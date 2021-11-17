@@ -1,4 +1,4 @@
-import ActionSheet, { ActionSheetProps } from './ActionSheet';
+import { ActionSheet, ActionSheetProps } from './ActionSheet';
 import ActionSheetItem from '../ActionSheetItem/ActionSheetItem';
 import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 import { withPlatform } from '../../hoc/withPlatform';
@@ -9,7 +9,7 @@ describe('ActionSheet', () => {
   describeScreenshotFuzz(withPlatform((props: ActionSheetProps) => (
     <ActionSheet
       {...props}
-      iosCloseItem={props.platform === 'ios' && cancel}
+      iosCloseItem={cancel}
       style={{ position: 'relative' }}
     />
   )), [{

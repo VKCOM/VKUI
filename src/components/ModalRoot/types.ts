@@ -12,7 +12,6 @@ export interface ModalElements {
   innerElement?: HTMLElement | null;
   headerElement?: HTMLElement | null;
   contentElement?: HTMLElement | null;
-  footerElement?: HTMLElement | null;
 }
 
 export interface ModalsStateEntry extends ModalElements {
@@ -37,7 +36,6 @@ export interface ModalsStateEntry extends ModalElements {
    */
   translateYCurrent?: number;
 
-  touchStartTime?: Date;
   touchStartContentScrollTop?: number;
   touchMovePositive?: boolean | null;
   touchShiftYPercent?: number;
@@ -47,7 +45,7 @@ export interface ModalsStateEntry extends ModalElements {
   hidden?: boolean;
 
   contentScrolled?: boolean;
-  contentScrollStopTimeout?: number;
+  contentScrollStopTimeout?: ReturnType<typeof setTimeout>;
 
   expandedRange?: TranslateRange;
   collapsedRange?: TranslateRange;

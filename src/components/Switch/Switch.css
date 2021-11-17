@@ -1,9 +1,19 @@
 .Switch {
+  position: relative;
   display: block;
+  cursor: pointer;
 }
 
 .Switch__self {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  overflow: hidden;
+  opacity: 0;
 }
 
 .Switch__pseudo {
@@ -17,6 +27,8 @@
 .Switch__pseudo::before {
   position: absolute;
   content: '';
+  top: -3px;
+  left: -3px;
   border-radius: 50%;
   box-sizing: border-box;
 }
@@ -38,9 +50,6 @@
   border: 2px solid transparent;
   background: var(--placeholder_icon_background);
   border-radius: 15px;
-  transition:
-    background-color .2s ease,
-    border-color .2s ease;
 }
 
 .Switch--ios.Switch--sizeY-compact .Switch__pseudo {
@@ -63,16 +72,11 @@
     0 3px 8px rgba(0, 0, 0, .15),
     0 3px 1px rgba(0, 0, 0, .06),
     inset 0 0 0 .5px rgba(0, 0, 0, .04);
-  transition: transform .2s cubic-bezier(.36, -.24, .26, 1.32);
 }
 
 .Switch--ios.Switch--sizeY-compact .Switch__pseudo::before {
   width: 23px;
   height: 23px;
-}
-
-.Switch--ios .Switch__self:checked + .Switch__pseudo::before {
-  transform: translateX(20px);
 }
 
 /**
@@ -89,7 +93,6 @@
   display: block;
   width: 100%;
   height: 100%;
-  transition: background-color .1s ease;
 }
 
 .Switch--android .Switch__self:checked + .Switch__pseudo::after,
@@ -121,13 +124,10 @@
 }
 
 .Switch--android .Switch__pseudo::before {
-  top: -3px;
-  left: -3px;
   width: 20px;
   height: 20px;
   background: #f1f1f1; /* todo: 1077 replace w/ a proper variable */
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, .12), 0 2px 2px 0 rgba(0, 0, 0, .24);
-  transition: transform .1s ease;
 }
 
 .Switch--android.Switch--sizeY-compact .Switch__pseudo::before {
@@ -158,13 +158,11 @@
 }
 
 .Switch--vkcom .Switch__pseudo::before {
-  top: -3px;
   left: -2px;
   width: 16px;
   height: 16px;
   background: var(--background_light);
   border: 1px solid var(--icon_tertiary);
-  transition: transform .1s ease;
   z-index: 1;
 }
 
@@ -172,4 +170,37 @@
   background: var(--accent);
   border: none;
   transform: translateX(16px);
+}
+
+/**
+ * [a11y]
+ * add animation for browsers that support prefers-reduced-motion
+ * so that users with vestibular motion disorders have no problem
+ * navigating accessible vkui apps via keyboard
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .Switch__pseudo::before {
+    transition: transform .1s ease;
+  }
+
+  .Switch--ios .Switch__pseudo {
+    transition: background-color .2s ease, border-color .2s ease;
+  }
+
+  .Switch--ios .Switch__pseudo::before {
+    transition: transform .2s cubic-bezier(.36, -.24, .26, 1.32);
+  }
+
+  .Switch--android .Switch__pseudo::after,
+  .Switch--vkcom .Switch__pseudo::after {
+    transition: background-color .1s ease;
+  }
+}
+
+/**
+ * CMP:
+ * SimpleCell
+ */
+.SimpleCell .Switch {
+  margin-left: 10px;
 }

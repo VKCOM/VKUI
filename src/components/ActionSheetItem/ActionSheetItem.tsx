@@ -1,4 +1,4 @@
-import React, { AnchorHTMLAttributes, ElementType, Fragment, HTMLAttributes, InputHTMLAttributes, useContext } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
@@ -12,11 +12,12 @@ import { Icon16Done, Icon24Done } from '@vkontakte/icons';
 import { ActionSheetContext } from '../ActionSheet/ActionSheetContext';
 import Caption from '../Typography/Caption/Caption';
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import './ActionSheetItem.css';
 
 export interface ActionSheetItemProps extends
-  HTMLAttributes<HTMLElement>,
-  AnchorHTMLAttributes<HTMLElement>,
-  Pick<InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'value'>,
+  React.HTMLAttributes<HTMLElement>,
+  React.AnchorHTMLAttributes<HTMLElement>,
+  Pick<React.InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'value'>,
   AdaptivityProps {
   mode?: 'default' | 'destructive' | 'cancel';
   before?: React.ReactNode;
@@ -27,7 +28,7 @@ export interface ActionSheetItemProps extends
   disabled?: boolean;
 }
 
-const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
+const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
   children,
   autoclose,
   mode,
@@ -45,13 +46,11 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
   ...restProps
 }: ActionSheetItemProps) => {
   const platform = usePlatform();
-  const { onItemClick = () => noop, isDesktop } = useContext(ActionSheetContext);
+  const { onItemClick = () => noop, isDesktop } = React.useContext(ActionSheetContext);
 
-  let Component: ElementType = 'div';
+  let Component: React.ElementType = restProps.href ? 'a' : 'div';
 
-  if (restProps.href) {
-    Component = 'a';
-  } else if (selectable) {
+  if (selectable) {
     Component = 'label';
   }
 
@@ -66,10 +65,10 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
         classNames(
           getClassName('ActionSheetItem', platform),
           `ActionSheetItem--${mode}`,
+          `ActionSheetItem--sizeY-${sizeY}`,
           {
             'ActionSheetItem--compact': isCompact,
             'ActionSheetItem--desktop': isDesktop,
-            [`ActionSheetItem--sizeY-${sizeY}`]: sizeY === SizeType.COMPACT,
             'ActionSheetItem--withSubtitle': hasReactNode(subtitle),
           },
         )
@@ -80,7 +79,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
       <div vkuiClass="ActionSheetItem__container">
         <div vkuiClass="ActionSheetItem__content">
           {sizeY === SizeType.COMPACT ?
-            <Fragment>
+            <React.Fragment>
               <Text
                 weight={mode === 'cancel' ? 'medium' : 'regular'}
                 vkuiClass="ActionSheetItem__children"
@@ -95,9 +94,9 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
                   {meta}
                 </Text>
               }
-            </Fragment>
+            </React.Fragment>
             :
-            <Fragment>
+            <React.Fragment>
               <Title
                 weight={mode === 'cancel' ? 'medium' : 'regular'}
                 level={isCompact || hasReactNode(before) || platform === ANDROID ? '3' : '2'}
@@ -114,7 +113,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
                   {meta}
                 </Title>
               }
-            </Fragment>
+            </React.Fragment>
           }
         </div>
         {hasReactNode(subtitle) && (sizeY === SizeType.COMPACT ?

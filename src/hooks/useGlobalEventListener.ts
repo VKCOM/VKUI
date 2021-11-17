@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 import { useEventListener } from './useEventListener';
 
 export function useGlobalEventListener<K extends keyof GlobalEventHandlersEventMap>(
@@ -15,5 +15,5 @@ export function useGlobalEventListener(
 ): void;
 export function useGlobalEventListener(element: any, event: string, cb: (ev: Event) => any, options?: AddEventListenerOptions) {
   const listener = useEventListener(event, cb, options);
-  useEffect(() => cb ? listener.add(element) : listener.remove(), [Boolean(cb)]);
+  useIsomorphicLayoutEffect(() => cb ? listener.add(element) : listener.remove(), [Boolean(cb)]);
 }

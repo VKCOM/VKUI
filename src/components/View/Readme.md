@@ -5,118 +5,93 @@
 Как только он заканчивается, вызывается свойство-функция `onTransition`.
 
 ```jsx
-class Example extends React.Component {
-  constructor(props) {
-    super(props);
+const [activePanel, setActivePanel] = useState('panel1');
 
-    this.state = {
-      activePanel: 'panel1'
-    }
-  }
-
-  render() {
-    return (
-      <View activePanel={this.state.activePanel}>
-        <Panel id="panel1">
-          <PanelHeader>Panel 1</PanelHeader>
-          <Group>
-            <CellButton onClick={ () => this.setState({ activePanel: 'panel2' }) }>
-              Go to panel 2
-            </CellButton>
-          </Group>
-        </Panel>
-        <Panel id="panel2">
-          <PanelHeader>Panel 2</PanelHeader>
-          <Group>
-            <CellButton onClick={ () => this.setState({ activePanel: 'panel3' }) }>
-              Go to panel 3
-            </CellButton>
-          </Group>
-        </Panel>
-        <Panel id="panel3">
-          <PanelHeader>Panel 3</PanelHeader>
-          <Group>
-            <CellButton onClick={ () => this.setState({ activePanel: 'panel1' }) }>
-              Back to panel 1
-            </CellButton>
-          </Group>
-        </Panel>
-      </View>
-    )
-  }
-}
-
-<Example />
+<View activePanel={activePanel}>
+  <Panel id="panel1">
+    <PanelHeader>Panel 1</PanelHeader>
+    <Group>
+      <div style={{ height: 200 }} />
+      <CellButton onClick={ () => setActivePanel('panel2') }>
+        Go to panel 2
+      </CellButton>
+      <div style={{ height: 600 }} />
+    </Group>
+  </Panel>
+  <Panel id="panel2">
+    <PanelHeader>Panel 2</PanelHeader>
+    <Group>
+      <div style={{ height: 200 }} />
+      <CellButton onClick={ () => setActivePanel('panel3') }>
+        Go to panel 3
+      </CellButton>
+      <div style={{ height: 600 }} />
+    </Group>
+  </Panel>
+  <Panel id="panel3">
+    <PanelHeader>Panel 3</PanelHeader>
+    <Group>
+      <div style={{ height: 200 }} />
+      <CellButton onClick={ () => setActivePanel('panel1') }>
+        Back to panel 1
+      </CellButton>
+      <div style={{ height: 600 }} />
+    </Group>
+  </Panel>
+</View>
 ```
 
-### <a id="iosswipeback"></a>[iOS Swipe Back](#iosswipeback)
+### <a id="/View?id=iosswipeback"></a>[iOS Swipe Back](#/View?id=iosswipeback)
 
 В iOS есть возможность свайпнуть от левого края назад, чтобы перейти на предыдущую панель. Для того, чтобы
 повторить такое поведение в VKUI нужно:
 
-* Передать во `View` свойство `onSwipeBack`. Это callback, срабатывающий при завершении анимации свайпа.
-Как правило в нём прописывают логику, которая выставит нужный `activePanel` и обновит свойство `history`.
+- Передать во `View` коллбек `onSwipeBack` — он сработает при завершении анимации свайпа. Поменяйте в нем `activePanel` и обновите `history`.
+- Передать во `View` проп `history` — массив из id панелей в порядке открытия. Например, если пользователь из `main` перешел в `profile`, а оттуда попал в `education`, то `history=['main', 'profile', 'education']`.
+- Обернуть ваше приложение в `ConfigProvider` — он определит, открыто приложение в webview клиента VK или в браузере (там есть свой swipe back, который будет конфликтовать с нашим). Для проверки в браузере форсируйте определение webview: `<СonfigProvider isWebView>`.
+- На первой панели должен включаться свайпбек нативного клиента, чтобы пользователь смог выйти из приложения — для этого используют `vk-bridge`. __Если вы не из ВК,__ при переходах отправляйте [событие `VKWebAppSetSwipeSettings`](https://vk.com/dev.php?method=vk_bridge_events_10&f=Включение%20swipe%20как%20в%20браузере) с `history: true` на первой панели или `history: false` на других. __Если вы из ВК,__ при переходе на первую панель отправляйте событие `VKWebAppEnableSwipeBack`, на любую другую — `VKWebAppDisableSwipeBack`.
+- Компоненты, которые сами обрабатывают жесты (например, карта), могут конфликтовать со свайпбеком — повесьте на них свойство `data-vkui-swipe-back={false}`
 
-* Передать во `View` свойство `history`. Это массив, состоящий из id панелей, которые были открыты на текущий момент.
-Например, если пользователь из `main` перешел в `profile`, а оттуда попал в `education`, то
-`history=['main', 'profile', 'education']`.
-
-* Убедиться, что приложение открыто внутри webview (так как внутри обычного мобильного браузера
-как правило есть свой swipe back). Для этого достаточно обернуть ваше приложение компонентом `ConfigProvider`.
-Он внутри себя определяет, открыто приложение внутри webview или в мобильном браузере. Для тестов в браузере
-можно явно передать в `СonfigProvider` свойство `isWebView={true}`.
-
-* При попадании на первую панель слать `vk-bridge` событие `VKWebAppEnableSwipeBack`. При уходе с первой панели –
-слать `VKWebAppDisableSwipeBack`. Таким образом VKUI свайп не будет конфликтовать со свайпом нативного клиента.
-
-Пример:
-
-```jsx static
-import React from 'react';
-import { View, Panel, ConfigProvider } from '@vkontakte/vkui';
+```jsx
 import vkBridge from '@vkontakte/vk-bridge';
 
-class App extends React.Component {
+const [history, setHistory] = useState(['main']);
+const activePanel = history[history.length - 1];
+const isFirst = history.length === 1;
 
-  state = {
-    activePanel: 'main',
-    history: ['main']
-  }
+React.useEffect(() => {
+  // Если вы из ВК, делайте так
+  vkBridge.send(isFirst
+    ? 'VKWebAppEnableSwipeBack'
+    : 'VKWebAppDisableSwipeBack');
+  // Если вы не из ВК, то так:
+  vkBridge.send('VKWebAppSetSwipeSettings', { history: isFirst });
+}, [isFirst]);
 
-  goBack = () => {
-    const history = [...this.state.history];
-    history.pop();
-    const activePanel = history[history.length - 1];
-    if (activePanel === 'main') {
-      vkBridge.send('VKWebAppEnableSwipeBack');
-    }
-    this.setState({ history, activePanel });
-  }
+const goBack = () => setHistory(history.slice(0, -1));
+const go = (panel) => setHistory([...history, panel]);
 
-  goForward = (activePanel) => {
-    const history = [...this.state.history];
-    history.push(activePanel);
-    if (this.state.activePanel === 'main') {
-      vkBridge.send('VKWebAppDisableSwipeBack');
-    }
-    this.setState({ history, activePanel });
-  }
-
-  render () {
-    return (
-      <ConfigProvider isWebView={true}>
-        <View
-          onSwipeBack={this.goBack}
-          history={this.state.history}
-          activePanel={this.state.activePanel}
-        >
-          <Panel id="main"/>
-          <Panel id="profile"/>
-          <Panel id="education"/>
-        </View>
-      </ConfigProvider>
-    )
-  }
-}
-
+<ConfigProvider platform={IOS} isWebView>
+  <View
+    onSwipeBack={goBack}
+    history={history}
+    activePanel={activePanel}
+  >
+    <Panel id="main">
+      <PanelHeader>Main</PanelHeader>
+      <Group>
+        <CellButton onClick={() => go('profile')}>profile</CellButton>
+      </Group>
+    </Panel>
+    <Panel id="profile">
+      <PanelHeader>Профиль</PanelHeader>
+      <Group>
+        <Placeholder>Теперь свайпните от левого края направо, чтобы вернуться</Placeholder>
+        <Div style={{ height: 50, background: '#eee' }} data-vkui-swipe-back={false}>
+          Здесь свайпбек отключен
+        </Div>
+      </Group>
+    </Panel>
+  </View>
+</ConfigProvider>
 ```

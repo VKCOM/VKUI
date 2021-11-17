@@ -1,39 +1,56 @@
-import { FC, HTMLAttributes } from 'react';
+import * as React from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
-import HorizontalScroll from '../HorizontalScroll/HorizontalScroll';
+import HorizontalScroll, { HorizontalScrollProps, ScrollPositionHandler } from '../HorizontalScroll/HorizontalScroll';
+import './SubnavigationBar.css';
 
-export interface SubnavigationBarProps extends HTMLAttributes<HTMLDivElement> {
+export interface SubnavigationBarProps extends
+  React.HTMLAttributes<HTMLDivElement>,
+  Pick<HorizontalScrollProps, 'showArrows' | 'getScrollToLeft' | 'getScrollToRight' | 'scrollAnimationDuration'> {
   mode?: 'fixed' | 'overflow';
 }
 
-export const SubnavigationBar: FC<SubnavigationBarProps> = (props: SubnavigationBarProps) => {
-  const platform = usePlatform();
-  const {
-    mode,
-    children,
-    ...restProps
-  } = props;
+const defaultScrollToLeft: ScrollPositionHandler = (x) => x - 240;
 
-  const ScrollWrapper = mode === 'fixed' ? 'div' : HorizontalScroll;
+const defaultScrollToRight: ScrollPositionHandler = (x) => x + 240;
+
+export const SubnavigationBar: React.FC<SubnavigationBarProps> = ({
+  mode = 'overflow',
+  children,
+  showArrows = true,
+  getScrollToLeft = defaultScrollToLeft,
+  getScrollToRight = defaultScrollToRight,
+  scrollAnimationDuration,
+  ...restProps
+}: SubnavigationBarProps) => {
+  const platform = usePlatform();
+
+  let ScrollWrapper: React.ElementType;
+  let scrollWrapperProps = {};
+
+  if (mode === 'fixed') {
+    ScrollWrapper = 'div';
+  } else {
+    ScrollWrapper = HorizontalScroll;
+    scrollWrapperProps = {
+      showArrows,
+      getScrollToLeft,
+      getScrollToRight,
+      scrollAnimationDuration,
+    };
+  }
 
   return (
     <div
       {...restProps}
       vkuiClass={classNames(getClassName('SubnavigationBar', platform), `SubnavigationBar--${mode}`)}
     >
-      <ScrollWrapper vkuiClass="SubnavigationBar__in">
+      <ScrollWrapper vkuiClass="SubnavigationBar__in" {...scrollWrapperProps}>
         <div vkuiClass="SubnavigationBar__scrollIn">
-          <div vkuiClass="SubnavigationBar__gap" />
           {children}
-          <div vkuiClass="SubnavigationBar__gap" />
         </div>
       </ScrollWrapper>
     </div>
   );
-};
-
-SubnavigationBar.defaultProps = {
-  mode: 'overflow',
 };

@@ -1,0 +1,37 @@
+.GridAvatar__in {
+  display: flex;
+  flex-flow: column wrap;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+
+  --grid-avatar-image-offset: 2px;
+}
+
+.GridAvatar__item {
+  width: calc(50% - var(--grid-avatar-image-offset) / 2);
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.GridAvatar--images-1 .GridAvatar__item {
+  width: 100%;
+}
+
+.GridAvatar--images-3 .GridAvatar__item:nth-child(1n + 2),
+.GridAvatar--images-4 .GridAvatar__item {
+  height: calc(50% - var(--grid-avatar-image-offset) / 2);
+}
+
+.GridAvatar--images-2 .GridAvatar__item:nth-child(1n + 2),
+.GridAvatar--images-3 .GridAvatar__item:nth-child(1n + 2),
+.GridAvatar--images-4 .GridAvatar__item:nth-child(1n + 3) {
+  margin-left: var(--grid-avatar-image-offset);
+}
+
+.GridAvatar--images-3 .GridAvatar__item:nth-child(2),
+.GridAvatar--images-4 .GridAvatar__item:nth-child(odd) {
+  margin-bottom: var(--grid-avatar-image-offset);
+}

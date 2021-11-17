@@ -11,6 +11,12 @@
   padding-bottom: 0;
 }
 
+.FormItem .CellButton {
+  width: 100%;
+  box-sizing: content-box;
+  margin: 0 calc(-1 * var(--formitem_padding));
+}
+
 .CellButton[disabled] {
   opacity: .4;
 }
@@ -29,18 +35,12 @@
   padding-right: 8px;
 }
 
-.CellButton > .Avatar {
-  color: var(--button_muted_background);
-}
-
-.CellButton--primary,
-.CellButton--primary > .Icon,
-.CellButton--primary > .Avatar .Icon {
+.CellButton,
+.CellButton > .Icon {
   color: var(--accent);
 }
 
 .CellButton--danger,
-.CellButton--danger > .Icon,
-.CellButton--danger > .Avatar .Icon {
+.CellButton--danger > .Icon {
   color: var(--destructive);
 }

@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import * as React from 'react';
 import vkBridge, { AppearanceSchemeType, AppearanceType } from '@vkontakte/vk-bridge';
 import { PlatformType, platform } from '../../lib/platform';
 
@@ -10,18 +10,19 @@ export enum Appearance {
 export enum Scheme {
   DEPRECATED_CLIENT_LIGHT = 'client_light',
   DEPRECATED_CLIENT_DARK = 'client_dark',
+  /**
+   * @deprecated будет удалено в 5.0.0
+   * версия оставлена для совместимости с vkcom, когда там была только одна схема
+   */
+  VKCOM = 'vkcom',
+
   BRIGHT_LIGHT = 'bright_light',
   SPACE_GRAY = 'space_gray',
-  VKCOM = 'vkcom'
-}
-
-// Схемы, которых нет в VKUI, но мы знаем их appearance
-export enum ExternalScheme {
   VKCOM_LIGHT = 'vkcom_light',
   VKCOM_DARK = 'vkcom_dark'
 }
 
-export type AppearanceScheme = AppearanceSchemeType | Scheme.VKCOM | 'inherit';
+export type AppearanceScheme = AppearanceSchemeType | Scheme.VKCOM | Scheme.VKCOM_DARK | Scheme.VKCOM_LIGHT | 'inherit';
 
 export enum WebviewType {
   VKAPPS = 'vkapps',
@@ -66,4 +67,4 @@ export const defaultConfigProviderProps = {
   // appearance: Appearance.LIGHT,
 };
 
-export const ConfigProviderContext = createContext<ConfigProviderContextInterface>(defaultConfigProviderProps);
+export const ConfigProviderContext = React.createContext<ConfigProviderContextInterface>(defaultConfigProviderProps);

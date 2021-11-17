@@ -1,6 +1,32 @@
-import { ComponentType } from 'react';
+import * as React from 'react';
 import { render, RenderResult, screen } from '@testing-library/react';
 import AdaptivityProvider, { AdaptivityProviderProps } from '../components/AdaptivityProvider/AdaptivityProvider';
+import { ImgOnlyAttributes } from '../lib/utils';
+import { ScrollContext } from '../components/AppRoot/ScrollContext';
+import { act } from 'react-dom/test-utils';
+
+export function fakeTimers() {
+  beforeEach(() => jest.useFakeTimers());
+  afterEach(() => jest.useRealTimers());
+}
+
+export const runAllTimers = () => act(() => {
+  jest.runAllTimers();
+});
+
+export const imgOnlyAttributes: ImgOnlyAttributes = {
+  alt: 'test',
+  crossOrigin: 'anonymous',
+  decoding: 'async',
+  height: 100,
+  width: 100,
+  loading: 'eager',
+  referrerPolicy: 'no-referrer',
+  sizes: 'test',
+  src: 'test',
+  srcSet: 'test',
+  useMap: 'test',
+};
 
 export type ComponentTestOptions = {
   defaultProps?: any;
@@ -13,7 +39,7 @@ export type ComponentTestOptions = {
 
 type BasicProps = { style?: any; className?: string };
 
-export function mountTest(Component: ComponentType<any>) {
+export function mountTest(Component: React.ComponentType<any>) {
   it('renders', () => {
     let api: RenderResult;
     // mount
@@ -26,7 +52,7 @@ export function mountTest(Component: ComponentType<any>) {
 }
 
 export function baselineComponent<Props extends BasicProps>(
-  RawComponent: ComponentType<Props>,
+  RawComponent: React.ComponentType<Props>,
   {
     forward = true,
     style = true,
@@ -35,7 +61,7 @@ export function baselineComponent<Props extends BasicProps>(
     adaptivity,
   }: ComponentTestOptions = {},
 ) {
-  const Component: ComponentType<BasicProps> = adaptivity
+  const Component: React.ComponentType<BasicProps> = adaptivity
     ? (p: Props) => <AdaptivityProvider {...adaptivity}><RawComponent {...p} /></AdaptivityProvider>
     : RawComponent;
   mountTest(Component);
@@ -86,3 +112,47 @@ export function mockRect(el: HTMLElement | ({} & any), { x = 0, y = 0, w = 0, h 
     },
   });
 }
+
+export const mockScrollContext = (getY: () => number): [React.FC, jest.Mock] => {
+  const getScroll = () => ({ x: 0, y: getY() });
+  const scrollTo = jest.fn();
+  return [
+    (props) => (
+      <ScrollContext.Provider value={{ getScroll, scrollTo }}>
+        {props.children}
+      </ScrollContext.Provider>
+    ),
+    scrollTo,
+  ];
+};
+
+const isNullOrUndefined = (val: any) => val === null || val === undefined;
+
+// Согласно спеке, offsetParent в ряде случаев будет null
+Object.defineProperty(HTMLElement.prototype, 'offsetParent', {
+  get() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    let element: HTMLElement = this;
+    while (!isNullOrUndefined(element) &&
+    (isNullOrUndefined(element.style) ||
+      isNullOrUndefined(element.style.display) ||
+      element.style.display.toLowerCase() !== 'none')) {
+      // @ts-ignore
+      element = element.parentNode;
+    }
+
+    if (!isNullOrUndefined(element)) {
+      return null;
+    }
+
+    if (!isNullOrUndefined(this.style) && !isNullOrUndefined(this.style.position) && this.style.position.toLowerCase() === 'fixed') {
+      return null;
+    }
+
+    if (this.tagName.toLowerCase() === 'html' || this.tagName.toLowerCase() === 'body') {
+      return null;
+    }
+
+    return this.parentNode;
+  },
+});

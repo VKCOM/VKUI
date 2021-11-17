@@ -1,14 +1,22 @@
 .CustomSelectOption {
   width: 100%;
-  height: 44px;
   display: flex;
   align-items: center;
   position: relative;
   box-sizing: border-box;
-  padding: 10px 36px 10px 12px;
+  padding: 8px 12px;
   white-space: nowrap;
   user-select: none;
   cursor: pointer;
+}
+
+.CustomSelectOption--sizeY-regular {
+  min-height: 44px;
+}
+
+.CustomSelectOption--disabled {
+  cursor: default;
+  opacity: .4;
 }
 
 .CustomSelectOption--hover {
@@ -16,20 +24,39 @@
 }
 
 .CustomSelectOption__before {
+  flex-shrink: 0;
   margin-right: 7px;
 }
 
-.CustomSelectOption__label {
+.CustomSelectOption__main {
+  flex-grow: 1;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.CustomSelectOption__children {
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .CustomSelectOption__after {
-  margin-left: 7px;
+  margin-left: 8px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.CustomSelectOption__description {
+  color: var(--text_secondary);
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .CustomSelectOption__selectedIcon {
-  position: absolute;
-  top: 15px;
-  right: 12px;
+  color: var(--accent);
+}
+
+.CustomSelectOption__selectedIcon:not(:first-child) {
+  margin-left: 8px;
 }

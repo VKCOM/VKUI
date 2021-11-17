@@ -1,20 +1,21 @@
-import { FunctionComponent, ButtonHTMLAttributes, useState } from 'react';
+import * as React from 'react';
 import Tappable from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { HasRootRef } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 import Text from '../Typography/Text/Text';
+import './SliderSwitch.css';
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
   active?: boolean;
   hovered?: boolean;
 }
 
-const SliderSwitchButton: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
+const SliderSwitchButton: React.FunctionComponent<ButtonProps> = (props: ButtonProps) => {
   const { active, hovered, children, getRootRef, ...restProps } = props;
   const platform = usePlatform();
-  const [focus, setFocus] = useState(false);
+  const [focus, setFocus] = React.useState(false);
 
   const toggleFocus = () => {
     setFocus(!focus);
@@ -42,7 +43,7 @@ const SliderSwitchButton: FunctionComponent<ButtonProps> = (props: ButtonProps) 
     hasActive={false}
     hoverMode="opacity"
   >
-    <Text Component="span" weight="medium">{children}</Text>
+    <Text weight="medium">{children}</Text>
   </Tappable>;
 };
 

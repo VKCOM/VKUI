@@ -2,8 +2,9 @@
 /*
 * Этот файл сгенерирован автоматически. Не надо править его руками.
 */
-body[scheme="space_gray"] {
+body[scheme="space_gray"], [scheme="space_gray"] {
   --accent: #71aaeb;
+  --accent_alternate: #ffffff;
   --action_sheet_action_foreground: #ffffff;
   --action_sheet_separator: rgba(255, 255, 255, 0.12);
   --activity_indicator_tint: #5d5f61;
@@ -43,6 +44,7 @@ body[scheme="space_gray"] {
   --cell_button_foreground: #e1e3e6;
   --content_placeholder_icon: #aaaeb3;
   --content_placeholder_text: #aaaeb3;
+  --content_positive_background: rgba(75, 179, 75, 0.15);
   --content_tint_background: #232324;
   --content_tint_foreground: #909499;
   --content_warning_background: #857250;
@@ -57,11 +59,12 @@ body[scheme="space_gray"] {
   --counter_secondary_background: #76787a;
   --counter_secondary_text: #19191a;
   --destructive: #ff5c5c;
-  --dynamic_blue: #3f8ae0;
+  --dynamic_blue: #2688eb;
   --dynamic_gray: #a3adb8;
   --dynamic_green: #4bb34b;
   --dynamic_orange: #ffa000;
   --dynamic_purple: #937ff5;
+  --dynamic_raspberry_pink: #f060c0;
   --dynamic_red: #ff3347;
   --dynamic_violet: #a393f5;
   --feed_recommended_friend_promo_background: #6d7885;
@@ -109,7 +112,7 @@ body[scheme="space_gray"] {
   --im_bubble_button_background: rgba(255, 255, 255, 0.16);
   --im_bubble_button_background_highlighted: rgba(255, 255, 255, 0.24);
   --im_bubble_button_foreground: #e1e3e6;
-  --im_bubble_button_outgoing_background: #5d5f61;
+  --im_bubble_button_outgoing_background: rgba(255, 255, 255, 0.20);
   --im_bubble_gift_background: #857250;
   --im_bubble_gift_background_highlighted: #ab9871;
   --im_bubble_gift_text: #ffffff;
@@ -133,7 +136,7 @@ body[scheme="space_gray"] {
   --im_bubble_wallpaper_incoming_highlighted: #5d5f61;
   --im_bubble_wallpaper_outgoing: #454647;
   --im_bubble_wallpaper_outgoing_highlighted: #5d5f61;
-  --im_forward_line_tint: #ffffff;
+  --im_forward_line_tint: rgba(255, 255, 255, 0.24);
   --im_reply_separator: #ffffff;
   --im_service_message_text: #76787a;
   --im_text_name: #71aaeb;
@@ -182,16 +185,20 @@ body[scheme="space_gray"] {
   --placeholder_icon_foreground_secondary: #5d5f61;
   --placeholder_icon_tint: #ffffff;
   --poll_option_background: #ffffff;
+  --primary_overlay_badge: rgba(255, 255, 255, 0.40);
   --search_bar_background: #19191a;
   --search_bar_field_background: #363738;
   --search_bar_field_tint: #aaaeb3;
   --search_bar_segmented_control_tint: #909499;
+  --secondary_overlay_badge: rgba(255, 255, 255, 0.15);
   --segmented_control_bar_background: #19191a;
   --segmented_control_tint: #76787a;
   --selection_off_icon: #5d5f61;
   --separator_alpha: rgba(255, 255, 255, 0.12);
   --separator_alternate: #232324;
   --separator_common: #363738;
+  --skeleton_foreground_from: #232324;
+  --skeleton_foreground_to: #2c2d2e;
   --skeleton_shimmer_from: #19191a;
   --skeleton_shimmer_to: #19191a;
   --snippet_background: #232324;

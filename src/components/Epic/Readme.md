@@ -10,7 +10,9 @@ Android. Внизу располагается панель с иконками,
 либо коллекция `View`. У каждого элемента коллекции должен быть уникальный `id`. Свойство `activeStory` указывает
 на `id` активного окна.
 
-**Важно:** При `viewWidth < SMALL_TABLET` в `Epic` всегда должен быть передан `Tabbar`, так как он является единственным способом переключения
+> **Важно**
+>
+>При `viewWidth < SMALL_TABLET` в `Epic` всегда должен быть передан `Tabbar`, так как он является единственным способом переключения
 между окнами.
 
 ``` jsx
@@ -27,7 +29,7 @@ const Example = withAdaptivity(({ viewWidth }) => {
       style={{ justifyContent: "center" }}
     >
       {isDesktop && (
-        <SplitCol fixed width="280px" maxWidth="280px">
+        <SplitCol fixed width={280} maxWidth={280}>
           <Panel>
             {hasHeader && <PanelHeader />}
             <Group>

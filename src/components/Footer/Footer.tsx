@@ -1,10 +1,12 @@
-import { FunctionComponent } from 'react';
-import { DivProps } from '../Div/Div';
+import * as React from 'react';
 import Caption from '../Typography/Caption/Caption';
+import './Footer.css';
 
-const Footer: FunctionComponent<DivProps> = ({ children, ...restProps }: DivProps) => {
+type FooterProps = React.AllHTMLAttributes<HTMLElement>;
+
+const Footer: React.FC<FooterProps> = ({ children, ...restProps }: FooterProps) => {
   return (
-    <Caption {...restProps} level="1" weight="regular" vkuiClass="Footer">
+    <Caption Component="footer" {...restProps} level="1" weight="regular" vkuiClass="Footer">
       {children}
     </Caption>
   );

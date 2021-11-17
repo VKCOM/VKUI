@@ -1,5 +1,14 @@
-import { useContext } from 'react';
-import { AdaptivityContext, SizeType, ViewHeight, ViewWidth } from '../components/AdaptivityProvider/AdaptivityContext';
+import * as React from 'react';
+import {
+  AdaptivityContext,
+  SizeType,
+  ViewHeight,
+  ViewWidth,
+  AdaptivityProps,
+} from '../components/AdaptivityProvider/AdaptivityContext';
+
+export { SizeType, ViewWidth, ViewHeight };
+export type { AdaptivityProps };
 
 interface Config {
   sizeX?: boolean;
@@ -9,11 +18,9 @@ interface Config {
   hasMouse?: boolean;
 }
 
-export { SizeType, ViewWidth, ViewHeight };
-
 export function withAdaptivity<T>(TargetComponent: T, config: Config): T {
   function AdaptivityConsumer(props: AdaptivityProps) {
-    const context = useContext(AdaptivityContext);
+    const context = React.useContext(AdaptivityContext);
     let update = false;
 
     if (props.sizeX || props.sizeY) {
@@ -52,21 +59,4 @@ export function withAdaptivity<T>(TargetComponent: T, config: Config): T {
   }
 
   return AdaptivityConsumer as unknown as T;
-}
-
-export interface AdaptivityProps {
-  sizeX?: SizeType;
-  sizeY?: SizeType;
-  /**
-   * @ignore
-   */
-  viewWidth?: ViewWidth;
-  /**
-   * @ignore
-   */
-  viewHeight?: ViewHeight;
-  /**
-   * @ignore
-   */
-  hasMouse?: boolean;
 }

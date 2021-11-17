@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { noop } from '../lib/utils';
-import { createRef, useRef, FC, RefObject } from 'react';
+import * as React from 'react';
 import { HasRef } from '../types';
 import { useExternRef } from './useExternRef';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
@@ -9,16 +9,16 @@ const RefForwarder = (props: HasRef<HTMLDivElement>) => <div ref={useExternRef(p
 describe(useExternRef, () => {
   describe('manages inner ref', () => {
     it('ensures ref exists', () => {
-      const OuterRef: FC = () => {
+      const OuterRef: React.FC = () => {
         expect(useExternRef()).toBeTruthy();
         return null;
       };
       render(<OuterRef />);
     });
     it('keeps inner ref.current up-to-date', () => {
-      let firstRef: RefObject<any>;
+      let firstRef: React.RefObject<any>;
       let counter = 0;
-      const RefForwarder: FC<HasRef<any>> = (props) => {
+      const RefForwarder: React.FC<HasRef<any>> = (props) => {
         const ref = useExternRef(props.getRef);
         firstRef = firstRef || ref;
         counter += 1;
@@ -32,12 +32,12 @@ describe(useExternRef, () => {
   });
   describe('sets outer ref to null', () => {
     it('on wrapper unmount', () => {
-      const ref = createRef<HTMLDivElement>();
+      const ref = React.createRef<HTMLDivElement>();
       render(<RefForwarder getRef={ref} />).unmount();
       expect(ref.current).toBeNull();
     });
     it('on inner node unmount', () => {
-      const ref = createRef();
+      const ref = React.createRef();
       const RefForwarder = (props: HasRef<any> & { hide?: boolean }) => {
         const ref = useExternRef(props.getRef);
         return props.hide ? null : <div ref={ref} />;
@@ -49,7 +49,7 @@ describe(useExternRef, () => {
   describe('calls outer ref', () => {
     it('before useLayoutEffect', () => {
       const RefUser = () => {
-        const ref = useRef();
+        const ref = React.useRef();
         useIsomorphicLayoutEffect(() => {
           expect(ref.current).toBeInTheDocument();
         }, []);
@@ -58,7 +58,7 @@ describe(useExternRef, () => {
       render(<RefUser />);
     });
     it('when node changes', () => {
-      const ref = createRef();
+      const ref = React.createRef();
       const RefForwarder = (props: HasRef<any> & { remountKey?: any }) => (
         <div key={props.remountKey} ref={useExternRef(props.getRef)} />);
       render(<RefForwarder getRef={ref} />).rerender(<RefForwarder getRef={ref} remountKey="123" />);

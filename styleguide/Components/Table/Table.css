@@ -1,0 +1,67 @@
+.Table {
+  position: relative;
+}
+
+.Table__in {
+  overflow: auto;
+  border: 1px solid var(--separator_alternate);
+  border-radius: 8px;
+}
+
+.Table::before {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 10%;
+  position: absolute;
+  background: linear-gradient(to right, var(--background_content), transparent);
+  content: '';
+  opacity: 0;
+  pointer-events: none;
+}
+
+.Table--hasLeft::before {
+  opacity: 1;
+}
+
+.Table::after {
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 10%;
+  position: absolute;
+  background: linear-gradient(to left, var(--background_content), transparent);
+  content: '';
+  opacity: 0;
+  pointer-events: none;
+}
+
+.Table--hasRight::after {
+  opacity: 1;
+}
+
+.Table__main {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.Table__td,
+.Table__th {
+  border-bottom: 1px solid var(--separator_alternate);
+}
+
+.Table__th {
+  background: var(--background_light);
+  text-align: left;
+  padding: 16px;
+  white-space: nowrap;
+  color: var(--text_subhead);
+}
+
+.Table__tr:last-child .Table__td {
+  border-bottom: none;
+}
+
+.Table__td {
+  padding: 20px 16px;
+}

@@ -1,4 +1,4 @@
-import { HTMLAttributes, useEffect, useMemo, useState, useCallback } from 'react';
+import * as React from 'react';
 import { Icon24Dismiss } from '@vkontakte/icons';
 import Button from '../Button/Button';
 import SimpleCell from '../SimpleCell/SimpleCell';
@@ -6,6 +6,7 @@ import Avatar from '../Avatar/Avatar';
 import Caption from '../Typography/Caption/Caption';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
+import './PromoBanner.css';
 
 type StatsType =
   | 'playbackStarted' // Начало показа
@@ -36,7 +37,7 @@ type BannerData = {
   ageRestriction?: number;
 };
 
-export interface PromoBannerProps extends HTMLAttributes<HTMLDivElement> {
+export interface PromoBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Данные рекламного баннера, полученные из VKWebAppGetAds */
   bannerData: BannerData;
   /** Флаг скрытия кнопки закрытия рекламы */
@@ -54,9 +55,9 @@ const PromoBanner = (props: PromoBannerProps) => {
       ? parseInt(bannerData.ageRestrictions)
       : bannerData.ageRestriction;
 
-  const [currentPixel, setCurrentPixel] = useState('');
+  const [currentPixel, setCurrentPixel] = React.useState('');
 
-  const statsPixels = useMemo(
+  const statsPixels = React.useMemo(
     () =>
       (bannerData.statistics
         ? bannerData.statistics.reduce((acc, item) => ({ ...acc, [item.type]: item.url }), {})
@@ -64,9 +65,9 @@ const PromoBanner = (props: PromoBannerProps) => {
     [bannerData.statistics],
   );
 
-  const onClick = useCallback(() => setCurrentPixel(statsPixels.click || ''), [statsPixels.click]);
+  const onClick = React.useCallback(() => setCurrentPixel(statsPixels.click || ''), [statsPixels.click]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (statsPixels.playbackStarted) {
       setCurrentPixel(statsPixels.playbackStarted);
     }

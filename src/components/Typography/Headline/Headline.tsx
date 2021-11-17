@@ -1,40 +1,29 @@
-import { AllHTMLAttributes, ElementType, FunctionComponent } from 'react';
+import * as React from 'react';
+import { HasComponent } from '../../../types';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
-import { ANDROID } from '../../../lib/platform';
+import './Headline.css';
 
-export interface HeadlineProps extends AllHTMLAttributes<HTMLElement> {
+export interface HeadlineProps extends React.AllHTMLAttributes<HTMLElement>, HasComponent {
   weight: 'regular' | 'medium' | 'semibold';
-  Component?: ElementType;
 }
 
-const Headline: FunctionComponent<HeadlineProps> = ({
+const Headline: React.FC<HeadlineProps> = ({
   children,
-  weight,
-  Component,
+  weight = 'regular',
+  Component = 'h3',
   ...restProps
 }: HeadlineProps) => {
   const platform = usePlatform();
-  let HeadlineComponent = Component;
-
-  if (!Component) {
-    HeadlineComponent = platform === ANDROID ? 'h3' : 'h4';
-  }
-
-  let headlineWeight: HeadlineProps['weight'] = weight;
-
-  if (platform === ANDROID && weight === 'semibold') {
-    headlineWeight = 'medium';
-  }
 
   return (
-    <HeadlineComponent
+    <Component
       {...restProps}
-      vkuiClass={classNames(getClassName('Headline', platform), `Headline--w-${headlineWeight}`)}
+      vkuiClass={classNames(getClassName('Headline', platform), `Headline--w-${weight}`)}
     >
       {children}
-    </HeadlineComponent>
+    </Component>
   );
 };
 

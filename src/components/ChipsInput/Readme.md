@@ -17,6 +17,11 @@ const Example = () => {
     }
   ]);
 
+  const onClick = (e) => {
+    e.stopPropagation();
+    setColors([]);
+  }
+
   return (
     <View activePanel="panel">
       <Panel id="panel">
@@ -25,7 +30,7 @@ const Example = () => {
           <FormItem top="Цвет">
             <ChipsInput
               value={colors}
-              after={<IconButton hoverMode="opacity" aria-label="Очистить поле" onClick={() => setColors([])}><Icon16Clear/></IconButton>}
+              after={<IconButton hoverMode="opacity" aria-label="Очистить поле" onClick={onClick}><Icon16Clear/></IconButton>}
             />
           </FormItem>
           <FormItem top="Список">

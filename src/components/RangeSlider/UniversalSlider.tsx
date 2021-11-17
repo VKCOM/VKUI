@@ -1,5 +1,5 @@
-import { useRef, FC, HTMLAttributes } from 'react';
-import Touch, { TouchEvent, TouchEventHandler } from '../Touch/Touch';
+import * as React from 'react';
+import { Touch, TouchEvent, TouchEventHandler } from '../Touch/Touch';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { HasRootRef } from '../../types';
@@ -7,12 +7,13 @@ import { rescale } from '../../helpers/math';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
+import '../Slider/Slider.css';
 
 export type UniversalValue = [number | null, number];
 
 export interface UniversalSliderProps<Value> extends
   HasRootRef<HTMLDivElement>,
-  Omit<HTMLAttributes<HTMLDivElement>, 'value' | 'defaultValue' | 'onChange'>,
+  Omit<React.HTMLAttributes<HTMLDivElement>, 'value' | 'defaultValue' | 'onChange'>,
   AdaptivityProps {
   min?: number;
   max?: number;
@@ -23,7 +24,7 @@ export interface UniversalSliderProps<Value> extends
   onChange?(value: Value, e: TouchEvent): void;
 }
 
-const UniversalSliderDumb: FC<UniversalSliderProps<UniversalValue>> = ({
+const UniversalSliderDumb: React.FC<UniversalSliderProps<UniversalValue>> = ({
   min, max, step,
   value, defaultValue, onChange,
   getRootRef,
@@ -34,14 +35,14 @@ const UniversalSliderDumb: FC<UniversalSliderProps<UniversalValue>> = ({
   const platform = usePlatform();
   const [start, end] = value;
   const isRange = start != null;
-  const gesture = useRef({
+  const gesture = React.useRef({
     dragging: false as false | 'start' | 'end',
     startX: 0,
     containerWidth: 0,
   }).current;
   const container = useExternRef(getRootRef);
-  const thumbStart = useRef<HTMLDivElement>();
-  const thumbEnd = useRef<HTMLDivElement>();
+  const thumbStart = React.useRef<HTMLDivElement>();
+  const thumbEnd = React.useRef<HTMLDivElement>();
 
   const offsetToValue = (absolute: number) => {
     return rescale(absolute, [0, gesture.containerWidth], [min, max], { step });

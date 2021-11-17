@@ -1,20 +1,14 @@
-import {
-  FunctionComponent,
-  AllHTMLAttributes,
-  FormEvent,
-  ElementType,
-} from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
-import { HasRef } from '../../types';
+import { HasComponent, HasRef } from '../../types';
+import './FormLayout.css';
 
-const preventDefault = (e: FormEvent) => e.preventDefault();
+const preventDefault = (e: React.FormEvent) => e.preventDefault();
 
-export interface FormLayoutProps extends AllHTMLAttributes<HTMLElement>, HasRef<HTMLElement> {
-  Component?: ElementType;
-}
+export type FormLayoutProps = React.AllHTMLAttributes<HTMLElement> & HasRef<HTMLElement> & HasComponent;
 
-const FormLayout: FunctionComponent<FormLayoutProps> = (props: FormLayoutProps) => {
+const FormLayout: React.FunctionComponent<FormLayoutProps> = (props: FormLayoutProps) => {
   const {
     children,
     Component,

@@ -1,4 +1,4 @@
-import { FC, ImgHTMLAttributes, ReactNode } from 'react';
+import * as React from 'react';
 import Card, { CardProps } from '../Card/Card';
 import Caption from '../Typography/Caption/Caption';
 import Title from '../Typography/Title/Title';
@@ -8,26 +8,31 @@ import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import { HasRef, HasRootRef } from '../../types';
+import './ContentCard.css';
 
-export interface ContentCardProps extends HasRootRef<HTMLDivElement>, ImgHTMLAttributes<HTMLImageElement>, HasRef<HTMLImageElement>{
+export interface ContentCardProps extends HasRootRef<HTMLDivElement>, React.ImgHTMLAttributes<HTMLImageElement>, HasRef<HTMLImageElement> {
   /**
    Текст над заголовком
    */
-  subtitle?: ReactNode;
+  subtitle?: React.ReactNode;
   /**
    Заголовок
    */
-  header?: ReactNode;
+  header?: React.ReactNode;
   /**
    Текст
    */
-  text?: ReactNode;
+  text?: React.ReactNode;
   /**
    Нижний текст
    */
-  caption?: ReactNode;
+  caption?: React.ReactNode;
   /**
     URL или путь к изображению
+   */
+  src?: string;
+  /**
+    @deprecated будет удалено в 5.0.0. Используйте src
    */
   image?: string;
   /**
@@ -48,19 +53,66 @@ export interface ContentCardProps extends HasRootRef<HTMLDivElement>, ImgHTMLAtt
   mode?: CardProps['mode'];
 }
 
-const ContentCard: FC<ContentCardProps> = (props: ContentCardProps) => {
-  const { getRef, onClick, subtitle, header, text, caption, className, image, maxHeight, disabled, mode, alt, style, getRootRef, ...restProps } = props;
+const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
+  const {
+    subtitle,
+    header,
+    text,
+    caption,
+    // card props
+    className,
+    mode,
+    style,
+    getRootRef,
+    // img props
+    getRef,
+    maxHeight,
+    image,
+    src,
+    srcSet,
+    alt,
+    width,
+    height,
+    crossOrigin,
+    decoding,
+    loading,
+    referrerPolicy,
+    sizes,
+    useMap,
+    ...restProps
+  } = props;
   const platform = usePlatform();
+
+  const disabled = restProps.disabled || typeof restProps.onClick !== 'function';
+
+  const source = image || src;
 
   return (
     <Card mode={mode} getRootRef={getRootRef} vkuiClass={getClassName('ContentCard', platform)} style={style} className={className}>
-      <Tappable disabled={disabled} onClick={onClick} vkuiClass="ContentCard__tappable">
-        {image && <img {...restProps} ref={getRef} src={image} alt={alt} vkuiClass="ContentCard__img" style={{ maxHeight: props.maxHeight }} width="100%" />}
+      <Tappable {...restProps} disabled={disabled} vkuiClass="ContentCard__tappable">
+        {(source || srcSet) && (
+          <img
+            ref={getRef}
+            vkuiClass="ContentCard__img"
+            src={source}
+            srcSet={srcSet}
+            alt={alt}
+            crossOrigin={crossOrigin}
+            decoding={decoding}
+            loading={loading}
+            referrerPolicy={referrerPolicy}
+            sizes={sizes}
+            useMap={useMap}
+            height={height}
+            style={{ maxHeight }}
+            width="100%"
+          />
+        )}
         <div vkuiClass="ContentCard__body">
-          {hasReactNode(subtitle) && <Caption caps vkuiClass="ContentCard__caption" weight="semibold" level="3">{subtitle}</Caption>}
-          {hasReactNode(header) && <Title vkuiClass="ContentCard__title" weight="semibold" level="3">{header}</Title>}
+          {hasReactNode(subtitle) && <Caption caps vkuiClass="ContentCard__text" weight="semibold" level="3">{subtitle}</Caption>}
+          {hasReactNode(header) && <Title vkuiClass="ContentCard__text" weight="semibold" level="3">{header}</Title>}
           {hasReactNode(text) && <Text vkuiClass="ContentCard__text" weight="regular">{text}</Text>}
-          {hasReactNode(caption) && <Caption vkuiClass="ContentCard__caption" weight="regular" level="1">{caption}</Caption>}
+          {hasReactNode(caption) && <Caption vkuiClass="ContentCard__text" weight="regular" level="1">{caption}</Caption>}
         </div>
       </Tappable>
     </Card>

@@ -1,23 +1,24 @@
-import { ElementType, FC, HTMLAttributes, ReactNode } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import Text from '../Typography/Text/Text';
 import Tappable from '../../components/Tappable/Tappable';
 import { hasReactNode } from '../../lib/utils';
+import './MiniInfoCell.css';
 
-export interface MiniInfoCellProps extends HTMLAttributes<HTMLDivElement> {
+export interface MiniInfoCellProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Иконка слева.<br />
    * Рекомендуется использовать иконки размера 20.
    */
-  before: ReactNode;
+  before: React.ReactNode;
 
   /**
    * Содержимое справа.<br />
    * `<UsersStack size="s" />` или `<Avatar size={24} />`
    */
-  after?: ReactNode;
+  after?: React.ReactNode;
 
   /**
    * Тип ячейки:
@@ -47,7 +48,7 @@ export interface MiniInfoCellProps extends HTMLAttributes<HTMLDivElement> {
   textLevel?: 'primary' | 'secondary';
 }
 
-export const MiniInfoCell: FC<MiniInfoCellProps> = (props: MiniInfoCellProps) => {
+export const MiniInfoCell: React.FC<MiniInfoCellProps> = (props: MiniInfoCellProps) => {
   const platform = usePlatform();
   const {
     before,
@@ -59,32 +60,25 @@ export const MiniInfoCell: FC<MiniInfoCellProps> = (props: MiniInfoCellProps) =>
     ...restProps
   } = props;
 
-  const Component: ElementType = restProps.onClick ? Tappable : 'div';
+  const isClickable = !!restProps.onClick;
 
   return (
-    <Component
+    <Tappable
+      Component="div"
+      disabled={!isClickable}
+      role={isClickable ? 'button' : null}
       {...restProps}
       vkuiClass={classNames(getClassName('MiniInfoCell', platform), {
         [`MiniInfoCell--md-${mode}`]: mode !== 'base',
         [`MiniInfoCell--wr-${textWrap}`]: textWrap !== 'nowrap',
       }, `MiniInfoCell--lvl-${textLevel}`)}
     >
-      <div vkuiClass="MiniInfoCell__icon">
-        {before}
-      </div>
-      <Text
-        Component="span"
-        vkuiClass="MiniInfoCell__content"
-        weight={mode === 'more' ? 'medium' : 'regular'}
-      >
+      <span vkuiClass="MiniInfoCell__icon">{before}</span>
+      <Text vkuiClass="MiniInfoCell__content" weight={mode === 'more' ? 'medium' : 'regular'}>
         {children}
       </Text>
-      {hasReactNode(after) &&
-      <div vkuiClass="MiniInfoCell__after">
-        {after}
-      </div>
-      }
-    </Component>
+      {hasReactNode(after) && <span vkuiClass="MiniInfoCell__after">{after}</span>}
+    </Tappable>
   );
 };
 

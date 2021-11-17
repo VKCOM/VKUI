@@ -1,11 +1,5 @@
-import React, {
-  useRef,
-  FocusEvent,
-  ReactNode,
-  useEffect,
-  Fragment,
-} from 'react';
-import { Icon20Dropdown } from '@vkontakte/icons';
+import * as React from 'react';
+import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { classNames } from '../../lib/classNames';
 import Spinner from '../Spinner/Spinner';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
@@ -19,11 +13,13 @@ import Caption from '../Typography/Caption/Caption';
 import { prefixClass } from '../../lib/prefixClass';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { defaultFilterFn } from '../../lib/select';
+import './ChipsSelect.css';
 
 export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option>, AdaptivityProps {
   popupDirection?: 'top' | 'bottom';
   options?: Option[];
-  filterFn?: (value?: string, option?: Option, getOptionLabel?: Pick<ChipsInputProps<ChipsInputOption>, 'getOptionLabel'>['getOptionLabel']) => boolean;
+  filterFn?: false | ((value?: string, option?: Option, getOptionLabel?: Pick<ChipsInputProps<ChipsInputOption>, 'getOptionLabel'>['getOptionLabel']) => boolean);
   /**
    * Возможность создавать чипы которых нет в списке (по enter или с помощью пункта в меню, см creatableText)
    */
@@ -32,7 +28,7 @@ export interface ChipsSelectProps<Option extends ChipsInputOption> extends Chips
    * Отрисовка лоадера вместо списка опций в выпадающем списке
    */
   fetching?: boolean;
-  renderOption?: (props: CustomSelectOptionProps) => ReactNode;
+  renderOption?: (props: CustomSelectOptionProps) => React.ReactNode;
   /**
    * Показывать или скрывать уже выбранные опции
    */
@@ -65,12 +61,12 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
     style, onFocus, onKeyDown, className, fetching, renderOption, emptyText,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, showSelected,
     getNewOptionData, renderChip, popupDirection, creatable, filterFn, inputValue, creatableText, sizeY,
-    closeAfterSelect, onChangeStart, after, ...restProps
+    closeAfterSelect, onChangeStart, after, options, ...restProps
   } = props;
 
   const { document } = useDOM();
 
-  const scrollBoxRef = useRef<HTMLDivElement>(null);
+  const scrollBoxRef = React.useRef<HTMLDivElement>(null);
   const rootRef = useExternRef(getRef);
   const {
     fieldValue, selectedOptions, opened, setOpened, addOptionFromInput,
@@ -80,7 +76,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
 
   const showCreatable = Boolean(creatable && creatableText && !filteredOptions.length && fieldValue);
 
-  const handleFocus = (e: FocusEvent<HTMLInputElement>) => {
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setOpened(true);
     setFocusedOptionIndex(0);
     onFocus(e);
@@ -93,7 +89,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
     }
   };
 
-  const chipsSelectOptions = useRef<HTMLElement[]>([]).current;
+  const chipsSelectOptions = React.useRef<HTMLElement[]>([]).current;
 
   const scrollToElement = (index: number, center = false) => {
     const dropdown = scrollBoxRef.current;
@@ -194,7 +190,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (filteredOptions[focusedOptionIndex]) {
       setFocusedOption(filteredOptions[focusedOptionIndex]);
     } else if (focusedOptionIndex === null || focusedOptionIndex === 0) {
@@ -202,7 +198,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
     }
   }, [focusedOptionIndex, filteredOptions]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const index = focusedOption ? filteredOptions.findIndex(({ value }) => value === focusedOption.value) : -1;
 
     if (index === -1 && !!filteredOptions.length && !showCreatable && closeAfterSelect) {
@@ -214,8 +210,11 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
 
   const renderChipWrapper = (renderChipProps: RenderChip<Option>) => {
     const { onRemove } = renderChipProps;
+
     const onRemoveWrapper = (e: React.MouseEvent, value: ChipsInputValue) => {
       e.preventDefault();
+      e.stopPropagation();
+
       onRemove(e, value);
     };
 
@@ -248,7 +247,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
         getRef={getRef}
         disabled={disabled}
         onInputChange={handleInputChange}
-        after={<Icon20Dropdown />}
+        after={<DropdownIcon />}
       />
       {opened &&
         <div
@@ -263,7 +262,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
                 <Spinner size="small" />
               </div>
             ) : (
-              <Fragment>
+              <React.Fragment>
                 {showCreatable && (
                   <CustomSelectOption
                     hovered={focusedOptionIndex === 0}
@@ -282,9 +281,10 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
                     const selected = selectedOptions.find((selectedOption: Option) => {
                       return getOptionValue(selectedOption) === getOptionValue(option);
                     });
+                    const value = getOptionValue(option);
 
                     return (
-                      <React.Fragment key={getOptionValue(option)}>
+                      <React.Fragment key={`${typeof value}-${value}`}>
                         {renderOption({
                           className: prefixClass('ChipsSelect__option'),
                           option,
@@ -307,7 +307,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
                     );
                   })
                 }
-              </Fragment>
+              </React.Fragment>
             )}
           </CustomScrollView>
         </div>
@@ -326,14 +326,10 @@ const chipsSelectDefaultProps: ChipsSelectProps<any> = {
   showSelected: true,
   closeAfterSelect: true,
   options: [],
-  filterFn: (value?: string, option?: ChipsInputOption, getOptionLabel?: Pick<ChipsInputProps<ChipsInputOption>, 'getOptionLabel'>['getOptionLabel']) => {
+  filterFn: defaultFilterFn,
+  renderOption({ option, ...restProps }: CustomSelectOptionProps): React.ReactNode {
     return (
-      !value || value && getOptionLabel(option)?.toLowerCase()?.startsWith(value?.toLowerCase())
-    );
-  },
-  renderOption(props: CustomSelectOptionProps): ReactNode {
-    return (
-      <CustomSelectOption {...props} />
+      <CustomSelectOption {...restProps} />
     );
   },
 };

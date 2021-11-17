@@ -17,6 +17,9 @@
   --search_default_height: 36px;
   --thin-border: 1px;
 
+  /* paddings */
+  --formitem_padding: 16px;
+
   /* colors */
   --white: #fff;
   --blue_200: #5c9ce6;
@@ -26,6 +29,9 @@
   --safe-area-inset-right: 0px;
   --safe-area-inset-bottom: 0px;
   --safe-area-inset-left: 0px;
+
+  /* animations */
+  --duration: .7s;
 }
 
 @media (min-resolution: 2dppx) {

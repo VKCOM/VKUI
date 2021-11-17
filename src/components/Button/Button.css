@@ -1,18 +1,54 @@
 .Button {
+  position: relative;
   display: inline-block;
   box-sizing: border-box;
   text-decoration: none;
   border: none;
-  min-height: 30px;
+  min-height: 28px;
   margin: 0;
-  padding: 1px 16px;
+  padding: 0;
   user-select: none;
   border-radius: 8px;
   max-width: 100%;
 }
 
+.Button--stretched {
+  display: block;
+  width: 100%;
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.Button__in {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: inherit;
+  padding: 1px 16px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.Button--aln-left .Button__in {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.Button--aln-right .Button__in {
+  justify-content: flex-end;
+  text-align: right;
+}
+
 .Button[disabled] {
   opacity: .4;
+}
+
+.Button--lvl-primary[disabled],
+.Button--lvl-secondary[disabled],
+.Button--lvl-tertiary[disabled],
+.Button--lvl-outline[disabled] {
+  opacity: .64;
 }
 
 .Button__before:not(:last-child) {
@@ -25,47 +61,25 @@
 }
 
 .Button__content {
-  padding-top: 4px;
-  padding-bottom: 6px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
 .Button__content--caps {
-  padding-top: 7px;
-  padding-bottom: 7px;
+  transform: translateY(0);
 }
 
-.Button__in {
-  display: flex;
-  align-items: center;
+.Button__spinner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
 }
 
-.Button--aln-left .Button__in {
-  justify-content: flex-start;
-  text-align: left;
-}
-
-.Button--aln-center .Button__in {
-  justify-content: center;
-  text-align: center;
-}
-
-.Button--aln-right .Button__in {
-  justify-content: flex-end;
-  text-align: right;
-}
-
-.Button--str {
-  display: block;
-  width: 100%;
-  flex-grow: 1;
-  flex-basis: 0;
-}
-
-.Button--str .Button__in {
-  justify-content: center;
+.Button__spinner + .Button__in {
+  visibility: hidden;
 }
 
 .Button--lvl-primary {
@@ -115,21 +129,6 @@
   color: var(--white);
 }
 
-.Button--sz-m {
-  min-height: 36px;
-}
-
-.Button--sz-m .Button__content {
-  padding-top: 5px;
-  padding-bottom: 7px;
-}
-
-.Button--sz-l {
-  min-height: 44px;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
 .Button--sz-l .Button__before:not(:last-child) {
   margin-right: 8px;
 }
@@ -138,31 +137,29 @@
   margin-left: 8px;
 }
 
-.Button--sz-l .Button__content {
-  padding-top: 10px;
-  padding-bottom: 12px;
-}
-
 .Button--sz-l .Button__in {
   justify-content: center;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.Button:not(.Button--sz-s) .Button__content {
+  transform: translateY(-1px);
 }
 
 /**
  * iOS
  */
 .Button--ios {
+  min-height: 26px;
   border-radius: 10px;
-}
-
-.Button--ios.Button--sz-l .Button__content {
-  padding-top: 9px;
-  padding-bottom: 11px;
 }
 
 /**
  * VKCOM
  */
 .Button--vkcom {
+  min-height: 26px;
   border-radius: 4px;
 }
 
@@ -175,40 +172,32 @@
 /**
  * sizeY COMPACT
  */
-.Button--sizeY-compact {
-  min-height: 26px;
-}
-
-.Button--sizeY-compact .Button__content {
-  padding-top: 3px;
-  padding-bottom: 5px;
-}
-
-.Button--sizeY-compact .Button__content--caps {
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-.Button--sizeY-compact.Button--sz-m {
+.Button--sz-m {
   min-height: 32px;
 }
 
-.Button--sizeY-compact.Button--sz-m .Button__content {
-  padding-top: 4px;
-  padding-bottom: 6px;
-}
-
-.Button--sizeY-compact.Button--sz-l {
+.Button--sz-l {
   min-height: 36px;
 }
 
-.Button--sizeY-compact.Button--sz-l .Button__content {
-  padding-top: 6px;
-  padding-bottom: 8px;
+/**
+ * sizeY REGULAR
+ */
+.Button--sizeY-regular {
+  min-height: 30px;
+}
+
+.Button--sizeY-regular.Button--sz-m {
+  min-height: 36px;
+}
+
+.Button--sizeY-regular.Button--sz-l {
+  min-height: 44px;
 }
 
 /**
- * .Banner__actions
+ * CMP:
+ * Banner
  */
 .Banner__actions > .Button {
   margin-top: 12px;
@@ -235,4 +224,31 @@
 
 .Banner__actions > .Button--lvl-tertiary + .Button--lvl-tertiary {
   margin-top: 2px;
+}
+
+/**
+ * CMP:
+ * ModalCardBase
+ */
+.ModalCardBase__actions .Button {
+  flex: 1;
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+.ModalCardBase__actions--v .Button {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.ModalCardBase__actions--v .Button + .Button {
+  margin-top: 12px;
+}
+
+/**
+ * CMP:
+ * RichCell
+ */
+.RichCell__actions .Button + .Button {
+  margin-left: 8px;
 }

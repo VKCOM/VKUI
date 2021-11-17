@@ -9,7 +9,7 @@
 }
 
 .Tabs--default .TabsItem {
-  color: var(--text_secondary);
+  color: var(--text_tertiary);
   max-width: 100%;
   min-width: 0;
   flex-basis: 0;
@@ -22,6 +22,7 @@
 
 .Tabs--default .TabsItem__in {
   overflow: hidden;
+  overflow: -moz-hidden-unscrollable; /* Лечит баг с ломающимся выравниванием по baseline в FF https://stackoverflow.com/questions/4310047/css-why-is-vertical-align-baseline-stop-working-on-firefox-when-using-overflow */
   text-overflow: ellipsis;
   padding: 14px 0;
 }
@@ -86,11 +87,6 @@
 .Tabs--buttons .TabsItem--selected {
   background-color: var(--panel_tab_active_background);
   color: var(--panel_tab_active_text);
-}
-
-.TabsItem__after .Badge {
-  transform: translateY(-2px);
-  margin-left: 6px;
 }
 
 .TabsItem__after .Icon--dropdown_16 {

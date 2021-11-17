@@ -5,6 +5,8 @@
  * чтобы в каждом файле были доступны CSS переменные без их дублирования.
  */
 
+@import '../components/AppRoot/AppRoot.css';
+
 /* Typography */
 @import '../components/Typography/Title/Title.css';
 @import '../components/Typography/Headline/Headline.css';
@@ -19,6 +21,7 @@
 /* Primitives */
 @import '../components/Button/Button.css';
 @import '../components/Removable/Removable.css';
+@import '../components/FocusVisible/FocusVisible.css';
 
 /* Layout */
 @import '../components/Root/Root.css';
@@ -47,6 +50,7 @@
 @import '../components/Snackbar/Snackbar.css';
 
 /* Modals */
+@import '../components/ModalCardBase/ModalCardBase.css';
 @import '../components/ModalRoot/ModalRoot.css';
 @import '../components/ModalCard/ModalCard.css';
 @import '../components/ModalPage/ModalPage.css';
@@ -67,6 +71,8 @@
 @import '../components/Gradient/Gradient.css';
 @import '../components/SimpleCell/SimpleCell.css';
 @import '../components/Cell/Cell.css';
+@import '../components/Cell/CellCheckbox/CellCheckbox.css';
+@import '../components/Cell/CellDragger/CellDragger.css';
 @import '../components/CellButton/CellButton.css';
 @import '../components/RichCell/RichCell.css';
 @import '../components/HorizontalCell/HorizontalCell.css';
@@ -76,6 +82,8 @@
 @import '../components/Switch/Switch.css';
 @import '../components/InfoRow/InfoRow.css';
 @import '../components/Avatar/Avatar.css';
+@import '../components/InitialsAvatar/InitialsAvatar.css';
+@import '../components/GridAvatar/GridAvatar.css';
 @import '../components/Gallery/Gallery.css';
 @import '../components/Progress/Progress.css';
 @import '../components/Search/Search.css';
@@ -119,58 +127,6 @@
 /* Advertisement */
 @import '../components/PromoBanner/PromoBanner.css';
 
-.vkui > body {
-  overflow-x: hidden;
-}
-
-.vkui,
-.vkui > body,
-.vkui__root {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-
-.vkui,
-.vkui > body,
-.vkui__root,
-.vkui__portal-root {
-  -webkit-font-smoothing: subpixel-antialiased;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-tap-highlight-color: transparent;
-  -webkit-text-size-adjust: 100%;
-  font-family: var(--font-common);
-  color: var(--text_primary);
-}
-
-.vkui__root--embedded {
-  transform: translate3d(0, 0, 0);
-  overflow-x: hidden;
-}
-
-.AppRoot {
-  height: 100%;
-}
-
-.vkui__root--embedded .AppRoot {
-  overflow: auto;
-}
-
-.vkui--sizeX-regular {
-  background: var(--background_page);
-}
-
-.AppRoot--no-mouse {
-  user-select: none;
-}
-
-.vkui__root input,
-.vkui__root textarea,
-.vkui__root select,
-.vkui__root button {
-  font-family: inherit;
-}
-
-.vkui__root *:focus {
-  outline: none;
-}
+/* Глобальные стили vkui.
+ */
+@import './common.css';

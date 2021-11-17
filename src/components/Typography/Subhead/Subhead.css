@@ -17,5 +17,12 @@
 }
 
 .Subhead--w-bold {
-  font-weight: 600;
+  font-weight: 700;
+}
+
+/**
+ * ANDROID
+ */
+.Subhead--android.Subhead--w-semibold {
+  font-weight: 500;
 }

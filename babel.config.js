@@ -14,7 +14,13 @@ const testFiles = [
 
 module.exports = {
   presets: [
-    ['@babel/preset-env', { modules: useModules ? false : 'commonjs' }],
+    ['@babel/preset-env', {
+      modules: useModules ? false : 'commonjs',
+      exclude: [
+        '@babel/plugin-proposal-unicode-property-regex',
+        '@babel/plugin-transform-unicode-regex'
+      ]
+    }],
     ['@babel/preset-react', {
       pragma: "createScopedElement",
       pragmaFrag: "createScopedElement.Fragment",

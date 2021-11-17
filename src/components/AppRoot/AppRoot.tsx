@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, useMemo, useRef, useState } from 'react';
+import * as React from 'react';
 import { useDOM } from '../../lib/dom';
 import { classNames } from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
@@ -10,11 +10,14 @@ import { elementScrollController, globalScrollController, ScrollContext, ScrollC
 import { noop } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
+import { useInsets } from '../../hooks/useInsets';
+import { Insets } from '@vkontakte/vk-bridge';
+import './AppRoot.css';
 
 // Используйте classList, но будьте осторожны
 /* eslint-disable no-restricted-properties */
 
-export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
+export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement>, Pick<AdaptivityProps, 'sizeX' | 'hasMouse'> {
   /** @deprecated Use mode="embedded" */
   embedded?: boolean;
   /** Режим встраивания */
@@ -26,18 +29,19 @@ export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, Adaptivity
 }
 
 const warn = warnOnce('AppRoot');
-const AppRoot: FC<AppRootProps> = ({
+export const AppRoot: React.FC<AppRootProps> = withAdaptivity(({
   children, mode: _mode, embedded: _embedded, sizeX, hasMouse, noLegacyClasses = false, scroll = 'global',
   ...props
-}) => {
+}: AppRootProps) => {
   // normalize mode
   const mode = _mode || (_embedded ? 'embedded' : 'full');
   const isKeyboardInputActive = useKeyboardInputTracker();
-  const rootRef = useRef<HTMLDivElement>();
-  const [portalRoot, setPortalRoot] = useState<HTMLDivElement>(null);
+  const rootRef = React.useRef<HTMLDivElement>();
+  const [portalRoot, setPortalRoot] = React.useState<HTMLDivElement>(null);
   const { window, document } = useDOM();
+  const insets = useInsets();
 
-  const initialized = useRef(false);
+  const initialized = React.useRef(false);
   if (!initialized.current) {
     if (window && mode === 'full') {
       document.documentElement.classList.add('vkui');
@@ -86,6 +90,32 @@ const AppRoot: FC<AppRootProps> = ({
     };
   }, []);
 
+  // setup insets
+  useIsomorphicLayoutEffect(() => {
+    if (mode === 'partial') {
+      return noop;
+    }
+
+    const parent = rootRef.current.parentElement;
+
+    for (const key in insets) {
+      if (insets.hasOwnProperty(key) && typeof insets[key as keyof Insets] === 'number') {
+        const inset = insets[key as keyof Insets];
+        parent.style.setProperty(`--safe-area-inset-${key}`, `${inset}px`);
+        portalRoot && portalRoot.style.setProperty(`--safe-area-inset-${key}`, `${inset}px`);
+      }
+    }
+
+    return () => {
+      for (const key in insets) {
+        if (insets.hasOwnProperty(key)) {
+          parent.style.removeProperty(`--safe-area-inset-${key}`);
+          portalRoot && portalRoot.style.removeProperty(`--safe-area-inset-${key}`);
+        }
+      }
+    };
+  }, [insets, portalRoot]);
+
   // adaptivity handler
   useIsomorphicLayoutEffect(() => {
     if (mode === 'partial' || sizeX !== SizeType.REGULAR) {
@@ -96,7 +126,7 @@ const AppRoot: FC<AppRootProps> = ({
     return () => container.classList.remove('vkui--sizeX-regular');
   }, [sizeX]);
 
-  const scrollController = useMemo<ScrollContextInterface>(
+  const scrollController = React.useMemo<ScrollContextInterface>(
     () => scroll === 'contain' ? elementScrollController(rootRef) : globalScrollController(window, document),
     [scroll]);
 
@@ -105,6 +135,7 @@ const AppRoot: FC<AppRootProps> = ({
       appRoot: rootRef,
       portalRoot: portalRoot,
       embedded: mode === 'embedded',
+      keyboardInput: isKeyboardInputActive,
     }}>
       <ScrollContext.Provider value={scrollController}>
         <IconSettingsProvider classPrefix="vkui" globalClasses={!noLegacyClasses}>
@@ -122,9 +153,9 @@ const AppRoot: FC<AppRootProps> = ({
       {content}
     </div>
   );
-};
-
-export default withAdaptivity(AppRoot, {
+}, {
   sizeX: true,
   hasMouse: true,
 });
+
+export default AppRoot;

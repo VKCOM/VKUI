@@ -2,6 +2,12 @@
   display: block;
 }
 
+.FormItem .Checkbox {
+  width: 100%;
+  box-sizing: content-box;
+  margin: 0 calc(-1 * var(--formitem_padding));
+}
+
 .Checkbox__input {
   display: none;
 }

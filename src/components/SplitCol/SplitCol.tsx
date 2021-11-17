@@ -1,5 +1,6 @@
-import React, { FC, HTMLAttributes, useMemo, useRef } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
+import './SplitCol.css';
 
 export interface SplitColContextProps {
   colRef: React.RefObject<HTMLDivElement>;
@@ -11,10 +12,10 @@ export const SplitColContext = React.createContext<SplitColContextProps>({
   animate: true,
 });
 
-export interface SplitColProps extends HTMLAttributes<HTMLDivElement> {
-  width?: string;
-  maxWidth?: string;
-  minWidth?: string;
+export interface SplitColProps extends React.HTMLAttributes<HTMLDivElement> {
+  width?: number | string;
+  maxWidth?: number | string;
+  minWidth?: number | string;
   /**
    * Если false, то переходы между Panel происходят без анимации
    */
@@ -26,11 +27,11 @@ export interface SplitColProps extends HTMLAttributes<HTMLDivElement> {
   fixed?: boolean;
 }
 
-export const SplitCol: FC<SplitColProps> = (props: SplitColProps) => {
-  const { children, width, maxWidth, minWidth, spaced, animate, fixed, style, ...restProps } = props;
-  const baseRef = useRef<HTMLDivElement>();
+export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
+  const { children, width, maxWidth, minWidth, spaced, animate = false, fixed, style, ...restProps } = props;
+  const baseRef = React.useRef<HTMLDivElement>();
 
-  const contextValue = useMemo(() => {
+  const contextValue = React.useMemo(() => {
     return {
       colRef: baseRef,
       animate,
@@ -57,8 +58,4 @@ export const SplitCol: FC<SplitColProps> = (props: SplitColProps) => {
       </SplitColContext.Provider>
     </div>
   );
-};
-
-SplitCol.defaultProps = {
-  animate: false,
 };

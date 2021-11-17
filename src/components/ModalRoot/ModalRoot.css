@@ -53,3 +53,13 @@
   box-sizing: border-box;
   z-index: 1;
 }
+
+@keyframes vkui-animation-fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

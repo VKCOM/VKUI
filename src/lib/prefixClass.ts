@@ -16,13 +16,16 @@ function prefixSingle(scopedStyle: string): string {
 }
 
 export function prefixClass(scopedStyle?: string | string[]) {
-  let resolved = '';
   if (typeof scopedStyle === 'string') {
-    resolved = prefixSingle(scopedStyle);
-  } else {
-    for (let i = 0; i < scopedStyle.length; i++) {
-      resolved += ' ' + prefixSingle(scopedStyle[i]);
-    }
+    return prefixSingle(scopedStyle);
   }
+
+  let resolved = '';
+  for (let i = 0; i < scopedStyle.length; i++) {
+    const separator = resolved ? ' ' : '';
+
+    resolved += separator + prefixSingle(scopedStyle[i]);
+  }
+
   return resolved;
 }

@@ -34,6 +34,7 @@ const config = {
   },
   moduleNameMapper: {
     '@react-playwright': path.join(__dirname, 'index.ts'),
+    '\\.css$': require.resolve('identity-obj-proxy'),
   },
 };
 

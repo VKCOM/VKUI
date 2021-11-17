@@ -1,0 +1,15 @@
+.StyleGuideMobile__content {
+  padding: 0 16px 24px;
+}
+
+.StyleGuideMobile__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.StyleGuideMobile__headerText {
+  font-family: var(--font-tt);
+  margin-left: 1px;
+  font-size: 20px;
+}

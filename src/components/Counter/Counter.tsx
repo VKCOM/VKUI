@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, FC, Children } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -6,24 +6,10 @@ import Caption from '../Typography/Caption/Caption';
 import Text from '../Typography/Text/Text';
 import { VKCOM } from '../../lib/platform';
 import { hasReactNode } from '../../lib/utils';
+import { HasComponent, HasPlatform } from '../../types';
+import './Counter.css';
 
-interface CounterTypographyProps extends HTMLAttributes<HTMLDivElement> {
-  size: CounterProps['size'];
-}
-
-const CounterTypography: FC<CounterTypographyProps> = ({ size, children, ...restProps }: CounterTypographyProps) => {
-  const platform = usePlatform();
-
-  if (size === 's') {
-    const weight = platform === VKCOM ? 'medium' : 'regular';
-
-    return <Caption level="2" weight={weight} {...restProps}>{children}</Caption>;
-  }
-
-  return <Text weight="medium" {...restProps}>{children}</Text>;
-};
-
-export interface CounterProps extends HTMLAttributes<HTMLDivElement> {
+export interface CounterProps extends React.HTMLAttributes<HTMLSpanElement> {
   /**
    * Тип счетчика. При использовании компонента в качестве значения свойства `after` у `Button` эти значения игнорируются
    */
@@ -31,16 +17,24 @@ export interface CounterProps extends HTMLAttributes<HTMLDivElement> {
   size?: 's' | 'm';
 }
 
-const Counter: FC<CounterProps> = (props: CounterProps) => {
+type CounterTypographyProps = Pick<CounterProps, 'size'> & HasPlatform & HasComponent;
+
+const CounterTypography: React.FC<CounterTypographyProps> = ({ size, platform, ...restProps }) => {
+  return size === 's'
+    ? <Caption level="2" weight={platform === VKCOM ? 'medium' : 'regular'} {...restProps} />
+    : <Text weight="medium" {...restProps} />;
+};
+
+const Counter: React.FC<CounterProps> = (props: CounterProps) => {
   const { mode, size, children, ...restProps } = props;
   const platform = usePlatform();
 
-  if (Children.count(children) === 0) {
+  if (React.Children.count(children) === 0) {
     return null;
   }
 
   return (
-    <div
+    <span
       {...restProps}
       vkuiClass={classNames(
         getClassName('Counter', platform),
@@ -48,8 +42,8 @@ const Counter: FC<CounterProps> = (props: CounterProps) => {
         `Counter--s-${size}`,
       )}
     >
-      {hasReactNode(children) && <CounterTypography size={size} vkuiClass="Counter__in">{children}</CounterTypography>}
-    </div>
+      {hasReactNode(children) && <CounterTypography platform={platform} size={size} vkuiClass="Counter__in">{children}</CounterTypography>}
+    </span>
   );
 };
 

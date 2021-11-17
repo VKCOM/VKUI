@@ -1,4 +1,4 @@
-import { ComponentType, Fragment, isValidElement, FC } from 'react';
+import { ComponentType, FC, Fragment, isValidElement } from 'react';
 import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
 import { screenshot } from '@react-playwright';
 // Импорты из отдельных модулей помогают jest отслеживать зависимости
@@ -9,12 +9,12 @@ import { Scheme } from '../../components/ConfigProvider/ConfigProviderContext';
 import AdaptivityProvider, {
   AdaptivityProviderProps,
   DESKTOP_SIZE,
-  TABLET_SIZE,
-  SMALL_TABLET_SIZE,
   MOBILE_SIZE,
+  SMALL_TABLET_SIZE,
+  TABLET_SIZE,
 } from '../../components/AdaptivityProvider/AdaptivityProvider';
 import { SizeType, ViewWidth } from '../../components/AdaptivityProvider/AdaptivityContext';
-import { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { AdaptivityProps, withAdaptivity } from '../../hoc/withAdaptivity';
 import View from '../../components/View/View';
 import AppRoot from '../../components/AppRoot/AppRoot';
 import Group from '../../components/Group/Group';
@@ -74,7 +74,10 @@ function prettyProps(props: any) {
 type ScreenshotOptions = {
   matchScreenshot?: MatchImageSnapshotOptions;
   platforms?: Platform[];
-  mobileSchemes?: Scheme[];
+  // pass [BRIGHT_LIGHT, SPACE_GRAY] if component depends on appearance
+  mobileSchemes?: Array<Scheme.BRIGHT_LIGHT | Scheme.SPACE_GRAY>;
+  // pass [VKCOM_LIGHT, VKCOM_DARK] if component depends on appearance
+  vkcomSchemes?: Array<Scheme.VKCOM_LIGHT | Scheme.VKCOM_DARK>;
   adaptivity?: AdaptivityProps;
   Wrapper?: ComponentType;
 };
@@ -90,7 +93,7 @@ function getAdaptivePxWidth(viewWidth: ViewWidth) {
 }
 
 const AppWrapper: FC = (props) => (
-  <AppRoot embedded>
+  <AppRoot mode="embedded">
     <View activePanel="panel">
       <Panel id="panel">
         <Group>
@@ -109,7 +112,8 @@ export function describeScreenshotFuzz<Props>(
   const {
     matchScreenshot,
     platforms = Object.values(Platform),
-    mobileSchemes = [Scheme.BRIGHT_LIGHT, Scheme.SPACE_GRAY],
+    mobileSchemes = [Scheme.BRIGHT_LIGHT],
+    vkcomSchemes = [Scheme.VKCOM_LIGHT],
     adaptivity = {},
     Wrapper = AppWrapper,
   } = options;
@@ -122,17 +126,23 @@ export function describeScreenshotFuzz<Props>(
       const adaptivityProps = Object.assign(
         isVkCom ? { sizeX: SizeType.COMPACT, sizeY: SizeType.COMPACT } : {},
         adaptivity);
-      (isVkCom ? [Scheme.VKCOM] : mobileSchemes).forEach((scheme) => {
+
+      const AdaptiveComponent = withAdaptivity(Component, { sizeX: true, sizeY: true });
+
+      (isVkCom ? vkcomSchemes : mobileSchemes).forEach((scheme: Scheme) => {
+        scheme = scheme === Scheme.VKCOM_LIGHT ? Scheme.VKCOM : scheme; // Снести после мержа 1978
         it(`${scheme}${adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ''}`, async () => {
           expect(await screenshot((
             <ConfigProvider scheme={scheme} platform={platform}>
               <AdaptivityProvider {...adaptivityProps}>
-                <div style={{ width, position: 'absolute', height: 'auto' }}>
+                <div style={{ width, maxWidth: isVkCom ? '100%' : 'initial', position: 'absolute', height: 'auto' }}>
                   <Wrapper>
                     {multiCartesian(propSets, { adaptive: !isVkCom }).map((props, i) => (
                       <Fragment key={i}>
                         <div>{prettyProps(props)}</div>
-                        <div><Component {...props as any} /></div>
+                        <div>
+                          <AdaptiveComponent {...props} />
+                        </div>
                       </Fragment>
                     ))}
                   </Wrapper>

@@ -1,7 +1,6 @@
 .FormField {
   position: relative;
   display: flex;
-  flex-flow: row nowrap;
   align-items: center;
   padding: 1px;
   box-sizing: border-box;
@@ -54,7 +53,7 @@
 }
 
 .FormField--disabled {
-  opacity: .4;
+  opacity: .64;
   cursor: default;
   pointer-events: none;
 }
@@ -108,4 +107,13 @@
  */
 .FormField--vkcom {
   border-radius: 6px;
+}
+
+/**
+ * ModalCardBase
+ */
+
+.ModalCardBase__header + .FormField,
+.ModalCardBase__subheader + .FormField {
+  margin-top: 16px;
 }

@@ -49,15 +49,15 @@ const WriteBarExample = (props) => {
             }
             after={
               <Fragment>
-                <WriteBarIcon>
+                <WriteBarIcon aria-label="Эмоджи и стикеры">
                   <Icon28SmileOutline />
                 </WriteBarIcon>
 
-                <WriteBarIcon>
+                <WriteBarIcon aria-label="Записать видео-сообщение">
                   <Icon28CameraOutline />
                 </WriteBarIcon>
 
-                <WriteBarIcon>
+                <WriteBarIcon aria-label="Записать голосовое сообщение">
                   <Icon28VoiceOutline />
                 </WriteBarIcon>
               </Fragment>
@@ -76,13 +76,13 @@ const WriteBarExample = (props) => {
             inlineAfter={
               <Fragment>
                 {text2.length === 0 &&
-                <WriteBarIcon>
+                <WriteBarIcon aria-label="Открыть меню бота">
                   <Icon28KeyboardBotsOutline />
                 </WriteBarIcon>
                 }
                 
                 {text2.length > 0 &&
-                <WriteBarIcon>
+                <WriteBarIcon aria-label="Эмоджи и стикеры">
                   <Icon28SmileOutline />
                 </WriteBarIcon>
                 }
@@ -91,13 +91,13 @@ const WriteBarExample = (props) => {
             after={
               <Fragment>
                 {text2.length === 0 &&
-                <WriteBarIcon>
+                <WriteBarIcon aria-label="Эмоджи и стикеры">
                   <Icon28SmileOutline />
                 </WriteBarIcon>
                 }
 
                 {text2.length === 0 &&
-                <WriteBarIcon>
+                <WriteBarIcon aria-label="Записать голосовое сообщение">
                   <Icon28VoiceOutline />
                 </WriteBarIcon>
                 }
@@ -121,7 +121,7 @@ const WriteBarExample = (props) => {
             inlineAfter={
               <Fragment>
                 {text3.length > 0 &&
-                <WriteBarIcon>
+                <WriteBarIcon aria-label="Смайлы и стикеры">
                   <Icon28SmileOutline />
                 </WriteBarIcon>
                 }
@@ -130,7 +130,7 @@ const WriteBarExample = (props) => {
             after={
               <Fragment>
                 {text3.length === 0 &&
-                <WriteBarIcon>
+                <WriteBarIcon aria-label="Смайлы и стикеры">
                   <Icon28SmileOutline />
                 </WriteBarIcon>
                 }
@@ -155,7 +155,7 @@ const WriteBarExample = (props) => {
             inlineAfter={
               <Fragment>
                 {text4.length > 0 &&
-                <WriteBarIcon>
+                <WriteBarIcon aria-label="Смайлы и стикеры">
                   <Icon28SmileOutline />
                 </WriteBarIcon>
                 }
@@ -164,7 +164,7 @@ const WriteBarExample = (props) => {
             after={
               <Fragment>
                 {text4.length === 0 &&
-                <WriteBarIcon>
+                <WriteBarIcon aria-label="Смайлы и стикеры">
                   <Icon28SmileOutline />
                 </WriteBarIcon>
                 }
@@ -203,7 +203,7 @@ const WriteBarExample = (props) => {
               inlineAfter={
                 <Fragment>
                   {text.length > 0 &&
-                  <WriteBarIcon>
+                  <WriteBarIcon aria-label="Смайлы и стикеры">
                     <Icon28SmileOutline />
                   </WriteBarIcon>
                   }
@@ -212,13 +212,13 @@ const WriteBarExample = (props) => {
               after={
                 <Fragment>
                   {text.length === 0 &&
-                  <WriteBarIcon>
+                  <WriteBarIcon aria-label="Смайлы и стикеры">
                     <Icon28SmileOutline />
                   </WriteBarIcon>
                   }
 
                   {text.length === 0 &&
-                  <WriteBarIcon>
+                  <WriteBarIcon aria-label="Записать голосовое сообщение">
                     <Icon28VoiceOutline />
                   </WriteBarIcon>
                   }
@@ -241,5 +241,4 @@ const WriteBarExample = (props) => {
 };
 
 <WriteBarExample />
-
 ```

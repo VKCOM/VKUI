@@ -5,6 +5,8 @@
   white-space: nowrap;
   text-decoration: none;
   color: var(--text_primary);
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 .SimpleCell--mult {
@@ -16,48 +18,23 @@
   text-overflow: initial;
 }
 
-.SimpleCell > .Avatar,
-.SimpleCell > .Icon {
-  flex-shrink: 0;
-}
-
-.SimpleCell > .Icon {
-  color: var(--accent);
-}
-
 .SimpleCell__main {
   max-width: 100%;
   flex-grow: 1;
   min-width: 0;
-  flex-shrink: initial;
   overflow: hidden;
 }
 
-.SimpleCell > .Icon,
-.SimpleCell > .Avatar {
+.SimpleCell > .Icon {
+  padding-top: 10px;
+  padding-bottom: 10px;
   padding-right: 12px;
+  flex-shrink: 0;
+  color: var(--accent);
 }
 
 .SimpleCell > .Icon--28 {
   padding-right: 16px;
-}
-
-.SimpleCell > .Icon,
-.SimpleCell > .Avatar--sz-32,
-.SimpleCell > .Avatar--sz-28 {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.SimpleCell > .Avatar--sz-40 {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-.SimpleCell > .Avatar--sz-48,
-.SimpleCell > .Avatar--sz-72 {
-  padding-top: 6px;
-  padding-bottom: 6px;
 }
 
 .SimpleCell__description {
@@ -65,6 +42,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
   margin-top: 3px;
+  display: block;
 }
 
 .SimpleCell > .Avatar--sz-32 ~ .SimpleCell__main .SimpleCell__description,
@@ -74,7 +52,6 @@
 
 .SimpleCell:not(.SimpleCell--mult) .SimpleCell__content {
   display: flex;
-  flex-flow: row nowrap;
   align-content: flex-start;
   align-items: center;
   justify-content: flex-start;
@@ -85,6 +62,7 @@
   color: inherit;
   text-overflow: ellipsis;
   overflow: hidden;
+  display: block;
 }
 
 .SimpleCell__badge {
@@ -136,10 +114,6 @@
   padding-right: 2px;
 }
 
-.SimpleCell .Switch {
-  padding-left: 10px;
-}
-
 .SimpleCell__after .IconButton .Icon--28,
 .SimpleCell__after .IconButton .Icon--28 ~ * {
   margin-right: -8px;
@@ -175,9 +149,7 @@
   padding-bottom: 11px;
 }
 
-.SimpleCell--ios > .Icon--28,
-.SimpleCell--ios > .Avatar--sz-32,
-.SimpleCell--ios > .Avatar--sz-28 {
+.SimpleCell--ios > .Icon--28 {
   padding-left: 4px;
 }
 
@@ -207,12 +179,6 @@
  * Android & VKCOM
  */
 
-.SimpleCell--android,
-.SimpleCell--vkcom {
-  padding-left: 16px;
-  padding-right: 16px;
-}
-
 .SimpleCell--android .SimpleCell__main,
 .SimpleCell--android .SimpleCell__indicator,
 .SimpleCell--vkcom .SimpleCell__main,
@@ -233,23 +199,6 @@
 .SimpleCell--sizeY-compact .SimpleCell__indicator {
   padding-top: 10px;
   padding-bottom: 10px;
-}
-
-.SimpleCell--sizeY-compact > .Avatar--sz-40 {
-  padding-top: 2px;
-  padding-bottom: 2px;
-}
-
-.SimpleCell--sizeY-compact > .Avatar--sz-48 {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-.SimpleCell--sizeY-compact > .Icon,
-.SimpleCell--sizeY-compact > .Avatar--sz-32,
-.SimpleCell--sizeY-compact > .Avatar--sz-28 {
-  padding-top: 8px;
-  padding-bottom: 8px;
 }
 
 .SimpleCell--sizeY-compact .SimpleCell__description,
@@ -280,4 +229,12 @@
 
 .SimpleCell--sizeY-compact .SimpleCell__badge .Badge {
   transform: translateY(.5px);
+}
+
+/**
+ * CMP:
+ * FormItem
+ */
+.FormItem > .SimpleCell {
+  margin: 0 calc(-1 * var(--formitem_padding));
 }

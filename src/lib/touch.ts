@@ -1,3 +1,5 @@
+import { canUseDOM } from '@vkontakte/vkjs';
+
 export interface VKUITouchEvent extends MouseEvent, TouchEvent {}
 export type VKUITouchEventHander = (e: VKUITouchEvent) => void;
 
@@ -21,8 +23,8 @@ const coordY = (e: VKUITouchEvent): number => {
   return e.changedTouches && e.changedTouches[0].clientY;
 };
 
-const isClient: boolean = typeof window !== 'undefined';
-const touchEnabled: boolean = isClient && 'ontouchstart' in window;
+// eslint-disable-next-line no-restricted-globals
+const touchEnabled = () => canUseDOM && 'ontouchstart' in window;
 
 /*
  * Возвращает массив поддерживаемых событий
@@ -30,7 +32,7 @@ const touchEnabled: boolean = isClient && 'ontouchstart' in window;
  * Если нет, используем события мыши
  */
 function getSupportedEvents(): string[] {
-  if (touchEnabled) {
+  if (touchEnabled()) {
     return ['touchstart', 'touchmove', 'touchend', 'touchcancel'];
   }
 

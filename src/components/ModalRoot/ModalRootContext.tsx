@@ -1,4 +1,4 @@
-import { createContext, useContext, useRef } from 'react';
+import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { ModalElements, ModalsStateEntry, ModalType } from './types';
 
@@ -12,7 +12,7 @@ export interface ModalRootContextInterface {
   isInsideModal: boolean;
 }
 
-export const ModalRootContext = createContext<ModalRootContextInterface>({
+export const ModalRootContext = React.createContext<ModalRootContextInterface>({
   updateModalHeight: () => undefined,
   registerModal: () => undefined,
   isInsideModal: false,
@@ -22,8 +22,8 @@ export const ModalRootContext = createContext<ModalRootContextInterface>({
  * All referenced elements must be static
  */
 export function useModalRegistry(id: string, type: ModalType) {
-  const modalContext = useContext(ModalRootContext);
-  const elements = useRef<ModalElements>({}).current;
+  const modalContext = React.useContext(ModalRootContext);
+  const elements = React.useRef<ModalElements>({}).current;
   useIsomorphicLayoutEffect(() => {
     modalContext.registerModal({ ...elements, type, id });
     // unset refs on  unmount to prevent leak
@@ -33,12 +33,11 @@ export function useModalRegistry(id: string, type: ModalType) {
     return () => modalContext.registerModal(reset);
   }, []);
 
-  const refs = useRef<Required<ModalRefs>>({
+  const refs = React.useRef<Required<ModalRefs>>({
     modalElement: (e) => elements.modalElement = e,
     innerElement: (e) => elements.innerElement = e,
     headerElement: (e) => elements.headerElement = e,
     contentElement: (e) => elements.contentElement = e,
-    footerElement: (e) => elements.footerElement = e,
   }).current;
   return { refs };
 }

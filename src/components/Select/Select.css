@@ -1,5 +1,6 @@
 .Select {
   position: relative;
+  cursor: pointer;
   box-sizing: border-box;
 }
 
@@ -17,21 +18,19 @@
   font-size: 16px;
 }
 
-.Select__title {
-  display: block;
-}
-
 .Select__container {
   flex-grow: 1;
   flex-shrink: 1;
-  padding: 11px 11px 12px;
+  padding: 11px;
   color: var(--text_primary);
   box-sizing: border-box;
-  height: 42px;
   position: relative;
   z-index: 2;
-  cursor: pointer;
   overflow: hidden;
+}
+
+.Select__title {
+  display: block;
 }
 
 .Select:not(.Select--multiline) .Select__title {
@@ -52,12 +51,9 @@
   text-align: center;
 }
 
-.Select--multiline .Select__title {
-  height: auto;
-  min-height: 42px;
-}
-
+/**
+ * sizeY === 'compact'
+ */
 .Select--sizeY--compact .Select__container {
-  height: 34px;
   padding: 7px 11px;
 }

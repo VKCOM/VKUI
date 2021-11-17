@@ -1,16 +1,16 @@
-import { TextareaHTMLAttributes, FC, memo } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
-import FormField from '../FormField/FormField';
+import { FormField } from '../FormField/FormField';
 import { HasRef, HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { getClassName } from '../../helpers/getClassName';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import './Textarea.css';
 
 export interface TextareaProps extends
-  TextareaHTMLAttributes<HTMLTextAreaElement>,
+  React.TextareaHTMLAttributes<HTMLTextAreaElement>,
   HasRef<HTMLTextAreaElement>,
   HasRootRef<HTMLElement>,
   AdaptivityProps {
@@ -19,31 +19,37 @@ export interface TextareaProps extends
   defaultValue?: string;
 }
 
-const Textarea: FC<TextareaProps> = memo(({
-  defaultValue,
-  grow,
+const Textarea: React.FC<TextareaProps> = React.memo(({
+  defaultValue = '',
+  grow = true,
   style,
   onResize,
   className,
   getRootRef,
   getRef,
   sizeY,
+  rows = 2,
   ...restProps
-}) => {
+}: TextareaProps) => {
   const [value, onChange] = useEnsuredControl(restProps, { defaultValue });
+  const currentScrollHeight = React.useRef<number>();
   const elementRef = useExternRef(getRef);
   const platform = usePlatform();
 
   // autosize input
-  useIsomorphicLayoutEffect(() => {
+  React.useEffect(() => {
     const el = elementRef.current;
-    if (grow) {
+
+    if (grow && el.offsetParent) {
       el.style.height = null;
       el.style.height = `${el.scrollHeight}px`;
-      // TODO: call only when height changed?
-      onResize && onResize(el);
+
+      if (el.scrollHeight !== currentScrollHeight.current && onResize) {
+        onResize(el);
+        currentScrollHeight.current = el.scrollHeight;
+      }
     }
-  }, [grow, value]);
+  }, [grow, value, sizeY]);
 
   return (
     <FormField
@@ -55,6 +61,7 @@ const Textarea: FC<TextareaProps> = memo(({
     >
       <textarea
         {...restProps}
+        rows={rows}
         vkuiClass="Textarea__el"
         value={value}
         onChange={onChange}
@@ -63,10 +70,5 @@ const Textarea: FC<TextareaProps> = memo(({
     </FormField>
   );
 });
-
-Textarea.defaultProps = {
-  defaultValue: '',
-  grow: true,
-};
 
 export default withAdaptivity(Textarea, { sizeY: true });

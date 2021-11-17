@@ -1,60 +1,21 @@
-import { HTMLAttributes, ReactNode, FC, useContext } from 'react';
-import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
-import { Icon24Dismiss } from '@vkontakte/icons';
-import { IOS } from '../../lib/platform';
-import { hasReactNode } from '../../lib/utils';
 import { withPlatform } from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
 import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
-import Subhead from '../Typography/Subhead/Subhead';
-import Title from '../Typography/Title/Title';
-import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 import ModalRootContext, { useModalRegistry } from '../ModalRoot/ModalRootContext';
 import { ModalType } from '../ModalRoot/types';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import { ModalCardBase, ModalCardBaseProps } from '../ModalCardBase/ModalCardBase';
+import './ModalCard.css';
 
-export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps, NavIdProps {
-  /**
-   * Иконка.
-   *
-   * Может быть компонентом иконки, например, `<Icon56MoneyTransferOutline />`, или `<Avatar size={72} src="" />`
-   */
-  icon?: ReactNode;
-
-  /**
-   * Заголовок карточки
-   */
-  header?: ReactNode;
-
-  /**
-   * Подзаголовок
-   */
-  subheader?: ReactNode;
-
-  /**
-   * Кнопки-действия.
-   *
-   * Рекомендуется использовать `<Button size="l" mode="primary" />` или `<Button size="l" mode="secondary" />`
-   */
-  actions?: ReactNode;
-
-  /**
-   * Тип отображения кнопок: вертикальный или горизонтальный
-   */
-  actionsLayout?: 'vertical' | 'horizontal';
-
-  /**
-   * Будет вызван при закрытии карточки жестом
-   */
-  onClose?: VoidFunction;
-}
+export interface ModalCardProps extends HasPlatform, AdaptivityProps, NavIdProps, ModalCardBaseProps {}
 
 const warn = warnOnce('ModalCard');
 
-const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
+const ModalCard: React.FC<ModalCardProps> = (props: ModalCardProps) => {
   const {
     icon,
     header,
@@ -72,10 +33,8 @@ const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
   } = props;
 
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
-  const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
-  const canShowCloseBtnIos = platform === IOS && !canShowCloseBtn;
 
-  const modalContext = useContext(ModalRootContext);
+  const modalContext = React.useContext(ModalRootContext);
   const { refs } = useModalRegistry(getNavId(props, warn), ModalType.CARD);
 
   return (
@@ -85,30 +44,18 @@ const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
         'ModalCard--desktop': isDesktop,
       })}
     >
-      <div vkuiClass="ModalCard__in" ref={refs.innerElement}>
-        <div vkuiClass="ModalCard__container">
-          {hasReactNode(icon) && <div vkuiClass="ModalCard__icon">{icon}</div>}
-          {hasReactNode(header) && <Title level="2" weight="semibold" vkuiClass="ModalCard__header">{header}</Title>}
-          {hasReactNode(subheader) && <Subhead weight="regular" vkuiClass="ModalCard__subheader">{subheader}</Subhead>}
-
-          {children}
-
-          {hasReactNode(actions) &&
-          <div vkuiClass={classNames('ModalCard__actions', {
-            'ModalCard__actions--v': actionsLayout === 'vertical',
-          })}>
-            {actions}
-          </div>
-          }
-
-          {canShowCloseBtn && <ModalDismissButton onClick={onClose || modalContext.onClose} />}
-          {canShowCloseBtnIos &&
-          <PanelHeaderButton vkuiClass="ModalCard__dismiss" onClick={onClose || modalContext.onClose}>
-            <Icon24Dismiss />
-          </PanelHeaderButton>
-          }
-        </div>
-      </div>
+      <ModalCardBase
+        vkuiClass="ModalCard__in"
+        getRootRef={refs.innerElement}
+        icon={icon}
+        header={header}
+        subheader={subheader}
+        actions={actions}
+        actionsLayout={actionsLayout}
+        onClose={onClose || modalContext.onClose}
+      >
+        {children}
+      </ModalCardBase>
     </div>
   );
 };

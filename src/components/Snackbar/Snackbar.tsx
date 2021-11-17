@@ -1,12 +1,5 @@
-import React, {
-  FC,
-  HTMLAttributes,
-  MouseEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import Touch, { TouchEvent } from '../Touch/Touch';
+import * as React from 'react';
+import { Touch, TouchEvent } from '../Touch/Touch';
 import { classNames } from '../../lib/classNames';
 import { HasPlatform } from '../../types';
 import { getClassName } from '../../helpers/getClassName';
@@ -19,8 +12,9 @@ import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
+import './Snackbar.css';
 
-export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
+export interface SnackbarProps extends React.HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   /**
    * Название кнопки действия в уведомлении
    */
@@ -53,7 +47,7 @@ export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform,
   onClose: () => void;
 }
 
-const SnackbarComponent: FC<SnackbarProps> = (props: SnackbarProps) => {
+const SnackbarComponent: React.FC<SnackbarProps> = (props: SnackbarProps) => {
   const {
     children,
     layout,
@@ -71,17 +65,16 @@ const SnackbarComponent: FC<SnackbarProps> = (props: SnackbarProps) => {
 
   const { waitTransitionFinish } = useWaitTransitionFinish();
 
-  const [closing, setClosing] = useState(false);
-  const [touched, setTouched] = useState(false);
+  const [closing, setClosing] = React.useState(false);
+  const [touched, setTouched] = React.useState(false);
 
-  const shiftXPercentRef = useRef<number>(0);
-  const shiftXCurrentRef = useRef<number>(0);
-  const touchStartTimeRef = useRef<Date | null>(null);
+  const shiftXPercentRef = React.useRef<number>(0);
+  const shiftXCurrentRef = React.useRef<number>(0);
 
-  const bodyElRef = useRef<HTMLDivElement | null>(null);
-  const innerElRef = useRef<HTMLDivElement | null>(null);
+  const bodyElRef = React.useRef<HTMLDivElement | null>(null);
+  const innerElRef = React.useRef<HTMLDivElement | null>(null);
 
-  const animationFrameRef = useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
+  const animationFrameRef = React.useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
 
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
   const transitionFinishDurationFallback = platform === ANDROID || platform === VKCOM ? 400 : 320;
@@ -93,7 +86,7 @@ const SnackbarComponent: FC<SnackbarProps> = (props: SnackbarProps) => {
     }, transitionFinishDurationFallback);
   };
 
-  const handleActionClick: MouseEventHandler<HTMLElement> = (e) => {
+  const handleActionClick: React.MouseEventHandler<HTMLElement> = (e) => {
     close();
 
     if (action && typeof onActionClick === 'function') {
@@ -115,7 +108,7 @@ const SnackbarComponent: FC<SnackbarProps> = (props: SnackbarProps) => {
   const onTouchStart = closeTimeout.clear;
 
   const onTouchMoveX = (event: TouchEvent) => {
-    const { shiftX, startT, originalEvent } = event;
+    const { shiftX, originalEvent } = event;
     originalEvent.preventDefault();
 
     if (!touched) {
@@ -124,17 +117,16 @@ const SnackbarComponent: FC<SnackbarProps> = (props: SnackbarProps) => {
 
     shiftXPercentRef.current = shiftX / bodyElRef.current.offsetWidth * 100;
     shiftXCurrentRef.current = rubber(shiftXPercentRef.current, 72, 1.2, platform === ANDROID || platform === VKCOM);
-    touchStartTimeRef.current = startT;
 
     setBodyTransform(shiftXCurrentRef.current);
   };
 
-  const onTouchEnd = () => {
+  const onTouchEnd = (e: TouchEvent) => {
     let callback: VoidFunction | undefined;
 
     if (touched) {
       let shiftXCurrent = shiftXCurrentRef.current;
-      const expectTranslateY = shiftXCurrent / (Date.now() - touchStartTimeRef.current.getTime()) * 240 * 0.6;
+      const expectTranslateY = shiftXCurrent / e.duration * 240 * 0.6;
       shiftXCurrent = shiftXCurrent + expectTranslateY;
 
       if (isDesktop && shiftXCurrent <= -50) {
@@ -163,7 +155,7 @@ const SnackbarComponent: FC<SnackbarProps> = (props: SnackbarProps) => {
     callback && requestAnimationFrame(callback);
   };
 
-  useEffect(closeTimeout.set, []);
+  React.useEffect(closeTimeout.set, []);
 
   const resolvedLayout = after || isDesktop ? 'vertical' : layout;
 

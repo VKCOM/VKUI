@@ -1,32 +1,41 @@
-import { FunctionComponent, InputHTMLAttributes } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasRef, HasRootRef } from '../../types';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { FocusVisible } from '../FocusVisible/FocusVisible';
+import './Switch.css';
 
 export interface SwitchProps extends
-  InputHTMLAttributes<HTMLInputElement>,
+  React.InputHTMLAttributes<HTMLInputElement>,
   HasRootRef<HTMLLabelElement>,
-  HasRef<HTMLInputElement>,
-  AdaptivityProps { }
+  HasRef<HTMLInputElement> {};
 
-export const Switch: FunctionComponent<SwitchProps> = withAdaptivity(({
+export const Switch: React.FC<SwitchProps> = ({
   style,
   className,
   getRef,
   getRootRef,
-  sizeY,
   ...restProps
 }: SwitchProps) => {
   const platform = usePlatform();
+  const { sizeY } = useAdaptivity();
+
   const inputRef = useExternRef(getRef);
 
   return (
-    <label vkuiClass={classNames(getClassName('Switch', platform), `Switch--sizeY-${sizeY}`)} className={className} style={style} ref={getRootRef}>
+    <label
+      vkuiClass={classNames(getClassName('Switch', platform), `Switch--sizeY-${sizeY}`)}
+      className={className}
+      style={style}
+      ref={getRootRef}
+      role="presentation"
+    >
       <input {...restProps} type="checkbox" vkuiClass="Switch__self" ref={inputRef} />
-      <span vkuiClass="Switch__pseudo" />
+      <span role="presentation" vkuiClass="Switch__pseudo" />
+      <FocusVisible mode="outside" />
     </label>
   );
-}, { sizeY: true });
+};

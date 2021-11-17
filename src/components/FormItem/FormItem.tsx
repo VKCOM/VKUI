@@ -1,65 +1,66 @@
-import { AllHTMLAttributes, ElementType, FC, ReactNode, MouseEvent, Fragment } from 'react';
+import * as React from 'react';
+import { HasComponent, HasRootRef } from '../../types';
 import { classNames } from '../../lib/classNames';
+import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import { hasReactNode } from '../../lib/utils';
 import Subhead from '../Typography/Subhead/Subhead';
 import Caption from '../Typography/Caption/Caption';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
-import { Removable, RemovePlaceholderProps } from '../Removable/Removable';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { Removable, RemovableProps } from '../Removable/Removable';
+import './FormItem.css';
 
-export interface FormItemProps extends AllHTMLAttributes<HTMLElement>, RemovePlaceholderProps {
-  top?: ReactNode;
-  bottom?: ReactNode;
+export interface FormItemProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasComponent, RemovableProps {
+  top?: React.ReactNode;
+  bottom?: React.ReactNode;
   status?: 'default' | 'error' | 'valid';
-  Component?: ElementType;
   /**
    * Дает возможность удалить `FormItem`. Рекомендуется использовать только для `Input` или `Select`.
    */
   removable?: boolean;
-  /**
-   * Коллбэк срабатывает при клике на контрол удаления.
-   */
-  onRemove?: (e: MouseEvent) => void;
 }
 
-export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps & Pick<AdaptivityProps, 'sizeY'>) => {
-  const {
-    children,
-    top,
-    bottom,
-    status,
-    Component,
-    sizeY,
-    removable,
-    onRemove,
-    removePlaceholder,
-    ...restProps
-  } = props;
+export const FormItem: React.FC<FormItemProps> = ({
+  children,
+  top,
+  bottom,
+  status = 'default',
+  Component = 'div',
+  removable,
+  onRemove,
+  removePlaceholder = 'Удалить',
+  getRootRef,
+  ...restProps
+}: FormItemProps) => {
   const platform = usePlatform();
+  const rootEl = useExternRef(getRootRef);
+  const { sizeY } = useAdaptivity();
 
   const wrappedChildren = (
-    <Fragment>
+    <React.Fragment>
       {hasReactNode(top) && <Subhead weight="regular" vkuiClass="FormItem__top">{top}</Subhead>}
       {children}
       {hasReactNode(bottom) && <Caption level="1" weight="regular" vkuiClass="FormItem__bottom">{bottom}</Caption>}
-    </Fragment>
+    </React.Fragment>
   );
 
   return (
     <Component
       {...restProps}
+      ref={rootEl}
       vkuiClass={classNames(
         getClassName('FormItem', platform),
         `FormItem--${status}`,
         `FormItem--sizeY-${sizeY}`,
         {
           'FormItem--withTop': hasReactNode(top),
+          'FormItem--removable': removable,
         },
       )}
     >
       {removable ? (
-        <Removable align="start" onRemove={onRemove} removePlaceholder={removePlaceholder}>
+        <Removable align="start" onRemove={(e) => onRemove(e, rootEl?.current)} removePlaceholder={removePlaceholder}>
           <div vkuiClass="FormItem__removable">
             {wrappedChildren}
           </div>
@@ -67,12 +68,4 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
       ) : wrappedChildren}
     </Component>
   );
-}, {
-  sizeY: true,
-});
-
-FormItem.defaultProps = {
-  status: 'default',
-  Component: 'div',
-  removePlaceholder: 'Удалить',
 };

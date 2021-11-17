@@ -1,17 +1,3 @@
-:root {
-  --duration: .7s;
-}
-
-@keyframes vkui-animation-fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
 @keyframes vkui-rotator {
   0% {
     transform: rotate(0deg);

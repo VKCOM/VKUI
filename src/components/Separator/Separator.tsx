@@ -1,9 +1,10 @@
-import React, { FunctionComponent, HTMLAttributes } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
+import './Separator.css';
 
-export interface SeparatorProps extends HTMLAttributes<HTMLDivElement> {
+export interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * С этим свойством компонент не будет иметь отступы слева и справа
    */
@@ -11,12 +12,13 @@ export interface SeparatorProps extends HTMLAttributes<HTMLDivElement> {
   expanded?: boolean;
 }
 
-let Separator: FunctionComponent<SeparatorProps> = ({ wide, expanded, ...restProps }: SeparatorProps) => {
+const Separator: React.FC<SeparatorProps> = ({ wide, expanded, ...restProps }) => {
   const platform = usePlatform();
 
   return (
     <div
       {...restProps}
+      aria-hidden="true"
       vkuiClass={classNames(getClassName('Separator', platform), {
         'Separator--wide': wide,
       })}

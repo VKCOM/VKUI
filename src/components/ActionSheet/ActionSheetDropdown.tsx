@@ -1,25 +1,18 @@
-import React, { FC, MouseEventHandler } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
-import { ActionSheetProps } from './ActionSheet';
+import { SharedDropdownProps } from './types';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
+import './ActionSheet.css';
 
-interface Props {
-  closing: boolean;
-  onClose(): void;
-  toggleRef: Element;
-  elementRef: React.RefObject<HTMLDivElement>;
-  /** Has no effect - only for ActionSheetDropdownDesktip polymorhipsm */
-  popupDirection?: ActionSheetProps['popupDirection'];
-}
+const stopPropagation: React.MouseEventHandler = (e) => e.stopPropagation();
 
-const stopPropagation: MouseEventHandler = (e) => e.stopPropagation();
-
-const ActionSheetDropdown: FC<Props> = ({
+export const ActionSheetDropdown: React.FC<SharedDropdownProps> = ({
   children,
-  elementRef,
-  toggleRef,
   closing,
+  // these 2 props are only omitted - ActionSheetDesktop compat
+  toggleRef,
   popupDirection,
   ...restProps
 }) => {
@@ -27,17 +20,14 @@ const ActionSheetDropdown: FC<Props> = ({
   const baseClaseName = getClassName('ActionSheet', platform);
 
   return (
-    <div
+    <FocusTrap
       {...restProps}
-      ref={elementRef}
       onClick={stopPropagation}
       vkuiClass={classNames(baseClaseName, {
         'ActionSheet--closing': closing,
       })}
     >
       {children}
-    </div>
+    </FocusTrap>
   );
 };
-
-export default ActionSheetDropdown;

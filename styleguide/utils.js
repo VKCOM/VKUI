@@ -1,4 +1,3 @@
-import React from 'react';
 import { users } from './demo_dataset';
 
 export function getRandomInt(min, max) {
@@ -39,7 +38,7 @@ const photos = {
     photo_100: 'https://pp.userapi.com/c837628/v837628453/39175/4JRjMaFvCrw.jpg',
   },
   'audio_linkin_park': {
-    photo_100: 'https://pp.userapi.com/c846120/v846120617/1ff005/WmCcgV5CozY.jpg'
+    photo_100: 'https://pp.userapi.com/c846120/v846120617/1ff005/WmCcgV5CozY.jpg',
   },
   'audio_face': {
     photo_100: 'https://pp.userapi.com/c845218/v845218888/182681/Al6XrhpJYn0.jpg',
@@ -73,10 +72,17 @@ export function getAvatarUrl(id, size) {
   }
 }
 
+function prepareUser(user) {
+  user.name = `${user.first_name} ${user.last_name}`;
+  user.initials = `${user.first_name[0]}${user.last_name[0]}`;
+  return user;
+}
+
 export function getRandomUser() {
   const user = Object.assign({}, getRandomArrayElement(users));
   user.id = getRandomInt(1, 20e8);
-  return user;
+
+  return prepareUser(user);
 }
 
 export function getRandomUsers(count) {
@@ -171,5 +177,5 @@ export const perfLogger = {
     if (this.isEnabled) {
       console.log(event, Number(duration.toFixed(2)));
     }
-  }
+  },
 };

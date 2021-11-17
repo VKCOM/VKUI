@@ -1,6 +1,6 @@
-import React, { Component, HTMLAttributes, MouseEventHandler, ReactNode, SyntheticEvent } from 'react';
+import * as React from 'react';
 import Tappable from '../Tappable/Tappable';
-import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
+import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { transitionEvent } from '../../lib/supportEvents';
@@ -14,8 +14,10 @@ import Headline from '../Typography/Headline/Headline';
 import Title from '../Typography/Title/Title';
 import Caption from '../Typography/Caption/Caption';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
+import './Alert.css';
 
-export type AlertActionInterface = AlertProps['actions'][0];
+export type AlertActionInterface = AlertProps['actions'][0] & React.AnchorHTMLAttributes<HTMLElement>;
 
 export interface AlertAction extends Pick<ButtonProps, 'Component' | 'href'> {
   title: string;
@@ -24,11 +26,11 @@ export interface AlertAction extends Pick<ButtonProps, 'Component' | 'href'> {
   mode: 'cancel' | 'destructive' | 'default';
 }
 
-export interface AlertProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
+export interface AlertProps extends React.HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   actionsLayout?: 'vertical' | 'horizontal';
   actions?: AlertAction[];
-  header?: ReactNode;
-  text?: ReactNode;
+  header?: React.ReactNode;
+  text?: React.ReactNode;
   onClose?: VoidFunction;
 }
 
@@ -40,7 +42,7 @@ type TransitionEndHandler = (e?: TransitionEvent) => void;
 
 type ItemClickHander = (item: AlertActionInterface) => () => void;
 
-class Alert extends Component<AlertProps, AlertState> {
+class Alert extends React.Component<AlertProps, AlertState> {
   constructor(props: AlertProps) {
     super(props);
     this.element = React.createRef();
@@ -57,6 +59,10 @@ class Alert extends Component<AlertProps, AlertState> {
     actionsLayout: 'horizontal',
     actions: [],
   };
+
+  private get timeout(): number {
+    return this.props.platform === ANDROID || this.props.platform === VKCOM ? 200 : 300;
+  }
 
   onItemClick: ItemClickHander = (item: AlertActionInterface) => () => {
     const { action, autoclose } = item;
@@ -83,7 +89,7 @@ class Alert extends Component<AlertProps, AlertState> {
     });
   };
 
-  stopPropagation: MouseEventHandler = (e: SyntheticEvent) => {
+  stopPropagation: React.MouseEventHandler = (e: React.SyntheticEvent) => {
     e.stopPropagation();
   };
 
@@ -93,11 +99,11 @@ class Alert extends Component<AlertProps, AlertState> {
       this.element.current.addEventListener(transitionEvent.name, eventHandler);
     } else {
       clearTimeout(this.transitionFinishTimeout);
-      this.transitionFinishTimeout = setTimeout(eventHandler.bind(this), this.props.platform === ANDROID || this.props.platform === VKCOM ? 200 : 300);
+      this.transitionFinishTimeout = setTimeout(eventHandler.bind(this), this.timeout);
     }
   }
 
-  renderHeader(header: ReactNode) {
+  renderHeader(header: React.ReactNode) {
     switch (this.props.platform) {
       case VKCOM:
         return <Headline vkuiClass="Alert__header" weight="medium">{header}</Headline>;
@@ -108,7 +114,7 @@ class Alert extends Component<AlertProps, AlertState> {
     }
   }
 
-  renderText(text: ReactNode) {
+  renderText(text: React.ReactNode) {
     switch (this.props.platform) {
       case VKCOM:
         return <Caption vkuiClass="Alert__text" level="1" weight="regular">{text}</Caption>;
@@ -121,6 +127,7 @@ class Alert extends Component<AlertProps, AlertState> {
 
   renderAction = (action: AlertActionInterface, i: number) => {
     const { platform } = this.props;
+
     if (platform === IOS) {
       const { Component = 'button' } = action;
       return (
@@ -130,14 +137,23 @@ class Alert extends Component<AlertProps, AlertState> {
           onClick={this.onItemClick(action)}
           href={action.href}
           key={`alert-action-${i}`}
+          target={action.target}
         >
           {action.title}
         </Tappable>
       );
     }
-    const mode: ButtonProps['mode'] = platform === ANDROID
-      ? 'tertiary'
-      : action.mode === 'cancel' ? 'secondary' : 'primary';
+
+    let mode: ButtonProps['mode'] = action.mode === 'cancel' ? 'secondary' : 'primary';
+
+    if (platform === ANDROID) {
+      mode = 'tertiary';
+
+      if (this.props.viewWidth === ViewWidth.DESKTOP && action.mode === 'destructive') {
+        mode = 'destructive';
+      }
+    }
+
     return (
       <Button
         vkuiClass={classNames('Alert__button', `Alert__button--${action.mode}`)}
@@ -147,6 +163,7 @@ class Alert extends Component<AlertProps, AlertState> {
         Component={action.Component}
         href={action.href}
         key={`alert-action-${i}`}
+        target={action.target}
       >
         {action.title}
       </Button>
@@ -168,10 +185,12 @@ class Alert extends Component<AlertProps, AlertState> {
         style={style}
         onClick={this.onClose}
       >
-        <div
+        <FocusTrap
           {...restProps}
-          ref={this.element}
+          getRootRef={this.element}
           onClick={this.stopPropagation}
+          onClose={this.onClose}
+          timeout={this.timeout}
           vkuiClass={classNames(getClassName('Alert', platform), {
             'Alert--v': resolvedActionsLayout === 'vertical',
             'Alert--h': resolvedActionsLayout === 'horizontal',
@@ -188,7 +207,7 @@ class Alert extends Component<AlertProps, AlertState> {
           <footer vkuiClass="Alert__actions">
             {actions.map(this.renderAction)}
           </footer>
-        </div>
+        </FocusTrap>
       </PopoutWrapper>
     );
   }
