@@ -127,6 +127,12 @@ const Example = withAdaptivity(({ viewWidth }) => {
             ><Icon28MessageOutline /></TabbarItem>
             <TabbarItem
               onClick={onStoryChange}
+              selected={activeStory === 'clips'}
+              data-story="clips"
+              text="Клипы"
+            ><Icon28ClipOutline /></TabbarItem>
+            <TabbarItem
+              onClick={onStoryChange}
               selected={activeStory === 'profile'}
               data-story="profile"
               indicator={<Badge mode="prominent" />}
