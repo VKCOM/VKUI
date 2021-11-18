@@ -135,6 +135,7 @@ const Example = withAdaptivity(({ viewWidth }) => {
               onClick={onStoryChange}
               selected={activeStory === 'profile'}
               data-story="profile"
+              indicator={<Badge mode="prominent" />}
               text="Профиль"
             ><Icon28UserCircleOutline /></TabbarItem>
           </Tabbar>
