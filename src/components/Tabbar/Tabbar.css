@@ -31,10 +31,6 @@
   content: '';
 }
 
-.Tabbar--ios .Tabbar__in {
-  height: var(--tabbar_height);
-}
-
 @media (min-resolution: 2dppx) {
   .Tabbar--ios::before {
     transform: scaleY(.5);

@@ -29,7 +29,6 @@
 }
 
 .TabbarItem__in {
-  align-self: center;
   display: flex;
   padding: 0 2px;
   align-items: center;
@@ -93,7 +92,6 @@
  */
 
 .TabbarItem--android .TabbarItem__tappable {
-  position: absolute;
   width: calc(100% + 16px);
   padding-bottom: calc(100% + 16px);
   border-radius: 50%;
