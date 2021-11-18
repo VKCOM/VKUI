@@ -53,7 +53,7 @@ const TabbarItem: React.FunctionComponent<TabbarItemProps> = ({
       role="presentation"
       Component="div"
       activeMode={platform === Platform.IOS ? 'TabbarItem__tappable--active' : 'background'}
-      activeEffectDelay={0}
+      activeEffectDelay={platform === Platform.IOS ? 0 : 300}
       hasHover={false}
       vkuiClass="TabbarItem__tappable"
     />
