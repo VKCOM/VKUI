@@ -36,6 +36,7 @@ const TabbarItem: React.FunctionComponent<TabbarItemProps> = ({
   text,
   href,
   Component = href ? 'a' : 'button',
+  disabled,
   ...restProps
 }: TabbarItemProps) => {
   const platform = usePlatform();
@@ -43,6 +44,7 @@ const TabbarItem: React.FunctionComponent<TabbarItemProps> = ({
   // @ts-ignore ругается на то, что у AllHTMLAttributes type это строка, а button не любую строку считает валидным значением
   return (<Component
     {...restProps}
+    disabled={disabled}
     href={href}
     vkuiClass={classNames(getClassName('TabbarItem', platform), {
       'TabbarItem--selected': selected,
@@ -52,6 +54,7 @@ const TabbarItem: React.FunctionComponent<TabbarItemProps> = ({
     <Tappable
       role="presentation"
       Component="div"
+      disabled={disabled}
       activeMode={platform === Platform.IOS ? 'TabbarItem__tappable--active' : 'background'}
       activeEffectDelay={platform === Platform.IOS ? 0 : 300}
       hasHover={false}
