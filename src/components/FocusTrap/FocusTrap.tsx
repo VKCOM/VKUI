@@ -54,14 +54,17 @@ export const FocusTrap: React.FC<FocusTrapProps> = ({
     }
 
     const nodes: HTMLElement[] = [];
-    // eslint-disable-next-line no-restricted-properties
-    ref.current?.querySelectorAll(FOCUSABLE_ELEMENTS).forEach((focusableEl) => {
-      const { display, visibility } = window.getComputedStyle(focusableEl);
+    Array.prototype.forEach.call(
+      // eslint-disable-next-line no-restricted-properties
+      ref.current.querySelectorAll(FOCUSABLE_ELEMENTS),
+      (focusableEl: Element) => {
+        const { display, visibility } = window.getComputedStyle(focusableEl);
 
-      if (display !== 'none' && visibility !== 'hidden') {
-        nodes.push(focusableEl as HTMLElement);
-      }
-    });
+        if (display !== 'none' && visibility !== 'hidden') {
+          nodes.push(focusableEl as HTMLElement);
+        }
+      },
+    );
 
     if (nodes?.length) {
       setFocusableNodes(nodes);
