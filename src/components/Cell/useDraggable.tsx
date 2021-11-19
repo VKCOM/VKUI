@@ -28,7 +28,7 @@ export const useDraggable = ({ onDragFinish }: Pick<CellProps, 'onDragFinish'>) 
 
     setDragging(true);
 
-    const _siblings: HTMLElement[] = Array.from(rootEl.parentElement.childNodes);
+    const _siblings: HTMLElement[] = [...rootEl.parentElement.childNodes];
     const idx = _siblings.indexOf(rootEl);
 
     setDragStartIndex(idx);
