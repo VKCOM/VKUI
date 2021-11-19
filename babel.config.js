@@ -15,8 +15,6 @@ const testFiles = [
 module.exports = {
   presets: [
     ['@babel/preset-env', {
-      useBuiltIns: 'usage',
-      corejs: 3,
       modules: useModules ? false : 'commonjs',
       exclude: [
         '@babel/plugin-proposal-unicode-property-regex',
@@ -35,7 +33,7 @@ module.exports = {
   plugins: [
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-proposal-object-rest-spread',
-    ['@babel/plugin-transform-runtime', { version: runtimeVersion }],
+    ['@babel/plugin-transform-runtime', { version: runtimeVersion, corejs: 3 }],
     [require.resolve('babel-plugin-auto-import'), {
       'declarations': [
         { members: ['createScopedElement'], path: '#jsxRuntime' }

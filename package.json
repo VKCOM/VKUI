@@ -58,7 +58,6 @@
     "classnames": "^2.2.6",
     "clean-webpack-plugin": "^3.0.0",
     "concurrently": "^4.1.2",
-    "core-js": "3.19.1",
     "cross-env": "^7.0.2",
     "css-loader": "^5.0.1",
     "eslint": "~6.8.0",
