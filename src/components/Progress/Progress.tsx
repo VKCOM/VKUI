@@ -8,9 +8,20 @@ export interface ProgressProps extends React.HTMLAttributes<HTMLDivElement>, Has
   value?: number;
 }
 
+const PROGRESS_MAX_VALUE = 100;
+const PROGRESS_MIN_VALUE = 0;
+
 const Progress: React.FC<ProgressProps> = ({ value, getRootRef, ...restProps }: ProgressProps) => {
   const platform = usePlatform();
 
+  const progress = value >= PROGRESS_MIN_VALUE ?
+    value < PROGRESS_MAX_VALUE ?
+      value
+      :
+      PROGRESS_MAX_VALUE
+    :
+    PROGRESS_MIN_VALUE;
+  
   return (
     <div
       aria-valuenow={value}
@@ -22,7 +33,7 @@ const Progress: React.FC<ProgressProps> = ({ value, getRootRef, ...restProps }: 
       vkuiClass={getClassName('Progress', platform)}
     >
       <div vkuiClass="Progress__bg" aria-hidden="true" />
-      <div vkuiClass="Progress__in" style={{ width: `${value}%` }} aria-hidden="true" />
+      <div vkuiClass="Progress__in" style={{ width: `${progress}%` }} aria-hidden="true" />
     </div>
   );
 };
