@@ -14,7 +14,7 @@ const PROGRESS_MIN_VALUE = 0;
 const Progress: React.FC<ProgressProps> = ({ value, getRootRef, ...restProps }: ProgressProps) => {
   const platform = usePlatform();
 
-  const progress = value >= PROGRESS_MIN_VALUE ?
+  const progress = value > PROGRESS_MIN_VALUE ?
     value < PROGRESS_MAX_VALUE ?
       value
       :
