@@ -8,8 +8,8 @@ export interface ProgressProps extends React.HTMLAttributes<HTMLDivElement>, Has
   value?: number;
 }
 
-const PROGRESS_MAX_VALUE = 100;
 const PROGRESS_MIN_VALUE = 0;
+const PROGRESS_MAX_VALUE = 100;
 
 const Progress: React.FC<ProgressProps> = ({ value, getRootRef, ...restProps }: ProgressProps) => {
   const platform = usePlatform();
@@ -27,8 +27,8 @@ const Progress: React.FC<ProgressProps> = ({ value, getRootRef, ...restProps }: 
       aria-valuenow={value}
       {...restProps}
       role="progressbar"
-      aria-valuemin={0}
-      aria-valuemax={100}
+      aria-valuemin={PROGRESS_MIN_VALUE}
+      aria-valuemax={PROGRESS_MAX_VALUE}
       ref={getRootRef}
       vkuiClass={getClassName('Progress', platform)}
     >
