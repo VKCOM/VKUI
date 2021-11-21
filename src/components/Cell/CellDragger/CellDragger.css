@@ -1,4 +1,5 @@
 .CellDragger {
   cursor: ns-resize;
+  user-select: none;
   color: var(--icon_secondary);
 }
