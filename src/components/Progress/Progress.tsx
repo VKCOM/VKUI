@@ -14,13 +14,7 @@ const PROGRESS_MAX_VALUE = 100;
 const Progress: React.FC<ProgressProps> = ({ value, getRootRef, ...restProps }: ProgressProps) => {
   const platform = usePlatform();
 
-  const progress = value > PROGRESS_MIN_VALUE ?
-    value < PROGRESS_MAX_VALUE ?
-      value
-      :
-      PROGRESS_MAX_VALUE
-    :
-    PROGRESS_MIN_VALUE;
+  const progress = Math.max(PROGRESS_MIN_VALUE, Math.min(value, PROGRESS_MAX_VALUE));
   
   return (
     <div
