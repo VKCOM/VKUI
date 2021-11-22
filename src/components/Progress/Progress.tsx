@@ -15,7 +15,7 @@ const Progress: React.FC<ProgressProps> = ({ value, getRootRef, ...restProps }: 
   const platform = usePlatform();
 
   const progress = Math.max(PROGRESS_MIN_VALUE, Math.min(value, PROGRESS_MAX_VALUE));
-  
+
   return (
     <div
       aria-valuenow={value}
