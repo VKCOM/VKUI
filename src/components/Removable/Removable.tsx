@@ -86,7 +86,6 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
         getRootRef={removeButtonRef}
         vkuiClass="Removable__remove"
         onClick={onRemoveClick}
-        onTransitionEnd={onRemoveTransitionEnd}
       >
         <span vkuiClass="Removable__remove-in">{removePlaceholder}</span>
       </Tappable>
