@@ -41,9 +41,11 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
   const removeButtonRef = React.useRef(null);
   const [removeOffset, updateRemoveOffset] = React.useState(0);
 
-  useGlobalEventListener(window, 'click', removeOffset > 0 && (() => {
-    updateRemoveOffset(0);
-  }));
+  useGlobalEventListener(window, 'click', () => {
+    if (removeOffset > 0) {
+      updateRemoveOffset(0);
+    }
+  });
 
   const onRemoveTransitionEnd = () => {
     if (removeOffset > 0) {
