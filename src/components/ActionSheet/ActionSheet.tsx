@@ -13,7 +13,6 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { warnOnce } from '../../lib/warnOnce';
 import { SharedDropdownProps, PopupDirection, ToggleRef } from './types';
-import { noop } from '@vkontakte/vkjs';
 import './ActionSheet.css';
 
 export interface ActionSheetProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -54,10 +53,8 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
   const [closing, setClosing] = React.useState(false);
   const onClose = () => setClosing(true);
 
-  const closeAction = React.useRef<VoidFunction>(noop);
   const afterClose = () => {
     restProps.onClose();
-    closeAction.current();
   };
 
   if (process.env.NODE_ENV === 'development' && !restProps.onClose) {
@@ -83,13 +80,9 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
   }, [closing]);
 
   const onItemClick = React.useCallback<ItemClickHandler>((action, autoclose) => (event) => {
-    event.persist();
-
+    action && action(event);
     if (autoclose) {
-      closeAction.current = () => action && action(event);
       setClosing(true);
-    } else {
-      action && action(event);
     }
   }, []);
   const contextValue = useObjectMemo({ onItemClick, isDesktop });
