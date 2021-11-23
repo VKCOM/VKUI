@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames } from '../../lib/classNames';
-import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
+import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormField } from '../FormField/FormField';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
@@ -64,7 +64,7 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
       style={style}
       getRootRef={getRootRef}
       disabled={disabled}
-      after={sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
+      after={<DropdownIcon />}
     >
       <select
         {...restProps}

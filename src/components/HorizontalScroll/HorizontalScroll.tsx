@@ -24,6 +24,8 @@ interface ScrollContext {
   initialScrollWidth: number;
 }
 
+export type ScrollPositionHandler = (currentPosition: number) => number;
+
 export interface HorizontalScrollProps extends
   React.HTMLAttributes<HTMLDivElement>,
   AdaptivityProps,
@@ -31,11 +33,11 @@ export interface HorizontalScrollProps extends
   /**
    * Функция для расчета величины прокрутки при клике на левую стрелку.
    */
-  getScrollToLeft?: (currentPosition: number) => number;
+  getScrollToLeft?: ScrollPositionHandler;
   /**
    * Функция для расчета величины прокрутки при клике на правую стрелку.
    */
-  getScrollToRight?: (currentPosition: number) => number;
+  getScrollToRight?: ScrollPositionHandler;
   showArrows?: boolean;
   scrollAnimationDuration?: number;
 }
@@ -112,18 +114,16 @@ function doScroll({
   })();
 }
 
-const HorizontalScroll: React.FC<HorizontalScrollProps> = (props: HorizontalScrollProps) => {
-  const {
-    children,
-    getScrollToLeft,
-    getScrollToRight,
-    showArrows,
-    scrollAnimationDuration,
-    hasMouse,
-    getRef,
-    ...restProps
-  } = props;
-
+const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
+  children,
+  getScrollToLeft,
+  getScrollToRight,
+  showArrows = true,
+  scrollAnimationDuration,
+  hasMouse,
+  getRef,
+  ...restProps
+}: HorizontalScrollProps) => {
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(false);
 
@@ -187,10 +187,6 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = (props: HorizontalScro
       </div>
     </div>
   );
-};
-
-HorizontalScroll.defaultProps = {
-  showArrows: true,
 };
 
 export default withAdaptivity(HorizontalScroll, {

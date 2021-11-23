@@ -2,7 +2,7 @@ import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
-import { HasPlatform, HasRootRef } from '../../types';
+import { HasComponent, HasPlatform, HasRootRef } from '../../types';
 import { hasReactNode, isPrimitiveReactNode } from '../../lib/utils';
 import { Platform } from '../../lib/platform';
 import Headline from '../Typography/Headline/Headline';
@@ -26,7 +26,7 @@ export interface HeaderProps extends React.HTMLAttributes<HTMLElement>, HasRootR
   multiline?: boolean;
 }
 
-type HeaderContentProps = Pick<HeaderProps, 'children' | 'mode'> & HasPlatform & { Component: React.ElementType };
+type HeaderContentProps = Pick<HeaderProps, 'children' | 'mode'> & HasPlatform & HasComponent;
 
 const HeaderContent: React.FC<HeaderContentProps> = ({ platform, mode, ...restProps }) => {
   if (platform === Platform.IOS) {
@@ -58,7 +58,7 @@ const HeaderContent: React.FC<HeaderContentProps> = ({ platform, mode, ...restPr
   }
 };
 
-type HeaderAsideProps = Pick<HeaderProps, 'aside'> & HasPlatform & { Component: React.ElementType };
+type HeaderAsideProps = Pick<HeaderProps, 'aside'> & HasPlatform & HasComponent;
 
 const HeaderAside: React.FC<HeaderAsideProps> = ({ platform, ...restProps }) => {
   return platform === Platform.VKCOM
@@ -66,7 +66,7 @@ const HeaderAside: React.FC<HeaderAsideProps> = ({ platform, ...restProps }) => 
     : <Text weight="regular" {...restProps} />;
 };
 
-type HeaderSubtitleProps = Pick<HeaderProps, 'subtitle' | 'mode'> & { Component: React.ElementType };
+type HeaderSubtitleProps = Pick<HeaderProps, 'subtitle' | 'mode'> & HasComponent;
 
 const HeaderSubtitle: React.FC<HeaderSubtitleProps> = ({ mode, ...restProps }) => {
   return mode === 'secondary'

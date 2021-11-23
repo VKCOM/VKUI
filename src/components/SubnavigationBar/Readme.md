@@ -1,7 +1,7 @@
 В режиме `fixed` может потребоваться уменьшить размер шрифта у `SubnavigationButton`, чтобы текст показывался полностью.
 За это отвечает свойство `textLevel` у `SubnavigationButton`.
 
-```jsx
+```jsx { "props": { "layout": false, "adaptivity": true } }
 import { useState } from 'react';
 
 const MODAL_NAME = 'filters';
@@ -122,91 +122,95 @@ const SubnavigationBarExample = () => {
   );
 
   return (
-    <View activePanel={activePanel} modal={modal}>
-      <Panel id="example">
-        <PanelHeader>SubnavigationBar</PanelHeader>
-        <Group>
-          <SubnavigationBar>
-            <SubnavigationButton
-              before={<Icon24Filter/>}
-              selected={filtersCount > 0}
-              expandable
-              after={filtersCount > 0 && <Counter mode="primary" size="s">{filtersCount}</Counter>}
-              onClick={openModal}
-            >
-              Фильтры
-            </SubnavigationButton>
+    <SplitLayout modal={modal}>
+      <SplitCol>
+      <View activePanel={activePanel}>
+        <Panel id="example">
+          <PanelHeader>SubnavigationBar</PanelHeader>
+          <Group>
+            <SubnavigationBar>
+              <SubnavigationButton
+                before={<Icon24Filter/>}
+                selected={filtersCount > 0}
+                expandable
+                after={filtersCount > 0 && <Counter mode="primary" size="s">{filtersCount}</Counter>}
+                onClick={openModal}
+              >
+                Фильтры
+              </SubnavigationButton>
 
-            <SubnavigationButton
-              selected={sizeSelected}
-              onClick={() => setSizeSelected(!sizeSelected)}
-            >
-              Мой размер
-            </SubnavigationButton>
+              <SubnavigationButton
+                selected={sizeSelected}
+                onClick={() => setSizeSelected(!sizeSelected)}
+              >
+                Мой размер
+              </SubnavigationButton>
 
-            <SubnavigationButton
-              selected={inStockSelected}
-              onClick={() => setInStockSelected(!inStockSelected)}
-            >
-              В наличии
-            </SubnavigationButton>
+              <SubnavigationButton
+                selected={inStockSelected}
+                onClick={() => setInStockSelected(!inStockSelected)}
+              >
+                В наличии
+              </SubnavigationButton>
 
-            <SubnavigationButton
-              selected={highRatingSelected}
-              onClick={() => setHighRatingSelected(!highRatingSelected)}
-            >
-              Высокий рейтинг
-            </SubnavigationButton>
+              <SubnavigationButton
+                selected={highRatingSelected}
+                onClick={() => setHighRatingSelected(!highRatingSelected)}
+              >
+                Высокий рейтинг
+              </SubnavigationButton>
 
-            <SubnavigationButton
-              before={<Icon24FavoriteOutline/>}
-              selected={faveSelected}
-              onClick={() => setFaveSelected(!faveSelected)}
-            >
-              Избранное
-            </SubnavigationButton>
-          </SubnavigationBar>
-        </Group>
+              <SubnavigationButton
+                before={<Icon24FavoriteOutline/>}
+                selected={faveSelected}
+                onClick={() => setFaveSelected(!faveSelected)}
+              >
+                Избранное
+              </SubnavigationButton>
+            </SubnavigationBar>
+          </Group>
 
-        <Group>
-          <SubnavigationBar mode="fixed">
-            <SubnavigationButton
-              before={<Icon24ScanViewfinderOutline />}
-              size="l"
-              textLevel={viewWidth <= ViewWidth.MOBILE ? 3 : 1}
-              onClick={() => setActivePanel('add_friend')}
-            >
-              Сканировать QR
-            </SubnavigationButton>
+          <Group>
+            <SubnavigationBar mode="fixed">
+              <SubnavigationButton
+                before={<Icon24ScanViewfinderOutline />}
+                size="l"
+                textLevel={viewWidth <= ViewWidth.MOBILE ? 3 : 1}
+                onClick={() => setActivePanel('add_friend')}
+              >
+                Сканировать QR
+              </SubnavigationButton>
 
-            <SubnavigationButton
-              before={<Icon24UserAddOutline />}
-              size="l"
-              textLevel={viewWidth <= ViewWidth.MOBILE ? 3 : 1}
-              onClick={() => setActivePanel('add_friend')}
-            >
-              Добавить друга
-            </SubnavigationButton>
-          </SubnavigationBar>
+              <SubnavigationButton
+                before={<Icon24UserAddOutline />}
+                size="l"
+                textLevel={viewWidth <= ViewWidth.MOBILE ? 3 : 1}
+                onClick={() => setActivePanel('add_friend')}
+              >
+                Добавить друга
+              </SubnavigationButton>
+            </SubnavigationBar>
 
-          <Header>Важные</Header>
-          <SimpleCell before={<Avatar src={getAvatarUrl('user_wayshev')} />}>Иван Барышев</SimpleCell>
-          <SimpleCell before={<Avatar src={getAvatarUrl('user_lihachyov')} />}>Михаил Лихачёв</SimpleCell>
-          <SimpleCell before={<Avatar src={getAvatarUrl('user_arthurstam')} />}>Artur Stambultsian</SimpleCell>
-        </Group>
-      </Panel>
-      <Panel id="add_friend">
-        <PanelHeader
-          left={<PanelHeaderBack onClick={() => setActivePanel('example')} />}
-        >Добавить друга</PanelHeader>
+            <Header>Важные</Header>
+            <SimpleCell before={<Avatar src={getAvatarUrl('user_wayshev')} />}>Иван Барышев</SimpleCell>
+            <SimpleCell before={<Avatar src={getAvatarUrl('user_lihachyov')} />}>Михаил Лихачёв</SimpleCell>
+            <SimpleCell before={<Avatar src={getAvatarUrl('user_arthurstam')} />}>Artur Stambultsian</SimpleCell>
+          </Group>
+        </Panel>
+        <Panel id="add_friend">
+          <PanelHeader
+            left={<PanelHeaderBack onClick={() => setActivePanel('example')} />}
+          >Добавить друга</PanelHeader>
 
-        <Group>
-          <SimpleCell before={<Avatar src={getAvatarUrl('user_wayshev')} />}>Иван Барышев</SimpleCell>
-          <SimpleCell before={<Avatar src={getAvatarUrl('user_lihachyov')} />}>Михаил Лихачёв</SimpleCell>
-          <SimpleCell before={<Avatar src={getAvatarUrl('user_arthurstam')} />}>Artur Stambultsian</SimpleCell>
-        </Group>
-      </Panel>
-    </View>
+          <Group>
+            <SimpleCell before={<Avatar src={getAvatarUrl('user_wayshev')} />}>Иван Барышев</SimpleCell>
+            <SimpleCell before={<Avatar src={getAvatarUrl('user_lihachyov')} />}>Михаил Лихачёв</SimpleCell>
+            <SimpleCell before={<Avatar src={getAvatarUrl('user_arthurstam')} />}>Artur Stambultsian</SimpleCell>
+          </Group>
+        </Panel>
+      </View>
+      </SplitCol>
+    </SplitLayout>
   );
 };
 

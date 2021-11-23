@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { HasComponent } from '../../types';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { getTitleFromChildren, hasReactNode } from '../../lib/utils';
@@ -27,9 +28,7 @@ export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
   expandable?: boolean;
 }
 
-interface SubnavButtonTypographyProps extends Pick<SubnavigationButtonProps, 'textLevel'> {
-  Component?: React.ElementType;
-}
+type SubnavButtonTypographyProps = Pick<SubnavigationButtonProps, 'textLevel'> & HasComponent;
 
 const SubnavigationButtonTypography: React.FC<SubnavButtonTypographyProps> = ({ textLevel, ...restProps }: SubnavButtonTypographyProps) => {
   if (textLevel === 1) {

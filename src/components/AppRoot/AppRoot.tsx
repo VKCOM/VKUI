@@ -133,6 +133,7 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(({
       appRoot: rootRef,
       portalRoot: portalRoot,
       embedded: mode === 'embedded',
+      keyboardInput: isKeyboardInputActive,
       mode,
     }}>
       <ScrollContext.Provider value={scrollController}>

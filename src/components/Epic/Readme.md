@@ -29,7 +29,7 @@ const Example = withAdaptivity(({ viewWidth }) => {
       style={{ justifyContent: "center" }}
     >
       {isDesktop && (
-        <SplitCol fixed width="280px" maxWidth="280px">
+        <SplitCol fixed width={280} maxWidth={280}>
           <Panel>
             {hasHeader && <PanelHeader />}
             <Group>
@@ -135,6 +135,7 @@ const Example = withAdaptivity(({ viewWidth }) => {
               onClick={onStoryChange}
               selected={activeStory === 'profile'}
               data-story="profile"
+              indicator={<Badge mode="prominent" />}
               text="Профиль"
             ><Icon28UserCircleOutline /></TabbarItem>
           </Tabbar>

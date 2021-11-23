@@ -117,9 +117,9 @@ const Search: React.FC<SearchProps> = ({
             }
             {!!value &&
               <Touch onStart={onIconCancelClickStart} vkuiClass="Search__icon">
-                {platform === VKCOM
-                  ? <Icon24Cancel />
-                  : <Icon16Clear />
+                {platform === IOS
+                  ? <Icon16Clear />
+                  : <Icon24Cancel />
                 }
               </Touch>
             }

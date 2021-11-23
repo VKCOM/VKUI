@@ -46,7 +46,10 @@ const CardScroll: React.FC<CardScrollProps> = ({ children, size, sizeX, ...restP
 
   function getScrollToRight(offset: number): number {
     const containerWidth = refContainer.current.offsetWidth;
-    const slide = Array.from(refContainer.current.children).find((el: HTMLElement) => el.offsetLeft + el.offsetWidth - offset > containerWidth) as HTMLElement;
+    const slide = Array.prototype.find.call(
+      refContainer.current.children,
+      (el: HTMLElement) => el.offsetLeft + el.offsetWidth - offset > containerWidth,
+    ) as HTMLElement;
 
     if (!slide) {
       return offset;

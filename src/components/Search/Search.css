@@ -30,7 +30,7 @@
 }
 
 .Search__input {
-  -webkit-appearance: textfield;
+  -webkit-appearance: none; /* не используем textfield из-за бага в iOS 15.1 http://www.openradar.me/FB9744107 */
   border: none;
   margin: 0;
   height: var(--search_default_height);

@@ -4,7 +4,7 @@
 */
 body[scheme="vkcom_light"], [scheme="vkcom_light"] {
   --accent: #5181b8;
-  --accent_alternate: #2787f5;
+  --accent_alternate: #0077ff;
   --action_sheet_action_foreground: #5181b8;
   --action_sheet_separator: rgba(0, 0, 0, 0.12);
   --activity_indicator_tint: #aeb7c2;
@@ -71,7 +71,7 @@ body[scheme="vkcom_light"], [scheme="vkcom_light"] {
   --feed_recommended_friend_promo_background: #5181b8;
   --field_background: #f7f8fa;
   --field_border: #dce1e6;
-  --field_error_background: #ff5c5c;
+  --field_error_background: #faebeb;
   --field_error_border: #e64646;
   --field_text_placeholder: #818c99;
   --field_valid_border: #4bb34b;
@@ -96,7 +96,7 @@ body[scheme="vkcom_light"], [scheme="vkcom_light"] {
   --header_text_alternate: #000000;
   --header_text_secondary: #818c99;
   --header_tint: #aeb7c2;
-  --header_tint_alternate: #2787f5;
+  --header_tint_alternate: #0077ff;
   --icon_alpha_placeholder: #ffffff;
   --icon_medium: #6f7985;
   --icon_medium_alpha: rgba(0, 0, 0, 0.48);

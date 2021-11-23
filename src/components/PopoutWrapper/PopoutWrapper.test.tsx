@@ -35,7 +35,9 @@ describe('PopoutWrapper', () => {
     it('after animation if mask', () => {
       render(<PopoutWrapper hasMask />);
       expect(isOpened()).toBe(false);
-      act(() => jest.runAllTimers());
+      act(() => {
+        jest.runAllTimers();
+      });
       expect(isOpened()).toBe(true);
     });
   });

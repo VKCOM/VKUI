@@ -33,7 +33,9 @@ const Tabbar: React.FunctionComponent<TabbarProps> = (props: TabbarProps) => {
       })}
       {...restProps}
     >
-      {children}
+      <div vkuiClass="Tabbar__in">
+        {children}
+      </div>
     </div>
   );
 };

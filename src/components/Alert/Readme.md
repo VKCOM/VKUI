@@ -22,7 +22,7 @@
 > 4. В VKCOM версии возможно только горизонтальное расположение кнопок.
 > 5.  Порядок кнопок должен быть одинаковым на всех платформах (см. пункт 2).
 
-```jsx
+```jsx { "props": { "layout": false, "adaptivity": true } }
 class Example extends React.Component {
   constructor(props) {
     super(props);
@@ -96,16 +96,20 @@ class Example extends React.Component {
 
   render() {
     return (
-      <View popout={this.state.popout} activePanel="alert">
-        <Panel id="alert">
-          <PanelHeader>Alert</PanelHeader>
-          <Group>
-            <CellButton onClick={this.openAction}>Лишить права</CellButton>
-            <CellButton onClick={this.openDeleteion}>Удалить документ</CellButton>
-            {this.state.actionsLog.map((value, i) => <Div key={i}>{value}</Div>)}
-          </Group>
-        </Panel>
-      </View>
+      <SplitLayout popout={this.state.popout}>
+        <SplitCol>
+        <View activePanel="alert">
+          <Panel id="alert">
+            <PanelHeader>Alert</PanelHeader>
+            <Group>
+              <CellButton onClick={this.openAction}>Лишить права</CellButton>
+              <CellButton onClick={this.openDeleteion}>Удалить документ</CellButton>
+              {this.state.actionsLog.map((value, i) => <Div key={i}>{value}</Div>)}
+            </Group>
+          </Panel>
+        </View>
+        </SplitCol>
+      </SplitLayout>
     )
   }
 }

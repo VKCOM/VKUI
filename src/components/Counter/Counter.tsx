@@ -6,7 +6,7 @@ import Caption from '../Typography/Caption/Caption';
 import Text from '../Typography/Text/Text';
 import { VKCOM } from '../../lib/platform';
 import { hasReactNode } from '../../lib/utils';
-import { HasPlatform } from '../../types';
+import { HasComponent, HasPlatform } from '../../types';
 import './Counter.css';
 
 export interface CounterProps extends React.HTMLAttributes<HTMLSpanElement> {
@@ -17,7 +17,7 @@ export interface CounterProps extends React.HTMLAttributes<HTMLSpanElement> {
   size?: 's' | 'm';
 }
 
-type CounterTypographyProps = Pick<CounterProps, 'size'> & HasPlatform & { Component?: React.ElementType };
+type CounterTypographyProps = Pick<CounterProps, 'size'> & HasPlatform & HasComponent;
 
 const CounterTypography: React.FC<CounterTypographyProps> = ({ size, platform, ...restProps }) => {
   return size === 's'

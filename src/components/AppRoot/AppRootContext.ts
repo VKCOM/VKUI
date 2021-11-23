@@ -5,6 +5,7 @@ export interface AppRootContextInterface {
   portalRoot?: HTMLDivElement;
   embedded?: boolean;
   mode?: 'partial' | 'embedded' | 'full';
+  keyboardInput?: boolean;
 }
 
 export const AppRootContext = React.createContext<AppRootContextInterface>({

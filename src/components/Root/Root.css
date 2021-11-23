@@ -21,6 +21,11 @@
   overflow: hidden;
 }
 
+.Root__scrollCompensation {
+  width: 100%;
+  height: 100%;
+}
+
 .Root__view--show-back,
 .Root__view--hide-forward {
   z-index: 1;

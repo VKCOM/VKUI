@@ -10,7 +10,7 @@ import './Settings.css';
 import { Platform, useAdaptivity, ViewWidth } from '@vkui';
 import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
 
-export const Settings = ({ layout }) => {
+export const Settings = ({ adaptivity }) => {
   const { viewWidth } = useAdaptivity();
   const isMobile = viewWidth <= ViewWidth.MOBILE;
   return (
@@ -35,7 +35,7 @@ export const Settings = ({ layout }) => {
                   value={context.scheme}
                 />
               )}
-              {layout && !isMobile &&
+              {adaptivity && !isMobile &&
                 <Fragment>
                   <WebviewTypeSelect
                     onChange={(webviewType) => context.setContext({ webviewType })}
