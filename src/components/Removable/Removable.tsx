@@ -36,14 +36,16 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
   removePlaceholderString,
   children,
 }) => {
-  const { document } = useDOM();
+  const { window } = useDOM();
 
   const removeButtonRef = React.useRef(null);
   const [removeOffset, updateRemoveOffset] = React.useState(0);
 
-  useGlobalEventListener(document, 'click', removeOffset > 0 && (() => {
-    updateRemoveOffset(0);
-  }));
+  useGlobalEventListener(window, 'click', () => {
+    if (removeOffset > 0) {
+      updateRemoveOffset(0);
+    }
+  });
 
   const onRemoveTransitionEnd = () => {
     if (removeOffset > 0) {
@@ -51,7 +53,9 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
     }
   };
 
-  const onRemoveActivateClick = () => {
+  const onRemoveActivateClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+
     const { offsetWidth = 0 } = removeButtonRef?.current;
     updateRemoveOffset(offsetWidth);
   };
@@ -84,7 +88,6 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
         getRootRef={removeButtonRef}
         vkuiClass="Removable__remove"
         onClick={onRemoveClick}
-        onTransitionEnd={onRemoveTransitionEnd}
       >
         <span vkuiClass="Removable__remove-in">{removePlaceholder}</span>
       </Tappable>
