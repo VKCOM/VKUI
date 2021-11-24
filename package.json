@@ -23,13 +23,11 @@
     "@babel/core": "^7.15.0",
     "@babel/parser": "^7.15.0",
     "@babel/plugin-proposal-class-properties": "^7.14.5",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.16.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.14.7",
     "@babel/plugin-transform-runtime": "^7.14.0",
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-react": "^7.14.5",
     "@babel/preset-typescript": "^7.15.0",
-    "@babel/runtime-corejs3": "^7.16.3",
     "@size-limit/preset-small-lib": "^4.9.1",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.1",
@@ -182,7 +180,7 @@
     "test:static"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.14.6",
+    "@babel/runtime-corejs3": "^7.16.3",
     "@popperjs/core": "^2.9.2",
     "@vkontakte/vkjs": "^0.22.1",
     "mitt": "^3.0.0",
