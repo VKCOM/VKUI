@@ -4,7 +4,7 @@ import { classNames } from '../../lib/classNames';
 import { withPlatform } from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
 import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
-import ModalRootContext, { useModalRegistry } from '../ModalRoot/ModalRootContext';
+import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
 import { ModalType } from '../ModalRoot/types';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';

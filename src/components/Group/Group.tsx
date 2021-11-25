@@ -7,7 +7,7 @@ import Separator from '../Separator/Separator';
 import { hasReactNode } from '../../lib/utils';
 import { Caption } from '../Typography/Caption/Caption';
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
-import ModalRootContext from '../ModalRoot/ModalRootContext';
+import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import './Group.css';
 
 export interface GroupProps extends HasRootRef<HTMLElement>, React.HTMLAttributes<HTMLElement>, AdaptivityProps {

@@ -41,5 +41,3 @@ export function useModalRegistry(id: string, type: ModalType) {
   }).current;
   return { refs };
 }
-
-export default ModalRootContext;

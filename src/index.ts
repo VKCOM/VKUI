@@ -58,7 +58,7 @@ export type { SnackbarProps } from './components/Snackbar/Snackbar';
 export { ModalRoot } from './components/ModalRoot/ModalRootAdaptive';
 export type { ModalRootProps } from './components/ModalRoot/ModalRootAdaptive';
 export { withModalRootContext } from './components/ModalRoot/withModalRootContext';
-export { default as ModalRootContext } from './components/ModalRoot/ModalRootContext';
+export { ModalRootContext } from './components/ModalRoot/ModalRootContext';
 export { default as ModalPage } from './components/ModalPage/ModalPage';
 export type { ModalPageProps } from './components/ModalPage/ModalPage';
 export { default as ModalPageHeader } from './components/ModalPageHeader/ModalPageHeader';
