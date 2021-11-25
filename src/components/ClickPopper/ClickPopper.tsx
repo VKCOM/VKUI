@@ -57,7 +57,7 @@ export const ClickPopper: React.FC<ClickPopperProps> = ({
     }
   });
 
-  const targetClickEvent = useEventListener('pointerup', () => {
+  const targetClickEvent = useEventListener('click', () => {
     setShown(!shown);
   });
 
