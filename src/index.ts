@@ -75,7 +75,7 @@ export { Badge } from './components/Badge/Badge';
 export type { BadgeProps } from './components/Badge/Badge';
 export { Button } from './components/Button/Button';
 export type { ButtonProps } from './components/Button/Button';
-export { default as IconButton } from './components/IconButton/IconButton';
+export { IconButton } from './components/IconButton/IconButton';
 export type { IconButtonProps } from './components/IconButton/IconButton';
 export { default as Card } from './components/Card/Card';
 export type { CardProps } from './components/Card/Card';

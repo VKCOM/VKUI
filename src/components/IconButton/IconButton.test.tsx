@@ -1,5 +1,5 @@
 import { baselineComponent } from '../../testing/utils';
-import IconButton, { IconButtonProps } from './IconButton';
+import { IconButton, IconButtonProps } from './IconButton';
 import { render, screen } from '@testing-library/react';
 import { Icon28VoiceOutline } from '@vkontakte/icons';
 

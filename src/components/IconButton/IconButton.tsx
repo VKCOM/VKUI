@@ -14,7 +14,7 @@ export interface IconButtonProps extends TappableProps {
   icon?: React.ReactNode;
 }
 
-const IconButton: React.FC<IconButtonProps> = ({
+export const IconButton: React.FC<IconButtonProps> = withAdaptivity(({
   icon,
   sizeY,
   children,
@@ -37,12 +37,10 @@ const IconButton: React.FC<IconButtonProps> = ({
       {icon || children}
     </Tappable>
   );
-};
+}, {
+  sizeY: true,
+});
 
 IconButton.defaultProps = {
   Component: 'button',
 };
-
-export default withAdaptivity(IconButton, {
-  sizeY: true,
-});
