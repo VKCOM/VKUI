@@ -27,7 +27,7 @@ export { SplitCol } from './components/SplitCol/SplitCol';
 export type { SplitColProps } from './components/SplitCol/SplitCol';
 export { Epic } from './components/Epic/Epic';
 export type { EpicProps } from './components/Epic/Epic';
-export { default as Tabbar } from './components/Tabbar/Tabbar';
+export { Tabbar } from './components/Tabbar/Tabbar';
 export type { TabbarProps } from './components/Tabbar/Tabbar';
 export { default as TabbarItem } from './components/TabbarItem/TabbarItem';
 export type { TabbarItemProps } from './components/TabbarItem/TabbarItem';
