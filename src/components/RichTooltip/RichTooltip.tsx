@@ -10,16 +10,13 @@ import './RichTooltip.css';
 export interface RichTooltipProps extends HoverPopperProps {
   /**
    * @ignore
-   * Можно было бы использовать Omit, но react-docgen-typescript в таком случае выкидывает из документации все свойства наследуемого интерфейса
-   * https://github.com/styleguidist/react-docgen-typescript/issues/335
+   * Можно было бы использовать Omit, но react-docgen в таком случае выкидывает из документации все свойства наследуемого интерфейса
    */
   arrow?: HoverPopperProps['arrow'];
   /**
    * @ignore
    */
   arrowClassName?: HoverPopperProps['arrowClassName'];
-  text?: React.ReactNode;
-  header?: React.ReactNode;
 }
 
 export const RichTooltip: React.FC<RichTooltipProps> = ({ children, ...popperProps }: RichTooltipProps) => {

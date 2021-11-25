@@ -6,13 +6,17 @@ import { usePlatform } from '../../hooks/usePlatform';
 import './Dropdown.css';
 
 export interface DropdownProps extends HoverPopperProps, ClickPopperProps {
-  action?: 'click' | 'hover';
   /**
    * @ignore
-   * Можно было бы использовать Omit, но react-docgen-typescript в таком случае выкидывает из документации все свойства наследуемого интерфейса
-   * https://github.com/styleguidist/react-docgen-typescript/issues/335
+   * Можно было бы использовать Omit, но react-docgen в таком случае выкидывает из документации все свойства наследуемого интерфейса
    */
   arrow?: HoverPopperProps['arrow'];
+  /**
+   * @ignore
+   */
+  arrowClassName?: HoverPopperProps['arrowClassName'];
+
+  action?: 'click' | 'hover';
   /**
    * Актуально только для action="hover"
    * Количество миллисекунд, после которых произойдет показ дропдауна
@@ -23,10 +27,6 @@ export interface DropdownProps extends HoverPopperProps, ClickPopperProps {
    * Количество миллисекунд, после которых произойдет скрытие дропдауна
    */
   hideDelay?: HoverPopperProps['hideDelay'];
-  /**
-   * @ignore
-   */
-  arrowClassName?: HoverPopperProps['arrowClassName'];
 }
 
 export const Dropdown: React.FC<DropdownProps> = ({ action = 'click', hideDelay, showDelay, ...popperProps }: DropdownProps) => {

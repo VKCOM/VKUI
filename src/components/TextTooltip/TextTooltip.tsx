@@ -10,10 +10,9 @@ import './TextTooltip.css';
 export interface TextTooltipProps extends HoverPopperProps {
   /**
    * @ignore
-   * Можно было бы использовать Omit, но react-docgen-typescript в таком случае выкидывает из документации все свойства наследуемого интерфейса
-   * https://github.com/styleguidist/react-docgen-typescript/issues/335
+   * Можно было бы использовать Omit, но react-docgen в таком случае выкидывает из документации все свойства наследуемого интерфейса
    */
-  content?: React.ReactNode;
+  content?: HoverPopperProps['content'];
   /**
    * @ignore
    */
@@ -22,6 +21,7 @@ export interface TextTooltipProps extends HoverPopperProps {
    * @ignore
    */
   arrowClassName?: HoverPopperProps['arrowClassName'];
+
   text?: React.ReactNode;
   header?: React.ReactNode;
 }

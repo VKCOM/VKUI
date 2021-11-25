@@ -14,7 +14,7 @@ export const usePatchChildrenRef = <T = HTMLElement>(children: ChildrenElement<T
   const patchedRef = useExternRef<T>(childRef);
   React.useEffect(() => {
     if (!patchedRef.current && process.env.NODE_ENV === 'development') {
-      warn('Кажется в `children` передан компонент, который не поддерживает свойство `getRootRef`. Мы не можем' +
+      warn('Кажется, в `children` передан компонент, который не поддерживает свойство `getRootRef`. Мы не можем' +
         'получить ссылку на корневой dom-элемент этого компонента');
     }
   }, [children.type]);

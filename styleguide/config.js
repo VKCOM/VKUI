@@ -108,7 +108,6 @@ module.exports = {
       }, {
         name: 'Poppers',
         components: () => [
-          '../src/components/Popper/Popper.tsx',
           '../src/components/Dropdown/Dropdown.tsx',
           '../src/components/TextTooltip/TextTooltip.tsx',
           '../src/components/RichTooltip/RichTooltip.tsx',
