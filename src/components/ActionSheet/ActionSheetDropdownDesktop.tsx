@@ -76,9 +76,7 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
       getRootRef={elementRef}
       onClick={onClick}
       style={dropdownStyles}
-      vkuiClass={classNames(getClassName('ActionSheet', platform), 'ActionSheet--desktop', {
-        'ActionSheet--closing': closing,
-      }, `ActionSheet--sizeY-${sizeY}`)}
+      vkuiClass={classNames(getClassName('ActionSheet', platform), 'ActionSheet--desktop', `ActionSheet--sizeY-${sizeY}`)}
     >
       {children}
     </FocusTrap>
