@@ -87,7 +87,7 @@ export { ContentCard } from './components/ContentCard/ContentCard';
 export type { ContentCardProps } from './components/ContentCard/ContentCard';
 export { CellButton } from './components/CellButton/CellButton';
 export type { CellButtonProps } from './components/CellButton/CellButton';
-export { default as Header } from './components/Header/Header';
+export { Header } from './components/Header/Header';
 export type { HeaderProps } from './components/Header/Header';
 export { default as Group } from './components/Group/Group';
 export type { GroupProps } from './components/Group/Group';

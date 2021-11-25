@@ -74,7 +74,7 @@ const HeaderSubtitle: React.FC<HeaderSubtitleProps> = ({ mode, ...restProps }) =
     : <Caption weight="regular" level="1" {...restProps} />;
 };
 
-const Header: React.FC<HeaderProps> = ({
+export const Header: React.FC<HeaderProps> = ({
   mode,
   children,
   subtitle,
@@ -117,5 +117,3 @@ const Header: React.FC<HeaderProps> = ({
 Header.defaultProps = {
   mode: 'primary',
 };
-
-export default Header;
