@@ -1,20 +1,43 @@
 import * as React from 'react';
 import { HoverPopper, HoverPopperProps } from '../HoverPopper/HoverPopper';
-import { ClickPopper, ClickPopperProps } from '../ClickPopper/ClickPopper';
+import { ClickPopper } from '../ClickPopper/ClickPopper';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
+import { Placement } from '../Popper/Popper';
 import './Dropdown.css';
 
-export interface DropdownProps extends HoverPopperProps, ClickPopperProps {
+// Приходится избегать экстендов от HoverPopperProps, ClickPopperProps и PopperProps, потому что react-docgen не умеет в Omit.
+// Ждём либо фикса react-docgen (что вряд ли), либо переезда на react-docgen-typescript, где такой проблемы нет.
+export interface DropdownProps {
   /**
-   * @ignore
-   * Можно было бы использовать Omit, но react-docgen в таком случае выкидывает из документации все свойства наследуемого интерфейса
+   * По умолчанию компонент выберет наилучшее расположение сам. Но его можно задать извне с помощью этого свойства
    */
-  arrow?: HoverPopperProps['arrow'];
+  placement?: Placement;
   /**
-   * @ignore
+   * Отступ по вспомогательной оси
    */
-  arrowClassName?: HoverPopperProps['arrowClassName'];
+  offsetSkidding?: number;
+  /**
+   * Отступ по главной оси
+   */
+  offsetDistance?: number;
+  onPlacementChange?: (data: { placement?: Placement }) => void;
+  /**
+   * Содержимое тултипа
+   */
+  content?: React.ReactNode;
+  /**
+   * Если передан, то тултип будет показыван/скрыт в зависимости от значения свойства
+   */
+  shown?: boolean;
+  /**
+   * Вызывается при каждом изменении видимости тултипа
+   */
+  onShownChange?: (shown: boolean) => void;
+  /**
+   * Либо jsx-элемент (div, button, etc.), либо компонент со свойством `getRootRef`, которое применяется к корневому элементу компонента
+   */
+  children?: React.ReactElement;
 
   action?: 'click' | 'hover';
   /**

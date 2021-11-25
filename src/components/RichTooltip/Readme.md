@@ -2,7 +2,7 @@
 по содержимому. Компонент всё ещё предназначен для информирования пользователей, но внутри допускаются кнопки, ссылки, картинки.
 
 ```jsx { "props": { "layout": false, "iframe": true } }
-<Checkbox style={{marginTop: 10}}>
+<Checkbox>
   Специальные возможности
   <RichTooltip style={{maxWidth: 320}} content={
     <Subhead weight="regular" style={{padding: '8px 12px', color: 'var(--text_primary)'}}>
