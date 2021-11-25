@@ -67,6 +67,7 @@ export const Cell: React.FC<CellProps> = ({
   Component,
   onChange,
   name,
+  value,
   checked,
   defaultChecked,
   getRootRef,
@@ -113,7 +114,7 @@ export const Cell: React.FC<CellProps> = ({
 
   let checkbox;
   if (selectable) {
-    const checkboxProps: CellCheckboxProps = { name, onChange, defaultChecked, checked, disabled };
+    const checkboxProps: CellCheckboxProps = { name, value, onChange, defaultChecked, checked, disabled };
     checkbox = <CellCheckbox vkuiClass="Cell__checkbox" {...checkboxProps} />;
   }
 
