@@ -6,7 +6,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import { hasReactNode } from '../../lib/utils';
 import { Subhead } from '../Typography/Subhead/Subhead';
-import Caption from '../Typography/Caption/Caption';
+import { Caption } from '../Typography/Caption/Caption';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import './FormItem.css';

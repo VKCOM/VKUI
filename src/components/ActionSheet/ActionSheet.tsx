@@ -6,7 +6,7 @@ import { ActionSheetDropdownDesktop } from './ActionSheetDropdownDesktop';
 import { ActionSheetDropdown } from './ActionSheetDropdown';
 import { hasReactNode, noop } from '../../lib/utils';
 import { ActionSheetContext, ItemClickHandler } from './ActionSheetContext';
-import Caption from '../Typography/Caption/Caption';
+import { Caption } from '../Typography/Caption/Caption';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
 import { useAdaptivity } from '../../hooks/useAdaptivity';

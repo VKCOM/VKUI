@@ -250,7 +250,7 @@ export { default as Headline } from './components/Typography/Headline/Headline';
 export type { HeadlineProps } from './components/Typography/Headline/Headline';
 export { default as Text } from './components/Typography/Text/Text';
 export type { TextProps } from './components/Typography/Text/Text';
-export { default as Caption } from './components/Typography/Caption/Caption';
+export { Caption } from './components/Typography/Caption/Caption';
 export type { CaptionProps } from './components/Typography/Caption/Caption';
 export { Subhead } from './components/Typography/Subhead/Subhead';
 export type { SubheadProps } from './components/Typography/Subhead/Subhead';

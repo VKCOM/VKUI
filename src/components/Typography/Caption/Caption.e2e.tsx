@@ -1,5 +1,5 @@
 import { describeScreenshotFuzz } from '../../../testing/e2e/utils';
-import Caption, { CaptionProps } from './Caption';
+import { Caption, CaptionProps } from './Caption';
 
 describe('Caption', () => {
   describeScreenshotFuzz((props: CaptionProps) => <Caption {...props} style={{ marginBottom: 16 }}>Caption lvl{props.level} {props.caps && 'CAPS'} {props.weight}</Caption>, [{

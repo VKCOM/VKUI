@@ -11,7 +11,7 @@ export interface CaptionProps extends React.AllHTMLAttributes<HTMLElement>, HasC
   caps?: boolean;
 }
 
-const Caption: React.FC<CaptionProps> = ({
+export const Caption: React.FC<CaptionProps> = ({
   children,
   weight = 'regular',
   level = '1',
@@ -39,5 +39,3 @@ const Caption: React.FC<CaptionProps> = ({
     </Component>
   );
 };
-
-export default Caption;

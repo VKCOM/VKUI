@@ -3,7 +3,7 @@ import { Icon16Done } from '@vkontakte/icons';
 import { classNames } from '../../lib/classNames';
 import { hasReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
-import Caption from '../Typography/Caption/Caption';
+import { Caption } from '../Typography/Caption/Caption';
 import { HasRootRef } from '../../types';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { warnOnce } from '../../lib/warnOnce';
