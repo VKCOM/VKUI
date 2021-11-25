@@ -60,7 +60,7 @@ const PanelHeaderIn: React.FC<PanelHeaderProps> = ({ children, left, right }) =>
   );
 };
 
-const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
+export const PanelHeader: React.FC<PanelHeaderProps> = withAdaptivity((props: PanelHeaderProps) => {
   const {
     left,
     children,
@@ -114,15 +114,13 @@ const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
       />}
     </div>
   );
-};
+}, {
+  sizeX: true,
+  sizeY: true,
+});
 
 PanelHeader.defaultProps = {
   separator: true,
   transparent: false,
   visor: true,
 };
-
-export default withAdaptivity(PanelHeader, {
-  sizeX: true,
-  sizeY: true,
-});
