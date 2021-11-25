@@ -28,7 +28,7 @@ export interface FixedLayoutState {
   width: string;
 }
 
-const FixedLayout: React.FC<FixedLayoutProps> = ({
+export const FixedLayout: React.FC<FixedLayoutProps> = ({
   children, style, vertical, getRootRef, getRef, filled,
   ...restProps
 }: FixedLayoutProps) => {
@@ -54,5 +54,3 @@ const FixedLayout: React.FC<FixedLayoutProps> = ({
     </TooltipContainer>
   );
 };
-
-export default FixedLayout;
