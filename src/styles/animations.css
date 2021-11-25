@@ -7,3 +7,8 @@
     transform: rotate(360deg);
   }
 }
+
+@keyframes vkui-popper-fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
