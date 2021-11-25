@@ -4,7 +4,7 @@ import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 import Avatar from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import UsersStack from '../UsersStack/UsersStack';
-import RichCell from './RichCell';
+import { RichCell } from './RichCell';
 
 describe('RichCell', () => {
   describeScreenshotFuzz(RichCell, [

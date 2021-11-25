@@ -4,7 +4,7 @@ import { CellButton } from '../CellButton/CellButton';
 import Checkbox from '../Checkbox/Checkbox';
 import Input from '../Input/Input';
 import Radio from '../Radio/Radio';
-import RichCell from '../RichCell/RichCell';
+import { RichCell } from '../RichCell/RichCell';
 import SimpleCell from '../SimpleCell/SimpleCell';
 import { Cell } from '../Cell/Cell';
 

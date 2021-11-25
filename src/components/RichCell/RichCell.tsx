@@ -41,7 +41,7 @@ export interface RichCellProps extends TappableProps {
   multiline?: boolean;
 }
 
-const RichCell: React.FC<RichCellProps> = ({
+export const RichCell: React.FC<RichCellProps> = withAdaptivity(({
   children,
   text,
   caption,
@@ -87,6 +87,4 @@ const RichCell: React.FC<RichCellProps> = ({
       </div>
     </Tappable>
   );
-};
-
-export default withAdaptivity(RichCell, { sizeY: true });
+}, { sizeY: true });
