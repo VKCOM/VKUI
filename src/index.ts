@@ -59,7 +59,7 @@ export { ModalRoot } from './components/ModalRoot/ModalRootAdaptive';
 export type { ModalRootProps } from './components/ModalRoot/ModalRootAdaptive';
 export { withModalRootContext } from './components/ModalRoot/withModalRootContext';
 export { ModalRootContext } from './components/ModalRoot/ModalRootContext';
-export { default as ModalPage } from './components/ModalPage/ModalPage';
+export { ModalPage } from './components/ModalPage/ModalPage';
 export type { ModalPageProps } from './components/ModalPage/ModalPage';
 export { default as ModalPageHeader } from './components/ModalPageHeader/ModalPageHeader';
 export type { ModalPageHeaderProps } from './components/ModalPageHeader/ModalPageHeader';

@@ -29,7 +29,7 @@ export interface ModalPageProps extends React.HTMLAttributes<HTMLDivElement>, Ad
 }
 
 const warn = warnOnce('ModalPage');
-const ModalPage: React.FC<ModalPageProps> = (props: ModalPageProps) => {
+export const ModalPage: React.FC<ModalPageProps> = withAdaptivity((props: ModalPageProps) => {
   const platform = usePlatform();
   const { updateModalHeight } = React.useContext(ModalRootContext);
   const {
@@ -82,15 +82,13 @@ const ModalPage: React.FC<ModalPageProps> = (props: ModalPageProps) => {
       </div>
     </div>
   );
-};
-
-ModalPage.defaultProps = {
-  settlingHeight: 75,
-};
-
-export default withAdaptivity(ModalPage, {
+}, {
   viewWidth: true,
   viewHeight: true,
   sizeX: true,
   hasMouse: true,
 });
+
+ModalPage.defaultProps = {
+  settlingHeight: 75,
+};

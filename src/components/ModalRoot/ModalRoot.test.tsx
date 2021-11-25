@@ -1,6 +1,6 @@
 import { baselineComponent, mountTest } from '../../testing/utils';
 import { render } from '@testing-library/react';
-import ModalPage from '../ModalPage/ModalPage';
+import { ModalPage } from '../ModalPage/ModalPage';
 import ModalCard from '../ModalCard/ModalCard';
 import { ModalRootTouch } from './ModalRoot';
 import { ModalRootDesktop } from './ModalRootDesktop';
