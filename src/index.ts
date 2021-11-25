@@ -93,7 +93,7 @@ export { Group } from './components/Group/Group';
 export type { GroupProps } from './components/Group/Group';
 export { Gradient } from './components/Gradient/Gradient';
 export type { GradientProps } from './components/Gradient/Gradient';
-export { default as List } from './components/List/List';
+export { List } from './components/List/List';
 export { Cell } from './components/Cell/Cell';
 export type { CellProps } from './components/Cell/Cell';
 export { default as RichCell } from './components/RichCell/RichCell';

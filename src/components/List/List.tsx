@@ -5,7 +5,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { ListContext } from './ListContext';
 import './List.css';
 
-const List: React.FunctionComponent<React.HTMLAttributes<HTMLDivElement>> = ({
+export const List: React.FunctionComponent<React.HTMLAttributes<HTMLDivElement>> = ({
   children,
   ...restProps
 }: React.HTMLAttributes<HTMLDivElement>) => {
@@ -26,5 +26,3 @@ const List: React.FunctionComponent<React.HTMLAttributes<HTMLDivElement>> = ({
     </div>
   );
 };
-
-export default List;
