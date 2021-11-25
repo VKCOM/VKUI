@@ -29,7 +29,7 @@ export { Epic } from './components/Epic/Epic';
 export type { EpicProps } from './components/Epic/Epic';
 export { Tabbar } from './components/Tabbar/Tabbar';
 export type { TabbarProps } from './components/Tabbar/Tabbar';
-export { default as TabbarItem } from './components/TabbarItem/TabbarItem';
+export { TabbarItem } from './components/TabbarItem/TabbarItem';
 export type { TabbarItemProps } from './components/TabbarItem/TabbarItem';
 export { default as HorizontalScroll } from './components/HorizontalScroll/HorizontalScroll';
 export type { HorizontalScrollProps } from './components/HorizontalScroll/HorizontalScroll';

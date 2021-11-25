@@ -28,7 +28,7 @@ export interface TabbarItemProps extends
   label?: React.ReactNode;
 }
 
-const TabbarItem: React.FunctionComponent<TabbarItemProps> = ({
+export const TabbarItem: React.FunctionComponent<TabbarItemProps> = ({
   children,
   selected,
   label,
@@ -72,5 +72,3 @@ const TabbarItem: React.FunctionComponent<TabbarItemProps> = ({
     </div>
   </Component>);
 };
-
-export default TabbarItem;
