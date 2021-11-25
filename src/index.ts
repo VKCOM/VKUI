@@ -91,7 +91,7 @@ export { Header } from './components/Header/Header';
 export type { HeaderProps } from './components/Header/Header';
 export { Group } from './components/Group/Group';
 export type { GroupProps } from './components/Group/Group';
-export { default as Gradient } from './components/Gradient/Gradient';
+export { Gradient } from './components/Gradient/Gradient';
 export type { GradientProps } from './components/Gradient/Gradient';
 export { default as List } from './components/List/List';
 export { Cell } from './components/Cell/Cell';
