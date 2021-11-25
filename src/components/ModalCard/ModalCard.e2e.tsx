@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import ModalCard, { ModalCardProps } from './ModalCard';
+import { ModalCard, ModalCardProps } from './ModalCard';
 import Button from '../Button/Button';
 import { ModalRoot } from '../ModalRoot/ModalRootAdaptive';
 import Avatar from '../Avatar/Avatar';

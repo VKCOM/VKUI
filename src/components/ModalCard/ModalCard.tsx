@@ -14,8 +14,7 @@ import './ModalCard.css';
 export interface ModalCardProps extends HasPlatform, AdaptivityProps, NavIdProps, ModalCardBaseProps {}
 
 const warn = warnOnce('ModalCard');
-
-const ModalCard: React.FC<ModalCardProps> = (props: ModalCardProps) => {
+export const ModalCard: React.FC<ModalCardProps> = withAdaptivity(withPlatform((props: ModalCardProps) => {
   const {
     icon,
     header,
@@ -58,14 +57,12 @@ const ModalCard: React.FC<ModalCardProps> = (props: ModalCardProps) => {
       </ModalCardBase>
     </div>
   );
-};
-
-ModalCard.defaultProps = {
-  actionsLayout: 'horizontal',
-};
-
-export default withAdaptivity(withPlatform(ModalCard), {
+}), {
   viewWidth: true,
   viewHeight: true,
   hasMouse: true,
 });
+
+ModalCard.defaultProps = {
+  actionsLayout: 'horizontal',
+};
