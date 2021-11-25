@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import AdaptivityProvider from '../AdaptivityProvider/AdaptivityProvider';
 import { ViewWidth } from '../../hoc/withAdaptivity';
 import { baselineComponent } from '../../testing/utils';
-import Alert from './Alert';
+import { Alert } from './Alert';
 import { ANDROID, IOS } from '../../lib/platform';
 import ConfigProvider from '../ConfigProvider/ConfigProvider';
 

@@ -41,7 +41,7 @@ export type { FixedLayoutProps } from './components/FixedLayout/FixedLayout';
  */
 export { PopoutWrapper } from './components/PopoutWrapper/PopoutWrapper';
 export type { PopoutWrapperProps } from './components/PopoutWrapper/PopoutWrapper';
-export { default as Alert } from './components/Alert/Alert';
+export { Alert } from './components/Alert/Alert';
 export type { AlertProps, AlertActionInterface } from './components/Alert/Alert';
 export { ActionSheet } from './components/ActionSheet/ActionSheet';
 export type { ActionSheetProps } from './components/ActionSheet/ActionSheet';
