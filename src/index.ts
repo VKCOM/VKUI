@@ -61,7 +61,7 @@ export { withModalRootContext } from './components/ModalRoot/withModalRootContex
 export { ModalRootContext } from './components/ModalRoot/ModalRootContext';
 export { ModalPage } from './components/ModalPage/ModalPage';
 export type { ModalPageProps } from './components/ModalPage/ModalPage';
-export { default as ModalPageHeader } from './components/ModalPageHeader/ModalPageHeader';
+export { ModalPageHeader } from './components/ModalPageHeader/ModalPageHeader';
 export type { ModalPageHeaderProps } from './components/ModalPageHeader/ModalPageHeader';
 export { default as ModalCard } from './components/ModalCard/ModalCard';
 export type { ModalCardProps } from './components/ModalCard/ModalCard';

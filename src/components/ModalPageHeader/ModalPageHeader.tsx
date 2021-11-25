@@ -21,7 +21,7 @@ export interface ModalPageHeaderProps extends React.HTMLAttributes<HTMLDivElemen
   separator?: boolean;
 }
 
-const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = (props: ModalPageHeaderProps) => {
+export const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = (props: ModalPageHeaderProps) => {
   const platform = usePlatform();
   const { sizeX } = useAdaptivity();
   const { left, right, children, separator, getRef, ...restProps } = props;
@@ -58,5 +58,3 @@ const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = (props: M
 ModalPageHeader.defaultProps = {
   separator: true,
 };
-
-export default ModalPageHeader;
