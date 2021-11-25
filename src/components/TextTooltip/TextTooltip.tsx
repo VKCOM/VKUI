@@ -4,7 +4,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import { Placement } from '../Popper/Popper';
-import Subhead from '../Typography/Subhead/Subhead';
+import { Subhead } from '../Typography/Subhead/Subhead';
 import { prefixClass } from '../../lib/prefixClass';
 import './TextTooltip.css';
 

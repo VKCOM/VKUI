@@ -9,7 +9,7 @@ export interface SubheadProps extends React.AllHTMLAttributes<HTMLElement>, HasC
   weight: 'regular' | 'medium' | 'semibold' | 'bold';
 }
 
-const Subhead: React.FC<SubheadProps> = ({
+export const Subhead: React.FC<SubheadProps> = ({
   children,
   weight = 'regular',
   Component = 'h4',
@@ -26,5 +26,3 @@ const Subhead: React.FC<SubheadProps> = ({
     </Component>
   );
 };
-
-export default Subhead;

@@ -11,7 +11,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { withAdaptivity, SizeType } from '../../hoc/withAdaptivity';
 import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
-import Subhead from '../Typography/Subhead/Subhead';
+import { Subhead } from '../Typography/Subhead/Subhead';
 import './SimpleCell.css';
 
 export interface SimpleCellOwnProps extends HasComponent {

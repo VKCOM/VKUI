@@ -7,7 +7,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import { TabsProps, TabsModeContext } from '../Tabs/Tabs';
 import Headline from '../Typography/Headline/Headline';
-import Subhead from '../Typography/Subhead/Subhead';
+import { Subhead } from '../Typography/Subhead/Subhead';
 import Text from '../Typography/Text/Text';
 import './TabsItem.css';
 

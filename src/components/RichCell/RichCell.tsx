@@ -5,7 +5,7 @@ import { getClassName } from '../../helpers/getClassName';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { hasReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
-import Subhead from '../Typography/Subhead/Subhead';
+import { Subhead } from '../Typography/Subhead/Subhead';
 import { withAdaptivity } from '../../hoc/withAdaptivity';
 import './RichCell.css';
 

@@ -4,7 +4,7 @@ import { classNames } from '../../lib/classNames';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
-import Subhead from '../Typography/Subhead/Subhead';
+import { Subhead } from '../Typography/Subhead/Subhead';
 import Caption from '../Typography/Caption/Caption';
 import { HasAlign, HasComponent } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';

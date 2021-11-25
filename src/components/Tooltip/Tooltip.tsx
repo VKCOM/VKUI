@@ -2,7 +2,7 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
-import Subhead from '../Typography/Subhead/Subhead';
+import { Subhead } from '../Typography/Subhead/Subhead';
 import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
 import { Modifier, usePopper } from 'react-popper';
 import { Placement } from '@popperjs/core';

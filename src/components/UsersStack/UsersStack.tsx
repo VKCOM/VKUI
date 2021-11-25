@@ -5,7 +5,7 @@ import { hasReactNode } from '../../lib/utils';
 import { classNames } from '../../lib/classNames';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import Caption from '../Typography/Caption/Caption';
-import Subhead from '../Typography/Subhead/Subhead';
+import { Subhead } from '../Typography/Subhead/Subhead';
 import { createMasks } from './masks';
 import { useDOM } from '../../lib/dom';
 import './UsersStack.css';

@@ -252,7 +252,7 @@ export { default as Text } from './components/Typography/Text/Text';
 export type { TextProps } from './components/Typography/Text/Text';
 export { default as Caption } from './components/Typography/Caption/Caption';
 export type { CaptionProps } from './components/Typography/Caption/Caption';
-export { default as Subhead } from './components/Typography/Subhead/Subhead';
+export { Subhead } from './components/Typography/Subhead/Subhead';
 export type { SubheadProps } from './components/Typography/Subhead/Subhead';
 
 /**
