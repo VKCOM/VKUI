@@ -106,6 +106,7 @@
   flex-basis: 0;
   flex-shrink: 0;
   flex-grow: 1;
+  border-radius: 0;
 }
 
 .Tabs--ios.Tabs--segmented .TabsItem__in {
@@ -117,11 +118,13 @@
 }
 
 .Tabs--ios.Tabs--segmented .TabsItem:last-child {
-  border-radius: 0 10px 10px 0;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .Tabs--ios.Tabs--segmented .TabsItem:first-child {
-  border-radius: 10px 0 0 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 .Tabs--ios.Tabs--segmented .TabsItem {
