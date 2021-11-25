@@ -274,7 +274,7 @@ export { useAppearance } from './hooks/useAppearance';
  * Utils
  */
 export { classNamesString as classNames } from './lib/classNames';
-export { default as animate } from './lib/animate';
+export { animate } from './lib/animate';
 export { removeObjectKeys } from './lib/removeObjectKeys';
 export { SSRWrapper } from './lib/SSR';
 export { platform, ANDROID, IOS, VKCOM, Platform, IS_PLATFORM_ANDROID, IS_PLATFORM_IOS } from './lib/platform';

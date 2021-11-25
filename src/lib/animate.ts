@@ -17,7 +17,7 @@ export interface AnimateArgumentsInterface {
   draw: DrawInterface;
 }
 
-export default function animate({ duration, timing, draw }: AnimateArgumentsInterface): void {
+export function animate({ duration, timing, draw }: AnimateArgumentsInterface): void {
   if (!canUseDOM) {
     return;
   }
