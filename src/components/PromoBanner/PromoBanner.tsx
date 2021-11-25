@@ -46,7 +46,7 @@ export interface PromoBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   onClose: () => void;
 }
 
-const PromoBanner = (props: PromoBannerProps) => {
+export const PromoBanner = (props: PromoBannerProps) => {
   const platform = usePlatform();
   const { bannerData = {}, onClose, ...restProps } = props;
 
@@ -107,5 +107,3 @@ const PromoBanner = (props: PromoBannerProps) => {
     </div>
   );
 };
-
-export default PromoBanner;

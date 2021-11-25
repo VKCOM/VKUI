@@ -238,7 +238,7 @@ export {
 /**
  * Advertisement
  */
-export { default as PromoBanner } from './components/PromoBanner/PromoBanner';
+export { PromoBanner } from './components/PromoBanner/PromoBanner';
 export type { PromoBannerProps } from './components/PromoBanner/PromoBanner';
 
 /**
