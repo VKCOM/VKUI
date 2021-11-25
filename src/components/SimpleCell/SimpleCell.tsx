@@ -58,7 +58,7 @@ const SimpleCellTypography: React.FC<SimpleCellTypographyProps> = (props: Simple
     : <Title Component="span" level="3" weight="regular" {...props} />;
 };
 
-const SimpleCell: React.FC<SimpleCellProps> = ({
+export const SimpleCell: React.FC<SimpleCellProps> = withAdaptivity(({
   badge,
   before,
   indicator,
@@ -110,6 +110,4 @@ const SimpleCell: React.FC<SimpleCellProps> = ({
       }
     </Tappable>
   );
-};
-
-export default withAdaptivity(SimpleCell, { sizeY: true });
+}, { sizeY: true });

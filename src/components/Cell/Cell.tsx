@@ -3,7 +3,7 @@ import { classNames } from '../../lib/classNames';
 import { warnOnce } from '../../lib/warnOnce';
 import { getClassName } from '../../helpers/getClassName';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
-import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
+import { SimpleCell, SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { HasPlatform } from '../../types';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import { usePlatform } from '../../hooks/usePlatform';

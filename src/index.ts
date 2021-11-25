@@ -98,7 +98,7 @@ export { Cell } from './components/Cell/Cell';
 export type { CellProps } from './components/Cell/Cell';
 export { RichCell } from './components/RichCell/RichCell';
 export type { RichCellProps } from './components/RichCell/RichCell';
-export { default as SimpleCell } from './components/SimpleCell/SimpleCell';
+export { SimpleCell } from './components/SimpleCell/SimpleCell';
 export type { SimpleCellProps } from './components/SimpleCell/SimpleCell';
 export { HorizontalCell } from './components/HorizontalCell/HorizontalCell';
 export type { HorizontalCellProps } from './components/HorizontalCell/HorizontalCell';
