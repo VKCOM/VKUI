@@ -7,7 +7,7 @@ import './ScreenSpinner.css';
 
 export type ScreenSpinnerProps = React.HTMLAttributes<HTMLDivElement> & SpinnerProps;
 
-const ScreenSpinner: React.FC<ScreenSpinnerProps> = (props: ScreenSpinnerProps) => {
+export const ScreenSpinner: React.FC<ScreenSpinnerProps> = (props: ScreenSpinnerProps) => {
   const { style, className, ...restProps } = props;
   const platform = usePlatform();
 
@@ -29,5 +29,3 @@ ScreenSpinner.defaultProps = {
   'size': 'large',
   'aria-label': 'Пожалуйста, подождите...',
 };
-
-export default ScreenSpinner;

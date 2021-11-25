@@ -47,7 +47,7 @@ export { ActionSheet } from './components/ActionSheet/ActionSheet';
 export type { ActionSheetProps } from './components/ActionSheet/ActionSheet';
 export { ActionSheetItem } from './components/ActionSheetItem/ActionSheetItem';
 export type { ActionSheetItemProps } from './components/ActionSheetItem/ActionSheetItem';
-export { default as ScreenSpinner } from './components/ScreenSpinner/ScreenSpinner';
+export { ScreenSpinner } from './components/ScreenSpinner/ScreenSpinner';
 export type { ScreenSpinnerProps } from './components/ScreenSpinner/ScreenSpinner';
 export { Snackbar } from './components/Snackbar/Snackbar';
 export type { SnackbarProps } from './components/Snackbar/Snackbar';
