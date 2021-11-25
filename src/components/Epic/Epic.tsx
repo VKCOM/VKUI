@@ -14,7 +14,7 @@ export interface EpicProps extends React.HTMLAttributes<HTMLDivElement>, Adaptiv
 
 const warn = warnOnce('Epic');
 
-export const Epic: React.FC<EpicProps> = (props: EpicProps) => {
+export const Epic: React.FC<EpicProps> = withAdaptivity((props: EpicProps) => {
   const platform = usePlatform();
   const scroll = React.useRef<{ [key: string]: number }>({}).current;
   const { activeStory, tabbar, children, viewWidth, ...restProps } = props;
@@ -35,8 +35,6 @@ export const Epic: React.FC<EpicProps> = (props: EpicProps) => {
       {tabbar}
     </div>
   );
-};
-
-export default withAdaptivity(Epic, {
+}, {
   viewWidth: true,
 });

@@ -25,7 +25,7 @@ export { SplitLayout } from './components/SplitLayout/SplitLayout';
 export type { SplitLayoutProps } from './components/SplitLayout/SplitLayout';
 export { SplitCol } from './components/SplitCol/SplitCol';
 export type { SplitColProps } from './components/SplitCol/SplitCol';
-export { default as Epic } from './components/Epic/Epic';
+export { Epic } from './components/Epic/Epic';
 export type { EpicProps } from './components/Epic/Epic';
 export { default as Tabbar } from './components/Tabbar/Tabbar';
 export type { TabbarProps } from './components/Tabbar/Tabbar';
