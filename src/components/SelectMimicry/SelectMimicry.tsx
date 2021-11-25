@@ -7,7 +7,7 @@ import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptiv
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import Headline from '../Typography/Headline/Headline';
-import Text from '../Typography/Text/Text';
+import { Text } from '../Typography/Text/Text';
 import { VKCOM } from '../../lib/platform';
 import '../Select/Select.css';
 

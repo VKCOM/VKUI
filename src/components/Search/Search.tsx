@@ -8,7 +8,7 @@ import { HasPlatform, HasRef } from '../../types';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import { VKUITouchEvent } from '../../lib/touch';
 import { noop } from '../../lib/utils';
-import Text from '../Typography/Text/Text';
+import { Text } from '../Typography/Text/Text';
 import Title from '../Typography/Title/Title';
 import Separator from '../Separator/Separator';
 import { useExternRef } from '../../hooks/useExternRef';

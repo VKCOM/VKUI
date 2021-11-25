@@ -10,7 +10,7 @@ import Tappable from '../Tappable/Tappable';
 import IconButton from '../IconButton/IconButton';
 import Headline from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
-import Text from '../Typography/Text/Text';
+import { Text } from '../Typography/Text/Text';
 import Title from '../Typography/Title/Title';
 import './Banner.css';
 

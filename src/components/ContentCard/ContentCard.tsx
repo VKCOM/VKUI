@@ -2,7 +2,7 @@ import * as React from 'react';
 import Card, { CardProps } from '../Card/Card';
 import { Caption } from '../Typography/Caption/Caption';
 import Title from '../Typography/Title/Title';
-import Text from '../Typography/Text/Text';
+import { Text } from '../Typography/Text/Text';
 import Tappable from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';

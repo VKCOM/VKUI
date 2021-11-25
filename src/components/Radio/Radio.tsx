@@ -9,7 +9,7 @@ import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptiv
 import { hasReactNode } from '../../lib/utils';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import Headline from '../Typography/Headline/Headline';
-import Text from '../Typography/Text/Text';
+import { Text } from '../Typography/Text/Text';
 import './Radio.css';
 
 export interface RadioProps extends

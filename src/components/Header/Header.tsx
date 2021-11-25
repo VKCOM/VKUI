@@ -8,7 +8,7 @@ import { Platform } from '../../lib/platform';
 import Headline from '../Typography/Headline/Headline';
 import { Caption } from '../Typography/Caption/Caption';
 import Title from '../Typography/Title/Title';
-import Text from '../Typography/Text/Text';
+import { Text } from '../Typography/Text/Text';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import './Header.css';
 

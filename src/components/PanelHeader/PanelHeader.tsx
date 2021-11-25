@@ -9,7 +9,7 @@ import { HasRef, HasRootRef } from '../../types';
 import { ConfigProviderContext, WebviewType } from '../ConfigProvider/ConfigProviderContext';
 import { AdaptivityProps, SizeType, withAdaptivity } from '../../hoc/withAdaptivity';
 import { isPrimitiveReactNode } from '../../lib/utils';
-import Text from '../Typography/Text/Text';
+import { Text } from '../Typography/Text/Text';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import './PanelHeader.css';
 
