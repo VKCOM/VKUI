@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { hasReactNode } from '../../lib/utils';
-import Title from '../Typography/Title/Title';
+import { Title } from '../Typography/Title/Title';
 import { Headline } from '../Typography/Headline/Headline';
 import { HasRootRef } from '../../types';
 import './Placeholder.css';

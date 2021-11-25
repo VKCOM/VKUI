@@ -12,7 +12,7 @@ export interface TitleProps extends React.AllHTMLAttributes<HTMLElement>, HasCom
   level: '1' | '2' | '3';
 }
 
-const Title: React.FC<TitleProps> = ({
+export const Title: React.FC<TitleProps> = ({
   children,
   weight = 'regular',
   level = '1',
@@ -54,5 +54,3 @@ const Title: React.FC<TitleProps> = ({
     </Component>
   );
 };
-
-export default Title;

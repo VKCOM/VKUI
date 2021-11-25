@@ -5,7 +5,7 @@ import Tappable from '../Tappable/Tappable';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode, noop } from '../../lib/utils';
 import { Subhead } from '../Typography/Subhead/Subhead';
-import Title from '../Typography/Title/Title';
+import { Title } from '../Typography/Title/Title';
 import { Text } from '../Typography/Text/Text';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { Icon16Done, Icon24Done } from '@vkontakte/icons';

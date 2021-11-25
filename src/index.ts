@@ -244,7 +244,7 @@ export type { PromoBannerProps } from './components/PromoBanner/PromoBanner';
 /**
  * Typography
  */
-export { default as Title } from './components/Typography/Title/Title';
+export { Title } from './components/Typography/Title/Title';
 export type { TitleProps } from './components/Typography/Title/Title';
 export { Headline } from './components/Typography/Headline/Headline';
 export type { HeadlineProps } from './components/Typography/Headline/Headline';

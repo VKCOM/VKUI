@@ -2,7 +2,7 @@ import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
-import Title from '../Typography/Title/Title';
+import { Title } from '../Typography/Title/Title';
 import { Text } from '../Typography/Text/Text';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Caption } from '../Typography/Caption/Caption';
