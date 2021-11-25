@@ -4,7 +4,7 @@ import { classNames } from '../../lib/classNames';
 import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
-import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
+import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { multiRef } from '../../lib/utils';
 import { ModalType } from '../ModalRoot/types';
 import { getNavId, NavIdProps } from '../../lib/getNavId';

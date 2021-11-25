@@ -65,7 +65,7 @@ export { ModalPageHeader } from './components/ModalPageHeader/ModalPageHeader';
 export type { ModalPageHeaderProps } from './components/ModalPageHeader/ModalPageHeader';
 export { ModalCard } from './components/ModalCard/ModalCard';
 export type { ModalCardProps } from './components/ModalCard/ModalCard';
-export { default as ModalDismissButton } from './components/ModalDismissButton/ModalDismissButton';
+export { ModalDismissButton } from './components/ModalDismissButton/ModalDismissButton';
 export type { ModalDismissButtonProps } from './components/ModalDismissButton/ModalDismissButton';
 
 /**

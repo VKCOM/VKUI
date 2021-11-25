@@ -9,7 +9,7 @@ import { AdaptivityProps, ViewHeight, ViewWidth, withAdaptivity } from '../../ho
 import { HasRootRef } from '../../types';
 import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import { IOS } from '../../lib/platform';
-import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
+import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { Icon24Dismiss } from '@vkontakte/icons';
 import { useKeyboard } from '../../hooks/useKeyboard';
 import './ModalCardBase.css';

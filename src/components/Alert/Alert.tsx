@@ -13,7 +13,7 @@ import { hasReactNode } from '../../lib/utils';
 import { Headline } from '../Typography/Headline/Headline';
 import { Title } from '../Typography/Title/Title';
 import { Caption } from '../Typography/Caption/Caption';
-import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
+import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import './Alert.css';
 

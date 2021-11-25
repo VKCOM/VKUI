@@ -7,7 +7,7 @@ import './ModalDismissButton.css';
 
 export type ModalDismissButtonProps = React.HTMLAttributes<HTMLButtonElement>;
 
-const ModalDismissButton: React.FC<ModalDismissButtonProps> = (props: ModalDismissButtonProps) => {
+export const ModalDismissButton: React.FC<ModalDismissButtonProps> = (props: ModalDismissButtonProps) => {
   const platform = usePlatform();
 
   return (
@@ -25,5 +25,3 @@ const ModalDismissButton: React.FC<ModalDismissButtonProps> = (props: ModalDismi
 ModalDismissButton.defaultProps = {
   'aria-label': 'Закрыть',
 };
-
-export default ModalDismissButton;
