@@ -1,7 +1,7 @@
 Тултип, открывающийся при наведеннии мыши на `children`. В отличие от [TextTooltip](#/TextTooltip), имеет меньше ограничений 
 по содержимому. Компонент всё ещё предназначен для информирования пользователей, но внутри допускаются кнопки, ссылки, картинки.
 
-```jsx { "props": { "layout": false, "iframe": false } }
+```jsx { "props": { "layout": false, "iframe": true } }
 <Checkbox style={{marginTop: 10}}>
   Специальные возможности
   <RichTooltip style={{maxWidth: 320}} content={

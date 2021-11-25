@@ -1,13 +1,13 @@
 Может открываться при клике или наведении мыши на `children`. Ограничений по содержимому нет. Предназначен для 
 отрисовки части интерфейса в выпадающем окне.
 
-```jsx { "props": { "layout": false, "iframe": false } }
+```jsx { "props": { "layout": false, "iframe": true } }
 const [shown, setShown] = React.useState(true);
 
 return (
   <React.Fragment>
     <Dropdown action="hover" placement="right" content={<Div><Text>Привет</Text></Div>}>
-      <Button style={{ margin: 50 }}>Наведи</Button>
+      <Button style={{ margin: 20 }}>Наведи</Button>
     </Dropdown>
 
     <Dropdown
@@ -21,9 +21,8 @@ return (
           <FormItem top="Фамилия">
             <Input />
           </FormItem>
-          <FormItem top="Пол">
-             <Radio sizeX="compact" name="gender">Мужской</Radio>
-             <Radio sizeX="compact" name="gender">Женский</Radio>
+          <FormItem top="Соглашение">
+            <Checkbox name="agreement">Согласен</Checkbox>
           </FormItem>
           <FormItem>
             <Button onClick={() => setShown(false)}>Отправить</Button>
@@ -31,7 +30,7 @@ return (
         </FormLayout>
       }
     >
-      <Button style={{ margin: 50 }}>
+      <Button style={{ margin: '20px 0 0 0' }}>
         Кликни
       </Button>
     </Dropdown>
