@@ -9,7 +9,7 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement>, HasRoot
   mode?: 'tint' | 'shadow' | 'outline';
 }
 
-const Card: React.FunctionComponent<CardProps> = ({ mode, children, getRootRef, ...restProps }: CardProps) => {
+export const Card: React.FunctionComponent<CardProps> = ({ mode, children, getRootRef, ...restProps }: CardProps) => {
   const platform = usePlatform();
 
   return (
@@ -28,5 +28,3 @@ const Card: React.FunctionComponent<CardProps> = ({ mode, children, getRootRef, 
 Card.defaultProps = {
   mode: 'tint',
 };
-
-export default Card;
