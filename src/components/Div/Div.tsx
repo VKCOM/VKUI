@@ -14,5 +14,3 @@ export const Div: React.FunctionComponent<DivProps> = ({ children, getRootRef, .
     </div>
   );
 };
-
-export default Div;
