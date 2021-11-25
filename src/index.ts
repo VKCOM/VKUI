@@ -7,7 +7,7 @@ import './styles/common.css';
 /**
  * Layout
  */
-export { default as Root } from './components/Root/Root';
+export { Root } from './components/Root/Root';
 export type { RootProps } from './components/Root/Root';
 export { default as View } from './components/View/View';
 export type { ViewProps } from './components/View/View';

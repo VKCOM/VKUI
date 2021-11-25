@@ -41,7 +41,7 @@ export interface RootState {
   prevView?: string;
 }
 
-const Root: React.FC<RootProps> = ({
+export const Root: React.FC<RootProps> = ({
   popout = null, modal, children,
   activeView: _activeView, onTransition,
   nav,
@@ -150,5 +150,3 @@ const Root: React.FC<RootProps> = ({
     </div>
   );
 };
-
-export default Root;
