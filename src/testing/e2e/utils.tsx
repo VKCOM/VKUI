@@ -17,7 +17,7 @@ import { SizeType, ViewWidth } from '../../components/AdaptivityProvider/Adaptiv
 import { AdaptivityProps, withAdaptivity } from '../../hoc/withAdaptivity';
 import { View } from '../../components/View/View';
 import AppRoot from '../../components/AppRoot/AppRoot';
-import Group from '../../components/Group/Group';
+import { Group } from '../../components/Group/Group';
 
 type AdaptivityFlag = boolean | 'x' | 'y';
 type PropDesc<Props> = { [K in keyof Props]?: Array<Props[K]> } & { $adaptivity?: AdaptivityFlag };

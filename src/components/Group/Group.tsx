@@ -28,7 +28,7 @@ export interface GroupProps extends HasRootRef<HTMLElement>, React.HTMLAttribute
   mode?: 'plain' | 'card';
 }
 
-const Group: React.FC<GroupProps> = (props: GroupProps) => {
+export const Group: React.FC<GroupProps> = withAdaptivity((props: GroupProps) => {
   const { header, description, children, separator, getRootRef, mode, sizeX, ...restProps } = props;
   const { isInsideModal } = React.useContext(ModalRootContext);
   const platform = usePlatform();
@@ -65,10 +65,8 @@ const Group: React.FC<GroupProps> = (props: GroupProps) => {
       )}
     </section>
   );
-};
+}, { sizeX: true });
 
 Group.defaultProps = {
   separator: 'auto',
 };
-
-export default withAdaptivity(Group, { sizeX: true });

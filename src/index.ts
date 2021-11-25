@@ -89,7 +89,7 @@ export { CellButton } from './components/CellButton/CellButton';
 export type { CellButtonProps } from './components/CellButton/CellButton';
 export { Header } from './components/Header/Header';
 export type { HeaderProps } from './components/Header/Header';
-export { default as Group } from './components/Group/Group';
+export { Group } from './components/Group/Group';
 export type { GroupProps } from './components/Group/Group';
 export { default as Gradient } from './components/Gradient/Gradient';
 export type { GradientProps } from './components/Gradient/Gradient';
