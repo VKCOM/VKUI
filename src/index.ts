@@ -31,7 +31,7 @@ export { Tabbar } from './components/Tabbar/Tabbar';
 export type { TabbarProps } from './components/Tabbar/Tabbar';
 export { TabbarItem } from './components/TabbarItem/TabbarItem';
 export type { TabbarItemProps } from './components/TabbarItem/TabbarItem';
-export { default as HorizontalScroll } from './components/HorizontalScroll/HorizontalScroll';
+export { HorizontalScroll } from './components/HorizontalScroll/HorizontalScroll';
 export type { HorizontalScrollProps } from './components/HorizontalScroll/HorizontalScroll';
 export { default as FixedLayout } from './components/FixedLayout/FixedLayout';
 export type { FixedLayoutProps } from './components/FixedLayout/FixedLayout';

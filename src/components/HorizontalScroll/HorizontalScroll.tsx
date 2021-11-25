@@ -114,7 +114,7 @@ function doScroll({
   })();
 }
 
-const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
+export const HorizontalScroll: React.FC<HorizontalScrollProps> = withAdaptivity(({
   children,
   getScrollToLeft,
   getScrollToRight,
@@ -187,8 +187,6 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
       </div>
     </div>
   );
-};
-
-export default withAdaptivity(HorizontalScroll, {
+}, {
   hasMouse: true,
 });
