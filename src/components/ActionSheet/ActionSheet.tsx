@@ -82,7 +82,9 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
     }
   }, [closing]);
 
-  const onItemClick = React.useCallback<ItemClickHandler>((action, autoclose) => (event) => {
+  const onItemClick = React.useCallback<ItemClickHandler>((action, immediateAction, autoclose) => (event) => {
+    event.persist();
+    immediateAction && immediateAction(event);
     if (autoclose) {
       _action.current = () => action && action(event);
       setClosing(true);

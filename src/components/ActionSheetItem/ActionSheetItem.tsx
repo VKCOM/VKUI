@@ -26,6 +26,13 @@ export interface ActionSheetItemProps extends
   autoclose?: boolean;
   selectable?: boolean;
   disabled?: boolean;
+  /**
+   * Если autoclose === true, onClick будет вызван после завершения анимации скрытия и после вызова onClose.
+   * Из этого следует, что в объекте события значения полей типа `currentTarget` будут не определены.
+   * Если вам нужен объект события именно на момент клика, используйте `onImmediateClick`.
+   */
+  onClick?: React.MouseEventHandler<HTMLElement>;
+  onImmediateClick?: React.MouseEventHandler<HTMLElement>;
 }
 
 const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
@@ -43,6 +50,7 @@ const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
   onChange,
   onClick,
   sizeY,
+  onImmediateClick,
   ...restProps
 }: ActionSheetItemProps) => {
   const platform = usePlatform();
@@ -59,7 +67,7 @@ const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
   return (
     <Tappable
       {...restProps}
-      onClick={selectable ? onClick : onItemClick(onClick, autoclose)}
+      onClick={selectable ? onClick : onItemClick(onClick, onImmediateClick, autoclose)}
       activeMode="ActionSheetItem--active"
       vkuiClass={
         classNames(
@@ -130,7 +138,7 @@ const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
             name={name}
             value={value}
             onChange={onChange}
-            onClick={onItemClick(noop, autoclose)}
+            onClick={onItemClick(noop, noop, autoclose)}
             defaultChecked={defaultChecked}
             checked={checked}
             disabled={restProps.disabled}
