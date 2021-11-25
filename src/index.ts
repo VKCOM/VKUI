@@ -17,7 +17,7 @@ export { PanelHeaderButton } from './components/PanelHeaderButton/PanelHeaderBut
 export type { PanelHeaderButtonProps } from './components/PanelHeaderButton/PanelHeaderButton';
 export { PanelHeader } from './components/PanelHeader/PanelHeader';
 export type { PanelHeaderProps } from './components/PanelHeader/PanelHeader';
-export { default as PanelHeaderContent } from './components/PanelHeaderContent/PanelHeaderContent';
+export { PanelHeaderContent } from './components/PanelHeaderContent/PanelHeaderContent';
 export type { PanelHeaderContentProps } from './components/PanelHeaderContent/PanelHeaderContent';
 export { PanelHeaderContext } from './components/PanelHeaderContext/PanelHeaderContext';
 export type { PanelHeaderContextProps } from './components/PanelHeaderContext/PanelHeaderContext';

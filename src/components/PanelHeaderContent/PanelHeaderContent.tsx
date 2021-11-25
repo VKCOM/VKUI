@@ -14,7 +14,7 @@ export interface PanelHeaderContentProps extends React.HTMLAttributes<HTMLDivEle
   status?: React.ReactNode;
 }
 
-const PanelHeaderContent: React.FunctionComponent<PanelHeaderContentProps> = ({
+export const PanelHeaderContent: React.FunctionComponent<PanelHeaderContentProps> = ({
   className,
   style,
   aside,
@@ -62,5 +62,3 @@ const PanelHeaderContent: React.FunctionComponent<PanelHeaderContentProps> = ({
     </div>
   );
 };
-
-export default PanelHeaderContent;
