@@ -8,7 +8,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { hasReactNode } from '../../lib/utils';
 import { Subhead } from '../Typography/Subhead/Subhead';
-import Headline from '../Typography/Headline/Headline';
+import { Headline } from '../Typography/Headline/Headline';
 import { Text } from '../Typography/Text/Text';
 import './Radio.css';
 

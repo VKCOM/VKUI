@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { hasReactNode } from '../../lib/utils';
 import Title from '../Typography/Title/Title';
-import Headline from '../Typography/Headline/Headline';
+import { Headline } from '../Typography/Headline/Headline';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';

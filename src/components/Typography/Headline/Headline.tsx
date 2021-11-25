@@ -9,7 +9,7 @@ export interface HeadlineProps extends React.AllHTMLAttributes<HTMLElement>, Has
   weight: 'regular' | 'medium' | 'semibold';
 }
 
-const Headline: React.FC<HeadlineProps> = ({
+export const Headline: React.FC<HeadlineProps> = ({
   children,
   weight = 'regular',
   Component = 'h3',
@@ -26,5 +26,3 @@ const Headline: React.FC<HeadlineProps> = ({
     </Component>
   );
 };
-
-export default Headline;

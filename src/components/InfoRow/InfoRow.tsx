@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
-import Headline from '../Typography/Headline/Headline';
+import { Headline } from '../Typography/Headline/Headline';
 import { hasReactNode } from '../../lib/utils';
 import './InfoRow.css';
 

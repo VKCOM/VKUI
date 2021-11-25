@@ -10,7 +10,7 @@ import { withPlatform } from '../../hoc/withPlatform';
 import { withAdaptivity, AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 import Button, { ButtonProps } from '../Button/Button';
 import { hasReactNode } from '../../lib/utils';
-import Headline from '../Typography/Headline/Headline';
+import { Headline } from '../Typography/Headline/Headline';
 import Title from '../Typography/Title/Title';
 import { Caption } from '../Typography/Caption/Caption';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';

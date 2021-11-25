@@ -4,7 +4,7 @@ import Tappable from '../Tappable/Tappable';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import { Caption } from '../Typography/Caption/Caption';
-import Headline from '../Typography/Headline/Headline';
+import { Headline } from '../Typography/Headline/Headline';
 import { IOS } from '../../lib/platform';
 import './PanelHeaderContent.css';
 

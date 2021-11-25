@@ -2,7 +2,7 @@ import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
-import Headline from '../Typography/Headline/Headline';
+import { Headline } from '../Typography/Headline/Headline';
 import { Caption } from '../Typography/Caption/Caption';
 import { hasReactNode } from '../../lib/utils';
 import './FormStatus.css';
