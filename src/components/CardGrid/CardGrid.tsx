@@ -9,7 +9,12 @@ export interface CardGridProps extends React.HTMLAttributes<HTMLDivElement>, Ada
   size: 's' | 'm' | 'l';
 }
 
-const CardGrid: React.FunctionComponent<CardGridProps> = ({ children, size, sizeX, ...restProps }: CardGridProps) => {
+export const CardGrid: React.FunctionComponent<CardGridProps> = withAdaptivity(({
+  children,
+  size,
+  sizeX,
+  ...restProps
+}: CardGridProps) => {
   const platform = usePlatform();
 
   return (
@@ -24,10 +29,8 @@ const CardGrid: React.FunctionComponent<CardGridProps> = ({ children, size, size
       {children}
     </div>
   );
-};
+}, { sizeX: true });
 
 CardGrid.defaultProps = {
   size: 's',
 };
-
-export default withAdaptivity(CardGrid, { sizeX: true });
