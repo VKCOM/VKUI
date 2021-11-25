@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import AppRoot from '../components/AppRoot/AppRoot';
-import Button from '../components/Button/Button';
+import { Button } from '../components/Button/Button';
 
 const AppRootTest = () => <AppRoot data-testid="root" mode="embedded"><Button>Hello world</Button></AppRoot>;
 const root = () => screen.getByTestId('root');

@@ -66,7 +66,7 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = (props: ButtonTypograp
   }
 };
 
-const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
+export const Button: React.FC<ButtonProps> = withAdaptivity((props: ButtonProps) => {
   const platform = usePlatform();
   const {
     size,
@@ -126,7 +126,9 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
       </span>
     </Tappable>
   );
-};
+}, {
+  sizeY: true,
+});
 
 Button.defaultProps = {
   mode: 'primary',
@@ -135,7 +137,3 @@ Button.defaultProps = {
   stretched: false,
   stopPropagation: true,
 };
-
-export default withAdaptivity(Button, {
-  sizeY: true,
-});

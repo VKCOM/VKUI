@@ -73,7 +73,7 @@ export type { ModalDismissButtonProps } from './components/ModalDismissButton/Mo
  */
 export { Badge } from './components/Badge/Badge';
 export type { BadgeProps } from './components/Badge/Badge';
-export { default as Button } from './components/Button/Button';
+export { Button } from './components/Button/Button';
 export type { ButtonProps } from './components/Button/Button';
 export { default as IconButton } from './components/IconButton/IconButton';
 export type { IconButtonProps } from './components/IconButton/IconButton';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
-import Button, { VKUIButtonProps } from '../Button/Button';
+import { Button, VKUIButtonProps } from '../Button/Button';
 import { HasRef, HasRootRef } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useExternRef } from '../../hooks/useExternRef';

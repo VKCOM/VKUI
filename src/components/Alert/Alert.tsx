@@ -8,7 +8,7 @@ import { ANDROID, VKCOM, IOS } from '../../lib/platform';
 import { HasPlatform } from '../../types';
 import { withPlatform } from '../../hoc/withPlatform';
 import { withAdaptivity, AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
-import Button, { ButtonProps } from '../Button/Button';
+import { Button, ButtonProps } from '../Button/Button';
 import { hasReactNode } from '../../lib/utils';
 import { Headline } from '../Typography/Headline/Headline';
 import { Title } from '../Typography/Title/Title';

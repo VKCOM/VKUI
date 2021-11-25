@@ -7,7 +7,7 @@ import { ANDROID, VKCOM } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
 import { withAdaptivity, AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 import { Text } from '../Typography/Text/Text';
-import Button from '../Button/Button';
+import { Button } from '../Button/Button';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { usePlatform } from '../../hooks/usePlatform';
