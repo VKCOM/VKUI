@@ -83,7 +83,7 @@ export { CardGrid } from './components/CardGrid/CardGrid';
 export type { CardGridProps } from './components/CardGrid/CardGrid';
 export { CardScroll } from './components/CardScroll/CardScroll';
 export type { CardScrollProps } from './components/CardScroll/CardScroll';
-export { default as ContentCard } from './components/ContentCard/ContentCard';
+export { ContentCard } from './components/ContentCard/ContentCard';
 export type { ContentCardProps } from './components/ContentCard/ContentCard';
 export { CellButton } from './components/CellButton/CellButton';
 export type { CellButtonProps } from './components/CellButton/CellButton';

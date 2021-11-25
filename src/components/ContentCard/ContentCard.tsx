@@ -53,7 +53,7 @@ export interface ContentCardProps extends HasRootRef<HTMLDivElement>, React.ImgH
   mode?: CardProps['mode'];
 }
 
-const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
+export const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
   const {
     subtitle,
     header,
@@ -122,5 +122,3 @@ const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
 ContentCard.defaultProps = {
   mode: 'shadow',
 };
-
-export default ContentCard;
