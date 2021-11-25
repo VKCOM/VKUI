@@ -3,7 +3,7 @@ import ConfigProvider from '../ConfigProvider/ConfigProvider';
 import { IOS } from '../../lib/platform';
 import { baselineComponent, mockScrollContext, mountTest } from '../../testing/utils';
 import { Panel } from '../Panel/Panel';
-import View, { scrollsCache, ViewProps } from './View';
+import { View, scrollsCache, ViewProps } from './View';
 import ViewInfinite from './ViewInfinite';
 import { ComponentType, Fragment } from 'react';
 

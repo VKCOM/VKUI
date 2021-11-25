@@ -95,7 +95,7 @@ export interface ViewState {
   browserSwipe: boolean;
 }
 
-class View extends React.Component<ViewProps & DOMProps, ViewState> {
+class _View extends React.Component<ViewProps & DOMProps, ViewState> {
   constructor(props: ViewProps) {
     super(props);
 
@@ -486,9 +486,15 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
   }
 }
 
-export default withContext(withContext(
+export const View = withContext(
   withContext(
-    withPlatform(withDOM<ViewProps>(View)),
-    SplitColContext, 'splitCol'),
-  ConfigProviderContext, 'configProvider'),
-ScrollContext, 'scroll');
+    withContext(
+      withPlatform(
+        withDOM<ViewProps>(_View),
+      ),
+      SplitColContext, 'splitCol',
+    ),
+    ConfigProviderContext, 'configProvider',
+  ),
+  ScrollContext, 'scroll',
+);
