@@ -11,7 +11,12 @@ export interface CardScrollProps extends React.HTMLAttributes<HTMLDivElement>, A
   size?: 's' | 'm' | 'l';
 }
 
-const CardScroll: React.FC<CardScrollProps> = ({ children, size, sizeX, ...restProps }: CardScrollProps) => {
+export const CardScroll: React.FC<CardScrollProps> = withAdaptivity(({
+  children,
+  size,
+  sizeX,
+  ...restProps
+}: CardScrollProps) => {
   const platform = usePlatform();
 
   const refContainer = React.useRef<HTMLDivElement>(null);
@@ -76,10 +81,8 @@ const CardScroll: React.FC<CardScrollProps> = ({ children, size, sizeX, ...restP
       </HorizontalScroll>
     </div>
   );
-};
+}, { sizeX: true });
 
 CardScroll.defaultProps = {
   size: 's',
 };
-
-export default withAdaptivity(CardScroll, { sizeX: true });
