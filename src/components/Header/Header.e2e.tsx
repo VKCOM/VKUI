@@ -1,5 +1,5 @@
 import { Header, HeaderProps } from './Header';
-import Link from '../Link/Link';
+import { Link } from '../Link/Link';
 import Counter from '../Counter/Counter';
 import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 

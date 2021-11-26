@@ -126,7 +126,7 @@ export { Spinner } from './components/Spinner/Spinner';
 export type { SpinnerProps } from './components/Spinner/Spinner';
 export { PullToRefresh } from './components/PullToRefresh/PullToRefresh';
 export type { PullToRefreshProps } from './components/PullToRefresh/PullToRefresh';
-export { default as Link } from './components/Link/Link';
+export { Link } from './components/Link/Link';
 export type { LinkProps } from './components/Link/Link';
 export { default as Tooltip } from './components/Tooltip/Tooltip';
 export type { TooltipProps } from './components/Tooltip/Tooltip';

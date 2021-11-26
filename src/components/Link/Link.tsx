@@ -6,7 +6,7 @@ import './Link.css';
 
 export type LinkProps = TappableProps;
 
-const Link: React.FC<LinkProps> = ({
+export const Link: React.FC<LinkProps> = ({
   children,
   ...restProps
 }: LinkProps) => {
@@ -25,5 +25,3 @@ const Link: React.FC<LinkProps> = ({
     </Tappable>
   );
 };
-
-export default Link;
