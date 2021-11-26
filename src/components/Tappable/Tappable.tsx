@@ -129,7 +129,7 @@ const Tappable: React.FC<TappableProps> = ({
   sizeX,
   hasMouse,
   deviceHasHover,
-  hasHover: _hasHover = deviceHasHover,
+  hasHover: _hasHover = true,
   hoverMode = 'background',
   hasActive: _hasActive = true,
   activeMode = 'background',
@@ -148,7 +148,7 @@ const Tappable: React.FC<TappableProps> = ({
 
   const hovered = _hovered && !props.disabled;
   const hasActive = _hasActive && !childHover && !props.disabled;
-  const hasHover = _hasHover && !childHover;
+  const hasHover = deviceHasHover && _hasHover && !childHover;
   const isCustomElement = Component !== 'a' && Component !== 'button' && !props.contentEditable;
   const isPresetHoverMode = ['opacity', 'background'].includes(hoverMode);
   const isPresetActiveMode = ['opacity', 'background'].includes(activeMode);
