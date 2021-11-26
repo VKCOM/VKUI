@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Text, classNames, useAdaptivity, ViewWidth } from '@vkui';
+import { Text, classNames, useAdaptivity, ViewWidth, useAppearance } from '@vkui';
 import './Table.css';
 import { throttle } from '@vkontakte/vkjs';
 
@@ -11,6 +11,7 @@ export const TableRenderer = ({
   const { viewWidth } = useAdaptivity();
   const [hasLeft, setHasLeft] = useState(viewWidth <= ViewWidth.MOBILE);
   const [hasRight, setHasRight] = useState(viewWidth <= ViewWidth.MOBILE);
+  const appearance = useAppearance();
   const tableRef = useRef();
   const tableWidth = useRef(0);
   const tableInRef = useRef();
@@ -30,7 +31,7 @@ export const TableRenderer = ({
     <div className={classNames('Table', {
       'Table--hasLeft': hasLeft,
       'Table--hasRight': hasRight,
-    })}>
+    }, `Table--${appearance}`)}>
       <div className="Table__in" onScroll={throttle(updateBorders, 50)} ref={tableInRef}>
         <table className="Table__main" ref={tableRef}>
           <thead className="Table__head">
