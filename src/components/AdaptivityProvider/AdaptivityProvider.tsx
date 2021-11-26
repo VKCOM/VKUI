@@ -66,9 +66,9 @@ function calculateAdaptivity(windowWidth: number, windowHeight: number, props: A
   let viewWidth = ViewWidth.SMALL_MOBILE;
   let viewHeight = ViewHeight.SMALL;
   let sizeY = SizeType.REGULAR;
-  let sizeX = SizeType.REGULAR;
-  let hasMouse = typeof props.hasMouse === 'boolean' ? props.hasMouse : _hasMouse;
-  let deviceHasHover = typeof props.deviceHasHover === 'boolean' ? props.deviceHasHover : _hasHover;
+  let sizeX = SizeType.COMPACT;
+  let hasMouse = props.hasMouse ?? _hasMouse;
+  let deviceHasHover = props.deviceHasHover ?? _hasHover;
 
   if (windowWidth >= DESKTOP_SIZE) {
     viewWidth = ViewWidth.DESKTOP;
