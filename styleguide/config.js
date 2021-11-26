@@ -22,7 +22,6 @@ module.exports = {
     'Markdown/Blockquote': path.join(__dirname, './Components/Blockquote'),
     'Markdown/List': path.join(__dirname, './Components/List'),
     'Markdown/MarkdownHeading': path.join(__dirname, './Components/MarkdownHeading'),
-    'Markdown/Pre': path.join(__dirname, './Components/Pre'),
     'TableRenderer': path.join(__dirname, './Components/Table/TableRenderer'),
     'LinkRenderer': path.join(__dirname, './Components/Link/LinkRenderer'),
     'NameRenderer': path.join(__dirname, './Components/Name/NameRenderer'),
@@ -30,6 +29,45 @@ module.exports = {
     'ComplexType/ComplexTypeRenderder': path.join(__dirname, './Components/ComplexType/ComplexTypeRenderder'),
     'Preview': path.join(__dirname, './Components/Preview'),
     'Editor': path.join(__dirname, './Components/Editor'),
+  },
+  theme: {
+    color: {
+      codeBase: 'var(--text_primary)',
+      codeBackground: 'var(--button_secondary_background)',
+      codeScreen: 'var(--dynamic_green)',
+      codeProperty: 'var(--dynamic_purple)',
+      codeComment: 'var(--text_secondary)',
+      codePunctuation: 'var(--text_secondary)',
+      codeKeyword: 'var(--dynamic_blue)',
+      codeFunction: 'var(--dynamic_red)',
+    },
+  },
+  styles: {
+    Pre: {
+      pre: {
+        fontFamily: '"JetBrainsMono", monospace',
+        borderRadius: '8px',
+        fontSize: 14,
+        lineHeight: '24px',
+      },
+    },
+    Editor: {
+      root: {
+        'fontFamily': '"JetBrainsMono", monospace',
+        'fontSize': 14,
+        'lineHeight': '24px',
+        '& textarea': {
+          transition: 'all ease-in-out .1s',
+          // important to override inline styles in react-simple-code-editor
+          border: 'none !important',
+          borderRadius: 'none',
+        },
+        '& textarea:focus': {
+          outline: 0,
+          borderColor: `none !important`,
+        },
+      },
+    },
   },
   propsParser: (filePath, source) => {
     return require('react-docgen').parse(source, findAllExportedComponentDefinitions, null, {
