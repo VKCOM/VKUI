@@ -106,7 +106,7 @@ export { Footer } from './components/Footer/Footer';
 export type { FooterProps } from './components/Footer/Footer';
 export { InfoRow } from './components/InfoRow/InfoRow';
 export type { InfoRowProps } from './components/InfoRow/InfoRow';
-export { default as Gallery } from './components/Gallery/Gallery';
+export { Gallery } from './components/Gallery/Gallery';
 export type { GalleryProps } from './components/Gallery/Gallery';
 export { default as Avatar } from './components/Avatar/Avatar';
 export type { AvatarProps } from './components/Avatar/Avatar';

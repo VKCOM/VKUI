@@ -421,7 +421,7 @@ const BaseGalleryAdaptive = withAdaptivity(withDOM<BaseGalleryProps>(BaseGallery
   hasMouse: true,
 });
 
-const Gallery: React.FC<GalleryProps> = ({
+export const Gallery: React.FC<GalleryProps> = withPlatform(({
   initialSlideIndex = 0,
   children,
   timeout,
@@ -464,6 +464,4 @@ const Gallery: React.FC<GalleryProps> = ({
       onChange={handleChange}
     >{slides}</BaseGalleryAdaptive>
   );
-};
-
-export default withPlatform(Gallery);
+});
