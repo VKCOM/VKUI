@@ -12,7 +12,7 @@ export interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
   expanded?: boolean;
 }
 
-const Separator: React.FC<SeparatorProps> = ({ wide, expanded, ...restProps }) => {
+const _Separator: React.FC<SeparatorProps> = ({ wide, expanded, ...restProps }) => {
   const platform = usePlatform();
 
   return (
@@ -30,4 +30,4 @@ const Separator: React.FC<SeparatorProps> = ({ wide, expanded, ...restProps }) =
   );
 };
 
-export default React.memo(Separator);
+export const Separator = React.memo(_Separator);

@@ -135,7 +135,7 @@ export { Counter } from './components/Counter/Counter';
 export type { CounterProps } from './components/Counter/Counter';
 export { UsersStack } from './components/UsersStack/UsersStack';
 export type { UsersStackProps } from './components/UsersStack/UsersStack';
-export { default as Separator } from './components/Separator/Separator';
+export { Separator } from './components/Separator/Separator';
 export type { SeparatorProps } from './components/Separator/Separator';
 export { Spacing } from './components/Spacing/Spacing';
 export type { SpacingProps } from './components/Spacing/Spacing';

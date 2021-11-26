@@ -5,7 +5,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { HasRef } from '../../types';
 import { isPrimitiveReactNode } from '../../lib/utils';
 import { VKCOM } from '../../lib/platform';
-import Separator from '../Separator/Separator';
+import { Separator } from '../Separator/Separator';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import './ModalPageHeader.css';
 

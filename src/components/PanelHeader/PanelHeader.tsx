@@ -3,7 +3,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
-import Separator from '../Separator/Separator';
+import { Separator } from '../Separator/Separator';
 import { Platform, VKCOM } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { ConfigProviderContext, WebviewType } from '../ConfigProvider/ConfigProviderContext';
