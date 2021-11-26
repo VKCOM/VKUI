@@ -120,7 +120,7 @@ export { Search } from './components/Search/Search';
 export type { SearchProps } from './components/Search/Search';
 export { Tabs } from './components/Tabs/Tabs';
 export type { TabsProps } from './components/Tabs/Tabs';
-export { default as TabsItem } from './components/TabsItem/TabsItem';
+export { TabsItem } from './components/TabsItem/TabsItem';
 export type { TabsItemProps } from './components/TabsItem/TabsItem';
 export { default as Spinner } from './components/Spinner/Spinner';
 export type { SpinnerProps } from './components/Spinner/Spinner';

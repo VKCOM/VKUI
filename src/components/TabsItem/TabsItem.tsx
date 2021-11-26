@@ -16,7 +16,7 @@ export interface TabsItemProps extends React.HTMLAttributes<HTMLElement> {
   selected?: boolean;
 }
 
-const TabsItem: React.FC<TabsItemProps> = ({
+export const TabsItem: React.FC<TabsItemProps> = ({
   children,
   selected,
   after,
@@ -50,5 +50,3 @@ const TabsItem: React.FC<TabsItemProps> = ({
 TabsItem.defaultProps = {
   selected: false,
 };
-
-export default TabsItem;
