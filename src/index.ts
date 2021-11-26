@@ -118,7 +118,7 @@ export { Progress } from './components/Progress/Progress';
 export type { ProgressProps } from './components/Progress/Progress';
 export { Search } from './components/Search/Search';
 export type { SearchProps } from './components/Search/Search';
-export { default as Tabs } from './components/Tabs/Tabs';
+export { Tabs } from './components/Tabs/Tabs';
 export type { TabsProps } from './components/Tabs/Tabs';
 export { default as TabsItem } from './components/TabsItem/TabsItem';
 export type { TabsItemProps } from './components/TabsItem/TabsItem';

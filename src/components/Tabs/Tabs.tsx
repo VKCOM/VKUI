@@ -13,7 +13,7 @@ export interface TabsProps extends React.HTMLAttributes<HTMLDivElement>, HasRoot
 
 export const TabsModeContext = React.createContext<TabsProps['mode']>('default');
 
-const Tabs: React.FunctionComponent<TabsProps> = ({
+export const Tabs: React.FunctionComponent<TabsProps> = withAdaptivity(({
   children,
   mode,
   getRootRef,
@@ -39,10 +39,8 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
       </div>
     </div>
   );
-};
+}, { sizeX: true });
 
 Tabs.defaultProps = {
   mode: 'default',
 };
-
-export default withAdaptivity(Tabs, { sizeX: true });
