@@ -90,7 +90,7 @@ const BannerSubheader: React.FC<BannerTypographyProps> = ({ size, ...restProps }
     : <Subhead weight="regular" {...restProps} />;
 };
 
-const Banner: React.FC<BannerProps> = (props: BannerProps) => {
+export const Banner: React.FC<BannerProps> = (props: BannerProps) => {
   const platform = usePlatform();
   const {
     mode, imageTheme, size, before, asideMode, header, subheader, text, children, background, actions,
@@ -166,5 +166,3 @@ Banner.defaultProps = {
   size: 's',
   imageTheme: 'dark',
 };
-
-export default Banner;

@@ -141,7 +141,7 @@ export { Spacing } from './components/Spacing/Spacing';
 export type { SpacingProps } from './components/Spacing/Spacing';
 export { Placeholder } from './components/Placeholder/Placeholder';
 export type { PlaceholderProps } from './components/Placeholder/Placeholder';
-export { default as Banner } from './components/Banner/Banner';
+export { Banner } from './components/Banner/Banner';
 export type { BannerProps } from './components/Banner/Banner';
 export { MiniInfoCell } from './components/MiniInfoCell/MiniInfoCell';
 export type { MiniInfoCellProps } from './components/MiniInfoCell/MiniInfoCell';
