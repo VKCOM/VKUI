@@ -11,7 +11,7 @@ import { Icon28CopyOutline } from '@vkontakte/icons';
 
 export class EditorWrapper extends Component {
   onCopyClick = () => {
-    navigator.clipboard.writeText(this.state.code);
+    navigator.clipboard.writeText(this.props.code);
   }
 
   render() {
