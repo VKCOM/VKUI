@@ -14,7 +14,7 @@ import Input from '../Input/Input';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { Caption } from '../Typography/Caption/Caption';
 import { warnOnce } from '../../lib/warnOnce';
-import Spinner from '../Spinner/Spinner';
+import { Spinner } from '../Spinner/Spinner';
 import { defaultFilterFn } from '../../lib/select';
 import { is } from '../../lib/is';
 import './CustomSelect.css';

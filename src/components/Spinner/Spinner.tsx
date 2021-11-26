@@ -8,7 +8,7 @@ export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
   size?: 'small' | 'regular' | 'large' | 'medium';
 }
 
-const Spinner: React.FC<SpinnerProps> = ({ size, ...restProps }: SpinnerProps) => {
+const _Spinner: React.FC<SpinnerProps> = ({ size, ...restProps }: SpinnerProps) => {
   const platform = usePlatform();
 
   let SpinnerIcon = Icon24Spinner;
@@ -32,9 +32,9 @@ const Spinner: React.FC<SpinnerProps> = ({ size, ...restProps }: SpinnerProps) =
   );
 };
 
-Spinner.defaultProps = {
+_Spinner.defaultProps = {
   'size': 'regular',
   'aria-label': 'Загружается...',
 };
 
-export default React.memo(Spinner);
+export const Spinner = React.memo(_Spinner);
