@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 import { baselineComponent } from '../../testing/utils';
 import { noop } from '../../lib/utils';
-import AdaptivityProvider from '../AdaptivityProvider/AdaptivityProvider';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ViewWidth } from '../../hoc/withAdaptivity';
 import { PanelHeaderContext } from './PanelHeaderContext';
 
