@@ -53,11 +53,8 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
   const [closing, setClosing] = React.useState(false);
   const onClose = () => setClosing(true);
 
-  const [_closeAction, setCloseAction] = React.useState<VoidFunction>();
   const afterClose = () => {
     restProps.onClose();
-    _closeAction && _closeAction();
-    setCloseAction(undefined);
   };
 
   if (process.env.NODE_ENV === 'development' && !restProps.onClose) {
@@ -83,13 +80,9 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
   }, [closing]);
 
   const onItemClick = React.useCallback<ItemClickHandler>((action, autoclose) => (event) => {
-    event.persist();
-
+    action && action(event);
     if (autoclose) {
-      setCloseAction(() => action && action(event));
       setClosing(true);
-    } else {
-      action && action(event);
     }
   }, []);
   const contextValue = useObjectMemo({ onItemClick, isDesktop });
@@ -111,7 +104,6 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
       <ActionSheetContext.Provider value={contextValue}>
         <DropdownComponent
           closing={closing}
-          onTransitionEnd={closing && !isDesktop ? afterClose : null}
           timeout={timeout}
           {...restProps as Omit<SharedDropdownProps, 'closing'>}
           onClose={onClose}

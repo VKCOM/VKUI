@@ -10,7 +10,9 @@ export function fakeTimers() {
   afterEach(() => jest.useRealTimers());
 }
 
-export const runAllTimers = () => act(() => jest.runAllTimers());
+export const runAllTimers = () => act(() => {
+  jest.runAllTimers();
+});
 
 export const imgOnlyAttributes: ImgOnlyAttributes = {
   alt: 'test',
@@ -123,3 +125,34 @@ export const mockScrollContext = (getY: () => number): [React.FC, jest.Mock] => 
     scrollTo,
   ];
 };
+
+const isNullOrUndefined = (val: any) => val === null || val === undefined;
+
+// Согласно спеке, offsetParent в ряде случаев будет null
+Object.defineProperty(HTMLElement.prototype, 'offsetParent', {
+  get() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    let element: HTMLElement = this;
+    while (!isNullOrUndefined(element) &&
+    (isNullOrUndefined(element.style) ||
+      isNullOrUndefined(element.style.display) ||
+      element.style.display.toLowerCase() !== 'none')) {
+      // @ts-ignore
+      element = element.parentNode;
+    }
+
+    if (!isNullOrUndefined(element)) {
+      return null;
+    }
+
+    if (!isNullOrUndefined(this.style) && !isNullOrUndefined(this.style.position) && this.style.position.toLowerCase() === 'fixed') {
+      return null;
+    }
+
+    if (this.tagName.toLowerCase() === 'html' || this.tagName.toLowerCase() === 'body') {
+      return null;
+    }
+
+    return this.parentNode;
+  },
+});

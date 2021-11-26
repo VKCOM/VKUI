@@ -11,7 +11,7 @@ ActionSheet – имитация [нативного компонента](https
 > В коде примера ниже можно посмотреть, как добавить такой элемент.
 Для Android версии он не нужен.
 
-```jsx
+```jsx { "props": { "layout": false, "adaptivity": true } }
 const [popout, setPopout] = useState(null);
 const onClose = () => setPopout(null);
 const [filter, setFilter] = useState('best');
@@ -192,17 +192,21 @@ const openBaseTop = () => setPopout(
 
 React.useEffect(openBase, []);
 
-<View popout={popout} activePanel="panel">
-  <Panel id="panel">
-    <PanelHeader>ActionSheet</PanelHeader>
-    <Group>
-      <CellButton getRootRef={baseTargetRef} onClick={openBase}>Базовый список</CellButton>
-      <CellButton getRootRef={iconsTargetRef} onClick={openIcons}>Список с иконками</CellButton>
-      <CellButton getRootRef={subtitleTargetRef} onClick={openSubtitle}>С подзаголовком</CellButton>
-      <CellButton getRootRef={selectableTargetRef} onClick={openSelectable}>Выделяемые</CellButton>
-      <CellButton getRootRef={titleTargetRef} onClick={openTitle}>C заголовком</CellButton>
-      <CellButton getRootRef={baseTopTargetRef} onClick={openBaseTop}>Базовый список, открывается наверх на десктопах</CellButton>
-    </Group>
-  </Panel>
-</View>
+<SplitLayout popout={popout}>
+  <SplitCol>
+  <View activePanel="panel">
+    <Panel id="panel">
+      <PanelHeader>ActionSheet</PanelHeader>
+      <Group>
+        <CellButton getRootRef={baseTargetRef} onClick={openBase}>Базовый список</CellButton>
+        <CellButton getRootRef={iconsTargetRef} onClick={openIcons}>Список с иконками</CellButton>
+        <CellButton getRootRef={subtitleTargetRef} onClick={openSubtitle}>С подзаголовком</CellButton>
+        <CellButton getRootRef={selectableTargetRef} onClick={openSelectable}>Выделяемые</CellButton>
+        <CellButton getRootRef={titleTargetRef} onClick={openTitle}>C заголовком</CellButton>
+        <CellButton getRootRef={baseTopTargetRef} onClick={openBaseTop}>Базовый список, открывается наверх на десктопах</CellButton>
+      </Group>
+    </Panel>
+  </View>
+  </SplitCol>
+</SplitLayout>
 ```

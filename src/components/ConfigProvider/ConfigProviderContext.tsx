@@ -8,7 +8,15 @@ export enum Appearance {
 }
 
 export enum Scheme {
+  /**
+   * @deprecated будет удалено в 5.0.0
+   * версия оставлена для совместимости со старыми версиями клиентов
+   */
   DEPRECATED_CLIENT_LIGHT = 'client_light',
+  /**
+   * @deprecated будет удалено в 5.0.0
+   * версия оставлена для совместимости со старыми версиями клиентов
+   */
   DEPRECATED_CLIENT_DARK = 'client_dark',
   /**
    * @deprecated будет удалено в 5.0.0

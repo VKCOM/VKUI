@@ -4,14 +4,14 @@ import { debounce, setRef } from '../../lib/utils';
 import { classNames } from '../../lib/classNames';
 import { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
-import { SizeType, withAdaptivity } from '../../hoc/withAdaptivity';
+import { withAdaptivity } from '../../hoc/withAdaptivity';
 import { withPlatform } from '../../hoc/withPlatform';
 import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
 import { getClassName } from '../../helpers/getClassName';
 import { FormFieldProps } from '../FormField/FormField';
 import { HasPlatform } from '../../types';
 import Input from '../Input/Input';
-import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
+import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import Caption from '../Typography/Caption/Caption';
 import { warnOnce } from '../../lib/warnOnce';
 import Spinner from '../Spinner/Spinner';
@@ -150,7 +150,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     }
   }
 
-  public state: CustomSelectState;
   private keyboardInput: string;
   private isControlledOutside: boolean;
   private selectEl: HTMLSelectElement;
@@ -576,7 +575,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
             // TODO Нужно перестать пытаться превратить CustomSelect в select. Тогда эта проблема уйдёт.
             // @ts-ignore
             onClick={onClick}
-            after={sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
+            after={<DropdownIcon />}
             placeholder={restProps.placeholder}
           /> :
           <SelectMimicry

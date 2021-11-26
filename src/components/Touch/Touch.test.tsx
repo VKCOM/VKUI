@@ -95,6 +95,40 @@ describe('Touch', () => {
       if (input === 'touch') {
         beforeEach(() => window['ontouchstart'] = null);
       }
+
+      describe('callback gesture params', () => {
+        const emptyGesture = (x: number, y: number) => expect.objectContaining({
+          startX: x,
+          startY: y,
+          startT: expect.any(Date),
+          duration: expect.any(Number),
+          isPressed: true,
+          isY: false,
+          isX: false,
+          isSlideX: false,
+          isSlideY: false,
+          isSlide: false,
+          shiftX: 0,
+          shiftY: 0,
+          shiftXAbs: 0,
+          shiftYAbs: 0,
+        });
+        it('has all gesture params in start handler', () => {
+          const handlers = makeHandlers();
+          render(<Touch {...handlers} data-testid="__t__" />);
+          fireGesture(screen.getByTestId('__t__'), [[20, 20]]);
+          expect(handlers.onStart).toBeCalledTimes(1);
+          expect(handlers.onStart).toBeCalledWith(emptyGesture(20, 20));
+        });
+        it('has all params end gesture on clean tap', () => {
+          const handlers = makeHandlers();
+          render(<Touch {...handlers} data-testid="__t__" />);
+          fireGesture(screen.getByTestId('__t__'), [[20, 20]]);
+          expect(handlers.onEnd).toBeCalledTimes(1);
+          expect(handlers.onEnd).toBeCalledWith(emptyGesture(20, 20));
+        });
+      });
+
       it.each([
         ['left', [-3, 0]],
         ['right', [3, 0]],
@@ -111,6 +145,7 @@ describe('Touch', () => {
         expect(handlers.onEndX).toBeCalledTimes(vx ? 1 : 0);
         expect(handlers.onEndY).toBeCalledTimes(vy ? 1 : 0);
       });
+
       it('does not detect slide on small movement', () => {
         const handlers = makeHandlers();
         render(<Touch {...handlers} data-testid="__t__" />);
@@ -119,6 +154,7 @@ describe('Touch', () => {
         expect(handlers.onMoveY).not.toBeCalled();
         expect(handlers.onEndY).not.toBeCalled();
       });
+
       it('does not detect slide if onMove[X|Y] not passed', () => {
         const { onMoveX, onMoveY, onMove, ...handlers } = makeHandlers();
         render(<Touch {...handlers} data-testid="__t__" />);
@@ -129,6 +165,7 @@ describe('Touch', () => {
           isSlideY: false,
         }));
       });
+
       it('snaps slide direction', () => {
         const handlers = makeHandlers();
         render(<Touch {...handlers} data-testid="__t__" />);
@@ -141,6 +178,7 @@ describe('Touch', () => {
           isSlideX: false,
         }));
       });
+
       if (input === 'touch') {
         it('stops gesture if multitouch', () => {
           const handlers = makeHandlers();
@@ -150,6 +188,7 @@ describe('Touch', () => {
           expect(handlers.onEnd).toBeCalledWith(expect.objectContaining({ shiftX: 0, shiftY: 6 }));
         });
       }
+
       if (input === 'mouse') {
         it('detects slide under target change', () => {
           const handlers = makeHandlers();

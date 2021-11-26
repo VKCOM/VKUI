@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Icon20Dropdown } from '@vkontakte/icons';
+import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { classNames } from '../../lib/classNames';
 import Spinner from '../Spinner/Spinner';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
@@ -247,7 +247,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
         getRef={getRef}
         disabled={disabled}
         onInputChange={handleInputChange}
-        after={<Icon20Dropdown />}
+        after={<DropdownIcon />}
       />
       {opened &&
         <div

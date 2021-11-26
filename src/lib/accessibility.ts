@@ -50,7 +50,7 @@ const ACCESSIBLE_KEYS: AccessibleKey[] = [
   },
 ];
 
-export function pressedKey(e: KeyboardEvent): Keys {
+export function pressedKey(e: KeyboardEvent | React.KeyboardEvent<HTMLElement>): Keys {
   return ACCESSIBLE_KEYS.find(({ key, keyCode }) => key.includes(e.key) || keyCode === e.keyCode)?.code || null;
 }
 
@@ -66,7 +66,7 @@ export function shouldTriggerClickOnEnterOrSpace(e: KeyboardEvent | React.Keyboa
     && (role === 'button' || role === 'link');
 
   const isNativeAnchorEl = tagName === 'A' && el.hasAttribute('href');
-  const keyPressed = pressedKey(e as KeyboardEvent);
+  const keyPressed = pressedKey(e);
 
   return isValidKeyboardEventTarget && (
     // trigger buttons on Space

@@ -6,13 +6,12 @@ import { FOCUSABLE_ELEMENTS_LIST, Keys, pressedKey } from '../../lib/accessibili
 import { useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { noop } from '../../lib/utils';
-import { HasRootRef } from '../../types';
+import { HasComponent, HasRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
 
 const FOCUSABLE_ELEMENTS: string = FOCUSABLE_ELEMENTS_LIST.join();
 
-export interface FocusTrapProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
-  Component?: React.ElementType;
+export interface FocusTrapProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasComponent {
   onClose?: (props?: any) => void;
   restoreFocus?: boolean;
   timeout?: number;
@@ -55,14 +54,17 @@ export const FocusTrap: React.FC<FocusTrapProps> = ({
     }
 
     const nodes: HTMLElement[] = [];
-    // eslint-disable-next-line no-restricted-properties
-    ref.current?.querySelectorAll(FOCUSABLE_ELEMENTS).forEach((focusableEl) => {
-      const { display, visibility } = window.getComputedStyle(focusableEl);
+    Array.prototype.forEach.call(
+      // eslint-disable-next-line no-restricted-properties
+      ref.current.querySelectorAll(FOCUSABLE_ELEMENTS),
+      (focusableEl: Element) => {
+        const { display, visibility } = window.getComputedStyle(focusableEl);
 
-      if (display !== 'none' && visibility !== 'hidden') {
-        nodes.push(focusableEl as HTMLElement);
-      }
-    });
+        if (display !== 'none' && visibility !== 'hidden') {
+          nodes.push(focusableEl as HTMLElement);
+        }
+      },
+    );
 
     if (nodes?.length) {
       setFocusableNodes(nodes);

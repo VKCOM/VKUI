@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { getSupportedEvents, coordX, coordY, touchEnabled, VKUITouchEvent } from '../../lib/touch';
-import { HasRootRef } from '../../types';
+import { HasComponent, HasRootRef } from '../../types';
 import { useDOM } from '../../lib/dom';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 
-export interface TouchProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+export interface TouchProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasComponent {
   /**
    * Привязать onEnter и onLeave через pointer-events - работает на disabled-инпутах
    */
@@ -14,7 +14,6 @@ export interface TouchProps extends React.AllHTMLAttributes<HTMLElement>, HasRoo
   useCapture?: boolean;
   slideThreshold?: number;
   noSlideClick?: boolean;
-  Component?: React.ElementType;
   onEnter?: HoverHandler;
   onLeave?: HoverHandler;
   onStart?: TouchEventHandler;
@@ -30,20 +29,20 @@ export interface TouchProps extends React.AllHTMLAttributes<HTMLElement>, HasRoo
 }
 
 export interface Gesture {
-  startX?: number;
-  startY?: number;
-  startT?: Date;
-  duration?: number;
-  isPressed?: boolean;
-  isY?: boolean;
-  isX?: boolean;
-  isSlideX?: boolean;
-  isSlideY?: boolean;
-  isSlide?: boolean;
-  shiftX?: number;
-  shiftY?: number;
-  shiftXAbs?: number;
-  shiftYAbs?: number;
+  startX: number;
+  startY: number;
+  startT: Date;
+  duration: number;
+  isPressed: boolean;
+  isY: boolean;
+  isX: boolean;
+  isSlideX: boolean;
+  isSlideY: boolean;
+  isSlide: boolean;
+  shiftX: number;
+  shiftY: number;
+  shiftXAbs: number;
+  shiftYAbs: number;
 }
 
 export interface TouchEvent extends Gesture {
@@ -80,24 +79,19 @@ export const Touch: React.FC<TouchProps> = ({
   const { document } = useDOM();
   const events = React.useMemo(getSupportedEvents, []);
   const didSlide = React.useRef(false);
-  const gesture = React.useRef<Partial<Gesture>>({});
+  const gesture = React.useRef<Partial<Gesture>>(null);
   const handle = (e: VKUITouchEvent, handers: TouchEventHandler[]) => {
     stopPropagation && e.stopPropagation();
     handers.forEach((cb) => {
       const duration = Date.now() - gesture.current.startT.getTime();
-      cb && cb({ ...gesture.current, duration, originalEvent: e });
+      cb && cb({ ...gesture.current as Gesture, duration, originalEvent: e });
     });
   };
 
   const enterHandler = useEventListener(usePointerHover ? 'pointerenter' : 'mouseenter', onEnter);
   const leaveHandler = useEventListener(usePointerHover ? 'pointerleave' : 'mouseleave', onLeave);
   const startHandler = useEventListener(events[0], (e: VKUITouchEvent) => {
-    gesture.current = {
-      startX: coordX(e),
-      startY: coordY(e),
-      startT: new Date(),
-      isPressed: true,
-    };
+    gesture.current = initGesture(coordX(e), coordY(e));
 
     handle(e, [onStart, onStartX, onStartY]);
     // 1 line, 2 bad specs, 2 workarounds:
@@ -232,3 +226,22 @@ export const Touch: React.FC<TouchProps> = ({
     />
   );
 };
+
+function initGesture(startX: number, startY: number): Gesture {
+  return {
+    startX,
+    startY,
+    startT: new Date(),
+    duration: 0,
+    isPressed: true,
+    isY: false,
+    isX: false,
+    isSlideX: false,
+    isSlideY: false,
+    isSlide: false,
+    shiftX: 0,
+    shiftY: 0,
+    shiftXAbs: 0,
+    shiftYAbs: 0,
+  };
+}

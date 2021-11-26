@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { HasRootRef } from '../../types';
+import { HasComponent, HasRootRef } from '../../types';
 import { classNames } from '../../lib/classNames';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -11,11 +11,10 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import './FormItem.css';
 
-export interface FormItemProps extends React.AllHTMLAttributes<HTMLElement>, RemovableProps, HasRootRef<HTMLElement> {
+export interface FormItemProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasComponent, RemovableProps {
   top?: React.ReactNode;
   bottom?: React.ReactNode;
   status?: 'default' | 'error' | 'valid';
-  Component?: React.ElementType;
   /**
    * Дает возможность удалить `FormItem`. Рекомендуется использовать только для `Input` или `Select`.
    */

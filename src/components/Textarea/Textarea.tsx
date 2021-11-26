@@ -7,7 +7,6 @@ import { getClassName } from '../../helpers/getClassName';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import './Textarea.css';
 
 export interface TextareaProps extends
@@ -33,19 +32,24 @@ const Textarea: React.FC<TextareaProps> = React.memo(({
   ...restProps
 }: TextareaProps) => {
   const [value, onChange] = useEnsuredControl(restProps, { defaultValue });
+  const currentScrollHeight = React.useRef<number>();
   const elementRef = useExternRef(getRef);
   const platform = usePlatform();
 
   // autosize input
-  useIsomorphicLayoutEffect(() => {
+  React.useEffect(() => {
     const el = elementRef.current;
-    if (grow) {
+
+    if (grow && el.offsetParent) {
       el.style.height = null;
       el.style.height = `${el.scrollHeight}px`;
-      // TODO: call only when height changed?
-      onResize && onResize(el);
+
+      if (el.scrollHeight !== currentScrollHeight.current && onResize) {
+        onResize(el);
+        currentScrollHeight.current = el.scrollHeight;
+      }
     }
-  }, [grow, value]);
+  }, [grow, value, sizeY]);
 
   return (
     <FormField

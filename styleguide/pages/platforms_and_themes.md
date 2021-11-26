@@ -58,7 +58,7 @@
 Каждому мини-приложению клиент посылает событие `VKWebAppUpdateConfig`. В данных этого события помимо прочего есть поле `scheme`, которое и содержит текущую схему клиента.
 
 ### Наследование темы
-Если ваше приложение само определяет цвета через css-переменные аналогично [https://github.com/VKCOM/VKUI/blob/master/package.json](bright_light.css), используйте `ConfigProvider scheme="inherit"`, а стили подключайте через `import '@vkontakte/vkui/components.css'`.
+Если ваше приложение само определяет цвета через css-переменные аналогично [https://github.com/VKCOM/VKUI/blob/master/package.json](bright_light.css), используйте `ConfigProvider scheme="inherit"`, а стили подключайте через `import '@vkontakte/vkui/dist/components.css'`.
 
 ### Использование темы в коде
 У каждой темы есть поле `appearance`, которое определяет, тёмная она или светлая. В коде мы рекомендуем опираться 

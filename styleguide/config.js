@@ -22,7 +22,6 @@ module.exports = {
     'Markdown/Blockquote': path.join(__dirname, './Components/Blockquote'),
     'Markdown/List': path.join(__dirname, './Components/List'),
     'Markdown/MarkdownHeading': path.join(__dirname, './Components/MarkdownHeading'),
-    'Markdown/Pre': path.join(__dirname, './Components/Pre'),
     'TableRenderer': path.join(__dirname, './Components/Table/TableRenderer'),
     'LinkRenderer': path.join(__dirname, './Components/Link/LinkRenderer'),
     'NameRenderer': path.join(__dirname, './Components/Name/NameRenderer'),
@@ -30,6 +29,45 @@ module.exports = {
     'ComplexType/ComplexTypeRenderder': path.join(__dirname, './Components/ComplexType/ComplexTypeRenderder'),
     'Preview': path.join(__dirname, './Components/Preview'),
     'Editor': path.join(__dirname, './Components/Editor'),
+  },
+  theme: {
+    color: {
+      codeBase: 'var(--text_primary)',
+      codeBackground: 'var(--button_secondary_background)',
+      codeScreen: 'var(--dynamic_green)',
+      codeProperty: 'var(--dynamic_purple)',
+      codeComment: 'var(--text_secondary)',
+      codePunctuation: 'var(--text_secondary)',
+      codeKeyword: 'var(--dynamic_blue)',
+      codeFunction: 'var(--dynamic_red)',
+    },
+  },
+  styles: {
+    Pre: {
+      pre: {
+        fontFamily: '"JetBrainsMono", monospace',
+        borderRadius: '8px',
+        fontSize: 14,
+        lineHeight: '24px',
+      },
+    },
+    Editor: {
+      root: {
+        'fontFamily': '"JetBrainsMono", monospace',
+        'fontSize': 14,
+        'lineHeight': '24px',
+        '& textarea': {
+          transition: 'all ease-in-out .1s',
+          // important to override inline styles in react-simple-code-editor
+          border: 'none !important',
+          borderRadius: 'none',
+        },
+        '& textarea:focus': {
+          outline: 0,
+          borderColor: `none !important`,
+        },
+      },
+    },
   },
   propsParser: (filePath, source) => {
     return require('react-docgen').parse(source, findAllExportedComponentDefinitions, null, {
@@ -106,6 +144,14 @@ module.exports = {
           '../src/components/Snackbar/Snackbar.tsx',
         ],
       }, {
+        name: 'Poppers',
+        components: () => [
+          '../src/components/Dropdown/Dropdown.tsx',
+          '../src/components/TextTooltip/TextTooltip.tsx',
+          '../src/components/RichTooltip/RichTooltip.tsx',
+          '../src/components/Tooltip/Tooltip.tsx',
+        ],
+      }, {
         name: 'Modals',
         components: () => [
           '../src/components/ModalRoot/ModalRootAdaptive.tsx',
@@ -141,12 +187,13 @@ module.exports = {
           '../src/components/Switch/Switch.tsx',
           '../src/components/InfoRow/InfoRow.tsx',
           '../src/components/Avatar/Avatar.tsx',
+          '../src/components/GridAvatar/GridAvatar.tsx',
+          '../src/components/InitialsAvatar/InitialsAvatar.tsx',
           '../src/components/Gallery/Gallery.tsx',
           '../src/components/Progress/Progress.tsx',
           '../src/components/Search/Search.tsx',
           '../src/components/Tabs/Tabs.tsx',
           '../src/components/TabsItem/TabsItem.tsx',
-          '../src/components/Tooltip/Tooltip.tsx',
           '../src/components/PullToRefresh/PullToRefresh.tsx',
           '../src/components/Counter/Counter.tsx',
           '../src/components/UsersStack/UsersStack.tsx',

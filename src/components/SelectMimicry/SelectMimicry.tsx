@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames } from '../../lib/classNames';
-import { Icon24Dropdown, Icon20Dropdown } from '@vkontakte/icons';
+import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormField } from '../FormField/FormField';
 import { HasAlign, HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
@@ -51,7 +51,7 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
       getRootRef={getRootRef}
       onClick={disabled ? null : onClick}
       disabled={disabled}
-      after={sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
+      after={<DropdownIcon />}
     >
       <TypographyComponent Component="div" weight="regular" vkuiClass="Select__container">
         <span vkuiClass="Select__title">{children || placeholder}</span>

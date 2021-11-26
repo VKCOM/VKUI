@@ -7,25 +7,25 @@
         Switch
       </PanelHeader>
       <Group>
-        <Cell disabled after={<Switch />}>
+        <Cell role={null} disabled after={<Switch aria-label="Комментарии к записям" />}>
           Комментарии к записям
         </Cell>
-        <Cell disabled after={<Switch defaultChecked />}>
+        <Cell role={null} disabled after={<Switch defaultChecked aria-label="Ссылки" />}>
           Ссылки
         </Cell>
-        <Cell disabled after={<Switch disabled />}>
+        <Cell role={null} disabled after={<Switch disabled aria-label="Фотоальбомы" />}>
           Фотоальбомы
         </Cell>
       </Group>
       <Group header={<Header mode="secondary">Компактный вид</Header>}>
         <AdaptivityProvider sizeY="compact">
-          <Cell disabled after={<Switch />}>
+          <Cell role={null} disabled after={<Switch aria-label="Комментарии к записям" />}>
             Комментарии к записям
           </Cell>
-          <Cell disabled after={<Switch defaultChecked />}>
+          <Cell role={null} disabled after={<Switch defaultChecked aria-label="Ссылки" />}>
             Ссылки
           </Cell>
-          <Cell disabled after={<Switch disabled />}>
+          <Cell role={null} disabled after={<Switch disabled aria-label="Фотоальбомы" />}>
             Фотоальбомы
           </Cell>
         </AdaptivityProvider>

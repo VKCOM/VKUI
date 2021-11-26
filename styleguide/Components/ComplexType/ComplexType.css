@@ -10,3 +10,8 @@
   margin-left: 6px;
   color: var(--icon_secondary);
 }
+
+.ComplexTypeDropdown {
+  max-width: 340px;
+  word-break: break-word;
+}

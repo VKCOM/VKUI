@@ -15,6 +15,7 @@ import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext'
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import { swipeBackExcluded } from './utils';
 import './View.css';
 
 const warn = warnOnce('ViewInfinite');
@@ -29,13 +30,9 @@ interface ViewsScrolls {
   [index: string]: Scrolls;
 }
 
-type AnimationEventHandler = (e?: AnimationEvent) => void;
-
 type TransitionEventHandler = (e?: TransitionEvent) => void;
 
 let scrollsCache: ViewsScrolls = {};
-
-const swipeBackExcludedTags = ['input', 'textarea'];
 
 export type TransitionParams = { from: string; to: string };
 
@@ -170,14 +167,24 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
       };
       this.scrolls = scrolls;
 
-      this.setState({
-        visiblePanels: [prevProps.activePanel, this.props.activePanel],
-        prevPanel: prevProps.activePanel,
-        nextPanel: this.props.activePanel,
-        activePanel: null,
-        animated: true,
-        isBack,
-      });
+      if (this.shouldDisableTransitionMotion()) {
+        this.flushTransition(prevProps.activePanel, isBack);
+      } else {
+        this.setState({
+          visiblePanels: [prevProps.activePanel, this.props.activePanel],
+          prevPanel: prevProps.activePanel,
+          nextPanel: this.props.activePanel,
+          activePanel: null,
+          animated: true,
+          isBack,
+        });
+
+        // Фолбек анимации перехода
+        if (!animationEvent.supported) {
+          clearTimeout(this.animationFinishTimeout);
+          this.animationFinishTimeout = setTimeout(this.transitionEndHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 300 : 600);
+        }
+      }
     }
 
     // Закончилась анимация свайпа назад
@@ -207,12 +214,6 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
         this.props.scroll.scrollTo(0, scrollPosition);
         prevProps.onTransition && prevProps.onTransition({ isBack: true, from: prevPanel, to: nextPanel });
       });
-    }
-
-    // Начался переход
-    if (!prevState.animated && this.state.animated) {
-      const { prevPanel, nextPanel, isBack } = this.state;
-      this.waitAnimationFinish(this.pickPanel(isBack ? prevPanel : nextPanel), this.transitionEndHandler);
     }
 
     // Начался свайп назад
@@ -265,21 +266,6 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
     }
   }
 
-  waitAnimationFinish(elem: HTMLElement, eventHandler: AnimationEventHandler): void {
-    if (this.shouldDisableTransitionMotion()) {
-      eventHandler();
-      return;
-    }
-
-    if (animationEvent.supported) {
-      elem.removeEventListener(animationEvent.name, eventHandler);
-      elem.addEventListener(animationEvent.name, eventHandler);
-    } else {
-      clearTimeout(this.animationFinishTimeout);
-      this.animationFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 300 : 600);
-    }
-  }
-
   blurActiveElement(): void {
     if (typeof this.window !== 'undefined' && this.document.activeElement) {
       (this.document.activeElement as HTMLElement).blur();
@@ -290,39 +276,41 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
     return this.panelNodes[id];
   }
 
-  transitionEndHandler = (e?: AnimationEvent): void => {
+  flushTransition(prevPanel: string, isBack: boolean) {
+    const activePanel = this.props.activePanel;
+
+    const prevPanelScrolls = [...this.scrolls[prevPanel] || []].slice(0, -1);
+    const newPanelScrolls = [...this.scrolls[activePanel] || []];
+    const scrollPosition = isBack ? newPanelScrolls.pop() : 0;
+    if (isBack) {
+      this.scrolls = {
+        ...this.scrolls,
+        [prevPanel]: prevPanelScrolls,
+        [activePanel]: newPanelScrolls,
+      };
+    }
+
+    this.setState({
+      prevPanel: null,
+      nextPanel: null,
+      visiblePanels: [activePanel],
+      activePanel: activePanel,
+      animated: false,
+      isBack: undefined,
+    }, () => {
+      this.props.scroll.scrollTo(0, isBack ? scrollPosition : 0);
+      this.props.onTransition && this.props.onTransition({ isBack, from: prevPanel, to: activePanel });
+    });
+  }
+
+  transitionEndHandler = (e?: React.AnimationEvent): void => {
     if (!e || [
       'vkui-animation-ios-next-forward',
       'vkui-animation-ios-prev-back',
       'vkui-animation-view-next-forward',
       'vkui-animation-view-prev-back',
     ].includes(e.animationName)) {
-      const activePanel = this.props.activePanel;
-      const prevPanel = this.state.prevPanel;
-      const isBack = this.state.isBack;
-
-      const prevPanelScrolls = [...this.scrolls[prevPanel] || []].slice(0, -1);
-      const newPanelScrolls = [...this.scrolls[activePanel] || []];
-      const scrollPosition = isBack ? newPanelScrolls.pop() : 0;
-      if (isBack) {
-        this.scrolls = {
-          ...this.scrolls,
-          [prevPanel]: prevPanelScrolls,
-          [activePanel]: newPanelScrolls,
-        };
-      }
-
-      this.setState({
-        prevPanel: null,
-        nextPanel: null,
-        visiblePanels: [activePanel],
-        activePanel: activePanel,
-        animated: false,
-        isBack: undefined,
-      }, () => {
-        isBack && this.props.scroll.scrollTo(0, scrollPosition);
-        this.props.onTransition && this.props.onTransition({ isBack, from: prevPanel, to: activePanel });
-      });
+      this.flushTransition(this.state.prevPanel, this.state.isBack);
     }
   };
 
@@ -356,12 +344,7 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
   }
 
   onMoveX = (e: TouchEvent): void => {
-    const target = e.originalEvent.target as HTMLElement;
-    if (
-      target &&
-      typeof target.tagName === 'string' &&
-      swipeBackExcludedTags.includes(target.tagName.toLowerCase())
-    ) {
+    if (swipeBackExcluded(e)) {
       return;
     }
 
@@ -465,7 +448,7 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
       ...restProps
     } = this.props;
     const {
-      prevPanel, nextPanel, activePanel, isBack,
+      prevPanel, nextPanel, activePanel, isBack, animated,
       swipeBackPrevPanel, swipeBackNextPanel, swipeBackResult, swipingBack,
     } = this.state;
 
@@ -517,6 +500,7 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
             const panelId = getNavId(panel.props, warn);
             const isPrev = panelId === prevPanel || panelId === swipeBackPrevPanel;
             const compensateScroll = isPrev || panelId === swipeBackNextPanel || panelId === nextPanel && isBack;
+            const isTransitionTarget = animated && panelId === (isBack ? prevPanel : nextPanel);
             const scrollList = this.scrolls[panelId] || [];
             const scroll = scrollList[scrollList.length - 1] || 0;
 
@@ -531,6 +515,7 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
                   'View__panel--swipe-back-success': swipeBackResult === SwipeBackResults.success,
                   'View__panel--swipe-back-failed': swipeBackResult === SwipeBackResults.fail,
                 })}
+                onAnimationEnd={isTransitionTarget ? this.transitionEndHandler : null}
                 ref={(el) => this.panelNodes[panelId] = el}
                 style={this.calcPanelSwipeStyles(panelId)}
                 key={panelId}

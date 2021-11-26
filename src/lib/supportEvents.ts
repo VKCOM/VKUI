@@ -10,9 +10,8 @@ export type VKUISupportEvents = {
 declare const WebKitAnimationEvent: AnimationEvent;
 declare const WebKitTransitionEvent: TransitionEvent;
 
-const animationEvent: VKUISupportEvents = {
+const animationEvent = {
   supported: false,
-  name: null,
 };
 
 const transitionEvent: VKUISupportEvents = {
@@ -23,10 +22,8 @@ const transitionEvent: VKUISupportEvents = {
 if (canUseDOM && !isTesting) {
   if (typeof AnimationEvent !== 'undefined') {
     animationEvent.supported = true;
-    animationEvent.name = 'animationend';
   } else if (typeof WebKitAnimationEvent !== 'undefined') {
     animationEvent.supported = true;
-    animationEvent.name = 'webkitAnimationEnd';
   }
 
   if (typeof TransitionEvent !== 'undefined') {

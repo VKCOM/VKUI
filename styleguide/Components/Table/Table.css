@@ -2,6 +2,14 @@
   position: relative;
 }
 
+.Table--light {
+  --transparent_color: rgba(255, 255, 255, 0);
+}
+
+.Table--dark {
+  --transparent_color: rgba(25, 25, 26, 0);
+}
+
 .Table__in {
   overflow: auto;
   border: 1px solid var(--separator_alternate);
@@ -14,7 +22,7 @@
   height: 100%;
   width: 10%;
   position: absolute;
-  background: linear-gradient(to right, var(--background_content), transparent);
+  background: linear-gradient(to right, var(--background_content), var(--transparent_color));
   content: '';
   opacity: 0;
   pointer-events: none;
@@ -30,7 +38,7 @@
   height: 100%;
   width: 10%;
   position: absolute;
-  background: linear-gradient(to left, var(--background_content), transparent);
+  background: linear-gradient(to left, var(--background_content), var(--transparent_color));
   content: '';
   opacity: 0;
   pointer-events: none;

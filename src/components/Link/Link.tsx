@@ -4,7 +4,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import './Link.css';
 
-export interface LinkProps extends React.AnchorHTMLAttributes<HTMLElement>, TappableProps {}
+export type LinkProps = TappableProps;
 
 const Link: React.FC<LinkProps> = ({
   children,

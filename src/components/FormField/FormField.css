@@ -1,7 +1,6 @@
 .FormField {
   position: relative;
   display: flex;
-  flex-flow: row nowrap;
   align-items: center;
   padding: 1px;
   box-sizing: border-box;

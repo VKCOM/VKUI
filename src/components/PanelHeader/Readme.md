@@ -8,6 +8,10 @@
 
 В таких случаях передавайте в `PanelHeader` свойство `separator={false}`.
 
+>**Важно**
+>
+> Правая часть шапки будет скрыта, если в [`ConfigProvider`](#/ConfigProvider) передан `webviewType={WebviewType.VKAPPS}`.
+
 ```jsx
 class Example extends React.Component {
   constructor(props) {
