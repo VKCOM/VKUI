@@ -133,7 +133,7 @@ export type { TooltipProps } from './components/Tooltip/Tooltip';
 export { TooltipContainer } from './components/Tooltip/TooltipContainer';
 export { Counter } from './components/Counter/Counter';
 export type { CounterProps } from './components/Counter/Counter';
-export { default as UsersStack } from './components/UsersStack/UsersStack';
+export { UsersStack } from './components/UsersStack/UsersStack';
 export type { UsersStackProps } from './components/UsersStack/UsersStack';
 export { default as Separator } from './components/Separator/Separator';
 export type { SeparatorProps } from './components/Separator/Separator';

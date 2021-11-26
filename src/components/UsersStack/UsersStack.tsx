@@ -30,7 +30,7 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
   visibleCount?: number;
 }
 
-const UsersStack: React.FC<UsersStackProps> = (props: UsersStackProps) => {
+const _UsersStack: React.FC<UsersStackProps> = (props: UsersStackProps) => {
   const platform = usePlatform();
   const { photos, visibleCount, size, layout, children, ...restProps } = props;
   const { document } = useDOM();
@@ -78,11 +78,11 @@ const UsersStack: React.FC<UsersStackProps> = (props: UsersStackProps) => {
   );
 };
 
-UsersStack.defaultProps = {
+_UsersStack.defaultProps = {
   photos: [],
   size: 's',
   visibleCount: 3,
   layout: 'horizontal',
 };
 
-export default React.memo(UsersStack);
+export const UsersStack = React.memo(_UsersStack);
