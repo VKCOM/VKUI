@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { ModalCard, ModalCardProps } from './ModalCard';
 import { Button } from '../Button/Button';
 import { ModalRoot } from '../ModalRoot/ModalRootAdaptive';
-import Avatar from '../Avatar/Avatar';
+import { Avatar } from '../Avatar/Avatar';
 import UsersStack from '../UsersStack/UsersStack';
 import Textarea from '../Textarea/Textarea';
 import { describeScreenshotFuzz } from '../../testing/e2e';

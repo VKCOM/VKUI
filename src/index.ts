@@ -108,7 +108,7 @@ export { InfoRow } from './components/InfoRow/InfoRow';
 export type { InfoRowProps } from './components/InfoRow/InfoRow';
 export { Gallery } from './components/Gallery/Gallery';
 export type { GalleryProps } from './components/Gallery/Gallery';
-export { default as Avatar } from './components/Avatar/Avatar';
+export { Avatar } from './components/Avatar/Avatar';
 export type { AvatarProps } from './components/Avatar/Avatar';
 export { GridAvatar } from './components/GridAvatar/GridAvatar';
 export type { GridAvatarProps } from './components/GridAvatar/GridAvatar';

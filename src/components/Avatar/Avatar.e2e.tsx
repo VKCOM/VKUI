@@ -1,5 +1,5 @@
 import { Icon16Add } from '@vkontakte/icons';
-import Avatar, { AvatarProps } from './Avatar';
+import { Avatar, AvatarProps } from './Avatar';
 import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
 const base64Image = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAACXBIWXMAAC4jAAAuIwF4pT92AAAA+' +

@@ -1,7 +1,7 @@
 import { Icon28UserAddOutline } from '@vkontakte/icons';
 import { Fragment } from 'react';
 import { describeScreenshotFuzz } from '../../testing/e2e/utils';
-import Avatar from '../Avatar/Avatar';
+import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import UsersStack from '../UsersStack/UsersStack';
 import { RichCell } from './RichCell';

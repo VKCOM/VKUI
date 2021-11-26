@@ -1,7 +1,7 @@
 import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 import { HorizontalScroll } from './HorizontalScroll';
 import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
-import Avatar from '../Avatar/Avatar';
+import { Avatar } from '../Avatar/Avatar';
 import { ANDROID } from '../../lib/platform';
 import { ViewWidth } from '../../hoc/withAdaptivity';
 import { mount, screenshot } from '../../testing/e2e';

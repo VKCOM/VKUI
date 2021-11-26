@@ -14,7 +14,7 @@ export interface AvatarProps extends React.ImgHTMLAttributes<HTMLElement>, HasRo
   shadow?: boolean;
 }
 
-const Avatar: React.FC<AvatarProps> = ({
+export const Avatar: React.FC<AvatarProps> = ({
   alt,
   crossOrigin,
   decoding,
@@ -114,5 +114,3 @@ Avatar.defaultProps = {
   mode: 'default',
   shadow: AVATAR_DEFAULT_SHADOW,
 };
-
-export default Avatar;

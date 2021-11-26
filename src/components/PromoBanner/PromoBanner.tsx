@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Icon24Dismiss } from '@vkontakte/icons';
 import { Button } from '../Button/Button';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
-import Avatar from '../Avatar/Avatar';
+import { Avatar } from '../Avatar/Avatar';
 import { Caption } from '../Typography/Caption/Caption';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';

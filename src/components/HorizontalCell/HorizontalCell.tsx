@@ -6,7 +6,7 @@ import { hasReactNode } from '../../lib/utils';
 import { Caption } from '../Typography/Caption/Caption';
 import Tappable from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
-import Avatar from '../Avatar/Avatar';
+import { Avatar } from '../Avatar/Avatar';
 import { HasComponent, HasRef, HasRootRef } from '../../types';
 import './HorizontalCell.css';
 

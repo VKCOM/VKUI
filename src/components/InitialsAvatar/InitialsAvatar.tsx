@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { HasRootRef } from '../../types';
 import { classNames } from '../../lib/classNames';
-import Avatar, { AVATAR_DEFAULT_SHADOW, AVATAR_DEFAULT_SIZE } from '../Avatar/Avatar';
+import { Avatar, AVATAR_DEFAULT_SHADOW, AVATAR_DEFAULT_SIZE } from '../Avatar/Avatar';
 import './InitialsAvatar.css';
 
 /**

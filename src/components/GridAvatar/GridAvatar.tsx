@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Avatar, { AVATAR_DEFAULT_SHADOW, AVATAR_DEFAULT_SIZE } from '../Avatar/Avatar';
+import { Avatar, AVATAR_DEFAULT_SHADOW, AVATAR_DEFAULT_SIZE } from '../Avatar/Avatar';
 import { classNames } from '../../lib/classNames';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasRootRef } from '../../types';
