@@ -4,7 +4,7 @@ import { baselineComponent, fakeTimers, runAllTimers } from '../../testing/utils
 import { noop } from '../../lib/utils';
 import { PullToRefresh } from './PullToRefresh';
 import { act } from 'react-dom/test-utils';
-import ConfigProvider from '../ConfigProvider/ConfigProvider';
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { IOS, ANDROID } from '../../lib/platform';
 
 fakeTimers();

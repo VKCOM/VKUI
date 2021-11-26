@@ -3,7 +3,7 @@ import { screenshot, mount, describeScreenshotFuzz } from '../../testing/e2e';
 import { IOS } from '../../lib/platform';
 import { Icon16Add } from '@vkontakte/icons';
 import AppRoot from '../AppRoot/AppRoot';
-import ConfigProvider from '../ConfigProvider/ConfigProvider';
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 
 describe('Search', () => {
   describeScreenshotFuzz((p) => <Search style={{ maxWidth: '320px' }} {...p} />, [{

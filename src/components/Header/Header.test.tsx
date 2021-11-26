@@ -2,7 +2,7 @@ import { screen, render } from '@testing-library/react';
 import { Fragment } from 'react';
 import { Platform } from '../../lib/platform';
 import { baselineComponent } from '../../testing/utils';
-import ConfigProvider from '../ConfigProvider/ConfigProvider';
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Header } from './Header';
 
 const getTypographyTagNameByText = (text: string) => screen.getByText(text).tagName.toLowerCase();

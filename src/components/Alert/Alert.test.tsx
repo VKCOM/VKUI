@@ -5,7 +5,7 @@ import { ViewWidth } from '../../hoc/withAdaptivity';
 import { baselineComponent } from '../../testing/utils';
 import { Alert } from './Alert';
 import { ANDROID, IOS } from '../../lib/platform';
-import ConfigProvider from '../ConfigProvider/ConfigProvider';
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 
 beforeEach(() => jest.useFakeTimers());
 afterEach(() => jest.useRealTimers());

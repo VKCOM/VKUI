@@ -71,7 +71,7 @@ function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): Sche
   }
 }
 
-const ConfigProvider: React.FC<ConfigProviderProps> = ({
+export const ConfigProvider: React.FC<ConfigProviderProps> = ({
   children,
   schemeTarget,
   ...config
@@ -104,5 +104,3 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
 // Деструктуризация нужна из бага в react-docgen-typescript
 // https://github.com/styleguidist/react-docgen-typescript/issues/195
 ConfigProvider.defaultProps = { ...defaultConfigProviderProps };
-
-export default ConfigProvider;

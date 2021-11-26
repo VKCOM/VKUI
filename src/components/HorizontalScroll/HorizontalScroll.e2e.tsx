@@ -7,7 +7,7 @@ import { ViewWidth } from '../../hoc/withAdaptivity';
 import { mount, screenshot } from '../../testing/e2e';
 import AdaptivityProvider from '../AdaptivityProvider/AdaptivityProvider';
 import AppRoot from '../AppRoot/AppRoot';
-import ConfigProvider from '../ConfigProvider/ConfigProvider';
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Scheme } from '../ConfigProvider/ConfigProviderContext';
 
 describe('HorizontalScroll', () => {

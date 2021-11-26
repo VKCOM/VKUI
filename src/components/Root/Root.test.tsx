@@ -2,7 +2,7 @@ import { act } from 'react-dom/test-utils';
 import { baselineComponent, mockScrollContext, mountTest } from '../../testing/utils';
 import { render } from '@testing-library/react';
 import { View } from '../View/View';
-import ConfigProvider from '../ConfigProvider/ConfigProvider';
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Root } from './Root';
 
 beforeEach(() => jest.useFakeTimers());

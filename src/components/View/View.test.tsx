@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import ConfigProvider from '../ConfigProvider/ConfigProvider';
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { IOS } from '../../lib/platform';
 import { baselineComponent, mockScrollContext, mountTest } from '../../testing/utils';
 import { Panel } from '../Panel/Panel';
