@@ -104,7 +104,7 @@ export { HorizontalCell } from './components/HorizontalCell/HorizontalCell';
 export type { HorizontalCellProps } from './components/HorizontalCell/HorizontalCell';
 export { Footer } from './components/Footer/Footer';
 export type { FooterProps } from './components/Footer/Footer';
-export { default as InfoRow } from './components/InfoRow/InfoRow';
+export { InfoRow } from './components/InfoRow/InfoRow';
 export type { InfoRowProps } from './components/InfoRow/InfoRow';
 export { default as Gallery } from './components/Gallery/Gallery';
 export type { GalleryProps } from './components/Gallery/Gallery';

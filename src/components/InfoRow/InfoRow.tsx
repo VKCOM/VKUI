@@ -10,7 +10,7 @@ export interface InfoRowProps extends React.HTMLAttributes<HTMLDivElement> {
   header: React.ReactNode;
 }
 
-const InfoRow: React.FunctionComponent<InfoRowProps> = ({ header, children, ...restProps }: InfoRowProps) => {
+export const InfoRow: React.FunctionComponent<InfoRowProps> = ({ header, children, ...restProps }: InfoRowProps) => {
   const platform = usePlatform();
 
   return (
@@ -22,5 +22,3 @@ const InfoRow: React.FunctionComponent<InfoRowProps> = ({ header, children, ...r
     </Headline>
   );
 };
-
-export default InfoRow;
