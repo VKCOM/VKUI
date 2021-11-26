@@ -5,6 +5,7 @@ import { baselineComponent } from '../../testing/utils';
 import Tappable, { TappableProps } from './Tappable';
 import { ANDROID } from '../../lib/platform';
 import { act } from 'react-dom/test-utils';
+import AdaptivityProvider from '../AdaptivityProvider/AdaptivityProvider';
 
 const TappableTest = (props: TappableProps) => <Tappable data-testid="tappable" {...props} />;
 const tappable = () => screen.getByTestId('tappable');
@@ -165,7 +166,11 @@ describe('Tappable', () => {
     afterEach(() => jest.clearAllMocks());
     it('shows waves on android', () => {
       const waveCount = () => document.querySelectorAll('.Tappable__wave').length;
-      render(<ConfigProvider platform={ANDROID}><Tappable data-testid="x" /></ConfigProvider>);
+      render(
+        <AdaptivityProvider hasMouse={false}>
+          <ConfigProvider platform={ANDROID}><Tappable data-testid="x" /></ConfigProvider>
+        </AdaptivityProvider>,
+      );
       userEvent.click(screen.getByTestId('x'));
       expect(waveCount()).toBe(1);
       userEvent.click(screen.getByTestId('x'));
