@@ -66,7 +66,7 @@ function cancelEvent(event: any) {
   return false;
 }
 
-class PullToRefresh extends React.PureComponent<PullToRefreshProps & DOMProps, PullToRefreshState> {
+class _PullToRefresh extends React.PureComponent<PullToRefreshProps & DOMProps, PullToRefreshState> {
   constructor(props: PullToRefreshProps) {
     super(props);
 
@@ -298,6 +298,6 @@ class PullToRefresh extends React.PureComponent<PullToRefreshProps & DOMProps, P
   }
 }
 
-export default withContext(
-  withPlatform(withDOM<PullToRefreshProps>(PullToRefresh)),
+export const PullToRefresh = withContext(
+  withPlatform(withDOM<PullToRefreshProps>(_PullToRefresh)),
   ScrollContext, 'scroll');
