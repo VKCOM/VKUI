@@ -25,7 +25,7 @@ export interface PlaceholderProps extends React.HTMLAttributes<HTMLDivElement>, 
   stretched?: boolean;
 }
 
-const Placeholder: React.FC<PlaceholderProps> = (props: PlaceholderProps) => {
+export const Placeholder: React.FC<PlaceholderProps> = (props: PlaceholderProps) => {
   const {
     icon,
     header,
@@ -53,5 +53,3 @@ const Placeholder: React.FC<PlaceholderProps> = (props: PlaceholderProps) => {
     </div>
   );
 };
-
-export default Placeholder;

@@ -139,7 +139,7 @@ export { Separator } from './components/Separator/Separator';
 export type { SeparatorProps } from './components/Separator/Separator';
 export { Spacing } from './components/Spacing/Spacing';
 export type { SpacingProps } from './components/Spacing/Spacing';
-export { default as Placeholder } from './components/Placeholder/Placeholder';
+export { Placeholder } from './components/Placeholder/Placeholder';
 export type { PlaceholderProps } from './components/Placeholder/Placeholder';
 export { default as Banner } from './components/Banner/Banner';
 export type { BannerProps } from './components/Banner/Banner';
