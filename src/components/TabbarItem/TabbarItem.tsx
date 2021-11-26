@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
-import Counter from '../Counter/Counter';
+import { Counter } from '../Counter/Counter';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';

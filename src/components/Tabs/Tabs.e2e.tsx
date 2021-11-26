@@ -1,7 +1,7 @@
 
 import { Fragment } from 'react';
 import { describeScreenshotFuzz } from '../../testing/e2e/utils';
-import Counter from '../Counter/Counter';
+import { Counter } from '../Counter/Counter';
 import { TabsItem } from '../TabsItem/TabsItem';
 import { Tabs } from './Tabs';
 

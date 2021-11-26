@@ -131,7 +131,7 @@ export type { LinkProps } from './components/Link/Link';
 export { Tooltip } from './components/Tooltip/Tooltip';
 export type { TooltipProps } from './components/Tooltip/Tooltip';
 export { TooltipContainer } from './components/Tooltip/TooltipContainer';
-export { default as Counter } from './components/Counter/Counter';
+export { Counter } from './components/Counter/Counter';
 export type { CounterProps } from './components/Counter/Counter';
 export { default as UsersStack } from './components/UsersStack/UsersStack';
 export type { UsersStackProps } from './components/UsersStack/UsersStack';

@@ -25,7 +25,7 @@ const CounterTypography: React.FC<CounterTypographyProps> = ({ size, platform, .
     : <Text weight="medium" {...restProps} />;
 };
 
-const Counter: React.FC<CounterProps> = (props: CounterProps) => {
+const _Counter: React.FC<CounterProps> = (props: CounterProps) => {
   const { mode, size, children, ...restProps } = props;
   const platform = usePlatform();
 
@@ -47,9 +47,9 @@ const Counter: React.FC<CounterProps> = (props: CounterProps) => {
   );
 };
 
-Counter.defaultProps = {
+_Counter.defaultProps = {
   mode: 'secondary',
   size: 'm',
 };
 
-export default React.memo(Counter);
+export const Counter = React.memo(_Counter);
