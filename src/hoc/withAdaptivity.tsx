@@ -16,7 +16,7 @@ interface Config {
   viewWidth?: boolean;
   viewHeight?: boolean;
   hasMouse?: boolean;
-  hasHover?: boolean;
+  deviceHasHover?: boolean;
 }
 
 export function withAdaptivity<T>(TargetComponent: T, config: Config): T {
@@ -33,7 +33,7 @@ export function withAdaptivity<T>(TargetComponent: T, config: Config): T {
     const viewWidth = context.viewWidth;
     const viewHeight = context.viewHeight;
     const hasMouse = context.hasMouse;
-    const hasHover = context.hasHover;
+    const deviceHasHover = context.deviceHasHover;
 
     const adaptivityProps: {
       sizeX?: SizeType;
@@ -41,20 +41,20 @@ export function withAdaptivity<T>(TargetComponent: T, config: Config): T {
       viewWidth?: ViewWidth;
       viewHeight?: ViewHeight;
       hasMouse?: boolean;
-      hasHover?: boolean;
+      deviceHasHover?: boolean;
     } = {};
     config.sizeX ? adaptivityProps.sizeX = sizeX : undefined;
     config.sizeY ? adaptivityProps.sizeY = sizeY : undefined;
     config.viewWidth ? adaptivityProps.viewWidth = viewWidth : undefined;
     config.viewHeight ? adaptivityProps.viewHeight = viewHeight : undefined;
     config.hasMouse ? adaptivityProps.hasMouse = hasMouse : undefined;
-    config.hasHover ? adaptivityProps.hasHover = hasHover : undefined;
+    config.deviceHasHover ? adaptivityProps.deviceHasHover = deviceHasHover : undefined;
 
     // @ts-ignore
     const target = <TargetComponent {...props} {...adaptivityProps} />;
 
     if (update) {
-      return <AdaptivityContext.Provider value={{ sizeX, sizeY, viewWidth, viewHeight, hasMouse, hasHover }}>
+      return <AdaptivityContext.Provider value={{ sizeX, sizeY, viewWidth, viewHeight, hasMouse, deviceHasHover }}>
         {target}
       </AdaptivityContext.Provider>;
     }

@@ -128,7 +128,8 @@ const Tappable: React.FC<TappableProps> = ({
   getRootRef,
   sizeX,
   hasMouse,
-  hasHover: _hasHover,
+  deviceHasHover,
+  hasHover: _hasHover = deviceHasHover,
   hoverMode = 'background',
   hasActive: _hasActive = true,
   activeMode = 'background',
@@ -270,7 +271,7 @@ const Tappable: React.FC<TappableProps> = ({
   );
 };
 
-export default withAdaptivity(Tappable, { sizeX: true, hasMouse: true, hasHover: true });
+export default withAdaptivity(Tappable, { sizeX: true, hasMouse: true, deviceHasHover: true });
 
 function Wave({ x, y, onClear }: Wave & { onClear: VoidFunction }) {
   const timeout = useTimeout(onClear, 225);

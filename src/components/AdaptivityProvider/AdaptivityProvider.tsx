@@ -32,7 +32,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   React.useEffect(() => {
     function onResize() {
       const calculated = calculateAdaptivity(window.innerWidth, window.innerHeight, props);
-      const { viewWidth, viewHeight, sizeX, sizeY, hasMouse, hasHover } = adaptivityRef.current;
+      const { viewWidth, viewHeight, sizeX, sizeY, hasMouse, deviceHasHover } = adaptivityRef.current;
 
       if (
         viewWidth !== calculated.viewWidth ||
@@ -40,7 +40,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
         sizeX !== calculated.sizeX ||
         sizeY !== calculated.sizeY ||
         hasMouse !== calculated.hasMouse ||
-        hasHover !== calculated.hasHover
+        deviceHasHover !== calculated.deviceHasHover
       ) {
         adaptivityRef.current = calculated;
         updateAdaptivity({});
@@ -53,7 +53,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
     return () => {
       window.removeEventListener('resize', onResize, false);
     };
-  }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse, props.hasHover]);
+  }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse, props.deviceHasHover]);
 
   return (
     <AdaptivityContext.Provider value={adaptivityRef.current}>
@@ -68,7 +68,7 @@ function calculateAdaptivity(windowWidth: number, windowHeight: number, props: A
   let sizeY = SizeType.REGULAR;
   let sizeX = SizeType.REGULAR;
   let hasMouse = typeof props.hasMouse === 'boolean' ? props.hasMouse : _hasMouse;
-  let hasHover = typeof props.hasHover === 'boolean' ? props.hasHover : _hasHover;
+  let deviceHasHover = typeof props.deviceHasHover === 'boolean' ? props.deviceHasHover : _hasHover;
 
   if (windowWidth >= DESKTOP_SIZE) {
     viewWidth = ViewWidth.DESKTOP;
@@ -104,5 +104,5 @@ function calculateAdaptivity(windowWidth: number, windowHeight: number, props: A
   props.sizeX && (sizeX = props.sizeX);
   props.sizeY && (sizeY = props.sizeY);
 
-  return { viewWidth, viewHeight, sizeX, sizeY, hasMouse, hasHover };
+  return { viewWidth, viewHeight, sizeX, sizeY, hasMouse, deviceHasHover };
 }
