@@ -70,6 +70,7 @@ describe('ActionSheet', () => {
       render(<ActionSheetDesktop onClose={onClose} />);
       jest.runAllTimers();
       userEvent.click(document.body);
+      jest.runAllTimers();
       expect(onClose).toBeCalledTimes(1);
     });
     it('calls popupDirection with element', () => {
