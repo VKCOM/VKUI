@@ -2,10 +2,10 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { baselineComponent } from '../../testing/utils';
-import Tappable, { TappableProps } from './Tappable';
+import { Tappable, TappableProps } from './Tappable';
 import { ANDROID } from '../../lib/platform';
 import { act } from 'react-dom/test-utils';
-import AdaptivityProvider from '../AdaptivityProvider/AdaptivityProvider';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 
 const TappableTest = (props: TappableProps) => <Tappable data-testid="tappable" {...props} />;
 const tappable = () => screen.getByTestId('tappable');

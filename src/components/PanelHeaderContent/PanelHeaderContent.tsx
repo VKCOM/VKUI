@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
-import Tappable from '../Tappable/Tappable';
+import { Tappable } from '../Tappable/Tappable';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import { Caption } from '../Typography/Caption/Caption';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
-import Tappable from '../Tappable/Tappable';
+import { Tappable } from '../Tappable/Tappable';
 import { classNames } from '../../lib/classNames';
 import { VKCOM } from '../../lib/platform';
 import { usePlatform } from '../../hooks/usePlatform';

@@ -6,7 +6,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { hasReactNode } from '../../lib/utils';
 import { Icon24Chevron, Icon24DismissSubstract, Icon24DismissDark, Icon24Cancel } from '@vkontakte/icons';
-import Tappable from '../Tappable/Tappable';
+import { Tappable } from '../Tappable/Tappable';
 import { IconButton } from '../IconButton/IconButton';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';

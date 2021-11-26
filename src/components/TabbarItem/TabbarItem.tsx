@@ -4,7 +4,7 @@ import { Counter } from '../Counter/Counter';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
-import Tappable from '../Tappable/Tappable';
+import { Tappable } from '../Tappable/Tappable';
 import { Platform } from '../../lib/platform';
 import { HasComponent, HasRootRef } from '../../types';
 import './TabbarItem.css';

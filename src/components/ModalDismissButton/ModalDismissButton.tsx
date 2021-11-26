@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Icon20Cancel } from '@vkontakte/icons';
-import Tappable from '../Tappable/Tappable';
+import { Tappable } from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import './ModalDismissButton.css';

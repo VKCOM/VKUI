@@ -12,7 +12,7 @@ import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { IOS } from '../../lib/platform';
 import { Counter } from '../Counter/Counter';
-import Tappable from '../Tappable/Tappable';
+import { Tappable } from '../Tappable/Tappable';
 import { warnOnce } from '../../lib/warnOnce';
 import { hasReactNode } from '../../lib/utils';
 import './WriteBarIcon.css';

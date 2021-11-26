@@ -118,7 +118,7 @@ function useActivity(hasActive: boolean, stopDelay: number) {
   return [activity, { delayStart, start, stop }] as const;
 }
 
-const Tappable: React.FC<TappableProps> = ({
+export const Tappable: React.FC<TappableProps> = withAdaptivity(({
   children,
   Component,
   onClick,
@@ -269,9 +269,7 @@ const Tappable: React.FC<TappableProps> = ({
       {!props.disabled && <FocusVisible mode={focusVisibleMode} />}
     </Touch>
   );
-};
-
-export default withAdaptivity(Tappable, { sizeX: true, hasMouse: true, deviceHasHover: true });
+}, { sizeX: true, hasMouse: true, deviceHasHover: true });
 
 function Wave({ x, y, onClear }: Wave & { onClear: VoidFunction }) {
   const timeout = useTimeout(onClear, 225);

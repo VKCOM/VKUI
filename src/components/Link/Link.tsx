@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
-import Tappable, { TappableProps } from '../Tappable/Tappable';
+import { Tappable, TappableProps } from '../Tappable/Tappable';
 import './Link.css';
 
 export type LinkProps = TappableProps;

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { HasComponent } from '../../types';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
-import Tappable, { TappableProps } from '../Tappable/Tappable';
+import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Icon24Chevron } from '@vkontakte/icons';
 import { IOS } from '../../lib/platform';
 import { usePlatform } from '../../hooks/usePlatform';
