@@ -128,7 +128,7 @@ export { PullToRefresh } from './components/PullToRefresh/PullToRefresh';
 export type { PullToRefreshProps } from './components/PullToRefresh/PullToRefresh';
 export { Link } from './components/Link/Link';
 export type { LinkProps } from './components/Link/Link';
-export { default as Tooltip } from './components/Tooltip/Tooltip';
+export { Tooltip } from './components/Tooltip/Tooltip';
 export type { TooltipProps } from './components/Tooltip/Tooltip';
 export { TooltipContainer } from './components/Tooltip/TooltipContainer';
 export { default as Counter } from './components/Counter/Counter';

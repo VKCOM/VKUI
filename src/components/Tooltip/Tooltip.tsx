@@ -128,7 +128,7 @@ function isVerticalPlacement(placement: Placement) {
   return placement.startsWith('top') || placement.startsWith('bottom');
 }
 
-const Tooltip: React.FC<TooltipProps> = ({
+export const Tooltip: React.FC<TooltipProps> = ({
   children, isShown: _isShown, offsetX = 0, offsetY = 15,
   alignX, alignY, onClose, cornerOffset, cornerAbsoluteOffset,
   ...restProps
@@ -248,4 +248,3 @@ Tooltip.defaultProps = {
   isShown: true,
   mode: 'accent',
 };
-export default Tooltip;
