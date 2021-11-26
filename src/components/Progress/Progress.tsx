@@ -11,7 +11,7 @@ export interface ProgressProps extends React.HTMLAttributes<HTMLDivElement>, Has
 const PROGRESS_MIN_VALUE = 0;
 const PROGRESS_MAX_VALUE = 100;
 
-const Progress: React.FC<ProgressProps> = ({ value, getRootRef, ...restProps }: ProgressProps) => {
+export const Progress: React.FC<ProgressProps> = ({ value, getRootRef, ...restProps }: ProgressProps) => {
   const platform = usePlatform();
 
   const progress = Math.max(PROGRESS_MIN_VALUE, Math.min(value, PROGRESS_MAX_VALUE));
@@ -35,5 +35,3 @@ const Progress: React.FC<ProgressProps> = ({ value, getRootRef, ...restProps }: 
 Progress.defaultProps = {
   value: 0,
 };
-
-export default Progress;

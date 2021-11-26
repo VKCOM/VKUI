@@ -114,7 +114,7 @@ export { GridAvatar } from './components/GridAvatar/GridAvatar';
 export type { GridAvatarProps } from './components/GridAvatar/GridAvatar';
 export { InitialsAvatar } from './components/InitialsAvatar/InitialsAvatar';
 export type { InitialsAvatarProps } from './components/InitialsAvatar/InitialsAvatar';
-export { default as Progress } from './components/Progress/Progress';
+export { Progress } from './components/Progress/Progress';
 export type { ProgressProps } from './components/Progress/Progress';
 export { default as Search } from './components/Search/Search';
 export type { SearchProps } from './components/Search/Search';
