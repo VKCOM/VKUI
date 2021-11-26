@@ -28,7 +28,7 @@ export interface SearchProps extends React.InputHTMLAttributes<HTMLInputElement>
   defaultValue?: string;
 }
 
-const Search: React.FC<SearchProps> = ({
+export const Search: React.FC<SearchProps> = withPlatform(({
   before,
   className,
   defaultValue,
@@ -132,7 +132,7 @@ const Search: React.FC<SearchProps> = ({
       {platform === VKCOM && <Separator vkuiClass="Search__separator" wide />}
     </div>
   );
-};
+});
 
 Search.defaultProps = {
   autoComplete: 'off',
@@ -141,5 +141,3 @@ Search.defaultProps = {
   after: 'Отмена',
   before: <Icon16SearchOutline />,
 };
-
-export default withPlatform(Search);

@@ -1,4 +1,4 @@
-import Search from './Search';
+import { Search } from './Search';
 import { screenshot, mount, describeScreenshotFuzz } from '../../testing/e2e';
 import { IOS } from '../../lib/platform';
 import { Icon16Add } from '@vkontakte/icons';

@@ -116,7 +116,7 @@ export { InitialsAvatar } from './components/InitialsAvatar/InitialsAvatar';
 export type { InitialsAvatarProps } from './components/InitialsAvatar/InitialsAvatar';
 export { Progress } from './components/Progress/Progress';
 export type { ProgressProps } from './components/Progress/Progress';
-export { default as Search } from './components/Search/Search';
+export { Search } from './components/Search/Search';
 export type { SearchProps } from './components/Search/Search';
 export { default as Tabs } from './components/Tabs/Tabs';
 export type { TabsProps } from './components/Tabs/Tabs';
