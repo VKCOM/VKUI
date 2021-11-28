@@ -59,36 +59,21 @@
 
 .ModalPage__content {
   height: 100%;
-  overflow-y: hidden;
-  overflow-x: hidden;
+  overflow: hidden;
   box-sizing: border-box;
+  touch-action: pan-y;
 }
 
 .ModalPage--desktop .ModalPage__content,
-.ModalRoot__modal--expandable .ModalPage__content {
+.ModalPage--scrollable .ModalPage__content {
   overflow-y: auto;
+  touch-action: auto;
   -webkit-overflow-scrolling: touch;
 }
 
 .ModalPage__content-in {
   position: relative;
   padding-bottom: var(--safe-area-inset-bottom);
-}
-
-.ModalRoot__modal--collapsed .ModalPage__content,
-.ModalRoot__modal--dragging .ModalPage__content {
-  overflow: hidden;
-  touch-action: pan-y;
-}
-
-.ModalPage__footer {
-  background: var(--background_content);
-  position: relative;
-  z-index: 10;
-}
-
-.ModalRoot--touched .ModalPage__footer {
-  transition: none;
 }
 
 /**
@@ -135,12 +120,4 @@
   .ModalPage--desktop .ModalPage__in {
     max-height: calc(100vh - 32px);
   }
-}
-
-/**
- * common
- */
-
-.ModalRoot--touched .ModalPage__in-wrap {
-  transition: none;
 }

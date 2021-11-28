@@ -1,26 +1,52 @@
 import * as React from "react";
-import { ModalsState, ModalsStateEntry, ModalType } from "./types";
 import { warnOnce } from "../../lib/warnOnce";
 import { getNavId } from "../../lib/getNavId";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import { noop, isFunction } from "../../lib/utils";
+import { isFunction } from "../../lib/utils";
+import { noop } from "@vkontakte/vkjs";
 
+type ModalHistoryRecord = {
+  id: string;
+  translate?: number;
+  globalTranslate?: boolean;
+};
 interface ModalTransitionState {
   activeModal?: string;
   enteringModal?: string;
   exitingModal?: string;
 
-  history?: string[];
+  isLocked?: boolean;
+  history?: ModalHistoryRecord[];
   isBack?: boolean;
 }
 
 export interface ModalTransitionProps extends ModalTransitionState {
-  onEnter: (id: string) => void;
+  onEnter: (id: string, lock?: boolean) => void;
   onExit: (id: string) => void;
-  getModalState: (id: string) => ModalsStateEntry;
+  captureClose: (override?: (id: string) => void | null) => void;
+  saveTranslate: (
+    id: string,
+    translate: number,
+    globalTranslate: boolean
+  ) => void;
   closeActiveModal: VoidFunction;
-  delayEnter: boolean;
+  modals: React.ReactElement[];
 }
+
+export const ModalManagerContext = React.createContext<ModalTransitionProps>({
+  history: [],
+  onEnter: noop,
+  onExit: noop,
+  captureClose: noop,
+  closeActiveModal: noop,
+  saveTranslate: noop,
+  modals: [],
+  isLocked: false,
+  isBack: false,
+  activeModal: null,
+  enteringModal: null,
+  exitingModal: null,
+});
 
 function getModals(children: React.ReactNode | React.ReactNode[]) {
   return React.Children.toArray(children) as React.ReactElement[];
@@ -28,42 +54,55 @@ function getModals(children: React.ReactNode | React.ReactNode[]) {
 
 const warn = warnOnce("ModalRoot");
 
+type ModalTransitionAction =
+  | { type: "setActive" | "exited"; id: string }
+  | { type: "entered"; id: string; lock: boolean }
+  | ({ type: "saveTranslate"; id: string } & Required<ModalHistoryRecord>);
 export function modalTransitionReducer(
   state: ModalTransitionState,
-  action: { type: "setActive" | "entered" | "exited" | "inited"; id: string }
+  action: ModalTransitionAction
 ): ModalTransitionState {
   if (action.type === "setActive" && action.id !== state.activeModal) {
     const nextModal = action.id;
     // preserve exiting modal if switching mid-transition
     const prevModal = state.exitingModal || state.activeModal;
     let history = [...state.history];
-    const isBack = history.includes(nextModal);
+    const backRef = history.find(({ id }) => id === action.id);
 
     if (nextModal === null) {
       history = [];
-    } else if (isBack) {
-      history = history.splice(0, history.indexOf(nextModal) + 1);
+    } else if (backRef) {
+      history = history.splice(0, history.indexOf(backRef) + 1);
     } else {
-      history.push(nextModal);
+      history.push({ id: nextModal });
     }
 
     return {
       activeModal: nextModal,
-      // not entering yet
-      enteringModal: null,
+      enteringModal: nextModal,
       exitingModal: prevModal,
       history,
-      isBack,
+      isBack: !!backRef,
+      isLocked: false,
+    };
+  }
+  if (
+    action.type === "saveTranslate" &&
+    state.history.some((e) => e.id === action.id)
+  ) {
+    const { type, id, ...patch } = action;
+    return {
+      ...state,
+      history: state.history.map((e) =>
+        e.id === action.id ? { ...e, ...patch } : e
+      ),
     };
   }
   if (action.type === "entered" && action.id === state.enteringModal) {
-    return { ...state, enteringModal: null };
+    return { ...state, enteringModal: null, isLocked: action.lock };
   }
   if (action.type === "exited" && action.id === state.exitingModal) {
-    return { ...state, exitingModal: null };
-  }
-  if (action.type === "inited" && action.id === state.activeModal) {
-    return { ...state, enteringModal: action.id };
+    return { ...state, exitingModal: null, isLocked: false };
   }
   return state;
 }
@@ -71,121 +110,101 @@ export function modalTransitionReducer(
 /**
  * Реализует переход модалок. При смене activeModal m1 -> m2:
  * 1. activeModal: m1, exitingModal: null, enteringModal: null, триггер перехода
- * 2. activeModal: m2, exitingModal: m1, enteringModal: null, рендерим m2 чтобы прошел init, начинаем анимацию выхода
- * одновременный переход между ModalPage:
- *   3a. activeModal: m2, exitingModal: m1, enteringModal: m2
- *   4a. exitingModal и enteringModal переходят в null в порядке завершения анимации
- * ИЛИ дожидаемся скрытия ModalCard
- *   3b. activeModal: m2, exitingModal: null, enteringModal: m2
- *   4b. enteringModal переходит в null после завершения анимации
+ * 2. activeModal: m2, exitingModal: m1, enteringModal: m2
+ * 3/4. exitingModal вызывает onExit, enteringModal - onEnter и становятся null в порядке завершения анимации
  * 5. activeModal: m2, exitingModal: null, enteringModal: null, переход закончен
+ *
+ * При isLocked = true нельзя начинать анимацию входа следующей модалки.
  */
 export function useModalManager(
   activeModal: string,
   children: React.ReactNode | React.ReactNode[],
-  onClose: (id: string) => void,
-  initModal: (state: ModalsStateEntry) => void = noop
+  onClose: (id: string) => void
 ): ModalTransitionProps {
-  const modalsState = React.useRef<ModalsState>({}).current;
-  getModals(children).forEach((Modal) => {
-    const modalProps = Modal.props;
-    const id = getNavId(modalProps, warn);
-    const state: ModalsStateEntry = modalsState[id] || { id };
+  const onCloseOverride = React.useRef<(id: string) => void>();
+  const modals = getModals(children);
 
-    state.onClose = Modal.props.onClose;
-    state.dynamicContentHeight = !!modalProps.dynamicContentHeight;
-    // ModalPage props
-    if (typeof modalProps.settlingHeight === "number") {
-      state.settlingHeight = modalProps.settlingHeight;
-    }
-
-    modalsState[state.id] = state;
-  });
-
-  const isMissing = activeModal && !modalsState[activeModal];
+  const isMissing =
+    activeModal && !modals.some((m) => getNavId(m.props, warn) === activeModal);
   const safeActiveModal = isMissing ? null : activeModal;
   const [transitionState, dispatchTransition] = React.useReducer(
     modalTransitionReducer,
     {
       activeModal: safeActiveModal,
-      enteringModal: null,
+      enteringModal: safeActiveModal,
       exitingModal: null,
-      history: safeActiveModal ? [safeActiveModal] : [],
+      history: safeActiveModal ? [{ id: safeActiveModal }] : [],
       isBack: false,
+      isLocked: false,
     }
   );
 
   // Map props to state, render activeModal for init
   useIsomorphicLayoutEffect(() => {
-    // ignore non-existent activeModal
+    dispatchTransition({ type: "setActive", id: safeActiveModal });
+  }, [safeActiveModal]);
+
+  // Warn on non-existent activeModal
+  React.useEffect(() => {
     if (process.env.NODE_ENV === "development" && isMissing) {
       warn(`Can't transition - modal ${activeModal} not found`);
     }
-    dispatchTransition({ type: "setActive", id: safeActiveModal });
-  }, [activeModal]);
+  }, [isMissing]);
 
-  // Init activeModal & set enteringModal
-  useIsomorphicLayoutEffect(() => {
-    if (transitionState.activeModal) {
-      initModal(modalsState[transitionState.activeModal]);
-      dispatchTransition({ type: "inited", id: transitionState.activeModal });
-    }
-  }, [transitionState.activeModal]);
-
-  const isCard = (id: string) => modalsState[id]?.type === ModalType.CARD;
-  const onEnter = React.useCallback(
-    (id: string) => dispatchTransition({ type: "entered", id }),
+  const onEnter = React.useCallback<ModalTransitionProps["onEnter"]>(
+    (id, lock) => dispatchTransition({ type: "entered", id, lock }),
     []
   );
-  const onExit = React.useCallback(
-    (id: string) => dispatchTransition({ type: "exited", id }),
+  const onExit = React.useCallback<ModalTransitionProps["onExit"]>(
+    (id) => dispatchTransition({ type: "exited", id }),
     []
   );
-  const delayEnter = Boolean(
-    transitionState.exitingModal &&
-      (isCard(activeModal) || isCard(transitionState.exitingModal))
+  const saveTranslate = React.useCallback<
+    ModalTransitionProps["saveTranslate"]
+  >(
+    (id, translate, globalTranslate) =>
+      dispatchTransition({
+        type: "saveTranslate",
+        id,
+        translate,
+        globalTranslate,
+      }),
+    []
   );
-  const getModalState = React.useCallback((id: string) => modalsState[id], []);
 
-  function closeActiveModal() {
-    const modalState = modalsState[transitionState.activeModal];
-    if (modalState) {
-      if (isFunction(modalState.onClose)) {
-        modalState.onClose();
+  const captureClose = React.useCallback<ModalTransitionProps["captureClose"]>(
+    (cb) => {
+      onCloseOverride.current = cb;
+    },
+    []
+  );
+
+  const closeActiveModal = React.useCallback(() => {
+    if (safeActiveModal) {
+      if (isFunction(onCloseOverride.current)) {
+        onCloseOverride.current();
       } else if (isFunction(onClose)) {
-        onClose(modalState.id);
+        onClose(safeActiveModal);
       } else if (process.env.NODE_ENV === "development") {
         warn("onClose is undefined");
       }
     }
-  }
+  }, [safeActiveModal, onClose]);
+
+  const visibleModals = modals.filter((m) => {
+    const id = getNavId(m.props, warn);
+    return (
+      id === transitionState.activeModal || id === transitionState.exitingModal
+    );
+  });
 
   return {
+    ...transitionState,
     onEnter,
     onExit,
-    ...transitionState,
-    delayEnter,
-    getModalState,
+    saveTranslate,
+    captureClose,
     closeActiveModal,
-  };
-}
-
-export function withModalManager(
-  initModal: (a: ModalsStateEntry) => void = noop
-) {
-  return function <Props extends ModalTransitionProps>(
-    Wrapped: React.ComponentType<Props>
-  ): React.FC<
-    Omit<Props, keyof ModalTransitionProps> & { activeModal: string }
-  > {
-    return function WithModalManager(props) {
-      const transitionManager = useModalManager(
-        props.activeModal,
-        props.children,
-        (props as any).onClose,
-        initModal
-      );
-      return <Wrapped {...(props as any)} {...transitionManager} />;
-    };
+    modals: visibleModals,
   };
 }

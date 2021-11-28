@@ -92,6 +92,8 @@ const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
   );
 };
 
+const users = getRandomUsers(15);
+
 const App = withPlatform(
   withAdaptivity(
     class App extends React.Component {
@@ -260,6 +262,23 @@ const App = withPlatform(
                 <FormItem top="Город">
                   <SelectMimicry placeholder="Выбрать город" disabled />
                 </FormItem>
+
+                <HorizontalScroll>
+                  <div style={{ display: "flex" }}>
+                    {users.map((user) => (
+                      <HorizontalCell
+                        size="s"
+                        header={user.first_name}
+                        key={user.id}
+                      >
+                        <Avatar
+                          size={platform === "ios" ? 64 : 56}
+                          src={user.photo_100}
+                        />
+                      </HorizontalCell>
+                    ))}
+                  </div>
+                </HorizontalScroll>
 
                 <FormItem top="Пол">
                   <Radio name="sex" value={0} defaultChecked>

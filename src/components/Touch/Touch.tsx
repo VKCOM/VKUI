@@ -252,7 +252,7 @@ export const Touch: React.FC<TouchProps> = ({
   );
 };
 
-function initGesture(startX: number, startY: number): Gesture {
+export function initGesture(startX: number, startY: number): Gesture {
   return {
     startX,
     startY,

@@ -61,7 +61,8 @@ export function useKeyboard(): SoftwareKeyboardState {
    */
   React.useEffect(() => {
     onFocus(true);
-  }, [onFocus]);
+    // help me
+  }, []);
 
   useGlobalEventListener(document, "focusout", onFocus, eventOptions);
   useGlobalEventListener(document, "focusin", onFocus, eventOptions);

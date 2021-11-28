@@ -1,22 +1,19 @@
 import * as React from "react";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
-import {
-  ModalRootContext,
-  useModalRegistry,
-} from "../ModalRoot/ModalRootContext";
+import { ModalRootContext } from "../ModalRoot/ModalRootContext";
 import { usePlatform } from "../../hooks/usePlatform";
 import {
   withAdaptivity,
   AdaptivityProps,
-  ViewHeight,
   ViewWidth,
 } from "../../hoc/withAdaptivity";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
-import { multiRef } from "../../lib/utils";
-import { ModalType } from "../ModalRoot/types";
 import { getNavId, NavIdProps } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
+import { Touch } from "../Touch/Touch";
+import { useExternRef } from "../../hooks/useExternRef";
+import { useModalPage } from "./useModalPage";
 import "./ModalPage.css";
 
 export interface ModalPageProps
@@ -42,7 +39,6 @@ export interface ModalPageProps
 const warn = warnOnce("ModalPage");
 const ModalPage: React.FC<ModalPageProps> = (props: ModalPageProps) => {
   const platform = usePlatform();
-  const { updateModalHeight } = React.useContext(ModalRootContext);
   const {
     children,
     header,
@@ -50,7 +46,7 @@ const ModalPage: React.FC<ModalPageProps> = (props: ModalPageProps) => {
     viewHeight,
     sizeX,
     hasMouse,
-    onClose,
+    onClose: _onClose,
     settlingHeight,
     dynamicContentHeight,
     getModalContentRef,
@@ -58,51 +54,65 @@ const ModalPage: React.FC<ModalPageProps> = (props: ModalPageProps) => {
     ...restProps
   } = props;
 
+  const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
+
+  const modalContext = React.useContext(ModalRootContext);
+  const pageElement = React.useRef<HTMLDivElement>();
+  const contentRef = useExternRef(getModalContentRef);
+  const { refs, updateModalHeight, handlers, expanded, dragging, onClose } =
+    useModalPage(getNavId(props, warn), {
+      onClose: _onClose,
+      ...props,
+      hasOverflow: () =>
+        contentRef.current.scrollHeight > contentRef.current.offsetHeight,
+      innerHeight: () =>
+        contentRef.current.getBoundingClientRect().bottom -
+        refs.innerElement.current.getBoundingClientRect().top,
+      pageHeight: () => pageElement.current.offsetHeight,
+      isScrolled: () => contentRef.current.scrollTop > 0,
+    });
+  const childContext = React.useMemo(
+    () => ({ ...modalContext, updateModalHeight }),
+    [updateModalHeight]
+  );
   React.useEffect(() => {
     updateModalHeight();
   }, [children]);
 
-  const isDesktop =
-    viewWidth >= ViewWidth.SMALL_TABLET &&
-    (hasMouse || viewHeight >= ViewHeight.MEDIUM);
-  const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
-
-  const modalContext = React.useContext(ModalRootContext);
-  const { refs } = useModalRegistry(getNavId(props, warn), ModalType.PAGE);
-
   return (
     <div
       {...restProps}
+      ref={pageElement}
       vkuiClass={classNames(
         getClassName("ModalPage", platform),
         `ModalPage--sizeX-${sizeX}`,
         {
-          "ModalPage--desktop": isDesktop,
+          "ModalPage--desktop": modalContext.mode === "desktop",
+          "ModalPage--scrollable": expanded && !dragging,
         }
       )}
     >
-      <div vkuiClass="ModalPage__in-wrap" ref={refs.innerElement}>
-        <div vkuiClass="ModalPage__in">
-          <div vkuiClass="ModalPage__header" ref={refs.headerElement}>
-            {header}
-          </div>
-
-          <div vkuiClass="ModalPage__content-wrap">
-            <div
-              vkuiClass="ModalPage__content"
-              ref={multiRef<HTMLDivElement>(
-                refs.contentElement,
-                getModalContentRef
-              )}
-            >
-              <div vkuiClass="ModalPage__content-in">{children}</div>
+      <ModalRootContext.Provider value={childContext}>
+        <Touch
+          vkuiClass="ModalPage__in-wrap"
+          getRootRef={refs.innerElement}
+          {...handlers}
+          data-vkui-modal-page
+        >
+          <div vkuiClass="ModalPage__in">
+            <div vkuiClass="ModalPage__header" ref={refs.headerElement}>
+              {header}
             </div>
+
+            <div vkuiClass="ModalPage__content-wrap">
+              <div vkuiClass="ModalPage__content" ref={contentRef}>
+                <div vkuiClass="ModalPage__content-in">{children}</div>
+              </div>
+            </div>
+            {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}
           </div>
-          {canShowCloseBtn && (
-            <ModalDismissButton onClick={onClose || modalContext.onClose} />
-          )}
-        </div>
-      </div>
+        </Touch>
+      </ModalRootContext.Provider>
     </div>
   );
 };

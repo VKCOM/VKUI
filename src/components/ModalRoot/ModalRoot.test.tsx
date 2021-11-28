@@ -1,53 +1,44 @@
-import { baselineComponent, mountTest } from "../../testing/utils";
+import * as React from "react";
+import {
+  baselineComponent,
+  mountTest,
+  runAllTimers,
+  setupFakeAsync,
+} from "../../testing/utils";
 import { render } from "@testing-library/react";
-import ModalPage from "../ModalPage/ModalPage";
-import ModalCard from "../ModalCard/ModalCard";
-import { ModalRootTouch } from "./ModalRoot";
-import { ModalRootDesktop } from "./ModalRootDesktop";
+import { ModalRoot as ModalRootAdaptive } from "./ModalRootAdaptive";
 import userEvent from "@testing-library/user-event";
+import { NavIdProps } from "index";
+import { useModal } from "./useModal";
+
+const MockModal: React.FC<NavIdProps & { onClose?: VoidFunction }> = ({
+  id,
+  onClose,
+}) => {
+  const { innerElement } = useModal(id, { startTranslateY: 0, onClose });
+  return <div id={id} ref={innerElement} />;
+};
 
 const clickFade = () =>
   userEvent.click(document.querySelector(".ModalRoot__mask"));
-let rafSpies: jest.SpyInstance[];
-beforeEach(() => {
-  jest.useFakeTimers();
-  rafSpies = [
-    jest
-      .spyOn(window, "requestAnimationFrame")
-      .mockImplementation((cb) => setTimeout(() => cb(Date.now()))),
-    jest
-      .spyOn(window, "cancelAnimationFrame")
-      .mockImplementation((id) => clearTimeout(id)),
-  ];
-});
-afterEach(() => {
-  jest.clearAllTimers();
-  jest.useRealTimers();
-  rafSpies.forEach((m) => m.mockRestore());
-});
+setupFakeAsync();
 
-describe.each([
-  ["ModalRootTouch", ModalRootTouch],
-  ["ModalRootDesktop", ModalRootDesktop],
-] as const)("%s", (name, ModalRoot) => {
+describe.each(["mobile", "desktop"] as const)("%s", (mode) => {
+  const ModalRoot: typeof ModalRootAdaptive = (p) => (
+    <ModalRootAdaptive mode={mode} {...p} />
+  );
   baselineComponent<any>(ModalRoot, { forward: false });
   describe("With ModalPage", () =>
     mountTest(() => (
       <ModalRoot activeModal="m">
-        <ModalPage id="m" />
-      </ModalRoot>
-    )));
-  describe("With ModalCard", () =>
-    mountTest(() => (
-      <ModalRoot activeModal="m">
-        <ModalCard id="m" />
+        <MockModal id="m" />
       </ModalRoot>
     )));
 
   describe("shows active modal", () => {
     const modals = [
-      <ModalPage id="m" key="m" />,
-      <ModalPage id="other" key="o" />,
+      <MockModal id="m" key="m" />,
+      <MockModal id="other" key="o" />,
     ];
     it("on mount", () => {
       render(<ModalRoot activeModal="m">{modals}</ModalRoot>);
@@ -56,25 +47,32 @@ describe.each([
     });
     it("shows via prop update", () => {
       const h = render(<ModalRoot activeModal={null}>{modals}</ModalRoot>);
-      jest.runAllTimers();
+      runAllTimers();
       h.rerender(<ModalRoot activeModal="m">{modals}</ModalRoot>);
-      jest.runAllTimers();
+      runAllTimers();
       expect(document.getElementById("m")).not.toBeNull();
       expect(document.getElementById("other")).toBeNull();
     });
     it("hides via prop update", () => {
       const h = render(<ModalRoot activeModal="m">{modals}</ModalRoot>);
-      jest.runAllTimers();
+      runAllTimers();
       h.rerender(<ModalRoot activeModal={null}>{modals}</ModalRoot>);
-      jest.runAllTimers();
+      runAllTimers();
       expect(document.getElementById("m")).toBeNull();
       expect(document.getElementById("other")).toBeNull();
     });
     it("changes via prop update", () => {
       const h = render(<ModalRoot activeModal="m">{modals}</ModalRoot>);
-      jest.runAllTimers();
+      runAllTimers();
       h.rerender(<ModalRoot activeModal="other">{modals}</ModalRoot>);
-      jest.runAllTimers();
+      runAllTimers();
+      expect(document.getElementById("m")).toBeNull();
+      expect(document.getElementById("other")).not.toBeNull();
+    });
+    it("changes via prop update during transition", () => {
+      const h = render(<ModalRoot activeModal="m">{modals}</ModalRoot>);
+      h.rerender(<ModalRoot activeModal="other">{modals}</ModalRoot>);
+      runAllTimers();
       expect(document.getElementById("m")).toBeNull();
       expect(document.getElementById("other")).not.toBeNull();
     });
@@ -87,11 +85,11 @@ describe.each([
         const onCloseRoot = jest.fn();
         render(
           <ModalRoot onClose={onCloseRoot} activeModal="m">
-            <ModalPage id="m" onClose={onClose} />
+            <MockModal id="m" onClose={onClose} />
           </ModalRoot>
         );
         // wait for animations
-        jest.runAllTimers();
+        runAllTimers();
         clickFade();
         expect(onClose).toBeCalledTimes(1);
         expect(onCloseRoot).not.toBeCalled();
@@ -100,25 +98,25 @@ describe.each([
         const onCloseRoot = jest.fn();
         render(
           <ModalRoot onClose={onCloseRoot} activeModal="m">
-            <ModalPage id="m" />
+            <MockModal id="m" />
           </ModalRoot>
         );
         // wait for animations
-        jest.runAllTimers();
+        runAllTimers();
         clickFade();
         expect(onCloseRoot).toBeCalledTimes(1);
       });
     });
-    if (name === "ModalRootDesktop") {
+    if (mode === "desktop") {
       it("on esc click", () => {
         const onCloseRoot = jest.fn();
         render(
           <ModalRoot onClose={onCloseRoot} activeModal="m">
-            <ModalPage id="m" />
+            <MockModal id="m" />
           </ModalRoot>
         );
         // wait for animations
-        jest.runAllTimers();
+        runAllTimers();
         userEvent.keyboard("{esc}");
         expect(onCloseRoot).toBeCalledTimes(1);
       });

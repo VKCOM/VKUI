@@ -7,9 +7,35 @@ import { ImgOnlyAttributes } from "../lib/utils";
 import { ScrollContext } from "../components/AppRoot/ScrollContext";
 import { act } from "react-dom/test-utils";
 
+export const expectPositive = () => ({
+  asymmetricMatch: (v: number) => v > 0,
+  toString: () => "PositiveNumber",
+  getExpectedType: () => "number",
+});
+
 export function fakeTimers() {
   beforeEach(() => jest.useFakeTimers());
   afterEach(() => jest.useRealTimers());
+}
+
+export function setupFakeAsync() {
+  let rafSpies: jest.SpyInstance[];
+  beforeEach(() => {
+    jest.useFakeTimers();
+    rafSpies = [
+      jest
+        .spyOn(window, "requestAnimationFrame")
+        .mockImplementation((cb) => setTimeout(() => cb(Date.now()))),
+      jest
+        .spyOn(window, "cancelAnimationFrame")
+        .mockImplementation((id) => clearTimeout(id)),
+    ];
+  });
+  afterEach(() => {
+    jest.clearAllTimers();
+    jest.useRealTimers();
+    rafSpies.forEach((m) => m.mockRestore());
+  });
 }
 
 export const runAllTimers = () =>

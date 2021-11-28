@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
+import { act } from "react-dom/test-utils";
 import { noop } from "../../lib/utils";
-import { ModalType } from "./types";
 import { useModalManager, modalTransitionReducer } from "./useModalManager";
 
 const MockModal = (p: any) => <div {...p} />;
@@ -19,9 +19,8 @@ describe(useModalManager, () => {
         activeModal: "m1",
         enteringModal: "m1",
         exitingModal: null,
-        delayEnter: false,
       });
-      handle.result.current.onEnter("m1");
+      act(() => handle.result.current.onEnter("m1"));
       expect(handle.result.current).toMatchObject({
         activeModal: "m1",
         enteringModal: null,
@@ -40,9 +39,8 @@ describe(useModalManager, () => {
         activeModal: "m1",
         enteringModal: "m1",
         exitingModal: null,
-        delayEnter: false,
       });
-      handle.result.current.onEnter("m1");
+      act(() => handle.result.current.onEnter("m1"));
       expect(handle.result.current).toMatchObject({
         activeModal: "m1",
         enteringModal: null,
@@ -53,7 +51,7 @@ describe(useModalManager, () => {
       const handle = renderHook(({ id = initId } = {} as any) =>
         useModalManager(id, modals, noop)
       );
-      handle.result.current.onEnter(initId);
+      act(() => handle.result.current.onEnter(initId));
       return handle;
     };
     it("can exit", () => {
@@ -64,36 +62,9 @@ describe(useModalManager, () => {
         enteringModal: null,
         exitingModal: "m1",
       });
-      handle.result.current.onExit("m1");
+      act(() => handle.result.current.onExit("m1"));
       expect(handle.result.current).toMatchObject({
         activeModal: null,
-        enteringModal: null,
-        exitingModal: null,
-      });
-    });
-    it.each([
-      [ModalType.CARD, ModalType.CARD, true],
-      [ModalType.PAGE, ModalType.PAGE, false],
-    ])("transitions %s -> %s with delay=%s", (t1, t2, delayEnter) => {
-      const handle = flushMount("m1");
-      handle.result.current.getModalState("m1").type = t1;
-      handle.result.current.getModalState("m2").type = t2;
-      handle.rerender({ id: "m2" });
-      expect(handle.result.current).toMatchObject({
-        activeModal: "m2",
-        enteringModal: "m2",
-        exitingModal: "m1",
-        delayEnter,
-      });
-      handle.result.current.onExit("m1");
-      expect(handle.result.current).toMatchObject({
-        activeModal: "m2",
-        enteringModal: "m2",
-        exitingModal: null,
-      });
-      handle.result.current.onEnter("m2");
-      expect(handle.result.current).toMatchObject({
-        activeModal: "m2",
         enteringModal: null,
         exitingModal: null,
       });
@@ -105,7 +76,7 @@ describe(useModalManager, () => {
       const handle = renderHook(() =>
         useModalManager("m1", <MockModal id="m1" />, noop)
       );
-      expect(handle.result.current.history).toEqual(["m1"]);
+      expect(handle.result.current.history).toEqual([{ id: "m1" }]);
     });
     it("initializes empty if activeModal=null", () => {
       const handle = renderHook(() => useModalManager(null, [], noop));
@@ -118,23 +89,23 @@ describe(useModalManager, () => {
         },
         { type: "setActive", id: "m1" }
       );
-      expect(history).toEqual(["m1"]);
+      expect(history).toEqual([{ id: "m1" }]);
       expect(isBack).toBe(false);
     });
     it("Handles transition back", () => {
       const { history, isBack } = modalTransitionReducer(
         {
-          history: ["m1", "m2", "m3"],
+          history: [{ id: "m1" }, { id: "m2" }, { id: "m3" }],
         },
         { type: "setActive", id: "m2" }
       );
-      expect(history).toEqual(["m1", "m2"]);
+      expect(history).toEqual([{ id: "m1" }, { id: "m2" }]);
       expect(isBack).toBe(true);
     });
     it("resets on activeModal=null", () => {
       const { history, isBack } = modalTransitionReducer(
         {
-          history: ["m1", "m2", "m3"],
+          history: [{ id: "m1" }, { id: "m2" }, { id: "m3" }],
         },
         { type: "setActive", id: null }
       );
@@ -159,19 +130,22 @@ describe(useModalManager, () => {
   });
 
   it("handles dynamic modals", () => {
-    const handle = renderHook(({ id = "m1", children = [] }) =>
+    const handle = renderHook(({ id = "m2", children = [] }) =>
       useModalManager(id, children, noop)
     );
-    handle.rerender({ children: <MockModal id="m2" /> });
-    expect(handle.result.current.getModalState("m2")).toBeTruthy();
+    const child = <MockModal id="m2" />;
+    handle.rerender({ children: child });
+    expect(handle.result.current.activeModal).toEqual("m2");
+    expect(handle.result.current.modals).toHaveLength(1);
   });
 
   describe("closes active modal", () => {
-    it("calls active modal onClose", () => {
+    it("can capture onClose", () => {
       const onClose = jest.fn();
       const handle = renderHook(() =>
-        useModalManager("m1", <MockModal id="m1" onClose={onClose} />, noop)
+        useModalManager("m1", <MockModal id="m1" />, noop)
       );
+      handle.result.current.captureClose(onClose);
       handle.result.current.closeActiveModal();
       expect(onClose).toBeCalledTimes(1);
     });
