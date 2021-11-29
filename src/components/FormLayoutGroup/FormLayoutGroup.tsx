@@ -16,7 +16,7 @@ export interface FormLayoutGroupProps extends React.HTMLAttributes<HTMLDivElemen
   removable?: boolean;
 }
 
-const FormLayoutGroup: React.FC<FormLayoutGroupProps> = ({
+export const FormLayoutGroup: React.FC<FormLayoutGroupProps> = ({
   children,
   mode = 'vertical',
   removable,
@@ -57,5 +57,3 @@ const FormLayoutGroup: React.FC<FormLayoutGroupProps> = ({
     </div>
   );
 };
-
-export default FormLayoutGroup;
