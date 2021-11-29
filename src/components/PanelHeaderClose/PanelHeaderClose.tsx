@@ -5,7 +5,7 @@ import { ANDROID, VKCOM } from '../../lib/platform';
 import { getTitleFromChildren } from '../../lib/utils';
 import { usePlatform } from '../../hooks/usePlatform';
 
-const PanelHeaderClose: React.FunctionComponent<PanelHeaderButtonProps> = ({ children, ...restProps }: PanelHeaderButtonProps) => {
+export const PanelHeaderClose: React.FunctionComponent<PanelHeaderButtonProps> = ({ children, ...restProps }: PanelHeaderButtonProps) => {
   const platform = usePlatform();
   return (
     <PanelHeaderButton aria-label={getTitleFromChildren(children)} {...restProps}>
@@ -17,5 +17,3 @@ const PanelHeaderClose: React.FunctionComponent<PanelHeaderButtonProps> = ({ chi
 PanelHeaderClose.defaultProps = {
   children: 'Отмена',
 };
-
-export default PanelHeaderClose;
