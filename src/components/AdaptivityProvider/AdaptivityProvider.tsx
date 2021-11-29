@@ -66,7 +66,7 @@ function calculateAdaptivity(windowWidth: number, windowHeight: number, props: A
   let viewWidth = ViewWidth.SMALL_MOBILE;
   let viewHeight = ViewHeight.SMALL;
   let sizeY = SizeType.REGULAR;
-  let sizeX = SizeType.COMPACT;
+  let sizeX = SizeType.REGULAR;
   let hasMouse = props.hasMouse ?? _hasMouse;
   let deviceHasHover = props.deviceHasHover ?? _hasHover;
 
