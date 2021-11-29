@@ -215,7 +215,7 @@ export { PanelSpinner } from './components/PanelSpinner/PanelSpinner';
 export type { PanelSpinnerProps } from './components/PanelSpinner/PanelSpinner';
 export { PanelHeaderClose } from './components/PanelHeaderClose/PanelHeaderClose';
 export { PanelHeaderBack } from './components/PanelHeaderBack/PanelHeaderBack';
-export { default as PanelHeaderSubmit } from './components/PanelHeaderSubmit/PanelHeaderSubmit';
+export { PanelHeaderSubmit } from './components/PanelHeaderSubmit/PanelHeaderSubmit';
 export { default as PanelHeaderEdit } from './components/PanelHeaderEdit/PanelHeaderEdit';
 export type { PanelHeaderEditProps } from './components/PanelHeaderEdit/PanelHeaderEdit';
 export { ModalCardBase } from './components/ModalCardBase/ModalCardBase';

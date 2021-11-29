@@ -5,7 +5,7 @@ import { ANDROID, VKCOM } from '../../lib/platform';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getTitleFromChildren } from '../../lib/utils';
 
-const PanelHeaderSubmit: React.FunctionComponent<PanelHeaderButtonProps> = ({
+export const PanelHeaderSubmit: React.FunctionComponent<PanelHeaderButtonProps> = ({
   children,
   ...restProps
 }: PanelHeaderButtonProps) => {
@@ -24,5 +24,3 @@ const PanelHeaderSubmit: React.FunctionComponent<PanelHeaderButtonProps> = ({
 PanelHeaderSubmit.defaultProps = {
   children: 'Готово',
 };
-
-export default PanelHeaderSubmit;
