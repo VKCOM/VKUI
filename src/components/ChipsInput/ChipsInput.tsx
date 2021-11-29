@@ -41,7 +41,7 @@ export interface ChipsInputProps<Option extends ChipsInputOption> extends
   inputAriaLabel?: string;
 }
 
-const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Option>) => {
+export const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Option>) => {
   const { style, value, onChange, onInputChange, onKeyDown, onBlur, onFocus, children, className, inputValue,
     getRef, getRootRef, placeholder, getOptionValue, getOptionLabel, getNewOptionData, renderChip,
     after, inputAriaLabel, ...restProps } = props;
@@ -173,5 +173,3 @@ export const chipsInputDefaultProps: ChipsInputProps<any> = {
   },
 };
 ChipsInput.defaultProps = chipsInputDefaultProps;
-
-export default ChipsInput;
