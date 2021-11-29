@@ -3,7 +3,7 @@ import { SelectMimicry } from '../SelectMimicry/SelectMimicry';
 import { debounce, setRef } from '../../lib/utils';
 import { classNames } from '../../lib/classNames';
 import { NativeSelectProps } from '../NativeSelect/NativeSelect';
-import CustomScrollView from '../CustomScrollView/CustomScrollView';
+import { CustomScrollView } from '../CustomScrollView/CustomScrollView';
 import { withAdaptivity } from '../../hoc/withAdaptivity';
 import { withPlatform } from '../../hoc/withPlatform';
 import { CustomSelectOption, CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';

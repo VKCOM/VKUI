@@ -8,7 +8,7 @@ interface Props extends DOMProps {
   boxRef: React.Ref<HTMLDivElement>;
 }
 
-class CustomScrollView extends React.Component<Props> {
+class _CustomScrollView extends React.Component<Props> {
   private ratio = NaN;
   private lastTrackerTop = 0;
   private clientHeight = 0;
@@ -134,4 +134,4 @@ class CustomScrollView extends React.Component<Props> {
   }
 }
 
-export default withDOM(CustomScrollView);
+export const CustomScrollView = withDOM(_CustomScrollView);
