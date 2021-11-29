@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Touch, TouchProps, TouchEvent } from '../Touch/Touch';
-import TouchRootContext from '../Touch/TouchContext';
+import { TouchRootContext } from '../Touch/TouchContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
 import { classNames } from '../../lib/classNames';
 import { IOS, ANDROID, VKCOM } from '../../lib/platform';

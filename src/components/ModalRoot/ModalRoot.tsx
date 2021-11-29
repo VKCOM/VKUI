@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Touch, TouchEvent } from '../Touch/Touch';
-import TouchRootContext from '../Touch/TouchContext';
+import { TouchRootContext } from '../Touch/TouchContext';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { setTransformStyle } from '../../lib/styles';

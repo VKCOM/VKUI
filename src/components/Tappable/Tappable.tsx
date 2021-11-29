@@ -2,7 +2,7 @@ import * as React from 'react';
 import mitt from 'mitt';
 import { noop } from '@vkontakte/vkjs';
 import { Touch, TouchEvent, TouchProps } from '../Touch/Touch';
-import TouchRootContext from '../Touch/TouchContext';
+import { TouchRootContext } from '../Touch/TouchContext';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { ANDROID } from '../../lib/platform';
