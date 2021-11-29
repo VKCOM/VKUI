@@ -18,7 +18,7 @@ export interface ChipProps extends React.HTMLAttributes<HTMLDivElement> {
   after?: React.ReactNode;
 }
 
-const Chip: React.FC<ChipProps> = ({
+export const Chip: React.FC<ChipProps> = ({
   value = '',
   option,
   removable = true,
@@ -62,5 +62,3 @@ const Chip: React.FC<ChipProps> = ({
     </div>
   );
 };
-
-export default Chip;

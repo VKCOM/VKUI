@@ -2,7 +2,7 @@ import * as React from 'react';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { FormField, FormFieldProps } from '../FormField/FormField';
 import { classNames } from '../../lib/classNames';
-import Chip, { ChipProps } from '../Chip/Chip';
+import { Chip, ChipProps } from '../Chip/Chip';
 import { noop } from '../../lib/utils';
 import { useChipsInput } from './useChipsInput';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
