@@ -19,7 +19,7 @@ export interface PanelHeaderEditProps extends PanelHeaderButtonProps {
   doneLabel?: string;
 }
 
-const PanelHeaderEdit: React.FunctionComponent<PanelHeaderEditProps> = ({
+export const PanelHeaderEdit: React.FunctionComponent<PanelHeaderEditProps> = ({
   isActive,
   editLabel,
   doneLabel,
@@ -44,5 +44,3 @@ PanelHeaderEdit.defaultProps = {
   editLabel: 'Редактировать',
   doneLabel: 'Готово',
 };
-
-export default PanelHeaderEdit;
