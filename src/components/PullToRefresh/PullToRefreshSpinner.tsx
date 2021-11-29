@@ -15,7 +15,7 @@ export interface PullToRefreshSpinnerProps extends React.HTMLAttributes<HTMLDivE
   'aria-label'?: string;
 }
 
-const PullToRefreshSpinner: React.FunctionComponent<PullToRefreshSpinnerProps> = ({
+const _PullToRefreshSpinner: React.FunctionComponent<PullToRefreshSpinnerProps> = ({
   on,
   progress,
   size,
@@ -71,7 +71,7 @@ const PullToRefreshSpinner: React.FunctionComponent<PullToRefreshSpinnerProps> =
   );
 };
 
-PullToRefreshSpinner.defaultProps = {
+_PullToRefreshSpinner.defaultProps = {
   'size': 24,
   'strokeWidth': 2.5,
   'on': true,
@@ -79,4 +79,4 @@ PullToRefreshSpinner.defaultProps = {
   'aria-label': 'Пожалуйста, подождите...',
 };
 
-export default React.memo(PullToRefreshSpinner);
+export const PullToRefreshSpinner = React.memo(_PullToRefreshSpinner);

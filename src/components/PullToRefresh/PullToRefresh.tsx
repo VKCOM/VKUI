@@ -5,7 +5,7 @@ import { FixedLayout } from '../FixedLayout/FixedLayout';
 import { classNames } from '../../lib/classNames';
 import { IOS, ANDROID, VKCOM } from '../../lib/platform';
 import { getClassName } from '../../helpers/getClassName';
-import PullToRefreshSpinner from './PullToRefreshSpinner';
+import { PullToRefreshSpinner } from './PullToRefreshSpinner';
 import { withPlatform } from '../../hoc/withPlatform';
 import { AnyFunction, HasPlatform } from '../../types';
 import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
