@@ -162,7 +162,7 @@ const DatePickerNative: React.FC<DatePickerProps & Partial<DatePickerDateFormat>
   );
 };
 
-const DatePicker: React.FC<DatePickerProps> = ({ hasMouse, defaultValue, ...props }) => {
+export const DatePicker: React.FC<DatePickerProps> = withAdaptivity(({ hasMouse, defaultValue, ...props }) => {
   const [value, setValue] = React.useState<Partial<DatePickerDateFormat>>(() => ({
     day: defaultValue?.day || 0,
     month: defaultValue?.month || 0,
@@ -176,13 +176,11 @@ const DatePicker: React.FC<DatePickerProps> = ({ hasMouse, defaultValue, ...prop
 
   const Cmp = hasMouse ? DatePickerCustom : DatePickerNative;
   return <Cmp {...props} {...value} onDateChange={onDateChange} />;
-};
+}, {
+  hasMouse: true,
+});
 
 DatePicker.defaultProps = {
   min: { day: 0, month: 0, year: 0 },
   max: { day: 31, month: 12, year: 2100 },
 };
-
-export default withAdaptivity(DatePicker, {
-  hasMouse: true,
-});
