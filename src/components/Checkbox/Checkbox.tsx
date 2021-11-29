@@ -19,7 +19,7 @@ export interface CheckboxProps extends
   HasRef<HTMLInputElement>,
   AdaptivityProps { }
 
-export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
+export const Checkbox: React.FunctionComponent<CheckboxProps> = withAdaptivity(({
   children,
   className,
   style,
@@ -60,8 +60,6 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
       </div>
     </Tappable>
   );
-};
-
-export default withAdaptivity(Checkbox, {
+}, {
   sizeY: true,
 });
