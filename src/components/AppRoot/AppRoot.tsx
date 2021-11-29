@@ -156,5 +156,3 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(({
   sizeX: true,
   hasMouse: true,
 });
-
-export default AppRoot;
