@@ -181,7 +181,7 @@ export { Slider } from './components/Slider/Slider';
 export type { SliderProps } from './components/Slider/Slider';
 export { RangeSlider } from './components/RangeSlider/RangeSlider';
 export type { RangeSliderProps } from './components/RangeSlider/RangeSlider';
-export { default as Textarea } from './components/Textarea/Textarea';
+export { Textarea } from './components/Textarea/Textarea';
 export type { TextareaProps } from './components/Textarea/Textarea';
 export { default as Radio } from './components/Radio/Radio';
 export type { RadioProps } from './components/Radio/Radio';

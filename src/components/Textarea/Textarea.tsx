@@ -19,7 +19,7 @@ export interface TextareaProps extends
   defaultValue?: string;
 }
 
-const Textarea: React.FC<TextareaProps> = React.memo(({
+const _Textarea: React.FC<TextareaProps> = React.memo(({
   defaultValue = '',
   grow = true,
   style,
@@ -71,4 +71,4 @@ const Textarea: React.FC<TextareaProps> = React.memo(({
   );
 });
 
-export default withAdaptivity(Textarea, { sizeY: true });
+export const Textarea = withAdaptivity(_Textarea, { sizeY: true });
