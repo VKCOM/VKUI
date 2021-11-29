@@ -1,5 +1,5 @@
 import * as React from 'react';
-import SelectMimicry from '../SelectMimicry/SelectMimicry';
+import { SelectMimicry } from '../SelectMimicry/SelectMimicry';
 import { debounce, setRef } from '../../lib/utils';
 import { classNames } from '../../lib/classNames';
 import { NativeSelectProps } from '../NativeSelect/NativeSelect';

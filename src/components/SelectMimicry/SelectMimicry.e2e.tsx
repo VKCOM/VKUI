@@ -1,5 +1,5 @@
 import { describeScreenshotFuzz } from '../../testing/e2e/utils';
-import SelectMimicry, { SelectMimicryProps } from './SelectMimicry';
+import { SelectMimicry, SelectMimicryProps } from './SelectMimicry';
 
 describe('SelectMimicry', () => {
   describeScreenshotFuzz((props: SelectMimicryProps) => (<SelectMimicry placeholder="Не выбрано" {...props} />), [

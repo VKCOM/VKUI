@@ -20,7 +20,7 @@ export interface SelectMimicryProps extends
   disabled?: boolean;
 }
 
-const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
+export const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = withAdaptivity(({
   tabIndex,
   placeholder,
   children,
@@ -58,13 +58,11 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
       </TypographyComponent>
     </FormField>
   );
-};
+}, {
+  sizeX: true,
+  sizeY: true,
+});
 
 SelectMimicry.defaultProps = {
   tabIndex: 0,
 };
-
-export default withAdaptivity(SelectMimicry, {
-  sizeX: true,
-  sizeY: true,
-});
