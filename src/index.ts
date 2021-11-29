@@ -183,7 +183,7 @@ export { RangeSlider } from './components/RangeSlider/RangeSlider';
 export type { RangeSliderProps } from './components/RangeSlider/RangeSlider';
 export { Textarea } from './components/Textarea/Textarea';
 export type { TextareaProps } from './components/Textarea/Textarea';
-export { default as Radio } from './components/Radio/Radio';
+export { Radio } from './components/Radio/Radio';
 export type { RadioProps } from './components/Radio/Radio';
 export { default as Checkbox } from './components/Checkbox/Checkbox';
 export type { CheckboxProps } from './components/Checkbox/Checkbox';

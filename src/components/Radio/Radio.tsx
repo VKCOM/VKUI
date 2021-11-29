@@ -20,7 +20,7 @@ export interface RadioProps extends
   description?: React.ReactNode;
 }
 
-const Radio: React.FC<RadioProps> = (props: RadioProps) => {
+export const Radio: React.FC<RadioProps> = withAdaptivity((props: RadioProps) => {
   const { children, description, style, className, getRef, getRootRef, sizeY, ...restProps } = props;
   const platform = usePlatform();
 
@@ -46,8 +46,6 @@ const Radio: React.FC<RadioProps> = (props: RadioProps) => {
       </div>
     </Tappable>
   );
-};
-
-export default withAdaptivity(Radio, {
+}, {
   sizeY: true,
 });
