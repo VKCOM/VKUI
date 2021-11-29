@@ -56,7 +56,7 @@ type focusActionType = 'next' | 'prev';
 const FOCUS_ACTION_NEXT: focusActionType = 'next';
 const FOCUS_ACTION_PREV: focusActionType = 'prev';
 
-const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Option>) => {
+const _ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Option>) => {
   const {
     style, onFocus, onKeyDown, className, fetching, renderOption, emptyText,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, showSelected,
@@ -334,6 +334,6 @@ const chipsSelectDefaultProps: ChipsSelectProps<any> = {
   },
 };
 
-ChipsSelect.defaultProps = chipsSelectDefaultProps;
+_ChipsSelect.defaultProps = chipsSelectDefaultProps;
 
-export default withAdaptivity(ChipsSelect, { sizeY: true });
+export const ChipsSelect = withAdaptivity(_ChipsSelect, { sizeY: true });
