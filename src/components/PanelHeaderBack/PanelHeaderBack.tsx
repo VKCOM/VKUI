@@ -12,7 +12,7 @@ export type PanelHeaderBackProps = PanelHeaderButtonProps & AdaptivityProps & {
   'aria-label'?: string;
 };
 
-const PanelHeaderBack: React.FunctionComponent<PanelHeaderBackProps> = ({ label, sizeX, ...restProps }: PanelHeaderButtonProps & AdaptivityProps) => {
+const _PanelHeaderBack: React.FunctionComponent<PanelHeaderBackProps> = ({ label, sizeX, ...restProps }: PanelHeaderButtonProps & AdaptivityProps) => {
   const platform = usePlatform();
   const showLabel = platform === VKCOM || platform === IOS && sizeX === SizeType.REGULAR;
 
@@ -31,10 +31,10 @@ const PanelHeaderBack: React.FunctionComponent<PanelHeaderBackProps> = ({ label,
   );
 };
 
-PanelHeaderBack.defaultProps = {
+_PanelHeaderBack.defaultProps = {
   'aria-label': 'Назад',
 };
 
-export default React.memo(withAdaptivity(PanelHeaderBack, {
+export const PanelHeaderBack = React.memo(withAdaptivity(_PanelHeaderBack, {
   sizeX: true,
 }));
