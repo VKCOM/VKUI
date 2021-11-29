@@ -4,7 +4,7 @@ import { UniversalSlider, UniversalSliderProps, UniversalValue } from '../RangeS
 
 export type SliderProps = UniversalSliderProps<number>;
 
-const Slider = ({ onChange, defaultValue, ...props }: SliderProps) => {
+export const Slider = ({ onChange, defaultValue, ...props }: SliderProps) => {
   const isControlled = props.value != null;
 
   const [localValue, setValue] = React.useState(defaultValue == null ? props.min : defaultValue);
@@ -27,5 +27,3 @@ Slider.defaultProps = {
   max: 100,
   step: 0,
 };
-
-export default Slider;

@@ -177,7 +177,7 @@ export { Chip } from './components/Chip/Chip';
 export type { ChipProps } from './components/Chip/Chip';
 export { ChipsInput } from './components/ChipsInput/ChipsInput';
 export type { ChipsInputProps } from './components/ChipsInput/ChipsInput';
-export { default as Slider } from './components/Slider/Slider';
+export { Slider } from './components/Slider/Slider';
 export type { SliderProps } from './components/Slider/Slider';
 export { default as RangeSlider } from './components/RangeSlider/RangeSlider';
 export type { RangeSliderProps } from './components/RangeSlider/RangeSlider';
