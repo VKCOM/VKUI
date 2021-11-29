@@ -5,7 +5,7 @@ import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export interface SelectProps extends CustomSelectProps, AdaptivityProps {}
 
-const Select: React.FunctionComponent<SelectProps> = ({ hasMouse, ...props }: SelectProps) => {
+export const Select: React.FunctionComponent<SelectProps> = withAdaptivity(({ hasMouse, ...props }: SelectProps) => {
   // Use custom select if device has connected a mouse
   if (hasMouse) {
     const { children, ...restProps } = props;
@@ -22,8 +22,6 @@ const Select: React.FunctionComponent<SelectProps> = ({ hasMouse, ...props }: Se
       {options.map(({ label, value }) => <option value={value} key={`${value}`}>{label}</option>)}
     </NativeSelect>
   );
-};
-
-export default withAdaptivity(Select, {
+}, {
   hasMouse: true,
 });

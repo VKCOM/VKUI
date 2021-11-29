@@ -187,7 +187,7 @@ export { Radio } from './components/Radio/Radio';
 export type { RadioProps } from './components/Radio/Radio';
 export { Checkbox } from './components/Checkbox/Checkbox';
 export type { CheckboxProps } from './components/Checkbox/Checkbox';
-export { default as Select } from './components/Select/Select';
+export { Select } from './components/Select/Select';
 export type { SelectProps } from './components/Select/Select';
 export { default as SelectMimicry } from './components/SelectMimicry/SelectMimicry';
 export type { SelectMimicryProps } from './components/SelectMimicry/SelectMimicry';
