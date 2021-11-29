@@ -88,7 +88,7 @@ export interface ViewInfiniteState {
   browserSwipe: boolean;
 }
 
-class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInfiniteState> {
+class _ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInfiniteState> {
   constructor(props: ViewInfiniteProps) {
     super(props);
 
@@ -538,9 +538,9 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
   }
 }
 
-export default withContext(withContext(
+export const ViewInfinite = withContext(withContext(
   withContext(
-    withPlatform(withDOM<ViewInfiniteProps>(ViewInfinite)),
+    withPlatform(withDOM<ViewInfiniteProps>(_ViewInfinite)),
     SplitColContext, 'splitCol'),
   ConfigProviderContext, 'configProvider'),
 ScrollContext, 'scroll');
