@@ -5,7 +5,7 @@ import { UniversalSlider, UniversalSliderProps } from './UniversalSlider';
 export type Value = [number, number];
 export type RangeSliderProps = UniversalSliderProps<Value>;
 
-const RangeSlider: React.FC<RangeSliderProps> = ({ onChange, defaultValue, ...props }: RangeSliderProps) => {
+export const RangeSlider: React.FC<RangeSliderProps> = ({ onChange, defaultValue, ...props }: RangeSliderProps) => {
   const isControlled = Boolean(props.value);
 
   const [localValue, setValue] = React.useState(defaultValue || [props.min, props.max] as Value);
@@ -28,5 +28,3 @@ RangeSlider.defaultProps = {
   max: 100,
   step: 0,
 };
-
-export default RangeSlider;

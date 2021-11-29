@@ -179,7 +179,7 @@ export { ChipsInput } from './components/ChipsInput/ChipsInput';
 export type { ChipsInputProps } from './components/ChipsInput/ChipsInput';
 export { Slider } from './components/Slider/Slider';
 export type { SliderProps } from './components/Slider/Slider';
-export { default as RangeSlider } from './components/RangeSlider/RangeSlider';
+export { RangeSlider } from './components/RangeSlider/RangeSlider';
 export type { RangeSliderProps } from './components/RangeSlider/RangeSlider';
 export { default as Textarea } from './components/Textarea/Textarea';
 export type { TextareaProps } from './components/Textarea/Textarea';
