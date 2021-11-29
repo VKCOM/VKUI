@@ -15,7 +15,7 @@ export interface InputProps extends
   AdaptivityProps,
   FormFieldProps {}
 
-const Input: React.FunctionComponent<InputProps> = ({
+export const Input: React.FunctionComponent<InputProps> = withAdaptivity(({
   align,
   getRef,
   className,
@@ -38,12 +38,10 @@ const Input: React.FunctionComponent<InputProps> = ({
       <input {...restProps} vkuiClass="Input__el" ref={getRef} />
     </FormField>
   );
-};
+}, {
+  sizeY: true,
+});
 
 Input.defaultProps = {
   type: 'text',
 };
-
-export default withAdaptivity(Input, {
-  sizeY: true,
-});
