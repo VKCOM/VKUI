@@ -99,7 +99,9 @@ let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
   return (
     <StyleGuideContext.Provider value={providerValue}>
       <ConfigProvider platform={Platform.ANDROID} scheme={styleguideScheme} transitionMotionEnabled={false} webviewType="internal">
-        <Component toc={toc} popout={popout} switchStyleGuideScheme={switchStyleGuideScheme}>{children}</Component>
+        <AppRoot noLegacyClasses>
+          <Component toc={toc} popout={popout} switchStyleGuideScheme={switchStyleGuideScheme}>{children}</Component>
+        </AppRoot>
       </ConfigProvider>
     </StyleGuideContext.Provider>
   );
@@ -110,9 +112,7 @@ StyleGuideRenderer = withAdaptivity(StyleGuideRenderer, { sizeX: true, viewWidth
 const StyleGuideWrapper = (props) => {
   return (
     <AdaptivityProvider>
-      <AppRoot noLegacyClasses>
-        <StyleGuideRenderer {...props} />
-      </AppRoot>
+      <StyleGuideRenderer {...props} />
     </AdaptivityProvider>
   );
 };
