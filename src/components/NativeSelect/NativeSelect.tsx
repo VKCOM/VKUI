@@ -30,7 +30,7 @@ export interface SelectState {
   notSelected?: boolean;
 }
 
-const NativeSelect: React.FC<NativeSelectProps> = ({
+export const NativeSelect: React.FC<NativeSelectProps> = withAdaptivity(({
   style, defaultValue = '', align, placeholder, children,
   className, getRef, getRootRef, disabled, sizeX, sizeY, multiline,
   ...restProps
@@ -82,9 +82,7 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
       </TypographyComponent>
     </FormField>
   );
-};
-
-export default withAdaptivity(NativeSelect, {
+}, {
   sizeX: true,
   sizeY: true,
 });
