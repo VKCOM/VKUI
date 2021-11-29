@@ -2,7 +2,7 @@ import * as React from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
-import HorizontalScrollArrow from './HorizontalScrollArrow';
+import { HorizontalScrollArrow } from './HorizontalScrollArrow';
 import { easeInOutSine } from '../../lib/fx';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';

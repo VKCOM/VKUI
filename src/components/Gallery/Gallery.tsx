@@ -7,7 +7,7 @@ import { HasAlign, HasPlatform, HasRef, HasRootRef } from '../../types';
 import { withDOM, DOMProps } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
-import HorizontalScrollArrow from '../HorizontalScroll/HorizontalScrollArrow';
+import { HorizontalScrollArrow } from '../HorizontalScroll/HorizontalScrollArrow';
 import { clamp } from '../../helpers/math';
 import { useTimeout } from '../../hooks/useTimeout';
 import './Gallery.css';

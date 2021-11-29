@@ -11,7 +11,7 @@ export interface HorizontalScrollArrowProps {
   direction: 'left' | 'right';
 }
 
-const HorizontalScrollArrow: React.FC<HorizontalScrollArrowProps> = ({ onClick, direction }: HorizontalScrollArrowProps) => {
+export const HorizontalScrollArrow: React.FC<HorizontalScrollArrowProps> = ({ onClick, direction }: HorizontalScrollArrowProps) => {
   const platform = usePlatform();
 
   return (
@@ -31,5 +31,3 @@ const HorizontalScrollArrow: React.FC<HorizontalScrollArrowProps> = ({ onClick, 
     </Tappable>
   );
 };
-
-export default HorizontalScrollArrow;
