@@ -110,7 +110,7 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
-class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState> {
+class _CustomSelect extends React.Component<CustomSelectProps, CustomSelectState> {
   static defaultProps: CustomSelectProps = {
     searchable: false,
     renderOption({ option, ...props }): React.ReactNode {
@@ -622,6 +622,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   }
 }
 
-export default withPlatform(withAdaptivity(CustomSelect, {
+export const CustomSelect = withPlatform(withAdaptivity(_CustomSelect, {
   sizeY: true,
 }));

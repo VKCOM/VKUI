@@ -193,7 +193,7 @@ export { SelectMimicry } from './components/SelectMimicry/SelectMimicry';
 export type { SelectMimicryProps } from './components/SelectMimicry/SelectMimicry';
 export { NativeSelect } from './components/NativeSelect/NativeSelect';
 export type { NativeSelectProps } from './components/NativeSelect/NativeSelect';
-export { default as CustomSelect } from './components/CustomSelect/CustomSelect';
+export { CustomSelect } from './components/CustomSelect/CustomSelect';
 export type { CustomSelectProps, CustomSelectOptionInterface } from './components/CustomSelect/CustomSelect';
 export { default as CustomSelectOption } from './components/CustomSelectOption/CustomSelectOption';
 export type { CustomSelectOptionProps } from './components/CustomSelectOption/CustomSelectOption';

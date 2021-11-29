@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NativeSelect } from '../NativeSelect/NativeSelect';
-import CustomSelect, { CustomSelectProps } from '../CustomSelect/CustomSelect';
+import { CustomSelect, CustomSelectProps } from '../CustomSelect/CustomSelect';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export interface SelectProps extends CustomSelectProps, AdaptivityProps {}
