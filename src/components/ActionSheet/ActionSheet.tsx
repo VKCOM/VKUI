@@ -4,7 +4,7 @@ import { ViewWidth, ViewHeight } from '../../hoc/withAdaptivity';
 import { IOS } from '../../lib/platform';
 import { ActionSheetDropdownDesktop } from './ActionSheetDropdownDesktop';
 import { ActionSheetDropdown } from './ActionSheetDropdown';
-import { hasReactNode } from '../../lib/utils';
+import { hasReactNode, noop } from '../../lib/utils';
 import { ActionSheetContext, ItemClickHandler } from './ActionSheetContext';
 import Caption from '../Typography/Caption/Caption';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -52,9 +52,12 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
   const platform = usePlatform();
   const [closing, setClosing] = React.useState(false);
   const onClose = () => setClosing(true);
+  const _action = React.useRef(noop);
 
   const afterClose = () => {
     restProps.onClose();
+    _action.current();
+    _action.current = noop;
   };
 
   if (process.env.NODE_ENV === 'development' && !restProps.onClose) {
@@ -64,25 +67,29 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
   const { viewWidth, viewHeight, hasMouse } = useAdaptivity();
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
 
-  const timeout = platform === IOS ? 300 : 200;
+  let timeout = platform === IOS ? 300 : 200;
+
+  if (isDesktop) {
+    timeout = 0;
+  }
 
   const fallbackTransitionFinish = useTimeout(afterClose, timeout);
   React.useEffect(() => {
     if (closing) {
-      if (isDesktop) {
-        afterClose();
-      } else {
-        fallbackTransitionFinish.set();
-      }
+      fallbackTransitionFinish.set();
     } else {
       fallbackTransitionFinish.clear();
     }
   }, [closing]);
 
-  const onItemClick = React.useCallback<ItemClickHandler>((action, autoclose) => (event) => {
-    action && action(event);
+  const onItemClick = React.useCallback<ItemClickHandler>((action, immediateAction, autoclose) => (event) => {
+    event.persist();
+    immediateAction && immediateAction(event);
     if (autoclose) {
+      _action.current = () => action && action(event);
       setClosing(true);
+    } else {
+      action && action(event);
     }
   }, []);
   const contextValue = useObjectMemo({ onItemClick, isDesktop });
