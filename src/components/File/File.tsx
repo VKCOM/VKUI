@@ -15,7 +15,7 @@ export interface FileProps extends
   controlSize?: VKUIButtonProps['size'];
 }
 
-const File: React.FunctionComponent<FileProps> = (props: FileProps) => {
+export const File: React.FunctionComponent<FileProps> = (props: FileProps) => {
   const { children, align, controlSize, mode, stretched, before, className,
     style, getRef, getRootRef, onClick, ...restProps } = props;
 
@@ -50,5 +50,3 @@ File.defaultProps = {
   children: 'Выберите файл',
   align: 'left',
 };
-
-export default File;
