@@ -199,7 +199,7 @@ export { CustomSelectOption } from './components/CustomSelectOption/CustomSelect
 export type { CustomSelectOptionProps } from './components/CustomSelectOption/CustomSelectOption';
 export { DatePicker } from './components/DatePicker/DatePicker';
 export type { DatePickerProps, DatePickerDateFormat } from './components/DatePicker/DatePicker';
-export { default as SliderSwitch } from './components/SliderSwitch/SliderSwitch';
+export { SliderSwitch } from './components/SliderSwitch/SliderSwitch';
 export type { SliderSwitchProps, SliderSwitchOptionInterface } from './components/SliderSwitch/SliderSwitch';
 
 /**

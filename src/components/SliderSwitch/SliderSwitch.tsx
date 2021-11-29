@@ -1,5 +1,5 @@
 import * as React from 'react';
-import SliderSwitchButton from './SliderSwitchButton';
+import { SliderSwitchButton } from './SliderSwitchButton';
 import { classNames } from '../../lib/classNames';
 import { HasPlatform } from '../../types';
 import './SliderSwitch.css';
@@ -24,7 +24,7 @@ interface SliderSwitchState {
   hoveredOptionId: number;
 }
 
-export default class SliderSwitch extends React.Component<SliderSwitchProps, SliderSwitchState> {
+export class SliderSwitch extends React.Component<SliderSwitchProps, SliderSwitchState> {
   public constructor(props: SliderSwitchProps) {
     super(props);
 

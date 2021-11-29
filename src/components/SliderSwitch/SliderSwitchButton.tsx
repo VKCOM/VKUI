@@ -12,7 +12,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLElement>, Ha
   hovered?: boolean;
 }
 
-const SliderSwitchButton: React.FunctionComponent<ButtonProps> = (props: ButtonProps) => {
+export const SliderSwitchButton: React.FunctionComponent<ButtonProps> = (props: ButtonProps) => {
   const { active, hovered, children, getRootRef, ...restProps } = props;
   const platform = usePlatform();
   const [focus, setFocus] = React.useState(false);
@@ -46,5 +46,3 @@ const SliderSwitchButton: React.FunctionComponent<ButtonProps> = (props: ButtonP
     <Text weight="medium">{children}</Text>
   </Tappable>;
 };
-
-export default SliderSwitchButton;
