@@ -195,7 +195,7 @@ export { NativeSelect } from './components/NativeSelect/NativeSelect';
 export type { NativeSelectProps } from './components/NativeSelect/NativeSelect';
 export { CustomSelect } from './components/CustomSelect/CustomSelect';
 export type { CustomSelectProps, CustomSelectOptionInterface } from './components/CustomSelect/CustomSelect';
-export { default as CustomSelectOption } from './components/CustomSelectOption/CustomSelectOption';
+export { CustomSelectOption } from './components/CustomSelectOption/CustomSelectOption';
 export type { CustomSelectOptionProps } from './components/CustomSelectOption/CustomSelectOption';
 export { default as DatePicker } from './components/DatePicker/DatePicker';
 export type { DatePickerProps, DatePickerDateFormat } from './components/DatePicker/DatePicker';

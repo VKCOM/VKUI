@@ -22,7 +22,7 @@ export interface CustomSelectOptionProps extends React.HTMLAttributes<HTMLDivEle
 
 const warn = warnOnce('CustomSelectOption');
 
-const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
+export const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
   children,
   hovered,
   selected,
@@ -69,5 +69,3 @@ const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
     </Text>
   );
 };
-
-export default CustomSelectOption;
