@@ -5,14 +5,14 @@ export interface PanelSpinnerProps extends SpinnerProps {
   height?: number;
 }
 
-const PanelSpinner: React.FunctionComponent<PanelSpinnerProps> = ({ height, style, ...restProps }: PanelSpinnerProps) => {
+const _PanelSpinner: React.FunctionComponent<PanelSpinnerProps> = ({ height, style, ...restProps }: PanelSpinnerProps) => {
   return (
     <Spinner size="regular" {...restProps} style={{ height, ...style }} />
   );
 };
 
-PanelSpinner.defaultProps = {
+_PanelSpinner.defaultProps = {
   height: 96,
 };
 
-export default React.memo(PanelSpinner);
+export const PanelSpinner = React.memo(_PanelSpinner);

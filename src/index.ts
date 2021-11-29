@@ -211,7 +211,7 @@ export { Tappable } from './components/Tappable/Tappable';
 export type { TappableProps } from './components/Tappable/Tappable';
 export { Touch } from './components/Touch/Touch';
 export type { TouchProps } from './components/Touch/Touch';
-export { default as PanelSpinner } from './components/PanelSpinner/PanelSpinner';
+export { PanelSpinner } from './components/PanelSpinner/PanelSpinner';
 export type { PanelSpinnerProps } from './components/PanelSpinner/PanelSpinner';
 export { default as PanelHeaderClose } from './components/PanelHeaderClose/PanelHeaderClose';
 export { default as PanelHeaderBack } from './components/PanelHeaderBack/PanelHeaderBack';
