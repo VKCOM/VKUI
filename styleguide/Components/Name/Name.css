@@ -3,5 +3,10 @@
 }
 
 .Name--deprecated {
+  color: #818c99;
   text-decoration: line-through;
+}
+
+.Name--optional::after {
+  content: '?';
 }

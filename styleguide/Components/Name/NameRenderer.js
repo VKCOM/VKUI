@@ -2,9 +2,16 @@ import React from 'react';
 import { classNames, Text } from '@vkui';
 import './Name.css';
 
-export const NameRenderer = ({ children, deprecated }) => {
+export const NameRenderer = ({ children, deprecated, required }) => {
   return (
-    <Text weight="regular" className={classNames('Name', { 'Name--deprecated': deprecated })}>{children}</Text>
+    <Text
+      weight="regular"
+      className={classNames('Name', {
+        'Name--deprecated': deprecated,
+        'Name--optional': !deprecated && !required,
+      })}>
+      {children}
+    </Text>
   );
 };
 
