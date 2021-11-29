@@ -157,7 +157,7 @@ export type { SubnavigationButtonProps } from './components/SubnavigationButton/
 /**
  * Forms
  */
-export { default as FormLayout } from './components/FormLayout/FormLayout';
+export { FormLayout } from './components/FormLayout/FormLayout';
 export type { FormLayoutProps } from './components/FormLayout/FormLayout';
 export { FormItem } from './components/FormItem/FormItem';
 export type { FormItemProps } from './components/FormItem/FormItem';

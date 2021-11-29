@@ -8,7 +8,7 @@ const preventDefault = (e: React.FormEvent) => e.preventDefault();
 
 export type FormLayoutProps = React.AllHTMLAttributes<HTMLElement> & HasRef<HTMLElement> & HasComponent;
 
-const FormLayout: React.FunctionComponent<FormLayoutProps> = (props: FormLayoutProps) => {
+export const FormLayout: React.FunctionComponent<FormLayoutProps> = (props: FormLayoutProps) => {
   const {
     children,
     Component,
@@ -39,5 +39,3 @@ FormLayout.defaultProps = {
   Component: 'form',
   onSubmit: preventDefault,
 };
-
-export default FormLayout;
