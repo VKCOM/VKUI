@@ -1,7 +1,33 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Text, classNames, useAdaptivity, ViewWidth, useAppearance } from '@vkui';
-import './Table.css';
+import React, { createContext, Fragment, useContext, useEffect, useRef, useState } from 'react';
 import { throttle } from '@vkontakte/vkjs';
+import { Text, classNames, useAdaptivity, ViewWidth, useAppearance } from '@vkui';
+import NameRenderer from '../Name/NameRenderer';
+import './Table.css';
+
+const TableContext = createContext({ getRowKey: noop, columns: [] });
+
+const TableRows = ({ rows }) => {
+  const { columns, getRowKey } = useContext(TableContext);
+
+  return (
+    <Fragment>
+      {rows.map((row) => (
+        <tr key={getRowKey(row)} className="Table__tr">
+          {columns.map(({ render }, index) => (
+            <td key={index} className="Table__td">
+              {index > 0 && render(row)}
+              {index <= 0 && (
+                <NameRenderer deprecated={!!row.tags?.deprecated} required={row.required}>
+                  {row.name}
+                </NameRenderer>
+              )}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </Fragment>
+  );
+};
 
 export const TableRenderer = ({
   columns,
