@@ -17,7 +17,7 @@ import './Button.css';
 export interface VKUIButtonProps extends HasAlign {
   /**
    Значения `commerce`, `destructive`, `overlay_...` будут упразднены в 5.x.x
-   * */
+   */
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline';
   appearance?: 'accent' | 'positive' | 'negative' | 'neutral' | 'overlay';
   size?: 's' | 'm' | 'l';
