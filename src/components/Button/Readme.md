@@ -20,6 +20,7 @@ const Example = () => {
     (size === 's' ? <Icon12Add/> : size === 'm' ? <Icon16Add/> : <Icon24Add/>);
   const buttonAfter = addAfter &&
     (size === 's' ? <Icon12Tag/> :size === 'm' ? <Icon24ChevronCompactRight/> : <Counter>16</Counter>);
+  const buttonLink = hasLink ? '#' : undefined;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
@@ -29,7 +30,7 @@ const Example = () => {
       }}>
         <Div>
           <Button
-            href={hasLink && '#'}
+            href={buttonLink}
             before={buttonBefore}
             after={buttonAfter}
             appearance={appearance}
@@ -43,7 +44,7 @@ const Example = () => {
         </Div>
         <Div>
           <Button
-            href={hasLink && '#'}
+            href={buttonLink}
             before={buttonBefore}
             after={buttonAfter}
             appearance={appearance}
@@ -58,7 +59,7 @@ const Example = () => {
         </Div>
         <Div>
           <Button
-            href={hasLink && '#'}
+            href={buttonLink}
             before={buttonBefore}
             after={buttonAfter}
             appearance={appearance}
@@ -73,7 +74,7 @@ const Example = () => {
         </Div>
         <Div>
           <Button
-            href={hasLink && '#'}
+            href={buttonLink}
             before={buttonBefore}
             after={buttonAfter}
             appearance={appearance}
