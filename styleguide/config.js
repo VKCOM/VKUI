@@ -25,7 +25,7 @@ module.exports = {
     'LinkRenderer': path.join(__dirname, './Components/Link/LinkRenderer'),
     'NameRenderer': path.join(__dirname, './Components/Name/NameRenderer'),
     'TypeRenderer': path.join(__dirname, './Components/Type/TypeRenderer'),
-    'ComplexType/ComplexTypeRenderder': path.join(__dirname, './Components/ComplexType/ComplexTypeRenderder'),
+    'ComplexType/ComplexTypeRenderer': path.join(__dirname, './Components/ComplexType/ComplexTypeRenderer'),
     'Preview': path.join(__dirname, './Components/Preview'),
     'Editor': path.join(__dirname, './Components/Editor'),
   },
