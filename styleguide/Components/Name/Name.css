@@ -1,9 +1,9 @@
 .Name {
-  color: #4bb34b;
+  color: var(--dynamic_green);
 }
 
 .Name--deprecated {
-  color: #818c99;
+  color: var(--text_secondary);
   text-decoration: line-through;
 }
 
