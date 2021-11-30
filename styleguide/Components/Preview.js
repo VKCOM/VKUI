@@ -120,7 +120,6 @@ export default withAdaptivity(class Preview extends PreviewParent {
                           width={adaptivity && width}
                           height={adaptivity && styleGuideContext.height}
                           scheme={styleGuideContext.scheme}
-                          tokens={styleGuideContext.tokens}
                         >
                           {content}
                         </Frame> :

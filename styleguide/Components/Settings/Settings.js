@@ -9,7 +9,6 @@ import { ViewWidthSelect } from './ViewWidthSelect';
 import './Settings.css';
 import { Platform, useAdaptivity, ViewWidth } from '@vkui';
 import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
-import { TokensSourceSelect } from './TokensSourceSelect';
 
 export const Settings = ({ adaptivity }) => {
   const { viewWidth } = useAdaptivity();
@@ -35,11 +34,6 @@ export const Settings = ({ adaptivity }) => {
                     platform={context.platform}
                     onChange={(scheme) => context.setContext({ scheme })}
                     value={context.scheme}
-                  />
-                  <TokensSourceSelect
-                    onChange={(tokens) => context.setContext({ tokens })}
-                    value={context.tokens}
-                    disabled={context.platform === Platform.VKCOM}
                   />
                 </Fragment>
               )}
