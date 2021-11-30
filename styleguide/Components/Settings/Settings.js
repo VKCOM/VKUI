@@ -29,13 +29,11 @@ export const Settings = ({ adaptivity }) => {
                 value={context.platform}
               />
               {!isMobile && (
-                <Fragment>
-                  <SchemeSelect
-                    platform={context.platform}
-                    onChange={(scheme) => context.setContext({ scheme })}
-                    value={context.scheme}
-                  />
-                </Fragment>
+                <SchemeSelect
+                  platform={context.platform}
+                  onChange={(scheme) => context.setContext({ scheme })}
+                  value={context.scheme}
+                />
               )}
               {adaptivity && !isMobile &&
                 <Fragment>
