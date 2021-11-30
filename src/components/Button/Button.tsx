@@ -11,10 +11,13 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { AdaptivityProps, SizeType, withAdaptivity } from '../../hoc/withAdaptivity';
 import { Platform, IOS, VKCOM } from '../../lib/platform';
 import Spinner from '../Spinner/Spinner';
-import './Button.tokenized.css';
+import { useTokensInfo } from '../../hooks/useTokensInfo';
 import './Button.css';
 
 export interface VKUIButtonProps extends HasAlign {
+  /**
+   Значения `commerce`, `destructive`, `overlay_...` будут упразднены в 5.x.x
+   * */
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline';
   appearance?: 'accent' | 'positive' | 'negative' | 'neutral' | 'overlay';
   size?: 's' | 'm' | 'l';
@@ -68,6 +71,55 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = (props: ButtonTypograp
   }
 };
 
+interface ResolvedButtonAppearance {
+  resolvedAppearance: ButtonProps['appearance'];
+  resolvedMode: ButtonProps['mode'];
+  isFallback: boolean;
+}
+
+function resolveButtonAppearance(appearance: ButtonProps['appearance'], mode: ButtonProps['mode']): ResolvedButtonAppearance {
+  const isFallback: boolean = appearance === undefined;
+  let resolvedAppearance: ButtonProps['appearance'] = appearance;
+  let resolvedMode: ButtonProps['mode'] = mode;
+
+  if (isFallback) {
+    switch (mode) {
+      case 'tertiary':
+      case 'secondary':
+      case 'primary':
+      case 'outline':
+        resolvedAppearance = 'accent';
+        break;
+      case 'commerce':
+        resolvedMode = 'primary';
+        resolvedAppearance = 'positive';
+        break;
+      case 'destructive':
+        resolvedMode = 'primary';
+        resolvedAppearance = 'negative';
+        break;
+      case 'overlay_primary':
+        resolvedMode = 'primary';
+        resolvedAppearance = 'overlay';
+        break;
+      case 'overlay_secondary':
+        resolvedMode = 'secondary';
+        resolvedAppearance = 'overlay';
+        break;
+      case 'overlay_outline':
+        resolvedMode = 'outline';
+        resolvedAppearance = 'overlay';
+        break;
+    }
+  }
+
+  return {
+    isFallback,
+    resolvedAppearance,
+    resolvedMode,
+  };
+}
+
 const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
   const platform = usePlatform();
   const {
@@ -86,9 +138,10 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
     onClick,
     ...restProps
   } = props;
-
+  const dummyRef = React.useRef();
   const hasIcons = Boolean(before || after);
-  const isFallback: boolean = appearance === undefined;
+  const { resolvedMode, resolvedAppearance } = resolveButtonAppearance(appearance, mode);
+  const { isNewTokensAvailable } = useTokensInfo(dummyRef);
 
   return (
     <Tappable
@@ -100,21 +153,21 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
         classNames(
           getClassName('Button', platform),
           `Button--sz-${size}`,
-          `Button--lvl-${mode}`,
+          `Button--lvl-${resolvedMode}`,
+          `Button--clr-${resolvedAppearance}`,
           `Button--aln-${align}`,
           `Button--sizeY-${sizeY}`,
           {
-            [`Button--clr-${appearance}`]: !!appearance,
             ['Button--stretched']: stretched,
             ['Button--with-icon']: hasIcons,
-            ['Button--tokenized']: !isFallback,
           },
         )
       }
       getRootRef={getRootRef}
-      hoverMode={!isFallback ? 'Button--hover' : 'background'}
-      activeMode={!isFallback ? 'Button--active' : 'opacity'}
+      hoverMode={isNewTokensAvailable ? 'Button--hover' : 'background'}
+      activeMode={isNewTokensAvailable ? 'Button--active' : 'opacity'}
     >
+      <span vkuiClass="vkuiButton__dummy" ref={dummyRef} />
       {loading && <Spinner size="small" vkuiClass="Button__spinner" />}
       <span vkuiClass="Button__in">
         {before && <span vkuiClass="Button__before">{before}</span>}
