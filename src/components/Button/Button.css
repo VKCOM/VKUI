@@ -196,7 +196,7 @@
   Text colors of background-colored buttons
 */
 .Button--lvl-tertiary.Button--clr-accent {
-  color: var(--button_outline_foreground, var(--vkui--color_text_accent));
+  color: var(--button_tertiary_foreground, var(--vkui--color_text_accent));
 }
 
 .Button--lvl-secondary.Button--clr-accent {
