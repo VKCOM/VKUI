@@ -8,7 +8,7 @@ export const NameRenderer = ({ children, deprecated, required }) => {
       weight="regular"
       className={classNames('Name', {
         'Name--deprecated': deprecated,
-        'Name--optional': !deprecated && !required,
+        'Name--optional': !required,
       })}>
       {children}
     </Text>
