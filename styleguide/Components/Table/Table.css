@@ -53,9 +53,8 @@
   width: 100%;
 }
 
-.Table__td,
-.Table__th {
-  border-bottom: 1px solid var(--separator_alternate);
+.Table__td {
+  border-top: 1px solid var(--separator_alternate);
 }
 
 .Table__th {
@@ -70,6 +69,6 @@
   border-bottom: none;
 }
 
-.Table__td {
+.Table__td:not([colspan]) {
   padding: 20px 16px;
 }

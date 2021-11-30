@@ -1,6 +1,8 @@
 import React, { createContext, Fragment, useContext, useEffect, useRef, useState } from 'react';
-import { throttle } from '@vkontakte/vkjs';
+import { Icon16Up, Icon16MoreHorizontal } from '@vkontakte/icons';
+import { noop, throttle } from '@vkontakte/vkjs';
 import { Text, classNames, useAdaptivity, ViewWidth, useAppearance } from '@vkui';
+import TogglePropsButton from '../TogglePropsButton';
 import NameRenderer from '../Name/NameRenderer';
 import './Table.css';
 
@@ -42,6 +44,7 @@ export const TableRenderer = ({
   const tableWidth = useRef(0);
   const tableInRef = useRef();
   const tableInWidth = useRef(0);
+  const [expanded, toggleExpanded] = React.useState(false);
 
   function updateBorders() {
     tableWidth.current = tableRef.current.offsetWidth;
@@ -50,8 +53,23 @@ export const TableRenderer = ({
     setHasLeft(tableInRef.current.scrollLeft > 0);
     setHasRight(tableWidth.current - tableInRef.current.scrollLeft > tableInWidth.current);
   }
+  useEffect(updateBorders, [viewWidth, expanded]);
 
-  useEffect(updateBorders, [viewWidth]);
+  // react-docgen-typescript сортирует пропсы:
+  // - по обязательности
+  // - по алфавиту
+  // здесь мы вытаскиваем вверх еще и пропсы vkui,
+  // а пропсы из node_modules сохраняем отдельным списком
+  const nodeModulesRows = [];
+  const vkuiRows = [];
+
+  rows.forEach((prop) => {
+    if (prop.parent?.fileName?.includes('node_modules')) {
+      nodeModulesRows.push(prop);
+    } else {
+      vkuiRows.push(prop);
+    }
+  });
 
   return (
     <div className={classNames('Table', {
@@ -70,15 +88,25 @@ export const TableRenderer = ({
             </tr>
           </thead>
           <tbody className="Table__body">
-            {rows.map((row) => (
-              <tr key={getRowKey(row)} className="Table__tr">
-                {columns.map(({ render }, index) => (
-                  <td key={index} className="Table__td">
-                    {render(row)}
+            <TableContext.Provider value={{ columns, getRowKey }}>
+              <TableRows rows={vkuiRows} />
+              {!!nodeModulesRows.length && (
+                <tr className="Table__tr">
+                  <td className="Table__td" colSpan={columns.length}>
+                    <TogglePropsButton
+                      before={expanded ? <Icon16Up /> : <Icon16MoreHorizontal />}
+                      onClick={() => toggleExpanded(!expanded)}
+                    >
+                      {expanded
+                        ? <span>Скрыть дополнительные свойства</span>
+                        : <span>Показать все свойства</span>
+                      }
+                    </TogglePropsButton>
                   </td>
-                ))}
-              </tr>
-            ))}
+                </tr>
+              )}
+              {expanded && <TableRows rows={nodeModulesRows} />}
+            </TableContext.Provider>
           </tbody>
         </table>
       </div>
