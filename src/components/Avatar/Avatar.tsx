@@ -3,6 +3,8 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasRef, HasRootRef } from '../../types';
+import OnlineIconCircle from './OnlineIconCircle';
+import OnlineIconMobile from './OnlineIconMobile';
 import './Avatar.css';
 
 export interface AvatarProps extends React.ImgHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement>, HasRef<HTMLImageElement> {
@@ -12,6 +14,12 @@ export interface AvatarProps extends React.ImgHTMLAttributes<HTMLElement>, HasRo
   size?: number;
   mode?: 'default' | 'image' | 'app';
   shadow?: boolean;
+  badge?: React.ReactNode;
+  online?: boolean;
+  /**
+   * Тип значка online: 'default' - кружок, 'mobile' - телефон
+   */
+  onlineType?: 'default' | 'mobile';
 }
 
 const Avatar: React.FC<AvatarProps> = ({
@@ -35,6 +43,9 @@ const Avatar: React.FC<AvatarProps> = ({
   getRootRef,
   style,
   'aria-label': ariaLabel,
+  badge,
+  online,
+  onlineType,
   ...restProps
 }: AvatarProps) => {
   const platform = usePlatform();
@@ -69,6 +80,9 @@ const Avatar: React.FC<AvatarProps> = ({
 
   const hasSrc = src || srcSet;
 
+  const OnlineIconComponent =
+    onlineType === 'default' ? OnlineIconCircle : OnlineIconMobile;
+
   return (
     <div
       {...restProps}
@@ -102,6 +116,24 @@ const Avatar: React.FC<AvatarProps> = ({
         />
       }
       {children && <div vkuiClass="Avatar__children">{children}</div>}
+      {badge ? (
+        <div
+          vkuiClass={classNames('Avatar__badge', {
+            'Avatar__badge--large': size >= 96,
+          })}
+        >
+          {badge}
+        </div>
+      ) :
+        mode === 'default' &&
+        online && (
+          <OnlineIconComponent
+            vkuiClass={classNames('Avatar__online', {
+              'Avatar__online--large': size >= 72,
+            })}
+          />
+        )
+      }
     </div>
   );
 };
@@ -113,6 +145,8 @@ Avatar.defaultProps = {
   size: AVATAR_DEFAULT_SIZE,
   mode: 'default',
   shadow: AVATAR_DEFAULT_SHADOW,
+  onlineType: 'default',
+  online: false,
 };
 
 export default Avatar;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { HasRootRef } from '../../types';
 import { classNames } from '../../lib/classNames';
-import Avatar, { AVATAR_DEFAULT_SHADOW, AVATAR_DEFAULT_SIZE } from '../Avatar/Avatar';
+import Avatar, { AVATAR_DEFAULT_SIZE, AvatarProps } from '../Avatar/Avatar';
 import './InitialsAvatar.css';
 
 /**
@@ -19,7 +19,11 @@ export type InitialsAvatarTextGradients =
   | 'blue'
   | 'violet';
 
-export interface InitialsAvatarProps extends React.HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
+export interface InitialsAvatarProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+  HasRootRef<HTMLDivElement>,
+  Pick<AvatarProps, 'size' | 'shadow' | 'badge' | 'online' | 'onlineType'> {
+
   children?: React.ReactNode;
   /**
    * `'red' | 'pink' | 'orange' | 'yellow' | 'green' | 'l-blue' | 'blue' | 'violet'`
@@ -39,8 +43,6 @@ export interface InitialsAvatarProps extends React.HTMLAttributes<HTMLDivElement
    * 6: 'violet'
    */
   gradientColor?: InitialsAvatarNumberGradients | InitialsAvatarTextGradients;
-  size?: number;
-  shadow?: boolean;
 }
 
 const COLORS_NUMBER_TO_TEXT_MAP: Record<InitialsAvatarNumberGradients, InitialsAvatarTextGradients> = {
@@ -60,7 +62,6 @@ function getInitialsFontSize(avatarSize: number) {
 
 export const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
   size = AVATAR_DEFAULT_SIZE,
-  shadow = AVATAR_DEFAULT_SHADOW,
   children,
   gradientColor,
   style,
@@ -75,7 +76,6 @@ export const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
         ...style,
         fontSize: getInitialsFontSize(size),
       }}
-      shadow={shadow}
       size={size}
       vkuiClass={classNames(
         'InitialsAvatar',

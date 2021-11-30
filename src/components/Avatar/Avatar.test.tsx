@@ -1,6 +1,7 @@
 import { baselineComponent, imgOnlyAttributes } from '../../testing/utils';
 import { render, screen } from '@testing-library/react';
 import Avatar, { AvatarProps } from './Avatar';
+import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
 
 const AvatarTest = (props: AvatarProps) => (<Avatar {...props} data-testid="avatar" />);
 
@@ -10,30 +11,90 @@ const img = () => avatar().querySelector('img');
 describe('Avatar', () => {
   baselineComponent(Avatar);
 
-  it('[img] renders img if src is passed', () => {
-    render(<AvatarTest src="#" />);
+  describe('Image', () => {
+    it('Renders img if src is passed', () => {
+      render(<AvatarTest src="#" />);
 
-    expect(img()).toBeInTheDocument();
+      expect(img()).toBeInTheDocument();
+    });
+
+    it('does not render img if there is no src', () => {
+      render(<AvatarTest />);
+
+      expect(img()).not.toBeInTheDocument();
+    });
+
+    it('Passes ref to img', () => {
+      const refCallback = jest.fn();
+      render(<AvatarTest src="#" getRef={refCallback} />);
+
+      expect(refCallback).toBeCalled();
+    });
+
+    it('Passes all img attributes to img', () => {
+      render(<AvatarTest src="#" {...imgOnlyAttributes} />);
+
+      Object.keys(imgOnlyAttributes).forEach((attr) => {
+        expect(img()).toHaveAttribute(attr);
+      });
+    });
   });
 
-  it('[img] does not render img if there is no src', () => {
-    render(<AvatarTest />);
+  describe('Badge', () => {
+    it('Renders badge if passed', () => {
+      render(<AvatarTest badge={<Icon20GiftCircleFillRed />} />);
 
-    expect(img()).not.toBeInTheDocument();
+      expect(avatar().querySelector('.Avatar__badge')).toBeInTheDocument();
+    });
+
+    it('Doesn\'t render badge if not passed', () => {
+      render(<AvatarTest />);
+
+      expect(avatar().querySelector('.Avatar__badge')).not.toBeInTheDocument();
+    });
+
+    it('Renders badge if online status passed', () => {
+      render(<AvatarTest badge={<Icon20GiftCircleFillRed />} online />);
+
+      expect(avatar().querySelector('.Avatar__badge')).toBeInTheDocument();
+    });
+
+    it('Adds large class if size >= then 96', () => {
+      render(<AvatarTest badge={<Icon20GiftCircleFillRed />} size={96} />);
+
+      expect(avatar().querySelector('.Avatar__badge--large')).toBeInTheDocument();
+    });
   });
 
-  it('[img] passes ref to img', () => {
-    const refCallback = jest.fn();
-    render(<AvatarTest src="#" getRef={refCallback} />);
+  describe('Online', () => {
+    it('Renders online icon if online status passed', () => {
+      render(<AvatarTest online />);
 
-    expect(refCallback).toBeCalled();
-  });
+      expect(avatar().querySelector('.Avatar__online')).toBeInTheDocument();
+    });
 
-  it('[img] passes all img attributes to img', () => {
-    render(<AvatarTest src="#" {...imgOnlyAttributes} />);
+    it('Doesn\'t render online icon if online status not passed', () => {
+      render(<AvatarTest />);
 
-    Object.keys(imgOnlyAttributes).forEach((attr) => {
-      expect(img()).toHaveAttribute(attr);
+      expect(avatar().querySelector('.Avatar__online')).not.toBeInTheDocument();
+    });
+
+    it('Doesn\'t render online icon if badge passed', () => {
+      render(<AvatarTest badge={<Icon20GiftCircleFillRed />} online />);
+
+      expect(avatar().querySelector('.Avatar__online')).not.toBeInTheDocument();
+    });
+
+    it('Doesn\'t render online icon if mode isn\'t default', () => {
+      render(<AvatarTest online mode="app" />);
+
+      expect(avatar().querySelector('.Avatar__online')).not.toBeInTheDocument();
+    });
+
+    it('Adds large class if size >= then 72', () => {
+      render(<AvatarTest online size={72} />);
+
+      expect(avatar().querySelector('.Avatar__online--large')).toBeInTheDocument();
     });
   });
 });

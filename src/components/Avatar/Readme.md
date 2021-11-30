@@ -1,6 +1,8 @@
 Надстройка над `<img />`. Компонент принимает все валидные для этого элемента свойства.
 
 ```jsx
+  import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
+
   <View activePanel="avatar">
     <Panel id="avatar">
       <PanelHeader>Avatar</PanelHeader>
@@ -58,6 +60,21 @@
         <SimpleCell before={<Avatar src={getAvatarUrl('user_evg')} />}>Евгений Авсиевич</SimpleCell>
         <SimpleCell before={<Avatar src={getAvatarUrl('user_id34')} />}>Татьяна Плуталова</SimpleCell>
         <SimpleCell before={<Avatar src={getAvatarUrl('user_illarionov')} />}>Олег Илларианов</SimpleCell>
+      </Group>
+      <Group description="Online статус аватарки. Используется для юзеров, групп.">
+        <Header mode="secondary">Online статус</Header>
+        <SimpleCell before={<Avatar src={getAvatarUrl('user_evg')} online size={24} />}>Евгений Авсиевич</SimpleCell>
+        <SimpleCell before={<Avatar src={getAvatarUrl('user_evg')} online onlineType="mobile" size={24} />}>Евгений Авсиевич</SimpleCell>
+        <SimpleCell before={<Avatar src={getAvatarUrl('user_id34')} online size={36} />}>Татьяна Плуталова</SimpleCell>
+        <SimpleCell before={<Avatar src={getAvatarUrl('user_id34')} online onlineType="mobile" size={36} />}>Татьяна Плуталова</SimpleCell>
+        <SimpleCell before={<Avatar src={getAvatarUrl('user_illarionov')} online size={96} />}>Олег Илларианов</SimpleCell>
+        <SimpleCell before={<Avatar src={getAvatarUrl('user_illarionov')} online onlineType="mobile" size={96} />}>Олег Илларианов</SimpleCell>
+      </Group>
+      <Group description="Значок аватарки. Используется для юзеров, групп.">
+        <Header mode="secondary">Значок</Header>
+        <SimpleCell before={<Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed width={12} height={12} />} size={24} />}>Евгений Авсиевич</SimpleCell>
+        <SimpleCell before={<Avatar src={getAvatarUrl('user_id34')} badge={<Icon20GiftCircleFillRed width={12} height={12} />} size={36} />}>Татьяна Плуталова</SimpleCell>
+        <SimpleCell before={<Avatar src={getAvatarUrl('user_illarionov')} badge={<Icon20GiftCircleFillRed width={24} height={24} />} size={96} />}>Олег Илларианов</SimpleCell>
       </Group>
       <Group description="Аватарки для приложений. Радиус скургления зависит от значения свойства size.">
         <Header mode="secondary">Приложения</Header>

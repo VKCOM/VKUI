@@ -1,4 +1,4 @@
-import { Icon16Add } from '@vkontakte/icons';
+import { Icon16Add, Icon20GiftCircleFillRed } from '@vkontakte/icons';
 import Avatar, { AvatarProps } from './Avatar';
 import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
@@ -28,6 +28,15 @@ describe('Avatar', () => {
     },
     {
       style: [{ backgroundImage: `url("${base64Image}")` }],
+    },
+    {
+      size: [24, 96],
+      online: [true, false],
+      onlineType: ['default', 'mobile'],
+    },
+    {
+      size: [72],
+      badge: [<Icon20GiftCircleFillRed key="icon" />],
     },
   ]);
 });
