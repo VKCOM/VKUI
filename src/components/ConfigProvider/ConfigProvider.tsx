@@ -71,6 +71,13 @@ function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): Sche
   }
 }
 
+const getTokenThemeName = (node: HTMLElement) => {
+  node.style.setProperty('--theme', 'var(--vkui--theme_name)');
+  const themeName = getComputedStyle(node).getPropertyValue('--theme');
+  node.style.removeProperty('--theme');
+  return themeName;
+};
+
 const ConfigProvider: React.FC<ConfigProviderProps> = ({
   children,
   schemeTarget,
@@ -92,7 +99,11 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
   }, [scheme]);
 
   const realScheme = useSchemeDetector(target, scheme);
-  const configContext = useObjectMemo({ appearance: deriveAppearance(realScheme), ...config });
+  const configContext = useObjectMemo({
+    appearance: deriveAppearance(realScheme),
+    tokensTheme: getTokenThemeName(target),
+    ...config,
+  });
 
   return (
     <ConfigProviderContext.Provider value={configContext}>

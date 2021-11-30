@@ -138,10 +138,9 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
     onClick,
     ...restProps
   } = props;
-  const dummyRef = React.useRef();
   const hasIcons = Boolean(before || after);
   const { resolvedMode, resolvedAppearance } = resolveButtonAppearance(appearance, mode);
-  const { isNewTokensAvailable } = useTokensInfo(dummyRef);
+  const { isNewTokensAvailable } = useTokensInfo();
 
   return (
     <Tappable
@@ -167,7 +166,6 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
       hoverMode={isNewTokensAvailable ? 'Button--hover' : 'background'}
       activeMode={isNewTokensAvailable ? 'Button--active' : 'opacity'}
     >
-      <span vkuiClass="vkuiButton__dummy" ref={dummyRef} />
       {loading && <Spinner size="small" vkuiClass="Button__spinner" />}
       <span vkuiClass="Button__in">
         {before && <span vkuiClass="Button__before">{before}</span>}

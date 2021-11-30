@@ -55,6 +55,7 @@ export interface ConfigProviderContextInterface {
    * Платформа
    */
   platform?: PlatformType;
+  tokensTheme?: string;
 }
 
 export const defaultConfigProviderProps = {

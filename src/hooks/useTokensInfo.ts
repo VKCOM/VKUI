@@ -1,24 +1,16 @@
 import * as React from 'react';
+import { ConfigProviderContext } from '../components/ConfigProvider/ConfigProviderContext';
 
 interface TokensInfo {
   isNewTokensAvailable: boolean;
-  newTokensTheme: string;
+  tokensTheme: string;
 }
 
-export function useTokensInfo(ref: React.MutableRefObject<HTMLElement>): TokensInfo {
-  const [isNewTokensAvailable, setNewTokensAvailability] = React.useState<boolean>(false);
-  const [newTokensTheme, setNewTokensTheme] = React.useState<string>('');
-
-  React.useEffect(() => {
-    const cssThemeVar = getComputedStyle(ref.current).getPropertyValue('--theme');
-    if (cssThemeVar !== '') {
-      setNewTokensAvailability(true);
-      setNewTokensTheme(cssThemeVar);
-    }
-  }, [ref]);
+export const useTokensInfo = (): TokensInfo => {
+  const tokens = React.useContext(ConfigProviderContext).tokensTheme;
 
   return {
-    isNewTokensAvailable,
-    newTokensTheme,
+    isNewTokensAvailable: tokens !== '',
+    tokensTheme: tokens,
   };
-}
+};
