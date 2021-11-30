@@ -13,7 +13,6 @@ class FrameDomProvider extends React.Component {
 
   static propTypes = {
     appearance: PropTypes.oneOf(Object.values(Appearance)),
-    tokens: PropTypes.string.isRequired,
   };
 
   state = { ready: false };
@@ -91,7 +90,7 @@ const initialFrameContent = `
 </html>
 `;
 
-export const Frame = ({ children, width, height, scheme, tokens }) => {
+export const Frame = ({ children, width, height, scheme }) => {
   return (
     <ReactFrame
       mountTarget="body"
@@ -99,7 +98,7 @@ export const Frame = ({ children, width, height, scheme, tokens }) => {
       style={{ height, width }}
       initialContent={initialFrameContent}
     >
-      <FrameDomProvider tokens={tokens} appearance={scheme === Scheme.SPACE_GRAY ? Appearance.DARK : Appearance.LIGHT}>
+      <FrameDomProvider appearance={scheme === Scheme.SPACE_GRAY ? Appearance.DARK : Appearance.LIGHT}>
         {children}
       </FrameDomProvider>
     </ReactFrame>
