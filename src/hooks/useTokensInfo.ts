@@ -3,7 +3,6 @@ import { ConfigProviderContext } from '../components/ConfigProvider/ConfigProvid
 
 interface TokensInfo {
   isNewTokensAvailable: boolean;
-  tokensTheme: string;
 }
 
 export const useTokensInfo = (): TokensInfo => {
@@ -11,6 +10,5 @@ export const useTokensInfo = (): TokensInfo => {
 
   return {
     isNewTokensAvailable: tokens !== '',
-    tokensTheme: tokens,
   };
 };
