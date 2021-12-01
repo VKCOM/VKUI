@@ -116,9 +116,7 @@ export default withAdaptivity(class Preview extends PreviewParent {
                     {error ?
                       <PlaygroundError message={error} /> :
                       iframe ?
-                        <Frame width={adaptivity && width} height={adaptivity && styleGuideContext.height} scheme={styleGuideContext.scheme}>
-                          {content}
-                        </Frame> :
+                        <Frame width={adaptivity && width} height={adaptivity && styleGuideContext.height} scheme={styleGuideContext.scheme}>{content}</Frame> :
                         content
                     }
                   </div>
