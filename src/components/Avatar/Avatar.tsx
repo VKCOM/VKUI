@@ -3,8 +3,6 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasRef, HasRootRef } from '../../types';
-import OnlineIconCircle from './OnlineIconCircle';
-import OnlineIconMobile from './OnlineIconMobile';
 import './Avatar.css';
 
 export interface AvatarProps extends React.ImgHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement>, HasRef<HTMLImageElement> {
@@ -80,9 +78,6 @@ const Avatar: React.FC<AvatarProps> = ({
 
   const hasSrc = src || srcSet;
 
-  const OnlineIconComponent =
-    onlineType === 'default' ? OnlineIconCircle : OnlineIconMobile;
-
   return (
     <div
       {...restProps}
@@ -116,7 +111,7 @@ const Avatar: React.FC<AvatarProps> = ({
         />
       }
       {children && <div vkuiClass="Avatar__children">{children}</div>}
-      {badge ? (
+      {badge && (
         <div
           vkuiClass={classNames('Avatar__badge', {
             'Avatar__badge--large': size >= 96,
@@ -124,16 +119,7 @@ const Avatar: React.FC<AvatarProps> = ({
         >
           {badge}
         </div>
-      ) :
-        mode === 'default' &&
-        online && (
-          <OnlineIconComponent
-            vkuiClass={classNames('Avatar__online', {
-              'Avatar__online--large': size >= 72,
-            })}
-          />
-        )
-      }
+      )}
     </div>
   );
 };

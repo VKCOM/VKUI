@@ -45,33 +45,15 @@
 .Avatar__badge {
   position: absolute;
   z-index: 1;
-  right: -2px;
-  bottom: -2px;
+  bottom: calc(14% - 1px);
+  right: calc(14% - 1px);
+  transform: translate(50%, 50%);
   filter: drop-shadow(0 0 2px rgba(0, 0, 0, .04)) drop-shadow(0 4px 4px rgba(0, 0, 0, .08));
 }
 
 .Avatar__badge--large {
-  right: 0;
-  bottom: 0;
-}
-
-.Avatar__online {
-  position: absolute;
-  z-index: 1;
-  width: 12px;
-  height: 16px;
   bottom: 14%;
   right: 14%;
-  transform: translate(50%, 50%);
-}
-
-.Avatar__online--large {
-  width: 16px;
-  height: 20px;
-}
-
-.Avatar__online_background {
-  fill: var(--background_content);
 }
 
 /**

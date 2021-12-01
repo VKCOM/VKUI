@@ -53,48 +53,10 @@ describe('Avatar', () => {
       expect(avatar().querySelector('.Avatar__badge')).not.toBeInTheDocument();
     });
 
-    it('Renders badge if online status passed', () => {
-      render(<AvatarTest badge={<Icon20GiftCircleFillRed />} online />);
-
-      expect(avatar().querySelector('.Avatar__badge')).toBeInTheDocument();
-    });
-
-    it('Adds large class if size >= then 96', () => {
+    it('Adds large class if size >= 96', () => {
       render(<AvatarTest badge={<Icon20GiftCircleFillRed />} size={96} />);
 
       expect(avatar().querySelector('.Avatar__badge--large')).toBeInTheDocument();
-    });
-  });
-
-  describe('Online', () => {
-    it('Renders online icon if online status passed', () => {
-      render(<AvatarTest online />);
-
-      expect(avatar().querySelector('.Avatar__online')).toBeInTheDocument();
-    });
-
-    it('Doesn\'t render online icon if online status not passed', () => {
-      render(<AvatarTest />);
-
-      expect(avatar().querySelector('.Avatar__online')).not.toBeInTheDocument();
-    });
-
-    it('Doesn\'t render online icon if badge passed', () => {
-      render(<AvatarTest badge={<Icon20GiftCircleFillRed />} online />);
-
-      expect(avatar().querySelector('.Avatar__online')).not.toBeInTheDocument();
-    });
-
-    it('Doesn\'t render online icon if mode isn\'t default', () => {
-      render(<AvatarTest online mode="app" />);
-
-      expect(avatar().querySelector('.Avatar__online')).not.toBeInTheDocument();
-    });
-
-    it('Adds large class if size >= then 72', () => {
-      render(<AvatarTest online size={72} />);
-
-      expect(avatar().querySelector('.Avatar__online--large')).toBeInTheDocument();
     });
   });
 });

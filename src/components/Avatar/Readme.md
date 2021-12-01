@@ -1,7 +1,7 @@
 Надстройка над `<img />`. Компонент принимает все валидные для этого элемента свойства.
 
 ```jsx
-  import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
+  import { Icon20GiftCircleFillRed, Icon12Circle, Icon12OnlineMobile, Icon20GameCircleFillBlue, Icon16StarCircleFillBlue } from '@vkontakte/icons';
 
   <View activePanel="avatar">
     <Panel id="avatar">
@@ -61,20 +61,39 @@
         <SimpleCell before={<Avatar src={getAvatarUrl('user_id34')} />}>Татьяна Плуталова</SimpleCell>
         <SimpleCell before={<Avatar src={getAvatarUrl('user_illarionov')} />}>Олег Илларианов</SimpleCell>
       </Group>
-      <Group description="Online статус аватарки. Используется для юзеров, групп.">
-        <Header mode="secondary">Online статус</Header>
-        <SimpleCell before={<Avatar src={getAvatarUrl('user_evg')} online size={24} />}>Евгений Авсиевич</SimpleCell>
-        <SimpleCell before={<Avatar src={getAvatarUrl('user_evg')} online onlineType="mobile" size={24} />}>Евгений Авсиевич</SimpleCell>
-        <SimpleCell before={<Avatar src={getAvatarUrl('user_id34')} online size={36} />}>Татьяна Плуталова</SimpleCell>
-        <SimpleCell before={<Avatar src={getAvatarUrl('user_id34')} online onlineType="mobile" size={36} />}>Татьяна Плуталова</SimpleCell>
-        <SimpleCell before={<Avatar src={getAvatarUrl('user_illarionov')} online size={96} />}>Олег Илларианов</SimpleCell>
-        <SimpleCell before={<Avatar src={getAvatarUrl('user_illarionov')} online onlineType="mobile" size={96} />}>Олег Илларианов</SimpleCell>
-      </Group>
       <Group description="Значок аватарки. Используется для юзеров, групп.">
         <Header mode="secondary">Значок</Header>
-        <SimpleCell before={<Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed width={12} height={12} />} size={24} />}>Евгений Авсиевич</SimpleCell>
-        <SimpleCell before={<Avatar src={getAvatarUrl('user_id34')} badge={<Icon20GiftCircleFillRed width={12} height={12} />} size={36} />}>Татьяна Плуталова</SimpleCell>
-        <SimpleCell before={<Avatar src={getAvatarUrl('user_illarionov')} badge={<Icon20GiftCircleFillRed width={24} height={24} />} size={96} />}>Олег Илларианов</SimpleCell>
+        <div style={{ display: 'flex', padding: 12, gap: 8, flexFlow: 'row wrap' }}>
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed width={12} height={12} />} size={24} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={
+            <div style={{ color: '#4BB34B', backgroundColor: 'var(--background_content)', borderRadius: '50%' }}>
+              <Icon12Circle width={12} height={12} />
+            </div>
+          } size={28} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={
+            <div style={{ color: '#4BB34B', backgroundColor: 'var(--background_content)', borderRadius: 3, padding: 2 }}>
+              <Icon12OnlineMobile width={8} height={12} />
+            </div>
+          } size={32} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon16StarCircleFillBlue />} size={36} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon16StarCircleFillBlue />} size={40} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon16StarCircleFillBlue />} size={44} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed width={16} height={16} />} size={48} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GameCircleFillBlue />} size={56} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed width={20} height={20} />} size={64} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed width={20} height={20} />} size={72} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={
+            <div style={{ color: '#4BB34B', backgroundColor: 'var(--background_content)', borderRadius: 3, padding: 2 }}>
+              <Icon12OnlineMobile width={9} height={14} />
+            </div>
+          } size={80} />
+          <Avatar src={getAvatarUrl('user_id34')} badge={
+            <div style={{ color: '#4BB34B', backgroundColor: 'var(--background_content)', borderRadius: '50%' }}>
+              <Icon12Circle width={15} height={15} />
+            </div>
+          } size={88} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed width={24} height={24} />} size={96} />
+        </div>
       </Group>
       <Group description="Аватарки для приложений. Радиус скургления зависит от значения свойства size.">
         <Header mode="secondary">Приложения</Header>
