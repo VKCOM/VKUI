@@ -138,6 +138,14 @@ module.exports = {
         '../src/components/Snackbar/Snackbar.tsx',
       ],
     }, {
+      name: 'Poppers',
+      components: () => [
+        '../src/components/Dropdown/Dropdown.tsx',
+        '../src/components/TextTooltip/TextTooltip.tsx',
+        '../src/components/RichTooltip/RichTooltip.tsx',
+        '../src/components/Tooltip/Tooltip.tsx',
+      ],
+    }, {
       name: 'Modals',
       components: () => [
         '../src/components/ModalRoot/ModalRootAdaptive.tsx',
@@ -180,7 +188,6 @@ module.exports = {
         '../src/components/Search/Search.tsx',
         '../src/components/Tabs/Tabs.tsx',
         '../src/components/TabsItem/TabsItem.tsx',
-        '../src/components/Tooltip/Tooltip.tsx',
         '../src/components/PullToRefresh/PullToRefresh.tsx',
         '../src/components/Counter/Counter.tsx',
         '../src/components/UsersStack/UsersStack.tsx',
