@@ -6,6 +6,7 @@
   margin-right: -1px;
   margin-bottom: -1px;
   padding: 12px 17px;
+  border-radius: 0;
 }
 
 .Table__tr:last-child .TogglePropsButton {
