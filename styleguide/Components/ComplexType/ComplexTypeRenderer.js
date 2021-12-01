@@ -5,7 +5,7 @@ import { Icon16ErrorCircleOutline } from '@vkontakte/icons';
 import TypeRenderer from '../Type/TypeRenderer';
 import './ComplexType.css';
 
-export const ComplexTypeRenderder = ({ name, raw }) => {
+export const ComplexTypeRenderer = ({ name, raw }) => {
   const { viewWidth } = useAdaptivity();
 
   if (viewWidth <= ViewWidth.MOBILE) {
@@ -22,4 +22,4 @@ export const ComplexTypeRenderder = ({ name, raw }) => {
   );
 };
 
-export default ComplexTypeRenderder;
+export default ComplexTypeRenderer;

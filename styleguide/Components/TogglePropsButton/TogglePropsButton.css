@@ -1,0 +1,15 @@
+.TogglePropsButton {
+  position: relative;
+  width: calc(100% + 2px);
+  margin-top: -1px;
+  margin-left: -1px;
+  margin-right: -1px;
+  margin-bottom: -1px;
+  padding: 12px 17px;
+  border-radius: 0;
+}
+
+.Table__tr:last-child .TogglePropsButton {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}

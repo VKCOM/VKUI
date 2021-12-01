@@ -1,7 +1,12 @@
 .Name {
-  color: #4bb34b;
+  color: var(--dynamic_green);
 }
 
 .Name--deprecated {
+  color: var(--text_secondary);
   text-decoration: line-through;
+}
+
+.Name--optional::after {
+  content: '?';
 }
