@@ -69,12 +69,12 @@
             <div style={{ color: '#4BB34B', backgroundColor: 'var(--background_content)', borderRadius: '50%' }}>
               <Icon12Circle width={12} height={12} />
             </div>
-          } size={28} />
+          } size={28} badgeShadow={false} />
           <Avatar src={getAvatarUrl('user_evg')} badge={
             <div style={{ color: '#4BB34B', backgroundColor: 'var(--background_content)', borderRadius: 3, padding: 2 }}>
               <Icon12OnlineMobile width={8} height={12} />
             </div>
-          } size={32} />
+          } size={32} badgeShadow={false} />
           <Avatar src={getAvatarUrl('user_evg')} badge={<Icon16StarCircleFillBlue />} size={36} />
           <Avatar src={getAvatarUrl('user_evg')} badge={<Icon16StarCircleFillBlue />} size={40} />
           <Avatar src={getAvatarUrl('user_evg')} badge={<Icon16StarCircleFillBlue />} size={44} />
@@ -86,12 +86,12 @@
             <div style={{ color: '#4BB34B', backgroundColor: 'var(--background_content)', borderRadius: 3, padding: 2 }}>
               <Icon12OnlineMobile width={9} height={14} />
             </div>
-          } size={80} />
+          } size={80} badgeShadow={false} />
           <Avatar src={getAvatarUrl('user_id34')} badge={
             <div style={{ color: '#4BB34B', backgroundColor: 'var(--background_content)', borderRadius: '50%' }}>
               <Icon12Circle width={15} height={15} />
             </div>
-          } size={88} />
+          } size={88} badgeShadow={false} />
           <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed width={24} height={24} />} size={96} />
         </div>
       </Group>

@@ -48,12 +48,15 @@
   bottom: calc(14% - 1px);
   right: calc(14% - 1px);
   transform: translate(50%, 50%);
-  filter: drop-shadow(0 0 2px rgba(0, 0, 0, .04)) drop-shadow(0 4px 4px rgba(0, 0, 0, .08));
 }
 
 .Avatar__badge--large {
   bottom: 14%;
   right: 14%;
+}
+
+.Avatar__badge--shadow {
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, .04)) drop-shadow(0 4px 4px rgba(0, 0, 0, .08));
 }
 
 /**

@@ -58,5 +58,11 @@ describe('Avatar', () => {
 
       expect(avatar().querySelector('.Avatar__badge--large')).toBeInTheDocument();
     });
+
+    it('Doesn\t render badge shadow if passed badgeShadow: false', () => {
+      render(<AvatarTest badgeShadow={false} badge={<Icon20GiftCircleFillRed />} size={96} />);
+
+      expect(avatar().querySelector('.Avatar__badge--shadow')).not.toBeInTheDocument();
+    });
   });
 });

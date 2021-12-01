@@ -13,6 +13,7 @@ export interface AvatarProps extends React.ImgHTMLAttributes<HTMLElement>, HasRo
   mode?: 'default' | 'image' | 'app';
   shadow?: boolean;
   badge?: React.ReactNode;
+  badgeShadow?: boolean;
 }
 
 const Avatar: React.FC<AvatarProps> = ({
@@ -37,6 +38,7 @@ const Avatar: React.FC<AvatarProps> = ({
   style,
   'aria-label': ariaLabel,
   badge,
+  badgeShadow,
   ...restProps
 }: AvatarProps) => {
   const platform = usePlatform();
@@ -108,6 +110,7 @@ const Avatar: React.FC<AvatarProps> = ({
         <div
           vkuiClass={classNames('Avatar__badge', {
             'Avatar__badge--large': size >= 96,
+            'Avatar__badge--shadow': badgeShadow,
           })}
         >
           {badge}
@@ -119,11 +122,13 @@ const Avatar: React.FC<AvatarProps> = ({
 
 export const AVATAR_DEFAULT_SIZE = 48;
 export const AVATAR_DEFAULT_SHADOW = true;
+export const AVATAR_BADGE_DEFAULT_SHADOW = true;
 
 Avatar.defaultProps = {
   size: AVATAR_DEFAULT_SIZE,
   mode: 'default',
   shadow: AVATAR_DEFAULT_SHADOW,
+  badgeShadow: AVATAR_BADGE_DEFAULT_SHADOW,
 };
 
 export default Avatar;
