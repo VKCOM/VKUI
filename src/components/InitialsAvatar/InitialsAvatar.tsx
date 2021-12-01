@@ -22,7 +22,7 @@ export type InitialsAvatarTextGradients =
 export interface InitialsAvatarProps
   extends React.HTMLAttributes<HTMLDivElement>,
   HasRootRef<HTMLDivElement>,
-  Pick<AvatarProps, 'size' | 'shadow' | 'badge' | 'online' | 'onlineType'> {
+  Pick<AvatarProps, 'size' | 'shadow' | 'badge'> {
 
   children?: React.ReactNode;
   /**

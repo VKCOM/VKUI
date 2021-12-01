@@ -13,11 +13,6 @@ export interface AvatarProps extends React.ImgHTMLAttributes<HTMLElement>, HasRo
   mode?: 'default' | 'image' | 'app';
   shadow?: boolean;
   badge?: React.ReactNode;
-  online?: boolean;
-  /**
-   * Тип значка online: 'default' - кружок, 'mobile' - телефон
-   */
-  onlineType?: 'default' | 'mobile';
 }
 
 const Avatar: React.FC<AvatarProps> = ({
@@ -42,8 +37,6 @@ const Avatar: React.FC<AvatarProps> = ({
   style,
   'aria-label': ariaLabel,
   badge,
-  online,
-  onlineType,
   ...restProps
 }: AvatarProps) => {
   const platform = usePlatform();
@@ -131,8 +124,6 @@ Avatar.defaultProps = {
   size: AVATAR_DEFAULT_SIZE,
   mode: 'default',
   shadow: AVATAR_DEFAULT_SHADOW,
-  onlineType: 'default',
-  online: false,
 };
 
 export default Avatar;
