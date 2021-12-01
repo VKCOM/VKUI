@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Icon12Circle, Icon12OnlineMobile } from '@vkontakte/icons';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -12,8 +13,7 @@ export interface AvatarProps extends React.ImgHTMLAttributes<HTMLElement>, HasRo
   size?: number;
   mode?: 'default' | 'image' | 'app';
   shadow?: boolean;
-  badge?: React.ReactNode;
-  badgeShadow?: boolean;
+  badge?: 'online' | 'online-mobile' | JSX.Element;
 }
 
 const Avatar: React.FC<AvatarProps> = ({
@@ -38,7 +38,6 @@ const Avatar: React.FC<AvatarProps> = ({
   style,
   'aria-label': ariaLabel,
   badge,
-  badgeShadow,
   ...restProps
 }: AvatarProps) => {
   const platform = usePlatform();
@@ -110,10 +109,21 @@ const Avatar: React.FC<AvatarProps> = ({
         <div
           vkuiClass={classNames('Avatar__badge', {
             'Avatar__badge--large': size >= 96,
-            'Avatar__badge--shadow': badgeShadow,
+            'Avatar__badge--shadow':
+              badge !== 'online' && badge !== 'online-mobile',
           })}
         >
-          {badge}
+          {badge === 'online' ? (
+            <div vkuiClass="Avatar__badge-online">
+              <Icon12Circle width={size >= 72 ? 15 : 12} height={size >= 72 ? 15 : 12} />
+            </div>
+          ) : badge === 'online-mobile' ? (
+            <div vkuiClass="Avatar__badge-online-mobile">
+              <Icon12OnlineMobile width={size >= 72 ? 9 : 8} height={size >= 72 ? 15 : 12} />
+            </div>
+          ) :
+            badge
+          }
         </div>
       )}
     </div>
@@ -122,13 +132,11 @@ const Avatar: React.FC<AvatarProps> = ({
 
 export const AVATAR_DEFAULT_SIZE = 48;
 export const AVATAR_DEFAULT_SHADOW = true;
-export const AVATAR_BADGE_DEFAULT_SHADOW = true;
 
 Avatar.defaultProps = {
   size: AVATAR_DEFAULT_SIZE,
   mode: 'default',
   shadow: AVATAR_DEFAULT_SHADOW,
-  badgeShadow: AVATAR_BADGE_DEFAULT_SHADOW,
 };
 
 export default Avatar;

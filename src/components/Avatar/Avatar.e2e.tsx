@@ -31,8 +31,7 @@ describe('Avatar', () => {
     },
     {
       size: [24, 96],
-      badgeShadow: [true, false],
-      badge: [<Icon20GiftCircleFillRed key="icon" />],
+      badge: [<Icon20GiftCircleFillRed key="icon" />, 'online', 'online-mobile'],
     },
   ]);
 });

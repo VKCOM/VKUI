@@ -59,6 +59,19 @@
   filter: drop-shadow(0 0 2px rgba(0, 0, 0, .04)) drop-shadow(0 4px 4px rgba(0, 0, 0, .08));
 }
 
+.Avatar__badge-online {
+  color: #4bb34b;
+  background-color: var(--background_content);
+  border-radius: 50%;
+}
+
+.Avatar__badge-online-mobile {
+  color: #4bb34b;
+  background-color: var(--background_content);
+  border-radius: 3px;
+  padding: 2px;
+}
+
 /**
  * .CellButton
  */

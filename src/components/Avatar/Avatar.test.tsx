@@ -42,9 +42,9 @@ describe('Avatar', () => {
 
   describe('Badge', () => {
     it('Renders badge if passed', () => {
-      render(<AvatarTest badge={<Icon20GiftCircleFillRed />} />);
+      render(<AvatarTest badge={<Icon20GiftCircleFillRed className="test-badge" />} />);
 
-      expect(avatar().querySelector('.Avatar__badge')).toBeInTheDocument();
+      expect(avatar().querySelector('.test-badge')).toBeInTheDocument();
     });
 
     it('Doesn\'t render badge if not passed', () => {
@@ -59,10 +59,28 @@ describe('Avatar', () => {
       expect(avatar().querySelector('.Avatar__badge--large')).toBeInTheDocument();
     });
 
-    it('Doesn\t render badge shadow if passed badgeShadow: false', () => {
-      render(<AvatarTest badgeShadow={false} badge={<Icon20GiftCircleFillRed />} size={96} />);
+    it('Doesn\t render badge shadow if passed online badge', () => {
+      render(<AvatarTest badge="online" size={96} />);
 
       expect(avatar().querySelector('.Avatar__badge--shadow')).not.toBeInTheDocument();
+    });
+
+    it('Doesn\t render badge shadow if passed online badge', () => {
+      render(<AvatarTest badge="online" size={96} />);
+
+      expect(avatar().querySelector('.Avatar__badge--shadow')).not.toBeInTheDocument();
+    });
+
+    it('Renders online badge if passed', () => {
+      render(<AvatarTest badge="online" />);
+
+      expect(avatar().querySelector('.Avatar__badge-online')).toBeInTheDocument();
+    });
+
+    it('Renders online mobile badge if passed', () => {
+      render(<AvatarTest badge="online-mobile" />);
+
+      expect(avatar().querySelector('.Avatar__badge-online-mobile')).toBeInTheDocument();
     });
   });
 });
