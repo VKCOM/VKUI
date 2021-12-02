@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Icon12Circle, Icon12OnlineMobile } from '@vkontakte/icons';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -12,6 +13,7 @@ export interface AvatarProps extends React.ImgHTMLAttributes<HTMLElement>, HasRo
   size?: number;
   mode?: 'default' | 'image' | 'app';
   shadow?: boolean;
+  badge?: 'online' | 'online-mobile' | JSX.Element;
 }
 
 const Avatar: React.FC<AvatarProps> = ({
@@ -35,6 +37,7 @@ const Avatar: React.FC<AvatarProps> = ({
   getRootRef,
   style,
   'aria-label': ariaLabel,
+  badge,
   ...restProps
 }: AvatarProps) => {
   const platform = usePlatform();
@@ -102,6 +105,27 @@ const Avatar: React.FC<AvatarProps> = ({
         />
       }
       {children && <div vkuiClass="Avatar__children">{children}</div>}
+      {badge && (
+        <div
+          vkuiClass={classNames('Avatar__badge', {
+            'Avatar__badge--large': size >= 96,
+            'Avatar__badge--shadow':
+              badge !== 'online' && badge !== 'online-mobile',
+          })}
+        >
+          {badge === 'online' ? (
+            <div vkuiClass="Avatar__badge-online">
+              <Icon12Circle width={size >= 72 ? 15 : 12} height={size >= 72 ? 15 : 12} />
+            </div>
+          ) : badge === 'online-mobile' ? (
+            <div vkuiClass="Avatar__badge-online-mobile">
+              <Icon12OnlineMobile width={size >= 72 ? 9 : 8} height={size >= 72 ? 15 : 12} />
+            </div>
+          ) :
+            badge
+          }
+        </div>
+      )}
     </div>
   );
 };

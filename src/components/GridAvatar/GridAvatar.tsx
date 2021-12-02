@@ -1,14 +1,16 @@
 import * as React from 'react';
-import Avatar, { AVATAR_DEFAULT_SHADOW, AVATAR_DEFAULT_SIZE } from '../Avatar/Avatar';
+import Avatar, { AvatarProps } from '../Avatar/Avatar';
 import { classNames } from '../../lib/classNames';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasRootRef } from '../../types';
 import './GridAvatar.css';
 
-export interface GridAvatarProps extends React.HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
+export interface GridAvatarProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+  HasRootRef<HTMLDivElement>,
+  Pick<AvatarProps, 'size' | 'shadow' | 'badge'> {
+
   src?: string[];
-  size?: number;
-  shadow?: boolean;
 }
 
 const MIN_GRID_LENGTH = 1;
@@ -18,8 +20,6 @@ const warn = warnOnce('GridAvatar');
 
 export const GridAvatar: React.FC<GridAvatarProps> = ({
   src = [],
-  size = AVATAR_DEFAULT_SIZE,
-  shadow = AVATAR_DEFAULT_SHADOW,
   ...restProps
 }: GridAvatarProps) => {
   if (process.env.NODE_ENV === 'development' && src.length > MAX_GRID_LENGTH) {
@@ -35,8 +35,6 @@ export const GridAvatar: React.FC<GridAvatarProps> = ({
         'GridAvatar',
         `GridAvatar--images-${count}`,
       )}
-      shadow={shadow}
-      size={size}
     >
       <div vkuiClass="GridAvatar__in">
         {src.slice(0, MAX_GRID_LENGTH).map((src, i) => {

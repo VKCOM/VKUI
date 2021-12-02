@@ -42,6 +42,36 @@
   color: var(--icon_secondary);
 }
 
+.Avatar__badge {
+  position: absolute;
+  z-index: 1;
+  bottom: calc(14% - 1px);
+  right: calc(14% - 1px);
+  transform: translate(50%, 50%);
+}
+
+.Avatar__badge--large {
+  bottom: 14%;
+  right: 14%;
+}
+
+.Avatar__badge--shadow {
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, .04)) drop-shadow(0 4px 4px rgba(0, 0, 0, .08));
+}
+
+.Avatar__badge-online {
+  color: #4bb34b;
+  background-color: var(--background_content);
+  border-radius: 50%;
+}
+
+.Avatar__badge-online-mobile {
+  color: #4bb34b;
+  background-color: var(--background_content);
+  border-radius: 3px;
+  padding: 2px;
+}
+
 /**
  * .CellButton
  */

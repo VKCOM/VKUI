@@ -1,6 +1,8 @@
 Надстройка над `<img />`. Компонент принимает все валидные для этого элемента свойства.
 
 ```jsx
+  import { Icon20GiftCircleFillRed, Icon12Circle, Icon12OnlineMobile, Icon20GameCircleFillBlue, Icon16StarCircleFillBlue } from '@vkontakte/icons';
+
   <View activePanel="avatar">
     <Panel id="avatar">
       <PanelHeader>Avatar</PanelHeader>
@@ -58,6 +60,54 @@
         <SimpleCell before={<Avatar src={getAvatarUrl('user_evg')} />}>Евгений Авсиевич</SimpleCell>
         <SimpleCell before={<Avatar src={getAvatarUrl('user_id34')} />}>Татьяна Плуталова</SimpleCell>
         <SimpleCell before={<Avatar src={getAvatarUrl('user_illarionov')} />}>Олег Илларианов</SimpleCell>
+      </Group>
+      <Group description="Значок аватарки. Используется для юзеров, групп.">
+        <Header mode="secondary">Значок</Header>
+        <div style={{ display: 'flex', padding: 12, gap: 8, flexFlow: 'row wrap' }}>
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed width={12} height={12} />} size={24} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed width={12} height={12} />} size={28} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed width={12} height={12} />} size={32} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed width={16} height={16} />} size={36} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed width={16} height={16} />} size={40} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed width={16} height={16} />} size={44} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed width={16} height={16}  />} size={48} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed  />} size={56} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed  />} size={64} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed width={24} height={24} />} size={72} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed width={24} height={24} />} size={80} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed width={24} height={24} />} size={88} />
+          <Avatar src={getAvatarUrl('user_evg')} badge={<Icon20GiftCircleFillRed width={24} height={24} />} size={96} />
+        </div>
+        <div style={{ display: 'flex', padding: 12, gap: 8, flexFlow: 'row wrap' }}>
+          <Avatar src={getAvatarUrl('user_id34')} badge='online' size={24} />
+          <Avatar src={getAvatarUrl('user_id34')} badge='online' size={28} />
+          <Avatar src={getAvatarUrl('user_id34')} badge='online' size={32} />
+          <Avatar src={getAvatarUrl('user_id34')} badge='online' size={36} />
+          <Avatar src={getAvatarUrl('user_id34')} badge='online' size={40} />
+          <Avatar src={getAvatarUrl('user_id34')} badge='online' size={44} />
+          <Avatar src={getAvatarUrl('user_id34')} badge='online' size={48} />
+          <Avatar src={getAvatarUrl('user_id34')} badge='online' size={56} />
+          <Avatar src={getAvatarUrl('user_id34')} badge='online' size={64} />
+          <Avatar src={getAvatarUrl('user_id34')} badge='online' size={72} />
+          <Avatar src={getAvatarUrl('user_id34')} badge='online' size={80} />
+          <Avatar src={getAvatarUrl('user_id34')} badge='online' size={88} />
+          <Avatar src={getAvatarUrl('user_id34')} badge='online' size={96} />
+        </div>
+        <div style={{ display: 'flex', padding: 12, gap: 8, flexFlow: 'row wrap' }}>
+          <Avatar src={getAvatarUrl('user_illarionov')} badge='online-mobile' size={24} />
+          <Avatar src={getAvatarUrl('user_illarionov')} badge='online-mobile' size={28} />
+          <Avatar src={getAvatarUrl('user_illarionov')} badge='online-mobile' size={32} />
+          <Avatar src={getAvatarUrl('user_illarionov')} badge='online-mobile' size={36} />
+          <Avatar src={getAvatarUrl('user_illarionov')} badge='online-mobile' size={40} />
+          <Avatar src={getAvatarUrl('user_illarionov')} badge='online-mobile' size={44} />
+          <Avatar src={getAvatarUrl('user_illarionov')} badge='online-mobile' size={48} />
+          <Avatar src={getAvatarUrl('user_illarionov')} badge='online-mobile' size={56} />
+          <Avatar src={getAvatarUrl('user_illarionov')} badge='online-mobile' size={64} />
+          <Avatar src={getAvatarUrl('user_illarionov')} badge='online-mobile' size={72} />
+          <Avatar src={getAvatarUrl('user_illarionov')} badge='online-mobile' size={80} />
+          <Avatar src={getAvatarUrl('user_illarionov')} badge='online-mobile' size={88} />
+          <Avatar src={getAvatarUrl('user_illarionov')} badge='online-mobile' size={96} />
+        </div>
       </Group>
       <Group description="Аватарки для приложений. Радиус скургления зависит от значения свойства size.">
         <Header mode="secondary">Приложения</Header>
