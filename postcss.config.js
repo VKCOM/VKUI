@@ -3,7 +3,7 @@ const cssCustomProperties = require('postcss-custom-properties');
 const scopeRoot = require('./tasks/postcss-scope-root.js');
 const cssImport = require('postcss-import');
 const autoprefixer = require('autoprefixer');
-const selectorPrefixer = require('postcss-prefixer');
+const cssModules = require('postcss-modules');
 const csso = require('postcss-csso');
 const checkKeyframes = require('./tasks/postcss-check-keyframes');
 const { defaultSchemeId } = require('./package.json');
@@ -30,9 +30,9 @@ let plugins = [
     except: path.resolve(`./src/styles/${defaultSchemeId}.css`)
   }),
   autoprefixer(),
-  selectorPrefixer({
-    prefix: 'vkui',
-    ignore: [/^\.vkui/, '#mount']
+  cssModules({
+    generateScopedName: (name) => name.startsWith('vkui') ? name : `vkui${name}`,
+    getJSON: () => {},
   })
 ];
 
