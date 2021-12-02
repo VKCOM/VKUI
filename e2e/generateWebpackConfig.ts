@@ -37,7 +37,6 @@ export async function generateWebpackConfig() {
     module: {
       ...webpackConfig.module,
       rules: [
-        ...(webpackConfig.module || {}).rules,
         {
           test: /\.[jt]sx?$/,
           exclude: /node_modules/,
@@ -62,7 +61,7 @@ export async function generateWebpackConfig() {
           test: /\.css$/i,
           use: [
             { loader: MiniCssExtractPlugin.loader },
-            { loader: 'css-loader', options: { url: false } },
+            { loader: 'css-loader', options: { url: false, modules: false } },
             'postcss-loader',
           ],
         },
