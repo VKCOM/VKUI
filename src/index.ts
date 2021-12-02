@@ -280,6 +280,7 @@ export { SSRWrapper } from './lib/SSR';
 export { platform, ANDROID, IOS, VKCOM, Platform, IS_PLATFORM_ANDROID, IS_PLATFORM_IOS } from './lib/platform';
 export { getClassName } from './helpers/getClassName';
 export { ViewWidth, ViewHeight, SizeType } from './components/AdaptivityProvider/AdaptivityContext';
+export { calcInitialsAvatarColor } from './helpers/avatar';
 
 /**
  * Types

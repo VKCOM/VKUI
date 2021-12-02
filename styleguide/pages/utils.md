@@ -42,3 +42,20 @@ const MyButton = ({ children }) => {
   return <button className={baseClassNames}>{children}</button>;
 }
 ```
+
+## calcInitialsAvatarColor
+
+Используется для определения цвета [InitialsAvatar](#!/InitialsAvatar) по переданному идентификатору объекта.
+
+```jsx static
+import { calcInitialsAvatarColor } from '@vkontakte/vkui'
+
+const conversation = { peer: { id: 480 }, name: 'Библиотека компонентов VKUI' };
+
+<InitialsAvatar
+  size={48}
+  gradientColor={calcInitialsAvatarColor(conversation.peer.id)}
+>
+  {conversation.name[0]}
+</InitialsAvatar>
+```
