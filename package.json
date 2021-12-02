@@ -109,7 +109,7 @@
     "generate_scheme": "./tasks/generate_scheme.js"
   },
   "peerDependencies": {
-    "@vkontakte/icons": "^1.109.0",
+    "@vkontakte/icons": "^1.136.0",
     "@vkontakte/vk-bridge": "^2.0.2",
     "react": "^16.8.6 || ^17.0.0",
     "react-dom": "^16.8.6 || ^17.0.0"
