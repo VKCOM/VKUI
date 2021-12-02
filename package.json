@@ -184,17 +184,17 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
-      "prettier --write",
+      "prettier --check",
       "eslint",
       "git add"
     ],
     "*.{css}": [
-      "prettier --write",
+      "prettier --check",
       "stylelint",
       "git add"
     ],
     "*.{json,md}": [
-      "prettier --write",
+      "prettier --check",
       "git add"
     ]
   },
