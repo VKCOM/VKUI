@@ -1,5 +1,5 @@
 {
-  "extends": ["@vkontakte/eslint-config/typescript/react"],
+  "extends": ["@vkontakte/eslint-config/typescript/react", "prettier"],
   "parserOptions": {
     "project": "./tsconfig.json",
     "ecmaVersion": 2018, // Allows for the parsing of modern ECMAScript features
@@ -22,67 +22,84 @@
     "@typescript-eslint/explicit-member-accessibility": "off",
     "@typescript-eslint/no-unnecessary-condition": "off",
     "@typescript-eslint/no-magic-numbers": "off",
-    "@typescript-eslint/no-unused-vars": ["error", {
-      "ignoreRestSiblings": true
-    }],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "ignoreRestSiblings": true
+      }
+    ],
     "no-restricted-globals": ["error", "window", "document"],
-    "no-restricted-imports": ["error", {
-      "paths": [
-        // prevent absolute imports from src subfolders like `import { ... } from "lib"`
-        "appearance",
-        "components",
-        "helpers",
-        "hoc",
-        "hooks",
-        "lib",
-        "styles",
-        "testing",
-        "types",
-        "unstable"
-      ],
-      "patterns": [
-        "@vkontakte/icons/dist/*",
-        // prevent absolute imports from src subfolders like `import { ... } from "lib/platform"`
-        "appearance/*",
-        "components/*",
-        "helpers/*",
-        "hoc/*",
-        "hooks/*",
-        "lib/*",
-        "styles/*",
-        "testing/*",
-        "types/*",
-        "unstable/*"
-      ]
-    }],
-    "no-restricted-properties": ["error", {
-      "property": "querySelector",
-      "message": "Make sure to use [data-*] selector, not class"
-    }, {
-      "property": "querySelectorAll",
-      "message": "Make sure to use [data-*] selector, not class"
-    }, {
-      "property": "matches",
-      "message": "Make sure to use [data-*] selector, not class"
-    }, {
-      "property": "closest",
-      "message": "Make sure to use [data-*] selector, not class"
-    }, {
-      "property": "getElementsByClassName",
-      "message": "Use .querySelectorAll('[data-*]')"
-    }, {
-      "property": "classList",
-      "message": "Make sure to use 'vkui' prefix"
-    }, {
-      "property": "getElementById",
-      "message": "Absolutely do not use id"
-    }, {
-      "object": "React",
-      "property": "useLayoutEffect",
-      "message": "Prefer lib/useIsomorphicLayoutEffect"
-    }],
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          // prevent absolute imports from src subfolders like `import { ... } from "lib"`
+          "appearance",
+          "components",
+          "helpers",
+          "hoc",
+          "hooks",
+          "lib",
+          "styles",
+          "testing",
+          "types",
+          "unstable"
+        ],
+        "patterns": [
+          "@vkontakte/icons/dist/*",
+          // prevent absolute imports from src subfolders like `import { ... } from "lib/platform"`
+          "appearance/*",
+          "components/*",
+          "helpers/*",
+          "hoc/*",
+          "hooks/*",
+          "lib/*",
+          "styles/*",
+          "testing/*",
+          "types/*",
+          "unstable/*"
+        ]
+      }
+    ],
+    "no-restricted-properties": [
+      "error",
+      {
+        "property": "querySelector",
+        "message": "Make sure to use [data-*] selector, not class"
+      },
+      {
+        "property": "querySelectorAll",
+        "message": "Make sure to use [data-*] selector, not class"
+      },
+      {
+        "property": "matches",
+        "message": "Make sure to use [data-*] selector, not class"
+      },
+      {
+        "property": "closest",
+        "message": "Make sure to use [data-*] selector, not class"
+      },
+      {
+        "property": "getElementsByClassName",
+        "message": "Use .querySelectorAll('[data-*]')"
+      },
+      {
+        "property": "classList",
+        "message": "Make sure to use 'vkui' prefix"
+      },
+      {
+        "property": "getElementById",
+        "message": "Absolutely do not use id"
+      },
+      {
+        "object": "React",
+        "property": "useLayoutEffect",
+        "message": "Prefer lib/useIsomorphicLayoutEffect"
+      }
+    ],
     "react/react-in-jsx-scope": "off",
-    "no-restricted-syntax": ["error",
+    "no-restricted-syntax": [
+      "error",
       {
         "selector": "ImportDeclaration[source.value=/^\\W+(index(\\.ts)?)?$/i]",
         "message": "Do not import index"
@@ -95,7 +112,11 @@
   },
   "overrides": [
     {
-      "files": ["src/**/*.{test,spec,e2e}.{ts,tsx}", "e2e/**/*", "src/testing/**/*"],
+      "files": [
+        "src/**/*.{test,spec,e2e}.{ts,tsx}",
+        "e2e/**/*",
+        "src/testing/**/*"
+      ],
       "env": {
         "jest": true
       },
