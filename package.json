@@ -186,17 +186,14 @@
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
       "prettier --check",
-      "eslint",
-      "git add"
+      "eslint"
     ],
     "*.{css}": [
       "prettier --check",
-      "stylelint",
-      "git add"
+      "stylelint"
     ],
     "*.{json,md}": [
-      "prettier --check",
-      "git add"
+      "prettier --check"
     ]
   },
   "dependencies": {
