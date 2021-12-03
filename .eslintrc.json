@@ -114,8 +114,7 @@
         "selector": "ImportDeclaration[source.value=/\\.css$/i] ~ ImportDeclaration[source.value!=/\\.css$/i]",
         "message": "CSS import must be last"
       }
-    ],
-    "prettier/prettier": "error"
+    ]
   },
   "overrides": [
     {

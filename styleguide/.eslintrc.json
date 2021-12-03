@@ -2,8 +2,7 @@
   "extends": ["@vkontakte/eslint-config/react", "prettier", "prettier/react"],
   "plugins": ["prettier"],
   "rules": {
-    "react/prop-types": [0],
-    "prettier/prettier": "error"
+    "react/prop-types": [0]
   },
   "env": {
     "node": true,
