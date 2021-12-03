@@ -1,8 +1,7 @@
 const { cssPropSources } = require("./postcss.config");
-const { rules } = require("stylelint-config-prettier");
 
 module.exports = {
-  extends: "stylelint-config-standard",
+  extends: ["stylelint-config-standard", "stylelint-config-prettier"],
   plugins: [
     "stylelint-value-no-unknown-custom-properties",
     "./tasks/styleint-atomic",
@@ -36,7 +35,6 @@ module.exports = {
         severity: "warning",
       },
     ],
-    ...rules,
     "prettier/prettier": true,
   },
 };
