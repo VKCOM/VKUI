@@ -1,5 +1,11 @@
 {
-  "extends": ["@vkontakte/eslint-config/typescript/react", "prettier"],
+  "extends": [
+    "@vkontakte/eslint-config/typescript/react",
+    "prettier",
+    "prettier/react",
+    "prettier/@typescript-eslint"
+  ],
+  "plugins": ["prettier"],
   "parserOptions": {
     "project": "./tsconfig.json",
     "ecmaVersion": 2018, // Allows for the parsing of modern ECMAScript features
@@ -108,7 +114,8 @@
         "selector": "ImportDeclaration[source.value=/\\.css$/i] ~ ImportDeclaration[source.value!=/\\.css$/i]",
         "message": "CSS import must be last"
       }
-    ]
+    ],
+    "prettier/prettier": "error"
   },
   "overrides": [
     {

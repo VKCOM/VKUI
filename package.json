@@ -62,7 +62,7 @@
     "eslint": "~6.8.0",
     "eslint-config-prettier": "6.15.0",
     "eslint-plugin-jest-playwright": "^0.2.1",
-    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-prettier": "^3.4.1",
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^2.0.1",
     "expect-playwright": "^0.2.6",
@@ -95,9 +95,10 @@
     "size-limit": "^4.9.1",
     "source-map-loader": "^0.2.4",
     "style-loader": "^2.0.0",
-    "stylelint": "^14.1.0",
-    "stylelint-config-standard": "^24.0.0",
-    "stylelint-prettier": "^2.0.0",
+    "stylelint": "^13.13.1",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^22.0.0",
+    "stylelint-prettier": "^1.2.0",
     "stylelint-value-no-unknown-custom-properties": "^3.0.0",
     "typescript": "3.8",
     "wait-port": "^0.2.9",
@@ -191,7 +192,7 @@
     ],
     "*.{css}": [
       "prettier --check",
-      "stylelint"
+      "cross-env LINT_PRECOMMIT_RUN=1 stylelint"
     ],
     "*.{json,md}": [
       "prettier --check"

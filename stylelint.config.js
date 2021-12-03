@@ -1,4 +1,5 @@
 const { cssPropSources } = require("./postcss.config");
+const { rules } = require("stylelint-config-prettier");
 
 module.exports = {
   extends: "stylelint-config-standard",
@@ -9,7 +10,6 @@ module.exports = {
   ],
   rules: {
     indentation: null,
-    "number-leading-zero": "never",
     "block-no-empty": null,
     "declaration-block-no-redundant-longhand-properties": null,
     "comment-empty-line-before": null,
@@ -36,6 +36,7 @@ module.exports = {
         severity: "warning",
       },
     ],
+    ...rules,
     "prettier/prettier": true,
   },
 };
