@@ -5,7 +5,6 @@ module.exports = {
   plugins: [
     "stylelint-value-no-unknown-custom-properties",
     "./tasks/styleint-atomic",
-    "stylelint-prettier",
   ],
   rules: {
     indentation: null,
@@ -35,6 +34,5 @@ module.exports = {
         severity: "warning",
       },
     ],
-    "prettier/prettier": true,
   },
 };

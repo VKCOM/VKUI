@@ -5,7 +5,6 @@
     "prettier/react",
     "prettier/@typescript-eslint"
   ],
-  "plugins": ["prettier"],
   "parserOptions": {
     "project": "./tsconfig.json",
     "ecmaVersion": 2018, // Allows for the parsing of modern ECMAScript features

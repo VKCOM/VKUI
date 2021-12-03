@@ -98,7 +98,6 @@
     "stylelint": "^13.13.1",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-standard": "^22.0.0",
-    "stylelint-prettier": "^1.2.0",
     "stylelint-value-no-unknown-custom-properties": "^3.0.0",
     "typescript": "3.8",
     "wait-port": "^0.2.9",
