@@ -39,8 +39,7 @@ const config = {
 };
 
 if (!canRunTests) {
-  console.error(chalk.red.bold('E2E tests can only run in linux or docker - please install and start docker. Skipping for now.'));
-  module.exports = {};
-} else {
-  module.exports = config;
+  console.error(chalk.red.bold('Screenshots will only match in linux or docker - please install and start docker.'));
 }
+
+module.exports = config;
