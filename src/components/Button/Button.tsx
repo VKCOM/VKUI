@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
+import { ConfigProviderContext } from '../ConfigProvider/ConfigProviderContext';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
@@ -11,12 +12,11 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { AdaptivityProps, SizeType, withAdaptivity } from '../../hoc/withAdaptivity';
 import { Platform, IOS, VKCOM } from '../../lib/platform';
 import Spinner from '../Spinner/Spinner';
-import { useTokensInfo } from '../../hooks/useTokensInfo';
 import './Button.css';
 
 export interface VKUIButtonProps extends HasAlign {
   /**
-   Значения `commerce`, `destructive`, `overlay_...` будут упразднены в 5.x.x
+   Значения `commerce`, `destructive`, `overlay_...` будут упразднены в 5.0.0
    */
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline';
   appearance?: 'accent' | 'positive' | 'negative' | 'neutral' | 'overlay';
@@ -140,7 +140,7 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
   } = props;
   const hasIcons = Boolean(before || after);
   const { resolvedMode, resolvedAppearance } = resolveButtonAppearance(appearance, mode);
-  const { isNewTokensAvailable } = useTokensInfo();
+  const hasNewTokens = React.useContext(ConfigProviderContext).hasNewTokens;
 
   return (
     <Tappable
@@ -163,8 +163,8 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
         )
       }
       getRootRef={getRootRef}
-      hoverMode={isNewTokensAvailable ? 'Button--hover' : 'background'}
-      activeMode={isNewTokensAvailable ? 'Button--active' : 'opacity'}
+      hoverMode={hasNewTokens ? 'Button--hover' : 'background'}
+      activeMode={hasNewTokens ? 'Button--active' : 'opacity'}
     >
       {loading && <Spinner size="small" vkuiClass="Button__spinner" />}
       <span vkuiClass="Button__in">

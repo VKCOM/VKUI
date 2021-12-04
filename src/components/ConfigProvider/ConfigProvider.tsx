@@ -71,11 +71,12 @@ function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): Sche
   }
 }
 
-const getTokenThemeName = (node: HTMLElement) => {
-  node.style.setProperty('--theme', 'var(--vkui--theme_name)');
+const hasNewTokens = (node: HTMLElement) => {
+  const themeNameVar = 'var(--vkui--theme_name)';
+  node.style.setProperty('--theme', themeNameVar);
   const themeName = getComputedStyle(node).getPropertyValue('--theme');
   node.style.removeProperty('--theme');
-  return themeName;
+  return themeName !== themeNameVar && themeName !== '';
 };
 
 const ConfigProvider: React.FC<ConfigProviderProps> = ({
@@ -101,7 +102,7 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
   const realScheme = useSchemeDetector(target, scheme);
   const configContext = useObjectMemo({
     appearance: deriveAppearance(realScheme),
-    tokensTheme: getTokenThemeName(target),
+    hasNewTokens: hasNewTokens(target),
     ...config,
   });
 
