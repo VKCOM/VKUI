@@ -31,7 +31,7 @@ let plugins = [
   }),
   autoprefixer(),
   cssModules({
-    generateScopedName: (name) => name.startsWith('vkui') ? name : `vkui${name}`,
+    generateScopedName: (name, filename) => name.startsWith('vkui') || name === 'mount' ? name : `vkui${name}`,
     getJSON: () => {},
   })
 ];
