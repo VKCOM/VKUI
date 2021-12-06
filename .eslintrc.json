@@ -18,6 +18,7 @@
   "globals": {
     "Element": true
   },
+  "ignorePatterns": ["unstable/**/*.ts"],
   "env": {
     "es6": true, // Enable global es6 variables, like Set, Map, etc
     "browser": true,

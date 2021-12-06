@@ -29,7 +29,6 @@
     "e2e/**/*.js",
     "tasks/**/*.js",
     ".github/**/*.js",
-    "unstable/**/*.ts",
     "*.js"
   ],
   "files": [
