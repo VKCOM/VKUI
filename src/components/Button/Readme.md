@@ -8,6 +8,7 @@ const containerStyles = {
 
 const Example = () => {
   const [appearance, setAppearance] = useState('accent');
+  const [sizeY, setSizeY] = useState('compact');
   const [stretched, setStretched] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [size, setSize] = useState("s");
@@ -26,70 +27,72 @@ const Example = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
-      <div style={{
-        background: appearance === 'overlay' ? '#232323' : 'unset',
-        ...containerStyles,
-      }}>
-        <Div>
-          <Button
-            href={buttonLink}
-            before={buttonBefore}
-            after={buttonAfter}
-            appearance={appearance}
-            stretched={stretched}
-            disabled={disabled}
-            size={size}
-            loading={loading}
-          >
-            {buttonText}
-          </Button>
-        </Div>
-        <Div>
-          <Button
-            href={buttonLink}
-            before={buttonBefore}
-            after={buttonAfter}
-            appearance={appearance}
-            stretched={stretched}
-            mode="secondary"
-            disabled={disabled}
-            size={size}
-            loading={loading}
-          >
-            {buttonText}
-          </Button>
-        </Div>
-        <Div>
-          <Button
-            href={buttonLink}
-            before={buttonBefore}
-            after={buttonAfter}
-            appearance={appearance}
-            stretched={stretched}
-            mode="tertiary"
-            disabled={disabled}
-            size={size}
-            loading={loading}
-          >
-            {buttonText}
-          </Button>
-        </Div>
-        <Div>
-          <Button
-            href={buttonLink}
-            before={buttonBefore}
-            after={buttonAfter}
-            appearance={appearance}
-            stretched={stretched}
-            mode="outline"
-            disabled={disabled}
-            size={size}
-            loading={loading}
-          >
-            {buttonText}
-          </Button>
-        </Div>
-      </div>
+      <AdaptivityProvider sizeY={sizeY}>
+        <div style={{
+          background: appearance === 'overlay' ? '#232323' : 'unset',
+          ...containerStyles,
+        }}>
+          <Div>
+            <Button
+              href={buttonLink}
+              before={buttonBefore}
+              after={buttonAfter}
+              appearance={appearance}
+              stretched={stretched}
+              disabled={disabled}
+              size={size}
+              loading={loading}
+            >
+              {buttonText}
+            </Button>
+          </Div>
+          <Div>
+            <Button
+              href={buttonLink}
+              before={buttonBefore}
+              after={buttonAfter}
+              appearance={appearance}
+              stretched={stretched}
+              mode="secondary"
+              disabled={disabled}
+              size={size}
+              loading={loading}
+            >
+              {buttonText}
+            </Button>
+          </Div>
+          <Div>
+            <Button
+              href={buttonLink}
+              before={buttonBefore}
+              after={buttonAfter}
+              appearance={appearance}
+              stretched={stretched}
+              mode="tertiary"
+              disabled={disabled}
+              size={size}
+              loading={loading}
+            >
+              {buttonText}
+            </Button>
+          </Div>
+          <Div>
+            <Button
+              href={buttonLink}
+              before={buttonBefore}
+              after={buttonAfter}
+              appearance={appearance}
+              stretched={stretched}
+              mode="outline"
+              disabled={disabled}
+              size={size}
+              loading={loading}
+            >
+              {buttonText}
+            </Button>
+          </Div>
+        </div>
+      </AdaptivityProvider>
       <div style={{ minWidth: 200 }}>
         <FormItem top="appearance">
           <Select value={appearance} onChange={(e) => setAppearance(e.target.value)} options={[
@@ -105,6 +108,12 @@ const Example = () => {
             {label: "s", value: "s"},
             {label: "m", value: "m"},
             {label: "l", value: "l"},
+          ]}/>
+        </FormItem>
+        <FormItem top="sizeY">
+          <Select value={sizeY} onChange={(e) => setSizeY(e.target.value)} options={[
+            {label: "compact", value: "compact"},
+            {label: "regular", value: "regular"},
           ]}/>
         </FormItem>
         <FormItem top="props">

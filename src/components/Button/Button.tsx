@@ -156,6 +156,7 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
           {
             ['Button--stretched']: stretched,
             ['Button--with-icon']: hasIcons,
+            ['Button--singleIcon']: Boolean(!children && !after && before || !children && after && !before),
           },
         )
       }

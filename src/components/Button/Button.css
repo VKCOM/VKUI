@@ -51,16 +51,32 @@
   opacity: .64;
 }
 
-.Button__before:not(:last-child) {
-  margin-left: -4px;
+/* only 1 icon cases */
+/* sizeY: compact */
+.Button--singleIcon.Button--sz-s .Button__in {
+  padding: 0 9px;
 }
 
-.Button__before:not(:last-child) + .Button__content {
-  margin-left: 6px;
+.Button--singleIcon.Button--sz-m .Button__in {
+  padding: 0 10px;
 }
 
-.Button__after:not(:first-child) {
-  margin-left: 6px;
+.Button--singleIcon.Button--sz-l .Button__in {
+  padding: 0 6px;
+}
+
+/* sizeX: REGULAR */
+.Button--singleIcon.Button--sizeY-regular.Button--sz-s .Button__in {
+  padding: 0 9px;
+}
+
+.Button--singleIcon.Button--sizeY-regular.Button--sz-l .Button__in {
+  padding: 0 10px;
+}
+
+.Button--singleIcon .Button__before:only-child,
+.Button--singleIcon .Button__after:only-child {
+  margin: 0;
 }
 
 .Button__content {
@@ -407,6 +423,18 @@
 
 .Button--lvl-outline.Button--clr-overlay.Button--active {
   box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_contrast--active);
+}
+
+.Button__before:not(:last-child) {
+  margin-left: -4px;
+}
+
+.Button__before:not(:last-child) + .Button__content {
+  margin-left: 6px;
+}
+
+.Button__after:not(:first-child) {
+  margin-left: 6px;
 }
 
 .Button--sz-l .Button__before:not(:last-child) + .Button__content {
