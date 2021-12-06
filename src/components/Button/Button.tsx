@@ -74,15 +74,13 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = (props: ButtonTypograp
 interface ResolvedButtonAppearance {
   resolvedAppearance: ButtonProps['appearance'];
   resolvedMode: ButtonProps['mode'];
-  isFallback: boolean;
 }
 
 function resolveButtonAppearance(appearance: ButtonProps['appearance'], mode: ButtonProps['mode']): ResolvedButtonAppearance {
-  const isFallback: boolean = appearance === undefined;
   let resolvedAppearance: ButtonProps['appearance'] = appearance;
   let resolvedMode: ButtonProps['mode'] = mode;
 
-  if (isFallback) {
+  if (appearance === undefined) {
     switch (mode) {
       case 'tertiary':
       case 'secondary':
@@ -114,7 +112,6 @@ function resolveButtonAppearance(appearance: ButtonProps['appearance'], mode: Bu
   }
 
   return {
-    isFallback,
     resolvedAppearance,
     resolvedMode,
   };
