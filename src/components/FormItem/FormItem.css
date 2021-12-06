@@ -77,6 +77,7 @@
   margin-top: -28px;
 }
 
-.FormLayoutGroup--removable .FormItem--ios.FormItem--withTop.FormItem--sizeY-compact {
+.FormLayoutGroup--removable
+  .FormItem--ios.FormItem--withTop.FormItem--sizeY-compact {
   margin-top: -26px;
 }

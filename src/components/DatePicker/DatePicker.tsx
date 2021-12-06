@@ -1,13 +1,24 @@
-import * as React from 'react';
-import Input from '../Input/Input';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
-import { HasPlatform } from '../../types';
-import { leadingZero } from '../../lib/utils';
-import CustomSelect from '../CustomSelect/CustomSelect';
-import './DatePicker.css';
+import * as React from "react";
+import Input from "../Input/Input";
+import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
+import { HasPlatform } from "../../types";
+import { leadingZero } from "../../lib/utils";
+import CustomSelect from "../CustomSelect/CustomSelect";
+import "./DatePicker.css";
 
 const DefaultMonths: string[] = [
-  'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря',
+  "Января",
+  "Февраля",
+  "Марта",
+  "Апреля",
+  "Мая",
+  "Июня",
+  "Июля",
+  "Августа",
+  "Сентября",
+  "Октября",
+  "Ноября",
+  "Декабря",
 ];
 
 export type DatePickerDateFormat = {
@@ -16,12 +27,18 @@ export type DatePickerDateFormat = {
   year: number;
 };
 
-export interface DatePickerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'min' | 'max'>, HasPlatform, AdaptivityProps {
+export interface DatePickerProps
+  extends Omit<
+      React.HTMLAttributes<HTMLDivElement>,
+      "defaultValue" | "min" | "max"
+    >,
+    HasPlatform,
+    AdaptivityProps {
   min?: DatePickerDateFormat;
   max?: DatePickerDateFormat;
   name?: string;
   defaultValue?: DatePickerDateFormat;
-  popupDirection?: 'top' | 'bottom';
+  popupDirection?: "top" | "bottom";
   monthNames?: string[];
   dayPlaceholder?: string;
   monthPlaceholder?: string;
@@ -31,13 +48,17 @@ export interface DatePickerProps extends Omit<React.HTMLAttributes<HTMLDivElemen
 }
 
 // Переводим state к формату гг-мм-дд
-function convertToInputFormat({ day, month, year }: Partial<DatePickerDateFormat>) {
+function convertToInputFormat({
+  day,
+  month,
+  year,
+}: Partial<DatePickerDateFormat>) {
   return `${year}-${leadingZero(month)}-${leadingZero(day)}`;
 }
 
 // Переводим дату формата гг-мм-дд к объекту
 function parseInputDate(date: string): DatePickerDateFormat {
-  const splited = date.split('-');
+  const splited = date.split("-");
 
   return {
     day: Number(splited[2]),
@@ -59,14 +80,22 @@ const range = (start: number, end: number) => {
   return swap ? arr.reverse() : arr;
 };
 
-const DatePickerCustom: React.FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
-  name, min, max,
-  dayPlaceholder, monthPlaceholder, yearPlaceholder,
+const DatePickerCustom: React.FC<
+  DatePickerProps & Partial<DatePickerDateFormat>
+> = ({
+  name,
+  min,
+  max,
+  dayPlaceholder,
+  monthPlaceholder,
+  yearPlaceholder,
   popupDirection,
   defaultValue,
   hasMouse,
   monthNames,
-  day, month, year,
+  day,
+  month,
+  year,
   onDateChange,
   disabled,
   ...restProps
@@ -129,27 +158,43 @@ const DatePickerCustom: React.FC<DatePickerProps & Partial<DatePickerDateFormat>
           />
         </div>
       </div>
-      <input type="hidden" name={name} value={convertToInputFormat({ day, month, year })} />
+      <input
+        type="hidden"
+        name={name}
+        value={convertToInputFormat({ day, month, year })}
+      />
     </div>
   );
 };
 
-const DatePickerNative: React.FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
-  min, max,
-  dayPlaceholder, monthPlaceholder, yearPlaceholder,
+const DatePickerNative: React.FC<
+  DatePickerProps & Partial<DatePickerDateFormat>
+> = ({
+  min,
+  max,
+  dayPlaceholder,
+  monthPlaceholder,
+  yearPlaceholder,
   popupDirection,
   defaultValue,
   hasMouse,
-  day, month, year,
+  day,
+  month,
+  year,
   onDateChange,
   ...restProps
 }) => {
-  const defProps = day && month && year
-    ? { defaultValue: convertToInputFormat({ day, month, year }) }
-    : {};
-  const onStringChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback((e) => {
-    onDateChange(parseInputDate(e.currentTarget.value));
-  }, [onDateChange]);
+  const defProps =
+    day && month && year
+      ? { defaultValue: convertToInputFormat({ day, month, year }) }
+      : {};
+  const onStringChange: React.ChangeEventHandler<HTMLInputElement> =
+    React.useCallback(
+      (e) => {
+        onDateChange(parseInputDate(e.currentTarget.value));
+      },
+      [onDateChange]
+    );
   return (
     <Input
       {...restProps}
@@ -162,17 +207,26 @@ const DatePickerNative: React.FC<DatePickerProps & Partial<DatePickerDateFormat>
   );
 };
 
-const DatePicker: React.FC<DatePickerProps> = ({ hasMouse, defaultValue, ...props }) => {
-  const [value, setValue] = React.useState<Partial<DatePickerDateFormat>>(() => ({
-    day: defaultValue?.day || 0,
-    month: defaultValue?.month || 0,
-    year: defaultValue?.year || 0,
-  }));
+const DatePicker: React.FC<DatePickerProps> = ({
+  hasMouse,
+  defaultValue,
+  ...props
+}) => {
+  const [value, setValue] = React.useState<Partial<DatePickerDateFormat>>(
+    () => ({
+      day: defaultValue?.day || 0,
+      month: defaultValue?.month || 0,
+      year: defaultValue?.year || 0,
+    })
+  );
 
-  const onDateChange = React.useCallback((update: DatePickerDateFormat) => {
-    setValue(update);
-    props.onDateChange && props.onDateChange({ ...update });
-  }, [props.onDateChange]);
+  const onDateChange = React.useCallback(
+    (update: DatePickerDateFormat) => {
+      setValue(update);
+      props.onDateChange && props.onDateChange({ ...update });
+    },
+    [props.onDateChange]
+  );
 
   const Cmp = hasMouse ? DatePickerCustom : DatePickerNative;
   return <Cmp {...props} {...value} onDateChange={onDateChange} />;

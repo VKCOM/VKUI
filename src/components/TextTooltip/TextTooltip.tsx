@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { HoverPopper } from '../HoverPopper/HoverPopper';
-import { getClassName } from '../../helpers/getClassName';
-import { usePlatform } from '../../hooks/usePlatform';
-import { hasReactNode } from '../../lib/utils';
-import { Placement } from '../Popper/Popper';
-import Subhead from '../Typography/Subhead/Subhead';
-import { prefixClass } from '../../lib/prefixClass';
-import './TextTooltip.css';
+import * as React from "react";
+import { HoverPopper } from "../HoverPopper/HoverPopper";
+import { getClassName } from "../../helpers/getClassName";
+import { usePlatform } from "../../hooks/usePlatform";
+import { hasReactNode } from "../../lib/utils";
+import { Placement } from "../Popper/Popper";
+import Subhead from "../Typography/Subhead/Subhead";
+import { prefixClass } from "../../lib/prefixClass";
+import "./TextTooltip.css";
 
 // Приходится избегать экстендов от HoverPopperProps и PopperProps, потому что react-docgen не умеет в Omit.
 // Ждём либо фикса react-docgen (что вряд ли), либо переезда на react-docgen-typescript, где такой проблемы нет.
@@ -54,18 +54,39 @@ export interface TextTooltipProps {
   header?: React.ReactNode;
 }
 
-export const TextTooltip: React.FC<TextTooltipProps> = ({ children, text, header, ...popperProps }: TextTooltipProps) => {
+export const TextTooltip: React.FC<TextTooltipProps> = ({
+  children,
+  text,
+  header,
+  ...popperProps
+}: TextTooltipProps) => {
   const platform = usePlatform();
 
   return (
     <HoverPopper
-      vkuiClass={getClassName('TextTooltip', platform)}
+      vkuiClass={getClassName("TextTooltip", platform)}
       arrow
-      arrowClassName={prefixClass('TextTooltip__arrow')}
+      arrowClassName={prefixClass("TextTooltip__arrow")}
       content={
         <React.Fragment>
-          {hasReactNode(header) && <Subhead Component="span" weight="medium" vkuiClass="TextTooltip__header">{header}</Subhead>}
-          {hasReactNode(text) && <Subhead Component="span" weight="regular" vkuiClass="TextTooltip__text">{text}</Subhead>}
+          {hasReactNode(header) && (
+            <Subhead
+              Component="span"
+              weight="medium"
+              vkuiClass="TextTooltip__header"
+            >
+              {header}
+            </Subhead>
+          )}
+          {hasReactNode(text) && (
+            <Subhead
+              Component="span"
+              weight="regular"
+              vkuiClass="TextTooltip__text"
+            >
+              {text}
+            </Subhead>
+          )}
         </React.Fragment>
       }
       {...popperProps}

@@ -1,26 +1,35 @@
-import * as React from 'react';
-import { classNames } from '../../lib/classNames';
-import { transitionEvent, animationEvent } from '../../lib/supportEvents';
-import { getClassName } from '../../helpers/getClassName';
-import { IOS, ANDROID, VKCOM } from '../../lib/platform';
-import { Touch, TouchEvent } from '../Touch/Touch';
-import { HasPlatform } from '../../types';
-import { withPlatform } from '../../hoc/withPlatform';
-import { withContext } from '../../hoc/withContext';
-import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
-import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
-import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
-import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
-import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
-import { getNavId, NavIdProps } from '../../lib/getNavId';
-import { warnOnce } from '../../lib/warnOnce';
-import { swipeBackExcluded } from './utils';
-import './View.css';
+import * as React from "react";
+import { classNames } from "../../lib/classNames";
+import { transitionEvent, animationEvent } from "../../lib/supportEvents";
+import { getClassName } from "../../helpers/getClassName";
+import { IOS, ANDROID, VKCOM } from "../../lib/platform";
+import { Touch, TouchEvent } from "../Touch/Touch";
+import { HasPlatform } from "../../types";
+import { withPlatform } from "../../hoc/withPlatform";
+import { withContext } from "../../hoc/withContext";
+import {
+  ConfigProviderContext,
+  ConfigProviderContextInterface,
+} from "../ConfigProvider/ConfigProviderContext";
+import { SplitColContext, SplitColContextProps } from "../SplitCol/SplitCol";
+import { AppRootPortal } from "../AppRoot/AppRootPortal";
+import { canUseDOM, withDOM, DOMProps } from "../../lib/dom";
+import {
+  ScrollContext,
+  ScrollContextInterface,
+} from "../AppRoot/ScrollContext";
+import { NavTransitionProvider } from "../NavTransitionContext/NavTransitionContext";
+import { getNavId, NavIdProps } from "../../lib/getNavId";
+import { warnOnce } from "../../lib/warnOnce";
+import { swipeBackExcluded } from "./utils";
+import "./View.css";
 
-const warn = warnOnce('View');
+const warn = warnOnce("View");
 
-enum SwipeBackResults { fail = 1, success}
+enum SwipeBackResults {
+  fail = 1,
+  success,
+}
 
 interface Scrolls {
   [index: string]: number;
@@ -34,7 +43,10 @@ type TransitionEventHandler = (e?: TransitionEvent) => void;
 
 export let scrollsCache: ViewsScrolls = {};
 
-export interface ViewProps extends React.HTMLAttributes<HTMLElement>, HasPlatform, NavIdProps {
+export interface ViewProps
+  extends React.HTMLAttributes<HTMLElement>,
+    HasPlatform,
+    NavIdProps {
   activePanel: string;
   /**
    * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
@@ -153,10 +165,16 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
     this.props.modal && !prevProps.modal && this.blurActiveElement();
 
     // Нужен переход
-    if (prevProps.activePanel !== this.props.activePanel && !prevState.swipingBack && !prevState.browserSwipe) {
+    if (
+      prevProps.activePanel !== this.props.activePanel &&
+      !prevState.swipingBack &&
+      !prevState.browserSwipe
+    ) {
       const firstLayerId = this.panels
         .map((panel) => getNavId(panel.props, warn))
-        .find((id) => id === prevProps.activePanel || id === this.props.activePanel);
+        .find(
+          (id) => id === prevProps.activePanel || id === this.props.activePanel
+        );
 
       const isBack = firstLayerId === this.props.activePanel;
       this.scrolls[prevProps.activePanel] = this.props.scroll.getScroll().y;
@@ -178,29 +196,45 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
         // Фолбек анимации перехода
         if (!animationEvent.supported) {
           clearTimeout(this.animationFinishTimeout);
-          this.animationFinishTimeout = setTimeout(this.transitionEndHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 300 : 600);
+          this.animationFinishTimeout = setTimeout(
+            this.transitionEndHandler,
+            this.props.platform === ANDROID || this.props.platform === VKCOM
+              ? 300
+              : 600
+          );
         }
       }
     }
 
     // Закончилась анимация свайпа назад
-    if (prevProps.activePanel !== this.props.activePanel && prevState.swipingBack) {
+    if (
+      prevProps.activePanel !== this.props.activePanel &&
+      prevState.swipingBack
+    ) {
       const nextPanel = this.props.activePanel;
       const prevPanel = prevProps.activePanel;
       this.scrolls[prevState.swipeBackPrevPanel] = 0;
-      this.setState({
-        swipeBackPrevPanel: null,
-        swipeBackNextPanel: null,
-        swipingBack: false,
-        swipeBackResult: null,
-        swipebackStartX: 0,
-        swipeBackShift: 0,
-        activePanel: nextPanel,
-        visiblePanels: [nextPanel],
-      }, () => {
-        this.props.scroll.scrollTo(0, this.scrolls[this.state.activePanel]);
-        prevProps.onTransition && prevProps.onTransition({ isBack: true, from: prevPanel, to: nextPanel });
-      });
+      this.setState(
+        {
+          swipeBackPrevPanel: null,
+          swipeBackNextPanel: null,
+          swipingBack: false,
+          swipeBackResult: null,
+          swipebackStartX: 0,
+          swipeBackShift: 0,
+          activePanel: nextPanel,
+          visiblePanels: [nextPanel],
+        },
+        () => {
+          this.props.scroll.scrollTo(0, this.scrolls[this.state.activePanel]);
+          prevProps.onTransition &&
+            prevProps.onTransition({
+              isBack: true,
+              from: prevPanel,
+              to: nextPanel,
+            });
+        }
+      );
     }
 
     // Начался свайп назад
@@ -210,16 +244,25 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
 
     // Началась анимация завершения свайпа назад.
     if (!prevState.swipeBackResult && this.state.swipeBackResult) {
-      this.waitTransitionFinish(this.pickPanel(this.state.swipeBackNextPanel), this.swipingBackTransitionEndHandler);
+      this.waitTransitionFinish(
+        this.pickPanel(this.state.swipeBackNextPanel),
+        this.swipingBackTransitionEndHandler
+      );
     }
 
     // Если свайп назад отменился (когда пользователь недостаточно сильно свайпнул)
-    if (prevState.swipeBackResult === SwipeBackResults.fail && !this.state.swipeBackResult) {
+    if (
+      prevState.swipeBackResult === SwipeBackResults.fail &&
+      !this.state.swipeBackResult
+    ) {
       this.props.scroll.scrollTo(0, this.scrolls[this.state.activePanel]);
     }
 
     // Закончился Safari свайп
-    if (prevProps.activePanel !== this.props.activePanel && this.state.browserSwipe) {
+    if (
+      prevProps.activePanel !== this.props.activePanel &&
+      this.state.browserSwipe
+    ) {
       this.setState({
         browserSwipe: false,
         nextPanel: null,
@@ -232,22 +275,32 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
   }
 
   shouldDisableTransitionMotion(): boolean {
-    return this.props.configProvider.transitionMotionEnabled === false ||
-      !this.props.splitCol.animate;
+    return (
+      this.props.configProvider.transitionMotionEnabled === false ||
+      !this.props.splitCol.animate
+    );
   }
 
-  waitTransitionFinish(elem: HTMLElement, eventHandler: TransitionEventHandler): void {
+  waitTransitionFinish(
+    elem: HTMLElement,
+    eventHandler: TransitionEventHandler
+  ): void {
     if (transitionEvent.supported) {
       elem.removeEventListener(transitionEvent.name, eventHandler);
       elem.addEventListener(transitionEvent.name, eventHandler);
     } else {
       clearTimeout(this.transitionFinishTimeout);
-      this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 300 : 600);
+      this.transitionFinishTimeout = setTimeout(
+        eventHandler,
+        this.props.platform === ANDROID || this.props.platform === VKCOM
+          ? 300
+          : 600
+      );
     }
   }
 
   blurActiveElement(): void {
-    if (typeof this.window !== 'undefined' && this.document.activeElement) {
+    if (typeof this.window !== "undefined" && this.document.activeElement) {
       (this.document.activeElement as HTMLElement).blur();
     }
   }
@@ -261,33 +314,44 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
     if (isBack) {
       this.scrolls[prevPanel] = 0;
     }
-    this.setState({
-      prevPanel: null,
-      nextPanel: null,
-      visiblePanels: [activePanel],
-      activePanel,
-      animated: false,
-      isBack: undefined,
-    }, () => {
-      this.props.scroll.scrollTo(0, isBack ? this.scrolls[activePanel] : 0);
-      this.props.onTransition && this.props.onTransition({ isBack, from: prevPanel, to: activePanel });
-    });
+    this.setState(
+      {
+        prevPanel: null,
+        nextPanel: null,
+        visiblePanels: [activePanel],
+        activePanel,
+        animated: false,
+        isBack: undefined,
+      },
+      () => {
+        this.props.scroll.scrollTo(0, isBack ? this.scrolls[activePanel] : 0);
+        this.props.onTransition &&
+          this.props.onTransition({ isBack, from: prevPanel, to: activePanel });
+      }
+    );
   }
 
   transitionEndHandler = (e?: React.AnimationEvent): void => {
-    if (!e || [
-      'vkui-animation-ios-next-forward',
-      'vkui-animation-ios-prev-back',
-      'vkui-animation-view-next-forward',
-      'vkui-animation-view-prev-back',
-    ].includes(e.animationName)) {
+    if (
+      !e ||
+      [
+        "vkui-animation-ios-next-forward",
+        "vkui-animation-ios-prev-back",
+        "vkui-animation-view-next-forward",
+        "vkui-animation-view-prev-back",
+      ].includes(e.animationName)
+    ) {
       this.flushTransition(this.state.prevPanel, this.state.isBack);
     }
   };
 
   swipingBackTransitionEndHandler = (e?: TransitionEvent): void => {
     // indexOf because of vendor prefixes in old browsers
-    if (!e || e?.propertyName.includes('transform') && e?.target === this.pickPanel(this.state.swipeBackNextPanel)) {
+    if (
+      !e ||
+      (e?.propertyName.includes("transform") &&
+        e?.target === this.pickPanel(this.state.swipeBackNextPanel))
+    ) {
       switch (this.state.swipeBackResult) {
         case SwipeBackResults.fail:
           this.onSwipeBackCancel();
@@ -321,16 +385,29 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
 
     const { platform, configProvider } = this.props;
 
-    if (platform === IOS && !configProvider.isWebView && (e.startX <= 70 || e.startX >= this.window.innerWidth - 70) && !this.state.browserSwipe) {
+    if (
+      platform === IOS &&
+      !configProvider.isWebView &&
+      (e.startX <= 70 || e.startX >= this.window.innerWidth - 70) &&
+      !this.state.browserSwipe
+    ) {
       this.setState({ browserSwipe: true });
     }
 
-    if (platform === IOS && configProvider.isWebView && this.props.onSwipeBack) {
+    if (
+      platform === IOS &&
+      configProvider.isWebView &&
+      this.props.onSwipeBack
+    ) {
       if (this.state.animated && e.startX <= 70) {
         return;
       }
 
-      if (e.startX <= 70 && !this.state.swipingBack && this.props.history.length > 1) {
+      if (
+        e.startX <= 70 &&
+        !this.state.swipingBack &&
+        this.props.history.length > 1
+      ) {
         this.scrolls[this.state.activePanel] = this.props.scroll.getScroll().y;
         this.setState({
           swipingBack: true,
@@ -343,7 +420,10 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
         let swipeBackShift;
         if (e.shiftX < 0) {
           swipeBackShift = 0;
-        } else if (e.shiftX > this.window.innerWidth - this.state.swipebackStartX) {
+        } else if (
+          e.shiftX >
+          this.window.innerWidth - this.state.swipebackStartX
+        ) {
           swipeBackShift = this.window.innerWidth;
         } else {
           swipeBackShift = e.shiftX;
@@ -355,12 +435,16 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
 
   onEnd = (e: TouchEvent): void => {
     if (this.state.swipingBack) {
-      const speed = this.state.swipeBackShift / e.duration * 1000;
+      const speed = (this.state.swipeBackShift / e.duration) * 1000;
       if (this.state.swipeBackShift === 0) {
         this.onSwipeBackCancel();
       } else if (this.state.swipeBackShift >= this.window.innerWidth) {
         this.onSwipeBackSuccess();
-      } else if (speed > 250 || this.state.swipebackStartX + this.state.swipeBackShift > this.window.innerWidth / 2) {
+      } else if (
+        speed > 250 ||
+        this.state.swipebackStartX + this.state.swipeBackShift >
+          this.window.innerWidth / 2
+      ) {
         this.setState({ swipeBackResult: SwipeBackResults.success });
       } else {
         this.setState({ swipeBackResult: SwipeBackResults.fail });
@@ -376,16 +460,22 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
     const isPrev = panelId === this.state.swipeBackPrevPanel;
     const isNext = panelId === this.state.swipeBackNextPanel;
 
-    if (!isPrev && !isNext || this.state.swipeBackResult) {
+    if ((!isPrev && !isNext) || this.state.swipeBackResult) {
       return {};
     }
 
     let prevPanelTranslate = `${this.state.swipeBackShift}px`;
-    let nextPanelTranslate = `${-50 + this.state.swipeBackShift * 100 / this.window.innerWidth / 2}%`;
-    let prevPanelShadow = 0.3 * (this.window.innerWidth - this.state.swipeBackShift) / this.window.innerWidth;
+    let nextPanelTranslate = `${
+      -50 + (this.state.swipeBackShift * 100) / this.window.innerWidth / 2
+    }%`;
+    let prevPanelShadow =
+      (0.3 * (this.window.innerWidth - this.state.swipeBackShift)) /
+      this.window.innerWidth;
 
     if (this.state.swipeBackResult) {
-      return isPrev ? { boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})` } : {};
+      return isPrev
+        ? { boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})` }
+        : {};
     }
 
     if (isNext) {
@@ -407,15 +497,32 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
 
   render() {
     const {
-      popout, modal, platform,
-      activePanel: _1, splitCol, configProvider, history, nav,
-      onTransition, onSwipeBack, onSwipeBackStart, onSwipeBackCancel,
-      window, document, scroll,
+      popout,
+      modal,
+      platform,
+      activePanel: _1,
+      splitCol,
+      configProvider,
+      history,
+      nav,
+      onTransition,
+      onSwipeBack,
+      onSwipeBackStart,
+      onSwipeBackCancel,
+      window,
+      document,
+      scroll,
       ...restProps
     } = this.props;
     const {
-      prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel,
-      swipeBackResult, isBack, animated,
+      prevPanel,
+      nextPanel,
+      activePanel,
+      swipeBackPrevPanel,
+      swipeBackNextPanel,
+      swipeBackResult,
+      isBack,
+      animated,
     } = this.state;
 
     const hasPopout = !!popout;
@@ -424,52 +531,74 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
     const panels = this.panels.filter((panel: React.ReactElement) => {
       const panelId = getNavId(panel.props, warn);
 
-      return this.state.visiblePanels.includes(panelId) ||
+      return (
+        this.state.visiblePanels.includes(panelId) ||
         panelId === swipeBackPrevPanel ||
-        panelId === swipeBackNextPanel;
+        panelId === swipeBackNextPanel
+      );
     });
 
     const disableAnimation = this.shouldDisableTransitionMotion();
 
     const modifiers = {
-      'View--animated': !disableAnimation && animated,
-      'View--swiping-back': !disableAnimation && this.state.swipingBack,
-      'View--no-motion': disableAnimation,
+      "View--animated": !disableAnimation && animated,
+      "View--swiping-back": !disableAnimation && this.state.swipingBack,
+      "View--no-motion": disableAnimation,
     };
 
     return (
       <Touch
         Component="section"
         {...restProps}
-        vkuiClass={classNames(getClassName('View', platform), modifiers)}
+        vkuiClass={classNames(getClassName("View", platform), modifiers)}
         onMoveX={this.onMoveX}
         onEnd={this.onEnd}
       >
         <div vkuiClass="View__panels">
           {panels.map((panel: React.ReactElement) => {
             const panelId = getNavId(panel.props, warn);
-            const isPrev = panelId === prevPanel || panelId === swipeBackPrevPanel;
-            const isTransitionTarget = animated && panelId === (isBack ? prevPanel : nextPanel);
-            const compensateScroll = isPrev || panelId === swipeBackNextPanel || panelId === nextPanel && isBack;
+            const isPrev =
+              panelId === prevPanel || panelId === swipeBackPrevPanel;
+            const isTransitionTarget =
+              animated && panelId === (isBack ? prevPanel : nextPanel);
+            const compensateScroll =
+              isPrev ||
+              panelId === swipeBackNextPanel ||
+              (panelId === nextPanel && isBack);
 
             return (
               <div
-                vkuiClass={classNames('View__panel', {
-                  'View__panel--active': panelId === activePanel,
-                  'View__panel--prev': panelId === prevPanel,
-                  'View__panel--next': panelId === nextPanel,
-                  'View__panel--swipe-back-prev': panelId === swipeBackPrevPanel,
-                  'View__panel--swipe-back-next': panelId === swipeBackNextPanel,
-                  'View__panel--swipe-back-success': swipeBackResult === SwipeBackResults.success,
-                  'View__panel--swipe-back-failed': swipeBackResult === SwipeBackResults.fail,
+                vkuiClass={classNames("View__panel", {
+                  "View__panel--active": panelId === activePanel,
+                  "View__panel--prev": panelId === prevPanel,
+                  "View__panel--next": panelId === nextPanel,
+                  "View__panel--swipe-back-prev":
+                    panelId === swipeBackPrevPanel,
+                  "View__panel--swipe-back-next":
+                    panelId === swipeBackNextPanel,
+                  "View__panel--swipe-back-success":
+                    swipeBackResult === SwipeBackResults.success,
+                  "View__panel--swipe-back-failed":
+                    swipeBackResult === SwipeBackResults.fail,
                 })}
-                onAnimationEnd={isTransitionTarget ? this.transitionEndHandler : null}
-                ref={(el) => this.panelNodes[panelId] = el}
+                onAnimationEnd={
+                  isTransitionTarget ? this.transitionEndHandler : null
+                }
+                ref={(el) => (this.panelNodes[panelId] = el)}
                 style={this.calcPanelSwipeStyles(panelId)}
                 key={panelId}
               >
-                <div vkuiClass="View__panel-in" style={{ marginTop: compensateScroll ? -this.scrolls[panelId] : null }}>
-                  <NavTransitionProvider entering={panelId === nextPanel || panelId === swipeBackNextPanel}>
+                <div
+                  vkuiClass="View__panel-in"
+                  style={{
+                    marginTop: compensateScroll ? -this.scrolls[panelId] : null,
+                  }}
+                >
+                  <NavTransitionProvider
+                    entering={
+                      panelId === nextPanel || panelId === swipeBackNextPanel
+                    }
+                  >
                     {panel}
                   </NavTransitionProvider>
                 </div>
@@ -486,9 +615,16 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
   }
 }
 
-export default withContext(withContext(
+export default withContext(
   withContext(
-    withPlatform(withDOM<ViewProps>(View)),
-    SplitColContext, 'splitCol'),
-  ConfigProviderContext, 'configProvider'),
-ScrollContext, 'scroll');
+    withContext(
+      withPlatform(withDOM<ViewProps>(View)),
+      SplitColContext,
+      "splitCol"
+    ),
+    ConfigProviderContext,
+    "configProvider"
+  ),
+  ScrollContext,
+  "scroll"
+);

@@ -101,7 +101,9 @@
   font-size: 17px;
 }
 
-.ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton:not(:first-child) {
+.ModalPageHeader--ios
+  .ModalPageHeader__right
+  .PanelHeaderButton:not(:first-child) {
   padding-left: 12px;
 }
 
@@ -114,11 +116,13 @@
   padding: 0 8px;
 }
 
-.ModalPageHeader--ios.ModalPageHeader--sizeX-regular .ModalPageHeader__left:not(:empty) {
+.ModalPageHeader--ios.ModalPageHeader--sizeX-regular
+  .ModalPageHeader__left:not(:empty) {
   padding-left: 0;
 }
 
-.ModalPageHeader--ios.ModalPageHeader--sizeX-regular .ModalPageHeader__right:not(:empty) {
+.ModalPageHeader--ios.ModalPageHeader--sizeX-regular
+  .ModalPageHeader__right:not(:empty) {
   padding-right: 0;
 }
 
@@ -170,7 +174,8 @@
   padding-right: 14px;
 }
 
-.ModalPageHeader--android.ModalPageHeader--sizeX-regular .ModalPageHeader__left:not(:empty) {
+.ModalPageHeader--android.ModalPageHeader--sizeX-regular
+  .ModalPageHeader__left:not(:empty) {
   padding-left: 0;
 }
 
@@ -178,7 +183,8 @@
   padding-left: 14px;
 }
 
-.ModalPageHeader--android.ModalPageHeader--sizeX-regular .ModalPageHeader__right:not(:empty) {
+.ModalPageHeader--android.ModalPageHeader--sizeX-regular
+  .ModalPageHeader__right:not(:empty) {
   padding-right: 0;
 }
 

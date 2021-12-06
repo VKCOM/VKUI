@@ -1,3 +1,4 @@
+const path = require("path");
 const { cssPropSources } = require("./postcss.config");
 
 module.exports = {
@@ -14,6 +15,7 @@ module.exports = {
     "comment-whitespace-inside": null,
     "no-descending-specificity": null,
     "no-duplicate-selectors": null,
+    "value-keyword-case": null,
     "length-zero-no-unit": [
       true,
       {
@@ -24,7 +26,13 @@ module.exports = {
     "csstools/value-no-unknown-custom-properties": [
       true,
       {
-        importFrom: cssPropSources,
+        importFrom: [
+          ...cssPropSources,
+          path.join(
+            __dirname,
+            "node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css"
+          ),
+        ],
       },
     ],
     // Skip reporting in pprecommit run, highlight in editor

@@ -1,7 +1,6 @@
-name: 'Update screenshots'
+name: "Update screenshots"
 
-on:
-  workflow_dispatch
+on: workflow_dispatch
 
 jobs:
   update_screens:
@@ -24,4 +23,4 @@ jobs:
         with:
           # dangerfile depends on this message
           commit_message: "CHORE: Update screenshots"
-          file_pattern: './**/*.png'
+          file_pattern: "./**/*.png"

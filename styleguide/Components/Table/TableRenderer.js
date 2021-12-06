@@ -1,10 +1,23 @@
-import React, { createContext, Fragment, useContext, useEffect, useRef, useState } from 'react';
-import { Icon16Up, Icon16MoreHorizontal } from '@vkontakte/icons';
-import { noop, throttle } from '@vkontakte/vkjs';
-import { Text, classNames, useAdaptivity, ViewWidth, useAppearance } from '@vkui';
-import TogglePropsButton from '../TogglePropsButton';
-import NameRenderer from '../Name/NameRenderer';
-import './Table.css';
+import React, {
+  createContext,
+  Fragment,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { Icon16Up, Icon16MoreHorizontal } from "@vkontakte/icons";
+import { noop, throttle } from "@vkontakte/vkjs";
+import {
+  Text,
+  classNames,
+  useAdaptivity,
+  ViewWidth,
+  useAppearance,
+} from "@vkui";
+import TogglePropsButton from "../TogglePropsButton";
+import NameRenderer from "../Name/NameRenderer";
+import "./Table.css";
 
 const TableContext = createContext({ getRowKey: noop, columns: [] });
 
@@ -19,7 +32,10 @@ const TableRows = ({ rows }) => {
             <td key={index} className="Table__td">
               {index > 0 && render(row)}
               {index <= 0 && (
-                <NameRenderer deprecated={!!row.tags?.deprecated} required={row.required}>
+                <NameRenderer
+                  deprecated={!!row.tags?.deprecated}
+                  required={row.required}
+                >
                   {row.name}
                 </NameRenderer>
               )}
@@ -31,11 +47,7 @@ const TableRows = ({ rows }) => {
   );
 };
 
-export const TableRenderer = ({
-  columns,
-  rows,
-  getRowKey,
-}) => {
+export const TableRenderer = ({ columns, rows, getRowKey }) => {
   const { viewWidth } = useAdaptivity();
   const [hasLeft, setHasLeft] = useState(viewWidth <= ViewWidth.MOBILE);
   const [hasRight, setHasRight] = useState(viewWidth <= ViewWidth.MOBILE);
@@ -51,7 +63,9 @@ export const TableRenderer = ({
     tableInWidth.current = tableInRef.current.offsetWidth;
 
     setHasLeft(tableInRef.current.scrollLeft > 0);
-    setHasRight(tableWidth.current - tableInRef.current.scrollLeft > tableInWidth.current);
+    setHasRight(
+      tableWidth.current - tableInRef.current.scrollLeft > tableInWidth.current
+    );
   }
   useEffect(updateBorders, [viewWidth, expanded]);
 
@@ -64,7 +78,7 @@ export const TableRenderer = ({
   const vkuiRows = [];
 
   rows.forEach((prop) => {
-    if (prop.parent?.fileName?.includes('node_modules')) {
+    if (prop.parent?.fileName?.includes("node_modules")) {
       nodeModulesRows.push(prop);
     } else {
       vkuiRows.push(prop);
@@ -72,11 +86,21 @@ export const TableRenderer = ({
   });
 
   return (
-    <div className={classNames('Table', {
-      'Table--hasLeft': hasLeft,
-      'Table--hasRight': hasRight,
-    }, `Table--${appearance}`)}>
-      <div className="Table__in" onScroll={throttle(updateBorders, 50)} ref={tableInRef}>
+    <div
+      className={classNames(
+        "Table",
+        {
+          "Table--hasLeft": hasLeft,
+          "Table--hasRight": hasRight,
+        },
+        `Table--${appearance}`
+      )}
+    >
+      <div
+        className="Table__in"
+        onScroll={throttle(updateBorders, 50)}
+        ref={tableInRef}
+      >
         <table className="Table__main" ref={tableRef}>
           <thead className="Table__head">
             <tr className="Table__tr Table__tr--head">
@@ -94,13 +118,16 @@ export const TableRenderer = ({
                 <tr className="Table__tr">
                   <td className="Table__td" colSpan={columns.length}>
                     <TogglePropsButton
-                      before={expanded ? <Icon16Up /> : <Icon16MoreHorizontal />}
+                      before={
+                        expanded ? <Icon16Up /> : <Icon16MoreHorizontal />
+                      }
                       onClick={() => toggleExpanded(!expanded)}
                     >
-                      {expanded
-                        ? <span>Скрыть дополнительные свойства</span>
-                        : <span>Показать все свойства</span>
-                      }
+                      {expanded ? (
+                        <span>Скрыть дополнительные свойства</span>
+                      ) : (
+                        <span>Показать все свойства</span>
+                      )}
                     </TogglePropsButton>
                   </td>
                 </tr>

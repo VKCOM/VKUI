@@ -1,9 +1,9 @@
-import { BrowserInfo, computeBrowserInfo } from './browser';
+import { BrowserInfo, computeBrowserInfo } from "./browser";
 
 export enum Platform {
-  ANDROID = 'android',
-  IOS = 'ios',
-  VKCOM = 'vkcom'
+  ANDROID = "android",
+  IOS = "ios",
+  VKCOM = "vkcom",
 }
 
 export const ANDROID = Platform.ANDROID;
@@ -17,7 +17,7 @@ export function platform(browserInfo?: BrowserInfo): PlatformType {
     browserInfo = computeBrowserInfo();
   }
 
-  return browserInfo.system === 'ios' ? IOS : ANDROID;
+  return browserInfo.system === "ios" ? IOS : ANDROID;
 }
 
 const platformName = platform();

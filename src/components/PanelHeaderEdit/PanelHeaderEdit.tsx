@@ -1,8 +1,11 @@
-import * as React from 'react';
-import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
-import { ANDROID, VKCOM } from '../../lib/platform';
-import { Icon28EditOutline, Icon28DoneOutline } from '@vkontakte/icons';
-import { usePlatform } from '../../hooks/usePlatform';
+import * as React from "react";
+import {
+  PanelHeaderButton,
+  PanelHeaderButtonProps,
+} from "../PanelHeaderButton/PanelHeaderButton";
+import { ANDROID, VKCOM } from "../../lib/platform";
+import { Icon28EditOutline, Icon28DoneOutline } from "@vkontakte/icons";
+import { usePlatform } from "../../hooks/usePlatform";
 
 export interface PanelHeaderEditProps extends PanelHeaderButtonProps {
   /**
@@ -31,18 +34,15 @@ const PanelHeaderEdit: React.FunctionComponent<PanelHeaderEditProps> = ({
 
   return (
     <PanelHeaderButton aria-label={iOSText} {...restProps}>
-      {platform === ANDROID || platform === VKCOM
-        ? <AndroidIcon />
-        : iOSText
-      }
+      {platform === ANDROID || platform === VKCOM ? <AndroidIcon /> : iOSText}
     </PanelHeaderButton>
   );
 };
 
 PanelHeaderEdit.defaultProps = {
   isActive: false,
-  editLabel: 'Редактировать',
-  doneLabel: 'Готово',
+  editLabel: "Редактировать",
+  doneLabel: "Готово",
 };
 
 export default PanelHeaderEdit;

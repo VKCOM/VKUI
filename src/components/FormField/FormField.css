@@ -37,7 +37,7 @@
   height: 100%;
   border: 1px solid var(--field_border);
   background: var(--field_background);
-  content: '';
+  content: "";
   box-sizing: border-box;
   z-index: 1;
   transform-origin: left top;
@@ -53,7 +53,7 @@
 }
 
 .FormField--disabled {
-  opacity: .64;
+  opacity: 0.64;
   cursor: default;
   pointer-events: none;
 }
@@ -87,7 +87,7 @@
 @media (min-resolution: 2dppx) {
   .FormField--ios .FormField__border {
     border-radius: 20px;
-    transform: scale(.5);
+    transform: scale(0.5);
     width: 200%;
     height: 200%;
   }
@@ -96,7 +96,7 @@
 @media (min-resolution: 3dppx) {
   .FormField--ios .FormField__border {
     border-radius: 31.25px;
-    transform: scale(.32);
+    transform: scale(0.32);
     width: 312.5%;
     height: 312.5%;
   }

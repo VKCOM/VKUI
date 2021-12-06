@@ -1,19 +1,29 @@
-import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
-import { useEventListener } from './useEventListener';
+import { useIsomorphicLayoutEffect } from "../lib/useIsomorphicLayoutEffect";
+import { useEventListener } from "./useEventListener";
 
-export function useGlobalEventListener<K extends keyof GlobalEventHandlersEventMap>(
+export function useGlobalEventListener<
+  K extends keyof GlobalEventHandlersEventMap
+>(
   element: HTMLElement | HTMLDocument | Window,
   event: K,
   cb: false | null | ((ev: GlobalEventHandlersEventMap[K]) => any),
-  options?: AddEventListenerOptions,
+  options?: AddEventListenerOptions
 ): void;
 export function useGlobalEventListener(
   element: HTMLElement | HTMLDocument | Window,
   event: string,
   cb: false | null | ((ev: Event) => any),
-  options?: AddEventListenerOptions,
+  options?: AddEventListenerOptions
 ): void;
-export function useGlobalEventListener(element: any, event: string, cb: (ev: Event) => any, options?: AddEventListenerOptions) {
+export function useGlobalEventListener(
+  element: any,
+  event: string,
+  cb: (ev: Event) => any,
+  options?: AddEventListenerOptions
+) {
   const listener = useEventListener(event, cb, options);
-  useIsomorphicLayoutEffect(() => cb ? listener.add(element) : listener.remove(), [Boolean(cb)]);
+  useIsomorphicLayoutEffect(
+    () => (cb ? listener.add(element) : listener.remove()),
+    [Boolean(cb)]
+  );
 }

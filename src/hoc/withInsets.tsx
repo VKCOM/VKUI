@@ -1,4 +1,4 @@
-import { useInsets } from '../hooks/useInsets';
+import { useInsets } from "../hooks/useInsets";
 
 export function withInsets<T>(Component: T): T {
   function WithInsets(props: {}) {

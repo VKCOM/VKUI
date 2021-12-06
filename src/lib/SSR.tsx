@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { PlatformType, platform } from './platform';
-import { BrowserInfo, computeBrowserInfo } from './browser';
-import { DOMContext, getDOM } from '../lib/dom';
+import * as React from "react";
+import { PlatformType, platform } from "./platform";
+import { BrowserInfo, computeBrowserInfo } from "./browser";
+import { DOMContext, getDOM } from "../lib/dom";
 
 export interface SSRContextInterface {
   platform: PlatformType;
@@ -11,7 +11,7 @@ export interface SSRContextInterface {
 
 export const SSRContext = React.createContext<SSRContextInterface>({
   platform: null,
-  userAgent: '',
+  userAgent: "",
   browserInfo: undefined,
 });
 
@@ -39,9 +39,7 @@ export const SSRWrapper: React.FC<SSRWrapperProps> = (props) => {
 
   return (
     <SSRContext.Provider value={contextValue}>
-      <DOMContext.Provider value={dom}>
-        {children}
-      </DOMContext.Provider>
+      <DOMContext.Provider value={dom}>{children}</DOMContext.Provider>
     </SSRContext.Provider>
   );
 };

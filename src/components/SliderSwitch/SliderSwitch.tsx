@@ -1,35 +1,40 @@
-import * as React from 'react';
-import SliderSwitchButton from './SliderSwitchButton';
-import { classNames } from '../../lib/classNames';
-import { HasPlatform } from '../../types';
-import './SliderSwitch.css';
+import * as React from "react";
+import SliderSwitchButton from "./SliderSwitchButton";
+import { classNames } from "../../lib/classNames";
+import { HasPlatform } from "../../types";
+import "./SliderSwitch.css";
 
 export interface SliderSwitchOptionInterface {
   name: string;
   value: string | number;
 }
 
-export interface SliderSwitchProps extends React.HTMLAttributes<HTMLDivElement>, HasPlatform {
+export interface SliderSwitchProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    HasPlatform {
   options: Array<{
     name: string;
     value: string | number;
   }>;
-  activeValue?: SliderSwitchOptionInterface['value'];
+  activeValue?: SliderSwitchOptionInterface["value"];
   name?: string;
-  onSwitch?: (value: SliderSwitchOptionInterface['value']) => void;
+  onSwitch?: (value: SliderSwitchOptionInterface["value"]) => void;
 }
 
 interface SliderSwitchState {
-  activeValue: SliderSwitchOptionInterface['value'];
+  activeValue: SliderSwitchOptionInterface["value"];
   hoveredOptionId: number;
 }
 
-export default class SliderSwitch extends React.Component<SliderSwitchProps, SliderSwitchState> {
+export default class SliderSwitch extends React.Component<
+  SliderSwitchProps,
+  SliderSwitchState
+> {
   public constructor(props: SliderSwitchProps) {
     super(props);
 
     this.state = {
-      activeValue: props.activeValue ?? '',
+      activeValue: props.activeValue ?? "",
       hoveredOptionId: -1,
     };
 
@@ -38,20 +43,26 @@ export default class SliderSwitch extends React.Component<SliderSwitchProps, Sli
   }
 
   static defaultProps = {
-    options: [{ name: '', value: '' }, { name: '', value: '' }],
+    options: [
+      { name: "", value: "" },
+      { name: "", value: "" },
+    ],
   };
 
   firstButton: React.RefObject<HTMLDivElement>;
   secondButton: React.RefObject<HTMLDivElement>;
 
-  onSwitch = (value: SliderSwitchOptionInterface['value']) => {
+  onSwitch = (value: SliderSwitchOptionInterface["value"]) => {
     const { onSwitch } = this.props;
 
-    this.setState(() => ({
-      activeValue: value,
-    }), () => {
-      onSwitch && onSwitch(value);
-    });
+    this.setState(
+      () => ({
+        activeValue: value,
+      }),
+      () => {
+        onSwitch && onSwitch(value);
+      }
+    );
   };
 
   handleFirstClick = () => {
@@ -69,13 +80,13 @@ export default class SliderSwitch extends React.Component<SliderSwitchProps, Sli
   };
 
   handleFirstHover = () => {
-    this.setState(() =>({
+    this.setState(() => ({
       hoveredOptionId: 0,
     }));
   };
 
   handleSecondHover = () => {
-    this.setState(() =>({
+    this.setState(() => ({
       hoveredOptionId: 1,
     }));
   };
@@ -87,7 +98,11 @@ export default class SliderSwitch extends React.Component<SliderSwitchProps, Sli
   };
 
   switchByKey = (event: React.KeyboardEvent) => {
-    if (event.key !== 'Enter' && event.key !== 'Spacebar' && event.key !== ' ') {
+    if (
+      event.key !== "Enter" &&
+      event.key !== "Spacebar" &&
+      event.key !== " "
+    ) {
       return;
     }
     event.preventDefault();
@@ -105,8 +120,14 @@ export default class SliderSwitch extends React.Component<SliderSwitchProps, Sli
     }
   };
 
-  static getDerivedStateFromProps(nextProps: SliderSwitchProps, prevState: SliderSwitchState) {
-    if (nextProps.activeValue && nextProps.activeValue !== prevState.activeValue) {
+  static getDerivedStateFromProps(
+    nextProps: SliderSwitchProps,
+    prevState: SliderSwitchState
+  ) {
+    if (
+      nextProps.activeValue &&
+      nextProps.activeValue !== prevState.activeValue
+    ) {
       return {
         activeValue: nextProps.activeValue,
       };
@@ -116,7 +137,13 @@ export default class SliderSwitch extends React.Component<SliderSwitchProps, Sli
   }
 
   public render() {
-    const { name, options, activeValue: _activeValue, onSwitch, ...restProps } = this.props;
+    const {
+      name,
+      options,
+      activeValue: _activeValue,
+      onSwitch,
+      ...restProps
+    } = this.props;
     const { activeValue, hoveredOptionId } = this.state;
 
     const [firstOption, secondOption] = options;
@@ -130,16 +157,15 @@ export default class SliderSwitch extends React.Component<SliderSwitchProps, Sli
         onKeyDown={this.switchByKey}
         onMouseLeave={this.resetFocusedOption}
       >
-        {!firstActive && !secondActive &&
+        {!firstActive && !secondActive && (
           <div vkuiClass="SliderSwitch__border" />
-        }
-        <div vkuiClass={classNames(
-          'SliderSwitch__slider',
-          {
-            ['SliderSwitch--firstActive']: firstActive,
-            ['SliderSwitch--secondActive']: secondActive,
-          },
-        )} />
+        )}
+        <div
+          vkuiClass={classNames("SliderSwitch__slider", {
+            ["SliderSwitch--firstActive"]: firstActive,
+            ["SliderSwitch--secondActive"]: secondActive,
+          })}
+        />
         <input type="hidden" name={name} value={activeValue} />
         <SliderSwitchButton
           active={firstActive}

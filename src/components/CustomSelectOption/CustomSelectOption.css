@@ -16,7 +16,7 @@
 
 .CustomSelectOption--disabled {
   cursor: default;
-  opacity: .4;
+  opacity: 0.4;
 }
 
 .CustomSelectOption--hover {

@@ -21,7 +21,17 @@
       "@react-playwright": ["../e2e"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "e2e/**/*.ts", "e2e/**/*.tsx", "e2e/**/*.js"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "e2e/**/*.ts",
+    "e2e/**/*.tsx",
+    "e2e/**/*.js",
+    "tasks/**/*.js",
+    ".github/**/*.js",
+    "unstable/**/*.ts",
+    "*.js"
+  ],
   "files": [
     "node_modules/jest-playwright-preset/types/global.d.ts",
     "node_modules/expect-playwright/global.d.ts",

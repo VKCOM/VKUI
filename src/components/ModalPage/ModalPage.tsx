@@ -1,17 +1,28 @@
-import * as React from 'react';
-import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
-import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
-import { usePlatform } from '../../hooks/usePlatform';
-import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
-import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
-import { multiRef } from '../../lib/utils';
-import { ModalType } from '../ModalRoot/types';
-import { getNavId, NavIdProps } from '../../lib/getNavId';
-import { warnOnce } from '../../lib/warnOnce';
-import './ModalPage.css';
+import * as React from "react";
+import { getClassName } from "../../helpers/getClassName";
+import { classNames } from "../../lib/classNames";
+import {
+  ModalRootContext,
+  useModalRegistry,
+} from "../ModalRoot/ModalRootContext";
+import { usePlatform } from "../../hooks/usePlatform";
+import {
+  withAdaptivity,
+  AdaptivityProps,
+  ViewHeight,
+  ViewWidth,
+} from "../../hoc/withAdaptivity";
+import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
+import { multiRef } from "../../lib/utils";
+import { ModalType } from "../ModalRoot/types";
+import { getNavId, NavIdProps } from "../../lib/getNavId";
+import { warnOnce } from "../../lib/warnOnce";
+import "./ModalPage.css";
 
-export interface ModalPageProps extends React.HTMLAttributes<HTMLDivElement>, AdaptivityProps, NavIdProps {
+export interface ModalPageProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    AdaptivityProps,
+    NavIdProps {
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`
    */
@@ -28,7 +39,7 @@ export interface ModalPageProps extends React.HTMLAttributes<HTMLDivElement>, Ad
   getModalContentRef?: React.Ref<HTMLDivElement>;
 }
 
-const warn = warnOnce('ModalPage');
+const warn = warnOnce("ModalPage");
 const ModalPage: React.FC<ModalPageProps> = (props: ModalPageProps) => {
   const platform = usePlatform();
   const { updateModalHeight } = React.useContext(ModalRootContext);
@@ -51,7 +62,9 @@ const ModalPage: React.FC<ModalPageProps> = (props: ModalPageProps) => {
     updateModalHeight();
   }, [children]);
 
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
+  const isDesktop =
+    viewWidth >= ViewWidth.SMALL_TABLET &&
+    (hasMouse || viewHeight >= ViewHeight.MEDIUM);
   const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
 
   const modalContext = React.useContext(ModalRootContext);
@@ -60,9 +73,13 @@ const ModalPage: React.FC<ModalPageProps> = (props: ModalPageProps) => {
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(getClassName('ModalPage', platform), `ModalPage--sizeX-${sizeX}`, {
-        'ModalPage--desktop': isDesktop,
-      })}
+      vkuiClass={classNames(
+        getClassName("ModalPage", platform),
+        `ModalPage--sizeX-${sizeX}`,
+        {
+          "ModalPage--desktop": isDesktop,
+        }
+      )}
     >
       <div vkuiClass="ModalPage__in-wrap" ref={refs.innerElement}>
         <div vkuiClass="ModalPage__in">
@@ -71,13 +88,19 @@ const ModalPage: React.FC<ModalPageProps> = (props: ModalPageProps) => {
           </div>
 
           <div vkuiClass="ModalPage__content-wrap">
-            <div vkuiClass="ModalPage__content" ref={multiRef<HTMLDivElement>(refs.contentElement, getModalContentRef)}>
-              <div vkuiClass="ModalPage__content-in">
-                {children}
-              </div>
+            <div
+              vkuiClass="ModalPage__content"
+              ref={multiRef<HTMLDivElement>(
+                refs.contentElement,
+                getModalContentRef
+              )}
+            >
+              <div vkuiClass="ModalPage__content-in">{children}</div>
             </div>
           </div>
-          {canShowCloseBtn && <ModalDismissButton onClick={onClose || modalContext.onClose} />}
+          {canShowCloseBtn && (
+            <ModalDismissButton onClick={onClose || modalContext.onClose} />
+          )}
         </div>
       </div>
     </div>

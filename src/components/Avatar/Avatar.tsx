@@ -1,19 +1,22 @@
-import * as React from 'react';
-import { Icon12Circle, Icon12OnlineMobile } from '@vkontakte/icons';
-import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
-import { usePlatform } from '../../hooks/usePlatform';
-import { HasRef, HasRootRef } from '../../types';
-import './Avatar.css';
+import * as React from "react";
+import { Icon12Circle, Icon12OnlineMobile } from "@vkontakte/icons";
+import { getClassName } from "../../helpers/getClassName";
+import { classNames } from "../../lib/classNames";
+import { usePlatform } from "../../hooks/usePlatform";
+import { HasRef, HasRootRef } from "../../types";
+import "./Avatar.css";
 
-export interface AvatarProps extends React.ImgHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement>, HasRef<HTMLImageElement> {
+export interface AvatarProps
+  extends React.ImgHTMLAttributes<HTMLElement>,
+    HasRootRef<HTMLDivElement>,
+    HasRef<HTMLImageElement> {
   /**
    * Рекомендуемый сет значений: 96 | 88 | 80 | 72 | 64 | 56 | 48 | 44 | 40 | 36 | 32 | 28 | 24
    */
   size?: number;
-  mode?: 'default' | 'image' | 'app';
+  mode?: "default" | "image" | "app";
   shadow?: boolean;
-  badge?: 'online' | 'online-mobile' | JSX.Element;
+  badge?: "online" | "online-mobile" | JSX.Element;
 }
 
 const Avatar: React.FC<AvatarProps> = ({
@@ -36,7 +39,7 @@ const Avatar: React.FC<AvatarProps> = ({
   children,
   getRootRef,
   style,
-  'aria-label': ariaLabel,
+  "aria-label": ariaLabel,
   badge,
   ...restProps
 }: AvatarProps) => {
@@ -51,15 +54,15 @@ const Avatar: React.FC<AvatarProps> = ({
     setFailedImage(false);
   };
 
-  let borderRadius: string | number = '50%';
+  let borderRadius: string | number = "50%";
 
   switch (mode) {
-    case 'image':
+    case "image":
       size < 64 && (borderRadius = 4);
       size >= 64 && size < 96 && (borderRadius = 6);
       size >= 96 && (borderRadius = 8);
       break;
-    case 'app':
+    case "app":
       size <= 40 && (borderRadius = 8);
       size > 40 && size < 56 && (borderRadius = 10);
       size >= 56 && size < 64 && (borderRadius = 12);
@@ -75,17 +78,22 @@ const Avatar: React.FC<AvatarProps> = ({
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(getClassName('Avatar', platform), `Avatar--type-${mode}`, `Avatar--sz-${size}`, {
-        'Avatar--shadow': shadow,
-        'Avatar--failed': failedImage,
-      })}
+      vkuiClass={classNames(
+        getClassName("Avatar", platform),
+        `Avatar--type-${mode}`,
+        `Avatar--sz-${size}`,
+        {
+          "Avatar--shadow": shadow,
+          "Avatar--failed": failedImage,
+        }
+      )}
       className={className}
       ref={getRootRef}
-      role={hasSrc ? 'img' : 'presentation'}
+      role={hasSrc ? "img" : "presentation"}
       aria-label={alt || ariaLabel}
       style={{ ...style, width: size, height: size, borderRadius }}
     >
-      {hasSrc &&
+      {hasSrc && (
         <img
           crossOrigin={crossOrigin}
           decoding={decoding}
@@ -103,27 +111,33 @@ const Avatar: React.FC<AvatarProps> = ({
           vkuiClass="Avatar__img"
           alt=""
         />
-      }
+      )}
       {children && <div vkuiClass="Avatar__children">{children}</div>}
       {badge && (
         <div
-          vkuiClass={classNames('Avatar__badge', {
-            'Avatar__badge--large': size >= 96,
-            'Avatar__badge--shadow':
-              badge !== 'online' && badge !== 'online-mobile',
+          vkuiClass={classNames("Avatar__badge", {
+            "Avatar__badge--large": size >= 96,
+            "Avatar__badge--shadow":
+              badge !== "online" && badge !== "online-mobile",
           })}
         >
-          {badge === 'online' ? (
+          {badge === "online" ? (
             <div vkuiClass="Avatar__badge-online">
-              <Icon12Circle width={size >= 72 ? 15 : 12} height={size >= 72 ? 15 : 12} />
+              <Icon12Circle
+                width={size >= 72 ? 15 : 12}
+                height={size >= 72 ? 15 : 12}
+              />
             </div>
-          ) : badge === 'online-mobile' ? (
+          ) : badge === "online-mobile" ? (
             <div vkuiClass="Avatar__badge-online-mobile">
-              <Icon12OnlineMobile width={size >= 72 ? 9 : 8} height={size >= 72 ? 15 : 12} />
+              <Icon12OnlineMobile
+                width={size >= 72 ? 9 : 8}
+                height={size >= 72 ? 15 : 12}
+              />
             </div>
-          ) :
+          ) : (
             badge
-          }
+          )}
         </div>
       )}
     </div>
@@ -135,7 +149,7 @@ export const AVATAR_DEFAULT_SHADOW = true;
 
 Avatar.defaultProps = {
   size: AVATAR_DEFAULT_SIZE,
-  mode: 'default',
+  mode: "default",
   shadow: AVATAR_DEFAULT_SHADOW,
 };
 

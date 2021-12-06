@@ -1,5 +1,4 @@
 .ModalCardBase {
-
 }
 
 .ModalCardBase__container {
@@ -82,7 +81,7 @@
 .ModalCardBase--android .ModalCardBase__container,
 .ModalCardBase--vkcom .ModalCardBase__container {
   border-radius: 12px;
-  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, .16), 0 0 4px 0 rgba(0, 0, 0, .08);
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.16), 0 0 4px 0 rgba(0, 0, 0, 0.08);
 }
 
 /**
@@ -91,7 +90,5 @@
 
 .ModalCardBase--desktop .ModalCardBase__container {
   border-radius: 8px;
-  box-shadow:
-    0 16px 16px rgba(0, 0, 0, .16),
-    0 0 8px rgba(0, 0, 0, .12);
+  box-shadow: 0 16px 16px rgba(0, 0, 0, 0.16), 0 0 8px rgba(0, 0, 0, 0.12);
 }

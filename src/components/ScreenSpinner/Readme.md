@@ -6,36 +6,38 @@
 
 ```jsx { "props": { "layout": false, "adaptivity": true } }
 class Example extends React.Component {
-
-  constructor (props) {
-
+  constructor(props) {
     this.state = {
-      popout: null
-    }
+      popout: null,
+    };
   }
 
-  onClick () {
+  onClick() {
     this.setState({ popout: <ScreenSpinner /> });
-    setTimeout(() => { this.setState({ popout: null }) }, 2000);
+    setTimeout(() => {
+      this.setState({ popout: null });
+    }, 2000);
   }
 
-  render () {
+  render() {
     return (
       <SplitLayout popout={this.state.popout}>
         <SplitCol>
-        <View activePanel="spinner">
-          <Panel id="spinner">
-            <PanelHeader>ScreenSpinner</PanelHeader>
-            <Group>
-              <CellButton onClick={this.onClick.bind(this)}>Запустить долгий процесс</CellButton>
-            </Group>
-          </Panel>
-        </View>
+          <View activePanel="spinner">
+            <Panel id="spinner">
+              <PanelHeader>ScreenSpinner</PanelHeader>
+              <Group>
+                <CellButton onClick={this.onClick.bind(this)}>
+                  Запустить долгий процесс
+                </CellButton>
+              </Group>
+            </Panel>
+          </View>
         </SplitCol>
       </SplitLayout>
-    )
+    );
   }
 }
 
-<Example />
+<Example />;
 ```

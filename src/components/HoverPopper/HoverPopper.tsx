@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { Popper, PopperCommonProps } from '../Popper/Popper';
-import { useEventListener } from '../../hooks/useEventListener';
-import { useTimeout } from '../../hooks/useTimeout';
-import { usePatchChildrenRef } from '../../hooks/usePatchChildrenRef';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import * as React from "react";
+import { Popper, PopperCommonProps } from "../Popper/Popper";
+import { useEventListener } from "../../hooks/useEventListener";
+import { useTimeout } from "../../hooks/useTimeout";
+import { usePatchChildrenRef } from "../../hooks/usePatchChildrenRef";
+import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 
 export interface HoverPopperProps extends PopperCommonProps {
   /**
@@ -44,13 +44,13 @@ export const HoverPopper: React.FC<HoverPopperProps> = ({
 }: HoverPopperProps) => {
   const [computedShown, setComputedShown] = React.useState(_shown || false);
 
-  const shown = typeof _shown === 'boolean' ? _shown : computedShown;
+  const shown = typeof _shown === "boolean" ? _shown : computedShown;
 
   const setShown = (value: boolean) => {
-    if (typeof _shown !== 'boolean') {
+    if (typeof _shown !== "boolean") {
       setComputedShown(value);
     }
-    typeof onShownChange === 'function' && onShownChange(value);
+    typeof onShownChange === "function" && onShownChange(value);
   };
 
   const showTimeout = useTimeout(() => {
@@ -73,8 +73,8 @@ export const HoverPopper: React.FC<HoverPopperProps> = ({
     hideTimeout.set();
   };
 
-  const targetEnterListener = useEventListener('pointerenter', onTargetEnter);
-  const targetLeaveListener = useEventListener('pointerleave', onTargetLeave);
+  const targetEnterListener = useEventListener("pointerenter", onTargetEnter);
+  const targetLeaveListener = useEventListener("pointerleave", onTargetLeave);
 
   useIsomorphicLayoutEffect(() => {
     targetEnterListener.add(childRef.current);
@@ -84,7 +84,7 @@ export const HoverPopper: React.FC<HoverPopperProps> = ({
   return (
     <React.Fragment>
       {child}
-      {shown &&
+      {shown && (
         <Popper
           {...restProps}
           onMouseOver={hideTimeout.clear}
@@ -94,7 +94,7 @@ export const HoverPopper: React.FC<HoverPopperProps> = ({
         >
           {content}
         </Popper>
-      }
+      )}
     </React.Fragment>
   );
 };

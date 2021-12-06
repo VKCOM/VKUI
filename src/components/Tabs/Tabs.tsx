@@ -1,17 +1,21 @@
-import * as React from 'react';
-import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
-import { HasRootRef } from '../../types';
-import { usePlatform } from '../../hooks/usePlatform';
-import { IOS } from '../../lib/platform';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
-import './Tabs.css';
+import * as React from "react";
+import { getClassName } from "../../helpers/getClassName";
+import { classNames } from "../../lib/classNames";
+import { HasRootRef } from "../../types";
+import { usePlatform } from "../../hooks/usePlatform";
+import { IOS } from "../../lib/platform";
+import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
+import "./Tabs.css";
 
-export interface TabsProps extends React.HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement>, AdaptivityProps {
-  mode?: 'default' | 'buttons' | 'segmented';
+export interface TabsProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    HasRootRef<HTMLDivElement>,
+    AdaptivityProps {
+  mode?: "default" | "buttons" | "segmented";
 }
 
-export const TabsModeContext = React.createContext<TabsProps['mode']>('default');
+export const TabsModeContext =
+  React.createContext<TabsProps["mode"]>("default");
 
 const Tabs: React.FunctionComponent<TabsProps> = ({
   children,
@@ -22,15 +26,19 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
 }: TabsProps) => {
   const platform = usePlatform();
 
-  if (platform !== IOS && mode === 'segmented') {
-    mode = 'default';
+  if (platform !== IOS && mode === "segmented") {
+    mode = "default";
   }
 
   return (
     <div
       {...restProps}
       ref={getRootRef}
-      vkuiClass={classNames(getClassName('Tabs', platform), `Tabs--${mode}`, `Tabs--sizeX-${sizeX}`)}
+      vkuiClass={classNames(
+        getClassName("Tabs", platform),
+        `Tabs--${mode}`,
+        `Tabs--sizeX-${sizeX}`
+      )}
     >
       <div vkuiClass="Tabs__in">
         <TabsModeContext.Provider value={mode}>
@@ -42,7 +50,7 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
 };
 
 Tabs.defaultProps = {
-  mode: 'default',
+  mode: "default",
 };
 
 export default withAdaptivity(Tabs, { sizeX: true });

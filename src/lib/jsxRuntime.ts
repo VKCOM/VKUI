@@ -1,17 +1,20 @@
-import * as React from 'react';
-import { prefixClass } from './prefixClass';
+import * as React from "react";
+import { prefixClass } from "./prefixClass";
 
 function processProps(props: any) {
   const newProps: any = {};
   for (let key in props) {
-    if (Object.prototype.hasOwnProperty.call(props, key) && key !== 'vkuiClass') {
+    if (
+      Object.prototype.hasOwnProperty.call(props, key) &&
+      key !== "vkuiClass"
+    ) {
       newProps[key] = props[key];
     }
   }
   if (props.vkuiClass) {
     const className: string = props.className;
     const resolved = prefixClass(props.vkuiClass);
-    newProps.className = className ? className + ' ' + resolved : resolved;
+    newProps.className = className ? className + " " + resolved : resolved;
   }
   return newProps;
 }
@@ -19,7 +22,7 @@ function processProps(props: any) {
 function _createScopedElement(_type: any, props: any) {
   let args = arguments;
 
-  if (!props || !('vkuiClass' in props)) {
+  if (!props || !("vkuiClass" in props)) {
     return React.createElement.apply(undefined, args);
   }
 
@@ -37,4 +40,6 @@ function _createScopedElement(_type: any, props: any) {
 
 _createScopedElement.Fragment = React.Fragment;
 
-export const createScopedElement: typeof React.createElement & { Fragment: typeof React.Fragment } = _createScopedElement;
+export const createScopedElement: typeof React.createElement & {
+  Fragment: typeof React.Fragment;
+} = _createScopedElement;

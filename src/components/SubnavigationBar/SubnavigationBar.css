@@ -10,7 +10,7 @@
 
 .SubnavigationBar__scrollIn::before,
 .SubnavigationBar__scrollIn::after {
-  content: '';
+  content: "";
   min-width: 16px;
 }
 

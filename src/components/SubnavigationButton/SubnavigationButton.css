@@ -2,7 +2,7 @@
   display: inline-block;
   background-color: var(--modal_card_background);
   color: var(--text_primary);
-  box-shadow: 0 0 2px rgba(0, 0, 0, .08), 0 2px 24px rgba(0, 0, 0, .08);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 2px 24px rgba(0, 0, 0, 0.08);
   user-select: none;
 }
 

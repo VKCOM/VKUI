@@ -26,7 +26,8 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  transition: transform 300ms cubic-bezier(.1, 0, .25, 1), opacity 220ms ease-out;
+  transition: transform 300ms cubic-bezier(0.1, 0, 0.25, 1),
+    opacity 220ms ease-out;
   opacity: 0;
 }
 
@@ -38,7 +39,7 @@
 .PullToRefresh--vkcom .PullToRefresh__spinner {
   background: var(--background_suggestions);
   border-radius: 50%;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   color: var(--accent);
 }
 
@@ -84,7 +85,7 @@
   }
 
   30% {
-    transform: scale(.6);
+    transform: scale(0.6);
   }
 
   90% {

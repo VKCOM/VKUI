@@ -3,16 +3,21 @@
 ```jsx
 <View activePanel="select">
   <Panel id="select">
-    <PanelHeader>
-      Select
-    </PanelHeader>
+    <PanelHeader>Select</PanelHeader>
     <Group>
       <FormItem top="Администратор">
         <Select
-          placeholder="Не выбран" 
-          options={getRandomUsers(10).map(user => ({ label: user.name, value: user.id, avatar: user.photo_100 }))}
+          placeholder="Не выбран"
+          options={getRandomUsers(10).map((user) => ({
+            label: user.name,
+            value: user.id,
+            avatar: user.photo_100,
+          }))}
           renderOption={({ option, ...restProps }) => (
-            <CustomSelectOption {...restProps} before={<Avatar size={24} src={option.avatar} />} />
+            <CustomSelectOption
+              {...restProps}
+              before={<Avatar size={24} src={option.avatar} />}
+            />
           )}
         />
       </FormItem>

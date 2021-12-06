@@ -11,7 +11,7 @@ class PlaceholderExample extends React.Component {
     super(props);
 
     this.state = {
-      activePanel: 'example-1',
+      activePanel: "example-1",
     };
 
     this.onNavClick = this.onNavClick.bind(this);
@@ -36,25 +36,27 @@ class PlaceholderExample extends React.Component {
               Подключите сообщества, от которых Вы хотите получать уведомления
             </Placeholder>
             <Separator />
-            <Placeholder
-              icon={<Icon56MentionOutline />}
-            >
+            <Placeholder icon={<Icon56MentionOutline />}>
               Введите адрес страницы в поле поиска
             </Placeholder>
           </Group>
           <Group>
-            <CellButton onClick={this.onNavClick} data-to="example-2">Ещё примеры</CellButton>
+            <CellButton onClick={this.onNavClick} data-to="example-2">
+              Ещё примеры
+            </CellButton>
           </Group>
         </Panel>
 
         <Panel id="example-2">
           <PanelHeader
-            left={<PanelHeaderBack onClick={this.onNavClick} data-to="example-1" />}
-          >Плейсхолдеры</PanelHeader>
+            left={
+              <PanelHeaderBack onClick={this.onNavClick} data-to="example-1" />
+            }
+          >
+            Плейсхолдеры
+          </PanelHeader>
           <Group>
-            <Placeholder>
-              Доступ запрещён
-            </Placeholder>
+            <Placeholder>Доступ запрещён</Placeholder>
             <Separator />
             <Placeholder
               header="Находите друзей"
@@ -64,21 +66,33 @@ class PlaceholderExample extends React.Component {
             </Placeholder>
           </Group>
           <Group>
-            <CellButton onClick={this.onNavClick} data-to="example-3">Полноэкранный плейсхолдер</CellButton>
+            <CellButton onClick={this.onNavClick} data-to="example-3">
+              Полноэкранный плейсхолдер
+            </CellButton>
           </Group>
         </Panel>
 
         <Panel id="example-3">
           <PanelHeader
-            left={<PanelHeaderBack onClick={this.onNavClick} data-to="example-1" />}
-          >Плейсхолдеры</PanelHeader>
+            left={
+              <PanelHeaderBack onClick={this.onNavClick} data-to="example-1" />
+            }
+          >
+            Плейсхолдеры
+          </PanelHeader>
 
           <Placeholder
             icon={<Icon56MessageReadOutline />}
-            action={<Button size="m" mode="tertiary">Показать все сообщения</Button>}
+            action={
+              <Button size="m" mode="tertiary">
+                Показать все сообщения
+              </Button>
+            }
             stretched
           >
-            Нет непрочитанных<br />сообщений
+            Нет непрочитанных
+            <br />
+            сообщений
           </Placeholder>
         </Panel>
       </View>
@@ -86,5 +100,5 @@ class PlaceholderExample extends React.Component {
   }
 }
 
-<PlaceholderExample />
+<PlaceholderExample />;
 ```

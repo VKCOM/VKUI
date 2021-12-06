@@ -1,26 +1,28 @@
-import * as React from 'react';
-import { classNames } from '../../lib/classNames';
-import { transitionEvent } from '../../lib/supportEvents';
-import { HasPlatform } from '../../types';
-import { withPlatform } from '../../hoc/withPlatform';
-import { withContext } from '../../hoc/withContext';
-import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
+import * as React from "react";
+import { classNames } from "../../lib/classNames";
+import { transitionEvent } from "../../lib/supportEvents";
+import { HasPlatform } from "../../types";
+import { withPlatform } from "../../hoc/withPlatform";
+import { withContext } from "../../hoc/withContext";
+import ModalRootContext, {
+  ModalRootContextInterface,
+} from "./ModalRootContext";
 import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
   WebviewType,
-} from '../ConfigProvider/ConfigProviderContext';
-import { ModalsStateEntry } from './types';
-import { ANDROID, VKCOM } from '../../lib/platform';
-import { getClassName } from '../../helpers/getClassName';
-import { DOMProps, withDOM } from '../../lib/dom';
-import { getNavId } from '../../lib/getNavId';
-import { warnOnce } from '../../lib/warnOnce';
-import { FocusTrap } from '../FocusTrap/FocusTrap';
-import { ModalTransitionProps, withModalManager } from './useModalManager';
-import './ModalRoot.css';
+} from "../ConfigProvider/ConfigProviderContext";
+import { ModalsStateEntry } from "./types";
+import { ANDROID, VKCOM } from "../../lib/platform";
+import { getClassName } from "../../helpers/getClassName";
+import { DOMProps, withDOM } from "../../lib/dom";
+import { getNavId } from "../../lib/getNavId";
+import { warnOnce } from "../../lib/warnOnce";
+import { FocusTrap } from "../FocusTrap/FocusTrap";
+import { ModalTransitionProps, withModalManager } from "./useModalManager";
+import "./ModalRoot.css";
 
-const warn = warnOnce('ModalRoot');
+const warn = warnOnce("ModalRoot");
 
 export interface ModalRootProps extends HasPlatform {
   activeModal?: string | null;
@@ -35,7 +37,9 @@ export interface ModalRootProps extends HasPlatform {
   onClose?(modalId: string): void;
 }
 
-class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProps & ModalTransitionProps> {
+class ModalRootDesktopComponent extends React.Component<
+  ModalRootProps & DOMProps & ModalTransitionProps
+> {
   constructor(props: ModalRootProps & ModalTransitionProps) {
     super(props);
 
@@ -43,7 +47,8 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
 
     this.modalRootContext = {
       updateModalHeight: () => undefined,
-      registerModal: ({ id, ...data }) => Object.assign(this.getModalState(id), data),
+      registerModal: ({ id, ...data }) =>
+        Object.assign(this.getModalState(id), data),
       onClose: () => this.props.closeActiveModal(),
       isInsideModal: true,
     };
@@ -55,7 +60,9 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
   private restoreFocusTo: HTMLElement;
 
   private get timeout() {
-    return this.props.platform === ANDROID || this.props.platform === VKCOM ? 320 : 400;
+    return this.props.platform === ANDROID || this.props.platform === VKCOM
+      ? 320
+      : 400;
   }
 
   private get modals() {
@@ -68,17 +75,25 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
 
   componentDidUpdate(prevProps: ModalRootProps & ModalTransitionProps) {
     // transition phase 2: animate exiting modal
-    if (this.props.exitingModal && this.props.exitingModal !== prevProps.exitingModal) {
+    if (
+      this.props.exitingModal &&
+      this.props.exitingModal !== prevProps.exitingModal
+    ) {
       this.closeModal(this.props.exitingModal);
     }
 
     // transition phase 3: animate entering modal
-    if (this.props.enteringModal && this.props.enteringModal !== prevProps.enteringModal) {
+    if (
+      this.props.enteringModal &&
+      this.props.enteringModal !== prevProps.enteringModal
+    ) {
       const { enteringModal } = this.props;
       const enteringState = this.getModalState(enteringModal);
       requestAnimationFrame(() => {
         if (this.props.enteringModal === enteringModal) {
-          this.waitTransitionFinish(enteringState, () => this.props.onEnter(enteringModal));
+          this.waitTransitionFinish(enteringState, () =>
+            this.props.onEnter(enteringModal)
+          );
           this.animateModalOpacity(enteringState, true);
         }
       });
@@ -88,7 +103,11 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
     if (this.props.activeModal && !prevProps.activeModal) {
       this.restoreFocusTo = this.props.document.activeElement as HTMLElement;
     }
-    if (!this.props.activeModal && !this.props.exitingModal && this.restoreFocusTo) {
+    if (
+      !this.props.activeModal &&
+      !this.props.exitingModal &&
+      this.restoreFocusTo
+    ) {
       this.restoreFocusTo.focus();
       this.restoreFocusTo = null;
     }
@@ -110,11 +129,17 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
   waitTransitionFinish(modalState: ModalsStateEntry, eventHandler: () => void) {
     if (transitionEvent.supported) {
       const onceHandler = () => {
-        modalState.innerElement.removeEventListener(transitionEvent.name, onceHandler);
+        modalState.innerElement.removeEventListener(
+          transitionEvent.name,
+          onceHandler
+        );
         eventHandler();
       };
 
-      modalState.innerElement.addEventListener(transitionEvent.name, onceHandler);
+      modalState.innerElement.addEventListener(
+        transitionEvent.name,
+        onceHandler
+      );
     } else {
       setTimeout(eventHandler, this.timeout);
     }
@@ -122,8 +147,9 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
 
   /* Анимирует сдивг модалки */
   animateModalOpacity(modalState: ModalsStateEntry, display: boolean) {
-    modalState.innerElement.style.transitionDelay = display && this.props.delayEnter ? `${this.timeout}ms` : null;
-    modalState.innerElement.style.opacity = display ? '1' : '0';
+    modalState.innerElement.style.transitionDelay =
+      display && this.props.delayEnter ? `${this.timeout}ms` : null;
+    modalState.innerElement.style.opacity = display ? "1" : "0";
   }
 
   /* Устанавливает прозрачность для полупрозрачной подложки */
@@ -137,8 +163,14 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
       if (this.maskElementRef.current) {
         const { translateY, translateYCurrent } = modalState;
 
-        const opacity = forceOpacity === null ? 1 - (translateYCurrent - translateY) / (100 - translateY) || 0 : forceOpacity;
-        this.maskElementRef.current.style.opacity = Math.max(0, Math.min(100, opacity)).toString();
+        const opacity =
+          forceOpacity === null
+            ? 1 - (translateYCurrent - translateY) / (100 - translateY) || 0
+            : forceOpacity;
+        this.maskElementRef.current.style.opacity = Math.max(
+          0,
+          Math.min(100, opacity)
+        ).toString();
       }
     });
   }
@@ -153,9 +185,14 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
     return (
       <ModalRootContext.Provider value={this.modalRootContext}>
         <div
-          vkuiClass={classNames(getClassName('ModalRoot', this.props.platform), {
-            'ModalRoot--vkapps': this.props.configProvider.webviewType === WebviewType.VKAPPS,
-          }, 'ModalRoot--desktop')}
+          vkuiClass={classNames(
+            getClassName("ModalRoot", this.props.platform),
+            {
+              "ModalRoot--vkapps":
+                this.props.configProvider.webviewType === WebviewType.VKAPPS,
+            },
+            "ModalRoot--desktop"
+          )}
         >
           <div
             vkuiClass="ModalRoot__mask"
@@ -177,12 +214,18 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
                   onClose={this.props.closeActiveModal}
                   timeout={this.timeout}
                   key={key}
-                  vkuiClass={classNames('ModalRoot__modal', {
-                    'ModalRoot__modal--active': !exitingModal && !enteringModal && modalId === activeModal,
-                    'ModalRoot__modal--prev': modalId === exitingModal,
-                    'ModalRoot__modal--next': exitingModal && modalId === activeModal,
+                  vkuiClass={classNames("ModalRoot__modal", {
+                    "ModalRoot__modal--active":
+                      !exitingModal &&
+                      !enteringModal &&
+                      modalId === activeModal,
+                    "ModalRoot__modal--prev": modalId === exitingModal,
+                    "ModalRoot__modal--next":
+                      exitingModal && modalId === activeModal,
                   })}
-                >{Modal}</FocusTrap>
+                >
+                  {Modal}
+                </FocusTrap>
               );
             })}
           </div>
@@ -194,8 +237,8 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
 
 export const ModalRootDesktop = withContext(
   withPlatform(
-    withDOM<ModalRootProps>(
-      withModalManager()(ModalRootDesktopComponent),
-    ),
+    withDOM<ModalRootProps>(withModalManager()(ModalRootDesktopComponent))
   ),
-  ConfigProviderContext, 'configProvider');
+  ConfigProviderContext,
+  "configProvider"
+);

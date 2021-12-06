@@ -1,5 +1,5 @@
-import { ReactElement } from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
+import { ReactElement } from "react";
+import { render, unmountComponentAtNode } from "react-dom";
 
 class ComponentHandle {
   constructor(private readonly mountNode: Element) {}
@@ -7,16 +7,24 @@ class ComponentHandle {
 
   register(name: string, node: ReactElement) {
     if (name in this.components) {
-      throw new Error(`Test ${name} already exists. make sure path is unique and mount() is called once.`);
+      throw new Error(
+        `Test ${name} already exists. make sure path is unique and mount() is called once.`
+      );
     }
     this.components[name] = { node };
   }
 
   mount(name: string) {
     if (!(name in this.components)) {
-      throw new Error(`Test "${name}" does not exist, ${JSON.stringify(Object.keys(this.components))}`);
+      throw new Error(
+        `Test "${name}" does not exist, ${JSON.stringify(
+          Object.keys(this.components)
+        )}`
+      );
     }
-    return new Promise((ok) => render(this.components[name].node, this.mountNode, () => ok()));
+    return new Promise((ok) =>
+      render(this.components[name].node, this.mountNode, () => ok())
+    );
   }
 
   unmount() {
@@ -24,5 +32,5 @@ class ComponentHandle {
   }
 }
 
-export const testHandle = new ComponentHandle(document.getElementById('mount'));
-(window as any)['testHandle'] = testHandle;
+export const testHandle = new ComponentHandle(document.getElementById("mount"));
+(window as any)["testHandle"] = testHandle;

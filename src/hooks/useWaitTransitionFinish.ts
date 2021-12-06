@@ -1,10 +1,14 @@
-import * as React from 'react';
-import { transitionEvent } from '../lib/supportEvents';
+import * as React from "react";
+import { transitionEvent } from "../lib/supportEvents";
 
 export const useWaitTransitionFinish = () => {
   const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const waitTransitionFinish = (element: HTMLElement, eventHandler: VoidFunction, durationFallback: number) => {
+  const waitTransitionFinish = (
+    element: HTMLElement,
+    eventHandler: VoidFunction,
+    durationFallback: number
+  ) => {
     if (element) {
       if (transitionEvent.supported) {
         element.removeEventListener(transitionEvent.name, eventHandler);

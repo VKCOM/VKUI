@@ -1,20 +1,23 @@
-import * as React from 'react';
-import { Touch, TouchEvent, TouchEventHandler } from '../Touch/Touch';
-import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
-import { HasRootRef } from '../../types';
-import { rescale } from '../../helpers/math';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
-import { useExternRef } from '../../hooks/useExternRef';
-import { usePlatform } from '../../hooks/usePlatform';
-import '../Slider/Slider.css';
+import * as React from "react";
+import { Touch, TouchEvent, TouchEventHandler } from "../Touch/Touch";
+import { getClassName } from "../../helpers/getClassName";
+import { classNames } from "../../lib/classNames";
+import { HasRootRef } from "../../types";
+import { rescale } from "../../helpers/math";
+import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
+import { useExternRef } from "../../hooks/useExternRef";
+import { usePlatform } from "../../hooks/usePlatform";
+import "../Slider/Slider.css";
 
 export type UniversalValue = [number | null, number];
 
-export interface UniversalSliderProps<Value> extends
-  HasRootRef<HTMLDivElement>,
-  Omit<React.HTMLAttributes<HTMLDivElement>, 'value' | 'defaultValue' | 'onChange'>,
-  AdaptivityProps {
+export interface UniversalSliderProps<Value>
+  extends HasRootRef<HTMLDivElement>,
+    Omit<
+      React.HTMLAttributes<HTMLDivElement>,
+      "value" | "defaultValue" | "onChange"
+    >,
+    AdaptivityProps {
   min?: number;
   max?: number;
   step?: number;
@@ -25,8 +28,12 @@ export interface UniversalSliderProps<Value> extends
 }
 
 const UniversalSliderDumb: React.FC<UniversalSliderProps<UniversalValue>> = ({
-  min, max, step,
-  value, defaultValue, onChange,
+  min,
+  max,
+  step,
+  value,
+  defaultValue,
+  onChange,
   getRootRef,
   sizeY,
   disabled,
@@ -36,7 +43,7 @@ const UniversalSliderDumb: React.FC<UniversalSliderProps<UniversalValue>> = ({
   const [start, end] = value;
   const isRange = start != null;
   const gesture = React.useRef({
-    dragging: false as false | 'start' | 'end',
+    dragging: false as false | "start" | "end",
     startX: 0,
     containerWidth: 0,
   }).current;
@@ -54,18 +61,18 @@ const UniversalSliderDumb: React.FC<UniversalSliderProps<UniversalValue>> = ({
     }
 
     const { dragging } = gesture;
-    if (dragging === 'start') {
+    if (dragging === "start") {
       if (nextValue > end) {
         // "перехватиться", если перетянули за конец
-        gesture.dragging = 'end';
+        gesture.dragging = "end";
         return [end, nextValue];
       }
       return [nextValue, end];
     }
-    if (dragging === 'end') {
+    if (dragging === "end") {
       if (nextValue < start) {
         // "перехватиться", если перетянули за начало
-        gesture.dragging = 'start';
+        gesture.dragging = "start";
         return [nextValue, start];
       }
       return [start, nextValue];
@@ -76,12 +83,12 @@ const UniversalSliderDumb: React.FC<UniversalSliderProps<UniversalValue>> = ({
 
   const snapDirection = (pos: number, target: EventTarget) => {
     if (target === thumbStart.current) {
-      return 'start';
+      return "start";
     }
     if (target === thumbEnd.current) {
-      return 'end';
+      return "end";
     }
-    return Math.abs(start - pos) <= Math.abs(end - pos) ? 'start' : 'end';
+    return Math.abs(start - pos) <= Math.abs(end - pos) ? "start" : "end";
   };
 
   const onStart: TouchEventHandler = (e: TouchEvent) => {
@@ -109,29 +116,39 @@ const UniversalSliderDumb: React.FC<UniversalSliderProps<UniversalValue>> = ({
     e.originalEvent.stopPropagation();
   };
 
-  const toPercent = (v: number) => (v - min) / (max - min) * 100;
-  const draggerStyle = isRange ? {
-    width: `${toPercent(end) - toPercent(start)}%`,
-    left: `${toPercent(start)}%`,
-  } : {
-    width: `${toPercent(end)}%`,
-  };
+  const toPercent = (v: number) => ((v - min) / (max - min)) * 100;
+  const draggerStyle = isRange
+    ? {
+        width: `${toPercent(end) - toPercent(start)}%`,
+        left: `${toPercent(start)}%`,
+      }
+    : {
+        width: `${toPercent(end)}%`,
+      };
 
   return (
     <Touch
-      data-value={isRange ? value.join(',') : value}
+      data-value={isRange ? value.join(",") : value}
       {...restProps}
       {...(disabled ? {} : { onStart, onMove, onEnd })}
       vkuiClass={classNames(
-        getClassName('Slider', platform),
+        getClassName("Slider", platform),
         `Slider--sizeY-${sizeY}`,
-        disabled && 'Slider--disabled',
+        disabled && "Slider--disabled"
       )}
     >
       <div ref={container} vkuiClass="Slider__in">
         <div vkuiClass="Slider__dragger" style={draggerStyle}>
-          {isRange && <span vkuiClass={classNames('Slider__thumb', 'Slider__thumb--start')} ref={thumbStart} />}
-          <span vkuiClass={classNames('Slider__thumb', 'Slider__thumb--end')} ref={thumbEnd} />
+          {isRange && (
+            <span
+              vkuiClass={classNames("Slider__thumb", "Slider__thumb--start")}
+              ref={thumbStart}
+            />
+          )}
+          <span
+            vkuiClass={classNames("Slider__thumb", "Slider__thumb--end")}
+            ref={thumbEnd}
+          />
         </div>
       </div>
     </Touch>

@@ -1,10 +1,13 @@
-import * as React from 'react';
-import vkBridge, { AppearanceSchemeType, AppearanceType } from '@vkontakte/vk-bridge';
-import { PlatformType, platform } from '../../lib/platform';
+import * as React from "react";
+import vkBridge, {
+  AppearanceSchemeType,
+  AppearanceType,
+} from "@vkontakte/vk-bridge";
+import { PlatformType, platform } from "../../lib/platform";
 
 export enum Appearance {
-  DARK = 'dark',
-  LIGHT = 'light',
+  DARK = "dark",
+  LIGHT = "light",
 }
 
 export enum Scheme {
@@ -12,29 +15,34 @@ export enum Scheme {
    * @deprecated будет удалено в 5.0.0
    * версия оставлена для совместимости со старыми версиями клиентов
    */
-  DEPRECATED_CLIENT_LIGHT = 'client_light',
+  DEPRECATED_CLIENT_LIGHT = "client_light",
   /**
    * @deprecated будет удалено в 5.0.0
    * версия оставлена для совместимости со старыми версиями клиентов
    */
-  DEPRECATED_CLIENT_DARK = 'client_dark',
+  DEPRECATED_CLIENT_DARK = "client_dark",
   /**
    * @deprecated будет удалено в 5.0.0
    * версия оставлена для совместимости с vkcom, когда там была только одна схема
    */
-  VKCOM = 'vkcom',
+  VKCOM = "vkcom",
 
-  BRIGHT_LIGHT = 'bright_light',
-  SPACE_GRAY = 'space_gray',
-  VKCOM_LIGHT = 'vkcom_light',
-  VKCOM_DARK = 'vkcom_dark'
+  BRIGHT_LIGHT = "bright_light",
+  SPACE_GRAY = "space_gray",
+  VKCOM_LIGHT = "vkcom_light",
+  VKCOM_DARK = "vkcom_dark",
 }
 
-export type AppearanceScheme = AppearanceSchemeType | Scheme.VKCOM | Scheme.VKCOM_DARK | Scheme.VKCOM_LIGHT | 'inherit';
+export type AppearanceScheme =
+  | AppearanceSchemeType
+  | Scheme.VKCOM
+  | Scheme.VKCOM_DARK
+  | Scheme.VKCOM_LIGHT
+  | "inherit";
 
 export enum WebviewType {
-  VKAPPS = 'vkapps',
-  INTERNAL = 'internal',
+  VKAPPS = "vkapps",
+  INTERNAL = "internal",
 }
 
 export interface ConfigProviderContextInterface {
@@ -63,6 +71,7 @@ export interface ConfigProviderContextInterface {
    * Платформа
    */
   platform?: PlatformType;
+  hasNewTokens?: boolean;
 }
 
 export const defaultConfigProviderProps = {
@@ -71,8 +80,12 @@ export const defaultConfigProviderProps = {
   scheme: Scheme.BRIGHT_LIGHT,
   transitionMotionEnabled: true,
   platform: platform(),
+  hasNewTokens: false,
   // appearance is auto-detected by default
   // appearance: Appearance.LIGHT,
 };
 
-export const ConfigProviderContext = React.createContext<ConfigProviderContextInterface>(defaultConfigProviderProps);
+export const ConfigProviderContext =
+  React.createContext<ConfigProviderContextInterface>(
+    defaultConfigProviderProps
+  );

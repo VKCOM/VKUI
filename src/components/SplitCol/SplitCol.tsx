@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { classNames } from '../../lib/classNames';
-import './SplitCol.css';
+import * as React from "react";
+import { classNames } from "../../lib/classNames";
+import "./SplitCol.css";
 
 export interface SplitColContextProps {
   colRef: React.RefObject<HTMLDivElement>;
@@ -28,7 +28,17 @@ export interface SplitColProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
-  const { children, width, maxWidth, minWidth, spaced, animate = false, fixed, style, ...restProps } = props;
+  const {
+    children,
+    width,
+    maxWidth,
+    minWidth,
+    spaced,
+    animate = false,
+    fixed,
+    style,
+    ...restProps
+  } = props;
   const baseRef = React.useRef<HTMLDivElement>();
 
   const contextValue = React.useMemo(() => {
@@ -48,13 +58,17 @@ export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
         minWidth: minWidth,
       }}
       ref={baseRef}
-      vkuiClass={classNames('SplitCol', {
-        'SplitCol--spaced': spaced,
-        'SplitCol--fixed': fixed,
+      vkuiClass={classNames("SplitCol", {
+        "SplitCol--spaced": spaced,
+        "SplitCol--fixed": fixed,
       })}
     >
       <SplitColContext.Provider value={contextValue}>
-        {fixed ? <div vkuiClass="SplitCol__fixedInner">{children}</div> : children}
+        {fixed ? (
+          <div vkuiClass="SplitCol__fixedInner">{children}</div>
+        ) : (
+          children
+        )}
       </SplitColContext.Provider>
     </div>
   );

@@ -1,4 +1,4 @@
-import { canUseDOM } from '../../lib/dom';
+import { canUseDOM } from "../../lib/dom";
 
 const masksCreated: Document[] = [];
 
@@ -8,13 +8,16 @@ export function createMasks(document: Document): void {
   }
 
   // eslint-disable-next-line no-restricted-globals
-  const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svgElement.setAttributeNS(null, 'id', '__SVG_MASKS_NODE__');
-  svgElement.setAttributeNS(null, 'width', '0');
-  svgElement.setAttributeNS(null, 'height', '0');
-  svgElement.style.position = 'absolute';
-  svgElement.style.width = '0px';
-  svgElement.style.height = '0px';
+  const svgElement = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "svg"
+  );
+  svgElement.setAttributeNS(null, "id", "__SVG_MASKS_NODE__");
+  svgElement.setAttributeNS(null, "width", "0");
+  svgElement.setAttributeNS(null, "height", "0");
+  svgElement.style.position = "absolute";
+  svgElement.style.width = "0px";
+  svgElement.style.height = "0px";
 
   svgElement.innerHTML = `<defs>
   <clipPath id="users_stack_mask_16_left">

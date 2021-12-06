@@ -1,27 +1,35 @@
-import { ActionSheet, ActionSheetProps } from './ActionSheet';
-import ActionSheetItem from '../ActionSheetItem/ActionSheetItem';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
-import { withPlatform } from '../../hoc/withPlatform';
-import { ViewWidth } from '../../hoc/withAdaptivity';
+import { ActionSheet, ActionSheetProps } from "./ActionSheet";
+import ActionSheetItem from "../ActionSheetItem/ActionSheetItem";
+import { describeScreenshotFuzz } from "../../testing/e2e/utils";
+import { withPlatform } from "../../hoc/withPlatform";
+import { ViewWidth } from "../../hoc/withAdaptivity";
 
-describe('ActionSheet', () => {
+describe("ActionSheet", () => {
   const cancel = <ActionSheetItem mode="cancel">Отменить</ActionSheetItem>;
-  describeScreenshotFuzz(withPlatform((props: ActionSheetProps) => (
-    <ActionSheet
-      {...props}
-      iosCloseItem={cancel}
-      style={{ position: 'relative' }}
-    />
-  )), [{
-    children: [[
-      <ActionSheetItem key="1">Элемент</ActionSheetItem>,
-      <ActionSheetItem key="2">Второй элемент</ActionSheetItem>,
-    ]],
-    header: [undefined, 'Заголовок'],
-  }], {
-    adaptivity: {
-      // prevent desktop action sheet
-      viewWidth: ViewWidth.MOBILE,
-    },
-  });
+  describeScreenshotFuzz(
+    withPlatform((props: ActionSheetProps) => (
+      <ActionSheet
+        {...props}
+        iosCloseItem={cancel}
+        style={{ position: "relative" }}
+      />
+    )),
+    [
+      {
+        children: [
+          [
+            <ActionSheetItem key="1">Элемент</ActionSheetItem>,
+            <ActionSheetItem key="2">Второй элемент</ActionSheetItem>,
+          ],
+        ],
+        header: [undefined, "Заголовок"],
+      },
+    ],
+    {
+      adaptivity: {
+        // prevent desktop action sheet
+        viewWidth: ViewWidth.MOBILE,
+      },
+    }
+  );
 });

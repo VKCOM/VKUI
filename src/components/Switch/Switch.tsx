@@ -1,17 +1,17 @@
-import * as React from 'react';
-import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
-import { usePlatform } from '../../hooks/usePlatform';
-import { HasRef, HasRootRef } from '../../types';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useExternRef } from '../../hooks/useExternRef';
-import { FocusVisible } from '../FocusVisible/FocusVisible';
-import './Switch.css';
+import * as React from "react";
+import { getClassName } from "../../helpers/getClassName";
+import { classNames } from "../../lib/classNames";
+import { usePlatform } from "../../hooks/usePlatform";
+import { HasRef, HasRootRef } from "../../types";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { useExternRef } from "../../hooks/useExternRef";
+import { FocusVisible } from "../FocusVisible/FocusVisible";
+import "./Switch.css";
 
-export interface SwitchProps extends
-  React.InputHTMLAttributes<HTMLInputElement>,
-  HasRootRef<HTMLLabelElement>,
-  HasRef<HTMLInputElement> {};
+export interface SwitchProps
+  extends React.InputHTMLAttributes<HTMLInputElement>,
+    HasRootRef<HTMLLabelElement>,
+    HasRef<HTMLInputElement> {}
 
 export const Switch: React.FC<SwitchProps> = ({
   style,
@@ -27,13 +27,21 @@ export const Switch: React.FC<SwitchProps> = ({
 
   return (
     <label
-      vkuiClass={classNames(getClassName('Switch', platform), `Switch--sizeY-${sizeY}`)}
+      vkuiClass={classNames(
+        getClassName("Switch", platform),
+        `Switch--sizeY-${sizeY}`
+      )}
       className={className}
       style={style}
       ref={getRootRef}
       role="presentation"
     >
-      <input {...restProps} type="checkbox" vkuiClass="Switch__self" ref={inputRef} />
+      <input
+        {...restProps}
+        type="checkbox"
+        vkuiClass="Switch__self"
+        ref={inputRef}
+      />
       <span role="presentation" vkuiClass="Switch__pseudo" />
       <FocusVisible mode="outside" />
     </label>

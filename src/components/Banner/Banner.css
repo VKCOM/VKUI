@@ -17,7 +17,7 @@
 }
 
 .Banner__in::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0;
@@ -115,7 +115,7 @@
 
 .Banner--inverted .Banner__subheader {
   color: var(--white);
-  opacity: .72;
+  opacity: 0.72;
 }
 
 /**

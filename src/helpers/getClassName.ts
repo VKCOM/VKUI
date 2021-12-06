@@ -1,5 +1,8 @@
-import { PlatformType, platform } from '../lib/platform';
+import { PlatformType, platform } from "../lib/platform";
 
-export function getClassName(base: string, osname: PlatformType = platform()): string {
+export function getClassName(
+  base: string,
+  osname: PlatformType = platform()
+): string {
   return `${base} ${base}--${osname}`;
 }

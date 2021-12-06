@@ -1,13 +1,20 @@
-import '../src/styles/themes.css';
-import '../src/styles/unstable.css';
-import '../src/styles/common.css';
+import "../src/styles/themes.css";
+import "../src/styles/unstable.css";
+import "../src/styles/common.css";
 
-import { useState, useRef } from 'react';
-import pkg from '../package';
-import * as VKUI from '../src';
-import * as VKUIUnstable from '../src/unstable';
-import * as Icons from '@vkontakte/icons';
-import { getRandomInt, getRandomUser, getRandomUsers, importantCountries, getAvatarUrl, perfLogger } from './utils';
+import { useState, useRef } from "react";
+import pkg from "../package";
+import * as VKUI from "../src";
+import * as VKUIUnstable from "../src/unstable";
+import * as Icons from "@vkontakte/icons";
+import {
+  getRandomInt,
+  getRandomUser,
+  getRandomUsers,
+  importantCountries,
+  getAvatarUrl,
+  perfLogger,
+} from "./utils";
 
 const ui = { ...VKUI, ...VKUIUnstable };
 
@@ -18,11 +25,11 @@ for (let i in ui) {
 }
 
 Object.getOwnPropertyNames(Icons).forEach((name) => {
-  if (name.startsWith('Icon')) {
+  if (name.startsWith("Icon")) {
     const icon = Icons[name];
     window[name] = icon;
 
-    if (typeof icon.mountIcon === 'function') {
+    if (typeof icon.mountIcon === "function") {
       // Нужно смонтировать символ иконки до того, как общий спрайт будет клонирован во все iframe предпросмотры компонентов.
       // Раньше код для добавления SVG-символа в спрайт находился в корне модуля,
       // а теперь по-умолчанию символ добавляется только во время первого рендера иконки.
@@ -33,7 +40,9 @@ Object.getOwnPropertyNames(Icons).forEach((name) => {
 
 window.osname = VKUI.platform();
 
-window.schemeId = window.localStorage.getItem('vkui-styleguide:schemeId') || pkg.defaultSchemeId;
+window.schemeId =
+  window.localStorage.getItem("vkui-styleguide:schemeId") ||
+  pkg.defaultSchemeId;
 
 window.getRandomInt = getRandomInt;
 window.getRandomUser = getRandomUser;

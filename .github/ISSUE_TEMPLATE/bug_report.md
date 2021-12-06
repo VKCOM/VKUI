@@ -2,9 +2,8 @@
 name: Bug report
 about: Помогите нам сделать библиотеку более стабильной
 title: "[Bug]"
-labels: 'bug'
-assignees: ''
-
+labels: "bug"
+assignees: ""
 ---
 
 **Описание**

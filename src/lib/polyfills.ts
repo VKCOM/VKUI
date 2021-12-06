@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { canUseDOM } from './dom';
+import { canUseDOM } from "./dom";
 
 export type MatchesMethod = (css: string) => boolean;
 
@@ -14,15 +14,16 @@ if (canUseDOM) {
 
   // Element.prototype.matches
   if (!ElementProto.matches) {
-    ElementProto.matches = (ElementProto as OldElement).matchesSelector ||
+    ElementProto.matches =
+      (ElementProto as OldElement).matchesSelector ||
       ElementProto.webkitMatchesSelector ||
       (ElementProto as OldElement).mozMatchesSelector ||
-        (ElementProto as OldElement).msMatchesSelector;
+      (ElementProto as OldElement).msMatchesSelector;
   }
 
   // Element.prototype.closest
   if (!ElementProto.closest) {
-    ElementProto.closest = function(css: string): Element | null {
+    ElementProto.closest = function (css: string): Element | null {
       let node: Element = this;
       while (node) {
         if (node.matches(css)) {
@@ -38,8 +39,8 @@ if (canUseDOM) {
 
 // Array.prototype.includes
 if (!Array.prototype.includes) {
-  Object.defineProperty(Array.prototype, 'includes', {
-    value: function(searchElement: any, fromIndex: number) {
+  Object.defineProperty(Array.prototype, "includes", {
+    value: function (searchElement: any, fromIndex: number) {
       if (this == null) {
         throw new TypeError('"this" is null or not defined');
       }
@@ -51,7 +52,13 @@ if (!Array.prototype.includes) {
       const n = fromIndex | 0;
       let k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
       function sameValueZero(x: any, y: any) {
-        return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
+        return (
+          x === y ||
+          (typeof x === "number" &&
+            typeof y === "number" &&
+            isNaN(x) &&
+            isNaN(y))
+        );
       }
       while (k < len) {
         if (sameValueZero(o[k], searchElement)) {
@@ -60,18 +67,18 @@ if (!Array.prototype.includes) {
         k++;
       }
       return false;
-    }
+    },
   });
 }
 
 // Array.prototype.find
 if (!Array.prototype.find) {
-  Object.defineProperty(Array.prototype, 'find', {
-    value: function(callback: Array<any>['find']) {
+  Object.defineProperty(Array.prototype, "find", {
+    value: function (callback: Array<any>["find"]) {
       if (this === null) {
-        throw new TypeError('Array.prototype.find called on null or undefined');
-      } else if (typeof callback !== 'function') {
-        throw new TypeError('callback must be a function');
+        throw new TypeError("Array.prototype.find called on null or undefined");
+      } else if (typeof callback !== "function") {
+        throw new TypeError("callback must be a function");
       }
 
       let list = Object(this);
@@ -84,6 +91,6 @@ if (!Array.prototype.find) {
           return element;
         }
       }
-    }
-  })
+    },
+  });
 }

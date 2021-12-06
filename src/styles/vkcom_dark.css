@@ -2,7 +2,8 @@
 /*
 * Этот файл сгенерирован автоматически. Не надо править его руками.
 */
-body[scheme="vkcom_dark"], [scheme="vkcom_dark"] {
+body[scheme="vkcom_dark"],
+[scheme="vkcom_dark"] {
   --accent: #71aaeb;
   --accent_alternate: #ffffff;
   --action_sheet_action_foreground: #ffffff;
@@ -21,7 +22,7 @@ body[scheme="vkcom_dark"], [scheme="vkcom_dark"] {
   --background_light: #292929;
   --background_page: #0a0a0a;
   --background_suggestions: #333333;
-  --background_text_highlighted: rgba(81, 129, 184, 0.20);
+  --background_text_highlighted: rgba(81, 129, 184, 0.2);
   --button_bot_shadow: #222222;
   --button_commerce_background: #4bb34b;
   --button_commerce_foreground: #ffffff;
@@ -34,12 +35,17 @@ body[scheme="vkcom_dark"], [scheme="vkcom_dark"] {
   --button_secondary_background: #555555;
   --button_secondary_background_highlighted: #656565;
   --button_secondary_destructive_background: #555555;
-  --button_secondary_destructive_background_highlighted: rgba(85, 85, 85, 0.60);
+  --button_secondary_destructive_background_highlighted: rgba(85, 85, 85, 0.6);
   --button_secondary_destructive_foreground: #ff5c5c;
-  --button_secondary_destructive_foreground_highlighted: rgba(230, 70, 70, 0.16);
+  --button_secondary_destructive_foreground_highlighted: rgba(
+    230,
+    70,
+    70,
+    0.16
+  );
   --button_secondary_foreground: #e1e3e6;
   --button_secondary_foreground_highlighted: #e1e3e6;
-  --button_tertiary_background: rgba(0, 0, 0, 0.00);
+  --button_tertiary_background: rgba(0, 0, 0, 0);
   --button_tertiary_foreground: #e1e3e6;
   --cell_button_foreground: #e1e3e6;
   --content_negative_background: rgba(230, 70, 70, 0.16);
@@ -104,12 +110,12 @@ body[scheme="vkcom_dark"], [scheme="vkcom_dark"] {
   --icon_outline_medium: #b2b2b2;
   --icon_outline_secondary: #939393;
   --icon_secondary: #828282;
-  --icon_secondary_alpha: rgba(255, 255, 255, 0.40);
+  --icon_secondary_alpha: rgba(255, 255, 255, 0.4);
   --icon_tertiary: #656565;
   --icon_tertiary_alpha: rgba(255, 255, 255, 0.24);
   --im_attach_tint: #ffffff;
-  --im_bubble_border_alternate: rgba(0, 0, 0, 0.00);
-  --im_bubble_border_alternate_highlighted: rgba(0, 0, 0, 0.00);
+  --im_bubble_border_alternate: rgba(0, 0, 0, 0);
+  --im_bubble_border_alternate_highlighted: rgba(0, 0, 0, 0);
   --im_bubble_button_background: rgba(255, 255, 255, 0.16);
   --im_bubble_button_background_highlighted: rgba(255, 255, 255, 0.24);
   --im_bubble_button_foreground: #e1e3e6;
@@ -148,7 +154,7 @@ body[scheme="vkcom_dark"], [scheme="vkcom_dark"] {
   --input_border: #555555;
   --landing_background: #222222;
   --landing_field_background: #292929;
-  --landing_field_border: rgba(0, 0, 0, 0.00);
+  --landing_field_border: rgba(0, 0, 0, 0);
   --landing_field_placeholder: #b2b2b2;
   --landing_login_button_background: #e1e3e6;
   --landing_login_button_foreground: #222222;
@@ -157,7 +163,7 @@ body[scheme="vkcom_dark"], [scheme="vkcom_dark"] {
   --landing_secondary_button_background: rgba(255, 255, 255, 0.16);
   --landing_secondary_button_foreground: #ffffff;
   --landing_snippet_border: rgba(255, 255, 255, 0.16);
-  --landing_tertiary_button_background: rgba(0, 0, 0, 0.00);
+  --landing_tertiary_button_background: rgba(0, 0, 0, 0);
   --landing_tertiary_button_foreground: #ffffff;
   --landing_text_primary: #e1e3e6;
   --landing_text_secondary: #828282;
@@ -186,7 +192,7 @@ body[scheme="vkcom_dark"], [scheme="vkcom_dark"] {
   --placeholder_icon_foreground_secondary: #656565;
   --placeholder_icon_tint: #ffffff;
   --poll_option_background: #ffffff;
-  --primary_overlay_badge: rgba(255, 255, 255, 0.40);
+  --primary_overlay_badge: rgba(255, 255, 255, 0.4);
   --search_bar_background: #222222;
   --search_bar_field_background: #424242;
   --search_bar_field_tint: #b2b2b2;
@@ -201,12 +207,12 @@ body[scheme="vkcom_dark"], [scheme="vkcom_dark"] {
   --skeleton_foreground_from: #292929;
   --skeleton_foreground_to: #333333;
   --skeleton_shimmer_from: #222222;
-  --skeleton_shimmer_to: rgba(0, 0, 0, 0.00);
+  --skeleton_shimmer_to: rgba(0, 0, 0, 0);
   --snippet_background: rgba(255, 255, 255, 0.04);
   --snippet_border: rgba(255, 255, 255, 0.16);
   --snippet_icon_tertiary: #656565;
   --splashscreen_icon: #333333;
-  --statusbar_alternate_legacy_background: rgba(0, 0, 0, 0.00);
+  --statusbar_alternate_legacy_background: rgba(0, 0, 0, 0);
   --stories_create_button_background_from: #424242;
   --stories_create_button_background_to: #424242;
   --stories_create_button_foreground: #cccccc;

@@ -1,4 +1,4 @@
-name: 'Clear styleguide for closed PR'
+name: "Clear styleguide for closed PR"
 
 on:
   pull_request:

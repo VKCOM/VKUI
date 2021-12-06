@@ -1,21 +1,25 @@
-import * as React from 'react';
-import { classNames } from '../../lib/classNames';
-import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
-import { FormField } from '../FormField/FormField';
-import { HasAlign, HasRootRef } from '../../types';
-import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
-import { usePlatform } from '../../hooks/usePlatform';
-import { getClassName } from '../../helpers/getClassName';
-import Headline from '../Typography/Headline/Headline';
-import Text from '../Typography/Text/Text';
-import { VKCOM } from '../../lib/platform';
-import '../Select/Select.css';
+import * as React from "react";
+import { classNames } from "../../lib/classNames";
+import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
+import { FormField } from "../FormField/FormField";
+import { HasAlign, HasRootRef } from "../../types";
+import {
+  withAdaptivity,
+  AdaptivityProps,
+  SizeType,
+} from "../../hoc/withAdaptivity";
+import { usePlatform } from "../../hooks/usePlatform";
+import { getClassName } from "../../helpers/getClassName";
+import Headline from "../Typography/Headline/Headline";
+import Text from "../Typography/Text/Text";
+import { VKCOM } from "../../lib/platform";
+import "../Select/Select.css";
 
-export interface SelectMimicryProps extends
-  React.HTMLAttributes<HTMLElement>,
-  HasAlign,
-  HasRootRef<HTMLElement>,
-  AdaptivityProps {
+export interface SelectMimicryProps
+  extends React.HTMLAttributes<HTMLElement>,
+    HasAlign,
+    HasRootRef<HTMLElement>,
+    AdaptivityProps {
   multiline?: boolean;
   disabled?: boolean;
 }
@@ -35,25 +39,34 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
 }: SelectMimicryProps) => {
   const platform = usePlatform();
 
-  const TypographyComponent = platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
+  const TypographyComponent =
+    platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
 
   return (
     <FormField
       {...restProps}
       tabIndex={disabled ? null : tabIndex}
-      vkuiClass={classNames(getClassName('Select', platform), 'Select--mimicry', {
-        'Select--not-selected': !children,
-        'Select--multiline': multiline,
-        [`Select--align-${align}`]: !!align,
-        [`Select--sizeX--${sizeX}`]: !!sizeX,
-        [`Select--sizeY--${sizeY}`]: !!sizeY,
-      })}
+      vkuiClass={classNames(
+        getClassName("Select", platform),
+        "Select--mimicry",
+        {
+          "Select--not-selected": !children,
+          "Select--multiline": multiline,
+          [`Select--align-${align}`]: !!align,
+          [`Select--sizeX--${sizeX}`]: !!sizeX,
+          [`Select--sizeY--${sizeY}`]: !!sizeY,
+        }
+      )}
       getRootRef={getRootRef}
       onClick={disabled ? null : onClick}
       disabled={disabled}
       after={<DropdownIcon />}
     >
-      <TypographyComponent Component="div" weight="regular" vkuiClass="Select__container">
+      <TypographyComponent
+        Component="div"
+        weight="regular"
+        vkuiClass="Select__container"
+      >
         <span vkuiClass="Select__title">{children || placeholder}</span>
       </TypographyComponent>
     </FormField>

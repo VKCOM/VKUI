@@ -1,6 +1,6 @@
-import React from 'react';
-import { Text } from '@vkui';
-import './Type.css';
+import React from "react";
+import { Text } from "@vkui";
+import "./Type.css";
 
 export const TypeRenderer = ({ children }) => {
   return (

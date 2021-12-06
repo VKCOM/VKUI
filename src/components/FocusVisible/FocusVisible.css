@@ -40,8 +40,8 @@ input:focus-visible ~ .FocusVisible--outside {
     left: 4px;
     right: 4px;
     bottom: 4px;
-    animation: vkui-animation-focus-visible .15s ease-in-out forwards;
-    animation-delay: .01ms;
+    animation: vkui-animation-focus-visible 0.15s ease-in-out forwards;
+    animation-delay: 0.01ms;
     will-change: top, left, bottom, right;
   }
 
@@ -57,7 +57,8 @@ input:focus-visible ~ .FocusVisible--outside {
   }
 
   @keyframes vkui-animation-focus-visible {
-    0% {}
+    0% {
+    }
 
     100% {
       top: 2px;
@@ -69,7 +70,8 @@ input:focus-visible ~ .FocusVisible--outside {
   }
 
   @keyframes vkui-animation-focus-visible-outside {
-    0% {}
+    0% {
+    }
 
     100% {
       top: -2px;

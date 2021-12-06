@@ -1,23 +1,23 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { baselineComponent } from '../../testing/utils';
-import { Cell } from './Cell';
-import { ListContext } from '../List/ListContext';
-import List from '../List/List';
+import { fireEvent, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { baselineComponent } from "../../testing/utils";
+import { Cell } from "./Cell";
+import { ListContext } from "../List/ListContext";
+import List from "../List/List";
 
-const label = 'Перенести ячейку';
+const label = "Перенести ячейку";
 const dragger = () => screen.getByLabelText(label);
 
-describe('Cell', () => {
+describe("Cell", () => {
   baselineComponent(Cell);
 
-  describe('Controls dragging', () => {
-    it('on mouse up/down', () => {
+  describe("Controls dragging", () => {
+    it("on mouse up/down", () => {
       const toggleDrag = jest.fn();
       render(
         <ListContext.Provider value={{ toggleDrag }}>
           <Cell draggable draggerLabel={label} />
-        </ListContext.Provider>,
+        </ListContext.Provider>
       );
 
       fireEvent.mouseDown(dragger());
@@ -27,12 +27,12 @@ describe('Cell', () => {
       expect(toggleDrag).toHaveBeenLastCalledWith(false);
     });
 
-    it('stops drag on unmount', () => {
+    it("stops drag on unmount", () => {
       const toggleDrag = jest.fn();
       const { rerender } = render(
         <ListContext.Provider value={{ toggleDrag }}>
           <Cell draggable draggerLabel={label} />
-        </ListContext.Provider>,
+        </ListContext.Provider>
       );
 
       fireEvent.mouseDown(dragger());
@@ -40,8 +40,8 @@ describe('Cell', () => {
       expect(toggleDrag).toHaveBeenLastCalledWith(false);
     });
 
-    it('does not reorder dragged item on click', () => {
-      const initialList = ['eugpoloz', 'arthurstam', 'xyz'];
+    it("does not reorder dragged item on click", () => {
+      const initialList = ["eugpoloz", "arthurstam", "xyz"];
       let updatedList = [...initialList];
 
       render(
@@ -49,7 +49,7 @@ describe('Cell', () => {
           {updatedList.map((item) => (
             <Cell
               key={item}
-              data-testid={'list-' + item}
+              data-testid={"list-" + item}
               draggable
               onDragFinish={({ from, to }) => {
                 let list = [...updatedList];
@@ -62,10 +62,12 @@ describe('Cell', () => {
               {item}
             </Cell>
           ))}
-        </List>,
+        </List>
       );
 
-      userEvent.click(screen.getByTestId('list-xyz').querySelector(`[aria-label="${label}"]`));
+      userEvent.click(
+        screen.getByTestId("list-xyz").querySelector(`[aria-label="${label}"]`)
+      );
 
       expect(updatedList).toEqual(initialList);
     });

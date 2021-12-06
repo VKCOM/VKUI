@@ -1,42 +1,44 @@
-const path = require('path');
-const cssCustomProperties = require('postcss-custom-properties');
-const scopeRoot = require('./tasks/postcss-scope-root.js');
-const cssImport = require('postcss-import');
-const autoprefixer = require('autoprefixer');
-const selectorPrefixer = require('postcss-prefixer');
-const csso = require('postcss-csso');
-const checkKeyframes = require('./tasks/postcss-check-keyframes');
-const { defaultSchemeId } = require('./package.json');
+const path = require("path");
+const cssCustomProperties = require("postcss-custom-properties");
+const scopeRoot = require("./tasks/postcss-scope-root.js");
+const cssImport = require("postcss-import");
+const autoprefixer = require("autoprefixer");
+const cssModules = require("postcss-modules");
+const csso = require("postcss-csso");
+const checkKeyframes = require("./tasks/postcss-check-keyframes");
+const { defaultSchemeId } = require("./package.json");
 
-const animationsSource = path.join(__dirname, 'src/styles/animations.css');
+const animationsSource = path.join(__dirname, "src/styles/animations.css");
 const cssPropSources = [
-  path.join(__dirname, 'src/styles/bright_light.css'),
-  path.join(__dirname, 'src/styles/constants.css'),
+  path.join(__dirname, "src/styles/bright_light.css"),
+  path.join(__dirname, "src/styles/constants.css"),
   animationsSource,
 ];
 
 let plugins = [
   cssImport(),
   checkKeyframes({
-    importFrom: animationsSource
+    importFrom: animationsSource,
   }),
   cssCustomProperties({
     importFrom: cssPropSources,
-    preserve: true
+    preserve: true,
   }),
   // postcss-custom-properties only works with :root
   scopeRoot({
-    customPropRoot: '.vkui__root, .vkui__portal-root',
-    except: path.resolve(`./src/styles/${defaultSchemeId}.css`)
+    customPropRoot: ".vkui__root, .vkui__portal-root",
+    except: path.resolve(`./src/styles/${defaultSchemeId}.css`),
   }),
   autoprefixer(),
-  selectorPrefixer({
-    prefix: 'vkui',
-    ignore: [/^\.vkui/, '#mount']
-  })
+  cssModules({
+    generateScopedName: (name) =>
+      name.startsWith("vkui") || name === "mount" ? name : `vkui${name}`,
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    getJSON: () => {},
+  }),
 ];
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   plugins.push(csso({ restructure: false }));
 }
 

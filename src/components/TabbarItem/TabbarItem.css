@@ -119,9 +119,9 @@
 }
 
 .TabbarItem--ios .TabbarItem__in {
-  transition: transform .07s var(--ios-easing);
+  transition: transform 0.07s var(--ios-easing);
 }
 
 .TabbarItem--ios .TabbarItem__tappable--active + .TabbarItem__in {
-  transform: scale(.96);
+  transform: scale(0.96);
 }

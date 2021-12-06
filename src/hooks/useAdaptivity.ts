@@ -1,5 +1,8 @@
-import * as React from 'react';
-import { AdaptivityContext, AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
+import * as React from "react";
+import {
+  AdaptivityContext,
+  AdaptivityProps,
+} from "../components/AdaptivityProvider/AdaptivityContext";
 
 export type { AdaptivityProps };
 

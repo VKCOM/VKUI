@@ -6,7 +6,10 @@
 .InitialsAvatar__text {
   font-family: var(--font-tt);
   font-weight: 600;
-  color: var(--white); /* stylelint-disable-line plugin/only-tokens-are-allowed */
+  color: var(
+    --white
+  ); /* stylelint-disable-line plugin/only-tokens-are-allowed */
+
   text-transform: uppercase;
   text-align: center;
 }

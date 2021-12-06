@@ -4,50 +4,69 @@
 
 Поле ввода принимает все валидные для `<input>` значения.
 
->**Важно**
+> **Важно**
 >
->Это нестабильный компонент. Его API может меняться в рамках одной мажорной версии. [Подробнее про нестабильные компоненты](#/Unstable).
+> Это нестабильный компонент. Его API может меняться в рамках одной мажорной версии. [Подробнее про нестабильные компоненты](#/Unstable).
 
 ```jsx
-const colors = [{value: 'red', label: 'Красный'}, {value: 'blue', label: 'Синий'}, {value: 'navarin', label: 'Наваринского пламени с дымом',}];
-const groups = [{ value: 'download', label: 'Скачать все и вся!', icon: <Icon12Download /> }, { value: '1', label: 'Arctic Monkeys', src: getAvatarUrl('audio_arctic_monkeys')}, {value: '2', label: 'Звери', src: getAvatarUrl('audio_leto_zveri')}, {value: '4', label: 'FACE', src: getAvatarUrl('audio_face')}, {value: '3', label: 'Depeche Mode', src: getAvatarUrl('audio_depeche_mode')}, {value: '5', label: 'Linkin Park', src: getAvatarUrl('audio_linkin_park')}]
+const colors = [
+  { value: "red", label: "Красный" },
+  { value: "blue", label: "Синий" },
+  { value: "navarin", label: "Наваринского пламени с дымом" },
+];
+const groups = [
+  { value: "download", label: "Скачать все и вся!", icon: <Icon12Download /> },
+  {
+    value: "1",
+    label: "Arctic Monkeys",
+    src: getAvatarUrl("audio_arctic_monkeys"),
+  },
+  { value: "2", label: "Звери", src: getAvatarUrl("audio_leto_zveri") },
+  { value: "4", label: "FACE", src: getAvatarUrl("audio_face") },
+  {
+    value: "3",
+    label: "Depeche Mode",
+    src: getAvatarUrl("audio_depeche_mode"),
+  },
+  { value: "5", label: "Linkin Park", src: getAvatarUrl("audio_linkin_park") },
+];
 
 const Example = () => {
   const [selectedGroups, setSelectedGroups] = React.useState([]);
-  const [selectedColors, setSelectedColors] = React.useState(colors.slice(0, 2));
+  const [selectedColors, setSelectedColors] = React.useState(
+    colors.slice(0, 2)
+  );
   const [selectedColorsCopy, setSelectedColorsCopy] = React.useState([]);
-  
+
   const groupsChipsProps = {
     value: selectedGroups,
     onChange: setSelectedGroups,
     options: groups,
-    placeholder:"Не выбраны",
-    emptyText: 'Совсем ничего не найдено',
+    placeholder: "Не выбраны",
+    emptyText: "Совсем ничего не найдено",
   };
 
   const colorsChipsProps = {
     value: selectedColors,
     onChange: setSelectedColors,
     options: colors,
-    placeholder:"Не выбраны",
+    placeholder: "Не выбраны",
     creatable: true,
   };
 
   const colorsCopyChipsProps = {
-      value: selectedColorsCopy,
-      onChange: setSelectedColorsCopy,
-      options: colors,
-      placeholder:"Не выбраны",
-      creatable: true,
-      creatableText: '',
+    value: selectedColorsCopy,
+    onChange: setSelectedColorsCopy,
+    options: colors,
+    placeholder: "Не выбраны",
+    creatable: true,
+    creatableText: "",
   };
 
   return (
     <View activePanel="profile" id="profile">
       <Panel id="profile">
-        <PanelHeader>
-          Предпочтения
-        </PanelHeader>
+        <PanelHeader>Предпочтения</PanelHeader>
         <Group>
           <FormItem top="Выберите группы">
             <ChipsSelect
@@ -55,12 +74,17 @@ const Example = () => {
               showSelected={false}
               closeAfterSelect={false}
               onChangeStart={(e, option) => {
-                if (option.value === 'download') {
+                if (option.value === "download") {
                   e.preventDefault();
-                  alert('download!');
-                }   
+                  alert("download!");
+                }
               }}
-              renderChip={({ value, label, option: { src, icon }, ...rest }) => (
+              renderChip={({
+                value,
+                label,
+                option: { src, icon },
+                ...rest
+              }) => (
                 <Chip
                   value={value}
                   before={<Avatar size={20} src={src} />}
@@ -69,10 +93,19 @@ const Example = () => {
                   {label}
                 </Chip>
               )}
-              renderOption={({ option: { src, value, icon }, ...otherProps }) => {
+              renderOption={({
+                option: { src, value, icon },
+                ...otherProps
+              }) => {
                 return (
                   <CustomSelectOption
-                    before={icon ? <Avatar size={20}>{icon}</Avatar> : <Avatar size={20} src={src} />}
+                    before={
+                      icon ? (
+                        <Avatar size={20}>{icon}</Avatar>
+                      ) : (
+                        <Avatar size={20} src={src} />
+                      )
+                    }
                     {...otherProps}
                   />
                 );
@@ -80,7 +113,7 @@ const Example = () => {
             />
           </FormItem>
           <FormItem top="Выберите или добавьте цвета">
-            <ChipsSelect {...colorsChipsProps}/>
+            <ChipsSelect {...colorsChipsProps} />
           </FormItem>
           <FormItem top="Выберите или добавьте цвета (creatable без кнопки создания)">
             <ChipsSelect {...colorsCopyChipsProps} />
@@ -89,8 +122,7 @@ const Example = () => {
       </Panel>
     </View>
   );
-}
+};
 
-<Example />
+<Example />;
 ```
-
