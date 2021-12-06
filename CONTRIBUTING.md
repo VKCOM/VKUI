@@ -25,15 +25,21 @@ props => <div {...props} vkuiClass="Component" />
 
 Бывают случаи, например, поле ввода, когда главным является именно `input`, а не обёртка:
 ```jsx
-const { mode, style, className, ...restProps } = props;
-
-return (
-  <div vkuiClass={classNames('Input', `Input--${mode}`)} className={className} style={style}>
-    <input {...restProps} />
-  </div>
-);
+const Input: React.FC<InputProps> = ({ mode, style, className, ...restProps }) => {
+  return (
+    <div vkuiClass={classNames('Input', `Input--${mode}`)} className={className} style={style}>
+      <input {...restProps} />
+    </div>
+  );
+}
 ```
-* Компонент корректно отрисовывается, если не передавать никаких свойств (пользуемся `defaultProps`)
+* Компонент корректно отрисовывается, если не передавать никаких свойств. Вместо `defaultProps`, [deprecated для функциональных компонентов](https://github.com/facebook/react/pull/16210), используем спред:
+```jsx
+const Cmp: React.FC<CmpProps> = ({
+  mode = "default",
+  ...restProps,
+}) => <div vkuiClass={classNames("Cmp", `Cmp--${mode}`)} {...restProps} />;
+```
 * Для цветов используются цветовые токены
 * Для типографии используются компоненты [Typography](https://vkcom.github.io/VKUI/#!/Typography) там, где это возможно
 * Добавлен `export` компонента и его свойств в `src/index.ts`
