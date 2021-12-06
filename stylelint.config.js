@@ -1,3 +1,4 @@
+const path = require('path');
 const { cssPropSources } = require('./postcss.config');
 
 module.exports = {
@@ -20,7 +21,10 @@ module.exports = {
     }],
     "keyframes-name-pattern": "vkui-.+",
     "csstools/value-no-unknown-custom-properties": [true, {
-      "importFrom": cssPropSources
+      "importFrom": [
+        ...cssPropSources,
+        path.join(__dirname, 'node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css'),
+      ]
     }],
     // Skip reporting in pprecommit run, highlight in editor
     "vkui/atomic": [process.env.LINT_PRECOMMIT_RUN ? null : true, {
