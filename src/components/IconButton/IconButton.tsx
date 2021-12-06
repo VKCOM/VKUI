@@ -1,11 +1,11 @@
-import * as React from 'react';
-import Tappable, { TappableProps } from '../Tappable/Tappable';
-import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
-import { usePlatform } from '../../hooks/usePlatform';
-import { withAdaptivity } from '../../hoc/withAdaptivity';
-import { IOS } from '../../lib/platform';
-import './IconButton.css';
+import * as React from "react";
+import Tappable, { TappableProps } from "../Tappable/Tappable";
+import { getClassName } from "../../helpers/getClassName";
+import { classNames } from "../../lib/classNames";
+import { usePlatform } from "../../hooks/usePlatform";
+import { withAdaptivity } from "../../hoc/withAdaptivity";
+import { IOS } from "../../lib/platform";
+import "./IconButton.css";
 
 export interface IconButtonProps extends TappableProps {
   /**
@@ -26,12 +26,12 @@ const IconButton: React.FC<IconButtonProps> = ({
   return (
     <Tappable
       {...restProps}
-      Component={restProps.href ? 'a' : Component}
+      Component={restProps.href ? "a" : Component}
       activeEffectDelay={200}
-      activeMode={platform === IOS ? 'opacity' : 'IconButton--active'}
+      activeMode={platform === IOS ? "opacity" : "IconButton--active"}
       vkuiClass={classNames(
-        getClassName('IconButton', platform),
-        `IconButton--sizeY-${sizeY}`,
+        getClassName("IconButton", platform),
+        `IconButton--sizeY-${sizeY}`
       )}
     >
       {icon || children}
@@ -40,7 +40,7 @@ const IconButton: React.FC<IconButtonProps> = ({
 };
 
 IconButton.defaultProps = {
-  Component: 'button',
+  Component: "button",
 };
 
 export default withAdaptivity(IconButton, {

@@ -5,7 +5,7 @@
 Как только он заканчивается, вызывается свойство-функция `onTransition`.
 
 ```jsx
-const [activeView, setActiveView] = useState('view1');
+const [activeView, setActiveView] = useState("view1");
 
 <Root activeView={activeView}>
   <View activePanel="panel1.1" id="view1">
@@ -13,7 +13,7 @@ const [activeView, setActiveView] = useState('view1');
       <PanelHeader>View 1</PanelHeader>
       <Group>
         <div style={{ height: 200 }} />
-        <CellButton onClick={ () => setActiveView('view2') }>
+        <CellButton onClick={() => setActiveView("view2")}>
           Open View 2
         </CellButton>
         <div style={{ height: 600 }} />
@@ -25,12 +25,12 @@ const [activeView, setActiveView] = useState('view1');
       <PanelHeader>View 2</PanelHeader>
       <Group>
         <div style={{ height: 200 }} />
-        <CellButton onClick={ () => setActiveView('view1') }>
+        <CellButton onClick={() => setActiveView("view1")}>
           Back to View 1
         </CellButton>
         <div style={{ height: 600 }} />
       </Group>
     </Panel>
   </View>
-</Root>
+</Root>;
 ```

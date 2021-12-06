@@ -28,7 +28,7 @@
 }
 
 .Tabs--default .TabsItem::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   left: 16px;
@@ -144,8 +144,10 @@
   background: var(--separator_common);
 }
 
-.PanelHeader--ios .Tabs--segmented.TabsItem:not(.TabsItem--selected).TabsItem--active .TabsItem__in {
-  opacity: .7;
+.PanelHeader--ios
+  .Tabs--segmented.TabsItem:not(.TabsItem--selected).TabsItem--active
+  .TabsItem__in {
+  opacity: 0.7;
 }
 
 .PanelHeader--ios .Tabs--segmented .TabsItem {

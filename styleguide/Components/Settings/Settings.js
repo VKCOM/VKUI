@@ -1,12 +1,12 @@
-import React, { Fragment } from 'react';
-import { PlatformSelect } from './PlatformSelect';
-import { SchemeSelect } from './SchemeSelect';
-import { HasMouseCheckbox } from './HasMouseCheckbox';
-import { ViewHeightSelect } from './ViewHeightSelect';
-import { ViewWidthSelect } from './ViewWidthSelect';
-import './Settings.css';
-import { Platform, useAdaptivity, ViewWidth } from '@vkui';
-import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
+import React, { Fragment } from "react";
+import { PlatformSelect } from "./PlatformSelect";
+import { SchemeSelect } from "./SchemeSelect";
+import { HasMouseCheckbox } from "./HasMouseCheckbox";
+import { ViewHeightSelect } from "./ViewHeightSelect";
+import { ViewWidthSelect } from "./ViewWidthSelect";
+import "./Settings.css";
+import { Platform, useAdaptivity, ViewWidth } from "@vkui";
+import { StyleGuideContext } from "../StyleGuide/StyleGuideRenderer";
 
 export const Settings = ({ adaptivity }) => {
   const { viewWidth } = useAdaptivity();
@@ -29,7 +29,7 @@ export const Settings = ({ adaptivity }) => {
                   value={context.scheme}
                 />
               )}
-              {adaptivity && !isMobile &&
+              {adaptivity && !isMobile && (
                 <Fragment>
                   <ViewHeightSelect
                     onChange={(height) => context.setContext({ height })}
@@ -46,7 +46,7 @@ export const Settings = ({ adaptivity }) => {
                     disabled={context.platform === Platform.VKCOM}
                   />
                 </Fragment>
-              }
+              )}
             </div>
           </div>
         );

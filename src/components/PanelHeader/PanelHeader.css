@@ -4,7 +4,7 @@
 
 .PanelHeader--vis.PanelHeader--fixed::before {
   display: block;
-  content: '';
+  content: "";
 }
 
 .PanelHeader__fixed {
@@ -25,7 +25,7 @@
 }
 
 .PanelHeader--shadow .PanelHeader__in {
-  box-shadow: 0 0 4px rgba(0, 0, 0, .08);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
 }
 
 .PanelHeader__left {
@@ -86,11 +86,14 @@
   flex-shrink: 0;
   flex-grow: 1;
   opacity: 1;
-  transition: opacity .3s var(--ios-easing);
+  transition: opacity 0.3s var(--ios-easing);
   padding: 4px 0 4px 4px;
 }
 
-.PanelHeader--ios .PanelHeader__left .PanelHeaderButton + .PanelHeaderButton--primitive {
+.PanelHeader--ios
+  .PanelHeader__left
+  .PanelHeaderButton
+  + .PanelHeaderButton--primitive {
   margin-left: -6px;
   padding-left: 0;
 }
@@ -98,7 +101,7 @@
 .PanelHeader--ios .PanelHeader__content {
   text-align: center;
   opacity: 1;
-  transition: opacity .3s var(--ios-easing);
+  transition: opacity 0.3s var(--ios-easing);
 }
 
 .PanelHeader--ios .PanelHeader__content-in {
@@ -131,7 +134,7 @@
   flex-shrink: 0;
   flex-grow: 1;
   opacity: 1;
-  transition: opacity .3s var(--ios-easing);
+  transition: opacity 0.3s var(--ios-easing);
   padding: 4px 4px 4px 0;
 }
 
@@ -195,7 +198,9 @@
   padding-left: 16px;
 }
 
-.SplitCol--spaced .PanelHeader--android.PanelHeader--no-left .PanelHeader__content {
+.SplitCol--spaced
+  .PanelHeader--android.PanelHeader--no-left
+  .PanelHeader__content {
   padding-left: 0;
 }
 
@@ -208,7 +213,9 @@
   padding-right: 16px;
 }
 
-.SplitCol--spaced .PanelHeader--android.PanelHeader--no-right .PanelHeader__content {
+.SplitCol--spaced
+  .PanelHeader--android.PanelHeader--no-right
+  .PanelHeader__content {
   padding-right: 0;
 }
 

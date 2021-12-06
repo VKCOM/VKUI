@@ -1,6 +1,6 @@
-import React from 'react';
-import { Platform, Scheme } from '@vkui';
-import { Setting } from '../Setting/Setting';
+import React from "react";
+import { Platform, Scheme } from "@vkui";
+import { Setting } from "../Setting/Setting";
 
 export const SchemeSelect = ({ onChange, value, platform, ...restProps }) => {
   let options;
@@ -24,7 +24,6 @@ export const SchemeSelect = ({ onChange, value, platform, ...restProps }) => {
       options={options}
       onChange={onChange}
       value={value}
-    >
-    </Setting>
+    ></Setting>
   );
 };

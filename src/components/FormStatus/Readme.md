@@ -4,9 +4,7 @@
 ```jsx
 <View activePanel="form-status">
   <Panel id="form-status">
-    <PanelHeader>
-      Статус формы
-    </PanelHeader>
+    <PanelHeader>Статус формы</PanelHeader>
     <Group>
       <FormItem>
         <FormStatus header="Некорректный мобильный номер" mode="error">

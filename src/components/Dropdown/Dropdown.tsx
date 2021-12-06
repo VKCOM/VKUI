@@ -1,10 +1,10 @@
-import * as React from 'react';
-import { HoverPopper, HoverPopperProps } from '../HoverPopper/HoverPopper';
-import { ClickPopper } from '../ClickPopper/ClickPopper';
-import { getClassName } from '../../helpers/getClassName';
-import { usePlatform } from '../../hooks/usePlatform';
-import { Placement } from '../Popper/Popper';
-import './Dropdown.css';
+import * as React from "react";
+import { HoverPopper, HoverPopperProps } from "../HoverPopper/HoverPopper";
+import { ClickPopper } from "../ClickPopper/ClickPopper";
+import { getClassName } from "../../helpers/getClassName";
+import { usePlatform } from "../../hooks/usePlatform";
+import { Placement } from "../Popper/Popper";
+import "./Dropdown.css";
 
 // Приходится избегать экстендов от HoverPopperProps, ClickPopperProps и PopperProps, потому что react-docgen не умеет в Omit.
 // Ждём либо фикса react-docgen (что вряд ли), либо переезда на react-docgen-typescript, где такой проблемы нет.
@@ -39,36 +39,45 @@ export interface DropdownProps {
    */
   children?: React.ReactElement;
 
-  action?: 'click' | 'hover';
+  action?: "click" | "hover";
   /**
    * Актуально только для action="hover"
    * Количество миллисекунд, после которых произойдет показ дропдауна
    */
-  showDelay?: HoverPopperProps['showDelay'];
+  showDelay?: HoverPopperProps["showDelay"];
   /**
    * Актуально только для action="hover"
    * Количество миллисекунд, после которых произойдет скрытие дропдауна
    */
-  hideDelay?: HoverPopperProps['hideDelay'];
+  hideDelay?: HoverPopperProps["hideDelay"];
 }
 
-export const Dropdown: React.FC<DropdownProps> = ({ action = 'click', hideDelay, showDelay, ...popperProps }: DropdownProps) => {
+export const Dropdown: React.FC<DropdownProps> = ({
+  action = "click",
+  hideDelay,
+  showDelay,
+  ...popperProps
+}: DropdownProps) => {
   const platform = usePlatform();
 
   let Component;
   let actionSpecificProps: Partial<DropdownProps> = {};
 
   switch (action) {
-    case 'click':
+    case "click":
       Component = ClickPopper;
       break;
-    case 'hover':
+    case "hover":
       actionSpecificProps = { hideDelay, showDelay };
       Component = HoverPopper;
       break;
   }
 
   return (
-    <Component vkuiClass={getClassName('Dropdown', platform)} {...actionSpecificProps} {...popperProps} />
+    <Component
+      vkuiClass={getClassName("Dropdown", platform)}
+      {...actionSpecificProps}
+      {...popperProps}
+    />
   );
 };

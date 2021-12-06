@@ -26,7 +26,7 @@
 
 .Switch__pseudo::before {
   position: absolute;
-  content: '';
+  content: "";
   top: -3px;
   left: -3px;
   border-radius: 50%;
@@ -38,7 +38,7 @@
 }
 
 .Switch__self[disabled] + .Switch__pseudo {
-  opacity: .4;
+  opacity: 0.4;
 }
 
 /**
@@ -68,10 +68,8 @@
   width: 27px;
   height: 27px;
   background: var(--white);
-  box-shadow:
-    0 3px 8px rgba(0, 0, 0, .15),
-    0 3px 1px rgba(0, 0, 0, .06),
-    inset 0 0 0 .5px rgba(0, 0, 0, .04);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15), 0 3px 1px rgba(0, 0, 0, 0.06),
+    inset 0 0 0 0.5px rgba(0, 0, 0, 0.04);
 }
 
 .Switch--ios.Switch--sizeY-compact .Switch__pseudo::before {
@@ -89,7 +87,7 @@
 
 .Switch--android .Switch__pseudo::after,
 .Switch--vkcom .Switch__pseudo::after {
-  content: '';
+  content: "";
   display: block;
   width: 100%;
   height: 100%;
@@ -98,7 +96,7 @@
 .Switch--android .Switch__self:checked + .Switch__pseudo::after,
 .Switch--vkcom .Switch__self:checked + .Switch__pseudo::after {
   background: var(--accent);
-  opacity: .48;
+  opacity: 0.48;
 }
 
 /**
@@ -127,7 +125,7 @@
   width: 20px;
   height: 20px;
   background: #f1f1f1; /* todo: 1077 replace w/ a proper variable */
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, .12), 0 2px 2px 0 rgba(0, 0, 0, .24);
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
 }
 
 .Switch--android.Switch--sizeY-compact .Switch__pseudo::before {
@@ -139,7 +137,9 @@
   background: var(--accent);
 }
 
-.Switch--android.Switch--sizeY-compact .Switch__self:checked + .Switch__pseudo::before {
+.Switch--android.Switch--sizeY-compact
+  .Switch__self:checked
+  + .Switch__pseudo::before {
   transform: translateX(19px);
 }
 
@@ -154,7 +154,7 @@
 .Switch--vkcom .Switch__pseudo::after {
   border-radius: 45px;
   background: var(--icon_tertiary);
-  opacity: .48;
+  opacity: 0.48;
 }
 
 .Switch--vkcom .Switch__pseudo::before {
@@ -180,20 +180,20 @@
  */
 @media (prefers-reduced-motion: no-preference) {
   .Switch__pseudo::before {
-    transition: transform .1s ease;
+    transition: transform 0.1s ease;
   }
 
   .Switch--ios .Switch__pseudo {
-    transition: background-color .2s ease, border-color .2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
   }
 
   .Switch--ios .Switch__pseudo::before {
-    transition: transform .2s cubic-bezier(.36, -.24, .26, 1.32);
+    transition: transform 0.2s cubic-bezier(0.36, -0.24, 0.26, 1.32);
   }
 
   .Switch--android .Switch__pseudo::after,
   .Switch--vkcom .Switch__pseudo::after {
-    transition: background-color .1s ease;
+    transition: background-color 0.1s ease;
   }
 }
 

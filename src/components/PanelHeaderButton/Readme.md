@@ -4,29 +4,41 @@
 Кнопки могут быть переданы в `left` или `right` компонента `PanelHeader`:
 
 ```jsx static
-import { PanelHeader, PanelHeaderButton } from '@vkontakte/vkui';
-import { Icon28Notifications, Icon28SettingsOutline } from '@vkontakte/icons';
+import { PanelHeader, PanelHeaderButton } from "@vkontakte/vkui";
+import { Icon28Notifications, Icon28SettingsOutline } from "@vkontakte/icons";
 
 <PanelHeader
-  left={<PanelHeaderButton><Icon28Notifications/></PanelHeaderButton>}
-  right={<PanelHeaderButton><Icon28SettingsOutline/></PanelHeaderButton>}
-/>
+  left={
+    <PanelHeaderButton>
+      <Icon28Notifications />
+    </PanelHeaderButton>
+  }
+  right={
+    <PanelHeaderButton>
+      <Icon28SettingsOutline />
+    </PanelHeaderButton>
+  }
+/>;
 ```
 
 Если нужно несколько кнопок справа или слева, то используем `React.Fragment`:
 
 ```jsx static
-import { PanelHeader, PanelHeaderButton } from '@vkontakte/vkui';
-import { Icon28SettingsOutline, Icon28Notifications } from '@vkontakte/icons';
+import { PanelHeader, PanelHeaderButton } from "@vkontakte/vkui";
+import { Icon28SettingsOutline, Icon28Notifications } from "@vkontakte/icons";
 
 <PanelHeader
   right={
     <React.Fragment>
-      <PanelHeaderButton><Icon28SettingsOutline /></PanelHeaderButton>
-      <PanelHeaderButton><Icon28Notifications /></PanelHeaderButton>
+      <PanelHeaderButton>
+        <Icon28SettingsOutline />
+      </PanelHeaderButton>
+      <PanelHeaderButton>
+        <Icon28Notifications />
+      </PanelHeaderButton>
     </React.Fragment>
   }
-/>
+/>;
 ```
 
 **VK Mini Apps**

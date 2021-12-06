@@ -1,16 +1,16 @@
-import * as React from 'react';
-import { Icon24Dismiss } from '@vkontakte/icons';
-import Button from '../Button/Button';
-import SimpleCell from '../SimpleCell/SimpleCell';
-import Avatar from '../Avatar/Avatar';
-import Caption from '../Typography/Caption/Caption';
-import { usePlatform } from '../../hooks/usePlatform';
-import { getClassName } from '../../helpers/getClassName';
-import './PromoBanner.css';
+import * as React from "react";
+import { Icon24Dismiss } from "@vkontakte/icons";
+import Button from "../Button/Button";
+import SimpleCell from "../SimpleCell/SimpleCell";
+import Avatar from "../Avatar/Avatar";
+import Caption from "../Typography/Caption/Caption";
+import { usePlatform } from "../../hooks/usePlatform";
+import { getClassName } from "../../helpers/getClassName";
+import "./PromoBanner.css";
 
 type StatsType =
-  | 'playbackStarted' // Начало показа
-  | 'click'; // Клик по баннеру
+  | "playbackStarted" // Начало показа
+  | "click"; // Клик по баннеру
 
 type BannerData = {
   title?: string;
@@ -55,17 +55,23 @@ const PromoBanner = (props: PromoBannerProps) => {
       ? parseInt(bannerData.ageRestrictions)
       : bannerData.ageRestriction;
 
-  const [currentPixel, setCurrentPixel] = React.useState('');
+  const [currentPixel, setCurrentPixel] = React.useState("");
 
   const statsPixels = React.useMemo(
     () =>
       (bannerData.statistics
-        ? bannerData.statistics.reduce((acc, item) => ({ ...acc, [item.type]: item.url }), {})
+        ? bannerData.statistics.reduce(
+            (acc, item) => ({ ...acc, [item.type]: item.url }),
+            {}
+          )
         : {}) as Record<StatsType, string | void>,
-    [bannerData.statistics],
+    [bannerData.statistics]
   );
 
-  const onClick = React.useCallback(() => setCurrentPixel(statsPixels.click || ''), [statsPixels.click]);
+  const onClick = React.useCallback(
+    () => setCurrentPixel(statsPixels.click || ""),
+    [statsPixels.click]
+  );
 
   React.useEffect(() => {
     if (statsPixels.playbackStarted) {
@@ -74,16 +80,22 @@ const PromoBanner = (props: PromoBannerProps) => {
   }, [statsPixels.playbackStarted]);
 
   return (
-    <div vkuiClass={getClassName('PromoBanner', platform)} {...restProps}>
+    <div vkuiClass={getClassName("PromoBanner", platform)} {...restProps}>
       <div vkuiClass="PromoBanner__head">
-        <Caption weight="regular" level="1" vkuiClass="PromoBanner__label">{bannerData.advertisingLabel || 'Advertisement'}</Caption>
-        {ageRestrictions != null && <Caption weight="regular" level="1" vkuiClass="PromoBanner__age">{ageRestrictions}+</Caption>}
+        <Caption weight="regular" level="1" vkuiClass="PromoBanner__label">
+          {bannerData.advertisingLabel || "Advertisement"}
+        </Caption>
+        {ageRestrictions != null && (
+          <Caption weight="regular" level="1" vkuiClass="PromoBanner__age">
+            {ageRestrictions}+
+          </Caption>
+        )}
 
-        {!props.isCloseButtonHidden &&
+        {!props.isCloseButtonHidden && (
           <div vkuiClass="PromoBanner__close" onClick={props.onClose}>
             <Icon24Dismiss />
           </div>
-        }
+        )}
       </div>
       <SimpleCell
         href={bannerData.trackingLink}
@@ -91,7 +103,12 @@ const PromoBanner = (props: PromoBannerProps) => {
         rel="nofollow noopener noreferrer"
         target="_blank"
         before={
-          <Avatar mode="image" size={48} src={bannerData.iconLink} alt={bannerData.title} />
+          <Avatar
+            mode="image"
+            size={48}
+            src={bannerData.iconLink}
+            alt={bannerData.title}
+          />
         }
         after={<Button mode="outline">{bannerData.ctaText}</Button>}
         description={bannerData.domain}
@@ -99,11 +116,11 @@ const PromoBanner = (props: PromoBannerProps) => {
         {bannerData.title}
       </SimpleCell>
 
-      {currentPixel.length > 0 &&
+      {currentPixel.length > 0 && (
         <div vkuiClass="PromoBanner__pixels">
           <img src={currentPixel} alt="" />
         </div>
-      }
+      )}
     </div>
   );
 };

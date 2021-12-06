@@ -24,13 +24,13 @@
 
 @media (min-resolution: 2dppx) {
   .Spacing--separator::after {
-    transform: scaleY(.5);
+    transform: scaleY(0.5);
   }
 }
 
 @media (min-resolution: 3dppx) {
   .Spacing--separator::after {
-    transform: scaleY(.32);
+    transform: scaleY(0.32);
   }
 }
 

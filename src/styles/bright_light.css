@@ -2,7 +2,9 @@
 /*
 * Этот файл сгенерирован автоматически. Не надо править его руками.
 */
-:root, body[scheme="bright_light"], [scheme="bright_light"] {
+:root,
+body[scheme="bright_light"],
+[scheme="bright_light"] {
   --accent: #2688eb;
   --accent_alternate: #0077ff;
   --action_sheet_action_foreground: #2688eb;
@@ -21,7 +23,7 @@
   --background_light: #f9f9f9;
   --background_page: #ebedf0;
   --background_suggestions: #ffffff;
-  --background_text_highlighted: rgba(38, 136, 235, 0.20);
+  --background_text_highlighted: rgba(38, 136, 235, 0.2);
   --button_bot_shadow: #c4c8cc;
   --button_commerce_background: #4bb34b;
   --button_commerce_foreground: #ffffff;
@@ -36,10 +38,10 @@
   --button_secondary_destructive_background: rgba(0, 28, 61, 0.05);
   --button_secondary_destructive_background_highlighted: rgba(0, 28, 61, 0.03);
   --button_secondary_destructive_foreground: #e64646;
-  --button_secondary_destructive_foreground_highlighted: rgba(230, 70, 70, 0.60);
+  --button_secondary_destructive_foreground_highlighted: rgba(230, 70, 70, 0.6);
   --button_secondary_foreground: #2688eb;
-  --button_secondary_foreground_highlighted: rgba(38, 136, 235, 0.60);
-  --button_tertiary_background: rgba(0, 0, 0, 0.00);
+  --button_secondary_foreground_highlighted: rgba(38, 136, 235, 0.6);
+  --button_tertiary_background: rgba(0, 0, 0, 0);
   --button_tertiary_foreground: #2d81e0;
   --cell_button_foreground: #2688eb;
   --content_placeholder_icon: #99a2ad;
@@ -87,7 +89,7 @@
   --header_background_before_blur_alternate: #ffffff;
   --header_search_field_background: #ebedf0;
   --header_search_field_tint: #818c99;
-  --header_tab_active_background: rgba(0, 0, 0, 0.00);
+  --header_tab_active_background: rgba(0, 0, 0, 0);
   --header_tab_active_indicator: #2688eb;
   --header_tab_active_text: #000000;
   --header_tab_inactive_text: #99a2ad;
@@ -112,7 +114,7 @@
   --im_bubble_button_background: #f9f9f9;
   --im_bubble_button_background_highlighted: #d7d8d9;
   --im_bubble_button_foreground: #000000;
-  --im_bubble_button_outgoing_background: rgba(255, 255, 255, 0.60);
+  --im_bubble_button_outgoing_background: rgba(255, 255, 255, 0.6);
   --im_bubble_gift_background: #f4e7c3;
   --im_bubble_gift_background_highlighted: #e3d3ac;
   --im_bubble_gift_text: #857250;
@@ -147,16 +149,16 @@
   --input_border: #e1e3e6;
   --landing_background: #ffffff;
   --landing_field_background: #f2f3f5;
-  --landing_field_border: rgba(0, 0, 0, 0.00);
+  --landing_field_border: rgba(0, 0, 0, 0);
   --landing_field_placeholder: #818c99;
   --landing_login_button_background: #2d81e0;
   --landing_login_button_foreground: #ffffff;
   --landing_primary_button_background: #2d81e0;
   --landing_primary_button_foreground: #ffffff;
-  --landing_secondary_button_background: rgba(0, 57, 115, 0.10);
+  --landing_secondary_button_background: rgba(0, 57, 115, 0.1);
   --landing_secondary_button_foreground: #2688eb;
   --landing_snippet_border: rgba(0, 0, 0, 0.15);
-  --landing_tertiary_button_background: rgba(0, 0, 0, 0.00);
+  --landing_tertiary_button_background: rgba(0, 0, 0, 0);
   --landing_tertiary_button_foreground: #2d81e0;
   --landing_text_primary: #000000;
   --landing_text_secondary: #818c99;
@@ -170,7 +172,7 @@
   --media_overlay_button_background: #ffffff;
   --media_overlay_button_foreground: #2c2d2e;
   --modal_card_background: #ffffff;
-  --modal_card_border: rgba(0, 0, 0, 0.00);
+  --modal_card_border: rgba(0, 0, 0, 0);
   --modal_card_header_close: #000000;
   --music_playback_icon: #000000;
   --overlay_status_background: #ebedf0;
@@ -185,13 +187,13 @@
   --placeholder_icon_foreground_secondary: #aeb7c2;
   --placeholder_icon_tint: #001c3d;
   --poll_option_background: #45678f;
-  --primary_overlay_badge: rgba(0, 0, 0, 0.60);
+  --primary_overlay_badge: rgba(0, 0, 0, 0.6);
   --search_bar_background: #ffffff;
   --search_bar_field_background: #ebedf0;
   --search_bar_field_tint: #818c99;
   --search_bar_segmented_control_tint: #818c99;
   --secondary_overlay_badge: rgba(0, 0, 0, 0.24);
-  --segmented_control_bar_background: rgba(0, 0, 0, 0.00);
+  --segmented_control_bar_background: rgba(0, 0, 0, 0);
   --segmented_control_tint: #99a2ad;
   --selection_off_icon: #b8c1cc;
   --separator_alpha: rgba(0, 0, 0, 0.12);
@@ -205,7 +207,7 @@
   --snippet_border: rgba(0, 0, 0, 0.15);
   --snippet_icon_tertiary: #c4c8cc;
   --splashscreen_icon: #e1e3e6;
-  --statusbar_alternate_legacy_background: rgba(0, 0, 0, 0.20);
+  --statusbar_alternate_legacy_background: rgba(0, 0, 0, 0.2);
   --stories_create_button_background_from: #f2f3f5;
   --stories_create_button_background_to: #e1e3e6;
   --stories_create_button_foreground: #6d7885;

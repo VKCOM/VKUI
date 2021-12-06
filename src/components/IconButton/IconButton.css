@@ -29,7 +29,7 @@
 }
 
 .IconButton[disabled] {
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .FormItem--removable .Removable__content > .IconButton,

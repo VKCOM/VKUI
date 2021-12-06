@@ -2,7 +2,8 @@
 /*
 * Этот файл сгенерирован автоматически. Не надо править его руками.
 */
-body[scheme="vkcom_light"], [scheme="vkcom_light"] {
+body[scheme="vkcom_light"],
+[scheme="vkcom_light"] {
   --accent: #5181b8;
   --accent_alternate: #0077ff;
   --action_sheet_action_foreground: #5181b8;
@@ -21,7 +22,7 @@ body[scheme="vkcom_light"], [scheme="vkcom_light"] {
   --background_light: #fafbfc;
   --background_page: #edeef0;
   --background_suggestions: #ffffff;
-  --background_text_highlighted: rgba(81, 129, 184, 0.20);
+  --background_text_highlighted: rgba(81, 129, 184, 0.2);
   --button_bot_shadow: #cccccc;
   --button_commerce_background: #4bb34b;
   --button_commerce_foreground: #ffffff;
@@ -34,12 +35,22 @@ body[scheme="vkcom_light"], [scheme="vkcom_light"] {
   --button_secondary_background: #e5ebf1;
   --button_secondary_background_highlighted: #dae2ea;
   --button_secondary_destructive_background: rgba(230, 70, 70, 0.16);
-  --button_secondary_destructive_background_highlighted: rgba(230, 70, 70, 0.12);
+  --button_secondary_destructive_background_highlighted: rgba(
+    230,
+    70,
+    70,
+    0.12
+  );
   --button_secondary_destructive_foreground: #e64646;
-  --button_secondary_destructive_foreground_highlighted: rgba(230, 70, 70, 0.12);
+  --button_secondary_destructive_foreground_highlighted: rgba(
+    230,
+    70,
+    70,
+    0.12
+  );
   --button_secondary_foreground: #55677d;
   --button_secondary_foreground_highlighted: #55677d;
-  --button_tertiary_background: rgba(0, 0, 0, 0.00);
+  --button_tertiary_background: rgba(0, 0, 0, 0);
   --button_tertiary_foreground: #2a5885;
   --cell_button_foreground: #2a5885;
   --content_negative_background: #ff5c5c;
@@ -88,7 +99,7 @@ body[scheme="vkcom_light"], [scheme="vkcom_light"] {
   --header_background_before_blur_alternate: #ffffff;
   --header_search_field_background: #edeef0;
   --header_search_field_tint: #818c99;
-  --header_tab_active_background: rgba(0, 0, 0, 0.00);
+  --header_tab_active_background: rgba(0, 0, 0, 0);
   --header_tab_active_indicator: #5181b8;
   --header_tab_active_text: #000000;
   --header_tab_inactive_text: #99a2ad;
@@ -148,16 +159,16 @@ body[scheme="vkcom_light"], [scheme="vkcom_light"] {
   --input_border: #d3d9de;
   --landing_background: #ffffff;
   --landing_field_background: #f7f8fa;
-  --landing_field_border: rgba(0, 0, 0, 0.00);
+  --landing_field_border: rgba(0, 0, 0, 0);
   --landing_field_placeholder: #818c99;
   --landing_login_button_background: #5181b8;
   --landing_login_button_foreground: #ffffff;
   --landing_primary_button_background: #5181b8;
   --landing_primary_button_foreground: #ffffff;
-  --landing_secondary_button_background: rgba(0, 57, 115, 0.10);
+  --landing_secondary_button_background: rgba(0, 57, 115, 0.1);
   --landing_secondary_button_foreground: #5181b8;
   --landing_snippet_border: rgba(0, 0, 0, 0.12);
-  --landing_tertiary_button_background: rgba(0, 0, 0, 0.00);
+  --landing_tertiary_button_background: rgba(0, 0, 0, 0);
   --landing_tertiary_button_foreground: #5181b8;
   --landing_text_primary: #000000;
   --landing_text_secondary: #818c99;
@@ -171,7 +182,7 @@ body[scheme="vkcom_light"], [scheme="vkcom_light"] {
   --media_overlay_button_background: #ffffff;
   --media_overlay_button_foreground: #333333;
   --modal_card_background: #ffffff;
-  --modal_card_border: rgba(0, 0, 0, 0.00);
+  --modal_card_border: rgba(0, 0, 0, 0);
   --modal_card_header_close: #000000;
   --music_playback_icon: #000000;
   --overlay_status_background: #edeef0;
@@ -187,12 +198,12 @@ body[scheme="vkcom_light"], [scheme="vkcom_light"] {
   --placeholder_icon_tint: #1d3a5c;
   --poll_option_background: #5181b8;
   --primary_overlay_badge: rgba(0, 0, 0, 0.56);
-  --search_bar_background: rgba(0, 0, 0, 0.00);
+  --search_bar_background: rgba(0, 0, 0, 0);
   --search_bar_field_background: #edeef0;
   --search_bar_field_tint: #818c99;
   --search_bar_segmented_control_tint: #818c99;
   --secondary_overlay_badge: rgba(0, 0, 0, 0.24);
-  --segmented_control_bar_background: rgba(0, 0, 0, 0.00);
+  --segmented_control_bar_background: rgba(0, 0, 0, 0);
   --segmented_control_tint: #99a2ad;
   --selection_off_icon: #c5d0db;
   --separator_alpha: rgba(0, 0, 0, 0.12);
@@ -201,7 +212,7 @@ body[scheme="vkcom_light"], [scheme="vkcom_light"] {
   --skeleton_foreground_from: #f0f2f5;
   --skeleton_foreground_to: #e7e8ec;
   --skeleton_shimmer_from: #ffffff;
-  --skeleton_shimmer_to: rgba(255, 255, 255, 0.00);
+  --skeleton_shimmer_to: rgba(255, 255, 255, 0);
   --snippet_background: #ffffff;
   --snippet_border: rgba(0, 0, 0, 0.12);
   --snippet_icon_tertiary: #aeb7c2;

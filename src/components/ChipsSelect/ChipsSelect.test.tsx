@@ -1,97 +1,112 @@
-import { baselineComponent } from '../../testing/utils';
-import { fireEvent, render, screen, queryByText } from '@testing-library/react';
-import ChipsSelect, { ChipsSelectProps } from './ChipsSelect';
-import userEvent from '@testing-library/user-event';
-import { ChipsInputOption } from '../ChipsInput/ChipsInput';
+import { baselineComponent } from "../../testing/utils";
+import { fireEvent, render, screen, queryByText } from "@testing-library/react";
+import ChipsSelect, { ChipsSelectProps } from "./ChipsSelect";
+import userEvent from "@testing-library/user-event";
+import { ChipsInputOption } from "../ChipsInput/ChipsInput";
 
 const ChipsSelectTest = (props: ChipsSelectProps<ChipsInputOption>) => (
   <ChipsSelect data-testid="chips-select" {...props} />
 );
 // const redChip = () => screen.queryByText('Красный');
-const getChipsSelect = () => screen.getByTestId('chips-select');
+const getChipsSelect = () => screen.getByTestId("chips-select");
 
-const colors: ChipsInputOption[] = [{ value: 'red', label: 'Красный' }, { value: 'blue', label: 'Синий' }, { value: 'navarin', label: 'Наваринского пламени с дымом' }];
-const toggleDropdown = () => userEvent.click(screen.getByRole('textbox'));
+const colors: ChipsInputOption[] = [
+  { value: "red", label: "Красный" },
+  { value: "blue", label: "Синий" },
+  { value: "navarin", label: "Наваринского пламени с дымом" },
+];
+const toggleDropdown = () => userEvent.click(screen.getByRole("textbox"));
 // получить опцию из дропдауна (не чип)
 const queryListOption = (o: ChipsInputOption) => {
-  const list = document.querySelector('.ChipsSelect__options');
+  const list = document.querySelector(".ChipsSelect__options");
   return list ? queryByText(list as HTMLElement, o.label) : null;
 };
 
-describe('ChipsSelect', () => {
+describe("ChipsSelect", () => {
   baselineComponent(ChipsSelect);
 
-  it('renders empty text', () => {
+  it("renders empty text", () => {
     render(<ChipsSelect options={[]} emptyText="__empty__" />);
     toggleDropdown();
-    expect(screen.queryByText('__empty__')).toBeTruthy();
+    expect(screen.queryByText("__empty__")).toBeTruthy();
   });
 
-  it('filters options', () => {
+  it("filters options", () => {
     render(<ChipsSelect options={colors} />);
-    userEvent.type(screen.getByRole('textbox'), colors[1].label.substring(0, 3));
+    userEvent.type(
+      screen.getByRole("textbox"),
+      colors[1].label.substring(0, 3)
+    );
     toggleDropdown();
     expect(queryListOption(colors[1])).toBeTruthy();
-    expect(screen.queryAllByRole('option')).toHaveLength(1);
+    expect(screen.queryAllByRole("option")).toHaveLength(1);
   });
 
-  it('shows spinner if fetching', () => {
+  it("shows spinner if fetching", () => {
     render(<ChipsSelect fetching />);
     toggleDropdown();
-    expect(screen.queryByRole('status')).toBeTruthy();
+    expect(screen.queryByRole("status")).toBeTruthy();
   });
 
-  describe('controls dropdown', () => {
-    it.each(['click', 'focus'])('opens options on %s', (e) => {
+  describe("controls dropdown", () => {
+    it.each(["click", "focus"])("opens options on %s", (e) => {
       render(<ChipsSelect options={colors} />);
-      e === 'focus'
-        ? fireEvent.focus(screen.getByRole('textbox'))
+      e === "focus"
+        ? fireEvent.focus(screen.getByRole("textbox"))
         : toggleDropdown();
-      expect(screen.getAllByRole('option')[0]).toBeTruthy();
+      expect(screen.getAllByRole("option")[0]).toBeTruthy();
     });
-    it('closes options on click outside', () => {
+    it("closes options on click outside", () => {
       render(<ChipsSelect options={colors} />);
       toggleDropdown();
       userEvent.click(document.body);
-      expect(screen.queryByRole('option')).toBeNull();
+      expect(screen.queryByRole("option")).toBeNull();
     });
-    it('closes options after select', () => {
+    it("closes options after select", () => {
       render(<ChipsSelect options={colors} />);
       toggleDropdown();
       userEvent.click(queryListOption(colors[0]));
       expect(queryListOption(colors[1])).toBeNull();
     });
-    it('closes options on esc', () => {
+    it("closes options on esc", () => {
       render(<ChipsSelect options={colors} />);
       toggleDropdown();
-      userEvent.type(screen.getByRole('textbox'), '{esc}');
+      userEvent.type(screen.getByRole("textbox"), "{esc}");
       expect(queryListOption(colors[1])).toBeNull();
     });
   });
 
-  describe('selects', () => {
-    it('on click', () => {
+  describe("selects", () => {
+    it("on click", () => {
       let value;
-      render(<ChipsSelect options={colors} onChange={(e) => value = e} />);
+      render(<ChipsSelect options={colors} onChange={(e) => (value = e)} />);
       toggleDropdown();
       userEvent.click(queryListOption(colors[0]));
       expect(value).toEqual([colors[0]]);
     });
-    it('hides selected option from list', () => {
+    it("hides selected option from list", () => {
       render(<ChipsSelect options={colors} value={[colors[0]]} />);
       toggleDropdown();
       expect(queryListOption(colors[0])).toBeNull();
     });
-    it('deselects on chip click', () => {
+    it("deselects on chip click", () => {
       let value;
-      render(<ChipsSelect options={colors} value={[colors[0]]} onChange={(e) => value = e} />);
+      render(
+        <ChipsSelect
+          options={colors}
+          value={[colors[0]]}
+          onChange={(e) => (value = e)}
+        />
+      );
       userEvent.click(screen.getByLabelText(`Удалить ${colors[0].label}`));
       expect(value).toEqual([]);
     });
   });
 
-  it('does not focus ChipsSelect on chip click', () => {
-    let selectedColors: ChipsInputOption[] = [{ value: 'red', label: 'Красный' }];
+  it("does not focus ChipsSelect on chip click", () => {
+    let selectedColors: ChipsInputOption[] = [
+      { value: "red", label: "Красный" },
+    ];
     const setSelectedColors = (updatedColors: ChipsInputOption[]) => {
       selectedColors = [...updatedColors];
     };
@@ -100,16 +115,14 @@ describe('ChipsSelect', () => {
       value: selectedColors,
       onChange: setSelectedColors,
       options: colors,
-      top: 'Выберите или добавьте цвета',
-      placeholder: 'Не выбраны',
+      top: "Выберите или добавьте цвета",
+      placeholder: "Не выбраны",
       creatable: true,
     };
 
-    render(
-      <ChipsSelectTest {...colorsChipsProps} />,
-    );
+    render(<ChipsSelectTest {...colorsChipsProps} />);
 
-    const redChipRemove = screen.getByLabelText('Удалить Красный');
+    const redChipRemove = screen.getByLabelText("Удалить Красный");
 
     userEvent.click(redChipRemove);
     expect(getChipsSelect()).not.toHaveFocus();

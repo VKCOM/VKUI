@@ -1,7 +1,6 @@
 Компонент-контейнер для реализации интерфейса с [многоколоночной структурой](#!/Adaptivity). Тесно связан со [SplitCol](#!/SplitCol).
 
 ```jsx
-
 const panels = ["panel 1", "panel 2", "panel 3"];
 const modals = ["modal 1", "modal 2"];
 
@@ -54,10 +53,15 @@ const Example = withAdaptivity(
                   <Cell
                     key={i}
                     disabled={i === panel}
-                    style={i === panel ? {
-                      backgroundColor: "var(--button_secondary_background)",
-                      borderRadius: 8
-                    } : {}}
+                    style={
+                      i === panel
+                        ? {
+                            backgroundColor:
+                              "var(--button_secondary_background)",
+                            borderRadius: 8,
+                          }
+                        : {}
+                    }
                     onClick={() => setPanel(i)}
                   >
                     {i}
@@ -66,7 +70,15 @@ const Example = withAdaptivity(
                 <Separator />
                 <Cell onClick={() => setModal(modals[0])}>modal 1</Cell>
                 <Cell onClick={() => setModal(modals[1])}>modal 2</Cell>
-                <Cell onClick={() => setPopout(<Alert header="Alert!" onClose={() => setPopout(null)} />)}>alert</Cell>
+                <Cell
+                  onClick={() =>
+                    setPopout(
+                      <Alert header="Alert!" onClose={() => setPopout(null)} />
+                    )
+                  }
+                >
+                  alert
+                </Cell>
               </Group>
             </Panel>
           </SplitCol>
@@ -75,8 +87,8 @@ const Example = withAdaptivity(
         <SplitCol
           animate={!isDesktop}
           spaced={isDesktop}
-          width={isDesktop ? '560px' : '100%'}
-          maxWidth={isDesktop ? '560px' : '100%'}
+          width={isDesktop ? "560px" : "100%"}
+          maxWidth={isDesktop ? "560px" : "100%"}
         >
           <View activePanel={panel}>
             <Panel id={panels[0]}>
@@ -87,12 +99,11 @@ const Example = withAdaptivity(
                   header="Уведомления от сообществ"
                   action={<Button size="m">Подключить сообщества</Button>}
                 >
-                  Подключите сообщества, от которых Вы хотите получать уведомления
+                  Подключите сообщества, от которых Вы хотите получать
+                  уведомления
                 </Placeholder>
                 <Separator />
-                <Placeholder
-                  icon={<Icon56MentionOutline />}
-                >
+                <Placeholder icon={<Icon56MentionOutline />}>
                   Введите адрес страницы в поле поиска
                 </Placeholder>
               </Group>
@@ -101,9 +112,7 @@ const Example = withAdaptivity(
             <Panel id={panels[1]}>
               <PanelHeader right={<Avatar size={36} />}>Panel 2</PanelHeader>
               <Group>
-                <Placeholder>
-                  Доступ запрещён
-                </Placeholder>
+                <Placeholder>Доступ запрещён</Placeholder>
                 <Separator />
                 <Placeholder
                   header="Находите друзей"
@@ -119,9 +128,15 @@ const Example = withAdaptivity(
               <Group>
                 <Placeholder
                   icon={<Icon56MessageReadOutline />}
-                  action={<Button size="m" mode="tertiary">Показать все сообщения</Button>}
+                  action={
+                    <Button size="m" mode="tertiary">
+                      Показать все сообщения
+                    </Button>
+                  }
                 >
-                  Нет непрочитанных<br />сообщений
+                  Нет непрочитанных
+                  <br />
+                  сообщений
                 </Placeholder>
               </Group>
             </Panel>
@@ -135,6 +150,5 @@ const Example = withAdaptivity(
   }
 );
 
-<Example />
-
+<Example />;
 ```

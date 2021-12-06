@@ -1,13 +1,13 @@
-import * as React from 'react';
-import { usePlatform } from '../../hooks/usePlatform';
-import { getClassName } from '../../helpers/getClassName';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
-import HorizontalScrollArrow from './HorizontalScrollArrow';
-import { easeInOutSine } from '../../lib/fx';
-import { useEventListener } from '../../hooks/useEventListener';
-import { useExternRef } from '../../hooks/useExternRef';
-import { HasRef } from '../../types';
-import './HorizontalScroll.css';
+import * as React from "react";
+import { usePlatform } from "../../hooks/usePlatform";
+import { getClassName } from "../../helpers/getClassName";
+import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
+import HorizontalScrollArrow from "./HorizontalScrollArrow";
+import { easeInOutSine } from "../../lib/fx";
+import { useEventListener } from "../../hooks/useEventListener";
+import { useExternRef } from "../../hooks/useExternRef";
+import { HasRef } from "../../types";
+import "./HorizontalScroll.css";
 
 interface ScrollContext {
   scrollElement: HTMLElement | null;
@@ -26,10 +26,10 @@ interface ScrollContext {
 
 export type ScrollPositionHandler = (currentPosition: number) => number;
 
-export interface HorizontalScrollProps extends
-  React.HTMLAttributes<HTMLDivElement>,
-  AdaptivityProps,
-  HasRef<HTMLDivElement> {
+export interface HorizontalScrollProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    AdaptivityProps,
+    HasRef<HTMLDivElement> {
   /**
    * Функция для расчета величины прокрутки при клике на левую стрелку.
    */
@@ -138,52 +138,60 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
   function scrollTo(getScrollPosition: (offset: number) => number) {
     const scrollElement = scrollerRef.current;
 
-    animationQueue.current.push(() => doScroll({
-      scrollElement,
-      getScrollPosition,
-      animationQueue: animationQueue.current,
-      onScrollToRightBorder: () => setCanScrollRight(false),
-      onScrollEnd: () => isCustomScrollingRef.current = false,
-      onScrollStart: () => isCustomScrollingRef.current = true,
-      initialScrollWidth: scrollElement?.firstElementChild?.scrollWidth || 0,
-      scrollAnimationDuration,
-    }));
+    animationQueue.current.push(() =>
+      doScroll({
+        scrollElement,
+        getScrollPosition,
+        animationQueue: animationQueue.current,
+        onScrollToRightBorder: () => setCanScrollRight(false),
+        onScrollEnd: () => (isCustomScrollingRef.current = false),
+        onScrollStart: () => (isCustomScrollingRef.current = true),
+        initialScrollWidth: scrollElement?.firstElementChild?.scrollWidth || 0,
+        scrollAnimationDuration,
+      })
+    );
     if (animationQueue.current.length === 1) {
       animationQueue.current[0]();
     }
   }
 
   const onscroll = React.useCallback(() => {
-    if (showArrows && hasMouse && scrollerRef.current && !isCustomScrollingRef.current) {
+    if (
+      showArrows &&
+      hasMouse &&
+      scrollerRef.current &&
+      !isCustomScrollingRef.current
+    ) {
       const scrollElement = scrollerRef.current;
 
       setCanScrollLeft(scrollElement.scrollLeft > 0);
-      setCanScrollRight(scrollElement.scrollLeft + scrollElement.offsetWidth < scrollElement.scrollWidth);
+      setCanScrollRight(
+        scrollElement.scrollLeft + scrollElement.offsetWidth <
+          scrollElement.scrollWidth
+      );
     }
   }, [hasMouse]);
 
-  const scrollEvent = useEventListener('scroll', onscroll);
+  const scrollEvent = useEventListener("scroll", onscroll);
   React.useEffect(() => scrollEvent.add(scrollerRef.current), []);
   React.useEffect(onscroll, [scrollerRef, children]);
 
   return (
-    <div {...restProps} vkuiClass={getClassName('HorizontalScroll', platform)}>
-      {showArrows && hasMouse && canScrollLeft &&
-      <HorizontalScrollArrow
-        direction="left"
-        onClick={() => scrollTo(getScrollToLeft)}
-      />
-      }
-      {showArrows && hasMouse && canScrollRight &&
-      <HorizontalScrollArrow
-        direction="right"
-        onClick={() => scrollTo(getScrollToRight)}
-      />
-      }
+    <div {...restProps} vkuiClass={getClassName("HorizontalScroll", platform)}>
+      {showArrows && hasMouse && canScrollLeft && (
+        <HorizontalScrollArrow
+          direction="left"
+          onClick={() => scrollTo(getScrollToLeft)}
+        />
+      )}
+      {showArrows && hasMouse && canScrollRight && (
+        <HorizontalScrollArrow
+          direction="right"
+          onClick={() => scrollTo(getScrollToRight)}
+        />
+      )}
       <div vkuiClass="HorizontalScroll__in" ref={scrollerRef}>
-        <div vkuiClass="HorizontalScroll__in-wrapper">
-          {children}
-        </div>
+        <div vkuiClass="HorizontalScroll__in-wrapper">{children}</div>
       </div>
     </div>
   );

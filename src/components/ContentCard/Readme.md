@@ -1,26 +1,26 @@
-Компонент на базе [Card](/#/Card). Принимает все валидные свойства для `img` и `Tappable`. 
+Компонент на базе [Card](/#/Card). Принимает все валидные свойства для `img` и `Tappable`.
 
 Внутри распределяет переданные свойства между своими компонентами следующим образом:
 
 - корневой компонент `Card`
-  * `mode`,
-  * `getRootRef`,
-  * `style`,
-  * `className`;
+  - `mode`,
+  - `getRootRef`,
+  - `style`,
+  - `className`;
 - `img`
-  * `getRef`,
-  * `src`,
-  * `srcSet`,
-  * `alt`,
-  * `width`,
-  * `height`,
-  * `maxHeight`,
-  * `crossOrigin`,
-  * `decoding`,
-  * `loading`,
-  * `referrerPolicy`,
-  * `sizes`,
-  * `useMap`,
+  - `getRef`,
+  - `src`,
+  - `srcSet`,
+  - `alt`,
+  - `width`,
+  - `height`,
+  - `maxHeight`,
+  - `crossOrigin`,
+  - `decoding`,
+  - `loading`,
+  - `referrerPolicy`,
+  - `sizes`,
+  - `useMap`,
 - внутренний `Tappable` получает все остальные свойства (кроме `subtitle`, `header`, `text` и `caption`).
 
 ```jsx
@@ -28,9 +28,7 @@ const Example = () => {
   return (
     <View activePanel="profile" id="profile">
       <Panel id="profile">
-        <PanelHeader>
-          ContentCardExample
-        </PanelHeader>
+        <PanelHeader>ContentCardExample</PanelHeader>
         <Group>
           <CardGrid size="l">
             <ContentCard
@@ -59,8 +57,7 @@ const Example = () => {
       </Panel>
     </View>
   );
-}
+};
 
-<Example/>
+<Example />;
 ```
-

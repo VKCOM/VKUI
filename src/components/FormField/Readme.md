@@ -3,22 +3,22 @@
 ```jsx
 const CustomInput = () => {
   const style = {
-    position: 'relative',
-    display: 'block',
-    width: '100%',
+    position: "relative",
+    display: "block",
+    width: "100%",
     margin: 0,
     padding: 11,
     fontSize: 16,
-    lineHeight: '19px',
-    textOverflow: 'ellipsis',
-    color: '#000',
-    border: 'none',
-    background: 'transparent',
+    lineHeight: "19px",
+    textOverflow: "ellipsis",
+    color: "#000",
+    border: "none",
+    background: "transparent",
     zIndex: 2,
-  }
+  };
 
-  return (<input type="text" style={style} placeholder="Кастомный инпут" />);
-}
+  return <input type="text" style={style} placeholder="Кастомный инпут" />;
+};
 
 const Example = () => (
   <View activePanel="custom-field">
@@ -38,5 +38,5 @@ const Example = () => (
   </View>
 );
 
-<Example />
+<Example />;
 ```

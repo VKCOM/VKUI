@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { SSRContext } from '../lib/SSR';
-import { ConfigProviderContext } from '../components/ConfigProvider/ConfigProviderContext';
+import * as React from "react";
+import { SSRContext } from "../lib/SSR";
+import { ConfigProviderContext } from "../components/ConfigProvider/ConfigProviderContext";
 
 export function withPlatform<T>(Component: T): T {
   function WithPlatform(props: {}) {

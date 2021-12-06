@@ -1,4 +1,4 @@
-import { createScopedElement as _jsxFactory } from './jsxRuntime';
+import { createScopedElement as _jsxFactory } from "./jsxRuntime";
 type jsxFactory = typeof _jsxFactory;
 
 declare global {

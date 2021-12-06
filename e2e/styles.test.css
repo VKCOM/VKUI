@@ -1,34 +1,36 @@
 /* import all global styles that are not imported by the components */
-@import '../src/styles/themes.css';
-@import '../src/styles/components.css';
-@import '../src/styles/unstable.css';
+@import "../src/styles/themes.css";
+@import "../src/styles/components.css";
+@import "../src/styles/unstable.css";
 
 @font-face {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: italic;
   font-weight: 400;
-  src: url(/font/Roboto-Italic.ttf) format('truetype');
+  src: url(/font/Roboto-Italic.ttf) format("truetype");
 }
 /* cyrillic */
 @font-face {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
-  src: url(/font/Roboto-Regular.ttf) format('truetype');
+  src: url(/font/Roboto-Regular.ttf) format("truetype");
 }
 /* cyrillic */
 @font-face {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 700;
-  src: url(/font/Roboto-Bold.ttf) format('truetype');
+  src: url(/font/Roboto-Bold.ttf) format("truetype");
 }
 
 .vkui__root {
   /* Force use embedded Roboto font for cross-platformity */
-  --font-common: 'Roboto';
-  --font-tt: 'Roboto';
-  font-family: 'Roboto';
+  --font-common: "Roboto";
+  --font-tt: "Roboto";
+
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font-family: "Roboto";
   -webkit-font-smoothing: antialiased;
   caret-color: transparent;
 }

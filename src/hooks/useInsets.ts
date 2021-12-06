@@ -1,6 +1,6 @@
-import * as React from 'react';
-import vkBridge, { Insets } from '@vkontakte/vk-bridge';
-import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
+import * as React from "react";
+import vkBridge, { Insets } from "@vkontakte/vk-bridge";
+import { useIsomorphicLayoutEffect } from "../lib/useIsomorphicLayoutEffect";
 
 let initialState: Insets = {
   bottom: null,
@@ -21,8 +21,8 @@ interface BridgeEvent {
 function resolveInsets(e: BridgeEvent): Insets | null {
   const { type, data } = e.detail;
   switch (type) {
-    case 'VKWebAppUpdateConfig':
-    case 'VKWebAppUpdateInsets': // Устаревшее событие vk-bridge
+    case "VKWebAppUpdateConfig":
+    case "VKWebAppUpdateInsets": // Устаревшее событие vk-bridge
       const { insets } = data;
       if (insets) {
         return {

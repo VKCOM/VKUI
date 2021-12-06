@@ -12,13 +12,14 @@ VKUI — это библиотека адаптивных React-компонен
 Гайд по миграции на версию 4: <a href="https://github.com/VKCOM/VKUI/releases/tag/v4.0.0">https://github.com/VKCOM/VKUI/releases/tag/v4.0.0</a>.
 </p>
 
-
 ## Установка
+
 `npm i @vkontakte/vkui` или `yarn add @vkontakte/vkui`
 
 **Важно:** Нужно установить вручную [`peerDependencies`](package.json#L104-L112), либо использовать npm7+ который делает это автоматически.
 
 ## Hello World
+
 ```jsx static
 import React from "react";
 import ReactDOM from "react-dom";
@@ -35,13 +36,13 @@ import {
   PanelHeader,
   Header,
   Group,
-  SimpleCell
+  SimpleCell,
 } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
 
 const Example = () => {
   const { viewWidth } = useAdaptivity();
-  
+
   return (
     <AppRoot>
       <SplitLayout header={<PanelHeader separator={false} />}>
@@ -72,27 +73,34 @@ ReactDOM.render(
 ```
 
 ## Браузеры
+
 На данный момент мы поддерживаем WebView следующих операционных систем:
-* Android >= 4.4
-* iOS >= 9
+
+- Android >= 4.4
+- iOS >= 9
 
 Иными словами, мы поддерживаем браузеры следующих версий:
-* Safari для iOS >= 9
-* Android Browser >= 4.4 (Chrome 30)
-* Chrome для Android, начиная с Android 5.0 (Chrome 36)
+
+- Safari для iOS >= 9
+- Android Browser >= 4.4 (Chrome 30)
+- Chrome для Android, начиная с Android 5.0 (Chrome 36)
 
 ## Тестирование
 
 Мы работаем над качеством библиотеки и подвозим тесты. `yarn test` запускает юниты, проверяет типы и линтит. `yarn test:unit` запускает только юниты и поддерживает интерактивный режим с флагом `--watch`. Также мы поддерживаем скриншотные тесты — смотрите наш [гайд по тестированию](./TESTING.md).
 
 ## Документация
+
 В [документации](https://vkcom.github.io/VKUI/) вы сможете найти информацию об использовании компонентов и утилит.
 
 ## Сообщить о проблеме
+
 Напишите нам [issue](https://github.com/VKCOM/VKUI/issues/new/choose), если нашли баг или у вас есть предложения по улучшению библиотеки.
 
 ## Contributing
+
 Мы очень радуемся, когда пользователи библиотеки работают над её улучшением. Для того, чтобы оставить след в
 истории:
-* почитайте наши [чеклист компонента и общие требования к разработке](./CONTRIBUTING.md),
-* сделайте форк проекта, внесите изменения и отправьте нам [pull request](https://github.com/VKCOM/VKUI/pulls). 
+
+- почитайте наши [чеклист компонента и общие требования к разработке](./CONTRIBUTING.md),
+- сделайте форк проекта, внесите изменения и отправьте нам [pull request](https://github.com/VKCOM/VKUI/pulls).

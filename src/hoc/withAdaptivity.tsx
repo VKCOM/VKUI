@@ -1,11 +1,11 @@
-import * as React from 'react';
+import * as React from "react";
 import {
   AdaptivityContext,
   SizeType,
   ViewHeight,
   ViewWidth,
   AdaptivityProps,
-} from '../components/AdaptivityProvider/AdaptivityContext';
+} from "../components/AdaptivityProvider/AdaptivityContext";
 
 export { SizeType, ViewWidth, ViewHeight };
 export type { AdaptivityProps };
@@ -43,20 +43,33 @@ export function withAdaptivity<T>(TargetComponent: T, config: Config): T {
       hasMouse?: boolean;
       deviceHasHover?: boolean;
     } = {};
-    config.sizeX ? adaptivityProps.sizeX = sizeX : undefined;
-    config.sizeY ? adaptivityProps.sizeY = sizeY : undefined;
-    config.viewWidth ? adaptivityProps.viewWidth = viewWidth : undefined;
-    config.viewHeight ? adaptivityProps.viewHeight = viewHeight : undefined;
-    config.hasMouse ? adaptivityProps.hasMouse = hasMouse : undefined;
-    config.deviceHasHover ? adaptivityProps.deviceHasHover = deviceHasHover : undefined;
+    config.sizeX ? (adaptivityProps.sizeX = sizeX) : undefined;
+    config.sizeY ? (adaptivityProps.sizeY = sizeY) : undefined;
+    config.viewWidth ? (adaptivityProps.viewWidth = viewWidth) : undefined;
+    config.viewHeight ? (adaptivityProps.viewHeight = viewHeight) : undefined;
+    config.hasMouse ? (adaptivityProps.hasMouse = hasMouse) : undefined;
+    config.deviceHasHover
+      ? (adaptivityProps.deviceHasHover = deviceHasHover)
+      : undefined;
 
     // @ts-ignore
     const target = <TargetComponent {...props} {...adaptivityProps} />;
 
     if (update) {
-      return <AdaptivityContext.Provider value={{ sizeX, sizeY, viewWidth, viewHeight, hasMouse, deviceHasHover }}>
-        {target}
-      </AdaptivityContext.Provider>;
+      return (
+        <AdaptivityContext.Provider
+          value={{
+            sizeX,
+            sizeY,
+            viewWidth,
+            viewHeight,
+            hasMouse,
+            deviceHasHover,
+          }}
+        >
+          {target}
+        </AdaptivityContext.Provider>
+      );
     }
 
     return target;

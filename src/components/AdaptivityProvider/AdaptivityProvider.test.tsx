@@ -1,6 +1,6 @@
-import { baselineComponent } from '../../testing/utils';
-import AdaptivityProvider from './AdaptivityProvider';
+import { baselineComponent } from "../../testing/utils";
+import AdaptivityProvider from "./AdaptivityProvider";
 
-describe('AdaptivityProvider', () => {
+describe("AdaptivityProvider", () => {
   baselineComponent<any>(AdaptivityProvider, { forward: false });
 });

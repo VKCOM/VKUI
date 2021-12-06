@@ -1,12 +1,21 @@
-import * as React from 'react';
-import { getSupportedEvents, coordX, coordY, touchEnabled, VKUITouchEvent } from '../../lib/touch';
-import { HasComponent, HasRootRef } from '../../types';
-import { useDOM } from '../../lib/dom';
-import { useExternRef } from '../../hooks/useExternRef';
-import { useEventListener } from '../../hooks/useEventListener';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import * as React from "react";
+import {
+  getSupportedEvents,
+  coordX,
+  coordY,
+  touchEnabled,
+  VKUITouchEvent,
+} from "../../lib/touch";
+import { HasComponent, HasRootRef } from "../../types";
+import { useDOM } from "../../lib/dom";
+import { useExternRef } from "../../hooks/useExternRef";
+import { useEventListener } from "../../hooks/useEventListener";
+import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 
-export interface TouchProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasComponent {
+export interface TouchProps
+  extends React.AllHTMLAttributes<HTMLElement>,
+    HasRootRef<HTMLElement>,
+    HasComponent {
   /**
    * Привязать onEnter и onLeave через pointer-events - работает на disabled-инпутах
    */
@@ -70,7 +79,7 @@ export const Touch: React.FC<TouchProps> = ({
   usePointerHover,
   slideThreshold = 5,
   useCapture = false,
-  Component = 'div',
+  Component = "div",
   getRootRef,
   noSlideClick = false,
   stopPropagation = false,
@@ -84,26 +93,38 @@ export const Touch: React.FC<TouchProps> = ({
     stopPropagation && e.stopPropagation();
     handers.forEach((cb) => {
       const duration = Date.now() - gesture.current.startT.getTime();
-      cb && cb({ ...gesture.current as Gesture, duration, originalEvent: e });
+      cb && cb({ ...(gesture.current as Gesture), duration, originalEvent: e });
     });
   };
 
-  const enterHandler = useEventListener(usePointerHover ? 'pointerenter' : 'mouseenter', onEnter);
-  const leaveHandler = useEventListener(usePointerHover ? 'pointerleave' : 'mouseleave', onLeave);
-  const startHandler = useEventListener(events[0], (e: VKUITouchEvent) => {
-    gesture.current = initGesture(coordX(e), coordY(e));
+  const enterHandler = useEventListener(
+    usePointerHover ? "pointerenter" : "mouseenter",
+    onEnter
+  );
+  const leaveHandler = useEventListener(
+    usePointerHover ? "pointerleave" : "mouseleave",
+    onLeave
+  );
+  const startHandler = useEventListener(
+    events[0],
+    (e: VKUITouchEvent) => {
+      gesture.current = initGesture(coordX(e), coordY(e));
 
-    handle(e, [onStart, onStartX, onStartY]);
-    // 1 line, 2 bad specs, 2 workarounds:
-    subscribe(touchEnabled()
-      // Touch events fire on initial target, and won't bubble if its removed
-      // see: #235, #1968, https://stackoverflow.com/a/45760014
-      ? e.target as HTMLElement
-      // Mouse events fire on the element under pointer, so we lose move / end
-      // if pointer goes outside container.
-      // Can be fixed by PointerEvents' setPointerCapture later
-      : document);
-  }, { capture: useCapture, passive: false });
+      handle(e, [onStart, onStartX, onStartY]);
+      // 1 line, 2 bad specs, 2 workarounds:
+      subscribe(
+        touchEnabled()
+          ? // Touch events fire on initial target, and won't bubble if its removed
+            // see: #235, #1968, https://stackoverflow.com/a/45760014
+            (e.target as HTMLElement)
+          : // Mouse events fire on the element under pointer, so we lose move / end
+            // if pointer goes outside container.
+            // Can be fixed by PointerEvents' setPointerCapture later
+            document
+      );
+    },
+    { capture: useCapture, passive: false }
+  );
   const containerRef = useExternRef(getRootRef);
 
   useIsomorphicLayoutEffect(() => {
@@ -154,7 +175,11 @@ export const Touch: React.FC<TouchProps> = ({
           shiftYAbs,
         });
 
-        handle(e, [_onMove, gesture.current.isSlideX && onMoveX, gesture.current.isSlideY && onMoveY]);
+        handle(e, [
+          _onMove,
+          gesture.current.isSlideX && onMoveX,
+          gesture.current.isSlideY && onMoveY,
+        ]);
       }
     }
   }
@@ -192,7 +217,7 @@ export const Touch: React.FC<TouchProps> = ({
    */
   const onDragStart = (e: React.DragEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
-    if (target.tagName === 'A' || target.tagName === 'IMG') {
+    if (target.tagName === "A" || target.tagName === "IMG") {
       e.preventDefault();
     }
   };
@@ -206,7 +231,7 @@ export const Touch: React.FC<TouchProps> = ({
       return onClickCapture && onClickCapture(e);
     }
     // eslint-disable-next-line no-restricted-properties
-    if ((e.target as HTMLElement).closest('a')) {
+    if ((e.target as HTMLElement).closest("a")) {
       e.preventDefault();
     }
     if (noSlideClick) {

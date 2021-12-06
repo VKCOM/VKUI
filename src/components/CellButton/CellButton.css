@@ -18,7 +18,7 @@
 }
 
 .CellButton[disabled] {
-  opacity: .4;
+  opacity: 0.4;
 }
 
 .CellButton--centered {

@@ -1,15 +1,19 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import AppRoot from '../components/AppRoot/AppRoot';
-import Button from '../components/Button/Button';
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import AppRoot from "../components/AppRoot/AppRoot";
+import Button from "../components/Button/Button";
 
-const AppRootTest = () => <AppRoot data-testid="root" mode="embedded"><Button>Hello world</Button></AppRoot>;
-const root = () => screen.getByTestId('root');
-const btn = () => screen.getByRole('button');
-const keyboardClass = 'AppRoot--keyboard-input';
+const AppRootTest = () => (
+  <AppRoot data-testid="root" mode="embedded">
+    <Button>Hello world</Button>
+  </AppRoot>
+);
+const root = () => screen.getByTestId("root");
+const btn = () => screen.getByRole("button");
+const keyboardClass = "AppRoot--keyboard-input";
 
-describe('useKeyboardInputTracker()', () => {
-  describe('Manages a11y via AppRoot', () => {
+describe("useKeyboardInputTracker()", () => {
+  describe("Manages a11y via AppRoot", () => {
     it(`has no .${keyboardClass} by default`, () => {
       render(<AppRootTest />);
 
@@ -27,7 +31,7 @@ describe('useKeyboardInputTracker()', () => {
       render(<AppRootTest />);
 
       userEvent.tab();
-      userEvent.keyboard('{esc}');
+      userEvent.keyboard("{esc}");
 
       expect(root()).toHaveClass(keyboardClass);
     });

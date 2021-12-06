@@ -31,7 +31,7 @@
 }
 
 .Avatar--shadow::after {
-  content: '';
+  content: "";
   box-shadow: inset 0 0 0 var(--thin-border) var(--image_border);
 }
 
@@ -56,7 +56,8 @@
 }
 
 .Avatar__badge--shadow {
-  filter: drop-shadow(0 0 2px rgba(0, 0, 0, .04)) drop-shadow(0 4px 4px rgba(0, 0, 0, .08));
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.04))
+    drop-shadow(0 4px 4px rgba(0, 0, 0, 0.08));
 }
 
 .Avatar__badge-online {

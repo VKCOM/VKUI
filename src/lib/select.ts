@@ -5,7 +5,7 @@ type Option = {
 
 type GetOptionLabel = (option: Option) => string;
 
-const findAllIncludes = (target = '', search = '') => {
+const findAllIncludes = (target = "", search = "") => {
   const includes = [];
 
   let i = target.indexOf(search);
@@ -21,13 +21,13 @@ let letterRegexp: RegExp;
 
 // На момент написания флаг u не поддерживался рядом браузеров, поэтому добавили фоллбэк.
 try {
-  letterRegexp = new RegExp('\\p{L}', 'u');
+  letterRegexp = new RegExp("\\p{L}", "u");
 } catch (e) {}
 
 export const defaultFilterFn = (
-  query = '',
+  query = "",
   option: Option,
-  getOptionLabel: GetOptionLabel = (option) => option.label,
+  getOptionLabel: GetOptionLabel = (option) => option.label
 ) => {
   query = query.toLocaleLowerCase();
   let label = getOptionLabel(option).toLocaleLowerCase();
@@ -45,7 +45,8 @@ export const defaultFilterFn = (
         return true;
       }
     }
-  } else { // если regexp не поддерживается, то ищем любое вхождение
+  } else {
+    // если regexp не поддерживается, то ищем любое вхождение
     return includes.length > 0;
   }
 

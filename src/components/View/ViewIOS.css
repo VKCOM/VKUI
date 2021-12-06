@@ -6,7 +6,8 @@
 }
 
 .View--ios .Panel__in {
-  padding: 0 var(--safe-area-inset-right) var(--safe-area-inset-bottom) var(--safe-area-inset-left);
+  padding: 0 var(--safe-area-inset-right) var(--safe-area-inset-bottom)
+    var(--safe-area-inset-left);
 }
 
 /**
@@ -14,26 +15,26 @@
  */
 
 .View--ios .View__panel--swipe-back-prev {
-  box-shadow: -2px 0 12px rgba(0, 0, 0, .3);
+  box-shadow: -2px 0 12px rgba(0, 0, 0, 0.3);
 }
 
 .View--ios .View__panel--swipe-back-prev.View__panel--swipe-back-success {
-  transition: transform .3s var(--ios-easing);
+  transition: transform 0.3s var(--ios-easing);
   transform: translate3d(100%, 0, 0);
 }
 
 .View--ios .View__panel--swipe-back-next.View__panel--swipe-back-success {
-  transition: transform .3s var(--ios-easing);
+  transition: transform 0.3s var(--ios-easing);
   transform: translate3d(0, 0, 0);
 }
 
 .View--ios .View__panel--swipe-back-prev.View__panel--swipe-back-failed {
-  transition: transform .3s var(--ios-easing);
+  transition: transform 0.3s var(--ios-easing);
   transform: translate3d(0, 0, 0);
 }
 
 .View--ios .View__panel--swipe-back-next.View__panel--swipe-back-failed {
-  transition: transform .3s var(--ios-easing);
+  transition: transform 0.3s var(--ios-easing);
   transform: translate3d(-50%, 0, 0);
 }
 
@@ -41,19 +42,19 @@
  * Panel transition
  */
 .View--ios .View__panel--prev {
-  animation: vkui-animation-ios-prev-forward .6s var(--ios-easing);
+  animation: vkui-animation-ios-prev-forward 0.6s var(--ios-easing);
 }
 
 .View--ios .View__panel--next {
-  animation: vkui-animation-ios-next-back .6s var(--ios-easing);
+  animation: vkui-animation-ios-next-back 0.6s var(--ios-easing);
 }
 
 .View--ios .View__panel--prev ~ .View__panel--next {
-  animation: vkui-animation-ios-next-forward .6s var(--ios-easing);
+  animation: vkui-animation-ios-next-forward 0.6s var(--ios-easing);
 }
 
 .View--ios .View__panel--next ~ .View__panel--prev {
-  animation: vkui-animation-ios-prev-back .6s var(--ios-easing);
+  animation: vkui-animation-ios-prev-back 0.6s var(--ios-easing);
 }
 
 .View--ios .View__panel--prev .Panel__fade,
@@ -69,11 +70,11 @@
 }
 
 .View--ios .View__panel--prev .Panel__fade {
-  animation: vkui-animation-ios-fade-in .6s var(--ios-easing);
+  animation: vkui-animation-ios-fade-in 0.6s var(--ios-easing);
 }
 
 .View--ios .View__panel--next .Panel__fade {
-  animation: vkui-animation-ios-fade-out .6s var(--ios-easing);
+  animation: vkui-animation-ios-fade-out 0.6s var(--ios-easing);
 }
 
 .View--ios .View__panel--prev ~ .View__panel--next .Panel__fade,
@@ -139,13 +140,13 @@
   }
 
   to {
-    opacity: .3;
+    opacity: 0.3;
   }
 }
 
 @keyframes vkui-animation-ios-fade-out {
   from {
-    opacity: .3;
+    opacity: 0.3;
   }
 
   to {

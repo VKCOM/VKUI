@@ -1,18 +1,18 @@
-import * as React from 'react';
-import { getClassName } from '../../helpers/getClassName';
-import Counter from '../Counter/Counter';
-import { classNames } from '../../lib/classNames';
-import { usePlatform } from '../../hooks/usePlatform';
-import { hasReactNode } from '../../lib/utils';
-import Tappable from '../Tappable/Tappable';
-import { Platform } from '../../lib/platform';
-import { HasComponent, HasRootRef } from '../../types';
-import './TabbarItem.css';
+import * as React from "react";
+import { getClassName } from "../../helpers/getClassName";
+import Counter from "../Counter/Counter";
+import { classNames } from "../../lib/classNames";
+import { usePlatform } from "../../hooks/usePlatform";
+import { hasReactNode } from "../../lib/utils";
+import Tappable from "../Tappable/Tappable";
+import { Platform } from "../../lib/platform";
+import { HasComponent, HasRootRef } from "../../types";
+import "./TabbarItem.css";
 
-export interface TabbarItemProps extends
-  Omit<React.AllHTMLAttributes<HTMLElement>, 'label'>, // TODO убрать Omit после удаления свойства label
-  HasRootRef<HTMLElement>,
-  HasComponent {
+export interface TabbarItemProps
+  extends Omit<React.AllHTMLAttributes<HTMLElement>, "label">, // TODO убрать Omit после удаления свойства label
+    HasRootRef<HTMLElement>,
+    HasComponent {
   selected?: boolean;
   /**
    * Тест рядом с иконкой
@@ -35,42 +35,52 @@ const TabbarItem: React.FunctionComponent<TabbarItemProps> = ({
   indicator,
   text,
   href,
-  Component = href ? 'a' : 'button',
+  Component = href ? "a" : "button",
   disabled,
   ...restProps
 }: TabbarItemProps) => {
   const platform = usePlatform();
 
   // @ts-ignore ругается на то, что у AllHTMLAttributes type это строка, а button не любую строку считает валидным значением
-  return (<Component
-    {...restProps}
-    disabled={disabled}
-    href={href}
-    vkuiClass={classNames(getClassName('TabbarItem', platform), {
-      'TabbarItem--selected': selected,
-      'TabbarItem--text': !!text,
-    })}
-  >
-    <Tappable
-      role="presentation"
-      Component="div"
+  return (
+    <Component
+      {...restProps}
       disabled={disabled}
-      activeMode={platform === Platform.IOS ? 'TabbarItem__tappable--active' : 'background'}
-      activeEffectDelay={platform === Platform.IOS ? 0 : 300}
-      hasHover={false}
-      vkuiClass="TabbarItem__tappable"
-    />
-    <div vkuiClass="TabbarItem__in">
-      <div vkuiClass="TabbarItem__icon">
-        {children}
-        <div vkuiClass="TabbarItem__label">
-          {hasReactNode(indicator) && indicator}
-          {!indicator && label && <Counter size="s" mode="prominent">{label}</Counter>}
+      href={href}
+      vkuiClass={classNames(getClassName("TabbarItem", platform), {
+        "TabbarItem--selected": selected,
+        "TabbarItem--text": !!text,
+      })}
+    >
+      <Tappable
+        role="presentation"
+        Component="div"
+        disabled={disabled}
+        activeMode={
+          platform === Platform.IOS
+            ? "TabbarItem__tappable--active"
+            : "background"
+        }
+        activeEffectDelay={platform === Platform.IOS ? 0 : 300}
+        hasHover={false}
+        vkuiClass="TabbarItem__tappable"
+      />
+      <div vkuiClass="TabbarItem__in">
+        <div vkuiClass="TabbarItem__icon">
+          {children}
+          <div vkuiClass="TabbarItem__label">
+            {hasReactNode(indicator) && indicator}
+            {!indicator && label && (
+              <Counter size="s" mode="prominent">
+                {label}
+              </Counter>
+            )}
+          </div>
         </div>
+        {text && <div vkuiClass="TabbarItem__text">{text}</div>}
       </div>
-      {text && <div vkuiClass="TabbarItem__text">{text}</div>}
-    </div>
-  </Component>);
+    </Component>
+  );
 };
 
 export default TabbarItem;

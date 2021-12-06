@@ -52,34 +52,52 @@
 .Button--lvl-primary.Button--clr-accent .Counter,
 .Button--lvl-secondary.Button--clr-neutral .Counter,
 .Button--lvl-tertiary.Button--clr-neutral .Counter {
-  background-color: var(--button_primary_foreground, var(--vkui--color_background_contrast));
+  background-color: var(
+    --button_primary_foreground,
+    var(--vkui--color_background_contrast)
+  );
   color: var(--button_primary_background, var(--vkui--color_text_contrast));
 }
 
 .Button--lvl-secondary.Button--clr-accent .Counter {
-  background-color: var(--button_secondary_foreground, var(--vkui--color_background_accent));
+  background-color: var(
+    --button_secondary_foreground,
+    var(--vkui--color_background_accent)
+  );
   color: var(--background_content, var(--vkui--color_text_contrast_themed));
 }
 
 .Button--lvl-tertiary.Button--clr-accent .Counter {
-  background-color: var(--button_tertiary_foreground, var(--vkui--color_background_accent));
+  background-color: var(
+    --button_tertiary_foreground,
+    var(--vkui--color_background_accent)
+  );
   color: var(--background_content, var(--vkui--color_text_contrast_themed));
 }
 
 .Button--lvl-outline.Button--clr-accent .Counter {
-  background-color: var(--button_outline_foreground, var(--vkui--color_background_accent));
+  background-color: var(
+    --button_outline_foreground,
+    var(--vkui--color_background_accent)
+  );
   color: var(--background_content, var(--vkui--color_text_contrast_themed));
 }
 
 .Button--lvl-primary.Button--clr-positive .Counter {
-  background-color: var(--button_commerce_foreground, var(--vkui--color_background_contrast));
+  background-color: var(
+    --button_commerce_foreground,
+    var(--vkui--color_background_contrast)
+  );
   color: var(--button_commerce_background, var(--vkui--color_text_positive));
 }
 
 .Button--lvl-secondary.Button--clr-positive .Counter,
 .Button--lvl-tertiary.Button--clr-positive .Counter,
 .Button--lvl-outline.Button--clr-positive .Counter {
-  background-color: var(--button_commerce_background, var(--vkui--color_background_positive));
+  background-color: var(
+    --button_commerce_background,
+    var(--vkui--color_background_positive)
+  );
   color: var(--button_commerce_foreground, var(--vkui--color_text_contrast));
 }
 
@@ -96,26 +114,41 @@
 }
 
 .Button--lvl-primary.Button--clr-neutral .Counter {
-  background-color: var(--media_overlay_button_background, var(--vkui--color_background_contrast));
+  background-color: var(
+    --media_overlay_button_background,
+    var(--vkui--color_background_contrast)
+  );
   color: var(--text_primary, var(--vkui--color_text_primary));
 }
 
 .Button--lvl-primary.Button--clr-overlay .Counter {
-  background-color: var(--media_overlay_button_foreground, var(--vkui--color_icon_primary_invariably));
-  color: var(--media_overlay_button_background, var(--vkui--color_text_contrast));
+  background-color: var(
+    --media_overlay_button_foreground,
+    var(--vkui--color_icon_primary_invariably)
+  );
+  color: var(
+    --media_overlay_button_background,
+    var(--vkui--color_text_contrast)
+  );
 }
 
 .Button--lvl-secondary.Button--clr-overlay .Counter,
 .Button--lvl-tertiary.Button--clr-overlay .Counter,
 .Button--lvl-outline.Button--clr-overlay .Counter {
-  background-color: var(--media_overlay_button_background, var(--vkui--color_background_contrast));
-  color: var(--media_overlay_button_foreground, var(--vkui--color_text_primary_invariably));
+  background-color: var(
+    --media_overlay_button_background,
+    var(--vkui--color_background_contrast)
+  );
+  color: var(
+    --media_overlay_button_foreground,
+    var(--vkui--color_text_primary_invariably)
+  );
 }
 
 .Button--lvl-secondary.Button--clr-accent .Counter--vkcom,
 .Button--lvl-tertiary.Button--clr-accent .Counter--vkcom,
 .Button--lvl-outline.Button--clr-accent .Counter--vkcom {
-  opacity: .72;
+  opacity: 0.72;
 }
 
 /**

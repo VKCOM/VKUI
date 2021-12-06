@@ -8,7 +8,7 @@
   padding: 18px;
   box-sizing: border-box;
   color: var(--white);
-  transition: opacity .15s ease-out;
+  transition: opacity 0.15s ease-out;
 }
 
 .ModalDismissButton::before {
@@ -18,7 +18,7 @@
   right: 14px;
   bottom: 14px;
   left: 14px;
-  background-color: rgba(0, 0, 0, .35);
+  background-color: rgba(0, 0, 0, 0.35);
   border-radius: 50%;
   position: absolute;
 }
@@ -29,7 +29,7 @@
 }
 
 .ModalDismissButton--hover {
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .ModalDismissButton--active {

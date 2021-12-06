@@ -1,32 +1,37 @@
-import * as React from 'react';
-import { HasComponent } from '../../types';
-import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
-import { usePlatform } from '../../hooks/usePlatform';
-import { ANDROID, IOS, VKCOM } from '../../lib/platform';
-import { hasReactNode } from '../../lib/utils';
-import { Icon24Chevron, Icon24DismissSubstract, Icon24DismissDark, Icon24Cancel } from '@vkontakte/icons';
-import Tappable from '../Tappable/Tappable';
-import IconButton from '../IconButton/IconButton';
-import Headline from '../Typography/Headline/Headline';
-import Subhead from '../Typography/Subhead/Subhead';
-import Text from '../Typography/Text/Text';
-import Title from '../Typography/Title/Title';
-import './Banner.css';
+import * as React from "react";
+import { HasComponent } from "../../types";
+import { getClassName } from "../../helpers/getClassName";
+import { classNames } from "../../lib/classNames";
+import { usePlatform } from "../../hooks/usePlatform";
+import { ANDROID, IOS, VKCOM } from "../../lib/platform";
+import { hasReactNode } from "../../lib/utils";
+import {
+  Icon24Chevron,
+  Icon24DismissSubstract,
+  Icon24DismissDark,
+  Icon24Cancel,
+} from "@vkontakte/icons";
+import Tappable from "../Tappable/Tappable";
+import IconButton from "../IconButton/IconButton";
+import Headline from "../Typography/Headline/Headline";
+import Subhead from "../Typography/Subhead/Subhead";
+import Text from "../Typography/Text/Text";
+import Title from "../Typography/Title/Title";
+import "./Banner.css";
 
 export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Тип баннера.
    */
-  mode?: 'tint' | 'image';
-  size?: 's' | 'm';
+  mode?: "tint" | "image";
+  size?: "s" | "m";
   /**
    * Тип действия в правой части баннера.
    *
    * - `dismiss` – отображается иконка крестика, при клике на неё сработает свойство `onDismiss`.
    * - `expand` – отображается иконка шеврона, которая подразумевает, что при клике на баннер можно куда-то перейти.
    */
-  asideMode?: 'dismiss' | 'expand';
+  asideMode?: "dismiss" | "expand";
   /**
    * Срабатывает при клике на иконку крестика при `asideMode="dismiss"`.
    */
@@ -60,7 +65,7 @@ export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
    * - `light` – в качестве фона используется светлое изображение, цвет текста в баннере будет тёмным.
    * - `dark` – в качестве фона используется тёмное изображение, цвет текста будет светлым.
    */
-  imageTheme?: 'light' | 'dark';
+  imageTheme?: "light" | "dark";
   /**
    * При использовании `mode="image"`.
    *
@@ -76,25 +81,46 @@ export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
   actions?: React.ReactNode;
 }
 
-type BannerTypographyProps = Pick<BannerProps, 'size'> & HasComponent;
+type BannerTypographyProps = Pick<BannerProps, "size"> & HasComponent;
 
-const BannerHeader: React.FC<BannerTypographyProps> = ({ size, ...restProps }) => {
-  return size === 'm'
-    ? <Title level="2" weight="medium" {...restProps} />
-    : <Headline weight="medium" {...restProps} />;
+const BannerHeader: React.FC<BannerTypographyProps> = ({
+  size,
+  ...restProps
+}) => {
+  return size === "m" ? (
+    <Title level="2" weight="medium" {...restProps} />
+  ) : (
+    <Headline weight="medium" {...restProps} />
+  );
 };
 
-const BannerSubheader: React.FC<BannerTypographyProps> = ({ size, ...restProps }) => {
-  return size === 'm'
-    ? <Text weight="regular" {...restProps} />
-    : <Subhead weight="regular" {...restProps} />;
+const BannerSubheader: React.FC<BannerTypographyProps> = ({
+  size,
+  ...restProps
+}) => {
+  return size === "m" ? (
+    <Text weight="regular" {...restProps} />
+  ) : (
+    <Subhead weight="regular" {...restProps} />
+  );
 };
 
 const Banner: React.FC<BannerProps> = (props: BannerProps) => {
   const platform = usePlatform();
   const {
-    mode, imageTheme, size, before, asideMode, header, subheader, text, children, background, actions,
-    onDismiss, dismissLabel,
+    mode,
+    imageTheme,
+    size,
+    before,
+    asideMode,
+    header,
+    subheader,
+    text,
+    children,
+    background,
+    actions,
+    onDismiss,
+    dismissLabel,
     ...restProps
   } = props;
 
@@ -102,36 +128,52 @@ const Banner: React.FC<BannerProps> = (props: BannerProps) => {
     <section
       {...restProps}
       vkuiClass={classNames(
-        getClassName('Banner', platform),
+        getClassName("Banner", platform),
         `Banner--md-${mode}`,
         `Banner--sz-${size}`,
         {
-          'Banner--inverted': mode === 'image' && imageTheme === 'dark',
-        },
+          "Banner--inverted": mode === "image" && imageTheme === "dark",
+        }
       )}
     >
       <Tappable
         vkuiClass="Banner__in"
-        activeMode={platform === IOS ? 'opacity' : 'background'}
-        disabled={asideMode !== 'expand'}
-        role={asideMode === 'expand' ? 'button' : null}
+        activeMode={platform === IOS ? "opacity" : "background"}
+        disabled={asideMode !== "expand"}
+        role={asideMode === "expand" ? "button" : null}
       >
-        {mode === 'image' && background &&
+        {mode === "image" && background && (
           <div aria-hidden="true" vkuiClass="Banner__bg">
             {background}
           </div>
-        }
+        )}
 
         {before && <div vkuiClass="Banner__before">{before}</div>}
 
         <div vkuiClass="Banner__content">
           {hasReactNode(header) && (
-            <BannerHeader size={size} Component="span" vkuiClass="Banner__header">{header}</BannerHeader>
+            <BannerHeader
+              size={size}
+              Component="span"
+              vkuiClass="Banner__header"
+            >
+              {header}
+            </BannerHeader>
           )}
           {hasReactNode(subheader) && (
-            <BannerSubheader Component="span" size={size} vkuiClass="Banner__subheader">{subheader}</BannerSubheader>
+            <BannerSubheader
+              Component="span"
+              size={size}
+              vkuiClass="Banner__subheader"
+            >
+              {subheader}
+            </BannerSubheader>
           )}
-          {hasReactNode(text) && <Text weight="regular" vkuiClass="Banner__text">{text}</Text>}
+          {hasReactNode(text) && (
+            <Text weight="regular" vkuiClass="Banner__text">
+              {text}
+            </Text>
+          )}
           {hasReactNode(actions) && React.Children.count(actions) > 0 && (
             <div vkuiClass="Banner__actions">{actions}</div>
           )}
@@ -139,9 +181,9 @@ const Banner: React.FC<BannerProps> = (props: BannerProps) => {
 
         {!!asideMode && (
           <div vkuiClass="Banner__aside">
-            {asideMode === 'expand' && <Icon24Chevron />}
+            {asideMode === "expand" && <Icon24Chevron />}
 
-            {asideMode === 'dismiss' && (
+            {asideMode === "dismiss" && (
               <IconButton
                 aria-label={dismissLabel}
                 vkuiClass="Banner__dismiss"
@@ -149,8 +191,15 @@ const Banner: React.FC<BannerProps> = (props: BannerProps) => {
                 hoverMode="opacity"
                 hasActive={false}
               >
-                {(platform === ANDROID || platform === VKCOM) && <Icon24Cancel />}
-                {platform === IOS && (mode === 'image' ? <Icon24DismissDark /> : <Icon24DismissSubstract />)}
+                {(platform === ANDROID || platform === VKCOM) && (
+                  <Icon24Cancel />
+                )}
+                {platform === IOS &&
+                  (mode === "image" ? (
+                    <Icon24DismissDark />
+                  ) : (
+                    <Icon24DismissSubstract />
+                  ))}
               </IconButton>
             )}
           </div>
@@ -161,10 +210,10 @@ const Banner: React.FC<BannerProps> = (props: BannerProps) => {
 };
 
 Banner.defaultProps = {
-  dismissLabel: 'Скрыть',
-  mode: 'tint',
-  size: 's',
-  imageTheme: 'dark',
+  dismissLabel: "Скрыть",
+  mode: "tint",
+  size: "s",
+  imageTheme: "dark",
 };
 
 export default Banner;

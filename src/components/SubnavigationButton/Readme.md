@@ -13,18 +13,19 @@ const SubnavigationButtonExample = () => {
         <PanelHeader>SubnavigationButton</PanelHeader>
         <Group>
           <SubnavigationBar>
-            <SubnavigationButton
-              before={<Icon24Filter/>}
-              expandable
-            >
+            <SubnavigationButton before={<Icon24Filter />} expandable>
               Фильтры
             </SubnavigationButton>
 
             <SubnavigationButton
-              before={<Icon24Filter/>}
+              before={<Icon24Filter />}
               selected
               expandable
-              after={<Counter mode="primary" size="s">3</Counter>}
+              after={
+                <Counter mode="primary" size="s">
+                  3
+                </Counter>
+              }
             >
               Фильтры
             </SubnavigationButton>
@@ -32,35 +33,30 @@ const SubnavigationButtonExample = () => {
 
           <SubnavigationBar>
             <SubnavigationButton
-              before={<Icon24ScanViewfinderOutline/>}
+              before={<Icon24ScanViewfinderOutline />}
               size="l"
             >
               Сканировать QR
             </SubnavigationButton>
 
-            <SubnavigationButton
-              before={<Icon24UserAddOutline/>}
-              size="l"
-            >
+            <SubnavigationButton before={<Icon24UserAddOutline />} size="l">
               Добавить друга
             </SubnavigationButton>
           </SubnavigationBar>
 
           <SubnavigationBar>
-            <SubnavigationButton>
-              Мой размер
-            </SubnavigationButton>
+            <SubnavigationButton>Мой размер</SubnavigationButton>
 
-            <SubnavigationButton
-              selected
-            >
-              Мой размер
-            </SubnavigationButton>
+            <SubnavigationButton selected>Мой размер</SubnavigationButton>
           </SubnavigationBar>
 
           <SubnavigationBar>
             <SubnavigationButton
-              after={<Counter mode="prominent" size="s">3</Counter>}
+              after={
+                <Counter mode="prominent" size="s">
+                  3
+                </Counter>
+              }
             >
               Новинки
             </SubnavigationButton>
@@ -68,38 +64,34 @@ const SubnavigationButtonExample = () => {
 
           <SubnavigationBar>
             <SubnavigationButton
-              before={<Icon24Filter/>}
+              before={<Icon24Filter />}
               selected
               expandable
-              after={<Counter mode="primary" size="s">3</Counter>}
+              after={
+                <Counter mode="primary" size="s">
+                  3
+                </Counter>
+              }
             >
               Фильтры
             </SubnavigationButton>
 
-            <SubnavigationButton
-              selected
-            >
-              Мой размер
-            </SubnavigationButton>
+            <SubnavigationButton selected>Мой размер</SubnavigationButton>
 
-            <SubnavigationButton>
-              В наличии
-            </SubnavigationButton>
+            <SubnavigationButton>В наличии</SubnavigationButton>
 
-            <SubnavigationButton
-              before={<Icon24FavoriteOutline/>}
-            >
+            <SubnavigationButton before={<Icon24FavoriteOutline />}>
               Избранное
             </SubnavigationButton>
           </SubnavigationBar>
         </Group>
-        
+
         <Group>
           <Header>Уменьшение шрифта</Header>
 
           <SubnavigationBar>
             <SubnavigationButton
-              before={<Icon24ScanViewfinderOutline/>}
+              before={<Icon24ScanViewfinderOutline />}
               size="l"
               textLevel={1}
             >
@@ -109,7 +101,7 @@ const SubnavigationButtonExample = () => {
 
           <SubnavigationBar>
             <SubnavigationButton
-              before={<Icon24ScanViewfinderOutline/>}
+              before={<Icon24ScanViewfinderOutline />}
               size="l"
               textLevel={2}
             >
@@ -119,7 +111,7 @@ const SubnavigationButtonExample = () => {
 
           <SubnavigationBar>
             <SubnavigationButton
-              before={<Icon24ScanViewfinderOutline/>}
+              before={<Icon24ScanViewfinderOutline />}
               size="l"
               textLevel={3}
             >
@@ -132,5 +124,5 @@ const SubnavigationButtonExample = () => {
   );
 };
 
-<SubnavigationButtonExample/>
+<SubnavigationButtonExample />;
 ```

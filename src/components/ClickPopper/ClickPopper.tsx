@@ -1,10 +1,10 @@
-import * as React from 'react';
-import { useDOM } from '../../lib/dom';
-import { Popper, PopperCommonProps } from '../Popper/Popper';
-import { useExternRef } from '../../hooks/useExternRef';
-import { useEventListener } from '../../hooks/useEventListener';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
-import { usePatchChildrenRef } from '../../hooks/usePatchChildrenRef';
+import * as React from "react";
+import { useDOM } from "../../lib/dom";
+import { Popper, PopperCommonProps } from "../Popper/Popper";
+import { useExternRef } from "../../hooks/useExternRef";
+import { useEventListener } from "../../hooks/useEventListener";
+import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
+import { usePatchChildrenRef } from "../../hooks/usePatchChildrenRef";
 
 export interface ClickPopperProps extends PopperCommonProps {
   /**
@@ -36,7 +36,7 @@ export const ClickPopper: React.FC<ClickPopperProps> = ({
   const [computedShown, setComputedShown] = React.useState(_shown || false);
   const [dropdownNode, setPopperNode] = React.useState(null);
 
-  const shown = typeof _shown === 'boolean' ? _shown : computedShown;
+  const shown = typeof _shown === "boolean" ? _shown : computedShown;
 
   const { document } = useDOM();
 
@@ -45,19 +45,23 @@ export const ClickPopper: React.FC<ClickPopperProps> = ({
   const [childRef, child] = usePatchChildrenRef(children);
 
   const setShown = (value: boolean) => {
-    if (typeof _shown !== 'boolean') {
+    if (typeof _shown !== "boolean") {
       setComputedShown(value);
     }
-    typeof onShownChange === 'function' && onShownChange(value);
+    typeof onShownChange === "function" && onShownChange(value);
   };
 
-  useGlobalEventListener(document, 'click', (e: MouseEvent) => {
-    if (dropdownNode && !childRef.current.contains(e.target as Node) && !dropdownNode.contains(e.target)) {
+  useGlobalEventListener(document, "click", (e: MouseEvent) => {
+    if (
+      dropdownNode &&
+      !childRef.current.contains(e.target as Node) &&
+      !dropdownNode.contains(e.target)
+    ) {
       setShown(false);
     }
   });
 
-  const targetClickEvent = useEventListener('click', () => {
+  const targetClickEvent = useEventListener("click", () => {
     setShown(!shown);
   });
 
@@ -68,15 +72,11 @@ export const ClickPopper: React.FC<ClickPopperProps> = ({
   return (
     <React.Fragment>
       {child}
-      {shown &&
-        <Popper
-          {...restProps}
-          targetRef={childRef}
-          getRef={patchedPopperRef}
-        >
+      {shown && (
+        <Popper {...restProps} targetRef={childRef} getRef={patchedPopperRef}>
           {content}
         </Popper>
-      }
+      )}
     </React.Fragment>
   );
 };

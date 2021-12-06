@@ -1,7 +1,13 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { MOBILE_SIZE, TABLET_SIZE } from '@vkui/components/AdaptivityProvider/AdaptivityProvider';
-import { Appearance, defaultConfigProviderProps } from '@vkui/components/ConfigProvider/ConfigProviderContext';
-import { SMALL_HEIGHT } from '../Settings/ViewHeightSelect';
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  MOBILE_SIZE,
+  TABLET_SIZE,
+} from "@vkui/components/AdaptivityProvider/AdaptivityProvider";
+import {
+  Appearance,
+  defaultConfigProviderProps,
+} from "@vkui/components/ConfigProvider/ConfigProviderContext";
+import { SMALL_HEIGHT } from "../Settings/ViewHeightSelect";
 import {
   VKCOM,
   AppRoot,
@@ -12,10 +18,10 @@ import {
   ConfigProvider,
   ViewWidth,
   Platform,
-} from '@vkui';
-import './StyleGuideRenderer.css';
-import { StyleGuideMobile } from './StyleGuideMobile';
-import { StyleGuideDesktop } from './StyleGuideDesktop';
+} from "@vkui";
+import "./StyleGuideRenderer.css";
+import { StyleGuideMobile } from "./StyleGuideMobile";
+import { StyleGuideDesktop } from "./StyleGuideDesktop";
 
 export const StyleGuideContext = React.createContext({
   ...defaultConfigProviderProps,
@@ -28,7 +34,7 @@ export const StyleGuideContext = React.createContext({
 
 let initialState = {
   ...defaultConfigProviderProps,
-  integration: 'full',
+  integration: "full",
   webviewType: WebviewType.INTERNAL,
   width: MOBILE_SIZE,
   height: SMALL_HEIGHT,
@@ -37,7 +43,7 @@ let initialState = {
 };
 
 try {
-  const lsState = localStorage.getItem('vkui:state');
+  const lsState = localStorage.getItem("vkui:state");
   if (lsState) {
     initialState = {
       ...initialState,
@@ -53,18 +59,21 @@ let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
   const [popout, setPopout] = useState(null);
   const { width, height, platform, scheme, hasMouse, styleguideScheme } = state;
 
-  const setContext = useCallback((data) => {
-    const newState = { ...state, ...data };
-    if (data.platform && data.platform !== state.platform) {
-      if (data.platform === Platform.VKCOM) {
-        newState.scheme = Scheme.VKCOM_LIGHT;
-      } else {
-        newState.scheme = Scheme.BRIGHT_LIGHT;
+  const setContext = useCallback(
+    (data) => {
+      const newState = { ...state, ...data };
+      if (data.platform && data.platform !== state.platform) {
+        if (data.platform === Platform.VKCOM) {
+          newState.scheme = Scheme.VKCOM_LIGHT;
+        } else {
+          newState.scheme = Scheme.BRIGHT_LIGHT;
+        }
       }
-    }
-    localStorage.setItem('vkui:state', JSON.stringify(newState));
-    setState(newState);
-  }, [state]);
+      localStorage.setItem("vkui:state", JSON.stringify(newState));
+      setState(newState);
+    },
+    [state]
+  );
 
   useEffect(() => {
     if (platform === VKCOM) {
@@ -79,12 +88,21 @@ let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
   }, [scheme]);
 
   useEffect(() => {
-    const styleGuideAppearance = styleguideScheme === Scheme.SPACE_GRAY ? Appearance.DARK : Appearance.LIGHT;
-    document.documentElement.style.setProperty('color-scheme', styleGuideAppearance);
+    const styleGuideAppearance =
+      styleguideScheme === Scheme.SPACE_GRAY
+        ? Appearance.DARK
+        : Appearance.LIGHT;
+    document.documentElement.style.setProperty(
+      "color-scheme",
+      styleGuideAppearance
+    );
   }, [styleguideScheme]);
 
   const switchStyleGuideScheme = useCallback(() => {
-    const newValue = styleguideScheme === Scheme.SPACE_GRAY ? Scheme.BRIGHT_LIGHT : Scheme.SPACE_GRAY;
+    const newValue =
+      styleguideScheme === Scheme.SPACE_GRAY
+        ? Scheme.BRIGHT_LIGHT
+        : Scheme.SPACE_GRAY;
     if (platform !== VKCOM) {
       setContext({ styleguideScheme: newValue, scheme: newValue });
     } else {
@@ -92,22 +110,40 @@ let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
     }
   }, [platform, styleguideScheme]);
 
-  const providerValue = useMemo(() => ({ ...state, setContext, setPopout }), [width, height, platform, scheme, hasMouse, setContext, setPopout]);
+  const providerValue = useMemo(
+    () => ({ ...state, setContext, setPopout }),
+    [width, height, platform, scheme, hasMouse, setContext, setPopout]
+  );
 
-  const Component = viewWidth > ViewWidth.MOBILE ? StyleGuideDesktop : StyleGuideMobile;
+  const Component =
+    viewWidth > ViewWidth.MOBILE ? StyleGuideDesktop : StyleGuideMobile;
 
   return (
     <StyleGuideContext.Provider value={providerValue}>
-      <ConfigProvider platform={Platform.ANDROID} scheme={styleguideScheme} transitionMotionEnabled={false} webviewType="internal">
+      <ConfigProvider
+        platform={Platform.ANDROID}
+        scheme={styleguideScheme}
+        transitionMotionEnabled={false}
+        webviewType="internal"
+      >
         <AppRoot noLegacyClasses>
-          <Component toc={toc} popout={popout} switchStyleGuideScheme={switchStyleGuideScheme}>{children}</Component>
+          <Component
+            toc={toc}
+            popout={popout}
+            switchStyleGuideScheme={switchStyleGuideScheme}
+          >
+            {children}
+          </Component>
         </AppRoot>
       </ConfigProvider>
     </StyleGuideContext.Provider>
   );
 };
 
-StyleGuideRenderer = withAdaptivity(StyleGuideRenderer, { sizeX: true, viewWidth: true });
+StyleGuideRenderer = withAdaptivity(StyleGuideRenderer, {
+  sizeX: true,
+  viewWidth: true,
+});
 
 const StyleGuideWrapper = (props) => {
   return (

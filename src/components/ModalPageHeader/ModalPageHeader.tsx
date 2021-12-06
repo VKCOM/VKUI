@@ -1,15 +1,17 @@
-import * as React from 'react';
-import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
-import { usePlatform } from '../../hooks/usePlatform';
-import { HasRef } from '../../types';
-import { isPrimitiveReactNode } from '../../lib/utils';
-import { VKCOM } from '../../lib/platform';
-import Separator from '../Separator/Separator';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
-import './ModalPageHeader.css';
+import * as React from "react";
+import { getClassName } from "../../helpers/getClassName";
+import { classNames } from "../../lib/classNames";
+import { usePlatform } from "../../hooks/usePlatform";
+import { HasRef } from "../../types";
+import { isPrimitiveReactNode } from "../../lib/utils";
+import { VKCOM } from "../../lib/platform";
+import Separator from "../Separator/Separator";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import "./ModalPageHeader.css";
 
-export interface ModalPageHeaderProps extends React.HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement> {
+export interface ModalPageHeaderProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    HasRef<HTMLDivElement> {
   /**
    * Иконки, отображаемые слева
    */
@@ -21,7 +23,9 @@ export interface ModalPageHeaderProps extends React.HTMLAttributes<HTMLDivElemen
   separator?: boolean;
 }
 
-const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = (props: ModalPageHeaderProps) => {
+const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = (
+  props: ModalPageHeaderProps
+) => {
   const platform = usePlatform();
   const { sizeX } = useAdaptivity();
   const { left, right, children, separator, getRef, ...restProps } = props;
@@ -31,13 +35,14 @@ const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = (props: M
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(getClassName('ModalPageHeader', platform), `ModalPageHeader--sizeX-${sizeX}`)}
+      vkuiClass={classNames(
+        getClassName("ModalPageHeader", platform),
+        `ModalPageHeader--sizeX-${sizeX}`
+      )}
       ref={getRef}
     >
       <div vkuiClass="ModalPageHeader__in">
-        <div vkuiClass="ModalPageHeader__left">
-          {left}
-        </div>
+        <div vkuiClass="ModalPageHeader__left">{left}</div>
 
         <div vkuiClass="ModalPageHeader__content">
           <div vkuiClass="ModalPageHeader__content-in">
@@ -45,12 +50,12 @@ const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = (props: M
           </div>
         </div>
 
-        <div vkuiClass="ModalPageHeader__right">
-          {right}
-        </div>
+        <div vkuiClass="ModalPageHeader__right">{right}</div>
       </div>
 
-      {hasSeparator && <Separator wide vkuiClass="ModalPageHeader__separator" />}
+      {hasSeparator && (
+        <Separator wide vkuiClass="ModalPageHeader__separator" />
+      )}
     </div>
   );
 };

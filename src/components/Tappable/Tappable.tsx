@@ -1,24 +1,28 @@
-import * as React from 'react';
-import mitt from 'mitt';
-import { noop } from '@vkontakte/vkjs';
-import { Touch, TouchEvent, TouchProps } from '../Touch/Touch';
-import TouchRootContext from '../Touch/TouchContext';
-import { classNames } from '../../lib/classNames';
-import { getClassName } from '../../helpers/getClassName';
-import { ANDROID } from '../../lib/platform';
-import { getOffsetRect } from '../../lib/offset';
-import { coordX, coordY } from '../../lib/touch';
-import { HasComponent, HasRootRef } from '../../types';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
-import { shouldTriggerClickOnEnterOrSpace } from '../../lib/accessibility';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { FocusVisible, FocusVisibleMode } from '../FocusVisible/FocusVisible';
-import { useTimeout } from '../../hooks/useTimeout';
-import { useExternRef } from '../../hooks/useExternRef';
-import { usePlatform } from '../../hooks/usePlatform';
-import './Tappable.css';
+import * as React from "react";
+import mitt from "mitt";
+import { noop } from "@vkontakte/vkjs";
+import { Touch, TouchEvent, TouchProps } from "../Touch/Touch";
+import TouchRootContext from "../Touch/TouchContext";
+import { classNames } from "../../lib/classNames";
+import { getClassName } from "../../helpers/getClassName";
+import { ANDROID } from "../../lib/platform";
+import { getOffsetRect } from "../../lib/offset";
+import { coordX, coordY } from "../../lib/touch";
+import { HasComponent, HasRootRef } from "../../types";
+import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
+import { shouldTriggerClickOnEnterOrSpace } from "../../lib/accessibility";
+import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
+import { FocusVisible, FocusVisibleMode } from "../FocusVisible/FocusVisible";
+import { useTimeout } from "../../hooks/useTimeout";
+import { useExternRef } from "../../hooks/useExternRef";
+import { usePlatform } from "../../hooks/usePlatform";
+import "./Tappable.css";
 
-export interface TappableProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, AdaptivityProps, HasComponent {
+export interface TappableProps
+  extends React.AllHTMLAttributes<HTMLElement>,
+    HasRootRef<HTMLElement>,
+    AdaptivityProps,
+    HasComponent {
   /**
    * Длительность показа active-состояния
    */
@@ -35,11 +39,11 @@ export interface TappableProps extends React.AllHTMLAttributes<HTMLElement>, Has
   /**
    * Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active
    */
-  activeMode?: 'opacity' | 'background' | string;
+  activeMode?: "opacity" | "background" | string;
   /**
    * Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover
    */
-  hoverMode?: 'opacity' | 'background' | string;
+  hoverMode?: "opacity" | "background" | string;
   /**
    * Стиль аутлайна focus visible.
    */
@@ -63,12 +67,19 @@ const activeBus = mitt<{ active: string }>();
 const TapState = { none: 0, pending: 1, active: 2, exiting: 3 } as const;
 
 type TappableContextInterface = { onHoverChange: (s: boolean) => void };
-const TappableContext = React.createContext<TappableContextInterface>({ onHoverChange: noop });
+const TappableContext = React.createContext<TappableContextInterface>({
+  onHoverChange: noop,
+});
 
 function useActivity(hasActive: boolean, stopDelay: number) {
-  const id = React.useMemo(() => Math.round(Math.random() * 1e8).toString(16), []);
+  const id = React.useMemo(
+    () => Math.round(Math.random() * 1e8).toString(16),
+    []
+  );
 
-  const [activity, setActivity] = React.useState<typeof TapState[keyof typeof TapState]>(TapState.none);
+  const [activity, setActivity] = React.useState<
+    typeof TapState[keyof typeof TapState]
+  >(TapState.none);
   const _stop = () => setActivity(TapState.none);
   const start = () => hasActive && setActivity(TapState.active);
   const delayStart = () => {
@@ -87,7 +98,7 @@ function useActivity(hasActive: boolean, stopDelay: number) {
       return stopTimeout.clear;
     }
     if (activity === TapState.active) {
-      activeBus.emit('active', id);
+      activeBus.emit("active", id);
     }
     return noop;
   }, [activity]);
@@ -99,8 +110,8 @@ function useActivity(hasActive: boolean, stopDelay: number) {
     const onActiveChange = (activeId: string) => {
       activeId !== id && _stop();
     };
-    activeBus.on('active', onActiveChange);
-    return () => activeBus.off('active', onActiveChange);
+    activeBus.on("active", onActiveChange);
+    return () => activeBus.off("active", onActiveChange);
   }, [activity === TapState.none]);
 
   useIsomorphicLayoutEffect(() => {
@@ -130,13 +141,13 @@ const Tappable: React.FC<TappableProps> = ({
   hasMouse,
   deviceHasHover,
   hasHover: _hasHover = true,
-  hoverMode = 'background',
+  hoverMode = "background",
   hasActive: _hasActive = true,
-  activeMode = 'background',
-  focusVisibleMode = 'inside',
+  activeMode = "background",
+  focusVisibleMode = "inside",
   ...props
 }: TappableProps) => {
-  Component = Component || (props.href ? 'a' : 'div') as React.ElementType;
+  Component = Component || ((props.href ? "a" : "div") as React.ElementType);
 
   const { onHoverChange } = React.useContext(TappableContext);
   const insideTouchRoot = React.useContext(TouchRootContext);
@@ -149,11 +160,15 @@ const Tappable: React.FC<TappableProps> = ({
   const hovered = _hovered && !props.disabled;
   const hasActive = _hasActive && !childHover && !props.disabled;
   const hasHover = deviceHasHover && _hasHover && !childHover;
-  const isCustomElement = Component !== 'a' && Component !== 'button' && !props.contentEditable;
-  const isPresetHoverMode = ['opacity', 'background'].includes(hoverMode);
-  const isPresetActiveMode = ['opacity', 'background'].includes(activeMode);
+  const isCustomElement =
+    Component !== "a" && Component !== "button" && !props.contentEditable;
+  const isPresetHoverMode = ["opacity", "background"].includes(hoverMode);
+  const isPresetActiveMode = ["opacity", "background"].includes(activeMode);
 
-  const [activity, { start, stop, delayStart }] = useActivity(hasActive, activeEffectDelay);
+  const [activity, { start, stop, delayStart }] = useActivity(
+    hasActive,
+    activeEffectDelay
+  );
   const active = activity === TapState.active || activity === TapState.exiting;
 
   const containerRef = useExternRef(getRootRef);
@@ -181,7 +196,7 @@ const Tappable: React.FC<TappableProps> = ({
       containerRef.current.click();
     }
 
-    if (typeof _onKeyDown === 'function') {
+    if (typeof _onKeyDown === "function") {
       return _onKeyDown(e);
     }
   }
@@ -225,25 +240,34 @@ const Tappable: React.FC<TappableProps> = ({
   }
 
   const classes = classNames(
-    getClassName('Tappable', platform),
+    getClassName("Tappable", platform),
     `Tappable--sizeX-${sizeX}`,
     {
-      'Tappable--active': hasActive && active,
-      'Tappable--mouse': hasMouse,
-      [`Tappable--hover-${hoverMode}`]: hasHover && hovered && isPresetHoverMode,
-      [`Tappable--active-${activeMode}`]: hasActive && active && isPresetActiveMode,
+      "Tappable--active": hasActive && active,
+      "Tappable--mouse": hasMouse,
+      [`Tappable--hover-${hoverMode}`]:
+        hasHover && hovered && isPresetHoverMode,
+      [`Tappable--active-${activeMode}`]:
+        hasActive && active && isPresetActiveMode,
       [hoverMode]: hasHover && hovered && !isPresetHoverMode,
       [activeMode]: hasActive && active && !isPresetActiveMode,
-    });
+    }
+  );
 
-  const handlers: RootComponentProps = { onStart, onMove, onEnd, onClick, onKeyDown };
-  const role = props.href ? 'link' : 'button';
+  const handlers: RootComponentProps = {
+    onStart,
+    onMove,
+    onEnd,
+    onClick,
+    onKeyDown,
+  };
+  const role = props.href ? "link" : "button";
 
   return (
     <Touch
       onEnter={() => setHovered(true)}
       onLeave={() => setHovered(false)}
-      type={Component === 'button' ? 'button' : undefined}
+      type={Component === "button" ? "button" : undefined}
       tabIndex={isCustomElement && !props.disabled ? 0 : undefined}
       role={isCustomElement ? role : undefined}
       aria-disabled={isCustomElement ? props.disabled : null}
@@ -254,24 +278,40 @@ const Tappable: React.FC<TappableProps> = ({
       vkuiClass={classes}
       Component={Component}
       getRootRef={containerRef}
-      {...(props.disabled ? {} : handlers)}>
+      {...(props.disabled ? {} : handlers)}
+    >
       <TappableContext.Provider value={childContext}>
         {children}
       </TappableContext.Provider>
-      {platform === ANDROID && !hasMouse && hasActive && activeMode === 'background' && (
-        <span aria-hidden="true" vkuiClass="Tappable__waves">
-          {clicks.map((wave) => (
-            <Wave {...wave} key={wave.id} onClear={() => setClicks(clicks.filter((c) => c.id !== wave.id))} />
-          ))}
-        </span>
+      {platform === ANDROID &&
+        !hasMouse &&
+        hasActive &&
+        activeMode === "background" && (
+          <span aria-hidden="true" vkuiClass="Tappable__waves">
+            {clicks.map((wave) => (
+              <Wave
+                {...wave}
+                key={wave.id}
+                onClear={() =>
+                  setClicks(clicks.filter((c) => c.id !== wave.id))
+                }
+              />
+            ))}
+          </span>
+        )}
+      {hasHover && hoverMode === "background" && (
+        <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />
       )}
-      {hasHover && hoverMode === 'background' && <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />}
       {!props.disabled && <FocusVisible mode={focusVisibleMode} />}
     </Touch>
   );
 };
 
-export default withAdaptivity(Tappable, { sizeX: true, hasMouse: true, deviceHasHover: true });
+export default withAdaptivity(Tappable, {
+  sizeX: true,
+  hasMouse: true,
+  deviceHasHover: true,
+});
 
 function Wave({ x, y, onClear }: Wave & { onClear: VoidFunction }) {
   const timeout = useTimeout(onClear, 225);

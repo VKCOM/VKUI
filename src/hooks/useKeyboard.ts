@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { useDOM } from '../lib/dom';
-import { useGlobalEventListener } from './useGlobalEventListener';
+import * as React from "react";
+import { useDOM } from "../lib/dom";
+import { useGlobalEventListener } from "./useGlobalEventListener";
 
 interface SoftwareKeyboardState {
   isOpened: boolean;
@@ -15,19 +15,24 @@ export function getPreciseKeyboardState(window: any): boolean {
   const { availHeight } = window.screen;
   const { innerHeight } = window;
 
-  const coveredViewportPercentage = Math.round((1 - innerHeight / availHeight) * 100);
+  const coveredViewportPercentage = Math.round(
+    (1 - innerHeight / availHeight) * 100
+  );
   return coveredViewportPercentage > 24;
 }
 
 export function useKeyboard(): SoftwareKeyboardState {
   const { window, document } = useDOM();
 
-  const [keyboardState, setKeyboardState] = React.useState<SoftwareKeyboardState>({
-    isOpened: false,
-    isPrecise: false,
-  });
+  const [keyboardState, setKeyboardState] =
+    React.useState<SoftwareKeyboardState>({
+      isOpened: false,
+      isPrecise: false,
+    });
 
-  const transitionalTimeout = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const transitionalTimeout = React.useRef<ReturnType<
+    typeof setTimeout
+  > | null>(null);
 
   const eventOptions = {
     passive: true,
@@ -46,10 +51,10 @@ export function useKeyboard(): SoftwareKeyboardState {
     clearTimeout(transitionalTimeout.current);
 
     let returnObject = {
-      isOpened: (event === true || event.type === 'focusin') && (
-        document.activeElement?.tagName === 'INPUT' ||
-        document.activeElement?.tagName === 'TEXTAREA'
-      ),
+      isOpened:
+        (event === true || event.type === "focusin") &&
+        (document.activeElement?.tagName === "INPUT" ||
+          document.activeElement?.tagName === "TEXTAREA"),
       isPrecise: false,
     };
 
@@ -60,8 +65,8 @@ export function useKeyboard(): SoftwareKeyboardState {
     }, 300);
   }
 
-  useGlobalEventListener(document, 'focusout', onFocus, eventOptions);
-  useGlobalEventListener(document, 'focusin', onFocus, eventOptions);
+  useGlobalEventListener(document, "focusout", onFocus, eventOptions);
+  useGlobalEventListener(document, "focusin", onFocus, eventOptions);
 
   return keyboardState;
 }

@@ -19,7 +19,7 @@
 }
 
 .Tappable--active-opacity.Tappable--active-opacity.Tappable--active-opacity {
-  opacity: .7;
+  opacity: 0.7;
 }
 
 /**
@@ -41,18 +41,18 @@
 }
 
 .Tappable--hover-opacity {
-  opacity: .8;
+  opacity: 0.8;
 }
 
 /**
  * mouse
  */
 .Tappable--mouse {
-  transition: opacity .15s ease-out;
+  transition: opacity 0.15s ease-out;
 }
 
 .Tappable--mouse .Tappable__hoverShadow {
-  transition: background-color .15s ease-out;
+  transition: background-color 0.15s ease-out;
 }
 
 /**
@@ -61,7 +61,7 @@
 .Tappable--ios {
   position: relative;
   border-radius: 10px;
-  transition: background-color .15s ease-out;
+  transition: background-color 0.15s ease-out;
 }
 
 .Tappable--ios.Tappable--active-background {
@@ -73,7 +73,7 @@
  */
 .Tappable--android {
   position: relative;
-  transition: background-color .15s ease-out;
+  transition: background-color 0.15s ease-out;
   border-radius: 8px;
 }
 
@@ -98,17 +98,17 @@
   height: 24px;
   margin: -12px 0 0 -12px;
   opacity: 0;
-  content: '';
+  content: "";
   border-radius: 50%;
-  background: rgba(127, 127, 127, .1);
-  animation: vkui-animation-wave .3s var(--android-easing);
+  background: rgba(127, 127, 127, 0.1);
+  animation: vkui-animation-wave 0.3s var(--android-easing);
 }
 
 /**
  * VKCOM tappable
  */
 .Tappable--vkcom {
-  transition: background-color .15s ease-out;
+  transition: background-color 0.15s ease-out;
   border-radius: 8px;
 }
 

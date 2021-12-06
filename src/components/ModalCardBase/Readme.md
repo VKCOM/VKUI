@@ -1,6 +1,7 @@
 Низкоуровневый компонент для отрисовки карточки со сложным содержимым. Используется внутри [ModalCard](#/ModalCard).
 
 ### Кнопка для закрытия
+
 Согласно нашим дизайн-гайдам, в Android-версии специальной кнопки для закрытия не предусмотрено.
 
 ```jsx { "props": { "layout": false, "iframe": false } }
@@ -21,7 +22,9 @@
   <AdaptivityProvider viewWidth={ViewWidth.MOBILE}>
     <ModalCardBase
       style={{ width: 320 }}
-      icon={<Avatar mode="app" src={getAvatarUrl('app_zagadki', 200)} size={72} />}
+      icon={
+        <Avatar mode="app" src={getAvatarUrl("app_zagadki", 200)} size={72} />
+      }
       header="Добавить игру «Загадки детства» в меню?"
       subheader="Игра появится под списком разделов на экране меню и будет всегда под рукой."
       actions={

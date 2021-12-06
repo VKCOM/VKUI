@@ -1,13 +1,13 @@
-import * as React from 'react';
-import { classNames } from '../../lib/classNames';
-import { usePlatform } from '../../hooks/usePlatform';
-import { getClassName } from '../../helpers/getClassName';
-import Tappable, { TappableProps } from '../Tappable/Tappable';
-import { hasReactNode } from '../../lib/utils';
-import Text from '../Typography/Text/Text';
-import Subhead from '../Typography/Subhead/Subhead';
-import { withAdaptivity } from '../../hoc/withAdaptivity';
-import './RichCell.css';
+import * as React from "react";
+import { classNames } from "../../lib/classNames";
+import { usePlatform } from "../../hooks/usePlatform";
+import { getClassName } from "../../helpers/getClassName";
+import Tappable, { TappableProps } from "../Tappable/Tappable";
+import { hasReactNode } from "../../lib/utils";
+import Text from "../Typography/Text/Text";
+import Subhead from "../Typography/Subhead/Subhead";
+import { withAdaptivity } from "../../hoc/withAdaptivity";
+import "./RichCell.css";
 
 export interface RichCellProps extends TappableProps {
   /**
@@ -58,15 +58,13 @@ const RichCell: React.FC<RichCellProps> = ({
   return (
     <Tappable
       {...restProps}
-      vkuiClass={
-        classNames(
-          getClassName('RichCell', platform),
-          {
-            'RichCell--mult': multiline,
-          },
-          `RichCell--sizeY-${sizeY}`,
-        )
-      }
+      vkuiClass={classNames(
+        getClassName("RichCell", platform),
+        {
+          "RichCell--mult": multiline,
+        },
+        `RichCell--sizeY-${sizeY}`
+      )}
     >
       {before}
       <div vkuiClass="RichCell__in">
@@ -74,14 +72,30 @@ const RichCell: React.FC<RichCellProps> = ({
         {after}
         <Text weight="medium" vkuiClass="RichCell__content">
           <div vkuiClass="RichCell__children">{children}</div>
-          {hasReactNode(after) && <div vkuiClass="RichCell__after">{after}</div>}
+          {hasReactNode(after) && (
+            <div vkuiClass="RichCell__after">{after}</div>
+          )}
         </Text>
-        {hasReactNode(text) && <Text weight="regular" vkuiClass="RichCell__text">{text}</Text>}
-        {hasReactNode(caption) && <Subhead Component="span" weight="regular" vkuiClass="RichCell__caption">{caption}</Subhead>}
+        {hasReactNode(text) && (
+          <Text weight="regular" vkuiClass="RichCell__text">
+            {text}
+          </Text>
+        )}
+        {hasReactNode(caption) && (
+          <Subhead
+            Component="span"
+            weight="regular"
+            vkuiClass="RichCell__caption"
+          >
+            {caption}
+          </Subhead>
+        )}
         {(hasReactNode(bottom) || hasReactNode(actions)) && (
           <div vkuiClass="RichCell__bottom">
             {bottom}
-            {hasReactNode(actions) && <div vkuiClass="RichCell__actions">{actions}</div>}
+            {hasReactNode(actions) && (
+              <div vkuiClass="RichCell__actions">{actions}</div>
+            )}
           </div>
         )}
       </div>

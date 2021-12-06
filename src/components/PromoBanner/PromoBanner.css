@@ -32,7 +32,7 @@
 }
 
 .PromoBanner__close:active {
-  opacity: .7;
+  opacity: 0.7;
 }
 
 .PromoBanner__pixels {

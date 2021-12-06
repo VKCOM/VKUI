@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { classNames } from '../../lib/classNames';
-import { getClassName } from '../../helpers/getClassName';
-import { usePlatform } from '../../hooks/usePlatform';
-import { ListContext } from './ListContext';
-import './List.css';
+import * as React from "react";
+import { classNames } from "../../lib/classNames";
+import { getClassName } from "../../helpers/getClassName";
+import { usePlatform } from "../../hooks/usePlatform";
+import { ListContext } from "./ListContext";
+import "./List.css";
 
 const List: React.FunctionComponent<React.HTMLAttributes<HTMLDivElement>> = ({
   children,
@@ -16,8 +16,8 @@ const List: React.FunctionComponent<React.HTMLAttributes<HTMLDivElement>> = ({
     <div
       role="list"
       {...restProps}
-      vkuiClass={classNames(getClassName('List', platform), {
-        'List--dragging': isDragging,
+      vkuiClass={classNames(getClassName("List", platform), {
+        "List--dragging": isDragging,
       })}
     >
       <ListContext.Provider value={React.useMemo(() => ({ toggleDrag }), [])}>

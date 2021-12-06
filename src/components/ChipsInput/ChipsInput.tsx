@@ -1,14 +1,14 @@
-import * as React from 'react';
-import { HasAlign, HasRef, HasRootRef } from '../../types';
-import { FormField, FormFieldProps } from '../FormField/FormField';
-import { classNames } from '../../lib/classNames';
-import Chip, { ChipProps } from '../Chip/Chip';
-import { noop } from '../../lib/utils';
-import { useChipsInput } from './useChipsInput';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { prefixClass } from '../../lib/prefixClass';
-import { useExternRef } from '../../hooks/useExternRef';
-import './ChipsInput.css';
+import * as React from "react";
+import { HasAlign, HasRef, HasRootRef } from "../../types";
+import { FormField, FormFieldProps } from "../FormField/FormField";
+import { classNames } from "../../lib/classNames";
+import Chip, { ChipProps } from "../Chip/Chip";
+import { noop } from "../../lib/utils";
+import { useChipsInput } from "./useChipsInput";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { prefixClass } from "../../lib/prefixClass";
+import { useExternRef } from "../../hooks/useExternRef";
+import "./ChipsInput.css";
 
 export type ChipsInputValue = string | number;
 
@@ -24,12 +24,15 @@ export interface RenderChip<Option extends ChipsInputOption> extends ChipProps {
   disabled: boolean;
 }
 
-export interface ChipsInputProps<Option extends ChipsInputOption> extends
-  Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'>,
-  HasRef<HTMLInputElement>,
-  HasRootRef<HTMLDivElement>,
-  HasAlign,
-  FormFieldProps {
+export interface ChipsInputProps<Option extends ChipsInputOption>
+  extends Omit<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      "value" | "onChange"
+    >,
+    HasRef<HTMLInputElement>,
+    HasRootRef<HTMLDivElement>,
+    HasAlign,
+    FormFieldProps {
   value: Option[];
   inputValue?: string;
   onChange?: (o: Option[]) => void;
@@ -41,14 +44,41 @@ export interface ChipsInputProps<Option extends ChipsInputOption> extends
   inputAriaLabel?: string;
 }
 
-const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Option>) => {
-  const { style, value, onChange, onInputChange, onKeyDown, onBlur, onFocus, children, className, inputValue,
-    getRef, getRootRef, placeholder, getOptionValue, getOptionLabel, getNewOptionData, renderChip,
-    after, inputAriaLabel, ...restProps } = props;
+const ChipsInput = <Option extends ChipsInputOption>(
+  props: ChipsInputProps<Option>
+) => {
+  const {
+    style,
+    value,
+    onChange,
+    onInputChange,
+    onKeyDown,
+    onBlur,
+    onFocus,
+    children,
+    className,
+    inputValue,
+    getRef,
+    getRootRef,
+    placeholder,
+    getOptionValue,
+    getOptionLabel,
+    getNewOptionData,
+    renderChip,
+    after,
+    inputAriaLabel,
+    ...restProps
+  } = props;
   const { sizeY } = useAdaptivity();
 
   const [focused, setFocused] = React.useState(false);
-  const { fieldValue, addOptionFromInput, removeOption, selectedOptions, handleInputChange } = useChipsInput(props);
+  const {
+    fieldValue,
+    addOptionFromInput,
+    removeOption,
+    selectedOptions,
+    handleInputChange,
+  } = useChipsInput(props);
   const inputRef = useExternRef(getRef);
 
   const isDisabled = restProps.disabled || restProps.readOnly;
@@ -61,12 +91,17 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
 
     onKeyDown(e);
 
-    if (e.key === 'Backspace' && !e.defaultPrevented && !fieldValue && selectedOptions.length) {
+    if (
+      e.key === "Backspace" &&
+      !e.defaultPrevented &&
+      !fieldValue &&
+      selectedOptions.length
+    ) {
       removeOption(getOptionValue(selectedOptions[selectedOptions.length - 1]));
       e.preventDefault();
     }
 
-    if (e.key === 'Enter' && !e.defaultPrevented && fieldValue) {
+    if (e.key === "Enter" && !e.defaultPrevented && fieldValue) {
       addOptionFromInput();
       e.preventDefault();
     }
@@ -86,7 +121,10 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
     onFocus(e);
   };
 
-  const handleChipRemove = (_: React.MouseEvent<HTMLInputElement>, value: ChipsInputValue) => {
+  const handleChipRemove = (
+    _: React.MouseEvent<HTMLInputElement>,
+    value: ChipsInputValue
+  ) => {
     removeOption(value);
   };
 
@@ -104,9 +142,9 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
   return (
     <FormField
       getRootRef={getRootRef}
-      vkuiClass={classNames('ChipsInput', `ChipsInput--sizeY-${sizeY}`, {
-        'ChipsInput--focused': focused,
-        'ChipsInput--withChips': !!selectedOptions.length,
+      vkuiClass={classNames("ChipsInput", `ChipsInput--sizeY-${sizeY}`, {
+        "ChipsInput--focused": focused,
+        "ChipsInput--withChips": !!selectedOptions.length,
       })}
       className={className}
       style={style}
@@ -124,11 +162,21 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
 
           return (
             <React.Fragment key={`${typeof value}-${value}`}>
-              {renderChip({ option, value, label, onRemove: handleChipRemove, disabled: restProps.disabled, className: prefixClass('ChipsInput__chip') })}
+              {renderChip({
+                option,
+                value,
+                label,
+                onRemove: handleChipRemove,
+                disabled: restProps.disabled,
+                className: prefixClass("ChipsInput__chip"),
+              })}
             </React.Fragment>
           );
         })}
-        <label vkuiClass="ChipsInput__input-container" aria-label={inputAriaLabel}>
+        <label
+          vkuiClass="ChipsInput__input-container"
+          aria-label={inputAriaLabel}
+        >
           <input
             ref={inputRef}
             value={fieldValue}
@@ -152,19 +200,27 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
 };
 
 export const chipsInputDefaultProps: ChipsInputProps<any> = {
-  type: 'text',
+  type: "text",
   onChange: noop,
   onInputChange: noop,
   onKeyDown: noop,
   onBlur: noop,
   onFocus: noop,
   value: [],
-  inputValue: '',
-  inputAriaLabel: 'Введите ваше значение...',
+  inputValue: "",
+  inputAriaLabel: "Введите ваше значение...",
   getOptionValue: (option: ChipsInputOption): ChipsInputValue => option.value,
   getOptionLabel: (option: ChipsInputOption): string => option.label,
-  getNewOptionData: (_: ChipsInputValue, label: string): ChipsInputOption => ({ value: label, label }),
-  renderChip({ disabled, value, label, ...rest }: RenderChip<ChipsInputOption>) {
+  getNewOptionData: (_: ChipsInputValue, label: string): ChipsInputOption => ({
+    value: label,
+    label,
+  }),
+  renderChip({
+    disabled,
+    value,
+    label,
+    ...rest
+  }: RenderChip<ChipsInputOption>) {
     return (
       <Chip value={value} removable={!disabled} {...rest}>
         {label}

@@ -12,8 +12,8 @@ class SnackBarExample extends React.Component {
     super(props);
 
     this.state = {
-      text: '',
-      snackbar: null
+      text: "",
+      snackbar: null,
     };
 
     this.openBaseWithAction = this.openBaseWithAction.bind(this);
@@ -22,48 +22,66 @@ class SnackBarExample extends React.Component {
   }
 
   componentDidMount() {
-    this.openBaseWithAction()
+    this.openBaseWithAction();
   }
 
-  openBaseWithAction () {
+  openBaseWithAction() {
     if (this.state.snackbar) return;
-    this.setState({ snackbar:
-      <Snackbar
-        onClose={() => this.setState({ snackbar: null })}
-        action="Поделиться"
-        onActionClick={() => this.setState({ text: 'Добавляем метку.' })}
-        before={<Avatar size={24} style={{ background: 'var(--accent)' }}><Icon16Done fill="#fff" width={14} height={14} /></Avatar>}
-      >
-        Ссылка скопирована
-      </Snackbar>
+    this.setState({
+      snackbar: (
+        <Snackbar
+          onClose={() => this.setState({ snackbar: null })}
+          action="Поделиться"
+          onActionClick={() => this.setState({ text: "Добавляем метку." })}
+          before={
+            <Avatar size={24} style={{ background: "var(--accent)" }}>
+              <Icon16Done fill="#fff" width={14} height={14} />
+            </Avatar>
+          }
+        >
+          Ссылка скопирована
+        </Snackbar>
+      ),
     });
   }
 
-  openVertical () {
+  openVertical() {
     if (this.state.snackbar) return;
-    this.setState({ snackbar:
-      <Snackbar
-        layout="vertical"
-        onClose={() => this.setState({ snackbar: null })}
-        action="Перейти в раздел «Понравилось»"
-        onActionClick={() => this.setState({ text: 'Открыта подробная информация.' })}
-        before={<Avatar size={24} style={{ background: 'var(--accent)' }}><Icon16Done fill="#fff" width={14} height={14} /></Avatar>}
-      >
-        Ссылка сохранена в закладки
-      </Snackbar>
+    this.setState({
+      snackbar: (
+        <Snackbar
+          layout="vertical"
+          onClose={() => this.setState({ snackbar: null })}
+          action="Перейти в раздел «Понравилось»"
+          onActionClick={() =>
+            this.setState({ text: "Открыта подробная информация." })
+          }
+          before={
+            <Avatar size={24} style={{ background: "var(--accent)" }}>
+              <Icon16Done fill="#fff" width={14} height={14} />
+            </Avatar>
+          }
+        >
+          Ссылка сохранена в закладки
+        </Snackbar>
+      ),
     });
   }
 
-  openWithAvatar () {
+  openWithAvatar() {
     if (this.state.snackbar) return;
-    this.setState({ snackbar:
-      <Snackbar
-        onClose={() => this.setState({ snackbar: null })}
-        onActionClick={() => this.setState({ text: 'Сообщение Ивану было отменено.' })}
-        after={<Avatar src={getAvatarUrl('user_wayshev')} size={32} />}
-      >
-        Отправлено Ивану Барышеву
-      </Snackbar>
+    this.setState({
+      snackbar: (
+        <Snackbar
+          onClose={() => this.setState({ snackbar: null })}
+          onActionClick={() =>
+            this.setState({ text: "Сообщение Ивану было отменено." })
+          }
+          after={<Avatar src={getAvatarUrl("user_wayshev")} size={32} />}
+        >
+          Отправлено Ивану Барышеву
+        </Snackbar>
+      ),
     });
   }
 
@@ -73,19 +91,29 @@ class SnackBarExample extends React.Component {
         <Panel id="example">
           <PanelHeader>Snackbar</PanelHeader>
           <Group>
-            <CellButton onClick={this.openBaseWithAction}>Уведомление с иконкой и кнопкой</CellButton>
-            <CellButton onClick={this.openVertical}>Вертикальное расположение</CellButton>
-            <CellButton onClick={this.openWithAvatar}>Уведомление с аватаркой</CellButton>
+            <CellButton onClick={this.openBaseWithAction}>
+              Уведомление с иконкой и кнопкой
+            </CellButton>
+            <CellButton onClick={this.openVertical}>
+              Вертикальное расположение
+            </CellButton>
+            <CellButton onClick={this.openWithAvatar}>
+              Уведомление с аватаркой
+            </CellButton>
           </Group>
 
-          {this.state.text && <Group><Div>{this.state.text}</Div></Group>}
+          {this.state.text && (
+            <Group>
+              <Div>{this.state.text}</Div>
+            </Group>
+          )}
 
           {this.state.snackbar}
         </Panel>
       </View>
-    )
+    );
   }
 }
 
-<SnackBarExample />
+<SnackBarExample />;
 ```

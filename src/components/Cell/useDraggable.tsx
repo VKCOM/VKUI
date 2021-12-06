@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { TouchEvent } from '../Touch/Touch';
-import { CellProps } from './Cell';
+import * as React from "react";
+import { TouchEvent } from "../Touch/Touch";
+import { CellProps } from "./Cell";
 
 export interface DraggableProps {
   onDragStart: () => void;
@@ -13,7 +13,9 @@ interface UseDraggableProps extends DraggableProps {
   rootElRef: any;
 }
 
-export const useDraggable = ({ onDragFinish }: Pick<CellProps, 'onDragFinish'>) => {
+export const useDraggable = ({
+  onDragFinish,
+}: Pick<CellProps, "onDragFinish">) => {
   const [dragging, setDragging] = React.useState<boolean>(false);
   const rootElRef = React.useRef(null);
 
@@ -21,7 +23,9 @@ export const useDraggable = ({ onDragFinish }: Pick<CellProps, 'onDragFinish'>) 
   const [dragStartIndex, setDragStartIndex] = React.useState<number>(undefined);
   const [dragEndIndex, setDragEndIndex] = React.useState<number>(undefined);
   const [dragShift, setDragShift] = React.useState<number>(0);
-  const [dragDirection, setDragDirection] = React.useState<'down' | 'up'>(undefined);
+  const [dragDirection, setDragDirection] = React.useState<"down" | "up">(
+    undefined
+  );
 
   const onDragStart = () => {
     const rootEl = rootElRef.current;
@@ -45,7 +49,7 @@ export const useDraggable = ({ onDragFinish }: Pick<CellProps, 'onDragFinish'>) 
     rootEl.style.transform = `translateY(${e.shiftY}px)`;
     const rootGesture = rootEl.getBoundingClientRect();
 
-    setDragDirection(dragShift - e.shiftY < 0 ? 'down' : 'up');
+    setDragDirection(dragShift - e.shiftY < 0 ? "down" : "up");
     setDragShift(e.shiftY);
     setDragEndIndex(dragStartIndex);
 
@@ -53,30 +57,32 @@ export const useDraggable = ({ onDragFinish }: Pick<CellProps, 'onDragFinish'>) 
       const siblingGesture = sibling.getBoundingClientRect();
       const siblingHalfHeight = siblingGesture.height / 2;
 
-      const rootOverSibling = rootGesture.bottom > siblingGesture.top + siblingHalfHeight;
-      const rootUnderSibling = rootGesture.top < siblingGesture.bottom - siblingHalfHeight;
+      const rootOverSibling =
+        rootGesture.bottom > siblingGesture.top + siblingHalfHeight;
+      const rootUnderSibling =
+        rootGesture.top < siblingGesture.bottom - siblingHalfHeight;
 
       if (dragStartIndex < siblingIndex) {
         if (rootOverSibling) {
-          if (dragDirection === 'down') {
-            sibling.style.transform = 'translateY(-100%)';
+          if (dragDirection === "down") {
+            sibling.style.transform = "translateY(-100%)";
           }
 
           setDragEndIndex((dragEndIndex) => dragEndIndex + 1);
         }
-        if (rootUnderSibling && dragDirection === 'up') {
-          sibling.style.transform = 'translateY(0)';
+        if (rootUnderSibling && dragDirection === "up") {
+          sibling.style.transform = "translateY(0)";
         }
       } else if (dragStartIndex > siblingIndex) {
         if (rootUnderSibling) {
-          if (dragDirection === 'up') {
-            sibling.style.transform = 'translateY(100%)';
+          if (dragDirection === "up") {
+            sibling.style.transform = "translateY(100%)";
           }
 
           setDragEndIndex((dragEndIndex) => dragEndIndex - 1);
         }
-        if (rootOverSibling && dragDirection === 'down') {
-          sibling.style.transform = 'translateY(0)';
+        if (rootOverSibling && dragDirection === "down") {
+          sibling.style.transform = "translateY(0)";
         }
       }
     });

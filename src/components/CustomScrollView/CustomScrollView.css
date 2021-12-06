@@ -45,8 +45,8 @@
 }
 
 .CustomScrollView__trackerY::before {
-  content: '';
-  opacity: .28;
+  content: "";
+  opacity: 0.28;
   display: block;
   width: 100%;
   height: 100%;
@@ -57,7 +57,7 @@
 
 .CustomScrollView__trackerY:hover::before,
 .CustomScrollView__trackerY:active::before {
-  opacity: .56;
+  opacity: 0.56;
   transform: scaleX(1.34);
 }
 

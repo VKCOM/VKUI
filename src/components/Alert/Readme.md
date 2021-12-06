@@ -15,12 +15,12 @@
 Кнопки могут быть ссылками (передайте `href`) или другим компонентом (передайте `Component`).
 
 > **Важно:**
-> 
+>
 > 1. Кнопка со стилем `cancel` должна быть одна на алерт.
 > 2. Кнопку со стилем `cancel` нужно располагать либо слева, либо снизу, в зависимости от выбранного `actionsLayout`.
 > 3. В Android версии игнорируется стили `cancel` и `destructive`, и жирность всех кнопок одинаковая.
 > 4. В VKCOM версии возможно только горизонтальное расположение кнопок.
-> 5.  Порядок кнопок должен быть одинаковым на всех платформах (см. пункт 2).
+> 5. Порядок кнопок должен быть одинаковым на всех платформах (см. пункт 2).
 
 ```jsx { "props": { "layout": false, "adaptivity": true } }
 class Example extends React.Component {
@@ -39,7 +39,7 @@ class Example extends React.Component {
   }
 
   componentDidMount() {
-    this.openDeleteion()
+    this.openDeleteion();
   }
 
   addActionLogItem(value) {
@@ -48,49 +48,60 @@ class Example extends React.Component {
     });
   }
 
-  openAction () {
-    this.setState({ popout:
-      <Alert
-        actions={[{
-          title: 'Лишить права',
-          mode: 'destructive',
-          autoclose: true,
-          action: () => this.addActionLogItem('Право на модерацию контента убрано.'),
-        }, {
-          title: 'Отмена',
-          autoclose: true,
-          mode: 'cancel'
-        }]}
-        actionsLayout="vertical"
-        onClose={this.closePopout}
-        header="Подтвердите действие"
-        text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
-      />
+  openAction() {
+    this.setState({
+      popout: (
+        <Alert
+          actions={[
+            {
+              title: "Лишить права",
+              mode: "destructive",
+              autoclose: true,
+              action: () =>
+                this.addActionLogItem("Право на модерацию контента убрано."),
+            },
+            {
+              title: "Отмена",
+              autoclose: true,
+              mode: "cancel",
+            },
+          ]}
+          actionsLayout="vertical"
+          onClose={this.closePopout}
+          header="Подтвердите действие"
+          text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
+        />
+      ),
     });
   }
 
-  openDeleteion () {
-    this.setState({ popout:
-      <Alert
-        actions={[{
-          title: 'Отмена',
-          autoclose: true,
-          mode: 'cancel'
-        }, {
-          title: 'Удалить',
-          autoclose: true,
-          mode: 'destructive',
-          action: () => this.addActionLogItem('Документ удален.'),
-        }]}
-        actionsLayout="horizontal"
-        onClose={this.closePopout}
-        header="Удаление документа"
-        text="Вы уверены, что хотите удалить этот документ?"
-      />
+  openDeleteion() {
+    this.setState({
+      popout: (
+        <Alert
+          actions={[
+            {
+              title: "Отмена",
+              autoclose: true,
+              mode: "cancel",
+            },
+            {
+              title: "Удалить",
+              autoclose: true,
+              mode: "destructive",
+              action: () => this.addActionLogItem("Документ удален."),
+            },
+          ]}
+          actionsLayout="horizontal"
+          onClose={this.closePopout}
+          header="Удаление документа"
+          text="Вы уверены, что хотите удалить этот документ?"
+        />
+      ),
     });
   }
 
-  closePopout () {
+  closePopout() {
     this.setState({ popout: null });
   }
 
@@ -98,21 +109,25 @@ class Example extends React.Component {
     return (
       <SplitLayout popout={this.state.popout}>
         <SplitCol>
-        <View activePanel="alert">
-          <Panel id="alert">
-            <PanelHeader>Alert</PanelHeader>
-            <Group>
-              <CellButton onClick={this.openAction}>Лишить права</CellButton>
-              <CellButton onClick={this.openDeleteion}>Удалить документ</CellButton>
-              {this.state.actionsLog.map((value, i) => <Div key={i}>{value}</Div>)}
-            </Group>
-          </Panel>
-        </View>
+          <View activePanel="alert">
+            <Panel id="alert">
+              <PanelHeader>Alert</PanelHeader>
+              <Group>
+                <CellButton onClick={this.openAction}>Лишить права</CellButton>
+                <CellButton onClick={this.openDeleteion}>
+                  Удалить документ
+                </CellButton>
+                {this.state.actionsLog.map((value, i) => (
+                  <Div key={i}>{value}</Div>
+                ))}
+              </Group>
+            </Panel>
+          </View>
         </SplitCol>
       </SplitLayout>
-    )
+    );
   }
 }
 
-<Example />
+<Example />;
 ```

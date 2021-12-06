@@ -19,7 +19,7 @@
 }
 
 .Radio__input:disabled ~ .Radio__container {
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .Radio__icon {
@@ -32,7 +32,7 @@
 
 .Radio__icon::after {
   position: absolute;
-  content: '';
+  content: "";
   display: block;
   border-radius: 50%;
   box-sizing: border-box;
@@ -59,7 +59,7 @@
   height: 22px;
   border: 2px solid var(--icon_tertiary);
   margin: 1px 12px 1px 1px;
-  transition: border-color .15s var(--ios-easing);
+  transition: border-color 0.15s var(--ios-easing);
 }
 
 .Radio--ios.Radio--sizeY-compact .Radio__icon {
@@ -77,8 +77,8 @@
   height: 14px;
   left: 2px;
   top: 2px;
-  transform: scale(.3);
-  transition: transform .15s var(--ios-easing);
+  transform: scale(0.3);
+  transition: transform 0.15s var(--ios-easing);
 }
 
 .Radio--ios.Radio--sizeY-compact .Radio__icon::after {
@@ -115,7 +115,7 @@
   height: 22px;
   border: 2px solid var(--icon_tertiary);
   margin: 1px 12px 1px 1px;
-  transition: border-color .5s var(--ios-easing);
+  transition: border-color 0.5s var(--ios-easing);
 }
 
 .Radio--android.Radio--sizeY-compact .Radio__icon {
@@ -129,8 +129,8 @@
   height: 14px;
   left: 2px;
   top: 2px;
-  transform: scale(.3);
-  transition: transform .5s var(--ios-easing);
+  transform: scale(0.3);
+  transition: transform 0.5s var(--ios-easing);
 }
 
 .Radio--android.Radio--sizeY-compact .Radio__icon::after {
@@ -172,7 +172,7 @@
   margin: 2px 14px 2px 2px;
   border: 1px solid var(--icon_secondary);
   border-radius: 50%;
-  transition: border-color .5s var(--ios-easing);
+  transition: border-color 0.5s var(--ios-easing);
 }
 
 .Radio--vkcom .Radio__icon::after {
@@ -180,12 +180,12 @@
   height: 8px;
   left: 3px;
   top: 3px;
-  transform: scale(.3);
-  transition: transform .5s var(--ios-easing);
+  transform: scale(0.3);
+  transition: transform 0.5s var(--ios-easing);
 }
 
 .Radio--vkcom .Radio__input:disabled ~ .Radio__container {
-  opacity: .4;
+  opacity: 0.4;
 }
 
 .Radio--vkcom .Radio__input:checked ~ .Radio__container .Radio__icon {

@@ -41,14 +41,14 @@
 }
 
 .Button[disabled] {
-  opacity: var(--vkui--opacity_disable, .4);
+  opacity: var(--vkui--opacity_disable, 0.4);
 }
 
 .Button--lvl-primary[disabled]:not(.Button--clr-overlay):not(.Button--clr-negative):not(.Button--clr-positive),
 .Button--lvl-secondary[disabled]:not(.Button--clr-overlay),
 .Button--lvl-tertiary[disabled]:not(.Button--clr-overlay),
 .Button--lvl-outline[disabled]:not(.Button--clr-overlay) {
-  opacity: .64;
+  opacity: 0.64;
 }
 
 /* only 1 icon cases */
@@ -104,7 +104,10 @@
 /* Button's backgrounds */
 /* Mode  = Primary */
 .Button--lvl-primary.Button--clr-accent {
-  background-color: var(--button_primary_background, var(--vkui--color_background_accent));
+  background-color: var(
+    --button_primary_background,
+    var(--vkui--color_background_accent)
+  );
 }
 
 .Button--lvl-primary.Button--clr-accent.Button--hover {
@@ -116,7 +119,10 @@
 }
 
 .Button--lvl-primary.Button--clr-positive {
-  background-color: var(--button_commerce_background, var(--vkui--color_background_positive));
+  background-color: var(
+    --button_commerce_background,
+    var(--vkui--color_background_positive)
+  );
 }
 
 .Button--lvl-primary.Button--clr-positive.Button--hover {
@@ -140,7 +146,10 @@
 }
 
 .Button--lvl-primary.Button--clr-neutral {
-  background-color: var(--content_tint_background, var(--vkui--color_background_secondary));
+  background-color: var(
+    --content_tint_background,
+    var(--vkui--color_background_secondary)
+  );
 }
 
 .Button--lvl-primary.Button--clr-neutral.Button--hover {
@@ -153,12 +162,18 @@
 
 /* Mode = Secondary */
 .Button--lvl-secondary {
-  background-color: var(--content_tint_background, var(--vkui--color_background_secondary));
+  background-color: var(
+    --content_tint_background,
+    var(--vkui--color_background_secondary)
+  );
 }
 
 /* Only for VKCOM */
 .Button--vkcom.Button--lvl-secondary {
-  background-color: var(--control_background, var(--vkui--color_background_secondary));
+  background-color: var(
+    --control_background,
+    var(--vkui--color_background_secondary)
+  );
 }
 
 .Button--lvl-secondary.Button--hover {
@@ -172,7 +187,10 @@
 /* Mode = Tertiary */
 .Button--lvl-tertiary,
 .Button--lvl-outline {
-  background-color: var(--button_tertiary_background, var(--vkui--color_transparent));
+  background-color: var(
+    --button_tertiary_background,
+    var(--vkui--color_transparent)
+  );
 }
 
 .Button--lvl-tertiary.Button--hover,
@@ -300,7 +318,8 @@
   Outline buttons borders
 */
 .Button--lvl-outline.Button--clr-accent {
-  box-shadow: inset 0 0 0 1px var(--button_outline_border, var(--vkui--color_stroke_accent));
+  box-shadow: inset 0 0 0 1px
+    var(--button_outline_border, var(--vkui--color_stroke_accent));
 }
 
 .Button--lvl-outline.Button--clr-accent.Button--hover {
@@ -312,7 +331,8 @@
 }
 
 .Button--lvl-outline.Button--clr-positive {
-  box-shadow: inset 0 0 0 1px var(--button_commerce_background, var(--vkui--color_stroke_positive));
+  box-shadow: inset 0 0 0 1px
+    var(--button_commerce_background, var(--vkui--color_stroke_positive));
 }
 
 .Button--lvl-outline.Button--clr-positive.Button--hover {
@@ -324,7 +344,8 @@
 }
 
 .Button--lvl-outline.Button--clr-negative {
-  box-shadow: inset 0 0 0 1px var(--destructive, var(--vkui--color_stroke_negative));
+  box-shadow: inset 0 0 0 1px
+    var(--destructive, var(--vkui--color_stroke_negative));
 }
 
 .Button--lvl-outline.Button--clr-negative.Button--hover {
@@ -336,7 +357,8 @@
 }
 
 .Button--lvl-outline.Button--clr-neutral {
-  box-shadow: inset 0 0 0 1px var(--field_border, var(--vkui--color_field_border_alpha));
+  box-shadow: inset 0 0 0 1px
+    var(--field_border, var(--vkui--color_field_border_alpha));
 }
 
 .Button--lvl-outline.Button--clr-neutral.Button--hover {
@@ -354,7 +376,10 @@
   Background colors
 */
 .Button--lvl-primary.Button--clr-overlay {
-  background-color: var(--media_overlay_button_background, var(--vkui--color_background_contrast));
+  background-color: var(
+    --media_overlay_button_background,
+    var(--vkui--color_background_contrast)
+  );
 }
 
 .Button--lvl-primary.Button--clr-overlay.Button--hover {
@@ -366,24 +391,34 @@
 }
 
 .Button--lvl-secondary.Button--clr-overlay {
-  background-color: var(--vkui--color_background_contrast_secondary_alpha, rgba(255, 255, 255, .2));
+  background-color: var(
+    --vkui--color_background_contrast_secondary_alpha,
+    rgba(255, 255, 255, 0.2)
+  );
 }
 
 .Button--lvl-secondary.Button--clr-overlay.Button--hover,
 .Button--lvl-tertiary.Button--clr-overlay.Button--hover,
 .Button--lvl-outline.Button--clr-overlay.Button--hover {
-  background-color: var(--vkui--color_background_contrast_secondary_alpha--hover);
+  background-color: var(
+    --vkui--color_background_contrast_secondary_alpha--hover
+  );
 }
 
 .Button--lvl-secondary.Button--clr-overlay.Button--active,
 .Button--lvl-tertiary.Button--clr-overlay.Button--active,
 .Button--lvl-outline.Button--clr-overlay.Button--active {
-  background-color: var(--vkui--color_background_contrast_secondary_alpha--active);
+  background-color: var(
+    --vkui--color_background_contrast_secondary_alpha--active
+  );
 }
 
 /* Text colors */
 .Button--lvl-primary.Button--clr-overlay {
-  color: var(--media_overlay_button_foreground, var(--vkui--color_text_primary_invariably));
+  color: var(
+    --media_overlay_button_foreground,
+    var(--vkui--color_text_primary_invariably)
+  );
 }
 
 .Button--lvl-primary.Button--clr-overlay.Button--hover {
@@ -474,7 +509,7 @@
 .Button--vkcom.Button--lvl-secondary .Icon,
 .Button--vkcom.Button--lvl-tertiary .Icon,
 .Button--vkcom.Button--lvl-outline .Icon {
-  opacity: .72;
+  opacity: 0.72;
 }
 
 /**
@@ -521,7 +556,9 @@
   margin-top: 4px;
 }
 
-.Banner__actions > .Button:not(.Button--lvl-tertiary) + .Button:not(.Button--lvl-tertiary) {
+.Banner__actions
+  > .Button:not(.Button--lvl-tertiary)
+  + .Button:not(.Button--lvl-tertiary) {
   margin-top: 0;
 }
 

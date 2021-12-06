@@ -1,9 +1,9 @@
-import { Version } from '../types';
-import { detectIOS } from '@vkontakte/vkjs';
+import { Version } from "../types";
+import { detectIOS } from "@vkontakte/vkjs";
 
 export enum System {
-  IOS = 'ios',
-  UNKNOWN = '',
+  IOS = "ios",
+  UNKNOWN = "",
 }
 
 export interface BrowserInfo {
@@ -14,7 +14,7 @@ export interface BrowserInfo {
 
 const memoized: { [index: string]: BrowserInfo } = {};
 
-export function computeBrowserInfo(userAgent = ''): BrowserInfo {
+export function computeBrowserInfo(userAgent = ""): BrowserInfo {
   if (memoized[userAgent]) {
     return memoized[userAgent];
   }
