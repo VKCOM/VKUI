@@ -19,10 +19,6 @@
   flex-basis: 0;
 }
 
-.Button__dummy {
-  --theme: var(--vkui--theme_name);
-}
-
 .Button__in {
   display: flex;
   align-items: center;
@@ -57,7 +53,10 @@
 
 .Button__before:not(:last-child) {
   margin-left: -4px;
-  margin-right: 6px;
+}
+
+.Button__before:not(:last-child) + .Button__content {
+  margin-left: 6px;
 }
 
 .Button__after:not(:first-child) {
@@ -410,8 +409,8 @@
   box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_contrast--active);
 }
 
-.Button--sz-l .Button__before:not(:last-child) {
-  margin-right: 8px;
+.Button--sz-l .Button__before:not(:last-child) + .Button__content {
+  margin-left: 8px;
 }
 
 .Button--sz-l .Button__after:not(:first-child) {

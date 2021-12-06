@@ -14,6 +14,7 @@ const Example = () => {
   const [loading, setLoading] = useState(false);
   const [addBefore, setAddBefore] = useState(false);
   const [addAfter, setAddAfter] = useState(false);
+  const [addText, setAddText] = useState(true);
   const [hasLink, setHasLink] = useState(false);
 
   const buttonBefore = addBefore &&
@@ -21,6 +22,7 @@ const Example = () => {
   const buttonAfter = addAfter &&
     (size === 's' ? <Icon12Tag/> :size === 'm' ? <Icon24ChevronCompactRight/> : <Counter>16</Counter>);
   const buttonLink = hasLink ? '#' : undefined;
+  const buttonText = addText ? 'Button' : undefined;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
@@ -39,7 +41,7 @@ const Example = () => {
             size={size}
             loading={loading}
           >
-            Primary
+            {buttonText}
           </Button>
         </Div>
         <Div>
@@ -54,7 +56,7 @@ const Example = () => {
             size={size}
             loading={loading}
           >
-            Secondary
+            {buttonText}
           </Button>
         </Div>
         <Div>
@@ -69,7 +71,7 @@ const Example = () => {
             size={size}
             loading={loading}
           >
-            Tertiary
+            {buttonText}
           </Button>
         </Div>
         <Div>
@@ -84,7 +86,7 @@ const Example = () => {
             size={size}
             loading={loading}
           >
-            Outline
+            {buttonText}
           </Button>
         </Div>
       </div>
@@ -109,8 +111,15 @@ const Example = () => {
           <Checkbox onChange={(e) => setStretched(e.target.checked)}>stretched</Checkbox>
           <Checkbox onChange={(e) => setLoading(e.target.checked)}>loading</Checkbox>
           <Checkbox onChange={(e) => setDisabled(e.target.checked)}>disabled</Checkbox>
-          <Checkbox onChange={(e) => setAddBefore(e.target.checked)}>add before</Checkbox>
-          <Checkbox onChange={(e) => setAddAfter(e.target.checked)}>add after</Checkbox>
+          <Checkbox 
+            disabled={!(addBefore || addAfter)}
+            onChange={(e) => setAddText(e.target.checked)}
+            checked={addText}
+          >
+            add text
+          </Checkbox>
+          <Checkbox disabled={!(addText || addAfter)} onChange={(e) => setAddBefore(e.target.checked)}>add before</Checkbox>
+          <Checkbox disabled={!(addText || addBefore)} onChange={(e) => setAddAfter(e.target.checked)}>add after</Checkbox>
           <Checkbox onChange={(e) => setHasLink(e.target.checked)}>add href</Checkbox>
         </FormItem>
       </div>
