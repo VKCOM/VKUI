@@ -1,7 +1,7 @@
 import Radio, { RadioProps } from "./Radio";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
-describe("Checkbox", () => {
+describe("Radio", () => {
   describeScreenshotFuzz(
     (props: RadioProps) => <Radio {...props}>label</Radio>,
     [
