@@ -20,13 +20,17 @@ import {
 } from "../../hoc/withAdaptivity";
 import Text from "../Typography/Text/Text";
 import Headline from "../Typography/Headline/Headline";
+import { hasReactNode } from "../../lib/utils";
+import Subhead from "../Typography/Subhead/Subhead";
 import "./Checkbox.css";
 
 export interface CheckboxProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     HasRootRef<HTMLLabelElement>,
     HasRef<HTMLInputElement>,
-    AdaptivityProps {}
+    AdaptivityProps {
+  description?: React.ReactNode;
+}
 
 export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   children,
@@ -34,6 +38,7 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   style,
   getRootRef,
   getRef,
+  description,
   sizeY,
   ...restProps
 }: CheckboxProps) => {
@@ -77,7 +82,16 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
           )}
         </div>
         <ContentComponent weight="regular" vkuiClass="Checkbox__content">
-          {children}
+          <div vkuiClass="Checkbox__children">{children}</div>
+          {hasReactNode(description) && (
+            <Subhead
+              Component="span"
+              weight="regular"
+              vkuiClass="Checkbox__description"
+            >
+              {description}
+            </Subhead>
+          )}
         </ContentComponent>
       </div>
     </Tappable>

@@ -14,16 +14,13 @@
 
 .Checkbox__container {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
 }
 
 .Checkbox__icon {
   flex-shrink: 0;
-  box-sizing: border-box;
   margin-right: 12px;
-  border-radius: 4px;
-  display: flex;
 }
 
 .Checkbox__icon--on {
@@ -41,8 +38,13 @@
   word-break: break-word;
 }
 
+.Checkbox__description {
+  color: var(--text_secondary);
+  display: block;
+}
+
 .Checkbox__input:checked ~ .Checkbox__container .Checkbox__icon--on {
-  display: flex;
+  display: block;
 }
 
 .Checkbox__input:checked ~ .Checkbox__container .Checkbox__icon--off {
@@ -53,56 +55,89 @@
   opacity: 0.6;
 }
 
+/**
+ * iOS
+ */
+
 .Checkbox--ios {
   padding: 0 12px;
 }
 
-.Checkbox--ios .Checkbox__icon {
-  margin-top: 10px;
+.Checkbox--ios .Checkbox__children {
+  margin-top: 11px;
 }
 
-.Checkbox--ios.Checkbox--sizeY-compact .Checkbox__icon {
-  margin-top: 8px;
+.Checkbox--ios .Checkbox__children:last-child {
+  margin-bottom: 13px;
 }
 
-.Checkbox--ios .Checkbox__content {
-  margin-top: 12px;
+.Checkbox--ios .Checkbox__description {
   margin-bottom: 12px;
+  margin-top: 2px;
 }
+
+/**
+ * Android
+ */
 
 .Checkbox--android {
   padding: 0 16px;
 }
 
-.Checkbox--android .Checkbox__icon {
-  margin-top: 10px;
+.Checkbox--android .Checkbox__children {
+  margin-top: 11px;
 }
 
-.Checkbox--android.Checkbox--sizeY-compact .Checkbox__icon {
-  margin-top: 8px;
-}
-
-.Checkbox--android .Checkbox__content {
-  margin-top: 12px;
+.Checkbox--android .Checkbox__children:last-child {
   margin-bottom: 12px;
 }
+
+.Checkbox--android .Checkbox__description {
+  margin-top: 1px;
+  margin-bottom: 11px;
+}
+
+/**
+ * vkcom
+ */
 
 .Checkbox--vkcom {
   padding: 0 16px;
 }
 
 .Checkbox--vkcom .Checkbox__icon {
-  border-radius: 3px;
-  padding: 1px;
-  border-width: 1px;
-  margin-top: 8px;
+  margin-right: 10px;
 }
 
 .Checkbox--vkcom .Checkbox__input[disabled] ~ .Checkbox__container {
   opacity: 0.4;
 }
 
-.Checkbox--sizeY-compact .Checkbox__content {
+.Checkbox--vkcom .Checkbox__children {
   margin-top: 8px;
+}
+
+.Checkbox--vkcom .Checkbox__children:last-child {
   margin-bottom: 8px;
+}
+
+.Checkbox--vkcom .Checkbox__description {
+  margin-top: 1px;
+  margin-bottom: 8px;
+}
+
+/**
+ * sizeY COMPACT
+ */
+
+.Checkbox--sizeY-compact .Checkbox__children {
+  margin-top: 8px;
+}
+
+.Checkbox--sizeY-compact .Checkbox__children:last-child {
+  margin-bottom: 8px;
+}
+
+.Checkbox--sizeY-compact .Checkbox__description {
+  margin-bottom: 7px;
 }

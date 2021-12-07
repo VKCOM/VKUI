@@ -7,7 +7,9 @@
     <Group>
       <FormItem>
         <Checkbox defaultChecked>Я участвую в сборе</Checkbox>
-        <Checkbox>Закрепить сообщение с запросом</Checkbox>
+        <Checkbox description="Все пользователи получат уведомление">
+          Закрепить сообщение с запросом
+        </Checkbox>
         <Checkbox>Автоматически зачислять на карту</Checkbox>
       </FormItem>
     </Group>

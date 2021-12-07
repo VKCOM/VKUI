@@ -1,9 +1,9 @@
-import { Checkbox, CheckboxProps } from "./Checkbox";
+import Radio, { RadioProps } from "./Radio";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
 describe("Checkbox", () => {
   describeScreenshotFuzz(
-    (props: CheckboxProps) => <Checkbox {...props}>label</Checkbox>,
+    (props: RadioProps) => <Radio {...props}>label</Radio>,
     [
       {
         checked: [false, true],
