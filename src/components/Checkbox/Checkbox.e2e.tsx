@@ -10,7 +10,8 @@ describe("Checkbox", () => {
         checked: [false, true],
         disabled: [undefined, true],
       },
-    ]
+    ],
+    { adaptivity: { sizeY: SizeType.REGULAR } }
   );
 });
 
