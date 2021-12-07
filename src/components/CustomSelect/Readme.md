@@ -110,7 +110,6 @@ class Example extends React.Component {
         </FormItem>
         <FormItem top="Администратор" bottom="Кастомное поведение при поиске">
           <CustomSelect
-            popupDirection="top"
             placeholder="Введите имя пользователя"
             searchable
             onInputChange={(e) => {
@@ -154,7 +153,6 @@ class Example extends React.Component {
         <Header>Асинхронная загрузка списка</Header>
         <FormItem top="Администратор">
           <CustomSelect
-            popupDirection="top"
             placeholder="Не выбран"
             onOpen={() => {
               if (this.state.remoteUsers.length === 0) {
@@ -177,7 +175,6 @@ class Example extends React.Component {
         </FormItem>
         <FormItem top="Администратор" bottom="Асинхронный поиск">
           <CustomSelect
-            popupDirection="top"
             placeholder="Введите имя пользователя"
             searchable
             onInputChange={(e) => {

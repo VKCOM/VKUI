@@ -22,6 +22,7 @@ import { prefixClass } from "../../lib/prefixClass";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { defaultFilterFn } from "../../lib/select";
+import { Popper, Placement } from "../Popper/Popper";
 import "./ChipsSelect.css";
 
 export interface ChipsSelectProps<Option extends ChipsInputOption>
@@ -113,6 +114,9 @@ const ChipsSelect = <Option extends ChipsInputOption>(
   } = props;
 
   const { document } = useDOM();
+
+  const [popperPlacement, setPopperPlacement] =
+    React.useState<Placement>(undefined);
 
   const scrollBoxRef = React.useRef<HTMLDivElement>(null);
   const rootRef = useExternRef(getRef);
@@ -292,6 +296,15 @@ const ChipsSelect = <Option extends ChipsInputOption>(
     return renderChip({ ...renderChipProps, onRemove: onRemoveWrapper });
   };
 
+  const isPopperDirectionTop = popperPlacement?.includes("top");
+
+  const onPlacementChange = React.useCallback(
+    ({ placement }: { placement?: Placement }) => {
+      setPopperPlacement(placement);
+    },
+    [setPopperPlacement]
+  );
+
   return (
     <div
       vkuiClass={classNames("ChipsSelect", `ChipsSelect--sizeY-${sizeY}`)}
@@ -313,7 +326,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(
         placeholder={placeholder}
         vkuiClass={classNames({
           ["ChipsSelect__open"]: opened,
-          ["ChipsSelect__open--popupDirectionTop"]: popupDirection === "top",
+          ["ChipsSelect__open--popupDirectionTop"]: isPopperDirectionTop,
         })}
         getRef={getRef}
         disabled={disabled}
@@ -321,83 +334,94 @@ const ChipsSelect = <Option extends ChipsInputOption>(
         after={<DropdownIcon />}
       />
       {opened && (
-        <div
-          vkuiClass={classNames("ChipsSelect__options", {
-            ["ChipsSelect__options--popupDirectionTop"]:
-              popupDirection === "top",
-          })}
-          onMouseLeave={() => setFocusedOptionIndex(null)}
+        <Popper
+          targetRef={rootRef}
+          offsetDistance={0}
+          sameWidth
+          onPlacementChange={onPlacementChange}
+          placement={popupDirection}
         >
-          <CustomScrollView boxRef={scrollBoxRef}>
-            {fetching ? (
-              <div vkuiClass="ChipsSelect__fetching">
-                <Spinner size="small" />
-              </div>
-            ) : (
-              <React.Fragment>
-                {showCreatable && (
-                  <CustomSelectOption
-                    hovered={focusedOptionIndex === 0}
-                    onMouseDown={addOptionFromInput}
-                    onMouseEnter={() => setFocusedOptionIndex(0)}
-                  >
-                    {creatableText}
-                  </CustomSelectOption>
-                )}
-                {!filteredOptions?.length && !showCreatable && emptyText ? (
-                  <Caption
-                    level="1"
-                    weight="regular"
-                    vkuiClass="ChipsSelect__empty"
-                  >
-                    {emptyText}
-                  </Caption>
-                ) : (
-                  filteredOptions.map((option: Option, index: number) => {
-                    const label = getOptionLabel(option);
-                    const hovered =
-                      focusedOption &&
-                      getOptionValue(option) === getOptionValue(focusedOption);
-                    const selected = selectedOptions.find(
-                      (selectedOption: Option) => {
-                        return (
-                          getOptionValue(selectedOption) ===
-                          getOptionValue(option)
-                        );
-                      }
-                    );
-                    const value = getOptionValue(option);
+          <div
+            vkuiClass={classNames("ChipsSelect__options", {
+              ["ChipsSelect__options--popupDirectionTop"]: isPopperDirectionTop,
+            })}
+            onMouseLeave={() => setFocusedOptionIndex(null)}
+          >
+            <CustomScrollView
+              boxRef={scrollBoxRef}
+              className="vkuiChipsSelect__CustomScrollView"
+            >
+              {fetching ? (
+                <div vkuiClass="ChipsSelect__fetching">
+                  <Spinner size="small" />
+                </div>
+              ) : (
+                <React.Fragment>
+                  {showCreatable && (
+                    <CustomSelectOption
+                      hovered={focusedOptionIndex === 0}
+                      onMouseDown={addOptionFromInput}
+                      onMouseEnter={() => setFocusedOptionIndex(0)}
+                    >
+                      {creatableText}
+                    </CustomSelectOption>
+                  )}
+                  {!filteredOptions?.length && !showCreatable && emptyText ? (
+                    <Caption
+                      level="1"
+                      weight="regular"
+                      vkuiClass="ChipsSelect__empty"
+                    >
+                      {emptyText}
+                    </Caption>
+                  ) : (
+                    filteredOptions.map((option: Option, index: number) => {
+                      const label = getOptionLabel(option);
+                      const hovered =
+                        focusedOption &&
+                        getOptionValue(option) ===
+                          getOptionValue(focusedOption);
+                      const selected = selectedOptions.find(
+                        (selectedOption: Option) => {
+                          return (
+                            getOptionValue(selectedOption) ===
+                            getOptionValue(option)
+                          );
+                        }
+                      );
+                      const value = getOptionValue(option);
 
-                    return (
-                      <React.Fragment key={`${typeof value}-${value}`}>
-                        {renderOption({
-                          className: prefixClass("ChipsSelect__option"),
-                          option,
-                          hovered,
-                          children: label,
-                          selected: !!selected,
-                          getRootRef: (e) => (chipsSelectOptions[index] = e),
-                          onMouseDown: (
-                            e: React.MouseEvent<HTMLDivElement>
-                          ) => {
-                            onChangeStart(e, option);
+                      return (
+                        <React.Fragment key={`${typeof value}-${value}`}>
+                          {renderOption({
+                            className: prefixClass("ChipsSelect__option"),
+                            option,
+                            hovered,
+                            children: label,
+                            selected: !!selected,
+                            getRootRef: (e) => (chipsSelectOptions[index] = e),
+                            onMouseDown: (
+                              e: React.MouseEvent<HTMLDivElement>
+                            ) => {
+                              onChangeStart(e, option);
 
-                            if (!e.defaultPrevented) {
-                              closeAfterSelect && setOpened(false);
-                              addOption(option);
-                              clearInput();
-                            }
-                          },
-                          onMouseEnter: () => setFocusedOptionIndex(index),
-                        })}
-                      </React.Fragment>
-                    );
-                  })
-                )}
-              </React.Fragment>
-            )}
-          </CustomScrollView>
-        </div>
+                              if (!e.defaultPrevented) {
+                                closeAfterSelect && setOpened(false);
+                                addOption(option);
+                                clearInput();
+                              }
+                            },
+                            onMouseEnter: () => setFocusedOptionIndex(index),
+                          })}
+                        </React.Fragment>
+                      );
+                    })
+                  )}
+                </React.Fragment>
+              )}
+            </CustomScrollView>
+          </div>
+        </Popper>
       )}
     </div>
   );

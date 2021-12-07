@@ -6,6 +6,7 @@ import "./CustomScrollView.css";
 interface Props extends DOMProps {
   windowResize?: boolean;
   boxRef: React.Ref<HTMLDivElement>;
+  className?: HTMLDivElement["className"];
 }
 
 class CustomScrollView extends React.Component<Props> {
@@ -132,8 +133,10 @@ class CustomScrollView extends React.Component<Props> {
   };
 
   render() {
+    const { children, className } = this.props;
+
     return (
-      <div vkuiClass="CustomScrollView">
+      <div vkuiClass="CustomScrollView" className={className}>
         <div vkuiClass="CustomScrollView__barY" ref={this.barY}>
           <div
             vkuiClass="CustomScrollView__trackerY"
@@ -148,7 +151,7 @@ class CustomScrollView extends React.Component<Props> {
           ref={this.box}
           onScroll={this.scroll}
         >
-          {this.props.children}
+          {children}
         </div>
       </div>
     );
