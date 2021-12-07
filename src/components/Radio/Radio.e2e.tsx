@@ -12,7 +12,9 @@ describe("Radio", () => {
       },
     ]
   );
+});
 
+describe("Radio sizes and description", () => {
   describeScreenshotFuzz(
     (props: RadioProps) => <Radio {...props}>label</Radio>,
     [

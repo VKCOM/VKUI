@@ -12,7 +12,9 @@ describe("Checkbox", () => {
       },
     ]
   );
+});
 
+describe("Checkbox sizes and description", () => {
   describeScreenshotFuzz(
     (props: CheckboxProps) => <Checkbox {...props}>label</Checkbox>,
     [
