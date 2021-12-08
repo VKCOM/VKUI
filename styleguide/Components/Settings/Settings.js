@@ -18,7 +18,6 @@ export const Settings = ({ adaptivity }) => {
           <div className="Settings">
             <div className="Settings__in">
               <PlatformSelect
-                allowVkCom={!isMobile}
                 onChange={(platform) => context.setContext({ platform })}
                 value={context.platform}
               />
