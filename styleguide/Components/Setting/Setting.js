@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useEffect } from "react";
 import {
   Headline,
   Link,
@@ -20,6 +20,13 @@ export const Setting = ({
 }) => {
   const { setPopout } = useContext(StyleGuideContext);
   const ref = useRef();
+
+  console.log(ref);
+  useEffect(() => {
+    if (!ref.current) {
+      setPopout(null);
+    }
+  }, [ref.current]);
 
   return (
     <Headline
