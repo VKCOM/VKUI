@@ -21,12 +21,12 @@ export const Setting = ({
   const { setPopout } = useContext(StyleGuideContext);
   const ref = useRef();
 
-  console.log(ref);
-  useEffect(() => {
-    if (!ref.current) {
+  useEffect(
+    () => () => {
       setPopout(null);
-    }
-  }, [ref.current]);
+    },
+    []
+  );
 
   return (
     <Headline
@@ -43,10 +43,7 @@ export const Setting = ({
           disabled={disabled}
           onClick={() => {
             setPopout(
-              <ActionSheet
-                toggleRef={ref.current}
-                onClose={() => setPopout(null)}
-              >
+              <ActionSheet toggleRef={ref} onClose={() => setPopout(null)}>
                 {options.map((item) => {
                   const isPrimitive =
                     typeof item === "string" || typeof item === "number";
