@@ -32,7 +32,6 @@ const Example = () => {
         <Group>
           <CardGrid size="l">
             <ContentCard
-              href="#"
               subtitle="VKUI"
               header="ContentCard example"
               caption="VKUI Styleguide > Blocks > ContentCard"

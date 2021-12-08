@@ -77,8 +77,6 @@ const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
   const platform = usePlatform();
 
   const source = image || src;
-  const clickable =
-    !restProps.disabled && !!(restProps.onClick || restProps.href);
 
   return (
     <Card
@@ -92,8 +90,7 @@ const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
     >
       <Tappable
         {...restProps}
-        hasActive={clickable}
-        hasHover={clickable}
+        disabled={restProps.disabled || (!restProps.onClick && !restProps.href)}
         vkuiClass="ContentCard__tappable"
       >
         {(source || srcSet) && (
