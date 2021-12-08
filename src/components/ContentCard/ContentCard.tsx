@@ -3,16 +3,21 @@ import Card, { CardProps } from "../Card/Card";
 import Caption from "../Typography/Caption/Caption";
 import Title from "../Typography/Title/Title";
 import Text from "../Typography/Text/Text";
-import Tappable from "../Tappable/Tappable";
+import Tappable, { TappableProps } from "../Tappable/Tappable";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import { HasRef, HasRootRef } from "../../types";
+import { classNames } from "../../lib/classNames";
 import "./ContentCard.css";
 
 export interface ContentCardProps
   extends HasRootRef<HTMLDivElement>,
-    React.ImgHTMLAttributes<HTMLImageElement>,
+    Omit<TappableProps, "getRootRef" | "crossOrigin">,
+    Omit<
+      React.ImgHTMLAttributes<HTMLImageElement>,
+      keyof React.HTMLAttributes<HTMLImageElement>
+    >,
     HasRef<HTMLImageElement> {
   /**
    Текст над заголовком
@@ -31,10 +36,6 @@ export interface ContentCardProps
    */
   caption?: React.ReactNode;
   /**
-    URL или путь к изображению
-   */
-  src?: string;
-  /**
     @deprecated будет удалено в 5.0.0. Используйте src
    */
   image?: string;
@@ -44,14 +45,6 @@ export interface ContentCardProps
   maxHeight?: number;
   /**
     Аналогично alt для img
-   */
-  alt?: string;
-  /**
-    Отключает Tappable у карточки
-   */
-  disabled?: boolean;
-  /**
-   В точности как у `<Card/>`
    */
   mode?: CardProps["mode"];
 }
@@ -86,22 +79,24 @@ const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
   } = props;
   const platform = usePlatform();
 
-  const disabled =
-    restProps.disabled || typeof restProps.onClick !== "function";
-
   const source = image || src;
+  const clickable =
+    !restProps.disabled && !!(restProps.onClick || restProps.href);
 
   return (
     <Card
       mode={mode}
       getRootRef={getRootRef}
-      vkuiClass={getClassName("ContentCard", platform)}
+      vkuiClass={classNames(getClassName("ContentCard", platform), {
+        "ContentCard--disabled": restProps.disabled,
+      })}
       style={style}
       className={className}
     >
       <Tappable
         {...restProps}
-        disabled={disabled}
+        hasActive={clickable}
+        hasHover={clickable}
         vkuiClass="ContentCard__tappable"
       >
         {(source || srcSet) && (
