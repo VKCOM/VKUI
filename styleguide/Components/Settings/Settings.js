@@ -21,13 +21,11 @@ export const Settings = ({ adaptivity }) => {
                 onChange={(platform) => context.setContext({ platform })}
                 value={context.platform}
               />
-              {!isMobile && (
-                <SchemeSelect
-                  platform={context.platform}
-                  onChange={(scheme) => context.setContext({ scheme })}
-                  value={context.scheme}
-                />
-              )}
+              <SchemeSelect
+                platform={context.platform}
+                onChange={(scheme) => context.setContext({ scheme })}
+                value={context.scheme}
+              />
               {adaptivity && !isMobile && (
                 <Fragment>
                   <ViewHeightSelect
