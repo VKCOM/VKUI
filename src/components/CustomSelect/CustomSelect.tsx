@@ -3,7 +3,6 @@ import SelectMimicry from "../SelectMimicry/SelectMimicry";
 import { debounce, setRef, multiRef } from "../../lib/utils";
 import { classNames } from "../../lib/classNames";
 import { NativeSelectProps } from "../NativeSelect/NativeSelect";
-import CustomScrollView from "../CustomScrollView/CustomScrollView";
 import { withAdaptivity } from "../../hoc/withAdaptivity";
 import { withPlatform } from "../../hoc/withPlatform";
 import CustomSelectOption, {
@@ -16,10 +15,10 @@ import Input from "../Input/Input";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import Caption from "../Typography/Caption/Caption";
 import { warnOnce } from "../../lib/warnOnce";
-import Spinner from "../Spinner/Spinner";
 import { defaultFilterFn } from "../../lib/select";
 import { is } from "../../lib/is";
-import { Popper, Placement } from "../Popper/Popper";
+import { Placement } from "../Popper/Popper";
+import { CustomSelectDropdown } from "../CustomSelectDropdown/CustomSelectDropdown";
 import "./CustomSelect.css";
 
 const findIndexAfter = (
@@ -580,14 +579,14 @@ class CustomSelect extends React.Component<
     setRef(element, this.props.getRef);
   };
 
-  onPlacementChange = ({ placement }: { placement?: Placement }) => {
+  onPlacementChange = (placement?: Placement) => {
     this.setState(() => ({
       popperPlacement: placement,
     }));
   };
 
   render() {
-    const { opened, nativeSelectValue } = this.state;
+    const { opened, nativeSelectValue, options: stateOptions } = this.state;
     const {
       searchable,
       name,
@@ -617,30 +616,19 @@ class CustomSelect extends React.Component<
     const selected = this.getSelectedItem();
     const label = selected ? selected.label : undefined;
 
-    const defaultDropdownContent = (
-      <CustomScrollView
-        boxRef={this.scrollBoxRef}
-        className="vkuiCustomSelect__CustomScrollView"
-      >
-        {this.state.options.map(this.renderOption)}
-        {this.state.options.length === 0 && (
-          <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
-            {this.props.emptyText}
-          </Caption>
-        )}
-      </CustomScrollView>
-    );
+    const defaultDropdownContent =
+      stateOptions.length > 0 ? (
+        stateOptions.map(this.renderOption)
+      ) : (
+        <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
+          {this.props.emptyText}
+        </Caption>
+      );
 
     let resolvedContent;
 
     if (typeof renderDropdown === "function") {
       resolvedContent = renderDropdown({ defaultDropdownContent });
-    } else if (fetching) {
-      resolvedContent = (
-        <div vkuiClass="CustomSelect__fetching">
-          <Spinner size="small" />
-        </div>
-      );
     } else {
       resolvedContent = defaultDropdownContent;
     }
@@ -707,27 +695,16 @@ class CustomSelect extends React.Component<
           ))}
         </select>
         {opened && (
-          <Popper
+          <CustomSelectDropdown
             targetRef={this.containerRef}
-            offsetDistance={0}
-            sameWidth
-            onPlacementChange={this.onPlacementChange}
             placement={popupDirection}
+            scrollBoxRef={this.scrollBoxRef}
+            onPlacementChange={this.onPlacementChange}
+            onMouseLeave={this.resetFocusedOption}
+            fetching={fetching}
           >
-            <div
-              vkuiClass={classNames(
-                "CustomSelect__options",
-                `CustomSelect__options--sizeY-${sizeY}`,
-                {
-                  "CustomSelect__options--popupDirectionTop":
-                    isPopperDirectionTop,
-                }
-              )}
-              onMouseLeave={this.resetFocusedOption}
-            >
-              {resolvedContent}
-            </div>
-          </Popper>
+            {resolvedContent}
+          </CustomSelectDropdown>
         )}
       </label>
     );
