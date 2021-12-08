@@ -56,7 +56,6 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
     return refObject;
   }, [toggleRef]);
 
-  console.log(isPopupDirectionTop, elementRef);
   return (
     <Popper
       targetRef={targetRef}
