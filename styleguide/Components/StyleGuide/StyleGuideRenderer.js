@@ -64,9 +64,15 @@ let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
       const newState = { ...state, ...data };
       if (data.platform && data.platform !== state.platform) {
         if (data.platform === Platform.VKCOM) {
-          newState.scheme = Scheme.VKCOM_LIGHT;
+          newState.scheme =
+            state.scheme === Scheme.SPACE_GRAY
+              ? Scheme.VKCOM_DARK
+              : Scheme.VKCOM_LIGHT;
         } else {
-          newState.scheme = Scheme.BRIGHT_LIGHT;
+          newState.scheme =
+            state.scheme === Scheme.VKCOM_DARK
+              ? Scheme.SPACE_GRAY
+              : Scheme.BRIGHT_LIGHT;
         }
       }
       localStorage.setItem("vkui:state", JSON.stringify(newState));
@@ -99,15 +105,17 @@ let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
   }, [styleguideScheme]);
 
   const switchStyleGuideScheme = useCallback(() => {
-    const newValue =
-      styleguideScheme === Scheme.SPACE_GRAY
-        ? Scheme.BRIGHT_LIGHT
-        : Scheme.SPACE_GRAY;
-    if (platform !== VKCOM) {
-      setContext({ styleguideScheme: newValue, scheme: newValue });
-    } else {
-      setContext({ styleguideScheme: newValue });
+    const isDark = styleguideScheme === Scheme.SPACE_GRAY;
+    let _scheme = isDark ? Scheme.BRIGHT_LIGHT : Scheme.SPACE_GRAY;
+
+    if (platform === VKCOM) {
+      _scheme = isDark ? Scheme.VKCOM_LIGHT : Scheme.VKCOM_DARK;
     }
+
+    setContext({
+      styleguideScheme: isDark ? Scheme.BRIGHT_LIGHT : Scheme.SPACE_GRAY,
+      scheme: _scheme,
+    });
   }, [platform, styleguideScheme]);
 
   const providerValue = useMemo(
