@@ -1,9 +1,5 @@
 import { useEffect } from "react";
+import { noop } from "../lib/utils";
 
-export const useEffectDev: typeof useEffect = (effect, deps) => {
-  useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
-      return effect();
-    }
-  }, deps);
-};
+export const useEffectDev =
+  process.env.NODE_ENV === "development" ? useEffect : noop;
