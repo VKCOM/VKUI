@@ -85,6 +85,7 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
         `ActionSheet--sizeY-${sizeY}`
       )}
       getRef={elementRef}
+      forcePortal={false}
     >
       <FocusTrap onClose={onClose} {...restProps} onClick={onClick}>
         {children}

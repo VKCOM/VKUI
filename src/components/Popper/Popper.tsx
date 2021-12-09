@@ -46,6 +46,7 @@ export interface PopperCommonProps
    * Выставлять ширину равной target элементу
    */
   sameWidth?: boolean;
+  forcePortal?: boolean;
   onPlacementChange?: (data: { placement?: Placement }) => void;
 }
 
@@ -68,6 +69,7 @@ export const Popper: React.FC<PopperProps> = ({
   sameWidth,
   offsetDistance = 8,
   offsetSkidding = 0,
+  forcePortal = true,
   style: compStyles,
   ...restProps
 }: PopperProps) => {
@@ -218,7 +220,7 @@ export const Popper: React.FC<PopperProps> = ({
   );
 
   return (
-    <AppRootPortal forcePortal vkuiClass="PopperPortal">
+    <AppRootPortal forcePortal={forcePortal} vkuiClass="PopperPortal">
       {dropdown}
     </AppRootPortal>
   );
