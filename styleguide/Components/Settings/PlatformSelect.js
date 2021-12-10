@@ -2,11 +2,11 @@ import React from "react";
 import { IOS, VKCOM, ANDROID } from "@vkui";
 import { Setting } from "../Setting/Setting";
 
-export const PlatformSelect = ({ onChange, value, allowVkCom = true }) => (
+export const PlatformSelect = ({ onChange, value }) => (
   <Setting
     label="Платформа"
     onChange={onChange}
     value={value}
-    options={[IOS, ANDROID].concat(allowVkCom ? VKCOM : [])}
+    options={[IOS, ANDROID, VKCOM]}
   />
 );
