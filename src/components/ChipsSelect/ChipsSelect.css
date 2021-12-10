@@ -11,10 +11,6 @@
   color: var(--text_secondary);
 }
 
-.ChipsSelect__options {
-  max-height: 160px;
-}
-
 .ChipsSelect__open:not(.ChipsSelect__open--popupDirectionTop)
   .FormField__border {
   border-bottom-left-radius: 0;

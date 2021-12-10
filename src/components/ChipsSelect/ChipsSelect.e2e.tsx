@@ -21,7 +21,7 @@ describe("ChipsSelect", () => {
     }
     expect(
       await screenshot(null, {
-        selector: ".ChipsSelect, .ChipsSelect__options",
+        selector: ".ChipsSelect__options",
       })
     ).toMatchImageSnapshot();
   });
