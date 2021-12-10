@@ -251,7 +251,6 @@ const Tappable: React.FC<TappableProps> = ({
         hasActive && active && isPresetActiveMode,
       [hoverMode]: hasHover && hovered && !isPresetHoverMode,
       [activeMode]: hasActive && active && !isPresetActiveMode,
-      "Tappable--no-effects": !hasHover && !hasActive,
     }
   );
 

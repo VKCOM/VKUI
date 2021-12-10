@@ -91,6 +91,8 @@ const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
       <Tappable
         {...restProps}
         disabled={restProps.disabled || (!restProps.onClick && !restProps.href)}
+        hasHover={false}
+        hasActive={false}
         vkuiClass="ContentCard__tappable"
       >
         {(source || srcSet) && (

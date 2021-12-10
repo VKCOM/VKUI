@@ -4,8 +4,7 @@
 }
 
 .Tappable[disabled],
-.Tappable[aria-disabled="true"],
-.Tappable--no-effects {
+.Tappable[aria-disabled="true"] {
   cursor: default;
 }
 
