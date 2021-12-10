@@ -1,10 +1,10 @@
-import { Checkbox, CheckboxProps } from "./Checkbox";
+import Radio, { RadioProps } from "./Radio";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { SizeType } from "../AdaptivityProvider/AdaptivityContext";
 
-describe("Checkbox", () => {
+describe("Radio", () => {
   describeScreenshotFuzz(
-    (props: CheckboxProps) => <Checkbox {...props}>label</Checkbox>,
+    (props: RadioProps) => <Radio {...props}>label</Radio>,
     [
       {
         checked: [false, true],
@@ -15,9 +15,9 @@ describe("Checkbox", () => {
   );
 });
 
-describe("Checkbox sizes and description", () => {
+describe("Radio sizes and description", () => {
   describeScreenshotFuzz(
-    (props: CheckboxProps) => <Checkbox {...props}>label</Checkbox>,
+    (props: RadioProps) => <Radio {...props}>label</Radio>,
     [
       {
         description: [undefined, "Description"],
