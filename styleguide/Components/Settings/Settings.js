@@ -18,17 +18,14 @@ export const Settings = ({ adaptivity }) => {
           <div className="Settings">
             <div className="Settings__in">
               <PlatformSelect
-                allowVkCom={!isMobile}
                 onChange={(platform) => context.setContext({ platform })}
                 value={context.platform}
               />
-              {!isMobile && (
-                <SchemeSelect
-                  platform={context.platform}
-                  onChange={(scheme) => context.setContext({ scheme })}
-                  value={context.scheme}
-                />
-              )}
+              <SchemeSelect
+                platform={context.platform}
+                onChange={(scheme) => context.setContext({ scheme })}
+                value={context.scheme}
+              />
               {adaptivity && !isMobile && (
                 <Fragment>
                   <ViewHeightSelect
