@@ -1,4 +1,5 @@
 import * as React from "react";
+import { hasMouse } from "@vkontakte/vkjs";
 import { Icon12Circle, Icon12OnlineMobile } from "@vkontakte/icons";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
@@ -17,6 +18,12 @@ export interface AvatarProps
   mode?: "default" | "image" | "app";
   shadow?: boolean;
   badge?: "online" | "online-mobile" | JSX.Element;
+  overlayIcon?: JSX.Element;
+  overlayColor?: "black" | "white";
+  /**
+   * Поведение показа overlay: "hover" - при наведении, "always" - всегда
+   */
+  overlayAction?: "hover" | "always";
 }
 
 const Avatar: React.FC<AvatarProps> = ({
@@ -41,6 +48,9 @@ const Avatar: React.FC<AvatarProps> = ({
   style,
   "aria-label": ariaLabel,
   badge,
+  overlayAction,
+  overlayIcon,
+  overlayColor,
   ...restProps
 }: AvatarProps) => {
   const platform = usePlatform();
@@ -85,6 +95,10 @@ const Avatar: React.FC<AvatarProps> = ({
         {
           "Avatar--shadow": shadow,
           "Avatar--failed": failedImage,
+          "Avatar--overlay": Boolean(overlayIcon),
+          "Avatar--overlay--always": overlayAction === "always",
+          "Avatar--overlay--white": overlayColor === "white",
+          "Avatar--overlay--black": overlayColor === "black",
         }
       )}
       className={className}
@@ -140,6 +154,7 @@ const Avatar: React.FC<AvatarProps> = ({
           )}
         </div>
       )}
+      {overlayIcon && <div vkuiClass="Avatar__overlay_icon">{overlayIcon}</div>}
     </div>
   );
 };
@@ -151,6 +166,8 @@ Avatar.defaultProps = {
   size: AVATAR_DEFAULT_SIZE,
   mode: "default",
   shadow: AVATAR_DEFAULT_SHADOW,
+  overlayColor: "white",
+  overlayAction: hasMouse ? "hover" : "always",
 };
 
 export default Avatar;
