@@ -21,7 +21,7 @@ describe("ChipsSelect", () => {
     }
     expect(
       await screenshot(null, {
-        selector: ".ChipsSelect__options",
+        selector: ".CustomSelectDropdown__CustomScrollView",
       })
     ).toMatchImageSnapshot();
   });
