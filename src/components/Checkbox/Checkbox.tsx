@@ -21,7 +21,7 @@ import {
 import Text from "../Typography/Text/Text";
 import Headline from "../Typography/Headline/Headline";
 import { hasReactNode } from "../../lib/utils";
-import Subhead from "../Typography/Subhead/Subhead";
+import Caption from "../Typography/Caption/Caption";
 import "./Checkbox.css";
 
 export interface CheckboxProps
@@ -81,16 +81,21 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
             <Icon24CheckBoxOff />
           )}
         </div>
-        <ContentComponent weight="regular" vkuiClass="Checkbox__content">
+        <ContentComponent
+          weight="regular"
+          vkuiClass="Checkbox__content"
+          Component="div"
+        >
           <div vkuiClass="Checkbox__children">{children}</div>
           {hasReactNode(description) && (
-            <Subhead
+            <Caption
+              level="1"
               Component="span"
               weight="regular"
               vkuiClass="Checkbox__description"
             >
               {description}
-            </Subhead>
+            </Caption>
           )}
         </ContentComponent>
       </div>

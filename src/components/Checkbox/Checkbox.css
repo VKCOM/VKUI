@@ -64,11 +64,11 @@
 }
 
 .Checkbox--ios .Checkbox__children {
-  margin-top: 11px;
+  margin-top: 12px;
 }
 
 .Checkbox--ios .Checkbox__children:last-child {
-  margin-bottom: 13px;
+  margin-bottom: 12px;
 }
 
 .Checkbox--ios .Checkbox__description {
@@ -85,7 +85,7 @@
 }
 
 .Checkbox--android .Checkbox__children {
-  margin-top: 11px;
+  margin-top: 12px;
 }
 
 .Checkbox--android .Checkbox__children:last-child {
@@ -93,8 +93,8 @@
 }
 
 .Checkbox--android .Checkbox__description {
-  margin-top: 1px;
-  margin-bottom: 11px;
+  margin-top: 2px;
+  margin-bottom: 12px;
 }
 
 /**
@@ -139,5 +139,5 @@
 }
 
 .Checkbox--sizeY-compact .Checkbox__description {
-  margin-bottom: 7px;
+  margin-bottom: 8px;
 }
