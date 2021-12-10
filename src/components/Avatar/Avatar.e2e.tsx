@@ -1,4 +1,8 @@
-import { Icon16Add, Icon20GiftCircleFillRed } from "@vkontakte/icons";
+import {
+  Icon16Add,
+  Icon20GiftCircleFillRed,
+  Icon28AddOutline,
+} from "@vkontakte/icons";
 import Avatar, { AvatarProps } from "./Avatar";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
@@ -39,6 +43,11 @@ describe("Avatar", () => {
           "online",
           "online-mobile",
         ],
+        overlayIcon: [
+          <Icon28AddOutline key="icon" style={{ color: "#FFF" }} />,
+          undefined,
+        ],
+        overlayColor: ["black", "white"],
       },
     ]
   );
