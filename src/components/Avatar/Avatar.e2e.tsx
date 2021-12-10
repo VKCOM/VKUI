@@ -43,6 +43,14 @@ describe("Avatar", () => {
           "online",
           "online-mobile",
         ],
+      },
+      {
+        size: [72],
+        badge: [
+          <Icon20GiftCircleFillRed key="icon" />,
+          "online",
+          "online-mobile",
+        ],
         overlayIcon: [
           <Icon28AddOutline key="icon" style={{ color: "#FFF" }} />,
           undefined,
