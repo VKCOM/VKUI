@@ -65,6 +65,7 @@ class Example extends React.Component {
     return (
       <View activePanel="profile" id="profile">
         <Panel id="profile">
+          <PanelHeader>CustomSelect</PanelHeader>
           <Group separator="hide">
             <FormItem top="Администратор" bottom="Базовый пример использования">
               <CustomSelect placeholder="Не выбран" options={this.users} />
