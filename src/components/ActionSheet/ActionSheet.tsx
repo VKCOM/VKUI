@@ -103,49 +103,55 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
     ? ActionSheetDropdownDesktop
     : ActionSheetDropdown;
 
+  const actionSheet = (
+    <ActionSheetContext.Provider value={contextValue}>
+      <DropdownComponent
+        closing={closing}
+        timeout={timeout}
+        {...(restProps as Omit<SharedDropdownProps, "closing">)}
+        onClose={onClose}
+        className={isDesktop ? className : undefined}
+        style={isDesktop ? style : undefined}
+      >
+        {(hasReactNode(header) || hasReactNode(text)) && (
+          <header vkuiClass="ActionSheet__header">
+            {hasReactNode(header) && (
+              <Caption
+                level="1"
+                weight={platform === IOS ? "semibold" : "medium"}
+                vkuiClass="ActionSheet__title"
+              >
+                {header}
+              </Caption>
+            )}
+            {hasReactNode(text) && (
+              <Caption level="1" weight="regular" vkuiClass="ActionSheet__text">
+                {text}
+              </Caption>
+            )}
+          </header>
+        )}
+        {children}
+        {platform === IOS && !isDesktop && iosCloseItem}
+      </DropdownComponent>
+    </ActionSheetContext.Provider>
+  );
+
+  if (isDesktop) {
+    return actionSheet;
+  }
+
   return (
     <PopoutWrapper
       closing={closing}
       alignY="bottom"
       className={className}
       style={style}
-      onClick={!isDesktop ? onClose : null}
-      hasMask={!isDesktop}
-      fixed={!isDesktop}
+      onClick={onClose}
+      hasMask
+      fixed
     >
-      <ActionSheetContext.Provider value={contextValue}>
-        <DropdownComponent
-          closing={closing}
-          timeout={timeout}
-          {...(restProps as Omit<SharedDropdownProps, "closing">)}
-          onClose={onClose}
-        >
-          {(hasReactNode(header) || hasReactNode(text)) && (
-            <header vkuiClass="ActionSheet__header">
-              {hasReactNode(header) && (
-                <Caption
-                  level="1"
-                  weight={platform === IOS ? "semibold" : "medium"}
-                  vkuiClass="ActionSheet__title"
-                >
-                  {header}
-                </Caption>
-              )}
-              {hasReactNode(text) && (
-                <Caption
-                  level="1"
-                  weight="regular"
-                  vkuiClass="ActionSheet__text"
-                >
-                  {text}
-                </Caption>
-              )}
-            </header>
-          )}
-          {children}
-          {platform === IOS && !isDesktop && iosCloseItem}
-        </DropdownComponent>
-      </ActionSheetContext.Provider>
+      {actionSheet}
     </PopoutWrapper>
   );
 };
