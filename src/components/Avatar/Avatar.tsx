@@ -4,6 +4,7 @@ import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
+import Tappable from "../Tappable/Tappable";
 import { HasRef, HasRootRef } from "../../types";
 import "./Avatar.css";
 
@@ -98,10 +99,6 @@ const Avatar: React.FC<AvatarProps> = ({
         {
           "Avatar--shadow": shadow,
           "Avatar--failed": failedImage,
-          "Avatar--overlay": Boolean(overlayIcon),
-          "Avatar--overlay-always": overlayAction === "always",
-          "Avatar--overlay-light": overlayMode === "light",
-          "Avatar--overlay-dark": overlayMode === "dark",
         }
       )}
       className={className}
@@ -130,6 +127,21 @@ const Avatar: React.FC<AvatarProps> = ({
         />
       )}
       {children && <div vkuiClass="Avatar__children">{children}</div>}
+      {overlayIcon && (
+        <Tappable
+          Component="button"
+          vkuiClass={classNames("Avatar_overlay", {
+            "Avatar_overlay--visible": overlayAction === "always",
+            "Avatar_overlay--light": overlayMode === "light",
+            "Avatar_overlay--dark": overlayMode === "dark",
+          })}
+          hoverMode="Avatar_overlay--visible"
+          hasActive={false}
+          onClick={restProps.onClick}
+        >
+          {overlayIcon}
+        </Tappable>
+      )}
       {badge && (
         <div
           vkuiClass={classNames("Avatar__badge", {
@@ -157,7 +169,6 @@ const Avatar: React.FC<AvatarProps> = ({
           )}
         </div>
       )}
-      {overlayIcon && <div vkuiClass="Avatar__overlay-icon">{overlayIcon}</div>}
     </div>
   );
 };
