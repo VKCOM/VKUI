@@ -55,7 +55,8 @@ describe("Avatar", () => {
           <Icon28AddOutline key="icon" style={{ color: "#FFF" }} />,
           undefined,
         ],
-        overlayColor: ["dark", "light"],
+        overlayMode: ["dark", "light"],
+        overlayAction: ["always"],
       },
     ]
   );

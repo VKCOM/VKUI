@@ -45,20 +45,21 @@
   z-index: 1;
   opacity: 0;
   transition: opacity 0.3s;
+  box-shadow: 0 0 0 var(--thin-border) var(--image_border);
 }
 
 .Avatar--overlay:hover::before,
-.Avatar--overlay--always::before,
+.Avatar--overlay-always::before,
 .Avatar--overlay:hover .Avatar__overlay-icon,
-.Avatar--overlay--always .Avatar__overlay-icon {
+.Avatar--overlay-always .Avatar__overlay-icon {
   opacity: 1;
 }
 
-.Avatar--overlay--light::before {
+.Avatar--overlay-light::before {
   background-color: rgba(255, 255, 255, 0.85);
 }
 
-.Avatar--overlay--dark::before {
+.Avatar--overlay-dark::before {
   background-color: rgba(0, 0, 0, 0.6);
 }
 

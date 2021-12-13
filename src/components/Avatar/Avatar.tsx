@@ -19,7 +19,7 @@ export interface AvatarProps
   shadow?: boolean;
   badge?: "online" | "online-mobile" | JSX.Element;
   overlayIcon?: JSX.Element;
-  overlayColor?: "dark" | "light";
+  overlayMode?: "dark" | "light";
   /**
    * Поведение показа overlay: "hover" - при наведении, "always" - всегда
    */
@@ -49,7 +49,7 @@ const Avatar: React.FC<AvatarProps> = ({
   "aria-label": ariaLabel,
   badge,
   overlayIcon,
-  overlayColor,
+  overlayMode,
   overlayAction: passedOverlayAction,
   ...restProps
 }: AvatarProps) => {
@@ -99,9 +99,9 @@ const Avatar: React.FC<AvatarProps> = ({
           "Avatar--shadow": shadow,
           "Avatar--failed": failedImage,
           "Avatar--overlay": Boolean(overlayIcon),
-          "Avatar--overlay--always": overlayAction === "always",
-          "Avatar--overlay--light": overlayColor === "light",
-          "Avatar--overlay--dark": overlayColor === "dark",
+          "Avatar--overlay-always": overlayAction === "always",
+          "Avatar--overlay-light": overlayMode === "light",
+          "Avatar--overlay-dark": overlayMode === "dark",
         }
       )}
       className={className}
@@ -169,7 +169,7 @@ Avatar.defaultProps = {
   size: AVATAR_DEFAULT_SIZE,
   mode: "default",
   shadow: AVATAR_DEFAULT_SHADOW,
-  overlayColor: "light",
+  overlayMode: "light",
 };
 
 export default Avatar;
