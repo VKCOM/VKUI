@@ -549,17 +549,17 @@ class ModalRootTouchComponent extends React.Component<
     }
   };
 
-  waitTransitionFinish(modalState: ModalsStateEntry, eventHandler: () => void) {
+  waitTransitionFinish(modalState: ModalsStateEntry | undefined, eventHandler: () => void) {
     if (transitionEvent.supported) {
       const onceHandler = () => {
-        modalState.innerElement.removeEventListener(
+        modalState?.innerElement.removeEventListener(
           transitionEvent.name,
           onceHandler
         );
         eventHandler();
       };
 
-      modalState.innerElement.addEventListener(
+      modalState?.innerElement.addEventListener(
         transitionEvent.name,
         onceHandler
       );
