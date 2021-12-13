@@ -313,46 +313,6 @@ describe("CustomSelect", () => {
     );
   });
 
-  it("prefers fetching to options", () => {
-    render(
-      <CustomSelect
-        fetching
-        data-testid="target"
-        options={[
-          { value: 0, label: "Mike" },
-          { value: 1, label: "Josh" },
-        ]}
-      />
-    );
-
-    fireEvent.click(screen.getByTestId("target"));
-
-    expect(screen.queryByTitle("Josh")).toBeNull();
-    expect(document.querySelector(".CustomSelect__fetching")).not.toBeNull();
-  });
-
-  it("prefers renderDropdown to fetching and options", () => {
-    render(
-      <CustomSelect
-        fetching
-        renderDropdown={() => (
-          <div data-testid="custom-dropdown">Hello everyone</div>
-        )}
-        data-testid="target"
-        options={[
-          { value: 0, label: "Mike" },
-          { value: 1, label: "Josh" },
-        ]}
-      />
-    );
-
-    fireEvent.click(screen.getByTestId("target"));
-
-    expect(screen.queryByTitle("Josh")).toBeNull();
-    expect(document.querySelector(".CustomSelect__fetching")).toBeNull();
-    expect(screen.getByTestId("custom-dropdown")).not.toBeNull();
-  });
-
   it("fires onOpen and onClose correctly", () => {
     const openCb = jest.fn(() => null);
     const closeCb = jest.fn(() => null);

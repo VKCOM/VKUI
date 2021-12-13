@@ -1,8 +1,6 @@
 import * as React from "react";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { classNames } from "../../lib/classNames";
-import Spinner from "../Spinner/Spinner";
-import CustomScrollView from "../CustomScrollView/CustomScrollView";
 import ChipsInput, {
   ChipsInputOption,
   ChipsInputProps,
@@ -22,6 +20,8 @@ import { prefixClass } from "../../lib/prefixClass";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { defaultFilterFn } from "../../lib/select";
+import { Placement } from "../Popper/Popper";
+import { CustomSelectDropdown } from "../CustomSelectDropdown/CustomSelectDropdown";
 import "./ChipsSelect.css";
 
 export interface ChipsSelectProps<Option extends ChipsInputOption>
@@ -113,6 +113,9 @@ const ChipsSelect = <Option extends ChipsInputOption>(
   } = props;
 
   const { document } = useDOM();
+
+  const [popperPlacement, setPopperPlacement] =
+    React.useState<Placement>(undefined);
 
   const scrollBoxRef = React.useRef<HTMLDivElement>(null);
   const rootRef = useExternRef(getRef);
@@ -292,6 +295,19 @@ const ChipsSelect = <Option extends ChipsInputOption>(
     return renderChip({ ...renderChipProps, onRemove: onRemoveWrapper });
   };
 
+  const isPopperDirectionTop = popperPlacement?.includes("top");
+
+  const onPlacementChange = React.useCallback(
+    (placement?: Placement) => {
+      setPopperPlacement(placement);
+    },
+    [setPopperPlacement]
+  );
+
+  const onDropdownMouseLeave = React.useCallback(() => {
+    setFocusedOptionIndex(null);
+  }, [setFocusedOptionIndex]);
+
   return (
     <div
       vkuiClass={classNames("ChipsSelect", `ChipsSelect--sizeY-${sizeY}`)}
@@ -313,7 +329,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(
         placeholder={placeholder}
         vkuiClass={classNames({
           ["ChipsSelect__open"]: opened,
-          ["ChipsSelect__open--popupDirectionTop"]: popupDirection === "top",
+          ["ChipsSelect__open--popupDirectionTop"]: isPopperDirectionTop,
         })}
         getRef={getRef}
         disabled={disabled}
@@ -321,83 +337,68 @@ const ChipsSelect = <Option extends ChipsInputOption>(
         after={<DropdownIcon />}
       />
       {opened && (
-        <div
-          vkuiClass={classNames("ChipsSelect__options", {
-            ["ChipsSelect__options--popupDirectionTop"]:
-              popupDirection === "top",
-          })}
-          onMouseLeave={() => setFocusedOptionIndex(null)}
+        <CustomSelectDropdown
+          targetRef={rootRef}
+          placement={popupDirection}
+          scrollBoxRef={scrollBoxRef}
+          onPlacementChange={onPlacementChange}
+          onMouseLeave={onDropdownMouseLeave}
+          fetching={fetching}
+          vkuiClass="ChipsSelect__options"
         >
-          <CustomScrollView boxRef={scrollBoxRef}>
-            {fetching ? (
-              <div vkuiClass="ChipsSelect__fetching">
-                <Spinner size="small" />
-              </div>
-            ) : (
-              <React.Fragment>
-                {showCreatable && (
-                  <CustomSelectOption
-                    hovered={focusedOptionIndex === 0}
-                    onMouseDown={addOptionFromInput}
-                    onMouseEnter={() => setFocusedOptionIndex(0)}
-                  >
-                    {creatableText}
-                  </CustomSelectOption>
-                )}
-                {!filteredOptions?.length && !showCreatable && emptyText ? (
-                  <Caption
-                    level="1"
-                    weight="regular"
-                    vkuiClass="ChipsSelect__empty"
-                  >
-                    {emptyText}
-                  </Caption>
-                ) : (
-                  filteredOptions.map((option: Option, index: number) => {
-                    const label = getOptionLabel(option);
-                    const hovered =
-                      focusedOption &&
-                      getOptionValue(option) === getOptionValue(focusedOption);
-                    const selected = selectedOptions.find(
-                      (selectedOption: Option) => {
-                        return (
-                          getOptionValue(selectedOption) ===
-                          getOptionValue(option)
-                        );
+          {showCreatable && (
+            <CustomSelectOption
+              hovered={focusedOptionIndex === 0}
+              onMouseDown={addOptionFromInput}
+              onMouseEnter={() => setFocusedOptionIndex(0)}
+            >
+              {creatableText}
+            </CustomSelectOption>
+          )}
+          {!filteredOptions?.length && !showCreatable && emptyText ? (
+            <Caption level="1" weight="regular" vkuiClass="ChipsSelect__empty">
+              {emptyText}
+            </Caption>
+          ) : (
+            filteredOptions.map((option: Option, index: number) => {
+              const label = getOptionLabel(option);
+              const hovered =
+                focusedOption &&
+                getOptionValue(option) === getOptionValue(focusedOption);
+              const selected = selectedOptions.find(
+                (selectedOption: Option) => {
+                  return (
+                    getOptionValue(selectedOption) === getOptionValue(option)
+                  );
+                }
+              );
+              const value = getOptionValue(option);
+
+              return (
+                <React.Fragment key={`${typeof value}-${value}`}>
+                  {renderOption({
+                    className: prefixClass("ChipsSelect__option"),
+                    option,
+                    hovered,
+                    children: label,
+                    selected: !!selected,
+                    getRootRef: (e) => (chipsSelectOptions[index] = e),
+                    onMouseDown: (e: React.MouseEvent<HTMLDivElement>) => {
+                      onChangeStart(e, option);
+
+                      if (!e.defaultPrevented) {
+                        closeAfterSelect && setOpened(false);
+                        addOption(option);
+                        clearInput();
                       }
-                    );
-                    const value = getOptionValue(option);
-
-                    return (
-                      <React.Fragment key={`${typeof value}-${value}`}>
-                        {renderOption({
-                          className: prefixClass("ChipsSelect__option"),
-                          option,
-                          hovered,
-                          children: label,
-                          selected: !!selected,
-                          getRootRef: (e) => (chipsSelectOptions[index] = e),
-                          onMouseDown: (
-                            e: React.MouseEvent<HTMLDivElement>
-                          ) => {
-                            onChangeStart(e, option);
-
-                            if (!e.defaultPrevented) {
-                              closeAfterSelect && setOpened(false);
-                              addOption(option);
-                              clearInput();
-                            }
-                          },
-                          onMouseEnter: () => setFocusedOptionIndex(index),
-                        })}
-                      </React.Fragment>
-                    );
-                  })
-                )}
-              </React.Fragment>
-            )}
-          </CustomScrollView>
-        </div>
+                    },
+                    onMouseEnter: () => setFocusedOptionIndex(index),
+                  })}
+                </React.Fragment>
+              );
+            })
+          )}
+        </CustomSelectDropdown>
       )}
     </div>
   );

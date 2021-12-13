@@ -1,5 +1,5 @@
 import * as React from "react";
-import { usePopper } from "react-popper";
+import { usePopper, Modifier } from "react-popper";
 import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { HasRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
@@ -25,13 +25,6 @@ export type Placement =
   | "left"
   | "right";
 
-type Modifier = {
-  name: string;
-  options?: {
-    [index: string]: any;
-  };
-};
-
 export interface PopperCommonProps
   extends React.HTMLAttributes<HTMLElement>,
     HasRef<HTMLElement> {
@@ -49,6 +42,11 @@ export interface PopperCommonProps
   offsetDistance?: number;
   arrow?: boolean;
   arrowClassName?: string;
+  /**
+   * Выставлять ширину равной target элементу
+   */
+  sameWidth?: boolean;
+  forcePortal?: boolean;
   onPlacementChange?: (data: { placement?: Placement }) => void;
 }
 
@@ -68,8 +66,10 @@ export const Popper: React.FC<PopperProps> = ({
   onPlacementChange,
   arrow,
   arrowClassName,
+  sameWidth,
   offsetDistance = 8,
   offsetSkidding = 0,
+  forcePortal = true,
   style: compStyles,
   ...restProps
 }: PopperProps) => {
@@ -80,32 +80,63 @@ export const Popper: React.FC<PopperProps> = ({
 
   const setExternalRef = useExternRef(getRef, setPopperNode);
 
-  const modifiers: Modifier[] = [
-    {
-      name: "preventOverflow",
-    },
-    {
-      name: "offset",
-      options: {
-        offset: [
-          arrow ? offsetSkidding - smallTargetOffsetSkidding : offsetSkidding,
-          arrow ? offsetDistance + ARROW_HEIGHT : offsetDistance,
-        ],
+  const modifiers = React.useMemo(() => {
+    const modifiers: Array<Modifier<string>> = [
+      {
+        name: "preventOverflow",
       },
-    },
-    {
-      name: "flip",
-    },
-  ];
+      {
+        name: "offset",
+        options: {
+          offset: [
+            arrow ? offsetSkidding - smallTargetOffsetSkidding : offsetSkidding,
+            arrow ? offsetDistance + ARROW_HEIGHT : offsetDistance,
+          ],
+        },
+      },
+      {
+        name: "flip",
+      },
+    ];
 
-  if (arrow) {
-    modifiers.push({
-      name: "arrow",
-      options: {
-        padding: ARROW_PADDING,
-      },
-    });
-  }
+    if (arrow) {
+      modifiers.push({
+        name: "arrow",
+        options: {
+          padding: ARROW_PADDING,
+        },
+      });
+    }
+
+    if (sameWidth) {
+      const sameWidth: Modifier<string> = {
+        name: "sameWidth",
+        enabled: true,
+        phase: "beforeWrite",
+        requires: ["computeStyles"],
+        fn: ({ state }) => {
+          state.styles.popper.width = `${state.rects.reference.width}px`;
+        },
+        effect: ({ state }) => {
+          state.elements.popper.style.width = `${
+            (state.elements.reference as HTMLElement).offsetWidth
+          }px`;
+        },
+      };
+
+      modifiers.push(sameWidth);
+    }
+
+    return modifiers;
+  }, [
+    arrow,
+    sameWidth,
+    smallTargetOffsetSkidding,
+    offsetSkidding,
+    offsetDistance,
+    ARROW_HEIGHT,
+    ARROW_PADDING,
+  ]);
 
   const { styles, state, attributes } = usePopper(
     targetRef.current,
@@ -189,7 +220,7 @@ export const Popper: React.FC<PopperProps> = ({
   );
 
   return (
-    <AppRootPortal forcePortal vkuiClass="PopperPortal">
+    <AppRootPortal forcePortal={forcePortal} vkuiClass="PopperPortal">
       {dropdown}
     </AppRootPortal>
   );
