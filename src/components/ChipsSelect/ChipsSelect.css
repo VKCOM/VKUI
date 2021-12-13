@@ -11,7 +11,7 @@
   color: var(--text_secondary);
 }
 
-.ChipsSelect__options {
+.ChipsSelect__options .CustomSelectDropdown__CustomScrollView {
   max-height: 160px;
 }
 
