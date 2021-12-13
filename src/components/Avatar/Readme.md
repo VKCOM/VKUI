@@ -518,7 +518,7 @@ import {
               style={{ color: "#FFF" }}
             />
           }
-          overlayColor="black"
+          overlayColor="dark"
           overlayAction="always"
           src={getAvatarUrl("user_id34")}
           badge={<Icon20GiftCircleFillRed />}
@@ -532,7 +532,7 @@ import {
               style={{ color: "#FFF" }}
             />
           }
-          overlayColor="black"
+          overlayColor="dark"
           overlayAction="always"
           src={getAvatarUrl("user_id34")}
           badge={<Icon20GiftCircleFillRed />}
@@ -546,7 +546,7 @@ import {
               style={{ color: "#FFF" }}
             />
           }
-          overlayColor="black"
+          overlayColor="dark"
           overlayAction="always"
           src={getAvatarUrl("user_id34")}
           badge={<Icon20GiftCircleFillRed width={24} height={24} />}
@@ -560,7 +560,7 @@ import {
               style={{ color: "#FFF" }}
             />
           }
-          overlayColor="black"
+          overlayColor="dark"
           overlayAction="always"
           src={getAvatarUrl("user_id34")}
           badge={<Icon20GiftCircleFillRed width={24} height={24} />}
@@ -574,7 +574,7 @@ import {
               style={{ color: "#FFF" }}
             />
           }
-          overlayColor="black"
+          overlayColor="dark"
           overlayAction="always"
           src={getAvatarUrl("user_id34")}
           badge={<Icon20GiftCircleFillRed width={24} height={24} />}
@@ -588,7 +588,7 @@ import {
               style={{ color: "#FFF" }}
             />
           }
-          overlayColor="black"
+          overlayColor="dark"
           overlayAction="always"
           src={getAvatarUrl("user_id34")}
           badge={<Icon20GiftCircleFillRed width={24} height={24} />}
@@ -607,7 +607,7 @@ import {
               style={{ color: "#FFF" }}
             />
           }
-          overlayColor="black"
+          overlayColor="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
           badge={<Icon20GiftCircleFillRed width={12} height={12} />}
@@ -621,7 +621,7 @@ import {
               style={{ color: "#FFF" }}
             />
           }
-          overlayColor="black"
+          overlayColor="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
           badge={<Icon20GiftCircleFillRed width={12} height={12} />}
@@ -635,7 +635,7 @@ import {
               style={{ color: "#FFF" }}
             />
           }
-          overlayColor="black"
+          overlayColor="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
           badge={<Icon20GiftCircleFillRed width={12} height={12} />}
@@ -649,7 +649,7 @@ import {
               style={{ color: "#FFF" }}
             />
           }
-          overlayColor="black"
+          overlayColor="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
           badge={<Icon20GiftCircleFillRed width={16} height={16} />}
@@ -663,7 +663,7 @@ import {
               style={{ color: "#FFF" }}
             />
           }
-          overlayColor="black"
+          overlayColor="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
           badge={<Icon20GiftCircleFillRed width={16} height={16} />}
@@ -677,7 +677,7 @@ import {
               style={{ color: "#FFF" }}
             />
           }
-          overlayColor="black"
+          overlayColor="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
           badge={<Icon20GiftCircleFillRed width={16} height={16} />}
@@ -691,7 +691,7 @@ import {
               style={{ color: "#FFF" }}
             />
           }
-          overlayColor="black"
+          overlayColor="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
           badge={<Icon20GiftCircleFillRed width={16} height={16} />}
@@ -705,7 +705,7 @@ import {
               style={{ color: "#FFF" }}
             />
           }
-          overlayColor="black"
+          overlayColor="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
           badge={<Icon20GiftCircleFillRed />}
@@ -719,7 +719,7 @@ import {
               style={{ color: "#FFF" }}
             />
           }
-          overlayColor="black"
+          overlayColor="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
           badge={<Icon20GiftCircleFillRed />}
@@ -733,7 +733,7 @@ import {
               style={{ color: "#FFF" }}
             />
           }
-          overlayColor="black"
+          overlayColor="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
           badge={<Icon20GiftCircleFillRed width={24} height={24} />}
@@ -747,7 +747,7 @@ import {
               style={{ color: "#FFF" }}
             />
           }
-          overlayColor="black"
+          overlayColor="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
           badge={<Icon20GiftCircleFillRed width={24} height={24} />}
@@ -761,7 +761,7 @@ import {
               style={{ color: "#FFF" }}
             />
           }
-          overlayColor="black"
+          overlayColor="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
           badge={<Icon20GiftCircleFillRed width={24} height={24} />}
@@ -775,7 +775,7 @@ import {
               style={{ color: "#FFF" }}
             />
           }
-          overlayColor="black"
+          overlayColor="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
           badge={<Icon20GiftCircleFillRed width={24} height={24} />}

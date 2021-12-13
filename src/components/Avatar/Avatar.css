@@ -36,7 +36,7 @@
   box-shadow: inset 0 0 0 var(--thin-border) var(--image_border);
 }
 
-.Avatar.Avatar--overlay {
+.Avatar--overlay {
   cursor: pointer;
 }
 
@@ -49,20 +49,20 @@
 
 .Avatar--overlay:hover::before,
 .Avatar--overlay--always::before,
-.Avatar--overlay:hover .Avatar__overlay_icon,
-.Avatar--overlay--always .Avatar__overlay_icon {
+.Avatar--overlay:hover .Avatar__overlay-icon,
+.Avatar--overlay--always .Avatar__overlay-icon {
   opacity: 1;
 }
 
-.Avatar--overlay--white::before {
+.Avatar--overlay--light::before {
   background-color: rgba(255, 255, 255, 0.85);
 }
 
-.Avatar--overlay--black::before {
+.Avatar--overlay--dark::before {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-.Avatar__overlay_icon {
+.Avatar__overlay-icon {
   position: absolute;
   z-index: 1;
   top: 50%;

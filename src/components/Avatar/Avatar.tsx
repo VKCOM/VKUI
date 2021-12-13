@@ -1,9 +1,9 @@
 import * as React from "react";
-import { hasMouse } from "@vkontakte/vkjs";
 import { Icon12Circle, Icon12OnlineMobile } from "@vkontakte/icons";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { HasRef, HasRootRef } from "../../types";
 import "./Avatar.css";
 
@@ -19,7 +19,7 @@ export interface AvatarProps
   shadow?: boolean;
   badge?: "online" | "online-mobile" | JSX.Element;
   overlayIcon?: JSX.Element;
-  overlayColor?: "black" | "white";
+  overlayColor?: "dark" | "light";
   /**
    * Поведение показа overlay: "hover" - при наведении, "always" - всегда
    */
@@ -48,13 +48,16 @@ const Avatar: React.FC<AvatarProps> = ({
   style,
   "aria-label": ariaLabel,
   badge,
-  overlayAction,
   overlayIcon,
   overlayColor,
+  overlayAction: passedOverlayAction,
   ...restProps
 }: AvatarProps) => {
   const platform = usePlatform();
+  const { hasMouse } = useAdaptivity();
   const [failedImage, setFailedImage] = React.useState(false);
+
+  const overlayAction = passedOverlayAction ?? (hasMouse ? "hover" : "always");
 
   const onImageError = () => {
     setFailedImage(true);
@@ -97,8 +100,8 @@ const Avatar: React.FC<AvatarProps> = ({
           "Avatar--failed": failedImage,
           "Avatar--overlay": Boolean(overlayIcon),
           "Avatar--overlay--always": overlayAction === "always",
-          "Avatar--overlay--white": overlayColor === "white",
-          "Avatar--overlay--black": overlayColor === "black",
+          "Avatar--overlay--light": overlayColor === "light",
+          "Avatar--overlay--dark": overlayColor === "dark",
         }
       )}
       className={className}
@@ -154,7 +157,7 @@ const Avatar: React.FC<AvatarProps> = ({
           )}
         </div>
       )}
-      {overlayIcon && <div vkuiClass="Avatar__overlay_icon">{overlayIcon}</div>}
+      {overlayIcon && <div vkuiClass="Avatar__overlay-icon">{overlayIcon}</div>}
     </div>
   );
 };
@@ -166,8 +169,7 @@ Avatar.defaultProps = {
   size: AVATAR_DEFAULT_SIZE,
   mode: "default",
   shadow: AVATAR_DEFAULT_SHADOW,
-  overlayColor: "white",
-  overlayAction: hasMouse ? "hover" : "always",
+  overlayColor: "light",
 };
 
 export default Avatar;

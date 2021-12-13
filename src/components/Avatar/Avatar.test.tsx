@@ -105,7 +105,7 @@ describe("Avatar", () => {
       render(<AvatarTest overlayIcon={<Icon20GiftCircleFillRed />} />);
 
       expect(
-        avatar().querySelector(".Avatar__overlay_icon")
+        avatar().querySelector(".Avatar__overlay-icon")
       ).toBeInTheDocument();
     });
   });
