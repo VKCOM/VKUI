@@ -123,6 +123,7 @@
 @import "../components/CustomSelectOption/CustomSelectOption.css";
 @import "../components/DatePicker/DatePicker.css";
 @import "../components/SliderSwitch/SliderSwitch.css";
+@import "../components/CustomSelectDropdown/CustomSelectDropdown.css";
 
 /* Advertisement */
 @import "../components/PromoBanner/PromoBanner.css";
