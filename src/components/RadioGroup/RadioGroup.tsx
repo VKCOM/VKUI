@@ -12,7 +12,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   mode = "vertical",
   children,
   ...restProps
-}: RadioGroupProps) => {
+}) => {
   const platform = usePlatform();
 
   return (
