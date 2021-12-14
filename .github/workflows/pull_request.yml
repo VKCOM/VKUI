@@ -7,12 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: Merge master into current branch
+      - name: "Merge master -> ${github.event.pull_request.head.ref}"
         uses: devmasx/merge-branch@1.4.0
         with:
           type: now
           from_branch: master
-          target_branch: github.event.pull_request.head.ref
+          target_branch: ${{ github.event.pull_request.head.ref }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
   test:
     runs-on: ubuntu-latest
