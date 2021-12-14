@@ -1,5 +1,6 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
+import { noop } from "../../lib/utils";
 import { warnOnce } from "../../lib/warnOnce";
 import { getClassName } from "../../helpers/getClassName";
 import { ANDROID, IOS, VKCOM } from "../../lib/platform";
@@ -58,7 +59,7 @@ export interface CellProps
 const warn = warnOnce("Cell");
 export const Cell: React.FC<CellProps> = ({
   mode: propsMode, // TODO: убрать переименование в propsMode перед 5.0.0
-  onRemove,
+  onRemove = noop,
   removePlaceholder = "Удалить",
   onDragFinish,
   before,
