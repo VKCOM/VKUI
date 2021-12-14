@@ -1,6 +1,6 @@
 const path = require("path");
 const { argv } = require("yargs");
-const { tsPropsParser } = require("./docgen-typescript.config");
+const { reactDocgenTypescript } = require("./propsParser.config");
 
 module.exports = {
   title: "VKUI styleguide",
@@ -92,7 +92,7 @@ module.exports = {
       },
     },
   },
-  propsParser: tsPropsParser,
+  propsParser: reactDocgenTypescript,
   exampleMode: "expand",
   assetsDir: path.join(__dirname, `assets`),
   sections: [
