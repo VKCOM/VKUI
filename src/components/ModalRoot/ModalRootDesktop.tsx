@@ -126,7 +126,10 @@ class ModalRootDesktopComponent extends React.Component<
     }
   }
 
-  waitTransitionFinish(modalState: ModalsStateEntry | undefined, eventHandler: () => void) {
+  waitTransitionFinish(
+    modalState: ModalsStateEntry | undefined,
+    eventHandler: () => void
+  ) {
     if (transitionEvent.supported) {
       const onceHandler = () => {
         modalState?.innerElement.removeEventListener(
