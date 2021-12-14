@@ -2,6 +2,7 @@ import * as React from "react";
 import { HasRootRef } from "../../types";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
+import { noop } from "../../lib/utils";
 import { useExternRef } from "../../hooks/useExternRef";
 import { usePlatform } from "../../hooks/usePlatform";
 import { Removable, RemovableProps } from "../Removable/Removable";
@@ -24,7 +25,7 @@ const FormLayoutGroup: React.FC<FormLayoutGroupProps> = ({
   mode = "vertical",
   removable,
   removePlaceholder = "Удалить",
-  onRemove,
+  onRemove = noop,
   getRootRef,
   ...restProps
 }: FormLayoutGroupProps) => {

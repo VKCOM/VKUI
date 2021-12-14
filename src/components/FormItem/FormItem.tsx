@@ -4,7 +4,7 @@ import { classNames } from "../../lib/classNames";
 import { useExternRef } from "../../hooks/useExternRef";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getClassName } from "../../helpers/getClassName";
-import { hasReactNode } from "../../lib/utils";
+import { hasReactNode, noop } from "../../lib/utils";
 import Subhead from "../Typography/Subhead/Subhead";
 import Caption from "../Typography/Caption/Caption";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
@@ -32,7 +32,7 @@ export const FormItem: React.FC<FormItemProps> = ({
   status = "default",
   Component = "div",
   removable,
-  onRemove,
+  onRemove = noop,
   removePlaceholder = "Удалить",
   getRootRef,
   ...restProps
