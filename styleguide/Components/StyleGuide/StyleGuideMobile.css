@@ -7,9 +7,3 @@
   align-items: center;
   justify-content: center;
 }
-
-.StyleGuideMobile__headerText {
-  font-family: var(--font-tt);
-  margin-left: 1px;
-  font-size: 20px;
-}

@@ -4,7 +4,7 @@
 }
 
 .InitialsAvatar__text {
-  font-family: var(--font-tt);
+  font-family: var(--font-display);
   font-weight: 600;
   color: var(
     --white

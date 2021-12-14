@@ -28,6 +28,7 @@
   /* Force use embedded Roboto font for cross-platformity */
   --font-common: "Roboto";
   --font-tt: "Roboto";
+  --font-display: "Roboto";
 
   /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
   font-family: "Roboto";

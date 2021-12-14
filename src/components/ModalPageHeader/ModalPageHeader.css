@@ -82,7 +82,7 @@
 .ModalPageHeader--ios .ModalPageHeader__content {
   position: relative;
   z-index: 1;
-  font-family: var(--font-tt);
+  font-family: var(--font-display);
   flex: 2 1;
   font-size: 21px;
   justify-content: center;
@@ -154,7 +154,7 @@
 
 .ModalPageHeader--android .ModalPageHeader__content-in {
   font-size: 20px;
-  font-family: var(--font-tt);
+  font-family: var(--font-display);
 }
 
 .ModalPageHeader--android .ModalPageHeader__right,

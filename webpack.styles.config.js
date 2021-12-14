@@ -15,6 +15,7 @@ module.exports = {
     unstable: "./src/styles/unstable.css",
     components: "./src/styles/components.css",
     default_scheme: `./src/styles/${defaultSchemeId}.css`,
+    fonts: "./src/fonts/fonts.css",
   },
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -30,6 +31,10 @@ module.exports = {
       {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
+      },
+      {
+        test: /\.woff|woff2$/,
+        use: ["file-loader"],
       },
     ],
   },
