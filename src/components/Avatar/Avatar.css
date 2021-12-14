@@ -59,7 +59,8 @@
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-.Avatar_overlay--visible {
+.Avatar_overlay--visible,
+.Avatar_overlay:focus {
   opacity: 1;
 }
 
