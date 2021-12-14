@@ -52,6 +52,7 @@ const Avatar: React.FC<AvatarProps> = ({
   overlayIcon,
   overlayMode,
   overlayAction: passedOverlayAction,
+  onClick,
   ...restProps
 }: AvatarProps) => {
   const platform = usePlatform();
@@ -105,6 +106,7 @@ const Avatar: React.FC<AvatarProps> = ({
       ref={getRootRef}
       role={hasSrc ? "img" : "presentation"}
       aria-label={alt || ariaLabel}
+      onClick={!overlayIcon ? onClick : undefined}
       style={{ ...style, width: size, height: size, borderRadius }}
     >
       {hasSrc && (
@@ -130,14 +132,14 @@ const Avatar: React.FC<AvatarProps> = ({
       {overlayIcon && (
         <Tappable
           Component="button"
-          vkuiClass={classNames("Avatar_overlay", {
-            "Avatar_overlay--visible": overlayAction === "always",
-            "Avatar_overlay--light": overlayMode === "light",
-            "Avatar_overlay--dark": overlayMode === "dark",
+          vkuiClass={classNames("Avatar__overlay", {
+            "Avatar__overlay--visible": overlayAction === "always",
+            "Avatar__overlay--light": overlayMode === "light",
+            "Avatar__overlay--dark": overlayMode === "dark",
           })}
-          hoverMode="Avatar_overlay--visible"
+          hoverMode="Avatar__overlay--visible"
           hasActive={false}
-          onClick={restProps.onClick}
+          onClick={onClick}
         >
           {overlayIcon}
         </Tappable>

@@ -35,7 +35,7 @@
   box-shadow: inset 0 0 0 var(--thin-border) var(--image_border);
 }
 
-.Avatar_overlay {
+.Avatar__overlay {
   position: absolute;
   left: 0;
   top: 0;
@@ -51,16 +51,16 @@
   border: none;
 }
 
-.Avatar_overlay--light {
+.Avatar__overlay--light {
   background-color: rgba(255, 255, 255, 0.85);
 }
 
-.Avatar_overlay--dark {
+.Avatar__overlay--dark {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-.Avatar_overlay--visible,
-.Avatar_overlay:focus-visible {
+.Avatar__overlay--visible,
+.Avatar__overlay:focus-visible {
   opacity: 1;
 }
 
