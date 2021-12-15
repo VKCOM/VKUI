@@ -1,11 +1,3 @@
-.RadioGroup {
-  border: none;
-  min-width: 0; /* resets default browser styles for fieldset */
-  margin: 0; /* resets default browser styles for fieldset */
-  padding: 12px 0;
-  box-sizing: border-box;
-}
-
 .RadioGroup--horizontal {
   display: flex;
 }
@@ -15,7 +7,6 @@
  * FormItem
  */
 .FormItem .RadioGroup {
-  padding: 0;
   margin: 0 calc(-1 * var(--formitem_padding));
   box-sizing: content-box;
 }
