@@ -64,6 +64,10 @@
   opacity: 1;
 }
 
+.Avatar__overlay--visible {
+  opacity: 1;
+}
+
 .Avatar__children {
   display: flex;
   align-items: center;
