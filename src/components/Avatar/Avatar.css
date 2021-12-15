@@ -59,12 +59,11 @@
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-.Avatar__overlay--visible,
-.Avatar__overlay:focus-visible {
+.Avatar__overlay--visible {
   opacity: 1;
 }
 
-.Avatar__overlay--visible {
+.Avatar__overlay:focus-visible {
   opacity: 1;
 }
 
