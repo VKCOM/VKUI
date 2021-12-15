@@ -29,7 +29,10 @@ export const Switch: React.FC<SwitchProps> = ({
     <label
       vkuiClass={classNames(
         getClassName("Switch", platform),
-        `Switch--sizeY-${sizeY}`
+        `Switch--sizeY-${sizeY}`,
+        {
+          "Switch--disabled": restProps.disabled,
+        }
       )}
       className={className}
       style={style}
