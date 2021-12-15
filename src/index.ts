@@ -305,6 +305,7 @@ export {
   SizeType,
 } from "./components/AdaptivityProvider/AdaptivityContext";
 export { calcInitialsAvatarColor } from "./helpers/avatar";
+export { Popper } from "./components/Popper/Popper";
 
 /**
  * Types

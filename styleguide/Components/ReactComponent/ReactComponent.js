@@ -12,6 +12,10 @@ const ReactComponent = ({ component, exampleMode }) => {
   const { name, visibleName, pathLine } = component;
   const { description = "", examples = [] } = component.props || {};
 
+  const showPropsPlaceholder =
+    process.env.NODE_ENV === "development" &&
+    process.env.VKUI_STYLEGUIDE_PROPSPARSER !== 1;
+
   return (
     <div className="ReactComponent">
       <Link
@@ -36,7 +40,17 @@ const ReactComponent = ({ component, exampleMode }) => {
       <SectionSubheading href={`#/${name}?id=props`}>
         Свойства и методы
       </SectionSubheading>
-      <Slot name="docsTabs" props={component} />
+      {showPropsPlaceholder ? (
+        <blockquote className="Blockquote">
+          <Text>
+            В режиме разработки свойства и методы не генерируются по умолчанию.
+            Если они вам необходимы, воспользуйтесь командой{" "}
+            <span className="Code">yarn styleguide:props</span>.
+          </Text>
+        </blockquote>
+      ) : (
+        <Slot name="docsTabs" props={component} />
+      )}
     </div>
   );
 };
