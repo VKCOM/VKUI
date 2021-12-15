@@ -1,8 +1,8 @@
 const path = require("path");
 const { argv } = require("yargs");
-const { tsPropsParser } = require("./docgen-typescript.config");
+const { reactDocgenTypescript } = require("./propsParser.config");
 
-module.exports = {
+const baseConfig = {
   title: "VKUI styleguide",
   styleguideDir: path.join(__dirname, `../${argv.dist || "docs"}`),
   styleguideComponents: {
@@ -92,7 +92,7 @@ module.exports = {
       },
     },
   },
-  propsParser: tsPropsParser,
+  propsParser: () => ({}),
   exampleMode: "expand",
   assetsDir: path.join(__dirname, `assets`),
   sections: [
@@ -336,3 +336,14 @@ module.exports = {
   ],
   webpackConfig: require("./webpack.config"),
 };
+
+const prodConfig = {
+  ...baseConfig,
+  propsParser: reactDocgenTypescript,
+};
+
+module.exports =
+  process.env.NODE_ENV === "development" &&
+  process.env.VKUI_STYLEGUIDE_PROPSPARSER !== 1
+    ? baseConfig
+    : prodConfig;
