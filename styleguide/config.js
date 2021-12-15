@@ -344,6 +344,6 @@ const prodConfig = {
 
 module.exports =
   process.env.NODE_ENV === "development" &&
-  process.env.VKUI_STYLEGUIDE_PROPSPARSER !== 1
+  process.env.VKUI_STYLEGUIDE_PROPSPARSER !== "1"
     ? baseConfig
     : prodConfig;
