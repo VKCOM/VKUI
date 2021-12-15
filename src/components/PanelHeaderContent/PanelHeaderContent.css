@@ -47,10 +47,6 @@
 .PanelHeaderContent__children-in {
   flex-grow: 0;
   min-width: 0;
-  font-size: 21px;
-  line-height: var(--panelheader_height_ios);
-  font-weight: 800;
-  font-family: var(--font-tt);
 }
 
 .PanelHeaderContent__aside {
@@ -72,3 +68,29 @@
 .PanelHeaderContent--ios .PanelHeaderContent__in {
   align-items: center;
 }
+
+/**
+ * iOS
+ */
+
+.PanelHeaderContent--ios .PanelHeaderContent__children-in {
+  font-size: 21px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: var(--panelheader_height_ios);
+}
+
+/**
+ * Android
+ */
+
+.PanelHeaderContent--android .PanelHeaderContent__children-in {
+  font-size: 23px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: var(--panelheader_height_android);
+}
+
+/**
+ * vkcom
+ */

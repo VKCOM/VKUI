@@ -5,7 +5,9 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import Caption from "../Typography/Caption/Caption";
 import Headline from "../Typography/Headline/Headline";
-import { IOS } from "../../lib/platform";
+import { IOS, Platform } from "../../lib/platform";
+import Text from "../Typography/Text/Text";
+import { HasPlatform } from "../../types";
 import "./PanelHeaderContent.css";
 
 export interface PanelHeaderContentProps
@@ -14,6 +16,35 @@ export interface PanelHeaderContentProps
   before?: React.ReactNode;
   status?: React.ReactNode;
 }
+
+interface PanelHeaderChildrenProps extends HasPlatform {
+  hasStatus: boolean;
+  hasBefore: boolean;
+  children: React.ReactNode;
+}
+
+const PanelHeaderChildren: React.FC<PanelHeaderChildrenProps> = ({
+  platform,
+  hasStatus,
+  hasBefore,
+  children,
+}) => {
+  if (platform === Platform.VKCOM) {
+    return (
+      <Text Component="div" weight="medium">
+        {children}
+      </Text>
+    );
+  }
+
+  return hasStatus || hasBefore ? (
+    <Headline Component="div" weight="medium">
+      {children}
+    </Headline>
+  ) : (
+    <div vkuiClass="PanelHeaderContent__children-in">{children}</div>
+  );
+};
 
 const PanelHeaderContent: React.FunctionComponent<PanelHeaderContentProps> = ({
   className,
@@ -60,16 +91,13 @@ const PanelHeaderContent: React.FunctionComponent<PanelHeaderContentProps> = ({
           </Caption>
         )}
         <div vkuiClass="PanelHeaderContent__children">
-          {hasReactNode(status) ? (
-            <Headline Component="span" weight="medium">
-              {children}
-            </Headline>
-          ) : (
-            <span vkuiClass="PanelHeaderContent__children-in">{children}</span>
-          )}
-          {hasReactNode(aside) && (
-            <div vkuiClass="PanelHeaderContent__aside">{aside}</div>
-          )}
+          <PanelHeaderChildren
+            platform={platform}
+            hasStatus={hasReactNode(status)}
+            hasBefore={hasReactNode(before)}
+          >
+            {children}
+          </PanelHeaderChildren>
         </div>
         {hasReactNode(before) && <div vkuiClass="PanelHeaderContent__width" />}
       </InComponent>
