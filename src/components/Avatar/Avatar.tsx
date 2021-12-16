@@ -3,6 +3,8 @@ import { Icon12Circle, Icon12OnlineMobile } from "@vkontakte/icons";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import Tappable from "../Tappable/Tappable";
 import { HasRef, HasRootRef } from "../../types";
 import "./Avatar.css";
 
@@ -17,6 +19,12 @@ export interface AvatarProps
   mode?: "default" | "image" | "app";
   shadow?: boolean;
   badge?: "online" | "online-mobile" | JSX.Element;
+  overlayIcon?: JSX.Element;
+  overlayMode?: "dark" | "light";
+  /**
+   * Поведение показа overlay: "hover" - при наведении, "always" - всегда
+   */
+  overlayAction?: "hover" | "always";
 }
 
 const Avatar: React.FC<AvatarProps> = ({
@@ -41,10 +49,17 @@ const Avatar: React.FC<AvatarProps> = ({
   style,
   "aria-label": ariaLabel,
   badge,
+  overlayIcon,
+  overlayMode,
+  overlayAction: passedOverlayAction,
+  onClick,
   ...restProps
 }: AvatarProps) => {
   const platform = usePlatform();
+  const { hasMouse } = useAdaptivity();
   const [failedImage, setFailedImage] = React.useState(false);
+
+  const overlayAction = passedOverlayAction ?? (hasMouse ? "hover" : "always");
 
   const onImageError = () => {
     setFailedImage(true);
@@ -91,6 +106,7 @@ const Avatar: React.FC<AvatarProps> = ({
       ref={getRootRef}
       role={hasSrc ? "img" : "presentation"}
       aria-label={alt || ariaLabel}
+      onClick={!overlayIcon ? onClick : undefined}
       style={{ ...style, width: size, height: size, borderRadius }}
     >
       {hasSrc && (
@@ -113,6 +129,21 @@ const Avatar: React.FC<AvatarProps> = ({
         />
       )}
       {children && <div vkuiClass="Avatar__children">{children}</div>}
+      {overlayIcon && (
+        <Tappable
+          Component="button"
+          vkuiClass={classNames("Avatar__overlay", {
+            "Avatar__overlay--visible": overlayAction === "always",
+            "Avatar__overlay--light": overlayMode === "light",
+            "Avatar__overlay--dark": overlayMode === "dark",
+          })}
+          hoverMode="Avatar__overlay--visible"
+          hasActive={false}
+          onClick={onClick}
+        >
+          {overlayIcon}
+        </Tappable>
+      )}
       {badge && (
         <div
           vkuiClass={classNames("Avatar__badge", {
@@ -151,6 +182,7 @@ Avatar.defaultProps = {
   size: AVATAR_DEFAULT_SIZE,
   mode: "default",
   shadow: AVATAR_DEFAULT_SHADOW,
+  overlayMode: "light",
 };
 
 export default Avatar;

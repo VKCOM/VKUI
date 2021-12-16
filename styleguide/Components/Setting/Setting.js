@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useEffect } from "react";
 import {
   Headline,
   Link,
@@ -21,6 +21,13 @@ export const Setting = ({
   const { setPopout } = useContext(StyleGuideContext);
   const ref = useRef();
 
+  useEffect(
+    () => () => {
+      setPopout(null);
+    },
+    []
+  );
+
   return (
     <Headline
       className={classNames("Setting", {
@@ -36,10 +43,7 @@ export const Setting = ({
           disabled={disabled}
           onClick={() => {
             setPopout(
-              <ActionSheet
-                toggleRef={ref.current}
-                onClose={() => setPopout(null)}
-              >
+              <ActionSheet toggleRef={ref} onClose={() => setPopout(null)}>
                 {options.map((item) => {
                   const isPrimitive =
                     typeof item === "string" || typeof item === "number";

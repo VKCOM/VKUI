@@ -35,6 +35,38 @@
   box-shadow: inset 0 0 0 var(--thin-border) var(--image_border);
 }
 
+.Avatar__overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s;
+  border: none;
+}
+
+.Avatar__overlay--light {
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+.Avatar__overlay--dark {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.Avatar__overlay--visible {
+  opacity: 1;
+}
+
+.Avatar__overlay:focus-visible {
+  opacity: 1;
+}
+
 .Avatar__children {
   display: flex;
   align-items: center;

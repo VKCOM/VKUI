@@ -60,7 +60,7 @@ function createServiceHost(compilerOptions, files) {
 }
 
 module.exports = {
-  tsPropsParser: (file, source) => {
+  reactDocgenTypescript: (file, source) => {
     filesCache.set(file, {
       text: source,
       version: 0,
