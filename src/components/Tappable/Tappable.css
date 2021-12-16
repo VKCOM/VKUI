@@ -1,9 +1,11 @@
 .Tappable {
   position: relative;
+  cursor: pointer;
 }
 
-.Tappable:not([disabled]):not([aria-disabled="true"]) {
-  cursor: pointer;
+.Tappable[disabled],
+.Tappable[aria-disabled="true"] {
+  cursor: default;
 }
 
 .AppRoot--keyboard-input .Tappable:focus-visible {

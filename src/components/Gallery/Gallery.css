@@ -1,6 +1,7 @@
 .Gallery {
   position: relative;
   overflow: hidden;
+  user-select: none;
 }
 
 .Gallery__viewport {
