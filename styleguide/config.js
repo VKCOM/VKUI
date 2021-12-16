@@ -252,6 +252,7 @@ const baseConfig = {
             "../src/components/Slider/Slider.tsx",
             "../src/components/RangeSlider/RangeSlider.tsx",
             "../src/components/Radio/Radio.tsx",
+            "../src/components/RadioGroup/RadioGroup.tsx",
             "../src/components/Checkbox/Checkbox.tsx",
             "../src/components/SimpleCheckbox/SimpleCheckbox.tsx",
             "../src/components/Input/Input.tsx",

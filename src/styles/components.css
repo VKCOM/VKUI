@@ -111,6 +111,7 @@
 @import "../components/Slider/Slider.css";
 @import "../components/FormField/FormField.css";
 @import "../components/Radio/Radio.css";
+@import "../components/RadioGroup/RadioGroup.css";
 @import "../components/Checkbox/Checkbox.css";
 @import "../components/Input/Input.css";
 @import "../components/ChipsInput/ChipsInput.css";
