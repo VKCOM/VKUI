@@ -20,7 +20,6 @@ export interface PanelHeaderContentProps
 interface PanelHeaderChildrenProps extends HasPlatform {
   hasStatus: boolean;
   hasBefore: boolean;
-  children: React.ReactNode;
 }
 
 const PanelHeaderChildren: React.FC<PanelHeaderChildrenProps> = ({
