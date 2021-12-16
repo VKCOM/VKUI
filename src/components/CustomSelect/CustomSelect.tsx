@@ -1,9 +1,8 @@
 import * as React from "react";
 import SelectMimicry from "../SelectMimicry/SelectMimicry";
-import { debounce, setRef } from "../../lib/utils";
+import { debounce, setRef, multiRef } from "../../lib/utils";
 import { classNames } from "../../lib/classNames";
 import { NativeSelectProps } from "../NativeSelect/NativeSelect";
-import CustomScrollView from "../CustomScrollView/CustomScrollView";
 import { withAdaptivity } from "../../hoc/withAdaptivity";
 import { withPlatform } from "../../hoc/withPlatform";
 import CustomSelectOption, {
@@ -16,9 +15,10 @@ import Input from "../Input/Input";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import Caption from "../Typography/Caption/Caption";
 import { warnOnce } from "../../lib/warnOnce";
-import Spinner from "../Spinner/Spinner";
 import { defaultFilterFn } from "../../lib/select";
 import { is } from "../../lib/is";
+import { Placement } from "../Popper/Popper";
+import { CustomSelectDropdown } from "../CustomSelectDropdown/CustomSelectDropdown";
 import "./CustomSelect.css";
 
 const findIndexAfter = (
@@ -76,6 +76,7 @@ interface CustomSelectState {
   selectedOptionIndex?: number;
   nativeSelectValue?: SelectValue;
   options?: CustomSelectOptionInterface[];
+  popperPlacement?: Placement;
 }
 
 export interface CustomSelectProps
@@ -183,6 +184,7 @@ class CustomSelect extends React.Component<
   private isControlledOutside: boolean;
   private selectEl: HTMLSelectElement;
   private readonly scrollBoxRef = React.createRef<HTMLDivElement>();
+  private readonly containerRef = React.createRef<HTMLLabelElement>();
 
   private readonly resetKeyboardInput = () => {
     this.keyboardInput = "";
@@ -577,8 +579,14 @@ class CustomSelect extends React.Component<
     setRef(element, this.props.getRef);
   };
 
+  onPlacementChange = (placement?: Placement) => {
+    this.setState(() => ({
+      popperPlacement: placement,
+    }));
+  };
+
   render() {
-    const { opened, nativeSelectValue } = this.state;
+    const { opened, nativeSelectValue, options: stateOptions } = this.state;
     const {
       searchable,
       name,
@@ -608,37 +616,31 @@ class CustomSelect extends React.Component<
     const selected = this.getSelectedItem();
     const label = selected ? selected.label : undefined;
 
-    const defaultDropdownContent = (
-      <CustomScrollView boxRef={this.scrollBoxRef}>
-        {this.state.options.map(this.renderOption)}
-        {this.state.options.length === 0 && (
-          <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
-            {this.props.emptyText}
-          </Caption>
-        )}
-      </CustomScrollView>
-    );
+    const defaultDropdownContent =
+      stateOptions.length > 0 ? (
+        stateOptions.map(this.renderOption)
+      ) : (
+        <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
+          {this.props.emptyText}
+        </Caption>
+      );
 
     let resolvedContent;
 
     if (typeof renderDropdown === "function") {
       resolvedContent = renderDropdown({ defaultDropdownContent });
-    } else if (fetching) {
-      resolvedContent = (
-        <div vkuiClass="CustomSelect__fetching">
-          <Spinner size="small" />
-        </div>
-      );
     } else {
       resolvedContent = defaultDropdownContent;
     }
+
+    const isPopperDirectionTop = this.state.popperPlacement?.includes("top");
 
     return (
       <label
         vkuiClass={getClassName("CustomSelect", platform)}
         className={className}
         style={style}
-        ref={getRootRef}
+        ref={multiRef(this.containerRef, getRootRef)}
         onClick={this.onLabelClick}
       >
         {opened && searchable ? (
@@ -648,7 +650,7 @@ class CustomSelect extends React.Component<
             onBlur={this.onBlur}
             vkuiClass={classNames({
               CustomSelect__open: opened,
-              "CustomSelect__open--popupDirectionTop": popupDirection === "top",
+              "CustomSelect__open--popupDirectionTop": isPopperDirectionTop,
             })}
             value={this.state.inputValue}
             onKeyDown={this.onInputKeyDown}
@@ -671,7 +673,7 @@ class CustomSelect extends React.Component<
             onBlur={this.onBlur}
             vkuiClass={classNames({
               CustomSelect__open: opened,
-              "CustomSelect__open--popupDirectionTop": popupDirection === "top",
+              "CustomSelect__open--popupDirectionTop": isPopperDirectionTop,
             })}
           >
             {label}
@@ -693,19 +695,16 @@ class CustomSelect extends React.Component<
           ))}
         </select>
         {opened && (
-          <div
-            vkuiClass={classNames(
-              "CustomSelect__options",
-              `CustomSelect__options--sizeY-${sizeY}`,
-              {
-                "CustomSelect__options--popupDirectionTop":
-                  popupDirection === "top",
-              }
-            )}
+          <CustomSelectDropdown
+            targetRef={this.containerRef}
+            placement={popupDirection}
+            scrollBoxRef={this.scrollBoxRef}
+            onPlacementChange={this.onPlacementChange}
             onMouseLeave={this.resetFocusedOption}
+            fetching={fetching}
           >
             {resolvedContent}
-          </div>
+          </CustomSelectDropdown>
         )}
       </label>
     );

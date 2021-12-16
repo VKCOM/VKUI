@@ -211,7 +211,6 @@ const openBaseTop = () =>
         </ActionSheetItem>
       }
       toggleRef={baseTopTargetRef}
-      popupDirection="top"
     >
       <ActionSheetItem autoclose>Сохранить в закладках</ActionSheetItem>
       <ActionSheetItem autoclose>Закрепить запись</ActionSheetItem>

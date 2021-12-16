@@ -4,6 +4,10 @@
   cursor: pointer;
 }
 
+.Switch--disabled {
+  cursor: default;
+}
+
 .Switch__self {
   position: absolute;
   width: 1px;

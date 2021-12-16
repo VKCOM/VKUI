@@ -2,9 +2,11 @@
  * Задает стиль трансформации элементу с учетом префиксов
  */
 export function setTransformStyle(
-  element: HTMLElement,
+  element: HTMLElement | undefined,
   transform: string
 ): void {
-  element.style.transform = transform;
-  element.style.webkitTransform = transform;
+  if (element) {
+    element.style.transform = transform;
+    element.style.webkitTransform = transform;
+  }
 }

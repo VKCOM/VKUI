@@ -1,0 +1,12 @@
+.RadioGroup--horizontal {
+  display: flex;
+}
+
+/**
+ * CMP:
+ * FormItem
+ */
+.FormItem .RadioGroup {
+  margin: 0 calc(-1 * var(--formitem_padding));
+  box-sizing: content-box;
+}
