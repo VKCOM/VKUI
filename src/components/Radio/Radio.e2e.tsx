@@ -21,7 +21,7 @@ describe("Radio sizes and description", () => {
     [
       {
         description: [undefined, "Description"],
-        sizeY: [SizeType.REGULAR, SizeType.COMPACT],
+        $adaptivity: "y",
       },
     ]
   );
