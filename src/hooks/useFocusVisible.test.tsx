@@ -23,7 +23,7 @@ describe("useFocusVisible", () => {
     });
 
     act(() => {
-      result.current.onFocus();
+      result.current.onFocus({ stopPropagation: jest.fn() } as any);
     });
 
     expect(result.current.focusVisible).toEqual(true);
@@ -34,7 +34,7 @@ describe("useFocusVisible", () => {
     });
 
     act(() => {
-      result.current.onFocus();
+      result.current.onFocus({ stopPropagation: jest.fn() } as any);
     });
 
     expect(result.current.focusVisible).toEqual(false);
@@ -45,10 +45,10 @@ describe("useFocusVisible", () => {
     });
 
     act(() => {
-      result.current.onFocus();
+      result.current.onFocus({ stopPropagation: jest.fn() } as any);
     });
     act(() => {
-      result.current.onBlur();
+      result.current.onBlur({ stopPropagation: jest.fn() } as any);
     });
 
     expect(result.current.focusVisible).toEqual(false);

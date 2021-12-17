@@ -17,7 +17,7 @@ import { useTimeout } from "../../hooks/useTimeout";
 import { useExternRef } from "../../hooks/useExternRef";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useFocusVisible } from "../../hooks/useFocusVisible";
-import { compose } from "../../lib/compose";
+import { callMultiple } from "../../lib/callMultiple";
 import "./Tappable.css";
 
 export interface TappableProps
@@ -258,6 +258,7 @@ const Tappable: React.FC<TappableProps> = ({
         hasHover && hovered && isPresetHoverMode,
       [`Tappable--active-${activeMode}`]:
         hasActive && active && isPresetActiveMode,
+      "Tappable--focus-visible": focusVisible,
     }
   );
 
@@ -285,8 +286,8 @@ const Tappable: React.FC<TappableProps> = ({
       vkuiClass={classes}
       Component={Component}
       getRootRef={containerRef}
-      onBlur={compose(onBlur, props.onBlur)}
-      onFocus={compose(onFocus, props.onFocus)}
+      onBlur={callMultiple(onBlur, props.onBlur)}
+      onFocus={callMultiple(onFocus, props.onFocus)}
       {...(props.disabled ? {} : handlers)}
     >
       <TappableContext.Provider value={childContext}>
@@ -312,10 +313,7 @@ const Tappable: React.FC<TappableProps> = ({
         <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />
       )}
       {!props.disabled && isPresetFocusVisibleMode && (
-        <FocusVisible
-          mode={focusVisibleMode as FocusVisibleMode}
-          focusVisible={focusVisible}
-        />
+        <FocusVisible mode={focusVisibleMode as FocusVisibleMode} />
       )}
     </Touch>
   );

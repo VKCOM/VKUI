@@ -1,6 +1,5 @@
-.AppRoot--keyboard-input .Tappable:focus > .FocusVisible,
-.AppRoot--keyboard-input input:focus ~ .FocusVisible,
-.FocusVisible--focus-visible {
+.Switch--focus-visible > .FocusVisible,
+.Tappable--focus-visible > .FocusVisible {
   position: absolute;
   top: 2px;
   left: 2px;
@@ -14,9 +13,8 @@
   z-index: 0;
 }
 
-.AppRoot--keyboard-input .Tappable:focus > .FocusVisible--outside,
-.AppRoot--keyboard-input input:focus ~ .FocusVisible--outside,
-.FocusVisible--focus-visible.FocusVisible--outside {
+.Switch--focus-visible > .FocusVisible--outside,
+.Tappable--focus-visible > .FocusVisible--outside {
   top: -2px;
   left: -2px;
   right: -2px;
@@ -30,9 +28,8 @@
  * navigating accessible vkui apps via keyboard
  */
 @media (prefers-reduced-motion: no-preference) {
-  .AppRoot--keyboard-input .Tappable:focus > .FocusVisible,
-  .FocusVisible--focus-visible,
-  .AppRoot--keyboard-input input:focus ~ .FocusVisible {
+  .Tappable--focus-visible > .FocusVisible,
+  .Switch--focus-visible > .FocusVisible {
     top: 4px;
     left: 4px;
     right: 4px;
@@ -42,9 +39,8 @@
     will-change: top, left, bottom, right;
   }
 
-  .AppRoot--keyboard-input .Tappable:focus > .FocusVisible--outside,
-  .FocusVisible--focus-visible.FocusVisible--outside,
-  .AppRoot--keyboard-input input:focus ~ .FocusVisible--outside {
+  .Tappable--focus-visible > .FocusVisible--outside,
+  .Switch--focus-visible > .FocusVisible--outside {
     top: 0;
     left: 0;
     bottom: 0;

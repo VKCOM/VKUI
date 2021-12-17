@@ -189,7 +189,6 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
         ref={rootRef}
         vkuiClass={classNames("AppRoot", {
           "AppRoot--no-mouse": !hasMouse,
-          "AppRoot--keyboard-input": isKeyboardInputActive,
         })}
         {...props}
       >
