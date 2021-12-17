@@ -63,6 +63,11 @@
   opacity: 1;
 }
 
+.Avatar__overlay--focus-visible {
+  opacity: 1;
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
 .Avatar__children {
   display: flex;
   align-items: center;

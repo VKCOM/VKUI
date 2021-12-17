@@ -138,7 +138,7 @@ const Avatar: React.FC<AvatarProps> = ({
             "Avatar__overlay--dark": overlayMode === "dark",
           })}
           hoverMode="Avatar__overlay--visible"
-          focusVisibleMode="Avatar__overlay--visible"
+          focusVisibleMode="Avatar__overlay--focus-visible"
           hasActive={false}
           onClick={onClick}
         >
