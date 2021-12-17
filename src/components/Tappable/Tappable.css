@@ -8,7 +8,7 @@
   cursor: default;
 }
 
-.AppRoot--keyboard-input .Tappable:focus-visible {
+.Tappable--focus-visible {
   outline: none;
 }
 
