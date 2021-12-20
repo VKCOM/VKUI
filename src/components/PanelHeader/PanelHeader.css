@@ -47,8 +47,8 @@
 
 .PanelHeader__content-in {
   color: var(--header_text);
-  font-weight: 800;
-  font-family: var(--font-tt);
+  font-weight: 500;
+  font-family: var(--font-display);
 }
 
 .PanelHeader__right {
