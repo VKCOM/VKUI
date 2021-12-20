@@ -36,7 +36,7 @@ export const FocusTrap: React.FC<FocusTrapProps> = ({
   const ref = useExternRef<HTMLElement>(getRootRef);
 
   const { document, window } = useDOM();
-  const activeElement = document.activeElement as HTMLElement;
+  const activeElement = document?.activeElement as HTMLElement;
 
   const [focusableNodes, setFocusableNodes] =
     React.useState<HTMLElement[]>(null);
