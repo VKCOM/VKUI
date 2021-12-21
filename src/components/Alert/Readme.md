@@ -23,111 +23,89 @@
 > 5. Порядок кнопок должен быть одинаковым на всех платформах (см. пункт 2).
 
 ```jsx { "props": { "layout": false, "adaptivity": true } }
-class Example extends React.Component {
-  constructor(props) {
-    super(props);
+import { SplitLayoutContext } from "../SplitLayout/SplitLayoutContext";
 
-    this.state = {
-      popout: null,
-      actionsLog: [],
-    };
+const Example = () => {
+  const [actionsLog, setActionsLog] = React.useState([]);
+  const { setPopout } = React.useContext(SplitLayoutContext);
 
-    this.openAction = this.openAction.bind(this);
-    this.openDeleteion = this.openDeleteion.bind(this);
-    this.closePopout = this.closePopout.bind(this);
-    this.addActionLogItem = this.addActionLogItem.bind(this);
-  }
-
-  componentDidMount() {
-    this.openDeleteion();
-  }
-
-  addActionLogItem(value) {
-    this.setState({
-      actionsLog: [...this.state.actionsLog, value],
-    });
-  }
-
-  openAction() {
-    this.setState({
-      popout: (
-        <Alert
-          actions={[
-            {
-              title: "Лишить права",
-              mode: "destructive",
-              autoclose: true,
-              action: () =>
-                this.addActionLogItem("Право на модерацию контента убрано."),
-            },
-            {
-              title: "Отмена",
-              autoclose: true,
-              mode: "cancel",
-            },
-          ]}
-          actionsLayout="vertical"
-          onClose={this.closePopout}
-          header="Подтвердите действие"
-          text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
-        />
-      ),
-    });
-  }
-
-  openDeleteion() {
-    this.setState({
-      popout: (
-        <Alert
-          actions={[
-            {
-              title: "Отмена",
-              autoclose: true,
-              mode: "cancel",
-            },
-            {
-              title: "Удалить",
-              autoclose: true,
-              mode: "destructive",
-              action: () => this.addActionLogItem("Документ удален."),
-            },
-          ]}
-          actionsLayout="horizontal"
-          onClose={this.closePopout}
-          header="Удаление документа"
-          text="Вы уверены, что хотите удалить этот документ?"
-        />
-      ),
-    });
-  }
-
-  closePopout() {
-    this.setState({ popout: null });
-  }
-
-  render() {
-    return (
-      <SplitLayout popout={this.state.popout}>
-        <SplitCol>
-          <View activePanel="alert">
-            <Panel id="alert">
-              <PanelHeader>Alert</PanelHeader>
-              <Group>
-                <CellButton onClick={this.openAction}>Лишить права</CellButton>
-                <CellButton onClick={this.openDeleteion}>
-                  Удалить документ
-                </CellButton>
-                {this.state.actionsLog.map((value, i) => (
-                  <Div key={i}>{value}</Div>
-                ))}
-              </Group>
-            </Panel>
-          </View>
-        </SplitCol>
-      </SplitLayout>
+  const addActionLogItem = (value) => {
+    setPopout([...actionsLog, value]);
+  };
+  const closePopout = () => {
+    setPopout(null);
+  };
+  const openAction = () => {
+    setPopout(
+      <Alert
+        actions={[
+          {
+            title: "Лишить права",
+            mode: "destructive",
+            autoclose: true,
+            action: () =>
+              addActionLogItem("Право на модерацию контента убрано."),
+          },
+          {
+            title: "Отмена",
+            autoclose: true,
+            mode: "cancel",
+          },
+        ]}
+        actionsLayout="vertical"
+        onClose={closePopout}
+        header="Подтвердите действие"
+        text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
+      />
     );
-  }
-}
+  };
+  const openDeletion = () => {
+    setPopout(
+      <Alert
+        actions={[
+          {
+            title: "Отмена",
+            autoclose: true,
+            mode: "cancel",
+          },
+          {
+            title: "Удалить",
+            autoclose: true,
+            mode: "destructive",
+            action: () => addActionLogItem("Документ удален."),
+          },
+        ]}
+        actionsLayout="horizontal"
+        onClose={closePopout}
+        header="Удаление документа"
+        text="Вы уверены, что хотите удалить этот документ?"
+      />
+    );
+  };
 
-<Example />;
+  React.useEffect(() => {
+    openDeletion();
+  }, []);
+
+  return (
+    <SplitCol>
+      <View activePanel="alert">
+        <Panel id="alert">
+          <PanelHeader>Alert</PanelHeader>
+          <Group>
+            <CellButton onClick={openAction}>Лишить права</CellButton>
+            <CellButton onClick={openDeletion}>Удалить документ</CellButton>
+            {actionsLog.map((value, i) => (
+              <Div key={i}>{value}</Div>
+            ))}
+          </Group>
+        </Panel>
+      </View>
+    </SplitCol>
+  );
+};
+
+<SplitLayout>
+  <Example />
+</SplitLayout>;
 ```

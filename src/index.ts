@@ -22,6 +22,7 @@ export type { PanelHeaderContentProps } from "./components/PanelHeaderContent/Pa
 export { PanelHeaderContext } from "./components/PanelHeaderContext/PanelHeaderContext";
 export type { PanelHeaderContextProps } from "./components/PanelHeaderContext/PanelHeaderContext";
 export { SplitLayout } from "./components/SplitLayout/SplitLayout";
+export { SplitLayoutContext } from "./components/SplitLayout/SplitLayoutContext";
 export type { SplitLayoutProps } from "./components/SplitLayout/SplitLayout";
 export { SplitCol } from "./components/SplitCol/SplitCol";
 export type { SplitColProps } from "./components/SplitCol/SplitCol";
