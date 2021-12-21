@@ -1,8 +1,14 @@
 :root {
   /* fonts */
   --font-common: -apple-system, system-ui, Helvetica Neue, Roboto, sans-serif;
+  /* @deprecated
+   * --font-tt будет удален в 5.0.0, используйте --font-display
+   * В коде библиотеки использовать нельзя. Оставлен для обратной совместимости для пользователей библиотеки.
+   */
   --font-tt: "TT Commons", -apple-system, system-ui, Helvetica Neue, Roboto,
     sans-serif;
+  --font-display: "VK Sans Display", -apple-system, system-ui, Helvetica Neue,
+    Roboto, sans-serif;
 
   /* easings */
   --ios-easing: cubic-bezier(0.36, 0.66, 0.04, 1);

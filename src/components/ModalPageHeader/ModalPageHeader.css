@@ -44,7 +44,6 @@
 .ModalPageHeader__content-in {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 800;
 }
 
 .ModalPageHeader__right {
@@ -82,10 +81,14 @@
 .ModalPageHeader--ios .ModalPageHeader__content {
   position: relative;
   z-index: 1;
-  font-family: var(--font-tt);
   flex: 2 1;
-  font-size: 21px;
   justify-content: center;
+}
+
+.ModalPageHeader--ios .ModalPageHeader__content-in {
+  font-size: 21px;
+  font-family: var(--font-display);
+  font-weight: 500;
 }
 
 @media (min-width: 320px) {
@@ -153,8 +156,9 @@
 }
 
 .ModalPageHeader--android .ModalPageHeader__content-in {
-  font-size: 20px;
-  font-family: var(--font-tt);
+  font-size: 23px;
+  font-family: var(--font-display);
+  font-weight: 500;
 }
 
 .ModalPageHeader--android .ModalPageHeader__right,

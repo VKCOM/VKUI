@@ -85,14 +85,6 @@ function normalizeScheme(
   }
 }
 
-const hasNewTokens = (node: HTMLElement) => {
-  const themeNameVar = "var(--vkui--theme_name)";
-  node.style.setProperty("--theme", themeNameVar);
-  const themeName = getComputedStyle(node).getPropertyValue("--theme");
-  node.style.removeProperty("--theme");
-  return themeName !== themeNameVar && themeName !== "";
-};
-
 const ConfigProvider: React.FC<ConfigProviderProps> = ({
   children,
   schemeTarget,
@@ -124,7 +116,6 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
   const realScheme = useSchemeDetector(target, scheme);
   const configContext = useObjectMemo({
     appearance: deriveAppearance(realScheme),
-    hasNewTokens: hasNewTokens(target),
     ...config,
   });
 
