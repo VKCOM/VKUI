@@ -83,13 +83,12 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
     useIsomorphicLayoutEffect(() => {
       const portal = document.createElement("div");
       portal.classList.add("vkui__portal-root");
-      portal.setAttribute("scheme", scheme);
       document.body.appendChild(portal);
       setPortalRoot(portal);
       return () => {
         portal.parentElement.removeChild(portal);
       };
-    }, [scheme]);
+    }, []);
 
     // setup root classes
     useIsomorphicLayoutEffect(() => {
@@ -163,6 +162,10 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
           : globalScrollController(window, document),
       [scroll]
     );
+
+    useIsomorphicLayoutEffect(() => {
+      portalRoot?.setAttribute("scheme", scheme);
+    }, [scheme, portalRoot]);
 
     const content = (
       <AppRootContext.Provider
