@@ -3,10 +3,9 @@ import { AppearanceType } from "@vkontakte/vk-bridge";
 import { FC, useContext } from "react";
 import { ANDROID, VKCOM } from "../../lib/platform";
 import { baselineComponent } from "../../testing/utils";
-import { Scheme } from "../../helpers/scheme";
+import { Scheme, Appearance } from "../../helpers/scheme";
 import ConfigProvider from "./ConfigProvider";
 import {
-  Appearance,
   ConfigProviderContext,
   ConfigProviderContextInterface,
   WebviewType,

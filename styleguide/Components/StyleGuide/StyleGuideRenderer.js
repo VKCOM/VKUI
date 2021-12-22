@@ -3,10 +3,7 @@ import {
   MOBILE_SIZE,
   TABLET_SIZE,
 } from "@vkui/components/AdaptivityProvider/AdaptivityProvider";
-import {
-  Appearance,
-  defaultConfigProviderProps,
-} from "@vkui/components/ConfigProvider/ConfigProviderContext";
+import { defaultConfigProviderProps } from "@vkui/components/ConfigProvider/ConfigProviderContext";
 import { SMALL_HEIGHT } from "../Settings/ViewHeightSelect";
 import {
   VKCOM,
@@ -18,6 +15,7 @@ import {
   ConfigProvider,
   ViewWidth,
   Platform,
+  Appearance,
 } from "@vkui";
 import "./StyleGuideRenderer.css";
 import { StyleGuideMobile } from "./StyleGuideMobile";

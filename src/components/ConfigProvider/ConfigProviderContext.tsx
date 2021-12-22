@@ -2,11 +2,6 @@ import * as React from "react";
 import vkBridge, { AppearanceType } from "@vkontakte/vk-bridge";
 import { PlatformType, platform } from "../../lib/platform";
 
-export enum Appearance {
-  DARK = "dark",
-  LIGHT = "light",
-}
-
 export enum WebviewType {
   VKAPPS = "vkapps",
   INTERNAL = "internal",

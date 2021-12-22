@@ -15,10 +15,11 @@ import {
   AppearanceScheme,
   Scheme,
 } from "../../helpers/scheme";
-import { SchemeProviderContext } from "../SchemeProvider/SchemeProviderContext";
+import { AppearanceProviderContext } from "../AppearanceProvider/AppearanceProviderContext";
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface {
   /**
+   * @deprecated будет удалено в 5.0.0, устанавливать тему следует через appearance
    * Цветовая схема приложения
    */
   scheme?: AppearanceScheme;
@@ -60,7 +61,11 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
   schemeTarget,
   ...config
 }) => {
-  const scheme = normalizeScheme(config.scheme, config.platform);
+  const scheme = normalizeScheme({
+    scheme: config.scheme,
+    platform: config.platform,
+    appearance: config.appearance,
+  });
   const { document } = useDOM();
   const target = schemeTarget || document?.body;
 
@@ -85,12 +90,19 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
     appearance: deriveAppearance(realScheme),
     ...config,
   });
+  const appearanceContext = React.useMemo(
+    () => ({
+      appearance: configContext.appearance,
+      scheme: realScheme,
+    }),
+    [realScheme, configContext, realScheme]
+  );
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
-      <SchemeProviderContext.Provider value={realScheme}>
+      <AppearanceProviderContext.Provider value={appearanceContext}>
         {children}
-      </SchemeProviderContext.Provider>
+      </AppearanceProviderContext.Provider>
     </ConfigProviderContext.Provider>
   );
 };

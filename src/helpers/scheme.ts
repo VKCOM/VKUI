@@ -1,4 +1,4 @@
-import { AppearanceSchemeType } from "@vkontakte/vk-bridge";
+import { AppearanceSchemeType, AppearanceType } from "@vkontakte/vk-bridge";
 import { PlatformType, VKCOM } from "../lib/platform";
 import { warnOnce } from "../lib/warnOnce";
 
@@ -32,12 +32,38 @@ export type AppearanceScheme =
   | Scheme.VKCOM_LIGHT
   | "inherit";
 
+export enum Appearance {
+  DARK = "dark",
+  LIGHT = "light",
+}
+
 const warn = warnOnce("scheme");
 
-export function normalizeScheme(
-  scheme: AppearanceScheme,
-  platform: PlatformType
-): Scheme | "inherit" {
+export interface NormalizeSchemeProps {
+  platform: PlatformType;
+  scheme?: AppearanceScheme;
+  appearance?: AppearanceType;
+}
+
+export function normalizeScheme({
+  platform,
+  scheme,
+  appearance,
+}: NormalizeSchemeProps): Scheme | "inherit" {
+  if (appearance === "dark") {
+    if (platform === VKCOM) {
+      return Scheme.VKCOM_DARK;
+    } else {
+      return Scheme.BRIGHT_LIGHT;
+    }
+  } else if (appearance === "light") {
+    if (platform === VKCOM) {
+      return Scheme.VKCOM_LIGHT;
+    } else {
+      return Scheme.SPACE_GRAY;
+    }
+  }
+
   if (scheme === "inherit") {
     return scheme;
   }

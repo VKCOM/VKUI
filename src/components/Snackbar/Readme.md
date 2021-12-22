@@ -7,7 +7,7 @@
 После закрытия компонент вызывает обязательное свойство `onClose`, и вам необходимо убрать `Snackbar` со страницы.
 
 ```jsx
-import { SchemeProvider } from "@vkui";
+import { AppearanceProvider } from "@vkui";
 
 class SnackBarExample extends React.Component {
   constructor(props) {
@@ -92,7 +92,7 @@ class SnackBarExample extends React.Component {
     if (this.state.snackbar) return;
     this.setState({
       snackbar: (
-        <SchemeProvider scheme="vkcom_dark">
+        <AppearanceProvider appearance="dark">
           <Snackbar
             onClose={() => this.setState({ snackbar: null })}
             action="Поделиться"
@@ -105,7 +105,7 @@ class SnackBarExample extends React.Component {
           >
             Ссылка скопирована
           </Snackbar>
-        </SchemeProvider>
+        </AppearanceProvider>
       ),
     });
   }
