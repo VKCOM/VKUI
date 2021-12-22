@@ -4,7 +4,8 @@
 */
 :root,
 body[scheme="bright_light"],
-[scheme="bright_light"] {
+[scheme="bright_light"],
+.vkuibright_light {
   --accent: #2688eb;
   --accent_alternate: #0077ff;
   --action_sheet_action_foreground: #2688eb;

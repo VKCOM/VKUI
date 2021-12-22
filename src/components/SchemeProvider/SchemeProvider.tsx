@@ -1,10 +1,10 @@
 import * as React from "react";
 import { SchemeProviderContext } from "./SchemeProviderContext";
 import { AppearanceScheme, normalizeScheme } from "../../helpers/scheme";
-import { HasComponent } from "../../types";
+import { classNames } from "../../lib/classNames";
 import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
 
-export interface SchemeProviderProps extends HasComponent {
+export interface SchemeProviderProps {
   /**
    * Цветовая схема приложения
    */
@@ -14,19 +14,26 @@ export interface SchemeProviderProps extends HasComponent {
 export const SchemeProvider: React.FC<SchemeProviderProps> = ({
   children,
   scheme,
-  Component = "div",
 }) => {
   const configProviderContext = React.useContext(ConfigProviderContext);
   const realScheme = React.useMemo(
     () => normalizeScheme(scheme, configProviderContext?.platform),
     [scheme, configProviderContext?.platform]
   );
+  const childrenWithScheme = React.useMemo(() => {
+    return React.Children.map(children, (child) => {
+      if (React.isValidElement(child)) {
+        return React.cloneElement(child, {
+          className: classNames(child.props.className, `vkui${scheme}`),
+        });
+      }
+      return child;
+    });
+  }, [children, scheme]);
 
   return (
-    <Component scheme={realScheme}>
-      <SchemeProviderContext.Provider value={realScheme}>
-        {children}
-      </SchemeProviderContext.Provider>
-    </Component>
+    <SchemeProviderContext.Provider value={realScheme}>
+      {childrenWithScheme}
+    </SchemeProviderContext.Provider>
   );
 };

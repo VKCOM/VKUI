@@ -3,7 +3,8 @@
 * Этот файл сгенерирован автоматически. Не надо править его руками.
 */
 body[scheme="vkcom_light"],
-[scheme="vkcom_light"] {
+[scheme="vkcom_light"],
+.vkuivkcom_light {
   --accent: #5181b8;
   --accent_alternate: #0077ff;
   --action_sheet_action_foreground: #5181b8;

@@ -3,7 +3,8 @@
 * Этот файл сгенерирован автоматически. Не надо править его руками.
 */
 body[scheme="space_gray"],
-[scheme="space_gray"] {
+[scheme="space_gray"],
+.vkuispace_gray {
   --accent: #71aaeb;
   --accent_alternate: #ffffff;
   --action_sheet_action_foreground: #ffffff;
