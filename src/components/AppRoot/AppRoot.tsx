@@ -20,6 +20,7 @@ import { noop } from "../../lib/utils";
 import { warnOnce } from "../../lib/warnOnce";
 import { useKeyboardInputTracker } from "../../hooks/useKeyboardInputTracker";
 import { useInsets } from "../../hooks/useInsets";
+import { SchemeProviderContext } from "../SchemeProvider/SchemeProviderContext";
 import { Insets } from "@vkontakte/vk-bridge";
 import "./AppRoot.css";
 
@@ -58,6 +59,7 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
     const [portalRoot, setPortalRoot] = React.useState<HTMLDivElement>(null);
     const { window, document } = useDOM();
     const insets = useInsets();
+    const scheme = React.useContext(SchemeProviderContext);
 
     const initialized = React.useRef(false);
     if (!initialized.current) {
@@ -81,12 +83,13 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
     useIsomorphicLayoutEffect(() => {
       const portal = document.createElement("div");
       portal.classList.add("vkui__portal-root");
+      portal.setAttribute("scheme", scheme);
       document.body.appendChild(portal);
       setPortalRoot(portal);
       return () => {
         portal.parentElement.removeChild(portal);
       };
-    }, []);
+    }, [scheme]);
 
     // setup root classes
     useIsomorphicLayoutEffect(() => {

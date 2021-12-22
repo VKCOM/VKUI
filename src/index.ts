@@ -245,9 +245,10 @@ export type { ConfigProviderProps } from "./components/ConfigProvider/ConfigProv
 export {
   ConfigProviderContext,
   Appearance,
-  Scheme,
   WebviewType,
 } from "./components/ConfigProvider/ConfigProviderContext";
+export { SchemeProvider } from "./components/SchemeProvider/SchemeProvider";
+export { Scheme } from "./helpers/scheme";
 
 /**
  * Advertisement

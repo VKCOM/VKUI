@@ -1,44 +1,11 @@
 import * as React from "react";
-import vkBridge, {
-  AppearanceSchemeType,
-  AppearanceType,
-} from "@vkontakte/vk-bridge";
+import vkBridge, { AppearanceType } from "@vkontakte/vk-bridge";
 import { PlatformType, platform } from "../../lib/platform";
 
 export enum Appearance {
   DARK = "dark",
   LIGHT = "light",
 }
-
-export enum Scheme {
-  /**
-   * @deprecated будет удалено в 5.0.0
-   * версия оставлена для совместимости со старыми версиями клиентов
-   */
-  DEPRECATED_CLIENT_LIGHT = "client_light",
-  /**
-   * @deprecated будет удалено в 5.0.0
-   * версия оставлена для совместимости со старыми версиями клиентов
-   */
-  DEPRECATED_CLIENT_DARK = "client_dark",
-  /**
-   * @deprecated будет удалено в 5.0.0
-   * версия оставлена для совместимости с vkcom, когда там была только одна схема
-   */
-  VKCOM = "vkcom",
-
-  BRIGHT_LIGHT = "bright_light",
-  SPACE_GRAY = "space_gray",
-  VKCOM_LIGHT = "vkcom_light",
-  VKCOM_DARK = "vkcom_dark",
-}
-
-export type AppearanceScheme =
-  | AppearanceSchemeType
-  | Scheme.VKCOM
-  | Scheme.VKCOM_DARK
-  | Scheme.VKCOM_LIGHT
-  | "inherit";
 
 export enum WebviewType {
   VKAPPS = "vkapps",
@@ -77,7 +44,6 @@ export interface ConfigProviderContextInterface {
 export const defaultConfigProviderProps = {
   webviewType: WebviewType.VKAPPS,
   isWebView: vkBridge.isWebView(),
-  scheme: Scheme.BRIGHT_LIGHT,
   transitionMotionEnabled: true,
   platform: platform(),
   hasNewTokens: false,

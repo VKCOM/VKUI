@@ -2,23 +2,27 @@ import * as React from "react";
 import { AppearanceType } from "@vkontakte/vk-bridge";
 import { canUseDOM, useDOM } from "../../lib/dom";
 import {
-  AppearanceScheme,
   ConfigProviderContext,
   ConfigProviderContextInterface,
   defaultConfigProviderProps,
-  Scheme,
 } from "./ConfigProviderContext";
-import { PlatformType, VKCOM } from "../../lib/platform";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { useObjectMemo } from "../../hooks/useObjectMemo";
 import { noop } from "../../lib/utils";
 import { warnOnce } from "../../lib/warnOnce";
+import {
+  normalizeScheme,
+  AppearanceScheme,
+  Scheme,
+} from "../../helpers/scheme";
+import { SchemeProviderContext } from "../SchemeProvider/SchemeProviderContext";
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface {
   /**
    * Цветовая схема приложения
    */
   scheme?: AppearanceScheme;
+  schemeTarget?: HTMLElement;
 }
 
 const warn = warnOnce("ConfigProvider");
@@ -51,47 +55,10 @@ const deriveAppearance = (scheme: Scheme): AppearanceType =>
     ? "dark"
     : "light";
 
-function normalizeScheme(
-  scheme: AppearanceScheme,
-  platform: PlatformType
-): Scheme | "inherit" {
-  if (scheme === "inherit") {
-    return scheme;
-  }
-  if (scheme === Scheme.VKCOM) {
-    process.env.NODE_ENV === "development" &&
-      warn(
-        `Схема "${Scheme.VKCOM}" устарела и будет удалена 5.0.0. Вместо неё используйте "${Scheme.VKCOM_LIGHT}"`
-      );
-    return Scheme.VKCOM_LIGHT;
-  }
-  if (
-    platform === VKCOM &&
-    (scheme === Scheme.BRIGHT_LIGHT || scheme === Scheme.SPACE_GRAY)
-  ) {
-    process.env.NODE_ENV === "development" &&
-      warn(
-        `Платформа "vkcom" и схема "${scheme}" несовместимы. С этой платформой можно использовать схемы "${Scheme.VKCOM_LIGHT}" или "${Scheme.VKCOM_DARK}"`
-      );
-    return Scheme.VKCOM_LIGHT;
-  }
-  switch (scheme) {
-    case Scheme.DEPRECATED_CLIENT_LIGHT:
-      return Scheme.BRIGHT_LIGHT;
-    case Scheme.DEPRECATED_CLIENT_DARK:
-      return Scheme.SPACE_GRAY;
-    default:
-      return scheme as Scheme;
-  }
-}
-
 const ConfigProvider: React.FC<ConfigProviderProps> = ({
   children,
   schemeTarget,
   ...config
-}: ConfigProviderProps & {
-  children?: React.ReactNode;
-  schemeTarget?: HTMLElement;
 }) => {
   const scheme = normalizeScheme(config.scheme, config.platform);
   const { document } = useDOM();
@@ -121,7 +88,9 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
-      {children}
+      <SchemeProviderContext.Provider value={realScheme}>
+        {children}
+      </SchemeProviderContext.Provider>
     </ConfigProviderContext.Provider>
   );
 };

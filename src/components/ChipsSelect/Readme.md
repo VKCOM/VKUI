@@ -8,7 +8,7 @@
 >
 > Это нестабильный компонент. Его API может меняться в рамках одной мажорной версии. [Подробнее про нестабильные компоненты](#/Unstable).
 
-```jsx
+```jsx { "props": { "layout": false, "iframe": false } }
 const colors = [
   { value: "red", label: "Красный" },
   { value: "blue", label: "Синий" },

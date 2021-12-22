@@ -1,9 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  Appearance,
-  Scheme,
-} from "@vkui/components/ConfigProvider/ConfigProviderContext";
+import { Appearance, Scheme } from "@vkui";
 import { DOMContext } from "@vkui/lib/dom";
 import ReactFrame from "react-frame-component";
 import "./Frame.css";
