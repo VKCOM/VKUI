@@ -21,10 +21,21 @@ import { callMultiple } from "../../lib/callMultiple";
 import "./Tappable.css";
 
 export interface TappableProps
-  extends React.AllHTMLAttributes<HTMLElement>,
+  extends Omit<
+      React.AllHTMLAttributes<HTMLElement>,
+      | "onTouchStart"
+      | "onTouchMove"
+      | "onTouchEnd"
+      | "onTouchCancel"
+      | "onMouseDown"
+      | "onMouseMove"
+      | "onMouseUp"
+      | "onMouseLeave"
+    >,
     HasRootRef<HTMLElement>,
     AdaptivityProps,
-    HasComponent {
+    HasComponent,
+    Pick<TouchProps, "onStart" | "onEnd" | "onMove"> {
   /**
    * Длительность показа active-состояния
    */
@@ -201,10 +212,6 @@ const Tappable: React.FC<TappableProps> = ({
       e.preventDefault();
       containerRef.current.click();
     }
-
-    if (typeof _onKeyDown === "function") {
-      return _onKeyDown(e);
-    }
   }
 
   function onStart({ originalEvent }: TouchEvent) {
@@ -263,11 +270,11 @@ const Tappable: React.FC<TappableProps> = ({
   );
 
   const handlers: RootComponentProps = {
-    onStart,
-    onMove,
-    onEnd,
+    onStart: callMultiple(onStart, props.onStart),
+    onMove: callMultiple(onMove, props.onMove),
+    onEnd: callMultiple(onEnd, props.onEnd),
     onClick,
-    onKeyDown,
+    onKeyDown: callMultiple(onKeyDown, _onKeyDown),
   };
   const role = props.href ? "link" : "button";
 
