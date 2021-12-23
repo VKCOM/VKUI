@@ -45,23 +45,37 @@ export interface NormalizeSchemeProps {
   appearance?: AppearanceType;
 }
 
+export interface GetSchemeProps {
+  platform: PlatformType;
+  appearance: AppearanceType;
+}
+
+export function getScheme({ platform, appearance }: GetSchemeProps): Scheme {
+  switch (appearance) {
+    case "dark":
+      switch (platform) {
+        case VKCOM:
+          return Scheme.VKCOM_DARK;
+        default:
+          return Scheme.SPACE_GRAY;
+      }
+    case "light":
+      switch (platform) {
+        case VKCOM:
+          return Scheme.VKCOM_LIGHT;
+        default:
+          return Scheme.BRIGHT_LIGHT;
+      }
+  }
+}
+
 export function normalizeScheme({
   platform,
   scheme,
   appearance,
 }: NormalizeSchemeProps): Scheme | "inherit" {
-  if (appearance === "dark") {
-    if (platform === VKCOM) {
-      return Scheme.VKCOM_DARK;
-    } else {
-      return Scheme.BRIGHT_LIGHT;
-    }
-  } else if (appearance === "light") {
-    if (platform === VKCOM) {
-      return Scheme.VKCOM_LIGHT;
-    } else {
-      return Scheme.SPACE_GRAY;
-    }
+  if (appearance) {
+    return getScheme({ platform, appearance });
   }
 
   if (scheme === "inherit") {

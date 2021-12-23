@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AppearanceType } from "@vkontakte/vk-bridge";
 import { AppearanceProviderContext } from "./AppearanceProviderContext";
-import { normalizeScheme } from "../../helpers/scheme";
+import { getScheme } from "../../helpers/scheme";
 import { classNames } from "../../lib/classNames";
 import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
 
@@ -16,7 +16,7 @@ export const AppearanceProvider: React.FC<AppearanceProviderProps> = ({
   const configProviderContext = React.useContext(ConfigProviderContext);
   const appearanceContext = React.useMemo(
     () => ({
-      scheme: normalizeScheme({
+      scheme: getScheme({
         platform: configProviderContext?.platform,
         appearance,
       }),
