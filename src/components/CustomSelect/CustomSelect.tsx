@@ -218,10 +218,12 @@ class CustomSelect extends React.Component<
     options: CustomSelectOptionInterface[],
     value: SelectValue
   ) {
-    return options.findIndex((item) => {
-      value = typeof item.value === "number" ? Number(value) : value;
-      return item.value === value;
-    });
+    return (
+      options?.findIndex((item) => {
+        value = typeof item.value === "number" ? Number(value) : value;
+        return item.value === value;
+      }) ?? -1
+    );
   }
 
   open = () => {
@@ -408,14 +410,18 @@ class CustomSelect extends React.Component<
   };
 
   onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const value = e.currentTarget.value;
-    if (!this.isControlledOutside) {
-      this.setState({
-        selectedOptionIndex: this.findSelectedIndex(this.state.options, value),
-      });
-    }
-    if (this.props.onChange) {
-      this.props.onChange(e);
+    const newSelectedOptionIndex = this.findSelectedIndex(
+      this.state.options,
+      e.currentTarget.value
+    );
+
+    if (this.state.selectedOptionIndex !== newSelectedOptionIndex) {
+      if (!this.isControlledOutside) {
+        this.setState({
+          selectedOptionIndex: newSelectedOptionIndex,
+        });
+      }
+      this.props.onChange?.(e);
     }
   };
 
