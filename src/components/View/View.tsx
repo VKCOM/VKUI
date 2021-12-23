@@ -591,7 +591,9 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
                 <div
                   vkuiClass="View__panel-in"
                   style={{
-                    marginTop: compensateScroll ? -this.scrolls[panelId] : null,
+                    marginTop: compensateScroll
+                      ? -(this.scrolls[panelId] ?? 0)
+                      : null,
                   }}
                 >
                   <NavTransitionProvider
