@@ -1,13 +1,8 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
-import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { HasRef } from "../../types";
-import { isPrimitiveReactNode } from "../../lib/utils";
 import { VKCOM } from "../../lib/platform";
-import Separator from "../Separator/Separator";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import "./ModalPageHeader.css";
+import PanelHeader from "../PanelHeader/PanelHeader";
 
 export interface ModalPageHeaderProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -23,40 +18,26 @@ export interface ModalPageHeaderProps
   separator?: boolean;
 }
 
-const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = (
-  props: ModalPageHeaderProps
-) => {
+const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = ({
+  children,
+  separator,
+  getRef,
+  ...restProps
+}: ModalPageHeaderProps) => {
   const platform = usePlatform();
-  const { sizeX } = useAdaptivity();
-  const { left, right, children, separator, getRef, ...restProps } = props;
-  const isPrimitive = isPrimitiveReactNode(children);
   const hasSeparator = separator && platform === VKCOM;
 
   return (
-    <div
+    <PanelHeader
       {...restProps}
-      vkuiClass={classNames(
-        getClassName("ModalPageHeader", platform),
-        `ModalPageHeader--sizeX-${sizeX}`
-      )}
-      ref={getRef}
+      fixed={false}
+      separator={hasSeparator}
+      getRootRef={getRef}
+      transparent
+      vkuiClass="ModalPageHeader"
     >
-      <div vkuiClass="ModalPageHeader__in">
-        <div vkuiClass="ModalPageHeader__left">{left}</div>
-
-        <div vkuiClass="ModalPageHeader__content">
-          <div vkuiClass="ModalPageHeader__content-in">
-            {isPrimitive ? <span>{children}</span> : children}
-          </div>
-        </div>
-
-        <div vkuiClass="ModalPageHeader__right">{right}</div>
-      </div>
-
-      {hasSeparator && (
-        <Separator wide vkuiClass="ModalPageHeader__separator" />
-      )}
-    </div>
+      {children}
+    </PanelHeader>
   );
 };
 

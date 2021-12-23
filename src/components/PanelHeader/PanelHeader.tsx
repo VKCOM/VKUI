@@ -15,7 +15,6 @@ import {
   SizeType,
   withAdaptivity,
 } from "../../hoc/withAdaptivity";
-import { isPrimitiveReactNode } from "../../lib/utils";
 import Text from "../Typography/Text/Text";
 import { TooltipContainer } from "../Tooltip/TooltipContainer";
 import "./PanelHeader.css";
@@ -58,17 +57,12 @@ const PanelHeaderIn: React.FC<PanelHeaderProps> = ({
   right,
 }) => {
   const { webviewType } = React.useContext(ConfigProviderContext);
-  const isPrimitive = isPrimitiveReactNode(children);
 
   return (
     <TooltipContainer fixed vkuiClass="PanelHeader__in">
       <div vkuiClass="PanelHeader__left">{left}</div>
       <div vkuiClass="PanelHeader__content">
-        {isPrimitive ? (
-          <PanelHeaderInTypography>{children}</PanelHeaderInTypography>
-        ) : (
-          children
-        )}
+        <PanelHeaderInTypography>{children}</PanelHeaderInTypography>
       </div>
       <div vkuiClass="PanelHeader__right">
         {webviewType !== WebviewType.VKAPPS && right}
