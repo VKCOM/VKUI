@@ -2,21 +2,18 @@ import * as React from "react";
 import { usePlatform } from "../../hooks/usePlatform";
 import { HasRef } from "../../types";
 import { VKCOM } from "../../lib/platform";
-import PanelHeader from "../PanelHeader/PanelHeader";
+import PanelHeader, { PanelHeaderProps } from "../PanelHeader/PanelHeader";
+import Separator from "../Separator/Separator";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { classNames } from "../../lib/classNames";
+import { getClassName } from "../../helpers/getClassName";
+import { ViewHeight, ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import "./ModalPageHeader.css";
 
 export interface ModalPageHeaderProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    HasRef<HTMLDivElement> {
-  /**
-   * Иконки, отображаемые слева
-   */
-  left?: React.ReactNode;
-  /**
-   * Иконки, отображаемые справа
-   */
-  right?: React.ReactNode;
-  separator?: boolean;
-}
+    Omit<PanelHeaderProps, "fixed" | "shadow">,
+    HasRef<HTMLDivElement> {}
 
 const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = ({
   children,
@@ -25,19 +22,24 @@ const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = ({
   ...restProps
 }: ModalPageHeaderProps) => {
   const platform = usePlatform();
+  const { viewWidth, viewHeight, hasMouse } = useAdaptivity();
   const hasSeparator = separator && platform === VKCOM;
+  const isDesktop =
+    viewWidth >= ViewWidth.SMALL_TABLET &&
+    (hasMouse || viewHeight >= ViewHeight.MEDIUM);
 
   return (
-    <PanelHeader
-      {...restProps}
-      fixed={false}
-      separator={hasSeparator}
-      getRootRef={getRef}
-      transparent
-      vkuiClass="ModalPageHeader"
+    <div
+      vkuiClass={classNames(getClassName("ModalPageHeader", platform), {
+        "ModalPageHeader--desktop": isDesktop,
+      })}
+      ref={getRef}
     >
-      {children}
-    </PanelHeader>
+      <PanelHeader {...restProps} fixed={false} separator={false} transparent>
+        {children}
+      </PanelHeader>
+      {hasSeparator && <Separator wide />}
+    </div>
   );
 };
 

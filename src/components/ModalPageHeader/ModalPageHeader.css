@@ -1,3 +1,14 @@
 .ModalPageHeader {
-  display: block;
+  position: relative;
+  z-index: 2;
+}
+
+.ModalPageHeader--desktop.ModalPageHeader--android {
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.ModalPageHeader--desktop.ModalPageHeader--ios {
+  padding-left: 4px;
+  padding-right: 4px;
 }
