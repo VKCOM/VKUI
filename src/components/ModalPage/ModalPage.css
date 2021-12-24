@@ -6,8 +6,6 @@
   box-sizing: border-box;
   z-index: 1;
   pointer-events: none;
-
-  --safe-area-inset-top: 0;
 }
 
 .ModalPage--desktop {

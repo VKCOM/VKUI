@@ -1,6 +1,8 @@
 .ModalPageHeader {
   position: relative;
   z-index: 2;
+
+  --safe-area-inset-top: 0;
 }
 
 .ModalPageHeader--desktop.ModalPageHeader--android {
