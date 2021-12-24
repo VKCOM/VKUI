@@ -14,3 +14,11 @@
   padding-left: 4px;
   padding-right: 4px;
 }
+
+.ModalPageHeader .Icon--dismiss_24 {
+  color: var(--placeholder_icon_foreground_primary);
+}
+
+.ModalPageHeader .Icon--cancel_24 {
+  color: var(--icon_secondary);
+}
