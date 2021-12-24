@@ -6,6 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  font-family: var(--font-common);
 }
 
 .PanelHeaderContent__before {
@@ -61,6 +62,10 @@
   width: 1000px;
 }
 
+/**
+ * iOS
+ */
+
 .PanelHeaderContent--ios .PanelHeaderContent__before ~ .PanelHeaderContent__in {
   align-items: flex-start;
 }
@@ -68,10 +73,6 @@
 .PanelHeaderContent--ios .PanelHeaderContent__in {
   align-items: center;
 }
-
-/**
- * iOS
- */
 
 .PanelHeaderContent--ios .PanelHeaderContent__children-in {
   font-size: 21px;
@@ -92,5 +93,15 @@
 }
 
 /**
- * vkcom
+ * VKCOM
  */
+
+.PanelHeaderContent--vkcom
+  .PanelHeaderContent__before
+  ~ .PanelHeaderContent__in {
+  align-items: flex-start;
+}
+
+.PanelHeaderContent--vkcom .PanelHeaderContent__in {
+  align-items: center;
+}
