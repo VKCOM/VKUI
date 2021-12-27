@@ -63,7 +63,6 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
     e.stopPropagation();
 
     const { offsetWidth = 0 } = removeButtonRef?.current;
-    console.log(offsetWidth);
     updateRemoveOffset(offsetWidth);
   };
 
