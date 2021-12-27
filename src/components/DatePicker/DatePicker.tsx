@@ -1,9 +1,10 @@
 import * as React from "react";
 import Input from "../Input/Input";
 import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
-import { HasPlatform } from "../../types";
+import { HasPlatform, HasRef } from "../../types";
 import { leadingZero } from "../../lib/utils";
 import CustomSelect from "../CustomSelect/CustomSelect";
+import { useExternRef } from "../../hooks/useExternRef";
 import "./DatePicker.css";
 
 const DefaultMonths: string[] = [
@@ -32,6 +33,7 @@ export interface DatePickerProps
       React.HTMLAttributes<HTMLDivElement>,
       "defaultValue" | "min" | "max"
     >,
+    HasRef<HTMLInputElement>,
     HasPlatform,
     AdaptivityProps {
   min?: DatePickerDateFormat;
@@ -98,6 +100,7 @@ const DatePickerCustom: React.FC<
   year,
   onDateChange,
   disabled,
+  getRef,
   ...restProps
 }) => {
   const onSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
@@ -120,6 +123,9 @@ const DatePickerCustom: React.FC<
     label: String(value),
     value: value,
   }));
+
+  const inputRef = useExternRef(getRef);
+
   return (
     <div vkuiClass="DatePicker" {...restProps}>
       <div vkuiClass="DatePicker__container">
@@ -159,10 +165,10 @@ const DatePickerCustom: React.FC<
         </div>
       </div>
       <input
-        required
         type="date"
         vkuiClass="DatePicker__input"
         name={name}
+        ref={inputRef}
         value={convertToInputFormat({ day, month, year })}
       />
     </div>
