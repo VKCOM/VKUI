@@ -159,7 +159,9 @@ const DatePickerCustom: React.FC<
         </div>
       </div>
       <input
-        type="hidden"
+        required
+        type="date"
+        vkuiClass="DatePicker__input"
         name={name}
         value={convertToInputFormat({ day, month, year })}
       />

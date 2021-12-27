@@ -28,3 +28,7 @@
 .DatePicker__monthSelect {
   width: 100%;
 }
+
+.DatePicker__input {
+  display: none;
+}
