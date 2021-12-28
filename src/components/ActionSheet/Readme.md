@@ -11,7 +11,7 @@ ActionSheet – имитация [нативного компонента](https
 >   В коде примера ниже можно посмотреть, как добавить такой элемент.
 >   Для Android версии он не нужен.
 
-```jsx { "props": { "layout": false, "adaptivity": true, "iframe": false } }
+```jsx { "props": { "layout": false, "adaptivity": true } }
 const [popout, setPopout] = useState(null);
 const onClose = () => setPopout(null);
 const [filter, setFilter] = useState("best");
