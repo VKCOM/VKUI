@@ -15,7 +15,7 @@ import {
   AppearanceScheme,
   Scheme,
 } from "../../helpers/scheme";
-import { AppearanceProviderContext } from "../AppearanceProvider/AppearanceProviderContext";
+import { AppearanceProvider } from "../AppearanceProvider/AppearanceProvider";
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface {
   /**
@@ -91,19 +91,12 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
     appearance: deriveAppearance(realScheme),
     ...config,
   });
-  const appearanceContext = React.useMemo(
-    () => ({
-      appearance: configContext.appearance,
-      scheme: realScheme,
-    }),
-    [realScheme, configContext, realScheme]
-  );
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
-      <AppearanceProviderContext.Provider value={appearanceContext}>
+      <AppearanceProvider appearance={configContext.appearance}>
         {children}
-      </AppearanceProviderContext.Provider>
+      </AppearanceProvider>
     </ConfigProviderContext.Provider>
   );
 };
