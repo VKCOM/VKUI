@@ -191,7 +191,7 @@ export const Popper: React.FC<PopperProps> = ({
       style={{
         ...compStyles,
         ...styles.popper,
-        minWidth: targetRef.current?.scrollWidth,
+        minWidth: sameWidth ? targetRef.current?.scrollWidth : undefined,
       }}
     >
       {arrow && (
