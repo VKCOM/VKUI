@@ -7,8 +7,6 @@
 После закрытия компонент вызывает обязательное свойство `onClose`, и вам необходимо убрать `Snackbar` со страницы.
 
 ```jsx
-import { AppearanceProvider } from "@vkui";
-
 class SnackBarExample extends React.Component {
   constructor(props) {
     super(props);
