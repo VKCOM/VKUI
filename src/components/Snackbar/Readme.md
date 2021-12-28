@@ -19,6 +19,7 @@ class SnackBarExample extends React.Component {
     this.openBaseWithAction = this.openBaseWithAction.bind(this);
     this.openVertical = this.openVertical.bind(this);
     this.openWithAvatar = this.openWithAvatar.bind(this);
+    this.openDark = this.openDark.bind(this);
   }
 
   componentDidMount() {
@@ -85,6 +86,28 @@ class SnackBarExample extends React.Component {
     });
   }
 
+  openDark() {
+    if (this.state.snackbar) return;
+    this.setState({
+      snackbar: (
+        <AppearanceProvider appearance="dark">
+          <Snackbar
+            onClose={() => this.setState({ snackbar: null })}
+            action="Поделиться"
+            onActionClick={() => this.setState({ text: "Добавляем метку." })}
+            before={
+              <Avatar size={24} style={{ background: "var(--accent)" }}>
+                <Icon16Done fill="#fff" width={14} height={14} />
+              </Avatar>
+            }
+          >
+            Ссылка скопирована
+          </Snackbar>
+        </AppearanceProvider>
+      ),
+    });
+  }
+
   render() {
     return (
       <View activePanel="example">
@@ -99,6 +122,9 @@ class SnackBarExample extends React.Component {
             </CellButton>
             <CellButton onClick={this.openWithAvatar}>
               Уведомление с аватаркой
+            </CellButton>
+            <CellButton onClick={this.openDark}>
+              Уведомление с темной темой
             </CellButton>
           </Group>
 

@@ -1,6 +1,6 @@
 Делает из [SelectMimicry](#!/SelectMimicry) селект с выпадающим списком. Используется внутри [Select](#!/Select).
 
-```jsx
+```jsx { "props": { "layout": false, "iframe": false } }
 class Example extends React.Component {
   constructor(props) {
     super(props);

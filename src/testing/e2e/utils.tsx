@@ -5,7 +5,7 @@ import { screenshot } from "@react-playwright";
 import ConfigProvider from "../../components/ConfigProvider/ConfigProvider";
 import { Panel } from "../../components/Panel/Panel";
 import { Platform } from "../../lib/platform";
-import { Scheme } from "../../components/ConfigProvider/ConfigProviderContext";
+import { Scheme } from "../../helpers/scheme";
 import AdaptivityProvider, {
   AdaptivityProviderProps,
   DESKTOP_SIZE,
