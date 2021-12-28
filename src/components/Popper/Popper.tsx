@@ -188,7 +188,11 @@ export const Popper: React.FC<PopperProps> = ({
       {...attributes.popper}
       vkuiClass={getClassName("Popper", platform)}
       ref={setExternalRef}
-      style={{ ...compStyles, ...styles.popper }}
+      style={{
+        ...compStyles,
+        ...styles.popper,
+        minWidth: targetRef.current?.scrollWidth,
+      }}
     >
       {arrow && (
         <div
