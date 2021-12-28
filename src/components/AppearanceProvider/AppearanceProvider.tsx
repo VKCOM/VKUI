@@ -25,23 +25,20 @@ export const AppearanceProvider: React.FC<AppearanceProviderProps> = ({
     }),
     [appearance, platform]
   );
-  const childrenWithScheme = React.useMemo(() => {
-    return React.Children.map(children, (child) => {
-      if (React.isValidElement(child)) {
-        return React.cloneElement(child, {
-          className: classNames(
-            child.props.className,
-            `vkui${appearanceContext.scheme}`
-          ),
-        });
-      }
-      return child;
-    });
-  }, [children, appearanceContext.scheme]);
 
   return (
     <AppearanceProviderContext.Provider value={appearanceContext}>
-      {childrenWithScheme}
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement(child)) {
+          return React.cloneElement(child, {
+            className: classNames(
+              child.props.className,
+              `vkui${appearanceContext.scheme}`
+            ),
+          });
+        }
+        return child;
+      })}
     </AppearanceProviderContext.Provider>
   );
 };
