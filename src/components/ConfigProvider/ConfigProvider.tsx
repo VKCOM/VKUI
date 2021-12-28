@@ -23,7 +23,6 @@ export interface ConfigProviderProps extends ConfigProviderContextInterface {
    * Цветовая схема приложения
    */
   scheme?: AppearanceScheme;
-  schemeTarget?: HTMLElement;
 }
 
 const warn = warnOnce("ConfigProvider");
@@ -60,6 +59,8 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
   children,
   schemeTarget,
   ...config
+}: React.PropsWithChildren<ConfigProviderProps> & {
+  schemeTarget?: HTMLElement;
 }) => {
   const scheme = normalizeScheme({
     scheme: config.scheme,
