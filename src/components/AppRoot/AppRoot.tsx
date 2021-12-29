@@ -20,6 +20,7 @@ import { noop } from "../../lib/utils";
 import { warnOnce } from "../../lib/warnOnce";
 import { useKeyboardInputTracker } from "../../hooks/useKeyboardInputTracker";
 import { useInsets } from "../../hooks/useInsets";
+import { AppearanceProviderContext } from "../AppearanceProvider/AppearanceProviderContext";
 import { Insets } from "@vkontakte/vk-bridge";
 import "./AppRoot.css";
 
@@ -58,6 +59,7 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
     const [portalRoot, setPortalRoot] = React.useState<HTMLDivElement>(null);
     const { window, document } = useDOM();
     const insets = useInsets();
+    const appearanceContext = React.useContext(AppearanceProviderContext);
 
     const initialized = React.useRef(false);
     if (!initialized.current) {
@@ -160,6 +162,10 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
           : globalScrollController(window, document),
       [scroll]
     );
+
+    useIsomorphicLayoutEffect(() => {
+      portalRoot?.setAttribute("scheme", appearanceContext?.scheme);
+    }, [appearanceContext?.scheme, portalRoot]);
 
     const content = (
       <AppRootContext.Provider

@@ -8,7 +8,7 @@
 >
 > Это нестабильный компонент. Его API может меняться в рамках одной мажорной версии. [Подробнее про нестабильные компоненты](#/Unstable).
 
-```jsx
+```jsx { "props": { "layout": false, "iframe": false } }
 const colors = [
   { value: "red", label: "Красный" },
   { value: "blue", label: "Синий" },
@@ -64,63 +64,50 @@ const Example = () => {
   };
 
   return (
-    <View activePanel="profile" id="profile">
-      <Panel id="profile">
-        <PanelHeader>Предпочтения</PanelHeader>
-        <Group>
-          <FormItem top="Выберите группы">
-            <ChipsSelect
-              {...groupsChipsProps}
-              showSelected={false}
-              closeAfterSelect={false}
-              onChangeStart={(e, option) => {
-                if (option.value === "download") {
-                  e.preventDefault();
-                  alert("download!");
+    <Group separator="hide">
+      <FormItem top="Выберите группы">
+        <ChipsSelect
+          {...groupsChipsProps}
+          showSelected={false}
+          closeAfterSelect={false}
+          onChangeStart={(e, option) => {
+            if (option.value === "download") {
+              e.preventDefault();
+              alert("download!");
+            }
+          }}
+          renderChip={({ value, label, option: { src, icon }, ...rest }) => (
+            <Chip
+              value={value}
+              before={<Avatar size={20} src={src} />}
+              {...rest}
+            >
+              {label}
+            </Chip>
+          )}
+          renderOption={({ option: { src, value, icon }, ...otherProps }) => {
+            return (
+              <CustomSelectOption
+                before={
+                  icon ? (
+                    <Avatar size={20}>{icon}</Avatar>
+                  ) : (
+                    <Avatar size={20} src={src} />
+                  )
                 }
-              }}
-              renderChip={({
-                value,
-                label,
-                option: { src, icon },
-                ...rest
-              }) => (
-                <Chip
-                  value={value}
-                  before={<Avatar size={20} src={src} />}
-                  {...rest}
-                >
-                  {label}
-                </Chip>
-              )}
-              renderOption={({
-                option: { src, value, icon },
-                ...otherProps
-              }) => {
-                return (
-                  <CustomSelectOption
-                    before={
-                      icon ? (
-                        <Avatar size={20}>{icon}</Avatar>
-                      ) : (
-                        <Avatar size={20} src={src} />
-                      )
-                    }
-                    {...otherProps}
-                  />
-                );
-              }}
-            />
-          </FormItem>
-          <FormItem top="Выберите или добавьте цвета">
-            <ChipsSelect {...colorsChipsProps} />
-          </FormItem>
-          <FormItem top="Выберите или добавьте цвета (creatable без кнопки создания)">
-            <ChipsSelect {...colorsCopyChipsProps} />
-          </FormItem>
-        </Group>
-      </Panel>
-    </View>
+                {...otherProps}
+              />
+            );
+          }}
+        />
+      </FormItem>
+      <FormItem top="Выберите или добавьте цвета">
+        <ChipsSelect {...colorsChipsProps} />
+      </FormItem>
+      <FormItem top="Выберите или добавьте цвета (creatable без кнопки создания)">
+        <ChipsSelect {...colorsCopyChipsProps} />
+      </FormItem>
+    </Group>
   );
 };
 

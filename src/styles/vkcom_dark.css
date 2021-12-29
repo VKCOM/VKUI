@@ -3,7 +3,8 @@
 * Этот файл сгенерирован автоматически. Не надо править его руками.
 */
 body[scheme="vkcom_dark"],
-[scheme="vkcom_dark"] {
+[scheme="vkcom_dark"],
+.vkuivkcom_dark {
   --accent: #71aaeb;
   --accent_alternate: #ffffff;
   --action_sheet_action_foreground: #ffffff;

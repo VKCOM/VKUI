@@ -244,10 +244,10 @@ export { default as ConfigProvider } from "./components/ConfigProvider/ConfigPro
 export type { ConfigProviderProps } from "./components/ConfigProvider/ConfigProvider";
 export {
   ConfigProviderContext,
-  Appearance,
-  Scheme,
   WebviewType,
 } from "./components/ConfigProvider/ConfigProviderContext";
+export { AppearanceProvider } from "./components/AppearanceProvider/AppearanceProvider";
+export { Scheme, Appearance } from "./helpers/scheme";
 
 /**
  * Advertisement
