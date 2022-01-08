@@ -122,7 +122,7 @@ const baseConfig = {
           content: "./pages/adaptivity.md",
         },
         {
-          title: "Платфомы и темы",
+          title: "Платформы и темы",
           name: "PlatformsAndThemes",
           content: "./pages/platforms_and_themes.md",
         },
