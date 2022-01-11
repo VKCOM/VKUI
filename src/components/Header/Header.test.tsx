@@ -20,13 +20,13 @@ describe("Header", () => {
       </ConfigProvider>
     );
     expect(
-      screen.getByText("Русский").parentElement.tagName.toLowerCase()
+      screen.getByText("Русский").parentElement?.tagName.toLowerCase()
     ).toMatch("span");
     expect(
-      screen.getByText("English").parentElement.tagName.toLowerCase()
+      screen.getByText("English").parentElement?.tagName.toLowerCase()
     ).toMatch("span");
     expect(
-      screen.getByText("Espanõl").parentElement.tagName.toLowerCase()
+      screen.getByText("Espanõl").parentElement?.tagName.toLowerCase()
     ).toMatch("span");
   });
 
@@ -39,13 +39,13 @@ describe("Header", () => {
       </ConfigProvider>
     );
     expect(
-      screen.getByText("Русский").parentElement.tagName.toLowerCase()
+      screen.getByText("Русский").parentElement?.tagName.toLowerCase()
     ).toMatch("span");
     expect(
-      screen.getByText("English").parentElement.tagName.toLowerCase()
+      screen.getByText("English").parentElement?.tagName.toLowerCase()
     ).toMatch("span");
     expect(
-      screen.getByText("Espanõl").parentElement.tagName.toLowerCase()
+      screen.getByText("Espanõl").parentElement?.tagName.toLowerCase()
     ).toMatch("span");
   });
 
@@ -58,13 +58,13 @@ describe("Header", () => {
       </ConfigProvider>
     );
     expect(
-      screen.getByText("Русский").parentElement.tagName.toLowerCase()
+      screen.getByText("Русский").parentElement?.tagName.toLowerCase()
     ).toMatch("span");
     expect(
-      screen.getByText("English").parentElement.tagName.toLowerCase()
+      screen.getByText("English").parentElement?.tagName.toLowerCase()
     ).toMatch("span");
     expect(
-      screen.getByText("Espanõl").parentElement.tagName.toLowerCase()
+      screen.getByText("Espanõl").parentElement?.tagName.toLowerCase()
     ).toMatch("span");
   });
 

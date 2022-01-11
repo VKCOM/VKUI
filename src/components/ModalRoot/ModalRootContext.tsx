@@ -22,17 +22,20 @@ export const ModalRootContext = React.createContext<ModalRootContextInterface>({
 /**
  * All referenced elements must be static
  */
-export function useModalRegistry(id: string, type: ModalType) {
+export function useModalRegistry(id: string | undefined, type: ModalType) {
   const modalContext = React.useContext(ModalRootContext);
   const elements = React.useRef<ModalElements>({}).current;
   useIsomorphicLayoutEffect(() => {
-    modalContext.registerModal({ ...elements, type, id });
-    // unset refs on  unmount to prevent leak
-    const reset = Object.keys(elements).reduce<ModalRegistryEntry>(
-      (acc, k: keyof ModalElements) => ({ ...acc, [k]: null }),
-      { type, id }
-    );
-    return () => modalContext.registerModal(reset);
+    if (id !== undefined) {
+      modalContext.registerModal({ ...elements, type, id });
+      // unset refs on  unmount to prevent leak
+      const reset = Object.keys(elements).reduce<ModalRegistryEntry>(
+        (acc, k) => ({ ...acc, [k]: null }),
+        { type, id }
+      );
+      return () => modalContext.registerModal(reset);
+    }
+    return undefined;
   }, []);
 
   const refs = React.useRef<Required<ModalRefs>>({

@@ -3,7 +3,6 @@ import { ScrollContext } from "../AppRoot/ScrollContext";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 
 export interface ScrollSaverProps {
-  children: React.ReactElement;
   initialScroll?: number;
   saveScroll: (scroll: number) => any;
 }
@@ -18,7 +17,7 @@ export const ScrollSaver: React.FC<ScrollSaverProps> = ({
     if (typeof initialScroll === "number") {
       scrollTo(0, initialScroll);
     }
-    return () => saveScroll(getScroll().y);
+    return () => saveScroll(getScroll().y ?? 0);
   }, []);
-  return children;
+  return <React.Fragment>{children}</React.Fragment>;
 };

@@ -3,7 +3,7 @@ import { classNames } from "../../lib/classNames";
 import "./SplitCol.css";
 
 export interface SplitColContextProps {
-  colRef: React.RefObject<HTMLDivElement>;
+  colRef: React.RefObject<HTMLDivElement> | null;
   animate: boolean;
 }
 
@@ -39,7 +39,7 @@ export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
     style,
     ...restProps
   } = props;
-  const baseRef = React.useRef<HTMLDivElement>();
+  const baseRef = React.useRef<HTMLDivElement>(null);
 
   const contextValue = React.useMemo(() => {
     return {

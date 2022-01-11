@@ -53,7 +53,9 @@ export interface ModalCardBaseProps
   onClose?: VoidFunction;
 }
 
-export const ModalCardBase: React.FC<ModalCardBaseProps> = withAdaptivity(
+export const ModalCardBase: React.FC<ModalCardBaseProps> = withAdaptivity<
+  ModalCardBaseProps & AdaptivityProps
+>(
   ({
     getRootRef,
     icon,
@@ -62,12 +64,12 @@ export const ModalCardBase: React.FC<ModalCardBaseProps> = withAdaptivity(
     children,
     actions,
     actionsLayout,
-    viewWidth,
+    viewWidth = 0,
     hasMouse,
-    viewHeight,
+    viewHeight = 0,
     onClose,
     ...restProps
-  }: ModalCardBaseProps & AdaptivityProps) => {
+  }) => {
     const platform = usePlatform();
     const isDesktop =
       viewWidth >= ViewWidth.SMALL_TABLET &&

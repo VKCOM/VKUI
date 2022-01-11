@@ -24,7 +24,7 @@ describe("Alert", () => {
         trigger === "overlay"
           ? ".PopoutWrapper__overlay"
           : ".ModalDismissButton";
-      userEvent.click(document.querySelector(target));
+      userEvent.click(document.querySelector(target) as Element);
       expect(onClose).not.toBeCalled();
       jest.runAllTimers();
       expect(onClose).toBeCalledTimes(1);

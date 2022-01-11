@@ -8,10 +8,10 @@ import "./CustomSelectDropdown.css";
 
 export interface CustomSelectDropdownProps
   extends React.HTMLAttributes<HTMLElement>,
-    HasRef<HTMLElement> {
+    HasRef<HTMLDivElement> {
   targetRef: React.RefObject<HTMLElement>;
   placement?: Placement;
-  scrollBoxRef?: React.Ref<HTMLDivElement>;
+  scrollBoxRef: React.Ref<HTMLDivElement>;
   fetching?: boolean;
   onPlacementChange?: (placement?: Placement) => void;
 }

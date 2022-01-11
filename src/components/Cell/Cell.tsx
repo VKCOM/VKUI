@@ -115,7 +115,7 @@ export const Cell: React.FC<CellProps> = ({
       return () => toggleDrag(false);
     }
     return undefined;
-  }, [dragging]);
+  }, [dragging, toggleDrag]);
 
   let dragger;
   if (draggable) {

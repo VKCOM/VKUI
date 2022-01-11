@@ -22,7 +22,7 @@ export const MOBILE_LANDSCAPE_HEIGHT = 414;
 export const MEDIUM_HEIGHT = 720;
 
 export default function AdaptivityProvider(props: AdaptivityProviderProps) {
-  const adaptivityRef = React.useRef<AdaptivityContextInterface>(null);
+  const adaptivityRef = React.useRef<AdaptivityContextInterface | null>(null);
   const [, updateAdaptivity] = React.useState({});
 
   const { window } = useDOM();
@@ -37,6 +37,9 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
 
   React.useEffect(() => {
     function onResize() {
+      if (!window || adaptivityRef.current === null) {
+        return;
+      }
       const calculated = calculateAdaptivity(
         window.innerWidth,
         window.innerHeight,
@@ -59,10 +62,10 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
     }
 
     onResize();
-    window.addEventListener("resize", onResize, false);
+    window?.addEventListener("resize", onResize, false);
 
     return () => {
-      window.removeEventListener("resize", onResize, false);
+      window?.removeEventListener("resize", onResize, false);
     };
   }, [
     props.viewWidth,
@@ -71,6 +74,8 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
     props.sizeY,
     props.hasMouse,
     props.deviceHasHover,
+    window,
+    props,
   ]);
 
   return (

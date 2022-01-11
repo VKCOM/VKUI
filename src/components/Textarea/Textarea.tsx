@@ -41,8 +41,7 @@ const Textarea: React.FC<TextareaProps> = React.memo(
     React.useEffect(() => {
       const el = elementRef.current;
 
-      if (grow && el.offsetParent) {
-        el.style.height = null;
+      if (grow && el?.offsetParent) {
         el.style.height = `${el.scrollHeight}px`;
 
         if (el.scrollHeight !== currentScrollHeight.current && onResize) {
@@ -50,7 +49,7 @@ const Textarea: React.FC<TextareaProps> = React.memo(
           currentScrollHeight.current = el.scrollHeight;
         }
       }
-    }, [grow, value, sizeY]);
+    }, [grow, value, sizeY, elementRef, onResize]);
 
     return (
       <FormField

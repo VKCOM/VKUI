@@ -88,11 +88,14 @@ export const Touch: React.FC<TouchProps> = ({
   const { document } = useDOM();
   const events = React.useMemo(getSupportedEvents, []);
   const didSlide = React.useRef(false);
-  const gesture = React.useRef<Partial<Gesture>>(null);
-  const handle = (e: VKUITouchEvent, handers: TouchEventHandler[]) => {
+  const gesture = React.useRef<Partial<Gesture> | null>(null);
+  const handle = (
+    e: VKUITouchEvent,
+    handers: Array<TouchEventHandler | undefined | false>
+  ) => {
     stopPropagation && e.stopPropagation();
     handers.forEach((cb) => {
-      const duration = Date.now() - gesture.current.startT.getTime();
+      const duration = Date.now() - (gesture.current?.startT?.getTime() ?? 0);
       cb && cb({ ...(gesture.current as Gesture), duration, originalEvent: e });
     });
   };
@@ -129,13 +132,21 @@ export const Touch: React.FC<TouchProps> = ({
 
   useIsomorphicLayoutEffect(() => {
     const el = containerRef.current;
-    enterHandler.add(el);
-    leaveHandler.add(el);
-    startHandler.add(el);
+    if (el) {
+      enterHandler.add(el);
+      leaveHandler.add(el);
+      startHandler.add(el);
+    }
   }, [Component]);
 
   function onMove(e: VKUITouchEvent) {
-    const { isPressed, isX, isY, startX, startY } = gesture.current;
+    const {
+      isPressed,
+      isX,
+      isY,
+      startX = 0,
+      startY = 0,
+    } = gesture.current ?? {};
 
     if (isPressed) {
       // смещения
@@ -167,7 +178,7 @@ export const Touch: React.FC<TouchProps> = ({
         });
       }
 
-      if (gesture.current.isSlide) {
+      if (gesture.current?.isSlide) {
         Object.assign(gesture.current, {
           shiftX,
           shiftY,
@@ -177,21 +188,21 @@ export const Touch: React.FC<TouchProps> = ({
 
         handle(e, [
           _onMove,
-          gesture.current.isSlideX && onMoveX,
-          gesture.current.isSlideY && onMoveY,
+          gesture.current?.isSlideX && onMoveX,
+          gesture.current?.isSlideY && onMoveY,
         ]);
       }
     }
   }
 
   function onEnd(e: VKUITouchEvent) {
-    const { isPressed, isSlide, isSlideX, isSlideY } = gesture.current;
+    const { isPressed, isSlide, isSlideX, isSlideY } = gesture.current ?? {};
 
     if (isPressed) {
       handle(e, [_onEnd, isSlideY && onEndY, isSlideX && onEndX]);
     }
 
-    didSlide.current = isSlide;
+    didSlide.current = Boolean(isSlide);
     gesture.current = {};
 
     // Если это был тач-евент, симулируем отмену hover
@@ -207,8 +218,10 @@ export const Touch: React.FC<TouchProps> = ({
     useEventListener(events[2], onEnd, listenerParams),
     useEventListener(events[3], onEnd, listenerParams),
   ];
-  function subscribe(el: HTMLElement | Document | null) {
-    listeners.forEach((l) => l.add(el));
+  function subscribe(el: HTMLElement | Document | null | undefined) {
+    if (el) {
+      listeners.forEach((l) => l.add(el));
+    }
   }
 
   /**

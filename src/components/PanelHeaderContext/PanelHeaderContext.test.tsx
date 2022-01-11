@@ -36,7 +36,9 @@ describe("PanelHeaderContext", () => {
     it("on mobile fade click", () => {
       const onClose = jest.fn();
       render(<PanelHeaderContext opened onClose={onClose} />);
-      userEvent.click(document.querySelector(".PanelHeaderContext__fade"));
+      userEvent.click(
+        document.querySelector(".PanelHeaderContext__fade") as Element
+      );
       expect(onClose).toBeCalledTimes(1);
     });
 

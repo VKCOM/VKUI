@@ -64,7 +64,7 @@ export function baselineComponent<Props extends BasicProps>(
     adaptivity,
   }: ComponentTestOptions = {}
 ) {
-  const Component: React.ComponentType<BasicProps> = adaptivity
+  const Component: React.ComponentType<any> = adaptivity
     ? (p: Props) => (
         <AdaptivityProvider {...adaptivity}>
           <RawComponent {...p} />

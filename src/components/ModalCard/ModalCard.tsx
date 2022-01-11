@@ -39,8 +39,8 @@ const ModalCard: React.FC<ModalCardProps> = (props: ModalCardProps) => {
     actionsLayout,
     onClose,
     platform,
-    viewWidth,
-    viewHeight,
+    viewWidth = 0,
+    viewHeight = 0,
     hasMouse,
     nav,
     ...restProps

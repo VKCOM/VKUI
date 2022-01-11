@@ -54,25 +54,26 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
       indeterminate === undefined ? defaultIndeterminate : indeterminate;
 
     if (inputRef.current) {
-      inputRef.current.indeterminate = indeterminateValue;
+      inputRef.current.indeterminate = Boolean(indeterminateValue);
     }
-  }, [indeterminate]);
+  }, [defaultIndeterminate, indeterminate, inputRef]);
 
   const handleChange: SimpleCheckboxProps["onChange"] = React.useCallback(
     (event) => {
       if (
         defaultIndeterminate !== undefined &&
         indeterminate === undefined &&
-        restProps.checked === undefined
+        restProps.checked === undefined &&
+        inputRef.current
       ) {
         inputRef.current.indeterminate = false;
       }
-      if (indeterminate !== undefined) {
+      if (indeterminate !== undefined && inputRef.current) {
         inputRef.current.indeterminate = indeterminate;
       }
       onChange && onChange(event);
     },
-    [onChange, indeterminate, restProps.checked]
+    [defaultIndeterminate, indeterminate, restProps.checked, onChange, inputRef]
   );
 
   if (IS_DEV) {

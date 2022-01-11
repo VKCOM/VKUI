@@ -2,8 +2,8 @@ import { canUseDOM } from "../../lib/dom";
 
 const masksCreated: Document[] = [];
 
-export function createMasks(document: Document): void {
-  if (!canUseDOM || masksCreated.includes(document)) {
+export function createMasks(document?: Document): void {
+  if (!canUseDOM || !document || masksCreated.includes(document)) {
     return;
   }
 

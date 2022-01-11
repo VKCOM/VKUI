@@ -17,8 +17,8 @@ export type DOMProps = DOMContextInterface;
 
 /* eslint-disable no-restricted-globals */
 export const getDOM = () => ({
-  window: canUseDOM ? window : null,
-  document: canUseDOM ? document : null,
+  window: canUseDOM ? window : undefined,
+  document: canUseDOM ? document : undefined,
 });
 /* eslint-enable no-restricted-globals */
 
@@ -30,7 +30,7 @@ export const useDOM = () => {
 
 export function withDOM<Props>(
   Component: React.ComponentType<Props & DOMProps>
-) {
+): React.ComponentType<Props> {
   const WithDOM: React.FC<Props> = (props: Props) => {
     const dom = useDOM();
     return <Component {...props} {...dom} />;

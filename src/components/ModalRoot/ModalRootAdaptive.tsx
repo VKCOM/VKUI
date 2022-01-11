@@ -17,10 +17,8 @@ export interface ModalRootProps extends AdaptivityProps {
   onClose?: (modalId: string) => void;
 }
 
-const ModalRootComponent: React.FC<ModalRootProps> = (
-  props: ModalRootProps
-) => {
-  const { viewWidth, viewHeight, hasMouse } = props;
+const ModalRootComponent: React.FC<ModalRootProps> = (props) => {
+  const { viewWidth = 0, viewHeight = 0, hasMouse } = props;
   const isDesktop =
     viewWidth >= ViewWidth.SMALL_TABLET &&
     (hasMouse || viewHeight >= ViewHeight.MEDIUM);

@@ -21,7 +21,7 @@ import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import "./Alert.css";
 
-export type AlertActionInterface = AlertProps["actions"][0] &
+export type AlertActionInterface = AlertAction &
   React.AnchorHTMLAttributes<HTMLElement>;
 
 export interface AlertAction extends Pick<ButtonProps, "Component" | "href"> {
@@ -61,7 +61,7 @@ class Alert extends React.Component<AlertProps, AlertState> {
 
   element: React.RefObject<HTMLDivElement>;
 
-  private transitionFinishTimeout: ReturnType<typeof setTimeout>;
+  private transitionFinishTimeout: number | undefined = undefined;
 
   static defaultProps: AlertProps = {
     actionsLayout: "horizontal",
@@ -81,7 +81,7 @@ class Alert extends React.Component<AlertProps, AlertState> {
       this.setState({ closing: true });
       this.waitTransitionFinish((e?: TransitionEvent) => {
         if (!e || e.propertyName === "opacity") {
-          autoclose && this.props.onClose();
+          autoclose && this.props.onClose?.();
           action && action();
         }
       });
@@ -94,7 +94,7 @@ class Alert extends React.Component<AlertProps, AlertState> {
     this.setState({ closing: true });
     this.waitTransitionFinish((e?: TransitionEvent) => {
       if (!e || e.propertyName === "opacity") {
-        this.props.onClose();
+        this.props.onClose?.();
       }
     });
   };
@@ -105,13 +105,18 @@ class Alert extends React.Component<AlertProps, AlertState> {
 
   waitTransitionFinish(eventHandler: TransitionEndHandler) {
     if (transitionEvent.supported) {
-      this.element.current.removeEventListener(
-        transitionEvent.name,
-        eventHandler
+      this.element.current?.removeEventListener(
+        transitionEvent.name as string,
+        eventHandler as () => void
       );
-      this.element.current.addEventListener(transitionEvent.name, eventHandler);
+      this.element.current?.addEventListener(
+        transitionEvent.name as string,
+        eventHandler as () => void
+      );
     } else {
-      clearTimeout(this.transitionFinishTimeout);
+      if (this.transitionFinishTimeout) {
+        clearTimeout(this.transitionFinishTimeout);
+      }
       this.transitionFinishTimeout = setTimeout(
         eventHandler.bind(this),
         this.timeout
@@ -139,6 +144,8 @@ class Alert extends React.Component<AlertProps, AlertState> {
             {header}
           </Title>
         );
+      default:
+        return undefined;
     }
   }
 
@@ -162,6 +169,8 @@ class Alert extends React.Component<AlertProps, AlertState> {
             {text}
           </Headline>
         );
+      default:
+        return undefined;
     }
   }
 
@@ -225,7 +234,7 @@ class Alert extends React.Component<AlertProps, AlertState> {
       className,
       style,
       platform,
-      viewWidth,
+      viewWidth = 0,
       text,
       header,
       ...restProps
@@ -266,7 +275,7 @@ class Alert extends React.Component<AlertProps, AlertState> {
             {children}
           </div>
           <footer vkuiClass="Alert__actions">
-            {actions.map(this.renderAction)}
+            {actions?.map(this.renderAction)}
           </footer>
         </FocusTrap>
       </PopoutWrapper>

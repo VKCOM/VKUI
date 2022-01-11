@@ -96,7 +96,9 @@ describe("ActionSheet", () => {
       const onClose = jest.fn();
       render(<ActionSheetMobile onClose={onClose} />);
       jest.runAllTimers();
-      userEvent.click(document.querySelector(".PopoutWrapper__overlay"));
+      userEvent.click(
+        document.querySelector(".PopoutWrapper__overlay") as Element
+      );
       jest.runAllTimers();
       expect(onClose).toBeCalledTimes(1);
     });

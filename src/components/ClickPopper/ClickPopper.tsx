@@ -34,13 +34,15 @@ export const ClickPopper: React.FC<ClickPopperProps> = ({
   ...restProps
 }: ClickPopperProps) => {
   const [computedShown, setComputedShown] = React.useState(_shown || false);
-  const [dropdownNode, setPopperNode] = React.useState(null);
+  const [dropdownNode, setPopperNode] = React.useState<HTMLElement | null>(
+    null
+  );
 
   const shown = typeof _shown === "boolean" ? _shown : computedShown;
 
   const { document } = useDOM();
 
-  const patchedPopperRef = useExternRef(setPopperNode, getRef);
+  const patchedPopperRef = useExternRef<HTMLDivElement>(setPopperNode, getRef);
 
   const [childRef, child] = usePatchChildrenRef(children);
 
@@ -54,8 +56,8 @@ export const ClickPopper: React.FC<ClickPopperProps> = ({
   useGlobalEventListener(document, "click", (e: MouseEvent) => {
     if (
       dropdownNode &&
-      !childRef.current.contains(e.target as Node) &&
-      !dropdownNode.contains(e.target)
+      !childRef.current?.contains(e.target as Node) &&
+      !dropdownNode?.contains(e.target as Node)
     ) {
       setShown(false);
     }
@@ -66,8 +68,10 @@ export const ClickPopper: React.FC<ClickPopperProps> = ({
   });
 
   React.useEffect(() => {
-    targetClickEvent.add(childRef.current);
-  }, []);
+    if (childRef.current !== null) {
+      targetClickEvent.add(childRef.current);
+    }
+  }, [childRef, targetClickEvent]);
 
   return (
     <React.Fragment>

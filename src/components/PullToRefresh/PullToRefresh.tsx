@@ -105,7 +105,7 @@ class PullToRefresh extends React.PureComponent<
 
   params: PullToRefreshParams;
   contentRef: React.RefObject<HTMLDivElement>;
-  waitFetchingTimeout: ReturnType<typeof setTimeout>;
+  waitFetchingTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
 
   get document() {
     return this.props.document;
@@ -113,7 +113,7 @@ class PullToRefresh extends React.PureComponent<
 
   componentDidMount() {
     if (canUseDOM) {
-      this.document.addEventListener("touchmove", this.onWindowTouchMove, {
+      this.document?.addEventListener("touchmove", this.onWindowTouchMove, {
         // @ts-ignore
         cancelable: true,
         passive: false,
@@ -126,13 +126,15 @@ class PullToRefresh extends React.PureComponent<
     // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
     // https://github.com/VKCOM/VKUI/issues/444
     if (canUseDOM) {
-      this.document.removeEventListener("touchmove", this.onWindowTouchMove, {
+      this.document?.removeEventListener("touchmove", this.onWindowTouchMove, {
         // @ts-ignore
         cancelable: true,
         passive: false,
       });
     }
-    clearTimeout(this.waitFetchingTimeout);
+    if (this.waitFetchingTimeout) {
+      clearTimeout(this.waitFetchingTimeout);
+    }
   }
 
   componentDidUpdate(
@@ -142,7 +144,11 @@ class PullToRefresh extends React.PureComponent<
     if (prevProps.isFetching && !this.props.isFetching) {
       this.onRefreshingFinish();
     }
-    if (!prevProps.isFetching && this.props.isFetching) {
+    if (
+      !prevProps.isFetching &&
+      this.props.isFetching &&
+      this.waitFetchingTimeout
+    ) {
       clearTimeout(this.waitFetchingTimeout);
     }
 
@@ -182,7 +188,7 @@ class PullToRefresh extends React.PureComponent<
   onTouchMove: TouchEventHandler = (e: TouchEvent) => {
     const { isY, shiftY } = e;
     const { start, max } = this.params;
-    const pageYOffset = this.props.scroll.getScroll().y;
+    const pageYOffset = this.props.scroll?.getScroll().y;
 
     const { refreshing, watching, touchDown } = this.state;
 
@@ -319,7 +325,7 @@ class PullToRefresh extends React.PureComponent<
                 opacity: watching || refreshing || canRefresh ? 1 : 0,
               }}
               on={refreshing}
-              progress={refreshing ? null : spinnerProgress}
+              progress={refreshing ? undefined : spinnerProgress}
             />
           </FixedLayout>
 

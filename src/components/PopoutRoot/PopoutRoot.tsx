@@ -24,7 +24,7 @@ export const PopoutRootComponent: React.FC<PopoutRootProps> = (
   const {
     popout,
     modal,
-    viewWidth,
+    viewWidth = 0,
     viewHeight,
     hasMouse,
     children,
@@ -34,12 +34,13 @@ export const PopoutRootComponent: React.FC<PopoutRootProps> = (
   const { document } = useDOM();
 
   const isDesktop =
+    viewHeight &&
     viewWidth >= ViewWidth.SMALL_TABLET &&
     (hasMouse || viewHeight >= ViewHeight.MEDIUM);
 
   React.useEffect(() => {
     popout && blurActiveElement(document);
-  }, [!!popout]);
+  }, [document, popout]);
 
   return (
     <div {...restProps} vkuiClass="PopoutRoot" ref={getRootRef}>

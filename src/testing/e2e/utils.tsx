@@ -49,17 +49,18 @@ function cartesian<Props>(
     ...propDesc,
     ...getAdaptivity(ops.adaptive ? $adaptivity : false),
   };
-  return Object.entries(propDesc).reduce(
-    (acc, [prop, values]: [string, any[]]) => {
+  return Object.entries(propDesc).reduce<TestProps<Props>>(
+    (acc, [prop, values]: [string, any]) => {
       const res: any[] = [];
       acc.forEach((props) => {
-        values.forEach((value) => {
+        values.forEach((value: any) => {
           res.push({ ...props, [prop]: value });
         });
       });
       return res;
     },
-    [{}]
+    // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
+    [{}] as TestProps<Props>
   );
 }
 
@@ -70,13 +71,16 @@ function multiCartesian<Props>(
   if (propSets.length === 0) {
     return [{} as any];
   }
-  return propSets.reduce((acc, ortho) => acc.concat(cartesian(ortho, ops)), []);
+  return propSets.reduce(
+    (acc, ortho) => acc.concat(cartesian(ortho, ops) as any),
+    []
+  );
 }
 
 function prettyProps(props: any) {
   return Object.entries(props)
     .sort(([key1], [key2]) => Number(key1 > key2))
-    .map(([prop, value]) => {
+    .map(([prop, value]: [string, any]) => {
       if (value === undefined) {
         return "";
       }

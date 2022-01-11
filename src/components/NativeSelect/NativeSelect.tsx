@@ -56,7 +56,7 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
   const selectRef = useExternRef(getRef);
   useIsomorphicLayoutEffect(() => {
     const selectedOption =
-      selectRef.current.options[selectRef.current.selectedIndex];
+      selectRef.current?.options[selectRef.current.selectedIndex];
     if (selectedOption) {
       setTitle(selectedOption.text);
       setNotSelected(selectedOption.value === "" && placeholder != null);

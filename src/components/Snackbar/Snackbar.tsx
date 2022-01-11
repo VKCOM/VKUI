@@ -61,8 +61,8 @@ const SnackbarComponent: React.FC<SnackbarProps> = (props: SnackbarProps) => {
     action,
     before,
     after,
-    viewWidth,
-    duration,
+    viewWidth = 0,
+    duration = 0,
     onActionClick,
     onClose,
     ...restProps
@@ -111,7 +111,9 @@ const SnackbarComponent: React.FC<SnackbarProps> = (props: SnackbarProps) => {
   const closeTimeout = useTimeout(close, duration);
 
   const setBodyTransform = (percent: number) => {
-    cancelAnimationFrame(animationFrameRef.current);
+    if (animationFrameRef.current !== null) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
     animationFrameRef.current = requestAnimationFrame(() => {
       if (bodyElRef.current) {
         bodyElRef.current.style.transform = `translate3d(${percent}%, 0, 0)`;
@@ -129,7 +131,8 @@ const SnackbarComponent: React.FC<SnackbarProps> = (props: SnackbarProps) => {
       setTouched(true);
     }
 
-    shiftXPercentRef.current = (shiftX / bodyElRef.current.offsetWidth) * 100;
+    shiftXPercentRef.current =
+      (shiftX / (bodyElRef.current?.offsetWidth ?? 0)) * 100;
     shiftXCurrentRef.current = rubber(
       shiftXPercentRef.current,
       72,
@@ -182,7 +185,7 @@ const SnackbarComponent: React.FC<SnackbarProps> = (props: SnackbarProps) => {
     callback && requestAnimationFrame(callback);
   };
 
-  React.useEffect(closeTimeout.set, []);
+  React.useEffect(() => closeTimeout.set(), [closeTimeout]);
 
   const resolvedLayout = after || isDesktop ? "vertical" : layout;
 

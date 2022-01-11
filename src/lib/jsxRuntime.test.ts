@@ -4,7 +4,7 @@ import { __controller } from "./classScopingMode";
 
 describe(createScopedElement, () => {
   beforeEach(() => (__controller._noConflict = false));
-  const processProps = (props: Attributes & HTMLAttributes<any>) => {
+  const processProps = (props: Attributes & HTMLAttributes<any>): any => {
     return createScopedElement("div", props).props;
   };
   const classSet = ({ className }: HTMLAttributes<any>) =>
@@ -29,7 +29,7 @@ describe(createScopedElement, () => {
     it("does not require vkuiClass", () =>
       expect(processProps({})).not.toHaveProperty("className"));
     it("accepts falsy vkuiClass", () =>
-      expect(processProps({ vkuiClass: null })).not.toHaveProperty(
+      expect(processProps({ vkuiClass: undefined })).not.toHaveProperty(
         "className"
       ));
     it("does not require props", () =>

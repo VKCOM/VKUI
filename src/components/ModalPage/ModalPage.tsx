@@ -46,8 +46,8 @@ const ModalPage: React.FC<ModalPageProps> = (props: ModalPageProps) => {
   const {
     children,
     header,
-    viewWidth,
-    viewHeight,
+    viewWidth = 0,
+    viewHeight = 0,
     sizeX,
     hasMouse,
     onClose,
@@ -60,7 +60,7 @@ const ModalPage: React.FC<ModalPageProps> = (props: ModalPageProps) => {
 
   React.useEffect(() => {
     updateModalHeight();
-  }, [children]);
+  }, [children, updateModalHeight]);
 
   const isDesktop =
     viewWidth >= ViewWidth.SMALL_TABLET &&

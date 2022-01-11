@@ -22,21 +22,21 @@ import { CustomSelectDropdown } from "../CustomSelectDropdown/CustomSelectDropdo
 import "./CustomSelect.css";
 
 const findIndexAfter = (
-  options: CustomSelectOptionInterface[],
+  options: CustomSelectOptionInterface[] | undefined,
   startIndex = -1
 ) => {
-  if (startIndex >= options.length - 1) {
+  if (options === undefined || startIndex >= options.length - 1) {
     return -1;
   }
   return options.findIndex((option, i) => i > startIndex && !option.disabled);
 };
 
 const findIndexBefore = (
-  options: CustomSelectOptionInterface[],
-  endIndex: number = options.length
+  options: CustomSelectOptionInterface[] | undefined,
+  endIndex: number = options?.length ?? 0
 ) => {
   let result = -1;
-  if (endIndex <= 0) {
+  if (options === undefined || endIndex <= 0) {
     return result;
   }
   for (let i = endIndex - 1; i >= 0; i--) {
@@ -181,8 +181,8 @@ class CustomSelect extends React.Component<
   }
 
   private keyboardInput: string;
-  private isControlledOutside: boolean;
-  private selectEl: HTMLSelectElement;
+  private isControlledOutside = false;
+  private selectEl: HTMLSelectElement | null = null;
   private readonly scrollBoxRef = React.createRef<HTMLDivElement>();
   private readonly containerRef = React.createRef<HTMLLabelElement>();
 
@@ -193,11 +193,13 @@ class CustomSelect extends React.Component<
   private readonly getSelectedItem = () => {
     const { selectedOptionIndex, options } = this.state;
 
-    if (!options.length) {
+    if (!options?.length) {
       return null;
     }
 
-    return options[selectedOptionIndex];
+    return selectedOptionIndex !== undefined
+      ? options[selectedOptionIndex]
+      : undefined;
   };
 
   get areOptionsShown() {
@@ -215,7 +217,7 @@ class CustomSelect extends React.Component<
   };
 
   findSelectedIndex(
-    options: CustomSelectOptionInterface[],
+    options: CustomSelectOptionInterface[] | undefined,
     value: SelectValue
   ) {
     return (
@@ -235,7 +237,10 @@ class CustomSelect extends React.Component<
       () => {
         const { selectedOptionIndex } = this.state;
 
-        if (this.isValidIndex(selectedOptionIndex)) {
+        if (
+          selectedOptionIndex !== undefined &&
+          this.isValidIndex(selectedOptionIndex)
+        ) {
           this.scrollToElement(selectedOptionIndex, true);
         }
       }
@@ -256,13 +261,15 @@ class CustomSelect extends React.Component<
   };
 
   private isValidIndex(index: number) {
-    return index >= 0 && index < this.state.options.length;
+    return index >= 0 && index < (this.state.options?.length ?? 0);
   }
 
   selectFocused = () => {
     const { focusedOptionIndex } = this.state;
 
-    this.select(focusedOptionIndex);
+    if (focusedOptionIndex !== undefined) {
+      this.select(focusedOptionIndex);
+    }
   };
 
   select = (index: number) => {
@@ -270,15 +277,15 @@ class CustomSelect extends React.Component<
       return;
     }
 
-    const item = this.state.options[index];
+    const item = this.state.options?.[index];
 
     this.setState(
       {
-        nativeSelectValue: item.value,
+        nativeSelectValue: item?.value,
       },
       () => {
         const event = new Event("change", { bubbles: true });
-        this.selectEl.dispatchEvent(event);
+        this.selectEl?.dispatchEvent(event);
       }
     );
     this.close();
@@ -290,13 +297,13 @@ class CustomSelect extends React.Component<
 
   onFocus = () => {
     const event = new Event("focus");
-    this.selectEl.dispatchEvent(event);
+    this.selectEl?.dispatchEvent(event);
   };
 
   onBlur = () => {
     this.close();
     const event = new Event("blur");
-    this.selectEl.dispatchEvent(event);
+    this.selectEl?.dispatchEvent(event);
   };
 
   private scrollToElement(index: number, center = false) {
@@ -307,28 +314,34 @@ class CustomSelect extends React.Component<
       return;
     }
 
-    const dropdownHeight = dropdown.offsetHeight;
-    const scrollTop = dropdown.scrollTop;
+    const dropdownHeight = dropdown?.offsetHeight ?? 0;
+    const scrollTop = dropdown?.scrollTop ?? 0;
     const itemTop = item.offsetTop;
     const itemHeight = item.offsetHeight;
 
-    if (center) {
-      dropdown.scrollTop = itemTop - dropdownHeight / 2 + itemHeight / 2;
-    } else if (itemTop + itemHeight > dropdownHeight + scrollTop) {
-      dropdown.scrollTop = itemTop - dropdownHeight + itemHeight;
-    } else if (itemTop < scrollTop) {
-      dropdown.scrollTop = itemTop;
+    if (dropdown) {
+      if (center) {
+        dropdown.scrollTop = itemTop - dropdownHeight / 2 + itemHeight / 2;
+      } else if (itemTop + itemHeight > dropdownHeight + scrollTop) {
+        dropdown.scrollTop = itemTop - dropdownHeight + itemHeight;
+      } else if (itemTop < scrollTop) {
+        dropdown.scrollTop = itemTop;
+      }
     }
   }
 
-  focusOptionByIndex = (index: number, scrollTo = true) => {
-    if (index < 0 || index > this.state.options.length - 1) {
+  focusOptionByIndex = (index: number | undefined, scrollTo = true) => {
+    if (
+      index === undefined ||
+      index < 0 ||
+      index > (this.state.options?.length ?? 0) - 1
+    ) {
       return;
     }
 
-    const option = this.state.options[index];
+    const option = this.state.options?.[index];
 
-    if (option.disabled) {
+    if (option?.disabled) {
       return;
     }
 
@@ -358,7 +371,7 @@ class CustomSelect extends React.Component<
   handleOptionHover: MouseEventHandler = (e: React.MouseEvent<HTMLElement>) => {
     this.focusOptionByIndex(
       Array.prototype.indexOf.call(
-        e.currentTarget.parentNode.children,
+        e.currentTarget.parentNode?.children,
         e.currentTarget
       ),
       false
@@ -371,10 +384,10 @@ class CustomSelect extends React.Component<
 
   handleOptionClick: MouseEventHandler = (e: React.MouseEvent<HTMLElement>) => {
     const index = Array.prototype.indexOf.call(
-      e.currentTarget.parentNode.children,
+      e.currentTarget.parentNode?.children,
       e.currentTarget
     );
-    const option = this.state.options[index];
+    const option = this.state.options?.[index];
 
     if (option && !option.disabled) {
       this.selectFocused();
@@ -388,11 +401,11 @@ class CustomSelect extends React.Component<
   onKeyboardInput = (key: string) => {
     const fullInput = this.keyboardInput + key;
 
-    const optionIndex = this.state.options.findIndex((option) => {
+    const optionIndex = this.state.options?.findIndex((option) => {
       return option.label.toLowerCase().includes(fullInput);
     });
 
-    if (optionIndex > -1) {
+    if (optionIndex !== undefined && optionIndex > -1) {
       this.focusOptionByIndex(optionIndex);
     }
 
@@ -543,13 +556,14 @@ class CustomSelect extends React.Component<
         this.props.value === undefined
           ? this.state.nativeSelectValue
           : this.props.value;
-      const options = this.props.searchable
-        ? this.filter(
-            this.props.options,
-            this.state.inputValue,
-            this.props.filterFn
-          )
-        : this.props.options;
+      const options =
+        this.props.searchable && this.state.inputValue !== undefined
+          ? this.filter(
+              this.props.options,
+              this.state.inputValue,
+              this.props.filterFn
+            )
+          : this.props.options;
       this.setState({
         nativeSelectValue: value,
         selectedOptionIndex: this.findSelectedIndex(options, value),
@@ -566,7 +580,7 @@ class CustomSelect extends React.Component<
 
     return (
       <React.Fragment key={`${option.value}`}>
-        {renderOption({
+        {renderOption?.({
           option,
           hovered,
           children: option.label,
@@ -582,7 +596,9 @@ class CustomSelect extends React.Component<
 
   selectRef = (element: HTMLSelectElement) => {
     this.selectEl = element;
-    setRef(element, this.props.getRef);
+    if (this.props.getRef) {
+      setRef(element, this.props.getRef);
+    }
   };
 
   onPlacementChange = (placement?: Placement) => {
@@ -623,7 +639,7 @@ class CustomSelect extends React.Component<
     const label = selected ? selected.label : undefined;
 
     const defaultDropdownContent =
-      stateOptions.length > 0 ? (
+      stateOptions !== undefined && stateOptions.length > 0 ? (
         stateOptions.map(this.renderOption)
       ) : (
         <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">

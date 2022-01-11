@@ -3,11 +3,12 @@ import ActionSheetItem from "../ActionSheetItem/ActionSheetItem";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { withPlatform } from "../../hoc/withPlatform";
 import { ViewWidth } from "../../hoc/withAdaptivity";
+import { HasPlatform } from "../../types";
 
 describe("ActionSheet", () => {
   const cancel = <ActionSheetItem mode="cancel">Отменить</ActionSheetItem>;
   describeScreenshotFuzz(
-    withPlatform((props: ActionSheetProps) => (
+    withPlatform<ActionSheetProps & HasPlatform>((props) => (
       <ActionSheet
         {...props}
         iosCloseItem={cancel}

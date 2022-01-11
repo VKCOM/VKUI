@@ -23,7 +23,7 @@ const warn = warnOnce("Epic");
 export const Epic: React.FC<EpicProps> = (props: EpicProps) => {
   const platform = usePlatform();
   const scroll = React.useRef<{ [key: string]: number }>({}).current;
-  const { activeStory, tabbar, children, viewWidth, ...restProps } = props;
+  const { activeStory, tabbar, children, viewWidth = 0, ...restProps } = props;
 
   if (
     process.env.NODE_ENV === "development" &&
@@ -33,9 +33,11 @@ export const Epic: React.FC<EpicProps> = (props: EpicProps) => {
     warn("Using Epic without tabbar is not recommended on mobile");
   }
   const story =
-    (React.Children.toArray(children) as React.ReactElement[]).find(
-      (story) => getNavId(story.props, warn) === activeStory
-    ) || null;
+    (React.Children.toArray(children).find(
+      (story) =>
+        React.isValidElement(story) &&
+        getNavId(story.props, warn) === activeStory
+    ) as React.ReactElement | undefined) ?? null;
 
   return (
     <div {...restProps} vkuiClass={getClassName("Epic", platform)}>

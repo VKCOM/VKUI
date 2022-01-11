@@ -52,7 +52,7 @@ const ACCESSIBLE_KEYS: AccessibleKey[] = [
 
 export function pressedKey(
   e: KeyboardEvent | React.KeyboardEvent<HTMLElement>
-): Keys {
+) {
   return (
     ACCESSIBLE_KEYS.find(
       ({ key, keyCode }) => key.includes(e.key) || keyCode === e.keyCode

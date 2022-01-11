@@ -2,9 +2,10 @@ import * as React from "react";
 import { setRef } from "../lib/utils";
 
 export function useExternRef<T>(
-  ...externRefs: Array<React.Ref<T>>
-): React.MutableRefObject<T> {
-  const stableRef = React.useRef<T>();
+  ...externRefs: Array<React.Ref<T> | undefined | false>
+): React.MutableRefObject<T | null> {
+  const stableRef = React.useRef<T | null>(null);
+
   return React.useMemo(
     () => ({
       get current() {
@@ -12,9 +13,14 @@ export function useExternRef<T>(
       },
       set current(el) {
         stableRef.current = el;
-        externRefs.forEach((ref) => setRef(el, ref));
+        externRefs.forEach((ref) => {
+          if (ref) {
+            setRef(el, ref);
+          }
+        });
       },
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     externRefs
   );
 }

@@ -39,10 +39,10 @@ const UsersStack: React.FC<UsersStackProps> = (props: UsersStackProps) => {
     createMasks(document);
   }, [document]);
 
-  const othersCount = Math.max(0, photos.length - visibleCount);
+  const othersCount = Math.max(0, (photos?.length ?? 0) - (visibleCount ?? 0));
   const canShowOthers = othersCount > 0 && size === "m";
 
-  const photosShown = photos.slice(0, visibleCount);
+  const photosShown = photos?.slice(0, visibleCount);
 
   return (
     <div
@@ -57,7 +57,7 @@ const UsersStack: React.FC<UsersStackProps> = (props: UsersStackProps) => {
       )}
     >
       <div vkuiClass="UsersStack__photos" role="presentation">
-        {photosShown.map((photo, i) => (
+        {photosShown?.map((photo, i) => (
           <div
             key={i}
             vkuiClass="UsersStack__photo"

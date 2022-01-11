@@ -55,9 +55,9 @@ class ModalRootDesktopComponent extends React.Component<
   }
 
   private readonly maskElementRef: React.RefObject<HTMLDivElement>;
-  private maskAnimationFrame: number;
+  private maskAnimationFrame: number | undefined = undefined;
   private readonly modalRootContext: ModalRootContextInterface;
-  private restoreFocusTo: HTMLElement;
+  private restoreFocusTo: HTMLElement | undefined = undefined;
 
   private get timeout() {
     return this.props.platform === ANDROID || this.props.platform === VKCOM
@@ -69,7 +69,10 @@ class ModalRootDesktopComponent extends React.Component<
     return React.Children.toArray(this.props.children) as React.ReactElement[];
   }
 
-  getModalState(id: string) {
+  getModalState(id: string | null) {
+    if (id === null) {
+      return undefined;
+    }
     return this.props.getModalState(id);
   }
 
@@ -101,7 +104,8 @@ class ModalRootDesktopComponent extends React.Component<
 
     // focus restoration
     if (this.props.activeModal && !prevProps.activeModal) {
-      this.restoreFocusTo = this.props.document.activeElement as HTMLElement;
+      this.restoreFocusTo = (this.props.document?.activeElement ??
+        undefined) as HTMLElement | undefined;
     }
     if (
       !this.props.activeModal &&
@@ -109,7 +113,7 @@ class ModalRootDesktopComponent extends React.Component<
       this.restoreFocusTo
     ) {
       this.restoreFocusTo.focus();
-      this.restoreFocusTo = null;
+      this.restoreFocusTo = undefined;
     }
   }
 
@@ -132,15 +136,15 @@ class ModalRootDesktopComponent extends React.Component<
   ) {
     if (transitionEvent.supported) {
       const onceHandler = () => {
-        modalState?.innerElement.removeEventListener(
-          transitionEvent.name,
+        modalState?.innerElement?.removeEventListener(
+          transitionEvent.name as string,
           onceHandler
         );
         eventHandler();
       };
 
-      modalState?.innerElement.addEventListener(
-        transitionEvent.name,
+      modalState?.innerElement?.addEventListener(
+        transitionEvent.name as string,
         onceHandler
       );
     } else {
@@ -149,22 +153,32 @@ class ModalRootDesktopComponent extends React.Component<
   }
 
   /* Анимирует сдивг модалки */
-  animateModalOpacity(modalState: ModalsStateEntry, display: boolean) {
-    modalState.innerElement.style.transitionDelay =
-      display && this.props.delayEnter ? `${this.timeout}ms` : null;
-    modalState.innerElement.style.opacity = display ? "1" : "0";
+  animateModalOpacity(
+    modalState: ModalsStateEntry | undefined,
+    display: boolean
+  ) {
+    if (modalState?.innerElement) {
+      modalState.innerElement.style.transitionDelay =
+        display && this.props.delayEnter ? `${this.timeout}ms` : "";
+      modalState.innerElement.style.opacity = display ? "1" : "0";
+    }
   }
 
   /* Устанавливает прозрачность для полупрозрачной подложки */
-  setMaskOpacity(modalState: ModalsStateEntry, forceOpacity: number = null) {
-    if (forceOpacity === null && this.props.history[0] !== modalState.id) {
+  setMaskOpacity(
+    modalState: ModalsStateEntry,
+    forceOpacity: number | null = null
+  ) {
+    if (forceOpacity === null && this.props.history?.[0] !== modalState.id) {
       return;
     }
 
-    cancelAnimationFrame(this.maskAnimationFrame);
+    if (this.maskAnimationFrame) {
+      cancelAnimationFrame(this.maskAnimationFrame);
+    }
     this.maskAnimationFrame = requestAnimationFrame(() => {
       if (this.maskElementRef.current) {
-        const { translateY, translateYCurrent } = modalState;
+        const { translateY = 0, translateYCurrent = 0 } = modalState;
 
         const opacity =
           forceOpacity === null
@@ -192,7 +206,7 @@ class ModalRootDesktopComponent extends React.Component<
             getClassName("ModalRoot", this.props.platform),
             {
               "ModalRoot--vkapps":
-                this.props.configProvider.webviewType === WebviewType.VKAPPS,
+                this.props.configProvider?.webviewType === WebviewType.VKAPPS,
             },
             "ModalRoot--desktop"
           )}
@@ -224,7 +238,7 @@ class ModalRootDesktopComponent extends React.Component<
                       modalId === activeModal,
                     "ModalRoot__modal--prev": modalId === exitingModal,
                     "ModalRoot__modal--next":
-                      exitingModal && modalId === activeModal,
+                      Boolean(exitingModal) && modalId === activeModal,
                   })}
                 >
                   {Modal}

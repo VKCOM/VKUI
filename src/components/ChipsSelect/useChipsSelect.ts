@@ -6,17 +6,23 @@ import { ChipsSelectProps } from "./ChipsSelect";
 export const useChipsSelect = <Option extends ChipsInputOption>(
   props: Partial<ChipsSelectProps<Option>>
 ) => {
-  const { options, filterFn, getOptionLabel, getOptionValue, showSelected } =
-    props;
+  const { options, filterFn, getOptionLabel, getOptionValue } = props;
 
   const [opened, setOpened] = React.useState(false);
-  const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number>(0);
-  const [focusedOption, setFocusedOption] = React.useState<Option>(null);
+  const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<
+    number | null | undefined
+  >(0);
+  const [focusedOption, setFocusedOption] = React.useState<Option | null>(null);
 
   const { fieldValue, selectedOptions, ...chipsInputState } =
     useChipsInput(props);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement> | undefined
+  ) => {
+    if (!e) {
+      return;
+    }
     chipsInputState.handleInputChange(e);
 
     if (!opened) {
@@ -26,29 +32,31 @@ export const useChipsSelect = <Option extends ChipsInputOption>(
   };
 
   let filteredOptions = React.useMemo(() => {
-    return filterFn
-      ? options.filter((option: Option) =>
+    return filterFn && getOptionLabel
+      ? options?.filter((option) =>
           filterFn(fieldValue, option, getOptionLabel)
         )
       : options;
   }, [options, filterFn, fieldValue, getOptionLabel]);
 
   filteredOptions = React.useMemo(() => {
-    if (!filteredOptions.length) {
+    if (!filteredOptions?.length) {
       return filteredOptions;
     }
 
     const filteredSet = new Set(filteredOptions);
-    const selected = selectedOptions.map((item) => getOptionValue(item));
+    if (getOptionValue !== undefined) {
+      const selected = selectedOptions?.map((item) => getOptionValue(item));
 
-    for (const item of filteredSet) {
-      if (selected.includes(getOptionValue(item))) {
-        filteredSet.delete(item);
+      for (const item of filteredSet) {
+        if (selected?.includes(getOptionValue(item))) {
+          filteredSet.delete(item);
+        }
       }
     }
 
     return [...filteredSet];
-  }, [showSelected, filteredOptions, selectedOptions]);
+  }, [filteredOptions, selectedOptions, getOptionValue]);
 
   return {
     ...chipsInputState,

@@ -12,7 +12,7 @@ export interface WriteBarProps
     HasRootRef<HTMLDivElement>,
     HasRef<HTMLTextAreaElement> {
   /**
-   * Содержимое, отображаемое слево от поля ввода.
+   * Содержимое, отображаемое слева от поля ввода.
    */
   before?: React.ReactNode;
   /**
@@ -56,16 +56,16 @@ export const WriteBar: React.FC<WriteBarProps> = (props: WriteBarProps) => {
   const textareaRef = useExternRef(getRef);
   const textareaMinHeightRef = React.useRef<number | null>(null);
 
-  const resize = () => {
+  const resize = React.useCallback(() => {
     const textareaEl = textareaRef.current;
     if (!textareaEl) {
       return;
     }
 
     const { offsetHeight, scrollHeight } = textareaEl;
-    const style = window.getComputedStyle(textareaEl);
-    const paddingTop = parseInt(style.paddingTop);
-    const paddingBottom = parseInt(style.paddingBottom);
+    const style = window?.getComputedStyle(textareaEl);
+    const paddingTop = style ? parseInt(style.paddingTop) : 0;
+    const paddingBottom = style ? parseInt(style.paddingBottom) : 0;
 
     if (textareaMinHeightRef.current === null) {
       textareaMinHeightRef.current = offsetHeight;
@@ -86,7 +86,7 @@ export const WriteBar: React.FC<WriteBarProps> = (props: WriteBarProps) => {
     if (isFunction(onHeightChange)) {
       onHeightChange();
     }
-  };
+  }, [onHeightChange, textareaRef, window]);
 
   const onTextareaChange: React.ChangeEventHandler<HTMLTextAreaElement> = (
     event
@@ -102,7 +102,7 @@ export const WriteBar: React.FC<WriteBarProps> = (props: WriteBarProps) => {
 
   React.useEffect(() => {
     resize();
-  }, [value]);
+  }, [resize, value]);
 
   return (
     <div

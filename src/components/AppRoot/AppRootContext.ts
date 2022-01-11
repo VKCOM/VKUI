@@ -2,7 +2,7 @@ import * as React from "react";
 
 export interface AppRootContextInterface {
   appRoot?: React.RefObject<HTMLDivElement>;
-  portalRoot?: HTMLDivElement;
+  portalRoot?: HTMLDivElement | null;
   embedded?: boolean;
   mode?: "partial" | "embedded" | "full";
   keyboardInput?: boolean;

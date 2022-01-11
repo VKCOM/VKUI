@@ -59,7 +59,9 @@ export function setRef<T>(element: T, ref: React.Ref<T>): void {
   }
 }
 
-export function multiRef<T>(...refs: Array<React.Ref<T>>): React.RefObject<T> {
+export function multiRef<T>(
+  ...refs: Array<React.Ref<T> | undefined>
+): React.RefObject<T> {
   let current: T | null = null;
   return {
     get current() {
@@ -67,7 +69,9 @@ export function multiRef<T>(...refs: Array<React.Ref<T>>): React.RefObject<T> {
     },
     set current(element) {
       current = element;
-      refs.forEach((ref) => setRef(element, ref));
+      refs
+        .filter((ref) => ref)
+        .forEach((ref) => setRef(element, ref as React.Ref<T>));
     },
   };
 }

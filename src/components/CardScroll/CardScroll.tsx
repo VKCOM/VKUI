@@ -27,12 +27,14 @@ const CardScroll: React.FC<CardScrollProps> = ({
   const { window } = useDOM();
 
   function getScrollToLeft(offset: number): number {
-    const containerWidth = refContainer.current.offsetWidth;
-    const slideIndex = Array.from(refContainer.current.children).findIndex(
+    const containerWidth = refContainer.current?.offsetWidth ?? 0;
+    const slideIndex = Array.from(
+      (refContainer.current?.children ?? []) as HTMLElement[]
+    ).findIndex(
       (el: HTMLElement) =>
         el.offsetLeft +
           el.offsetWidth +
-          parseInt(window.getComputedStyle(el).marginRight) -
+          (window ? parseInt(window.getComputedStyle(el).marginRight) : 0) -
           offset >=
         0
     );
@@ -45,14 +47,14 @@ const CardScroll: React.FC<CardScrollProps> = ({
       return 0;
     }
 
-    const slide = refContainer.current.children[slideIndex] as HTMLElement;
+    const slide = refContainer.current?.children[slideIndex] as HTMLElement;
 
     const scrollTo =
       slide.offsetLeft -
       (containerWidth - slide.offsetWidth) +
-      gapRef.current.offsetWidth;
+      (gapRef.current?.offsetWidth ?? 0);
 
-    if (scrollTo <= 2 * gapRef.current.offsetWidth) {
+    if (scrollTo <= 2 * (gapRef.current?.offsetWidth ?? 0)) {
       return 0;
     }
 
@@ -60,9 +62,9 @@ const CardScroll: React.FC<CardScrollProps> = ({
   }
 
   function getScrollToRight(offset: number): number {
-    const containerWidth = refContainer.current.offsetWidth;
+    const containerWidth = refContainer.current?.offsetWidth ?? 0;
     const slide = Array.prototype.find.call(
-      refContainer.current.children,
+      (refContainer.current?.children ?? []) as HTMLElement[],
       (el: HTMLElement) =>
         el.offsetLeft + el.offsetWidth - offset > containerWidth
     ) as HTMLElement;
@@ -71,7 +73,7 @@ const CardScroll: React.FC<CardScrollProps> = ({
       return offset;
     }
 
-    return slide.offsetLeft - gapRef.current.offsetWidth;
+    return slide.offsetLeft - (gapRef.current?.offsetWidth ?? 0);
   }
 
   return (

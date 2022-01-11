@@ -16,29 +16,31 @@ export const useChipsInput = <Option extends ChipsInputOption>(
 
   const clearInput = React.useCallback(() => {
     setFieldValue("");
-    onInputChange({ target: { value: "" } } as any);
+    onInputChange?.({ target: { value: "" } } as any);
   }, [onInputChange]);
 
   const handleInputChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setFieldValue(e.target.value);
-      onInputChange(e);
+      onInputChange?.(e);
     },
     [onInputChange]
   );
 
   const toggleOption = React.useCallback(
     (newOption: Option, value?: boolean) => {
-      const newSelectedOptions = selectedOptions.filter(
-        (option: Option) => getOptionValue(newOption) !== getOptionValue(option)
-      );
+      const newSelectedOptions =
+        selectedOptions?.filter(
+          (option: Option) =>
+            getOptionValue?.(newOption) !== getOptionValue?.(option)
+        ) ?? [];
 
       if (value === true) {
-        newSelectedOptions.push(newOption);
+        newSelectedOptions?.push(newOption);
       }
 
       setSelectedOptions(newSelectedOptions);
-      onChange(newSelectedOptions);
+      onChange?.(newSelectedOptions);
     },
     [selectedOptions, getOptionValue, onChange]
   );
@@ -51,13 +53,19 @@ export const useChipsInput = <Option extends ChipsInputOption>(
     const trimmedValue = fieldValue?.trim();
 
     if (trimmedValue) {
-      addOption(getNewOptionData(undefined, trimmedValue));
+      const option = getNewOptionData?.(undefined, trimmedValue);
+      if (option) {
+        addOption(option);
+      }
       clearInput();
     }
   }, [addOption, clearInput, getNewOptionData, fieldValue]);
   const removeOption = React.useCallback(
     (value: ChipsInputValue) => {
-      toggleOption(getNewOptionData(undefined, value as string), false);
+      const option = getNewOptionData?.(undefined, value as string);
+      if (option) {
+        toggleOption(option, false);
+      }
     },
     [toggleOption, getNewOptionData]
   );
@@ -66,7 +74,7 @@ export const useChipsInput = <Option extends ChipsInputOption>(
     setSelectedOptions(value);
 
     return () => setSelectedOptions([]);
-  }, [props.value]);
+  }, [props.value, value]);
 
   React.useEffect(() => {
     setFieldValue(props.inputValue);

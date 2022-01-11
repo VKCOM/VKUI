@@ -62,7 +62,7 @@ export const MiniInfoCell: React.FC<MiniInfoCellProps> = (
     <Tappable
       Component="div"
       disabled={!isClickable}
-      role={isClickable ? "button" : null}
+      role={isClickable ? "button" : undefined}
       {...restProps}
       vkuiClass={classNames(
         getClassName("MiniInfoCell", platform),

@@ -74,7 +74,11 @@ export const FormItem: React.FC<FormItemProps> = ({
       {removable ? (
         <Removable
           align="start"
-          onRemove={(e) => onRemove(e, rootEl?.current)}
+          onRemove={(e) => {
+            if (rootEl?.current) {
+              onRemove(e, rootEl.current);
+            }
+          }}
           removePlaceholder={removePlaceholder}
         >
           <div vkuiClass="FormItem__removable">{wrappedChildren}</div>
