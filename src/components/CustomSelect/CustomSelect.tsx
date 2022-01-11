@@ -55,7 +55,7 @@ const warn = warnOnce("CustomSelect");
 const checkOptionsValueType = (options: CustomSelectOptionInterface[]) => {
   if (new Set(options.map((item) => typeof item.value)).size > 1) {
     warn(
-      "Some values of your options have different types. CustomSelect onChange always returns a string type."
+      "Значения опций вашего селекта содержат разные типы. onChange всегда возвращает string."
     );
   }
 };
@@ -92,6 +92,9 @@ export interface CustomSelectProps
    * Текст, который будет отображен, если приходит пустой `options`
    */
   emptyText?: string;
+  /**
+   * @deprecated Этот метод фильтрации устарел. Возвращенное этим методом значение будет игнорироваться, начиная с 5.0.0. Используйте свойство filterFn или обновляйте props.options самостоятельно.
+   */
   onInputChange?: (
     e: React.ChangeEvent,
     options: CustomSelectOptionInterface[]
@@ -102,7 +105,7 @@ export interface CustomSelectProps
     [index: string]: any;
   }>;
   /**
-   * Функция для кастомной фильтрации. По-умолчанию поиск производится по option.label.
+   * Функция для кастомной фильтрации. По умолчанию поиск производится по option.label.
    */
   filterFn?:
     | false
@@ -129,7 +132,7 @@ export interface CustomSelectProps
     defaultDropdownContent: React.ReactNode;
   }) => React.ReactNode;
   /**
-   * Если true, то в дропдауне вместо списка опций рисуется спиннер. При переданных renderDropdown и fetching: true,
+   * Если true, то в дропдауне вместо списка опций рисуется спиннер. При переданных renderDropdown и fetching: true
    * "победит" renderDropdown
    */
   fetching?: boolean;
@@ -431,8 +434,7 @@ class CustomSelect extends React.Component<
       if (options) {
         if (process.env.NODE_ENV === "development") {
           warn(
-            "This filtration method is deprecated. Return value of onInputChange will" +
-              " be ignored in v5.0.0. For custom filtration please update props.options by yourself or use filterFn property"
+            "Этот метод фильтрации устарел. Значение, которое возвращает onInputChange, будет игнорироваться, начиная с 5.0.0. Используйте свойство filterFn или обновляйте props.options самостоятельно"
           );
         }
         this.setState({
