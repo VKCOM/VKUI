@@ -7,6 +7,10 @@
   content: "";
 }
 
+.PanelHeader:not(.PanelHeader--vis):not(.PanelHeader--fixed) {
+  height: 0;
+}
+
 .PanelHeader__fixed {
   z-index: 10;
 }
@@ -238,7 +242,7 @@
   top: calc(var(--panelheader_height_vkcom) + var(--safe-area-inset-top));
 }
 
-.PanelHeader--vkcom .PanelHeader__in {
+.PanelHeader--vkcom.PanelHeader--sep .PanelHeader__in {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   box-shadow: 0 0 0 var(--thin-border) var(--input_border) inset;

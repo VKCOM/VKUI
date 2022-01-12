@@ -97,6 +97,9 @@ const PanelHeaderContent: React.FunctionComponent<PanelHeaderContentProps> = ({
           >
             {children}
           </PanelHeaderChildren>
+          {hasReactNode(aside) && (
+            <div vkuiClass="PanelHeaderContent__aside">{aside}</div>
+          )}
         </div>
         {hasReactNode(before) && <div vkuiClass="PanelHeaderContent__width" />}
       </InComponent>

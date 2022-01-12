@@ -1,9 +1,23 @@
-import ModalPageHeader from "./ModalPageHeader";
+import ModalPageHeader, { ModalPageHeaderProps } from "./ModalPageHeader";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { PanelHeaderButton } from "../PanelHeaderButton/PanelHeaderButton";
 import { Icon24Cancel, Icon24Dismiss, Icon24Done } from "@vkontakte/icons";
 import { Platform } from "../../lib/platform";
 import { ViewWidth } from "../../hoc/withAdaptivity";
+import ModalRootContext from "../ModalRoot/ModalRootContext";
+import { noop } from "../../lib/utils";
+
+const BaseModalPageHeader = (p: ModalPageHeaderProps) => (
+  <ModalRootContext.Provider
+    value={{
+      isInsideModal: true,
+      updateModalHeight: noop,
+      registerModal: noop,
+    }}
+  >
+    <ModalPageHeader {...p} />
+  </ModalRootContext.Provider>
+);
 
 describe("ModalPageHeader", () => {
   const cancel = (
@@ -27,7 +41,7 @@ describe("ModalPageHeader", () => {
     "Невероятно длинный заголовок выезжает за шапку даже на десктопе",
   ];
   describeScreenshotFuzz(
-    ModalPageHeader,
+    BaseModalPageHeader,
     [
       {
         children,
@@ -43,7 +57,7 @@ describe("ModalPageHeader", () => {
     }
   );
   describeScreenshotFuzz(
-    ModalPageHeader,
+    BaseModalPageHeader,
     [
       {
         children,
@@ -59,7 +73,7 @@ describe("ModalPageHeader", () => {
     }
   );
   describeScreenshotFuzz(
-    ModalPageHeader,
+    BaseModalPageHeader,
     [
       {
         children,
@@ -75,7 +89,7 @@ describe("ModalPageHeader", () => {
     }
   );
   describeScreenshotFuzz(
-    ModalPageHeader,
+    BaseModalPageHeader,
     [
       {
         children,
