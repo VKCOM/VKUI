@@ -1,61 +1,44 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
-import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { HasRef } from "../../types";
-import { isPrimitiveReactNode } from "../../lib/utils";
 import { VKCOM } from "../../lib/platform";
+import PanelHeader, { PanelHeaderProps } from "../PanelHeader/PanelHeader";
 import Separator from "../Separator/Separator";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { classNames } from "../../lib/classNames";
+import { getClassName } from "../../helpers/getClassName";
+import { ViewHeight, ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import "./ModalPageHeader.css";
 
 export interface ModalPageHeaderProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    HasRef<HTMLDivElement> {
-  /**
-   * Иконки, отображаемые слева
-   */
-  left?: React.ReactNode;
-  /**
-   * Иконки, отображаемые справа
-   */
-  right?: React.ReactNode;
-  separator?: boolean;
-}
+    Omit<PanelHeaderProps, "fixed" | "shadow">,
+    HasRef<HTMLDivElement> {}
 
-const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = (
-  props: ModalPageHeaderProps
-) => {
+const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = ({
+  children,
+  separator,
+  getRef,
+  ...restProps
+}: ModalPageHeaderProps) => {
   const platform = usePlatform();
-  const { sizeX } = useAdaptivity();
-  const { left, right, children, separator, getRef, ...restProps } = props;
-  const isPrimitive = isPrimitiveReactNode(children);
+  const { viewWidth, viewHeight, hasMouse } = useAdaptivity();
   const hasSeparator = separator && platform === VKCOM;
+  const isDesktop =
+    viewWidth >= ViewWidth.SMALL_TABLET &&
+    (hasMouse || viewHeight >= ViewHeight.MEDIUM);
 
   return (
     <div
-      {...restProps}
-      vkuiClass={classNames(
-        getClassName("ModalPageHeader", platform),
-        `ModalPageHeader--sizeX-${sizeX}`
-      )}
+      vkuiClass={classNames(getClassName("ModalPageHeader", platform), {
+        "ModalPageHeader--desktop": isDesktop,
+      })}
       ref={getRef}
     >
-      <div vkuiClass="ModalPageHeader__in">
-        <div vkuiClass="ModalPageHeader__left">{left}</div>
-
-        <div vkuiClass="ModalPageHeader__content">
-          <div vkuiClass="ModalPageHeader__content-in">
-            {isPrimitive ? <span>{children}</span> : children}
-          </div>
-        </div>
-
-        <div vkuiClass="ModalPageHeader__right">{right}</div>
-      </div>
-
-      {hasSeparator && (
-        <Separator wide vkuiClass="ModalPageHeader__separator" />
-      )}
+      <PanelHeader {...restProps} fixed={false} separator={false} transparent>
+        {children}
+      </PanelHeader>
+      {hasSeparator && <Separator wide />}
     </div>
   );
 };
