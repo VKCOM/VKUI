@@ -66,4 +66,5 @@ const Placeholder: React.FC<PlaceholderProps> = (props: PlaceholderProps) => {
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default Placeholder;

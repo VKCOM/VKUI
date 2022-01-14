@@ -27,4 +27,5 @@ const List: React.FunctionComponent<React.HTMLAttributes<HTMLDivElement>> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default List;

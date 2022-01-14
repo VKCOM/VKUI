@@ -74,4 +74,5 @@ const PullToRefreshSpinner: React.FunctionComponent<
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default React.memo(PullToRefreshSpinner);

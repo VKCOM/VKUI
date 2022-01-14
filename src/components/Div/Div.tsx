@@ -25,4 +25,5 @@ export const Div: React.FunctionComponent<DivProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default Div;

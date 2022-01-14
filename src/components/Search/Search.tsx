@@ -168,4 +168,5 @@ Search.defaultProps = {
   before: <Icon16SearchOutline />,
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withPlatform(Search);

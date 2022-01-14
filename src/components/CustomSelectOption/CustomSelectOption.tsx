@@ -88,4 +88,5 @@ const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default CustomSelectOption;

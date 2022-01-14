@@ -128,4 +128,5 @@ const SimpleCell: React.FC<SimpleCellProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(SimpleCell, { sizeY: true });

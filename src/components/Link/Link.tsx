@@ -23,4 +23,5 @@ const Link: React.FC<LinkProps> = ({ children, ...restProps }: LinkProps) => {
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default Link;

@@ -80,6 +80,7 @@ ModalCard.defaultProps = {
   actionsLayout: "horizontal",
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(withPlatform(ModalCard), {
   viewWidth: true,
   viewHeight: true,

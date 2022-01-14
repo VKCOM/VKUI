@@ -220,6 +220,7 @@ Button.defaultProps = {
   stopPropagation: true,
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(Button, {
   sizeY: true,
 });

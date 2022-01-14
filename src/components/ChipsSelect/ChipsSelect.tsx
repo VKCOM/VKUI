@@ -449,4 +449,5 @@ const ChipsSelect = <Option extends ChipsInputOption>(
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(ChipsSelect, { sizeY: true });

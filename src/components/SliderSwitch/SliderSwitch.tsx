@@ -26,6 +26,7 @@ interface SliderSwitchState {
   hoveredOptionId: number;
 }
 
+// eslint-disable-next-line import/no-default-export
 export default class SliderSwitch extends React.Component<
   SliderSwitchProps,
   SliderSwitchState
