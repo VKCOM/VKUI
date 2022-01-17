@@ -10,7 +10,7 @@ export const useChipsSelect = <Option extends ChipsInputOption>(
 
   const [opened, setOpened] = React.useState(false);
   const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<
-    number | null | undefined
+    number | null
   >(0);
   const [focusedOption, setFocusedOption] = React.useState<Option | null>(null);
 
@@ -32,26 +32,24 @@ export const useChipsSelect = <Option extends ChipsInputOption>(
   };
 
   let filteredOptions = React.useMemo(() => {
-    return filterFn && getOptionLabel
-      ? options?.filter((option) =>
+    return filterFn
+      ? options!.filter((option) =>
           filterFn(fieldValue, option, getOptionLabel)
         )
-      : options;
+      : (options as Option[]);
   }, [options, filterFn, fieldValue, getOptionLabel]);
 
   filteredOptions = React.useMemo(() => {
-    if (!filteredOptions?.length) {
+    if (!filteredOptions.length) {
       return filteredOptions;
     }
 
     const filteredSet = new Set(filteredOptions);
-    if (getOptionValue !== undefined) {
-      const selected = selectedOptions?.map((item) => getOptionValue(item));
+    const selected = selectedOptions.map((item) => getOptionValue!(item));
 
-      for (const item of filteredSet) {
-        if (selected?.includes(getOptionValue(item))) {
-          filteredSet.delete(item);
-        }
+    for (const item of filteredSet) {
+      if (selected.includes(getOptionValue!(item))) {
+        filteredSet.delete(item);
       }
     }
 

@@ -5,23 +5,20 @@ import { HasPlatform } from "../../types";
 import { getClassName } from "../../helpers/getClassName";
 import { ANDROID, VKCOM } from "../../lib/platform";
 import { rubber } from "../../lib/touch";
-import {
-  withAdaptivity,
-  AdaptivityProps,
-  ViewWidth,
-} from "../../hoc/withAdaptivity";
+import { withAdaptivity, ViewWidth } from "../../hoc/withAdaptivity";
 import Text from "../Typography/Text/Text";
 import Button from "../Button/Button";
 import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useTimeout } from "../../hooks/useTimeout";
+import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
 import "./Snackbar.css";
 
 export interface SnackbarProps
   extends React.HTMLAttributes<HTMLElement>,
     HasPlatform,
-    AdaptivityProps {
+    AdaptivityContextInterface {
   /**
    * Название кнопки действия в уведомлении
    */
@@ -61,7 +58,7 @@ const SnackbarComponent: React.FC<SnackbarProps> = (props: SnackbarProps) => {
     action,
     before,
     after,
-    viewWidth = 0,
+    viewWidth,
     duration = 0,
     onActionClick,
     onClose,

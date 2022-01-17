@@ -120,20 +120,17 @@ const ChipsInput = <Option extends ChipsInputOption>(
       return;
     }
 
-    onKeyDown?.(e);
+    onKeyDown!(e);
 
     if (
       e.key === "Backspace" &&
       !e.defaultPrevented &&
       !fieldValue &&
-      selectedOptions?.length
+      selectedOptions.length
     ) {
-      const optionToRemove = getOptionValue?.(
-        selectedOptions[selectedOptions.length - 1]
+      removeOption(
+        getOptionValue!(selectedOptions[selectedOptions.length - 1])
       );
-      if (optionToRemove) {
-        removeOption(optionToRemove);
-      }
       e.preventDefault();
     }
 
@@ -147,14 +144,14 @@ const ChipsInput = <Option extends ChipsInputOption>(
     if (focused) {
       setFocused(false);
     }
-    onBlur?.(e);
+    onBlur!(e);
   };
 
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     if (!focused) {
       setFocused(true);
     }
-    onFocus?.(e);
+    onFocus!(e);
   };
 
   const handleChipRemove = (
@@ -182,7 +179,7 @@ const ChipsInput = <Option extends ChipsInputOption>(
       getRootRef={getRootRef}
       vkuiClass={classNames("ChipsInput", `ChipsInput--sizeY-${sizeY}`, {
         "ChipsInput--focused": focused,
-        "ChipsInput--withChips": !!selectedOptions?.length,
+        "ChipsInput--withChips": !!selectedOptions.length,
       })}
       className={className}
       style={style}
@@ -194,13 +191,13 @@ const ChipsInput = <Option extends ChipsInputOption>(
       aria-readonly={restProps.readOnly}
     >
       <div vkuiClass="ChipsInput__container" role="presentation">
-        {selectedOptions?.map((option: Option) => {
-          const value = getOptionValue?.(option) ?? "";
-          const label = getOptionLabel?.(option) ?? "";
+        {selectedOptions.map((option: Option) => {
+          const value = getOptionValue!(option);
+          const label = getOptionLabel!(option);
 
           return (
             <React.Fragment key={`${typeof value}-${value}`}>
-              {renderChip?.({
+              {renderChip!({
                 option,
                 value,
                 label,
@@ -228,7 +225,7 @@ const ChipsInput = <Option extends ChipsInputOption>(
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            placeholder={selectedOptions?.length ? undefined : placeholder}
+            placeholder={selectedOptions.length ? undefined : placeholder}
             {...restProps}
           />
         </label>

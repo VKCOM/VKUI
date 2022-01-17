@@ -113,7 +113,7 @@ class PullToRefresh extends React.PureComponent<
 
   componentDidMount() {
     if (canUseDOM) {
-      this.document?.addEventListener("touchmove", this.onWindowTouchMove, {
+      this.document!.addEventListener("touchmove", this.onWindowTouchMove, {
         // @ts-ignore
         cancelable: true,
         passive: false,
@@ -126,7 +126,7 @@ class PullToRefresh extends React.PureComponent<
     // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
     // https://github.com/VKCOM/VKUI/issues/444
     if (canUseDOM) {
-      this.document?.removeEventListener("touchmove", this.onWindowTouchMove, {
+      this.document!.removeEventListener("touchmove", this.onWindowTouchMove, {
         // @ts-ignore
         cancelable: true,
         passive: false,

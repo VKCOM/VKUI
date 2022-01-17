@@ -77,7 +77,7 @@ const Root: React.FC<RootProps> = ({
     if (panel !== activeView) {
       const viewIds = views.map((view) => getNavId(view.props, warn));
       const isBack = viewIds.indexOf(panel) < viewIds.indexOf(activeView);
-      scrolls[activeView] = scroll.getScroll().y ?? 0;
+      scrolls[activeView] = scroll.getScroll().y;
       _setState({
         activeView: panel,
         prevView: activeView,
@@ -92,7 +92,7 @@ const Root: React.FC<RootProps> = ({
   );
 
   useIsomorphicLayoutEffect(() => {
-    (document?.activeElement as HTMLElement)?.blur();
+    (document!.activeElement as HTMLElement).blur();
   }, [!!popout, activeView]);
 
   // Нужен переход

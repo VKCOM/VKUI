@@ -22,18 +22,18 @@ import { CustomSelectDropdown } from "../CustomSelectDropdown/CustomSelectDropdo
 import "./CustomSelect.css";
 
 const findIndexAfter = (
-  options: CustomSelectOptionInterface[] | undefined,
+  options: CustomSelectOptionInterface[] = [],
   startIndex = -1
 ) => {
-  if (options === undefined || startIndex >= options.length - 1) {
+  if (startIndex >= options.length - 1) {
     return -1;
   }
   return options.findIndex((option, i) => i > startIndex && !option.disabled);
 };
 
 const findIndexBefore = (
-  options: CustomSelectOptionInterface[] | undefined,
-  endIndex: number = options?.length ?? 0
+  options: CustomSelectOptionInterface[] = [],
+  endIndex: number = options.length
 ) => {
   let result = -1;
   if (options === undefined || endIndex <= 0) {
@@ -143,7 +143,7 @@ class CustomSelect extends React.Component<
   CustomSelectProps,
   CustomSelectState
 > {
-  static defaultProps: CustomSelectProps = {
+  static defaultProps: Partial<CustomSelectProps> = {
     searchable: false,
     renderOption({ option, ...props }): React.ReactNode {
       return <CustomSelectOption {...props} />;
@@ -310,23 +310,21 @@ class CustomSelect extends React.Component<
     const dropdown = this.scrollBoxRef.current;
     const item = dropdown ? (dropdown.children[index] as HTMLElement) : null;
 
-    if (!item) {
+    if (!item || !dropdown) {
       return;
     }
 
-    const dropdownHeight = dropdown?.offsetHeight ?? 0;
-    const scrollTop = dropdown?.scrollTop ?? 0;
+    const dropdownHeight = dropdown.offsetHeight;
+    const scrollTop = dropdown.scrollTop;
     const itemTop = item.offsetTop;
     const itemHeight = item.offsetHeight;
 
-    if (dropdown) {
-      if (center) {
-        dropdown.scrollTop = itemTop - dropdownHeight / 2 + itemHeight / 2;
-      } else if (itemTop + itemHeight > dropdownHeight + scrollTop) {
-        dropdown.scrollTop = itemTop - dropdownHeight + itemHeight;
-      } else if (itemTop < scrollTop) {
-        dropdown.scrollTop = itemTop;
-      }
+    if (center) {
+      dropdown.scrollTop = itemTop - dropdownHeight / 2 + itemHeight / 2;
+    } else if (itemTop + itemHeight > dropdownHeight + scrollTop) {
+      dropdown.scrollTop = itemTop - dropdownHeight + itemHeight;
+    } else if (itemTop < scrollTop) {
+      dropdown.scrollTop = itemTop;
     }
   }
 
@@ -580,7 +578,7 @@ class CustomSelect extends React.Component<
 
     return (
       <React.Fragment key={`${option.value}`}>
-        {renderOption?.({
+        {renderOption!({
           option,
           hovered,
           children: option.label,

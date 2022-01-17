@@ -63,9 +63,9 @@ export const WriteBar: React.FC<WriteBarProps> = (props: WriteBarProps) => {
     }
 
     const { offsetHeight, scrollHeight } = textareaEl;
-    const style = window?.getComputedStyle(textareaEl);
-    const paddingTop = style ? parseInt(style.paddingTop) : 0;
-    const paddingBottom = style ? parseInt(style.paddingBottom) : 0;
+    const style = window!.getComputedStyle(textareaEl);
+    const paddingTop = parseInt(style.paddingTop);
+    const paddingBottom = parseInt(style.paddingBottom);
 
     if (textareaMinHeightRef.current === null) {
       textareaMinHeightRef.current = offsetHeight;

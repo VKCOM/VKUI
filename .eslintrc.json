@@ -35,6 +35,7 @@
         "ignoreRestSiblings": true
       }
     ],
+    "@typescript-eslint/no-non-null-assertion": "off",
     "no-restricted-globals": ["error", "window", "document"],
     "no-restricted-imports": [
       "error",

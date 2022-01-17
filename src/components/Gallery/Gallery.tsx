@@ -359,7 +359,7 @@ class BaseGallery extends React.Component<
 
   componentDidMount() {
     this.initializeSlides({ animation: false });
-    this.props.window?.addEventListener("resize", this.onResize);
+    this.props.window!.addEventListener("resize", this.onResize);
   }
 
   componentDidUpdate(prevProps: GalleryProps) {
@@ -383,7 +383,7 @@ class BaseGallery extends React.Component<
   }
 
   componentWillUnmount() {
-    this.props.window?.removeEventListener("resize", this.onResize);
+    this.props.window!.removeEventListener("resize", this.onResize);
   }
 
   render() {

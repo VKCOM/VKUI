@@ -188,8 +188,8 @@ export const Touch: React.FC<TouchProps> = ({
 
         handle(e, [
           _onMove,
-          gesture.current?.isSlideX && onMoveX,
-          gesture.current?.isSlideY && onMoveY,
+          gesture.current.isSlideX && onMoveX,
+          gesture.current.isSlideY && onMoveY,
         ]);
       }
     }

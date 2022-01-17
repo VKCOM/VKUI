@@ -7,11 +7,7 @@ import { transitionEvent } from "../../lib/supportEvents";
 import { ANDROID, VKCOM, IOS } from "../../lib/platform";
 import { HasPlatform } from "../../types";
 import { withPlatform } from "../../hoc/withPlatform";
-import {
-  withAdaptivity,
-  AdaptivityProps,
-  ViewWidth,
-} from "../../hoc/withAdaptivity";
+import { withAdaptivity, ViewWidth } from "../../hoc/withAdaptivity";
 import Button, { ButtonProps } from "../Button/Button";
 import { hasReactNode } from "../../lib/utils";
 import Headline from "../Typography/Headline/Headline";
@@ -19,6 +15,7 @@ import Title from "../Typography/Title/Title";
 import Caption from "../Typography/Caption/Caption";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
+import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
 import "./Alert.css";
 
 export type AlertActionInterface = AlertAction &
@@ -34,7 +31,7 @@ export interface AlertAction extends Pick<ButtonProps, "Component" | "href"> {
 export interface AlertProps
   extends React.HTMLAttributes<HTMLElement>,
     HasPlatform,
-    AdaptivityProps {
+    AdaptivityContextInterface {
   actionsLayout?: "vertical" | "horizontal";
   actions?: AlertAction[];
   header?: React.ReactNode;
@@ -63,7 +60,7 @@ class Alert extends React.Component<AlertProps, AlertState> {
 
   private transitionFinishTimeout: number | undefined = undefined;
 
-  static defaultProps: AlertProps = {
+  static defaultProps: Partial<AlertProps> = {
     actionsLayout: "horizontal",
     actions: [],
   };
@@ -104,12 +101,12 @@ class Alert extends React.Component<AlertProps, AlertState> {
   };
 
   waitTransitionFinish(eventHandler: TransitionEndHandler) {
-    if (transitionEvent.supported) {
-      this.element.current?.removeEventListener(
+    if (transitionEvent.supported && this.element.current) {
+      this.element.current.removeEventListener(
         transitionEvent.name as string,
         eventHandler as () => void
       );
-      this.element.current?.addEventListener(
+      this.element.current.addEventListener(
         transitionEvent.name as string,
         eventHandler as () => void
       );
@@ -234,7 +231,7 @@ class Alert extends React.Component<AlertProps, AlertState> {
       className,
       style,
       platform,
-      viewWidth = 0,
+      viewWidth,
       text,
       header,
       ...restProps

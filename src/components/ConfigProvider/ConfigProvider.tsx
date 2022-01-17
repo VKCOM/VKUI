@@ -33,10 +33,10 @@ function useSchemeDetector(
 ) {
   const inherit = _scheme === "inherit";
   const getScheme = React.useCallback(() => {
-    if (!inherit || !canUseDOM) {
+    if (!inherit || !canUseDOM || !node) {
       return undefined;
     }
-    return node?.getAttribute("scheme") as Scheme;
+    return node.getAttribute("scheme") as Scheme;
   }, [inherit, node]);
   const [resolvedScheme, setScheme] = React.useState(getScheme());
 

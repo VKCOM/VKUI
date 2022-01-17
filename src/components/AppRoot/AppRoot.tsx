@@ -41,7 +41,7 @@ export interface AppRootProps
 }
 
 const warn = warnOnce("AppRoot");
-export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
+export const AppRoot = withAdaptivity<AppRootProps>(
   ({
     children,
     mode: _mode,
@@ -51,7 +51,7 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
     noLegacyClasses = false,
     scroll = "global",
     ...props
-  }: AppRootProps) => {
+  }) => {
     // normalize mode
     const mode = _mode || (_embedded ? "embedded" : "full");
     const isKeyboardInputActive = useKeyboardInputTracker();
@@ -65,8 +65,8 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
 
     const initialized = React.useRef(false);
     if (!initialized.current) {
-      if (window && mode === "full") {
-        document?.documentElement.classList.add("vkui");
+      if (document && mode === "full") {
+        document.documentElement.classList.add("vkui");
       }
       classScopingMode.noConflict = noLegacyClasses;
       initialized.current = true;
@@ -83,14 +83,12 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
 
     // setup portal
     useIsomorphicLayoutEffect(() => {
-      const portal = document?.createElement("div");
-      if (portal) {
-        portal.classList.add("vkui__portal-root");
-        document?.body.appendChild(portal);
-        setPortalRoot(portal);
-      }
+      const portal = document!.createElement("div");
+      portal.classList.add("vkui__portal-root");
+      document!.body.appendChild(portal);
+      setPortalRoot(portal);
       return () => {
-        portal?.parentElement?.removeChild(portal);
+        portal.parentElement?.removeChild(portal);
       };
     }, []);
 
@@ -116,11 +114,11 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
 
     // setup insets
     useIsomorphicLayoutEffect(() => {
-      if (mode === "partial") {
+      if (mode === "partial" || !rootRef.current?.parentElement) {
         return noop;
       }
 
-      const parent = rootRef.current?.parentElement;
+      const parent = rootRef.current.parentElement;
 
       for (const key in insets) {
         if (
@@ -128,7 +126,7 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
           typeof insets[key as keyof Insets] === "number"
         ) {
           const inset = insets[key as keyof Insets];
-          parent?.style.setProperty(`--safe-area-inset-${key}`, `${inset}px`);
+          parent.style.setProperty(`--safe-area-inset-${key}`, `${inset}px`);
           portalRoot &&
             portalRoot.style.setProperty(
               `--safe-area-inset-${key}`,
@@ -140,7 +138,7 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
       return () => {
         for (const key in insets) {
           if (insets.hasOwnProperty(key)) {
-            parent?.style.removeProperty(`--safe-area-inset-${key}`);
+            parent.style.removeProperty(`--safe-area-inset-${key}`);
             portalRoot &&
               portalRoot.style.removeProperty(`--safe-area-inset-${key}`);
           }
@@ -154,7 +152,7 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
         return noop;
       }
       const container =
-        mode === "embedded" ? rootRef.current?.parentElement : document?.body;
+        mode === "embedded" ? rootRef.current?.parentElement : document!.body;
       container?.classList.add("vkui--sizeX-regular");
       return () => container?.classList.remove("vkui--sizeX-regular");
     }, [sizeX]);

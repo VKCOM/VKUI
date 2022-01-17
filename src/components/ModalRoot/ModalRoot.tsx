@@ -127,7 +127,7 @@ class ModalRootTouchComponent extends React.Component<
 
   componentWillUnmount() {
     this.toggleDocumentScrolling(true);
-    this.window?.removeEventListener(
+    this.window!.removeEventListener(
       "resize",
       this.updateModalTranslate,
       false
@@ -167,7 +167,7 @@ class ModalRootTouchComponent extends React.Component<
 
     // focus restoration
     if (this.props.activeModal && !prevProps.activeModal) {
-      this.restoreFocusTo = this.document?.activeElement as HTMLElement;
+      this.restoreFocusTo = this.document!.activeElement as HTMLElement;
     }
     if (
       !this.props.activeModal &&
@@ -194,12 +194,12 @@ class ModalRootTouchComponent extends React.Component<
       // Здесь нужен последний аргумент с такими же параметрами, потому что
       // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
       // https://github.com/VKCOM/VKUI/issues/444
-      this.window?.removeEventListener("touchmove", this.preventTouch, {
+      this.window!.removeEventListener("touchmove", this.preventTouch, {
         // @ts-ignore (В интерфейсе EventListenerOptions нет поля passive)
         passive: false,
       });
     } else {
-      this.window?.addEventListener("touchmove", this.preventTouch, {
+      this.window!.addEventListener("touchmove", this.preventTouch, {
         passive: false,
       });
     }

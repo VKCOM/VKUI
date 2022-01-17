@@ -77,7 +77,7 @@ export const HoverPopper: React.FC<HoverPopperProps> = ({
   const targetLeaveListener = useEventListener("pointerleave", onTargetLeave);
 
   useIsomorphicLayoutEffect(() => {
-    if (childRef?.current) {
+    if (childRef.current) {
       targetEnterListener.add(childRef.current);
       targetLeaveListener.add(childRef.current);
     }

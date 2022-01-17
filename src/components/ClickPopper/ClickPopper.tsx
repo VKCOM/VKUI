@@ -57,7 +57,7 @@ export const ClickPopper: React.FC<ClickPopperProps> = ({
     if (
       dropdownNode &&
       !childRef.current?.contains(e.target as Node) &&
-      !dropdownNode?.contains(e.target as Node)
+      !dropdownNode.contains(e.target as Node)
     ) {
       setShown(false);
     }

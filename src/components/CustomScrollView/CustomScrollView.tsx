@@ -32,7 +32,7 @@ class CustomScrollView extends React.Component<Props> {
     this.resize();
 
     if (this.props.windowResize) {
-      this.props.window?.addEventListener("resize", this.resize);
+      this.props.window!.addEventListener("resize", this.resize);
     }
   }
 
@@ -41,7 +41,7 @@ class CustomScrollView extends React.Component<Props> {
   }
 
   componentWillUnmount() {
-    this.props.window?.removeEventListener("resize", this.resize);
+    this.props.window!.removeEventListener("resize", this.resize);
   }
 
   chooseTransformProp() {
@@ -58,8 +58,11 @@ class CustomScrollView extends React.Component<Props> {
   }
 
   resize = () => {
-    const clientHeight = this.box.current?.clientHeight ?? 0;
-    const scrollHeight = this.box.current?.scrollHeight ?? 0;
+    if (!this.box.current || !this.barY.current || !this.trackerY.current) {
+      return;
+    }
+    const clientHeight = this.box.current.clientHeight;
+    const scrollHeight = this.box.current.scrollHeight;
     let ratio = clientHeight / scrollHeight;
     let trackerHeight = Math.max(clientHeight * ratio, 40);
 
@@ -69,30 +72,20 @@ class CustomScrollView extends React.Component<Props> {
     this.trackerHeight = trackerHeight;
 
     if (ratio >= 1) {
-      if (this.barY.current) {
-        this.barY.current.style.display = "none";
-      }
+      this.barY.current.style.display = "none";
     } else {
-      if (this.barY.current) {
-        this.barY.current.style.display = "";
-      }
-      if (this.trackerY.current) {
-        this.trackerY.current.style.height = `${trackerHeight}px`;
-      }
-      if (this.box.current !== null) {
-        this.setTrackerPositionFromScroll(this.box.current.scrollTop);
-      }
+      this.barY.current.style.display = "";
+      this.trackerY.current.style.height = `${trackerHeight}px`;
+      this.setTrackerPositionFromScroll(this.box.current.scrollTop);
     }
   };
 
   scroll = () => {
-    if (this.ratio >= 1) {
+    if (this.ratio >= 1 || !this.box.current) {
       return;
     }
 
-    if (this.box.current !== null) {
-      this.setTrackerPositionFromScroll(this.box.current.scrollTop);
-    }
+    this.setTrackerPositionFromScroll(this.box.current.scrollTop);
   };
 
   setTrackerPosition(scrollTop: number) {
@@ -124,8 +117,8 @@ class CustomScrollView extends React.Component<Props> {
     this.startY = e.clientY;
     this.trackerTop = this.lastTrackerTop;
 
-    this.props.document?.addEventListener("mousemove", this.onMove);
-    this.props.document?.addEventListener("mouseup", this.onUp);
+    this.props.document!.addEventListener("mousemove", this.onMove);
+    this.props.document!.addEventListener("mouseup", this.onUp);
   };
 
   onMove = (e: MouseEvent) => {
@@ -141,8 +134,8 @@ class CustomScrollView extends React.Component<Props> {
 
   onUp = (e: MouseEvent) => {
     e.preventDefault();
-    this.props.document?.removeEventListener("mousemove", this.onMove);
-    this.props.document?.removeEventListener("mouseup", this.onUp);
+    this.props.document!.removeEventListener("mousemove", this.onMove);
+    this.props.document!.removeEventListener("mouseup", this.onUp);
   };
 
   render() {

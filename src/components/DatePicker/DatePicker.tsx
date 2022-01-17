@@ -93,18 +93,18 @@ const DatePickerCustom: React.FC<
   defaultValue,
   hasMouse,
   monthNames,
-  day,
-  month,
-  year,
+  day = 0,
+  month = 0,
+  year = 0,
   onDateChange,
   disabled,
   ...restProps
 }) => {
   const onSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     onDateChange?.({
-      day: day ?? 0,
-      month: month ?? 0,
-      year: year ?? 0,
+      day,
+      month,
+      year,
       [e.target.name]: Number(e.target.value),
     });
   };

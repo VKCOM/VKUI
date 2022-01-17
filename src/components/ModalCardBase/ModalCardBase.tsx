@@ -6,7 +6,6 @@ import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
 import {
-  AdaptivityProps,
   ViewHeight,
   ViewWidth,
   withAdaptivity,
@@ -17,6 +16,7 @@ import { IOS } from "../../lib/platform";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { Icon24Dismiss } from "@vkontakte/icons";
 import { useKeyboard } from "../../hooks/useKeyboard";
+import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
 import "./ModalCardBase.css";
 
 export interface ModalCardBaseProps
@@ -53,8 +53,8 @@ export interface ModalCardBaseProps
   onClose?: VoidFunction;
 }
 
-export const ModalCardBase: React.FC<ModalCardBaseProps> = withAdaptivity<
-  ModalCardBaseProps & AdaptivityProps
+export const ModalCardBase = withAdaptivity<
+  ModalCardBaseProps & AdaptivityContextInterface
 >(
   ({
     getRootRef,
@@ -64,9 +64,9 @@ export const ModalCardBase: React.FC<ModalCardBaseProps> = withAdaptivity<
     children,
     actions,
     actionsLayout,
-    viewWidth = 0,
+    viewWidth,
     hasMouse,
-    viewHeight = 0,
+    viewHeight,
     onClose,
     ...restProps
   }) => {

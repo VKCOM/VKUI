@@ -35,12 +35,12 @@ const AdaptivityProvider: React.FC<AdaptivityProps> = (props) => {
 
   React.useEffect(() => {
     function onResize() {
-      if (!window || adaptivityRef.current === null) {
+      if (adaptivityRef.current === null) {
         return;
       }
       const calculated = calculateAdaptivity(
-        window.innerWidth,
-        window.innerHeight,
+        window!.innerWidth,
+        window!.innerHeight,
         props
       );
       const { viewWidth, viewHeight, sizeX, sizeY, hasMouse, deviceHasHover } =
@@ -60,10 +60,10 @@ const AdaptivityProvider: React.FC<AdaptivityProps> = (props) => {
     }
 
     onResize();
-    window?.addEventListener("resize", onResize, false);
+    window!.addEventListener("resize", onResize, false);
 
     return () => {
-      window?.removeEventListener("resize", onResize, false);
+      window!.removeEventListener("resize", onResize, false);
     };
   }, [
     props.viewWidth,

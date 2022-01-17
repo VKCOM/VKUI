@@ -12,35 +12,34 @@ export const useChipsInput = <Option extends ChipsInputOption>(
     props;
 
   const [fieldValue, setFieldValue] = React.useState(props.inputValue);
-  const [selectedOptions, setSelectedOptions] = React.useState(value);
+  const [selectedOptions, setSelectedOptions] = React.useState(value ?? []);
 
   const clearInput = React.useCallback(() => {
     setFieldValue("");
-    onInputChange?.({ target: { value: "" } } as any);
+    onInputChange!({ target: { value: "" } } as any);
   }, [onInputChange]);
 
   const handleInputChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setFieldValue(e.target.value);
-      onInputChange?.(e);
+      onInputChange!(e);
     },
     [onInputChange]
   );
 
   const toggleOption = React.useCallback(
     (newOption: Option, value?: boolean) => {
-      const newSelectedOptions =
-        selectedOptions?.filter(
-          (option: Option) =>
-            getOptionValue?.(newOption) !== getOptionValue?.(option)
-        ) ?? [];
+      const newSelectedOptions = selectedOptions.filter(
+        (option: Option) =>
+          getOptionValue!(newOption) !== getOptionValue!(option)
+      );
 
       if (value === true) {
-        newSelectedOptions?.push(newOption);
+        newSelectedOptions.push(newOption);
       }
 
       setSelectedOptions(newSelectedOptions);
-      onChange?.(newSelectedOptions);
+      onChange!(newSelectedOptions);
     },
     [selectedOptions, getOptionValue, onChange]
   );
@@ -53,25 +52,19 @@ export const useChipsInput = <Option extends ChipsInputOption>(
     const trimmedValue = fieldValue?.trim();
 
     if (trimmedValue) {
-      const option = getNewOptionData?.(undefined, trimmedValue);
-      if (option) {
-        addOption(option);
-      }
+      addOption(getNewOptionData!(undefined, trimmedValue));
       clearInput();
     }
   }, [addOption, clearInput, getNewOptionData, fieldValue]);
   const removeOption = React.useCallback(
     (value: ChipsInputValue) => {
-      const option = getNewOptionData?.(undefined, value as string);
-      if (option) {
-        toggleOption(option, false);
-      }
+      toggleOption(getNewOptionData!(undefined, value as string), false);
     },
     [toggleOption, getNewOptionData]
   );
 
   React.useEffect(() => {
-    setSelectedOptions(value);
+    setSelectedOptions(value as Option[]);
 
     return () => setSelectedOptions([]);
   }, [props.value, value]);

@@ -56,12 +56,10 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
   });
 
   React.useEffect(() => {
-    if (document?.body) {
-      setTimeout(() => {
-        bodyClickListener.add(document.body);
-      });
-    }
-  }, [bodyClickListener, document?.body]);
+    setTimeout(() => {
+      bodyClickListener.add(document!.body);
+    });
+  }, [bodyClickListener, document]);
 
   const onClick = React.useCallback((e) => e.stopPropagation(), []);
 

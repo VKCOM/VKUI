@@ -490,7 +490,7 @@ class ViewInfinite extends React.Component<
           swipingBack: true,
           swipebackStartX: e.startX,
           swipeBackPrevPanel: this.state.activePanel,
-          swipeBackNextPanel: this.props.history?.slice(-2)[0] ?? null,
+          swipeBackNextPanel: this.props.history!.slice(-2)[0],
         });
       }
       if (this.state.swipingBack) {

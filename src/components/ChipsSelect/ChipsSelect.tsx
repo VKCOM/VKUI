@@ -154,13 +154,13 @@ const ChipsSelect = <Option extends ChipsInputOption>(
   } = useChipsSelect(propsWithDefault);
 
   const showCreatable = Boolean(
-    creatable && creatableText && !filteredOptions?.length && fieldValue
+    creatable && creatableText && !filteredOptions.length && fieldValue
   );
 
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setOpened(true);
     setFocusedOptionIndex(0);
-    onFocus?.(e);
+    onFocus!(e);
   };
 
   const handleClickOutside = (e: MouseEvent) => {
@@ -184,8 +184,8 @@ const ChipsSelect = <Option extends ChipsInputOption>(
       return;
     }
 
-    const dropdownHeight = dropdown?.offsetHeight ?? 0;
-    const scrollTop = dropdown?.scrollTop ?? 0;
+    const dropdownHeight = dropdown.offsetHeight;
+    const scrollTop = dropdown.scrollTop;
     const itemTop = item.offsetTop;
     const itemHeight = item.offsetHeight;
 
@@ -199,7 +199,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(
   };
 
   const focusOptionByIndex = (index: number, oldIndex: number) => {
-    const { length = 0 } = filteredOptions ?? {};
+    const { length } = filteredOptions;
 
     if (index < 0) {
       index = length - 1;
@@ -230,7 +230,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    onKeyDown?.(e);
+    onKeyDown!(e);
 
     if (e.key === "ArrowUp" && !e.defaultPrevented) {
       e.preventDefault();
@@ -238,7 +238,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(
       if (!opened) {
         setOpened(true);
         setFocusedOptionIndex(0);
-      } else if (focusedOptionIndex !== undefined) {
+      } else {
         focusOption(focusedOptionIndex, FOCUS_ACTION_PREV);
       }
     }
@@ -249,7 +249,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(
       if (!opened) {
         setOpened(true);
         setFocusedOptionIndex(0);
-      } else if (focusedOptionIndex !== undefined) {
+      } else {
         focusOption(focusedOptionIndex, FOCUS_ACTION_NEXT);
       }
     }
@@ -260,10 +260,10 @@ const ChipsSelect = <Option extends ChipsInputOption>(
       opened &&
       focusedOptionIndex != null
     ) {
-      const option = filteredOptions?.[focusedOptionIndex];
+      const option = filteredOptions[focusedOptionIndex];
 
       if (option) {
-        onChangeStart?.(e, option);
+        onChangeStart!(e, option);
 
         if (!e.defaultPrevented) {
           addOption(option);
@@ -283,7 +283,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(
   };
 
   React.useEffect(() => {
-    if (focusedOptionIndex != null && filteredOptions?.[focusedOptionIndex]) {
+    if (focusedOptionIndex != null && filteredOptions[focusedOptionIndex]) {
       setFocusedOption(filteredOptions[focusedOptionIndex]);
     } else if (focusedOptionIndex === null || focusedOptionIndex === 0) {
       setFocusedOption(null);
@@ -292,12 +292,12 @@ const ChipsSelect = <Option extends ChipsInputOption>(
 
   React.useEffect(() => {
     const index = focusedOption
-      ? filteredOptions?.findIndex(({ value }) => value === focusedOption.value)
+      ? filteredOptions.findIndex(({ value }) => value === focusedOption.value)
       : -1;
 
     if (
       index === -1 &&
-      !!filteredOptions?.length &&
+      !!filteredOptions.length &&
       !showCreatable &&
       closeAfterSelect
     ) {
@@ -329,7 +329,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(
       renderChipProps.onRemove?.(e, value);
     };
 
-    return renderChip?.({
+    return renderChip!({
       ...renderChipProps,
       onRemove: onRemoveWrapper,
     });
@@ -400,24 +400,23 @@ const ChipsSelect = <Option extends ChipsInputOption>(
               {emptyText}
             </Caption>
           ) : (
-            filteredOptions?.map((option: Option, index: number) => {
-              const label = getOptionLabel?.(option);
+            filteredOptions.map((option: Option, index: number) => {
+              const label = getOptionLabel!(option);
               const hovered =
                 focusedOption &&
-                getOptionValue?.(option) === getOptionValue?.(focusedOption);
-              const selected = selectedOptions?.find(
+                getOptionValue!(option) === getOptionValue!(focusedOption);
+              const selected = selectedOptions.find(
                 (selectedOption: Option) => {
                   return (
-                    getOptionValue?.(selectedOption) ===
-                    getOptionValue?.(option)
+                    getOptionValue!(selectedOption) === getOptionValue!(option)
                   );
                 }
               );
-              const value = getOptionValue?.(option);
+              const value = getOptionValue!(option);
 
               return (
                 <React.Fragment key={`${typeof value}-${value}`}>
-                  {renderOption?.({
+                  {renderOption!({
                     className: prefixClass("ChipsSelect__option"),
                     option,
                     hovered: Boolean(hovered),

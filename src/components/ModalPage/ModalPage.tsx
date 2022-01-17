@@ -8,10 +8,10 @@ import {
 import { usePlatform } from "../../hooks/usePlatform";
 import {
   withAdaptivity,
-  AdaptivityProps,
   ViewHeight,
   ViewWidth,
 } from "../../hoc/withAdaptivity";
+import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { multiRef } from "../../lib/utils";
 import { ModalType } from "../ModalRoot/types";
@@ -21,7 +21,7 @@ import "./ModalPage.css";
 
 export interface ModalPageProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    AdaptivityProps,
+    AdaptivityContextInterface,
     NavIdProps {
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`
@@ -46,8 +46,8 @@ const ModalPage: React.FC<ModalPageProps> = (props: ModalPageProps) => {
   const {
     children,
     header,
-    viewWidth = 0,
-    viewHeight = 0,
+    viewWidth,
+    viewHeight,
     sizeX,
     hasMouse,
     onClose,

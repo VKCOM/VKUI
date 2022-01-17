@@ -410,7 +410,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
     if (
       platform === IOS &&
       !configProvider?.isWebView &&
-      (e.startX <= 70 || e.startX >= (this.window?.innerWidth ?? 0) - 70) &&
+      (e.startX <= 70 || e.startX >= this.window!.innerWidth - 70) &&
       !this.state.browserSwipe
     ) {
       this.setState({ browserSwipe: true });
@@ -421,7 +421,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
       configProvider?.isWebView &&
       this.props.onSwipeBack
     ) {
-      if (this.state.animated && e.startX <= 70) {
+      if ((this.state.animated && e.startX <= 70) || !this.window) {
         return;
       }
 
@@ -438,22 +438,22 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
           swipingBack: true,
           swipebackStartX: e.startX,
           swipeBackPrevPanel: this.state.activePanel,
-          swipeBackNextPanel: this.props.history?.slice(-2)[0] ?? null,
+          swipeBackNextPanel: this.props.history!.slice(-2)[0],
         });
       }
       if (this.state.swipingBack) {
-        let swipeBackShift;
+        let swipeBackShift = 0;
         if (e.shiftX < 0) {
           swipeBackShift = 0;
         } else if (
           e.shiftX >
-          (this.window?.innerWidth ?? 0) - this.state.swipebackStartX
+          this.window.innerWidth - this.state.swipebackStartX
         ) {
           swipeBackShift = this.window?.innerWidth;
         } else {
           swipeBackShift = e.shiftX;
         }
-        this.setState({ swipeBackShift: swipeBackShift ?? 0 });
+        this.setState({ swipeBackShift });
       }
     }
   };
