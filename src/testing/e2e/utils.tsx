@@ -150,14 +150,15 @@ export function describeScreenshotFuzz<Props>(
   } = options;
   platforms.forEach((platform) => {
     describe(platform, () => {
-      const isVkCom = platform === "vkcom";
+      const isVKCOM = platform === Platform.VKCOM;
       const width: number | "auto" = adaptivity.viewWidth
         ? getAdaptivePxWidth(adaptivity.viewWidth)
-        : isVkCom
+        : isVKCOM
         ? "auto"
         : 320;
+
       const adaptivityProps = Object.assign(
-        isVkCom ? { sizeX: SizeType.COMPACT, sizeY: SizeType.COMPACT } : {},
+        isVKCOM ? { sizeX: SizeType.COMPACT, sizeY: SizeType.COMPACT } : {},
         adaptivity
       );
 
@@ -166,7 +167,7 @@ export function describeScreenshotFuzz<Props>(
         sizeY: true,
       });
 
-      (isVkCom ? vkcomSchemes : mobileSchemes).forEach((scheme: Scheme) => {
+      (isVKCOM ? vkcomSchemes : mobileSchemes).forEach((scheme: Scheme) => {
         scheme = scheme === Scheme.VKCOM_LIGHT ? Scheme.VKCOM : scheme; // Снести после мержа 1978
         it(`${scheme}${
           adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ""
@@ -178,13 +179,12 @@ export function describeScreenshotFuzz<Props>(
                   <div
                     style={{
                       width,
-                      maxWidth: isVkCom ? "100%" : "initial",
                       position: "absolute",
                       height: "auto",
                     }}
                   >
                     <Wrapper>
-                      {multiCartesian(propSets, { adaptive: !isVkCom }).map(
+                      {multiCartesian(propSets, { adaptive: !isVKCOM }).map(
                         (props, i) => (
                           <Fragment key={i}>
                             <div>{prettyProps(props)}</div>
