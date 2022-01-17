@@ -42,6 +42,7 @@ const Textarea: React.FC<TextareaProps> = React.memo(
       const el = elementRef.current;
 
       if (grow && el?.offsetParent) {
+        el.style.height = "";
         el.style.height = `${el.scrollHeight}px`;
 
         if (el.scrollHeight !== currentScrollHeight.current && onResize) {

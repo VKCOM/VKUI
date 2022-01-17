@@ -69,9 +69,7 @@ export function multiRef<T>(
     },
     set current(element) {
       current = element;
-      refs
-        .filter((ref) => ref)
-        .forEach((ref) => setRef(element, ref as React.Ref<T>));
+      refs.forEach((ref) => ref && setRef(element, ref));
     },
   };
 }
