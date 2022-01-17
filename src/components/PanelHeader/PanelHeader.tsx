@@ -15,9 +15,9 @@ import {
   SizeType,
   withAdaptivity,
 } from "../../hoc/withAdaptivity";
-import { isPrimitiveReactNode } from "../../lib/utils";
 import Text from "../Typography/Text/Text";
 import { TooltipContainer } from "../Tooltip/TooltipContainer";
+import ModalRootContext from "../ModalRoot/ModalRootContext";
 import "./PanelHeader.css";
 
 export interface PanelHeaderProps
@@ -58,20 +58,16 @@ const PanelHeaderIn: React.FC<PanelHeaderProps> = ({
   right,
 }) => {
   const { webviewType } = React.useContext(ConfigProviderContext);
-  const isPrimitive = isPrimitiveReactNode(children);
+  const { isInsideModal } = React.useContext(ModalRootContext);
 
   return (
     <TooltipContainer fixed vkuiClass="PanelHeader__in">
       <div vkuiClass="PanelHeader__left">{left}</div>
       <div vkuiClass="PanelHeader__content">
-        {isPrimitive ? (
-          <PanelHeaderInTypography>{children}</PanelHeaderInTypography>
-        ) : (
-          children
-        )}
+        <PanelHeaderInTypography>{children}</PanelHeaderInTypography>
       </div>
       <div vkuiClass="PanelHeader__right">
-        {webviewType !== WebviewType.VKAPPS && right}
+        {(webviewType === WebviewType.INTERNAL || isInsideModal) && right}
       </div>
     </TooltipContainer>
   );
@@ -95,6 +91,7 @@ const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
   } = props;
   const platform = usePlatform();
   const { webviewType } = React.useContext(ConfigProviderContext);
+  const { isInsideModal } = React.useContext(ModalRootContext);
   const needShadow = shadow && sizeX === SizeType.REGULAR;
   let isFixed = fixed !== undefined ? fixed : platform !== Platform.VKCOM;
 
@@ -108,7 +105,8 @@ const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
           "PanelHeader--shadow": needShadow,
           "PanelHeader--vis": visor,
           "PanelHeader--sep": separator && visor,
-          "PanelHeader--vkapps": webviewType === WebviewType.VKAPPS,
+          "PanelHeader--vkapps":
+            webviewType === WebviewType.VKAPPS && !isInsideModal,
           "PanelHeader--no-left": !left,
           "PanelHeader--no-right": !right,
           "PanelHeader--fixed": isFixed,

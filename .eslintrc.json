@@ -19,7 +19,7 @@
   "globals": {
     "Element": true
   },
-  "ignorePatterns": ["unstable/**/*.ts"],
+  "ignorePatterns": ["unstable/**/*.ts", "tokenized/**/*.ts"],
   "env": {
     "es6": true, // Enable global es6 variables, like Set, Map, etc
     "browser": true,
@@ -50,7 +50,8 @@
           "styles",
           "testing",
           "types",
-          "unstable"
+          "unstable",
+          "tokenized"
         ],
         "patterns": [
           "@vkontakte/icons/dist/*",
@@ -64,7 +65,8 @@
           "styles/*",
           "testing/*",
           "types/*",
-          "unstable/*"
+          "unstable/*",
+          "tokenized/*"
         ]
       }
     ],
