@@ -7,7 +7,6 @@ import { Panel } from "../../components/Panel/Panel";
 import { Platform } from "../../lib/platform";
 import { Scheme } from "../../helpers/scheme";
 import AdaptivityProvider, {
-  AdaptivityProviderProps,
   DESKTOP_SIZE,
   MOBILE_SIZE,
   SMALL_TABLET_SIZE,
@@ -26,7 +25,7 @@ type AdaptivityFlag = boolean | "x" | "y";
 type PropDesc<Props> = { [K in keyof Props]?: Array<Props[K]> } & {
   $adaptivity?: AdaptivityFlag;
 };
-type SizeProps = Pick<AdaptivityProviderProps, "sizeX" | "sizeY">;
+type SizeProps = Pick<AdaptivityProps, "sizeX" | "sizeY">;
 type TestProps<Props> = Array<Props & SizeProps>;
 type CartesianOptions = { adaptive: boolean };
 
@@ -106,7 +105,7 @@ type ScreenshotOptions = {
   mobileSchemes?: Array<Scheme.BRIGHT_LIGHT | Scheme.SPACE_GRAY>;
   // pass [VKCOM_LIGHT, VKCOM_DARK] if component depends on appearance
   vkcomSchemes?: Array<Scheme.VKCOM_LIGHT | Scheme.VKCOM_DARK>;
-  adaptivity?: AdaptivityProps;
+  adaptivity?: Partial<AdaptivityProps>;
   Wrapper?: ComponentType;
 };
 

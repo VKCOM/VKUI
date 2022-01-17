@@ -64,7 +64,7 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
     warn("can't close on outer click without onClose");
   }
 
-  const { viewWidth = 0, viewHeight = 0, hasMouse } = useAdaptivity();
+  const { viewWidth, viewHeight, hasMouse } = useAdaptivity();
   const isDesktop =
     viewWidth >= ViewWidth.SMALL_TABLET &&
     (hasMouse || viewHeight >= ViewHeight.MEDIUM);

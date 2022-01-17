@@ -27,7 +27,7 @@ export const PanelHeaderContext: React.FC<PanelHeaderContextProps> = ({
   const platform = usePlatform();
   const [visible, setVisible] = React.useState(opened);
   const closing = visible && !opened;
-  const { viewWidth = 0 } = useAdaptivity();
+  const { viewWidth } = useAdaptivity();
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
   const elementRef = React.useRef<HTMLDivElement>(null);
 

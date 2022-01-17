@@ -45,10 +45,10 @@ export interface AdaptivityProps extends SizeProps {
 }
 
 export interface AdaptivityContextInterface extends SizeProps {
-  viewWidth?: ViewWidth;
-  viewHeight?: ViewHeight;
-  hasMouse?: boolean;
-  deviceHasHover?: boolean;
+  viewWidth: ViewWidth;
+  viewHeight: ViewHeight;
+  hasMouse: boolean;
+  deviceHasHover: boolean;
 }
 
 export const AdaptivityContext =
@@ -57,4 +57,6 @@ export const AdaptivityContext =
     sizeY: SizeType.REGULAR,
     hasMouse,
     deviceHasHover: hasHover,
+    viewWidth: 0,
+    viewHeight: 0,
   });
