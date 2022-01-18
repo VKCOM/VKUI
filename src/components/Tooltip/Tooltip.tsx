@@ -164,7 +164,7 @@ const Tooltip: React.FC<TooltipProps> = ({
   alignX,
   alignY,
   onClose,
-  cornerOffset,
+  cornerOffset = 0,
   cornerAbsoluteOffset,
   ...restProps
 }) => {
@@ -217,24 +217,23 @@ const Tooltip: React.FC<TooltipProps> = ({
       enabled: true,
       phase: "main",
       fn({ state }) {
+        if (!state.modifiersData.arrow) {
+          return;
+        }
         if (isVerticalPlacement(state.placement)) {
           if (cornerAbsoluteOffset !== undefined) {
-            if (state.modifiersData.arrow) {
-              state.modifiersData.arrow.x = cornerAbsoluteOffset;
-            }
+            state.modifiersData.arrow.x = cornerAbsoluteOffset;
           } else {
             if (state.modifiersData.arrow?.x !== undefined) {
-              state.modifiersData.arrow.x += cornerOffset ?? 0;
+              state.modifiersData.arrow.x += cornerOffset;
             }
           }
         } else {
           if (cornerAbsoluteOffset !== undefined) {
-            if (state.modifiersData.arrow) {
-              state.modifiersData.arrow.y = cornerAbsoluteOffset;
-            }
+            state.modifiersData.arrow.y = cornerAbsoluteOffset;
           } else {
             if (state.modifiersData.arrow?.y !== undefined) {
-              state.modifiersData.arrow.y += cornerOffset ?? 0;
+              state.modifiersData.arrow.y += cornerOffset;
             }
           }
         }
