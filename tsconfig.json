@@ -19,7 +19,8 @@
     "baseUrl": "src",
     "paths": {
       "@react-playwright": ["../e2e"]
-    }
+    },
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*.ts",
