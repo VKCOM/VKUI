@@ -94,6 +94,11 @@ function prettyProps(props: any) {
       ) {
         return `${prop}=<jsx>`;
       }
+      if (prop === "style" || prop === "src") {
+        const _value = JSON.stringify(value);
+
+        return `${prop}=${_value.replace(/"\\?data:.+?"+?/gi, "{base64}")}`;
+      }
       return `${prop}=${JSON.stringify(value)}`;
     })
     .join(" ");
@@ -157,7 +162,7 @@ export function describeScreenshotFuzz<Props>(
         ? "auto"
         : 320;
 
-      const adaptivityProps = Object.assign(
+      const adaptivityProps: AdaptivityProps = Object.assign(
         isVKCOM ? { sizeX: SizeType.COMPACT, sizeY: SizeType.COMPACT } : {},
         adaptivity
       );
