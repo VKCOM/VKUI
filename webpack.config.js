@@ -1,5 +1,6 @@
 const path = require("path");
-const merge = require("webpack-merge");
+const webpack = require("webpack");
+const { merge } = require("webpack-merge");
 
 const isProduction = process.env.NODE_ENV === "production";
 process.env.BABEL_KEEP_CSS = "1";
@@ -24,6 +25,11 @@ const config = {
     libraryTarget: "umd",
     globalObject: `typeof self !== 'undefined' ? self : this`,
   },
+  plugins: [
+    new webpack.ProvidePlugin({
+      process: "process/browser",
+    }),
+  ],
   module: {
     rules: [
       {
@@ -33,13 +39,9 @@ const config = {
       },
       {
         test: /\.(jpeg|jpg|png|woff|woff2|svg|otf)$/,
-        use: {
-          loader: "file-loader",
-          options: {
-            esModule: false,
-            outputPath: "static/",
-            name: "[name].[hash:8].[ext]",
-          },
+        type: "asset/resource",
+        generator: {
+          filename: "static/[name].[hash:8].[ext]",
         },
       },
       {
