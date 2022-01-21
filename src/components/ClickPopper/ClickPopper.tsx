@@ -12,7 +12,7 @@ export interface ClickPopperProps extends PopperCommonProps {
    */
   content?: React.ReactNode;
   /**
-   * Если передан, то тултип будет показыван/скрыт в зависимости от значения свойства
+   * Если передан, то тултип будет показан/скрыт в зависимости от значения свойства
    */
   shown?: boolean;
   /**
