@@ -4,7 +4,7 @@
 }
 
 .CardScroll .Card {
-  margin-right: 8px;
+  margin-right: 12px;
   flex-shrink: 0;
 }
 
@@ -31,6 +31,14 @@
 
 .CardScroll--l .Card {
   width: 100%;
+}
+
+.CardScroll--rounded .vkuiHorizontalScroll {
+  border-radius: 16px;
+}
+
+.CardScroll--arrows .HorizontalScrollArrow {
+  opacity: 1;
 }
 
 /**

@@ -11,12 +11,18 @@ export interface CardScrollProps
   extends React.HTMLAttributes<HTMLDivElement>,
     AdaptivityProps {
   size?: "s" | "m" | "l";
+  fluidCard?: boolean;
+  rounded?: boolean;
+  showArrows?: boolean;
 }
 
 const CardScroll: React.FC<CardScrollProps> = ({
   children,
   size,
   sizeX,
+  fluidCard,
+  showArrows,
+  rounded,
   ...restProps
 }: CardScrollProps) => {
   const platform = usePlatform();
@@ -79,8 +85,10 @@ const CardScroll: React.FC<CardScrollProps> = ({
       {...restProps}
       vkuiClass={classNames(
         getClassName("CardScroll", platform),
-        `CardScroll--${size}`,
-        `CardScroll--sizeX-${sizeX}`
+        `CardScroll--sizeX-${sizeX}`,
+        { [`CardScroll--${size}`]: !fluidCard },
+        rounded ? `CardScroll--rounded` : "",
+        showArrows ? "CardScroll--arrows" : ""
       )}
     >
       <HorizontalScroll
