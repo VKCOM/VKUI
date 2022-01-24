@@ -30,7 +30,10 @@ import "./ModalRoot.css";
 const warn = warnOnce("ModalRoot");
 const IS_DEV = process.env.NODE_ENV === "development";
 
-function numberInRange(number: number, range: TranslateRange) {
+function numberInRange(number: number, range: TranslateRange | undefined) {
+  if (!range) {
+    return false;
+  }
   return number >= range[0] && number <= range[1];
 }
 
@@ -80,15 +83,15 @@ class ModalRootTouchComponent extends React.Component<
     this.frameIds = {};
   }
 
-  private documentScrolling: boolean;
+  private documentScrolling = false;
   private readonly maskElementRef: React.RefObject<HTMLDivElement>;
   private readonly viewportRef = React.createRef<HTMLDivElement>();
-  private maskAnimationFrame: number;
+  private maskAnimationFrame: number | undefined = undefined;
   private readonly modalRootContext: ModalRootContextInterface;
   private readonly frameIds: {
     [index: string]: number;
   };
-  private restoreFocusTo: HTMLElement;
+  private restoreFocusTo: HTMLElement | undefined | null = undefined;
 
   get timeout(): number {
     return this.props.platform === ANDROID || this.props.platform === VKCOM
@@ -96,15 +99,18 @@ class ModalRootTouchComponent extends React.Component<
       : 400;
   }
 
-  get document(): Document {
+  get document() {
     return this.props.document;
   }
 
-  get window(): Window {
+  get window() {
     return this.props.window;
   }
 
-  getModalState(id: string) {
+  getModalState(id: string | undefined | null) {
+    if (!id) {
+      return undefined;
+    }
     return this.props.getModalState(id);
   }
 
@@ -115,13 +121,17 @@ class ModalRootTouchComponent extends React.Component<
   componentDidMount() {
     // Отслеживаем изменение размеров viewport (Необходимо для iOS)
     if (this.props.platform === IOS) {
-      this.window.addEventListener("resize", this.updateModalTranslate, false);
+      this.window?.addEventListener("resize", this.updateModalTranslate, false);
     }
   }
 
   componentWillUnmount() {
     this.toggleDocumentScrolling(true);
-    this.window.removeEventListener("resize", this.updateModalTranslate, false);
+    this.window!.removeEventListener(
+      "resize",
+      this.updateModalTranslate,
+      false
+    );
   }
 
   componentDidUpdate(prevProps: ModalRootProps & ModalTransitionProps) {
@@ -141,18 +151,23 @@ class ModalRootTouchComponent extends React.Component<
       const { enteringModal } = this.props;
       const enteringState = this.getModalState(enteringModal);
       this.waitTransitionFinish(enteringState, () => {
-        enteringState.innerElement.style.transitionDelay = null;
+        if (enteringState?.innerElement) {
+          enteringState.innerElement.style.transitionDelay = "";
+        }
         this.props.onEnter(enteringModal);
       });
-      enteringState.innerElement.style.transitionDelay = this.props.delayEnter
-        ? `${this.timeout}ms`
-        : null;
-      this.animateTranslate(enteringState, enteringState.translateY);
+
+      if (enteringState?.innerElement) {
+        enteringState.innerElement.style.transitionDelay = this.props.delayEnter
+          ? `${this.timeout}ms`
+          : "";
+        this.animateTranslate(enteringState, enteringState.translateY);
+      }
     }
 
     // focus restoration
     if (this.props.activeModal && !prevProps.activeModal) {
-      this.restoreFocusTo = this.document.activeElement as HTMLElement;
+      this.restoreFocusTo = this.document!.activeElement as HTMLElement;
     }
     if (
       !this.props.activeModal &&
@@ -179,12 +194,12 @@ class ModalRootTouchComponent extends React.Component<
       // Здесь нужен последний аргумент с такими же параметрами, потому что
       // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
       // https://github.com/VKCOM/VKUI/issues/444
-      this.window.removeEventListener("touchmove", this.preventTouch, {
+      this.window!.removeEventListener("touchmove", this.preventTouch, {
         // @ts-ignore (В интерфейсе EventListenerOptions нет поля passive)
         passive: false,
       });
     } else {
-      this.window.addEventListener("touchmove", this.preventTouch, {
+      this.window!.addEventListener("touchmove", this.preventTouch, {
         passive: false,
       });
     }
@@ -273,9 +288,10 @@ class ModalRootTouchComponent extends React.Component<
     const exitTranslate =
       prevIsPage &&
       nextIsPage &&
-      prevModalState.translateY <= nextModalState.translateYFrom &&
+      (prevModalState.translateY ?? 0) <=
+        (nextModalState?.translateYFrom ?? 0) &&
       !this.props.isBack
-        ? nextModalState.translateYFrom + 10
+        ? (nextModalState?.translateYFrom ?? 0) + 10
         : 100;
     this.animateTranslate(prevModalState, exitTranslate);
 
@@ -308,13 +324,13 @@ class ModalRootTouchComponent extends React.Component<
     const target = originalEvent.target as HTMLElement;
 
     if (!event.isY) {
-      if (this.viewportRef.current.contains(target)) {
+      if (this.viewportRef.current?.contains(target)) {
         originalEvent.preventDefault();
       }
       return;
     }
 
-    if (!modalState.innerElement.contains(target)) {
+    if (!modalState.innerElement?.contains(target)) {
       return originalEvent.preventDefault();
     }
 
@@ -324,7 +340,7 @@ class ModalRootTouchComponent extends React.Component<
 
     if (!this.state.touchDown) {
       modalState.touchStartContentScrollTop =
-        modalState.contentElement.scrollTop;
+        modalState.contentElement?.scrollTop;
       this.setState({ touchDown: true });
     }
 
@@ -342,11 +358,11 @@ class ModalRootTouchComponent extends React.Component<
       (expanded &&
         modalState.touchMovePositive &&
         modalState.touchStartContentScrollTop === 0) ||
-      modalState.headerElement.contains(target)
+      modalState.headerElement?.contains(target)
     ) {
       originalEvent.preventDefault();
 
-      if (!expandable && shiftY < 0) {
+      if ((!expandable && shiftY < 0) || !this.window) {
         return;
       }
 
@@ -362,7 +378,7 @@ class ModalRootTouchComponent extends React.Component<
 
       modalState.touchShiftYPercent = shiftYPercent;
       modalState.translateYCurrent = rangeTranslate(
-        modalState.translateY + shiftYCurrent
+        (modalState.translateY ?? 0) + shiftYCurrent
       );
 
       this.animateTranslate(modalState, modalState.translateYCurrent);
@@ -373,7 +389,7 @@ class ModalRootTouchComponent extends React.Component<
   onCardTouchMove(event: TouchEvent, modalState: ModalsStateEntry) {
     const { originalEvent, shiftY } = event;
     const target = originalEvent.target as HTMLElement;
-    if (modalState.innerElement.contains(target)) {
+    if (modalState.innerElement?.contains(target)) {
       if (!this.state.touchDown) {
         this.setState({ touchDown: true, dragging: true });
       }
@@ -390,7 +406,7 @@ class ModalRootTouchComponent extends React.Component<
       modalState.touchShiftYPercent = shiftYPercent;
       modalState.translateYCurrent = Math.max(
         0,
-        modalState.translateY + shiftYCurrent
+        (modalState.translateY ?? 0) + shiftYCurrent
       );
 
       this.animateTranslate(modalState, modalState.translateYCurrent);
@@ -401,11 +417,11 @@ class ModalRootTouchComponent extends React.Component<
   onTouchEnd = (e: TouchEvent) => {
     const modalState = this.getModalState(this.props.activeModal);
 
-    if (modalState.type === ModalType.PAGE) {
+    if (modalState?.type === ModalType.PAGE) {
       return this.onPageTouchEnd(e, modalState);
     }
 
-    if (modalState.type === ModalType.CARD) {
+    if (modalState?.type === ModalType.CARD) {
       return this.onCardTouchEnd(e, modalState);
     }
   };
@@ -418,27 +434,27 @@ class ModalRootTouchComponent extends React.Component<
 
     let setStateCallback;
 
-    if (this.state.dragging) {
+    if (this.state.dragging && this.window) {
       const shiftYEndPercent =
         ((startY + shiftY) / this.window.innerHeight) * 100;
 
-      let translateY = modalState.translateYCurrent;
+      let translateY = modalState.translateYCurrent ?? 0;
       const expectTranslateY =
         (translateY / event.duration) *
         240 *
         0.6 *
-        (modalState.touchShiftYPercent < 0 ? -1 : 1);
+        ((modalState.touchShiftYPercent ?? 0) < 0 ? -1 : 1);
       translateY = rangeTranslate(translateY + expectTranslateY);
 
       if (modalState.settlingHeight !== 100) {
         if (numberInRange(translateY, modalState.expandedRange)) {
-          translateY = modalState.expandedRange[0];
+          translateY = modalState.expandedRange?.[0] ?? 0;
         } else if (numberInRange(translateY, modalState.collapsedRange)) {
-          translateY = modalState.translateYFrom;
+          translateY = modalState.translateYFrom ?? 0;
         } else if (numberInRange(translateY, modalState.hiddenRange)) {
           translateY = 100;
         } else {
-          translateY = modalState.translateYFrom;
+          translateY = modalState.translateYFrom ?? 0;
         }
       } else {
         if (numberInRange(translateY, [0, 25])) {
@@ -484,13 +500,13 @@ class ModalRootTouchComponent extends React.Component<
     let setStateCallback;
 
     if (this.state.dragging) {
-      let translateY = modalState.translateYCurrent;
+      let translateY = modalState.translateYCurrent ?? 0;
 
       const expectTranslateY =
         (translateY / duration) *
         240 *
         0.6 *
-        (modalState.touchShiftYPercent < 0 ? -1 : 1);
+        ((modalState.touchShiftYPercent ?? 0) < 0 ? -1 : 1);
       translateY = Math.max(0, translateY + expectTranslateY);
 
       if (translateY >= 30) {
@@ -534,12 +550,14 @@ class ModalRootTouchComponent extends React.Component<
     }
     const modalState = this.getModalState(activeModal);
     if (
-      modalState.type === ModalType.PAGE &&
-      modalState.contentElement.contains(target)
+      modalState?.type === ModalType.PAGE &&
+      modalState?.contentElement?.contains(target)
     ) {
       modalState.contentScrolled = true;
 
-      clearTimeout(modalState.contentScrollStopTimeout);
+      if (modalState.contentScrollStopTimeout) {
+        clearTimeout(modalState.contentScrollStopTimeout);
+      }
 
       modalState.contentScrollStopTimeout = setTimeout(() => {
         if (modalState.contentScrolled) {
@@ -555,15 +573,15 @@ class ModalRootTouchComponent extends React.Component<
   ) {
     if (transitionEvent.supported) {
       const onceHandler = () => {
-        modalState?.innerElement.removeEventListener(
-          transitionEvent.name,
+        modalState?.innerElement?.removeEventListener(
+          transitionEvent.name as string,
           onceHandler
         );
         eventHandler();
       };
 
-      modalState?.innerElement.addEventListener(
-        transitionEvent.name,
+      modalState?.innerElement?.addEventListener(
+        transitionEvent.name as string,
         onceHandler
       );
     } else {
@@ -577,7 +595,7 @@ class ModalRootTouchComponent extends React.Component<
    * @param {ModalsStateEntry} modalState
    * @param {number} percent Процент сдвига: 0 – полностью открыта, 100 – полностью закрыта
    */
-  animateTranslate(modalState: ModalsStateEntry, percent: number) {
+  animateTranslate(modalState: ModalsStateEntry, percent: number | undefined) {
     const frameId = `animateTranslateFrame${modalState.id}`;
 
     cancelAnimationFrame(this.frameIds[frameId]);
@@ -591,15 +609,19 @@ class ModalRootTouchComponent extends React.Component<
   }
 
   /* Устанавливает прозрачность для полупрозрачной подложки */
-  setMaskOpacity(modalState: ModalsStateEntry, forceOpacity: number = null) {
-    if (forceOpacity === null && this.props.history[0] !== modalState.id) {
+  setMaskOpacity(
+    modalState: ModalsStateEntry,
+    forceOpacity: number | null = null
+  ) {
+    if (forceOpacity === null && this.props.history?.[0] !== modalState.id) {
       return;
     }
-
-    cancelAnimationFrame(this.maskAnimationFrame);
+    if (this.maskAnimationFrame) {
+      cancelAnimationFrame(this.maskAnimationFrame);
+    }
     this.maskAnimationFrame = requestAnimationFrame(() => {
       if (this.maskElementRef.current) {
-        const { translateY, translateYCurrent } = modalState;
+        const { translateY = 0, translateYCurrent = 0 } = modalState;
 
         const opacity =
           forceOpacity === null
@@ -629,7 +651,7 @@ class ModalRootTouchComponent extends React.Component<
               getClassName("ModalRoot", this.props.platform),
               {
                 "ModalRoot--vkapps":
-                  this.props.configProvider.webviewType === WebviewType.VKAPPS,
+                  this.props.configProvider?.webviewType === WebviewType.VKAPPS,
                 "ModalRoot--touched": touchDown,
                 "ModalRoot--switching": !!(enteringModal || exitingModal),
               }
@@ -646,10 +668,14 @@ class ModalRootTouchComponent extends React.Component<
             <div vkuiClass="ModalRoot__viewport" ref={this.viewportRef}>
               {this.getModals().map((Modal) => {
                 const modalId = getNavId(Modal.props, warn);
-                if (modalId !== activeModal && modalId !== exitingModal) {
+                const _modalState = this.getModalState(modalId);
+                if (
+                  (modalId !== activeModal && modalId !== exitingModal) ||
+                  !_modalState
+                ) {
                   return null;
                 }
-                const modalState = { ...this.getModalState(modalId) };
+                const modalState = { ..._modalState };
 
                 const isPage = modalState.type === ModalType.PAGE;
                 const key = `modal-${modalId}`;
@@ -657,9 +683,12 @@ class ModalRootTouchComponent extends React.Component<
                 return (
                   <FocusTrap
                     key={key}
-                    getRootRef={(e) =>
-                      (this.getModalState(modalId).modalElement = e)
-                    }
+                    getRootRef={(e) => {
+                      const modalState = this.getModalState(modalId);
+                      if (modalState) {
+                        modalState.modalElement = e;
+                      }
+                    }}
                     onClose={this.props.closeActiveModal}
                     timeout={this.timeout}
                     vkuiClass={classNames("ModalRoot__modal", {
@@ -720,13 +749,13 @@ function initModal(modalState: ModalsStateEntry) {
 
 function initPageModal(modalState: ModalsStateEntry) {
   const { contentElement } = modalState;
-  const contentHeight = (contentElement.firstElementChild as HTMLElement)
+  const contentHeight = (contentElement?.firstElementChild as HTMLElement)
     .offsetHeight;
 
   let prevTranslateY = modalState.translateY;
 
   modalState.expandable =
-    contentHeight > contentElement.clientHeight ||
+    contentHeight > (contentElement?.clientHeight ?? 0) ||
     modalState.settlingHeight === 100;
 
   let collapsed = false;
@@ -738,7 +767,7 @@ function initPageModal(modalState: ModalsStateEntry) {
   let hiddenRange: TranslateRange;
 
   if (modalState.expandable) {
-    translateYFrom = 100 - modalState.settlingHeight;
+    translateYFrom = 100 - (modalState.settlingHeight ?? 0);
 
     const shiftHalf = translateYFrom / 2;
     const visiblePart = 100 - translateYFrom;
@@ -751,11 +780,13 @@ function initPageModal(modalState: ModalsStateEntry) {
     expanded = translateYFrom <= 0;
     translateY = translateYFrom;
   } else {
-    const headerHeight = modalState.headerElement.offsetHeight;
+    const headerHeight = modalState.headerElement?.offsetHeight ?? 0;
     const height = contentHeight + headerHeight;
 
     translateYFrom =
-      100 - (height / modalState.innerElement.parentElement.offsetHeight) * 100;
+      100 -
+      (height / (modalState.innerElement?.parentElement?.offsetHeight ?? 0)) *
+        100;
     translateY = translateYFrom;
 
     expandedRange = [translateY, translateY + 25];
@@ -765,7 +796,7 @@ function initPageModal(modalState: ModalsStateEntry) {
 
   // Если модалка может открываться на весь экран, и новый сдвиг больше предыдущего, то откроем её на весь экран
   if (
-    (modalState.expandable && translateY > prevTranslateY) ||
+    (modalState.expandable && translateY > (prevTranslateY ?? 0)) ||
     modalState.settlingHeight === 100
   ) {
     translateY = 0;

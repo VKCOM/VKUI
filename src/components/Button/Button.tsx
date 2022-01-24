@@ -46,7 +46,7 @@ export interface ButtonProps
 
 interface ButtonTypographyProps extends HasComponent {
   size: ButtonProps["size"];
-  platform: Platform;
+  platform: Platform | undefined;
   sizeY: AdaptivityProps["sizeY"];
   children?: ButtonProps["children"];
 }
@@ -171,7 +171,7 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
     <Tappable
       {...restProps}
       Component={restProps.href ? "a" : Component}
-      onClick={loading ? null : onClick}
+      onClick={loading ? undefined : onClick}
       focusVisibleMode="outside"
       vkuiClass={classNames(
         getClassName("Button", platform),

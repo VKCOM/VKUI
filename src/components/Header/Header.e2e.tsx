@@ -12,7 +12,7 @@ describe("Header", () => {
       {
         mode: ["primary", "secondary", "tertiary"],
         children: ["Кто может оставлять записи на моей странице"],
-        multiline: [null, true],
+        multiline: [undefined, true],
       },
       {
         mode: ["primary"],

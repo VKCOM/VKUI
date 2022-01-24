@@ -48,14 +48,14 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
   style,
   iosCloseItem,
   ...restProps
-}: ActionSheetProps) => {
+}) => {
   const platform = usePlatform();
   const [closing, setClosing] = React.useState(false);
   const onClose = () => setClosing(true);
   const _action = React.useRef(noop);
 
   const afterClose = () => {
-    restProps.onClose();
+    restProps.onClose?.();
     _action.current();
     _action.current = noop;
   };
@@ -82,7 +82,7 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
     } else {
       fallbackTransitionFinish.clear();
     }
-  }, [closing]);
+  }, [closing, fallbackTransitionFinish]);
 
   const onItemClick = React.useCallback<ItemClickHandler>(
     (action, immediateAction, autoclose) => (event) => {

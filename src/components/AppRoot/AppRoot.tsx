@@ -41,7 +41,7 @@ export interface AppRootProps
 }
 
 const warn = warnOnce("AppRoot");
-export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
+export const AppRoot = withAdaptivity<AppRootProps>(
   ({
     children,
     mode: _mode,
@@ -51,19 +51,21 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
     noLegacyClasses = false,
     scroll = "global",
     ...props
-  }: AppRootProps) => {
+  }) => {
     // normalize mode
     const mode = _mode || (_embedded ? "embedded" : "full");
     const isKeyboardInputActive = useKeyboardInputTracker();
-    const rootRef = React.useRef<HTMLDivElement>();
-    const [portalRoot, setPortalRoot] = React.useState<HTMLDivElement>(null);
+    const rootRef = React.useRef<HTMLDivElement | null>(null);
+    const [portalRoot, setPortalRoot] = React.useState<HTMLDivElement | null>(
+      null
+    );
     const { window, document } = useDOM();
     const insets = useInsets();
     const appearanceContext = React.useContext(AppearanceProviderContext);
 
     const initialized = React.useRef(false);
     if (!initialized.current) {
-      if (window && mode === "full") {
+      if (document && mode === "full") {
         document.documentElement.classList.add("vkui");
       }
       classScopingMode.noConflict = noLegacyClasses;
@@ -81,12 +83,12 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
 
     // setup portal
     useIsomorphicLayoutEffect(() => {
-      const portal = document.createElement("div");
+      const portal = document!.createElement("div");
       portal.classList.add("vkui__portal-root");
-      document.body.appendChild(portal);
+      document!.body.appendChild(portal);
       setPortalRoot(portal);
       return () => {
-        portal.parentElement.removeChild(portal);
+        portal.parentElement?.removeChild(portal);
       };
     }, []);
 
@@ -96,23 +98,23 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
         return noop;
       }
 
-      const parent = rootRef.current.parentElement;
+      const parent = rootRef.current?.parentElement;
       const classes = ["vkui__root"].concat(
         mode === "embedded" ? "vkui__root--embedded" : []
       );
-      parent.classList.add(...classes);
+      parent?.classList.add(...classes);
 
       return () => {
-        parent.classList.remove(...classes);
+        parent?.classList.remove(...classes);
         if (mode === "full") {
-          document.documentElement.classList.remove("vkui");
+          document?.documentElement.classList.remove("vkui");
         }
       };
     }, []);
 
     // setup insets
     useIsomorphicLayoutEffect(() => {
-      if (mode === "partial") {
+      if (mode === "partial" || !rootRef.current?.parentElement) {
         return noop;
       }
 
@@ -150,9 +152,9 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
         return noop;
       }
       const container =
-        mode === "embedded" ? rootRef.current.parentElement : document.body;
-      container.classList.add("vkui--sizeX-regular");
-      return () => container.classList.remove("vkui--sizeX-regular");
+        mode === "embedded" ? rootRef.current?.parentElement : document!.body;
+      container?.classList.add("vkui--sizeX-regular");
+      return () => container?.classList.remove("vkui--sizeX-regular");
     }, [sizeX]);
 
     const scrollController = React.useMemo<ScrollContextInterface>(
@@ -160,12 +162,12 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(
         scroll === "contain"
           ? elementScrollController(rootRef)
           : globalScrollController(window, document),
-      [scroll]
+      [document, scroll, window]
     );
 
     useIsomorphicLayoutEffect(() => {
-      portalRoot?.setAttribute("scheme", appearanceContext?.scheme);
-    }, [appearanceContext?.scheme, portalRoot]);
+      portalRoot?.setAttribute("scheme", appearanceContext?.scheme ?? "");
+    }, [portalRoot, appearanceContext?.scheme]);
 
     const content = (
       <AppRootContext.Provider

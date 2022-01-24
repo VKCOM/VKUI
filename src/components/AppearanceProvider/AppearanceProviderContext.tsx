@@ -7,5 +7,6 @@ export interface AppearanceProviderContextProps {
   appearance: AppearanceType;
 }
 
-export const AppearanceProviderContext =
-  React.createContext<AppearanceProviderContextProps>(undefined);
+export const AppearanceProviderContext = React.createContext<
+  AppearanceProviderContextProps | undefined
+>(undefined);

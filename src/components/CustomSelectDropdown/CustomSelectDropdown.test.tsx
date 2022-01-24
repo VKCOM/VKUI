@@ -5,7 +5,11 @@ import { render } from "@testing-library/react";
 describe("CustomSelectDropdown", () => {
   it("Displays only spinner if fetching: true", () => {
     render(
-      <CustomSelectDropdown targetRef={React.createRef()} fetching>
+      <CustomSelectDropdown
+        targetRef={React.createRef()}
+        scrollBoxRef={React.createRef()}
+        fetching
+      >
         <div className="test-content">test</div>
       </CustomSelectDropdown>
     );
@@ -16,7 +20,10 @@ describe("CustomSelectDropdown", () => {
 
   it("Displays children if fetching: false", () => {
     render(
-      <CustomSelectDropdown targetRef={React.createRef()}>
+      <CustomSelectDropdown
+        targetRef={React.createRef()}
+        scrollBoxRef={React.createRef()}
+      >
         <div className="test-content">test</div>
       </CustomSelectDropdown>
     );

@@ -3,7 +3,8 @@
     "@vkontakte/eslint-config/typescript/react",
     "prettier",
     "prettier/react",
-    "prettier/@typescript-eslint"
+    "prettier/@typescript-eslint",
+    "plugin:react-hooks/recommended"
   ],
   "parserOptions": {
     "project": "./tsconfig.json",
@@ -34,6 +35,7 @@
         "ignoreRestSiblings": true
       }
     ],
+    "@typescript-eslint/no-non-null-assertion": "off",
     "no-restricted-globals": ["error", "window", "document"],
     "no-restricted-imports": [
       "error",

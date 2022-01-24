@@ -52,7 +52,11 @@ const FormLayoutGroup: React.FC<FormLayoutGroupProps> = ({
           vkuiClass="FormLayoutGroup__removable"
           align="start"
           removePlaceholder={removePlaceholder}
-          onRemove={(e) => onRemove(e, rootEl?.current)}
+          onRemove={(e) => {
+            if (rootEl?.current) {
+              onRemove(e, rootEl.current);
+            }
+          }}
         >
           {children}
         </Removable>

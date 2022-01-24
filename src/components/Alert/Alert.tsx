@@ -7,11 +7,7 @@ import { transitionEvent } from "../../lib/supportEvents";
 import { ANDROID, VKCOM, IOS } from "../../lib/platform";
 import { HasPlatform } from "../../types";
 import { withPlatform } from "../../hoc/withPlatform";
-import {
-  withAdaptivity,
-  AdaptivityProps,
-  ViewWidth,
-} from "../../hoc/withAdaptivity";
+import { withAdaptivity, ViewWidth } from "../../hoc/withAdaptivity";
 import Button, { ButtonProps } from "../Button/Button";
 import { hasReactNode } from "../../lib/utils";
 import Headline from "../Typography/Headline/Headline";
@@ -19,9 +15,10 @@ import Title from "../Typography/Title/Title";
 import Caption from "../Typography/Caption/Caption";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
+import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
 import "./Alert.css";
 
-export type AlertActionInterface = AlertProps["actions"][0] &
+export type AlertActionInterface = AlertAction &
   React.AnchorHTMLAttributes<HTMLElement>;
 
 export interface AlertAction extends Pick<ButtonProps, "Component" | "href"> {
@@ -34,7 +31,7 @@ export interface AlertAction extends Pick<ButtonProps, "Component" | "href"> {
 export interface AlertProps
   extends React.HTMLAttributes<HTMLElement>,
     HasPlatform,
-    AdaptivityProps {
+    AdaptivityContextInterface {
   actionsLayout?: "vertical" | "horizontal";
   actions?: AlertAction[];
   header?: React.ReactNode;
@@ -61,9 +58,9 @@ class Alert extends React.Component<AlertProps, AlertState> {
 
   element: React.RefObject<HTMLDivElement>;
 
-  private transitionFinishTimeout: ReturnType<typeof setTimeout>;
+  private transitionFinishTimeout: number | undefined = undefined;
 
-  static defaultProps: AlertProps = {
+  static defaultProps: Partial<AlertProps> = {
     actionsLayout: "horizontal",
     actions: [],
   };
@@ -81,7 +78,7 @@ class Alert extends React.Component<AlertProps, AlertState> {
       this.setState({ closing: true });
       this.waitTransitionFinish((e?: TransitionEvent) => {
         if (!e || e.propertyName === "opacity") {
-          autoclose && this.props.onClose();
+          autoclose && this.props.onClose?.();
           action && action();
         }
       });
@@ -94,7 +91,7 @@ class Alert extends React.Component<AlertProps, AlertState> {
     this.setState({ closing: true });
     this.waitTransitionFinish((e?: TransitionEvent) => {
       if (!e || e.propertyName === "opacity") {
-        this.props.onClose();
+        this.props.onClose?.();
       }
     });
   };
@@ -104,14 +101,19 @@ class Alert extends React.Component<AlertProps, AlertState> {
   };
 
   waitTransitionFinish(eventHandler: TransitionEndHandler) {
-    if (transitionEvent.supported) {
+    if (transitionEvent.supported && this.element.current) {
       this.element.current.removeEventListener(
-        transitionEvent.name,
-        eventHandler
+        transitionEvent.name as string,
+        eventHandler as () => void
       );
-      this.element.current.addEventListener(transitionEvent.name, eventHandler);
+      this.element.current.addEventListener(
+        transitionEvent.name as string,
+        eventHandler as () => void
+      );
     } else {
-      clearTimeout(this.transitionFinishTimeout);
+      if (this.transitionFinishTimeout) {
+        clearTimeout(this.transitionFinishTimeout);
+      }
       this.transitionFinishTimeout = setTimeout(
         eventHandler.bind(this),
         this.timeout
@@ -139,6 +141,8 @@ class Alert extends React.Component<AlertProps, AlertState> {
             {header}
           </Title>
         );
+      default:
+        return undefined;
     }
   }
 
@@ -162,6 +166,8 @@ class Alert extends React.Component<AlertProps, AlertState> {
             {text}
           </Headline>
         );
+      default:
+        return undefined;
     }
   }
 
@@ -266,7 +272,7 @@ class Alert extends React.Component<AlertProps, AlertState> {
             {children}
           </div>
           <footer vkuiClass="Alert__actions">
-            {actions.map(this.renderAction)}
+            {actions?.map(this.renderAction)}
           </footer>
         </FocusTrap>
       </PopoutWrapper>

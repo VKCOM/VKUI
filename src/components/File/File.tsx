@@ -50,7 +50,7 @@ const File: React.FunctionComponent<FileProps> = (props: FileProps) => {
       disabled={restProps.disabled}
       type="button"
       onClick={(e) => {
-        inputRef.current.click();
+        inputRef.current?.click();
         onClick && onClick(e);
       }}
     >

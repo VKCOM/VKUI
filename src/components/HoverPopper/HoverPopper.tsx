@@ -38,7 +38,7 @@ export const HoverPopper: React.FC<HoverPopperProps> = ({
   children,
   onShownChange,
   shown: _shown,
-  showDelay,
+  showDelay = 150,
   hideDelay = 150,
   ...restProps
 }: HoverPopperProps) => {
@@ -77,8 +77,10 @@ export const HoverPopper: React.FC<HoverPopperProps> = ({
   const targetLeaveListener = useEventListener("pointerleave", onTargetLeave);
 
   useIsomorphicLayoutEffect(() => {
-    targetEnterListener.add(childRef.current);
-    targetLeaveListener.add(childRef.current);
+    if (childRef.current) {
+      targetEnterListener.add(childRef.current);
+      targetLeaveListener.add(childRef.current);
+    }
   }, []);
 
   return (

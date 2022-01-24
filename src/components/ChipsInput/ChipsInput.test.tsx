@@ -23,7 +23,7 @@ describe("ChipsInput", () => {
   });
 
   it("adds chips", () => {
-    let value: ChipsInputOption[];
+    let value;
 
     render(
       <ChipsInputTest
@@ -38,7 +38,7 @@ describe("ChipsInput", () => {
   });
 
   it("does not lose data when adding an already existing chip", () => {
-    let value: ChipsInputOption[];
+    let value: ChipsInputOption[] | undefined = undefined;
 
     render(
       <ChipsInputTest
@@ -59,7 +59,7 @@ describe("ChipsInput", () => {
   });
 
   it("removes chip on hitting backspace", () => {
-    let value: ChipsInputOption[];
+    let value: ChipsInputOption[] | undefined = undefined;
 
     render(
       <ChipsInputTest
@@ -99,7 +99,7 @@ describe("ChipsInput", () => {
   it("focuses ChipsInput on chip click", () => {
     render(<ChipsInputTest value={chipsInputValue} />);
 
-    userEvent.click(redChip());
+    userEvent.click(redChip() as HTMLElement);
     expect(getChipsInput()).toHaveFocus();
   });
 });

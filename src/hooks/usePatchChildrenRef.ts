@@ -12,8 +12,8 @@ const isDOMTypeElement = (
 
 const warn = warnOnce("usePatchChildrenRef");
 export const usePatchChildrenRef = <T = HTMLElement>(
-  children: ChildrenElement<T>
-): [React.MutableRefObject<T>, ChildrenElement<T>] => {
+  children?: ChildrenElement<T>
+): [React.MutableRefObject<T | null>, ChildrenElement<T> | undefined] => {
   const childRef =
     React.isValidElement(children) &&
     (isDOMTypeElement(children)
@@ -27,7 +27,7 @@ export const usePatchChildrenRef = <T = HTMLElement>(
           "получить ссылку на корневой dom-элемент этого компонента"
       );
     }
-  }, [children.type]);
+  }, [children?.type, patchedRef]);
   return [
     patchedRef,
     React.isValidElement(children)

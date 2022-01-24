@@ -17,9 +17,7 @@ const warn = warnOnce("ActionSheet");
 function getEl(
   ref: SharedDropdownProps["toggleRef"]
 ): Element | null | undefined {
-  return ref && "current" in ref
-    ? ref.current
-    : (ref as Element | null | undefined);
+  return ref && "current" in ref ? ref.current : ref;
 }
 
 export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
@@ -33,7 +31,7 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
   const { document } = useDOM();
   const platform = usePlatform();
   const { sizeY } = useAdaptivity();
-  const elementRef = React.useRef<HTMLDivElement>();
+  const elementRef = React.useRef<HTMLDivElement | null>(null);
 
   useEffectDev(() => {
     const toggleEl = getEl(toggleRef);
@@ -53,15 +51,15 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
   const bodyClickListener = useEventListener("click", (e: MouseEvent) => {
     const dropdownElement = elementRef?.current;
     if (dropdownElement && !dropdownElement.contains(e.target as Node)) {
-      onClose();
+      onClose?.();
     }
   });
 
   React.useEffect(() => {
     setTimeout(() => {
-      bodyClickListener.add(document.body);
+      bodyClickListener.add(document!.body);
     });
-  }, []);
+  }, [bodyClickListener, document]);
 
   const onClick = React.useCallback((e) => e.stopPropagation(), []);
 

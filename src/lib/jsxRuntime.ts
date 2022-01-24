@@ -19,11 +19,11 @@ function processProps(props: any) {
   return newProps;
 }
 
-function _createScopedElement(_type: any, props: any) {
+function createScopedElement(_type: any, props?: any) {
   let args = arguments;
 
   if (!props || !("vkuiClass" in props)) {
-    return React.createElement.apply(undefined, args);
+    return React.createElement.apply(undefined, args as any);
   }
 
   let argsLength = args.length;
@@ -35,11 +35,9 @@ function _createScopedElement(_type: any, props: any) {
     createElementArgArray[i] = args[i];
   }
 
-  return React.createElement.apply(null, createElementArgArray);
+  return React.createElement.apply(null, createElementArgArray as any);
 }
 
-_createScopedElement.Fragment = React.Fragment;
+createScopedElement.Fragment = React.Fragment;
 
-export const createScopedElement: typeof React.createElement & {
-  Fragment: typeof React.Fragment;
-} = _createScopedElement;
+export { createScopedElement };

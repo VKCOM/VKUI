@@ -5,23 +5,20 @@ import { HasPlatform } from "../../types";
 import { getClassName } from "../../helpers/getClassName";
 import { ANDROID, VKCOM } from "../../lib/platform";
 import { rubber } from "../../lib/touch";
-import {
-  withAdaptivity,
-  AdaptivityProps,
-  ViewWidth,
-} from "../../hoc/withAdaptivity";
+import { withAdaptivity, ViewWidth } from "../../hoc/withAdaptivity";
 import Text from "../Typography/Text/Text";
 import Button from "../Button/Button";
 import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useTimeout } from "../../hooks/useTimeout";
+import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
 import "./Snackbar.css";
 
 export interface SnackbarProps
   extends React.HTMLAttributes<HTMLElement>,
     HasPlatform,
-    AdaptivityProps {
+    AdaptivityContextInterface {
   /**
    * Название кнопки действия в уведомлении
    */
@@ -62,7 +59,7 @@ const SnackbarComponent: React.FC<SnackbarProps> = (props: SnackbarProps) => {
     before,
     after,
     viewWidth,
-    duration,
+    duration = 0,
     onActionClick,
     onClose,
     ...restProps
@@ -111,7 +108,9 @@ const SnackbarComponent: React.FC<SnackbarProps> = (props: SnackbarProps) => {
   const closeTimeout = useTimeout(close, duration);
 
   const setBodyTransform = (percent: number) => {
-    cancelAnimationFrame(animationFrameRef.current);
+    if (animationFrameRef.current !== null) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
     animationFrameRef.current = requestAnimationFrame(() => {
       if (bodyElRef.current) {
         bodyElRef.current.style.transform = `translate3d(${percent}%, 0, 0)`;
@@ -129,7 +128,8 @@ const SnackbarComponent: React.FC<SnackbarProps> = (props: SnackbarProps) => {
       setTouched(true);
     }
 
-    shiftXPercentRef.current = (shiftX / bodyElRef.current.offsetWidth) * 100;
+    shiftXPercentRef.current =
+      (shiftX / (bodyElRef.current?.offsetWidth ?? 0)) * 100;
     shiftXCurrentRef.current = rubber(
       shiftXPercentRef.current,
       72,
@@ -182,7 +182,7 @@ const SnackbarComponent: React.FC<SnackbarProps> = (props: SnackbarProps) => {
     callback && requestAnimationFrame(callback);
   };
 
-  React.useEffect(closeTimeout.set, []);
+  React.useEffect(() => closeTimeout.set(), [closeTimeout]);
 
   const resolvedLayout = after || isDesktop ? "vertical" : layout;
 

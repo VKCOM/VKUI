@@ -4,15 +4,15 @@ import {
   withAdaptivity,
   ViewWidth,
   ViewHeight,
-  AdaptivityProps,
 } from "../../hoc/withAdaptivity";
 import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { blurActiveElement, useDOM } from "../../lib/dom";
+import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
 import "./PopoutRoot.css";
 
 export interface PopoutRootProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    AdaptivityProps,
+    AdaptivityContextInterface,
     HasRootRef<HTMLDivElement> {
   popout?: React.ReactNode;
   modal?: React.ReactNode;
@@ -39,7 +39,7 @@ export const PopoutRootComponent: React.FC<PopoutRootProps> = (
 
   React.useEffect(() => {
     popout && blurActiveElement(document);
-  }, [!!popout]);
+  }, [document, popout]);
 
   return (
     <div {...restProps} vkuiClass="PopoutRoot" ref={getRootRef}>

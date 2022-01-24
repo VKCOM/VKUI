@@ -4,7 +4,7 @@ import { BrowserInfo, computeBrowserInfo } from "./browser";
 import { DOMContext, getDOM } from "../lib/dom";
 
 export interface SSRContextInterface {
-  platform: PlatformType;
+  platform: PlatformType | null;
   userAgent?: string;
   browserInfo?: BrowserInfo;
 }
@@ -27,7 +27,7 @@ export const SSRWrapper: React.FC<SSRWrapperProps> = (props) => {
     browserInfo = computeBrowserInfo(userAgent);
   }
 
-  // TODO: Каждый раз создаётся новый объект для контекста – плохо
+  // TODO: Каждый раз создаётся новый объект для контекста - плохо
   const contextValue = {
     platform: platform(browserInfo),
     browserInfo,
