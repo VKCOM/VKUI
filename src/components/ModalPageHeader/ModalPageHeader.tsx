@@ -35,7 +35,13 @@ const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = ({
       })}
       ref={getRef}
     >
-      <PanelHeader {...restProps} fixed={false} separator={false} transparent>
+      <PanelHeader
+        vkuiClass="ModalPageHeader__in"
+        {...restProps}
+        fixed={false}
+        separator={false}
+        transparent
+      >
         {children}
       </PanelHeader>
       {hasSeparator && <Separator wide />}
