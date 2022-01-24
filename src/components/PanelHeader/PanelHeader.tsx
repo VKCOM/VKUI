@@ -40,18 +40,6 @@ export interface PanelHeaderProps
   fixed?: boolean;
 }
 
-const PanelHeaderInTypography: React.FC<PanelHeaderProps> = ({
-  children,
-}: PanelHeaderProps) => {
-  const platform = usePlatform();
-
-  return platform === VKCOM ? (
-    <Text weight="medium">{children}</Text>
-  ) : (
-    <span vkuiClass="PanelHeader__content-in">{children}</span>
-  );
-};
-
 const PanelHeaderIn: React.FC<PanelHeaderProps> = ({
   children,
   left,
@@ -59,12 +47,17 @@ const PanelHeaderIn: React.FC<PanelHeaderProps> = ({
 }) => {
   const { webviewType } = React.useContext(ConfigProviderContext);
   const { isInsideModal } = React.useContext(ModalRootContext);
+  const platform = usePlatform();
 
   return (
     <TooltipContainer fixed vkuiClass="PanelHeader__in">
       <div vkuiClass="PanelHeader__left">{left}</div>
       <div vkuiClass="PanelHeader__content">
-        <PanelHeaderInTypography>{children}</PanelHeaderInTypography>
+        {platform === VKCOM ? (
+          <Text weight="medium">{children}</Text>
+        ) : (
+          <span vkuiClass="PanelHeader__content-in">{children}</span>
+        )}
       </div>
       <div vkuiClass="PanelHeader__right">
         {(webviewType === WebviewType.INTERNAL || isInsideModal) && right}
