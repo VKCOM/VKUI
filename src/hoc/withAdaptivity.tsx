@@ -24,7 +24,7 @@ interface Config {
 export function withAdaptivity<T extends AdaptivityProps>(
   TargetComponent: React.ComponentType<T>,
   config: Config
-): React.ComponentType<Omit<T, keyof AdaptivityContextInterface> & SizeProps> {
+): React.FC<Omit<T, keyof AdaptivityContextInterface> & SizeProps> {
   const AdaptivityConsumer: React.ComponentType<
     Omit<T, keyof AdaptivityContextInterface> & SizeProps
   > = (props: Omit<T, keyof AdaptivityContextInterface> & SizeProps) => {
@@ -42,14 +42,15 @@ export function withAdaptivity<T extends AdaptivityProps>(
     const hasMouse = context.hasMouse;
     const deviceHasHover = context.deviceHasHover;
 
-    const adaptivityProps: AdaptivityContextInterface = {
-      sizeX: SizeType.COMPACT,
-      sizeY: SizeType.REGULAR,
-      hasMouse,
-      deviceHasHover: true,
-      viewWidth: 0,
-      viewHeight: 0,
-    };
+    const adaptivityProps: {
+      sizeX?: SizeType;
+      sizeY?: SizeType;
+      viewWidth?: ViewWidth;
+      viewHeight?: ViewHeight;
+      hasMouse?: boolean;
+      deviceHasHover?: boolean;
+    } = {};
+
     config.sizeX ? (adaptivityProps.sizeX = sizeX) : undefined;
     config.sizeY ? (adaptivityProps.sizeY = sizeY) : undefined;
     config.viewWidth ? (adaptivityProps.viewWidth = viewWidth) : undefined;

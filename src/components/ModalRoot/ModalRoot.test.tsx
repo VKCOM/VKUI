@@ -29,7 +29,7 @@ afterEach(() => {
 describe.each([
   ["ModalRootTouch", ModalRootTouch],
   ["ModalRootDesktop", ModalRootDesktop],
-] as const)("%s", (name, ModalRoot) => {
+] as const)("%s", (name, ModalRoot: any) => {
   baselineComponent<any>(ModalRoot, { forward: false });
   describe("With ModalPage", () =>
     mountTest(() => (
