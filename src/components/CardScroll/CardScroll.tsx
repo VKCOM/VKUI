@@ -86,9 +86,11 @@ const CardScroll: React.FC<CardScrollProps> = ({
       vkuiClass={classNames(
         getClassName("CardScroll", platform),
         `CardScroll--sizeX-${sizeX}`,
-        { [`CardScroll--${size}`]: !fluidCard },
-        rounded ? `CardScroll--rounded` : "",
-        showArrows ? "CardScroll--arrows" : ""
+        {
+          [`CardScroll--${size}`]: !fluidCard,
+          ["CardScroll--rounded"]: rounded,
+          ["CardScroll--arrows"]: showArrows,
+        }
       )}
     >
       <HorizontalScroll
