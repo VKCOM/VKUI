@@ -179,4 +179,5 @@ const Avatar: React.FC<AvatarProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default Avatar;

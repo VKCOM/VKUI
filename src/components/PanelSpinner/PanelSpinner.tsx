@@ -17,4 +17,5 @@ PanelSpinner.defaultProps = {
   height: 96,
 };
 
+// eslint-disable-next-line import/no-default-export
 export default React.memo(PanelSpinner);

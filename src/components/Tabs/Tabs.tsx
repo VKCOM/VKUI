@@ -53,4 +53,5 @@ Tabs.defaultProps = {
   mode: "default",
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(Tabs, { sizeX: true });

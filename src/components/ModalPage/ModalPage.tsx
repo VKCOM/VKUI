@@ -111,6 +111,7 @@ ModalPage.defaultProps = {
   settlingHeight: 75,
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(ModalPage, {
   viewWidth: true,
   viewHeight: true,

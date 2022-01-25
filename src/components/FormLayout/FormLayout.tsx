@@ -35,4 +35,5 @@ const FormLayout: React.FC<FormLayoutProps> = (props: FormLayoutProps) => {
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default FormLayout;

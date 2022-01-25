@@ -111,4 +111,5 @@ CardScroll.defaultProps = {
   size: "s",
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(CardScroll, { sizeX: true });

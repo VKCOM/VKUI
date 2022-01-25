@@ -7,4 +7,5 @@ import * as React from "react";
 const TouchRootContext: React.Context<boolean> =
   React.createContext<boolean>(false);
 
+// eslint-disable-next-line import/no-default-export
 export default TouchRootContext;

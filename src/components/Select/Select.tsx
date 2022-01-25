@@ -32,6 +32,7 @@ const Select: React.FunctionComponent<SelectProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(Select, {
   hasMouse: true,
 });

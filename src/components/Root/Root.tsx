@@ -195,4 +195,5 @@ const Root: React.FC<RootProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default Root;

@@ -101,6 +101,7 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(NativeSelect, {
   sizeX: true,
   sizeY: true,

@@ -92,4 +92,5 @@ Group.defaultProps = {
   separator: "auto",
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(Group, { sizeX: true });

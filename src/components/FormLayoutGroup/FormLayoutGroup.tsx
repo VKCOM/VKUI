@@ -67,4 +67,5 @@ const FormLayoutGroup: React.FC<FormLayoutGroupProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default FormLayoutGroup;

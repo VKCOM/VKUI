@@ -135,4 +135,5 @@ function calculateAdaptivity(
   return { viewWidth, viewHeight, sizeX, sizeY, hasMouse, deviceHasHover };
 }
 
+// eslint-disable-next-line import/no-default-export
 export default AdaptivityProvider;

@@ -28,4 +28,5 @@ ModalDismissButton.defaultProps = {
   "aria-label": "Закрыть",
 };
 
+// eslint-disable-next-line import/no-default-export
 export default ModalDismissButton;

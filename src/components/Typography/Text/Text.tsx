@@ -45,4 +45,5 @@ const Text: React.FC<TextProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default Text;
