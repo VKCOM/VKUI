@@ -74,4 +74,5 @@ const Chip: React.FC<ChipProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default Chip;

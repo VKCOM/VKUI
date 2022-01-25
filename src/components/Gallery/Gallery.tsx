@@ -558,4 +558,5 @@ const Gallery: React.FC<GalleryProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withPlatform(Gallery);

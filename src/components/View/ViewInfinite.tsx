@@ -716,6 +716,7 @@ class ViewInfinite extends React.Component<
   }
 }
 
+// eslint-disable-next-line import/no-default-export
 export default withContext(
   withContext(
     withContext(

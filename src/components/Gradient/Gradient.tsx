@@ -33,4 +33,5 @@ Gradient.defaultProps = {
   to: "top",
 };
 
+// eslint-disable-next-line import/no-default-export
 export default Gradient;

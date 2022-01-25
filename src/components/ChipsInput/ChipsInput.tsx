@@ -234,4 +234,5 @@ const ChipsInput = <Option extends ChipsInputOption>(
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default ChipsInput;

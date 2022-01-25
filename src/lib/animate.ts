@@ -17,6 +17,7 @@ export interface AnimateArgumentsInterface {
   draw: DrawInterface;
 }
 
+// eslint-disable-next-line import/no-default-export
 export default function animate({
   duration,
   timing,

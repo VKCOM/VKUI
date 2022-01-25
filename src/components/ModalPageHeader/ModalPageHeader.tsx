@@ -35,7 +35,13 @@ const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = ({
       })}
       ref={getRef}
     >
-      <PanelHeader {...restProps} fixed={false} separator={false} transparent>
+      <PanelHeader
+        vkuiClass="ModalPageHeader__in"
+        {...restProps}
+        fixed={false}
+        separator={false}
+        transparent
+      >
         {children}
       </PanelHeader>
       {hasSeparator && <Separator wide />}
@@ -47,4 +53,5 @@ ModalPageHeader.defaultProps = {
   separator: true,
 };
 
+// eslint-disable-next-line import/no-default-export
 export default ModalPageHeader;

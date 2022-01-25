@@ -36,4 +36,5 @@ const Separator: React.FC<SeparatorProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default React.memo(Separator);

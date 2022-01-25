@@ -103,6 +103,7 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(Checkbox, {
   sizeY: true,
 });

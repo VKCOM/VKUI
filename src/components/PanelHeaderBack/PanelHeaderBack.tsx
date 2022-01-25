@@ -52,6 +52,7 @@ PanelHeaderBack.defaultProps = {
   "aria-label": "Назад",
 };
 
+// eslint-disable-next-line import/no-default-export
 export default React.memo(
   withAdaptivity(PanelHeaderBack, {
     sizeX: true,

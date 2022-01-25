@@ -83,6 +83,7 @@ const Radio: React.FC<RadioProps> = (props: RadioProps) => {
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(Radio, {
   sizeY: true,
 });

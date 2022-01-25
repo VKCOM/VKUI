@@ -326,6 +326,7 @@ const Tappable: React.FC<TappableProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(Tappable, {
   sizeX: true,
   hasMouse: true,

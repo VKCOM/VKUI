@@ -67,4 +67,5 @@ const FixedLayout: React.FC<FixedLayoutProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default FixedLayout;

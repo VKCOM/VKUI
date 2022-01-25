@@ -103,4 +103,5 @@ const RichCell: React.FC<RichCellProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(RichCell, { sizeY: true });

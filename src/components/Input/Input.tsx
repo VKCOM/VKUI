@@ -48,6 +48,7 @@ Input.defaultProps = {
   type: "text",
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(Input, {
   sizeY: true,
 });

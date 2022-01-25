@@ -77,6 +77,7 @@ SelectMimicry.defaultProps = {
   tabIndex: 0,
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(SelectMimicry, {
   sizeX: true,
   sizeY: true,

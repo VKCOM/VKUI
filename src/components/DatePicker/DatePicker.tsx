@@ -232,6 +232,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
   return <Cmp {...props} {...value} onDateChange={onDateChange} />;
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(DatePicker, {
   hasMouse: true,
 });

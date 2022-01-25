@@ -125,4 +125,5 @@ const PromoBanner = (props: PromoBannerProps) => {
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default PromoBanner;

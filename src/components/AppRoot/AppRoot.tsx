@@ -210,4 +210,5 @@ export const AppRoot = withAdaptivity<AppRootProps>(
   }
 );
 
+// eslint-disable-next-line import/no-default-export
 export default AppRoot;

@@ -45,4 +45,5 @@ const Progress: React.FC<ProgressProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default Progress;

@@ -40,4 +40,5 @@ const Caption: React.FC<CaptionProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default Caption;

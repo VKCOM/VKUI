@@ -76,4 +76,5 @@ const Textarea: React.FC<TextareaProps> = React.memo(
   }
 );
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(Textarea, { sizeY: true });
