@@ -12,9 +12,9 @@ describe(useModalManager, () => {
       <MockModal id="m2" key="m2" />,
     ];
     it("can enter on mount", () => {
-      const handle = renderHook(({ id = "m1" } = {} as any) =>
-        useModalManager(id, modals, noop)
-      );
+      const handle = renderHook(({ id }) => useModalManager(id, modals, noop), {
+        initialProps: { id: "m1" },
+      });
       expect(handle.result.current).toMatchObject({
         activeModal: "m1",
         enteringModal: "m1",
@@ -29,9 +29,9 @@ describe(useModalManager, () => {
       });
     });
     it("can enter on update", () => {
-      const handle = renderHook(({ id = null } = {} as any) =>
-        useModalManager(id, modals, noop)
-      );
+      const handle = renderHook(({ id }) => useModalManager(id, modals, noop), {
+        initialProps: { id: null as string | null },
+      });
       expect(handle.result.all).toMatchObject([
         { activeModal: null, enteringModal: null, exitingModal: null },
       ]);
@@ -49,10 +49,10 @@ describe(useModalManager, () => {
         exitingModal: null,
       });
     });
-    const flushMount = (initId: string = null) => {
-      const handle = renderHook(({ id = initId } = {} as any) =>
-        useModalManager(id, modals, noop)
-      );
+    const flushMount = (initId: string | null = null) => {
+      const handle = renderHook(({ id }) => useModalManager(id, modals, noop), {
+        initialProps: { id: initId },
+      });
       handle.result.current.onEnter(initId);
       return handle;
     };
@@ -150,19 +150,33 @@ describe(useModalManager, () => {
       expect(handle.result.current.history).toEqual([]);
     });
     it("on update", () => {
-      const handle = renderHook(({ id = null }) =>
-        useModalManager(id, [], noop)
-      );
+      const handle = renderHook(({ id }) => useModalManager(id, [], noop), {
+        initialProps: { id: null as string | null },
+      });
       handle.rerender({ id: "m1" });
       expect(handle.result.current.activeModal).toEqual(null);
     });
   });
 
   it("handles dynamic modals", () => {
-    const handle = renderHook(({ id = "m1", children = [] }) =>
-      useModalManager(id, children, noop)
+    // const handle = renderHook(({ id = "m1", children = [] }) =>
+    //   useModalManager(id, children, noop)
+    // );
+    // handle.rerender({ children: <MockModal id="m2" /> });
+
+    const handle = renderHook(
+      ({ id, children }) => useModalManager(id, children, noop),
+      {
+        initialProps: {
+          id: "m1" as string | null,
+          children: [] as React.ReactNode | undefined,
+        },
+      }
     );
-    handle.rerender({ children: <MockModal id="m2" /> });
+    handle.rerender({
+      children: <MockModal id="m2" />,
+      id: "m1",
+    });
     expect(handle.result.current.getModalState("m2")).toBeTruthy();
   });
 

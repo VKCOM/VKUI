@@ -1,10 +1,12 @@
 import { useInsets } from "../hooks/useInsets";
+import { HasInsets } from "../types";
 
-export function withInsets<T>(Component: T): T {
-  function WithInsets(props: {}) {
+export function withInsets<T extends HasInsets>(
+  Component: React.ComponentType<T>
+): React.ComponentType<Omit<T, keyof HasInsets>> {
+  function WithInsets(props: Omit<T, keyof HasInsets>) {
     const insets = useInsets();
-    // @ts-ignore
-    return <Component {...props} insets={insets} />;
+    return <Component {...(props as T)} insets={insets} />;
   }
-  return WithInsets as unknown as T;
+  return WithInsets;
 }

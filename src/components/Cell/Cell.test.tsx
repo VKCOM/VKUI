@@ -66,7 +66,9 @@ describe("Cell", () => {
       );
 
       userEvent.click(
-        screen.getByTestId("list-xyz").querySelector(`[aria-label="${label}"]`)
+        screen
+          .getByTestId("list-xyz")
+          .querySelector(`[aria-label="${label}"]`) as Element
       );
 
       expect(updatedList).toEqual(initialList);

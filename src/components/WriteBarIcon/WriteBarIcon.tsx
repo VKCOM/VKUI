@@ -46,7 +46,7 @@ export const WriteBarIcon: React.FC<WriteBarIconProps> = ({
   const platform = usePlatform();
 
   let icon: React.ReactNode;
-  let ariaLabel: string;
+  let ariaLabel: string | undefined = undefined;
 
   switch (mode) {
     case "attach":

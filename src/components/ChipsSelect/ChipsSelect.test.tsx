@@ -17,25 +17,25 @@ const colors: ChipsInputOption[] = [
 ];
 const toggleDropdown = () => userEvent.click(screen.getByRole("textbox"));
 // получить опцию из дропдауна (не чип)
-const queryListOption = (o: ChipsInputOption) => {
-  const list = document.querySelector(".ChipsSelect__options");
-  return list ? queryByText(list as HTMLElement, o.label) : null;
+const queryListOption = (o: ChipsInputOption | null | undefined) => {
+  const list = document.querySelector(".ChipsSelect__options") as HTMLElement;
+  return list ? queryByText(list, o?.label as string) : null;
 };
 
 describe("ChipsSelect", () => {
   baselineComponent(ChipsSelect);
 
   it("renders empty text", () => {
-    render(<ChipsSelect options={[]} emptyText="__empty__" />);
+    render(<ChipsSelect options={[]} value={[]} emptyText="__empty__" />);
     toggleDropdown();
     expect(screen.queryByText("__empty__")).toBeTruthy();
   });
 
   it("filters options", () => {
-    render(<ChipsSelect options={colors} />);
+    render(<ChipsSelect options={colors} value={[]} />);
     userEvent.type(
       screen.getByRole("textbox"),
-      colors[1].label.substring(0, 3)
+      colors[1]?.label?.substring(0, 3) as string
     );
     toggleDropdown();
     expect(queryListOption(colors[1])).toBeTruthy();
@@ -43,33 +43,33 @@ describe("ChipsSelect", () => {
   });
 
   it("shows spinner if fetching", () => {
-    render(<ChipsSelect fetching />);
+    render(<ChipsSelect fetching value={[]} />);
     toggleDropdown();
     expect(screen.queryByRole("status")).toBeTruthy();
   });
 
   describe("controls dropdown", () => {
     it.each(["click", "focus"])("opens options on %s", (e) => {
-      render(<ChipsSelect options={colors} />);
+      render(<ChipsSelect options={colors} value={[]} />);
       e === "focus"
         ? fireEvent.focus(screen.getByRole("textbox"))
         : toggleDropdown();
       expect(screen.getAllByRole("option")[0]).toBeTruthy();
     });
     it("closes options on click outside", () => {
-      render(<ChipsSelect options={colors} />);
+      render(<ChipsSelect options={colors} value={[]} />);
       toggleDropdown();
       userEvent.click(document.body);
       expect(screen.queryByRole("option")).toBeNull();
     });
     it("closes options after select", () => {
-      render(<ChipsSelect options={colors} />);
+      render(<ChipsSelect options={colors} value={[]} />);
       toggleDropdown();
-      userEvent.click(queryListOption(colors[0]));
+      userEvent.click(queryListOption(colors[0]) as Element);
       expect(queryListOption(colors[1])).toBeNull();
     });
     it("closes options on esc", () => {
-      render(<ChipsSelect options={colors} />);
+      render(<ChipsSelect options={colors} value={[]} />);
       toggleDropdown();
       userEvent.type(screen.getByRole("textbox"), "{esc}");
       expect(queryListOption(colors[1])).toBeNull();
@@ -79,9 +79,15 @@ describe("ChipsSelect", () => {
   describe("selects", () => {
     it("on click", () => {
       let value;
-      render(<ChipsSelect options={colors} onChange={(e) => (value = e)} />);
+      render(
+        <ChipsSelect
+          options={colors}
+          onChange={(e) => (value = e)}
+          value={[]}
+        />
+      );
       toggleDropdown();
-      userEvent.click(queryListOption(colors[0]));
+      userEvent.click(queryListOption(colors[0]) as Element);
       expect(value).toEqual([colors[0]]);
     });
     it("hides selected option from list", () => {

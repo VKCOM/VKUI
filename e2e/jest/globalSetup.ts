@@ -27,7 +27,7 @@ async function setupWebpack() {
     });
   });
 
-  devServer = new WebpackDevServer(compiler, {
+  devServer = new WebpackDevServer(compiler as any, {
     noInfo: true,
     stats: "minimal",
     disableHostCheck: true,

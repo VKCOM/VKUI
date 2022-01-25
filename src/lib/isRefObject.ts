@@ -6,6 +6,6 @@ export const isRefObject = <T, E = Element>(
   return (
     typeof refObject === "object" &&
     refObject !== null &&
-    refObject.hasOwnProperty("current")
+    (refObject as React.RefObject<E>).hasOwnProperty("current")
   );
 };

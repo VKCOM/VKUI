@@ -35,7 +35,7 @@ export interface ChipsSelectProps<Option extends ChipsInputOption>
         value?: string,
         option?: Option,
         getOptionLabel?: Pick<
-          ChipsInputProps<ChipsInputOption>,
+          ChipsInputProps<Option>,
           "getOptionLabel"
         >["getOptionLabel"]
       ) => boolean);
@@ -78,9 +78,26 @@ type focusActionType = "next" | "prev";
 const FOCUS_ACTION_NEXT: focusActionType = "next";
 const FOCUS_ACTION_PREV: focusActionType = "prev";
 
+const chipsSelectDefaultProps: ChipsSelectProps<any> = {
+  ...chipsInputDefaultProps,
+  emptyText: "Ничего не найдено",
+  creatableText: "Создать значение",
+  onChangeStart: noop,
+  creatable: false,
+  fetching: false,
+  showSelected: true,
+  closeAfterSelect: true,
+  options: [],
+  filterFn: defaultFilterFn,
+  renderOption({ option, ...restProps }) {
+    return <CustomSelectOption {...restProps} />;
+  },
+};
+
 const ChipsSelect = <Option extends ChipsInputOption>(
   props: ChipsSelectProps<Option>
 ) => {
+  const propsWithDefault = { ...chipsSelectDefaultProps, ...props };
   const {
     style,
     onFocus,
@@ -110,18 +127,19 @@ const ChipsSelect = <Option extends ChipsInputOption>(
     after,
     options,
     ...restProps
-  } = props;
+  } = propsWithDefault;
 
   const { document } = useDOM();
 
-  const [popperPlacement, setPopperPlacement] =
-    React.useState<Placement>(undefined);
+  const [popperPlacement, setPopperPlacement] = React.useState<
+    Placement | undefined
+  >(undefined);
 
   const scrollBoxRef = React.useRef<HTMLDivElement>(null);
   const rootRef = useExternRef(getRef);
   const {
     fieldValue,
-    selectedOptions,
+    selectedOptions = [],
     opened,
     setOpened,
     addOptionFromInput,
@@ -133,7 +151,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(
     setFocusedOption,
     focusedOptionIndex,
     setFocusedOptionIndex,
-  } = useChipsSelect(props);
+  } = useChipsSelect(propsWithDefault);
 
   const showCreatable = Boolean(
     creatable && creatableText && !filteredOptions.length && fieldValue
@@ -142,7 +160,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setOpened(true);
     setFocusedOptionIndex(0);
-    onFocus(e);
+    onFocus!(e);
   };
 
   const handleClickOutside = (e: MouseEvent) => {
@@ -162,7 +180,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(
     const dropdown = scrollBoxRef.current;
     const item = chipsSelectOptions[index];
 
-    if (!item) {
+    if (!item || !dropdown) {
       return;
     }
 
@@ -206,11 +224,13 @@ const ChipsSelect = <Option extends ChipsInputOption>(
       index = index - 1;
     }
 
-    focusOptionByIndex(index, focusedOptionIndex);
+    if (focusedOptionIndex != null) {
+      focusOptionByIndex(index, focusedOptionIndex);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    onKeyDown(e);
+    onKeyDown!(e);
 
     if (e.key === "ArrowUp" && !e.defaultPrevented) {
       e.preventDefault();
@@ -234,11 +254,16 @@ const ChipsSelect = <Option extends ChipsInputOption>(
       }
     }
 
-    if (e.key === "Enter" && !e.defaultPrevented && opened) {
+    if (
+      e.key === "Enter" &&
+      !e.defaultPrevented &&
+      opened &&
+      focusedOptionIndex != null
+    ) {
       const option = filteredOptions[focusedOptionIndex];
 
       if (option) {
-        onChangeStart(e, option);
+        onChangeStart!(e, option);
 
         if (!e.defaultPrevented) {
           addOption(option);
@@ -258,12 +283,12 @@ const ChipsSelect = <Option extends ChipsInputOption>(
   };
 
   React.useEffect(() => {
-    if (filteredOptions[focusedOptionIndex]) {
+    if (focusedOptionIndex != null && filteredOptions[focusedOptionIndex]) {
       setFocusedOption(filteredOptions[focusedOptionIndex]);
     } else if (focusedOptionIndex === null || focusedOptionIndex === 0) {
       setFocusedOption(null);
     }
-  }, [focusedOptionIndex, filteredOptions]);
+  }, [focusedOptionIndex, filteredOptions, setFocusedOption]);
 
   React.useEffect(() => {
     const index = focusedOption
@@ -278,21 +303,36 @@ const ChipsSelect = <Option extends ChipsInputOption>(
     ) {
       setFocusedOption(filteredOptions[0]);
     }
-  }, [filteredOptions, focusedOption, showCreatable, closeAfterSelect]);
+  }, [
+    filteredOptions,
+    focusedOption,
+    showCreatable,
+    closeAfterSelect,
+    setFocusedOption,
+  ]);
 
   useGlobalEventListener(document, "click", handleClickOutside);
 
-  const renderChipWrapper = (renderChipProps: RenderChip<Option>) => {
-    const { onRemove } = renderChipProps;
+  const renderChipWrapper = (
+    renderChipProps: RenderChip<Option> | undefined
+  ) => {
+    if (renderChipProps === undefined) {
+      return null;
+    }
+    const onRemoveWrapper = (
+      e: React.MouseEvent | undefined,
+      value: ChipsInputValue | undefined
+    ) => {
+      e?.preventDefault();
+      e?.stopPropagation();
 
-    const onRemoveWrapper = (e: React.MouseEvent, value: ChipsInputValue) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      onRemove(e, value);
+      renderChipProps.onRemove?.(e, value);
     };
 
-    return renderChip({ ...renderChipProps, onRemove: onRemoveWrapper });
+    return renderChip!({
+      ...renderChipProps,
+      onRemove: onRemoveWrapper,
+    });
   };
 
   const isPopperDirectionTop = popperPlacement?.includes("top");
@@ -361,30 +401,35 @@ const ChipsSelect = <Option extends ChipsInputOption>(
             </Caption>
           ) : (
             filteredOptions.map((option: Option, index: number) => {
-              const label = getOptionLabel(option);
+              const label = getOptionLabel!(option);
               const hovered =
                 focusedOption &&
-                getOptionValue(option) === getOptionValue(focusedOption);
+                getOptionValue!(option) === getOptionValue!(focusedOption);
               const selected = selectedOptions.find(
                 (selectedOption: Option) => {
                   return (
-                    getOptionValue(selectedOption) === getOptionValue(option)
+                    getOptionValue!(selectedOption) === getOptionValue!(option)
                   );
                 }
               );
-              const value = getOptionValue(option);
+              const value = getOptionValue!(option);
 
               return (
                 <React.Fragment key={`${typeof value}-${value}`}>
-                  {renderOption({
+                  {renderOption!({
                     className: prefixClass("ChipsSelect__option"),
                     option,
-                    hovered,
+                    hovered: Boolean(hovered),
                     children: label,
                     selected: !!selected,
-                    getRootRef: (e) => (chipsSelectOptions[index] = e),
+                    getRootRef: (e) => {
+                      if (e) {
+                        return (chipsSelectOptions[index] = e);
+                      }
+                      return undefined;
+                    },
                     onMouseDown: (e: React.MouseEvent<HTMLDivElement>) => {
-                      onChangeStart(e, option);
+                      onChangeStart?.(e, option);
 
                       if (!e.defaultPrevented) {
                         closeAfterSelect && setOpened(false);
@@ -403,26 +448,5 @@ const ChipsSelect = <Option extends ChipsInputOption>(
     </div>
   );
 };
-
-const chipsSelectDefaultProps: ChipsSelectProps<any> = {
-  ...chipsInputDefaultProps,
-  emptyText: "Ничего не найдено",
-  creatableText: "Создать значение",
-  onChangeStart: noop,
-  creatable: false,
-  fetching: false,
-  showSelected: true,
-  closeAfterSelect: true,
-  options: [],
-  filterFn: defaultFilterFn,
-  renderOption({
-    option,
-    ...restProps
-  }: CustomSelectOptionProps): React.ReactNode {
-    return <CustomSelectOption {...restProps} />;
-  },
-};
-
-ChipsSelect.defaultProps = chipsSelectDefaultProps;
 
 export default withAdaptivity(ChipsSelect, { sizeY: true });

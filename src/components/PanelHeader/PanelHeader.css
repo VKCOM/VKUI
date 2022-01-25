@@ -203,7 +203,7 @@
 }
 
 .SplitCol--spaced
-  .PanelHeader--android.PanelHeader--no-left
+  .PanelHeader--android.PanelHeader--no-left:not(.ModalPageHeader)
   .PanelHeader__content {
   padding-left: 0;
 }
@@ -218,7 +218,7 @@
 }
 
 .SplitCol--spaced
-  .PanelHeader--android.PanelHeader--no-right
+  .PanelHeader--android.PanelHeader--no-right:not(.ModalPageHeader)
   .PanelHeader__content {
   padding-right: 0;
 }

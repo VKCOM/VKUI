@@ -34,7 +34,7 @@ module.exports = {
       },
       {
         test: /\.woff|woff2$/,
-        use: ["file-loader"],
+        type: "asset/resource",
       },
     ],
   },
@@ -45,7 +45,10 @@ module.exports = {
         // capture all common deps between stable & unstable
         vkui: {
           name: "vkui",
-          test: (_, chunks) => chunks.some((chunk) => chunk.name === "stable"),
+          test: (module, { chunkGraph }) =>
+            chunkGraph
+              .getModuleChunks(module)
+              .some((chunk) => chunk.name === "stable"),
         },
       },
     },

@@ -28,10 +28,10 @@ export interface UniversalSliderProps<Value>
 }
 
 const UniversalSliderDumb: React.FC<UniversalSliderProps<UniversalValue>> = ({
-  min,
-  max,
+  min = 0,
+  max = 100,
   step,
-  value,
+  value = [0, 0],
   defaultValue,
   onChange,
   getRootRef,
@@ -48,8 +48,8 @@ const UniversalSliderDumb: React.FC<UniversalSliderProps<UniversalValue>> = ({
     containerWidth: 0,
   }).current;
   const container = useExternRef(getRootRef);
-  const thumbStart = React.useRef<HTMLDivElement>();
-  const thumbEnd = React.useRef<HTMLDivElement>();
+  const thumbStart = React.useRef<HTMLDivElement>(null);
+  const thumbEnd = React.useRef<HTMLDivElement>(null);
 
   const offsetToValue = (absolute: number) => {
     return rescale(absolute, [0, gesture.containerWidth], [min, max], { step });
@@ -81,31 +81,33 @@ const UniversalSliderDumb: React.FC<UniversalSliderProps<UniversalValue>> = ({
     return value;
   };
 
-  const snapDirection = (pos: number, target: EventTarget) => {
+  const snapDirection = (pos: number, target: EventTarget | null) => {
     if (target === thumbStart.current) {
       return "start";
     }
     if (target === thumbEnd.current) {
       return "end";
     }
-    return Math.abs(start - pos) <= Math.abs(end - pos) ? "start" : "end";
+    return Math.abs((start ?? 0) - pos) <= Math.abs(end - pos)
+      ? "start"
+      : "end";
   };
 
   const onStart: TouchEventHandler = (e: TouchEvent) => {
-    const boundingRect = container.current.getBoundingClientRect();
-    gesture.containerWidth = boundingRect.width;
+    const boundingRect = container.current?.getBoundingClientRect();
+    gesture.containerWidth = boundingRect?.width ?? 0;
 
-    const absolutePosition = e.startX - boundingRect.left;
+    const absolutePosition = e.startX - (boundingRect?.left ?? 0);
     const pos = offsetToValue(absolutePosition);
     gesture.dragging = snapDirection(pos, e.originalEvent.target);
     gesture.startX = absolutePosition;
 
-    onChange(updateRange(pos), e);
+    onChange?.(updateRange(pos), e);
     e.originalEvent.stopPropagation();
   };
 
   const onMove: TouchEventHandler = (e: TouchEvent) => {
-    onChange(updateRange(offsetToValue(gesture.startX + (e.shiftX || 0))), e);
+    onChange?.(updateRange(offsetToValue(gesture.startX + (e.shiftX || 0))), e);
 
     e.originalEvent.stopPropagation();
     e.originalEvent.preventDefault();
@@ -119,8 +121,8 @@ const UniversalSliderDumb: React.FC<UniversalSliderProps<UniversalValue>> = ({
   const toPercent = (v: number) => ((v - min) / (max - min)) * 100;
   const draggerStyle = isRange
     ? {
-        width: `${toPercent(end) - toPercent(start)}%`,
-        left: `${toPercent(start)}%`,
+        width: `${toPercent(end) - toPercent(start ?? 0)}%`,
+        left: `${toPercent(start ?? 0)}%`,
       }
     : {
         width: `${toPercent(end)}%`,

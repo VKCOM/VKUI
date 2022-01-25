@@ -32,5 +32,7 @@ class ComponentHandle {
   }
 }
 
-export const testHandle = new ComponentHandle(document.getElementById("mount"));
+export const testHandle = new ComponentHandle(
+  document.getElementById("mount") as Element
+);
 (window as any)["testHandle"] = testHandle;

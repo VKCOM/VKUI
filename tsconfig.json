@@ -9,13 +9,11 @@
     "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitThis": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
     "isolatedModules": true,
-    "noImplicitAny": true,
-    "strict": false,
+    "strict": true,
     "baseUrl": "src",
     "paths": {
       "@react-playwright": ["../e2e"]

@@ -6,7 +6,6 @@ import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
 import {
-  AdaptivityProps,
   ViewHeight,
   ViewWidth,
   withAdaptivity,
@@ -17,6 +16,7 @@ import { IOS } from "../../lib/platform";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { Icon24Dismiss } from "@vkontakte/icons";
 import { useKeyboard } from "../../hooks/useKeyboard";
+import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
 import "./ModalCardBase.css";
 
 export interface ModalCardBaseProps
@@ -53,7 +53,9 @@ export interface ModalCardBaseProps
   onClose?: VoidFunction;
 }
 
-export const ModalCardBase: React.FC<ModalCardBaseProps> = withAdaptivity(
+export const ModalCardBase = withAdaptivity<
+  ModalCardBaseProps & AdaptivityContextInterface
+>(
   ({
     getRootRef,
     icon,
@@ -67,7 +69,7 @@ export const ModalCardBase: React.FC<ModalCardBaseProps> = withAdaptivity(
     viewHeight,
     onClose,
     ...restProps
-  }: ModalCardBaseProps & AdaptivityProps) => {
+  }) => {
     const platform = usePlatform();
     const isDesktop =
       viewWidth >= ViewWidth.SMALL_TABLET &&

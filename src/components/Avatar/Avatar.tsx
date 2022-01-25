@@ -27,6 +27,9 @@ export interface AvatarProps
   overlayAction?: "hover" | "always";
 }
 
+export const AVATAR_DEFAULT_SIZE = 48;
+export const AVATAR_DEFAULT_SHADOW = true;
+
 const Avatar: React.FC<AvatarProps> = ({
   alt,
   crossOrigin,
@@ -40,9 +43,9 @@ const Avatar: React.FC<AvatarProps> = ({
   useMap,
   width,
   getRef,
-  size,
-  shadow,
-  mode,
+  size = AVATAR_DEFAULT_SIZE,
+  shadow = AVATAR_DEFAULT_SHADOW,
+  mode = "default",
   className,
   children,
   getRootRef,
@@ -50,7 +53,7 @@ const Avatar: React.FC<AvatarProps> = ({
   "aria-label": ariaLabel,
   badge,
   overlayIcon,
-  overlayMode,
+  overlayMode = "light",
   overlayAction: passedOverlayAction,
   onClick,
   ...restProps
@@ -174,16 +177,6 @@ const Avatar: React.FC<AvatarProps> = ({
       )}
     </div>
   );
-};
-
-export const AVATAR_DEFAULT_SIZE = 48;
-export const AVATAR_DEFAULT_SHADOW = true;
-
-Avatar.defaultProps = {
-  size: AVATAR_DEFAULT_SIZE,
-  mode: "default",
-  shadow: AVATAR_DEFAULT_SHADOW,
-  overlayMode: "light",
 };
 
 export default Avatar;

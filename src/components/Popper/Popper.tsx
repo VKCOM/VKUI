@@ -26,8 +26,8 @@ export type Placement =
   | "right";
 
 export interface PopperCommonProps
-  extends React.HTMLAttributes<HTMLElement>,
-    HasRef<HTMLElement> {
+  extends React.HTMLAttributes<HTMLDivElement>,
+    HasRef<HTMLDivElement> {
   /**
    * По умолчанию компонент выберет наилучшее расположение сам. Но его можно задать извне с помощью этого свойства
    */
@@ -51,7 +51,7 @@ export interface PopperCommonProps
 }
 
 export interface PopperProps extends PopperCommonProps {
-  targetRef?: React.RefObject<HTMLElement>;
+  targetRef: React.RefObject<HTMLElement>;
 }
 
 const ARROW_PADDING = 8;
@@ -73,12 +73,14 @@ export const Popper: React.FC<PopperProps> = ({
   style: compStyles,
   ...restProps
 }: PopperProps) => {
-  const [popperNode, setPopperNode] = React.useState(null);
+  const [popperNode, setPopperNode] = React.useState<HTMLDivElement | null>(
+    null
+  );
   const [smallTargetOffsetSkidding, setSmallTargetOffsetSkidding] =
     React.useState(0);
   const platform = usePlatform();
 
-  const setExternalRef = useExternRef(getRef, setPopperNode);
+  const setExternalRef = useExternRef<HTMLDivElement>(getRef, setPopperNode);
 
   const modifiers = React.useMemo(() => {
     const modifiers: Array<Modifier<string>> = [
@@ -134,8 +136,6 @@ export const Popper: React.FC<PopperProps> = ({
     smallTargetOffsetSkidding,
     offsetSkidding,
     offsetDistance,
-    ARROW_HEIGHT,
-    ARROW_PADDING,
   ]);
 
   const { styles, state, attributes } = usePopper(
@@ -156,17 +156,17 @@ export const Popper: React.FC<PopperProps> = ({
   useIsomorphicLayoutEffect(() => {
     if (arrow && isEdgePlacement) {
       const placementDirection =
-        resolvedPlacement.startsWith("bottom") ||
-        resolvedPlacement.startsWith("top")
+        resolvedPlacement?.startsWith("bottom") ||
+        resolvedPlacement?.startsWith("top")
           ? "vertical"
           : "horizontal";
 
       const arrowSize =
         placementDirection === "vertical" ? ARROW_WIDTH : ARROW_HEIGHT;
       const targetSize =
-        placementDirection === "vertical"
-          ? targetRef.current.offsetWidth
-          : targetRef.current.offsetHeight;
+        (placementDirection === "vertical"
+          ? targetRef.current?.offsetWidth
+          : targetRef.current?.offsetHeight) ?? 0;
 
       if (targetSize < arrowSize + 2 * ARROW_PADDING) {
         setSmallTargetOffsetSkidding(ARROW_PADDING + arrowSize / 2);
@@ -180,7 +180,7 @@ export const Popper: React.FC<PopperProps> = ({
     if (resolvedPlacement) {
       onPlacementChange && onPlacementChange({ placement: resolvedPlacement });
     }
-  }, [resolvedPlacement]);
+  }, [onPlacementChange, resolvedPlacement]);
 
   const dropdown = (
     <div

@@ -32,7 +32,14 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const UsersStack: React.FC<UsersStackProps> = (props: UsersStackProps) => {
   const platform = usePlatform();
-  const { photos, visibleCount, size, layout, children, ...restProps } = props;
+  const {
+    photos = [],
+    visibleCount = 0,
+    size,
+    layout,
+    children,
+    ...restProps
+  } = props;
   const { document } = useDOM();
 
   useIsomorphicLayoutEffect(() => {

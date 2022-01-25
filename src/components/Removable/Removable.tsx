@@ -39,7 +39,7 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
 }) => {
   const { window } = useDOM();
 
-  const removeButtonRef = React.useRef(null);
+  const removeButtonRef = React.useRef<HTMLElement>(null);
   const [removeOffset, updateRemoveOffset] = React.useState(0);
 
   useGlobalEventListener(
@@ -61,8 +61,10 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
 
   const onRemoveActivateClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-
-    const { offsetWidth = 0 } = removeButtonRef?.current;
+    if (!removeButtonRef.current) {
+      return;
+    }
+    const { offsetWidth } = removeButtonRef.current;
     updateRemoveOffset(offsetWidth);
   };
 

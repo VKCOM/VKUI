@@ -29,7 +29,7 @@ export const PopoutWrapper: React.FC<PopoutWrapperProps> = ({
 }: PopoutWrapperProps) => {
   const platform = usePlatform();
   const [opened, setOpened] = React.useState(!hasMask);
-  const elRef = React.useRef<HTMLDivElement>();
+  const elRef = React.useRef<HTMLDivElement>(null);
 
   const onFadeInEnd = (e?: React.AnimationEvent) => {
     if (!e || e.animationName === "vkui-animation-full-fade-in") {
@@ -42,7 +42,7 @@ export const PopoutWrapper: React.FC<PopoutWrapperProps> = ({
   );
   React.useEffect(() => {
     !opened && animationFinishFallback.set();
-  }, []);
+  }, [animationFinishFallback, opened]);
 
   const { window } = useDOM();
   useGlobalEventListener(window, "touchmove", (e) => e.preventDefault(), {
@@ -65,7 +65,7 @@ export const PopoutWrapper: React.FC<PopoutWrapperProps> = ({
           "PopoutWrapper--masked": hasMask,
         }
       )}
-      onAnimationEnd={opened ? null : onFadeInEnd}
+      onAnimationEnd={opened ? undefined : onFadeInEnd}
       ref={elRef}
     >
       <div vkuiClass="PopoutWrapper__container">

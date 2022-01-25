@@ -8,18 +8,21 @@ export type RangeSliderProps = UniversalSliderProps<Value>;
 const RangeSlider: React.FC<RangeSliderProps> = ({
   onChange,
   defaultValue,
+  min = 0,
+  max = 100,
+  step = 0,
   ...props
 }: RangeSliderProps) => {
   const isControlled = Boolean(props.value);
 
   const [localValue, setValue] = React.useState(
-    defaultValue || ([props.min, props.max] as Value)
+    defaultValue || ([min, max] as Value)
   );
   const [start, end] = props.value || localValue;
-  const value = [
-    clamp(start, props.min, props.max),
-    clamp(end, props.min, props.max),
-  ] as Value;
+  const value = React.useMemo(
+    () => [clamp(start, min, max), clamp(end, min, max)] as Value,
+    [end, max, min, start]
+  );
 
   const handleChange: RangeSliderProps["onChange"] = React.useCallback(
     (nextValue, event) => {
@@ -32,16 +35,19 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
       !isControlled && setValue(nextValue);
       onChange && onChange(nextValue, event);
     },
-    [onChange, isControlled, value]
+    [props.disabled, value, isControlled, onChange]
   );
 
-  return <UniversalSlider {...props} value={value} onChange={handleChange} />;
-};
-
-RangeSlider.defaultProps = {
-  min: 0,
-  max: 100,
-  step: 0,
+  return (
+    <UniversalSlider
+      {...props}
+      value={value}
+      onChange={handleChange}
+      min={min}
+      max={max}
+      step={step}
+    />
+  );
 };
 
 export default RangeSlider;

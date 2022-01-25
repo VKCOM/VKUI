@@ -22,8 +22,8 @@ interface SimpleTooltipProps extends Partial<TooltipProps> {
     container: React.CSSProperties;
   };
   attributes?: {
-    arrow: React.HTMLAttributes<HTMLDivElement>;
-    container: React.HTMLAttributes<HTMLDivElement>;
+    arrow: React.HTMLAttributes<HTMLDivElement> | null;
+    container: React.HTMLAttributes<HTMLDivElement> | null;
   };
 }
 
@@ -48,12 +48,12 @@ const SimpleTooltip = React.forwardRef<HTMLDivElement, SimpleTooltipProps>(
           vkuiClass="Tooltip__container"
           ref={ref}
           style={style.container}
-          {...attributes.container}
+          {...attributes?.container}
         >
           <div
             vkuiClass="Tooltip__corner"
             style={style.arrow}
-            {...attributes.arrow}
+            {...attributes?.arrow}
             ref={arrowRef}
           />
           <div vkuiClass="Tooltip__content">
@@ -164,14 +164,15 @@ const Tooltip: React.FC<TooltipProps> = ({
   alignX,
   alignY,
   onClose,
-  cornerOffset,
+  cornerOffset = 0,
   cornerAbsoluteOffset,
   ...restProps
 }) => {
   const { entering } = useNavTransition();
   const isShown = _isShown && !entering;
-  const [tooltipRef, setTooltipRef] = React.useState<HTMLElement>();
-  const [tooltipArrowRef, setTooltipArrowRef] = React.useState<HTMLElement>();
+  const [tooltipRef, setTooltipRef] = React.useState<HTMLElement | null>(null);
+  const [tooltipArrowRef, setTooltipArrowRef] =
+    React.useState<HTMLElement | null>(null);
   const [target, setTarget] = React.useState<HTMLElement>();
 
   if (IS_DEV) {
@@ -216,17 +217,24 @@ const Tooltip: React.FC<TooltipProps> = ({
       enabled: true,
       phase: "main",
       fn({ state }) {
+        if (!state.modifiersData.arrow) {
+          return;
+        }
         if (isVerticalPlacement(state.placement)) {
           if (cornerAbsoluteOffset !== undefined) {
             state.modifiersData.arrow.x = cornerAbsoluteOffset;
           } else {
-            state.modifiersData.arrow.x += cornerOffset;
+            if (state.modifiersData.arrow?.x !== undefined) {
+              state.modifiersData.arrow.x += cornerOffset;
+            }
           }
         } else {
           if (cornerAbsoluteOffset !== undefined) {
             state.modifiersData.arrow.y = cornerAbsoluteOffset;
           } else {
-            state.modifiersData.arrow.y += cornerOffset;
+            if (state.modifiersData.arrow?.y !== undefined) {
+              state.modifiersData.arrow.y += cornerOffset;
+            }
           }
         }
       },
@@ -289,8 +297,8 @@ const Tooltip: React.FC<TooltipProps> = ({
             arrowRef={(el) => setTooltipArrowRef(el)}
             style={{ arrow: styles.arrow, container: styles.popper }}
             attributes={{
-              arrow: attributes.arrow,
-              container: attributes.popper,
+              arrow: attributes.arrow ?? null,
+              container: attributes.popper ?? null,
             }}
           />,
           tooltipContainer

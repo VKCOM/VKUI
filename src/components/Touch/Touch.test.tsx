@@ -39,8 +39,8 @@ function fireTouchSwipe(
     }
     prevTouches = touches;
     return {
-      changedTouches: changedTouches.map(asClientPos),
-      touches: touches.map(asClientPos),
+      changedTouches: changedTouches.map(asClientPos as any),
+      touches: touches.map(asClientPos as any),
     };
   };
   fireEvent.touchStart(e, eventProps(start));

@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import Search from "./Search";
 
 const getInput = () => screen.getByRole("searchbox");
-const getClearIcon = () => document.querySelector(".Search__icon");
+const getClearIcon = () => document.querySelector(".Search__icon") as Element;
 
 describe("Search", () => {
   baselineComponent(Search);

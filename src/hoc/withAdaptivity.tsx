@@ -4,7 +4,9 @@ import {
   SizeType,
   ViewHeight,
   ViewWidth,
+  AdaptivityContextInterface,
   AdaptivityProps,
+  SizeProps,
 } from "../components/AdaptivityProvider/AdaptivityContext";
 
 export { SizeType, ViewWidth, ViewHeight };
@@ -19,8 +21,13 @@ interface Config {
   deviceHasHover?: boolean;
 }
 
-export function withAdaptivity<T>(TargetComponent: T, config: Config): T {
-  function AdaptivityConsumer(props: AdaptivityProps) {
+export function withAdaptivity<T extends AdaptivityProps>(
+  TargetComponent: React.ComponentType<T>,
+  config: Config
+): React.ComponentType<Omit<T, keyof AdaptivityContextInterface> & SizeProps> {
+  const AdaptivityConsumer: React.ComponentType<
+    Omit<T, keyof AdaptivityContextInterface> & SizeProps
+  > = (props: Omit<T, keyof AdaptivityContextInterface> & SizeProps) => {
     const context = React.useContext(AdaptivityContext);
     let update = false;
 
@@ -35,14 +42,14 @@ export function withAdaptivity<T>(TargetComponent: T, config: Config): T {
     const hasMouse = context.hasMouse;
     const deviceHasHover = context.deviceHasHover;
 
-    const adaptivityProps: {
-      sizeX?: SizeType;
-      sizeY?: SizeType;
-      viewWidth?: ViewWidth;
-      viewHeight?: ViewHeight;
-      hasMouse?: boolean;
-      deviceHasHover?: boolean;
-    } = {};
+    const adaptivityProps: AdaptivityContextInterface = {
+      sizeX: SizeType.COMPACT,
+      sizeY: SizeType.REGULAR,
+      hasMouse,
+      deviceHasHover: true,
+      viewWidth: 0,
+      viewHeight: 0,
+    };
     config.sizeX ? (adaptivityProps.sizeX = sizeX) : undefined;
     config.sizeY ? (adaptivityProps.sizeY = sizeY) : undefined;
     config.viewWidth ? (adaptivityProps.viewWidth = viewWidth) : undefined;
@@ -52,8 +59,7 @@ export function withAdaptivity<T>(TargetComponent: T, config: Config): T {
       ? (adaptivityProps.deviceHasHover = deviceHasHover)
       : undefined;
 
-    // @ts-ignore
-    const target = <TargetComponent {...props} {...adaptivityProps} />;
+    const target = <TargetComponent {...(props as T)} {...adaptivityProps} />;
 
     if (update) {
       return (
@@ -73,7 +79,7 @@ export function withAdaptivity<T>(TargetComponent: T, config: Config): T {
     }
 
     return target;
-  }
+  };
 
-  return AdaptivityConsumer as unknown as T;
+  return AdaptivityConsumer;
 }

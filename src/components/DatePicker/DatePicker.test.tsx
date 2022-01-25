@@ -162,7 +162,7 @@ describe("DatePicker", () => {
     const forceNative = (jsx: ReactNode) => (
       <AdaptivityProvider hasMouse={false}>{jsx}</AdaptivityProvider>
     );
-    const getInput = () => document.querySelector("input");
+    const getInput = () => document.querySelector("input") as Element;
 
     it("renders value", () => {
       render(forceNative(<DatePicker defaultValue={getDate()} />));

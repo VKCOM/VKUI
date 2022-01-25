@@ -2,16 +2,12 @@ import * as React from "react";
 import { hasMouse as _hasMouse, hasHover as _hasHover } from "@vkontakte/vkjs";
 import {
   AdaptivityContext,
-  AdaptivityContextInterface,
+  AdaptivityProps,
   SizeType,
   ViewHeight,
   ViewWidth,
 } from "./AdaptivityContext";
 import { useDOM } from "../../lib/dom";
-
-export interface AdaptivityProviderProps extends AdaptivityContextInterface {
-  children?: React.ReactNode;
-}
 
 export const DESKTOP_SIZE = 1280;
 export const TABLET_SIZE = 1024;
@@ -21,8 +17,10 @@ export const MOBILE_SIZE = 320;
 export const MOBILE_LANDSCAPE_HEIGHT = 414;
 export const MEDIUM_HEIGHT = 720;
 
-export default function AdaptivityProvider(props: AdaptivityProviderProps) {
-  const adaptivityRef = React.useRef<AdaptivityContextInterface>(null);
+const AdaptivityProvider: React.FC<AdaptivityProps> = (props) => {
+  const adaptivityRef = React.useRef<ReturnType<
+    typeof calculateAdaptivity
+  > | null>(null);
   const [, updateAdaptivity] = React.useState({});
 
   const { window } = useDOM();
@@ -37,9 +35,12 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
 
   React.useEffect(() => {
     function onResize() {
+      if (adaptivityRef.current === null) {
+        return;
+      }
       const calculated = calculateAdaptivity(
-        window.innerWidth,
-        window.innerHeight,
+        window!.innerWidth,
+        window!.innerHeight,
         props
       );
       const { viewWidth, viewHeight, sizeX, sizeY, hasMouse, deviceHasHover } =
@@ -59,10 +60,10 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
     }
 
     onResize();
-    window.addEventListener("resize", onResize, false);
+    window!.addEventListener("resize", onResize, false);
 
     return () => {
-      window.removeEventListener("resize", onResize, false);
+      window!.removeEventListener("resize", onResize, false);
     };
   }, [
     props.viewWidth,
@@ -71,6 +72,8 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
     props.sizeY,
     props.hasMouse,
     props.deviceHasHover,
+    window,
+    props,
   ]);
 
   return (
@@ -78,12 +81,12 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
       {props.children}
     </AdaptivityContext.Provider>
   );
-}
+};
 
 function calculateAdaptivity(
   windowWidth: number,
   windowHeight: number,
-  props: AdaptivityProviderProps
+  props: AdaptivityProps
 ) {
   let viewWidth = ViewWidth.SMALL_MOBILE;
   let viewHeight = ViewHeight.SMALL;
@@ -131,3 +134,5 @@ function calculateAdaptivity(
 
   return { viewWidth, viewHeight, sizeX, sizeY, hasMouse, deviceHasHover };
 }
+
+export default AdaptivityProvider;

@@ -62,17 +62,17 @@ const Search: React.FC<SearchProps> = ({
     inputProps.onBlur && inputProps.onBlur(e);
   };
 
-  const onCancel = () => {
+  const onCancel = React.useCallback(() => {
     // eslint-disable-next-line @typescript-eslint/unbound-method
     const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
       HTMLInputElement.prototype,
       "value"
-    ).set;
-    nativeInputValueSetter.call(inputRef.current, "");
+    )?.set;
+    nativeInputValueSetter?.call(inputRef.current, "");
 
     const ev2 = new Event("input", { bubbles: true });
-    inputRef.current.dispatchEvent(ev2);
-  };
+    inputRef.current?.dispatchEvent(ev2);
+  }, [inputRef]);
 
   const onIconClickStart = React.useCallback(
     (e: TouchEvent) => onIconClick(e.originalEvent),
@@ -82,10 +82,10 @@ const Search: React.FC<SearchProps> = ({
   const onIconCancelClickStart = React.useCallback(
     (e: TouchEvent) => {
       e.originalEvent.preventDefault();
-      inputRef.current.focus();
+      inputRef.current?.focus();
       onCancel();
     },
-    [onCancel]
+    [inputRef, onCancel]
   );
 
   return (
