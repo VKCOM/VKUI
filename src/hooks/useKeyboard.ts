@@ -38,22 +38,27 @@ export function useKeyboard(): SoftwareKeyboardState {
     typeof setTimeout
   > | null>(null);
 
-  const onFocus = React.useCallback((event: FocusEvent | true) => {
-    clearTimeout(transitionalTimeout.current);
+  const onFocus = React.useCallback(
+    (event: FocusEvent | true) => {
+      if (transitionalTimeout.current) {
+        clearTimeout(transitionalTimeout.current);
+      }
 
-    const isOpened =
-      (event === true || event.type === "focusin") &&
-      (document.activeElement?.tagName === "INPUT" ||
-        document.activeElement?.tagName === "TEXTAREA");
-    setIsOpened(isOpened);
-    setIsPrecise(false);
-
-    // Ожидаем прохождение анимации раскрытия клавиатуры
-    transitionalTimeout.current = setTimeout(() => {
+      const isOpened =
+        (event === true || event.type === "focusin") &&
+        (document?.activeElement?.tagName === "INPUT" ||
+          document?.activeElement?.tagName === "TEXTAREA");
       setIsOpened(isOpened);
-      setIsPrecise(getPreciseKeyboardState(window));
-    }, 300);
-  }, []);
+      setIsPrecise(false);
+
+      // Ожидаем прохождение анимации раскрытия клавиатуры
+      transitionalTimeout.current = setTimeout(() => {
+        setIsOpened(isOpened);
+        setIsPrecise(getPreciseKeyboardState(window));
+      }, 300);
+    },
+    [document?.activeElement?.tagName, window]
+  );
 
   /**
    У полей с autoFocus не отлавливаются события focus, для этого вызываем вручную,

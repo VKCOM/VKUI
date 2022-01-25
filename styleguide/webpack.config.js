@@ -1,7 +1,7 @@
 const path = require("path");
 const webpackConfig = require("../webpack.config");
 const { DefinePlugin } = require("webpack");
-const merge = require("webpack-merge");
+const { merge } = require("webpack-merge");
 
 module.exports = merge(webpackConfig, {
   plugins: [

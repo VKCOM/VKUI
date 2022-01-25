@@ -72,7 +72,7 @@ export const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
   const gradientName =
     typeof gradientColor === "string"
       ? gradientColor
-      : COLORS_NUMBER_TO_TEXT_MAP[gradientColor];
+      : gradientColor && COLORS_NUMBER_TO_TEXT_MAP[gradientColor];
 
   return (
     <Avatar

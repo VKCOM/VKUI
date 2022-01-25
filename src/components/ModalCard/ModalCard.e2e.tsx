@@ -53,7 +53,7 @@ const propSets = [
     ],
     children: [
       <UsersStack
-        photos={[undefined, undefined, undefined, undefined]}
+        photos={["", "", "", ""]}
         size="m"
         visibleCount={3}
         key="usersstack"

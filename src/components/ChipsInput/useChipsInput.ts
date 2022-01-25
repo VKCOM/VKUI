@@ -12,17 +12,17 @@ export const useChipsInput = <Option extends ChipsInputOption>(
     props;
 
   const [fieldValue, setFieldValue] = React.useState(props.inputValue);
-  const [selectedOptions, setSelectedOptions] = React.useState(value);
+  const [selectedOptions, setSelectedOptions] = React.useState(value ?? []);
 
   const clearInput = React.useCallback(() => {
     setFieldValue("");
-    onInputChange({ target: { value: "" } } as any);
+    onInputChange!({ target: { value: "" } } as any);
   }, [onInputChange]);
 
   const handleInputChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setFieldValue(e.target.value);
-      onInputChange(e);
+      onInputChange!(e);
     },
     [onInputChange]
   );
@@ -30,7 +30,8 @@ export const useChipsInput = <Option extends ChipsInputOption>(
   const toggleOption = React.useCallback(
     (newOption: Option, value?: boolean) => {
       const newSelectedOptions = selectedOptions.filter(
-        (option: Option) => getOptionValue(newOption) !== getOptionValue(option)
+        (option: Option) =>
+          getOptionValue!(newOption) !== getOptionValue!(option)
       );
 
       if (value === true) {
@@ -38,7 +39,7 @@ export const useChipsInput = <Option extends ChipsInputOption>(
       }
 
       setSelectedOptions(newSelectedOptions);
-      onChange(newSelectedOptions);
+      onChange!(newSelectedOptions);
     },
     [selectedOptions, getOptionValue, onChange]
   );
@@ -51,22 +52,22 @@ export const useChipsInput = <Option extends ChipsInputOption>(
     const trimmedValue = fieldValue?.trim();
 
     if (trimmedValue) {
-      addOption(getNewOptionData(undefined, trimmedValue));
+      addOption(getNewOptionData!(undefined, trimmedValue));
       clearInput();
     }
   }, [addOption, clearInput, getNewOptionData, fieldValue]);
   const removeOption = React.useCallback(
     (value: ChipsInputValue) => {
-      toggleOption(getNewOptionData(undefined, value as string), false);
+      toggleOption(getNewOptionData!(undefined, value as string), false);
     },
     [toggleOption, getNewOptionData]
   );
 
   React.useEffect(() => {
-    setSelectedOptions(value);
+    setSelectedOptions(value as Option[]);
 
     return () => setSelectedOptions([]);
-  }, [props.value]);
+  }, [props.value, value]);
 
   React.useEffect(() => {
     setFieldValue(props.inputValue);

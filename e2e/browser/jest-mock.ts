@@ -40,7 +40,7 @@ const fakeTest = Object.assign(withPath, {
   skip: noop as any,
 }) as any as typeof test;
 
-window.describe = fakeTest;
+(window as any).describe = fakeTest;
 window.test = fakeTest;
 window.it = fakeTest;
 

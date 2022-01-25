@@ -14,7 +14,7 @@ const PROGRESS_MIN_VALUE = 0;
 const PROGRESS_MAX_VALUE = 100;
 
 const Progress: React.FC<ProgressProps> = ({
-  value,
+  value = 0,
   getRootRef,
   ...restProps
 }: ProgressProps) => {
@@ -43,10 +43,6 @@ const Progress: React.FC<ProgressProps> = ({
       />
     </div>
   );
-};
-
-Progress.defaultProps = {
-  value: 0,
 };
 
 export default Progress;

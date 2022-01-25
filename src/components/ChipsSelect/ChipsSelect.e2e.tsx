@@ -11,7 +11,7 @@ describe("ChipsSelect", () => {
     await mount(
       <AppRoot embedded>
         <AdaptivityProvider>
-          <ChipsSelect id="chips" options={options} />
+          <ChipsSelect id="chips" options={options} value={[]} />
         </AdaptivityProvider>
       </AppRoot>
     );
@@ -20,7 +20,7 @@ describe("ChipsSelect", () => {
       await page.keyboard.press("ArrowDown");
     }
     expect(
-      await screenshot(null, {
+      await screenshot(undefined, {
         selector: ".ChipsSelect, .ChipsSelect__options",
       })
     ).toMatchImageSnapshot();

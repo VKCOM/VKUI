@@ -9,6 +9,7 @@ import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
   WebviewType,
+  defaultConfigProviderProps,
 } from "./ConfigProviderContext";
 
 describe("ConfigProvider", () => {
@@ -22,7 +23,7 @@ describe("ConfigProvider", () => {
     };
     const ConfigUser: FC = () => {
       expect(useContext(ConfigProviderContext)).toEqual({
-        ...ConfigProvider.defaultProps,
+        ...defaultConfigProviderProps,
         ...config,
       });
       return null;
@@ -83,7 +84,7 @@ describe("ConfigProvider", () => {
   });
   describe("resolves appearance from external scheme", () => {
     afterEach(() => () => document.body.removeAttribute("scheme"));
-    let appearance: AppearanceType;
+    let appearance: AppearanceType | undefined;
     const ReadAppearance: FC = () => {
       appearance = useContext(ConfigProviderContext).appearance;
       return null;

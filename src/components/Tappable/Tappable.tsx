@@ -210,7 +210,7 @@ const Tappable: React.FC<TappableProps> = ({
   function onKeyDown(e: React.KeyboardEvent<HTMLElement>) {
     if (isCustomElement && shouldTriggerClickOnEnterOrSpace(e)) {
       e.preventDefault();
-      containerRef.current.click();
+      containerRef.current?.click();
     }
   }
 
@@ -223,8 +223,8 @@ const Tappable: React.FC<TappableProps> = ({
 
       if (platform === ANDROID) {
         const { top, left } = getOffsetRect(containerRef.current);
-        const x = coordX(originalEvent) - left;
-        const y = coordY(originalEvent) - top;
+        const x = coordX(originalEvent) - (left ?? 0);
+        const y = coordY(originalEvent) - (top ?? 0);
         setClicks([...clicks, { x, y, id: Date.now().toString() }]);
       }
 
@@ -285,7 +285,7 @@ const Tappable: React.FC<TappableProps> = ({
       type={Component === "button" ? "button" : undefined}
       tabIndex={isCustomElement && !props.disabled ? 0 : undefined}
       role={isCustomElement ? role : undefined}
-      aria-disabled={isCustomElement ? props.disabled : null}
+      aria-disabled={isCustomElement ? props.disabled : undefined}
       stopPropagation={stopPropagation && !insideTouchRoot && !props.disabled}
       {...props}
       slideThreshold={20}
@@ -334,6 +334,6 @@ export default withAdaptivity(Tappable, {
 
 function Wave({ x, y, onClear }: Wave & { onClear: VoidFunction }) {
   const timeout = useTimeout(onClear, 225);
-  React.useEffect(() => timeout.set(), []);
+  React.useEffect(() => timeout.set(), [timeout]);
   return <span vkuiClass="Tappable__wave" style={{ top: y, left: x }} />;
 }

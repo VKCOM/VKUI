@@ -9,7 +9,10 @@ import Title from "../Typography/Title/Title";
 import Text from "../Typography/Text/Text";
 import { ANDROID, VKCOM } from "../../lib/platform";
 import { Icon16Done, Icon24Done } from "@vkontakte/icons";
-import { ActionSheetContext } from "../ActionSheet/ActionSheetContext";
+import {
+  ActionSheetContext,
+  ActionSheetContextType,
+} from "../ActionSheet/ActionSheetContext";
 import Caption from "../Typography/Caption/Caption";
 import {
   withAdaptivity,
@@ -62,7 +65,7 @@ const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
 }: ActionSheetItemProps) => {
   const platform = usePlatform();
   const { onItemClick = () => noop, isDesktop } =
-    React.useContext(ActionSheetContext);
+    React.useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);
 
   let Component: React.ElementType = restProps.href ? "a" : "div";
 
@@ -76,7 +79,9 @@ const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
     <Tappable
       {...restProps}
       onClick={
-        selectable ? onClick : onItemClick(onClick, onImmediateClick, autoclose)
+        selectable
+          ? onClick
+          : onItemClick(onClick, onImmediateClick, Boolean(autoclose))
       }
       activeMode="ActionSheetItem--active"
       vkuiClass={classNames(
@@ -162,7 +167,7 @@ const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
             name={name}
             value={value}
             onChange={onChange}
-            onClick={onItemClick(noop, noop, autoclose)}
+            onClick={onItemClick(noop, noop, Boolean(autoclose))}
             defaultChecked={defaultChecked}
             checked={checked}
             disabled={restProps.disabled}

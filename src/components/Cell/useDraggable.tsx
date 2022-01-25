@@ -17,22 +17,28 @@ export const useDraggable = ({
   onDragFinish,
 }: Pick<CellProps, "onDragFinish">) => {
   const [dragging, setDragging] = React.useState<boolean>(false);
-  const rootElRef = React.useRef(null);
+  const rootElRef = React.useRef<HTMLElement>(null);
 
-  const [siblings, setSiblings] = React.useState<HTMLElement[]>(undefined);
-  const [dragStartIndex, setDragStartIndex] = React.useState<number>(undefined);
-  const [dragEndIndex, setDragEndIndex] = React.useState<number>(undefined);
+  const [siblings, setSiblings] = React.useState<HTMLElement[]>([]);
+  const [dragStartIndex, setDragStartIndex] = React.useState<number>(0);
+  const [dragEndIndex, setDragEndIndex] = React.useState<number>(0);
   const [dragShift, setDragShift] = React.useState<number>(0);
-  const [dragDirection, setDragDirection] = React.useState<"down" | "up">(
-    undefined
-  );
+  const [dragDirection, setDragDirection] = React.useState<
+    "down" | "up" | undefined
+  >(undefined);
 
   const onDragStart = () => {
     const rootEl = rootElRef.current;
+    if (!rootEl) {
+      return;
+    }
 
     setDragging(true);
 
-    const _siblings: HTMLElement[] = [...rootEl.parentElement.childNodes];
+    let _siblings: HTMLElement[] = [];
+    if (rootEl.parentElement?.childNodes) {
+      _siblings = Array.from(rootEl.parentElement.children) as HTMLElement[];
+    }
     const idx = _siblings.indexOf(rootEl);
 
     setDragStartIndex(idx);
@@ -46,60 +52,62 @@ export const useDraggable = ({
 
     const rootEl = rootElRef.current;
 
-    rootEl.style.transform = `translateY(${e.shiftY}px)`;
-    const rootGesture = rootEl.getBoundingClientRect();
+    if (rootEl) {
+      rootEl.style.transform = `translateY(${e.shiftY}px)`;
+      const rootGesture = rootEl.getBoundingClientRect();
 
-    setDragDirection(dragShift - e.shiftY < 0 ? "down" : "up");
-    setDragShift(e.shiftY);
-    setDragEndIndex(dragStartIndex);
+      setDragDirection(dragShift - e.shiftY < 0 ? "down" : "up");
+      setDragShift(e.shiftY);
+      setDragEndIndex(dragStartIndex);
 
-    siblings.forEach((sibling: HTMLElement, siblingIndex: number) => {
-      const siblingGesture = sibling.getBoundingClientRect();
-      const siblingHalfHeight = siblingGesture.height / 2;
+      siblings.forEach((sibling: HTMLElement, siblingIndex: number) => {
+        const siblingGesture = sibling.getBoundingClientRect();
+        const siblingHalfHeight = siblingGesture.height / 2;
 
-      const rootOverSibling =
-        rootGesture.bottom > siblingGesture.top + siblingHalfHeight;
-      const rootUnderSibling =
-        rootGesture.top < siblingGesture.bottom - siblingHalfHeight;
+        const rootOverSibling =
+          rootGesture.bottom > siblingGesture.top + siblingHalfHeight;
+        const rootUnderSibling =
+          rootGesture.top < siblingGesture.bottom - siblingHalfHeight;
 
-      if (dragStartIndex < siblingIndex) {
-        if (rootOverSibling) {
-          if (dragDirection === "down") {
-            sibling.style.transform = "translateY(-100%)";
+        if (dragStartIndex < siblingIndex) {
+          if (rootOverSibling) {
+            if (dragDirection === "down") {
+              sibling.style.transform = "translateY(-100%)";
+            }
+
+            setDragEndIndex((dragEndIndex) => dragEndIndex + 1);
           }
-
-          setDragEndIndex((dragEndIndex) => dragEndIndex + 1);
-        }
-        if (rootUnderSibling && dragDirection === "up") {
-          sibling.style.transform = "translateY(0)";
-        }
-      } else if (dragStartIndex > siblingIndex) {
-        if (rootUnderSibling) {
-          if (dragDirection === "up") {
-            sibling.style.transform = "translateY(100%)";
+          if (rootUnderSibling && dragDirection === "up") {
+            sibling.style.transform = "translateY(0)";
           }
+        } else if (dragStartIndex > siblingIndex) {
+          if (rootUnderSibling) {
+            if (dragDirection === "up") {
+              sibling.style.transform = "translateY(100%)";
+            }
 
-          setDragEndIndex((dragEndIndex) => dragEndIndex - 1);
+            setDragEndIndex((dragEndIndex) => dragEndIndex - 1);
+          }
+          if (rootOverSibling && dragDirection === "down") {
+            sibling.style.transform = "translateY(0)";
+          }
         }
-        if (rootOverSibling && dragDirection === "down") {
-          sibling.style.transform = "translateY(0)";
-        }
-      }
-    });
+      });
+    }
   };
 
   const onDragEnd = () => {
     const [from, to] = [dragStartIndex, dragEndIndex];
 
     siblings.forEach((sibling: HTMLElement) => {
-      sibling.style.transform = null;
+      sibling.style.transform = "";
     });
 
-    setSiblings(undefined);
-    setDragEndIndex(undefined);
-    setDragStartIndex(undefined);
+    setSiblings([]);
+    setDragEndIndex(0);
+    setDragStartIndex(0);
     setDragDirection(undefined);
-    setDragShift(undefined);
+    setDragShift(0);
 
     setDragging(false);
 

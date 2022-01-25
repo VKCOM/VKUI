@@ -76,11 +76,11 @@ class BaseGallery extends React.Component<
     this.slidesStore = {};
   }
 
-  container: HTMLDivElement;
+  container: HTMLDivElement | null = null;
   slidesStore: {
-    [index: string]: HTMLElement;
+    [index: string]: HTMLElement | null;
   };
-  viewport: HTMLElement;
+  viewport: HTMLElement | null = null;
 
   static defaultProps: Partial<BaseGalleryProps> = {
     slideWidth: "100%",
@@ -95,18 +95,19 @@ class BaseGallery extends React.Component<
   }
 
   initializeSlides(options: { animation?: boolean } = {}) {
-    const slides: GallerySlidesState[] = React.Children.map(
-      this.props.children,
-      (_item: React.ReactElement, i: number): GallerySlidesState => {
-        const elem = this.slidesStore[`slide-${i}`];
-        return {
-          coordX: elem.offsetLeft,
-          width: elem.offsetWidth,
-        };
-      }
-    );
+    const slides =
+      React.Children.map(
+        this.props.children,
+        (_item: React.ReactNode, i: number): GallerySlidesState => {
+          const elem = this.slidesStore[`slide-${i}`];
+          return {
+            coordX: elem?.offsetLeft ?? 0,
+            width: elem?.offsetWidth ?? 0,
+          };
+        }
+      ) ?? [];
 
-    const containerWidth = this.container.offsetWidth;
+    const containerWidth = this.container?.offsetWidth ?? 0;
     const layerWidth = slides.reduce(
       (val: number, slide: GallerySlidesState) => slide.width + val,
       0
@@ -116,29 +117,31 @@ class BaseGallery extends React.Component<
     const max = this.calcMax({ slides });
 
     this.setState({ min, max, layerWidth, containerWidth, slides }, () => {
-      const shiftX = this.calculateIndent(this.props.slideIndex);
-      if (this.state.shiftX === shiftX) {
-        return;
-      }
-      const isValidShift =
-        this.state.shiftX === this.validateIndent(this.state.shiftX);
-      const { animation = isValidShift } = options;
-      this.setState({ shiftX, animation }, () => {
-        if (!this.state.animation) {
-          this.props.window.requestAnimationFrame(() =>
-            this.setState({ animation: true })
-          );
+      if (this.props.slideIndex !== undefined) {
+        const shiftX = this.calculateIndent(this.props.slideIndex);
+        if (this.state.shiftX === shiftX) {
+          return;
         }
-      });
+        const isValidShift =
+          this.state.shiftX === this.validateIndent(this.state.shiftX);
+        const { animation = isValidShift } = options;
+        this.setState({ shiftX, animation }, () => {
+          if (!this.state.animation) {
+            this.props.window?.requestAnimationFrame(() =>
+              this.setState({ animation: true })
+            );
+          }
+        });
+      }
     });
   }
 
   calcMin({
     containerWidth,
-    layerWidth,
+    layerWidth = 0,
     slides,
   }: Pick<GalleryState, "containerWidth" | "layerWidth" | "slides">) {
-    const viewportWidth = this.viewport.offsetWidth;
+    const viewportWidth = this.viewport?.offsetWidth ?? 0;
     switch (this.props.align) {
       case "left":
         return containerWidth - layerWidth;
@@ -154,10 +157,11 @@ class BaseGallery extends React.Component<
           );
         }
     }
+    return undefined;
   }
 
   calcMax({ slides }: Pick<GalleryState, "slides">) {
-    const viewportWidth = this.viewport.offsetWidth;
+    const viewportWidth = this.viewport?.offsetWidth ?? 0;
     if (this.isCenterWithCustomWidth && slides.length) {
       const { width, coordX } = slides[0];
       return viewportWidth / 2 - coordX - width / 2;
@@ -182,7 +186,7 @@ class BaseGallery extends React.Component<
       const { coordX, width } = targetSlide;
 
       if (this.isCenterWithCustomWidth) {
-        const viewportWidth = this.viewport.offsetWidth;
+        const viewportWidth = this.viewport?.offsetWidth ?? 0;
         return viewportWidth / 2 - coordX - width / 2;
       }
 
@@ -196,7 +200,7 @@ class BaseGallery extends React.Component<
    * Считает отступ слоя галереи во время драга
    */
   calculateDragIndent() {
-    const { shiftX, deltaX, min, max } = this.state;
+    const { shiftX, deltaX, min = 0, max = 0 } = this.state;
     const indent = shiftX + deltaX;
 
     if (indent > max) {
@@ -209,7 +213,7 @@ class BaseGallery extends React.Component<
   }
 
   validateIndent(value: number) {
-    const { min, max } = this.state;
+    const { min = 0, max = 0 } = this.state;
 
     if (value < min) {
       return min;
@@ -221,15 +225,15 @@ class BaseGallery extends React.Component<
   }
 
   get isFullyVisible() {
-    return this.state.layerWidth <= this.state.containerWidth;
+    return (this.state.layerWidth ?? 0) <= this.state.containerWidth;
   }
 
   /*
    * Получает индекс слайда, к которому будет осуществлен переход
    */
   getTarget(e: TouchEvent) {
-    const { slides, deltaX, shiftX, max } = this.state;
-    const { slideIndex } = this.props;
+    const { slides, deltaX, shiftX, max = 0 } = this.state;
+    const { slideIndex = 0 } = this.props;
     const expectDeltaX = (deltaX / e.duration) * 240 * 0.6;
     const shift = shiftX + deltaX + expectDeltaX - max;
     const direction = deltaX < 0 ? 1 : -1;
@@ -285,10 +289,12 @@ class BaseGallery extends React.Component<
   };
 
   onEnd: TouchEventHandler = (e: TouchEvent) => {
-    const targetIndex = e.isSlide ? this.getTarget(e) : this.props.slideIndex;
+    const targetIndex = e.isSlide
+      ? this.getTarget(e)
+      : this.props.slideIndex ?? 0;
     this.props.onDragEnd && this.props.onDragEnd(e);
     this.setState({ deltaX: 0, animation: true }, () =>
-      this.props.onChange(targetIndex)
+      this.props.onChange?.(targetIndex)
     );
 
     if (this.props.onEnd) {
@@ -304,8 +310,8 @@ class BaseGallery extends React.Component<
   }
 
   get canSlideRight() {
-    const { containerWidth, layerWidth, shiftX, slides } = this.state;
-    const { align, slideIndex } = this.props;
+    const { containerWidth, layerWidth = 0, shiftX, slides } = this.state;
+    const { align, slideIndex = 0 } = this.props;
     return (
       !this.isFullyVisible &&
       // we can't move right when gallery layer fully scrolled right, if gallery aligned by left side
@@ -316,19 +322,19 @@ class BaseGallery extends React.Component<
   }
 
   slideLeft = () => {
-    const { slideIndex, onChange } = this.props;
+    const { slideIndex = 0, onChange } = this.props;
     if (this.canSlideLeft) {
       this.setState({ deltaX: 0, animation: true }, () =>
-        onChange(slideIndex - 1)
+        onChange?.(slideIndex - 1)
       );
     }
   };
 
   slideRight = () => {
-    const { slideIndex, onChange } = this.props;
+    const { slideIndex = 0, onChange } = this.props;
     if (this.canSlideRight) {
       this.setState({ deltaX: 0, animation: true }, () =>
-        onChange(slideIndex + 1)
+        onChange?.(slideIndex + 1)
       );
     }
   };
@@ -339,17 +345,21 @@ class BaseGallery extends React.Component<
 
   getViewportRef: React.RefCallback<HTMLElement> = (viewport) => {
     this.viewport = viewport;
-    setRef(viewport, this.props.getRef);
+    if (this.props.getRef) {
+      setRef(viewport, this.props.getRef);
+    }
   };
 
   getRootRef: React.RefCallback<HTMLDivElement> = (container) => {
     this.container = container;
-    setRef(container, this.props.getRootRef);
+    if (this.props.getRootRef) {
+      setRef(container, this.props.getRootRef);
+    }
   };
 
   componentDidMount() {
     this.initializeSlides({ animation: false });
-    this.props.window.addEventListener("resize", this.onResize);
+    this.props.window!.addEventListener("resize", this.onResize);
   }
 
   componentDidUpdate(prevProps: GalleryProps) {
@@ -367,13 +377,13 @@ class BaseGallery extends React.Component<
       this.setState({
         animation: true,
         deltaX: 0,
-        shiftX: this.calculateIndent(this.props.slideIndex),
+        shiftX: this.calculateIndent(this.props.slideIndex ?? 0),
       });
     }
   }
 
   componentWillUnmount() {
-    this.props.window.removeEventListener("resize", this.onResize);
+    this.props.window!.removeEventListener("resize", this.onResize);
   }
 
   render() {
@@ -381,7 +391,7 @@ class BaseGallery extends React.Component<
     const {
       children,
       slideWidth,
-      slideIndex,
+      slideIndex = 0,
       isDraggable,
       onDragStart,
       onDragEnd,
@@ -439,7 +449,7 @@ class BaseGallery extends React.Component<
           <div vkuiClass="Gallery__layer" style={layerStyle}>
             {React.Children.map(
               children,
-              (item: React.ReactElement, i: number) => (
+              (item: React.ReactNode, i: number) => (
                 <div
                   vkuiClass="Gallery__slide"
                   key={`slide-${i}`}
@@ -462,7 +472,7 @@ class BaseGallery extends React.Component<
           >
             {React.Children.map(
               children,
-              (_item: React.ReactElement, index: number) => (
+              (_item: React.ReactNode, index: number) => (
                 <div
                   vkuiClass={classNames("Gallery__bullet", {
                     "Gallery__bullet--active": index === slideIndex,
@@ -485,23 +495,20 @@ class BaseGallery extends React.Component<
   }
 }
 
-const BaseGalleryAdaptive = withAdaptivity(
-  withDOM<BaseGalleryProps>(BaseGallery),
-  {
-    hasMouse: true,
-  }
-);
+const BaseGalleryAdaptive = withAdaptivity(withDOM(BaseGallery), {
+  hasMouse: true,
+});
 
 const Gallery: React.FC<GalleryProps> = ({
   initialSlideIndex = 0,
   children,
-  timeout,
+  timeout = 0,
   onChange,
   ...props
 }: GalleryProps) => {
   const [localSlideIndex, setSlideIndex] = React.useState(initialSlideIndex);
   const isControlled = typeof props.slideIndex === "number";
-  const slideIndex = isControlled ? props.slideIndex : localSlideIndex;
+  const slideIndex = isControlled ? props.slideIndex ?? 0 : localSlideIndex;
   const isDraggable = !isControlled || Boolean(onChange);
   const slides = React.Children.toArray(children).filter((item) =>
     Boolean(item)
@@ -516,7 +523,7 @@ const Gallery: React.FC<GalleryProps> = ({
       !isControlled && setSlideIndex(current);
       onChange && onChange(current);
     },
-    [onChange, slideIndex]
+    [isControlled, onChange, slideIndex]
   );
 
   const autoplay = useTimeout(
@@ -525,7 +532,7 @@ const Gallery: React.FC<GalleryProps> = ({
   );
   React.useEffect(
     () => (timeout ? autoplay.set() : autoplay.clear()),
-    [timeout, slideIndex]
+    [timeout, slideIndex, autoplay]
   );
 
   // prevent invalid slideIndex
@@ -537,7 +544,7 @@ const Gallery: React.FC<GalleryProps> = ({
     if (onChange && safeSlideIndex !== slideIndex) {
       onChange(safeSlideIndex);
     }
-  }, [safeSlideIndex]);
+  }, [onChange, safeSlideIndex, slideIndex]);
 
   return (
     <BaseGalleryAdaptive

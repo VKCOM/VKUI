@@ -30,7 +30,7 @@ const RadioGroupTest: FC<RadioGroupTestProps> = ({
 describe("RadioGroup", () => {
   describeScreenshotFuzz(RadioGroupTest, [
     {
-      mode: [null, "horizontal"],
+      mode: [undefined, "horizontal"],
       RadioGroupWrapper: ["FormItem", "div"],
       children: [
         <Fragment key="kids">

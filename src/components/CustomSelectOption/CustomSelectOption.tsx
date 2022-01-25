@@ -35,7 +35,7 @@ const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
   disabled,
   ...restProps
 }: CustomSelectOptionProps) => {
-  const title = typeof children === "string" ? children : null;
+  const title = typeof children === "string" ? children : undefined;
   const { sizeY } = useAdaptivity();
 
   if (!!option && process.env.NODE_ENV === "development") {

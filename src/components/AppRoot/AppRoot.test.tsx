@@ -9,7 +9,7 @@ describe("AppRoot", () => {
   describe("Manages portal root in embedded mode", () => {
     describe("Creates & injects portal root", () => {
       it.each(["embedded", "partial"] as const)("in %s mode", (mode) => {
-        let portalRoot: HTMLElement;
+        let portalRoot: HTMLElement | undefined | null;
         const { unmount } = render(
           <AppRoot mode={mode}>
             <AppRootContext.Consumer>
@@ -20,9 +20,9 @@ describe("AppRoot", () => {
             </AppRootContext.Consumer>
           </AppRoot>
         );
-        expect(document.body).toContainElement(portalRoot);
+        expect(document.body).toContainElement(portalRoot as HTMLElement);
         unmount();
-        expect(document.body).not.toContainElement(portalRoot);
+        expect(document.body).not.toContainElement(portalRoot as HTMLElement);
       });
     });
     describe("applies container classes", () => {
@@ -63,7 +63,7 @@ describe("AppRoot", () => {
       );
     });
     it("Supports multi-instance mode", () => {
-      let portalRoot1: HTMLElement;
+      let portalRoot1: HTMLElement | undefined | null;
       render(
         <AppRoot mode="embedded">
           <AppRootContext.Consumer>
@@ -75,7 +75,7 @@ describe("AppRoot", () => {
         </AppRoot>
       );
       render(<AppRoot mode="embedded" />).unmount();
-      expect(document.body).toContainElement(portalRoot1);
+      expect(document.body).toContainElement(portalRoot1 as HTMLElement);
     });
   });
 });

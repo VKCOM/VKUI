@@ -7,8 +7,10 @@ describe("CustomSelect", () => {
   baselineComponent(CustomSelect);
 
   it("Does not explode on NaN value", () => {
-    const h = render(<CustomSelect value={NaN} />);
-    expect(() => h.rerender(<CustomSelect value={NaN} />)).not.toThrow();
+    const h = render(<CustomSelect value={NaN} options={[]} />);
+    expect(() =>
+      h.rerender(<CustomSelect value={NaN} options={[]} />)
+    ).not.toThrow();
   });
 
   it("works correctly as uncontrolled component", () => {
@@ -387,7 +389,7 @@ describe("CustomSelect", () => {
     });
 
     expect(
-      document.querySelector(".CustomSelectOption--hover").textContent
+      document.querySelector(".CustomSelectOption--hover")?.textContent
     ).toEqual("Bob");
 
     fireEvent.keyDown(screen.getByTestId("target"), {
@@ -396,7 +398,7 @@ describe("CustomSelect", () => {
     });
 
     expect(
-      document.querySelector(".CustomSelectOption--hover").textContent
+      document.querySelector(".CustomSelectOption--hover")?.textContent
     ).toEqual("Josh");
 
     rerender(
@@ -416,7 +418,7 @@ describe("CustomSelect", () => {
     });
 
     expect(
-      document.querySelector(".CustomSelectOption--hover").textContent
+      document.querySelector(".CustomSelectOption--hover")?.textContent
     ).toEqual("Bob");
   });
 });

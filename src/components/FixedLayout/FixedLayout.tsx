@@ -38,12 +38,12 @@ const FixedLayout: React.FC<FixedLayoutProps> = ({
   ...restProps
 }: FixedLayoutProps) => {
   const platform = usePlatform();
-  const [width, setWidth] = React.useState<string>(null);
+  const [width, setWidth] = React.useState<string | undefined>(undefined);
   const { window } = useDOM();
   const { colRef } = React.useContext(SplitColContext);
   const doResize = () =>
-    setWidth(colRef?.current ? `${colRef.current.offsetWidth}px` : null);
-  React.useEffect(doResize, []);
+    setWidth(colRef?.current ? `${colRef.current.offsetWidth}px` : undefined);
+  React.useEffect(doResize, [colRef]);
   useGlobalEventListener(window, "resize", doResize);
 
   return (

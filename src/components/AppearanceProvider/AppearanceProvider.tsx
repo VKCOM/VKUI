@@ -18,7 +18,7 @@ export const AppearanceProvider: React.FC<AppearanceProviderProps> = ({
   const appearanceContext = React.useMemo(
     () => ({
       scheme: getScheme({
-        platform: platform,
+        platform,
         appearance,
       }),
       appearance,

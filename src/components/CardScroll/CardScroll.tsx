@@ -33,12 +33,17 @@ const CardScroll: React.FC<CardScrollProps> = ({
   const { window } = useDOM();
 
   function getScrollToLeft(offset: number): number {
+    if (!refContainer.current || !gapRef.current) {
+      return offset;
+    }
     const containerWidth = refContainer.current.offsetWidth;
-    const slideIndex = Array.from(refContainer.current.children).findIndex(
+    const slideIndex = (
+      Array.from(refContainer.current.children) as HTMLElement[]
+    ).findIndex(
       (el: HTMLElement) =>
         el.offsetLeft +
           el.offsetWidth +
-          parseInt(window.getComputedStyle(el).marginRight) -
+          parseInt(window!.getComputedStyle(el).marginRight) -
           offset >=
         0
     );
@@ -66,6 +71,10 @@ const CardScroll: React.FC<CardScrollProps> = ({
   }
 
   function getScrollToRight(offset: number): number {
+    if (!refContainer.current || !gapRef.current) {
+      return offset;
+    }
+
     const containerWidth = refContainer.current.offsetWidth;
     const slide = Array.prototype.find.call(
       refContainer.current.children,

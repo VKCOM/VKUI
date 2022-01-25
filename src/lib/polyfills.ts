@@ -24,7 +24,7 @@ if (canUseDOM) {
   // Element.prototype.closest
   if (!ElementProto.closest) {
     ElementProto.closest = function (css: string): Element | null {
-      let node: Element = this;
+      let node: Element | null = this;
       while (node) {
         if (node.matches(css)) {
           return node;
@@ -74,7 +74,7 @@ if (!Array.prototype.includes) {
 // Array.prototype.find
 if (!Array.prototype.find) {
   Object.defineProperty(Array.prototype, "find", {
-    value: function (callback: Array<any>["find"]) {
+    value: function (callback: Parameters<Array<any>["find"]>[0]) {
       if (this === null) {
         throw new TypeError("Array.prototype.find called on null or undefined");
       } else if (typeof callback !== "function") {

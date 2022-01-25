@@ -10,7 +10,7 @@ describe("ChipsInput", () => {
     [
       {
         value: [
-          undefined,
+          [],
           [
             { value: "1", label: "Arctic Monkeys" },
             { value: "2", label: "Звери" },

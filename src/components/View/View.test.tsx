@@ -142,7 +142,7 @@ describe.each([
       );
       const h = render(<SwipeBack />);
       jest.runAllTimers();
-      const view = h.container.firstElementChild;
+      const view = h.container.firstElementChild as Element;
       // force detect x-swipe
       fireEvent.mouseDown(view, { clientX: 50, clientY: 100 });
       fireEvent.mouseMove(view, { clientX: 40, clientY: 100 });
