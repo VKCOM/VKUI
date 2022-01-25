@@ -10,10 +10,14 @@ export type FormLayoutProps = React.AllHTMLAttributes<HTMLElement> &
   HasRef<HTMLElement> &
   HasComponent;
 
-const FormLayout: React.FunctionComponent<FormLayoutProps> = (
-  props: FormLayoutProps
-) => {
-  const { children, Component, getRef, onSubmit, ...restProps } = props;
+const FormLayout: React.FC<FormLayoutProps> = (props: FormLayoutProps) => {
+  const {
+    children,
+    Component = "form",
+    getRef,
+    onSubmit = preventDefault,
+    ...restProps
+  } = props;
 
   const platform = usePlatform();
   return (
@@ -31,9 +35,5 @@ const FormLayout: React.FunctionComponent<FormLayoutProps> = (
   );
 };
 
-FormLayout.defaultProps = {
-  Component: "form",
-  onSubmit: preventDefault,
-};
-
+// eslint-disable-next-line import/no-default-export
 export default FormLayout;

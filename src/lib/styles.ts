@@ -2,7 +2,7 @@
  * Задает стиль трансформации элементу с учетом префиксов
  */
 export function setTransformStyle(
-  element: HTMLElement | undefined,
+  element: HTMLElement | undefined | null,
   transform: string
 ): void {
   if (element) {

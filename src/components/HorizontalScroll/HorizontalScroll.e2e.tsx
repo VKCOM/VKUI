@@ -76,7 +76,7 @@ describe("HorizontalScroll", () => {
     await page.hover(".HorizontalScroll");
 
     expect(
-      await screenshot(null, {
+      await screenshot(undefined, {
         selector: ".HorizontalScroll",
       })
     ).toMatchImageSnapshot();
@@ -101,7 +101,7 @@ describe("HorizontalScroll", () => {
     await page.hover(".HorizontalScroll");
 
     expect(
-      await screenshot(null, {
+      await screenshot(undefined, {
         selector: ".HorizontalScroll",
       })
     ).toMatchImageSnapshot();

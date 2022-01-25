@@ -3,7 +3,7 @@ import { PlatformType, VKCOM } from "../lib/platform";
 import { Scheme } from "./scheme";
 
 export interface GetSchemeProps {
-  platform: PlatformType;
+  platform?: PlatformType;
   appearance: AppearanceType;
 }
 

@@ -8,10 +8,10 @@ import {
 import { usePlatform } from "../../hooks/usePlatform";
 import {
   withAdaptivity,
-  AdaptivityProps,
   ViewHeight,
   ViewWidth,
 } from "../../hoc/withAdaptivity";
+import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { multiRef } from "../../lib/utils";
 import { ModalType } from "../ModalRoot/types";
@@ -21,7 +21,7 @@ import "./ModalPage.css";
 
 export interface ModalPageProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    AdaptivityProps,
+    AdaptivityContextInterface,
     NavIdProps {
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`
@@ -60,7 +60,7 @@ const ModalPage: React.FC<ModalPageProps> = (props: ModalPageProps) => {
 
   React.useEffect(() => {
     updateModalHeight();
-  }, [children]);
+  }, [children, updateModalHeight]);
 
   const isDesktop =
     viewWidth >= ViewWidth.SMALL_TABLET &&
@@ -111,6 +111,7 @@ ModalPage.defaultProps = {
   settlingHeight: 75,
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(ModalPage, {
   viewWidth: true,
   viewHeight: true,

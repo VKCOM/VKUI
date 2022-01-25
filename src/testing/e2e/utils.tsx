@@ -7,7 +7,6 @@ import { Panel } from "../../components/Panel/Panel";
 import { Platform } from "../../lib/platform";
 import { Scheme } from "../../helpers/scheme";
 import AdaptivityProvider, {
-  AdaptivityProviderProps,
   DESKTOP_SIZE,
   MOBILE_SIZE,
   SMALL_TABLET_SIZE,
@@ -26,7 +25,7 @@ type AdaptivityFlag = boolean | "x" | "y";
 type PropDesc<Props> = { [K in keyof Props]?: Array<Props[K]> } & {
   $adaptivity?: AdaptivityFlag;
 };
-type SizeProps = Pick<AdaptivityProviderProps, "sizeX" | "sizeY">;
+type SizeProps = Pick<AdaptivityProps, "sizeX" | "sizeY">;
 type TestProps<Props> = Array<Props & SizeProps>;
 type CartesianOptions = { adaptive: boolean };
 
@@ -49,17 +48,18 @@ function cartesian<Props>(
     ...propDesc,
     ...getAdaptivity(ops.adaptive ? $adaptivity : false),
   };
-  return Object.entries(propDesc).reduce(
-    (acc, [prop, values]: [string, any[]]) => {
+  return Object.entries(propDesc).reduce<TestProps<Props>>(
+    (acc, [prop, values]: [string, any]) => {
       const res: any[] = [];
       acc.forEach((props) => {
-        values.forEach((value) => {
+        values.forEach((value: any) => {
           res.push({ ...props, [prop]: value });
         });
       });
       return res;
     },
-    [{}]
+    // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
+    [{}] as TestProps<Props>
   );
 }
 
@@ -70,13 +70,16 @@ function multiCartesian<Props>(
   if (propSets.length === 0) {
     return [{} as any];
   }
-  return propSets.reduce((acc, ortho) => acc.concat(cartesian(ortho, ops)), []);
+  return propSets.reduce(
+    (acc, ortho) => acc.concat(cartesian(ortho, ops) as any),
+    []
+  );
 }
 
 function prettyProps(props: any) {
   return Object.entries(props)
     .sort(([key1], [key2]) => Number(key1 > key2))
-    .map(([prop, value]) => {
+    .map(([prop, value]: [string, any]) => {
       if (value === undefined) {
         return "";
       }
@@ -102,7 +105,7 @@ type ScreenshotOptions = {
   mobileSchemes?: Array<Scheme.BRIGHT_LIGHT | Scheme.SPACE_GRAY>;
   // pass [VKCOM_LIGHT, VKCOM_DARK] if component depends on appearance
   vkcomSchemes?: Array<Scheme.VKCOM_LIGHT | Scheme.VKCOM_DARK>;
-  adaptivity?: AdaptivityProps;
+  adaptivity?: Partial<AdaptivityProps>;
   Wrapper?: ComponentType;
 };
 

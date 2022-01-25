@@ -14,7 +14,7 @@ const PROGRESS_MIN_VALUE = 0;
 const PROGRESS_MAX_VALUE = 100;
 
 const Progress: React.FC<ProgressProps> = ({
-  value,
+  value = 0,
   getRootRef,
   ...restProps
 }: ProgressProps) => {
@@ -45,8 +45,5 @@ const Progress: React.FC<ProgressProps> = ({
   );
 };
 
-Progress.defaultProps = {
-  value: 0,
-};
-
+// eslint-disable-next-line import/no-default-export
 export default Progress;

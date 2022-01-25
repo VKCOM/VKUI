@@ -29,7 +29,7 @@ export const PanelHeaderContext: React.FC<PanelHeaderContextProps> = ({
   const closing = visible && !opened;
   const { viewWidth } = useAdaptivity();
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
-  const elementRef = React.useRef<HTMLDivElement>();
+  const elementRef = React.useRef<HTMLDivElement>(null);
 
   useIsomorphicLayoutEffect(() => {
     opened && setVisible(true);
@@ -57,7 +57,7 @@ export const PanelHeaderContext: React.FC<PanelHeaderContextProps> = ({
   const animationFallback = useTimeout(onAnimationEnd, 200);
   React.useEffect(
     () => (closing ? animationFallback.set() : animationFallback.clear()),
-    [closing]
+    [animationFallback, closing]
   );
 
   return (
@@ -73,7 +73,7 @@ export const PanelHeaderContext: React.FC<PanelHeaderContextProps> = ({
       <div
         vkuiClass="PanelHeaderContext__in"
         ref={elementRef}
-        onAnimationEnd={closing ? onAnimationEnd : null}
+        onAnimationEnd={closing ? onAnimationEnd : undefined}
       >
         <div vkuiClass="PanelHeaderContext__content">{visible && children}</div>
       </div>

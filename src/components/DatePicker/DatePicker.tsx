@@ -49,9 +49,9 @@ export interface DatePickerProps
 
 // Переводим state к формату гг-мм-дд
 function convertToInputFormat({
-  day,
-  month,
-  year,
+  day = 0,
+  month = 0,
+  year = 0,
 }: Partial<DatePickerDateFormat>) {
   return `${year}-${leadingZero(month)}-${leadingZero(day)}`;
 }
@@ -84,8 +84,8 @@ const DatePickerCustom: React.FC<
   DatePickerProps & Partial<DatePickerDateFormat>
 > = ({
   name,
-  min,
-  max,
+  min = { day: 0, month: 0, year: 0 },
+  max = { day: 31, month: 12, year: 2100 },
   dayPlaceholder,
   monthPlaceholder,
   yearPlaceholder,
@@ -93,15 +93,15 @@ const DatePickerCustom: React.FC<
   defaultValue,
   hasMouse,
   monthNames,
-  day,
-  month,
-  year,
+  day = 0,
+  month = 0,
+  year = 0,
   onDateChange,
   disabled,
   ...restProps
 }) => {
   const onSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    onDateChange({
+    onDateChange?.({
       day,
       month,
       year,
@@ -170,8 +170,8 @@ const DatePickerCustom: React.FC<
 const DatePickerNative: React.FC<
   DatePickerProps & Partial<DatePickerDateFormat>
 > = ({
-  min,
-  max,
+  min = { day: 0, month: 0, year: 0 },
+  max = { day: 31, month: 12, year: 2100 },
   dayPlaceholder,
   monthPlaceholder,
   yearPlaceholder,
@@ -191,7 +191,7 @@ const DatePickerNative: React.FC<
   const onStringChange: React.ChangeEventHandler<HTMLInputElement> =
     React.useCallback(
       (e) => {
-        onDateChange(parseInputDate(e.currentTarget.value));
+        onDateChange?.(parseInputDate(e.currentTarget.value));
       },
       [onDateChange]
     );
@@ -225,18 +225,14 @@ const DatePicker: React.FC<DatePickerProps> = ({
       setValue(update);
       props.onDateChange && props.onDateChange({ ...update });
     },
-    [props.onDateChange]
+    [props]
   );
 
   const Cmp = hasMouse ? DatePickerCustom : DatePickerNative;
   return <Cmp {...props} {...value} onDateChange={onDateChange} />;
 };
 
-DatePicker.defaultProps = {
-  min: { day: 0, month: 0, year: 0 },
-  max: { day: 31, month: 12, year: 2100 },
-};
-
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(DatePicker, {
   hasMouse: true,
 });

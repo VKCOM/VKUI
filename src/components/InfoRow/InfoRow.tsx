@@ -33,4 +33,5 @@ const InfoRow: React.FunctionComponent<InfoRowProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default InfoRow;

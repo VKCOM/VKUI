@@ -27,30 +27,33 @@ export interface ConfigProviderProps extends ConfigProviderContextInterface {
 
 const warn = warnOnce("ConfigProvider");
 
-function useSchemeDetector(node: HTMLElement, _scheme: Scheme | "inherit") {
+function useSchemeDetector(
+  node: HTMLElement | undefined | null,
+  _scheme: Scheme | "inherit"
+) {
   const inherit = _scheme === "inherit";
-  const getScheme = () => {
-    if (!inherit || !canUseDOM) {
+  const getScheme = React.useCallback(() => {
+    if (!inherit || !canUseDOM || !node) {
       return undefined;
     }
     return node.getAttribute("scheme") as Scheme;
-  };
+  }, [inherit, node]);
   const [resolvedScheme, setScheme] = React.useState(getScheme());
 
   React.useEffect(() => {
-    if (!inherit) {
+    if (!inherit || !node) {
       return noop;
     }
     setScheme(getScheme());
     const observer = new MutationObserver(() => setScheme(getScheme()));
     observer.observe(node, { attributes: true, attributeFilter: ["scheme"] });
     return () => observer.disconnect();
-  }, [inherit]);
+  }, [getScheme, inherit, node]);
 
   return _scheme === "inherit" ? resolvedScheme : _scheme;
 }
 
-const deriveAppearance = (scheme: Scheme): AppearanceType =>
+const deriveAppearance = (scheme: Scheme | undefined): AppearanceType =>
   scheme === Scheme.SPACE_GRAY || scheme === Scheme.VKCOM_DARK
     ? "dark"
     : "light";
@@ -58,10 +61,11 @@ const deriveAppearance = (scheme: Scheme): AppearanceType =>
 const ConfigProvider: React.FC<ConfigProviderProps> = ({
   children,
   schemeTarget,
-  ...config
+  ...props
 }: React.PropsWithChildren<ConfigProviderProps> & {
   schemeTarget?: HTMLElement;
 }) => {
+  const config = { ...defaultConfigProviderProps, ...props };
   const scheme = normalizeScheme({
     scheme: config.scheme,
     platform: config.platform,
@@ -76,14 +80,14 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
     }
     if (
       process.env.NODE_ENV === "development" &&
-      target.hasAttribute("scheme")
+      target?.hasAttribute("scheme")
     ) {
       warn(
         '<body scheme> was set before VKUI mount - did you forget scheme="inherit"?'
       );
     }
-    target.setAttribute("scheme", scheme);
-    return () => target.removeAttribute("scheme");
+    target?.setAttribute("scheme", scheme);
+    return () => target?.removeAttribute("scheme");
   }, [scheme]);
 
   const realScheme = useSchemeDetector(target, scheme);
@@ -101,8 +105,5 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
   );
 };
 
-// Деструктуризация нужна из бага в react-docgen-typescript
-// https://github.com/styleguidist/react-docgen-typescript/issues/195
-ConfigProvider.defaultProps = { ...defaultConfigProviderProps };
-
+// eslint-disable-next-line import/no-default-export
 export default ConfigProvider;

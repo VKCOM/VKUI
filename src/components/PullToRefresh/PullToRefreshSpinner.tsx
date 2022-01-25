@@ -19,12 +19,12 @@ export interface PullToRefreshSpinnerProps
 const PullToRefreshSpinner: React.FunctionComponent<
   PullToRefreshSpinnerProps
 > = ({
-  on,
-  progress,
-  size,
-  strokeWidth,
+  on = true,
+  size = 24,
+  strokeWidth = 2.5,
   style,
-  ...restProps
+  progress = 0,
+  "aria-label": ariaLabel = "Пожалуйста, подождите...",
 }: PullToRefreshSpinnerProps) => {
   const radius = 0.5 * size - 0.5 * strokeWidth;
   const dasharray = 2 * Math.PI * radius;
@@ -38,7 +38,7 @@ const PullToRefreshSpinner: React.FunctionComponent<
         "PullToRefresh__spinner--on": on,
       })}
       style={style}
-      aria-label={on ? restProps["aria-label"] : undefined}
+      aria-label={on ? ariaLabel : undefined}
     >
       <svg
         role="presentation"
@@ -74,12 +74,5 @@ const PullToRefreshSpinner: React.FunctionComponent<
   );
 };
 
-PullToRefreshSpinner.defaultProps = {
-  size: 24,
-  strokeWidth: 2.5,
-  on: true,
-  progress: null,
-  "aria-label": "Пожалуйста, подождите...",
-};
-
+// eslint-disable-next-line import/no-default-export
 export default React.memo(PullToRefreshSpinner);

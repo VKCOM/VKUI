@@ -5,7 +5,6 @@ import { withPlatform } from "../../hoc/withPlatform";
 import { HasPlatform } from "../../types";
 import {
   withAdaptivity,
-  AdaptivityProps,
   ViewHeight,
   ViewWidth,
 } from "../../hoc/withAdaptivity";
@@ -19,11 +18,12 @@ import {
   ModalCardBase,
   ModalCardBaseProps,
 } from "../ModalCardBase/ModalCardBase";
+import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
 import "./ModalCard.css";
 
 export interface ModalCardProps
   extends HasPlatform,
-    AdaptivityProps,
+    AdaptivityContextInterface,
     NavIdProps,
     ModalCardBaseProps {}
 
@@ -80,6 +80,7 @@ ModalCard.defaultProps = {
   actionsLayout: "horizontal",
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(withPlatform(ModalCard), {
   viewWidth: true,
   viewHeight: true,

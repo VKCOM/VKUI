@@ -26,6 +26,7 @@ interface SliderSwitchState {
   hoveredOptionId: number;
 }
 
+// eslint-disable-next-line import/no-default-export
 export default class SliderSwitch extends React.Component<
   SliderSwitchProps,
   SliderSwitchState
@@ -109,14 +110,16 @@ export default class SliderSwitch extends React.Component<
 
     const { options } = this.props;
     const { activeValue } = this.state;
-    const { value } = options.find((option) => option.value !== activeValue);
+    const value = options.find((option) => option.value !== activeValue)?.value;
 
-    this.onSwitch(value);
+    if (value !== undefined) {
+      this.onSwitch(value);
+    }
 
     if (options[0].value === value) {
-      this.firstButton.current.focus();
+      this.firstButton.current?.focus();
     } else {
-      this.secondButton.current.focus();
+      this.secondButton.current?.focus();
     }
   };
 

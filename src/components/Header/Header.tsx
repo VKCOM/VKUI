@@ -64,6 +64,8 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
     case "secondary":
       return <Caption level="1" weight="medium" caps {...restProps} />;
   }
+
+  return null;
 };
 
 type HeaderAsideProps = Pick<HeaderProps, "aside"> & HasPlatform & HasComponent;
@@ -168,4 +170,5 @@ Header.defaultProps = {
   mode: "primary",
 };
 
+// eslint-disable-next-line import/no-default-export
 export default Header;

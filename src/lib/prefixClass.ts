@@ -18,7 +18,7 @@ function prefixSingle(scopedStyle: string): string {
   return resolved;
 }
 
-export function prefixClass(scopedStyle?: string | string[]) {
+export function prefixClass(scopedStyle: string | string[]) {
   if (typeof scopedStyle === "string") {
     return prefixSingle(scopedStyle);
   }

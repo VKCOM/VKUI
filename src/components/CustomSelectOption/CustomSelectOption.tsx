@@ -35,7 +35,7 @@ const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
   disabled,
   ...restProps
 }: CustomSelectOptionProps) => {
-  const title = typeof children === "string" ? children : null;
+  const title = typeof children === "string" ? children : undefined;
   const { sizeY } = useAdaptivity();
 
   if (!!option && process.env.NODE_ENV === "development") {
@@ -88,4 +88,5 @@ const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default CustomSelectOption;

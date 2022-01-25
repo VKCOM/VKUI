@@ -1,19 +1,16 @@
 import * as React from "react";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
-import {
-  withAdaptivity,
-  ViewWidth,
-  AdaptivityProps,
-} from "../../hoc/withAdaptivity";
+import { withAdaptivity, ViewWidth } from "../../hoc/withAdaptivity";
 import { ScrollSaver } from "./ScrollSaver";
 import { getNavId } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
+import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
 import "./Epic.css";
 
 export interface EpicProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    AdaptivityProps {
+    AdaptivityContextInterface {
   tabbar?: React.ReactNode;
   activeStory: string;
 }
@@ -33,9 +30,11 @@ export const Epic: React.FC<EpicProps> = (props: EpicProps) => {
     warn("Using Epic without tabbar is not recommended on mobile");
   }
   const story =
-    (React.Children.toArray(children) as React.ReactElement[]).find(
-      (story) => getNavId(story.props, warn) === activeStory
-    ) || null;
+    (React.Children.toArray(children).find(
+      (story) =>
+        React.isValidElement(story) &&
+        getNavId(story.props, warn) === activeStory
+    ) as React.ReactElement | undefined) ?? null;
 
   return (
     <div {...restProps} vkuiClass={getClassName("Epic", platform)}>
@@ -51,6 +50,7 @@ export const Epic: React.FC<EpicProps> = (props: EpicProps) => {
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(Epic, {
   viewWidth: true,
 });

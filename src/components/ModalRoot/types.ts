@@ -15,7 +15,7 @@ export interface ModalElements {
 }
 
 export interface ModalsStateEntry extends ModalElements {
-  id: string;
+  id: string | null;
   onClose?: () => any;
   type?: ModalType;
 

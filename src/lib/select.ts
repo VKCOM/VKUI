@@ -3,7 +3,7 @@ type Option = {
   [index: string]: any;
 };
 
-type GetOptionLabel = (option: Option) => string;
+type GetOptionLabel = (option: Option) => string | undefined;
 
 const findAllIncludes = (target = "", search = "") => {
   const includes = [];
@@ -30,16 +30,16 @@ export const defaultFilterFn = (
   getOptionLabel: GetOptionLabel = (option) => option.label
 ) => {
   query = query.toLocaleLowerCase();
-  let label = getOptionLabel(option).toLocaleLowerCase();
+  let label = getOptionLabel(option)?.toLocaleLowerCase();
 
-  if (label.startsWith(query)) {
+  if (label?.startsWith(query)) {
     return true;
   }
 
   const includes = findAllIncludes(label, query);
 
   // Ищем вхождение перед началом которого не буква
-  if (letterRegexp) {
+  if (letterRegexp && label) {
     for (const index of includes) {
       if (!letterRegexp.test(label[index - 1])) {
         return true;

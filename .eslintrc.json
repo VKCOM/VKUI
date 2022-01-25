@@ -3,7 +3,8 @@
     "@vkontakte/eslint-config/typescript/react",
     "prettier",
     "prettier/react",
-    "prettier/@typescript-eslint"
+    "prettier/@typescript-eslint",
+    "plugin:react-hooks/recommended"
   ],
   "parserOptions": {
     "project": "./tsconfig.json",
@@ -24,6 +25,7 @@
     "browser": true,
     "node": true
   },
+  "plugins": ["import"],
   "rules": {
     "@typescript-eslint/explicit-member-accessibility": "off",
     "@typescript-eslint/no-unnecessary-condition": "off",
@@ -34,6 +36,7 @@
         "ignoreRestSiblings": true
       }
     ],
+    "@typescript-eslint/no-non-null-assertion": "off",
     "no-restricted-globals": ["error", "window", "document"],
     "no-restricted-imports": [
       "error",
@@ -116,7 +119,8 @@
         "selector": "ImportDeclaration[source.value=/\\.css$/i] ~ ImportDeclaration[source.value!=/\\.css$/i]",
         "message": "CSS import must be last"
       }
-    ]
+    ],
+    "import/no-default-export": "error"
   },
   "overrides": [
     {

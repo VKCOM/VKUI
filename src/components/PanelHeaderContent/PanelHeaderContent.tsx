@@ -107,4 +107,5 @@ const PanelHeaderContent: React.FunctionComponent<PanelHeaderContentProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default PanelHeaderContent;

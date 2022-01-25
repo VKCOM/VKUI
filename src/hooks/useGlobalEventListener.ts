@@ -4,26 +4,32 @@ import { useEventListener } from "./useEventListener";
 export function useGlobalEventListener<
   K extends keyof GlobalEventHandlersEventMap
 >(
-  element: HTMLElement | HTMLDocument | Window,
+  element: Document | HTMLElement | Window | null | undefined,
   event: K,
-  cb: false | null | ((ev: GlobalEventHandlersEventMap[K]) => any),
+  cb: ((ev: GlobalEventHandlersEventMap[K]) => void) | null | false | undefined,
   options?: AddEventListenerOptions
 ): void;
-export function useGlobalEventListener(
-  element: HTMLElement | HTMLDocument | Window,
+export function useGlobalEventListener<E extends Event>(
+  element: Document | HTMLElement | Window | null | undefined,
   event: string,
-  cb: false | null | ((ev: Event) => any),
+  cb: ((ev: E) => void) | null | false | undefined,
   options?: AddEventListenerOptions
 ): void;
-export function useGlobalEventListener(
-  element: any,
-  event: string,
-  cb: (ev: Event) => any,
+export function useGlobalEventListener<
+  K extends keyof GlobalEventHandlersEventMap,
+  E extends Event
+>(
+  element: Document | HTMLElement | Window | null | undefined,
+  event: K | string,
+  cb: ((ev: E) => void) | null | false | undefined,
   options?: AddEventListenerOptions
 ) {
   const listener = useEventListener(event, cb, options);
-  useIsomorphicLayoutEffect(
-    () => (cb ? listener.add(element) : listener.remove()),
-    [Boolean(cb)]
-  );
+  useIsomorphicLayoutEffect(() => {
+    if (cb && element) {
+      listener.add(element);
+    } else {
+      listener.remove();
+    }
+  }, [Boolean(cb), Boolean(element)]);
 }

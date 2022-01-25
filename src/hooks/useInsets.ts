@@ -1,6 +1,13 @@
 import * as React from "react";
-import vkBridge, { Insets } from "@vkontakte/vk-bridge";
+import vkBridge, { Insets as BridgeInsets } from "@vkontakte/vk-bridge";
 import { useIsomorphicLayoutEffect } from "../lib/useIsomorphicLayoutEffect";
+
+export interface Insets {
+  bottom: BridgeInsets["bottom"] | null;
+  top: BridgeInsets["top"] | null;
+  left: BridgeInsets["left"] | null;
+  right: BridgeInsets["right"] | null;
+}
 
 let initialState: Insets = {
   bottom: null,

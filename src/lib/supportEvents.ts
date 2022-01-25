@@ -3,7 +3,7 @@ import { isTesting } from "./testing";
 
 export type VKUISupportEvents = {
   supported: boolean;
-  name?: string;
+  name?: string | null;
 };
 
 // WebKitAnimationEvent и WebKitTransitionEvent не существуют в глобальном контексте

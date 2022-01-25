@@ -56,7 +56,9 @@ const Root: React.FC<RootProps> = ({
   const platform = usePlatform();
   const { document } = useDOM();
   const scrolls = React.useRef<Record<string, number>>({}).current;
-  const viewNodes = React.useRef<Record<string, HTMLElement>>({}).current;
+  const viewNodes = React.useRef<Record<string, HTMLElement | null>>(
+    {}
+  ).current;
 
   const { transitionMotionEnabled = true } = React.useContext(
     ConfigProviderContext
@@ -84,11 +86,13 @@ const Root: React.FC<RootProps> = ({
       });
     }
   };
-  const finishTransition = () =>
-    _setState({ activeView, prevView, isBack, transition: false });
+  const finishTransition = React.useCallback(
+    () => _setState({ activeView, prevView, isBack, transition: false }),
+    [activeView, isBack, prevView]
+  );
 
   useIsomorphicLayoutEffect(() => {
-    (document.activeElement as HTMLElement)?.blur();
+    (document!.activeElement as HTMLElement).blur();
   }, [!!popout, activeView]);
 
   // Нужен переход
@@ -97,7 +101,12 @@ const Root: React.FC<RootProps> = ({
     if (!transition && prevView) {
       // Закончился переход
       scroll.scrollTo(0, isBack ? scrolls[activeView] : 0);
-      onTransition && onTransition({ isBack, from: prevView, to: activeView });
+      onTransition &&
+        onTransition({
+          isBack: Boolean(isBack),
+          from: prevView,
+          to: activeView,
+        });
     }
   }, [transition]);
 
@@ -111,7 +120,7 @@ const Root: React.FC<RootProps> = ({
       return;
     }
     disableAnimation ? finishTransition() : fallbackTransition.set();
-  }, [transition]);
+  }, [disableAnimation, fallbackTransition, finishTransition, transition]);
 
   const onAnimationEnd = (e: React.AnimationEvent) => {
     if (
@@ -147,8 +156,8 @@ const Root: React.FC<RootProps> = ({
         return (
           <div
             key={viewId}
-            ref={(e) => (viewNodes[viewId] = e)}
-            onAnimationEnd={isTransitionTarget ? onAnimationEnd : null}
+            ref={(e) => viewId && (viewNodes[viewId] = e)}
+            onAnimationEnd={isTransitionTarget ? onAnimationEnd : undefined}
             vkuiClass={classNames("Root__view", {
               "Root__view--hide-back":
                 transition && viewId === prevView && isBack,
@@ -167,7 +176,9 @@ const Root: React.FC<RootProps> = ({
               <div
                 vkuiClass="Root__scrollCompensation"
                 style={{
-                  marginTop: compensateScroll ? -scrolls[viewId] : null,
+                  marginTop: compensateScroll
+                    ? viewId && -(scrolls[viewId] ?? 0)
+                    : undefined,
                 }}
               >
                 {view}
@@ -184,4 +195,5 @@ const Root: React.FC<RootProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default Root;

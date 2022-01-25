@@ -1,9 +1,12 @@
 import * as React from "react";
 import NativeSelect from "../NativeSelect/NativeSelect";
 import CustomSelect, { CustomSelectProps } from "../CustomSelect/CustomSelect";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
+import { withAdaptivity } from "../../hoc/withAdaptivity";
+import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
 
-export interface SelectProps extends CustomSelectProps, AdaptivityProps {}
+export interface SelectProps
+  extends CustomSelectProps,
+    AdaptivityContextInterface {}
 
 const Select: React.FunctionComponent<SelectProps> = ({
   hasMouse,
@@ -29,6 +32,7 @@ const Select: React.FunctionComponent<SelectProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(Select, {
   hasMouse: true,
 });

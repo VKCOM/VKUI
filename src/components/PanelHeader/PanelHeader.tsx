@@ -135,6 +135,7 @@ PanelHeader.defaultProps = {
   visor: true,
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(PanelHeader, {
   sizeX: true,
   sizeY: true,

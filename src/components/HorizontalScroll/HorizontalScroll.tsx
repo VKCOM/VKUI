@@ -119,7 +119,7 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
   getScrollToLeft,
   getScrollToRight,
   showArrows = true,
-  scrollAnimationDuration,
+  scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
   hasMouse,
   getRef,
   ...restProps
@@ -170,24 +170,36 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
           scrollElement.scrollWidth
       );
     }
-  }, [hasMouse]);
+  }, [hasMouse, scrollerRef, showArrows]);
 
   const scrollEvent = useEventListener("scroll", onscroll);
-  React.useEffect(() => scrollEvent.add(scrollerRef.current), []);
-  React.useEffect(onscroll, [scrollerRef, children]);
+  React.useEffect(() => {
+    if (scrollerRef.current) {
+      scrollEvent.add(scrollerRef.current);
+    }
+  }, [scrollEvent, scrollerRef]);
+  React.useEffect(onscroll, [scrollerRef, children, onscroll]);
 
   return (
     <div {...restProps} vkuiClass={getClassName("HorizontalScroll", platform)}>
       {showArrows && hasMouse && canScrollLeft && (
         <HorizontalScrollArrow
           direction="left"
-          onClick={() => scrollTo(getScrollToLeft)}
+          onClick={() => {
+            if (getScrollToLeft) {
+              scrollTo(getScrollToLeft);
+            }
+          }}
         />
       )}
       {showArrows && hasMouse && canScrollRight && (
         <HorizontalScrollArrow
           direction="right"
-          onClick={() => scrollTo(getScrollToRight)}
+          onClick={() => {
+            if (getScrollToLeft) {
+              scrollTo(getScrollToLeft);
+            }
+          }}
         />
       )}
       <div vkuiClass="HorizontalScroll__in" ref={scrollerRef}>
@@ -197,6 +209,7 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(HorizontalScroll, {
   hasMouse: true,
 });

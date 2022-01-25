@@ -140,7 +140,7 @@ const Banner: React.FC<BannerProps> = (props: BannerProps) => {
         vkuiClass="Banner__in"
         activeMode={platform === IOS ? "opacity" : "background"}
         disabled={asideMode !== "expand"}
-        role={asideMode === "expand" ? "button" : null}
+        role={asideMode === "expand" ? "button" : undefined}
       >
         {mode === "image" && background && (
           <div aria-hidden="true" vkuiClass="Banner__bg">
@@ -216,4 +216,5 @@ Banner.defaultProps = {
   imageTheme: "dark",
 };
 
+// eslint-disable-next-line import/no-default-export
 export default Banner;

@@ -13,9 +13,9 @@ beforeEach(() => jest.useFakeTimers());
 afterEach(() => jest.useRealTimers());
 
 const views = [
-  <View id="v1" key="1" activePanel={null} />,
-  <View id="v2" key="2" activePanel={null} />,
-  <View id="v3" key="3" activePanel={null} />,
+  <View id="v1" key="1" activePanel="" />,
+  <View id="v2" key="2" activePanel="" />,
+  <View id="v3" key="3" activePanel="" />,
 ];
 
 describe("Root", () => {
@@ -23,7 +23,7 @@ describe("Root", () => {
   describe("With View", () =>
     mountTest(() => (
       <Root activeView="view">
-        <View id="view" activePanel={null} />
+        <View id="view" activePanel="" />
       </Root>
     )));
 
@@ -156,8 +156,8 @@ describe("Root", () => {
     it("on activeView change", () => {
       renderFocused();
       const views = [
-        <View id="focus" activePanel={null} key="1" />,
-        <View id="other" activePanel={null} key="2" />,
+        <View id="focus" activePanel="" key="1" />,
+        <View id="other" activePanel="" key="2" />,
       ];
       render(<Root activeView="focus">{views}</Root>).rerender(
         <Root activeView="other">{views}</Root>
@@ -168,11 +168,11 @@ describe("Root", () => {
       renderFocused();
       render(
         <Root activeView="focus">
-          <View id="focus" activePanel={null} />
+          <View id="focus" activePanel="" />
         </Root>
       ).rerender(
         <Root activeView="focus" popout={<div />}>
-          <View id="focus" activePanel={null} />
+          <View id="focus" activePanel="" />
         </Root>
       );
       expect(document.activeElement === document.body).toBe(true);

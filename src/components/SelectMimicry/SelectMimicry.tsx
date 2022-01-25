@@ -45,7 +45,7 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
   return (
     <FormField
       {...restProps}
-      tabIndex={disabled ? null : tabIndex}
+      tabIndex={disabled ? undefined : tabIndex}
       vkuiClass={classNames(
         getClassName("Select", platform),
         "Select--mimicry",
@@ -58,7 +58,7 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
         }
       )}
       getRootRef={getRootRef}
-      onClick={disabled ? null : onClick}
+      onClick={disabled ? undefined : onClick}
       disabled={disabled}
       after={<DropdownIcon />}
     >
@@ -77,6 +77,7 @@ SelectMimicry.defaultProps = {
   tabIndex: 0,
 };
 
+// eslint-disable-next-line import/no-default-export
 export default withAdaptivity(SelectMimicry, {
   sizeX: true,
   sizeY: true,

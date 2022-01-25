@@ -18,7 +18,7 @@ describe(useExternRef, () => {
       render(<OuterRef />);
     });
     it("keeps inner ref.current up-to-date", () => {
-      let firstRef: React.RefObject<any>;
+      let firstRef: React.MutableRefObject<any> | undefined = undefined;
       let counter = 0;
       const RefForwarder: React.FC<HasRef<any>> = (props) => {
         const ref = useExternRef(props.getRef);
@@ -30,7 +30,7 @@ describe(useExternRef, () => {
       render(<RefForwarder getRef={() => null} />).rerender(
         <RefForwarder getRef={() => null} />
       );
-      expect(firstRef.current).toBe(counter);
+      expect((firstRef as any)?.current).toBe(counter);
     });
   });
   describe("sets outer ref to null", () => {
@@ -54,7 +54,7 @@ describe(useExternRef, () => {
   describe("calls outer ref", () => {
     it("before useLayoutEffect", () => {
       const RefUser = () => {
-        const ref = React.useRef();
+        const ref = React.useRef(null);
         useIsomorphicLayoutEffect(() => {
           expect(ref.current).toBeInTheDocument();
         }, []);
