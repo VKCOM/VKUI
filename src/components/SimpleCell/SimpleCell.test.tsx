@@ -2,6 +2,7 @@ import { screen, render } from "@testing-library/react";
 import { baselineComponent } from "../../testing/utils";
 import { SizeType } from "../AdaptivityProvider/AdaptivityContext";
 import SimpleCell from "./SimpleCell";
+import AdaptivityProvider from "../AdaptivityProvider/AdaptivityProvider";
 
 describe("SimpleCell", () => {
   baselineComponent(SimpleCell);
@@ -20,5 +21,29 @@ describe("SimpleCell", () => {
       </SimpleCell>
     );
     expect(screen.getByText("English").tagName.toLowerCase()).toMatch("span");
+  });
+
+  describe("Adaptivity", () => {
+    it("Set SizeX to regular", () => {
+      Object.defineProperty(window, "innerWidth", {
+        writable: true,
+        configurable: true,
+        value: 1600,
+      });
+      render(
+        <AdaptivityProvider>
+          <SimpleCell
+            data-testid="simple-cell"
+            sizeY={SizeType.REGULAR}
+            indicator="Русский"
+          >
+            Язык
+          </SimpleCell>
+        </AdaptivityProvider>
+      );
+      expect(screen.getByTestId("simple-cell")).toHaveClass(
+        " Tappable--sizeX-regular"
+      );
+    });
   });
 });

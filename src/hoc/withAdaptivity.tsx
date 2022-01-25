@@ -42,14 +42,15 @@ export function withAdaptivity<T extends AdaptivityProps>(
     const hasMouse = context.hasMouse;
     const deviceHasHover = context.deviceHasHover;
 
-    const adaptivityProps: AdaptivityContextInterface = {
-      sizeX: SizeType.COMPACT,
-      sizeY: SizeType.REGULAR,
-      hasMouse,
-      deviceHasHover: true,
-      viewWidth: 0,
-      viewHeight: 0,
-    };
+    const adaptivityProps: {
+      sizeX?: SizeType;
+      sizeY?: SizeType;
+      viewWidth?: ViewWidth;
+      viewHeight?: ViewHeight;
+      hasMouse?: boolean;
+      deviceHasHover?: boolean;
+    } = {};
+
     config.sizeX ? (adaptivityProps.sizeX = sizeX) : undefined;
     config.sizeY ? (adaptivityProps.sizeY = sizeY) : undefined;
     config.viewWidth ? (adaptivityProps.viewWidth = viewWidth) : undefined;
