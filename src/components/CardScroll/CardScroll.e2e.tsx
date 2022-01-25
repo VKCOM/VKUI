@@ -13,22 +13,23 @@ describe("CardScroll", () => {
     (props: CardScrollProps) => <CardScroll {...props}>{items}</CardScroll>,
     [
       {
-        size: ["s", "m", "l"],
-      },
-      {
-        size: ["s", "m", "l"],
-        fluidCard: [true],
-      },
-      {
-        size: ["s", "m", "l"],
-        fluidCard: [true],
-        rounded: [true],
-      },
-      {
-        size: ["s", "m", "l"],
-        fluidCard: [true],
-        rounded: [true],
+        size: ["s"],
         showArrows: [true],
+      },
+      {
+        size: ["m"],
+        showArrows: [false],
+        withSpaces: [false],
+      },
+      {
+        size: ["l"],
+        showArrows: ["always"],
+        withSpaces: [false],
+      },
+      {
+        size: ["false"],
+        showArrows: ["always"],
+        withSpaces: [true],
       },
     ]
   );

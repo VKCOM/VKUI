@@ -10,19 +10,17 @@ import "./CardScroll.css";
 export interface CardScrollProps
   extends React.HTMLAttributes<HTMLDivElement>,
     AdaptivityProps {
-  size?: "s" | "m" | "l";
-  fluidCard?: boolean;
-  rounded?: boolean;
-  showArrows?: boolean;
+  size?: "s" | "m" | "l" | "false";
+  showArrows?: boolean | "always";
+  withSpaces: boolean;
 }
 
 const CardScroll: React.FC<CardScrollProps> = ({
   children,
   size,
-  sizeX,
-  fluidCard,
   showArrows,
-  rounded,
+  sizeX,
+  withSpaces = true,
   ...restProps
 }: CardScrollProps) => {
   const platform = usePlatform();
@@ -95,17 +93,14 @@ const CardScroll: React.FC<CardScrollProps> = ({
       vkuiClass={classNames(
         getClassName("CardScroll", platform),
         `CardScroll--sizeX-${sizeX}`,
-        {
-          [`CardScroll--${size}`]: !fluidCard,
-          ["CardScroll--rounded"]: rounded,
-          ["CardScroll--arrows"]: showArrows,
-        }
+        `CardScroll--${size}`,
+        { ["CardScroll--withoutSpaces"]: !withSpaces }
       )}
     >
       <HorizontalScroll
         getScrollToLeft={getScrollToLeft}
         getScrollToRight={getScrollToRight}
-        showArrows={true}
+        showArrows={showArrows}
       >
         <div vkuiClass="CardScroll__in" ref={refContainer}>
           <span vkuiClass="CardScroll__gap" ref={gapRef} />

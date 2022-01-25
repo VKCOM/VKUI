@@ -13,6 +13,10 @@
   flex-shrink: 0;
 }
 
+.CardScroll--withoutSpaces .CardScroll__gap {
+  display: none;
+}
+
 .CardScroll + .CardScroll {
   margin-top: 16px;
 }
@@ -31,14 +35,6 @@
 
 .CardScroll--l .Card {
   width: 100%;
-}
-
-.CardScroll--rounded .vkuiHorizontalScroll {
-  border-radius: 16px;
-}
-
-.CardScroll--arrows .HorizontalScrollArrow {
-  opacity: 1;
 }
 
 /**
@@ -102,4 +98,12 @@
 
 .Group--card .CardScroll:last-child {
   padding-bottom: 8px;
+}
+
+.Group--card .CardScroll--withoutSpaces:first-child {
+  padding-top: 0;
+}
+
+.Group--card .CardScroll--withoutSpaces:last-child {
+  padding-bottom: 0;
 }
