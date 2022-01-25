@@ -25,11 +25,14 @@ describe("SimpleCell", () => {
 
   describe("Adaptivity", () => {
     it("Set SizeX to regular", () => {
+      const innerWidth = window.innerWidth;
+
       Object.defineProperty(window, "innerWidth", {
         writable: true,
         configurable: true,
         value: 1600,
       });
+
       render(
         <AdaptivityProvider>
           <SimpleCell
@@ -44,6 +47,12 @@ describe("SimpleCell", () => {
       expect(screen.getByTestId("simple-cell")).toHaveClass(
         " Tappable--sizeX-regular"
       );
+
+      Object.defineProperty(window, "innerWidth", {
+        writable: true,
+        configurable: true,
+        value: innerWidth,
+      });
     });
   });
 });
