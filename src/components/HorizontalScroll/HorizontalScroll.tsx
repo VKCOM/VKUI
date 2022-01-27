@@ -202,8 +202,8 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
         <HorizontalScrollArrow
           direction="right"
           onClick={() => {
-            if (getScrollToLeft) {
-              scrollTo(getScrollToLeft);
+            if (getScrollToRight) {
+              scrollTo(getScrollToRight);
             }
           }}
         />
