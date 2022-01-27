@@ -185,5 +185,8 @@ ActionSheetItem.defaultProps = {
   mode: "default",
 };
 
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(ActionSheetItem, { sizeY: true });
+const ActionSheetItemWithAdaptivity = withAdaptivity(ActionSheetItem, {
+  sizeY: true,
+});
+
+export { ActionSheetItemWithAdaptivity as ActionSheetItem };
