@@ -18,18 +18,23 @@ import {
   ModalCardBase,
   ModalCardBaseProps,
 } from "../ModalCardBase/ModalCardBase";
-import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
+import {
+  AdaptivityContextInterface,
+  AdaptivityProps,
+} from "../AdaptivityProvider/AdaptivityContext";
 import "./ModalCard.css";
 
 export interface ModalCardProps
   extends HasPlatform,
-    AdaptivityContextInterface,
+    AdaptivityProps,
     NavIdProps,
     ModalCardBaseProps {}
 
 const warn = warnOnce("ModalCard");
 
-const ModalCard: React.FC<ModalCardProps> = (props: ModalCardProps) => {
+const ModalCard: React.FC<ModalCardProps & AdaptivityContextInterface> = (
+  props
+) => {
   const {
     icon,
     header,
