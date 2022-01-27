@@ -2730,7 +2730,7 @@
 
 "@vkontakte/vkui-tokens@4.1.0":
   version "4.1.0"
-  resolved "http://dragonballs.dev.mail.ru:6666/@vkontakte%2fvkui-tokens/-/vkui-tokens-4.1.0.tgz#c95f81a23084b47198e6bfcfd9d31a00b9dc239d"
+  resolved "https://registry.yarnpkg.com/@vkontakte/vkui-tokens/-/vkui-tokens-4.1.0.tgz#c95f81a23084b47198e6bfcfd9d31a00b9dc239d"
   integrity sha512-HphR0uYNXwA+jtxh8VEzr2fvuTPSb92MkS974MbPcptaYJDF9ZpnPrciQdqo2SwYbyNHt8IMeOan4hBeN20Erw==
   dependencies:
     csstype "3.0.8"
