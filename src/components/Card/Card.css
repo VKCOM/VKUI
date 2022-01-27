@@ -46,5 +46,5 @@
 
 .Card--android,
 .Card--vkcom {
-  border-radius: 8px;
+  border-radius: var(--vkui--size_card_border_radius--regular, 16px);
 }

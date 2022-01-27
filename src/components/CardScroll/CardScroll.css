@@ -4,7 +4,7 @@
 }
 
 .CardScroll .Card {
-  margin-right: 12px;
+  margin-right: var(--vkui--size_cardgrid_padding--regular, 12px);
   flex-shrink: 0;
 }
 
