@@ -48,7 +48,7 @@ export interface ActionSheetItemProps
 const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
   children,
   autoclose,
-  mode,
+  mode = "default",
   meta,
   subtitle,
   before,
@@ -179,10 +179,6 @@ const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
       )}
     </Tappable>
   );
-};
-
-ActionSheetItem.defaultProps = {
-  mode: "default",
 };
 
 const ActionSheetItemWithAdaptivity = withAdaptivity(ActionSheetItem, {
