@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import AdaptivityProvider from "../AdaptivityProvider/AdaptivityProvider";
+import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { ViewWidth } from "../../hoc/withAdaptivity";
 import { baselineComponent } from "../../testing/utils";
 import Alert from "./Alert";

@@ -239,7 +239,7 @@ export type { ModalCardBaseProps } from "./components/ModalCardBase/ModalCardBas
  * Wrappers
  */
 export { AppRoot } from "./components/AppRoot/AppRoot";
-export { default as AdaptivityProvider } from "./components/AdaptivityProvider/AdaptivityProvider";
+export { AdaptivityProvider } from "./components/AdaptivityProvider/AdaptivityProvider";
 export { default as ConfigProvider } from "./components/ConfigProvider/ConfigProvider";
 export type { ConfigProviderProps } from "./components/ConfigProvider/ConfigProvider";
 export {

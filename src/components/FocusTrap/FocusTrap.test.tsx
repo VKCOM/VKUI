@@ -5,7 +5,7 @@ import { act } from "react-dom/test-utils";
 import { baselineComponent } from "../../testing/utils";
 import { FocusTrap, FocusTrapProps } from "./FocusTrap";
 import AppRoot from "../AppRoot/AppRoot";
-import AdaptivityProvider from "../AdaptivityProvider/AdaptivityProvider";
+import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { ActionSheet, ActionSheetProps } from "../ActionSheet/ActionSheet";
 import { ActionSheetItem } from "../ActionSheetItem/ActionSheetItem";
 import View from "../View/View";
