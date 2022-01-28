@@ -6,7 +6,8 @@ import ConfigProvider from "../../components/ConfigProvider/ConfigProvider";
 import { Panel } from "../../components/Panel/Panel";
 import { Platform } from "../../lib/platform";
 import { Scheme } from "../../helpers/scheme";
-import AdaptivityProvider, {
+import {
+  AdaptivityProvider,
   DESKTOP_SIZE,
   MOBILE_SIZE,
   SMALL_TABLET_SIZE,

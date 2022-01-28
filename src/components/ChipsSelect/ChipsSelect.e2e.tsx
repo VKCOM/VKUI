@@ -1,6 +1,6 @@
 import ChipsSelect from "./ChipsSelect";
 import { screenshot, mount } from "../../testing/e2e";
-import AdaptivityProvider from "../AdaptivityProvider/AdaptivityProvider";
+import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import AppRoot from "../AppRoot/AppRoot";
 
 describe("ChipsSelect", () => {

@@ -5,7 +5,7 @@ import { baselineComponent } from "../../testing/utils";
 import { ActionSheet, ActionSheetProps } from "./ActionSheet";
 import { ActionSheetItem } from "../ActionSheetItem/ActionSheetItem";
 import userEvent from "@testing-library/user-event";
-import AdaptivityProvider from "../AdaptivityProvider/AdaptivityProvider";
+import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { FC } from "react";
 
 beforeEach(() => jest.useFakeTimers());
