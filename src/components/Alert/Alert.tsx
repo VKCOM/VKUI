@@ -285,9 +285,10 @@ class Alert extends React.Component<TAlertProps, AlertState> {
   }
 }
 
-// eslint-disable-next-line import/no-default-export
-export default withPlatform(
+const AlertWithPlatformAndAdaptivity = withPlatform(
   withAdaptivity(Alert, {
     viewWidth: true,
   })
 );
+
+export { AlertWithPlatformAndAdaptivity as Alert };
