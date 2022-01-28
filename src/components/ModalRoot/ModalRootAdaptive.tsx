@@ -6,9 +6,12 @@ import {
 } from "../../hoc/withAdaptivity";
 import { ModalRootTouch } from "./ModalRoot";
 import { ModalRootDesktop } from "./ModalRootDesktop";
-import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
+import {
+  AdaptivityContextInterface,
+  AdaptivityProps,
+} from "../AdaptivityProvider/AdaptivityContext";
 
-export interface ModalRootProps extends AdaptivityContextInterface {
+export interface ModalRootProps extends AdaptivityProps {
   activeModal?: string | null;
 
   /**
@@ -17,7 +20,9 @@ export interface ModalRootProps extends AdaptivityContextInterface {
   onClose?: (modalId: string) => void;
 }
 
-const ModalRootComponent: React.FC<ModalRootProps> = (props) => {
+const ModalRootComponent: React.FC<
+  ModalRootProps & AdaptivityContextInterface
+> = (props) => {
   const { viewWidth, viewHeight, hasMouse } = props;
   const isDesktop =
     viewWidth >= ViewWidth.SMALL_TABLET &&
