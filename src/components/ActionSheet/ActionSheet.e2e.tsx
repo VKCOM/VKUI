@@ -1,5 +1,5 @@
 import { ActionSheet, ActionSheetProps } from "./ActionSheet";
-import ActionSheetItem from "../ActionSheetItem/ActionSheetItem";
+import { ActionSheetItem } from "../ActionSheetItem/ActionSheetItem";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { withPlatform } from "../../hoc/withPlatform";
 import { ViewWidth } from "../../hoc/withAdaptivity";

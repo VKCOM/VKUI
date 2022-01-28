@@ -48,7 +48,7 @@ export type {
 } from "./components/Alert/Alert";
 export { ActionSheet } from "./components/ActionSheet/ActionSheet";
 export type { ActionSheetProps } from "./components/ActionSheet/ActionSheet";
-export { default as ActionSheetItem } from "./components/ActionSheetItem/ActionSheetItem";
+export { ActionSheetItem } from "./components/ActionSheetItem/ActionSheetItem";
 export type { ActionSheetItemProps } from "./components/ActionSheetItem/ActionSheetItem";
 export { default as ScreenSpinner } from "./components/ScreenSpinner/ScreenSpinner";
 export type { ScreenSpinnerProps } from "./components/ScreenSpinner/ScreenSpinner";
