@@ -2,3 +2,4 @@
 @import "./space_gray.css";
 @import "./vkcom_light.css";
 @import "./vkcom_dark.css";
+@import "../../node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css";
