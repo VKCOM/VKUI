@@ -1,10 +1,9 @@
 import * as React from "react";
 import { format, isMatch, parse } from "date-fns";
+import { Icon16Clear } from "@vkontakte/icons";
 import { NumberFormatValues } from "react-number-format";
-import { getClassName } from "../../helpers/getClassName";
 import { InputProps } from "../Input/Input";
 import { MaskedInput } from "../MaskedInput/MaskedInput";
-import { usePlatform } from "../../hooks/usePlatform";
 import { Calendar, CalendarProps } from "../Calendar/Calendar";
 import { Popper, Placement } from "../Popper/Popper";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
@@ -12,7 +11,8 @@ import { callMultiple } from "../../lib/callMultiple";
 import { useDOM } from "../../lib/dom";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import IconButton from "../IconButton/IconButton";
-import { Icon16Clear } from "@vkontakte/icons";
+import { classNames } from "../../lib/classNames";
+import "./DateInput.css";
 
 export interface DateInputProps
   extends Omit<InputProps, "onChange" | "value" | "defaultValue" | "type">,
@@ -31,13 +31,15 @@ export interface DateInputProps
 
 const maskWithoutTime = {
   format: "##.##.####",
-  placeholder: "__.__.____",
+  placeholder: "_ _._ _._ _ _ _",
   dateFnsFormat: "dd.MM.yyyy",
+  mask: ["_ ", "_", "_ ", "_", "_ ", "_ ", "_ ", "_"],
 };
 const maskWithTime = {
   format: "##.##.####   ##:##",
-  placeholder: "__.__.____   __:__",
+  placeholder: "_ _._ _._ _ _ _   _ _:_ _",
   dateFnsFormat: "dd.MM.yyyy   HH:mm",
+  mask: ["_ ", "_", "_ ", "_", "_ ", "_ ", "_ ", "_", "_ ", "_", "_ ", "_"],
 };
 
 export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
@@ -61,7 +63,6 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
     const [open, setOpen] = React.useState(false);
     const rootRef = React.useRef<HTMLDivElement>(null);
     const calendarRef = React.useRef<HTMLDivElement>(null);
-    const platform = usePlatform();
     const { document } = useDOM();
 
     const mask = enableTime ? maskWithTime : maskWithoutTime;
@@ -108,7 +109,9 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
 
     return (
       <div
-        vkuiClass={getClassName("DateInput", platform)}
+        vkuiClass={classNames("DateInput", {
+          "DateInput--time": enableTime,
+        })}
         style={style}
         className={className}
         ref={rootRef}
@@ -118,7 +121,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
           value={value ? format(value, mask.dateFnsFormat) : ""}
           format={mask.format}
           placeholder={mask.placeholder}
-          mask="_"
+          mask={mask.mask}
           getRef={ref}
           onFocus={callMultiple(openCalendar, onFocus)}
           onValueChange={onValueChange}

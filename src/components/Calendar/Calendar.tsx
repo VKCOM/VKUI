@@ -1,10 +1,7 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
-import { classNames } from "../../lib/classNames";
 import { Locale, subMonths, addMonths } from "date-fns";
 import ru from "date-fns/locale/ru";
 import { CalendarHeader } from "../CalendarHeader/CalendarHeader";
-import { usePlatform } from "../../hooks/usePlatform";
 import { CalendarDays } from "../CalendarDays/CalendarDays";
 import { CalendarTime } from "../CalendarTime/CalendarTime";
 import "./Calendar.css";
@@ -40,7 +37,6 @@ export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
     ref
   ) => {
     const [viewDate, setViewDate] = React.useState(value ?? new Date());
-    const platform = usePlatform();
 
     const setPrevMonth = React.useCallback(
       () => setViewDate(subMonths(viewDate, 1)),
@@ -52,11 +48,7 @@ export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
     );
 
     return (
-      <div
-        {...props}
-        ref={ref}
-        vkuiClass={classNames(getClassName("Calendar", platform))}
-      >
+      <div {...props} ref={ref} vkuiClass="Calendar">
         <CalendarHeader
           locale={locale}
           viewDate={viewDate}

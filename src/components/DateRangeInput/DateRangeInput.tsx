@@ -1,10 +1,8 @@
 import * as React from "react";
 import { format, isMatch, parse, isAfter } from "date-fns";
 import { NumberFormatValues } from "react-number-format";
-import { getClassName } from "../../helpers/getClassName";
 import { InputProps } from "../Input/Input";
 import { MaskedInput } from "../MaskedInput/MaskedInput";
-import { usePlatform } from "../../hooks/usePlatform";
 import {
   CalendarRange,
   CalendarRangeProps,
@@ -16,6 +14,7 @@ import { useDOM } from "../../lib/dom";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import IconButton from "../IconButton/IconButton";
 import { Icon16Clear } from "@vkontakte/icons";
+import "./DateRangeInput.css";
 
 export interface DateRangeInputProps
   extends Omit<InputProps, "onChange" | "value" | "defaultValue" | "type">,
@@ -32,6 +31,24 @@ export interface DateRangeInputProps
 }
 
 const dateFnsFormat = "dd.MM.yyyy";
+const mask = [
+  "_ ",
+  "_",
+  "_ ",
+  "_",
+  "_ ",
+  "_ ",
+  "_ ",
+  "_",
+  "_ ",
+  "_",
+  "_ ",
+  "_",
+  "_ ",
+  "_ ",
+  "_ ",
+  "_",
+];
 
 const formatValue = (value: DateRangeInputProps["value"]) => {
   if (value?.[0] && value?.[1]) {
@@ -69,7 +86,6 @@ export const DateRangeInput = React.forwardRef<
     const [open, setOpen] = React.useState(false);
     const rootRef = React.useRef<HTMLDivElement>(null);
     const calendarRef = React.useRef<HTMLDivElement>(null);
-    const platform = usePlatform();
     const { document } = useDOM();
 
     const openCalendar = React.useCallback(() => {
@@ -139,7 +155,7 @@ export const DateRangeInput = React.forwardRef<
 
     return (
       <div
-        vkuiClass={getClassName("DateInput", platform)}
+        vkuiClass="DateRangeInput"
         style={style}
         className={className}
         ref={rootRef}
@@ -148,8 +164,8 @@ export const DateRangeInput = React.forwardRef<
           {...props}
           value={formatValue(value)}
           format="##.##.#### - ##.##.####"
-          placeholder="__.__.____ - __.__.____"
-          mask="_"
+          placeholder="_ _._ _._ _ _ _ - _ _._ _._ _ _ _"
+          mask={mask}
           getRef={ref}
           onFocus={callMultiple(openCalendar, onFocus)}
           onValueChange={onValueChange}

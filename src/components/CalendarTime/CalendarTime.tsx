@@ -2,6 +2,7 @@ import * as React from "react";
 import { setHours, setMinutes } from "date-fns";
 import CustomSelect, { CustomSelectProps } from "../CustomSelect/CustomSelect";
 import Button from "../Button/Button";
+import { SizeType } from "../../hoc/withAdaptivity";
 import "./CalendarTime.css";
 
 export interface CalendarTimeProps {
@@ -56,7 +57,12 @@ export const CalendarTime: React.FC<CalendarTimeProps> = ({
         />
       </div>
       <div vkuiClass="CalendarTime__button">
-        <Button mode="secondary" onClick={onClose} size="l">
+        <Button
+          sizeY={SizeType.COMPACT}
+          mode="secondary"
+          onClick={onClose}
+          size="l"
+        >
           Готово
         </Button>
       </div>

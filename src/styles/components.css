@@ -127,6 +127,15 @@
 @import "../components/Popper/Popper.css";
 @import "../components/CustomSelectDropdown/CustomSelectDropdown.css";
 
+@import "../components/Calendar/Calendar.css";
+@import "../components/CalendarDay/CalendarDay.css";
+@import "../components/CalendarDays/CalendarDays.css";
+@import "../components/CalendarHeader/CalendarHeader.css";
+@import "../components/CalendarRange/CalendarRange.css";
+@import "../components/CalendarTime/CalendarTime.css";
+@import "../components/DateInput/DateInput.css";
+@import "../components/DateRangeInput/DateRangeInput.css";
+
 /* Advertisement */
 @import "../components/PromoBanner/PromoBanner.css";
 
