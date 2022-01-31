@@ -95,7 +95,6 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
 
     const onValueChange = React.useCallback(
       ({ formattedValue }: NumberFormatValues) => {
-        console.log(formattedValue);
         if (isMatch(formattedValue, mask.dateFnsFormat)) {
           onChange?.(
             parse(formattedValue, mask.dateFnsFormat, value ?? new Date())
@@ -107,7 +106,6 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
 
     const clear = React.useCallback(() => onChange?.(undefined), [onChange]);
 
-    console.log(value ? format(value, mask.dateFnsFormat) : "rr");
     return (
       <div
         vkuiClass={getClassName("DateInput", platform)}
