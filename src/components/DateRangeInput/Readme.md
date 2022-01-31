@@ -58,13 +58,15 @@ const Example = () => {
                 />
               </FormItem>
               <FormItem>
-                <DateRangeInput
-                  value={value}
-                  onChange={setValue}
-                  disablePast={disablePast}
-                  disableFuture={disableFuture}
-                  locale={locales[locale]}
-                />
+                <div style={{ display: "flex" }}>
+                  <DateRangeInput
+                    value={value}
+                    onChange={setValue}
+                    disablePast={disablePast}
+                    disableFuture={disableFuture}
+                    locale={locales[locale]}
+                  />
+                </div>
               </FormItem>
             </FormLayoutGroup>
           </FormLayout>

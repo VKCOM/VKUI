@@ -67,14 +67,16 @@ const Example = () => {
                 />
               </FormItem>
               <FormItem>
-                <DateInput
-                  value={value}
-                  onChange={setValue}
-                  enableTime={enableTime}
-                  disablePast={disablePast}
-                  disableFuture={disableFuture}
-                  locale={locales[locale]}
-                />
+                <div style={{ display: "flex" }}>
+                  <DateInput
+                    value={value}
+                    onChange={setValue}
+                    enableTime={enableTime}
+                    disablePast={disablePast}
+                    disableFuture={disableFuture}
+                    locale={locales[locale]}
+                  />
+                </div>
               </FormItem>
             </FormLayoutGroup>
           </FormLayout>
