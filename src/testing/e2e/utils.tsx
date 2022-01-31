@@ -6,7 +6,8 @@ import ConfigProvider from "../../components/ConfigProvider/ConfigProvider";
 import { Panel } from "../../components/Panel/Panel";
 import { Platform } from "../../lib/platform";
 import { Scheme } from "../../helpers/scheme";
-import AdaptivityProvider, {
+import {
+  AdaptivityProvider,
   DESKTOP_SIZE,
   MOBILE_SIZE,
   SMALL_TABLET_SIZE,
@@ -18,7 +19,7 @@ import {
 } from "../../components/AdaptivityProvider/AdaptivityContext";
 import { AdaptivityProps, withAdaptivity } from "../../hoc/withAdaptivity";
 import View from "../../components/View/View";
-import AppRoot from "../../components/AppRoot/AppRoot";
+import { AppRoot } from "../../components/AppRoot/AppRoot";
 import Group from "../../components/Group/Group";
 
 type AdaptivityFlag = boolean | "x" | "y";

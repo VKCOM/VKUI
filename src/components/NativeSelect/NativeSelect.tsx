@@ -12,7 +12,10 @@ import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
 import { useExternRef } from "../../hooks/useExternRef";
 import { usePlatform } from "../../hooks/usePlatform";
-import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
+import {
+  AdaptivityContextInterface,
+  AdaptivityProps,
+} from "../AdaptivityProvider/AdaptivityContext";
 import "../Select/Select.css";
 
 export interface NativeSelectProps
@@ -20,7 +23,7 @@ export interface NativeSelectProps
     HasRef<HTMLSelectElement>,
     HasRootRef<HTMLLabelElement>,
     HasAlign,
-    AdaptivityContextInterface {
+    AdaptivityProps {
   placeholder?: string;
   multiline?: boolean;
 }
@@ -31,7 +34,9 @@ export interface SelectState {
   notSelected?: boolean;
 }
 
-const NativeSelect: React.FC<NativeSelectProps> = ({
+const NativeSelect: React.FC<
+  NativeSelectProps & AdaptivityContextInterface
+> = ({
   style,
   defaultValue = "",
   align,

@@ -41,14 +41,14 @@ export type { FixedLayoutProps } from "./components/FixedLayout/FixedLayout";
  */
 export { PopoutWrapper } from "./components/PopoutWrapper/PopoutWrapper";
 export type { PopoutWrapperProps } from "./components/PopoutWrapper/PopoutWrapper";
-export { default as Alert } from "./components/Alert/Alert";
+export { Alert } from "./components/Alert/Alert";
 export type {
   AlertProps,
   AlertActionInterface,
 } from "./components/Alert/Alert";
 export { ActionSheet } from "./components/ActionSheet/ActionSheet";
 export type { ActionSheetProps } from "./components/ActionSheet/ActionSheet";
-export { default as ActionSheetItem } from "./components/ActionSheetItem/ActionSheetItem";
+export { ActionSheetItem } from "./components/ActionSheetItem/ActionSheetItem";
 export type { ActionSheetItemProps } from "./components/ActionSheetItem/ActionSheetItem";
 export { default as ScreenSpinner } from "./components/ScreenSpinner/ScreenSpinner";
 export type { ScreenSpinnerProps } from "./components/ScreenSpinner/ScreenSpinner";
@@ -239,7 +239,7 @@ export type { ModalCardBaseProps } from "./components/ModalCardBase/ModalCardBas
  * Wrappers
  */
 export { AppRoot } from "./components/AppRoot/AppRoot";
-export { default as AdaptivityProvider } from "./components/AdaptivityProvider/AdaptivityProvider";
+export { AdaptivityProvider } from "./components/AdaptivityProvider/AdaptivityProvider";
 export { default as ConfigProvider } from "./components/ConfigProvider/ConfigProvider";
 export type { ConfigProviderProps } from "./components/ConfigProvider/ConfigProvider";
 export {

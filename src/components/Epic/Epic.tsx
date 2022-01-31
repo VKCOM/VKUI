@@ -5,19 +5,24 @@ import { withAdaptivity, ViewWidth } from "../../hoc/withAdaptivity";
 import { ScrollSaver } from "./ScrollSaver";
 import { getNavId } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
-import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
+import {
+  AdaptivityContextInterface,
+  AdaptivityProps,
+} from "../AdaptivityProvider/AdaptivityContext";
 import "./Epic.css";
 
 export interface EpicProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    AdaptivityContextInterface {
+    AdaptivityProps {
   tabbar?: React.ReactNode;
   activeStory: string;
 }
 
 const warn = warnOnce("Epic");
 
-export const Epic: React.FC<EpicProps> = (props: EpicProps) => {
+export const Epic: React.FC<EpicProps & AdaptivityContextInterface> = (
+  props
+) => {
   const platform = usePlatform();
   const scroll = React.useRef<{ [key: string]: number }>({}).current;
   const { activeStory, tabbar, children, viewWidth, ...restProps } = props;
