@@ -1,0 +1,19 @@
+.CalendarDays__row {
+  display: flex;
+  justify-content: center;
+}
+
+.CalendarDays__row:not(:last-child) {
+  margin-bottom: 4px;
+}
+
+.CalendarDays__row__day-name {
+  text-transform: capitalize;
+  color: #6d7885;
+  width: 40px;
+  height: 32px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -5,7 +5,7 @@ import "./CustomScrollView.css";
 
 interface Props extends DOMProps {
   windowResize?: boolean;
-  boxRef: React.Ref<HTMLDivElement>;
+  boxRef?: React.Ref<HTMLDivElement>;
   className?: HTMLDivElement["className"];
 }
 

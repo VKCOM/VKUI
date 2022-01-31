@@ -49,7 +49,7 @@ export function isPrimitiveReactNode(node: React.ReactNode): boolean {
   return typeof node === "string" || typeof node === "number";
 }
 
-export function setRef<T>(element: T, ref: React.Ref<T>): void {
+export function setRef<T>(element: T, ref?: React.Ref<T>): void {
   if (ref) {
     if (typeof ref === "function") {
       ref(element);

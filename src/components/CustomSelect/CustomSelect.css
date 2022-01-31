@@ -27,13 +27,14 @@
   border-color: var(--field_border);
 }
 
-.CustomSelect__open:not(.CustomSelect__open--popupDirectionTop)
+.CustomSelect__open:not(.CustomSelect__open--popupDirectionTop):not(.CustomSelect__open--not-adjacent)
   .FormField__border {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.CustomSelect__open.CustomSelect__open--popupDirectionTop .FormField__border {
+.CustomSelect__open.CustomSelect__open--popupDirectionTop:not(.CustomSelect__open--not-adjacent)
+  .FormField__border {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }

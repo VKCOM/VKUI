@@ -22,6 +22,7 @@ export interface SelectMimicryProps
     AdaptivityProps {
   multiline?: boolean;
   disabled?: boolean;
+  after?: React.ReactNode;
 }
 
 const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
@@ -35,6 +36,7 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
   onClick,
   sizeX,
   sizeY,
+  after = <DropdownIcon />,
   ...restProps
 }: SelectMimicryProps) => {
   const platform = usePlatform();
@@ -60,7 +62,7 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
       getRootRef={getRootRef}
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
-      after={<DropdownIcon />}
+      after={after}
     >
       <TypographyComponent
         Component="div"
