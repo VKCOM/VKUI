@@ -1,6 +1,7 @@
 .Card {
   position: relative;
   background: var(--content_tint_background);
+  border-radius: var(--vkui--size_card_border_radius--regular, 16px);
 }
 
 .Card__in {
@@ -46,5 +47,5 @@
 
 .Card--android,
 .Card--vkcom {
-  border-radius: var(--vkui--size_card_border_radius--regular, 16px);
+  border-radius: 8px;
 }

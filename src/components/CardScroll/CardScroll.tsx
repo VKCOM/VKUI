@@ -2,7 +2,9 @@ import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
-import HorizontalScroll from "../HorizontalScroll/HorizontalScroll";
+import HorizontalScroll, {
+  HorizontalScrollProps,
+} from "../HorizontalScroll/HorizontalScroll";
 import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { useDOM } from "../../lib/dom";
 import "./CardScroll.css";
@@ -11,14 +13,14 @@ export interface CardScrollProps
   extends React.HTMLAttributes<HTMLDivElement>,
     AdaptivityProps {
   size?: "s" | "m" | "l" | "false";
-  showArrows?: boolean | "always";
+  showArrows?: HorizontalScrollProps["showArrows"];
   withSpaces: boolean;
 }
 
 const CardScroll: React.FC<CardScrollProps> = ({
   children,
   size,
-  showArrows,
+  showArrows = true,
   sizeX,
   withSpaces = true,
   ...restProps

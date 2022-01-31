@@ -13,10 +13,6 @@
   flex-shrink: 0;
 }
 
-.CardScroll--withoutSpaces .CardScroll__gap {
-  display: none;
-}
-
 .CardScroll + .CardScroll {
   margin-top: 16px;
 }
@@ -41,7 +37,7 @@
  * iOS
  */
 
-.CardScroll--ios .CardScroll__gap {
+.CardScroll--ios:not(.CardScroll--withoutSpaces) .CardScroll__gap {
   width: 12px;
 }
 
@@ -49,8 +45,8 @@
  * Android & VKCOM
  */
 
-.CardScroll--android .CardScroll__gap,
-.CardScroll--vkcom .CardScroll__gap {
+.CardScroll--android:not(.CardScroll--withoutSpaces) .CardScroll__gap,
+.CardScroll--vkcom:not(.CardScroll--withoutSpaces) .CardScroll__gap {
   width: 16px;
 }
 
@@ -79,7 +75,7 @@
  * Group
  */
 
-.Group--card .CardScroll {
+.Group--card .CardScroll:not(.CardScroll--withoutSpaces) {
   margin-left: -8px;
   margin-right: -8px;
 }
@@ -92,18 +88,10 @@
   margin-right: 16px;
 }
 
-.Group--card .CardScroll:first-child {
+.Group--card .CardScroll:not(.CardScroll--withoutSpaces):first-child {
   padding-top: 8px;
 }
 
-.Group--card .CardScroll:last-child {
+.Group--card .CardScroll:not(.CardScroll--withoutSpaces):last-child {
   padding-bottom: 8px;
-}
-
-.Group--card .CardScroll--withoutSpaces:first-child {
-  padding-top: 0;
-}
-
-.Group--card .CardScroll--withoutSpaces:last-child {
-  padding-bottom: 0;
 }
