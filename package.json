@@ -147,7 +147,7 @@
     "size": "yarn clear && concurrently 'yarn:babel' 'yarn:postcss' && size-limit",
     "size:ci": "yarn install --frozen-lockfile --ignore-scripts && yarn build:no-types",
     "styleguide": "cross-env NODE_ENV=development styleguidist server --config=styleguide/config.js",
-    "styleguide:props": "cross-env NODE_ENV=development VKUI_STYLEGUIDE_PROPSPARSER=1 styleguidist server --config=styleguide/config.js",
+    "styleguide:props": "VKUI_STYLEGUIDE_PROPSPARSER=1 yarn styleguide",
     "styleguide:build": "cross-env NODE_ENV=production styleguidist build --config=styleguide/config.js",
     "dev": "yarn clear && concurrently \"yarn:tsc-dev\" \"yarn:babel-dev\" \"yarn:postcss-dev\"",
     "dev-cjs": "yarn clear && concurrently \"yarn:tsc-cjs-dev\" \"yarn:babel-cjs-dev\" \"yarn:postcss-dev\"",
