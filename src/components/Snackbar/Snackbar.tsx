@@ -12,13 +12,16 @@ import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useTimeout } from "../../hooks/useTimeout";
-import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
+import {
+  AdaptivityContextInterface,
+  AdaptivityProps,
+} from "../AdaptivityProvider/AdaptivityContext";
 import "./Snackbar.css";
 
 export interface SnackbarProps
   extends React.HTMLAttributes<HTMLElement>,
     HasPlatform,
-    AdaptivityContextInterface {
+    AdaptivityProps {
   /**
    * Название кнопки действия в уведомлении
    */
@@ -51,7 +54,9 @@ export interface SnackbarProps
   onClose: () => void;
 }
 
-const SnackbarComponent: React.FC<SnackbarProps> = (props: SnackbarProps) => {
+const SnackbarComponent: React.FC<
+  SnackbarProps & AdaptivityContextInterface
+> = (props) => {
   const {
     children,
     layout,

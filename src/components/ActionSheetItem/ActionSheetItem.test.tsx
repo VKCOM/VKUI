@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { baselineComponent } from "../../testing/utils";
-import ActionSheetItem, { ActionSheetItemProps } from "./ActionSheetItem";
+import { ActionSheetItem, ActionSheetItemProps } from "./ActionSheetItem";
 
 const ActionSheetItemTest = (props: ActionSheetItemProps) => (
   <ActionSheetItem data-testid="item" {...props} />

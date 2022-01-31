@@ -209,6 +209,3 @@ export const AppRoot = withAdaptivity<AppRootProps>(
     hasMouse: true,
   }
 );
-
-// eslint-disable-next-line import/no-default-export
-export default AppRoot;

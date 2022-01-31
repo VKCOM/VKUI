@@ -11,7 +11,10 @@ import {
   ViewHeight,
   ViewWidth,
 } from "../../hoc/withAdaptivity";
-import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
+import {
+  AdaptivityContextInterface,
+  AdaptivityProps,
+} from "../AdaptivityProvider/AdaptivityContext";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { multiRef } from "../../lib/utils";
 import { ModalType } from "../ModalRoot/types";
@@ -21,7 +24,7 @@ import "./ModalPage.css";
 
 export interface ModalPageProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    AdaptivityContextInterface,
+    AdaptivityProps,
     NavIdProps {
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`
@@ -40,7 +43,9 @@ export interface ModalPageProps
 }
 
 const warn = warnOnce("ModalPage");
-const ModalPage: React.FC<ModalPageProps> = (props: ModalPageProps) => {
+const ModalPage: React.FC<ModalPageProps & AdaptivityContextInterface> = (
+  props
+) => {
   const platform = usePlatform();
   const { updateModalHeight } = React.useContext(ModalRootContext);
   const {
