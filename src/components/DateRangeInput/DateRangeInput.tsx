@@ -163,8 +163,8 @@ export const DateRangeInput = React.forwardRef<
         <MaskedInput
           {...props}
           value={formatValue(value)}
-          format="##.##.#### - ##.##.####"
-          placeholder="_ _._ _._ _ _ _ - _ _._ _._ _ _ _"
+          format="##.##.#### — ##.##.####"
+          placeholder="_ _._ _._ _ _ _ — _ _._ _._ _ _ _"
           mask={mask}
           getRef={ref}
           onFocus={callMultiple(openCalendar, onFocus)}

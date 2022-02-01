@@ -1,5 +1,7 @@
 Компонент выбора даты.
 
+**Обратите внимание:** Данный компонент предназначен для использования на desktop. При использовании на ios/android работа компонента не гарантируется
+
 ```jsx { "props": { "layout": false, "iframe": false } }
 import * as locales from "date-fns/locale";
 import { format, addDays } from "date-fns";
