@@ -165,6 +165,17 @@ ReactDOM.render(
 }
 ```
 
+Если создаётся новый компонент, то там фоллбэки Appearance можно уже не использовать:
+
+```css
+/* Button.css */
+
+.Button {
+  background-color: var(--vkui--color_background_accent);
+  border-radius: var(--vkui--size_border_radius--regular);
+}
+```
+
 ```css
 /* vkui.css */
 
