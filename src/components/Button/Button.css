@@ -4,7 +4,7 @@
   box-sizing: border-box;
   text-decoration: none;
   border: none;
-  min-height: var(--vkui--size_button_small_height--regular);
+  min-height: var(--vkui--size_button_small_height--compact);
   margin: 0;
   padding: 0;
   user-select: none;
