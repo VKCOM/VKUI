@@ -12,7 +12,11 @@ import "./CardScroll.css";
 export interface CardScrollProps
   extends React.HTMLAttributes<HTMLDivElement>,
     AdaptivityProps {
-  size?: "s" | "m" | "l" | "false";
+  /**
+   * При size = "s", "m", "l" у Card будет явно задана ширина в %
+   * При size = false ширина Card будет регулироваться контентом внутри
+   */
+  size?: "s" | "m" | "l" | false;
   showArrows?: HorizontalScrollProps["showArrows"];
   withSpaces: boolean;
 }
@@ -96,7 +100,7 @@ const CardScroll: React.FC<CardScrollProps> = ({
         getClassName("CardScroll", platform),
         `CardScroll--sizeX-${sizeX}`,
         `CardScroll--${size}`,
-        { ["CardScroll--withoutSpaces"]: !withSpaces }
+        { ["CardScroll--withSpaces"]: withSpaces }
       )}
     >
       <HorizontalScroll
