@@ -48,7 +48,7 @@ export interface ActionSheetItemProps
 const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
   children,
   autoclose,
-  mode,
+  mode = "default",
   meta,
   subtitle,
   before,
@@ -181,9 +181,8 @@ const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
   );
 };
 
-ActionSheetItem.defaultProps = {
-  mode: "default",
-};
+const ActionSheetItemWithAdaptivity = withAdaptivity(ActionSheetItem, {
+  sizeY: true,
+});
 
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(ActionSheetItem, { sizeY: true });
+export { ActionSheetItemWithAdaptivity as ActionSheetItem };

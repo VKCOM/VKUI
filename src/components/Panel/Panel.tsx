@@ -8,18 +8,21 @@ import { withAdaptivity } from "../../hoc/withAdaptivity";
 import { IOS } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
 import { NavIdProps } from "../../lib/getNavId";
-import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
+import {
+  AdaptivityContextInterface,
+  AdaptivityProps,
+} from "../AdaptivityProvider/AdaptivityContext";
 import "./Panel.css";
 
 export interface PanelProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement>,
-    AdaptivityContextInterface,
+    AdaptivityProps,
     NavIdProps {
   centered?: boolean;
 }
 
-export const Panel = withAdaptivity<PanelProps>(
+export const Panel = withAdaptivity<PanelProps & AdaptivityContextInterface>(
   ({ centered = false, children, getRootRef, sizeX, nav, ...restProps }) => {
     const platform = usePlatform();
 

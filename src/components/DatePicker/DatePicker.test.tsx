@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { render } from "@testing-library/react";
-import AdaptivityProvider from "../AdaptivityProvider/AdaptivityProvider";
+import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { baselineComponent } from "../../testing/utils";
 import DatePicker from "./DatePicker";
 import userEvent from "@testing-library/user-event";

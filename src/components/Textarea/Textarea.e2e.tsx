@@ -1,6 +1,6 @@
 import Textarea from "./Textarea";
 import { screenshot, mount, describeScreenshotFuzz } from "../../testing/e2e";
-import AppRoot from "../AppRoot/AppRoot";
+import { AppRoot } from "../AppRoot/AppRoot";
 
 describe("Textarea", () => {
   describeScreenshotFuzz(Textarea, [
