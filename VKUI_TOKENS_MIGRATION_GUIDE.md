@@ -136,7 +136,7 @@ import "@vkontakte/vkui/dist/components.css";
 import "path/to/my/appearance/tokens.css"; // Добавляем свои значения токенов
 
 ReactDOM.render(
-  <ConfigProvider platform="vkcom" scheme="inherit">
+  <ConfigProvider platform="vkcom" appearance="dark">
     <AppRoot>
       <Button />
     </AppRoot>
@@ -151,7 +151,7 @@ ReactDOM.render(
 
 ### Промежуточный вариант
 
-Промежуточный вариант позволяет использовать либо Appearance, либо vkui-tokens.
+Промежуточный вариант позволяет пользователям использовать либо Appearance, либо vkui-tokens.
 
 ```css
 /* Button.css */
@@ -206,6 +206,8 @@ ReactDOM.render(
 
 Заметьте, что в `vkui.css` сохранились значения токенов Appearance, а значений vkui-tokens нет, но есть
 только ссылки на них в css-правилах.
+
+В components.css остаются только фоллбэки. Нет ни значений Appearance токенов, ни vkui-tokens
 
 ```css
 /* components.css */
