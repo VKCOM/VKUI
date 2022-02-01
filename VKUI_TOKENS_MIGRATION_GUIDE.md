@@ -101,8 +101,7 @@ ReactDOM.render(
 );
 ```
 
-Рядом с бандлом, в который вшиты значения токенов Appearance (vkui.css),
-генерируется бандл без этих значений (components.css).
+Рядом с бандлом, в который вшиты значения токенов Appearance, генерируется бандл без этих значений.
 
 ```css
 /* components.css */
@@ -137,7 +136,7 @@ import "@vkontakte/vkui/dist/components.css";
 import "path/to/my/appearance/tokens.css"; // Добавляем свои значения токенов
 
 ReactDOM.render(
-  <ConfigProvider platform="vkcom">
+  <ConfigProvider platform="vkcom" scheme="inherit">
     <AppRoot>
       <Button />
     </AppRoot>
