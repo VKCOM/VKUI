@@ -66,6 +66,7 @@ export const CalendarRange = React.forwardRef<
             disablePast={disablePast}
             disableFuture={disableFuture}
             shouldDisableDate={shouldDisableDate}
+            range
           />
         </div>
         <div vkuiClass="CalendarRange__inner">
@@ -84,6 +85,7 @@ export const CalendarRange = React.forwardRef<
             disablePast={disablePast}
             disableFuture={disableFuture}
             shouldDisableDate={shouldDisableDate}
+            range
           />
         </div>
       </div>

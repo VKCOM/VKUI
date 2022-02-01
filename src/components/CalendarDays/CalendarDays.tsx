@@ -28,6 +28,7 @@ export interface CalendarDaysProps {
   locale: Locale;
   disablePast?: boolean;
   disableFuture?: boolean;
+  range?: boolean;
   onChange?(value?: Date | Array<Date | null>): void;
   shouldDisableDate?(value: Date): boolean;
 }
@@ -51,8 +52,8 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
   disablePast,
   disableFuture,
   shouldDisableDate,
+  range = false,
 }) => {
-  const isRange = Array.isArray(value);
   const [now] = React.useState(new Date());
 
   const weeks = React.useMemo(() => {
@@ -86,9 +87,14 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
 
   const onDayChange = React.useCallback(
     (date: Date) => {
-      if (!isRange) {
+      if (!range) {
         onChange?.(setTimeEqual(date, value as Date | undefined | null));
       } else {
+        if (!value) {
+          onChange?.([date, null]);
+          return;
+        }
+
         const start = (value as Array<Date | null>)[0];
         const end = (value as Array<Date | null>)[1];
         if (
@@ -103,7 +109,7 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
         }
       }
     },
-    [value, onChange, isRange]
+    [value, onChange, range]
   );
 
   return (
@@ -135,7 +141,7 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
             let selectionStart = i === 0 || isFirstDayOfMonth(day);
             let selectionEnd = i === arr.length - 1 || isLastDayOfMonth(day);
 
-            if (isRange) {
+            if (range && value) {
               const start = (value as Array<Date | null>)[0];
               const end = (value as Array<Date | null>)[1];
 
