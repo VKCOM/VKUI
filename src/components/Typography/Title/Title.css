@@ -4,47 +4,45 @@
 }
 
 .Title--l-1 {
-  font-size: 24px;
-  line-height: 28px;
+  font-size: var(--vkui--font_title1--font_size--regular);
+  line-height: var(--vkui--font_title1--line_height--regular);
+  font-weight: var(--vkui--font_title1--font_weight--regular);
 }
 
 .Title--l-2 {
-  font-size: 20px;
-  line-height: 24px;
+  font-size: var(--vkui--font_title2--font_size--regular);
+  line-height: var(--vkui--font_title2--line_height--regular);
+  font-weight: var(--vkui--font_title2--font_weight--regular);
 }
 
 .Title--l-3 {
-  font-size: 17px;
-  line-height: 22px;
+  font-size: var(--vkui--font_title3--font_size--regular);
+  line-height: var(--vkui--font_title3--line_height--regular);
+  font-weight: var(--vkui--font_title3--font_weight--regular);
 }
 
 .Title--w-regular {
-  font-weight: 400;
+  font-weight: var(--vkui--font_weight_accent1);
 }
 
 .Title--w-medium {
-  font-weight: 500;
+  font-weight: var(--vkui--font_weight_accent2);
 }
 
 .Title--w-semibold {
-  font-weight: 600;
+  font-weight: var(--vkui--font_weight_accent3);
 }
 
+/**
+ * TODO удалять перед релизом 5.0.0
+ */
 .Title--w-bold {
   font-weight: 700;
 }
 
+/**
+ * TODO удалять перед релизом 5.0.0
+ */
 .Title--w-heavy {
   font-weight: 800;
-}
-
-/**
- * ANDROID
- */
-.Title--android.Title--w-semibold {
-  font-weight: 500;
-}
-
-.Title--android.Title--w-heavy {
-  font-weight: 700;
 }

@@ -3,8 +3,7 @@ import { HasComponent } from "../../../types";
 import { usePlatform } from "../../../hooks/usePlatform";
 import { classNames } from "../../../lib/classNames";
 import { getClassName } from "../../../helpers/getClassName";
-import { ANDROID } from "../../../lib/platform";
-import Headline, { HeadlineProps } from "../Headline/Headline";
+import { warnOnce } from "../../../lib/warnOnce";
 import "./Title.css";
 
 export interface TitleProps
@@ -14,9 +13,11 @@ export interface TitleProps
   level: "1" | "2" | "3";
 }
 
+const warn = warnOnce("Title");
+
 const Title: React.FC<TitleProps> = ({
   children,
-  weight = "regular",
+  weight = "semibold",
   level = "1",
   Component,
   ...restProps
@@ -27,15 +28,9 @@ const Title: React.FC<TitleProps> = ({
     Component = ("h" + level) as React.ElementType;
   }
 
-  if (platform === ANDROID && level === "3") {
-    const headlineWeight: HeadlineProps["weight"] =
-      weight === "regular" ? weight : "medium";
-
-    return (
-      <Headline Component={Component} {...restProps} weight={headlineWeight}>
-        {children}
-      </Headline>
-    );
+  if (process.env.NODE_ENV === "development") {
+    if (["heavy", "bold"].includes(level))
+      warn(`Начертание "${level}" устарело и будет удалено в 5.0.0`);
   }
 
   return (
