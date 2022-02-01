@@ -494,7 +494,6 @@
  * iOS
  */
 .Button--ios {
-  min-height: 26px;
   border-radius: 10px;
 }
 
@@ -502,7 +501,6 @@
  * VKCOM
  */
 .Button--vkcom {
-  min-height: 26px;
   border-radius: 4px;
 }
 
