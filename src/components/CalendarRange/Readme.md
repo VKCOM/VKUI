@@ -61,15 +61,17 @@ const Example = () => {
                   ]}
                 />
               </FormItem>
+              <FormItem>
+                <CalendarRange
+                  value={value}
+                  onChange={setValue}
+                  disablePast={disablePast}
+                  disableFuture={disableFuture}
+                  locale={locales[locale]}
+                />
+              </FormItem>
             </FormLayoutGroup>
           </FormLayout>
-          <CalendarRange
-            value={value}
-            onChange={setValue}
-            disablePast={disablePast}
-            disableFuture={disableFuture}
-            locale={locales[locale]}
-          />
         </Group>
       </Panel>
     </View>
