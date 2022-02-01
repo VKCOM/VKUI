@@ -34,7 +34,7 @@ let plugins = [
     except: [
       path.resolve(`./src/styles/${defaultSchemeId}.css`),
       path.resolve(
-        "./node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css"
+        "./node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css"
       ),
     ],
   }),
