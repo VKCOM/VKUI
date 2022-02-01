@@ -163,15 +163,7 @@
 /* Mode = Secondary */
 .Button--lvl-secondary {
   background-color: var(
-    --content_tint_background,
-    var(--vkui--color_background_secondary)
-  );
-}
-
-/* Only for VKCOM */
-.Button--vkcom.Button--lvl-secondary {
-  background-color: var(
-    --control_background,
+    --button_secondary_background,
     var(--vkui--color_background_secondary)
   );
 }
@@ -488,15 +480,6 @@
 
 .Button:not(.Button--sz-s) .Button__content {
   transform: translateY(-1px);
-}
-
-/**
- * VKCOM
- */
-.Button--vkcom.Button--lvl-secondary .Icon,
-.Button--vkcom.Button--lvl-tertiary .Icon,
-.Button--vkcom.Button--lvl-outline .Icon {
-  opacity: 0.72;
 }
 
 /**
