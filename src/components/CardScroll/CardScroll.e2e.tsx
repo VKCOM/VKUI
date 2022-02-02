@@ -17,9 +17,17 @@ describe("CardScroll", () => {
       },
       {
         size: ["m"],
+        showArrows: [true],
       },
       {
         size: ["l"],
+        showArrows: [false],
+        withSpaces: [true],
+      },
+      {
+        size: [false],
+        showArrows: ["always"],
+        withSpaces: [false],
       },
     ]
   );
