@@ -1,6 +1,9 @@
 .Card {
   position: relative;
-  background: var(--content_tint_background);
+  background: var(
+    --vkui--color_background_secondary,
+    var(--content_tint_background)
+  );
   border-radius: var(--vkui--size_card_border_radius--regular, 16px);
 }
 
@@ -11,12 +14,16 @@
 }
 
 .Card--md-shadow {
-  box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.08), 0 0 2px 0 rgba(0, 0, 0, 0.08);
-  background: var(--modal_card_background);
+  box-shadow: var(
+    --vkui--elevation3,
+    0 2px 24px 0 rgba(0, 0, 0, 0.08),
+    0 0 2px 0 rgba(0, 0, 0, 0.08)
+  );
+  background: var(--vkui--color_background_modal, var(--modal_card_background));
 }
 
 .Card--md-outline {
-  background: var(--modal_card_background);
+  background: var(--vkui--color_background_modal, var(--modal_card_background));
 }
 
 .Card--md-outline::before {
@@ -27,7 +34,8 @@
   height: 100%;
   content: "";
   display: block;
-  border: var(--thin-border) solid var(--input_border);
+  border: var(--thin-border) solid
+    var(--vkui--color_image_border_alpha, var(--input_border));
   z-index: 1;
   box-sizing: border-box;
   border-radius: inherit;
@@ -42,10 +50,9 @@
 }
 
 /**
- * Android, VKCOM
+ * VKCOM
  */
 
-.Card--android,
 .Card--vkcom {
   border-radius: 8px;
 }
