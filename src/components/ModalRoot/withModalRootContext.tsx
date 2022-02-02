@@ -7,7 +7,7 @@ type PickedProps = Pick<ModalRootContextInterface, "updateModalHeight">;
 
 export function withModalRootContext<P extends PickedProps>(
   Component: React.ComponentType<P>
-): React.ComponentType<P> {
+): React.ComponentType<Omit<P, keyof PickedProps>> {
   function WithModalRootContext(props: Omit<P, keyof PickedProps>) {
     const { updateModalHeight } = React.useContext(ModalRootContext);
 

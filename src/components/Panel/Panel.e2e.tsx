@@ -3,7 +3,7 @@ import { Panel, PanelProps } from "./Panel";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import PanelHeader from "../PanelHeader/PanelHeader";
 import Group from "../Group/Group";
-import AppRoot from "../AppRoot/AppRoot";
+import { AppRoot } from "../AppRoot/AppRoot";
 
 describe("Panel", () => {
   const content = (h: number) => (

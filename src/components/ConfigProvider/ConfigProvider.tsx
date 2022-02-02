@@ -16,6 +16,7 @@ import {
   Scheme,
 } from "../../helpers/scheme";
 import { AppearanceProvider } from "../AppearanceProvider/AppearanceProvider";
+import { Platform } from "../../lib/platform";
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface {
   /**
@@ -58,6 +59,28 @@ const deriveAppearance = (scheme: Scheme | undefined): AppearanceType =>
     ? "dark"
     : "light";
 
+const generateVKUITokensClassName = (
+  platform: string,
+  appearance: string
+): string => {
+  let tokensPlatform;
+  switch (platform) {
+    case Platform.ANDROID:
+      tokensPlatform = "vkBase";
+      break;
+    case Platform.IOS:
+      tokensPlatform = "vkIOS";
+      break;
+    case Platform.VKCOM:
+      tokensPlatform = "vkCom";
+      break;
+    default:
+      tokensPlatform = platform;
+  }
+
+  return `vkui--${tokensPlatform}--${appearance}`;
+};
+
 const ConfigProvider: React.FC<ConfigProviderProps> = ({
   children,
   schemeTarget,
@@ -66,10 +89,11 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
   schemeTarget?: HTMLElement;
 }) => {
   const config = { ...defaultConfigProviderProps, ...props };
+  const { platform, appearance } = config;
   const scheme = normalizeScheme({
     scheme: config.scheme,
-    platform: config.platform,
-    appearance: config.appearance,
+    platform: platform,
+    appearance: appearance,
   });
   const { document } = useDOM();
   const target = schemeTarget || document?.body;
@@ -91,8 +115,23 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
   }, [scheme]);
 
   const realScheme = useSchemeDetector(target, scheme);
+  const derivedAppearance = deriveAppearance(realScheme);
+
+  useIsomorphicLayoutEffect(() => {
+    const VKUITokensClassName = generateVKUITokensClassName(
+      platform,
+      derivedAppearance
+    );
+
+    target?.classList.add(VKUITokensClassName);
+
+    return () => {
+      target?.classList.remove(VKUITokensClassName);
+    };
+  }, [platform, derivedAppearance]);
+
   const configContext = useObjectMemo({
-    appearance: deriveAppearance(realScheme),
+    appearance: derivedAppearance,
     ...config,
   });
 

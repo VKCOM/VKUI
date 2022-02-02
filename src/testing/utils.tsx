@@ -1,6 +1,6 @@
 import * as React from "react";
 import { render, RenderResult, screen } from "@testing-library/react";
-import AdaptivityProvider from "../components/AdaptivityProvider/AdaptivityProvider";
+import { AdaptivityProvider } from "../components/AdaptivityProvider/AdaptivityProvider";
 import { AdaptivityProps } from "../components/AdaptivityProvider/AdaptivityContext";
 import { ImgOnlyAttributes } from "../lib/utils";
 import { ScrollContext } from "../components/AppRoot/ScrollContext";

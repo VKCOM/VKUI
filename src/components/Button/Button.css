@@ -4,11 +4,11 @@
   box-sizing: border-box;
   text-decoration: none;
   border: none;
-  min-height: var(--vkui--size_button_small_height--regular, 28px);
+  min-height: var(--vkui--size_button_small_height--compact);
   margin: 0;
   padding: 0;
   user-select: none;
-  border-radius: var(--vkui--size_border_radius--regular, 8px);
+  border-radius: var(--vkui--size_border_radius--regular);
   max-width: 100%;
 }
 
@@ -41,7 +41,7 @@
 }
 
 .Button[disabled] {
-  opacity: var(--vkui--opacity_disable, 0.4);
+  opacity: var(--vkui--opacity_disable);
 }
 
 .Button--lvl-primary[disabled]:not(.Button--clr-overlay):not(.Button--clr-negative):not(.Button--clr-positive),
@@ -163,15 +163,7 @@
 /* Mode = Secondary */
 .Button--lvl-secondary {
   background-color: var(
-    --content_tint_background,
-    var(--vkui--color_background_secondary)
-  );
-}
-
-/* Only for VKCOM */
-.Button--vkcom.Button--lvl-secondary {
-  background-color: var(
-    --control_background,
+    --button_secondary_background,
     var(--vkui--color_background_secondary)
   );
 }
@@ -491,51 +483,29 @@
 }
 
 /**
- * iOS
- */
-.Button--ios {
-  min-height: 26px;
-  border-radius: 10px;
-}
-
-/**
- * VKCOM
- */
-.Button--vkcom {
-  min-height: 26px;
-  border-radius: 4px;
-}
-
-.Button--vkcom.Button--lvl-secondary .Icon,
-.Button--vkcom.Button--lvl-tertiary .Icon,
-.Button--vkcom.Button--lvl-outline .Icon {
-  opacity: 0.72;
-}
-
-/**
  * sizeY COMPACT
  */
 .Button--sz-m {
-  min-height: var(--vkui--size_button_medium_height--compact, 32px);
+  min-height: var(--vkui--size_button_medium_height--compact);
 }
 
 .Button--sz-l {
-  min-height: var(--vkui--size_button_large_height--compact, 36px);
+  min-height: var(--vkui--size_button_large_height--compact);
 }
 
 /**
  * sizeY REGULAR
  */
 .Button--sizeY-regular {
-  min-height: var(--vkui--size_button_small_height--regular, 30px);
+  min-height: var(--vkui--size_button_small_height--regular);
 }
 
 .Button--sizeY-regular.Button--sz-m {
-  min-height: var(--vkui--size_button_medium_height--regular, 36px);
+  min-height: var(--vkui--size_button_medium_height--regular);
 }
 
 .Button--sizeY-regular.Button--sz-l {
-  min-height: var(--vkui--size_button_large_height--regular, 44px);
+  min-height: var(--vkui--size_button_large_height--regular);
 }
 
 /**
