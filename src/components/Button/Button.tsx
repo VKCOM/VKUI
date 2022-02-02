@@ -1,5 +1,4 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
 import Tappable, { TappableProps } from "../Tappable/Tappable";
@@ -174,7 +173,7 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
       onClick={loading ? undefined : onClick}
       focusVisibleMode="outside"
       vkuiClass={classNames(
-        getClassName("Button", platform),
+        "Button",
         `Button--sz-${size}`,
         `Button--lvl-${resolvedMode}`,
         `Button--clr-${resolvedAppearance}`,

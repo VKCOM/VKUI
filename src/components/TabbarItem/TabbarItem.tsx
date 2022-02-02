@@ -7,6 +7,7 @@ import { hasReactNode } from "../../lib/utils";
 import Tappable from "../Tappable/Tappable";
 import { Platform } from "../../lib/platform";
 import { HasComponent, HasRootRef } from "../../types";
+import { warnOnce } from "../../lib/warnOnce";
 import "./TabbarItem.css";
 
 export interface TabbarItemProps
@@ -28,6 +29,7 @@ export interface TabbarItemProps
   label?: React.ReactNode;
 }
 
+const warn = warnOnce("TabbarItem");
 const TabbarItem: React.FunctionComponent<TabbarItemProps> = ({
   children,
   selected,
@@ -41,7 +43,12 @@ const TabbarItem: React.FunctionComponent<TabbarItemProps> = ({
 }: TabbarItemProps) => {
   const platform = usePlatform();
 
-  // @ts-ignore ругается на то, что у AllHTMLAttributes type это строка, а button не любую строку считает валидным значением
+  if (label && process.env.NODE_ENV === "development") {
+    warn(
+      "Свойство label устарело и будет удалено в 5.0.0. Используйте indicator."
+    );
+  }
+
   return (
     <Component
       {...restProps}
