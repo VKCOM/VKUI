@@ -33,11 +33,15 @@
   width: 100%;
 }
 
+.CardScroll--withSpaces .CardScroll__gap {
+  width: var(--vkui--size_base_padding_horizontal--regular, 16px);
+}
+
 /**
  * iOS
  */
 
-.CardScroll--ios:is(.CardScroll--withSpaces) .CardScroll__gap {
+.CardScroll--ios.CardScroll--withSpaces .CardScroll__gap {
   width: 12px;
 }
 
@@ -45,16 +49,8 @@
  * VKCOM
  */
 
-.CardScroll--vkcom:is(.CardScroll--withSpaces) .CardScroll__gap {
+.CardScroll--vkcom.CardScroll--withSpaces .CardScroll__gap {
   width: 16px;
-}
-
-/**
- * Android
- */
-
-.CardScroll--android:is(.CardScroll--withSpaces) .CardScroll__gap {
-  width: var(--vkui--size_base_padding_horizontal--regular, 16px);
 }
 
 /**
