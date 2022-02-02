@@ -6,15 +6,15 @@ import "./CalendarDay.css";
 
 export interface CalendarDayProps {
   day: Date;
-  locale: Locale;
-  today: boolean;
-  onChange(viewDate: Date): void;
+  locale?: Locale;
+  today?: boolean;
   selected?: boolean;
   selectionStart?: boolean;
   selectionEnd?: boolean;
   active?: boolean;
   hidden?: boolean;
   disabled?: boolean;
+  onChange(viewDate: Date): void;
 }
 
 export const CalendarDay: React.FC<CalendarDayProps> = React.memo(

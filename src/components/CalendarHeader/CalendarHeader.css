@@ -22,11 +22,11 @@
   color: var(--accent);
 }
 
-.CalendarHeader__nav-icon-right {
+.CalendarHeader__nav-icon-next {
   right: 0;
 }
 
-.CalendarHeader__nav-icon-left {
+.CalendarHeader__nav-icon-prev {
   left: 0;
 }
 

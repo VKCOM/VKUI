@@ -4,6 +4,7 @@ import ru from "date-fns/locale/ru";
 import { CalendarHeader } from "../CalendarHeader/CalendarHeader";
 import { CalendarDays } from "../CalendarDays/CalendarDays";
 import { CalendarTime } from "../CalendarTime/CalendarTime";
+import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import "./Calendar.css";
 
 export interface CalendarProps
@@ -36,7 +37,7 @@ export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
     },
     ref
   ) => {
-    const [viewDate, setViewDate] = React.useState(value ?? new Date());
+    const [viewDate, setViewDate] = React.useState(new Date());
 
     const setPrevMonth = React.useCallback(
       () => setViewDate(subMonths(viewDate, 1)),
@@ -46,6 +47,12 @@ export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
       () => setViewDate(addMonths(viewDate, 1)),
       [viewDate]
     );
+
+    useIsomorphicLayoutEffect(() => {
+      if (value) {
+        setViewDate(value);
+      }
+    }, [value]);
 
     return (
       <div {...props} ref={ref} vkuiClass="Calendar">

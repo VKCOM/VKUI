@@ -117,7 +117,7 @@ export const DateRangeInput = React.forwardRef<
 
     const onValueChange = React.useCallback(
       ({ formattedValue }: NumberFormatValues) => {
-        const [formattedStart, formattedEnd] = formattedValue.split(" - ");
+        const [formattedStart, formattedEnd] = formattedValue.split(" — ");
         const startValid = isMatch(formattedStart, dateFnsFormat);
         const endValid = isMatch(formattedEnd, dateFnsFormat);
 

@@ -25,7 +25,7 @@ import "./CalendarDays.css";
 export interface CalendarDaysProps {
   value?: Date | Array<Date | null>;
   viewDate: Date;
-  locale: Locale;
+  locale?: Locale;
   disablePast?: boolean;
   disableFuture?: boolean;
   range?: boolean;
@@ -33,7 +33,29 @@ export interface CalendarDaysProps {
   shouldDisableDate?(value: Date): boolean;
 }
 
-const setTimeEqual = (to: Date, from?: Date | null) => {
+export const getWeeks = (viewDate: Date, locale?: Locale) => {
+  const start = startOfWeek(startOfMonth(viewDate), { locale });
+  const end = endOfWeek(endOfMonth(viewDate), { locale });
+
+  let count = 0;
+  let current = start;
+  const nestedWeeks: Date[][] = [];
+  let lastDay = null;
+  while (isBefore(current, end)) {
+    const weekNumber = Math.floor(count / 7);
+    nestedWeeks[weekNumber] = nestedWeeks[weekNumber] || [];
+    const day = getDay(current);
+    if (lastDay !== day) {
+      lastDay = day;
+      nestedWeeks[weekNumber].push(current);
+      count += 1;
+    }
+    current = addDays(current, 1);
+  }
+  return nestedWeeks;
+};
+
+export const setTimeEqual = (to: Date, from?: Date | null) => {
   if (from) {
     to.setHours(from.getHours());
     to.setMinutes(from.getMinutes());
@@ -56,27 +78,10 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
 }) => {
   const [now] = React.useState(new Date());
 
-  const weeks = React.useMemo(() => {
-    const start = startOfWeek(startOfMonth(viewDate), { locale });
-    const end = endOfWeek(endOfMonth(viewDate), { locale });
-
-    let count = 0;
-    let current = start;
-    const nestedWeeks: Date[][] = [];
-    let lastDay = null;
-    while (isBefore(current, end)) {
-      const weekNumber = Math.floor(count / 7);
-      nestedWeeks[weekNumber] = nestedWeeks[weekNumber] || [];
-      const day = getDay(current);
-      if (lastDay !== day) {
-        lastDay = day;
-        nestedWeeks[weekNumber].push(current);
-        count += 1;
-      }
-      current = addDays(current, 1);
-    }
-    return nestedWeeks;
-  }, [locale, viewDate]);
+  const weeks = React.useMemo(
+    () => getWeeks(viewDate, locale),
+    [locale, viewDate]
+  );
 
   const daysNames = React.useMemo(() => {
     return eachDayOfInterval({

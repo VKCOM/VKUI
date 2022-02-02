@@ -8,13 +8,36 @@ import "./CalendarHeader.css";
 
 export interface CalendarHeaderProps {
   viewDate: Date;
-  locale: Locale;
+  locale?: Locale;
   prevMonth?: boolean;
   nextMonth?: boolean;
   onChange(viewDate: Date): void;
   onNextMonth?(): void;
   onPrevMonth?(): void;
 }
+
+export const getYears = (currentYear: number, range: number) => {
+  const years: CustomSelectProps["options"] = [];
+
+  for (let i = currentYear - range; i <= currentYear + range; i++) {
+    years.push({ label: String(i).padStart(4, "0"), value: i });
+  }
+
+  return years;
+};
+
+export const getMonths = (locale?: Locale) => {
+  const months: CustomSelectProps["options"] = [];
+
+  for (let i = 0; i < 12; i++) {
+    months.push({
+      label: format(new Date("1970-01-01").setMonth(i), "LLLL", { locale }),
+      value: i,
+    });
+  }
+
+  return months;
+};
 
 const renderOption: CustomSelectProps["renderOption"] = ({
   option,
@@ -77,30 +100,11 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   const onYearsOpen = React.useCallback(() => setYearsOpen(true), []);
   const onYearsClose = React.useCallback(() => setYearsOpen(false), []);
 
-  const months = React.useMemo(() => {
-    const months: CustomSelectProps["options"] = [];
+  const months = React.useMemo(() => getMonths(locale), [locale]);
 
-    for (let i = 0; i < 12; i++) {
-      months.push({
-        label: format(new Date("1970-01-01").setMonth(i), "LLLL", { locale }),
-        value: i,
-      });
-    }
+  const currentYear = viewDate.getFullYear();
 
-    return months;
-  }, [locale]);
-
-  const years = React.useMemo(() => {
-    format(viewDate, "yyyy", { locale });
-    const years: CustomSelectProps["options"] = [];
-    const currentYear = viewDate.getFullYear();
-
-    for (let i = currentYear - 100; i < currentYear + 100; i++) {
-      years.push({ label: String(i).padStart(4, "0"), value: i });
-    }
-
-    return years;
-  }, [locale, viewDate]);
+  const years = React.useMemo(() => getYears(currentYear, 100), [currentYear]);
 
   return (
     <div vkuiClass="CalendarHeader">
@@ -108,7 +112,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
         <Tappable
           vkuiClass={classNames(
             "CalendarHeader__nav-icon",
-            "CalendarHeader__nav-icon-left"
+            "CalendarHeader__nav-icon-prev"
           )}
           onClick={onPrevMonth}
         >
@@ -162,7 +166,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
         <Tappable
           vkuiClass={classNames(
             "CalendarHeader__nav-icon",
-            "CalendarHeader__nav-icon-right"
+            "CalendarHeader__nav-icon-next"
           )}
           onClick={onNextMonth}
         >
