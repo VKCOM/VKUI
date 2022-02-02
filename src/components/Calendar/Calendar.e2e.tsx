@@ -9,8 +9,7 @@ describe("Calendar", () => {
     [
       {
         value: [new Date("1970-05-05")],
-        disablePast: [true, false],
-        disableFuture: [true, false],
+        shouldDisableDate: [undefined, () => true],
       },
       {
         value: [new Date("1970-05-05")],
