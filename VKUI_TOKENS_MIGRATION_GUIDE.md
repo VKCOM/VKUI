@@ -69,7 +69,6 @@ vkui-tokens — новый набор токенов. Он контролиру�
 .Button {
   background: #2d81e0; /* Автоматически сгенерированный фоллбэк, который берется из светлой темы */
   background: var(--button_primary_background);
-  /*...*/
 }
 
 .Button--ios {
@@ -92,7 +91,7 @@ import { AppRoot, ConfigProvider, Button } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
 
 ReactDOM.render(
-  <ConfigProvider platform="vkcom">
+  <ConfigProvider platform="vkcom" appearance="light">
     <AppRoot>
       <Button />
     </AppRoot>
@@ -109,7 +108,6 @@ ReactDOM.render(
 .Button {
   background: #2d81e0; /* Автоматически сгенерированный фоллбэк, который берется из светлой темы */
   background: var(--button_primary_background);
-  /*...*/
 }
 
 .Button--ios {
@@ -136,7 +134,7 @@ import "@vkontakte/vkui/dist/components.css";
 import "path/to/my/appearance/tokens.css"; // Добавляем свои значения токенов
 
 ReactDOM.render(
-  <ConfigProvider platform="vkcom" appearance="dark">
+  <ConfigProvider platform="vkcom" appearance="dark" scheme="inherit">
     <AppRoot>
       <Button />
     </AppRoot>
@@ -145,7 +143,7 @@ ReactDOM.render(
 );
 ```
 
-То есть Appearance позволяет кастомизировать внешний вид компонентов, но только цветовую часть.
+То есть Appearance позволяет кастомизировать внешний вид компонентов, но только их цветовую часть.
 
 ## Внедрение vkui-tokens
 
@@ -176,6 +174,8 @@ ReactDOM.render(
 }
 ```
 
+`vkui.css` получится таким:
+
 ```css
 /* vkui.css */
 
@@ -191,15 +191,26 @@ ReactDOM.render(
 }
 
 :root,
-.vkuiandroid {
+.vkui--vkBase--light {
   --vkui--size_border_radius--regular: 8px;
 }
 
-.vkuiios {
+.vkui--vkBase--dark {
+  --vkui--size_border_radius--regular: 8px;
+}
+
+.vkui--vkIOS--light {
   --vkui--size_border_radius--regular: 10px;
 }
 
-.vkuivkcom {
+.vkui--vkIOS--dark {
+  --vkui--size_border_radius--regular: 10px;
+}
+
+.vkui--vkCom--light {
+  --vkui--size_border_radius--regular: 4px;
+}
+.vkui--vkCom--dark {
   --vkui--size_border_radius--regular: 4px;
 }
 
@@ -211,14 +222,13 @@ ReactDOM.render(
   );
   border-radius: 8px; /* Автоматически сгенерированный фоллбэк, который берется из платформы android */
   border-radius: var(--vkui--size_border_radius--regular);
-  /*...*/
 }
 ```
 
 Заметьте, что в `vkui.css` сохранились значения токенов Appearance, а значений vkui-tokens нет, но есть
-только ссылки на них в css-правилах.
+только ссылки на них в css-правилах. Это сделано для обратной совместимости.
 
-В components.css остаются только фоллбэки. Нет ни значений Appearance токенов, ни vkui-tokens
+В components.css нет ни значений Appearance токенов, ни vkui-tokens.
 
 ```css
 /* components.css */
@@ -230,11 +240,30 @@ ReactDOM.render(
   );
   border-radius: 8px; /* Автоматически сгенерированный фоллбэк, который берется из платформы android */
   border-radius: var(--vkui--size_border_radius--regular);
-  /*...*/
 }
 ```
 
-Пример использования для Appearance остаётся прежним.
+Для тех, кто пользуется `vkui.css` пример использования остаётся прежним.
+
+Для тех, кто пользуется `components.css` и кастомную тему, основанную на Appearance, пример меняется:
+
+```jsx
+import { AppRoot, ConfigProvider, Button } from "@vkontakte/vkui";
+/*
+ * Так как часть компонентов переведены на vkui-tokens, необходимо импортировать их значения.
+ */
+import "@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css";
+import "path/to/my/appearance/tokens.css"; // Добавляем свои значения токенов
+
+ReactDOM.render(
+  <ConfigProvider platform="vkcom" appearance="dark" scheme="inherit">
+    <AppRoot>
+      <Button />
+    </AppRoot>
+  </ConfigProvider>,
+  root
+);
+```
 
 Для того чтобы использовать VKUI и vkui-tokens необходимо внести следующие изменения:
 
@@ -254,9 +283,15 @@ ReactDOM.render(
 );
 ```
 
+#### Чеклист перевода компонента на vkui-tokens
+
+- В стилях компонента не осталось платформенных селекторов типа `.Button--ios`, `.Button--vkcom`, `.Button--android`
+- В tsx компонента не осталось логики, которая зависит от платформы
+- Компонент добавлен в src/tokenized/index.ts
+
 ### После отказа от Appearance
 
-После отказа от Appearance останутся только токены из vkui-tokens.
+В следующей мажорной версии мы откажемся от Appearance. После отказа останутся только токены из vkui-tokens.
 
 ```css
 /* Button.css */
@@ -278,7 +313,6 @@ ReactDOM.render(
   background: var(--vkui--color_background_accent);
   border-radius: 8px; /* Автоматически сгенерированный фоллбэк, который берется из платформы android */
   border-radius: var(--vkui--size_border_radius--regular);
-  /*...*/
 }
 ```
 
