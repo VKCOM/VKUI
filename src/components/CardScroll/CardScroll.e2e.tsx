@@ -13,13 +13,7 @@ describe("CardScroll", () => {
     (props: CardScrollProps) => <CardScroll {...props}>{items}</CardScroll>,
     [
       {
-        size: ["s"],
-      },
-      {
-        size: ["m"],
-      },
-      {
-        size: ["l"],
+        size: ["s", "m", "l"],
       },
     ]
   );
