@@ -42,12 +42,16 @@
 }
 
 /**
- * Android & VKCOM
+ * VKCOM
  */
 
 .CardScroll--vkcom:is(.CardScroll--withSpaces) .CardScroll__gap {
   width: 16px;
 }
+
+/**
+ * Android
+ */
 
 .CardScroll--android:is(.CardScroll--withSpaces) .CardScroll__gap {
   width: var(--vkui--size_base_padding_horizontal--regular, 16px);
