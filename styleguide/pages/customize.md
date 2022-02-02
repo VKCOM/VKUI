@@ -8,7 +8,7 @@
 
 Пример использования:
 
-```jsx
+```jsx static
 import { AppRoot, ConfigProvider, Button } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
 
@@ -44,7 +44,7 @@ ReactDOM.render(
 
 Пример использования:
 
-```jsx
+```jsx static
 import { AppRoot, ConfigProvider, Button } from "@vkontakte/vkui";
 /*
  * В components.css уже нет значений токенов из Appearance. Предполагается, что
