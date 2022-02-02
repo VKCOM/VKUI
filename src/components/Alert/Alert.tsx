@@ -15,7 +15,10 @@ import Title from "../Typography/Title/Title";
 import Caption from "../Typography/Caption/Caption";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
-import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
+import {
+  AdaptivityContextInterface,
+  AdaptivityProps,
+} from "../AdaptivityProvider/AdaptivityContext";
 import "./Alert.css";
 
 export type AlertActionInterface = AlertAction &
@@ -31,13 +34,15 @@ export interface AlertAction extends Pick<ButtonProps, "Component" | "href"> {
 export interface AlertProps
   extends React.HTMLAttributes<HTMLElement>,
     HasPlatform,
-    AdaptivityContextInterface {
+    AdaptivityProps {
   actionsLayout?: "vertical" | "horizontal";
   actions?: AlertAction[];
   header?: React.ReactNode;
   text?: React.ReactNode;
   onClose?: VoidFunction;
 }
+
+export type TAlertProps = AlertProps & AdaptivityContextInterface;
 
 export interface AlertState {
   closing: boolean;
@@ -47,8 +52,8 @@ type TransitionEndHandler = (e?: TransitionEvent) => void;
 
 type ItemClickHander = (item: AlertActionInterface) => () => void;
 
-class Alert extends React.Component<AlertProps, AlertState> {
-  constructor(props: AlertProps) {
+class Alert extends React.Component<TAlertProps, AlertState> {
+  constructor(props: TAlertProps) {
     super(props);
     this.element = React.createRef();
     this.state = {
@@ -60,7 +65,7 @@ class Alert extends React.Component<AlertProps, AlertState> {
 
   private transitionFinishTimeout: number | undefined = undefined;
 
-  static defaultProps: Partial<AlertProps> = {
+  static defaultProps: Partial<TAlertProps> = {
     actionsLayout: "horizontal",
     actions: [],
   };
@@ -238,7 +243,7 @@ class Alert extends React.Component<AlertProps, AlertState> {
     } = this.props;
     const { closing } = this.state;
 
-    const resolvedActionsLayout: AlertProps["actionsLayout"] =
+    const resolvedActionsLayout: TAlertProps["actionsLayout"] =
       platform === VKCOM ? "horizontal" : actionsLayout;
     const canShowCloseButton =
       platform === VKCOM ||
@@ -280,9 +285,10 @@ class Alert extends React.Component<AlertProps, AlertState> {
   }
 }
 
-// eslint-disable-next-line import/no-default-export
-export default withPlatform(
+const AlertWithPlatformAndAdaptivity = withPlatform(
   withAdaptivity(Alert, {
     viewWidth: true,
   })
 );
+
+export { AlertWithPlatformAndAdaptivity as Alert };

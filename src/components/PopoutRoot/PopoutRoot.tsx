@@ -7,20 +7,23 @@ import {
 } from "../../hoc/withAdaptivity";
 import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { blurActiveElement, useDOM } from "../../lib/dom";
-import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
+import {
+  AdaptivityContextInterface,
+  AdaptivityProps,
+} from "../AdaptivityProvider/AdaptivityContext";
 import "./PopoutRoot.css";
 
 export interface PopoutRootProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    AdaptivityContextInterface,
+    AdaptivityProps,
     HasRootRef<HTMLDivElement> {
   popout?: React.ReactNode;
   modal?: React.ReactNode;
 }
 
-export const PopoutRootComponent: React.FC<PopoutRootProps> = (
-  props: PopoutRootProps
-) => {
+export const PopoutRootComponent: React.FC<
+  PopoutRootProps & AdaptivityContextInterface
+> = (props) => {
   const {
     popout,
     modal,

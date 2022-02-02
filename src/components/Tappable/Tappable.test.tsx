@@ -5,7 +5,7 @@ import { baselineComponent } from "../../testing/utils";
 import Tappable, { TappableProps } from "./Tappable";
 import { ANDROID } from "../../lib/platform";
 import { act } from "react-dom/test-utils";
-import AdaptivityProvider from "../AdaptivityProvider/AdaptivityProvider";
+import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 
 const TappableTest = (props: TappableProps) => (
   <Tappable data-testid="tappable" {...props} />

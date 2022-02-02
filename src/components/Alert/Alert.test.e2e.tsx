@@ -1,4 +1,4 @@
-import Alert, { AlertProps, AlertAction } from "./Alert";
+import { Alert, AlertProps, AlertAction } from "./Alert";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { VKCOM, ANDROID, IOS } from "../../lib/platform";
 

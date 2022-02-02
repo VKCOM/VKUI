@@ -2,13 +2,14 @@ import * as React from "react";
 import NativeSelect from "../NativeSelect/NativeSelect";
 import CustomSelect, { CustomSelectProps } from "../CustomSelect/CustomSelect";
 import { withAdaptivity } from "../../hoc/withAdaptivity";
-import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
+import {
+  AdaptivityContextInterface,
+  AdaptivityProps,
+} from "../AdaptivityProvider/AdaptivityContext";
 
-export interface SelectProps
-  extends CustomSelectProps,
-    AdaptivityContextInterface {}
+export interface SelectProps extends CustomSelectProps, AdaptivityProps {}
 
-const Select: React.FunctionComponent<SelectProps> = ({
+const Select: React.FC<SelectProps & AdaptivityContextInterface> = ({
   hasMouse,
   ...props
 }: SelectProps) => {
