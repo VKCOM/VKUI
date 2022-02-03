@@ -18,6 +18,7 @@ describe("Calendar", () => {
       {
         value: [new Date("1970-05-05")],
         enableTime: [true, false],
+        doneButtonText: [undefined, "Done"],
       },
     ]
   );

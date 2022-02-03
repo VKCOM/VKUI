@@ -25,6 +25,7 @@ export interface DateInputProps
       | "shouldDisableDate"
       | "onChange"
       | "value"
+      | "doneButtonText"
     > {
   calendarPlacement?: Placement;
 }
@@ -56,6 +57,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
       onFocus,
       style,
       className,
+      doneButtonText,
       ...props
     },
     ref
@@ -174,6 +176,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
                 locale={locale}
                 onClose={closeCalendar}
                 ref={calendarRef}
+                doneButtonText={doneButtonText}
               />
             </FocusTrap>
           </Popper>

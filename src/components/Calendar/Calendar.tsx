@@ -17,6 +17,7 @@ export interface CalendarProps
   disablePast?: boolean;
   disableFuture?: boolean;
   enableTime?: boolean;
+  doneButtonText?: string;
   onChange?(value?: Date): void;
   shouldDisableDate?(value: Date): boolean;
   onClose?(): void;
@@ -33,6 +34,7 @@ export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
       shouldDisableDate,
       onClose,
       enableTime = false,
+      doneButtonText,
       ...props
     },
     ref
@@ -74,7 +76,12 @@ export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
         />
         {enableTime && value && (
           <div vkuiClass="Calendar__time">
-            <CalendarTime value={value} onChange={onChange} onClose={onClose} />
+            <CalendarTime
+              value={value}
+              onChange={onChange}
+              onClose={onClose}
+              doneButtonText={doneButtonText}
+            />
           </div>
         )}
       </div>

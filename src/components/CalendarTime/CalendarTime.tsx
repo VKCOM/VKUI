@@ -7,6 +7,7 @@ import "./CalendarTime.css";
 
 export interface CalendarTimeProps {
   value: Date;
+  doneButtonText?: string;
   onChange?(value: Date): void;
   onClose?(): void;
 }
@@ -23,6 +24,7 @@ for (let i = 0; i < 60; i += 1) {
 
 export const CalendarTime: React.FC<CalendarTimeProps> = ({
   value,
+  doneButtonText = "Готово",
   onChange,
   onClose,
 }) => {
@@ -63,7 +65,7 @@ export const CalendarTime: React.FC<CalendarTimeProps> = ({
           onClick={onClose}
           size="l"
         >
-          Готово
+          {doneButtonText}
         </Button>
       </div>
     </div>
