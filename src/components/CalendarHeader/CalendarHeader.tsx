@@ -4,6 +4,7 @@ import Tappable from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
 import CustomSelect, { CustomSelectProps } from "../CustomSelect/CustomSelect";
 import CustomSelectOption from "../CustomSelectOption/CustomSelectOption";
+import { SizeType } from "../../hoc/withAdaptivity";
 import "./CalendarHeader.css";
 
 export interface CalendarHeaderProps {
@@ -136,6 +137,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
           renderOption={renderOption}
           dropdownOffsetDistance={8}
           fixDropdownWidth={false}
+          sizeY={SizeType.COMPACT}
           icon={
             <div vkuiClass="CalendarHeader__picker-icon">
               {monthsOpen ? selectIconOpen : selectIconClose}
@@ -151,6 +153,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
           options={years}
           dropdownOffsetDistance={8}
           fixDropdownWidth={false}
+          sizeY={SizeType.COMPACT}
           icon={
             <div vkuiClass="CalendarHeader__picker-icon">
               {yearsOpen ? selectIconOpen : selectIconClose}
