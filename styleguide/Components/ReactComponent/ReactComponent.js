@@ -38,6 +38,7 @@ const ReactComponent = ({ component, exampleMode }) => {
         {visibleName}{" "}
         {tokenized.includes(visibleName) && (
           <TextTooltip
+            placement="right"
             text={
               <React.Fragment>
                 Компонент поддерживает{" "}
