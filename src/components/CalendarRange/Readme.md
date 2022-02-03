@@ -39,6 +39,7 @@ const Example = () => {
               </FormItem>
               <FormItem top="Локаль">
                 <Select
+                  style={{ width: 100 }}
                   value={locale}
                   onChange={(e) => setLocale(e.target.value)}
                   options={[
