@@ -13,6 +13,7 @@ jobs:
           type: now
           from_branch: master
           target_branch: ${{ github.event.pull_request.head.ref }}
+          # We can't use GITHUB_TOKEN because it doesn't trigger check's rerun
           github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
   test:
     runs-on: ubuntu-latest
