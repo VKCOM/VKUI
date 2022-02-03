@@ -7,6 +7,8 @@ import { SectionSubheading } from "../SectionSubheading/SectionSubheading";
 import { Caption, Link } from "@vkui";
 import pkg from "../../../package.json";
 import "./ReactComponent.css";
+import { tokenized } from "../../tokenized";
+import { TextTooltip } from "@vkui/components/TextTooltip/TextTooltip";
 
 const ReactComponent = ({ component, exampleMode }) => {
   const { name, visibleName, pathLine } = component;
@@ -15,6 +17,8 @@ const ReactComponent = ({ component, exampleMode }) => {
   const showPropsPlaceholder =
     process.env.NODE_ENV === "development" &&
     process.env.VKUI_STYLEGUIDE_PROPSPARSER !== 1;
+
+  console.log(tokenized.includes(visibleName));
 
   return (
     <div className="ReactComponent">
@@ -31,7 +35,29 @@ const ReactComponent = ({ component, exampleMode }) => {
         </Caption>
       </Link>
       <Heading level={1} className="ReactComponent__name">
-        {visibleName}
+        {visibleName}{" "}
+        {tokenized.includes(visibleName) && (
+          <TextTooltip
+            text={
+              <React.Fragment>
+                Компонент поддерживает{" "}
+                <Link
+                  target="_blank"
+                  href="https://github.com/VKCOM/vkui-tokens"
+                >
+                  vkui-tokens
+                </Link>
+              </React.Fragment>
+            }
+          >
+            <img
+              className="ReactComponent__tokenized"
+              width={20}
+              alt="Компонент поддерживает vkui-tokens"
+              src={require("../../assets/static/tokenized.png")}
+            />
+          </TextTooltip>
+        )}
       </Heading>
       {description && <Markdown text={description} />}
       {examples.length > 0 && (
