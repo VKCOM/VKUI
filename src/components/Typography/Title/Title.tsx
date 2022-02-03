@@ -9,7 +9,15 @@ import "./Title.css";
 export interface TitleProps
   extends React.AllHTMLAttributes<HTMLElement>,
     HasComponent {
-  weight: "heavy" | "bold" | "semibold" | "medium" | "regular";
+  weight?:
+    | "heavy"
+    | "bold"
+    | "semibold"
+    | "medium"
+    | "regular"
+    | "1"
+    | "2"
+    | "3";
   level: "1" | "2" | "3";
 }
 
@@ -17,7 +25,7 @@ const warn = warnOnce("Title");
 
 const Title: React.FC<TitleProps> = ({
   children,
-  weight = "semibold",
+  weight,
   level = "1",
   Component,
   ...restProps
@@ -29,8 +37,10 @@ const Title: React.FC<TitleProps> = ({
   }
 
   if (process.env.NODE_ENV === "development") {
-    if (["heavy", "bold"].includes(level))
-      warn(`Начертание "${level}" устарело и будет удалено в 5.0.0`);
+    if (["heavy", "bold", "semibold", "medium", "regular"].includes(level))
+      warn(
+        `Начертание "${level}" устарело и будет удалено в 5.0.0. Используйте значения "1", "2" и "3"`
+      );
   }
 
   return (

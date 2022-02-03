@@ -29,7 +29,7 @@ const SearchPlaceholderTypography: React.FC<{ platform?: Platform }> = ({
   switch (platform) {
     case IOS:
       return (
-        <Title vkuiClass="Search__placeholder-text" level="3" weight="regular">
+        <Title vkuiClass="Search__placeholder-text" level="3" weight="1">
           {children}
         </Title>
       );

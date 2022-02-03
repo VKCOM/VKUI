@@ -88,7 +88,7 @@ const BannerHeader: React.FC<BannerTypographyProps> = ({
   ...restProps
 }) => {
   return size === "m" ? (
-    <Title level="2" weight="medium" {...restProps} />
+    <Title level="2" weight="2" {...restProps} />
   ) : (
     <Headline weight="medium" {...restProps} />
   );

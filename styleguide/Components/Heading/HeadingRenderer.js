@@ -8,7 +8,7 @@ const HeadingRenderer = ({ level, children, className }) => {
       return (
         <Title
           className={classNames("Heading", "Heading--1", className)}
-          weight="semibold"
+          weight="3"
           level="1"
         >
           {children}
@@ -18,7 +18,7 @@ const HeadingRenderer = ({ level, children, className }) => {
       return (
         <Title
           className={classNames("Heading", "Heading--2", className)}
-          weight="medium"
+          weight="2"
           level="2"
         >
           {children}

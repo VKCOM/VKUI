@@ -65,7 +65,7 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = (
       if (platform === ANDROID) {
         return <Headline weight="medium" {...restProps} />;
       }
-      return <Title level="3" weight="medium" {...restProps} />;
+      return <Title level="3" weight="2" {...restProps} />;
     case "m":
       if (isCompact) {
         return (

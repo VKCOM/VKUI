@@ -18,14 +18,14 @@
 
 ```jsx { "props": { "layout": false, "iframe": false } }
 <div style={{ padding: 20 }}>
-  <Title level="3" weight="regular" style={{ marginBottom: 16 }}>
-    Title 3 Regular
+  <Title level="3" weight="1" style={{ marginBottom: 16 }}>
+    Title 3 weight 1
   </Title>
-  <Title level="3" weight="medium" style={{ marginBottom: 16 }}>
-    Title 3 Medium
+  <Title level="3" weight="2" style={{ marginBottom: 16 }}>
+    Title 3 weight 2
   </Title>
-  <Title level="3" weight="semibold">
-    Title 3 Bold
+  <Title level="3" weight="3">
+    Title 3 weight 3
   </Title>
 </div>
 ```

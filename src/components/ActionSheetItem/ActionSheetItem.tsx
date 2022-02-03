@@ -124,7 +124,7 @@ const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
                 </Headline>
               ) : (
                 <Title
-                  weight={mode === "cancel" ? "medium" : "regular"}
+                  weight={mode === "cancel" ? "2" : "1"}
                   level={isCompact || hasReactNode(before) ? "3" : "2"}
                   vkuiClass="ActionSheetItem__children"
                 >
@@ -138,7 +138,7 @@ const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
                   </Headline>
                 ) : (
                   <Title
-                    weight="regular"
+                    weight="1"
                     level={isCompact || hasReactNode(before) ? "3" : "2"}
                     vkuiClass="ActionSheetItem__meta"
                   >

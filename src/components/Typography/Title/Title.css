@@ -24,27 +24,39 @@
   /*letter-spacing: var(--vkui--font_title3--letter_spacing--regular);*/
 }
 
+/**
+ * TODO удалить `.Title--w-regular` перед релизом 5.0.0
+ */
+.Title--w-1,
 .Title--w-regular {
   font-weight: var(--vkui--font_weight_accent1);
 }
 
+/**
+ * TODO удалить `.Title--w-medium` перед релизом 5.0.0
+ */
+.Title--w-2,
 .Title--w-medium {
   font-weight: var(--vkui--font_weight_accent2);
 }
 
+/**
+ * TODO удалить `.Title--w-semibold` перед релизом 5.0.0
+ */
+.Title--w-3,
 .Title--w-semibold {
   font-weight: var(--vkui--font_weight_accent3);
 }
 
 /**
- * TODO удалять перед релизом 5.0.0
+ * TODO удалить перед релизом 5.0.0
  */
 .Title--w-bold {
   font-weight: 700;
 }
 
 /**
- * TODO удалять перед релизом 5.0.0
+ * TODO удалить перед релизом 5.0.0
  */
 .Title--w-heavy {
   font-weight: 800;
