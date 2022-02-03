@@ -13,8 +13,9 @@ import {
   SizeType,
   withAdaptivity,
 } from "../../hoc/withAdaptivity";
-import { Platform, IOS, VKCOM } from "../../lib/platform";
+import { Platform, IOS, VKCOM, ANDROID } from "../../lib/platform";
 import Spinner from "../Spinner/Spinner";
+import Headline from "../Typography/Headline/Headline";
 import "./Button.css";
 
 export interface VKUIButtonProps extends HasAlign {
@@ -61,7 +62,9 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = (
       if (isCompact) {
         return <Text weight="medium" {...restProps} />;
       }
-
+      if (platform === ANDROID) {
+        return <Headline weight="medium" {...restProps} />;
+      }
       return <Title level="3" weight="medium" {...restProps} />;
     case "m":
       if (isCompact) {

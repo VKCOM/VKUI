@@ -97,11 +97,7 @@ export const ModalCardBase = withAdaptivity<
             <div vkuiClass="ModalCardBase__icon">{icon}</div>
           )}
           {hasReactNode(header) && (
-            <Title
-              level="2"
-              weight="semibold"
-              vkuiClass="ModalCardBase__header"
-            >
+            <Title level="2" weight="medium" vkuiClass="ModalCardBase__header">
               {header}
             </Title>
           )}
