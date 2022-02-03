@@ -14,17 +14,11 @@
 }
 
 .CalendarDay--selection-start.CalendarDay--selected {
-  border-bottom-left-radius: 8px;
-  border-top-left-radius: 8px;
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
+  border-radius: 8px 0 0 8px;
 }
 
 .CalendarDay--selection-end.CalendarDay--selected {
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-  border-bottom-right-radius: 8px;
-  border-top-right-radius: 8px;
+  border-radius: 0 8px 8px 0;
 }
 
 .CalendarDay__hidden {
