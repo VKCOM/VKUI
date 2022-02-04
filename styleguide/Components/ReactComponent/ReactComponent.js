@@ -18,8 +18,6 @@ const ReactComponent = ({ component, exampleMode }) => {
     process.env.NODE_ENV === "development" &&
     process.env.VKUI_STYLEGUIDE_PROPSPARSER !== 1;
 
-  console.log(tokenized.includes(visibleName));
-
   return (
     <div className="ReactComponent">
       <Link
