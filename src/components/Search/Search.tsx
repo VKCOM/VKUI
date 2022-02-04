@@ -7,7 +7,7 @@ import {
   Icon16Clear,
   Icon24Cancel,
 } from "@vkontakte/icons";
-import { IOS, Platform, VKCOM, ANDROID } from "../../lib/platform";
+import { IOS, VKCOM, ANDROID } from "../../lib/platform";
 import { HasPlatform, HasRef } from "../../types";
 import { Touch, TouchEvent } from "../Touch/Touch";
 import { VKUITouchEvent } from "../../lib/touch";
@@ -22,27 +22,30 @@ import "./Search.css";
 
 export type InputRef = (element: HTMLInputElement) => void;
 
-const SearchPlaceholderTypography: React.FC<{ platform?: Platform }> = ({
-  platform,
-  children,
-}) => {
+interface SearchPlaceholderTypographyProps
+  extends HasPlatform,
+    React.HTMLAttributes<HTMLElement> {}
+
+const SearchPlaceholderTypography: React.FC<
+  SearchPlaceholderTypographyProps
+> = ({ platform, children, ...restProps }) => {
   switch (platform) {
     case IOS:
       return (
-        <Title vkuiClass="Search__placeholder-text" level="3" weight="1">
+        <Title {...restProps} level="3" weight="1">
           {children}
         </Title>
       );
     case VKCOM:
       return (
-        <Text vkuiClass="Search__placeholder-text" weight="regular">
+        <Text {...restProps} weight="regular">
           {children}
         </Text>
       );
     case ANDROID:
     default:
       return (
-        <Headline vkuiClass="Search__placeholder-text" weight="regular">
+        <Headline {...restProps} weight="regular">
           {children}
         </Headline>
       );
@@ -146,7 +149,10 @@ const Search: React.FC<SearchProps> = ({
           <div vkuiClass="Search__placeholder">
             <div vkuiClass="Search__placeholder-in">
               {before}
-              <SearchPlaceholderTypography platform={platform}>
+              <SearchPlaceholderTypography
+                vkuiClass="Search__placeholder-text"
+                platform={platform}
+              >
                 {placeholder}
               </SearchPlaceholderTypography>
             </div>
