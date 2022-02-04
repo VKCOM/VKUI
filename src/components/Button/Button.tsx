@@ -13,7 +13,7 @@ import {
   SizeType,
   withAdaptivity,
 } from "../../hoc/withAdaptivity";
-import { Platform, IOS, VKCOM, ANDROID } from "../../lib/platform";
+import { PlatformType, IOS, VKCOM, ANDROID } from "../../lib/platform";
 import Spinner from "../Spinner/Spinner";
 import Headline from "../Typography/Headline/Headline";
 import "./Button.css";
@@ -46,7 +46,7 @@ export interface ButtonProps
 
 interface ButtonTypographyProps extends HasComponent {
   size: ButtonProps["size"];
-  platform: Platform | undefined;
+  platform: PlatformType | undefined;
   sizeY: AdaptivityProps["sizeY"];
   children?: ButtonProps["children"];
 }
