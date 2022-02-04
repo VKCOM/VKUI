@@ -1,6 +1,10 @@
 .Card {
   position: relative;
-  background: var(--content_tint_background);
+  background: var(
+    --content_tint_background,
+    var(--vkui--color_background_secondary)
+  );
+  border-radius: var(--vkui--size_card_border_radius--regular);
 }
 
 .Card__in {
@@ -10,12 +14,16 @@
 }
 
 .Card--md-shadow {
-  box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.08), 0 0 2px 0 rgba(0, 0, 0, 0.08);
-  background: var(--modal_card_background);
+  box-shadow: var(
+    --vkui--elevation3,
+    0 2px 24px 0 rgba(0, 0, 0, 0.08),
+    0 0 2px 0 rgba(0, 0, 0, 0.08)
+  );
+  background: var(--modal_card_background, var(--vkui--color_background_modal));
 }
 
 .Card--md-outline {
-  background: var(--modal_card_background);
+  background: var(--modal_card_background, var(--vkui--color_background_modal));
 }
 
 .Card--md-outline::before {
@@ -26,25 +34,9 @@
   height: 100%;
   content: "";
   display: block;
-  border: var(--thin-border) solid var(--input_border);
+  border: var(--thin-border) solid
+    var(--input_border, var(--vkui--color_image_border_alpha));
   z-index: 1;
   box-sizing: border-box;
   border-radius: inherit;
-}
-
-/**
-  * iOS
- */
-
-.Card--ios {
-  border-radius: 10px;
-}
-
-/**
- * Android, VKCOM
- */
-
-.Card--android,
-.Card--vkcom {
-  border-radius: 8px;
 }
