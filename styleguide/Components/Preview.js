@@ -104,51 +104,59 @@ export default withAdaptivity(
 
             return (
               <Profiler id={exampleId} onRender={logPerf}>
-                <AppearanceProvider appearance={styleGuideContext.appearance}>
-                  <div
-                    className={classNames(
-                      "Preview",
-                      `Preview--${styleGuideContext.platform}`,
-                      { "Preview--layout": layout }
-                    )}
-                  >
+                <ConfigProvider
+                  scheme="inherit"
+                  platform={styleGuideContext.platform}
+                >
+                  <AppearanceProvider appearance={styleGuideContext.appearance}>
                     <div
-                      className="Preview__shadow"
-                      style={
-                        adaptivity
-                          ? {
-                              maxWidth: width,
-                              maxHeight: styleGuideContext.height,
-                            }
-                          : null
-                      }
-                    />
-                    <div
-                      className="Preview__in"
-                      style={
-                        adaptivity
-                          ? { height: styleGuideContext.height, width }
-                          : null
-                      }
-                    >
-                      {error ? (
-                        <PlaygroundError message={error} />
-                      ) : iframe ? (
-                        <Frame
-                          width={adaptivity && width}
-                          height={adaptivity && styleGuideContext.height}
-                          appearance={styleGuideContext.appearance}
-                        >
-                          <Config {...styleGuideContext} exampleId={exampleId}>
-                            {layout ? <Layout>{example}</Layout> : example}
-                          </Config>
-                        </Frame>
-                      ) : (
-                        example
+                      className={classNames(
+                        "Preview",
+                        `Preview--${styleGuideContext.platform}`,
+                        { "Preview--layout": layout }
                       )}
+                    >
+                      <div
+                        className="Preview__shadow"
+                        style={
+                          adaptivity
+                            ? {
+                                maxWidth: width,
+                                maxHeight: styleGuideContext.height,
+                              }
+                            : null
+                        }
+                      />
+                      <div
+                        className="Preview__in"
+                        style={
+                          adaptivity
+                            ? { height: styleGuideContext.height, width }
+                            : null
+                        }
+                      >
+                        {error ? (
+                          <PlaygroundError message={error} />
+                        ) : iframe ? (
+                          <Frame
+                            width={adaptivity && width}
+                            height={adaptivity && styleGuideContext.height}
+                            appearance={styleGuideContext.appearance}
+                          >
+                            <Config
+                              {...styleGuideContext}
+                              exampleId={exampleId}
+                            >
+                              {layout ? <Layout>{example}</Layout> : example}
+                            </Config>
+                          </Frame>
+                        ) : (
+                          example
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </AppearanceProvider>
+                  </AppearanceProvider>
+                </ConfigProvider>
               </Profiler>
             );
           }}
