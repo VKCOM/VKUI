@@ -333,6 +333,11 @@ const baseConfig = {
           name: "Design",
           content: "./pages/design.md",
         },
+        {
+          title: "Кастомизация",
+          name: "Customize",
+          content: "./pages/customize.md",
+        },
       ],
     },
   ],

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
 import Tappable, { TappableProps } from "../Tappable/Tappable";
@@ -14,7 +13,7 @@ import {
   SizeType,
   withAdaptivity,
 } from "../../hoc/withAdaptivity";
-import { Platform, IOS, VKCOM } from "../../lib/platform";
+import { IOS, VKCOM, PlatformType } from "../../lib/platform";
 import Spinner from "../Spinner/Spinner";
 import "./Button.css";
 
@@ -46,7 +45,7 @@ export interface ButtonProps
 
 interface ButtonTypographyProps extends HasComponent {
   size: ButtonProps["size"];
-  platform: Platform | undefined;
+  platform: PlatformType | undefined;
   sizeY: AdaptivityProps["sizeY"];
   children?: ButtonProps["children"];
 }
@@ -174,7 +173,7 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
       onClick={loading ? undefined : onClick}
       focusVisibleMode="outside"
       vkuiClass={classNames(
-        getClassName("Button", platform),
+        "Button",
         `Button--sz-${size}`,
         `Button--lvl-${resolvedMode}`,
         `Button--clr-${resolvedAppearance}`,

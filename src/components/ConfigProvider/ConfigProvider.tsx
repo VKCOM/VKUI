@@ -16,6 +16,7 @@ import {
   Scheme,
 } from "../../helpers/scheme";
 import { AppearanceProvider } from "../AppearanceProvider/AppearanceProvider";
+import { Platform } from "../../lib/platform";
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface {
   /**
@@ -62,7 +63,22 @@ const generateVKUITokensClassName = (
   platform: string,
   appearance: string
 ): string => {
-  return `vkui--${platform}-${appearance}`;
+  let tokensPlatform;
+  switch (platform) {
+    case Platform.ANDROID:
+      tokensPlatform = "vkBase";
+      break;
+    case Platform.IOS:
+      tokensPlatform = "vkIOS";
+      break;
+    case Platform.VKCOM:
+      tokensPlatform = "vkCom";
+      break;
+    default:
+      tokensPlatform = platform;
+  }
+
+  return `vkui--${tokensPlatform}--${appearance}`;
 };
 
 const ConfigProvider: React.FC<ConfigProviderProps> = ({
