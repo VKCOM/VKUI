@@ -15,6 +15,7 @@ import {
   ConfigProvider,
   AdaptivityProvider,
   classNames,
+  AppearanceProvider,
 } from "@vkui";
 import { Frame } from "./Frame/Frame";
 import { perfLogger } from "../utils";
@@ -44,33 +45,13 @@ let Layout = ({ children, viewWidth }) => {
 
 Layout = withAdaptivity(Layout, { viewWidth: true, sizeY: true });
 
-const Config = ({
-  platform,
-  scheme,
-  webviewType,
-  hasMouse,
-  exampleId,
-  children,
-  schemeTarget,
-  mode,
-  ...config
-}) => {
+const Config = ({ hasMouse, children, ...config }) => {
   return (
-    <Profiler id={exampleId} onRender={logPerf}>
-      <ConfigProvider
-        platform={platform}
-        scheme={scheme}
-        webviewType={webviewType}
-        schemeTarget={schemeTarget}
-        {...config}
-      >
-        <AdaptivityProvider hasMouse={hasMouse}>
-          <AppRoot mode={mode} noLegacyClasses>
-            {children}
-          </AppRoot>
-        </AdaptivityProvider>
-      </ConfigProvider>
-    </Profiler>
+    <ConfigProvider {...config}>
+      <AdaptivityProvider hasMouse={hasMouse}>
+        <AppRoot noLegacyClasses>{children}</AppRoot>
+      </AdaptivityProvider>
+    </ConfigProvider>
   );
 };
 
@@ -93,22 +74,16 @@ export default withAdaptivity(
 
     componentWillUnmount() {} // Оверрайдим методы PreviewParent
 
-    getSchemeTargetRef = (el) => {
-      this.setState({ schemeTarget: el });
-    };
-
     render() {
       const {
         code,
         layout = true,
         adaptivity = true,
         iframe = true,
-        config = {},
         exampleId,
         viewWidth,
       } = this.props;
-      const { error, schemeTarget } = this.state;
-      const ready = !!schemeTarget;
+      const { error } = this.state;
 
       return (
         <StyleGuideContext.Consumer>
@@ -122,33 +97,21 @@ export default withAdaptivity(
               />
             );
 
-            const content = (
-              <Config
-                {...styleGuideContext}
-                {...config}
-                exampleId={exampleId}
-                schemeTarget={!iframe && schemeTarget}
-                mode={iframe ? "full" : "embedded"}
-              >
-                {layout ? <Layout>{example}</Layout> : example}
-              </Config>
-            );
             const isMobile = viewWidth <= ViewWidth.MOBILE;
             const width = isMobile
               ? window.innerWidth - 32
               : styleGuideContext.width;
 
             return (
-              <div
-                ref={this.getSchemeTargetRef}
-                className={classNames(
-                  "Preview",
-                  `Preview--${styleGuideContext.platform}`,
-                  { "Preview--layout": layout }
-                )}
-              >
-                {ready && (
-                  <React.Fragment>
+              <Profiler id={exampleId} onRender={logPerf}>
+                <AppearanceProvider appearance={styleGuideContext.appearance}>
+                  <div
+                    className={classNames(
+                      "Preview",
+                      `Preview--${styleGuideContext.platform}`,
+                      { "Preview--layout": layout }
+                    )}
+                  >
                     <div
                       className="Preview__shadow"
                       style={
@@ -174,17 +137,19 @@ export default withAdaptivity(
                         <Frame
                           width={adaptivity && width}
                           height={adaptivity && styleGuideContext.height}
-                          scheme={styleGuideContext.scheme}
+                          appearance={styleGuideContext.appearance}
                         >
-                          {content}
+                          <Config {...styleGuideContext} exampleId={exampleId}>
+                            {layout ? <Layout>{example}</Layout> : example}
+                          </Config>
                         </Frame>
                       ) : (
-                        content
+                        example
                       )}
                     </div>
-                  </React.Fragment>
-                )}
-              </div>
+                  </div>
+                </AppearanceProvider>
+              </Profiler>
             );
           }}
         </StyleGuideContext.Consumer>

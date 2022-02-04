@@ -9,6 +9,7 @@ import {
 import { Icon16Dropdown } from "@vkontakte/icons";
 import "./Setting.css";
 import { StyleGuideContext } from "../StyleGuide/StyleGuideRenderer";
+import { RichTooltip } from "@vkui/components/RichTooltip/RichTooltip";
 
 export const Setting = ({
   label,
@@ -17,6 +18,7 @@ export const Setting = ({
   options,
   children,
   disabled,
+  hint,
 }) => {
   const { setPopout } = useContext(StyleGuideContext);
   const ref = useRef();
@@ -28,6 +30,8 @@ export const Setting = ({
     []
   );
 
+  const labelJsx = <span className="Setting__label">{label}:&nbsp;</span>;
+
   return (
     <Headline
       className={classNames("Setting", {
@@ -35,7 +39,16 @@ export const Setting = ({
       })}
       weight="regular"
     >
-      <span className="Setting__label">{label}:&nbsp;</span>
+      {hint ? (
+        <RichTooltip
+          placement="top"
+          content={<div style={{ padding: "8px 12px 9px" }}>{hint}</div>}
+        >
+          {labelJsx}
+        </RichTooltip>
+      ) : (
+        labelJsx
+      )}
       {Array.isArray(options) && (
         <Link
           className="Setting__value"

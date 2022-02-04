@@ -11,3 +11,8 @@
   margin-right: 16px;
   margin-bottom: 28px;
 }
+
+.Setting {
+  display: flex;
+  align-items: center;
+}
