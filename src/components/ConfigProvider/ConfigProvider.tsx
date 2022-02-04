@@ -84,7 +84,7 @@ const generateVKUITokensClassName = (
 const ConfigProvider: React.FC<ConfigProviderProps> = ({
   children,
   ...props
-}: React.PropsWithChildren<ConfigProviderProps>) => {
+}) => {
   const config = { ...defaultConfigProviderProps, ...props };
   const { platform, appearance } = config;
   const scheme = normalizeScheme({
