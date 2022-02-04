@@ -4,7 +4,7 @@
 }
 
 .CardScroll .Card {
-  margin-right: var(--vkui--size_cardgrid_padding--regular, 12px);
+  margin-right: var(--vkui--size_cardgrid_padding--regular);
   flex-shrink: 0;
 }
 
@@ -34,23 +34,7 @@
 }
 
 .CardScroll--withSpaces .CardScroll__gap {
-  width: var(--vkui--size_base_padding_horizontal--regular, 16px);
-}
-
-/**
- * iOS
- */
-
-.CardScroll--ios.CardScroll--withSpaces .CardScroll__gap {
-  width: 12px;
-}
-
-/**
- * VKCOM
- */
-
-.CardScroll--vkcom.CardScroll--withSpaces .CardScroll__gap {
-  width: 16px;
+  width: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 /**
@@ -92,9 +76,9 @@
 }
 
 .Group--card .CardScroll--withSpaces:first-child {
-  padding-top: var(--vkui--size_cardgrid_padding_vertical--regular, 8px);
+  padding-top: var(--vkui--size_cardgrid_padding_vertical--regular);
 }
 
 .Group--card .CardScroll--withSpaces:last-child {
-  padding-bottom: var(--vkui--size_cardgrid_padding_vertical--regular, 8px);
+  padding-bottom: var(--vkui--size_cardgrid_padding_vertical--regular);
 }

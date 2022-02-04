@@ -4,7 +4,7 @@
     --content_tint_background,
     var(--vkui--color_background_secondary)
   );
-  border-radius: var(--vkui--size_card_border_radius--regular, 16px);
+  border-radius: var(--vkui--size_card_border_radius--regular);
 }
 
 .Card__in {
@@ -39,20 +39,4 @@
   z-index: 1;
   box-sizing: border-box;
   border-radius: inherit;
-}
-
-/**
-  * iOS
- */
-
-.Card--ios {
-  border-radius: 10px;
-}
-
-/**
- * VKCOM
- */
-
-.Card--vkcom {
-  border-radius: 8px;
 }
