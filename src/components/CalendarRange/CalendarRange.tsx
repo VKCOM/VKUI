@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Locale, addMonths, subMonths } from "date-fns";
-import ru from "date-fns/locale/ru";
+import { addMonths, subMonths } from "date-fns";
 import { CalendarHeader } from "../CalendarHeader/CalendarHeader";
 import { CalendarDays } from "../CalendarDays/CalendarDays";
 import "./CalendarRange.css";
@@ -9,11 +8,12 @@ export interface CalendarRangeProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
   value?: Array<Date | null>;
   /**
-    Объект локализации из date-fns
+    Локаль, список -> https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
    */
-  locale?: Locale;
+  locale?: string;
   disablePast?: boolean;
   disableFuture?: boolean;
+  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   onChange?(value?: Array<Date | null>): void;
   shouldDisableDate?(value: Date): boolean;
   onClose?(): void;
@@ -27,11 +27,12 @@ export const CalendarRange = React.forwardRef<
     {
       value,
       onChange,
-      locale = ru,
+      locale = "ru",
       disablePast,
       disableFuture,
       shouldDisableDate,
       onClose,
+      weekStartsOn = 1,
       ...props
     },
     ref
@@ -66,6 +67,7 @@ export const CalendarRange = React.forwardRef<
             disablePast={disablePast}
             disableFuture={disableFuture}
             shouldDisableDate={shouldDisableDate}
+            weekStartsOn={weekStartsOn}
             range
           />
         </div>
@@ -85,6 +87,7 @@ export const CalendarRange = React.forwardRef<
             disablePast={disablePast}
             disableFuture={disableFuture}
             shouldDisableDate={shouldDisableDate}
+            weekStartsOn={weekStartsOn}
             range
           />
         </div>

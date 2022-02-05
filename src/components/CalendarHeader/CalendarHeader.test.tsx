@@ -1,4 +1,3 @@
-import ru from "date-fns/locale/ru";
 import { render } from "@testing-library/react";
 import { CalendarHeader, getYears, getMonths } from "./CalendarHeader";
 
@@ -79,7 +78,7 @@ describe("CalendarHeader", () => {
   });
   describe("getMonths", () => {
     it("returns months options", () => {
-      const result = getMonths(ru);
+      const result = getMonths("ru");
 
       expect(result).toEqual([
         {

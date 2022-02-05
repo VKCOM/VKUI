@@ -26,6 +26,7 @@ export interface DateInputProps
       | "onChange"
       | "value"
       | "doneButtonText"
+      | "weekStartsOn"
     > {
   calendarPlacement?: Placement;
 }

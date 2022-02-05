@@ -1,5 +1,3 @@
-import ru from "date-fns/locale/ru";
-import ar from "date-fns/locale/ar";
 import { Calendar, CalendarProps } from "./Calendar";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
@@ -13,7 +11,11 @@ describe("Calendar", () => {
       },
       {
         value: [new Date("1970-05-05")],
-        locale: [ru, ar],
+        locale: ["ru", "ar"],
+      },
+      {
+        value: [new Date("1970-05-05")],
+        weekStartsOn: [0, 1],
       },
       {
         value: [new Date("1970-05-05")],

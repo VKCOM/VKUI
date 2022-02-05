@@ -1,12 +1,10 @@
 import * as React from "react";
-import { Locale, format } from "date-fns";
 import { classNames } from "../../lib/classNames";
 import Tappable from "../Tappable/Tappable";
 import "./CalendarDay.css";
 
 export interface CalendarDayProps {
   day: Date;
-  locale?: Locale;
   today?: boolean;
   selected?: boolean;
   selectionStart?: boolean;
@@ -19,7 +17,6 @@ export interface CalendarDayProps {
 
 export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
   ({
-    locale,
     day,
     today,
     selected,
@@ -55,9 +52,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
             "CalendarDay__inner--active": active && !disabled,
           })}
         >
-          <div vkuiClass="CalendarDay__day-number">
-            {format(day, "d", { locale })}
-          </div>
+          <div vkuiClass="CalendarDay__day-number">{day.getDate()}</div>
         </div>
       </Tappable>
     );

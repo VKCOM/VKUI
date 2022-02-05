@@ -1,5 +1,5 @@
 import * as React from "react";
-import { format, Locale, setMonth, setYear } from "date-fns";
+import { setMonth, setYear } from "date-fns";
 import Tappable from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
 import CustomSelect, { CustomSelectProps } from "../CustomSelect/CustomSelect";
@@ -9,7 +9,7 @@ import "./CalendarHeader.css";
 
 export interface CalendarHeaderProps {
   viewDate: Date;
-  locale?: Locale;
+  locale?: string;
   prevMonth?: boolean;
   nextMonth?: boolean;
   onChange(viewDate: Date): void;
@@ -27,12 +27,15 @@ export const getYears = (currentYear: number, range: number) => {
   return years;
 };
 
-export const getMonths = (locale?: Locale) => {
+export const getMonths = (locale?: string) => {
   const months: CustomSelectProps["options"] = [];
+  const formatter = new Intl.DateTimeFormat(locale, {
+    month: "long",
+  });
 
   for (let i = 0; i < 12; i++) {
     months.push({
-      label: format(new Date("1970-01-01").setMonth(i), "LLLL", { locale }),
+      label: formatter.format(new Date("1970-01-01").setMonth(i)),
       value: i,
     });
   }

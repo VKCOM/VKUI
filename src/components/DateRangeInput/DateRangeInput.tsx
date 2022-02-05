@@ -26,6 +26,7 @@ export interface DateRangeInputProps
       | "shouldDisableDate"
       | "onChange"
       | "value"
+      | "weekStartsOn"
     > {
   calendarPlacement?: Placement;
 }

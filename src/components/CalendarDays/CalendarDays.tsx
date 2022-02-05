@@ -1,6 +1,5 @@
 import * as React from "react";
 import {
-  Locale,
   startOfWeek,
   endOfWeek,
   startOfMonth,
@@ -15,7 +14,6 @@ import {
   isAfter,
   startOfDay,
   endOfDay,
-  format,
   eachDayOfInterval,
   isWithinInterval,
 } from "date-fns";
@@ -25,17 +23,21 @@ import "./CalendarDays.css";
 export interface CalendarDaysProps {
   value?: Date | Array<Date | null>;
   viewDate: Date;
-  locale?: Locale;
+  locale?: string;
   disablePast?: boolean;
   disableFuture?: boolean;
   range?: boolean;
+  weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   onChange?(value?: Date | Array<Date | null>): void;
   shouldDisableDate?(value: Date): boolean;
 }
 
-export const getWeeks = (viewDate: Date, locale?: Locale) => {
-  const start = startOfWeek(startOfMonth(viewDate), { locale });
-  const end = endOfWeek(endOfMonth(viewDate), { locale });
+export const getWeeks = (
+  viewDate: Date,
+  weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6
+) => {
+  const start = startOfWeek(startOfMonth(viewDate), { weekStartsOn });
+  const end = endOfWeek(endOfMonth(viewDate), { weekStartsOn });
 
   let count = 0;
   let current = start;
@@ -75,20 +77,24 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
   disableFuture,
   shouldDisableDate,
   range = false,
+  weekStartsOn,
 }) => {
   const [now] = React.useState(new Date());
 
   const weeks = React.useMemo(
-    () => getWeeks(viewDate, locale),
-    [locale, viewDate]
+    () => getWeeks(viewDate, weekStartsOn),
+    [weekStartsOn, viewDate]
   );
 
   const daysNames = React.useMemo(() => {
+    const formatter = new Intl.DateTimeFormat(locale, {
+      weekday: "short",
+    });
     return eachDayOfInterval({
-      start: startOfWeek(now, { locale }),
-      end: endOfWeek(now, { locale }),
-    }).map((day) => format(day, "EEEEEE", { locale }));
-  }, [locale, now]);
+      start: startOfWeek(now, { weekStartsOn }),
+      end: endOfWeek(now, { weekStartsOn }),
+    }).map((day) => formatter.format(day));
+  }, [locale, now, weekStartsOn]);
 
   const onDayChange = React.useCallback(
     (date: Date) => {
@@ -177,7 +183,6 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
               <CalendarDay
                 key={day.toISOString()}
                 day={day}
-                locale={locale}
                 today={isSameDay(day, now)}
                 active={active}
                 onChange={onDayChange}

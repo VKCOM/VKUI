@@ -1,7 +1,6 @@
 Компонент выбора даты.
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-import * as locales from "date-fns/locale";
 import { format } from "date-fns";
 
 const Example = () => {
@@ -56,8 +55,8 @@ const Example = () => {
                       value: "ru",
                     },
                     {
-                      label: "en-US",
-                      value: "enUS",
+                      label: "en",
+                      value: "en",
                     },
                     {
                       label: "ar",
@@ -77,7 +76,7 @@ const Example = () => {
                   enableTime={enableTime}
                   disablePast={disablePast}
                   disableFuture={disableFuture}
-                  locale={locales[locale]}
+                  locale={locale}
                 />
               </FormItem>
             </FormLayoutGroup>
