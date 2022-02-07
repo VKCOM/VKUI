@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { CalendarHeader, getYears, getMonths } from "./CalendarHeader";
+import { CalendarHeader, getYears } from "./CalendarHeader";
 
 describe("CalendarHeader", () => {
   it("displays prev month button", () => {
@@ -72,62 +72,6 @@ describe("CalendarHeader", () => {
         {
           label: "2005",
           value: 2005,
-        },
-      ]);
-    });
-  });
-  describe("getMonths", () => {
-    it("returns months options", () => {
-      const result = getMonths("ru");
-
-      expect(result).toEqual([
-        {
-          label: "январь",
-          value: 0,
-        },
-        {
-          label: "февраль",
-          value: 1,
-        },
-        {
-          label: "март",
-          value: 2,
-        },
-        {
-          label: "апрель",
-          value: 3,
-        },
-        {
-          label: "май",
-          value: 4,
-        },
-        {
-          label: "июнь",
-          value: 5,
-        },
-        {
-          label: "июль",
-          value: 6,
-        },
-        {
-          label: "август",
-          value: 7,
-        },
-        {
-          label: "сентябрь",
-          value: 8,
-        },
-        {
-          label: "октябрь",
-          value: 9,
-        },
-        {
-          label: "ноябрь",
-          value: 10,
-        },
-        {
-          label: "декабрь",
-          value: 11,
         },
       ]);
     });
