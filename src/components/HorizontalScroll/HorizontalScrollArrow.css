@@ -22,7 +22,9 @@
 }
 
 .HorizontalScroll:hover .HorizontalScrollArrow:hover,
-.Gallery:hover .HorizontalScrollArrow:hover {
+.Gallery:hover .HorizontalScrollArrow:hover,
+.HorizontalScroll--withConstArrows .HorizontalScrollArrow,
+.HorizontalScroll--withConstArrows:hover .HorizontalScrollArrow {
   opacity: 1;
 }
 

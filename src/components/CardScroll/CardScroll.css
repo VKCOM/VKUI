@@ -4,7 +4,7 @@
 }
 
 .CardScroll .Card {
-  margin-right: 8px;
+  margin-right: var(--vkui--size_cardgrid_padding--regular);
   flex-shrink: 0;
 }
 
@@ -33,33 +33,20 @@
   width: 100%;
 }
 
-/**
- * iOS
- */
-
-.CardScroll--ios .CardScroll__gap {
-  width: 12px;
-}
-
-/**
- * Android & VKCOM
- */
-
-.CardScroll--android .CardScroll__gap,
-.CardScroll--vkcom .CardScroll__gap {
-  width: 16px;
+.CardScroll--withSpaces .CardScroll__gap {
+  width: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 /**
  * SplitCol
  */
 
-.SplitCol--spaced .CardScroll {
+.SplitCol--spaced .CardScroll--withSpaces .CardScroll {
   margin-left: -16px;
   margin-right: -16px;
 }
 
-.SplitCol--spaced .CardScroll__gap {
+.SplitCol--spaced .CardScroll--withSpaces .CardScroll__gap {
   width: 16px;
 }
 
@@ -75,7 +62,7 @@
  * Group
  */
 
-.Group--card .CardScroll {
+.Group--card .CardScroll--withSpaces {
   margin-left: -8px;
   margin-right: -8px;
 }
@@ -88,10 +75,10 @@
   margin-right: 16px;
 }
 
-.Group--card .CardScroll:first-child {
-  padding-top: 8px;
+.Group--card .CardScroll--withSpaces:first-child {
+  padding-top: var(--vkui--size_cardgrid_padding_vertical--regular);
 }
 
-.Group--card .CardScroll:last-child {
-  padding-bottom: 8px;
+.Group--card .CardScroll--withSpaces:last-child {
+  padding-bottom: var(--vkui--size_cardgrid_padding_vertical--regular);
 }
