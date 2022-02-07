@@ -37,31 +37,3 @@
 .CalendarHeader__month_name {
   text-transform: capitalize;
 }
-
-.CalendarHeader__pickers .Select__container {
-  padding: 0 4px 0 8px;
-}
-
-.CalendarHeader__pickers .FormField__after {
-  justify-content: flex-start;
-  min-width: 0;
-  height: auto;
-}
-
-.CalendarHeader__pickers .Select--mimicry {
-  padding: 8px 8px 8px 0;
-  text-transform: capitalize;
-  border-radius: 8px;
-}
-
-.CalendarHeader__pickers .vkuiCustomSelect .FormField__border--hover,
-.CalendarHeader__pickers
-  .CustomSelect__open.Select--mimicry:focus
-  .FormField__border {
-  background-color: #ebedf0;
-}
-
-.CalendarHeader__pickers .FormField__border {
-  background-color: white;
-  border: none;
-}

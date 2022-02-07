@@ -2,7 +2,10 @@ import * as React from "react";
 import { setMonth, setYear } from "date-fns";
 import Tappable from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
-import CustomSelect, { CustomSelectProps } from "../CustomSelect/CustomSelect";
+import CustomSelect, {
+  CustomSelectProps,
+  SelectType,
+} from "../CustomSelect/CustomSelect";
 import CustomSelectOption from "../CustomSelectOption/CustomSelectOption";
 import { SizeType } from "../../hoc/withAdaptivity";
 import "./CalendarHeader.css";
@@ -150,6 +153,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
           onClose={onMonthsClose}
           onChange={onMonthsChange}
           forceDropdownPortal={false}
+          selectType={SelectType.Plain}
         />
         <CustomSelect
           value={viewDate.getFullYear()}
@@ -166,6 +170,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
           onClose={onYearsClose}
           onChange={onYearChange}
           forceDropdownPortal={false}
+          selectType={SelectType.Plain}
         />
       </div>
       {nextMonth && (

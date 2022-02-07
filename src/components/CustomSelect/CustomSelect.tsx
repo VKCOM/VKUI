@@ -62,6 +62,11 @@ const checkOptionsValueType = (options: CustomSelectOptionInterface[]) => {
 
 type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>["value"];
 
+export enum SelectType {
+  Default = "default",
+  Plain = "plain",
+}
+
 export interface CustomSelectOptionInterface {
   value: SelectValue;
   label: string;
@@ -139,6 +144,7 @@ export interface CustomSelectProps
   dropdownOffsetDistance?: number;
   fixDropdownWidth?: boolean;
   forceDropdownPortal?: boolean;
+  selectType?: SelectType;
 }
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
@@ -158,6 +164,7 @@ class CustomSelect extends React.Component<
     icon: <DropdownIcon />,
     dropdownOffsetDistance: 0,
     fixDropdownWidth: true,
+    selectType: SelectType.Default,
   };
 
   public constructor(props: CustomSelectProps) {

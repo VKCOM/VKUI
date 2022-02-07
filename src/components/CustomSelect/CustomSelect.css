@@ -38,3 +38,23 @@
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+.Select--mimicry-plain {
+  padding: 8px 8px 8px 0;
+  text-transform: capitalize;
+  border-radius: 8px;
+}
+
+.CustomSelect__open.Select--mimicry-plain.Select--mimicry:focus
+  .FormField__border {
+  background-color: #f5f5f5;
+}
+
+.FormField:not(.FormField--disabled) .FormField__border--hover {
+  background-color: #f0f0f0;
+}
+
+.Select--mimicry-plain .FormField__border {
+  background-color: white;
+  border: none;
+}

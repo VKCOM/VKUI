@@ -117,3 +117,10 @@
 .ModalCardBase__subheader + .FormField {
   margin-top: 16px;
 }
+
+.Select--mimicry-plain .FormField__after,
+.Select--mimicry-plain .FormField--sizeY-compact .FormField__after {
+  justify-content: flex-start;
+  min-width: 0;
+  height: auto;
+}
