@@ -43,7 +43,7 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = ({
 
 export const PanelHeaderButton: React.FC<PanelHeaderButtonProps> = ({
   children,
-  primary,
+  primary = false,
   label,
   ...restProps
 }: PanelHeaderButtonProps) => {
@@ -93,9 +93,4 @@ export const PanelHeaderButton: React.FC<PanelHeaderButtonProps> = ({
       )}
     </Tappable>
   );
-};
-
-PanelHeaderButton.defaultProps = {
-  primary: false,
-  "aria-label": "Закрыть",
 };
