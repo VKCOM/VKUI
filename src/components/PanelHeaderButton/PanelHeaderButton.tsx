@@ -2,8 +2,9 @@ import * as React from "react";
 import Tappable, { TappableProps } from "../Tappable/Tappable";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
+import { warnOnce } from "../../lib/warnOnce";
 import { usePlatform } from "../../hooks/usePlatform";
-import { isPrimitiveReactNode } from "../../lib/utils";
+import { getTitleFromChildren, isPrimitiveReactNode } from "../../lib/utils";
 import { IOS, VKCOM, ANDROID } from "../../lib/platform";
 import Text from "../Typography/Text/Text";
 import Title from "../Typography/Title/Title";
@@ -41,6 +42,7 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = ({
   );
 };
 
+const warn = warnOnce("PanelHeaderButton");
 export const PanelHeaderButton: React.FC<PanelHeaderButtonProps> = ({
   children,
   primary = false,
@@ -66,6 +68,19 @@ export const PanelHeaderButton: React.FC<PanelHeaderButtonProps> = ({
     case VKCOM:
       hoverMode = "PanelHeaderButton--hover";
       activeMode = "PanelHeaderButton--active";
+  }
+
+  const hasAccessibleName = Boolean(
+    getTitleFromChildren(children) ||
+      getTitleFromChildren(label) ||
+      restProps["aria-label"] ||
+      restProps["aria-labelledby"]
+  );
+
+  if (process.env.NODE_ENV === "development" && !hasAccessibleName) {
+    warn(
+      "a11y: У кнопки нет названия, которое может прочитать скринридер, и она недоступна для части пользователей. Замените содержимое на текст или добавьте описание действия с помощью пропа aria-label."
+    );
   }
 
   return (
