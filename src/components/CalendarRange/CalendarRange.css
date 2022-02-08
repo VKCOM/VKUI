@@ -3,8 +3,8 @@
   justify-content: center;
   flex-wrap: wrap;
   max-width: 610px;
-  background: #fff;
-  border: 0.5px solid #d7d8d9;
+  background: var(--vkui--color_background_modal);
+  border: 0.5px solid var(--vkui--color_separator_primary);
   box-sizing: border-box;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.03), 0 2px 2px rgba(0, 0, 0, 0.06);
   border-radius: 8px;

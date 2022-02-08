@@ -46,15 +46,12 @@
 }
 
 .CustomSelect__open.Select--mimicry-plain.Select--mimicry:focus
-  .FormField__border {
-  background-color: #f5f5f5;
-}
-
+  .FormField__border,
 .FormField:not(.FormField--disabled) .FormField__border--hover {
-  background-color: #f0f0f0;
+  background-color: var(--vkui--color_background);
 }
 
 .Select--mimicry-plain .FormField__border {
-  background-color: white;
+  background-color: transparent;
   border: none;
 }
