@@ -2,7 +2,7 @@ import * as React from "react";
 import { AppearanceType } from "@vkontakte/vk-bridge";
 import { AppearanceProviderContext } from "./AppearanceProviderContext";
 import { getScheme } from "../../helpers/getScheme";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 
 export interface AppearanceProviderProps {
@@ -31,7 +31,7 @@ export const AppearanceProvider: React.FC<AppearanceProviderProps> = ({
       {React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
           return React.cloneElement(child, {
-            className: classNames(
+            className: classNamesString(
               child.props.className,
               `vkui${appearanceContext.scheme}`
             ),

@@ -3,13 +3,15 @@ import React from "react";
 
 export const StyleGuideDesktop = ({
   popout,
-  switchStyleGuideScheme,
+  switchStyleGuideAppearance,
   toc,
   children,
 }) => {
   return (
     <React.Fragment>
-      <StyleGuideHeader switchStyleGuideScheme={switchStyleGuideScheme} />
+      <StyleGuideHeader
+        switchStyleGuideAppearance={switchStyleGuideAppearance}
+      />
       <SplitLayout className="StyleGuide" popout={popout}>
         <SplitCol
           minWidth={340}
