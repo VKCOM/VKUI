@@ -12,6 +12,8 @@ import { useDOM } from "../../lib/dom";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import IconButton from "../IconButton/IconButton";
 import { classNames } from "../../lib/classNames";
+import { useBooleanState } from "../../hooks/useBooleanState";
+import { nodeEqualsOrContains } from "../../lib/nodeEqualsOrContains";
 import "./DateInput.css";
 
 export interface DateInputProps
@@ -38,10 +40,10 @@ const maskWithoutTime = {
   mask: ["_ ", "_", "_ ", "_", "_ ", "_ ", "_ ", "_"],
 };
 const maskWithTime = {
-  format: "##.##.####   ##:##",
-  placeholder: "_ _._ _._ _ _ _   _ _:_ _",
-  dateFnsFormat: "dd.MM.yyyy   HH:mm",
-  mask: ["_ ", "_", "_ ", "_", "_ ", "_ ", "_ ", "_", "_ ", "_", "_ ", "_"],
+  format: `${maskWithoutTime.format}   ##:##`,
+  placeholder: `${maskWithoutTime.placeholder}   _ _:_ _`,
+  dateFnsFormat: `${maskWithoutTime.dateFnsFormat}   HH:mm`,
+  mask: [...maskWithoutTime.mask, "_ ", "_", "_ ", "_"],
 };
 
 export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
@@ -63,29 +65,24 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
     },
     ref
   ) => {
-    const [open, setOpen] = React.useState(false);
+    const {
+      value: open,
+      setTrue: openCalendar,
+      setFalse: closeCalendar,
+    } = useBooleanState(false);
     const rootRef = React.useRef<HTMLDivElement>(null);
     const calendarRef = React.useRef<HTMLDivElement>(null);
     const { document } = useDOM();
 
     const mask = enableTime ? maskWithTime : maskWithoutTime;
 
-    const openCalendar = React.useCallback(() => {
-      setOpen(true);
-    }, []);
-    const closeCalendar = React.useCallback(() => {
-      setOpen(false);
-    }, []);
-
     const handleClickOutside = React.useCallback(
       (e: MouseEvent) => {
-        const { current: rootNode } = rootRef;
-        const { current: calendarNode } = calendarRef;
         if (
-          e.target !== rootNode &&
-          e.target !== calendarNode &&
-          !rootNode?.contains(e.target as Node | null) &&
-          !calendarNode?.contains(e.target as Node | null)
+          !nodeEqualsOrContains(e.target, [
+            rootRef.current,
+            calendarRef.current,
+          ])
         ) {
           closeCalendar();
         }

@@ -1,12 +1,6 @@
 import * as React from "react";
 import {
-  startOfWeek,
-  endOfWeek,
-  startOfMonth,
-  endOfMonth,
   isBefore,
-  getDay,
-  addDays,
   isSameDay,
   isSameMonth,
   isFirstDayOfMonth,
@@ -14,15 +8,17 @@ import {
   isAfter,
   startOfDay,
   endOfDay,
-  eachDayOfInterval,
   isWithinInterval,
 } from "date-fns";
 import { CalendarDay } from "../CalendarDay/CalendarDay";
+import { getDaysNames, getWeeks, setTimeEqual } from "../../lib/calendar";
 import "./CalendarDays.css";
 
-export interface CalendarDaysProps {
+export interface CalendarDaysProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
   value?: Date | Array<Date | null>;
   viewDate: Date;
+  focusedDay?: Date;
   locale?: string;
   disablePast?: boolean;
   disableFuture?: boolean;
@@ -31,42 +27,6 @@ export interface CalendarDaysProps {
   onChange?(value?: Date | Array<Date | null>): void;
   shouldDisableDate?(value: Date): boolean;
 }
-
-export const getWeeks = (
-  viewDate: Date,
-  weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6
-) => {
-  const start = startOfWeek(startOfMonth(viewDate), { weekStartsOn });
-  const end = endOfWeek(endOfMonth(viewDate), { weekStartsOn });
-
-  let count = 0;
-  let current = start;
-  const nestedWeeks: Date[][] = [];
-  let lastDay = null;
-  while (isBefore(current, end)) {
-    const weekNumber = Math.floor(count / 7);
-    nestedWeeks[weekNumber] = nestedWeeks[weekNumber] || [];
-    const day = getDay(current);
-    if (lastDay !== day) {
-      lastDay = day;
-      nestedWeeks[weekNumber].push(current);
-      count += 1;
-    }
-    current = addDays(current, 1);
-  }
-  return nestedWeeks;
-};
-
-export const setTimeEqual = (to: Date, from?: Date | null) => {
-  if (from) {
-    to.setHours(from.getHours());
-    to.setMinutes(from.getMinutes());
-    to.setSeconds(from.getSeconds());
-    to.setMilliseconds(from.getMilliseconds());
-  }
-
-  return to;
-};
 
 export const CalendarDays: React.FC<CalendarDaysProps> = ({
   locale,
@@ -78,7 +38,10 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
   shouldDisableDate,
   range = false,
   weekStartsOn,
+  focusedDay,
+  ...props
 }) => {
+  const ref = React.useRef<HTMLDivElement>(null);
   const [now] = React.useState(new Date());
 
   const weeks = React.useMemo(
@@ -86,23 +49,22 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
     [weekStartsOn, viewDate]
   );
 
-  const daysNames = React.useMemo(() => {
-    const formatter = new Intl.DateTimeFormat(locale, {
-      weekday: "short",
-    });
-    return eachDayOfInterval({
-      start: startOfWeek(now, { weekStartsOn }),
-      end: endOfWeek(now, { weekStartsOn }),
-    }).map((day) => formatter.format(day));
-  }, [locale, now, weekStartsOn]);
+  const daysNames = React.useMemo(
+    () => getDaysNames(now, weekStartsOn, locale),
+    [locale, now, weekStartsOn]
+  );
 
   const onDayChange = React.useCallback(
     (date: Date) => {
+      if (!onChange) {
+        return;
+      }
+
       if (!range) {
-        onChange?.(setTimeEqual(date, value as Date | undefined | null));
+        onChange(setTimeEqual(date, value as Date | undefined | null));
       } else {
         if (!value) {
-          onChange?.([date, null]);
+          onChange([date, null]);
           return;
         }
 
@@ -112,19 +74,21 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
           (start && isSameDay(date, start)) ||
           (end && isSameDay(date, end))
         ) {
-          onChange?.([setTimeEqual(date, start), setTimeEqual(date, end)]);
+          onChange([setTimeEqual(date, start), setTimeEqual(date, end)]);
         } else if (start && isBefore(date, start)) {
-          onChange?.([setTimeEqual(date, start), end]);
+          onChange([setTimeEqual(date, start), end]);
         } else if (start && isAfter(date, start)) {
-          onChange?.([start, setTimeEqual(date, end)]);
+          onChange([start, setTimeEqual(date, end)]);
         }
       }
+
+      ref.current?.focus();
     },
     [value, onChange, range]
   );
 
   return (
-    <div vkuiClass="CalendarDays">
+    <div {...props} vkuiClass="CalendarDays" ref={ref}>
       <div vkuiClass="CalendarDays__row">
         {daysNames.map((dayName) => (
           <div vkuiClass="CalendarDays__row__day-name" key={dayName}>
@@ -151,6 +115,7 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
             let selected = false;
             let selectionStart = i === 0 || isFirstDayOfMonth(day);
             let selectionEnd = i === arr.length - 1 || isLastDayOfMonth(day);
+            let focused = focusedDay && isSameDay(day, focusedDay);
 
             if (range && value) {
               const start = (value as Array<Date | null>)[0];
@@ -191,6 +156,8 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
                 selectionStart={selectionStart}
                 selectionEnd={selectionEnd}
                 selected={selected}
+                locale={locale}
+                focused={focused}
               />
             );
           })}

@@ -1,9 +1,10 @@
 import * as React from "react";
-import { subMonths, addMonths } from "date-fns";
+import { subMonths, addMonths, isSameMonth } from "date-fns";
 import { CalendarHeader } from "../CalendarHeader/CalendarHeader";
 import { CalendarDays } from "../CalendarDays/CalendarDays";
 import { CalendarTime } from "../CalendarTime/CalendarTime";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
+import { navigateDate } from "../../lib/calendar";
 import "./Calendar.css";
 
 export interface CalendarProps
@@ -41,6 +42,7 @@ export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
     ref
   ) => {
     const [viewDate, setViewDate] = React.useState(new Date());
+    const [focusedDay, setFocusedDay] = React.useState<Date>();
 
     const setPrevMonth = React.useCallback(
       () => setViewDate(subMonths(viewDate, 1)),
@@ -56,6 +58,22 @@ export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
         setViewDate(value);
       }
     }, [value]);
+
+    const handleKeyDown = React.useCallback(
+      (event: React.KeyboardEvent) => {
+        if (["ArrowUp", "ArrowDown"].includes(event.key)) {
+          event.preventDefault();
+        }
+
+        const newFocusedDay = navigateDate(focusedDay ?? value, event.key);
+
+        if (newFocusedDay && !isSameMonth(newFocusedDay, viewDate)) {
+          setViewDate(newFocusedDay);
+        }
+        setFocusedDay(newFocusedDay);
+      },
+      [focusedDay, value, viewDate]
+    );
 
     return (
       <div {...props} ref={ref} vkuiClass="Calendar">
@@ -75,6 +93,10 @@ export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
           disableFuture={disableFuture}
           shouldDisableDate={shouldDisableDate}
           weekStartsOn={weekStartsOn}
+          focusedDay={focusedDay}
+          tabIndex={0}
+          aria-label="Выбрать день"
+          onKeyDown={handleKeyDown}
         />
         {enableTime && value && (
           <div vkuiClass="Calendar__time">

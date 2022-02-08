@@ -48,6 +48,7 @@ export const CalendarTime: React.FC<CalendarTimeProps> = ({
           onChange={onHoursChange}
           forceDropdownPortal={false}
           sizeY={SizeType.COMPACT}
+          aria-label="Выбрать часы"
         />
       </div>
       <div vkuiClass="CalendarTime__divider">:</div>
@@ -58,6 +59,7 @@ export const CalendarTime: React.FC<CalendarTimeProps> = ({
           onChange={onMinutesChange}
           forceDropdownPortal={false}
           sizeY={SizeType.COMPACT}
+          aria-label="Выбрать минуты"
         />
       </div>
       <div vkuiClass="CalendarTime__button">
@@ -66,6 +68,7 @@ export const CalendarTime: React.FC<CalendarTimeProps> = ({
           mode="secondary"
           onClick={onClose}
           size="l"
+          aria-label="Закрыть"
         >
           {doneButtonText}
         </Button>

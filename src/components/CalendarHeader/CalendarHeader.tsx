@@ -1,5 +1,5 @@
 import * as React from "react";
-import { setMonth, setYear } from "date-fns";
+import { setMonth, setYear, subMonths, addMonths } from "date-fns";
 import Tappable from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
 import CustomSelect, {
@@ -8,6 +8,8 @@ import CustomSelect, {
 } from "../CustomSelect/CustomSelect";
 import CustomSelectOption from "../CustomSelectOption/CustomSelectOption";
 import { SizeType } from "../../hoc/withAdaptivity";
+import { useBooleanState } from "../../hooks/useBooleanState";
+import { getMonths, getYears } from "../../lib/calendar";
 import "./CalendarHeader.css";
 
 export interface CalendarHeaderProps {
@@ -19,32 +21,6 @@ export interface CalendarHeaderProps {
   onNextMonth?(): void;
   onPrevMonth?(): void;
 }
-
-export const getYears = (currentYear: number, range: number) => {
-  const years: CustomSelectProps["options"] = [];
-
-  for (let i = currentYear - range; i <= currentYear + range; i++) {
-    years.push({ label: String(i).padStart(4, "0"), value: i });
-  }
-
-  return years;
-};
-
-export const getMonths = (locale?: string) => {
-  const months: CustomSelectProps["options"] = [];
-  const formatter = new Intl.DateTimeFormat(locale, {
-    month: "long",
-  });
-
-  for (let i = 0; i < 12; i++) {
-    months.push({
-      label: formatter.format(new Date("1970-01-01").setMonth(i)),
-      value: i,
-    });
-  }
-
-  return months;
-};
 
 const renderOption: CustomSelectProps["renderOption"] = ({
   option,
@@ -64,7 +40,7 @@ const selectIconClose = (
       fillRule="evenodd"
       clipRule="evenodd"
       d="M.156.295A.75.75 0 0 1 1.207.158L4 2.306 6.793.158a.75.75 0 0 1 .914 1.189l-3.25 2.5a.75.75 0 0 1-.914 0l-3.25-2.5A.75.75 0 0 1 .156.295Z"
-      fill="#99A2AD"
+      fill="currentColor"
     />
   </svg>
 );
@@ -74,7 +50,7 @@ const selectIconOpen = (
       fillRule="evenodd"
       clipRule="evenodd"
       d="M7.844 3.71a.75.75 0 0 1-1.051.137L4 1.699 1.207 3.847a.75.75 0 0 1-.914-1.19l3.25-2.5a.75.75 0 0 1 .914 0l3.25 2.5a.75.75 0 0 1 .137 1.053Z"
-      fill="#99A2AD"
+      fill="currentColor"
     />
   </svg>
 );
@@ -99,19 +75,32 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
     [onChange, viewDate]
   );
 
-  const [monthsOpen, setMonthsOpen] = React.useState(false);
-  const onMonthsOpen = React.useCallback(() => setMonthsOpen(true), []);
-  const onMonthsClose = React.useCallback(() => setMonthsOpen(false), []);
+  const {
+    value: monthsOpen,
+    setTrue: onMonthsOpen,
+    setFalse: onMonthsClose,
+  } = useBooleanState(false);
 
-  const [yearsOpen, setYearsOpen] = React.useState(false);
-  const onYearsOpen = React.useCallback(() => setYearsOpen(true), []);
-  const onYearsClose = React.useCallback(() => setYearsOpen(false), []);
+  const {
+    value: yearsOpen,
+    setTrue: onYearsOpen,
+    setFalse: onYearsClose,
+  } = useBooleanState(false);
 
   const months = React.useMemo(() => getMonths(locale), [locale]);
 
   const currentYear = viewDate.getFullYear();
 
   const years = React.useMemo(() => getYears(currentYear, 100), [currentYear]);
+
+  const formatter = React.useMemo(
+    () =>
+      new Intl.DateTimeFormat(locale, {
+        year: "numeric",
+        month: "long",
+      }),
+    [locale]
+  );
 
   return (
     <div vkuiClass="CalendarHeader">
@@ -122,6 +111,9 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             "CalendarHeader__nav-icon-prev"
           )}
           onClick={onPrevMonth}
+          aria-label={`Предыдущий месяц, ${formatter.format(
+            subMonths(viewDate, 1)
+          )}`}
         >
           <svg
             width="10"
@@ -154,6 +146,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
           onChange={onMonthsChange}
           forceDropdownPortal={false}
           selectType={SelectType.Plain}
+          aria-label="Выбрать месяц"
         />
         <CustomSelect
           value={viewDate.getFullYear()}
@@ -171,6 +164,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
           onChange={onYearChange}
           forceDropdownPortal={false}
           selectType={SelectType.Plain}
+          aria-label="Выбрать год"
         />
       </div>
       {nextMonth && (
@@ -180,6 +174,9 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             "CalendarHeader__nav-icon-next"
           )}
           onClick={onNextMonth}
+          aria-label={`Следующий месяц, ${formatter.format(
+            addMonths(viewDate, 1)
+          )}`}
         >
           <svg
             width="10"

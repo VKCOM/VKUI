@@ -1,6 +1,7 @@
 import * as React from "react";
 import { format, isMatch, parse, isAfter } from "date-fns";
 import { NumberFormatValues } from "react-number-format";
+import { Icon16Clear } from "@vkontakte/icons";
 import { InputProps } from "../Input/Input";
 import { MaskedInput } from "../MaskedInput/MaskedInput";
 import {
@@ -13,7 +14,8 @@ import { callMultiple } from "../../lib/callMultiple";
 import { useDOM } from "../../lib/dom";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import IconButton from "../IconButton/IconButton";
-import { Icon16Clear } from "@vkontakte/icons";
+import { useBooleanState } from "../../hooks/useBooleanState";
+import { nodeEqualsOrContains } from "../../lib/nodeEqualsOrContains";
 import "./DateRangeInput.css";
 
 export interface DateRangeInputProps
@@ -84,27 +86,22 @@ export const DateRangeInput = React.forwardRef<
     },
     ref
   ) => {
-    const [open, setOpen] = React.useState(false);
+    const {
+      value: open,
+      setTrue: openCalendar,
+      setFalse: closeCalendar,
+    } = useBooleanState(false);
     const rootRef = React.useRef<HTMLDivElement>(null);
     const calendarRef = React.useRef<HTMLDivElement>(null);
     const { document } = useDOM();
 
-    const openCalendar = React.useCallback(() => {
-      setOpen(true);
-    }, []);
-    const closeCalendar = React.useCallback(() => {
-      setOpen(false);
-    }, []);
-
     const handleClickOutside = React.useCallback(
       (e: MouseEvent) => {
-        const { current: rootNode } = rootRef;
-        const { current: calendarNode } = calendarRef;
         if (
-          e.target !== rootNode &&
-          e.target !== calendarNode &&
-          !rootNode?.contains(e.target as Node | null) &&
-          !calendarNode?.contains(e.target as Node | null)
+          !nodeEqualsOrContains(e.target, [
+            rootRef.current,
+            calendarRef.current,
+          ])
         ) {
           closeCalendar();
         }
