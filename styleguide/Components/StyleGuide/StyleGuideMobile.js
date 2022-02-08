@@ -15,7 +15,7 @@ import {
 import { Logo } from "../Logo/Logo";
 import "./StyleGuideMobile.css";
 
-const StyleGuideMobileHeader = ({ left, switchStyleGuideScheme }) => {
+const StyleGuideMobileHeader = ({ left, switchStyleGuideAppearance }) => {
   const appearance = useAppearance();
 
   return (
@@ -23,7 +23,7 @@ const StyleGuideMobileHeader = ({ left, switchStyleGuideScheme }) => {
       left={left}
       right={
         <PanelHeaderButton
-          onClick={switchStyleGuideScheme}
+          onClick={switchStyleGuideAppearance}
           aria-label="Сменить тему"
         >
           {appearance === "dark" ? <Icon28SunOutline /> : <Icon28MoonOutline />}
@@ -56,7 +56,7 @@ export const StyleGuideMobile = (props) => {
     <View activePanel={activePanel} popout={props.popout}>
       <Panel id="content">
         <StyleGuideMobileHeader
-          switchStyleGuideScheme={props.switchStyleGuideScheme}
+          switchStyleGuideAppearance={props.switchStyleGuideAppearance}
           left={
             <PanelHeaderButton
               aria-label="Показать меню"
@@ -70,7 +70,7 @@ export const StyleGuideMobile = (props) => {
       </Panel>
       <Panel id="menu">
         <StyleGuideMobileHeader
-          switchStyleGuideScheme={props.switchStyleGuideScheme}
+          switchStyleGuideAppearance={props.switchStyleGuideAppearance}
           left={
             <PanelHeaderClose
               aria-label="Скрыть меню"

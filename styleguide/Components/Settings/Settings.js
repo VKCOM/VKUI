@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { PlatformSelect } from "./PlatformSelect";
-import { SchemeSelect } from "./SchemeSelect";
+import { AppearanceSelect } from "./AppearanceSelect";
 import { HasMouseCheckbox } from "./HasMouseCheckbox";
 import { ViewHeightSelect } from "./ViewHeightSelect";
 import { ViewWidthSelect } from "./ViewWidthSelect";
@@ -21,10 +21,9 @@ export const Settings = ({ adaptivity }) => {
                 onChange={(platform) => context.setContext({ platform })}
                 value={context.platform}
               />
-              <SchemeSelect
-                platform={context.platform}
-                onChange={(scheme) => context.setContext({ scheme })}
-                value={context.scheme}
+              <AppearanceSelect
+                onChange={(appearance) => context.setContext({ appearance })}
+                value={context.appearance}
               />
               {adaptivity && !isMobile && (
                 <Fragment>
