@@ -27,9 +27,9 @@
 /**
  * TODO удалить `.Title--w-regular` перед релизом 5.0.0
  */
-.Title--w-1,
+.Title--w-3,
 .Title--w-regular {
-  font-weight: var(--vkui--font_weight_accent1);
+  font-weight: var(--vkui--font_weight_accent3);
 }
 
 /**
@@ -43,9 +43,9 @@
 /**
  * TODO удалить `.Title--w-semibold` перед релизом 5.0.0
  */
-.Title--w-3,
+.Title--w-1,
 .Title--w-semibold {
-  font-weight: var(--vkui--font_weight_accent3);
+  font-weight: var(--vkui--font_weight_accent1);
 }
 
 /**
