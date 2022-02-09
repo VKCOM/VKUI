@@ -74,7 +74,7 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = (
     case "s":
     default:
       if (platform === IOS) {
-        return <Subhead weight="medium" {...restProps} />;
+        return <Subhead weight="2" {...restProps} />;
       }
 
       if (platform === VKCOM) {
@@ -85,7 +85,7 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = (
         return <Caption level="1" weight="medium" {...restProps} />;
       }
 
-      return <Subhead weight="medium" {...restProps} />;
+      return <Subhead weight="2" {...restProps} />;
   }
 };
 
