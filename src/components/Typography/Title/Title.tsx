@@ -1,8 +1,6 @@
 import * as React from "react";
 import { HasComponent } from "../../../types";
-import { usePlatform } from "../../../hooks/usePlatform";
 import { classNames } from "../../../lib/classNames";
-import { getClassName } from "../../../helpers/getClassName";
 import { warnOnce } from "../../../lib/warnOnce";
 import "./Title.css";
 
@@ -33,29 +31,26 @@ const Title: React.FC<TitleProps> = ({
   Component,
   ...restProps
 }: TitleProps) => {
-  const platform = usePlatform();
-
   if (!Component) {
     Component = ("h" + level) as React.ElementType;
   }
 
   if (process.env.NODE_ENV === "development") {
-    if (["heavy", "bold", "semibold", "medium", "regular"].includes(level))
+    if (
+      weight &&
+      ["heavy", "bold", "semibold", "medium", "regular"].includes(weight)
+    )
       warn(
-        `Начертание "${level}" устарело и будет удалено в 5.0.0. Используйте значения "1", "2" и "3"`
+        `Начертание "${weight}" устарело и будет удалено в 5.0.0. Используйте значения "1", "2" и "3"`
       );
   }
 
   return (
     <Component
       {...restProps}
-      vkuiClass={classNames(
-        getClassName("Title", platform),
-        `Title--l-${level}`,
-        {
-          [`Title--w-${weight}`]: !!weight,
-        }
-      )}
+      vkuiClass={classNames("Title", `Title--l-${level}`, {
+        [`Title--w-${weight}`]: !!weight,
+      })}
     >
       {children}
     </Component>
