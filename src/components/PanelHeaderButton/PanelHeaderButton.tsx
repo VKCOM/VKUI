@@ -70,17 +70,19 @@ export const PanelHeaderButton: React.FC<PanelHeaderButtonProps> = ({
       activeMode = "PanelHeaderButton--active";
   }
 
-  const hasAccessibleName = Boolean(
-    getTitleFromChildren(children) ||
-      getTitleFromChildren(label) ||
-      restProps["aria-label"] ||
-      restProps["aria-labelledby"]
-  );
-
-  if (process.env.NODE_ENV === "development" && !hasAccessibleName) {
-    warn(
-      "a11y: У кнопки нет названия, которое может прочитать скринридер, и она недоступна для части пользователей. Замените содержимое на текст или добавьте описание действия с помощью пропа aria-label."
+  if (process.env.NODE_ENV === "development") {
+    const hasAccessibleName = Boolean(
+      getTitleFromChildren(children) ||
+        getTitleFromChildren(label) ||
+        restProps["aria-label"] ||
+        restProps["aria-labelledby"]
     );
+
+    if (!hasAccessibleName) {
+      warn(
+        "a11y: У кнопки нет названия, которое может прочитать скринридер, и она недоступна для части пользователей. Замените содержимое на текст или добавьте описание действия с помощью пропа aria-label."
+      );
+    }
   }
 
   return (
