@@ -84,7 +84,7 @@ const UsersStack: React.FC<UsersStackProps> = (props: UsersStackProps) => {
         )}
       </div>
       {hasReactNode(children) && (
-        <Subhead Component="span" weight="regular" vkuiClass="UsersStack__text">
+        <Subhead Component="span" vkuiClass="UsersStack__text">
           {children}
         </Subhead>
       )}

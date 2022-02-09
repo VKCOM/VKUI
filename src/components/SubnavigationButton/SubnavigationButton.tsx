@@ -36,7 +36,7 @@ const SubnavigationButtonTypography: React.FC<SubnavButtonTypographyProps> = ({
   ...restProps
 }: SubnavButtonTypographyProps) => {
   if (textLevel === 1) {
-    return <Subhead weight="regular" {...restProps} />;
+    return <Subhead {...restProps} />;
   }
 
   return (

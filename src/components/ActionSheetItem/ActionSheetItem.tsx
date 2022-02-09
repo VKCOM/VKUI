@@ -154,9 +154,7 @@ const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
               {subtitle}
             </Caption>
           ) : (
-            <Subhead weight="regular" vkuiClass="ActionSheetItem__subtitle">
-              {subtitle}
-            </Subhead>
+            <Subhead vkuiClass="ActionSheetItem__subtitle">{subtitle}</Subhead>
           ))}
       </div>
       {selectable && (

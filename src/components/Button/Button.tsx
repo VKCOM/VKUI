@@ -66,10 +66,7 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = (
     case "m":
       if (isCompact) {
         return (
-          <Subhead
-            weight={platform === VKCOM ? "regular" : "medium"}
-            {...restProps}
-          />
+          <Subhead weight={platform === VKCOM ? "3" : "2"} {...restProps} />
         );
       }
 
