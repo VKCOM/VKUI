@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Appearance, Scheme } from "@vkui";
+import { Appearance } from "@vkui";
 import { DOMContext } from "@vkui/lib/dom";
 import ReactFrame from "react-frame-component";
 import "./Frame.css";
@@ -95,7 +95,7 @@ const initialFrameContent = `
 </html>
 `;
 
-export const Frame = ({ children, width, height, scheme }) => {
+export const Frame = ({ children, width, height, appearance }) => {
   return (
     <ReactFrame
       mountTarget="body"
@@ -103,13 +103,7 @@ export const Frame = ({ children, width, height, scheme }) => {
       style={{ height, width }}
       initialContent={initialFrameContent}
     >
-      <FrameDomProvider
-        appearance={
-          scheme === Scheme.SPACE_GRAY ? Appearance.DARK : Appearance.LIGHT
-        }
-      >
-        {children}
-      </FrameDomProvider>
+      <FrameDomProvider appearance={appearance}>{children}</FrameDomProvider>
     </ReactFrame>
   );
 };
@@ -117,5 +111,5 @@ export const Frame = ({ children, width, height, scheme }) => {
 Frame.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  scheme: PropTypes.oneOf(Object.values(Scheme)).isRequired,
+  appearance: PropTypes.oneOf(Object.values(Appearance)).isRequired,
 };

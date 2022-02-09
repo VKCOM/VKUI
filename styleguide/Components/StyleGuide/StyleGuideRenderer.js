@@ -3,13 +3,10 @@ import {
   MOBILE_SIZE,
   TABLET_SIZE,
 } from "@vkui/components/AdaptivityProvider/AdaptivityProvider";
-import { defaultConfigProviderProps } from "@vkui/components/ConfigProvider/ConfigProviderContext";
 import { SMALL_HEIGHT } from "../Settings/ViewHeightSelect";
 import {
   VKCOM,
   AppRoot,
-  Scheme,
-  WebviewType,
   AdaptivityProvider,
   withAdaptivity,
   ConfigProvider,
@@ -21,23 +18,13 @@ import "./StyleGuideRenderer.css";
 import { StyleGuideMobile } from "./StyleGuideMobile";
 import { StyleGuideDesktop } from "./StyleGuideDesktop";
 
-export const StyleGuideContext = React.createContext({
-  ...defaultConfigProviderProps,
-  webviewType: WebviewType.INTERNAL,
-  width: MOBILE_SIZE,
-  height: SMALL_HEIGHT,
-  hasMouse: true,
-  styleguideScheme: Scheme.BRIGHT_LIGHT,
-});
-
 let initialState = {
-  ...defaultConfigProviderProps,
-  integration: "full",
-  webviewType: WebviewType.INTERNAL,
+  platform: Platform.ANDROID,
   width: MOBILE_SIZE,
   height: SMALL_HEIGHT,
   hasMouse: true,
-  styleguideScheme: Scheme.BRIGHT_LIGHT,
+  appearance: Appearance.LIGHT,
+  styleguideAppearance: Appearance.LIGHT,
 };
 
 try {
@@ -52,27 +39,17 @@ try {
   console.log(e);
 }
 
+export const StyleGuideContext = React.createContext(initialState);
+
 let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
   const [state, setState] = useState(initialState);
   const [popout, setPopout] = useState(null);
-  const { width, height, platform, scheme, hasMouse, styleguideScheme } = state;
+  const { width, height, platform, scheme, hasMouse, styleguideAppearance } =
+    state;
 
   const setContext = useCallback(
     (data) => {
       const newState = { ...state, ...data };
-      if (data.platform && data.platform !== state.platform) {
-        if (data.platform === Platform.VKCOM) {
-          newState.scheme =
-            state.scheme === Scheme.SPACE_GRAY
-              ? Scheme.VKCOM_DARK
-              : Scheme.VKCOM_LIGHT;
-        } else {
-          newState.scheme =
-            state.scheme === Scheme.VKCOM_DARK
-              ? Scheme.SPACE_GRAY
-              : Scheme.BRIGHT_LIGHT;
-        }
-      }
       localStorage.setItem("vkui:state", JSON.stringify(newState));
       setState(newState);
     },
@@ -86,35 +63,22 @@ let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
   }, [platform]);
 
   useEffect(() => {
-    if (scheme === Scheme.VKCOM) {
-      setContext({ scheme: Scheme.VKCOM_LIGHT });
-    }
-  }, [scheme]);
-
-  useEffect(() => {
-    const styleGuideAppearance =
-      styleguideScheme === Scheme.SPACE_GRAY
-        ? Appearance.DARK
-        : Appearance.LIGHT;
     document.documentElement.style.setProperty(
       "color-scheme",
-      styleGuideAppearance
+      styleguideAppearance
     );
-  }, [styleguideScheme]);
+  }, [styleguideAppearance]);
 
-  const switchStyleGuideScheme = useCallback(() => {
-    const isDark = styleguideScheme === Scheme.SPACE_GRAY;
-    let _scheme = isDark ? Scheme.BRIGHT_LIGHT : Scheme.SPACE_GRAY;
-
-    if (platform === VKCOM) {
-      _scheme = isDark ? Scheme.VKCOM_LIGHT : Scheme.VKCOM_DARK;
-    }
-
+  const switchStyleGuideAppearance = useCallback(() => {
+    const value =
+      styleguideAppearance === Appearance.DARK
+        ? Appearance.LIGHT
+        : Appearance.DARK;
     setContext({
-      styleguideScheme: isDark ? Scheme.BRIGHT_LIGHT : Scheme.SPACE_GRAY,
-      scheme: _scheme,
+      styleguideAppearance: value,
+      appearance: value,
     });
-  }, [platform, styleguideScheme]);
+  }, [platform, styleguideAppearance]);
 
   const providerValue = useMemo(
     () => ({ ...state, setContext, setPopout }),
@@ -128,7 +92,7 @@ let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
     <StyleGuideContext.Provider value={providerValue}>
       <ConfigProvider
         platform={Platform.ANDROID}
-        scheme={styleguideScheme}
+        appearance={styleguideAppearance}
         transitionMotionEnabled={false}
         webviewType="internal"
       >
@@ -136,7 +100,7 @@ let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
           <Component
             toc={toc}
             popout={popout}
-            switchStyleGuideScheme={switchStyleGuideScheme}
+            switchStyleGuideAppearance={switchStyleGuideAppearance}
           >
             {children}
           </Component>

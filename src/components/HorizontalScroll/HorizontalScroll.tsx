@@ -7,6 +7,7 @@ import { easeInOutSine } from "../../lib/fx";
 import { useEventListener } from "../../hooks/useEventListener";
 import { useExternRef } from "../../hooks/useExternRef";
 import { HasRef } from "../../types";
+import { classNames } from "../../lib/classNames";
 import "./HorizontalScroll.css";
 
 interface ScrollContext {
@@ -38,7 +39,7 @@ export interface HorizontalScrollProps
    * Функция для расчета величины прокрутки при клике на правую стрелку.
    */
   getScrollToRight?: ScrollPositionHandler;
-  showArrows?: boolean;
+  showArrows?: boolean | "always";
   scrollAnimationDuration?: number;
 }
 
@@ -181,7 +182,12 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
   React.useEffect(onscroll, [scrollerRef, children, onscroll]);
 
   return (
-    <div {...restProps} vkuiClass={getClassName("HorizontalScroll", platform)}>
+    <div
+      {...restProps}
+      vkuiClass={classNames(getClassName("HorizontalScroll", platform), {
+        ["HorizontalScroll--withConstArrows"]: showArrows === "always",
+      })}
+    >
       {showArrows && hasMouse && canScrollLeft && (
         <HorizontalScrollArrow
           direction="left"

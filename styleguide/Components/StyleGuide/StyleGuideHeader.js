@@ -12,7 +12,7 @@ import React from "react";
 import pkg from "../../../package.json";
 import "./StyleGuideHeader.css";
 
-export const StyleGuideHeader = ({ switchStyleGuideScheme }) => {
+export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
   const appearance = useAppearance();
 
   return (
@@ -64,7 +64,7 @@ export const StyleGuideHeader = ({ switchStyleGuideScheme }) => {
             <IconButton
               aria-label="Сменить тему"
               className="StyleGuideHeader__scheme"
-              onClick={switchStyleGuideScheme}
+              onClick={switchStyleGuideAppearance}
             >
               {appearance === "dark" ? (
                 <Icon28SunOutline />

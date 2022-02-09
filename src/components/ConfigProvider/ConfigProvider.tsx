@@ -83,10 +83,7 @@ const generateVKUITokensClassName = (
 
 const ConfigProvider: React.FC<ConfigProviderProps> = ({
   children,
-  schemeTarget,
   ...props
-}: React.PropsWithChildren<ConfigProviderProps> & {
-  schemeTarget?: HTMLElement;
 }) => {
   const config = { ...defaultConfigProviderProps, ...props };
   const { platform, appearance } = config;
@@ -96,7 +93,7 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
     appearance: appearance,
   });
   const { document } = useDOM();
-  const target = schemeTarget || document?.body;
+  const target = document?.body;
 
   useIsomorphicLayoutEffect(() => {
     if (scheme === "inherit") {
