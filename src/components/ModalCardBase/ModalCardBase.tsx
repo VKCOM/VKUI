@@ -99,7 +99,7 @@ export const ModalCardBase = withAdaptivity<
           {hasReactNode(header) && (
             <Title
               level="2"
-              weight={platform === ANDROID ? "2" : "3"}
+              weight={platform === ANDROID ? "2" : "1"}
               vkuiClass="ModalCardBase__header"
             >
               {header}

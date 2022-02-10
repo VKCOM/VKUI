@@ -32,7 +32,7 @@ const SearchPlaceholderTypography: React.FC<
   switch (platform) {
     case IOS:
       return (
-        <Title {...restProps} level="3" weight="1">
+        <Title {...restProps} level="3" weight="3">
           {children}
         </Title>
       );

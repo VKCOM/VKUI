@@ -63,7 +63,7 @@ const SimpleCellTypography: React.FC<SimpleCellTypographyProps> = (
   } else if (platform === ANDROID) {
     return <Headline Component="span" weight="regular" {...props} />;
   } else {
-    return <Title Component="span" level="3" weight="1" {...props} />;
+    return <Title Component="span" level="3" weight="3" {...props} />;
   }
 };
 

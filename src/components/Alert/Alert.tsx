@@ -136,7 +136,7 @@ class Alert extends React.Component<TAlertProps, AlertState> {
         );
       case IOS:
         return (
-          <Title vkuiClass="Alert__header" weight="3" level="3">
+          <Title vkuiClass="Alert__header" weight="3" level="1">
             {header}
           </Title>
         );
