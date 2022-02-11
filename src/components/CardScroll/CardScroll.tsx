@@ -11,8 +11,7 @@ import "./CardScroll.css";
 
 export interface CardScrollProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
-   * При size = "s", "m", "l" у Card будет явно задана ширина в %
-   * При size = false ширина Card будет регулироваться контентом внутри
+   * При `size=false` ширина `Card` будет регулироваться контентом внутри. В остальных случаях — будет явно задана в процентах.
    */
   size?: "s" | "m" | "l" | false;
   showArrows?: HorizontalScrollProps["showArrows"];
