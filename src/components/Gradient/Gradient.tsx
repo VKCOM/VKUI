@@ -7,7 +7,7 @@ export interface GradientProps extends React.HTMLAttributes<HTMLDivElement> {
   to?: "top" | "bottom";
 }
 
-const Gradient: React.FC<GradientProps> = ({
+export const Gradient: React.FC<GradientProps> = ({
   mode = "tint",
   children,
   to = "top",
@@ -27,6 +27,3 @@ const Gradient: React.FC<GradientProps> = ({
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default Gradient;
