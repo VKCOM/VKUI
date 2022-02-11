@@ -362,7 +362,7 @@ class ModalRootTouchComponent extends React.Component<
 
     if (!this.state.touchDown) {
       modalState.touchStartContentScrollTop =
-        modalState.contentElement?.scrollTop;
+        modalState.contentElement?.scrollTop ?? 0;
       this.setState({ touchDown: true });
     }
 
@@ -828,6 +828,12 @@ function initPageModal(modalState: ModalsStateEntry) {
     modalState.settlingHeight === 100
   ) {
     translateY = 0;
+  }
+
+  // Если модалка уже раскрыта обновляем состояния
+  if (translateY === 0) {
+    expanded = true;
+    collapsed = false;
   }
 
   modalState.expandedRange = expandedRange;
