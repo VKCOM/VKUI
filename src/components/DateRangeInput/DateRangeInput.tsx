@@ -15,7 +15,6 @@ import { useDOM } from "../../lib/dom";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import IconButton from "../IconButton/IconButton";
 import { useBooleanState } from "../../hooks/useBooleanState";
-import { nodeEqualsOrContains } from "../../lib/nodeEqualsOrContains";
 import "./DateRangeInput.css";
 
 export interface DateRangeInputProps
@@ -98,10 +97,8 @@ export const DateRangeInput = React.forwardRef<
     const handleClickOutside = React.useCallback(
       (e: MouseEvent) => {
         if (
-          !nodeEqualsOrContains(e.target, [
-            rootRef.current,
-            calendarRef.current,
-          ])
+          !rootRef.current?.contains(e.target as Node | null) &&
+          !calendarRef.current?.contains(e.target as Node | null)
         ) {
           closeCalendar();
         }
