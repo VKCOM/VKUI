@@ -23,7 +23,7 @@ export interface CardScrollProps
 
 const CardScroll: React.FC<CardScrollProps> = ({
   children,
-  size,
+  size = "s",
   showArrows = true,
   sizeX,
   withSpaces = true,
@@ -116,10 +116,6 @@ const CardScroll: React.FC<CardScrollProps> = ({
       </HorizontalScroll>
     </div>
   );
-};
-
-CardScroll.defaultProps = {
-  size: "s",
 };
 
 // eslint-disable-next-line import/no-default-export
