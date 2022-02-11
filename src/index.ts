@@ -84,7 +84,7 @@ export { default as Card } from "./components/Card/Card";
 export type { CardProps } from "./components/Card/Card";
 export { default as CardGrid } from "./components/CardGrid/CardGrid";
 export type { CardGridProps } from "./components/CardGrid/CardGrid";
-export { default as CardScroll } from "./components/CardScroll/CardScroll";
+export { CardScroll } from "./components/CardScroll/CardScroll";
 export type { CardScrollProps } from "./components/CardScroll/CardScroll";
 export { default as ContentCard } from "./components/ContentCard/ContentCard";
 export type { ContentCardProps } from "./components/ContentCard/ContentCard";

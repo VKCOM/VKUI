@@ -19,7 +19,7 @@ export interface CardScrollProps extends React.HTMLAttributes<HTMLDivElement> {
   withSpaces: boolean;
 }
 
-const CardScroll: React.FC<CardScrollProps> = ({
+export const CardScroll: React.FC<CardScrollProps> = ({
   children,
   size = "s",
   showArrows = true,
@@ -115,6 +115,3 @@ const CardScroll: React.FC<CardScrollProps> = ({
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default CardScroll;
