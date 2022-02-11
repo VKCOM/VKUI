@@ -7,12 +7,12 @@ export interface GradientProps extends React.HTMLAttributes<HTMLDivElement> {
   to?: "top" | "bottom";
 }
 
-const Gradient: React.FunctionComponent<GradientProps> = ({
+const Gradient: React.FC<GradientProps> = ({
   mode,
   children,
   to,
   ...restProps
-}: GradientProps) => {
+}) => {
   return (
     <div
       role="presentation"
