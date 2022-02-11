@@ -176,7 +176,7 @@ export { default as File } from "./components/File/File";
 export type { FileProps } from "./components/File/File";
 export { default as Input } from "./components/Input/Input";
 export type { InputProps } from "./components/Input/Input";
-export { default as Chip } from "./components/Chip/Chip";
+export { Chip } from "./components/Chip/Chip";
 export type { ChipProps } from "./components/Chip/Chip";
 export { default as ChipsInput } from "./components/ChipsInput/ChipsInput";
 export type { ChipsInputProps } from "./components/ChipsInput/ChipsInput";
