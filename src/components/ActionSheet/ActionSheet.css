@@ -98,31 +98,34 @@
 .ActionSheet--desktop {
   width: auto;
   height: auto;
-  background: var(--modal_card_background);
+  background: transparent;
   animation: none;
   padding: 0;
   margin: 0;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
 }
 
-.ActionSheet--desktop.ActionSheet--sizeY-compact {
+.ActionSheet--desktop.ActionSheet--sizeY-compact .ActionSheet__content {
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
-.ActionSheet--desktop.ActionSheet--ios {
+.ActionSheet--desktop.ActionSheet--ios .ActionSheet__content {
   border-radius: 14px;
   box-shadow: 0 0 96px rgba(0, 0, 0, 0.16), 0 0 2px rgba(0, 0, 0, 0.12);
   padding: 0;
 }
 
-.ActionSheet--desktop.ActionSheet--android {
+.ActionSheet--desktop.ActionSheet--android .ActionSheet__content {
   min-width: 112px;
   border-radius: 12px;
   padding: 8px 0;
   box-shadow: 0 8px 8px rgba(0, 0, 0, 0.16), 0 0 4px rgba(0, 0, 0, 0.08);
 }
 
-.ActionSheet--desktop.ActionSheet--vkcom {
+.ActionSheet--desktop.ActionSheet--vkcom .ActionSheet__content {
   border-radius: 12px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.08);
 }
@@ -136,10 +139,50 @@
 */
 @keyframes vkui-animation-actionsheet-intro {
   from {
-    transform: translateY(100%);
+    transform: translateY(36px);
+    opacity: 0;
   }
 
   to {
     transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.ActionSheet__content {
+  background: var(--modal_card_background);
+  will-change: transform, opacity;
+}
+
+.ActionSheet--desktop[data-popper-placement="bottom-end"] .ActionSheet__content {
+  animation: vkui-animation-actionsheet-intro-content-bottom 0.1s linear;
+}
+
+.ActionSheet--desktop[data-popper-placement="top-end"] .ActionSheet__content {
+  animation: vkui-animation-actionsheet-intro-content-top 0.1s linear;
+}
+
+@keyframes vkui-animation-actionsheet-intro-content-bottom {
+  from {
+    transform: translateY(36px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+@keyframes vkui-animation-actionsheet-intro-content-top {
+  from {
+    transform: translateY(-36px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }

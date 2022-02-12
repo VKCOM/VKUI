@@ -86,7 +86,11 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
       forcePortal={false}
     >
       <FocusTrap onClose={onClose} {...restProps} onClick={onClick}>
-        {children}
+        <div vkuiClass={classNames(
+          "ActionSheet__content"
+        )}>
+          {children}
+        </div>
       </FocusTrap>
     </Popper>
   );
