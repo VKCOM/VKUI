@@ -7,19 +7,50 @@ import {
   Icon16Clear,
   Icon24Cancel,
 } from "@vkontakte/icons";
-import { IOS, VKCOM } from "../../lib/platform";
+import { IOS, VKCOM, ANDROID } from "../../lib/platform";
 import { HasPlatform, HasRef } from "../../types";
 import { Touch, TouchEvent } from "../Touch/Touch";
 import { VKUITouchEvent } from "../../lib/touch";
 import { noop } from "../../lib/utils";
 import Text from "../Typography/Text/Text";
 import Title from "../Typography/Title/Title";
+import Headline from "../Typography/Headline/Headline";
 import Separator from "../Separator/Separator";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
 import "./Search.css";
 
 export type InputRef = (element: HTMLInputElement) => void;
+
+interface SearchPlaceholderTypographyProps
+  extends HasPlatform,
+    React.HTMLAttributes<HTMLElement> {}
+
+const SearchPlaceholderTypography: React.FC<
+  SearchPlaceholderTypographyProps
+> = ({ platform, children, ...restProps }) => {
+  switch (platform) {
+    case IOS:
+      return (
+        <Title {...restProps} level="3" weight="3">
+          {children}
+        </Title>
+      );
+    case VKCOM:
+      return (
+        <Text {...restProps} weight="regular">
+          {children}
+        </Text>
+      );
+    case ANDROID:
+    default:
+      return (
+        <Headline {...restProps} weight="regular">
+          {children}
+        </Headline>
+      );
+  }
+};
 
 export interface SearchProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
@@ -118,19 +149,12 @@ const Search: React.FC<SearchProps> = ({
           <div vkuiClass="Search__placeholder">
             <div vkuiClass="Search__placeholder-in">
               {before}
-              {platform === VKCOM ? (
-                <Text vkuiClass="Search__placeholder-text" weight="regular">
-                  {placeholder}
-                </Text>
-              ) : (
-                <Title
-                  vkuiClass="Search__placeholder-text"
-                  level="3"
-                  weight="regular"
-                >
-                  {placeholder}
-                </Title>
-              )}
+              <SearchPlaceholderTypography
+                vkuiClass="Search__placeholder-text"
+                platform={platform}
+              >
+                {placeholder}
+              </SearchPlaceholderTypography>
             </div>
             {isFocused && platform === IOS && after && (
               <div vkuiClass="Search__after-width">{after}</div>

@@ -27,11 +27,7 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = ({
 
   if (platform === IOS) {
     return (
-      <Title
-        Component="span"
-        level="3"
-        weight={primary ? "semibold" : "regular"}
-      >
+      <Title Component="span" level="3" weight={primary ? "1" : "3"}>
         {children}
       </Title>
     );
