@@ -11,8 +11,8 @@ export interface CardProps
   mode?: "tint" | "shadow" | "outline";
 }
 
-const Card: React.FunctionComponent<CardProps> = ({
-  mode,
+const Card: React.FC<CardProps> = ({
+  mode = "tint",
   children,
   getRootRef,
   ...restProps
@@ -28,10 +28,6 @@ const Card: React.FunctionComponent<CardProps> = ({
       <div vkuiClass="Card__in">{children}</div>
     </div>
   );
-};
-
-Card.defaultProps = {
-  mode: "tint",
 };
 
 // eslint-disable-next-line import/no-default-export
