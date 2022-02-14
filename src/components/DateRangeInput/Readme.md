@@ -9,6 +9,7 @@ const Example = () => {
   const [value, setValue] = useState([new Date(), addDays(new Date(), 10)]);
   const [disablePast, setDisablePast] = useState(false);
   const [disableFuture, setDisableFuture] = useState(false);
+  const [closeOnChange, setCloseOnChange] = useState(false);
   const [locale, setLocale] = useState("ru");
 
   return (
@@ -30,6 +31,14 @@ const Example = () => {
                 <Checkbox
                   checked={disableFuture}
                   onChange={(e) => setDisableFuture(e.target.checked)}
+                >
+                  Включено
+                </Checkbox>
+              </FormItem>
+              <FormItem top="Закрывать календарь послы выбора даты">
+                <Checkbox
+                  checked={closeOnChange}
+                  onChange={(e) => setCloseOnChange(e.target.checked)}
                 >
                   Включено
                 </Checkbox>
@@ -67,6 +76,7 @@ const Example = () => {
                     disablePast={disablePast}
                     disableFuture={disableFuture}
                     locale={locale}
+                    closeOnChange={closeOnChange}
                   />
                 </div>
               </FormItem>

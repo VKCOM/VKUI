@@ -30,6 +30,7 @@ export interface DateRangeInputProps
       | "weekStartsOn"
     > {
   calendarPlacement?: Placement;
+  closeOnChange?: boolean;
 }
 
 const dateFnsFormat = "dd.MM.yyyy";
@@ -81,6 +82,7 @@ export const DateRangeInput = React.forwardRef<
       onFocus,
       style,
       className,
+      closeOnChange = false,
       ...props
     },
     ref
@@ -109,6 +111,16 @@ export const DateRangeInput = React.forwardRef<
     useGlobalEventListener(document, "click", handleClickOutside, {
       capture: true,
     });
+
+    const onCalendarChange = React.useCallback(
+      (newValue?: Array<Date | null> | undefined) => {
+        onChange?.(newValue);
+        if (closeOnChange && newValue?.[1] && newValue[1] !== value?.[1]) {
+          closeCalendar();
+        }
+      },
+      [onChange, closeOnChange, value, closeCalendar]
+    );
 
     const onValueChange = React.useCallback(
       ({ formattedValue }: NumberFormatValues) => {
@@ -205,7 +217,7 @@ export const DateRangeInput = React.forwardRef<
             <FocusTrap onClose={closeCalendar} restoreFocus={false}>
               <CalendarRange
                 value={value}
-                onChange={onChange}
+                onChange={onCalendarChange}
                 disablePast={disablePast}
                 disableFuture={disableFuture}
                 shouldDisableDate={shouldDisableDate}

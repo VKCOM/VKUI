@@ -30,6 +30,7 @@ export interface DateInputProps
       | "weekStartsOn"
     > {
   calendarPlacement?: Placement;
+  closeOnChange?: boolean;
 }
 
 const maskWithoutTime = {
@@ -60,6 +61,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
       style,
       className,
       doneButtonText,
+      closeOnChange = false,
       ...props
     },
     ref
@@ -103,6 +105,16 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
     );
 
     const clear = React.useCallback(() => onChange?.(undefined), [onChange]);
+
+    const onCalendarChange = React.useCallback(
+      (value?: Date | undefined) => {
+        onChange?.(value);
+        if (closeOnChange && !enableTime) {
+          closeCalendar();
+        }
+      },
+      [onChange, closeCalendar, closeOnChange, enableTime]
+    );
 
     return (
       <div
@@ -163,7 +175,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
             <FocusTrap onClose={closeCalendar} restoreFocus={false}>
               <Calendar
                 value={value}
-                onChange={onChange}
+                onChange={onCalendarChange}
                 enableTime={enableTime}
                 disablePast={disablePast}
                 disableFuture={disableFuture}
