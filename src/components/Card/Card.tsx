@@ -11,7 +11,7 @@ export interface CardProps
   mode?: "tint" | "shadow" | "outline";
 }
 
-const Card: React.FC<CardProps> = ({
+export const Card: React.FC<CardProps> = ({
   mode = "tint",
   children,
   getRootRef,
@@ -29,6 +29,3 @@ const Card: React.FC<CardProps> = ({
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default Card;
