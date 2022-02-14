@@ -215,6 +215,12 @@ export type {
   SliderSwitchProps,
   SliderSwitchOptionInterface,
 } from "./components/SliderSwitch/SliderSwitch";
+export { SegmentedControl } from "./components/SegmentedControl/SegmentedControl";
+export type {
+  SegmentedControlProps,
+  SegmentedControlOptionInterface,
+  SegmentedControlValue,
+} from "./components/SegmentedControl/SegmentedControl";
 
 /**
  * Helpers
