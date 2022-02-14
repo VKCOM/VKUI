@@ -14,6 +14,7 @@ import {
   ActionSheetContextType,
 } from "../ActionSheet/ActionSheetContext";
 import Caption from "../Typography/Caption/Caption";
+import Headline from "../Typography/Headline/Headline";
 import {
   withAdaptivity,
   AdaptivityProps,
@@ -117,30 +118,33 @@ const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
             </React.Fragment>
           ) : (
             <React.Fragment>
-              <Title
-                weight={mode === "cancel" ? "medium" : "regular"}
-                level={
-                  isCompact || hasReactNode(before) || platform === ANDROID
-                    ? "3"
-                    : "2"
-                }
-                vkuiClass="ActionSheetItem__children"
-              >
-                {children}
-              </Title>
-              {hasReactNode(meta) && (
+              {platform === ANDROID ? (
+                <Headline weight={mode === "cancel" ? "medium" : "regular"}>
+                  {children}
+                </Headline>
+              ) : (
                 <Title
-                  weight="regular"
-                  level={
-                    isCompact || hasReactNode(before) || platform === ANDROID
-                      ? "3"
-                      : "2"
-                  }
-                  vkuiClass="ActionSheetItem__meta"
+                  weight={mode === "cancel" ? "2" : "3"}
+                  level={isCompact || hasReactNode(before) ? "3" : "2"}
+                  vkuiClass="ActionSheetItem__children"
                 >
-                  {meta}
+                  {children}
                 </Title>
               )}
+              {hasReactNode(meta) &&
+                (platform === ANDROID ? (
+                  <Headline weight={mode === "cancel" ? "medium" : "regular"}>
+                    {children}
+                  </Headline>
+                ) : (
+                  <Title
+                    weight="3"
+                    level={isCompact || hasReactNode(before) ? "3" : "2"}
+                    vkuiClass="ActionSheetItem__meta"
+                  >
+                    {meta}
+                  </Title>
+                ))}
             </React.Fragment>
           )}
         </div>

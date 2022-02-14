@@ -1,5 +1,5 @@
 import { describeScreenshotFuzz } from "../../testing/e2e";
-import Card, { CardProps } from "./Card";
+import { Card, CardProps } from "./Card";
 
 describe("Card", () => {
   describeScreenshotFuzz(

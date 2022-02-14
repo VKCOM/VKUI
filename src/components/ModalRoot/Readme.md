@@ -189,7 +189,7 @@ const App = withPlatform(
                 <Title
                   style={{ marginBottom: 8, marginTop: 20 }}
                   level="2"
-                  weight="medium"
+                  weight="2"
                 >
                   {this.randomUser.first_name + " " + this.randomUser.last_name}
                 </Title>

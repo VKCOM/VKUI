@@ -1,6 +1,6 @@
-import CardScroll, { CardScrollProps } from "./CardScroll";
+import { CardScroll, CardScrollProps } from "./CardScroll";
 import { describeScreenshotFuzz } from "../../testing/e2e";
-import Card from "../Card/Card";
+import { Card } from "../Card/Card";
 
 describe("CardScroll", () => {
   const items = new Array(20).fill(0).map((_, index) => (

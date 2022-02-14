@@ -20,7 +20,7 @@ const Example = ({ sizeX }) => {
             <Title
               style={{ marginBottom: 8, marginTop: 20 }}
               level="2"
-              weight="medium"
+              weight="2"
             >
               Алексей Мазелюк
             </Title>
