@@ -14,12 +14,12 @@ export interface CalendarTimeProps {
 
 const hours: CustomSelectProps["options"] = [];
 for (let i = 0; i < 24; i += 1) {
-  hours.push({ value: i, label: String(i) });
+  hours.push({ value: i, label: String(i).padStart(2, "0") });
 }
 
 const minutes: CustomSelectProps["options"] = [];
 for (let i = 0; i < 60; i += 1) {
-  minutes.push({ value: i, label: String(i) });
+  minutes.push({ value: i, label: String(i).padStart(2, "0") });
 }
 
 export const CalendarTime: React.FC<CalendarTimeProps> = ({
