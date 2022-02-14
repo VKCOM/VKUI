@@ -210,7 +210,7 @@ export type {
   DatePickerProps,
   DatePickerDateFormat,
 } from "./components/DatePicker/DatePicker";
-export { default as SliderSwitch } from "./components/SliderSwitch/SliderSwitch";
+export { SliderSwitch } from "./components/SliderSwitch/SliderSwitch";
 export type {
   SliderSwitchProps,
   SliderSwitchOptionInterface,

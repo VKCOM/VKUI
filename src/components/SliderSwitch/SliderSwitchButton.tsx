@@ -14,7 +14,7 @@ export interface ButtonProps
   hovered?: boolean;
 }
 
-const SliderSwitchButton: React.FunctionComponent<ButtonProps> = (
+export const SliderSwitchButton: React.FunctionComponent<ButtonProps> = (
   props: ButtonProps
 ) => {
   const { active, hovered, children, getRootRef, ...restProps } = props;
@@ -48,6 +48,3 @@ const SliderSwitchButton: React.FunctionComponent<ButtonProps> = (
     </Tappable>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default SliderSwitchButton;
