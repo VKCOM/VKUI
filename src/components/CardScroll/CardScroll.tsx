@@ -1,35 +1,32 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { usePlatform } from "../../hooks/usePlatform";
 import HorizontalScroll, {
   HorizontalScrollProps,
 } from "../HorizontalScroll/HorizontalScroll";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { useDOM } from "../../lib/dom";
 import "./CardScroll.css";
 
-export interface CardScrollProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    AdaptivityProps {
+export interface CardScrollProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
-   * При size = "s", "m", "l" у Card будет явно задана ширина в %
-   * При size = false ширина Card будет регулироваться контентом внутри
+   * При `size=false` ширина `Card` будет регулироваться контентом внутри. В остальных случаях — будет явно задана в процентах.
    */
   size?: "s" | "m" | "l" | false;
   showArrows?: HorizontalScrollProps["showArrows"];
   withSpaces: boolean;
 }
 
-const CardScroll: React.FC<CardScrollProps> = ({
+export const CardScroll: React.FC<CardScrollProps> = ({
   children,
-  size,
+  size = "s",
   showArrows = true,
-  sizeX,
   withSpaces = true,
   ...restProps
 }: CardScrollProps) => {
   const platform = usePlatform();
+  const { sizeX } = useAdaptivity();
 
   const refContainer = React.useRef<HTMLDivElement>(null);
   const gapRef = React.useRef<HTMLDivElement>(null);
@@ -117,10 +114,3 @@ const CardScroll: React.FC<CardScrollProps> = ({
     </div>
   );
 };
-
-CardScroll.defaultProps = {
-  size: "s",
-};
-
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(CardScroll, { sizeX: true });

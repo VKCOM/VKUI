@@ -1,1 +1,1 @@
-export const tokenized = ["Button", "Title"];
+export const tokenized = ["Button", "Card", "CardScroll", "Title"];
