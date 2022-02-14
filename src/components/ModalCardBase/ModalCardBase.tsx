@@ -12,7 +12,7 @@ import {
 } from "../../hoc/withAdaptivity";
 import { HasRootRef } from "../../types";
 import { PanelHeaderButton } from "../PanelHeaderButton/PanelHeaderButton";
-import { IOS } from "../../lib/platform";
+import { ANDROID, IOS } from "../../lib/platform";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { Icon24Dismiss } from "@vkontakte/icons";
 import { useKeyboard } from "../../hooks/useKeyboard";
@@ -99,7 +99,7 @@ export const ModalCardBase = withAdaptivity<
           {hasReactNode(header) && (
             <Title
               level="2"
-              weight="semibold"
+              weight={platform === ANDROID ? "2" : "1"}
               vkuiClass="ModalCardBase__header"
             >
               {header}

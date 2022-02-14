@@ -49,7 +49,7 @@ const Placeholder: React.FC<PlaceholderProps> = (props: PlaceholderProps) => {
       <div vkuiClass="Placeholder__in">
         {hasReactNode(icon) && <div vkuiClass="Placeholder__icon">{icon}</div>}
         {hasReactNode(header) && (
-          <Title level="2" weight="medium" vkuiClass="Placeholder__header">
+          <Title level="2" weight="2" vkuiClass="Placeholder__header">
             {header}
           </Title>
         )}

@@ -11,15 +11,15 @@ describe("Title", () => {
     [
       {
         level: ["1"],
-        weight: ["semibold", "bold", "heavy"],
+        weight: [undefined, "1", "2", "3"],
       },
       {
         level: ["2"],
-        weight: ["regular", "semibold", "heavy"],
+        weight: [undefined, "1", "2", "3"],
       },
       {
         level: ["3"],
-        weight: ["regular", "medium", "semibold"],
+        weight: [undefined, "1", "2", "3"],
       },
     ]
   );
