@@ -61,7 +61,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
       style,
       className,
       doneButtonText,
-      closeOnChange = false,
+      closeOnChange = true,
       ...props
     },
     ref

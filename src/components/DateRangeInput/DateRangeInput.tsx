@@ -82,7 +82,7 @@ export const DateRangeInput = React.forwardRef<
       onFocus,
       style,
       className,
-      closeOnChange = false,
+      closeOnChange = true,
       ...props
     },
     ref
