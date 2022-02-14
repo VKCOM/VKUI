@@ -15,10 +15,13 @@ import {
   AppearanceScheme,
   Scheme,
 } from "../../helpers/scheme";
-import { AppearanceProvider } from "../AppearanceProvider/AppearanceProvider";
-import { Platform } from "../../lib/platform";
+import {
+  AppearanceProvider,
+  generateVKUITokensClassName,
+} from "../AppearanceProvider/AppearanceProvider";
 
-export interface ConfigProviderProps extends ConfigProviderContextInterface {
+export interface ConfigProviderProps
+  extends Partial<ConfigProviderContextInterface> {
   /**
    * @deprecated будет удалено в 5.0.0, устанавливать тему следует через appearance
    * Цветовая схема приложения
@@ -58,28 +61,6 @@ const deriveAppearance = (scheme: Scheme | undefined): AppearanceType =>
   scheme === Scheme.SPACE_GRAY || scheme === Scheme.VKCOM_DARK
     ? "dark"
     : "light";
-
-const generateVKUITokensClassName = (
-  platform: string,
-  appearance: string
-): string => {
-  let tokensPlatform;
-  switch (platform) {
-    case Platform.ANDROID:
-      tokensPlatform = "vkBase";
-      break;
-    case Platform.IOS:
-      tokensPlatform = "vkIOS";
-      break;
-    case Platform.VKCOM:
-      tokensPlatform = "vkCom";
-      break;
-    default:
-      tokensPlatform = platform;
-  }
-
-  return `vkui--${tokensPlatform}--${appearance}`;
-};
 
 const ConfigProvider: React.FC<ConfigProviderProps> = ({
   children,
