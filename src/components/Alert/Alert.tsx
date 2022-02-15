@@ -52,7 +52,7 @@ type TransitionEndHandler = (e?: TransitionEvent) => void;
 
 type ItemClickHander = (item: AlertActionInterface) => () => void;
 
-class Alert extends React.Component<TAlertProps, AlertState> {
+class AlertComponent extends React.Component<TAlertProps, AlertState> {
   constructor(props: TAlertProps) {
     super(props);
     this.element = React.createRef();
@@ -285,10 +285,8 @@ class Alert extends React.Component<TAlertProps, AlertState> {
   }
 }
 
-const AlertWithPlatformAndAdaptivity = withPlatform(
-  withAdaptivity(Alert, {
+export const Alert = withPlatform(
+  withAdaptivity(AlertComponent, {
     viewWidth: true,
   })
 );
-
-export { AlertWithPlatformAndAdaptivity as Alert };
