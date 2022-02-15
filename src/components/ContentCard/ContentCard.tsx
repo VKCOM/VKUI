@@ -1,5 +1,5 @@
 import * as React from "react";
-import Card, { CardProps } from "../Card/Card";
+import { Card, CardProps } from "../Card/Card";
 import Caption from "../Typography/Caption/Caption";
 import Title from "../Typography/Title/Title";
 import Text from "../Typography/Text/Text";
@@ -131,7 +131,7 @@ const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
             </Caption>
           )}
           {hasReactNode(header) && (
-            <Title vkuiClass="ContentCard__text" weight="semibold" level="3">
+            <Title vkuiClass="ContentCard__text" weight="3" level="1">
               {header}
             </Title>
           )}

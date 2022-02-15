@@ -40,3 +40,44 @@
   box-sizing: border-box;
   border-radius: inherit;
 }
+
+/**
+ * CMP:
+ * CardScroll
+ */
+.CardScroll .Card {
+  margin-right: var(--vkui--size_cardgrid_padding--regular);
+  flex-shrink: 0;
+}
+
+.CardScroll .Card:last-of-type {
+  margin-right: 0;
+}
+
+.CardScroll--s .Card {
+  width: 40%;
+}
+
+.CardScroll--m .Card {
+  width: 62%;
+}
+
+.CardScroll--l .Card {
+  width: 100%;
+}
+
+/**
+ * CMP:
+ * Group
+ * SplitCol
+ */
+.Group--card .CardScroll--l .Card,
+.SplitCol--spaced .CardScroll--l .Card {
+  width: calc(100% - 32px);
+  margin-right: 16px;
+}
+
+.Group--card .CardScroll--l .Card:last-of-type,
+.SplitCol--spaced .CardScroll--l .Card:last-of-type {
+  margin-right: 0;
+}

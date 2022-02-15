@@ -4,7 +4,7 @@ import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import Tappable, { TappableProps } from "../Tappable/Tappable";
 import { Icon24Chevron } from "@vkontakte/icons";
-import { IOS } from "../../lib/platform";
+import { ANDROID, IOS } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
@@ -12,6 +12,7 @@ import { withAdaptivity, SizeType } from "../../hoc/withAdaptivity";
 import Title from "../Typography/Title/Title";
 import Text from "../Typography/Text/Text";
 import Subhead from "../Typography/Subhead/Subhead";
+import Headline from "../Typography/Headline/Headline";
 import "./SimpleCell.css";
 
 export interface SimpleCellOwnProps extends HasComponent {
@@ -55,12 +56,15 @@ const SimpleCellTypography: React.FC<SimpleCellTypographyProps> = (
   props: SimpleCellTypographyProps
 ) => {
   const { sizeY } = useAdaptivity();
+  const platform = usePlatform();
 
-  return sizeY === SizeType.COMPACT ? (
-    <Text Component="span" weight="regular" {...props} />
-  ) : (
-    <Title Component="span" level="3" weight="regular" {...props} />
-  );
+  if (sizeY === SizeType.COMPACT) {
+    return <Text Component="span" weight="regular" {...props} />;
+  } else if (platform === ANDROID) {
+    return <Headline Component="span" weight="regular" {...props} />;
+  } else {
+    return <Title Component="span" level="3" weight="3" {...props} />;
+  }
 };
 
 const SimpleCell: React.FC<SimpleCellProps> = ({

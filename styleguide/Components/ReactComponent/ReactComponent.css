@@ -5,6 +5,12 @@
   font-size: 0;
 }
 
+.ReactComponent__tokenized {
+  position: relative;
+  top: 1px;
+  left: 4px;
+}
+
 .ReactComponent__name {
   margin-top: 4px;
 }

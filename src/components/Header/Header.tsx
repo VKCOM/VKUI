@@ -41,7 +41,7 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
     switch (mode) {
       case "primary":
       case "tertiary":
-        return <Title weight="semibold" level="3" {...restProps} />;
+        return <Title weight="1" level="3" {...restProps} />;
       case "secondary":
         return <Caption level="1" weight="semibold" caps {...restProps} />;
     }

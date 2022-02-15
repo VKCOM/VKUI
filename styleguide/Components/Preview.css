@@ -30,6 +30,7 @@
   overflow: auto;
   border-radius: inherit;
   background: var(--background_content);
+  color: var(--text_primary);
 }
 
 /*
