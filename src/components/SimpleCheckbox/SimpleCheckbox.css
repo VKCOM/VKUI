@@ -29,17 +29,17 @@
 }
 
 .SimpleCheckbox__icon--on {
-  color: var(--accent);
+  color: var(--accent, var(--vkui--color_icon_accent));
   display: none;
 }
 
 .SimpleCheckbox__icon--indeterminate {
-  color: var(--accent);
+  color: var(--accent, var(--vkui--color_icon_accent));
   display: none;
 }
 
 .SimpleCheckbox__icon--off {
-  color: var(--icon_tertiary);
+  color: var(--icon_tertiary, var(--vkui--color_icon_tertiary));
 }
 
 .SimpleCheckbox__input:checked
