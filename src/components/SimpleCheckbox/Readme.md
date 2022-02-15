@@ -13,7 +13,6 @@
     alignItems: "center",
     flexDirection: "row",
     padding: "24px 16px",
-    background: "white",
   }}
 >
   <SimpleCheckbox defaultChecked style={{ margin: "0 10px" }} />
