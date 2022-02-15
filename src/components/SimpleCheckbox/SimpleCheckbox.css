@@ -1,5 +1,5 @@
 .SimpleCheckbox {
-  display: block;
+  display: flex;
   margin: -10px;
   padding: 10px;
   width: 24px;
@@ -14,15 +14,9 @@
   appearance: none;
 }
 
-.SimpleCheckbox__container {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-
 .SimpleCheckbox__icon {
   flex-shrink: 0;
-  margin: 0;
+  margin: auto;
   box-sizing: border-box;
   border-radius: 4px;
   display: flex;
@@ -42,88 +36,24 @@
   color: var(--icon_tertiary, var(--vkui--color_icon_tertiary));
 }
 
-.SimpleCheckbox__input:checked
-  ~ .SimpleCheckbox__container
-  .SimpleCheckbox__icon--on {
+.SimpleCheckbox__input:checked ~ .SimpleCheckbox__icon--on {
   display: flex;
 }
 
-.SimpleCheckbox__input:indeterminate
-  ~ .SimpleCheckbox__container
-  .SimpleCheckbox__icon--indeterminate,
-.SimpleCheckbox__input:checked
-  ~ .SimpleCheckbox__container
-  .SimpleCheckbox__icon--off {
+.SimpleCheckbox__input:indeterminate ~ .SimpleCheckbox__icon--indeterminate,
+.SimpleCheckbox__input:checked ~ .SimpleCheckbox__icon--off {
   display: none;
 }
 
-.SimpleCheckbox__input:indeterminate
-  ~ .SimpleCheckbox__container
-  .SimpleCheckbox__icon--indeterminate {
+.SimpleCheckbox__input:indeterminate ~ .SimpleCheckbox__icon--indeterminate {
   display: flex;
 }
 
-.SimpleCheckbox__input:indeterminate
-  ~ .SimpleCheckbox__container
-  .SimpleCheckbox__icon--on,
-.SimpleCheckbox__input:indeterminate
-  ~ .SimpleCheckbox__container
-  .SimpleCheckbox__icon--off {
+.SimpleCheckbox__input:indeterminate ~ .SimpleCheckbox__icon--on,
+.SimpleCheckbox__input:indeterminate ~ .SimpleCheckbox__icon--off {
   display: none;
 }
 
-.SimpleCheckbox__input[disabled] ~ .SimpleCheckbox__container {
+.SimpleCheckbox__input[disabled] ~ .SimpleCheckbox__icon {
   opacity: 0.6;
-}
-
-.SimpleCheckbox--ios.SimpleCheckbox--sizeY-compact,
-.SimpleCheckbox--android.SimpleCheckbox--sizeY-compact {
-  margin: -8px;
-  padding: 8px;
-  width: 20px;
-  height: 20px;
-}
-
-.SimpleCheckbox--vkcom {
-  margin: 0;
-  padding: 0;
-  width: 22px;
-  height: 22px;
-  border-radius: 4px;
-}
-
-.SimpleCheckbox--vkcom .SimpleCheckbox__activeShadow,
-.SimpleCheckbox--vkcom .SimpleCheckbox__hoverShadow {
-  margin: 3px;
-  width: 16px;
-  height: 16px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  pointer-events: none;
-  overflow: hidden;
-  border-radius: inherit;
-  transition: inherit;
-}
-
-.SimpleCheckbox--vkcom.SimpleCheckbox--active .SimpleCheckbox__activeShadow {
-  background-color: var(--background_highlighted);
-}
-
-.SimpleCheckbox--vkcom.SimpleCheckbox--hover .SimpleCheckbox__hoverShadow {
-  background-color: var(--background_hover);
-}
-
-.SimpleCheckbox--vkcom .SimpleCheckbox__icon {
-  border-radius: 3px;
-  padding: 1px;
-  border-width: 1px;
-}
-
-.SimpleCheckbox--vkcom
-  .SimpleCheckbox__input[disabled]
-  ~ .SimpleCheckbox__container {
-  opacity: 0.4;
 }

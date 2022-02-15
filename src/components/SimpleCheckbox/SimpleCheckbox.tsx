@@ -1,7 +1,5 @@
 import * as React from "react";
 import Tappable, { ACTIVE_EFFECT_DELAY } from "../Tappable/Tappable";
-import { getClassName } from "../../helpers/getClassName";
-import { classNames } from "../../lib/classNames";
 import { IOS, VKCOM } from "../../lib/platform";
 
 import {
@@ -91,15 +89,10 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
   return (
     <Tappable
       Component="label"
-      vkuiClass={classNames(
-        getClassName("SimpleCheckbox", platform),
-        `SimpleCheckbox--sizeY-${sizeY}`
-      )}
+      vkuiClass="SimpleCheckbox"
       className={className}
       style={style}
       disabled={restProps.disabled}
-      activeMode={platform === VKCOM ? "SimpleCheckbox--active" : "background"}
-      hoverMode={platform === VKCOM ? "SimpleCheckbox--hover" : "background"}
       activeEffectDelay={platform === IOS ? 100 : ACTIVE_EFFECT_DELAY}
       getRootRef={getRootRef}
     >
@@ -110,34 +103,26 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
         vkuiClass="SimpleCheckbox__input"
         ref={inputRef}
       />
-      <div vkuiClass="SimpleCheckbox__container">
-        <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--on">
-          {sizeY === SizeType.COMPACT || platform === VKCOM ? (
-            <Icon20CheckBoxOn />
-          ) : (
-            <Icon24CheckBoxOn />
-          )}
-        </div>
-        <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--off">
-          {sizeY === SizeType.COMPACT || platform === VKCOM ? (
-            <Icon20CheckBoxOff />
-          ) : (
-            <Icon24CheckBoxOff />
-          )}
-        </div>
-        <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--indeterminate">
-          <Icon20CheckBoxIndetermanate
-            width={sizeY === SizeType.COMPACT || platform === VKCOM ? 20 : 24}
-            height={sizeY === SizeType.COMPACT || platform === VKCOM ? 20 : 24}
-          />
-        </div>
+      <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--on">
+        {sizeY === SizeType.COMPACT || platform === VKCOM ? (
+          <Icon20CheckBoxOn />
+        ) : (
+          <Icon24CheckBoxOn />
+        )}
       </div>
-      {platform === VKCOM && (
-        <div aria-hidden={true} vkuiClass="SimpleCheckbox__activeShadow" />
-      )}
-      {platform === VKCOM && (
-        <div aria-hidden={true} vkuiClass="SimpleCheckbox__hoverShadow" />
-      )}
+      <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--off">
+        {sizeY === SizeType.COMPACT || platform === VKCOM ? (
+          <Icon20CheckBoxOff />
+        ) : (
+          <Icon24CheckBoxOff />
+        )}
+      </div>
+      <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--indeterminate">
+        <Icon20CheckBoxIndetermanate
+          width={sizeY === SizeType.COMPACT || platform === VKCOM ? 20 : 24}
+          height={sizeY === SizeType.COMPACT || platform === VKCOM ? 20 : 24}
+        />
+      </div>
     </Tappable>
   );
 };
