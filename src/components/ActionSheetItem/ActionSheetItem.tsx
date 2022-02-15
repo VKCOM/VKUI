@@ -46,7 +46,7 @@ export interface ActionSheetItemProps
   onImmediateClick?: React.MouseEventHandler<HTMLElement>;
 }
 
-const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
+const ActionSheetItemComponent: React.FC<ActionSheetItemProps> = ({
   children,
   autoclose,
   mode = "default",
@@ -185,8 +185,6 @@ const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
   );
 };
 
-const ActionSheetItemWithAdaptivity = withAdaptivity(ActionSheetItem, {
+export const ActionSheetItem = withAdaptivity(ActionSheetItemComponent, {
   sizeY: true,
 });
-
-export { ActionSheetItemWithAdaptivity as ActionSheetItem };
