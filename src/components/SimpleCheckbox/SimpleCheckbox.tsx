@@ -1,6 +1,5 @@
 import * as React from "react";
-import Tappable, { ACTIVE_EFFECT_DELAY } from "../Tappable/Tappable";
-import { IOS, VKCOM } from "../../lib/platform";
+import Tappable from "../Tappable/Tappable";
 
 import {
   Icon20CheckBoxOn,
@@ -11,7 +10,6 @@ import {
 } from "@vkontakte/icons";
 
 import { HasRef, HasRootRef } from "../../types";
-import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useExternRef } from "../../hooks/useExternRef";
 import { SizeType } from "../../hoc/withAdaptivity";
@@ -44,7 +42,6 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
     ...restProps
   } = props;
   const { sizeY } = useAdaptivity();
-  const platform = usePlatform();
   const inputRef = useExternRef(getRef);
 
   React.useEffect(() => {
@@ -93,7 +90,6 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
       className={className}
       style={style}
       disabled={restProps.disabled}
-      activeEffectDelay={platform === IOS ? 100 : ACTIVE_EFFECT_DELAY}
       getRootRef={getRootRef}
     >
       <input
@@ -104,14 +100,14 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
         ref={inputRef}
       />
       <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--on">
-        {sizeY === SizeType.COMPACT || platform === VKCOM ? (
+        {sizeY === SizeType.COMPACT ? (
           <Icon20CheckBoxOn />
         ) : (
           <Icon24CheckBoxOn />
         )}
       </div>
       <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--off">
-        {sizeY === SizeType.COMPACT || platform === VKCOM ? (
+        {sizeY === SizeType.COMPACT ? (
           <Icon20CheckBoxOff />
         ) : (
           <Icon24CheckBoxOff />
@@ -119,8 +115,8 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
       </div>
       <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--indeterminate">
         <Icon20CheckBoxIndetermanate
-          width={sizeY === SizeType.COMPACT || platform === VKCOM ? 20 : 24}
-          height={sizeY === SizeType.COMPACT || platform === VKCOM ? 20 : 24}
+          width={sizeY === SizeType.COMPACT ? 20 : 24}
+          height={sizeY === SizeType.COMPACT ? 20 : 24}
         />
       </div>
     </Tappable>
