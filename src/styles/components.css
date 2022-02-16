@@ -126,6 +126,9 @@
 @import "../components/SliderSwitch/SliderSwitch.css";
 @import "../components/Popper/Popper.css";
 @import "../components/CustomSelectDropdown/CustomSelectDropdown.css";
+@import "../components/SegmentedControl/SegmentedControl.css";
+@import "../components/SegmentedControl/SegmentedControlOption/SegmentedControlOption.css";
+@import "../components/VisuallyHiddenInput/VisuallyHiddenInput.css";
 
 @import "../components/Calendar/Calendar.css";
 @import "../components/CalendarDay/CalendarDay.css";
