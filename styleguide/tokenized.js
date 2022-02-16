@@ -1,1 +1,8 @@
-export const tokenized = ["Button", "Card", "CardScroll", "Title"];
+export const tokenized = [
+  "Button",
+  "Card",
+  "CardScroll",
+  "Title",
+  "Calendar",
+  "CalendarRange",
+];
