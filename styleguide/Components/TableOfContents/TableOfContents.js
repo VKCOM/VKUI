@@ -14,8 +14,9 @@ import {
   Icon28ChevronDownOutline,
   Icon28ChevronUpOutline,
 } from "@vkontakte/icons";
-import "./TableOfContents.css";
+import { deprecated } from "../../deprecated";
 import getInfoFromHash from "react-styleguidist/lib/client/utils/getInfoFromHash";
+import "./TableOfContents.css";
 
 function capitalize(string = "") {
   return `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
@@ -254,6 +255,11 @@ class TableOfContents extends React.PureComponent {
                 "TableOfContents__section--selected":
                   section.name === this.state.currentSectionName,
               })}
+              indicator={
+                deprecated.includes(section.name) && (
+                  <Caption level="3">deprecated</Caption>
+                )
+              }
             >
               {section.title || section.name}
             </SimpleCell>
