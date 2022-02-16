@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { baselineComponent } from "../../testing/utils";
-import SliderSwitch from "./SliderSwitch";
+import { SliderSwitch } from "./SliderSwitch";
 
 const options = [
   { name: "vk", value: "vk" },

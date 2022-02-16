@@ -3,30 +3,29 @@ import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { callMultiple } from "../../lib/callMultiple";
 import { usePlatform } from "../../hooks/usePlatform";
-import { HasRef, HasRootRef } from "../../types";
+import { HasRootRef } from "../../types";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { useExternRef } from "../../hooks/useExternRef";
+import {
+  VisuallyHiddenInput,
+  VisuallyHiddenInputProps,
+} from "../VisuallyHiddenInput/VisuallyHiddenInput";
 import { useFocusVisible } from "../../hooks/useFocusVisible";
 import { FocusVisible } from "../FocusVisible/FocusVisible";
 import "./Switch.css";
 
 export interface SwitchProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
-    HasRootRef<HTMLLabelElement>,
-    HasRef<HTMLInputElement> {}
+  extends VisuallyHiddenInputProps,
+    HasRootRef<HTMLLabelElement> {}
 
 export const Switch: React.FC<SwitchProps> = ({
   style,
   className,
-  getRef,
   getRootRef,
   ...restProps
 }: SwitchProps) => {
   const platform = usePlatform();
   const { sizeY } = useAdaptivity();
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
-
-  const inputRef = useExternRef(getRef);
 
   return (
     <label
@@ -43,11 +42,10 @@ export const Switch: React.FC<SwitchProps> = ({
       ref={getRootRef}
       role="presentation"
     >
-      <input
+      <VisuallyHiddenInput
         {...restProps}
         type="checkbox"
         vkuiClass="Switch__self"
-        ref={inputRef}
         onBlur={callMultiple(onBlur, restProps.onBlur)}
         onFocus={callMultiple(onFocus, restProps.onFocus)}
       />
