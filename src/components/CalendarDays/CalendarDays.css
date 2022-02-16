@@ -7,7 +7,7 @@
   margin-bottom: 4px;
 }
 
-.CalendarDays__row__day-name {
+.CalendarDays__row-day-name {
   text-transform: capitalize;
   color: var(--vkui--color_text_subhead);
   width: 40px;

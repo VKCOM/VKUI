@@ -91,7 +91,7 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
     <div {...props} vkuiClass="CalendarDays" ref={ref}>
       <div vkuiClass="CalendarDays__row">
         {daysNames.map((dayName) => (
-          <div vkuiClass="CalendarDays__row__day-name" key={dayName}>
+          <div vkuiClass="CalendarDays__row-day-name" key={dayName}>
             {dayName}
           </div>
         ))}
