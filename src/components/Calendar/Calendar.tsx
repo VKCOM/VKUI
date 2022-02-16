@@ -5,10 +5,12 @@ import { CalendarDays } from "../CalendarDays/CalendarDays";
 import { CalendarTime } from "../CalendarTime/CalendarTime";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { navigateDate } from "../../lib/calendar";
+import { HasRootRef } from "../../types";
 import "./Calendar.css";
 
 export interface CalendarProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange">,
+    HasRootRef<HTMLDivElement> {
   value?: Date;
   /**
     Локаль, список -> https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
@@ -24,93 +26,89 @@ export interface CalendarProps
   onClose?(): void;
 }
 
-export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
-  (
-    {
-      value,
-      onChange,
-      locale = "ru",
-      disablePast,
-      disableFuture,
-      shouldDisableDate,
-      onClose,
-      enableTime = false,
-      doneButtonText,
-      weekStartsOn = 1,
-      ...props
-    },
-    ref
-  ) => {
-    const [viewDate, setViewDate] = React.useState(new Date());
-    const [focusedDay, setFocusedDay] = React.useState<Date>();
+export const Calendar: React.FC<CalendarProps> = ({
+  value,
+  onChange,
+  locale = "ru",
+  disablePast,
+  disableFuture,
+  shouldDisableDate,
+  onClose,
+  enableTime = false,
+  doneButtonText,
+  weekStartsOn = 1,
+  getRootRef,
+  ...props
+}) => {
+  const [viewDate, setViewDate] = React.useState(new Date());
+  const [focusedDay, setFocusedDay] = React.useState<Date>();
 
-    const setPrevMonth = React.useCallback(
-      () => setViewDate(subMonths(viewDate, 1)),
-      [viewDate]
-    );
-    const setNextMonth = React.useCallback(
-      () => setViewDate(addMonths(viewDate, 1)),
-      [viewDate]
-    );
+  const setPrevMonth = React.useCallback(
+    () => setViewDate(subMonths(viewDate, 1)),
+    [viewDate]
+  );
+  const setNextMonth = React.useCallback(
+    () => setViewDate(addMonths(viewDate, 1)),
+    [viewDate]
+  );
 
-    useIsomorphicLayoutEffect(() => {
-      if (value) {
-        setViewDate(value);
+  useIsomorphicLayoutEffect(() => {
+    if (value) {
+      setViewDate(value);
+    }
+  }, [value]);
+
+  const handleKeyDown = React.useCallback(
+    (event: React.KeyboardEvent) => {
+      if (["ArrowUp", "ArrowDown"].includes(event.key)) {
+        event.preventDefault();
       }
-    }, [value]);
 
-    const handleKeyDown = React.useCallback(
-      (event: React.KeyboardEvent) => {
-        if (["ArrowUp", "ArrowDown"].includes(event.key)) {
-          event.preventDefault();
-        }
+      const newFocusedDay = navigateDate(focusedDay ?? value, event.key);
 
-        const newFocusedDay = navigateDate(focusedDay ?? value, event.key);
+      if (newFocusedDay && !isSameMonth(newFocusedDay, viewDate)) {
+        setViewDate(newFocusedDay);
+      }
+      setFocusedDay(newFocusedDay);
+    },
+    [focusedDay, value, viewDate]
+  );
 
-        if (newFocusedDay && !isSameMonth(newFocusedDay, viewDate)) {
-          setViewDate(newFocusedDay);
-        }
-        setFocusedDay(newFocusedDay);
-      },
-      [focusedDay, value, viewDate]
-    );
-
-    return (
-      <div {...props} ref={ref} vkuiClass="Calendar">
-        <CalendarHeader
-          locale={locale}
-          viewDate={viewDate}
-          onChange={setViewDate}
-          onNextMonth={setNextMonth}
-          onPrevMonth={setPrevMonth}
-        />
-        <CalendarDays
-          locale={locale}
-          viewDate={viewDate}
-          value={value}
-          onChange={onChange}
-          disablePast={disablePast}
-          disableFuture={disableFuture}
-          shouldDisableDate={shouldDisableDate}
-          weekStartsOn={weekStartsOn}
-          focusedDay={focusedDay}
-          tabIndex={0}
-          aria-label="Выбрать день"
-          onKeyDown={handleKeyDown}
-        />
-        {enableTime && value && (
-          <div vkuiClass="Calendar__time">
-            <CalendarTime
-              value={value}
-              onChange={onChange}
-              onClose={onClose}
-              doneButtonText={doneButtonText}
-            />
-          </div>
-        )}
-      </div>
-    );
-  }
-);
+  return (
+    <div {...props} ref={getRootRef} vkuiClass="Calendar">
+      <CalendarHeader
+        locale={locale}
+        viewDate={viewDate}
+        onChange={setViewDate}
+        onNextMonth={setNextMonth}
+        onPrevMonth={setPrevMonth}
+      />
+      <CalendarDays
+        locale={locale}
+        viewDate={viewDate}
+        value={value}
+        onChange={onChange}
+        disablePast={disablePast}
+        disableFuture={disableFuture}
+        shouldDisableDate={shouldDisableDate}
+        weekStartsOn={weekStartsOn}
+        focusedDay={focusedDay}
+        tabIndex={0}
+        aria-label="Выбрать день"
+        onKeyDown={handleKeyDown}
+      />
+      {enableTime && value && (
+        <div vkuiClass="Calendar__time">
+          <CalendarTime
+            value={value}
+            onChange={onChange}
+            onClose={onClose}
+            doneButtonText={doneButtonText}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
 
 Calendar.displayName = "Calendar";
