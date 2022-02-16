@@ -20,6 +20,8 @@ describe("ConfigProvider", () => {
       isWebView: true,
       appearance: Appearance.LIGHT,
       webviewType: WebviewType.INTERNAL,
+      hasNewTokens: false,
+      transitionMotionEnabled: false,
     };
     const ConfigUser: FC = () => {
       expect(useContext(ConfigProviderContext)).toEqual({
