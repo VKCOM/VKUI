@@ -1,6 +1,7 @@
 import * as React from "react";
 import { SliderSwitchButton } from "./SliderSwitchButton";
 import { classNames } from "../../lib/classNames";
+import { warnOnce } from "../../lib/warnOnce";
 import { HasPlatform } from "../../types";
 import "./SliderSwitch.css";
 
@@ -26,6 +27,10 @@ interface SliderSwitchState {
   hoveredOptionId: number;
 }
 
+const warn = warnOnce("SliderSwitch");
+/**
+ * @deprecated Этот компонент устарел и будет удален в 5.0.0. Используйте [`SegmentedControl`](#/SegmentedControl).
+ */
 class SliderSwitch extends React.Component<
   SliderSwitchProps,
   SliderSwitchState
@@ -136,6 +141,14 @@ class SliderSwitch extends React.Component<
     }
 
     return null;
+  }
+
+  componentDidMount(): void {
+    if (process.env.NODE_ENV === "development") {
+      warn(
+        "Этот компонент устарел и будет удален в 5.0.0. Используйте SegmentedControl."
+      );
+    }
   }
 
   public render() {

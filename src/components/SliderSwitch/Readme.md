@@ -1,3 +1,7 @@
+> **Deprecated:** этот компонент устарел и будет удален в 5.0.0.
+>
+> Используйте [`SegmentedControl`](#/SegmentedControl).
+
 ```jsx
 <View activePanel="progress">
   <Panel id="progress">

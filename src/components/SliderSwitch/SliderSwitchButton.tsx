@@ -14,6 +14,9 @@ export interface ButtonProps
   hovered?: boolean;
 }
 
+/**
+ * @deprecated Этот компонент устарел и будет удален в 5.0.0.
+ */
 export const SliderSwitchButton: React.FunctionComponent<ButtonProps> = (
   props: ButtonProps
 ) => {
