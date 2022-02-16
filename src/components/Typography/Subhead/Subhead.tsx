@@ -2,6 +2,7 @@ import * as React from "react";
 import { HasComponent } from "../../../types";
 import { classNames } from "../../../lib/classNames";
 import { warnOnce } from "../../../lib/warnOnce";
+import { useAdaptivity } from "../../../hooks/useAdaptivity";
 import "./Subhead.css";
 
 export interface SubheadProps
@@ -21,6 +22,8 @@ const Subhead: React.FC<SubheadProps> = ({
   Component = "h5",
   ...restProps
 }: SubheadProps) => {
+  const { sizeY } = useAdaptivity();
+
   if (process.env.NODE_ENV === "development") {
     if (
       weight &&
@@ -34,7 +37,11 @@ const Subhead: React.FC<SubheadProps> = ({
   return (
     <Component
       {...restProps}
-      vkuiClass={classNames("Subhead", `Subhead--w-${weight}`)}
+      vkuiClass={classNames(
+        "Subhead",
+        `Subhead--sizeY-${sizeY}`,
+        `Subhead--w-${weight}`
+      )}
     >
       {children}
     </Component>
