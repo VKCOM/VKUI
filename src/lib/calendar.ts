@@ -10,10 +10,12 @@ import {
   endOfMonth,
   isBefore,
 } from "date-fns";
-import { CustomSelectProps } from "../components/CustomSelect/CustomSelect";
 
 export const getYears = (currentYear: number, range: number) => {
-  const years: CustomSelectProps["options"] = [];
+  const years: Array<{
+    value: number;
+    label: string;
+  }> = [];
 
   for (let i = currentYear - range; i <= currentYear + range; i++) {
     years.push({ label: String(i).padStart(4, "0"), value: i });
@@ -23,7 +25,10 @@ export const getYears = (currentYear: number, range: number) => {
 };
 
 export const getMonths = (locale?: string) => {
-  const months: CustomSelectProps["options"] = [];
+  const months: Array<{
+    value: number;
+    label: string;
+  }> = [];
   const formatter = new Intl.DateTimeFormat(locale, {
     month: "long",
   });

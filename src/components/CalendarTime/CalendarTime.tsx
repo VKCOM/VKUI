@@ -1,6 +1,6 @@
 import * as React from "react";
 import { setHours, setMinutes } from "date-fns";
-import CustomSelect, { CustomSelectProps } from "../CustomSelect/CustomSelect";
+import CustomSelect from "../CustomSelect/CustomSelect";
 import Button from "../Button/Button";
 import { SizeType } from "../../hoc/withAdaptivity";
 import "./CalendarTime.css";
@@ -12,12 +12,18 @@ export interface CalendarTimeProps {
   onClose?(): void;
 }
 
-const hours: CustomSelectProps["options"] = [];
+const hours: Array<{
+  value: number;
+  label: string;
+}> = [];
 for (let i = 0; i < 24; i += 1) {
   hours.push({ value: i, label: String(i).padStart(2, "0") });
 }
 
-const minutes: CustomSelectProps["options"] = [];
+const minutes: Array<{
+  value: number;
+  label: string;
+}> = [];
 for (let i = 0; i < 60; i += 1) {
   minutes.push({ value: i, label: String(i).padStart(2, "0") });
 }
