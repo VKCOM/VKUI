@@ -54,5 +54,5 @@
 }
 
 .SimpleCheckbox__input[disabled] ~ .SimpleCheckbox__icon {
-  opacity: 0.6;
+  opacity: var(--vkui--opacity_disable);
 }

@@ -20,5 +20,8 @@
   <SimpleCheckbox defaultChecked style={{ margin: "0 10px" }} />
   <SimpleCheckbox indeterminate style={{ margin: "0 10px" }} />
   <SimpleCheckbox defaultIndeterminate style={{ margin: "0 10px" }} />
+  <SimpleCheckbox disabled style={{ margin: "0 10px" }} />
+  <SimpleCheckbox defaultChecked disabled style={{ margin: "0 10px" }} />
+  <SimpleCheckbox defaultIndeterminate disabled style={{ margin: "0 10px" }} />
 </div>
 ```
