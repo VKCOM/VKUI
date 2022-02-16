@@ -15,7 +15,7 @@ export interface CardScrollProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   size?: "s" | "m" | "l" | false;
   showArrows?: HorizontalScrollProps["showArrows"];
-  withSpaces: boolean;
+  withSpaces?: boolean;
 }
 
 export const CardScroll: React.FC<CardScrollProps> = ({
