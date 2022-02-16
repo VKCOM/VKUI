@@ -9,82 +9,75 @@ const Example = () => {
   const [value, setValue] = useState([new Date(), addDays(new Date(), 10)]);
   const [disablePast, setDisablePast] = useState(false);
   const [disableFuture, setDisableFuture] = useState(false);
-  const [closeOnChange, setCloseOnChange] = useState(false);
+  const [closeOnChange, setCloseOnChange] = useState(true);
   const [locale, setLocale] = useState("ru");
 
   return (
-    <View activePanel="DateRangeInput">
-      <Panel id="DateRangeInput">
-        <PanelHeader>DateRangeInput</PanelHeader>
-        <Group>
-          <FormLayout>
-            <FormLayoutGroup mode="vertical">
-              <FormItem top="Запрет выбора прошлых дат">
-                <Checkbox
-                  checked={disablePast}
-                  onChange={(e) => setDisablePast(e.target.checked)}
-                >
-                  Включено
-                </Checkbox>
-              </FormItem>
-              <FormItem top="Запрет выбора будущих дат">
-                <Checkbox
-                  checked={disableFuture}
-                  onChange={(e) => setDisableFuture(e.target.checked)}
-                >
-                  Включено
-                </Checkbox>
-              </FormItem>
-              <FormItem top="Закрывать календарь послы выбора даты">
-                <Checkbox
-                  checked={closeOnChange}
-                  onChange={(e) => setCloseOnChange(e.target.checked)}
-                >
-                  Включено
-                </Checkbox>
-              </FormItem>
-              <FormItem top="Локаль">
-                <Select
-                  style={{ width: 100 }}
-                  value={locale}
-                  onChange={(e) => setLocale(e.target.value)}
-                  options={[
-                    {
-                      label: "ru",
-                      value: "ru",
-                    },
-                    {
-                      label: "en",
-                      value: "en",
-                    },
-                    {
-                      label: "ar",
-                      value: "ar",
-                    },
-                    {
-                      label: "fr",
-                      value: "fr",
-                    },
-                  ]}
-                />
-              </FormItem>
-              <FormItem>
-                <div style={{ display: "flex" }}>
-                  <DateRangeInput
-                    value={value}
-                    onChange={setValue}
-                    disablePast={disablePast}
-                    disableFuture={disableFuture}
-                    locale={locale}
-                    closeOnChange={closeOnChange}
-                  />
-                </div>
-              </FormItem>
-            </FormLayoutGroup>
-          </FormLayout>
-        </Group>
-      </Panel>
-    </View>
+    <FormLayout>
+      <FormLayoutGroup mode="vertical">
+        <FormItem top="Запрет выбора прошлых дат">
+          <Checkbox
+            checked={disablePast}
+            onChange={(e) => setDisablePast(e.target.checked)}
+          >
+            Включено
+          </Checkbox>
+        </FormItem>
+        <FormItem top="Запрет выбора будущих дат">
+          <Checkbox
+            checked={disableFuture}
+            onChange={(e) => setDisableFuture(e.target.checked)}
+          >
+            Включено
+          </Checkbox>
+        </FormItem>
+        <FormItem top="Закрывать календарь послы выбора даты">
+          <Checkbox
+            checked={closeOnChange}
+            onChange={(e) => setCloseOnChange(e.target.checked)}
+          >
+            Включено
+          </Checkbox>
+        </FormItem>
+        <FormItem top="Локаль">
+          <Select
+            style={{ width: 100 }}
+            value={locale}
+            onChange={(e) => setLocale(e.target.value)}
+            options={[
+              {
+                label: "ru",
+                value: "ru",
+              },
+              {
+                label: "en",
+                value: "en",
+              },
+              {
+                label: "ar",
+                value: "ar",
+              },
+              {
+                label: "fr",
+                value: "fr",
+              },
+            ]}
+          />
+        </FormItem>
+        <FormItem>
+          <div style={{ display: "flex" }}>
+            <DateRangeInput
+              value={value}
+              onChange={setValue}
+              disablePast={disablePast}
+              disableFuture={disableFuture}
+              locale={locale}
+              closeOnChange={closeOnChange}
+            />
+          </div>
+        </FormItem>
+      </FormLayoutGroup>
+    </FormLayout>
   );
 };
 

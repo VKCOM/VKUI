@@ -73,5 +73,5 @@
 
 :not(.CalendarDay--hover) .CalendarDay__inner--active {
   background-color: var(--vkui--color_background_accent);
-  color: #fff;
+  color: var(--vkui--color_text_contrast);
 }

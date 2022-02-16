@@ -182,7 +182,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
                 shouldDisableDate={shouldDisableDate}
                 locale={locale}
                 onClose={closeCalendar}
-                ref={calendarRef}
+                getRootRef={calendarRef}
                 doneButtonText={doneButtonText}
               />
             </FocusTrap>

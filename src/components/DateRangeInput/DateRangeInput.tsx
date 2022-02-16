@@ -223,7 +223,7 @@ export const DateRangeInput = React.forwardRef<
                 shouldDisableDate={shouldDisableDate}
                 locale={locale}
                 onClose={closeCalendar}
-                ref={calendarRef}
+                getRootRef={calendarRef}
               />
             </FocusTrap>
           </Popper>
