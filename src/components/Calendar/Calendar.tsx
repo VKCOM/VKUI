@@ -82,6 +82,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         onChange={setViewDate}
         onNextMonth={setNextMonth}
         onPrevMonth={setPrevMonth}
+        vkuiClass="Calendar__header"
       />
       <CalendarDays
         locale={locale}

@@ -13,3 +13,8 @@
   margin: 12px -12px 0 -12px;
   padding: 12px 12px 0 12px;
 }
+
+.Calendar__header {
+  margin-bottom: 4px;
+  z-index: 1;
+}

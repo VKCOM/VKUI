@@ -2,10 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 4px;
   position: relative;
   min-height: 36px;
-  z-index: 1;
 }
 
 .CalendarHeader__pickers {

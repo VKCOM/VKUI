@@ -12,7 +12,8 @@ import { useBooleanState } from "../../hooks/useBooleanState";
 import { getMonths, getYears } from "../../lib/calendar";
 import "./CalendarHeader.css";
 
-export interface CalendarHeaderProps {
+export interface CalendarHeaderProps
+  extends Pick<React.HTMLAttributes<HTMLDivElement>, "className"> {
   viewDate: Date;
   locale?: string;
   prevMonth?: boolean;
@@ -63,6 +64,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   nextMonth = true,
   onNextMonth,
   onPrevMonth,
+  className,
 }) => {
   const onMonthsChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>
@@ -103,7 +105,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   );
 
   return (
-    <div vkuiClass="CalendarHeader">
+    <div vkuiClass="CalendarHeader" className={className}>
       {prevMonth && (
         <Tappable
           vkuiClass={classNames(
