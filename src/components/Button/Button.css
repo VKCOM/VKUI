@@ -12,6 +12,26 @@
   max-width: 100%;
 }
 
+.Button--in-group {
+  flex-basis: 100%;
+}
+
+.Button--in-group-horizontal-medium:not(:last-child) {
+  margin-right: var(--vkui--size_button_group--padding-medium);
+}
+
+.Button--in-group-horizontal-small:not(:last-child) {
+  margin-right: var(--vkui--size_button_group--padding-small);
+}
+
+.Button--in-group-vertical-medium:not(:first-child) {
+  margin-top: var(--vkui--size_button_group--padding-medium);
+}
+
+.Button--in-group-vertical-small:not(:first-child) {
+  margin-top: var(--vkui--size_button_group--padding-small);
+}
+
 .Button--stretched {
   display: block;
   width: 100%;
@@ -77,6 +97,12 @@
 .Button--singleIcon .Button__before:only-child,
 .Button--singleIcon .Button__after:only-child {
   margin: 0;
+}
+
+.Button--singleIcon.Button--in-group {
+  flex-shrink: 1;
+  flex-grow: 0;
+  flex-basis: content;
 }
 
 .Button__content {

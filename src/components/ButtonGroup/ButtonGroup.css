@@ -1,0 +1,23 @@
+.ButtonGroup {
+  display: inline-flex;
+}
+
+.ButtonGroup--mode-vertical {
+  flex-direction: column;
+}
+
+.ButtonGroup--mode-horizontal {
+  flex-direction: row;
+}
+
+.ButtonGroup--vertical-padding-medium:not(:first-child) {
+  margin-top: var(--vkui--size_button_group--padding-medium);
+}
+
+.ButtonGroup--vertical-padding-small:not(:first-child) {
+  margin-top: var(--vkui--size_button_group--padding-small);
+}
+
+.ButtonGroup--stretched {
+  display: flex;
+}
