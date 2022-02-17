@@ -1,8 +1,23 @@
 import * as React from "react";
-import { addMonths, subMonths, isSameMonth } from "date-fns";
+import {
+  addMonths,
+  subMonths,
+  isSameMonth,
+  isSameDay,
+  isBefore,
+  isAfter,
+  startOfDay,
+  endOfDay,
+  isWithinInterval,
+} from "date-fns";
 import { CalendarHeader } from "../CalendarHeader/CalendarHeader";
 import { CalendarDays } from "../CalendarDays/CalendarDays";
-import { navigateDate } from "../../lib/calendar";
+import {
+  navigateDate,
+  setTimeEqual,
+  isLastDay,
+  isFirstDay,
+} from "../../lib/calendar";
 import { HasRootRef } from "../../types";
 import "./CalendarRange.css";
 
@@ -67,6 +82,71 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
     [focusedDay, value, viewDate]
   );
 
+  const onDayChange = React.useCallback(
+    (date: Date) => {
+      if (!onChange) {
+        return;
+      }
+
+      if (!value) {
+        onChange([date, null]);
+        return;
+      }
+
+      const start = value[0];
+      const end = value[1];
+      if ((start && isSameDay(date, start)) || (end && isSameDay(date, end))) {
+        onChange([setTimeEqual(date, start), setTimeEqual(date, end)]);
+      } else if (start && isBefore(date, start)) {
+        onChange([setTimeEqual(date, start), end]);
+      } else if (start && isAfter(date, start)) {
+        onChange([start, setTimeEqual(date, end)]);
+      }
+    },
+    [value, onChange]
+  );
+
+  const isDaySelected = React.useCallback(
+    (day: Date) => {
+      if (!value?.[0] || !value[1]) {
+        return false;
+      }
+
+      return Boolean(
+        isWithinInterval(day, {
+          start: startOfDay(value[0]),
+          end: endOfDay(value[1]),
+        })
+      );
+    },
+    [value]
+  );
+
+  const isDayActive = React.useCallback(
+    (day: Date) =>
+      Boolean(
+        (value?.[0] && isSameDay(day, value[0])) ||
+          (value?.[1] && isSameDay(day, value[1]))
+      ),
+    [value]
+  );
+
+  const isDaySelectionEnd = React.useCallback(
+    (day: Date, dayOfWeek: number) =>
+      Boolean(
+        isLastDay(day, dayOfWeek) || (value?.[1] && isSameDay(day, value[1]))
+      ),
+    [value]
+  );
+
+  const isDaySelectionStart = React.useCallback(
+    (day: Date, dayOfWeek: number) =>
+      Boolean(
+        isFirstDay(day, dayOfWeek) || (value?.[0] && isSameDay(day, value[0]))
+      ),
+    [value]
+  );
+
   return (
     <div {...props} ref={getRootRef} vkuiClass="CalendarRange">
       <div vkuiClass="CalendarRange__inner">
@@ -82,14 +162,17 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
           locale={locale}
           viewDate={viewDate}
           value={value}
-          onChange={onChange}
           disablePast={disablePast}
           disableFuture={disableFuture}
           shouldDisableDate={shouldDisableDate}
           weekStartsOn={weekStartsOn}
-          range
           onKeyDown={handleKeyDown}
           focusedDay={focusedDay}
+          onDayChange={onDayChange}
+          isDaySelected={isDaySelected}
+          isDayActive={isDayActive}
+          isDaySelectionEnd={isDaySelectionEnd}
+          isDaySelectionStart={isDaySelectionStart}
         />
       </div>
       <div vkuiClass="CalendarRange__inner">
@@ -105,16 +188,19 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
           locale={locale}
           viewDate={secondViewDate}
           value={value}
-          onChange={onChange}
           disablePast={disablePast}
           disableFuture={disableFuture}
           shouldDisableDate={shouldDisableDate}
           weekStartsOn={weekStartsOn}
-          range
           tabIndex={0}
           aria-label="Выбрать день"
           onKeyDown={handleKeyDown}
           focusedDay={focusedDay}
+          onDayChange={onDayChange}
+          isDaySelected={isDaySelected}
+          isDayActive={isDayActive}
+          isDaySelectionEnd={isDaySelectionEnd}
+          isDaySelectionStart={isDaySelectionStart}
         />
       </div>
     </div>

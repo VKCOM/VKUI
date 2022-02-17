@@ -9,6 +9,8 @@ import {
   startOfMonth,
   endOfMonth,
   isBefore,
+  isFirstDayOfMonth,
+  isLastDayOfMonth,
 } from "date-fns";
 
 export const getYears = (currentYear: number, range: number) => {
@@ -113,3 +115,9 @@ export const setTimeEqual = (to: Date, from?: Date | null) => {
 
   return to;
 };
+
+export const isFirstDay = (day: Date, dayOfWeek: number) =>
+  dayOfWeek === 0 || isFirstDayOfMonth(day);
+
+export const isLastDay = (day: Date, dayOfWeek: number) =>
+  dayOfWeek === 6 || isLastDayOfMonth(day);

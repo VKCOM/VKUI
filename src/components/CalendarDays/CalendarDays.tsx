@@ -3,15 +3,12 @@ import {
   isBefore,
   isSameDay,
   isSameMonth,
-  isFirstDayOfMonth,
-  isLastDayOfMonth,
   isAfter,
   startOfDay,
   endOfDay,
-  isWithinInterval,
 } from "date-fns";
 import { CalendarDay } from "../CalendarDay/CalendarDay";
-import { getDaysNames, getWeeks, setTimeEqual } from "../../lib/calendar";
+import { getDaysNames, getWeeks } from "../../lib/calendar";
 import "./CalendarDays.css";
 
 export interface CalendarDaysProps
@@ -22,9 +19,12 @@ export interface CalendarDaysProps
   locale?: string;
   disablePast?: boolean;
   disableFuture?: boolean;
-  range?: boolean;
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-  onChange?(value?: Date | Array<Date | null>): void;
+  onDayChange(value: Date): void;
+  isDaySelected(value: Date): boolean;
+  isDaySelectionStart(value: Date, dayOfWeek: number): boolean;
+  isDaySelectionEnd(value: Date, dayOfWeek: number): boolean;
+  isDayActive(value: Date): boolean;
   shouldDisableDate?(value: Date): boolean;
 }
 
@@ -32,13 +32,16 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
   locale,
   viewDate,
   value,
-  onChange,
   disablePast,
   disableFuture,
   shouldDisableDate,
-  range = false,
   weekStartsOn,
   focusedDay,
+  onDayChange,
+  isDaySelected,
+  isDayActive,
+  isDaySelectionEnd,
+  isDaySelectionStart,
   ...props
 }) => {
   const ref = React.useRef<HTMLDivElement>(null);
@@ -54,37 +57,13 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
     [locale, now, weekStartsOn]
   );
 
-  const onDayChange = React.useCallback(
+  const handleDayChange = React.useCallback(
     (date: Date) => {
-      if (!onChange) {
-        return;
-      }
-
-      if (!range) {
-        onChange(setTimeEqual(date, value as Date | undefined | null));
-      } else {
-        if (!value) {
-          onChange([date, null]);
-          return;
-        }
-
-        const start = (value as Array<Date | null>)[0];
-        const end = (value as Array<Date | null>)[1];
-        if (
-          (start && isSameDay(date, start)) ||
-          (end && isSameDay(date, end))
-        ) {
-          onChange([setTimeEqual(date, start), setTimeEqual(date, end)]);
-        } else if (start && isBefore(date, start)) {
-          onChange([setTimeEqual(date, start), end]);
-        } else if (start && isAfter(date, start)) {
-          onChange([start, setTimeEqual(date, end)]);
-        }
-      }
+      onDayChange(date);
 
       ref.current?.focus();
     },
-    [value, onChange, range]
+    [onDayChange]
   );
 
   return (
@@ -99,7 +78,7 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
 
       {weeks.map((week, i) => (
         <div vkuiClass="CalendarDays__row" key={i}>
-          {week.map((day, i, arr) => {
+          {week.map((day, i) => {
             let disabled = false;
             if (disablePast) {
               disabled = isBefore(endOfDay(day), now);
@@ -110,52 +89,20 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
             if (shouldDisableDate) {
               disabled = shouldDisableDate(day);
             }
-
-            let active = false;
-            let selected = false;
-            let selectionStart = i === 0 || isFirstDayOfMonth(day);
-            let selectionEnd = i === arr.length - 1 || isLastDayOfMonth(day);
             let focused = focusedDay && isSameDay(day, focusedDay);
-
-            if (range && value) {
-              const start = (value as Array<Date | null>)[0];
-              const end = (value as Array<Date | null>)[1];
-
-              active = Boolean(
-                (start && isSameDay(day, start)) || (end && isSameDay(day, end))
-              );
-
-              selected = Boolean(
-                start &&
-                  end &&
-                  isWithinInterval(day, {
-                    start: startOfDay(start),
-                    end: endOfDay(end),
-                  })
-              );
-
-              selectionStart = Boolean(
-                selectionStart || (start && isSameDay(day, start))
-              );
-              selectionEnd = Boolean(
-                selectionEnd || (end && isSameDay(day, end))
-              );
-            } else {
-              active = Boolean(value && isSameDay(day, value as Date));
-            }
 
             return (
               <CalendarDay
                 key={day.toISOString()}
                 day={day}
                 today={isSameDay(day, now)}
-                active={active}
-                onChange={onDayChange}
+                active={isDayActive(day)}
+                onChange={handleDayChange}
                 hidden={!isSameMonth(day, viewDate)}
                 disabled={disabled}
-                selectionStart={selectionStart}
-                selectionEnd={selectionEnd}
-                selected={selected}
+                selectionStart={isDaySelectionStart(day, i)}
+                selectionEnd={isDaySelectionEnd(day, i)}
+                selected={isDaySelected(day)}
                 locale={locale}
                 focused={focused}
               />

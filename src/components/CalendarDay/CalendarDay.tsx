@@ -16,6 +16,8 @@ export interface CalendarDayProps {
   locale?: string;
   focused?: boolean;
   onChange(viewDate: Date): void;
+  onEnter?(): void;
+  onLeave?(): void;
 }
 
 export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
@@ -31,6 +33,8 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
     selectionEnd,
     locale,
     focused,
+    onEnter,
+    onLeave,
   }) => {
     const ref = React.useRef<HTMLElement>(null);
     const onClick = React.useCallback(() => onChange(day), [day, onChange]);
@@ -70,6 +74,8 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
         tabIndex={-1}
         getRootRef={ref}
         focusVisibleMode={active ? "outside" : "inside"}
+        onEnter={onEnter}
+        onLeave={onLeave}
       >
         <div
           vkuiClass={classNames("CalendarDay__inner", {

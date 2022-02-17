@@ -1,10 +1,15 @@
 import * as React from "react";
-import { subMonths, addMonths, isSameMonth } from "date-fns";
+import { subMonths, addMonths, isSameMonth, isSameDay } from "date-fns";
 import { CalendarHeader } from "../CalendarHeader/CalendarHeader";
 import { CalendarDays } from "../CalendarDays/CalendarDays";
 import { CalendarTime } from "../CalendarTime/CalendarTime";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import { navigateDate } from "../../lib/calendar";
+import {
+  navigateDate,
+  setTimeEqual,
+  isFirstDay,
+  isLastDay,
+} from "../../lib/calendar";
 import { HasRootRef } from "../../types";
 import "./Calendar.css";
 
@@ -25,6 +30,8 @@ export interface CalendarProps
   shouldDisableDate?(value: Date): boolean;
   onClose?(): void;
 }
+
+const isDaySelected = () => false;
 
 export const Calendar: React.FC<CalendarProps> = ({
   value,
@@ -74,6 +81,18 @@ export const Calendar: React.FC<CalendarProps> = ({
     [focusedDay, value, viewDate]
   );
 
+  const onDayChange = React.useCallback(
+    (date: Date) => {
+      onChange?.(setTimeEqual(date, value as Date | undefined | null));
+    },
+    [value, onChange]
+  );
+
+  const isDayActive = React.useCallback(
+    (day: Date) => Boolean(value && isSameDay(day, value)),
+    [value]
+  );
+
   return (
     <div {...props} ref={getRootRef} vkuiClass="Calendar">
       <CalendarHeader
@@ -88,7 +107,6 @@ export const Calendar: React.FC<CalendarProps> = ({
         locale={locale}
         viewDate={viewDate}
         value={value}
-        onChange={onChange}
         disablePast={disablePast}
         disableFuture={disableFuture}
         shouldDisableDate={shouldDisableDate}
@@ -97,6 +115,11 @@ export const Calendar: React.FC<CalendarProps> = ({
         tabIndex={0}
         aria-label="Выбрать день"
         onKeyDown={handleKeyDown}
+        onDayChange={onDayChange}
+        isDaySelected={isDaySelected}
+        isDayActive={isDayActive}
+        isDaySelectionStart={isFirstDay}
+        isDaySelectionEnd={isLastDay}
       />
       {enableTime && value && (
         <div vkuiClass="Calendar__time">
