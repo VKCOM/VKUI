@@ -68,7 +68,7 @@
 
 .CalendarDay--hover .CalendarDay__inner {
   border-radius: 8px;
-  background-color: var(--vkui--color_background_secondary_alpha--hover);
+  background-color: var(--vkui--color_background_secondary--hover);
 }
 
 :not(.CalendarDay--hover) .CalendarDay__inner--active {
