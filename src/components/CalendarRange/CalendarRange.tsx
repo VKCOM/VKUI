@@ -37,6 +37,19 @@ export interface CalendarRangeProps
   onClose?(): void;
 }
 
+const getIsDaySelected = (day: Date, value?: Array<Date | null>) => {
+  if (!value?.[0] || !value[1]) {
+    return false;
+  }
+
+  return Boolean(
+    isWithinInterval(day, {
+      start: startOfDay(value[0]),
+      end: endOfDay(value[1]),
+    })
+  );
+};
+
 export const CalendarRange: React.FC<CalendarRangeProps> = ({
   value,
   onChange,
@@ -50,6 +63,7 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
   ...props
 }) => {
   const [viewDate, setViewDate] = React.useState(value?.[0] ?? new Date());
+  const [hintedDate, setHintedDate] = React.useState<Array<Date | null>>();
   const [focusedDay, setFocusedDay] = React.useState<Date>();
   const secondViewDate = addMonths(viewDate, 1);
 
@@ -82,43 +96,36 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
     [focusedDay, value, viewDate]
   );
 
-  const onDayChange = React.useCallback(
+  const getNewValue = React.useCallback(
     (date: Date) => {
-      if (!onChange) {
-        return;
-      }
-
       if (!value) {
-        onChange([date, null]);
-        return;
+        return [date, null];
       }
 
       const start = value[0];
       const end = value[1];
       if ((start && isSameDay(date, start)) || (end && isSameDay(date, end))) {
-        onChange([setTimeEqual(date, start), setTimeEqual(date, end)]);
+        return [setTimeEqual(date, start), setTimeEqual(date, end)];
       } else if (start && isBefore(date, start)) {
-        onChange([setTimeEqual(date, start), end]);
+        return [setTimeEqual(date, start), end];
       } else if (start && isAfter(date, start)) {
-        onChange([start, setTimeEqual(date, end)]);
+        return [start, setTimeEqual(date, end)];
       }
+
+      return value;
     },
-    [value, onChange]
+    [value]
+  );
+
+  const onDayChange = React.useCallback(
+    (date: Date) => {
+      onChange?.(getNewValue(date));
+    },
+    [onChange, getNewValue]
   );
 
   const isDaySelected = React.useCallback(
-    (day: Date) => {
-      if (!value?.[0] || !value[1]) {
-        return false;
-      }
-
-      return Boolean(
-        isWithinInterval(day, {
-          start: startOfDay(value[0]),
-          end: endOfDay(value[1]),
-        })
-      );
-    },
+    (day: Date) => getIsDaySelected(day, value),
     [value]
   );
 
@@ -139,12 +146,45 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
     [value]
   );
 
+  const isHintedDaySelectionEnd = React.useCallback(
+    (day: Date, dayOfWeek: number) =>
+      Boolean(
+        isLastDay(day, dayOfWeek) ||
+          (hintedDate?.[1] && isSameDay(day, hintedDate[1]))
+      ),
+    [hintedDate]
+  );
+
   const isDaySelectionStart = React.useCallback(
     (day: Date, dayOfWeek: number) =>
       Boolean(
         isFirstDay(day, dayOfWeek) || (value?.[0] && isSameDay(day, value[0]))
       ),
     [value]
+  );
+
+  const isHintedDaySelectionStart = React.useCallback(
+    (day: Date, dayOfWeek: number) =>
+      Boolean(
+        isFirstDay(day, dayOfWeek) ||
+          (hintedDate?.[0] && isSameDay(day, hintedDate[0]))
+      ),
+    [hintedDate]
+  );
+
+  const onDayEnter = React.useCallback(
+    (date: Date) => setHintedDate(getNewValue(date)),
+    [setHintedDate, getNewValue]
+  );
+
+  const onDayLeave = React.useCallback(
+    () => setHintedDate(undefined),
+    [setHintedDate]
+  );
+
+  const isDayHinted = React.useCallback(
+    (day: Date) => getIsDaySelected(day, hintedDate),
+    [hintedDate]
   );
 
   return (
@@ -173,6 +213,11 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
           isDayActive={isDayActive}
           isDaySelectionEnd={isDaySelectionEnd}
           isDaySelectionStart={isDaySelectionStart}
+          isDayHinted={isDayHinted}
+          onDayEnter={onDayEnter}
+          onDayLeave={onDayLeave}
+          isHintedDaySelectionEnd={isHintedDaySelectionEnd}
+          isHintedDaySelectionStart={isHintedDaySelectionStart}
         />
       </div>
       <div vkuiClass="CalendarRange__inner">
@@ -201,6 +246,11 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
           isDayActive={isDayActive}
           isDaySelectionEnd={isDaySelectionEnd}
           isDaySelectionStart={isDaySelectionStart}
+          isDayHinted={isDayHinted}
+          onDayEnter={onDayEnter}
+          onDayLeave={onDayLeave}
+          isHintedDaySelectionEnd={isHintedDaySelectionEnd}
+          isHintedDaySelectionStart={isHintedDaySelectionStart}
         />
       </div>
     </div>

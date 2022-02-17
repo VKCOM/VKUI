@@ -31,8 +31,6 @@ export interface CalendarProps
   onClose?(): void;
 }
 
-const isDaySelected = () => false;
-
 export const Calendar: React.FC<CalendarProps> = ({
   value,
   onChange,
@@ -116,7 +114,6 @@ export const Calendar: React.FC<CalendarProps> = ({
         aria-label="Выбрать день"
         onKeyDown={handleKeyDown}
         onDayChange={onDayChange}
-        isDaySelected={isDaySelected}
         isDayActive={isDayActive}
         isDaySelectionStart={isFirstDay}
         isDaySelectionEnd={isLastDay}

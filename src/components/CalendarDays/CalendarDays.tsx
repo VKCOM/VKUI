@@ -21,11 +21,16 @@ export interface CalendarDaysProps
   disableFuture?: boolean;
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   onDayChange(value: Date): void;
-  isDaySelected(value: Date): boolean;
   isDaySelectionStart(value: Date, dayOfWeek: number): boolean;
   isDaySelectionEnd(value: Date, dayOfWeek: number): boolean;
+  isHintedDaySelectionStart?(value: Date, dayOfWeek: number): boolean;
+  isHintedDaySelectionEnd?(value: Date, dayOfWeek: number): boolean;
   isDayActive(value: Date): boolean;
+  isDayHinted?(value: Date): boolean;
+  isDaySelected?(value: Date): boolean;
   shouldDisableDate?(value: Date): boolean;
+  onDayEnter?(value: Date): void;
+  onDayLeave?(value: Date): void;
 }
 
 export const CalendarDays: React.FC<CalendarDaysProps> = ({
@@ -42,6 +47,11 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
   isDayActive,
   isDaySelectionEnd,
   isDaySelectionStart,
+  onDayEnter,
+  onDayLeave,
+  isDayHinted,
+  isHintedDaySelectionStart,
+  isHintedDaySelectionEnd,
   ...props
 }) => {
   const ref = React.useRef<HTMLDivElement>(null);
@@ -102,9 +112,14 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
                 disabled={disabled}
                 selectionStart={isDaySelectionStart(day, i)}
                 selectionEnd={isDaySelectionEnd(day, i)}
-                selected={isDaySelected(day)}
+                hintedSelectionStart={isHintedDaySelectionStart?.(day, i)}
+                hintedSelectionEnd={isHintedDaySelectionEnd?.(day, i)}
+                selected={isDaySelected?.(day)}
                 locale={locale}
                 focused={focused}
+                onEnter={onDayEnter}
+                onLeave={onDayLeave}
+                hinted={isDayHinted?.(day)}
               />
             );
           })}

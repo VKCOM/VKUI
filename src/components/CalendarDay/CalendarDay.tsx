@@ -10,14 +10,17 @@ export interface CalendarDayProps {
   selected?: boolean;
   selectionStart?: boolean;
   selectionEnd?: boolean;
+  hintedSelectionStart?: boolean;
+  hintedSelectionEnd?: boolean;
   active?: boolean;
   hidden?: boolean;
   disabled?: boolean;
   locale?: string;
   focused?: boolean;
-  onChange(viewDate: Date): void;
-  onEnter?(): void;
-  onLeave?(): void;
+  hinted?: boolean;
+  onChange(value: Date): void;
+  onEnter?(value: Date): void;
+  onLeave?(value: Date): void;
 }
 
 export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
@@ -35,9 +38,14 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
     focused,
     onEnter,
     onLeave,
+    hinted,
+    hintedSelectionStart,
+    hintedSelectionEnd,
   }) => {
     const ref = React.useRef<HTMLElement>(null);
     const onClick = React.useCallback(() => onChange(day), [day, onChange]);
+    const handleEnter = React.useCallback(() => onEnter?.(day), [day, onEnter]);
+    const handleLeave = React.useCallback(() => onLeave?.(day), [day, onLeave]);
 
     React.useEffect(() => {
       if (focused && ref.current) {
@@ -51,6 +59,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
     if (hidden) {
       return <div vkuiClass="CalendarDay__hidden"></div>;
     }
+
     return (
       <Tappable
         vkuiClass={classNames("CalendarDay", {
@@ -74,15 +83,23 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
         tabIndex={-1}
         getRootRef={ref}
         focusVisibleMode={active ? "outside" : "inside"}
-        onEnter={onEnter}
-        onLeave={onLeave}
+        onEnter={handleEnter}
+        onLeave={handleLeave}
       >
         <div
-          vkuiClass={classNames("CalendarDay__inner", {
-            "CalendarDay__inner--active": active && !disabled,
+          vkuiClass={classNames("CalendarDay__hinted", {
+            "CalendarDay__hinted--active": hinted,
+            "CalendarDay__hinted--selection-start": hintedSelectionStart,
+            "CalendarDay__hinted--selection-end": hintedSelectionEnd,
           })}
         >
-          <div vkuiClass="CalendarDay__day-number">{day.getDate()}</div>
+          <div
+            vkuiClass={classNames("CalendarDay__inner", {
+              "CalendarDay__inner--active": active && !disabled,
+            })}
+          >
+            <div vkuiClass="CalendarDay__day-number">{day.getDate()}</div>
+          </div>
         </div>
       </Tappable>
     );
