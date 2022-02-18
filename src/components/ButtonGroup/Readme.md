@@ -1,6 +1,9 @@
 Группирует компонент [Button](#!/Button).
 
-Позволяет вкладывать внутрь себя же. Если вложенному [ButtonGroup](#!/ButtonGroup) не передать параметры `mode`, `padding` и `stretched`, то значения для этих параметров будут унаследованы из контекста выше стоящего [ButtonGroup](#!/ButtonGroup).
+Позволяет вкладывать внутрь себя же. Если вложенному [ButtonGroup](#!/ButtonGroup) не передать параметры `padding` и `stretched`, то значения для этих параметров будут унаследованы из контекста выше стоящего [ButtonGroup](#!/ButtonGroup).
+
+1. `stretched` из контекста приоритетнее чем переданный `stretched` в компонент [Button](#!/Button).
+2. [ButtonGroup](#!/ButtonGroup) не отвечает за все остальные параметры [Button](#!/Button). К примеру, `size` нужно определять самостоятельно в каждом [Button](#!/Button).
 
 ```jsx { "props": { "layout": false, "iframe": false } }
 const containerStyles = {
@@ -8,6 +11,10 @@ const containerStyles = {
   flexDirection: "column",
   justifyContent: "center",
   width: "100%",
+};
+
+const exampleWrapperStyles = {
+  border: "1px dashed tomato",
 };
 
 const Example = () => {
@@ -22,6 +29,9 @@ const Example = () => {
       <AdaptivityProvider sizeY={sizeY}>
         <div style={containerStyles}>
           <Div>
+            <Title level="3">Example 1</Title>
+          </Div>
+          <Div style={exampleWrapperStyles}>
             <ButtonGroup
               mode="vertical"
               padding={padding}
@@ -44,6 +54,9 @@ const Example = () => {
             </ButtonGroup>
           </Div>
           <Div>
+            <Title level="3">Example 2</Title>
+          </Div>
+          <Div style={exampleWrapperStyles}>
             <ButtonGroup
               mode="vertical"
               padding={padding}

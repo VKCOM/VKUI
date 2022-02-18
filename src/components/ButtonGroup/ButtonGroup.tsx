@@ -9,9 +9,6 @@ export interface ButtonGroupProps
   mode?: "vertical" | "horizontal";
   padding?: "medium" | "small"; // number
   stretched?: boolean;
-  className?: string;
-  style?: React.CSSProperties;
-  children?: React.ReactNode;
 }
 
 export type ButtonGroupContextProps = Pick<
@@ -22,13 +19,14 @@ export type ButtonGroupContextProps = Pick<
 export const ButtonGroupContext =
   React.createContext<ButtonGroupContextProps>(null);
 
-const ButtonGroup: React.FC<ButtonGroupProps> = ({
+export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   mode: modeProp,
   padding: paddingProp,
   stretched: stretchedProp,
   getRootRef,
+  children,
   ...restProps
-}: ButtonGroupProps) => {
+}) => {
   const context = React.useContext(ButtonGroupContext);
   const isNested = context !== null;
 
@@ -48,10 +46,9 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ({
         role="group"
         ref={getRootRef}
         {...restProps}
-      />
+      >
+        {children}
+      </div>
     </ButtonGroupContext.Provider>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default ButtonGroup;
