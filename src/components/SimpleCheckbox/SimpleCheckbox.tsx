@@ -87,9 +87,13 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
   return (
     <Tappable
       Component="label"
-      vkuiClass={classNames("SimpleCheckbox", {
-        "SimpleCheckbox--mouse": hasMouse,
-      })}
+      vkuiClass={classNames(
+        "SimpleCheckbox",
+        `SimpleCheckbox--sizeY-${sizeY}`,
+        {
+          "SimpleCheckbox--mouse": hasMouse,
+        }
+      )}
       className={className}
       style={style}
       disabled={restProps.disabled}

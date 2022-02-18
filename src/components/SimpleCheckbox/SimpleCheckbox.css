@@ -7,6 +7,13 @@
   border-radius: 50%;
 }
 
+.SimpleCheckbox--sizeY-compact {
+  margin: -8px;
+  padding: 8px;
+  width: 20px;
+  height: 20px;
+}
+
 .SimpleCheckbox--mouse {
   margin: 0;
   padding: 0;
