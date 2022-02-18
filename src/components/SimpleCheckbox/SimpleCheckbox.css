@@ -22,10 +22,7 @@
 }
 
 .SimpleCheckbox__input {
-  position: absolute;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+  display: none;
 }
 
 .SimpleCheckbox__icon {
