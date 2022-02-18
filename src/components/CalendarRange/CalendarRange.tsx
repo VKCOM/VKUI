@@ -1,7 +1,6 @@
 import * as React from "react";
 import {
   addMonths,
-  subMonths,
   isSameMonth,
   isSameDay,
   isBefore,
@@ -18,6 +17,7 @@ import {
   isLastDay,
   isFirstDay,
 } from "../../lib/calendar";
+import { useCalendar } from "../../hooks/useCalendar";
 import { HasRootRef } from "../../types";
 import "./CalendarRange.css";
 
@@ -62,23 +62,24 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
   getRootRef,
   ...props
 }) => {
-  const [viewDate, setViewDate] = React.useState(value?.[0] ?? new Date());
+  const {
+    viewDate,
+    setViewDate,
+    setPrevMonth,
+    setNextMonth,
+    focusedDay,
+    setFocusedDay,
+    isDayFocused,
+    isDayDisabled,
+  } = useCalendar({ value, disableFuture, disablePast, shouldDisableDate });
   const [hintedDate, setHintedDate] = React.useState<Array<Date | null>>();
-  const [focusedDay, setFocusedDay] = React.useState<Date>();
   const secondViewDate = addMonths(viewDate, 1);
-
-  const setPrevMonth = React.useCallback(
-    () => setViewDate(subMonths(viewDate, 1)),
-    [viewDate]
-  );
-  const setNextMonth = React.useCallback(
-    () => setViewDate(addMonths(viewDate, 1)),
-    [viewDate]
-  );
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent) => {
-      if (["ArrowUp", "ArrowDown"].includes(event.key)) {
+      if (
+        ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)
+      ) {
         event.preventDefault();
       }
 
@@ -93,7 +94,7 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
       }
       setFocusedDay(newFocusedDay);
     },
-    [focusedDay, value, viewDate]
+    [focusedDay, setFocusedDay, setViewDate, value, viewDate]
   );
 
   const getNewValue = React.useCallback(
@@ -202,12 +203,9 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
           locale={locale}
           viewDate={viewDate}
           value={value}
-          disablePast={disablePast}
-          disableFuture={disableFuture}
-          shouldDisableDate={shouldDisableDate}
           weekStartsOn={weekStartsOn}
           onKeyDown={handleKeyDown}
-          focusedDay={focusedDay}
+          isDayFocused={isDayFocused}
           onDayChange={onDayChange}
           isDaySelected={isDaySelected}
           isDayActive={isDayActive}
@@ -218,6 +216,7 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
           onDayLeave={onDayLeave}
           isHintedDaySelectionEnd={isHintedDaySelectionEnd}
           isHintedDaySelectionStart={isHintedDaySelectionStart}
+          isDayDisabled={isDayDisabled}
         />
       </div>
       <div vkuiClass="CalendarRange__inner">
@@ -233,14 +232,11 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
           locale={locale}
           viewDate={secondViewDate}
           value={value}
-          disablePast={disablePast}
-          disableFuture={disableFuture}
-          shouldDisableDate={shouldDisableDate}
           weekStartsOn={weekStartsOn}
           tabIndex={0}
           aria-label="Выбрать день"
           onKeyDown={handleKeyDown}
-          focusedDay={focusedDay}
+          isDayFocused={isDayFocused}
           onDayChange={onDayChange}
           isDaySelected={isDaySelected}
           isDayActive={isDayActive}
@@ -251,6 +247,7 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
           onDayLeave={onDayLeave}
           isHintedDaySelectionEnd={isHintedDaySelectionEnd}
           isHintedDaySelectionStart={isHintedDaySelectionStart}
+          isDayDisabled={isDayDisabled}
         />
       </div>
     </div>

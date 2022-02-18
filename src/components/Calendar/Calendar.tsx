@@ -1,5 +1,5 @@
 import * as React from "react";
-import { subMonths, addMonths, isSameMonth, isSameDay } from "date-fns";
+import { isSameMonth, isSameDay } from "date-fns";
 import { CalendarHeader } from "../CalendarHeader/CalendarHeader";
 import { CalendarDays } from "../CalendarDays/CalendarDays";
 import { CalendarTime } from "../CalendarTime/CalendarTime";
@@ -10,6 +10,7 @@ import {
   isFirstDay,
   isLastDay,
 } from "../../lib/calendar";
+import { useCalendar } from "../../hooks/useCalendar";
 import { HasRootRef } from "../../types";
 import "./Calendar.css";
 
@@ -45,17 +46,16 @@ export const Calendar: React.FC<CalendarProps> = ({
   getRootRef,
   ...props
 }) => {
-  const [viewDate, setViewDate] = React.useState(new Date());
-  const [focusedDay, setFocusedDay] = React.useState<Date>();
-
-  const setPrevMonth = React.useCallback(
-    () => setViewDate(subMonths(viewDate, 1)),
-    [viewDate]
-  );
-  const setNextMonth = React.useCallback(
-    () => setViewDate(addMonths(viewDate, 1)),
-    [viewDate]
-  );
+  const {
+    viewDate,
+    setViewDate,
+    setPrevMonth,
+    setNextMonth,
+    focusedDay,
+    setFocusedDay,
+    isDayFocused,
+    isDayDisabled,
+  } = useCalendar({ value, disableFuture, disablePast, shouldDisableDate });
 
   useIsomorphicLayoutEffect(() => {
     if (value) {
@@ -65,7 +65,9 @@ export const Calendar: React.FC<CalendarProps> = ({
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent) => {
-      if (["ArrowUp", "ArrowDown"].includes(event.key)) {
+      if (
+        ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)
+      ) {
         event.preventDefault();
       }
 
@@ -76,7 +78,7 @@ export const Calendar: React.FC<CalendarProps> = ({
       }
       setFocusedDay(newFocusedDay);
     },
-    [focusedDay, value, viewDate]
+    [focusedDay, setFocusedDay, setViewDate, value, viewDate]
   );
 
   const onDayChange = React.useCallback(
@@ -105,11 +107,8 @@ export const Calendar: React.FC<CalendarProps> = ({
         locale={locale}
         viewDate={viewDate}
         value={value}
-        disablePast={disablePast}
-        disableFuture={disableFuture}
-        shouldDisableDate={shouldDisableDate}
         weekStartsOn={weekStartsOn}
-        focusedDay={focusedDay}
+        isDayFocused={isDayFocused}
         tabIndex={0}
         aria-label="Выбрать день"
         onKeyDown={handleKeyDown}
@@ -117,6 +116,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         isDayActive={isDayActive}
         isDaySelectionStart={isFirstDay}
         isDaySelectionEnd={isLastDay}
+        isDayDisabled={isDayDisabled}
       />
       {enableTime && value && (
         <div vkuiClass="Calendar__time">

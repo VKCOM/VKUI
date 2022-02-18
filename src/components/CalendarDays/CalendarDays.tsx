@@ -1,12 +1,5 @@
 import * as React from "react";
-import {
-  isBefore,
-  isSameDay,
-  isSameMonth,
-  isAfter,
-  startOfDay,
-  endOfDay,
-} from "date-fns";
+import { isSameDay, isSameMonth } from "date-fns";
 import { CalendarDay } from "../CalendarDay/CalendarDay";
 import { getDaysNames, getWeeks } from "../../lib/calendar";
 import "./CalendarDays.css";
@@ -15,12 +8,10 @@ export interface CalendarDaysProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
   value?: Date | Array<Date | null>;
   viewDate: Date;
-  focusedDay?: Date;
   locale?: string;
-  disablePast?: boolean;
-  disableFuture?: boolean;
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   onDayChange(value: Date): void;
+  isDayDisabled(value: Date): boolean;
   isDaySelectionStart(value: Date, dayOfWeek: number): boolean;
   isDaySelectionEnd(value: Date, dayOfWeek: number): boolean;
   isHintedDaySelectionStart?(value: Date, dayOfWeek: number): boolean;
@@ -28,7 +19,7 @@ export interface CalendarDaysProps
   isDayActive(value: Date): boolean;
   isDayHinted?(value: Date): boolean;
   isDaySelected?(value: Date): boolean;
-  shouldDisableDate?(value: Date): boolean;
+  isDayFocused(value: Date): boolean;
   onDayEnter?(value: Date): void;
   onDayLeave?(value: Date): void;
 }
@@ -37,11 +28,7 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
   locale,
   viewDate,
   value,
-  disablePast,
-  disableFuture,
-  shouldDisableDate,
   weekStartsOn,
-  focusedDay,
   onDayChange,
   isDaySelected,
   isDayActive,
@@ -52,6 +39,8 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
   isDayHinted,
   isHintedDaySelectionStart,
   isHintedDaySelectionEnd,
+  isDayFocused,
+  isDayDisabled,
   ...props
 }) => {
   const ref = React.useRef<HTMLDivElement>(null);
@@ -88,41 +77,27 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
 
       {weeks.map((week, i) => (
         <div vkuiClass="CalendarDays__row" key={i}>
-          {week.map((day, i) => {
-            let disabled = false;
-            if (disablePast) {
-              disabled = isBefore(endOfDay(day), now);
-            }
-            if (disableFuture) {
-              disabled = isAfter(startOfDay(day), now);
-            }
-            if (shouldDisableDate) {
-              disabled = shouldDisableDate(day);
-            }
-            let focused = focusedDay && isSameDay(day, focusedDay);
-
-            return (
-              <CalendarDay
-                key={day.toISOString()}
-                day={day}
-                today={isSameDay(day, now)}
-                active={isDayActive(day)}
-                onChange={handleDayChange}
-                hidden={!isSameMonth(day, viewDate)}
-                disabled={disabled}
-                selectionStart={isDaySelectionStart(day, i)}
-                selectionEnd={isDaySelectionEnd(day, i)}
-                hintedSelectionStart={isHintedDaySelectionStart?.(day, i)}
-                hintedSelectionEnd={isHintedDaySelectionEnd?.(day, i)}
-                selected={isDaySelected?.(day)}
-                locale={locale}
-                focused={focused}
-                onEnter={onDayEnter}
-                onLeave={onDayLeave}
-                hinted={isDayHinted?.(day)}
-              />
-            );
-          })}
+          {week.map((day, i) => (
+            <CalendarDay
+              key={day.toISOString()}
+              day={day}
+              today={isSameDay(day, now)}
+              active={isDayActive(day)}
+              onChange={handleDayChange}
+              hidden={!isSameMonth(day, viewDate)}
+              disabled={isDayDisabled(day)}
+              selectionStart={isDaySelectionStart(day, i)}
+              selectionEnd={isDaySelectionEnd(day, i)}
+              hintedSelectionStart={isHintedDaySelectionStart?.(day, i)}
+              hintedSelectionEnd={isHintedDaySelectionEnd?.(day, i)}
+              selected={isDaySelected?.(day)}
+              locale={locale}
+              focused={isDayFocused(day)}
+              onEnter={onDayEnter}
+              onLeave={onDayLeave}
+              hinted={isDayHinted?.(day)}
+            />
+          ))}
         </div>
       ))}
     </div>
