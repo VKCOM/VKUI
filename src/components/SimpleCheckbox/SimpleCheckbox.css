@@ -7,6 +7,13 @@
   border-radius: 50%;
 }
 
+.SimpleCheckbox--mouse {
+  margin: 0;
+  padding: 0;
+  width: unset;
+  height: unset;
+}
+
 .SimpleCheckbox__input {
   position: absolute;
   -webkit-appearance: none;
@@ -26,13 +33,43 @@
   display: none;
 }
 
+.SimpleCheckbox--hover--mouse .SimpleCheckbox__icon--on {
+  /*color: var(--accent, var(--vkui--color_icon_accent--hover));*/
+  color: var(--vkui--color_icon_accent--hover);
+}
+
+.SimpleCheckbox--active--mouse .SimpleCheckbox__icon--on {
+  /*color: var(--accent, var(--vkui--color_icon_accent--active));*/
+  color: var(--vkui--color_icon_accent--active);
+}
+
 .SimpleCheckbox__icon--indeterminate {
   color: var(--accent, var(--vkui--color_icon_accent));
   display: none;
 }
 
+.SimpleCheckbox--hover--mouse .SimpleCheckbox__icon--indeterminate {
+  /*color: var(--accent, var(--vkui--color_icon_accent--hover));*/
+  color: var(--vkui--color_icon_accent--hover);
+}
+
+.SimpleCheckbox--active--mouse .SimpleCheckbox__icon--indeterminate {
+  /*color: var(--accent, var(--vkui--color_icon_accent--active));*/
+  color: var(--vkui--color_icon_accent--active);
+}
+
 .SimpleCheckbox__icon--off {
   color: var(--icon_tertiary, var(--vkui--color_icon_tertiary));
+}
+
+.SimpleCheckbox--hover--mouse .SimpleCheckbox__icon--off {
+  /*color: var(--accent, var(--vkui--color_icon_tertiary--hover));*/
+  color: var(--vkui--color_icon_tertiary--hover);
+}
+
+.SimpleCheckbox--active--mouse .SimpleCheckbox__icon--off {
+  /*color: var(--accent, var(--vkui--color_icon_tertiary--active));*/
+  color: var(--vkui--color_icon_tertiary--active);
 }
 
 .SimpleCheckbox__input:checked ~ .SimpleCheckbox__icon--on {

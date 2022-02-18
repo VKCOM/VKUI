@@ -14,6 +14,7 @@ import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useExternRef } from "../../hooks/useExternRef";
 import { SizeType } from "../../hoc/withAdaptivity";
 import { warnOnce } from "../../lib/warnOnce";
+import { classNames } from "../../lib/classNames";
 
 import "./SimpleCheckbox.css";
 
@@ -41,7 +42,7 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
     onChange,
     ...restProps
   } = props;
-  const { sizeY } = useAdaptivity();
+  const { sizeY, hasMouse } = useAdaptivity();
   const inputRef = useExternRef(getRef);
 
   React.useEffect(() => {
@@ -86,10 +87,14 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
   return (
     <Tappable
       Component="label"
-      vkuiClass="SimpleCheckbox"
+      vkuiClass={classNames("SimpleCheckbox", {
+        "SimpleCheckbox--mouse": hasMouse,
+      })}
       className={className}
       style={style}
       disabled={restProps.disabled}
+      hoverMode={hasMouse ? "SimpleCheckbox--hover--mouse" : undefined}
+      activeMode={hasMouse ? "SimpleCheckbox--active--mouse" : undefined}
       getRootRef={getRootRef}
     >
       <input
