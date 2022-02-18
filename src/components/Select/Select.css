@@ -51,6 +51,10 @@
   text-align: center;
 }
 
+.Select__container--plain {
+  font-weight: 500;
+}
+
 /**
  * sizeY === 'compact'
  */
@@ -60,5 +64,5 @@
 
 .Select--sizeY--compact .Select__container--plain,
 .Select__container--plain {
-  padding: 0 4px 0 8px;
+  padding: 0 6px 0 8px;
 }

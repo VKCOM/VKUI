@@ -1,5 +1,10 @@
 import * as React from "react";
 import { setMonth, setYear, subMonths, addMonths } from "date-fns";
+import {
+  Icon20ChevronLeftOutline,
+  Icon20ChevronRightOutline,
+  Icon12Dropdown,
+} from "@vkontakte/icons";
 import Tappable from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
 import CustomSelect, {
@@ -8,7 +13,6 @@ import CustomSelect, {
 } from "../CustomSelect/CustomSelect";
 import CustomSelectOption from "../CustomSelectOption/CustomSelectOption";
 import { SizeType } from "../../hoc/withAdaptivity";
-import { useBooleanState } from "../../hooks/useBooleanState";
 import { getMonths, getYears } from "../../lib/calendar";
 import "./CalendarHeader.css";
 
@@ -35,27 +39,6 @@ const renderOption: CustomSelectProps["renderOption"] = ({
   );
 };
 
-const selectIconClose = (
-  <svg width="8" height="5" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M.156.295A.75.75 0 0 1 1.207.158L4 2.306 6.793.158a.75.75 0 0 1 .914 1.189l-3.25 2.5a.75.75 0 0 1-.914 0l-3.25-2.5A.75.75 0 0 1 .156.295Z"
-      fill="currentColor"
-    />
-  </svg>
-);
-const selectIconOpen = (
-  <svg width="8" height="5" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M7.844 3.71a.75.75 0 0 1-1.051.137L4 1.699 1.207 3.847a.75.75 0 0 1-.914-1.19l3.25-2.5a.75.75 0 0 1 .914 0l3.25 2.5a.75.75 0 0 1 .137 1.053Z"
-      fill="currentColor"
-    />
-  </svg>
-);
-
 export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   viewDate,
   onChange,
@@ -76,18 +59,6 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
       onChange(setYear(viewDate, Number(event.target.value))),
     [onChange, viewDate]
   );
-
-  const {
-    value: monthsOpen,
-    setTrue: onMonthsOpen,
-    setFalse: onMonthsClose,
-  } = useBooleanState(false);
-
-  const {
-    value: yearsOpen,
-    setTrue: onYearsOpen,
-    setFalse: onYearsClose,
-  } = useBooleanState(false);
 
   const months = React.useMemo(() => getMonths(locale), [locale]);
 
@@ -117,17 +88,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             subMonths(viewDate, 1)
           )}`}
         >
-          <svg
-            width="10"
-            height="18"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="m2.414 9 7.293 7.293a1 1 0 0 1-1.414 1.414l-8-8a1 1 0 0 1 0-1.414l8-8a1 1 0 0 1 1.414 1.414L2.414 9Z"
-              fill="currentColor"
-            />
-          </svg>
+          <Icon20ChevronLeftOutline width={30} height={30} />
         </Tappable>
       )}
       <div vkuiClass="CalendarHeader__pickers">
@@ -135,16 +96,10 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
           value={viewDate.getMonth()}
           options={months}
           renderOption={renderOption}
-          dropdownOffsetDistance={8}
+          dropdownOffsetDistance={4}
           fixDropdownWidth={false}
           sizeY={SizeType.COMPACT}
-          icon={
-            <div vkuiClass="CalendarHeader__picker-icon">
-              {monthsOpen ? selectIconOpen : selectIconClose}
-            </div>
-          }
-          onOpen={onMonthsOpen}
-          onClose={onMonthsClose}
+          icon={<Icon12Dropdown />}
           onChange={onMonthsChange}
           forceDropdownPortal={false}
           selectType={SelectType.Plain}
@@ -153,16 +108,10 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
         <CustomSelect
           value={viewDate.getFullYear()}
           options={years}
-          dropdownOffsetDistance={8}
+          dropdownOffsetDistance={4}
           fixDropdownWidth={false}
           sizeY={SizeType.COMPACT}
-          icon={
-            <div vkuiClass="CalendarHeader__picker-icon">
-              {yearsOpen ? selectIconOpen : selectIconClose}
-            </div>
-          }
-          onOpen={onYearsOpen}
-          onClose={onYearsClose}
+          icon={<Icon12Dropdown />}
           onChange={onYearChange}
           forceDropdownPortal={false}
           selectType={SelectType.Plain}
@@ -180,17 +129,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             addMonths(viewDate, 1)
           )}`}
         >
-          <svg
-            width="10"
-            height="18"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M7.586 9 .293 1.707A1 1 0 0 1 1.707.293l8 8a1 1 0 0 1 0 1.414l-8 8a1 1 0 0 1-1.414-1.414L7.586 9Z"
-              fill="currentColor"
-            />
-          </svg>
+          <Icon20ChevronRightOutline width={30} height={30} />
         </Tappable>
       )}
     </div>

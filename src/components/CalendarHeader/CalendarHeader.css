@@ -11,12 +11,16 @@
   position: absolute;
 }
 
+.CalendarHeader__pickers > :not(:last-child) {
+  margin-right: 4px;
+}
+
 .CalendarHeader__nav-icon {
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 9px 12px;
+  padding: 3px;
   color: var(--vkui--color_icon_accent);
 }
 
