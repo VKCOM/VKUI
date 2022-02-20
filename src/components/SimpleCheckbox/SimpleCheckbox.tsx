@@ -1,8 +1,5 @@
 import * as React from "react";
-import Tappable, { ACTIVE_EFFECT_DELAY } from "../Tappable/Tappable";
-import { getClassName } from "../../helpers/getClassName";
-import { classNames } from "../../lib/classNames";
-import { IOS, VKCOM } from "../../lib/platform";
+import Tappable from "../Tappable/Tappable";
 
 import {
   Icon20CheckBoxOn,
@@ -13,11 +10,11 @@ import {
 } from "@vkontakte/icons";
 
 import { HasRef, HasRootRef } from "../../types";
-import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useExternRef } from "../../hooks/useExternRef";
 import { SizeType } from "../../hoc/withAdaptivity";
 import { warnOnce } from "../../lib/warnOnce";
+import { classNames } from "../../lib/classNames";
 
 import "./SimpleCheckbox.css";
 
@@ -45,8 +42,7 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
     onChange,
     ...restProps
   } = props;
-  const { sizeY } = useAdaptivity();
-  const platform = usePlatform();
+  const { sizeY, hasMouse } = useAdaptivity();
   const inputRef = useExternRef(getRef);
 
   React.useEffect(() => {
@@ -92,15 +88,17 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
     <Tappable
       Component="label"
       vkuiClass={classNames(
-        getClassName("SimpleCheckbox", platform),
-        `SimpleCheckbox--sizeY-${sizeY}`
+        "SimpleCheckbox",
+        `SimpleCheckbox--sizeY-${sizeY}`,
+        {
+          "SimpleCheckbox--mouse": hasMouse,
+        }
       )}
       className={className}
       style={style}
       disabled={restProps.disabled}
-      activeMode={platform === VKCOM ? "SimpleCheckbox--active" : "background"}
-      hoverMode={platform === VKCOM ? "SimpleCheckbox--hover" : "background"}
-      activeEffectDelay={platform === IOS ? 100 : ACTIVE_EFFECT_DELAY}
+      hoverMode={hasMouse ? "SimpleCheckbox--hover--mouse" : undefined}
+      activeMode={hasMouse ? "SimpleCheckbox--active--mouse" : undefined}
       getRootRef={getRootRef}
     >
       <input
@@ -110,34 +108,26 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
         vkuiClass="SimpleCheckbox__input"
         ref={inputRef}
       />
-      <div vkuiClass="SimpleCheckbox__container">
-        <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--on">
-          {sizeY === SizeType.COMPACT || platform === VKCOM ? (
-            <Icon20CheckBoxOn />
-          ) : (
-            <Icon24CheckBoxOn />
-          )}
-        </div>
-        <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--off">
-          {sizeY === SizeType.COMPACT || platform === VKCOM ? (
-            <Icon20CheckBoxOff />
-          ) : (
-            <Icon24CheckBoxOff />
-          )}
-        </div>
-        <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--indeterminate">
-          <Icon20CheckBoxIndetermanate
-            width={sizeY === SizeType.COMPACT || platform === VKCOM ? 20 : 24}
-            height={sizeY === SizeType.COMPACT || platform === VKCOM ? 20 : 24}
-          />
-        </div>
+      <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--on">
+        {sizeY === SizeType.COMPACT ? (
+          <Icon20CheckBoxOn />
+        ) : (
+          <Icon24CheckBoxOn />
+        )}
       </div>
-      {platform === VKCOM && (
-        <div aria-hidden={true} vkuiClass="SimpleCheckbox__activeShadow" />
-      )}
-      {platform === VKCOM && (
-        <div aria-hidden={true} vkuiClass="SimpleCheckbox__hoverShadow" />
-      )}
+      <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--off">
+        {sizeY === SizeType.COMPACT ? (
+          <Icon20CheckBoxOff />
+        ) : (
+          <Icon24CheckBoxOff />
+        )}
+      </div>
+      <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--indeterminate">
+        <Icon20CheckBoxIndetermanate
+          width={sizeY === SizeType.COMPACT ? 20 : 24}
+          height={sizeY === SizeType.COMPACT ? 20 : 24}
+        />
+      </div>
     </Tappable>
   );
 };

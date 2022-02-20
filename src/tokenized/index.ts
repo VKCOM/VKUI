@@ -13,3 +13,6 @@ export type {
   SegmentedControlOptionInterface,
   SegmentedControlValue,
 } from "../components/SegmentedControl/SegmentedControl";
+
+export { default as SimpleCheckbox } from "../components/SimpleCheckbox/SimpleCheckbox";
+export type { SimpleCheckboxProps } from "../components/SimpleCheckbox/SimpleCheckbox";
