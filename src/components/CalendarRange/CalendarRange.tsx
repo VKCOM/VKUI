@@ -31,6 +31,7 @@ export interface CalendarRangeProps
   locale?: string;
   disablePast?: boolean;
   disableFuture?: boolean;
+  disablePickers?: boolean;
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   onChange?(value?: Array<Date | null>): void;
   shouldDisableDate?(value: Date): boolean;
@@ -60,6 +61,7 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
   onClose,
   weekStartsOn = 1,
   getRootRef,
+  disablePickers,
   ...props
 }) => {
   const {
@@ -197,6 +199,7 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
           onChange={setViewDate}
           nextMonth={false}
           onPrevMonth={setPrevMonth}
+          disablePickers={disablePickers}
           vkuiClass="CalendarRange__header"
         />
         <CalendarDays
@@ -226,6 +229,7 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
           onChange={setViewDate}
           prevMonth={false}
           onNextMonth={setNextMonth}
+          disablePickers={disablePickers}
           vkuiClass="CalendarRange__header"
         />
         <CalendarDays

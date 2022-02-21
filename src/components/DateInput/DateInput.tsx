@@ -28,6 +28,7 @@ export interface DateInputProps
       | "value"
       | "doneButtonText"
       | "weekStartsOn"
+      | "disablePickers"
     > {
   calendarPlacement?: Placement;
   closeOnChange?: boolean;
@@ -62,6 +63,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
       className,
       doneButtonText,
       closeOnChange = true,
+      disablePickers,
       ...props
     },
     ref
@@ -172,6 +174,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
                 onClose={closeCalendar}
                 getRootRef={calendarRef}
                 doneButtonText={doneButtonText}
+                disablePickers={disablePickers}
               />
             </FocusTrap>
           </Popper>

@@ -41,6 +41,12 @@
   text-transform: capitalize;
 }
 
+.CalendarHeader__pickers-placeholder {
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
 .CalendarHeader__pickers .CustomSelectDropdown__CustomScrollView {
   max-height: 184px;
 }

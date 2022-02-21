@@ -10,6 +10,7 @@ const Example = () => {
   const [enableTime, setEnableTime] = useState(false);
   const [disablePast, setDisablePast] = useState(false);
   const [disableFuture, setDisableFuture] = useState(false);
+  const [disablePickers, setDisablePickers] = useState(false);
   const [closeOnChange, setCloseOnChange] = useState(true);
   const [locale, setLocale] = useState("ru");
 
@@ -44,6 +45,14 @@ const Example = () => {
           <Checkbox
             checked={closeOnChange}
             onChange={(e) => setCloseOnChange(e.target.checked)}
+          >
+            Включено
+          </Checkbox>
+        </FormItem>
+        <FormItem top="Отключить селекты выбора месяца/года">
+          <Checkbox
+            checked={disablePickers}
+            onChange={(e) => setDisablePickers(e.target.checked)}
           >
             Включено
           </Checkbox>
@@ -83,6 +92,7 @@ const Example = () => {
               disableFuture={disableFuture}
               locale={locale}
               closeOnChange={closeOnChange}
+              disablePickers={disablePickers}
             />
           </div>
         </FormItem>

@@ -28,6 +28,7 @@ export interface DateRangeInputProps
       | "onChange"
       | "value"
       | "weekStartsOn"
+      | "disablePickers"
     > {
   calendarPlacement?: Placement;
   closeOnChange?: boolean;
@@ -83,6 +84,7 @@ export const DateRangeInput = React.forwardRef<
       style,
       className,
       closeOnChange = true,
+      disablePickers,
       ...props
     },
     ref
@@ -212,6 +214,7 @@ export const DateRangeInput = React.forwardRef<
                 locale={locale}
                 onClose={closeCalendar}
                 getRootRef={calendarRef}
+                disablePickers={disablePickers}
               />
             </FocusTrap>
           </Popper>

@@ -25,6 +25,7 @@ export interface CalendarProps
   disablePast?: boolean;
   disableFuture?: boolean;
   enableTime?: boolean;
+  disablePickers?: boolean;
   doneButtonText?: string;
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   onChange?(value?: Date): void;
@@ -44,6 +45,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   doneButtonText,
   weekStartsOn = 1,
   getRootRef,
+  disablePickers,
   ...props
 }) => {
   const {
@@ -101,6 +103,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         onChange={setViewDate}
         onNextMonth={setNextMonth}
         onPrevMonth={setPrevMonth}
+        disablePickers={disablePickers}
         vkuiClass="Calendar__header"
       />
       <CalendarDays

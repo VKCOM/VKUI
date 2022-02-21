@@ -22,6 +22,7 @@ export interface CalendarHeaderProps
   locale?: string;
   prevMonth?: boolean;
   nextMonth?: boolean;
+  disablePickers?: boolean;
   onChange(viewDate: Date): void;
   onNextMonth?(): void;
   onPrevMonth?(): void;
@@ -45,6 +46,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   locale,
   prevMonth = true,
   nextMonth = true,
+  disablePickers = false,
   onNextMonth,
   onPrevMonth,
   className,
@@ -66,14 +68,10 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
 
   const years = React.useMemo(() => getYears(currentYear, 100), [currentYear]);
 
-  const formatter = React.useMemo(
-    () =>
-      new Intl.DateTimeFormat(locale, {
-        year: "numeric",
-        month: "long",
-      }),
-    [locale]
-  );
+  const formatter = new Intl.DateTimeFormat(locale, {
+    year: "numeric",
+    month: "long",
+  });
 
   return (
     <div vkuiClass="CalendarHeader" className={className}>
@@ -92,31 +90,48 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
         </Tappable>
       )}
       <div vkuiClass="CalendarHeader__pickers">
-        <CustomSelect
-          value={viewDate.getMonth()}
-          options={months}
-          renderOption={renderOption}
-          dropdownOffsetDistance={4}
-          fixDropdownWidth={false}
-          sizeY={SizeType.COMPACT}
-          icon={<Icon12Dropdown />}
-          onChange={onMonthsChange}
-          forceDropdownPortal={false}
-          selectType={SelectType.Plain}
-          aria-label="Выбрать месяц"
-        />
-        <CustomSelect
-          value={viewDate.getFullYear()}
-          options={years}
-          dropdownOffsetDistance={4}
-          fixDropdownWidth={false}
-          sizeY={SizeType.COMPACT}
-          icon={<Icon12Dropdown />}
-          onChange={onYearChange}
-          forceDropdownPortal={false}
-          selectType={SelectType.Plain}
-          aria-label="Выбрать год"
-        />
+        {disablePickers ? (
+          <React.Fragment>
+            <div vkuiClass="CalendarHeader__pickers-placeholder">
+              {new Intl.DateTimeFormat(locale, {
+                month: "long",
+              }).format(viewDate)}
+            </div>
+            <div vkuiClass="CalendarHeader__pickers-placeholder">
+              {new Intl.DateTimeFormat(locale, {
+                year: "numeric",
+              }).format(viewDate)}
+            </div>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <CustomSelect
+              value={viewDate.getMonth()}
+              options={months}
+              renderOption={renderOption}
+              dropdownOffsetDistance={4}
+              fixDropdownWidth={false}
+              sizeY={SizeType.COMPACT}
+              icon={<Icon12Dropdown />}
+              onChange={onMonthsChange}
+              forceDropdownPortal={false}
+              selectType={SelectType.Plain}
+              aria-label="Выбрать месяц"
+            />
+            <CustomSelect
+              value={viewDate.getFullYear()}
+              options={years}
+              dropdownOffsetDistance={4}
+              fixDropdownWidth={false}
+              sizeY={SizeType.COMPACT}
+              icon={<Icon12Dropdown />}
+              onChange={onYearChange}
+              forceDropdownPortal={false}
+              selectType={SelectType.Plain}
+              aria-label="Выбрать год"
+            />
+          </React.Fragment>
+        )}
       </div>
       {nextMonth && (
         <Tappable
