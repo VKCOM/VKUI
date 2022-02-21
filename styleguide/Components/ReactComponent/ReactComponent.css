@@ -15,6 +15,11 @@
   margin-top: 4px;
 }
 
+.ReactComponent__name--deprecated {
+  color: var(--text_subhead);
+  text-decoration: line-through;
+}
+
 .ReactComponent__title {
   margin-bottom: 6px;
 }

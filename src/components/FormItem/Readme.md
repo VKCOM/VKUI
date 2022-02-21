@@ -113,8 +113,20 @@ class Example extends React.Component {
               </FormItem>
 
               <FormItem top="Тип документа">
-                <Radio name="type">Паспорт</Radio>
-                <Radio name="type">Загран</Radio>
+                <SegmentedControl
+                  size="m"
+                  name="type"
+                  options={[
+                    {
+                      label: "Паспорт РФ",
+                      value: "russian",
+                    },
+                    {
+                      label: "Заграничный",
+                      value: "international",
+                    },
+                  ]}
+                />
               </FormItem>
 
               {this.addressItems.map(({ label, name }) => (
