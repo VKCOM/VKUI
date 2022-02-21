@@ -100,7 +100,7 @@
 }
 
 .SimpleCheckbox__input[disabled] ~ .SimpleCheckbox__icon {
-  opacity: var(--vkui--opacity_disable);
+  opacity: var(--vkui--opacity_disable, 0.4);
 }
 
 /* todo: при съезде с appearance удалить строки отсюда */
