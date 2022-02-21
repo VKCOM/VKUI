@@ -84,16 +84,17 @@ const Example = () => {
         </FormItem>
         <FormItem>
           <div style={{ display: "flex" }}>
-            <DateInput
-              value={value}
-              onChange={setValue}
-              enableTime={enableTime}
-              disablePast={disablePast}
-              disableFuture={disableFuture}
-              locale={locale}
-              closeOnChange={closeOnChange}
-              disablePickers={disablePickers}
-            />
+            <LocaleProviderContext.Provider value={locale}>
+              <DateInput
+                value={value}
+                onChange={setValue}
+                enableTime={enableTime}
+                disablePast={disablePast}
+                disableFuture={disableFuture}
+                closeOnChange={closeOnChange}
+                disablePickers={disablePickers}
+              />
+            </LocaleProviderContext.Provider>
           </div>
         </FormItem>
       </FormLayoutGroup>

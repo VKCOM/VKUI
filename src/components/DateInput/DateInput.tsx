@@ -19,7 +19,6 @@ export interface DateInputProps
   extends Omit<InputProps, "onChange" | "value" | "defaultValue" | "type">,
     Pick<
       CalendarProps,
-      | "locale"
       | "disablePast"
       | "disableFuture"
       | "enableTime"
@@ -50,7 +49,6 @@ const maskWithTime = {
 export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
   (
     {
-      locale,
       enableTime,
       shouldDisableDate,
       disableFuture,
@@ -170,7 +168,6 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
                 disablePast={disablePast}
                 disableFuture={disableFuture}
                 shouldDisableDate={shouldDisableDate}
-                locale={locale}
                 onClose={closeCalendar}
                 getRootRef={calendarRef}
                 doneButtonText={doneButtonText}

@@ -11,10 +11,6 @@ describe("Calendar", () => {
       },
       {
         value: [new Date("1970-05-05")],
-        locale: ["ru", "ar"],
-      },
-      {
-        value: [new Date("1970-05-05")],
         weekStartsOn: [0, 1],
       },
       {

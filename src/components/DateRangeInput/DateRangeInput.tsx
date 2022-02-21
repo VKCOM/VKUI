@@ -21,7 +21,6 @@ export interface DateRangeInputProps
   extends Omit<InputProps, "onChange" | "value" | "defaultValue" | "type">,
     Pick<
       CalendarRangeProps,
-      | "locale"
       | "disablePast"
       | "disableFuture"
       | "shouldDisableDate"
@@ -73,7 +72,6 @@ export const DateRangeInput = React.forwardRef<
 >(
   (
     {
-      locale,
       shouldDisableDate,
       disableFuture,
       disablePast,
@@ -211,7 +209,6 @@ export const DateRangeInput = React.forwardRef<
                 disablePast={disablePast}
                 disableFuture={disableFuture}
                 shouldDisableDate={shouldDisableDate}
-                locale={locale}
                 onClose={closeCalendar}
                 getRootRef={calendarRef}
                 disablePickers={disablePickers}

@@ -19,6 +19,7 @@ import {
   AppearanceProvider,
   generateVKUITokensClassName,
 } from "../AppearanceProvider/AppearanceProvider";
+import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
 
 export interface ConfigProviderProps
   extends Partial<ConfigProviderContextInterface> {
@@ -27,6 +28,10 @@ export interface ConfigProviderProps
    * Цветовая схема приложения
    */
   scheme?: AppearanceScheme;
+  /**
+    Локаль, список -> https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
+   */
+  locale?: string;
 }
 
 const warn = warnOnce("ConfigProvider");
@@ -64,6 +69,7 @@ const deriveAppearance = (scheme: Scheme | undefined): AppearanceType =>
 
 const ConfigProvider: React.FC<ConfigProviderProps> = ({
   children,
+  locale = "ru",
   ...props
 }) => {
   const config = { ...defaultConfigProviderProps, ...props };
@@ -115,9 +121,11 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
-      <AppearanceProvider appearance={configContext.appearance}>
-        {children}
-      </AppearanceProvider>
+      <LocaleProviderContext.Provider value={locale}>
+        <AppearanceProvider appearance={configContext.appearance}>
+          {children}
+        </AppearanceProvider>
+      </LocaleProviderContext.Provider>
     </ConfigProviderContext.Provider>
   );
 };

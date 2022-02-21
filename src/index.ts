@@ -259,6 +259,7 @@ export {
 } from "./components/ConfigProvider/ConfigProviderContext";
 export { AppearanceProvider } from "./components/AppearanceProvider/AppearanceProvider";
 export { Scheme, Appearance } from "./helpers/scheme";
+export { LocaleProviderContext } from "./components/LocaleProviderContext/LocaleProviderContext";
 
 /**
  * Advertisement

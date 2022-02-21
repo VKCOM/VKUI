@@ -18,10 +18,6 @@ export interface CalendarProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange">,
     HasRootRef<HTMLDivElement> {
   value?: Date;
-  /**
-    Локаль, список -> https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
-   */
-  locale?: string;
   disablePast?: boolean;
   disableFuture?: boolean;
   enableTime?: boolean;
@@ -36,7 +32,6 @@ export interface CalendarProps
 export const Calendar: React.FC<CalendarProps> = ({
   value,
   onChange,
-  locale = "ru",
   disablePast,
   disableFuture,
   shouldDisableDate,
@@ -98,7 +93,6 @@ export const Calendar: React.FC<CalendarProps> = ({
   return (
     <div {...props} ref={getRootRef} vkuiClass="Calendar">
       <CalendarHeader
-        locale={locale}
         viewDate={viewDate}
         onChange={setViewDate}
         onNextMonth={setNextMonth}
@@ -107,7 +101,6 @@ export const Calendar: React.FC<CalendarProps> = ({
         vkuiClass="Calendar__header"
       />
       <CalendarDays
-        locale={locale}
         viewDate={viewDate}
         value={value}
         weekStartsOn={weekStartsOn}

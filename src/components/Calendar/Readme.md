@@ -75,15 +75,16 @@ const Example = () => {
           />
         </FormItem>
         <FormItem>
-          <Calendar
-            value={value}
-            onChange={setValue}
-            enableTime={enableTime}
-            disablePast={disablePast}
-            disableFuture={disableFuture}
-            locale={locale}
-            disablePickers={disablePickers}
-          />
+          <LocaleProviderContext.Provider value={locale}>
+            <Calendar
+              value={value}
+              onChange={setValue}
+              enableTime={enableTime}
+              disablePast={disablePast}
+              disableFuture={disableFuture}
+              disablePickers={disablePickers}
+            />
+          </LocaleProviderContext.Provider>
         </FormItem>
       </FormLayoutGroup>
     </FormLayout>

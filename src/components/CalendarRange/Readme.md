@@ -66,14 +66,15 @@ const Example = () => {
           />
         </FormItem>
         <FormItem>
-          <CalendarRange
-            value={value}
-            onChange={setValue}
-            disablePast={disablePast}
-            disableFuture={disableFuture}
-            locale={locale}
-            disablePickers={disablePickers}
-          />
+          <LocaleProviderContext.Provider value={locale}>
+            <CalendarRange
+              value={value}
+              onChange={setValue}
+              disablePast={disablePast}
+              disableFuture={disableFuture}
+              disablePickers={disablePickers}
+            />
+          </LocaleProviderContext.Provider>
         </FormItem>
       </FormLayoutGroup>
     </FormLayout>

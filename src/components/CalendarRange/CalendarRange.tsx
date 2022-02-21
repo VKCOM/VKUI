@@ -25,10 +25,6 @@ export interface CalendarRangeProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange">,
     HasRootRef<HTMLDivElement> {
   value?: Array<Date | null>;
-  /**
-    Локаль, список -> https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
-   */
-  locale?: string;
   disablePast?: boolean;
   disableFuture?: boolean;
   disablePickers?: boolean;
@@ -54,7 +50,6 @@ const getIsDaySelected = (day: Date, value?: Array<Date | null>) => {
 export const CalendarRange: React.FC<CalendarRangeProps> = ({
   value,
   onChange,
-  locale = "ru",
   disablePast,
   disableFuture,
   shouldDisableDate,
@@ -195,7 +190,6 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
     <div {...props} ref={getRootRef} vkuiClass="CalendarRange">
       <div vkuiClass="CalendarRange__inner">
         <CalendarHeader
-          locale={locale}
           viewDate={viewDate}
           onChange={setViewDate}
           nextMonth={false}
@@ -204,7 +198,6 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
           vkuiClass="CalendarRange__header"
         />
         <CalendarDays
-          locale={locale}
           viewDate={viewDate}
           value={value}
           weekStartsOn={weekStartsOn}
@@ -225,7 +218,6 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
       </div>
       <div vkuiClass="CalendarRange__inner">
         <CalendarHeader
-          locale={locale}
           viewDate={secondViewDate}
           onChange={setViewDate}
           prevMonth={false}
@@ -234,7 +226,6 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
           vkuiClass="CalendarRange__header"
         />
         <CalendarDays
-          locale={locale}
           viewDate={secondViewDate}
           value={value}
           weekStartsOn={weekStartsOn}

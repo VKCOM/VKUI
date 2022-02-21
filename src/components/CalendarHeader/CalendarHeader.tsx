@@ -14,12 +14,12 @@ import CustomSelect, {
 import CustomSelectOption from "../CustomSelectOption/CustomSelectOption";
 import { SizeType } from "../../hoc/withAdaptivity";
 import { getMonths, getYears } from "../../lib/calendar";
+import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
 import "./CalendarHeader.css";
 
 export interface CalendarHeaderProps
   extends Pick<React.HTMLAttributes<HTMLDivElement>, "className"> {
   viewDate: Date;
-  locale?: string;
   prevMonth?: boolean;
   nextMonth?: boolean;
   disablePickers?: boolean;
@@ -43,7 +43,6 @@ const renderOption: CustomSelectProps["renderOption"] = ({
 export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   viewDate,
   onChange,
-  locale,
   prevMonth = true,
   nextMonth = true,
   disablePickers = false,
@@ -51,6 +50,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   onPrevMonth,
   className,
 }) => {
+  const locale = React.useContext(LocaleProviderContext);
   const onMonthsChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>
       onChange(setMonth(viewDate, Number(event.target.value))),

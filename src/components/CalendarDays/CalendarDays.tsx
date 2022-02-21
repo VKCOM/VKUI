@@ -2,13 +2,13 @@ import * as React from "react";
 import { isSameDay, isSameMonth } from "date-fns";
 import { CalendarDay } from "../CalendarDay/CalendarDay";
 import { getDaysNames, getWeeks } from "../../lib/calendar";
+import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
 import "./CalendarDays.css";
 
 export interface CalendarDaysProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
   value?: Date | Array<Date | null>;
   viewDate: Date;
-  locale?: string;
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   onDayChange(value: Date): void;
   isDayDisabled(value: Date): boolean;
@@ -25,7 +25,6 @@ export interface CalendarDaysProps
 }
 
 export const CalendarDays: React.FC<CalendarDaysProps> = ({
-  locale,
   viewDate,
   value,
   weekStartsOn,
@@ -43,6 +42,7 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
   isDayDisabled,
   ...props
 }) => {
+  const locale = React.useContext(LocaleProviderContext);
   const ref = React.useRef<HTMLDivElement>(null);
   const [now] = React.useState(new Date());
 
@@ -91,7 +91,6 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
               hintedSelectionStart={isHintedDaySelectionStart?.(day, i)}
               hintedSelectionEnd={isHintedDaySelectionEnd?.(day, i)}
               selected={isDaySelected?.(day)}
-              locale={locale}
               focused={isDayFocused(day)}
               onEnter={onDayEnter}
               onLeave={onDayLeave}

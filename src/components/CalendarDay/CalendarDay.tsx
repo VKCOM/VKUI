@@ -2,6 +2,7 @@ import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import Tappable from "../Tappable/Tappable";
 import { ENABLE_KEYBOARD_INPUT_EVENT_NAME } from "../../hooks/useKeyboardInputTracker";
+import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
 import "./CalendarDay.css";
 
 export interface CalendarDayProps {
@@ -15,7 +16,6 @@ export interface CalendarDayProps {
   active?: boolean;
   hidden?: boolean;
   disabled?: boolean;
-  locale?: string;
   focused?: boolean;
   hinted?: boolean;
   onChange(value: Date): void;
@@ -34,7 +34,6 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
     active,
     selectionStart,
     selectionEnd,
-    locale,
     focused,
     onEnter,
     onLeave,
@@ -42,6 +41,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
     hintedSelectionStart,
     hintedSelectionEnd,
   }) => {
+    const locale = React.useContext(LocaleProviderContext);
     const ref = React.useRef<HTMLElement>(null);
     const onClick = React.useCallback(() => onChange(day), [day, onChange]);
     const handleEnter = React.useCallback(() => onEnter?.(day), [day, onEnter]);
