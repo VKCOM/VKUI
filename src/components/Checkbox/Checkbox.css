@@ -24,22 +24,22 @@
 }
 
 .Checkbox__icon--on {
-  color: var(--accent);
+  color: var(--accent, var(--vkui--color_icon_accent));
   display: none;
 }
 
 .Checkbox__icon--off {
-  color: var(--icon_tertiary);
+  color: var(--icon_tertiary, var(--vkui--color_icon_tertiary));
 }
 
 .Checkbox__content {
   flex-grow: 1;
-  color: var(--text_primary);
+  color: var(--text_primary, var(--vkui--color_text_primary));
   word-break: break-word;
 }
 
 .Checkbox__description {
-  color: var(--text_secondary);
+  color: var(--text_secondary, var(--vkui--color_text_secondary));
   display: block;
   margin-bottom: 12px;
   margin-top: 2px;
@@ -62,7 +62,7 @@
 }
 
 .Checkbox__input[disabled] ~ .Checkbox__container {
-  opacity: 0.6;
+  opacity: var(--vkui--opacity_disable, 0.6);
 }
 
 /**
