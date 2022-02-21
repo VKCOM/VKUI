@@ -40,3 +40,7 @@
 .CalendarHeader__month_name {
   text-transform: capitalize;
 }
+
+.CalendarHeader__pickers .CustomSelectDropdown__CustomScrollView {
+  max-height: 184px;
+}
