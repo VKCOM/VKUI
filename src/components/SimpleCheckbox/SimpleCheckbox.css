@@ -1,17 +1,13 @@
 .SimpleCheckbox {
   display: flex;
-  margin: -10px;
-  padding: 10px;
-  width: 24px;
-  height: 24px;
+  margin: -10px; /* чтобы тачзона не влияла на размеры компонента  */
+  padding: 10px; /* размер тачзоны */
   border-radius: 50%;
 }
 
 .SimpleCheckbox--sizeY-compact {
-  margin: -8px;
-  padding: 8px;
-  width: 20px;
-  height: 20px;
+  margin: -8px; /* чтобы тачзона не влияла на размеры компонента  */
+  padding: 8px; /* размер тачзоны */
 }
 
 .SimpleCheckbox--mouse {
