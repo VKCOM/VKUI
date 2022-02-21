@@ -27,7 +27,6 @@
 
 .SimpleCheckbox__icon {
   flex-shrink: 0;
-  margin: auto;
   box-sizing: border-box;
   display: flex;
 }
