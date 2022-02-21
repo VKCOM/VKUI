@@ -123,6 +123,7 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
   const onDayChange = React.useCallback(
     (date: Date) => {
       onChange?.(getNewValue(date));
+      setHintedDate(undefined);
     },
     [onChange, getNewValue]
   );
