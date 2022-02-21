@@ -27,6 +27,9 @@
   display: flex;
 }
 
+/**
+ * Иконка отмеченного чекбокса
+ */
 .SimpleCheckbox__icon--on {
   color: var(--accent, var(--vkui--color_icon_accent));
   display: none;
@@ -44,6 +47,9 @@
   color: var(--vkui--color_icon_accent--active);
 }
 
+/**
+ * Иконка неопределённого чекбокса
+ */
 .SimpleCheckbox__icon--indeterminate {
   color: var(--accent, var(--vkui--color_icon_accent));
   display: none;
@@ -61,6 +67,9 @@
   color: var(--vkui--color_icon_accent--active);
 }
 
+/**
+ * Иконка выключенного чекбокса
+ */
 .SimpleCheckbox__icon--off {
   color: var(--icon_tertiary, var(--vkui--color_icon_tertiary));
 }
@@ -77,6 +86,9 @@
   color: var(--vkui--color_icon_tertiary--active);
 }
 
+/**
+ * Показ/скрытие иконок включенного, выключенного и необпеределённого чекбокса
+ */
 .SimpleCheckbox__input:checked ~ .SimpleCheckbox__icon--on {
   display: flex;
 }
@@ -95,11 +107,19 @@
   display: none;
 }
 
+/**
+ * Disabled state
+ */
 .SimpleCheckbox__input[disabled] ~ .SimpleCheckbox__icon {
   opacity: var(--vkui--opacity_disable, 0.4);
 }
 
 /* todo: при съезде с appearance удалить строки отсюда */
+/**
+ * Hover & active state (appearance-way)
+ * Тут живут стили диваков, которые натягиваются на иконку чекбокса при hover или active
+ * Размеры и border-radius диваков подобраны так, чтобы совпадали с размерами и border-radius иконок
+ */
 .SimpleCheckbox--old-tokens.SimpleCheckbox--active--mouse
   .SimpleCheckbox__activeShadow,
 .SimpleCheckbox--old-tokens.SimpleCheckbox--hover--mouse
