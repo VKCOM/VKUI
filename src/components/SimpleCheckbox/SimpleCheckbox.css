@@ -36,13 +36,15 @@
   display: none;
 }
 
-.SimpleCheckbox--hover--mouse .SimpleCheckbox__icon--on {
-  /*color: var(--accent, var(--vkui--color_icon_accent--hover));*/
+/* todo: выпилить .SimpleCheckbox:not(.SimpleCheckbox--old-tokens) при съезде с appearence */
+.SimpleCheckbox:not(.SimpleCheckbox--old-tokens).SimpleCheckbox--hover--mouse
+  .SimpleCheckbox__icon--on {
   color: var(--vkui--color_icon_accent--hover);
 }
 
-.SimpleCheckbox--active--mouse .SimpleCheckbox__icon--on {
-  /*color: var(--accent, var(--vkui--color_icon_accent--active));*/
+/* todo: выпилить .SimpleCheckbox:not(.SimpleCheckbox--old-tokens) при съезде с appearence */
+.SimpleCheckbox:not(.SimpleCheckbox--old-tokens).SimpleCheckbox--active--mouse
+  .SimpleCheckbox__icon--on {
   color: var(--vkui--color_icon_accent--active);
 }
 
@@ -51,13 +53,15 @@
   display: none;
 }
 
-.SimpleCheckbox--hover--mouse .SimpleCheckbox__icon--indeterminate {
-  /*color: var(--accent, var(--vkui--color_icon_accent--hover));*/
+/* todo: выпилить .SimpleCheckbox:not(.SimpleCheckbox--old-tokens) при съезде с appearence */
+.SimpleCheckbox:not(.SimpleCheckbox--old-tokens).SimpleCheckbox--hover--mouse
+  .SimpleCheckbox__icon--indeterminate {
   color: var(--vkui--color_icon_accent--hover);
 }
 
-.SimpleCheckbox--active--mouse .SimpleCheckbox__icon--indeterminate {
-  /*color: var(--accent, var(--vkui--color_icon_accent--active));*/
+/* todo: выпилить .SimpleCheckbox:not(.SimpleCheckbox--old-tokens) при съезде с appearence */
+.SimpleCheckbox:not(.SimpleCheckbox--old-tokens).SimpleCheckbox--active--mouse
+  .SimpleCheckbox__icon--indeterminate {
   color: var(--vkui--color_icon_accent--active);
 }
 
@@ -65,13 +69,15 @@
   color: var(--icon_tertiary, var(--vkui--color_icon_tertiary));
 }
 
-.SimpleCheckbox--hover--mouse .SimpleCheckbox__icon--off {
-  /*color: var(--accent, var(--vkui--color_icon_tertiary--hover));*/
+.SimpleCheckbox:not(.SimpleCheckbox--old-tokens) /* todo: выпилить эту строку при съезде с appearence */
+  .SimpleCheckbox--hover--mouse
+  .SimpleCheckbox__icon--off {
   color: var(--vkui--color_icon_tertiary--hover);
 }
 
-.SimpleCheckbox--active--mouse .SimpleCheckbox__icon--off {
-  /*color: var(--accent, var(--vkui--color_icon_tertiary--active));*/
+.SimpleCheckbox:not(.SimpleCheckbox--old-tokens) /* todo: выпилить эту строку при съезде с appearence */
+  .SimpleCheckbox--active--mouse
+  .SimpleCheckbox__icon--off {
   color: var(--vkui--color_icon_tertiary--active);
 }
 
@@ -96,3 +102,42 @@
 .SimpleCheckbox__input[disabled] ~ .SimpleCheckbox__icon {
   opacity: var(--vkui--opacity_disable);
 }
+
+/* todo: при съезде с appearance удалить строки отсюда */
+.SimpleCheckbox--old-tokens.SimpleCheckbox--active--mouse
+  .SimpleCheckbox__activeShadow,
+.SimpleCheckbox--old-tokens.SimpleCheckbox--hover--mouse
+  .SimpleCheckbox__hoverShadow {
+  display: flex;
+  margin: 2px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 4px;
+  transition: inherit;
+}
+
+.SimpleCheckbox--old-tokens.SimpleCheckbox--active--mouse.SimpleCheckbox--sizeY-compact
+  .SimpleCheckbox__activeShadow,
+.SimpleCheckbox--old-tokens.SimpleCheckbox--hover--mouse.SimpleCheckbox--sizeY-compact
+  .SimpleCheckbox__hoverShadow {
+  width: 16px;
+  height: 16px;
+}
+
+.SimpleCheckbox--old-tokens.SimpleCheckbox--hover--mouse
+  .SimpleCheckbox__hoverShadow {
+  background-color: var(--background_hover);
+}
+
+.SimpleCheckbox--old-tokens.SimpleCheckbox--active--mouse
+  .SimpleCheckbox__activeShadow {
+  background-color: var(--background_highlighted);
+}
+/* todo: досюда */

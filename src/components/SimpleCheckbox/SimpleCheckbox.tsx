@@ -15,6 +15,7 @@ import { useExternRef } from "../../hooks/useExternRef";
 import { SizeType } from "../../hoc/withAdaptivity";
 import { warnOnce } from "../../lib/warnOnce";
 import { classNames } from "../../lib/classNames";
+import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
 
 import "./SimpleCheckbox.css";
 
@@ -43,6 +44,8 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
     ...restProps
   } = props;
   const { sizeY, hasMouse } = useAdaptivity();
+  const hasNewTokens = React.useContext(ConfigProviderContext).hasNewTokens;
+
   const inputRef = useExternRef(getRef);
 
   React.useEffect(() => {
@@ -92,6 +95,7 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
         `SimpleCheckbox--sizeY-${sizeY}`,
         {
           "SimpleCheckbox--mouse": hasMouse,
+          "SimpleCheckbox--old-tokens": !hasNewTokens,
         }
       )}
       className={className}
@@ -128,6 +132,12 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
           height={sizeY === SizeType.COMPACT ? 20 : 24}
         />
       </div>
+      {!hasNewTokens && (
+        <div aria-hidden={true} vkuiClass="SimpleCheckbox__activeShadow" />
+      )}
+      {!hasNewTokens && (
+        <div aria-hidden={true} vkuiClass="SimpleCheckbox__hoverShadow" />
+      )}
     </Tappable>
   );
 };
