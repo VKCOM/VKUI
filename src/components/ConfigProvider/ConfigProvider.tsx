@@ -80,6 +80,7 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
     hasNewTokens,
     platform,
     scheme,
+    appearance,
   };
 
   const normalizedScheme = normalizeScheme({
