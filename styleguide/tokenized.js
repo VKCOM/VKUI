@@ -4,6 +4,7 @@ export const tokenized = [
   "CardScroll",
   "SegmentedControl",
   "Title",
+  "HorizontalScroll",
   "Title",
   "Calendar",
   "CalendarRange",

@@ -26,6 +26,8 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
   closing,
   popupDirection,
   onClose,
+  className,
+  style,
   ...restProps
 }) => {
   const { document } = useDOM();
@@ -82,6 +84,8 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
         "ActionSheet--desktop",
         `ActionSheet--sizeY-${sizeY}`
       )}
+      className={className}
+      style={style}
       getRef={elementRef}
       forcePortal={false}
     >
