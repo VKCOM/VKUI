@@ -16,14 +16,7 @@ import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./DateInput.css";
 
 export interface DateInputProps
-  extends Pick<
-      React.InputHTMLAttributes<HTMLDivElement>,
-      "style" | "className"
-    >,
-    Pick<
-      React.InputHTMLAttributes<HTMLInputElement>,
-      "name" | "autoFocus" | "disabled"
-    >,
+  extends Omit<React.InputHTMLAttributes<HTMLDivElement>, "value" | "onChange">,
     Pick<
       CalendarProps,
       | "disablePast"
@@ -86,6 +79,7 @@ export const DateInput: React.FC<DateInputProps> = ({
   name,
   autoFocus,
   disabled,
+  ...props
 }) => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
   const monthsRef = React.useRef<HTMLSpanElement>(null);
@@ -191,6 +185,7 @@ export const DateInput: React.FC<DateInputProps> = ({
       disabled={disabled}
       onClick={handleFieldClick}
       onFocus={openCalendar}
+      {...props}
     >
       <input
         type="hidden"

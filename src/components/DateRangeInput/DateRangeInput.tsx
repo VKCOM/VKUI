@@ -19,14 +19,7 @@ import { InputLikeDivider } from "../InputLike/InputLikeDivider";
 import "./DateRangeInput.css";
 
 export interface DateRangeInputProps
-  extends Pick<
-      React.InputHTMLAttributes<HTMLDivElement>,
-      "style" | "className"
-    >,
-    Pick<
-      React.InputHTMLAttributes<HTMLInputElement>,
-      "name" | "autoFocus" | "disabled"
-    >,
+  extends Omit<React.InputHTMLAttributes<HTMLDivElement>, "value" | "onChange">,
     Pick<
       CalendarRangeProps,
       | "disablePast"
@@ -82,6 +75,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
   name,
   autoFocus,
   disabled,
+  ...props
 }) => {
   const daysStartRef = React.useRef<HTMLSpanElement>(null);
   const monthsStartRef = React.useRef<HTMLSpanElement>(null);
@@ -219,6 +213,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
       disabled={disabled}
       onClick={handleFieldClick}
       onFocus={openCalendar}
+      {...props}
     >
       <input
         type="hidden"
