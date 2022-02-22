@@ -1,11 +1,15 @@
 .Checkbox {
   display: block;
+  padding: 0 var(--vkui--size_base_padding_horizontal--regular, 16px);
 }
 
 .FormItem .Checkbox {
   width: 100%;
   box-sizing: content-box;
-  margin: 0 calc(-1 * var(--formitem_padding));
+  margin: 0
+    calc(
+      -1 * var(--formitem_padding, var(--vkui--size_base_padding_horizontal--regular))
+    );
 }
 
 .Checkbox__input {
@@ -70,7 +74,7 @@
  */
 
 .Checkbox--ios {
-  padding: 0 12px;
+  /*padding: 0 12px;*/
 }
 
 /**
@@ -78,7 +82,7 @@
  */
 
 .Checkbox--android {
-  padding: 0 16px;
+  /*padding: 0 16px;*/
 }
 
 /**
@@ -102,7 +106,7 @@
  */
 
 .Checkbox--vkcom {
-  padding: 0 16px;
+  /*padding: 0 16px;*/
 }
 
 .Checkbox--vkcom .Checkbox__icon {
@@ -110,7 +114,7 @@
 }
 
 .Checkbox--vkcom .Checkbox__input[disabled] ~ .Checkbox__container {
-  opacity: 0.4;
+  /*opacity: 0.4;*/
 }
 
 .Checkbox--vkcom .Checkbox__children {
