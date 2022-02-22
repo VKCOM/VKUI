@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Icon24Chevron } from "@vkontakte/icons";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import Tappable from "../Tappable/Tappable";
 import "./HorizontalScrollArrow.css";
@@ -20,7 +19,7 @@ const HorizontalScrollArrow: React.FC<HorizontalScrollArrowProps> = ({
       hasHover={false}
       hasActive={false}
       vkuiClass={classNames(
-        getClassName("HorizontalScrollArrow"),
+        "HorizontalScrollArrow",
         `HorizontalScrollArrow--${direction}`
       )}
       onClick={onClick}
