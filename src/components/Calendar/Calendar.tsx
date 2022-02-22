@@ -127,5 +127,3 @@ export const Calendar: React.FC<CalendarProps> = ({
     </div>
   );
 };
-
-Calendar.displayName = "Calendar";

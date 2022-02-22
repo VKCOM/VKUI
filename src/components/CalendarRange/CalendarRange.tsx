@@ -249,5 +249,3 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
     </div>
   );
 };
-
-CalendarRange.displayName = "CalendarRange";
