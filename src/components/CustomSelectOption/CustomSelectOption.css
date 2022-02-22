@@ -8,6 +8,7 @@
   white-space: nowrap;
   user-select: none;
   cursor: pointer;
+  color: var(--text_primary);
 }
 
 .CustomSelectOption--sizeY-regular {

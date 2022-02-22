@@ -7,6 +7,9 @@ export type { CardProps } from "../components/Card/Card";
 export { CardScroll } from "../components/CardScroll/CardScroll";
 export type { CardScrollProps } from "../components/CardScroll/CardScroll";
 
+export { default as HorizontalScroll } from "../components/HorizontalScroll/HorizontalScroll";
+export type { HorizontalScrollProps } from "../components/HorizontalScroll/HorizontalScroll";
+
 export { SegmentedControl } from "../components/SegmentedControl/SegmentedControl";
 export type {
   SegmentedControlProps,
