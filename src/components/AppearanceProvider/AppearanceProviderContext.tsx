@@ -1,7 +1,12 @@
 import * as React from "react";
 import { AppearanceType } from "@vkontakte/vk-bridge";
-import { Appearance } from "../../helpers/scheme";
+import { Scheme } from "../../helpers/scheme";
 
-export const AppearanceProviderContext = React.createContext<AppearanceType>(
-  Appearance.LIGHT
-);
+export interface AppearanceProviderContextProps {
+  scheme: Scheme | "inherit" | undefined;
+  appearance: AppearanceType;
+}
+
+export const AppearanceProviderContext = React.createContext<
+  AppearanceProviderContextProps | undefined
+>(undefined);

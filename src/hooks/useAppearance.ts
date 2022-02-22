@@ -1,4 +1,5 @@
 import * as React from "react";
-import { AppearanceProviderContext } from "../components/AppearanceProvider/AppearanceProviderContext";
+import { ConfigProviderContext } from "../components/ConfigProvider/ConfigProviderContext";
 
-export const useAppearance = () => React.useContext(AppearanceProviderContext);
+export const useAppearance = () =>
+  React.useContext(ConfigProviderContext).appearance;

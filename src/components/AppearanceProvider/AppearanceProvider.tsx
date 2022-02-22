@@ -37,19 +37,26 @@ export const AppearanceProvider: React.FC<AppearanceProviderProps> = ({
   appearance = "light",
 }) => {
   const platform = usePlatform();
-  const scheme = getScheme({
-    platform,
-    appearance,
-  });
+
+  const appearanceContext = React.useMemo(
+    () => ({
+      scheme: getScheme({
+        platform,
+        appearance,
+      }),
+      appearance,
+    }),
+    [appearance, platform]
+  );
 
   return (
-    <AppearanceProviderContext.Provider value={appearance}>
+    <AppearanceProviderContext.Provider value={appearanceContext}>
       {React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
           return React.cloneElement(child, {
             className: classNamesString(
               child.props.className,
-              `vkui${scheme}`,
+              `vkui${appearanceContext.scheme}`,
               generateVKUITokensClassName(platform, appearance)
             ),
           });
