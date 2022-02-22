@@ -73,16 +73,6 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
   appearance,
   scheme,
 }) => {
-  const config = {
-    webviewType,
-    isWebView,
-    transitionMotionEnabled,
-    hasNewTokens,
-    platform,
-    scheme,
-    appearance,
-  };
-
   const normalizedScheme = normalizeScheme({
     scheme,
     platform,
@@ -124,8 +114,13 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
   }, [platform, derivedAppearance]);
 
   const configContext = useObjectMemo({
-    appearance: derivedAppearance,
-    ...config,
+    webviewType,
+    isWebView,
+    transitionMotionEnabled,
+    hasNewTokens,
+    platform,
+    scheme,
+    appearance: appearance || derivedAppearance,
   });
 
   return (
