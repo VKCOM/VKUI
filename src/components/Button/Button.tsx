@@ -16,7 +16,6 @@ import {
 import { PlatformType, IOS, VKCOM, ANDROID } from "../../lib/platform";
 import Spinner from "../Spinner/Spinner";
 import Headline from "../Typography/Headline/Headline";
-import { ButtonGroupContext } from "../ButtonGroup/ButtonGroup";
 import "./Button.css";
 
 export interface VKUIButtonProps extends HasAlign {
@@ -169,7 +168,6 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
     mode
   );
   const hasNewTokens = React.useContext(ConfigProviderContext).hasNewTokens;
-  const buttonGroupContext = React.useContext(ButtonGroupContext);
 
   return (
     <Tappable
@@ -184,11 +182,8 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
         `Button--clr-${resolvedAppearance}`,
         `Button--aln-${align}`,
         `Button--sizeY-${sizeY}`,
-        buttonGroupContext &&
-          `Button--in-group Button--in-group-${buttonGroupContext.mode}-${buttonGroupContext.padding}`,
         {
-          // Контекст ButtonGroup в приоритете
-          ["Button--stretched"]: buttonGroupContext?.stretched || stretched,
+          ["Button--stretched"]: stretched,
           ["Button--with-icon"]: hasIcons,
           ["Button--singleIcon"]: Boolean(
             (!children && !after && before) || (!children && after && !before)

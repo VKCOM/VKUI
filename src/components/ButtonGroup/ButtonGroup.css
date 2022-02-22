@@ -1,5 +1,10 @@
 .ButtonGroup {
   display: inline-flex;
+  align-items: flex-start; /* Чтобы блоки по-умолчанию не растягивались на всю ширину контейнера */
+}
+
+.ButtonGroup--stretched {
+  width: 100%;
 }
 
 .ButtonGroup--mode-vertical {
@@ -10,14 +15,37 @@
   flex-direction: row;
 }
 
-.ButtonGroup--vertical-padding-medium:not(:first-child) {
-  margin-top: var(--vkui--size_button_group--padding-medium);
+/* stylelint-disable vkui/atomic */
+
+/**
+ * # Обоснование
+ * Чтобы не завязываться на класс компонента, используем каскад и универсальный селектор.
+ */
+
+/* "gap" для mode="vertical" */
+.ButtonGroup--mode-vertical.ButtonGroup--gap-space > *:not(:first-child) {
+  margin-top: var(--vkui--size_button_group_gap_space--regular);
 }
 
-.ButtonGroup--vertical-padding-small:not(:first-child) {
-  margin-top: var(--vkui--size_button_group--padding-small);
+.ButtonGroup--mode-vertical.ButtonGroup--gap-s > *:not(:first-child) {
+  margin-top: var(--vkui--size_button_group_gap_small--regular);
 }
 
-.ButtonGroup--stretched {
-  display: flex;
+.ButtonGroup--mode-vertical.ButtonGroup--gap-m > *:not(:first-child) {
+  margin-top: var(--vkui--size_button_group_gap_medium--regular);
 }
+
+/* "gap" для mode="horizontal" */
+.ButtonGroup--mode-horizontal.ButtonGroup--gap-space > *:not(:last-child) {
+  margin-right: var(--vkui--size_button_group_gap_space--regular);
+}
+
+.ButtonGroup--mode-horizontal.ButtonGroup--gap-s > *:not(:last-child) {
+  margin-right: var(--vkui--size_button_group_gap_small--regular);
+}
+
+.ButtonGroup--mode-horizontal.ButtonGroup--gap-m > *:not(:last-child) {
+  margin-right: var(--vkui--size_button_group_gap_medium--regular);
+}
+
+/* stylelint-enable vkui/atomic */

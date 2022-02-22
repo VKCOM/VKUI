@@ -4,47 +4,49 @@ import { ButtonGroup, ButtonGroupProps } from "./ButtonGroup";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
 describe("ButtonGroup", () => {
+  const buttonText = "Button";
+  const strechedButtonText = "Button (stretched)";
+
   describeScreenshotFuzz(
     (props: ButtonGroupProps) => (
       <ButtonGroup {...props}>
-        <ButtonGroup mode="horizontal">
+        <ButtonGroup mode="horizontal" gap="m" stretched>
           <Button size="l" appearance="accent">
-            Button
+            {buttonText}
           </Button>
           <Button size="l" appearance="accent" before={<Icon24Add />} />
         </ButtonGroup>
-        <ButtonGroup mode="vertical">
+
+        <ButtonGroup mode="horizontal" gap="m" stretched={false}>
           <Button size="l" appearance="accent">
-            Button
+            {buttonText}
           </Button>
           <Button size="l" appearance="accent" before={<Icon24Add />} />
-          <ButtonGroup mode="horizontal">
+        </ButtonGroup>
+
+        <ButtonGroup mode="vertical" gap="m" stretched={false}>
+          <Button size="l" appearance="accent" stretched>
+            {strechedButtonText}
+          </Button>
+          <Button
+            size="l"
+            appearance="accent"
+            before={<Icon24Add />}
+            stretched
+          />
+          <ButtonGroup mode="horizontal" stretched>
             <Button size="l" appearance="accent" before={<Icon24Add />} />
-            <Button size="l" appearance="accent">
-              Button
+            <Button size="l" appearance="accent" stretched>
+              {strechedButtonText}
             </Button>
           </ButtonGroup>
-        </ButtonGroup>
-        <Button size="l" appearance="accent">
-          Button
-        </Button>
-        <ButtonGroup mode="horizontal">
-          <Button size="l" appearance="accent">
-            Button
-          </Button>
-          <Button size="l" appearance="accent">
-            Button
-          </Button>
-          <Button size="l" appearance="accent">
-            Button
-          </Button>
         </ButtonGroup>
       </ButtonGroup>
     ),
     [
       {
         mode: ["horizontal", "vertical"],
-        padding: ["medium", "small"],
+        gap: ["none", "space", "s", "m"],
         stretched: [undefined, true],
       },
     ]

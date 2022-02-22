@@ -41,8 +41,9 @@
   --duration: 0.7s;
 
   /* FIXME Для теста зашил токены тут. Надо добавить их в `@vkontakte/vkui-tokens` и брать оттуда */
-  --vkui--size_button_group--padding-medium: 12px;
-  --vkui--size_button_group--padding-small: 8px;
+  --vkui--size_button_group_gap_space--regular: 1px;
+  --vkui--size_button_group_gap_small--regular: 8px;
+  --vkui--size_button_group_gap_medium--regular: 12px;
 }
 
 @media (min-resolution: 2dppx) {
