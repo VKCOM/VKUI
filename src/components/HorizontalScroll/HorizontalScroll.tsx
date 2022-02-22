@@ -1,5 +1,4 @@
 import * as React from "react";
-import { usePlatform } from "../../hooks/usePlatform";
 import { getClassName } from "../../helpers/getClassName";
 import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import HorizontalScrollArrow from "./HorizontalScrollArrow";
@@ -134,8 +133,6 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
 
   const animationQueue = React.useRef<VoidFunction[]>([]);
 
-  const platform = usePlatform();
-
   function scrollTo(getScrollPosition: (offset: number) => number) {
     const scrollElement = scrollerRef.current;
 
@@ -184,7 +181,7 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(getClassName("HorizontalScroll", platform), {
+      vkuiClass={classNames(getClassName("HorizontalScroll"), {
         ["HorizontalScroll--withConstArrows"]: showArrows === "always",
       })}
     >
