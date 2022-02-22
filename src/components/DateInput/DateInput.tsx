@@ -1,22 +1,29 @@
 import * as React from "react";
 import { format, isMatch, parse } from "date-fns";
 import { Icon16Clear, Icon20CalendarOutline } from "@vkontakte/icons";
-import { NumberFormatValues } from "react-number-format";
-import { InputProps } from "../Input/Input";
-import { MaskedInput } from "../MaskedInput/MaskedInput";
 import { Calendar, CalendarProps } from "../Calendar/Calendar";
 import { Popper, Placement } from "../Popper/Popper";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
-import { callMultiple } from "../../lib/callMultiple";
-import { useDOM } from "../../lib/dom";
-import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
+import { multiRef } from "../../lib/utils";
 import IconButton from "../IconButton/IconButton";
 import { classNames } from "../../lib/classNames";
-import { useBooleanState } from "../../hooks/useBooleanState";
+import { FormField } from "../FormField/FormField";
+import { HasRootRef } from "../../types";
+import { useDateInput } from "../../hooks/useDateInput";
+import { InputLike } from "../InputLike/InputLike";
+import { InputLikeDivider } from "../InputLike/InputLikeDivider";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./DateInput.css";
 
 export interface DateInputProps
-  extends Omit<InputProps, "onChange" | "value" | "defaultValue" | "type">,
+  extends Pick<
+      React.InputHTMLAttributes<HTMLDivElement>,
+      "style" | "className"
+    >,
+    Pick<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      "name" | "autoFocus" | "disabled"
+    >,
     Pick<
       CalendarProps,
       | "disablePast"
@@ -28,157 +35,250 @@ export interface DateInputProps
       | "doneButtonText"
       | "weekStartsOn"
       | "disablePickers"
-    > {
+    >,
+    HasRootRef<HTMLDivElement> {
   calendarPlacement?: Placement;
   closeOnChange?: boolean;
 }
 
-const maskWithoutTime = {
-  format: "##.##.####",
-  placeholder: "_ _._ _._ _ _ _",
-  dateFnsFormat: "dd.MM.yyyy",
-  mask: ["_ ", "_", "_ ", "_", "_ ", "_ ", "_ ", "_"],
-};
-const maskWithTime = {
-  format: `${maskWithoutTime.format}   ##:##`,
-  placeholder: `${maskWithoutTime.placeholder}   _ _:_ _`,
-  dateFnsFormat: `${maskWithoutTime.dateFnsFormat}   HH:mm`,
-  mask: [...maskWithoutTime.mask, "_ ", "_", "_ ", "_"],
-};
+const elementsConfig = (index: number) => {
+  let length = 2;
+  let min = 1;
+  let max = 0;
 
-export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
-  (
-    {
-      enableTime,
-      shouldDisableDate,
-      disableFuture,
-      disablePast,
-      value,
-      onChange,
-      calendarPlacement = "bottom-start",
-      onFocus,
-      style,
-      className,
-      doneButtonText,
-      closeOnChange = true,
-      disablePickers,
-      ...props
-    },
-    ref
-  ) => {
-    const {
-      value: open,
-      setTrue: openCalendar,
-      setFalse: closeCalendar,
-    } = useBooleanState(false);
-    const rootRef = React.useRef<HTMLDivElement>(null);
-    const calendarRef = React.useRef<HTMLDivElement>(null);
-    const { document } = useDOM();
-
-    const mask = enableTime ? maskWithTime : maskWithoutTime;
-
-    const handleClickOutside = React.useCallback(
-      (e: MouseEvent) => {
-        if (
-          !rootRef.current?.contains(e.target as Node | null) &&
-          !calendarRef.current?.contains(e.target as Node | null)
-        ) {
-          closeCalendar();
-        }
-      },
-      [closeCalendar]
-    );
-
-    useGlobalEventListener(document, "click", handleClickOutside, {
-      capture: true,
-    });
-
-    const onValueChange = React.useCallback(
-      ({ formattedValue }: NumberFormatValues) => {
-        if (isMatch(formattedValue, mask.dateFnsFormat)) {
-          onChange?.(
-            parse(formattedValue, mask.dateFnsFormat, value ?? new Date())
-          );
-        }
-      },
-      [mask.dateFnsFormat, onChange, value]
-    );
-
-    const clear = React.useCallback(() => onChange?.(undefined), [onChange]);
-
-    const onCalendarChange = React.useCallback(
-      (value?: Date | undefined) => {
-        onChange?.(value);
-        if (closeOnChange && !enableTime) {
-          closeCalendar();
-        }
-      },
-      [onChange, closeCalendar, closeOnChange, enableTime]
-    );
-
-    return (
-      <div
-        vkuiClass={classNames("DateInput", {
-          "DateInput--time": enableTime,
-        })}
-        style={style}
-        className={className}
-        ref={rootRef}
-      >
-        <MaskedInput
-          {...props}
-          value={value ? format(value, mask.dateFnsFormat) : ""}
-          format={mask.format}
-          placeholder={mask.placeholder}
-          mask={mask.mask}
-          getRef={ref}
-          onFocus={callMultiple(openCalendar, onFocus)}
-          onValueChange={onValueChange}
-          after={
-            value ? (
-              <IconButton
-                hoverMode="opacity"
-                aria-label="Очистить поле"
-                onClick={clear}
-              >
-                <Icon16Clear />
-              </IconButton>
-            ) : (
-              <IconButton
-                hoverMode="opacity"
-                aria-label="Показать календарь"
-                onClick={openCalendar}
-              >
-                <Icon20CalendarOutline />
-              </IconButton>
-            )
-          }
-        />
-        {open && (
-          <Popper
-            targetRef={rootRef}
-            offsetDistance={8}
-            placement={calendarPlacement}
-          >
-            <FocusTrap onClose={closeCalendar} restoreFocus={false}>
-              <Calendar
-                value={value}
-                onChange={onCalendarChange}
-                enableTime={enableTime}
-                disablePast={disablePast}
-                disableFuture={disableFuture}
-                shouldDisableDate={shouldDisableDate}
-                onClose={closeCalendar}
-                getRootRef={calendarRef}
-                doneButtonText={doneButtonText}
-                disablePickers={disablePickers}
-              />
-            </FocusTrap>
-          </Popper>
-        )}
-      </div>
-    );
+  switch (index) {
+    case 0:
+      max = 31;
+      break;
+    case 1:
+      max = 12;
+      break;
+    case 2:
+      max = 2100;
+      min = 1900;
+      length = 4;
+      break;
+    case 3:
+      max = 23;
+      break;
+    case 4:
+      max = 59;
+      break;
   }
-);
 
-DateInput.displayName = "DateInput";
+  return { length, min, max };
+};
+
+export const DateInput: React.FC<DateInputProps> = ({
+  enableTime,
+  shouldDisableDate,
+  disableFuture,
+  disablePast,
+  value,
+  onChange,
+  calendarPlacement = "bottom-start",
+  style,
+  className,
+  doneButtonText,
+  closeOnChange = true,
+  disablePickers,
+  getRootRef,
+  name,
+  autoFocus,
+  disabled,
+}) => {
+  const daysRef = React.useRef<HTMLSpanElement>(null);
+  const monthsRef = React.useRef<HTMLSpanElement>(null);
+  const yearsRef = React.useRef<HTMLSpanElement>(null);
+  const hoursRef = React.useRef<HTMLSpanElement>(null);
+  const minutesRef = React.useRef<HTMLSpanElement>(null);
+
+  const maxElement = enableTime ? 4 : 2;
+
+  const onInternalValueChange = React.useCallback(
+    (internalValue: string[]) => {
+      for (let i = 0; i <= maxElement; i += 1) {
+        if (internalValue[i].length < elementsConfig(i).length) {
+          return;
+        }
+      }
+
+      let formattedValue = `${internalValue[0]}.${internalValue[1]}.${internalValue[2]}`;
+      let mask = "dd.MM.yyyy";
+      if (enableTime) {
+        formattedValue += ` ${internalValue[3]}:${internalValue[4]}`;
+        mask += " HH:mm";
+      }
+
+      if (isMatch(formattedValue, mask)) {
+        onChange?.(parse(formattedValue, mask, value ?? new Date()));
+      }
+    },
+    [enableTime, maxElement, onChange, value]
+  );
+  const {
+    rootRef,
+    calendarRef,
+    open,
+    openCalendar,
+    closeCalendar,
+    internalValue,
+    setInternalValue,
+    handleKeyDown,
+    setFocusedElement,
+    handleFieldClick,
+    clearSelection,
+    clear,
+  } = useDateInput({
+    maxElement,
+    refs: [daysRef, monthsRef, yearsRef, hoursRef, minutesRef],
+    autoFocus,
+    disabled,
+    elementsConfig,
+    onChange,
+    onInternalValueChange,
+  });
+
+  const { sizeY } = useAdaptivity();
+
+  React.useEffect(() => {
+    const newValue = ["", "", "", "", ""];
+    if (value) {
+      newValue[0] = String(value.getDate()).padStart(2, "0");
+      newValue[1] = String(value.getMonth() + 1).padStart(2, "0");
+      newValue[2] = String(value.getFullYear()).padStart(4, "0");
+      newValue[3] = String(value.getHours()).padStart(2, "0");
+      newValue[4] = String(value.getMinutes()).padStart(2, "0");
+    }
+    setInternalValue(newValue);
+  }, [setInternalValue, value]);
+
+  const onCalendarChange = React.useCallback(
+    (value?: Date | undefined) => {
+      onChange?.(value);
+      if (closeOnChange && !enableTime) {
+        closeCalendar();
+      }
+    },
+    [onChange, closeCalendar, closeOnChange, enableTime]
+  );
+
+  return (
+    <FormField
+      vkuiClass={classNames("DateInput", `DateInput--sizeY-${sizeY}`)}
+      style={style}
+      className={className}
+      getRootRef={multiRef(rootRef, getRootRef)}
+      after={
+        value ? (
+          <IconButton
+            hoverMode="opacity"
+            aria-label="Очистить поле"
+            onClick={clear}
+          >
+            <Icon16Clear />
+          </IconButton>
+        ) : (
+          <IconButton
+            hoverMode="opacity"
+            aria-label="Показать календарь"
+            onClick={openCalendar}
+          >
+            <Icon20CalendarOutline />
+          </IconButton>
+        )
+      }
+      disabled={disabled}
+      onClick={handleFieldClick}
+      onFocus={openCalendar}
+    >
+      <input
+        type="hidden"
+        name={name}
+        value={
+          value
+            ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : "dd.MM.yyyy")
+            : ""
+        }
+      />
+      <span
+        vkuiClass="DateInput__input"
+        onKeyDown={handleKeyDown}
+        onBlur={clearSelection}
+      >
+        <InputLike
+          length={2}
+          ref={daysRef}
+          index={0}
+          onElementSelect={setFocusedElement}
+          value={internalValue[0]}
+          aria-label="Изменить день"
+        />
+        <InputLikeDivider>.</InputLikeDivider>
+        <InputLike
+          length={2}
+          ref={monthsRef}
+          index={1}
+          onElementSelect={setFocusedElement}
+          value={internalValue[1]}
+          aria-label="Изменить месяц"
+        />
+        <InputLikeDivider>.</InputLikeDivider>
+        <InputLike
+          length={4}
+          ref={yearsRef}
+          index={2}
+          onElementSelect={setFocusedElement}
+          value={internalValue[2]}
+          aria-label="Изменить год"
+        />
+        {enableTime && (
+          <React.Fragment>
+            <InputLikeDivider vkuiClass="DateInput__input-time-divider">
+              {" "}
+            </InputLikeDivider>
+            <InputLike
+              length={2}
+              ref={hoursRef}
+              index={3}
+              onElementSelect={setFocusedElement}
+              value={internalValue[3]}
+              aria-label="Изменить час"
+            />
+            <InputLikeDivider>:</InputLikeDivider>
+            <InputLike
+              length={2}
+              ref={minutesRef}
+              index={4}
+              onElementSelect={setFocusedElement}
+              value={internalValue[4]}
+              aria-label="Изменить минуту"
+            />
+          </React.Fragment>
+        )}
+      </span>
+      {open && (
+        <Popper
+          targetRef={rootRef}
+          offsetDistance={8}
+          placement={calendarPlacement}
+        >
+          <FocusTrap onClose={closeCalendar} restoreFocus={false}>
+            <Calendar
+              value={value}
+              onChange={onCalendarChange}
+              enableTime={enableTime}
+              disablePast={disablePast}
+              disableFuture={disableFuture}
+              shouldDisableDate={shouldDisableDate}
+              onClose={closeCalendar}
+              getRootRef={calendarRef}
+              doneButtonText={doneButtonText}
+              disablePickers={disablePickers}
+            />
+          </FocusTrap>
+        </Popper>
+      )}
+    </FormField>
+  );
+};

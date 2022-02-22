@@ -136,6 +136,8 @@
 @import "../components/CalendarHeader/CalendarHeader.css";
 @import "../components/CalendarRange/CalendarRange.css";
 @import "../components/CalendarTime/CalendarTime.css";
+@import "../components/InputLike/InputLike.css";
+@import "../components/InputLike/InputLikeDivider.css";
 @import "../components/DateInput/DateInput.css";
 @import "../components/DateRangeInput/DateRangeInput.css";
 

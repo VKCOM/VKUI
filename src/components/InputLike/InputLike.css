@@ -1,0 +1,12 @@
+.InputLike__mask {
+  color: var(--vkui--color_text_secondary);
+}
+
+.InputLike__mask {
+  letter-spacing: 2px;
+}
+
+.InputLike__mask:last-child,
+.InputLike__last_character {
+  letter-spacing: 1px;
+}

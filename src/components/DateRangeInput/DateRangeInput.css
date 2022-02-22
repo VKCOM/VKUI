@@ -1,3 +1,15 @@
-.DateRangeInput {
-  min-width: 274px;
+.DateRangeInput__input {
+  margin-left: 10px;
+  margin-right: 14px;
+  font-size: 16px;
+  z-index: 2;
+  cursor: text;
+  white-space: nowrap;
+  user-select: text;
+  font-variant-numeric: tabular-nums;
+}
+
+.DateRangeInput--sizeY-compact .DateRangeInput__input {
+  font-size: 15px;
+  margin-right: 22px;
 }
