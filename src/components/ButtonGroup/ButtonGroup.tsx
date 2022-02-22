@@ -41,7 +41,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
           "ButtonGroup",
           `ButtonGroup--mode-${mode}`,
           stretched && "ButtonGroup--stretched",
-          isNested && `ButtonGroup--vertical-padding-${padding}`
+          isNested && `ButtonGroup--vertical-padding-${context?.padding}`
         )}
         role="group"
         ref={getRootRef}

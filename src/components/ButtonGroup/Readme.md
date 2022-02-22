@@ -36,6 +36,7 @@ const Example = () => {
               mode="vertical"
               padding={padding}
               stretched={stretched}
+              style={{ minWidth: 328 }}
             >
               <Button size="l" appearance="accent">
                 Разрешить

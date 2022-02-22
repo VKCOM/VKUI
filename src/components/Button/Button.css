@@ -13,7 +13,7 @@
 }
 
 .Button--in-group {
-  flex-grow: 1;
+  flex-basis: 100%;
 }
 
 .Button--in-group-horizontal-medium:not(:last-child) {

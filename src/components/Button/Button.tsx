@@ -146,7 +146,6 @@ function resolveButtonAppearance(
 }
 
 const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
-  const buttonGroupContext = React.useContext(ButtonGroupContext);
   const platform = usePlatform();
   const {
     size,
@@ -170,6 +169,7 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
     mode
   );
   const hasNewTokens = React.useContext(ConfigProviderContext).hasNewTokens;
+  const buttonGroupContext = React.useContext(ButtonGroupContext);
 
   return (
     <Tappable
