@@ -273,7 +273,6 @@ const baseConfig = {
             "../src/components/CalendarRange/CalendarRange.tsx",
             "../src/components/DateInput/DateInput.tsx",
             "../src/components/DateRangeInput/DateRangeInput.tsx",
-            "../src/components/MaskedInput/MaskedInput.tsx",
           ],
         },
         {

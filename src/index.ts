@@ -225,7 +225,6 @@ export { Calendar } from "./components/Calendar/Calendar";
 export { CalendarRange } from "./components/CalendarRange/CalendarRange";
 export { DateInput } from "./components/DateInput/DateInput";
 export { DateRangeInput } from "./components/DateRangeInput/DateRangeInput";
-export { MaskedInput } from "./components/MaskedInput/MaskedInput";
 
 /**
  * Helpers
