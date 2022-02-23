@@ -19,18 +19,7 @@ const Example = () => {
     setPopout(<CustomPopout onClose={() => setPopout(null)}/>);
 
   return (
-    <SplitLayout popout={popout}>
-      <SplitCol>
-        <View activePanel="popout">
-          <Panel id="popout">
-            <PanelHeader>PasswordModal</PanelHeader>
-            <Group>
-              <CellButton onClick={onClick}>Открыть модальное окно</CellButton>
-            </Group>
-          </Panel>
-        </View>
-      </SplitCol>
-    </SplitLayout>
+    <PasswordModal/>
   );
 };
 
