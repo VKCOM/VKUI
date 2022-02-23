@@ -190,6 +190,7 @@ const baseConfig = {
             "../src/components/ModalPageHeader/ModalPageHeader.tsx",
             "../src/components/ModalCard/ModalCard.tsx",
             "../src/components/ModalDismissButton/ModalDismissButton.tsx",
+            "../src/components/PasswordModal/PasswordModal.tsx",
           ],
         },
         {
