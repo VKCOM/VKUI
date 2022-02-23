@@ -1,22 +1,10 @@
 ```jsx { "props": { "layout": false, "adaptivity": true } }
+import PasswordModal from './PasswordModal';
+
 const CustomPopout = withAdaptivity(
   ({onClose, viewWidth}) => {
     return (
-      <PopoutWrapper onClick={onClose}>
-        <div
-          style={{
-            backgroundColor: "var(--background_content)",
-            borderRadius: 8,
-            position: "relative",
-            padding: "12px",
-          }}
-        >
-          <h4>Кастомное модальное окно</h4>
-          {viewWidth >= ViewWidth.SMALL_TABLET && (
-            <ModalDismissButton onClick={onClose}/>
-          )}
-        </div>
-      </PopoutWrapper>
+      <PasswordModal onClose={onClose}/>
     );
   },
   {
