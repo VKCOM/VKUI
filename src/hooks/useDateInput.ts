@@ -40,18 +40,24 @@ export function useDateInput<T extends HTMLElement, D>({
   );
   const { window } = useDOM();
 
+  const removeFocusFromField = React.useCallback(() => {
+    setFocusedElement(null);
+    closeCalendar();
+    window!.getSelection()?.removeAllRanges();
+  }, [closeCalendar, window]);
+
   const handleClickOutside = React.useCallback(
     (e: MouseEvent) => {
       if (
         !rootRef.current?.contains(e.target as Node | null) &&
         !calendarRef.current?.contains(e.target as Node | null)
       ) {
-        setFocusedElement(null);
-        closeCalendar();
+        removeFocusFromField();
       }
     },
-    [closeCalendar]
+    [removeFocusFromField]
   );
+
   const selectFirst = React.useCallback(() => {
     setFocusedElement(0);
   }, []);
@@ -91,7 +97,7 @@ export function useDateInput<T extends HTMLElement, D>({
     selectFirst();
   }, [onChange, selectFirst]);
 
-  const handleFieldClick = React.useCallback(() => {
+  const handleFieldEnter = React.useCallback(() => {
     if (!open) {
       selectFirst();
     }
@@ -140,7 +146,16 @@ export function useDateInput<T extends HTMLElement, D>({
         setFocusedElement(
           focusedElement <= 0 ? maxElement : focusedElement - 1
         );
-      } else if (e.key === "ArrowRight" || e.key === "Right") {
+      } else if (
+        e.key === "Enter" ||
+        (e.key === "Tab" && focusedElement === maxElement)
+      ) {
+        removeFocusFromField();
+      } else if (
+        e.key === "ArrowRight" ||
+        e.key === "Right" ||
+        e.key === "Tab"
+      ) {
         setFocusedElement(
           focusedElement >= maxElement ? 0 : focusedElement + 1
         );
@@ -160,6 +175,7 @@ export function useDateInput<T extends HTMLElement, D>({
       internalValue,
       maxElement,
       onInternalValueChange,
+      removeFocusFromField,
     ]
   );
 
@@ -173,9 +189,9 @@ export function useDateInput<T extends HTMLElement, D>({
     setInternalValue,
     focusedElement,
     setFocusedElement,
-    selectFirst,
     handleKeyDown,
     clear,
-    handleFieldClick,
+    handleFieldEnter,
+    removeFocusFromField,
   };
 }

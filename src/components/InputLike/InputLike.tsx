@@ -11,9 +11,13 @@ export interface InputLikeProps extends React.HTMLAttributes<HTMLSpanElement> {
 
 export const InputLike = React.forwardRef<HTMLSpanElement, InputLikeProps>(
   ({ value, length, index, onElementSelect, onClick, ...props }, ref) => {
-    const handleElementSelect = React.useCallback(() => {
-      onElementSelect?.(index);
-    }, [index, onElementSelect]);
+    const handleElementSelect = React.useCallback(
+      (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+        event.stopPropagation();
+        onElementSelect?.(index);
+      },
+      [index, onElementSelect]
+    );
 
     return (
       <span

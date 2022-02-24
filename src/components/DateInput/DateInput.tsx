@@ -3,7 +3,6 @@ import { format, isMatch, parse } from "date-fns";
 import { Icon16Clear, Icon20CalendarOutline } from "@vkontakte/icons";
 import { Calendar, CalendarProps } from "../Calendar/Calendar";
 import { Popper, Placement } from "../Popper/Popper";
-import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { multiRef } from "../../lib/utils";
 import IconButton from "../IconButton/IconButton";
 import { classNames } from "../../lib/classNames";
@@ -123,8 +122,9 @@ export const DateInput: React.FC<DateInputProps> = ({
     setInternalValue,
     handleKeyDown,
     setFocusedElement,
-    handleFieldClick,
+    handleFieldEnter,
     clear,
+    removeFocusFromField,
   } = useDateInput({
     maxElement,
     refs: [daysRef, monthsRef, yearsRef, hoursRef, minutesRef],
@@ -153,10 +153,10 @@ export const DateInput: React.FC<DateInputProps> = ({
     (value?: Date | undefined) => {
       onChange?.(value);
       if (closeOnChange && !enableTime) {
-        closeCalendar();
+        removeFocusFromField();
       }
     },
-    [onChange, closeCalendar, closeOnChange, enableTime]
+    [onChange, removeFocusFromField, closeOnChange, enableTime]
   );
 
   return (
@@ -185,8 +185,8 @@ export const DateInput: React.FC<DateInputProps> = ({
         )
       }
       disabled={disabled}
-      onClick={callMultiple(handleFieldClick, onClick)}
-      onFocus={callMultiple(openCalendar, onFocus)}
+      onClick={callMultiple(handleFieldEnter, onClick)}
+      onFocus={callMultiple(handleFieldEnter, onFocus)}
       {...props}
     >
       <input
@@ -200,6 +200,7 @@ export const DateInput: React.FC<DateInputProps> = ({
       />
       <span vkuiClass="DateInput__input" onKeyDown={handleKeyDown}>
         <InputLike
+          tabIndex={1}
           length={2}
           ref={daysRef}
           index={0}
@@ -256,20 +257,18 @@ export const DateInput: React.FC<DateInputProps> = ({
           offsetDistance={8}
           placement={calendarPlacement}
         >
-          <FocusTrap onClose={closeCalendar} restoreFocus={false}>
-            <Calendar
-              value={value}
-              onChange={onCalendarChange}
-              enableTime={enableTime}
-              disablePast={disablePast}
-              disableFuture={disableFuture}
-              shouldDisableDate={shouldDisableDate}
-              onClose={closeCalendar}
-              getRootRef={calendarRef}
-              doneButtonText={doneButtonText}
-              disablePickers={disablePickers}
-            />
-          </FocusTrap>
+          <Calendar
+            value={value}
+            onChange={onCalendarChange}
+            enableTime={enableTime}
+            disablePast={disablePast}
+            disableFuture={disableFuture}
+            shouldDisableDate={shouldDisableDate}
+            onClose={closeCalendar}
+            getRootRef={calendarRef}
+            doneButtonText={doneButtonText}
+            disablePickers={disablePickers}
+          />
         </Popper>
       )}
     </FormField>

@@ -6,7 +6,6 @@ import {
   CalendarRangeProps,
 } from "../CalendarRange/CalendarRange";
 import { Popper, Placement } from "../Popper/Popper";
-import { FocusTrap } from "../FocusTrap/FocusTrap";
 import IconButton from "../IconButton/IconButton";
 import { HasRootRef } from "../../types";
 import { useDateInput } from "../../hooks/useDateInput";
@@ -141,8 +140,9 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
     setInternalValue,
     handleKeyDown,
     setFocusedElement,
-    handleFieldClick,
+    handleFieldEnter,
     clear,
+    removeFocusFromField,
   } = useDateInput({
     maxElement: 5,
     refs: [
@@ -181,10 +181,10 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
     (newValue?: Array<Date | null> | undefined) => {
       onChange?.(newValue);
       if (closeOnChange && newValue?.[1] && newValue[1] !== value?.[1]) {
-        closeCalendar();
+        removeFocusFromField();
       }
     },
-    [onChange, closeOnChange, value, closeCalendar]
+    [onChange, closeOnChange, value, removeFocusFromField]
   );
 
   return (
@@ -213,8 +213,8 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
         )
       }
       disabled={disabled}
-      onClick={callMultiple(handleFieldClick, onClick)}
-      onFocus={callMultiple(openCalendar, onFocus)}
+      onClick={callMultiple(handleFieldEnter, onClick)}
+      onFocus={callMultiple(handleFieldEnter, onFocus)}
       {...props}
     >
       <input
@@ -289,18 +289,16 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
           offsetDistance={8}
           placement={calendarPlacement}
         >
-          <FocusTrap onClose={closeCalendar} restoreFocus={false}>
-            <CalendarRange
-              value={value}
-              onChange={onCalendarChange}
-              disablePast={disablePast}
-              disableFuture={disableFuture}
-              shouldDisableDate={shouldDisableDate}
-              onClose={closeCalendar}
-              getRootRef={calendarRef}
-              disablePickers={disablePickers}
-            />
-          </FocusTrap>
+          <CalendarRange
+            value={value}
+            onChange={onCalendarChange}
+            disablePast={disablePast}
+            disableFuture={disableFuture}
+            shouldDisableDate={shouldDisableDate}
+            onClose={closeCalendar}
+            getRootRef={calendarRef}
+            disablePickers={disablePickers}
+          />
         </Popper>
       )}
     </FormField>
