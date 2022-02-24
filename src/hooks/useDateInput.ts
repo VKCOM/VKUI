@@ -46,6 +46,7 @@ export function useDateInput<T extends HTMLElement, D>({
         !rootRef.current?.contains(e.target as Node | null) &&
         !calendarRef.current?.contains(e.target as Node | null)
       ) {
+        setFocusedElement(null);
         closeCalendar();
       }
     },
@@ -53,10 +54,6 @@ export function useDateInput<T extends HTMLElement, D>({
   );
   const selectFirst = React.useCallback(() => {
     setFocusedElement(0);
-  }, []);
-
-  const clearSelection = React.useCallback(() => {
-    setFocusedElement(null);
   }, []);
 
   useGlobalEventListener(document, "click", handleClickOutside, {
@@ -71,7 +68,6 @@ export function useDateInput<T extends HTMLElement, D>({
 
   React.useEffect(() => {
     if (disabled || focusedElement === null) {
-      setFocusedElement(null);
       return;
     }
 
@@ -82,14 +78,13 @@ export function useDateInput<T extends HTMLElement, D>({
     if (element) {
       element.focus();
       openCalendar();
-      range.setStartBefore(element as Node);
-      range.setEndAfter(element as Node);
+      range.selectNodeContents(element as Node);
 
       const selection = window!.getSelection();
       selection?.removeAllRanges();
       selection?.addRange(range);
     }
-  }, [clearSelection, disabled, focusedElement, openCalendar, refs, window]);
+  }, [disabled, focusedElement, openCalendar, refs, window]);
 
   const clear = React.useCallback(() => {
     onChange?.(undefined);
@@ -179,7 +174,6 @@ export function useDateInput<T extends HTMLElement, D>({
     focusedElement,
     setFocusedElement,
     selectFirst,
-    clearSelection,
     handleKeyDown,
     clear,
     handleFieldClick,

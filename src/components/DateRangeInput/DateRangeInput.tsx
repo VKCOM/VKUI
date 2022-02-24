@@ -16,6 +16,7 @@ import { multiRef } from "../../lib/utils";
 import { FormField } from "../FormField/FormField";
 import { InputLike } from "../InputLike/InputLike";
 import { InputLikeDivider } from "../InputLike/InputLikeDivider";
+import { callMultiple } from "../../lib/callMultiple";
 import "./DateRangeInput.css";
 
 export interface DateRangeInputProps
@@ -75,6 +76,8 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
   name,
   autoFocus,
   disabled,
+  onClick,
+  onFocus,
   ...props
 }) => {
   const daysStartRef = React.useRef<HTMLSpanElement>(null);
@@ -139,7 +142,6 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
     handleKeyDown,
     setFocusedElement,
     handleFieldClick,
-    clearSelection,
     clear,
   } = useDateInput({
     maxElement: 5,
@@ -211,8 +213,8 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
         )
       }
       disabled={disabled}
-      onClick={handleFieldClick}
-      onFocus={openCalendar}
+      onClick={callMultiple(handleFieldClick, onClick)}
+      onFocus={callMultiple(openCalendar, onFocus)}
       {...props}
     >
       <input
@@ -226,11 +228,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
             : ""
         }
       />
-      <span
-        vkuiClass="DateInput__input"
-        onKeyDown={handleKeyDown}
-        onBlur={clearSelection}
-      >
+      <span vkuiClass="DateInput__input" onKeyDown={handleKeyDown}>
         <InputLike
           length={2}
           ref={daysStartRef}

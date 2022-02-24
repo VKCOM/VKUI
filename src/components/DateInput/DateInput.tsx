@@ -13,6 +13,7 @@ import { useDateInput } from "../../hooks/useDateInput";
 import { InputLike } from "../InputLike/InputLike";
 import { InputLikeDivider } from "../InputLike/InputLikeDivider";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { callMultiple } from "../../lib/callMultiple";
 import "./DateInput.css";
 
 export interface DateInputProps
@@ -79,6 +80,8 @@ export const DateInput: React.FC<DateInputProps> = ({
   name,
   autoFocus,
   disabled,
+  onClick,
+  onFocus,
   ...props
 }) => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -121,7 +124,6 @@ export const DateInput: React.FC<DateInputProps> = ({
     handleKeyDown,
     setFocusedElement,
     handleFieldClick,
-    clearSelection,
     clear,
   } = useDateInput({
     maxElement,
@@ -183,8 +185,8 @@ export const DateInput: React.FC<DateInputProps> = ({
         )
       }
       disabled={disabled}
-      onClick={handleFieldClick}
-      onFocus={openCalendar}
+      onClick={callMultiple(handleFieldClick, onClick)}
+      onFocus={callMultiple(openCalendar, onFocus)}
       {...props}
     >
       <input
@@ -196,11 +198,7 @@ export const DateInput: React.FC<DateInputProps> = ({
             : ""
         }
       />
-      <span
-        vkuiClass="DateInput__input"
-        onKeyDown={handleKeyDown}
-        onBlur={clearSelection}
-      >
+      <span vkuiClass="DateInput__input" onKeyDown={handleKeyDown}>
         <InputLike
           length={2}
           ref={daysRef}
