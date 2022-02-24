@@ -144,15 +144,20 @@ export function useDateInput<T extends HTMLElement, D>({
         _value[focusedElement] = String(
           currentValue >= config.max ? config.min : currentValue + 1
         ).padStart(config.length, "0");
-      } else if (e.key === "ArrowLeft" || e.key === "Left") {
+      } else if (
+        e.key === "Enter" ||
+        (e.key === "Tab" && focusedElement === maxElement) ||
+        (e.key === "Tab" && e.shiftKey && focusedElement === 0)
+      ) {
+        removeFocusFromField();
+      } else if (
+        e.key === "ArrowLeft" ||
+        e.key === "Left" ||
+        (e.key === "Tab" && e.shiftKey)
+      ) {
         setFocusedElement(
           focusedElement <= 0 ? maxElement : focusedElement - 1
         );
-      } else if (
-        e.key === "Enter" ||
-        (e.key === "Tab" && focusedElement === maxElement)
-      ) {
-        removeFocusFromField();
       } else if (
         e.key === "ArrowRight" ||
         e.key === "Right" ||
