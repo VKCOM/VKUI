@@ -1,30 +1,29 @@
 import * as React from 'react';
 import ModalPage, { ModalPageProps } from '../ModalPage/ModalPage';
-import { Icon20Info, Icon24Dismiss } from '@vkontakte/icons';
+import { Icon20Info } from '@vkontakte/icons';
 import { MiniInfoCell } from '../MiniInfoCell/MiniInfoCell';
 import { SplitLayout } from '../SplitLayout/SplitLayout';
-import { IOS } from '../../lib/platform';
 import { SplitCol } from '../SplitCol/SplitCol';
-import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import ModalPageHeader from '../ModalPageHeader/ModalPageHeader';
 import { ModalRoot } from '../ModalRoot/ModalRootAdaptive';
-import { usePlatform } from '../../hooks/usePlatform';
 import View from '../View/View';
 import Group from '../Group/Group';
 import { Panel } from '../Panel/Panel';
 import Separator from '../Separator/Separator';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
-import { CellButton } from '../CellButton/CellButton';
-import Placeholder from '../Placeholder/Placeholder';
+import { Div } from '../Div/Div';
+import Caption from '../Typography/Caption/Caption';
+import { Cell } from '../Cell/Cell';
+import './PasswordModal.css';
 
 export interface PasswordModalProps extends ModalPageProps {
   height?: number;
 }
 
 function PasswordModal() {
-  const platform = usePlatform();
   const [activeModal, setActiveModal] = React.useState(null);
+  const [password, setPassword] = React.useState('Password');
   const handleExtendedInfoClick = () => {
     // @ts-ignore
     setActiveModal('validate_password');
@@ -34,32 +33,34 @@ function PasswordModal() {
     setActiveModal(null);
   };
 
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e?.target.value;
+    setPassword(value);
+  }
+
   const modal = (
     <ModalRoot activeModal={activeModal} onClose={closeModal}>
       <ModalPage
-        style={{padding: 8}}
+        className="vkuiPasswordModal"
+        style={{ padding: 8 }}
         header={
-          <ModalPageHeader
-            right={
-              platform === IOS && (
-                <PanelHeaderButton onClick={closeModal}>
-                  <Icon24Dismiss/>
-                </PanelHeaderButton>
-              )
-            }
-          >
+          <ModalPageHeader>
             Введите пароль
           </ModalPageHeader>
         }
         id="validate_password"
       >
         <Separator style={{marginBottom: 15.5}}/>
-        <Placeholder>Для продолжения введите ваш текущий пароль от аккаунта VK ID</Placeholder>
-        <Input type="password"/>
-        <CellButton>Забыли пароль?</CellButton>
+        <Caption level="1" weight="regular" className="vkuiGroup__description Group__description vkuiPasswordModal__caption">Для продолжения введите ваш<br/>текущий пароль от аккаунта VK ID</Caption>
+         <Div className="vkuiPasswordModal__container">
+            <Input value={password} onChange={handlePasswordChange} type="password" placeholder="Введите пароль"/>
+         </Div>
+        <Cell className="vkuiPasswordModal__button">Забыли пароль?</Cell>
         <Separator style={{marginTop: 12, marginBottom: 12}}/>
-          <Button appearance="neutral">Отменить</Button>
-          <Button appearance="accent">Продолжить</Button>
+        <footer vkuiClass="PasswordModal__actions">
+          <Button className="PasswordModal__button" onClick={closeModal} appearance="neutral">Отменить</Button>
+          <Button className="PasswordModal__button" disabled={password.length === 0} appearance="accent">Продолжить</Button>
+        </footer>
         <div style={{height: 24}}/>
       </ModalPage>
     </ModalRoot>
