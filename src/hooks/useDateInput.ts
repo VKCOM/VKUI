@@ -159,6 +159,7 @@ export function useDateInput<T extends HTMLElement, D>({
         (e.key === "Tab" && e.shiftKey && focusedElement === 0)
       ) {
         removeFocusFromField();
+        return;
       } else if (
         e.key === "ArrowLeft" ||
         e.key === "Left" ||
