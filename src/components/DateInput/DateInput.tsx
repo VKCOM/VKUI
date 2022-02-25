@@ -161,7 +161,11 @@ export const DateInput: React.FC<DateInputProps> = ({
 
   return (
     <FormField
-      vkuiClass={classNames("DateInput", `DateInput--sizeY-${sizeY}`)}
+      vkuiClass={classNames(
+        "DateInput",
+        `DateInput--sizeY-${sizeY}`,
+        enableTime && `DateInput--time`
+      )}
       style={style}
       className={className}
       getRootRef={multiRef(rootRef, getRootRef)}
