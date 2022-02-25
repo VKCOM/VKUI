@@ -8,12 +8,14 @@ export interface UseDateInputDependencies<T, D> {
   refs: Array<React.RefObject<T>>;
   autoFocus?: boolean;
   disabled?: boolean;
+  value?: D;
   elementsConfig(index: number): {
     length: number;
     min: number;
     max: number;
   };
   onInternalValueChange(value: string[]): void;
+  getInternalValue(value?: D | undefined): string[];
   onChange?(value?: D | undefined): void;
 }
 
@@ -25,6 +27,8 @@ export function useDateInput<T extends HTMLElement, D>({
   elementsConfig,
   onChange,
   onInternalValueChange,
+  getInternalValue,
+  value,
 }: UseDateInputDependencies<T, D>) {
   const { document } = useDOM();
   const {
@@ -45,8 +49,9 @@ export function useDateInput<T extends HTMLElement, D>({
       setFocusedElement(null);
       closeCalendar();
       window!.getSelection()?.removeAllRanges();
+      setInternalValue(getInternalValue(value));
     }
-  }, [closeCalendar, open, window]);
+  }, [closeCalendar, getInternalValue, open, value, window]);
 
   const handleClickOutside = React.useCallback(
     (e: MouseEvent) => {
@@ -67,6 +72,10 @@ export function useDateInput<T extends HTMLElement, D>({
   useGlobalEventListener(document, "click", handleClickOutside, {
     capture: true,
   });
+
+  React.useEffect(() => {
+    setInternalValue(getInternalValue(value));
+  }, [getInternalValue, value]);
 
   React.useEffect(() => {
     if (autoFocus) {
@@ -193,7 +202,6 @@ export function useDateInput<T extends HTMLElement, D>({
     openCalendar,
     closeCalendar,
     internalValue,
-    setInternalValue,
     focusedElement,
     setFocusedElement,
     handleKeyDown,

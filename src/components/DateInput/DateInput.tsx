@@ -62,6 +62,18 @@ const elementsConfig = (index: number) => {
   return { length, min, max };
 };
 
+const getInternalValue = (value: CalendarProps["value"]) => {
+  const newValue = ["", "", "", "", ""];
+  if (value) {
+    newValue[0] = String(value.getDate()).padStart(2, "0");
+    newValue[1] = String(value.getMonth() + 1).padStart(2, "0");
+    newValue[2] = String(value.getFullYear()).padStart(4, "0");
+    newValue[3] = String(value.getHours()).padStart(2, "0");
+    newValue[4] = String(value.getMinutes()).padStart(2, "0");
+  }
+  return newValue;
+};
+
 export const DateInput: React.FC<DateInputProps> = ({
   enableTime,
   shouldDisableDate,
@@ -112,6 +124,7 @@ export const DateInput: React.FC<DateInputProps> = ({
     },
     [enableTime, maxElement, onChange, value]
   );
+
   const {
     rootRef,
     calendarRef,
@@ -119,7 +132,6 @@ export const DateInput: React.FC<DateInputProps> = ({
     openCalendar,
     closeCalendar,
     internalValue,
-    setInternalValue,
     handleKeyDown,
     setFocusedElement,
     handleFieldEnter,
@@ -133,21 +145,11 @@ export const DateInput: React.FC<DateInputProps> = ({
     elementsConfig,
     onChange,
     onInternalValueChange,
+    getInternalValue,
+    value,
   });
 
   const { sizeY } = useAdaptivity();
-
-  React.useEffect(() => {
-    const newValue = ["", "", "", "", ""];
-    if (value) {
-      newValue[0] = String(value.getDate()).padStart(2, "0");
-      newValue[1] = String(value.getMonth() + 1).padStart(2, "0");
-      newValue[2] = String(value.getFullYear()).padStart(4, "0");
-      newValue[3] = String(value.getHours()).padStart(2, "0");
-      newValue[4] = String(value.getMinutes()).padStart(2, "0");
-    }
-    setInternalValue(newValue);
-  }, [setInternalValue, value]);
 
   const onCalendarChange = React.useCallback(
     (value?: Date | undefined) => {

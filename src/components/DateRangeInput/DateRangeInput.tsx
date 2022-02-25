@@ -60,6 +60,21 @@ const elementsConfig = (index: number) => {
   return { length, min, max };
 };
 
+const getInternalValue = (value: CalendarRangeProps["value"]) => {
+  const newValue = ["", "", "", "", "", ""];
+  if (value?.[0]) {
+    newValue[0] = String(value[0].getDate()).padStart(2, "0");
+    newValue[1] = String(value[0].getMonth() + 1).padStart(2, "0");
+    newValue[2] = String(value[0].getFullYear()).padStart(4, "0");
+  }
+  if (value?.[1]) {
+    newValue[3] = String(value[1].getDate()).padStart(2, "0");
+    newValue[4] = String(value[1].getMonth() + 1).padStart(2, "0");
+    newValue[5] = String(value[1].getFullYear()).padStart(4, "0");
+  }
+  return newValue;
+};
+
 export const DateRangeInput: React.FC<DateRangeInputProps> = ({
   shouldDisableDate,
   disableFuture,
@@ -137,7 +152,6 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
     openCalendar,
     closeCalendar,
     internalValue,
-    setInternalValue,
     handleKeyDown,
     setFocusedElement,
     handleFieldEnter,
@@ -158,24 +172,11 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
     elementsConfig,
     onChange,
     onInternalValueChange,
+    getInternalValue,
+    value,
   });
 
   const { sizeY } = useAdaptivity();
-
-  React.useEffect(() => {
-    const newValue = ["", "", "", "", "", ""];
-    if (value?.[0]) {
-      newValue[0] = String(value[0].getDate()).padStart(2, "0");
-      newValue[1] = String(value[0].getMonth() + 1).padStart(2, "0");
-      newValue[2] = String(value[0].getFullYear()).padStart(4, "0");
-    }
-    if (value?.[1]) {
-      newValue[3] = String(value[1].getDate()).padStart(2, "0");
-      newValue[4] = String(value[1].getMonth() + 1).padStart(2, "0");
-      newValue[5] = String(value[1].getFullYear()).padStart(4, "0");
-    }
-    setInternalValue(newValue);
-  }, [setInternalValue, value]);
 
   const onCalendarChange = React.useCallback(
     (newValue?: Array<Date | null> | undefined) => {
