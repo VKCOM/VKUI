@@ -1,14 +1,7 @@
 import * as React from 'react';
 import ModalPage, { ModalPageProps } from '../ModalPage/ModalPage';
-import { Icon20Info } from '@vkontakte/icons';
-import { MiniInfoCell } from '../MiniInfoCell/MiniInfoCell';
-import { SplitLayout } from '../SplitLayout/SplitLayout';
-import { SplitCol } from '../SplitCol/SplitCol';
 import ModalPageHeader from '../ModalPageHeader/ModalPageHeader';
 import { ModalRoot } from '../ModalRoot/ModalRootAdaptive';
-import View from '../View/View';
-import Group from '../Group/Group';
-import { Panel } from '../Panel/Panel';
 import Separator from '../Separator/Separator';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
@@ -20,15 +13,12 @@ import './PasswordModal.css';
 
 export interface PasswordModalProps extends ModalPageProps, NavIdProps {
   height?: number;
+  nav?: string;
 }
 
-const PasswordModal: React.FunctionComponent<PasswordModalProps> = ({nav}) =>  {
+const PasswordModal: React.FC<PasswordModalProps> = ({nav}) =>  {
   const [activeModal, setActiveModal] = React.useState(null);
   const [password, setPassword] = React.useState('Password');
-  const handleExtendedInfoClick = () => {
-    // @ts-ignore
-    setActiveModal('validate_password');
-  };
 
   const closeModal = () => {
     setActiveModal(null);
@@ -39,7 +29,7 @@ const PasswordModal: React.FunctionComponent<PasswordModalProps> = ({nav}) =>  {
     setPassword(value);
   }
 
-  const modal = (
+  return (
     <ModalRoot activeModal={activeModal} onClose={closeModal}>
       <ModalPage
         nav={nav}
@@ -54,9 +44,9 @@ const PasswordModal: React.FunctionComponent<PasswordModalProps> = ({nav}) =>  {
       >
         <Separator style={{marginBottom: 15.5}}/>
         <Caption level="1" weight="regular" className="vkuiGroup__description Group__description vkuiPasswordModal__caption">Для продолжения введите ваш<br/>текущий пароль от аккаунта VK ID</Caption>
-         <Div className="vkuiPasswordModal__container">
-            <Input value={password} onChange={handlePasswordChange} type="password" placeholder="Введите пароль"/>
-         </Div>
+        <Div className="vkuiPasswordModal__container">
+          <Input value={password} onChange={handlePasswordChange} type="password" placeholder="Введите пароль"/>
+        </Div>
         {/* <Cell className="vkuiPasswordModal__button">Забыли пароль?</Cell> */}
         <Separator style={{marginTop: 12, marginBottom: 12}}/>
         <footer vkuiClass="PasswordModal__actions">
@@ -66,26 +56,6 @@ const PasswordModal: React.FunctionComponent<PasswordModalProps> = ({nav}) =>  {
         <div style={{height: 24}}/>
       </ModalPage>
     </ModalRoot>
-  );
-
-  return (
-    <SplitLayout modal={modal}>
-      <SplitCol>
-        <View activePanel="information_cell">
-          <Panel id="information_cell">
-            <Group>
-              <MiniInfoCell
-                before={<Icon20Info/>}
-                mode="more"
-                onClick={handleExtendedInfoClick}
-              >
-                Открыть модальное окно
-              </MiniInfoCell>
-            </Group>
-          </Panel>
-        </View>
-      </SplitCol>
-    </SplitLayout>
   );
 };
 
