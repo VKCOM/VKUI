@@ -70,6 +70,10 @@ export function useCalendar({
     }
   }, [setFocusedDay, value]);
 
+  const resetSelectedDay = React.useCallback(() => {
+    setFocusedDay(undefined);
+  }, [setFocusedDay]);
+
   return {
     viewDate,
     setViewDate,
@@ -80,5 +84,6 @@ export function useCalendar({
     isDayFocused,
     isDayDisabled,
     focusSelectedDay,
+    resetSelectedDay,
   };
 }

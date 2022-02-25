@@ -76,6 +76,7 @@ export const Calendar: React.FC<CalendarProps> = ({
     isDayFocused,
     isDayDisabled,
     focusSelectedDay,
+    resetSelectedDay,
   } = useCalendar({ value, disableFuture, disablePast, shouldDisableDate });
 
   useIsomorphicLayoutEffect(() => {
@@ -142,6 +143,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         isDaySelectionEnd={isLastDay}
         isDayDisabled={isDayDisabled}
         onFocus={focusSelectedDay}
+        onBlur={resetSelectedDay}
       />
       {enableTime && value && (
         <div vkuiClass="Calendar__time">
