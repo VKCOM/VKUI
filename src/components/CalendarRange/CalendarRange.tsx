@@ -9,7 +9,10 @@ import {
   endOfDay,
   isWithinInterval,
 } from "date-fns";
-import { CalendarHeader } from "../CalendarHeader/CalendarHeader";
+import {
+  CalendarHeader,
+  CalendarHeaderProps,
+} from "../CalendarHeader/CalendarHeader";
 import { CalendarDays } from "../CalendarDays/CalendarDays";
 import {
   navigateDate,
@@ -23,11 +26,19 @@ import "./CalendarRange.css";
 
 export interface CalendarRangeProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange">,
+    Pick<
+      CalendarHeaderProps,
+      | "prevMonthAriaLabel"
+      | "nextMonthAriaLabel"
+      | "changeMonthAriaLabel"
+      | "changeYearAriaLabel"
+    >,
     HasRootRef<HTMLDivElement> {
   value?: Array<Date | null>;
   disablePast?: boolean;
   disableFuture?: boolean;
   disablePickers?: boolean;
+  changeDayAriaLabel?: string;
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   onChange?(value?: Array<Date | null>): void;
   shouldDisableDate?(value: Date): boolean;
@@ -57,6 +68,11 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
   weekStartsOn = 1,
   getRootRef,
   disablePickers,
+  prevMonthAriaLabel,
+  nextMonthAriaLabel,
+  changeMonthAriaLabel,
+  changeYearAriaLabel,
+  changeDayAriaLabel = "Изменить день",
   ...props
 }) => {
   const {
@@ -196,6 +212,10 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
           onPrevMonth={setPrevMonth}
           disablePickers={disablePickers}
           vkuiClass="CalendarRange__header"
+          prevMonthAriaLabel={prevMonthAriaLabel}
+          nextMonthAriaLabel={nextMonthAriaLabel}
+          changeMonthAriaLabel={changeMonthAriaLabel}
+          changeYearAriaLabel={changeYearAriaLabel}
         />
         <CalendarDays
           viewDate={viewDate}
@@ -214,6 +234,7 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
           isHintedDaySelectionEnd={isHintedDaySelectionEnd}
           isHintedDaySelectionStart={isHintedDaySelectionStart}
           isDayDisabled={isDayDisabled}
+          aria-label={changeDayAriaLabel}
         />
       </div>
       <div vkuiClass="CalendarRange__inner">
@@ -224,13 +245,17 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
           onNextMonth={setNextMonth}
           disablePickers={disablePickers}
           vkuiClass="CalendarRange__header"
+          prevMonthAriaLabel={prevMonthAriaLabel}
+          nextMonthAriaLabel={nextMonthAriaLabel}
+          changeMonthAriaLabel={changeMonthAriaLabel}
+          changeYearAriaLabel={changeYearAriaLabel}
         />
         <CalendarDays
           viewDate={secondViewDate}
           value={value}
           weekStartsOn={weekStartsOn}
           tabIndex={0}
-          aria-label="Выбрать день"
+          aria-label={changeDayAriaLabel}
           onKeyDown={handleKeyDown}
           isDayFocused={isDayFocused}
           onDayChange={onDayChange}

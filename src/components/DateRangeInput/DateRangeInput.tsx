@@ -29,10 +29,23 @@ export interface DateRangeInputProps
       | "value"
       | "weekStartsOn"
       | "disablePickers"
+      | "prevMonthAriaLabel"
+      | "nextMonthAriaLabel"
+      | "changeMonthAriaLabel"
+      | "changeYearAriaLabel"
+      | "changeDayAriaLabel"
     >,
     HasRootRef<HTMLDivElement> {
   calendarPlacement?: Placement;
   closeOnChange?: boolean;
+  clearFieldAriaLabel?: string;
+  showCalendarAriaLabel?: string;
+  changeStartDayAriaLabel?: string;
+  changeStartMonthAriaLabel?: string;
+  changeStartYearAriaLabel?: string;
+  changeEndDayAriaLabel?: string;
+  changeEndMonthAriaLabel?: string;
+  changeEndYearAriaLabel?: string;
 }
 
 const elementsConfig = (index: number) => {
@@ -92,6 +105,19 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
   disabled,
   onClick,
   onFocus,
+  prevMonthAriaLabel,
+  nextMonthAriaLabel,
+  changeDayAriaLabel,
+  changeMonthAriaLabel,
+  changeYearAriaLabel,
+  changeStartDayAriaLabel = "Изменить день начала",
+  changeStartMonthAriaLabel = "Изменить месяц начала",
+  changeStartYearAriaLabel = "Изменить год начала",
+  changeEndDayAriaLabel = "Изменить день окончания",
+  changeEndMonthAriaLabel = "Изменить месяц окончания",
+  changeEndYearAriaLabel = "Изменить год окончания",
+  clearFieldAriaLabel = "Очистить поле",
+  showCalendarAriaLabel = "Показать календарь",
   ...props
 }) => {
   const daysStartRef = React.useRef<HTMLSpanElement>(null);
@@ -198,7 +224,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
         value ? (
           <IconButton
             hoverMode="opacity"
-            aria-label="Очистить поле"
+            aria-label={clearFieldAriaLabel}
             onClick={clear}
           >
             <Icon16Clear />
@@ -206,7 +232,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
         ) : (
           <IconButton
             hoverMode="opacity"
-            aria-label="Показать календарь"
+            aria-label={showCalendarAriaLabel}
             onClick={openCalendar}
           >
             <Icon20CalendarOutline />
@@ -236,7 +262,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
           index={0}
           onElementSelect={setFocusedElement}
           value={internalValue[0]}
-          aria-label="Изменить день начала"
+          aria-label={changeStartDayAriaLabel}
         />
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
@@ -245,7 +271,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
           index={1}
           onElementSelect={setFocusedElement}
           value={internalValue[1]}
-          aria-label="Изменить месяц начала"
+          aria-label={changeStartMonthAriaLabel}
         />
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
@@ -254,7 +280,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
           index={2}
           onElementSelect={setFocusedElement}
           value={internalValue[2]}
-          aria-label="Изменить год начала"
+          aria-label={changeStartYearAriaLabel}
         />
         <InputLikeDivider>{" — "}</InputLikeDivider>
         <InputLike
@@ -263,7 +289,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
           index={3}
           onElementSelect={setFocusedElement}
           value={internalValue[3]}
-          aria-label="Изменить день конца"
+          aria-label={changeEndDayAriaLabel}
         />
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
@@ -272,7 +298,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
           index={4}
           onElementSelect={setFocusedElement}
           value={internalValue[4]}
-          aria-label="Изменить месяц конца"
+          aria-label={changeEndMonthAriaLabel}
         />
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
@@ -281,7 +307,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
           index={5}
           onElementSelect={setFocusedElement}
           value={internalValue[5]}
-          aria-label="Изменить год конца"
+          aria-label={changeEndYearAriaLabel}
         />
       </span>
       {open && (
@@ -299,6 +325,11 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
             onClose={closeCalendar}
             getRootRef={calendarRef}
             disablePickers={disablePickers}
+            prevMonthAriaLabel={prevMonthAriaLabel}
+            nextMonthAriaLabel={nextMonthAriaLabel}
+            changeMonthAriaLabel={changeMonthAriaLabel}
+            changeYearAriaLabel={changeYearAriaLabel}
+            changeDayAriaLabel={changeDayAriaLabel}
           />
         </Popper>
       )}

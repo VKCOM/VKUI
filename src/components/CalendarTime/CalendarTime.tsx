@@ -8,6 +8,9 @@ import "./CalendarTime.css";
 export interface CalendarTimeProps {
   value: Date;
   doneButtonText?: string;
+  changeHoursAriaLabel?: string;
+  changeMinutesAriaLabel?: string;
+  closeAriaLabel?: string;
   onChange?(value: Date): void;
   onClose?(): void;
 }
@@ -33,6 +36,9 @@ export const CalendarTime: React.FC<CalendarTimeProps> = ({
   doneButtonText = "Готово",
   onChange,
   onClose,
+  changeHoursAriaLabel = "Изменить час",
+  changeMinutesAriaLabel = "Изменить минуту",
+  closeAriaLabel = "Закрыть",
 }) => {
   const onHoursChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>
@@ -54,7 +60,7 @@ export const CalendarTime: React.FC<CalendarTimeProps> = ({
           onChange={onHoursChange}
           forceDropdownPortal={false}
           sizeY={SizeType.COMPACT}
-          aria-label="Выбрать часы"
+          aria-label={changeHoursAriaLabel}
         />
       </div>
       <div vkuiClass="CalendarTime__divider">:</div>
@@ -65,7 +71,7 @@ export const CalendarTime: React.FC<CalendarTimeProps> = ({
           onChange={onMinutesChange}
           forceDropdownPortal={false}
           sizeY={SizeType.COMPACT}
-          aria-label="Выбрать минуты"
+          aria-label={changeMinutesAriaLabel}
         />
       </div>
       <div vkuiClass="CalendarTime__button">
@@ -74,7 +80,7 @@ export const CalendarTime: React.FC<CalendarTimeProps> = ({
           mode="secondary"
           onClick={onClose}
           size="l"
-          aria-label="Закрыть"
+          aria-label={closeAriaLabel}
         >
           {doneButtonText}
         </Button>

@@ -23,6 +23,10 @@ export interface CalendarHeaderProps
   prevMonth?: boolean;
   nextMonth?: boolean;
   disablePickers?: boolean;
+  prevMonthAriaLabel?: string;
+  nextMonthAriaLabel?: string;
+  changeMonthAriaLabel?: string;
+  changeYearAriaLabel?: string;
   onChange(viewDate: Date): void;
   onNextMonth?(): void;
   onPrevMonth?(): void;
@@ -49,6 +53,10 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   onNextMonth,
   onPrevMonth,
   className,
+  prevMonthAriaLabel = "Предыдущий месяц",
+  nextMonthAriaLabel = "Следующий месяц",
+  changeMonthAriaLabel = "Изменить месяц",
+  changeYearAriaLabel = "Изменить год",
 }) => {
   const locale = React.useContext(LocaleProviderContext);
   const onMonthsChange = React.useCallback(
@@ -82,7 +90,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             "CalendarHeader__nav-icon-prev"
           )}
           onClick={onPrevMonth}
-          aria-label={`Предыдущий месяц, ${formatter.format(
+          aria-label={`${prevMonthAriaLabel}, ${formatter.format(
             subMonths(viewDate, 1)
           )}`}
         >
@@ -116,7 +124,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
               onChange={onMonthsChange}
               forceDropdownPortal={false}
               selectType={SelectType.Plain}
-              aria-label="Выбрать месяц"
+              aria-label={changeMonthAriaLabel}
             />
             <CustomSelect
               value={viewDate.getFullYear()}
@@ -128,7 +136,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
               onChange={onYearChange}
               forceDropdownPortal={false}
               selectType={SelectType.Plain}
-              aria-label="Выбрать год"
+              aria-label={changeYearAriaLabel}
             />
           </React.Fragment>
         )}
@@ -140,7 +148,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             "CalendarHeader__nav-icon-next"
           )}
           onClick={onNextMonth}
-          aria-label={`Следующий месяц, ${formatter.format(
+          aria-label={`${nextMonthAriaLabel}, ${formatter.format(
             addMonths(viewDate, 1)
           )}`}
         >

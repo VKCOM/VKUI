@@ -1,8 +1,11 @@
 import * as React from "react";
 import { isSameMonth, isSameDay } from "date-fns";
-import { CalendarHeader } from "../CalendarHeader/CalendarHeader";
+import {
+  CalendarHeader,
+  CalendarHeaderProps,
+} from "../CalendarHeader/CalendarHeader";
 import { CalendarDays } from "../CalendarDays/CalendarDays";
-import { CalendarTime } from "../CalendarTime/CalendarTime";
+import { CalendarTime, CalendarTimeProps } from "../CalendarTime/CalendarTime";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import {
   navigateDate,
@@ -16,6 +19,17 @@ import "./Calendar.css";
 
 export interface CalendarProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange">,
+    Pick<
+      CalendarTimeProps,
+      "changeHoursAriaLabel" | "changeMinutesAriaLabel" | "closeAriaLabel"
+    >,
+    Pick<
+      CalendarHeaderProps,
+      | "prevMonthAriaLabel"
+      | "nextMonthAriaLabel"
+      | "changeMonthAriaLabel"
+      | "changeYearAriaLabel"
+    >,
     HasRootRef<HTMLDivElement> {
   value?: Date;
   disablePast?: boolean;
@@ -23,6 +37,7 @@ export interface CalendarProps
   enableTime?: boolean;
   disablePickers?: boolean;
   doneButtonText?: string;
+  changeDayAriaLabel?: string;
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   onChange?(value?: Date): void;
   shouldDisableDate?(value: Date): boolean;
@@ -41,6 +56,14 @@ export const Calendar: React.FC<CalendarProps> = ({
   weekStartsOn = 1,
   getRootRef,
   disablePickers,
+  changeHoursAriaLabel,
+  changeMinutesAriaLabel,
+  closeAriaLabel,
+  prevMonthAriaLabel,
+  nextMonthAriaLabel,
+  changeMonthAriaLabel,
+  changeYearAriaLabel,
+  changeDayAriaLabel = "Изменить день",
   ...props
 }) => {
   const {
@@ -99,6 +122,10 @@ export const Calendar: React.FC<CalendarProps> = ({
         onPrevMonth={setPrevMonth}
         disablePickers={disablePickers}
         vkuiClass="Calendar__header"
+        prevMonthAriaLabel={prevMonthAriaLabel}
+        nextMonthAriaLabel={nextMonthAriaLabel}
+        changeMonthAriaLabel={changeMonthAriaLabel}
+        changeYearAriaLabel={changeYearAriaLabel}
       />
       <CalendarDays
         viewDate={viewDate}
@@ -106,7 +133,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         weekStartsOn={weekStartsOn}
         isDayFocused={isDayFocused}
         tabIndex={0}
-        aria-label="Выбрать день"
+        aria-label={changeDayAriaLabel}
         onKeyDown={handleKeyDown}
         onDayChange={onDayChange}
         isDayActive={isDayActive}
@@ -121,6 +148,9 @@ export const Calendar: React.FC<CalendarProps> = ({
             onChange={onChange}
             onClose={onClose}
             doneButtonText={doneButtonText}
+            changeHoursAriaLabel={changeHoursAriaLabel}
+            changeMinutesAriaLabel={changeMinutesAriaLabel}
+            closeAriaLabel={closeAriaLabel}
           />
         </div>
       )}

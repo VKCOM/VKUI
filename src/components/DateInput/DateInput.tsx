@@ -28,10 +28,20 @@ export interface DateInputProps
       | "doneButtonText"
       | "weekStartsOn"
       | "disablePickers"
+      | "changeHoursAriaLabel"
+      | "changeMinutesAriaLabel"
+      | "closeAriaLabel"
+      | "prevMonthAriaLabel"
+      | "nextMonthAriaLabel"
+      | "changeMonthAriaLabel"
+      | "changeYearAriaLabel"
+      | "changeDayAriaLabel"
     >,
     HasRootRef<HTMLDivElement> {
   calendarPlacement?: Placement;
   closeOnChange?: boolean;
+  clearFieldAriaLabel?: string;
+  showCalendarAriaLabel?: string;
 }
 
 const elementsConfig = (index: number) => {
@@ -93,6 +103,16 @@ export const DateInput: React.FC<DateInputProps> = ({
   disabled,
   onClick,
   onFocus,
+  closeAriaLabel,
+  prevMonthAriaLabel,
+  nextMonthAriaLabel,
+  changeMonthAriaLabel = "Изменить месяц",
+  changeYearAriaLabel = "Изменить год",
+  changeDayAriaLabel = "Изменить день",
+  changeHoursAriaLabel = "Изменить час",
+  changeMinutesAriaLabel = "Изменить минуту",
+  clearFieldAriaLabel = "Очистить поле",
+  showCalendarAriaLabel = "Показать календарь",
   ...props
 }) => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -175,7 +195,7 @@ export const DateInput: React.FC<DateInputProps> = ({
         value ? (
           <IconButton
             hoverMode="opacity"
-            aria-label="Очистить поле"
+            aria-label={clearFieldAriaLabel}
             onClick={clear}
           >
             <Icon16Clear />
@@ -183,7 +203,7 @@ export const DateInput: React.FC<DateInputProps> = ({
         ) : (
           <IconButton
             hoverMode="opacity"
-            aria-label="Показать календарь"
+            aria-label={showCalendarAriaLabel}
             onClick={openCalendar}
           >
             <Icon20CalendarOutline />
@@ -212,7 +232,7 @@ export const DateInput: React.FC<DateInputProps> = ({
           index={0}
           onElementSelect={setFocusedElement}
           value={internalValue[0]}
-          aria-label="Изменить день"
+          aria-label={changeDayAriaLabel}
         />
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
@@ -221,7 +241,7 @@ export const DateInput: React.FC<DateInputProps> = ({
           index={1}
           onElementSelect={setFocusedElement}
           value={internalValue[1]}
-          aria-label="Изменить месяц"
+          aria-label={changeMonthAriaLabel}
         />
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
@@ -230,7 +250,7 @@ export const DateInput: React.FC<DateInputProps> = ({
           index={2}
           onElementSelect={setFocusedElement}
           value={internalValue[2]}
-          aria-label="Изменить год"
+          aria-label={changeYearAriaLabel}
         />
         {enableTime && (
           <React.Fragment>
@@ -243,7 +263,7 @@ export const DateInput: React.FC<DateInputProps> = ({
               index={3}
               onElementSelect={setFocusedElement}
               value={internalValue[3]}
-              aria-label="Изменить час"
+              aria-label={changeHoursAriaLabel}
             />
             <InputLikeDivider>:</InputLikeDivider>
             <InputLike
@@ -252,7 +272,7 @@ export const DateInput: React.FC<DateInputProps> = ({
               index={4}
               onElementSelect={setFocusedElement}
               value={internalValue[4]}
-              aria-label="Изменить минуту"
+              aria-label={changeMinutesAriaLabel}
             />
           </React.Fragment>
         )}
@@ -274,6 +294,14 @@ export const DateInput: React.FC<DateInputProps> = ({
             getRootRef={calendarRef}
             doneButtonText={doneButtonText}
             disablePickers={disablePickers}
+            changeHoursAriaLabel={changeHoursAriaLabel}
+            changeMinutesAriaLabel={changeMinutesAriaLabel}
+            closeAriaLabel={closeAriaLabel}
+            prevMonthAriaLabel={prevMonthAriaLabel}
+            nextMonthAriaLabel={nextMonthAriaLabel}
+            changeMonthAriaLabel={changeMonthAriaLabel}
+            changeYearAriaLabel={changeYearAriaLabel}
+            changeDayAriaLabel={changeDayAriaLabel}
           />
         </Popper>
       )}
