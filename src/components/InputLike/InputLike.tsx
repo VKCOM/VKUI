@@ -1,5 +1,6 @@
 import * as React from "react";
 import { callMultiple } from "../../lib/callMultiple";
+import { stopPropagation } from "../../lib/utils";
 import "./InputLike.css";
 
 export interface InputLikeProps extends React.HTMLAttributes<HTMLSpanElement> {
@@ -10,10 +11,13 @@ export interface InputLikeProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 export const InputLike = React.forwardRef<HTMLSpanElement, InputLikeProps>(
-  ({ value, length, index, onElementSelect, onClick, ...props }, ref) => {
+  (
+    { value, length, index, onElementSelect, onClick, onFocus, ...props },
+    ref
+  ) => {
     const handleElementSelect = React.useCallback(
       (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-        event.stopPropagation();
+        stopPropagation(event);
         onElementSelect?.(index);
       },
       [index, onElementSelect]
@@ -25,6 +29,7 @@ export const InputLike = React.forwardRef<HTMLSpanElement, InputLikeProps>(
         tabIndex={0}
         ref={ref}
         onClick={callMultiple(onClick, handleElementSelect)}
+        onFocus={callMultiple(stopPropagation, onFocus)}
         {...props}
       >
         {value?.slice(0, -1)}

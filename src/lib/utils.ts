@@ -94,3 +94,6 @@ export const generateRandomId = () => {
     .toString(36)
     .replace(/[^a-z]+/g, "");
 };
+
+export const stopPropagation = <T extends React.SyntheticEvent>(event: T) =>
+  event.stopPropagation();
