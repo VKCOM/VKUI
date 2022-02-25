@@ -14,14 +14,15 @@ import Input from '../Input/Input';
 import Button from '../Button/Button';
 import { Div } from '../Div/Div';
 import Caption from '../Typography/Caption/Caption';
-import { Cell } from '../Cell/Cell';
+import { NavIdProps } from '../../lib/getNavId';
+
 import './PasswordModal.css';
 
-export interface PasswordModalProps extends ModalPageProps {
+export interface PasswordModalProps extends ModalPageProps, NavIdProps {
   height?: number;
 }
 
-function PasswordModal() {
+const PasswordModal: React.FunctionComponent<PasswordModalProps> = ({nav}) =>  {
   const [activeModal, setActiveModal] = React.useState(null);
   const [password, setPassword] = React.useState('Password');
   const handleExtendedInfoClick = () => {
@@ -41,6 +42,7 @@ function PasswordModal() {
   const modal = (
     <ModalRoot activeModal={activeModal} onClose={closeModal}>
       <ModalPage
+        nav={nav}
         className="vkuiPasswordModal"
         style={{ padding: 8 }}
         header={
@@ -55,7 +57,7 @@ function PasswordModal() {
          <Div className="vkuiPasswordModal__container">
             <Input value={password} onChange={handlePasswordChange} type="password" placeholder="Введите пароль"/>
          </Div>
-        <Cell className="vkuiPasswordModal__button">Забыли пароль?</Cell>
+        {/* <Cell className="vkuiPasswordModal__button">Забыли пароль?</Cell> */}
         <Separator style={{marginTop: 12, marginBottom: 12}}/>
         <footer vkuiClass="PasswordModal__actions">
           <Button className="PasswordModal__button" onClick={closeModal} appearance="neutral">Отменить</Button>
@@ -90,4 +92,4 @@ function PasswordModal() {
 PasswordModal.defaultProps = {};
 
 // eslint-disable-next-line import/no-default-export
-export default React.memo(PasswordModal);
+export default PasswordModal;

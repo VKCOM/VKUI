@@ -70,6 +70,8 @@ export { default as ModalCard } from "./components/ModalCard/ModalCard";
 export type { ModalCardProps } from "./components/ModalCard/ModalCard";
 export { default as ModalDismissButton } from "./components/ModalDismissButton/ModalDismissButton";
 export type { ModalDismissButtonProps } from "./components/ModalDismissButton/ModalDismissButton";
+export { default as PasswordModal } from "./components/PasswordModal/PasswordModal";
+export type { PasswordModalProps } from "./components/PasswordModal/PasswordModal";
 
 /**
  * Blocks
