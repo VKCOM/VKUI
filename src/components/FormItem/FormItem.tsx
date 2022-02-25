@@ -43,11 +43,7 @@ export const FormItem: React.FC<FormItemProps> = ({
 
   const wrappedChildren = (
     <React.Fragment>
-      {hasReactNode(top) && (
-        <Subhead weight="regular" vkuiClass="FormItem__top">
-          {top}
-        </Subhead>
-      )}
+      {hasReactNode(top) && <Subhead vkuiClass="FormItem__top">{top}</Subhead>}
       {children}
       {hasReactNode(bottom) && (
         <Caption level="1" weight="regular" vkuiClass="FormItem__bottom">

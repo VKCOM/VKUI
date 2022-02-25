@@ -58,15 +58,11 @@ const SimpleTooltip = React.forwardRef<HTMLDivElement, SimpleTooltipProps>(
           />
           <div vkuiClass="Tooltip__content">
             {header && (
-              <Subhead weight="semibold" vkuiClass="Tooltip__title">
+              <Subhead weight="1" vkuiClass="Tooltip__title">
                 {header}
               </Subhead>
             )}
-            {text && (
-              <Subhead weight="regular" vkuiClass="Tooltip__text">
-                {text}
-              </Subhead>
-            )}
+            {text && <Subhead vkuiClass="Tooltip__text">{text}</Subhead>}
           </div>
         </div>
       </div>

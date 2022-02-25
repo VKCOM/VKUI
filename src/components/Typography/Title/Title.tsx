@@ -41,7 +41,7 @@ const Title: React.FC<TitleProps> = ({
       ["heavy", "bold", "semibold", "medium", "regular"].includes(weight)
     )
       warn(
-        `Начертание "${weight}" устарело и будет удалено в 5.0.0. Используйте значения "1", "2" и "3"`
+        `Начертание weight="${weight}" устарело и будет удалено в 5.0.0. Используйте значения "1", "2" и "3"`
       );
   }
 
