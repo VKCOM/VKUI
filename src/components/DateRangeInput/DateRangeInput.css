@@ -1,7 +1,3 @@
-.DateRangeInput {
-  min-width: 275px;
-}
-
 .DateRangeInput__input {
   flex-grow: 1;
   margin-left: 10px;
@@ -16,4 +12,5 @@
 
 .DateRangeInput--sizeY-compact .DateRangeInput__input {
   font-size: 15px;
+  margin-right: 22px;
 }
