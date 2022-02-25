@@ -11,6 +11,13 @@ describe("ButtonGroup", () => {
     (props: ButtonGroupProps) => (
       <ButtonGroup {...props}>
         <ButtonGroup mode="horizontal" gap="m" stretched>
+          <Button size="l" appearance="accent" stretched>
+            {strechedButtonText}
+          </Button>
+          <Button size="l" appearance="accent" before={<Icon24Add />} />
+        </ButtonGroup>
+
+        <ButtonGroup mode="horizontal" gap="m" stretched>
           <Button size="l" appearance="accent">
             {buttonText}
           </Button>
