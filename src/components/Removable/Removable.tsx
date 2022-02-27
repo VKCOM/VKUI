@@ -6,11 +6,9 @@ import { useExternRef } from "../../hooks/useExternRef";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getClassName } from "../../helpers/getClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { useDOM } from "../../lib/dom";
 import { ANDROID, IOS, VKCOM } from "../../lib/platform";
 import { Icon24Cancel } from "@vkontakte/icons";
 import IconButton from "../IconButton/IconButton";
-import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import Tappable from "../Tappable/Tappable";
 import "./Removable.css";
 
@@ -27,7 +25,7 @@ export interface RemovableProps {
 
 interface RemovableIosOwnProps
   extends Pick<RemovableProps, "removePlaceholder"> {
-  onRemoveClick?: (e: React.MouseEvent, rootEl?: HTMLElement) => void;
+  onRemoveClick: (e: React.MouseEvent, rootEl?: HTMLElement) => void;
   removePlaceholderString?: string;
 }
 
@@ -37,21 +35,8 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
   removePlaceholderString,
   children,
 }) => {
-  const { window } = useDOM();
-
   const removeButtonRef = React.useRef<HTMLElement>(null);
   const [removeOffset, updateRemoveOffset] = React.useState(0);
-
-  useGlobalEventListener(
-    window,
-    "click",
-    () => {
-      if (removeOffset > 0) {
-        updateRemoveOffset(0);
-      }
-    },
-    { capture: true }
-  );
 
   const onRemoveTransitionEnd = () => {
     if (removeOffset > 0) {
@@ -66,6 +51,11 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
     }
     const { offsetWidth } = removeButtonRef.current;
     updateRemoveOffset(offsetWidth);
+  };
+
+  const tappableHandler = (e: React.MouseEvent) => {
+    updateRemoveOffset(0);
+    onRemoveClick(e);
   };
 
   return (
@@ -95,7 +85,7 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
         disabled={removeOffset === 0}
         getRootRef={removeButtonRef}
         vkuiClass="Removable__remove"
-        onClick={onRemoveClick}
+        onClick={tappableHandler}
       >
         <span vkuiClass="Removable__remove-in">{removePlaceholder}</span>
       </Tappable>
