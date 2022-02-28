@@ -156,6 +156,8 @@ export { SubnavigationBar } from "./components/SubnavigationBar/SubnavigationBar
 export type { SubnavigationBarProps } from "./components/SubnavigationBar/SubnavigationBar";
 export { SubnavigationButton } from "./components/SubnavigationButton/SubnavigationButton";
 export type { SubnavigationButtonProps } from "./components/SubnavigationButton/SubnavigationButton";
+export { Pagination } from "./components/Pagination/Pagination";
+export type { PaginationProps } from "./components/Pagination/Pagination";
 
 /**
  * Forms
