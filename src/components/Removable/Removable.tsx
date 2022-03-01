@@ -38,6 +38,7 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
   const { window } = useDOM();
 
   const removeButtonRef = React.useRef<HTMLElement>(null);
+  const disabledRef = React.useRef(true);
   const [removeOffset, updateRemoveOffset] = React.useState(0);
 
   useGlobalEventListener(
@@ -54,6 +55,8 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
   const onRemoveTransitionEnd = () => {
     if (removeOffset > 0) {
       removeButtonRef?.current?.focus();
+    } else {
+      disabledRef.current = true;
     }
   };
 
@@ -63,6 +66,7 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
       return;
     }
     const { offsetWidth } = removeButtonRef.current;
+    disabledRef.current = false;
     updateRemoveOffset(offsetWidth);
   };
 
@@ -90,7 +94,7 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
         Component="button"
         hasActive={false}
         hasHover={false}
-        disabled={removeOffset === 0}
+        disabled={disabledRef.current}
         getRootRef={removeButtonRef}
         vkuiClass="Removable__remove"
         onClick={onRemove}
