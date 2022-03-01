@@ -37,18 +37,14 @@ export const TextTooltip: React.FC<TextTooltipProps> = ({
           {hasReactNode(header) && (
             <Subhead
               Component="span"
-              weight="medium"
+              weight="2"
               vkuiClass="TextTooltip__header"
             >
               {header}
             </Subhead>
           )}
           {hasReactNode(text) && (
-            <Subhead
-              Component="span"
-              weight="regular"
-              vkuiClass="TextTooltip__text"
-            >
+            <Subhead Component="span" vkuiClass="TextTooltip__text">
               {text}
             </Subhead>
           )}

@@ -83,11 +83,7 @@ const RichCell: React.FC<RichCellProps> = ({
           </Text>
         )}
         {hasReactNode(caption) && (
-          <Subhead
-            Component="span"
-            weight="regular"
-            vkuiClass="RichCell__caption"
-          >
+          <Subhead Component="span" vkuiClass="RichCell__caption">
             {caption}
           </Subhead>
         )}

@@ -101,7 +101,7 @@ const BannerSubheader: React.FC<BannerTypographyProps> = ({
   return size === "m" ? (
     <Text weight="regular" {...restProps} />
   ) : (
-    <Subhead weight="regular" {...restProps} />
+    <Subhead {...restProps} />
   );
 };
 

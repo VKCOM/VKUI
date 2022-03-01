@@ -5,5 +5,6 @@ export const tokenized = [
   "CardScroll",
   "SegmentedControl",
   "Title",
+  "Subhead",
   "HorizontalScroll",
 ];

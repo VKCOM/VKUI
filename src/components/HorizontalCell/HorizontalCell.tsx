@@ -24,9 +24,7 @@ const CellTypography: React.FC<CellTypographyProps> = ({
       {children}
     </Caption>
   ) : (
-    <Subhead weight="regular" {...restProps}>
-      {children}
-    </Subhead>
+    <Subhead {...restProps}>{children}</Subhead>
   );
 };
 

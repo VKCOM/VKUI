@@ -75,7 +75,7 @@ const HeaderAside: React.FC<HeaderAsideProps> = ({
   ...restProps
 }) => {
   return platform === Platform.VKCOM ? (
-    <Subhead weight="regular" {...restProps} />
+    <Subhead {...restProps} />
   ) : (
     <Text weight="regular" {...restProps} />
   );
@@ -89,7 +89,7 @@ const HeaderSubtitle: React.FC<HeaderSubtitleProps> = ({
   ...restProps
 }) => {
   return mode === "secondary" ? (
-    <Subhead weight="regular" {...restProps} />
+    <Subhead {...restProps} />
   ) : (
     <Caption weight="regular" level="1" {...restProps} />
   );
