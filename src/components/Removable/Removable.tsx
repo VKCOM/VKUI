@@ -25,14 +25,12 @@ export interface RemovableProps {
   onRemove?: (e: React.MouseEvent, rootEl?: HTMLElement) => void;
 }
 
-interface RemovableIosOwnProps
-  extends Pick<RemovableProps, "removePlaceholder"> {
-  onRemoveClick?: (e: React.MouseEvent, rootEl?: HTMLElement) => void;
+interface RemovableIosOwnProps extends RemovableProps {
   removePlaceholderString?: string;
 }
 
 const RemovableIos: React.FC<RemovableIosOwnProps> = ({
-  onRemoveClick,
+  onRemove,
   removePlaceholder,
   removePlaceholderString,
   children,
@@ -95,7 +93,7 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
         disabled={removeOffset === 0}
         getRootRef={removeButtonRef}
         vkuiClass="Removable__remove"
-        onClick={onRemoveClick}
+        onClick={onRemove}
       >
         <span vkuiClass="Removable__remove-in">{removePlaceholder}</span>
       </Tappable>
@@ -162,7 +160,7 @@ export const Removable: React.FC<RemovableOwnProps> = ({
 
       {platform === IOS && (
         <RemovableIos
-          onRemoveClick={onRemoveClick}
+          onRemove={onRemoveClick}
           removePlaceholder={removePlaceholder}
           removePlaceholderString={removePlaceholderString}
         >
