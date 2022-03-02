@@ -1,60 +1,60 @@
-import { Icon24Add } from "@vkontakte/icons";
+import { Icon24Attach, Icon24Add } from "@vkontakte/icons";
 import Button from "../Button/Button";
 import { ButtonGroup, ButtonGroupProps } from "./ButtonGroup";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
 describe("ButtonGroup", () => {
-  const buttonText = "Button";
-  const strechedButtonText = "Button (stretched)";
-
+  const defaultStyle = { minWidth: 328 };
   describeScreenshotFuzz(
-    (props: ButtonGroupProps) => (
-      <ButtonGroup {...props}>
-        <ButtonGroup mode="horizontal" gap="m" stretched>
-          <Button size="l" appearance="accent" stretched>
-            {strechedButtonText}
-          </Button>
-          <Button size="l" appearance="accent" before={<Icon24Add />} />
-        </ButtonGroup>
-
-        <ButtonGroup mode="horizontal" gap="m" stretched>
-          <Button size="l" appearance="accent">
-            {buttonText}
-          </Button>
-          <Button size="l" appearance="accent" before={<Icon24Add />} />
-        </ButtonGroup>
-
-        <ButtonGroup mode="horizontal" gap="m" stretched={false}>
-          <Button size="l" appearance="accent">
-            {buttonText}
-          </Button>
-          <Button size="l" appearance="accent" before={<Icon24Add />} />
-        </ButtonGroup>
-
-        <ButtonGroup mode="vertical" gap="m" stretched={false}>
-          <Button size="l" appearance="accent" stretched>
-            {strechedButtonText}
-          </Button>
-          <Button
-            size="l"
-            appearance="accent"
-            before={<Icon24Add />}
-            stretched
-          />
-          <ButtonGroup mode="horizontal" stretched>
-            <Button size="l" appearance="accent" before={<Icon24Add />} />
-            <Button size="l" appearance="accent" stretched>
-              {strechedButtonText}
+    ({ mode, gap, stretched, style }: ButtonGroupProps) => (
+      <ButtonGroup
+        mode="vertical"
+        gap={gap}
+        stretched={stretched}
+        style={style || defaultStyle}
+      >
+        <Button size="l" appearance="accent" stretched>
+          Разрешить
+        </Button>
+        <Button size="l" appearance="accent" stretched>
+          Завершить
+        </Button>
+        <ButtonGroup mode="vertical" gap={gap} stretched>
+          <ButtonGroup mode={mode} gap={gap} stretched>
+            <Button size="l" appearance="negative" stretched>
+              Не сейчас
             </Button>
+            <Button size="l" appearance="positive" stretched>
+              Продолжить
+            </Button>
+          </ButtonGroup>
+          <ButtonGroup mode="horizontal" gap="space" stretched={stretched}>
+            <Button
+              size="l"
+              appearance="accent"
+              mode="tertiary"
+              before={<Icon24Attach />}
+              stretched
+            >
+              Прикрепить файл
+            </Button>
+            <Button size="l" appearance="accent" before={<Icon24Add />} />
           </ButtonGroup>
         </ButtonGroup>
       </ButtonGroup>
     ),
     [
       {
-        mode: ["horizontal", "vertical"],
+        style: [{ minWidth: undefined }, defaultStyle],
+      },
+      {
         gap: ["none", "space", "s", "m"],
-        stretched: [undefined, true],
+      },
+      {
+        mode: ["vertical"],
+      },
+      {
+        stretched: [true],
       },
     ]
   );

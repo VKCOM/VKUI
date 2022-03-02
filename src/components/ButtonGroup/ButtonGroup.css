@@ -4,6 +4,7 @@
 }
 
 .ButtonGroup--stretched {
+  display: flex;
   width: 100%;
 }
 
