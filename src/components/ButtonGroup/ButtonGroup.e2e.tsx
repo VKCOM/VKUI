@@ -4,15 +4,9 @@ import { ButtonGroup, ButtonGroupProps } from "./ButtonGroup";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
 describe("ButtonGroup", () => {
-  const defaultStyle = { minWidth: 328 };
   describeScreenshotFuzz(
-    ({ mode, gap, stretched, style }: ButtonGroupProps) => (
-      <ButtonGroup
-        mode="vertical"
-        gap={gap}
-        stretched={stretched}
-        style={style || defaultStyle}
-      >
+    ({ mode, gap, stretched }: ButtonGroupProps) => (
+      <ButtonGroup mode="vertical" gap={gap} stretched={stretched}>
         <Button size="l" appearance="accent" stretched>
           Разрешить
         </Button>
@@ -44,9 +38,6 @@ describe("ButtonGroup", () => {
       </ButtonGroup>
     ),
     [
-      {
-        style: [{ minWidth: undefined }, defaultStyle],
-      },
       {
         gap: ["none", "space", "s", "m"],
       },
