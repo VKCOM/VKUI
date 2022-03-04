@@ -4,6 +4,11 @@
   "main": "dist/cjs/index.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "CONTRIBUTING.md",
+    "VKUI_TOKENS_MIGRATION_GUIDE.md"
+  ],
   "license": "MIT",
   "description": "VKUI library",
   "repository": "https://github.com/VKCOM/VKUI",
