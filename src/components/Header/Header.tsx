@@ -146,7 +146,11 @@ const Header: React.FC<HeaderProps> = ({
         </HeaderContent>
 
         {hasReactNode(subtitle) && (
-          <HeaderSubtitle vkuiClass="Header__subtitle" Component="span">
+          <HeaderSubtitle
+            vkuiClass="Header__subtitle"
+            Component="span"
+            mode={mode}
+          >
             {subtitle}
           </HeaderSubtitle>
         )}

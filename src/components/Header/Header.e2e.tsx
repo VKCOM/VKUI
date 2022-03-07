@@ -19,7 +19,7 @@ describe("Header", () => {
         aside: [<Link key="link">Показать все</Link>],
       },
       {
-        mode: ["primary"],
+        mode: ["primary", "secondary"],
         subtitle: ["SOHN — Conrad"],
       },
       {
