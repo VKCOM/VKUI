@@ -154,14 +154,10 @@ class AlertComponent extends React.Component<TAlertProps, AlertState> {
   renderText(text: React.ReactNode) {
     switch (this.props.platform) {
       case VKCOM:
-        return (
-          <Caption vkuiClass="Alert__text" level="1" weight="regular">
-            {text}
-          </Caption>
-        );
+        return <Caption vkuiClass="Alert__text">{text}</Caption>;
       case IOS:
         return (
-          <Caption vkuiClass="Alert__text" level="2" weight="regular">
+          <Caption vkuiClass="Alert__text" level="2">
             {text}
           </Caption>
         );

@@ -640,7 +640,7 @@ class CustomSelect extends React.Component<
       stateOptions !== undefined && stateOptions.length > 0 ? (
         stateOptions.map(this.renderOption)
       ) : (
-        <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
+        <Caption vkuiClass="CustomSelect__empty">
           {this.props.emptyText}
         </Caption>
       );

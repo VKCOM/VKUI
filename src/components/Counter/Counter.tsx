@@ -29,7 +29,7 @@ const CounterTypography: React.FC<CounterTypographyProps> = ({
   return size === "s" ? (
     <Caption
       level="2"
-      weight={platform === VKCOM ? "medium" : "regular"}
+      weight={platform === VKCOM ? "medium" : undefined}
       {...restProps}
     />
   ) : (

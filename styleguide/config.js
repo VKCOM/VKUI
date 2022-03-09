@@ -279,6 +279,7 @@ const baseConfig = {
             "../src/components/Typography/Text/Text.tsx",
             "../src/components/Typography/Subhead/Subhead.tsx",
             "../src/components/Typography/Caption/Caption.tsx",
+            "../src/components/Typography/Footnote/Footnote.tsx",
           ],
         },
         {

@@ -39,13 +39,7 @@ const SubnavigationButtonTypography: React.FC<SubnavButtonTypographyProps> = ({
     return <Subhead {...restProps} />;
   }
 
-  return (
-    <Caption
-      level={textLevel === 2 ? "1" : "2"}
-      weight="regular"
-      {...restProps}
-    />
-  );
+  return <Caption level={textLevel === 2 ? "1" : "2"} {...restProps} />;
 };
 
 export const SubnavigationButton: React.FC<SubnavigationButtonProps> = (

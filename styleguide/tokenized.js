@@ -6,4 +6,6 @@ export const tokenized = [
   "Title",
   "Subhead",
   "HorizontalScroll",
+  "Footnote",
+  "Caption",
 ];

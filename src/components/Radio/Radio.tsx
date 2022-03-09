@@ -68,14 +68,7 @@ const Radio: React.FC<RadioProps> = (props: RadioProps) => {
         >
           <div vkuiClass="Radio__children">{children}</div>
           {hasReactNode(description) && (
-            <Caption
-              level="1"
-              Component="span"
-              weight="regular"
-              vkuiClass="Radio__description"
-            >
-              {description}
-            </Caption>
+            <Caption vkuiClass="Radio__description">{description}</Caption>
           )}
         </ContentComponent>
       </div>

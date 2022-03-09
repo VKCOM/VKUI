@@ -90,13 +90,11 @@ const PromoBanner = (props: PromoBannerProps) => {
   return (
     <div vkuiClass={getClassName("PromoBanner", platform)} {...restProps}>
       <div vkuiClass="PromoBanner__head">
-        <Caption weight="regular" level="1" vkuiClass="PromoBanner__label">
+        <Caption vkuiClass="PromoBanner__label">
           {bannerData.advertisingLabel || "Advertisement"}
         </Caption>
         {ageRestrictions != null && (
-          <Caption weight="regular" level="1" vkuiClass="PromoBanner__age">
-            {ageRestrictions}+
-          </Caption>
+          <Caption vkuiClass="PromoBanner__age">{ageRestrictions}+</Caption>
         )}
 
         {!props.isCloseButtonHidden && (

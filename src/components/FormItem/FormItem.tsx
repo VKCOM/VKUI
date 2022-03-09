@@ -46,9 +46,7 @@ export const FormItem: React.FC<FormItemProps> = ({
       {hasReactNode(top) && <Subhead vkuiClass="FormItem__top">{top}</Subhead>}
       {children}
       {hasReactNode(bottom) && (
-        <Caption level="1" weight="regular" vkuiClass="FormItem__bottom">
-          {bottom}
-        </Caption>
+        <Caption vkuiClass="FormItem__bottom">{bottom}</Caption>
       )}
     </React.Fragment>
   );

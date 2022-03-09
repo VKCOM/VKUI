@@ -35,16 +35,10 @@ export const FormStatus: React.FunctionComponent<FormStatusProps> = ({
         </Headline>
       )}
       {dangerouslySetInnerHTML && (
-        <Caption
-          level="1"
-          weight="regular"
-          dangerouslySetInnerHTML={dangerouslySetInnerHTML}
-        />
+        <Caption dangerouslySetInnerHTML={dangerouslySetInnerHTML} />
       )}
       {hasReactNode(children) && !dangerouslySetInnerHTML && (
-        <Caption level="1" weight="regular">
-          {children}
-        </Caption>
+        <Caption>{children}</Caption>
       )}
     </div>
   );

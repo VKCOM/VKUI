@@ -2,6 +2,7 @@ import * as React from "react";
 import { HasComponent } from "../../../types";
 import { classNames } from "../../../lib/classNames";
 import { warnOnce } from "../../../lib/warnOnce";
+import { resolveWeight } from "../../../helpers/typography";
 import "./Title.css";
 
 export interface TitleProps
@@ -49,7 +50,7 @@ const Title: React.FC<TitleProps> = ({
     <Component
       {...restProps}
       vkuiClass={classNames("Title", `Title--l-${level}`, {
-        [`Title--w-${weight}`]: !!weight,
+        [`Title--w-${resolveWeight(weight)}`]: !!weight,
       })}
     >
       {children}

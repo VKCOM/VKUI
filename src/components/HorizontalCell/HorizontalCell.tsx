@@ -20,7 +20,7 @@ const CellTypography: React.FC<CellTypographyProps> = ({
   ...restProps
 }: CellTypographyProps) => {
   return size === "s" ? (
-    <Caption level="2" weight="regular" {...restProps}>
+    <Caption level="2" {...restProps}>
       {children}
     </Caption>
   ) : (
@@ -77,13 +77,7 @@ export const HorizontalCell: React.FC<HorizontalCellProps> = ({
             </CellTypography>
           )}
           {hasReactNode(subtitle) && (
-            <Caption
-              weight="regular"
-              level="1"
-              vkuiClass="HorizontalCell__subtitle"
-            >
-              {subtitle}
-            </Caption>
+            <Caption vkuiClass="HorizontalCell__subtitle">{subtitle}</Caption>
           )}
         </div>
       </Tappable>

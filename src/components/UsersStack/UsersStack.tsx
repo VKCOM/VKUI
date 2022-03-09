@@ -74,8 +74,7 @@ const UsersStack: React.FC<UsersStackProps> = (props: UsersStackProps) => {
 
         {canShowOthers && (
           <Caption
-            weight="medium"
-            level="1"
+            weight="1"
             vkuiClass="UsersStack__photo UsersStack__photo--others"
             aria-hidden="true"
           >

@@ -43,7 +43,7 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
       case "tertiary":
         return <Title weight="1" level="3" {...restProps} />;
       case "secondary":
-        return <Caption level="1" weight="semibold" caps {...restProps} />;
+        return <Caption weight="2" caps {...restProps} />;
     }
   }
 
@@ -53,7 +53,7 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
         return <Headline weight="regular" {...restProps} />;
       case "secondary":
       case "tertiary":
-        return <Caption level="1" weight="regular" {...restProps} />;
+        return <Caption {...restProps} />;
     }
   }
 
@@ -62,7 +62,7 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
     case "tertiary":
       return <Headline weight="medium" {...restProps} />;
     case "secondary":
-      return <Caption level="1" weight="medium" caps {...restProps} />;
+      return <Caption weight="1" caps {...restProps} />;
   }
 
   return null;
@@ -91,7 +91,7 @@ const HeaderSubtitle: React.FC<HeaderSubtitleProps> = ({
   return mode === "secondary" ? (
     <Subhead {...restProps} />
   ) : (
-    <Caption weight="regular" level="1" {...restProps} />
+    <Caption {...restProps} />
   );
 };
 
@@ -135,11 +135,8 @@ const Header: React.FC<HeaderProps> = ({
             <Caption
               vkuiClass="Header__indicator"
               weight={
-                mode === "primary" || mode === "secondary"
-                  ? "medium"
-                  : "regular"
+                mode === "primary" || mode === "secondary" ? "1" : undefined
               }
-              level="1"
             >
               {indicator}
             </Caption>

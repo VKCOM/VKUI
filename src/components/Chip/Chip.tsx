@@ -46,13 +46,7 @@ export const Chip: React.FC<ChipProps> = ({
     >
       <div vkuiClass="Chip__in" role="presentation">
         {hasReactNode(before) && <div vkuiClass="Chip__before">{before}</div>}
-        <Caption
-          level="1"
-          weight="regular"
-          vkuiClass="Chip__content"
-          title={title}
-          aria-hidden="true"
-        >
+        <Caption vkuiClass="Chip__content" title={title} aria-hidden="true">
           {children}
         </Caption>
         {hasReactNode(after) && <div vkuiClass="Chip__after">{after}</div>}

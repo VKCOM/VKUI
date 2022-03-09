@@ -396,9 +396,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(
             </CustomSelectOption>
           )}
           {!filteredOptions?.length && !showCreatable && emptyText ? (
-            <Caption level="1" weight="regular" vkuiClass="ChipsSelect__empty">
-              {emptyText}
-            </Caption>
+            <Caption vkuiClass="ChipsSelect__empty">{emptyText}</Caption>
           ) : (
             filteredOptions.map((option: Option, index: number) => {
               const label = getOptionLabel!(option);

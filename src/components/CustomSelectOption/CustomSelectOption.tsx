@@ -67,11 +67,7 @@ const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
       <div vkuiClass="CustomSelectOption__main">
         <div vkuiClass="CustomSelectOption__children">{children}</div>
         {hasReactNode(description) && (
-          <Caption
-            level="1"
-            weight="regular"
-            vkuiClass="CustomSelectOption__description"
-          >
+          <Caption vkuiClass="CustomSelectOption__description">
             {description}
           </Caption>
         )}

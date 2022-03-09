@@ -10,13 +10,7 @@ export const Footer: React.FC<FooterProps> = ({
   ...restProps
 }: FooterProps) => {
   return (
-    <Caption
-      Component="footer"
-      {...restProps}
-      level="1"
-      weight="regular"
-      vkuiClass="Footer"
-    >
+    <Caption Component="footer" {...restProps} vkuiClass="Footer">
       {children}
     </Caption>
   );

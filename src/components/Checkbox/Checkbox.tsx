@@ -88,14 +88,7 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
         >
           <div vkuiClass="Checkbox__children">{children}</div>
           {hasReactNode(description) && (
-            <Caption
-              level="1"
-              Component="span"
-              weight="regular"
-              vkuiClass="Checkbox__description"
-            >
-              {description}
-            </Caption>
+            <Caption vkuiClass="Checkbox__description">{description}</Caption>
           )}
         </ContentComponent>
       </div>

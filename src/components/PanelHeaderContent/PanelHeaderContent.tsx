@@ -81,13 +81,7 @@ const PanelHeaderContent: React.FunctionComponent<PanelHeaderContentProps> = ({
       )}
       <InComponent {...inProps} vkuiClass="PanelHeaderContent__in">
         {hasReactNode(status) && (
-          <Caption
-            level="1"
-            weight="regular"
-            vkuiClass="PanelHeaderContent__status"
-          >
-            {status}
-          </Caption>
+          <Caption vkuiClass="PanelHeaderContent__status">{status}</Caption>
         )}
         <div vkuiClass="PanelHeaderContent__children">
           <PanelHeaderChildren

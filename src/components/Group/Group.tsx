@@ -70,9 +70,7 @@ const Group: React.FC<GroupProps> = (props: GroupProps) => {
         {header}
         {children}
         {hasReactNode(description) && (
-          <Caption vkuiClass="Group__description" weight="regular" level="1">
-            {description}
-          </Caption>
+          <Caption vkuiClass="Group__description">{description}</Caption>
         )}
       </div>
 

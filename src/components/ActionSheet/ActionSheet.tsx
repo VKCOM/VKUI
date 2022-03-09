@@ -117,17 +117,14 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
           <header vkuiClass="ActionSheet__header">
             {hasReactNode(header) && (
               <Caption
-                level="1"
-                weight={platform === IOS ? "semibold" : "medium"}
+                weight={platform === IOS ? "1" : "2"}
                 vkuiClass="ActionSheet__title"
               >
                 {header}
               </Caption>
             )}
             {hasReactNode(text) && (
-              <Caption level="1" weight="regular" vkuiClass="ActionSheet__text">
-                {text}
-              </Caption>
+              <Caption vkuiClass="ActionSheet__text">{text}</Caption>
             )}
           </header>
         )}
