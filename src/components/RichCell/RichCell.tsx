@@ -23,7 +23,8 @@ export interface RichCellProps extends TappableProps {
    */
   bottom?: React.ReactNode;
   /**
-   * Кнопка или набор кнопок `<Button size="s" />`. Располагается под `bottom`.
+   * Кнопка `<Button size="s" />`. Располагается под `bottom`.
+   * Для набора кнопок следует использовать обёртку `<ButtonGroup mode="horizontal" gap="s">...</ButtonGroup>`.
    */
   actions?: React.ReactNode;
   /**
