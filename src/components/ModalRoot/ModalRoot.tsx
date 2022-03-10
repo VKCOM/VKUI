@@ -274,7 +274,7 @@ class ModalRootTouchComponent extends React.Component<
     const prevModalState = this.getModalState(id);
 
     if (!prevModalState) {
-      id && warn(`[closeActiveModal] Modal ${id} does not exist - not closing`);
+      id && warn(`closeActiveModal: Modal ${id} does not exist - not closing`);
       return;
     }
 
@@ -743,7 +743,7 @@ function initModal(modalState: ModalsStateEntry) {
     case ModalType.CARD:
       return initCardModal(modalState);
     default:
-      IS_DEV && warn("[initActiveModal] modalState.type is unknown");
+      IS_DEV && warn("initActiveModal: modalState.type is unknown");
   }
 }
 

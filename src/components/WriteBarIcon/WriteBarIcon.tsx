@@ -76,7 +76,7 @@ export const WriteBarIcon: React.FC<WriteBarIconProps> = ({
 
   if (IS_DEV && !restProps["aria-label"] && !ariaLabel) {
     warn(
-      "[WriteBarIcon/a11y] У WriteBarIcon нет aria-label. Кнопка будет недоступной для части пользователей."
+      "a11y: У WriteBarIcon нет aria-label. Кнопка будет недоступной для части пользователей."
     );
   }
 
