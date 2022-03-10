@@ -103,6 +103,7 @@
 @import "../components/WriteBarIcon/WriteBarIcon.css";
 @import "../components/SubnavigationBar/SubnavigationBar.css";
 @import "../components/SubnavigationButton/SubnavigationButton.css";
+@import "../components/Pagination/Pagination.css";
 
 /* Forms */
 @import "../components/FormLayout/FormLayout.css";

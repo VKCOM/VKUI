@@ -17,7 +17,7 @@ import Button from "../Button/Button";
 import "./Pagination.css";
 
 function getPageAreaLabelDefault(page: number, isCurrent: boolean): string {
-  return isCurrent ? `page ${page}` : `go to page ${page}`;
+  return isCurrent ? `${page} страница` : `Перейти на ${page} страницу`;
 }
 
 export interface PaginationProps
@@ -45,33 +45,17 @@ export interface PaginationProps
   disabled?: boolean;
   /**
    * Переобределение `aria-label` для кнопки навигации назад.
+   * По умолчанию используется текст на "ru_RU".
    */
   prevButtonAriaLabel?: string;
   /**
-   * Компонент иконки для кнопки с навигацией назад.
-   * Так как по умолчанию иконка есть, слеудет передать `null`, чтобы её скрыть.
-   */
-  prevButtonIcon?: React.ReactNode;
-  /**
-   * Текст для кнопки с навигацией назад.
-   */
-  prevButtonText?: React.ReactNode;
-  /**
-   * Текст для кнопки с навигацией вперёд.
-   */
-  nextButtonText?: React.ReactNode;
-  /**
-   * Компонент иконки для кнопки с навигацией вперёд.
-   * Так как по умолчанию иконка есть, слеудет передать `null`, чтобы её скрыть.
-   */
-  nextButtonIcon?: React.ReactNode;
-  /**
    * Переобределение `aria-label` для кнопки навигации вперёд.
+   * По умолчанию используется текст на "ru_RU".
    */
   nextButtonAriaLabel?: string;
   /**
    * Функция для переопределния и/или локализации `aria-label` атрибута.
-   * По умолчанию используется текст на "en_US".
+   * По умолчанию используется текст на "ru_RU".
    */
   getPageAreaLabel?(page: number, isCurrent: boolean): string;
   onChange?(page: number): void;
@@ -84,12 +68,8 @@ export const Pagination: React.FC<PaginationProps> = ({
   totalPages = 1,
   disabled,
   getPageAreaLabel = getPageAreaLabelDefault,
-  prevButtonAriaLabel = "go to previous page",
-  prevButtonIcon = <Icon24ChevronCompactLeft />,
-  prevButtonText,
-  nextButtonText,
-  nextButtonIcon = <Icon24ChevronCompactRight />,
-  nextButtonAriaLabel = "go to next page",
+  prevButtonAriaLabel = "Перейти на предыдущую страницу",
+  nextButtonAriaLabel = "Перейти на следующую страницу",
   getRootRef,
   onChange,
   ...resetProps
@@ -131,10 +111,7 @@ export const Pagination: React.FC<PaginationProps> = ({
         case "start-ellipsis":
         case "end-ellipsis":
           return (
-            <li
-              key={page}
-              vkuiClass="Pagination__listitem Pagination__listitem--type-narrow"
-            >
+            <li key={page}>
               <div
                 vkuiClass={classNames(
                   "Pagination__page",
@@ -150,7 +127,7 @@ export const Pagination: React.FC<PaginationProps> = ({
         default: {
           const isCurrent = page === currentPage;
           return (
-            <li vkuiClass="Pagination__listitem" key={page}>
+            <li key={page}>
               <Tappable
                 vkuiClass={classNames(
                   "Pagination__page",
@@ -183,41 +160,37 @@ export const Pagination: React.FC<PaginationProps> = ({
     <nav
       vkuiClass="Pagination"
       role="navigation"
-      aria-label="pagination navigation"
+      aria-label="Навигация по страницам"
       ref={getRootRef}
       {...resetProps}
     >
       <ul vkuiClass="Pagination__list">
-        <li vkuiClass="Pagination__listitem Pagination__listitem--type-before">
+        <li vkuiClass="Pagination__prevButtonContainer">
           <Button
             size="l"
             sizeY={sizeY}
-            before={prevButtonIcon}
+            before={<Icon24ChevronCompactLeft width={24} />}
             appearance="accent"
             mode="tertiary"
             stretched
             disabled={isFirstPage || disabled}
             aria-label={prevButtonAriaLabel}
             onClick={handlePrevClick}
-          >
-            {prevButtonText}
-          </Button>
+          />
         </li>
         {pages.map(renderPages)}
-        <li vkuiClass="Pagination__listitem Pagination__listitem--type-after">
+        <li vkuiClass="Pagination__nextButtonContainer">
           <Button
             size="l"
             sizeY={sizeY}
-            after={nextButtonIcon}
+            after={<Icon24ChevronCompactRight width={24} />}
             appearance="accent"
             mode="tertiary"
             stretched
             disabled={isLastPage || disabled}
             aria-label={nextButtonAriaLabel}
             onClick={handleNextClick}
-          >
-            {nextButtonText}
-          </Button>
+          />
         </li>
       </ul>
     </nav>

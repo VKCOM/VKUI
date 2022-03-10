@@ -48,6 +48,10 @@
 .Button--lvl-secondary[disabled]:not(.Button--clr-overlay),
 .Button--lvl-tertiary[disabled]:not(.Button--clr-overlay),
 .Button--lvl-outline[disabled]:not(.Button--clr-overlay) {
+  /*
+   * Не консистен с `opacity` у `<Pagination disabled />`
+   * [Ищи в директории `src/components/Pagination` идентификатор "uk7V6Wws"]
+   */
   opacity: 0.64;
 }
 

@@ -8,19 +8,11 @@
   list-style-type: none;
 }
 
-.Pagination__listitem {
-  min-width: 40px;
-}
-
-.Pagination__listitem--type-before {
+.Pagination__prevButtonContainer {
   margin-right: 8px;
 }
 
-.Pagination__listitem--type-narrow {
-  min-width: 16px;
-}
-
-.Pagination__listitem--type-after {
+.Pagination__nextButtonContainer {
   margin-left: 8px;
 }
 
@@ -30,6 +22,7 @@
   padding-right: 8px;
   padding-left: 8px;
   width: 100%;
+  min-width: 40px;
   border-radius: var(--vkui--size_border_radius--regular);
   text-align: center;
   color: var(--vkui--color_text_secondary);
@@ -47,6 +40,10 @@
 }
 
 .Pagination__page--disabled {
+  /*
+   * Не консистен с `opacity` у `<Button appearance="accent" mode="tertiary" disabled />`
+   * [Ищи в директории `src/components/Button` идентификатор "uk7V6Wws"]
+   */
   opacity: var(--vkui--opacity_disable);
 }
 
@@ -63,6 +60,7 @@
 }
 
 .Pagination__page--type-ellipsis {
+  min-width: 16px;
   padding-right: 0;
   padding-left: 0;
 }
