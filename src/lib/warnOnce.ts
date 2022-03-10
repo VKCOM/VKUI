@@ -1,8 +1,14 @@
-export function warnOnce(zone: string) {
+export type WarnOnceHandler = (
+  message: string,
+  type?: "warn" | "error"
+) => void;
+
+export function warnOnce(zone: string): WarnOnceHandler {
   const didWarn: { [msg: string]: boolean } = {};
-  return (message: string) => {
+
+  return (message: string, type: "warn" | "error" = "warn") => {
     if (!didWarn[message]) {
-      console.error(`[VKUI/${zone}] ${message}`);
+      console[type](`[VKUI/${zone}] ${message}`);
       didWarn[message] = true;
     }
   };
