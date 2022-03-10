@@ -16,14 +16,14 @@
 
 ```jsx { "props": { "layout": false, "iframe": false } }
 <div style={{ padding: 20 }}>
-  <Caption level="3" weight="1" style={{ marginBottom: 16 }}>
-    Caption 3 weight 1
+  <Caption level="1" weight="1" style={{ marginBottom: 16 }}>
+    Caption 1 weight 1
   </Caption>
-  <Caption level="3" weight="2" style={{ marginBottom: 16 }}>
-    Caption 3 weight 2
+  <Caption level="1" weight="2" style={{ marginBottom: 16 }}>
+    Caption 1 weight 2
   </Caption>
-  <Caption level="3" weight="3">
-    Caption 3 weight 3
+  <Caption level="1" weight="3">
+    Caption 1 weight 3
   </Caption>
 </div>
 ```
