@@ -126,7 +126,7 @@ export function useModalManager(
   useIsomorphicLayoutEffect(() => {
     // ignore non-existent activeModal
     if (process.env.NODE_ENV === "development" && isMissing) {
-      warn(`Can't transition - modal ${activeModal} not found`);
+      warn(`Can't transition - modal ${activeModal} not found`, "error");
     }
     dispatchTransition({ type: "setActive", id: safeActiveModal ?? null });
   }, [activeModal]);
@@ -167,7 +167,7 @@ export function useModalManager(
       } else if (isFunction(onClose)) {
         onClose(modalState.id);
       } else if (process.env.NODE_ENV === "development") {
-        warn("onClose is undefined");
+        warn("onClose is undefined", "error");
       }
     }
   }

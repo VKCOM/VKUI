@@ -56,7 +56,7 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({
     );
 
     if (_activeOptionIdx === -1 && process.env.NODE_ENV === "development") {
-      warn("defaultValue: такого значения нет среди опций!");
+      warn("defaultValue: такого значения нет среди опций!", "error");
     }
 
     updateActiveOptionIdx(_activeOptionIdx);

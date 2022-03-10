@@ -55,7 +55,8 @@ const warn = warnOnce("CustomSelect");
 const checkOptionsValueType = (options: CustomSelectOptionInterface[]) => {
   if (new Set(options.map((item) => typeof item.value)).size > 1) {
     warn(
-      "Some values of your options have different types. CustomSelect onChange always returns a string type."
+      "Some values of your options have different types. CustomSelect onChange always returns a string type.",
+      "error"
     );
   }
 };

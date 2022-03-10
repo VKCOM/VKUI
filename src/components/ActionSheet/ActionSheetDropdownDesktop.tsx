@@ -38,7 +38,7 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
   useEffectDev(() => {
     const toggleEl = getEl(toggleRef);
     if (!toggleEl) {
-      warn("toggleRef not passed");
+      warn("toggleRef not passed", "error");
     }
   }, [toggleRef]);
 

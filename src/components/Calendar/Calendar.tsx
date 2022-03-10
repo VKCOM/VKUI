@@ -94,12 +94,13 @@ export const Calendar: React.FC<CalendarProps> = ({
     size === "s"
   ) {
     warn(
-      "Нельзя включить селекты выбора месяца/года, если размер календаря 's'"
+      "Нельзя включить селекты выбора месяца/года, если размер календаря 's'",
+      "error"
     );
   }
 
   if (process.env.NODE_ENV === "development" && enableTime && size === "s") {
-    warn("Нельзя включить выбор времени, если размер календаря 's'");
+    warn("Нельзя включить выбор времени, если размер календаря 's'", "error");
   }
 
   const handleKeyDown = React.useCallback(
