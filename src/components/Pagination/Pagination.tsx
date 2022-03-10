@@ -168,7 +168,6 @@ export const Pagination: React.FC<PaginationProps> = ({
         <li vkuiClass="Pagination__prevButtonContainer">
           <Button
             size="l"
-            sizeY={sizeY}
             before={<Icon24ChevronCompactLeft width={24} />}
             appearance="accent"
             mode="tertiary"
@@ -182,7 +181,6 @@ export const Pagination: React.FC<PaginationProps> = ({
         <li vkuiClass="Pagination__nextButtonContainer">
           <Button
             size="l"
-            sizeY={sizeY}
             after={<Icon24ChevronCompactRight width={24} />}
             appearance="accent"
             mode="tertiary"
