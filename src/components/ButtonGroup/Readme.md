@@ -129,7 +129,7 @@ const ExampleUseCases = () => {
 };
 
 const buttonText = "Button";
-const strechedButtonText = "Button (stretched)";
+const stretchedButtonText = "Button (stretched)";
 
 const ExampleBase = () => {
   const [props, setProps] = useState({
@@ -150,7 +150,7 @@ const ExampleBase = () => {
             {buttonText}
           </Button>
           <Button size="l" appearance="accent" stretched>
-            {strechedButtonText}
+            {stretchedButtonText}
           </Button>
           <Button size="l" appearance="accent" before={<Icon24Add />} />
           <Button
@@ -195,7 +195,7 @@ const ExampleNested = () => {
             style={buttonGroupHighlightStyles}
           >
             <Button size="l" appearance="accent" stretched>
-              {strechedButtonText}
+              {stretchedButtonText}
             </Button>
             <Button size="l" appearance="accent" before={<Icon24Add />} />
           </ButtonGroup>
@@ -234,7 +234,7 @@ const ExampleNested = () => {
               {buttonText}
             </Button>
             <Button size="l" appearance="accent" stretched>
-              {strechedButtonText}
+              {stretchedButtonText}
             </Button>
             <Button size="l" appearance="accent">
               {buttonText}
@@ -247,7 +247,7 @@ const ExampleNested = () => {
             style={buttonGroupHighlightStyles}
           >
             <Button size="l" appearance="accent" stretched>
-              {strechedButtonText}
+              {stretchedButtonText}
             </Button>
             <Button
               size="l"
@@ -262,7 +262,7 @@ const ExampleNested = () => {
             >
               <Button size="l" appearance="accent" before={<Icon24Add />} />
               <Button size="l" appearance="accent" stretched>
-                {strechedButtonText}
+                {stretchedButtonText}
               </Button>
             </ButtonGroup>
           </ButtonGroup>
