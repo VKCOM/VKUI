@@ -16,7 +16,7 @@ import Button from "../Button/Button";
 
 import "./Pagination.css";
 
-function getPageAreaLabelDefault(page: number, isCurrent: boolean): string {
+function getPageAriaLabelDefault(page: number, isCurrent: boolean): string {
   return isCurrent ? `${page} страница` : `Перейти на ${page} страницу`;
 }
 
@@ -57,7 +57,7 @@ export interface PaginationProps
    * Функция для переопределния и/или локализации `aria-label` атрибута.
    * По умолчанию используется текст на "ru_RU".
    */
-  getPageAreaLabel?(page: number, isCurrent: boolean): string;
+  getPageAriaLabel?(page: number, isCurrent: boolean): string;
   onChange?(page: number): void;
 }
 
@@ -67,7 +67,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   boundaryCount = 1,
   totalPages = 1,
   disabled,
-  getPageAreaLabel = getPageAreaLabelDefault,
+  getPageAriaLabel = getPageAriaLabelDefault,
   prevButtonAriaLabel = "Перейти на предыдущую страницу",
   nextButtonAriaLabel = "Перейти на следующую страницу",
   getRootRef,
@@ -143,7 +143,7 @@ export const Pagination: React.FC<PaginationProps> = ({
                 disabled={disabled}
                 data-page={page}
                 aria-current={isCurrent ? true : undefined}
-                aria-label={getPageAreaLabel(page, isCurrent)}
+                aria-label={getPageAriaLabel(page, isCurrent)}
                 onClick={handleClick}
               >
                 {page}
@@ -153,7 +153,7 @@ export const Pagination: React.FC<PaginationProps> = ({
         }
       }
     },
-    [sizeY, currentPage, disabled, getPageAreaLabel, handleClick]
+    [sizeY, currentPage, disabled, getPageAriaLabel, handleClick]
   );
 
   return (

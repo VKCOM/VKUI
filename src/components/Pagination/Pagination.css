@@ -40,10 +40,6 @@
 }
 
 .Pagination__page--disabled {
-  /*
-   * Не консистен с `opacity` у `<Button appearance="accent" mode="tertiary" disabled />`
-   * [Ищи в директории `src/components/Button` идентификатор "uk7V6Wws"]
-   */
   opacity: var(--vkui--opacity_disable);
 }
 
