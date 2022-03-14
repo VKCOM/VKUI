@@ -26,6 +26,9 @@ export type { TitleProps } from "../components/Typography/Title/Title";
 export { default as Subhead } from "../components/Typography/Subhead/Subhead";
 export type { SubheadProps } from "../components/Typography/Subhead/Subhead";
 
+export { Pagination } from "../components/Pagination/Pagination";
+export type { PaginationProps } from "../components/Pagination/Pagination";
+
 export { Calendar } from "../components/Calendar/Calendar";
 export type { CalendarProps } from "../components/Calendar/Calendar";
 
