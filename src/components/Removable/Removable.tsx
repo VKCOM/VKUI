@@ -25,14 +25,12 @@ export interface RemovableProps {
   onRemove?: (e: React.MouseEvent, rootEl?: HTMLElement) => void;
 }
 
-interface RemovableIosOwnProps
-  extends Pick<RemovableProps, "removePlaceholder"> {
-  onRemoveClick?: (e: React.MouseEvent, rootEl?: HTMLElement) => void;
+interface RemovableIosOwnProps extends RemovableProps {
   removePlaceholderString?: string;
 }
 
 const RemovableIos: React.FC<RemovableIosOwnProps> = ({
-  onRemoveClick,
+  onRemove,
   removePlaceholder,
   removePlaceholderString,
   children,
@@ -40,6 +38,7 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
   const { window } = useDOM();
 
   const removeButtonRef = React.useRef<HTMLElement>(null);
+  const disabledRef = React.useRef(true);
   const [removeOffset, updateRemoveOffset] = React.useState(0);
 
   useGlobalEventListener(
@@ -56,6 +55,8 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
   const onRemoveTransitionEnd = () => {
     if (removeOffset > 0) {
       removeButtonRef?.current?.focus();
+    } else {
+      disabledRef.current = true;
     }
   };
 
@@ -65,6 +66,7 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
       return;
     }
     const { offsetWidth } = removeButtonRef.current;
+    disabledRef.current = false;
     updateRemoveOffset(offsetWidth);
   };
 
@@ -92,10 +94,10 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
         Component="button"
         hasActive={false}
         hasHover={false}
-        disabled={removeOffset === 0}
+        disabled={disabledRef.current}
         getRootRef={removeButtonRef}
         vkuiClass="Removable__remove"
-        onClick={onRemoveClick}
+        onClick={onRemove}
       >
         <span vkuiClass="Removable__remove-in">{removePlaceholder}</span>
       </Tappable>
@@ -162,7 +164,7 @@ export const Removable: React.FC<RemovableOwnProps> = ({
 
       {platform === IOS && (
         <RemovableIos
-          onRemoveClick={onRemoveClick}
+          onRemove={onRemoveClick}
           removePlaceholder={removePlaceholder}
           removePlaceholderString={removePlaceholderString}
         >
