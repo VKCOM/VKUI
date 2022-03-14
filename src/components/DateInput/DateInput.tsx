@@ -36,6 +36,7 @@ export interface DateInputProps
       | "changeMonthAriaLabel"
       | "changeYearAriaLabel"
       | "changeDayAriaLabel"
+      | "showNeighboringMonth"
     >,
     HasRootRef<HTMLDivElement> {
   calendarPlacement?: Placement;
@@ -106,6 +107,7 @@ export const DateInput: React.FC<DateInputProps> = ({
   closeAriaLabel,
   prevMonthAriaLabel,
   nextMonthAriaLabel,
+  showNeighboringMonth,
   changeMonthAriaLabel = "Изменить месяц",
   changeYearAriaLabel = "Изменить год",
   changeDayAriaLabel = "Изменить день",
@@ -298,6 +300,7 @@ export const DateInput: React.FC<DateInputProps> = ({
             changeMonthAriaLabel={changeMonthAriaLabel}
             changeYearAriaLabel={changeYearAriaLabel}
             changeDayAriaLabel={changeDayAriaLabel}
+            showNeighboringMonth={showNeighboringMonth}
           />
         </Popper>
       )}

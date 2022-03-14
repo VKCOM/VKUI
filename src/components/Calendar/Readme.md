@@ -9,6 +9,7 @@ const Example = () => {
   const [disablePast, setDisablePast] = useState(false);
   const [disableFuture, setDisableFuture] = useState(false);
   const [disablePickers, setDisablePickers] = useState(false);
+  const [showNeighboringMonth, setShowNeighboringMonth] = useState(false);
   const [locale, setLocale] = useState("ru");
 
   return (
@@ -49,6 +50,14 @@ const Example = () => {
             Включено
           </Checkbox>
         </FormItem>
+        <FormItem top="Отображать даты с прошлого и следующего месяца">
+          <Checkbox
+            checked={showNeighboringMonth}
+            onChange={(e) => setShowNeighboringMonth(e.target.checked)}
+          >
+            Включено
+          </Checkbox>
+        </FormItem>
         <FormItem top="Локаль">
           <Select
             style={{ width: 100 }}
@@ -83,6 +92,7 @@ const Example = () => {
               disablePast={disablePast}
               disableFuture={disableFuture}
               disablePickers={disablePickers}
+              showNeighboringMonth={showNeighboringMonth}
             />
           </LocaleProviderContext.Provider>
         </FormItem>

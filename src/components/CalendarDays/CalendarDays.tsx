@@ -10,6 +10,7 @@ export interface CalendarDaysProps
   value?: Date | Array<Date | null>;
   viewDate: Date;
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  showNeighboringMonth?: boolean;
   onDayChange(value: Date): void;
   isDayDisabled(value: Date): boolean;
   isDaySelectionStart(value: Date, dayOfWeek: number): boolean;
@@ -40,6 +41,7 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
   isHintedDaySelectionEnd,
   isDayFocused,
   isDayDisabled,
+  showNeighboringMonth = false,
   ...props
 }) => {
   const locale = React.useContext(LocaleProviderContext);
@@ -77,26 +79,30 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
 
       {weeks.map((week, i) => (
         <div vkuiClass="CalendarDays__row" key={i}>
-          {week.map((day, i) => (
-            <CalendarDay
-              key={day.toISOString()}
-              day={day}
-              today={isSameDay(day, now)}
-              active={isDayActive(day)}
-              onChange={handleDayChange}
-              hidden={!isSameMonth(day, viewDate)}
-              disabled={isDayDisabled(day)}
-              selectionStart={isDaySelectionStart(day, i)}
-              selectionEnd={isDaySelectionEnd(day, i)}
-              hintedSelectionStart={isHintedDaySelectionStart?.(day, i)}
-              hintedSelectionEnd={isHintedDaySelectionEnd?.(day, i)}
-              selected={isDaySelected?.(day)}
-              focused={isDayFocused(day)}
-              onEnter={onDayEnter}
-              onLeave={onDayLeave}
-              hinted={isDayHinted?.(day)}
-            />
-          ))}
+          {week.map((day, i) => {
+            const sameMonth = isSameMonth(day, viewDate);
+            return (
+              <CalendarDay
+                key={day.toISOString()}
+                day={day}
+                today={isSameDay(day, now)}
+                active={isDayActive(day)}
+                onChange={handleDayChange}
+                hidden={!showNeighboringMonth && !sameMonth}
+                disabled={isDayDisabled(day)}
+                selectionStart={isDaySelectionStart(day, i)}
+                selectionEnd={isDaySelectionEnd(day, i)}
+                hintedSelectionStart={isHintedDaySelectionStart?.(day, i)}
+                hintedSelectionEnd={isHintedDaySelectionEnd?.(day, i)}
+                selected={isDaySelected?.(day)}
+                focused={isDayFocused(day)}
+                onEnter={onDayEnter}
+                onLeave={onDayLeave}
+                hinted={isDayHinted?.(day)}
+                sameMonth={sameMonth}
+              />
+            );
+          })}
         </div>
       ))}
     </div>

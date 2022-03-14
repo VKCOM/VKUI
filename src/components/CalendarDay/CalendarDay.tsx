@@ -18,6 +18,7 @@ export interface CalendarDayProps {
   disabled?: boolean;
   focused?: boolean;
   hinted?: boolean;
+  sameMonth?: boolean;
   onChange(value: Date): void;
   onEnter?(value: Date): void;
   onLeave?(value: Date): void;
@@ -40,6 +41,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
     hinted,
     hintedSelectionStart,
     hintedSelectionEnd,
+    sameMonth,
   }) => {
     const locale = React.useContext(LocaleProviderContext);
     const ref = React.useRef<HTMLElement>(null);
@@ -69,6 +71,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
           "CalendarDay--selection-start": selectionStart,
           "CalendarDay--selection-end": selectionEnd,
           "CalendarDay--disabled": disabled,
+          "CalendarDay--not-same-month": !sameMonth,
         })}
         hoverMode="CalendarDay--hover"
         hasActive={false}

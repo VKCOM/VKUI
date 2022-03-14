@@ -39,6 +39,7 @@ export interface CalendarProps
   doneButtonText?: string;
   changeDayAriaLabel?: string;
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  showNeighboringMonth?: boolean;
   onChange?(value?: Date): void;
   shouldDisableDate?(value: Date): boolean;
   onClose?(): void;
@@ -63,6 +64,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   nextMonthAriaLabel,
   changeMonthAriaLabel,
   changeYearAriaLabel,
+  showNeighboringMonth,
   changeDayAriaLabel = "Изменить день",
   ...props
 }) => {
@@ -144,6 +146,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         isDayDisabled={isDayDisabled}
         onFocus={focusSelectedDay}
         onBlur={resetSelectedDay}
+        showNeighboringMonth={showNeighboringMonth}
       />
       {enableTime && value && (
         <div vkuiClass="Calendar__time">

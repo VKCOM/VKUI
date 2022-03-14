@@ -6,7 +6,8 @@
   color: var(--vkui--color_text_primary);
 }
 
-.CalendarDay--disabled {
+.CalendarDay--disabled,
+.CalendarDay--not-same-month {
   color: var(--vkui--color_text_tertiary);
 }
 
