@@ -240,6 +240,7 @@ const baseConfig = {
             "../src/components/SubnavigationBar/SubnavigationBar.tsx",
             "../src/components/SubnavigationButton/SubnavigationButton.tsx",
             "../src/components/ModalCardBase/ModalCardBase.tsx",
+            "../src/components/Pagination/Pagination.tsx",
           ],
         },
         {
