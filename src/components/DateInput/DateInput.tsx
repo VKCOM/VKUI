@@ -16,7 +16,10 @@ import { callMultiple } from "../../lib/callMultiple";
 import "./DateInput.css";
 
 export interface DateInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLDivElement>, "value" | "onChange">,
+  extends Omit<
+      React.InputHTMLAttributes<HTMLDivElement>,
+      "value" | "onChange" | "size"
+    >,
     Pick<
       CalendarProps,
       | "disablePast"
@@ -37,6 +40,7 @@ export interface DateInputProps
       | "changeYearAriaLabel"
       | "changeDayAriaLabel"
       | "showNeighboringMonth"
+      | "size"
     >,
     HasRootRef<HTMLDivElement> {
   calendarPlacement?: Placement;
@@ -108,6 +112,7 @@ export const DateInput: React.FC<DateInputProps> = ({
   prevMonthAriaLabel,
   nextMonthAriaLabel,
   showNeighboringMonth,
+  size,
   changeMonthAriaLabel = "Изменить месяц",
   changeYearAriaLabel = "Изменить год",
   changeDayAriaLabel = "Изменить день",
@@ -301,6 +306,7 @@ export const DateInput: React.FC<DateInputProps> = ({
             changeYearAriaLabel={changeYearAriaLabel}
             changeDayAriaLabel={changeDayAriaLabel}
             showNeighboringMonth={showNeighboringMonth}
+            size={size}
           />
         </Popper>
       )}

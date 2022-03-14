@@ -15,6 +15,8 @@ import {
 } from "../../lib/calendar";
 import { useCalendar } from "../../hooks/useCalendar";
 import { HasRootRef } from "../../types";
+import { classNames } from "../../lib/classNames";
+import { warnOnce } from "../../lib/warnOnce";
 import "./Calendar.css";
 
 export interface CalendarProps
@@ -40,10 +42,13 @@ export interface CalendarProps
   changeDayAriaLabel?: string;
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   showNeighboringMonth?: boolean;
+  size?: "s" | "m";
   onChange?(value?: Date): void;
   shouldDisableDate?(value: Date): boolean;
   onClose?(): void;
 }
+
+const warn = warnOnce("Calendar");
 
 export const Calendar: React.FC<CalendarProps> = ({
   value,
@@ -66,6 +71,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   changeYearAriaLabel,
   showNeighboringMonth,
   changeDayAriaLabel = "Изменить день",
+  size = "s",
   ...props
 }) => {
   const {
@@ -77,7 +83,6 @@ export const Calendar: React.FC<CalendarProps> = ({
     setFocusedDay,
     isDayFocused,
     isDayDisabled,
-    focusSelectedDay,
     resetSelectedDay,
   } = useCalendar({ value, disableFuture, disablePast, shouldDisableDate });
 
@@ -86,6 +91,18 @@ export const Calendar: React.FC<CalendarProps> = ({
       setViewDate(value);
     }
   }, [value]);
+
+  if (
+    process.env.NODE_ENV === "development" &&
+    !disablePickers &&
+    size === "s"
+  ) {
+    warn("can't enable pickers when size is 's'");
+  }
+
+  if (process.env.NODE_ENV === "development" && enableTime && size === "s") {
+    warn("can't enable time when size is 's'");
+  }
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent) => {
@@ -118,13 +135,17 @@ export const Calendar: React.FC<CalendarProps> = ({
   );
 
   return (
-    <div {...props} ref={getRootRef} vkuiClass="Calendar">
+    <div
+      {...props}
+      ref={getRootRef}
+      vkuiClass={classNames("Calendar", `Calendar--size-${size}`)}
+    >
       <CalendarHeader
         viewDate={viewDate}
         onChange={setViewDate}
         onNextMonth={setNextMonth}
         onPrevMonth={setPrevMonth}
-        disablePickers={disablePickers}
+        disablePickers={disablePickers || size === "s"}
         vkuiClass="Calendar__header"
         prevMonthAriaLabel={prevMonthAriaLabel}
         nextMonthAriaLabel={nextMonthAriaLabel}
@@ -144,11 +165,10 @@ export const Calendar: React.FC<CalendarProps> = ({
         isDaySelectionStart={isFirstDay}
         isDaySelectionEnd={isLastDay}
         isDayDisabled={isDayDisabled}
-        onFocus={focusSelectedDay}
         onBlur={resetSelectedDay}
         showNeighboringMonth={showNeighboringMonth}
       />
-      {enableTime && value && (
+      {enableTime && value && size !== "s" && (
         <div vkuiClass="Calendar__time">
           <CalendarTime
             value={value}

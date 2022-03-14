@@ -11,6 +11,7 @@ const Example = () => {
   const [disablePickers, setDisablePickers] = useState(false);
   const [showNeighboringMonth, setShowNeighboringMonth] = useState(false);
   const [locale, setLocale] = useState("ru");
+  const [size, setSize] = useState("m");
 
   return (
     <FormLayout>
@@ -83,6 +84,23 @@ const Example = () => {
             ]}
           />
         </FormItem>
+        <FormItem top="Размер">
+          <Select
+            style={{ width: 100 }}
+            value={size}
+            onChange={(e) => setSize(e.target.value)}
+            options={[
+              {
+                label: "s",
+                value: "s",
+              },
+              {
+                label: "m",
+                value: "m",
+              },
+            ]}
+          />
+        </FormItem>
         <FormItem>
           <LocaleProviderContext.Provider value={locale}>
             <Calendar
@@ -93,6 +111,7 @@ const Example = () => {
               disableFuture={disableFuture}
               disablePickers={disablePickers}
               showNeighboringMonth={showNeighboringMonth}
+              size={size}
             />
           </LocaleProviderContext.Provider>
         </FormItem>
