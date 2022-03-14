@@ -229,7 +229,7 @@ export type {
 /**
  * Helpers
  */
-export { default as Div } from "./components/Div/Div";
+export { Div } from "./components/Div/Div";
 export type { DivProps } from "./components/Div/Div";
 export { default as Tappable } from "./components/Tappable/Tappable";
 export type { TappableProps } from "./components/Tappable/Tappable";
