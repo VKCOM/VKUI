@@ -94,7 +94,7 @@ const chipsSelectDefaultProps: ChipsSelectProps<any> = {
   },
 };
 
-const ChipsSelect = <Option extends ChipsInputOption>(
+const ChipsSelectComponent = <Option extends ChipsInputOption>(
   props: ChipsSelectProps<Option>
 ) => {
   const propsWithDefault = { ...chipsSelectDefaultProps, ...props };
@@ -449,5 +449,6 @@ const ChipsSelect = <Option extends ChipsInputOption>(
   );
 };
 
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(ChipsSelect, { sizeY: true });
+export const ChipsSelect = withAdaptivity(ChipsSelectComponent, {
+  sizeY: true,
+});
