@@ -12,6 +12,7 @@
   color: var(--vkui--color_text_subhead);
   width: 40px;
   height: 32px;
+  flex-shrink: 0;
   font-size: 13px;
   display: flex;
   align-items: center;

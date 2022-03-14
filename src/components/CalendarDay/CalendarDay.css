@@ -2,6 +2,7 @@
   width: 40px;
   height: 36px;
   border-radius: 0;
+  flex-shrink: 0;
   font-size: 14px;
   color: var(--vkui--color_text_primary);
 }
@@ -30,6 +31,7 @@
 .CalendarDay__hidden {
   width: 40px;
   height: 36px;
+  flex-shrink: 0;
 }
 
 .CalendarDay__day-number {

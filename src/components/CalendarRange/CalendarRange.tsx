@@ -84,7 +84,6 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
     setFocusedDay,
     isDayFocused,
     isDayDisabled,
-    focusSelectedDay,
     resetSelectedDay,
   } = useCalendar({ value, disableFuture, disablePast, shouldDisableDate });
   const [hintedDate, setHintedDate] = React.useState<Array<Date | null>>();
@@ -271,7 +270,6 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
           isHintedDaySelectionStart={isHintedDaySelectionStart}
           isDayDisabled={isDayDisabled}
           tabIndex={0}
-          onFocus={focusSelectedDay}
           onBlur={resetSelectedDay}
         />
       </div>

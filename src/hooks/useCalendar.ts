@@ -60,16 +60,6 @@ export function useCalendar({
     [disableFuture, disablePast, shouldDisableDate]
   );
 
-  const focusSelectedDay = React.useCallback(() => {
-    if (Array.isArray(value)) {
-      if (value[1]) {
-        setFocusedDay(value[1]);
-      }
-    } else if (value) {
-      setFocusedDay(value);
-    }
-  }, [setFocusedDay, value]);
-
   const resetSelectedDay = React.useCallback(() => {
     setFocusedDay(undefined);
   }, [setFocusedDay]);
@@ -83,7 +73,6 @@ export function useCalendar({
     setFocusedDay,
     isDayFocused,
     isDayDisabled,
-    focusSelectedDay,
     resetSelectedDay,
   };
 }
