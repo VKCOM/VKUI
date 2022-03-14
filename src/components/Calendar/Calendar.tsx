@@ -71,7 +71,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   changeYearAriaLabel,
   showNeighboringMonth,
   changeDayAriaLabel = "Изменить день",
-  size = "s",
+  size = "m",
   ...props
 }) => {
   const {
