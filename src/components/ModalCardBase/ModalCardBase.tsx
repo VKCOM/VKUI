@@ -128,7 +128,10 @@ export const ModalCardBase = withAdaptivity<
 
           {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}
           {canShowCloseBtnIos && (
-            <PanelHeaderButton vkuiClass="ModalCard__dismiss" onClick={onClose}>
+            <PanelHeaderButton
+              vkuiClass="ModalCardBase__dismiss"
+              onClick={onClose}
+            >
               <Icon24Dismiss />
             </PanelHeaderButton>
           )}
