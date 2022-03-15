@@ -33,7 +33,6 @@ export interface DateInputProps
       | "disablePickers"
       | "changeHoursAriaLabel"
       | "changeMinutesAriaLabel"
-      | "closeAriaLabel"
       | "prevMonthAriaLabel"
       | "nextMonthAriaLabel"
       | "changeMonthAriaLabel"
@@ -108,7 +107,6 @@ export const DateInput: React.FC<DateInputProps> = ({
   disabled,
   onClick,
   onFocus,
-  closeAriaLabel,
   prevMonthAriaLabel,
   nextMonthAriaLabel,
   showNeighboringMonth,
@@ -152,6 +150,11 @@ export const DateInput: React.FC<DateInputProps> = ({
     [enableTime, maxElement, onChange, value]
   );
 
+  const refs = React.useMemo(
+    () => [daysRef, monthsRef, yearsRef, hoursRef, minutesRef],
+    [daysRef, monthsRef, yearsRef, hoursRef, minutesRef]
+  );
+
   const {
     rootRef,
     calendarRef,
@@ -166,7 +169,7 @@ export const DateInput: React.FC<DateInputProps> = ({
     removeFocusFromField,
   } = useDateInput({
     maxElement,
-    refs: [daysRef, monthsRef, yearsRef, hoursRef, minutesRef],
+    refs,
     autoFocus,
     disabled,
     elementsConfig,
@@ -231,7 +234,7 @@ export const DateInput: React.FC<DateInputProps> = ({
         <InputLike
           tabIndex={1}
           length={2}
-          ref={daysRef}
+          getRootRef={daysRef}
           index={0}
           onElementSelect={setFocusedElement}
           value={internalValue[0]}
@@ -240,7 +243,7 @@ export const DateInput: React.FC<DateInputProps> = ({
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
           length={2}
-          ref={monthsRef}
+          getRootRef={monthsRef}
           index={1}
           onElementSelect={setFocusedElement}
           value={internalValue[1]}
@@ -249,7 +252,7 @@ export const DateInput: React.FC<DateInputProps> = ({
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
           length={4}
-          ref={yearsRef}
+          getRootRef={yearsRef}
           index={2}
           onElementSelect={setFocusedElement}
           value={internalValue[2]}
@@ -262,7 +265,7 @@ export const DateInput: React.FC<DateInputProps> = ({
             </InputLikeDivider>
             <InputLike
               length={2}
-              ref={hoursRef}
+              getRootRef={hoursRef}
               index={3}
               onElementSelect={setFocusedElement}
               value={internalValue[3]}
@@ -271,7 +274,7 @@ export const DateInput: React.FC<DateInputProps> = ({
             <InputLikeDivider>:</InputLikeDivider>
             <InputLike
               length={2}
-              ref={minutesRef}
+              getRootRef={minutesRef}
               index={4}
               onElementSelect={setFocusedElement}
               value={internalValue[4]}
@@ -299,7 +302,6 @@ export const DateInput: React.FC<DateInputProps> = ({
             disablePickers={disablePickers}
             changeHoursAriaLabel={changeHoursAriaLabel}
             changeMinutesAriaLabel={changeMinutesAriaLabel}
-            closeAriaLabel={closeAriaLabel}
             prevMonthAriaLabel={prevMonthAriaLabel}
             nextMonthAriaLabel={nextMonthAriaLabel}
             changeMonthAriaLabel={changeMonthAriaLabel}

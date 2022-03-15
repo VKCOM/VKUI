@@ -10,7 +10,6 @@ export interface CalendarTimeProps {
   doneButtonText?: string;
   changeHoursAriaLabel?: string;
   changeMinutesAriaLabel?: string;
-  closeAriaLabel?: string;
   onChange?(value: Date): void;
   onClose?(): void;
 }
@@ -38,7 +37,6 @@ export const CalendarTime: React.FC<CalendarTimeProps> = ({
   onClose,
   changeHoursAriaLabel = "Изменить час",
   changeMinutesAriaLabel = "Изменить минуту",
-  closeAriaLabel = "Закрыть",
 }) => {
   const onHoursChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>
@@ -80,7 +78,7 @@ export const CalendarTime: React.FC<CalendarTimeProps> = ({
           mode="secondary"
           onClick={onClose}
           size="l"
-          aria-label={closeAriaLabel}
+          aria-label={doneButtonText}
         >
           {doneButtonText}
         </Button>

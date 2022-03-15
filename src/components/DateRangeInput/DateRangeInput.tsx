@@ -171,6 +171,25 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
     [onChange, value]
   );
 
+  const refs = React.useMemo(
+    () => [
+      daysStartRef,
+      monthsStartRef,
+      yearsStartRef,
+      daysEndRef,
+      monthsEndRef,
+      yearsEndRef,
+    ],
+    [
+      daysStartRef,
+      monthsStartRef,
+      yearsStartRef,
+      daysEndRef,
+      monthsEndRef,
+      yearsEndRef,
+    ]
+  );
+
   const {
     rootRef,
     calendarRef,
@@ -185,14 +204,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
     removeFocusFromField,
   } = useDateInput({
     maxElement: 5,
-    refs: [
-      daysStartRef,
-      monthsStartRef,
-      yearsStartRef,
-      daysEndRef,
-      monthsEndRef,
-      yearsEndRef,
-    ],
+    refs,
     autoFocus,
     disabled,
     elementsConfig,
@@ -258,7 +270,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
       <span vkuiClass="DateInput__input" onKeyDown={handleKeyDown}>
         <InputLike
           length={2}
-          ref={daysStartRef}
+          getRootRef={daysStartRef}
           index={0}
           onElementSelect={setFocusedElement}
           value={internalValue[0]}
@@ -267,7 +279,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
           length={2}
-          ref={monthsStartRef}
+          getRootRef={monthsStartRef}
           index={1}
           onElementSelect={setFocusedElement}
           value={internalValue[1]}
@@ -276,7 +288,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
           length={4}
-          ref={yearsStartRef}
+          getRootRef={yearsStartRef}
           index={2}
           onElementSelect={setFocusedElement}
           value={internalValue[2]}
@@ -285,7 +297,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
         <InputLikeDivider>{" — "}</InputLikeDivider>
         <InputLike
           length={2}
-          ref={daysEndRef}
+          getRootRef={daysEndRef}
           index={3}
           onElementSelect={setFocusedElement}
           value={internalValue[3]}
@@ -294,7 +306,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
           length={2}
-          ref={monthsEndRef}
+          getRootRef={monthsEndRef}
           index={4}
           onElementSelect={setFocusedElement}
           value={internalValue[4]}
@@ -303,7 +315,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
           length={4}
-          ref={yearsEndRef}
+          getRootRef={yearsEndRef}
           index={5}
           onElementSelect={setFocusedElement}
           value={internalValue[5]}

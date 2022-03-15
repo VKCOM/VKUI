@@ -74,10 +74,7 @@
   border-radius: 8px;
 }
 
-.CalendarDay__hinted--active {
-  background-color: var(--vkui--color_background_secondary--hover);
-}
-
+.CalendarDay__hinted--active,
 .CalendarDay--hover .CalendarDay__inner {
   background-color: var(--vkui--color_background_secondary--hover);
 }

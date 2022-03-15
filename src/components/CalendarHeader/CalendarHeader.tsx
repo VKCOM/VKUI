@@ -15,6 +15,7 @@ import CustomSelectOption from "../CustomSelectOption/CustomSelectOption";
 import { SizeType } from "../../hoc/withAdaptivity";
 import { getMonths, getYears } from "../../lib/calendar";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
+import Text from "../Typography/Text/Text";
 import "./CalendarHeader.css";
 
 export interface CalendarHeaderProps
@@ -100,16 +101,22 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
       <div vkuiClass="CalendarHeader__pickers">
         {disablePickers ? (
           <React.Fragment>
-            <div vkuiClass="CalendarHeader__pickers-placeholder">
+            <Text
+              weight="medium"
+              vkuiClass="CalendarHeader__pickers-placeholder"
+            >
               {new Intl.DateTimeFormat(locale, {
                 month: "long",
               }).format(viewDate)}
-            </div>
-            <div vkuiClass="CalendarHeader__pickers-placeholder">
+            </Text>
+            <Text
+              weight="medium"
+              vkuiClass="CalendarHeader__pickers-placeholder"
+            >
               {new Intl.DateTimeFormat(locale, {
                 year: "numeric",
               }).format(viewDate)}
-            </div>
+            </Text>
           </React.Fragment>
         ) : (
           <React.Fragment>

@@ -71,7 +71,7 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
     >
       <TypographyComponent
         Component="div"
-        weight="regular"
+        weight={selectType === SelectType.Plain ? "semibold" : "regular"}
         vkuiClass={classNames(
           "Select__container",
           `Select__container--${selectType}`

@@ -8,7 +8,6 @@ export const tokenized = [
   "Subhead",
   "HorizontalScroll",
   "Pagination",
-  "Title",
   "Calendar",
   "CalendarRange",
 ];

@@ -51,10 +51,6 @@
   text-align: center;
 }
 
-.Select__container--plain {
-  font-weight: 500;
-}
-
 /**
  * sizeY === 'compact'
  */

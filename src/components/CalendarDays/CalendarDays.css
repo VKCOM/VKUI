@@ -19,13 +19,12 @@
   margin-bottom: 0;
 }
 
-.CalendarDays__row-day-name {
+.CalendarDays__weekday {
   text-transform: capitalize;
   color: var(--vkui--color_text_subhead);
   height: 32px;
   flex-basis: calc(100% / 7);
   flex-grow: 0;
-  font-size: 13px;
   display: flex;
   align-items: center;
   justify-content: center;

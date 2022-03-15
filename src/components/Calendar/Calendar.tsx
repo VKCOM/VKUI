@@ -21,10 +21,7 @@ import "./Calendar.css";
 
 export interface CalendarProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange">,
-    Pick<
-      CalendarTimeProps,
-      "changeHoursAriaLabel" | "changeMinutesAriaLabel" | "closeAriaLabel"
-    >,
+    Pick<CalendarTimeProps, "changeHoursAriaLabel" | "changeMinutesAriaLabel">,
     Pick<
       CalendarHeaderProps,
       | "prevMonthAriaLabel"
@@ -64,7 +61,6 @@ export const Calendar: React.FC<CalendarProps> = ({
   disablePickers,
   changeHoursAriaLabel,
   changeMinutesAriaLabel,
-  closeAriaLabel,
   prevMonthAriaLabel,
   nextMonthAriaLabel,
   changeMonthAriaLabel,
@@ -97,11 +93,13 @@ export const Calendar: React.FC<CalendarProps> = ({
     !disablePickers &&
     size === "s"
   ) {
-    warn("can't enable pickers when size is 's'");
+    warn(
+      "Нельзя включить селекты выбора месяца/года если размер календаря 's'"
+    );
   }
 
   if (process.env.NODE_ENV === "development" && enableTime && size === "s") {
-    warn("can't enable time when size is 's'");
+    warn("Нельзя включить выбор времени если размер календаря 's'");
   }
 
   const handleKeyDown = React.useCallback(
@@ -178,7 +176,6 @@ export const Calendar: React.FC<CalendarProps> = ({
             doneButtonText={doneButtonText}
             changeHoursAriaLabel={changeHoursAriaLabel}
             changeMinutesAriaLabel={changeMinutesAriaLabel}
-            closeAriaLabel={closeAriaLabel}
           />
         </div>
       )}
