@@ -15,6 +15,7 @@ import Text from "../Typography/Text/Text";
 import { VKCOM } from "../../lib/platform";
 import { SelectType } from "../CustomSelect/CustomSelect";
 import "../Select/Select.css";
+import "./SelectMimicry.css";
 
 export interface SelectMimicryProps
   extends React.HTMLAttributes<HTMLElement>,
