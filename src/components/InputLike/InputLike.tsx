@@ -14,6 +14,20 @@ export interface InputLikeProps
   onElementSelect?(index: number): void;
 }
 
+const MASK_SYMBOL = String.fromCharCode(0x2007);
+
+function getMaskElements(length: number) {
+  const result = [];
+  for (let index = 0; index < length; index += 1) {
+    result.push(
+      <span key={index} vkuiClass="InputLike__mask">
+        {MASK_SYMBOL}
+      </span>
+    );
+  }
+  return result;
+}
+
 export const InputLike: React.FC<InputLikeProps> = ({
   value,
   length,
@@ -50,13 +64,7 @@ export const InputLike: React.FC<InputLikeProps> = ({
           {value.slice(length - 1)}
         </span>
       )}
-      {new Array(length - (value?.length ?? 0))
-        .fill(String.fromCharCode(0x2007))
-        .map((value, index) => (
-          <span key={index} vkuiClass="InputLike__mask">
-            {value}
-          </span>
-        ))}
+      {getMaskElements(length - (value?.length ?? 0))}
     </span>
   );
 };
