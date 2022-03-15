@@ -30,7 +30,7 @@ export interface ConfigProviderProps
    */
   scheme?: AppearanceScheme;
   /**
-    Локаль, список -> https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
+    Локаль ([список](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry))
    */
   locale?: string;
 }

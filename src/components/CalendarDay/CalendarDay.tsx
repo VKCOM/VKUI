@@ -19,6 +19,7 @@ export interface CalendarDayProps {
   focused?: boolean;
   hinted?: boolean;
   sameMonth?: boolean;
+  size?: "s" | "m";
   onChange(value: Date): void;
   onEnter?(value: Date): void;
   onLeave?(value: Date): void;
@@ -42,6 +43,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
     hintedSelectionStart,
     hintedSelectionEnd,
     sameMonth,
+    size,
   }) => {
     const locale = React.useContext(LocaleProviderContext);
     const ref = React.useRef<HTMLElement>(null);
@@ -64,7 +66,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
 
     return (
       <Tappable
-        vkuiClass={classNames("CalendarDay", {
+        vkuiClass={classNames("CalendarDay", `CalendarDay--size-${size}`, {
           "CalendarDay--today": today,
           "CalendarDay--selected": selected && !disabled,
           "CalendarDay--active": active && !disabled,
@@ -73,7 +75,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
           "CalendarDay--disabled": disabled,
           "CalendarDay--not-same-month": !sameMonth,
         })}
-        hoverMode="CalendarDay--hover"
+        hoverMode={active ? "CalendarDay--active-hover" : "CalendarDay--hover"}
         hasActive={false}
         onClick={onClick}
         disabled={disabled}

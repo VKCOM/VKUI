@@ -1,8 +1,10 @@
 .Calendar {
+  display: flex;
+  flex-direction: column;
   background: var(--vkui--color_background_modal);
   border: 0.5px solid var(--vkui--color_separator_primary);
   box-sizing: border-box;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.03), 0 2px 2px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--vkui--elevation1);
   border-radius: 8px;
   width: 305px;
   padding: 12px;
@@ -24,18 +26,6 @@
   padding: 8px;
 }
 
-.Calendar--size-s .CalendarDay,
-.Calendar--size-s .CalendarDay__hidden {
-  width: 29px;
-  height: 34px;
-}
-
-.Calendar--size-s .CalendarDays__row-day-name {
-  width: 29px;
-  height: 32px;
-}
-
-.Calendar--size-s .CalendarDays__row:not(:last-child),
 .Calendar--size-s .Calendar__header {
   margin-bottom: 0;
 }

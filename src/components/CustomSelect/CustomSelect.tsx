@@ -711,7 +711,7 @@ class CustomSelect extends React.Component<
             onKeyUp={this.handleKeyUp}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
-            vkuiClass={classNames({
+            vkuiClass={classNames("CustomSelect__SelectComponent", {
               CustomSelect__open: opened,
               "CustomSelect__open--popupDirectionTop": isPopperDirectionTop,
               "CustomSelect__open--not-adjacent":

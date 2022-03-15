@@ -167,6 +167,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         isDayDisabled={isDayDisabled}
         onBlur={resetSelectedDay}
         showNeighboringMonth={showNeighboringMonth}
+        size={size}
       />
       {enableTime && value && size !== "s" && (
         <div vkuiClass="Calendar__time">

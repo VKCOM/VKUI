@@ -1,18 +1,30 @@
+.CalendarDays {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex-grow: 1;
+}
+
 .CalendarDays__row {
   display: flex;
   justify-content: center;
+  flex-grow: 1;
 }
 
 .CalendarDays__row:not(:last-child) {
   margin-bottom: 4px;
 }
 
+.CalendarDays__row--size-s:not(:last-child) {
+  margin-bottom: 0;
+}
+
 .CalendarDays__row-day-name {
   text-transform: capitalize;
   color: var(--vkui--color_text_subhead);
-  width: 40px;
   height: 32px;
-  flex-shrink: 0;
+  flex-basis: calc(100% / 7);
+  flex-grow: 0;
   font-size: 13px;
   display: flex;
   align-items: center;

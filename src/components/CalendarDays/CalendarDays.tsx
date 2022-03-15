@@ -3,6 +3,7 @@ import { isSameDay, isSameMonth } from "date-fns";
 import { CalendarDay } from "../CalendarDay/CalendarDay";
 import { getDaysNames, getWeeks } from "../../lib/calendar";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
+import { classNames } from "../../lib/classNames";
 import "./CalendarDays.css";
 
 export interface CalendarDaysProps
@@ -11,6 +12,7 @@ export interface CalendarDaysProps
   viewDate: Date;
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   showNeighboringMonth?: boolean;
+  size?: "s" | "m";
   onDayChange(value: Date): void;
   isDayDisabled(value: Date): boolean;
   isDaySelectionStart(value: Date, dayOfWeek: number): boolean;
@@ -41,6 +43,7 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
   isHintedDaySelectionEnd,
   isDayFocused,
   isDayDisabled,
+  size,
   showNeighboringMonth = false,
   ...props
 }) => {
@@ -69,7 +72,12 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
 
   return (
     <div {...props} vkuiClass="CalendarDays" ref={ref}>
-      <div vkuiClass="CalendarDays__row">
+      <div
+        vkuiClass={classNames(
+          "CalendarDays__row",
+          `CalendarDays__row--size-${size}`
+        )}
+      >
         {daysNames.map((dayName) => (
           <div vkuiClass="CalendarDays__row-day-name" key={dayName}>
             {dayName}
@@ -78,7 +86,13 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
       </div>
 
       {weeks.map((week, i) => (
-        <div vkuiClass="CalendarDays__row" key={i}>
+        <div
+          vkuiClass={classNames(
+            "CalendarDays__row",
+            `CalendarDays__row--size-${size}`
+          )}
+          key={i}
+        >
           {week.map((day, i) => {
             const sameMonth = isSameMonth(day, viewDate);
             return (
@@ -100,6 +114,7 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
                 onLeave={onDayLeave}
                 hinted={isDayHinted?.(day)}
                 sameMonth={sameMonth}
+                size={size}
               />
             );
           })}
