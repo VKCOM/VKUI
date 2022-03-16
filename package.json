@@ -211,6 +211,7 @@
     "@babel/runtime": "^7.14.6",
     "@popperjs/core": "^2.9.2",
     "@vkontakte/vkjs": "^0.22.2",
+    "date-fns": "^2.28.0",
     "mitt": "^3.0.0",
     "react-popper": "^2.2.5"
   }

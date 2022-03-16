@@ -1,0 +1,10 @@
+.Select--mimicry-plain {
+  padding: 8px 8px 8px 0;
+  text-transform: capitalize;
+  border-radius: 8px;
+}
+
+.Select--mimicry-plain .FormField__border {
+  background-color: transparent;
+  border: none;
+}

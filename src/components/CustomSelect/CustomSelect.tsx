@@ -62,6 +62,11 @@ const checkOptionsValueType = (options: CustomSelectOptionInterface[]) => {
 
 type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>["value"];
 
+export enum SelectType {
+  Default = "default",
+  Plain = "plain",
+}
+
 export interface CustomSelectOptionInterface {
   value: SelectValue;
   label: string;
@@ -135,6 +140,11 @@ export interface CustomSelectProps
   fetching?: boolean;
   onClose?: VoidFunction;
   onOpen?: VoidFunction;
+  icon?: React.ReactNode;
+  dropdownOffsetDistance?: number;
+  fixDropdownWidth?: boolean;
+  forceDropdownPortal?: boolean;
+  selectType?: SelectType;
 }
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
@@ -151,6 +161,10 @@ class CustomSelect extends React.Component<
     options: [],
     emptyText: "Ничего не найдено",
     filterFn: defaultFilterFn,
+    icon: <DropdownIcon />,
+    dropdownOffsetDistance: 0,
+    fixDropdownWidth: true,
+    selectType: SelectType.Default,
   };
 
   public constructor(props: CustomSelectProps) {
@@ -631,6 +645,10 @@ class CustomSelect extends React.Component<
       onOpen,
       onClose,
       fetching,
+      icon,
+      dropdownOffsetDistance,
+      fixDropdownWidth,
+      forceDropdownPortal,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
@@ -671,6 +689,8 @@ class CustomSelect extends React.Component<
             vkuiClass={classNames({
               CustomSelect__open: opened,
               "CustomSelect__open--popupDirectionTop": isPopperDirectionTop,
+              "CustomSelect__open--not-adjacent":
+                (dropdownOffsetDistance as number) > 0,
             })}
             value={this.state.inputValue}
             onKeyDown={this.onInputKeyDown}
@@ -679,7 +699,7 @@ class CustomSelect extends React.Component<
             // TODO Нужно перестать пытаться превратить CustomSelect в select. Тогда эта проблема уйдёт.
             // @ts-ignore
             onClick={onClick}
-            after={<DropdownIcon />}
+            after={icon}
             placeholder={restProps.placeholder}
           />
         ) : (
@@ -694,7 +714,10 @@ class CustomSelect extends React.Component<
             vkuiClass={classNames({
               CustomSelect__open: opened,
               "CustomSelect__open--popupDirectionTop": isPopperDirectionTop,
+              "CustomSelect__open--not-adjacent":
+                (dropdownOffsetDistance as number) > 0,
             })}
+            after={icon}
           >
             {label}
           </SelectMimicry>
@@ -722,6 +745,9 @@ class CustomSelect extends React.Component<
             onPlacementChange={this.onPlacementChange}
             onMouseLeave={this.resetFocusedOption}
             fetching={fetching}
+            offsetDistance={dropdownOffsetDistance}
+            sameWidth={fixDropdownWidth}
+            forcePortal={forceDropdownPortal}
           >
             {resolvedContent}
           </CustomSelectDropdown>

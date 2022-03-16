@@ -225,6 +225,10 @@ export type {
   SegmentedControlOptionInterface,
   SegmentedControlValue,
 } from "./components/SegmentedControl/SegmentedControl";
+export { Calendar } from "./components/Calendar/Calendar";
+export { CalendarRange } from "./components/CalendarRange/CalendarRange";
+export { DateInput } from "./components/DateInput/DateInput";
+export { DateRangeInput } from "./components/DateRangeInput/DateRangeInput";
 
 /**
  * Helpers
@@ -258,6 +262,7 @@ export {
 } from "./components/ConfigProvider/ConfigProviderContext";
 export { AppearanceProvider } from "./components/AppearanceProvider/AppearanceProvider";
 export { Scheme, Appearance } from "./helpers/scheme";
+export { LocaleProviderContext } from "./components/LocaleProviderContext/LocaleProviderContext";
 
 /**
  * Advertisement

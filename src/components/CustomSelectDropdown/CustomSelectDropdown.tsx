@@ -11,8 +11,11 @@ export interface CustomSelectDropdownProps
     HasRef<HTMLDivElement> {
   targetRef: React.RefObject<HTMLElement>;
   placement?: Placement;
-  scrollBoxRef: React.Ref<HTMLDivElement>;
+  scrollBoxRef?: React.Ref<HTMLDivElement>;
   fetching?: boolean;
+  offsetDistance?: number;
+  sameWidth?: boolean;
+  forcePortal?: boolean;
   onPlacementChange?: (placement?: Placement) => void;
 }
 
@@ -25,6 +28,9 @@ export const CustomSelectDropdown: React.FC<CustomSelectDropdownProps> = ({
   placement,
   fetching,
   onPlacementChange: parentOnPlacementChange,
+  offsetDistance = 0,
+  sameWidth = true,
+  forcePortal = true,
   ...restProps
 }) => {
   const [isTop, setIsTop] = React.useState(() => calcIsTop(placement));
@@ -40,13 +46,16 @@ export const CustomSelectDropdown: React.FC<CustomSelectDropdownProps> = ({
   return (
     <Popper
       targetRef={targetRef}
-      offsetDistance={0}
-      sameWidth
+      offsetDistance={offsetDistance}
+      sameWidth={sameWidth}
       onPlacementChange={onPlacementChange}
       placement={placement}
       vkuiClass={classNames("CustomSelectDropdown__options", {
         "CustomSelectDropdown__options--popupDirectionTop": isTop,
+        "CustomSelectDropdown__options--not-adjacent": offsetDistance > 0,
+        "CustomSelectDropdown__options--same-width": sameWidth,
       })}
+      forcePortal={forcePortal}
       {...restProps}
     >
       <CustomScrollView
