@@ -62,10 +62,12 @@ const Caption: React.FC<CaptionProps> = ({
   return (
     <Component
       {...restProps}
-      vkuiClass={classNames("Caption", `Caption--l-${level}`, {
-        "Caption--caps": caps,
-        [`Caption--w-${weight}`]: !!weight,
-      })}
+      vkuiClass={classNames(
+        "Caption",
+        `Caption--l-${level}`,
+        caps && "Caption--caps",
+        weight && `Caption--w-${weight}`
+      )}
     >
       {children}
     </Component>
