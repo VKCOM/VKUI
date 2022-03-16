@@ -196,6 +196,7 @@ const baseConfig = {
           name: "Blocks",
           components: () => [
             "../src/components/Badge/Badge.tsx",
+            "../src/components/ButtonGroup/ButtonGroup.tsx",
             "../src/components/Button/Button.tsx",
             "../src/components/CellButton/CellButton.tsx",
             "../src/components/IconButton/IconButton.tsx",
@@ -239,6 +240,7 @@ const baseConfig = {
             "../src/components/SubnavigationBar/SubnavigationBar.tsx",
             "../src/components/SubnavigationButton/SubnavigationButton.tsx",
             "../src/components/ModalCardBase/ModalCardBase.tsx",
+            "../src/components/Pagination/Pagination.tsx",
           ],
         },
         {

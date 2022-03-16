@@ -1,4 +1,5 @@
 export const tokenized = [
+  "ButtonGroup",
   "Button",
   "Card",
   "CardScroll",
@@ -6,6 +7,7 @@ export const tokenized = [
   "Title",
   "Subhead",
   "HorizontalScroll",
+  "Pagination",
   "Footnote",
   "Caption",
 ];

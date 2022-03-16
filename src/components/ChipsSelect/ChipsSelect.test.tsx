@@ -1,6 +1,6 @@
 import { baselineComponent } from "../../testing/utils";
 import { fireEvent, render, screen, queryByText } from "@testing-library/react";
-import ChipsSelect, { ChipsSelectProps } from "./ChipsSelect";
+import { ChipsSelect, ChipsSelectProps } from "./ChipsSelect";
 import userEvent from "@testing-library/user-event";
 import { ChipsInputOption } from "../ChipsInput/ChipsInput";
 

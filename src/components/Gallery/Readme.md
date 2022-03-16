@@ -55,7 +55,7 @@ const [showArrows, setShowArrows] = useState(true);
         <div style={{ backgroundColor: "var(--accent)" }} />
       </Gallery>
     </Group>
-    <Group header={<Header mode="secondary">Controled</Header>}>
+    <Group header={<Header mode="secondary">Controlled</Header>}>
       <Gallery
         slideWidth="90%"
         align="center"

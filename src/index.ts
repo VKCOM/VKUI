@@ -76,6 +76,8 @@ export type { ModalDismissButtonProps } from "./components/ModalDismissButton/Mo
  */
 export { Badge } from "./components/Badge/Badge";
 export type { BadgeProps } from "./components/Badge/Badge";
+export { ButtonGroup } from "./components/ButtonGroup/ButtonGroup";
+export type { ButtonGroupProps } from "./components/ButtonGroup/ButtonGroup";
 export { default as Button } from "./components/Button/Button";
 export type { ButtonProps } from "./components/Button/Button";
 export { default as IconButton } from "./components/IconButton/IconButton";
@@ -156,6 +158,8 @@ export { SubnavigationBar } from "./components/SubnavigationBar/SubnavigationBar
 export type { SubnavigationBarProps } from "./components/SubnavigationBar/SubnavigationBar";
 export { SubnavigationButton } from "./components/SubnavigationButton/SubnavigationButton";
 export type { SubnavigationButtonProps } from "./components/SubnavigationButton/SubnavigationButton";
+export { Pagination } from "./components/Pagination/Pagination";
+export type { PaginationProps } from "./components/Pagination/Pagination";
 
 /**
  * Forms
@@ -225,7 +229,7 @@ export type {
 /**
  * Helpers
  */
-export { default as Div } from "./components/Div/Div";
+export { Div } from "./components/Div/Div";
 export type { DivProps } from "./components/Div/Div";
 export { default as Tappable } from "./components/Tappable/Tappable";
 export type { TappableProps } from "./components/Tappable/Tappable";
@@ -291,6 +295,7 @@ export { useInsets } from "./hooks/useInsets";
 export { usePlatform } from "./hooks/usePlatform";
 export { useAdaptivity } from "./hooks/useAdaptivity";
 export { useAppearance } from "./hooks/useAppearance";
+export { usePagination } from "./hooks/usePagination";
 
 /**
  * Utils

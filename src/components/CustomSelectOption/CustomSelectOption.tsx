@@ -74,7 +74,7 @@ const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
       </div>
       <div vkuiClass="CustomSelectOption__after">
         {hasReactNode(after) && (
-          <div className="CustomSelectOption__afterIn">{after}</div>
+          <div vkuiClass="CustomSelectOption__afterIn">{after}</div>
         )}
         {selected && (
           <Icon16Done vkuiClass="CustomSelectOption__selectedIcon" />
