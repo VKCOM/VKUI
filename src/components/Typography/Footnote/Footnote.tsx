@@ -20,10 +20,11 @@ export const Footnote: React.FC<FootnoteProps> = ({
   return (
     <Component
       {...restProps}
-      vkuiClass={classNames("Footnote", {
-        "Footnote--caps": caps,
-        [`Footnote--w-${weight}`]: !!weight,
-      })}
+      vkuiClass={classNames(
+        "Footnote",
+        caps && "Footnote--caps",
+        weight && `Footnote--w-${weight}`
+      )}
     >
       {children}
     </Component>
