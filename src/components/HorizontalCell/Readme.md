@@ -183,7 +183,11 @@ const HorizontalCellExample = withPlatform(
           <Panel id="horizontalCell">
             <PanelHeader>HorizontalCell</PanelHeader>
             <Group header={<Header>Возможные друзья</Header>}>
-              <HorizontalScroll>
+              <HorizontalScroll
+                showArrows
+                getScrollToLeft={(i) => i - 80 * 3}
+                getScrollToRight={(i) => i + 80 * 3}
+              >
                 <div style={{ display: "flex" }}>{this.state.userItems}</div>
               </HorizontalScroll>
             </Group>
@@ -194,14 +198,22 @@ const HorizontalCellExample = withPlatform(
                 </Header>
               }
             >
-              <HorizontalScroll>
+              <HorizontalScroll
+                showArrows
+                getScrollToLeft={(i) => i - 80 * 3}
+                getScrollToRight={(i) => i + 80 * 3}
+              >
                 <div style={{ display: "flex" }}>{this.state.miniAppItems}</div>
               </HorizontalScroll>
             </Group>
             <Group
               header={<Header aside={<Link>Показать все</Link>}>Игры</Header>}
             >
-              <HorizontalScroll>
+              <HorizontalScroll
+                showArrows
+                getScrollToLeft={(i) => i - 100 * 2}
+                getScrollToRight={(i) => i + 100 * 2}
+              >
                 <div style={{ display: "flex" }}>{this.state.gamesItems}</div>
               </HorizontalScroll>
             </Group>
@@ -210,7 +222,11 @@ const HorizontalCellExample = withPlatform(
                 <Header aside={<Link>Показать все</Link>}>Плейлисты</Header>
               }
             >
-              <HorizontalScroll>
+              <HorizontalScroll
+                showArrows
+                getScrollToLeft={(i) => i - 140}
+                getScrollToRight={(i) => i + 140}
+              >
                 <div style={{ display: "flex" }}>
                   {this.state.playlistsItems}
                 </div>
@@ -221,7 +237,11 @@ const HorizontalCellExample = withPlatform(
                 <Header aside={<Link>Показать все</Link>}>Альбомы</Header>
               }
             >
-              <HorizontalScroll>
+              <HorizontalScroll
+                showArrows
+                getScrollToLeft={(i) => i - 234}
+                getScrollToRight={(i) => i + 234}
+              >
                 <div style={{ display: "flex" }}>{this.state.albumItems}</div>
               </HorizontalScroll>
             </Group>
