@@ -22,7 +22,7 @@
 }
 
 .CalendarDay--selected {
-  background-color: var(--vkui--color_background_secondary_alpha);
+  background-color: var(--vkui--color_background_secondary);
 }
 
 .CalendarDay--selection-start.CalendarDay--selected,
@@ -75,8 +75,8 @@
 }
 
 .CalendarDay__hinted--active,
-.CalendarDay--hover .CalendarDay__inner {
-  background-color: var(--vkui--color_background_secondary--hover);
+.CalendarDay--hover :not(.CalendarDay__hinted--active) .CalendarDay__inner {
+  background-color: var(--vkui--color_background_secondary_alpha--hover);
 }
 
 .CalendarDay__inner--active {
