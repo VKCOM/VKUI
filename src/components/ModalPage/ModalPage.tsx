@@ -6,7 +6,7 @@ import {
   useModalRegistry,
 } from "../ModalRoot/ModalRootContext";
 import { usePlatform } from "../../hooks/usePlatform";
-import { useIsomorphicOrientationChange } from "../../hooks/useOrientationChange";
+import { useOrientationChange } from "../../hooks/useOrientationChange";
 import {
   withAdaptivity,
   ViewHeight,
@@ -65,7 +65,7 @@ const ModalPage: React.FC<ModalPageProps & AdaptivityContextInterface> = (
   } = props;
 
   const platform = usePlatform();
-  const orientation = useIsomorphicOrientationChange();
+  const orientation = useOrientationChange();
 
   React.useEffect(updateModalHeight, [
     children,

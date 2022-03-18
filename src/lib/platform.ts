@@ -24,7 +24,7 @@ export function platform(browserInfo?: BrowserInfo): PlatformType {
   return browserInfo.system === "ios" ? IOS : ANDROID;
 }
 
-export const platformName = platform();
+const platformName = platform();
 
 /**
  * @deprecated для определения платформы используйте withPlatform или usePlatform
