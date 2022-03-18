@@ -30,12 +30,9 @@ export function useOrientationChange(): Orientation {
     getOrientation(window)
   );
 
-  const handleOrientationChange = React.useCallback(
-    () => setOrientation(getOrientation(window)),
-    [window]
+  useGlobalEventListener(window, "orientationchange", () =>
+    setOrientation(getOrientation(window))
   );
-
-  useGlobalEventListener(window, "orientationchange", handleOrientationChange);
 
   return orientation;
 }
