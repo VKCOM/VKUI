@@ -209,7 +209,7 @@ export const Touch: React.FC<TouchProps> = ({
     if (touchEnabled()) {
       onLeave && onLeave(e);
     }
-    subscribe(null);
+    unsubscribe();
   }
 
   const listenerParams = { capture: useCapture, passive: false };
@@ -222,6 +222,9 @@ export const Touch: React.FC<TouchProps> = ({
     if (el) {
       listeners.forEach((l) => l.add(el));
     }
+  }
+  function unsubscribe() {
+    listeners.forEach((l) => l.remove());
   }
 
   /**
