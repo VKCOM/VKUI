@@ -5,7 +5,7 @@ import { useGlobalEventListener } from "./useGlobalEventListener";
 type Orientation = "portrait" | "landscape";
 
 /**
- * Возвращает текущую ориентация экрана на человеском языке.
+ * Возвращает текущую ориентация экрана на человеческом языке.
  * Учитывает особенности API на разных платформах.
  */
 function getOrientation(window: Window | undefined): Orientation {
@@ -21,7 +21,8 @@ function getOrientation(window: Window | undefined): Orientation {
 }
 
 /**
- * Возвращает текущую ориентация экрана. Обновляется при её изменение.
+ * Возвращает текущую ориентация экрана на человеческом языке.
+ * Обновляется при изменении ориентации.
  */
 export function useOrientationChange(): Orientation {
   const { window } = useDOM();
