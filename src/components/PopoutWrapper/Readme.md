@@ -9,4 +9,4 @@ import { PopoutWrapper } from "@vkontakte/vkui";
 </PopoutWrapper>;
 ```
 
-Все всплывающие окна передаются в свойство `popout` компонентов `View` или `Root`.
+Все всплывающие окна передаются в свойство `popout` компонента [`SplitLayout`](#/SplitLayout).
