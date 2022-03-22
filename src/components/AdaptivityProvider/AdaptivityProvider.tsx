@@ -1,5 +1,5 @@
 import * as React from "react";
-import { hasMouse as _hasMouse, hasHover as _hasHover } from "@vkontakte/vkjs";
+import { hasHover as _hasHover, hasMouse as _hasMouse } from "@vkontakte/vkjs";
 import {
   AdaptivityContext,
   AdaptivityProps,
@@ -7,132 +7,178 @@ import {
   ViewHeight,
   ViewWidth,
 } from "./AdaptivityContext";
+import { mediaQueryNull } from "../../lib/browser";
 import { useDOM } from "../../lib/dom";
+import {
+  MQ_DESKTOP_ONLY,
+  MQ_TABLET_ONLY,
+  MQ_SMALL_TABLET_ONLY,
+  MQ_MOBILE_ONLY,
+  MQ_MEDIUM_HEIGHT,
+  MQ_MOBILE_LANDSCAPE_HEIGHT,
+} from "./constants";
 
-export const DESKTOP_SIZE = 1280;
-export const TABLET_SIZE = 1024;
-export const SMALL_TABLET_SIZE = 768;
-export const MOBILE_SIZE = 320;
+export {
+  DESKTOP_SIZE,
+  TABLET_SIZE,
+  SMALL_TABLET_SIZE,
+  MOBILE_SIZE,
+  MOBILE_LANDSCAPE_HEIGHT,
+  MEDIUM_HEIGHT,
+} from "./constants";
 
-export const MOBILE_LANDSCAPE_HEIGHT = 414;
-export const MEDIUM_HEIGHT = 720;
+type MediaQuaries = Record<
+  | "desktopOnly"
+  | "tabletOnly"
+  | "smallTabletOnly"
+  | "mobileOnly"
+  | "mediumHeight"
+  | "mobileLandscapeHeight",
+  MediaQueryList
+>;
 
-const AdaptivityProvider: React.FC<AdaptivityProps> = (props) => {
-  const adaptivityRef = React.useRef<ReturnType<
-    typeof calculateAdaptivity
-  > | null>(null);
-  const [, updateAdaptivity] = React.useState({});
-
+const AdaptivityProvider: React.FC<AdaptivityProps> = ({
+  viewWidth: viewWidthProp,
+  viewHeight: viewHeightProp,
+  sizeX: sizeXProp,
+  sizeY: sizeYProp,
+  hasMouse: hasMouseProp,
+  deviceHasHover: deviceHasHoverProp,
+  children,
+}) => {
   const { window } = useDOM();
 
-  if (!adaptivityRef.current) {
-    adaptivityRef.current = calculateAdaptivity(
-      window ? window.innerWidth : 0,
-      window ? window.innerHeight : 0,
-      props
-    );
-  }
+  const mqs = React.useMemo(() => {
+    const matchMedia = window ? window.matchMedia.bind(window) : mediaQueryNull;
+    return {
+      desktopOnly: matchMedia(MQ_DESKTOP_ONLY),
+      tabletOnly: matchMedia(MQ_TABLET_ONLY),
+      smallTabletOnly: matchMedia(MQ_SMALL_TABLET_ONLY),
+      mobileOnly: matchMedia(MQ_MOBILE_ONLY),
+      mediumHeight: matchMedia(MQ_MEDIUM_HEIGHT),
+      mobileLandscapeHeight: matchMedia(MQ_MOBILE_LANDSCAPE_HEIGHT),
+    };
+  }, [window]);
 
-  React.useEffect(() => {
-    function onResize() {
-      if (adaptivityRef.current === null) {
-        return;
-      }
-      const calculated = calculateAdaptivity(
-        window!.innerWidth,
-        window!.innerHeight,
-        props
-      );
-      const { viewWidth, viewHeight, sizeX, sizeY, hasMouse, deviceHasHover } =
-        adaptivityRef.current;
+  const [viewWidthLocal, setViewWidthLocal] = React.useState(
+    viewWidthProp ?? getViewWidth(mqs)
+  );
+  const [viewHeightLocal, setViewHeightLocal] = React.useState(
+    viewHeightProp ?? getViewHeight(mqs)
+  );
 
-      if (
-        viewWidth !== calculated.viewWidth ||
-        viewHeight !== calculated.viewHeight ||
-        sizeX !== calculated.sizeX ||
-        sizeY !== calculated.sizeY ||
-        hasMouse !== calculated.hasMouse ||
-        deviceHasHover !== calculated.deviceHasHover
-      ) {
-        adaptivityRef.current = calculated;
-        updateAdaptivity({});
-      }
-    }
+  const adaptivity = React.useMemo(() => {
+    const hasMouse = hasMouseProp ?? _hasMouse;
+    const deviceHasHover = deviceHasHoverProp ?? _hasHover;
+    const viewWidth = viewWidthProp ?? viewWidthLocal;
+    const viewHeight = viewHeightProp ?? viewHeightLocal;
+    const sizeX = sizeXProp ?? getSizeX(viewWidth);
+    const sizeY = sizeYProp ?? getSizeY(viewWidth, viewHeight, hasMouse);
 
-    onResize();
-    window!.addEventListener("resize", onResize, false);
-
-    return () => {
-      window!.removeEventListener("resize", onResize, false);
+    return {
+      viewWidth,
+      viewHeight,
+      sizeX,
+      sizeY,
+      hasMouse,
+      deviceHasHover,
     };
   }, [
-    props.viewWidth,
-    props.viewHeight,
-    props.sizeX,
-    props.sizeY,
-    props.hasMouse,
-    props.deviceHasHover,
-    window,
-    props,
+    viewWidthLocal,
+    viewHeightLocal,
+    viewWidthProp,
+    viewHeightProp,
+    sizeXProp,
+    sizeYProp,
+    hasMouseProp,
+    deviceHasHoverProp,
   ]);
 
+  React.useEffect(() => {
+    if (!viewWidthProp) {
+      mqs.desktopOnly.onchange = ({ matches }) =>
+        matches ? setViewWidthLocal(ViewWidth.DESKTOP) : void 0;
+      mqs.tabletOnly.onchange = ({ matches }) =>
+        matches ? setViewWidthLocal(ViewWidth.TABLET) : void 0;
+      mqs.smallTabletOnly.onchange = ({ matches }) =>
+        matches ? setViewWidthLocal(ViewWidth.SMALL_TABLET) : void 0;
+      mqs.mobileOnly.onchange = ({ matches }) =>
+        matches
+          ? setViewWidthLocal(ViewWidth.MOBILE)
+          : setViewWidthLocal(getViewWidth(mqs)); // <- безопасно сбрасываем до значения по умолчанию
+    }
+
+    if (!viewHeightProp) {
+      mqs.mediumHeight.onchange = ({ matches }) =>
+        matches
+          ? setViewHeightLocal(ViewHeight.MEDIUM)
+          : setViewHeightLocal(getViewHeight(mqs)); // <- безопасно сбрасываем до значения по умолчанию
+      mqs.mobileLandscapeHeight.onchange = ({ matches }) =>
+        matches
+          ? setViewHeightLocal(ViewHeight.SMALL)
+          : setViewHeightLocal(getViewHeight(mqs)); // <- безопасно сбрасываем до значения по умолчанию
+    }
+
+    return () => {
+      mqs.desktopOnly.onchange = null;
+      mqs.tabletOnly.onchange = null;
+      mqs.smallTabletOnly.onchange = null;
+      mqs.mobileOnly.onchange = null;
+      mqs.mediumHeight.onchange = null;
+      mqs.mobileLandscapeHeight.onchange = null;
+    };
+  }, [mqs, viewWidthProp, viewHeightProp]);
   return (
-    <AdaptivityContext.Provider value={adaptivityRef.current}>
-      {props.children}
+    <AdaptivityContext.Provider value={adaptivity}>
+      {children}
     </AdaptivityContext.Provider>
   );
 };
 
-function calculateAdaptivity(
-  windowWidth: number,
-  windowHeight: number,
-  props: AdaptivityProps
+export { AdaptivityProvider };
+
+/* eslint-disable no-restricted-properties */
+function getViewWidth(mqs: MediaQuaries) {
+  if (mqs.desktopOnly.matches) {
+    return ViewWidth.DESKTOP;
+  }
+  if (mqs.tabletOnly.matches) {
+    return ViewWidth.TABLET;
+  }
+  if (mqs.smallTabletOnly.matches) {
+    return ViewWidth.SMALL_TABLET;
+  }
+  if (mqs.mobileOnly.matches) {
+    return ViewWidth.MOBILE;
+  }
+  return ViewWidth.SMALL_MOBILE;
+}
+
+function getViewHeight(mqs: MediaQuaries) {
+  if (mqs.mediumHeight.matches) {
+    return ViewHeight.MEDIUM;
+  }
+  if (mqs.mobileLandscapeHeight.matches) {
+    return ViewHeight.SMALL;
+  }
+  return ViewHeight.EXTRA_SMALL;
+}
+/* eslint-enable no-restricted-properties */
+
+function getSizeX(viewWidth: ViewWidth) {
+  return viewWidth <= ViewWidth.MOBILE ? SizeType.COMPACT : SizeType.REGULAR;
+}
+
+function getSizeY(
+  viewWidth: ViewWidth,
+  viewHeight: ViewHeight,
+  hasMouse: boolean
 ) {
-  let viewWidth = ViewWidth.SMALL_MOBILE;
-  let viewHeight = ViewHeight.SMALL;
-  let sizeY = SizeType.REGULAR;
-  let sizeX = SizeType.REGULAR;
-  let hasMouse = props.hasMouse ?? _hasMouse;
-  let deviceHasHover = props.deviceHasHover ?? _hasHover;
-
-  if (windowWidth >= DESKTOP_SIZE) {
-    viewWidth = ViewWidth.DESKTOP;
-  } else if (windowWidth >= TABLET_SIZE) {
-    viewWidth = ViewWidth.TABLET;
-  } else if (windowWidth >= SMALL_TABLET_SIZE) {
-    viewWidth = ViewWidth.SMALL_TABLET;
-  } else if (windowWidth >= MOBILE_SIZE) {
-    viewWidth = ViewWidth.MOBILE;
-  } else {
-    viewWidth = ViewWidth.SMALL_MOBILE;
-  }
-
-  if (windowHeight >= MEDIUM_HEIGHT) {
-    viewHeight = ViewHeight.MEDIUM;
-  } else if (windowHeight > MOBILE_LANDSCAPE_HEIGHT) {
-    viewHeight = ViewHeight.SMALL;
-  } else {
-    viewHeight = ViewHeight.EXTRA_SMALL;
-  }
-
-  props.viewWidth && (viewWidth = props.viewWidth);
-  props.viewHeight && (viewHeight = props.viewHeight);
-
-  if (viewWidth <= ViewWidth.MOBILE) {
-    sizeX = SizeType.COMPACT;
-  }
-
   if (
     (viewWidth >= ViewWidth.SMALL_TABLET && hasMouse) ||
     viewHeight <= ViewHeight.EXTRA_SMALL
   ) {
-    sizeY = SizeType.COMPACT;
+    return SizeType.COMPACT;
   }
-
-  props.sizeX && (sizeX = props.sizeX);
-  props.sizeY && (sizeY = props.sizeY);
-
-  return { viewWidth, viewHeight, sizeX, sizeY, hasMouse, deviceHasHover };
+  return SizeType.REGULAR;
 }
-
-export { AdaptivityProvider };

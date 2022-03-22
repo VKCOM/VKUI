@@ -42,3 +42,31 @@ export function computeBrowserInfo(userAgent = ""): BrowserInfo {
 
   return browserInfo;
 }
+
+/**
+ * Эмулярием функцию `window.matchMedia` для SSR.
+ */
+export function mediaQueryNull(query: string): MediaQueryList {
+  return {
+    matches: false,
+    media: query,
+    onchange() {
+      return void 0;
+    },
+    addListener() {
+      return void 0;
+    },
+    removeListener() {
+      return void 0;
+    },
+    addEventListener() {
+      return void 0;
+    },
+    removeEventListener() {
+      return void 0;
+    },
+    dispatchEvent() {
+      return false;
+    },
+  };
+}
