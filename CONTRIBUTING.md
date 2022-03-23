@@ -57,7 +57,7 @@ const Cmp: React.FC<CmpProps> = ({
 }) => <div vkuiClass={classNames("Cmp", `Cmp--${mode}`)} {...restProps} />;
 ```
 
-- Для цветов используются цветовые токены
+- Для цветов используются цветовые токены. Старые компоненты поддерживают [Appearance](https://github.com/VKCOM/Appearance) и [vkui-tokens](https://github.com/VKCOM/vkui-tokens), новые — только vkui-tokens. [Гайд по миграции](https://github.com/VKCOM/VKUI/blob/master/VKUI_TOKENS_MIGRATION_GUIDE.md)
 - Для типографии используются компоненты [Typography](https://vkcom.github.io/VKUI/#!/Typography) там, где это возможно
 - Добавлен `export` компонента и его свойств в `src/index.ts`
 - Компонент покрыт юнит- и скриншотными тестами. [Гайд по тестированию](./TESTING.md)
