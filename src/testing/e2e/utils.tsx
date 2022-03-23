@@ -156,11 +156,11 @@ export function describeScreenshotFuzz<Props>(
   platforms.forEach((platform) => {
     describe(platform, () => {
       const isVKCOM = platform === Platform.VKCOM;
-      const width: number | "auto" = adaptivity.viewWidth
-        ? getAdaptivePxWidth(adaptivity.viewWidth)
-        : isVKCOM
-        ? "auto"
-        : 320;
+
+      let width: ViewWidth | "auto" = isVKCOM ? "auto" : MOBILE_SIZE;
+      if (adaptivity.viewWidth) {
+        width = getAdaptivePxWidth(adaptivity.viewWidth);
+      }
 
       const adaptivityProps: AdaptivityProps = Object.assign(
         isVKCOM ? { sizeX: SizeType.COMPACT, sizeY: SizeType.COMPACT } : {},
@@ -184,6 +184,7 @@ export function describeScreenshotFuzz<Props>(
                   <div
                     style={{
                       width,
+                      maxWidth: DESKTOP_SIZE,
                       position: "absolute",
                       height: "auto",
                     }}
