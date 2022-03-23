@@ -173,8 +173,7 @@ export function describeScreenshotFuzz<Props>(
       });
 
       (isVKCOM ? vkcomSchemes : mobileSchemes).forEach((scheme: Scheme) => {
-        scheme = scheme === Scheme.VKCOM_LIGHT ? Scheme.VKCOM : scheme; // Снести после мержа 1978
-        it(`${scheme}${
+        it(`light${
           adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ""
         }`, async () => {
           expect(
