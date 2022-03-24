@@ -31,6 +31,3 @@ export type { PaginationProps } from "../components/Pagination/Pagination";
 
 export { default as Caption } from "../components/Typography/Caption/Caption";
 export type { CaptionProps } from "../components/Typography/Caption/Caption";
-
-export { Footnote } from "../components/Typography/Footnote/Footnote";
-export type { FootnoteProps } from "../components/Typography/Footnote/Footnote";
