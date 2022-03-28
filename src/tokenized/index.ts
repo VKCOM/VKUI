@@ -29,5 +29,11 @@ export type { SubheadProps } from "../components/Typography/Subhead/Subhead";
 export { Pagination } from "../components/Pagination/Pagination";
 export type { PaginationProps } from "../components/Pagination/Pagination";
 
+export { Calendar } from "../components/Calendar/Calendar";
+export type { CalendarProps } from "../components/Calendar/Calendar";
+
+export { CalendarRange } from "../components/CalendarRange/CalendarRange";
+export type { CalendarRangeProps } from "../components/CalendarRange/CalendarRange";
+
 export { default as Caption } from "../components/Typography/Caption/Caption";
 export type { CaptionProps } from "../components/Typography/Caption/Caption";

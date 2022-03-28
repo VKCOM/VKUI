@@ -18,6 +18,7 @@ import { useExternRef } from "../../hooks/useExternRef";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useFocusVisible } from "../../hooks/useFocusVisible";
 import { callMultiple } from "../../lib/callMultiple";
+import { useBooleanState } from "../../hooks/useBooleanState";
 import "./Tappable.css";
 
 export interface TappableProps
@@ -61,6 +62,8 @@ export interface TappableProps
    * Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс во время focus-visible
    */
   focusVisibleMode?: FocusVisibleMode | string;
+  onEnter?: (outputEvent: MouseEvent) => void;
+  onLeave?: (outputEvent: MouseEvent) => void;
 }
 
 interface Wave {
@@ -158,6 +161,8 @@ const Tappable: React.FC<TappableProps> = ({
   hasActive: _hasActive = true,
   activeMode = "background",
   focusVisibleMode = "inside",
+  onEnter,
+  onLeave,
   ...props
 }: TappableProps) => {
   Component = Component || ((props.href ? "a" : "div") as React.ElementType);
@@ -169,7 +174,11 @@ const Tappable: React.FC<TappableProps> = ({
 
   const [clicks, setClicks] = React.useState<Wave[]>([]);
   const [childHover, setChildHover] = React.useState(false);
-  const [_hovered, setHovered] = React.useState(false);
+  const {
+    value: _hovered,
+    setTrue: setHoveredTrue,
+    setFalse: setHoveredFalse,
+  } = useBooleanState(false);
 
   const hovered = _hovered && !props.disabled;
   const hasActive = _hasActive && !childHover && !props.disabled;
@@ -280,8 +289,8 @@ const Tappable: React.FC<TappableProps> = ({
 
   return (
     <Touch
-      onEnter={() => setHovered(true)}
-      onLeave={() => setHovered(false)}
+      onEnter={callMultiple(setHoveredTrue, onEnter)}
+      onLeave={callMultiple(setHoveredFalse, onLeave)}
       type={Component === "button" ? "button" : undefined}
       tabIndex={isCustomElement && !props.disabled ? 0 : undefined}
       role={isCustomElement ? role : undefined}

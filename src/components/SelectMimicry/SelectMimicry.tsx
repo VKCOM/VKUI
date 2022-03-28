@@ -13,7 +13,9 @@ import { getClassName } from "../../helpers/getClassName";
 import Headline from "../Typography/Headline/Headline";
 import Text from "../Typography/Text/Text";
 import { VKCOM } from "../../lib/platform";
+import { SelectType } from "../CustomSelect/CustomSelect";
 import "../Select/Select.css";
+import "./SelectMimicry.css";
 
 export interface SelectMimicryProps
   extends React.HTMLAttributes<HTMLElement>,
@@ -22,6 +24,8 @@ export interface SelectMimicryProps
     AdaptivityProps {
   multiline?: boolean;
   disabled?: boolean;
+  after?: React.ReactNode;
+  selectType?: SelectType;
 }
 
 const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
@@ -35,6 +39,8 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
   onClick,
   sizeX,
   sizeY,
+  after = <DropdownIcon />,
+  selectType = SelectType.Default,
   ...restProps
 }: SelectMimicryProps) => {
   const platform = usePlatform();
@@ -49,6 +55,7 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
       vkuiClass={classNames(
         getClassName("Select", platform),
         "Select--mimicry",
+        `Select--mimicry-${selectType}`,
         {
           "Select--not-selected": !children,
           "Select--multiline": multiline,
@@ -60,12 +67,15 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
       getRootRef={getRootRef}
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
-      after={<DropdownIcon />}
+      after={after}
     >
       <TypographyComponent
         Component="div"
-        weight="regular"
-        vkuiClass="Select__container"
+        weight={selectType === SelectType.Plain ? "semibold" : "regular"}
+        vkuiClass={classNames(
+          "Select__container",
+          `Select__container--${selectType}`
+        )}
       >
         <span vkuiClass="Select__title">{children || placeholder}</span>
       </TypographyComponent>
