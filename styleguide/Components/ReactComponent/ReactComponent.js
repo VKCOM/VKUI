@@ -31,7 +31,7 @@ const ReactComponent = ({ component, exampleMode }) => {
           ""
         )}`}
       >
-        <Caption Component="span">Github</Caption>
+        <Caption>Github</Caption>
       </Link>
       <Heading
         level={1}
