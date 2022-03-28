@@ -4,11 +4,6 @@
   "main": "dist/cjs/index.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "CONTRIBUTING.md",
-    "VKUI_TOKENS_MIGRATION_GUIDE.md"
-  ],
   "sideEffects": [
     "./dist/lib/polyfills.js",
     "./dist/index.js",
