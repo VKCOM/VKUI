@@ -330,12 +330,12 @@
   background-color: transparent;
 }
 
-.PanelHeader--vkcom .Search__separator {
-  display: none;
+.PanelHeader--vkcom .Search--vkcom {
+  border-bottom: none;
 }
 
-.Search--vkcom .Search__separator {
-  color: var(--input_border);
+.Search--vkcom {
+  border-bottom: var(--thin-border) solid var(--input_border);
 }
 
 .Group--card .Search--vkcom {
