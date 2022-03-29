@@ -89,8 +89,13 @@ class Example extends React.Component {
               malesuada vel. Donec nisi tellus, mollis et posuere vel, dictum
               eget neque.
             </Div>
-            <FixedLayout filled vertical="bottom">
-              <Separator wide />
+            <FixedLayout
+              filled
+              vertical="bottom"
+              style={{
+                borderTop: "var(--thin-border) solid var(--separator_common)",
+              }}
+            >
               <Tabs>
                 <TabsItem
                   selected={this.state.activeTab === "groups"}

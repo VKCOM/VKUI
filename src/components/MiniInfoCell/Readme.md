@@ -37,7 +37,7 @@ function MiniInfoCellExample() {
         }
         id="extended_info"
       >
-        <Separator style={{ marginBottom: 12 }} />
+        <Spacing separator="top" size={12} />
 
         <MiniInfoCell
           before={<Icon20CommunityName />}
@@ -65,7 +65,7 @@ function MiniInfoCellExample() {
           пользователей.
         </MiniInfoCell>
 
-        <Separator style={{ marginTop: 12, marginBottom: 12 }} />
+        <Spacing separator size={24} />
 
         <MiniInfoCell before={<Icon20PlaceOutline />}>
           Санкт-Петербург, Россия

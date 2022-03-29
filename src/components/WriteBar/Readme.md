@@ -164,13 +164,20 @@ const WriteBarExample = (props) => {
         <div style={{ height: bottomPadding }} />
 
         <FixedLayout vertical="bottom">
-          <div ref={fixedLayoutInnerElRef}>
-            <Separator wide />
-
+          <div
+            ref={fixedLayoutInnerElRef}
+            style={{
+              borderTop: "var(--thin-border) solid var(--separator_common)",
+            }}
+          >
             {isAttachmentsShown && (
-              <div>
+              <div
+                style={{
+                  borderBottom:
+                    "var(--thin-border) solid var(--separator_common)",
+                }}
+              >
                 <Div>Интерфейс прикрепления</Div>
-                <Separator wide />
               </div>
             )}
 

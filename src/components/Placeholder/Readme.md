@@ -35,7 +35,7 @@ class PlaceholderExample extends React.Component {
             >
               Подключите сообщества, от которых Вы хотите получать уведомления
             </Placeholder>
-            <Separator />
+            <Spacing separator />
             <Placeholder icon={<Icon56MentionOutline />}>
               Введите адрес страницы в поле поиска
             </Placeholder>
@@ -57,7 +57,7 @@ class PlaceholderExample extends React.Component {
           </PanelHeader>
           <Group>
             <Placeholder>Доступ запрещён</Placeholder>
-            <Separator />
+            <Spacing separator />
             <Placeholder
               header="Находите друзей"
               action={<Button size="m">Найти друзей</Button>}

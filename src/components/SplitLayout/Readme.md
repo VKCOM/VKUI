@@ -67,7 +67,7 @@ const Example = withAdaptivity(
                     {i}
                   </Cell>
                 ))}
-                <Separator />
+                <Spacing separator />
                 <Cell onClick={() => setModal(modals[0])}>modal 1</Cell>
                 <Cell onClick={() => setModal(modals[1])}>modal 2</Cell>
                 <Cell
@@ -102,7 +102,7 @@ const Example = withAdaptivity(
                   Подключите сообщества, от которых Вы хотите получать
                   уведомления
                 </Placeholder>
-                <Separator />
+                <Spacing separator />
                 <Placeholder icon={<Icon56MentionOutline />}>
                   Введите адрес страницы в поле поиска
                 </Placeholder>
@@ -113,7 +113,7 @@ const Example = withAdaptivity(
               <PanelHeader right={<Avatar size={36} />}>Panel 2</PanelHeader>
               <Group>
                 <Placeholder>Доступ запрещён</Placeholder>
-                <Separator />
+                <Spacing separator />
                 <Placeholder
                   header="Находите друзей"
                   action={<Button size="m">Найти друзей</Button>}
