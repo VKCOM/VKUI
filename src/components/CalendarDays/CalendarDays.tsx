@@ -4,7 +4,7 @@ import { CalendarDay } from "../CalendarDay/CalendarDay";
 import { getDaysNames, getWeeks } from "../../lib/calendar";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
 import { classNames } from "../../lib/classNames";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import "./CalendarDays.css";
 
 export interface CalendarDaysProps

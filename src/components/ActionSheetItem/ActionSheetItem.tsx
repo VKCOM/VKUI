@@ -13,7 +13,7 @@ import {
   ActionSheetContext,
   ActionSheetContextType,
 } from "../ActionSheet/ActionSheetContext";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import Headline from "../Typography/Headline/Headline";
 import {
   withAdaptivity,

@@ -2,7 +2,7 @@ import * as React from "react";
 import { Icon16Cancel } from "@vkontakte/icons";
 import { getTitleFromChildren, hasReactNode, noop } from "../../lib/utils";
 import { classNames } from "../../lib/classNames";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import Tappable from "../Tappable/Tappable";
 import "./Chip.css";
 

@@ -6,7 +6,7 @@ import { getTitleFromChildren, hasReactNode } from "../../lib/utils";
 import Tappable, { TappableProps } from "../Tappable/Tappable";
 import { Icon16Dropdown } from "@vkontakte/icons";
 import { usePlatform } from "../../hooks/usePlatform";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import Subhead from "../Typography/Subhead/Subhead";
 import "./SubnavigationButton.css";
 

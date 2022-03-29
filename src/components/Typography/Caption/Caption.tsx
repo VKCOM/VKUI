@@ -19,7 +19,7 @@ export interface CaptionProps
 
 const warn = warnOnce("Caption");
 
-const Caption: React.FC<CaptionProps> = ({
+export const Caption: React.FC<CaptionProps> = ({
   children,
   weight,
   level = "1",
@@ -51,6 +51,3 @@ const Caption: React.FC<CaptionProps> = ({
     </Component>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default Caption;

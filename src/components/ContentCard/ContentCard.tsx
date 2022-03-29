@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Card, CardProps } from "../Card/Card";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import Title from "../Typography/Title/Title";
 import Text from "../Typography/Text/Text";
 import Tappable, { TappableProps } from "../Tappable/Tappable";

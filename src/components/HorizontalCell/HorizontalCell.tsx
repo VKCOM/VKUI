@@ -3,7 +3,7 @@ import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import Tappable from "../Tappable/Tappable";
 import Subhead from "../Typography/Subhead/Subhead";
 import Avatar from "../Avatar/Avatar";

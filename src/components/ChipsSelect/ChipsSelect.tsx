@@ -15,7 +15,7 @@ import { useChipsSelect } from "./useChipsSelect";
 import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { noop } from "../../lib/utils";
 import { useDOM } from "../../lib/dom";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import { prefixClass } from "../../lib/prefixClass";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";

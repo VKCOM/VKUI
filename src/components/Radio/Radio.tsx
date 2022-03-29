@@ -11,7 +11,7 @@ import {
   SizeType,
 } from "../../hoc/withAdaptivity";
 import { hasReactNode } from "../../lib/utils";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import Headline from "../Typography/Headline/Headline";
 import Text from "../Typography/Text/Text";
 import "./Radio.css";

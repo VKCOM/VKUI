@@ -21,7 +21,7 @@ import {
 import Text from "../Typography/Text/Text";
 import Headline from "../Typography/Headline/Headline";
 import { hasReactNode } from "../../lib/utils";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import "./Checkbox.css";
 
 export interface CheckboxProps
