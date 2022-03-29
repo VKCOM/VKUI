@@ -5,7 +5,7 @@ import {
   SimpleCell,
   Search,
   classNames,
-  Separator,
+  Spacing,
   Footer,
   withAdaptivity,
   ViewWidth,
@@ -229,7 +229,7 @@ class TableOfContents extends React.PureComponent {
         <Fragment key={section.name}>
           {section.sections.length > 0 && !section.content && section.expand ? (
             <Fragment>
-              <Separator className="TableOfContents__separator" />
+              <Spacing separator="bottom" size={16} />
               <Header mode="secondary">{section.title || section.name}</Header>
             </Fragment>
           ) : (

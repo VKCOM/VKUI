@@ -34,14 +34,6 @@
   display: block;
 }
 
-.TableOfContents__separator {
-  margin-top: 16px;
-}
-
-.TableOfContents__title + .TableOfContents__separator {
-  margin-top: 12px;
-}
-
 .TableOfContents__section--selected {
   background: var(--background_hover);
 }
