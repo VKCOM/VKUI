@@ -6,6 +6,7 @@ import {
   useModalRegistry,
 } from "../ModalRoot/ModalRootContext";
 import { usePlatform } from "../../hooks/usePlatform";
+import { useOrientationChange } from "../../hooks/useOrientationChange";
 import {
   withAdaptivity,
   ViewHeight,
@@ -46,8 +47,8 @@ const warn = warnOnce("ModalPage");
 const ModalPage: React.FC<ModalPageProps & AdaptivityContextInterface> = (
   props
 ) => {
-  const platform = usePlatform();
   const { updateModalHeight } = React.useContext(ModalRootContext);
+
   const {
     children,
     header,
@@ -63,9 +64,14 @@ const ModalPage: React.FC<ModalPageProps & AdaptivityContextInterface> = (
     ...restProps
   } = props;
 
-  React.useEffect(() => {
-    updateModalHeight();
-  }, [children, updateModalHeight]);
+  const platform = usePlatform();
+  const orientation = useOrientationChange();
+
+  React.useEffect(updateModalHeight, [
+    children,
+    orientation,
+    updateModalHeight,
+  ]);
 
   const isDesktop =
     viewWidth >= ViewWidth.SMALL_TABLET &&

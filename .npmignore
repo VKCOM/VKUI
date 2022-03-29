@@ -15,6 +15,7 @@ dist/**/*.tmp
 .gitignore
 package-lock.json
 .github
+postcss.config.js
 
 __image_snapshots__
 *.e2e.*
