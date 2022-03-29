@@ -55,15 +55,18 @@
   font-weight: var(--vkui--font_caption3_caps--font_weight--regular);
 }
 
-.Caption--w-1 {
+.Caption.Caption--w-1 {
+  /* We use .Caption to override .Caption--caps selectors */
   font-weight: var(--vkui--font_weight_accent1);
 }
 
-.Caption--w-2 {
+.Caption.Caption--w-2 {
+  /* We use .Caption to override .Caption--caps selectors */
   font-weight: var(--vkui--font_weight_accent2);
 }
 
-.Caption--w-3 {
+.Caption.Caption--w-3 {
+  /* We use .Caption to override .Caption--caps selectors */
   font-weight: var(--vkui--font_weight_accent3);
 }
 
