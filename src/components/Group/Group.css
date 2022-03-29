@@ -25,15 +25,6 @@
   margin-top: -4px;
 }
 
-.Group--plain > .Group__separator {
-  padding-top: 8px;
-  padding-bottom: 8px;
-}
-
-.Group--sizeX-regular.Group--plain > .Group__separator {
-  padding: 8px;
-}
-
 .Group:last-of-type > .Group__separator {
   display: none;
 }
@@ -49,8 +40,7 @@
   color: var(--text_secondary);
 }
 
-.Group .Group > .Group__inner,
-.Group .Group > .Group__separator {
+.Group .Group > .Group__inner {
   padding-left: 0;
   padding-right: 0;
 }
