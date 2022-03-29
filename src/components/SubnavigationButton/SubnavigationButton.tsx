@@ -6,7 +6,7 @@ import { getTitleFromChildren, hasReactNode } from "../../lib/utils";
 import Tappable, { TappableProps } from "../Tappable/Tappable";
 import { Icon16Dropdown } from "@vkontakte/icons";
 import { usePlatform } from "../../hooks/usePlatform";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import Subhead from "../Typography/Subhead/Subhead";
 import "./SubnavigationButton.css";
 
@@ -39,13 +39,7 @@ const SubnavigationButtonTypography: React.FC<SubnavButtonTypographyProps> = ({
     return <Subhead {...restProps} />;
   }
 
-  return (
-    <Caption
-      level={textLevel === 2 ? "1" : "2"}
-      weight="regular"
-      {...restProps}
-    />
-  );
+  return <Caption level={textLevel === 2 ? "1" : "2"} {...restProps} />;
 };
 
 export const SubnavigationButton: React.FC<SubnavigationButtonProps> = (

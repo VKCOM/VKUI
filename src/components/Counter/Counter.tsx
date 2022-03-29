@@ -2,7 +2,7 @@ import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import Text from "../Typography/Text/Text";
 import { VKCOM } from "../../lib/platform";
 import { hasReactNode } from "../../lib/utils";
@@ -29,7 +29,7 @@ const CounterTypography: React.FC<CounterTypographyProps> = ({
   return size === "s" ? (
     <Caption
       level="2"
-      weight={platform === VKCOM ? "medium" : "regular"}
+      weight={platform === VKCOM ? "1" : undefined}
       {...restProps}
     />
   ) : (

@@ -34,3 +34,6 @@ export type { CalendarProps } from "../components/Calendar/Calendar";
 
 export { CalendarRange } from "../components/CalendarRange/CalendarRange";
 export type { CalendarRangeProps } from "../components/CalendarRange/CalendarRange";
+
+export { Caption } from "../components/Typography/Caption/Caption";
+export type { CaptionProps } from "../components/Typography/Caption/Caption";

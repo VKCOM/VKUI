@@ -12,7 +12,7 @@ import Button, { ButtonProps } from "../Button/Button";
 import { hasReactNode } from "../../lib/utils";
 import Headline from "../Typography/Headline/Headline";
 import Title from "../Typography/Title/Title";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import {
@@ -154,14 +154,10 @@ class AlertComponent extends React.Component<TAlertProps, AlertState> {
   renderText(text: React.ReactNode) {
     switch (this.props.platform) {
       case VKCOM:
-        return (
-          <Caption vkuiClass="Alert__text" level="1" weight="regular">
-            {text}
-          </Caption>
-        );
+        return <Caption vkuiClass="Alert__text">{text}</Caption>;
       case IOS:
         return (
-          <Caption vkuiClass="Alert__text" level="2" weight="regular">
+          <Caption vkuiClass="Alert__text" level="2">
             {text}
           </Caption>
         );

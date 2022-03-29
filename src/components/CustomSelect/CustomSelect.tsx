@@ -13,7 +13,7 @@ import { FormFieldProps } from "../FormField/FormField";
 import { HasPlatform } from "../../types";
 import Input from "../Input/Input";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import { warnOnce } from "../../lib/warnOnce";
 import { defaultFilterFn } from "../../lib/select";
 import { is } from "../../lib/is";
@@ -658,7 +658,7 @@ class CustomSelect extends React.Component<
       stateOptions !== undefined && stateOptions.length > 0 ? (
         stateOptions.map(this.renderOption)
       ) : (
-        <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
+        <Caption vkuiClass="CustomSelect__empty">
           {this.props.emptyText}
         </Caption>
       );

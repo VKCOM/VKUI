@@ -6,7 +6,7 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { getClassName } from "../../helpers/getClassName";
 import { hasReactNode, noop } from "../../lib/utils";
 import Subhead from "../Typography/Subhead/Subhead";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { Removable, RemovableProps } from "../Removable/Removable";
 import "./FormItem.css";
@@ -46,9 +46,7 @@ export const FormItem: React.FC<FormItemProps> = ({
       {hasReactNode(top) && <Subhead vkuiClass="FormItem__top">{top}</Subhead>}
       {children}
       {hasReactNode(bottom) && (
-        <Caption level="1" weight="regular" vkuiClass="FormItem__bottom">
-          {bottom}
-        </Caption>
+        <Caption vkuiClass="FormItem__bottom">{bottom}</Caption>
       )}
     </React.Fragment>
   );

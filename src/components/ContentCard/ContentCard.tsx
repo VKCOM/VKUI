@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Card, CardProps } from "../Card/Card";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import Title from "../Typography/Title/Title";
 import Text from "../Typography/Text/Text";
 import Tappable, { TappableProps } from "../Tappable/Tappable";
@@ -121,12 +121,7 @@ const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
         )}
         <div vkuiClass="ContentCard__body">
           {hasReactNode(subtitle) && (
-            <Caption
-              caps
-              vkuiClass="ContentCard__text"
-              weight="semibold"
-              level="3"
-            >
+            <Caption caps vkuiClass="ContentCard__text" weight="1" level="3">
               {subtitle}
             </Caption>
           )}
@@ -141,9 +136,7 @@ const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
             </Text>
           )}
           {hasReactNode(caption) && (
-            <Caption vkuiClass="ContentCard__text" weight="regular" level="1">
-              {caption}
-            </Caption>
+            <Caption vkuiClass="ContentCard__text">{caption}</Caption>
           )}
         </div>
       </Tappable>

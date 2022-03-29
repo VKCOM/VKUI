@@ -11,7 +11,7 @@ import {
   SizeType,
 } from "../../hoc/withAdaptivity";
 import { hasReactNode } from "../../lib/utils";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import Headline from "../Typography/Headline/Headline";
 import Text from "../Typography/Text/Text";
 import "./Radio.css";
@@ -68,14 +68,7 @@ const Radio: React.FC<RadioProps> = (props: RadioProps) => {
         >
           <div vkuiClass="Radio__children">{children}</div>
           {hasReactNode(description) && (
-            <Caption
-              level="1"
-              Component="span"
-              weight="regular"
-              vkuiClass="Radio__description"
-            >
-              {description}
-            </Caption>
+            <Caption vkuiClass="Radio__description">{description}</Caption>
           )}
         </ContentComponent>
       </div>

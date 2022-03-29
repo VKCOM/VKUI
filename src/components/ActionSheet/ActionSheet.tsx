@@ -6,7 +6,7 @@ import { ActionSheetDropdownDesktop } from "./ActionSheetDropdownDesktop";
 import { ActionSheetDropdown } from "./ActionSheetDropdown";
 import { hasReactNode, noop } from "../../lib/utils";
 import { ActionSheetContext, ItemClickHandler } from "./ActionSheetContext";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useTimeout } from "../../hooks/useTimeout";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
@@ -117,17 +117,14 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
           <header vkuiClass="ActionSheet__header">
             {hasReactNode(header) && (
               <Caption
-                level="1"
-                weight={platform === IOS ? "semibold" : "medium"}
+                weight={platform === IOS ? "1" : "2"}
                 vkuiClass="ActionSheet__title"
               >
                 {header}
               </Caption>
             )}
             {hasReactNode(text) && (
-              <Caption level="1" weight="regular" vkuiClass="ActionSheet__text">
-                {text}
-              </Caption>
+              <Caption vkuiClass="ActionSheet__text">{text}</Caption>
             )}
           </header>
         )}

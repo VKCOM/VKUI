@@ -10,4 +10,5 @@ export const tokenized = [
   "Pagination",
   "Calendar",
   "CalendarRange",
+  "Caption",
 ];

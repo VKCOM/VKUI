@@ -3,7 +3,7 @@ import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
 import Headline from "../Typography/Headline/Headline";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import { hasReactNode } from "../../lib/utils";
 import "./FormStatus.css";
 
@@ -35,16 +35,10 @@ export const FormStatus: React.FunctionComponent<FormStatusProps> = ({
         </Headline>
       )}
       {dangerouslySetInnerHTML && (
-        <Caption
-          level="1"
-          weight="regular"
-          dangerouslySetInnerHTML={dangerouslySetInnerHTML}
-        />
+        <Caption dangerouslySetInnerHTML={dangerouslySetInnerHTML} />
       )}
       {hasReactNode(children) && !dangerouslySetInnerHTML && (
-        <Caption level="1" weight="regular">
-          {children}
-        </Caption>
+        <Caption>{children}</Caption>
       )}
     </div>
   );
