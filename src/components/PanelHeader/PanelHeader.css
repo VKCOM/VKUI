@@ -66,10 +66,6 @@
   min-width: 90px;
 }
 
-.PanelHeader--sizeX-compact .PanelHeader__separator {
-  padding-top: 4px;
-}
-
 /**
  * iOS
  */

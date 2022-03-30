@@ -3,7 +3,7 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import FixedLayout from "../FixedLayout/FixedLayout";
-import Separator from "../Separator/Separator";
+import { Spacing } from "../Spacing/Spacing";
 import { Platform, VKCOM } from "../../lib/platform";
 import { HasRef, HasRootRef } from "../../types";
 import {
@@ -121,9 +121,9 @@ const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
         <PanelHeaderIn {...props} />
       )}
       {separator && visor && platform !== VKCOM && (
-        <Separator
-          vkuiClass="PanelHeader__separator"
-          expanded={sizeX === SizeType.REGULAR}
+        <Spacing
+          size={sizeX === SizeType.REGULAR ? 16 : 4}
+          separator={sizeX !== SizeType.REGULAR}
         />
       )}
     </div>
