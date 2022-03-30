@@ -3,7 +3,6 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { HasRef } from "../../types";
 import { VKCOM } from "../../lib/platform";
 import PanelHeader, { PanelHeaderProps } from "../PanelHeader/PanelHeader";
-import Separator from "../Separator/Separator";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
@@ -33,6 +32,7 @@ const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = ({
       // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("ModalPageHeader", platform), {
         "ModalPageHeader--desktop": isDesktop,
+        "ModalPageHeader--separator": hasSeparator,
       })}
       ref={getRef}
     >
@@ -45,7 +45,6 @@ const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = ({
       >
         {children}
       </PanelHeader>
-      {hasSeparator && <Separator wide />}
     </div>
   );
 };

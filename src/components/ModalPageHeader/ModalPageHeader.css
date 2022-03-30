@@ -15,6 +15,10 @@
   padding-right: 4px;
 }
 
+.ModalPageHeader--separator {
+  border-bottom: var(--thin-border) solid var(--separator_common);
+}
+
 .ModalPageHeader .Icon--dismiss_24 {
   color: var(--placeholder_icon_foreground_primary);
 }
