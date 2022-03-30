@@ -359,9 +359,14 @@ class CustomSelect extends React.Component<
 
     scrollTo && this.scrollToElement(index);
 
-    this.setState(() => ({
-      focusedOptionIndex: index,
-    }));
+    this.setState((prevState) =>
+      // Это оптимизация, прежде всего, под `onMouseOver`
+      prevState.focusedOptionIndex !== index
+        ? {
+            focusedOptionIndex: index,
+          }
+        : null
+    );
   };
 
   focusOption = (type: "next" | "prev") => {
@@ -600,7 +605,15 @@ class CustomSelect extends React.Component<
           disabled: option.disabled,
           onClick: this.handleOptionClick,
           onMouseDown: this.handleOptionDown,
-          onMouseEnter: this.handleOptionHover,
+          // Используем `onMouseOver` вместо `onMouseEnter`.
+          // При параметре `searchable`, обновляется "ребёнок", из-за чего `onMouseEnter` не срабатывает в следующих кейсах:
+          //  1. До загрузки выпадающего списка, курсор мышки находится над произвольным элементом этого списка.
+          //     > Лечение: только увод курсора мыши и возвращении его обратно вызывает событие `onMouseEnter` на этот элемент.
+          //  2. Если это тач-устройство.
+          //     > Лечение: нужно нажать на какой-нибудь произвольный элемент списка, после чего `onMouseEnter` будет работать на соседние элементы,
+          //     но не на тот, на который нажали в первый раз.
+          // Более подробно по ссылке https://github.com/facebook/react/issues/13956#issuecomment-1082055744
+          onMouseOver: this.handleOptionHover,
         })}
       </React.Fragment>
     );
