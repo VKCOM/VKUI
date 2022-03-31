@@ -27,6 +27,7 @@
     "e2e/**/*.js",
     "tasks/**/*.js",
     ".github/**/*.js",
+    "eslint-plugin-vkui/*.js",
     "*.js"
   ],
   "files": [
