@@ -86,6 +86,37 @@ class Example extends React.Component {
                 )}
               />
             </FormItem>
+            <FormItem top="Администратор" bottom="Кастомный дизайн триггера">
+              <CustomSelect
+                placeholder="Не выбран"
+                options={this.users}
+                renderOption={({ option, ...restProps }) => (
+                  <CustomSelectOption
+                    {...restProps}
+                    before={<Avatar size={24} src={option.avatar} />}
+                    description={option.description}
+                  />
+                )}
+                renderTrigger={(selectedOption) => (
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <Avatar
+                      style={{ marginRight: "8px" }}
+                      size={20}
+                      src={selectedOption.avatar}
+                    />
+                    <span>{selectedOption.label}</span>
+                    <span
+                      style={{
+                        color: "var(--text_secondary)",
+                        marginLeft: "auto",
+                      }}
+                    >
+                      {selectedOption.description}
+                    </span>
+                  </div>
+                )}
+              />
+            </FormItem>
             <Header>Поиск</Header>
             <FormItem top="Администратор" bottom="Поиск по списку">
               <CustomSelect
@@ -107,6 +138,19 @@ class Example extends React.Component {
                     {...restProps}
                     description={option.description}
                   />
+                )}
+                renderTrigger={(selectedOption) => (
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <span>{selectedOption.label}</span>
+                    <span
+                      style={{
+                        color: "var(--text_secondary)",
+                        marginLeft: "8px",
+                      }}
+                    >
+                      ({selectedOption.description})
+                    </span>
+                  </div>
                 )}
                 options={this.cities}
               />

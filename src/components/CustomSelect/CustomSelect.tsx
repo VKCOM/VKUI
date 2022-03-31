@@ -101,11 +101,7 @@ export interface CustomSelectProps
     e: React.ChangeEvent,
     options: CustomSelectOptionInterface[]
   ) => void | CustomSelectOptionInterface[];
-  options: Array<{
-    value: SelectValue;
-    label: string;
-    [index: string]: any;
-  }>;
+  options: CustomSelectOptionInterface[];
   /**
    * Функция для кастомной фильтрации. По-умолчанию поиск производится по option.label.
    */
@@ -133,6 +129,14 @@ export interface CustomSelectProps
   }: {
     defaultDropdownContent: React.ReactNode;
   }) => React.ReactNode;
+  /**
+   * Рендер-проп для кастомного рендера триггера.
+   * В selectedOption содержится выбранная опция из options.
+   * По умолчанию будет рендериться option.label
+   */
+  renderTrigger?: (
+    selectedOption: CustomSelectOptionInterface
+  ) => React.ReactNode;
   /**
    * Если true, то в дропдауне вместо списка опций рисуется спиннер. При переданных renderDropdown и fetching: true,
    * "победит" renderDropdown
@@ -632,6 +636,19 @@ class CustomSelect extends React.Component<
     }));
   };
 
+  renderTrigger = () => {
+    const { renderTrigger } = this.props;
+    const selected = this.getSelectedItem();
+
+    if (!selected) {
+      return undefined;
+    }
+
+    return typeof renderTrigger === "function"
+      ? renderTrigger(selected)
+      : selected.label;
+  };
+
   render() {
     const { opened, nativeSelectValue, options: stateOptions } = this.state;
     const {
@@ -662,11 +679,9 @@ class CustomSelect extends React.Component<
       dropdownOffsetDistance,
       fixDropdownWidth,
       forceDropdownPortal,
+      renderTrigger,
       ...restProps
     } = this.props;
-    const selected = this.getSelectedItem();
-    const label = selected ? selected.label : undefined;
-
     const defaultDropdownContent =
       stateOptions !== undefined && stateOptions.length > 0 ? (
         stateOptions.map(this.renderOption)
@@ -732,7 +747,7 @@ class CustomSelect extends React.Component<
             })}
             after={icon}
           >
-            {label}
+            {this.renderTrigger()}
           </SelectMimicry>
         )}
         <select

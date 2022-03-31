@@ -19,6 +19,16 @@
               before={<Avatar size={24} src={option.avatar} />}
             />
           )}
+          renderTrigger={(option) => (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Avatar
+                style={{ marginRight: "8px" }}
+                size={20}
+                src={option.avatar}
+              />
+              {option.label}
+            </div>
+          )}
         />
       </FormItem>
     </Group>
