@@ -177,6 +177,7 @@ const ChipsInput = <Option extends ChipsInputOption>(
   return (
     <FormField
       getRootRef={getRootRef}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames("ChipsInput", `ChipsInput--sizeY-${sizeY}`, {
         "ChipsInput--focused": focused,
         "ChipsInput--withChips": !!selectedOptions.length,

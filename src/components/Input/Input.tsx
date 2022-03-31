@@ -28,6 +28,7 @@ const Input: React.FunctionComponent<InputProps> = ({
   const platform = usePlatform();
   return (
     <FormField
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("Input", platform),
         { [`Input--${align}`]: !!align },

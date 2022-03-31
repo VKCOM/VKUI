@@ -111,6 +111,7 @@ const Header: React.FC<HeaderProps> = ({
     <header
       {...restProps}
       ref={getRootRef}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("Header", platform),
         `Header--mode-${mode}`,
@@ -125,6 +126,7 @@ const Header: React.FC<HeaderProps> = ({
           platform={platform}
         >
           <span
+            // eslint-disable-next-line vkui/no-object-expression-in-arguments
             vkuiClass={classNames("Header__content-in", {
               "Header__content-in--multiline": multiline,
             })}

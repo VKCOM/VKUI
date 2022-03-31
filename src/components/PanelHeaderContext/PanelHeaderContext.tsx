@@ -63,6 +63,7 @@ export const PanelHeaderContext: React.FC<PanelHeaderContextProps> = ({
   return (
     <FixedLayout
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("PanelHeaderContext", platform), {
         "PanelHeaderContext--opened": opened,
         "PanelHeaderContext--closing": closing,

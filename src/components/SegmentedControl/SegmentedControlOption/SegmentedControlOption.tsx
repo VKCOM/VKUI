@@ -22,6 +22,7 @@ export const SegmentedControlOption: React.FC<VisuallyHiddenInputProps> = ({
     <label
       className={className}
       style={style}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames("SegmentedControlOption", {
         "SegmentedControlOption--checked": restProps.checked,
         "SegmentedControlOption--focus-visible": focusVisible,

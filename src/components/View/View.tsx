@@ -606,6 +606,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
 
             return (
               <div
+                // eslint-disable-next-line vkui/no-object-expression-in-arguments
                 vkuiClass={classNames("View__panel", {
                   "View__panel--active": panelId === activePanel,
                   "View__panel--prev": panelId === prevPanel,

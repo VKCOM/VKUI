@@ -51,6 +51,7 @@ export const FormField: React.FC<FormFieldOwnProps> = ({
       ref={getRootRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("FormField", platform),
         `FormField--sizeY-${sizeY}`,
@@ -67,6 +68,7 @@ export const FormField: React.FC<FormFieldOwnProps> = ({
       )}
       <div
         role="presentation"
+        // eslint-disable-next-line vkui/no-object-expression-in-arguments
         vkuiClass={classNames("FormField__border", {
           "FormField__border--hover": !disabled && hover,
         })}

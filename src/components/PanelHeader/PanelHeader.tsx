@@ -91,6 +91,7 @@ const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
   return (
     <div
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("PanelHeader", platform),
         {

@@ -148,6 +148,7 @@ const Root: React.FC<RootProps> = ({
   return (
     <div
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("Root", platform), {
         "Root--transition": !disableAnimation && transition,
         "Root--no-motion": disableAnimation,
@@ -168,6 +169,7 @@ const Root: React.FC<RootProps> = ({
             key={viewId}
             ref={(e) => viewId && (viewNodes[viewId] = e)}
             onAnimationEnd={isTransitionTarget ? onAnimationEnd : undefined}
+            // eslint-disable-next-line vkui/no-object-expression-in-arguments
             vkuiClass={classNames("Root__view", {
               "Root__view--hide-back":
                 transition && viewId === prevView && isBack,

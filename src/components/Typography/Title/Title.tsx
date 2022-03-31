@@ -51,6 +51,7 @@ const Title: React.FC<TitleProps> = ({
   return (
     <Component
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames("Title", `Title--l-${level}`, {
         [`Title--w-${resolveWeight(weight)}`]: !!weight,
       })}

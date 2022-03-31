@@ -93,6 +93,7 @@ export const CardScroll: React.FC<CardScrollProps> = ({
   return (
     <div
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("CardScroll", platform),
         `CardScroll--sizeX-${sizeX}`,

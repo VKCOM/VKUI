@@ -88,6 +88,7 @@ const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
     <Card
       mode={mode}
       getRootRef={getRootRef}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("ContentCard", platform), {
         "ContentCard--disabled": restProps.disabled,
       })}

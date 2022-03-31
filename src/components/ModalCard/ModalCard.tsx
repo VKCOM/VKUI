@@ -61,6 +61,7 @@ const ModalCard: React.FC<ModalCardProps & AdaptivityContextInterface> = (
   return (
     <div
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("ModalCard", platform), {
         "ModalCard--desktop": isDesktop,
       })}

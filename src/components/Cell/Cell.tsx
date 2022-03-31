@@ -145,6 +145,7 @@ export const Cell: React.FC<CellProps> = ({
     (draggable && !selectable) || removable || disabled;
   const hasActive = !simpleCellDisabled && !dragging;
 
+  // eslint-disable-next-line vkui/no-object-expression-in-arguments
   const cellClasses = classNames(getClassName("Cell", platform), {
     "Cell--dragging": dragging,
     "Cell--removable": removable,

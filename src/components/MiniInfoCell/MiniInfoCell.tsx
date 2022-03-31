@@ -64,6 +64,7 @@ export const MiniInfoCell: React.FC<MiniInfoCellProps> = (
       disabled={!isClickable}
       role={isClickable ? "button" : undefined}
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("MiniInfoCell", platform),
         {

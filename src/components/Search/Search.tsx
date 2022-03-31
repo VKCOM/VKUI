@@ -121,6 +121,7 @@ const Search: React.FC<SearchProps> = ({
 
   return (
     <div
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("Search", platform), {
         "Search--focused": isFocused,
         "Search--has-value": !!value,

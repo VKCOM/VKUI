@@ -54,6 +54,7 @@ const TabbarItem: React.FunctionComponent<TabbarItemProps> = ({
       {...restProps}
       disabled={disabled}
       href={href}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("TabbarItem", platform), {
         "TabbarItem--selected": selected,
         "TabbarItem--text": !!text,

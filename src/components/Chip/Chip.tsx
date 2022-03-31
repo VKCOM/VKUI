@@ -39,6 +39,7 @@ export const Chip: React.FC<ChipProps> = ({
 
   return (
     <div
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames("Chip", { "Chip--removable": removable })}
       role="option"
       aria-label={title}

@@ -23,6 +23,7 @@ export const ActionSheetDropdown: React.FC<SharedDropdownProps> = ({
     <FocusTrap
       {...restProps}
       onClick={stopPropagation}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(baseClaseName, {
         "ActionSheet--closing": closing,
       })}

@@ -16,6 +16,7 @@ const List: React.FunctionComponent<React.HTMLAttributes<HTMLDivElement>> = ({
     <div
       role="list"
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("List", platform), {
         "List--dragging": isDragging,
       })}

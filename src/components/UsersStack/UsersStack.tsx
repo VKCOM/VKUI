@@ -54,6 +54,7 @@ const UsersStack: React.FC<UsersStackProps> = (props: UsersStackProps) => {
   return (
     <div
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("UsersStack", platform),
         `UsersStack--size-${size}`,

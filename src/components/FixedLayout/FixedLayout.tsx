@@ -51,6 +51,7 @@ const FixedLayout: React.FC<FixedLayoutProps> = ({
       {...restProps}
       fixed
       ref={getRootRef}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("FixedLayout", platform),
         {

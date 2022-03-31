@@ -54,6 +54,7 @@ export const PopoutWrapper: React.FC<PopoutWrapperProps> = ({
   return (
     <div
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         baseClassNames,
         `PopoutWrapper--v-${alignY}`,

@@ -42,6 +42,7 @@ const Placeholder: React.FC<PlaceholderProps> = (props: PlaceholderProps) => {
     <div
       {...restProps}
       ref={getRootRef}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames("Placeholder", {
         "Placeholder--stretched": stretched,
       })}

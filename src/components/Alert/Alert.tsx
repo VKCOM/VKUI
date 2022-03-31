@@ -259,6 +259,7 @@ class AlertComponent extends React.Component<TAlertProps, AlertState> {
           onClick={this.stopPropagation}
           onClose={this.onClose}
           timeout={this.timeout}
+          // eslint-disable-next-line vkui/no-object-expression-in-arguments
           vkuiClass={classNames(getClassName("Alert", platform), {
             "Alert--v": resolvedActionsLayout === "vertical",
             "Alert--h": resolvedActionsLayout === "horizontal",

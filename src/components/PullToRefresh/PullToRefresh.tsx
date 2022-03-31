@@ -312,6 +312,7 @@ class PullToRefresh extends React.PureComponent<
           onStart={this.onTouchStart}
           onMove={this.onTouchMove}
           onEnd={this.onTouchEnd}
+          // eslint-disable-next-line vkui/no-object-expression-in-arguments
           vkuiClass={classNames(getClassName("PullToRefresh", platform), {
             "PullToRefresh--watching": watching,
             "PullToRefresh--refreshing": refreshing,

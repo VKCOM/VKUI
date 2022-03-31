@@ -36,6 +36,7 @@ export const Spacing: React.FC<SpacingProps> = ({
     <div
       {...restProps}
       aria-hidden="true"
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("Spacing", platform), {
         "Spacing--separator": !!separator,
         "Spacing--separator-center":

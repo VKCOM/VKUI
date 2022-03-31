@@ -88,6 +88,7 @@ export const PanelHeaderButton: React.FC<PanelHeaderButtonProps> = ({
       Component={restProps.href ? "a" : "button"}
       activeEffectDelay={200}
       activeMode={activeMode}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("PanelHeaderButton", platform), {
         "PanelHeaderButton--primary": primary,
         "PanelHeaderButton--primitive": isPrimitive,

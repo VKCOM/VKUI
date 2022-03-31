@@ -19,6 +19,7 @@ export const RichTooltip: React.FC<RichTooltipProps> = ({
 
   return (
     <HoverPopper
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("RichTooltip", platform), {
         [`RichTooltip--${appearance}`]: !!appearance,
       })}

@@ -36,6 +36,7 @@ const PanelHeaderBack: React.FunctionComponent<PanelHeaderBackProps> = ({
   return (
     <PanelHeaderButton
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("PanelHeaderBack", platform), {
         "PanelHeaderBack--has-label": showLabel && !!label,
       })}

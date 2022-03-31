@@ -195,6 +195,7 @@ const SnackbarComponent: React.FC<
     <AppRootPortal>
       <div
         {...restProps}
+        // eslint-disable-next-line vkui/no-object-expression-in-arguments
         vkuiClass={classNames(
           getClassName("Snackbar", platform),
           `Snackbar--l-${resolvedLayout}`,

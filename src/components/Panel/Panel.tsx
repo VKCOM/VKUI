@@ -30,6 +30,7 @@ export const Panel = withAdaptivity<PanelProps & AdaptivityContextInterface>(
       <div
         {...restProps}
         ref={getRootRef}
+        // eslint-disable-next-line vkui/no-object-expression-in-arguments
         vkuiClass={classNames(
           getClassName("Panel", platform),
           `Panel--${sizeX}`,

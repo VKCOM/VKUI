@@ -66,6 +66,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
 
     return (
       <Tappable
+        // eslint-disable-next-line vkui/no-object-expression-in-arguments
         vkuiClass={classNames("CalendarDay", `CalendarDay--size-${size}`, {
           "CalendarDay--today": today,
           "CalendarDay--selected": selected && !disabled,
@@ -92,6 +93,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
         onLeave={handleLeave}
       >
         <div
+          // eslint-disable-next-line vkui/no-object-expression-in-arguments
           vkuiClass={classNames("CalendarDay__hinted", {
             "CalendarDay__hinted--active": hinted,
             "CalendarDay__hinted--selection-start": hintedSelectionStart,
@@ -99,6 +101,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
           })}
         >
           <div
+            // eslint-disable-next-line vkui/no-object-expression-in-arguments
             vkuiClass={classNames("CalendarDay__inner", {
               "CalendarDay__inner--active": active && !disabled,
             })}
