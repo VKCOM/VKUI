@@ -15,7 +15,6 @@ export interface GridAvatarProps
 const MAX_GRID_LENGTH = 4;
 
 const warn = warnOnce("GridAvatar");
-
 export const GridAvatar: React.FC<GridAvatarProps> = ({
   src = [],
   ...restProps
@@ -28,16 +27,14 @@ export const GridAvatar: React.FC<GridAvatarProps> = ({
 
   return (
     <Avatar {...restProps} vkuiClass={classNames("GridAvatar")}>
-      <div vkuiClass="GridAvatar__in">
-        {src.slice(0, MAX_GRID_LENGTH).map((src, i) => {
-          return (
-            <div
-              key={i}
-              vkuiClass="GridAvatar__item"
-              style={{ backgroundImage: `url(${src})` }}
-            ></div>
-          );
-        })}
+      <div vkuiClass="GridAvatar__in" aria-hidden={true}>
+        {src.slice(0, MAX_GRID_LENGTH).map((src, i) => (
+          <div
+            key={i}
+            vkuiClass="GridAvatar__item"
+            style={{ backgroundImage: `url(${src})` }}
+          />
+        ))}
       </div>
     </Avatar>
   );
