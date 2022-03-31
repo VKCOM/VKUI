@@ -12,11 +12,9 @@ export interface GridAvatarProps
   src?: string[];
 }
 
-const MIN_GRID_LENGTH = 1;
 const MAX_GRID_LENGTH = 4;
 
 const warn = warnOnce("GridAvatar");
-
 export const GridAvatar: React.FC<GridAvatarProps> = ({
   src = [],
   ...restProps
@@ -27,26 +25,16 @@ export const GridAvatar: React.FC<GridAvatarProps> = ({
     );
   }
 
-  const count = Math.max(
-    MIN_GRID_LENGTH,
-    Math.min(MAX_GRID_LENGTH, src.length)
-  );
-
   return (
-    <Avatar
-      {...restProps}
-      vkuiClass={classNames("GridAvatar", `GridAvatar--images-${count}`)}
-    >
-      <div vkuiClass="GridAvatar__in">
-        {src.slice(0, MAX_GRID_LENGTH).map((src, i) => {
-          return (
-            <div
-              key={i}
-              vkuiClass="GridAvatar__item"
-              style={{ backgroundImage: `url(${src})` }}
-            ></div>
-          );
-        })}
+    <Avatar {...restProps} vkuiClass={classNames("GridAvatar")}>
+      <div vkuiClass="GridAvatar__in" aria-hidden={true}>
+        {src.slice(0, MAX_GRID_LENGTH).map((src, i) => (
+          <div
+            key={i}
+            vkuiClass="GridAvatar__item"
+            style={{ backgroundImage: `url(${src})` }}
+          />
+        ))}
       </div>
     </Avatar>
   );
