@@ -1,7 +1,6 @@
 import * as React from "react";
 import Avatar, { AvatarProps } from "../Avatar/Avatar";
 import { classNames } from "../../lib/classNames";
-import { warnOnce } from "../../lib/warnOnce";
 import { HasRootRef } from "../../types";
 import "./GridAvatar.css";
 
@@ -14,17 +13,10 @@ export interface GridAvatarProps
 
 const MAX_GRID_LENGTH = 4;
 
-const warn = warnOnce("GridAvatar");
 export const GridAvatar: React.FC<GridAvatarProps> = ({
   src = [""],
   ...restProps
 }) => {
-  if (process.env.NODE_ENV === "development" && src.length > MAX_GRID_LENGTH) {
-    warn(
-      `Размер пропа src (${src.length}) больше максимального (${MAX_GRID_LENGTH})`
-    );
-  }
-
   return (
     <Avatar {...restProps} vkuiClass={classNames("GridAvatar")}>
       <div vkuiClass="GridAvatar__in" aria-hidden={true}>
