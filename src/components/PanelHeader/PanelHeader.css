@@ -55,14 +55,14 @@
   font-family: var(--font-display);
 }
 
-.PanelHeader__right {
+.PanelHeader__after {
   display: flex;
   justify-content: flex-end;
   box-sizing: border-box;
   color: var(--header_tint);
 }
 
-.PanelHeader--vkapps .PanelHeader__right {
+.PanelHeader--vkapps .PanelHeader__after {
   min-width: 90px;
 }
 
@@ -121,15 +121,15 @@
   padding-left: 8px;
 }
 
-.PanelHeader--ios.PanelHeader--no-right .PanelHeader__content > * {
+.PanelHeader--ios.PanelHeader--no-after .PanelHeader__content > * {
   padding-right: 0;
 }
 
-.PanelHeader--ios.PanelHeader--no-right .PanelHeader__content {
+.PanelHeader--ios.PanelHeader--no-after .PanelHeader__content {
   padding-right: 8px;
 }
 
-.PanelHeader--ios .PanelHeader__right {
+.PanelHeader--ios .PanelHeader__after {
   flex-basis: 0;
   flex-shrink: 0;
   flex-grow: 1;
@@ -139,7 +139,7 @@
 }
 
 .View--ios .View__panel--prev .PanelHeader__left,
-.View--ios .View__panel--prev .PanelHeader__right,
+.View--ios .View__panel--prev .PanelHeader__after,
 .View--ios .View__panel--prev .PanelHeader__content {
   opacity: 0;
 }
@@ -196,23 +196,23 @@
   padding-left: 0;
 }
 
-.PanelHeader--android.PanelHeader--no-right .PanelHeader__content > *,
-.PanelHeader--vkcom.PanelHeader--no-right .PanelHeader__content > * {
+.PanelHeader--android.PanelHeader--no-after .PanelHeader__content > *,
+.PanelHeader--vkcom.PanelHeader--no-after .PanelHeader__content > * {
   padding-right: 0;
 }
 
-.PanelHeader--android.PanelHeader--no-right .PanelHeader__content {
+.PanelHeader--android.PanelHeader--no-after .PanelHeader__content {
   padding-right: 16px;
 }
 
 .SplitCol--spaced
-  .PanelHeader--android.PanelHeader--no-right:not(.ModalPageHeader__in)
+  .PanelHeader--android.PanelHeader--no-after:not(.ModalPageHeader__in)
   .PanelHeader__content {
   padding-right: 0;
 }
 
-.PanelHeader--android .PanelHeader__right:not(:empty),
-.PanelHeader--vkcom .PanelHeader__right:not(:empty) {
+.PanelHeader--android .PanelHeader__after:not(:empty),
+.PanelHeader--vkcom .PanelHeader__after:not(:empty) {
   padding: 4px 4px 4px 0;
 }
 
@@ -264,7 +264,7 @@
 }
 
 .PanelHeader--vkcom .PanelHeader__left,
-.PanelHeader--vkcom .PanelHeader__right {
+.PanelHeader--vkcom .PanelHeader__after {
   flex-basis: 0;
   flex-shrink: 0;
   flex-grow: 1;
