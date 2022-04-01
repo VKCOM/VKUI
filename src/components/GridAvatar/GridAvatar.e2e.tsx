@@ -15,7 +15,7 @@ describe("GridAvatar", () => {
       {
         size: [96, 28],
         src: [
-          [],
+          undefined,
           [base64Image],
           [base64Image, base64Image],
           [base64Image, base64Image, base64Image],
