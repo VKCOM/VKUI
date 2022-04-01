@@ -2,6 +2,7 @@ import * as React from "react";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
+import { warnOnce } from "../../lib/warnOnce";
 import FixedLayout from "../FixedLayout/FixedLayout";
 import { Separator } from "../Separator/Separator";
 import { Platform, VKCOM } from "../../lib/platform";
@@ -79,6 +80,7 @@ const PanelHeaderIn: React.FC<PanelHeaderProps> = ({
   );
 };
 
+const warn = warnOnce("PanelHeader");
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeader
  */
@@ -107,6 +109,17 @@ const PanelHeader: React.FC<PanelHeaderProps> = ({
 
   const before = propsBefore ?? left;
   const after = propsAfter ?? right;
+
+  if (process.env.NODE_ENV === "development") {
+    right &&
+      warn(
+        "Свойство right устарелo и будет удалено в 5.0.0. Используйте after."
+      );
+    left &&
+      warn(
+        "Свойство left устарелo и будет удалено в 5.0.0. Используйте before."
+      );
+  }
 
   const innerProps = { children, before, after, separator };
 
