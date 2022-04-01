@@ -1,10 +1,10 @@
 import * as React from "react";
 import { usePlatform } from "../../hooks/usePlatform";
+import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
 import { HasRef } from "../../types";
 import { VKCOM } from "../../lib/platform";
-import PanelHeader, { PanelHeaderProps } from "../PanelHeader/PanelHeader";
 import { Separator } from "../Separator/Separator";
-import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
+import { PanelHeader, PanelHeaderProps } from "../PanelHeader/PanelHeader";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import "./ModalPageHeader.css";

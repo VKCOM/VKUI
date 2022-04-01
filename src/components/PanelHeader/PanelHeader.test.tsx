@@ -1,6 +1,6 @@
 import { baselineComponent } from "../../testing/utils";
 import { render } from "@testing-library/react";
-import PanelHeader from "./PanelHeader";
+import { PanelHeader } from "./PanelHeader";
 import ConfigProvider from "../ConfigProvider/ConfigProvider";
 import { Platform } from "../../lib/platform";
 
