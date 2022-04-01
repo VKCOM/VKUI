@@ -124,7 +124,7 @@
 /**
  * .PanelHeader
  */
-.PanelHeader__left .Avatar {
+.PanelHeader__before .Avatar {
   margin-left: 8px;
 }
 

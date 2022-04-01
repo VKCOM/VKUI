@@ -26,6 +26,10 @@ export interface PanelHeaderProps
     HasRef<HTMLDivElement>,
     HasRootRef<HTMLDivElement>,
     AdaptivityProps {
+  before?: React.ReactNode;
+  /**
+   * @deprecated Будет удалено в 5.0.0. Используйте `before`
+   */
   left?: React.ReactNode;
   after?: React.ReactNode;
   /**
@@ -47,7 +51,7 @@ export interface PanelHeaderProps
 
 const PanelHeaderIn: React.FC<PanelHeaderProps> = ({
   children,
-  left,
+  before,
   after,
   separator,
 }) => {
@@ -58,7 +62,7 @@ const PanelHeaderIn: React.FC<PanelHeaderProps> = ({
   return (
     <React.Fragment>
       <TooltipContainer fixed vkuiClass="PanelHeader__in">
-        <div vkuiClass="PanelHeader__left">{left}</div>
+        <div vkuiClass="PanelHeader__before">{before}</div>
         <div vkuiClass="PanelHeader__content">
           {platform === VKCOM ? (
             <Text weight="2">{children}</Text>
@@ -79,6 +83,7 @@ const PanelHeaderIn: React.FC<PanelHeaderProps> = ({
  * @see https://vkcom.github.io/VKUI/#/PanelHeader
  */
 const PanelHeader: React.FC<PanelHeaderProps> = ({
+  before: propsBefore,
   left,
   children,
   after: propsAfter,
@@ -100,9 +105,10 @@ const PanelHeader: React.FC<PanelHeaderProps> = ({
   const needShadow = shadow && sizeX === SizeType.REGULAR;
   let isFixed = fixed !== undefined ? fixed : platform !== Platform.VKCOM;
 
+  const before = propsBefore ?? left;
   const after = propsAfter ?? right;
 
-  const innerProps = { children, left, after, separator };
+  const innerProps = { children, before, after, separator };
 
   return (
     <div
@@ -117,7 +123,7 @@ const PanelHeader: React.FC<PanelHeaderProps> = ({
           "PanelHeader--sep": separator && visor,
           "PanelHeader--vkapps":
             webviewType === WebviewType.VKAPPS && !isInsideModal,
-          "PanelHeader--no-left": !left,
+          "PanelHeader--no-before": !before,
           "PanelHeader--no-after": !after,
           "PanelHeader--fixed": isFixed,
         },
