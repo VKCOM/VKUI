@@ -261,6 +261,7 @@ const Tappable: React.FC<TappableProps> = ({
     stop(activeDuraion >= 100 ? 0 : activeEffectDelay - activeDuraion);
   }
 
+  // eslint-disable-next-line vkui/no-object-expression-in-arguments
   const classes = classNames(
     getClassName("Tappable", platform),
     `Tappable--sizeX-${sizeX}`,

@@ -651,6 +651,7 @@ class ModalRootTouchComponent extends React.Component<
       <TouchRootContext.Provider value={true}>
         <ModalRootContext.Provider value={this.modalRootContext}>
           <Touch
+            // eslint-disable-next-line vkui/no-object-expression-in-arguments
             vkuiClass={classNames(
               getClassName("ModalRoot", this.props.platform),
               {
@@ -695,6 +696,7 @@ class ModalRootTouchComponent extends React.Component<
                     }}
                     onClose={this.props.closeActiveModal}
                     timeout={this.timeout}
+                    // eslint-disable-next-line vkui/no-object-expression-in-arguments
                     vkuiClass={classNames("ModalRoot__modal", {
                       "ModalRoot__modal--active": modalId === activeModal,
                       "ModalRoot__modal--prev": modalId === exitingModal,

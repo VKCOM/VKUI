@@ -28,6 +28,7 @@ const Tabbar: React.FunctionComponent<TabbarProps> = (props: TabbarProps) => {
 
   return (
     <div
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("Tabbar", platform),
         `Tabbar--l-${getItemsLayout()}`,

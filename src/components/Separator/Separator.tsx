@@ -23,11 +23,13 @@ const Separator: React.FC<SeparatorProps> = ({
     <div
       {...restProps}
       aria-hidden="true"
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("Separator", platform), {
         "Separator--wide": wide,
       })}
     >
       <div
+        // eslint-disable-next-line vkui/no-object-expression-in-arguments
         vkuiClass={classNames("Separator__in", {
           "Separator__in--expanded": expanded,
         })}

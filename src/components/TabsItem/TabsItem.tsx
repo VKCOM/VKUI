@@ -35,6 +35,7 @@ const TabsItem: React.FC<TabsItemProps> = ({
   return (
     <Tappable
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("TabsItem", platform), {
         "TabsItem--selected": selected,
       })}

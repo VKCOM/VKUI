@@ -43,6 +43,7 @@ export const SplitLayout: React.FC<SplitLayoutProps> = ({
       <div
         {...restProps}
         ref={getRef}
+        // eslint-disable-next-line vkui/no-object-expression-in-arguments
         vkuiClass={classNames("SplitLayout__inner", {
           "SplitLayout__inner--header": !!header,
         })}

@@ -85,6 +85,7 @@ const ActionSheetItemComponent: React.FC<ActionSheetItemProps> = ({
           : onItemClick(onClick, onImmediateClick, Boolean(autoclose))
       }
       activeMode="ActionSheetItem--active"
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("ActionSheetItem", platform),
         `ActionSheetItem--${mode}`,

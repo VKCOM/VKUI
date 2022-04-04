@@ -62,6 +62,7 @@ export const SubnavigationButton: React.FC<SubnavigationButtonProps> = (
       {...restProps}
       hasActive={false}
       focusVisibleMode="outside"
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("SubnavigationButton", platform),
         `SubnavigationButton--${size}`,

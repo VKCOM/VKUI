@@ -127,6 +127,7 @@ const Banner: React.FC<BannerProps> = (props: BannerProps) => {
   return (
     <section
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("Banner", platform),
         `Banner--md-${mode}`,

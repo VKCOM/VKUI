@@ -76,6 +76,7 @@ const Group: React.FC<GroupProps> = (props: GroupProps) => {
 
       {separator !== "hide" && (
         <Separator
+          // eslint-disable-next-line vkui/no-object-expression-in-arguments
           vkuiClass={classNames("Group__separator", {
             "Group__separator--force": separator === "show",
           })}

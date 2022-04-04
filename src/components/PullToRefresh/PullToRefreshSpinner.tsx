@@ -34,6 +34,7 @@ const PullToRefreshSpinner: React.FunctionComponent<
 
   return (
     <div
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames("PullToRefresh__spinner", {
         "PullToRefresh__spinner--on": on,
       })}

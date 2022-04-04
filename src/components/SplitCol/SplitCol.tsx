@@ -58,6 +58,7 @@ export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
         minWidth: minWidth,
       }}
       ref={baseRef}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames("SplitCol", {
         "SplitCol--spaced": spaced,
         "SplitCol--fixed": fixed,

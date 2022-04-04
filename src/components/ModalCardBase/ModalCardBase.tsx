@@ -82,12 +82,14 @@ export const ModalCardBase = withAdaptivity<
     return (
       <div
         {...restProps}
+        // eslint-disable-next-line vkui/no-object-expression-in-arguments
         vkuiClass={classNames(getClassName("ModalCardBase", platform), {
           "ModalCardBase--desktop": isDesktop,
         })}
         ref={getRootRef}
       >
         <div
+          // eslint-disable-next-line vkui/no-object-expression-in-arguments
           vkuiClass={classNames("ModalCardBase__container", {
             "ModalCardBase__container--softwareKeyboardOpened":
               isSoftwareKeyboardOpened,
@@ -115,6 +117,7 @@ export const ModalCardBase = withAdaptivity<
 
           {hasReactNode(actions) && (
             <div
+              // eslint-disable-next-line vkui/no-object-expression-in-arguments
               vkuiClass={classNames("ModalCardBase__actions", {
                 "ModalCardBase__actions--v": actionsLayout === "vertical",
               })}
