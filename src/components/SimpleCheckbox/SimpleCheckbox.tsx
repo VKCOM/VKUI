@@ -79,12 +79,16 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
   if (IS_DEV) {
     if (defaultIndeterminate && restProps.defaultChecked) {
       warn(
-        "defaultIndeterminate and defaultChecked cannot be true at the same time"
+        "defaultIndeterminate and defaultChecked cannot be true at the same time",
+        "error"
       );
     }
 
     if (indeterminate && restProps.checked) {
-      warn("indeterminate and checked cannot be true at the same time");
+      warn(
+        "indeterminate and checked cannot be true at the same time",
+        "error"
+      );
     }
   }
 

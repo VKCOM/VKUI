@@ -184,7 +184,8 @@ const Tooltip: React.FC<TooltipProps> = ({
           primitiveChild && JSON.stringify(children),
         ]
           .filter(Boolean)
-          .join(" ")
+          .join(" "),
+        "error"
       );
   }
 

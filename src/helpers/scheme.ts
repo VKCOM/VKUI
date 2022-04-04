@@ -61,7 +61,7 @@ export function normalizeScheme({
   if (scheme === Scheme.VKCOM) {
     process.env.NODE_ENV === "development" &&
       warn(
-        `Схема "${Scheme.VKCOM}" устарела и будет удалена 5.0.0. Вместо неё используйте "${Scheme.VKCOM_LIGHT}"`
+        `Схема "${Scheme.VKCOM}" устарела и будет удалена в v5.0.0. Вместо неё используйте "${Scheme.VKCOM_LIGHT}"`
       );
     return Scheme.VKCOM_LIGHT;
   }
@@ -71,7 +71,8 @@ export function normalizeScheme({
   ) {
     process.env.NODE_ENV === "development" &&
       warn(
-        `Платформа "vkcom" и схема "${scheme}" несовместимы. С этой платформой можно использовать схемы "${Scheme.VKCOM_LIGHT}" или "${Scheme.VKCOM_DARK}"`
+        `Платформа "vkcom" и схема "${scheme}" несовместимы. С этой платформой можно использовать схемы "${Scheme.VKCOM_LIGHT}" или "${Scheme.VKCOM_DARK}"`,
+        "error"
       );
     return Scheme.VKCOM_LIGHT;
   }
