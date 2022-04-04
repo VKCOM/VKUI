@@ -1,7 +1,7 @@
 Компонент выбора даты.
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-import { format } from "date-fns";
+import { format } from "../../lib/date";
 
 const Example = () => {
   const [value, setValue] = useState(new Date());
@@ -17,7 +17,7 @@ const Example = () => {
     <FormLayout>
       <FormLayoutGroup mode="vertical">
         <FormItem top="Выбранная дата">
-          {format(value, "yyyy-MM-dd HH:mm:ss")}
+          {format(value, "YYYY-MM-DD HH:mm:ss")}
         </FormItem>
         <FormItem top="Выбор времени">
           <Checkbox

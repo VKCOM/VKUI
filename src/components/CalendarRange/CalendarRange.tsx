@@ -8,7 +8,7 @@ import {
   startOfDay,
   endOfDay,
   isWithinInterval,
-} from "date-fns";
+} from "../../lib/date";
 import {
   CalendarHeader,
   CalendarHeaderProps,
@@ -51,10 +51,7 @@ const getIsDaySelected = (day: Date, value?: Array<Date | null>) => {
   }
 
   return Boolean(
-    isWithinInterval(day, {
-      start: startOfDay(value[0]),
-      end: endOfDay(value[1]),
-    })
+    isWithinInterval(day, startOfDay(value[0]), endOfDay(value[1]))
   );
 };
 
