@@ -21,6 +21,7 @@ const CellButton: React.FC<CellButtonProps> = ({
     <SimpleCell
       stopPropagation={true}
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("CellButton", platform),
         `CellButton--${mode}`,

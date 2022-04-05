@@ -52,6 +52,7 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
     <FormField
       {...restProps}
       tabIndex={disabled ? undefined : tabIndex}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("Select", platform),
         "Select--mimicry",

@@ -1,3 +1,4 @@
+/* eslint-disable vkui/no-object-expression-in-arguments */
 import { classNames, classNamesString } from "./classNames";
 
 describe(classNames, () => {

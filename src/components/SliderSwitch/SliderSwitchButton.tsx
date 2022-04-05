@@ -31,6 +31,7 @@ export const SliderSwitchButton: React.FunctionComponent<ButtonProps> = (
   return (
     <Tappable
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("SliderSwitch__button", platform), {
         ["SliderSwitch__button--active"]: active,
         ["SliderSwitch__button--hover"]: !active && hovered,

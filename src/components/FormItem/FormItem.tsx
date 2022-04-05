@@ -55,6 +55,7 @@ export const FormItem: React.FC<FormItemProps> = ({
     <Component
       {...restProps}
       ref={rootEl}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("FormItem", platform),
         `FormItem--${status}`,

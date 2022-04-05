@@ -180,6 +180,7 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
   return (
     <div
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames("HorizontalScroll", {
         ["HorizontalScroll--withConstArrows"]: showArrows === "always",
       })}

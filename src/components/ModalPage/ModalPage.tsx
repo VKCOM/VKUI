@@ -84,6 +84,7 @@ const ModalPage: React.FC<ModalPageProps & AdaptivityContextInterface> = (
   return (
     <div
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("ModalPage", platform),
         `ModalPage--sizeX-${sizeX}`,

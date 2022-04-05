@@ -55,7 +55,8 @@ const warn = warnOnce("CustomSelect");
 const checkOptionsValueType = (options: CustomSelectOptionInterface[]) => {
   if (new Set(options.map((item) => typeof item.value)).size > 1) {
     warn(
-      "Some values of your options have different types. CustomSelect onChange always returns a string type."
+      "Some values of your options have different types. CustomSelect onChange always returns a string type.",
+      "error"
     );
   }
 };
@@ -714,6 +715,7 @@ class CustomSelect extends React.Component<
             {...restProps}
             autoFocus
             onBlur={this.onBlur}
+            // eslint-disable-next-line vkui/no-object-expression-in-arguments
             vkuiClass={classNames({
               CustomSelect__open: opened,
               "CustomSelect__open--popupDirectionTop": isPopperDirectionTop,
@@ -739,6 +741,7 @@ class CustomSelect extends React.Component<
             onKeyUp={this.handleKeyUp}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
+            // eslint-disable-next-line vkui/no-object-expression-in-arguments
             vkuiClass={classNames({
               CustomSelect__open: opened,
               "CustomSelect__open--popupDirectionTop": isPopperDirectionTop,

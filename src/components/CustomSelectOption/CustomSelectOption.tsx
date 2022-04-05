@@ -51,6 +51,7 @@ const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
       title={title}
       aria-disabled={disabled}
       aria-selected={selected}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         "CustomSelectOption",
         `CustomSelectOption--sizeY-${sizeY}`,
