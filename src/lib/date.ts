@@ -138,7 +138,7 @@ export function eachDayOfInterval(start: DirtyDate, end: DirtyDate) {
 export function parse(
   input: string,
   format: string,
-  referenceDate?: Date = new Date()
+  referenceDate: Date = new Date()
 ) {
   const match2 = /^\d\d/; // 00 - 99
   const match4 = /^\d{4}/; // 0000 - 9999
