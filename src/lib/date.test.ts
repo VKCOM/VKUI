@@ -20,17 +20,47 @@ describe(parse, () => {
     expect(format(result, "MM-DD-YYYY HH:mm")).toEqual("12-25-1995 20:34");
   });
 
-  it("It parses valid date and time", () => {
+  it("Parses valid date and time", () => {
     const result = parse("12-25-1995 16:36", "MM-DD-YYYY HH:mm");
     expect(format(result, "MM-DD-YYYY HH:mm")).toEqual("12-25-1995 16:36");
   });
 
-  it("It parses valid date and time with reference", () => {
+  it("Parses valid date and time with reference", () => {
     const reference = new Date(2022, 3, 4, 20, 34, 52);
     const result = parse("12-25-1995 16:36", "MM-DD-YYYY HH:mm", reference);
     expect(format(result, "MM-DD-YYYY HH:mm:ss")).toEqual(
       "12-25-1995 16:36:52"
     );
+  });
+
+  it("Validates identical non-formatting symbols", () => {
+    const result = parse("12 xxx 25 yyy 1995", "MM yyy DD xxx YYYY");
+    expect(result.toString()).toEqual("Invalid Date");
+  });
+
+  it("Fails if formatting not found", () => {
+    const result = parse("12 xxx 25 yyy 1995", "foo yyy bar xxx baz");
+    expect(result.toString()).toEqual("Invalid Date");
+  });
+
+  it("Fails with year month overflow", () => {
+    const result = parse("13-15-2022", "MM-DD-YYYY");
+    expect(result.toString()).toEqual("Invalid Date");
+  });
+
+  it("Fails with month day overflow", () => {
+    const result = parse("02-31-2022", "MM-DD-YYYY");
+    expect(result.toString()).toEqual("Invalid Date");
+  });
+
+  it("Fails with day hours overflow", () => {
+    const result = parse("04-04-2022 25:31", "MM-DD-YYYY HH:mm");
+    expect(result.toString()).toEqual("Invalid Date");
+  });
+
+  it("Fails with hours minutes overflow", () => {
+    const result = parse("04-04-2022 14:61", "MM-DD-YYYY HH:mm");
+    expect(result.toString()).toEqual("Invalid Date");
   });
 });
 

@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 
+// Using date-fns-like type for migration
 type DirtyDate = Date | number;
 
 export function startOfDay(date: DirtyDate) {
@@ -134,17 +135,18 @@ export function eachDayOfInterval(start: DirtyDate, end: DirtyDate) {
   return dates;
 }
 
-export function parse(input: string, format: string, referenceDate?: Date) {
+export function parse(
+  input: string,
+  format: string,
+  referenceDate?: Date = new Date()
+) {
   const match2 = /^\d\d/; // 00 - 99
   const match4 = /^\d{4}/; // 0000 - 9999
-
-  const date = referenceDate ? new Date(referenceDate) : new Date();
 
   const entries: Array<
     [string, RegExp, (val: string) => [string, number, boolean]]
   > = [
     ["YYYY", match4, (val) => ["Y", +val, true]],
-    // ['yyyy', match4, (val) => ['Y', +val, true]],
     [
       "MM",
       match2,
@@ -156,7 +158,6 @@ export function parse(input: string, format: string, referenceDate?: Date) {
       },
     ],
     ["DD", match2, (val) => ["D", +val, true]],
-    // ['dd', match2, (val) => ['D', +val, true]],
     [
       "HH",
       match2,
@@ -184,65 +185,88 @@ export function parse(input: string, format: string, referenceDate?: Date) {
   const store: {
     [key: string]: number;
   } = {
-    Y: date.getFullYear(),
-    M: date.getMonth(),
-    D: date.getDate(),
-    h: date.getHours(),
-    m: date.getMinutes(),
+    Y: referenceDate.getFullYear(),
+    M: referenceDate.getMonth(),
+    D: referenceDate.getDate(),
+    h: referenceDate.getHours(),
+    m: referenceDate.getMinutes(),
+    s: referenceDate.getSeconds(),
+    ms: referenceDate.getMilliseconds(),
   };
 
-  let going = true;
+  let prevInputIndex = 0;
+  let lastNonFormatting = "";
+  let lastFormatIndex = 0;
+  let found = false;
 
-  // TODO:
-  // Если не было итераций, то считается валидной датой
-  // TODO:
-  // Как то обработать повторения, если нужно
-  while (going) {
+  while (true) {
     const match = superRegExp.exec(format);
 
     if (!match) {
-      going = false;
       break;
     }
 
     const length = match[0].length;
     const atIndex = superRegExp.lastIndex - length;
 
-    // TODO:
-    // Возможно нужна проверка что используются именно те разделитили что в формате
     const item = entries.find((item) => item[0] === match[0]);
 
     if (!item) {
       return new Date("");
     }
 
-    const value = input.slice(atIndex).match(item[1]);
-    const [key, newValue, okay] = item[2](value ? value[0] : "");
+    lastNonFormatting = format.slice(lastFormatIndex, atIndex);
+    lastFormatIndex = superRegExp.lastIndex;
+
+    if (
+      input.slice(prevInputIndex, prevInputIndex + lastNonFormatting.length) !==
+      lastNonFormatting
+    ) {
+      return new Date("");
+    }
+
+    const value = input
+      .slice(prevInputIndex + lastNonFormatting.length)
+      .match(item[1]);
+
+    if (!value) {
+      return new Date("");
+    }
+
+    prevInputIndex =
+      prevInputIndex + lastNonFormatting.length + value[0].length;
+
+    const [key, newValue, okay] = item[2](value[0]);
 
     if (!okay) {
       return new Date("");
     }
 
     store[key] = newValue;
+    found = true;
   }
 
-  date.setFullYear(store.Y);
-  date.setMonth(store.M);
-  date.setDate(store.D);
-  date.setHours(store.h);
-  date.setMinutes(store.m);
-
-  if (
-    date.getFullYear() === store.Y &&
-    date.getMonth() === store.M &&
-    date.getDate() === store.D &&
-    date.getHours() === store.h &&
-    date.getMinutes() === store.m
-  ) {
-    return date;
+  if (!found) {
+    return new Date("");
   }
 
-  return new Date("");
+  const date = new Date(
+    store.Y,
+    store.M,
+    store.D,
+    store.h,
+    store.m,
+    store.s,
+    store.ms
+  );
+
+  // Since days of months are dynamic, they can't be validated in entries,
+  // so we check it here, in the finalized date
+  if (date.getMonth() !== store.M || date.getDate() !== store.D) {
+    return new Date("");
+  }
+
+  return date;
 }
 
 export function isMatch(input: string, format: string) {
