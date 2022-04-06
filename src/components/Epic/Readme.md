@@ -150,7 +150,11 @@ const Example = withAdaptivity(
                     onClick={onStoryChange}
                     selected={activeStory === "messages"}
                     data-story="messages"
-                    label="12"
+                    indicator={
+                      <Counter size="s" mode="prominent">
+                        12
+                      </Counter>
+                    }
                     text="Сообщения"
                   >
                     <Icon28MessageOutline />
