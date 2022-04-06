@@ -12,19 +12,19 @@ export function endOfDay(date: DirtyDate) {
 }
 
 export function startOfWeek(date: DirtyDate, weekStart = 0) {
-  // hacks
+  weekStart = weekStart % 7;
+
   const day = dayjs(date);
-  // @ts-ignore
-  day.$locale().weekStart = weekStart;
-  return day.startOf("week").toDate();
+  const weekDay = day.day();
+  const diff = (weekDay < weekStart ? 7 : 0) + weekDay - weekStart;
+
+  return day.date(day.date() - diff).toDate();
 }
 
 export function endOfWeek(date: DirtyDate, weekStart = 0) {
-  // hacks
-  const day = dayjs(date);
-  // @ts-ignore
-  day.$locale().weekStart = weekStart;
-  return day.endOf("week").toDate();
+  const day = dayjs(startOfWeek(date, weekStart));
+
+  return day.date(day.date() + 6).toDate();
 }
 
 export function startOfMonth(date: DirtyDate) {
