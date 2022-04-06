@@ -1,6 +1,6 @@
 import { createScopedElement as _jsxFactory } from "./jsxRuntime";
-type jsxFactory = typeof _jsxFactory;
+type JsxFactory = typeof _jsxFactory;
 
 declare global {
-  const createScopedElement: jsxFactory;
+  const createScopedElement: JsxFactory;
 }

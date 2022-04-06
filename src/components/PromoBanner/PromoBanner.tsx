@@ -15,7 +15,7 @@ type StatsType =
 
 type BannerData = {
   title?: string;
-  url_types?: string; // eslint-disable-line camelcase
+  url_types?: string;
   bannerID?: string;
   imageWidth?: number;
   imageHeight?: number;

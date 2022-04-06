@@ -114,7 +114,7 @@ class PullToRefresh extends React.PureComponent<
   componentDidMount() {
     if (canUseDOM) {
       this.document!.addEventListener("touchmove", this.onWindowTouchMove, {
-        // @ts-ignore
+        // @ts-expect-error
         cancelable: true,
         passive: false,
       });
@@ -127,7 +127,7 @@ class PullToRefresh extends React.PureComponent<
     // https://github.com/VKCOM/VKUI/issues/444
     if (canUseDOM) {
       this.document!.removeEventListener("touchmove", this.onWindowTouchMove, {
-        // @ts-ignore
+        // @ts-expect-error
         cancelable: true,
         passive: false,
       });

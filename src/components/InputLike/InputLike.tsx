@@ -39,7 +39,7 @@ export const InputLike: React.FC<InputLikeProps> = ({
   ...props
 }) => {
   const handleElementSelect = React.useCallback(
-    (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+    (event: React.MouseEvent<HTMLSpanElement>) => {
       stopPropagation(event);
       onElementSelect?.(index);
     },

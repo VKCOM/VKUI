@@ -115,7 +115,7 @@ export function baselineComponent<Props extends BasicProps>(
 
 type RectOptions = { x?: number; y?: number; w?: number; h?: number };
 export function mockRect(
-  el: HTMLElement | ({} & any),
+  el: HTMLElement | null,
   { x = 0, y = 0, w = 0, h = 0 }: RectOptions
 ) {
   if (!el) {
@@ -164,7 +164,7 @@ Object.defineProperty(HTMLElement.prototype, "offsetParent", {
         isNullOrUndefined(element.style.display) ||
         element.style.display.toLowerCase() !== "none")
     ) {
-      // @ts-ignore
+      // @ts-expect-error
       element = element.parentNode;
     }
 

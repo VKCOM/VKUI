@@ -126,7 +126,8 @@
       {
         "onlyForFunctionsWithNames": ["classNames", "classNamesString"]
       }
-    ]
+    ],
+    "no-shadow": "off"
   },
   "overrides": [
     {
