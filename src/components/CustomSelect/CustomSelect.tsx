@@ -11,7 +11,7 @@ import CustomSelectOption, {
 import { getClassName } from "../../helpers/getClassName";
 import { FormFieldProps } from "../FormField/FormField";
 import { HasPlatform } from "../../types";
-import Input from "../Input/Input";
+import { Input } from "../Input/Input";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { Caption } from "../Typography/Caption/Caption";
 import { warnOnce } from "../../lib/warnOnce";

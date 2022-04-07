@@ -12,4 +12,5 @@ export const tokenized = [
   "CalendarRange",
   "Caption",
   "Paragraph",
+  "Input",
 ];

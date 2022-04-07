@@ -1,5 +1,5 @@
 import * as React from "react";
-import Input from "../Input/Input";
+import { Input } from "../Input/Input";
 import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { HasPlatform } from "../../types";
 import { leadingZero } from "../../lib/utils";

@@ -178,7 +178,7 @@ export { Switch } from "./components/Switch/Switch";
 export type { SwitchProps } from "./components/Switch/Switch";
 export { default as File } from "./components/File/File";
 export type { FileProps } from "./components/File/File";
-export { default as Input } from "./components/Input/Input";
+export { Input } from "./components/Input/Input";
 export type { InputProps } from "./components/Input/Input";
 export { Chip } from "./components/Chip/Chip";
 export type { ChipProps } from "./components/Chip/Chip";
