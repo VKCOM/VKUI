@@ -1,4 +1,4 @@
-import CustomSelect, { CustomSelectProps } from "../CustomSelect/CustomSelect";
+import { CustomSelect, CustomSelectProps } from "../CustomSelect/CustomSelect";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
 describe("CustomSelect", () => {

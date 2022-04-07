@@ -15,4 +15,5 @@ export const tokenized = [
   "Input",
   "FormField",
   "Select",
+  "CustomSelect",
 ];

@@ -7,7 +7,8 @@ import {
 } from "@vkontakte/icons";
 import Tappable from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
-import CustomSelect, {
+import {
+  CustomSelect,
   CustomSelectProps,
   SelectType,
 } from "../CustomSelect/CustomSelect";

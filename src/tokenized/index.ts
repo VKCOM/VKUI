@@ -49,3 +49,6 @@ export type { FormFieldProps } from "../components/FormField/FormField";
 
 export { Select } from "../components/Select/Select";
 export type { SelectProps } from "../components/Select/Select";
+
+export { CustomSelect } from "../components/CustomSelect/CustomSelect";
+export type { CustomSelectProps } from "../components/CustomSelect/CustomSelect";

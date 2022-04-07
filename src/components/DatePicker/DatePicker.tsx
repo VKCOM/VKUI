@@ -3,7 +3,7 @@ import { Input } from "../Input/Input";
 import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { HasPlatform } from "../../types";
 import { leadingZero } from "../../lib/utils";
-import CustomSelect from "../CustomSelect/CustomSelect";
+import { CustomSelect } from "../CustomSelect/CustomSelect";
 import "./DatePicker.css";
 
 const DefaultMonths: string[] = [

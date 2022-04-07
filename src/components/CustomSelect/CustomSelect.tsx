@@ -150,7 +150,7 @@ export interface CustomSelectProps
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
-class CustomSelect extends React.Component<
+class CustomSelectComponent extends React.Component<
   CustomSelectProps,
   CustomSelectState
 > {
@@ -701,13 +701,12 @@ class CustomSelect extends React.Component<
             {...restProps}
             autoFocus
             onBlur={this.onBlur}
-            // eslint-disable-next-line vkui/no-object-expression-in-arguments
-            vkuiClass={classNames({
-              CustomSelect__open: opened,
-              "CustomSelect__open--popupDirectionTop": isPopperDirectionTop,
-              "CustomSelect__open--not-adjacent":
-                (dropdownOffsetDistance as number) > 0,
-            })}
+            vkuiClass={classNames(
+              opened && "CustomSelect__open",
+              isPopperDirectionTop && "CustomSelect__open--popupDirectionTop",
+              (dropdownOffsetDistance as number) > 0 &&
+                "CustomSelect__open--not-adjacent"
+            )}
             value={this.state.inputValue}
             onKeyDown={this.onInputKeyDown}
             onChange={this.onInputChange}
@@ -727,13 +726,12 @@ class CustomSelect extends React.Component<
             onKeyUp={this.handleKeyUp}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
-            // eslint-disable-next-line vkui/no-object-expression-in-arguments
-            vkuiClass={classNames({
-              CustomSelect__open: opened,
-              "CustomSelect__open--popupDirectionTop": isPopperDirectionTop,
-              "CustomSelect__open--not-adjacent":
-                (dropdownOffsetDistance as number) > 0,
-            })}
+            vkuiClass={classNames(
+              opened && "CustomSelect__open",
+              isPopperDirectionTop && "CustomSelect__open--popupDirectionTop",
+              (dropdownOffsetDistance as number) > 0 &&
+                "CustomSelect__open--not-adjacent"
+            )}
             after={icon}
             selectType={selectType}
           >
@@ -775,9 +773,8 @@ class CustomSelect extends React.Component<
   }
 }
 
-// eslint-disable-next-line import/no-default-export
-export default withPlatform(
-  withAdaptivity(CustomSelect, {
+export const CustomSelect = withPlatform(
+  withAdaptivity(CustomSelectComponent, {
     sizeY: true,
   })
 );
