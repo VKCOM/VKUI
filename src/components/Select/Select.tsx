@@ -9,7 +9,7 @@ import {
 
 export interface SelectProps extends CustomSelectProps, AdaptivityProps {}
 
-const Select: React.FC<SelectProps & AdaptivityContextInterface> = ({
+const SelectComponent: React.FC<SelectProps & AdaptivityContextInterface> = ({
   hasMouse,
   ...props
 }: SelectProps) => {
@@ -33,7 +33,6 @@ const Select: React.FC<SelectProps & AdaptivityContextInterface> = ({
   );
 };
 
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(Select, {
+export const Select = withAdaptivity(SelectComponent, {
   hasMouse: true,
 });

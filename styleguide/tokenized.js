@@ -14,4 +14,5 @@ export const tokenized = [
   "Paragraph",
   "Input",
   "FormField",
+  "Select",
 ];

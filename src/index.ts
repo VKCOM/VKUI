@@ -196,7 +196,7 @@ export { RadioGroup } from "./components/RadioGroup/RadioGroup";
 export type { RadioGroupProps } from "./components/RadioGroup/RadioGroup";
 export { default as Checkbox } from "./components/Checkbox/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox/Checkbox";
-export { default as Select } from "./components/Select/Select";
+export { Select } from "./components/Select/Select";
 export type { SelectProps } from "./components/Select/Select";
 export { default as SelectMimicry } from "./components/SelectMimicry/SelectMimicry";
 export type { SelectMimicryProps } from "./components/SelectMimicry/SelectMimicry";
