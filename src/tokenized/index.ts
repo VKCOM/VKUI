@@ -43,3 +43,6 @@ export type { ParagraphProps } from "../components/Typography/Paragraph/Paragrap
 
 export { Input } from "../components/Input/Input";
 export type { InputProps } from "../components/Input/Input";
+
+export { FormField } from "../components/FormField/FormField";
+export type { FormFieldProps } from "../components/FormField/FormField";

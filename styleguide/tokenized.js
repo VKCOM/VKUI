@@ -13,4 +13,5 @@ export const tokenized = [
   "Caption",
   "Paragraph",
   "Input",
+  "FormField",
 ];
