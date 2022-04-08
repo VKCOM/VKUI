@@ -39,10 +39,6 @@
   font-size: 15px;
 }
 
-.Input__el:disabled {
-  opacity: 0.4;
-}
-
 .Input__el::placeholder {
   color: var(--field_text_placeholder);
 }
