@@ -1,5 +1,5 @@
 import { Icon16Clear } from "@vkontakte/icons";
-import ChipsInput, { ChipsInputProps } from "./ChipsInput";
+import { ChipsInput, ChipsInputProps } from "./ChipsInput";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
 describe("ChipsInput", () => {

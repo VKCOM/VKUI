@@ -18,4 +18,5 @@ export const tokenized = [
   "CustomSelect",
   "CustomSelectDropdown",
   "CustomSelectOption",
+  "ChipsInput",
 ];
