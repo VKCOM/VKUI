@@ -369,11 +369,10 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
-        // eslint-disable-next-line vkui/no-object-expression-in-arguments
-        vkuiClass={classNames({
-          ["ChipsSelect__open"]: opened,
-          ["ChipsSelect__open--popupDirectionTop"]: isPopperDirectionTop,
-        })}
+        vkuiClass={classNames(
+          opened && "ChipsSelect__open",
+          isPopperDirectionTop && "ChipsSelect__open--popupDirectionTop"
+        )}
         getRef={getRef}
         disabled={disabled}
         onInputChange={handleInputChange}

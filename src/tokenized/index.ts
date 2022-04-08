@@ -61,3 +61,6 @@ export type { CustomSelectOptionProps } from "../components/CustomSelectOption/C
 
 export { ChipsInput } from "../components/ChipsInput/ChipsInput";
 export type { ChipsInputProps } from "../components/ChipsInput/ChipsInput";
+
+export { ChipsSelect } from "../components/ChipsSelect/ChipsSelect";
+export type { ChipsSelectProps } from "../components/ChipsSelect/ChipsSelect";

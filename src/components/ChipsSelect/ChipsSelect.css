@@ -8,7 +8,7 @@
 
 .ChipsSelect__empty {
   text-align: center;
-  color: var(--text_secondary);
+  color: var(--text_secondary, var(--vkui--color_text_secondary));
 }
 
 .ChipsSelect__open:not(.ChipsSelect__open--popupDirectionTop)
