@@ -55,3 +55,6 @@ export type { CustomSelectProps } from "../components/CustomSelect/CustomSelect"
 
 export { CustomSelectDropdown } from "../components/CustomSelectDropdown/CustomSelectDropdown";
 export type { CustomSelectDropdownProps } from "../components/CustomSelectDropdown/CustomSelectDropdown";
+
+export { CustomSelectOption } from "../components/CustomSelectOption/CustomSelectOption";
+export type { CustomSelectOptionProps } from "../components/CustomSelectOption/CustomSelectOption";

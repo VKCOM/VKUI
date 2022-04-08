@@ -8,7 +8,8 @@ import ChipsInput, {
   RenderChip,
   chipsInputDefaultProps,
 } from "../ChipsInput/ChipsInput";
-import CustomSelectOption, {
+import {
+  CustomSelectOption,
   CustomSelectOptionProps,
 } from "../CustomSelectOption/CustomSelectOption";
 import { useChipsSelect } from "./useChipsSelect";

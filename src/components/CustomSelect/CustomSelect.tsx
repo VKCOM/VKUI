@@ -5,7 +5,8 @@ import { classNames } from "../../lib/classNames";
 import { NativeSelectProps } from "../NativeSelect/NativeSelect";
 import { withAdaptivity } from "../../hoc/withAdaptivity";
 import { withPlatform } from "../../hoc/withPlatform";
-import CustomSelectOption, {
+import {
+  CustomSelectOption,
   CustomSelectOptionProps,
 } from "../CustomSelectOption/CustomSelectOption";
 import { getClassName } from "../../helpers/getClassName";

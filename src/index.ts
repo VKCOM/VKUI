@@ -207,7 +207,7 @@ export type {
   CustomSelectProps,
   CustomSelectOptionInterface,
 } from "./components/CustomSelect/CustomSelect";
-export { default as CustomSelectOption } from "./components/CustomSelectOption/CustomSelectOption";
+export { CustomSelectOption } from "./components/CustomSelectOption/CustomSelectOption";
 export type { CustomSelectOptionProps } from "./components/CustomSelectOption/CustomSelectOption";
 export { default as DatePicker } from "./components/DatePicker/DatePicker";
 export type {

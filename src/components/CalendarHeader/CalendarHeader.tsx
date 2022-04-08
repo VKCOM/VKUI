@@ -12,7 +12,7 @@ import {
   CustomSelectProps,
   SelectType,
 } from "../CustomSelect/CustomSelect";
-import CustomSelectOption from "../CustomSelectOption/CustomSelectOption";
+import { CustomSelectOption } from "../CustomSelectOption/CustomSelectOption";
 import { SizeType } from "../../hoc/withAdaptivity";
 import { getMonths, getYears } from "../../lib/calendar";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
