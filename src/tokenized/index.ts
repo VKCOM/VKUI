@@ -52,3 +52,6 @@ export type { SelectProps } from "../components/Select/Select";
 
 export { CustomSelect } from "../components/CustomSelect/CustomSelect";
 export type { CustomSelectProps } from "../components/CustomSelect/CustomSelect";
+
+export { CustomSelectDropdown } from "../components/CustomSelectDropdown/CustomSelectDropdown";
+export type { CustomSelectDropdownProps } from "../components/CustomSelectDropdown/CustomSelectDropdown";

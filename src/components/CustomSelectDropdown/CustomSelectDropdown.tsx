@@ -50,12 +50,12 @@ export const CustomSelectDropdown: React.FC<CustomSelectDropdownProps> = ({
       sameWidth={sameWidth}
       onPlacementChange={onPlacementChange}
       placement={placement}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames("CustomSelectDropdown__options", {
-        "CustomSelectDropdown__options--popupDirectionTop": isTop,
-        "CustomSelectDropdown__options--not-adjacent": offsetDistance > 0,
-        "CustomSelectDropdown__options--same-width": sameWidth,
-      })}
+      vkuiClass={classNames(
+        "CustomSelectDropdown__options",
+        isTop && "CustomSelectDropdown__options--popupDirectionTop",
+        offsetDistance > 0 && "CustomSelectDropdown__options--not-adjacent",
+        sameWidth && "CustomSelectDropdown__options--same-width"
+      )}
       forcePortal={forcePortal}
       {...restProps}
     >

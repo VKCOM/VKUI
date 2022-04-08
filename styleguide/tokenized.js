@@ -16,4 +16,5 @@ export const tokenized = [
   "FormField",
   "Select",
   "CustomSelect",
+  "CustomSelectDropdown",
 ];
