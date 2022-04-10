@@ -82,7 +82,7 @@ describe("Tooltip", () => {
     });
   });
 
-  it("does not explode when chilren does not accept ref", () => {
+  it("does not explode when children does not accept ref", () => {
     expect(() => render(<Tooltip isShown {...({} as any)} />)).not.toThrow();
     expect(() =>
       render(<Tooltip isShown>{"text" as any}</Tooltip>)

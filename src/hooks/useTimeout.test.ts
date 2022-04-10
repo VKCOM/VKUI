@@ -11,7 +11,7 @@ describe(useTimeout, () => {
     jest.runAllTimers();
     expect(cb).toBeCalledTimes(1);
   });
-  it("clears timeout on unmout", () => {
+  it("clears timeout on unmount", () => {
     const { result, unmount } = renderHook(() => useTimeout(noop, 100));
     // run useEffect
     jest.runAllTimers();

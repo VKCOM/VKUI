@@ -91,10 +91,10 @@ export const Touch: React.FC<TouchProps> = ({
   const gesture = React.useRef<Partial<Gesture> | null>(null);
   const handle = (
     e: VKUITouchEvent,
-    handers: Array<TouchEventHandler | undefined | false>
+    handlers: Array<TouchEventHandler | undefined | false>
   ) => {
     stopPropagation && e.stopPropagation();
-    handers.forEach((cb) => {
+    handlers.forEach((cb) => {
       const duration = Date.now() - (gesture.current?.startT?.getTime() ?? 0);
       cb && cb({ ...(gesture.current as Gesture), duration, originalEvent: e });
     });

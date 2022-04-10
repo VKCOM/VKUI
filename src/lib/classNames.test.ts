@@ -8,7 +8,7 @@ describe(classNames, () => {
     expect(
       classNames({ b: true, no: false, c: true, no2: null, no3: undefined })
     ).toEqual(["b", "c"]));
-  it("filters out falsey values", () =>
+  it("filters out falsy values", () =>
     expect(classNames("a", false, "b", null, "c", undefined)).toEqual([
       "a",
       "b",
@@ -27,7 +27,7 @@ describe(classNames, () => {
 });
 
 describe(classNamesString, () => {
-  it("returns classname as string", () => {
+  it("returns className as string", () => {
     expect(classNamesString("A", "B")).toBe("A B");
     expect(classNamesString("A")).toBe("A");
     expect(classNamesString()).toBe("");

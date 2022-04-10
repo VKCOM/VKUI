@@ -236,7 +236,7 @@ describe("Touch", () => {
       });
 
       if (input === "touch") {
-        it("stops gesture if multitouch", () => {
+        it("stops gesture if multi-touch", () => {
           const handlers = makeHandlers();
           render(<Touch {...handlers} data-testid="__t__" />);
           fireGesture(screen.getByTestId("__t__"), [

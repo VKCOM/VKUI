@@ -7,7 +7,7 @@ class Example extends React.Component {
       activePanel: "panel1",
       contextOpened: false,
       mode: "all",
-      activeTab1: "recomendations",
+      activeTab1: "recommendations",
       activeTab2: "music",
       activeTab3: "news",
       activeTab4: "all",
@@ -63,11 +63,11 @@ class Example extends React.Component {
               <TabsItem
                 onClick={() => {
                   this.setState({
-                    activeTab1: "recomendations",
+                    activeTab1: "recommendations",
                     contextOpened: false,
                   });
                 }}
-                selected={this.state.activeTab1 === "recomendations"}
+                selected={this.state.activeTab1 === "recommendations"}
               >
                 Интересное
               </TabsItem>
@@ -134,8 +134,8 @@ class Example extends React.Component {
                 Моя музыка
               </TabsItem>
               <TabsItem
-                onClick={() => this.setState({ activeTab2: "recomendations" })}
-                selected={this.state.activeTab2 === "recomendations"}
+                onClick={() => this.setState({ activeTab2: "recommendations" })}
+                selected={this.state.activeTab2 === "recommendations"}
               >
                 Рекомендации
               </TabsItem>
@@ -169,9 +169,9 @@ class Example extends React.Component {
                 </TabsItem>
                 <TabsItem
                   onClick={() =>
-                    this.setState({ activeTab3: "recomendations" })
+                    this.setState({ activeTab3: "recommendations" })
                   }
-                  selected={this.state.activeTab3 === "recomendations"}
+                  selected={this.state.activeTab3 === "recommendations"}
                 >
                   Рекомендации
                 </TabsItem>

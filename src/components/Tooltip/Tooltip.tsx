@@ -208,7 +208,7 @@ const Tooltip: React.FC<TooltipProps> = ({
     );
   }
 
-  const arrowOffsetModiifer = React.useMemo<ArrowOffsetModifier>(() => {
+  const arrowOffsetModifier = React.useMemo<ArrowOffsetModifier>(() => {
     return {
       name: "arrowOffset",
       enabled: true,
@@ -262,7 +262,7 @@ const Tooltip: React.FC<TooltipProps> = ({
       {
         name: "flip",
       },
-      arrowOffsetModiifer,
+      arrowOffsetModifier,
     ],
   });
 
