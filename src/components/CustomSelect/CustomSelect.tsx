@@ -712,7 +712,7 @@ class CustomSelect extends React.Component<
             onChange={this.onInputChange}
             // TODO Ожидается, что клик поймает нативный select, но его перехвает Input. К сожалению, это приводит конфликтам типизации.
             // TODO Нужно перестать пытаться превратить CustomSelect в select. Тогда эта проблема уйдёт.
-            // @ts-ignore
+            // @ts-expect-error
             onClick={onClick}
             after={icon}
             placeholder={restProps.placeholder}

@@ -34,7 +34,7 @@ describe("Avatar", () => {
     });
 
     it("Passes all img attributes to img", () => {
-      render(<AvatarTest src="#" {...imgOnlyAttributes} />);
+      render(<AvatarTest {...imgOnlyAttributes} />);
 
       Object.keys(imgOnlyAttributes).forEach((attr) => {
         expect(img()).toHaveAttribute(attr);

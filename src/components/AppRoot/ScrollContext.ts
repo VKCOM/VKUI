@@ -3,8 +3,8 @@ import { noop } from "../../lib/utils";
 import { clamp } from "../../helpers/math";
 
 export interface ScrollContextInterface {
-  getScroll(): { x: number; y: number };
-  scrollTo(x?: number, y?: number): void;
+  getScroll(this: void): { x: number; y: number };
+  scrollTo(this: void, x?: number, y?: number): void;
 }
 
 export const ScrollContext = React.createContext<ScrollContextInterface>({

@@ -73,10 +73,10 @@ export interface ChipsSelectProps<Option extends ChipsInputOption>
   closeAfterSelect?: boolean;
 }
 
-type focusActionType = "next" | "prev";
+type FocusActionType = "next" | "prev";
 
-const FOCUS_ACTION_NEXT: focusActionType = "next";
-const FOCUS_ACTION_PREV: focusActionType = "prev";
+const FOCUS_ACTION_NEXT: FocusActionType = "next";
+const FOCUS_ACTION_PREV: FocusActionType = "prev";
 
 const chipsSelectDefaultProps: ChipsSelectProps<any> = {
   ...chipsInputDefaultProps,
@@ -215,7 +215,7 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
     setFocusedOptionIndex(index);
   };
 
-  const focusOption = (nextIndex: number | null, type: focusActionType) => {
+  const focusOption = (nextIndex: number | null, type: FocusActionType) => {
     let index = typeof nextIndex !== "number" ? -1 : nextIndex;
 
     if (type === FOCUS_ACTION_NEXT) {

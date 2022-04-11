@@ -3,19 +3,18 @@ import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
 describe("CustomSelect", () => {
   describeScreenshotFuzz(
-    (props: CustomSelectProps) => (
-      <CustomSelect
-        placeholder="Не выбрана"
-        options={[
-          { value: 1, label: "Россия" },
-          { value: 2, label: "Украина" },
-          {
-            value: 3,
-            label: "Соединенное королевство Великобритании и Северной Ирландии",
-          },
-        ]}
-        {...props}
-      />
+    ({
+      options = [
+        { value: 1, label: "Россия" },
+        { value: 2, label: "Украина" },
+        {
+          value: 3,
+          label: "Соединенное королевство Великобритании и Северной Ирландии",
+        },
+      ],
+      ...props
+    }: CustomSelectProps) => (
+      <CustomSelect placeholder="Не выбрана" options={options} {...props} />
     ),
     [
       {

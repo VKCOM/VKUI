@@ -633,7 +633,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
                   vkuiClass="View__panel-in"
                   style={{
                     marginTop: compensateScroll
-                      ? -(this.scrolls[panelId as string] ?? 0)
+                      ? -(this.scrolls[panelId] ?? 0)
                       : undefined,
                   }}
                 >
