@@ -12,7 +12,6 @@ import {
   ConfigProviderContextInterface,
 } from "../ConfigProvider/ConfigProviderContext";
 import { SplitColContext, SplitColContextProps } from "../SplitCol/SplitCol";
-import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { canUseDOM, withDOM, DOMProps } from "../../lib/dom";
 import {
   ScrollContext,
@@ -46,18 +45,6 @@ export interface ViewProps
     HasPlatform,
     NavIdProps {
   activePanel: string;
-  /**
-   * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
-   *
-   * Свойство для отрисовки `Alert`, `ActionSheet` и `ScreenSpinner`.
-   */
-  popout?: React.ReactNode;
-  /**
-   * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
-   *
-   * Свойство для отрисовки `ModalRoot`.
-   */
-  modal?: React.ReactNode;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   /**
    * callback свайпа назад
@@ -152,20 +139,6 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
 
   panelNodes: { [id: string]: HTMLDivElement | null } = {};
 
-  componentDidMount() {
-    if (process.env.NODE_ENV === "development") {
-      const { popout, modal } = this.props;
-      popout &&
-        warn(
-          "Свойство popout устарело и будет удалено в 5.0.0. Используйте одноименное свойство у SplitLayout."
-        );
-      modal &&
-        warn(
-          "Свойство modal устарело и будет удалено в 5.0.0. Используйте одноименное свойство у SplitLayout."
-        );
-    }
-  }
-
   componentWillUnmount() {
     const id = getNavId(this.props);
     if (id) {
@@ -177,9 +150,6 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
   }
 
   componentDidUpdate(prevProps: ViewProps, prevState: ViewState) {
-    this.props.popout && !prevProps.popout && this.blurActiveElement();
-    this.props.modal && !prevProps.modal && this.blurActiveElement();
-
     // Нужен переход
     if (
       prevProps.activePanel !== this.props.activePanel &&
@@ -538,8 +508,6 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
 
   render() {
     const {
-      popout,
-      modal,
       platform,
       activePanel: _1,
       splitCol,
@@ -565,10 +533,6 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
       isBack,
       animated,
     } = this.state;
-
-    const hasPopout = !!popout;
-    const hasModal = !!modal;
-
     const panels = this.panels.filter((panel: React.ReactElement) => {
       const panelId = getNavId(panel.props, warn);
 
@@ -652,10 +616,6 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
             );
           })}
         </div>
-        <AppRootPortal>
-          {hasPopout && <div vkuiClass="View__popout">{popout}</div>}
-          {hasModal && <div vkuiClass="View__modal">{modal}</div>}
-        </AppRootPortal>
       </Touch>
     );
   }
