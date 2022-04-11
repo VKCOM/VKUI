@@ -11,7 +11,7 @@ import {
   SizeType,
 } from "../AdaptivityProvider/AdaptivityContext";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import { Headline } from "../Typography/Headline/Headline";
 
 export const SelectType = {

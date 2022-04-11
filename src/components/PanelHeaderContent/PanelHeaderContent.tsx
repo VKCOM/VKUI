@@ -6,7 +6,7 @@ import { hasReactNode } from "../../lib/utils";
 import { Caption } from "../Typography/Caption/Caption";
 import { Headline } from "../Typography/Headline/Headline";
 import { IOS, Platform } from "../../lib/platform";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import { HasPlatform } from "../../types";
 import "./PanelHeaderContent.css";
 

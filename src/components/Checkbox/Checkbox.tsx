@@ -18,7 +18,7 @@ import {
   AdaptivityProps,
   SizeType,
 } from "../../hoc/withAdaptivity";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import { Headline } from "../Typography/Headline/Headline";
 import { hasReactNode } from "../../lib/utils";
 import { Caption } from "../Typography/Caption/Caption";

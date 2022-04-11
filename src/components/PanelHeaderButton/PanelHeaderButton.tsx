@@ -6,7 +6,7 @@ import { warnOnce } from "../../lib/warnOnce";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getTitleFromChildren, isPrimitiveReactNode } from "../../lib/utils";
 import { IOS, VKCOM, ANDROID } from "../../lib/platform";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import { Title } from "../Typography/Title/Title";
 import "./PanelHeaderButton.css";
 

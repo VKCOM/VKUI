@@ -1,5 +1,5 @@
 import { describeScreenshotFuzz } from "../../../testing/e2e/utils";
-import Text, { TextProps } from "./Text";
+import { Text, TextProps } from "./Text";
 
 describe("Text", () => {
   describeScreenshotFuzz(

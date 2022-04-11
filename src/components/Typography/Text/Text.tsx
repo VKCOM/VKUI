@@ -18,7 +18,7 @@ const warn = warnOnce("Text");
 /**
  * @see https://vkcom.github.io/VKUI/#/Text
  */
-const Text: React.FC<TextProps> = ({
+export const Text: React.FC<TextProps> = ({
   children,
   weight = "regular",
   Component = "span",
@@ -51,6 +51,3 @@ const Text: React.FC<TextProps> = ({
     </Component>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default Text;
