@@ -10,7 +10,11 @@ describe("Text", () => {
     ),
     [
       {
-        weight: ["3", "2", "1"],
+        weight: ["3"],
+        $adaptivity: "y",
+      },
+      {
+        weight: ["2", "1"],
       },
     ]
   );

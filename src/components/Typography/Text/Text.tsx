@@ -1,7 +1,6 @@
 import * as React from "react";
-import { usePlatform } from "../../../hooks/usePlatform";
+import { useAdaptivity } from "../../../hooks/useAdaptivity";
 import { classNames } from "../../../lib/classNames";
-import { getClassName } from "../../../helpers/getClassName";
 import { HasComponent, HasRootRef } from "../../../types";
 import { warnOnce } from "../../../lib/warnOnce";
 import "./Text.css";
@@ -29,8 +28,6 @@ export const Text: React.FC<TextProps> = ({
   getRootRef,
   ...restProps
 }: TextProps) => {
-  const platform = usePlatform();
-
   if (
     process.env.NODE_ENV === "development" &&
     typeof Component !== "string" &&
@@ -51,13 +48,16 @@ export const Text: React.FC<TextProps> = ({
       `Начертание weight="${weight}" устарело и будет удалено в 5.0.0. Используйте значения "1", "2" и "3"`
     );
   }
+
+  const { sizeY } = useAdaptivity();
+
   return (
     <Component
       {...restProps}
       ref={getRootRef}
       vkuiClass={classNames(
         "Text",
-        getClassName("Text", platform),
+        `Text--sizeY-${sizeY}`,
         weight && `Text--w-${weight}`
       )}
     >

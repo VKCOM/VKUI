@@ -6,6 +6,11 @@
   font-weight: var(--vkui--font_text--font_weight--regular);
 }
 
+.Text--sizeY-compact {
+  font-size: var(--vkui--font_text--font_size--compact);
+  line-height: var(--vkui--font_text--line_height--compact);
+}
+
 /* TODO удалить перед релизом 5.0.0 */
 .Text--w-regular {
   font-weight: 400;
