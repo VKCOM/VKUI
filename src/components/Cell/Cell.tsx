@@ -1,6 +1,6 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
-import { noop } from "../../lib/utils";
+import { noop, stopPropagation } from "../../lib/utils";
 import { warnOnce } from "../../lib/warnOnce";
 import { getClassName } from "../../helpers/getClassName";
 import { ANDROID, IOS, VKCOM } from "../../lib/platform";
@@ -138,7 +138,13 @@ export const Cell: React.FC<CellProps> = ({
       checked,
       disabled,
     };
-    checkbox = <CellCheckbox vkuiClass="Cell__checkbox" {...checkboxProps} />;
+    checkbox = (
+      <CellCheckbox
+        vkuiClass="Cell__checkbox"
+        onClick={stopPropagation}
+        {...checkboxProps}
+      />
+    );
   }
 
   const simpleCellDisabled =
