@@ -9,7 +9,7 @@ describe("ChipsSelect", () => {
     .map((_, i) => ({ value: i, label: `Option #${i}` }));
   it("Scrolls to item via arrows", async () => {
     await mount(
-      <AppRoot embedded>
+      <AppRoot mode="embedded">
         <AdaptivityProvider>
           <ChipsSelect id="chips" options={options} value={[]} />
         </AdaptivityProvider>
