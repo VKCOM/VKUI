@@ -2,6 +2,7 @@ import * as React from "react";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { callMultiple } from "../../lib/callMultiple";
+import { stopPropagation } from "../../lib/utils";
 import { usePlatform } from "../../hooks/usePlatform";
 import { HasRootRef } from "../../types";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
@@ -21,6 +22,7 @@ export const Switch: React.FC<SwitchProps> = ({
   style,
   className,
   getRootRef,
+  onClick = stopPropagation,
   ...restProps
 }: SwitchProps) => {
   const platform = usePlatform();
@@ -45,6 +47,7 @@ export const Switch: React.FC<SwitchProps> = ({
     >
       <VisuallyHiddenInput
         {...restProps}
+        onClick={onClick}
         type="checkbox"
         vkuiClass="Switch__self"
         onBlur={callMultiple(onBlur, restProps.onBlur)}
