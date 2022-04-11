@@ -163,19 +163,6 @@ describe("Root", () => {
       );
       expect(document.activeElement === document.body).toBe(true);
     });
-    it("on popout", () => {
-      renderFocused();
-      render(
-        <Root activeView="focus">
-          <View id="focus" activePanel="" />
-        </Root>
-      ).rerender(
-        <Root activeView="focus" popout={<div />}>
-          <View id="focus" activePanel="" />
-        </Root>
-      );
-      expect(document.activeElement === document.body).toBe(true);
-    });
   });
 
   describe("scroll control", () => {
