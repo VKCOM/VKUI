@@ -33,17 +33,6 @@ describe("SimpleCheckbox", () => {
         expect(screen.getByRole("checkbox")).not.toBeChecked();
       });
 
-      it("value overrides defaultValue", () => {
-        render(
-          <SimpleCheckbox
-            data-testid="simple-checkbox"
-            defaultChecked
-            checked={false}
-          />
-        );
-        expect(screen.getByRole("checkbox")).not.toBeChecked();
-      });
-
       it("handles change", () => {
         render(<CheckboxController />);
         expect(screen.getByRole("checkbox")).not.toBeChecked();

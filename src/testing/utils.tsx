@@ -72,7 +72,7 @@ export function baselineComponent<Props extends BasicProps>(
     : RawComponent;
   mountTest(Component);
   forward &&
-    it("forwards attributes", () => {
+    it("forwards attributes", async () => {
       const cls = "Custom";
       const { rerender } = render(
         <Component
@@ -81,6 +81,7 @@ export function baselineComponent<Props extends BasicProps>(
           style={{ background: "red" }}
         />
       );
+      await waitForPopper();
       // forward DOM attributes
       domAttr && expect(screen.queryByTestId("__cmp__")).toBeTruthy();
 
@@ -190,3 +191,11 @@ Object.defineProperty(HTMLElement.prototype, "offsetParent", {
     return this.parentNode;
   },
 });
+
+// Popper update() - https://github.com/popperjs/react-popper/issues/350
+export async function waitForPopper() {
+  await act(async () => {
+    // eslint-disable-next-line @typescript-eslint/await-thenable
+    await null;
+  });
+}

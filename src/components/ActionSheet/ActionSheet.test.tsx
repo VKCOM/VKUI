@@ -1,17 +1,19 @@
 import { render, screen } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
 import { ViewWidth } from "../../hoc/withAdaptivity";
-import { baselineComponent } from "../../testing/utils";
+import {
+  baselineComponent,
+  waitForPopper,
+  runAllTimers,
+} from "../../testing/utils";
 import { ActionSheet, ActionSheetProps } from "./ActionSheet";
 import { ActionSheetItem } from "../ActionSheetItem/ActionSheetItem";
 import userEvent from "@testing-library/user-event";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { FC } from "react";
 
-beforeEach(() => jest.useFakeTimers());
-afterEach(() => jest.useRealTimers());
-
 describe("ActionSheet", () => {
+  beforeAll(() => jest.useFakeTimers());
+  afterAll(() => jest.useRealTimers());
   const toggle = document.createElement("div");
   const ActionSheetDesktop: FC<Partial<ActionSheetProps>> = (props) => (
     <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasMouse>
@@ -36,7 +38,7 @@ describe("ActionSheet", () => {
         { selectable: true },
         { autoclose: true },
         { autoclose: true, selectable: true },
-      ])("when %s", (props) => {
+      ])("when %s", async (props) => {
         const handlers = { onClick: jest.fn(), onChange: jest.fn() };
         const { unmount } = render(
           <ActionSheet onClose={() => unmount()}>
@@ -48,8 +50,10 @@ describe("ActionSheet", () => {
             />
           </ActionSheet>
         );
+        await waitForPopper();
         userEvent.click(screen.getByTestId("item"));
-        jest.runAllTimers();
+
+        runAllTimers();
         expect(handlers.onClick).toBeCalled();
         props.selectable && expect(handlers.onChange).toBeCalled();
       });
@@ -58,33 +62,34 @@ describe("ActionSheet", () => {
     it.each([
       ["content", () => screen.getByTestId("xxx")],
       ["toggle", () => toggle],
-    ])("does not close on %s click", (_name, getNode) => {
+    ])("does not close on %s click", async (_name, getNode) => {
       const onClose = jest.fn();
       render(
         <ActionSheet onClose={onClose}>
           <div data-testid="xxx" />
         </ActionSheet>
       );
-      act(() => {
-        jest.runAllTimers();
-      });
+      await waitForPopper();
+      runAllTimers();
       userEvent.click(getNode());
       expect(onClose).not.toBeCalled();
     });
   });
 
   describe("desktop", () => {
-    it("closes on click outside", () => {
+    it("closes on click outside", async () => {
       const onClose = jest.fn();
       render(<ActionSheetDesktop onClose={onClose} />);
-      jest.runAllTimers();
+      await waitForPopper();
+      runAllTimers();
       userEvent.click(document.body);
-      jest.runAllTimers();
+      runAllTimers();
       expect(onClose).toBeCalledTimes(1);
     });
-    it("calls popupDirection with element", () => {
+    it("calls popupDirection with element", async () => {
       const popupDirection = jest.fn();
       render(<ActionSheetDesktop popupDirection={popupDirection} />);
+      await waitForPopper();
       expect(popupDirection).toBeCalledWith({
         current: document.querySelector(".ActionSheet"),
       });
@@ -92,14 +97,15 @@ describe("ActionSheet", () => {
   });
 
   describe("mobile", () => {
-    it("closes on overlay click", () => {
+    it("closes on overlay click", async () => {
       const onClose = jest.fn();
       render(<ActionSheetMobile onClose={onClose} />);
-      jest.runAllTimers();
+      await waitForPopper();
+      runAllTimers();
       userEvent.click(
         document.querySelector(".PopoutWrapper__overlay") as Element
       );
-      jest.runAllTimers();
+      runAllTimers();
       expect(onClose).toBeCalledTimes(1);
     });
   });

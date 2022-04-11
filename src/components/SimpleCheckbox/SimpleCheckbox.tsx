@@ -90,6 +90,13 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
         "error"
       );
     }
+
+    if (restProps.defaultChecked && restProps.checked) {
+      warn(
+        "defaultChecked and checked cannot be true at the same time",
+        "error"
+      );
+    }
   }
 
   return (

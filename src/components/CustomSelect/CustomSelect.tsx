@@ -663,6 +663,7 @@ class CustomSelect extends React.Component<
       dropdownOffsetDistance,
       fixDropdownWidth,
       forceDropdownPortal,
+      selectType,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
@@ -734,6 +735,7 @@ class CustomSelect extends React.Component<
                 (dropdownOffsetDistance as number) > 0,
             })}
             after={icon}
+            selectType={selectType}
           >
             {label}
           </SelectMimicry>

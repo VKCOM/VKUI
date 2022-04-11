@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, act } from "@testing-library/react";
 import ConfigProvider from "../ConfigProvider/ConfigProvider";
 import { IOS } from "../../lib/platform";
 import {
@@ -11,15 +11,14 @@ import View, { scrollsCache, ViewProps } from "./View";
 import { ViewInfinite } from "./ViewInfinite";
 import { ComponentType, Fragment } from "react";
 
-beforeEach(() => jest.useFakeTimers());
-afterEach(() => jest.useRealTimers());
-
 // Basically the same as Root.test.tsx
 
 describe.each([
   ["View", View],
   ["ViewInfinite", ViewInfinite],
 ])("%s", (name, View) => {
+  beforeAll(() => jest.useFakeTimers());
+  afterAll(() => jest.useRealTimers());
   baselineComponent(View);
   describe("With Panel", () =>
     mountTest(() => (
@@ -39,7 +38,9 @@ describe.each([
       render(<View activePanel="p1">{panels}</View>).rerender(
         <View activePanel="p2">{panels}</View>
       );
-      jest.runAllTimers();
+      act(() => {
+        jest.runAllTimers();
+      });
       expect(document.getElementById("p1")).toBeNull();
       expect(document.getElementById("p2")).not.toBeNull();
     });
@@ -54,7 +55,9 @@ describe.each([
           {panels}
         </View>
       );
-      jest.runAllTimers();
+      act(() => {
+        jest.runAllTimers();
+      });
       expect(onTransition).toBeCalledTimes(1);
       expect(onTransition).toBeCalledWith({
         from: "p1",
@@ -73,7 +76,9 @@ describe.each([
           {panels}
         </View>
       );
-      jest.runAllTimers();
+      act(() => {
+        jest.runAllTimers();
+      });
       expect(onTransition).toBeCalledWith({
         from: "p2",
         to: "p1",
@@ -141,7 +146,9 @@ describe.each([
         </Wrapper>
       );
       const h = render(<SwipeBack />);
-      jest.runAllTimers();
+      act(() => {
+        jest.runAllTimers();
+      });
       const view = h.container.firstElementChild as Element;
       // force detect x-swipe
       fireEvent.mouseDown(view, { clientX: 50, clientY: 100 });
@@ -196,7 +203,9 @@ describe.each([
       fireEvent.mouseUp(view);
       expect(events.onSwipeBack).not.toBeCalled();
       expect(events.onSwipeBackCancel).not.toBeCalled();
-      jest.runAllTimers();
+      act(() => {
+        jest.runAllTimers();
+      });
       expect(events.onSwipeBack).toBeCalledTimes(1);
     });
     it("fails weak swipeBack", () => {
@@ -208,7 +217,9 @@ describe.each([
       // speed to 0
       nowMock.mockImplementation(() => Infinity);
       fireEvent.mouseUp(view);
-      jest.runAllTimers();
+      act(() => {
+        jest.runAllTimers();
+      });
       expect(events.onSwipeBack).not.toBeCalled();
       expect(events.onSwipeBackCancel).toBeCalledTimes(1);
     });
@@ -263,7 +274,9 @@ describe.each([
           <View activePanel="p1">{panels}</View>
         </MockScroll>
       );
-      jest.runAllTimers();
+      act(() => {
+        jest.runAllTimers();
+      });
       expect(scrollTo).toBeCalledWith(0, y);
     });
     it("resets scroll on forward navigation", () => {
@@ -280,14 +293,18 @@ describe.each([
           <View activePanel="p1">{panels}</View>
         </MockScroll>
       );
-      jest.runAllTimers();
+      act(() => {
+        jest.runAllTimers();
+      });
       scrollTo.mockReset();
       h.rerender(
         <MockScroll>
           <View activePanel="p2">{panels}</View>
         </MockScroll>
       );
-      jest.runAllTimers();
+      act(() => {
+        jest.runAllTimers();
+      });
       expect(scrollTo).toBeCalledWith(0, 0);
     });
   });
