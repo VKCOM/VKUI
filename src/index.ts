@@ -214,11 +214,6 @@ export type {
   DatePickerProps,
   DatePickerDateFormat,
 } from "./components/DatePicker/DatePicker";
-export { SliderSwitch } from "./components/SliderSwitch/SliderSwitch";
-export type {
-  SliderSwitchProps,
-  SliderSwitchOptionInterface,
-} from "./components/SliderSwitch/SliderSwitch";
 export { SegmentedControl } from "./components/SegmentedControl/SegmentedControl";
 export type {
   SegmentedControlProps,
