@@ -14,9 +14,6 @@ import { SplitLayout } from "../SplitLayout/SplitLayout";
 import { SplitCol } from "../SplitCol/SplitCol";
 import { CellButton } from "../CellButton/CellButton";
 
-beforeEach(() => jest.useFakeTimers());
-afterEach(() => jest.useRealTimers());
-
 const _children = ["first", "middle", "last"].map((item) => (
   <ActionSheetItem key={item} autoclose data-testid={item}>
     {item} Item
@@ -69,6 +66,8 @@ const ActionSheetTest: React.FC<
 };
 
 describe("FocusTrap", () => {
+  beforeAll(() => jest.useFakeTimers());
+  afterAll(() => jest.useRealTimers());
   baselineComponent(FocusTrap);
 
   const mountActionSheetViaClick = () => {
