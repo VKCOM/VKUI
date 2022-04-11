@@ -6,7 +6,6 @@ import Avatar from "../Avatar/Avatar";
 import { Caption } from "../Typography/Caption/Caption";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getClassName } from "../../helpers/getClassName";
-import { warnOnce } from "../../lib/warnOnce";
 import "./PromoBanner.css";
 
 type StatsType =
@@ -34,8 +33,6 @@ type BannerData = {
   navigationType?: string;
   description?: string;
   ageRestrictions?: string;
-  /** @deprecated */
-  ageRestriction?: number;
 };
 
 export interface PromoBannerProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -47,21 +44,9 @@ export interface PromoBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   onClose: () => void;
 }
 
-const warn = warnOnce("PromoBanner");
 const PromoBanner = (props: PromoBannerProps) => {
   const platform = usePlatform();
   const { bannerData = {}, onClose, ...restProps } = props;
-
-  const ageRestrictions =
-    bannerData.ageRestrictions != null
-      ? parseInt(bannerData.ageRestrictions)
-      : bannerData.ageRestriction;
-
-  if (bannerData.ageRestriction && process.env.NODE_ENV === "development") {
-    warn(
-      "Свойство bannerData.ageRestriction устарело и будет удалено в 5.0.0. Используйте bannerData.ageRestrictions"
-    );
-  }
 
   const [currentPixel, setCurrentPixel] = React.useState("");
 
@@ -93,8 +78,10 @@ const PromoBanner = (props: PromoBannerProps) => {
         <Caption vkuiClass="PromoBanner__label">
           {bannerData.advertisingLabel || "Advertisement"}
         </Caption>
-        {ageRestrictions != null && (
-          <Caption vkuiClass="PromoBanner__age">{ageRestrictions}+</Caption>
+        {bannerData.ageRestrictions && (
+          <Caption vkuiClass="PromoBanner__age">
+            {bannerData.ageRestrictions}
+          </Caption>
         )}
 
         {!props.isCloseButtonHidden && (
