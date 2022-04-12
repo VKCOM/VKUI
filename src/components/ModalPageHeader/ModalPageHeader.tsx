@@ -19,7 +19,7 @@ export interface ModalPageHeaderProps
  */
 const ModalPageHeader = ({
   children,
-  separator,
+  separator = true,
   getRef,
   ...restProps
 }: ModalPageHeaderProps) => {
@@ -47,10 +47,6 @@ const ModalPageHeader = ({
       {hasSeparator && <Separator wide />}
     </div>
   );
-};
-
-ModalPageHeader.defaultProps = {
-  separator: true,
 };
 
 // eslint-disable-next-line import/no-default-export
