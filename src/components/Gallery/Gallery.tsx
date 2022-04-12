@@ -427,6 +427,7 @@ class BaseGallery extends React.Component<
     return (
       <div
         {...restProps}
+        // eslint-disable-next-line vkui/no-object-expression-in-arguments
         vkuiClass={classNames(
           getClassName("Gallery", platform),
           `Gallery--${align}`,
@@ -474,6 +475,7 @@ class BaseGallery extends React.Component<
               children,
               (_item: React.ReactNode, index: number) => (
                 <div
+                  // eslint-disable-next-line vkui/no-object-expression-in-arguments
                   vkuiClass={classNames("Gallery__bullet", {
                     "Gallery__bullet--active": index === slideIndex,
                   })}

@@ -1,14 +1,7 @@
 .Div {
+  padding: 12px 16px;
 }
 
 .Div--ios {
   padding: 12px;
-}
-
-.Div--android {
-  padding: 12px 16px;
-}
-
-.Div--vkcom {
-  padding: 12px 16px;
 }

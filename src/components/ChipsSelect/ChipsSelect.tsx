@@ -15,7 +15,7 @@ import { useChipsSelect } from "./useChipsSelect";
 import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { noop } from "../../lib/utils";
 import { useDOM } from "../../lib/dom";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import { prefixClass } from "../../lib/prefixClass";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
@@ -94,7 +94,7 @@ const chipsSelectDefaultProps: ChipsSelectProps<any> = {
   },
 };
 
-const ChipsSelect = <Option extends ChipsInputOption>(
+const ChipsSelectComponent = <Option extends ChipsInputOption>(
   props: ChipsSelectProps<Option>
 ) => {
   const propsWithDefault = { ...chipsSelectDefaultProps, ...props };
@@ -367,6 +367,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
+        // eslint-disable-next-line vkui/no-object-expression-in-arguments
         vkuiClass={classNames({
           ["ChipsSelect__open"]: opened,
           ["ChipsSelect__open--popupDirectionTop"]: isPopperDirectionTop,
@@ -396,9 +397,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(
             </CustomSelectOption>
           )}
           {!filteredOptions?.length && !showCreatable && emptyText ? (
-            <Caption level="1" weight="regular" vkuiClass="ChipsSelect__empty">
-              {emptyText}
-            </Caption>
+            <Caption vkuiClass="ChipsSelect__empty">{emptyText}</Caption>
           ) : (
             filteredOptions.map((option: Option, index: number) => {
               const label = getOptionLabel!(option);
@@ -449,5 +448,6 @@ const ChipsSelect = <Option extends ChipsInputOption>(
   );
 };
 
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(ChipsSelect, { sizeY: true });
+export const ChipsSelect = withAdaptivity(ChipsSelectComponent, {
+  sizeY: true,
+});

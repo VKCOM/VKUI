@@ -76,7 +76,8 @@ export const PanelHeaderButton: React.FC<PanelHeaderButtonProps> = ({
 
     if (!hasAccessibleName) {
       warn(
-        "a11y: У кнопки нет названия, которое может прочитать скринридер, и она недоступна для части пользователей. Замените содержимое на текст или добавьте описание действия с помощью пропа aria-label."
+        "a11y: У кнопки нет названия, которое может прочитать скринридер, и она недоступна для части пользователей. Замените содержимое на текст или добавьте описание действия с помощью пропа aria-label.",
+        "error"
       );
     }
   }
@@ -88,6 +89,7 @@ export const PanelHeaderButton: React.FC<PanelHeaderButtonProps> = ({
       Component={restProps.href ? "a" : "button"}
       activeEffectDelay={200}
       activeMode={activeMode}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("PanelHeaderButton", platform), {
         "PanelHeaderButton--primary": primary,
         "PanelHeaderButton--primitive": isPrimitive,

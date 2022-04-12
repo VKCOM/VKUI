@@ -30,6 +30,7 @@ const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = ({
 
   return (
     <div
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("ModalPageHeader", platform), {
         "ModalPageHeader--desktop": isDesktop,
       })}

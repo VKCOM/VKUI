@@ -26,7 +26,7 @@ export const Spacing: React.FC<SpacingProps> = ({
   style,
   ...restProps
 }: SpacingProps) => {
-  const platfrom = usePlatform();
+  const platform = usePlatform();
   const styles = {
     height: size,
     ...style,
@@ -36,7 +36,8 @@ export const Spacing: React.FC<SpacingProps> = ({
     <div
       {...restProps}
       aria-hidden="true"
-      vkuiClass={classNames(getClassName("Spacing", platfrom), {
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
+      vkuiClass={classNames(getClassName("Spacing", platform), {
         "Spacing--separator": !!separator,
         "Spacing--separator-center":
           separator === true || separator === "center",

@@ -5,28 +5,26 @@ import { ANDROID, VKCOM } from "../../lib/platform";
 import { baselineComponent } from "../../testing/utils";
 import { Scheme, Appearance } from "../../helpers/scheme";
 import ConfigProvider from "./ConfigProvider";
-import {
-  ConfigProviderContext,
-  ConfigProviderContextInterface,
-  WebviewType,
-  defaultConfigProviderProps,
-} from "./ConfigProviderContext";
+import { ConfigProviderContext, WebviewType } from "./ConfigProviderContext";
 
 describe("ConfigProvider", () => {
   baselineComponent<any>(ConfigProvider, { forward: false });
   it("provides config context", () => {
-    const config: ConfigProviderContextInterface = {
-      platform: ANDROID,
-      isWebView: true,
+    const config = {
+      platform: undefined,
       appearance: Appearance.LIGHT,
       webviewType: WebviewType.INTERNAL,
-      hasNewTokens: false,
+      hasNewTokens: undefined,
       transitionMotionEnabled: false,
     };
     const ConfigUser: FC = () => {
       expect(useContext(ConfigProviderContext)).toEqual({
-        ...defaultConfigProviderProps,
-        ...config,
+        platform: ANDROID,
+        isWebView: false,
+        appearance: Appearance.LIGHT,
+        webviewType: WebviewType.INTERNAL,
+        hasNewTokens: false,
+        transitionMotionEnabled: false,
       });
       return null;
     };

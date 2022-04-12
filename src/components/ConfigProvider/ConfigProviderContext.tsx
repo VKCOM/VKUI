@@ -36,17 +36,13 @@ export interface ConfigProviderContextInterface {
   hasNewTokens: boolean;
 }
 
-export const defaultConfigProviderProps = {
-  webviewType: WebviewType.VKAPPS,
-  isWebView: vkBridge.isWebView(),
-  transitionMotionEnabled: true,
-  platform: platform(),
-  hasNewTokens: false,
-  // appearance is auto-detected by default
-  // appearance: Appearance.LIGHT,
-};
-
 export const ConfigProviderContext =
-  React.createContext<ConfigProviderContextInterface>(
-    defaultConfigProviderProps
-  );
+  React.createContext<ConfigProviderContextInterface>({
+    webviewType: WebviewType.VKAPPS,
+    isWebView: vkBridge.isWebView(),
+    transitionMotionEnabled: true,
+    platform: platform(),
+    hasNewTokens: false,
+    // appearance is auto-detected by default
+    // appearance: Appearance.LIGHT,
+  });

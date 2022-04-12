@@ -1,10 +1,10 @@
 import * as React from "react";
-import { AppearanceType } from "@vkontakte/vk-bridge";
+import vkBridge, { AppearanceType } from "@vkontakte/vk-bridge";
 import { canUseDOM, useDOM } from "../../lib/dom";
 import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
-  defaultConfigProviderProps,
+  WebviewType,
 } from "./ConfigProviderContext";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { useObjectMemo } from "../../hooks/useObjectMemo";
@@ -19,6 +19,8 @@ import {
   AppearanceProvider,
   generateVKUITokensClassName,
 } from "../AppearanceProvider/AppearanceProvider";
+import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
+import { platform as resolvePlatform } from "../../lib/platform";
 
 export interface ConfigProviderProps
   extends Partial<ConfigProviderContextInterface> {
@@ -27,6 +29,10 @@ export interface ConfigProviderProps
    * Цветовая схема приложения
    */
   scheme?: AppearanceScheme;
+  /**
+    Локаль ([список](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry))
+   */
+  locale?: string;
 }
 
 const warn = warnOnce("ConfigProvider");
@@ -64,20 +70,25 @@ const deriveAppearance = (scheme: Scheme | undefined): AppearanceType =>
 
 const ConfigProvider: React.FC<ConfigProviderProps> = ({
   children,
-  ...props
+  webviewType = WebviewType.VKAPPS,
+  isWebView = vkBridge.isWebView(),
+  transitionMotionEnabled = true,
+  platform = resolvePlatform(),
+  hasNewTokens = false,
+  appearance,
+  scheme,
+  locale = "ru",
 }) => {
-  const config = { ...defaultConfigProviderProps, ...props };
-  const { platform, appearance } = config;
-  const scheme = normalizeScheme({
-    scheme: config.scheme,
-    platform: platform,
-    appearance: appearance,
+  const normalizedScheme = normalizeScheme({
+    scheme,
+    platform,
+    appearance,
   });
   const { document } = useDOM();
   const target = document?.body;
 
   useIsomorphicLayoutEffect(() => {
-    if (scheme === "inherit") {
+    if (normalizedScheme === "inherit") {
       return noop;
     }
     if (
@@ -88,11 +99,11 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
         '<body scheme> was set before VKUI mount - did you forget scheme="inherit"?'
       );
     }
-    target?.setAttribute("scheme", scheme);
+    target?.setAttribute("scheme", normalizedScheme);
     return () => target?.removeAttribute("scheme");
-  }, [scheme]);
+  }, [normalizedScheme]);
 
-  const realScheme = useSchemeDetector(target, scheme);
+  const realScheme = useSchemeDetector(target, normalizedScheme);
   const derivedAppearance = deriveAppearance(realScheme);
 
   useIsomorphicLayoutEffect(() => {
@@ -109,15 +120,22 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
   }, [platform, derivedAppearance]);
 
   const configContext = useObjectMemo({
-    appearance: derivedAppearance,
-    ...config,
+    webviewType,
+    isWebView,
+    transitionMotionEnabled,
+    hasNewTokens,
+    platform,
+    scheme,
+    appearance: appearance || derivedAppearance,
   });
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
-      <AppearanceProvider appearance={configContext.appearance}>
-        {children}
-      </AppearanceProvider>
+      <LocaleProviderContext.Provider value={locale}>
+        <AppearanceProvider appearance={configContext.appearance}>
+          {children}
+        </AppearanceProvider>
+      </LocaleProviderContext.Provider>
     </ConfigProviderContext.Provider>
   );
 };

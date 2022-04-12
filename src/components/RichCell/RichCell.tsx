@@ -23,7 +23,8 @@ export interface RichCellProps extends TappableProps {
    */
   bottom?: React.ReactNode;
   /**
-   * Кнопка или набор кнопок `<Button size="s" />`. Располагается под `bottom`.
+   * Кнопка `<Button size="s" />`. Располагается под `bottom`.
+   * Для набора кнопок следует использовать обёртку `<ButtonGroup mode="horizontal" gap="s">...</ButtonGroup>`.
    */
   actions?: React.ReactNode;
   /**
@@ -58,6 +59,7 @@ const RichCell: React.FC<RichCellProps> = ({
   return (
     <Tappable
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("RichCell", platform),
         {
@@ -82,11 +84,7 @@ const RichCell: React.FC<RichCellProps> = ({
           </Text>
         )}
         {hasReactNode(caption) && (
-          <Subhead
-            Component="span"
-            weight="regular"
-            vkuiClass="RichCell__caption"
-          >
+          <Subhead Component="span" vkuiClass="RichCell__caption">
             {caption}
           </Subhead>
         )}

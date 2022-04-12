@@ -11,10 +11,10 @@
         caption="Вчера в 20:30"
         after="+ 1 500 ₽"
         actions={
-          <React.Fragment>
+          <ButtonGroup mode="horizontal" gap="s">
             <Button>Принять</Button>
             <Button mode="secondary">Отклонить</Button>
-          </React.Fragment>
+          </ButtonGroup>
         }
       >
         Тарас Иванов
@@ -36,10 +36,10 @@
           </UsersStack>
         }
         actions={
-          <React.Fragment>
+          <ButtonGroup mode="horizontal" gap="s">
             <Button>Добавить</Button>
             <Button mode="secondary">Скрыть</Button>
-          </React.Fragment>
+          </ButtonGroup>
         }
       >
         Илья Гришин

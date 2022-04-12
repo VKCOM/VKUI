@@ -1,7 +1,7 @@
 import { Icon28UserAddOutline } from "@vkontakte/icons";
-import { Fragment } from "react";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import Avatar from "../Avatar/Avatar";
+import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
 import Button from "../Button/Button";
 import UsersStack from "../UsersStack/UsersStack";
 import RichCell from "./RichCell";
@@ -25,10 +25,10 @@ describe("RichCell", () => {
         </UsersStack>,
       ],
       actions: [
-        <Fragment key="actions">
+        <ButtonGroup key="actions" gap="s">
           <Button>Окей</Button>
           <Button mode="secondary">Отменить</Button>
-        </Fragment>,
+        </ButtonGroup>,
       ],
     },
     {
@@ -41,10 +41,10 @@ describe("RichCell", () => {
         </UsersStack>,
       ],
       actions: [
-        <Fragment key="actions">
+        <ButtonGroup key="actions" gap="s">
           <Button>Окей</Button>
           <Button mode="secondary">Отменить</Button>
-        </Fragment>,
+        </ButtonGroup>,
       ],
       $adaptivity: "y",
     },

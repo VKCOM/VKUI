@@ -3,7 +3,7 @@ import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import Tappable from "../Tappable/Tappable";
 import Subhead from "../Typography/Subhead/Subhead";
 import Avatar from "../Avatar/Avatar";
@@ -20,13 +20,11 @@ const CellTypography: React.FC<CellTypographyProps> = ({
   ...restProps
 }: CellTypographyProps) => {
   return size === "s" ? (
-    <Caption level="2" weight="regular" {...restProps}>
+    <Caption level="2" {...restProps}>
       {children}
     </Caption>
   ) : (
-    <Subhead weight="regular" {...restProps}>
-      {children}
-    </Subhead>
+    <Subhead {...restProps}>{children}</Subhead>
   );
 };
 
@@ -79,13 +77,7 @@ export const HorizontalCell: React.FC<HorizontalCellProps> = ({
             </CellTypography>
           )}
           {hasReactNode(subtitle) && (
-            <Caption
-              weight="regular"
-              level="1"
-              vkuiClass="HorizontalCell__subtitle"
-            >
-              {subtitle}
-            </Caption>
+            <Caption vkuiClass="HorizontalCell__subtitle">{subtitle}</Caption>
           )}
         </div>
       </Tappable>

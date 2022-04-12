@@ -274,7 +274,11 @@ class ModalRootTouchComponent extends React.Component<
     const prevModalState = this.getModalState(id);
 
     if (!prevModalState) {
-      id && warn(`[closeActiveModal] Modal ${id} does not exist - not closing`);
+      id &&
+        warn(
+          `closeActiveModal: Modal ${id} does not exist - not closing`,
+          "error"
+        );
       return;
     }
 
@@ -647,6 +651,7 @@ class ModalRootTouchComponent extends React.Component<
       <TouchRootContext.Provider value={true}>
         <ModalRootContext.Provider value={this.modalRootContext}>
           <Touch
+            // eslint-disable-next-line vkui/no-object-expression-in-arguments
             vkuiClass={classNames(
               getClassName("ModalRoot", this.props.platform),
               {
@@ -691,6 +696,7 @@ class ModalRootTouchComponent extends React.Component<
                     }}
                     onClose={this.props.closeActiveModal}
                     timeout={this.timeout}
+                    // eslint-disable-next-line vkui/no-object-expression-in-arguments
                     vkuiClass={classNames("ModalRoot__modal", {
                       "ModalRoot__modal--active": modalId === activeModal,
                       "ModalRoot__modal--prev": modalId === exitingModal,
@@ -743,7 +749,7 @@ function initModal(modalState: ModalsStateEntry) {
     case ModalType.CARD:
       return initCardModal(modalState);
     default:
-      IS_DEV && warn("[initActiveModal] modalState.type is unknown");
+      IS_DEV && warn("initActiveModal: modalState.type is unknown", "error");
   }
 }
 

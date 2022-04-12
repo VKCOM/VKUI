@@ -1,4 +1,4 @@
-Унивирсальный компонент для отрисовки option в кастомных селектах.
+Универсальный компонент для отрисовки option в кастомных селектах.
 Используется внутри [CustomSelect](#!/CustomSelect), [ChipsSelect](#!/ChipsSelect).
 
 ```jsx { "props": { "layout": false, "iframe": false } }

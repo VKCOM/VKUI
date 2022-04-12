@@ -23,8 +23,8 @@ export const usePatchChildrenRef = <T = HTMLElement>(
   React.useEffect(() => {
     if (!patchedRef.current && process.env.NODE_ENV === "development") {
       warn(
-        "Кажется, в `children` передан компонент, который не поддерживает свойство `getRootRef`. Мы не можем" +
-          "получить ссылку на корневой dom-элемент этого компонента"
+        "Кажется, в children передан компонент, который не поддерживает свойство getRootRef. Мы не можем получить ссылку на корневой dom-элемент этого компонента",
+        "error"
       );
     }
   }, [children?.type, patchedRef]);

@@ -101,7 +101,7 @@ const BannerSubheader: React.FC<BannerTypographyProps> = ({
   return size === "m" ? (
     <Text weight="regular" {...restProps} />
   ) : (
-    <Subhead weight="regular" {...restProps} />
+    <Subhead {...restProps} />
   );
 };
 
@@ -127,6 +127,7 @@ const Banner: React.FC<BannerProps> = (props: BannerProps) => {
   return (
     <section
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("Banner", platform),
         `Banner--md-${mode}`,

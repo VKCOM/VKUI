@@ -117,3 +117,36 @@
 .ModalCardBase__subheader + .FormField {
   margin-top: 16px;
 }
+
+/**
+ * Select
+ */
+
+.Select--mimicry-plain .FormField__after,
+.Select--mimicry-plain .FormField--sizeY-compact .FormField__after {
+  justify-content: flex-start;
+  min-width: 0;
+  height: auto;
+}
+
+.CustomSelect__open.Select--mimicry:focus .FormField__border {
+  border-color: var(--field_border);
+}
+
+.CustomSelect__open:not(.CustomSelect__open--popupDirectionTop):not(.CustomSelect__open--not-adjacent)
+  .FormField__border {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.CustomSelect__open.CustomSelect__open--popupDirectionTop:not(.CustomSelect__open--not-adjacent)
+  .FormField__border {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.CustomSelect__open.Select--mimicry-plain.Select--mimicry:focus
+  .FormField__border,
+.FormField:not(.FormField--disabled) .FormField__border--hover {
+  background-color: var(--vkui--color_background);
+}

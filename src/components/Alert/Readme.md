@@ -33,13 +33,13 @@ class Example extends React.Component {
     };
 
     this.openAction = this.openAction.bind(this);
-    this.openDeleteion = this.openDeleteion.bind(this);
+    this.openDeletion = this.openDeletion.bind(this);
     this.closePopout = this.closePopout.bind(this);
     this.addActionLogItem = this.addActionLogItem.bind(this);
   }
 
   componentDidMount() {
-    this.openDeleteion();
+    this.openDeletion();
   }
 
   addActionLogItem(value) {
@@ -75,7 +75,7 @@ class Example extends React.Component {
     });
   }
 
-  openDeleteion() {
+  openDeletion() {
     this.setState({
       popout: (
         <Alert
@@ -114,7 +114,7 @@ class Example extends React.Component {
               <PanelHeader>Alert</PanelHeader>
               <Group>
                 <CellButton onClick={this.openAction}>Лишить права</CellButton>
-                <CellButton onClick={this.openDeleteion}>
+                <CellButton onClick={this.openDeletion}>
                   Удалить документ
                 </CellButton>
                 {this.state.actionsLog.map((value, i) => (

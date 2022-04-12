@@ -13,7 +13,7 @@ import { FormFieldProps } from "../FormField/FormField";
 import { HasPlatform } from "../../types";
 import Input from "../Input/Input";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import { warnOnce } from "../../lib/warnOnce";
 import { defaultFilterFn } from "../../lib/select";
 import { is } from "../../lib/is";
@@ -55,12 +55,18 @@ const warn = warnOnce("CustomSelect");
 const checkOptionsValueType = (options: CustomSelectOptionInterface[]) => {
   if (new Set(options.map((item) => typeof item.value)).size > 1) {
     warn(
-      "Some values of your options have different types. CustomSelect onChange always returns a string type."
+      "Some values of your options have different types. CustomSelect onChange always returns a string type.",
+      "error"
     );
   }
 };
 
 type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>["value"];
+
+export enum SelectType {
+  Default = "default",
+  Plain = "plain",
+}
 
 export interface CustomSelectOptionInterface {
   value: SelectValue;
@@ -135,6 +141,11 @@ export interface CustomSelectProps
   fetching?: boolean;
   onClose?: VoidFunction;
   onOpen?: VoidFunction;
+  icon?: React.ReactNode;
+  dropdownOffsetDistance?: number;
+  fixDropdownWidth?: boolean;
+  forceDropdownPortal?: boolean;
+  selectType?: SelectType;
 }
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
@@ -151,6 +162,10 @@ class CustomSelect extends React.Component<
     options: [],
     emptyText: "Ничего не найдено",
     filterFn: defaultFilterFn,
+    icon: <DropdownIcon />,
+    dropdownOffsetDistance: 0,
+    fixDropdownWidth: true,
+    selectType: SelectType.Default,
   };
 
   public constructor(props: CustomSelectProps) {
@@ -345,9 +360,14 @@ class CustomSelect extends React.Component<
 
     scrollTo && this.scrollToElement(index);
 
-    this.setState(() => ({
-      focusedOptionIndex: index,
-    }));
+    this.setState((prevState) =>
+      // Это оптимизация, прежде всего, под `onMouseOver`
+      prevState.focusedOptionIndex !== index
+        ? {
+            focusedOptionIndex: index,
+          }
+        : null
+    );
   };
 
   focusOption = (type: "next" | "prev") => {
@@ -586,7 +606,15 @@ class CustomSelect extends React.Component<
           disabled: option.disabled,
           onClick: this.handleOptionClick,
           onMouseDown: this.handleOptionDown,
-          onMouseEnter: this.handleOptionHover,
+          // Используем `onMouseOver` вместо `onMouseEnter`.
+          // При параметре `searchable`, обновляется "ребёнок", из-за чего `onMouseEnter` не срабатывает в следующих кейсах:
+          //  1. До загрузки выпадающего списка, курсор мышки находится над произвольным элементом этого списка.
+          //     > Лечение: только увод курсора мыши и возвращении его обратно вызывает событие `onMouseEnter` на этот элемент.
+          //  2. Если это тач-устройство.
+          //     > Лечение: нужно нажать на какой-нибудь произвольный элемент списка, после чего `onMouseEnter` будет работать на соседние элементы,
+          //     но не на тот, на который нажали в первый раз.
+          // Более подробно по ссылке https://github.com/facebook/react/issues/13956#issuecomment-1082055744
+          onMouseOver: this.handleOptionHover,
         })}
       </React.Fragment>
     );
@@ -631,6 +659,10 @@ class CustomSelect extends React.Component<
       onOpen,
       onClose,
       fetching,
+      icon,
+      dropdownOffsetDistance,
+      fixDropdownWidth,
+      forceDropdownPortal,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
@@ -640,7 +672,7 @@ class CustomSelect extends React.Component<
       stateOptions !== undefined && stateOptions.length > 0 ? (
         stateOptions.map(this.renderOption)
       ) : (
-        <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
+        <Caption vkuiClass="CustomSelect__empty">
           {this.props.emptyText}
         </Caption>
       );
@@ -668,9 +700,12 @@ class CustomSelect extends React.Component<
             {...restProps}
             autoFocus
             onBlur={this.onBlur}
+            // eslint-disable-next-line vkui/no-object-expression-in-arguments
             vkuiClass={classNames({
               CustomSelect__open: opened,
               "CustomSelect__open--popupDirectionTop": isPopperDirectionTop,
+              "CustomSelect__open--not-adjacent":
+                (dropdownOffsetDistance as number) > 0,
             })}
             value={this.state.inputValue}
             onKeyDown={this.onInputKeyDown}
@@ -679,7 +714,7 @@ class CustomSelect extends React.Component<
             // TODO Нужно перестать пытаться превратить CustomSelect в select. Тогда эта проблема уйдёт.
             // @ts-ignore
             onClick={onClick}
-            after={<DropdownIcon />}
+            after={icon}
             placeholder={restProps.placeholder}
           />
         ) : (
@@ -691,10 +726,14 @@ class CustomSelect extends React.Component<
             onKeyUp={this.handleKeyUp}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
+            // eslint-disable-next-line vkui/no-object-expression-in-arguments
             vkuiClass={classNames({
               CustomSelect__open: opened,
               "CustomSelect__open--popupDirectionTop": isPopperDirectionTop,
+              "CustomSelect__open--not-adjacent":
+                (dropdownOffsetDistance as number) > 0,
             })}
+            after={icon}
           >
             {label}
           </SelectMimicry>
@@ -722,6 +761,9 @@ class CustomSelect extends React.Component<
             onPlacementChange={this.onPlacementChange}
             onMouseLeave={this.resetFocusedOption}
             fetching={fetching}
+            offsetDistance={dropdownOffsetDistance}
+            sameWidth={fixDropdownWidth}
+            forcePortal={forceDropdownPortal}
           >
             {resolvedContent}
           </CustomSelectDropdown>

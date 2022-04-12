@@ -11,27 +11,24 @@
 
 .GridAvatar__item {
   width: calc(50% - var(--grid-avatar-image-offset) / 2);
-  height: 100%;
+  height: calc(50% - var(--grid-avatar-image-offset) / 2);
+  margin-right: var(--grid-avatar-image-offset);
   background-size: cover;
   background-position: center;
 }
 
-.GridAvatar--images-1 .GridAvatar__item {
+.GridAvatar__item:only-child {
   width: 100%;
 }
 
-.GridAvatar--images-3 .GridAvatar__item:nth-child(1n + 2),
-.GridAvatar--images-4 .GridAvatar__item {
-  height: calc(50% - var(--grid-avatar-image-offset) / 2);
+.GridAvatar__item:first-child:not(:nth-last-child(4)),
+.GridAvatar__item:nth-child(2):last-child {
+  height: 100%;
 }
 
-.GridAvatar--images-2 .GridAvatar__item:nth-child(1n + 2),
-.GridAvatar--images-3 .GridAvatar__item:nth-child(1n + 2),
-.GridAvatar--images-4 .GridAvatar__item:nth-child(1n + 3) {
-  margin-left: var(--grid-avatar-image-offset);
-}
-
-.GridAvatar--images-3 .GridAvatar__item:nth-child(2),
-.GridAvatar--images-4 .GridAvatar__item:nth-child(odd) {
+/* если есть минимум три элемента — выбираем второй с конца */
+.GridAvatar__item:nth-last-child(n + 3) ~ .GridAvatar__item:nth-last-child(2),
+/* четвертый с конца */
+.GridAvatar__item:nth-last-child(4) {
   margin-bottom: var(--grid-avatar-image-offset);
 }

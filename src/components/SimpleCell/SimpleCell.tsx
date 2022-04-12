@@ -85,6 +85,7 @@ const SimpleCell: React.FC<SimpleCellProps> = ({
   return (
     <Tappable
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("SimpleCell", platform),
         {
@@ -105,11 +106,7 @@ const SimpleCell: React.FC<SimpleCellProps> = ({
           )}
         </div>
         {description && (
-          <Subhead
-            Component="span"
-            weight="regular"
-            vkuiClass="SimpleCell__description"
-          >
+          <Subhead Component="span" vkuiClass="SimpleCell__description">
             {description}
           </Subhead>
         )}

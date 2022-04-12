@@ -1,5 +1,5 @@
 import { describeScreenshotFuzz } from "../../../testing/e2e/utils";
-import Caption, { CaptionProps } from "./Caption";
+import { Caption, CaptionProps } from "./Caption";
 
 describe("Caption", () => {
   describeScreenshotFuzz(
@@ -10,27 +10,9 @@ describe("Caption", () => {
     ),
     [
       {
-        level: ["1", "2"],
-        weight: ["regular", "medium"],
-      },
-      {
-        level: ["1", "2"],
-        weight: ["semibold"],
+        level: ["1", "2", "3", "4"],
+        weight: [undefined, "1", "2", "3"],
         caps: [undefined, true],
-      },
-      {
-        level: ["3", "4"],
-        weight: ["regular"],
-      },
-      {
-        level: ["3"],
-        weight: ["semibold"],
-        caps: [true],
-      },
-      {
-        level: ["4"],
-        weight: ["bold"],
-        caps: [true],
       },
     ]
   );

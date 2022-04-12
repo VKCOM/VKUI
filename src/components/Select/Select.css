@@ -57,3 +57,8 @@
 .Select--sizeY--compact .Select__container {
   padding: 7px 11px;
 }
+
+.Select--sizeY--compact .Select__container--plain,
+.Select__container--plain {
+  padding: 0 6px 0 8px;
+}

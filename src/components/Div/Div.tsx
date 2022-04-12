@@ -8,11 +8,11 @@ export interface DivProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement> {}
 
-export const Div: React.FunctionComponent<DivProps> = ({
+export const Div: React.FC<DivProps> = ({
   children,
   getRootRef,
   ...restProps
-}: DivProps) => {
+}) => {
   const platform = usePlatform();
   return (
     <div
@@ -24,6 +24,3 @@ export const Div: React.FunctionComponent<DivProps> = ({
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default Div;

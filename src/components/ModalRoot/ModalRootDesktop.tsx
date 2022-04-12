@@ -202,6 +202,7 @@ class ModalRootDesktopComponent extends React.Component<
     return (
       <ModalRootContext.Provider value={this.modalRootContext}>
         <div
+          // eslint-disable-next-line vkui/no-object-expression-in-arguments
           vkuiClass={classNames(
             getClassName("ModalRoot", this.props.platform),
             {
@@ -231,6 +232,7 @@ class ModalRootDesktopComponent extends React.Component<
                   onClose={this.props.closeActiveModal}
                   timeout={this.timeout}
                   key={key}
+                  // eslint-disable-next-line vkui/no-object-expression-in-arguments
                   vkuiClass={classNames("ModalRoot__modal", {
                     "ModalRoot__modal--active":
                       !exitingModal &&

@@ -24,7 +24,7 @@ const InfoRow: React.FunctionComponent<InfoRowProps> = ({
       weight="regular"
     >
       {hasReactNode(header) && (
-        <Subhead Component="span" vkuiClass="InfoRow__header" weight="regular">
+        <Subhead Component="span" vkuiClass="InfoRow__header">
           {header}
         </Subhead>
       )}

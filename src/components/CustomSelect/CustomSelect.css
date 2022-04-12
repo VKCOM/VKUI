@@ -22,18 +22,3 @@
   text-align: center;
   color: var(--text_secondary);
 }
-
-.CustomSelect__open.Select--mimicry:focus .FormField__border {
-  border-color: var(--field_border);
-}
-
-.CustomSelect__open:not(.CustomSelect__open--popupDirectionTop)
-  .FormField__border {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.CustomSelect__open.CustomSelect__open--popupDirectionTop .FormField__border {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}

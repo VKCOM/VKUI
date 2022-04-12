@@ -94,6 +94,11 @@ function prettyProps(props: any) {
       ) {
         return `${prop}=<jsx>`;
       }
+      if (prop === "style" || prop === "src") {
+        const _value = JSON.stringify(value);
+
+        return `${prop}=${_value.replace(/"\\?data:.+?"+?/gi, "{base64}")}`;
+      }
       return `${prop}=${JSON.stringify(value)}`;
     })
     .join(" ");
@@ -150,14 +155,15 @@ export function describeScreenshotFuzz<Props>(
   } = options;
   platforms.forEach((platform) => {
     describe(platform, () => {
-      const isVkCom = platform === "vkcom";
-      const width: number | "auto" = adaptivity.viewWidth
-        ? getAdaptivePxWidth(adaptivity.viewWidth)
-        : isVkCom
-        ? "auto"
-        : 320;
-      const adaptivityProps = Object.assign(
-        isVkCom ? { sizeX: SizeType.COMPACT, sizeY: SizeType.COMPACT } : {},
+      const isVKCOM = platform === Platform.VKCOM;
+
+      let width: ViewWidth | "auto" = isVKCOM ? "auto" : MOBILE_SIZE;
+      if (adaptivity.viewWidth) {
+        width = getAdaptivePxWidth(adaptivity.viewWidth);
+      }
+
+      const adaptivityProps: AdaptivityProps = Object.assign(
+        isVKCOM ? { sizeX: SizeType.COMPACT, sizeY: SizeType.COMPACT } : {},
         adaptivity
       );
 
@@ -166,9 +172,8 @@ export function describeScreenshotFuzz<Props>(
         sizeY: true,
       });
 
-      (isVkCom ? vkcomSchemes : mobileSchemes).forEach((scheme: Scheme) => {
-        scheme = scheme === Scheme.VKCOM_LIGHT ? Scheme.VKCOM : scheme; // Снести после мержа 1978
-        it(`${scheme}${
+      (isVKCOM ? vkcomSchemes : mobileSchemes).forEach((scheme: Scheme) => {
+        it(`light${
           adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ""
         }`, async () => {
           expect(
@@ -178,13 +183,13 @@ export function describeScreenshotFuzz<Props>(
                   <div
                     style={{
                       width,
-                      maxWidth: isVkCom ? "100%" : "initial",
+                      maxWidth: DESKTOP_SIZE,
                       position: "absolute",
                       height: "auto",
                     }}
                   >
                     <Wrapper>
-                      {multiCartesian(propSets, { adaptive: !isVkCom }).map(
+                      {multiCartesian(propSets, { adaptive: !isVKCOM }).map(
                         (props, i) => (
                           <Fragment key={i}>
                             <div>{prettyProps(props)}</div>

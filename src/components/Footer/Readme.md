@@ -17,7 +17,7 @@
         </Cell>
       </List>
     </Group>
-    <Footer>3 cообщества</Footer>
+    <Footer>3 сообщества</Footer>
   </Panel>
 </View>
 ```

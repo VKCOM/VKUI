@@ -5,7 +5,7 @@ import Tappable, { TappableProps } from "../Tappable/Tappable";
 import Title from "../Typography/Title/Title";
 import Text from "../Typography/Text/Text";
 import Subhead from "../Typography/Subhead/Subhead";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import { HasAlign, HasComponent } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import {
@@ -69,10 +69,7 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = (
     case "m":
       if (isCompact) {
         return (
-          <Subhead
-            weight={platform === VKCOM ? "regular" : "medium"}
-            {...restProps}
-          />
+          <Subhead weight={platform === VKCOM ? "3" : "2"} {...restProps} />
         );
       }
 
@@ -80,18 +77,18 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = (
     case "s":
     default:
       if (platform === IOS) {
-        return <Subhead weight="medium" {...restProps} />;
+        return <Subhead weight="2" {...restProps} />;
       }
 
       if (platform === VKCOM) {
-        return <Caption level="1" weight="regular" {...restProps} />;
+        return <Caption {...restProps} />;
       }
 
       if (isCompact) {
-        return <Caption level="1" weight="medium" {...restProps} />;
+        return <Caption weight="2" {...restProps} />;
       }
 
-      return <Subhead weight="medium" {...restProps} />;
+      return <Subhead weight="2" {...restProps} />;
   }
 };
 
@@ -175,6 +172,7 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
       Component={restProps.href ? "a" : Component}
       onClick={loading ? undefined : onClick}
       focusVisibleMode="outside"
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         "Button",
         `Button--sz-${size}`,

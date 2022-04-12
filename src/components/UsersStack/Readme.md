@@ -82,7 +82,7 @@
               getAvatarUrl("user_va"),
               getAvatarUrl("user_tc"),
             ]}
-            style={{ color: "#fff", padding: "8px 0" }}
+            style={{ color: "#fff", padding: "8px 16px" }}
           >
             Проголосовали 2 176 человек
           </UsersStack>

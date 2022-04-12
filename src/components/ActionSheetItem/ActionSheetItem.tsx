@@ -13,7 +13,7 @@ import {
   ActionSheetContext,
   ActionSheetContextType,
 } from "../ActionSheet/ActionSheetContext";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import Headline from "../Typography/Headline/Headline";
 import {
   withAdaptivity,
@@ -85,6 +85,7 @@ const ActionSheetItemComponent: React.FC<ActionSheetItemProps> = ({
           : onItemClick(onClick, onImmediateClick, Boolean(autoclose))
       }
       activeMode="ActionSheetItem--active"
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("ActionSheetItem", platform),
         `ActionSheetItem--${mode}`,
@@ -150,17 +151,9 @@ const ActionSheetItemComponent: React.FC<ActionSheetItemProps> = ({
         </div>
         {hasReactNode(subtitle) &&
           (sizeY === SizeType.COMPACT ? (
-            <Caption
-              weight="regular"
-              vkuiClass="ActionSheetItem__subtitle"
-              level="1"
-            >
-              {subtitle}
-            </Caption>
+            <Caption vkuiClass="ActionSheetItem__subtitle">{subtitle}</Caption>
           ) : (
-            <Subhead weight="regular" vkuiClass="ActionSheetItem__subtitle">
-              {subtitle}
-            </Subhead>
+            <Subhead vkuiClass="ActionSheetItem__subtitle">{subtitle}</Subhead>
           ))}
       </div>
       {selectable && (

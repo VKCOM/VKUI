@@ -7,12 +7,12 @@
 
 > **Важно**
 >
-> Учтите порядок подключения компонентов для конфигурации. `ConfigProvider` -> `AdaptivtyProvider` -> `AppRoot`
+> Учтите порядок подключения компонентов для конфигурации. `ConfigProvider` -> `AdaptivityProvider` -> `AppRoot`
 
 ```jsx static
 import React from "react";
 import ReactDOM from "react-dom";
-import { AppRoot } from "@vkontakte/vkui";
+import { ConfigProvider, AdaptivityProvider, AppRoot } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
 
 function App() {
@@ -109,7 +109,7 @@ App = withAdaptivity(App, { viewWidth: true });
 ### Технические детали
 
 Адаптивность базируется на четырёх свойствах: `viewWidth`, `viewHeight`, `sizeX`, `sizeY`. Эти свойства вычисляются в `AdaptivityProvider`,
-доступ к ним можно получить через HOC `withAdaptivty` (либо через hook `useAdaptivity`).
+доступ к ним можно получить через HOC `withAdaptivity` (либо через hook `useAdaptivity`).
 
 - `sizeX` и `sizeY` принимают значения `SizeType.REGULAR | SizeType.COMPACT`
 - `viewWidth` — `ViewWidth.SMALL_MOBILE | ViewWidth.MOBILE | ViewWidth.SMALL_TABLET | ViewWidth.TABLET | ViewWidth.DESKTOP`

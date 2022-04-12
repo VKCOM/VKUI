@@ -6,7 +6,7 @@ import { HasComponent, HasPlatform, HasRootRef } from "../../types";
 import { hasReactNode, isPrimitiveReactNode } from "../../lib/utils";
 import { Platform } from "../../lib/platform";
 import Headline from "../Typography/Headline/Headline";
-import Caption from "../Typography/Caption/Caption";
+import { Caption } from "../Typography/Caption/Caption";
 import Title from "../Typography/Title/Title";
 import Text from "../Typography/Text/Text";
 import Subhead from "../Typography/Subhead/Subhead";
@@ -43,7 +43,7 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
       case "tertiary":
         return <Title weight="1" level="3" {...restProps} />;
       case "secondary":
-        return <Caption level="1" weight="semibold" caps {...restProps} />;
+        return <Caption weight="2" caps {...restProps} />;
     }
   }
 
@@ -53,7 +53,7 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
         return <Headline weight="regular" {...restProps} />;
       case "secondary":
       case "tertiary":
-        return <Caption level="1" weight="regular" {...restProps} />;
+        return <Caption {...restProps} />;
     }
   }
 
@@ -62,7 +62,7 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
     case "tertiary":
       return <Headline weight="medium" {...restProps} />;
     case "secondary":
-      return <Caption level="1" weight="medium" caps {...restProps} />;
+      return <Caption weight="1" caps {...restProps} />;
   }
 
   return null;
@@ -75,7 +75,7 @@ const HeaderAside: React.FC<HeaderAsideProps> = ({
   ...restProps
 }) => {
   return platform === Platform.VKCOM ? (
-    <Subhead weight="regular" {...restProps} />
+    <Subhead {...restProps} />
   ) : (
     <Text weight="regular" {...restProps} />
   );
@@ -89,9 +89,9 @@ const HeaderSubtitle: React.FC<HeaderSubtitleProps> = ({
   ...restProps
 }) => {
   return mode === "secondary" ? (
-    <Subhead weight="regular" {...restProps} />
+    <Subhead {...restProps} />
   ) : (
-    <Caption weight="regular" level="1" {...restProps} />
+    <Caption {...restProps} />
   );
 };
 
@@ -111,6 +111,7 @@ const Header: React.FC<HeaderProps> = ({
     <header
       {...restProps}
       ref={getRootRef}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("Header", platform),
         `Header--mode-${mode}`,
@@ -125,6 +126,7 @@ const Header: React.FC<HeaderProps> = ({
           platform={platform}
         >
           <span
+            // eslint-disable-next-line vkui/no-object-expression-in-arguments
             vkuiClass={classNames("Header__content-in", {
               "Header__content-in--multiline": multiline,
             })}
@@ -135,11 +137,8 @@ const Header: React.FC<HeaderProps> = ({
             <Caption
               vkuiClass="Header__indicator"
               weight={
-                mode === "primary" || mode === "secondary"
-                  ? "medium"
-                  : "regular"
+                mode === "primary" || mode === "secondary" ? "1" : undefined
               }
-              level="1"
             >
               {indicator}
             </Caption>
@@ -147,7 +146,11 @@ const Header: React.FC<HeaderProps> = ({
         </HeaderContent>
 
         {hasReactNode(subtitle) && (
-          <HeaderSubtitle vkuiClass="Header__subtitle" Component="span">
+          <HeaderSubtitle
+            vkuiClass="Header__subtitle"
+            Component="span"
+            mode={mode}
+          >
             {subtitle}
           </HeaderSubtitle>
         )}
