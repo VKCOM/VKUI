@@ -34,11 +34,11 @@ export interface ActionSheetItemProps
   before?: React.ReactNode;
   meta?: React.ReactNode;
   subtitle?: React.ReactNode;
-  autoclose?: boolean;
+  autoClose?: boolean;
   selectable?: boolean;
   disabled?: boolean;
   /**
-   * Если autoclose === true, onClick будет вызван после завершения анимации скрытия и после вызова onClose.
+   * Если autoClose === true, onClick будет вызван после завершения анимации скрытия и после вызова onClose.
    * Из этого следует, что в объекте события значения полей типа `currentTarget` будут не определены.
    * Если вам нужен объект события именно на момент клика, используйте `onImmediateClick`.
    */
@@ -48,7 +48,7 @@ export interface ActionSheetItemProps
 
 const ActionSheetItemComponent: React.FC<ActionSheetItemProps> = ({
   children,
-  autoclose,
+  autoClose,
   mode = "default",
   meta,
   subtitle,
@@ -82,7 +82,7 @@ const ActionSheetItemComponent: React.FC<ActionSheetItemProps> = ({
       onClick={
         selectable
           ? onClick
-          : onItemClick(onClick, onImmediateClick, Boolean(autoclose))
+          : onItemClick(onClick, onImmediateClick, Boolean(autoClose))
       }
       activeMode="ActionSheetItem--active"
       // eslint-disable-next-line vkui/no-object-expression-in-arguments
@@ -164,7 +164,7 @@ const ActionSheetItemComponent: React.FC<ActionSheetItemProps> = ({
             name={name}
             value={value}
             onChange={onChange}
-            onClick={onItemClick(noop, noop, Boolean(autoclose))}
+            onClick={onItemClick(noop, noop, Boolean(autoClose))}
             defaultChecked={defaultChecked}
             checked={checked}
             disabled={restProps.disabled}

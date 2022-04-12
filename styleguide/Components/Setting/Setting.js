@@ -64,7 +64,7 @@ export const Setting = ({
                   const title = isPrimitive ? item : item.title;
                   return (
                     <ActionSheetItem
-                      autoclose
+                      autoClose
                       key={value}
                       value={value}
                       onClick={() => onChange(value)}
