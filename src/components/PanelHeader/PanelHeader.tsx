@@ -107,6 +107,7 @@ const PanelHeader: React.FC<PanelHeaderProps> = ({
   const needShadow = shadow && sizeX === SizeType.REGULAR;
   let isFixed = fixed !== undefined ? fixed : platform !== Platform.VKCOM;
 
+  // TODO: удалить перед 5.0.0
   const before = propsBefore ?? left;
   const after = propsAfter ?? right;
 
@@ -120,6 +121,7 @@ const PanelHeader: React.FC<PanelHeaderProps> = ({
         "Свойство left устарелo и будет удалено в 5.0.0. Используйте before."
       );
   }
+  // /end TODO
 
   const innerProps = { children, before, after, separator };
 
