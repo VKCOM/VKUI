@@ -9,9 +9,6 @@ import View from "../View/View";
 import ConfigProvider from "../ConfigProvider/ConfigProvider";
 import Root from "./Root";
 
-beforeEach(() => jest.useFakeTimers());
-afterEach(() => jest.useRealTimers());
-
 const views = [
   <View id="v1" key="1" activePanel="" />,
   <View id="v2" key="2" activePanel="" />,
@@ -19,6 +16,8 @@ const views = [
 ];
 
 describe("Root", () => {
+  beforeAll(() => jest.useFakeTimers());
+  afterAll(() => jest.useRealTimers());
   baselineComponent(Root);
   describe("With View", () =>
     mountTest(() => (

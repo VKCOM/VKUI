@@ -1,13 +1,15 @@
 import { HtmlHTMLAttributes, ReactElement, Fragment } from "react";
-import { baselineComponent } from "../../testing/utils";
+import { baselineComponent, waitForPopper } from "../../testing/utils";
 import { render, screen } from "@testing-library/react";
 import Tooltip from "./Tooltip";
 import { HasRootRef } from "../../types";
 import { TooltipContainer } from "./TooltipContainer";
 import userEvent from "@testing-library/user-event";
 
-const renderTooltip = (jsx: ReactElement) =>
+const renderTooltip = async (jsx: ReactElement) => {
   render(<TooltipContainer>{jsx}</TooltipContainer>);
+  await waitForPopper();
+};
 const RootRef = ({
   getRootRef,
   ...props
@@ -27,8 +29,8 @@ describe("Tooltip", () => {
     { forward: false }
   );
 
-  it("renders tooltip when isShown=true", () => {
-    renderTooltip(
+  it("renders tooltip when isShown=true", async () => {
+    await renderTooltip(
       <Tooltip isShown text="text">
         <div />
       </Tooltip>
@@ -36,8 +38,8 @@ describe("Tooltip", () => {
     expect(screen.getByText("text")).toBeTruthy();
   });
 
-  it("supports child with getRootRef", () => {
-    renderTooltip(
+  it("supports child with getRootRef", async () => {
+    await renderTooltip(
       <Tooltip isShown text="text">
         <RootRef />
       </Tooltip>
@@ -60,9 +62,9 @@ describe("Tooltip", () => {
   });
 
   describe("calls onClose", () => {
-    it("on outer click", () => {
+    it("on outer click", async () => {
       const onClose = jest.fn();
-      renderTooltip(
+      await renderTooltip(
         <Tooltip onClose={onClose} isShown>
           <div />
         </Tooltip>
@@ -70,9 +72,9 @@ describe("Tooltip", () => {
       userEvent.click(document.body);
       expect(onClose).toHaveBeenCalled();
     });
-    it("on tooltip click", () => {
+    it("on tooltip click", async () => {
       const onClose = jest.fn();
-      renderTooltip(
+      await renderTooltip(
         <Tooltip onClose={onClose} isShown text="text">
           <div />
         </Tooltip>
@@ -105,18 +107,18 @@ describe("Tooltip", () => {
   });
 
   describe("preserves child ref", () => {
-    it("on DOM child", () => {
+    it("on DOM child", async () => {
       const ref = jest.fn();
-      renderTooltip(
+      await renderTooltip(
         <Tooltip>
           <div ref={ref} data-testid="xxx" />
         </Tooltip>
       );
       expect(ref).toHaveBeenCalledWith(screen.getByTestId("xxx"));
     });
-    it("on VKUI child", () => {
+    it("on VKUI child", async () => {
       const ref = jest.fn();
-      renderTooltip(
+      await renderTooltip(
         <Tooltip>
           <RootRef getRootRef={ref} data-testid="xxx" />
         </Tooltip>

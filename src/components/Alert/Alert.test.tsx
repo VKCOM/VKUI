@@ -2,15 +2,14 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { ViewWidth } from "../../hoc/withAdaptivity";
-import { baselineComponent } from "../../testing/utils";
+import { baselineComponent, runAllTimers } from "../../testing/utils";
 import { Alert } from "./Alert";
 import { ANDROID, IOS } from "../../lib/platform";
 import ConfigProvider from "../ConfigProvider/ConfigProvider";
 
-beforeEach(() => jest.useFakeTimers());
-afterEach(() => jest.useRealTimers());
-
 describe("Alert", () => {
+  beforeAll(() => jest.useFakeTimers());
+  afterAll(() => jest.useRealTimers());
   baselineComponent(Alert);
   describe("closes", () => {
     it.each(["overlay", "close"])("with %s click", (trigger) => {
@@ -24,9 +23,10 @@ describe("Alert", () => {
         trigger === "overlay"
           ? ".PopoutWrapper__overlay"
           : ".ModalDismissButton";
+
       userEvent.click(document.querySelector(target) as Element);
       expect(onClose).not.toBeCalled();
-      jest.runAllTimers();
+      runAllTimers();
       expect(onClose).toBeCalledTimes(1);
     });
   });
@@ -65,7 +65,7 @@ describe("Alert", () => {
         userEvent.click(screen.getByText("__action__"));
         expect(action).not.toBeCalled();
         expect(onClose).not.toBeCalled();
-        jest.runAllTimers();
+        runAllTimers();
         expect(action).toBeCalledTimes(1);
         expect(onClose).toBeCalledTimes(1);
       });

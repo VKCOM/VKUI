@@ -12,11 +12,10 @@ const TappableTest = (props: TappableProps) => (
 );
 const tappable = () => screen.getByTestId("tappable");
 
-beforeEach(() => jest.useFakeTimers());
-afterEach(() => jest.useRealTimers());
-afterEach(() => delete window["ontouchstart"]);
-
 describe("Tappable", () => {
+  beforeAll(() => jest.useFakeTimers());
+  afterAll(() => jest.useRealTimers());
+  afterEach(() => delete window["ontouchstart"]);
   baselineComponent(TappableTest);
 
   it("Component: if no Component is passed Tappable becomes a div", () => {
