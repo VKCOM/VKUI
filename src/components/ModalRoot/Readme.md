@@ -65,17 +65,17 @@ const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
       {...props}
       header={
         <ModalPageHeader
-          right={
+          before={
+            isMobile &&
+            platform === ANDROID && <PanelHeaderClose onClick={onClose} />
+          }
+          after={
             isMobile &&
             platform === IOS && (
               <PanelHeaderButton onClick={onClose}>
                 <Icon24Dismiss />
               </PanelHeaderButton>
             )
-          }
-          left={
-            isMobile &&
-            platform === ANDROID && <PanelHeaderClose onClick={onClose} />
           }
         >
           Dynamic modal
@@ -157,17 +157,17 @@ const App = withPlatform(
               settlingHeight={100}
               header={
                 <ModalPageHeader
-                  right={
+                  before={
+                    isMobile &&
+                    platform === ANDROID && (
+                      <PanelHeaderClose onClick={this.modalBack} />
+                    )
+                  }
+                  after={
                     platform === IOS && (
                       <PanelHeaderButton onClick={this.modalBack}>
                         <Icon24Dismiss />
                       </PanelHeaderButton>
-                    )
-                  }
-                  left={
-                    isMobile &&
-                    platform === ANDROID && (
-                      <PanelHeaderClose onClick={this.modalBack} />
                     )
                   }
                 >
@@ -225,10 +225,10 @@ const App = withPlatform(
               onClose={this.modalBack}
               header={
                 <ModalPageHeader
-                  left={
+                  before={
                     isMobile && <PanelHeaderClose onClick={this.modalBack} />
                   }
-                  right={<PanelHeaderSubmit onClick={this.modalBack} />}
+                  after={<PanelHeaderSubmit onClick={this.modalBack} />}
                 >
                   Фильтры
                 </ModalPageHeader>
@@ -309,7 +309,7 @@ const App = withPlatform(
               onClose={this.modalBack}
               header={
                 <ModalPageHeader
-                  left={
+                  before={
                     <PanelHeaderBack label="Назад" onClick={this.modalBack} />
                   }
                 >
@@ -342,7 +342,7 @@ const App = withPlatform(
               onClose={this.modalBack}
               header={
                 <ModalPageHeader
-                  left={
+                  before={
                     <PanelHeaderBack label="Назад" onClick={this.modalBack} />
                   }
                 >
@@ -370,7 +370,7 @@ const App = withPlatform(
               onClose={this.modalBack}
               header={
                 <ModalPageHeader
-                  left={
+                  before={
                     <PanelHeaderBack label="Назад" onClick={this.modalBack} />
                   }
                 >

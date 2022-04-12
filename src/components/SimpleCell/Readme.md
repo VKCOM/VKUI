@@ -117,7 +117,7 @@ class Example extends React.Component {
         </Panel>
         <Panel id="nothing">
           <PanelHeader
-            left={
+            before={
               <PanelHeaderBack
                 onClick={() => this.setState({ activePanel: "list" })}
               />

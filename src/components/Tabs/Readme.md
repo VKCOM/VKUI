@@ -27,12 +27,12 @@ class Example extends React.Component {
       <View activePanel={this.state.activePanel}>
         <Panel id="panel1">
           <PanelHeader
-            left={
+            before={
               <PanelHeaderButton>
                 <Icon28CameraOutline />
               </PanelHeaderButton>
             }
-            right={
+            after={
               <PanelHeaderButton>
                 <Icon28AddOutline />
               </PanelHeaderButton>
@@ -116,7 +116,7 @@ class Example extends React.Component {
         </Panel>
         <Panel id="panel2">
           <PanelHeader
-            left={
+            before={
               <PanelHeaderBack
                 onClick={() => this.setState({ activePanel: "panel1" })}
               />
@@ -149,7 +149,7 @@ class Example extends React.Component {
         </Panel>
         <Panel id="panel3">
           <PanelHeader
-            left={
+            before={
               <PanelHeaderBack
                 onClick={() => this.setState({ activePanel: "panel2" })}
               />
@@ -204,7 +204,7 @@ class Example extends React.Component {
         </Panel>
         <Panel id="panel4">
           <PanelHeader
-            left={
+            before={
               <PanelHeaderBack
                 onClick={() => this.setState({ activePanel: "panel2" })}
               />
@@ -236,7 +236,7 @@ class Example extends React.Component {
         </Panel>
         <Panel id="panel5">
           <PanelHeader
-            left={
+            before={
               <PanelHeaderBack
                 onClick={() => this.setState({ activePanel: "panel4" })}
               />

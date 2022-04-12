@@ -16,14 +16,14 @@ function MiniInfoCellExample() {
       <ModalPage
         header={
           <ModalPageHeader
-            left={
+            before={
               (platform === ANDROID || platform === VKCOM) && (
                 <PanelHeaderButton onClick={closeModal}>
                   <Icon24Cancel />
                 </PanelHeaderButton>
               )
             }
-            right={
+            after={
               platform === IOS && (
                 <PanelHeaderButton onClick={closeModal}>
                   <Icon24Dismiss />

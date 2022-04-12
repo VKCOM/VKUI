@@ -32,8 +32,8 @@ class Example extends React.Component {
         <View id="main" activePanel={this.state.mainPanel}>
           <Panel id="panel1">
             <PanelHeader
-              left={<PanelHeaderClose />}
-              right={<Avatar size={36} />}
+              before={<PanelHeaderClose />}
+              after={<Avatar size={36} />}
             >
               Стартовый экран
             </PanelHeader>
@@ -47,13 +47,13 @@ class Example extends React.Component {
           </Panel>
           <Panel id="panel2">
             <PanelHeader
-              left={
+              before={
                 <PanelHeaderBack
                   onClick={() => this.setState({ mainPanel: "panel1" })}
                   label={platform === VKCOM ? "Назад" : undefined}
                 />
               }
-              right={
+              after={
                 <PanelHeaderButton
                   aria-label="Изображения"
                   label={
@@ -82,12 +82,12 @@ class Example extends React.Component {
           </Panel>
           <Panel id="panel3">
             <PanelHeader
-              left={
+              before={
                 <PanelHeaderBack
                   onClick={() => this.setState({ mainPanel: "panel2" })}
                 />
               }
-              right={
+              after={
                 <React.Fragment>
                   <PanelHeaderButton
                     aria-label="Настройки"
@@ -134,14 +134,14 @@ class Example extends React.Component {
         <View id="modal" activePanel={this.state.modalPanel}>
           <Panel id="modal-panel1">
             <PanelHeader
-              left={
+              before={
                 <PanelHeaderButton
                   onClick={() => this.setState({ activeView: "main" })}
                 >
                   Отмена
                 </PanelHeaderButton>
               }
-              right={
+              after={
                 <PanelHeaderButton
                   disabled
                   primary
@@ -163,7 +163,7 @@ class Example extends React.Component {
           </Panel>
           <Panel id="modal-panel2">
             <PanelHeader
-              left={
+              before={
                 <PanelHeaderBack
                   onClick={() => this.setState({ modalPanel: "modal-panel1" })}
                   label={platform === VKCOM ? "Назад" : undefined}
@@ -188,7 +188,7 @@ class Example extends React.Component {
           <Panel id="modal-panel3">
             <PanelHeader
               separator={platform === VKCOM || sizeX === SizeType.REGULAR}
-              left={
+              before={
                 platform !== VKCOM && (
                   <PanelHeaderBack
                     onClick={() =>
@@ -218,7 +218,7 @@ class Example extends React.Component {
           <Panel id="modal-panel4">
             <PanelHeader
               separator={platform === VKCOM || sizeX === SizeType.REGULAR}
-              left={
+              before={
                 <PanelHeaderBack
                   onClick={() => this.setState({ modalPanel: "modal-panel3" })}
                 />

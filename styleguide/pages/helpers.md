@@ -63,7 +63,7 @@ class Example extends React.Component {
         <View id={HOME_VIEW} activePanel={activePanels[HOME_VIEW]}>
           <Panel id={MAIN_PANEL}>
             <PanelHeader
-              left={<PanelHeaderBack onClick={() => this.closeApp()} />}
+              before={<PanelHeaderBack onClick={() => this.closeApp()} />}
             >
               Приложение
             </PanelHeader>
@@ -77,12 +77,12 @@ class Example extends React.Component {
 
           <Panel id={LIST_PANEL}>
             <PanelHeader
-              left={
+              before={
                 <PanelHeaderBack
                   onClick={() => this.go(HOME_VIEW, MAIN_PANEL)}
                 />
               }
-              right={
+              after={
                 <PanelHeaderEdit
                   isActive={editing}
                   editLabel="Изменить"
@@ -143,8 +143,8 @@ class Example extends React.Component {
         <View id={CREATE_VIEW} activePanel={activePanels[CREATE_VIEW]}>
           <Panel id={CREATE_PANEL} theme="white">
             <PanelHeader
-              left={<PanelHeaderClose onClick={() => this.go(HOME_VIEW)} />}
-              right={<PanelHeaderSubmit onClick={() => this.go(HOME_VIEW)} />}
+              before={<PanelHeaderClose onClick={() => this.go(HOME_VIEW)} />}
+              after={<PanelHeaderSubmit onClick={() => this.go(HOME_VIEW)} />}
             >
               Добавить
             </PanelHeader>

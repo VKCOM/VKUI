@@ -4,7 +4,7 @@
 import { PanelSpinner } from "@vkontakte/vkui";
 
 <Panel>
-  <PanelHeader left={<PanelHeaderBack />}>Заголовок панели</PanelHeader>
+  <PanelHeader before={<PanelHeaderBack />}>Заголовок панели</PanelHeader>
 
   {loading ? (
     <PanelSpinner />

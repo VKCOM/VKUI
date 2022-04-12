@@ -39,8 +39,8 @@ const Example = withPlatform(
               <View activePanel="context2">
                 <Panel id="context2">
                   <PanelHeader
-                    left={<PanelHeaderBack />}
-                    right={
+                    before={<PanelHeaderBack />}
+                    after={
                       <PanelHeaderButton>
                         <Icon28AddOutline />
                       </PanelHeaderButton>
