@@ -65,6 +65,16 @@
   margin-right: 0;
 }
 
+.ModalCardBase__dismiss {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 48px;
+  height: 48px;
+  color: var(--placeholder_icon_foreground_primary);
+  justify-content: center;
+}
+
 /**
  * iOS
  */

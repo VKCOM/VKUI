@@ -53,33 +53,37 @@ export const StyleGuideMobile = (props) => {
   }, []);
 
   return (
-    <View activePanel={activePanel} popout={props.popout}>
-      <Panel id="content">
-        <StyleGuideMobileHeader
-          switchStyleGuideAppearance={props.switchStyleGuideAppearance}
-          left={
-            <PanelHeaderButton
-              aria-label="Показать меню"
-              onClick={() => setActivePanel("menu")}
-            >
-              <Icon28MenuOutline />
-            </PanelHeaderButton>
-          }
-        />
-        <div className="StyleGuideMobile__content">{props.children}</div>
-      </Panel>
-      <Panel id="menu">
-        <StyleGuideMobileHeader
-          switchStyleGuideAppearance={props.switchStyleGuideAppearance}
-          left={
-            <PanelHeaderClose
-              aria-label="Скрыть меню"
-              onClick={() => setActivePanel("content")}
+    <SplitLayout popout={props.popout}>
+      <SplitCol>
+        <View activePanel={activePanel}>
+          <Panel id="content">
+            <StyleGuideMobileHeader
+              switchStyleGuideAppearance={props.switchStyleGuideAppearance}
+              left={
+                <PanelHeaderButton
+                  aria-label="Показать меню"
+                  onClick={() => setActivePanel("menu")}
+                >
+                  <Icon28MenuOutline />
+                </PanelHeaderButton>
+              }
             />
-          }
-        />
-        {props.toc}
-      </Panel>
-    </View>
+            <div className="StyleGuideMobile__content">{props.children}</div>
+          </Panel>
+          <Panel id="menu">
+            <StyleGuideMobileHeader
+              switchStyleGuideAppearance={props.switchStyleGuideAppearance}
+              left={
+                <PanelHeaderClose
+                  aria-label="Скрыть меню"
+                  onClick={() => setActivePanel("content")}
+                />
+              }
+            />
+            {props.toc}
+          </Panel>
+        </View>
+      </SplitCol>
+    </SplitLayout>
   );
 };

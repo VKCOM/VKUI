@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook, act } from "@testing-library/react-hooks";
 import { useBooleanState } from "./useBooleanState";
 
 describe("useBooleanState", () => {
@@ -12,21 +12,27 @@ describe("useBooleanState", () => {
     const { result } = renderHook(useBooleanState, {
       initialProps: true,
     });
-    result.current.setFalse();
+    act(() => {
+      result.current.setFalse();
+    });
     expect(result.current.value).toEqual(false);
   });
   it("sets value to true", () => {
     const { result } = renderHook(useBooleanState, {
       initialProps: false,
     });
-    result.current.setTrue();
+    act(() => {
+      result.current.setTrue();
+    });
     expect(result.current.value).toEqual(true);
   });
   it("toggles value", () => {
     const { result } = renderHook(useBooleanState, {
       initialProps: false,
     });
-    result.current.toggle();
+    act(() => {
+      result.current.toggle();
+    });
     expect(result.current.value).toEqual(true);
   });
 });

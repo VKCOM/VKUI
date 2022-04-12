@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook, act } from "@testing-library/react-hooks";
 import { noop } from "../../lib/utils";
 import { ModalType } from "./types";
 import { useModalManager, modalTransitionReducer } from "./useModalManager";
@@ -21,7 +21,9 @@ describe(useModalManager, () => {
         exitingModal: null,
         delayEnter: false,
       });
-      handle.result.current.onEnter("m1");
+      act(() => {
+        handle.result.current.onEnter("m1");
+      });
       expect(handle.result.current).toMatchObject({
         activeModal: "m1",
         enteringModal: null,
@@ -42,7 +44,10 @@ describe(useModalManager, () => {
         exitingModal: null,
         delayEnter: false,
       });
-      handle.result.current.onEnter("m1");
+
+      act(() => {
+        handle.result.current.onEnter("m1");
+      });
       expect(handle.result.current).toMatchObject({
         activeModal: "m1",
         enteringModal: null,
@@ -53,7 +58,9 @@ describe(useModalManager, () => {
       const handle = renderHook(({ id }) => useModalManager(id, modals, noop), {
         initialProps: { id: initId },
       });
-      handle.result.current.onEnter(initId);
+      act(() => {
+        handle.result.current.onEnter(initId);
+      });
       return handle;
     };
     it("can exit", () => {
@@ -64,7 +71,9 @@ describe(useModalManager, () => {
         enteringModal: null,
         exitingModal: "m1",
       });
-      handle.result.current.onExit("m1");
+      act(() => {
+        handle.result.current.onExit("m1");
+      });
       expect(handle.result.current).toMatchObject({
         activeModal: null,
         enteringModal: null,
@@ -85,13 +94,17 @@ describe(useModalManager, () => {
         exitingModal: "m1",
         delayEnter,
       });
-      handle.result.current.onExit("m1");
+      act(() => {
+        handle.result.current.onExit("m1");
+      });
       expect(handle.result.current).toMatchObject({
         activeModal: "m2",
         enteringModal: "m2",
         exitingModal: null,
       });
-      handle.result.current.onEnter("m2");
+      act(() => {
+        handle.result.current.onEnter("m2");
+      });
       expect(handle.result.current).toMatchObject({
         activeModal: "m2",
         enteringModal: null,

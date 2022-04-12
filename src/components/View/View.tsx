@@ -171,6 +171,9 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
     if (id) {
       scrollsCache[id] = this.scrolls;
     }
+    if (this.animationFinishTimeout) {
+      clearTimeout(this.animationFinishTimeout);
+    }
   }
 
   componentDidUpdate(prevProps: ViewProps, prevState: ViewState) {

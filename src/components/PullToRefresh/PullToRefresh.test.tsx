@@ -1,17 +1,11 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import {
-  baselineComponent,
-  fakeTimers,
-  runAllTimers,
-} from "../../testing/utils";
+import { baselineComponent, runAllTimers } from "../../testing/utils";
 import { noop } from "../../lib/utils";
 import PullToRefresh from "./PullToRefresh";
 import { act } from "react-dom/test-utils";
 import ConfigProvider from "../ConfigProvider/ConfigProvider";
 import { IOS, ANDROID } from "../../lib/platform";
-
-fakeTimers();
 
 const hasSpinner = () =>
   !!document.querySelector(".PullToRefresh__spinner--on");
@@ -50,6 +44,8 @@ function renderRefresher({ platform = ANDROID } = {}) {
 }
 
 describe("PullToRefresh", () => {
+  beforeAll(() => jest.useFakeTimers());
+  afterAll(() => jest.useRealTimers());
   baselineComponent(PullToRefresh);
 
   describe("calls onRefresh", () => {

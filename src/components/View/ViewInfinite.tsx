@@ -154,6 +154,9 @@ class ViewInfiniteComponent extends React.Component<
     if (id) {
       scrollsCache[id] = this.scrolls;
     }
+    if (this.animationFinishTimeout) {
+      clearTimeout(this.animationFinishTimeout);
+    }
   }
 
   componentDidUpdate(

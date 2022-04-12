@@ -51,6 +51,11 @@ export interface ModalCardBaseProps
    */
   actionsLayout?: "vertical" | "horizontal";
   onClose?: VoidFunction;
+
+  /**
+   * `aria-label` для кнопки закрытия. Необходим, чтобы кнопка была доступной.
+   */
+  dismissLabel?: string;
 }
 
 export const ModalCardBase = withAdaptivity<
@@ -68,6 +73,7 @@ export const ModalCardBase = withAdaptivity<
     hasMouse,
     viewHeight,
     onClose,
+    dismissLabel = "Скрыть",
     ...restProps
   }) => {
     const platform = usePlatform();
@@ -128,7 +134,11 @@ export const ModalCardBase = withAdaptivity<
 
           {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}
           {canShowCloseBtnIos && (
-            <PanelHeaderButton vkuiClass="ModalCard__dismiss" onClick={onClose}>
+            <PanelHeaderButton
+              aria-label={dismissLabel}
+              vkuiClass="ModalCardBase__dismiss"
+              onClick={onClose}
+            >
               <Icon24Dismiss />
             </PanelHeaderButton>
           )}

@@ -1,4 +1,4 @@
-import { baselineComponent } from "../../testing/utils";
+import { baselineComponent, waitForPopper } from "../../testing/utils";
 import { fireEvent, render, screen, queryByText } from "@testing-library/react";
 import { ChipsSelect, ChipsSelectProps } from "./ChipsSelect";
 import userEvent from "@testing-library/user-event";
@@ -15,7 +15,10 @@ const colors: ChipsInputOption[] = [
   { value: "blue", label: "Синий" },
   { value: "navarin", label: "Наваринского пламени с дымом" },
 ];
-const toggleDropdown = () => userEvent.click(screen.getByRole("textbox"));
+const toggleDropdown = async () => {
+  userEvent.click(screen.getByRole("textbox"));
+  await waitForPopper();
+};
 // получить опцию из дропдауна (не чип)
 const queryListOption = (o: ChipsInputOption | null | undefined) => {
   const list = document.querySelector(".ChipsSelect__options") as HTMLElement;
@@ -25,59 +28,60 @@ const queryListOption = (o: ChipsInputOption | null | undefined) => {
 describe("ChipsSelect", () => {
   baselineComponent(ChipsSelect);
 
-  it("renders empty text", () => {
+  it("renders empty text", async () => {
     render(<ChipsSelect options={[]} value={[]} emptyText="__empty__" />);
-    toggleDropdown();
+    await toggleDropdown();
     expect(screen.queryByText("__empty__")).toBeTruthy();
   });
 
-  it("filters options", () => {
+  it("filters options", async () => {
     render(<ChipsSelect options={colors} value={[]} />);
     userEvent.type(
       screen.getByRole("textbox"),
       colors[1]?.label?.substring(0, 3) as string
     );
-    toggleDropdown();
+    await toggleDropdown();
     expect(queryListOption(colors[1])).toBeTruthy();
     expect(screen.queryAllByRole("option")).toHaveLength(1);
   });
 
-  it("shows spinner if fetching", () => {
+  it("shows spinner if fetching", async () => {
     render(<ChipsSelect fetching value={[]} />);
-    toggleDropdown();
+    await toggleDropdown();
     expect(screen.queryByRole("status")).toBeTruthy();
   });
 
   describe("controls dropdown", () => {
-    it.each(["click", "focus"])("opens options on %s", (e) => {
+    it.each(["click", "focus"])("opens options on %s", async (e) => {
       render(<ChipsSelect options={colors} value={[]} />);
       e === "focus"
         ? fireEvent.focus(screen.getByRole("textbox"))
-        : toggleDropdown();
+        : await toggleDropdown();
+      await toggleDropdown();
       expect(screen.getAllByRole("option")[0]).toBeTruthy();
     });
-    it("closes options on click outside", () => {
+    it("closes options on click outside", async () => {
       render(<ChipsSelect options={colors} value={[]} />);
-      toggleDropdown();
+      await toggleDropdown();
       userEvent.click(document.body);
       expect(screen.queryByRole("option")).toBeNull();
     });
-    it("closes options after select", () => {
+    it("closes options after select", async () => {
       render(<ChipsSelect options={colors} value={[]} />);
-      toggleDropdown();
+      await toggleDropdown();
       userEvent.click(queryListOption(colors[0]) as Element);
       expect(queryListOption(colors[1])).toBeNull();
     });
-    it("closes options on esc", () => {
+    it("closes options on esc", async () => {
       render(<ChipsSelect options={colors} value={[]} />);
-      toggleDropdown();
+      await toggleDropdown();
       userEvent.type(screen.getByRole("textbox"), "{esc}");
       expect(queryListOption(colors[1])).toBeNull();
     });
   });
 
   describe("selects", () => {
-    it("on click", () => {
+    it("on click", async () => {
       let value;
       render(
         <ChipsSelect
@@ -86,13 +90,13 @@ describe("ChipsSelect", () => {
           value={[]}
         />
       );
-      toggleDropdown();
+      await toggleDropdown();
       userEvent.click(queryListOption(colors[0]) as Element);
       expect(value).toEqual([colors[0]]);
     });
-    it("hides selected option from list", () => {
+    it("hides selected option from list", async () => {
       render(<ChipsSelect options={colors} value={[colors[0]]} />);
-      toggleDropdown();
+      await toggleDropdown();
       expect(queryListOption(colors[0])).toBeNull();
     });
     it("deselects on chip click", () => {
