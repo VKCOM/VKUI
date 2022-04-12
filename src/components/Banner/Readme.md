@@ -126,7 +126,7 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
             }}
           />
         }
-        actions={<Button mode="overlay_primary">Подробнее</Button>}
+        actions={<Button appearance="overlay">Подробнее</Button>}
       />
     </Group>
     <Group header={<Header>Content: tint, size: medium</Header>}>
@@ -173,7 +173,7 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
         }
         asideMode="dismiss"
         actions={
-          <Button mode="overlay_primary" size="m">
+          <Button appearance="overlay" size="m">
             Подробнее
           </Button>
         }
@@ -204,7 +204,7 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
         }
         asideMode="dismiss"
         actions={
-          <Button mode="overlay_primary" size="m">
+          <Button appearance="overlay" size="m">
             Подробнее
           </Button>
         }

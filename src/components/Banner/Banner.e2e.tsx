@@ -46,7 +46,7 @@ describe("Banner", () => {
         before: [undefined],
         asideMode: [undefined],
         actions: [
-          <Button key="btn" mode="overlay_primary">
+          <Button key="btn" appearance="overlay">
             Подробнее
           </Button>,
         ],

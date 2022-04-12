@@ -76,7 +76,7 @@ export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
    * Кнопки, отображаемые в баннере.
    *
    * - В режиме `tint` или в `image` со светлым фоном рекомендуется использовать только `<Button mode="primary" />` или `<Button mode="tertiary" hasHover={false} />`.
-   * - В режиме `image` с тёмным фоном – `<Button mode="overlay_primary" />`.
+   * - В режиме `image` с тёмным фоном – `<Button appearance="overlay" />`.
    */
   actions?: React.ReactNode;
 }
