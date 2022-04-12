@@ -44,7 +44,7 @@ describe("Alert", () => {
         userEvent.click(screen.getByText("__action__"));
         expect(action).toBeCalledTimes(1);
       });
-      it("calls action after close when autoclose=true", () => {
+      it("calls action after close when autoClose=true", () => {
         const action = jest.fn();
         const onClose = jest.fn();
         render(
@@ -56,7 +56,7 @@ describe("Alert", () => {
                   action,
                   title: "__action__",
                   mode: "default",
-                  autoclose: true,
+                  autoClose: true,
                 },
               ]}
             />

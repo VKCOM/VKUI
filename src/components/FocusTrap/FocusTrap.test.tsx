@@ -18,7 +18,7 @@ import { SplitCol } from "../SplitCol/SplitCol";
 import { CellButton } from "../CellButton/CellButton";
 
 const _children = ["first", "middle", "last"].map((item) => (
-  <ActionSheetItem key={item} autoclose data-testid={item}>
+  <ActionSheetItem key={item} autoClose data-testid={item}>
     {item} Item
   </ActionSheetItem>
 ));

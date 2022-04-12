@@ -27,7 +27,7 @@ export type AlertActionInterface = AlertAction &
 export interface AlertAction extends Pick<ButtonProps, "Component" | "href"> {
   title: string;
   action?: VoidFunction;
-  autoclose?: boolean;
+  autoClose?: boolean;
   mode: "cancel" | "destructive" | "default";
 }
 
@@ -77,13 +77,13 @@ class AlertComponent extends React.Component<TAlertProps, AlertState> {
   }
 
   onItemClick: ItemClickHander = (item: AlertActionInterface) => () => {
-    const { action, autoclose } = item;
+    const { action, autoClose } = item;
 
-    if (autoclose) {
+    if (autoClose) {
       this.setState({ closing: true });
       this.waitTransitionFinish((e?: TransitionEvent) => {
         if (!e || e.propertyName === "opacity") {
-          autoclose && this.props.onClose?.();
+          autoClose && this.props.onClose?.();
           action && action();
         }
       });

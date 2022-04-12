@@ -36,8 +36,8 @@ describe("ActionSheet", () => {
       it.each([
         {},
         { selectable: true },
-        { autoclose: true },
-        { autoclose: true, selectable: true },
+        { autoClose: true },
+        { autoClose: true, selectable: true },
       ])("when %s", async (props) => {
         const handlers = { onClick: jest.fn(), onChange: jest.fn() };
         const { unmount } = render(
