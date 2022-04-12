@@ -42,7 +42,7 @@ const Subhead: React.FC<SubheadProps> = ({
       vkuiClass={classNames(
         "Subhead",
         `Subhead--sizeY-${sizeY}`,
-        `Subhead--w-${weight}`
+        weight && `Subhead--w-${weight}`
       )}
     >
       {children}
