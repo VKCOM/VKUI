@@ -17,7 +17,7 @@ export interface ModalPageHeaderProps
 /**
  * @see https://vkcom.github.io/VKUI/#/ModalPageHeader
  */
-const ModalPageHeader = ({
+export const ModalPageHeader = ({
   children,
   separator = true,
   getRef,
@@ -48,6 +48,3 @@ const ModalPageHeader = ({
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default ModalPageHeader;

@@ -1,4 +1,4 @@
-import ModalPageHeader, { ModalPageHeaderProps } from "./ModalPageHeader";
+import { ModalPageHeader, ModalPageHeaderProps } from "./ModalPageHeader";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { PanelHeaderButton } from "../PanelHeaderButton/PanelHeaderButton";
 import { Icon24Cancel, Icon24Dismiss, Icon24Done } from "@vkontakte/icons";
