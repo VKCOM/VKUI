@@ -56,13 +56,13 @@ class Example extends React.Component {
             {
               title: "Лишить права",
               mode: "destructive",
-              autoclose: true,
+              autoClose: true,
               action: () =>
                 this.addActionLogItem("Право на модерацию контента убрано."),
             },
             {
               title: "Отмена",
-              autoclose: true,
+              autoClose: true,
               mode: "cancel",
             },
           ]}
@@ -82,12 +82,12 @@ class Example extends React.Component {
           actions={[
             {
               title: "Отмена",
-              autoclose: true,
+              autoClose: true,
               mode: "cancel",
             },
             {
               title: "Удалить",
-              autoclose: true,
+              autoClose: true,
               mode: "destructive",
               action: () => this.addActionLogItem("Документ удален."),
             },
