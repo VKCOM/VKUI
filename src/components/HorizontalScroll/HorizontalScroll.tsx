@@ -132,25 +132,41 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
 
   const animationQueue = React.useRef<VoidFunction[]>([]);
 
-  function scrollTo(getScrollPosition: (offset: number) => number) {
-    const scrollElement = scrollerRef.current;
+  const scrollTo = React.useCallback(
+    (getScrollPosition: ScrollPositionHandler) => {
+      const scrollElement = scrollerRef.current;
 
-    animationQueue.current.push(() =>
-      doScroll({
-        scrollElement,
-        getScrollPosition,
-        animationQueue: animationQueue.current,
-        onScrollToRightBorder: () => setCanScrollRight(false),
-        onScrollEnd: () => (isCustomScrollingRef.current = false),
-        onScrollStart: () => (isCustomScrollingRef.current = true),
-        initialScrollWidth: scrollElement?.firstElementChild?.scrollWidth || 0,
-        scrollAnimationDuration,
-      })
-    );
-    if (animationQueue.current.length === 1) {
-      animationQueue.current[0]();
-    }
-  }
+      animationQueue.current.push(() =>
+        doScroll({
+          scrollElement,
+          getScrollPosition,
+          animationQueue: animationQueue.current,
+          onScrollToRightBorder: () => setCanScrollRight(false),
+          onScrollEnd: () => (isCustomScrollingRef.current = false),
+          onScrollStart: () => (isCustomScrollingRef.current = true),
+          initialScrollWidth:
+            scrollElement?.firstElementChild?.scrollWidth || 0,
+          scrollAnimationDuration,
+        })
+      );
+      if (animationQueue.current.length === 1) {
+        animationQueue.current[0]();
+      }
+    },
+    [scrollAnimationDuration, scrollerRef]
+  );
+
+  const scrollToLeft = React.useCallback(() => {
+    const getScrollPosition =
+      getScrollToLeft ?? ((i: number) => i - scrollerRef.current!.offsetWidth);
+    scrollTo(getScrollPosition);
+  }, [getScrollToLeft, scrollTo, scrollerRef]);
+
+  const scrollToRight = React.useCallback(() => {
+    const getScrollPosition =
+      getScrollToRight ?? ((i: number) => i + scrollerRef.current!.offsetWidth);
+    scrollTo(getScrollPosition);
+  }, [getScrollToRight, scrollTo, scrollerRef]);
 
   const onscroll = React.useCallback(() => {
     if (
@@ -186,24 +202,10 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
       })}
     >
       {showArrows && hasMouse && canScrollLeft && (
-        <HorizontalScrollArrow
-          direction="left"
-          onClick={() => {
-            if (getScrollToLeft) {
-              scrollTo(getScrollToLeft);
-            }
-          }}
-        />
+        <HorizontalScrollArrow direction="left" onClick={scrollToLeft} />
       )}
       {showArrows && hasMouse && canScrollRight && (
-        <HorizontalScrollArrow
-          direction="right"
-          onClick={() => {
-            if (getScrollToRight) {
-              scrollTo(getScrollToRight);
-            }
-          }}
-        />
+        <HorizontalScrollArrow direction="right" onClick={scrollToRight} />
       )}
       <div vkuiClass="HorizontalScroll__in" ref={scrollerRef}>
         <div vkuiClass="HorizontalScroll__in-wrapper">{children}</div>
