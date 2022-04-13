@@ -34,13 +34,14 @@
   pointer-events: none;
 }
 
-:not(.ModalRoot--desktop).ModalRoot--ios .ModalRoot__viewport {
+:not(.ModalRoot--desktop).ModalRoot--ios .ModalRoot__viewport,
+:not(.ModalRoot--desktop).ModalRoot--android .ModalRoot__viewport {
   top: var(--safe-area-inset-top);
 }
 
 :not(.ModalRoot--desktop).ModalRoot--vkapps.ModalRoot--android
   .ModalRoot__viewport {
-  top: var(--panelheader_height_android);
+  top: calc(var(--safe-area-inset-top) + var(--panelheader_height_android));
 }
 
 :not(.ModalRoot--desktop).ModalRoot--vkapps.ModalRoot--ios
