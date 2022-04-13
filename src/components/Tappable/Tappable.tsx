@@ -265,6 +265,8 @@ const Tappable: React.FC<TappableProps> = ({
   const classes = classNames(
     getClassName("Tappable", platform),
     `Tappable--sizeX-${sizeX}`,
+    hasHover && `Tappable--hasHover`,
+    hasActive && `Tappable--hasActive`,
     hasHover && hovered && !isPresetHoverMode && hoverMode,
     hasActive && active && !isPresetActiveMode && activeMode,
     focusVisible && !isPresetFocusVisibleMode && focusVisibleMode,
