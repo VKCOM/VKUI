@@ -1,5 +1,10 @@
 .Tappable {
   position: relative;
+  cursor: default;
+}
+
+.Tappable--hasHover,
+.Tappable--hasActive {
   cursor: pointer;
 }
 
