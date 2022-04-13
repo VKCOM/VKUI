@@ -86,6 +86,7 @@ export function modalTransitionReducer(
 export function useModalManager(
   activeModal: string | null | undefined,
   children: React.ReactNode | React.ReactNode[],
+  onOpen: (id: string) => void,
   onClose: (id: string) => void,
   initModal: (state: ModalsStateEntry) => void = noop
 ): ModalTransitionProps {
@@ -97,6 +98,7 @@ export function useModalManager(
       id: id ?? null,
     };
 
+    state.onOpen = Modal.props.onOpen;
     state.onClose = Modal.props.onClose;
     state.dynamicContentHeight = !!modalProps.dynamicContentHeight;
     // ModalPage props
@@ -142,8 +144,20 @@ export function useModalManager(
   const isCard = (id: string | null | undefined) =>
     id != null && modalsState[id]?.type === ModalType.CARD;
   const onEnter = React.useCallback(
-    (id: string | null) => dispatchTransition({ type: "entered", id }),
-    []
+    (id: string | null) => {
+      if (id) {
+        const modalState = modalsState[id];
+
+        if (isFunction(modalState.onOpen)) {
+          modalState.onOpen();
+        } else if (isFunction(onOpen)) {
+          onOpen(id);
+        }
+      }
+
+      dispatchTransition({ type: "entered", id });
+    },
+    [modalsState, onOpen]
   );
   const onExit = React.useCallback(
     (id: string | null) => dispatchTransition({ type: "exited", id }),
@@ -194,6 +208,7 @@ export function withModalManager(
       const transitionManager = useModalManager(
         props.activeModal,
         props.children,
+        (props as any).onOpen,
         (props as any).onClose,
         initModal
       );

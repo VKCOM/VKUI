@@ -45,6 +45,13 @@ export interface ModalRootProps extends HasPlatform {
   activeModal?: string | null;
 
   /**
+   * Будет вызвано при открытии активной модалки с её id
+   *
+   * > Может дожидаться окончания анимации, если она есть.
+   */
+  onOpen?(modalId: string): void;
+
+  /**
    * Будет вызвано при закрытии активной модалки с её id
    */
   onClose?(modalId: string): void;

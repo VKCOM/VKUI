@@ -16,6 +16,10 @@ export interface ModalElements {
 
 export interface ModalsStateEntry extends ModalElements {
   id: string | null;
+  /**
+   * Событие открытия модалки.
+   */
+  onOpen?: () => any;
   onClose?: () => any;
   type?: ModalType;
 

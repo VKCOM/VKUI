@@ -12,9 +12,12 @@ describe(useModalManager, () => {
       <MockModal id="m2" key="m2" />,
     ];
     it("can enter on mount", () => {
-      const handle = renderHook(({ id }) => useModalManager(id, modals, noop), {
-        initialProps: { id: "m1" },
-      });
+      const handle = renderHook(
+        ({ id }) => useModalManager(id, modals, noop, noop),
+        {
+          initialProps: { id: "m1" },
+        }
+      );
       expect(handle.result.current).toMatchObject({
         activeModal: "m1",
         enteringModal: "m1",
@@ -31,9 +34,12 @@ describe(useModalManager, () => {
       });
     });
     it("can enter on update", () => {
-      const handle = renderHook(({ id }) => useModalManager(id, modals, noop), {
-        initialProps: { id: null as string | null },
-      });
+      const handle = renderHook(
+        ({ id }) => useModalManager(id, modals, noop, noop),
+        {
+          initialProps: { id: null as string | null },
+        }
+      );
       expect(handle.result.all).toMatchObject([
         { activeModal: null, enteringModal: null, exitingModal: null },
       ]);
@@ -55,9 +61,12 @@ describe(useModalManager, () => {
       });
     });
     const flushMount = (initId: string | null = null) => {
-      const handle = renderHook(({ id }) => useModalManager(id, modals, noop), {
-        initialProps: { id: initId },
-      });
+      const handle = renderHook(
+        ({ id }) => useModalManager(id, modals, noop, noop),
+        {
+          initialProps: { id: initId },
+        }
+      );
       act(() => {
         handle.result.current.onEnter(initId);
       });
@@ -116,12 +125,12 @@ describe(useModalManager, () => {
   describe("maintains transition history", () => {
     it("initializes with activeModal", () => {
       const handle = renderHook(() =>
-        useModalManager("m1", <MockModal id="m1" />, noop)
+        useModalManager("m1", <MockModal id="m1" />, noop, noop)
       );
       expect(handle.result.current.history).toEqual(["m1"]);
     });
     it("initializes empty if activeModal=null", () => {
-      const handle = renderHook(() => useModalManager(null, [], noop));
+      const handle = renderHook(() => useModalManager(null, [], noop, noop));
       expect(handle.result.current.history).toEqual([]);
     });
     it("Handles transition forward", () => {
@@ -158,14 +167,17 @@ describe(useModalManager, () => {
 
   describe("ignores missing modal", () => {
     it("on init", () => {
-      const handle = renderHook(() => useModalManager("m1", [], noop));
+      const handle = renderHook(() => useModalManager("m1", [], noop, noop));
       expect(handle.result.current.activeModal).toEqual(null);
       expect(handle.result.current.history).toEqual([]);
     });
     it("on update", () => {
-      const handle = renderHook(({ id }) => useModalManager(id, [], noop), {
-        initialProps: { id: null as string | null },
-      });
+      const handle = renderHook(
+        ({ id }) => useModalManager(id, [], noop, noop),
+        {
+          initialProps: { id: null as string | null },
+        }
+      );
       handle.rerender({ id: "m1" });
       expect(handle.result.current.activeModal).toEqual(null);
     });
@@ -178,7 +190,7 @@ describe(useModalManager, () => {
     // handle.rerender({ children: <MockModal id="m2" /> });
 
     const handle = renderHook(
-      ({ id, children }) => useModalManager(id, children, noop),
+      ({ id, children }) => useModalManager(id, children, noop, noop),
       {
         initialProps: {
           id: "m1" as string | null,
@@ -193,11 +205,46 @@ describe(useModalManager, () => {
     expect(handle.result.current.getModalState("m2")).toBeTruthy();
   });
 
+  describe("onOpen() callback", () => {
+    it("call onOpen provided to component", () => {
+      const onOpenOfComponent = jest.fn();
+      const onOpenOfArgument = jest.fn();
+      const handle = renderHook(() =>
+        useModalManager(
+          "m1",
+          <MockModal id="m1" onOpen={onOpenOfComponent} />,
+          onOpenOfArgument,
+          noop
+        )
+      );
+      act(() => {
+        handle.result.current.onEnter("m1");
+      });
+      expect(onOpenOfComponent).toBeCalledTimes(1);
+      expect(onOpenOfArgument).toBeCalledTimes(0);
+    });
+    it("call onOpen provided to argument", () => {
+      const onOpen = jest.fn();
+      const handle = renderHook(() =>
+        useModalManager("m1", <MockModal id="m1" />, onOpen, noop)
+      );
+      act(() => {
+        handle.result.current.onEnter("m1");
+      });
+      expect(onOpen).toBeCalledTimes(1);
+    });
+  });
+
   describe("closes active modal", () => {
     it("calls active modal onClose", () => {
       const onClose = jest.fn();
       const handle = renderHook(() =>
-        useModalManager("m1", <MockModal id="m1" onClose={onClose} />, noop)
+        useModalManager(
+          "m1",
+          <MockModal id="m1" onClose={onClose} />,
+          noop,
+          noop
+        )
       );
       handle.result.current.closeActiveModal();
       expect(onClose).toBeCalledTimes(1);
@@ -205,18 +252,18 @@ describe(useModalManager, () => {
     it("calls own onClose if missing in modal props", () => {
       const onClose = jest.fn();
       const handle = renderHook(() =>
-        useModalManager("m1", <MockModal id="m1" />, onClose)
+        useModalManager("m1", <MockModal id="m1" />, noop, onClose)
       );
       handle.result.current.closeActiveModal();
       expect(onClose).toBeCalledTimes(1);
     });
     it("does not explode if no active modal", () => {
-      const handle = renderHook(() => useModalManager(null, [], noop));
+      const handle = renderHook(() => useModalManager(null, [], noop, noop));
       expect(handle.result.current.closeActiveModal).not.toThrow();
     });
     it("does not explode if no onClose", () => {
       const handle = renderHook(() =>
-        useModalManager("m1", <MockModal id="m1" />, null as any)
+        useModalManager("m1", <MockModal id="m1" />, noop, null as any)
       );
       expect(handle.result.current.closeActiveModal).not.toThrow();
     });
