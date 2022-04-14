@@ -11,7 +11,7 @@ import {
   isBefore,
   isFirstDayOfMonth,
   isLastDayOfMonth,
-} from "date-fns";
+} from "./date";
 
 export const getYears = (currentYear: number, range: number) => {
   const years: Array<{
@@ -53,10 +53,10 @@ export const getDaysNames = (
   const formatter = new Intl.DateTimeFormat(locale, {
     weekday: "short",
   });
-  return eachDayOfInterval({
-    start: startOfWeek(now, { weekStartsOn }),
-    end: endOfWeek(now, { weekStartsOn }),
-  }).map((day) => formatter.format(day));
+  return eachDayOfInterval(
+    startOfWeek(now, weekStartsOn),
+    endOfWeek(now, weekStartsOn)
+  ).map((day) => formatter.format(day));
 };
 
 export const navigateDate = (date?: Date | null, key?: string) => {
@@ -84,8 +84,8 @@ export const getWeeks = (
   viewDate: Date,
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6
 ) => {
-  const start = startOfWeek(startOfMonth(viewDate), { weekStartsOn });
-  const end = endOfWeek(endOfMonth(viewDate), { weekStartsOn });
+  const start = startOfWeek(startOfMonth(viewDate), weekStartsOn);
+  const end = endOfWeek(endOfMonth(viewDate), weekStartsOn);
 
   let count = 0;
   let current = start;

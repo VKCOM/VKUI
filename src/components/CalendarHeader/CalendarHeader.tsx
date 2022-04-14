@@ -1,5 +1,5 @@
 import * as React from "react";
-import { setMonth, setYear, subMonths, addMonths } from "date-fns";
+import { setMonth, setYear, subMonths, addMonths } from "../../lib/date";
 import {
   Icon20ChevronLeftOutline,
   Icon20ChevronRightOutline,

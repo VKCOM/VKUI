@@ -3,7 +3,7 @@
 > ⚠️ Данный компонент предназначен для использования на desktop. При использовании на ios/android работа компонента не гарантируется
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-import { format } from "date-fns";
+import { format } from "../../lib/date";
 
 const Example = () => {
   const [value, setValue] = useState(new Date());
