@@ -148,5 +148,5 @@
 .CustomSelect__open.Select--mimicry-plain.Select--mimicry:focus
   .FormField__border,
 .FormField:not(.FormField--disabled) .FormField__border--hover {
-  background-color: var(--vkui--color_background);
+  background-color: var(--background_page, var(--vkui--color_background));
 }
