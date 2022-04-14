@@ -15,16 +15,24 @@ export interface ModalRootProps extends AdaptivityProps {
   activeModal?: string | null;
 
   /**
-   * Будет вызвано при открытии активной модалки с её id
-   *
-   * > Может дожидаться окончания анимации, если она есть.
+   * Будет вызвано при начале открытия активной модалки с её id
    */
   onOpen?(modalId: string): void;
 
   /**
-   * Будет вызвано при закрытии активной модалки с её id
+   * Будет вызвано при окончательном открытии активной модалки с её id
    */
-  onClose?: (modalId: string) => void;
+  onOpened?(modalId: string): void;
+
+  /**
+   * Будет вызвано при начале закрытия активной модалки с её id
+   */
+  onClose?(modalId: string): void;
+
+  /**
+   * Будет вызвано при окончательном закрытии активной модалки с её id
+   */
+  onClosed?(modalId: string): void;
 }
 
 const ModalRootComponent: React.FC<

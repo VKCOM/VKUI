@@ -12,12 +12,9 @@ describe(useModalManager, () => {
       <MockModal id="m2" key="m2" />,
     ];
     it("can enter on mount", () => {
-      const handle = renderHook(
-        ({ id }) => useModalManager(id, modals, noop, noop),
-        {
-          initialProps: { id: "m1" },
-        }
-      );
+      const handle = renderHook(({ id }) => useModalManager(id, modals), {
+        initialProps: { id: "m1" },
+      });
       expect(handle.result.current).toMatchObject({
         activeModal: "m1",
         enteringModal: "m1",
@@ -25,7 +22,7 @@ describe(useModalManager, () => {
         delayEnter: false,
       });
       act(() => {
-        handle.result.current.onEnter("m1");
+        handle.result.current.onEntered("m1");
       });
       expect(handle.result.current).toMatchObject({
         activeModal: "m1",
@@ -34,12 +31,9 @@ describe(useModalManager, () => {
       });
     });
     it("can enter on update", () => {
-      const handle = renderHook(
-        ({ id }) => useModalManager(id, modals, noop, noop),
-        {
-          initialProps: { id: null as string | null },
-        }
-      );
+      const handle = renderHook(({ id }) => useModalManager(id, modals), {
+        initialProps: { id: null as string | null },
+      });
       expect(handle.result.all).toMatchObject([
         { activeModal: null, enteringModal: null, exitingModal: null },
       ]);
@@ -52,7 +46,7 @@ describe(useModalManager, () => {
       });
 
       act(() => {
-        handle.result.current.onEnter("m1");
+        handle.result.current.onEntered("m1");
       });
       expect(handle.result.current).toMatchObject({
         activeModal: "m1",
@@ -61,14 +55,11 @@ describe(useModalManager, () => {
       });
     });
     const flushMount = (initId: string | null = null) => {
-      const handle = renderHook(
-        ({ id }) => useModalManager(id, modals, noop, noop),
-        {
-          initialProps: { id: initId },
-        }
-      );
+      const handle = renderHook(({ id }) => useModalManager(id, modals), {
+        initialProps: { id: initId },
+      });
       act(() => {
-        handle.result.current.onEnter(initId);
+        handle.result.current.onEntered(initId);
       });
       return handle;
     };
@@ -81,7 +72,7 @@ describe(useModalManager, () => {
         exitingModal: "m1",
       });
       act(() => {
-        handle.result.current.onExit("m1");
+        handle.result.current.onExited("m1");
       });
       expect(handle.result.current).toMatchObject({
         activeModal: null,
@@ -104,7 +95,7 @@ describe(useModalManager, () => {
         delayEnter,
       });
       act(() => {
-        handle.result.current.onExit("m1");
+        handle.result.current.onExited("m1");
       });
       expect(handle.result.current).toMatchObject({
         activeModal: "m2",
@@ -112,7 +103,7 @@ describe(useModalManager, () => {
         exitingModal: null,
       });
       act(() => {
-        handle.result.current.onEnter("m2");
+        handle.result.current.onEntered("m2");
       });
       expect(handle.result.current).toMatchObject({
         activeModal: "m2",
@@ -130,7 +121,7 @@ describe(useModalManager, () => {
       expect(handle.result.current.history).toEqual(["m1"]);
     });
     it("initializes empty if activeModal=null", () => {
-      const handle = renderHook(() => useModalManager(null, [], noop, noop));
+      const handle = renderHook(() => useModalManager(null, []));
       expect(handle.result.current.history).toEqual([]);
     });
     it("Handles transition forward", () => {
@@ -167,17 +158,14 @@ describe(useModalManager, () => {
 
   describe("ignores missing modal", () => {
     it("on init", () => {
-      const handle = renderHook(() => useModalManager("m1", [], noop, noop));
+      const handle = renderHook(() => useModalManager("m1", []));
       expect(handle.result.current.activeModal).toEqual(null);
       expect(handle.result.current.history).toEqual([]);
     });
     it("on update", () => {
-      const handle = renderHook(
-        ({ id }) => useModalManager(id, [], noop, noop),
-        {
-          initialProps: { id: null as string | null },
-        }
-      );
+      const handle = renderHook(({ id }) => useModalManager(id, []), {
+        initialProps: { id: null as string | null },
+      });
       handle.rerender({ id: "m1" });
       expect(handle.result.current.activeModal).toEqual(null);
     });
@@ -190,7 +178,7 @@ describe(useModalManager, () => {
     // handle.rerender({ children: <MockModal id="m2" /> });
 
     const handle = renderHook(
-      ({ id, children }) => useModalManager(id, children, noop, noop),
+      ({ id, children }) => useModalManager(id, children),
       {
         initialProps: {
           id: "m1" as string | null,
@@ -205,67 +193,111 @@ describe(useModalManager, () => {
     expect(handle.result.current.getModalState("m2")).toBeTruthy();
   });
 
-  describe("onOpen() callback", () => {
-    it("call onOpen provided to component", () => {
+  describe("open phase", () => {
+    it("calls active modal onOpen", () => {
       const onOpenOfComponent = jest.fn();
       const onOpenOfArgument = jest.fn();
       const handle = renderHook(() =>
         useModalManager(
           "m1",
           <MockModal id="m1" onOpen={onOpenOfComponent} />,
-          onOpenOfArgument,
-          noop
+          onOpenOfArgument
         )
       );
-      act(() => {
-        handle.result.current.onEnter("m1");
-      });
+      handle.result.current.onEnter();
       expect(onOpenOfComponent).toBeCalledTimes(1);
       expect(onOpenOfArgument).toBeCalledTimes(0);
     });
-    it("call onOpen provided to argument", () => {
+    it("calls own onOpen if missing in modal props", () => {
       const onOpen = jest.fn();
       const handle = renderHook(() =>
-        useModalManager("m1", <MockModal id="m1" />, onOpen, noop)
+        useModalManager("m1", <MockModal id="m1" />, onOpen)
       );
-      act(() => {
-        handle.result.current.onEnter("m1");
-      });
+      handle.result.current.onEnter();
       expect(onOpen).toBeCalledTimes(1);
     });
-  });
-
-  describe("closes active modal", () => {
-    it("calls active modal onClose", () => {
-      const onClose = jest.fn();
+    it("calls active modal onOpened", () => {
+      const onOpenedOfComponent = jest.fn();
+      const onOpenedOfArgument = jest.fn();
       const handle = renderHook(() =>
         useModalManager(
           "m1",
-          <MockModal id="m1" onClose={onClose} />,
+          <MockModal id="m1" onOpened={onOpenedOfComponent} />,
           noop,
-          noop
+          onOpenedOfArgument
         )
       );
-      handle.result.current.closeActiveModal();
-      expect(onClose).toBeCalledTimes(1);
+      act(() => {
+        handle.result.current.onEntered("m1");
+      });
+      expect(onOpenedOfComponent).toBeCalledTimes(1);
+      expect(onOpenedOfArgument).toBeCalledTimes(0);
+    });
+    it("calls own onOpened if missing in modal props", () => {
+      const onOpened = jest.fn();
+      const handle = renderHook(() =>
+        useModalManager("m1", <MockModal id="m1" />, noop, onOpened)
+      );
+      act(() => {
+        handle.result.current.onEntered("m1");
+      });
+      expect(onOpened).toBeCalledTimes(1);
+    });
+  });
+
+  describe("exit phase", () => {
+    it("calls active modal onClose", () => {
+      const onCloseOfComponent = jest.fn();
+      const onCloseOfArgument = jest.fn();
+      const handle = renderHook(() =>
+        useModalManager(
+          "m1",
+          <MockModal id="m1" onClose={onCloseOfComponent} />,
+          noop,
+          noop,
+          onCloseOfArgument
+        )
+      );
+      handle.result.current.onExit();
+      expect(onCloseOfComponent).toBeCalledTimes(1);
+      expect(onCloseOfArgument).toBeCalledTimes(0);
     });
     it("calls own onClose if missing in modal props", () => {
       const onClose = jest.fn();
       const handle = renderHook(() =>
-        useModalManager("m1", <MockModal id="m1" />, noop, onClose)
+        useModalManager("m1", <MockModal id="m1" />, noop, noop, onClose)
       );
-      handle.result.current.closeActiveModal();
+      handle.result.current.onExit();
       expect(onClose).toBeCalledTimes(1);
     });
-    it("does not explode if no active modal", () => {
-      const handle = renderHook(() => useModalManager(null, [], noop, noop));
-      expect(handle.result.current.closeActiveModal).not.toThrow();
-    });
-    it("does not explode if no onClose", () => {
+    it("calls active modal onClosed", () => {
+      const onClosedOfComponent = jest.fn();
+      const onClosedOfArgument = jest.fn();
       const handle = renderHook(() =>
-        useModalManager("m1", <MockModal id="m1" />, noop, null as any)
+        useModalManager(
+          "m1",
+          <MockModal id="m1" onClosed={onClosedOfComponent} />,
+          noop,
+          noop,
+          noop,
+          onClosedOfArgument
+        )
       );
-      expect(handle.result.current.closeActiveModal).not.toThrow();
+      act(() => {
+        handle.result.current.onExited("m1");
+      });
+      expect(onClosedOfComponent).toBeCalledTimes(1);
+      expect(onClosedOfArgument).toBeCalledTimes(0);
+    });
+    it("calls own onClosed if missing in modal props", () => {
+      const onClosed = jest.fn();
+      const handle = renderHook(() =>
+        useModalManager("m1", <MockModal id="m1" />, noop, noop, noop, onClosed)
+      );
+      act(() => {
+        handle.result.current.onExited("m1");
+      });
+      expect(onClosed).toBeCalledTimes(1);
     });
   });
 });

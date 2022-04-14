@@ -15,10 +15,11 @@ interface ModalTransitionState {
 }
 
 export interface ModalTransitionProps extends ModalTransitionState {
-  onEnter: (id: string | null) => void;
-  onExit: (id: string | null) => void;
+  onEnter: VoidFunction;
+  onEntered: (id: string | null) => void;
+  onExit: VoidFunction;
+  onExited: (id: string | null) => void;
   getModalState: (id: string) => ModalsStateEntry;
-  closeActiveModal: VoidFunction;
   delayEnter: boolean;
 }
 
@@ -86,8 +87,10 @@ export function modalTransitionReducer(
 export function useModalManager(
   activeModal: string | null | undefined,
   children: React.ReactNode | React.ReactNode[],
-  onOpen: (id: string) => void,
-  onClose: (id: string) => void,
+  onOpen: (id: string) => void = noop,
+  onOpened: (id: string) => void = noop,
+  onClose: (id: string) => void = noop,
+  onClosed: (id: string) => void = noop,
   initModal: (state: ModalsStateEntry) => void = noop
 ): ModalTransitionProps {
   const modalsState = React.useRef<ModalsState>({}).current;
@@ -99,7 +102,9 @@ export function useModalManager(
     };
 
     state.onOpen = Modal.props.onOpen;
+    state.onOpened = Modal.props.onOpened;
     state.onClose = Modal.props.onClose;
+    state.onClosed = Modal.props.onClosed;
     state.dynamicContentHeight = !!modalProps.dynamicContentHeight;
     // ModalPage props
     if (typeof modalProps.settlingHeight === "number") {
@@ -143,25 +148,37 @@ export function useModalManager(
 
   const isCard = (id: string | null | undefined) =>
     id != null && modalsState[id]?.type === ModalType.CARD;
-  const onEnter = React.useCallback(
+  const onEntered = React.useCallback(
     (id: string | null) => {
       if (id) {
         const modalState = modalsState[id];
 
-        if (isFunction(modalState.onOpen)) {
-          modalState.onOpen();
-        } else if (isFunction(onOpen)) {
-          onOpen(id);
+        if (isFunction(modalState.onOpened)) {
+          modalState.onOpened();
+        } else if (isFunction(onOpened)) {
+          onOpened(id);
         }
       }
 
       dispatchTransition({ type: "entered", id });
     },
-    [modalsState, onOpen]
+    [modalsState, onOpened]
   );
-  const onExit = React.useCallback(
-    (id: string | null) => dispatchTransition({ type: "exited", id }),
-    []
+  const onExited = React.useCallback(
+    (id: string | null) => {
+      if (id) {
+        const modalState = modalsState[id];
+
+        if (isFunction(modalState.onClosed)) {
+          modalState.onClosed();
+        } else if (isFunction(onClosed)) {
+          onClosed(id);
+        }
+      }
+
+      dispatchTransition({ type: "exited", id });
+    },
+    [modalsState, onClosed]
   );
   const delayEnter = Boolean(
     transitionState.exitingModal &&
@@ -172,7 +189,19 @@ export function useModalManager(
     [modalsState]
   );
 
-  function closeActiveModal() {
+  function onEnter() {
+    const modalState =
+      transitionState.activeModal && modalsState[transitionState.activeModal];
+    if (modalState) {
+      if (isFunction(modalState.onOpen)) {
+        modalState.onOpen();
+      } else if (isFunction(onOpen)) {
+        onOpen(modalState.id);
+      }
+    }
+  }
+
+  function onExit() {
     const modalState =
       transitionState.activeModal && modalsState[transitionState.activeModal];
     if (modalState) {
@@ -180,19 +209,18 @@ export function useModalManager(
         modalState.onClose();
       } else if (isFunction(onClose)) {
         onClose(modalState.id);
-      } else if (process.env.NODE_ENV === "development") {
-        warn("onClose is undefined", "error");
       }
     }
   }
 
   return {
     onEnter,
+    onEntered,
     onExit,
+    onExited,
     ...transitionState,
     delayEnter,
     getModalState,
-    closeActiveModal,
   };
 }
 
@@ -209,7 +237,9 @@ export function withModalManager(
         props.activeModal,
         props.children,
         (props as any).onOpen,
+        (props as any).onOpened,
         (props as any).onClose,
+        (props as any).onClosed,
         initModal
       );
       return <Wrapped {...(props as any)} {...transitionManager} />;

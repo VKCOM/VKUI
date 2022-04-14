@@ -661,14 +661,14 @@ class SelectModal extends Component {
 export default withModalRootContext(SelectModal);
 ```
 
-#### В мобильной версии при парамтре `autoFocus` у контрола ломается поведение карточки
+#### В мобильной версии при параметре `autoFocus` у контрола ломается поведение карточки
 
 К сожалению, из-за особенностей React, `autoFocus` ломает CSS анимацию.
 
-Чтобы исправить проблему, следует отказаться от `autoFocus` и выставлять фокус в ручную при событии `onOpen`.
-Подписываться на `onOpen` можно двумя разными способами.
+Чтобы исправить проблему, следует отказаться от `autoFocus` и выставлять фокус в ручную при событии `onOpened`.
+Подписываться на `onOpened` можно двумя разными способами.
 
-1️⃣ `<ModalRoot onOpen={(id) => ...} />`
+1️⃣ `<ModalRoot onOpened={(id) => ...} />`
 
 ```jsx static
 const App = () => {
@@ -681,7 +681,7 @@ const App = () => {
   }, []);
 
   const modal = (
-    <ModalRoot activeModal="modal-with-auto-focus" onOpen={handleOpen}>
+    <ModalRoot activeModal="modal-with-auto-focus" onOpened={handleOpen}>
       <ModalPage id="modal-with-auto-focus">
         <Input getRootRef={inputRef} />
       </ModalPage>
@@ -691,10 +691,10 @@ const App = () => {
 };
 ```
 
-2️⃣ `<ModalPage onOpen={() => ...} />`
+2️⃣ `<ModalPage onOpened={() => ...} />`
 
 > ⚠️ в этом случае `ModalPage` нельзя заворачивать в другой компонент
-> иначе `ModalRoot` не сможет получить доступ к `onOpen`.
+> иначе `ModalRoot` не сможет получить доступ к `onOpened`.
 
 ```jsx static
 const App = () => {
@@ -708,7 +708,7 @@ const App = () => {
 
   const modal = (
     <ModalRoot activeModal="modal-with-auto-focus">
-      <ModalPage id="modal-with-auto-focus" onOpen={handleOpen}>
+      <ModalPage id="modal-with-auto-focus" onOpened={handleOpen}>
         <Input getRootRef={inputRef} />
       </ModalPage>
     </ModalRoot>
@@ -734,7 +734,7 @@ const Example = () => {
   }, []);
 
   const modal = (
-    <ModalRoot activeModal={activeModal} onOpen={handleOpenOfModalRoot}>
+    <ModalRoot activeModal={activeModal} onOpened={handleOpenOfModalRoot}>
       <ModalPage id="modal-1" onClose={() => setActiveModal(null)}>
         <Div>
           <input type="text" ref={firstInputRef} />
@@ -742,7 +742,7 @@ const Example = () => {
       </ModalPage>
       <ModalPage
         id="modal-2"
-        onOpen={handleOpenOfModalPage}
+        onOpened={handleOpenOfModalPage}
         onClose={() => setActiveModal(null)}
       >
         <Div>
@@ -758,10 +758,10 @@ const Example = () => {
         <View activePanel="main">
           <Panel id="main">
             <CellButton multiline onClick={() => setActiveModal("modal-1")}>
-              Пример с onOpen() на ModalRoot
+              Пример с onOpened() на ModalRoot
             </CellButton>
             <CellButton multiline onClick={() => setActiveModal("modal-2")}>
-              Пример с onOpen() на ModalPage
+              Пример с onOpened() на ModalPage
             </CellButton>
           </Panel>
         </View>

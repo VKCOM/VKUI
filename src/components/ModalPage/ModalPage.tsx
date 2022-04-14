@@ -32,15 +32,21 @@ export interface ModalPageProps
    */
   header?: React.ReactNode;
   /**
-   * Будет вызвано при открытии модалки.
-   *
-   * > Может дожидаться окончания анимации, если она есть.
+   * Будет вызвано при начале открытия модалки.
    */
   onOpen?: VoidFunction;
   /**
-   * Будет вызвано при закрытии модалки.
+   * Будет вызвано при окончательном открытии модалки.
+   */
+  onOpened?: VoidFunction;
+  /**
+   * Будет вызвано при начале закрытия модалки.
    */
   onClose?: VoidFunction;
+  /**
+   * Будет вызвано при окончательном закрытии модалки.
+   */
+  onClosed?: VoidFunction;
   /**
    * Процент, на который изначально будет открыта модальная страница. При `settlingHeight={100}` модальная страница раскрывается на всю высоту.
    */
@@ -66,7 +72,9 @@ const ModalPage: React.FC<ModalPageProps & AdaptivityContextInterface> = (
     sizeX,
     hasMouse,
     onOpen,
+    onOpened,
     onClose,
+    onClosed,
     settlingHeight,
     dynamicContentHeight,
     getModalContentRef,
