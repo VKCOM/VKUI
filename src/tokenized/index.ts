@@ -20,7 +20,7 @@ export type {
   SegmentedControlValue,
 } from "../components/SegmentedControl/SegmentedControl";
 
-export { default as Title } from "../components/Typography/Title/Title";
+export { Title } from "../components/Typography/Title/Title";
 export type { TitleProps } from "../components/Typography/Title/Title";
 
 export { default as Subhead } from "../components/Typography/Subhead/Subhead";

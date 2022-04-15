@@ -26,14 +26,13 @@ export interface TitleProps
 }
 
 const warn = warnOnce("Title");
-
-const Title: React.FC<TitleProps> = ({
+export const Title: React.FC<TitleProps> = ({
   children,
   weight,
   level = "1",
   Component,
   ...restProps
-}: TitleProps) => {
+}) => {
   if (!Component) {
     Component = ("h" + level) as React.ElementType;
   }
@@ -60,6 +59,3 @@ const Title: React.FC<TitleProps> = ({
     </Component>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default Title;
