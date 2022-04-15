@@ -13,6 +13,7 @@
 @import "../components/Typography/Subhead/Subhead.css";
 @import "../components/Typography/Caption/Caption.css";
 @import "../components/Typography/Text/Text.css";
+@import "../components/Typography/Paragraph/Paragraph.css";
 
 /* Service */
 @import "../components/Tappable/Tappable.css";
