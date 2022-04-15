@@ -2,7 +2,6 @@ import * as React from "react";
 import { HasComponent } from "../../../types";
 import { classNames } from "../../../lib/classNames";
 import { warnOnce } from "../../../lib/warnOnce";
-import { resolveWeight } from "../../../helpers/typography";
 import "./Title.css";
 
 export interface TitleProps
@@ -50,10 +49,11 @@ export const Title: React.FC<TitleProps> = ({
   return (
     <Component
       {...restProps}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames("Title", `Title--l-${level}`, {
-        [`Title--w-${resolveWeight(weight)}`]: !!weight,
-      })}
+      vkuiClass={classNames(
+        "Title",
+        `Title--l-${level}`,
+        weight && `Title--w-${weight}`
+      )}
     >
       {children}
     </Component>
