@@ -141,24 +141,24 @@ function resolveButtonAppearance(
   };
 }
 
-const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
+const Button: React.FC<ButtonProps> = ({
+  size = "s",
+  mode = "primary",
+  appearance,
+  stretched = false,
+  align = "center",
+  children,
+  before,
+  after,
+  getRootRef,
+  sizeY,
+  Component = "button",
+  loading,
+  onClick,
+  stopPropagation = true,
+  ...restProps
+}) => {
   const platform = usePlatform();
-  const {
-    size,
-    mode,
-    appearance,
-    stretched,
-    align,
-    children,
-    before,
-    after,
-    getRootRef,
-    sizeY,
-    Component = "button",
-    loading,
-    onClick,
-    ...restProps
-  } = props;
   const hasIcons = Boolean(before || after);
   const { resolvedMode, resolvedAppearance } = resolveButtonAppearance(
     appearance,
@@ -172,6 +172,7 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
       Component={restProps.href ? "a" : Component}
       onClick={loading ? undefined : onClick}
       focusVisibleMode="outside"
+      stopPropagation={stopPropagation}
       // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         "Button",
@@ -210,14 +211,6 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
       </span>
     </Tappable>
   );
-};
-
-Button.defaultProps = {
-  mode: "primary",
-  align: "center",
-  size: "s",
-  stretched: false,
-  stopPropagation: true,
 };
 
 // eslint-disable-next-line import/no-default-export
