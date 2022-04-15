@@ -141,7 +141,7 @@ function resolveButtonAppearance(
   };
 }
 
-const Button: React.FC<ButtonProps> = ({
+const ButtonComponent: React.FC<ButtonProps> = ({
   size = "s",
   mode = "primary",
   appearance,
@@ -213,7 +213,6 @@ const Button: React.FC<ButtonProps> = ({
   );
 };
 
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(Button, {
+export const Button = withAdaptivity(ButtonComponent, {
   sizeY: true,
 });
