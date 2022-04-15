@@ -23,7 +23,7 @@ export type {
 export { Title } from "../components/Typography/Title/Title";
 export type { TitleProps } from "../components/Typography/Title/Title";
 
-export { default as Subhead } from "../components/Typography/Subhead/Subhead";
+export { Subhead } from "../components/Typography/Subhead/Subhead";
 export type { SubheadProps } from "../components/Typography/Subhead/Subhead";
 
 export { Pagination } from "../components/Pagination/Pagination";
