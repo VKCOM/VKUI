@@ -37,3 +37,6 @@ export type { CalendarRangeProps } from "../components/CalendarRange/CalendarRan
 
 export { Caption } from "../components/Typography/Caption/Caption";
 export type { CaptionProps } from "../components/Typography/Caption/Caption";
+
+export { Paragraph } from "../components/Typography/Paragraph/Paragraph";
+export type { ParagraphProps } from "../components/Typography/Paragraph/Paragraph";
