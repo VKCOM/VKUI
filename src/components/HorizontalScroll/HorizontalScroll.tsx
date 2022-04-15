@@ -113,7 +113,7 @@ function doScroll({
   })();
 }
 
-const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
+const HorizontalScrollComponent: React.FC<HorizontalScrollProps> = ({
   children,
   getScrollToLeft,
   getScrollToRight,
@@ -122,7 +122,7 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
   hasMouse,
   getRef,
   ...restProps
-}: HorizontalScrollProps) => {
+}) => {
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(false);
 
@@ -214,7 +214,6 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
   );
 };
 
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(HorizontalScroll, {
+export const HorizontalScroll = withAdaptivity(HorizontalScrollComponent, {
   hasMouse: true,
 });
