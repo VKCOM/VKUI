@@ -1,38 +1,59 @@
-import { renderHook } from '@testing-library/react-hooks';
-import { noop } from '../lib/utils';
-import { useTimeout } from './useTimeout';
+import { renderHook, act } from "@testing-library/react-hooks";
+import { noop } from "../lib/utils";
+import { useTimeout } from "./useTimeout";
 
 describe(useTimeout, () => {
-  jest.useFakeTimers();
-  it('sets timeout', () => {
+  beforeAll(() => jest.useFakeTimers());
+  afterAll(() => jest.useRealTimers());
+  it("sets timeout", () => {
     const cb = jest.fn();
     const { result } = renderHook(() => useTimeout(cb, 100));
-    result.current.set();
-    jest.runAllTimers();
+    act(() => {
+      result.current.set();
+    });
+    act(() => {
+      jest.runAllTimers();
+    });
     expect(cb).toBeCalledTimes(1);
   });
-  it('clears timeout on unmout', () => {
+  it("clears timeout on unmout", () => {
     const { result, unmount } = renderHook(() => useTimeout(noop, 100));
     // run useEffect
-    jest.runAllTimers();
-    result.current.set();
+    act(() => {
+      jest.runAllTimers();
+    });
+    act(() => {
+      result.current.set();
+    });
     unmount();
     expect(jest.getTimerCount()).toBe(0);
   });
-  it('calls current callback', () => {
-    const { result, rerender } = renderHook((cb: VoidFunction = noop) => useTimeout(cb, 100));
-    result.current.set();
+  it("calls current callback", () => {
+    const { result, rerender } = renderHook((cb: VoidFunction = noop) =>
+      useTimeout(cb, 100)
+    );
+    act(() => {
+      result.current.set();
+    });
     const cb = jest.fn();
     rerender(cb);
-    jest.runAllTimers();
+    act(() => {
+      jest.runAllTimers();
+    });
     expect(cb).toBeCalledTimes(1);
   });
-  it('set() replaces old timeout', () => {
+  it("set() replaces old timeout", () => {
     const cb = jest.fn();
     const { result } = renderHook(() => useTimeout(cb, 100));
-    result.current.set();
-    result.current.set();
-    jest.runAllTimers();
+    act(() => {
+      result.current.set();
+    });
+    act(() => {
+      result.current.set();
+    });
+    act(() => {
+      jest.runAllTimers();
+    });
     expect(cb).toBeCalledTimes(1);
   });
 });

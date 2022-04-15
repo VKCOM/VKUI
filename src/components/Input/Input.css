@@ -40,7 +40,7 @@
 }
 
 .Input__el:disabled {
-  opacity: .4;
+  opacity: 0.4;
 }
 
 .Input__el::placeholder {

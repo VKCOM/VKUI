@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { PlatformType } from '../lib/platform';
-import { SSRContext } from '../lib/SSR';
-import { ConfigProviderContext } from '../components/ConfigProvider/ConfigProviderContext';
+import * as React from "react";
+import { PlatformType } from "../lib/platform";
+import { SSRContext } from "../lib/SSR";
+import { ConfigProviderContext } from "../components/ConfigProvider/ConfigProviderContext";
 
 export function usePlatform(): PlatformType {
   const ssrContext = React.useContext(SSRContext);

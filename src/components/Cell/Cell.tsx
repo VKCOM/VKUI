@@ -1,20 +1,24 @@
-import * as React from 'react';
-import { classNames } from '../../lib/classNames';
-import { warnOnce } from '../../lib/warnOnce';
-import { getClassName } from '../../helpers/getClassName';
-import { ANDROID, IOS, VKCOM } from '../../lib/platform';
-import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
-import { HasPlatform } from '../../types';
-import { Removable, RemovableProps } from '../Removable/Removable';
-import { usePlatform } from '../../hooks/usePlatform';
-import { useDraggable } from './useDraggable';
-import { ListContext } from '../List/ListContext';
-import { CellDragger } from './CellDragger/CellDragger';
-import { CellCheckbox, CellCheckboxProps } from './CellCheckbox/CellCheckbox';
-import './Cell.css';
+import * as React from "react";
+import { classNames } from "../../lib/classNames";
+import { noop } from "../../lib/utils";
+import { warnOnce } from "../../lib/warnOnce";
+import { getClassName } from "../../helpers/getClassName";
+import { ANDROID, IOS, VKCOM } from "../../lib/platform";
+import SimpleCell, { SimpleCellProps } from "../SimpleCell/SimpleCell";
+import { HasPlatform } from "../../types";
+import { Removable, RemovableProps } from "../Removable/Removable";
+import { usePlatform } from "../../hooks/usePlatform";
+import { useDraggable } from "./useDraggable";
+import { ListContext } from "../List/ListContext";
+import { CellDragger } from "./CellDragger/CellDragger";
+import { CellCheckbox, CellCheckboxProps } from "./CellCheckbox/CellCheckbox";
+import "./Cell.css";
 
-export interface CellProps extends SimpleCellProps, HasPlatform, RemovableProps {
-  mode?: 'removable' | 'selectable';
+export interface CellProps
+  extends SimpleCellProps,
+    HasPlatform,
+    RemovableProps {
+  mode?: "removable" | "selectable";
   /**
    * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
    */
@@ -52,11 +56,11 @@ export interface CellProps extends SimpleCellProps, HasPlatform, RemovableProps 
   draggerLabel?: string;
 }
 
-const warn = warnOnce('Cell');
+const warn = warnOnce("Cell");
 export const Cell: React.FC<CellProps> = ({
   mode: propsMode, // TODO: убрать переименование в propsMode перед 5.0.0
-  onRemove,
-  removePlaceholder = 'Удалить',
+  onRemove = noop,
+  removePlaceholder = "Удалить",
   onDragFinish,
   before,
   after,
@@ -67,33 +71,42 @@ export const Cell: React.FC<CellProps> = ({
   Component,
   onChange,
   name,
+  value,
   checked,
   defaultChecked,
   getRootRef,
-  draggerLabel = 'Перенести ячейку',
+  draggerLabel = "Перенести ячейку",
+  className,
+  style,
   ...restProps
 }: CellProps) => {
   // TODO: удалить перед 5.0.0
-  let mode: CellProps['mode'] = propsMode;
+  let mode: CellProps["mode"] = propsMode;
 
   if (!propsMode && (deprecatedSelectable || deprecatedRemovable)) {
-    mode = deprecatedSelectable
-      ? 'selectable'
-      : 'removable';
+    mode = deprecatedSelectable ? "selectable" : "removable";
 
-    if (process.env.NODE_ENV === 'development') {
-      deprecatedSelectable && warn('Свойство selectable устарелo и будет удалено в 5.0.0. Используйте mode="selectable".');
-      deprecatedRemovable && warn('Свойство removable устарелo и будет удалено в 5.0.0. Используйте mode="removable".');
+    if (process.env.NODE_ENV === "development") {
+      deprecatedSelectable &&
+        warn(
+          'Свойство selectable устарелo и будет удалено в 5.0.0. Используйте mode="selectable".'
+        );
+      deprecatedRemovable &&
+        warn(
+          'Свойство removable устарелo и будет удалено в 5.0.0. Используйте mode="removable".'
+        );
     }
   }
   // /end TODO
 
-  const selectable = mode === 'selectable';
-  const removable = mode === 'removable';
+  const selectable = mode === "selectable";
+  const removable = mode === "removable";
 
   const platform = usePlatform();
 
-  const { dragging, rootElRef, ...draggableProps } = useDraggable({ onDragFinish });
+  const { dragging, rootElRef, ...draggableProps } = useDraggable({
+    onDragFinish,
+  });
 
   const { toggleDrag } = React.useContext(ListContext);
   React.useEffect(() => {
@@ -102,27 +115,42 @@ export const Cell: React.FC<CellProps> = ({
       return () => toggleDrag(false);
     }
     return undefined;
-  }, [dragging]);
+  }, [dragging, toggleDrag]);
 
   let dragger;
   if (draggable) {
-    dragger = <CellDragger vkuiClass="Cell__dragger" aria-label={draggerLabel} {...draggableProps} />;
+    dragger = (
+      <CellDragger
+        vkuiClass="Cell__dragger"
+        aria-label={draggerLabel}
+        {...draggableProps}
+      />
+    );
   }
 
   let checkbox;
   if (selectable) {
-    const checkboxProps: CellCheckboxProps = { name, onChange, defaultChecked, checked, disabled };
+    const checkboxProps: CellCheckboxProps = {
+      name,
+      value,
+      onChange,
+      defaultChecked,
+      checked,
+      disabled,
+    };
     checkbox = <CellCheckbox vkuiClass="Cell__checkbox" {...checkboxProps} />;
   }
 
-  const simpleCellDisabled = draggable && !selectable || removable || disabled;
+  const simpleCellDisabled =
+    (draggable && !selectable) || removable || disabled;
   const hasActive = !simpleCellDisabled && !dragging;
 
-  const cellClasses = classNames(getClassName('Cell', platform), {
-    'Cell--dragging': dragging,
-    'Cell--removable': removable,
-    'Cell--selectable': selectable,
-    'Cell--disabled': disabled,
+  // eslint-disable-next-line vkui/no-object-expression-in-arguments
+  const cellClasses = classNames(getClassName("Cell", platform), {
+    "Cell--dragging": dragging,
+    "Cell--removable": removable,
+    "Cell--selectable": selectable,
+    "Cell--disabled": disabled,
   });
 
   const simpleCell = (
@@ -132,7 +160,7 @@ export const Cell: React.FC<CellProps> = ({
       {...restProps}
       vkuiClass="Cell__content"
       disabled={simpleCellDisabled}
-      Component={selectable ? 'label' : Component}
+      Component={selectable ? "label" : Component}
       before={
         <React.Fragment>
           {draggable && (platform === ANDROID || platform === VKCOM) && dragger}
@@ -153,6 +181,8 @@ export const Cell: React.FC<CellProps> = ({
     return (
       <Removable
         vkuiClass={cellClasses}
+        className={className}
+        style={style}
         getRootRef={rootElRef}
         removePlaceholder={removePlaceholder}
         onRemove={(e) => onRemove(e, rootElRef?.current)}
@@ -162,5 +192,14 @@ export const Cell: React.FC<CellProps> = ({
     );
   }
 
-  return (<div vkuiClass={cellClasses} ref={rootElRef}>{simpleCell}</div>);
+  return (
+    <div
+      vkuiClass={cellClasses}
+      className={className}
+      style={style}
+      ref={rootElRef}
+    >
+      {simpleCell}
+    </div>
+  );
 };

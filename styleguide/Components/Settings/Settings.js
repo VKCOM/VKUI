@@ -1,14 +1,12 @@
-import React, { Fragment } from 'react';
-import { PlatformSelect } from './PlatformSelect';
-import { SchemeSelect } from './SchemeSelect';
-import { WebviewTypeSelect } from './WebviewTypeSelect';
-import { HasMouseCheckbox } from './HasMouseCheckbox';
-import { ViewHeightSelect } from './ViewHeightSelect';
-import { ViewWidthSelect } from './ViewWidthSelect';
-// import { IntegrationSelect } from '../IntegrationSelect';
-import './Settings.css';
-import { Platform, useAdaptivity, ViewWidth } from '@vkui';
-import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
+import React, { Fragment } from "react";
+import { PlatformSelect } from "./PlatformSelect";
+import { AppearanceSelect } from "./AppearanceSelect";
+import { HasMouseCheckbox } from "./HasMouseCheckbox";
+import { ViewHeightSelect } from "./ViewHeightSelect";
+import { ViewWidthSelect } from "./ViewWidthSelect";
+import "./Settings.css";
+import { Platform, useAdaptivity, ViewWidth } from "@vkui";
+import { StyleGuideContext } from "../StyleGuide/StyleGuideRenderer";
 
 export const Settings = ({ adaptivity }) => {
   const { viewWidth } = useAdaptivity();
@@ -19,28 +17,16 @@ export const Settings = ({ adaptivity }) => {
         return (
           <div className="Settings">
             <div className="Settings__in">
-              {/* <IntegrationSelect*/}
-              {/*  onChange={(e) => context.setContext({ integration: e.target.value })}*/}
-              {/*  value={context.integration}*/}
-              {/* />*/}
               <PlatformSelect
-                allowVkCom={!isMobile}
                 onChange={(platform) => context.setContext({ platform })}
                 value={context.platform}
               />
-              {!isMobile && (
-                <SchemeSelect
-                  platform={context.platform}
-                  onChange={(scheme) => context.setContext({ scheme })}
-                  value={context.scheme}
-                />
-              )}
-              {adaptivity && !isMobile &&
+              <AppearanceSelect
+                onChange={(appearance) => context.setContext({ appearance })}
+                value={context.appearance}
+              />
+              {adaptivity && !isMobile && (
                 <Fragment>
-                  <WebviewTypeSelect
-                    onChange={(webviewType) => context.setContext({ webviewType })}
-                    value={context.webviewType}
-                  />
                   <ViewHeightSelect
                     onChange={(height) => context.setContext({ height })}
                     value={context.height}
@@ -56,7 +42,7 @@ export const Settings = ({ adaptivity }) => {
                     disabled={context.platform === Platform.VKCOM}
                   />
                 </Fragment>
-              }
+              )}
             </div>
           </div>
         );

@@ -1,6 +1,6 @@
-import { baselineComponent } from '../../testing/utils';
-import Select from './Select';
+import { baselineComponent } from "../../testing/utils";
+import Select from "./Select";
 
-describe('Select', () => {
+describe("Select", () => {
   baselineComponent(Select);
 });

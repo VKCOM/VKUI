@@ -1,26 +1,26 @@
-Компонент на базе [Card](/#/Card). Принимает все валидные свойства для `img` и `Tappable`. 
+Компонент на базе [Card](/#/Card). Принимает все валидные свойства для `img` и `Tappable`.
 
 Внутри распределяет переданные свойства между своими компонентами следующим образом:
 
 - корневой компонент `Card`
-  * `mode`,
-  * `getRootRef`,
-  * `style`,
-  * `className`;
+  - `mode`,
+  - `getRootRef`,
+  - `style`,
+  - `className`;
 - `img`
-  * `getRef`,
-  * `src`,
-  * `srcSet`,
-  * `alt`,
-  * `width`,
-  * `height`,
-  * `maxHeight`,
-  * `crossOrigin`,
-  * `decoding`,
-  * `loading`,
-  * `referrerPolicy`,
-  * `sizes`,
-  * `useMap`,
+  - `getRef`,
+  - `src`,
+  - `srcSet`,
+  - `alt`,
+  - `width`,
+  - `height`,
+  - `maxHeight`,
+  - `crossOrigin`,
+  - `decoding`,
+  - `loading`,
+  - `referrerPolicy`,
+  - `sizes`,
+  - `useMap`,
 - внутренний `Tappable` получает все остальные свойства (кроме `subtitle`, `header`, `text` и `caption`).
 
 ```jsx
@@ -28,9 +28,7 @@ const Example = () => {
   return (
     <View activePanel="profile" id="profile">
       <Panel id="profile">
-        <PanelHeader>
-          ContentCardExample
-        </PanelHeader>
+        <PanelHeader>ContentCardExample</PanelHeader>
         <Group>
           <CardGrid size="l">
             <ContentCard
@@ -39,6 +37,7 @@ const Example = () => {
               caption="VKUI Styleguide > Blocks > ContentCard"
             />
             <ContentCard
+              onClick={() => {}}
               src="https://images.unsplash.com/photo-1603988492906-4fb0fb251cf8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80"
               subtitle="unsplash"
               header="brown and gray mountains under blue sky during daytime photo"
@@ -47,6 +46,7 @@ const Example = () => {
               maxHeight={150}
             />
             <ContentCard
+              disabled
               src="https://images.unsplash.com/photo-1603928726698-a015a1015d0e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
               subtitle="unsplash"
               header="persons left hand with pink paint"
@@ -59,8 +59,7 @@ const Example = () => {
       </Panel>
     </View>
   );
-}
+};
 
-<Example/>
+<Example />;
 ```
-

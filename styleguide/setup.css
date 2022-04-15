@@ -1,10 +1,4 @@
 @font-face {
-  font-family: "TT Commons";
-  src: url("./fonts/TTCommons-DemiBold.woff") format("woff");
-  font-weight: 800;
-}
-
-@font-face {
   font-family: "JetBrainsMono";
   src: url("./fonts/JetBrainsMono-Regular.woff2") format("woff2");
   font-weight: 400;

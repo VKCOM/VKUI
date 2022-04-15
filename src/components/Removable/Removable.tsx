@@ -1,18 +1,18 @@
-import * as React from 'react';
-import { HasRootRef } from '../../types';
-import { classNames } from '../../lib/classNames';
-import { getTitleFromChildren, noop } from '../../lib/utils';
-import { useExternRef } from '../../hooks/useExternRef';
-import { usePlatform } from '../../hooks/usePlatform';
-import { getClassName } from '../../helpers/getClassName';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useDOM } from '../../lib/dom';
-import { ANDROID, IOS, VKCOM } from '../../lib/platform';
-import { Icon24Cancel } from '@vkontakte/icons';
-import IconButton from '../IconButton/IconButton';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
-import Tappable from '../Tappable/Tappable';
-import './Removable.css';
+import * as React from "react";
+import { HasRootRef } from "../../types";
+import { classNames } from "../../lib/classNames";
+import { getTitleFromChildren, noop } from "../../lib/utils";
+import { useExternRef } from "../../hooks/useExternRef";
+import { usePlatform } from "../../hooks/usePlatform";
+import { getClassName } from "../../helpers/getClassName";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { useDOM } from "../../lib/dom";
+import { ANDROID, IOS, VKCOM } from "../../lib/platform";
+import { Icon24Cancel } from "@vkontakte/icons";
+import IconButton from "../IconButton/IconButton";
+import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
+import Tappable from "../Tappable/Tappable";
+import "./Removable.css";
 
 export interface RemovableProps {
   /**
@@ -25,34 +25,48 @@ export interface RemovableProps {
   onRemove?: (e: React.MouseEvent, rootEl?: HTMLElement) => void;
 }
 
-interface RemovableIosOwnProps extends Pick<RemovableProps, 'removePlaceholder'> {
-  onRemoveClick?: (e: React.MouseEvent, rootEl?: HTMLElement) => void;
+interface RemovableIosOwnProps extends RemovableProps {
   removePlaceholderString?: string;
 }
 
 const RemovableIos: React.FC<RemovableIosOwnProps> = ({
-  onRemoveClick,
+  onRemove,
   removePlaceholder,
   removePlaceholderString,
   children,
 }) => {
-  const { document } = useDOM();
+  const { window } = useDOM();
 
-  const removeButtonRef = React.useRef(null);
+  const removeButtonRef = React.useRef<HTMLElement>(null);
+  const disabledRef = React.useRef(true);
   const [removeOffset, updateRemoveOffset] = React.useState(0);
 
-  useGlobalEventListener(document, 'click', removeOffset > 0 && (() => {
-    updateRemoveOffset(0);
-  }));
+  useGlobalEventListener(
+    window,
+    "click",
+    () => {
+      if (removeOffset > 0) {
+        updateRemoveOffset(0);
+      }
+    },
+    { capture: true }
+  );
 
   const onRemoveTransitionEnd = () => {
     if (removeOffset > 0) {
       removeButtonRef?.current?.focus();
+    } else {
+      disabledRef.current = true;
     }
   };
 
-  const onRemoveActivateClick = () => {
-    const { offsetWidth = 0 } = removeButtonRef?.current;
+  const onRemoveActivateClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!removeButtonRef.current) {
+      return;
+    }
+    const { offsetWidth } = removeButtonRef.current;
+    disabledRef.current = false;
     updateRemoveOffset(offsetWidth);
   };
 
@@ -80,11 +94,10 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
         Component="button"
         hasActive={false}
         hasHover={false}
-        disabled={removeOffset === 0}
+        disabled={disabledRef.current}
         getRootRef={removeButtonRef}
         vkuiClass="Removable__remove"
-        onClick={onRemoveClick}
-        onTransitionEnd={onRemoveTransitionEnd}
+        onClick={onRemove}
       >
         <span vkuiClass="Removable__remove-in">{removePlaceholder}</span>
       </Tappable>
@@ -92,19 +105,22 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
   );
 };
 
-interface RemovableOwnProps extends React.AllHTMLAttributes<HTMLElement>, RemovableProps, HasRootRef<HTMLDivElement> {
+interface RemovableOwnProps
+  extends React.AllHTMLAttributes<HTMLElement>,
+    RemovableProps,
+    HasRootRef<HTMLDivElement> {
   /**
    * Расположение кнопки удаления.
    */
-  align?: 'start' | 'center';
+  align?: "start" | "center";
 }
 
 export const Removable: React.FC<RemovableOwnProps> = ({
   getRootRef,
   children,
   onRemove = noop,
-  removePlaceholder = 'Удалить',
-  align = 'center',
+  removePlaceholder = "Удалить",
+  align = "center",
   ...restProps
 }: RemovableOwnProps) => {
   const platform = usePlatform();
@@ -117,16 +133,17 @@ export const Removable: React.FC<RemovableOwnProps> = ({
     onRemove(e);
   };
 
-  const removePlaceholderString: string = getTitleFromChildren(removePlaceholder);
+  const removePlaceholderString: string =
+    getTitleFromChildren(removePlaceholder);
 
   return (
     <div
       {...restProps}
       ref={ref}
       vkuiClass={classNames(
-        getClassName('Removable', platform),
+        getClassName("Removable", platform),
         `Removable--${align}`,
-        `Removable--sizeY-${sizeY}`,
+        `Removable--sizeY-${sizeY}`
       )}
     >
       {(platform === ANDROID || platform === VKCOM) && (
@@ -147,7 +164,7 @@ export const Removable: React.FC<RemovableOwnProps> = ({
 
       {platform === IOS && (
         <RemovableIos
-          onRemoveClick={onRemoveClick}
+          onRemove={onRemoveClick}
           removePlaceholder={removePlaceholder}
           removePlaceholderString={removePlaceholderString}
         >

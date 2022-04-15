@@ -1,11 +1,12 @@
-import * as React from 'react';
-import { DOMProps, withDOM } from '../../lib/dom';
-import { multiRef, setRef } from '../../lib/utils';
-import './CustomScrollView.css';
+import * as React from "react";
+import { DOMProps, withDOM } from "../../lib/dom";
+import { multiRef, setRef } from "../../lib/utils";
+import "./CustomScrollView.css";
 
 interface Props extends DOMProps {
   windowResize?: boolean;
-  boxRef: React.Ref<HTMLDivElement>;
+  boxRef?: React.Ref<HTMLDivElement>;
+  className?: HTMLDivElement["className"];
 }
 
 class CustomScrollView extends React.Component<Props> {
@@ -14,12 +15,14 @@ class CustomScrollView extends React.Component<Props> {
   private clientHeight = 0;
   private trackerHeight = 0;
   private scrollHeight = 0;
-  private transformProp = '';
+  private transformProp = "";
 
   private startY = 0;
   private trackerTop = 0;
 
-  private readonly box = multiRef<HTMLDivElement>((e) => setRef(e, this.props.boxRef));
+  private readonly box = multiRef<HTMLDivElement>((e) =>
+    setRef(e, this.props.boxRef)
+  );
   private readonly barY = React.createRef<HTMLDivElement>();
   private readonly trackerY = React.createRef<HTMLDivElement>();
 
@@ -29,7 +32,7 @@ class CustomScrollView extends React.Component<Props> {
     this.resize();
 
     if (this.props.windowResize) {
-      this.props.window.addEventListener('resize', this.resize);
+      this.props.window!.addEventListener("resize", this.resize);
     }
   }
 
@@ -38,23 +41,26 @@ class CustomScrollView extends React.Component<Props> {
   }
 
   componentWillUnmount() {
-    this.props.window.removeEventListener('resize', this.resize);
+    this.props.window!.removeEventListener("resize", this.resize);
   }
 
   chooseTransformProp() {
-    let style = this.trackerY.current.style;
-    let prop = '';
-
-    if ('transform' in style) {
-      prop = 'transform';
-    } else if ('webkitTransform' in style) {
-      prop = 'webkitTransform';
+    let style = this.trackerY.current?.style;
+    let prop = "";
+    if (style !== undefined) {
+      if ("transform" in style) {
+        prop = "transform";
+      } else if ("webkitTransform" in style) {
+        prop = "webkitTransform";
+      }
     }
-
     this.transformProp = prop;
   }
 
   resize = () => {
+    if (!this.box.current || !this.barY.current || !this.trackerY.current) {
+      return;
+    }
     const clientHeight = this.box.current.clientHeight;
     const scrollHeight = this.box.current.scrollHeight;
     let ratio = clientHeight / scrollHeight;
@@ -66,17 +72,16 @@ class CustomScrollView extends React.Component<Props> {
     this.trackerHeight = trackerHeight;
 
     if (ratio >= 1) {
-      this.barY.current.style.display = 'none';
+      this.barY.current.style.display = "none";
     } else {
-      this.barY.current.style.display = '';
+      this.barY.current.style.display = "";
       this.trackerY.current.style.height = `${trackerHeight}px`;
-
       this.setTrackerPositionFromScroll(this.box.current.scrollTop);
     }
   };
 
   scroll = () => {
-    if (this.ratio >= 1) {
+    if (this.ratio >= 1 || !this.box.current) {
       return;
     }
 
@@ -85,17 +90,26 @@ class CustomScrollView extends React.Component<Props> {
 
   setTrackerPosition(scrollTop: number) {
     this.lastTrackerTop = scrollTop;
-    (this.trackerY.current.style as any)[this.transformProp] = `translate(0, ${scrollTop}px)`;
+    if (this.trackerY.current !== null) {
+      (this.trackerY.current.style as any)[
+        this.transformProp
+      ] = `translate(0, ${scrollTop}px)`;
+    }
   }
 
   setTrackerPositionFromScroll(scrollTop: number) {
     const progress = scrollTop / (this.scrollHeight - this.clientHeight);
-    this.setTrackerPosition((this.clientHeight - this.trackerHeight) * progress);
+    this.setTrackerPosition(
+      (this.clientHeight - this.trackerHeight) * progress
+    );
   }
 
   setScrollPositionFromTracker(trackerTop: number) {
     const progress = trackerTop / (this.clientHeight - this.trackerHeight);
-    this.box.current.scrollTop = (this.scrollHeight - this.clientHeight) * progress;
+    if (this.box.current !== null) {
+      this.box.current.scrollTop =
+        (this.scrollHeight - this.clientHeight) * progress;
+    }
   }
 
   onDragStart = (e: React.MouseEvent) => {
@@ -103,35 +117,52 @@ class CustomScrollView extends React.Component<Props> {
     this.startY = e.clientY;
     this.trackerTop = this.lastTrackerTop;
 
-    this.props.document.addEventListener('mousemove', this.onMove);
-    this.props.document.addEventListener('mouseup', this.onUp);
+    this.props.document!.addEventListener("mousemove", this.onMove);
+    this.props.document!.addEventListener("mouseup", this.onUp);
   };
 
   onMove = (e: MouseEvent) => {
     e.preventDefault();
     const diff = e.clientY - this.startY;
-    const position = Math.min(Math.max(this.trackerTop + diff, 0), this.clientHeight - this.trackerHeight);
+    const position = Math.min(
+      Math.max(this.trackerTop + diff, 0),
+      this.clientHeight - this.trackerHeight
+    );
 
     this.setScrollPositionFromTracker(position);
   };
 
   onUp = (e: MouseEvent) => {
     e.preventDefault();
-    this.props.document.removeEventListener('mousemove', this.onMove);
-    this.props.document.removeEventListener('mouseup', this.onUp);
+    this.props.document!.removeEventListener("mousemove", this.onMove);
+    this.props.document!.removeEventListener("mouseup", this.onUp);
   };
 
   render() {
-    return <div vkuiClass="CustomScrollView">
-      <div vkuiClass="CustomScrollView__barY" ref={this.barY}>
-        <div vkuiClass="CustomScrollView__trackerY" ref={this.trackerY} onMouseDown={this.onDragStart} />
-      </div>
+    const { children, className } = this.props;
 
-      <div vkuiClass="CustomScrollView__box" tabIndex={-1} ref={this.box} onScroll={this.scroll}>
-        {this.props.children}
+    return (
+      <div vkuiClass="CustomScrollView" className={className}>
+        <div vkuiClass="CustomScrollView__barY" ref={this.barY}>
+          <div
+            vkuiClass="CustomScrollView__trackerY"
+            ref={this.trackerY}
+            onMouseDown={this.onDragStart}
+          />
+        </div>
+
+        <div
+          vkuiClass="CustomScrollView__box"
+          tabIndex={-1}
+          ref={this.box}
+          onScroll={this.scroll}
+        >
+          {children}
+        </div>
       </div>
-    </div>;
+    );
   }
 }
 
+// eslint-disable-next-line import/no-default-export
 export default withDOM(CustomScrollView);

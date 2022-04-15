@@ -1,5 +1,7 @@
-import * as React from 'react';
-import { canUseDOM } from './dom';
+import * as React from "react";
+import { canUseDOM } from "./dom";
 
-// eslint-disable-next-line no-restricted-properties
-export const useIsomorphicLayoutEffect = canUseDOM ? React.useLayoutEffect : React.useEffect;
+export const useIsomorphicLayoutEffect = canUseDOM
+  ? // eslint-disable-next-line no-restricted-properties
+    React.useLayoutEffect
+  : React.useEffect;

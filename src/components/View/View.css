@@ -1,4 +1,4 @@
-@import './ViewIOS.css';
+@import "./ViewIOS.css";
 
 .View {
   position: relative;
@@ -93,7 +93,7 @@
 }
 
 .View__panel--prev ~ .View__panel--next {
-  animation: vkui-animation-view-next-forward .3s var(--android-easing);
+  animation: vkui-animation-view-next-forward 0.3s var(--android-easing);
 }
 
 .View--no-motion .View__panel {

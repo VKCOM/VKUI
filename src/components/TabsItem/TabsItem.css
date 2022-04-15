@@ -28,7 +28,7 @@
 }
 
 .Tabs--default .TabsItem::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   left: 16px;
@@ -106,6 +106,7 @@
   flex-basis: 0;
   flex-shrink: 0;
   flex-grow: 1;
+  border-radius: 0;
 }
 
 .Tabs--ios.Tabs--segmented .TabsItem__in {
@@ -117,11 +118,13 @@
 }
 
 .Tabs--ios.Tabs--segmented .TabsItem:last-child {
-  border-radius: 0 10px 10px 0;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .Tabs--ios.Tabs--segmented .TabsItem:first-child {
-  border-radius: 10px 0 0 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 .Tabs--ios.Tabs--segmented .TabsItem {
@@ -141,8 +144,10 @@
   background: var(--separator_common);
 }
 
-.PanelHeader--ios .Tabs--segmented.TabsItem:not(.TabsItem--selected).TabsItem--active .TabsItem__in {
-  opacity: .7;
+.PanelHeader--ios
+  .Tabs--segmented.TabsItem:not(.TabsItem--selected).TabsItem--active
+  .TabsItem__in {
+  opacity: 0.7;
 }
 
 .PanelHeader--ios .Tabs--segmented .TabsItem {

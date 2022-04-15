@@ -1,9 +1,16 @@
+.ContentCard--disabled {
+  opacity: 0.6;
+}
+
 .ContentCard__body {
   padding: 12px 16px;
 }
 
 .ContentCard__tappable {
   border-radius: 8px;
+  text-decoration: none;
+  color: var(--text_primary);
+  display: block;
 }
 
 .ContentCard__img {

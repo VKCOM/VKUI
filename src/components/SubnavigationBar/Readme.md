@@ -2,9 +2,9 @@
 За это отвечает свойство `textLevel` у `SubnavigationButton`.
 
 ```jsx { "props": { "layout": false, "adaptivity": true } }
-import { useState } from 'react';
+import { useState } from "react";
 
-const MODAL_NAME = 'filters';
+const MODAL_NAME = "filters";
 
 const FILTERS_SIZE = [
   { value: 36, label: 36 },
@@ -14,22 +14,22 @@ const FILTERS_SIZE = [
 ];
 
 const FILTERS_STYLE = [
-  { value: 'Вечерний', label: 'Вечерний' },
-  { value: 'Деловой', label: 'Деловой' },
-  { value: 'Повседневный', label: 'Повседневный' },
-  { value: 'Спортивный', label: 'Спортивный' },
+  { value: "Вечерний", label: "Вечерний" },
+  { value: "Деловой", label: "Деловой" },
+  { value: "Повседневный", label: "Повседневный" },
+  { value: "Спортивный", label: "Спортивный" },
 ];
 
 const SubnavigationBarExample = () => {
   const platform = usePlatform();
   const { viewWidth } = useAdaptivity();
 
-  const [activePanel, setActivePanel] = useState('example');
+  const [activePanel, setActivePanel] = useState("example");
   const [filtersModalOpened, setFiltersModalOpened] = useState(false);
   const [filtersCount, setFiltersCount] = useState(2);
-  
+
   const [filterSizes, setFilterSizes] = useState([36]);
-  const [filterStyles, setFilterStyles] = useState(['Вечерний']);
+  const [filterStyles, setFilterStyles] = useState(["Вечерний"]);
 
   const [sizeSelected, setSizeSelected] = useState(false);
   const [inStockSelected, setInStockSelected] = useState(false);
@@ -43,7 +43,7 @@ const SubnavigationBarExample = () => {
   const closeModal = () => {
     setFiltersModalOpened(false);
   };
-  
+
   const onChangeFilterSize = (e) => {
     const { value, checked } = e.currentTarget;
     if (checked) {
@@ -61,12 +61,12 @@ const SubnavigationBarExample = () => {
       setFilterStyles(filterStyles.filter((v) => v !== value));
     }
   };
-  
+
   const applyFilters = () => {
     let count = 0;
 
-    filterSizes.length && (count++);
-    filterStyles.length && (count++);
+    filterSizes.length && count++;
+    filterStyles.length && count++;
 
     closeModal();
     setFiltersCount(count);
@@ -82,7 +82,13 @@ const SubnavigationBarExample = () => {
         header={
           <ModalPageHeader
             left={platform !== IOS && <PanelHeaderClose onClick={closeModal} />}
-            right={platform === IOS && <PanelHeaderButton onClick={closeModal}><Icon24Dismiss /></PanelHeaderButton>}
+            right={
+              platform === IOS && (
+                <PanelHeaderButton onClick={closeModal}>
+                  <Icon24Dismiss />
+                </PanelHeaderButton>
+              )
+            }
           >
             Фильтры
           </ModalPageHeader>
@@ -96,7 +102,9 @@ const SubnavigationBarExample = () => {
                   value={value}
                   checked={filterSizes.includes(value)}
                   onChange={onChangeFilterSize}
-                >{label}</Checkbox>
+                >
+                  {label}
+                </Checkbox>
               );
             })}
           </FormItem>
@@ -108,13 +116,17 @@ const SubnavigationBarExample = () => {
                   value={value}
                   checked={filterStyles.includes(value)}
                   onChange={onChangeFilterStyle}
-                >{label}</Checkbox>
+                >
+                  {label}
+                </Checkbox>
               );
             })}
           </FormItem>
 
           <FormItem>
-            <Button size="l" stretched onClick={applyFilters}>Показать результаты</Button>
+            <Button size="l" stretched onClick={applyFilters}>
+              Показать результаты
+            </Button>
           </FormItem>
         </FormLayout>
       </ModalPage>
@@ -124,95 +136,129 @@ const SubnavigationBarExample = () => {
   return (
     <SplitLayout modal={modal}>
       <SplitCol>
-      <View activePanel={activePanel}>
-        <Panel id="example">
-          <PanelHeader>SubnavigationBar</PanelHeader>
-          <Group>
-            <SubnavigationBar>
-              <SubnavigationButton
-                before={<Icon24Filter/>}
-                selected={filtersCount > 0}
-                expandable
-                after={filtersCount > 0 && <Counter mode="primary" size="s">{filtersCount}</Counter>}
-                onClick={openModal}
+        <View activePanel={activePanel}>
+          <Panel id="example">
+            <PanelHeader>SubnavigationBar</PanelHeader>
+            <Group>
+              <SubnavigationBar>
+                <SubnavigationButton
+                  before={<Icon24Filter />}
+                  selected={filtersCount > 0}
+                  expandable
+                  after={
+                    filtersCount > 0 && (
+                      <Counter mode="primary" size="s">
+                        {filtersCount}
+                      </Counter>
+                    )
+                  }
+                  onClick={openModal}
+                >
+                  Фильтры
+                </SubnavigationButton>
+
+                <SubnavigationButton
+                  selected={sizeSelected}
+                  onClick={() => setSizeSelected(!sizeSelected)}
+                >
+                  Мой размер
+                </SubnavigationButton>
+
+                <SubnavigationButton
+                  selected={inStockSelected}
+                  onClick={() => setInStockSelected(!inStockSelected)}
+                >
+                  В наличии
+                </SubnavigationButton>
+
+                <SubnavigationButton
+                  selected={highRatingSelected}
+                  onClick={() => setHighRatingSelected(!highRatingSelected)}
+                >
+                  Высокий рейтинг
+                </SubnavigationButton>
+
+                <SubnavigationButton
+                  before={<Icon24FavoriteOutline />}
+                  selected={faveSelected}
+                  onClick={() => setFaveSelected(!faveSelected)}
+                >
+                  Избранное
+                </SubnavigationButton>
+              </SubnavigationBar>
+            </Group>
+
+            <Group>
+              <SubnavigationBar mode="fixed">
+                <SubnavigationButton
+                  before={<Icon24ScanViewfinderOutline />}
+                  size="l"
+                  textLevel={viewWidth <= ViewWidth.MOBILE ? 3 : 1}
+                  onClick={() => setActivePanel("add_friend")}
+                >
+                  Сканировать QR
+                </SubnavigationButton>
+
+                <SubnavigationButton
+                  before={<Icon24UserAddOutline />}
+                  size="l"
+                  textLevel={viewWidth <= ViewWidth.MOBILE ? 3 : 1}
+                  onClick={() => setActivePanel("add_friend")}
+                >
+                  Добавить друга
+                </SubnavigationButton>
+              </SubnavigationBar>
+
+              <Header>Важные</Header>
+              <SimpleCell
+                before={<Avatar src={getAvatarUrl("user_wayshev")} />}
               >
-                Фильтры
-              </SubnavigationButton>
-
-              <SubnavigationButton
-                selected={sizeSelected}
-                onClick={() => setSizeSelected(!sizeSelected)}
+                Иван Барышев
+              </SimpleCell>
+              <SimpleCell
+                before={<Avatar src={getAvatarUrl("user_lihachyov")} />}
               >
-                Мой размер
-              </SubnavigationButton>
-
-              <SubnavigationButton
-                selected={inStockSelected}
-                onClick={() => setInStockSelected(!inStockSelected)}
+                Михаил Лихачёв
+              </SimpleCell>
+              <SimpleCell
+                before={<Avatar src={getAvatarUrl("user_arthurstam")} />}
               >
-                В наличии
-              </SubnavigationButton>
+                Artur Stambultsian
+              </SimpleCell>
+            </Group>
+          </Panel>
+          <Panel id="add_friend">
+            <PanelHeader
+              left={
+                <PanelHeaderBack onClick={() => setActivePanel("example")} />
+              }
+            >
+              Добавить друга
+            </PanelHeader>
 
-              <SubnavigationButton
-                selected={highRatingSelected}
-                onClick={() => setHighRatingSelected(!highRatingSelected)}
+            <Group>
+              <SimpleCell
+                before={<Avatar src={getAvatarUrl("user_wayshev")} />}
               >
-                Высокий рейтинг
-              </SubnavigationButton>
-
-              <SubnavigationButton
-                before={<Icon24FavoriteOutline/>}
-                selected={faveSelected}
-                onClick={() => setFaveSelected(!faveSelected)}
+                Иван Барышев
+              </SimpleCell>
+              <SimpleCell
+                before={<Avatar src={getAvatarUrl("user_lihachyov")} />}
               >
-                Избранное
-              </SubnavigationButton>
-            </SubnavigationBar>
-          </Group>
-
-          <Group>
-            <SubnavigationBar mode="fixed">
-              <SubnavigationButton
-                before={<Icon24ScanViewfinderOutline />}
-                size="l"
-                textLevel={viewWidth <= ViewWidth.MOBILE ? 3 : 1}
-                onClick={() => setActivePanel('add_friend')}
+                Михаил Лихачёв
+              </SimpleCell>
+              <SimpleCell
+                before={<Avatar src={getAvatarUrl("user_arthurstam")} />}
               >
-                Сканировать QR
-              </SubnavigationButton>
-
-              <SubnavigationButton
-                before={<Icon24UserAddOutline />}
-                size="l"
-                textLevel={viewWidth <= ViewWidth.MOBILE ? 3 : 1}
-                onClick={() => setActivePanel('add_friend')}
-              >
-                Добавить друга
-              </SubnavigationButton>
-            </SubnavigationBar>
-
-            <Header>Важные</Header>
-            <SimpleCell before={<Avatar src={getAvatarUrl('user_wayshev')} />}>Иван Барышев</SimpleCell>
-            <SimpleCell before={<Avatar src={getAvatarUrl('user_lihachyov')} />}>Михаил Лихачёв</SimpleCell>
-            <SimpleCell before={<Avatar src={getAvatarUrl('user_arthurstam')} />}>Artur Stambultsian</SimpleCell>
-          </Group>
-        </Panel>
-        <Panel id="add_friend">
-          <PanelHeader
-            left={<PanelHeaderBack onClick={() => setActivePanel('example')} />}
-          >Добавить друга</PanelHeader>
-
-          <Group>
-            <SimpleCell before={<Avatar src={getAvatarUrl('user_wayshev')} />}>Иван Барышев</SimpleCell>
-            <SimpleCell before={<Avatar src={getAvatarUrl('user_lihachyov')} />}>Михаил Лихачёв</SimpleCell>
-            <SimpleCell before={<Avatar src={getAvatarUrl('user_arthurstam')} />}>Artur Stambultsian</SimpleCell>
-          </Group>
-        </Panel>
-      </View>
+                Artur Stambultsian
+              </SimpleCell>
+            </Group>
+          </Panel>
+        </View>
       </SplitCol>
     </SplitLayout>
   );
 };
 
-<SubnavigationBarExample />
+<SubnavigationBarExample />;
 ```

@@ -1,12 +1,14 @@
-import * as React from 'react';
-import { classNames } from '../../lib/classNames';
-import { hasReactNode } from '../../lib/utils';
-import Title from '../Typography/Title/Title';
-import Headline from '../Typography/Headline/Headline';
-import { HasRootRef } from '../../types';
-import './Placeholder.css';
+import * as React from "react";
+import { classNames } from "../../lib/classNames";
+import { hasReactNode } from "../../lib/utils";
+import Title from "../Typography/Title/Title";
+import Headline from "../Typography/Headline/Headline";
+import { HasRootRef } from "../../types";
+import "./Placeholder.css";
 
-export interface PlaceholderProps extends React.HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
+export interface PlaceholderProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    HasRootRef<HTMLDivElement> {
   /**
    * Иконка
    */
@@ -40,18 +42,30 @@ const Placeholder: React.FC<PlaceholderProps> = (props: PlaceholderProps) => {
     <div
       {...restProps}
       ref={getRootRef}
-      vkuiClass={classNames('Placeholder', {
-        'Placeholder--stretched': stretched,
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
+      vkuiClass={classNames("Placeholder", {
+        "Placeholder--stretched": stretched,
       })}
     >
       <div vkuiClass="Placeholder__in">
         {hasReactNode(icon) && <div vkuiClass="Placeholder__icon">{icon}</div>}
-        {hasReactNode(header) && <Title level="2" weight="medium" vkuiClass="Placeholder__header">{header}</Title>}
-        {hasReactNode(children) && <Headline weight="regular" vkuiClass="Placeholder__text">{children}</Headline>}
-        {hasReactNode(action) && <div vkuiClass="Placeholder__action">{action}</div>}
+        {hasReactNode(header) && (
+          <Title level="2" weight="2" vkuiClass="Placeholder__header">
+            {header}
+          </Title>
+        )}
+        {hasReactNode(children) && (
+          <Headline weight="regular" vkuiClass="Placeholder__text">
+            {children}
+          </Headline>
+        )}
+        {hasReactNode(action) && (
+          <div vkuiClass="Placeholder__action">{action}</div>
+        )}
       </div>
     </div>
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default Placeholder;

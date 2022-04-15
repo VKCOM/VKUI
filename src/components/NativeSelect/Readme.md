@@ -3,9 +3,7 @@
 ```jsx
 <View activePanel="native-select">
   <Panel id="native-select">
-    <PanelHeader>
-      NativeSelect
-    </PanelHeader>
+    <PanelHeader>NativeSelect</PanelHeader>
     <Group>
       <FormItem top="Выберите пол">
         <NativeSelect>

@@ -13,7 +13,7 @@
   height: 100%;
   background-color: var(--modal_card_background);
   z-index: 1;
-  content: '';
+  content: "";
   border-radius: inherit;
 }
 
@@ -41,12 +41,12 @@
   width: 270px;
   border-radius: 12px;
   overflow: hidden;
-  animation: vkui-animation-ios-alert-intro .3s var(--ios-easing);
+  animation: vkui-animation-ios-alert-intro 0.3s var(--ios-easing);
 }
 
 .Alert--ios.Alert--closing {
   opacity: 0;
-  transition: opacity .3s var(--ios-easing);
+  transition: opacity 0.3s var(--ios-easing);
 }
 
 .Alert--ios .Alert__content {
@@ -59,7 +59,7 @@
 }
 
 .Alert--ios .Alert__content::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   height: 1px;
@@ -95,7 +95,7 @@
 }
 
 .Alert--ios .Alert__action::after {
-  content: '';
+  content: "";
   position: absolute;
   background: var(--action_sheet_separator);
 }
@@ -145,22 +145,22 @@
 @media (min-resolution: 2dppx) {
   .Alert--ios .Alert__content::after,
   .Alert--ios.Alert--v .Alert__action::after {
-    transform: scaleY(.5);
+    transform: scaleY(0.5);
   }
 
   .Alert--ios.Alert--h .Alert__action::after {
-    transform: scaleX(.5);
+    transform: scaleX(0.5);
   }
 }
 
 @media (min-resolution: 3dppx) {
   .Alert--ios .Alert__content::after,
   .Alert--ios.Alert--v .Alert__action::after {
-    transform: scaleY(.33);
+    transform: scaleY(0.33);
   }
 
   .Alert--ios.Alert--h .Alert__action::after {
-    transform: scaleX(.33);
+    transform: scaleX(0.33);
   }
 }
 
@@ -178,9 +178,9 @@
 .Alert--android {
   min-width: 280px;
   margin: auto 24px;
-  box-shadow: 0 20px 35px 0 rgba(0, 0, 0, .3), 0 0 35px 0 rgba(0, 0, 0, .22);
+  box-shadow: 0 20px 35px 0 rgba(0, 0, 0, 0.3), 0 0 35px 0 rgba(0, 0, 0, 0.22);
   border-radius: 12px;
-  animation: vkui-animation-android-alert-intro .2s ease;
+  animation: vkui-animation-android-alert-intro 0.2s ease;
 }
 
 .Alert--desktop.Alert--android {
@@ -189,9 +189,10 @@
 
 .Alert--android.Alert--closing,
 .Alert--vkcom.Alert--closing {
-  transform: scale(.95);
+  transform: scale(0.95);
   opacity: 0;
-  transition: transform .2s var(--android-easing), opacity .2s var(--android-easing);
+  transition: transform 0.2s var(--android-easing),
+    opacity 0.2s var(--android-easing);
 }
 
 .Alert--android .Alert__content {
@@ -245,11 +246,11 @@
  */
 
 .Alert--vkcom {
-  box-shadow: 0 0 2px rgba(0, 0, 0, .12), 0 0 96px rgba(0, 0, 0, .16);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 0 96px rgba(0, 0, 0, 0.16);
   border-radius: 8px;
   width: 400px;
   margin: auto 24px;
-  animation: vkui-animation-android-alert-intro .2s ease;
+  animation: vkui-animation-android-alert-intro 0.2s ease;
 }
 
 .Alert--vkcom .Alert__content {
@@ -286,7 +287,7 @@
 @keyframes vkui-animation-android-alert-intro {
   from {
     opacity: 0;
-    transform: scale(.95);
+    transform: scale(0.95);
   }
 
   to {

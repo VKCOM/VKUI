@@ -1,19 +1,23 @@
-import * as React from 'react';
-import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
-import { useDOM } from '../../lib/dom';
-import { usePlatform } from '../../hooks/usePlatform';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { warnOnce } from '../../lib/warnOnce';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { useEventListener } from '../../hooks/useEventListener';
-import { SharedDropdownProps } from './types';
-import { FocusTrap } from '../FocusTrap/FocusTrap';
-import './ActionSheet.css';
+import * as React from "react";
+import { getClassName } from "../../helpers/getClassName";
+import { classNames } from "../../lib/classNames";
+import { useDOM } from "../../lib/dom";
+import { usePlatform } from "../../hooks/usePlatform";
+import { useEffectDev } from "../../hooks/useEffectDev";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { isRefObject } from "../../lib/isRefObject";
+import { warnOnce } from "../../lib/warnOnce";
+import { useEventListener } from "../../hooks/useEventListener";
+import { SharedDropdownProps } from "./types";
+import { FocusTrap } from "../FocusTrap/FocusTrap";
+import { Popper } from "../Popper/Popper";
+import "./ActionSheet.css";
 
-const warn = warnOnce('ActionSheet');
-function getEl(ref: SharedDropdownProps['toggleRef']): Element | null | undefined {
-  return ref && 'current' in ref ? ref.current : ref as Element | null | undefined;
+const warn = warnOnce("ActionSheet");
+function getEl(
+  ref: SharedDropdownProps["toggleRef"]
+): Element | null | undefined {
+  return ref && "current" in ref ? ref.current : ref;
 }
 
 export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
@@ -22,65 +26,72 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
   closing,
   popupDirection,
   onClose,
+  className,
+  style,
   ...restProps
 }) => {
-  const { window, document } = useDOM();
+  const { document } = useDOM();
   const platform = usePlatform();
   const { sizeY } = useAdaptivity();
-  const elementRef = React.useRef<HTMLDivElement>();
+  const elementRef = React.useRef<HTMLDivElement | null>(null);
 
-  const [dropdownStyles, setDropdownStyles] = React.useState<React.CSSProperties>({
-    left: 0,
-    top: 0,
-    opacity: 0,
-    pointerEvents: 'none',
-  });
-  useIsomorphicLayoutEffect(() => {
+  useEffectDev(() => {
     const toggleEl = getEl(toggleRef);
     if (!toggleEl) {
-      if (process.env.NODE_ENV === 'development') {
-        warn('toggleRef not passed');
-      }
-      return;
+      warn("toggleRef not passed", "error");
     }
-
-    const toggleRect = toggleEl.getBoundingClientRect();
-    const elementRect = elementRef.current.getBoundingClientRect();
-    const isTop = popupDirection === 'top' || typeof popupDirection === 'function' && popupDirection(elementRef) === 'top';
-
-    setDropdownStyles({
-      left: toggleRect.left + toggleRect.width - elementRect.width + window.pageXOffset,
-      top: toggleRect.top + window.pageYOffset + (isTop ? -elementRect.height : toggleRect.height),
-    });
   }, [toggleRef]);
 
-  const bodyClickListener = useEventListener('click', (e: MouseEvent) => {
+  const isPopupDirectionTop = React.useMemo(
+    () =>
+      popupDirection === "top" ||
+      (typeof popupDirection === "function" &&
+        popupDirection(elementRef) === "top"),
+    [popupDirection, elementRef]
+  );
+
+  const bodyClickListener = useEventListener("click", (e: MouseEvent) => {
     const dropdownElement = elementRef?.current;
     if (dropdownElement && !dropdownElement.contains(e.target as Node)) {
-      onClose();
+      onClose?.();
     }
   });
 
   React.useEffect(() => {
     setTimeout(() => {
-      bodyClickListener.add(document.body);
+      bodyClickListener.add(document!.body);
     });
-  }, []);
+  }, [bodyClickListener, document]);
 
   const onClick = React.useCallback((e) => e.stopPropagation(), []);
 
+  const targetRef = React.useMemo(() => {
+    if (isRefObject<SharedDropdownProps["toggleRef"], HTMLElement>(toggleRef)) {
+      return toggleRef;
+    }
+    const refObject = { current: toggleRef as HTMLElement };
+
+    return refObject;
+  }, [toggleRef]);
+
   return (
-    <FocusTrap
-      onClose={onClose}
-      {...restProps}
-      getRootRef={elementRef}
-      onClick={onClick}
-      style={dropdownStyles}
-      vkuiClass={classNames(getClassName('ActionSheet', platform), 'ActionSheet--desktop', {
-        'ActionSheet--closing': closing,
-      }, `ActionSheet--sizeY-${sizeY}`)}
+    <Popper
+      targetRef={targetRef}
+      offsetDistance={0}
+      placement={isPopupDirectionTop ? "top-end" : "bottom-end"}
+      vkuiClass={classNames(
+        getClassName("ActionSheet", platform),
+        "ActionSheet--desktop",
+        `ActionSheet--sizeY-${sizeY}`
+      )}
+      className={className}
+      style={style}
+      getRef={elementRef}
+      forcePortal={false}
     >
-      {children}
-    </FocusTrap>
+      <FocusTrap onClose={onClose} {...restProps} onClick={onClick}>
+        {children}
+      </FocusTrap>
+    </Popper>
   );
 };

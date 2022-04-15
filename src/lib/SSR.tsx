@@ -1,17 +1,17 @@
-import * as React from 'react';
-import { PlatformType, platform } from './platform';
-import { BrowserInfo, computeBrowserInfo } from './browser';
-import { DOMContext, getDOM } from '../lib/dom';
+import * as React from "react";
+import { PlatformType, platform } from "./platform";
+import { BrowserInfo, computeBrowserInfo } from "./browser";
+import { DOMContext, getDOM } from "../lib/dom";
 
 export interface SSRContextInterface {
-  platform: PlatformType;
+  platform: PlatformType | null;
   userAgent?: string;
   browserInfo?: BrowserInfo;
 }
 
 export const SSRContext = React.createContext<SSRContextInterface>({
   platform: null,
-  userAgent: '',
+  userAgent: "",
   browserInfo: undefined,
 });
 
@@ -27,7 +27,7 @@ export const SSRWrapper: React.FC<SSRWrapperProps> = (props) => {
     browserInfo = computeBrowserInfo(userAgent);
   }
 
-  // TODO: Каждый раз создаётся новый объект для контекста – плохо
+  // TODO: Каждый раз создаётся новый объект для контекста - плохо
   const contextValue = {
     platform: platform(browserInfo),
     browserInfo,
@@ -39,9 +39,7 @@ export const SSRWrapper: React.FC<SSRWrapperProps> = (props) => {
 
   return (
     <SSRContext.Provider value={contextValue}>
-      <DOMContext.Provider value={dom}>
-        {children}
-      </DOMContext.Provider>
+      <DOMContext.Provider value={dom}>{children}</DOMContext.Provider>
     </SSRContext.Provider>
   );
 };

@@ -127,9 +127,7 @@
 .ModalPage--desktop .ModalPage__in {
   height: auto;
   max-height: 640px;
-  box-shadow:
-    0 16px 16px rgba(0, 0, 0, .16),
-    0 0 8px rgba(0, 0, 0, .12);
+  box-shadow: 0 16px 16px rgba(0, 0, 0, 0.16), 0 0 8px rgba(0, 0, 0, 0.12);
   border-radius: 8px;
 }
 

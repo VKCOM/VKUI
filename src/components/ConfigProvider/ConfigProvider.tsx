@@ -1,108 +1,144 @@
-import * as React from 'react';
-import { AppearanceType } from '@vkontakte/vk-bridge';
-import { canUseDOM, useDOM } from '../../lib/dom';
+import * as React from "react";
+import vkBridge, { AppearanceType } from "@vkontakte/vk-bridge";
+import { canUseDOM, useDOM } from "../../lib/dom";
 import {
-  AppearanceScheme,
   ConfigProviderContext,
   ConfigProviderContextInterface,
-  defaultConfigProviderProps,
+  WebviewType,
+} from "./ConfigProviderContext";
+import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
+import { useObjectMemo } from "../../hooks/useObjectMemo";
+import { noop } from "../../lib/utils";
+import { warnOnce } from "../../lib/warnOnce";
+import {
+  normalizeScheme,
+  AppearanceScheme,
   Scheme,
-} from './ConfigProviderContext';
-import { PlatformType, VKCOM } from '../../lib/platform';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
-import { noop } from '../../lib/utils';
-import { warnOnce } from '../../lib/warnOnce';
+} from "../../helpers/scheme";
+import {
+  AppearanceProvider,
+  generateVKUITokensClassName,
+} from "../AppearanceProvider/AppearanceProvider";
+import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
+import { platform as resolvePlatform } from "../../lib/platform";
 
-export interface ConfigProviderProps extends ConfigProviderContextInterface {
+export interface ConfigProviderProps
+  extends Partial<ConfigProviderContextInterface> {
   /**
+   * @deprecated будет удалено в 5.0.0, устанавливать тему следует через appearance
    * Цветовая схема приложения
    */
   scheme?: AppearanceScheme;
+  /**
+    Локаль ([список](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry))
+   */
+  locale?: string;
 }
 
-const warn = warnOnce('ConfigProvider');
+const warn = warnOnce("ConfigProvider");
 
-function useSchemeDetector(node: HTMLElement, _scheme: Scheme | 'inherit') {
-  const inherit = _scheme === 'inherit';
-  const getScheme = () => {
-    if (!inherit || !canUseDOM) {
+function useSchemeDetector(
+  node: HTMLElement | undefined | null,
+  _scheme: Scheme | "inherit"
+) {
+  const inherit = _scheme === "inherit";
+  const getScheme = React.useCallback(() => {
+    if (!inherit || !canUseDOM || !node) {
       return undefined;
     }
-    return node.getAttribute('scheme') as Scheme;
-  };
+    return node.getAttribute("scheme") as Scheme;
+  }, [inherit, node]);
   const [resolvedScheme, setScheme] = React.useState(getScheme());
 
   React.useEffect(() => {
-    if (!inherit) {
+    if (!inherit || !node) {
       return noop;
     }
     setScheme(getScheme());
     const observer = new MutationObserver(() => setScheme(getScheme()));
-    observer.observe(node, { attributes: true, attributeFilter: ['scheme'] });
+    observer.observe(node, { attributes: true, attributeFilter: ["scheme"] });
     return () => observer.disconnect();
-  }, [inherit]);
+  }, [getScheme, inherit, node]);
 
-  return _scheme === 'inherit' ? resolvedScheme : _scheme;
+  return _scheme === "inherit" ? resolvedScheme : _scheme;
 }
 
-const deriveAppearance = (scheme: Scheme): AppearanceType =>
-  scheme === Scheme.SPACE_GRAY || scheme === Scheme.VKCOM_DARK ? 'dark' : 'light';
-
-function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): Scheme | 'inherit' {
-  if (scheme === 'inherit') {
-    return scheme;
-  }
-  if (scheme === Scheme.VKCOM) {
-    process.env.NODE_ENV === 'development' && warn(`Схема "${Scheme.VKCOM}" устарела и будет удалена 5.0.0. Вместо неё используйте "${Scheme.VKCOM_LIGHT}"`);
-    return Scheme.VKCOM_LIGHT;
-  }
-  if (platform === VKCOM && (scheme === Scheme.BRIGHT_LIGHT || scheme === Scheme.SPACE_GRAY)) {
-    process.env.NODE_ENV === 'development' && warn(`Платформа "vkcom" и схема "${scheme}" несовместимы. С этой платформой можно использовать схемы "${Scheme.VKCOM_LIGHT}" или "${Scheme.VKCOM_DARK}"`);
-    return Scheme.VKCOM_LIGHT;
-  }
-  switch (scheme) {
-    case Scheme.DEPRECATED_CLIENT_LIGHT:
-      return Scheme.BRIGHT_LIGHT;
-    case Scheme.DEPRECATED_CLIENT_DARK:
-      return Scheme.SPACE_GRAY;
-    default:
-      return scheme as Scheme;
-  }
-}
+const deriveAppearance = (scheme: Scheme | undefined): AppearanceType =>
+  scheme === Scheme.SPACE_GRAY || scheme === Scheme.VKCOM_DARK
+    ? "dark"
+    : "light";
 
 const ConfigProvider: React.FC<ConfigProviderProps> = ({
   children,
-  schemeTarget,
-  ...config
-}: ConfigProviderProps & { children?: React.ReactNode; schemeTarget?: HTMLElement }) => {
-  const scheme = normalizeScheme(config.scheme, config.platform);
+  webviewType = WebviewType.VKAPPS,
+  isWebView = vkBridge.isWebView(),
+  transitionMotionEnabled = true,
+  platform = resolvePlatform(),
+  hasNewTokens = false,
+  appearance,
+  scheme,
+  locale = "ru",
+}) => {
+  const normalizedScheme = normalizeScheme({
+    scheme,
+    platform,
+    appearance,
+  });
   const { document } = useDOM();
-  const target = schemeTarget || document?.body;
+  const target = document?.body;
 
   useIsomorphicLayoutEffect(() => {
-    if (scheme === 'inherit') {
+    if (normalizedScheme === "inherit") {
       return noop;
     }
-    if (process.env.NODE_ENV === 'development' && target.hasAttribute('scheme')) {
-      warn('<body scheme> was set before VKUI mount - did you forget scheme="inherit"?');
+    if (
+      process.env.NODE_ENV === "development" &&
+      target?.hasAttribute("scheme")
+    ) {
+      warn(
+        '<body scheme> was set before VKUI mount - did you forget scheme="inherit"?'
+      );
     }
-    target.setAttribute('scheme', scheme);
-    return () => target.removeAttribute('scheme');
-  }, [scheme]);
+    target?.setAttribute("scheme", normalizedScheme);
+    return () => target?.removeAttribute("scheme");
+  }, [normalizedScheme]);
 
-  const realScheme = useSchemeDetector(target, scheme);
-  const configContext = useObjectMemo({ appearance: deriveAppearance(realScheme), ...config });
+  const realScheme = useSchemeDetector(target, normalizedScheme);
+  const derivedAppearance = deriveAppearance(realScheme);
+
+  useIsomorphicLayoutEffect(() => {
+    const VKUITokensClassName = generateVKUITokensClassName(
+      platform,
+      derivedAppearance
+    );
+
+    target?.classList.add(VKUITokensClassName);
+
+    return () => {
+      target?.classList.remove(VKUITokensClassName);
+    };
+  }, [platform, derivedAppearance]);
+
+  const configContext = useObjectMemo({
+    webviewType,
+    isWebView,
+    transitionMotionEnabled,
+    hasNewTokens,
+    platform,
+    scheme,
+    appearance: appearance || derivedAppearance,
+  });
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
-      {children}
+      <LocaleProviderContext.Provider value={locale}>
+        <AppearanceProvider appearance={configContext.appearance}>
+          {children}
+        </AppearanceProvider>
+      </LocaleProviderContext.Provider>
     </ConfigProviderContext.Provider>
   );
 };
 
-// Деструктуризация нужна из бага в react-docgen-typescript
-// https://github.com/styleguidist/react-docgen-typescript/issues/195
-ConfigProvider.defaultProps = { ...defaultConfigProviderProps };
-
+// eslint-disable-next-line import/no-default-export
 export default ConfigProvider;

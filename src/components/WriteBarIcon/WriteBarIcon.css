@@ -18,12 +18,12 @@
 }
 
 .WriteBarIcon:disabled {
-  opacity: .4;
+  opacity: 0.4;
   pointer-events: none;
 }
 
 .WriteBarIcon__active {
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .WriteBarIcon__counter {

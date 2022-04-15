@@ -1,0 +1,18 @@
+.TextTooltip {
+  border-radius: 8px;
+  background: rgba(
+    44,
+    45,
+    46,
+    0.88
+  ); /*TODO узнать у дизайнеров название токена*/
+
+  padding: 8px 12px 9px;
+  color: var(--white);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.04), 0 4px 32px rgba(0, 0, 0, 0.16);
+  animation: vkui-popper-fadein 0.2s ease;
+}
+
+.TextTooltip__arrow {
+  color: rgba(44, 45, 46, 0.88);
+}

@@ -10,10 +10,10 @@
   position: absolute;
   left: 0;
   top: 0;
-  background: rgba(0, 0, 0, .4);
+  background: rgba(0, 0, 0, 0.4);
   user-select: none;
   transition: opacity 167ms ease-out;
-  animation: vkui-animation-fadeIn .32s ease;
+  animation: vkui-animation-fadeIn 0.32s ease;
 }
 
 .ModalRoot--touched .ModalRoot__mask {
@@ -38,11 +38,13 @@
   top: var(--safe-area-inset-top);
 }
 
-:not(.ModalRoot--desktop).ModalRoot--vkapps.ModalRoot--android .ModalRoot__viewport {
+:not(.ModalRoot--desktop).ModalRoot--vkapps.ModalRoot--android
+  .ModalRoot__viewport {
   top: var(--panelheader_height_android);
 }
 
-:not(.ModalRoot--desktop).ModalRoot--vkapps.ModalRoot--ios .ModalRoot__viewport {
+:not(.ModalRoot--desktop).ModalRoot--vkapps.ModalRoot--ios
+  .ModalRoot__viewport {
   top: calc(var(--safe-area-inset-top) + var(--panelheader_height_ios));
 }
 

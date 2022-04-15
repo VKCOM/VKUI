@@ -4,7 +4,7 @@
 }
 
 .Setting--disabled {
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .Setting--disabled .Setting__value,

@@ -164,13 +164,25 @@
   margin-right: -12px;
 }
 
-.SimpleCell--ios.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--16,
-.SimpleCell--ios.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--16 ~ * {
+.SimpleCell--ios.SimpleCell--sizeY-compact
+  .SimpleCell__after
+  .IconButton
+  .Icon--16,
+.SimpleCell--ios.SimpleCell--sizeY-compact
+  .SimpleCell__after
+  .IconButton
+  .Icon--16
+  ~ * {
   margin-right: -14px;
 }
 
-.SimpleCell--ios.SimpleCell--sizeY-regular > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__main .SimpleCell__children,
-.SimpleCell--ios.SimpleCell--sizeY-regular > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__indicator {
+.SimpleCell--ios.SimpleCell--sizeY-regular
+  > .Avatar:not(.Avatar--sz-32)
+  ~ .SimpleCell__main
+  .SimpleCell__children,
+.SimpleCell--ios.SimpleCell--sizeY-regular
+  > .Avatar:not(.Avatar--sz-32)
+  ~ .SimpleCell__indicator {
   font-size: 16px;
   line-height: 20px;
 }
@@ -202,8 +214,14 @@
 }
 
 .SimpleCell--sizeY-compact .SimpleCell__description,
-.SimpleCell--sizeY-compact > .Avatar--sz-32 ~ .SimpleCell__main .SimpleCell__description,
-.SimpleCell--sizeY-compact > .Avatar--sz-28 ~ .SimpleCell__main .SimpleCell__description {
+.SimpleCell--sizeY-compact
+  > .Avatar--sz-32
+  ~ .SimpleCell__main
+  .SimpleCell__description,
+.SimpleCell--sizeY-compact
+  > .Avatar--sz-28
+  ~ .SimpleCell__main
+  .SimpleCell__description {
   margin-top: 1px;
 }
 
@@ -228,7 +246,7 @@
 }
 
 .SimpleCell--sizeY-compact .SimpleCell__badge .Badge {
-  transform: translateY(.5px);
+  transform: translateY(0.5px);
 }
 
 /**

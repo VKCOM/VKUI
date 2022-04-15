@@ -1,34 +1,49 @@
-import * as React from 'react';
-import { getClassName } from '../../helpers/getClassName';
-import { HasRootRef } from '../../types';
-import { usePlatform } from '../../hooks/usePlatform';
-import './Progress.css';
+import * as React from "react";
+import { getClassName } from "../../helpers/getClassName";
+import { HasRootRef } from "../../types";
+import { usePlatform } from "../../hooks/usePlatform";
+import "./Progress.css";
 
-export interface ProgressProps extends React.HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
+export interface ProgressProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    HasRootRef<HTMLDivElement> {
   value?: number;
 }
 
-const Progress: React.FC<ProgressProps> = ({ value, getRootRef, ...restProps }: ProgressProps) => {
+const PROGRESS_MIN_VALUE = 0;
+const PROGRESS_MAX_VALUE = 100;
+
+const Progress: React.FC<ProgressProps> = ({
+  value = 0,
+  getRootRef,
+  ...restProps
+}: ProgressProps) => {
   const platform = usePlatform();
+
+  const progress = Math.max(
+    PROGRESS_MIN_VALUE,
+    Math.min(value, PROGRESS_MAX_VALUE)
+  );
 
   return (
     <div
       aria-valuenow={value}
       {...restProps}
       role="progressbar"
-      aria-valuemin={0}
-      aria-valuemax={100}
+      aria-valuemin={PROGRESS_MIN_VALUE}
+      aria-valuemax={PROGRESS_MAX_VALUE}
       ref={getRootRef}
-      vkuiClass={getClassName('Progress', platform)}
+      vkuiClass={getClassName("Progress", platform)}
     >
       <div vkuiClass="Progress__bg" aria-hidden="true" />
-      <div vkuiClass="Progress__in" style={{ width: `${value}%` }} aria-hidden="true" />
+      <div
+        vkuiClass="Progress__in"
+        style={{ width: `${progress}%` }}
+        aria-hidden="true"
+      />
     </div>
   );
 };
 
-Progress.defaultProps = {
-  value: 0,
-};
-
+// eslint-disable-next-line import/no-default-export
 export default Progress;

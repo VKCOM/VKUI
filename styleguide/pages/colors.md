@@ -5,7 +5,7 @@
 ```css static
 .MyBlock {
   background: var(--background_content);
-  color: var(--text_primary)
+  color: var(--text_primary);
 }
 ```
 

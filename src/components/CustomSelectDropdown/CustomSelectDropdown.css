@@ -1,0 +1,38 @@
+.CustomSelectDropdown__options {
+  overflow: hidden;
+  background-color: var(--modal_card_background);
+  box-sizing: border-box;
+  border: solid 1px var(--field_border);
+  border-top: 0;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.06), 0 0 2px rgba(0, 0, 0, 0.03);
+  border-radius: 0 0 8px 8px;
+}
+
+.CustomSelectDropdown__options--same-width {
+  width: 100%;
+}
+
+:not(.CustomSelectDropdown__options--same-width) .CustomScrollView__box {
+  padding-right: 8px;
+}
+
+.CustomSelectDropdown__options--popupDirectionTop {
+  bottom: 100%;
+  border-radius: 8px 8px 0 0;
+  border-top: unset;
+  border-bottom: 0;
+  box-shadow: 0 -2px 2px rgba(0, 0, 0, 0.06), 0 0 2px rgba(0, 0, 0, 0.03);
+}
+
+.CustomSelectDropdown__options--not-adjacent {
+  border-radius: 8px;
+  border: solid 1px var(--field_border);
+}
+
+.CustomSelectDropdown__CustomScrollView {
+  max-height: 160px;
+}
+
+.CustomSelectDropdown__fetching {
+  padding: 12px 0;
+}

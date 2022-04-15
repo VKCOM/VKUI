@@ -1,0 +1,14 @@
+node_modules
+dist
+coverage
+.idea
+.vscode
+e2e/dist
+test-results.json
+lint-results.json
+e2e-results.json
+.nyc_output
+__diff_output__
+.cache
+docs/
+src/styles/generated

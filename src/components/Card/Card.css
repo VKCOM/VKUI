@@ -1,6 +1,10 @@
 .Card {
   position: relative;
-  background: var(--content_tint_background);
+  background: var(
+    --content_tint_background,
+    var(--vkui--color_background_secondary)
+  );
+  border-radius: var(--vkui--size_card_border_radius--regular);
 }
 
 .Card__in {
@@ -10,12 +14,16 @@
 }
 
 .Card--md-shadow {
-  box-shadow: 0 2px 24px 0 rgba(0, 0, 0, .08), 0 0 2px 0 rgba(0, 0, 0, .08);
-  background: var(--modal_card_background);
+  box-shadow: var(
+    --vkui--elevation3,
+    0 2px 24px 0 rgba(0, 0, 0, 0.08),
+    0 0 2px 0 rgba(0, 0, 0, 0.08)
+  );
+  background: var(--modal_card_background, var(--vkui--color_background_modal));
 }
 
 .Card--md-outline {
-  background: var(--modal_card_background);
+  background: var(--modal_card_background, var(--vkui--color_background_modal));
 }
 
 .Card--md-outline::before {
@@ -24,27 +32,52 @@
   top: 0;
   width: 100%;
   height: 100%;
-  content: '';
+  content: "";
   display: block;
-  border: var(--thin-border) solid var(--input_border);
+  border: var(--thin-border) solid
+    var(--input_border, var(--vkui--color_image_border_alpha));
   z-index: 1;
   box-sizing: border-box;
   border-radius: inherit;
 }
 
 /**
-  * iOS
+ * CMP:
+ * CardScroll
  */
+.CardScroll .Card {
+  margin-right: var(--vkui--size_cardgrid_padding--regular);
+  flex-shrink: 0;
+}
 
-.Card--ios {
-  border-radius: 10px;
+.CardScroll .Card:last-of-type {
+  margin-right: 0;
+}
+
+.CardScroll--s .Card {
+  width: 40%;
+}
+
+.CardScroll--m .Card {
+  width: 62%;
+}
+
+.CardScroll--l .Card {
+  width: 100%;
 }
 
 /**
- * Android, VKCOM
+ * CMP:
+ * Group
+ * SplitCol
  */
+.Group--card .CardScroll--l .Card,
+.SplitCol--spaced .CardScroll--l .Card {
+  width: calc(100% - 32px);
+  margin-right: 16px;
+}
 
-.Card--android,
-.Card--vkcom {
-  border-radius: 8px;
+.Group--card .CardScroll--l .Card:last-of-type,
+.SplitCol--spaced .CardScroll--l .Card:last-of-type {
+  margin-right: 0;
 }

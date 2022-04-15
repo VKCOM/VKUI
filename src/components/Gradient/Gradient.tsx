@@ -1,27 +1,29 @@
-import * as React from 'react';
-import { classNames } from '../../lib/classNames';
-import './Gradient.css';
+import * as React from "react";
+import { classNames } from "../../lib/classNames";
+import "./Gradient.css";
 
 export interface GradientProps extends React.HTMLAttributes<HTMLDivElement> {
-  mode?: 'tint' | 'white' | 'black';
-  to?: 'top' | 'bottom';
+  mode?: "tint" | "white" | "black";
+  to?: "top" | "bottom";
 }
 
-const Gradient: React.FunctionComponent<GradientProps> = ({ mode, children, to, ...restProps }: GradientProps) => {
+export const Gradient: React.FC<GradientProps> = ({
+  mode = "tint",
+  children,
+  to = "top",
+  ...restProps
+}) => {
   return (
     <div
       role="presentation"
       {...restProps}
-      vkuiClass={classNames('Gradient', `Gradient--md-${mode}`, `Gradient--to-${to}`)}
+      vkuiClass={classNames(
+        "Gradient",
+        `Gradient--md-${mode}`,
+        `Gradient--to-${to}`
+      )}
     >
       {children}
     </div>
   );
 };
-
-Gradient.defaultProps = {
-  mode: 'tint',
-  to: 'top',
-};
-
-export default Gradient;

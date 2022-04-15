@@ -6,8 +6,8 @@ class Example extends React.Component {
     super(props);
 
     this.state = {
-      activePanel: 'panel1'
-    }
+      activePanel: "panel1",
+    };
   }
 
   render() {
@@ -16,45 +16,82 @@ class Example extends React.Component {
         <Panel id="panel1">
           <PanelHeader>More</PanelHeader>
           <Group>
-            <Cell expandable before={<Icon28UserOutline/>} onClick={() => this.setState({ activePanel: 'panel2' })}>
+            <Cell
+              expandable
+              before={<Icon28UserOutline />}
+              onClick={() => this.setState({ activePanel: "panel2" })}
+            >
               Friends
             </Cell>
-            <Cell expandable before={<Icon28UsersOutline/>} onClick={() => this.setState({ activePanel: 'panel2' })}>
+            <Cell
+              expandable
+              before={<Icon28UsersOutline />}
+              onClick={() => this.setState({ activePanel: "panel2" })}
+            >
               Communities
             </Cell>
-            <Cell expandable before={<Icon28MusicOutline/>} onClick={() => this.setState({ activePanel: 'panel2' })}>
+            <Cell
+              expandable
+              before={<Icon28MusicOutline />}
+              onClick={() => this.setState({ activePanel: "panel2" })}
+            >
               Music
             </Cell>
           </Group>
         </Panel>
         <Panel id="panel2">
-          <PanelHeader separator={false} left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel1' })}/>}>
+          <PanelHeader
+            separator={false}
+            left={
+              <PanelHeaderBack
+                onClick={() => this.setState({ activePanel: "panel1" })}
+              />
+            }
+          >
             Communities
           </PanelHeader>
           <Group>
             <Search />
-            <Cell description="Humor" before={<Avatar />} onClick={() => this.setState({ activePanel: 'panel3' })}>
+            <Cell
+              description="Humor"
+              before={<Avatar />}
+              onClick={() => this.setState({ activePanel: "panel3" })}
+            >
               Swipe Right
             </Cell>
-            <Cell description="Cultural Center" before={<Avatar />} onClick={() => this.setState({ activePanel: 'panel3' })}>
+            <Cell
+              description="Cultural Center"
+              before={<Avatar />}
+              onClick={() => this.setState({ activePanel: "panel3" })}
+            >
               Out Cinema
             </Cell>
-            <Cell description="Movies" before={<Avatar />} onClick={() => this.setState({ activePanel: 'panel3' })}>
+            <Cell
+              description="Movies"
+              before={<Avatar />}
+              onClick={() => this.setState({ activePanel: "panel3" })}
+            >
               #ARTPOKAZ
             </Cell>
           </Group>
         </Panel>
         <Panel id="panel3" centered>
-          <PanelHeader left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel2' })}/>}>
+          <PanelHeader
+            left={
+              <PanelHeaderBack
+                onClick={() => this.setState({ activePanel: "panel2" })}
+              />
+            }
+          >
             Out Cinema
           </PanelHeader>
           <Spinner />
           <div style={{ marginTop: 10 }}>Centered Content</div>
         </Panel>
       </View>
-    )
+    );
   }
 }
 
-<Example />
+<Example />;
 ```

@@ -10,13 +10,13 @@
 
 @media (min-resolution: 2dppx) {
   .Separator__in:not(.Separator__in--expanded) {
-    transform: scaleY(.5);
+    transform: scaleY(0.5);
   }
 }
 
 @media (min-resolution: 3dppx) {
   .Separator__in:not(.Separator__in--expanded) {
-    transform: scaleY(.32);
+    transform: scaleY(0.32);
   }
 }
 

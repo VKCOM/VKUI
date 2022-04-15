@@ -42,26 +42,38 @@
   color: var(--icon_tertiary);
 }
 
-.SimpleCheckbox__input:checked ~ .SimpleCheckbox__container .SimpleCheckbox__icon--on {
+.SimpleCheckbox__input:checked
+  ~ .SimpleCheckbox__container
+  .SimpleCheckbox__icon--on {
   display: flex;
 }
 
-.SimpleCheckbox__input:indeterminate ~ .SimpleCheckbox__container .SimpleCheckbox__icon--indeterminate,
-.SimpleCheckbox__input:checked ~ .SimpleCheckbox__container .SimpleCheckbox__icon--off {
+.SimpleCheckbox__input:indeterminate
+  ~ .SimpleCheckbox__container
+  .SimpleCheckbox__icon--indeterminate,
+.SimpleCheckbox__input:checked
+  ~ .SimpleCheckbox__container
+  .SimpleCheckbox__icon--off {
   display: none;
 }
 
-.SimpleCheckbox__input:indeterminate ~ .SimpleCheckbox__container .SimpleCheckbox__icon--indeterminate {
+.SimpleCheckbox__input:indeterminate
+  ~ .SimpleCheckbox__container
+  .SimpleCheckbox__icon--indeterminate {
   display: flex;
 }
 
-.SimpleCheckbox__input:indeterminate ~ .SimpleCheckbox__container .SimpleCheckbox__icon--on,
-.SimpleCheckbox__input:indeterminate ~ .SimpleCheckbox__container .SimpleCheckbox__icon--off {
+.SimpleCheckbox__input:indeterminate
+  ~ .SimpleCheckbox__container
+  .SimpleCheckbox__icon--on,
+.SimpleCheckbox__input:indeterminate
+  ~ .SimpleCheckbox__container
+  .SimpleCheckbox__icon--off {
   display: none;
 }
 
 .SimpleCheckbox__input[disabled] ~ .SimpleCheckbox__container {
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .SimpleCheckbox--ios.SimpleCheckbox--sizeY-compact,
@@ -110,6 +122,8 @@
   border-width: 1px;
 }
 
-.SimpleCheckbox--vkcom .SimpleCheckbox__input[disabled] ~ .SimpleCheckbox__container {
-  opacity: .4;
+.SimpleCheckbox--vkcom
+  .SimpleCheckbox__input[disabled]
+  ~ .SimpleCheckbox__container {
+  opacity: 0.4;
 }

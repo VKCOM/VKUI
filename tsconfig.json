@@ -9,19 +9,27 @@
     "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitThis": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
     "isolatedModules": true,
-    "noImplicitAny": true,
-    "strict": false,
+    "strict": true,
     "baseUrl": "src",
     "paths": {
       "@react-playwright": ["../e2e"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "e2e/**/*.ts", "e2e/**/*.tsx", "e2e/**/*.js"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "e2e/**/*.ts",
+    "e2e/**/*.tsx",
+    "e2e/**/*.js",
+    "tasks/**/*.js",
+    ".github/**/*.js",
+    "eslint-plugin-vkui/*.js",
+    "*.js"
+  ],
   "files": [
     "node_modules/jest-playwright-preset/types/global.d.ts",
     "node_modules/expect-playwright/global.d.ts",

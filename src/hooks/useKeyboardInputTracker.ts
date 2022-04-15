@@ -1,18 +1,29 @@
-import * as React from 'react';
-import { Keys, pressedKey } from '../lib/accessibility';
-import { useDOM } from '../lib/dom';
-import { useGlobalEventListener } from './useGlobalEventListener';
+import * as React from "react";
+import { Keys, pressedKey } from "../lib/accessibility";
+import { useDOM } from "../lib/dom";
+import { useGlobalEventListener } from "./useGlobalEventListener";
+
+export const ENABLE_KEYBOARD_INPUT_EVENT_NAME = "enableKeyboardInput";
+export const DISABLE_KEYBOARD_INPUT_EVENT_NAME = "disableKeyboardInput";
 
 export function useKeyboardInputTracker(): boolean {
   const { document } = useDOM();
 
-  const [isKeyboardInputActive, toggleKeyboardInput] = React.useState<boolean>(false);
+  const [isKeyboardInputActive, toggleKeyboardInput] =
+    React.useState<boolean>(false);
 
-  const enableKeyboardInput = React.useCallback((e: KeyboardEvent) => {
-    if (pressedKey(e) === Keys.TAB) {
-      toggleKeyboardInput(true);
-    }
+  const enableKeyboardInput = React.useCallback(() => {
+    toggleKeyboardInput(true);
   }, []);
+
+  const handleKeydown = React.useCallback(
+    (e: KeyboardEvent) => {
+      if (pressedKey(e) === Keys.TAB) {
+        enableKeyboardInput();
+      }
+    },
+    [enableKeyboardInput]
+  );
 
   const disableKeyboardInput = React.useCallback(() => {
     toggleKeyboardInput(false);
@@ -23,9 +34,31 @@ export function useKeyboardInputTracker(): boolean {
     capture: true,
   };
 
-  useGlobalEventListener(document, 'keydown', enableKeyboardInput, eventOptions);
-  useGlobalEventListener(document, 'mousedown', disableKeyboardInput, eventOptions);
-  useGlobalEventListener(document, 'touchstart', disableKeyboardInput, eventOptions);
+  useGlobalEventListener(document, "keydown", handleKeydown, eventOptions);
+  useGlobalEventListener(
+    document,
+    "mousedown",
+    disableKeyboardInput,
+    eventOptions
+  );
+  useGlobalEventListener(
+    document,
+    "touchstart",
+    disableKeyboardInput,
+    eventOptions
+  );
+  useGlobalEventListener(
+    document,
+    ENABLE_KEYBOARD_INPUT_EVENT_NAME,
+    enableKeyboardInput,
+    eventOptions
+  );
+  useGlobalEventListener(
+    document,
+    DISABLE_KEYBOARD_INPUT_EVENT_NAME,
+    disableKeyboardInput,
+    eventOptions
+  );
 
   return isKeyboardInputActive;
 }

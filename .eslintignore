@@ -3,3 +3,4 @@ dist/
 docs/
 *.test.js
 src/vkui.js
+stylelint.config.js

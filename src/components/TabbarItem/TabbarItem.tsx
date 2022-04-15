@@ -1,12 +1,19 @@
-import * as React from 'react';
-import { getClassName } from '../../helpers/getClassName';
-import Counter from '../Counter/Counter';
-import { classNames } from '../../lib/classNames';
-import { usePlatform } from '../../hooks/usePlatform';
-import { hasReactNode } from '../../lib/utils';
-import './TabbarItem.css';
+import * as React from "react";
+import { getClassName } from "../../helpers/getClassName";
+import Counter from "../Counter/Counter";
+import { classNames } from "../../lib/classNames";
+import { usePlatform } from "../../hooks/usePlatform";
+import { hasReactNode } from "../../lib/utils";
+import Tappable from "../Tappable/Tappable";
+import { Platform } from "../../lib/platform";
+import { HasComponent, HasRootRef } from "../../types";
+import { warnOnce } from "../../lib/warnOnce";
+import "./TabbarItem.css";
 
-export interface TabbarItemProps extends React.HTMLAttributes<HTMLElement>, React.AnchorHTMLAttributes<HTMLElement> {
+export interface TabbarItemProps
+  extends Omit<React.AllHTMLAttributes<HTMLElement>, "label">, // TODO убрать Omit после удаления свойства label
+    HasRootRef<HTMLElement>,
+    HasComponent {
   selected?: boolean;
   /**
    * Тест рядом с иконкой
@@ -22,25 +29,60 @@ export interface TabbarItemProps extends React.HTMLAttributes<HTMLElement>, Reac
   label?: React.ReactNode;
 }
 
-const TabbarItem: React.FunctionComponent<TabbarItemProps> = (props: TabbarItemProps) => {
-  const { children, selected, label, indicator, text, ...restProps } = props;
+const warn = warnOnce("TabbarItem");
+const TabbarItem: React.FunctionComponent<TabbarItemProps> = ({
+  children,
+  selected,
+  label,
+  indicator,
+  text,
+  href,
+  Component = href ? "a" : "button",
+  disabled,
+  ...restProps
+}: TabbarItemProps) => {
   const platform = usePlatform();
-  const Component: React.ElementType = restProps.href ? 'a' : 'div';
+
+  if (label && process.env.NODE_ENV === "development") {
+    warn(
+      "Свойство label устарело и будет удалено в 5.0.0. Используйте indicator."
+    );
+  }
 
   return (
     <Component
       {...restProps}
-      vkuiClass={classNames(getClassName('TabbarItem', platform), {
-        'TabbarItem--selected': selected,
-        'TabbarItem--text': !!text,
+      disabled={disabled}
+      href={href}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
+      vkuiClass={classNames(getClassName("TabbarItem", platform), {
+        "TabbarItem--selected": selected,
+        "TabbarItem--text": !!text,
       })}
     >
+      <Tappable
+        role="presentation"
+        Component="div"
+        disabled={disabled}
+        activeMode={
+          platform === Platform.IOS
+            ? "TabbarItem__tappable--active"
+            : "background"
+        }
+        activeEffectDelay={platform === Platform.IOS ? 0 : 300}
+        hasHover={false}
+        vkuiClass="TabbarItem__tappable"
+      />
       <div vkuiClass="TabbarItem__in">
         <div vkuiClass="TabbarItem__icon">
           {children}
           <div vkuiClass="TabbarItem__label">
             {hasReactNode(indicator) && indicator}
-            {!indicator && label && <Counter size="s" mode="prominent">{label}</Counter>}
+            {!indicator && label && (
+              <Counter size="s" mode="prominent">
+                {label}
+              </Counter>
+            )}
           </div>
         </div>
         {text && <div vkuiClass="TabbarItem__text">{text}</div>}
@@ -49,4 +91,5 @@ const TabbarItem: React.FunctionComponent<TabbarItemProps> = (props: TabbarItemP
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default TabbarItem;

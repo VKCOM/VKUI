@@ -1,14 +1,14 @@
-В соответствии с требованиями по дизайну на iOS и Android различаются, например, некоторые кнопки, часто используемые 
-в шапках в приложениях. Можно использовать удобные компоненты, в которых скрыта платформенная логика показа нужного 
+В соответствии с требованиями по дизайну на iOS и Android различаются, например, некоторые кнопки, часто используемые
+в шапках в приложениях. Можно использовать удобные компоненты, в которых скрыта платформенная логика показа нужного
 текста или иконки. Ниже представлено подробное демо с этими вспомогательными компонентами.
 
 ```js
-const HOME_VIEW = 'home';
-const CREATE_VIEW = 'create';
+const HOME_VIEW = "home";
+const CREATE_VIEW = "create";
 
-const MAIN_PANEL = 'main';
-const LIST_PANEL = 'list';
-const CREATE_PANEL = 'create';
+const MAIN_PANEL = "main";
+const LIST_PANEL = "list";
+const CREATE_PANEL = "create";
 
 class Example extends React.Component {
   constructor(props) {
@@ -21,13 +21,13 @@ class Example extends React.Component {
       activeView: HOME_VIEW,
       activePanels: {
         [HOME_VIEW]: MAIN_PANEL,
-        [CREATE_VIEW]: CREATE_PANEL
-      }
+        [CREATE_VIEW]: CREATE_PANEL,
+      },
     };
   }
 
   closeApp() {
-    alert('Закрыть приложение');
+    alert("Закрыть приложение");
   }
 
   go(view, panel = this.state.activePanels[view]) {
@@ -36,8 +36,8 @@ class Example extends React.Component {
       activeView: view,
       activePanels: {
         ...this.state.activePanels,
-        [view]: panel
-      }
+        [view]: panel,
+      },
     });
 
     if (panel === CREATE_PANEL && !this.state.formLoaded) {
@@ -69,13 +69,19 @@ class Example extends React.Component {
             </PanelHeader>
 
             <Group>
-              <CellButton onClick={() => this.go(HOME_VIEW, LIST_PANEL)}>Перейти к списку</CellButton>
+              <CellButton onClick={() => this.go(HOME_VIEW, LIST_PANEL)}>
+                Перейти к списку
+              </CellButton>
             </Group>
           </Panel>
 
           <Panel id={LIST_PANEL}>
             <PanelHeader
-              left={<PanelHeaderBack onClick={() => this.go(HOME_VIEW, MAIN_PANEL)} />}
+              left={
+                <PanelHeaderBack
+                  onClick={() => this.go(HOME_VIEW, MAIN_PANEL)}
+                />
+              }
               right={
                 <PanelHeaderEdit
                   isActive={editing}
@@ -92,8 +98,18 @@ class Example extends React.Component {
               <List>
                 {!editing && (
                   <CellButton
-                    style={{ color: 'var(--accent)' }}
-                    before={<div style={{ width: 60, display: 'flex', justifyContent: 'center' }}><Icon24Add /></div>}
+                    style={{ color: "var(--accent)" }}
+                    before={
+                      <div
+                        style={{
+                          width: 60,
+                          display: "flex",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Icon24Add />
+                      </div>
+                    }
                     onClick={() => this.go(CREATE_VIEW)}
                   >
                     Добавить группу
@@ -102,15 +118,23 @@ class Example extends React.Component {
 
                 <Cell
                   removable={editing}
-                  before={<Avatar src="https://pp.userapi.com/c638629/v638629852/2afc2/nlmcXQP0V6c.jpg?ava=1" />}
+                  before={
+                    <Avatar src="https://pp.userapi.com/c638629/v638629852/2afc2/nlmcXQP0V6c.jpg?ava=1" />
+                  }
                   description="Открытая группа"
-                >ВКонтакте API</Cell>
+                >
+                  ВКонтакте API
+                </Cell>
 
                 <Cell
                   removable={editing}
-                  before={<Avatar src="https://sun9-34.userapi.com/c846420/v846420985/1526cd/YmiB_KSW1Q8.jpg?ava=1" />}
+                  before={
+                    <Avatar src="https://sun9-34.userapi.com/c846420/v846420985/1526cd/YmiB_KSW1Q8.jpg?ava=1" />
+                  }
                   description="Открытая группа"
-                >VK Apps</Cell>
+                >
+                  VK Apps
+                </Cell>
               </List>
             </Group>
           </Panel>
@@ -125,19 +149,19 @@ class Example extends React.Component {
               Добавить
             </PanelHeader>
             <Group>
-              {!formLoaded ? <PanelSpinner /> : <FormLayout>
-                <FormItem top="Название сообщества">              
-                  <Input
-                    placeholder="Введите название..."
-                  />
-                </FormItem>
+              {!formLoaded ? (
+                <PanelSpinner />
+              ) : (
+                <FormLayout>
+                  <FormItem top="Название сообщества">
+                    <Input placeholder="Введите название..." />
+                  </FormItem>
 
-                <FormItem top="Описание">              
-                  <Textarea
-                    placeholder="Введите описание..."
-                  />
-                </FormItem>
-              </FormLayout>}
+                  <FormItem top="Описание">
+                    <Textarea placeholder="Введите описание..." />
+                  </FormItem>
+                </FormLayout>
+              )}
             </Group>
           </Panel>
         </View>
@@ -146,5 +170,5 @@ class Example extends React.Component {
   }
 }
 
-<Example />
+<Example />;
 ```

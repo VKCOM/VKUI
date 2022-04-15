@@ -52,7 +52,7 @@
 }
 
 .ChipsInput__el:disabled {
-  opacity: .4;
+  opacity: 0.4;
 }
 
 .ChipsInput__el::placeholder {

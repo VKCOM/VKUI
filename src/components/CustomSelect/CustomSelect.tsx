@@ -1,34 +1,42 @@
-import * as React from 'react';
-import SelectMimicry from '../SelectMimicry/SelectMimicry';
-import { debounce, setRef } from '../../lib/utils';
-import { classNames } from '../../lib/classNames';
-import { NativeSelectProps } from '../NativeSelect/NativeSelect';
-import CustomScrollView from '../CustomScrollView/CustomScrollView';
-import { withAdaptivity } from '../../hoc/withAdaptivity';
-import { withPlatform } from '../../hoc/withPlatform';
-import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
-import { getClassName } from '../../helpers/getClassName';
-import { FormFieldProps } from '../FormField/FormField';
-import { HasPlatform } from '../../types';
-import Input from '../Input/Input';
-import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
-import Caption from '../Typography/Caption/Caption';
-import { warnOnce } from '../../lib/warnOnce';
-import Spinner from '../Spinner/Spinner';
-import { defaultFilterFn } from '../../lib/select';
-import { is } from '../../lib/is';
-import './CustomSelect.css';
+import * as React from "react";
+import SelectMimicry from "../SelectMimicry/SelectMimicry";
+import { debounce, setRef, multiRef } from "../../lib/utils";
+import { classNames } from "../../lib/classNames";
+import { NativeSelectProps } from "../NativeSelect/NativeSelect";
+import { withAdaptivity } from "../../hoc/withAdaptivity";
+import { withPlatform } from "../../hoc/withPlatform";
+import CustomSelectOption, {
+  CustomSelectOptionProps,
+} from "../CustomSelectOption/CustomSelectOption";
+import { getClassName } from "../../helpers/getClassName";
+import { FormFieldProps } from "../FormField/FormField";
+import { HasPlatform } from "../../types";
+import Input from "../Input/Input";
+import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
+import { Caption } from "../Typography/Caption/Caption";
+import { warnOnce } from "../../lib/warnOnce";
+import { defaultFilterFn } from "../../lib/select";
+import { is } from "../../lib/is";
+import { Placement } from "../Popper/Popper";
+import { CustomSelectDropdown } from "../CustomSelectDropdown/CustomSelectDropdown";
+import "./CustomSelect.css";
 
-const findIndexAfter = (options: CustomSelectOptionInterface[], startIndex = -1) => {
+const findIndexAfter = (
+  options: CustomSelectOptionInterface[] = [],
+  startIndex = -1
+) => {
   if (startIndex >= options.length - 1) {
     return -1;
   }
   return options.findIndex((option, i) => i > startIndex && !option.disabled);
 };
 
-const findIndexBefore = (options: CustomSelectOptionInterface[], endIndex: number = options.length) => {
+const findIndexBefore = (
+  options: CustomSelectOptionInterface[] = [],
+  endIndex: number = options.length
+) => {
   let result = -1;
-  if (endIndex <= 0) {
+  if (options === undefined || endIndex <= 0) {
     return result;
   }
   for (let i = endIndex - 1; i >= 0; i--) {
@@ -42,15 +50,23 @@ const findIndexBefore = (options: CustomSelectOptionInterface[], endIndex: numbe
   return result;
 };
 
-const warn = warnOnce('CustomSelect');
+const warn = warnOnce("CustomSelect");
 
 const checkOptionsValueType = (options: CustomSelectOptionInterface[]) => {
   if (new Set(options.map((item) => typeof item.value)).size > 1) {
-    warn('Some values of your options have different types. CustomSelect onChange always returns a string type.');
+    warn(
+      "Some values of your options have different types. CustomSelect onChange always returns a string type.",
+      "error"
+    );
   }
 };
 
-type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>['value'];
+type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>["value"];
+
+export enum SelectType {
+  Default = "default",
+  Plain = "plain",
+}
 
 export interface CustomSelectOptionInterface {
   value: SelectValue;
@@ -66,9 +82,13 @@ interface CustomSelectState {
   selectedOptionIndex?: number;
   nativeSelectValue?: SelectValue;
   options?: CustomSelectOptionInterface[];
+  popperPlacement?: Placement;
 }
 
-export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormFieldProps {
+export interface CustomSelectProps
+  extends NativeSelectProps,
+    HasPlatform,
+    FormFieldProps {
   /**
    * Если `true`, то при клике на селект в нём появится текстовое поле для поиска по `options`. По умолчанию поиск
    * производится по `option.label`.
@@ -78,7 +98,10 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
    * Текст, который будет отображен, если приходит пустой `options`
    */
   emptyText?: string;
-  onInputChange?: (e: React.ChangeEvent, options: CustomSelectOptionInterface[]) => void | CustomSelectOptionInterface[];
+  onInputChange?: (
+    e: React.ChangeEvent,
+    options: CustomSelectOptionInterface[]
+  ) => void | CustomSelectOptionInterface[];
   options: Array<{
     value: SelectValue;
     label: string;
@@ -87,8 +110,16 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
   /**
    * Функция для кастомной фильтрации. По-умолчанию поиск производится по option.label.
    */
-  filterFn?: false | ((value: string, option: CustomSelectOptionInterface, getOptionLabel?: (option: Partial<CustomSelectOptionInterface>) => string) => boolean);
-  popupDirection?: 'top' | 'bottom';
+  filterFn?:
+    | false
+    | ((
+        value: string,
+        option: CustomSelectOptionInterface,
+        getOptionLabel?: (
+          option: Partial<CustomSelectOptionInterface>
+        ) => string
+      ) => boolean);
+  popupDirection?: "top" | "bottom";
   /**
    * Рендер-проп для кастомного рендера опции.
    * В объекте аргумента приходят [свойства опции](#/CustomSelectOption?id=props)
@@ -98,7 +129,11 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
    * Рендер-проп для кастомного рендера содержимого дропдауна.
    * В defaultDropdownContent содержится список опций в виде скроллящегося блока.
    */
-  renderDropdown?: ({ defaultDropdownContent }: { defaultDropdownContent: React.ReactNode }) => React.ReactNode;
+  renderDropdown?: ({
+    defaultDropdownContent,
+  }: {
+    defaultDropdownContent: React.ReactNode;
+  }) => React.ReactNode;
   /**
    * Если true, то в дропдауне вместо списка опций рисуется спиннер. При переданных renderDropdown и fetching: true,
    * "победит" renderDropdown
@@ -106,21 +141,31 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
   fetching?: boolean;
   onClose?: VoidFunction;
   onOpen?: VoidFunction;
+  icon?: React.ReactNode;
+  dropdownOffsetDistance?: number;
+  fixDropdownWidth?: boolean;
+  forceDropdownPortal?: boolean;
+  selectType?: SelectType;
 }
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
-class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState> {
-  static defaultProps: CustomSelectProps = {
+class CustomSelect extends React.Component<
+  CustomSelectProps,
+  CustomSelectState
+> {
+  static defaultProps: Partial<CustomSelectProps> = {
     searchable: false,
     renderOption({ option, ...props }): React.ReactNode {
-      return (
-        <CustomSelectOption {...props} />
-      );
+      return <CustomSelectOption {...props} />;
     },
     options: [],
-    emptyText: 'Ничего не найдено',
+    emptyText: "Ничего не найдено",
     filterFn: defaultFilterFn,
+    icon: <DropdownIcon />,
+    dropdownOffsetDistance: 0,
+    fixDropdownWidth: true,
+    selectType: SelectType.Default,
   };
 
   public constructor(props: CustomSelectProps) {
@@ -130,9 +175,9 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
     const initialValue = value !== undefined ? value : defaultValue;
 
-    this.keyboardInput = '';
+    this.keyboardInput = "";
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === "development") {
       checkOptionsValueType(props.options);
     }
 
@@ -142,7 +187,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       selectedOptionIndex: this.findSelectedIndex(props.options, initialValue),
       nativeSelectValue: initialValue,
       options: props.options,
-      inputValue: '',
+      inputValue: "",
     };
 
     if (props.value !== undefined) {
@@ -151,73 +196,95 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   }
 
   private keyboardInput: string;
-  private isControlledOutside: boolean;
-  private selectEl: HTMLSelectElement;
+  private isControlledOutside = false;
+  private selectEl: HTMLSelectElement | null = null;
   private readonly scrollBoxRef = React.createRef<HTMLDivElement>();
+  private readonly containerRef = React.createRef<HTMLLabelElement>();
 
   private readonly resetKeyboardInput = () => {
-    this.keyboardInput = '';
+    this.keyboardInput = "";
   };
 
   private readonly getSelectedItem = () => {
     const { selectedOptionIndex, options } = this.state;
 
-    if (!options.length) {
+    if (!options?.length) {
       return null;
     }
 
-    return options[selectedOptionIndex];
+    return selectedOptionIndex !== undefined
+      ? options[selectedOptionIndex]
+      : undefined;
   };
 
   get areOptionsShown() {
     return this.scrollBoxRef.current !== null;
   }
 
-  filter = (options: CustomSelectProps['options'], inputValue: string, filterFn: CustomSelectProps['filterFn']) => {
-    return typeof filterFn === 'function' ? options.filter((option) => filterFn(inputValue, option)) : options;
+  filter = (
+    options: CustomSelectProps["options"],
+    inputValue: string,
+    filterFn: CustomSelectProps["filterFn"]
+  ) => {
+    return typeof filterFn === "function"
+      ? options.filter((option) => filterFn(inputValue, option))
+      : options;
   };
 
-  findSelectedIndex(options: CustomSelectOptionInterface[], value: SelectValue) {
-    return options.findIndex((item) => {
-      value = typeof item.value === 'number' ? Number(value) : value;
-      return item.value === value;
-    });
+  findSelectedIndex(
+    options: CustomSelectOptionInterface[] | undefined,
+    value: SelectValue
+  ) {
+    return (
+      options?.findIndex((item) => {
+        value = typeof item.value === "number" ? Number(value) : value;
+        return item.value === value;
+      }) ?? -1
+    );
   }
 
   open = () => {
-    this.setState(({ selectedOptionIndex }) => ({
-      opened: true,
-      focusedOptionIndex: selectedOptionIndex,
-    }), () => {
-      const { selectedOptionIndex } = this.state;
+    this.setState(
+      ({ selectedOptionIndex }) => ({
+        opened: true,
+        focusedOptionIndex: selectedOptionIndex,
+      }),
+      () => {
+        const { selectedOptionIndex } = this.state;
 
-      if (this.isValidIndex(selectedOptionIndex)) {
-        this.scrollToElement(selectedOptionIndex, true);
+        if (
+          selectedOptionIndex !== undefined &&
+          this.isValidIndex(selectedOptionIndex)
+        ) {
+          this.scrollToElement(selectedOptionIndex, true);
+        }
       }
-    });
-    typeof this.props.onOpen === 'function' && this.props.onOpen();
+    );
+    typeof this.props.onOpen === "function" && this.props.onOpen();
   };
 
   close = () => {
     this.resetKeyboardInput();
 
     this.setState(() => ({
-      inputValue: '',
+      inputValue: "",
       opened: false,
       focusedOptionIndex: -1,
       options: this.props.options,
     }));
-    typeof this.props.onClose === 'function' && this.props.onClose();
+    typeof this.props.onClose === "function" && this.props.onClose();
   };
 
   private isValidIndex(index: number) {
-    return index >= 0 && index < this.state.options.length;
+    return index >= 0 && index < (this.state.options?.length ?? 0);
   }
 
   selectFocused = () => {
     const { focusedOptionIndex } = this.state;
 
-    this.select(focusedOptionIndex);
+    if (focusedOptionIndex !== undefined) {
+      this.select(focusedOptionIndex);
+    }
   };
 
   select = (index: number) => {
@@ -225,14 +292,17 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       return;
     }
 
-    const item = this.state.options[index];
+    const item = this.state.options?.[index];
 
-    this.setState({
-      nativeSelectValue: item.value,
-    }, () => {
-      const event = new Event('change', { bubbles: true });
-      this.selectEl.dispatchEvent(event);
-    });
+    this.setState(
+      {
+        nativeSelectValue: item?.value,
+      },
+      () => {
+        const event = new Event("change", { bubbles: true });
+        this.selectEl?.dispatchEvent(event);
+      }
+    );
     this.close();
   };
 
@@ -241,21 +311,21 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   onFocus = () => {
-    const event = new Event('focus');
-    this.selectEl.dispatchEvent(event);
+    const event = new Event("focus");
+    this.selectEl?.dispatchEvent(event);
   };
 
   onBlur = () => {
     this.close();
-    const event = new Event('blur');
-    this.selectEl.dispatchEvent(event);
+    const event = new Event("blur");
+    this.selectEl?.dispatchEvent(event);
   };
 
   private scrollToElement(index: number, center = false) {
     const dropdown = this.scrollBoxRef.current;
     const item = dropdown ? (dropdown.children[index] as HTMLElement) : null;
 
-    if (!item) {
+    if (!item || !dropdown) {
       return;
     }
 
@@ -273,41 +343,57 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     }
   }
 
-  focusOptionByIndex = (index: number, scrollTo = true) => {
-    if (index < 0 || index > this.state.options.length - 1) {
+  focusOptionByIndex = (index: number | undefined, scrollTo = true) => {
+    if (
+      index === undefined ||
+      index < 0 ||
+      index > (this.state.options?.length ?? 0) - 1
+    ) {
       return;
     }
 
-    const option = this.state.options[index];
+    const option = this.state.options?.[index];
 
-    if (option.disabled) {
+    if (option?.disabled) {
       return;
     }
 
     scrollTo && this.scrollToElement(index);
 
-    this.setState(() => ({
-      focusedOptionIndex: index,
-    }));
+    this.setState((prevState) =>
+      // Это оптимизация, прежде всего, под `onMouseOver`
+      prevState.focusedOptionIndex !== index
+        ? {
+            focusedOptionIndex: index,
+          }
+        : null
+    );
   };
 
-  focusOption = (type: 'next' | 'prev') => {
+  focusOption = (type: "next" | "prev") => {
     const { focusedOptionIndex } = this.state;
     let index = focusedOptionIndex;
 
-    if (type === 'next') {
+    if (type === "next") {
       const nextIndex = findIndexAfter(this.state.options, index);
       index = nextIndex === -1 ? findIndexAfter(this.state.options) : nextIndex; // Следующий за index или первый валидный до index
-    } else if (type === 'prev') {
+    } else if (type === "prev") {
       const beforeIndex = findIndexBefore(this.state.options, index);
-      index = beforeIndex === -1 ? findIndexBefore(this.state.options) : beforeIndex; // Предшествующий index или последний валидный после index
+      index =
+        beforeIndex === -1 ? findIndexBefore(this.state.options) : beforeIndex; // Предшествующий index или последний валидный после index
     }
 
     this.focusOptionByIndex(index);
   };
 
   handleOptionHover: MouseEventHandler = (e: React.MouseEvent<HTMLElement>) => {
-    this.focusOptionByIndex(Array.prototype.indexOf.call(e.currentTarget.parentNode.children, e.currentTarget), false);
+    this.focusOptionByIndex(
+      Array.prototype.indexOf.call(
+        e.currentTarget.parentNode?.children,
+        e.currentTarget
+      ),
+      false
+    );
   };
 
   handleOptionDown: MouseEventHandler = (e: React.MouseEvent<HTMLElement>) => {
@@ -315,8 +401,11 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   handleOptionClick: MouseEventHandler = (e: React.MouseEvent<HTMLElement>) => {
-    const index = Array.prototype.indexOf.call(e.currentTarget.parentNode.children, e.currentTarget);
-    const option = this.state.options[index];
+    const index = Array.prototype.indexOf.call(
+      e.currentTarget.parentNode?.children,
+      e.currentTarget
+    );
+    const option = this.state.options?.[index];
 
     if (option && !option.disabled) {
       this.selectFocused();
@@ -330,11 +419,11 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   onKeyboardInput = (key: string) => {
     const fullInput = this.keyboardInput + key;
 
-    const optionIndex = this.state.options.findIndex((option) => {
+    const optionIndex = this.state.options?.findIndex((option) => {
       return option.label.toLowerCase().includes(fullInput);
     });
 
-    if (optionIndex > -1) {
+    if (optionIndex !== undefined && optionIndex > -1) {
       this.focusOptionByIndex(optionIndex);
     }
 
@@ -352,14 +441,18 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const value = e.currentTarget.value;
-    if (!this.isControlledOutside) {
-      this.setState({
-        selectedOptionIndex: this.findSelectedIndex(this.state.options, value),
-      });
-    }
-    if (this.props.onChange) {
-      this.props.onChange(e);
+    const newSelectedOptionIndex = this.findSelectedIndex(
+      this.state.options,
+      e.currentTarget.value
+    );
+
+    if (this.state.selectedOptionIndex !== newSelectedOptionIndex) {
+      if (!this.isControlledOutside) {
+        this.setState({
+          selectedOptionIndex: newSelectedOptionIndex,
+        });
+      }
+      this.props.onChange?.(e);
     }
   };
 
@@ -367,42 +460,56 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     if (this.props.onInputChange) {
       const options = this.props.onInputChange(e, this.props.options);
       if (options) {
-        if (process.env.NODE_ENV === 'development') {
-          warn('This filtration method is deprecated. Return value of onInputChange will' +
-            ' be ignored in v5.0.0. For custom filtration please update props.options by yourself or use filterFn property');
+        if (process.env.NODE_ENV === "development") {
+          warn(
+            "This filtration method is deprecated. Return value of onInputChange will" +
+              " be ignored in v5.0.0. For custom filtration please update props.options by yourself or use filterFn property"
+          );
         }
         this.setState({
           options,
-          selectedOptionIndex: this.findSelectedIndex(options, this.state.nativeSelectValue),
+          selectedOptionIndex: this.findSelectedIndex(
+            options,
+            this.state.nativeSelectValue
+          ),
           inputValue: e.target.value,
         });
       } else {
         this.setState({ inputValue: e.target.value });
       }
     } else {
-      const options = this.filter(this.props.options, e.target.value, this.props.filterFn);
+      const options = this.filter(
+        this.props.options,
+        e.target.value,
+        this.props.filterFn
+      );
       this.setState({
         options,
-        selectedOptionIndex: this.findSelectedIndex(options, this.state.nativeSelectValue),
+        selectedOptionIndex: this.findSelectedIndex(
+          options,
+          this.state.nativeSelectValue
+        ),
         inputValue: e.target.value,
       });
     }
   };
 
   onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (event) => {
-    ['ArrowUp', 'ArrowDown', 'Escape', 'Enter'].includes(event.key) && this.areOptionsShown && event.preventDefault();
+    ["ArrowUp", "ArrowDown", "Escape", "Enter"].includes(event.key) &&
+      this.areOptionsShown &&
+      event.preventDefault();
 
     switch (event.key) {
-      case 'ArrowUp':
-        this.areOptionsShown && this.focusOption('prev');
+      case "ArrowUp":
+        this.areOptionsShown && this.focusOption("prev");
         break;
-      case 'ArrowDown':
-        this.areOptionsShown && this.focusOption('next');
+      case "ArrowDown":
+        this.areOptionsShown && this.focusOption("next");
         break;
-      case 'Escape':
+      case "Escape":
         this.close();
         break;
-      case 'Enter':
+      case "Enter":
         this.areOptionsShown && this.selectFocused();
         break;
     }
@@ -411,34 +518,36 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   handleKeyDownSelect = (event: React.KeyboardEvent) => {
     const { opened } = this.state;
 
-    if (event.key.length === 1 && event.key !== ' ') {
+    if (event.key.length === 1 && event.key !== " ") {
       this.onKeyboardInput(event.key);
       return;
     }
 
-    ['ArrowUp', 'ArrowDown', 'Escape', 'Enter'].includes(event.key) && this.areOptionsShown && event.preventDefault();
+    ["ArrowUp", "ArrowDown", "Escape", "Enter"].includes(event.key) &&
+      this.areOptionsShown &&
+      event.preventDefault();
 
     switch (event.key) {
-      case 'ArrowUp':
+      case "ArrowUp":
         if (opened) {
-          this.areOptionsShown && this.focusOption('prev');
+          this.areOptionsShown && this.focusOption("prev");
         } else {
           this.open();
         }
         break;
-      case 'ArrowDown':
+      case "ArrowDown":
         if (opened) {
-          this.areOptionsShown && this.focusOption('next');
+          this.areOptionsShown && this.focusOption("next");
         } else {
           this.open();
         }
         break;
-      case 'Escape':
+      case "Escape":
         this.close();
         break;
-      case 'Enter':
-      case 'Spacebar':
-      case ' ':
+      case "Enter":
+      case "Spacebar":
+      case " ":
         if (opened) {
           this.areOptionsShown && this.selectFocused();
         } else {
@@ -452,14 +561,27 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
   componentDidUpdate(prevProps: CustomSelectProps) {
     // Внутри useEffect и так is, можно убрать
-    if (!is(prevProps.value, this.props.value) || prevProps.options !== this.props.options) {
-      if (process.env.NODE_ENV === 'development') {
+    if (
+      !is(prevProps.value, this.props.value) ||
+      prevProps.options !== this.props.options
+    ) {
+      if (process.env.NODE_ENV === "development") {
         checkOptionsValueType(this.props.options);
       }
 
       this.isControlledOutside = this.props.value !== undefined;
-      const value = this.props.value === undefined ? this.state.nativeSelectValue : this.props.value;
-      const options = this.props.searchable ? this.filter(this.props.options, this.state.inputValue, this.props.filterFn) : this.props.options;
+      const value =
+        this.props.value === undefined
+          ? this.state.nativeSelectValue
+          : this.props.value;
+      const options =
+        this.props.searchable && this.state.inputValue !== undefined
+          ? this.filter(
+              this.props.options,
+              this.state.inputValue,
+              this.props.filterFn
+            )
+          : this.props.options;
       this.setState({
         nativeSelectValue: value,
         selectedOptionIndex: this.findSelectedIndex(options, value),
@@ -476,7 +598,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
     return (
       <React.Fragment key={`${option.value}`}>
-        {renderOption({
+        {renderOption!({
           option,
           hovered,
           children: option.label,
@@ -484,7 +606,15 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           disabled: option.disabled,
           onClick: this.handleOptionClick,
           onMouseDown: this.handleOptionDown,
-          onMouseEnter: this.handleOptionHover,
+          // Используем `onMouseOver` вместо `onMouseEnter`.
+          // При параметре `searchable`, обновляется "ребёнок", из-за чего `onMouseEnter` не срабатывает в следующих кейсах:
+          //  1. До загрузки выпадающего списка, курсор мышки находится над произвольным элементом этого списка.
+          //     > Лечение: только увод курсора мыши и возвращении его обратно вызывает событие `onMouseEnter` на этот элемент.
+          //  2. Если это тач-устройство.
+          //     > Лечение: нужно нажать на какой-нибудь произвольный элемент списка, после чего `onMouseEnter` будет работать на соседние элементы,
+          //     но не на тот, на который нажали в первый раз.
+          // Более подробно по ссылке https://github.com/facebook/react/issues/13956#issuecomment-1082055744
+          onMouseOver: this.handleOptionHover,
         })}
       </React.Fragment>
     );
@@ -492,11 +622,19 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
   selectRef = (element: HTMLSelectElement) => {
     this.selectEl = element;
-    setRef(element, this.props.getRef);
+    if (this.props.getRef) {
+      setRef(element, this.props.getRef);
+    }
+  };
+
+  onPlacementChange = (placement?: Placement) => {
+    this.setState(() => ({
+      popperPlacement: placement,
+    }));
   };
 
   render() {
-    const { opened, nativeSelectValue } = this.state;
+    const { opened, nativeSelectValue, options: stateOptions } = this.state;
     const {
       searchable,
       name,
@@ -521,52 +659,54 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       onOpen,
       onClose,
       fetching,
+      icon,
+      dropdownOffsetDistance,
+      fixDropdownWidth,
+      forceDropdownPortal,
+      selectType,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
     const label = selected ? selected.label : undefined;
 
-    const defaultDropdownContent = (
-      <CustomScrollView boxRef={this.scrollBoxRef}>
-        {this.state.options.map(this.renderOption)}
-        {this.state.options.length === 0 &&
-        <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
+    const defaultDropdownContent =
+      stateOptions !== undefined && stateOptions.length > 0 ? (
+        stateOptions.map(this.renderOption)
+      ) : (
+        <Caption vkuiClass="CustomSelect__empty">
           {this.props.emptyText}
         </Caption>
-        }
-      </CustomScrollView>
-    );
+      );
 
     let resolvedContent;
 
-    if (typeof renderDropdown === 'function') {
+    if (typeof renderDropdown === "function") {
       resolvedContent = renderDropdown({ defaultDropdownContent });
-    } else if (fetching) {
-      resolvedContent = (
-        <div vkuiClass="CustomSelect__fetching">
-          <Spinner size="small" />
-        </div>
-      );
     } else {
       resolvedContent = defaultDropdownContent;
     }
 
+    const isPopperDirectionTop = this.state.popperPlacement?.includes("top");
+
     return (
       <label
-        vkuiClass={getClassName('CustomSelect', platform)}
+        vkuiClass={getClassName("CustomSelect", platform)}
         className={className}
         style={style}
-        ref={getRootRef}
+        ref={multiRef(this.containerRef, getRootRef)}
         onClick={this.onLabelClick}
       >
-        {opened && searchable ?
+        {opened && searchable ? (
           <Input
             {...restProps}
             autoFocus
             onBlur={this.onBlur}
+            // eslint-disable-next-line vkui/no-object-expression-in-arguments
             vkuiClass={classNames({
-              'CustomSelect__open': opened,
-              'CustomSelect__open--popupDirectionTop': popupDirection === 'top',
+              CustomSelect__open: opened,
+              "CustomSelect__open--popupDirectionTop": isPopperDirectionTop,
+              "CustomSelect__open--not-adjacent":
+                (dropdownOffsetDistance as number) > 0,
             })}
             value={this.state.inputValue}
             onKeyDown={this.onInputKeyDown}
@@ -575,9 +715,10 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
             // TODO Нужно перестать пытаться превратить CustomSelect в select. Тогда эта проблема уйдёт.
             // @ts-ignore
             onClick={onClick}
-            after={<DropdownIcon />}
+            after={icon}
             placeholder={restProps.placeholder}
-          /> :
+          />
+        ) : (
           <SelectMimicry
             {...restProps}
             aria-hidden={true}
@@ -586,14 +727,19 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
             onKeyUp={this.handleKeyUp}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
+            // eslint-disable-next-line vkui/no-object-expression-in-arguments
             vkuiClass={classNames({
-              'CustomSelect__open': opened,
-              'CustomSelect__open--popupDirectionTop': popupDirection === 'top',
+              CustomSelect__open: opened,
+              "CustomSelect__open--popupDirectionTop": isPopperDirectionTop,
+              "CustomSelect__open--not-adjacent":
+                (dropdownOffsetDistance as number) > 0,
             })}
+            after={icon}
+            selectType={selectType}
           >
             {label}
           </SelectMimicry>
-        }
+        )}
         <select
           ref={this.selectRef}
           name={name}
@@ -605,23 +751,33 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           aria-hidden={true}
           vkuiClass="CustomSelect__control"
         >
-          {options.map((item) => <option key={`${item.value}`} value={item.value} />)}
+          {options.map((item) => (
+            <option key={`${item.value}`} value={item.value} />
+          ))}
         </select>
-        {opened &&
-          <div
-            vkuiClass={classNames('CustomSelect__options', `CustomSelect__options--sizeY-${sizeY}`, {
-              'CustomSelect__options--popupDirectionTop': popupDirection === 'top',
-            })}
+        {opened && (
+          <CustomSelectDropdown
+            targetRef={this.containerRef}
+            placement={popupDirection}
+            scrollBoxRef={this.scrollBoxRef}
+            onPlacementChange={this.onPlacementChange}
             onMouseLeave={this.resetFocusedOption}
+            fetching={fetching}
+            offsetDistance={dropdownOffsetDistance}
+            sameWidth={fixDropdownWidth}
+            forcePortal={forceDropdownPortal}
           >
             {resolvedContent}
-          </div>
-        }
+          </CustomSelectDropdown>
+        )}
       </label>
     );
   }
 }
 
-export default withPlatform(withAdaptivity(CustomSelect, {
-  sizeY: true,
-}));
+// eslint-disable-next-line import/no-default-export
+export default withPlatform(
+  withAdaptivity(CustomSelect, {
+    sizeY: true,
+  })
+);

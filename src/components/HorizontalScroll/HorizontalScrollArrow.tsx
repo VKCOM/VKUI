@@ -1,27 +1,26 @@
-import * as React from 'react';
-import { Icon24Chevron } from '@vkontakte/icons';
-import { usePlatform } from '../../hooks/usePlatform';
-import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
-import Tappable from '../Tappable/Tappable';
-import './HorizontalScrollArrow.css';
+import * as React from "react";
+import { Icon24Chevron } from "@vkontakte/icons";
+import { classNames } from "../../lib/classNames";
+import Tappable from "../Tappable/Tappable";
+import "./HorizontalScrollArrow.css";
 
 export interface HorizontalScrollArrowProps {
   onClick: () => void;
-  direction: 'left' | 'right';
+  direction: "left" | "right";
 }
 
-const HorizontalScrollArrow: React.FC<HorizontalScrollArrowProps> = ({ onClick, direction }: HorizontalScrollArrowProps) => {
-  const platform = usePlatform();
-
+const HorizontalScrollArrow: React.FC<HorizontalScrollArrowProps> = ({
+  onClick,
+  direction,
+}: HorizontalScrollArrowProps) => {
   return (
     <Tappable
       Component="button"
       hasHover={false}
       hasActive={false}
       vkuiClass={classNames(
-        getClassName('HorizontalScrollArrow', platform),
-        `HorizontalScrollArrow--${direction}`,
+        "HorizontalScrollArrow",
+        `HorizontalScrollArrow--${direction}`
       )}
       onClick={onClick}
     >
@@ -32,4 +31,5 @@ const HorizontalScrollArrow: React.FC<HorizontalScrollArrowProps> = ({ onClick, 
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default HorizontalScrollArrow;

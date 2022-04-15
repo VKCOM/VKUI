@@ -1,4 +1,4 @@
-import { canUseDOM } from '@vkontakte/vkjs';
+import { canUseDOM } from "@vkontakte/vkjs";
 
 /**
  * Функция для js анимации
@@ -17,7 +17,12 @@ export interface AnimateArgumentsInterface {
   draw: DrawInterface;
 }
 
-export default function animate({ duration, timing, draw }: AnimateArgumentsInterface): void {
+// eslint-disable-next-line import/no-default-export
+export default function animate({
+  duration,
+  timing,
+  draw,
+}: AnimateArgumentsInterface): void {
   if (!canUseDOM) {
     return;
   }
