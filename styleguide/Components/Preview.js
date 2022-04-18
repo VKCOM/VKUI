@@ -85,6 +85,10 @@ export default withAdaptivity(
       } = this.props;
       const { error } = this.state;
 
+      if (!this.state.error) {
+        console.clear();
+      }
+
       return (
         <StyleGuideContext.Consumer>
           {(styleGuideContext) => {
