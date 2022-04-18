@@ -33,26 +33,34 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({
   options,
   getRootRef,
   onChange = noop,
-  value,
+  value: valueProp,
   defaultValue,
   children,
   ...restProps
 }) => {
-  let initialValue = defaultValue ?? value;
+  const initialValue = defaultValue ?? options[0]?.value;
 
-  if (!initialValue) {
-    initialValue = options[0]?.value;
+  if (process.env.NODE_ENV === "development") {
+    if (valueProp !== undefined && defaultValue !== undefined) {
+      warn(
+        "SegmentedControl должен быть либо управляемым, либо неуправляемым" +
+          "(укажите либо свойство value, либо свойство defaultValue, но не оба).",
+        "error"
+      );
+    }
   }
 
   const [activeOptionIdx, updateActiveOptionIdx] = React.useState<number>(0);
-  const [activeValue, updateActiveValue] =
+  const [valueLocal, updateValueLocal] =
     React.useState<SegmentedControlValue>(initialValue);
+
+  const value = valueProp ?? valueLocal;
 
   const nameRef = React.useRef<string>(name ?? generateRandomId());
 
   useIsomorphicLayoutEffect(() => {
     const _activeOptionIdx = options.findIndex(
-      (option) => option.value === activeValue
+      (option) => option.value === value
     );
 
     if (_activeOptionIdx === -1 && process.env.NODE_ENV === "development") {
@@ -60,12 +68,14 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({
     }
 
     updateActiveOptionIdx(_activeOptionIdx);
-  }, [activeValue, options]);
+  }, [value, options]);
 
   const translateX = `translateX(${100 * activeOptionIdx}%)`;
 
   const handleOnChange = (value: SegmentedControlValue) => {
-    updateActiveValue(value);
+    if (valueProp === undefined) {
+      updateValueLocal(value);
+    }
     onChange(value);
   };
 
@@ -93,7 +103,7 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({
             {...optionProps}
             vkuiClass="SegmentedControl__option"
             name={nameRef.current}
-            checked={activeValue === optionProps.value}
+            checked={value === optionProps.value}
             onChange={() => handleOnChange(optionProps.value)}
           >
             {label}

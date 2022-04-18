@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { baselineComponent } from "../../testing/utils";
 import {
   SegmentedControl,
   SegmentedControlOptionInterface,
   SegmentedControlProps,
+  SegmentedControlValue,
 } from "./SegmentedControl";
 
 const options: SegmentedControlOptionInterface[] = [
@@ -48,11 +50,33 @@ describe("SegmentedControl", () => {
   it("uses passed onChange", () => {
     const onChange = jest.fn();
 
-    render(<SegmentedControlTest onChange={onChange} value="fb" />);
+    render(<SegmentedControlTest onChange={onChange} defaultValue="fb" />);
 
     fireEvent.click(option(0));
 
     expect(onChange).toHaveBeenCalled();
+    expect(option(0)).toBeChecked();
+  });
+
+  it("uses passed onChange with value", () => {
+    const SegmentedControlTest = () => {
+      const [value, setValue] = useState<SegmentedControlValue>("fb");
+
+      return (
+        <SegmentedControl
+          data-testid="ctrl"
+          onChange={setValue}
+          value={value}
+          name="test"
+          options={options}
+        />
+      );
+    };
+
+    render(<SegmentedControlTest />);
+
+    expect(option(2)).toBeChecked();
+    fireEvent.click(option(0));
     expect(option(0)).toBeChecked();
   });
 });
