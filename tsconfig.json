@@ -28,6 +28,7 @@
     "tasks/**/*.js",
     ".github/**/*.js",
     "eslint-plugin-vkui/*.js",
+    "postcss-plugin-vk-sans/*.js",
     "*.js"
   ],
   "files": [
