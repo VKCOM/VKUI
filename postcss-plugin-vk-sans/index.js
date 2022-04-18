@@ -1,3 +1,4 @@
+/* stylelint-disable */
 const postcss = require("postcss");
 const fs = require("fs");
 const path = require("path");
@@ -46,10 +47,14 @@ const letterSpacingFontSizes = Object.entries({
   "0.005em": ["11.5px"],
 }).reduce((acc, [k, v]) => ({ ...acc, [k]: new Set(v) }), {});
 
-const getLetterSpacingByFontSizeValue = (fontSizeValue, platform) =>
-  Object.entries(cache.config[platform]).find(([, fontSizes]) =>
-    fontSizes.has(fontSizeValue)
-  )?.[0];
+const getLetterSpacingByFontSizeValue = (fontSizeValue, platform) => {
+  const fontSize = Object.entries(cache.config[platform]).find(
+    ([, fontSizes]) => fontSizes.has(fontSizeValue)
+  );
+  if (fontSize) {
+    return fontSize[0];
+  }
+};
 
 const wrapVarValue = (letterSpacingValue, fallbackValue) => {
   const computedValue = letterSpacingValue.replace("em", "").replace("0.0", "");
@@ -112,9 +117,10 @@ const extendConfigWithCustomProperties = (customPropertiesFile, platform) => {
     cache.config[platform]
   )) {
     for (const fontSize of fontSizes) {
-      customPropertiesValues[fontSize]?.forEach((f) =>
-        cache.config[platform][letterSpacing].add(f)
-      );
+      customPropertiesValues[fontSize] &&
+        customPropertiesValues[fontSize].forEach((f) =>
+          cache.config[platform][letterSpacing].add(f)
+        );
     }
   }
 };
@@ -157,7 +163,9 @@ const initializeCustomPropertiesFiles = (customPropertiesFiles, platform) => {
 };
 
 const ruleHasStandaloneStyles = (rule) =>
-  [".vkui", ".widgets", ".Widgets"].some((i) => rule?.selector?.includes(i));
+  [".vkui", ".widgets", ".Widgets"].some(
+    (i) => rule && rule.selector && rule.selector.includes(i)
+  );
 
 const VkSansMandatoryDeclarations = postcss.plugin(
   "vk-sans-mandatory-declarations",
@@ -185,7 +193,8 @@ const VkSansMandatoryDeclarations = postcss.plugin(
       }
 
       if (
-        !ignoreFiles?.length ||
+        !ignoreFiles ||
+        !ignoreFiles.length ||
         !ignoreFiles.some((i) => css.source.input.file.endsWith(i))
       ) {
         css.walkRules((rule) => {
@@ -204,10 +213,16 @@ const VkSansMandatoryDeclarations = postcss.plugin(
             !ruleHasStandaloneStyles(rule)
           ) {
             rule.walkDecls(/^(font|font-size)$/, (decl) => {
-              fontSizeValue =
-                decl.prop === "font"
-                  ? decl.value.match(/(([0-9]|[1-9][0-9])px|inherit)/)?.[0]
-                  : decl.value.replace(/\s?!important$/, "");
+              if (decl.prop === "font") {
+                const match = decl.value.match(
+                  /(([0-9]|[1-9][0-9])px|inherit)/
+                );
+                if (match) {
+                  fontSizeValue = match[0];
+                }
+              } else {
+                fontSizeValue = decl.value.replace(/\s?!important$/, "");
+              }
 
               letterSpacingOverride = getLetterSpacingByFontSizeValue(
                 fontSizeValue,
@@ -242,7 +257,7 @@ const VkSansMandatoryDeclarations = postcss.plugin(
                 rule.append(newRule);
               }
 
-              if (fontSizeValue?.endsWith("px")) {
+              if (fontSizeValue && fontSizeValue.endsWith("px")) {
                 if (
                   parseFloat(fontSizeValue.replace("px", "")) >=
                   VK_SANS_DISPLAY_SIZE_STARTS
