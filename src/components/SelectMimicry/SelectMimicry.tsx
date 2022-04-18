@@ -28,7 +28,7 @@ export interface SelectMimicryProps
   selectType?: SelectType;
 }
 
-const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
+const SelectMimicry: React.FC<SelectMimicryProps> = ({
   tabIndex = 0,
   placeholder,
   children,
@@ -43,7 +43,7 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
   after = <DropdownIcon />,
   selectType = SelectType.Default,
   ...restProps
-}: SelectMimicryProps) => {
+}) => {
   const platform = usePlatform();
 
   const TypographyComponent =
