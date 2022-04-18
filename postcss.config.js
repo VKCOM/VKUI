@@ -1,6 +1,7 @@
 const path = require("path");
 const cssCustomProperties = require("postcss-custom-properties");
 const scopeRoot = require("./tasks/postcss-scope-root.js");
+const restructureVariable = require("./tasks/postcss-restructure-variable.js");
 const cssImport = require("postcss-import");
 const autoprefixer = require("autoprefixer");
 const cssModules = require("postcss-modules");
@@ -36,6 +37,20 @@ let plugins = [
       ),
     ],
   }),
+  restructureVariable(
+    [
+      "./src/styles/bright_light.css",
+      "./src/styles/space_gray.css",
+      "./src/styles/vkcom_light.css",
+      "./src/styles/vkcom_dark.css",
+      "./node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css",
+      "./node_modules/@vkontakte/vkui-tokens/themes/vkBaseDark/cssVars/declarations/onlyVariablesLocal.css",
+      "./node_modules/@vkontakte/vkui-tokens/themes/vkIOS/cssVars/declarations/onlyVariablesLocal.css",
+      "./node_modules/@vkontakte/vkui-tokens/themes/vkIOSDark/cssVars/declarations/onlyVariablesLocal.css",
+      "./node_modules/@vkontakte/vkui-tokens/themes/vkCom/cssVars/declarations/onlyVariablesLocal.css",
+      "./node_modules/@vkontakte/vkui-tokens/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css",
+    ].map((pathSegment) => path.resolve(pathSegment))
+  ),
   autoprefixer(),
   cssModules({
     generateScopedName: (name) =>
