@@ -8,7 +8,7 @@
   white-space: nowrap;
   user-select: none;
   cursor: pointer;
-  color: var(--text_primary);
+  color: var(--text_primary, var(--vkui--color_text_primary));
 }
 
 .CustomSelectOption--sizeY-regular {
@@ -17,11 +17,14 @@
 
 .CustomSelectOption--disabled {
   cursor: default;
-  opacity: 0.4;
+  opacity: var(--vkui--opacity_disable_accessibility);
 }
 
 .CustomSelectOption--hover {
-  background-color: var(--button_muted_background);
+  background-color: var(
+    --button_muted_background,
+    var(--vkui--color_transparent--hover)
+  );
 }
 
 .CustomSelectOption__before {
@@ -49,13 +52,13 @@
 }
 
 .CustomSelectOption__description {
-  color: var(--text_secondary);
+  color: var(--text_secondary, var(--vkui--color_text_secondary));
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
 .CustomSelectOption__selectedIcon {
-  color: var(--accent);
+  color: var(--accent, var(--vkui--color_icon_accent));
 }
 
 .CustomSelectOption__selectedIcon:not(:first-child) {

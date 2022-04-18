@@ -24,7 +24,7 @@ export interface CustomSelectOptionProps
 
 const warn = warnOnce("CustomSelectOption");
 
-const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
+export const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
   children,
   hovered,
   selected,
@@ -51,15 +51,12 @@ const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
       title={title}
       aria-disabled={disabled}
       aria-selected={selected}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         "CustomSelectOption",
         `CustomSelectOption--sizeY-${sizeY}`,
-        {
-          "CustomSelectOption--hover": hovered && !disabled,
-          "CustomSelectOption--selected": selected,
-          "CustomSelectOption--disabled": disabled,
-        }
+        hovered && !disabled && "CustomSelectOption--hover",
+        selected && "CustomSelectOption--selected", // Note: пустой класс
+        disabled && "CustomSelectOption--disabled"
       )}
     >
       {hasReactNode(before) && (
@@ -84,6 +81,3 @@ const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
     </Text>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default CustomSelectOption;

@@ -1,14 +1,16 @@
 import * as React from "react";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { classNames } from "../../lib/classNames";
-import ChipsInput, {
+import {
+  ChipsInput,
   ChipsInputOption,
   ChipsInputProps,
   ChipsInputValue,
   RenderChip,
   chipsInputDefaultProps,
 } from "../ChipsInput/ChipsInput";
-import CustomSelectOption, {
+import {
+  CustomSelectOption,
   CustomSelectOptionProps,
 } from "../CustomSelectOption/CustomSelectOption";
 import { useChipsSelect } from "./useChipsSelect";
@@ -367,11 +369,10 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
-        // eslint-disable-next-line vkui/no-object-expression-in-arguments
-        vkuiClass={classNames({
-          ["ChipsSelect__open"]: opened,
-          ["ChipsSelect__open--popupDirectionTop"]: isPopperDirectionTop,
-        })}
+        vkuiClass={classNames(
+          opened && "ChipsSelect__open",
+          isPopperDirectionTop && "ChipsSelect__open--popupDirectionTop"
+        )}
         getRef={getRef}
         disabled={disabled}
         onInputChange={handleInputChange}

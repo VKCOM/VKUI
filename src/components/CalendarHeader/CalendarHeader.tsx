@@ -7,11 +7,12 @@ import {
 } from "@vkontakte/icons";
 import Tappable from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
-import CustomSelect, {
+import {
+  CustomSelect,
   CustomSelectProps,
   SelectType,
 } from "../CustomSelect/CustomSelect";
-import CustomSelectOption from "../CustomSelectOption/CustomSelectOption";
+import { CustomSelectOption } from "../CustomSelectOption/CustomSelectOption";
 import { SizeType } from "../../hoc/withAdaptivity";
 import { getMonths, getYears } from "../../lib/calendar";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";

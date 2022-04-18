@@ -178,11 +178,11 @@ export { Switch } from "./components/Switch/Switch";
 export type { SwitchProps } from "./components/Switch/Switch";
 export { default as File } from "./components/File/File";
 export type { FileProps } from "./components/File/File";
-export { default as Input } from "./components/Input/Input";
+export { Input } from "./components/Input/Input";
 export type { InputProps } from "./components/Input/Input";
 export { Chip } from "./components/Chip/Chip";
 export type { ChipProps } from "./components/Chip/Chip";
-export { default as ChipsInput } from "./components/ChipsInput/ChipsInput";
+export { ChipsInput } from "./components/ChipsInput/ChipsInput";
 export type { ChipsInputProps } from "./components/ChipsInput/ChipsInput";
 export { default as Slider } from "./components/Slider/Slider";
 export type { SliderProps } from "./components/Slider/Slider";
@@ -196,18 +196,18 @@ export { RadioGroup } from "./components/RadioGroup/RadioGroup";
 export type { RadioGroupProps } from "./components/RadioGroup/RadioGroup";
 export { default as Checkbox } from "./components/Checkbox/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox/Checkbox";
-export { default as Select } from "./components/Select/Select";
+export { Select } from "./components/Select/Select";
 export type { SelectProps } from "./components/Select/Select";
 export { default as SelectMimicry } from "./components/SelectMimicry/SelectMimicry";
 export type { SelectMimicryProps } from "./components/SelectMimicry/SelectMimicry";
 export { default as NativeSelect } from "./components/NativeSelect/NativeSelect";
 export type { NativeSelectProps } from "./components/NativeSelect/NativeSelect";
-export { default as CustomSelect } from "./components/CustomSelect/CustomSelect";
+export { CustomSelect } from "./components/CustomSelect/CustomSelect";
 export type {
   CustomSelectProps,
   CustomSelectOptionInterface,
 } from "./components/CustomSelect/CustomSelect";
-export { default as CustomSelectOption } from "./components/CustomSelectOption/CustomSelectOption";
+export { CustomSelectOption } from "./components/CustomSelectOption/CustomSelectOption";
 export type { CustomSelectOptionProps } from "./components/CustomSelectOption/CustomSelectOption";
 export { default as DatePicker } from "./components/DatePicker/DatePicker";
 export type {

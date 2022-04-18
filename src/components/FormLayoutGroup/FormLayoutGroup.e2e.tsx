@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import FormLayoutGroup from "./FormLayoutGroup";
-import Input from "../Input/Input";
+import { Input } from "../Input/Input";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { FormItem } from "../FormItem/FormItem";
 

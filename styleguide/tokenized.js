@@ -12,4 +12,12 @@ export const tokenized = [
   "CalendarRange",
   "Caption",
   "Paragraph",
+  "Input",
+  "FormField",
+  "Select",
+  "CustomSelect",
+  "CustomSelectDropdown",
+  "CustomSelectOption",
+  "ChipsInput",
+  "ChipsSelect",
 ];

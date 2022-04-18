@@ -35,7 +35,7 @@
   /* Визуальная компенсация - центрируем строчные буквы */
   font-size: 15px;
   line-height: 26px;
-  color: var(--text_primary);
+  color: var(--text_primary, var(--vkui--color_text_primary));
   background: transparent;
   border: none;
   box-shadow: none;
@@ -52,15 +52,15 @@
 }
 
 .ChipsInput__el:disabled {
-  opacity: 0.4;
+  opacity: var(--vkui--opacity_disable_accessibility);
 }
 
 .ChipsInput__el::placeholder {
-  color: var(--field_text_placeholder);
+  color: var(--field_text_placeholder, var(--vkui--color_text_secondary));
 }
 
 .ChipsInput__el:disabled::placeholder {
-  color: var(--text_secondary);
+  color: var(--text_secondary, var(--vkui--color_text_secondary));
 }
 
 /**

@@ -74,7 +74,7 @@ export const chipsInputDefaultProps: ChipsInputProps<any> = {
   },
 };
 
-const ChipsInput = <Option extends ChipsInputOption>(
+export const ChipsInput = <Option extends ChipsInputOption>(
   props: ChipsInputProps<Option>
 ) => {
   const propsWithDefault = { ...chipsInputDefaultProps, ...props };
@@ -177,11 +177,12 @@ const ChipsInput = <Option extends ChipsInputOption>(
   return (
     <FormField
       getRootRef={getRootRef}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames("ChipsInput", `ChipsInput--sizeY-${sizeY}`, {
-        "ChipsInput--focused": focused,
-        "ChipsInput--withChips": !!selectedOptions.length,
-      })}
+      vkuiClass={classNames(
+        "ChipsInput",
+        `ChipsInput--sizeY-${sizeY}`,
+        focused && "ChipsInput--focused",
+        !!selectedOptions.length && "ChipsInput--withChips"
+      )}
       className={className}
       style={style}
       disabled={restProps.disabled}
@@ -234,6 +235,3 @@ const ChipsInput = <Option extends ChipsInputOption>(
     </FormField>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default ChipsInput;

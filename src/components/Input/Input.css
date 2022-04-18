@@ -24,7 +24,7 @@
   height: 42px;
   line-height: 20px;
   font-size: 16px;
-  color: var(--text_primary);
+  color: var(--text_primary, var(--vkui--color_text_primary));
   padding: 11px;
   position: relative;
   z-index: 2;
@@ -40,13 +40,13 @@
 }
 
 .Input__el:disabled {
-  opacity: 0.4;
+  opacity: var(--vkui--opacity_disable_accessibility);
 }
 
 .Input__el::placeholder {
-  color: var(--field_text_placeholder);
+  color: var(--field_text_placeholder, var(--vkui--color_text_secondary));
 }
 
 .Input__el:disabled::placeholder {
-  color: var(--text_secondary);
+  color: var(--text_secondary, var(--vkui--color_text_secondary));
 }
