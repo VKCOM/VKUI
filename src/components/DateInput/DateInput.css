@@ -11,7 +11,7 @@
 }
 
 .DateInput__input-time-divider {
-  letter-spacing: 6px;
+  letter-spacing: 6px !important;
 }
 
 .DateInput--sizeY-compact .DateInput__input {
