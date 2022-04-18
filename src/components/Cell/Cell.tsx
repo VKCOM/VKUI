@@ -36,7 +36,7 @@ export interface CellProps
    */
   selectable?: boolean;
   /**
-   * В режиме selectable реагирует на входящие значения пропса cheсked, как зависящий напрямую от входящего значения
+   * В режиме selectable реагирует на входящие значения пропса checked, как зависящий напрямую от входящего значения
    */
   checked?: boolean;
   /**
@@ -89,11 +89,11 @@ export const Cell: React.FC<CellProps> = ({
     if (process.env.NODE_ENV === "development") {
       deprecatedSelectable &&
         warn(
-          'Свойство selectable устарелo и будет удалено в 5.0.0. Используйте mode="selectable".'
+          'Свойство selectable устарело и будет удалено в 5.0.0. Используйте mode="selectable".'
         );
       deprecatedRemovable &&
         warn(
-          'Свойство removable устарелo и будет удалено в 5.0.0. Используйте mode="removable".'
+          'Свойство removable устарело и будет удалено в 5.0.0. Используйте mode="removable".'
         );
     }
   }

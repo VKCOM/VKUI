@@ -257,8 +257,8 @@ const Tappable: React.FC<TappableProps> = ({
     }
 
     // отключить без задержки при длинном тапе
-    const activeDuraion = duration - ACTIVE_DELAY;
-    stop(activeDuraion >= 100 ? 0 : activeEffectDelay - activeDuraion);
+    const activeDuration = duration - ACTIVE_DELAY;
+    stop(activeDuration >= 100 ? 0 : activeEffectDelay - activeDuration);
   }
 
   // eslint-disable-next-line vkui/no-object-expression-in-arguments

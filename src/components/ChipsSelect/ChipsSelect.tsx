@@ -68,7 +68,7 @@ export interface ChipsSelectProps<Option extends ChipsInputOption>
     option: Option
   ) => void;
   /**
-   * Закрытие выпадающиего списка после выбора элемента
+   * Закрытие выпадающего списка после выбора элемента
    */
   closeAfterSelect?: boolean;
 }

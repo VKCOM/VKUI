@@ -8,7 +8,7 @@
 
 ## `usePagination`
 
-Для полной кастомизации можно использовать хук `usePagination()`. Возвращает массив типа `[1, 2, 3, 4, 5, 'end-ellipsis', 8]`. Принимиает почти те же параметры, что и `Pagination`.
+Для полной кастомизации можно использовать хук `usePagination()`. Возвращает массив типа `[1, 2, 3, 4, 5, 'end-ellipsis', 8]`. Принимает почти те же параметры, что и `Pagination`.
 
 ```jsx { "props": { "layout": false, "adaptivity": true, "iframe": false } }
 const Example = () => {

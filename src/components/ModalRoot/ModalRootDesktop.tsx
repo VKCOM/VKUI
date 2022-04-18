@@ -152,7 +152,7 @@ class ModalRootDesktopComponent extends React.Component<
     }
   }
 
-  /* Анимирует сдивг модалки */
+  /* Анимирует сдвиг модалки */
   animateModalOpacity(
     modalState: ModalsStateEntry | undefined,
     display: boolean

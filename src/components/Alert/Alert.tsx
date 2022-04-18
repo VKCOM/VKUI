@@ -50,7 +50,7 @@ export interface AlertState {
 
 type TransitionEndHandler = (e?: TransitionEvent) => void;
 
-type ItemClickHander = (item: AlertActionInterface) => () => void;
+type ItemClickHandler = (item: AlertActionInterface) => () => void;
 
 class AlertComponent extends React.Component<TAlertProps, AlertState> {
   constructor(props: TAlertProps) {
@@ -76,7 +76,7 @@ class AlertComponent extends React.Component<TAlertProps, AlertState> {
       : 300;
   }
 
-  onItemClick: ItemClickHander = (item: AlertActionInterface) => () => {
+  onItemClick: ItemClickHandler = (item: AlertActionInterface) => () => {
     const { action, autoclose } = item;
 
     if (autoclose) {

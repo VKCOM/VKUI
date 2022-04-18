@@ -20,7 +20,7 @@ export interface ClickPopperProps extends PopperCommonProps {
    */
   onShownChange?: (shown: boolean) => void;
   /**
-   * Либо jsx-элемент (div, button, etc.), либо компонент со свойством `getRootRef`, которое применяется к корневому элемнету компонента
+   * Либо jsx-элемент (div, button, etc.), либо компонент со свойством `getRootRef`, которое применяется к корневому элементу компонента
    */
   children?: React.ReactElement;
 }
