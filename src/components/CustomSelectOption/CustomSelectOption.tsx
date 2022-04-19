@@ -2,7 +2,7 @@ import * as React from "react";
 import { Icon16Done } from "@vkontakte/icons";
 import { classNames } from "../../lib/classNames";
 import { hasReactNode } from "../../lib/utils";
-import Text from "../Typography/Text/Text";
+import { Paragraph } from "../Typography/Paragraph/Paragraph";
 import { Caption } from "../Typography/Caption/Caption";
 import { HasRootRef } from "../../types";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
@@ -85,10 +85,9 @@ export const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
   }
 
   return (
-    <Text
+    <Paragraph
       {...restProps}
       Component="div"
-      weight="regular"
       role="option"
       title={title}
       aria-disabled={disabled}
@@ -122,6 +121,6 @@ export const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
           <Icon16Done vkuiClass="CustomSelectOption__selectedIcon" />
         )}
       </div>
-    </Text>
+    </Paragraph>
   );
 };
