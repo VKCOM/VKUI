@@ -6,7 +6,7 @@
 по содержимому. Компонент всё ещё предназначен для информирования пользователей, но внутри допускаются кнопки, ссылки, картинки.
 
 ```jsx { "props": { "layout": false, "iframe": true } }
-<Checkbox>
+<Checkbox style={{userSelect: 'none'}}>
   Специальные возможности
   <RichTooltip style={{maxWidth: 320}} content={
     <Subhead weight="regular" style={{padding: '8px 12px', color: 'var(--text_primary)'}}>
@@ -54,6 +54,6 @@
     Илья Гришин
   </RichCell>
 }>
-  <Link style={{display: 'inline-block', margin: 20}}>Илья Гришин</Link>
+  <Link style={{display: 'inline-block', margin: 20, userSelect: 'none'}}>Илья Гришин</Link>
 </RichTooltip>
 ```
