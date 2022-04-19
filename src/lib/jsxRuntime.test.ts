@@ -44,7 +44,7 @@ describe(createScopedElement, () => {
       ).toEqual(new Set(["vkuiS", "S", "B", "C"])));
   });
   it("legacy classes can be controlled", () => {
-    // can be diabled...
+    // can be disabled...
     __controller._noConflict = true;
     expect(classSet(processProps({ vkuiClass: ["A", "B"] }))).toEqual(
       new Set(["vkuiA", "vkuiB"])

@@ -3,7 +3,8 @@ import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { usePlatform } from "../../hooks/usePlatform";
-import HorizontalScroll, {
+import {
+  HorizontalScroll,
   HorizontalScrollProps,
 } from "../HorizontalScroll/HorizontalScroll";
 import { useDOM } from "../../lib/dom";

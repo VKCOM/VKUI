@@ -7,7 +7,7 @@ import {
   endOfDay,
   isAfter,
   startOfDay,
-} from "date-fns";
+} from "../lib/date";
 
 export interface UseCalendarDependencies {
   value?: Array<Date | null> | Date;

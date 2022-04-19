@@ -1,5 +1,5 @@
 import * as React from "react";
-import { isSameMonth, isSameDay } from "date-fns";
+import { isSameMonth, isSameDay } from "../../lib/date";
 import {
   CalendarHeader,
   CalendarHeaderProps,

@@ -5,13 +5,14 @@ import { classNames } from "../../lib/classNames";
 import { NativeSelectProps } from "../NativeSelect/NativeSelect";
 import { withAdaptivity } from "../../hoc/withAdaptivity";
 import { withPlatform } from "../../hoc/withPlatform";
-import CustomSelectOption, {
+import {
+  CustomSelectOption,
   CustomSelectOptionProps,
 } from "../CustomSelectOption/CustomSelectOption";
 import { getClassName } from "../../helpers/getClassName";
 import { FormFieldProps } from "../FormField/FormField";
 import { HasPlatform } from "../../types";
-import Input from "../Input/Input";
+import { Input } from "../Input/Input";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { Caption } from "../Typography/Caption/Caption";
 import { warnOnce } from "../../lib/warnOnce";
@@ -150,7 +151,7 @@ export interface CustomSelectProps
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
-class CustomSelect extends React.Component<
+class CustomSelectComponent extends React.Component<
   CustomSelectProps,
   CustomSelectState
 > {
@@ -684,17 +685,16 @@ class CustomSelect extends React.Component<
             {...restProps}
             autoFocus
             onBlur={this.onBlur}
-            // eslint-disable-next-line vkui/no-object-expression-in-arguments
-            vkuiClass={classNames({
-              CustomSelect__open: opened,
-              "CustomSelect__open--popupDirectionTop": isPopperDirectionTop,
-              "CustomSelect__open--not-adjacent":
-                (dropdownOffsetDistance as number) > 0,
-            })}
+            vkuiClass={classNames(
+              opened && "CustomSelect__open",
+              isPopperDirectionTop && "CustomSelect__open--popupDirectionTop",
+              (dropdownOffsetDistance as number) > 0 &&
+                "CustomSelect__open--not-adjacent"
+            )}
             value={this.state.inputValue}
             onKeyDown={this.onInputKeyDown}
             onChange={this.onInputChange}
-            // TODO Ожидается, что клик поймает нативный select, но его перехвает Input. К сожалению, это приводит конфликтам типизации.
+            // TODO Ожидается, что клик поймает нативный select, но его перехватывает Input. К сожалению, это приводит к конфликтам типизации.
             // TODO Нужно перестать пытаться превратить CustomSelect в select. Тогда эта проблема уйдёт.
             // @ts-expect-error
             onClick={onClick}
@@ -710,13 +710,12 @@ class CustomSelect extends React.Component<
             onKeyUp={this.handleKeyUp}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
-            // eslint-disable-next-line vkui/no-object-expression-in-arguments
-            vkuiClass={classNames({
-              CustomSelect__open: opened,
-              "CustomSelect__open--popupDirectionTop": isPopperDirectionTop,
-              "CustomSelect__open--not-adjacent":
-                (dropdownOffsetDistance as number) > 0,
-            })}
+            vkuiClass={classNames(
+              opened && "CustomSelect__open",
+              isPopperDirectionTop && "CustomSelect__open--popupDirectionTop",
+              (dropdownOffsetDistance as number) > 0 &&
+                "CustomSelect__open--not-adjacent"
+            )}
             after={icon}
             selectType={selectType}
           >
@@ -758,9 +757,8 @@ class CustomSelect extends React.Component<
   }
 }
 
-// eslint-disable-next-line import/no-default-export
-export default withPlatform(
-  withAdaptivity(CustomSelect, {
+export const CustomSelect = withPlatform(
+  withAdaptivity(CustomSelectComponent, {
     sizeY: true,
   })
 );

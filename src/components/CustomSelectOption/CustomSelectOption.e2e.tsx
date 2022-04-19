@@ -1,4 +1,4 @@
-import CustomSelectOption from "./CustomSelectOption";
+import { CustomSelectOption } from "./CustomSelectOption";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import Avatar from "../Avatar/Avatar";
 import { SizeType } from "../../hoc/withAdaptivity";
@@ -28,6 +28,10 @@ describe("CustomSelectOption", () => {
         children: ["Мария Саломея"],
         disabled: [true],
         hovered: [true, false],
+      },
+      {
+        children: ["Иерархия"],
+        hierarchy: [undefined, 1, 2],
       },
     ],
     {

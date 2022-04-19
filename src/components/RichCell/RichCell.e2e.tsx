@@ -2,7 +2,7 @@ import { Icon28UserAddOutline } from "@vkontakte/icons";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import Avatar from "../Avatar/Avatar";
 import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
-import Button from "../Button/Button";
+import { Button } from "../Button/Button";
 import UsersStack from "../UsersStack/UsersStack";
 import RichCell from "./RichCell";
 

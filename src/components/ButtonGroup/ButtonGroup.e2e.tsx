@@ -1,5 +1,5 @@
 import { Icon24Attach, Icon24Add } from "@vkontakte/icons";
-import Button from "../Button/Button";
+import { Button } from "../Button/Button";
 import { ButtonGroup, ButtonGroupProps } from "./ButtonGroup";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 

@@ -8,10 +8,10 @@ import { ANDROID, VKCOM, IOS } from "../../lib/platform";
 import { HasPlatform } from "../../types";
 import { withPlatform } from "../../hoc/withPlatform";
 import { withAdaptivity, ViewWidth } from "../../hoc/withAdaptivity";
-import Button, { ButtonProps } from "../Button/Button";
+import { Button, ButtonProps } from "../Button/Button";
 import { hasReactNode } from "../../lib/utils";
 import Headline from "../Typography/Headline/Headline";
-import Title from "../Typography/Title/Title";
+import { Title } from "../Typography/Title/Title";
 import { Caption } from "../Typography/Caption/Caption";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
@@ -50,7 +50,7 @@ export interface AlertState {
 
 type TransitionEndHandler = (e?: TransitionEvent) => void;
 
-type ItemClickHander = (item: AlertActionInterface) => () => void;
+type ItemClickHandler = (item: AlertActionInterface) => () => void;
 
 class AlertComponent extends React.Component<TAlertProps, AlertState> {
   constructor(props: TAlertProps) {
@@ -76,7 +76,7 @@ class AlertComponent extends React.Component<TAlertProps, AlertState> {
       : 300;
   }
 
-  onItemClick: ItemClickHander = (item: AlertActionInterface) => () => {
+  onItemClick: ItemClickHandler = (item: AlertActionInterface) => () => {
     const { action, autoClose } = item;
 
     if (autoClose) {

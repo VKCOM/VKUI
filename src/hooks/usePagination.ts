@@ -1,6 +1,6 @@
 import * as React from "react";
 
-interface UsePagintaionProps {
+interface UsePaginationProps {
   /**
    * Текущая страница.
    */
@@ -24,7 +24,7 @@ export type PaginationPageType = "start-ellipsis" | "end-ellipsis" | number;
 export type UsePaginationResult = PaginationPageType[];
 
 /**
- * Хук взаимствован у @mui с некоторыми изменениями.
+ * Хук позаимствован у @mui с некоторыми изменениями.
  *  [usePagination.js](https://github.com/mui/material-ui/blob/master/packages/mui-material/src/usePagination/usePagination.js).
  *
  * Примеры вывода:
@@ -40,7 +40,7 @@ export const usePagination = ({
   siblingCount = 1,
   boundaryCount = 1,
   totalPages: endPage = 1,
-}: UsePagintaionProps = {}): UsePaginationResult =>
+}: UsePaginationProps = {}): UsePaginationResult =>
   React.useMemo(() => {
     const range = (from: number, to: number, step = 1) => {
       const range = [];
@@ -67,10 +67,10 @@ export const usePagination = ({
       boundaryCount + 2
     );
 
-    const upperBounadryWhenCurrentPageLow =
+    const upperBoundaryWhenCurrentPageLow =
       boundaryCount + 2 + 2 * siblingCount;
     const siblingsEnd = Math.min(
-      Math.max(currentPage + siblingCount, upperBounadryWhenCurrentPageLow),
+      Math.max(currentPage + siblingCount, upperBoundaryWhenCurrentPageLow),
       endPages.length > 0 ? endPages[0] - 2 : endPage - 1
     );
 

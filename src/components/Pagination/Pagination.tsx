@@ -12,7 +12,7 @@ import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { PaginationPageType, usePagination } from "../../hooks/usePagination";
 
 import Tappable from "../Tappable/Tappable";
-import Button from "../Button/Button";
+import { Button } from "../Button/Button";
 
 import "./Pagination.css";
 
@@ -44,17 +44,17 @@ export interface PaginationProps
    */
   disabled?: boolean;
   /**
-   * Переобределение `aria-label` для кнопки навигации назад.
+   * Переопределение `aria-label` для кнопки навигации назад.
    * По умолчанию используется текст на "ru_RU".
    */
   prevButtonAriaLabel?: string;
   /**
-   * Переобределение `aria-label` для кнопки навигации вперёд.
+   * Переопределение `aria-label` для кнопки навигации вперёд.
    * По умолчанию используется текст на "ru_RU".
    */
   nextButtonAriaLabel?: string;
   /**
-   * Функция для переопределния и/или локализации `aria-label` атрибута.
+   * Функция для переопределения и/или локализации `aria-label` атрибута.
    * По умолчанию используется текст на "ru_RU".
    */
   getPageAriaLabel?(page: number, isCurrent: boolean): string;

@@ -17,13 +17,12 @@ export interface SubheadProps
 }
 
 const warn = warnOnce("Subhead");
-
-const Subhead: React.FC<SubheadProps> = ({
+export const Subhead: React.FC<SubheadProps> = ({
   children,
   weight,
   Component = "h5",
   ...restProps
-}: SubheadProps) => {
+}) => {
   const { sizeY } = useAdaptivity();
 
   if (process.env.NODE_ENV === "development") {
@@ -49,6 +48,3 @@ const Subhead: React.FC<SubheadProps> = ({
     </Component>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default Subhead;

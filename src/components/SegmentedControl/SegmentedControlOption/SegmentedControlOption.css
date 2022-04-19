@@ -15,7 +15,7 @@
   color: var(--vkui--color_icon_secondary);
 }
 
-.SegmentedControlOption:hover {
+.SegmentedControlOption:not(.SegmentedControlOption--checked):hover {
   opacity: 0.5;
 }
 

@@ -1,10 +1,14 @@
 .CustomSelectDropdown__options {
   overflow: hidden;
-  background-color: var(--modal_card_background);
+  background-color: var(
+    --modal_card_background,
+    var(--vkui--color_background_content)
+  );
   box-sizing: border-box;
-  border: solid 1px var(--field_border);
+  border: var(--thin-border) solid
+    var(--field_border, var(--vkui--color_separator_primary_alpha));
   border-top: 0;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.06), 0 0 2px rgba(0, 0, 0, 0.03);
+  box-shadow: var(--vkui--elevation1);
   border-radius: 0 0 8px 8px;
 }
 
@@ -21,12 +25,13 @@
   border-radius: 8px 8px 0 0;
   border-top: unset;
   border-bottom: 0;
-  box-shadow: 0 -2px 2px rgba(0, 0, 0, 0.06), 0 0 2px rgba(0, 0, 0, 0.03);
+  box-shadow: var(--vkui--elevation1_invert_y);
 }
 
 .CustomSelectDropdown__options--not-adjacent {
   border-radius: 8px;
-  border: solid 1px var(--field_border);
+  border: var(--thin-border) solid
+    var(--field_border, var(--vkui--color_separator_primary_alpha));
 }
 
 .CustomSelectDropdown__CustomScrollView {

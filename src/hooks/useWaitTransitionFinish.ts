@@ -1,8 +1,10 @@
 import * as React from "react";
+import { useDOM } from "../lib/dom";
 import { transitionEvent } from "../lib/supportEvents";
 
 export const useWaitTransitionFinish = () => {
   const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { document } = useDOM();
 
   const waitTransitionFinish = (
     element: HTMLElement | null,
@@ -10,7 +12,11 @@ export const useWaitTransitionFinish = () => {
     durationFallback: number
   ) => {
     if (element) {
-      if (transitionEvent.supported && transitionEvent.name) {
+      if (
+        !document?.hidden &&
+        transitionEvent.supported &&
+        transitionEvent.name
+      ) {
         element.removeEventListener(transitionEvent.name, eventHandler);
         element.addEventListener(transitionEvent.name, eventHandler);
       } else {

@@ -32,9 +32,24 @@ export interface ModalRootProps extends HasPlatform {
   configProvider?: ConfigProviderContextInterface;
 
   /**
-   * Будет вызвано при закрытии активной модалки с её id
+   * Будет вызвано при начале открытия активной модалки с её id
+   */
+  onOpen?(modalId: string): void;
+
+  /**
+   * Будет вызвано при окончательном открытии активной модалки с её id
+   */
+  onOpened?(modalId: string): void;
+
+  /**
+   * Будет вызвано при начале закрытия активной модалки с её id
    */
   onClose?(modalId: string): void;
+
+  /**
+   * Будет вызвано при окончательном закрытии активной модалки с её id
+   */
+  onClosed?(modalId: string): void;
 }
 
 class ModalRootDesktopComponent extends React.Component<
@@ -49,7 +64,7 @@ class ModalRootDesktopComponent extends React.Component<
       updateModalHeight: () => undefined,
       registerModal: ({ id, ...data }) =>
         Object.assign(this.getModalState(id), data),
-      onClose: () => this.props.closeActiveModal(),
+      onClose: () => this.props.onExit(),
       isInsideModal: true,
     };
   }
@@ -92,10 +107,11 @@ class ModalRootDesktopComponent extends React.Component<
     ) {
       const { enteringModal } = this.props;
       const enteringState = this.getModalState(enteringModal);
+      this.props.onEnter();
       requestAnimationFrame(() => {
         if (this.props.enteringModal === enteringModal) {
           this.waitTransitionFinish(enteringState, () =>
-            this.props.onEnter(enteringModal)
+            this.props.onEntered(enteringModal)
           );
           this.animateModalOpacity(enteringState, true);
         }
@@ -123,7 +139,7 @@ class ModalRootDesktopComponent extends React.Component<
       return;
     }
 
-    this.waitTransitionFinish(prevModalState, () => this.props.onExit(id));
+    this.waitTransitionFinish(prevModalState, () => this.props.onExited(id));
     this.animateModalOpacity(prevModalState, false);
     if (!this.props.activeModal) {
       this.setMaskOpacity(prevModalState, 0);
@@ -152,7 +168,7 @@ class ModalRootDesktopComponent extends React.Component<
     }
   }
 
-  /* Анимирует сдивг модалки */
+  /* Анимирует сдвиг модалки */
   animateModalOpacity(
     modalState: ModalsStateEntry | undefined,
     display: boolean
@@ -215,7 +231,7 @@ class ModalRootDesktopComponent extends React.Component<
           <div
             vkuiClass="ModalRoot__mask"
             ref={this.maskElementRef}
-            onClick={this.props.closeActiveModal}
+            onClick={this.props.onExit}
           />
           <div vkuiClass="ModalRoot__viewport">
             {this.modals.map((Modal: React.ReactElement) => {
@@ -229,7 +245,7 @@ class ModalRootDesktopComponent extends React.Component<
               return (
                 <FocusTrap
                   restoreFocus={false}
-                  onClose={this.props.closeActiveModal}
+                  onClose={this.props.onExit}
                   timeout={this.timeout}
                   key={key}
                   // eslint-disable-next-line vkui/no-object-expression-in-arguments

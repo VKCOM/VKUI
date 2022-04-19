@@ -31,7 +31,7 @@ export { default as Tabbar } from "./components/Tabbar/Tabbar";
 export type { TabbarProps } from "./components/Tabbar/Tabbar";
 export { default as TabbarItem } from "./components/TabbarItem/TabbarItem";
 export type { TabbarItemProps } from "./components/TabbarItem/TabbarItem";
-export { default as HorizontalScroll } from "./components/HorizontalScroll/HorizontalScroll";
+export { HorizontalScroll } from "./components/HorizontalScroll/HorizontalScroll";
 export type { HorizontalScrollProps } from "./components/HorizontalScroll/HorizontalScroll";
 export { default as FixedLayout } from "./components/FixedLayout/FixedLayout";
 export type { FixedLayoutProps } from "./components/FixedLayout/FixedLayout";
@@ -78,7 +78,7 @@ export { Badge } from "./components/Badge/Badge";
 export type { BadgeProps } from "./components/Badge/Badge";
 export { ButtonGroup } from "./components/ButtonGroup/ButtonGroup";
 export type { ButtonGroupProps } from "./components/ButtonGroup/ButtonGroup";
-export { default as Button } from "./components/Button/Button";
+export { Button } from "./components/Button/Button";
 export type { ButtonProps } from "./components/Button/Button";
 export { default as IconButton } from "./components/IconButton/IconButton";
 export type { IconButtonProps } from "./components/IconButton/IconButton";
@@ -178,11 +178,11 @@ export { Switch } from "./components/Switch/Switch";
 export type { SwitchProps } from "./components/Switch/Switch";
 export { default as File } from "./components/File/File";
 export type { FileProps } from "./components/File/File";
-export { default as Input } from "./components/Input/Input";
+export { Input } from "./components/Input/Input";
 export type { InputProps } from "./components/Input/Input";
 export { Chip } from "./components/Chip/Chip";
 export type { ChipProps } from "./components/Chip/Chip";
-export { default as ChipsInput } from "./components/ChipsInput/ChipsInput";
+export { ChipsInput } from "./components/ChipsInput/ChipsInput";
 export type { ChipsInputProps } from "./components/ChipsInput/ChipsInput";
 export { default as Slider } from "./components/Slider/Slider";
 export type { SliderProps } from "./components/Slider/Slider";
@@ -196,18 +196,18 @@ export { RadioGroup } from "./components/RadioGroup/RadioGroup";
 export type { RadioGroupProps } from "./components/RadioGroup/RadioGroup";
 export { default as Checkbox } from "./components/Checkbox/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox/Checkbox";
-export { default as Select } from "./components/Select/Select";
+export { Select } from "./components/Select/Select";
 export type { SelectProps } from "./components/Select/Select";
 export { default as SelectMimicry } from "./components/SelectMimicry/SelectMimicry";
 export type { SelectMimicryProps } from "./components/SelectMimicry/SelectMimicry";
 export { default as NativeSelect } from "./components/NativeSelect/NativeSelect";
 export type { NativeSelectProps } from "./components/NativeSelect/NativeSelect";
-export { default as CustomSelect } from "./components/CustomSelect/CustomSelect";
+export { CustomSelect } from "./components/CustomSelect/CustomSelect";
 export type {
   CustomSelectProps,
   CustomSelectOptionInterface,
 } from "./components/CustomSelect/CustomSelect";
-export { default as CustomSelectOption } from "./components/CustomSelectOption/CustomSelectOption";
+export { CustomSelectOption } from "./components/CustomSelectOption/CustomSelectOption";
 export type { CustomSelectOptionProps } from "./components/CustomSelectOption/CustomSelectOption";
 export { default as DatePicker } from "./components/DatePicker/DatePicker";
 export type {
@@ -275,7 +275,7 @@ export type { PromoBannerProps } from "./components/PromoBanner/PromoBanner";
 /**
  * Typography
  */
-export { default as Title } from "./components/Typography/Title/Title";
+export { Title } from "./components/Typography/Title/Title";
 export type { TitleProps } from "./components/Typography/Title/Title";
 export { default as Headline } from "./components/Typography/Headline/Headline";
 export type { HeadlineProps } from "./components/Typography/Headline/Headline";
@@ -283,8 +283,10 @@ export { default as Text } from "./components/Typography/Text/Text";
 export type { TextProps } from "./components/Typography/Text/Text";
 export { Caption } from "./components/Typography/Caption/Caption";
 export type { CaptionProps } from "./components/Typography/Caption/Caption";
-export { default as Subhead } from "./components/Typography/Subhead/Subhead";
+export { Subhead } from "./components/Typography/Subhead/Subhead";
 export type { SubheadProps } from "./components/Typography/Subhead/Subhead";
+export { Paragraph } from "./components/Typography/Paragraph/Paragraph";
+export type { ParagraphProps } from "./components/Typography/Paragraph/Paragraph";
 
 /**
  * HOCs

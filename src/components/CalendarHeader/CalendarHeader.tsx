@@ -1,5 +1,5 @@
 import * as React from "react";
-import { setMonth, setYear, subMonths, addMonths } from "date-fns";
+import { setMonth, setYear, subMonths, addMonths } from "../../lib/date";
 import {
   Icon20ChevronLeftOutline,
   Icon20ChevronRightOutline,
@@ -7,15 +7,16 @@ import {
 } from "@vkontakte/icons";
 import Tappable from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
-import CustomSelect, {
+import {
+  CustomSelect,
   CustomSelectProps,
   SelectType,
 } from "../CustomSelect/CustomSelect";
-import CustomSelectOption from "../CustomSelectOption/CustomSelectOption";
+import { CustomSelectOption } from "../CustomSelectOption/CustomSelectOption";
 import { SizeType } from "../../hoc/withAdaptivity";
 import { getMonths, getYears } from "../../lib/calendar";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
-import Text from "../Typography/Text/Text";
+import { Paragraph } from "../Typography/Paragraph/Paragraph";
 import "./CalendarHeader.css";
 
 export interface CalendarHeaderProps
@@ -101,22 +102,22 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
       <div vkuiClass="CalendarHeader__pickers">
         {disablePickers ? (
           <React.Fragment>
-            <Text
-              weight="medium"
+            <Paragraph
+              weight="2"
               vkuiClass="CalendarHeader__pickers-placeholder"
             >
               {new Intl.DateTimeFormat(locale, {
                 month: "long",
               }).format(viewDate)}
-            </Text>
-            <Text
-              weight="medium"
+            </Paragraph>
+            <Paragraph
+              weight="2"
               vkuiClass="CalendarHeader__pickers-placeholder"
             >
               {new Intl.DateTimeFormat(locale, {
                 year: "numeric",
               }).format(viewDate)}
-            </Text>
+            </Paragraph>
           </React.Fragment>
         ) : (
           <React.Fragment>

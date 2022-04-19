@@ -1,5 +1,5 @@
 import { Icon16Add, Icon24Camera } from "@vkontakte/icons";
-import Button, { ButtonProps } from "./Button";
+import { Button, ButtonProps } from "./Button";
 import Counter from "../Counter/Counter";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 

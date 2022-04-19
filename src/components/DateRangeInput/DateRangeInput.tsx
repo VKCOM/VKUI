@@ -1,5 +1,5 @@
 import * as React from "react";
-import { format, isMatch, parse, isAfter } from "date-fns";
+import { format, isMatch, parse, isAfter } from "../../lib/date";
 import { Icon16Clear, Icon20CalendarOutline } from "@vkontakte/icons";
 import {
   CalendarRange,
@@ -261,8 +261,8 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
         name={name}
         value={
           value
-            ? `${value[0] ? format(value[0], "dd.MM.yyyy") : ""} - ${
-                value[1] ? format(value[1], "dd.MM.yyyy") : ""
+            ? `${value[0] ? format(value[0], "DD.MM.YYYY") : ""} - ${
+                value[1] ? format(value[1], "DD.MM.YYYY") : ""
               }`
             : ""
         }

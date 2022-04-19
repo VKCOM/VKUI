@@ -2,9 +2,9 @@ import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
 import Tappable, { TappableProps } from "../Tappable/Tappable";
-import Title from "../Typography/Title/Title";
+import { Title } from "../Typography/Title/Title";
 import Text from "../Typography/Text/Text";
-import Subhead from "../Typography/Subhead/Subhead";
+import { Subhead } from "../Typography/Subhead/Subhead";
 import { Caption } from "../Typography/Caption/Caption";
 import { HasAlign, HasComponent } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
@@ -80,25 +80,26 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = (
   }
 };
 
-const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
+const ButtonComponent: React.FC<ButtonProps> = ({
+  size = "s",
+  mode = "primary",
+  appearance,
+  stretched = false,
+  align = "center",
+  children,
+  before,
+  after,
+  getRootRef,
+  sizeY,
+  Component = "button",
+  loading,
+  onClick,
+  stopPropagation = true,
+  ...restProps
+}) => {
   const platform = usePlatform();
-  const {
-    size,
-    mode,
-    appearance,
-    stretched,
-    align,
-    children,
-    before,
-    after,
-    getRootRef,
-    sizeY,
-    Component = "button",
-    loading,
-    onClick,
-    ...restProps
-  } = props;
   const hasIcons = Boolean(before || after);
+  const hasIconOnly = !children && Boolean(after) !== Boolean(before);
   const hasNewTokens = React.useContext(ConfigProviderContext).hasNewTokens;
 
   return (
@@ -107,7 +108,7 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
       Component={restProps.href ? "a" : Component}
       onClick={loading ? undefined : onClick}
       focusVisibleMode="outside"
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
+      stopPropagation={stopPropagation}
       vkuiClass={classNames(
         "Button",
         `Button--sz-${size}`,
@@ -115,13 +116,9 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
         `Button--clr-${appearance}`,
         `Button--aln-${align}`,
         `Button--sizeY-${sizeY}`,
-        {
-          ["Button--stretched"]: stretched,
-          ["Button--with-icon"]: hasIcons,
-          ["Button--singleIcon"]: Boolean(
-            (!children && !after && before) || (!children && after && !before)
-          ),
-        }
+        stretched && "Button--stretched",
+        hasIcons && "Button--with-icon",
+        hasIconOnly && "Button--singleIcon"
       )}
       getRootRef={getRootRef}
       hoverMode={hasNewTokens ? "Button--hover" : "background"}
@@ -147,16 +144,6 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
   );
 };
 
-Button.defaultProps = {
-  mode: "primary",
-  appearance: "accent",
-  align: "center",
-  size: "s",
-  stretched: false,
-  stopPropagation: true,
-};
-
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(Button, {
+export const Button = withAdaptivity(ButtonComponent, {
   sizeY: true,
 });

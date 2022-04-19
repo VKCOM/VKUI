@@ -1,5 +1,5 @@
 import { baselineComponent, waitForPopper } from "../../testing/utils";
-import CustomSelect from "./CustomSelect";
+import { CustomSelect } from "./CustomSelect";
 import { useState } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 

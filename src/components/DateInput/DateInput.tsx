@@ -1,5 +1,5 @@
 import * as React from "react";
-import { format, isMatch, parse } from "date-fns";
+import { format, isMatch, parse } from "../../lib/date";
 import { Icon16Clear, Icon20CalendarOutline } from "@vkontakte/icons";
 import { Calendar, CalendarProps } from "../Calendar/Calendar";
 import { Popper, Placement } from "../Popper/Popper";
@@ -137,7 +137,7 @@ export const DateInput: React.FC<DateInputProps> = ({
       }
 
       let formattedValue = `${internalValue[0]}.${internalValue[1]}.${internalValue[2]}`;
-      let mask = "dd.MM.yyyy";
+      let mask = "DD.MM.YYYY";
       if (enableTime) {
         formattedValue += ` ${internalValue[3]}:${internalValue[4]}`;
         mask += " HH:mm";
@@ -226,7 +226,7 @@ export const DateInput: React.FC<DateInputProps> = ({
         name={name}
         value={
           value
-            ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : "dd.MM.yyyy")
+            ? format(value, enableTime ? "DD.MM.YYYYTHH:mm" : "DD.MM.YYYY")
             : ""
         }
       />

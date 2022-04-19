@@ -1,5 +1,5 @@
 import * as React from "react";
-import { isSameDay, isSameMonth } from "date-fns";
+import { isSameDay, isSameMonth } from "../../lib/date";
 import { CalendarDay } from "../CalendarDay/CalendarDay";
 import { getDaysNames, getWeeks } from "../../lib/calendar";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";

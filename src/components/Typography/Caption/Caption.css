@@ -62,17 +62,17 @@
 }
 
 .Caption.Caption--w-1 {
-  /* Мы утяжеляем селеткор, чтобы перебить селекторы .Caption--caps */
+  /* Мы утяжеляем селектор, чтобы перебить селекторы .Caption--caps */
   font-weight: var(--vkui--font_weight_accent1);
 }
 
 .Caption.Caption--w-2 {
-  /* Мы утяжеляем селеткор, чтобы перебить селекторы .Caption--caps */
+  /* Мы утяжеляем селектор, чтобы перебить селекторы .Caption--caps */
   font-weight: var(--vkui--font_weight_accent2);
 }
 
 .Caption.Caption--w-3 {
-  /* Мы утяжеляем селеткор, чтобы перебить селекторы .Caption--caps */
+  /* Мы утяжеляем селектор, чтобы перебить селекторы .Caption--caps */
   font-weight: var(--vkui--font_weight_accent3);
 }
 
