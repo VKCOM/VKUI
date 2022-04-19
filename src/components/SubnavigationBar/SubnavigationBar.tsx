@@ -2,7 +2,8 @@ import * as React from "react";
 import { usePlatform } from "../../hooks/usePlatform";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
-import HorizontalScroll, {
+import {
+  HorizontalScroll,
   HorizontalScrollProps,
   ScrollPositionHandler,
 } from "../HorizontalScroll/HorizontalScroll";

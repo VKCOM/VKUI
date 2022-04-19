@@ -31,7 +31,7 @@ export { default as Tabbar } from "./components/Tabbar/Tabbar";
 export type { TabbarProps } from "./components/Tabbar/Tabbar";
 export { default as TabbarItem } from "./components/TabbarItem/TabbarItem";
 export type { TabbarItemProps } from "./components/TabbarItem/TabbarItem";
-export { default as HorizontalScroll } from "./components/HorizontalScroll/HorizontalScroll";
+export { HorizontalScroll } from "./components/HorizontalScroll/HorizontalScroll";
 export type { HorizontalScrollProps } from "./components/HorizontalScroll/HorizontalScroll";
 export { default as FixedLayout } from "./components/FixedLayout/FixedLayout";
 export type { FixedLayoutProps } from "./components/FixedLayout/FixedLayout";
@@ -78,7 +78,7 @@ export { Badge } from "./components/Badge/Badge";
 export type { BadgeProps } from "./components/Badge/Badge";
 export { ButtonGroup } from "./components/ButtonGroup/ButtonGroup";
 export type { ButtonGroupProps } from "./components/ButtonGroup/ButtonGroup";
-export { default as Button } from "./components/Button/Button";
+export { Button } from "./components/Button/Button";
 export type { ButtonProps } from "./components/Button/Button";
 export { default as IconButton } from "./components/IconButton/IconButton";
 export type { IconButtonProps } from "./components/IconButton/IconButton";
@@ -280,7 +280,7 @@ export type { PromoBannerProps } from "./components/PromoBanner/PromoBanner";
 /**
  * Typography
  */
-export { default as Title } from "./components/Typography/Title/Title";
+export { Title } from "./components/Typography/Title/Title";
 export type { TitleProps } from "./components/Typography/Title/Title";
 export { default as Headline } from "./components/Typography/Headline/Headline";
 export type { HeadlineProps } from "./components/Typography/Headline/Headline";
@@ -288,7 +288,7 @@ export { default as Text } from "./components/Typography/Text/Text";
 export type { TextProps } from "./components/Typography/Text/Text";
 export { Caption } from "./components/Typography/Caption/Caption";
 export type { CaptionProps } from "./components/Typography/Caption/Caption";
-export { default as Subhead } from "./components/Typography/Subhead/Subhead";
+export { Subhead } from "./components/Typography/Subhead/Subhead";
 export type { SubheadProps } from "./components/Typography/Subhead/Subhead";
 export { Paragraph } from "./components/Typography/Paragraph/Paragraph";
 export type { ParagraphProps } from "./components/Typography/Paragraph/Paragraph";

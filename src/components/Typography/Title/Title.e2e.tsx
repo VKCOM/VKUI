@@ -1,5 +1,5 @@
 import { describeScreenshotFuzz } from "../../../testing/e2e/utils";
-import Title, { TitleProps } from "./Title";
+import { Title, TitleProps } from "./Title";
 
 describe("Title", () => {
   describeScreenshotFuzz(

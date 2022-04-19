@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { baselineComponent } from "../../testing/utils";
-import Button, { ButtonProps } from "./Button";
+import { Button, ButtonProps } from "./Button";
 
 const ButtonTest = (props: ButtonProps) => (
   <Button data-testid="custom-btn" {...props} />

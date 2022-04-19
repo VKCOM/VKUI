@@ -1,5 +1,5 @@
 import { describeScreenshotFuzz } from "../../../testing/e2e/utils";
-import Subhead, { SubheadProps } from "./Subhead";
+import { Subhead, SubheadProps } from "./Subhead";
 
 describe("Subhead", () => {
   describeScreenshotFuzz(

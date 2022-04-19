@@ -12,7 +12,7 @@ import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { PaginationPageType, usePagination } from "../../hooks/usePagination";
 
 import Tappable from "../Tappable/Tappable";
-import Button from "../Button/Button";
+import { Button } from "../Button/Button";
 
 import "./Pagination.css";
 

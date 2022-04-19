@@ -1,5 +1,5 @@
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import HorizontalScroll from "./HorizontalScroll";
+import { HorizontalScroll } from "./HorizontalScroll";
 import { HorizontalCell } from "../HorizontalCell/HorizontalCell";
 import Avatar from "../Avatar/Avatar";
 import { ANDROID } from "../../lib/platform";
