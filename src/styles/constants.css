@@ -38,8 +38,8 @@
   --white: #fff;
   --blue_200: #5c9ce6;
 
-  /* iOS insets */
-  --safe-area-inset-top: 20px;
+  /* insets */
+  --safe-area-inset-top: 0px;
   --safe-area-inset-right: 0px;
   --safe-area-inset-bottom: 0px;
   --safe-area-inset-left: 0px;
@@ -57,6 +57,21 @@
 @media (min-resolution: 3dppx) {
   :root {
     --thin-border: 0.33px;
+  }
+}
+
+/**
+ * Проверка на iOS.
+ *
+ * > Не стандартное св-во. Если так и не стандартизируют, то потребуется иначе определять платформу.
+ *
+ * Ссылки:
+ * - https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-touch-callout
+ * - https://stackoverflow.com/questions/30102792/css-media-query-to-target-only-ios-devices
+ */
+@supports (-webkit-touch-callout: none) {
+  :root {
+    --safe-area-inset-top: 20px;
   }
 }
 
