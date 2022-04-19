@@ -56,7 +56,7 @@ const warn = warnOnce("CustomSelectOption");
 
 export const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
   children,
-  hierarchy,
+  hierarchy = 0,
   hovered,
   selected,
   before,
@@ -71,7 +71,7 @@ export const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
   const { sizeY } = useAdaptivity();
   const style = React.useMemo(
     () =>
-      hierarchy
+      hierarchy > 0
         ? {
             "--custom-select-option-hierarchy-level": hierarchy,
             ...styleProp,
@@ -99,7 +99,7 @@ export const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
         hovered && !disabled && "CustomSelectOption--hover",
         selected && "CustomSelectOption--selected", // Note: пустой класс
         disabled && "CustomSelectOption--disabled",
-        hierarchy && "CustomSelectOption--hierarchy"
+        hierarchy > 0 && "CustomSelectOption--hierarchy"
       )}
       style={style}
     >
