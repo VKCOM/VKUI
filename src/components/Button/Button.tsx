@@ -160,9 +160,7 @@ const ButtonComponent: React.FC<ButtonProps> = ({
 }) => {
   const platform = usePlatform();
   const hasIcons = Boolean(before || after);
-  const hasIconOnly = Boolean(
-    (!children && !after && before) || (!children && after && !before)
-  );
+  const hasIconOnly = !children && Boolean(after) !== Boolean(before);
   const { resolvedMode, resolvedAppearance } = resolveButtonAppearance(
     appearance,
     mode
