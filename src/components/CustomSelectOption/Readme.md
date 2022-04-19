@@ -2,32 +2,51 @@
 Используется внутри [CustomSelect](#!/CustomSelect), [ChipsSelect](#!/ChipsSelect).
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-<div style={{ margin: 50, width: 320, background: "var(--background_page)" }}>
-  <CustomSelectOption style={{ background: "var(--background_content)" }}>
-    Дмитрий Безуглый
-  </CustomSelectOption>
-  <Header>description</Header>
-  <CustomSelectOption
-    style={{ background: "var(--background_content)" }}
-    description="Россия, Санкт-Петербург"
-  >
-    Вадим Дорохов
-  </CustomSelectOption>
-  <Header>before</Header>
-  <CustomSelectOption
-    style={{ background: "var(--background_content)" }}
-    before={<Avatar size={20} />}
-  >
-    Иван Барышев
-  </CustomSelectOption>
-  <Header>selected</Header>
-  <CustomSelectOption
-    style={{ background: "var(--background_content)" }}
-    selected
-  >
-    Владимир Клепов
-  </CustomSelectOption>
-  <Header>hovered</Header>
-  <CustomSelectOption hovered>Игорь Федоров</CustomSelectOption>
-</div>
+const frameStyles = { outline: "1px dashed tomato" };
+
+const Example = () => {
+  return (
+    <div style={{ margin: 50, width: 320 }}>
+      <CustomSelectOption style={frameStyles}>
+        Дмитрий Безуглый
+      </CustomSelectOption>
+      <Header>description</Header>
+      <CustomSelectOption
+        style={frameStyles}
+        description="Россия, Санкт-Петербург"
+      >
+        Вадим Дорохов
+      </CustomSelectOption>
+      <Header>before</Header>
+      <CustomSelectOption style={frameStyles} before={<Avatar size={20} />}>
+        Иван Барышев
+      </CustomSelectOption>
+      <Header>after</Header>
+      <CustomSelectOption style={frameStyles} after={<Avatar size={20} />}>
+        Иван Барышев
+      </CustomSelectOption>
+      <Header>selected</Header>
+      <CustomSelectOption style={frameStyles} selected>
+        Владимир Клепов
+      </CustomSelectOption>
+      <Header>hovered</Header>
+      <CustomSelectOption style={frameStyles} hovered>
+        Игорь Федоров
+      </CustomSelectOption>
+      <Header>hierarchy</Header>
+      <CustomSelectOption style={frameStyles}>Диск</CustomSelectOption>
+      <CustomSelectOption hierarchy={1} style={frameStyles}>
+        Папка
+      </CustomSelectOption>
+      <CustomSelectOption hierarchy={2} style={frameStyles}>
+        Файл 1
+      </CustomSelectOption>
+      <CustomSelectOption hierarchy={2} style={frameStyles}>
+        Файл 2
+      </CustomSelectOption>
+    </div>
+  );
+};
+
+<Example />;
 ```
