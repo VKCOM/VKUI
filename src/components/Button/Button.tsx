@@ -160,6 +160,9 @@ const ButtonComponent: React.FC<ButtonProps> = ({
 }) => {
   const platform = usePlatform();
   const hasIcons = Boolean(before || after);
+  const hasIconOnly = Boolean(
+    (!children && !after && before) || (!children && after && !before)
+  );
   const { resolvedMode, resolvedAppearance } = resolveButtonAppearance(
     appearance,
     mode
@@ -173,7 +176,6 @@ const ButtonComponent: React.FC<ButtonProps> = ({
       onClick={loading ? undefined : onClick}
       focusVisibleMode="outside"
       stopPropagation={stopPropagation}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         "Button",
         `Button--sz-${size}`,
@@ -181,13 +183,9 @@ const ButtonComponent: React.FC<ButtonProps> = ({
         `Button--clr-${resolvedAppearance}`,
         `Button--aln-${align}`,
         `Button--sizeY-${sizeY}`,
-        {
-          ["Button--stretched"]: stretched,
-          ["Button--with-icon"]: hasIcons,
-          ["Button--singleIcon"]: Boolean(
-            (!children && !after && before) || (!children && after && !before)
-          ),
-        }
+        stretched && "Button--stretched",
+        hasIcons && "Button--with-icon",
+        hasIconOnly && "Button--singleIcon"
       )}
       getRootRef={getRootRef}
       hoverMode={hasNewTokens ? "Button--hover" : "background"}
