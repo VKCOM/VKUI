@@ -45,8 +45,8 @@ function renderExtractAdaptive(
 ): {
   sizeX: string;
   sizeY: string;
-  viewHeight: string;
-  viewWidth: string;
+  viewHeight: number;
+  viewWidth: number;
 } {
   innerWidthMock.mockReturnValue(innerWidth);
   innerHeightMock.mockReturnValue(innerHeight);
@@ -56,13 +56,13 @@ function renderExtractAdaptive(
       <Adaptive />
     </AdaptivityProvider>
   );
-  const renderee = renderResult.container.firstElementChild;
+  const renderee = renderResult.container.firstElementChild as HTMLElement;
 
   const result = {
-    sizeX: renderee.dataset.sizeX,
-    sizeY: renderee.dataset.sizeY,
-    viewWidth: +renderee.dataset.viewWidth,
-    viewHeight: +renderee.dataset.viewHeight,
+    sizeX: String(renderee.dataset.sizeX),
+    sizeY: String(renderee.dataset.sizeY),
+    viewWidth: Number(renderee.dataset.viewWidth),
+    viewHeight: Number(renderee.dataset.viewHeight),
   };
 
   return result;
