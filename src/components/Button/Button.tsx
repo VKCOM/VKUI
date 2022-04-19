@@ -19,19 +19,7 @@ import Headline from "../Typography/Headline/Headline";
 import "./Button.css";
 
 export interface VKUIButtonProps extends HasAlign {
-  /**
-   Значения `commerce`, `destructive`, `overlay_...` будут упразднены в 5.0.0
-   */
-  mode?:
-    | "primary"
-    | "secondary"
-    | "tertiary"
-    | "outline"
-    | "commerce"
-    | "destructive"
-    | "overlay_primary"
-    | "overlay_secondary"
-    | "overlay_outline";
+  mode?: "primary" | "secondary" | "tertiary" | "outline";
   appearance?: "accent" | "positive" | "negative" | "neutral" | "overlay";
   size?: "s" | "m" | "l";
   stretched?: boolean;
@@ -92,55 +80,6 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = (
   }
 };
 
-interface ResolvedButtonAppearance {
-  resolvedAppearance: ButtonProps["appearance"];
-  resolvedMode: ButtonProps["mode"];
-}
-
-function resolveButtonAppearance(
-  appearance: ButtonProps["appearance"],
-  mode: ButtonProps["mode"]
-): ResolvedButtonAppearance {
-  let resolvedAppearance: ButtonProps["appearance"] = appearance;
-  let resolvedMode: ButtonProps["mode"] = mode;
-
-  if (appearance === undefined) {
-    switch (mode) {
-      case "tertiary":
-      case "secondary":
-      case "primary":
-      case "outline":
-        resolvedAppearance = "accent";
-        break;
-      case "commerce":
-        resolvedMode = "primary";
-        resolvedAppearance = "positive";
-        break;
-      case "destructive":
-        resolvedMode = "primary";
-        resolvedAppearance = "negative";
-        break;
-      case "overlay_primary":
-        resolvedMode = "primary";
-        resolvedAppearance = "overlay";
-        break;
-      case "overlay_secondary":
-        resolvedMode = "secondary";
-        resolvedAppearance = "overlay";
-        break;
-      case "overlay_outline":
-        resolvedMode = "outline";
-        resolvedAppearance = "overlay";
-        break;
-    }
-  }
-
-  return {
-    resolvedAppearance,
-    resolvedMode,
-  };
-}
-
 const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
   const platform = usePlatform();
   const {
@@ -160,10 +99,6 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
     ...restProps
   } = props;
   const hasIcons = Boolean(before || after);
-  const { resolvedMode, resolvedAppearance } = resolveButtonAppearance(
-    appearance,
-    mode
-  );
   const hasNewTokens = React.useContext(ConfigProviderContext).hasNewTokens;
 
   return (
@@ -176,8 +111,8 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
       vkuiClass={classNames(
         "Button",
         `Button--sz-${size}`,
-        `Button--lvl-${resolvedMode}`,
-        `Button--clr-${resolvedAppearance}`,
+        `Button--lvl-${mode}`,
+        `Button--clr-${appearance}`,
         `Button--aln-${align}`,
         `Button--sizeY-${sizeY}`,
         {
@@ -214,6 +149,7 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
 
 Button.defaultProps = {
   mode: "primary",
+  appearance: "accent",
   align: "center",
   size: "s",
   stretched: false,

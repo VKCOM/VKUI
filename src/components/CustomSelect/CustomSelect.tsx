@@ -101,7 +101,7 @@ export interface CustomSelectProps
   onInputChange?: (
     e: React.ChangeEvent,
     options: CustomSelectOptionInterface[]
-  ) => void | CustomSelectOptionInterface[];
+  ) => void;
   options: Array<{
     value: SelectValue;
     label: string;
@@ -458,25 +458,8 @@ class CustomSelect extends React.Component<
 
   onInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     if (this.props.onInputChange) {
-      const options = this.props.onInputChange(e, this.props.options);
-      if (options) {
-        if (process.env.NODE_ENV === "development") {
-          warn(
-            "This filtration method is deprecated. Return value of onInputChange will" +
-              " be ignored in v5.0.0. For custom filtration please update props.options by yourself or use filterFn property"
-          );
-        }
-        this.setState({
-          options,
-          selectedOptionIndex: this.findSelectedIndex(
-            options,
-            this.state.nativeSelectValue
-          ),
-          inputValue: e.target.value,
-        });
-      } else {
-        this.setState({ inputValue: e.target.value });
-      }
+      this.props.onInputChange(e, this.props.options);
+      this.setState({ inputValue: e.target.value });
     } else {
       const options = this.filter(
         this.props.options,

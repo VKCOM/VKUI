@@ -8,17 +8,7 @@ describe("Button", () => {
     (props: ButtonProps) => <Button {...props}>Кнопка</Button>,
     [
       {
-        mode: [
-          "primary",
-          "secondary",
-          "tertiary",
-          "outline",
-          "commerce",
-          "destructive",
-          "overlay_primary",
-          "overlay_secondary",
-          "overlay_outline",
-        ],
+        mode: ["primary", "secondary", "tertiary", "outline"],
         disabled: [undefined, true],
       },
       {
@@ -50,7 +40,7 @@ describe("Button", () => {
         size: ["l"],
       },
       {
-        mode: ["primary", "secondary", "overlay_primary"],
+        mode: ["primary", "secondary"],
         before: [<Icon24Camera key="icon-24" />],
         after: [<Counter key="counter">16</Counter>],
         size: ["s", "m", "l"],

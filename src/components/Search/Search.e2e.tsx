@@ -18,7 +18,7 @@ describe("Search", () => {
   it("shows after when focused on iOS", async () => {
     await mount(
       <ConfigProvider platform={IOS}>
-        <AppRoot embedded>
+        <AppRoot mode="embedded">
           <Search after="after" style={{ maxWidth: "320px" }} />
         </AppRoot>
       </ConfigProvider>

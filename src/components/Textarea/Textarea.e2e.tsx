@@ -20,7 +20,7 @@ describe("Textarea", () => {
   ]);
   it("fits size to content", async () => {
     await mount(
-      <AppRoot embedded>
+      <AppRoot mode="embedded">
         <Textarea id="textarea" />
       </AppRoot>
     );

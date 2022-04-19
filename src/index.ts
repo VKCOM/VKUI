@@ -214,11 +214,6 @@ export type {
   DatePickerProps,
   DatePickerDateFormat,
 } from "./components/DatePicker/DatePicker";
-export { SliderSwitch } from "./components/SliderSwitch/SliderSwitch";
-export type {
-  SliderSwitchProps,
-  SliderSwitchOptionInterface,
-} from "./components/SliderSwitch/SliderSwitch";
 export { SegmentedControl } from "./components/SegmentedControl/SegmentedControl";
 export type {
   SegmentedControlProps,
@@ -315,15 +310,7 @@ export { default as animate } from "./lib/animate";
 export { removeObjectKeys } from "./lib/removeObjectKeys";
 export { SSRWrapper } from "./lib/SSR";
 export type { SSRWrapperProps } from "./lib/SSR";
-export {
-  platform,
-  ANDROID,
-  IOS,
-  VKCOM,
-  Platform,
-  IS_PLATFORM_ANDROID,
-  IS_PLATFORM_IOS,
-} from "./lib/platform";
+export { platform, ANDROID, IOS, VKCOM, Platform } from "./lib/platform";
 export { getClassName } from "./helpers/getClassName";
 export {
   ViewWidth,

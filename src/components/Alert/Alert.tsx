@@ -196,6 +196,7 @@ class AlertComponent extends React.Component<TAlertProps, AlertState> {
 
     let mode: ButtonProps["mode"] =
       action.mode === "cancel" ? "secondary" : "primary";
+    let appearance: ButtonProps["appearance"] = "accent";
 
     if (platform === ANDROID) {
       mode = "tertiary";
@@ -204,7 +205,7 @@ class AlertComponent extends React.Component<TAlertProps, AlertState> {
         this.props.viewWidth === ViewWidth.DESKTOP &&
         action.mode === "destructive"
       ) {
-        mode = "destructive";
+        appearance = "negative";
       }
     }
 
@@ -212,6 +213,7 @@ class AlertComponent extends React.Component<TAlertProps, AlertState> {
       <Button
         vkuiClass={classNames("Alert__button", `Alert__button--${action.mode}`)}
         mode={mode}
+        appearance={appearance}
         size="m"
         onClick={this.onItemClick(action)}
         Component={action.Component}

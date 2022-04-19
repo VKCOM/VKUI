@@ -7,7 +7,6 @@ import Tappable, { TappableProps } from "../Tappable/Tappable";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
-import { warnOnce } from "../../lib/warnOnce";
 import { HasRef, HasRootRef } from "../../types";
 import { classNames } from "../../lib/classNames";
 import "./ContentCard.css";
@@ -37,17 +36,12 @@ export interface ContentCardProps
    */
   caption?: React.ReactNode;
   /**
-    @deprecated будет удалено в 5.0.0. Используйте src
-   */
-  image?: string;
-  /**
     Максимальная высота изображения
    */
   maxHeight?: number;
   mode?: CardProps["mode"];
 }
 
-const warn = warnOnce("ContentCard");
 const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
   const {
     subtitle,
@@ -62,7 +56,6 @@ const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
     // img props
     getRef,
     maxHeight,
-    image,
     src,
     srcSet,
     alt,
@@ -77,12 +70,6 @@ const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
     ...restProps
   } = props;
   const platform = usePlatform();
-
-  const source = image || src;
-
-  if (image && process.env.NODE_ENV === "development") {
-    warn("Свойство image устарело и будет удалено в 5.0.0. Используйте src");
-  }
 
   return (
     <Card
@@ -102,11 +89,11 @@ const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
         hasActive={false}
         vkuiClass="ContentCard__tappable"
       >
-        {(source || srcSet) && (
+        {(src || srcSet) && (
           <img
             ref={getRef}
             vkuiClass="ContentCard__img"
-            src={source}
+            src={src}
             srcSet={srcSet}
             alt={alt}
             crossOrigin={crossOrigin}

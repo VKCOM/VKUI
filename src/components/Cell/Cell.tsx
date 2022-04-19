@@ -1,7 +1,6 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { noop } from "../../lib/utils";
-import { warnOnce } from "../../lib/warnOnce";
 import { getClassName } from "../../helpers/getClassName";
 import { ANDROID, IOS, VKCOM } from "../../lib/platform";
 import SimpleCell, { SimpleCellProps } from "../SimpleCell/SimpleCell";
@@ -24,17 +23,9 @@ export interface CellProps
    */
   draggable?: boolean;
   /**
-   * @deprecated Будет удалено в 5.0.0. Используйте mode="removable"
-   */
-  removable?: boolean;
-  /**
    * Имя для input в режиме selectable
    */
   name?: string;
-  /**
-   * @deprecated Будет удалено в 5.0.0. Используйте mode="selectable"
-   */
-  selectable?: boolean;
   /**
    * В режиме selectable реагирует на входящие значения пропса cheсked, как зависящий напрямую от входящего значения
    */
@@ -56,18 +47,15 @@ export interface CellProps
   draggerLabel?: string;
 }
 
-const warn = warnOnce("Cell");
 export const Cell: React.FC<CellProps> = ({
-  mode: propsMode, // TODO: убрать переименование в propsMode перед 5.0.0
+  mode,
   onRemove = noop,
   removePlaceholder = "Удалить",
   onDragFinish,
   before,
   after,
   disabled,
-  removable: deprecatedRemovable, // TODO: удалить перед 5.0.0
   draggable,
-  selectable: deprecatedSelectable, // TODO: удалить перед 5.0.0
   Component,
   onChange,
   name,
@@ -80,25 +68,6 @@ export const Cell: React.FC<CellProps> = ({
   style,
   ...restProps
 }: CellProps) => {
-  // TODO: удалить перед 5.0.0
-  let mode: CellProps["mode"] = propsMode;
-
-  if (!propsMode && (deprecatedSelectable || deprecatedRemovable)) {
-    mode = deprecatedSelectable ? "selectable" : "removable";
-
-    if (process.env.NODE_ENV === "development") {
-      deprecatedSelectable &&
-        warn(
-          'Свойство selectable устарелo и будет удалено в 5.0.0. Используйте mode="selectable".'
-        );
-      deprecatedRemovable &&
-        warn(
-          'Свойство removable устарелo и будет удалено в 5.0.0. Используйте mode="removable".'
-        );
-    }
-  }
-  // /end TODO
-
   const selectable = mode === "selectable";
   const removable = mode === "removable";
 

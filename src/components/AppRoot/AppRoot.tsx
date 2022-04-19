@@ -17,7 +17,6 @@ import {
   ScrollContextInterface,
 } from "./ScrollContext";
 import { noop } from "../../lib/utils";
-import { warnOnce } from "../../lib/warnOnce";
 import { useKeyboardInputTracker } from "../../hooks/useKeyboardInputTracker";
 import { useInsets } from "../../hooks/useInsets";
 import { Insets } from "@vkontakte/vk-bridge";
@@ -29,8 +28,6 @@ import "./AppRoot.css";
 export interface AppRootProps
   extends React.HTMLAttributes<HTMLDivElement>,
     Pick<AdaptivityProps, "sizeX" | "hasMouse"> {
-  /** @deprecated Use mode="embedded" */
-  embedded?: boolean;
   /** Режим встраивания */
   mode?: "partial" | "embedded" | "full";
   window?: Window;
@@ -39,20 +36,16 @@ export interface AppRootProps
   scroll?: "global" | "contain";
 }
 
-const warn = warnOnce("AppRoot");
 export const AppRoot = withAdaptivity<AppRootProps>(
   ({
     children,
-    mode: _mode,
-    embedded: _embedded,
+    mode = "full",
     sizeX,
     hasMouse,
     noLegacyClasses = false,
     scroll = "global",
     ...props
   }) => {
-    // normalize mode
-    const mode = _mode || (_embedded ? "embedded" : "full");
     const isKeyboardInputActive = useKeyboardInputTracker();
     const rootRef = React.useRef<HTMLDivElement | null>(null);
     const [portalRoot, setPortalRoot] = React.useState<HTMLDivElement | null>(
@@ -68,15 +61,6 @@ export const AppRoot = withAdaptivity<AppRootProps>(
       }
       classScopingMode.noConflict = noLegacyClasses;
       initialized.current = true;
-    }
-
-    if (process.env.NODE_ENV === "development") {
-      if (scroll !== "global" && mode !== "embedded") {
-        warn("Scroll modes only supported in embedded mode", "error");
-      }
-      if (_mode && _embedded) {
-        warn(`mode="${mode}" overrides embedded`);
-      }
     }
 
     // setup portal

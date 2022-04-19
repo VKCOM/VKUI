@@ -4,7 +4,6 @@ import { getClassName } from "../../helpers/getClassName";
 import { IOS } from "../../lib/platform";
 import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
 import { SplitColContext } from "../SplitCol/SplitCol";
-import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { ScrollContext } from "../AppRoot/ScrollContext";
 import { NavTransitionProvider } from "../NavTransitionContext/NavTransitionContext";
 import { getNavId, NavIdProps } from "../../lib/getNavId";
@@ -20,18 +19,6 @@ export interface RootProps
     NavIdProps {
   activeView: string;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
-  /**
-   * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
-   *
-   * Свойство для отрисовки `Alert`, `ActionSheet` и `ScreenSpinner`.
-   */
-  popout?: React.ReactNode;
-  /**
-   * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
-   *
-   * Свойство для отрисовки `ModalRoot`.
-   */
-  modal?: React.ReactNode;
 }
 
 export interface RootState {
@@ -43,8 +30,6 @@ export interface RootState {
 
 const warn = warnOnce("Root");
 const Root: React.FC<RootProps> = ({
-  popout = null,
-  modal,
   children,
   activeView: _activeView,
   onTransition,
@@ -92,7 +77,7 @@ const Root: React.FC<RootProps> = ({
 
   useIsomorphicLayoutEffect(() => {
     (document!.activeElement as HTMLElement).blur();
-  }, [!!popout, activeView]);
+  }, [activeView]);
 
   // Нужен переход
   useIsomorphicLayoutEffect(() => transitionTo(_activeView), [_activeView]);
@@ -133,17 +118,6 @@ const Root: React.FC<RootProps> = ({
       finishTransition();
     }
   };
-
-  if (process.env.NODE_ENV === "development") {
-    popout &&
-      warn(
-        "Свойство popout устарело и будет удалено в 5.0.0. Используйте одноименное свойство у SplitLayout."
-      );
-    modal &&
-      warn(
-        "Свойство modal устарело и будет удалено в 5.0.0. Используйте одноименное свойство у SplitLayout."
-      );
-  }
 
   return (
     <div
@@ -198,10 +172,6 @@ const Root: React.FC<RootProps> = ({
           </div>
         );
       })}
-      <AppRootPortal>
-        {!!popout && <div vkuiClass="Root__popout">{popout}</div>}
-        {!!modal && <div vkuiClass="Root__modal">{modal}</div>}
-      </AppRootPortal>
     </div>
   );
 };
