@@ -27,7 +27,7 @@ export const GridAvatar: React.FC<GridAvatarProps> = ({
 
   return (
     <Avatar {...restProps} vkuiClass={classNames("GridAvatar")}>
-      <div vkuiClass="GridAvatar__in" aria-hidden={true}>
+      <div vkuiClass="GridAvatar__in" aria-hidden="true">
         {src.slice(0, MAX_GRID_LENGTH).map((src, i) => (
           <div
             key={i}
