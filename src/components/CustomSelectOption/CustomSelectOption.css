@@ -11,6 +11,15 @@
   color: var(--text_primary, var(--vkui--color_text_primary));
 }
 
+.CustomSelectOption--hierarchy {
+  --custom-select-option-hierarchy-level: 0;
+
+  padding-left: calc(
+    var(--custom-select-option-hierarchy-level) *
+      var(--vkui--size_option_hierarchy--regular)
+  );
+}
+
 .CustomSelectOption--sizeY-regular {
   min-height: 44px;
 }

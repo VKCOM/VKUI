@@ -29,6 +29,10 @@ describe("CustomSelectOption", () => {
         disabled: [true],
         hovered: [true, false],
       },
+      {
+        children: ["Иерархия"],
+        hierarchy: [undefined, 1, 2],
+      },
     ],
     {
       adaptivity: { sizeY: SizeType.REGULAR },
