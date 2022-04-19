@@ -5,5 +5,6 @@ const swipeBackExcludedSelector =
 
 export function swipeBackExcluded(e: TouchEvent) {
   const target = e.originalEvent.target as HTMLElement;
-  return Boolean(target?.closest(swipeBackExcludedSelector));
+  // eslint-disable-next-line no-restricted-properties
+  return Boolean(target?.closest?.(swipeBackExcludedSelector));
 }
