@@ -21,7 +21,7 @@ export const GridAvatar: React.FC<GridAvatarProps> = ({
 }: GridAvatarProps) => {
   if (process.env.NODE_ENV === "development" && src.length > MAX_GRID_LENGTH) {
     warn(
-      `Размер пропа src (${src.length}) больше максимального (${MAX_GRID_LENGTH})`
+      `Длина массива src (${src.length}) больше максимальной (${MAX_GRID_LENGTH})`
     );
   }
 
