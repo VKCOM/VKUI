@@ -142,9 +142,13 @@ export const mockScrollContext = (
 ): [React.FC, jest.Mock] => {
   const getScroll = () => ({ x: 0, y: getY() });
   const scrollTo = jest.fn();
+  const enableScrollLock = jest.fn();
+  const disableScrollLock = jest.fn();
   return [
     (props) => (
-      <ScrollContext.Provider value={{ getScroll, scrollTo }}>
+      <ScrollContext.Provider
+        value={{ getScroll, scrollTo, enableScrollLock, disableScrollLock }}
+      >
         {props.children}
       </ScrollContext.Provider>
     ),
