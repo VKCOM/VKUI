@@ -8,6 +8,10 @@ import {
   ViewWidth,
 } from "./AdaptivityContext";
 import { useDOM } from "../../lib/dom";
+import {
+  useBridgeAdaptivity,
+  BridgeAdaptivity,
+} from "../../hooks/useBridgeAdaptivity";
 
 export const DESKTOP_SIZE = 1280;
 export const TABLET_SIZE = 1024;
@@ -22,15 +26,12 @@ const AdaptivityProvider: React.FC<AdaptivityProps> = (props) => {
     typeof calculateAdaptivity
   > | null>(null);
   const [, updateAdaptivity] = React.useState({});
+  const bridge = useBridgeAdaptivity();
 
   const { window } = useDOM();
 
   if (!adaptivityRef.current) {
-    adaptivityRef.current = calculateAdaptivity(
-      window ? window.innerWidth : 0,
-      window ? window.innerHeight : 0,
-      props
-    );
+    adaptivityRef.current = calculateAdaptivity(props, bridge, window);
   }
 
   React.useEffect(() => {
@@ -38,11 +39,8 @@ const AdaptivityProvider: React.FC<AdaptivityProps> = (props) => {
       if (adaptivityRef.current === null) {
         return;
       }
-      const calculated = calculateAdaptivity(
-        window!.innerWidth,
-        window!.innerHeight,
-        props
-      );
+
+      const calculated = calculateAdaptivity(props, bridge, window);
       const { viewWidth, viewHeight, sizeX, sizeY, hasMouse, deviceHasHover } =
         adaptivityRef.current;
 
@@ -74,6 +72,7 @@ const AdaptivityProvider: React.FC<AdaptivityProps> = (props) => {
     props.deviceHasHover,
     window,
     props,
+    bridge,
   ]);
 
   return (
@@ -84,16 +83,27 @@ const AdaptivityProvider: React.FC<AdaptivityProps> = (props) => {
 };
 
 function calculateAdaptivity(
-  windowWidth: number,
-  windowHeight: number,
-  props: AdaptivityProps
+  props: AdaptivityProps,
+  bridge: BridgeAdaptivity,
+  window?: Window
 ) {
+  let windowWidth = 0;
+  let windowHeight = 0;
+
+  if (bridge.type === "adaptive") {
+    windowWidth = bridge.viewportWidth;
+    windowHeight = bridge.viewportHeight;
+  } else if (window) {
+    windowWidth = window.innerWidth;
+    windowHeight = window.innerHeight;
+  }
+
   let viewWidth = ViewWidth.SMALL_MOBILE;
   let viewHeight = ViewHeight.SMALL;
   let sizeY = SizeType.REGULAR;
   let sizeX = SizeType.REGULAR;
-  let hasMouse = props.hasMouse ?? _hasMouse;
-  let deviceHasHover = props.deviceHasHover ?? _hasHover;
+  let hasMouse = _hasMouse;
+  let deviceHasHover = _hasHover;
 
   if (windowWidth >= DESKTOP_SIZE) {
     viewWidth = ViewWidth.DESKTOP;
@@ -115,8 +125,13 @@ function calculateAdaptivity(
     viewHeight = ViewHeight.EXTRA_SMALL;
   }
 
-  props.viewWidth && (viewWidth = props.viewWidth);
-  props.viewHeight && (viewHeight = props.viewHeight);
+  if (!bridge.type) {
+    props.viewWidth && (viewWidth = props.viewWidth);
+    props.viewHeight && (viewHeight = props.viewHeight);
+
+    hasMouse = props.hasMouse ?? hasMouse;
+    deviceHasHover = props.deviceHasHover ?? deviceHasHover;
+  }
 
   if (viewWidth <= ViewWidth.MOBILE) {
     sizeX = SizeType.COMPACT;
@@ -129,8 +144,24 @@ function calculateAdaptivity(
     sizeY = SizeType.COMPACT;
   }
 
-  props.sizeX && (sizeX = props.sizeX);
-  props.sizeY && (sizeY = props.sizeY);
+  if (!bridge.type) {
+    props.sizeX && (sizeX = props.sizeX);
+    props.sizeY && (sizeY = props.sizeY);
+  }
+
+  if (
+    bridge.type === "force_mobile" ||
+    bridge.type === "force_mobile_compact"
+  ) {
+    viewWidth = ViewWidth.MOBILE;
+    sizeX = SizeType.COMPACT;
+
+    if (bridge.type === "force_mobile_compact") {
+      sizeY = SizeType.COMPACT;
+    } else {
+      sizeY = SizeType.REGULAR;
+    }
+  }
 
   return { viewWidth, viewHeight, sizeX, sizeY, hasMouse, deviceHasHover };
 }
