@@ -12,7 +12,7 @@ export interface GridAvatarProps
   src?: string[];
 }
 
-const MAX_GRID_LENGTH = 4;
+export const MAX_GRID_LENGTH = 4;
 
 const warn = warnOnce("GridAvatar");
 export const GridAvatar: React.FC<GridAvatarProps> = ({
