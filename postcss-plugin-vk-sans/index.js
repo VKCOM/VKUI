@@ -162,11 +162,6 @@ const initializeCustomPropertiesFiles = (customPropertiesFiles, platform) => {
   });
 };
 
-const ruleHasStandaloneStyles = (rule) =>
-  [".vkui", ".widgets", ".Widgets"].some(
-    (i) => rule && rule.selector && rule.selector.includes(i)
-  );
-
 const VkSansMandatoryDeclarations = postcss.plugin(
   "vk-sans-mandatory-declarations",
   (opts) => {
@@ -208,10 +203,7 @@ const VkSansMandatoryDeclarations = postcss.plugin(
           let fontSizeValue;
           let letterSpacingOverride;
 
-          if (
-            !selectorShouldBeIgnored(rule, ignoreSelectors) &&
-            !ruleHasStandaloneStyles(rule)
-          ) {
+          if (!selectorShouldBeIgnored(rule, ignoreSelectors)) {
             rule.walkDecls(/^(font|font-size)$/, (decl) => {
               if (decl.prop === "font") {
                 const match = decl.value.match(
