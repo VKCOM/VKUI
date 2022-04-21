@@ -27,6 +27,7 @@ export interface BaseGalleryProps
   onDragEnd?: TouchEventHandler;
   onChange?(current: number): void;
   onEnd?({ targetIndex }: { targetIndex: number }): void;
+  onArrowClick?(direction: "left" | "right"): void;
   bullets?: "dark" | "light" | false;
   isDraggable?: boolean;
   showArrows?: boolean;
@@ -322,20 +323,22 @@ class BaseGallery extends React.Component<
   }
 
   slideLeft = () => {
-    const { slideIndex = 0, onChange } = this.props;
+    const { slideIndex = 0, onChange, onArrowClick } = this.props;
     if (this.canSlideLeft) {
       this.setState({ deltaX: 0, animation: true }, () =>
         onChange?.(slideIndex - 1)
       );
+      onArrowClick?.("left");
     }
   };
 
   slideRight = () => {
-    const { slideIndex = 0, onChange } = this.props;
+    const { slideIndex = 0, onChange, onArrowClick } = this.props;
     if (this.canSlideRight) {
       this.setState({ deltaX: 0, animation: true }, () =>
         onChange?.(slideIndex + 1)
       );
+      onArrowClick?.("right");
     }
   };
 
