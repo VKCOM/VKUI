@@ -1,6 +1,14 @@
+import { FC } from "react";
+import { AppRoot } from "../AppRoot/AppRoot";
 import { Alert, AlertProps, AlertAction } from "./Alert";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { VKCOM, ANDROID, IOS } from "../../lib/platform";
+
+const AppWrapper: FC = (props) => (
+  <AppRoot mode="embedded" scroll="contain">
+    {props.children}
+  </AppRoot>
+);
 
 describe("Alert", () => {
   const BaseAlert = (p: AlertProps) => (
@@ -34,6 +42,7 @@ describe("Alert", () => {
       },
     ],
     {
+      Wrapper: AppWrapper,
       platforms: [IOS, ANDROID],
     }
   );
@@ -51,6 +60,7 @@ describe("Alert", () => {
       },
     ],
     {
+      Wrapper: AppWrapper,
       platforms: [VKCOM],
     }
   );
