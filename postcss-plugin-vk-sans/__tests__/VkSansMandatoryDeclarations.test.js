@@ -101,10 +101,6 @@ test('Option "ignoreSelectors" is working', () =>
       `.a { font-size: 14px; letter-spacing: 1px; }`,
       { ignoreSelectors: [/^\.a$/] }
     ),
-    run(
-      `.vkuiComponent { font-size: 14px; letter-spacing: 1px; }`,
-      `.vkuiComponent { font-size: 14px; letter-spacing: 1px; }`
-    ),
   ]));
 
 test('Option "explicitNormalLetterSpacing" is working', () =>
