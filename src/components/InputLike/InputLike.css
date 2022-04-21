@@ -17,7 +17,7 @@
 }
 
 .InputLike__last_character {
-  letter-spacing: 1px;
+  letter-spacing: 1px !important;
 }
 
 .InputLike--full + .InputLikeDivider {
