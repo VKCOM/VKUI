@@ -34,7 +34,7 @@ export interface SelectState {
   notSelected?: boolean;
 }
 
-const NativeSelect: React.FC<
+const NativeSelectComponent: React.FC<
   NativeSelectProps & AdaptivityContextInterface
 > = ({
   style,
@@ -107,8 +107,7 @@ const NativeSelect: React.FC<
   );
 };
 
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(NativeSelect, {
+export const NativeSelect = withAdaptivity(NativeSelectComponent, {
   sizeX: true,
   sizeY: true,
 });
