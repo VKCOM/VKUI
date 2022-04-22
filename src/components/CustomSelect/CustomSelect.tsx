@@ -56,7 +56,7 @@ const warn = warnOnce("CustomSelect");
 const checkOptionsValueType = (options: CustomSelectOptionInterface[]) => {
   if (new Set(options.map((item) => typeof item.value)).size > 1) {
     warn(
-      "Some values of your options have different types. CustomSelect onChange always returns a string type.",
+      "Некоторые значения ваших опций имеют разные типы. onChange всегда возвращает строковый тип.",
       "error"
     );
   }
@@ -463,8 +463,8 @@ class CustomSelectComponent extends React.Component<
       if (options) {
         if (process.env.NODE_ENV === "development") {
           warn(
-            "This filtration method is deprecated. Return value of onInputChange will" +
-              " be ignored in v5.0.0. For custom filtration please update props.options by yourself or use filterFn property"
+            "Этот метод фильтрации устарел. Возвращаемое значение onInputChange будет " +
+              "проигнорировано в v5.0.0. Для фильтрации обновляйте props.options самостоятельно или используйте свойство filterFn."
           );
         }
         this.setState({
