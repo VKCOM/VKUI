@@ -28,7 +28,7 @@ export interface SelectMimicryProps
   selectType?: SelectType;
 }
 
-const SelectMimicry: React.FC<SelectMimicryProps> = ({
+const SelectMimicryComponent: React.FC<SelectMimicryProps> = ({
   tabIndex = 0,
   placeholder,
   children,
@@ -86,8 +86,7 @@ const SelectMimicry: React.FC<SelectMimicryProps> = ({
   );
 };
 
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(SelectMimicry, {
+export const SelectMimicry = withAdaptivity(SelectMimicryComponent, {
   sizeX: true,
   sizeY: true,
 });
