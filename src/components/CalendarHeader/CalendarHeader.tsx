@@ -7,11 +7,8 @@ import {
 } from "@vkontakte/icons";
 import Tappable from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
-import {
-  CustomSelect,
-  CustomSelectProps,
-  SelectType,
-} from "../CustomSelect/CustomSelect";
+import { SelectType } from "../Select/Select";
+import { CustomSelect, CustomSelectProps } from "../CustomSelect/CustomSelect";
 import { CustomSelectOption } from "../CustomSelectOption/CustomSelectOption";
 import { SizeType } from "../../hoc/withAdaptivity";
 import { getMonths, getYears } from "../../lib/calendar";
@@ -153,7 +150,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
               icon={<Icon12Dropdown />}
               onChange={onMonthsChange}
               forceDropdownPortal={false}
-              selectType={SelectType.Plain}
+              selectType={SelectType.plain}
               aria-label={changeMonthAriaLabel}
             />
             <CustomSelect
@@ -165,7 +162,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
               icon={<Icon12Dropdown />}
               onChange={onYearChange}
               forceDropdownPortal={false}
-              selectType={SelectType.Plain}
+              selectType={SelectType.plain}
               aria-label={changeYearAriaLabel}
             />
           </React.Fragment>

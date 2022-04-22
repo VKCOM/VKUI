@@ -13,7 +13,7 @@ import { getClassName } from "../../helpers/getClassName";
 import Headline from "../Typography/Headline/Headline";
 import Text from "../Typography/Text/Text";
 import { VKCOM } from "../../lib/platform";
-import { SelectType } from "../CustomSelect/CustomSelect";
+import { SelectType } from "../Select/Select";
 import "../Select/Select.css";
 import "./SelectMimicry.css";
 
@@ -25,7 +25,7 @@ export interface SelectMimicryProps
     Pick<FormFieldProps, "before" | "after"> {
   multiline?: boolean;
   disabled?: boolean;
-  selectType?: SelectType;
+  selectType?: keyof typeof SelectType;
 }
 
 const SelectMimicryComponent: React.FC<SelectMimicryProps> = ({
@@ -41,7 +41,7 @@ const SelectMimicryComponent: React.FC<SelectMimicryProps> = ({
   sizeY,
   before,
   after = <DropdownIcon />,
-  selectType = SelectType.Default,
+  selectType = SelectType.default,
   ...restProps
 }) => {
   const platform = usePlatform();
@@ -71,7 +71,7 @@ const SelectMimicryComponent: React.FC<SelectMimicryProps> = ({
     >
       <TypographyComponent
         Component="div"
-        weight={selectType === SelectType.Plain ? "semibold" : "regular"}
+        weight={selectType === SelectType.plain ? "semibold" : "regular"}
         vkuiClass={classNames(
           "Select__container",
           `Select__container--${selectType}`

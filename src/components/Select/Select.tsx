@@ -7,6 +7,12 @@ import {
   AdaptivityProps,
 } from "../AdaptivityProvider/AdaptivityContext";
 
+export const SelectType = {
+  default: "default",
+  plain: "plain",
+  accent: "accent",
+} as const;
+
 export interface SelectProps extends CustomSelectProps, AdaptivityProps {}
 
 const SelectComponent: React.FC<SelectProps & AdaptivityContextInterface> = ({
