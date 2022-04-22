@@ -53,18 +53,15 @@ const SelectMimicryComponent: React.FC<SelectMimicryProps> = ({
     <FormField
       {...restProps}
       tabIndex={disabled ? undefined : tabIndex}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("Select", platform),
         "Select--mimicry",
         `Select--mimicry-${selectType}`,
-        {
-          "Select--not-selected": !children,
-          "Select--multiline": multiline,
-          [`Select--align-${align}`]: !!align,
-          [`Select--sizeX--${sizeX}`]: !!sizeX,
-          [`Select--sizeY--${sizeY}`]: !!sizeY,
-        }
+        !children && "Select--not-selected",
+        multiline && "Select--multiline",
+        align && `Select--align-${align}`,
+        `Select--sizeX-${sizeX}`,
+        `Select--sizeY-${sizeY}`
       )}
       getRootRef={getRootRef}
       onClick={disabled ? undefined : onClick}
