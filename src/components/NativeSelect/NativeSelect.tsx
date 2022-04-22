@@ -3,16 +3,13 @@ import { classNames } from "../../lib/classNames";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { FormField } from "../FormField/FormField";
 import { HasAlign, HasRef, HasRootRef } from "../../types";
-import { withAdaptivity, SizeType } from "../../hoc/withAdaptivity";
+import { withAdaptivity } from "../../hoc/withAdaptivity";
 import { getClassName } from "../../helpers/getClassName";
-import Headline from "../Typography/Headline/Headline";
-import Text from "../Typography/Text/Text";
-import { VKCOM } from "../../lib/platform";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
 import { useExternRef } from "../../hooks/useExternRef";
 import { usePlatform } from "../../hooks/usePlatform";
-import { SelectType } from "../Select/Select";
+import { SelectType, SelectTypography } from "../Select/Select";
 import {
   AdaptivityContextInterface,
   AdaptivityProps,
@@ -68,9 +65,6 @@ const NativeSelectComponent: React.FC<
     }
   }, [value, children]);
 
-  const TypographyComponent =
-    platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
-
   return (
     <FormField
       Component="label"
@@ -100,13 +94,9 @@ const NativeSelectComponent: React.FC<
         {placeholder && <option value="">{placeholder}</option>}
         {children}
       </select>
-      <TypographyComponent
-        Component="div"
-        weight="regular"
-        vkuiClass="Select__container"
-      >
-        <span vkuiClass="Select__title">{title}</span>
-      </TypographyComponent>
+      <div vkuiClass="Select__container">
+        <SelectTypography vkuiClass="Select__title">{title}</SelectTypography>
+      </div>
     </FormField>
   );
 };

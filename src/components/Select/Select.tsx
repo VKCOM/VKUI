@@ -2,16 +2,47 @@ import * as React from "react";
 import { NativeSelect } from "../NativeSelect/NativeSelect";
 import { CustomSelect, CustomSelectProps } from "../CustomSelect/CustomSelect";
 import { withAdaptivity } from "../../hoc/withAdaptivity";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { usePlatform } from "../../hooks/usePlatform";
+import { VKCOM } from "../../lib/platform";
 import {
   AdaptivityContextInterface,
   AdaptivityProps,
+  SizeType,
 } from "../AdaptivityProvider/AdaptivityContext";
+import { Paragraph } from "../Typography/Paragraph/Paragraph";
+import Text from "../Typography/Text/Text";
+import Headline from "../Typography/Headline/Headline";
 
 export const SelectType = {
   default: "default",
   plain: "plain",
   accent: "accent",
 } as const;
+
+export const SelectTypography: React.FC<
+  Pick<CustomSelectProps, "selectType">
+> = ({ selectType = SelectType.default, children, ...restProps }) => {
+  const platform = usePlatform();
+  const { sizeY } = useAdaptivity();
+
+  if (selectType === SelectType.accent) {
+    return (
+      <Paragraph weight={platform === VKCOM ? "1" : "2"} {...restProps}>
+        {children}
+      </Paragraph>
+    );
+  }
+
+  const Component =
+    platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
+
+  return (
+    <Component weight="regular" Component="span" {...restProps}>
+      {children}
+    </Component>
+  );
+};
 
 export interface SelectProps extends CustomSelectProps, AdaptivityProps {}
 
