@@ -71,14 +71,14 @@ const NativeSelectComponent: React.FC<
   return (
     <FormField
       Component="label"
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames(getClassName("Select", platform), {
-        ["Select--not-selected"]: notSelected,
-        [`Select--align-${align}`]: !!align,
-        [`Select--sizeX--${sizeX}`]: !!sizeX,
-        [`Select--sizeY--${sizeY}`]: !!sizeY,
-        "Select--multiline": multiline,
-      })}
+      vkuiClass={classNames(
+        getClassName("Select", platform),
+        notSelected && "Select--not-selected",
+        multiline && "Select--multiline",
+        align && `Select--align-${align}`,
+        `Select--sizeX-${sizeX}`,
+        `Select--sizeY-${sizeY}`
+      )}
       className={className}
       style={style}
       getRootRef={getRootRef}
