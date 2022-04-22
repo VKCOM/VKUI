@@ -35,16 +35,7 @@
   left: 0;
 }
 
-.CalendarHeader__picker-icon {
-  margin-top: -4px;
-  color: var(--vkui--color_icon_secondary);
-}
-
-.CalendarHeader__month_name {
-  text-transform: capitalize;
-}
-
-.CalendarHeader__pickers-placeholder {
+.CalendarHeader__month {
   text-transform: capitalize;
 }
 
