@@ -12,22 +12,22 @@ export interface GridAvatarProps
   src?: string[];
 }
 
-const MAX_GRID_LENGTH = 4;
+export const MAX_GRID_LENGTH = 4;
 
 const warn = warnOnce("GridAvatar");
 export const GridAvatar: React.FC<GridAvatarProps> = ({
   src = [],
   ...restProps
-}: GridAvatarProps) => {
+}) => {
   if (process.env.NODE_ENV === "development" && src.length > MAX_GRID_LENGTH) {
     warn(
-      `Размер пропа src (${src.length}) больше максимального (${MAX_GRID_LENGTH})`
+      `Длина массива src (${src.length}) больше максимальной (${MAX_GRID_LENGTH})`
     );
   }
 
   return (
     <Avatar {...restProps} vkuiClass={classNames("GridAvatar")}>
-      <div vkuiClass="GridAvatar__in" aria-hidden={true}>
+      <div vkuiClass="GridAvatar__in" aria-hidden="true">
         {src.slice(0, MAX_GRID_LENGTH).map((src, i) => (
           <div
             key={i}

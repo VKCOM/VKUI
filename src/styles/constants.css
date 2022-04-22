@@ -1,6 +1,13 @@
 :root {
   /* fonts */
-  --font-common: -apple-system, system-ui, Helvetica Neue, Roboto, sans-serif;
+  --font-common: var(
+    --palette-vk-font,
+    -apple-system,
+    system-ui,
+    Helvetica Neue,
+    Roboto,
+    sans-serif
+  );
   --font-display: "VK Sans Display", -apple-system, system-ui, Helvetica Neue,
     Roboto, sans-serif;
 
