@@ -32,7 +32,7 @@ export interface ChipsInputProps<Option extends ChipsInputOption>
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLDivElement>,
     HasAlign,
-    FormFieldProps {
+    Pick<FormFieldProps, "after"> {
   value: Option[];
   inputValue?: string;
   onChange?: (o: Option[]) => void;
