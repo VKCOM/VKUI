@@ -60,21 +60,6 @@
   }
 }
 
-/**
- * Проверка на iOS.
- *
- * > Не стандартное св-во. Если так и не стандартизируют, то потребуется иначе определять платформу.
- *
- * Ссылки:
- * - https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-touch-callout
- * - https://stackoverflow.com/questions/30102792/css-media-query-to-target-only-ios-devices
- */
-@supports (-webkit-touch-callout: none) {
-  :root {
-    --safe-area-inset-top: 20px;
-  }
-}
-
 @supports (padding-top: constant(safe-area-inset-top)) {
   :root {
     --safe-area-inset-top: constant(safe-area-inset-top);
