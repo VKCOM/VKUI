@@ -38,8 +38,8 @@
   --white: #fff;
   --blue_200: #5c9ce6;
 
-  /* iOS insets */
-  --safe-area-inset-top: 20px;
+  /* insets */
+  --safe-area-inset-top: 0px;
   --safe-area-inset-right: 0px;
   --safe-area-inset-bottom: 0px;
   --safe-area-inset-left: 0px;
