@@ -54,7 +54,7 @@ body[scheme="vkcom_light"],
   --button_tertiary_background: rgba(0, 0, 0, 0);
   --button_tertiary_foreground: #2a5885;
   --cell_button_foreground: #2a5885;
-  --content_negative_background: #ff5c5c;
+  --content_negative_background: #faebeb;
   --content_placeholder_icon: #99a2ad;
   --content_placeholder_text: #818c99;
   --content_positive_background: #def0d3;
@@ -62,6 +62,7 @@ body[scheme="vkcom_light"],
   --content_tint_foreground: #828282;
   --content_warning_background: #faefd2;
   --control_background: #edeef0;
+  --control_background_secondary: #ffffff;
   --control_foreground: #5181b8;
   --control_tint: #ffffff;
   --control_tint_muted: #828282;
@@ -75,6 +76,7 @@ body[scheme="vkcom_light"],
   --dynamic_blue: #5181b8;
   --dynamic_gray: #aeb7c2;
   --dynamic_green: #1b7a1b;
+  --dynamic_neon_pink: #f45fff;
   --dynamic_orange: #ffa000;
   --dynamic_purple: #735ce6;
   --dynamic_raspberry_pink: #e03fab;
@@ -211,7 +213,7 @@ body[scheme="vkcom_light"],
   --separator_alternate: #e7e8ec;
   --separator_common: #dce1e6;
   --skeleton_foreground_from: #f0f2f5;
-  --skeleton_foreground_to: #e7e8ec;
+  --skeleton_foreground_to: #edeef0;
   --skeleton_shimmer_from: #ffffff;
   --skeleton_shimmer_to: rgba(255, 255, 255, 0);
   --snippet_background: #ffffff;
