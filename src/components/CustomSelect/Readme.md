@@ -41,16 +41,14 @@ const Example = () => {
 
   const [value, setValue] = React.useState("0");
   const [query, setQuery] = React.useState("");
-  const [fetching, setFetching] = React.useState(false);
   const [newUsers, setNewUsers] = React.useState([...getUsers()]);
 
+  const [searchable, setSearchable] = React.useState(false);
   const [remoteQuery, setRemoteQuery] = React.useState("");
-  const [fetchingSearch, setFetchingSearch] = React.useState(false);
+  const [fetching, setFetching] = React.useState(false);
   const [remoteUsers, setRemoteUsers] = React.useState([]);
-  const [remoteUsersSearch, setRemoteUsersSearch] = React.useState([]);
 
   let timeout;
-  let timeoutSearch;
 
   const users = [...getUsers()];
 
@@ -66,155 +64,158 @@ const Example = () => {
   };
 
   return (
-    <View activePanel="profile" id="profile">
-      <Panel id="profile">
-        <Group separator="hide">
-          <FormItem top="Администратор" bottom="Базовый пример использования">
-            <CustomSelect placeholder="Не выбран" options={users} />
-          </FormItem>
-          <FormItem
-            top="Администратор"
-            bottom="Кастомный дизайн элементов списка"
-          >
-            <CustomSelect
-              placeholder="Не выбран"
-              options={users}
-              renderOption={({ option, ...restProps }) => (
-                <CustomSelectOption
-                  {...restProps}
-                  before={<Avatar size={24} src={option.avatar} />}
-                  description={option.description}
-                />
-              )}
+    <Div>
+      <Header>Базовые примеры использования</Header>
+      <FormItem top="Администратор" bottom="Базовый пример использования">
+        <CustomSelect placeholder="Не выбран" options={users} />
+      </FormItem>
+
+      <FormItem top="Администратор" bottom="Кастомный дизайн элементов списка">
+        <CustomSelect
+          placeholder="Не выбран"
+          options={users}
+          renderOption={({ option, ...restProps }) => (
+            <CustomSelectOption
+              {...restProps}
+              before={<Avatar size={24} src={option.avatar} />}
+              description={option.description}
             />
-          </FormItem>
-          <Header>Поиск</Header>
-          <FormItem top="Администратор" bottom="Поиск по списку">
-            <CustomSelect
-              placeholder="Введите имя пользователя"
+          )}
+        />
+      </FormItem>
+
+      <Header>Поиск</Header>
+      <FormItem top="Администратор" bottom="Поиск по списку">
+        <CustomSelect
+          placeholder="Введите имя пользователя"
+          searchable
+          options={users}
+        />
+      </FormItem>
+
+      <FormItem top="Администратор" bottom="Кастомное поведение при поиске">
+        <CustomSelect
+          placeholder="Введите имя пользователя"
+          searchable
+          options={customSearchOptions()}
+          onInputChange={(e) => {
+            setQuery(e.target.value);
+          }}
+          renderOption={({ option, ...restProps }) => (
+            <CustomSelectOption
+              style={option.value === "0" ? { color: "var(--accent)" } : {}}
+              {...restProps}
+            >
+              {option.label}
+            </CustomSelectOption>
+          )}
+          onChange={(e) => {
+            if (e.target.value === "0") {
+              setNewUsers([...newUsers, { label: query, value: query }]);
+              setQuery("");
+            } else {
+              setValue(e.target.value);
+            }
+            setQuery("");
+          }}
+        />
+      </FormItem>
+      <FormItem top="Город" bottom="Кастомный алгоритм поиска">
+        <CustomSelect
+          placeholder="Введите название города или страны"
+          searchable
+          filterFn={(value, option) =>
+            option.label.toLowerCase().includes(value.toLowerCase()) ||
+            option.description.toLowerCase().includes(value.toLowerCase())
+          }
+          renderOption={({ option, ...restProps }) => (
+            <CustomSelectOption
+              {...restProps}
+              description={option.description}
+            />
+          )}
+          options={cities}
+        />
+      </FormItem>
+
+      <Header>Асинхронная загрузка списка</Header>
+      <FormLayoutGroup mode="horizontal">
+        <FormItem style={{ flexGrow: 1, flexShrink: 1 }}>
+          <CustomSelect
+            searchable={searchable}
+            placeholder={searchable ? "Введите имя пользователя" : "Не выбран"}
+            disabled={searchable && fetching}
+            onInputChange={
               searchable
-              options={users}
-            />
-          </FormItem>
-          <FormItem top="Город" bottom="Кастомный алгоритм поиска">
-            <CustomSelect
-              placeholder="Введите название города или страны"
-              searchable
-              filterFn={(value, option) =>
-                option.label.toLowerCase().includes(value.toLowerCase()) ||
-                option.description.toLowerCase().includes(value.toLowerCase())
-              }
-              renderOption={({ option, ...restProps }) => (
-                <CustomSelectOption
-                  {...restProps}
-                  description={option.description}
-                />
-              )}
-              options={cities}
-            />
-          </FormItem>
-          <FormItem top="Администратор" bottom="Кастомное поведение при поиске">
-            <CustomSelect
-              placeholder="Введите имя пользователя"
-              searchable
-              options={customSearchOptions()}
-              onInputChange={(e) => {
-                setQuery(e.target.value);
-              }}
-              renderOption={({ option, ...restProps }) => (
-                <CustomSelectOption
-                  style={option.value === "0" ? { color: "var(--accent)" } : {}}
-                  {...restProps}
-                >
-                  {option.label}
-                </CustomSelectOption>
-              )}
-              onChange={(e) => {
-                if (e.target.value === "0") {
-                  setNewUsers([...newUsers, { label: query, value: query }]);
-                  setQuery("");
-                } else {
-                  setValue(e.target.value);
-                }
-                setQuery("");
-              }}
-            />
-          </FormItem>
-          <Header>Асинхронная загрузка списка</Header>
-          <FormItem top="Администратор">
-            <CustomSelect
-              placeholder="Не выбран"
-              onOpen={() => {
-                if (remoteUsers.length === 0) {
-                  setFetching(true);
-                  timeout = setTimeout(() => {
-                    setRemoteUsers([...getUsers()]);
-                    setFetching(false);
+                ? (e) => {
+                    const _remoteQuery = e.target.value;
                     clearTimeout(timeout);
-                  }, 1500);
-                }
-              }}
-              onClose={() => {
-                clearTimeout(timeout);
-                setRemoteUsers([]);
-              }}
-              fetching={fetching}
-              options={remoteUsers}
-            />
-          </FormItem>
-          <FormItem top="Администратор" bottom="Асинхронный поиск">
-            <CustomSelect
-              placeholder="Введите имя пользователя"
-              searchable
-              disabled={fetchingSearch}
-              onInputChange={(e) => {
-                const _remoteQuery = e.target.value;
-                clearTimeout(timeoutSearch);
-                setRemoteQuery(_remoteQuery);
-                if (_remoteQuery.length < 3) {
-                  setRemoteUsersSearch([]);
-                  setFetchingSearch(false);
-                } else {
-                  setFetchingSearch(true);
-                  timeoutSearch = setTimeout(() => {
-                    setRemoteUsersSearch([...getUsers()]);
-                    setFetchingSearch(false);
-                  }, 1500);
-                }
-              }}
-              onClose={() => {
-                clearTimeout(timeoutSearch);
-                setRemoteUsersSearch([]);
-                setRemoteQuery("");
-              }}
-              filterFn={false}
-              options={remoteUsersSearch}
-              fetching={fetchingSearch}
-              renderDropdown={
-                !fetchingSearch &&
-                (({ defaultDropdownContent }) => {
-                  if (remoteQuery.length < 3) {
-                    return (
-                      <Text
-                        style={{
-                          padding: 12,
-                          color: "var(--text_secondary)",
-                        }}
-                        weight="regular"
-                      >
-                        Нужно ввести хотя бы три символа
-                      </Text>
-                    );
-                  } else {
-                    return defaultDropdownContent;
+                    setRemoteQuery(_remoteQuery);
+                    if (_remoteQuery.length < 3) {
+                      setRemoteUsers([]);
+                      setFetching(false);
+                    } else {
+                      setFetching(true);
+                      timeout = setTimeout(() => {
+                        setRemoteUsers([...getUsers()]);
+                        setFetching(false);
+                      }, 1500);
+                    }
                   }
-                })
-              }
-            />
-          </FormItem>
-        </Group>
-      </Panel>
-    </View>
+                : undefined
+            }
+            onOpen={
+              !searchable
+                ? () => {
+                    if (remoteUsers.length === 0) {
+                      setFetching(true);
+                      timeout = setTimeout(() => {
+                        setRemoteUsers([...getUsers()]);
+                        setFetching(false);
+                        clearTimeout(timeout);
+                      }, 1500);
+                    }
+                  }
+                : undefined
+            }
+            onClose={() => {
+              clearTimeout(timeout);
+              setRemoteUsers([]);
+              setRemoteQuery("");
+            }}
+            fetching={fetching}
+            options={remoteUsers}
+            renderDropdown={
+              searchable &&
+              !fetching &&
+              (({ defaultDropdownContent }) => {
+                if (remoteQuery.length < 3) {
+                  return (
+                    <Text
+                      style={{
+                        padding: 12,
+                        color: "var(--text_secondary)",
+                      }}
+                      weight="regular"
+                    >
+                      Нужно ввести хотя бы три символа
+                    </Text>
+                  );
+                } else {
+                  return defaultDropdownContent;
+                }
+              })
+            }
+          />
+        </FormItem>
+
+        <FormItem style={{ flexBasis: "200px", flexGrow: 0 }}>
+          <Checkbox onChange={(e) => setSearchable(e.target.checked)}>
+            Использовать поиск
+          </Checkbox>
+        </FormItem>
+      </FormLayoutGroup>
+    </Div>
   );
 };
 
