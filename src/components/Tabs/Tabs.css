@@ -34,15 +34,6 @@
   justify-content: flex-start;
 }
 
-.Tabs--sizeX-compact.Tabs--buttons .HorizontalScroll__in-wrapper::after,
-.Tabs--sizeX-compact.Tabs--buttons .HorizontalScroll__in-wrapper::before {
-  display: block;
-  width: 8px;
-  flex-shrink: 0;
-  height: 1px;
-  content: "";
-}
-
 /*
  iOS
  */

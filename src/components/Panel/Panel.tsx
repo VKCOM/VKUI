@@ -4,56 +4,49 @@ import { classNames } from "../../lib/classNames";
 import { Touch } from "../Touch/Touch";
 import { TooltipContainer } from "../Tooltip/TooltipContainer";
 import { HasRootRef } from "../../types";
-import { withAdaptivity } from "../../hoc/withAdaptivity";
 import { IOS } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
 import { NavIdProps } from "../../lib/getNavId";
-import {
-  AdaptivityContextInterface,
-  AdaptivityProps,
-} from "../AdaptivityProvider/AdaptivityContext";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./Panel.css";
 
 export interface PanelProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement>,
-    AdaptivityProps,
     NavIdProps {
   centered?: boolean;
 }
 
-export const Panel = withAdaptivity<PanelProps & AdaptivityContextInterface>(
-  ({ centered = false, children, getRootRef, sizeX, nav, ...restProps }) => {
-    const platform = usePlatform();
+export const Panel: React.FC<PanelProps> = ({
+  centered = false,
+  children,
+  getRootRef,
+  nav,
+  ...restProps
+}) => {
+  const platform = usePlatform();
+  const { sizeX } = useAdaptivity();
 
-    return (
-      <div
-        {...restProps}
-        ref={getRootRef}
-        // eslint-disable-next-line vkui/no-object-expression-in-arguments
-        vkuiClass={classNames(
-          getClassName("Panel", platform),
-          `Panel--${sizeX}`,
-          {
-            "Panel--centered": centered,
-            [`Panel--sizeX-${sizeX}`]: true,
-          }
+  return (
+    <div
+      {...restProps}
+      ref={getRootRef}
+      vkuiClass={classNames(
+        getClassName("Panel", platform),
+        centered && "Panel--centered",
+        sizeX && `Panel--sizeX-${sizeX}`
+      )}
+    >
+      <Touch Component={TooltipContainer} vkuiClass="Panel__in">
+        {platform === IOS && <div vkuiClass="Panel__fade" />}
+        <div vkuiClass="Panel__in-before" />
+        {centered ? (
+          <div vkuiClass="Panel__centered">{children}</div>
+        ) : (
+          children
         )}
-      >
-        <Touch Component={TooltipContainer} vkuiClass="Panel__in">
-          {platform === IOS && <div vkuiClass="Panel__fade" />}
-          <div vkuiClass="Panel__in-before" />
-          {centered ? (
-            <div vkuiClass="Panel__centered">{children}</div>
-          ) : (
-            children
-          )}
-          <div vkuiClass="Panel__in-after" />
-        </Touch>
-      </div>
-    );
-  },
-  {
-    sizeX: true,
-  }
-);
+        <div vkuiClass="Panel__in-after" />
+      </Touch>
+    </div>
+  );
+};

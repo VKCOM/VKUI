@@ -29,3 +29,24 @@
   .HorizontalScroll__in-wrapper {
   transform: translateX(-8px);
 }
+
+.Tabs--sizeX-compact.Tabs--buttons .HorizontalScroll__in-wrapper::after,
+.Tabs--sizeX-compact.Tabs--buttons .HorizontalScroll__in-wrapper::before {
+  display: block;
+  width: 8px;
+  flex-shrink: 0;
+  height: 1px;
+  content: "";
+}
+
+@media (max-width: 767px) {
+  :not(.Tabs--sizeX-regular).Tabs--buttons .HorizontalScroll__in-wrapper::after,
+  :not(.Tabs--sizeX-regular).Tabs--buttons
+    .HorizontalScroll__in-wrapper::before {
+    display: block;
+    width: 8px;
+    flex-shrink: 0;
+    height: 1px;
+    content: "";
+  }
+}

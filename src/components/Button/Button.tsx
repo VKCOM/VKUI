@@ -30,7 +30,8 @@ export interface VKUIButtonProps extends HasAlign {
 
 export interface ButtonProps
   extends Omit<TappableProps, "size">,
-    VKUIButtonProps {}
+    VKUIButtonProps,
+    AdaptivityProps {}
 
 interface ButtonTypographyProps extends HasComponent {
   size: ButtonProps["size"];
@@ -83,7 +84,7 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = (
 const ButtonComponent: React.FC<ButtonProps> = ({
   size = "s",
   mode = "primary",
-  appearance,
+  appearance = "accent",
   stretched = false,
   align = "center",
   children,

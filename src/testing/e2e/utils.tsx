@@ -17,7 +17,7 @@ import {
   SizeType,
   ViewWidth,
 } from "../../components/AdaptivityProvider/AdaptivityContext";
-import { AdaptivityProps, withAdaptivity } from "../../hoc/withAdaptivity";
+import { AdaptivityProps } from "../../hoc/withAdaptivity";
 import View from "../../components/View/View";
 import { AppRoot } from "../../components/AppRoot/AppRoot";
 import Group from "../../components/Group/Group";
@@ -167,11 +167,6 @@ export function describeScreenshotFuzz<Props>(
         adaptivity
       );
 
-      const AdaptiveComponent = withAdaptivity(Component, {
-        sizeX: true,
-        sizeY: true,
-      });
-
       (isVKCOM ? vkcomSchemes : mobileSchemes).forEach((scheme: Scheme) => {
         it(`light${
           adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ""
@@ -194,7 +189,12 @@ export function describeScreenshotFuzz<Props>(
                           <Fragment key={i}>
                             <div>{prettyProps(props)}</div>
                             <div>
-                              <AdaptiveComponent {...props} />
+                              <AdaptivityProvider
+                                sizeX={props.sizeX}
+                                sizeY={props.sizeY}
+                              >
+                                <Component {...props} />
+                              </AdaptivityProvider>
                             </div>
                           </Fragment>
                         )

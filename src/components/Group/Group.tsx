@@ -6,18 +6,13 @@ import { usePlatform } from "../../hooks/usePlatform";
 import Separator from "../Separator/Separator";
 import { hasReactNode } from "../../lib/utils";
 import { Caption } from "../Typography/Caption/Caption";
-import {
-  withAdaptivity,
-  AdaptivityProps,
-  SizeType,
-} from "../../hoc/withAdaptivity";
 import ModalRootContext from "../ModalRoot/ModalRootContext";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./Group.css";
 
 export interface GroupProps
   extends HasRootRef<HTMLElement>,
-    React.HTMLAttributes<HTMLElement>,
-    AdaptivityProps {
+    React.HTMLAttributes<HTMLElement> {
   header?: React.ReactNode;
   description?: React.ReactNode;
   /**
@@ -40,20 +35,19 @@ const Group: React.FC<GroupProps> = (props: GroupProps) => {
     header,
     description,
     children,
-    separator,
+    separator = "auto",
     getRootRef,
     mode,
-    sizeX,
     ...restProps
   } = props;
   const { isInsideModal } = React.useContext(ModalRootContext);
   const platform = usePlatform();
+  const { sizeX } = useAdaptivity();
 
   let computedMode: GroupProps["mode"] = mode;
 
-  if (!mode) {
-    computedMode =
-      sizeX === SizeType.COMPACT || isInsideModal ? "plain" : "card";
+  if (!mode && isInsideModal) {
+    computedMode = "plain";
   }
 
   return (
@@ -62,8 +56,8 @@ const Group: React.FC<GroupProps> = (props: GroupProps) => {
       ref={getRootRef}
       vkuiClass={classNames(
         getClassName("Group", platform),
-        `Group--sizeX-${sizeX}`,
-        `Group--${computedMode}`
+        sizeX && `Group--sizeX-${sizeX}`,
+        computedMode && `Group--${computedMode}`
       )}
     >
       <div vkuiClass="Group__inner">
@@ -87,9 +81,5 @@ const Group: React.FC<GroupProps> = (props: GroupProps) => {
   );
 };
 
-Group.defaultProps = {
-  separator: "auto",
-};
-
 // eslint-disable-next-line import/no-default-export
-export default withAdaptivity(Group, { sizeX: true });
+export default Group;

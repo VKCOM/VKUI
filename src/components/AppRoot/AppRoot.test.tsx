@@ -2,7 +2,6 @@ import { render } from "@testing-library/react";
 import { baselineComponent } from "../../testing/utils";
 import { AppRootContext } from "./AppRootContext";
 import { AppRoot } from "./AppRoot";
-import { SizeType } from "../../hoc/withAdaptivity";
 
 describe("AppRoot", () => {
   baselineComponent(AppRoot);
@@ -42,23 +41,6 @@ describe("AppRoot", () => {
           );
           unmount();
           expect(container).not.toHaveClass();
-        }
-      );
-      it.each(["embedded", "full"] as const)(
-        "adaptivity class in %s mode",
-        (mode) => {
-          const { unmount, container, rerender } = render(
-            <AppRoot mode={mode} />
-          );
-          const adaptiveTarget =
-            mode === "embedded" ? container : document.body;
-          expect(adaptiveTarget).not.toHaveClass("vkui--sizeX-regular");
-          // adds class
-          rerender(<AppRoot mode={mode} sizeX={SizeType.REGULAR} />);
-          expect(adaptiveTarget).toHaveClass("vkui--sizeX-regular");
-          unmount();
-          // removes class on unmount
-          expect(adaptiveTarget).not.toHaveClass();
         }
       );
     });

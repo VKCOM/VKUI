@@ -9,7 +9,6 @@ import { ANDROID } from "../../lib/platform";
 import { getOffsetRect } from "../../lib/offset";
 import { coordX, coordY } from "../../lib/touch";
 import { HasComponent, HasRootRef } from "../../types";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { shouldTriggerClickOnEnterOrSpace } from "../../lib/accessibility";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { FocusVisible, FocusVisibleMode } from "../FocusVisible/FocusVisible";
@@ -19,6 +18,7 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { useFocusVisible } from "../../hooks/useFocusVisible";
 import { callMultiple } from "../../lib/callMultiple";
 import { useBooleanState } from "../../hooks/useBooleanState";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./Tappable.css";
 
 export interface TappableProps
@@ -34,7 +34,6 @@ export interface TappableProps
       | "onMouseLeave"
     >,
     HasRootRef<HTMLElement>,
-    AdaptivityProps,
     HasComponent,
     Pick<TouchProps, "onStart" | "onEnd" | "onMove"> {
   /**
@@ -153,9 +152,6 @@ const Tappable: React.FC<TappableProps> = ({
   activeEffectDelay = ACTIVE_EFFECT_DELAY,
   stopPropagation = false,
   getRootRef,
-  sizeX,
-  hasMouse,
-  deviceHasHover,
   hasHover: _hasHover = true,
   hoverMode = "background",
   hasActive: _hasActive = true,
@@ -171,6 +167,7 @@ const Tappable: React.FC<TappableProps> = ({
   const insideTouchRoot = React.useContext(TouchRootContext);
   const platform = usePlatform();
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
+  const { sizeX, hasMouse, deviceHasHover } = useAdaptivity();
 
   const [clicks, setClicks] = React.useState<Wave[]>([]);
   const [childHover, setChildHover] = React.useState(false);
@@ -264,7 +261,7 @@ const Tappable: React.FC<TappableProps> = ({
   // eslint-disable-next-line vkui/no-object-expression-in-arguments
   const classes = classNames(
     getClassName("Tappable", platform),
-    `Tappable--sizeX-${sizeX}`,
+    sizeX && `Tappable--sizeX-${sizeX}`,
     hasHover && `Tappable--hasHover`,
     hasActive && `Tappable--hasActive`,
     hasHover && hovered && !isPresetHoverMode && hoverMode,
@@ -339,11 +336,7 @@ const Tappable: React.FC<TappableProps> = ({
 };
 
 // eslint-disable-next-line import/no-default-export
-export default withAdaptivity(Tappable, {
-  sizeX: true,
-  hasMouse: true,
-  deviceHasHover: true,
-});
+export default Tappable;
 
 function Wave({ x, y, onClear }: Wave & { onClear: VoidFunction }) {
   const timeout = useTimeout(onClear, 225);

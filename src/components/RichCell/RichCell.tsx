@@ -6,10 +6,10 @@ import Tappable, { TappableProps } from "../Tappable/Tappable";
 import { hasReactNode } from "../../lib/utils";
 import Text from "../Typography/Text/Text";
 import { Subhead } from "../Typography/Subhead/Subhead";
-import { withAdaptivity } from "../../hoc/withAdaptivity";
+import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import "./RichCell.css";
 
-export interface RichCellProps extends TappableProps {
+export interface RichCellProps extends TappableProps, AdaptivityProps {
   /**
    * Контейнер для текста под `children`.
    */

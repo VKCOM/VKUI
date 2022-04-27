@@ -126,6 +126,12 @@
   border-radius: 0;
 }
 
+@media (max-width: 767px) {
+  .Tappable:not(.Tappable--sizeX-regular) {
+    border-radius: 0;
+  }
+}
+
 /**
  * Animations
  */

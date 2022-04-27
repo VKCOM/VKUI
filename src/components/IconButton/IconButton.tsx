@@ -3,11 +3,11 @@ import Tappable, { TappableProps } from "../Tappable/Tappable";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
-import { withAdaptivity } from "../../hoc/withAdaptivity";
+import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { IOS } from "../../lib/platform";
 import "./IconButton.css";
 
-export type IconButtonProps = TappableProps;
+export type IconButtonProps = TappableProps & AdaptivityProps;
 
 const IconButton: React.FC<IconButtonProps> = ({
   sizeY,

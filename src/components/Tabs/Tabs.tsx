@@ -4,13 +4,12 @@ import { classNames } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import { IOS } from "../../lib/platform";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./Tabs.css";
 
 export interface TabsProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    HasRootRef<HTMLDivElement>,
-    AdaptivityProps {
+    HasRootRef<HTMLDivElement> {
   mode?: "default" | "buttons" | "segmented";
 }
 
@@ -21,10 +20,10 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
   children,
   mode,
   getRootRef,
-  sizeX,
   ...restProps
 }: TabsProps) => {
   const platform = usePlatform();
+  const { sizeX } = useAdaptivity();
 
   if (platform !== IOS && mode === "segmented") {
     mode = "default";
@@ -37,7 +36,7 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
       vkuiClass={classNames(
         getClassName("Tabs", platform),
         `Tabs--${mode}`,
-        `Tabs--sizeX-${sizeX}`
+        sizeX && `Tabs--sizeX-${sizeX}`
       )}
     >
       <div vkuiClass="Tabs__in">
@@ -54,4 +53,4 @@ Tabs.defaultProps = {
 };
 
 // eslint-disable-next-line import/no-default-export
-export default withAdaptivity(Tabs, { sizeX: true });
+export default Tabs;

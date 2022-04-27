@@ -12,11 +12,23 @@
   .Separator__in:not(.Separator__in--expanded) {
     transform: scaleY(0.5);
   }
+
+  @media (min-width: 768px) {
+    .PanelHeader:not(.PanelHeader--sizeX-compact) .Separator__in {
+      transform: none;
+    }
+  }
 }
 
 @media (min-resolution: 3dppx) {
   .Separator__in:not(.Separator__in--expanded) {
     transform: scaleY(0.32);
+  }
+
+  @media (min-width: 768px) {
+    .PanelHeader:not(.PanelHeader--sizeX-compact) .Separator__in {
+      transform: none;
+    }
   }
 }
 
@@ -45,4 +57,16 @@
 .ModalPage--sizeX-regular .Separator:not(.Separator--wide) {
   padding-left: 8px;
   padding-right: 8px;
+}
+
+@media (min-width: 768px) {
+  .ModalPage:not(.ModalPage--sizeX-compact) .Separator:not(.Separator--wide) {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .PanelHeader:not(.PanelHeader--sizeX-compact) .Separator__in {
+    height: 16px;
+    background: transparent;
+  }
 }

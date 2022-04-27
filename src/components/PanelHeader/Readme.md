@@ -26,7 +26,7 @@ class Example extends React.Component {
   }
 
   render() {
-    const { sizeX, platform } = this.props;
+    const { platform } = this.props;
     return (
       <Root activeView={this.state.activeView}>
         <View id="main" activePanel={this.state.mainPanel}>
@@ -187,7 +187,6 @@ class Example extends React.Component {
           </Panel>
           <Panel id="modal-panel3">
             <PanelHeader
-              separator={platform === VKCOM || sizeX === SizeType.REGULAR}
               left={
                 platform !== VKCOM && (
                   <PanelHeaderBack
@@ -217,7 +216,6 @@ class Example extends React.Component {
           </Panel>
           <Panel id="modal-panel4">
             <PanelHeader
-              separator={platform === VKCOM || sizeX === SizeType.REGULAR}
               left={
                 <PanelHeaderBack
                   onClick={() => this.setState({ modalPanel: "modal-panel3" })}
@@ -236,9 +234,7 @@ class Example extends React.Component {
   }
 }
 
-const ExampleWithPlatform = withAdaptivity(withPlatform(Example), {
-  sizeX: true,
-});
+const ExampleWithPlatform = withPlatform(Example);
 
 <ExampleWithPlatform />;
 ```

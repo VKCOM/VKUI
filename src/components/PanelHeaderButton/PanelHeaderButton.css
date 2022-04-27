@@ -100,3 +100,10 @@
 .PanelHeaderButton--vkcom.PanelHeaderButton--notPrimitive {
   border-radius: 50%;
 }
+
+@media (max-width: 767px) {
+  .PanelHeaderBack--ios:not(.PanelHeaderBack--sizeX-regular)
+    .PanelHeaderButton__label {
+    display: none;
+  }
+}

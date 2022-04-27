@@ -32,6 +32,12 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
 }
 
+@media (min-width: 768px) {
+  .PanelHeader--shadow .PanelHeader__in {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
+  }
+}
+
 .PanelHeader__left {
   box-sizing: border-box;
   color: var(--header_tint);
@@ -68,6 +74,12 @@
 
 .PanelHeader--sizeX-compact .PanelHeader__separator {
   padding-top: 4px;
+}
+
+@media (max-width: 767px) {
+  .PanelHeader:not(.PanelHeader--sizeX-regular) .PanelHeader__separator {
+    padding-top: 4px;
+  }
 }
 
 /**

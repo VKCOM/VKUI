@@ -11,8 +11,10 @@
   overflow: auto;
 }
 
-.vkui--sizeX-regular {
-  background: var(--background_page);
+@media (min-width: 768px) {
+  .vkui__root {
+    background: var(--background_page);
+  }
 }
 
 .AppRoot--no-mouse {

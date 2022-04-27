@@ -55,6 +55,13 @@
   padding-right: 12px;
 }
 
+@media (max-width: 767px) {
+  .CardGrid--ios:not(.CardGrid--sizeX-regular) {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
 /**
  * Android & VKCOM
  */
@@ -62,6 +69,13 @@
 .CardGrid--android.CardGrid--sizeX-compact {
   padding-left: 16px;
   padding-right: 16px;
+}
+
+@media (max-width: 767px) {
+  .CardGrid--android:not(.CardGrid--sizeX-regular) {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 }
 
 /**
