@@ -128,49 +128,97 @@ describe("AdaptivityProvider", () => {
     it("should apply window adaptivity [viewWidth] SMALL_MOBILE", () => {
       const result = renderExtractAdaptive(300, 420);
 
-      expect(result.viewWidth).toEqual(ViewWidth.SMALL_MOBILE);
+      expect(result).toEqual(
+        expect.objectContaining({
+          sizeY: SizeType.REGULAR,
+          viewWidth: ViewWidth.SMALL_MOBILE,
+          viewHeight: ViewHeight.SMALL,
+        })
+      );
     });
 
     it("should apply window adaptivity [viewWidth] MOBILE", () => {
       const result = renderExtractAdaptive(320, 420);
 
-      expect(result.viewWidth).toEqual(ViewWidth.MOBILE);
+      expect(result).toEqual(
+        expect.objectContaining({
+          sizeY: SizeType.REGULAR,
+          viewWidth: ViewWidth.MOBILE,
+          viewHeight: ViewHeight.SMALL,
+        })
+      );
     });
 
     it("should apply window adaptivity [viewWidth] SMALL_TABLET", () => {
       const result = renderExtractAdaptive(768, 420);
 
-      expect(result.viewWidth).toEqual(ViewWidth.SMALL_TABLET);
+      expect(result).toEqual(
+        expect.objectContaining({
+          sizeY: SizeType.COMPACT,
+          viewWidth: ViewWidth.SMALL_TABLET,
+          viewHeight: ViewHeight.SMALL,
+        })
+      );
     });
 
     it("should apply window adaptivity [viewWidth] TABLET", () => {
       const result = renderExtractAdaptive(1024, 420);
 
-      expect(result.viewWidth).toEqual(ViewWidth.TABLET);
+      expect(result).toEqual(
+        expect.objectContaining({
+          sizeY: SizeType.COMPACT,
+          viewWidth: ViewWidth.TABLET,
+          viewHeight: ViewHeight.SMALL,
+        })
+      );
     });
 
     it("should apply window adaptivity [viewWidth] DESKTOP", () => {
       const result = renderExtractAdaptive(1280, 420);
 
-      expect(result.viewWidth).toEqual(ViewWidth.DESKTOP);
+      expect(result).toEqual(
+        expect.objectContaining({
+          sizeY: SizeType.COMPACT,
+          viewWidth: ViewWidth.DESKTOP,
+          viewHeight: ViewHeight.SMALL,
+        })
+      );
     });
 
     it("should apply window adaptivity [viewHeight] EXTRA_SMALL", () => {
       const result = renderExtractAdaptive(320, 340);
 
-      expect(result.viewHeight).toEqual(ViewHeight.EXTRA_SMALL);
+      expect(result).toEqual(
+        expect.objectContaining({
+          sizeY: SizeType.COMPACT,
+          viewWidth: ViewWidth.MOBILE,
+          viewHeight: ViewHeight.EXTRA_SMALL,
+        })
+      );
     });
 
     it("should apply window adaptivity [viewHeight] SMALL", () => {
       const result = renderExtractAdaptive(320, 415);
 
-      expect(result.viewHeight).toEqual(ViewHeight.SMALL);
+      expect(result).toEqual(
+        expect.objectContaining({
+          sizeY: SizeType.REGULAR,
+          viewWidth: ViewWidth.MOBILE,
+          viewHeight: ViewHeight.SMALL,
+        })
+      );
     });
 
     it("should apply window adaptivity [viewHeight] MEDIUM", () => {
       const result = renderExtractAdaptive(320, 720);
 
-      expect(result.viewHeight).toEqual(ViewHeight.MEDIUM);
+      expect(result).toEqual(
+        expect.objectContaining({
+          sizeY: SizeType.REGULAR,
+          viewWidth: ViewWidth.MOBILE,
+          viewHeight: ViewHeight.MEDIUM,
+        })
+      );
     });
 
     it("should apply window adaptivity [both] SMALL_MOBILE / EXTRA_SMALL", () => {
@@ -178,6 +226,7 @@ describe("AdaptivityProvider", () => {
 
       expect(result).toEqual(
         expect.objectContaining({
+          sizeY: SizeType.COMPACT,
           viewWidth: ViewWidth.SMALL_MOBILE,
           viewHeight: ViewHeight.EXTRA_SMALL,
         })
@@ -189,6 +238,7 @@ describe("AdaptivityProvider", () => {
 
       expect(result).toEqual(
         expect.objectContaining({
+          sizeY: SizeType.COMPACT,
           viewWidth: ViewWidth.SMALL_TABLET,
           viewHeight: ViewHeight.SMALL,
         })
@@ -200,6 +250,7 @@ describe("AdaptivityProvider", () => {
 
       expect(result).toEqual(
         expect.objectContaining({
+          sizeY: SizeType.COMPACT,
           viewWidth: ViewWidth.TABLET,
           viewHeight: ViewHeight.MEDIUM,
         })
@@ -211,6 +262,7 @@ describe("AdaptivityProvider", () => {
 
       expect(result).toEqual(
         expect.objectContaining({
+          sizeY: SizeType.COMPACT,
           viewWidth: ViewWidth.DESKTOP,
           viewHeight: ViewHeight.MEDIUM,
         })
@@ -222,89 +274,89 @@ describe("AdaptivityProvider", () => {
     it("should apply bridge adaptivity [viewWidth] SMALL_MOBILE", () => {
       const result = renderBridgeAdaptive(300, 420);
 
-      expect(result).toEqual(
-        expect.objectContaining({
-          sizeX: SizeType.COMPACT,
-          viewWidth: ViewWidth.SMALL_MOBILE,
-        })
-      );
+      expect(result).toEqual({
+        sizeX: SizeType.COMPACT,
+        sizeY: SizeType.REGULAR,
+        viewWidth: ViewWidth.SMALL_MOBILE,
+        viewHeight: ViewHeight.SMALL,
+      });
     });
 
     it("should apply bridge adaptivity [viewWidth] MOBILE", () => {
       const result = renderBridgeAdaptive(320, 420);
 
-      expect(result).toEqual(
-        expect.objectContaining({
-          sizeX: SizeType.COMPACT,
-          viewWidth: ViewWidth.MOBILE,
-        })
-      );
+      expect(result).toEqual({
+        sizeX: SizeType.COMPACT,
+        sizeY: SizeType.REGULAR,
+        viewWidth: ViewWidth.MOBILE,
+        viewHeight: ViewHeight.SMALL,
+      });
     });
 
     it("should apply bridge adaptivity [viewWidth] SMALL_TABLET", () => {
       const result = renderBridgeAdaptive(768, 420);
 
-      expect(result).toEqual(
-        expect.objectContaining({
-          sizeX: SizeType.REGULAR,
-          viewWidth: ViewWidth.SMALL_TABLET,
-        })
-      );
+      expect(result).toEqual({
+        sizeX: SizeType.REGULAR,
+        sizeY: SizeType.COMPACT,
+        viewWidth: ViewWidth.SMALL_TABLET,
+        viewHeight: ViewHeight.SMALL,
+      });
     });
 
     it("should apply bridge adaptivity [viewWidth] TABLET", () => {
       const result = renderBridgeAdaptive(1024, 420);
 
-      expect(result).toEqual(
-        expect.objectContaining({
-          sizeX: SizeType.REGULAR,
-          viewWidth: ViewWidth.TABLET,
-        })
-      );
+      expect(result).toEqual({
+        sizeX: SizeType.REGULAR,
+        sizeY: SizeType.COMPACT,
+        viewWidth: ViewWidth.TABLET,
+        viewHeight: ViewHeight.SMALL,
+      });
     });
 
     it("should apply bridge adaptivity [viewWidth] DESKTOP", () => {
       const result = renderBridgeAdaptive(1280, 420);
 
-      expect(result).toEqual(
-        expect.objectContaining({
-          sizeX: SizeType.REGULAR,
-          viewWidth: ViewWidth.DESKTOP,
-        })
-      );
+      expect(result).toEqual({
+        sizeX: SizeType.REGULAR,
+        sizeY: SizeType.COMPACT,
+        viewWidth: ViewWidth.DESKTOP,
+        viewHeight: ViewHeight.SMALL,
+      });
     });
 
     it("should apply bridge adaptivity [viewHeight] EXTRA_SMALL", () => {
       const result = renderBridgeAdaptive(320, 340);
 
-      expect(result).toEqual(
-        expect.objectContaining({
-          sizeY: SizeType.COMPACT,
-          viewHeight: ViewHeight.EXTRA_SMALL,
-        })
-      );
+      expect(result).toEqual({
+        sizeX: SizeType.COMPACT,
+        sizeY: SizeType.COMPACT,
+        viewWidth: ViewWidth.MOBILE,
+        viewHeight: ViewHeight.EXTRA_SMALL,
+      });
     });
 
     it("should apply bridge adaptivity [viewHeight] SMALL", () => {
       const result = renderBridgeAdaptive(320, 415);
 
-      expect(result).toEqual(
-        expect.objectContaining({
-          sizeY: SizeType.REGULAR,
-          viewHeight: ViewHeight.SMALL,
-        })
-      );
+      expect(result).toEqual({
+        sizeX: SizeType.COMPACT,
+        sizeY: SizeType.REGULAR,
+        viewWidth: ViewWidth.MOBILE,
+        viewHeight: ViewHeight.SMALL,
+      });
     });
 
     it("should apply bridge adaptivity [viewHeight] MEDIUM", () => {
       const result = renderBridgeAdaptive(320, 720);
 
-      expect(result).toEqual(
-        expect.objectContaining({
-          sizeY: SizeType.REGULAR,
-          viewHeight: ViewHeight.MEDIUM,
-        })
-      );
+      expect(result).toEqual({
+        sizeX: SizeType.COMPACT,
+        sizeY: SizeType.REGULAR,
+        viewWidth: ViewWidth.MOBILE,
+        viewHeight: ViewHeight.MEDIUM,
+      });
     });
 
     it("should apply bridge adaptivity [both] SMALL_MOBILE / EXTRA_SMALL", () => {
