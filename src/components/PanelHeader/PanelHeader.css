@@ -28,10 +28,6 @@
   background: transparent;
 }
 
-.PanelHeader--shadow .PanelHeader__in {
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
-}
-
 @media (min-width: 768px) {
   .PanelHeader--shadow .PanelHeader__in {
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
