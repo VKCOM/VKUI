@@ -13,8 +13,8 @@
 }
 
 @media (min-width: 768px) {
-  .Group:not(.Group--sizeX-compact) > .Group__inner,
-  .Group--plain:not(.Group--sizeX-compact) > .Group__separator {
+  .Group--sizeX-none > .Group__inner,
+  .Group--plain.Group--sizeX-none > .Group__separator {
     padding: 8px;
   }
 }
@@ -62,7 +62,7 @@
 }
 
 @media (min-width: 768px) {
-  .Group--card:not(.Group--sizeX-compact):last-of-type > .Group__separator,
+  .Group--sizeX-none:last-of-type > .Group__separator,
   .Group:not(.Group--plain):last-of-type > .Group__separator {
     display: block;
   }

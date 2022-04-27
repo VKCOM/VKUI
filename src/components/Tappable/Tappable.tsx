@@ -5,6 +5,7 @@ import { Touch, TouchEvent, TouchProps } from "../Touch/Touch";
 import TouchRootContext from "../Touch/TouchContext";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { ANDROID } from "../../lib/platform";
 import { getOffsetRect } from "../../lib/offset";
 import { coordX, coordY } from "../../lib/touch";
@@ -258,24 +259,22 @@ const Tappable: React.FC<TappableProps> = ({
     stop(activeDuration >= 100 ? 0 : activeEffectDelay - activeDuration);
   }
 
-  // eslint-disable-next-line vkui/no-object-expression-in-arguments
   const classes = classNames(
     getClassName("Tappable", platform),
-    sizeX && `Tappable--sizeX-${sizeX}`,
+    getSizeXClassName("Tappable", sizeX),
     hasHover && `Tappable--hasHover`,
     hasActive && `Tappable--hasActive`,
     hasHover && hovered && !isPresetHoverMode && hoverMode,
     hasActive && active && !isPresetActiveMode && activeMode,
     focusVisible && !isPresetFocusVisibleMode && focusVisibleMode,
-    {
-      "Tappable--active": hasActive && active,
-      "Tappable--mouse": hasMouse,
-      [`Tappable--hover-${hoverMode}`]:
-        hasHover && hovered && isPresetHoverMode,
-      [`Tappable--active-${activeMode}`]:
-        hasActive && active && isPresetActiveMode,
-      "Tappable--focus-visible": focusVisible,
-    }
+    hasActive && active && "Tappable--active",
+    hasMouse && "Tappable--mouse",
+    hasHover && hovered && isPresetHoverMode && `Tappable--hover-${hoverMode}`,
+    hasActive &&
+      active &&
+      isPresetActiveMode &&
+      `Tappable--active-${activeMode}`,
+    focusVisible && "Tappable--focus-visible"
   );
 
   const handlers: RootComponentProps = {

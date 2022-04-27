@@ -13,6 +13,7 @@ import { useEnsuredControl } from "../../hooks/useEnsuredControl";
 import { useExternRef } from "../../hooks/useExternRef";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import "../Select/Select.css";
 
 export interface NativeSelectProps
@@ -69,7 +70,7 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
         getClassName("Select", platform),
         notSelected && "Select--not-selected",
         align && `Select--align-${align}`,
-        sizeX && `Select--sizeX--${sizeX}`,
+        getSizeXClassName("Select", sizeX),
         sizeY && `Select--sizeY--${sizeY}`,
         multiline && "Select--multiline"
       )}

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./CardGrid.css";
@@ -22,8 +23,8 @@ const CardGrid: React.FunctionComponent<CardGridProps> = ({
       {...restProps}
       vkuiClass={classNames(
         getClassName("CardGrid", platform),
-        `CardGrid--${size}`,
-        sizeX && `CardGrid--sizeX-${sizeX}`
+        getSizeXClassName("CardGrid", sizeX),
+        `CardGrid--${size}`
       )}
     >
       {children}

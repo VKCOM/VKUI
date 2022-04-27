@@ -8,6 +8,7 @@ import { hasReactNode } from "../../lib/utils";
 import { Caption } from "../Typography/Caption/Caption";
 import ModalRootContext from "../ModalRoot/ModalRootContext";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import "./Group.css";
 
 export interface GroupProps
@@ -56,7 +57,7 @@ const Group: React.FC<GroupProps> = (props: GroupProps) => {
       ref={getRootRef}
       vkuiClass={classNames(
         getClassName("Group", platform),
-        sizeX && `Group--sizeX-${sizeX}`,
+        getSizeXClassName("Group", sizeX),
         computedMode && `Group--${computedMode}`
       )}
     >

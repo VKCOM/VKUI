@@ -5,6 +5,7 @@ import { HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import { IOS } from "../../lib/platform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import "./Tabs.css";
 
 export interface TabsProps
@@ -35,8 +36,8 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
       ref={getRootRef}
       vkuiClass={classNames(
         getClassName("Tabs", platform),
-        `Tabs--${mode}`,
-        sizeX && `Tabs--sizeX-${sizeX}`
+        getSizeXClassName("Tabs", sizeX),
+        `Tabs--${mode}`
       )}
     >
       <div vkuiClass="Tabs__in">

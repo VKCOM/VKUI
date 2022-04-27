@@ -1,6 +1,7 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { usePlatform } from "../../hooks/usePlatform";
 import {
@@ -96,7 +97,7 @@ export const CardScroll: React.FC<CardScrollProps> = ({
       {...restProps}
       vkuiClass={classNames(
         getClassName("CardScroll", platform),
-        sizeX && `CardScroll--sizeX-${sizeX}`,
+        getSizeXClassName("CardScroll", sizeX),
         `CardScroll--${size}`,
         withSpaces && "CardScroll--withSpaces"
       )}

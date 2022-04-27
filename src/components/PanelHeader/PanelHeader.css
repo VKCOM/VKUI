@@ -77,7 +77,7 @@
 }
 
 @media (max-width: 767px) {
-  .PanelHeader:not(.PanelHeader--sizeX-regular) .PanelHeader__separator {
+  .PanelHeader--sizeX-none .PanelHeader__separator {
     padding-top: 4px;
   }
 }

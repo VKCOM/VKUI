@@ -127,7 +127,7 @@
 }
 
 @media (max-width: 767px) {
-  .Tappable:not(.Tappable--sizeX-regular) {
+  .Tappable--sizeX-none {
     border-radius: 0;
   }
 }

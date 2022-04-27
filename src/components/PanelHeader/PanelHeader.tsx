@@ -1,6 +1,7 @@
 import * as React from "react";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getClassName } from "../../helpers/getClassName";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { classNames } from "../../lib/classNames";
 import FixedLayout from "../FixedLayout/FixedLayout";
 import Separator from "../Separator/Separator";
@@ -86,6 +87,7 @@ const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
       {...restProps}
       vkuiClass={classNames(
         getClassName("PanelHeader", platform),
+        getSizeXClassName("PanelHeader", sizeX),
         transparent && "PanelHeader--trnsp",
         shadow && "PanelHeader--shadow",
         visor && "PanelHeader--vis",
@@ -95,8 +97,7 @@ const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
           "PanelHeader--vkapps",
         !left && "PanelHeader--no-left",
         !right && "PanelHeader--no-right",
-        isFixed && "PanelHeader--fixed",
-        sizeX && `PanelHeader--sizeX-${sizeX}`
+        isFixed && "PanelHeader--fixed"
       )}
       ref={isFixed ? getRootRef : getRef}
     >

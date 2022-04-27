@@ -12,6 +12,7 @@ import { ANDROID, VKCOM, IOS } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
 import { AdaptivityProps } from "../../hoc/withAdaptivity";
 import { getClassName } from "../../helpers/getClassName";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { classNames } from "../../lib/classNames";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./PanelHeaderBack.css";
@@ -34,7 +35,7 @@ const PanelHeaderBack: React.FC<PanelHeaderBackProps> = ({
       {...restProps}
       vkuiClass={classNames(
         getClassName("PanelHeaderBack", platform),
-        sizeX && `PanelHeaderBack--sizeX-${sizeX}`,
+        getSizeXClassName("PanelHeaderBack", sizeX),
         label && "PanelHeaderBack--has-label"
       )}
       label={showLabel && label}

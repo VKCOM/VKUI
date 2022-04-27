@@ -1,5 +1,6 @@
 import * as React from "react";
 import { getClassName } from "../../helpers/getClassName";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { classNames } from "../../lib/classNames";
 import {
   ModalRootContext,
@@ -88,13 +89,10 @@ const ModalPage: React.FC<ModalPageProps> = (props) => {
   return (
     <div
       {...restProps}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("ModalPage", platform),
-        sizeX && `ModalPage--sizeX-${sizeX}`,
-        {
-          "ModalPage--desktop": isDesktop,
-        }
+        getSizeXClassName("ModalPage", sizeX),
+        isDesktop && "ModalPage--desktop"
       )}
     >
       <div vkuiClass="ModalPage__in-wrap" ref={refs.innerElement}>

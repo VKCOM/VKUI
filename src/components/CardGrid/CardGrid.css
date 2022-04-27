@@ -56,7 +56,7 @@
 }
 
 @media (max-width: 767px) {
-  .CardGrid--ios:not(.CardGrid--sizeX-regular) {
+  .CardGrid--sizeX-none {
     padding-left: 12px;
     padding-right: 12px;
   }

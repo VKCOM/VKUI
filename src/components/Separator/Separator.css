@@ -14,7 +14,7 @@
   }
 
   @media (min-width: 768px) {
-    .PanelHeader:not(.PanelHeader--sizeX-compact) .Separator__in {
+    .PanelHeader--sizeX-none .Separator__in {
       transform: none;
     }
   }
@@ -26,7 +26,7 @@
   }
 
   @media (min-width: 768px) {
-    .PanelHeader:not(.PanelHeader--sizeX-compact) .Separator__in {
+    .PanelHeader--sizeX-none .Separator__in {
       transform: none;
     }
   }
@@ -60,12 +60,12 @@
 }
 
 @media (min-width: 768px) {
-  .ModalPage:not(.ModalPage--sizeX-compact) .Separator:not(.Separator--wide) {
+  .ModalPage--sizeX-none .Separator:not(.Separator--wide) {
     padding-left: 8px;
     padding-right: 8px;
   }
 
-  .PanelHeader:not(.PanelHeader--sizeX-compact) .Separator__in {
+  .ModalPage--sizeX-none .Separator__in {
     height: 16px;
     background: transparent;
   }

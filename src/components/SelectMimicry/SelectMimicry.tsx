@@ -11,6 +11,7 @@ import Text from "../Typography/Text/Text";
 import { VKCOM } from "../../lib/platform";
 import { SelectType } from "../CustomSelect/CustomSelect";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import "../Select/Select.css";
 import "./SelectMimicry.css";
 
@@ -49,12 +50,12 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
       tabIndex={disabled ? undefined : tabIndex}
       vkuiClass={classNames(
         getClassName("Select", platform),
+        getSizeXClassName("Select", sizeX),
         "Select--mimicry",
         `Select--mimicry-${selectType}`,
         !children && "Select--not-selected",
         multiline && "Select--multiline",
         align && `Select--align-${align}`,
-        sizeX && `Select--sizeX--${sizeX}`,
         sizeY && `Select--sizeY--${sizeY}`
       )}
       getRootRef={getRootRef}
