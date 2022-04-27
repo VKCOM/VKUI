@@ -179,8 +179,8 @@ const Tooltip: React.FC<TooltipProps> = ({
     (multiChildren || primitiveChild) &&
       warn(
         [
-          "children must be a single React element, got",
-          multiChildren && "multiple",
+          "children должен быть одним React элементом, получено",
+          multiChildren && "несколько",
           primitiveChild && JSON.stringify(children),
         ]
           .filter(Boolean)

@@ -133,7 +133,10 @@ export function useModalManager(
   useIsomorphicLayoutEffect(() => {
     // ignore non-existent activeModal
     if (process.env.NODE_ENV === "development" && isMissing) {
-      warn(`Can't transition - modal ${activeModal} not found`, "error");
+      warn(
+        `Переход невозможен - модальное окно (страница) ${activeModal} не существует`,
+        "error"
+      );
     }
     dispatchTransition({ type: "setActive", id: safeActiveModal ?? null });
   }, [activeModal]);

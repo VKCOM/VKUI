@@ -72,10 +72,13 @@ export const AppRoot = withAdaptivity<AppRootProps>(
 
     if (process.env.NODE_ENV === "development") {
       if (scroll !== "global" && mode !== "embedded") {
-        warn("Scroll modes only supported in embedded mode", "error");
+        warn(
+          `Свойство scroll="${scroll}" поддерживается только в режиме embedded`,
+          "error"
+        );
       }
       if (_mode && _embedded) {
-        warn(`mode="${mode}" overrides embedded`);
+        warn(`Свойство mode="${mode}" приоритетнее, чем "embedded"`);
       }
     }
 

@@ -28,7 +28,10 @@ const Text: React.FC<TextProps> = ({
     typeof Component !== "string" &&
     getRootRef
   ) {
-    warn("getRootRef can only be used with DOM components", "error");
+    warn(
+      `Свойство "getRootRef" может использоваться только с компонентами DOM`,
+      "error"
+    );
   }
 
   return (
