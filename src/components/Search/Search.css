@@ -357,3 +357,25 @@
 .Group--card .Search--vkcom .Search__input {
   padding-left: 44px;
 }
+
+@media (min-width: 768px) {
+  .Group--none .Search--vkcom {
+    margin: 0 -8px;
+  }
+
+  .Group--none .Search--vkcom:first-child {
+    margin-top: -8px;
+  }
+
+  .Group--none .Search--vkcom:not(:last-child) {
+    margin-bottom: 8px;
+  }
+
+  .Group--none .Search--vkcom .Search__placeholder {
+    padding-left: 20px;
+  }
+
+  .Group--none .Search--vkcom .Search__input {
+    padding-left: 44px;
+  }
+}

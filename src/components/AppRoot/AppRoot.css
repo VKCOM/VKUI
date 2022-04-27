@@ -12,7 +12,7 @@
 }
 
 @media (min-width: 768px) {
-  .vkui__root {
+  .vkuiRootElement {
     background: var(--background_page);
   }
 }

@@ -81,3 +81,14 @@
 .SplitCol--spaced .CardScroll--l .Card:last-of-type {
   margin-right: 0;
 }
+
+@media (min-width: 768px) {
+  .Group--none .CardScroll--l .Card:last-of-type {
+    margin-right: 0;
+  }
+
+  .Group--none .CardScroll--l .Card {
+    width: calc(100% - 32px);
+    margin-right: 16px;
+  }
+}

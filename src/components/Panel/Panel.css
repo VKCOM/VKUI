@@ -102,28 +102,6 @@
   margin-top: calc(var(--panelheader_height_vkcom) + 16px);
 }
 
-@media (min-width: 768px) {
-  .Panel--sizeX-none .Panel__centered .PanelHeader--ios.PanelHeader--sep + * {
-    margin-top: calc(var(--panelheader_height_ios) + 16px);
-  }
-
-  .Panel--sizeX-none
-    .Panel__centered
-    .PanelHeader--android.PanelHeader--sep
-    + * {
-    margin-top: calc(var(--panelheader_height_android) + 16px);
-  }
-
-  .Panel--sizeX-none .Panel__centered .PanelHeader--vkcom.PanelHeader--sep + * {
-    margin-top: calc(var(--panelheader_height_vkcom) + 16px);
-  }
-
-  .Panel--sizeX-none .Panel__in,
-  .Panel--sizeX-none::after {
-    background-color: transparent;
-  }
-}
-
 .Epic .Panel__in {
   padding-bottom: var(--tabbar_height);
   padding-bottom: calc(var(--safe-area-inset-bottom) + var(--tabbar_height));
@@ -152,4 +130,26 @@
 .Panel.Panel--sizeX-regular .Panel__in,
 .Panel.Panel--sizeX-regular::after {
   background-color: transparent;
+}
+
+@media (min-width: 768px) {
+  .Panel--sizeX-none .Panel__centered .PanelHeader--ios.PanelHeader--sep + * {
+    margin-top: calc(var(--panelheader_height_ios) + 16px);
+  }
+
+  .Panel--sizeX-none
+    .Panel__centered
+    .PanelHeader--android.PanelHeader--sep
+    + * {
+    margin-top: calc(var(--panelheader_height_android) + 16px);
+  }
+
+  .Panel--sizeX-none .Panel__centered .PanelHeader--vkcom.PanelHeader--sep + * {
+    margin-top: calc(var(--panelheader_height_vkcom) + 16px);
+  }
+
+  .Panel--sizeX-none .Panel__in,
+  .Panel--sizeX-none::after {
+    background-color: transparent;
+  }
 }

@@ -45,10 +45,10 @@ const Group: React.FC<GroupProps> = (props: GroupProps) => {
   const platform = usePlatform();
   const { sizeX } = useAdaptivity();
 
-  let computedMode: GroupProps["mode"] = mode;
+  let computedMode: GroupProps["mode"] | "none" = mode;
 
-  if (!mode && isInsideModal) {
-    computedMode = "plain";
+  if (!mode) {
+    computedMode = isInsideModal ? "plain" : "none";
   }
 
   return (
@@ -68,14 +68,12 @@ const Group: React.FC<GroupProps> = (props: GroupProps) => {
           <Caption vkuiClass="Group__description">{description}</Caption>
         )}
       </div>
-
       {separator !== "hide" && (
         <Separator
-          // eslint-disable-next-line vkui/no-object-expression-in-arguments
-          vkuiClass={classNames("Group__separator", {
-            "Group__separator--force": separator === "show",
-          })}
-          expanded={computedMode === "card"}
+          vkuiClass={classNames(
+            "Group__separator",
+            separator === "show" && "Group__separator--force"
+          )}
         />
       )}
     </section>

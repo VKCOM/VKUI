@@ -147,6 +147,20 @@
   margin-top: -16px;
 }
 
+@media (max-width: 767px) {
+  .Group--none:not(:first-of-type) .Group__inner > .Header:first-child {
+    margin-top: -16px;
+  }
+}
+
 .Group--card > .Group__inner > .Header:not(.Header--mode-tertiary):first-child {
   margin-top: -4px;
+}
+
+@media (min-width: 768px) {
+  .Group--none
+    > .Group__inner
+    > .Header:not(.Header--mode-tertiary):first-child {
+    margin-top: -4px;
+  }
 }

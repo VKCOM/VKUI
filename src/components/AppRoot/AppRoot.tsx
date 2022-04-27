@@ -121,6 +121,17 @@ export const AppRoot: React.FC<AppRootProps> = ({
     };
   }, [insets, portalRoot]);
 
+  // set root className
+  useIsomorphicLayoutEffect(() => {
+    if (mode === "partial") {
+      return noop;
+    }
+    const container =
+      mode === "embedded" ? rootRef.current?.parentElement : document!.body;
+    container?.classList.add("vkuiRootElement");
+    return () => container?.classList.remove("vkuiRootElement");
+  }, []);
+
   const scrollController = React.useMemo<ScrollContextInterface>(
     () =>
       scroll === "contain"

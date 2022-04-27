@@ -87,6 +87,13 @@
   padding-right: 8px;
 }
 
+@media (min-width: 768px) {
+  .Group--none .CardGrid {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
 .Group .CardGrid:first-child {
   margin-top: 8px;
 }
