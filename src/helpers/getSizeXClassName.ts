@@ -4,9 +4,5 @@ export function getSizeXClassName(
   base: string,
   sizeX?: AdaptivityProps["sizeX"]
 ): string {
-  if (!sizeX) {
-    return `${base}--sizeX-none`;
-  }
-
-  return `${base}--sizeX-${sizeX}`;
+  return `${base}--sizeX-${sizeX ?? "none"}`;
 }
