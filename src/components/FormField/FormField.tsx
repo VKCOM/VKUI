@@ -9,7 +9,21 @@ import "./FormField.css";
 
 export interface FormFieldProps {
   /**
-   * Иконка 12|16|20|24|28 или `IconButton`.
+   * Добавляет иконку слева.
+   *
+   * Рекомендации:
+   *
+   * - Используйте следующие размеры иконок `12` | `16` | `20` | `24` | `28`.
+   * - Используйте [IconButton](#/IconButton), если вам нужна кликабельная иконка.
+   */
+  before?: React.ReactNode;
+  /**
+   * Добавляет иконку справа.
+   *
+   * Рекомендации:
+   *
+   * - Используйте следующие размеры иконок `12` | `16` | `20` | `24` | `28`.
+   * - Используйте [IconButton](#/IconButton), если вам нужна кликабельная иконка.
    */
   after?: React.ReactNode;
 }
@@ -26,6 +40,7 @@ export const FormField: React.FC<FormFieldOwnProps> = ({
   Component = "div",
   children,
   getRootRef,
+  before,
   after,
   disabled,
   ...restProps
@@ -57,6 +72,11 @@ export const FormField: React.FC<FormFieldOwnProps> = ({
         disabled && "FormField--disabled"
       )}
     >
+      {hasReactNode(before) && (
+        <div role="presentation" vkuiClass="FormField__before">
+          {before}
+        </div>
+      )}
       {children}
       {hasReactNode(after) && (
         <div role="presentation" vkuiClass="FormField__after">

@@ -11,6 +11,7 @@
   border-radius: inherit;
 }
 
+.FormField__before,
 .FormField__after {
   flex-shrink: 0;
   position: relative;
@@ -23,6 +24,14 @@
   margin: -1px;
   color: var(--icon_secondary, var(--vkui--color_icon_secondary));
   z-index: 2;
+}
+
+.FormField__before {
+  color: var(--vkui--color_icon_accent);
+}
+
+.FormField__after {
+  color: var(--icon_secondary, var(--vkui--color_icon_secondary));
 }
 
 .ChipsInput .FormField__after {
@@ -79,6 +88,7 @@
 /**
  * sizeY COMPACT
  */
+.FormField--sizeY-compact .FormField__before,
 .FormField--sizeY-compact .FormField__after {
   min-width: 36px;
   height: 36px;
