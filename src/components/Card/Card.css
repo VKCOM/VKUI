@@ -63,7 +63,8 @@
 }
 
 .CardScroll--l .Card {
-  width: 100%;
+  width: calc(100% - var(--vkui--size_base_padding_horizontal--regular) * 2);
+  margin-right: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 /**
