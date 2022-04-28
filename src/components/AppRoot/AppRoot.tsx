@@ -16,6 +16,7 @@ import { useKeyboardInputTracker } from "../../hooks/useKeyboardInputTracker";
 import { useInsets } from "../../hooks/useInsets";
 import { Insets } from "@vkontakte/vk-bridge";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import "./AppRoot.css";
 
 // Используйте classList, но будьте осторожны
@@ -54,7 +55,7 @@ export const AppRoot: React.FC<AppRootProps> = ({
     initialized.current = true;
   }
 
-  const { hasMouse } = useAdaptivity();
+  const { hasMouse, sizeX } = useAdaptivity();
 
   // setup portal
   useIsomorphicLayoutEffect(() => {
@@ -121,16 +122,17 @@ export const AppRoot: React.FC<AppRootProps> = ({
     };
   }, [insets, portalRoot]);
 
-  // set root className
+  // adaptivity handler
   useIsomorphicLayoutEffect(() => {
     if (mode === "partial") {
       return noop;
     }
+    const className = getSizeXClassName("vkui", sizeX);
     const container =
       mode === "embedded" ? rootRef.current?.parentElement : document!.body;
-    container?.classList.add("vkuiRootElement");
-    return () => container?.classList.remove("vkuiRootElement");
-  }, []);
+    container?.classList.add(className);
+    return () => container?.classList.remove(className);
+  }, [sizeX]);
 
   const scrollController = React.useMemo<ScrollContextInterface>(
     () =>

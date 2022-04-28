@@ -11,8 +11,12 @@
   overflow: auto;
 }
 
+.vkui--sizeX-regular {
+  background: var(--background_page);
+}
+
 @media (min-width: 768px) {
-  .vkuiRootElement {
+  .vkui--sizeX-none {
     background: var(--background_page);
   }
 }
