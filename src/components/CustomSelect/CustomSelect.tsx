@@ -637,6 +637,7 @@ class CustomSelectComponent extends React.Component<
   render() {
     const { opened, nativeSelectValue, options: stateOptions } = this.state;
     const {
+      before,
       searchable,
       name,
       className,
@@ -715,6 +716,7 @@ class CustomSelectComponent extends React.Component<
             // TODO Нужно перестать пытаться превратить CustomSelect в select. Тогда эта проблема уйдёт.
             // @ts-ignore
             onClick={onClick}
+            before={before}
             after={icon}
             placeholder={restProps.placeholder}
           />
@@ -733,6 +735,7 @@ class CustomSelectComponent extends React.Component<
               (dropdownOffsetDistance as number) > 0 &&
                 "CustomSelect__open--not-adjacent"
             )}
+            before={before}
             after={icon}
             selectType={selectType}
           >
