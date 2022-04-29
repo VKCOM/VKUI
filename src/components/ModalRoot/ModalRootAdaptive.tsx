@@ -10,6 +10,7 @@ import {
   AdaptivityContextInterface,
   AdaptivityProps,
 } from "../AdaptivityProvider/AdaptivityContext";
+import { useScrollLock } from "../AppRoot/ScrollContext";
 
 export interface ModalRootProps extends AdaptivityProps {
   activeModal?: string | null;
@@ -42,6 +43,8 @@ const ModalRootComponent: React.FC<
   const isDesktop =
     viewWidth >= ViewWidth.SMALL_TABLET &&
     (hasMouse || viewHeight >= ViewHeight.MEDIUM);
+
+  useScrollLock(!!props.activeModal);
 
   const RootComponent = isDesktop ? ModalRootDesktop : ModalRootTouch;
 

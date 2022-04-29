@@ -19,6 +19,11 @@ import {
   AdaptivityContextInterface,
   AdaptivityProps,
 } from "../AdaptivityProvider/AdaptivityContext";
+import { withContext } from "../../hoc/withContext";
+import {
+  ScrollContext,
+  ScrollContextInterface,
+} from "../AppRoot/ScrollContext";
 import "./Alert.css";
 
 export type AlertActionInterface = AlertAction &
@@ -40,6 +45,8 @@ export interface AlertProps
   header?: React.ReactNode;
   text?: React.ReactNode;
   onClose?: VoidFunction;
+  /** @ignore */
+  scroll?: ScrollContextInterface;
 }
 
 export type TAlertProps = AlertProps & AdaptivityContextInterface;
@@ -59,6 +66,14 @@ class AlertComponent extends React.Component<TAlertProps, AlertState> {
     this.state = {
       closing: false,
     };
+  }
+
+  componentDidMount() {
+    this.props.scroll?.enableScrollLock();
+  }
+
+  componentWillUnmount() {
+    this.props.scroll?.disableScrollLock();
   }
 
   element: React.RefObject<HTMLDivElement>;
@@ -282,8 +297,12 @@ class AlertComponent extends React.Component<TAlertProps, AlertState> {
   }
 }
 
-export const Alert = withPlatform(
-  withAdaptivity(AlertComponent, {
-    viewWidth: true,
-  })
+export const Alert = withContext(
+  withPlatform(
+    withAdaptivity(AlertComponent, {
+      viewWidth: true,
+    })
+  ),
+  ScrollContext,
+  "scroll"
 );
