@@ -95,7 +95,7 @@ export interface CustomSelectProps
    */
   searchable?: boolean;
   /**
-   * Текст, который будет отображен, если приходит пустой `options`
+   * Текст, который будет отображен, если приходит пустой `options`.
    */
   emptyText?: string;
   onInputChange?: (
@@ -108,7 +108,7 @@ export interface CustomSelectProps
     [index: string]: any;
   }>;
   /**
-   * Функция для кастомной фильтрации. По-умолчанию поиск производится по option.label.
+   * Функция для кастомной фильтрации. По умолчанию поиск производится по `option.label`.
    */
   filterFn?:
     | false
@@ -127,7 +127,7 @@ export interface CustomSelectProps
   renderOption?: (props: CustomSelectOptionProps) => React.ReactNode;
   /**
    * Рендер-проп для кастомного рендера содержимого дропдауна.
-   * В defaultDropdownContent содержится список опций в виде скроллящегося блока.
+   * В `defaultDropdownContent` содержится список опций в виде скроллящегося блока.
    */
   renderDropdown?: ({
     defaultDropdownContent,
@@ -135,8 +135,8 @@ export interface CustomSelectProps
     defaultDropdownContent: React.ReactNode;
   }) => React.ReactNode;
   /**
-   * Если true, то в дропдауне вместо списка опций рисуется спиннер. При переданных renderDropdown и fetching: true,
-   * "победит" renderDropdown
+   * Если `true`, то в дропдауне вместо списка опций рисуется спиннер. При переданных `renderDropdown` и `fetching: true`
+   * "победит" `renderDropdown`.
    */
   fetching?: boolean;
   onClose?: VoidFunction;
