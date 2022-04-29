@@ -61,7 +61,10 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
   };
 
   if (process.env.NODE_ENV === "development" && !restProps.onClose) {
-    warn("can't close on outer click without onClose", "error");
+    warn(
+      `Без свойства "onClose" нельзя закрыть ActionSheet по клику вне компонента`,
+      "error"
+    );
   }
 
   const { viewWidth, viewHeight, hasMouse } = useAdaptivity();

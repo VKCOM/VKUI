@@ -31,6 +31,7 @@ export interface SelectState {
   notSelected?: boolean;
 }
 
+
 const NativeSelect: React.FC<NativeSelectProps> = ({
   style,
   defaultValue = "",
@@ -102,5 +103,4 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
   );
 };
 
-// eslint-disable-next-line import/no-default-export
-export default NativeSelect;
+export const NativeSelect = NativeSelectComponent;

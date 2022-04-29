@@ -1,4 +1,4 @@
-import NativeSelect, { NativeSelectProps } from "../NativeSelect/NativeSelect";
+import { NativeSelect, NativeSelectProps } from "../NativeSelect/NativeSelect";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
 describe("NativeSelect", () => {

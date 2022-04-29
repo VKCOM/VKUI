@@ -32,7 +32,9 @@ export const Epic: React.FC<EpicProps & AdaptivityContextInterface> = (
     !tabbar &&
     viewWidth < ViewWidth.SMALL_TABLET
   ) {
-    warn("Using Epic without tabbar is not recommended on mobile");
+    warn(
+      `Не рекомендуется использовать Epic без Tabbar при ширине окна меньше ${ViewWidth.SMALL_TABLET}px`
+    );
   }
   const story =
     (React.Children.toArray(children).find(

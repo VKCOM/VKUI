@@ -21,7 +21,7 @@ body[scheme="vkcom_dark"],
   --background_hover: rgba(255, 255, 255, 0.08);
   --background_keyboard: #333333;
   --background_light: #292929;
-  --background_page: #0a0a0a;
+  --background_page: #141414;
   --background_suggestions: #333333;
   --background_text_highlighted: rgba(81, 129, 184, 0.2);
   --button_bot_shadow: #222222;
@@ -53,10 +53,11 @@ body[scheme="vkcom_dark"],
   --content_placeholder_icon: #b2b2b2;
   --content_placeholder_text: #b2b2b2;
   --content_positive_background: rgba(75, 179, 75, 0.16);
-  --content_tint_background: #292929;
+  --content_tint_background: #333333;
   --content_tint_foreground: #939393;
   --content_warning_background: rgba(255, 202, 99, 0.16);
   --control_background: #555555;
+  --control_background_secondary: #828282;
   --control_foreground: #e1e3e6;
   --control_tint: #222222;
   --control_tint_muted: #939393;
@@ -70,6 +71,7 @@ body[scheme="vkcom_dark"],
   --dynamic_blue: #5181b8;
   --dynamic_gray: #aeb7c2;
   --dynamic_green: #4bb34b;
+  --dynamic_neon_pink: #f45fff;
   --dynamic_orange: #ffa000;
   --dynamic_purple: #937ff5;
   --dynamic_raspberry_pink: #f060c0;
@@ -177,7 +179,7 @@ body[scheme="vkcom_dark"],
   --loader_track_value_fill: #ffffff;
   --media_overlay_button_background: #ffffff;
   --media_overlay_button_foreground: #333333;
-  --modal_card_background: #333333;
+  --modal_card_background: #292929;
   --modal_card_border: rgba(255, 255, 255, 0.12);
   --modal_card_header_close: #ffffff;
   --music_playback_icon: #ffffff;
@@ -203,7 +205,7 @@ body[scheme="vkcom_dark"],
   --segmented_control_tint: #828282;
   --selection_off_icon: #656565;
   --separator_alpha: rgba(255, 255, 255, 0.16);
-  --separator_alternate: #292929;
+  --separator_alternate: #333333;
   --separator_common: #424242;
   --skeleton_foreground_from: #292929;
   --skeleton_foreground_to: #333333;

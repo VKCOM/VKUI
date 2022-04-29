@@ -40,7 +40,8 @@
   );
 }
 
-body[scheme="space_gray"] .Gradient--md-tint.Gradient--to-top {
+body[scheme="space_gray"] .Gradient--md-tint.Gradient--to-top,
+body[scheme="vkcom_dark"] .Gradient--md-tint.Gradient--to-top {
   background: linear-gradient(
     to top,
     #232324,
@@ -61,7 +62,8 @@ body[scheme="space_gray"] .Gradient--md-tint.Gradient--to-top {
   );
 }
 
-body[scheme="space_gray"] .Gradient--md-tint.Gradient--to-bottom {
+body[scheme="space_gray"] .Gradient--md-tint.Gradient--to-bottom,
+body[scheme="vkcom_dark"] .Gradient--md-tint.Gradient--to-bottom {
   background: linear-gradient(
     to bottom,
     #232324,

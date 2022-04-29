@@ -1,5 +1,5 @@
 import { baselineComponent } from "../../testing/utils";
-import NativeSelect from "./NativeSelect";
+import { NativeSelect } from "./NativeSelect";
 import { useState } from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";

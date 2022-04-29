@@ -1,5 +1,4 @@
 /* stylelint-disable */
-const postcss = require("postcss");
 const fs = require("fs");
 const path = require("path");
 
@@ -88,14 +87,18 @@ const updateFontSizeStats = (value = "", platform) => {
   return ++cache.fontSizeUsages[value];
 };
 
-const extendConfigWithCustomProperties = (customPropertiesFile, platform) => {
+const extendConfigWithCustomProperties = (
+  customPropertiesFile,
+  platform,
+  parse
+) => {
   const customProperties = fs.readFileSync(
     path.resolve(customPropertiesFile),
     "utf8"
   );
   const customPropertiesValues = {};
 
-  postcss.parse(customProperties).walkRules((rule) => {
+  parse(customProperties).walkRules((rule) => {
     if (
       rule.parent.type === "root" &&
       rule.type === "rule" &&
@@ -153,38 +156,42 @@ const initializeConfig = (platform, overrides) => {
   }
 };
 
-const initializeCustomPropertiesFiles = (customPropertiesFiles, platform) => {
+const initializeCustomPropertiesFiles = (
+  customPropertiesFiles,
+  platform,
+  parse
+) => {
   customPropertiesFiles.forEach((i) => {
     if (!initializedCustomPropertiesFiles.has(i)) {
-      extendConfigWithCustomProperties(i, platform);
+      extendConfigWithCustomProperties(i, platform, parse);
       initializedCustomPropertiesFiles.add(i);
     }
   });
 };
 
-const VkSansMandatoryDeclarations = postcss.plugin(
-  "vk-sans-mandatory-declarations",
-  (opts) => {
-    const {
-      debug,
-      overrides,
-      platform = "test",
-      features = defaultFeatures,
-      customPropertiesFiles,
-      ignoreFiles,
-      ignoreSelectors,
-      explicitNormalLetterSpacing,
-      respectImportant,
-      varName = "--palette-vk-font",
-    } = opts;
+module.exports = (opts) => {
+  const {
+    debug,
+    overrides,
+    platform = "test",
+    features = defaultFeatures,
+    customPropertiesFiles,
+    ignoreFiles,
+    ignoreSelectors,
+    explicitNormalLetterSpacing,
+    respectImportant,
+    varName = "--palette-vk-font",
+  } = opts;
 
-    return (css) => {
+  return {
+    postcssPlugin: "vk-sans-mandatory-declarations",
+    Once(css, { parse }) {
       if (!cache.config[platform]) {
         initializeConfig(platform, overrides);
       }
 
       if (customPropertiesFiles) {
-        initializeCustomPropertiesFiles(customPropertiesFiles, platform);
+        initializeCustomPropertiesFiles(customPropertiesFiles, platform, parse);
       }
 
       if (
@@ -336,8 +343,8 @@ const VkSansMandatoryDeclarations = postcss.plugin(
           }
         });
       }
-    };
-  }
-);
+    },
+  };
+};
 
-module.exports = VkSansMandatoryDeclarations;
+module.exports.postcss = true;

@@ -52,6 +52,7 @@ body[scheme="bright_light"],
   --content_tint_foreground: #7f8285;
   --content_warning_background: #fff2d6;
   --control_background: #ebedf0;
+  --control_background_secondary: #ffffff;
   --control_foreground: #5181b8;
   --control_tint: #ffffff;
   --control_tint_muted: #76787a;
@@ -65,6 +66,7 @@ body[scheme="bright_light"],
   --dynamic_blue: #2688eb;
   --dynamic_gray: #a3adb8;
   --dynamic_green: #4bb34b;
+  --dynamic_neon_pink: #f45fff;
   --dynamic_orange: #ffa000;
   --dynamic_purple: #735ce6;
   --dynamic_raspberry_pink: #e03fab;
