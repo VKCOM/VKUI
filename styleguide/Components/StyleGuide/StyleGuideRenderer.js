@@ -63,13 +63,6 @@ let StyleGuideRenderer = ({ children, toc }) => {
     }
   }, [platform]);
 
-  useEffect(() => {
-    document.documentElement.style.setProperty(
-      "color-scheme",
-      styleguideAppearance
-    );
-  }, [styleguideAppearance]);
-
   const switchStyleGuideAppearance = useCallback(() => {
     const value =
       styleguideAppearance === Appearance.DARK

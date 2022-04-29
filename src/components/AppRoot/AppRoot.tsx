@@ -17,6 +17,7 @@ import { useInsets } from "../../hooks/useInsets";
 import { Insets } from "@vkontakte/vk-bridge";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
 import "./AppRoot.css";
 
 // Используйте classList, но будьте осторожны
@@ -45,6 +46,7 @@ export const AppRoot: React.FC<AppRootProps> = ({
   );
   const { window, document } = useDOM();
   const insets = useInsets();
+  const { appearance } = React.useContext(ConfigProviderContext);
 
   const initialized = React.useRef(false);
   if (!initialized.current) {
@@ -162,6 +164,15 @@ export const AppRoot: React.FC<AppRootProps> = ({
       </ScrollContext.Provider>
     </AppRootContext.Provider>
   );
+
+  useIsomorphicLayoutEffect(() => {
+    if (mode !== "full" || appearance === undefined) {
+      return noop;
+    }
+    document!.documentElement.style.setProperty("color-scheme", appearance);
+
+    return () => document!.documentElement.style.removeProperty("color-scheme");
+  }, [appearance]);
 
   return mode === "partial" ? (
     content

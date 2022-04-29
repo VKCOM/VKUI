@@ -17,13 +17,6 @@ class FrameDomProvider extends React.Component {
 
   state = { ready: false };
 
-  setAppearance = (appearance) => {
-    this.context.document.documentElement.style.setProperty(
-      "color-scheme",
-      appearance
-    );
-  };
-
   componentDidMount() {
     // Пихаем в iFrame с примером спрайты для иконок
     const sprite = document.getElementById("__SVG_SPRITE_NODE__");
@@ -58,17 +51,10 @@ class FrameDomProvider extends React.Component {
     });
     this.context.document.head.appendChild(frameAssets);
     this.setState({ ready: true });
-    this.setAppearance(this.props.appearance);
   }
 
   componentWillUnmount() {
     this.hotObservers.forEach((o) => o.disconnect());
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.appearance !== this.props.appearance) {
-      this.setAppearance(this.props.appearance);
-    }
   }
 
   render() {
