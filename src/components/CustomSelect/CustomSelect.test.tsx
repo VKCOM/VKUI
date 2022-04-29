@@ -201,7 +201,9 @@ describe("CustomSelect", () => {
           { value: 2, label: "New York", country: "USA" },
         ]}
         filterFn={(value, option) =>
-          option.label.toLowerCase().includes(value.toLowerCase()) ||
+          (option.label as string)
+            .toLowerCase()
+            .includes(value.toLowerCase()) ||
           option.country.toLowerCase().includes(value.toLowerCase())
         }
       />
