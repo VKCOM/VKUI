@@ -3,6 +3,7 @@ import Spinner, { SpinnerProps } from "../Spinner/Spinner";
 import { PopoutWrapper } from "../PopoutWrapper/PopoutWrapper";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
+import { useScrollLock } from "../AppRoot/ScrollContext";
 import "./ScreenSpinner.css";
 
 export type ScreenSpinnerProps = React.HTMLAttributes<HTMLDivElement> &
@@ -13,6 +14,8 @@ const ScreenSpinner: React.FC<ScreenSpinnerProps> = (
 ) => {
   const { style, className, ...restProps } = props;
   const platform = usePlatform();
+
+  useScrollLock();
 
   return (
     <PopoutWrapper

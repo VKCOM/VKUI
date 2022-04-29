@@ -20,6 +20,7 @@ import { noop } from "../../lib/utils";
 import { useKeyboardInputTracker } from "../../hooks/useKeyboardInputTracker";
 import { useInsets } from "../../hooks/useInsets";
 import { Insets } from "@vkontakte/vk-bridge";
+import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
 import "./AppRoot.css";
 
 // Используйте classList, но будьте осторожны
@@ -53,6 +54,7 @@ export const AppRoot = withAdaptivity<AppRootProps>(
     );
     const { window, document } = useDOM();
     const insets = useInsets();
+    const { appearance } = React.useContext(ConfigProviderContext);
 
     const initialized = React.useRef(false);
     if (!initialized.current) {
@@ -138,6 +140,16 @@ export const AppRoot = withAdaptivity<AppRootProps>(
       container?.classList.add("vkui--sizeX-regular");
       return () => container?.classList.remove("vkui--sizeX-regular");
     }, [sizeX]);
+
+    useIsomorphicLayoutEffect(() => {
+      if (mode !== "full" || appearance === undefined) {
+        return noop;
+      }
+      document!.documentElement.style.setProperty("color-scheme", appearance);
+
+      return () =>
+        document!.documentElement.style.removeProperty("color-scheme");
+    }, [appearance]);
 
     const scrollController = React.useMemo<ScrollContextInterface>(
       () =>
