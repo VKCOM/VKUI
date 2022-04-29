@@ -87,9 +87,14 @@ const propSets = [
       "Гиппопотомомонстросесквиппедалиофобия — боязнь длинных слов, таких как метоксихлордиэтиламинометилбутиламиноакридин",
     ],
     actions: [
-      <Button size="l" mode="primary" key="button">
-        Понятно
-      </Button>,
+      <Fragment key="buttons">
+        <Button size="l" mode="primary" key="button">
+          Гиппопотомомонстросесквиппедалиофобия
+        </Button>
+        <Button size="l" mode="primary" key="button">
+          Метоксихлордиэтиламинометилбутиламиноакридин
+        </Button>
+      </Fragment>,
     ],
   },
 ];
