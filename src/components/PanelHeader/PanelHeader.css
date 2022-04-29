@@ -151,14 +151,6 @@
 /**
  * Android
  */
-
-@supports not (padding-top: env(safe-area-inset-top)) {
-  .PanelHeader--android,
-  .PanelHeader--vkcom {
-    --safe-area-inset-top: 0px;
-  }
-}
-
 .PanelHeader--android ~ .FixedLayout--top,
 .PanelHeader--android ~ * .FixedLayout--top:not(.PanelHeader__fixed) {
   top: calc(var(--panelheader_height_android) + var(--safe-area-inset-top));
