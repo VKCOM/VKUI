@@ -1,6 +1,11 @@
 import * as React from "react";
 import { SelectMimicry } from "../SelectMimicry/SelectMimicry";
-import { debounce, setRef, multiRef } from "../../lib/utils";
+import {
+  debounce,
+  setRef,
+  multiRef,
+  getTitleFromChildren,
+} from "../../lib/utils";
 import { classNames } from "../../lib/classNames";
 import { NativeSelectProps } from "../NativeSelect/NativeSelect";
 import { withAdaptivity } from "../../hoc/withAdaptivity";
@@ -70,7 +75,7 @@ type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>["value"];
 
 export interface CustomSelectOptionInterface {
   value: SelectValue;
-  label: string;
+  label: React.ReactElement | string;
   disabled?: boolean;
   [index: string]: any;
 }
@@ -102,11 +107,7 @@ export interface CustomSelectProps
     e: React.ChangeEvent,
     options: CustomSelectOptionInterface[]
   ) => void | CustomSelectOptionInterface[];
-  options: Array<{
-    value: SelectValue;
-    label: string;
-    [index: string]: any;
-  }>;
+  options: CustomSelectOptionInterface[];
   /**
    * Функция для кастомной фильтрации. По умолчанию поиск производится по `option.label`.
    */
@@ -420,7 +421,9 @@ class CustomSelectComponent extends React.Component<
     const fullInput = this.keyboardInput + key;
 
     const optionIndex = this.state.options?.findIndex((option) => {
-      return option.label.toLowerCase().includes(fullInput);
+      return getTitleFromChildren(option.label)
+        .toLowerCase()
+        .includes(fullInput);
     });
 
     if (optionIndex !== undefined && optionIndex > -1) {
