@@ -83,6 +83,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  font-family: var(--vkui--font_family_accent);
 }
 
 .Button__content--caps {
