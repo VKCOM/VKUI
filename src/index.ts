@@ -200,7 +200,7 @@ export { Select } from "./components/Select/Select";
 export type { SelectProps } from "./components/Select/Select";
 export { default as SelectMimicry } from "./components/SelectMimicry/SelectMimicry";
 export type { SelectMimicryProps } from "./components/SelectMimicry/SelectMimicry";
-export { default as NativeSelect } from "./components/NativeSelect/NativeSelect";
+export { NativeSelect } from "./components/NativeSelect/NativeSelect";
 export type { NativeSelectProps } from "./components/NativeSelect/NativeSelect";
 export { CustomSelect } from "./components/CustomSelect/CustomSelect";
 export type {
