@@ -1,7 +1,7 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
-import { FormField } from "../FormField/FormField";
+import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasAlign, HasRootRef } from "../../types";
 import {
   withAdaptivity,
@@ -21,10 +21,10 @@ export interface SelectMimicryProps
   extends React.HTMLAttributes<HTMLElement>,
     HasAlign,
     HasRootRef<HTMLElement>,
-    AdaptivityProps {
+    AdaptivityProps,
+    Pick<FormFieldProps, "before" | "after"> {
   multiline?: boolean;
   disabled?: boolean;
-  after?: React.ReactNode;
   selectType?: SelectType;
 }
 
@@ -39,6 +39,7 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
   onClick,
   sizeX,
   sizeY,
+  before,
   after = <DropdownIcon />,
   selectType = SelectType.Default,
   ...restProps
@@ -68,6 +69,7 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
       getRootRef={getRootRef}
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
+      before={before}
       after={after}
     >
       <TypographyComponent
