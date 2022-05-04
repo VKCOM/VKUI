@@ -32,7 +32,7 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
 }
 
-@media (min-width: 768px) {
+@media (--size-x-regular) {
   .PanelHeader--shadow.PanelHeader--sizeX-none .PanelHeader__in {
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
   }
@@ -76,7 +76,7 @@
   padding-top: 4px;
 }
 
-@media (max-width: 767px) {
+@media (--size-x-compact) {
   .PanelHeader--sizeX-none .PanelHeader__separator {
     padding-top: 4px;
   }

@@ -13,7 +13,7 @@
     transform: scaleY(0.5);
   }
 
-  @media (min-width: 768px) {
+  @media (--size-x-regular) {
     .PanelHeader--sizeX-none .Separator__in {
       transform: none;
     }
@@ -25,7 +25,7 @@
     transform: scaleY(0.32);
   }
 
-  @media (min-width: 768px) {
+  @media (--size-x-regular) {
     .PanelHeader--sizeX-none .Separator__in {
       transform: none;
     }
@@ -61,7 +61,7 @@
   padding-right: 8px;
 }
 
-@media (min-width: 768px) {
+@media (--size-x-regular) {
   .ModalPage--sizeX-none .Separator:not(.Separator--wide) {
     padding-left: 8px;
     padding-right: 8px;

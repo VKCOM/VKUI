@@ -55,7 +55,7 @@
   padding-right: 12px;
 }
 
-@media (max-width: 767px) {
+@media (--size-x-compact) {
   .CardGrid--sizeX-none {
     padding-left: 12px;
     padding-right: 12px;
@@ -71,7 +71,7 @@
   padding-right: 16px;
 }
 
-@media (max-width: 767px) {
+@media (--size-x-compact) {
   .CardGrid--android:not(.CardGrid--sizeX-regular) {
     padding-left: 16px;
     padding-right: 16px;
@@ -87,7 +87,7 @@
   padding-right: 8px;
 }
 
-@media (min-width: 768px) {
+@media (--size-x-regular) {
   .Group--none .CardGrid {
     padding-left: 8px;
     padding-right: 8px;

@@ -8,6 +8,7 @@ const csso = require("postcss-csso");
 const checkKeyframes = require("./tasks/postcss-check-keyframes");
 const { defaultSchemeId } = require("./package.json");
 const VkSansMandatoryDeclarations = require("./postcss-plugin-vk-sans");
+const postcssCustomMedia = require("postcss-custom-media");
 
 const animationsSource = path.join(__dirname, "src/styles/animations.css");
 const cssPropSources = [
@@ -66,6 +67,9 @@ let plugins = [
         "./node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css"
       ),
     ],
+  }),
+  postcssCustomMedia({
+    importFrom: path.resolve("./src/styles/customMedia.css"),
   }),
 ];
 

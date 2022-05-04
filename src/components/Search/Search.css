@@ -363,7 +363,7 @@
   padding-left: 44px;
 }
 
-@media (min-width: 768px) {
+@media (--size-x-regular) {
   .Group--none.Group--sizeX-none .Search--vkcom {
     margin: 0 -8px;
   }

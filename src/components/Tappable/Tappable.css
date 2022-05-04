@@ -126,7 +126,7 @@
   border-radius: 0;
 }
 
-@media (max-width: 767px) {
+@media (--size-x-compact) {
   .Tappable--sizeX-none {
     border-radius: 0;
   }

@@ -67,7 +67,7 @@
   margin-top: calc(var(--panelheader_height_vkcom) + 5px);
 }
 
-@media (max-width: 767px) {
+@media (--size-x-compact) {
   .Panel--sizeX-none .Panel__centered .PanelHeader--ios.PanelHeader--sep + * {
     margin-top: calc(var(--panelheader_height_ios) + 5px);
   }
@@ -132,7 +132,7 @@
   background-color: transparent;
 }
 
-@media (min-width: 768px) {
+@media (--size-x-regular) {
   .Panel--sizeX-none .Panel__centered .PanelHeader--ios.PanelHeader--sep + * {
     margin-top: calc(var(--panelheader_height_ios) + 16px);
   }
