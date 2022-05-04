@@ -11,6 +11,7 @@ import {
   withAdaptivity,
   ConfigProvider,
   ViewWidth,
+  WebviewType,
   Platform,
   Appearance,
 } from "@vkui";
@@ -25,6 +26,7 @@ let initialState = {
   hasMouse: true,
   appearance: Appearance.LIGHT,
   styleguideAppearance: Appearance.LIGHT,
+  webviewType: WebviewType.VKAPPS,
 };
 
 try {

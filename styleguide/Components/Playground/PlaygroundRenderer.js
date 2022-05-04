@@ -8,9 +8,10 @@ class PlaygroundRenderer extends React.Component {
     const { name, preview, previewProps, tabBody, exampleIndex, viewWidth } =
       this.props;
     const {
-      layout = true, // Нужны ли примеру обвесы в виде SplitLayout, SplitCol, etc
-      iframe = true, // Нужно ли рендерить пример в айфреме
-      adaptivity: _adaptivity, // Нужно ли показывать продвинутые контролы адаптивности
+      layout = true, // Обвесы в виде SplitLayout, SplitCol, etc
+      iframe = true, // Рендерить пример в айфреме
+      adaptivity: _adaptivity, // Продвинутые контролеры настроек адаптивности
+      webviewType = false, // Контролер настроек webviewType
       integration,
       containerStyle,
       config,
@@ -25,7 +26,7 @@ class PlaygroundRenderer extends React.Component {
         <SectionSubheading href={`#/${name}?id=example`}>
           Пример реализации
         </SectionSubheading>
-        <Settings adaptivity={adaptivity} />
+        <Settings adaptivity={adaptivity} webviewType={webviewType} />
         <div
           className="Playground__preview"
           {...wrapperProps}
