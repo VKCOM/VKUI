@@ -28,6 +28,8 @@ export interface CalendarProps
       | "nextMonthAriaLabel"
       | "changeMonthAriaLabel"
       | "changeYearAriaLabel"
+      | "onNextMonth"
+      | "onPrevMonth"
     >,
     HasRootRef<HTMLDivElement> {
   value?: Date;
@@ -43,6 +45,15 @@ export interface CalendarProps
   onChange?(value?: Date): void;
   shouldDisableDate?(value: Date): boolean;
   onClose?(): void;
+  /**
+   * Дата отображаемого месяца.
+   * При использовании обновление даты должно происходить вне компонента.
+   */
+  viewDate?: Date;
+  /**
+   * Изменение даты в шапке календаря.
+   */
+  onHeaderChange?(value: Date): void;
 }
 
 const warn = warnOnce("Calendar");
@@ -68,6 +79,10 @@ export const Calendar: React.FC<CalendarProps> = ({
   showNeighboringMonth,
   changeDayAriaLabel = "Изменить день",
   size = "m",
+  viewDate: externalViewDate,
+  onHeaderChange,
+  onNextMonth,
+  onPrevMonth,
   ...props
 }) => {
   const {
@@ -80,7 +95,15 @@ export const Calendar: React.FC<CalendarProps> = ({
     isDayFocused,
     isDayDisabled,
     resetSelectedDay,
-  } = useCalendar({ value, disableFuture, disablePast, shouldDisableDate });
+  } = useCalendar({
+    value,
+    disableFuture,
+    disablePast,
+    shouldDisableDate,
+    onHeaderChange,
+    onNextMonth,
+    onPrevMonth,
+  });
 
   useIsomorphicLayoutEffect(() => {
     if (value) {
@@ -140,7 +163,7 @@ export const Calendar: React.FC<CalendarProps> = ({
       vkuiClass={classNames("Calendar", `Calendar--size-${size}`)}
     >
       <CalendarHeader
-        viewDate={viewDate}
+        viewDate={externalViewDate || viewDate}
         onChange={setViewDate}
         onNextMonth={setNextMonth}
         onPrevMonth={setPrevMonth}
@@ -152,7 +175,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         changeYearAriaLabel={changeYearAriaLabel}
       />
       <CalendarDays
-        viewDate={viewDate}
+        viewDate={externalViewDate || viewDate}
         value={value}
         weekStartsOn={weekStartsOn}
         isDayFocused={isDayFocused}
