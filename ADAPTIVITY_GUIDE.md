@@ -14,7 +14,7 @@
 
 ```tsx
 const Component: React.FC = () => {
-  const { 
+  const {
     sizeX // по умолчанию приходит `undefined`, если не
           // задавать явно через `AdaptivityProvider`
   } = useAdaptivity();
@@ -40,7 +40,7 @@ const Component: React.FC = () => {
 ```tsx
 /* Component.tsx */
 const Component: React.FC = () => {
-  const { 
+  const {
     sizeX // по умолчанию приходит `undefined`, если не
           // задавать явно через `AdaptivityProvider`
   } = useAdaptivity();
