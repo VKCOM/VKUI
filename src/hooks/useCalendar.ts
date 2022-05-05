@@ -8,8 +8,13 @@ import {
   isAfter,
   startOfDay,
 } from "../lib/date";
+import { CalendarProps } from "../components/Calendar/Calendar";
 
-export interface UseCalendarDependencies {
+export interface UseCalendarDependencies
+  extends Pick<
+    CalendarProps,
+    "onHeaderChange" | "onNextMonth" | "onPrevMonth"
+  > {
   value?: Array<Date | null> | Date;
   disablePast?: boolean;
   disableFuture?: boolean;
@@ -21,19 +26,30 @@ export function useCalendar({
   disablePast,
   disableFuture,
   shouldDisableDate,
+  onHeaderChange,
+  onNextMonth,
+  onPrevMonth,
 }: UseCalendarDependencies) {
   const [viewDate, setViewDate] = React.useState(
     (Array.isArray(value) ? value[0] : value) ?? new Date()
   );
   const [focusedDay, setFocusedDay] = React.useState<Date>();
 
-  const setPrevMonth = React.useCallback(
-    () => setViewDate(subMonths(viewDate, 1)),
-    [viewDate]
-  );
-  const setNextMonth = React.useCallback(
-    () => setViewDate(addMonths(viewDate, 1)),
-    [viewDate]
+  const setPrevMonth = React.useCallback(() => {
+    onPrevMonth?.();
+    setViewDate(subMonths(viewDate, 1));
+  }, [viewDate, onPrevMonth]);
+  const setNextMonth = React.useCallback(() => {
+    onNextMonth?.();
+    setViewDate(addMonths(viewDate, 1));
+  }, [viewDate, onNextMonth]);
+
+  const handleSetViewDate = React.useCallback(
+    (value: Date) => {
+      onHeaderChange?.(value);
+      setViewDate(value);
+    },
+    [onHeaderChange]
   );
 
   const isDayFocused = React.useCallback(
@@ -66,7 +82,7 @@ export function useCalendar({
 
   return {
     viewDate,
-    setViewDate,
+    setViewDate: handleSetViewDate,
     setPrevMonth,
     setNextMonth,
     focusedDay,

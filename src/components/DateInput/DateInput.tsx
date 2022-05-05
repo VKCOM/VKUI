@@ -40,6 +40,10 @@ export interface DateInputProps
       | "changeDayAriaLabel"
       | "showNeighboringMonth"
       | "size"
+      | "viewDate"
+      | "onHeaderChange"
+      | "onNextMonth"
+      | "onPrevMonth"
     >,
     HasRootRef<HTMLDivElement> {
   calendarPlacement?: Placement;
@@ -118,6 +122,10 @@ export const DateInput: React.FC<DateInputProps> = ({
   changeMinutesAriaLabel = "Изменить минуту",
   clearFieldAriaLabel = "Очистить поле",
   showCalendarAriaLabel = "Показать календарь",
+  viewDate,
+  onHeaderChange,
+  onNextMonth,
+  onPrevMonth,
   ...props
 }) => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -309,6 +317,10 @@ export const DateInput: React.FC<DateInputProps> = ({
             changeDayAriaLabel={changeDayAriaLabel}
             showNeighboringMonth={showNeighboringMonth}
             size={size}
+            viewDate={viewDate}
+            onHeaderChange={onCalendarChange}
+            onNextMonth={onNextMonth}
+            onPrevMonth={onPrevMonth}
           />
         </Popper>
       )}
