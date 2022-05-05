@@ -19,7 +19,7 @@ export const TabsModeContext =
 
 const Tabs: React.FunctionComponent<TabsProps> = ({
   children,
-  mode,
+  mode = "default",
   getRootRef,
   ...restProps
 }: TabsProps) => {
@@ -47,10 +47,6 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
       </div>
     </div>
   );
-};
-
-Tabs.defaultProps = {
-  mode: "default",
 };
 
 // eslint-disable-next-line import/no-default-export

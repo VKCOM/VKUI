@@ -56,7 +56,7 @@
 }
 
 @media (--size-x-compact) {
-  .CardGrid--sizeX-none {
+  .CardGrid--ios.CardGrid--sizeX-none {
     padding-left: 12px;
     padding-right: 12px;
   }
@@ -72,7 +72,7 @@
 }
 
 @media (--size-x-compact) {
-  .CardGrid--android:not(.CardGrid--sizeX-regular) {
+  .CardGrid--android.CardGrid--sizeX-none {
     padding-left: 16px;
     padding-right: 16px;
   }
