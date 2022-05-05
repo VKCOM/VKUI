@@ -16,7 +16,7 @@ export interface TabbarItemProps
     HasComponent {
   selected?: boolean;
   /**
-   * Тест рядом с иконкой
+   * Текст рядом с иконкой
    */
   text?: React.ReactNode;
   /**
