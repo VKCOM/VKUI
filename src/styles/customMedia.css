@@ -1,0 +1,2 @@
+@custom-media --size-x-regular (min-width: 768px);
+@custom-media --size-x-compact (max-width: 767px);

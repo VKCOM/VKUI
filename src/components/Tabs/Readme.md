@@ -37,7 +37,6 @@ class Example extends React.Component {
                 <Icon28AddOutline />
               </PanelHeaderButton>
             }
-            separator={this.props.sizeX === SizeType.REGULAR}
           >
             <Tabs>
               <TabsItem
@@ -121,7 +120,6 @@ class Example extends React.Component {
                 onClick={() => this.setState({ activePanel: "panel1" })}
               />
             }
-            separator={this.props.sizeX === SizeType.REGULAR}
           >
             Музыка
           </PanelHeader>
@@ -154,7 +152,6 @@ class Example extends React.Component {
                 onClick={() => this.setState({ activePanel: "panel2" })}
               />
             }
-            separator={this.props.sizeX === SizeType.REGULAR}
           >
             Новости
           </PanelHeader>
@@ -241,7 +238,6 @@ class Example extends React.Component {
                 onClick={() => this.setState({ activePanel: "panel4" })}
               />
             }
-            separator={this.props.sizeX === SizeType.REGULAR}
           >
             Лента
           </PanelHeader>
@@ -268,7 +264,5 @@ class Example extends React.Component {
   }
 }
 
-const AdaptivityExample = withAdaptivity(Example, { sizeX: true });
-
-<AdaptivityExample />;
+<Example />;
 ```

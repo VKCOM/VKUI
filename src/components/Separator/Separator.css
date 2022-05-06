@@ -12,15 +12,29 @@
   .Separator__in:not(.Separator__in--expanded) {
     transform: scaleY(0.5);
   }
+
+  @media (--size-x-regular) {
+    .PanelHeader--sizeX-none .Separator__in {
+      transform: none;
+    }
+  }
 }
 
 @media (min-resolution: 3dppx) {
   .Separator__in:not(.Separator__in--expanded) {
     transform: scaleY(0.32);
   }
+
+  @media (--size-x-regular) {
+    .PanelHeader--sizeX-none .Separator__in {
+      transform: none;
+    }
+  }
 }
 
-.Separator__in--expanded {
+.Separator__in--expanded,
+.Group--card .Separator__in,
+.PanelHeader--sizeX-regular .Separator__in {
   height: 16px;
   background: transparent;
 }
@@ -45,4 +59,26 @@
 .ModalPage--sizeX-regular .Separator:not(.Separator--wide) {
   padding-left: 8px;
   padding-right: 8px;
+}
+
+@media (--size-x-regular) {
+  .ModalPage--sizeX-none .Separator:not(.Separator--wide) {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .ModalPage--sizeX-none .Separator__in {
+    height: 16px;
+    background: transparent;
+  }
+
+  .Group--none .Separator__in {
+    height: 16px;
+    background: transparent;
+  }
+
+  .PanelHeader--sizeX-none .Separator__in {
+    height: 16px;
+    background: transparent;
+  }
 }

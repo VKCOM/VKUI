@@ -8,11 +8,11 @@ import {
   VKCOM,
   AppRoot,
   AdaptivityProvider,
-  withAdaptivity,
   ConfigProvider,
   ViewWidth,
   Platform,
   Appearance,
+  useAdaptivity,
 } from "@vkui";
 import "./StyleGuideRenderer.css";
 import { StyleGuideMobile } from "./StyleGuideMobile";
@@ -41,11 +41,12 @@ try {
 
 export const StyleGuideContext = React.createContext(initialState);
 
-let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
+let StyleGuideRenderer = ({ children, toc }) => {
   const [state, setState] = useState(initialState);
   const [popout, setPopout] = useState(null);
   const { width, height, platform, scheme, hasMouse, styleguideAppearance } =
     state;
+  const { viewWidth } = useAdaptivity();
 
   const setContext = useCallback(
     (data) => {
@@ -103,14 +104,9 @@ let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
   );
 };
 
-StyleGuideRenderer = withAdaptivity(StyleGuideRenderer, {
-  sizeX: true,
-  viewWidth: true,
-});
-
-const StyleGuideWrapper = (props) => {
+const StyleGuideWrapper = ({ viewWidth, ...props }) => {
   return (
-    <AdaptivityProvider>
+    <AdaptivityProvider viewWidth={viewWidth}>
       <StyleGuideRenderer {...props} />
     </AdaptivityProvider>
   );

@@ -58,7 +58,6 @@ class SimpleSearch extends React.Component {
               <Icon28AddOutline />
             </PanelHeaderButton>
           }
-          separator={this.props.sizeX === SizeType.REGULAR}
         >
           Выбор тематики
         </PanelHeader>
@@ -99,12 +98,11 @@ class HeaderSearch extends React.Component {
   }
 
   render() {
-    const { platform, sizeX, goSearch, onFiltersClick } = this.props;
+    const { platform, goSearch, onFiltersClick } = this.props;
     return (
       <React.Fragment>
         <PanelHeader
           left={platform !== VKCOM && <PanelHeaderBack onClick={goSearch} />}
-          separator={sizeX === SizeType.REGULAR}
         >
           <Search
             value={this.state.search}
@@ -209,14 +207,12 @@ class SearchExample extends React.Component {
       >
         <Panel id="search">
           <SimpleSearch
-            sizeX={this.props.sizeX}
             goHeaderSearch={this.goHeaderSearch}
             platform={platform}
           />
         </Panel>
         <Panel id="header-search">
           <HeaderSearch
-            sizeX={this.props.sizeX}
             onFiltersClick={() => this.setState({ activeModal: "filters" })}
             goSearch={this.goSearch}
             platform={platform}
@@ -227,9 +223,5 @@ class SearchExample extends React.Component {
   }
 }
 
-const AdaptivitySearch = withPlatform(
-  withAdaptivity(SearchExample, { sizeX: true })
-);
-
-<AdaptivitySearch />;
+<SearchExample />;
 ```

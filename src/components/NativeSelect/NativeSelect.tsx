@@ -3,7 +3,7 @@ import { classNames } from "../../lib/classNames";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { FormField } from "../FormField/FormField";
 import { HasAlign, HasRef, HasRootRef } from "../../types";
-import { withAdaptivity, SizeType } from "../../hoc/withAdaptivity";
+import { SizeType } from "../../hoc/withAdaptivity";
 import { getClassName } from "../../helpers/getClassName";
 import Headline from "../Typography/Headline/Headline";
 import Text from "../Typography/Text/Text";
@@ -12,18 +12,15 @@ import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
 import { useExternRef } from "../../hooks/useExternRef";
 import { usePlatform } from "../../hooks/usePlatform";
-import {
-  AdaptivityContextInterface,
-  AdaptivityProps,
-} from "../AdaptivityProvider/AdaptivityContext";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import "../Select/Select.css";
 
 export interface NativeSelectProps
   extends React.SelectHTMLAttributes<HTMLSelectElement>,
     HasRef<HTMLSelectElement>,
     HasRootRef<HTMLLabelElement>,
-    HasAlign,
-    AdaptivityProps {
+    HasAlign {
   placeholder?: string;
   multiline?: boolean;
 }
@@ -34,9 +31,7 @@ export interface SelectState {
   notSelected?: boolean;
 }
 
-const NativeSelectComponent: React.FC<
-  NativeSelectProps & AdaptivityContextInterface
-> = ({
+const NativeSelect: React.FC<NativeSelectProps> = ({
   style,
   defaultValue = "",
   align,
@@ -46,8 +41,6 @@ const NativeSelectComponent: React.FC<
   getRef,
   getRootRef,
   disabled,
-  sizeX,
-  sizeY,
   multiline,
   ...restProps
 }) => {
@@ -56,6 +49,8 @@ const NativeSelectComponent: React.FC<
   const [notSelected, setNotSelected] = React.useState(false);
   const [value, onChange] = useEnsuredControl(restProps, { defaultValue });
   const selectRef = useExternRef(getRef);
+  const { sizeX, sizeY } = useAdaptivity();
+
   useIsomorphicLayoutEffect(() => {
     const selectedOption =
       selectRef.current?.options[selectRef.current.selectedIndex];
@@ -71,14 +66,14 @@ const NativeSelectComponent: React.FC<
   return (
     <FormField
       Component="label"
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames(getClassName("Select", platform), {
-        ["Select--not-selected"]: notSelected,
-        [`Select--align-${align}`]: !!align,
-        [`Select--sizeX--${sizeX}`]: !!sizeX,
-        [`Select--sizeY--${sizeY}`]: !!sizeY,
-        "Select--multiline": multiline,
-      })}
+      vkuiClass={classNames(
+        getClassName("Select", platform),
+        notSelected && "Select--not-selected",
+        align && `Select--align-${align}`,
+        getSizeXClassName("Select", sizeX),
+        sizeY && `Select--sizeY--${sizeY}`,
+        multiline && "Select--multiline"
+      )}
       className={className}
       style={style}
       getRootRef={getRootRef}
@@ -107,7 +102,4 @@ const NativeSelectComponent: React.FC<
   );
 };
 
-export const NativeSelect = withAdaptivity(NativeSelectComponent, {
-  sizeX: true,
-  sizeY: true,
-});
+export { NativeSelect };

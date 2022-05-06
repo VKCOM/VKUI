@@ -89,23 +89,25 @@ export const PanelHeaderButton: React.FC<PanelHeaderButtonProps> = ({
       Component={restProps.href ? "a" : "button"}
       activeEffectDelay={200}
       activeMode={activeMode}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames(getClassName("PanelHeaderButton", platform), {
-        "PanelHeaderButton--primary": primary,
-        "PanelHeaderButton--primitive": isPrimitive,
-        "PanelHeaderButton--notPrimitive": !isPrimitive && !isPrimitiveLabel,
-      })}
+      vkuiClass={classNames(
+        getClassName("PanelHeaderButton", platform),
+        primary && "PanelHeaderButton--primary",
+        isPrimitive && "PanelHeaderButton--primitive",
+        !isPrimitive && !isPrimitiveLabel && "PanelHeaderButton--notPrimitive"
+      )}
     >
       {isPrimitive ? (
         <ButtonTypography primary={primary}>{children}</ButtonTypography>
       ) : (
         children
       )}
-      {isPrimitiveLabel ? (
-        <ButtonTypography primary={primary}>{label}</ButtonTypography>
-      ) : (
-        label
-      )}
+      <div vkuiClass="PanelHeaderButton__label">
+        {isPrimitiveLabel ? (
+          <ButtonTypography primary={primary}>{label}</ButtonTypography>
+        ) : (
+          label
+        )}
+      </div>
     </Tappable>
   );
 };

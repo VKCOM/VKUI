@@ -1,6 +1,7 @@
 import * as React from "react";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getClassName } from "../../helpers/getClassName";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { classNames } from "../../lib/classNames";
 import FixedLayout from "../FixedLayout/FixedLayout";
 import Separator from "../Separator/Separator";
@@ -10,21 +11,16 @@ import {
   ConfigProviderContext,
   WebviewType,
 } from "../ConfigProvider/ConfigProviderContext";
-import {
-  AdaptivityProps,
-  SizeType,
-  withAdaptivity,
-} from "../../hoc/withAdaptivity";
 import Text from "../Typography/Text/Text";
 import { TooltipContainer } from "../Tooltip/TooltipContainer";
 import ModalRootContext from "../ModalRoot/ModalRootContext";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./PanelHeader.css";
 
 export interface PanelHeaderProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRef<HTMLDivElement>,
-    HasRootRef<HTMLDivElement>,
-    AdaptivityProps {
+    HasRootRef<HTMLDivElement> {
   left?: React.ReactNode;
   right?: React.ReactNode;
   separator?: boolean;
@@ -71,41 +67,37 @@ const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
     left,
     children,
     right,
-    separator,
-    visor,
-    transparent,
+    separator = true,
+    visor = true,
+    transparent = false,
     shadow,
     getRef,
     getRootRef,
-    sizeX,
-    sizeY,
     fixed,
     ...restProps
   } = props;
   const platform = usePlatform();
   const { webviewType } = React.useContext(ConfigProviderContext);
   const { isInsideModal } = React.useContext(ModalRootContext);
-  const needShadow = shadow && sizeX === SizeType.REGULAR;
+  const { sizeX } = useAdaptivity();
   let isFixed = fixed !== undefined ? fixed : platform !== Platform.VKCOM;
 
   return (
     <div
       {...restProps}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("PanelHeader", platform),
-        {
-          "PanelHeader--trnsp": transparent,
-          "PanelHeader--shadow": needShadow,
-          "PanelHeader--vis": visor,
-          "PanelHeader--sep": separator && visor,
-          "PanelHeader--vkapps":
-            webviewType === WebviewType.VKAPPS && !isInsideModal,
-          "PanelHeader--no-left": !left,
-          "PanelHeader--no-right": !right,
-          "PanelHeader--fixed": isFixed,
-        },
-        `PanelHeader--sizeX-${sizeX}`
+        getSizeXClassName("PanelHeader", sizeX),
+        transparent && "PanelHeader--trnsp",
+        shadow && "PanelHeader--shadow",
+        visor && "PanelHeader--vis",
+        separator && visor && "PanelHeader--sep",
+        webviewType === WebviewType.VKAPPS &&
+          !isInsideModal &&
+          "PanelHeader--vkapps",
+        !left && "PanelHeader--no-left",
+        !right && "PanelHeader--no-right",
+        isFixed && "PanelHeader--fixed"
       )}
       ref={isFixed ? getRootRef : getRef}
     >
@@ -121,23 +113,11 @@ const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
         <PanelHeaderIn {...props} />
       )}
       {separator && visor && platform !== VKCOM && (
-        <Separator
-          vkuiClass="PanelHeader__separator"
-          expanded={sizeX === SizeType.REGULAR}
-        />
+        <Separator vkuiClass="PanelHeader__separator" />
       )}
     </div>
   );
 };
 
-PanelHeader.defaultProps = {
-  separator: true,
-  transparent: false,
-  visor: true,
-};
-
 // eslint-disable-next-line import/no-default-export
-export default withAdaptivity(PanelHeader, {
-  sizeX: true,
-  sizeY: true,
-});
+export default PanelHeader;

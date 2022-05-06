@@ -1,5 +1,6 @@
 import * as React from "react";
 import { getClassName } from "../../helpers/getClassName";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { classNames } from "../../lib/classNames";
 import {
   ModalRootContext,
@@ -7,25 +8,17 @@ import {
 } from "../ModalRoot/ModalRootContext";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useOrientationChange } from "../../hooks/useOrientationChange";
-import {
-  withAdaptivity,
-  ViewHeight,
-  ViewWidth,
-} from "../../hoc/withAdaptivity";
-import {
-  AdaptivityContextInterface,
-  AdaptivityProps,
-} from "../AdaptivityProvider/AdaptivityContext";
+import { ViewHeight, ViewWidth } from "../../hoc/withAdaptivity";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { multiRef } from "../../lib/utils";
 import { ModalType } from "../ModalRoot/types";
 import { getNavId, NavIdProps } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./ModalPage.css";
 
 export interface ModalPageProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    AdaptivityProps,
     NavIdProps {
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`
@@ -59,23 +52,16 @@ export interface ModalPageProps
 }
 
 const warn = warnOnce("ModalPage");
-const ModalPage: React.FC<ModalPageProps & AdaptivityContextInterface> = (
-  props
-) => {
+const ModalPage: React.FC<ModalPageProps> = (props) => {
   const { updateModalHeight } = React.useContext(ModalRootContext);
 
   const {
     children,
     header,
-    viewWidth,
-    viewHeight,
-    sizeX,
-    hasMouse,
     onOpen,
     onOpened,
     onClose,
     onClosed,
-    settlingHeight,
     dynamicContentHeight,
     getModalContentRef,
     nav,
@@ -84,6 +70,7 @@ const ModalPage: React.FC<ModalPageProps & AdaptivityContextInterface> = (
 
   const platform = usePlatform();
   const orientation = useOrientationChange();
+  const { viewWidth, viewHeight, sizeX, hasMouse } = useAdaptivity();
 
   React.useEffect(updateModalHeight, [
     children,
@@ -102,13 +89,10 @@ const ModalPage: React.FC<ModalPageProps & AdaptivityContextInterface> = (
   return (
     <div
       {...restProps}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("ModalPage", platform),
-        `ModalPage--sizeX-${sizeX}`,
-        {
-          "ModalPage--desktop": isDesktop,
-        }
+        getSizeXClassName("ModalPage", sizeX),
+        isDesktop && "ModalPage--desktop"
       )}
     >
       <div vkuiClass="ModalPage__in-wrap" ref={refs.innerElement}>
@@ -137,14 +121,5 @@ const ModalPage: React.FC<ModalPageProps & AdaptivityContextInterface> = (
   );
 };
 
-ModalPage.defaultProps = {
-  settlingHeight: 75,
-};
-
 // eslint-disable-next-line import/no-default-export
-export default withAdaptivity(ModalPage, {
-  viewWidth: true,
-  viewHeight: true,
-  sizeX: true,
-  hasMouse: true,
-});
+export default ModalPage;

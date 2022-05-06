@@ -2,6 +2,8 @@
   padding-right: 11px;
 }
 
-.PanelHeaderBack--ios.PanelHeaderBack--has-label {
-  padding-right: 8px;
+@media (--size-x-regular) {
+  .PanelHeaderBack--ios.PanelHeaderBack--has-label:not(.PanelHeaderBack--sizeX-compact) {
+    padding-right: 8px;
+  }
 }

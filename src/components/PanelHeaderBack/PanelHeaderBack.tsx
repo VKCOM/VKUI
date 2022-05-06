@@ -10,37 +10,38 @@ import {
 } from "../PanelHeaderButton/PanelHeaderButton";
 import { ANDROID, VKCOM, IOS } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
-import {
-  withAdaptivity,
-  SizeType,
-  AdaptivityProps,
-} from "../../hoc/withAdaptivity";
+import { AdaptivityProps } from "../../hoc/withAdaptivity";
 import { getClassName } from "../../helpers/getClassName";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { classNames } from "../../lib/classNames";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./PanelHeaderBack.css";
 
-export type PanelHeaderBackProps = PanelHeaderButtonProps &
-  AdaptivityProps & {
-    "aria-label"?: string;
-  };
+export type PanelHeaderBackProps = PanelHeaderButtonProps & {
+  "aria-label"?: string;
+};
 
-const PanelHeaderBack: React.FunctionComponent<PanelHeaderBackProps> = ({
+const PanelHeaderBack: React.FC<PanelHeaderBackProps> = ({
   label,
-  sizeX,
+  "aria-label": ariaLabel = "Назад",
   ...restProps
 }: PanelHeaderButtonProps & AdaptivityProps) => {
   const platform = usePlatform();
-  const showLabel =
-    platform === VKCOM || (platform === IOS && sizeX === SizeType.REGULAR);
+  const { sizeX } = useAdaptivity();
+  // так-же label нужно скрывать при platform === IOS && sizeX === regular
+  // https://github.com/VKCOM/VKUI/blob/master/src/components/PanelHeaderButton/PanelHeaderButton.css#L104
+  const showLabel = platform === VKCOM || platform === IOS;
 
   return (
     <PanelHeaderButton
       {...restProps}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames(getClassName("PanelHeaderBack", platform), {
-        "PanelHeaderBack--has-label": showLabel && !!label,
-      })}
+      vkuiClass={classNames(
+        getClassName("PanelHeaderBack", platform),
+        getSizeXClassName("PanelHeaderBack", sizeX),
+        label && "PanelHeaderBack--has-label"
+      )}
       label={showLabel && label}
+      aria-label={ariaLabel}
     >
       {platform === ANDROID && <Icon28ArrowLeftOutline />}
       {platform === VKCOM && <Icon28ChevronLeftOutline />}
@@ -49,13 +50,5 @@ const PanelHeaderBack: React.FunctionComponent<PanelHeaderBackProps> = ({
   );
 };
 
-PanelHeaderBack.defaultProps = {
-  "aria-label": "Назад",
-};
-
 // eslint-disable-next-line import/no-default-export
-export default React.memo(
-  withAdaptivity(PanelHeaderBack, {
-    sizeX: true,
-  })
-);
+export default React.memo(PanelHeaderBack);

@@ -50,18 +50,32 @@
  * iOS
  */
 
-.CardGrid--ios.CardGrid--sizeX-compact {
+.CardGrid--sizeX-compact.CardGrid--ios {
   padding-left: 12px;
   padding-right: 12px;
+}
+
+@media (--size-x-compact) {
+  .CardGrid--sizeX-none.CardGrid--ios {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
 }
 
 /**
  * Android & VKCOM
  */
 
-.CardGrid--android.CardGrid--sizeX-compact {
+.CardGrid--sizeX-compact.CardGrid--android {
   padding-left: 16px;
   padding-right: 16px;
+}
+
+@media (--size-x-compact) {
+  .CardGrid--sizeX-none.CardGrid--android {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 }
 
 /**
@@ -71,6 +85,13 @@
 .Group--card .CardGrid {
   padding-left: 8px;
   padding-right: 8px;
+}
+
+@media (--size-x-regular) {
+  .Group--none .CardGrid {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 }
 
 .Group .CardGrid:first-child {

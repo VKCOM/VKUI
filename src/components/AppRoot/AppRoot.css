@@ -15,6 +15,12 @@
   background: var(--background_page);
 }
 
+@media (--size-x-regular) {
+  .vkui--sizeX-none {
+    background: var(--background_page);
+  }
+}
+
 .AppRoot--no-mouse {
   user-select: none;
 }

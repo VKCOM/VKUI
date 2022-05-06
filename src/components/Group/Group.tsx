@@ -6,18 +6,14 @@ import { usePlatform } from "../../hooks/usePlatform";
 import Separator from "../Separator/Separator";
 import { hasReactNode } from "../../lib/utils";
 import { Caption } from "../Typography/Caption/Caption";
-import {
-  withAdaptivity,
-  AdaptivityProps,
-  SizeType,
-} from "../../hoc/withAdaptivity";
 import ModalRootContext from "../ModalRoot/ModalRootContext";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import "./Group.css";
 
 export interface GroupProps
   extends HasRootRef<HTMLElement>,
-    React.HTMLAttributes<HTMLElement>,
-    AdaptivityProps {
+    React.HTMLAttributes<HTMLElement> {
   header?: React.ReactNode;
   description?: React.ReactNode;
   /**
@@ -40,20 +36,20 @@ const Group: React.FC<GroupProps> = (props: GroupProps) => {
     header,
     description,
     children,
-    separator,
+    separator = "auto",
     getRootRef,
     mode,
-    sizeX,
     ...restProps
   } = props;
   const { isInsideModal } = React.useContext(ModalRootContext);
   const platform = usePlatform();
+  const { sizeX } = useAdaptivity();
 
-  let computedMode: GroupProps["mode"] = mode;
+  let computedMode: GroupProps["mode"] | "none" = mode;
 
   if (!mode) {
-    computedMode =
-      sizeX === SizeType.COMPACT || isInsideModal ? "plain" : "card";
+    // Подробнее в "none" можно прочитать в ADAPTIVITY_GUIDE.md
+    computedMode = isInsideModal ? "plain" : "none";
   }
 
   return (
@@ -62,8 +58,8 @@ const Group: React.FC<GroupProps> = (props: GroupProps) => {
       ref={getRootRef}
       vkuiClass={classNames(
         getClassName("Group", platform),
-        `Group--sizeX-${sizeX}`,
-        `Group--${computedMode}`
+        getSizeXClassName("Group", sizeX),
+        computedMode && `Group--${computedMode}`
       )}
     >
       <div vkuiClass="Group__inner">
@@ -73,23 +69,17 @@ const Group: React.FC<GroupProps> = (props: GroupProps) => {
           <Caption vkuiClass="Group__description">{description}</Caption>
         )}
       </div>
-
       {separator !== "hide" && (
         <Separator
-          // eslint-disable-next-line vkui/no-object-expression-in-arguments
-          vkuiClass={classNames("Group__separator", {
-            "Group__separator--force": separator === "show",
-          })}
-          expanded={computedMode === "card"}
+          vkuiClass={classNames(
+            "Group__separator",
+            separator === "show" && "Group__separator--force"
+          )}
         />
       )}
     </section>
   );
 };
 
-Group.defaultProps = {
-  separator: "auto",
-};
-
 // eslint-disable-next-line import/no-default-export
-export default withAdaptivity(Group, { sizeX: true });
+export default Group;
