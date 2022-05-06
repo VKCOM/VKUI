@@ -48,6 +48,7 @@ const Group: React.FC<GroupProps> = (props: GroupProps) => {
   let computedMode: GroupProps["mode"] | "none" = mode;
 
   if (!mode) {
+    // Подробнее в "none" можно прочитать в ADAPTIVITY_GUIDE.md
     computedMode = isInsideModal ? "plain" : "none";
   }
 

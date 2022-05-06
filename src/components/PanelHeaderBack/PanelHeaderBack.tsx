@@ -28,6 +28,8 @@ const PanelHeaderBack: React.FC<PanelHeaderBackProps> = ({
 }: PanelHeaderButtonProps & AdaptivityProps) => {
   const platform = usePlatform();
   const { sizeX } = useAdaptivity();
+  // так-же label нужно скрывать при platform === IOS && sizeX === regular
+  // https://github.com/VKCOM/VKUI/blob/master/src/components/PanelHeaderButton/PanelHeaderButton.css#L104
   const showLabel = platform === VKCOM || platform === IOS;
 
   return (
