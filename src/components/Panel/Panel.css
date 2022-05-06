@@ -127,8 +127,8 @@
   background-color: var(--background_content);
 }
 
-.Panel.Panel--sizeX-regular .Panel__in,
-.Panel.Panel--sizeX-regular::after {
+.Panel--sizeX-regular.Panel .Panel__in,
+.Panel--sizeX-regular.Panel::after {
   background-color: transparent;
 }
 

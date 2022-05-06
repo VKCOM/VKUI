@@ -102,7 +102,7 @@
 }
 
 @media (--size-x-compact) {
-  .PanelHeaderBack--ios.PanelHeaderBack--sizeX-none .PanelHeaderButton__label {
+  .PanelHeaderBack--sizeX-none.PanelHeaderBack--ios .PanelHeaderButton__label {
     display: none;
   }
 }
