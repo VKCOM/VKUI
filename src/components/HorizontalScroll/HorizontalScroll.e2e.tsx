@@ -8,7 +8,6 @@ import { mount, screenshot } from "../../testing/e2e";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { AppRoot } from "../AppRoot/AppRoot";
 import ConfigProvider from "../ConfigProvider/ConfigProvider";
-import { Scheme } from "../../helpers/scheme";
 
 describe("HorizontalScroll", () => {
   const items = new Array(20).fill(0).map((_, i) => (
@@ -60,7 +59,7 @@ describe("HorizontalScroll", () => {
   it("has arrows on mouse hover", async () => {
     jest.setTimeout(5000);
     await mount(
-      <ConfigProvider scheme={Scheme.BRIGHT_LIGHT}>
+      <ConfigProvider appearance="light">
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasMouse>
           <AppRoot>
             <HorizontalScroll>
@@ -85,7 +84,7 @@ describe("HorizontalScroll", () => {
   it("does not have arrows without mouse", async () => {
     jest.setTimeout(5000);
     await mount(
-      <ConfigProvider scheme={Scheme.BRIGHT_LIGHT}>
+      <ConfigProvider appearance="light">
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasMouse={false}>
           <AppRoot>
             <HorizontalScroll>

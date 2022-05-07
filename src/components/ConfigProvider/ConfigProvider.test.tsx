@@ -1,9 +1,8 @@
 import { render } from "@testing-library/react";
-import { AppearanceType } from "@vkontakte/vk-bridge";
 import { FC, useContext } from "react";
-import { ANDROID, VKCOM } from "../../lib/platform";
+import { ANDROID } from "../../lib/platform";
 import { baselineComponent } from "../../testing/utils";
-import { Scheme, Appearance } from "../../helpers/scheme";
+import { Appearance } from "../../helpers/appearance";
 import ConfigProvider from "./ConfigProvider";
 import { ConfigProviderContext, WebviewType } from "./ConfigProviderContext";
 
@@ -33,59 +32,5 @@ describe("ConfigProvider", () => {
         <ConfigUser />
       </ConfigProvider>
     );
-  });
-  describe("manages body[scheme]", () => {
-    it("sets body[scheme] on first render", () => {
-      render(<ConfigProvider scheme="space_gray" />);
-      expect(document.body).toHaveAttribute("scheme", "space_gray");
-    });
-    it("removes body[scheme] on unmount", () => {
-      render(<ConfigProvider scheme="space_gray" />).unmount();
-      expect(document.body).not.toHaveAttribute("scheme");
-    });
-    it("updates body[scheme] on change", () => {
-      render(<ConfigProvider scheme="space_gray" />).rerender(
-        <ConfigProvider scheme="bright_light" />
-      );
-      expect(document.body).toHaveAttribute("scheme", "bright_light");
-    });
-    describe("scheme=inherit", () => {
-      it("does not set body[scheme] to inherit", () => {
-        render(<ConfigProvider scheme="inherit" />);
-        expect(document.body).not.toHaveAttribute("scheme");
-      });
-      it("does not set body[scheme] to inherit when platform=VKCOM", () => {
-        render(<ConfigProvider scheme="inherit" platform={VKCOM} />);
-        expect(document.body).not.toHaveAttribute("scheme");
-      });
-      it('does not remove body[scheme] on unmount when scheme="inherit"', () => {
-        document.body.setAttribute("scheme", "extern");
-        render(<ConfigProvider scheme="inherit" />).unmount();
-        expect(document.body).toHaveAttribute("scheme", "extern");
-        document.body.removeAttribute("scheme");
-      });
-    });
-  });
-  describe("resolves appearance from external scheme", () => {
-    afterEach(() => () => document.body.removeAttribute("scheme"));
-    let appearance: AppearanceType | undefined;
-    const ReadAppearance: FC = () => {
-      appearance = useContext(ConfigProviderContext).appearance;
-      return null;
-    };
-    it.each([
-      [Scheme.SPACE_GRAY, "dark"],
-      [Scheme.BRIGHT_LIGHT, "light"],
-      [Scheme.VKCOM_DARK, "dark"],
-      [Scheme.VKCOM_LIGHT, "light"],
-    ] as const)("%s => %s", (scheme, expectAppearance) => {
-      document.body.setAttribute("scheme", scheme);
-      render(
-        <ConfigProvider scheme="inherit">
-          <ReadAppearance />
-        </ConfigProvider>
-      );
-      expect(appearance).toBe(expectAppearance);
-    });
   });
 });

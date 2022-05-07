@@ -1,72 +1,93 @@
 import * as React from "react";
-import vkBridge, { AppearanceType } from "@vkontakte/vk-bridge";
-import { canUseDOM, useDOM } from "../../lib/dom";
+import vkBridge, {
+  AnyReceiveMethodName,
+  AppearanceType,
+  VKBridgeEvent,
+} from "@vkontakte/vk-bridge";
+import { useDOM } from "../../lib/dom";
 import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
   WebviewType,
 } from "./ConfigProviderContext";
-import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { useObjectMemo } from "../../hooks/useObjectMemo";
 import { noop } from "../../lib/utils";
-import { warnOnce } from "../../lib/warnOnce";
-import {
-  normalizeScheme,
-  AppearanceScheme,
-  Scheme,
-} from "../../helpers/scheme";
-import {
-  AppearanceProvider,
-  generateVKUITokensClassName,
-} from "../AppearanceProvider/AppearanceProvider";
+import { AppearanceProvider } from "../AppearanceProvider/AppearanceProvider";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
 import { platform as resolvePlatform } from "../../lib/platform";
+import {
+  resolveAppearance,
+  VKBridgeConfigData,
+} from "../../helpers/appearance";
+import { useAppearance } from "../../hooks/useAppearance";
+
+function autoAppearanceBridge(setAppearance: (value: AppearanceType) => void) {
+  vkBridge
+    .send("VKWebAppGetConfig")
+    .then((data) => {
+      const newBridgeAppearance = resolveAppearance(data as VKBridgeConfigData);
+
+      if (newBridgeAppearance) {
+        setAppearance(newBridgeAppearance);
+      }
+    })
+    .catch(noop)
+    .finally(noop);
+
+  function bridgeListener(e: VKBridgeEvent<AnyReceiveMethodName>) {
+    const { type, data } = e.detail;
+
+    if (type !== "VKWebAppUpdateConfig") {
+      return;
+    }
+
+    const newBridgeAppearance = resolveAppearance(data as VKBridgeConfigData);
+
+    if (newBridgeAppearance) {
+      setAppearance(newBridgeAppearance);
+    }
+  }
+
+  vkBridge.subscribe(bridgeListener);
+
+  return () => vkBridge.unsubscribe(bridgeListener);
+}
+
+function autoAppearance(
+  window: Window | undefined,
+  setAppearance: (value: AppearanceType) => void
+): () => void {
+  if (vkBridge.isEmbedded()) {
+    return autoAppearanceBridge(setAppearance);
+  }
+
+  const mediaQuery =
+    window &&
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)");
+
+  if (mediaQuery === undefined) {
+    return noop;
+  }
+
+  const check = (event: MediaQueryList | MediaQueryListEvent) => {
+    // eslint-disable-next-line no-restricted-properties
+    setAppearance(event.matches ? "dark" : "light");
+  };
+
+  check(mediaQuery);
+  mediaQuery.addEventListener("change", check);
+
+  return () => mediaQuery.removeEventListener("change", check);
+}
 
 export interface ConfigProviderProps
   extends Partial<ConfigProviderContextInterface> {
-  /**
-   * @deprecated будет удалено в 5.0.0, устанавливать тему следует через appearance
-   * Цветовая схема приложения
-   */
-  scheme?: AppearanceScheme;
   /**
     Локаль ([список](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry))
    */
   locale?: string;
 }
-
-const warn = warnOnce("ConfigProvider");
-
-function useSchemeDetector(
-  node: HTMLElement | undefined | null,
-  _scheme: Scheme | "inherit"
-) {
-  const inherit = _scheme === "inherit";
-  const getScheme = React.useCallback(() => {
-    if (!inherit || !canUseDOM || !node) {
-      return undefined;
-    }
-    return node.getAttribute("scheme") as Scheme;
-  }, [inherit, node]);
-  const [resolvedScheme, setScheme] = React.useState(getScheme());
-
-  React.useEffect(() => {
-    if (!inherit || !node) {
-      return noop;
-    }
-    setScheme(getScheme());
-    const observer = new MutationObserver(() => setScheme(getScheme()));
-    observer.observe(node, { attributes: true, attributeFilter: ["scheme"] });
-    return () => observer.disconnect();
-  }, [getScheme, inherit, node]);
-
-  return _scheme === "inherit" ? resolvedScheme : _scheme;
-}
-
-const deriveAppearance = (scheme: Scheme | undefined): AppearanceType =>
-  scheme === Scheme.SPACE_GRAY || scheme === Scheme.VKCOM_DARK
-    ? "dark"
-    : "light";
 
 /**
  * @see https://vkcom.github.io/VKUI/#/ConfigProvider
@@ -78,51 +99,29 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
   transitionMotionEnabled = true,
   platform = resolvePlatform(),
   hasNewTokens = false,
-  appearance,
-  scheme,
+  appearance: _appearance,
   locale = "ru",
 }) => {
-  const normalizedScheme = normalizeScheme({
-    scheme,
-    platform,
-    appearance,
-  });
-  const { document } = useDOM();
-  const target = document?.body;
+  const contextAppearance = useAppearance();
 
-  useIsomorphicLayoutEffect(() => {
-    if (normalizedScheme === "inherit") {
+  const [appearance, setAppearance] = React.useState<AppearanceType>(() => {
+    if (_appearance) {
+      return _appearance;
+    }
+
+    return "light";
+  });
+
+  const { window } = useDOM();
+
+  React.useEffect(() => {
+    if (_appearance) {
+      setAppearance(_appearance);
       return noop;
     }
-    if (
-      process.env.NODE_ENV === "development" &&
-      target?.hasAttribute("scheme")
-    ) {
-      warn(
-        '<body scheme> был установлен перед монтированием VKUI - вы не забыли scheme="inherit"?'
-      );
-    }
-    target?.setAttribute("scheme", normalizedScheme);
-    return () => target?.removeAttribute("scheme");
-  }, [normalizedScheme]);
 
-  const realScheme = useSchemeDetector(target, normalizedScheme);
-  const derivedAppearance = deriveAppearance(realScheme);
-
-  useIsomorphicLayoutEffect(() => {
-    const VKUITokensClassName = generateVKUITokensClassName(
-      platform,
-      derivedAppearance
-    );
-
-    // eslint-disable-next-line no-restricted-properties
-    target?.classList.add(VKUITokensClassName);
-
-    return () => {
-      // eslint-disable-next-line no-restricted-properties
-      target?.classList.remove(VKUITokensClassName);
-    };
-  }, [platform, derivedAppearance]);
+    return autoAppearance(window, setAppearance);
+  }, [window, _appearance, contextAppearance]);
 
   const configContext = useObjectMemo({
     webviewType,
@@ -130,8 +129,7 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
     transitionMotionEnabled,
     hasNewTokens,
     platform,
-    scheme,
-    appearance: appearance || derivedAppearance,
+    appearance,
   });
 
   return (
