@@ -308,6 +308,7 @@ export { usePlatform } from "./hooks/usePlatform";
 export { useAdaptivity } from "./hooks/useAdaptivity";
 export { useAppearance } from "./hooks/useAppearance";
 export { usePagination } from "./hooks/usePagination";
+export { useScrollLock } from "./components/AppRoot/ScrollContext";
 
 /**
  * Utils
