@@ -49,6 +49,12 @@ function now() {
 }
 
 /**
+ * Округляем el.scrollLeft
+ * https://github.com/VKCOM/VKUI/pull/2445
+ */
+const roundUpElementScrollLeft = (el: HTMLElement) => Math.ceil(el.scrollLeft);
+
+/**
  * Код анимации скрола, на основе полифила: https://github.com/iamdustan/smoothscroll
  * Константа взята из полифила (468), на дизайн-ревью уточнили до 250
  * @var {number} SCROLL_ONE_FRAME_TIME время анимации скролла
@@ -74,7 +80,7 @@ function doScroll({
    */
   const maxLeft = initialScrollWidth - scrollElement.offsetWidth;
 
-  let startLeft = scrollElement.scrollLeft;
+  let startLeft = roundUpElementScrollLeft(scrollElement);
   let endLeft = getScrollPosition(startLeft);
 
   onScrollStart();
@@ -100,7 +106,7 @@ function doScroll({
     const currentLeft = startLeft + (endLeft - startLeft) * value;
     scrollElement.scrollLeft = Math.ceil(currentLeft);
 
-    if (scrollElement.scrollLeft !== Math.max(0, endLeft)) {
+    if (roundUpElementScrollLeft(scrollElement) !== Math.max(0, endLeft)) {
       requestAnimationFrame(scroll);
       return;
     }
@@ -179,7 +185,7 @@ const HorizontalScrollComponent: React.FC<HorizontalScrollProps> = ({
 
       setCanScrollLeft(scrollElement.scrollLeft > 0);
       setCanScrollRight(
-        scrollElement.scrollLeft + scrollElement.offsetWidth <
+        roundUpElementScrollLeft(scrollElement) + scrollElement.offsetWidth <
           scrollElement.scrollWidth
       );
     }

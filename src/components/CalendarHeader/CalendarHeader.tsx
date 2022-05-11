@@ -30,7 +30,13 @@ export interface CalendarHeaderProps
   changeMonthAriaLabel?: string;
   changeYearAriaLabel?: string;
   onChange(viewDate: Date): void;
+  /**
+   * Нажатие на кнопку переключения на следующий месяц.
+   */
   onNextMonth?(): void;
+  /**
+   * Нажатие на кнопку переключения на предыдущий месяц.
+   */
   onPrevMonth?(): void;
 }
 

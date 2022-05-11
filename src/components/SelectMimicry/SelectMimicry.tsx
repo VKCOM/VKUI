@@ -1,7 +1,7 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
-import { FormField } from "../FormField/FormField";
+import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasAlign, HasRootRef } from "../../types";
 import { SizeType } from "../../hoc/withAdaptivity";
 import { usePlatform } from "../../hooks/usePlatform";
@@ -18,15 +18,15 @@ import "./SelectMimicry.css";
 export interface SelectMimicryProps
   extends React.HTMLAttributes<HTMLElement>,
     HasAlign,
-    HasRootRef<HTMLElement> {
+    HasRootRef<HTMLElement>,
+    Pick<FormFieldProps, "before" | "after"> {
   multiline?: boolean;
   disabled?: boolean;
-  after?: React.ReactNode;
   selectType?: SelectType;
 }
 
 const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
-  tabIndex,
+  tabIndex = 0,
   placeholder,
   children,
   align,
@@ -34,6 +34,7 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
   multiline,
   disabled,
   onClick,
+  before,
   after = <DropdownIcon />,
   selectType = SelectType.Default,
   ...restProps
@@ -61,6 +62,7 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
       getRootRef={getRootRef}
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
+      before={before}
       after={after}
     >
       <TypographyComponent
@@ -75,10 +77,6 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
       </TypographyComponent>
     </FormField>
   );
-};
-
-SelectMimicry.defaultProps = {
-  tabIndex: 0,
 };
 
 // eslint-disable-next-line import/no-default-export

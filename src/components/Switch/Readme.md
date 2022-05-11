@@ -5,51 +5,27 @@
   <Panel id="switch">
     <PanelHeader>Switch</PanelHeader>
     <Group>
-      <Cell
-        role={null}
-        disabled
-        after={<Switch aria-label="Комментарии к записям" />}
-      >
+      <SimpleCell Component="label" after={<Switch />}>
         Комментарии к записям
-      </Cell>
-      <Cell
-        role={null}
-        disabled
-        after={<Switch defaultChecked aria-label="Ссылки" />}
-      >
+      </SimpleCell>
+      <SimpleCell Component="label" after={<Switch defaultChecked />}>
         Ссылки
-      </Cell>
-      <Cell
-        role={null}
-        disabled
-        after={<Switch disabled aria-label="Фотоальбомы" />}
-      >
+      </SimpleCell>
+      <SimpleCell Component="label" disabled after={<Switch disabled />}>
         Фотоальбомы
-      </Cell>
+      </SimpleCell>
     </Group>
     <Group header={<Header mode="secondary">Компактный вид</Header>}>
       <AdaptivityProvider sizeY="compact">
-        <Cell
-          role={null}
-          disabled
-          after={<Switch aria-label="Комментарии к записям" />}
-        >
+        <SimpleCell Component="label" after={<Switch />}>
           Комментарии к записям
-        </Cell>
-        <Cell
-          role={null}
-          disabled
-          after={<Switch defaultChecked aria-label="Ссылки" />}
-        >
+        </SimpleCell>
+        <SimpleCell Component="label" after={<Switch defaultChecked />}>
           Ссылки
-        </Cell>
-        <Cell
-          role={null}
-          disabled
-          after={<Switch disabled aria-label="Фотоальбомы" />}
-        >
+        </SimpleCell>
+        <SimpleCell Component="label" disabled after={<Switch disabled />}>
           Фотоальбомы
-        </Cell>
+        </SimpleCell>
       </AdaptivityProvider>
     </Group>
   </Panel>

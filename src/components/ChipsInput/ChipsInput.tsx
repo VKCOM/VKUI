@@ -96,6 +96,7 @@ export const ChipsInput = <Option extends ChipsInputOption>(
     getOptionLabel,
     getNewOptionData,
     renderChip,
+    before,
     after,
     inputAriaLabel,
     ...restProps
@@ -186,6 +187,7 @@ export const ChipsInput = <Option extends ChipsInputOption>(
       className={className}
       style={style}
       disabled={restProps.disabled}
+      before={before}
       after={after}
       onClick={handleClick}
       role="application"
