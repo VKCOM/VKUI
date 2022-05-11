@@ -1,9 +1,5 @@
 import * as React from "react";
-import {
-  withAdaptivity,
-  ViewHeight,
-  ViewWidth,
-} from "../../hoc/withAdaptivity";
+import { withAdaptivity } from "../../hoc/withAdaptivity";
 import { ModalRootTouch } from "./ModalRoot";
 import { ModalRootDesktop } from "./ModalRootDesktop";
 import {
@@ -11,6 +7,7 @@ import {
   AdaptivityProps,
 } from "../AdaptivityProvider/AdaptivityContext";
 import { useScrollLock } from "../AppRoot/ScrollContext";
+import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
 
 export interface ModalRootProps extends AdaptivityProps {
   activeModal?: string | null;
@@ -39,10 +36,7 @@ export interface ModalRootProps extends AdaptivityProps {
 const ModalRootComponent: React.FC<
   ModalRootProps & AdaptivityContextInterface
 > = (props) => {
-  const { viewWidth, viewHeight, hasMouse } = props;
-  const isDesktop =
-    viewWidth >= ViewWidth.SMALL_TABLET &&
-    (hasMouse || viewHeight >= ViewHeight.MEDIUM);
+  const isDesktop = useAdaptivityIsDesktop();
 
   useScrollLock(!!props.activeModal);
 

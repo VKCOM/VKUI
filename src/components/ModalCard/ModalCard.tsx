@@ -3,11 +3,7 @@ import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { withPlatform } from "../../hoc/withPlatform";
 import { HasPlatform } from "../../types";
-import {
-  withAdaptivity,
-  ViewHeight,
-  ViewWidth,
-} from "../../hoc/withAdaptivity";
+import { withAdaptivity } from "../../hoc/withAdaptivity";
 import ModalRootContext, {
   useModalRegistry,
 } from "../ModalRoot/ModalRootContext";
@@ -22,6 +18,7 @@ import {
   AdaptivityContextInterface,
   AdaptivityProps,
 } from "../AdaptivityProvider/AdaptivityContext";
+import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
 import "./ModalCard.css";
 
 export interface ModalCardProps
@@ -51,9 +48,7 @@ const ModalCard: React.FC<ModalCardProps & AdaptivityContextInterface> = (
     ...restProps
   } = props;
 
-  const isDesktop =
-    viewWidth >= ViewWidth.SMALL_TABLET &&
-    (hasMouse || viewHeight >= ViewHeight.MEDIUM);
+  const isDesktop = useAdaptivityIsDesktop();
 
   const modalContext = React.useContext(ModalRootContext);
   const { refs } = useModalRegistry(getNavId(props, warn), ModalType.CARD);

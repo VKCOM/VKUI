@@ -1,16 +1,13 @@
 import * as React from "react";
 import { HasRootRef } from "../../types";
-import {
-  withAdaptivity,
-  ViewWidth,
-  ViewHeight,
-} from "../../hoc/withAdaptivity";
+import { withAdaptivity } from "../../hoc/withAdaptivity";
 import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { blurActiveElement, useDOM } from "../../lib/dom";
 import {
   AdaptivityContextInterface,
   AdaptivityProps,
 } from "../AdaptivityProvider/AdaptivityContext";
+import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
 import "./PopoutRoot.css";
 
 export interface PopoutRootProps
@@ -36,9 +33,7 @@ export const PopoutRootComponent: React.FC<
   } = props;
   const { document } = useDOM();
 
-  const isDesktop =
-    viewWidth >= ViewWidth.SMALL_TABLET &&
-    (hasMouse || viewHeight >= ViewHeight.MEDIUM);
+  const isDesktop = useAdaptivityIsDesktop();
 
   React.useEffect(() => {
     popout && blurActiveElement(document);
