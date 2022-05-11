@@ -1,8 +1,11 @@
 .FixedLayout {
   position: fixed;
   box-sizing: border-box;
-  left: auto;
+  left: 0;
+  right: 0;
   z-index: 3;
+  margin-left: auto;
+  margin-right: auto;
   padding-left: var(--safe-area-inset-left);
   padding-right: var(--safe-area-inset-right);
 }
@@ -14,12 +17,10 @@
 .FixedLayout--top {
   width: 100%;
   top: 0;
-  left: 0;
 }
 
 .FixedLayout--bottom {
   width: 100%;
-  left: 0;
   bottom: 0;
   padding-bottom: var(--safe-area-inset-bottom);
 }
