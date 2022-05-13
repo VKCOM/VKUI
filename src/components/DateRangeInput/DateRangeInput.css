@@ -14,3 +14,10 @@
   font-size: 15px;
   margin-right: 22px;
 }
+
+@media (--size-y-compact) {
+  .DateRangeInput--sizeY-none .DateRangeInput__input {
+    font-size: 15px;
+    margin-right: 22px;
+  }
+}

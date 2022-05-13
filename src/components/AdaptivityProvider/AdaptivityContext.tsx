@@ -53,7 +53,6 @@ export interface AdaptivityContextInterface extends SizeProps {
 
 export const AdaptivityContext =
   React.createContext<AdaptivityContextInterface>({
-    sizeY: SizeType.REGULAR,
     hasMouse,
     deviceHasHover: hasHover,
     viewWidth: 0,

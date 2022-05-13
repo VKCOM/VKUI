@@ -7,8 +7,6 @@ import { IOS, VKCOM } from "../../lib/platform";
 import {
   Icon20CheckBoxOn,
   Icon20CheckBoxOff,
-  Icon24CheckBoxOn,
-  Icon24CheckBoxOff,
   Icon20CheckBoxIndetermanate,
 } from "@vkontakte/icons";
 
@@ -16,8 +14,8 @@ import { HasRef, HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useExternRef } from "../../hooks/useExternRef";
-import { SizeType } from "../../hoc/withAdaptivity";
 import { warnOnce } from "../../lib/warnOnce";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 
 import "./SimpleCheckbox.css";
 
@@ -98,7 +96,7 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
       Component="label"
       vkuiClass={classNames(
         getClassName("SimpleCheckbox", platform),
-        `SimpleCheckbox--sizeY-${sizeY}`
+        getSizeYClassName("SimpleCheckbox", sizeY)
       )}
       className={className}
       style={style}
@@ -117,24 +115,13 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
       />
       <div vkuiClass="SimpleCheckbox__container">
         <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--on">
-          {sizeY === SizeType.COMPACT || platform === VKCOM ? (
-            <Icon20CheckBoxOn />
-          ) : (
-            <Icon24CheckBoxOn />
-          )}
+          <Icon20CheckBoxOn vkuiClass="SimpleCheckbox__icon--inner" />
         </div>
         <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--off">
-          {sizeY === SizeType.COMPACT || platform === VKCOM ? (
-            <Icon20CheckBoxOff />
-          ) : (
-            <Icon24CheckBoxOff />
-          )}
+          <Icon20CheckBoxOff vkuiClass="SimpleCheckbox__icon--inner" />
         </div>
         <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--indeterminate">
-          <Icon20CheckBoxIndetermanate
-            width={sizeY === SizeType.COMPACT || platform === VKCOM ? 20 : 24}
-            height={sizeY === SizeType.COMPACT || platform === VKCOM ? 20 : 24}
-          />
+          <Icon20CheckBoxIndetermanate vkuiClass="SimpleCheckbox__icon--inner" />
         </div>
       </div>
       {platform === VKCOM && (

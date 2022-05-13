@@ -10,6 +10,7 @@ import { classNames } from "../../lib/classNames";
 
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { PaginationPageType, usePagination } from "../../hooks/usePagination";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 
 import Tappable from "../Tappable/Tappable";
 import { Button } from "../Button/Button";
@@ -116,7 +117,7 @@ export const Pagination: React.FC<PaginationProps> = ({
                 vkuiClass={classNames(
                   "Pagination__page",
                   "Pagination__page--type-ellipsis",
-                  `Pagination__page--sizeY-${sizeY}`,
+                  getSizeYClassName("Pagination__page", sizeY),
                   disabled && "Pagination__page--disabled"
                 )}
               >
@@ -131,7 +132,7 @@ export const Pagination: React.FC<PaginationProps> = ({
               <Tappable
                 vkuiClass={classNames(
                   "Pagination__page",
-                  `Pagination__page--sizeY-${sizeY}`,
+                  getSizeYClassName("Pagination__page", sizeY),
                   isCurrent && "Pagination__page--current",
                   disabled && "Pagination__page--disabled"
                 )}

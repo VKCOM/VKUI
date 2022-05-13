@@ -4,9 +4,10 @@ import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import { rescale } from "../../helpers/math";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { useExternRef } from "../../hooks/useExternRef";
 import { usePlatform } from "../../hooks/usePlatform";
+import { useBridgeAdaptivity } from "../../hooks/useBridgeAdaptivity";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "../Slider/Slider.css";
 
 export type UniversalValue = [number | null, number];
@@ -16,8 +17,7 @@ export interface UniversalSliderProps<Value>
     Omit<
       React.HTMLAttributes<HTMLDivElement>,
       "value" | "defaultValue" | "onChange"
-    >,
-    AdaptivityProps {
+    > {
   min?: number;
   max?: number;
   step?: number;
@@ -27,7 +27,7 @@ export interface UniversalSliderProps<Value>
   onChange?(value: Value, e: TouchEvent): void;
 }
 
-const UniversalSliderDumb: React.FC<UniversalSliderProps<UniversalValue>> = ({
+const UniversalSlider: React.FC<UniversalSliderProps<UniversalValue>> = ({
   min = 0,
   max = 100,
   step,
@@ -35,7 +35,6 @@ const UniversalSliderDumb: React.FC<UniversalSliderProps<UniversalValue>> = ({
   defaultValue,
   onChange,
   getRootRef,
-  sizeY,
   disabled,
   ...restProps
 }) => {
@@ -50,6 +49,7 @@ const UniversalSliderDumb: React.FC<UniversalSliderProps<UniversalValue>> = ({
   const container = useExternRef(getRootRef);
   const thumbStart = React.useRef<HTMLDivElement>(null);
   const thumbEnd = React.useRef<HTMLDivElement>(null);
+  const { sizeY } = useBridgeAdaptivity();
 
   const offsetToValue = (absolute: number) => {
     return rescale(absolute, [0, gesture.containerWidth], [min, max], { step });
@@ -135,6 +135,7 @@ const UniversalSliderDumb: React.FC<UniversalSliderProps<UniversalValue>> = ({
       {...(disabled ? {} : { onStart, onMove, onEnd })}
       vkuiClass={classNames(
         getClassName("Slider", platform),
+        getSizeYClassName("Slider", sizeY),
         `Slider--sizeY-${sizeY}`,
         disabled && "Slider--disabled"
       )}
@@ -157,6 +158,4 @@ const UniversalSliderDumb: React.FC<UniversalSliderProps<UniversalValue>> = ({
   );
 };
 
-export const UniversalSlider = withAdaptivity(UniversalSliderDumb, {
-  sizeY: true,
-});
+export { UniversalSlider };

@@ -10,6 +10,13 @@
   line-height: var(--vkui--font_subhead--line_height--compact);
 }
 
+@media (--size-y-compact) {
+  .Subhead--sizeY-none {
+    font-size: var(--vkui--font_subhead--font_size--compact);
+    line-height: var(--vkui--font_subhead--line_height--compact);
+  }
+}
+
 /* TODO Удалить перед релизом 5.0.0 */
 .Subhead--w-regular {
   font-weight: 400;

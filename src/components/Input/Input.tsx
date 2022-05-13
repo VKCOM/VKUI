@@ -3,8 +3,9 @@ import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasAlign, HasRef, HasRootRef } from "../../types";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { usePlatform } from "../../hooks/usePlatform";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./Input.css";
 
 export interface InputProps
@@ -12,28 +13,28 @@ export interface InputProps
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLDivElement>,
     HasAlign,
-    AdaptivityProps,
     FormFieldProps {}
 
-const InputComponent: React.FunctionComponent<InputProps> = ({
+const Input: React.FunctionComponent<InputProps> = ({
   type = "text",
   align,
   getRef,
   className,
   getRootRef,
-  sizeY,
   style,
   before,
   after,
   ...restProps
 }: InputProps) => {
   const platform = usePlatform();
+  const { sizeY } = useAdaptivity();
+
   return (
     <FormField
       vkuiClass={classNames(
         getClassName("Input", platform),
         !!align && `Input--${align}`,
-        `Input--sizeY-${sizeY}`
+        getSizeYClassName("Input", sizeY)
       )}
       style={style}
       className={className}
@@ -47,6 +48,4 @@ const InputComponent: React.FunctionComponent<InputProps> = ({
   );
 };
 
-export const Input = withAdaptivity(InputComponent, {
-  sizeY: true,
-});
+export { Input };

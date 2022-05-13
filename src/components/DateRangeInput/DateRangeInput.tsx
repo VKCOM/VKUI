@@ -16,6 +16,7 @@ import { FormField } from "../FormField/FormField";
 import { InputLike } from "../InputLike/InputLike";
 import { InputLikeDivider } from "../InputLike/InputLikeDivider";
 import { callMultiple } from "../../lib/callMultiple";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "./DateRangeInput.css";
 
 export interface DateRangeInputProps
@@ -228,7 +229,10 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
 
   return (
     <FormField
-      vkuiClass={classNames("DateRangeInput", `DateRangeInput--sizeY-${sizeY}`)}
+      vkuiClass={classNames(
+        "DateRangeInput",
+        getSizeYClassName("DateRangeInput", sizeY)
+      )}
       style={style}
       className={className}
       getRootRef={multiRef(rootRef, getRootRef)}

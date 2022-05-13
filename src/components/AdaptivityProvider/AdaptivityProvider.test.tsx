@@ -130,7 +130,6 @@ describe("AdaptivityProvider", () => {
 
       expect(result).toEqual(
         expect.objectContaining({
-          sizeY: SizeType.REGULAR,
           viewWidth: ViewWidth.SMALL_MOBILE,
           viewHeight: ViewHeight.SMALL,
         })
@@ -142,7 +141,6 @@ describe("AdaptivityProvider", () => {
 
       expect(result).toEqual(
         expect.objectContaining({
-          sizeY: SizeType.REGULAR,
           viewWidth: ViewWidth.MOBILE,
           viewHeight: ViewHeight.SMALL,
         })
@@ -154,7 +152,6 @@ describe("AdaptivityProvider", () => {
 
       expect(result).toEqual(
         expect.objectContaining({
-          sizeY: SizeType.COMPACT,
           viewWidth: ViewWidth.SMALL_TABLET,
           viewHeight: ViewHeight.SMALL,
         })
@@ -166,7 +163,6 @@ describe("AdaptivityProvider", () => {
 
       expect(result).toEqual(
         expect.objectContaining({
-          sizeY: SizeType.COMPACT,
           viewWidth: ViewWidth.TABLET,
           viewHeight: ViewHeight.SMALL,
         })
@@ -178,7 +174,6 @@ describe("AdaptivityProvider", () => {
 
       expect(result).toEqual(
         expect.objectContaining({
-          sizeY: SizeType.COMPACT,
           viewWidth: ViewWidth.DESKTOP,
           viewHeight: ViewHeight.SMALL,
         })
@@ -190,7 +185,6 @@ describe("AdaptivityProvider", () => {
 
       expect(result).toEqual(
         expect.objectContaining({
-          sizeY: SizeType.COMPACT,
           viewWidth: ViewWidth.MOBILE,
           viewHeight: ViewHeight.EXTRA_SMALL,
         })
@@ -202,7 +196,6 @@ describe("AdaptivityProvider", () => {
 
       expect(result).toEqual(
         expect.objectContaining({
-          sizeY: SizeType.REGULAR,
           viewWidth: ViewWidth.MOBILE,
           viewHeight: ViewHeight.SMALL,
         })
@@ -214,7 +207,6 @@ describe("AdaptivityProvider", () => {
 
       expect(result).toEqual(
         expect.objectContaining({
-          sizeY: SizeType.REGULAR,
           viewWidth: ViewWidth.MOBILE,
           viewHeight: ViewHeight.MEDIUM,
         })
@@ -226,7 +218,6 @@ describe("AdaptivityProvider", () => {
 
       expect(result).toEqual(
         expect.objectContaining({
-          sizeY: SizeType.COMPACT,
           viewWidth: ViewWidth.SMALL_MOBILE,
           viewHeight: ViewHeight.EXTRA_SMALL,
         })
@@ -238,7 +229,6 @@ describe("AdaptivityProvider", () => {
 
       expect(result).toEqual(
         expect.objectContaining({
-          sizeY: SizeType.COMPACT,
           viewWidth: ViewWidth.SMALL_TABLET,
           viewHeight: ViewHeight.SMALL,
         })
@@ -250,7 +240,6 @@ describe("AdaptivityProvider", () => {
 
       expect(result).toEqual(
         expect.objectContaining({
-          sizeY: SizeType.COMPACT,
           viewWidth: ViewWidth.TABLET,
           viewHeight: ViewHeight.MEDIUM,
         })
@@ -262,7 +251,6 @@ describe("AdaptivityProvider", () => {
 
       expect(result).toEqual(
         expect.objectContaining({
-          sizeY: SizeType.COMPACT,
           viewWidth: ViewWidth.DESKTOP,
           viewHeight: ViewHeight.MEDIUM,
         })
@@ -445,7 +433,6 @@ describe("AdaptivityProvider", () => {
 
       expect(result).toEqual(
         expect.objectContaining({
-          sizeY: SizeType.REGULAR,
           viewWidth: ViewWidth.SMALL_TABLET,
           viewHeight: ViewHeight.SMALL,
         })

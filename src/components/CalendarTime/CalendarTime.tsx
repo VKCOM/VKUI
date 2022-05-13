@@ -3,6 +3,7 @@ import { setHours, setMinutes } from "../../lib/date";
 import { CustomSelect } from "../CustomSelect/CustomSelect";
 import { Button } from "../Button/Button";
 import { SizeType } from "../../hoc/withAdaptivity";
+import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import "./CalendarTime.css";
 
 export interface CalendarTimeProps {
@@ -52,25 +53,27 @@ export const CalendarTime: React.FC<CalendarTimeProps> = ({
   return (
     <div vkuiClass="CalendarTime">
       <div vkuiClass="CalendarTime__picker">
-        <CustomSelect
-          value={value.getHours()}
-          options={hours}
-          onChange={onHoursChange}
-          forceDropdownPortal={false}
-          sizeY={SizeType.COMPACT}
-          aria-label={changeHoursAriaLabel}
-        />
+        <AdaptivityProvider sizeY={SizeType.COMPACT}>
+          <CustomSelect
+            value={value.getHours()}
+            options={hours}
+            onChange={onHoursChange}
+            forceDropdownPortal={false}
+            aria-label={changeHoursAriaLabel}
+          />
+        </AdaptivityProvider>
       </div>
       <div vkuiClass="CalendarTime__divider">:</div>
       <div vkuiClass="CalendarTime__picker">
-        <CustomSelect
-          value={value.getMinutes()}
-          options={minutes}
-          onChange={onMinutesChange}
-          forceDropdownPortal={false}
-          sizeY={SizeType.COMPACT}
-          aria-label={changeMinutesAriaLabel}
-        />
+        <AdaptivityProvider sizeY={SizeType.COMPACT}>
+          <CustomSelect
+            value={value.getMinutes()}
+            options={minutes}
+            onChange={onMinutesChange}
+            forceDropdownPortal={false}
+            aria-label={changeMinutesAriaLabel}
+          />
+        </AdaptivityProvider>
       </div>
       <div vkuiClass="CalendarTime__button">
         <Button

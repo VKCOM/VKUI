@@ -26,6 +26,14 @@
   font-size: 15px;
 }
 
+@media (--size-y-compact) {
+  .Textarea--sizeY-none .Textarea__el {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    font-size: 15px;
+  }
+}
+
 .Textarea__el::placeholder {
   color: var(--field_text_placeholder);
 }

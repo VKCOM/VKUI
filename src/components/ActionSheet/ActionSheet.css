@@ -104,9 +104,16 @@
   margin: 0;
 }
 
-.ActionSheet--desktop.ActionSheet--sizeY-compact {
+.ActionSheet--sizeY-compact.ActionSheet--desktop {
   padding-top: 8px;
   padding-bottom: 8px;
+}
+
+@media (--size-y-compact) {
+  .ActionSheet--sizeY-none.ActionSheet--desktop {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
 }
 
 .ActionSheet--desktop.ActionSheet--ios {

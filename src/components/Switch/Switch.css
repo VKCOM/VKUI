@@ -44,10 +44,18 @@
   border-radius: 15px;
 }
 
-.Switch--ios.Switch--sizeY-compact .Switch__pseudo {
+.Switch--sizeY-compact.Switch--ios .Switch__pseudo {
   width: 47px;
   height: 27px;
   border-radius: 13px;
+}
+
+@media (--size-y-compact) {
+  .Switch--sizeY-none.Switch--ios .Switch__pseudo {
+    width: 47px;
+    height: 27px;
+    border-radius: 13px;
+  }
 }
 
 .Switch--ios .Switch__self:checked + .Switch__pseudo {
@@ -64,9 +72,16 @@
     inset 0 0 0 0.5px rgba(0, 0, 0, 0.04);
 }
 
-.Switch--ios.Switch--sizeY-compact .Switch__pseudo::before {
+.Switch--sizeY-compact.Switch--ios .Switch__pseudo::before {
   width: 23px;
   height: 23px;
+}
+
+@media (--size-y-compact) {
+  .Switch--sizeY-none.Switch--ios .Switch__pseudo::before {
+    width: 23px;
+    height: 23px;
+  }
 }
 
 /**
@@ -104,13 +119,24 @@
   border-radius: 7px;
 }
 
-.Switch--android.Switch--sizeY-compact .Switch__pseudo {
+.Switch--sizeY-compact.Switch--android .Switch__pseudo {
   width: 32px;
   height: 12px;
 }
 
-.Switch--android.Switch--sizeY-compact .Switch__pseudo::after {
+.Switch--sizeY-compact.Switch--android .Switch__pseudo::after {
   border-radius: 6px;
+}
+
+@media (--size-y-compact) {
+  .Switch--sizeY-none.Switch--android .Switch__pseudo {
+    width: 32px;
+    height: 12px;
+  }
+
+  .Switch--sizeY-none.Switch--android .Switch__pseudo::after {
+    border-radius: 6px;
+  }
 }
 
 .Switch--android .Switch__pseudo::before {
@@ -120,7 +146,7 @@
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
 }
 
-.Switch--android.Switch--sizeY-compact .Switch__pseudo::before {
+.Switch--sizeY-compact.Switch--android .Switch__pseudo::before {
   width: 18px;
   height: 18px;
 }
@@ -129,10 +155,23 @@
   background: var(--accent);
 }
 
-.Switch--android.Switch--sizeY-compact
+.Switch--sizeY-compact.Switch--android
   .Switch__self:checked
   + .Switch__pseudo::before {
   transform: translateX(19px);
+}
+
+@media (--size-y-compact) {
+  .Switch--sizeY-none.Switch--android .Switch__pseudo::before {
+    width: 18px;
+    height: 18px;
+  }
+
+  .Switch--sizeY-none.Switch--android
+    .Switch__self:checked
+    + .Switch__pseudo::before {
+    transform: translateX(19px);
+  }
 }
 
 /**

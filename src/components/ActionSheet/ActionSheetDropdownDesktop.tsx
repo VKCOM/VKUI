@@ -11,6 +11,7 @@ import { useEventListener } from "../../hooks/useEventListener";
 import { SharedDropdownProps } from "./types";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { Popper } from "../Popper/Popper";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "./ActionSheet.css";
 
 const warn = warnOnce("ActionSheet");
@@ -82,7 +83,7 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
       vkuiClass={classNames(
         getClassName("ActionSheet", platform),
         "ActionSheet--desktop",
-        `ActionSheet--sizeY-${sizeY}`
+        getSizeYClassName("ActionSheet", sizeY)
       )}
       className={className}
       style={style}

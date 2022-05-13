@@ -82,6 +82,35 @@
   padding: 8px;
 }
 
+@media (--size-y-compact) {
+  .IconButton--sizeY-none {
+    height: 44px;
+  }
+
+  .FormField__after .IconButton--sizeY-none {
+    width: 36px;
+    height: 36px;
+  }
+
+  .FormItem--removable .Removable__content > .IconButton--sizeY-none,
+  .FormLayoutGroup--removable .Removable__content > .IconButton--sizeY-none {
+    height: 36px;
+  }
+
+  .IconButton--sizeY-none .Icon--16,
+  .IconButton--sizeY-none .Icon--16.Icon--w-8 {
+    padding: 14px;
+  }
+
+  .IconButton--sizeY-none .Icon--24 {
+    padding: 10px;
+  }
+
+  .IconButton--sizeY-none .Icon--28 {
+    padding: 8px;
+  }
+}
+
 /*
  * Android & VKCOM
  */

@@ -17,6 +17,7 @@ import { SizeType } from "../../hoc/withAdaptivity";
 import { getMonths, getYears } from "../../lib/calendar";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
+import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import "./CalendarHeader.css";
 
 export interface CalendarHeaderProps
@@ -126,14 +127,13 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             </Paragraph>
           </React.Fragment>
         ) : (
-          <React.Fragment>
+          <AdaptivityProvider sizeY={SizeType.COMPACT}>
             <CustomSelect
               value={viewDate.getMonth()}
               options={months}
               renderOption={renderOption}
               dropdownOffsetDistance={4}
               fixDropdownWidth={false}
-              sizeY={SizeType.COMPACT}
               icon={<Icon12Dropdown />}
               onChange={onMonthsChange}
               forceDropdownPortal={false}
@@ -145,14 +145,13 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
               options={years}
               dropdownOffsetDistance={4}
               fixDropdownWidth={false}
-              sizeY={SizeType.COMPACT}
               icon={<Icon12Dropdown />}
               onChange={onYearChange}
               forceDropdownPortal={false}
               selectType={SelectType.Plain}
               aria-label={changeYearAriaLabel}
             />
-          </React.Fragment>
+          </AdaptivityProvider>
         )}
       </div>
       {nextMonth && (

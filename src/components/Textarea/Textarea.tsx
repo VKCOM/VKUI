@@ -2,18 +2,18 @@ import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { FormField } from "../FormField/FormField";
 import { HasRef, HasRootRef } from "../../types";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { getClassName } from "../../helpers/getClassName";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
 import { useExternRef } from "../../hooks/useExternRef";
 import { usePlatform } from "../../hooks/usePlatform";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "./Textarea.css";
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
     HasRef<HTMLTextAreaElement>,
-    HasRootRef<HTMLElement>,
-    AdaptivityProps {
+    HasRootRef<HTMLElement> {
   grow?: boolean;
   onResize?(el: HTMLTextAreaElement): void;
   defaultValue?: string;
@@ -28,7 +28,6 @@ const Textarea: React.FC<TextareaProps> = React.memo(
     className,
     getRootRef,
     getRef,
-    sizeY,
     rows = 2,
     ...restProps
   }: TextareaProps) => {
@@ -36,6 +35,7 @@ const Textarea: React.FC<TextareaProps> = React.memo(
     const currentScrollHeight = React.useRef<number>();
     const elementRef = useExternRef(getRef);
     const platform = usePlatform();
+    const { sizeY } = useAdaptivity();
 
     // autosize input
     React.useEffect(() => {
@@ -56,7 +56,7 @@ const Textarea: React.FC<TextareaProps> = React.memo(
       <FormField
         vkuiClass={classNames(
           getClassName("Textarea", platform),
-          `Textarea--sizeY-${sizeY}`
+          getSizeYClassName("Textarea", sizeY)
         )}
         className={className}
         style={style}
@@ -77,4 +77,4 @@ const Textarea: React.FC<TextareaProps> = React.memo(
 );
 
 // eslint-disable-next-line import/no-default-export
-export default withAdaptivity(Textarea, { sizeY: true });
+export default Textarea;

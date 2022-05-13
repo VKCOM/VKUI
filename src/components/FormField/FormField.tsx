@@ -5,6 +5,7 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { HasComponent, HasRootRef } from "../../types";
 import { hasReactNode } from "../../lib/utils";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "./FormField.css";
 
 export interface FormFieldProps {
@@ -68,7 +69,7 @@ export const FormField: React.FC<FormFieldOwnProps> = ({
       onMouseLeave={handleMouseLeave}
       vkuiClass={classNames(
         getClassName("FormField", platform),
-        `FormField--sizeY-${sizeY}`,
+        getSizeYClassName("FormField", sizeY),
         disabled && "FormField--disabled"
       )}
     >

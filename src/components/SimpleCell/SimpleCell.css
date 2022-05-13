@@ -9,6 +9,45 @@
   padding-right: 16px;
 }
 
+.SimpleCell__typography {
+  margin: 0;
+  font-weight: var(--vkui--font_weight_accent3);
+}
+
+.SimpleCell--sizeY-compact .SimpleCell__typography {
+  font-size: var(--vkui--font_text--font_size--compact);
+  line-height: var(--vkui--font_text--line_height--compact);
+}
+
+@media (--size-y-compact) {
+  .SimpleCell--sizeY-none .SimpleCell__typography {
+    font-size: var(--vkui--font_text--font_size--compact);
+    line-height: var(--vkui--font_text--line_height--compact);
+  }
+}
+
+.SimpleCell--sizeY-regular .SimpleCell__typography {
+  font-size: var(--vkui--font_title3--font_size--regular);
+  line-height: var(--vkui--font_title3--line_height--regular);
+}
+
+.SimpleCell--sizeY-regular.SimpleCell--android .SimpleCell__typography {
+  font-size: var(--vkui--font_headline1--font_size--regular);
+  line-height: var(--vkui--font_headline1--line_height--regular);
+}
+
+@media (--size-y-regular) {
+  .SimpleCell--sizeY-none .SimpleCell__typography {
+    font-size: var(--vkui--font_title3--font_size--regular);
+    line-height: var(--vkui--font_title3--line_height--regular);
+  }
+
+  .SimpleCell--sizeY-none.SimpleCell--android .SimpleCell__typography {
+    font-size: var(--vkui--font_headline1--font_size--regular);
+    line-height: var(--vkui--font_headline1--line_height--regular);
+  }
+}
+
 .SimpleCell--mult {
   white-space: normal;
 }
@@ -164,11 +203,11 @@
   margin-right: -12px;
 }
 
-.SimpleCell--ios.SimpleCell--sizeY-compact
+.SimpleCell--sizeY-compact.SimpleCell--ios
   .SimpleCell__after
   .IconButton
   .Icon--16,
-.SimpleCell--ios.SimpleCell--sizeY-compact
+.SimpleCell--sizeY-compact.SimpleCell--ios
   .SimpleCell__after
   .IconButton
   .Icon--16
@@ -176,15 +215,42 @@
   margin-right: -14px;
 }
 
-.SimpleCell--ios.SimpleCell--sizeY-regular
+.SimpleCell--sizeY-regular.SimpleCell--ios
   > .Avatar:not(.Avatar--sz-32)
   ~ .SimpleCell__main
   .SimpleCell__children,
-.SimpleCell--ios.SimpleCell--sizeY-regular
+.SimpleCell--sizeY-regular.SimpleCell--ios
   > .Avatar:not(.Avatar--sz-32)
   ~ .SimpleCell__indicator {
   font-size: 16px;
   line-height: 20px;
+}
+
+@media (--size-y-compact) {
+  .SimpleCell--sizeY-none.SimpleCell--ios
+    .SimpleCell__after
+    .IconButton
+    .Icon--16,
+  .SimpleCell--sizeY-none.SimpleCell--ios
+    .SimpleCell__after
+    .IconButton
+    .Icon--16
+    ~ * {
+    margin-right: -14px;
+  }
+}
+
+@media (--size-y-regular) {
+  .SimpleCell--sizeY-none.SimpleCell--ios
+    > .Avatar:not(.Avatar--sz-32)
+    ~ .SimpleCell__main
+    .SimpleCell__children,
+  .SimpleCell--sizeY-none.SimpleCell--ios
+    > .Avatar:not(.Avatar--sz-32)
+    ~ .SimpleCell__indicator {
+    font-size: 16px;
+    line-height: 20px;
+  }
 }
 
 /**
@@ -247,6 +313,54 @@
 
 .SimpleCell--sizeY-compact .SimpleCell__badge .Badge {
   transform: translateY(0.5px);
+}
+
+@media (--size-y-compact) {
+  .SimpleCell--sizeY-none {
+    min-height: 44px;
+  }
+
+  .SimpleCell--sizeY-none .SimpleCell__main,
+  .SimpleCell--sizeY-none .SimpleCell__indicator {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .SimpleCell--sizeY-none .SimpleCell__description,
+  .SimpleCell--sizeY-none
+    > .Avatar--sz-32
+    ~ .SimpleCell__main
+    .SimpleCell__description,
+  .SimpleCell--sizeY-none
+    > .Avatar--sz-28
+    ~ .SimpleCell__main
+    .SimpleCell__description {
+    margin-top: 1px;
+  }
+
+  .SimpleCell--sizeY-none .SimpleCell__after .IconButton .Icon--28,
+  .SimpleCell--sizeY-none .SimpleCell__after .IconButton .Icon--28 ~ * {
+    margin-right: -6px;
+  }
+
+  .SimpleCell--sizeY-none .SimpleCell__after .IconButton .Icon--24,
+  .SimpleCell--sizeY-none .SimpleCell__after .IconButton .Icon--24 ~ * {
+    margin-right: -8px;
+  }
+
+  .SimpleCell--sizeY-none .SimpleCell__after .IconButton .Icon--16,
+  .SimpleCell--sizeY-none .SimpleCell__after .IconButton .Icon--16 ~ * {
+    margin-right: -12px;
+  }
+
+  .SimpleCell--sizeY-none .SimpleCell__after .IconButton .Icon--w-8,
+  .SimpleCell--sizeY-none .SimpleCell__after .IconButton .Icon--w-8 ~ * {
+    margin-right: -10px;
+  }
+
+  .SimpleCell--sizeY-none .SimpleCell__badge .Badge {
+    transform: translateY(0.5px);
+  }
 }
 
 /**

@@ -1,2 +1,8 @@
 @custom-media --size-x-regular (min-width: 768px);
 @custom-media --size-x-compact (max-width: 767px);
+
+@custom-media --size-y-compact (pointer: fine) and (min-width: 768px),
+  (max-height: 413px);
+@custom-media --size-y-regular (pointer: coarse) and (min-height: 414px),
+  (pointer: none) and (min-height: 414px),
+  (max-width: 767px) and (min-height: 414px);

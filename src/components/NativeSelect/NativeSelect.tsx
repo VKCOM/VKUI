@@ -3,17 +3,14 @@ import { classNames } from "../../lib/classNames";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { FormField } from "../FormField/FormField";
 import { HasAlign, HasRef, HasRootRef } from "../../types";
-import { SizeType } from "../../hoc/withAdaptivity";
 import { getClassName } from "../../helpers/getClassName";
-import Headline from "../Typography/Headline/Headline";
-import Text from "../Typography/Text/Text";
-import { VKCOM } from "../../lib/platform";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
 import { useExternRef } from "../../hooks/useExternRef";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "../Select/Select.css";
 
 export interface NativeSelectProps
@@ -60,9 +57,6 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
     }
   }, [value, children]);
 
-  const TypographyComponent =
-    platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
-
   return (
     <FormField
       Component="label"
@@ -71,7 +65,7 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
         notSelected && "Select--not-selected",
         align && `Select--align-${align}`,
         getSizeXClassName("Select", sizeX),
-        sizeY && `Select--sizeY--${sizeY}`,
+        getSizeYClassName("Select", sizeY),
         multiline && "Select--multiline"
       )}
       className={className}
@@ -91,13 +85,9 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
         {placeholder && <option value="">{placeholder}</option>}
         {children}
       </select>
-      <TypographyComponent
-        Component="div"
-        weight="regular"
-        vkuiClass="Select__container"
-      >
+      <div vkuiClass="Select__container">
         <span vkuiClass="Select__title">{title}</span>
-      </TypographyComponent>
+      </div>
     </FormField>
   );
 };

@@ -29,6 +29,16 @@
   top: 26px;
 }
 
+@media (--size-y-compact) {
+  .FormItem--sizeY-none.FormItem--removable.FormItem--withTop
+    .Removable__action,
+  .FormLayoutGroup--sizeY-none.FormLayoutGroup--removable
+    .FormItem--withTop
+    ~ .Removable__action {
+    top: 26px;
+  }
+}
+
 /**
  * iOS
  */
@@ -118,8 +128,16 @@
   height: 28px;
 }
 
-.FormLayoutGroup--removable.FormLayoutGroup--sizeY-compact
+.FormLayoutGroup--sizeY-compact.FormLayoutGroup--removable
   .FormItem--ios.FormItem--withTop
   ~ .Removable__offset {
   height: 26px;
+}
+
+@media (--size-y-compact) {
+  .FormItem--sizeY-none.FormLayoutGroup--removable
+    .FormItem--ios.FormItem--withTop
+    ~ .Removable__offset {
+    height: 26px;
+  }
 }

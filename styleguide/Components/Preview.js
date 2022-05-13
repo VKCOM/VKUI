@@ -43,7 +43,7 @@ let Layout = ({ children, viewWidth }) => {
   );
 };
 
-Layout = withAdaptivity(Layout, { viewWidth: true, sizeY: true });
+Layout = withAdaptivity(Layout, { viewWidth: true });
 
 const Config = ({ hasMouse, children, ...config }) => {
   return (

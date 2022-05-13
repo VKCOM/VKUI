@@ -18,3 +18,10 @@
   font-size: 15px;
   margin-right: 22px;
 }
+
+@media (--size-y-compact) {
+  .DateInput--sizeY-none .DateInput__input {
+    font-size: 15px;
+    margin-right: 22px;
+  }
+}
