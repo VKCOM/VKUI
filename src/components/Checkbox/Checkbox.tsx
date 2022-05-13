@@ -2,16 +2,20 @@ import * as React from "react";
 import Tappable, { ACTIVE_EFFECT_DELAY } from "../Tappable/Tappable";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
-import { IOS } from "../../lib/platform";
-
-import { Icon20CheckBoxOn, Icon20CheckBoxOff } from "@vkontakte/icons";
-
+import { IOS, VKCOM } from "../../lib/platform";
+import {
+  Icon20CheckBoxOn,
+  Icon24CheckBoxOn,
+  Icon20CheckBoxOff,
+  Icon24CheckBoxOff,
+} from "@vkontakte/icons";
 import { HasRef, HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import { Caption } from "../Typography/Caption/Caption";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { SizeYConditionalRender } from "../SizeYConditionalRender/SizeYConditionalRender";
 import "./Checkbox.css";
 
 export interface CheckboxProps
@@ -54,10 +58,24 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
       />
       <div vkuiClass="Checkbox__container">
         <div vkuiClass="Checkbox__icon Checkbox__icon--on">
-          <Icon20CheckBoxOn vkuiClass="Checkbox__icon--inner" />
+          {platform === VKCOM ? (
+            <Icon20CheckBoxOn />
+          ) : (
+            <SizeYConditionalRender
+              compact={<Icon20CheckBoxOn />}
+              regular={<Icon24CheckBoxOn />}
+            />
+          )}
         </div>
         <div vkuiClass="Checkbox__icon Checkbox__icon--off">
-          <Icon20CheckBoxOff vkuiClass="Checkbox__icon--inner" />
+          {platform === VKCOM ? (
+            <Icon20CheckBoxOff />
+          ) : (
+            <SizeYConditionalRender
+              compact={<Icon20CheckBoxOff />}
+              regular={<Icon24CheckBoxOff />}
+            />
+          )}
         </div>
         <div vkuiClass="Checkbox__content">
           <div vkuiClass="Checkbox__children">{children}</div>

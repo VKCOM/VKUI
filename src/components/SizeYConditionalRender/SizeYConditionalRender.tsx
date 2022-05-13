@@ -1,0 +1,35 @@
+import * as React from "react";
+import { classNames } from "../../lib/classNames";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import { hasReactNode } from "../../lib/utils";
+import "./SizeYConditionalRender.css";
+
+export interface SizeYConditionalRenderProps {
+  compact?: React.ReactNode;
+  regular?: React.ReactNode;
+}
+
+const SizeYConditionalRender: React.FC<SizeYConditionalRenderProps> = ({
+  compact,
+  regular,
+}) => {
+  const { sizeY } = useAdaptivity();
+
+  return (
+    <React.Fragment>
+      {hasReactNode(compact) && (
+        <div vkuiClass={classNames(getSizeYClassName("SizeYCompact", sizeY))}>
+          {compact}
+        </div>
+      )}
+      {hasReactNode(regular) && (
+        <div vkuiClass={classNames(getSizeYClassName("SizeYRegular", sizeY))}>
+          {regular}
+        </div>
+      )}
+    </React.Fragment>
+  );
+};
+
+export { SizeYConditionalRender };

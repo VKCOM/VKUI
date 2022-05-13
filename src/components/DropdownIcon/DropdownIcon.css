@@ -1,17 +1,3 @@
 .DropdownIcon {
   cursor: pointer;
 }
-
-.DropdownIcon--sizeY-compact,
-.DropdownIcon--sizeY-compact svg {
-  width: 20px !important;
-  height: 20px !important;
-}
-
-@media (--size-y-compact) {
-  .DropdownIcon--sizeY-none,
-  .DropdownIcon--sizeY-none svg {
-    width: 20px !important;
-    height: 20px !important;
-  }
-}

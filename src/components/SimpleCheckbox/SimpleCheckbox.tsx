@@ -3,20 +3,20 @@ import Tappable, { ACTIVE_EFFECT_DELAY } from "../Tappable/Tappable";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { IOS, VKCOM } from "../../lib/platform";
-
 import {
   Icon20CheckBoxOn,
   Icon20CheckBoxOff,
   Icon20CheckBoxIndetermanate,
+  Icon24CheckBoxOff,
+  Icon24CheckBoxOn,
 } from "@vkontakte/icons";
-
 import { HasRef, HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useExternRef } from "../../hooks/useExternRef";
 import { warnOnce } from "../../lib/warnOnce";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-
+import { SizeYConditionalRender } from "../SizeYConditionalRender/SizeYConditionalRender";
 import "./SimpleCheckbox.css";
 
 const warn = warnOnce("SimpleCheckbox");
@@ -115,10 +115,24 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
       />
       <div vkuiClass="SimpleCheckbox__container">
         <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--on">
-          <Icon20CheckBoxOn vkuiClass="SimpleCheckbox__icon--inner" />
+          {platform === VKCOM ? (
+            <Icon20CheckBoxOn />
+          ) : (
+            <SizeYConditionalRender
+              compact={<Icon20CheckBoxOn />}
+              regular={<Icon24CheckBoxOn />}
+            />
+          )}
         </div>
         <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--off">
-          <Icon20CheckBoxOff vkuiClass="SimpleCheckbox__icon--inner" />
+          {platform === VKCOM ? (
+            <Icon20CheckBoxOff />
+          ) : (
+            <SizeYConditionalRender
+              compact={<Icon20CheckBoxOff />}
+              regular={<Icon24CheckBoxOff />}
+            />
+          )}
         </div>
         <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--indeterminate">
           <Icon20CheckBoxIndetermanate vkuiClass="SimpleCheckbox__icon--inner" />

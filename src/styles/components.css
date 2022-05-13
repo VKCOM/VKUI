@@ -143,6 +143,7 @@
 @import "../components/InputLike/InputLikeDivider.css";
 @import "../components/DateInput/DateInput.css";
 @import "../components/DateRangeInput/DateRangeInput.css";
+@import "../components/SizeYConditionalRender/SizeYConditionalRender.css";
 
 /* Advertisement */
 @import "../components/PromoBanner/PromoBanner.css";
