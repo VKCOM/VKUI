@@ -1,6 +1,8 @@
 import Textarea from "./Textarea";
 import { screenshot, mount, describeScreenshotFuzz } from "../../testing/e2e";
 import { AppRoot } from "../AppRoot/AppRoot";
+import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
+import { SizeType } from "../../hoc/withAdaptivity";
 
 describe("Textarea", () => {
   describeScreenshotFuzz(Textarea, [
@@ -21,7 +23,9 @@ describe("Textarea", () => {
   it("fits size to content", async () => {
     await mount(
       <AppRoot mode="embedded">
-        <Textarea id="textarea" />
+        <AdaptivityProvider sizeY={SizeType.REGULAR}>
+          <Textarea id="textarea" />
+        </AdaptivityProvider>
       </AppRoot>
     );
     await page.type("#textarea", "1\n2\n3\n4\n5\n6\n7\n8");
