@@ -56,14 +56,6 @@
 /**
  * sizeY === 'compact'
  */
-.Select--sizeY--compact .Select__container {
-  padding: 7px 11px;
-}
-
-.Select--sizeY--compact .Select__container--plain,
-.Select__container--plain {
-  padding: 0 6px 0 8px;
-}
 
 .Select__container--plain {
   font-weight: var(--vkui--font_weight_accent1);
@@ -71,8 +63,14 @@
 
 .Select--vkcom .Select__container,
 .Select--sizeY-compact .Select__container {
+  padding: 7px 11px;
   font-size: var(--vkui--font_text--font_size--compact);
   line-height: var(--vkui--font_text--line_height--compact);
+}
+
+.Select--sizeY-compact .Select__container--plain,
+.Select__container--plain {
+  padding: 0 6px 0 8px;
 }
 
 @media (--size-y-compact) {
