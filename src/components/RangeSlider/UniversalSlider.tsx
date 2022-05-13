@@ -6,7 +6,7 @@ import { HasRootRef } from "../../types";
 import { rescale } from "../../helpers/math";
 import { useExternRef } from "../../hooks/useExternRef";
 import { usePlatform } from "../../hooks/usePlatform";
-import { useBridgeAdaptivity } from "../../hooks/useBridgeAdaptivity";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "../Slider/Slider.css";
 
@@ -49,7 +49,7 @@ const UniversalSlider: React.FC<UniversalSliderProps<UniversalValue>> = ({
   const container = useExternRef(getRootRef);
   const thumbStart = React.useRef<HTMLDivElement>(null);
   const thumbEnd = React.useRef<HTMLDivElement>(null);
-  const { sizeY } = useBridgeAdaptivity();
+  const { sizeY } = useAdaptivity();
 
   const offsetToValue = (absolute: number) => {
     return rescale(absolute, [0, gesture.containerWidth], [min, max], { step });
