@@ -7,11 +7,7 @@ import {
 } from "../ModalRoot/ModalRootContext";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useOrientationChange } from "../../hooks/useOrientationChange";
-import {
-  withAdaptivity,
-  ViewHeight,
-  ViewWidth,
-} from "../../hoc/withAdaptivity";
+import { withAdaptivity, ViewWidth } from "../../hoc/withAdaptivity";
 import {
   AdaptivityContextInterface,
   AdaptivityProps,
@@ -21,6 +17,8 @@ import { multiRef } from "../../lib/utils";
 import { ModalType } from "../ModalRoot/types";
 import { getNavId, NavIdProps } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
+import { Platform } from "../../lib/platform";
+import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
 import "./ModalPage.css";
 
 export interface ModalPageProps
@@ -91,10 +89,9 @@ const ModalPage: React.FC<ModalPageProps & AdaptivityContextInterface> = (
     updateModalHeight,
   ]);
 
-  const isDesktop =
-    viewWidth >= ViewWidth.SMALL_TABLET &&
-    (hasMouse || viewHeight >= ViewHeight.MEDIUM);
-  const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
+  const isDesktop = useAdaptivityIsDesktop();
+  const canShowCloseBtn =
+    viewWidth >= ViewWidth.SMALL_TABLET || platform === Platform.VKCOM;
 
   const modalContext = React.useContext(ModalRootContext);
   const { refs } = useModalRegistry(getNavId(props, warn), ModalType.PAGE);
