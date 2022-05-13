@@ -42,6 +42,14 @@
  * sizeY COMPACT
  */
 
+.FormItem--sizeY-compact .FormItem__top {
+  padding-bottom: 6px;
+}
+
+.FormItem--sizeY-compact .FormItem__bottom {
+  padding-top: 6px;
+}
+
 @media (--size-y-compact) {
   .FormItem--sizeY-none .FormItem__top {
     padding-bottom: 6px;
@@ -81,6 +89,13 @@
 }
 
 .FormLayoutGroup--removable
-  .FormItem--ios.FormItem--withTop.FormItem--sizeY-compact {
+  .FormItem--sizeY-compact.FormItem--ios.FormItem--withTop {
   margin-top: -26px;
+}
+
+@media (--size-y-compact) {
+  .FormLayoutGroup--removable
+    .FormItem--sizeY-none.FormItem--ios.FormItem--withTop {
+    margin-top: -26px;
+  }
 }
