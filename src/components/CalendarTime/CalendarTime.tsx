@@ -76,15 +76,16 @@ export const CalendarTime: React.FC<CalendarTimeProps> = ({
         </AdaptivityProvider>
       </div>
       <div vkuiClass="CalendarTime__button">
-        <Button
-          sizeY={SizeType.COMPACT}
-          mode="secondary"
-          onClick={onClose}
-          size="l"
-          aria-label={doneButtonText}
-        >
-          {doneButtonText}
-        </Button>
+        <AdaptivityProvider sizeY={SizeType.COMPACT}>
+          <Button
+            mode="secondary"
+            onClick={onClose}
+            size="l"
+            aria-label={doneButtonText}
+          >
+            {doneButtonText}
+          </Button>
+        </AdaptivityProvider>
       </div>
     </div>
   );
