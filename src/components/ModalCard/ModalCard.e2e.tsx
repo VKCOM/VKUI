@@ -9,7 +9,7 @@ import { describeScreenshotFuzz } from "../../testing/e2e";
 import { AppRoot } from "../AppRoot/AppRoot";
 import { Icon56MoneyTransferOutline } from "@vkontakte/icons";
 import { Platform } from "../../lib/platform";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import { ViewWidth, SizeType } from "../AdaptivityProvider/AdaptivityContext";
 
 const AppWrapper: FC = (props) => (
   <AppRoot mode="embedded" scroll="contain">
@@ -104,6 +104,7 @@ describe("ModalCard mobile", () => {
     Wrapper: AppWrapper,
     adaptivity: {
       viewWidth: ViewWidth.MOBILE,
+      sizeY: SizeType.COMPACT,
     },
     platforms: [Platform.IOS, Platform.ANDROID],
   });
@@ -114,6 +115,7 @@ describe("ModalCard tablet", () => {
     Wrapper: AppWrapper,
     adaptivity: {
       viewWidth: ViewWidth.SMALL_TABLET,
+      sizeY: SizeType.REGULAR,
     },
     platforms: [Platform.IOS, Platform.ANDROID],
   });
