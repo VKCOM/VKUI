@@ -1,6 +1,16 @@
 .FixedLayout {
   position: fixed;
   box-sizing: border-box;
+  /**
+   * ⚠️ WARNING ⚠️
+   * `left: auto` решает следующие задачи:
+   * 1. При фиксированной ширине компонента позиционирует компонент по центру.
+   * 2. При использовании `SplitLayout` позиционирует компонент с права от `<SplitCol fixed />`.
+   *
+   * Подробности можно почитать здесь https://github.com/VKCOM/VKUI/pull/2472
+   *
+   * Единственное, есть проблема при срабатывании insets в landscape ориентации экрана (https://github.com/VKCOM/VKUI/issues/2422).
+   */
   left: auto;
   z-index: 3;
   padding-left: var(--safe-area-inset-left);
