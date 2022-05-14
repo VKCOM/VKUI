@@ -104,7 +104,7 @@ describe("ModalCard mobile", () => {
     Wrapper: AppWrapper,
     adaptivity: {
       viewWidth: ViewWidth.MOBILE,
-      sizeY: SizeType.COMPACT,
+      sizeY: SizeType.REGULAR,
     },
     platforms: [Platform.IOS, Platform.ANDROID],
   });
@@ -115,7 +115,7 @@ describe("ModalCard tablet", () => {
     Wrapper: AppWrapper,
     adaptivity: {
       viewWidth: ViewWidth.SMALL_TABLET,
-      sizeY: SizeType.REGULAR,
+      sizeY: SizeType.COMPACT,
     },
     platforms: [Platform.IOS, Platform.ANDROID],
   });
