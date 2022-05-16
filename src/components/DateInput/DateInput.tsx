@@ -318,7 +318,7 @@ export const DateInput: React.FC<DateInputProps> = ({
             showNeighboringMonth={showNeighboringMonth}
             size={size}
             viewDate={viewDate}
-            onHeaderChange={onCalendarChange}
+            onHeaderChange={onHeaderChange}
             onNextMonth={onNextMonth}
             onPrevMonth={onPrevMonth}
           />
