@@ -5,10 +5,15 @@ import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
 describe("ButtonGroup", () => {
   describeScreenshotFuzz(
-    ({ mode, gap, stretched }: ButtonGroupProps) => (
-      <ButtonGroup mode="vertical" gap={gap} stretched={stretched}>
+    ({ mode, gap, stretched, style, children }: ButtonGroupProps) => (
+      <ButtonGroup
+        mode="vertical"
+        gap={gap}
+        stretched={stretched}
+        style={style}
+      >
         <Button size="l" appearance="accent" stretched>
-          Разрешить
+          {children || "Разрешить"}
         </Button>
         <Button size="l" appearance="accent" stretched>
           Завершить
@@ -16,7 +21,7 @@ describe("ButtonGroup", () => {
         <ButtonGroup mode="vertical" gap={gap} stretched>
           <ButtonGroup mode={mode} gap={gap} stretched>
             <Button size="l" appearance="negative" stretched>
-              Не сейчас
+              {children || "Не сейчас"}
             </Button>
             <Button size="l" appearance="positive" stretched>
               Продолжить
@@ -40,12 +45,11 @@ describe("ButtonGroup", () => {
     [
       {
         gap: ["none", "space", "s", "m"],
+        style: [{ minWidth: 300 }],
       },
       {
-        mode: ["vertical"],
-      },
-      {
-        stretched: [true],
+        stretched: [undefined, true],
+        children: [undefined, "Этот оооооочень длинный-длинный текст"],
       },
     ]
   );

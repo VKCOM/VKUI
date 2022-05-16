@@ -1,6 +1,7 @@
 .ButtonGroup {
   display: inline-flex;
-  align-items: flex-start; /* Чтобы блоки по-умолчанию не растягивались на всю ширину контейнера */
+  align-items: flex-start; /* [Примечание 1] Чтобы блоки по-умолчанию не растягивались на всю ширину контейнера */
+  max-width: 100%; /* [Примечание 2] Чтобы блок не выходил за границы контейнера (связано с [Примечание 4]) */
 }
 
 .ButtonGroup--stretched {
@@ -19,8 +20,7 @@
 /* stylelint-disable vkui/atomic */
 
 /**
- * # Обоснование
- * Чтобы не завязываться на класс компонента, используем каскад и универсальный селектор.
+ * [Примечание 3] Чтобы не завязываться на класс компонента, используем каскад и универсальный селектор.
  */
 
 /* "gap" для mode="vertical" */
@@ -37,6 +37,18 @@
 }
 
 /* "gap" для mode="horizontal" */
+.ButtonGroup--mode-horizontal > *:not(.ButtonGroup) {
+  /**
+   * [Примечание 4]
+   *
+   * `min-width` в контексте Flexbox по умолчанию имеет значение `auto`,
+   * из-за чего элементы при переполнении будут выходить за границы контейнера.
+   *
+   * Подробности по ссылке https://stackoverflow.com/a/66689926/2903061
+   */
+  min-width: 0;
+}
+
 .ButtonGroup--mode-horizontal.ButtonGroup--gap-space > *:not(:last-child) {
   margin-right: var(--vkui--size_button_group_gap_space--regular);
 }
