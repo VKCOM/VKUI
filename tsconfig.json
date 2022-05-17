@@ -29,6 +29,7 @@
     ".github/**/*.js",
     "eslint-plugin-vkui/*.js",
     "postcss-plugin-vk-sans/*.js",
+    "postcss-custom-properties-fallback/*.js",
     "*.js"
   ],
   "files": [
