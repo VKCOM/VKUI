@@ -60,3 +60,15 @@
   opacity: 0.56;
   transform: scaleX(1.34);
 }
+
+/**
+ * CMP:
+ * CustomSelectDropdown
+ */
+.CustomSelectDropdown .CustomScrollView__box {
+  padding-right: 8px;
+}
+
+.CustomSelectDropdown--wide .CustomScrollView__box {
+  padding-right: 0;
+}
