@@ -72,10 +72,18 @@ export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   background?: React.ReactNode;
   /**
-   * Кнопки, отображаемые в баннере.
+   * Кнопки-действия. Принимает [`Button`](https://vkcom.github.io/VKUI/#/Button).
    *
-   * - В режиме `tint` или в `image` со светлым фоном рекомендуется использовать только `<Button mode="primary" />` или `<Button mode="tertiary" hasHover={false} />`.
-   * - В режиме `image` с тёмным фоном – `<Button appearance="overlay" />`.
+   * - В режиме `tint` или `image` со светлым фоном используйте только с параметрами:
+   *    - `mode="primary"`
+   *    - `mode="secondary"`
+   * - В режиме `image` с тёмным фоном используйте с параметрами:
+   *    - `appearance="overlay"`.
+   *
+   * Для набора кнопок используйте [`ButtonGroup`](https://vkcom.github.io/VKUI/#/ButtonGroup) с параметрами:
+   *
+   * - `gap="m" mode="horizontal" stretched`
+   * - `gap="m" mode="vertical" stretched`
    */
   actions?: React.ReactNode;
 }
