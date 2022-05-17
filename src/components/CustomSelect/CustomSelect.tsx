@@ -166,7 +166,6 @@ class CustomSelectComponent extends React.Component<
     icon: <DropdownIcon />,
     dropdownOffsetDistance: 0,
     fixDropdownWidth: true,
-    selectType: SelectType.default,
   };
 
   public constructor(props: CustomSelectProps) {
@@ -667,7 +666,7 @@ class CustomSelectComponent extends React.Component<
       dropdownOffsetDistance,
       fixDropdownWidth,
       forceDropdownPortal,
-      selectType,
+      selectType = SelectType.default,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
