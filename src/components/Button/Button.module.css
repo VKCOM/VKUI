@@ -812,33 +812,3 @@
 .Banner__actions > .Button--lvl-tertiary + .Button--lvl-tertiary {
   margin-top: 2px;
 }
-
-/**
- * CMP:
- * ModalCardBase
- *
- * ====================
- *
- * FIXME Следует поправить компонент на уровне уровне дизайн-системы
- *  Сейчас нет возможности использовать `ButtonGroup`, т.к. эти стили конфликтуют с `ButtonGroup.css`:
- *  1. `flex: 1` конфликтует с `stretched={false}`.
- *  2. `margin-right` добавляет лишний отступ,
- *  3. `6px` конфликтуют со значениями в `gap`,
- *  4. У обёртки `.ModalCardBase__actions` выставлены отрицательные внешние отступы слева/справа в 6px.
- */
-.ModalCardBase__actions .Button {
-  flex: 1;
-  margin-left: 6px;
-  margin-right: 6px;
-  width: 0;
-}
-
-.ModalCardBase__actions--v .Button {
-  margin-left: 0;
-  margin-right: 0;
-  width: 100%;
-}
-
-.ModalCardBase__actions--v .Button + .Button {
-  margin-top: 12px;
-}

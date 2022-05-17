@@ -30,7 +30,6 @@ export const ModalCard = ({
   subheader,
   children,
   actions,
-  actionsLayout = "horizontal",
   onClose,
   nav,
   id,
@@ -61,7 +60,6 @@ export const ModalCard = ({
         header={header}
         subheader={subheader}
         actions={actions}
-        actionsLayout={actionsLayout}
         onClose={onClose || modalContext.onClose}
       >
         {children}
