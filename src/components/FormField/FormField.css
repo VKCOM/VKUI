@@ -95,9 +95,23 @@
 }
 
 /**
+ * FormFieldMode.PLAIN
+ */
+.FormField--plain .FormField__border {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.FormField--plain:focus-within .FormField__border,
+.FormField--plain *:focus ~ .FormField__border,
+.ChipsInput--focused .FormField--plain .FormField__border {
+  border-color: transparent;
+}
+
+/**
+ * CMP:
  * ModalCardBase
  */
-
 .ModalCardBase__header + .FormField,
 .ModalCardBase__subheader + .FormField {
   margin-top: 16px;
@@ -117,8 +131,10 @@
   border-top-right-radius: 0;
 }
 
-.CustomSelect__open.Select--mimicry-plain.Select--mimicry:focus
-  .FormField__border,
-.FormField:not(.FormField--disabled) .FormField__border--hover {
-  background-color: var(--background_page, var(--vkui--color_field_background));
+/**
+ * CMP:
+ * CalendarHeader
+ */
+.CalendarHeader__picker .FormField__after {
+  min-width: 24px;
 }
