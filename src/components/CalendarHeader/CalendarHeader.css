@@ -11,8 +11,8 @@
   position: absolute;
 }
 
-.CalendarHeader__pickers > :not(:last-child) {
-  margin-right: 4px;
+.CalendarHeader__picker + .CalendarHeader__picker {
+  margin-left: 4px;
 }
 
 .CalendarHeader__nav-icon {
