@@ -21,7 +21,8 @@
 .Select__container {
   flex-grow: 1;
   flex-shrink: 1;
-  padding: 11px;
+  padding: 7px 11px;
+  /* padding: 7px 0 7px 11px; */
   color: var(--text_primary, var(--vkui--color_text_primary));
   box-sizing: border-box;
   position: relative;
@@ -52,13 +53,8 @@
 }
 
 /**
- * sizeY === 'compact'
+ * sizeY === 'regular'
  */
-.Select--sizeY--compact .Select__container {
-  padding: 7px 11px;
-}
-
-.Select--sizeY--compact .Select__container--plain,
-.Select__container--plain {
-  padding: 0 6px 0 8px;
+.Select--sizeY-regular .Select__container {
+  padding: 11px;
 }
