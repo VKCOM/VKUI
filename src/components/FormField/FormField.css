@@ -44,20 +44,26 @@
   top: 0;
   width: 100%;
   height: 100%;
-  border: var(--thin-border) solid
-    var(--field_border, var(--vkui--color_field_border_alpha));
-  background: var(--field_background, var(--vkui--color_field_background));
   content: "";
   box-sizing: border-box;
   z-index: 1;
   transform-origin: left top;
 }
 
+.FormField--default .FormField__border {
+  border: var(--thin-border) solid
+    var(--field_border, var(--vkui--color_field_border_alpha));
+  background: var(--field_background, var(--vkui--color_field_background));
+}
+
 .FormItem--error .FormField__border {
-  background: var(
+  background-color: var(
     --field_error_background,
     var(--vkui--color_background_negative_tint)
   );
+}
+
+.FormItem--error .FormField--default .FormField__border {
   border-color: var(--field_error_border, var(--vkui--color_stroke_negative));
 }
 
@@ -72,17 +78,23 @@
 }
 
 .FormField--hover .FormField__border {
+  background-color: var(
+    --field_background,
+    var(--vkui--color_field_background)
+  );
+}
+
+.FormField--default.FormField--hover .FormField__border {
   border-color: var(
     --icon_tertiary_alpha,
     var(--vkui--color_field_border_alpha--hover)
   );
 }
 
-.FormField:focus-within .FormField__border,
-.FormField *:focus ~ .FormField__border,
-.ChipsInput--focused .FormField__border {
+.FormField--default:focus-within .FormField__border,
+.FormField--default *:focus ~ .FormField__border,
+.ChipsInput--focused .FormField--default .FormField__border {
   border-color: var(--accent, var(--vkui--color_stroke_accent));
-  background: var(--field_background, var(--vkui--color_field_background));
 }
 
 /**
@@ -92,20 +104,6 @@
 .FormField--sizeY-compact .FormField__after {
   min-width: 36px;
   height: 36px;
-}
-
-/**
- * FormFieldMode.PLAIN
- */
-.FormField--plain .FormField__border {
-  background-color: transparent;
-  border-color: transparent;
-}
-
-.FormField--plain:focus-within .FormField__border,
-.FormField--plain *:focus ~ .FormField__border,
-.ChipsInput--focused .FormField--plain .FormField__border {
-  border-color: transparent;
 }
 
 /**
@@ -137,5 +135,5 @@
  */
 .CalendarHeader__picker .FormField__after {
   min-width: 12px;
-  padding-right: 6px;
+  padding-right: 8px;
 }

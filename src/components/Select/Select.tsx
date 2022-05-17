@@ -4,7 +4,7 @@ import { CustomSelect, CustomSelectProps } from "../CustomSelect/CustomSelect";
 import { withAdaptivity } from "../../hoc/withAdaptivity";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { usePlatform } from "../../hooks/usePlatform";
-import { VKCOM } from "../../lib/platform";
+import { Platform, VKCOM } from "../../lib/platform";
 import {
   AdaptivityContextInterface,
   AdaptivityProps,
@@ -28,7 +28,10 @@ export const SelectTypography: React.FC<
 
   if (selectType === SelectType.accent) {
     return (
-      <Paragraph weight={platform === VKCOM ? "1" : "2"} {...restProps}>
+      <Paragraph
+        weight={platform === Platform.ANDROID ? "2" : "1"}
+        {...restProps}
+      >
         {children}
       </Paragraph>
     );
