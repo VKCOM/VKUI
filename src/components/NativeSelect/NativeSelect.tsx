@@ -12,6 +12,7 @@ import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
 import { useExternRef } from "../../hooks/useExternRef";
 import { usePlatform } from "../../hooks/usePlatform";
+import { SelectType } from "../Select/Select";
 import {
   AdaptivityContextInterface,
   AdaptivityProps,
@@ -26,6 +27,7 @@ export interface NativeSelectProps
     AdaptivityProps {
   placeholder?: string;
   multiline?: boolean;
+  selectType?: keyof typeof SelectType;
 }
 
 export interface SelectState {
@@ -49,6 +51,7 @@ const NativeSelectComponent: React.FC<
   sizeX,
   sizeY,
   multiline,
+  selectType = SelectType.default,
   ...restProps
 }) => {
   const platform = usePlatform();
@@ -73,6 +76,7 @@ const NativeSelectComponent: React.FC<
       Component="label"
       vkuiClass={classNames(
         getClassName("Select", platform),
+        `Select--${selectType}`,
         empty && "Select--empty",
         multiline && "Select--multiline",
         align && `Select--align-${align}`,
