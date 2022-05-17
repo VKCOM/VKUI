@@ -56,9 +56,8 @@ const SelectMimicryComponent: React.FC<SelectMimicryProps> = ({
       tabIndex={disabled ? undefined : tabIndex}
       vkuiClass={classNames(
         getClassName("Select", platform),
-        "Select--mimicry",
         `Select--mimicry-${selectType}`,
-        !children && "Select--not-selected",
+        !children && "Select--empty",
         multiline && "Select--multiline",
         align && `Select--align-${align}`,
         `Select--sizeX-${sizeX}`,

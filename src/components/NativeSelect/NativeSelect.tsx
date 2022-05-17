@@ -53,7 +53,7 @@ const NativeSelectComponent: React.FC<
 }) => {
   const platform = usePlatform();
   const [title, setTitle] = React.useState("");
-  const [notSelected, setNotSelected] = React.useState(false);
+  const [empty, setEmpty] = React.useState(false);
   const [value, onChange] = useEnsuredControl(restProps, { defaultValue });
   const selectRef = useExternRef(getRef);
   useIsomorphicLayoutEffect(() => {
@@ -61,7 +61,7 @@ const NativeSelectComponent: React.FC<
       selectRef.current?.options[selectRef.current.selectedIndex];
     if (selectedOption) {
       setTitle(selectedOption.text);
-      setNotSelected(selectedOption.value === "" && placeholder != null);
+      setEmpty(selectedOption.value === "" && placeholder != null);
     }
   }, [value, children]);
 
@@ -73,7 +73,7 @@ const NativeSelectComponent: React.FC<
       Component="label"
       vkuiClass={classNames(
         getClassName("Select", platform),
-        notSelected && "Select--not-selected",
+        empty && "Select--empty",
         multiline && "Select--multiline",
         align && `Select--align-${align}`,
         `Select--sizeX-${sizeX}`,
