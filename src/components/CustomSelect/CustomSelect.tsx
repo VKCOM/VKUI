@@ -684,7 +684,14 @@ class CustomSelectComponent extends React.Component<
       resolvedContent = defaultDropdownContent;
     }
 
-    const isPopperDirectionTop = this.state.popperPlacement?.includes("top");
+    const openedClassNames = classNames(
+      opened && "Select__open",
+      opened &&
+        (dropdownOffsetDistance as number) === 0 &&
+        (this.state.popperPlacement?.includes("top")
+          ? "Select__open--up"
+          : "Select__open--down")
+    );
 
     return (
       <label
@@ -699,12 +706,7 @@ class CustomSelectComponent extends React.Component<
             {...restProps}
             autoFocus
             onBlur={this.onBlur}
-            vkuiClass={classNames(
-              opened && "CustomSelect__open",
-              isPopperDirectionTop && "CustomSelect__open--popupDirectionTop",
-              (dropdownOffsetDistance as number) > 0 &&
-                "CustomSelect__open--not-adjacent"
-            )}
+            vkuiClass={openedClassNames}
             value={this.state.inputValue}
             onKeyDown={this.onInputKeyDown}
             onChange={this.onInputChange}
@@ -725,13 +727,7 @@ class CustomSelectComponent extends React.Component<
             onKeyUp={this.handleKeyUp}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
-            vkuiClass={classNames(
-              opened && "CustomSelect__open",
-              isPopperDirectionTop && "CustomSelect__open--popupDirectionTop",
-              (dropdownOffsetDistance as number) > 0 &&
-                "CustomSelect__open--not-adjacent"
-            )}
-            before={before}
+            vkuiClass={openedClassNames}
             after={icon}
             selectType={selectType}
           >
