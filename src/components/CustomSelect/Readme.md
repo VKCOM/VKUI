@@ -39,6 +39,22 @@ const Example = () => {
     },
   ];
 
+  const selectTypes = [
+    {
+      label: "SelectType.default",
+      value: "default",
+    },
+    {
+      label: "SelectType.plain",
+      value: "plain",
+    },
+    {
+      label: "SelectType.accent",
+      value: "accent",
+    },
+  ];
+
+  const [selectType, setSelectType] = React.useState(undefined);
   const [value, setValue] = React.useState("0");
   const [query, setQuery] = React.useState("");
   const [newUsers, setNewUsers] = React.useState([...getUsers()]);
@@ -66,9 +82,31 @@ const Example = () => {
   return (
     <Div>
       <Header>Базовые примеры использования</Header>
-      <FormItem top="Администратор" bottom="Базовый пример использования">
-        <CustomSelect placeholder="Не выбран" options={users} />
-      </FormItem>
+
+      <FormLayoutGroup mode="horizontal">
+        <FormItem style={{ flexGrow: 1, flexShrink: 1 }} top="Администратор">
+          <CustomSelect
+            placeholder="Не выбран"
+            options={users}
+            selectType={selectType}
+          />
+        </FormItem>
+
+        <FormItem top="Вид селекта" style={{ flexBasis: "200px", flexGrow: 0 }}>
+          <CustomSelect
+            value={selectType}
+            placeholder="Не задан"
+            options={selectTypes}
+            onChange={(e) => setSelectType(e.target.value)}
+            renderOption={({ option, ...restProps }) => (
+              <CustomSelectOption
+                {...restProps}
+                description={`"${option.value}"`}
+              />
+            )}
+          />
+        </FormItem>
+      </FormLayoutGroup>
 
       <FormItem top="Администратор" bottom="Кастомный дизайн элементов списка">
         <CustomSelect
