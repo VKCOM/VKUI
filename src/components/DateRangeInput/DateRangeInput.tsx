@@ -34,6 +34,8 @@ export interface DateRangeInputProps
       | "changeMonthAriaLabel"
       | "changeYearAriaLabel"
       | "changeDayAriaLabel"
+      | "prevMonthIcon"
+      | "nextMonthIcon"
     >,
     HasRootRef<HTMLDivElement> {
   calendarPlacement?: Placement;
@@ -118,6 +120,8 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
   changeEndYearAriaLabel = "Изменить год окончания",
   clearFieldAriaLabel = "Очистить поле",
   showCalendarAriaLabel = "Показать календарь",
+  prevMonthIcon,
+  nextMonthIcon,
   ...props
 }) => {
   const daysStartRef = React.useRef<HTMLSpanElement>(null);
@@ -342,6 +346,8 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
             changeMonthAriaLabel={changeMonthAriaLabel}
             changeYearAriaLabel={changeYearAriaLabel}
             changeDayAriaLabel={changeDayAriaLabel}
+            prevMonthIcon={prevMonthIcon}
+            nextMonthIcon={nextMonthIcon}
           />
         </Popper>
       )}

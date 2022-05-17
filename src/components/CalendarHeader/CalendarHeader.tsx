@@ -29,6 +29,8 @@ export interface CalendarHeaderProps
   nextMonthAriaLabel?: string;
   changeMonthAriaLabel?: string;
   changeYearAriaLabel?: string;
+  prevMonthIcon?: React.ReactNode;
+  nextMonthIcon?: React.ReactNode;
   onChange(viewDate: Date): void;
   /**
    * Нажатие на кнопку переключения на следующий месяц.
@@ -65,6 +67,20 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   nextMonthAriaLabel = "Следующий месяц",
   changeMonthAriaLabel = "Изменить месяц",
   changeYearAriaLabel = "Изменить год",
+  prevMonthIcon = (
+    <Icon20ChevronLeftOutline
+      vkuiClass="CalendarHeader__nav-icon--accent"
+      width={30}
+      height={30}
+    />
+  ),
+  nextMonthIcon = (
+    <Icon20ChevronRightOutline
+      vkuiClass="CalendarHeader__nav-icon--accent"
+      width={30}
+      height={30}
+    />
+  ),
 }) => {
   const locale = React.useContext(LocaleProviderContext);
   const onMonthsChange = React.useCallback(
@@ -102,7 +118,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             subMonths(viewDate, 1)
           )}`}
         >
-          <Icon20ChevronLeftOutline width={30} height={30} />
+          {prevMonthIcon}
         </Tappable>
       )}
       <div vkuiClass="CalendarHeader__pickers">
@@ -166,7 +182,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             addMonths(viewDate, 1)
           )}`}
         >
-          <Icon20ChevronRightOutline width={30} height={30} />
+          {nextMonthIcon}
         </Tappable>
       )}
     </div>

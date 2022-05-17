@@ -13,6 +13,11 @@ describe("CalendarRange", () => {
         value: [[new Date("1970-05-05"), new Date("1970-06-05")]],
         weekStartsOn: [0, 1],
       },
+      {
+        value: [[new Date("1970-05-05"), new Date("1970-06-05")]],
+        nextMonthIcon: [undefined, <span key="next">&gt;</span>],
+        prevMonthIcon: [undefined, <span key="prev">&lt;</span>],
+      },
     ]
   );
 });
