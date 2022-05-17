@@ -219,7 +219,6 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
           changeMonthAriaLabel={changeMonthAriaLabel}
           changeYearAriaLabel={changeYearAriaLabel}
           prevMonthIcon={prevMonthIcon}
-          nextMonthIcon={nextMonthIcon}
         />
         <CalendarDays
           viewDate={viewDate}
@@ -253,6 +252,7 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
           nextMonthAriaLabel={nextMonthAriaLabel}
           changeMonthAriaLabel={changeMonthAriaLabel}
           changeYearAriaLabel={changeYearAriaLabel}
+          nextMonthIcon={nextMonthIcon}
         />
         <CalendarDays
           viewDate={secondViewDate}
