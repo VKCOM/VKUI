@@ -61,7 +61,7 @@ export const CustomSelectDropdown: React.FC<CustomSelectDropdownProps> = ({
     >
       <CustomScrollView
         boxRef={scrollBoxRef}
-        vkuiClass="CustomSelectDropdown__CustomScrollView"
+        vkuiClass="CustomSelectDropdown__view"
       >
         {fetching ? (
           <div vkuiClass="CustomSelectDropdown__fetching">

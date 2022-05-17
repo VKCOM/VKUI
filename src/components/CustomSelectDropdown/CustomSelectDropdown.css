@@ -34,10 +34,18 @@
     var(--field_border, var(--vkui--color_separator_primary_alpha));
 }
 
-.CustomSelectDropdown__CustomScrollView {
+.CustomSelectDropdown__view {
   max-height: 160px;
 }
 
 .CustomSelectDropdown__fetching {
   padding: 12px 0;
+}
+
+/**
+ * CMP:
+ * CalendarHeader
+ */
+.CalendarHeader__pickers .CustomSelectDropdown__view {
+  max-height: 184px;
 }
