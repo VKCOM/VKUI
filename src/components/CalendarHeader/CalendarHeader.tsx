@@ -112,51 +112,48 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
           {prevMonthIcon}
         </Tappable>
       )}
-      <div vkuiClass="CalendarHeader__pickers">
-        {disablePickers ? (
-          <React.Fragment>
-            <Paragraph weight="2" vkuiClass="CalendarHeader__month">
-              {new Intl.DateTimeFormat(locale, {
-                month: "long",
-              }).format(viewDate)}
-            </Paragraph>
-            <Paragraph weight="2" vkuiClass="CalendarHeader__month">
-              {new Intl.DateTimeFormat(locale, {
-                year: "numeric",
-              }).format(viewDate)}
-            </Paragraph>
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            <CustomSelect
-              vkuiClass="CalendarHeader__picker"
-              value={viewDate.getMonth()}
-              options={months}
-              dropdownOffsetDistance={4}
-              fixDropdownWidth={false}
-              sizeY={SizeType.COMPACT}
-              icon={<Icon12Dropdown />}
-              onChange={onMonthsChange}
-              forceDropdownPortal={false}
-              selectType={SelectType.accent}
-              aria-label={changeMonthAriaLabel}
-            />
-            <CustomSelect
-              vkuiClass="CalendarHeader__picker"
-              value={viewDate.getFullYear()}
-              options={years}
-              dropdownOffsetDistance={4}
-              fixDropdownWidth={false}
-              sizeY={SizeType.COMPACT}
-              icon={<Icon12Dropdown />}
-              onChange={onYearChange}
-              forceDropdownPortal={false}
-              selectType={SelectType.accent}
-              aria-label={changeYearAriaLabel}
-            />
-          </React.Fragment>
-        )}
-      </div>
+      {disablePickers ? (
+        <Paragraph vkuiClass="CalendarHeader__pickers" weight="2">
+          <span vkuiClass="CalendarHeader__month">
+            {new Intl.DateTimeFormat(locale, {
+              month: "long",
+            }).format(viewDate)}
+          </span>
+          &nbsp;
+          {new Intl.DateTimeFormat(locale, {
+            year: "numeric",
+          }).format(viewDate)}
+        </Paragraph>
+      ) : (
+        <div vkuiClass="CalendarHeader__pickers">
+          <CustomSelect
+            vkuiClass="CalendarHeader__picker"
+            value={viewDate.getMonth()}
+            options={months}
+            dropdownOffsetDistance={4}
+            fixDropdownWidth={false}
+            sizeY={SizeType.COMPACT}
+            icon={<Icon12Dropdown />}
+            onChange={onMonthsChange}
+            forceDropdownPortal={false}
+            selectType={SelectType.accent}
+            aria-label={changeMonthAriaLabel}
+          />
+          <CustomSelect
+            vkuiClass="CalendarHeader__picker"
+            value={viewDate.getFullYear()}
+            options={years}
+            dropdownOffsetDistance={4}
+            fixDropdownWidth={false}
+            sizeY={SizeType.COMPACT}
+            icon={<Icon12Dropdown />}
+            onChange={onYearChange}
+            forceDropdownPortal={false}
+            selectType={SelectType.accent}
+            aria-label={changeYearAriaLabel}
+          />
+        </div>
+      )}
       {nextMonth && (
         <Tappable
           vkuiClass={classNames(
