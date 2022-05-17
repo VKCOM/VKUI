@@ -32,6 +32,8 @@ export interface CalendarRangeProps
       | "nextMonthAriaLabel"
       | "changeMonthAriaLabel"
       | "changeYearAriaLabel"
+      | "prevMonthIcon"
+      | "nextMonthIcon"
     >,
     HasRootRef<HTMLDivElement> {
   value?: Array<Date | null>;
@@ -70,6 +72,8 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
   changeMonthAriaLabel,
   changeYearAriaLabel,
   changeDayAriaLabel = "Изменить день",
+  prevMonthIcon,
+  nextMonthIcon,
   ...props
 }) => {
   const {
@@ -214,6 +218,8 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
           nextMonthAriaLabel={nextMonthAriaLabel}
           changeMonthAriaLabel={changeMonthAriaLabel}
           changeYearAriaLabel={changeYearAriaLabel}
+          prevMonthIcon={prevMonthIcon}
+          nextMonthIcon={nextMonthIcon}
         />
         <CalendarDays
           viewDate={viewDate}
