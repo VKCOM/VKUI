@@ -11,9 +11,13 @@
         caption="Вчера в 20:30"
         after="+ 1 500 ₽"
         actions={
-          <ButtonGroup mode="horizontal" gap="s">
-            <Button>Принять</Button>
-            <Button mode="secondary">Отклонить</Button>
+          <ButtonGroup mode="horizontal" gap="s" stretched>
+            <Button mode="primary" size="s">
+              Принять
+            </Button>
+            <Button mode="secondary" size="s">
+              Отклонить
+            </Button>
           </ButtonGroup>
         }
       >
@@ -36,9 +40,13 @@
           </UsersStack>
         }
         actions={
-          <ButtonGroup mode="horizontal" gap="s">
-            <Button>Добавить</Button>
-            <Button mode="secondary">Скрыть</Button>
+          <ButtonGroup mode="horizontal" gap="s" stretched>
+            <Button mode="primary" size="s">
+              Добавить
+            </Button>
+            <Button mode="secondary" size="s">
+              Скрыть
+            </Button>
           </ButtonGroup>
         }
       >

@@ -25,7 +25,7 @@ describe("RichCell", () => {
         </UsersStack>,
       ],
       actions: [
-        <ButtonGroup key="actions" gap="s">
+        <ButtonGroup key="actions" gap="s" stretched>
           <Button>Окей</Button>
           <Button mode="secondary">Отменить</Button>
         </ButtonGroup>,
@@ -41,7 +41,7 @@ describe("RichCell", () => {
         </UsersStack>,
       ],
       actions: [
-        <ButtonGroup key="actions" gap="s">
+        <ButtonGroup key="actions" gap="s" stretched>
           <Button>Окей</Button>
           <Button mode="secondary">Отменить</Button>
         </ButtonGroup>,
