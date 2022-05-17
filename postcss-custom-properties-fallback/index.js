@@ -32,7 +32,7 @@ module.exports = (opts) => {
     prepare() {
       const customProperties = parseCustomProperties(opts.importFrom);
       const shouldTransformableDecl =
-        opts.shouldTransformableDecl ?? isTransformableDecl;
+        opts.shouldTransformableDecl || isTransformableDecl;
 
       return {
         Declaration(node) {
