@@ -16,7 +16,10 @@ import { Input } from "../Input/Input";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { Caption } from "../Typography/Caption/Caption";
 import { warnOnce } from "../../lib/warnOnce";
-import { defaultFilterFn } from "../../lib/select";
+import {
+  defaultFilterFn,
+  getFormFieldModeFromSelectType,
+} from "../../lib/select";
 import { is } from "../../lib/is";
 import { Placement } from "../Popper/Popper";
 import { CustomSelectDropdown } from "../CustomSelectDropdown/CustomSelectDropdown";
@@ -717,6 +720,7 @@ class CustomSelectComponent extends React.Component<
             before={before}
             after={icon}
             placeholder={restProps.placeholder}
+            mode={getFormFieldModeFromSelectType(selectType)}
           />
         ) : (
           <SelectMimicry

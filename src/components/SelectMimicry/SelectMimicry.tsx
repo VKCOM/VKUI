@@ -13,6 +13,7 @@ import { getClassName } from "../../helpers/getClassName";
 import Headline from "../Typography/Headline/Headline";
 import Text from "../Typography/Text/Text";
 import { VKCOM } from "../../lib/platform";
+import { getFormFieldModeFromSelectType } from "../../lib/select";
 import { SelectType } from "../Select/Select";
 import "../Select/Select.css";
 import "./SelectMimicry.css";
@@ -68,6 +69,7 @@ const SelectMimicryComponent: React.FC<SelectMimicryProps> = ({
       disabled={disabled}
       before={before}
       after={after}
+      mode={getFormFieldModeFromSelectType(selectType)}
     >
       <TypographyComponent
         Component="div"

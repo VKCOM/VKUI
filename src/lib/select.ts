@@ -1,3 +1,6 @@
+import { FormFieldMode } from "../components/FormField/FormField";
+import { SelectType } from "../components/Select/Select";
+
 type Option = {
   label?: string;
   [index: string]: any;
@@ -51,4 +54,12 @@ export const defaultFilterFn = (
   }
 
   return false;
+};
+
+export const getFormFieldModeFromSelectType = (
+  selectType: keyof typeof SelectType = SelectType.default
+) => {
+  return selectType === SelectType.default
+    ? FormFieldMode.default
+    : FormFieldMode.plain;
 };
