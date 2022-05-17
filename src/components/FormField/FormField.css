@@ -71,7 +71,7 @@
   pointer-events: none;
 }
 
-.FormField:not(.FormField--disabled) .FormField__border--hover {
+.FormField--hover .FormField__border {
   border-color: var(
     --icon_tertiary_alpha,
     var(--vkui--color_field_border_alpha--hover)

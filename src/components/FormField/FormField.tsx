@@ -77,7 +77,8 @@ export const FormField: React.FC<FormFieldOwnProps> = ({
         getClassName("FormField", platform),
         `FormField--${mode}`,
         `FormField--sizeY-${sizeY}`,
-        disabled && "FormField--disabled"
+        disabled && "FormField--disabled",
+        !disabled && hover && "FormField--hover"
       )}
     >
       {hasReactNode(before) && (
@@ -91,13 +92,7 @@ export const FormField: React.FC<FormFieldOwnProps> = ({
           {after}
         </div>
       )}
-      <div
-        role="presentation"
-        vkuiClass={classNames(
-          "FormField__border",
-          !disabled && hover && "FormField__border--hover"
-        )}
-      />
+      <div role="presentation" vkuiClass="FormField__border" />
     </Component>
   );
 };
