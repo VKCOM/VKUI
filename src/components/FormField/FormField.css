@@ -136,5 +136,6 @@
  * CalendarHeader
  */
 .CalendarHeader__picker .FormField__after {
-  min-width: 24px;
+  min-width: 12px;
+  padding-right: 6px;
 }

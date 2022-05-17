@@ -22,7 +22,6 @@
   flex-grow: 1;
   flex-shrink: 1;
   padding: 7px 11px;
-  /* padding: 7px 0 7px 11px; */
   color: var(--text_primary, var(--vkui--color_text_primary));
   box-sizing: border-box;
   position: relative;
@@ -57,4 +56,12 @@
  */
 .Select--sizeY-regular .Select__container {
   padding: 11px;
+}
+
+/**
+ * CMP:
+ * CalendarHeader
+ */
+.CalendarHeader__picker .Select__container {
+  padding-right: 6px;
 }
