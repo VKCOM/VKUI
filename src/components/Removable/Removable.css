@@ -2,7 +2,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding-left: var(--formitem_padding);
+  padding-left: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .Removable__action {
@@ -102,7 +102,7 @@
 
 .Removable--ios .Removable__content {
   padding-left: 0;
-  padding-right: var(--formitem_padding);
+  padding-right: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .FormLayoutGroup--removable .Removable__content {

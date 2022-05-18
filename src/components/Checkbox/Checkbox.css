@@ -5,7 +5,7 @@
 .FormItem .Checkbox {
   width: 100%;
   box-sizing: content-box;
-  margin: 0 calc(-1 * var(--formitem_padding));
+  margin: 0 calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 
 .Checkbox__input {

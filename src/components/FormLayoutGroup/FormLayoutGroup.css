@@ -1,6 +1,6 @@
 .FormLayoutGroup--horizontal {
   display: flex;
-  padding: 12px var(--formitem_padding);
+  padding: 12px var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .FormLayoutGroup__removable {
@@ -11,6 +11,7 @@
 
 /**
  * iOS
+ * TODO: v5 удалить
  */
 .FormLayoutGroup--ios {
   --formitem_padding: 12px;

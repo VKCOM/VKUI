@@ -52,5 +52,5 @@
  * FormItem
  */
 .FormItem > .Cell {
-  margin: 0 calc(-1 * var(--formitem_padding));
+  margin: 0 calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
