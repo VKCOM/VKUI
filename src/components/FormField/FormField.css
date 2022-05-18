@@ -34,10 +34,6 @@
   color: var(--icon_secondary, var(--vkui--color_icon_secondary));
 }
 
-.ChipsInput .FormField__after {
-  z-index: 3;
-}
-
 .FormField__border {
   position: absolute;
   left: 0;
@@ -136,4 +132,12 @@
 .CalendarHeader__picker .FormField__after {
   min-width: 12px;
   padding-right: 8px;
+}
+
+/**
+ * CMP:
+ * ChipsInput
+ */
+.ChipsInput .FormField__after {
+  z-index: 3;
 }
