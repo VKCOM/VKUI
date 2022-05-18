@@ -370,9 +370,9 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         vkuiClass={classNames(
-          opened && "Select__open",
+          opened && "Select--open",
           opened &&
-            (isPopperDirectionTop ? "Select__open--up" : "Select__open--down")
+            (isPopperDirectionTop ? "Select--pop-up" : "Select--pop-down")
         )}
         getRef={getRef}
         disabled={disabled}

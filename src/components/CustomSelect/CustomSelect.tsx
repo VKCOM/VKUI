@@ -690,12 +690,12 @@ class CustomSelectComponent extends React.Component<
     }
 
     const openedClassNames = classNames(
-      opened && "Select__open",
+      opened && "Select--open",
       opened &&
         (dropdownOffsetDistance as number) === 0 &&
         (this.state.popperPlacement?.includes("top")
-          ? "Select__open--up"
-          : "Select__open--down")
+          ? "Select--pop-up"
+          : "Select--pop-down")
     );
 
     return (
