@@ -44,25 +44,29 @@ const PanelHeaderIn: React.FC<PanelHeaderProps> = ({
   children,
   left,
   right,
+  separator,
 }) => {
   const { webviewType } = React.useContext(ConfigProviderContext);
   const { isInsideModal } = React.useContext(ModalRootContext);
   const platform = usePlatform();
 
   return (
-    <TooltipContainer fixed vkuiClass="PanelHeader__in">
-      <div vkuiClass="PanelHeader__left">{left}</div>
-      <div vkuiClass="PanelHeader__content">
-        {platform === VKCOM ? (
-          <Text weight="medium">{children}</Text>
-        ) : (
-          <span vkuiClass="PanelHeader__content-in">{children}</span>
-        )}
-      </div>
-      <div vkuiClass="PanelHeader__right">
-        {(webviewType === WebviewType.INTERNAL || isInsideModal) && right}
-      </div>
-    </TooltipContainer>
+    <React.Fragment>
+      <TooltipContainer fixed vkuiClass="PanelHeader__in">
+        <div vkuiClass="PanelHeader__left">{left}</div>
+        <div vkuiClass="PanelHeader__content">
+          {platform === VKCOM ? (
+            <Text weight="medium">{children}</Text>
+          ) : (
+            <span vkuiClass="PanelHeader__content-in">{children}</span>
+          )}
+        </div>
+        <div vkuiClass="PanelHeader__right">
+          {(webviewType === WebviewType.INTERNAL || isInsideModal) && right}
+        </div>
+      </TooltipContainer>
+      {separator && platform === VKCOM && <Separator wide />}
+    </React.Fragment>
   );
 };
 
@@ -120,11 +124,8 @@ const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
       ) : (
         <PanelHeaderIn {...props} />
       )}
-      {separator && visor && (
-        <Separator
-          expanded={sizeX === SizeType.REGULAR && platform !== VKCOM}
-          wide={platform === VKCOM}
-        />
+      {separator && visor && platform !== VKCOM && (
+        <Separator expanded={sizeX === SizeType.REGULAR} />
       )}
     </div>
   );
