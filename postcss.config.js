@@ -8,13 +8,10 @@ const csso = require("postcss-csso");
 const checkKeyframes = require("./tasks/postcss-check-keyframes");
 const { defaultSchemeId } = require("./package.json");
 const VkSansMandatoryDeclarations = require("./postcss-plugin-vk-sans");
+const customPropertiesFallback = require("./postcss-custom-properties-fallback");
 
 const animationsSource = path.join(__dirname, "src/styles/animations.css");
 const cssPropSources = [
-  path.join(
-    __dirname,
-    "node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css"
-  ),
   path.join(__dirname, "src/styles/bright_light.css"),
   path.join(__dirname, "src/styles/constants.css"),
   animationsSource,
@@ -66,6 +63,17 @@ let plugins = [
         "./node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css"
       ),
     ],
+  }),
+  customPropertiesFallback({
+    importFrom: path.join(
+      __dirname,
+      "node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css"
+    ),
+    // match only vkui tokens
+    shouldTransformableDecl: (decl) =>
+      /(^|[^\w-])var\([\W\w]+\)/.test(decl.value) &&
+      decl.value.match(/var\(/g).length ===
+        (decl.value.match(/var\(--vkui--/g) || []).length,
   }),
 ];
 

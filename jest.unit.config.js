@@ -4,6 +4,7 @@ module.exports = {
   roots: [
     path.join(__dirname, "src"),
     path.join(__dirname, "postcss-plugin-vk-sans"),
+    path.join(__dirname, "postcss-custom-properties-fallback"),
   ],
   setupFilesAfterEnv: [path.join(__dirname, "src/testing/setup.ts")],
   collectCoverage: true,
