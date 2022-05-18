@@ -494,13 +494,21 @@
   transform: translateY(-1px);
 }
 
-/**
- * sizeY COMPACT
- */
-
 .Button--sz-s.Button--ios .Button__content {
   font-size: var(--vkui--font_subhead--font_size--compact);
   line-height: var(--vkui--font_subhead--line_height--compact);
+}
+
+.Button--sizeY-regular.Button--sz-s.Button--ios .Button__content {
+  font-size: var(--vkui--font_subhead--font_size--regular);
+  line-height: var(--vkui--font_subhead--line_height--regular);
+}
+
+@media (--size-y-regular) {
+  .Button--sizeY-none.Button--sz-s.Button--ios .Button__content {
+    font-size: var(--vkui--font_subhead--font_size--regular);
+    line-height: var(--vkui--font_subhead--line_height--regular);
+  }
 }
 
 .Button--sz-s.Button--vkcom .Button__content {
@@ -514,17 +522,65 @@
   line-height: var(--vkui--font_footnote--line_height--regular);
 }
 
+.Button--sizeY-regular.Button--sz-s.Button--android .Button__content {
+  font-size: var(--vkui--font_subhead--font_size--regular);
+  line-height: var(--vkui--font_subhead--line_height--regular);
+  font-weight: var(--vkui--font_weight_accent2);
+}
+
+@media (--size-y-regular) {
+  .Button--sizeY-none.Button--sz-s.Button--android .Button__content {
+    font-size: var(--vkui--font_subhead--font_size--regular);
+    line-height: var(--vkui--font_subhead--line_height--regular);
+    font-weight: var(--vkui--font_weight_accent2);
+  }
+}
+
 .Button--sz-m {
   min-height: var(--vkui--size_button_medium_height--compact);
+}
+
+.Button--sizeY-regular.Button--sz-m {
+  min-height: var(--vkui--size_button_medium_height--regular);
+}
+
+@media (--size-y-regular) {
+  .Button--sizeY-none.Button--sz-m {
+    min-height: var(--vkui--size_button_medium_height--regular);
+  }
 }
 
 .Button--sz-l {
   min-height: var(--vkui--size_button_large_height--compact);
 }
 
+.Button--sizeY-none.Button--sz-l {
+  min-height: var(--vkui--size_button_large_height--regular);
+}
+
+@media (--size-y-regular) {
+  .Button--sizeY-regular.Button--sz-l {
+    min-height: var(--vkui--size_button_large_height--regular);
+  }
+}
+
 .Button--sz-m .Button__content {
   font-size: var(--vkui--font_subhead--font_size--compact);
   line-height: var(--vkui--font_subhead--line_height--compact);
+}
+
+.Button--sizeY-regular.Button--sz-m .Button__content {
+  font-size: var(--vkui--font_text--font_size--regular);
+  line-height: var(--vkui--font_text--line_height--regular);
+  font-weight: var(--vkui--font_weight_accent2);
+}
+
+@media (--size-y-regular) {
+  .Button--sizeY-none.Button--sz-m .Button__content {
+    font-size: var(--vkui--font_text--font_size--regular);
+    line-height: var(--vkui--font_text--line_height--regular);
+    font-weight: var(--vkui--font_weight_accent2);
+  }
 }
 
 .Button--sz-m.Button--vkcom .Button__content {
@@ -536,42 +592,20 @@
   line-height: var(--vkui--font_text--line_height--compact);
 }
 
-/**
- * sizeY REGULAR
- */
-
-.Button--sizeY-regular.Button--sz-s.Button--ios .Button__content {
-  font-size: var(--vkui--font_subhead--font_size--regular);
-  line-height: var(--vkui--font_subhead--line_height--regular);
+.Button--sizeY-regular.Button--sz-l .Button__content {
+  font-size: var(--vkui--font_title3--font_size--regular);
+  line-height: var(--vkui--font_title3--line_height--regular);
 }
 
-.Button--sizeY-regular.Button--sz-s.Button--android .Button__content {
-  font-size: var(--vkui--font_subhead--font_size--regular);
-  line-height: var(--vkui--font_subhead--line_height--regular);
-  font-weight: var(--vkui--font_weight_accent2);
+@media (--size-y-regular) {
+  .Button--sizeY-none.Button--sz-l .Button__content {
+    font-size: var(--vkui--font_title3--font_size--regular);
+    line-height: var(--vkui--font_title3--line_height--regular);
+  }
 }
 
 .Button--sizeY-regular {
   min-height: var(--vkui--size_button_small_height--regular);
-}
-
-.Button--sizeY-regular.Button--sz-m {
-  min-height: var(--vkui--size_button_medium_height--regular);
-}
-
-.Button--sizeY-regular.Button--sz-l {
-  min-height: var(--vkui--size_button_large_height--regular);
-}
-
-.Button--sizeY-regular.Button--sz-m .Button__content {
-  font-size: var(--vkui--font_text--font_size--regular);
-  line-height: var(--vkui--font_text--line_height--regular);
-  font-weight: var(--vkui--font_weight_accent2);
-}
-
-.Button--sizeY-regular.Button--sz-l .Button__content {
-  font-size: var(--vkui--font_title3--font_size--regular);
-  line-height: var(--vkui--font_title3--line_height--regular);
 }
 
 .Button--sizeY-regular.Button--android.Button--sz-l .Button__content {
@@ -582,36 +616,6 @@
 @media (--size-y-regular) {
   .Button--sizeY-none {
     min-height: var(--vkui--size_button_small_height--regular);
-  }
-
-  .Button--sizeY-none.Button--sz-m {
-    min-height: var(--vkui--size_button_medium_height--regular);
-  }
-
-  .Button--sizeY-none.Button--sz-l {
-    min-height: var(--vkui--size_button_large_height--regular);
-  }
-
-  .Button--sizeY-none.Button--sz-s.Button--ios .Button__content {
-    font-size: var(--vkui--font_subhead--font_size--regular);
-    line-height: var(--vkui--font_subhead--line_height--regular);
-  }
-
-  .Button--sizeY-none.Button--sz-s.Button--android .Button__content {
-    font-size: var(--vkui--font_subhead--font_size--regular);
-    line-height: var(--vkui--font_subhead--line_height--regular);
-    font-weight: var(--vkui--font_weight_accent2);
-  }
-
-  .Button--sizeY-none.Button--sz-l .Button__content {
-    font-size: var(--vkui--font_title3--font_size--regular);
-    line-height: var(--vkui--font_title3--line_height--regular);
-  }
-
-  .Button--sizeY-none.Button--sz-m .Button__content {
-    font-size: var(--vkui--font_text--font_size--regular);
-    line-height: var(--vkui--font_text--line_height--regular);
-    font-weight: var(--vkui--font_weight_accent2);
   }
 
   .Button--sizeY-none.Button--android.Button--sz-l .Button__content {
