@@ -52,7 +52,8 @@
 }
 
 /**
- * sizeY === 'regular'
+ * sizeY REGULAR
+ * TODO v5.0.0 поправить под новую адаптивность
  */
 .Select--sizeY-regular .Select__container {
   padding: 11px;

@@ -61,6 +61,7 @@ const SelectMimicryComponent: React.FC<SelectMimicryProps> = ({
       mode={getFormFieldModeFromSelectType(selectType)}
     >
       <div vkuiClass="Select__container">
+        {/* TODO v5.0.0 поправить под новую адаптивность */}
         <SelectTypography selectType={selectType} vkuiClass="Select__title">
           {title}
         </SelectTypography>

@@ -20,6 +20,7 @@ export const SelectType = {
   accent: "accent",
 } as const;
 
+// TODO v5.0.0 поправить под новую адаптивность
 export const SelectTypography: React.FC<
   Pick<CustomSelectProps, "selectType">
 > = ({ selectType = SelectType.default, children, ...restProps }) => {

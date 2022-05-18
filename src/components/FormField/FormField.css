@@ -95,6 +95,7 @@
 
 /**
  * sizeY COMPACT
+ * TODO v5.0.0 поправить под новую адаптивность
  */
 .FormField--sizeY-compact .FormField__before,
 .FormField--sizeY-compact .FormField__after {

@@ -95,6 +95,7 @@ const NativeSelectComponent: React.FC<
         {children}
       </select>
       <div vkuiClass="Select__container">
+        {/* TODO v5.0.0 поправить под новую адаптивность */}
         <SelectTypography vkuiClass="Select__title">{title}</SelectTypography>
       </div>
     </FormField>
