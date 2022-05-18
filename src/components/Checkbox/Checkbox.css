@@ -33,7 +33,6 @@
 }
 
 .Checkbox__content {
-  margin: 0;
   flex-grow: 1;
   color: var(--text_primary);
   word-break: break-word;

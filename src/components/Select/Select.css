@@ -19,7 +19,6 @@
 }
 
 .Select__container {
-  margin: 0;
   flex-grow: 1;
   flex-shrink: 1;
   padding: 11px;

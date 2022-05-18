@@ -59,7 +59,6 @@
 }
 
 .Radio__content {
-  margin: 0;
   display: block;
   flex-grow: 1;
   max-width: 100%;

@@ -34,7 +34,6 @@
 }
 
 .ActionSheetItem__children {
-  margin: 0;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -121,7 +120,6 @@
 }
 
 .ActionSheetItem__subtitle {
-  margin: 0;
   display: block;
   color: var(--text_secondary);
   overflow: hidden;
@@ -132,7 +130,6 @@
 }
 
 .ActionSheetItem__meta {
-  margin: 0;
   display: block;
   color: var(--text_secondary);
   margin-left: 6px;

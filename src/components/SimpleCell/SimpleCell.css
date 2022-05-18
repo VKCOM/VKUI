@@ -10,7 +10,6 @@
 }
 
 .SimpleCell__typography {
-  margin: 0;
   font-weight: var(--vkui--font_weight_accent3);
 }
 
