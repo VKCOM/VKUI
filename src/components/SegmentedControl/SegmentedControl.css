@@ -43,6 +43,7 @@
 
 /**
  * sizeY REGULAR
+ * TODO v5.0.0 поправить под новую адаптивность
  */
 .SegmentedControl--sizeY-regular {
   height: 36px;

@@ -86,6 +86,7 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({
       {...restProps}
       vkuiClass={classNames(
         "SegmentedControl",
+        // TODO v5.0.0 поправить под новую адаптивность
         `SegmentedControl--sizeY-${sizeY}`,
         `SegmentedControl--${size}`
       )}

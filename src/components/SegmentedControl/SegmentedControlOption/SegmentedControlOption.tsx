@@ -38,6 +38,7 @@ export const SegmentedControlOption: React.FC<VisuallyHiddenInputProps> = ({
         onBlur={callMultiple(onBlur, restProps.onBlur)}
         onFocus={callMultiple(onFocus, restProps.onFocus)}
       />
+      {/* TODO v5.0.0 поправить под новую адаптивность */}
       {sizeY === SizeType.COMPACT ? (
         <Caption
           level="1"
