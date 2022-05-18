@@ -57,9 +57,6 @@
     --field_error_background,
     var(--vkui--color_background_negative_tint)
   );
-}
-
-.FormItem--error .FormField__border {
   border-color: var(--field_error_border, var(--vkui--color_stroke_negative));
 }
 
