@@ -554,14 +554,18 @@
   min-height: var(--vkui--size_button_large_height--compact);
 }
 
-.Button--sizeY-none.Button--sz-l {
+.Button--sizeY-regular.Button--sz-l {
   min-height: var(--vkui--size_button_large_height--regular);
 }
 
 @media (--size-y-regular) {
-  .Button--sizeY-regular.Button--sz-l {
+  .Button--sizeY-none.Button--sz-l {
     min-height: var(--vkui--size_button_large_height--regular);
   }
+}
+
+.Button--sz-m.Button--vkcom .Button__content {
+  font-weight: var(--vkui--font_weight_accent3);
 }
 
 .Button--sz-m .Button__content {
@@ -583,10 +587,6 @@
   }
 }
 
-.Button--sz-m.Button--vkcom .Button__content {
-  font-weight: var(--vkui--font_weight_accent3);
-}
-
 .Button--sz-l .Button__content {
   font-size: var(--vkui--font_text--font_size--compact);
   line-height: var(--vkui--font_text--line_height--compact);
@@ -597,10 +597,20 @@
   line-height: var(--vkui--font_title3--line_height--regular);
 }
 
+.Button--sizeY-regular.Button--android.Button--sz-l .Button__content {
+  font-size: var(--vkui--font_headline1--font_size--regular);
+  line-height: var(--vkui--font_headline1--line_height--regular);
+}
+
 @media (--size-y-regular) {
   .Button--sizeY-none.Button--sz-l .Button__content {
     font-size: var(--vkui--font_title3--font_size--regular);
     line-height: var(--vkui--font_title3--line_height--regular);
+  }
+
+  .Button--sizeY-none.Button--android.Button--sz-l .Button__content {
+    font-size: var(--vkui--font_headline1--font_size--regular);
+    line-height: var(--vkui--font_headline1--line_height--regular);
   }
 }
 
@@ -608,19 +618,9 @@
   min-height: var(--vkui--size_button_small_height--regular);
 }
 
-.Button--sizeY-regular.Button--android.Button--sz-l .Button__content {
-  font-size: var(--vkui--font_headline1--font_size--regular);
-  line-height: var(--vkui--font_headline1--line_height--regular);
-}
-
 @media (--size-y-regular) {
   .Button--sizeY-none {
     min-height: var(--vkui--size_button_small_height--regular);
-  }
-
-  .Button--sizeY-none.Button--android.Button--sz-l .Button__content {
-    font-size: var(--vkui--font_headline1--font_size--regular);
-    line-height: var(--vkui--font_headline1--line_height--regular);
   }
 }
 
