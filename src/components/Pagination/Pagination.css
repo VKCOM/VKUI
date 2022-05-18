@@ -49,10 +49,26 @@
   height: var(--vkui--size_button_large_height--compact);
 }
 
+@media (--size-y-compact) {
+  .Pagination__page--sizeY-none {
+    font-size: var(--vkui--font_text--font_size--compact);
+    line-height: var(--vkui--size_button_large_height--compact);
+    height: var(--vkui--size_button_large_height--compact);
+  }
+}
+
 .Pagination__page--sizeY-regular {
   font-size: var(--vkui--font_text--font_size--regular);
   line-height: var(--vkui--size_button_large_height--regular);
   height: var(--vkui--size_button_large_height--regular);
+}
+
+@media (--size-y-regular) {
+  .Pagination__page--sizeY-none {
+    font-size: var(--vkui--font_text--font_size--regular);
+    line-height: var(--vkui--size_button_large_height--regular);
+    height: var(--vkui--size_button_large_height--regular);
+  }
 }
 
 .Pagination__page--type-ellipsis {

@@ -7,6 +7,7 @@ import { Caption } from "../Typography/Caption/Caption";
 import { HasRootRef } from "../../types";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { warnOnce } from "../../lib/warnOnce";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "./CustomSelectOption.css";
 
 export interface CustomSelectOptionProps
@@ -94,7 +95,7 @@ export const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
       aria-selected={selected}
       vkuiClass={classNames(
         "CustomSelectOption",
-        `CustomSelectOption--sizeY-${sizeY}`,
+        getSizeYClassName("CustomSelectOption", sizeY),
         hovered && !disabled && "CustomSelectOption--hover",
         selected && "CustomSelectOption--selected", // Note: пустой класс
         disabled && "CustomSelectOption--disabled",

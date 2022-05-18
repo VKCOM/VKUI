@@ -3,7 +3,6 @@ import SelectMimicry from "../SelectMimicry/SelectMimicry";
 import { debounce, setRef, multiRef } from "../../lib/utils";
 import { classNames } from "../../lib/classNames";
 import { NativeSelectProps } from "../NativeSelect/NativeSelect";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { withPlatform } from "../../hoc/withPlatform";
 import {
   CustomSelectOption,
@@ -89,8 +88,7 @@ interface CustomSelectState {
 export interface CustomSelectProps
   extends NativeSelectProps,
     HasPlatform,
-    FormFieldProps,
-    AdaptivityProps {
+    FormFieldProps {
   /**
    * Если `true`, то при клике на селект в нём появится текстовое поле для поиска по `options`. По умолчанию поиск
    * производится по `option.label`.
@@ -629,7 +627,6 @@ class CustomSelectComponent extends React.Component<
       getRootRef,
       popupDirection,
       options,
-      sizeY,
       platform,
       style,
       onChange,
@@ -761,8 +758,4 @@ class CustomSelectComponent extends React.Component<
   }
 }
 
-export const CustomSelect = withPlatform(
-  withAdaptivity(CustomSelectComponent, {
-    sizeY: true,
-  })
-);
+export const CustomSelect = withPlatform(CustomSelectComponent);

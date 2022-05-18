@@ -24,6 +24,12 @@
   min-height: 44px;
 }
 
+@media (--size-y-regular) {
+  .CustomSelectOption--sizeY-none {
+    min-height: 44px;
+  }
+}
+
 .CustomSelectOption--disabled {
   cursor: default;
   opacity: var(--vkui--opacity_disable_accessibility);

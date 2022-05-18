@@ -66,12 +66,22 @@
 }
 
 /* sizeY: REGULAR */
-.Button--singleIcon.Button--sizeY-regular.Button--sz-s .Button__in {
+.Button--sizeY-regular.Button--singleIcon.Button--sz-s .Button__in {
   padding: 0 9px;
 }
 
-.Button--singleIcon.Button--sizeY-regular.Button--sz-l .Button__in {
+.Button--sizeY-regular.Button--singleIcon.Button--sz-l .Button__in {
   padding: 0 10px;
+}
+
+@media (--size-y-regular) {
+  .Button--sizeY-none.Button--singleIcon.Button--sz-s .Button__in {
+    padding: 0 9px;
+  }
+
+  .Button--sizeY-none.Button--singleIcon.Button--sz-l .Button__in {
+    padding: 0 10px;
+  }
 }
 
 .Button--singleIcon .Button__before:only-child,
@@ -83,6 +93,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  font-weight: var(--vkui--font_weight_accent2);
 }
 
 .Button__content--caps {
@@ -482,30 +493,134 @@
   transform: translateY(-1px);
 }
 
-/**
- * sizeY COMPACT
- */
+.Button--sz-s.Button--ios .Button__content {
+  font-size: var(--vkui--font_subhead--font_size--compact);
+  line-height: var(--vkui--font_subhead--line_height--compact);
+}
+
+.Button--sizeY-regular.Button--sz-s.Button--ios .Button__content {
+  font-size: var(--vkui--font_subhead--font_size--regular);
+  line-height: var(--vkui--font_subhead--line_height--regular);
+}
+
+@media (--size-y-regular) {
+  .Button--sizeY-none.Button--sz-s.Button--ios .Button__content {
+    font-size: var(--vkui--font_subhead--font_size--regular);
+    line-height: var(--vkui--font_subhead--line_height--regular);
+  }
+}
+
+.Button--sz-s.Button--vkcom .Button__content {
+  font-size: var(--vkui--font_footnote--font_size--regular);
+  line-height: var(--vkui--font_footnote--line_height--regular);
+  font-weight: var(--vkui--font_footnote--font_weight--regular);
+}
+
+.Button--sz-s.Button--android .Button__content {
+  font-size: var(--vkui--font_footnote--font_size--regular);
+  line-height: var(--vkui--font_footnote--line_height--regular);
+}
+
+.Button--sizeY-regular.Button--sz-s.Button--android .Button__content {
+  font-size: var(--vkui--font_subhead--font_size--regular);
+  line-height: var(--vkui--font_subhead--line_height--regular);
+  font-weight: var(--vkui--font_weight_accent2);
+}
+
+@media (--size-y-regular) {
+  .Button--sizeY-none.Button--sz-s.Button--android .Button__content {
+    font-size: var(--vkui--font_subhead--font_size--regular);
+    line-height: var(--vkui--font_subhead--line_height--regular);
+    font-weight: var(--vkui--font_weight_accent2);
+  }
+}
+
 .Button--sz-m {
   min-height: var(--vkui--size_button_medium_height--compact);
-}
-
-.Button--sz-l {
-  min-height: var(--vkui--size_button_large_height--compact);
-}
-
-/**
- * sizeY REGULAR
- */
-.Button--sizeY-regular {
-  min-height: var(--vkui--size_button_small_height--regular);
 }
 
 .Button--sizeY-regular.Button--sz-m {
   min-height: var(--vkui--size_button_medium_height--regular);
 }
 
+@media (--size-y-regular) {
+  .Button--sizeY-none.Button--sz-m {
+    min-height: var(--vkui--size_button_medium_height--regular);
+  }
+}
+
+.Button--sz-l {
+  min-height: var(--vkui--size_button_large_height--compact);
+}
+
 .Button--sizeY-regular.Button--sz-l {
   min-height: var(--vkui--size_button_large_height--regular);
+}
+
+@media (--size-y-regular) {
+  .Button--sizeY-none.Button--sz-l {
+    min-height: var(--vkui--size_button_large_height--regular);
+  }
+}
+
+.Button--sz-m.Button--vkcom .Button__content {
+  font-weight: var(--vkui--font_weight_accent3);
+}
+
+.Button--sz-m .Button__content {
+  font-size: var(--vkui--font_subhead--font_size--compact);
+  line-height: var(--vkui--font_subhead--line_height--compact);
+}
+
+.Button--sizeY-regular.Button--sz-m .Button__content {
+  font-size: var(--vkui--font_text--font_size--regular);
+  line-height: var(--vkui--font_text--line_height--regular);
+  font-weight: var(--vkui--font_weight_accent2);
+}
+
+@media (--size-y-regular) {
+  .Button--sizeY-none.Button--sz-m .Button__content {
+    font-size: var(--vkui--font_text--font_size--regular);
+    line-height: var(--vkui--font_text--line_height--regular);
+    font-weight: var(--vkui--font_weight_accent2);
+  }
+}
+
+.Button--sz-l .Button__content {
+  font-size: var(--vkui--font_text--font_size--compact);
+  line-height: var(--vkui--font_text--line_height--compact);
+}
+
+.Button--sizeY-regular.Button--sz-l .Button__content {
+  font-size: var(--vkui--font_title3--font_size--regular);
+  line-height: var(--vkui--font_title3--line_height--regular);
+}
+
+.Button--sizeY-regular.Button--android.Button--sz-l .Button__content {
+  font-size: var(--vkui--font_headline1--font_size--regular);
+  line-height: var(--vkui--font_headline1--line_height--regular);
+}
+
+@media (--size-y-regular) {
+  .Button--sizeY-none.Button--sz-l .Button__content {
+    font-size: var(--vkui--font_title3--font_size--regular);
+    line-height: var(--vkui--font_title3--line_height--regular);
+  }
+
+  .Button--sizeY-none.Button--android.Button--sz-l .Button__content {
+    font-size: var(--vkui--font_headline1--font_size--regular);
+    line-height: var(--vkui--font_headline1--line_height--regular);
+  }
+}
+
+.Button--sizeY-regular {
+  min-height: var(--vkui--size_button_small_height--regular);
+}
+
+@media (--size-y-regular) {
+  .Button--sizeY-none {
+    min-height: var(--vkui--size_button_small_height--regular);
+  }
 }
 
 /**

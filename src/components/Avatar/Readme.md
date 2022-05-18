@@ -40,10 +40,10 @@ import {
           </UsersStack>
         }
         actions={
-          <React.Fragment>
+          <ButtonGroup mode="horizontal" gap="s">
             <Button>Добавить</Button>
             <Button mode="secondary">Скрыть</Button>
-          </React.Fragment>
+          </ButtonGroup>
         }
       >
         Илья Гришин

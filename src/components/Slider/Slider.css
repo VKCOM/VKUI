@@ -100,6 +100,40 @@
   right: -12px;
 }
 
+@media (--size-y-compact) {
+  .Slider--sizeY-none {
+    height: 24px;
+    padding: 0 12px;
+  }
+
+  .Slider--sizeY-none::before {
+    top: 11px;
+  }
+
+  .Slider--sizeY-none .Slider__dragger {
+    top: 11px;
+  }
+
+  .Slider--sizeY-none .Slider__dragger::before {
+    width: calc(100% + 24px);
+    left: -12px;
+  }
+
+  .Slider--sizeY-none .Slider__thumb {
+    top: -11px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .Slider--sizeY-none .Slider__thumb--start {
+    left: -12px;
+  }
+
+  .Slider--sizeY-none .Slider__thumb--end {
+    right: -12px;
+  }
+}
+
 /**
  * VKCOM
  */

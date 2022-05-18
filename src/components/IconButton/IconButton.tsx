@@ -3,19 +3,20 @@ import Tappable, { TappableProps } from "../Tappable/Tappable";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { IOS } from "../../lib/platform";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./IconButton.css";
 
-export type IconButtonProps = TappableProps & AdaptivityProps;
+export type IconButtonProps = TappableProps;
 
 const IconButton: React.FC<IconButtonProps> = ({
-  sizeY,
   children,
-  Component,
+  Component = "button",
   ...restProps
 }: IconButtonProps) => {
   const platform = usePlatform();
+  const { sizeY } = useAdaptivity();
 
   return (
     <Tappable
@@ -25,7 +26,7 @@ const IconButton: React.FC<IconButtonProps> = ({
       activeMode={platform === IOS ? "opacity" : "IconButton--active"}
       vkuiClass={classNames(
         getClassName("IconButton", platform),
-        `IconButton--sizeY-${sizeY}`
+        getSizeYClassName("IconButton", sizeY)
       )}
     >
       {children}
@@ -33,11 +34,5 @@ const IconButton: React.FC<IconButtonProps> = ({
   );
 };
 
-IconButton.defaultProps = {
-  Component: "button",
-};
-
 // eslint-disable-next-line import/no-default-export
-export default withAdaptivity(IconButton, {
-  sizeY: true,
-});
+export default IconButton;

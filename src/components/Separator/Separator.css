@@ -34,7 +34,7 @@
 
 .Separator__in--expanded,
 .Group--card .Separator__in,
-.PanelHeader--sizeX-regular .Separator__in {
+.PanelHeader--sizeX-regular:not(.PanelHeader--vkcom) .Separator__in {
   height: 16px;
   background: transparent;
 }
@@ -77,7 +77,7 @@
     background: transparent;
   }
 
-  .PanelHeader--sizeX-none .Separator__in {
+  .PanelHeader--sizeX-none:not(.PanelHeader--vkcom) .Separator__in {
     height: 16px;
     background: transparent;
   }

@@ -9,6 +9,7 @@ import { Subhead } from "../Typography/Subhead/Subhead";
 import { Caption } from "../Typography/Caption/Caption";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { Removable, RemovableProps } from "../Removable/Removable";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "./FormItem.css";
 
 export interface FormItemProps
@@ -55,15 +56,12 @@ export const FormItem: React.FC<FormItemProps> = ({
     <Component
       {...restProps}
       ref={rootEl}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("FormItem", platform),
         `FormItem--${status}`,
-        `FormItem--sizeY-${sizeY}`,
-        {
-          "FormItem--withTop": hasReactNode(top),
-          "FormItem--removable": removable,
-        }
+        getSizeYClassName("FormItem", sizeY),
+        hasReactNode(top) && "FormItem--withTop",
+        removable && "FormItem--removable"
       )}
     >
       {removable ? (

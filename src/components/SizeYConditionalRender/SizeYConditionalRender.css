@@ -1,0 +1,19 @@
+.SizeYRegular--sizeY-compact {
+  display: none;
+}
+
+@media (--size-y-compact) {
+  .SizeYRegular--sizeY-none {
+    display: none;
+  }
+}
+
+.SizeYCompact--sizeY-regular {
+  display: none;
+}
+
+@media (--size-y-regular) {
+  .SizeYCompact--sizeY-none {
+    display: none;
+  }
+}

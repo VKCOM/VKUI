@@ -3,6 +3,7 @@ import { HasComponent } from "../../../types";
 import { classNames } from "../../../lib/classNames";
 import { warnOnce } from "../../../lib/warnOnce";
 import { useAdaptivity } from "../../../hooks/useAdaptivity";
+import { getSizeYClassName } from "../../../helpers/getSizeYClassName";
 import "./Subhead.css";
 
 export interface SubheadProps
@@ -40,7 +41,7 @@ export const Subhead: React.FC<SubheadProps> = ({
       {...restProps}
       vkuiClass={classNames(
         "Subhead",
-        `Subhead--sizeY-${sizeY}`,
+        getSizeYClassName("Subhead", sizeY),
         weight && `Subhead--w-${weight}`
       )}
     >

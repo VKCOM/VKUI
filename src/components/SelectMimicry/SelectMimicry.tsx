@@ -3,15 +3,12 @@ import { classNames } from "../../lib/classNames";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasAlign, HasRootRef } from "../../types";
-import { SizeType } from "../../hoc/withAdaptivity";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getClassName } from "../../helpers/getClassName";
-import Headline from "../Typography/Headline/Headline";
-import Text from "../Typography/Text/Text";
-import { VKCOM } from "../../lib/platform";
 import { SelectType } from "../CustomSelect/CustomSelect";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "../Select/Select.css";
 import "./SelectMimicry.css";
 
@@ -42,9 +39,6 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
   const platform = usePlatform();
   const { sizeX, sizeY } = useAdaptivity();
 
-  const TypographyComponent =
-    platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
-
   return (
     <FormField
       {...restProps}
@@ -52,12 +46,12 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
       vkuiClass={classNames(
         getClassName("Select", platform),
         getSizeXClassName("Select", sizeX),
+        getSizeYClassName("Select", sizeY),
         "Select--mimicry",
         `Select--mimicry-${selectType}`,
         !children && "Select--not-selected",
         multiline && "Select--multiline",
-        align && `Select--align-${align}`,
-        sizeY && `Select--sizeY--${sizeY}`
+        align && `Select--align-${align}`
       )}
       getRootRef={getRootRef}
       onClick={disabled ? undefined : onClick}
@@ -65,16 +59,14 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
       before={before}
       after={after}
     >
-      <TypographyComponent
-        Component="div"
-        weight={selectType === SelectType.Plain ? "semibold" : "regular"}
+      <div
         vkuiClass={classNames(
           "Select__container",
           `Select__container--${selectType}`
         )}
       >
         <span vkuiClass="Select__title">{children || placeholder}</span>
-      </TypographyComponent>
+      </div>
     </FormField>
   );
 };

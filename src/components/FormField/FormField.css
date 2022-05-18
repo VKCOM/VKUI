@@ -94,6 +94,14 @@
   height: 36px;
 }
 
+@media (--size-y-compact) {
+  .FormField--sizeY-none .FormField__before,
+  .FormField--sizeY-none .FormField__after {
+    min-width: 36px;
+    height: 36px;
+  }
+}
+
 /**
  * ModalCardBase
  */
@@ -112,6 +120,13 @@
   justify-content: flex-start;
   min-width: 0;
   height: auto;
+}
+
+@media (--size-y-compact) {
+  .Select--mimicry-plain .FormField--sizeY-none .FormField__after {
+    min-width: 36px;
+    height: 36px;
+  }
 }
 
 .CustomSelect__open.Select--mimicry:focus .FormField__border {

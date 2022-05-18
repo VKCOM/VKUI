@@ -8,6 +8,7 @@ import { useChipsInput } from "./useChipsInput";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { prefixClass } from "../../lib/prefixClass";
 import { useExternRef } from "../../hooks/useExternRef";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "./ChipsInput.css";
 
 export type ChipsInputValue = string | number;
@@ -180,7 +181,7 @@ export const ChipsInput = <Option extends ChipsInputOption>(
       getRootRef={getRootRef}
       vkuiClass={classNames(
         "ChipsInput",
-        `ChipsInput--sizeY-${sizeY}`,
+        getSizeYClassName("ChipsInput", sizeY),
         focused && "ChipsInput--focused",
         !!selectedOptions.length && "ChipsInput--withChips"
       )}

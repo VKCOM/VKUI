@@ -39,6 +39,16 @@
   font-size: 15px;
 }
 
+@media (--size-y-compact) {
+  .Input--sizeY-none .Input__el {
+    height: 34px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    line-height: 20px;
+    font-size: 15px;
+  }
+}
+
 .Input__el:disabled {
   opacity: var(--vkui--opacity_disable_accessibility);
 }

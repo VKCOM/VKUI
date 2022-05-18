@@ -6,10 +6,11 @@ import Tappable, { TappableProps } from "../Tappable/Tappable";
 import { hasReactNode } from "../../lib/utils";
 import Text from "../Typography/Text/Text";
 import { Subhead } from "../Typography/Subhead/Subhead";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./RichCell.css";
 
-export interface RichCellProps extends TappableProps, AdaptivityProps {
+export interface RichCellProps extends TappableProps {
   /**
    * Контейнер для текста под `children`.
    */
@@ -51,21 +52,18 @@ const RichCell: React.FC<RichCellProps> = ({
   bottom,
   actions,
   multiline,
-  sizeY,
   ...restProps
 }) => {
   const platform = usePlatform();
+  const { sizeY } = useAdaptivity();
 
   return (
     <Tappable
       {...restProps}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("RichCell", platform),
-        {
-          "RichCell--mult": multiline,
-        },
-        `RichCell--sizeY-${sizeY}`
+        getSizeYClassName("RichCell", sizeY),
+        multiline && "RichCell--mult"
       )}
     >
       {before}
@@ -102,4 +100,4 @@ const RichCell: React.FC<RichCellProps> = ({
 };
 
 // eslint-disable-next-line import/no-default-export
-export default withAdaptivity(RichCell, { sizeY: true });
+export default RichCell;

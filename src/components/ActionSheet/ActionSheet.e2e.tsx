@@ -2,7 +2,7 @@ import { ActionSheet, ActionSheetProps } from "./ActionSheet";
 import { ActionSheetItem } from "../ActionSheetItem/ActionSheetItem";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { withPlatform } from "../../hoc/withPlatform";
-import { ViewWidth } from "../../hoc/withAdaptivity";
+import { ViewWidth, SizeType } from "../../hoc/withAdaptivity";
 import { HasPlatform } from "../../types";
 
 describe("ActionSheet", () => {
@@ -30,6 +30,7 @@ describe("ActionSheet", () => {
       adaptivity: {
         // prevent desktop action sheet
         viewWidth: ViewWidth.MOBILE,
+        sizeY: SizeType.REGULAR,
       },
     }
   );

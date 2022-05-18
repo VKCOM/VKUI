@@ -115,7 +115,6 @@ const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
       {separator && visor && (
         <Separator
           vkuiClass="PanelHeader__separator"
-          expanded={platform !== VKCOM}
           wide={platform === VKCOM}
         />
       )}

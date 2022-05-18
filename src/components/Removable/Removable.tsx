@@ -12,6 +12,7 @@ import { Icon24Cancel } from "@vkontakte/icons";
 import IconButton from "../IconButton/IconButton";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import Tappable from "../Tappable/Tappable";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "./Removable.css";
 
 export interface RemovableProps {
@@ -143,7 +144,7 @@ export const Removable: React.FC<RemovableOwnProps> = ({
       vkuiClass={classNames(
         getClassName("Removable", platform),
         `Removable--${align}`,
-        `Removable--sizeY-${sizeY}`
+        getSizeYClassName("Removable", sizeY)
       )}
     >
       {(platform === ANDROID || platform === VKCOM) && (

@@ -100,7 +100,7 @@ function calculateAdaptivity(
 
   let viewWidth = ViewWidth.SMALL_MOBILE;
   let viewHeight = ViewHeight.SMALL;
-  let sizeY = SizeType.REGULAR;
+  let sizeY: SizeType | undefined = undefined;
   let sizeX: SizeType | undefined = undefined;
   let hasMouse = _hasMouse;
   let deviceHasHover = _hasHover;
@@ -133,13 +133,6 @@ function calculateAdaptivity(
     deviceHasHover = props.deviceHasHover ?? deviceHasHover;
   }
 
-  if (
-    (viewWidth >= ViewWidth.SMALL_TABLET && hasMouse) ||
-    viewHeight <= ViewHeight.EXTRA_SMALL
-  ) {
-    sizeY = SizeType.COMPACT;
-  }
-
   if (!bridge.type) {
     props.sizeX && (sizeX = props.sizeX);
     props.sizeY && (sizeY = props.sizeY);
@@ -148,6 +141,15 @@ function calculateAdaptivity(
       sizeX = SizeType.COMPACT;
     } else {
       sizeX = SizeType.REGULAR;
+    }
+
+    if (
+      (viewWidth >= ViewWidth.SMALL_TABLET && hasMouse) ||
+      viewHeight <= ViewHeight.EXTRA_SMALL
+    ) {
+      sizeY = SizeType.COMPACT;
+    } else {
+      sizeY = SizeType.REGULAR;
     }
   }
 
