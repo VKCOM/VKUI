@@ -145,7 +145,7 @@ export const AppRoot: React.FC<AppRootProps> = ({
   );
 
   // Прикрепляем vkui-token класс
-  useIsomorphicLayoutEffect(() => {
+  React.useEffect(() => {
     if (mode === "partial") {
       return noop;
     }
@@ -165,7 +165,7 @@ export const AppRoot: React.FC<AppRootProps> = ({
     return () => {
       container?.classList.remove(VKUITokensClassName);
     };
-  }, [platform, appearance]);
+  }, [platform, appearance, mode, document]);
 
   const content = (
     <AppRootContext.Provider
