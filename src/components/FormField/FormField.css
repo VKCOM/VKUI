@@ -44,12 +44,15 @@
   box-sizing: border-box;
   z-index: 1;
   transform-origin: left top;
+  border: var(--thin-border) solid transparent;
 }
 
 .FormField--default .FormField__border {
-  border: var(--thin-border) solid
-    var(--field_border, var(--vkui--color_field_border_alpha));
-  background: var(--field_background, var(--vkui--color_field_background));
+  border-color: var(--field_border, var(--vkui--color_field_border_alpha));
+  background-color: var(
+    --field_background,
+    var(--vkui--color_field_background)
+  );
 }
 
 .FormItem--error .FormField__border {
@@ -84,9 +87,9 @@
   );
 }
 
-.FormField--default:focus-within .FormField__border,
-.FormField--default *:focus ~ .FormField__border,
-.ChipsInput--focused .FormField--default .FormField__border {
+.FormField:focus-within .FormField__border,
+.FormField *:focus ~ .FormField__border,
+.ChipsInput--focused .FormField__border {
   border-color: var(--accent, var(--vkui--color_stroke_accent));
 }
 
