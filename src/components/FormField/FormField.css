@@ -59,7 +59,7 @@
   );
 }
 
-.FormItem--error .FormField--default .FormField__border {
+.FormItem--error .FormField__border {
   border-color: var(--field_error_border, var(--vkui--color_stroke_negative));
 }
 
