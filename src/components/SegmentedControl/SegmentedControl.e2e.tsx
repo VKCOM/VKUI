@@ -15,10 +15,6 @@ const optionFn: OptionFn = (label: string) => ({ label, value: label });
 describe("SegmentedControl", () => {
   describeScreenshotFuzz(SegmentedControl, [
     {
-      options: [[optionFn("vk"), optionFn("ok")]],
-      size: ["m"],
-    },
-    {
       options: [
         [optionFn("vk"), optionFn("ok")],
         [optionFn("vk"), optionFn("ok"), optionFn("fb")],
@@ -28,6 +24,11 @@ describe("SegmentedControl", () => {
           { label: <Icon24LogoGoogle />, value: "google" },
         ],
       ],
+    },
+    {
+      options: [[optionFn("vk"), optionFn("ok")]],
+      size: ["m", "l"],
+      $adaptivity: "y",
     },
   ]);
 });
