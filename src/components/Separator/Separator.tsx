@@ -12,7 +12,7 @@ export interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
   expanded?: boolean;
 }
 
-const Separator: React.FC<SeparatorProps> = ({
+export const Separator: React.FC<SeparatorProps> = ({
   wide,
   expanded,
   ...restProps
@@ -23,20 +23,17 @@ const Separator: React.FC<SeparatorProps> = ({
     <div
       {...restProps}
       aria-hidden="true"
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames(getClassName("Separator", platform), {
-        "Separator--wide": wide,
-      })}
+      vkuiClass={classNames(
+        getClassName("Separator", platform),
+        wide && "Separator--wide"
+      )}
     >
       <div
-        // eslint-disable-next-line vkui/no-object-expression-in-arguments
-        vkuiClass={classNames("Separator__in", {
-          "Separator__in--expanded": expanded,
-        })}
+        vkuiClass={classNames(
+          "Separator__in",
+          expanded && "Separator__in--expanded"
+        )}
       />
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default React.memo(Separator);
