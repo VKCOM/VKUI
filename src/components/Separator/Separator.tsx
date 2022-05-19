@@ -22,7 +22,11 @@ export const Separator: React.FC<SeparatorProps> = ({
   <div
     {...restProps}
     aria-hidden="true"
-    vkuiClass={classNames("Separator", wide && "Separator--wide")}
+    vkuiClass={classNames(
+      "Separator",
+      wide && "Separator--wide", // TODO: v5 remove
+      !wide && "Separator--padded"
+    )}
   >
     <div
       vkuiClass={classNames(
