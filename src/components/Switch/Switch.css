@@ -87,7 +87,7 @@
 
 .Switch--android .Switch__self:checked + .Switch__pseudo::after,
 .Switch--vkcom .Switch__self:checked + .Switch__pseudo::after {
-  background: var(--vkui--color_icon_accent);
+  background: var(--accent, var(--vkui--color_icon_accent));
   opacity: 0.48;
 }
 
@@ -127,7 +127,7 @@
 }
 
 .Switch--android .Switch__self:checked + .Switch__pseudo::before {
-  background: var(--vkui--color_icon_accent);
+  background: var(--accent, var(--vkui--color_icon_accent));
 }
 
 .Switch--android.Switch--sizeY-compact
