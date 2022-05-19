@@ -1,5 +1,5 @@
 import * as React from "react";
-import { hasMouse as _hasMouse, hasHover as _hasHover } from "@vkontakte/vkjs";
+import { hasMouse as _hasMouse } from "@vkontakte/vkjs";
 import {
   AdaptivityContext,
   AdaptivityProps,
@@ -103,7 +103,6 @@ function calculateAdaptivity(
   let sizeY: SizeType | undefined = undefined;
   let sizeX: SizeType | undefined = undefined;
   let hasMouse = _hasMouse;
-  let deviceHasHover = _hasHover;
 
   if (windowWidth >= DESKTOP_SIZE) {
     viewWidth = ViewWidth.DESKTOP;
@@ -130,10 +129,6 @@ function calculateAdaptivity(
     props.viewHeight && (viewHeight = props.viewHeight);
 
     hasMouse = props.hasMouse ?? hasMouse;
-    deviceHasHover = props.deviceHasHover ?? deviceHasHover;
-  }
-
-  if (!bridge.type) {
     props.sizeX && (sizeX = props.sizeX);
     props.sizeY && (sizeY = props.sizeY);
   } else {
@@ -167,7 +162,14 @@ function calculateAdaptivity(
     }
   }
 
-  return { viewWidth, viewHeight, sizeX, sizeY, hasMouse, deviceHasHover };
+  return {
+    viewWidth,
+    viewHeight,
+    sizeX,
+    sizeY,
+    hasMouse,
+    deviceHasHover: props.deviceHasHover,
+  };
 }
 
 export { AdaptivityProvider };

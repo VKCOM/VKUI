@@ -3,9 +3,15 @@
   cursor: default;
 }
 
-.Tappable--hasHover,
+.Tappable--hover-has,
 .Tappable--hasActive {
   cursor: pointer;
+}
+
+@media (--hover-has) {
+  .Tappable--hover-none {
+    cursor: pointer;
+  }
 }
 
 .Tappable[disabled],

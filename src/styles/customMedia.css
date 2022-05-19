@@ -6,3 +6,6 @@
 @custom-media --size-y-regular (pointer: coarse) and (min-height: 414px),
   (pointer: none) and (min-height: 414px),
   (max-width: 767px) and (min-height: 414px);
+
+@custom-media --hover-has (hover: hover);
+@custom-media --hover-none (hover: none);

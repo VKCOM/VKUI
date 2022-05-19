@@ -20,6 +20,7 @@ import { useFocusVisible } from "../../hooks/useFocusVisible";
 import { callMultiple } from "../../lib/callMultiple";
 import { useBooleanState } from "../../hooks/useBooleanState";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getHoverClassName } from "../../helpers/getHoverClassName";
 import "./Tappable.css";
 
 export interface TappableProps
@@ -180,7 +181,7 @@ const Tappable: React.FC<TappableProps> = ({
 
   const hovered = _hovered && !props.disabled;
   const hasActive = _hasActive && !childHover && !props.disabled;
-  const hasHover = deviceHasHover && _hasHover && !childHover;
+  const hasHover = deviceHasHover !== false && _hasHover && !childHover;
   const isCustomElement =
     Component !== "a" && Component !== "button" && !props.contentEditable;
   const isPresetHoverMode = ["opacity", "background"].includes(hoverMode);
@@ -262,7 +263,7 @@ const Tappable: React.FC<TappableProps> = ({
   const classes = classNames(
     getClassName("Tappable", platform),
     getSizeXClassName("Tappable", sizeX),
-    hasHover && `Tappable--hasHover`,
+    getHoverClassName("Tappable", deviceHasHover),
     hasActive && `Tappable--hasActive`,
     hasHover && hovered && !isPresetHoverMode && hoverMode,
     hasActive && active && !isPresetActiveMode && activeMode,
