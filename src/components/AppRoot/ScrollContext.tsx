@@ -30,7 +30,6 @@ export const ScrollContext = React.createContext<ScrollContextInterface>({
   isScrollLock: false,
   enableScrollLock: noop,
   disableScrollLock: noop,
-  // beforeScrollLockFnSet: React.useRef(new Set()),
 });
 
 export const useScroll = () => React.useContext(ScrollContext);
