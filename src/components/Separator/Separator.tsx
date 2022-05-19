@@ -1,7 +1,5 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
-import { usePlatform } from "../../hooks/usePlatform";
 import "./Separator.css";
 
 export interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -20,24 +18,17 @@ export const Separator: React.FC<SeparatorProps> = ({
   wide,
   expanded,
   ...restProps
-}) => {
-  const platform = usePlatform();
-
-  return (
+}) => (
+  <div
+    {...restProps}
+    aria-hidden="true"
+    vkuiClass={classNames("Separator", wide && "Separator--wide")}
+  >
     <div
-      {...restProps}
-      aria-hidden="true"
       vkuiClass={classNames(
-        getClassName("Separator", platform),
-        wide && "Separator--wide"
+        "Separator__in",
+        expanded && "Separator__in--expanded"
       )}
-    >
-      <div
-        vkuiClass={classNames(
-          "Separator__in",
-          expanded && "Separator__in--expanded"
-        )}
-      />
-    </div>
-  );
-};
+    />
+  </div>
+);

@@ -7,7 +7,10 @@
 
 <Spacing size={16} />  // - пустой отступ высотой 16px
 
-<Spacing separator size={16} /> // - сепаратор с отступами 8px сверху и снизу
+// - сепаратор с отступами 8px сверху и снизу
+<Spacing size={16} >
+  <Separator />
+</Spacing>
 ```
 
 Для более гибкой настройки положения линии и отступов, можно комбинировать два отступа вместе
@@ -15,7 +18,8 @@
 Например - нужен сепаратор с отступом сверху 12px и снизу 20px:
 
 ```jsx static
-<Spacing separator="bottom" size={12} />
+<Spacing size={12} />
+<Separator />
 <Spacing size={20} />
 ```
 
@@ -54,7 +58,9 @@
       <Cell before={<Icon28Notifications />}>Уведомления</Cell>
       <Cell before={<Icon28BlockOutline />}>Не беспокоить</Cell>
 
-      <Spacing separator size={16} />
+      <Spacing size={16}>
+        <Separator />
+      </Spacing>
 
       <Cell before={<Icon28UserOutline />}>Учётная запись</Cell>
       <Cell before={<Icon28SlidersOutline />}>Основные</Cell>
@@ -70,8 +76,9 @@
       <Cell before={<Icon28Notifications />}>Уведомления</Cell>
       <Cell before={<Icon28BlockOutline />}>Не беспокоить</Cell>
 
-      <Spacing separator="bottom" />
-      <Spacing />
+      <Spacing>
+        <Separator />
+      </Spacing>
 
       <Cell before={<Icon28UserOutline />}>Учётная запись</Cell>
       <Cell before={<Icon28SlidersOutline />}>Основные</Cell>
@@ -87,7 +94,8 @@
       <Cell before={<Icon28Notifications />}>Уведомления</Cell>
       <Cell before={<Icon28BlockOutline />}>Не беспокоить</Cell>
 
-      <Spacing separator="bottom" size={12} />
+      <Spacing size={12} />
+      <Separator />
       <Spacing size={20} />
 
       <Cell before={<Icon28UserOutline />}>Учётная запись</Cell>
