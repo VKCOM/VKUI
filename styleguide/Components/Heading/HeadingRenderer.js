@@ -27,7 +27,7 @@ const HeadingRenderer = ({ level, children, className }) => {
       return (
         <Headline
           className={classNames("Heading", "Heading--3", className)}
-          weight="bold"
+          weight="1"
           level="1"
         >
           {children}

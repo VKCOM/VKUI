@@ -12,7 +12,7 @@ import { withAdaptivity, SizeType } from "../../hoc/withAdaptivity";
 import { Title } from "../Typography/Title/Title";
 import Text from "../Typography/Text/Text";
 import { Subhead } from "../Typography/Subhead/Subhead";
-import Headline from "../Typography/Headline/Headline";
+import { Headline } from "../Typography/Headline/Headline";
 import "./SimpleCell.css";
 
 export interface SimpleCellOwnProps extends HasComponent {
@@ -61,7 +61,7 @@ const SimpleCellTypography: React.FC<SimpleCellTypographyProps> = (
   if (sizeY === SizeType.COMPACT) {
     return <Text Component="span" weight="regular" {...props} />;
   } else if (platform === ANDROID) {
-    return <Headline Component="span" weight="regular" {...props} />;
+    return <Headline Component="span" weight="3" {...props} />;
   } else {
     return <Title Component="span" level="3" weight="3" {...props} />;
   }

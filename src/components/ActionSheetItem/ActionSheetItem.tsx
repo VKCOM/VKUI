@@ -14,7 +14,7 @@ import {
   ActionSheetContextType,
 } from "../ActionSheet/ActionSheetContext";
 import { Caption } from "../Typography/Caption/Caption";
-import Headline from "../Typography/Headline/Headline";
+import { Headline } from "../Typography/Headline/Headline";
 import {
   withAdaptivity,
   AdaptivityProps,
@@ -120,7 +120,7 @@ const ActionSheetItemComponent: React.FC<ActionSheetItemProps> = ({
           ) : (
             <React.Fragment>
               {platform === ANDROID ? (
-                <Headline weight={mode === "cancel" ? "medium" : "regular"}>
+                <Headline weight={mode === "cancel" ? "2" : "3"}>
                   {children}
                 </Headline>
               ) : (
@@ -134,7 +134,7 @@ const ActionSheetItemComponent: React.FC<ActionSheetItemProps> = ({
               )}
               {hasReactNode(meta) &&
                 (platform === ANDROID ? (
-                  <Headline weight={mode === "cancel" ? "medium" : "regular"}>
+                  <Headline weight={mode === "cancel" ? "2" : "3"}>
                     {children}
                   </Headline>
                 ) : (

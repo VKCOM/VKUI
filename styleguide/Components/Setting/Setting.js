@@ -37,7 +37,7 @@ export const Setting = ({
       className={classNames("Setting", {
         "Setting--disabled": disabled,
       })}
-      weight="regular"
+      weight="3"
     >
       {hint ? (
         <RichTooltip

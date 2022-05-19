@@ -2,7 +2,7 @@ import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { hasReactNode } from "../../lib/utils";
 import { Title } from "../Typography/Title/Title";
-import Headline from "../Typography/Headline/Headline";
+import { Headline } from "../Typography/Headline/Headline";
 import { HasRootRef } from "../../types";
 import "./Placeholder.css";
 
@@ -55,7 +55,7 @@ const Placeholder: React.FC<PlaceholderProps> = (props: PlaceholderProps) => {
           </Title>
         )}
         {hasReactNode(children) && (
-          <Headline weight="regular" vkuiClass="Placeholder__text">
+          <Headline weight="3" vkuiClass="Placeholder__text">
             {children}
           </Headline>
         )}
