@@ -15,23 +15,21 @@ export interface FileProps
   controlSize?: VKUIButtonProps["size"];
 }
 
-const File: React.FC<FileProps> = (props) => {
-  const {
-    children,
-    align,
-    controlSize,
-    mode,
-    stretched,
-    before,
-    className,
-    style,
-    getRef,
-    getRootRef,
-    onClick,
-    appearance,
-    ...restProps
-  } = props;
-
+const File: React.FC<FileProps> = ({
+  children,
+  align,
+  controlSize,
+  mode,
+  stretched,
+  before,
+  className,
+  style,
+  getRef,
+  getRootRef,
+  onClick,
+  appearance,
+  ...restProps
+}) => {
   const platform = usePlatform();
   const inputRef = useExternRef(getRef);
 
