@@ -15,7 +15,7 @@ export interface FileProps
   controlSize?: VKUIButtonProps["size"];
 }
 
-const File: React.FC<FileProps> = ({
+export const File: React.FC<FileProps> = ({
   children = "Выберите файл",
   align = "left",
   controlSize,
@@ -62,6 +62,3 @@ const File: React.FC<FileProps> = ({
     </Button>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default File;
