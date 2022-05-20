@@ -4,7 +4,6 @@ import { Button, VKUIButtonProps } from "../Button/Button";
 import { HasRef, HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import { VisuallyHiddenInput } from "../VisuallyHiddenInput/VisuallyHiddenInput";
-import "./File.css";
 
 export interface FileProps
   extends Omit<VKUIButtonProps, "type">,
