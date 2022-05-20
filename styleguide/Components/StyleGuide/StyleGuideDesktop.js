@@ -19,7 +19,7 @@ export const StyleGuideDesktop = ({
           maxWidth={480}
           className="StyleGuide__sidebar"
         >
-          <div className="StyleGuide__sidebarIn">{toc}</div>
+          <nav className="StyleGuide__sidebarIn">{toc}</nav>
         </SplitCol>
         <SplitCol width="100%" className="StyleGuide__content">
           <div className="StyleGuide__contentIn">{children}</div>

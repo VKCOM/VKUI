@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import {
   Header,
-  IconButton,
   SimpleCell,
   Search,
   classNames,
@@ -233,36 +232,46 @@ class TableOfContents extends React.PureComponent {
               <Header mode="secondary">{section.title || section.name}</Header>
             </Fragment>
           ) : (
-            <SimpleCell
-              href={section.href}
-              after={
-                section.sections.length > 0 && (
-                  <IconButton
-                    onClick={this.onExpandIconClick}
-                    data-section-name={section.name}
-                  >
-                    {expanded ? (
-                      <Icon28ChevronUpOutline fill="var(--text_tertiary)" />
-                    ) : (
-                      <Icon28ChevronDownOutline fill="var(--text_tertiary)" />
-                    )}
-                  </IconButton>
-                )
-              }
-              onClick={!section.href ? this.onExpandCellClick : undefined}
-              data-section-name={section.name}
-              className={classNames("TableOfContents__section", {
-                "TableOfContents__section--selected":
-                  section.name === this.state.currentSectionName,
-              })}
-              indicator={
-                deprecated.includes(section.name) && (
-                  <Caption level="3">deprecated</Caption>
-                )
-              }
-            >
-              {section.title || section.name}
-            </SimpleCell>
+            <li>
+              <SimpleCell
+                href={section.href}
+                after={
+                  section.sections.length > 0 &&
+                  (expanded ? (
+                    <Icon28ChevronUpOutline
+                      fill="var(--text_tertiary)"
+                      aria-hidden="true"
+                    />
+                  ) : (
+                    <Icon28ChevronDownOutline
+                      fill="var(--text_tertiary)"
+                      aria-hidden="true"
+                    />
+                  ))
+                }
+                aria-expanded={
+                  section.sections.length > 0 ? Boolean(expanded) : undefined
+                }
+                aria-controls={
+                  section.sections.length > 0
+                    ? "TableOfContents__list--" + section.name
+                    : undefined
+                }
+                onClick={!section.href ? this.onExpandCellClick : undefined}
+                data-section-name={section.name}
+                className={classNames("TableOfContents__section", {
+                  "TableOfContents__section--selected":
+                    section.name === this.state.currentSectionName,
+                })}
+                indicator={
+                  deprecated.includes(section.name) && (
+                    <Caption level="3">deprecated</Caption>
+                  )
+                }
+              >
+                {section.title || section.name}
+              </SimpleCell>
+            </li>
           )}
           {section.search && (
             <Search
@@ -272,16 +281,17 @@ class TableOfContents extends React.PureComponent {
             />
           )}
           {section.sections.length > 0 && (
-            <div
+            <ul
               className={classNames("TableOfContents__list", {
                 "TableOfContents__list--expanded": expanded,
               })}
+              id={"TableOfContents__list--" + section.name}
             >
               {this.renderSections(section.sections)}
               <Footer className="TableOfContents__nothingFound">
                 Ничего не найдено
               </Footer>
-            </div>
+            </ul>
           )}
         </Fragment>
       );
@@ -291,14 +301,15 @@ class TableOfContents extends React.PureComponent {
   render() {
     const isMobile = this.props.viewWidth <= ViewWidth.MOBILE;
     return (
-      <div
+      <menu
         className={classNames("TableOfContents", {
           "TableOfContents--desktop": !isMobile,
           "TableOfContents--mobile": isMobile,
         })}
+        aria-orientation="horizontal"
       >
         {this.renderSections(this.sections)}
-      </div>
+      </menu>
     );
   }
 }

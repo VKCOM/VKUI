@@ -16,7 +16,7 @@ export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
   const appearance = useAppearance();
 
   return (
-    <div className="StyleGuideHeader">
+    <header className="StyleGuideHeader">
       <SplitLayout>
         <SplitCol
           minWidth={340}
@@ -31,6 +31,7 @@ export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
               Component="a"
               href="#/About"
               className="StyleGuideHeader__logo"
+              aria-label="О VKUI"
             >
               <Logo />
             </Tappable>
@@ -43,7 +44,7 @@ export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
               className="StyleGuideHeader__link"
               href="https://www.npmjs.com/package/@vkontakte/vkui"
             >
-              <Text>v{pkg.version}</Text>
+              <Text>{"v" + pkg.version}</Text>
             </Link>
             <Link
               target="_blank"
@@ -67,14 +68,14 @@ export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
               onClick={switchStyleGuideAppearance}
             >
               {appearance === "dark" ? (
-                <Icon28SunOutline />
+                <Icon28SunOutline aria-hidden="true" />
               ) : (
-                <Icon28MoonOutline />
+                <Icon28MoonOutline aria-hidden="true" />
               )}
             </IconButton>
           </div>
         </SplitCol>
       </SplitLayout>
-    </div>
+    </header>
   );
 };
