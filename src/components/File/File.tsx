@@ -7,11 +7,7 @@ import { VisuallyHiddenInput } from "../VisuallyHiddenInput/VisuallyHiddenInput"
 
 export interface FileProps
   extends Omit<VKUIButtonProps, "type">,
-    Omit<
-      React.InputHTMLAttributes<HTMLInputElement>,
-      "onClick" | "type" | "size"
-    >,
-    Pick<React.HTMLAttributes<HTMLElement>, "onClick">,
+    Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size">,
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLElement> {
   /**
