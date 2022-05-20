@@ -198,7 +198,7 @@ export { default as Checkbox } from "./components/Checkbox/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox/Checkbox";
 export { Select } from "./components/Select/Select";
 export type { SelectProps } from "./components/Select/Select";
-export { default as SelectMimicry } from "./components/SelectMimicry/SelectMimicry";
+export { SelectMimicry } from "./components/SelectMimicry/SelectMimicry";
 export type { SelectMimicryProps } from "./components/SelectMimicry/SelectMimicry";
 export { NativeSelect } from "./components/NativeSelect/NativeSelect";
 export type { NativeSelectProps } from "./components/NativeSelect/NativeSelect";

@@ -51,17 +51,19 @@ export const CustomSelectDropdown: React.FC<CustomSelectDropdownProps> = ({
       onPlacementChange={onPlacementChange}
       placement={placement}
       vkuiClass={classNames(
-        "CustomSelectDropdown__options",
-        isTop && "CustomSelectDropdown__options--popupDirectionTop",
-        offsetDistance > 0 && "CustomSelectDropdown__options--not-adjacent",
-        sameWidth && "CustomSelectDropdown__options--same-width"
+        "CustomSelectDropdown",
+        offsetDistance === 0 &&
+          (isTop
+            ? "CustomSelectDropdown--top"
+            : "CustomSelectDropdown--bottom"),
+        sameWidth && "CustomSelectDropdown--wide"
       )}
       forcePortal={forcePortal}
       {...restProps}
     >
       <CustomScrollView
         boxRef={scrollBoxRef}
-        vkuiClass="CustomSelectDropdown__CustomScrollView"
+        vkuiClass="CustomSelectDropdown__in"
       >
         {fetching ? (
           <div vkuiClass="CustomSelectDropdown__fetching">

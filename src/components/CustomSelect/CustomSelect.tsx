@@ -1,6 +1,11 @@
 import * as React from "react";
-import SelectMimicry from "../SelectMimicry/SelectMimicry";
-import { debounce, setRef, multiRef } from "../../lib/utils";
+import { SelectMimicry } from "../SelectMimicry/SelectMimicry";
+import {
+  debounce,
+  setRef,
+  multiRef,
+  getTitleFromChildren,
+} from "../../lib/utils";
 import { classNames } from "../../lib/classNames";
 import { NativeSelectProps } from "../NativeSelect/NativeSelect";
 import { withAdaptivity } from "../../hoc/withAdaptivity";
@@ -16,10 +21,14 @@ import { Input } from "../Input/Input";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { Caption } from "../Typography/Caption/Caption";
 import { warnOnce } from "../../lib/warnOnce";
-import { defaultFilterFn } from "../../lib/select";
+import {
+  defaultFilterFn,
+  getFormFieldModeFromSelectType,
+} from "../../lib/select";
 import { is } from "../../lib/is";
 import { Placement } from "../Popper/Popper";
 import { CustomSelectDropdown } from "../CustomSelectDropdown/CustomSelectDropdown";
+import { SelectType } from "../Select/Select";
 import "./CustomSelect.css";
 
 const findIndexAfter = (
@@ -64,14 +73,9 @@ const checkOptionsValueType = (options: CustomSelectOptionInterface[]) => {
 
 type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>["value"];
 
-export enum SelectType {
-  Default = "default",
-  Plain = "plain",
-}
-
 export interface CustomSelectOptionInterface {
   value: SelectValue;
-  label: string;
+  label: React.ReactElement | string;
   disabled?: boolean;
   [index: string]: any;
 }
@@ -96,20 +100,16 @@ export interface CustomSelectProps
    */
   searchable?: boolean;
   /**
-   * Текст, который будет отображен, если приходит пустой `options`
+   * Текст, который будет отображен, если приходит пустой `options`.
    */
   emptyText?: string;
   onInputChange?: (
     e: React.ChangeEvent,
     options: CustomSelectOptionInterface[]
   ) => void | CustomSelectOptionInterface[];
-  options: Array<{
-    value: SelectValue;
-    label: string;
-    [index: string]: any;
-  }>;
+  options: CustomSelectOptionInterface[];
   /**
-   * Функция для кастомной фильтрации. По-умолчанию поиск производится по option.label.
+   * Функция для кастомной фильтрации. По умолчанию поиск производится по `option.label`.
    */
   filterFn?:
     | false
@@ -128,7 +128,7 @@ export interface CustomSelectProps
   renderOption?: (props: CustomSelectOptionProps) => React.ReactNode;
   /**
    * Рендер-проп для кастомного рендера содержимого дропдауна.
-   * В defaultDropdownContent содержится список опций в виде скроллящегося блока.
+   * В `defaultDropdownContent` содержится список опций в виде скроллящегося блока.
    */
   renderDropdown?: ({
     defaultDropdownContent,
@@ -136,8 +136,8 @@ export interface CustomSelectProps
     defaultDropdownContent: React.ReactNode;
   }) => React.ReactNode;
   /**
-   * Если true, то в дропдауне вместо списка опций рисуется спиннер. При переданных renderDropdown и fetching: true,
-   * "победит" renderDropdown
+   * Если `true`, то в дропдауне вместо списка опций рисуется спиннер. При переданных `renderDropdown` и `fetching: true`
+   * "победит" `renderDropdown`.
    */
   fetching?: boolean;
   onClose?: VoidFunction;
@@ -146,7 +146,7 @@ export interface CustomSelectProps
   dropdownOffsetDistance?: number;
   fixDropdownWidth?: boolean;
   forceDropdownPortal?: boolean;
-  selectType?: SelectType;
+  selectType?: keyof typeof SelectType;
 }
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
@@ -166,7 +166,6 @@ class CustomSelectComponent extends React.Component<
     icon: <DropdownIcon />,
     dropdownOffsetDistance: 0,
     fixDropdownWidth: true,
-    selectType: SelectType.Default,
   };
 
   public constructor(props: CustomSelectProps) {
@@ -421,7 +420,9 @@ class CustomSelectComponent extends React.Component<
     const fullInput = this.keyboardInput + key;
 
     const optionIndex = this.state.options?.findIndex((option) => {
-      return option.label.toLowerCase().includes(fullInput);
+      return getTitleFromChildren(option.label)
+        .toLowerCase()
+        .includes(fullInput);
     });
 
     if (optionIndex !== undefined && optionIndex > -1) {
@@ -665,7 +666,7 @@ class CustomSelectComponent extends React.Component<
       dropdownOffsetDistance,
       fixDropdownWidth,
       forceDropdownPortal,
-      selectType,
+      selectType = SelectType.default,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
@@ -688,7 +689,14 @@ class CustomSelectComponent extends React.Component<
       resolvedContent = defaultDropdownContent;
     }
 
-    const isPopperDirectionTop = this.state.popperPlacement?.includes("top");
+    const openedClassNames = classNames(
+      opened && "Select--open",
+      opened &&
+        (dropdownOffsetDistance as number) === 0 &&
+        (this.state.popperPlacement?.includes("top")
+          ? "Select--pop-up"
+          : "Select--pop-down")
+    );
 
     return (
       <label
@@ -703,12 +711,7 @@ class CustomSelectComponent extends React.Component<
             {...restProps}
             autoFocus
             onBlur={this.onBlur}
-            vkuiClass={classNames(
-              opened && "CustomSelect__open",
-              isPopperDirectionTop && "CustomSelect__open--popupDirectionTop",
-              (dropdownOffsetDistance as number) > 0 &&
-                "CustomSelect__open--not-adjacent"
-            )}
+            vkuiClass={openedClassNames}
             value={this.state.inputValue}
             onKeyDown={this.onInputKeyDown}
             onChange={this.onInputChange}
@@ -719,6 +722,7 @@ class CustomSelectComponent extends React.Component<
             before={before}
             after={icon}
             placeholder={restProps.placeholder}
+            mode={getFormFieldModeFromSelectType(selectType)}
           />
         ) : (
           <SelectMimicry
@@ -729,13 +733,7 @@ class CustomSelectComponent extends React.Component<
             onKeyUp={this.handleKeyUp}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
-            vkuiClass={classNames(
-              opened && "CustomSelect__open",
-              isPopperDirectionTop && "CustomSelect__open--popupDirectionTop",
-              (dropdownOffsetDistance as number) > 0 &&
-                "CustomSelect__open--not-adjacent"
-            )}
-            before={before}
+            vkuiClass={openedClassNames}
             after={icon}
             selectType={selectType}
           >

@@ -11,8 +11,8 @@
   position: absolute;
 }
 
-.CalendarHeader__pickers > :not(:last-child) {
-  margin-right: 4px;
+.CalendarHeader__picker + .CalendarHeader__picker {
+  margin-left: 4px;
 }
 
 .CalendarHeader__nav-icon {
@@ -35,19 +35,6 @@
   left: 0;
 }
 
-.CalendarHeader__picker-icon {
-  margin-top: -4px;
-  color: var(--vkui--color_icon_secondary);
-}
-
-.CalendarHeader__month_name {
+.CalendarHeader__month {
   text-transform: capitalize;
-}
-
-.CalendarHeader__pickers-placeholder {
-  text-transform: capitalize;
-}
-
-.CalendarHeader__pickers .CustomSelectDropdown__CustomScrollView {
-  max-height: 184px;
 }

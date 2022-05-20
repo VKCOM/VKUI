@@ -3,15 +3,13 @@ import { classNames } from "../../lib/classNames";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { FormField } from "../FormField/FormField";
 import { HasAlign, HasRef, HasRootRef } from "../../types";
-import { withAdaptivity, SizeType } from "../../hoc/withAdaptivity";
+import { withAdaptivity } from "../../hoc/withAdaptivity";
 import { getClassName } from "../../helpers/getClassName";
-import Headline from "../Typography/Headline/Headline";
-import Text from "../Typography/Text/Text";
-import { VKCOM } from "../../lib/platform";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
 import { useExternRef } from "../../hooks/useExternRef";
 import { usePlatform } from "../../hooks/usePlatform";
+import { SelectType, SelectTypography } from "../Select/Select";
 import {
   AdaptivityContextInterface,
   AdaptivityProps,
@@ -26,6 +24,7 @@ export interface NativeSelectProps
     AdaptivityProps {
   placeholder?: string;
   multiline?: boolean;
+  selectType?: keyof typeof SelectType;
 }
 
 export interface SelectState {
@@ -49,11 +48,12 @@ const NativeSelectComponent: React.FC<
   sizeX,
   sizeY,
   multiline,
+  selectType = SelectType.default,
   ...restProps
 }) => {
   const platform = usePlatform();
   const [title, setTitle] = React.useState("");
-  const [notSelected, setNotSelected] = React.useState(false);
+  const [empty, setEmpty] = React.useState(false);
   const [value, onChange] = useEnsuredControl(restProps, { defaultValue });
   const selectRef = useExternRef(getRef);
   useIsomorphicLayoutEffect(() => {
@@ -61,24 +61,22 @@ const NativeSelectComponent: React.FC<
       selectRef.current?.options[selectRef.current.selectedIndex];
     if (selectedOption) {
       setTitle(selectedOption.text);
-      setNotSelected(selectedOption.value === "" && placeholder != null);
+      setEmpty(selectedOption.value === "" && placeholder != null);
     }
   }, [value, children]);
-
-  const TypographyComponent =
-    platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
 
   return (
     <FormField
       Component="label"
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames(getClassName("Select", platform), {
-        ["Select--not-selected"]: notSelected,
-        [`Select--align-${align}`]: !!align,
-        [`Select--sizeX--${sizeX}`]: !!sizeX,
-        [`Select--sizeY--${sizeY}`]: !!sizeY,
-        "Select--multiline": multiline,
-      })}
+      vkuiClass={classNames(
+        getClassName("Select", platform),
+        `Select--${selectType}`,
+        empty && "Select--empty",
+        multiline && "Select--multiline",
+        align && `Select--align-${align}`,
+        `Select--sizeX-${sizeX}`,
+        `Select--sizeY-${sizeY}`
+      )}
       className={className}
       style={style}
       getRootRef={getRootRef}
@@ -96,13 +94,10 @@ const NativeSelectComponent: React.FC<
         {placeholder && <option value="">{placeholder}</option>}
         {children}
       </select>
-      <TypographyComponent
-        Component="div"
-        weight="regular"
-        vkuiClass="Select__container"
-      >
-        <span vkuiClass="Select__title">{title}</span>
-      </TypographyComponent>
+      <div vkuiClass="Select__container">
+        {/* TODO v5.0.0 поправить под новую адаптивность */}
+        <SelectTypography vkuiClass="Select__title">{title}</SelectTypography>
+      </div>
     </FormField>
   );
 };

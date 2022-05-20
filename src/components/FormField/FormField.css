@@ -34,27 +34,29 @@
   color: var(--icon_secondary, var(--vkui--color_icon_secondary));
 }
 
-.ChipsInput .FormField__after {
-  z-index: 3;
-}
-
 .FormField__border {
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  border: var(--thin-border) solid
-    var(--field_border, var(--vkui--color_field_border_alpha));
-  background: var(--field_background, var(--vkui--color_field_background));
   content: "";
   box-sizing: border-box;
   z-index: 1;
   transform-origin: left top;
+  border: var(--thin-border) solid transparent;
+}
+
+.FormField--default .FormField__border {
+  border-color: var(--field_border, var(--vkui--color_field_border_alpha));
+  background-color: var(
+    --field_background,
+    var(--vkui--color_field_background)
+  );
 }
 
 .FormItem--error .FormField__border {
-  background: var(
+  background-color: var(
     --field_error_background,
     var(--vkui--color_background_negative_tint)
   );
@@ -71,7 +73,14 @@
   pointer-events: none;
 }
 
-.FormField:not(.FormField--disabled) .FormField__border--hover {
+.FormField--hover .FormField__border {
+  background-color: var(
+    --field_background,
+    var(--vkui--color_field_background)
+  );
+}
+
+.FormField--default.FormField--hover .FormField__border {
   border-color: var(
     --icon_tertiary_alpha,
     var(--vkui--color_field_border_alpha--hover)
@@ -82,11 +91,11 @@
 .FormField *:focus ~ .FormField__border,
 .ChipsInput--focused .FormField__border {
   border-color: var(--accent, var(--vkui--color_stroke_accent));
-  background: var(--field_background, var(--vkui--color_field_background));
 }
 
 /**
  * sizeY COMPACT
+ * TODO v5.0.0 поправить под новую адаптивность
  */
 .FormField--sizeY-compact .FormField__before,
 .FormField--sizeY-compact .FormField__after {
@@ -95,43 +104,41 @@
 }
 
 /**
+ * CMP:
  * ModalCardBase
  */
-
 .ModalCardBase__header + .FormField,
 .ModalCardBase__subheader + .FormField {
   margin-top: 16px;
 }
 
 /**
+ * CMP:
  * Select
  */
-
-.Select--mimicry-plain .FormField__after,
-.Select--mimicry-plain .FormField--sizeY-compact .FormField__after {
-  justify-content: flex-start;
-  min-width: 0;
-  height: auto;
-}
-
-.CustomSelect__open.Select--mimicry:focus .FormField__border {
-  border-color: var(--field_border, var(--vkui--color_field_border_alpha));
-}
-
-.CustomSelect__open:not(.CustomSelect__open--popupDirectionTop):not(.CustomSelect__open--not-adjacent)
-  .FormField__border {
+.Select--pop-down .FormField__border {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.CustomSelect__open.CustomSelect__open--popupDirectionTop:not(.CustomSelect__open--not-adjacent)
-  .FormField__border {
+.Select--pop-up .FormField__border {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
-.CustomSelect__open.Select--mimicry-plain.Select--mimicry:focus
-  .FormField__border,
-.FormField:not(.FormField--disabled) .FormField__border--hover {
-  background-color: var(--background_page, var(--vkui--color_field_background));
+/**
+ * CMP:
+ * CalendarHeader
+ */
+.CalendarHeader__picker .FormField__after {
+  min-width: 12px;
+  padding-right: 8px;
+}
+
+/**
+ * CMP:
+ * ChipsInput
+ */
+.ChipsInput .FormField__after {
+  z-index: 3;
 }

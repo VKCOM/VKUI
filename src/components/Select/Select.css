@@ -21,7 +21,7 @@
 .Select__container {
   flex-grow: 1;
   flex-shrink: 1;
-  padding: 11px;
+  padding: 7px 11px;
   color: var(--text_primary, var(--vkui--color_text_primary));
   box-sizing: border-box;
   position: relative;
@@ -39,7 +39,7 @@
   text-overflow: ellipsis;
 }
 
-.Select--not-selected .Select__title {
+.Select--empty .Select__title {
   color: var(--field_text_placeholder, var(--vkui--color_text_secondary));
 }
 
@@ -52,13 +52,17 @@
 }
 
 /**
- * sizeY === 'compact'
+ * sizeY REGULAR
+ * TODO v5.0.0 поправить под новую адаптивность
  */
-.Select--sizeY--compact .Select__container {
-  padding: 7px 11px;
+.Select--sizeY-regular .Select__container {
+  padding: 11px;
 }
 
-.Select--sizeY--compact .Select__container--plain,
-.Select__container--plain {
-  padding: 0 6px 0 8px;
+/**
+ * CMP:
+ * CalendarHeader
+ */
+.CalendarHeader__picker .Select__container {
+  padding-right: 4px;
 }

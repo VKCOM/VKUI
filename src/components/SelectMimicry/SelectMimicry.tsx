@@ -3,19 +3,12 @@ import { classNames } from "../../lib/classNames";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasAlign, HasRootRef } from "../../types";
-import {
-  withAdaptivity,
-  AdaptivityProps,
-  SizeType,
-} from "../../hoc/withAdaptivity";
+import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getClassName } from "../../helpers/getClassName";
-import Headline from "../Typography/Headline/Headline";
-import Text from "../Typography/Text/Text";
-import { VKCOM } from "../../lib/platform";
-import { SelectType } from "../CustomSelect/CustomSelect";
+import { getFormFieldModeFromSelectType } from "../../lib/select";
+import { SelectType, SelectTypography } from "../Select/Select";
 import "../Select/Select.css";
-import "./SelectMimicry.css";
 
 export interface SelectMimicryProps
   extends React.HTMLAttributes<HTMLElement>,
@@ -25,11 +18,11 @@ export interface SelectMimicryProps
     Pick<FormFieldProps, "before" | "after"> {
   multiline?: boolean;
   disabled?: boolean;
-  selectType?: SelectType;
+  selectType?: keyof typeof SelectType;
 }
 
-const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
-  tabIndex,
+const SelectMimicryComponent: React.FC<SelectMimicryProps> = ({
+  tabIndex = 0,
   placeholder,
   children,
   align,
@@ -41,57 +34,43 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
   sizeY,
   before,
   after = <DropdownIcon />,
-  selectType = SelectType.Default,
+  selectType = SelectType.default,
   ...restProps
-}: SelectMimicryProps) => {
+}) => {
   const platform = usePlatform();
-
-  const TypographyComponent =
-    platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
+  const title = children || placeholder;
 
   return (
     <FormField
       {...restProps}
       tabIndex={disabled ? undefined : tabIndex}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("Select", platform),
-        "Select--mimicry",
-        `Select--mimicry-${selectType}`,
-        {
-          "Select--not-selected": !children,
-          "Select--multiline": multiline,
-          [`Select--align-${align}`]: !!align,
-          [`Select--sizeX--${sizeX}`]: !!sizeX,
-          [`Select--sizeY--${sizeY}`]: !!sizeY,
-        }
+        `Select--${selectType}`,
+        !children && "Select--empty",
+        multiline && "Select--multiline",
+        align && `Select--align-${align}`,
+        `Select--sizeX-${sizeX}`,
+        `Select--sizeY-${sizeY}`
       )}
       getRootRef={getRootRef}
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
       before={before}
       after={after}
+      mode={getFormFieldModeFromSelectType(selectType)}
     >
-      <TypographyComponent
-        Component="div"
-        weight={selectType === SelectType.Plain ? "semibold" : "regular"}
-        vkuiClass={classNames(
-          "Select__container",
-          `Select__container--${selectType}`
-        )}
-      >
-        <span vkuiClass="Select__title">{children || placeholder}</span>
-      </TypographyComponent>
+      <div vkuiClass="Select__container">
+        {/* TODO v5.0.0 поправить под новую адаптивность */}
+        <SelectTypography selectType={selectType} vkuiClass="Select__title">
+          {title}
+        </SelectTypography>
+      </div>
     </FormField>
   );
 };
 
-SelectMimicry.defaultProps = {
-  tabIndex: 0,
-};
-
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(SelectMimicry, {
+export const SelectMimicry = withAdaptivity(SelectMimicryComponent, {
   sizeX: true,
   sizeY: true,
 });
