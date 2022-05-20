@@ -16,8 +16,8 @@ export interface FileProps
 }
 
 const File: React.FC<FileProps> = ({
-  children,
-  align,
+  children = "Выберите файл",
+  align = "left",
   controlSize,
   mode,
   stretched,
@@ -61,11 +61,6 @@ const File: React.FC<FileProps> = ({
       {children}
     </Button>
   );
-};
-
-File.defaultProps = {
-  children: "Выберите файл",
-  align: "left",
 };
 
 // eslint-disable-next-line import/no-default-export
