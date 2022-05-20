@@ -3,7 +3,7 @@ import { getClassName } from "../../helpers/getClassName";
 import { Button, VKUIButtonProps } from "../Button/Button";
 import { HasRef, HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
-import { useExternRef } from "../../hooks/useExternRef";
+import { VisuallyHiddenInput } from "../VisuallyHiddenInput/VisuallyHiddenInput";
 import "./File.css";
 
 export interface FileProps
@@ -39,10 +39,10 @@ export const File: React.FC<FileProps> = ({
   ...restProps
 }) => {
   const platform = usePlatform();
-  const inputRef = useExternRef(getRef);
 
   return (
     <Button
+      Component="label"
       align={align}
       vkuiClass={getClassName("File", platform)}
       className={className}
@@ -55,17 +55,13 @@ export const File: React.FC<FileProps> = ({
       style={style}
       getRootRef={getRootRef}
       disabled={restProps.disabled}
-      type="button"
-      onClick={(e) => {
-        inputRef.current?.click();
-        onClick && onClick(e);
-      }}
     >
-      <input
+      <VisuallyHiddenInput
         {...restProps}
+        onClick={(e) => onClick?.(e)}
         vkuiClass="File__input"
         type="file"
-        ref={inputRef}
+        getRef={getRef}
       />
       {children}
     </Button>
