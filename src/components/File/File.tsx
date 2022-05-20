@@ -7,18 +7,26 @@ import { useExternRef } from "../../hooks/useExternRef";
 import "./File.css";
 
 export interface FileProps
-  extends Omit<VKUIButtonProps, "size" | "type">,
-    Omit<React.InputHTMLAttributes<HTMLInputElement>, "onClick" | "type">,
+  extends Omit<VKUIButtonProps, "type">,
+    Omit<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      "onClick" | "type" | "size"
+    >,
     Pick<React.HTMLAttributes<HTMLElement>, "onClick">,
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLElement> {
+  /**
+   * @deprecated Будет удалено в 5.0.0. Используйте size
+   */
   controlSize?: VKUIButtonProps["size"];
 }
 
 export const File: React.FC<FileProps> = ({
   children = "Выберите файл",
   align = "left",
+  // TODO: v5.0.0 удалить controlSize
   controlSize,
+  size,
   mode,
   stretched,
   before,
@@ -41,7 +49,8 @@ export const File: React.FC<FileProps> = ({
       stretched={stretched}
       mode={mode}
       appearance={appearance}
-      size={controlSize}
+      // TODO: v5.0.0 удалить controlSize
+      size={size ?? controlSize}
       before={before}
       style={style}
       getRootRef={getRootRef}
