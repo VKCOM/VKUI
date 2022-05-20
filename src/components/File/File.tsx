@@ -15,7 +15,7 @@ export interface FileProps
   controlSize?: VKUIButtonProps["size"];
 }
 
-const File: React.FunctionComponent<FileProps> = (props: FileProps) => {
+const File: React.FC<FileProps> = (props) => {
   const {
     children,
     align,
