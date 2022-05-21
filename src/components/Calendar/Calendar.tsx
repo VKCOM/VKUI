@@ -32,6 +32,7 @@ export interface CalendarProps
       | "onPrevMonth"
       | "prevMonthIcon"
       | "nextMonthIcon"
+      | "navControlsClassName"
     >,
     HasRootRef<HTMLDivElement> {
   value?: Date;
@@ -87,6 +88,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   onPrevMonth,
   prevMonthIcon,
   nextMonthIcon,
+  navControlsClassName,
   ...props
 }) => {
   const {
@@ -179,6 +181,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         changeYearAriaLabel={changeYearAriaLabel}
         prevMonthIcon={prevMonthIcon}
         nextMonthIcon={nextMonthIcon}
+        className={navControlsClassName}
       />
       <CalendarDays
         viewDate={externalViewDate || viewDate}

@@ -31,6 +31,7 @@ export interface CalendarHeaderProps
   changeYearAriaLabel?: string;
   prevMonthIcon?: React.ReactNode;
   nextMonthIcon?: React.ReactNode;
+  navControlsClassName?: string;
   onChange(viewDate: Date): void;
   /**
    * Нажатие на кнопку переключения на следующий месяц.
@@ -63,6 +64,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   onNextMonth,
   onPrevMonth,
   className,
+  navControlsClassName,
   prevMonthAriaLabel = "Предыдущий месяц",
   nextMonthAriaLabel = "Следующий месяц",
   changeMonthAriaLabel = "Изменить месяц",
@@ -111,7 +113,8 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
         <Tappable
           vkuiClass={classNames(
             "CalendarHeader__nav-icon",
-            "CalendarHeader__nav-icon-prev"
+            "CalendarHeader__nav-icon-prev",
+            navControlsClassName
           )}
           onClick={onPrevMonth}
           aria-label={`${prevMonthAriaLabel}, ${formatter.format(
@@ -175,7 +178,8 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
         <Tappable
           vkuiClass={classNames(
             "CalendarHeader__nav-icon",
-            "CalendarHeader__nav-icon-next"
+            "CalendarHeader__nav-icon-next",
+            navControlsClassName
           )}
           onClick={onNextMonth}
           aria-label={`${nextMonthAriaLabel}, ${formatter.format(
