@@ -21,18 +21,18 @@ const Example = () => {
   const buttonBefore =
     addBefore &&
     (size === "s" ? (
-      <Icon12Add />
+      <Icon12Add aria-hidden />
     ) : size === "m" ? (
-      <Icon16Add />
+      <Icon16Add aria-hidden />
     ) : (
-      <Icon24Add />
+      <Icon24Add aria-hidden />
     ));
   const buttonAfter =
     addAfter &&
     (size === "s" ? (
-      <Icon12Tag />
+      <Icon12Tag aria-hidden />
     ) : size === "m" ? (
-      <Icon24ChevronCompactRight />
+      <Icon24ChevronCompactRight aria-hidden />
     ) : (
       <Counter>16</Counter>
     ));
