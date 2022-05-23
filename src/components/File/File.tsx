@@ -3,72 +3,60 @@ import { getClassName } from "../../helpers/getClassName";
 import { Button, VKUIButtonProps } from "../Button/Button";
 import { HasRef, HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
-import { useExternRef } from "../../hooks/useExternRef";
-import "./File.css";
+import { VisuallyHiddenInput } from "../VisuallyHiddenInput/VisuallyHiddenInput";
 
 export interface FileProps
-  extends Omit<VKUIButtonProps, "size" | "type">,
-    Omit<React.InputHTMLAttributes<HTMLInputElement>, "onClick" | "type">,
-    Pick<React.HTMLAttributes<HTMLElement>, "onClick">,
+  extends Omit<VKUIButtonProps, "type">,
+    Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size">,
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLElement> {
+  /**
+   * @deprecated Будет удалено в 5.0.0. Используйте size
+   */
   controlSize?: VKUIButtonProps["size"];
 }
 
-const File: React.FunctionComponent<FileProps> = (props: FileProps) => {
-  const {
-    children,
-    align,
-    controlSize,
-    mode,
-    stretched,
-    before,
-    className,
-    style,
-    getRef,
-    getRootRef,
-    onClick,
-    appearance,
-    ...restProps
-  } = props;
-
+export const File: React.FC<FileProps> = ({
+  children = "Выберите файл",
+  align = "left",
+  // TODO: v5.0.0 удалить controlSize
+  controlSize,
+  size,
+  mode,
+  stretched,
+  before,
+  className,
+  style,
+  getRef,
+  getRootRef,
+  appearance,
+  ...restProps
+}) => {
   const platform = usePlatform();
-  const inputRef = useExternRef(getRef);
 
   return (
     <Button
+      Component="label"
       align={align}
       vkuiClass={getClassName("File", platform)}
       className={className}
       stretched={stretched}
       mode={mode}
       appearance={appearance}
-      size={controlSize}
+      // TODO: v5.0.0 удалить controlSize
+      size={size ?? controlSize}
       before={before}
       style={style}
       getRootRef={getRootRef}
       disabled={restProps.disabled}
-      type="button"
-      onClick={(e) => {
-        inputRef.current?.click();
-        onClick && onClick(e);
-      }}
     >
-      <input
+      <VisuallyHiddenInput
         {...restProps}
         vkuiClass="File__input"
         type="file"
-        ref={inputRef}
+        getRef={getRef}
       />
       {children}
     </Button>
   );
 };
-
-File.defaultProps = {
-  children: "Выберите файл",
-  align: "left",
-};
-
-// eslint-disable-next-line import/no-default-export
-export default File;
