@@ -4,22 +4,6 @@ import { warnOnce } from "../lib/warnOnce";
 import { getScheme } from "./getScheme";
 
 export enum Scheme {
-  /**
-   * @deprecated будет удалено в 5.0.0
-   * версия оставлена для совместимости со старыми версиями клиентов
-   */
-  DEPRECATED_CLIENT_LIGHT = "client_light",
-  /**
-   * @deprecated будет удалено в 5.0.0
-   * версия оставлена для совместимости со старыми версиями клиентов
-   */
-  DEPRECATED_CLIENT_DARK = "client_dark",
-  /**
-   * @deprecated будет удалено в 5.0.0
-   * версия оставлена для совместимости с vkcom, когда там была только одна схема
-   */
-  VKCOM = "vkcom",
-
   BRIGHT_LIGHT = "bright_light",
   SPACE_GRAY = "space_gray",
   VKCOM_LIGHT = "vkcom_light",
@@ -28,7 +12,6 @@ export enum Scheme {
 
 export type AppearanceScheme =
   | AppearanceSchemeType
-  | Scheme.VKCOM
   | Scheme.VKCOM_DARK
   | Scheme.VKCOM_LIGHT
   | "inherit";
@@ -58,13 +41,6 @@ export function normalizeScheme({
   if (scheme === "inherit") {
     return scheme;
   }
-  if (scheme === Scheme.VKCOM) {
-    process.env.NODE_ENV === "development" &&
-      warn(
-        `Схема "${Scheme.VKCOM}" устарела и будет удалена в v5.0.0. Вместо неё используйте "${Scheme.VKCOM_LIGHT}"`
-      );
-    return Scheme.VKCOM_LIGHT;
-  }
   if (
     platform === VKCOM &&
     (scheme === Scheme.BRIGHT_LIGHT || scheme === Scheme.SPACE_GRAY)
@@ -76,12 +52,6 @@ export function normalizeScheme({
       );
     return Scheme.VKCOM_LIGHT;
   }
-  switch (scheme) {
-    case Scheme.DEPRECATED_CLIENT_LIGHT:
-      return Scheme.BRIGHT_LIGHT;
-    case Scheme.DEPRECATED_CLIENT_DARK:
-      return Scheme.SPACE_GRAY;
-    default:
-      return scheme as Scheme;
-  }
+
+  return scheme as Scheme;
 }

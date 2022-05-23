@@ -12,51 +12,30 @@
   .Separator__in:not(.Separator__in--expanded) {
     transform: scaleY(0.5);
   }
-
-  @media (--size-x-regular) {
-    .PanelHeader--sizeX-none .Separator__in {
-      transform: none;
-    }
-  }
 }
 
 @media (min-resolution: 3dppx) {
   .Separator__in:not(.Separator__in--expanded) {
     transform: scaleY(0.32);
   }
-
-  @media (--size-x-regular) {
-    .PanelHeader--sizeX-none .Separator__in {
-      transform: none;
-    }
-  }
 }
 
 .Separator__in--expanded,
-.Group--card .Separator__in,
-.PanelHeader--sizeX-regular:not(.PanelHeader--vkcom) .Separator__in {
+.Group--card .Separator__in {
   height: 16px;
   background: transparent;
 }
 
-.Separator:not(.Separator--wide) .Separator__in {
-  margin-left: 16px;
-  margin-right: 16px;
-}
-
-/**
- * iOS
- */
-.Separator:not(.Separator--wide).Separator--ios .Separator__in {
-  margin-left: 12px;
-  margin-right: 12px;
+.Separator--padded .Separator__in {
+  margin-left: var(--vkui--size_base_padding_horizontal--regular);
+  margin-right: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 /*
  * CMP:
  * ModalPage
  */
-.ModalPage--sizeX-regular .Separator:not(.Separator--wide) {
+.ModalPage--sizeX-regular .Separator--padded {
   padding-left: 8px;
   padding-right: 8px;
 }
@@ -73,11 +52,6 @@
   }
 
   .Group--none .Separator__in {
-    height: 16px;
-    background: transparent;
-  }
-
-  .PanelHeader--sizeX-none:not(.PanelHeader--vkcom) .Separator__in {
     height: 16px;
     background: transparent;
   }

@@ -10,6 +10,7 @@ import {
   AdaptivityProvider,
   ConfigProvider,
   ViewWidth,
+  WebviewType,
   Platform,
   Appearance,
   useAdaptivity,
@@ -25,6 +26,7 @@ let initialState = {
   hasMouse: true,
   appearance: Appearance.LIGHT,
   styleguideAppearance: Appearance.LIGHT,
+  webviewType: WebviewType.VKAPPS,
 };
 
 try {

@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { PlatformSelect } from "./PlatformSelect";
 import { AppearanceSelect } from "./AppearanceSelect";
+import { WebviewTypeSelect } from "./WebviewTypeSelect";
 import { HasMouseCheckbox } from "./HasMouseCheckbox";
 import { ViewHeightSelect } from "./ViewHeightSelect";
 import { ViewWidthSelect } from "./ViewWidthSelect";
@@ -8,7 +9,7 @@ import "./Settings.css";
 import { Platform, useAdaptivity, ViewWidth } from "@vkui";
 import { StyleGuideContext } from "../StyleGuide/StyleGuideRenderer";
 
-export const Settings = ({ adaptivity }) => {
+export const Settings = ({ adaptivity, webviewType }) => {
   const { viewWidth } = useAdaptivity();
   const isMobile = viewWidth <= ViewWidth.MOBILE;
   return (
@@ -25,6 +26,12 @@ export const Settings = ({ adaptivity }) => {
                 onChange={(appearance) => context.setContext({ appearance })}
                 value={context.appearance}
               />
+              {webviewType && (
+                <WebviewTypeSelect
+                  onChange={(v) => context.setContext({ webviewType: v })}
+                  value={context.webviewType}
+                />
+              )}
               {adaptivity && !isMobile && (
                 <Fragment>
                   <ViewHeightSelect

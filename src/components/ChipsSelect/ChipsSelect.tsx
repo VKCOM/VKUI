@@ -91,8 +91,8 @@ const chipsSelectDefaultProps: ChipsSelectProps<any> = {
   closeAfterSelect: true,
   options: [],
   filterFn: defaultFilterFn,
-  renderOption({ option, ...restProps }) {
-    return <CustomSelectOption {...restProps} />;
+  renderOption(props) {
+    return <CustomSelectOption {...props} />;
   },
 };
 
@@ -373,8 +373,9 @@ const ChipsSelect = <Option extends ChipsInputOption>(
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         vkuiClass={classNames(
-          opened && "ChipsSelect__open",
-          isPopperDirectionTop && "ChipsSelect__open--popupDirectionTop"
+          opened && "Select--open",
+          opened &&
+            (isPopperDirectionTop ? "Select--pop-up" : "Select--pop-down")
         )}
         getRef={getRef}
         disabled={disabled}
@@ -421,7 +422,6 @@ const ChipsSelect = <Option extends ChipsInputOption>(
                 <React.Fragment key={`${typeof value}-${value}`}>
                   {renderOption!({
                     className: prefixClass("ChipsSelect__option"),
-                    option,
                     hovered: Boolean(hovered),
                     children: label,
                     selected: !!selected,

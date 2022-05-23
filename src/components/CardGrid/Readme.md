@@ -35,7 +35,7 @@
         <div style={{ paddingBottom: "30%" }} />
       </Card>
     </CardGrid>
-    <Separator expanded />
+    <Spacing size={16} />
   </Panel>
 </View>
 ```

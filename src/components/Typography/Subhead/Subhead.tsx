@@ -1,7 +1,6 @@
 import * as React from "react";
 import { HasComponent } from "../../../types";
 import { classNames } from "../../../lib/classNames";
-import { warnOnce } from "../../../lib/warnOnce";
 import { useAdaptivity } from "../../../hooks/useAdaptivity";
 import { getSizeYClassName } from "../../../helpers/getSizeYClassName";
 import "./Subhead.css";
@@ -11,13 +10,10 @@ export interface SubheadProps
     HasComponent {
   /**
    * Задаёт начертание шрифта отличное от стандартного.
-   *
-   * > ⚠️ Начертания `"semibold"`, `medium` и `"regular"` устарели и будут удалены в 5.0.0. Используйте значения `"1"`, `"2"` и `"3"`.
    */
-  weight?: "regular" | "medium" | "semibold" | "bold" | "1" | "2" | "3";
+  weight?: "1" | "2" | "3";
 }
 
-const warn = warnOnce("Subhead");
 export const Subhead: React.FC<SubheadProps> = ({
   children,
   weight,
@@ -25,16 +21,6 @@ export const Subhead: React.FC<SubheadProps> = ({
   ...restProps
 }) => {
   const { sizeY } = useAdaptivity();
-
-  if (process.env.NODE_ENV === "development") {
-    if (
-      weight &&
-      ["heavy", "bold", "semibold", "medium", "regular"].includes(weight)
-    )
-      warn(
-        `Начертание weight="${weight}" устарело и будет удалено в 5.0.0. Используйте значения "1", "2" и "3"`
-      );
-  }
 
   return (
     <Component

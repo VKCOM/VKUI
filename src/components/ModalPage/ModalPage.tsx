@@ -8,13 +8,17 @@ import {
 } from "../ModalRoot/ModalRootContext";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useOrientationChange } from "../../hooks/useOrientationChange";
-import { ViewHeight, ViewWidth } from "../../hoc/withAdaptivity";
+import { ViewWidth } from "../../hoc/withAdaptivity";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { multiRef } from "../../lib/utils";
 import { ModalType } from "../ModalRoot/types";
 import { getNavId, NavIdProps } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
+import {
+  useAdaptivity,
+  useAdaptivityIsDesktop,
+} from "../../hooks/useAdaptivity";
+import { Platform } from "../../lib/platform";
 import "./ModalPage.css";
 
 export interface ModalPageProps
@@ -70,7 +74,7 @@ const ModalPage: React.FC<ModalPageProps> = (props) => {
 
   const platform = usePlatform();
   const orientation = useOrientationChange();
-  const { viewWidth, viewHeight, sizeX, hasMouse } = useAdaptivity();
+  const { viewWidth, sizeX } = useAdaptivity();
 
   React.useEffect(updateModalHeight, [
     children,
@@ -78,10 +82,9 @@ const ModalPage: React.FC<ModalPageProps> = (props) => {
     updateModalHeight,
   ]);
 
-  const isDesktop =
-    viewWidth >= ViewWidth.SMALL_TABLET &&
-    (hasMouse || viewHeight >= ViewHeight.MEDIUM);
-  const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
+  const isDesktop = useAdaptivityIsDesktop();
+  const canShowCloseBtn =
+    viewWidth >= ViewWidth.SMALL_TABLET || platform === Platform.VKCOM;
 
   const modalContext = React.useContext(ModalRootContext);
   const { refs } = useModalRegistry(getNavId(props, warn), ModalType.PAGE);

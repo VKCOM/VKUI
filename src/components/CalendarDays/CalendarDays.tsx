@@ -82,7 +82,7 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
         {daysNames.map((dayName) => (
           <Caption
             level="1"
-            weight="regular"
+            weight="3"
             vkuiClass="CalendarDays__weekday"
             key={dayName}
           >

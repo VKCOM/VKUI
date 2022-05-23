@@ -1,25 +1,28 @@
 .Headline {
   display: block;
   margin: 0;
-  font-size: 16px;
-  line-height: 20px;
 }
 
-.Headline--w-regular {
-  font-weight: 400;
+.Headline--l-1 {
+  font-size: var(--vkui--font_headline1--font_size--regular);
+  line-height: var(--vkui--font_headline1--line_height--regular);
+  font-weight: var(--vkui--font_headline1--font_weight--regular);
 }
 
-.Headline--w-medium {
-  font-weight: 500;
+.Headline--l-2 {
+  font-size: var(--vkui--font_headline2--font_size--regular);
+  line-height: var(--vkui--font_headline2--line_height--regular);
+  font-weight: var(--vkui--font_headline2--font_weight--regular);
 }
 
-.Headline--w-semibold {
-  font-weight: 600;
+.Headline--w-1 {
+  font-weight: var(--vkui--font_weight_accent1);
 }
 
-/**
- * ANDROID
- */
-.Headline--android.Headline--w-semibold {
-  font-weight: 500;
+.Headline--w-2 {
+  font-weight: var(--vkui--font_weight_accent2);
+}
+
+.Headline--w-3 {
+  font-weight: var(--vkui--font_weight_accent3);
 }

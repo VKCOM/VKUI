@@ -21,13 +21,12 @@
 .Select__container {
   flex-grow: 1;
   flex-shrink: 1;
-  padding: 11px;
+  padding: 7px 11px;
   color: var(--text_primary, var(--vkui--color_text_primary));
   box-sizing: border-box;
   position: relative;
   z-index: 2;
   overflow: hidden;
-  font-weight: var(--vkui--font_weight_accent3);
 }
 
 .Select__title {
@@ -40,7 +39,7 @@
   text-overflow: ellipsis;
 }
 
-.Select--not-selected .Select__title {
+.Select--empty .Select__title {
   color: var(--field_text_placeholder, var(--vkui--color_text_secondary));
 }
 
@@ -53,45 +52,53 @@
 }
 
 /**
- * sizeY === 'compact'
+ * sizeY REGULAR
  */
-
-.Select__container--plain {
-  font-weight: var(--vkui--font_weight_accent1);
-}
-
-.Select--vkcom .Select__container,
-.Select--sizeY-compact .Select__container {
-  padding: 7px 11px;
-  font-size: var(--vkui--font_text--font_size--compact);
-  line-height: var(--vkui--font_text--line_height--compact);
-}
-
-.Select--sizeY-compact .Select__container--plain,
-.Select__container--plain {
-  padding: 0 6px 0 8px;
+.Select--sizeY-regular .Select__container {
+  padding: 11px;
 }
 
 @media (--size-y-compact) {
   .Select--sizeY-none .Select__container {
-    padding: 7px 11px;
-    font-size: var(--vkui--font_text--font_size--compact);
-    line-height: var(--vkui--font_text--line_height--compact);
-  }
-
-  .Select--sizeY-none .Select__container--plain {
-    padding: 0 6px 0 8px;
+    padding: 11px;
   }
 }
 
-.Select--sizeY-regular:not(.Select--vkcom) .Select__container {
+/**
+ * CMP:
+ * CalendarHeader
+ */
+.CalendarHeader__picker .Select__container {
+  padding-right: 4px;
+}
+
+.SelectTypography--accent {
+  font-size: var(--vkui--font_paragraph--font_size--regular);
+  line-height: var(--vkui--font_paragraph--line_height--regular);
+  font-weight: var(--vkui--font_weight_accent1);
+}
+
+.SelectTypography--accent.SelectTypography--android {
+  font-weight: var(--vkui--font_weight_accent2);
+}
+
+:not(.SelectTypography--accent) {
   font-size: var(--vkui--font_headline1--font_size--regular);
   line-height: var(--vkui--font_headline1--line_height--regular);
+  font-weight: var(--vkui--font_weight_accent3);
 }
 
-@media (--size-y-regular) {
-  .Select--sizeY-none:not(.Select--vkcom) .Select__container {
-    font-size: var(--vkui--font_headline1--font_size--regular);
-    line-height: var(--vkui--font_headline1--line_height--regular);
+.SelectTypography--vkcom:not(.SelectTypography--accent),
+.SelectTypography--sizeY-compact:not(.SelectTypography--accent) {
+  font-size: var(--vkui--font_text--font_size--compact);
+  line-height: var(--vkui--font_text--line_height--compact);
+  font-weight: var(--vkui--font_weight_accent3);
+}
+
+@media (--size-y-compact) {
+  .SelectTypography--sizeY-none:not(.SelectTypography--accent) {
+    font-size: var(--vkui--font_text--font_size--compact);
+    line-height: var(--vkui--font_text--line_height--compact);
+    font-weight: var(--vkui--font_weight_accent3);
   }
 }

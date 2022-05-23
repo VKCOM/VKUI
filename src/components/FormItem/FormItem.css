@@ -1,6 +1,6 @@
 .FormItem {
   display: block;
-  padding: 12px var(--formitem_padding);
+  padding: 12px;
 }
 
 .FormItem--removable {
@@ -58,13 +58,6 @@
   .FormItem--sizeY-none .FormItem__bottom {
     padding-top: 6px;
   }
-}
-
-/**
- * iOS
- */
-.FormItem--ios {
-  --formitem_padding: 12px;
 }
 
 /**

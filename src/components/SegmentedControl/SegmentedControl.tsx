@@ -5,6 +5,8 @@ import { generateRandomId, noop } from "../../lib/utils";
 import { warnOnce } from "../../lib/warnOnce";
 import { SegmentedControlOption } from "./SegmentedControlOption/SegmentedControlOption";
 import { HasRootRef } from "../../types";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "./SegmentedControl.css";
 
 export type SegmentedControlValue = string | number | undefined;
@@ -38,6 +40,7 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({
   children,
   ...restProps
 }) => {
+  const { sizeY } = useAdaptivity();
   const initialValue = defaultValue ?? options[0]?.value;
 
   if (process.env.NODE_ENV === "development") {
@@ -82,7 +85,11 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({
   return (
     <div
       {...restProps}
-      vkuiClass={classNames("SegmentedControl", `SegmentedControl--${size}`)}
+      vkuiClass={classNames(
+        "SegmentedControl",
+        getSizeYClassName("SegmentedControl", sizeY),
+        `SegmentedControl--${size}`
+      )}
       ref={getRootRef}
     >
       <div role="radiogroup" vkuiClass="SegmentedControl__in">

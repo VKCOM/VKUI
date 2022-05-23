@@ -45,6 +45,8 @@ export interface DateInputProps
       | "onHeaderChange"
       | "onNextMonth"
       | "onPrevMonth"
+      | "prevMonthIcon"
+      | "nextMonthIcon"
     >,
     HasRootRef<HTMLDivElement> {
   calendarPlacement?: Placement;
@@ -127,6 +129,8 @@ export const DateInput: React.FC<DateInputProps> = ({
   onHeaderChange,
   onNextMonth,
   onPrevMonth,
+  prevMonthIcon,
+  nextMonthIcon,
   ...props
 }) => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -319,9 +323,11 @@ export const DateInput: React.FC<DateInputProps> = ({
             showNeighboringMonth={showNeighboringMonth}
             size={size}
             viewDate={viewDate}
-            onHeaderChange={onCalendarChange}
+            onHeaderChange={onHeaderChange}
             onNextMonth={onNextMonth}
             onPrevMonth={onPrevMonth}
+            prevMonthIcon={prevMonthIcon}
+            nextMonthIcon={nextMonthIcon}
           />
         </Popper>
       )}

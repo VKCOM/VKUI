@@ -21,31 +21,6 @@
   font-weight: var(--vkui--font_title3--font_weight--regular);
 }
 
-/* TODO удалить перед релизом 5.0.0 */
-.Title--w-regular {
-  font-weight: 400;
-}
-
-/* TODO удалить перед релизом 5.0.0 */
-.Title--w-medium {
-  font-weight: 500;
-}
-
-/* TODO удалить перед релизом 5.0.0 */
-.Title--w-semibold {
-  font-weight: 600;
-}
-
-/* TODO удалить перед релизом 5.0.0 */
-.Title--w-bold {
-  font-weight: 700;
-}
-
-/* TODO удалить перед релизом 5.0.0 */
-.Title--w-heavy {
-  font-weight: 800;
-}
-
 .Title--w-1 {
   font-weight: var(--vkui--font_weight_accent1);
 }

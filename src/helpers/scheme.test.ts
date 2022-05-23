@@ -28,14 +28,6 @@ describe("normalizeScheme", () => {
 
     expect(result).toEqual("inherit");
   });
-  it("Returns VKCOM_LIGHT if scheme is VKCOM", () => {
-    const result = normalizeScheme({
-      platform: Platform.VKCOM,
-      scheme: Scheme.VKCOM,
-    });
-
-    expect(result).toEqual(Scheme.VKCOM_LIGHT);
-  });
   it("Returns VKCOM_LIGHT if scheme is BRIGHT_LIGHT and platform is VKCOM", () => {
     const result = normalizeScheme({
       platform: Platform.VKCOM,
@@ -51,14 +43,6 @@ describe("normalizeScheme", () => {
     });
 
     expect(result).toEqual(Scheme.VKCOM_LIGHT);
-  });
-  it("Returns SPACE_GRAY if scheme is DEPRECATED_CLIENT_DARK", () => {
-    const result = normalizeScheme({
-      platform: Platform.VKCOM,
-      scheme: Scheme.DEPRECATED_CLIENT_DARK,
-    });
-
-    expect(result).toEqual(Scheme.SPACE_GRAY);
   });
   it("Returns scheme if no match", () => {
     const result = normalizeScheme({

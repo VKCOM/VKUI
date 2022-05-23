@@ -1,6 +1,5 @@
 import * as React from "react";
 import { PopoutWrapper } from "../PopoutWrapper/PopoutWrapper";
-import { ViewWidth, ViewHeight } from "../../hoc/withAdaptivity";
 import { IOS } from "../../lib/platform";
 import { ActionSheetDropdownDesktop } from "./ActionSheetDropdownDesktop";
 import { ActionSheetDropdown } from "./ActionSheetDropdown";
@@ -9,9 +8,8 @@ import { ActionSheetContext, ItemClickHandler } from "./ActionSheetContext";
 import { Caption } from "../Typography/Caption/Caption";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useTimeout } from "../../hooks/useTimeout";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
 import { useObjectMemo } from "../../hooks/useObjectMemo";
-import { warnOnce } from "../../lib/warnOnce";
 import { SharedDropdownProps, PopupDirection, ToggleRef } from "./types";
 import { useScrollLock } from "../AppRoot/ScrollContext";
 import "./ActionSheet.css";
@@ -20,26 +18,23 @@ export interface ActionSheetProps extends React.HTMLAttributes<HTMLDivElement> {
   header?: React.ReactNode;
   text?: React.ReactNode;
   /**
-   * Закрыть попап по клику снаружи. В v5 будет обязательным.
+   * Закрыть попап по клику снаружи.
    */
-  onClose?: VoidFunction;
+  onClose: VoidFunction;
   /**
    * Элемент, рядом с которым вылезает попап на десктопе.
    * Лучше передавать RefObject c current.
-   * В v5 будет обязательным.
    */
-  toggleRef?: ToggleRef;
+  toggleRef: ToggleRef;
   /**
    * Направление на десктопе
    */
   popupDirection?: PopupDirection;
   /**
-   * Только iOS. В v5 будет обязательным.
+   * Только iOS.
    */
   iosCloseItem?: React.ReactNode;
 }
-
-const warn = warnOnce("ActionSheet");
 
 export const ActionSheet: React.FC<ActionSheetProps> = ({
   children,
@@ -56,22 +51,12 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
   const _action = React.useRef(noop);
 
   const afterClose = () => {
-    restProps.onClose?.();
+    restProps.onClose();
     _action.current();
     _action.current = noop;
   };
 
-  if (process.env.NODE_ENV === "development" && !restProps.onClose) {
-    warn(
-      `Без свойства "onClose" нельзя закрыть ActionSheet по клику вне компонента`,
-      "error"
-    );
-  }
-
-  const { viewWidth, viewHeight, hasMouse } = useAdaptivity();
-  const isDesktop =
-    viewWidth >= ViewWidth.SMALL_TABLET &&
-    (hasMouse || viewHeight >= ViewHeight.MEDIUM);
+  const isDesktop = useAdaptivityIsDesktop();
 
   useScrollLock(!isDesktop);
 

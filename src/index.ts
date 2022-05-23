@@ -140,7 +140,7 @@ export { default as Counter } from "./components/Counter/Counter";
 export type { CounterProps } from "./components/Counter/Counter";
 export { default as UsersStack } from "./components/UsersStack/UsersStack";
 export type { UsersStackProps } from "./components/UsersStack/UsersStack";
-export { default as Separator } from "./components/Separator/Separator";
+export { Separator } from "./components/Separator/Separator";
 export type { SeparatorProps } from "./components/Separator/Separator";
 export { Spacing } from "./components/Spacing/Spacing";
 export type { SpacingProps } from "./components/Spacing/Spacing";
@@ -176,7 +176,7 @@ export { FormStatus } from "./components/FormStatus/FormStatus";
 export type { FormStatusProps } from "./components/FormStatus/FormStatus";
 export { Switch } from "./components/Switch/Switch";
 export type { SwitchProps } from "./components/Switch/Switch";
-export { default as File } from "./components/File/File";
+export { File } from "./components/File/File";
 export type { FileProps } from "./components/File/File";
 export { Input } from "./components/Input/Input";
 export type { InputProps } from "./components/Input/Input";
@@ -198,7 +198,7 @@ export { default as Checkbox } from "./components/Checkbox/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox/Checkbox";
 export { Select } from "./components/Select/Select";
 export type { SelectProps } from "./components/Select/Select";
-export { default as SelectMimicry } from "./components/SelectMimicry/SelectMimicry";
+export { SelectMimicry } from "./components/SelectMimicry/SelectMimicry";
 export type { SelectMimicryProps } from "./components/SelectMimicry/SelectMimicry";
 export { NativeSelect } from "./components/NativeSelect/NativeSelect";
 export type { NativeSelectProps } from "./components/NativeSelect/NativeSelect";
@@ -277,7 +277,7 @@ export type { PromoBannerProps } from "./components/PromoBanner/PromoBanner";
  */
 export { Title } from "./components/Typography/Title/Title";
 export type { TitleProps } from "./components/Typography/Title/Title";
-export { default as Headline } from "./components/Typography/Headline/Headline";
+export { Headline } from "./components/Typography/Headline/Headline";
 export type { HeadlineProps } from "./components/Typography/Headline/Headline";
 export { default as Text } from "./components/Typography/Text/Text";
 export type { TextProps } from "./components/Typography/Text/Text";
@@ -303,6 +303,7 @@ export { usePlatform } from "./hooks/usePlatform";
 export { useAdaptivity } from "./hooks/useAdaptivity";
 export { useAppearance } from "./hooks/useAppearance";
 export { usePagination } from "./hooks/usePagination";
+export { useScrollLock } from "./components/AppRoot/ScrollContext";
 
 /**
  * Utils

@@ -17,12 +17,22 @@ describe("ActionSheet", () => {
   const toggle = document.createElement("div");
   const ActionSheetDesktop: FC<Partial<ActionSheetProps>> = (props) => (
     <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasMouse>
-      <ActionSheet toggleRef={toggle} {...props} iosCloseItem={null} />
+      <ActionSheet
+        toggleRef={toggle}
+        onClose={jest.fn()}
+        {...props}
+        iosCloseItem={null}
+      />
     </AdaptivityProvider>
   );
   const ActionSheetMobile: FC<Partial<ActionSheetProps>> = (props) => (
     <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasMouse={false}>
-      <ActionSheet toggleRef={toggle} {...props} iosCloseItem={null} />
+      <ActionSheet
+        toggleRef={toggle}
+        onClose={jest.fn()}
+        {...props}
+        iosCloseItem={null}
+      />
     </AdaptivityProvider>
   );
 

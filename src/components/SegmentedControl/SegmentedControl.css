@@ -1,5 +1,5 @@
 .SegmentedControl {
-  height: 36px;
+  height: 26px;
   padding: 2px;
   border-radius: var(--vkui--size_border_radius--regular);
   background-color: var(--vkui--color_background_secondary);
@@ -7,7 +7,7 @@
 }
 
 .SegmentedControl--l {
-  height: 44px;
+  height: 32px;
 }
 
 .SegmentedControl__in {
@@ -39,4 +39,25 @@
   margin: 0;
   padding: 0;
   z-index: 1;
+}
+
+/**
+ * sizeY REGULAR
+ */
+.SegmentedControl--sizeY-regular {
+  height: 36px;
+}
+
+.SegmentedControl--sizeY-regular.SegmentedControl--l {
+  height: 44px;
+}
+
+@media (--size-y-regular) {
+  .SegmentedControl--sizeY-none {
+    height: 36px;
+  }
+
+  .SegmentedControl--sizeY-none.SegmentedControl--l {
+    height: 44px;
+  }
 }

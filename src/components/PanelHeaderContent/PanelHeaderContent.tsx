@@ -4,7 +4,7 @@ import Tappable from "../Tappable/Tappable";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import { Caption } from "../Typography/Caption/Caption";
-import Headline from "../Typography/Headline/Headline";
+import { Headline } from "../Typography/Headline/Headline";
 import { IOS, Platform } from "../../lib/platform";
 import Text from "../Typography/Text/Text";
 import { HasPlatform } from "../../types";
@@ -37,7 +37,7 @@ const PanelHeaderChildren: React.FC<PanelHeaderChildrenProps> = ({
   }
 
   return hasStatus || hasBefore ? (
-    <Headline Component="div" weight="medium">
+    <Headline Component="div" weight="2">
       {children}
     </Headline>
   ) : (

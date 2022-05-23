@@ -5,12 +5,12 @@ import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasAlign, HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getClassName } from "../../helpers/getClassName";
-import { SelectType } from "../CustomSelect/CustomSelect";
+import { getFormFieldModeFromSelectType } from "../../lib/select";
+import { SelectType, SelectTypography } from "../Select/Select";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "../Select/Select.css";
-import "./SelectMimicry.css";
 
 export interface SelectMimicryProps
   extends React.HTMLAttributes<HTMLElement>,
@@ -19,10 +19,10 @@ export interface SelectMimicryProps
     Pick<FormFieldProps, "before" | "after"> {
   multiline?: boolean;
   disabled?: boolean;
-  selectType?: SelectType;
+  selectType?: keyof typeof SelectType;
 }
 
-const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
+const SelectMimicry: React.FC<SelectMimicryProps> = ({
   tabIndex = 0,
   placeholder,
   children,
@@ -33,11 +33,12 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
   onClick,
   before,
   after = <DropdownIcon />,
-  selectType = SelectType.Default,
+  selectType = SelectType.default,
   ...restProps
-}: SelectMimicryProps) => {
+}) => {
   const platform = usePlatform();
   const { sizeX, sizeY } = useAdaptivity();
+  const title = children || placeholder;
 
   return (
     <FormField
@@ -51,25 +52,23 @@ const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
         `Select--mimicry-${selectType}`,
         !children && "Select--not-selected",
         multiline && "Select--multiline",
-        align && `Select--align-${align}`
+        align && `Select--align-${align}`,
+        !children && "Select--empty"
       )}
       getRootRef={getRootRef}
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
       before={before}
       after={after}
+      mode={getFormFieldModeFromSelectType(selectType)}
     >
-      <div
-        vkuiClass={classNames(
-          "Select__container",
-          `Select__container--${selectType}`
-        )}
-      >
-        <span vkuiClass="Select__title">{children || placeholder}</span>
+      <div vkuiClass="Select__container">
+        <SelectTypography selectType={selectType} vkuiClass="Select__title">
+          {title}
+        </SelectTypography>
       </div>
     </FormField>
   );
 };
 
-// eslint-disable-next-line import/no-default-export
-export default SelectMimicry;
+export { SelectMimicry };

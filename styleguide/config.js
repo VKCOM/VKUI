@@ -180,6 +180,7 @@ const baseConfig = {
             "../src/components/TextTooltip/TextTooltip.tsx",
             "../src/components/RichTooltip/RichTooltip.tsx",
             "../src/components/Tooltip/Tooltip.tsx",
+            "../src/components/Popper/Popper.tsx",
           ],
         },
         {

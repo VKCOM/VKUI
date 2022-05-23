@@ -26,6 +26,11 @@ describe("Calendar", () => {
         enableTime: [true, false],
         doneButtonText: [undefined, "Done"],
       },
+      {
+        value: [new Date("1970-05-05")],
+        nextMonthIcon: [undefined, <span key="next">&gt;</span>],
+        prevMonthIcon: [undefined, <span key="prev">&lt;</span>],
+      },
     ]
   );
 });

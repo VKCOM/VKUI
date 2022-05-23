@@ -6,7 +6,7 @@ import { VKCOM } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import { TabsProps, TabsModeContext } from "../Tabs/Tabs";
-import Headline from "../Typography/Headline/Headline";
+import { Headline } from "../Typography/Headline/Headline";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import Text from "../Typography/Text/Text";
 import "./TabsItem.css";
@@ -25,10 +25,12 @@ const TabsItem: React.FC<TabsItemProps> = ({
   const platform = usePlatform();
   const mode: TabsProps["mode"] = React.useContext(TabsModeContext);
 
+  // TODO: fix props
   let TypographyComponent =
     mode === "buttons" || mode === "segmented" ? Subhead : Headline;
 
   if (platform === VKCOM) {
+    // @ts-expect-error TODO убрать после перевода Text на токены
     TypographyComponent = Text;
   }
 
@@ -43,11 +45,7 @@ const TabsItem: React.FC<TabsItemProps> = ({
       activeMode="TabsItem--active"
       focusVisibleMode={mode === "segmented" ? "outside" : "inside"}
     >
-      <TypographyComponent
-        Component="span"
-        vkuiClass="TabsItem__in"
-        weight="medium"
-      >
+      <TypographyComponent Component="span" vkuiClass="TabsItem__in" weight="2">
         {children}
       </TypographyComponent>
       {hasReactNode(after) && <div vkuiClass="TabsItem__after">{after}</div>}

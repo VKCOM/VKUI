@@ -14,8 +14,8 @@ import { VKUITouchEvent } from "../../lib/touch";
 import { noop } from "../../lib/utils";
 import Text from "../Typography/Text/Text";
 import { Title } from "../Typography/Title/Title";
-import Headline from "../Typography/Headline/Headline";
-import Separator from "../Separator/Separator";
+import { Headline } from "../Typography/Headline/Headline";
+import { Separator } from "../Separator/Separator";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
 import "./Search.css";
@@ -45,7 +45,7 @@ const SearchPlaceholderTypography: React.FC<
     case ANDROID:
     default:
       return (
-        <Headline {...restProps} weight="regular">
+        <Headline {...restProps} weight="3">
           {children}
         </Headline>
       );

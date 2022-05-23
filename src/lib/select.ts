@@ -1,9 +1,12 @@
+import * as React from "react";
+import { getTitleFromChildren } from "./utils";
+import { FormFieldMode } from "../components/FormField/FormField";
+import { SelectType } from "../components/Select/Select";
+
 type Option = {
-  label?: string;
+  label?: React.ReactElement | string;
   [index: string]: any;
 };
-
-type GetOptionLabel = (option: Option) => string | undefined;
 
 const findAllIncludes = (target = "", search = "") => {
   const includes = [];
@@ -24,10 +27,15 @@ try {
   letterRegexp = new RegExp("\\p{L}", "u");
 } catch (e) {}
 
+type GetOptionLabel = (option: Option) => string | undefined;
+
+const _getOptionLabel: GetOptionLabel = (option) =>
+  getTitleFromChildren(option.label);
+
 export const defaultFilterFn = (
   query = "",
   option: Option,
-  getOptionLabel: GetOptionLabel = (option) => option.label
+  getOptionLabel: GetOptionLabel = _getOptionLabel
 ) => {
   query = query.toLocaleLowerCase();
   let label = getOptionLabel(option)?.toLocaleLowerCase();
@@ -51,4 +59,12 @@ export const defaultFilterFn = (
   }
 
   return false;
+};
+
+export const getFormFieldModeFromSelectType = (
+  selectType: keyof typeof SelectType = SelectType.default
+) => {
+  return selectType === SelectType.default
+    ? FormFieldMode.default
+    : FormFieldMode.plain;
 };

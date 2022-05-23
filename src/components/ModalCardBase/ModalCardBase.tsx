@@ -1,22 +1,19 @@
 import * as React from "react";
 import { hasReactNode } from "../../lib/utils";
 import { Title } from "../Typography/Title/Title";
-import Headline from "../Typography/Headline/Headline";
+import { Headline } from "../Typography/Headline/Headline";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
-import {
-  ViewHeight,
-  ViewWidth,
-  withAdaptivity,
-} from "../../hoc/withAdaptivity";
+import { ViewWidth, withAdaptivity } from "../../hoc/withAdaptivity";
 import { HasRootRef } from "../../types";
 import { PanelHeaderButton } from "../PanelHeaderButton/PanelHeaderButton";
-import { ANDROID, IOS } from "../../lib/platform";
+import { ANDROID, IOS, Platform } from "../../lib/platform";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { Icon24Dismiss } from "@vkontakte/icons";
 import { useKeyboard } from "../../hooks/useKeyboard";
 import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
+import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
 import "./ModalCardBase.css";
 
 export interface ModalCardBaseProps
@@ -77,12 +74,11 @@ export const ModalCardBase = withAdaptivity<
     ...restProps
   }) => {
     const platform = usePlatform();
-    const isDesktop =
-      viewWidth >= ViewWidth.SMALL_TABLET &&
-      (hasMouse || viewHeight >= ViewHeight.MEDIUM);
+    const isDesktop = useAdaptivityIsDesktop();
     const isSoftwareKeyboardOpened = useKeyboard().isOpened;
 
-    const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
+    const canShowCloseBtn =
+      viewWidth >= ViewWidth.SMALL_TABLET || platform === Platform.VKCOM;
     const canShowCloseBtnIos = platform === IOS && !canShowCloseBtn;
 
     return (
@@ -114,7 +110,7 @@ export const ModalCardBase = withAdaptivity<
             </Title>
           )}
           {hasReactNode(subheader) && (
-            <Headline weight="regular" vkuiClass="ModalCardBase__subheader">
+            <Headline weight="3" vkuiClass="ModalCardBase__subheader">
               {subheader}
             </Headline>
           )}

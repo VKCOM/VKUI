@@ -3,11 +3,10 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { HasRef } from "../../types";
 import { VKCOM } from "../../lib/platform";
 import PanelHeader, { PanelHeaderProps } from "../PanelHeader/PanelHeader";
-import Separator from "../Separator/Separator";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { Separator } from "../Separator/Separator";
+import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
-import { ViewHeight, ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import "./ModalPageHeader.css";
 
 export interface ModalPageHeaderProps
@@ -22,11 +21,8 @@ const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = ({
   ...restProps
 }: ModalPageHeaderProps) => {
   const platform = usePlatform();
-  const { viewWidth, viewHeight, hasMouse } = useAdaptivity();
   const hasSeparator = separator && platform === VKCOM;
-  const isDesktop =
-    viewWidth >= ViewWidth.SMALL_TABLET &&
-    (hasMouse || viewHeight >= ViewHeight.MEDIUM);
+  const isDesktop = useAdaptivityIsDesktop();
 
   return (
     <div

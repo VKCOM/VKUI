@@ -48,12 +48,12 @@ class Example extends React.Component {
           <PanelHeader>Tooltip</PanelHeader>
           <Group>
             <List>
-              <Cell>Музыка</Cell>
-              <Cell>Видео</Cell>
-              <Cell>Игры</Cell>
-              <Cell>Закладки</Cell>
-              <Cell>Документы</Cell>
-              <Cell>Денежные переводы</Cell>
+              <SimpleCell>Музыка</SimpleCell>
+              <SimpleCell>Видео</SimpleCell>
+              <SimpleCell>Игры</SimpleCell>
+              <SimpleCell>Закладки</SimpleCell>
+              <SimpleCell>Документы</SimpleCell>
+              <SimpleCell>Денежные переводы</SimpleCell>
             </List>
           </Group>
           <Group>
@@ -64,9 +64,11 @@ class Example extends React.Component {
               onClose={() => this.setState({ tooltip: false })}
               offsetX={10}
             >
-              <Cell onClick={() => this.setState({ activePanel: "tooltip2" })}>
+              <SimpleCell
+                onClick={() => this.setState({ activePanel: "tooltip2" })}
+              >
                 VK Pay
-              </Cell>
+              </SimpleCell>
             </Tooltip>
           </Group>
         </Panel>
@@ -74,39 +76,25 @@ class Example extends React.Component {
         <Panel id="tooltip2">
           <PanelHeader
             left={
-              <PanelHeaderButton
-                onClick={() => this.setState({ activePanel: "tooltip" })}
+              <Tooltip
+                isShown={this.state.tooltip2}
+                onClose={() =>
+                  this.setState({ tooltip2: false, tooltip3: true })
+                }
+                text="Нажмите на кнопку, если хотите вернуться"
+                header="Возвратиться"
               >
-                {this.props.platform === ANDROID ||
-                this.props.platform === VKCOM ? (
-                  <Icon24Back />
-                ) : (
-                  <Icon28ChevronBack />
-                )}
-              </PanelHeaderButton>
-            }
-            right={
-              <PanelHeaderButton>
-                <Tooltip
-                  isShown={this.state.tooltip2}
-                  onClose={() =>
-                    this.setState({ tooltip2: false, tooltip3: true })
-                  }
-                  cornerOffset={-10}
-                  offsetX={7}
-                  text="Обновлённый раздел поможет найти друзей"
-                  header="Рекомендации друзей"
-                >
-                  <Icon24Add />
-                </Tooltip>
-              </PanelHeaderButton>
+                <PanelHeaderBack
+                  onClick={() => this.setState({ activePanel: "tooltip" })}
+                />
+              </Tooltip>
             }
           >
             Tooltip
           </PanelHeader>
           <Group>
             <List>
-              <Cell
+              <SimpleCell
                 before={
                   <Tooltip
                     text="Теперь у нас появились аватарки в списках. Правда круто?"
@@ -120,25 +108,25 @@ class Example extends React.Component {
                 description="Веб-сайт"
               >
                 Команда ВКонтакте
-              </Cell>
-              <Cell before={<Avatar />} description="Музыкант">
+              </SimpleCell>
+              <SimpleCell before={<Avatar />} description="Музыкант">
                 Robbie Williams
-              </Cell>
-              <Cell before={<Avatar />} description="Издательский дом">
+              </SimpleCell>
+              <SimpleCell before={<Avatar />} description="Издательский дом">
                 ПостНаука
-              </Cell>
-              <Cell before={<Avatar />} description="Издательский дом">
+              </SimpleCell>
+              <SimpleCell before={<Avatar />} description="Издательский дом">
                 ПостНаука
-              </Cell>
-              <Cell before={<Avatar />} description="Издательский дом">
+              </SimpleCell>
+              <SimpleCell before={<Avatar />} description="Издательский дом">
                 ПостНаука
-              </Cell>
-              <Cell before={<Avatar />} description="Издательский дом">
+              </SimpleCell>
+              <SimpleCell before={<Avatar />} description="Издательский дом">
                 ПостНаука
-              </Cell>
-              <Cell before={<Avatar />} description="Издательский дом">
+              </SimpleCell>
+              <SimpleCell before={<Avatar />} description="Издательский дом">
                 ПостНаука
-              </Cell>
+              </SimpleCell>
             </List>
           </Group>
         </Panel>

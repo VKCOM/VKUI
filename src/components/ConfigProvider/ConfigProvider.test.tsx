@@ -66,22 +66,6 @@ describe("ConfigProvider", () => {
       });
     });
   });
-  describe("maps schemes", () => {
-    it("maps legacy mobile schemes", () => {
-      const { rerender } = render(<ConfigProvider scheme="client_dark" />);
-      expect(document.body).toHaveAttribute("scheme", "space_gray");
-      rerender(<ConfigProvider scheme="client_light" />);
-      expect(document.body).toHaveAttribute("scheme", "bright_light");
-    });
-    it("maps legacy vkcom scheme", () => {
-      render(<ConfigProvider scheme={Scheme.VKCOM} />);
-      expect(document.body).toHaveAttribute("scheme", "vkcom_light");
-    });
-    it("enforces vkcom_light scheme on vkcom platform", () => {
-      render(<ConfigProvider scheme="bright_light" platform={VKCOM} />);
-      expect(document.body).toHaveAttribute("scheme", "vkcom_light");
-    });
-  });
   describe("resolves appearance from external scheme", () => {
     afterEach(() => () => document.body.removeAttribute("scheme"));
     let appearance: AppearanceType | undefined;
@@ -92,7 +76,6 @@ describe("ConfigProvider", () => {
     it.each([
       [Scheme.SPACE_GRAY, "dark"],
       [Scheme.BRIGHT_LIGHT, "light"],
-      [Scheme.VKCOM, "light"],
       [Scheme.VKCOM_DARK, "dark"],
       [Scheme.VKCOM_LIGHT, "light"],
     ] as const)("%s => %s", (scheme, expectAppearance) => {

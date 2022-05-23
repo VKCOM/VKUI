@@ -1,7 +1,3 @@
-> **Важно**
->
-> Компонент устарел. Предпочтительнее использовать компонент [Spacing](#!/Spacing)
-
 Используется для разделения какого-либо контента. Отступы справа и слева контролируются свойством `wide`.
 
 ```jsx
@@ -13,7 +9,9 @@
       <Cell before={<Icon28Notifications />}>Уведомления</Cell>
       <Cell before={<Icon28BlockOutline />}>Не беспокоить</Cell>
 
-      <Separator style={{ margin: "12px 0" }} />
+      <Spacing size={24}>
+        <Separator />
+      </Spacing>
 
       <Cell before={<Icon28UserOutline />}>Учётная запись</Cell>
       <Cell before={<Icon28SlidersOutline />}>Основные</Cell>

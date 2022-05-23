@@ -1,0 +1,19 @@
+.SizeXRegular--sizeX-compact {
+  display: none;
+}
+
+@media (--size-x-compact) {
+  .SizeXRegular--sizeX-none {
+    display: none;
+  }
+}
+
+.SizeXCompact--sizeX-regular {
+  display: none;
+}
+
+@media (--size-x-regular) {
+  .SizeXCompact--sizeX-none {
+    display: none;
+  }
+}

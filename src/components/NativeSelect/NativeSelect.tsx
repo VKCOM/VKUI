@@ -11,6 +11,7 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import { SelectType, SelectTypography } from "../Select/Select";
 import "../Select/Select.css";
 
 export interface NativeSelectProps
@@ -20,6 +21,7 @@ export interface NativeSelectProps
     HasAlign {
   placeholder?: string;
   multiline?: boolean;
+  selectType?: keyof typeof SelectType;
 }
 
 export interface SelectState {
@@ -39,11 +41,12 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
   getRootRef,
   disabled,
   multiline,
+  selectType = SelectType.default,
   ...restProps
 }) => {
   const platform = usePlatform();
   const [title, setTitle] = React.useState("");
-  const [notSelected, setNotSelected] = React.useState(false);
+  const [empty, setEmpty] = React.useState(false);
   const [value, onChange] = useEnsuredControl(restProps, { defaultValue });
   const selectRef = useExternRef(getRef);
   const { sizeX, sizeY } = useAdaptivity();
@@ -53,7 +56,7 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
       selectRef.current?.options[selectRef.current.selectedIndex];
     if (selectedOption) {
       setTitle(selectedOption.text);
-      setNotSelected(selectedOption.value === "" && placeholder != null);
+      setEmpty(selectedOption.value === "" && placeholder != null);
     }
   }, [value, children]);
 
@@ -62,11 +65,12 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
       Component="label"
       vkuiClass={classNames(
         getClassName("Select", platform),
-        notSelected && "Select--not-selected",
+        `Select--${selectType}`,
+        empty && "Select--empty",
+        multiline && "Select--multiline",
         align && `Select--align-${align}`,
         getSizeXClassName("Select", sizeX),
-        getSizeYClassName("Select", sizeY),
-        multiline && "Select--multiline"
+        getSizeYClassName("Select", sizeY)
       )}
       className={className}
       style={style}
@@ -86,7 +90,7 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
         {children}
       </select>
       <div vkuiClass="Select__container">
-        <span vkuiClass="Select__title">{title}</span>
+        <SelectTypography vkuiClass="Select__title">{title}</SelectTypography>
       </div>
     </FormField>
   );

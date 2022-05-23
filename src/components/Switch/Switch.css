@@ -102,7 +102,7 @@
 
 .Switch--android .Switch__self:checked + .Switch__pseudo::after,
 .Switch--vkcom .Switch__self:checked + .Switch__pseudo::after {
-  background: var(--accent);
+  background: var(--accent, var(--vkui--color_icon_accent));
   opacity: 0.48;
 }
 
@@ -110,12 +110,12 @@
  * Android
  */
 .Switch--android .Switch__pseudo {
-  width: 34px;
-  height: 14px;
+  width: var(--vkui--size_switch_width--regular);
+  height: var(--vkui--size_switch_height--regular);
 }
 
 .Switch--android .Switch__pseudo::after {
-  background: #c6c5c5; /* todo: 1077 replace w/ a variable */
+  background: var(--vkui--color_icon_tertiary_alpha);
   border-radius: 7px;
 }
 
@@ -140,9 +140,10 @@
 }
 
 .Switch--android .Switch__pseudo::before {
-  width: 20px;
-  height: 20px;
-  background: #f1f1f1; /* todo: 1077 replace w/ a proper variable */
+  width: var(--vkui--size_switch_pin--regular);
+  height: var(--vkui--size_switch_pin--regular);
+  background: var(--vkui--color_icon_contrast_secondary);
+  /* background: #f1f1f1; todo: 1077 replace w/ a proper variable */
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
 }
 
@@ -152,7 +153,7 @@
 }
 
 .Switch--android .Switch__self:checked + .Switch__pseudo::before {
-  background: var(--accent);
+  background: var(--accent, var(--vkui--color_icon_accent));
 }
 
 .Switch--sizeY-compact.Switch--android

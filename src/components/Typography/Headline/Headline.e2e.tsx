@@ -1,16 +1,26 @@
 import { describeScreenshotFuzz } from "../../../testing/e2e/utils";
-import Headline, { HeadlineProps } from "./Headline";
+import { Headline, HeadlineProps } from "./Headline";
 
 describe("Headline", () => {
   describeScreenshotFuzz(
-    (props: HeadlineProps) => (
-      <Headline {...props} style={{ marginBottom: 16 }}>
-        Headline {props.weight}
-      </Headline>
-    ),
+    (props: HeadlineProps) => {
+      let title = "Headline";
+      if (props.level) {
+        title += " level" + props.level;
+      }
+      if (props.weight) {
+        title += " weight" + props.weight;
+      }
+      return (
+        <Headline {...props} style={{ marginBottom: 16 }}>
+          {title}
+        </Headline>
+      );
+    },
     [
       {
-        weight: ["regular", "medium", "semibold"],
+        level: [undefined, "1", "2"],
+        weight: [undefined, "1", "2", "3"],
       },
     ]
   );

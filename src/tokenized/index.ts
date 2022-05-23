@@ -44,6 +44,9 @@ export type { ParagraphProps } from "../components/Typography/Paragraph/Paragrap
 export { Input } from "../components/Input/Input";
 export type { InputProps } from "../components/Input/Input";
 
+export { File } from "../components/File/File";
+export type { FileProps } from "../components/File/File";
+
 export { FormField } from "../components/FormField/FormField";
 export type { FormFieldProps } from "../components/FormField/FormField";
 
@@ -64,3 +67,6 @@ export type { ChipsInputProps } from "../components/ChipsInput/ChipsInput";
 
 export { ChipsSelect } from "../components/ChipsSelect/ChipsSelect";
 export type { ChipsSelectProps } from "../components/ChipsSelect/ChipsSelect";
+
+export { Headline } from "../components/Typography/Headline/Headline";
+export type { HeadlineProps } from "../components/Typography/Headline/Headline";

@@ -11,9 +11,9 @@
 
 > **Важно**
 >
-> Правая часть шапки будет скрыта, если в [`ConfigProvider`](#/ConfigProvider) передан `webviewType={WebviewType.VKAPPS}`.
+> Правая часть шапки скрыта по умолчанию, если требуется показать её, передайте в [`ConfigProvider`](#/ConfigProvider) свойство `webviewType={WebviewType.INTERNAL}`.
 
-```jsx
+```jsx { "props": { "webviewType": true } }
 class Example extends React.Component {
   constructor(props) {
     super(props);

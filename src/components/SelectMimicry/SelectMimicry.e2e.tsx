@@ -1,5 +1,6 @@
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import SelectMimicry, { SelectMimicryProps } from "./SelectMimicry";
+import { SelectMimicry, SelectMimicryProps } from "./SelectMimicry";
+import { SelectType } from "../Select/Select";
 
 describe("SelectMimicry", () => {
   describeScreenshotFuzz(
@@ -19,6 +20,11 @@ describe("SelectMimicry", () => {
             "забирался и проглатывал горы, известный как поедатель земли, играл на своей флейте для своей возлюбленной",
         ],
         multiline: [undefined, true],
+      },
+      {
+        selectType: [SelectType.plain, SelectType.accent],
+        children: ["Россия"],
+        $adaptivity: "y",
       },
     ]
   );

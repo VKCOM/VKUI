@@ -13,6 +13,7 @@ export const tokenized = [
   "Caption",
   "Paragraph",
   "Input",
+  "File",
   "FormField",
   "Select",
   "CustomSelect",
@@ -20,4 +21,5 @@ export const tokenized = [
   "CustomSelectOption",
   "ChipsInput",
   "ChipsSelect",
+  "Headline",
 ];

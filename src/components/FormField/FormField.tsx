@@ -8,6 +8,11 @@ import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "./FormField.css";
 
+export const FormFieldMode = {
+  default: "default",
+  plain: "plain",
+} as const;
+
 export interface FormFieldProps {
   /**
    * Добавляет иконку слева.
@@ -27,6 +32,7 @@ export interface FormFieldProps {
    * - Используйте [IconButton](#/IconButton), если вам нужна кликабельная иконка.
    */
   after?: React.ReactNode;
+  mode?: keyof typeof FormFieldMode;
 }
 
 interface FormFieldOwnProps
@@ -44,6 +50,7 @@ export const FormField: React.FC<FormFieldOwnProps> = ({
   before,
   after,
   disabled,
+  mode = FormFieldMode.default,
   ...restProps
 }: FormFieldOwnProps) => {
   const platform = usePlatform();
@@ -69,8 +76,10 @@ export const FormField: React.FC<FormFieldOwnProps> = ({
       onMouseLeave={handleMouseLeave}
       vkuiClass={classNames(
         getClassName("FormField", platform),
+        `FormField--${mode}`,
         getSizeYClassName("FormField", sizeY),
-        disabled && "FormField--disabled"
+        disabled && "FormField--disabled",
+        !disabled && hover && "FormField--hover"
       )}
     >
       {hasReactNode(before) && (
@@ -84,13 +93,7 @@ export const FormField: React.FC<FormFieldOwnProps> = ({
           {after}
         </div>
       )}
-      <div
-        role="presentation"
-        vkuiClass={classNames(
-          "FormField__border",
-          !disabled && hover && "FormField__border--hover"
-        )}
-      />
+      <div role="presentation" vkuiClass="FormField__border" />
     </Component>
   );
 };
