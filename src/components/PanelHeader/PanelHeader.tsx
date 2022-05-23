@@ -113,10 +113,14 @@ const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
           vertical="top"
           getRootRef={getRef}
         >
-          <PanelHeaderIn {...props} />
+          <PanelHeaderIn left={left} right={right} separator={separator}>
+            {children}
+          </PanelHeaderIn>
         </FixedLayout>
       ) : (
-        <PanelHeaderIn {...props} />
+        <PanelHeaderIn left={left} right={right} separator={separator}>
+          {children}
+        </PanelHeaderIn>
       )}
       {separator && visor && platform !== VKCOM && (
         <SizeXConditionalRender
