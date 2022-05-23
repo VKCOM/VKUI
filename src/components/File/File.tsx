@@ -29,7 +29,6 @@ export const File: React.FC<FileProps> = ({
   style,
   getRef,
   getRootRef,
-  onClick,
   appearance,
   ...restProps
 }) => {
@@ -53,7 +52,6 @@ export const File: React.FC<FileProps> = ({
     >
       <VisuallyHiddenInput
         {...restProps}
-        onClick={(e) => onClick?.(e)}
         vkuiClass="File__input"
         type="file"
         getRef={getRef}
