@@ -57,6 +57,7 @@ export const Text: React.FC<TextProps> = ({
       ref={getRootRef}
       vkuiClass={classNames(
         "Text",
+        // TODO v5.0.0 перевести на новую адаптивность
         `Text--sizeY-${sizeY}`,
         weight && `Text--w-${weight}`
       )}
