@@ -3,6 +3,7 @@ module.exports = {
   displayName: "unit",
   roots: [
     path.join(__dirname, "src"),
+    path.join(__dirname, "tasks"),
     path.join(__dirname, "postcss-plugin-vk-sans"),
     path.join(__dirname, "postcss-custom-properties-fallback"),
   ],
