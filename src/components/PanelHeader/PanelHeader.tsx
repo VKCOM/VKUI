@@ -3,7 +3,7 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import FixedLayout from "../FixedLayout/FixedLayout";
-import Separator from "../Separator/Separator";
+import { Separator } from "../Separator/Separator";
 import { Platform, VKCOM } from "../../lib/platform";
 import { HasRef, HasRootRef } from "../../types";
 import {
@@ -18,6 +18,7 @@ import {
 import Text from "../Typography/Text/Text";
 import { TooltipContainer } from "../Tooltip/TooltipContainer";
 import ModalRootContext from "../ModalRoot/ModalRootContext";
+import { Spacing } from "../Spacing/Spacing";
 import "./PanelHeader.css";
 
 export interface PanelHeaderProps
@@ -124,9 +125,10 @@ const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
       ) : (
         <PanelHeaderIn {...props} />
       )}
-      {separator && visor && platform !== VKCOM && (
-        <Separator expanded={sizeX === SizeType.REGULAR} />
-      )}
+      {separator &&
+        visor &&
+        platform !== VKCOM &&
+        (sizeX === SizeType.REGULAR ? <Spacing size={16} /> : <Separator />)}
     </div>
   );
 };

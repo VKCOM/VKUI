@@ -4,6 +4,12 @@
   box-sizing: border-box;
   display: flex;
   flex-flow: column;
+  justify-content: center;
+}
+
+.Spacing--separator {
+  padding-left: var(--vkui--size_base_padding_horizontal--regular);
+  padding-right: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .Spacing--separator-center {
@@ -32,15 +38,4 @@
   .Spacing--separator::after {
     transform: scaleY(0.32);
   }
-}
-
-.Spacing--ios {
-  padding-left: 12px;
-  padding-right: 12px;
-}
-
-.Spacing--android,
-.Spacing--vkcom {
-  padding-left: 16px;
-  padding-right: 16px;
 }

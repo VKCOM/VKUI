@@ -3,7 +3,7 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { HasRef } from "../../types";
 import { VKCOM } from "../../lib/platform";
 import PanelHeader, { PanelHeaderProps } from "../PanelHeader/PanelHeader";
-import Separator from "../Separator/Separator";
+import { Separator } from "../Separator/Separator";
 import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";

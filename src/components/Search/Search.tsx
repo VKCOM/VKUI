@@ -15,7 +15,7 @@ import { noop } from "../../lib/utils";
 import Text from "../Typography/Text/Text";
 import { Title } from "../Typography/Title/Title";
 import Headline from "../Typography/Headline/Headline";
-import Separator from "../Separator/Separator";
+import { Separator } from "../Separator/Separator";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
 import "./Search.css";

@@ -25,24 +25,16 @@
   background: transparent;
 }
 
-.Separator:not(.Separator--wide) .Separator__in {
-  margin-left: 16px;
-  margin-right: 16px;
-}
-
-/**
- * iOS
- */
-.Separator:not(.Separator--wide).Separator--ios .Separator__in {
-  margin-left: 12px;
-  margin-right: 12px;
+.Separator--padded .Separator__in {
+  margin-left: var(--vkui--size_base_padding_horizontal--regular);
+  margin-right: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 /*
  * CMP:
  * ModalPage
  */
-.ModalPage--sizeX-regular .Separator:not(.Separator--wide) {
+.ModalPage--sizeX-regular .Separator--padded {
   padding-left: 8px;
   padding-right: 8px;
 }
