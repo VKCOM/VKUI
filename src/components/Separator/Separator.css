@@ -41,18 +41,8 @@
 }
 
 @media (--size-x-regular) {
-  .ModalPage--sizeX-none .Separator:not(.Separator--wide) {
+  .ModalPage--sizeX-none .Separator--padded {
     padding-left: 8px;
     padding-right: 8px;
-  }
-
-  .ModalPage--sizeX-none .Separator__in {
-    height: 16px;
-    background: transparent;
-  }
-
-  .Group--none .Separator__in {
-    height: 16px;
-    background: transparent;
   }
 }
