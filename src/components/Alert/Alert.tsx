@@ -10,7 +10,7 @@ import { withPlatform } from "../../hoc/withPlatform";
 import { withAdaptivity, ViewWidth } from "../../hoc/withAdaptivity";
 import { Button, ButtonProps } from "../Button/Button";
 import { hasReactNode } from "../../lib/utils";
-import Headline from "../Typography/Headline/Headline";
+import { Headline } from "../Typography/Headline/Headline";
 import { Title } from "../Typography/Title/Title";
 import { Caption } from "../Typography/Caption/Caption";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
@@ -145,7 +145,7 @@ class AlertComponent extends React.Component<TAlertProps, AlertState> {
     switch (this.props.platform) {
       case VKCOM:
         return (
-          <Headline vkuiClass="Alert__header" weight="medium">
+          <Headline vkuiClass="Alert__header" weight="2">
             {header}
           </Headline>
         );
@@ -178,7 +178,7 @@ class AlertComponent extends React.Component<TAlertProps, AlertState> {
         );
       case ANDROID:
         return (
-          <Headline vkuiClass="Alert__text" weight="regular">
+          <Headline vkuiClass="Alert__text" weight="3">
             {text}
           </Headline>
         );

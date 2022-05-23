@@ -13,7 +13,7 @@ import {
 } from "@vkontakte/icons";
 import Tappable from "../Tappable/Tappable";
 import IconButton from "../IconButton/IconButton";
-import Headline from "../Typography/Headline/Headline";
+import { Headline } from "../Typography/Headline/Headline";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import Text from "../Typography/Text/Text";
 import { Title } from "../Typography/Title/Title";
@@ -90,7 +90,7 @@ const BannerHeader: React.FC<BannerTypographyProps> = ({
   return size === "m" ? (
     <Title level="2" weight="2" {...restProps} />
   ) : (
-    <Headline weight="medium" {...restProps} />
+    <Headline weight="2" {...restProps} />
   );
 };
 

@@ -12,7 +12,7 @@ import {
 } from "../AdaptivityProvider/AdaptivityContext";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
 import Text from "../Typography/Text/Text";
-import Headline from "../Typography/Headline/Headline";
+import { Headline } from "../Typography/Headline/Headline";
 
 export const SelectType = {
   default: "default",

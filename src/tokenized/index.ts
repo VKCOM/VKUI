@@ -64,3 +64,6 @@ export type { ChipsInputProps } from "../components/ChipsInput/ChipsInput";
 
 export { ChipsSelect } from "../components/ChipsSelect/ChipsSelect";
 export type { ChipsSelectProps } from "../components/ChipsSelect/ChipsSelect";
+
+export { Headline } from "../components/Typography/Headline/Headline";
+export type { HeadlineProps } from "../components/Typography/Headline/Headline";

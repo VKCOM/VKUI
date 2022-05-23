@@ -19,7 +19,7 @@ import {
   SizeType,
 } from "../../hoc/withAdaptivity";
 import Text from "../Typography/Text/Text";
-import Headline from "../Typography/Headline/Headline";
+import { Headline } from "../Typography/Headline/Headline";
 import { hasReactNode } from "../../lib/utils";
 import { Caption } from "../Typography/Caption/Caption";
 import "./Checkbox.css";
@@ -44,6 +44,7 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
 }: CheckboxProps) => {
   const platform = usePlatform();
 
+  // TODO: fix props
   const ContentComponent =
     platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
 
