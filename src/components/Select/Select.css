@@ -78,14 +78,14 @@
   font-weight: var(--vkui--font_weight_accent1);
 }
 
-.SelectTypography--accent.SelectTypography--android {
-  font-weight: var(--vkui--font_weight_accent2);
-}
-
-:not(.SelectTypography--accent) {
+:not(.SelectTypography--accent).SelectTypography {
   font-size: var(--vkui--font_headline1--font_size--regular);
   line-height: var(--vkui--font_headline1--line_height--regular);
   font-weight: var(--vkui--font_weight_accent3);
+}
+
+.SelectTypography--accent.SelectTypography--android {
+  font-weight: var(--vkui--font_weight_accent2);
 }
 
 .SelectTypography--vkcom:not(.SelectTypography--accent),
