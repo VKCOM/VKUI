@@ -58,7 +58,7 @@
   padding: 11px;
 }
 
-@media (--size-y-compact) {
+@media (--size-y-regular) {
   .Select--sizeY-none .Select__container {
     padding: 11px;
   }

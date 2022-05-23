@@ -422,6 +422,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(
                 <React.Fragment key={`${typeof value}-${value}`}>
                   {renderOption!({
                     className: prefixClass("ChipsSelect__option"),
+                    option,
                     hovered: Boolean(hovered),
                     children: label,
                     selected: !!selected,

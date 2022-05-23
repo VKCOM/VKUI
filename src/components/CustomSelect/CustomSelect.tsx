@@ -156,7 +156,7 @@ class CustomSelectComponent extends React.Component<
 > {
   static defaultProps: Partial<CustomSelectProps> = {
     searchable: false,
-    renderOption(props): React.ReactNode {
+    renderOption({ option, ...props }): React.ReactNode {
       return <CustomSelectOption {...props} />;
     },
     options: [],
@@ -583,6 +583,7 @@ class CustomSelectComponent extends React.Component<
     return (
       <React.Fragment key={`${option.value}`}>
         {renderOption!({
+          option,
           hovered,
           children: option.label,
           selected,

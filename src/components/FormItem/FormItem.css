@@ -1,6 +1,6 @@
 .FormItem {
   display: block;
-  padding: 12px;
+  padding: 12px 16px;
 }
 
 .FormItem--removable {
