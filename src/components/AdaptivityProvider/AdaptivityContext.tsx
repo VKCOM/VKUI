@@ -1,5 +1,5 @@
 import * as React from "react";
-import { hasHover, hasMouse } from "@vkontakte/vkjs";
+import { hasMouse } from "@vkontakte/vkjs";
 
 export enum SizeType {
   COMPACT = "compact",
@@ -48,13 +48,12 @@ export interface AdaptivityContextInterface extends SizeProps {
   viewWidth: ViewWidth;
   viewHeight: ViewHeight;
   hasMouse: boolean;
-  deviceHasHover: boolean;
+  deviceHasHover?: boolean;
 }
 
 export const AdaptivityContext =
   React.createContext<AdaptivityContextInterface>({
     hasMouse,
-    deviceHasHover: hasHover,
     viewWidth: 0,
     viewHeight: 0,
   });

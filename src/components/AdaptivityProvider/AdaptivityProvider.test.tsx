@@ -118,7 +118,6 @@ afterEach(() => {
 
 // Default
 // hasMouse=true
-// deviceHasHover=true
 // TODO: More tests for these variations
 
 describe("AdaptivityProvider", () => {
