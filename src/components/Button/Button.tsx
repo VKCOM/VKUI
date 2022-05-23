@@ -191,7 +191,11 @@ const ButtonComponent: React.FC<ButtonProps> = ({
     >
       {loading && <Spinner size="small" vkuiClass="Button__spinner" />}
       <span vkuiClass="Button__in">
-        {before && <span vkuiClass="Button__before">{before}</span>}
+        {before && (
+          <span vkuiClass="Button__before" role="presentation">
+            {before}
+          </span>
+        )}
         {children && (
           <ButtonTypography
             size={size}
@@ -203,7 +207,11 @@ const ButtonComponent: React.FC<ButtonProps> = ({
             {children}
           </ButtonTypography>
         )}
-        {after && <span vkuiClass="Button__after">{after}</span>}
+        {after && (
+          <span vkuiClass="Button__after" role="presentation">
+            {after}
+          </span>
+        )}
       </span>
     </Tappable>
   );
