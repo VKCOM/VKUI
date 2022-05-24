@@ -197,7 +197,6 @@ export type { RadioGroupProps } from "./components/RadioGroup/RadioGroup";
 export { default as Checkbox } from "./components/Checkbox/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox/Checkbox";
 export { Select } from "./components/Select/Select";
-export type { SelectProps } from "./components/Select/Select";
 export { SelectMimicry } from "./components/SelectMimicry/SelectMimicry";
 export type { SelectMimicryProps } from "./components/SelectMimicry/SelectMimicry";
 export { NativeSelect } from "./components/NativeSelect/NativeSelect";
@@ -205,6 +204,7 @@ export type { NativeSelectProps } from "./components/NativeSelect/NativeSelect";
 export { CustomSelect } from "./components/CustomSelect/CustomSelect";
 export type {
   CustomSelectProps,
+  CustomSelectProps as SelectProps,
   CustomSelectOptionInterface,
 } from "./components/CustomSelect/CustomSelect";
 export { CustomSelectOption } from "./components/CustomSelectOption/CustomSelectOption";
@@ -293,7 +293,6 @@ export type { ParagraphProps } from "./components/Typography/Paragraph/Paragraph
  */
 export { withInsets } from "./hoc/withInsets";
 export { withPlatform } from "./hoc/withPlatform";
-export { withAdaptivity } from "./hoc/withAdaptivity";
 
 /**
  * Hooks
@@ -321,6 +320,7 @@ export {
   ViewHeight,
   SizeType,
 } from "./components/AdaptivityProvider/AdaptivityContext";
+export type { AdaptivityProps } from "./components/AdaptivityProvider/AdaptivityContext";
 export { calcInitialsAvatarColor } from "./helpers/avatar";
 export { Popper } from "./components/Popper/Popper";
 export type { PopperProps } from "./components/Popper/Popper";
@@ -331,5 +331,4 @@ export type { PopperProps } from "./components/Popper/Popper";
 export type { AlignType, HasPlatform, HasInsets } from "./types";
 export type { NavIdProps } from "./lib/getNavId";
 export type { PlatformType } from "./lib/platform";
-export type { AdaptivityProps } from "./hoc/withAdaptivity";
 export type { TransitionContextProps } from "./components/NavTransitionContext/NavTransitionContext";

@@ -5,23 +5,19 @@ import { HasPlatform } from "../../types";
 import { getClassName } from "../../helpers/getClassName";
 import { ANDROID, VKCOM } from "../../lib/platform";
 import { rubber } from "../../lib/touch";
-import { withAdaptivity, ViewWidth } from "../../hoc/withAdaptivity";
 import Text from "../Typography/Text/Text";
 import { Button } from "../Button/Button";
 import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
 import { usePlatform } from "../../hooks/usePlatform";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useTimeout } from "../../hooks/useTimeout";
-import {
-  AdaptivityContextInterface,
-  AdaptivityProps,
-} from "../AdaptivityProvider/AdaptivityContext";
+import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import "./Snackbar.css";
 
 export interface SnackbarProps
   extends React.HTMLAttributes<HTMLElement>,
-    HasPlatform,
-    AdaptivityProps {
+    HasPlatform {
   /**
    * Название кнопки действия в уведомлении
    */
@@ -54,23 +50,21 @@ export interface SnackbarProps
   onClose: () => void;
 }
 
-const SnackbarComponent: React.FC<
-  SnackbarProps & AdaptivityContextInterface
-> = (props) => {
+const Snackbar: React.FC<SnackbarProps> = (props) => {
   const {
     children,
-    layout,
+    layout = "horizontal",
     action,
     before,
     after,
-    viewWidth,
-    duration = 0,
+    duration = 4000,
     onActionClick,
     onClose,
     ...restProps
   } = props;
 
   const platform = usePlatform();
+  const { viewWidth } = useAdaptivity();
 
   const { waitTransitionFinish } = useWaitTransitionFinish();
 
@@ -195,15 +189,12 @@ const SnackbarComponent: React.FC<
     <AppRootPortal>
       <div
         {...restProps}
-        // eslint-disable-next-line vkui/no-object-expression-in-arguments
         vkuiClass={classNames(
           getClassName("Snackbar", platform),
           `Snackbar--l-${resolvedLayout}`,
-          {
-            "Snackbar--closing": closing,
-            "Snackbar--touched": touched,
-            "Snackbar--desktop": isDesktop,
-          }
+          closing && "Snackbar--closing",
+          touched && "Snackbar--touched",
+          isDesktop && "Snackbar--desktop"
         )}
       >
         <Touch
@@ -243,16 +234,9 @@ const SnackbarComponent: React.FC<
   );
 };
 
-SnackbarComponent.displayName = "Snackbar";
-
-SnackbarComponent.defaultProps = {
-  duration: 4000,
-  layout: "horizontal",
-};
+Snackbar.displayName = "Snackbar";
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Snackbar
  */
-export const Snackbar = withAdaptivity(SnackbarComponent, {
-  viewWidth: true,
-});
+export { Snackbar };

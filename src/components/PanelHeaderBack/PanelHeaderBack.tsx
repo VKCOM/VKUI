@@ -10,7 +10,6 @@ import {
 } from "../PanelHeaderButton/PanelHeaderButton";
 import { ANDROID, VKCOM, IOS } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
-import { AdaptivityProps } from "../../hoc/withAdaptivity";
 import { getClassName } from "../../helpers/getClassName";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { classNames } from "../../lib/classNames";
@@ -28,7 +27,7 @@ const PanelHeaderBack: React.FC<PanelHeaderBackProps> = ({
   label,
   "aria-label": ariaLabel = "Назад",
   ...restProps
-}: PanelHeaderButtonProps & AdaptivityProps) => {
+}: PanelHeaderButtonProps) => {
   const platform = usePlatform();
   const { sizeX } = useAdaptivity();
   // так-же label нужно скрывать при platform === IOS && sizeX === regular

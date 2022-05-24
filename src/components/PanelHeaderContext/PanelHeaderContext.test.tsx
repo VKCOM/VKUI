@@ -4,7 +4,7 @@ import { act } from "react-dom/test-utils";
 import { baselineComponent } from "../../testing/utils";
 import { noop } from "../../lib/utils";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import { ViewWidth } from "../../hoc/withAdaptivity";
+import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import { PanelHeaderContext } from "./PanelHeaderContext";
 
 describe("PanelHeaderContext", () => {

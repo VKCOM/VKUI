@@ -1,4 +1,4 @@
-import { SizeType } from "../hoc/withAdaptivity";
+import { SizeType } from "../components/AdaptivityProvider/AdaptivityContext";
 import { getSizeYClassName } from "./getSizeYClassName";
 
 describe("getSizeYClassName", () => {

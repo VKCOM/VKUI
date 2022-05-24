@@ -70,11 +70,14 @@ const SideCol = () => {
 ```
 
 Почти готово. Теперь нам необходимо сообщить приложению, что левая колонка нужна только на больших экранах. Для доступа
-к рассчитанным в `AdaptivityProvider` свойствам, достаточно обернуть приложение в HOC `withAdaptivity`.
+к рассчитанным в `AdaptivityProvider` свойствам, достаточно обернуть приложение в hook `useAdaptivity`.
 
 ```jsx static
-function App({ viewWidth }) {
+function App() {
+  const { viewWidth } = useAdaptivity();
+
   // ...
+
   <SplitLayout
     header={
       viewWidth >= ViewWidth.SMALL_TABLET && <PanelHeader separator={false} />
@@ -96,8 +99,6 @@ function App({ viewWidth }) {
   </SplitLayout>;
   // ...
 }
-
-App = withAdaptivity(App, { viewWidth: true });
 ```
 
 > **Нюансы**
@@ -109,7 +110,7 @@ App = withAdaptivity(App, { viewWidth: true });
 ### Технические детали
 
 Адаптивность базируется на четырёх свойствах: `viewWidth`, `viewHeight`, `sizeX`, `sizeY`. Эти свойства вычисляются в `AdaptivityProvider`,
-доступ к ним можно получить через HOC `withAdaptivity` (либо через hook `useAdaptivity`).
+доступ к ним можно получить через hook `useAdaptivity`.
 
 - `sizeX` и `sizeY` принимают значения `SizeType.REGULAR | SizeType.COMPACT`
 - `viewWidth` — `ViewWidth.SMALL_MOBILE | ViewWidth.MOBILE | ViewWidth.SMALL_TABLET | ViewWidth.TABLET | ViewWidth.DESKTOP`

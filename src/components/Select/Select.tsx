@@ -1,13 +1,8 @@
 import * as React from "react";
 import { NativeSelect } from "../NativeSelect/NativeSelect";
 import { CustomSelect, CustomSelectProps } from "../CustomSelect/CustomSelect";
-import { withAdaptivity } from "../../hoc/withAdaptivity";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { usePlatform } from "../../hooks/usePlatform";
-import {
-  AdaptivityContextInterface,
-  AdaptivityProps,
-} from "../AdaptivityProvider/AdaptivityContext";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
@@ -41,12 +36,8 @@ export const SelectTypography: React.FC<
   );
 };
 
-export interface SelectProps extends CustomSelectProps, AdaptivityProps {}
-
-const SelectComponent: React.FC<SelectProps & AdaptivityContextInterface> = ({
-  hasMouse,
-  ...props
-}: SelectProps) => {
+const Select: React.FC<CustomSelectProps> = (props) => {
+  const { hasMouse } = useAdaptivity();
   // Use custom select if device has connected a mouse
   if (hasMouse) {
     const { children, ...restProps } = props;
@@ -70,6 +61,4 @@ const SelectComponent: React.FC<SelectProps & AdaptivityContextInterface> = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/Select
  */
-export const Select = withAdaptivity(SelectComponent, {
-  hasMouse: true,
-});
+export { Select };

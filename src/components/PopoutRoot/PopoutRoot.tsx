@@ -1,36 +1,19 @@
 import * as React from "react";
 import { HasRootRef } from "../../types";
-import { withAdaptivity } from "../../hoc/withAdaptivity";
 import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { blurActiveElement, useDOM } from "../../lib/dom";
-import {
-  AdaptivityContextInterface,
-  AdaptivityProps,
-} from "../AdaptivityProvider/AdaptivityContext";
 import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
 import "./PopoutRoot.css";
 
 export interface PopoutRootProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    AdaptivityProps,
     HasRootRef<HTMLDivElement> {
   popout?: React.ReactNode;
   modal?: React.ReactNode;
 }
 
-export const PopoutRootComponent: React.FC<
-  PopoutRootProps & AdaptivityContextInterface
-> = (props) => {
-  const {
-    popout,
-    modal,
-    viewWidth,
-    viewHeight,
-    hasMouse,
-    children,
-    getRootRef,
-    ...restProps
-  } = props;
+const PopoutRoot: React.FC<PopoutRootProps> = (props) => {
+  const { popout, modal, children, getRootRef, ...restProps } = props;
   const { document } = useDOM();
 
   const isDesktop = useAdaptivityIsDesktop();
@@ -58,10 +41,6 @@ export const PopoutRootComponent: React.FC<
   );
 };
 
-PopoutRootComponent.displayName = "PopoutRoot";
+PopoutRoot.displayName = "PopoutRoot";
 
-export const PopoutRoot = withAdaptivity(PopoutRootComponent, {
-  viewWidth: true,
-  viewHeight: true,
-  hasMouse: true,
-});
+export { PopoutRoot };

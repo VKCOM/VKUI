@@ -7,7 +7,7 @@ import { transitionEvent } from "../../lib/supportEvents";
 import { ANDROID, VKCOM, IOS } from "../../lib/platform";
 import { HasPlatform } from "../../types";
 import { withPlatform } from "../../hoc/withPlatform";
-import { withAdaptivity, ViewWidth } from "../../hoc/withAdaptivity";
+import { withAdaptivity } from "../../hoc/withAdaptivity";
 import { Button, ButtonProps } from "../Button/Button";
 import { hasReactNode } from "../../lib/utils";
 import { Headline } from "../Typography/Headline/Headline";
@@ -18,6 +18,7 @@ import { FocusTrap } from "../FocusTrap/FocusTrap";
 import {
   AdaptivityContextInterface,
   AdaptivityProps,
+  ViewWidth,
 } from "../AdaptivityProvider/AdaptivityContext";
 import { withContext } from "../../hoc/withContext";
 import {
