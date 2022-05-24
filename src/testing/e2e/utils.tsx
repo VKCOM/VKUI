@@ -1,4 +1,4 @@
-import { ComponentType, FC, isValidElement } from "react";
+import { ComponentType, FC, Fragment, isValidElement } from "react";
 import { MatchImageSnapshotOptions } from "jest-image-snapshot";
 import { screenshot } from "@react-playwright";
 // Импорты из отдельных модулей помогают jest отслеживать зависимости
@@ -18,6 +18,7 @@ import {
   ViewWidth,
   AdaptivityProps,
 } from "../../components/AdaptivityProvider/AdaptivityContext";
+import { withAdaptivity } from "../../hoc/withAdaptivity";
 import View from "../../components/View/View";
 import { AppRoot } from "../../components/AppRoot/AppRoot";
 import Group from "../../components/Group/Group";
@@ -167,6 +168,11 @@ export function describeScreenshotFuzz<Props>(
         adaptivity
       );
 
+      const AdaptiveComponent = withAdaptivity(Component, {
+        sizeX: true,
+        sizeY: true,
+      });
+
       (isVKCOM ? vkcomSchemes : mobileSchemes).forEach((scheme: Scheme) => {
         it(`light${
           adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ""
@@ -186,12 +192,12 @@ export function describeScreenshotFuzz<Props>(
                     <Wrapper>
                       {multiCartesian(propSets, { adaptive: !isVKCOM }).map(
                         (props, i) => (
-                          <AdaptivityProvider {...props} key={i}>
+                          <Fragment key={i}>
                             <div>{prettyProps(props)}</div>
                             <div>
-                              <Component {...props} />
+                              <AdaptiveComponent {...props} />
                             </div>
-                          </AdaptivityProvider>
+                          </Fragment>
                         )
                       )}
                     </Wrapper>
