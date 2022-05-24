@@ -7,7 +7,6 @@ import {
   VKCOM,
   SplitCol,
   SplitLayout,
-  withAdaptivity,
   ViewWidth,
   PanelHeader,
   usePlatform,
@@ -18,6 +17,7 @@ import {
   AppearanceProvider,
 } from "@vkui";
 import { Frame } from "./Frame/Frame";
+import { withAdaptivity } from "../../src/hoc/withAdaptivity";
 import { perfLogger } from "../utils";
 import "./Preview.css";
 

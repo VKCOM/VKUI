@@ -7,7 +7,6 @@ import {
   classNames,
   Separator,
   Footer,
-  withAdaptivity,
   ViewWidth,
 } from "@vkui";
 import {
@@ -15,6 +14,7 @@ import {
   Icon28ChevronUpOutline,
 } from "@vkontakte/icons";
 import { deprecated } from "../../deprecated";
+import { withAdaptivity } from "../../../src/hoc/withAdaptivity";
 import getInfoFromHash from "react-styleguidist/lib/client/utils/getInfoFromHash";
 import "./TableOfContents.css";
 
