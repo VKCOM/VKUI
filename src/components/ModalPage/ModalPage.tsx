@@ -57,6 +57,10 @@ export interface ModalPageProps
 }
 
 const warn = warnOnce("ModalPage");
+
+/**
+ * @see https://vkcom.github.io/VKUI/#/ModalPage
+ */
 const ModalPage: React.FC<ModalPageProps & AdaptivityContextInterface> = (
   props
 ) => {

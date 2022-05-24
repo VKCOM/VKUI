@@ -19,6 +19,9 @@ export interface SpacingProps extends React.HTMLAttributes<HTMLDivElement> {
   separator?: boolean | "top" | "bottom" | "center";
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Spacing
+ */
 export const Spacing: React.FC<SpacingProps> = ({
   size = 8,
   separator,

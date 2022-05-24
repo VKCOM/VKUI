@@ -32,6 +32,9 @@ export interface SimpleCheckboxProps
   defaultIndeterminate?: boolean;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/SimpleCheckbox
+ */
 export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
   props: SimpleCheckboxProps
 ) => {

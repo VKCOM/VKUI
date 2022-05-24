@@ -19,6 +19,9 @@ export interface CaptionProps
 
 const warn = warnOnce("Caption");
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Caption
+ */
 export const Caption: React.FC<CaptionProps> = ({
   children,
   weight,

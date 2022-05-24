@@ -178,6 +178,9 @@ const ActionSheetItemComponent: React.FC<ActionSheetItemProps> = ({
   );
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/ActionSheetItem
+ */
 export const ActionSheetItem = withAdaptivity(ActionSheetItemComponent, {
   sizeY: true,
 });

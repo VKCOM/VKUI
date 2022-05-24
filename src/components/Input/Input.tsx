@@ -47,6 +47,9 @@ const InputComponent: React.FunctionComponent<InputProps> = ({
   );
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Input
+ */
 export const Input = withAdaptivity(InputComponent, {
   sizeY: true,
 });

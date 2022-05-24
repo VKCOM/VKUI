@@ -48,6 +48,10 @@ export interface ContentCardProps
 }
 
 const warn = warnOnce("ContentCard");
+
+/**
+ * @see https://vkcom.github.io/VKUI/#/ContentCard
+ */
 const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
   const {
     subtitle,

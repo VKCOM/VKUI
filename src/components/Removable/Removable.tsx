@@ -29,6 +29,9 @@ interface RemovableIosOwnProps extends RemovableProps {
   removePlaceholderString?: string;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/RemovableIos
+ */
 const RemovableIos: React.FC<RemovableIosOwnProps> = ({
   onRemove,
   removePlaceholder,
@@ -115,6 +118,9 @@ interface RemovableOwnProps
   align?: "start" | "center";
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Removable
+ */
 export const Removable: React.FC<RemovableOwnProps> = ({
   getRootRef,
   children,

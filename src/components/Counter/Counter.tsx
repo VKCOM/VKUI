@@ -37,6 +37,9 @@ const CounterTypography: React.FC<CounterTypographyProps> = ({
   );
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Counter
+ */
 const Counter: React.FC<CounterProps> = (props: CounterProps) => {
   const { mode, size, children, ...restProps } = props;
   const platform = usePlatform();

@@ -48,6 +48,10 @@ export interface PromoBannerProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const warn = warnOnce("PromoBanner");
+
+/**
+ * @see https://vkcom.github.io/VKUI/#/PromoBanner
+ */
 const PromoBanner = (props: PromoBannerProps) => {
   const platform = usePlatform();
   const { bannerData = {}, onClose, ...restProps } = props;

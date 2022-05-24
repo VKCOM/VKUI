@@ -15,6 +15,10 @@ export interface ParagraphProps
 }
 
 const warn = warnOnce("Paragraph");
+
+/**
+ * @see https://vkcom.github.io/VKUI/#/Paragraph
+ */
 export const Paragraph: React.FC<ParagraphProps> = ({
   Component = "span",
   getRootRef,

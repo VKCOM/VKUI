@@ -8,6 +8,7 @@ const TransitionContext = React.createContext<TransitionContextProps>({
   entering: false,
 });
 export const useNavTransition = () => React.useContext(TransitionContext);
+
 export const NavTransitionProvider: React.FC<TransitionContextProps> = ({
   children,
   entering,

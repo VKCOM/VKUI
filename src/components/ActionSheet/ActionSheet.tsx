@@ -40,6 +40,9 @@ export interface ActionSheetProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const warn = warnOnce("ActionSheet");
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/ActionSheet
+ */
 export const ActionSheet: React.FC<ActionSheetProps> = ({
   children,
   className,

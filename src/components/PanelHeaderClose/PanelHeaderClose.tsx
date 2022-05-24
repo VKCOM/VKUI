@@ -8,6 +8,9 @@ import { ANDROID, VKCOM } from "../../lib/platform";
 import { getTitleFromChildren } from "../../lib/utils";
 import { usePlatform } from "../../hooks/usePlatform";
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/PanelHeaderClose
+ */
 const PanelHeaderClose: React.FunctionComponent<PanelHeaderButtonProps> = ({
   children,
   ...restProps

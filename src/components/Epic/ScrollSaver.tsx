@@ -7,6 +7,9 @@ export interface ScrollSaverProps {
   saveScroll: (scroll: number) => any;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/ScrollSaver
+ */
 export const ScrollSaver: React.FC<ScrollSaverProps> = ({
   children,
   initialScroll,

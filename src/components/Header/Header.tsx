@@ -95,6 +95,9 @@ const HeaderSubtitle: React.FC<HeaderSubtitleProps> = ({
   );
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Header
+ */
 const Header: React.FC<HeaderProps> = ({
   mode,
   children,

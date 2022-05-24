@@ -35,6 +35,9 @@ export interface GroupProps
   mode?: "plain" | "card";
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Group
+ */
 const Group: React.FC<GroupProps> = (props: GroupProps) => {
   const {
     header,

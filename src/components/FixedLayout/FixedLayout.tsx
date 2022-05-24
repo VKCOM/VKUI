@@ -28,6 +28,9 @@ export interface FixedLayoutState {
   width: string;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/FixedLayout
+ */
 const FixedLayout: React.FC<FixedLayoutProps> = ({
   children,
   style,

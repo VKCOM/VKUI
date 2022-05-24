@@ -5,6 +5,9 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { ListContext } from "./ListContext";
 import "./List.css";
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/List
+ */
 const List: React.FunctionComponent<React.HTMLAttributes<HTMLDivElement>> = ({
   children,
   ...restProps

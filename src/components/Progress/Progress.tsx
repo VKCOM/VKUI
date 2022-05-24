@@ -11,6 +11,9 @@ export interface ProgressProps
 const PROGRESS_MIN_VALUE = 0;
 const PROGRESS_MAX_VALUE = 100;
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Progress
+ */
 export const Progress: React.FC<ProgressProps> = ({
   value = 0,
   getRootRef,

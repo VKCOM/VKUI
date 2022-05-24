@@ -16,6 +16,9 @@ export interface FileProps
   controlSize?: VKUIButtonProps["size"];
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/File
+ */
 export const File: React.FC<FileProps> = ({
   children = "Выберите файл",
   align = "left",

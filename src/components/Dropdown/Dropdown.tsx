@@ -11,6 +11,9 @@ export interface DropdownProps
   action?: "click" | "hover";
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Dropdown
+ */
 export const Dropdown: React.FC<DropdownProps> = ({
   action = "click",
   hideDelay,

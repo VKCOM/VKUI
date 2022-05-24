@@ -102,6 +102,9 @@ const NativeSelectComponent: React.FC<
   );
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/NativeSelect
+ */
 export const NativeSelect = withAdaptivity(NativeSelectComponent, {
   sizeX: true,
   sizeY: true,

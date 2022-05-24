@@ -47,6 +47,9 @@ const ModalRootComponent: React.FC<
 
 ModalRootComponent.displayName = "ModalRoot";
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/ModalRoot
+ */
 export const ModalRoot = withAdaptivity(ModalRootComponent, {
   viewWidth: true,
   viewHeight: true,

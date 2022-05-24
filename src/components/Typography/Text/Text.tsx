@@ -14,6 +14,10 @@ export interface TextProps
 }
 
 const warn = warnOnce("Text");
+
+/**
+ * @see https://vkcom.github.io/VKUI/#/Text
+ */
 const Text: React.FC<TextProps> = ({
   children,
   weight = "regular",

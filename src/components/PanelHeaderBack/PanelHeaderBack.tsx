@@ -24,6 +24,9 @@ export type PanelHeaderBackProps = PanelHeaderButtonProps &
     "aria-label"?: string;
   };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/PanelHeaderBack
+ */
 const PanelHeaderBack: React.FunctionComponent<PanelHeaderBackProps> = ({
   label,
   sizeX,

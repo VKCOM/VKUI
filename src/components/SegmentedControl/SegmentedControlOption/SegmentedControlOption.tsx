@@ -13,6 +13,9 @@ import {
 } from "../../VisuallyHiddenInput/VisuallyHiddenInput";
 import "./SegmentedControlOption.css";
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/SegmentedControl
+ */
 export const SegmentedControlOption: React.FC<VisuallyHiddenInputProps> = ({
   className,
   style,

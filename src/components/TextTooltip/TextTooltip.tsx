@@ -19,6 +19,9 @@ export interface TextTooltipProps
   header?: React.ReactNode;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/TextTooltip
+ */
 export const TextTooltip: React.FC<TextTooltipProps> = ({
   children,
   text,

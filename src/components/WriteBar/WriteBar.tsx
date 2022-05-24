@@ -31,6 +31,9 @@ export interface WriteBarProps
   children?: never;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/WriteBar
+ */
 export const WriteBar: React.FC<WriteBarProps> = (props: WriteBarProps) => {
   const platform = usePlatform();
   const {
