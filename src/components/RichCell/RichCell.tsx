@@ -97,13 +97,11 @@ const RichCell: React.FC<RichCellProps> = ({
             {caption}
           </Subhead>
         )}
-        {(hasReactNode(bottom) || hasReactNode(actions)) && (
-          <div vkuiClass="RichCell__bottom">
-            {bottom}
-            {hasReactNode(actions) && (
-              <div vkuiClass="RichCell__actions">{actions}</div>
-            )}
-          </div>
+        {hasReactNode(bottom) && (
+          <div vkuiClass="RichCell__bottom">{bottom}</div>
+        )}
+        {hasReactNode(actions) && (
+          <div vkuiClass="RichCell__actions">{actions}</div>
         )}
       </div>
     </Tappable>

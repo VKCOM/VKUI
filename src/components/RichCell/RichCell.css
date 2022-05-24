@@ -39,7 +39,7 @@
   pointer-events: none;
 }
 
-.RichCell__in > .Icon--28:first-child ~ * {
+.RichCell__in > .Icon--28:first-child ~ *:not(.RichCell__actions) {
   margin-right: 32px;
 }
 
@@ -104,12 +104,4 @@
  */
 .RichCell--sizeY-compact {
   min-height: 60px;
-}
-
-.RichCell--sizeY-compact .RichCell__actions {
-  margin-top: 11px;
-}
-
-.RichCell--sizeY-compact .UsersStack + .RichCell__actions {
-  margin-top: 12px;
 }
