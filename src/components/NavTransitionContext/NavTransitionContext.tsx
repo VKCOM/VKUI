@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useObjectMemo } from "../../hooks/useObjectMemo";
 
-interface TransitionContextProps {
+export interface TransitionContextProps {
   entering: boolean;
 }
 const TransitionContext = React.createContext<TransitionContextProps>({
