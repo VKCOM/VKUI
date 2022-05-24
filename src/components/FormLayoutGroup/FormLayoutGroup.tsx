@@ -23,7 +23,7 @@ export interface FormLayoutGroupProps
 /**
  * @see https://vkcom.github.io/VKUI/#/FormLayoutGroup
  */
-const FormLayoutGroup: React.FC<FormLayoutGroupProps> = ({
+export const FormLayoutGroup: React.FC<FormLayoutGroupProps> = ({
   children,
   mode = "vertical",
   removable,
@@ -40,14 +40,11 @@ const FormLayoutGroup: React.FC<FormLayoutGroupProps> = ({
   return (
     <div
       ref={rootEl}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
-        getClassName("FormLayoutGroup", platform),
+        getClassName("FormLayoutGroup", platform), // TODO: v5 remove
         `FormLayoutGroup--sizeY-${sizeY}`,
         `FormLayoutGroup--${mode}`,
-        {
-          "FormLayoutGroup--removable": isRemovable,
-        }
+        isRemovable && "FormLayoutGroup--removable"
       )}
       {...restProps}
     >
@@ -70,6 +67,3 @@ const FormLayoutGroup: React.FC<FormLayoutGroupProps> = ({
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default FormLayoutGroup;

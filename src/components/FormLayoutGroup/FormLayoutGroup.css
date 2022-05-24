@@ -1,6 +1,7 @@
 .FormLayoutGroup--horizontal {
   display: flex;
-  padding: 12px var(--vkui--size_base_padding_horizontal--regular);
+  padding: var(--vkui--size_form_item_padding_vertical--regular)
+    var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .FormLayoutGroup__removable {
