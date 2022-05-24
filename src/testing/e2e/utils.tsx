@@ -189,7 +189,10 @@ export function describeScreenshotFuzz<Props>(
                           <Fragment key={i}>
                             <div>{prettyProps(props)}</div>
                             <div>
-                              <AdaptivityProvider {...props}>
+                              <AdaptivityProvider
+                                {...adaptivityProps}
+                                {...props}
+                              >
                                 <Component {...props} />
                               </AdaptivityProvider>
                             </div>
