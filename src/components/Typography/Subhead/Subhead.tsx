@@ -17,6 +17,10 @@ export interface SubheadProps
 }
 
 const warn = warnOnce("Subhead");
+
+/**
+ * @see https://vkcom.github.io/VKUI/#/Subhead
+ */
 export const Subhead: React.FC<SubheadProps> = ({
   children,
   weight,

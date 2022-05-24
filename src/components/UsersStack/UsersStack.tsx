@@ -30,6 +30,9 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
   visibleCount?: number;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/UsersStack
+ */
 const UsersStack: React.FC<UsersStackProps> = (props: UsersStackProps) => {
   const platform = usePlatform();
   const {

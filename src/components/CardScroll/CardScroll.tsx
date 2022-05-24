@@ -19,6 +19,9 @@ export interface CardScrollProps extends React.HTMLAttributes<HTMLDivElement> {
   withSpaces?: boolean;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/CardScroll
+ */
 export const CardScroll: React.FC<CardScrollProps> = ({
   children,
   size = "s",

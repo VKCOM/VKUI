@@ -217,6 +217,9 @@ const ButtonComponent: React.FC<ButtonProps> = ({
   );
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Button
+ */
 export const Button = withAdaptivity(ButtonComponent, {
   sizeY: true,
 });

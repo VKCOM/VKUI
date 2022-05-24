@@ -22,6 +22,9 @@ export interface ButtonGroupProps
   stretched?: boolean;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/ButtonGroup
+ */
 export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   mode = "horizontal",
   gap = "m",

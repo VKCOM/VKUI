@@ -58,6 +58,9 @@ const ARROW_PADDING = 8;
 const ARROW_WIDTH = 20;
 const ARROW_HEIGHT = 8;
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Popper
+ */
 export const Popper: React.FC<PopperProps> = ({
   targetRef,
   children,

@@ -8,6 +8,9 @@ interface FocusVisibleProps {
   mode: FocusVisibleMode;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/FocusVisible
+ */
 export const FocusVisible: React.FC<FocusVisibleProps> = ({
   mode,
 }: FocusVisibleProps) => (

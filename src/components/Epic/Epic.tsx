@@ -20,6 +20,9 @@ export interface EpicProps
 
 const warn = warnOnce("Epic");
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Epic
+ */
 export const Epic: React.FC<EpicProps & AdaptivityContextInterface> = (
   props
 ) => {

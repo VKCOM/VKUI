@@ -250,6 +250,9 @@ SnackbarComponent.defaultProps = {
   layout: "horizontal",
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Snackbar
+ */
 export const Snackbar = withAdaptivity(SnackbarComponent, {
   viewWidth: true,
 });

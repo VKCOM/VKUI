@@ -68,6 +68,9 @@ const deriveAppearance = (scheme: Scheme | undefined): AppearanceType =>
     ? "dark"
     : "light";
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/ConfigProvider
+ */
 const ConfigProvider: React.FC<ConfigProviderProps> = ({
   children,
   webviewType = WebviewType.VKAPPS,

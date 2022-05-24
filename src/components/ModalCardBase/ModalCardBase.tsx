@@ -55,6 +55,9 @@ export interface ModalCardBaseProps
   dismissLabel?: string;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/ModalCardBase
+ */
 export const ModalCardBase = withAdaptivity<
   ModalCardBaseProps & AdaptivityContextInterface
 >(

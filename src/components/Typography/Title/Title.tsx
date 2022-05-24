@@ -25,6 +25,10 @@ export interface TitleProps
 }
 
 const warn = warnOnce("Title");
+
+/**
+ * @see https://vkcom.github.io/VKUI/#/Title
+ */
 export const Title: React.FC<TitleProps> = ({
   children,
   weight,

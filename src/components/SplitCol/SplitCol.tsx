@@ -27,6 +27,9 @@ export interface SplitColProps extends React.HTMLAttributes<HTMLDivElement> {
   fixed?: boolean;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/SplitCol
+ */
 export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
   const {
     children,

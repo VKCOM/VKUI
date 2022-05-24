@@ -29,6 +29,9 @@ export interface ModalCardProps
 
 const warn = warnOnce("ModalCard");
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/ModalCard
+ */
 const ModalCard: React.FC<ModalCardProps & AdaptivityContextInterface> = (
   props
 ) => {

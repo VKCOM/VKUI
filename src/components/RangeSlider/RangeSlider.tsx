@@ -5,6 +5,9 @@ import { UniversalSlider, UniversalSliderProps } from "./UniversalSlider";
 export type Value = [number, number];
 export type RangeSliderProps = UniversalSliderProps<Value>;
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/RangeSlider
+ */
 const RangeSlider: React.FC<RangeSliderProps> = ({
   onChange,
   defaultValue,

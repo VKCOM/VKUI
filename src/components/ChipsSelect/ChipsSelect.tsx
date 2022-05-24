@@ -450,6 +450,9 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
   );
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/ChipsSelect
+ */
 export const ChipsSelect = withAdaptivity(ChipsSelectComponent, {
   sizeY: true,
 });

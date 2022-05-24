@@ -67,6 +67,9 @@ const SimpleCellTypography: React.FC<SimpleCellTypographyProps> = (
   }
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/SimpleCell
+ */
 const SimpleCell: React.FC<SimpleCellProps> = ({
   badge,
   before,

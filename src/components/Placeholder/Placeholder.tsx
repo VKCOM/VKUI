@@ -27,6 +27,9 @@ export interface PlaceholderProps
   stretched?: boolean;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Placeholder
+ */
 const Placeholder: React.FC<PlaceholderProps> = (props: PlaceholderProps) => {
   const {
     icon,

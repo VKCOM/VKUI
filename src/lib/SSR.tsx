@@ -20,6 +20,9 @@ export interface SSRWrapperProps {
   browserInfo?: BrowserInfo;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/SSR
+ */
 export const SSRWrapper: React.FC<SSRWrapperProps> = (props) => {
   let { userAgent, browserInfo, children } = props;
 

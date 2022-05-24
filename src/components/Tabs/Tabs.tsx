@@ -17,6 +17,9 @@ export interface TabsProps
 export const TabsModeContext =
   React.createContext<TabsProps["mode"]>("default");
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Tabs
+ */
 const Tabs: React.FunctionComponent<TabsProps> = ({
   children,
   mode,

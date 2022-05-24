@@ -39,6 +39,10 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = ({
 };
 
 const warn = warnOnce("PanelHeaderButton");
+
+/**
+ * @see https://vkcom.github.io/VKUI/#/PanelHeaderButton
+ */
 export const PanelHeaderButton: React.FC<PanelHeaderButtonProps> = ({
   children,
   primary = false,

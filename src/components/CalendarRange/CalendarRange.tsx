@@ -57,6 +57,9 @@ const getIsDaySelected = (day: Date, value?: Array<Date | null>) => {
   );
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/CalendarRange
+ */
 export const CalendarRange: React.FC<CalendarRangeProps> = ({
   value,
   onChange,

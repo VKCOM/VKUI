@@ -9,6 +9,9 @@ import "./RichTooltip.css";
 
 export type RichTooltipProps = Omit<HoverPopperProps, "arrowClassName">;
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/RichTooltip
+ */
 export const RichTooltip: React.FC<RichTooltipProps> = ({
   children,
   arrow = true,

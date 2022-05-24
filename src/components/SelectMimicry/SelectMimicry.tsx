@@ -70,6 +70,9 @@ const SelectMimicryComponent: React.FC<SelectMimicryProps> = ({
   );
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/SelectMimicry
+ */
 export const SelectMimicry = withAdaptivity(SelectMimicryComponent, {
   sizeX: true,
   sizeY: true,

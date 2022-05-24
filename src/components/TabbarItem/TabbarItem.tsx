@@ -30,6 +30,10 @@ export interface TabbarItemProps
 }
 
 const warn = warnOnce("TabbarItem");
+
+/**
+ * @see https://vkcom.github.io/VKUI/#/TabbarItem
+ */
 const TabbarItem: React.FunctionComponent<TabbarItemProps> = ({
   children,
   selected,

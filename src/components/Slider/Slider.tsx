@@ -8,6 +8,9 @@ import {
 
 export type SliderProps = UniversalSliderProps<number>;
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Slider
+ */
 const Slider = ({
   onChange,
   defaultValue,

@@ -54,6 +54,9 @@ export interface CustomSelectOptionProps
 
 const warn = warnOnce("CustomSelectOption");
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/CustomSelectOption
+ */
 export const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
   children,
   hierarchy = 0,

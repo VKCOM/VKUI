@@ -22,6 +22,9 @@ export interface PanelHeaderEditProps extends PanelHeaderButtonProps {
   doneLabel?: string;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/PanelHeaderEdit
+ */
 const PanelHeaderEdit: React.FunctionComponent<PanelHeaderEditProps> = ({
   isActive,
   editLabel,

@@ -42,6 +42,9 @@ export interface RichCellProps extends TappableProps {
   multiline?: boolean;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/RichCell
+ */
 const RichCell: React.FC<RichCellProps> = ({
   children,
   text,

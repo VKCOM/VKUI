@@ -152,6 +152,9 @@ function isVerticalPlacement(placement: Placement) {
   return placement.startsWith("top") || placement.startsWith("bottom");
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Tooltip
+ */
 const Tooltip: React.FC<TooltipProps> = ({
   children,
   isShown: _isShown,

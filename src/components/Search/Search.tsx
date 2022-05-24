@@ -66,6 +66,9 @@ export interface SearchProps
   defaultValue?: string;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Search
+ */
 const Search: React.FC<SearchProps> = ({
   before,
   className,

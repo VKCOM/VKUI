@@ -15,6 +15,10 @@ export interface GridAvatarProps
 export const MAX_GRID_LENGTH = 4;
 
 const warn = warnOnce("GridAvatar");
+
+/**
+ * @see https://vkcom.github.io/VKUI/#/GridAvatar
+ */
 export const GridAvatar: React.FC<GridAvatarProps> = ({
   src = [],
   ...restProps

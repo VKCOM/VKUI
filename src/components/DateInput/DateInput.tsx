@@ -94,6 +94,9 @@ const getInternalValue = (value: CalendarProps["value"]) => {
   return newValue;
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/DateInput
+ */
 export const DateInput: React.FC<DateInputProps> = ({
   enableTime,
   shouldDisableDate,

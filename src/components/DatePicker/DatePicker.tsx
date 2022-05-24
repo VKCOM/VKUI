@@ -207,6 +207,9 @@ const DatePickerNative: React.FC<
   );
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/DatePicker
+ */
 const DatePicker: React.FC<DatePickerProps> = ({
   hasMouse,
   defaultValue,

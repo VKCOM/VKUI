@@ -8,6 +8,9 @@ import { ANDROID, VKCOM } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getTitleFromChildren } from "../../lib/utils";
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/PanelHeaderSubmit
+ */
 const PanelHeaderSubmit: React.FunctionComponent<PanelHeaderButtonProps> = ({
   children,
   ...restProps

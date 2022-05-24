@@ -220,6 +220,9 @@ const HorizontalScrollComponent: React.FC<HorizontalScrollProps> = ({
   );
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/HorizontalScroll
+ */
 export const HorizontalScroll = withAdaptivity(HorizontalScrollComponent, {
   hasMouse: true,
 });

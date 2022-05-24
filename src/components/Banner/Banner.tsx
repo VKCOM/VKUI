@@ -105,6 +105,9 @@ const BannerSubheader: React.FC<BannerTypographyProps> = ({
   );
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Banner
+ */
 const Banner: React.FC<BannerProps> = (props: BannerProps) => {
   const platform = usePlatform();
   const {

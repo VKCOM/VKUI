@@ -61,6 +61,9 @@ export interface PaginationProps
   onChange?(page: number): void;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Pagination
+ */
 export const Pagination: React.FC<PaginationProps> = ({
   currentPage = 1,
   siblingCount = 1,
