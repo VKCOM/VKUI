@@ -13,6 +13,9 @@ export type { HorizontalScrollProps } from "../components/HorizontalScroll/Horiz
 export { ButtonGroup } from "../components/ButtonGroup/ButtonGroup";
 export type { ButtonGroupProps } from "../components/ButtonGroup/ButtonGroup";
 
+export { Switch } from "../components/Switch/Switch";
+export type { SwitchProps } from "../components/Switch/Switch";
+
 export { SegmentedControl } from "../components/SegmentedControl/SegmentedControl";
 export type {
   SegmentedControlProps,

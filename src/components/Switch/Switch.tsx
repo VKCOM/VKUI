@@ -32,14 +32,11 @@ export const Switch: React.FC<SwitchProps> = ({
 
   return (
     <label
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("Switch", platform),
         `Switch--sizeY-${sizeY}`,
-        {
-          "Switch--disabled": restProps.disabled,
-          "Switch--focus-visible": focusVisible,
-        }
+        restProps.disabled && "Switch--disabled",
+        focusVisible && "Switch--focus-visible"
       )}
       className={className}
       style={style}
