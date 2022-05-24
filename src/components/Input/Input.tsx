@@ -15,6 +15,9 @@ export interface InputProps
     HasAlign,
     FormFieldProps {}
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Input
+ */
 const Input: React.FunctionComponent<InputProps> = ({
   type = "text",
   align,

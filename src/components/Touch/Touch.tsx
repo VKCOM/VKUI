@@ -63,6 +63,9 @@ export type TouchEventHandler = (e: TouchEvent) => void;
 export type ClickHandler = (e: React.MouseEvent<HTMLElement>) => void;
 export type DragHandler = (e: React.DragEvent<HTMLElement>) => void;
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Touch
+ */
 export const Touch: React.FC<TouchProps> = ({
   onStart,
   onStartX,

@@ -32,6 +32,9 @@ export const generateVKUITokensClassName = (
   return `vkui--${tokensPlatform}--${appearance}`;
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/AppearanceProvider
+ */
 export const AppearanceProvider: React.FC<AppearanceProviderProps> = ({
   children,
   appearance = "light",

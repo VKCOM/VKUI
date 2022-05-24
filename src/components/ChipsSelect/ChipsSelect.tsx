@@ -96,6 +96,9 @@ const chipsSelectDefaultProps: ChipsSelectProps<any> = {
   },
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/ChipsSelect
+ */
 const ChipsSelect = <Option extends ChipsInputOption>(
   props: ChipsSelectProps<Option>
 ) => {

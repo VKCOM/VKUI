@@ -10,6 +10,9 @@ export interface InfoRowProps extends React.HTMLAttributes<HTMLDivElement> {
   header: React.ReactNode;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/InfoRow
+ */
 const InfoRow: React.FunctionComponent<InfoRowProps> = ({
   header,
   children,

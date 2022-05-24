@@ -39,6 +39,9 @@ export interface HorizontalCellProps
   disabled?: boolean;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/HorizontalCell
+ */
 export const HorizontalCell: React.FC<HorizontalCellProps> = ({
   className,
   header,

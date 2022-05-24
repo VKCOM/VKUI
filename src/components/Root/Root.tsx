@@ -29,6 +29,10 @@ export interface RootState {
 }
 
 const warn = warnOnce("Root");
+
+/**
+ * @see https://vkcom.github.io/VKUI/#/Root
+ */
 const Root: React.FC<RootProps> = ({
   children,
   activeView: _activeView,

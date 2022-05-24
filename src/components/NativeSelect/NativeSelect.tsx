@@ -30,6 +30,9 @@ export interface SelectState {
   notSelected?: boolean;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/NativeSelect
+ */
 const NativeSelect: React.FC<NativeSelectProps> = ({
   style,
   defaultValue = "",

@@ -6,6 +6,9 @@ import "./Link.css";
 
 export type LinkProps = TappableProps;
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Link
+ */
 const Link: React.FC<LinkProps> = ({ children, ...restProps }: LinkProps) => {
   const platform = usePlatform();
 

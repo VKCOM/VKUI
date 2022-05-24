@@ -11,6 +11,9 @@ import {
 import { getSizeYClassName } from "../../../helpers/getSizeYClassName";
 import "./SegmentedControlOption.css";
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/SegmentedControl
+ */
 export const SegmentedControlOption: React.FC<VisuallyHiddenInputProps> = ({
   className,
   style,

@@ -16,6 +16,9 @@ export interface TabsItemProps extends React.HTMLAttributes<HTMLElement> {
   selected?: boolean;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/TabsItem
+ */
 const TabsItem: React.FC<TabsItemProps> = ({
   children,
   selected,

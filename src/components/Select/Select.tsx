@@ -18,6 +18,9 @@ export const SelectType = {
   accent: "accent",
 } as const;
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/SelectTypography
+ */
 export const SelectTypography: React.FC<
   Pick<CustomSelectProps, "selectType">
 > = ({ selectType = SelectType.default, children, ...restProps }) => {
@@ -64,6 +67,9 @@ const SelectComponent: React.FC<SelectProps & AdaptivityContextInterface> = ({
   );
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Select
+ */
 export const Select = withAdaptivity(SelectComponent, {
   hasMouse: true,
 });

@@ -10,6 +10,9 @@ export interface CardGridProps extends React.HTMLAttributes<HTMLDivElement> {
   size: "s" | "m" | "l";
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/CardGrid
+ */
 const CardGrid: React.FunctionComponent<CardGridProps> = ({
   children,
   size,

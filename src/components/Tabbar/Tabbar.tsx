@@ -12,6 +12,9 @@ export interface TabbarProps extends React.HTMLAttributes<HTMLDivElement> {
   itemsLayout?: "vertical" | "horizontal" | "auto";
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Tabbar
+ */
 const Tabbar: React.FunctionComponent<TabbarProps> = (props: TabbarProps) => {
   const { children, shadow, itemsLayout, ...restProps } = props;
   const platform = usePlatform();

@@ -32,6 +32,9 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
   scroll?: "global" | "contain";
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/AppRoot
+ */
 export const AppRoot: React.FC<AppRootProps> = ({
   children,
   mode = "full",

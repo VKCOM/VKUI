@@ -119,7 +119,7 @@ export { GridAvatar } from "./components/GridAvatar/GridAvatar";
 export type { GridAvatarProps } from "./components/GridAvatar/GridAvatar";
 export { InitialsAvatar } from "./components/InitialsAvatar/InitialsAvatar";
 export type { InitialsAvatarProps } from "./components/InitialsAvatar/InitialsAvatar";
-export { default as Progress } from "./components/Progress/Progress";
+export { Progress } from "./components/Progress/Progress";
 export type { ProgressProps } from "./components/Progress/Progress";
 export { default as Search } from "./components/Search/Search";
 export type { SearchProps } from "./components/Search/Search";
@@ -304,6 +304,7 @@ export { useAdaptivity } from "./hooks/useAdaptivity";
 export { useAppearance } from "./hooks/useAppearance";
 export { usePagination } from "./hooks/usePagination";
 export { useScrollLock } from "./components/AppRoot/ScrollContext";
+export { useNavTransition } from "./components/NavTransitionContext/NavTransitionContext";
 
 /**
  * Utils
@@ -331,3 +332,4 @@ export type { AlignType, HasPlatform, HasInsets } from "./types";
 export type { NavIdProps } from "./lib/getNavId";
 export type { PlatformType } from "./lib/platform";
 export type { AdaptivityProps } from "./hoc/withAdaptivity";
+export type { TransitionContextProps } from "./components/NavTransitionContext/NavTransitionContext";

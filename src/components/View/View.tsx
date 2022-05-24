@@ -93,6 +93,10 @@ export interface ViewState {
 }
 
 const warn = warnOnce("View");
+
+/**
+ * @see https://vkcom.github.io/VKUI/#/View
+ */
 class View extends React.Component<ViewProps & DOMProps, ViewState> {
   constructor(props: ViewProps) {
     super(props);

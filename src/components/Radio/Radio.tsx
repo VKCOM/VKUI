@@ -18,6 +18,9 @@ export interface RadioProps
   description?: React.ReactNode;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Radio
+ */
 const Radio: React.FC<RadioProps> = (props: RadioProps) => {
   const {
     children,

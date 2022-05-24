@@ -24,6 +24,9 @@ export interface FocusTrapProps
   timeout?: number;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/FocusTrap
+ */
 export const FocusTrap: React.FC<FocusTrapProps> = ({
   Component = "div",
   onClose = noop,

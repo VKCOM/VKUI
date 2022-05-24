@@ -14,6 +14,9 @@ export interface SubheadProps
   weight?: "1" | "2" | "3";
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Subhead
+ */
 export const Subhead: React.FC<SubheadProps> = ({
   children,
   weight,

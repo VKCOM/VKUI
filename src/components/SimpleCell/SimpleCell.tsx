@@ -46,6 +46,9 @@ export interface SimpleCellOwnProps extends HasComponent {
 
 export interface SimpleCellProps extends SimpleCellOwnProps, TappableProps {}
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/SimpleCell
+ */
 const SimpleCell: React.FC<SimpleCellProps> = ({
   badge,
   before,

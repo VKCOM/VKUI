@@ -7,6 +7,9 @@ export interface GradientProps extends React.HTMLAttributes<HTMLDivElement> {
   to?: "top" | "bottom";
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Gradient
+ */
 export const Gradient: React.FC<GradientProps> = ({
   mode = "tint",
   children,

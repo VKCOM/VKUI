@@ -9,6 +9,9 @@ import "./ScreenSpinner.css";
 export type ScreenSpinnerProps = React.HTMLAttributes<HTMLDivElement> &
   SpinnerProps;
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/ScreenSpinner
+ */
 const ScreenSpinner: React.FC<ScreenSpinnerProps> = (
   props: ScreenSpinnerProps
 ) => {

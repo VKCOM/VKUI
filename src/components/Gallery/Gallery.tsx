@@ -511,6 +511,9 @@ const BaseGalleryAdaptive = withAdaptivity(withDOM(BaseGallery), {
   hasMouse: true,
 });
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Gallery
+ */
 const Gallery: React.FC<GalleryProps> = ({
   initialSlideIndex = 0,
   children,

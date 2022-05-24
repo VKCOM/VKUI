@@ -68,6 +68,9 @@ const PanelHeaderIn: React.FC<PanelHeaderProps> = ({
   );
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/PanelHeader
+ */
 const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
   const {
     left,

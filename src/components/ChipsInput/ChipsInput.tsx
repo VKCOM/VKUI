@@ -75,6 +75,9 @@ export const chipsInputDefaultProps: ChipsInputProps<any> = {
   },
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/ChipsInput
+ */
 export const ChipsInput = <Option extends ChipsInputOption>(
   props: ChipsInputProps<Option>
 ) => {

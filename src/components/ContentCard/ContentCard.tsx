@@ -42,6 +42,9 @@ export interface ContentCardProps
   mode?: CardProps["mode"];
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/ContentCard
+ */
 const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
   const {
     subtitle,

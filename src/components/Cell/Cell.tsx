@@ -47,6 +47,9 @@ export interface CellProps
   draggerLabel?: string;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Cell
+ */
 export const Cell: React.FC<CellProps> = ({
   mode,
   onRemove = noop,

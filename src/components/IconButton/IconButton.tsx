@@ -10,6 +10,9 @@ import "./IconButton.css";
 
 export type IconButtonProps = TappableProps;
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/IconButton
+ */
 const IconButton: React.FC<IconButtonProps> = ({
   children,
   Component = "button",

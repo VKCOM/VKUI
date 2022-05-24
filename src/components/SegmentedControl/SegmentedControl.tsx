@@ -29,6 +29,10 @@ export interface SegmentedControlProps
 }
 
 const warn = warnOnce("SegmentedControl");
+
+/**
+ * @see https://vkcom.github.io/VKUI/#/SegmentedControl
+ */
 export const SegmentedControl: React.FC<SegmentedControlProps> = ({
   size = "l",
   name,

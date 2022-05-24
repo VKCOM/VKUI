@@ -62,6 +62,9 @@ function getInitialsFontSize(avatarSize: number) {
   return calculatedFontSize + evenFix;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/InitialsAvatar
+ */
 export const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
   size = AVATAR_DEFAULT_SIZE,
   children,

@@ -18,6 +18,9 @@ export interface PanelProps
   centered?: boolean;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Panel
+ */
 export const Panel: React.FC<PanelProps> = ({
   centered = false,
   children,

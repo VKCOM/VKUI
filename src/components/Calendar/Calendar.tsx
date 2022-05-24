@@ -60,6 +60,9 @@ export interface CalendarProps
 
 const warn = warnOnce("Calendar");
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Calendar
+ */
 export const Calendar: React.FC<CalendarProps> = ({
   value,
   onChange,

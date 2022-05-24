@@ -18,6 +18,9 @@ export interface PanelHeaderContextProps
   onClose: VoidFunction;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/PanelHeaderContext
+ */
 export const PanelHeaderContext: React.FC<PanelHeaderContextProps> = ({
   children,
   onClose,

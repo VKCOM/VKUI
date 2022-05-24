@@ -69,6 +69,9 @@ function cancelEvent(event: any) {
   return false;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/PullToRefresh
+ */
 class PullToRefresh extends React.PureComponent<
   PullToRefreshProps & DOMProps,
   PullToRefreshState

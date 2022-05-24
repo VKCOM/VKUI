@@ -23,6 +23,9 @@ export interface TabbarItemProps
   indicator?: React.ReactNode;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/TabbarItem
+ */
 const TabbarItem: React.FunctionComponent<TabbarItemProps> = ({
   children,
   selected,

@@ -11,6 +11,9 @@ export interface CardProps
   mode?: "tint" | "shadow" | "outline";
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Card
+ */
 export const Card: React.FC<CardProps> = ({
   mode = "tint",
   children,

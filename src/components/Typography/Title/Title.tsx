@@ -13,6 +13,9 @@ export interface TitleProps
   level: "1" | "2" | "3";
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Title
+ */
 export const Title: React.FC<TitleProps> = ({
   children,
   weight,

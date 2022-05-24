@@ -21,6 +21,9 @@ export const MOBILE_SIZE = 320;
 export const MOBILE_LANDSCAPE_HEIGHT = 414;
 export const MEDIUM_HEIGHT = 720;
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/AdaptivityProvider
+ */
 const AdaptivityProvider: React.FC<AdaptivityProps> = (props) => {
   const adaptivityRef = React.useRef<ReturnType<
     typeof calculateAdaptivity

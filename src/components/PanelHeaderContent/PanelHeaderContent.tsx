@@ -45,6 +45,9 @@ const PanelHeaderChildren: React.FC<PanelHeaderChildrenProps> = ({
   );
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/PanelHeaderContent
+ */
 const PanelHeaderContent: React.FunctionComponent<PanelHeaderContentProps> = ({
   className,
   style,

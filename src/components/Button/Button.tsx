@@ -24,6 +24,9 @@ export interface ButtonProps
   extends Omit<TappableProps, "size">,
     VKUIButtonProps {}
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Button
+ */
 const Button: React.FC<ButtonProps> = ({
   size = "s",
   mode = "primary",

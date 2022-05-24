@@ -26,6 +26,9 @@ export interface FormItemProps
   removable?: boolean;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/FormItem
+ */
 export const FormItem: React.FC<FormItemProps> = ({
   children,
   top,

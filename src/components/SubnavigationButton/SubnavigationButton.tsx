@@ -42,6 +42,9 @@ const SubnavigationButtonTypography: React.FC<SubnavButtonTypographyProps> = ({
   return <Caption level={textLevel === 2 ? "1" : "2"} {...restProps} />;
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/SubnavigationButton
+ */
 export const SubnavigationButton: React.FC<SubnavigationButtonProps> = (
   props: SubnavigationButtonProps
 ) => {

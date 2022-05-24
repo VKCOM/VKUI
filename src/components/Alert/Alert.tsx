@@ -299,6 +299,9 @@ class AlertComponent extends React.Component<TAlertProps, AlertState> {
   }
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Alert
+ */
 export const Alert = withContext(
   withPlatform(
     withAdaptivity(AlertComponent, {

@@ -44,6 +44,9 @@ export interface PromoBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   onClose: () => void;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/PromoBanner
+ */
 const PromoBanner = (props: PromoBannerProps) => {
   const platform = usePlatform();
   const { bannerData = {}, onClose, ...restProps } = props;

@@ -14,6 +14,9 @@ export interface CaptionProps
   caps?: boolean;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Caption
+ */
 export const Caption: React.FC<CaptionProps> = ({
   children,
   weight,

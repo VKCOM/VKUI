@@ -13,6 +13,9 @@ export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
   size?: "small" | "regular" | "large" | "medium";
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Spinner
+ */
 const Spinner: React.FC<SpinnerProps> = ({
   size,
   ...restProps

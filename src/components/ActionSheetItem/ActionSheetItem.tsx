@@ -37,6 +37,9 @@ export interface ActionSheetItemProps
   onImmediateClick?: React.MouseEventHandler<HTMLElement>;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/ActionSheetItem
+ */
 const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
   children,
   autoClose,

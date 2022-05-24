@@ -21,6 +21,9 @@ export type PanelHeaderBackProps = PanelHeaderButtonProps & {
   "aria-label"?: string;
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/PanelHeaderBack
+ */
 const PanelHeaderBack: React.FC<PanelHeaderBackProps> = ({
   label,
   "aria-label": ariaLabel = "Назад",

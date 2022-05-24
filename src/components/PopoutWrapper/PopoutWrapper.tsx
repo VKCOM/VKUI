@@ -17,6 +17,9 @@ export interface PopoutWrapperProps
   closing?: boolean;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/PopoutWrapper
+ */
 export const PopoutWrapper: React.FC<PopoutWrapperProps> = ({
   alignY = "center",
   alignX = "center",

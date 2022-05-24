@@ -14,6 +14,9 @@ export interface ModalPageHeaderProps
     Omit<PanelHeaderProps, "fixed" | "shadow">,
     HasRef<HTMLDivElement> {}
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/ModalPageHeader
+ */
 const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = ({
   children,
   separator = true,

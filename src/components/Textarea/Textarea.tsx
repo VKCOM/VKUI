@@ -19,6 +19,9 @@ export interface TextareaProps
   defaultValue?: string;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Textarea
+ */
 const Textarea: React.FC<TextareaProps> = React.memo(
   ({
     defaultValue = "",

@@ -5,6 +5,9 @@ export interface PanelSpinnerProps extends SpinnerProps {
   height?: number;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/PanelSpinner
+ */
 const PanelSpinner: React.FunctionComponent<PanelSpinnerProps> = ({
   height,
   style,

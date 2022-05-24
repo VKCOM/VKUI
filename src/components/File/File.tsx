@@ -11,6 +11,9 @@ export interface FileProps
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLElement> {}
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/File
+ */
 export const File: React.FC<FileProps> = ({
   children = "Выберите файл",
   align = "left",

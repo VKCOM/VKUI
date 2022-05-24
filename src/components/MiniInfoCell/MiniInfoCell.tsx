@@ -49,6 +49,9 @@ export interface MiniInfoCellProps
   textLevel?: "primary" | "secondary";
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/MiniInfoCell
+ */
 export const MiniInfoCell: React.FC<MiniInfoCellProps> = (
   props: MiniInfoCellProps
 ) => {

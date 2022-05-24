@@ -91,6 +91,9 @@ const getInternalValue = (value: CalendarRangeProps["value"]) => {
   return newValue;
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/DateRangeInput
+ */
 export const DateRangeInput: React.FC<DateRangeInputProps> = ({
   shouldDisableDate,
   disableFuture,

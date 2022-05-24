@@ -43,6 +43,9 @@ interface FormFieldOwnProps
   disabled?: boolean;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/FormField
+ */
 export const FormField: React.FC<FormFieldOwnProps> = ({
   Component = "div",
   children,

@@ -13,6 +13,9 @@ export interface HeadlineProps
   level?: "1" | "2";
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Headline
+ */
 export const Headline: React.FC<HeadlineProps> = ({
   children,
   weight = "3",

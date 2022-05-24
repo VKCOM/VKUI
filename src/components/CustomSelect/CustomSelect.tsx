@@ -756,4 +756,7 @@ class CustomSelectComponent extends React.Component<
   }
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/CustomSelect
+ */
 export const CustomSelect = withPlatform(CustomSelectComponent);

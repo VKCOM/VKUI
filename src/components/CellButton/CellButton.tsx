@@ -10,6 +10,9 @@ export interface CellButtonProps extends SimpleCellProps {
   centered?: boolean;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/CellButton
+ */
 const CellButton: React.FC<CellButtonProps> = ({
   centered = false,
   mode = "primary",

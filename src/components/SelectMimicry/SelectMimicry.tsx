@@ -22,6 +22,9 @@ export interface SelectMimicryProps
   selectType?: keyof typeof SelectType;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/SelectMimicry
+ */
 const SelectMimicry: React.FC<SelectMimicryProps> = ({
   tabIndex = 0,
   placeholder,

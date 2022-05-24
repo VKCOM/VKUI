@@ -7,6 +7,9 @@ import "./ModalDismissButton.css";
 
 export type ModalDismissButtonProps = React.HTMLAttributes<HTMLButtonElement>;
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/ModalDismissButton
+ */
 const ModalDismissButton: React.FC<ModalDismissButtonProps> = (
   props: ModalDismissButtonProps
 ) => {

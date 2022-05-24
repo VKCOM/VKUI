@@ -18,6 +18,9 @@ export interface SwitchProps
   extends VisuallyHiddenInputProps,
     HasRootRef<HTMLLabelElement> {}
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/Switch
+ */
 export const Switch: React.FC<SwitchProps> = ({
   style,
   className,
