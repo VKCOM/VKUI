@@ -309,6 +309,7 @@ export { useAdaptivity } from "./hooks/useAdaptivity";
 export { useAppearance } from "./hooks/useAppearance";
 export { usePagination } from "./hooks/usePagination";
 export { useScrollLock } from "./components/AppRoot/ScrollContext";
+export { useNavTransition } from "./components/NavTransitionContext/NavTransitionContext";
 
 /**
  * Utils
@@ -344,3 +345,4 @@ export type { AlignType, HasPlatform, HasInsets } from "./types";
 export type { NavIdProps } from "./lib/getNavId";
 export type { PlatformType } from "./lib/platform";
 export type { AdaptivityProps } from "./hoc/withAdaptivity";
+export type { TransitionContextProps } from "./components/NavTransitionContext/NavTransitionContext";
