@@ -21,10 +21,11 @@ interface Config {
   deviceHasHover?: boolean;
 }
 
+// TODO: удалить после перевода классовый компонентов на функциональные
 export function withAdaptivity<T extends AdaptivityProps>(
   TargetComponent: React.ComponentType<T>,
   config: Config
-): React.FC<Omit<T, keyof AdaptivityContextInterface> & SizeProps> {
+): React.FC<Omit<T, keyof AdaptivityContextInterface>> {
   const AdaptivityConsumer: React.ComponentType<
     Omit<T, keyof AdaptivityContextInterface> & SizeProps
   > = (props: Omit<T, keyof AdaptivityContextInterface> & SizeProps) => {
