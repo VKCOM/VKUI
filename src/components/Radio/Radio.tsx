@@ -24,10 +24,7 @@ export interface RadioProps
   description?: React.ReactNode;
 }
 
-/**
- * @see https://vkcom.github.io/VKUI/#/Radio
- */
-const Radio: React.FC<RadioProps> = (props: RadioProps) => {
+const RadioComponent: React.FC<RadioProps> = (props: RadioProps) => {
   const {
     children,
     description,
@@ -75,7 +72,9 @@ const Radio: React.FC<RadioProps> = (props: RadioProps) => {
   );
 };
 
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(Radio, {
+/**
+ * @see https://vkcom.github.io/VKUI/#/Radio
+ */
+export const Radio = withAdaptivity(RadioComponent, {
   sizeY: true,
 });
