@@ -76,3 +76,6 @@ export type { ProgressProps } from "../components/Progress/Progress";
 
 export { DateInput } from "../components/DateInput/DateInput";
 export type { DateInputProps } from "../components/DateInput/DateInput";
+
+export { DateRangeInput } from "../components/DateRangeInput/DateRangeInput";
+export type { DateRangeInputProps } from "../components/DateRangeInput/DateRangeInput";
