@@ -1,5 +1,5 @@
 const path = require("path");
-const { cssPropSources } = require("./postcss.config");
+const { cssCustomPropertiesPaths } = require("./shared");
 
 module.exports = {
   extends: ["stylelint-config-standard", "stylelint-config-prettier"],
@@ -27,7 +27,7 @@ module.exports = {
       true,
       {
         importFrom: [
-          ...cssPropSources,
+          ...cssCustomPropertiesPaths,
           path.join(
             __dirname,
             "node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css"
