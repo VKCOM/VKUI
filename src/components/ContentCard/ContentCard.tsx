@@ -136,9 +136,7 @@ const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
             </Title>
           )}
           {hasReactNode(text) && (
-            <Text vkuiClass="ContentCard__text" weight="regular">
-              {text}
-            </Text>
+            <Text vkuiClass="ContentCard__text">{text}</Text>
           )}
           {hasReactNode(caption) && (
             <Caption vkuiClass="ContentCard__text">{caption}</Caption>

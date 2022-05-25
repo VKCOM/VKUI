@@ -217,9 +217,7 @@ const SnackbarComponent: React.FC<
             {before && <div vkuiClass="Snackbar__before">{before}</div>}
 
             <div vkuiClass="Snackbar__content">
-              <Text weight="regular" vkuiClass="Snackbar__content-text">
-                {children}
-              </Text>
+              <Text vkuiClass="Snackbar__content-text">{children}</Text>
 
               {action && (
                 <Button

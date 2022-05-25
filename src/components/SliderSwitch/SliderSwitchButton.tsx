@@ -48,7 +48,7 @@ export const SliderSwitchButton: React.FunctionComponent<ButtonProps> = (
       hasActive={false}
       hoverMode="opacity"
     >
-      <Text weight="medium">{children}</Text>
+      <Text weight="2">{children}</Text>
     </Tappable>
   );
 };

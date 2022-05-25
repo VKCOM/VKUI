@@ -4,7 +4,7 @@ import "./Para.css";
 
 export const ParaRenderer = ({ children }) => {
   return (
-    <Text Component="p" className="Para" weight="regular">
+    <Text Component="p" className="Para">
       {children}
     </Text>
   );

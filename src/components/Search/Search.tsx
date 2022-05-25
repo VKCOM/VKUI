@@ -37,11 +37,7 @@ const SearchPlaceholderTypography: React.FC<
         </Title>
       );
     case VKCOM:
-      return (
-        <Text {...restProps} weight="regular">
-          {children}
-        </Text>
-      );
+      return <Text {...restProps}>{children}</Text>;
     case ANDROID:
     default:
       return (

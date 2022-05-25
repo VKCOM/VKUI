@@ -60,7 +60,7 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = (
   switch (size) {
     case "l":
       if (isCompact) {
-        return <Text weight="medium" {...restProps} />;
+        return <Text weight="2" {...restProps} />;
       }
       if (platform === ANDROID) {
         return <Headline weight="2" {...restProps} />;
@@ -73,7 +73,7 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = (
         );
       }
 
-      return <Text weight="medium" {...restProps} />;
+      return <Text weight="2" {...restProps} />;
     case "s":
     default:
       if (platform === IOS) {

@@ -10,7 +10,7 @@ describe("Text", () => {
     ),
     [
       {
-        weight: ["regular", "medium", "semibold"],
+        weight: ["3", "2", "1"],
       },
     ]
   );

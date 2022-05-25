@@ -45,7 +45,7 @@ export const SelectTypography: React.FC<
     platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
 
   return (
-    <Component weight="regular" Component="span" {...restProps}>
+    <Component Component="span" {...restProps}>
       {children}
     </Component>
   );

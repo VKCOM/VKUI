@@ -33,7 +33,7 @@ const CounterTypography: React.FC<CounterTypographyProps> = ({
       {...restProps}
     />
   ) : (
-    <Text weight="medium" {...restProps} />
+    <Text weight="2" {...restProps} />
   );
 };
 

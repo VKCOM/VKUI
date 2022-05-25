@@ -80,7 +80,7 @@ export const MiniInfoCell: React.FC<MiniInfoCellProps> = (
       <span vkuiClass="MiniInfoCell__icon">{before}</span>
       <Text
         vkuiClass="MiniInfoCell__content"
-        weight={mode === "more" ? "medium" : "regular"}
+        weight={mode === "more" ? "2" : undefined}
       >
         {children}
       </Text>

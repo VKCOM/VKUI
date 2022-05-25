@@ -30,7 +30,7 @@ const PanelHeaderChildren: React.FC<PanelHeaderChildrenProps> = ({
 }) => {
   if (platform === Platform.VKCOM) {
     return (
-      <Text Component="div" weight="medium">
+      <Text Component="div" weight="2">
         {children}
       </Text>
     );

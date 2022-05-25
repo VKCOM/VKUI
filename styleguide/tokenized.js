@@ -25,4 +25,5 @@ export const tokenized = [
   "Progress",
   "DateInput",
   "DateRangeInput",
+  "Text",
 ];

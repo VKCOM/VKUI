@@ -75,17 +75,13 @@ const RichCell: React.FC<RichCellProps> = ({
       <div vkuiClass="RichCell__in">
         {/* Этот after будет скрыт из верстки. Он нужен для CSS */}
         {after}
-        <Text weight="medium" vkuiClass="RichCell__content">
+        <Text weight="2" vkuiClass="RichCell__content">
           <div vkuiClass="RichCell__children">{children}</div>
           {hasReactNode(after) && (
             <div vkuiClass="RichCell__after">{after}</div>
           )}
         </Text>
-        {hasReactNode(text) && (
-          <Text weight="regular" vkuiClass="RichCell__text">
-            {text}
-          </Text>
-        )}
+        {hasReactNode(text) && <Text vkuiClass="RichCell__text">{text}</Text>}
         {hasReactNode(caption) && (
           <Subhead Component="span" vkuiClass="RichCell__caption">
             {caption}

@@ -33,9 +33,7 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = ({
     );
   }
 
-  return (
-    <Text weight={platform === VKCOM ? "regular" : "medium"}>{children}</Text>
-  );
+  return <Text weight={platform === VKCOM ? undefined : "2"}>{children}</Text>;
 };
 
 const warn = warnOnce("PanelHeaderButton");

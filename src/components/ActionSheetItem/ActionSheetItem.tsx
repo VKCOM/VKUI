@@ -106,15 +106,13 @@ const ActionSheetItemComponent: React.FC<ActionSheetItemProps> = ({
           {sizeY === SizeType.COMPACT ? (
             <React.Fragment>
               <Text
-                weight={mode === "cancel" ? "medium" : "regular"}
+                weight={mode === "cancel" ? "2" : undefined}
                 vkuiClass="ActionSheetItem__children"
               >
                 {children}
               </Text>
               {hasReactNode(meta) && (
-                <Text weight="regular" vkuiClass="ActionSheetItem__meta">
-                  {meta}
-                </Text>
+                <Text vkuiClass="ActionSheetItem__meta">{meta}</Text>
               )}
             </React.Fragment>
           ) : (

@@ -51,7 +51,7 @@ export const SegmentedControlOption: React.FC<VisuallyHiddenInputProps> = ({
           {children}
         </Caption>
       ) : (
-        <Text vkuiClass="SegmentedControlOption__content" weight="medium">
+        <Text vkuiClass="SegmentedControlOption__content" weight="2">
           {children}
         </Text>
       )}
