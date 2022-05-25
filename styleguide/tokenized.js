@@ -23,4 +23,5 @@ export const tokenized = [
   "ChipsSelect",
   "Headline",
   "Progress",
+  "DateInput",
 ];

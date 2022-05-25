@@ -73,3 +73,6 @@ export type { HeadlineProps } from "../components/Typography/Headline/Headline";
 
 export { Progress } from "../components/Progress/Progress";
 export type { ProgressProps } from "../components/Progress/Progress";
+
+export { DateInput } from "../components/DateInput/DateInput";
+export type { DateInputProps } from "../components/DateInput/DateInput";
