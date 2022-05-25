@@ -28,12 +28,11 @@ const TabsItem: React.FC<TabsItemProps> = ({
   const platform = usePlatform();
   const mode: TabsProps["mode"] = React.useContext(TabsModeContext);
 
-  // TODO: fix props
-  let TypographyComponent =
+  let ItemTypography =
     mode === "buttons" || mode === "segmented" ? Subhead : Headline;
 
   if (platform === VKCOM) {
-    TypographyComponent = Text;
+    ItemTypography = Text;
   }
 
   return (
@@ -47,13 +46,9 @@ const TabsItem: React.FC<TabsItemProps> = ({
       activeMode="TabsItem--active"
       focusVisibleMode={mode === "segmented" ? "outside" : "inside"}
     >
-      <TypographyComponent
-        Component="span"
-        vkuiClass="TabsItem__in"
-        weight="medium"
-      >
+      <ItemTypography Component="span" vkuiClass="TabsItem__in" weight="2">
         {children}
-      </TypographyComponent>
+      </ItemTypography>
       {hasReactNode(after) && <div vkuiClass="TabsItem__after">{after}</div>}
     </Tappable>
   );
