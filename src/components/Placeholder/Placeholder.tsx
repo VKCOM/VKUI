@@ -38,32 +38,27 @@ export const Placeholder = ({
   stretched,
   getRootRef,
   ...restProps
-}: PlaceholderProps) => {
-  return (
-    <div
-      {...restProps}
-      ref={getRootRef}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames("Placeholder", {
-        "Placeholder--stretched": stretched,
-      })}
-    >
-      <div vkuiClass="Placeholder__in">
-        {hasReactNode(icon) && <div vkuiClass="Placeholder__icon">{icon}</div>}
-        {hasReactNode(header) && (
-          <Title level="2" weight="2" vkuiClass="Placeholder__header">
-            {header}
-          </Title>
-        )}
-        {hasReactNode(children) && (
-          <Headline weight="3" vkuiClass="Placeholder__text">
-            {children}
-          </Headline>
-        )}
-        {hasReactNode(action) && (
-          <div vkuiClass="Placeholder__action">{action}</div>
-        )}
-      </div>
+}: PlaceholderProps) => (
+  <div
+    {...restProps}
+    ref={getRootRef}
+    vkuiClass={classNames("Placeholder", stretched && "Placeholder--stretched")}
+  >
+    <div vkuiClass="Placeholder__in">
+      {hasReactNode(icon) && <div vkuiClass="Placeholder__icon">{icon}</div>}
+      {hasReactNode(header) && (
+        <Title level="2" weight="2" vkuiClass="Placeholder__header">
+          {header}
+        </Title>
+      )}
+      {hasReactNode(children) && (
+        <Headline weight="3" vkuiClass="Placeholder__text">
+          {children}
+        </Headline>
+      )}
+      {hasReactNode(action) && (
+        <div vkuiClass="Placeholder__action">{action}</div>
+      )}
     </div>
-  );
-};
+  </div>
+);
