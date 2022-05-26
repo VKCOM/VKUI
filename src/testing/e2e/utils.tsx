@@ -191,6 +191,7 @@ export function describeScreenshotFuzz<Props>(
                               <div>{prettyProps(props)}</div>
                               <div>
                                 <AdaptivityProvider
+                                  {...adaptivityProps}
                                   sizeX={props.sizeX}
                                   sizeY={props.sizeY}
                                 >
