@@ -2,6 +2,7 @@ import * as React from "react";
 import { hasMouse as _hasMouse } from "@vkontakte/vkjs";
 import {
   AdaptivityContext,
+  AdaptivityContextInterface,
   AdaptivityProps,
   SizeType,
   ViewHeight,
@@ -30,11 +31,17 @@ const AdaptivityProvider: React.FC<AdaptivityProps> = (props) => {
   > | null>(null);
   const [, updateAdaptivity] = React.useState({});
   const bridge = useBridgeAdaptivity();
+  const parentContext = React.useContext(AdaptivityContext);
 
   const { window } = useDOM();
 
   if (!adaptivityRef.current) {
-    adaptivityRef.current = calculateAdaptivity(props, bridge, window);
+    adaptivityRef.current = calculateAdaptivity(
+      props,
+      bridge,
+      parentContext,
+      window
+    );
   }
 
   React.useEffect(() => {
@@ -43,7 +50,12 @@ const AdaptivityProvider: React.FC<AdaptivityProps> = (props) => {
         return;
       }
 
-      const calculated = calculateAdaptivity(props, bridge, window);
+      const calculated = calculateAdaptivity(
+        props,
+        bridge,
+        parentContext,
+        window
+      );
       const { viewWidth, viewHeight, sizeX, sizeY, hasMouse, deviceHasHover } =
         adaptivityRef.current;
 
@@ -76,6 +88,7 @@ const AdaptivityProvider: React.FC<AdaptivityProps> = (props) => {
     window,
     props,
     bridge,
+    parentContext,
   ]);
 
   return (
@@ -88,6 +101,7 @@ const AdaptivityProvider: React.FC<AdaptivityProps> = (props) => {
 function calculateAdaptivity(
   props: AdaptivityProps,
   bridge: BridgeAdaptivity,
+  parentContext: AdaptivityContextInterface,
   window?: Window
 ) {
   let windowWidth = 0;
@@ -166,12 +180,12 @@ function calculateAdaptivity(
   }
 
   return {
-    viewWidth,
-    viewHeight,
-    sizeX,
-    sizeY,
-    hasMouse,
-    deviceHasHover: props.deviceHasHover,
+    viewWidth: viewWidth ?? parentContext.viewWidth,
+    viewHeight: viewHeight ?? parentContext.viewHeight,
+    sizeX: sizeX ?? parentContext.sizeX,
+    sizeY: sizeY ?? parentContext.sizeY,
+    hasMouse: hasMouse ?? parentContext.hasMouse,
+    deviceHasHover: props.deviceHasHover ?? parentContext.deviceHasHover,
   };
 }
 

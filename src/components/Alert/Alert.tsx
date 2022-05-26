@@ -299,6 +299,7 @@ class AlertComponent extends React.Component<TAlertProps, AlertState> {
   }
 }
 
+// TODO: Удалить после перевода Alert на функциональный компонент
 const AlertComponentWrapper: React.FC<AlertProps> = (props) => {
   const { viewWidth } = useAdaptivity();
 
