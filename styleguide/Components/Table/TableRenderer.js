@@ -106,7 +106,7 @@ export const TableRenderer = ({ columns, rows, getRowKey }) => {
             <tr className="Table__tr Table__tr--head">
               {columns.map(({ caption }) => (
                 <th key={caption} className="Table__th">
-                  <Text weight="regular">{caption}</Text>
+                  <Text>{caption}</Text>
                 </th>
               ))}
             </tr>

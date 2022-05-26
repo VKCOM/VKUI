@@ -10,7 +10,7 @@ import { hasReactNode } from "../../lib/utils";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { withAdaptivity, SizeType } from "../../hoc/withAdaptivity";
 import { Title } from "../Typography/Title/Title";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import { Headline } from "../Typography/Headline/Headline";
 import "./SimpleCell.css";
@@ -59,7 +59,7 @@ const SimpleCellTypography: React.FC<SimpleCellTypographyProps> = (
   const platform = usePlatform();
 
   if (sizeY === SizeType.COMPACT) {
-    return <Text Component="span" weight="regular" {...props} />;
+    return <Text {...props} />;
   } else if (platform === ANDROID) {
     return <Headline Component="span" weight="3" {...props} />;
   } else {

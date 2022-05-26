@@ -8,7 +8,7 @@ import { Platform } from "../../lib/platform";
 import { Headline } from "../Typography/Headline/Headline";
 import { Caption } from "../Typography/Caption/Caption";
 import { Title } from "../Typography/Title/Title";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import "./Header.css";
 
@@ -68,33 +68,6 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
   return null;
 };
 
-type HeaderAsideProps = Pick<HeaderProps, "aside"> & HasPlatform & HasComponent;
-
-const HeaderAside: React.FC<HeaderAsideProps> = ({
-  platform,
-  ...restProps
-}) => {
-  return platform === Platform.VKCOM ? (
-    <Subhead {...restProps} />
-  ) : (
-    <Text weight="regular" {...restProps} />
-  );
-};
-
-type HeaderSubtitleProps = Pick<HeaderProps, "subtitle" | "mode"> &
-  HasComponent;
-
-const HeaderSubtitle: React.FC<HeaderSubtitleProps> = ({
-  mode,
-  ...restProps
-}) => {
-  return mode === "secondary" ? (
-    <Subhead {...restProps} />
-  ) : (
-    <Caption {...restProps} />
-  );
-};
-
 /**
  * @see https://vkcom.github.io/VKUI/#/Header
  */
@@ -109,6 +82,9 @@ const Header: React.FC<HeaderProps> = ({
   ...restProps
 }: HeaderProps) => {
   const platform = usePlatform();
+
+  const AsideTypography = platform === Platform.VKCOM ? Subhead : Text;
+  const SubtitleTypography = mode === "secondary" ? Subhead : Caption;
 
   return (
     <header
@@ -149,24 +125,16 @@ const Header: React.FC<HeaderProps> = ({
         </HeaderContent>
 
         {hasReactNode(subtitle) && (
-          <HeaderSubtitle
-            vkuiClass="Header__subtitle"
-            Component="span"
-            mode={mode}
-          >
+          <SubtitleTypography vkuiClass="Header__subtitle" Component="span">
             {subtitle}
-          </HeaderSubtitle>
+          </SubtitleTypography>
         )}
       </div>
 
       {hasReactNode(aside) && (
-        <HeaderAside
-          vkuiClass="Header__aside"
-          Component="span"
-          platform={platform}
-        >
+        <AsideTypography vkuiClass="Header__aside" Component="span">
           {aside}
-        </HeaderAside>
+        </AsideTypography>
       )}
     </header>
   );

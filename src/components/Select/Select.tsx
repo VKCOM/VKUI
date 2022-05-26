@@ -11,7 +11,7 @@ import {
   SizeType,
 } from "../AdaptivityProvider/AdaptivityContext";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import { Headline } from "../Typography/Headline/Headline";
 
 export const SelectType = {
@@ -45,7 +45,7 @@ export const SelectTypography: React.FC<
     platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
 
   return (
-    <Component weight="regular" Component="span" {...restProps}>
+    <Component Component="span" {...restProps}>
       {children}
     </Component>
   );

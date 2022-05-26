@@ -8,7 +8,7 @@ import { hasReactNode } from "../../lib/utils";
 import { TabsProps, TabsModeContext } from "../Tabs/Tabs";
 import { Headline } from "../Typography/Headline/Headline";
 import { Subhead } from "../Typography/Subhead/Subhead";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import "./TabsItem.css";
 
 export interface TabsItemProps extends React.HTMLAttributes<HTMLElement> {
@@ -28,13 +28,11 @@ const TabsItem: React.FC<TabsItemProps> = ({
   const platform = usePlatform();
   const mode: TabsProps["mode"] = React.useContext(TabsModeContext);
 
-  // TODO: fix props
-  let TypographyComponent =
+  let ItemTypography =
     mode === "buttons" || mode === "segmented" ? Subhead : Headline;
 
   if (platform === VKCOM) {
-    // @ts-ignore TODO убрать после перевода Text на токены
-    TypographyComponent = Text;
+    ItemTypography = Text;
   }
 
   return (
@@ -48,13 +46,9 @@ const TabsItem: React.FC<TabsItemProps> = ({
       activeMode="TabsItem--active"
       focusVisibleMode={mode === "segmented" ? "outside" : "inside"}
     >
-      <TypographyComponent
-        Component="span"
-        vkuiClass="TabsItem__in"
-        weight="medium"
-      >
+      <ItemTypography Component="span" vkuiClass="TabsItem__in" weight="2">
         {children}
-      </TypographyComponent>
+      </ItemTypography>
       {hasReactNode(after) && <div vkuiClass="TabsItem__after">{after}</div>}
     </Tappable>
   );

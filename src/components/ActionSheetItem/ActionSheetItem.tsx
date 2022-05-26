@@ -6,7 +6,7 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode, noop } from "../../lib/utils";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import { Title } from "../Typography/Title/Title";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import { ANDROID, VKCOM } from "../../lib/platform";
 import { Icon16Done, Icon24Done } from "@vkontakte/icons";
 import {
@@ -106,15 +106,13 @@ const ActionSheetItemComponent: React.FC<ActionSheetItemProps> = ({
           {sizeY === SizeType.COMPACT ? (
             <React.Fragment>
               <Text
-                weight={mode === "cancel" ? "medium" : "regular"}
+                weight={mode === "cancel" ? "2" : undefined}
                 vkuiClass="ActionSheetItem__children"
               >
                 {children}
               </Text>
               {hasReactNode(meta) && (
-                <Text weight="regular" vkuiClass="ActionSheetItem__meta">
-                  {meta}
-                </Text>
+                <Text vkuiClass="ActionSheetItem__meta">{meta}</Text>
               )}
             </React.Fragment>
           ) : (

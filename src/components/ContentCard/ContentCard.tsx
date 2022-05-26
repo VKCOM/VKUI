@@ -2,7 +2,7 @@ import * as React from "react";
 import { Card, CardProps } from "../Card/Card";
 import { Caption } from "../Typography/Caption/Caption";
 import { Title } from "../Typography/Title/Title";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import Tappable, { TappableProps } from "../Tappable/Tappable";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
@@ -136,9 +136,7 @@ const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
             </Title>
           )}
           {hasReactNode(text) && (
-            <Text vkuiClass="ContentCard__text" weight="regular">
-              {text}
-            </Text>
+            <Text vkuiClass="ContentCard__text">{text}</Text>
           )}
           {hasReactNode(caption) && (
             <Caption vkuiClass="ContentCard__text">{caption}</Caption>

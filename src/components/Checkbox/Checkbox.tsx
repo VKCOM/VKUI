@@ -18,7 +18,7 @@ import {
   AdaptivityProps,
   SizeType,
 } from "../../hoc/withAdaptivity";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import { Headline } from "../Typography/Headline/Headline";
 import { hasReactNode } from "../../lib/utils";
 import { Caption } from "../Typography/Caption/Caption";
@@ -47,8 +47,7 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
 }: CheckboxProps) => {
   const platform = usePlatform();
 
-  // TODO: fix props
-  const ContentComponent =
+  const ContentTypography =
     platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
 
   return (
@@ -85,16 +84,12 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
             <Icon24CheckBoxOff />
           )}
         </div>
-        <ContentComponent
-          weight="regular"
-          vkuiClass="Checkbox__content"
-          Component="div"
-        >
+        <ContentTypography vkuiClass="Checkbox__content" Component="div">
           <div vkuiClass="Checkbox__children">{children}</div>
           {hasReactNode(description) && (
             <Caption vkuiClass="Checkbox__description">{description}</Caption>
           )}
-        </ContentComponent>
+        </ContentTypography>
       </div>
     </Tappable>
   );

@@ -15,7 +15,7 @@ import {
   SizeType,
   withAdaptivity,
 } from "../../hoc/withAdaptivity";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import { TooltipContainer } from "../Tooltip/TooltipContainer";
 import ModalRootContext from "../ModalRoot/ModalRootContext";
 import { Spacing } from "../Spacing/Spacing";
@@ -57,7 +57,7 @@ const PanelHeaderIn: React.FC<PanelHeaderProps> = ({
         <div vkuiClass="PanelHeader__left">{left}</div>
         <div vkuiClass="PanelHeader__content">
           {platform === VKCOM ? (
-            <Text weight="medium">{children}</Text>
+            <Text weight="2">{children}</Text>
           ) : (
             <span vkuiClass="PanelHeader__content-in">{children}</span>
           )}

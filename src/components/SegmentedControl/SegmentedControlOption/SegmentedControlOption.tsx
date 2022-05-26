@@ -5,7 +5,7 @@ import { callMultiple } from "../../../lib/callMultiple";
 import { classNames } from "../../../lib/classNames";
 import { SizeType } from "../../AdaptivityProvider/AdaptivityContext";
 import { FocusVisible } from "../../FocusVisible/FocusVisible";
-import Text from "../../Typography/Text/Text";
+import { Text } from "../../Typography/Text/Text";
 import { Caption } from "../../Typography/Caption/Caption";
 import {
   VisuallyHiddenInput,
@@ -51,7 +51,7 @@ export const SegmentedControlOption: React.FC<VisuallyHiddenInputProps> = ({
           {children}
         </Caption>
       ) : (
-        <Text vkuiClass="SegmentedControlOption__content" weight="medium">
+        <Text vkuiClass="SegmentedControlOption__content" weight="2">
           {children}
         </Text>
       )}

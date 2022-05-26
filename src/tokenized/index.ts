@@ -41,6 +41,9 @@ export type { CaptionProps } from "../components/Typography/Caption/Caption";
 export { Paragraph } from "../components/Typography/Paragraph/Paragraph";
 export type { ParagraphProps } from "../components/Typography/Paragraph/Paragraph";
 
+export { Text } from "../components/Typography/Text/Text";
+export type { TextProps } from "../components/Typography/Text/Text";
+
 export { Input } from "../components/Input/Input";
 export type { InputProps } from "../components/Input/Input";
 

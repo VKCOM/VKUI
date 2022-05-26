@@ -3,7 +3,7 @@ import { classNames } from "../../lib/classNames";
 import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
 import Tappable, { TappableProps } from "../Tappable/Tappable";
 import { Title } from "../Typography/Title/Title";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import { Caption } from "../Typography/Caption/Caption";
 import { HasAlign, HasComponent } from "../../types";
@@ -60,7 +60,7 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = (
   switch (size) {
     case "l":
       if (isCompact) {
-        return <Text weight="medium" {...restProps} />;
+        return <Text weight="2" {...restProps} />;
       }
       if (platform === ANDROID) {
         return <Headline weight="2" {...restProps} />;
@@ -73,7 +73,7 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = (
         );
       }
 
-      return <Text weight="medium" {...restProps} />;
+      return <Text weight="2" {...restProps} />;
     case "s":
     default:
       if (platform === IOS) {

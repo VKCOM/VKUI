@@ -4,7 +4,7 @@ import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import "./SliderSwitch.css";
 
 export interface ButtonProps
@@ -48,7 +48,7 @@ export const SliderSwitchButton: React.FunctionComponent<ButtonProps> = (
       hasActive={false}
       hoverMode="opacity"
     >
-      <Text weight="medium">{children}</Text>
+      <Text weight="2">{children}</Text>
     </Tappable>
   );
 };

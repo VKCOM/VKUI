@@ -13,7 +13,7 @@ import {
 import { hasReactNode } from "../../lib/utils";
 import { Caption } from "../Typography/Caption/Caption";
 import { Headline } from "../Typography/Headline/Headline";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import "./Radio.css";
 
 export interface RadioProps
@@ -40,8 +40,7 @@ const Radio: React.FC<RadioProps> = (props: RadioProps) => {
   } = props;
   const platform = usePlatform();
 
-  // TODO: fix props
-  const ContentComponent =
+  const RadioTypography =
     platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
 
   return (
@@ -65,16 +64,12 @@ const Radio: React.FC<RadioProps> = (props: RadioProps) => {
       />
       <div vkuiClass="Radio__container">
         <i vkuiClass="Radio__icon" role="presentation" />
-        <ContentComponent
-          weight="regular"
-          vkuiClass="Radio__content"
-          Component="div"
-        >
+        <RadioTypography vkuiClass="Radio__content" Component="div">
           <div vkuiClass="Radio__children">{children}</div>
           {hasReactNode(description) && (
             <Caption vkuiClass="Radio__description">{description}</Caption>
           )}
-        </ContentComponent>
+        </RadioTypography>
       </div>
     </Tappable>
   );
