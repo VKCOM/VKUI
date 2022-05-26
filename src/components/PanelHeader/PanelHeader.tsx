@@ -74,27 +74,28 @@ const PanelHeaderIn: React.FC<PanelHeaderProps> = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeader
  */
-const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
-  const {
-    left,
-    children,
-    right,
-    separator,
-    visor,
-    transparent,
-    shadow,
-    getRef,
-    getRootRef,
-    sizeX,
-    sizeY,
-    fixed,
-    ...restProps
-  } = props;
+const PanelHeader: React.FC<PanelHeaderProps> = ({
+  left,
+  children,
+  right,
+  separator = true,
+  visor = true,
+  transparent = false,
+  shadow,
+  getRef,
+  getRootRef,
+  sizeX,
+  sizeY,
+  fixed,
+  ...restProps
+}) => {
   const platform = usePlatform();
   const { webviewType } = React.useContext(ConfigProviderContext);
   const { isInsideModal } = React.useContext(ModalRootContext);
   const needShadow = shadow && sizeX === SizeType.REGULAR;
   let isFixed = fixed !== undefined ? fixed : platform !== Platform.VKCOM;
+
+  const innerProps = { children, left, right, separator };
 
   return (
     <div
@@ -123,10 +124,10 @@ const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
           vertical="top"
           getRootRef={getRef}
         >
-          <PanelHeaderIn {...props} />
+          <PanelHeaderIn {...innerProps} />
         </FixedLayout>
       ) : (
-        <PanelHeaderIn {...props} />
+        <PanelHeaderIn {...innerProps} />
       )}
       {separator &&
         visor &&
@@ -134,12 +135,6 @@ const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
         (sizeX === SizeType.REGULAR ? <Spacing size={16} /> : <Separator />)}
     </div>
   );
-};
-
-PanelHeader.defaultProps = {
-  separator: true,
-  transparent: false,
-  visor: true,
 };
 
 // eslint-disable-next-line import/no-default-export
