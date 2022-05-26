@@ -15,16 +15,17 @@ import {
   AdaptivityProvider,
   classNames,
   AppearanceProvider,
+  useAdaptivity,
 } from "@vkui";
 import { Frame } from "./Frame/Frame";
-import { withAdaptivity } from "../../src/hoc/withAdaptivity";
 import { perfLogger } from "../utils";
 import "./Preview.css";
 
 const logPerf = (id, phase, time) => perfLogger.log(`${id}.${phase}`, time);
 
-let Layout = ({ children, viewWidth }) => {
+const Layout = ({ children }) => {
   const platform = usePlatform();
+  const { viewWidth } = useAdaptivity();
   return (
     <SplitLayout
       header={
@@ -43,8 +44,6 @@ let Layout = ({ children, viewWidth }) => {
   );
 };
 
-Layout = withAdaptivity(Layout, { viewWidth: true });
-
 const Config = ({ hasMouse, children, ...config }) => {
   return (
     <ConfigProvider {...config}>
@@ -55,118 +54,118 @@ const Config = ({ hasMouse, children, ...config }) => {
   );
 };
 
-export default withAdaptivity(
-  class Preview extends PreviewParent {
-    componentDidUpdate(prevProps) {
-      if (this.props.code !== prevProps.code && this.state.error) {
-        this.setState({
-          error: null,
-        });
-      }
+class Preview extends PreviewParent {
+  componentDidUpdate(prevProps) {
+    if (this.props.code !== prevProps.code && this.state.error) {
+      this.setState({
+        error: null,
+      });
+    }
+  }
+
+  shouldComponentUpdate() {
+    // Оверрайдим методы PreviewParent
+    return true;
+  }
+
+  componentDidMount() {} // Оверрайдим методы PreviewParent
+
+  componentWillUnmount() {} // Оверрайдим методы PreviewParent
+
+  render() {
+    const {
+      code,
+      layout = true,
+      adaptivity = true,
+      iframe = true,
+      exampleId,
+      viewWidth,
+    } = this.props;
+    const { error } = this.state;
+
+    if (!this.state.error) {
+      console.clear();
     }
 
-    shouldComponentUpdate() {
-      // Оверрайдим методы PreviewParent
-      return true;
-    }
+    return (
+      <StyleGuideContext.Consumer>
+        {(styleGuideContext) => {
+          let example = (
+            <ReactExample
+              code={code}
+              evalInContext={this.props.evalInContext}
+              onError={this.handleError}
+              compilerConfig={this.context.config.compilerConfig}
+            />
+          );
 
-    componentDidMount() {} // Оверрайдим методы PreviewParent
+          const isMobile = viewWidth <= ViewWidth.MOBILE;
+          const width = isMobile
+            ? window.innerWidth - 32
+            : styleGuideContext.width;
 
-    componentWillUnmount() {} // Оверрайдим методы PreviewParent
-
-    render() {
-      const {
-        code,
-        layout = true,
-        adaptivity = true,
-        iframe = true,
-        exampleId,
-        viewWidth,
-      } = this.props;
-      const { error } = this.state;
-
-      if (!this.state.error) {
-        console.clear();
-      }
-
-      return (
-        <StyleGuideContext.Consumer>
-          {(styleGuideContext) => {
-            let example = (
-              <ReactExample
-                code={code}
-                evalInContext={this.props.evalInContext}
-                onError={this.handleError}
-                compilerConfig={this.context.config.compilerConfig}
-              />
-            );
-
-            const isMobile = viewWidth <= ViewWidth.MOBILE;
-            const width = isMobile
-              ? window.innerWidth - 32
-              : styleGuideContext.width;
-
-            return (
-              <Profiler id={exampleId} onRender={logPerf}>
-                <ConfigProvider
-                  scheme="inherit"
-                  platform={styleGuideContext.platform}
-                >
-                  <AppearanceProvider appearance={styleGuideContext.appearance}>
+          return (
+            <Profiler id={exampleId} onRender={logPerf}>
+              <ConfigProvider
+                scheme="inherit"
+                platform={styleGuideContext.platform}
+              >
+                <AppearanceProvider appearance={styleGuideContext.appearance}>
+                  <div
+                    className={classNames(
+                      "Preview",
+                      `Preview--${styleGuideContext.platform}`,
+                      { "Preview--layout": layout }
+                    )}
+                  >
                     <div
-                      className={classNames(
-                        "Preview",
-                        `Preview--${styleGuideContext.platform}`,
-                        { "Preview--layout": layout }
-                      )}
+                      className="Preview__shadow"
+                      style={
+                        adaptivity
+                          ? {
+                              maxWidth: width,
+                              maxHeight: styleGuideContext.height,
+                            }
+                          : null
+                      }
+                    />
+                    <div
+                      className="Preview__in"
+                      style={
+                        adaptivity
+                          ? { height: styleGuideContext.height, width }
+                          : null
+                      }
                     >
-                      <div
-                        className="Preview__shadow"
-                        style={
-                          adaptivity
-                            ? {
-                                maxWidth: width,
-                                maxHeight: styleGuideContext.height,
-                              }
-                            : null
-                        }
-                      />
-                      <div
-                        className="Preview__in"
-                        style={
-                          adaptivity
-                            ? { height: styleGuideContext.height, width }
-                            : null
-                        }
-                      >
-                        {error ? (
-                          <PlaygroundError message={error} />
-                        ) : iframe ? (
-                          <Frame
-                            width={adaptivity && width}
-                            height={adaptivity && styleGuideContext.height}
-                            appearance={styleGuideContext.appearance}
-                          >
-                            <Config
-                              {...styleGuideContext}
-                              exampleId={exampleId}
-                            >
-                              {layout ? <Layout>{example}</Layout> : example}
-                            </Config>
-                          </Frame>
-                        ) : (
-                          example
-                        )}
-                      </div>
+                      {error ? (
+                        <PlaygroundError message={error} />
+                      ) : iframe ? (
+                        <Frame
+                          width={adaptivity && width}
+                          height={adaptivity && styleGuideContext.height}
+                          appearance={styleGuideContext.appearance}
+                        >
+                          <Config {...styleGuideContext} exampleId={exampleId}>
+                            {layout ? <Layout>{example}</Layout> : example}
+                          </Config>
+                        </Frame>
+                      ) : (
+                        example
+                      )}
                     </div>
-                  </AppearanceProvider>
-                </ConfigProvider>
-              </Profiler>
-            );
-          }}
-        </StyleGuideContext.Consumer>
-      );
-    }
-  },
-  { viewWidth: true }
-);
+                  </div>
+                </AppearanceProvider>
+              </ConfigProvider>
+            </Profiler>
+          );
+        }}
+      </StyleGuideContext.Consumer>
+    );
+  }
+}
+
+export default (props) => {
+  const { viewWidth } = useAdaptivity();
+
+  return <Preview {...props} viewWidth={viewWidth} />;
+};

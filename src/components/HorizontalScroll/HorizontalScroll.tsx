@@ -1,5 +1,5 @@
 import * as React from "react";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import HorizontalScrollArrow from "./HorizontalScrollArrow";
 import { easeInOutSine } from "../../lib/fx";
 import { useEventListener } from "../../hooks/useEventListener";
@@ -27,7 +27,6 @@ export type ScrollPositionHandler = (currentPosition: number) => number;
 
 export interface HorizontalScrollProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    AdaptivityProps,
     HasRef<HTMLDivElement> {
   /**
    * Функция для расчета величины прокрутки при клике на левую стрелку.
@@ -119,13 +118,12 @@ function doScroll({
   })();
 }
 
-const HorizontalScrollComponent: React.FC<HorizontalScrollProps> = ({
+const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
   children,
   getScrollToLeft,
   getScrollToRight,
   showArrows = true,
   scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
-  hasMouse,
   getRef,
   ...restProps
 }) => {
@@ -137,6 +135,8 @@ const HorizontalScrollComponent: React.FC<HorizontalScrollProps> = ({
   const scrollerRef = useExternRef(getRef);
 
   const animationQueue = React.useRef<VoidFunction[]>([]);
+
+  const { hasMouse } = useAdaptivity();
 
   const scrollTo = React.useCallback(
     (getScrollPosition: ScrollPositionHandler) => {
@@ -223,6 +223,4 @@ const HorizontalScrollComponent: React.FC<HorizontalScrollProps> = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/HorizontalScroll
  */
-export const HorizontalScroll = withAdaptivity(HorizontalScrollComponent, {
-  hasMouse: true,
-});
+export { HorizontalScroll };

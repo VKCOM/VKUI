@@ -8,13 +8,13 @@ import {
   Separator,
   Footer,
   ViewWidth,
+  useAdaptivity,
 } from "@vkui";
 import {
   Icon28ChevronDownOutline,
   Icon28ChevronUpOutline,
 } from "@vkontakte/icons";
 import { deprecated } from "../../deprecated";
-import { withAdaptivity } from "../../../src/hoc/withAdaptivity";
 import getInfoFromHash from "react-styleguidist/lib/client/utils/getInfoFromHash";
 import "./TableOfContents.css";
 
@@ -303,4 +303,8 @@ class TableOfContents extends React.PureComponent {
   }
 }
 
-export default withAdaptivity(TableOfContents, { viewWidth: true });
+export default (props) => {
+  const { viewWidth } = useAdaptivity();
+
+  return <TableOfContents {...props} viewWidth={viewWidth} />;
+};
