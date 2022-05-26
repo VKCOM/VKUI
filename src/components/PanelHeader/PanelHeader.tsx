@@ -51,10 +51,10 @@ export interface PanelHeaderProps
 }
 
 const PanelHeaderIn: React.FC<PanelHeaderProps> = ({
-  children,
   before,
   after,
   separator,
+  children,
 }) => {
   const { webviewType } = React.useContext(ConfigProviderContext);
   const { isInsideModal } = React.useContext(ModalRootContext);
@@ -85,11 +85,13 @@ const warn = warnOnce("PanelHeader");
  * @see https://vkcom.github.io/VKUI/#/PanelHeader
  */
 const PanelHeader: React.FC<PanelHeaderProps> = ({
+  // TODO: поправить перед 5.0.0
   before: propsBefore,
   left,
-  children,
   after: propsAfter,
   right,
+  // /end TODO
+  children,
   separator = true,
   visor = true,
   transparent = false,
@@ -123,7 +125,7 @@ const PanelHeader: React.FC<PanelHeaderProps> = ({
   }
   // /end TODO
 
-  const innerProps = { children, before, after, separator };
+  const innerProps = { before, after, separator, children };
 
   return (
     <div
