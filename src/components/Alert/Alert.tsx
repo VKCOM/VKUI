@@ -3,27 +3,19 @@ import Tappable from "../Tappable/Tappable";
 import { PopoutWrapper } from "../PopoutWrapper/PopoutWrapper";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
-import { transitionEvent } from "../../lib/supportEvents";
 import { ANDROID, VKCOM, IOS } from "../../lib/platform";
-import { HasPlatform } from "../../types";
-import { withPlatform } from "../../hoc/withPlatform";
-import { withAdaptivity, ViewWidth } from "../../hoc/withAdaptivity";
+import { ViewWidth } from "../../hoc/withAdaptivity";
 import { Button, ButtonProps } from "../Button/Button";
-import { hasReactNode } from "../../lib/utils";
+import { hasReactNode, stopPropagation } from "../../lib/utils";
 import { Headline } from "../Typography/Headline/Headline";
 import { Title } from "../Typography/Title/Title";
 import { Caption } from "../Typography/Caption/Caption";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
-import {
-  AdaptivityContextInterface,
-  AdaptivityProps,
-} from "../AdaptivityProvider/AdaptivityContext";
-import { withContext } from "../../hoc/withContext";
-import {
-  ScrollContext,
-  ScrollContextInterface,
-} from "../AppRoot/ScrollContext";
+import { useScrollLock } from "../AppRoot/ScrollContext";
+import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
+import { usePlatform } from "../../hooks/usePlatform";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./Alert.css";
 
 export type AlertActionInterface = AlertAction &
@@ -36,276 +28,231 @@ export interface AlertAction extends Pick<ButtonProps, "Component" | "href"> {
   mode: "cancel" | "destructive" | "default";
 }
 
-export interface AlertProps
-  extends React.HTMLAttributes<HTMLElement>,
-    HasPlatform,
-    AdaptivityProps {
+export interface AlertProps extends React.HTMLAttributes<HTMLElement> {
   actionsLayout?: "vertical" | "horizontal";
   actions?: AlertAction[];
   header?: React.ReactNode;
   text?: React.ReactNode;
   onClose?: VoidFunction;
-  /** @ignore */
-  scroll?: ScrollContextInterface;
+
+  /**
+   * `aria-label` для кнопки закрытия. Необходим, чтобы кнопка была доступной.
+   */
+  dismissLabel?: string;
 }
 
-export type TAlertProps = AlertProps & AdaptivityContextInterface;
+type ItemClickHandler = (item: AlertActionInterface) => void;
 
-export interface AlertState {
-  closing: boolean;
+interface AlertTypography {
+  id: string;
 }
 
-type TransitionEndHandler = (e?: TransitionEvent) => void;
+const AlertHeader: React.FC<AlertTypography> = (props) => {
+  const platform = usePlatform();
 
-type ItemClickHandler = (item: AlertActionInterface) => () => void;
-
-class AlertComponent extends React.Component<TAlertProps, AlertState> {
-  constructor(props: TAlertProps) {
-    super(props);
-    this.element = React.createRef();
-    this.state = {
-      closing: false,
-    };
-  }
-
-  componentDidMount() {
-    this.props.scroll?.enableScrollLock();
-  }
-
-  componentWillUnmount() {
-    this.props.scroll?.disableScrollLock();
-  }
-
-  element: React.RefObject<HTMLDivElement>;
-
-  private transitionFinishTimeout: number | undefined = undefined;
-
-  static defaultProps: Partial<TAlertProps> = {
-    actionsLayout: "horizontal",
-    actions: [],
-  };
-
-  private get timeout(): number {
-    return this.props.platform === ANDROID || this.props.platform === VKCOM
-      ? 200
-      : 300;
-  }
-
-  onItemClick: ItemClickHandler = (item: AlertActionInterface) => () => {
-    const { action, autoclose } = item;
-
-    if (autoclose) {
-      this.setState({ closing: true });
-      this.waitTransitionFinish((e?: TransitionEvent) => {
-        if (!e || e.propertyName === "opacity") {
-          autoclose && this.props.onClose?.();
-          action && action();
-        }
-      });
-    } else {
-      action && action();
-    }
-  };
-
-  onClose: VoidFunction = () => {
-    this.setState({ closing: true });
-    this.waitTransitionFinish((e?: TransitionEvent) => {
-      if (!e || e.propertyName === "opacity") {
-        this.props.onClose?.();
-      }
-    });
-  };
-
-  stopPropagation: React.MouseEventHandler = (e: React.SyntheticEvent) => {
-    e.stopPropagation();
-  };
-
-  waitTransitionFinish(eventHandler: TransitionEndHandler) {
-    if (transitionEvent.supported && this.element.current) {
-      this.element.current.removeEventListener(
-        transitionEvent.name as string,
-        eventHandler as () => void
-      );
-      this.element.current.addEventListener(
-        transitionEvent.name as string,
-        eventHandler as () => void
-      );
-    } else {
-      if (this.transitionFinishTimeout) {
-        clearTimeout(this.transitionFinishTimeout);
-      }
-      this.transitionFinishTimeout = setTimeout(
-        eventHandler.bind(this),
-        this.timeout
-      );
-    }
-  }
-
-  renderHeader(header: React.ReactNode) {
-    switch (this.props.platform) {
-      case VKCOM:
-        return (
-          <Headline vkuiClass="Alert__header" weight="2">
-            {header}
-          </Headline>
-        );
-      case IOS:
-        return (
-          <Title vkuiClass="Alert__header" weight="1" level="3">
-            {header}
-          </Title>
-        );
-      case ANDROID:
-        return (
-          <Title vkuiClass="Alert__header" weight="2" level="2">
-            {header}
-          </Title>
-        );
-      default:
-        return undefined;
-    }
-  }
-
-  renderText(text: React.ReactNode) {
-    switch (this.props.platform) {
-      case VKCOM:
-        return <Caption vkuiClass="Alert__text">{text}</Caption>;
-      case IOS:
-        return (
-          <Caption vkuiClass="Alert__text" level="2">
-            {text}
-          </Caption>
-        );
-      case ANDROID:
-        return (
-          <Headline vkuiClass="Alert__text" weight="3">
-            {text}
-          </Headline>
-        );
-      default:
-        return undefined;
-    }
-  }
-
-  renderAction = (action: AlertActionInterface, i: number) => {
-    const { platform } = this.props;
-
-    if (platform === IOS) {
-      const { Component = "button" } = action;
+  switch (platform) {
+    case VKCOM:
+      return <Headline vkuiClass="Alert__header" weight="2" {...props} />;
+    case IOS:
       return (
-        <Tappable
-          Component={action.href ? "a" : Component}
-          vkuiClass={classNames(
-            "Alert__action",
-            `Alert__action--${action.mode}`
-          )}
-          onClick={this.onItemClick(action)}
-          href={action.href}
-          key={`alert-action-${i}`}
-          target={action.target}
-        >
-          {action.title}
-        </Tappable>
+        <Title vkuiClass="Alert__header" weight="1" level="3" {...props} />
       );
-    }
+    default:
+      return (
+        <Title vkuiClass="Alert__header" weight="2" level="2" {...props} />
+      );
+  }
+};
 
-    let mode: ButtonProps["mode"] =
-      action.mode === "cancel" ? "secondary" : "primary";
+const AlertText: React.FC<AlertTypography> = (props) => {
+  const platform = usePlatform();
 
-    if (platform === ANDROID) {
-      mode = "tertiary";
+  switch (platform) {
+    case VKCOM:
+      return <Caption vkuiClass="Alert__text" {...props} />;
+    case IOS:
+      return <Caption vkuiClass="Alert__text" level="2" {...props} />;
+    default:
+      return (
+        <Headline
+          Component="span"
+          vkuiClass="Alert__text"
+          weight="3"
+          {...props}
+        />
+      );
+  }
+};
 
-      if (
-        this.props.viewWidth === ViewWidth.DESKTOP &&
-        action.mode === "destructive"
-      ) {
-        mode = "destructive";
-      }
-    }
+interface AlertActionProps {
+  action: AlertActionInterface;
+  onItemClick: ItemClickHandler;
+}
 
+const AlertAction: React.FC<AlertActionProps> = ({
+  action,
+  onItemClick,
+  ...restProps
+}) => {
+  const platform = usePlatform();
+  const { viewWidth } = useAdaptivity();
+  const handleItemClick = React.useCallback(
+    () => onItemClick(action),
+    [onItemClick, action]
+  );
+
+  if (platform === IOS) {
+    const { Component = "button" } = action;
     return (
-      <Button
-        vkuiClass={classNames("Alert__button", `Alert__button--${action.mode}`)}
-        mode={mode}
-        size="m"
-        onClick={this.onItemClick(action)}
-        Component={action.Component}
+      <Tappable
+        Component={action.href ? "a" : Component}
+        vkuiClass={classNames("Alert__action", `Alert__action--${action.mode}`)}
+        onClick={handleItemClick}
         href={action.href}
-        key={`alert-action-${i}`}
         target={action.target}
+        {...restProps}
       >
         {action.title}
-      </Button>
-    );
-  };
-
-  render() {
-    const {
-      actions,
-      actionsLayout,
-      children,
-      className,
-      style,
-      platform,
-      viewWidth,
-      text,
-      header,
-      ...restProps
-    } = this.props;
-    const { closing } = this.state;
-
-    const resolvedActionsLayout: TAlertProps["actionsLayout"] =
-      platform === VKCOM ? "horizontal" : actionsLayout;
-    const canShowCloseButton =
-      platform === VKCOM ||
-      (platform === ANDROID && viewWidth >= ViewWidth.SMALL_TABLET);
-    const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
-
-    return (
-      <PopoutWrapper
-        className={className}
-        closing={closing}
-        style={style}
-        onClick={this.onClose}
-      >
-        <FocusTrap
-          {...restProps}
-          getRootRef={this.element}
-          onClick={this.stopPropagation}
-          onClose={this.onClose}
-          timeout={this.timeout}
-          // eslint-disable-next-line vkui/no-object-expression-in-arguments
-          vkuiClass={classNames(getClassName("Alert", platform), {
-            "Alert--v": resolvedActionsLayout === "vertical",
-            "Alert--h": resolvedActionsLayout === "horizontal",
-            "Alert--closing": closing,
-            "Alert--desktop": isDesktop,
-          })}
-        >
-          {canShowCloseButton && <ModalDismissButton onClick={this.onClose} />}
-          <div vkuiClass="Alert__content">
-            {hasReactNode(header) && this.renderHeader(header)}
-            {hasReactNode(text) && this.renderText(text)}
-            {children}
-          </div>
-          <footer vkuiClass="Alert__actions">
-            {actions?.map(this.renderAction)}
-          </footer>
-        </FocusTrap>
-      </PopoutWrapper>
+      </Tappable>
     );
   }
-}
+
+  let mode: ButtonProps["mode"] =
+    action.mode === "cancel" ? "secondary" : "primary";
+
+  if (platform === ANDROID) {
+    mode = "tertiary";
+
+    if (viewWidth === ViewWidth.DESKTOP && action.mode === "destructive") {
+      mode = "destructive";
+    }
+  }
+
+  return (
+    <Button
+      vkuiClass={classNames("Alert__button", `Alert__button--${action.mode}`)}
+      mode={mode}
+      size="m"
+      onClick={handleItemClick}
+      Component={action.Component}
+      href={action.href}
+      target={action.target}
+    >
+      {action.title}
+    </Button>
+  );
+};
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Alert
  */
-export const Alert = withContext(
-  withPlatform(
-    withAdaptivity(AlertComponent, {
-      viewWidth: true,
-    })
-  ),
-  ScrollContext,
-  "scroll"
-);
+export const Alert: React.FC<AlertProps> = ({
+  actions = [],
+  actionsLayout = "horizontal",
+  children,
+  className,
+  style,
+  text,
+  header,
+  onClose,
+  dismissLabel = "Закрыть предупреждение",
+  ...restProps
+}) => {
+  const platform = usePlatform();
+  const { viewWidth } = useAdaptivity();
+  const { waitTransitionFinish } = useWaitTransitionFinish();
+
+  const [closing, setClosing] = React.useState(false);
+
+  const elementRef = React.useRef<HTMLDivElement>(null);
+
+  const resolvedActionsLayout: AlertProps["actionsLayout"] =
+    platform === VKCOM ? "horizontal" : actionsLayout;
+  const canShowCloseButton =
+    platform === VKCOM ||
+    (platform === ANDROID && viewWidth >= ViewWidth.SMALL_TABLET);
+  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
+
+  const timeout = platform === ANDROID || platform === VKCOM ? 200 : 300;
+
+  const close = React.useCallback(() => {
+    setClosing(true);
+    waitTransitionFinish(
+      elementRef.current,
+      () => {
+        onClose && onClose();
+      },
+      timeout
+    );
+  }, [elementRef, waitTransitionFinish, onClose, timeout]);
+
+  const onItemClick: ItemClickHandler = React.useCallback(
+    (item: AlertActionInterface) => {
+      const { action, autoclose } = item;
+
+      if (autoclose) {
+        setClosing(true);
+        waitTransitionFinish(
+          elementRef.current,
+          (e?: TransitionEvent) => {
+            if (!e || e.propertyName === "opacity") {
+              onClose && onClose();
+              action && action();
+            }
+          },
+          timeout
+        );
+      } else {
+        action && action();
+      }
+    },
+    [elementRef, waitTransitionFinish, onClose, timeout]
+  );
+
+  useScrollLock();
+
+  return (
+    <PopoutWrapper
+      className={className}
+      closing={closing}
+      style={style}
+      onClick={close}
+    >
+      <FocusTrap
+        {...restProps}
+        getRootRef={elementRef}
+        onClick={stopPropagation}
+        onClose={close}
+        timeout={timeout}
+        vkuiClass={classNames(
+          getClassName("Alert", platform),
+          resolvedActionsLayout === "vertical" ? "Alert--v" : "Alert--h",
+          closing && "Alert--closing",
+          isDesktop && "Alert--desktop"
+        )}
+        role="alertdialog"
+        aria-modal
+        aria-labelledby="vkui--alert--title"
+        aria-describedby="vkui--alert--desc"
+      >
+        <div vkuiClass="Alert__content">
+          {hasReactNode(header) && (
+            <AlertHeader id="vkui--alert--title">{header}</AlertHeader>
+          )}
+          {hasReactNode(text) && (
+            <AlertText id="vkui--alert--desc">{text}</AlertText>
+          )}
+          {children}
+        </div>
+        <div vkuiClass="Alert__actions">
+          {actions.map((action, i) => (
+            <AlertAction key={i} action={action} onItemClick={onItemClick} />
+          ))}
+        </div>
+        {canShowCloseButton && (
+          <ModalDismissButton onClick={close} aria-label={dismissLabel} />
+        )}
+      </FocusTrap>
+    </PopoutWrapper>
+  );
+};
