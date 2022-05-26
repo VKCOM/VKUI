@@ -17,7 +17,7 @@ export interface ModalPageHeaderProps
 /**
  * @see https://vkcom.github.io/VKUI/#/ModalPageHeader
  */
-const ModalPageHeader: React.FunctionComponent<ModalPageHeaderProps> = ({
+const ModalPageHeader = ({
   children,
   separator,
   getRef,
