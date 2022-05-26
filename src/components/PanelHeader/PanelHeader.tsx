@@ -81,7 +81,7 @@ const PanelHeaderIn: React.FC<PanelHeaderProps> = ({
 };
 
 const warn = warnOnce("PanelHeader");
-const PanelHeaderComponent: React.FC<PanelHeaderProps> = ({
+const PanelHeaderComponent = ({
   // TODO: поправить перед 5.0.0
   before: propsBefore,
   left,
@@ -99,7 +99,7 @@ const PanelHeaderComponent: React.FC<PanelHeaderProps> = ({
   sizeY,
   fixed,
   ...restProps
-}) => {
+}: PanelHeaderProps) => {
   const platform = usePlatform();
   const { webviewType } = React.useContext(ConfigProviderContext);
   const { isInsideModal } = React.useContext(ModalRootContext);
