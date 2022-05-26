@@ -1,7 +1,7 @@
 .Avatar {
   flex-shrink: 0;
   box-sizing: border-box;
-  color: var(--placeholder_icon_background);
+  color: var(--placeholder_icon_background, var(--vkui--color_background));
   background: currentColor;
   background-size: cover;
   position: relative;
@@ -21,7 +21,8 @@
 }
 
 .Avatar__children,
-.Avatar--shadow::after {
+.Avatar--shadow::after,
+.Avatar__badge--shadow::before {
   position: absolute;
   left: 0;
   top: 0;
@@ -32,7 +33,8 @@
 
 .Avatar--shadow::after {
   content: "";
-  box-shadow: inset 0 0 0 var(--thin-border) var(--image_border);
+  box-shadow: inset 0 0 0 var(--thin-border)
+    var(--image_border, var(--vkui--color_image_border_alpha));
 }
 
 .Avatar__overlay {
@@ -52,11 +54,13 @@
 }
 
 .Avatar__overlay--light {
-  background-color: rgba(255, 255, 255, 0.85);
+  color: var(--accent, var(--vkui--color_icon_accent));
+  background-color: var(--vkui--color_avatar_overlay_inverse_alpha);
 }
 
 .Avatar__overlay--dark {
-  background-color: rgba(0, 0, 0, 0.6);
+  color: var(--button_commerce_foreground, var(--vkui--color_icon_contrast));
+  background-color: var(--vkui--color_avatar_overlay);
 }
 
 .Avatar__overlay--visible {
@@ -65,14 +69,14 @@
 
 .Avatar__overlay--focus-visible {
   opacity: 1;
-  box-shadow: 0 0 0 2px var(--accent);
+  box-shadow: 0 0 0 2px var(--accent, var(--vkui--color_stroke_accent));
 }
 
 .Avatar__children {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--icon_secondary);
+  color: var(--icon_secondary, var(--vkui--color_icon_secondary));
 }
 
 .Avatar__badge {
@@ -88,20 +92,27 @@
   right: 14%;
 }
 
-.Avatar__badge--shadow {
-  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.04))
-    drop-shadow(0 4px 4px rgba(0, 0, 0, 0.08));
+.Avatar__badge--shadow::before {
+  content: "";
+  border-radius: 50%;
+  box-shadow: var(--vkui--elevation1);
 }
 
 .Avatar__badge-online {
-  color: #4bb34b;
-  background-color: var(--background_content);
+  color: var(--button_commerce_background, var(--vkui--color_accent_green));
+  background-color: var(
+    --background_content,
+    var(--vkui--color_background_content)
+  );
   border-radius: 50%;
 }
 
 .Avatar__badge-online-mobile {
-  color: #4bb34b;
-  background-color: var(--background_content);
+  color: var(--button_commerce_background, var(--vkui--color_accent_green));
+  background-color: var(
+    --background_content,
+    var(--vkui--color_background_content)
+  );
   border-radius: 3px;
   padding: 2px;
 }
@@ -109,16 +120,12 @@
 /**
  * .CellButton
  */
-.CellButton > .Avatar {
-  color: var(--button_muted_background);
-}
-
 .CellButton > .Avatar .Icon {
-  color: var(--accent);
+  color: var(--accent, var(--vkui--color_icon_accent));
 }
 
 .CellButton--danger > .Avatar .Icon {
-  color: var(--destructive);
+  color: var(--destructive, var(--vkui--color_icon_negative));
 }
 
 /**

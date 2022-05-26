@@ -1,5 +1,5 @@
 import * as React from "react";
-import Avatar, { AvatarProps } from "../Avatar/Avatar";
+import { Avatar, AvatarProps } from "../Avatar/Avatar";
 import { classNames } from "../../lib/classNames";
 import { warnOnce } from "../../lib/warnOnce";
 import { HasRootRef } from "../../types";

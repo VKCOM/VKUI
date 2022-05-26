@@ -1,4 +1,5 @@
 export const tokenized = [
+  "Avatar",
   "ButtonGroup",
   "Badge",
   "Button",

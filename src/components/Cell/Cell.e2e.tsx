@@ -1,6 +1,6 @@
 import { Cell } from "./Cell";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import Avatar from "../Avatar/Avatar";
+import { Avatar } from "../Avatar/Avatar";
 
 describe("Cell", () => {
   describeScreenshotFuzz(Cell, [
