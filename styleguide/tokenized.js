@@ -16,6 +16,7 @@ export const tokenized = [
   "File",
   "FormField",
   "Select",
+  "Spinner",
   "CustomSelect",
   "CustomSelectDropdown",
   "CustomSelectOption",
