@@ -16,7 +16,6 @@ import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import {
   AdaptivityContextInterface,
-  AdaptivityProps,
   ViewWidth,
 } from "../AdaptivityProvider/AdaptivityContext";
 import { withContext } from "../../hoc/withContext";
@@ -39,8 +38,7 @@ export interface AlertAction extends Pick<ButtonProps, "Component" | "href"> {
 
 export interface AlertProps
   extends React.HTMLAttributes<HTMLElement>,
-    HasPlatform,
-    AdaptivityProps {
+    HasPlatform {
   actionsLayout?: "vertical" | "horizontal";
   actions?: AlertAction[];
   header?: React.ReactNode;
@@ -50,7 +48,8 @@ export interface AlertProps
   scroll?: ScrollContextInterface;
 }
 
-export type TAlertProps = AlertProps & AdaptivityContextInterface;
+export type TAlertProps = AlertProps &
+  Pick<AdaptivityContextInterface, "viewWidth">;
 
 export interface AlertState {
   closing: boolean;
@@ -300,7 +299,7 @@ class AlertComponent extends React.Component<TAlertProps, AlertState> {
   }
 }
 
-const AlertComponentWrapper: React.FC<TAlertProps> = (props) => {
+const AlertComponentWrapper: React.FC<AlertProps> = (props) => {
   const { viewWidth } = useAdaptivity();
 
   return <AlertComponent {...props} viewWidth={viewWidth} />;
