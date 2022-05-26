@@ -7,6 +7,7 @@ export const tokenized = [
   "Title",
   "Subhead",
   "HorizontalScroll",
+  "PanelSpinner",
   "Pagination",
   "Calendar",
   "CalendarRange",
