@@ -186,14 +186,22 @@ export function describeScreenshotFuzz<Props>(
                     <Wrapper>
                       {multiCartesian(propSets, { adaptive: !isVKCOM }).map(
                         (props, i) => {
+                          const adaptivityProviderProps = {
+                            ...adaptivityProps,
+                          };
+                          if (props.sizeX) {
+                            adaptivityProviderProps.sizeX = props.sizeX;
+                          }
+                          if (props.sizeY) {
+                            adaptivityProviderProps.sizeY = props.sizeY;
+                          }
+
                           return (
                             <Fragment key={i}>
                               <div>{prettyProps(props)}</div>
                               <div>
                                 <AdaptivityProvider
-                                  {...adaptivityProps}
-                                  sizeX={props.sizeX}
-                                  sizeY={props.sizeY}
+                                  {...adaptivityProviderProps}
                                 >
                                   <Component {...props} />
                                 </AdaptivityProvider>
