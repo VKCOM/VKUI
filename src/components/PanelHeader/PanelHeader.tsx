@@ -11,7 +11,7 @@ import {
   ConfigProviderContext,
   WebviewType,
 } from "../ConfigProvider/ConfigProviderContext";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import { TooltipContainer } from "../Tooltip/TooltipContainer";
 import ModalRootContext from "../ModalRoot/ModalRootContext";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
@@ -54,7 +54,7 @@ const PanelHeaderIn: React.FC<PanelHeaderProps> = ({
         <div vkuiClass="PanelHeader__left">{left}</div>
         <div vkuiClass="PanelHeader__content">
           {platform === VKCOM ? (
-            <Text weight="medium">{children}</Text>
+            <Text weight="2">{children}</Text>
           ) : (
             <span vkuiClass="PanelHeader__content-in">{children}</span>
           )}

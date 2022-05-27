@@ -1,5 +1,5 @@
 .SegmentedControl {
-  height: 26px;
+  height: 30px;
   padding: 2px;
   border-radius: var(--vkui--size_border_radius--regular);
   background-color: var(--vkui--color_background_secondary);
@@ -7,7 +7,7 @@
 }
 
 .SegmentedControl--l {
-  height: 32px;
+  height: 36px;
 }
 
 .SegmentedControl__in {

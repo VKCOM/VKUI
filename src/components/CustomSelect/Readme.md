@@ -230,11 +230,7 @@ const Example = () => {
                 if (remoteQuery.length < 3) {
                   return (
                     <Text
-                      style={{
-                        padding: 12,
-                        color: "var(--text_secondary)",
-                      }}
-                      weight="regular"
+                      style={{ padding: 12, color: "var(--text_secondary)" }}
                     >
                       Нужно ввести хотя бы три символа
                     </Text>

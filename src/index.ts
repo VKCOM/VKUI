@@ -279,7 +279,7 @@ export { Title } from "./components/Typography/Title/Title";
 export type { TitleProps } from "./components/Typography/Title/Title";
 export { Headline } from "./components/Typography/Headline/Headline";
 export type { HeadlineProps } from "./components/Typography/Headline/Headline";
-export { default as Text } from "./components/Typography/Text/Text";
+export { Text } from "./components/Typography/Text/Text";
 export type { TextProps } from "./components/Typography/Text/Text";
 export { Caption } from "./components/Typography/Caption/Caption";
 export type { CaptionProps } from "./components/Typography/Caption/Caption";

@@ -7,13 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: 12
-      # cached yarn install
-      - uses: bahmutov/npm-install@v1.7.1
-        with:
-          install-command: yarn --frozen-lockfile --ignore-scripts
+          node-version: 14
+          cache: "yarn"
+      - run: yarn install --frozen-lockfile --ignore-scripts
       - name: Run tests
         run: yarn test:ci
       - name: Upload test artifact
@@ -35,13 +33,11 @@ jobs:
         run: git lfs checkout
       - name: Checkout base snapshots
         run: git fetch --no-tags --depth=1 origin $GITHUB_BASE_REF && git checkout origin/$GITHUB_BASE_REF src/**/__image_snapshots__/*.png
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: 12
-      # cached yarn install
-      - uses: bahmutov/npm-install@v1.7.1
-        with:
-          install-command: yarn --frozen-lockfile --ignore-scripts
+          node-version: 14
+          cache: "yarn"
+      - run: yarn install --frozen-lockfile --ignore-scripts
       - name: Install browser for E2E
         run: yarn --cwd node_modules/playwright-chromium run install
       - name: FYI visual tests
@@ -60,13 +56,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: 12
-      # cached yarn install
-      - uses: bahmutov/npm-install@v1.7.1
-        with:
-          install-command: yarn --frozen-lockfile --ignore-scripts
+          node-version: 14
+          cache: "yarn"
+      - run: yarn install --frozen-lockfile --ignore-scripts
       - run: yarn styleguide:build
       - name: Uploading styleguide artifact
         uses: actions/upload-artifact@v2
@@ -79,9 +73,11 @@ jobs:
       CI_JOB_NUMBER: 1
     steps:
       - uses: actions/checkout@v2
-      - uses: bahmutov/npm-install@v1.7.1
+      - uses: actions/setup-node@v3
         with:
-          install-command: yarn --frozen-lockfile --ignore-scripts
+          node-version: 14
+          cache: "yarn"
+      - run: yarn install --frozen-lockfile --ignore-scripts
       - uses: andresz1/size-limit-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -133,9 +129,10 @@ jobs:
     if: always()
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: 12
+          node-version: 14
+          cache: "yarn"
       - name: Download test artifact
         uses: actions/download-artifact@v2
         with:

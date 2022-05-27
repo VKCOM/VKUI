@@ -14,7 +14,7 @@ export const ComplexTypeRenderer = ({ name, raw }) => {
 
   return (
     <TextTooltip className="ComplexTypeDropdown" placement="right" text={raw}>
-      <Text className="ComplexType" weight="regular">
+      <Text className="ComplexType">
         <span className="ComplexType__name">{name}</span>
         <Icon16ErrorCircleOutline className="ComplexType__icon" />
       </Text>

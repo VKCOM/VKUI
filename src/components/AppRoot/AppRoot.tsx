@@ -6,10 +6,8 @@ import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { classScopingMode } from "../../lib/classScopingMode";
 import { IconSettingsProvider } from "@vkontakte/icons";
 import {
-  elementScrollController,
-  globalScrollController,
-  ScrollContext,
-  ScrollContextInterface,
+  ElementScrollController,
+  GlobalScrollController,
 } from "./ScrollContext";
 import { noop } from "../../lib/utils";
 import { useKeyboardInputTracker } from "../../hooks/useKeyboardInputTracker";
@@ -47,7 +45,7 @@ export const AppRoot: React.FC<AppRootProps> = ({
   const [portalRoot, setPortalRoot] = React.useState<HTMLDivElement | null>(
     null
   );
-  const { window, document } = useDOM();
+  const { document } = useDOM();
   const insets = useInsets();
   const { appearance } = React.useContext(ConfigProviderContext);
 
@@ -139,12 +137,10 @@ export const AppRoot: React.FC<AppRootProps> = ({
     return () => container?.classList.remove(className);
   }, [sizeX]);
 
-  const scrollController = React.useMemo<ScrollContextInterface>(
+  const ScrollController = React.useMemo(
     () =>
-      scroll === "contain"
-        ? elementScrollController(rootRef)
-        : globalScrollController(window, document),
-    [document, scroll, window]
+      scroll === "contain" ? ElementScrollController : GlobalScrollController,
+    [scroll]
   );
 
   const content = (
@@ -157,14 +153,14 @@ export const AppRoot: React.FC<AppRootProps> = ({
         mode,
       }}
     >
-      <ScrollContext.Provider value={scrollController}>
+      <ScrollController elRef={rootRef}>
         <IconSettingsProvider
           classPrefix="vkui"
           globalClasses={!noLegacyClasses}
         >
           {children}
         </IconSettingsProvider>
-      </ScrollContext.Provider>
+      </ScrollController>
     </AppRootContext.Provider>
   );
 

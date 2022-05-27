@@ -23,10 +23,10 @@ describe.each([
     rafSpies = [
       jest
         .spyOn(window, "requestAnimationFrame")
-        .mockImplementation((cb) => setTimeout(() => cb(Date.now()))),
+        .mockImplementation((cb) => window.setTimeout(() => cb(Date.now()))),
       jest
         .spyOn(window, "cancelAnimationFrame")
-        .mockImplementation((id) => clearTimeout(id)),
+        .mockImplementation((id) => window.clearTimeout(id)),
     ];
   });
   afterEach(() => {

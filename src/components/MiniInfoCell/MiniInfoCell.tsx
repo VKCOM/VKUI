@@ -2,7 +2,7 @@ import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getClassName } from "../../helpers/getClassName";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import Tappable from "../../components/Tappable/Tappable";
 import { hasReactNode } from "../../lib/utils";
 import "./MiniInfoCell.css";
@@ -80,7 +80,7 @@ export const MiniInfoCell: React.FC<MiniInfoCellProps> = (
       <span vkuiClass="MiniInfoCell__icon">{before}</span>
       <Text
         vkuiClass="MiniInfoCell__content"
-        weight={mode === "more" ? "medium" : "regular"}
+        weight={mode === "more" ? "2" : undefined}
       >
         {children}
       </Text>

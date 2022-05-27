@@ -1,5 +1,5 @@
 import { describeScreenshotFuzz } from "../../../testing/e2e/utils";
-import Text, { TextProps } from "./Text";
+import { Text, TextProps } from "./Text";
 
 describe("Text", () => {
   describeScreenshotFuzz(
@@ -10,7 +10,11 @@ describe("Text", () => {
     ),
     [
       {
-        weight: ["regular", "medium", "semibold"],
+        weight: ["3"],
+        $adaptivity: "y",
+      },
+      {
+        weight: ["2", "1"],
       },
     ]
   );

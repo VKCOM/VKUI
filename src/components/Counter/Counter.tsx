@@ -3,7 +3,7 @@ import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
 import { Caption } from "../Typography/Caption/Caption";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import { VKCOM } from "../../lib/platform";
 import { hasReactNode } from "../../lib/utils";
 import { HasComponent, HasPlatform } from "../../types";
@@ -33,7 +33,7 @@ const CounterTypography: React.FC<CounterTypographyProps> = ({
       {...restProps}
     />
   ) : (
-    <Text weight="medium" {...restProps} />
+    <Text weight="2" {...restProps} />
   );
 };
 

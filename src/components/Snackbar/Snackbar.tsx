@@ -5,7 +5,7 @@ import { HasPlatform } from "../../types";
 import { getClassName } from "../../helpers/getClassName";
 import { ANDROID, VKCOM } from "../../lib/platform";
 import { rubber } from "../../lib/touch";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import { Button } from "../Button/Button";
 import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
@@ -208,9 +208,7 @@ const Snackbar: React.FC<SnackbarProps> = (props) => {
             {before && <div vkuiClass="Snackbar__before">{before}</div>}
 
             <div vkuiClass="Snackbar__content">
-              <Text weight="regular" vkuiClass="Snackbar__content-text">
-                {children}
-              </Text>
+              <Text vkuiClass="Snackbar__content-text">{children}</Text>
 
               {action && (
                 <Button

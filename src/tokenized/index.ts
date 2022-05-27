@@ -41,6 +41,9 @@ export type { CaptionProps } from "../components/Typography/Caption/Caption";
 export { Paragraph } from "../components/Typography/Paragraph/Paragraph";
 export type { ParagraphProps } from "../components/Typography/Paragraph/Paragraph";
 
+export { Text } from "../components/Typography/Text/Text";
+export type { TextProps } from "../components/Typography/Text/Text";
+
 export { Input } from "../components/Input/Input";
 export type { InputProps } from "../components/Input/Input";
 
@@ -75,3 +78,9 @@ export type { HeadlineProps } from "../components/Typography/Headline/Headline";
 
 export { Progress } from "../components/Progress/Progress";
 export type { ProgressProps } from "../components/Progress/Progress";
+
+export { DateInput } from "../components/DateInput/DateInput";
+export type { DateInputProps } from "../components/DateInput/DateInput";
+
+export { DateRangeInput } from "../components/DateRangeInput/DateRangeInput";
+export type { DateRangeInputProps } from "../components/DateRangeInput/DateRangeInput";
