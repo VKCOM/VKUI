@@ -82,3 +82,6 @@ export type { DateInputProps } from "../components/DateInput/DateInput";
 
 export { DateRangeInput } from "../components/DateRangeInput/DateRangeInput";
 export type { DateRangeInputProps } from "../components/DateRangeInput/DateRangeInput";
+
+export { Footer } from "../components/Footer/Footer";
+export type { FooterProps } from "../components/Footer/Footer";
