@@ -9,7 +9,7 @@
 <Checkbox style={{userSelect: 'none'}}>
   Специальные возможности
   <RichTooltip style={{maxWidth: 320}} content={
-    <Subhead weight="regular" style={{padding: '8px 12px', color: 'var(--text_primary)'}}>
+    <Subhead style={{padding: '8px 12px', color: 'var(--text_primary)'}}>
       Если включить эту настройку, элементы управления на сайте будут определены и озвучены синтезатором речи.
       <br/><br/>
       Настройка повышает доступность сайта и подходит для пользователей с ограниченными возможностями.

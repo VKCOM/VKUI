@@ -6,7 +6,7 @@ import { warnOnce } from "../../lib/warnOnce";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getTitleFromChildren, isPrimitiveReactNode } from "../../lib/utils";
 import { IOS, VKCOM, ANDROID } from "../../lib/platform";
-import Text from "../Typography/Text/Text";
+import { Text } from "../Typography/Text/Text";
 import { Title } from "../Typography/Title/Title";
 import "./PanelHeaderButton.css";
 
@@ -33,9 +33,7 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = ({
     );
   }
 
-  return (
-    <Text weight={platform === VKCOM ? "regular" : "medium"}>{children}</Text>
-  );
+  return <Text weight={platform === VKCOM ? undefined : "2"}>{children}</Text>;
 };
 
 const warn = warnOnce("PanelHeaderButton");

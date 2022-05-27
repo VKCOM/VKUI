@@ -11,11 +11,11 @@ jobs:
           lfs: true
       - name: Checkout LFS objects
         run: git lfs checkout
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: 12
-      # cached yarn install
-      - uses: bahmutov/npm-install@v1.7.1
+          node-version: 14
+          cache: "yarn"
+      - run: yarn --frozen-lockfile
       - name: Update screenshots
         run: yarn test:e2e -u
       - name: Push updated screenshots

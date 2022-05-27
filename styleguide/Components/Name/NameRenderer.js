@@ -5,7 +5,6 @@ import "./Name.css";
 export const NameRenderer = ({ children, deprecated, required }) => {
   return (
     <Text
-      weight="regular"
       className={classNames("Name", {
         "Name--deprecated": deprecated,
         "Name--optional": !required,
