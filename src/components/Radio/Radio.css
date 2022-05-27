@@ -63,19 +63,9 @@
   flex-grow: 1;
   max-width: 100%;
   color: var(--text_primary);
-  font-weight: var(--vkui--font_weight_accent3);
-}
-
-.Radio--sizeY-regular:not(.Radio--vkcom) .Radio__content {
   font-size: var(--vkui--font_headline1--font_size--regular);
   line-height: var(--vkui--font_headline1--line_height--regular);
-}
-
-@media (--size-y-regular) {
-  .Radio--sizeY-none:not(.Radio--vkcom) .Radio__content {
-    font-size: var(--vkui--font_headline1--font_size--regular);
-    line-height: var(--vkui--font_headline1--line_height--regular);
-  }
+  font-weight: var(--vkui--font_weight_accent3);
 }
 
 .Radio--vkcom .Radio__content,
