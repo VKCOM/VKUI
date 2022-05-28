@@ -68,6 +68,9 @@ export type { SubheadProps } from "../components/Typography/Subhead/Subhead";
 export { CellButton } from "../components/CellButton/CellButton";
 export type { CellButtonProps } from "../components/CellButton/CellButton";
 
+export { ScreenSpinner } from "../components/ScreenSpinner/ScreenSpinner";
+export type { ScreenSpinnerProps } from "../components/ScreenSpinner/ScreenSpinner";
+
 export { Pagination } from "../components/Pagination/Pagination";
 export type { PaginationProps } from "../components/Pagination/Pagination";
 
