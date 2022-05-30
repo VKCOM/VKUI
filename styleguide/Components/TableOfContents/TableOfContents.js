@@ -16,6 +16,7 @@ import {
 } from "@vkontakte/icons";
 import { deprecated } from "../../deprecated";
 import getInfoFromHash from "react-styleguidist/lib/client/utils/getInfoFromHash";
+import { tokenized } from "../../tokenized";
 import "./TableOfContents.css";
 
 function capitalize(string = "") {
@@ -236,7 +237,7 @@ class TableOfContents extends React.PureComponent {
             <SimpleCell
               href={section.href}
               after={
-                section.sections.length > 0 && (
+                (section.sections.length > 0 && (
                   <IconButton
                     onClick={this.onExpandIconClick}
                     data-section-name={section.name}
@@ -247,7 +248,15 @@ class TableOfContents extends React.PureComponent {
                       <Icon28ChevronDownOutline fill="var(--text_tertiary)" />
                     )}
                   </IconButton>
-                )
+                )) ||
+                (tokenized.includes(section.name) && (
+                  <img
+                    className="ReactComponent__tokenized"
+                    width={22}
+                    alt="Компонент поддерживает vkui-tokens"
+                    src={require("../../assets/static/tokenized.png")}
+                  />
+                ))
               }
               onClick={!section.href ? this.onExpandCellClick : undefined}
               data-section-name={section.name}
