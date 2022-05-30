@@ -14,7 +14,7 @@ import {
   withAdaptivity,
 } from "../../hoc/withAdaptivity";
 import { PlatformType, IOS, VKCOM, ANDROID } from "../../lib/platform";
-import Spinner from "../Spinner/Spinner";
+import { Spinner } from "../Spinner/Spinner";
 import { Headline } from "../Typography/Headline/Headline";
 import "./Button.css";
 

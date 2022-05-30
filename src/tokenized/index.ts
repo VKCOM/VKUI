@@ -59,6 +59,9 @@ export type { FormFieldProps } from "../components/FormField/FormField";
 export { Select } from "../components/Select/Select";
 export type { SelectProps } from "../components/Select/Select";
 
+export { Spinner } from "../components/Spinner/Spinner";
+export type { SpinnerProps } from "../components/Spinner/Spinner";
+
 export { CustomSelect } from "../components/CustomSelect/CustomSelect";
 export type { CustomSelectProps } from "../components/CustomSelect/CustomSelect";
 
