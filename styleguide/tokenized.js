@@ -18,6 +18,7 @@ export const tokenized = [
   "Calendar",
   "CalendarRange",
   "Caption",
+  "Checkbox",
   "Paragraph",
   "Input",
   "File",

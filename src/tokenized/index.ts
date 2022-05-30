@@ -92,6 +92,9 @@ export type { CustomSelectOptionProps } from "../components/CustomSelectOption/C
 export { Chip } from "../components/Chip/Chip";
 export type { ChipProps } from "../components/Chip/Chip";
 
+export { Checkbox } from "../components/Checkbox/Checkbox";
+export type { CheckboxProps } from "../components/Checkbox/Checkbox";
+
 export { ChipsInput } from "../components/ChipsInput/ChipsInput";
 export type { ChipsInputProps } from "../components/ChipsInput/ChipsInput";
 

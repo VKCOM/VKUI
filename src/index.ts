@@ -194,7 +194,7 @@ export { Radio } from "./components/Radio/Radio";
 export type { RadioProps } from "./components/Radio/Radio";
 export { RadioGroup } from "./components/RadioGroup/RadioGroup";
 export type { RadioGroupProps } from "./components/RadioGroup/RadioGroup";
-export { default as Checkbox } from "./components/Checkbox/Checkbox";
+export { Checkbox } from "./components/Checkbox/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox/Checkbox";
 export { Select } from "./components/Select/Select";
 export type { SelectProps } from "./components/Select/Select";
