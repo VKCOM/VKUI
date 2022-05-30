@@ -26,6 +26,6 @@
 .Setting__value {
   display: flex;
   align-items: center;
-  color: var(--accent);
+  color: var(--vkui--color_text_accent);
   cursor: pointer;
 }
