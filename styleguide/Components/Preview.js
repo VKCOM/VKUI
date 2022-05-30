@@ -150,6 +150,7 @@ export default withAdaptivity(
                             }
                           >
                             <Config
+                              scheme="inherit"
                               {...styleGuideContext}
                               exampleId={exampleId}
                             >

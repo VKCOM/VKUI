@@ -20,7 +20,7 @@ import { StyleGuideMobile } from "./StyleGuideMobile";
 import { StyleGuideDesktop } from "./StyleGuideDesktop";
 
 let initialState = {
-  platform: Platform.ANDROID,
+  platform: "paradigmBase",
   width: MOBILE_SIZE,
   height: SMALL_HEIGHT,
   hasMouse: true,
