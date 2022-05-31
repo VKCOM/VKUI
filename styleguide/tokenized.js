@@ -1,6 +1,7 @@
 export const tokenized = [
   "ButtonGroup",
   "Button",
+  "Switch",
   "Card",
   "CardScroll",
   "SegmentedControl",
