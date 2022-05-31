@@ -74,6 +74,9 @@ export type { CustomSelectDropdownProps } from "../components/CustomSelectDropdo
 export { CustomSelectOption } from "../components/CustomSelectOption/CustomSelectOption";
 export type { CustomSelectOptionProps } from "../components/CustomSelectOption/CustomSelectOption";
 
+export { Chip } from "../components/Chip/Chip";
+export type { ChipProps } from "../components/Chip/Chip";
+
 export { ChipsInput } from "../components/ChipsInput/ChipsInput";
 export type { ChipsInputProps } from "../components/ChipsInput/ChipsInput";
 

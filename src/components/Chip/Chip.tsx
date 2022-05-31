@@ -4,6 +4,7 @@ import { getTitleFromChildren, hasReactNode, noop } from "../../lib/utils";
 import { classNames } from "../../lib/classNames";
 import { Caption } from "../Typography/Caption/Caption";
 import Tappable from "../Tappable/Tappable";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./Chip.css";
 
 type ChipValue = string | number;
@@ -32,6 +33,7 @@ export const Chip: React.FC<ChipProps> = ({
   children,
   ...restProps
 }: ChipProps) => {
+  const { sizeY } = useAdaptivity();
   const onRemoveWrapper = React.useCallback(
     (event: React.MouseEvent) => {
       onRemove(event, value);
@@ -42,8 +44,11 @@ export const Chip: React.FC<ChipProps> = ({
 
   return (
     <div
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames("Chip", { "Chip--removable": removable })}
+      vkuiClass={classNames(
+        "Chip",
+        removable && "Chip--removable",
+        `Chip--sizeY-${sizeY}` // TODO: v5 новая адаптивность
+      )}
       role="option"
       aria-label={title}
       {...restProps}
