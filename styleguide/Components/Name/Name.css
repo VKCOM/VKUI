@@ -1,9 +1,9 @@
 .Name {
-  color: var(--dynamic_green);
+  color: var(--vkui--color_accent_green);
 }
 
 .Name--deprecated {
-  color: var(--text_secondary);
+  color: var(--vkui--color_text_secondary);
   text-decoration: line-through;
 }
 

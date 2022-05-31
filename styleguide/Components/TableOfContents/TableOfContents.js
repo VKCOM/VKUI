@@ -242,9 +242,9 @@ class TableOfContents extends React.PureComponent {
                     data-section-name={section.name}
                   >
                     {expanded ? (
-                      <Icon28ChevronUpOutline fill="var(--text_tertiary)" />
+                      <Icon28ChevronUpOutline fill="var(--vkui--color_text_tertiary)" />
                     ) : (
-                      <Icon28ChevronDownOutline fill="var(--text_tertiary)" />
+                      <Icon28ChevronDownOutline fill="var(--vkui--color_text_tertiary)" />
                     )}
                   </IconButton>
                 )

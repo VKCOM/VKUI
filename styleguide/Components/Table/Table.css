@@ -12,7 +12,7 @@
 
 .Table__in {
   overflow: auto;
-  border: 1px solid var(--separator_alternate);
+  border: 1px solid var(--vkui--color_separator_secondary);
   border-radius: 8px;
 }
 
@@ -24,7 +24,7 @@
   position: absolute;
   background: linear-gradient(
     to right,
-    var(--background_content),
+    var(--vkui--color_background_content),
     var(--transparent_color)
   );
   content: "";
@@ -44,7 +44,7 @@
   position: absolute;
   background: linear-gradient(
     to left,
-    var(--background_content),
+    var(--vkui--color_background_content),
     var(--transparent_color)
   );
   content: "";
@@ -62,15 +62,15 @@
 }
 
 .Table__td {
-  border-top: 1px solid var(--separator_alternate);
+  border-top: 1px solid var(--vkui--color_separator_secondary);
 }
 
 .Table__th {
-  background: var(--background_light);
+  background: var(--vkui--color_background_tertiary);
   text-align: left;
   padding: 16px;
   white-space: nowrap;
-  color: var(--text_subhead);
+  color: var(--vkui--color_text_subhead);
 }
 
 .Table__tr:last-child .Table__td {
