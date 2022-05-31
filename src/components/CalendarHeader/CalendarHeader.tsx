@@ -13,6 +13,7 @@ import { SizeType } from "../../hoc/withAdaptivity";
 import { getMonths, getYears } from "../../lib/calendar";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
+import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import "./CalendarHeader.css";
 
 export interface CalendarHeaderProps
@@ -99,18 +100,20 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   return (
     <div vkuiClass="CalendarHeader" className={className}>
       {prevMonth && (
-        <Tappable
-          vkuiClass={classNames(
-            "CalendarHeader__nav-icon",
-            "CalendarHeader__nav-icon-prev"
-          )}
-          onClick={onPrevMonth}
-          aria-label={`${prevMonthAriaLabel}, ${formatter.format(
-            subMonths(viewDate, 1)
-          )}`}
-        >
-          {prevMonthIcon}
-        </Tappable>
+        <AdaptivityProvider sizeX={SizeType.REGULAR}>
+          <Tappable
+            vkuiClass={classNames(
+              "CalendarHeader__nav-icon",
+              "CalendarHeader__nav-icon-prev"
+            )}
+            onClick={onPrevMonth}
+            aria-label={`${prevMonthAriaLabel}, ${formatter.format(
+              subMonths(viewDate, 1)
+            )}`}
+          >
+            {prevMonthIcon}
+          </Tappable>
+        </AdaptivityProvider>
       )}
       {disablePickers ? (
         <Paragraph vkuiClass="CalendarHeader__pickers" weight="2">
@@ -155,18 +158,20 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
         </div>
       )}
       {nextMonth && (
-        <Tappable
-          vkuiClass={classNames(
-            "CalendarHeader__nav-icon",
-            "CalendarHeader__nav-icon-next"
-          )}
-          onClick={onNextMonth}
-          aria-label={`${nextMonthAriaLabel}, ${formatter.format(
-            addMonths(viewDate, 1)
-          )}`}
-        >
-          {nextMonthIcon}
-        </Tappable>
+        <AdaptivityProvider sizeX={SizeType.REGULAR}>
+          <Tappable
+            vkuiClass={classNames(
+              "CalendarHeader__nav-icon",
+              "CalendarHeader__nav-icon-next"
+            )}
+            onClick={onNextMonth}
+            aria-label={`${nextMonthAriaLabel}, ${formatter.format(
+              addMonths(viewDate, 1)
+            )}`}
+          >
+            {nextMonthIcon}
+          </Tappable>
+        </AdaptivityProvider>
       )}
     </div>
   );
