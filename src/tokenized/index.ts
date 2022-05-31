@@ -80,6 +80,9 @@ export type { ChipsSelectProps } from "../components/ChipsSelect/ChipsSelect";
 export { Headline } from "../components/Typography/Headline/Headline";
 export type { HeadlineProps } from "../components/Typography/Headline/Headline";
 
+export { Div } from "../components/Div/Div";
+export type { DivProps } from "../components/Div/Div";
+
 export { Progress } from "../components/Progress/Progress";
 export type { ProgressProps } from "../components/Progress/Progress";
 
