@@ -16,6 +16,7 @@ import { Insets } from "@vkontakte/vk-bridge";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
+import { generateVKUITokensClassName } from "../AppearanceProvider/AppearanceProvider";
 import "./AppRoot.css";
 
 // Используйте classList, но будьте осторожны
@@ -47,7 +48,7 @@ export const AppRoot: React.FC<AppRootProps> = ({
   );
   const { document } = useDOM();
   const insets = useInsets();
-  const { appearance } = React.useContext(ConfigProviderContext);
+  const { platform, appearance } = React.useContext(ConfigProviderContext);
 
   const initialized = React.useRef(false);
   if (!initialized.current) {
@@ -143,6 +144,29 @@ export const AppRoot: React.FC<AppRootProps> = ({
     [scroll]
   );
 
+  // Прикрепляем vkui-token класс
+  React.useEffect(() => {
+    if (mode === "partial") {
+      return noop;
+    }
+
+    const VKUITokensClassName = generateVKUITokensClassName(
+      platform,
+      appearance
+    );
+
+    const container =
+      mode === "embedded"
+        ? rootRef.current?.parentElement
+        : document?.documentElement;
+
+    container?.classList.add(VKUITokensClassName);
+
+    return () => {
+      container?.classList.remove(VKUITokensClassName);
+    };
+  }, [platform, appearance, mode, document]);
+
   const content = (
     <AppRootContext.Provider
       value={{
@@ -163,15 +187,6 @@ export const AppRoot: React.FC<AppRootProps> = ({
       </ScrollController>
     </AppRootContext.Provider>
   );
-
-  useIsomorphicLayoutEffect(() => {
-    if (mode !== "full" || appearance === undefined) {
-      return noop;
-    }
-    document!.documentElement.style.setProperty("color-scheme", appearance);
-
-    return () => document!.documentElement.style.removeProperty("color-scheme");
-  }, [appearance]);
 
   return mode === "partial" ? (
     content

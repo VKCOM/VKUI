@@ -109,7 +109,7 @@ export default withAdaptivity(
             return (
               <Profiler id={exampleId} onRender={logPerf}>
                 <ConfigProvider
-                  scheme="inherit"
+                  appearance="light"
                   platform={styleGuideContext.platform}
                 >
                   <AppearanceProvider appearance={styleGuideContext.appearance}>

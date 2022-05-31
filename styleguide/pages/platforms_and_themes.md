@@ -66,10 +66,6 @@
 Если ваше приложение встраивается в наши iOS или Android клиенты, то тему можно получить через [vk-bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge).
 Каждому мини-приложению клиент посылает событие `VKWebAppUpdateConfig`. В данных этого события помимо прочего есть поле `appearance`, которое и содержит текущую тему клиента.
 
-### Наследование темы
-
-Если ваше приложение само определяет цвета через css-переменные аналогично [bright_light.css](https://github.com/VKCOM/VKUI/blob/master/src/styles/bright_light.css), используйте `ConfigProvider scheme="inherit"`, а стили подключайте через `import '@vkontakte/vkui/dist/components.css'`.
-
 ### Использование темы в коде
 
 У каждой темы есть поле `appearance`, которое определяет, тёмная она или светлая. В коде мы рекомендуем опираться

@@ -20,6 +20,7 @@
   -webkit-text-size-adjust: 100%;
   font-family: var(--font-common);
   color: var(--text_primary);
+  color-scheme: var(--vkui--colors_scheme);
 }
 
 .vkui__root input,

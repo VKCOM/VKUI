@@ -309,6 +309,11 @@ const baseConfig = {
       sectionDepth: 1,
       sections: [
         {
+          title: "Миграция с v4 на v5",
+          name: "Migration",
+          content: "./pages/migration_v5.md",
+        },
+        {
           name: "Unstable",
           content: "./pages/unstable.md",
         },
