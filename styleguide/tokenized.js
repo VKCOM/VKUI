@@ -23,6 +23,7 @@ export const tokenized = [
   "CustomSelectOption",
   "ChipsInput",
   "ChipsSelect",
+  "SplitCol",
   "Headline",
   "Progress",
   "DateInput",
