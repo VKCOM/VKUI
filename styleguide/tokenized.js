@@ -28,4 +28,5 @@ export const tokenized = [
   "DateInput",
   "DateRangeInput",
   "Text",
+  "Footer",
 ];
