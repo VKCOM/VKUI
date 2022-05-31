@@ -36,7 +36,10 @@ export const SelectTypography: React.FC<
   );
 };
 
-const Select: React.FC<CustomSelectProps> = (props) => {
+/**
+ * @see https://vkcom.github.io/VKUI/#/Select
+ */
+export const Select: React.FC<CustomSelectProps> = (props) => {
   const { hasMouse } = useAdaptivity();
   // Use custom select if device has connected a mouse
   if (hasMouse) {
@@ -57,8 +60,3 @@ const Select: React.FC<CustomSelectProps> = (props) => {
     </NativeSelect>
   );
 };
-
-/**
- * @see https://vkcom.github.io/VKUI/#/Select
- */
-export { Select };

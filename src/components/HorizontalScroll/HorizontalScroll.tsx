@@ -118,7 +118,10 @@ function doScroll({
   })();
 }
 
-const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
+/**
+ * @see https://vkcom.github.io/VKUI/#/HorizontalScroll
+ */
+export const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
   children,
   getScrollToLeft,
   getScrollToRight,
@@ -219,8 +222,3 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
     </div>
   );
 };
-
-/**
- * @see https://vkcom.github.io/VKUI/#/HorizontalScroll
- */
-export { HorizontalScroll };

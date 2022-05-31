@@ -50,7 +50,10 @@ export interface SnackbarProps
   onClose: () => void;
 }
 
-const Snackbar: React.FC<SnackbarProps> = (props) => {
+/**
+ * @see https://vkcom.github.io/VKUI/#/Snackbar
+ */
+export const Snackbar: React.FC<SnackbarProps> = (props) => {
   const {
     children,
     layout = "horizontal",
@@ -233,8 +236,3 @@ const Snackbar: React.FC<SnackbarProps> = (props) => {
 };
 
 Snackbar.displayName = "Snackbar";
-
-/**
- * @see https://vkcom.github.io/VKUI/#/Snackbar
- */
-export { Snackbar };

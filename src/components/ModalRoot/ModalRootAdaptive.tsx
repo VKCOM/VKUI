@@ -28,7 +28,10 @@ export interface ModalRootProps {
   onClosed?(modalId: string): void;
 }
 
-const ModalRoot: React.FC<ModalRootProps> = (props) => {
+/**
+ * @see https://vkcom.github.io/VKUI/#/ModalRoot
+ */
+export const ModalRoot: React.FC<ModalRootProps> = (props) => {
   const isDesktop = useAdaptivityIsDesktop();
 
   useScrollLock(!!props.activeModal);
@@ -39,8 +42,3 @@ const ModalRoot: React.FC<ModalRootProps> = (props) => {
 };
 
 ModalRoot.displayName = "ModalRoot";
-
-/**
- * @see https://vkcom.github.io/VKUI/#/ModalRoot
- */
-export { ModalRoot };
