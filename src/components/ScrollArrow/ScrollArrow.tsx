@@ -12,7 +12,7 @@ export interface ScrollArrowProps {
   size?: "m" | "l";
 }
 
-const ScrollArrow: React.FC<ScrollArrowProps> = ({
+export const ScrollArrow: React.FC<ScrollArrowProps> = ({
   onClick,
   size = "l",
   direction,
@@ -45,6 +45,3 @@ const ScrollArrow: React.FC<ScrollArrowProps> = ({
     </Tappable>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default ScrollArrow;

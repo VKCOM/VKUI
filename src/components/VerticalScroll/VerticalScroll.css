@@ -1,0 +1,62 @@
+.VerticalScroll {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.VerticalScroll__in {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  height: 100%;
+  padding-right: 20px;
+  margin-right: -20px;
+}
+
+.VerticalScroll__in::-webkit-scrollbar {
+  display: none;
+}
+
+.VerticalScroll__in-wrapper {
+  width: 100%;
+  transition: transform 0.2s;
+}
+
+.VerticalScroll__arrow {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.VerticalScroll__arrow--top {
+  padding-top: var(--vkui--size_base_padding_horizontal--regular, 16px);
+  top: 0;
+}
+
+.VerticalScroll__arrow--bottom {
+  padding-bottom: var(--vkui--size_base_padding_horizontal--regular, 16px);
+  bottom: 0;
+}
+
+.VerticalScroll__arrow--top:hover
+  ~ .VerticalScroll__in
+  .VerticalScroll__in-wrapper {
+  transform: translateY(8px);
+}
+
+.VerticalScroll__arrow--bottom:hover
+  ~ .VerticalScroll__in
+  .VerticalScroll__in-wrapper {
+  transform: translateY(-8px);
+}
+
+.VerticalScroll:hover .VerticalScroll__arrow {
+  opacity: 0.72;
+}
+
+.VerticalScroll:hover .VerticalScroll__arrow:hover,
+.VerticalScroll--withConstArrows .VerticalScroll__arrow,
+.VerticalScroll--withConstArrows:hover .VerticalScroll__arrow {
+  opacity: 1;
+}

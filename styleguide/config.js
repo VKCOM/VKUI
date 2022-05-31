@@ -160,6 +160,7 @@ const baseConfig = {
             "../src/components/TabbarItem/TabbarItem.tsx",
             "../src/components/FixedLayout/FixedLayout.tsx",
             "../src/components/HorizontalScroll/HorizontalScroll.tsx",
+            "../src/components/VerticalScroll/VerticalScroll.tsx",
           ],
         },
         {

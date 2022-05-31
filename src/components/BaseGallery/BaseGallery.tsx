@@ -13,7 +13,7 @@ import {
   LayoutState,
   ShiftingState,
 } from "./types";
-import ScrollArrow from "../ScrollArrow/ScrollArrow";
+import { ScrollArrow } from "../ScrollArrow/ScrollArrow";
 import "./BaseGallery.css";
 
 const ANIMATION_DURATION = 0.24;
@@ -383,14 +383,14 @@ export const BaseGallery = ({
         </div>
       )}
 
-      {showArrows && hasMouse && this.canSlideLeft && (
+      {showArrows && hasMouse && canSlideLeft && (
         <ScrollArrow
           vkuiClass="Gallery__arrow Gallery__arrow--left"
           direction="left"
           onClick={slideLeft}
         />
       )}
-      {showArrows && hasMouse && this.canSlideRight && (
+      {showArrows && hasMouse && canSlideRight && (
         <ScrollArrow
           vkuiClass="Gallery__arrow Gallery__arrow--right"
           direction="right"

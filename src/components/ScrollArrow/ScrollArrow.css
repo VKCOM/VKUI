@@ -2,8 +2,6 @@
   position: absolute;
   cursor: pointer;
   user-select: auto;
-  top: 0;
-  height: 100%;
   padding: 0;
   opacity: 0;
   z-index: 3;

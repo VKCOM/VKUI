@@ -5,55 +5,54 @@ import { useEventListener } from "../../hooks/useEventListener";
 import { useExternRef } from "../../hooks/useExternRef";
 import { HasRef } from "../../types";
 import { classNames } from "../../lib/classNames";
-import { SCROLL_ONE_FRAME_TIME } from "../../helpers/constants";
-import { now } from "../../helpers/polymorphNow";
 import { ScrollArrow } from "../ScrollArrow/ScrollArrow";
-import "./HorizontalScroll.css";
+import { now } from "../../helpers/polymorphNow";
+import { SCROLL_ONE_FRAME_TIME } from "../../helpers/constants";
+import "./VerticalScroll.css";
 
 interface ScrollContext {
   scrollElement: HTMLElement | null;
   scrollAnimationDuration: number;
   animationQueue: VoidFunction[];
   getScrollPosition: (currentPosition: number) => number;
-  onScrollToRightBorder: VoidFunction;
+  onScrollToBottomBorder: VoidFunction;
   onScrollEnd: VoidFunction;
   onScrollStart: VoidFunction;
   /**
-   * Начальная ширина прокрутки.
-   * В некоторых случаях может отличаться от текущей ширины прокрутки из-за transforms: translate
+   * Начальная высота прокрутки.
+   * В некоторых случаях может отличаться от текущей высоты прокрутки из-за transforms: translate
    */
-  initialScrollWidth: number;
+  initialScrollHeight: number;
 }
 
 export type ScrollPositionHandler = (currentPosition: number) => number;
 
-export interface HorizontalScrollProps
+export interface VerticalScrollProps
   extends React.HTMLAttributes<HTMLDivElement>,
     AdaptivityProps,
     HasRef<HTMLDivElement> {
   /**
    * Функция для расчета величины прокрутки при клике на левую стрелку.
    */
-  getScrollToLeft?: ScrollPositionHandler;
+  getScrollToTop?: ScrollPositionHandler;
   /**
    * Функция для расчета величины прокрутки при клике на правую стрелку.
    */
-  getScrollToRight?: ScrollPositionHandler;
-  arrowSize?: "m" | "l";
+  getScrollToBottom?: ScrollPositionHandler;
   showArrows?: boolean | "always";
   scrollAnimationDuration?: number;
 }
 
-const roundUpElementScrollLeft = (el: HTMLElement) => Math.ceil(el.scrollLeft);
+const roundUpElementScrollTop = (el: HTMLElement) => Math.ceil(el.scrollTop);
 
 function doScroll({
   scrollElement,
   getScrollPosition,
   animationQueue,
-  onScrollToRightBorder,
+  onScrollToBottomBorder,
   onScrollEnd,
   onScrollStart,
-  initialScrollWidth,
+  initialScrollHeight,
   scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
 }: ScrollContext) {
   if (!scrollElement || !getScrollPosition) {
@@ -63,16 +62,16 @@ function doScroll({
   /**
    * максимальное значение сдвига влево
    */
-  const maxLeft = initialScrollWidth - scrollElement.offsetWidth;
+  const maxTop = initialScrollHeight - scrollElement.offsetHeight;
 
-  let startLeft = roundUpElementScrollLeft(scrollElement);
-  let endLeft = getScrollPosition(startLeft);
+  let startTop = roundUpElementScrollTop(scrollElement);
+  let endTop = getScrollPosition(startTop);
 
   onScrollStart();
 
-  if (endLeft >= maxLeft) {
-    onScrollToRightBorder();
-    endLeft = maxLeft;
+  if (endTop >= maxTop) {
+    onScrollToBottomBorder();
+    endTop = maxTop;
   }
 
   const startTime = now();
@@ -88,13 +87,10 @@ function doScroll({
 
     const value = easeInOutSine(elapsed);
 
-    const currentLeft = startLeft + (endLeft - startLeft) * value;
-    scrollElement.scrollLeft = Math.ceil(currentLeft);
+    const currentTop = startTop + (endTop - startTop) * value;
+    scrollElement.scrollTop = Math.ceil(currentTop);
 
-    if (
-      roundUpElementScrollLeft(scrollElement) !== Math.max(0, endLeft) &&
-      elapsed !== 1
-    ) {
+    if (roundUpElementScrollTop(scrollElement) !== Math.max(0, endTop)) {
       requestAnimationFrame(scroll);
       return;
     }
@@ -107,19 +103,18 @@ function doScroll({
   })();
 }
 
-const HorizontalScrollComponent = ({
+const VerticalScrollComponent: React.FC<VerticalScrollProps> = ({
   children,
-  getScrollToLeft,
-  getScrollToRight,
+  getScrollToTop,
+  getScrollToBottom,
   showArrows = true,
-  arrowSize = "l",
   scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
   hasMouse,
   getRef,
   ...restProps
-}: HorizontalScrollProps) => {
-  const [canScrollLeft, setCanScrollLeft] = React.useState(false);
-  const [canScrollRight, setCanScrollRight] = React.useState(false);
+}) => {
+  const [canScrollTop, setCanScrollTop] = React.useState(false);
+  const [canScrollBottom, setCanScrollBottom] = React.useState(false);
 
   const isCustomScrollingRef = React.useRef(false);
 
@@ -136,11 +131,11 @@ const HorizontalScrollComponent = ({
           scrollElement,
           getScrollPosition,
           animationQueue: animationQueue.current,
-          onScrollToRightBorder: () => setCanScrollRight(false),
+          onScrollToBottomBorder: () => setCanScrollBottom(false),
           onScrollEnd: () => (isCustomScrollingRef.current = false),
           onScrollStart: () => (isCustomScrollingRef.current = true),
-          initialScrollWidth:
-            scrollElement?.firstElementChild?.scrollWidth || 0,
+          initialScrollHeight:
+            scrollElement?.firstElementChild?.scrollHeight || 0,
           scrollAnimationDuration,
         })
       );
@@ -151,17 +146,18 @@ const HorizontalScrollComponent = ({
     [scrollAnimationDuration, scrollerRef]
   );
 
-  const scrollToLeft = React.useCallback(() => {
+  const scrollToTop = React.useCallback(() => {
     const getScrollPosition =
-      getScrollToLeft ?? ((i: number) => i - scrollerRef.current!.offsetWidth);
+      getScrollToTop ?? ((i: number) => i - scrollerRef.current!.offsetHeight);
     scrollTo(getScrollPosition);
-  }, [getScrollToLeft, scrollTo, scrollerRef]);
+  }, [getScrollToTop, scrollTo, scrollerRef]);
 
-  const scrollToRight = React.useCallback(() => {
+  const scrollToBottom = React.useCallback(() => {
     const getScrollPosition =
-      getScrollToRight ?? ((i: number) => i + scrollerRef.current!.offsetWidth);
+      getScrollToBottom ??
+      ((i: number) => i + scrollerRef.current!.offsetHeight);
     scrollTo(getScrollPosition);
-  }, [getScrollToRight, scrollTo, scrollerRef]);
+  }, [getScrollToBottom, scrollTo, scrollerRef]);
 
   const onscroll = React.useCallback(() => {
     if (
@@ -172,10 +168,10 @@ const HorizontalScrollComponent = ({
     ) {
       const scrollElement = scrollerRef.current;
 
-      setCanScrollLeft(scrollElement.scrollLeft > 0);
-      setCanScrollRight(
-        roundUpElementScrollLeft(scrollElement) + scrollElement.offsetWidth <
-          scrollElement.scrollWidth
+      setCanScrollTop(scrollElement.scrollTop > 0);
+      setCanScrollBottom(
+        roundUpElementScrollTop(scrollElement) + scrollElement.offsetHeight <
+          scrollElement.scrollHeight
       );
     }
   }, [hasMouse, scrollerRef, showArrows]);
@@ -192,36 +188,34 @@ const HorizontalScrollComponent = ({
     <div
       {...restProps}
       // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames("HorizontalScroll", {
-        ["HorizontalScroll--withConstArrows"]: showArrows === "always",
+      vkuiClass={classNames("VerticalScroll", {
+        ["VerticalScroll--withConstArrows"]: showArrows === "always",
       })}
     >
-      {showArrows && hasMouse && canScrollLeft && (
+      {showArrows && hasMouse && canScrollTop && (
         <ScrollArrow
-          vkuiClass="HorizontalScroll__arrow HorizontalScroll__arrow--left"
-          size={arrowSize}
-          direction="left"
-          onClick={scrollToLeft}
+          vkuiClass="VerticalScroll__arrow VerticalScroll__arrow--top"
+          direction="up"
+          onClick={scrollToTop}
         />
       )}
-      {showArrows && hasMouse && canScrollRight && (
+      {showArrows && hasMouse && canScrollBottom && (
         <ScrollArrow
-          vkuiClass="HorizontalScroll__arrow HorizontalScroll__arrow--right"
-          size={arrowSize}
-          direction="right"
-          onClick={scrollToRight}
+          vkuiClass="VerticalScroll__arrow VerticalScroll__arrow--bottom"
+          direction="down"
+          onClick={scrollToBottom}
         />
       )}
-      <div vkuiClass="HorizontalScroll__in" ref={scrollerRef}>
-        <div vkuiClass="HorizontalScroll__in-wrapper">{children}</div>
+      <div vkuiClass="VerticalScroll__in" ref={scrollerRef}>
+        <div vkuiClass="VerticalScroll__in-wrapper">{children}</div>
       </div>
     </div>
   );
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/HorizontalScroll
+ * @see https://vkcom.github.io/VKUI/#/VerticalScroll
  */
-export const HorizontalScroll = withAdaptivity(HorizontalScrollComponent, {
+export const VerticalScroll = withAdaptivity(VerticalScrollComponent, {
   hasMouse: true,
 });

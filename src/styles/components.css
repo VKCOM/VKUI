@@ -24,6 +24,7 @@
 @import "../components/Button/Button.css";
 @import "../components/Removable/Removable.css";
 @import "../components/FocusVisible/FocusVisible.css";
+@import "../components/ScrollArrow/ScrollArrow.css";
 
 /* Layout */
 @import "../components/Root/Root.css";
@@ -41,7 +42,7 @@
 @import "../components/Tabbar/Tabbar.css";
 @import "../components/TabbarItem/TabbarItem.css";
 @import "../components/HorizontalScroll/HorizontalScroll.css";
-@import "../components/HorizontalScroll/HorizontalScrollArrow.css";
+@import "../components/VerticalScroll/VerticalScroll.css";
 
 /* Popouts */
 @import "../components/PopoutWrapper/PopoutWrapper.css";
