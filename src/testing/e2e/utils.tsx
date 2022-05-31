@@ -5,7 +5,6 @@ import { screenshot } from "@react-playwright";
 import ConfigProvider from "../../components/ConfigProvider/ConfigProvider";
 import { Panel } from "../../components/Panel/Panel";
 import { Platform } from "../../lib/platform";
-import { Scheme } from "../../helpers/scheme";
 import {
   AdaptivityProvider,
   DESKTOP_SIZE,
@@ -21,6 +20,7 @@ import {
 import View from "../../components/View/View";
 import { AppRoot } from "../../components/AppRoot/AppRoot";
 import Group from "../../components/Group/Group";
+import { AppearanceType } from "@vkontakte/vk-bridge";
 
 type AdaptivityFlag = boolean | "x" | "y";
 type PropDesc<Props> = { [K in keyof Props]?: Array<Props[K]> } & {
@@ -107,10 +107,7 @@ function prettyProps(props: any) {
 type ScreenshotOptions = {
   matchScreenshot?: MatchImageSnapshotOptions;
   platforms?: Platform[];
-  // pass [BRIGHT_LIGHT, SPACE_GRAY] if component depends on appearance
-  mobileSchemes?: Array<Scheme.BRIGHT_LIGHT | Scheme.SPACE_GRAY>;
-  // pass [VKCOM_LIGHT, VKCOM_DARK] if component depends on appearance
-  vkcomSchemes?: Array<Scheme.VKCOM_LIGHT | Scheme.VKCOM_DARK>;
+  appearance?: AppearanceType;
   adaptivity?: Partial<AdaptivityProps>;
   Wrapper?: ComponentType;
 };
@@ -148,8 +145,7 @@ export function describeScreenshotFuzz<Props>(
   const {
     matchScreenshot,
     platforms = Object.values(Platform),
-    mobileSchemes = [Scheme.BRIGHT_LIGHT],
-    vkcomSchemes = [Scheme.VKCOM_LIGHT],
+    appearance = "light",
     adaptivity = {},
     Wrapper = AppWrapper,
   } = options;
@@ -173,7 +169,7 @@ export function describeScreenshotFuzz<Props>(
         }`, async () => {
           expect(
             await screenshot(
-              <ConfigProvider scheme={scheme} platform={platform}>
+              <ConfigProvider appearance={appearance} platform={platform}>
                 <AdaptivityProvider {...adaptivityProps}>
                   <div
                     style={{

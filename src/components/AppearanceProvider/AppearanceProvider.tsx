@@ -1,7 +1,6 @@
 import * as React from "react";
 import { AppearanceType } from "@vkontakte/vk-bridge";
 import { AppearanceProviderContext } from "./AppearanceProviderContext";
-import { getScheme } from "../../helpers/getScheme";
 import { classNamesString } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { Platform } from "../../lib/platform";
@@ -40,10 +39,6 @@ export const AppearanceProvider: React.FC<AppearanceProviderProps> = ({
   appearance = "light",
 }) => {
   const platform = usePlatform();
-  const scheme = getScheme({
-    platform,
-    appearance,
-  });
 
   return (
     <AppearanceProviderContext.Provider value={appearance}>
@@ -52,7 +47,6 @@ export const AppearanceProvider: React.FC<AppearanceProviderProps> = ({
           return React.cloneElement(child, {
             className: classNamesString(
               child.props.className,
-              `vkui${scheme}`,
               generateVKUITokensClassName(platform, appearance)
             ),
           });

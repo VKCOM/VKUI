@@ -4,7 +4,6 @@ import "../src/styles/common.css";
 import "../src/fonts/fonts.css";
 
 import { useState, useRef } from "react";
-import pkg from "../package";
 import * as VKUI from "../src";
 import * as VKUIUnstable from "../src/unstable";
 import * as Icons from "@vkontakte/icons";
@@ -40,10 +39,6 @@ Object.getOwnPropertyNames(Icons).forEach((name) => {
 });
 
 window.osname = VKUI.platform();
-
-window.schemeId =
-  window.localStorage.getItem("vkui-styleguide:schemeId") ||
-  pkg.defaultSchemeId;
 
 window.getRandomInt = getRandomInt;
 window.getRandomUser = getRandomUser;

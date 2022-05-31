@@ -9,7 +9,7 @@
 VKUI — это библиотека адаптивных React-компонентов, <br> для создания веб-приложений и <a href="https://vk.com/dev/vk_apps_docs">VK Mini Apps</a> в экосистеме ВКонтакте.<br>
 Библиотека основана на <a href="https://www.figma.com/@vk">дизайн-системе ВКонтакте</a> и реализует её интерфейсы для различных платформ.<br>
 Релизы: <a href="https://github.com/VKCOM/VKUI/releases">https://github.com/VKCOM/VKUI/releases</a>.<br>
-Гайд по миграции на версию 4: <a href="https://github.com/VKCOM/VKUI/releases/tag/v4.0.0">https://github.com/VKCOM/VKUI/releases/tag/v4.0.0</a>.
+Гайд по миграции <a href="https://vkcom.github.io/VKUI/#/Migration">на версию 5</a>.
 </p>
 
 ## Установка

@@ -46,8 +46,14 @@ export const StyleGuideContext = React.createContext(initialState);
 let StyleGuideRenderer = ({ children, toc }) => {
   const [state, setState] = useState(initialState);
   const [popout, setPopout] = useState(null);
-  const { width, height, platform, scheme, hasMouse, styleguideAppearance } =
-    state;
+  const {
+    width,
+    height,
+    platform,
+    appearance,
+    hasMouse,
+    styleguideAppearance,
+  } = state;
   const { viewWidth } = useAdaptivity();
 
   const setContext = useCallback(
@@ -78,7 +84,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
 
   const providerValue = useMemo(
     () => ({ ...state, setContext, setPopout }),
-    [width, height, platform, scheme, hasMouse, setContext, setPopout]
+    [width, height, platform, appearance, hasMouse, setContext, setPopout]
   );
 
   const Component =

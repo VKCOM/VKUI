@@ -40,8 +40,9 @@
   );
 }
 
-body[scheme="space_gray"] .Gradient--md-tint.Gradient--to-top,
-body[scheme="vkcom_dark"] .Gradient--md-tint.Gradient--to-top {
+.vkui--vkBase--dark .Gradient--md-tint.Gradient--to-top,
+.vkui--vkIOS--dark .Gradient--md-tint.Gradient--to-top,
+.vkui--vkCom--dark .Gradient--md-tint.Gradient--to-top {
   background: linear-gradient(
     to top,
     #232324,
@@ -62,8 +63,9 @@ body[scheme="vkcom_dark"] .Gradient--md-tint.Gradient--to-top {
   );
 }
 
-body[scheme="space_gray"] .Gradient--md-tint.Gradient--to-bottom,
-body[scheme="vkcom_dark"] .Gradient--md-tint.Gradient--to-bottom {
+.vkui--vkBase--dark .Gradient--md-tint.Gradient--to-bottom,
+.vkui--vkIOS--dark .Gradient--md-tint.Gradient--to-bottom,
+.vkui--vkCom--dark .Gradient--md-tint.Gradient--to-bottom {
   background: linear-gradient(
     to bottom,
     #232324,
