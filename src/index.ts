@@ -190,7 +190,7 @@ export { default as RangeSlider } from "./components/RangeSlider/RangeSlider";
 export type { RangeSliderProps } from "./components/RangeSlider/RangeSlider";
 export { default as Textarea } from "./components/Textarea/Textarea";
 export type { TextareaProps } from "./components/Textarea/Textarea";
-export { default as Radio } from "./components/Radio/Radio";
+export { Radio } from "./components/Radio/Radio";
 export type { RadioProps } from "./components/Radio/Radio";
 export { RadioGroup } from "./components/RadioGroup/RadioGroup";
 export type { RadioGroupProps } from "./components/RadioGroup/RadioGroup";

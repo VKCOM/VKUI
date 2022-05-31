@@ -16,6 +16,12 @@ export type { ButtonGroupProps } from "../components/ButtonGroup/ButtonGroup";
 export { Switch } from "../components/Switch/Switch";
 export type { SwitchProps } from "../components/Switch/Switch";
 
+export { Radio } from "../components/Radio/Radio";
+export type { RadioProps } from "../components/Radio/Radio";
+
+export { RadioGroup } from "../components/RadioGroup/RadioGroup";
+export type { RadioGroupProps } from "../components/RadioGroup/RadioGroup";
+
 export { SegmentedControl } from "../components/SegmentedControl/SegmentedControl";
 export type {
   SegmentedControlProps,

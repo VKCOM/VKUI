@@ -1,4 +1,4 @@
-import Radio, { RadioProps } from "./Radio";
+import { Radio, RadioProps } from "./Radio";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { SizeType } from "../AdaptivityProvider/AdaptivityContext";
 
