@@ -1,7 +1,5 @@
 import * as React from "react";
-import { useScrollLockEffect } from "../AppRoot/ScrollContext";
 import { classNames } from "../../lib/classNames";
-import { noop } from "../../lib/utils";
 import "./SplitCol.css";
 
 export interface SplitColContextProps {
@@ -46,27 +44,12 @@ export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
   } = props;
   const baseRef = React.useRef<HTMLDivElement>(null);
 
-  const fixedInnerRef = React.useRef<HTMLDivElement>(null);
-
   const contextValue = React.useMemo(() => {
     return {
       colRef: baseRef,
       animate,
     };
   }, [baseRef, animate]);
-
-  useScrollLockEffect(() => {
-    const fixedInner = fixedInnerRef.current;
-    if (!fixedInner) {
-      return noop;
-    }
-
-    fixedInner.style.top = `${fixedInner.offsetTop}px`;
-
-    return () => {
-      fixedInner.style.top = "";
-    };
-  }, [fixedInnerRef.current]);
 
   return (
     <div
@@ -86,9 +69,7 @@ export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
     >
       <SplitColContext.Provider value={contextValue}>
         {fixed ? (
-          <div ref={fixedInnerRef} vkuiClass="SplitCol__fixedInner">
-            {children}
-          </div>
+          <div vkuiClass="SplitCol__fixedInner">{children}</div>
         ) : (
           children
         )}
