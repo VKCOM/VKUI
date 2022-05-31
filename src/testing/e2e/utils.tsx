@@ -163,56 +163,52 @@ export function describeScreenshotFuzz<Props>(
         adaptivity
       );
 
-      (isVKCOM ? vkcomSchemes : mobileSchemes).forEach((scheme: Scheme) => {
-        it(`light${
-          adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ""
-        }`, async () => {
-          expect(
-            await screenshot(
-              <ConfigProvider appearance={appearance} platform={platform}>
-                <AdaptivityProvider {...adaptivityProps}>
-                  <div
-                    style={{
-                      width,
-                      maxWidth: DESKTOP_SIZE,
-                      position: "absolute",
-                      height: "auto",
-                    }}
-                  >
-                    <Wrapper>
-                      {multiCartesian(propSets, { adaptive: !isVKCOM }).map(
-                        (props, i) => {
-                          const adaptivityProviderProps = {
-                            ...adaptivityProps,
-                          };
-                          if (props.sizeX) {
-                            adaptivityProviderProps.sizeX = props.sizeX;
-                          }
-                          if (props.sizeY) {
-                            adaptivityProviderProps.sizeY = props.sizeY;
-                          }
-
-                          return (
-                            <Fragment key={i}>
-                              <div>{prettyProps(props)}</div>
-                              <div>
-                                <AdaptivityProvider
-                                  {...adaptivityProviderProps}
-                                >
-                                  <Component {...props} />
-                                </AdaptivityProvider>
-                              </div>
-                            </Fragment>
-                          );
+      it(`light${
+        adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ""
+      }`, async () => {
+        expect(
+          await screenshot(
+            <ConfigProvider appearance={appearance} platform={platform}>
+              <AdaptivityProvider {...adaptivityProps}>
+                <div
+                  style={{
+                    width,
+                    maxWidth: DESKTOP_SIZE,
+                    position: "absolute",
+                    height: "auto",
+                  }}
+                >
+                  <Wrapper>
+                    {multiCartesian(propSets, { adaptive: !isVKCOM }).map(
+                      (props, i) => {
+                        const adaptivityProviderProps = {
+                          ...adaptivityProps,
+                        };
+                        if (props.sizeX) {
+                          adaptivityProviderProps.sizeX = props.sizeX;
                         }
-                      )}
-                    </Wrapper>
-                  </div>
-                </AdaptivityProvider>
-              </ConfigProvider>
-            )
-          ).toMatchImageSnapshot(matchScreenshot);
-        });
+                        if (props.sizeY) {
+                          adaptivityProviderProps.sizeY = props.sizeY;
+                        }
+
+                        return (
+                          <Fragment key={i}>
+                            <div>{prettyProps(props)}</div>
+                            <div>
+                              <AdaptivityProvider {...adaptivityProviderProps}>
+                                <Component {...props} />
+                              </AdaptivityProvider>
+                            </div>
+                          </Fragment>
+                        );
+                      }
+                    )}
+                  </Wrapper>
+                </div>
+              </AdaptivityProvider>
+            </ConfigProvider>
+          )
+        ).toMatchImageSnapshot(matchScreenshot);
       });
     });
   });
