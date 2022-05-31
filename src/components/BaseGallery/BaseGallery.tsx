@@ -1,7 +1,6 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { Touch, TouchEvent } from "../Touch/Touch";
-import { HorizontalScrollArrow } from "../HorizontalScroll/HorizontalScrollArrow";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useDOM } from "../../lib/dom";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
@@ -14,6 +13,7 @@ import {
   LayoutState,
   ShiftingState,
 } from "./types";
+import ScrollArrow from "../ScrollArrow/ScrollArrow";
 import "./BaseGallery.css";
 
 const ANIMATION_DURATION = 0.24;
@@ -383,11 +383,19 @@ export const BaseGallery = ({
         </div>
       )}
 
-      {showArrows && hasMouse && canSlideLeft && (
-        <HorizontalScrollArrow direction="left" onClick={slideLeft} />
+      {showArrows && hasMouse && this.canSlideLeft && (
+        <ScrollArrow
+          vkuiClass="Gallery__arrow Gallery__arrow--left"
+          direction="left"
+          onClick={slideLeft}
+        />
       )}
-      {showArrows && hasMouse && canSlideRight && (
-        <HorizontalScrollArrow direction="right" onClick={slideRight} />
+      {showArrows && hasMouse && this.canSlideRight && (
+        <ScrollArrow
+          vkuiClass="Gallery__arrow Gallery__arrow--right"
+          direction="right"
+          onClick={slideRight}
+        />
       )}
     </div>
   );

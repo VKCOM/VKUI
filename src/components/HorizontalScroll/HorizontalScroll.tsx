@@ -1,11 +1,13 @@
 import * as React from "react";
 import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
-import { HorizontalScrollArrow } from "./HorizontalScrollArrow";
 import { easeInOutSine } from "../../lib/fx";
 import { useEventListener } from "../../hooks/useEventListener";
 import { useExternRef } from "../../hooks/useExternRef";
 import { HasRef } from "../../types";
 import { classNames } from "../../lib/classNames";
+import { SCROLL_ONE_FRAME_TIME } from "../../helpers/constants";
+import { now } from "../../helpers/polymorphNow";
+import ScrollArrow from "../ScrollArrow/ScrollArrow";
 import "./HorizontalScroll.css";
 
 interface ScrollContext {
@@ -42,25 +44,7 @@ export interface HorizontalScrollProps
   scrollAnimationDuration?: number;
 }
 
-/**
- * timing method
- */
-function now() {
-  return performance && performance.now ? performance.now() : Date.now();
-}
-
-/**
- * Округляем el.scrollLeft
- * https://github.com/VKCOM/VKUI/pull/2445
- */
 const roundUpElementScrollLeft = (el: HTMLElement) => Math.ceil(el.scrollLeft);
-
-/**
- * Код анимации скрола, на основе полифила: https://github.com/iamdustan/smoothscroll
- * Константа взята из полифила (468), на дизайн-ревью уточнили до 250
- * @var {number} SCROLL_ONE_FRAME_TIME время анимации скролла
- */
-const SCROLL_ONE_FRAME_TIME = 250;
 
 function doScroll({
   scrollElement,
@@ -213,14 +197,16 @@ const HorizontalScrollComponent = ({
       })}
     >
       {showArrows && hasMouse && canScrollLeft && (
-        <HorizontalScrollArrow
+        <ScrollArrow
+          vkuiClass="HorizontalScroll__arrow HorizontalScroll__arrow--left"
           size={arrowSize}
           direction="left"
           onClick={scrollToLeft}
         />
       )}
       {showArrows && hasMouse && canScrollRight && (
-        <HorizontalScrollArrow
+        <ScrollArrow
+          vkuiClass="HorizontalScroll__arrow HorizontalScroll__arrow--right"
           size={arrowSize}
           direction="right"
           onClick={scrollToRight}

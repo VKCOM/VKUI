@@ -73,3 +73,26 @@
 .Gallery__bullet--active {
   opacity: 1;
 }
+
+.Gallery:hover .Gallery__arrow {
+  opacity: 0.72;
+}
+
+.Gallery:hover .Gallery__arrow:hover {
+  opacity: 1;
+}
+
+.Gallery__arrow {
+  top: 0;
+  height: 100%;
+}
+
+.Gallery__arrow--left {
+  padding-left: var(--vkui--size_base_padding_horizontal--regular, 16px);
+  left: 0;
+}
+
+.Gallery__arrow--right {
+  padding-right: var(--vkui--size_base_padding_horizontal--regular, 16px);
+  right: 0;
+}

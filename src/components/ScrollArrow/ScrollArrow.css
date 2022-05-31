@@ -1,4 +1,4 @@
-.HorizontalScrollArrow {
+.ScrollArrow {
   position: absolute;
   cursor: pointer;
   user-select: auto;
@@ -16,7 +16,7 @@
   justify-content: center;
 }
 
-.HorizontalScrollArrow__icon {
+.ScrollArrow__icon {
   background-color: var(
     --modal_card_background,
     var(--vkui--color_background_modal)
@@ -28,32 +28,34 @@
   justify-content: center;
 }
 
-.HorizontalScrollArrow--m .HorizontalScrollArrow__icon {
+.ScrollArrow--m .ScrollArrow__icon {
   width: 28px;
   height: 28px;
   border-radius: 14px;
 }
 
-.HorizontalScrollArrow--l .HorizontalScrollArrow__icon {
+.ScrollArrow--l .ScrollArrow__icon {
   width: 40px;
   height: 40px;
   border-radius: 24px;
 }
 
-.HorizontalScrollArrow--left {
-  padding-left: var(--vkui--size_base_padding_horizontal--regular, 16px);
-  left: 0;
+.ScrollArrow--left .ScrollArrow__icon {
+  transform: rotate(180deg);
 }
 
-.HorizontalScrollArrow--right {
-  padding-right: var(--vkui--size_base_padding_horizontal--regular, 16px);
-  right: 0;
+.ScrollArrow--up .ScrollArrow__icon {
+  transform: rotate(270deg);
+}
+
+.ScrollArrow--down .ScrollArrow__icon {
+  transform: rotate(90deg);
 }
 
 /*
  * iOS
  */
-.HorizontalScrollArrow--ios .HorizontalScrollArrow {
+.ScrollArrow--ios .ScrollArrow {
   transition-timing-function: var(--ios-easing);
 }
 

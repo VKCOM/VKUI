@@ -29,3 +29,40 @@
   .HorizontalScroll__in-wrapper {
   transform: translateX(-8px);
 }
+
+.HorizontalScroll__arrow {
+  top: 0;
+  height: 100%;
+}
+
+.HorizontalScroll__arrow--left {
+  padding-left: var(--vkui--size_base_padding_horizontal--regular, 16px);
+  left: 0;
+}
+
+.HorizontalScroll__arrow--right {
+  padding-right: var(--vkui--size_base_padding_horizontal--regular, 16px);
+  right: 0;
+}
+
+.HorizontalScroll__arrow--left:hover
+  ~ .HorizontalScroll__in
+  .HorizontalScroll__in-wrapper {
+  transform: translateX(8px);
+}
+
+.HorizontalScroll__arrow--right:hover
+  ~ .HorizontalScroll__in
+  .HorizontalScroll__in-wrapper {
+  transform: translateX(-8px);
+}
+
+.HorizontalScroll:hover .HorizontalScroll__arrow {
+  opacity: 0.72;
+}
+
+.HorizontalScroll:hover .HorizontalScroll__arrow:hover,
+.HorizontalScroll--withConstArrows .HorizontalScroll__arrow,
+.HorizontalScroll--withConstArrows:hover .HorizontalScroll__arrow {
+  opacity: 1;
+}
