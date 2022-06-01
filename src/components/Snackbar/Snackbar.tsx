@@ -234,5 +234,3 @@ export const Snackbar: React.FC<SnackbarProps> = (props) => {
     </AppRootPortal>
   );
 };
-
-Snackbar.displayName = "Snackbar";

@@ -12,8 +12,13 @@ export interface PopoutRootProps
   modal?: React.ReactNode;
 }
 
-export const PopoutRoot: React.FC<PopoutRootProps> = (props) => {
-  const { popout, modal, children, getRootRef, ...restProps } = props;
+export const PopoutRoot: React.FC<PopoutRootProps> = ({
+  popout,
+  modal,
+  children,
+  getRootRef,
+  ...restProps
+}) => {
   const { document } = useDOM();
 
   const isDesktop = useAdaptivityIsDesktop();
@@ -40,5 +45,3 @@ export const PopoutRoot: React.FC<PopoutRootProps> = (props) => {
     </div>
   );
 };
-
-PopoutRoot.displayName = "PopoutRoot";

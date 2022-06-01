@@ -40,5 +40,3 @@ export const ModalRoot: React.FC<ModalRootProps> = (props) => {
 
   return <RootComponent {...props} />;
 };
-
-ModalRoot.displayName = "ModalRoot";
