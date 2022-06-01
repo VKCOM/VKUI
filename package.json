@@ -127,6 +127,11 @@
   "size-limit": [
     {
       "name": "JS",
+      "path": "dist/index.js",
+      "gzip": false
+    },
+    {
+      "name": "JS (gzip)",
       "path": "dist/index.js"
     },
     {
@@ -140,6 +145,12 @@
     },
     {
       "name": "CSS",
+      "path": "dist/vkui.css",
+      "webpack": false,
+      "gzip": false
+    },
+    {
+      "name": "CSS (gzip)",
       "path": "dist/vkui.css",
       "webpack": false
     },
