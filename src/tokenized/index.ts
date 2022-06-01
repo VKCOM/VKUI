@@ -10,6 +10,9 @@ export type { CardScrollProps } from "../components/CardScroll/CardScroll";
 export { HorizontalScroll } from "../components/HorizontalScroll/HorizontalScroll";
 export type { HorizontalScrollProps } from "../components/HorizontalScroll/HorizontalScroll";
 
+export { InfoRow } from "../components/InfoRow/InfoRow";
+export type { InfoRowProps } from "../components/InfoRow/InfoRow";
+
 export { ButtonGroup } from "../components/ButtonGroup/ButtonGroup";
 export type { ButtonGroupProps } from "../components/ButtonGroup/ButtonGroup";
 
