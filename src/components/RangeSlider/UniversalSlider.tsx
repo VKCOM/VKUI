@@ -1,12 +1,10 @@
 import * as React from "react";
 import { Touch, TouchEvent, TouchEventHandler } from "../Touch/Touch";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import { rescale } from "../../helpers/math";
 import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { useExternRef } from "../../hooks/useExternRef";
-import { usePlatform } from "../../hooks/usePlatform";
 import "../Slider/Slider.css";
 
 export type UniversalValue = [number | null, number];
@@ -39,7 +37,6 @@ const UniversalSliderDumb: React.FC<UniversalSliderProps<UniversalValue>> = ({
   disabled,
   ...restProps
 }) => {
-  const platform = usePlatform();
   const [start, end] = value;
   const isRange = start != null;
   const gesture = React.useRef({
@@ -134,7 +131,7 @@ const UniversalSliderDumb: React.FC<UniversalSliderProps<UniversalValue>> = ({
       {...restProps}
       {...(disabled ? {} : { onStart, onMove, onEnd })}
       vkuiClass={classNames(
-        getClassName("Slider", platform),
+        "Slider",
         `Slider--sizeY-${sizeY}`,
         disabled && "Slider--disabled"
       )}

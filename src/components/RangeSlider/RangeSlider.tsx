@@ -8,7 +8,7 @@ export type RangeSliderProps = UniversalSliderProps<Value>;
 /**
  * @see https://vkcom.github.io/VKUI/#/RangeSlider
  */
-const RangeSlider: React.FC<RangeSliderProps> = ({
+export const RangeSlider: React.FC<RangeSliderProps> = ({
   onChange,
   defaultValue,
   min = 0,
@@ -52,6 +52,3 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
     />
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default RangeSlider;
