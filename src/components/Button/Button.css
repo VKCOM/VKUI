@@ -645,7 +645,7 @@
 }
 
 .Banner__actions > .Button--lvl-tertiary {
-  margin: 4px 16px 2px -16px;
+  margin: 4px 16px 2px -12px;
 }
 
 .Banner__actions > .Button--lvl-tertiary:first-child {
