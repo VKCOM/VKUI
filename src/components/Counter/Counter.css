@@ -14,18 +14,32 @@
 }
 
 .Counter--primary {
-  background: var(--counter_primary_background);
-  color: var(--counter_primary_text);
+  background: var(
+    --counter_primary_background,
+    var(--vkui--color_background_accent)
+  );
+  color: var(--counter_primary_text, var(--vkui--color_text_contrast));
 }
 
 .Counter--secondary {
-  background: var(--counter_secondary_background);
-  color: var(--counter_secondary_text);
+  background: var(
+    --counter_secondary_background,
+    var(--vkui--color_icon_tertiary)
+  );
+  color: var(--counter_secondary_text, var(--vkui--color_text_contrast));
 }
 
 .Counter--prominent {
-  background: var(--counter_prominent_background);
-  color: var(--counter_prominent_text);
+  background: var(
+    --counter_prominent_background,
+    var(--vkui--color_background_negative)
+  );
+  color: var(--counter_prominent_text, var(--vkui--color_text_contrast));
+}
+
+.Counter--contrast {
+  background: var(--vkui--color_background_contrast);
+  color: var(--vkui--color_text_accent);
 }
 
 .Counter--s-m {
@@ -38,11 +52,6 @@
   height: 18px;
   min-width: 18px;
   border-radius: 9px;
-}
-
-.Counter--vkcom.Counter--s-m .Counter__in {
-  padding-left: 6px;
-  padding-right: 6px;
 }
 
 /**
@@ -145,17 +154,14 @@
   );
 }
 
-.Button--lvl-secondary.Button--clr-accent .Counter--vkcom,
-.Button--lvl-tertiary.Button--clr-accent .Counter--vkcom,
-.Button--lvl-outline.Button--clr-accent .Counter--vkcom {
-  opacity: 0.72;
-}
-
 /**
  * CMP:
  * WriteBarIcon
  */
 .WriteBarIcon .Counter {
-  color: var(--button_commerce_foreground);
-  background: var(--button_commerce_background);
+  color: var(--button_commerce_foreground, var(--vkui--color_text_contrast));
+  background: var(
+    --button_commerce_background,
+    var(--vkui--color_background_positive)
+  );
 }

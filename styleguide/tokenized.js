@@ -12,6 +12,7 @@ export const tokenized = [
   "HorizontalScroll",
   "PanelSpinner",
   "PullToRefresh",
+  "Counter",
   "Radio",
   "RadioGroup",
   "Pagination",
