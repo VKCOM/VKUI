@@ -1,6 +1,6 @@
 import { noop } from "../../lib/utils";
 import { baselineComponent } from "../../testing/utils";
-import Epic from "./Epic";
+import { Epic } from "./Epic";
 
 describe("Epic", () => {
   beforeAll(() => {

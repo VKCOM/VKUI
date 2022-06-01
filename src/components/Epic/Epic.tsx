@@ -53,6 +53,3 @@ export const Epic: React.FC<EpicProps> = (props) => {
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default Epic;
