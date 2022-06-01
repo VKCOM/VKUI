@@ -62,41 +62,37 @@
 }
 
 .Button--sz-s .Button__content:first-child {
-  padding-left: var(
-    --vkui--size_button_base_small_padding_horizontal_text--regular
-  );
+  padding-left: var(--vkui--size_button_base_small_padding_horizontal--regular);
 }
 
 .Button--sz-s .Button__content:last-child,
 .Button--sz-s .Button__after {
   padding-right: var(
-    --vkui--size_button_base_small_padding_horizontal_text--regular
+    --vkui--size_button_base_small_padding_horizontal--regular
   );
 }
 
 .Button--sz-m .Button__content:first-child {
   padding-left: var(
-    --vkui--size_button_base_medium_padding_horizontal_text--regular
+    --vkui--size_button_base_medium_padding_horizontal--regular
   );
 }
 
 .Button--sz-m .Button__content:last-child,
 .Button--sz-m .Button__after {
   padding-right: var(
-    --vkui--size_button_base_medium_padding_horizontal_text--regular
+    --vkui--size_button_base_medium_padding_horizontal--regular
   );
 }
 
 .Button--sz-l .Button__content:first-child {
-  padding-left: var(
-    --vkui--size_button_base_large_padding_horizontal_text--regular
-  );
+  padding-left: var(--vkui--size_button_base_large_padding_horizontal--regular);
 }
 
 .Button--sz-l .Button__content:last-child,
 .Button--sz-l .Button__after {
   padding-right: var(
-    --vkui--size_button_base_large_padding_horizontal_text--regular
+    --vkui--size_button_base_large_padding_horizontal--regular
   );
 }
 
@@ -120,40 +116,40 @@
 
 .Button--lvl-tertiary.Button--sz-s .Button__content:first-child {
   padding-left: var(
-    --vkui--size_button_tertiary_small_padding_horizontal_text--regular
+    --vkui--size_button_tertiary_small_padding_horizontal--regular
   );
 }
 
 .Button--lvl-tertiary.Button--sz-s .Button__content:last-child,
 .Button--lvl-tertiary.Button--sz-s .Button__after {
   padding-right: var(
-    --vkui--size_button_tertiary_small_padding_horizontal_text--regular
+    --vkui--size_button_tertiary_small_padding_horizontal--regular
   );
 }
 
 .Button--lvl-tertiary.Button--sz-m .Button__content:first-child {
   padding-left: var(
-    --vkui--size_button_tertiary_medium_padding_horizontal_text--regular
+    --vkui--size_button_tertiary_medium_padding_horizontal--regular
   );
 }
 
 .Button--lvl-tertiary.Button--sz-m .Button__content:last-child,
 .Button--lvl-tertiary.Button--sz-m .Button__after {
   padding-right: var(
-    --vkui--size_button_tertiary_medium_padding_horizontal_text--regular
+    --vkui--size_button_tertiary_medium_padding_horizontal--regular
   );
 }
 
 .Button--lvl-tertiary.Button--sz-l .Button__content:first-child {
   padding-left: var(
-    --vkui--size_button_tertiary_large_padding_horizontal_text--regular
+    --vkui--size_button_tertiary_large_padding_horizontal--regular
   );
 }
 
 .Button--lvl-tertiary.Button--sz-l .Button__content:last-child,
 .Button--lvl-tertiary.Button--sz-l .Button__after {
   padding-right: var(
-    --vkui--size_button_tertiary_large_padding_horizontal_text--regular
+    --vkui--size_button_tertiary_large_padding_horizontal--regular
   );
 }
 
