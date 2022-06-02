@@ -29,14 +29,6 @@
   transition: transform 300ms cubic-bezier(0.1, 0, 0.25, 1),
     opacity 220ms ease-out;
   opacity: 0;
-}
-
-.PullToRefresh--ios .PullToRefresh__spinner {
-  color: var(--icon_outline_secondary, var(--vkui--color_icon_medium));
-}
-
-.PullToRefresh--android .PullToRefresh__spinner,
-.PullToRefresh--vkcom .PullToRefresh__spinner {
   background: var(
     --background_suggestions,
     var(--vkui--color_background_modal)
@@ -44,6 +36,13 @@
   border-radius: 50%;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   color: var(--accent, var(--vkui--color_icon_accent));
+}
+
+.PullToRefresh--ios .PullToRefresh__spinner {
+  border-radius: none;
+  box-shadow: none;
+  background: none;
+  color: var(--icon_outline_secondary, var(--vkui--color_icon_medium));
 }
 
 .PullToRefresh--watching .PullToRefresh__spinner {
