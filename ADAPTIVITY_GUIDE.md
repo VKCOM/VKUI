@@ -52,7 +52,7 @@ const Component: React.FC = () => {
   padding: 20px;
 }
 
-.Component-sizeX-compact {
+.Component--sizeX-compact {
   padding: 10px;
 }
 
