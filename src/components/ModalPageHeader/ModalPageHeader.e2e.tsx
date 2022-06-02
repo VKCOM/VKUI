@@ -7,7 +7,7 @@ import { ViewWidth } from "../../hoc/withAdaptivity";
 import ModalRootContext from "../ModalRoot/ModalRootContext";
 import { noop } from "../../lib/utils";
 
-const BaseModalPageHeader = (p: ModalPageHeaderProps) => (
+const BaseModalPageHeader = (props: ModalPageHeaderProps) => (
   <ModalRootContext.Provider
     value={{
       isInsideModal: true,
@@ -15,7 +15,7 @@ const BaseModalPageHeader = (p: ModalPageHeaderProps) => (
       registerModal: noop,
     }}
   >
-    <ModalPageHeader {...p} />
+    <ModalPageHeader {...props} />
   </ModalRootContext.Provider>
 );
 
@@ -45,8 +45,8 @@ describe("ModalPageHeader", () => {
     [
       {
         children,
-        left: [null, cancel],
-        right: [null, done],
+        before: [null, cancel],
+        after: [null, done],
       },
     ],
     {
@@ -61,8 +61,8 @@ describe("ModalPageHeader", () => {
     [
       {
         children,
-        left: [null, cancel],
-        right: [null, done],
+        before: [null, cancel],
+        after: [null, done],
       },
     ],
     {
@@ -77,8 +77,8 @@ describe("ModalPageHeader", () => {
     [
       {
         children,
-        right: [dismiss, dismissText],
-        left: [null, cancel],
+        before: [null, cancel],
+        after: [dismiss, dismissText],
       },
     ],
     {
@@ -93,8 +93,8 @@ describe("ModalPageHeader", () => {
     [
       {
         children,
-        right: [dismiss, dismissText],
-        left: [null, cancel],
+        before: [null, cancel],
+        after: [dismiss, dismissText],
       },
     ],
     {
