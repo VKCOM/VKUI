@@ -23,8 +23,16 @@ export interface RichCellProps extends TappableProps {
    */
   bottom?: React.ReactNode;
   /**
-   * Кнопка `<Button size="s" />`. Располагается под `bottom`.
-   * Для набора кнопок следует использовать обёртку `<ButtonGroup mode="horizontal" gap="s">...</ButtonGroup>`.
+   * Кнопки-действия.
+   *
+   * Рекомендуется использовать [Button](#/Button) с параметрами:
+   *
+   * - `mode="primary" size="s"`
+   * - `mode="secondary" size="s"`
+   *
+   * Для набора кнопок следует использовать [ButtonGroup](#/ButtonGroup) с параметрами:
+   *
+   * - `mode="horizontal" gap="s" stretched`
    */
   actions?: React.ReactNode;
   /**
@@ -89,13 +97,11 @@ const RichCell: React.FC<RichCellProps> = ({
             {caption}
           </Subhead>
         )}
-        {(hasReactNode(bottom) || hasReactNode(actions)) && (
-          <div vkuiClass="RichCell__bottom">
-            {bottom}
-            {hasReactNode(actions) && (
-              <div vkuiClass="RichCell__actions">{actions}</div>
-            )}
-          </div>
+        {hasReactNode(bottom) && (
+          <div vkuiClass="RichCell__bottom">{bottom}</div>
+        )}
+        {hasReactNode(actions) && (
+          <div vkuiClass="RichCell__actions">{actions}</div>
         )}
       </div>
     </Tappable>
