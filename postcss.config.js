@@ -8,7 +8,8 @@ const cssModules = require("postcss-modules");
 const csso = require("postcss-csso");
 const checkKeyframes = require("./tasks/postcss-check-keyframes");
 const { defaultSchemeId } = require("./package.json");
-const VkSansMandatoryDeclarations = require("./postcss-plugin-vk-sans");
+// TODO: включить после добавления поддержки VK-Sans-Text
+// const VkSansMandatoryDeclarations = require("./postcss-plugin-vk-sans");
 const customPropertiesFallback = require("./postcss-custom-properties-fallback");
 
 const animationsSource = path.join(__dirname, "src/styles/animations.css");
@@ -59,27 +60,27 @@ let plugins = [
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     getJSON: () => {},
   }),
-  // eslint-disable-next-line new-cap
-  VkSansMandatoryDeclarations({
-    platform: "vkui",
-    debug: false,
-    ignoreFiles: [],
-    ignoreSelectors: [],
-    explicitNormalLetterSpacing: false,
-    respectImportant: true,
-    features: {
-      injectLetterSpacing: true,
-      injectVkSansDisplay: true,
-      overrideToVkSansDisplay: true,
-      overrideCustomFonts: true,
-    },
-    varName: "--font-display",
-    customPropertiesFiles: [
-      path.resolve(
-        "./node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css"
-      ),
-    ],
-  }),
+  // TODO: включить после добавления поддержки VK-Sans-Text
+  // VkSansMandatoryDeclarations({
+  //   platform: "vkui",
+  //   debug: false,
+  //   ignoreFiles: [],
+  //   ignoreSelectors: [],
+  //   explicitNormalLetterSpacing: false,
+  //   respectImportant: true,
+  //   features: {
+  //     injectLetterSpacing: true,
+  //     injectVkSansDisplay: true,
+  //     overrideToVkSansDisplay: true,
+  //     overrideCustomFonts: true,
+  //   },
+  //   varName: "--font-display",
+  //   customPropertiesFiles: [
+  //     path.resolve(
+  //       "./node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css"
+  //     ),
+  //   ],
+  // }),
   customPropertiesFallback({
     importFrom: path.join(
       __dirname,
