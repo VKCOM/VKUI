@@ -1,10 +1,10 @@
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import { CustomSelect, CustomSelectProps } from "../CustomSelect/CustomSelect";
+import { CustomSelect, SelectProps } from "../CustomSelect/CustomSelect";
 import { SelectType } from "../Select/Select";
 
 describe("CustomSelect", () => {
   describeScreenshotFuzz(
-    (props: CustomSelectProps) => (
+    (props: SelectProps) => (
       <CustomSelect
         placeholder="Не выбрана"
         {...props}

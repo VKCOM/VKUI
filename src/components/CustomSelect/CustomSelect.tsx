@@ -89,7 +89,7 @@ interface CustomSelectState {
   popperPlacement?: Placement;
 }
 
-export interface CustomSelectProps
+export interface SelectProps
   extends NativeSelectProps,
     HasPlatform,
     FormFieldProps {
@@ -151,10 +151,10 @@ export interface CustomSelectProps
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
 class CustomSelectComponent extends React.Component<
-  CustomSelectProps,
+  SelectProps,
   CustomSelectState
 > {
-  static defaultProps: Partial<CustomSelectProps> = {
+  static defaultProps: Partial<SelectProps> = {
     searchable: false,
     renderOption({ option, ...props }): React.ReactNode {
       return <CustomSelectOption {...props} />;
@@ -167,7 +167,7 @@ class CustomSelectComponent extends React.Component<
     fixDropdownWidth: true,
   };
 
-  public constructor(props: CustomSelectProps) {
+  public constructor(props: SelectProps) {
     super(props);
 
     const { value, defaultValue } = props;
@@ -221,9 +221,9 @@ class CustomSelectComponent extends React.Component<
   }
 
   filter = (
-    options: CustomSelectProps["options"],
+    options: SelectProps["options"],
     inputValue: string,
-    filterFn: CustomSelectProps["filterFn"]
+    filterFn: SelectProps["filterFn"]
   ) => {
     return typeof filterFn === "function"
       ? options.filter((option) => filterFn(inputValue, option))
@@ -543,7 +543,7 @@ class CustomSelectComponent extends React.Component<
 
   handleKeyUp = debounce(this.resetKeyboardInput, 1000);
 
-  componentDidUpdate(prevProps: CustomSelectProps) {
+  componentDidUpdate(prevProps: SelectProps) {
     // Внутри useEffect и так is, можно убрать
     if (
       !is(prevProps.value, this.props.value) ||

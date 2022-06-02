@@ -203,8 +203,7 @@ export { NativeSelect } from "./components/NativeSelect/NativeSelect";
 export type { NativeSelectProps } from "./components/NativeSelect/NativeSelect";
 export { CustomSelect } from "./components/CustomSelect/CustomSelect";
 export type {
-  CustomSelectProps,
-  CustomSelectProps as SelectProps,
+  SelectProps,
   CustomSelectOptionInterface,
 } from "./components/CustomSelect/CustomSelect";
 export { CustomSelectOption } from "./components/CustomSelectOption/CustomSelectOption";

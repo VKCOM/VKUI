@@ -74,10 +74,7 @@ export { Spinner } from "../components/Spinner/Spinner";
 export type { SpinnerProps } from "../components/Spinner/Spinner";
 
 export { CustomSelect } from "../components/CustomSelect/CustomSelect";
-export type {
-  CustomSelectProps,
-  CustomSelectProps as SelectProps,
-} from "../components/CustomSelect/CustomSelect";
+export type { SelectProps } from "../components/CustomSelect/CustomSelect";
 
 export { CustomSelectDropdown } from "../components/CustomSelectDropdown/CustomSelectDropdown";
 export type { CustomSelectDropdownProps } from "../components/CustomSelectDropdown/CustomSelectDropdown";
