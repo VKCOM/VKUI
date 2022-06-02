@@ -46,7 +46,7 @@
 
 .Panel__centered .PanelHeader--android.PanelHeader--vis + *,
 .Panel__centered .PanelHeader--vkcom.PanelHeader--vis + * {
-  margin-top: var(--panelheader_height_android);
+  margin-top: var(--panelheader_height);
 }
 
 .Panel--sizeX-compact .Panel__centered .PanelHeader--ios.PanelHeader--sep + * {
@@ -57,7 +57,7 @@
   .Panel__centered
   .PanelHeader--android.PanelHeader--sep
   + * {
-  margin-top: calc(var(--panelheader_height_android) + 5px);
+  margin-top: calc(var(--panelheader_height) + 5px);
 }
 
 .Panel--sizeX-compact
@@ -75,7 +75,7 @@
   .Panel__centered
   .PanelHeader--android.PanelHeader--sep
   + * {
-  margin-top: calc(var(--panelheader_height_android) + 16px);
+  margin-top: calc(var(--panelheader_height) + 16px);
 }
 
 .Panel--sizeX-regular
