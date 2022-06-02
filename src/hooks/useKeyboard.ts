@@ -4,7 +4,6 @@ import { useGlobalEventListener } from "./useGlobalEventListener";
 
 interface SoftwareKeyboardState {
   isOpened: boolean;
-  isPrecise: boolean;
 }
 
 /**
@@ -29,35 +28,19 @@ const eventOptions = {
 };
 
 export function useKeyboard(): SoftwareKeyboardState {
-  const { window, document } = useDOM();
+  const { document } = useDOM();
 
   const [isOpened, setIsOpened] = React.useState(false);
-  const [isPrecise, setIsPrecise] = React.useState(false);
-
-  const transitionalTimeout = React.useRef<ReturnType<
-    typeof setTimeout
-  > | null>(null);
 
   const onFocus = React.useCallback(
     (event: FocusEvent | true) => {
-      if (transitionalTimeout.current) {
-        clearTimeout(transitionalTimeout.current);
-      }
-
       const isOpened =
         (event === true || event.type === "focusin") &&
         (document?.activeElement?.tagName === "INPUT" ||
           document?.activeElement?.tagName === "TEXTAREA");
       setIsOpened(isOpened);
-      setIsPrecise(false);
-
-      // Ожидаем прохождение анимации раскрытия клавиатуры
-      transitionalTimeout.current = setTimeout(() => {
-        setIsOpened(isOpened);
-        setIsPrecise(getPreciseKeyboardState(window));
-      }, 300);
     },
-    [document?.activeElement?.tagName, window]
+    [document?.activeElement?.tagName]
   );
 
   /**
@@ -71,5 +54,5 @@ export function useKeyboard(): SoftwareKeyboardState {
   useGlobalEventListener(document, "focusout", onFocus, eventOptions);
   useGlobalEventListener(document, "focusin", onFocus, eventOptions);
 
-  return { isOpened, isPrecise };
+  return { isOpened };
 }
