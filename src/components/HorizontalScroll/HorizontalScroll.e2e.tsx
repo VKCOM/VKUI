@@ -3,7 +3,7 @@ import { HorizontalScroll } from "./HorizontalScroll";
 import { HorizontalCell } from "../HorizontalCell/HorizontalCell";
 import Avatar from "../Avatar/Avatar";
 import { ANDROID } from "../../lib/platform";
-import { ViewWidth } from "../../hoc/withAdaptivity";
+import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import { mount, screenshot } from "../../testing/e2e";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { AppRoot } from "../AppRoot/AppRoot";

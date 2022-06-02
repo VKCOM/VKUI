@@ -1,4 +1,4 @@
-import { AdaptivityProps } from "../hoc/withAdaptivity";
+import { AdaptivityProps } from "../components/AdaptivityProvider/AdaptivityContext";
 
 export function getSizeYClassName(
   base: string,

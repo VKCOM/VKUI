@@ -1,19 +1,14 @@
 import * as React from "react";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
-import { withAdaptivity, ViewWidth } from "../../hoc/withAdaptivity";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { ScrollSaver } from "./ScrollSaver";
 import { getNavId } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
-import {
-  AdaptivityContextInterface,
-  AdaptivityProps,
-} from "../AdaptivityProvider/AdaptivityContext";
+import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import "./Epic.css";
 
-export interface EpicProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    AdaptivityProps {
+export interface EpicProps extends React.HTMLAttributes<HTMLDivElement> {
   tabbar?: React.ReactNode;
   activeStory: string;
 }
@@ -23,12 +18,11 @@ const warn = warnOnce("Epic");
 /**
  * @see https://vkcom.github.io/VKUI/#/Epic
  */
-export const Epic: React.FC<EpicProps & AdaptivityContextInterface> = (
-  props
-) => {
+export const Epic: React.FC<EpicProps> = (props) => {
   const platform = usePlatform();
+  const { viewWidth } = useAdaptivity();
   const scroll = React.useRef<{ [key: string]: number }>({}).current;
-  const { activeStory, tabbar, children, viewWidth, ...restProps } = props;
+  const { activeStory, tabbar, children, ...restProps } = props;
 
   if (
     process.env.NODE_ENV === "development" &&
@@ -59,8 +53,3 @@ export const Epic: React.FC<EpicProps & AdaptivityContextInterface> = (
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(Epic, {
-  viewWidth: true,
-});

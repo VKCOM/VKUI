@@ -1,13 +1,8 @@
 import * as React from "react";
 import { NativeSelect } from "../NativeSelect/NativeSelect";
-import { CustomSelect, CustomSelectProps } from "../CustomSelect/CustomSelect";
-import { withAdaptivity } from "../../hoc/withAdaptivity";
+import { CustomSelect, SelectProps } from "../CustomSelect/CustomSelect";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { usePlatform } from "../../hooks/usePlatform";
-import {
-  AdaptivityContextInterface,
-  AdaptivityProps,
-} from "../AdaptivityProvider/AdaptivityContext";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
@@ -21,9 +16,11 @@ export const SelectType = {
 /**
  * @see https://vkcom.github.io/VKUI/#/SelectTypography
  */
-export const SelectTypography: React.FC<
-  Pick<CustomSelectProps, "selectType">
-> = ({ selectType = SelectType.default, children, ...restProps }) => {
+export const SelectTypography: React.FC<Pick<SelectProps, "selectType">> = ({
+  selectType = SelectType.default,
+  children,
+  ...restProps
+}) => {
   const platform = usePlatform();
   const { sizeY } = useAdaptivity();
 
@@ -41,12 +38,11 @@ export const SelectTypography: React.FC<
   );
 };
 
-export interface SelectProps extends CustomSelectProps, AdaptivityProps {}
-
-const SelectComponent: React.FC<SelectProps & AdaptivityContextInterface> = ({
-  hasMouse,
-  ...props
-}: SelectProps) => {
+/**
+ * @see https://vkcom.github.io/VKUI/#/Select
+ */
+export const Select: React.FC<SelectProps> = (props) => {
+  const { hasMouse } = useAdaptivity();
   // Use custom select if device has connected a mouse
   if (hasMouse) {
     const { children, ...restProps } = props;
@@ -66,10 +62,3 @@ const SelectComponent: React.FC<SelectProps & AdaptivityContextInterface> = ({
     </NativeSelect>
   );
 };
-
-/**
- * @see https://vkcom.github.io/VKUI/#/Select
- */
-export const Select = withAdaptivity(SelectComponent, {
-  hasMouse: true,
-});

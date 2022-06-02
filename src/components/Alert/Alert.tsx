@@ -4,7 +4,6 @@ import { PopoutWrapper } from "../PopoutWrapper/PopoutWrapper";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { ANDROID, VKCOM, IOS } from "../../lib/platform";
-import { ViewWidth } from "../../hoc/withAdaptivity";
 import { Button, ButtonProps } from "../Button/Button";
 import { hasReactNode, stopPropagation } from "../../lib/utils";
 import { Headline } from "../Typography/Headline/Headline";
@@ -16,6 +15,7 @@ import { useScrollLock } from "../AppRoot/ScrollContext";
 import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import "./Alert.css";
 
 export type AlertActionInterface = AlertAction &

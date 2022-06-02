@@ -15,8 +15,8 @@ import {
 import {
   SizeType,
   ViewWidth,
+  AdaptivityProps,
 } from "../../components/AdaptivityProvider/AdaptivityContext";
-import { AdaptivityProps, withAdaptivity } from "../../hoc/withAdaptivity";
 import View from "../../components/View/View";
 import { AppRoot } from "../../components/AppRoot/AppRoot";
 import Group from "../../components/Group/Group";
@@ -163,11 +163,6 @@ export function describeScreenshotFuzz<Props>(
         adaptivity
       );
 
-      const AdaptiveComponent = withAdaptivity(Component, {
-        sizeX: true,
-        sizeY: true,
-      });
-
       it(`light${
         adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ""
       }`, async () => {
@@ -185,14 +180,28 @@ export function describeScreenshotFuzz<Props>(
                 >
                   <Wrapper>
                     {multiCartesian(propSets, { adaptive: !isVKCOM }).map(
-                      (props, i) => (
-                        <Fragment key={i}>
-                          <div>{prettyProps(props)}</div>
-                          <div>
-                            <AdaptiveComponent {...props} />
-                          </div>
-                        </Fragment>
-                      )
+                      (props, i) => {
+                        const adaptivityProviderProps = {
+                          ...adaptivityProps,
+                        };
+                        if (props.sizeX) {
+                          adaptivityProviderProps.sizeX = props.sizeX;
+                        }
+                        if (props.sizeY) {
+                          adaptivityProviderProps.sizeY = props.sizeY;
+                        }
+
+                        return (
+                          <Fragment key={i}>
+                            <div>{prettyProps(props)}</div>
+                            <div>
+                              <AdaptivityProvider {...adaptivityProviderProps}>
+                                <Component {...props} />
+                              </AdaptivityProvider>
+                            </div>
+                          </Fragment>
+                        );
+                      }
                     )}
                   </Wrapper>
                 </div>

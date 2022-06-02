@@ -7,8 +7,8 @@ import {
   classNames,
   Separator,
   Footer,
-  withAdaptivity,
   ViewWidth,
+  useAdaptivity,
 } from "@vkui";
 import {
   Icon28ChevronDownOutline,
@@ -303,4 +303,8 @@ class TableOfContents extends React.PureComponent {
   }
 }
 
-export default withAdaptivity(TableOfContents, { viewWidth: true });
+export default (props) => {
+  const { viewWidth } = useAdaptivity();
+
+  return <TableOfContents {...props} viewWidth={viewWidth} />;
+};

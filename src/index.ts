@@ -25,7 +25,7 @@ export { SplitLayout } from "./components/SplitLayout/SplitLayout";
 export type { SplitLayoutProps } from "./components/SplitLayout/SplitLayout";
 export { SplitCol } from "./components/SplitCol/SplitCol";
 export type { SplitColProps } from "./components/SplitCol/SplitCol";
-export { default as Epic } from "./components/Epic/Epic";
+export { Epic } from "./components/Epic/Epic";
 export type { EpicProps } from "./components/Epic/Epic";
 export { default as Tabbar } from "./components/Tabbar/Tabbar";
 export type { TabbarProps } from "./components/Tabbar/Tabbar";
@@ -197,14 +197,13 @@ export type { RadioGroupProps } from "./components/RadioGroup/RadioGroup";
 export { default as Checkbox } from "./components/Checkbox/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox/Checkbox";
 export { Select } from "./components/Select/Select";
-export type { SelectProps } from "./components/Select/Select";
 export { SelectMimicry } from "./components/SelectMimicry/SelectMimicry";
 export type { SelectMimicryProps } from "./components/SelectMimicry/SelectMimicry";
 export { NativeSelect } from "./components/NativeSelect/NativeSelect";
 export type { NativeSelectProps } from "./components/NativeSelect/NativeSelect";
 export { CustomSelect } from "./components/CustomSelect/CustomSelect";
 export type {
-  CustomSelectProps,
+  SelectProps,
   CustomSelectOptionInterface,
 } from "./components/CustomSelect/CustomSelect";
 export { CustomSelectOption } from "./components/CustomSelectOption/CustomSelectOption";
@@ -293,7 +292,6 @@ export type { ParagraphProps } from "./components/Typography/Paragraph/Paragraph
  */
 export { withInsets } from "./hoc/withInsets";
 export { withPlatform } from "./hoc/withPlatform";
-export { withAdaptivity } from "./hoc/withAdaptivity";
 
 /**
  * Hooks
@@ -321,6 +319,7 @@ export {
   ViewHeight,
   SizeType,
 } from "./components/AdaptivityProvider/AdaptivityContext";
+export type { AdaptivityProps } from "./components/AdaptivityProvider/AdaptivityContext";
 export { calcInitialsAvatarColor } from "./helpers/avatar";
 export { Popper } from "./components/Popper/Popper";
 export type { PopperProps } from "./components/Popper/Popper";
@@ -331,5 +330,4 @@ export type { PopperProps } from "./components/Popper/Popper";
 export type { AlignType, HasPlatform, HasInsets } from "./types";
 export type { NavIdProps } from "./lib/getNavId";
 export type { PlatformType } from "./lib/platform";
-export type { AdaptivityProps } from "./hoc/withAdaptivity";
 export type { TransitionContextProps } from "./components/NavTransitionContext/NavTransitionContext";

@@ -3,10 +3,10 @@ import { ActionSheet, ActionSheetProps } from "./ActionSheet";
 import { ActionSheetItem } from "../ActionSheetItem/ActionSheetItem";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { withPlatform } from "../../hoc/withPlatform";
-import { ViewWidth, SizeType } from "../../hoc/withAdaptivity";
 import { HasPlatform } from "../../types";
 import { VKCOM } from "../../lib/platform";
 import { TooltipContainer } from "../Tooltip/TooltipContainer";
+import { ViewWidth, SizeType } from "../AdaptivityProvider/AdaptivityContext";
 
 describe("ActionSheet", () => {
   const cancel = <ActionSheetItem mode="cancel">Отменить</ActionSheetItem>;

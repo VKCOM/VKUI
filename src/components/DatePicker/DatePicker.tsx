@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Input } from "../Input/Input";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { HasPlatform } from "../../types";
 import { leadingZero } from "../../lib/utils";
 import { CustomSelect } from "../CustomSelect/CustomSelect";
@@ -32,8 +32,7 @@ export interface DatePickerProps
       React.HTMLAttributes<HTMLDivElement>,
       "defaultValue" | "min" | "max"
     >,
-    HasPlatform,
-    AdaptivityProps {
+    HasPlatform {
   min?: DatePickerDateFormat;
   max?: DatePickerDateFormat;
   name?: string;
@@ -91,7 +90,6 @@ const DatePickerCustom: React.FC<
   yearPlaceholder,
   popupDirection,
   defaultValue,
-  hasMouse,
   monthNames,
   day = 0,
   month = 0,
@@ -177,7 +175,6 @@ const DatePickerNative: React.FC<
   yearPlaceholder,
   popupDirection,
   defaultValue,
-  hasMouse,
   day,
   month,
   year,
@@ -210,11 +207,8 @@ const DatePickerNative: React.FC<
 /**
  * @see https://vkcom.github.io/VKUI/#/DatePicker
  */
-const DatePicker: React.FC<DatePickerProps> = ({
-  hasMouse,
-  defaultValue,
-  ...props
-}) => {
+const DatePicker: React.FC<DatePickerProps> = ({ defaultValue, ...props }) => {
+  const { hasMouse } = useAdaptivity();
   const [value, setValue] = React.useState<Partial<DatePickerDateFormat>>(
     () => ({
       day: defaultValue?.day || 0,
@@ -236,6 +230,4 @@ const DatePicker: React.FC<DatePickerProps> = ({
 };
 
 // eslint-disable-next-line import/no-default-export
-export default withAdaptivity(DatePicker, {
-  hasMouse: true,
-});
+export default DatePicker;

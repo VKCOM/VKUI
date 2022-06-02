@@ -8,7 +8,7 @@ import {
 } from "../ModalRoot/ModalRootContext";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useOrientationChange } from "../../hooks/useOrientationChange";
-import { ViewWidth } from "../../hoc/withAdaptivity";
+import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { multiRef } from "../../lib/utils";
 import { ModalType } from "../ModalRoot/types";

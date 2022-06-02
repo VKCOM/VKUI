@@ -6,10 +6,11 @@ import { withPlatform } from "../../hoc/withPlatform";
 import { HasAlign, HasPlatform, HasRef, HasRootRef } from "../../types";
 import { withDOM, DOMProps } from "../../lib/dom";
 import { setRef } from "../../lib/utils";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
+import { AdaptivityProps } from "../AdaptivityProvider/AdaptivityContext";
 import HorizontalScrollArrow from "../HorizontalScroll/HorizontalScrollArrow";
 import { clamp } from "../../helpers/math";
 import { useTimeout } from "../../hooks/useTimeout";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./Gallery.css";
 
 export interface BaseGalleryProps
@@ -66,7 +67,7 @@ export interface GallerySlidesState {
 type GetSlideRef = (index: number) => React.RefCallback<HTMLElement>;
 
 class BaseGallery extends React.Component<
-  BaseGalleryProps & DOMProps & AdaptivityProps,
+  BaseGalleryProps & DOMProps & Pick<AdaptivityProps, "hasMouse">,
   GalleryState
 > {
   constructor(props: GalleryProps) {
@@ -507,9 +508,7 @@ class BaseGallery extends React.Component<
   }
 }
 
-const BaseGalleryAdaptive = withAdaptivity(withDOM(BaseGallery), {
-  hasMouse: true,
-});
+const BaseGalleryAdaptive = withDOM(BaseGallery);
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Gallery
@@ -522,6 +521,7 @@ const Gallery: React.FC<GalleryProps> = ({
   ...props
 }: GalleryProps) => {
   const [localSlideIndex, setSlideIndex] = React.useState(initialSlideIndex);
+  const { hasMouse } = useAdaptivity();
   const isControlled = typeof props.slideIndex === "number";
   const slideIndex = isControlled ? props.slideIndex ?? 0 : localSlideIndex;
   const isDraggable = !isControlled || Boolean(onChange);
@@ -564,6 +564,7 @@ const Gallery: React.FC<GalleryProps> = ({
   return (
     <BaseGalleryAdaptive
       isDraggable={isDraggable}
+      hasMouse={hasMouse}
       {...props}
       slideIndex={safeSlideIndex}
       onChange={handleChange}

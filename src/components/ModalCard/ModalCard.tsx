@@ -3,7 +3,6 @@ import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { withPlatform } from "../../hoc/withPlatform";
 import { HasPlatform } from "../../types";
-import { withAdaptivity } from "../../hoc/withAdaptivity";
 import ModalRootContext, {
   useModalRegistry,
 } from "../ModalRoot/ModalRootContext";
@@ -14,16 +13,11 @@ import {
   ModalCardBase,
   ModalCardBaseProps,
 } from "../ModalCardBase/ModalCardBase";
-import {
-  AdaptivityContextInterface,
-  AdaptivityProps,
-} from "../AdaptivityProvider/AdaptivityContext";
 import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
 import "./ModalCard.css";
 
 export interface ModalCardProps
   extends HasPlatform,
-    AdaptivityProps,
     NavIdProps,
     ModalCardBaseProps {}
 
@@ -32,9 +26,7 @@ const warn = warnOnce("ModalCard");
 /**
  * @see https://vkcom.github.io/VKUI/#/ModalCard
  */
-const ModalCard: React.FC<ModalCardProps & AdaptivityContextInterface> = (
-  props
-) => {
+const ModalCard: React.FC<ModalCardProps> = (props) => {
   const {
     icon,
     header,
@@ -44,9 +36,6 @@ const ModalCard: React.FC<ModalCardProps & AdaptivityContextInterface> = (
     actionsLayout,
     onClose,
     platform,
-    viewWidth,
-    viewHeight,
-    hasMouse,
     nav,
     ...restProps
   } = props;
@@ -85,8 +74,4 @@ ModalCard.defaultProps = {
 };
 
 // eslint-disable-next-line import/no-default-export
-export default withAdaptivity(withPlatform(ModalCard), {
-  viewWidth: true,
-  viewHeight: true,
-  hasMouse: true,
-});
+export default withPlatform(ModalCard);

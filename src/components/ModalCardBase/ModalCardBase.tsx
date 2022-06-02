@@ -5,15 +5,17 @@ import { Headline } from "../Typography/Headline/Headline";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
-import { ViewWidth, withAdaptivity } from "../../hoc/withAdaptivity";
 import { HasRootRef } from "../../types";
 import { PanelHeaderButton } from "../PanelHeaderButton/PanelHeaderButton";
 import { ANDROID, IOS, Platform } from "../../lib/platform";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { Icon24Dismiss } from "@vkontakte/icons";
 import { useKeyboard } from "../../hooks/useKeyboard";
-import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
-import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
+import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import {
+  useAdaptivityIsDesktop,
+  useAdaptivity,
+} from "../../hooks/useAdaptivity";
 import "./ModalCardBase.css";
 
 export interface ModalCardBaseProps
@@ -58,96 +60,85 @@ export interface ModalCardBaseProps
 /**
  * @see https://vkcom.github.io/VKUI/#/ModalCardBase
  */
-export const ModalCardBase = withAdaptivity<
-  ModalCardBaseProps & AdaptivityContextInterface
->(
-  ({
-    getRootRef,
-    icon,
-    header,
-    subheader,
-    children,
-    actions,
-    actionsLayout,
-    viewWidth,
-    hasMouse,
-    viewHeight,
-    onClose,
-    dismissLabel = "Скрыть",
-    ...restProps
-  }) => {
-    const platform = usePlatform();
-    const isDesktop = useAdaptivityIsDesktop();
-    const isSoftwareKeyboardOpened = useKeyboard().isOpened;
+export const ModalCardBase: React.FC<ModalCardBaseProps> = ({
+  getRootRef,
+  icon,
+  header,
+  subheader,
+  children,
+  actions,
+  actionsLayout,
+  onClose,
+  dismissLabel = "Скрыть",
+  ...restProps
+}) => {
+  const platform = usePlatform();
+  const isDesktop = useAdaptivityIsDesktop();
+  const { viewWidth } = useAdaptivity();
+  const isSoftwareKeyboardOpened = useKeyboard().isOpened;
 
-    const canShowCloseBtn =
-      viewWidth >= ViewWidth.SMALL_TABLET || platform === Platform.VKCOM;
-    const canShowCloseBtnIos = platform === IOS && !canShowCloseBtn;
+  const canShowCloseBtn =
+    viewWidth >= ViewWidth.SMALL_TABLET || platform === Platform.VKCOM;
+  const canShowCloseBtnIos = platform === IOS && !canShowCloseBtn;
 
-    return (
+  return (
+    <div
+      {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
+      vkuiClass={classNames(getClassName("ModalCardBase", platform), {
+        "ModalCardBase--desktop": isDesktop,
+      })}
+      ref={getRootRef}
+    >
       <div
-        {...restProps}
         // eslint-disable-next-line vkui/no-object-expression-in-arguments
-        vkuiClass={classNames(getClassName("ModalCardBase", platform), {
-          "ModalCardBase--desktop": isDesktop,
+        vkuiClass={classNames("ModalCardBase__container", {
+          "ModalCardBase__container--softwareKeyboardOpened":
+            isSoftwareKeyboardOpened,
         })}
-        ref={getRootRef}
       >
-        <div
-          // eslint-disable-next-line vkui/no-object-expression-in-arguments
-          vkuiClass={classNames("ModalCardBase__container", {
-            "ModalCardBase__container--softwareKeyboardOpened":
-              isSoftwareKeyboardOpened,
-          })}
-        >
-          {hasReactNode(icon) && (
-            <div vkuiClass="ModalCardBase__icon">{icon}</div>
-          )}
-          {hasReactNode(header) && (
-            <Title
-              level="2"
-              weight={platform === ANDROID ? "2" : "1"}
-              vkuiClass="ModalCardBase__header"
-            >
-              {header}
-            </Title>
-          )}
-          {hasReactNode(subheader) && (
-            <Headline weight="3" vkuiClass="ModalCardBase__subheader">
-              {subheader}
-            </Headline>
-          )}
+        {hasReactNode(icon) && (
+          <div vkuiClass="ModalCardBase__icon">{icon}</div>
+        )}
+        {hasReactNode(header) && (
+          <Title
+            level="2"
+            weight={platform === ANDROID ? "2" : "1"}
+            vkuiClass="ModalCardBase__header"
+          >
+            {header}
+          </Title>
+        )}
+        {hasReactNode(subheader) && (
+          <Headline weight="3" vkuiClass="ModalCardBase__subheader">
+            {subheader}
+          </Headline>
+        )}
 
-          {children}
+        {children}
 
-          {hasReactNode(actions) && (
-            <div
-              // eslint-disable-next-line vkui/no-object-expression-in-arguments
-              vkuiClass={classNames("ModalCardBase__actions", {
-                "ModalCardBase__actions--v": actionsLayout === "vertical",
-              })}
-            >
-              {actions}
-            </div>
-          )}
+        {hasReactNode(actions) && (
+          <div
+            // eslint-disable-next-line vkui/no-object-expression-in-arguments
+            vkuiClass={classNames("ModalCardBase__actions", {
+              "ModalCardBase__actions--v": actionsLayout === "vertical",
+            })}
+          >
+            {actions}
+          </div>
+        )}
 
-          {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}
-          {canShowCloseBtnIos && (
-            <PanelHeaderButton
-              aria-label={dismissLabel}
-              vkuiClass="ModalCardBase__dismiss"
-              onClick={onClose}
-            >
-              <Icon24Dismiss />
-            </PanelHeaderButton>
-          )}
-        </div>
+        {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}
+        {canShowCloseBtnIos && (
+          <PanelHeaderButton
+            aria-label={dismissLabel}
+            vkuiClass="ModalCardBase__dismiss"
+            onClick={onClose}
+          >
+            <Icon24Dismiss />
+          </PanelHeaderButton>
+        )}
       </div>
-    );
-  },
-  {
-    viewWidth: true,
-    viewHeight: true,
-    hasMouse: true,
-  }
-);
+    </div>
+  );
+};

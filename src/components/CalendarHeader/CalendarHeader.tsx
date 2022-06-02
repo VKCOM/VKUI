@@ -9,7 +9,7 @@ import Tappable from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
 import { SelectType } from "../Select/Select";
 import { CustomSelect } from "../CustomSelect/CustomSelect";
-import { SizeType } from "../../hoc/withAdaptivity";
+import { SizeType } from "../AdaptivityProvider/AdaptivityContext";
 import { getMonths, getYears } from "../../lib/calendar";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
