@@ -21,7 +21,7 @@ export interface RadioProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Radio
  */
-export const Radio: React.FC<RadioProps> = (props: RadioProps) => {
+const Radio: React.FC<RadioProps> = (props: RadioProps) => {
   const {
     children,
     description,
@@ -65,3 +65,6 @@ export const Radio: React.FC<RadioProps> = (props: RadioProps) => {
     </Tappable>
   );
 };
+
+// eslint-disable-next-line import/no-default-export
+export default Radio;

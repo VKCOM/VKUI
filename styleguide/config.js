@@ -55,14 +55,14 @@ const baseConfig = {
   },
   theme: {
     color: {
-      codeBase: "var(--vkui--color_text_primary)",
-      codeBackground: "var(--vkui--color_background_secondary_alpha)",
-      codeScreen: "var(--vkui--color_accent_green)",
-      codeProperty: "var(--vkui--color_accent_purple)",
-      codeComment: "var(--vkui--color_text_secondary)",
-      codePunctuation: "var(--vkui--color_text_secondary)",
-      codeKeyword: "var(--vkui--color_accent_blue)",
-      codeFunction: "var(--vkui--color_accent_red)",
+      codeBase: "var(--text_primary)",
+      codeBackground: "var(--button_secondary_background)",
+      codeScreen: "var(--dynamic_green)",
+      codeProperty: "var(--dynamic_purple)",
+      codeComment: "var(--text_secondary)",
+      codePunctuation: "var(--text_secondary)",
+      codeKeyword: "var(--dynamic_blue)",
+      codeFunction: "var(--dynamic_red)",
     },
   },
   styles: {

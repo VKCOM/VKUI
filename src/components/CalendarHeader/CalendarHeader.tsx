@@ -100,20 +100,18 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   return (
     <div vkuiClass="CalendarHeader" className={className}>
       {prevMonth && (
-        <AdaptivityProvider sizeX={SizeType.REGULAR}>
-          <Tappable
-            vkuiClass={classNames(
-              "CalendarHeader__nav-icon",
-              "CalendarHeader__nav-icon-prev"
-            )}
-            onClick={onPrevMonth}
-            aria-label={`${prevMonthAriaLabel}, ${formatter.format(
-              subMonths(viewDate, 1)
-            )}`}
-          >
-            {prevMonthIcon}
-          </Tappable>
-        </AdaptivityProvider>
+        <Tappable
+          vkuiClass={classNames(
+            "CalendarHeader__nav-icon",
+            "CalendarHeader__nav-icon-prev"
+          )}
+          onClick={onPrevMonth}
+          aria-label={`${prevMonthAriaLabel}, ${formatter.format(
+            subMonths(viewDate, 1)
+          )}`}
+        >
+          {prevMonthIcon}
+        </Tappable>
       )}
       {disablePickers ? (
         <Paragraph vkuiClass="CalendarHeader__pickers" weight="2">
@@ -158,20 +156,18 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
         </AdaptivityProvider>
       )}
       {nextMonth && (
-        <AdaptivityProvider sizeX={SizeType.REGULAR}>
-          <Tappable
-            vkuiClass={classNames(
-              "CalendarHeader__nav-icon",
-              "CalendarHeader__nav-icon-next"
-            )}
-            onClick={onNextMonth}
-            aria-label={`${nextMonthAriaLabel}, ${formatter.format(
-              addMonths(viewDate, 1)
-            )}`}
-          >
-            {nextMonthIcon}
-          </Tappable>
-        </AdaptivityProvider>
+        <Tappable
+          vkuiClass={classNames(
+            "CalendarHeader__nav-icon",
+            "CalendarHeader__nav-icon-next"
+          )}
+          onClick={onNextMonth}
+          aria-label={`${nextMonthAriaLabel}, ${formatter.format(
+            addMonths(viewDate, 1)
+          )}`}
+        >
+          {nextMonthIcon}
+        </Tappable>
       )}
     </div>
   );

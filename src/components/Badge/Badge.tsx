@@ -1,5 +1,7 @@
 import * as React from "react";
+import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
+import { usePlatform } from "../../hooks/usePlatform";
 import "./Badge.css";
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLElement> {
@@ -9,6 +11,20 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLElement> {
 /**
  * @see https://vkcom.github.io/VKUI/#/Badge
  */
-export const Badge: React.FC<BadgeProps> = ({ mode = "new", ...restProps }) => (
-  <span vkuiClass={classNames("Badge", `Badge--${mode}`)} {...restProps} />
-);
+export const Badge: React.FunctionComponent<BadgeProps> = ({
+  mode,
+  ...restProps
+}: BadgeProps) => {
+  const platform = usePlatform();
+
+  return (
+    <span
+      vkuiClass={classNames(getClassName("Badge", platform), `Badge--${mode}`)}
+      {...restProps}
+    ></span>
+  );
+};
+
+Badge.defaultProps = {
+  mode: "new",
+};

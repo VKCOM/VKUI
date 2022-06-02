@@ -2,7 +2,7 @@ import * as React from "react";
 import CustomScrollView from "../CustomScrollView/CustomScrollView";
 import { classNames } from "../../lib/classNames";
 import { Popper, Placement } from "../Popper/Popper";
-import { Spinner } from "../Spinner/Spinner";
+import Spinner from "../Spinner/Spinner";
 import { HasRef } from "../../types";
 import "./CustomSelectDropdown.css";
 

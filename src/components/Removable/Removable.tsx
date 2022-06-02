@@ -23,7 +23,7 @@ export interface RemovableProps {
   /**
    * Коллбэк срабатывает при клике на контрол удаления.
    */
-  onRemove?: (e: React.MouseEvent, rootEl?: HTMLElement | null) => void;
+  onRemove?: (e: React.MouseEvent, rootEl?: HTMLElement) => void;
 }
 
 interface RemovableIosOwnProps extends RemovableProps {

@@ -4,7 +4,7 @@ import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
 import Tappable, { TappableProps } from "../Tappable/Tappable";
 import { HasAlign } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
-import { Spinner } from "../Spinner/Spinner";
+import Spinner from "../Spinner/Spinner";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getClassName } from "../../helpers/getClassName";
@@ -27,7 +27,7 @@ export interface ButtonProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Button
  */
-export const Button: React.FC<ButtonProps> = ({
+const Button: React.FC<ButtonProps> = ({
   size = "s",
   mode = "primary",
   appearance = "accent",
@@ -88,3 +88,5 @@ export const Button: React.FC<ButtonProps> = ({
     </Tappable>
   );
 };
+
+export { Button };

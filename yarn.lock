@@ -2861,10 +2861,10 @@
   resolved "https://registry.yarnpkg.com/@vkontakte/vkjs/-/vkjs-0.22.2.tgz#b530195b009bb598289a6c6382f1c35c4d1e66c2"
   integrity sha512-dOnRGhcKzCuex/RRTmi74uckqAQtGcVPhsKXSptmKz1/KqVt6WpmOT2rrr2rPyyWcfjHBbPwnF8A4Z0jkFz+Zg==
 
-"@vkontakte/vkui-tokens@4.12.0":
-  version "4.12.0"
-  resolved "https://registry.yarnpkg.com/@vkontakte/vkui-tokens/-/vkui-tokens-4.12.0.tgz#0d90bd21e386d693a76ce7159fa42ff137ff0cbc"
-  integrity sha512-rt3rv/28nVRu66nVsFkhq+l9Ra4rCA/Mdn4tEsOrHobuxXQTtG2+Rm1d3X+BJJTgmHd/wOlnHLKDGbI71WorEQ==
+"@vkontakte/vkui-tokens@4.10.0":
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/@vkontakte/vkui-tokens/-/vkui-tokens-4.10.0.tgz#e5a7a8d20a23bb53407c0b600b28a97bbebfa20b"
+  integrity sha512-1JrmPq/7jXfwMdT3TJUccGBRMU7ONOXUi2nFGPzk7FyK4WzOOzyE8SXLoyiyAD28itXKUQCccnLB+wzpsvfQng==
   dependencies:
     csstype "3.0.8"
 
@@ -10485,10 +10485,10 @@ postcss-custom-media@^8.0.0:
   resolved "https://registry.yarnpkg.com/postcss-custom-media/-/postcss-custom-media-8.0.0.tgz#1be6aff8be7dc9bf1fe014bde3b71b92bb4552f1"
   integrity sha512-FvO2GzMUaTN0t1fBULDeIvxr5IvbDXcIatt6pnJghc736nqNgsGao5NT+5+WVLAQiTt6Cb3YUms0jiPaXhL//g==
 
-postcss-custom-properties@^12.1.7:
-  version "12.1.7"
-  resolved "https://registry.yarnpkg.com/postcss-custom-properties/-/postcss-custom-properties-12.1.7.tgz#ca470fd4bbac5a87fd868636dafc084bc2a78b41"
-  integrity sha512-N/hYP5gSoFhaqxi2DPCmvto/ZcRDVjE3T1LiAMzc/bg53hvhcHOLpXOHb526LzBBp5ZlAUhkuot/bfpmpgStJg==
+postcss-custom-properties@^12.1.3:
+  version "12.1.3"
+  resolved "https://registry.yarnpkg.com/postcss-custom-properties/-/postcss-custom-properties-12.1.3.tgz#8e37651c7188e72e6762eeae8db39755e84d3a64"
+  integrity sha512-rtu3otIeY532PnEuuBrIIe+N+pcdbX/7JMZfrcL09wc78YayrHw5E8UkDfvnlOhEUrI4ptCuzXQfj+Or6spbGA==
   dependencies:
     postcss-value-parser "^4.2.0"
 

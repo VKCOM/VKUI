@@ -4,10 +4,9 @@ import { noop } from "../../lib/utils";
 import { getClassName } from "../../helpers/getClassName";
 import { ANDROID, IOS, VKCOM } from "../../lib/platform";
 import SimpleCell, { SimpleCellProps } from "../SimpleCell/SimpleCell";
-import { HasPlatform, HasRootRef } from "../../types";
+import { HasPlatform } from "../../types";
 import { Removable, RemovableProps } from "../Removable/Removable";
 import { usePlatform } from "../../hooks/usePlatform";
-import { useExternRef } from "../../hooks/useExternRef";
 import { useDraggable } from "./useDraggable";
 import { ListContext } from "../List/ListContext";
 import { CellDragger } from "./CellDragger/CellDragger";
@@ -15,10 +14,9 @@ import { CellCheckbox, CellCheckboxProps } from "./CellCheckbox/CellCheckbox";
 import "./Cell.css";
 
 export interface CellProps
-  extends Omit<SimpleCellProps, "getRootRef">,
+  extends SimpleCellProps,
     HasPlatform,
-    RemovableProps,
-    HasRootRef<HTMLDivElement> {
+    RemovableProps {
   mode?: "removable" | "selectable";
   /**
    * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
@@ -78,10 +76,7 @@ export const Cell: React.FC<CellProps> = ({
 
   const platform = usePlatform();
 
-  const rootElRef = useExternRef(getRootRef);
-
-  const { dragging, ...draggableProps } = useDraggable({
-    rootElRef,
+  const { dragging, rootElRef, ...draggableProps } = useDraggable({
     onDragFinish,
   });
 
@@ -162,7 +157,7 @@ export const Cell: React.FC<CellProps> = ({
         style={style}
         getRootRef={rootElRef}
         removePlaceholder={removePlaceholder}
-        onRemove={(e) => onRemove(e, rootElRef.current)}
+        onRemove={(e) => onRemove(e, rootElRef?.current)}
       >
         {simpleCell}
       </Removable>

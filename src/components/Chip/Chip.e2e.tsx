@@ -11,7 +11,6 @@ describe("Chip", () => {
     [
       {
         removable: [false, true],
-        $adaptivity: "y",
       },
     ]
   );

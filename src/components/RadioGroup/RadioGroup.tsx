@@ -1,4 +1,6 @@
 import * as React from "react";
+import { getClassName } from "../../helpers/getClassName";
+import { usePlatform } from "../../hooks/usePlatform";
 import { classNames } from "../../lib/classNames";
 import "./RadioGroup.css";
 
@@ -13,11 +15,18 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   mode = "vertical",
   children,
   ...restProps
-}) => (
-  <div
-    vkuiClass={classNames("RadioGroup", `RadioGroup--${mode}`)}
-    {...restProps}
-  >
-    {children}
-  </div>
-);
+}) => {
+  const platform = usePlatform();
+
+  return (
+    <div
+      vkuiClass={classNames(
+        getClassName("RadioGroup", platform),
+        `RadioGroup--${mode}`
+      )}
+      {...restProps}
+    >
+      {children}
+    </div>
+  );
+};
