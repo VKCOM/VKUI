@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--icon_outline_secondary);
+  color: var(--icon_outline_secondary, var(--vkui--color_icon_medium));
 }
 
 .Spinner__self {

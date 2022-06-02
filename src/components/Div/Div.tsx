@@ -1,6 +1,4 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
-import { usePlatform } from "../../hooks/usePlatform";
 import { HasRootRef } from "../../types";
 import "./Div.css";
 
@@ -16,13 +14,8 @@ export const Div: React.FC<DivProps> = ({
   getRootRef,
   ...restProps
 }) => {
-  const platform = usePlatform();
   return (
-    <div
-      {...restProps}
-      ref={getRootRef}
-      vkuiClass={getClassName("Div", platform)}
-    >
+    <div {...restProps} ref={getRootRef} vkuiClass="Div">
       {children}
     </div>
   );

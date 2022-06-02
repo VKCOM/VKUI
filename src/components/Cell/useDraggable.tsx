@@ -10,14 +10,15 @@ export interface DraggableProps {
 
 interface UseDraggableProps extends DraggableProps {
   dragging: boolean;
-  rootElRef: any;
 }
 
-export const useDraggable = ({
+export const useDraggable = <T extends HTMLElement>({
+  rootElRef,
   onDragFinish,
-}: Pick<CellProps, "onDragFinish">) => {
+}: Pick<CellProps, "onDragFinish"> & {
+  rootElRef: React.MutableRefObject<T | null>;
+}) => {
   const [dragging, setDragging] = React.useState<boolean>(false);
-  const rootElRef = React.useRef<HTMLElement>(null);
 
   const [siblings, setSiblings] = React.useState<HTMLElement[]>([]);
   const [dragStartIndex, setDragStartIndex] = React.useState<number>(0);
@@ -119,7 +120,6 @@ export const useDraggable = ({
     onDragMove,
     onDragEnd,
     dragging,
-    rootElRef,
   };
 
   return useDraggableProps;
