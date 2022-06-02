@@ -8,7 +8,7 @@
 </AdaptivityProvider>
 ```
 
-В таком случае при использовании хука `useAdaptivity` в свойстве `sizeX` придет `regular`, в противном случае `undefined`.
+В таком случае при использовании хука `useAdaptivity` в свойстве `sizeX` придёт `regular`, в противном случае `undefined`.
 
 ## Как пользоваться `css media queries`
 
@@ -20,14 +20,16 @@
 
 Пример:
 
+_Component.tsx_
+
 ```tsx
-/* Component.tsx */
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import styles from "./Component.module.css";
 
-const Component: React.FC = () => {
+const Component = () => {
   const { sizeX } = useAdaptivity();
 
   /**
@@ -38,18 +40,26 @@ const Component: React.FC = () => {
    */
   return (
     <div
-      vkuiClass={classNames("Component", getSizeXClassName("Component", sizeX))}
+      className={classNamesString(
+        styles.Component,
+        getSizeXClassName("Component", sizeX, styles)
+      )}
     />
   );
 };
 ```
 
+_Component.module.css_
+
 ```css
-/* Component.css */
 /* Равносильно модификатору `Component--sizeX-regular` */
 .Component {
   color: red;
   padding: 20px;
+}
+
+.Component--sizeX-regular {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }
 
 .Component--sizeX-compact {
@@ -57,13 +67,13 @@ const Component: React.FC = () => {
 }
 
 @media (--size-x-compact) {
-  .Component-sizeX-none {
+  .Component--sizeX-none {
     padding: 10px;
   }
 }
 ```
 
-В данном случае мы задаем `padding: 10px;` для размера `sizeX-compact` и `padding: 20px;` для размера `sizeX-regular`. В `@media (--size-x-compact)` мы задаем `padding: 10px;` для компонента только если `sizeX` не переопределен.
+В данном случае мы задаём `padding: 10px;` для размера `sizeX-compact` и `padding: 20px;` для размера `sizeX-regular`. В `@media (--size-x-compact)` мы задаём `padding: 10px;` для компонента только если `sizeX` не переопределен.
 
 ## Примечание
 

@@ -1,8 +1,22 @@
-import { AdaptivityProps } from "../components/AdaptivityProvider/AdaptivityContext";
+import { SizeType } from "../components/AdaptivityProvider/AdaptivityContext";
 
-export function getSizeXClassName(
-  base: string,
-  sizeX?: AdaptivityProps["sizeX"]
-): string {
-  return `${base}--sizeX-${sizeX ?? "none"}`;
+type SizeXType = SizeType | "none";
+
+export function getSizeXClassName(base: string, sizeX?: SizeXType): string;
+export function getSizeXClassName<Styles extends Record<string, string>>(
+  base: keyof Styles,
+  sizeX?: SizeXType,
+  styles?: Styles
+): string | undefined;
+export function getSizeXClassName<Styles extends Record<string, string>>(
+  base: keyof Styles,
+  sizeX: SizeXType = "none",
+  /**
+   * Note: ввиду того, что Typescript не поддерживает `typescript-plugin-css-modules` во время компиляции,
+   *  не удалось покрыть дженерик типом параметр `styles`. Поэтому может вернуться undefined.
+   */
+  styles?: Styles
+): string | undefined {
+  const sizeXClassName = `${base}--sizeX-${sizeX}`;
+  return styles ? styles[sizeXClassName] : sizeXClassName;
 }

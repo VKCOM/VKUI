@@ -16,8 +16,8 @@
 
 ```tsx
 // Button.tsx
-<button vkuiClass="Button">
-  <Text vkuiClass="Button__text">{children}</Text>
+<button className={styles.Button}>
+  <Text className={styles.Button__text}>{children}</Text>
 </button>
 ```
 
@@ -32,7 +32,7 @@
 
 ```tsx
 // Cell.tsx
-<div vkuiClass="Cell">
+<div className={styles.Cell}>
   {before} {/* В before может быть <Icon /> или <Avatar /> */}
 </div>
 ```

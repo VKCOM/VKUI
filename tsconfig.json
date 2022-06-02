@@ -15,6 +15,15 @@
     "isolatedModules": true,
     "strict": true,
     "baseUrl": "src",
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+        "options": {
+          "classnameTransform": "asIs",
+          "customMatcher": "\\.module\\.css$"
+        }
+      }
+    ],
     "paths": {
       "@react-playwright": ["../e2e"]
     }
@@ -35,6 +44,7 @@
     "node_modules/jest-playwright-preset/types/global.d.ts",
     "node_modules/expect-playwright/global.d.ts",
     "src/lib/jsxRuntime.d.ts",
-    "types/global.d.ts"
+    "types/global.d.ts",
+    "types/env.d.ts"
   ]
 }

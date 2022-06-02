@@ -35,6 +35,9 @@
   text-align: left;
 }
 
+.Button--aln-center {
+}
+
 .Button--aln-right .Button__in {
   justify-content: flex-end;
   text-align: right;
@@ -49,6 +52,9 @@
 .Button--lvl-tertiary[disabled]:not(.Button--clr-overlay),
 .Button--lvl-outline[disabled]:not(.Button--clr-overlay) {
   opacity: 0.64;
+}
+
+.Button--with-icon {
 }
 
 /* only 1 icon cases */
@@ -621,6 +627,10 @@
   .Button--sizeY-none {
     min-height: var(--vkui--size_button_small_height--regular);
   }
+}
+
+.Button--sizeY-compact {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }
 
 /**

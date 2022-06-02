@@ -3,6 +3,10 @@
   cursor: default;
 }
 
+.Tappable--hover-has-not {
+  /* keep for css modules */
+}
+
 .Tappable--hover-has,
 .Tappable--hasActive {
   cursor: pointer;
@@ -17,6 +21,10 @@
 .Tappable[disabled],
 .Tappable[aria-disabled="true"] {
   cursor: default;
+}
+
+.Tappable--active {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }
 
 .Tappable--focus-visible {
@@ -128,6 +136,10 @@
 /**
  * overrides
  */
+.Tappable--sizeX-regular {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
+}
+
 .Tappable--sizeX-compact {
   border-radius: 0;
 }
