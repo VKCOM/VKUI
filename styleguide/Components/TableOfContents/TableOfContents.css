@@ -43,5 +43,5 @@
 }
 
 .TableOfContents__section--selected {
-  background: var(--background_hover);
+  background: var(--vkui--color_transparent--hover);
 }

@@ -3,7 +3,7 @@
 ```jsx static
 import { PanelHeaderBack } from "@vkontakte/vkui";
 
-<PanelHeader left={<PanelHeaderBack onClick={this.props.onBackClick} />}>
+<PanelHeader before={<PanelHeaderBack onClick={this.props.onBackClick} />}>
   Заголовок панели
 </PanelHeader>;
 ```

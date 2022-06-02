@@ -75,14 +75,14 @@ class Example extends React.Component {
 
         <Panel id="tooltip2">
           <PanelHeader
-            left={
+            before={
               <Tooltip
                 isShown={this.state.tooltip2}
                 onClose={() =>
                   this.setState({ tooltip2: false, tooltip3: true })
                 }
                 text="Нажмите на кнопку, если хотите вернуться"
-                header="Возвратиться"
+                header="Назад"
               >
                 <PanelHeaderBack
                   onClick={() => this.setState({ activePanel: "tooltip" })}

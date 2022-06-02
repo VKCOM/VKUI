@@ -65,17 +65,17 @@ const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
       {...props}
       header={
         <ModalPageHeader
-          right={
+          before={
+            isMobile &&
+            platform === ANDROID && <PanelHeaderClose onClick={onClose} />
+          }
+          after={
             isMobile &&
             platform === IOS && (
               <PanelHeaderButton onClick={onClose}>
                 <Icon24Dismiss />
               </PanelHeaderButton>
             )
-          }
-          left={
-            isMobile &&
-            platform === ANDROID && <PanelHeaderClose onClick={onClose} />
           }
         >
           Dynamic modal
@@ -140,14 +140,14 @@ const App = () => {
         settlingHeight={100}
         header={
           <ModalPageHeader
-            right={
+            after={
               platform === IOS && (
                 <PanelHeaderButton onClick={modalBack}>
                   <Icon24Dismiss />
                 </PanelHeaderButton>
               )
             }
-            left={
+            before={
               isMobile &&
               platform === ANDROID && <PanelHeaderClose onClick={modalBack} />
             }
@@ -206,8 +206,8 @@ const App = () => {
         onClose={modalBack}
         header={
           <ModalPageHeader
-            left={isMobile && <PanelHeaderClose onClick={modalBack} />}
-            right={<PanelHeaderSubmit onClick={modalBack} />}
+            before={isMobile && <PanelHeaderClose onClick={modalBack} />}
+            after={<PanelHeaderSubmit onClick={modalBack} />}
           >
             Фильтры
           </ModalPageHeader>
@@ -284,7 +284,7 @@ const App = () => {
         onClose={modalBack}
         header={
           <ModalPageHeader
-            left={<PanelHeaderBack label="Назад" onClick={modalBack} />}
+            before={<PanelHeaderBack label="Назад" onClick={modalBack} />}
           >
             Выберите страну
           </ModalPageHeader>
@@ -313,7 +313,7 @@ const App = () => {
         onClose={modalBack}
         header={
           <ModalPageHeader
-            left={<PanelHeaderBack label="Назад" onClick={modalBack} />}
+            before={<PanelHeaderBack label="Назад" onClick={modalBack} />}
           >
             Просмотры истории
           </ModalPageHeader>
@@ -339,7 +339,7 @@ const App = () => {
         onClose={modalBack}
         header={
           <ModalPageHeader
-            left={<PanelHeaderBack label="Назад" onClick={modalBack} />}
+            before={<PanelHeaderBack label="Назад" onClick={modalBack} />}
           >
             Информация о пользователе
           </ModalPageHeader>

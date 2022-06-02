@@ -49,7 +49,7 @@ class PlaceholderExample extends React.Component {
 
         <Panel id="example-2">
           <PanelHeader
-            left={
+            before={
               <PanelHeaderBack onClick={this.onNavClick} data-to="example-1" />
             }
           >
@@ -74,7 +74,7 @@ class PlaceholderExample extends React.Component {
 
         <Panel id="example-3">
           <PanelHeader
-            left={
+            before={
               <PanelHeaderBack onClick={this.onNavClick} data-to="example-1" />
             }
           >

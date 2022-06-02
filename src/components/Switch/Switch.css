@@ -2,6 +2,34 @@
   position: relative;
   display: block;
   cursor: pointer;
+
+  /* Добавляем отступы, если пин больше трека */
+  padding: calc(
+    (
+        var(--vkui--size_switch_pin--regular) -
+          var(--vkui--size_switch_height--regular)
+      ) / 2
+  );
+}
+
+.Switch--sizeY-compact {
+  padding: calc(
+    (
+        var(--vkui--size_switch_pin--compact) -
+          var(--vkui--size_switch_height--compact)
+      ) / 2
+  );
+}
+
+@media (--size-y-compact) {
+  .Switch--sizeY-none {
+    padding: calc(
+      (
+          var(--vkui--size_switch_pin--compact) -
+            var(--vkui--size_switch_height--compact)
+        ) / 2
+    );
+  }
 }
 
 .Switch--disabled {
@@ -16,192 +44,160 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+/**
+ * Пин
+ */
 .Switch__pseudo::before {
   position: absolute;
   content: "";
-  top: -3px;
-  left: -3px;
   border-radius: 50%;
   box-sizing: border-box;
+  background: var(--vkui--color_icon_contrast_secondary);
+  box-shadow: 0 0 2px 0 rgb(0 0 0 / 12%), 0 2px 2px 0 rgb(0 0 0 / 24%);
+
+  /* Делаем пин по центру */
+  top: calc(
+    (
+        var(--vkui--size_switch_height--regular) -
+          var(--vkui--size_switch_pin--regular)
+      ) / 2
+  );
+  left: calc(
+    (
+        var(--vkui--size_switch_height--regular) -
+          var(--vkui--size_switch_pin--regular)
+      ) / 2
+  );
+  width: var(--vkui--size_switch_pin--regular);
+  height: var(--vkui--size_switch_pin--regular);
+}
+
+.Switch--sizeY-compact .Switch__pseudo::before {
+  top: calc(
+    (
+        var(--vkui--size_switch_height--compact) -
+          var(--vkui--size_switch_pin--compact)
+      ) / 2
+  );
+  left: calc(
+    (
+        var(--vkui--size_switch_height--compact) -
+          var(--vkui--size_switch_pin--compact)
+      ) / 2
+  );
+  width: var(--vkui--size_switch_pin--compact);
+  height: var(--vkui--size_switch_pin--compact);
+}
+
+@media (--size-y-compact) {
+  .Switch--sizeY-none .Switch__pseudo::before {
+    top: calc(
+      (
+          var(--vkui--size_switch_height--compact) -
+            var(--vkui--size_switch_pin--compact)
+        ) / 2
+    );
+    left: calc(
+      (
+          var(--vkui--size_switch_height--compact) -
+            var(--vkui--size_switch_pin--compact)
+        ) / 2
+    );
+    width: var(--vkui--size_switch_pin--compact);
+    height: var(--vkui--size_switch_pin--compact);
+  }
 }
 
 .Switch__self:checked + .Switch__pseudo::before {
-  transform: translateX(20px);
-}
-
-.Switch__self[disabled] + .Switch__pseudo {
-  opacity: 0.4;
-}
-
-/**
- * iOS
- */
-.Switch--ios .Switch__pseudo {
-  width: 51px;
-  height: 31px;
-  border: 2px solid transparent;
-  background: var(--placeholder_icon_background);
-  border-radius: 15px;
-}
-
-.Switch--sizeY-compact.Switch--ios .Switch__pseudo {
-  width: 47px;
-  height: 27px;
-  border-radius: 13px;
-}
-
-@media (--size-y-compact) {
-  .Switch--sizeY-none.Switch--ios .Switch__pseudo {
-    width: 47px;
-    height: 27px;
-    border-radius: 13px;
-  }
-}
-
-.Switch--ios .Switch__self:checked + .Switch__pseudo {
-  background: var(--accent);
-}
-
-.Switch--ios .Switch__pseudo::before {
-  top: 0;
-  left: 0;
-  width: 27px;
-  height: 27px;
-  background: var(--white);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15), 0 3px 1px rgba(0, 0, 0, 0.06),
-    inset 0 0 0 0.5px rgba(0, 0, 0, 0.04);
-}
-
-.Switch--sizeY-compact.Switch--ios .Switch__pseudo::before {
-  width: 23px;
-  height: 23px;
-}
-
-@media (--size-y-compact) {
-  .Switch--sizeY-none.Switch--ios .Switch__pseudo::before {
-    width: 23px;
-    height: 23px;
-  }
+  background: var(--accent, var(--vkui--color_icon_accent));
+  transform: translateX(
+    calc(
+      var(--vkui--size_switch_width--regular) -
+        var(--vkui--size_switch_height--regular)
+    )
+  );
 }
 
 /**
- * Android & VKCOM
+ * Трек
  */
-.Switch--android,
-.Switch--vkcom {
-  padding: 3px;
-}
-
-.Switch--android .Switch__pseudo::after,
-.Switch--vkcom .Switch__pseudo::after {
+.Switch__pseudo::after {
   content: "";
   display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.Switch--android .Switch__self:checked + .Switch__pseudo::after,
-.Switch--vkcom .Switch__self:checked + .Switch__pseudo::after {
-  background: var(--accent, var(--vkui--color_icon_accent));
-  opacity: 0.48;
-}
-
-/**
- * Android
- */
-.Switch--android .Switch__pseudo {
+  background: var(--vkui--color_icon_tertiary_alpha);
+  border-radius: calc(var(--vkui--size_switch_width--regular) / 2);
   width: var(--vkui--size_switch_width--regular);
   height: var(--vkui--size_switch_height--regular);
 }
 
-.Switch--android .Switch__pseudo::after {
-  background: var(--vkui--color_icon_tertiary_alpha);
-  border-radius: 7px;
-}
-
-.Switch--sizeY-compact.Switch--android .Switch__pseudo {
-  width: 32px;
-  height: 12px;
-}
-
-.Switch--sizeY-compact.Switch--android .Switch__pseudo::after {
-  border-radius: 6px;
+.Switch--sizeY-compact .Switch__pseudo::after {
+  border-radius: calc(var(--vkui--size_switch_width--compact) / 2);
+  width: var(--vkui--size_switch_width--compact);
+  height: var(--vkui--size_switch_height--compact);
 }
 
 @media (--size-y-compact) {
-  .Switch--sizeY-none.Switch--android .Switch__pseudo {
-    width: 32px;
-    height: 12px;
-  }
-
-  .Switch--sizeY-none.Switch--android .Switch__pseudo::after {
-    border-radius: 6px;
+  .Switch--sizeY-none .Switch__pseudo::after {
+    border-radius: calc(var(--vkui--size_switch_width--compact) / 2);
+    width: var(--vkui--size_switch_width--compact);
+    height: var(--vkui--size_switch_height--compact);
   }
 }
 
-.Switch--android .Switch__pseudo::before {
-  width: var(--vkui--size_switch_pin--regular);
-  height: var(--vkui--size_switch_pin--regular);
-  background: var(--vkui--color_icon_contrast_secondary);
-  /* background: #f1f1f1; todo: 1077 replace w/ a proper variable */
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
-}
-
-.Switch--sizeY-compact.Switch--android .Switch__pseudo::before {
-  width: 18px;
-  height: 18px;
-}
-
-.Switch--android .Switch__self:checked + .Switch__pseudo::before {
+.Switch__self:checked + .Switch__pseudo::after {
+  opacity: 0.48;
   background: var(--accent, var(--vkui--color_icon_accent));
 }
 
-.Switch--sizeY-compact.Switch--android
-  .Switch__self:checked
-  + .Switch__pseudo::before {
-  transform: translateX(19px);
+.Switch--sizeY-compact .Switch__self:checked + .Switch__pseudo::before {
+  transform: translateX(
+    calc(
+      var(--vkui--size_switch_width--compact) -
+        var(--vkui--size_switch_height--compact)
+    )
+  );
 }
 
 @media (--size-y-compact) {
-  .Switch--sizeY-none.Switch--android .Switch__pseudo::before {
-    width: 18px;
-    height: 18px;
+  .Switch--sizeY-none .Switch__self:checked + .Switch__pseudo::before {
+    transform: translateX(
+      calc(
+        var(--vkui--size_switch_width--compact) -
+          var(--vkui--size_switch_height--compact)
+      )
+    );
   }
+}
 
-  .Switch--sizeY-none.Switch--android
-    .Switch__self:checked
-    + .Switch__pseudo::before {
-    transform: translateX(19px);
-  }
+.Switch__self[disabled] + .Switch__pseudo {
+  opacity: var(--vkui--opacity_disable);
 }
 
 /**
- * VKCOM
+ * Пин
  */
-.Switch--vkcom .Switch__pseudo {
-  width: 28px;
-  height: 10px;
+.Switch--ios .Switch__pseudo::before {
+  background: var(--white);
+  box-shadow: 0 3px 8px rgb(0 0 0 / 15%), 0 3px 1px rgb(0 0 0 / 6%),
+    inset 0 0 0 0.5px rgb(0 0 0 / 4%);
 }
 
-.Switch--vkcom .Switch__pseudo::after {
-  border-radius: 45px;
-  background: var(--icon_tertiary);
-  opacity: 0.48;
+.Switch--ios .Switch__self:checked + .Switch__pseudo::before {
+  background: var(--white);
 }
 
-.Switch--vkcom .Switch__pseudo::before {
-  left: -2px;
-  width: 16px;
-  height: 16px;
-  background: var(--background_light);
-  border: 1px solid var(--icon_tertiary);
-  z-index: 1;
+/**
+ * Трек
+ */
+.Switch--ios .Switch__pseudo::after {
+  background: var(
+    --placeholder_icon_background,
+    var(--vkui--color_track_background)
+  );
 }
 
-.Switch--vkcom .Switch__self:checked + .Switch__pseudo::before {
-  background: var(--accent);
-  border: none;
-  transform: translateX(16px);
+.Switch--ios .Switch__self:checked + .Switch__pseudo::after {
+  opacity: 1;
 }
 
 /**
@@ -211,21 +207,20 @@
  * navigating accessible vkui apps via keyboard
  */
 @media (prefers-reduced-motion: no-preference) {
+  .Switch__pseudo::after {
+    transition: background-color 0.1s ease;
+  }
+
   .Switch__pseudo::before {
     transition: transform 0.1s ease;
   }
 
-  .Switch--ios .Switch__pseudo {
-    transition: background-color 0.2s ease, border-color 0.2s ease;
+  .Switch--ios .Switch__pseudo::after {
+    transition: background-color 0.2s ease;
   }
 
   .Switch--ios .Switch__pseudo::before {
     transition: transform 0.2s cubic-bezier(0.36, -0.24, 0.26, 1.32);
-  }
-
-  .Switch--android .Switch__pseudo::after,
-  .Switch--vkcom .Switch__pseudo::after {
-    transition: background-color 0.1s ease;
   }
 }
 

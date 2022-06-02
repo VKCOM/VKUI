@@ -3,7 +3,7 @@
 ```jsx static
 import { PanelHeaderClose } from "@vkontakte/vkui";
 
-<PanelHeader left={<PanelHeaderClose onClick={this.props.onCloseClick} />}>
+<PanelHeader before={<PanelHeaderClose onClick={this.props.onCloseClick} />}>
   Заголовок модального окна
 </PanelHeader>;
 ```

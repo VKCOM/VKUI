@@ -4,7 +4,7 @@
 import { PanelHeaderSubmit } from "@vkontakte/vkui";
 
 <PanelHeader
-  right={
+  after={
     <PanelHeaderSubmit onClick={this.props.onSubmit}>Готово</PanelHeaderSubmit>
   }
 >

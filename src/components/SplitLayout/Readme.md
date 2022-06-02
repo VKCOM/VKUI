@@ -91,7 +91,7 @@ const Example = () => {
       >
         <View activePanel={panel}>
           <Panel id={panels[0]}>
-            <PanelHeader right={<Avatar size={36} />}>Panel 1</PanelHeader>
+            <PanelHeader after={<Avatar size={36} />}>Panel 1</PanelHeader>
             <Group>
               <Placeholder
                 icon={<Icon56UsersOutline />}
@@ -108,7 +108,7 @@ const Example = () => {
           </Panel>
 
           <Panel id={panels[1]}>
-            <PanelHeader right={<Avatar size={36} />}>Panel 2</PanelHeader>
+            <PanelHeader after={<Avatar size={36} />}>Panel 2</PanelHeader>
             <Group>
               <Placeholder>Доступ запрещён</Placeholder>
               <Separator />
@@ -122,7 +122,7 @@ const Example = () => {
           </Panel>
 
           <Panel id={panels[2]}>
-            <PanelHeader right={<Avatar size={36} />}>Panel 3</PanelHeader>
+            <PanelHeader after={<Avatar size={36} />}>Panel 3</PanelHeader>
             <Group>
               <Placeholder
                 icon={<Icon56MessageReadOutline />}

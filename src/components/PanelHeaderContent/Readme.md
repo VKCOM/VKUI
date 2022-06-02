@@ -7,8 +7,8 @@ const Example = () => {
     <View activePanel="brand">
       <Panel id="brand">
         <PanelHeader
-          left={<PanelHeaderBack label="Назад" />}
-          right={
+          before={<PanelHeaderBack label="Назад" />}
+          after={
             <PanelHeaderButton>
               <Icon28MessageOutline
                 width={platform === VKCOM ? 24 : 28}

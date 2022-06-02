@@ -1,7 +1,7 @@
 .StyleGuide {
   height: auto;
   align-items: stretch;
-  padding-top: var(--panelheader_height_android);
+  padding-top: var(--panelheader_height);
 }
 
 .StyleGuide__sidebar,
@@ -12,8 +12,8 @@
 .StyleGuide__sidebar {
   display: flex;
   justify-content: flex-end;
-  border-right: 1px solid var(--image_border);
-  background: var(--background_light);
+  border-right: 1px solid var(--vkui--color_image_border_alpha);
+  background: var(--vkui--color_background_tertiary);
   position: relative;
   z-index: 2;
   box-sizing: border-box;
@@ -24,14 +24,14 @@
   padding-right: 16px;
   padding-left: 16px;
   box-sizing: border-box;
-  height: calc(100vh - var(--panelheader_height_android));
+  height: calc(100vh - var(--panelheader_height));
   position: fixed;
   overflow: auto;
 }
 
 .StyleGuide__content {
-  background: var(--background_content);
-  min-height: calc(100vh - var(--panelheader_height_android));
+  background: var(--vkui--color_background_content);
+  min-height: calc(100vh - var(--panelheader_height));
   position: relative;
   z-index: 1;
   overflow: hidden;

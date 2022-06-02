@@ -8,12 +8,12 @@ import { PanelHeader, PanelHeaderButton } from "@vkontakte/vkui";
 import { Icon28Notifications, Icon28SettingsOutline } from "@vkontakte/icons";
 
 <PanelHeader
-  left={
+  before={
     <PanelHeaderButton>
       <Icon28Notifications />
     </PanelHeaderButton>
   }
-  right={
+  after={
     <PanelHeaderButton>
       <Icon28SettingsOutline />
     </PanelHeaderButton>
@@ -28,7 +28,7 @@ import { PanelHeader, PanelHeaderButton } from "@vkontakte/vkui";
 import { Icon28SettingsOutline, Icon28Notifications } from "@vkontakte/icons";
 
 <PanelHeader
-  right={
+  after={
     <React.Fragment>
       <PanelHeaderButton>
         <Icon28SettingsOutline />

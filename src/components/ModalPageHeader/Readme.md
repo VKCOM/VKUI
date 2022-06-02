@@ -1,5 +1,5 @@
 Шапка в модальных страницах.
-Имеет очень похожую логику на [`PanelHeader`](#!/PanelHeader): два свойства `left` и `right` для иконок и название модальной страницы, передаваемое как `children`.
+Имеет очень похожую логику на [`PanelHeader`](#!/PanelHeader): два свойства `before` и `after` для иконок и название модальной страницы, передаваемое как `children`.
 
 ### Требования по расположению кнопок
 
@@ -16,7 +16,7 @@ const platform = usePlatform();
 
 return (
   <ModalPageHeader
-    left={
+    before={
       <Fragment>
         {(platform === ANDROID || platform === VKCOM) && (
           <PanelHeaderButton onClick={this.backModal}>
@@ -25,7 +25,7 @@ return (
         )}
       </Fragment>
     }
-    right={
+    after={
       <Fragment>
         {(platform === ANDROID || platform === VKCOM) && (
           <PanelHeaderButton onClick={this.backModal}>

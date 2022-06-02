@@ -4,7 +4,7 @@ import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
 import Tappable, { TappableProps } from "../Tappable/Tappable";
 import { HasAlign } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
-import Spinner from "../Spinner/Spinner";
+import { Spinner } from "../Spinner/Spinner";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getPlatformClassName } from "../../helpers/getPlatformClassName";

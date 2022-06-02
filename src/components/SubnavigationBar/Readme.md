@@ -81,8 +81,10 @@ const SubnavigationBarExample = () => {
         id={MODAL_NAME}
         header={
           <ModalPageHeader
-            left={platform !== IOS && <PanelHeaderClose onClick={closeModal} />}
-            right={
+            before={
+              platform !== IOS && <PanelHeaderClose onClick={closeModal} />
+            }
+            after={
               platform === IOS && (
                 <PanelHeaderButton onClick={closeModal}>
                   <Icon24Dismiss />
@@ -229,7 +231,7 @@ const SubnavigationBarExample = () => {
           </Panel>
           <Panel id="add_friend">
             <PanelHeader
-              left={
+              before={
                 <PanelHeaderBack onClick={() => setActivePanel("example")} />
               }
             >

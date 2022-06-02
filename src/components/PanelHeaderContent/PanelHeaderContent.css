@@ -89,7 +89,7 @@
   font-size: 23px;
   font-family: var(--font-display);
   font-weight: 500;
-  line-height: var(--panelheader_height_android);
+  line-height: var(--panelheader_height);
 }
 
 /**

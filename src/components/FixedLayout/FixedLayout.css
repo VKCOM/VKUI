@@ -32,6 +32,19 @@
   padding-bottom: var(--safe-area-inset-bottom);
 }
 
+/**
+ * CMP:
+ * Epic
+ */
 .Epic .FixedLayout--bottom {
   padding-bottom: calc(var(--tabbar_height) + var(--safe-area-inset-bottom));
+}
+
+/**
+ * CMP:
+ * PanelHeader
+ */
+.PanelHeader ~ .FixedLayout--top,
+.PanelHeader ~ * .FixedLayout--top:not(.PanelHeader__fixed) {
+  top: calc(var(--panelheader_height) + var(--safe-area-inset-top));
 }

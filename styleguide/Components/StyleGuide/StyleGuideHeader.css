@@ -1,7 +1,11 @@
+:root {
+  --styleguide_header_height: 56px;
+}
+
 .StyleGuideHeader {
-  height: var(--panelheader_height_android);
-  background: var(--background_content);
-  border-bottom: 1px solid var(--image_border);
+  height: var(--panelheader_height);
+  background: var(--vkui--color_background_content);
+  border-bottom: 1px solid var(--vkui--color_image_border_alpha);
   box-sizing: border-box;
   position: fixed;
   left: 0;
@@ -25,7 +29,7 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: var(--text_primary);
+  color: var(--vkui--color_text_primary);
 }
 
 .StyleGuideHeader__logo span {
@@ -54,6 +58,6 @@
   align-items: center;
 }
 
-.StyleGuideHeader__appearance {
-  color: var(--icon_secondary);
+.StyleGuideHeader__scheme {
+  color: var(--vkui--color_icon_secondary);
 }

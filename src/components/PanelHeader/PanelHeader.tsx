@@ -23,8 +23,8 @@ export interface PanelHeaderProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRef<HTMLDivElement>,
     HasRootRef<HTMLDivElement> {
-  left?: React.ReactNode;
-  right?: React.ReactNode;
+  before?: React.ReactNode;
+  after?: React.ReactNode;
   separator?: boolean;
   transparent?: boolean;
   shadow?: boolean;
@@ -39,10 +39,10 @@ export interface PanelHeaderProps
 }
 
 const PanelHeaderIn: React.FC<PanelHeaderProps> = ({
-  children,
-  left,
-  right,
+  before,
+  after,
   separator,
+  children,
 }) => {
   const { webviewType } = React.useContext(ConfigProviderContext);
   const { isInsideModal } = React.useContext(ModalRootContext);
@@ -51,7 +51,7 @@ const PanelHeaderIn: React.FC<PanelHeaderProps> = ({
   return (
     <React.Fragment>
       <TooltipContainer fixed vkuiClass="PanelHeader__in">
-        <div vkuiClass="PanelHeader__left">{left}</div>
+        <div vkuiClass="PanelHeader__before">{before}</div>
         <div vkuiClass="PanelHeader__content">
           {platform === VKCOM ? (
             <Text weight="2">{children}</Text>
@@ -59,8 +59,8 @@ const PanelHeaderIn: React.FC<PanelHeaderProps> = ({
             <span vkuiClass="PanelHeader__content-in">{children}</span>
           )}
         </div>
-        <div vkuiClass="PanelHeader__right">
-          {(webviewType === WebviewType.INTERNAL || isInsideModal) && right}
+        <div vkuiClass="PanelHeader__after">
+          {(webviewType === WebviewType.INTERNAL || isInsideModal) && after}
         </div>
       </TooltipContainer>
       {separator && platform === VKCOM && <Separator wide />}
@@ -71,20 +71,19 @@ const PanelHeaderIn: React.FC<PanelHeaderProps> = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeader
  */
-const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
-  const {
-    left,
-    children,
-    right,
-    separator = true,
-    visor = true,
-    transparent = false,
-    shadow,
-    getRef,
-    getRootRef,
-    fixed,
-    ...restProps
-  } = props;
+export const PanelHeader = ({
+  before,
+  children,
+  after,
+  separator = true,
+  visor = true,
+  transparent = false,
+  shadow,
+  getRef,
+  getRootRef,
+  fixed,
+  ...restProps
+}: PanelHeaderProps) => {
   const platform = usePlatform();
   const { webviewType } = React.useContext(ConfigProviderContext);
   const { isInsideModal } = React.useContext(ModalRootContext);
@@ -104,8 +103,8 @@ const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
         webviewType === WebviewType.VKAPPS &&
           !isInsideModal &&
           "PanelHeader--vkapps",
-        !left && "PanelHeader--no-left",
-        !right && "PanelHeader--no-right",
+        !before && "PanelHeader--no-before",
+        !after && "PanelHeader--no-after",
         isFixed && "PanelHeader--fixed"
       )}
       ref={isFixed ? getRootRef : getRef}
@@ -116,12 +115,12 @@ const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
           vertical="top"
           getRootRef={getRef}
         >
-          <PanelHeaderIn left={left} right={right} separator={separator}>
+          <PanelHeaderIn before={before} after={after} separator={separator}>
             {children}
           </PanelHeaderIn>
         </FixedLayout>
       ) : (
-        <PanelHeaderIn left={left} right={right} separator={separator}>
+        <PanelHeaderIn before={before} after={after} separator={separator}>
           {children}
         </PanelHeaderIn>
       )}
@@ -134,6 +133,3 @@ const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default PanelHeader;
