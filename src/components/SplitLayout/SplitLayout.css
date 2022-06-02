@@ -20,14 +20,14 @@
 
 .SplitLayout--ios .SplitLayout__inner--header {
   margin-top: calc(
-    -1 * calc(var(--panelheader_height_ios) + var(--safe-area-inset-top))
+    -1 * (var(--panelheader_height_ios) + var(--safe-area-inset-top))
   );
 }
 
 .SplitLayout--android .SplitLayout__inner--header,
 .SplitLayout--vkcom .SplitLayout__inner--header {
   margin-top: calc(
-    -1 * calc(var(--panelheader_height_android) + var(--safe-area-inset-top))
+    -1 * (var(--panelheader_height) + var(--safe-area-inset-top))
   );
 }
 

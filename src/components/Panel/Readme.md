@@ -42,7 +42,7 @@ class Example extends React.Component {
         <Panel id="panel2">
           <PanelHeader
             separator={false}
-            left={
+            before={
               <PanelHeaderBack
                 onClick={() => this.setState({ activePanel: "panel1" })}
               />
@@ -77,7 +77,7 @@ class Example extends React.Component {
         </Panel>
         <Panel id="panel3" centered>
           <PanelHeader
-            left={
+            before={
               <PanelHeaderBack
                 onClick={() => this.setState({ activePanel: "panel2" })}
               />

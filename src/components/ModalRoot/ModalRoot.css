@@ -41,7 +41,7 @@
 
 :not(.ModalRoot--desktop).ModalRoot--vkapps.ModalRoot--android
   .ModalRoot__viewport {
-  top: calc(var(--safe-area-inset-top) + var(--panelheader_height_android));
+  top: calc(var(--safe-area-inset-top) + var(--panelheader_height));
 }
 
 :not(.ModalRoot--desktop).ModalRoot--vkapps.ModalRoot--ios

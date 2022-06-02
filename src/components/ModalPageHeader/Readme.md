@@ -16,7 +16,7 @@ const platform = usePlatform();
 
 return (
   <ModalPageHeader
-    left={
+    before={
       <Fragment>
         {(platform === ANDROID || platform === VKCOM) && (
           <PanelHeaderButton onClick={this.backModal}>
@@ -25,7 +25,7 @@ return (
         )}
       </Fragment>
     }
-    right={
+    after={
       <Fragment>
         {(platform === ANDROID || platform === VKCOM) && (
           <PanelHeaderButton onClick={this.backModal}>

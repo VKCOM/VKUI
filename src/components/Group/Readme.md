@@ -96,14 +96,14 @@ class App extends React.Component {
           onClose={() => this.setState({ isModalOpened: false })}
           header={
             <ModalPageHeader
-              left={
+              before={
                 this.props.platform !== IOS && (
                   <PanelHeaderClose
                     onClick={() => this.setState({ isModalOpened: false })}
                   />
                 )
               }
-              right={
+              after={
                 this.props.platform === IOS && (
                   <PanelHeaderButton
                     onClick={() => this.setState({ isModalOpened: false })}

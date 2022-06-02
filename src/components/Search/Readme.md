@@ -53,7 +53,7 @@ class SimpleSearch extends React.Component {
     return (
       <React.Fragment>
         <PanelHeader
-          right={
+          after={
             <PanelHeaderButton onClick={this.props.goHeaderSearch}>
               <Icon28AddOutline />
             </PanelHeaderButton>
@@ -103,7 +103,7 @@ class HeaderSearch extends React.Component {
     return (
       <React.Fragment>
         <PanelHeader
-          left={platform !== VKCOM && <PanelHeaderBack onClick={goSearch} />}
+          before={platform !== VKCOM && <PanelHeaderBack onClick={goSearch} />}
           separator={sizeX === SizeType.REGULAR}
         >
           <Search
@@ -167,14 +167,14 @@ class SearchExample extends React.Component {
               onClose={this.hideModal}
               header={
                 <ModalPageHeader
-                  left={
+                  before={
                     platform === ANDROID && (
                       <PanelHeaderButton onClick={this.hideModal}>
                         <Icon24Cancel />
                       </PanelHeaderButton>
                     )
                   }
-                  right={
+                  after={
                     <PanelHeaderButton onClick={this.hideModal}>
                       {platform === IOS ? "Готово" : <Icon24Done />}
                     </PanelHeaderButton>

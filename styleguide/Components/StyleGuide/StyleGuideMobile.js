@@ -15,13 +15,13 @@ import {
 import { Logo } from "../Logo/Logo";
 import "./StyleGuideMobile.css";
 
-const StyleGuideMobileHeader = ({ left, switchStyleGuideAppearance }) => {
+const StyleGuideMobileHeader = ({ before, switchStyleGuideAppearance }) => {
   const appearance = useAppearance();
 
   return (
     <PanelHeader
-      left={left}
-      right={
+      before={before}
+      after={
         <PanelHeaderButton
           onClick={switchStyleGuideAppearance}
           aria-label="Сменить тему"
@@ -59,7 +59,7 @@ export const StyleGuideMobile = (props) => {
           <Panel id="content">
             <StyleGuideMobileHeader
               switchStyleGuideAppearance={props.switchStyleGuideAppearance}
-              left={
+              before={
                 <PanelHeaderButton
                   aria-label="Показать меню"
                   onClick={() => setActivePanel("menu")}
@@ -73,7 +73,7 @@ export const StyleGuideMobile = (props) => {
           <Panel id="menu">
             <StyleGuideMobileHeader
               switchStyleGuideAppearance={props.switchStyleGuideAppearance}
-              left={
+              before={
                 <PanelHeaderClose
                   aria-label="Скрыть меню"
                   onClick={() => setActivePanel("content")}
