@@ -1,51 +1,88 @@
+import { DOMProps, useDOM } from "../../lib/dom";
 import * as React from "react";
-import { DOMProps, withDOM } from "../../lib/dom";
-import { multiRef, setRef } from "../../lib/utils";
+import { useExternRef } from "../../hooks/useExternRef";
+import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
+import { useEventListener } from "../../hooks/useEventListener";
 import "./CustomScrollView.css";
 
-interface Props extends DOMProps {
+export interface CustomScrollViewProps extends DOMProps {
   windowResize?: boolean;
   boxRef?: React.Ref<HTMLDivElement>;
   className?: HTMLDivElement["className"];
+  children: React.ReactNode;
 }
 
-class CustomScrollView extends React.Component<Props> {
-  private ratio = NaN;
-  private lastTrackerTop = 0;
-  private clientHeight = 0;
-  private trackerHeight = 0;
-  private scrollHeight = 0;
-  private transformProp = "";
+export const CustomScrollView = ({
+  className,
+  children,
+  boxRef: externalBoxRef,
+  windowResize,
+}: CustomScrollViewProps) => {
+  const { document, window } = useDOM();
 
-  private startY = 0;
-  private trackerTop = 0;
+  const ratio = React.useRef(NaN);
+  const lastTrackerTop = React.useRef(0);
+  const clientHeight = React.useRef(0);
+  const trackerHeight = React.useRef(0);
+  const scrollHeight = React.useRef(0);
+  const transformProp = React.useRef("");
+  const startY = React.useRef(0);
+  const trackerTop = React.useRef(0);
 
-  private readonly box = multiRef<HTMLDivElement>((e) =>
-    setRef(e, this.props.boxRef)
-  );
-  private readonly barY = React.createRef<HTMLDivElement>();
-  private readonly trackerY = React.createRef<HTMLDivElement>();
+  const boxRef = useExternRef(externalBoxRef);
 
-  componentDidMount() {
-    this.chooseTransformProp();
+  const barY = React.useRef<HTMLDivElement>(null);
+  const trackerY = React.useRef<HTMLDivElement>(null);
 
-    this.resize();
-
-    if (this.props.windowResize) {
-      this.props.window!.addEventListener("resize", this.resize);
+  const setTrackerPosition = (scrollTop: number) => {
+    lastTrackerTop.current = scrollTop;
+    if (trackerY.current !== null) {
+      (trackerY.current.style as any)[
+        transformProp.current
+      ] = `translate(0, ${scrollTop}px)`;
     }
-  }
+  };
 
-  componentDidUpdate() {
-    this.resize();
-  }
+  const setTrackerPositionFromScroll = (scrollTop: number) => {
+    const progress = scrollTop / (scrollHeight.current - clientHeight.current);
+    setTrackerPosition(
+      (clientHeight.current - trackerHeight.current) * progress
+    );
+  };
 
-  componentWillUnmount() {
-    this.props.window!.removeEventListener("resize", this.resize);
-  }
+  const resize = () => {
+    if (!boxRef.current || !barY.current || !trackerY.current) {
+      return;
+    }
+    const localClientHeight = boxRef.current.clientHeight;
+    const localScrollHeight = boxRef.current.scrollHeight;
+    const localRatio = localClientHeight / localScrollHeight;
+    const localTrackerHeight = Math.max(localClientHeight * localRatio, 40);
 
-  chooseTransformProp() {
-    let style = this.trackerY.current?.style;
+    ratio.current = localRatio;
+    clientHeight.current = localClientHeight;
+    scrollHeight.current = localScrollHeight;
+    trackerHeight.current = localTrackerHeight;
+
+    if (localRatio >= 1) {
+      barY.current.style.display = "none";
+    } else {
+      barY.current.style.display = "";
+      trackerY.current.style.height = `${localTrackerHeight}px`;
+      setTrackerPositionFromScroll(boxRef.current.scrollTop);
+    }
+  };
+
+  const resizeHandler = useEventListener("resize", resize);
+
+  useIsomorphicLayoutEffect(() => {
+    if (windowResize && window) {
+      resizeHandler.add(window);
+    }
+  }, [windowResize, window]);
+
+  useIsomorphicLayoutEffect(() => {
+    let style = trackerY.current?.style;
     let prop = "";
     if (style !== undefined) {
       if ("transform" in style) {
@@ -54,115 +91,85 @@ class CustomScrollView extends React.Component<Props> {
         prop = "webkitTransform";
       }
     }
-    this.transformProp = prop;
-  }
+    transformProp.current = prop;
+  }, []);
 
-  resize = () => {
-    if (!this.box.current || !this.barY.current || !this.trackerY.current) {
-      return;
-    }
-    const clientHeight = this.box.current.clientHeight;
-    const scrollHeight = this.box.current.scrollHeight;
-    let ratio = clientHeight / scrollHeight;
-    let trackerHeight = Math.max(clientHeight * ratio, 40);
+  useIsomorphicLayoutEffect(resize);
 
-    this.ratio = ratio;
-    this.clientHeight = clientHeight;
-    this.scrollHeight = scrollHeight;
-    this.trackerHeight = trackerHeight;
-
-    if (ratio >= 1) {
-      this.barY.current.style.display = "none";
-    } else {
-      this.barY.current.style.display = "";
-      this.trackerY.current.style.height = `${trackerHeight}px`;
-      this.setTrackerPositionFromScroll(this.box.current.scrollTop);
+  const setScrollPositionFromTracker = (trackerTop: number) => {
+    const progress =
+      trackerTop / (clientHeight.current - trackerHeight.current);
+    if (boxRef.current !== null) {
+      boxRef.current.scrollTop =
+        (scrollHeight.current - clientHeight.current) * progress;
     }
   };
 
-  scroll = () => {
-    if (this.ratio >= 1 || !this.box.current) {
-      return;
-    }
-
-    this.setTrackerPositionFromScroll(this.box.current.scrollTop);
-  };
-
-  setTrackerPosition(scrollTop: number) {
-    this.lastTrackerTop = scrollTop;
-    if (this.trackerY.current !== null) {
-      (this.trackerY.current.style as any)[
-        this.transformProp
-      ] = `translate(0, ${scrollTop}px)`;
-    }
-  }
-
-  setTrackerPositionFromScroll(scrollTop: number) {
-    const progress = scrollTop / (this.scrollHeight - this.clientHeight);
-    this.setTrackerPosition(
-      (this.clientHeight - this.trackerHeight) * progress
-    );
-  }
-
-  setScrollPositionFromTracker(trackerTop: number) {
-    const progress = trackerTop / (this.clientHeight - this.trackerHeight);
-    if (this.box.current !== null) {
-      this.box.current.scrollTop =
-        (this.scrollHeight - this.clientHeight) * progress;
-    }
-  }
-
-  onDragStart = (e: React.MouseEvent) => {
+  const onMove = (e: MouseEvent) => {
     e.preventDefault();
-    this.startY = e.clientY;
-    this.trackerTop = this.lastTrackerTop;
-
-    this.props.document!.addEventListener("mousemove", this.onMove);
-    this.props.document!.addEventListener("mouseup", this.onUp);
-  };
-
-  onMove = (e: MouseEvent) => {
-    e.preventDefault();
-    const diff = e.clientY - this.startY;
+    const diff = e.clientY - startY.current;
     const position = Math.min(
-      Math.max(this.trackerTop + diff, 0),
-      this.clientHeight - this.trackerHeight
+      Math.max(trackerTop.current + diff, 0),
+      clientHeight.current - trackerHeight.current
     );
 
-    this.setScrollPositionFromTracker(position);
+    setScrollPositionFromTracker(position);
   };
 
-  onUp = (e: MouseEvent) => {
+  const onUp = (e: MouseEvent) => {
     e.preventDefault();
-    this.props.document!.removeEventListener("mousemove", this.onMove);
-    this.props.document!.removeEventListener("mouseup", this.onUp);
+    unsubscribe();
   };
 
-  render() {
-    const { children, className } = this.props;
+  const scroll = () => {
+    if (ratio.current >= 1 || !boxRef.current) {
+      return;
+    }
 
-    return (
-      <div vkuiClass="CustomScrollView" className={className}>
-        <div vkuiClass="CustomScrollView__barY" ref={this.barY}>
-          <div
-            vkuiClass="CustomScrollView__trackerY"
-            ref={this.trackerY}
-            onMouseDown={this.onDragStart}
-          />
-        </div>
+    setTrackerPositionFromScroll(boxRef.current.scrollTop);
+  };
 
-        <div
-          vkuiClass="CustomScrollView__box"
-          tabIndex={-1}
-          ref={this.box}
-          onScroll={this.scroll}
-        >
-          {children}
-        </div>
-      </div>
-    );
+  const listeners = [
+    useEventListener("mousemove", onMove),
+    useEventListener("mouseup", onUp),
+  ];
+
+  function subscribe(el: Document | undefined) {
+    if (el) {
+      listeners.forEach((l) => l.add(el));
+    }
   }
-}
 
-// eslint-disable-next-line import/no-default-export
-export default withDOM(CustomScrollView);
+  function unsubscribe() {
+    listeners.forEach((l) => l.remove());
+  }
+
+  const onDragStart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    startY.current = e.clientY;
+    trackerTop.current = lastTrackerTop.current;
+
+    subscribe(document);
+  };
+
+  return (
+    <div vkuiClass="CustomScrollView" className={className}>
+      <div vkuiClass="CustomScrollView__barY" ref={barY}>
+        <div
+          vkuiClass="CustomScrollView__trackerY"
+          ref={trackerY}
+          onMouseDown={onDragStart}
+        />
+      </div>
+
+      <div
+        vkuiClass="CustomScrollView__box"
+        tabIndex={-1}
+        ref={boxRef}
+        onScroll={scroll}
+      >
+        {children}
+      </div>
+    </div>
+  );
+};
