@@ -12,3 +12,4 @@ __diff_output__
 .cache
 docs/
 src/styles/generated
+.github/**/*.md
