@@ -645,7 +645,22 @@
 }
 
 .Banner__actions > .Button--lvl-tertiary {
-  margin: 4px 16px 2px -12px;
+  margin: 4px 16px 2px
+    calc(
+      -1 * var(--vkui--size_button_tertiary_small_padding_horizontal--regular)
+    );
+}
+
+.Banner__actions > .Button--sz-m.Button--lvl-tertiary {
+  margin-left: calc(
+    -1 * var(--vkui--size_button_tertiary_medium_padding_horizontal--regular)
+  );
+}
+
+.Banner__actions > .Button--sz-l.Button--lvl-tertiary {
+  margin-left: calc(
+    -1 * var(--vkui--size_button_tertiary_large_padding_horizontal--regular)
+  );
 }
 
 .Banner__actions > .Button--lvl-tertiary:first-child {
