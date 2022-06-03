@@ -3,7 +3,7 @@ import { Touch, TouchProps, TouchEvent } from "../Touch/Touch";
 import TouchRootContext from "../Touch/TouchContext";
 import FixedLayout from "../FixedLayout/FixedLayout";
 import { classNames } from "../../lib/classNames";
-import { IOS, ANDROID, VKCOM } from "../../lib/platform";
+import { IOS } from "../../lib/platform";
 import { getClassName } from "../../helpers/getClassName";
 import PullToRefreshSpinner from "./PullToRefreshSpinner";
 import { withPlatform } from "../../hoc/withPlatform";
@@ -80,14 +80,12 @@ class PullToRefresh extends React.PureComponent<
     super(props);
 
     this.params = {
-      start: props.platform === ANDROID || props.platform === VKCOM ? -45 : -10,
-      max: props.platform === ANDROID || props.platform === VKCOM ? 80 : 50,
-      maxY: props.platform === ANDROID || props.platform === VKCOM ? 80 : 400,
-      refreshing:
-        props.platform === ANDROID || props.platform === VKCOM ? 50 : 36,
+      start: props.platform === IOS ? -10 : -45,
+      max: props.platform === IOS ? 50 : 80,
+      maxY: props.platform === IOS ? 400 : 80,
+      refreshing: props.platform === IOS ? 36 : 50,
 
-      positionMultiplier:
-        props.platform === ANDROID || props.platform === VKCOM ? 1 : 0.21,
+      positionMultiplier: props.platform === IOS ? 0.21 : 1,
     };
 
     this.state = {
@@ -251,9 +249,9 @@ class PullToRefresh extends React.PureComponent<
       this.setState({
         refreshing: true,
         spinnerY:
-          this.props.platform === ANDROID || this.props.platform === VKCOM
-            ? this.params.refreshing
-            : this.state.spinnerY,
+          this.props.platform === IOS
+            ? this.state.spinnerY
+            : this.params.refreshing,
       });
 
       this.props.onRefresh();
