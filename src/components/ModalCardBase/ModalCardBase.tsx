@@ -1,7 +1,7 @@
 import * as React from "react";
 import { hasReactNode } from "../../lib/utils";
 import { Title } from "../Typography/Title/Title";
-import { Headline } from "../Typography/Headline/Headline";
+import { Subhead } from "../Typography/Subhead/Subhead";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
@@ -113,9 +113,7 @@ export const ModalCardBase = withAdaptivity<
             </Title>
           )}
           {hasReactNode(subheader) && (
-            <Headline weight="3" vkuiClass="ModalCardBase__subheader">
-              {subheader}
-            </Headline>
+            <Subhead vkuiClass="ModalCardBase__subheader">{subheader}</Subhead>
           )}
 
           {children}
