@@ -19,6 +19,9 @@ export type { ButtonGroupProps } from "../components/ButtonGroup/ButtonGroup";
 export { Switch } from "../components/Switch/Switch";
 export type { SwitchProps } from "../components/Switch/Switch";
 
+export { Footnote } from "../components/Typography/Footnote/Footnote";
+export type { FootnoteProps } from "../components/Typography/Footnote/Footnote";
+
 export { Radio } from "../components/Radio/Radio";
 export type { RadioProps } from "../components/Radio/Radio";
 

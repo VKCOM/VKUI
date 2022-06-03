@@ -8,6 +8,7 @@ export const tokenized = [
   "SegmentedControl",
   "Title",
   "Subhead",
+  "Footnote",
   "HorizontalScroll",
   "PanelSpinner",
   "PullToRefresh",
