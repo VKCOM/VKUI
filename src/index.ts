@@ -129,7 +129,7 @@ export { default as TabsItem } from "./components/TabsItem/TabsItem";
 export type { TabsItemProps } from "./components/TabsItem/TabsItem";
 export { Spinner } from "./components/Spinner/Spinner";
 export type { SpinnerProps } from "./components/Spinner/Spinner";
-export { default as PullToRefresh } from "./components/PullToRefresh/PullToRefresh";
+export { PullToRefresh } from "./components/PullToRefresh/PullToRefresh";
 export type { PullToRefreshProps } from "./components/PullToRefresh/PullToRefresh";
 export { default as Link } from "./components/Link/Link";
 export type { LinkProps } from "./components/Link/Link";
