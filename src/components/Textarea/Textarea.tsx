@@ -13,7 +13,8 @@ export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
     HasRef<HTMLTextAreaElement>,
     HasRootRef<HTMLElement>,
-    AdaptivityProps {
+    AdaptivityProps,
+    Pick<React.CSSProperties, "maxHeight"> {
   grow?: boolean;
   onResize?(el: HTMLTextAreaElement): void;
   defaultValue?: string;
@@ -33,6 +34,7 @@ const Textarea: React.FC<TextareaProps> = React.memo(
     getRef,
     sizeY,
     rows = 2,
+    maxHeight,
     ...restProps
   }: TextareaProps) => {
     const [value, onChange] = useEnsuredControl(restProps, { defaultValue });
@@ -68,6 +70,7 @@ const Textarea: React.FC<TextareaProps> = React.memo(
       >
         <textarea
           {...restProps}
+          style={{ maxHeight }}
           rows={rows}
           vkuiClass="Textarea__el"
           value={value}
