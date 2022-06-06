@@ -16,9 +16,7 @@ export interface PullToRefreshSpinnerProps
   "aria-label"?: string;
 }
 
-const PullToRefreshSpinner: React.FunctionComponent<
-  PullToRefreshSpinnerProps
-> = ({
+export const PullToRefreshSpinner = ({
   on = true,
   size = 24,
   strokeWidth = 2.5,
@@ -74,6 +72,3 @@ const PullToRefreshSpinner: React.FunctionComponent<
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default React.memo(PullToRefreshSpinner);

@@ -62,7 +62,7 @@ export type { ParagraphProps } from "../components/Typography/Paragraph/Paragrap
 export { Text } from "../components/Typography/Text/Text";
 export type { TextProps } from "../components/Typography/Text/Text";
 
-export { default as PullToRefresh } from "../components/PullToRefresh/PullToRefresh";
+export { PullToRefresh } from "../components/PullToRefresh/PullToRefresh";
 export type { PullToRefreshProps } from "../components/PullToRefresh/PullToRefresh";
 
 export { Input } from "../components/Input/Input";
