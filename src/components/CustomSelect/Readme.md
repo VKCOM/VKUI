@@ -27,13 +27,6 @@ const Example = () => {
 
   const [selectType, setSelectType] = React.useState(undefined);
 
-  const [searchable, setSearchable] = React.useState(false);
-  const [remoteQuery, setRemoteQuery] = React.useState("");
-  const [fetching, setFetching] = React.useState(false);
-  const [remoteUsers, setRemoteUsers] = React.useState([]);
-
-  let timeout;
-
   const users = [...getUsers()];
 
   return (
@@ -109,78 +102,7 @@ const Example = () => {
       </FormItem>
 
       <Header>Асинхронная загрузка списка</Header>
-      <FormLayoutGroup mode="horizontal">
-        <FormItem style={{ flexGrow: 1, flexShrink: 1 }}>
-          <CustomSelect
-            searchable={searchable}
-            placeholder={searchable ? "Введите имя пользователя" : "Не выбран"}
-            disabled={searchable && fetching}
-            onInputChange={
-              searchable
-                ? (e) => {
-                    const _remoteQuery = e.target.value;
-                    clearTimeout(timeout);
-                    setRemoteQuery(_remoteQuery);
-                    if (_remoteQuery.length < 3) {
-                      setRemoteUsers([]);
-                      setFetching(false);
-                    } else {
-                      setFetching(true);
-                      timeout = setTimeout(() => {
-                        setRemoteUsers([...getUsers()]);
-                        setFetching(false);
-                      }, 1500);
-                    }
-                  }
-                : undefined
-            }
-            onOpen={
-              !searchable
-                ? () => {
-                    if (remoteUsers.length === 0) {
-                      setFetching(true);
-                      timeout = setTimeout(() => {
-                        setRemoteUsers([...getUsers()]);
-                        setFetching(false);
-                        clearTimeout(timeout);
-                      }, 1500);
-                    }
-                  }
-                : undefined
-            }
-            onClose={() => {
-              clearTimeout(timeout);
-              setRemoteUsers([]);
-              setRemoteQuery("");
-            }}
-            fetching={fetching}
-            options={remoteUsers}
-            renderDropdown={
-              searchable &&
-              !fetching &&
-              (({ defaultDropdownContent }) => {
-                if (remoteQuery.length < 3) {
-                  return (
-                    <Text
-                      style={{ padding: 12, color: "var(--text_secondary)" }}
-                    >
-                      Нужно ввести хотя бы три символа
-                    </Text>
-                  );
-                } else {
-                  return defaultDropdownContent;
-                }
-              })
-            }
-          />
-        </FormItem>
-
-        <FormItem style={{ flexBasis: "200px", flexGrow: 0 }}>
-          <Checkbox onChange={(e) => setSearchable(e.target.checked)}>
-            Использовать поиск
-          </Checkbox>
-        </FormItem>
-      </FormLayoutGroup>
+      <AsyncCustomSelect />
     </Div>
   );
 };
@@ -288,6 +210,101 @@ const CustomSearchAlgoSelect = () => {
       )}
       options={cities}
     />
+  );
+};
+
+// **
+// * Асинхронная загрузка списка
+// **
+const AsyncCustomSelect = () => {
+  const [searchable, setSearchable] = React.useState(false);
+  const [remoteQuery, setRemoteQuery] = React.useState("");
+  const [fetching, setFetching] = React.useState(false);
+  const [remoteUsers, setRemoteUsers] = React.useState([]);
+
+  let timeout;
+
+  const cleanFetchingTimeout = () => {
+    if (timeout) {
+      clearTimeout(timeout);
+      console.log("timeout cleared");
+    }
+  };
+
+  const fetchRemoteUsers = () => {
+    setFetching(true);
+    timeout = setTimeout(() => {
+      setRemoteUsers([...getUsers()]);
+      setFetching(false);
+      cleanFetchingTimeout();
+    }, 1500);
+  };
+
+  const searchRemoteUsers = (e) => {
+    const _remoteQuery = e.target.value;
+    cleanFetchingTimeout();
+    setRemoteQuery(_remoteQuery);
+
+    if (_remoteQuery.length < 3) {
+      setRemoteUsers([]);
+      setFetching(false);
+    } else {
+      fetchRemoteUsers();
+    }
+  };
+
+  const clearRemoteUsers = () => {
+    setRemoteUsers([]);
+    setRemoteQuery("");
+    cleanFetchingTimeout();
+  };
+
+  const renderDropdown = ({ defaultDropdownContent }) => {
+    if (remoteQuery.length < 3) {
+      return (
+        <Text style={{ padding: 12, color: "var(--text_secondary)" }}>
+          Нужно ввести хотя бы три символа
+        </Text>
+      );
+    }
+    return defaultDropdownContent;
+  };
+
+  React.useEffect(() => {
+    return () => cleanFetchingTimeout();
+  }, []);
+
+  return (
+    <FormLayoutGroup mode="horizontal">
+      <FormItem style={{ flexGrow: 1, flexShrink: 1 }}>
+        <CustomSelect
+          options={remoteUsers}
+          searchable={searchable}
+          placeholder={searchable ? "Введите имя пользователя" : "Не выбран"}
+          disabled={searchable && fetching}
+          onInputChange={searchable ? searchRemoteUsers : undefined}
+          onOpen={
+            searchable
+              ? undefined
+              : remoteUsers.length === 0 && fetchRemoteUsers
+          }
+          onClose={searchable ? clearRemoteUsers : undefined}
+          fetching={fetching}
+          renderDropdown={searchable && !fetching && renderDropdown}
+        />
+      </FormItem>
+
+      <FormItem style={{ flexBasis: "200px", flexGrow: 0 }}>
+        <Checkbox
+          onChange={(e) => {
+            setSearchable(e.target.checked);
+            clearRemoteUsers();
+          }}
+        >
+          Использовать поиск
+        </Checkbox>
+      </FormItem>
+    </FormLayoutGroup>
   );
 };
 
