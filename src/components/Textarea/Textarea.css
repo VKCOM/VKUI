@@ -20,6 +20,10 @@
   background: transparent;
 }
 
+.Textarea__el[cols] {
+  width: initial;
+}
+
 .Textarea--sizeY-compact .Textarea__el {
   padding-top: 7px;
   padding-bottom: 7px;
