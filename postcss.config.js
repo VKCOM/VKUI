@@ -27,6 +27,7 @@ let plugins = [
   cssCustomProperties({
     importFrom: cssPropSources,
     preserve: true,
+    disableDeprecationNotice: true,
   }),
   // postcss-custom-properties only works with :root
   scopeRoot({
