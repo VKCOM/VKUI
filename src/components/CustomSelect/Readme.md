@@ -10,35 +10,6 @@ const getUsers = () =>
   }));
 
 const Example = () => {
-  const cities = [
-    {
-      label: "Санкт-Петербург",
-      description: "Россия",
-      value: "0",
-    },
-    {
-      label: "Москва",
-      description: "Россия",
-      value: "1",
-    },
-    {
-      label: "Новосибирск",
-      description: "Россия",
-      disabled: true,
-      value: "2",
-    },
-    {
-      label: "Нью-Йорк",
-      description: "США",
-      value: "3",
-    },
-    {
-      label: "Чикаго",
-      description: "США",
-      value: "4",
-    },
-  ];
-
   const selectTypes = [
     {
       label: "SelectType.default",
@@ -134,21 +105,7 @@ const Example = () => {
       </FormItem>
 
       <FormItem top="Город" bottom="Кастомный алгоритм поиска">
-        <CustomSelect
-          placeholder="Введите название города или страны"
-          searchable
-          filterFn={(value, option) =>
-            option.label.toLowerCase().includes(value.toLowerCase()) ||
-            option.description.toLowerCase().includes(value.toLowerCase())
-          }
-          renderOption={({ option, ...restProps }) => (
-            <CustomSelectOption
-              {...restProps}
-              description={option.description}
-            />
-          )}
-          options={cities}
-        />
+        <CustomSearchAlgoSelect />
       </FormItem>
 
       <Header>Асинхронная загрузка списка</Header>
@@ -280,6 +237,56 @@ const CustomSearchLogicSelect = () => {
         </CustomSelectOption>
       )}
       onChange={onCustomSearchChange}
+    />
+  );
+};
+
+// **
+// * Кастомный алгоритм поиска
+// **
+const CustomSearchAlgoSelect = () => {
+  const cities = [
+    {
+      label: "Санкт-Петербург",
+      description: "Россия",
+      value: "0",
+    },
+    {
+      label: "Москва",
+      description: "Россия",
+      value: "1",
+    },
+    {
+      label: "Новосибирск",
+      description: "Россия",
+      disabled: true,
+      value: "2",
+    },
+    {
+      label: "Нью-Йорк",
+      description: "США",
+      value: "3",
+    },
+    {
+      label: "Чикаго",
+      description: "США",
+      value: "4",
+    },
+  ];
+
+  const customSearchFilter = (value, option) =>
+    option.label.toLowerCase().includes(value.toLowerCase()) ||
+    option.description.toLowerCase().includes(value.toLowerCase());
+
+  return (
+    <CustomSelect
+      placeholder="Введите название города или страны"
+      searchable
+      filterFn={customSearchFilter}
+      renderOption={({ option, ...restProps }) => (
+        <CustomSelectOption {...restProps} description={option.description} />
+      )}
+      options={cities}
     />
   );
 };
