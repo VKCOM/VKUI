@@ -1,15 +1,15 @@
 Делает из [SelectMimicry](#!/SelectMimicry) селект с выпадающим списком. Используется внутри [Select](#!/Select).
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-const Example = () => {
-  const getUsers = () =>
-    getRandomUsers(10).map((user) => ({
-      label: user.name,
-      value: `${user.id}`,
-      avatar: user.photo_100,
-      description: user.screen_name,
-    }));
+const getUsers = () =>
+  getRandomUsers(10).map((user) => ({
+    label: user.name,
+    value: `${user.id}`,
+    avatar: user.photo_100,
+    description: user.screen_name,
+  }));
 
+const Example = () => {
   const cities = [
     {
       label: "Санкт-Петербург",
