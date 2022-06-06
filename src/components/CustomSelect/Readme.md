@@ -5,7 +5,7 @@ const Example = () => {
   const getUsers = () =>
     getRandomUsers(10).map((user) => ({
       label: user.name,
-      value: user.id,
+      value: `${user.id}`,
       avatar: user.photo_100,
       description: user.screen_name,
     }));
@@ -14,28 +14,28 @@ const Example = () => {
     {
       label: "Санкт-Петербург",
       description: "Россия",
-      value: 0,
+      value: "0",
     },
     {
       label: "Москва",
       description: "Россия",
-      value: 1,
+      value: "1",
     },
     {
       label: "Новосибирск",
       description: "Россия",
       disabled: true,
-      value: 2,
+      value: "2",
     },
     {
       label: "Нью-Йорк",
       description: "США",
-      value: 3,
+      value: "3",
     },
     {
       label: "Чикаго",
       description: "США",
-      value: 4,
+      value: "4",
     },
   ];
 
