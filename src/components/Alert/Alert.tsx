@@ -172,8 +172,10 @@ export const Alert: React.FC<AlertProps> = ({
     setClosing(true);
     waitTransitionFinish(
       elementRef.current,
-      () => {
-        onClose && onClose();
+      (e?: TransitionEvent) => {
+        if (!e || e.propertyName === "opacity") {
+          onClose && onClose();
+        }
       },
       timeout
     );
