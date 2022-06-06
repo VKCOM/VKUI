@@ -21,6 +21,8 @@ import { callMultiple } from "../../lib/callMultiple";
 import { useBooleanState } from "../../hooks/useBooleanState";
 import "./Tappable.css";
 
+const WAVE_LIVE = 225;
+
 export interface TappableProps
   extends Omit<
       React.AllHTMLAttributes<HTMLElement>,
@@ -69,7 +71,7 @@ export interface TappableProps
 interface Wave {
   x: number;
   y: number;
-  id: string;
+  id: number;
 }
 
 export interface RootComponentProps extends TouchProps {
@@ -226,6 +228,24 @@ const Tappable: React.FC<TappableProps> = ({
     }
   }
 
+  const needWaves =
+    platform === ANDROID &&
+    !hasMouse &&
+    hasActive &&
+    activeMode === "background";
+
+  const clearClicks = useTimeout(() => setClicks([]), WAVE_LIVE);
+
+  function addClick(x: number, y: number) {
+    const dateNow = Date.now();
+    const filteredClicks = clicks.filter(
+      (click) => click.id + WAVE_LIVE > dateNow
+    );
+
+    setClicks([...filteredClicks, { x, y, id: dateNow }]);
+    clearClicks.set();
+  }
+
   function onStart({ originalEvent }: TouchEvent) {
     if (hasActive) {
       if (originalEvent.touches && originalEvent.touches.length > 1) {
@@ -233,11 +253,11 @@ const Tappable: React.FC<TappableProps> = ({
         return stop();
       }
 
-      if (platform === ANDROID) {
+      if (needWaves) {
         const { top, left } = getOffsetRect(containerRef.current);
         const x = coordX(originalEvent) - (left ?? 0);
         const y = coordY(originalEvent) - (top ?? 0);
-        setClicks([...clicks, { x, y, id: Date.now().toString() }]);
+        addClick(x, y);
       }
 
       delayStart();
@@ -315,22 +335,17 @@ const Tappable: React.FC<TappableProps> = ({
       <TappableContext.Provider value={childContext}>
         {children}
       </TappableContext.Provider>
-      {platform === ANDROID &&
-        !hasMouse &&
-        hasActive &&
-        activeMode === "background" && (
-          <span aria-hidden="true" vkuiClass="Tappable__waves">
-            {clicks.map((wave) => (
-              <Wave
-                {...wave}
-                key={wave.id}
-                onClear={() =>
-                  setClicks(clicks.filter((c) => c.id !== wave.id))
-                }
-              />
-            ))}
-          </span>
-        )}
+      {needWaves && (
+        <span aria-hidden="true" vkuiClass="Tappable__waves">
+          {clicks.map((wave) => (
+            <span
+              key={wave.id}
+              vkuiClass="Tappable__wave"
+              style={{ top: wave.y, left: wave.x }}
+            />
+          ))}
+        </span>
+      )}
       {hasHover && hoverMode === "background" && (
         <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />
       )}
@@ -347,9 +362,3 @@ export default withAdaptivity(Tappable, {
   hasMouse: true,
   deviceHasHover: true,
 });
-
-function Wave({ x, y, onClear }: Wave & { onClear: VoidFunction }) {
-  const timeout = useTimeout(onClear, 225);
-  React.useEffect(() => timeout.set(), [timeout]);
-  return <span vkuiClass="Tappable__wave" style={{ top: y, left: x }} />;
-}
