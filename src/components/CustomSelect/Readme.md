@@ -55,9 +55,6 @@ const Example = () => {
   ];
 
   const [selectType, setSelectType] = React.useState(undefined);
-  const [value, setValue] = React.useState("0");
-  const [query, setQuery] = React.useState("");
-  const [newUsers, setNewUsers] = React.useState([...getUsers()]);
 
   const [searchable, setSearchable] = React.useState(false);
   const [remoteQuery, setRemoteQuery] = React.useState("");
@@ -67,17 +64,6 @@ const Example = () => {
   let timeout;
 
   const users = [...getUsers()];
-
-  const customSearchOptions = () => {
-    const options = [...newUsers];
-    if (query.length > 0) {
-      options.unshift({
-        label: `Добавить пользователя ${query}`,
-        value: "0",
-      });
-    }
-    return options;
-  };
 
   return (
     <Div>
@@ -144,32 +130,9 @@ const Example = () => {
       </FormItem>
 
       <FormItem top="Администратор" bottom="Кастомное поведение при поиске">
-        <CustomSelect
-          placeholder="Введите имя пользователя"
-          searchable
-          options={customSearchOptions()}
-          onInputChange={(e) => {
-            setQuery(e.target.value);
-          }}
-          renderOption={({ option, ...restProps }) => (
-            <CustomSelectOption
-              style={option.value === "0" ? { color: "var(--accent)" } : {}}
-              {...restProps}
-            >
-              {option.label}
-            </CustomSelectOption>
-          )}
-          onChange={(e) => {
-            if (e.target.value === "0") {
-              setNewUsers([...newUsers, { label: query, value: query }]);
-              setQuery("");
-            } else {
-              setValue(e.target.value);
-            }
-            setQuery("");
-          }}
-        />
+        <CustomSearchLogicSelect />
       </FormItem>
+
       <FormItem top="Город" bottom="Кастомный алгоритм поиска">
         <CustomSelect
           placeholder="Введите название города или страны"
@@ -262,6 +225,62 @@ const Example = () => {
         </FormItem>
       </FormLayoutGroup>
     </Div>
+  );
+};
+
+// **
+// * Кастомное поведение при поиске
+// **
+const CustomSearchLogicSelect = () => {
+  const [value, setValue] = React.useState("");
+  const [query, setQuery] = React.useState("");
+  const [newUsers, setNewUsers] = React.useState([...getUsers()]);
+
+  const customSearchOptions = () => {
+    const options = [...newUsers];
+    if (
+      query.length > 0 &&
+      !options.find((user) => user.value === query || user.label === query)
+    ) {
+      options.unshift({
+        label: `Добавить пользователя ${query}`,
+        value: "0",
+      });
+    }
+    return options;
+  };
+
+  const onCustomSearchChange = (e) => {
+    if (e.target.value === "0") {
+      setNewUsers([...newUsers, { label: query, value: query }]);
+      setValue(query);
+    } else {
+      setValue(e.target.value);
+    }
+    setQuery("");
+  };
+
+  const onCustomSearchInputChange = (e) => {
+    setQuery(e.target.value);
+  };
+
+  return (
+    <CustomSelect
+      value={value}
+      placeholder="Введите имя пользователя"
+      searchable
+      options={customSearchOptions()}
+      onInputChange={onCustomSearchInputChange}
+      renderOption={({ option, ...restProps }) => (
+        <CustomSelectOption
+          style={option.value === "0" ? { color: "var(--accent)" } : {}}
+          {...restProps}
+        >
+          {option.label}
+        </CustomSelectOption>
+      )}
+      onChange={onCustomSearchChange}
+    />
   );
 };
 
