@@ -107,6 +107,9 @@ export type { HeadlineProps } from "../components/Typography/Headline/Headline";
 export { Div } from "../components/Div/Div";
 export type { DivProps } from "../components/Div/Div";
 
+export { Counter } from "../components/Counter/Counter";
+export type { CounterProps } from "../components/Counter/Counter";
+
 export { Progress } from "../components/Progress/Progress";
 export type { ProgressProps } from "../components/Progress/Progress";
 

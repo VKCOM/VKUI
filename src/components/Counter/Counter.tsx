@@ -1,79 +1,47 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
-import { usePlatform } from "../../hooks/usePlatform";
 import { Caption } from "../Typography/Caption/Caption";
-import { Text } from "../Typography/Text/Text";
-import { VKCOM } from "../../lib/platform";
+import { Headline } from "../Typography/Headline/Headline";
 import { hasReactNode } from "../../lib/utils";
-import { HasComponent, HasPlatform } from "../../types";
 import "./Counter.css";
 
 export interface CounterProps extends React.HTMLAttributes<HTMLSpanElement> {
   /**
    * Тип счетчика. При использовании компонента в качестве значения свойства `after` у `Button` эти значения игнорируются
    */
-  mode?: "secondary" | "primary" | "prominent";
+  mode?: "secondary" | "primary" | "prominent" | "contrast";
   size?: "s" | "m";
 }
-
-type CounterTypographyProps = Pick<CounterProps, "size"> &
-  HasPlatform &
-  HasComponent;
-
-const CounterTypography: React.FC<CounterTypographyProps> = ({
-  size,
-  platform,
-  ...restProps
-}) => {
-  return size === "s" ? (
-    <Caption
-      level="2"
-      weight={platform === VKCOM ? "1" : undefined}
-      {...restProps}
-    />
-  ) : (
-    <Text weight="2" {...restProps} />
-  );
-};
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Counter
  */
-const Counter: React.FC<CounterProps> = (props: CounterProps) => {
-  const { mode, size, children, ...restProps } = props;
-  const platform = usePlatform();
-
+export const Counter = ({
+  mode = "secondary",
+  size = "m",
+  children,
+  ...restProps
+}: CounterProps) => {
   if (React.Children.count(children) === 0) {
     return null;
   }
+
+  const CounterTypography = size === "s" ? Caption : Headline;
 
   return (
     <span
       {...restProps}
       vkuiClass={classNames(
-        getClassName("Counter", platform),
+        "Counter",
         `Counter--${mode}`,
         `Counter--s-${size}`
       )}
     >
       {hasReactNode(children) && (
-        <CounterTypography
-          platform={platform}
-          size={size}
-          vkuiClass="Counter__in"
-        >
+        <CounterTypography Component="span" vkuiClass="Counter__in" level="2">
           {children}
         </CounterTypography>
       )}
     </span>
   );
 };
-
-Counter.defaultProps = {
-  mode: "secondary",
-  size: "m",
-};
-
-// eslint-disable-next-line import/no-default-export
-export default React.memo(Counter);
