@@ -1,7 +1,7 @@
 import { baselineComponent } from "../../testing/utils";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Textarea from "./Textarea";
+import { Textarea } from "./Textarea";
 
 const getInput = () => screen.getByRole("textbox");
 

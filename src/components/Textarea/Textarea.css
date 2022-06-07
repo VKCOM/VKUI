@@ -11,29 +11,33 @@
   appearance: none;
   line-height: 20px;
   font-size: 16px;
-  color: var(--text_primary);
-  padding: 11px;
-  max-height: 196px;
+  color: var(--text_primary, var(--vkui--color_text_primary));
+  padding: 12px;
+  max-height: 204px;
   border: none;
   z-index: 2;
   position: relative;
   background: transparent;
 }
 
+.Textarea__el[cols] {
+  width: initial;
+}
+
+/* TODO. v5.0.0 Новая адаптивность */
 .Textarea--sizeY-compact .Textarea__el {
-  padding-top: 7px;
-  padding-bottom: 7px;
   font-size: 15px;
+  max-height: 196px;
 }
 
 .Textarea__el::placeholder {
-  color: var(--field_text_placeholder);
+  color: var(--field_text_placeholder, var(--vkui--color_text_secondary));
 }
 
 .Textarea__el:disabled {
-  opacity: 0.4;
+  opacity: var(--vkui--opacity_disable_accessibility);
 }
 
 .Textarea__el:disabled::placeholder {
-  color: var(--text_secondary);
+  color: var(--text_secondary, var(--vkui--color_text_secondary));
 }
