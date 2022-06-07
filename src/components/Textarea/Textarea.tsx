@@ -3,10 +3,8 @@ import { classNames } from "../../lib/classNames";
 import { FormField } from "../FormField/FormField";
 import { HasRef, HasRootRef } from "../../types";
 import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
-import { getClassName } from "../../helpers/getClassName";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
 import { useExternRef } from "../../hooks/useExternRef";
-import { usePlatform } from "../../hooks/usePlatform";
 import "./Textarea.css";
 
 export interface TextareaProps
@@ -23,7 +21,7 @@ export interface TextareaProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Textarea
  */
-const Textarea: React.FC<TextareaProps> = React.memo(
+const TextareaComponent: React.FC<TextareaProps> = React.memo(
   ({
     defaultValue = "",
     grow = true,
@@ -40,7 +38,6 @@ const Textarea: React.FC<TextareaProps> = React.memo(
     const [value, onChange] = useEnsuredControl(restProps, { defaultValue });
     const currentScrollHeight = React.useRef<number>();
     const elementRef = useExternRef(getRef);
-    const platform = usePlatform();
 
     // autosize input
     React.useEffect(() => {
@@ -60,7 +57,8 @@ const Textarea: React.FC<TextareaProps> = React.memo(
     return (
       <FormField
         vkuiClass={classNames(
-          getClassName("Textarea", platform),
+          "Textarea",
+          // TODO. v5.0.0 Новая адаптивность
           `Textarea--sizeY-${sizeY}`
         )}
         className={className}
@@ -83,4 +81,4 @@ const Textarea: React.FC<TextareaProps> = React.memo(
 );
 
 // eslint-disable-next-line import/no-default-export
-export default withAdaptivity(Textarea, { sizeY: true });
+export const Textarea = withAdaptivity(TextareaComponent, { sizeY: true });

@@ -35,6 +35,9 @@ export type {
   SegmentedControlValue,
 } from "../components/SegmentedControl/SegmentedControl";
 
+export { Textarea } from "../components/Textarea/Textarea";
+export type { TextareaProps } from "../components/Textarea/Textarea";
+
 export { Title } from "../components/Typography/Title/Title";
 export type { TitleProps } from "../components/Typography/Title/Title";
 
