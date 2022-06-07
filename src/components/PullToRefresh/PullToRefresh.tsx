@@ -9,7 +9,7 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { ScrollContextInterface, useScroll } from "../AppRoot/ScrollContext";
 import { Touch, TouchEvent, TouchProps } from "../Touch/Touch";
-import FixedLayout from "../FixedLayout/FixedLayout";
+import { FixedLayout } from "../FixedLayout/FixedLayout";
 import { PullToRefreshSpinner } from "./PullToRefreshSpinner";
 import TouchRootContext from "../Touch/TouchContext";
 import { usePrevious } from "../../hooks/usePrevious";

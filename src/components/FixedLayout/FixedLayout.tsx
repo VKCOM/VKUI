@@ -1,5 +1,5 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
+import { IOS } from "../../lib/platform";
 import { classNames } from "../../lib/classNames";
 import { HasRef, HasRootRef } from "../../types";
 import { SplitColContext } from "../SplitCol/SplitCol";
@@ -31,7 +31,7 @@ export interface FixedLayoutState {
 /**
  * @see https://vkcom.github.io/VKUI/#/FixedLayout
  */
-const FixedLayout: React.FC<FixedLayoutProps> = ({
+export const FixedLayout: React.FC<FixedLayoutProps> = ({
   children,
   style,
   vertical,
@@ -54,12 +54,10 @@ const FixedLayout: React.FC<FixedLayoutProps> = ({
       {...restProps}
       fixed
       ref={getRootRef}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
-        getClassName("FixedLayout", platform),
-        {
-          "FixedLayout--filled": filled,
-        },
+        "FixedLayout",
+        platform === IOS && "FixedLayout--ios",
+        filled && "FixedLayout--filled",
         `FixedLayout--${vertical}`
       )}
       style={{ ...style, width }}
@@ -70,6 +68,3 @@ const FixedLayout: React.FC<FixedLayoutProps> = ({
     </TooltipContainer>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default FixedLayout;
