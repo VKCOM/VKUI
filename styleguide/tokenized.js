@@ -35,6 +35,7 @@ export const tokenized = [
   "SplitCol",
   "Headline",
   "Div",
+  "FixedLayout",
   "Progress",
   "DateInput",
   "DateRangeInput",

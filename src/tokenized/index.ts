@@ -107,6 +107,9 @@ export type { HeadlineProps } from "../components/Typography/Headline/Headline";
 export { Div } from "../components/Div/Div";
 export type { DivProps } from "../components/Div/Div";
 
+export { FixedLayout } from "../components/FixedLayout/FixedLayout";
+export type { FixedLayoutProps } from "../components/FixedLayout/FixedLayout";
+
 export { Counter } from "../components/Counter/Counter";
 export type { CounterProps } from "../components/Counter/Counter";
 
