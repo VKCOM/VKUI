@@ -94,7 +94,7 @@ function prettyProps(props: any) {
       ) {
         return `${prop}=<jsx>`;
       }
-      if (prop === "style" || prop === "src") {
+      if (prop === "style" || prop === "src" || prop === "photos") {
         const _value = JSON.stringify(value);
 
         return `${prop}=${_value.replace(/"\\?data:.+?"+?/gi, "{base64}")}`;
