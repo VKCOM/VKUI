@@ -62,6 +62,9 @@ export type { PanelSpinnerProps } from "../components/PanelSpinner/PanelSpinner"
 export { Paragraph } from "../components/Typography/Paragraph/Paragraph";
 export type { ParagraphProps } from "../components/Typography/Paragraph/Paragraph";
 
+export { UsersStack } from "../components/UsersStack/UsersStack";
+export type { UsersStackProps } from "../components/UsersStack/UsersStack";
+
 export { Text } from "../components/Typography/Text/Text";
 export type { TextProps } from "../components/Typography/Text/Text";
 

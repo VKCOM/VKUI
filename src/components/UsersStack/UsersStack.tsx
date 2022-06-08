@@ -1,11 +1,9 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
-import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import { classNames } from "../../lib/classNames";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { Caption } from "../Typography/Caption/Caption";
-import { Subhead } from "../Typography/Subhead/Subhead";
 import { createMasks } from "./masks";
 import { useDOM } from "../../lib/dom";
 import "./UsersStack.css";
@@ -18,7 +16,7 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Размер аватарок
    */
-  size?: "xs" | "s" | "m";
+  size?: "xs" | "s" | "m"; // TODO: "s" | "m" | "l"
   /**
    * Вертикальный режим рекомендуется использовать с размером `m`
    */
@@ -33,16 +31,14 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * @see https://vkcom.github.io/VKUI/#/UsersStack
  */
-const UsersStack: React.FC<UsersStackProps> = (props: UsersStackProps) => {
-  const platform = usePlatform();
-  const {
-    photos = [],
-    visibleCount = 0,
-    size,
-    layout,
-    children,
-    ...restProps
-  } = props;
+export const UsersStack = ({
+  photos = [],
+  visibleCount = 3,
+  size = "s",
+  layout = "horizontal",
+  children,
+  ...restProps
+}: UsersStackProps) => {
   const { document } = useDOM();
 
   useIsomorphicLayoutEffect(() => {
@@ -50,57 +46,67 @@ const UsersStack: React.FC<UsersStackProps> = (props: UsersStackProps) => {
   }, [document]);
 
   const othersCount = Math.max(0, photos.length - visibleCount);
-  const canShowOthers = othersCount > 0 && size === "m";
+  const canShowOthers = othersCount > 0 && size !== "xs";
+  const CounterTypography = size === "m" ? Footnote : Caption;
+
+  const photoSize = {
+    xs: 16,
+    s: 24,
+    m: 32,
+  }[size];
+  const directionClip = canShowOthers ? "right" : "left";
 
   const photosShown = photos.slice(0, visibleCount);
 
   return (
     <div
       {...restProps}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
-        getClassName("UsersStack", platform),
+        "UsersStack",
         `UsersStack--size-${size}`,
         `UsersStack--l-${layout}`,
-        {
-          "UsersStack--others": canShowOthers,
-        }
+        canShowOthers && "UsersStack--others"
       )}
     >
       <div vkuiClass="UsersStack__photos" role="presentation">
-        {photosShown.map((photo, i) => (
-          <div
-            key={i}
-            vkuiClass="UsersStack__photo"
-            style={{ backgroundImage: `url(${photo})` }}
-          />
-        ))}
+        {photosShown.map((photo, i) => {
+          const direction =
+            i === 0 && !canShowOthers ? "circle" : directionClip;
+
+          const pathHref = `#users_stack_${photoSize}_${direction}`;
+          const clipPathHref = `url(#users_stack_mask_${photoSize}_${direction})`;
+
+          return (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              vkuiClass="UsersStack__photo"
+              key={i}
+              aria-hidden
+            >
+              <g clipPath={clipPathHref}>
+                <use vkuiClass="UsersStack__fill" href={pathHref} />
+                <image href={photo} width={photoSize} height={photoSize} />
+                <use href={pathHref} fill="none" stroke="rgba(0, 0, 0, 0.08)" />
+              </g>
+            </svg>
+          );
+        })}
 
         {canShowOthers && (
-          <Caption
+          <CounterTypography
+            caps
             weight="1"
+            level="2" // TODO: remove only level in #2343
             vkuiClass="UsersStack__photo UsersStack__photo--others"
-            aria-hidden="true"
+            aria-hidden
           >
             <span>+{othersCount}</span>
-          </Caption>
+          </CounterTypography>
         )}
       </div>
       {hasReactNode(children) && (
-        <Subhead Component="span" vkuiClass="UsersStack__text">
-          {children}
-        </Subhead>
+        <Footnote vkuiClass="UsersStack__text">{children}</Footnote>
       )}
     </div>
   );
 };
-
-UsersStack.defaultProps = {
-  photos: [],
-  size: "s",
-  visibleCount: 3,
-  layout: "horizontal",
-};
-
-// eslint-disable-next-line import/no-default-export
-export default React.memo(UsersStack);
