@@ -1,3 +1,6 @@
+export { Avatar } from "../components/Avatar/Avatar";
+export type { AvatarProps } from "../components/Avatar/Avatar";
+
 export { Button } from "../components/Button/Button";
 export type { ButtonProps } from "../components/Button/Button";
 
