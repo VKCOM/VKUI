@@ -95,7 +95,7 @@ ReactDOM.render(
 
 ## Сообщить о проблеме
 
-Напишите нам [issue](https://github.com/VKCOM/VKUI/issues/new/choose), если нашли баг или у вас есть предложения по улучшению библиотеки.
+Напишите нам [issue](https://github.com/VKCOM/VKUI/issues/new/choose), если нашли баг или у вас есть предложения по улучшению библиотеки. Если вы хотите задать вопрос или обсудить библиотеку, воспользуйтесь [дискуссиями](https://github.com/VKCOM/VKUI/discussions/categories/q-a).
 
 ## Contributing
 
