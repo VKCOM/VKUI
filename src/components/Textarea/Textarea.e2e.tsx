@@ -1,4 +1,4 @@
-import Textarea from "./Textarea";
+import { Textarea } from "./Textarea";
 import { screenshot, mount, describeScreenshotFuzz } from "../../testing/e2e";
 import { AppRoot } from "../AppRoot/AppRoot";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
@@ -12,12 +12,18 @@ describe("Textarea", () => {
       disabled: [undefined, true],
     },
     {
-      $adaptivity: "y",
       value: ["text", "1\n2\n3\n4\n5"],
+      $adaptivity: "y",
     },
     {
       grow: [false],
       value: ["1\n2\n3\n4\n5"],
+    },
+    {
+      cols: [4],
+      defaultValue: [
+        "Музыка\nСпорт\nФотография\nПлавание\nПрограммирование\nПутешествия\nКниги\nСериалы\nФильмы\nНастольные игры",
+      ],
     },
   ]);
   it("fits size to content", async () => {

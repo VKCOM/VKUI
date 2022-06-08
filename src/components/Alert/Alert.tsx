@@ -6,9 +6,9 @@ import { classNames } from "../../lib/classNames";
 import { ANDROID, VKCOM, IOS } from "../../lib/platform";
 import { Button, ButtonProps } from "../Button/Button";
 import { hasReactNode, stopPropagation } from "../../lib/utils";
-import { Headline } from "../Typography/Headline/Headline";
 import { Title } from "../Typography/Title/Title";
 import { Caption } from "../Typography/Caption/Caption";
+import { Text } from "../Typography/Text/Text";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { useScrollLock } from "../AppRoot/ScrollContext";
@@ -51,8 +51,6 @@ const AlertHeader: React.FC<AlertTypography> = (props) => {
   const platform = usePlatform();
 
   switch (platform) {
-    case VKCOM:
-      return <Headline vkuiClass="Alert__header" weight="2" {...props} />;
     case IOS:
       return (
         <Title vkuiClass="Alert__header" weight="1" level="3" {...props} />
@@ -74,12 +72,7 @@ const AlertText: React.FC<AlertTypography> = (props) => {
       return <Caption vkuiClass="Alert__text" level="2" {...props} />;
     default:
       return (
-        <Headline
-          Component="span"
-          vkuiClass="Alert__text"
-          weight="3"
-          {...props}
-        />
+        <Text Component="span" vkuiClass="Alert__text" weight="3" {...props} />
       );
   }
 };
@@ -182,8 +175,10 @@ export const Alert: React.FC<AlertProps> = ({
     setClosing(true);
     waitTransitionFinish(
       elementRef.current,
-      () => {
-        onClose && onClose();
+      (e?: TransitionEvent) => {
+        if (!e || e.propertyName === "opacity") {
+          onClose && onClose();
+        }
       },
       timeout
     );

@@ -1,6 +1,6 @@
 import { baselineComponent, imgOnlyAttributes } from "../../testing/utils";
 import { render, screen } from "@testing-library/react";
-import Avatar, { AvatarProps } from "./Avatar";
+import { Avatar, AvatarProps } from "./Avatar";
 import { Icon20GiftCircleFillRed } from "@vkontakte/icons";
 
 const AvatarTest = (props: AvatarProps) => (

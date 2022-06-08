@@ -3,7 +3,7 @@ import {
   Icon20GiftCircleFillRed,
   Icon28AddOutline,
 } from "@vkontakte/icons";
-import Avatar, { AvatarProps } from "./Avatar";
+import { Avatar, AvatarProps } from "./Avatar";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
 const base64Image =

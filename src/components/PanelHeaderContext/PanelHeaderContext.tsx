@@ -1,5 +1,5 @@
 import * as React from "react";
-import FixedLayout from "../FixedLayout/FixedLayout";
+import { FixedLayout } from "../FixedLayout/FixedLayout";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";

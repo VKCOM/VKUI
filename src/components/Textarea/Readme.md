@@ -10,9 +10,8 @@
       </FormItem>
       <FormItem top="Увлечения">
         <Textarea
-          cols={4}
           placeholder="Музыка, спорт"
-          defaultValue="Музыка\nСпорт\nФотография\nПлавание\nПрограммирование"
+          defaultValue="Музыка\nСпорт\nФотография\nПлавание\nПрограммирование\nПутешествия\nКниги\nСериалы\nФильмы\nНастольные игры"
         />
       </FormItem>
       <FormItem top="Прикидываемся Input">

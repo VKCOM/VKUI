@@ -1,57 +1,19 @@
 import * as React from "react";
-import { Touch, TouchProps, TouchEvent } from "../Touch/Touch";
-import TouchRootContext from "../Touch/TouchContext";
-import FixedLayout from "../FixedLayout/FixedLayout";
-import { classNames } from "../../lib/classNames";
-import { IOS, ANDROID, VKCOM } from "../../lib/platform";
-import { getClassName } from "../../helpers/getClassName";
-import PullToRefreshSpinner from "./PullToRefreshSpinner";
-import { withPlatform } from "../../hoc/withPlatform";
 import { AnyFunction, HasPlatform } from "../../types";
-import { canUseDOM, DOMProps, withDOM } from "../../lib/dom";
+import { DOMProps, useDOM } from "../../lib/dom";
+import { classNames } from "../../lib/classNames";
+import { IOS } from "../../lib/platform";
 import { runTapticImpactOccurred } from "../../lib/taptic";
-import { withContext } from "../../hoc/withContext";
-import {
-  ScrollContext,
-  ScrollContextInterface,
-} from "../AppRoot/ScrollContext";
-import "./PullToRefresh.css";
-
-export interface PullToRefreshProps extends TouchProps, HasPlatform {
-  /**
-   * Будет вызвана для обновления контента
-   */
-  onRefresh: AnyFunction;
-  /**
-   * Определяет, выполняется ли обновление. Для скрытия спиннера после получения контента необходимо передать `false`
-   */
-  isFetching?: boolean;
-  /** @ignore */
-  scroll?: ScrollContextInterface;
-}
-
-export interface PullToRefreshState {
-  watching: boolean;
-  refreshing: boolean;
-  canRefresh: boolean;
-
-  touchDown: boolean;
-
-  touchY: number;
-  spinnerY: PullToRefreshParams["start"];
-  spinnerProgress: number;
-  contentShift: number;
-}
-
-export interface PullToRefreshParams {
-  start: number;
-  max: number;
-  maxY: number;
-  refreshing: number;
-  positionMultiplier: number;
-}
-
-export type TouchEventHandler = (event: TouchEvent) => void;
+import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
+import { usePlatform } from "../../hooks/usePlatform";
+import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
+import { ScrollContextInterface, useScroll } from "../AppRoot/ScrollContext";
+import { Touch, TouchEvent, TouchProps } from "../Touch/Touch";
+import { FixedLayout } from "../FixedLayout/FixedLayout";
+import { PullToRefreshSpinner } from "./PullToRefreshSpinner";
+import TouchRootContext from "../Touch/TouchContext";
+import { usePrevious } from "../../hooks/usePrevious";
+import { useTimeout } from "../../hooks/useTimeout";
 
 function cancelEvent(event: any) {
   if (!event) {
@@ -69,155 +31,186 @@ function cancelEvent(event: any) {
   return false;
 }
 
+export interface PullToRefreshProps extends DOMProps, TouchProps, HasPlatform {
+  /**
+   * Будет вызвана для обновления контента (прим.: функция должна быть мемоизированным коллбэком)
+   */
+  onRefresh: AnyFunction;
+  /**
+   * Определяет, выполняется ли обновление. Для скрытия спиннера после получения контента необходимо передать `false`
+   */
+  isFetching?: boolean;
+  /** @ignore */
+  scroll?: ScrollContextInterface;
+  children?: React.ReactNode;
+}
+
+const TOUCH_MOVE_EVENT_PARAMS = {
+  cancelable: true,
+  passive: false,
+};
+
 /**
  * @see https://vkcom.github.io/VKUI/#/PullToRefresh
  */
-class PullToRefresh extends React.PureComponent<
-  PullToRefreshProps & DOMProps,
-  PullToRefreshState
-> {
-  constructor(props: PullToRefreshProps) {
-    super(props);
+export const PullToRefresh = ({
+  children,
+  isFetching,
+  onRefresh,
+  ...restProps
+}: PullToRefreshProps) => {
+  const platform = usePlatform();
+  const scroll = useScroll();
+  const { document } = useDOM();
+  const prevIsFetching = usePrevious(isFetching);
 
-    this.params = {
-      start: props.platform === ANDROID || props.platform === VKCOM ? -45 : -10,
-      max: props.platform === ANDROID || props.platform === VKCOM ? 80 : 50,
-      maxY: props.platform === ANDROID || props.platform === VKCOM ? 80 : 400,
-      refreshing:
-        props.platform === ANDROID || props.platform === VKCOM ? 50 : 36,
+  const initParams = React.useMemo(
+    () => ({
+      start: platform === IOS ? -10 : -45,
+      max: platform === IOS ? 50 : 80,
+      maxY: platform === IOS ? 400 : 80,
+      refreshing: platform === IOS ? 36 : 50,
+      positionMultiplier: platform === IOS ? 0.21 : 1,
+    }),
+    [platform]
+  );
 
-      positionMultiplier:
-        props.platform === ANDROID || props.platform === VKCOM ? 1 : 0.21,
-    };
+  const [spinnerY, setSpinnerY] = React.useState(initParams.start);
+  const [watching, setWatching] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [canRefresh, setCanRefresh] = React.useState(false);
+  const [touchDown, setTouchDown] = React.useState(false);
+  const prevTouchDown = usePrevious(touchDown);
 
-    this.state = {
-      watching: false,
-      refreshing: false,
-      canRefresh: false,
+  const touchY = React.useRef(0);
+  const [contentShift, setContentShift] = React.useState(0);
+  const [spinnerProgress, setSpinnerProgress] = React.useState(0);
 
-      touchDown: false,
-
-      touchY: 0,
-      spinnerY: this.params.start,
-      spinnerProgress: 0,
-      contentShift: 0,
-    };
-
-    this.contentRef = React.createRef();
-  }
-
-  params: PullToRefreshParams;
-  contentRef: React.RefObject<HTMLDivElement>;
-  waitFetchingTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
-
-  get document() {
-    return this.props.document;
-  }
-
-  componentDidMount() {
-    if (canUseDOM) {
-      this.document!.addEventListener("touchmove", this.onWindowTouchMove, {
-        // @ts-expect-error
-        cancelable: true,
-        passive: false,
-      });
-    }
-  }
-
-  componentWillUnmount() {
-    // Здесь нужен последний аргумент с такими же параметрами, потому что
-    // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
-    // https://github.com/VKCOM/VKUI/issues/444
-    if (canUseDOM) {
-      this.document!.removeEventListener("touchmove", this.onWindowTouchMove, {
-        // @ts-expect-error
-        cancelable: true,
-        passive: false,
-      });
-    }
-    if (this.waitFetchingTimeout) {
-      clearTimeout(this.waitFetchingTimeout);
-    }
-  }
-
-  componentDidUpdate(
-    prevProps: PullToRefreshProps,
-    prevState: PullToRefreshState
-  ) {
-    if (prevProps.isFetching && !this.props.isFetching) {
-      this.onRefreshingFinish();
-    }
-    if (
-      !prevProps.isFetching &&
-      this.props.isFetching &&
-      this.waitFetchingTimeout
-    ) {
-      clearTimeout(this.waitFetchingTimeout);
-    }
-
-    if (prevState.touchDown && !this.state.touchDown) {
-      const { refreshing, canRefresh } = this.state;
-      if (!refreshing && canRefresh) {
-        this.runRefreshing();
-      } else if (refreshing && !this.props.isFetching) {
-        // only iOS can start refresh before gesture end
-        this.resetRefreshingState();
-      } else {
-        // refreshing && isFetching: refresh in progress
-        // OR !refreshing && !canRefresh: pull was not strong enough
-        this.setState({
-          spinnerY: refreshing ? this.params.refreshing : this.params.start,
-          spinnerProgress: 0,
-          contentShift: 0,
-        });
-      }
-    }
-  }
-
-  onTouchStart: TouchEventHandler = (e: TouchEvent) => {
-    if (this.state.refreshing) {
-      cancelEvent(e);
-    }
-    this.setState({ touchDown: true });
-  };
-
-  onWindowTouchMove: EventListener = (event: Event) => {
-    if (this.state.refreshing) {
+  const onWindowTouchMove = (event: Event) => {
+    if (refreshing) {
       event.preventDefault();
       event.stopPropagation();
     }
   };
 
-  onTouchMove: TouchEventHandler = (e: TouchEvent) => {
-    const { isY, shiftY } = e;
-    const { start, max } = this.params;
-    const pageYOffset = this.props.scroll?.getScroll().y;
+  useGlobalEventListener(
+    document,
+    "touchmove",
+    onWindowTouchMove,
+    TOUCH_MOVE_EVENT_PARAMS
+  );
 
-    const { refreshing, watching, touchDown } = this.state;
+  const resetRefreshingState = React.useCallback(() => {
+    setWatching(false);
+    setCanRefresh(false);
+    setRefreshing(false);
+    setSpinnerY(initParams.start);
+    setSpinnerProgress(0);
+    setContentShift(0);
+  }, [initParams]);
+
+  const onRefreshingFinish = React.useCallback(() => {
+    if (!touchDown) {
+      resetRefreshingState();
+    }
+  }, [touchDown, resetRefreshingState]);
+
+  const { set: setWaitFetchingTimeout, clear: clearWaitFetchingTimeout } =
+    useTimeout(onRefreshingFinish, 1000);
+
+  useIsomorphicLayoutEffect(() => {
+    if (prevIsFetching !== undefined && prevIsFetching && !isFetching) {
+      onRefreshingFinish();
+    }
+  }, [prevIsFetching, isFetching, onRefreshingFinish]);
+
+  useIsomorphicLayoutEffect(() => {
+    if (prevIsFetching !== undefined && !prevIsFetching && isFetching) {
+      clearWaitFetchingTimeout();
+    }
+  }, [isFetching, prevIsFetching, clearWaitFetchingTimeout]);
+
+  const runRefreshing = React.useCallback(() => {
+    if (!refreshing && onRefresh) {
+      // cleanup if the consumer does not start fetching in 1s
+      setWaitFetchingTimeout();
+
+      setRefreshing(true);
+      setSpinnerY((prevSpinnerY) =>
+        platform === IOS ? prevSpinnerY : initParams.refreshing
+      );
+
+      onRefresh();
+      runTapticImpactOccurred("light");
+    }
+  }, [
+    refreshing,
+    onRefresh,
+    setWaitFetchingTimeout,
+    platform,
+    initParams.refreshing,
+  ]);
+
+  useIsomorphicLayoutEffect(() => {
+    if (prevTouchDown !== undefined && prevTouchDown && !touchDown) {
+      if (!refreshing && canRefresh) {
+        runRefreshing();
+      } else if (refreshing && !isFetching) {
+        // only iOS can start refresh before gesture end
+        resetRefreshingState();
+      } else {
+        // refreshing && isFetching: refresh in progress
+        // OR !refreshing && !canRefresh: pull was not strong enough
+        setSpinnerY(refreshing ? initParams.refreshing : initParams.start);
+        setSpinnerProgress(0);
+        setContentShift(0);
+      }
+    }
+  }, [
+    initParams,
+    prevIsFetching,
+    isFetching,
+    onRefreshingFinish,
+    prevTouchDown,
+    touchDown,
+    refreshing,
+    canRefresh,
+    runRefreshing,
+  ]);
+
+  const onTouchStart = (e: TouchEvent) => {
+    if (refreshing) {
+      cancelEvent(e);
+    }
+    setTouchDown(true);
+  };
+
+  const onTouchMove = (e: TouchEvent) => {
+    const { isY, shiftY } = e;
+    const { start, max } = initParams;
+    const pageYOffset = scroll?.getScroll().y;
 
     if (watching && touchDown) {
       cancelEvent(e);
 
-      const { positionMultiplier } = this.params;
+      const { positionMultiplier, maxY } = initParams;
 
-      const shift = Math.max(0, shiftY - this.state.touchY);
+      const shift = Math.max(0, shiftY - touchY.current);
 
       const currentY = Math.max(
         start,
-        Math.min(this.params.maxY, start + shift * positionMultiplier)
+        Math.min(maxY, start + shift * positionMultiplier)
       );
       const progress =
         currentY > -10 ? Math.abs((currentY + 10) / max) * 80 : 0;
 
-      this.setState({
-        spinnerY: currentY,
-        spinnerProgress: Math.min(80, Math.max(0, progress)),
-        canRefresh: progress > 80,
-        contentShift: (currentY + 10) * 2.3,
-      });
+      setSpinnerY(currentY);
+      setSpinnerProgress(Math.min(80, Math.max(0, progress)));
+      setCanRefresh(progress > 80);
+      setContentShift((currentY + 10) * 2.3);
 
-      if (progress > 85 && !refreshing && this.props.platform === IOS) {
-        this.runRefreshing();
+      if (progress > 85 && !refreshing && platform === IOS) {
+        runRefreshing();
       }
     } else if (
       isY &&
@@ -228,130 +221,63 @@ class PullToRefresh extends React.PureComponent<
     ) {
       cancelEvent(e);
 
-      this.setState({
-        watching: true,
-        touchY: shiftY,
-        spinnerY: start,
-        spinnerProgress: 0,
-      });
+      touchY.current = shiftY;
+      setWatching(true);
+      setSpinnerY(start);
+      setSpinnerProgress(0);
     }
   };
 
-  onTouchEnd = () => {
-    this.setState({
-      watching: false,
-      touchDown: false,
-    });
+  const onTouchEnd = () => {
+    setWatching(false);
+    setTouchDown(false);
   };
 
-  runRefreshing() {
-    if (!this.state.refreshing && this.props.onRefresh) {
-      // cleanup if the consumer does not start fetching in 1s
-      this.waitFetchingTimeout = setTimeout(this.onRefreshingFinish, 1000);
-      this.setState({
-        refreshing: true,
-        spinnerY:
-          this.props.platform === ANDROID || this.props.platform === VKCOM
-            ? this.params.refreshing
-            : this.state.spinnerY,
-      });
+  const spinnerTransform = `translate3d(0, ${spinnerY}px, 0)`;
+  let contentTransform = "";
 
-      this.props.onRefresh();
-      runTapticImpactOccurred("light");
-    }
+  if (platform === IOS && refreshing && !touchDown) {
+    contentTransform = "translate3d(0, 100px, 0)";
+  } else if (platform === IOS && (contentShift || refreshing)) {
+    contentTransform = `translate3d(0, ${contentShift}px, 0)`;
   }
 
-  onRefreshingFinish: VoidFunction = () => {
-    if (!this.state.touchDown) {
-      this.resetRefreshingState();
-    }
-  };
-
-  resetRefreshingState() {
-    this.setState({
-      watching: false,
-      canRefresh: false,
-      refreshing: false,
-      spinnerY: this.params.start,
-      spinnerProgress: 0,
-      contentShift: 0,
-    });
-  }
-
-  render() {
-    const {
-      children,
-      onRefresh,
-      isFetching,
-      platform,
-      window,
-      document,
-      scroll,
-      ...restProps
-    } = this.props;
-    const {
-      watching,
-      refreshing,
-      spinnerY,
-      spinnerProgress,
-      canRefresh,
-      touchDown,
-      contentShift,
-    } = this.state;
-
-    const spinnerTransform = `translate3d(0, ${spinnerY}px, 0)`;
-    let contentTransform = "";
-
-    if (platform === IOS && refreshing && !touchDown) {
-      contentTransform = "translate3d(0, 100px, 0)";
-    } else if (platform === IOS && (contentShift || refreshing)) {
-      contentTransform = `translate3d(0, ${contentShift}px, 0)`;
-    }
-
-    return (
-      <TouchRootContext.Provider value={true}>
-        <Touch
-          {...restProps}
-          onStart={this.onTouchStart}
-          onMove={this.onTouchMove}
-          onEnd={this.onTouchEnd}
-          vkuiClass={classNames(
-            getClassName("PullToRefresh", platform),
-            watching && "PullToRefresh--watching",
-            refreshing && "PullToRefresh--refreshing"
-          )}
-        >
-          <FixedLayout vkuiClass="PullToRefresh__controls">
-            <PullToRefreshSpinner
-              style={{
-                transform: spinnerTransform,
-                WebkitTransform: spinnerTransform,
-                opacity: watching || refreshing || canRefresh ? 1 : 0,
-              }}
-              on={refreshing}
-              progress={refreshing ? undefined : spinnerProgress}
-            />
-          </FixedLayout>
-
-          <div
-            vkuiClass="PullToRefresh__content"
-            ref={this.contentRef}
+  return (
+    <TouchRootContext.Provider value={true}>
+      <Touch
+        {...restProps}
+        onStart={onTouchStart}
+        onMove={onTouchMove}
+        onEnd={onTouchEnd}
+        vkuiClass={classNames(
+          "PullToRefresh",
+          platform === IOS && "PullToRefresh--ios",
+          watching && "PullToRefresh--watching",
+          refreshing && "PullToRefresh--refreshing"
+        )}
+      >
+        <FixedLayout vkuiClass="PullToRefresh__controls">
+          <PullToRefreshSpinner
             style={{
-              transform: contentTransform,
-              WebkitTransform: contentTransform,
+              transform: spinnerTransform,
+              WebkitTransform: spinnerTransform,
+              opacity: watching || refreshing || canRefresh ? 1 : 0,
             }}
-          >
-            {children}
-          </div>
-        </Touch>
-      </TouchRootContext.Provider>
-    );
-  }
-}
+            on={refreshing}
+            progress={refreshing ? undefined : spinnerProgress}
+          />
+        </FixedLayout>
 
-// eslint-disable-next-line import/no-default-export
-export default withContext(
-  withPlatform(withDOM<PullToRefreshProps>(PullToRefresh)),
-  ScrollContext,
-  "scroll"
-);
+        <div
+          vkuiClass="PullToRefresh__content"
+          style={{
+            transform: contentTransform,
+            WebkitTransform: contentTransform,
+          }}
+        >
+          {children}
+        </div>
+      </Touch>
+    </TouchRootContext.Provider>
+  );
+};

@@ -10,62 +10,43 @@
 > В компонент нельзя помещать любой контент с фиксированным позиционированием. PullToRefresh подходит прежде всего, например, для каких-либо простых списков.
 
 ```jsx
-class Example extends React.Component {
-  constructor() {
-    let items = [];
+const initUsers = getRandomUsers(10);
 
-    for (let i = 0; i < 9; i++) {
-      items.push(this.getNewItem());
-    }
+const Example = () => {
+  const [users, setUsers] = React.useState(initUsers);
+  const [fetching, setFetching] = React.useState(false);
 
-    this.state = {
-      items: items,
-      fetching: false,
-    };
+  const onRefresh = React.useCallback(() => {
+    setFetching(true);
 
-    this.onRefresh = () => {
-      this.setState({ fetching: true });
+    setTimeout(() => {
+      setFetching(false);
+      setUsers((prevUsers) => [getRandomUser(), ...prevUsers]);
+    }, getRandomInt(600, 2000));
+  }, []);
 
-      setTimeout(() => {
-        this.setState({
-          items: [this.getNewItem(), ...this.state.items],
-          fetching: false,
-        });
-      }, getRandomInt(600, 2000));
-    };
-  }
+  return (
+    <View activePanel="users">
+      <Panel id="users">
+        <PanelHeader>Пользователи</PanelHeader>
 
-  getNewItem() {
-    return getRandomUser();
-  }
-
-  render() {
-    return (
-      <View activePanel="users">
-        <Panel id="users">
-          <PanelHeader>Пользователи</PanelHeader>
-
-          <PullToRefresh
-            onRefresh={this.onRefresh}
-            isFetching={this.state.fetching}
-          >
-            <Group>
-              <List>
-                {this.state.items.map(({ id, name, photo_100 }, i) => {
-                  return (
-                    <Cell key={i} before={<Avatar src={photo_100} />}>
-                      {name}
-                    </Cell>
-                  );
-                })}
-              </List>
-            </Group>
-          </PullToRefresh>
-        </Panel>
-      </View>
-    );
-  }
-}
+        <PullToRefresh onRefresh={onRefresh} isFetching={fetching}>
+          <Group>
+            <List>
+              {users.map(({ id, name, photo_100 }, i) => {
+                return (
+                  <Cell key={i} before={<Avatar src={photo_100} />}>
+                    {name}
+                  </Cell>
+                );
+              })}
+            </List>
+          </Group>
+        </PullToRefresh>
+      </Panel>
+    </View>
+  );
+};
 
 <Example />;
 ```

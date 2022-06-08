@@ -53,7 +53,6 @@
             getAvatarUrl("user_xyz"),
           ]}
           size="m"
-          count={3}
           layout="vertical"
         >
           Алексей, Илья, Михаил

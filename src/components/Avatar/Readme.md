@@ -1,15 +1,6 @@
 Надстройка над `<img />`. Компонент принимает все валидные для этого элемента свойства.
 
 ```jsx
-import {
-  Icon20GiftCircleFillRed,
-  Icon12Circle,
-  Icon12OnlineMobile,
-  Icon20GameCircleFillBlue,
-  Icon16StarCircleFillBlue,
-  Icon28AddOutline,
-} from "@vkontakte/icons";
-
 <View activePanel="avatar">
   <Panel id="avatar">
     <PanelHeader>Avatar</PanelHeader>
@@ -53,36 +44,18 @@ import {
       <Header mode="secondary">Placeholder</Header>
       <SimpleCell
         before={
-          <Avatar
-            style={{ background: "var(--accent)" }}
-            size={28}
-            shadow={false}
-          >
-            <Icon16Add fill="var(--white)" />
+          <Avatar size={48}>
+            <Icon28Users />
           </Avatar>
         }
         description="Только от друзей друзей"
       >
         Заявки в друзья
       </SimpleCell>
-      <SimpleCell
-        before={
-          <Avatar
-            style={{ background: "var(--destructive)" }}
-            size={28}
-            shadow={false}
-          >
-            <Icon16Like fill="var(--white)" />
-          </Avatar>
-        }
-        description="Только важные"
-      >
-        Отметки «Мне нравится»
-      </SimpleCell>
     </Group>
     <Group description="Дефолтный стиль аватарки. Используется для юзеров, групп.">
       <Header mode="secondary">Дефолтный тип</Header>
-      <SimpleCell before={<Avatar src={getAvatarUrl("user_evg")} />}>
+      <SimpleCell before={<Avatar size={32} src={getAvatarUrl("user_evg")} />}>
         Евгений Авсиевич
       </SimpleCell>
       <SimpleCell before={<Avatar src={getAvatarUrl("user_id34")} />}>
@@ -259,157 +232,79 @@ import {
         style={{ display: "flex", padding: 12, gap: 8, flexFlow: "row wrap" }}
       >
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={16}
-              height={16}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={16} height={16} />}
           src={getAvatarUrl("user_evg")}
           badge={<Icon20GiftCircleFillRed width={12} height={12} />}
           size={24}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={18}
-              height={18}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={18} height={18} />}
           src={getAvatarUrl("user_evg")}
           badge={<Icon20GiftCircleFillRed width={12} height={12} />}
           size={28}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={20}
-              height={20}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={20} height={20} />}
           src={getAvatarUrl("user_evg")}
           badge={<Icon20GiftCircleFillRed width={12} height={12} />}
           size={32}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={20}
-              height={20}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={20} height={20} />}
           src={getAvatarUrl("user_evg")}
           badge={<Icon20GiftCircleFillRed width={16} height={16} />}
           size={36}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={20}
-              height={20}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={20} height={20} />}
           src={getAvatarUrl("user_evg")}
           badge={<Icon20GiftCircleFillRed width={16} height={16} />}
           size={40}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={24}
-              height={24}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={24} height={24} />}
           src={getAvatarUrl("user_evg")}
           badge={<Icon20GiftCircleFillRed width={16} height={16} />}
           size={44}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={24}
-              height={24}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={24} height={24} />}
           src={getAvatarUrl("user_evg")}
           badge={<Icon20GiftCircleFillRed width={16} height={16} />}
           size={48}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={28}
-              height={28}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={28} height={28} />}
           src={getAvatarUrl("user_evg")}
           badge={<Icon20GiftCircleFillRed />}
           size={56}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={28}
-              height={28}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={28} height={28} />}
           src={getAvatarUrl("user_evg")}
           badge={<Icon20GiftCircleFillRed />}
           size={64}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={28}
-              height={28}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={28} height={28} />}
           src={getAvatarUrl("user_evg")}
           badge={<Icon20GiftCircleFillRed width={24} height={24} />}
           size={72}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={28}
-              height={28}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={28} height={28} />}
           src={getAvatarUrl("user_evg")}
           badge={<Icon20GiftCircleFillRed width={24} height={24} />}
           size={80}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={28}
-              height={28}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={28} height={28} />}
           src={getAvatarUrl("user_evg")}
           badge={<Icon20GiftCircleFillRed width={24} height={24} />}
           size={88}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={32}
-              height={32}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={32} height={32} />}
           src={getAvatarUrl("user_evg")}
           badge={<Icon20GiftCircleFillRed width={24} height={24} />}
           size={96}
@@ -420,104 +315,56 @@ import {
         style={{ display: "flex", padding: 12, gap: 8, flexFlow: "row wrap" }}
       >
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={16}
-              height={16}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={16} height={16} />}
           overlayAction="always"
           src={getAvatarUrl("user_id34")}
           badge={<Icon20GiftCircleFillRed width={12} height={12} />}
           size={24}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={18}
-              height={18}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={18} height={18} />}
           overlayAction="always"
           src={getAvatarUrl("user_id34")}
           badge={<Icon20GiftCircleFillRed width={12} height={12} />}
           size={28}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={20}
-              height={20}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={20} height={20} />}
           overlayAction="always"
           src={getAvatarUrl("user_id34")}
           badge={<Icon20GiftCircleFillRed width={12} height={12} />}
           size={32}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={20}
-              height={20}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={20} height={20} />}
           overlayAction="always"
           src={getAvatarUrl("user_id34")}
           badge={<Icon20GiftCircleFillRed width={16} height={16} />}
           size={36}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={20}
-              height={20}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={20} height={20} />}
           overlayAction="always"
           src={getAvatarUrl("user_id34")}
           badge={<Icon20GiftCircleFillRed width={16} height={16} />}
           size={40}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={24}
-              height={24}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={24} height={24} />}
           overlayAction="always"
           src={getAvatarUrl("user_id34")}
           badge={<Icon20GiftCircleFillRed width={16} height={16} />}
           size={44}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={24}
-              height={24}
-              style={{ color: "#3F8AE0" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={24} height={24} />}
           overlayAction="always"
           src={getAvatarUrl("user_id34")}
           badge={<Icon20GiftCircleFillRed width={16} height={16} />}
           size={48}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={28}
-              height={28}
-              style={{ color: "#FFF" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={28} height={28} />}
           overlayMode="dark"
           overlayAction="always"
           src={getAvatarUrl("user_id34")}
@@ -525,13 +372,7 @@ import {
           size={56}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={28}
-              height={28}
-              style={{ color: "#FFF" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={28} height={28} />}
           overlayMode="dark"
           overlayAction="always"
           src={getAvatarUrl("user_id34")}
@@ -539,13 +380,7 @@ import {
           size={64}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={28}
-              height={28}
-              style={{ color: "#FFF" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={28} height={28} />}
           overlayMode="dark"
           overlayAction="always"
           src={getAvatarUrl("user_id34")}
@@ -553,13 +388,7 @@ import {
           size={72}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={28}
-              height={28}
-              style={{ color: "#FFF" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={28} height={28} />}
           overlayMode="dark"
           overlayAction="always"
           src={getAvatarUrl("user_id34")}
@@ -567,13 +396,7 @@ import {
           size={80}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={28}
-              height={28}
-              style={{ color: "#FFF" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={28} height={28} />}
           overlayMode="dark"
           overlayAction="always"
           src={getAvatarUrl("user_id34")}
@@ -581,13 +404,7 @@ import {
           size={88}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={32}
-              height={32}
-              style={{ color: "#FFF" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={32} height={32} />}
           overlayMode="dark"
           overlayAction="always"
           src={getAvatarUrl("user_id34")}
@@ -600,13 +417,7 @@ import {
         style={{ display: "flex", padding: 12, gap: 8, flexFlow: "row wrap" }}
       >
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={16}
-              height={16}
-              style={{ color: "#FFF" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={16} height={16} />}
           overlayMode="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
@@ -614,13 +425,7 @@ import {
           size={24}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={18}
-              height={18}
-              style={{ color: "#FFF" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={18} height={18} />}
           overlayMode="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
@@ -628,13 +433,7 @@ import {
           size={28}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={20}
-              height={20}
-              style={{ color: "#FFF" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={20} height={20} />}
           overlayMode="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
@@ -642,13 +441,7 @@ import {
           size={32}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={20}
-              height={20}
-              style={{ color: "#FFF" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={20} height={20} />}
           overlayMode="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
@@ -656,13 +449,7 @@ import {
           size={36}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={20}
-              height={20}
-              style={{ color: "#FFF" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={20} height={20} />}
           overlayMode="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
@@ -670,13 +457,7 @@ import {
           size={40}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={24}
-              height={24}
-              style={{ color: "#FFF" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={24} height={24} />}
           overlayMode="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
@@ -684,13 +465,7 @@ import {
           size={44}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={24}
-              height={24}
-              style={{ color: "#FFF" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={24} height={24} />}
           overlayMode="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
@@ -698,13 +473,7 @@ import {
           size={48}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={28}
-              height={28}
-              style={{ color: "#FFF" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={28} height={28} />}
           overlayMode="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
@@ -712,13 +481,7 @@ import {
           size={56}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={28}
-              height={28}
-              style={{ color: "#FFF" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={28} height={28} />}
           overlayMode="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
@@ -726,13 +489,7 @@ import {
           size={64}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={28}
-              height={28}
-              style={{ color: "#FFF" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={28} height={28} />}
           overlayMode="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
@@ -740,13 +497,7 @@ import {
           size={72}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={28}
-              height={28}
-              style={{ color: "#FFF" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={28} height={28} />}
           overlayMode="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
@@ -754,13 +505,7 @@ import {
           size={80}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={28}
-              height={28}
-              style={{ color: "#FFF" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={28} height={28} />}
           overlayMode="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
@@ -768,13 +513,7 @@ import {
           size={88}
         />
         <Avatar
-          overlayIcon={
-            <Icon28AddOutline
-              width={32}
-              height={32}
-              style={{ color: "#FFF" }}
-            />
-          }
+          overlayIcon={<Icon28AddOutline width={32} height={32} />}
           overlayMode="dark"
           overlayAction="hover"
           src={getAvatarUrl("user_illarionov")}
@@ -834,5 +573,5 @@ import {
       </SimpleCell>
     </Group>
   </Panel>
-</View>;
+</View>
 ```

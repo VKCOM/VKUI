@@ -1,3 +1,6 @@
+export { Avatar } from "../components/Avatar/Avatar";
+export type { AvatarProps } from "../components/Avatar/Avatar";
+
 export { Button } from "../components/Button/Button";
 export type { ButtonProps } from "../components/Button/Button";
 
@@ -19,6 +22,9 @@ export type { ButtonGroupProps } from "../components/ButtonGroup/ButtonGroup";
 export { Switch } from "../components/Switch/Switch";
 export type { SwitchProps } from "../components/Switch/Switch";
 
+export { Footnote } from "../components/Typography/Footnote/Footnote";
+export type { FootnoteProps } from "../components/Typography/Footnote/Footnote";
+
 export { Radio } from "../components/Radio/Radio";
 export type { RadioProps } from "../components/Radio/Radio";
 
@@ -31,6 +37,9 @@ export type {
   SegmentedControlOptionInterface,
   SegmentedControlValue,
 } from "../components/SegmentedControl/SegmentedControl";
+
+export { Textarea } from "../components/Textarea/Textarea";
+export type { TextareaProps } from "../components/Textarea/Textarea";
 
 export { Title } from "../components/Typography/Title/Title";
 export type { TitleProps } from "../components/Typography/Title/Title";
@@ -56,10 +65,13 @@ export type { PanelSpinnerProps } from "../components/PanelSpinner/PanelSpinner"
 export { Paragraph } from "../components/Typography/Paragraph/Paragraph";
 export type { ParagraphProps } from "../components/Typography/Paragraph/Paragraph";
 
+export { UsersStack } from "../components/UsersStack/UsersStack";
+export type { UsersStackProps } from "../components/UsersStack/UsersStack";
+
 export { Text } from "../components/Typography/Text/Text";
 export type { TextProps } from "../components/Typography/Text/Text";
 
-export { default as PullToRefresh } from "../components/PullToRefresh/PullToRefresh";
+export { PullToRefresh } from "../components/PullToRefresh/PullToRefresh";
 export type { PullToRefreshProps } from "../components/PullToRefresh/PullToRefresh";
 
 export { Input } from "../components/Input/Input";
@@ -102,6 +114,12 @@ export type { HeadlineProps } from "../components/Typography/Headline/Headline";
 
 export { Div } from "../components/Div/Div";
 export type { DivProps } from "../components/Div/Div";
+
+export { FixedLayout } from "../components/FixedLayout/FixedLayout";
+export type { FixedLayoutProps } from "../components/FixedLayout/FixedLayout";
+
+export { Counter } from "../components/Counter/Counter";
+export type { CounterProps } from "../components/Counter/Counter";
 
 export { Progress } from "../components/Progress/Progress";
 export type { ProgressProps } from "../components/Progress/Progress";

@@ -22,6 +22,7 @@ module.exports = (ctx) => {
     cssCustomProperties({
       importFrom: cssCustomPropertiesPaths,
       preserve: true,
+      disableDeprecationNotice: true,
     }),
     // postcss-custom-properties only works with :root
     scopeRoot({

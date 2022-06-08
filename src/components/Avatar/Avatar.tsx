@@ -1,8 +1,6 @@
 import * as React from "react";
 import { Icon12Circle, Icon12OnlineMobile } from "@vkontakte/icons";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
-import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import Tappable from "../Tappable/Tappable";
 import { HasRef, HasRootRef } from "../../types";
@@ -33,7 +31,7 @@ export const AVATAR_DEFAULT_SHADOW = true;
 /**
  * @see https://vkcom.github.io/VKUI/#/Avatar
  */
-const Avatar: React.FC<AvatarProps> = ({
+export const Avatar: React.FC<AvatarProps> = ({
   alt,
   crossOrigin,
   decoding,
@@ -61,7 +59,6 @@ const Avatar: React.FC<AvatarProps> = ({
   onClick,
   ...restProps
 }: AvatarProps) => {
-  const platform = usePlatform();
   const { hasMouse } = useAdaptivity();
   const [failedImage, setFailedImage] = React.useState(false);
 
@@ -101,7 +98,7 @@ const Avatar: React.FC<AvatarProps> = ({
       {...restProps}
       // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
-        getClassName("Avatar", platform),
+        "Avatar",
         `Avatar--type-${mode}`,
         `Avatar--sz-${size}`,
         {
@@ -184,6 +181,3 @@ const Avatar: React.FC<AvatarProps> = ({
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default Avatar;

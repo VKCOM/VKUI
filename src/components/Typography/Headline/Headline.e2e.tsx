@@ -21,6 +21,7 @@ describe("Headline", () => {
       {
         level: [undefined, "1", "2"],
         weight: [undefined, "1", "2", "3"],
+        $adaptivity: "y",
       },
     ]
   );

@@ -3,7 +3,7 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { getClassName } from "../../helpers/getClassName";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { classNames } from "../../lib/classNames";
-import FixedLayout from "../FixedLayout/FixedLayout";
+import { FixedLayout } from "../FixedLayout/FixedLayout";
 import { Separator } from "../Separator/Separator";
 import { Platform, VKCOM } from "../../lib/platform";
 import { HasRef, HasRootRef } from "../../types";
