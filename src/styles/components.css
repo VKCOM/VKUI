@@ -87,7 +87,7 @@
 @import "../components/Avatar/Avatar.css";
 @import "../components/InitialsAvatar/InitialsAvatar.css";
 @import "../components/GridAvatar/GridAvatar.css";
-@import "../components/Gallery/Gallery.css";
+@import "../components/BaseGallery/BaseGallery.css";
 @import "../components/Progress/Progress.css";
 @import "../components/Search/Search.css";
 @import "../components/Tabs/Tabs.css";
