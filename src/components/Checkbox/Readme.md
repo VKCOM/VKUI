@@ -18,3 +18,22 @@
   </Panel>
 </View>
 ```
+
+```jsx { "props": { "layout": false, "iframe": false } }
+<div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    padding: "24px 16px",
+    background: "white",
+    gap: 20,
+  }}
+>
+  <Checkbox defaultChecked />
+  <Checkbox />
+  <Checkbox defaultChecked />
+  <Checkbox indeterminate />
+  <Checkbox defaultIndeterminate />
+</div>
+```
