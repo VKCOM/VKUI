@@ -86,6 +86,9 @@ export type { FormFieldProps } from "../components/FormField/FormField";
 export { Select } from "../components/Select/Select";
 export type { SelectProps } from "../components/Select/Select";
 
+export { View } from "../components/View/View";
+export type { ViewProps } from "../components/View/View";
+
 export { Spinner } from "../components/Spinner/Spinner";
 export type { SpinnerProps } from "../components/Spinner/Spinner";
 
