@@ -1,6 +1,5 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
 import { IOS } from "../../lib/platform";
 import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
 import { SplitColContext } from "../SplitCol/SplitCol";
@@ -46,7 +45,7 @@ const warn = warnOnce("Root");
 /**
  * @see https://vkcom.github.io/VKUI/#/Root
  */
-const Root: React.FC<RootProps> = ({
+export const Root: React.FC<RootProps> = ({
   popout = null,
   modal,
   children,
@@ -152,10 +151,11 @@ const Root: React.FC<RootProps> = ({
   return (
     <div
       {...restProps}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames(getClassName("Root", platform), {
-        "Root--transition": transition,
-      })}
+      vkuiClass={classNames(
+        "Root",
+        platform === IOS && "Root--ios",
+        transition && "Root--transition"
+      )}
     >
       {views.map((view) => {
         const viewId = getNavId(view.props, warn);
@@ -172,18 +172,26 @@ const Root: React.FC<RootProps> = ({
             key={viewId}
             ref={(e) => viewId && (viewNodes[viewId] = e)}
             onAnimationEnd={isTransitionTarget ? onAnimationEnd : undefined}
-            // eslint-disable-next-line vkui/no-object-expression-in-arguments
-            vkuiClass={classNames("Root__view", {
-              "Root__view--hide-back":
-                transition && viewId === prevView && isBack,
-              "Root__view--hide-forward":
-                transition && viewId === prevView && !isBack,
-              "Root__view--show-back":
-                transition && viewId === activeView && isBack,
-              "Root__view--show-forward":
-                transition && viewId === activeView && !isBack,
-              "Root__view--active": !transition && viewId === activeView,
-            })}
+            vkuiClass={classNames(
+              "Root__view",
+              transition &&
+                viewId === prevView &&
+                isBack &&
+                "Root__view--hide-back",
+              transition &&
+                viewId === prevView &&
+                !isBack &&
+                "Root__view--hide-forward",
+              transition &&
+                viewId === activeView &&
+                isBack &&
+                "Root__view--show-back",
+              transition &&
+                viewId === activeView &&
+                !isBack &&
+                "Root__view--show-forward",
+              !transition && viewId === activeView && "Root__view--active"
+            )}
           >
             <NavTransitionProvider
               entering={transition && viewId === activeView}
@@ -209,6 +217,3 @@ const Root: React.FC<RootProps> = ({
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default Root;

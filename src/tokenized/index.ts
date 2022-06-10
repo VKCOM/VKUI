@@ -113,6 +113,9 @@ export type { ChipsSelectProps } from "../components/ChipsSelect/ChipsSelect";
 export { SplitCol } from "../components/SplitCol/SplitCol";
 export type { SplitColProps } from "../components/SplitCol/SplitCol";
 
+export { Root } from "../components/Root/Root";
+export type { RootProps } from "../components/Root/Root";
+
 export { Headline } from "../components/Typography/Headline/Headline";
 export type { HeadlineProps } from "../components/Typography/Headline/Headline";
 
