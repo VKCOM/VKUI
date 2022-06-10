@@ -1,23 +1,23 @@
 .Separator {
-  color: var(--separator_common);
-}
-
-.Separator__in:not(.Separator__in--expanded) {
-  height: 1px;
-  background: currentColor;
-  transform-origin: center top;
+  color: var(--separator_common, var(--vkui--color_separator_primary));
 }
 
 @media (min-resolution: 2dppx) {
-  .Separator__in:not(.Separator__in--expanded) {
-    transform: scaleY(0.5);
+  .Separator {
+    color: var(--separator_common, var(--vkui--color_separator_primary2x));
   }
 }
 
 @media (min-resolution: 3dppx) {
-  .Separator__in:not(.Separator__in--expanded) {
-    transform: scaleY(0.32);
+  .Separator {
+    color: var(--separator_common, var(--vkui--color_separator_primary3x));
   }
+}
+
+.Separator__in:not(.Separator__in--expanded) {
+  height: var(--thin-border);
+  background: currentColor;
+  transform-origin: center top;
 }
 
 .Separator__in--expanded {

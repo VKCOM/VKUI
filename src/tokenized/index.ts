@@ -155,6 +155,9 @@ export type { CheckboxProps } from "../components/Checkbox/Checkbox";
 export { ChipsInput } from "../components/ChipsInput/ChipsInput";
 export type { ChipsInputProps } from "../components/ChipsInput/ChipsInput";
 
+export { Separator } from "../components/Separator/Separator";
+export type { SeparatorProps } from "../components/Separator/Separator";
+
 export { ChipsSelect } from "../components/ChipsSelect/ChipsSelect";
 export type { ChipsSelectProps } from "../components/ChipsSelect/ChipsSelect";
 
