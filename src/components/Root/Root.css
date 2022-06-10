@@ -36,6 +36,15 @@
   z-index: 2;
 }
 
+.Root__view--show-forward {
+  animation: vkui-root-android-animation-show-forward 0.3s var(--android-easing);
+}
+
+.Root__view--hide-back {
+  animation: vkui-root-android-animation-hide-back 0.3s var(--android-easing)
+    forwards;
+}
+
 .Root__popout {
   position: fixed;
   left: 0;
@@ -137,20 +146,6 @@
 /**
  * Android
  */
-
-.Root--android {
-}
-
-.Root--android .Root__view--show-forward,
-.Root--vkcom .Root__view--show-forward {
-  animation: vkui-root-android-animation-show-forward 0.3s var(--android-easing);
-}
-
-.Root--android .Root__view--hide-back,
-.Root--vkcom .Root__view--hide-back {
-  animation: vkui-root-android-animation-hide-back 0.3s var(--android-easing)
-    forwards;
-}
 
 @keyframes vkui-root-android-animation-hide-back {
   from {

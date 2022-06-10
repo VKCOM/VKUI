@@ -7,6 +7,7 @@ export const tokenized = [
   "Card",
   "CardScroll",
   "SegmentedControl",
+  "Root",
   "Textarea",
   "Title",
   "UsersStack",
