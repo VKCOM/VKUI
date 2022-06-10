@@ -5,6 +5,7 @@
   height: 100%;
   width: 100%;
   word-wrap: break-word;
+  font-family: var(--font-common);
 }
 
 .View--animated,
@@ -70,19 +71,6 @@
 
 .View__modal:empty {
   display: none;
-}
-
-.View--vkcom,
-.View--android {
-  font-family: var(--font-common);
-}
-
-/**
- * Active panel
- */
-.View--vkcom .View__panel--active::before,
-.View--android .View__panel--active::before {
-  content: none;
 }
 
 /**
