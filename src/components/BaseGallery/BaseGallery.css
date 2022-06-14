@@ -23,6 +23,10 @@
   align-items: stretch;
 }
 
+.Gallery__layer:empty {
+  min-height: 0;
+}
+
 .Gallery__slide {
   width: 100%;
   flex: 0 0 auto;
