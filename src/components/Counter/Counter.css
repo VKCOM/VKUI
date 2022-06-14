@@ -165,3 +165,23 @@
     var(--vkui--color_background_positive)
   );
 }
+
+/**
+ * CMP:
+ * SubnavigationButton
+ */
+.Button.SubnavigationButton .Counter {
+  background-color: var(
+    --button_secondary_foreground,
+    var(--vkui--color_background_accent)
+  );
+  color: var(--background_content, var(--vkui--color_text_contrast_themed));
+}
+
+.Button.SubnavigationButton--selected .Counter {
+  background-color: var(
+    --button_primary_foreground,
+    var(--vkui--color_background_contrast)
+  );
+  color: var(--button_primary_background, var(--vkui--color_text_accent));
+}

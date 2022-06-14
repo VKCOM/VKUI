@@ -143,6 +143,9 @@ export type { DivProps } from "../components/Div/Div";
 export { FixedLayout } from "../components/FixedLayout/FixedLayout";
 export type { FixedLayoutProps } from "../components/FixedLayout/FixedLayout";
 
+export { SubnavigationButton } from "../components/SubnavigationButton/SubnavigationButton";
+export type { SubnavigationButtonProps } from "../components/SubnavigationButton/SubnavigationButton";
+
 export { Counter } from "../components/Counter/Counter";
 export type { CounterProps } from "../components/Counter/Counter";
 

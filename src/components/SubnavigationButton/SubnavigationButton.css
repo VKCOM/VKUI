@@ -1,103 +1,80 @@
 .SubnavigationButton {
-  display: inline-block;
-  background-color: var(--modal_card_background);
-  color: var(--text_primary);
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 2px 24px rgba(0, 0, 0, 0.08);
-  user-select: none;
+  display: inline-flex;
+  min-width: initial;
+  box-sizing: border-box;
 }
 
-.SubnavigationButton__in {
+.Button.SubnavigationButton--mode-primary {
+  color: var(--text_primary, var(--vkui--color_text_primary));
+  background-color: var(
+    --modal_card_background,
+    var(--vkui--color_background_modal)
+  );
+  box-shadow: var(--vkui--elevation3);
+}
+
+.Button.SubnavigationButton--mode-tertiary {
+  color: var(--vkui--color_text_primary);
+  background: none;
+}
+
+.Button.SubnavigationButton--mode-outline {
+  box-shadow: inset 0 0 0 1px var(--vkui--color_field_border_alpha);
+  color: var(--vkui--color_text_primary);
+  background: none;
+}
+
+.SubnavigationButton .Button__before {
+  color: var(--accent, var(--vkui--color_background_accent));
+}
+
+.SubnavigationButton__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.SubnavigationButton .Button__after {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.SubnavigationButton__before {
-  margin-right: 8px;
-  color: var(--accent);
-}
-
-.SubnavigationButton__before .Icon--24 {
-  margin-left: -4px;
-}
-
-.SubnavigationButton__label {
-  flex-grow: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.SubnavigationButton__after {
-  margin-left: 8px;
-}
-
 .SubnavigationButton__expandableIcon {
-  margin-left: 8px;
   margin-top: 1px; /* Смещает иконку относительно текста */
-  color: var(--icon_secondary);
+  color: var(--icon_secondary, var(--vkui--color_icon_tertiary));
+}
+
+.SubnavigationButton__expandableIcon:not(:first-child) {
+  margin-left: 8px;
 }
 
 /**
  * selected
  */
 
-.SubnavigationButton--selected {
-  background-color: var(--button_primary_background);
-  color: var(--button_primary_foreground);
+.Button.SubnavigationButton--selected {
+  background-color: var(
+    --button_primary_background,
+    var(--vkui--color_background_accent)
+  );
+  color: var(--button_primary_foreground, var(--vkui--color_text_contrast));
+  box-shadow: none;
+  border: none;
 }
 
-.SubnavigationButton--selected .SubnavigationButton__before {
-  color: inherit;
+.Button.SubnavigationButton--selected.SubnavigationButton--mode-tertiary {
+  background-color: var(--vkui--color_transparent--active);
+  color: var(--vkui--color_text_primary);
 }
 
-.SubnavigationButton--selected .Counter {
-  background-color: var(--button_primary_foreground);
-  color: var(--button_primary_background);
-}
-
+.SubnavigationButton--selected .Button__before,
 .SubnavigationButton--selected .SubnavigationButton__expandableIcon {
   color: inherit;
 }
 
-/**
- * size m
- */
-
-.SubnavigationButton--m .SubnavigationButton__in {
-  height: 36px;
-  padding: 0 14px;
-}
-
-/**
- * size l
- */
-
-.SubnavigationButton--l .SubnavigationButton__in {
-  height: 44px;
-  padding: 0 14px;
-}
-
-/**
- * iOS
- */
-
-.SubnavigationButton--ios {
-  border-radius: 10px;
-}
-
-/**
- * Android
- */
-
-.SubnavigationButton--android {
-  border-radius: 8px;
-}
-
-/**
- * VKCOM
- */
-
-.SubnavigationButton--vkcom {
-  border-radius: 4px;
+.SubnavigationButton--selected.SubnavigationButton--mode-tertiary
+  .Button__before,
+.SubnavigationButton--selected.SubnavigationButton--mode-tertiary
+  .SubnavigationButton__expandableIcon {
+  color: var(--vkui--color_icon_accent);
 }
