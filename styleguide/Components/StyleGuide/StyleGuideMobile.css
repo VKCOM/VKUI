@@ -7,3 +7,9 @@
   align-items: center;
   justify-content: center;
 }
+
+@media (min-width: 768px) {
+  .StyleGuideMobile {
+    display: none;
+  }
+}

@@ -20,6 +20,8 @@ import { getNavId } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { ModalTransitionProps, withModalManager } from "./useModalManager";
+import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
+import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import "./ModalRoot.css";
 
 const warn = warnOnce("ModalRoot");
@@ -30,6 +32,8 @@ export interface ModalRootProps extends HasPlatform {
    * @ignore
    */
   configProvider?: ConfigProviderContextInterface;
+
+  viewWidth?: ViewWidth;
 
   /**
    * Будет вызвано при начале открытия активной модалки с её id
@@ -209,7 +213,7 @@ class ModalRootDesktopComponent extends React.Component<
   }
 
   render() {
-    const { exitingModal, activeModal, enteringModal } = this.props;
+    const { exitingModal, activeModal, enteringModal, viewWidth } = this.props;
 
     if (!activeModal && !exitingModal) {
       return null;
@@ -218,13 +222,11 @@ class ModalRootDesktopComponent extends React.Component<
     return (
       <ModalRootContext.Provider value={this.modalRootContext}>
         <div
-          // eslint-disable-next-line vkui/no-object-expression-in-arguments
           vkuiClass={classNames(
             getClassName("ModalRoot", this.props.platform),
-            {
-              "ModalRoot--vkapps":
-                this.props.configProvider?.webviewType === WebviewType.VKAPPS,
-            },
+            this.props.configProvider?.webviewType === WebviewType.VKAPPS &&
+              "ModalRoot--vkapps",
+            getViewWidthClassName("ModalRootDesktop", viewWidth),
             "ModalRoot--desktop"
           )}
         >

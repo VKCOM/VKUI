@@ -2,7 +2,9 @@ import * as React from "react";
 import { HasRootRef } from "../../types";
 import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { blurActiveElement, useDOM } from "../../lib/dom";
-import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { classNames } from "../../lib/classNames";
+import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
 import "./PopoutRoot.css";
 
 export interface PopoutRootProps
@@ -20,22 +22,29 @@ export const PopoutRoot: React.FC<PopoutRootProps> = ({
   ...restProps
 }) => {
   const { document } = useDOM();
-
-  const isDesktop = useAdaptivityIsDesktop();
+  const { viewWidth } = useAdaptivity();
 
   React.useEffect(() => {
     popout && blurActiveElement(document);
   }, [document, popout]);
 
   return (
-    <div {...restProps} vkuiClass="PopoutRoot" ref={getRootRef}>
+    <div
+      {...restProps}
+      vkuiClass={classNames(
+        "PopoutRoot",
+        getViewWidthClassName("PopoutRoot", viewWidth)
+      )}
+      ref={getRootRef}
+    >
       {children}
       <AppRootPortal>
         {!!popout && (
           <div
-            vkuiClass={
-              isDesktop ? "PopoutRoot--absolute" : "PopoutRoot__popout"
-            }
+            vkuiClass="PopoutRoot__popout"
+            // vkuiClass={
+            //   isDesktop ? "PopoutRoot--absolute" : "PopoutRoot__popout"
+            // }
           >
             {popout}
           </div>

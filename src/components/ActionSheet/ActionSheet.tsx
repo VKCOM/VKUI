@@ -8,10 +8,11 @@ import { ActionSheetContext, ItemClickHandler } from "./ActionSheetContext";
 import { Caption } from "../Typography/Caption/Caption";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useTimeout } from "../../hooks/useTimeout";
-import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useObjectMemo } from "../../hooks/useObjectMemo";
 import { SharedDropdownProps, PopupDirection, ToggleRef } from "./types";
-import { useScrollLock } from "../AppRoot/ScrollContext";
+import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
+import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import "./ActionSheet.css";
 
 export interface ActionSheetProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -46,9 +47,11 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
   text,
   style,
   iosCloseItem,
+  popupDirection = "bottom",
   ...restProps
 }) => {
   const platform = usePlatform();
+  const { viewWidth } = useAdaptivity();
   const [closing, setClosing] = React.useState(false);
   const onClose = () => setClosing(true);
   const _action = React.useRef(noop);
@@ -59,15 +62,7 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
     _action.current = noop;
   };
 
-  const isDesktop = useAdaptivityIsDesktop();
-
-  useScrollLock(!isDesktop);
-
   let timeout = platform === IOS ? 300 : 200;
-
-  if (isDesktop) {
-    timeout = 0;
-  }
 
   const fallbackTransitionFinish = useTimeout(afterClose, timeout);
   React.useEffect(() => {
@@ -91,62 +86,82 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
     },
     []
   );
-  const contextValue = useObjectMemo({ onItemClick, isDesktop });
 
-  const DropdownComponent = isDesktop
-    ? ActionSheetDropdownDesktop
-    : ActionSheetDropdown;
-
-  const actionSheet = (
-    <ActionSheetContext.Provider value={contextValue}>
-      <DropdownComponent
-        closing={closing}
-        timeout={timeout}
-        {...(restProps as Omit<SharedDropdownProps, "closing">)}
-        onClose={onClose}
-        className={isDesktop ? className : undefined}
-        style={isDesktop ? style : undefined}
-      >
-        {(hasReactNode(header) || hasReactNode(text)) && (
-          <header vkuiClass="ActionSheet__header">
-            {hasReactNode(header) && (
-              <Caption
-                weight={platform === IOS ? "1" : "2"}
-                vkuiClass="ActionSheet__title"
-              >
-                {header}
-              </Caption>
-            )}
-            {hasReactNode(text) && (
-              <Caption vkuiClass="ActionSheet__text">{text}</Caption>
-            )}
-          </header>
-        )}
-        {children}
-        {platform === IOS && !isDesktop && iosCloseItem}
-      </DropdownComponent>
-    </ActionSheetContext.Provider>
-  );
-
-  if (isDesktop) {
-    return actionSheet;
-  }
+  const contextDesktop = useObjectMemo({ onItemClick, isDesktop: true });
+  const contextMobile = useObjectMemo({ onItemClick, isDesktop: false });
 
   return (
-    <PopoutWrapper
-      closing={closing}
-      alignY="bottom"
-      className={className}
-      style={style}
-      onClick={onClose}
-      hasMask
-      fixed
-    >
-      {actionSheet}
-    </PopoutWrapper>
+    <React.Fragment>
+      {(viewWidth === undefined || viewWidth >= ViewWidth.SMALL_TABLET) && (
+        <ActionSheetContext.Provider value={contextDesktop}>
+          <ActionSheetDropdownDesktop
+            closing={closing}
+            timeout={timeout}
+            {...(restProps as Omit<SharedDropdownProps, "closing">)}
+            onClose={onClose}
+            className={className}
+            style={style}
+            popupDirection={popupDirection}
+          >
+            {(hasReactNode(header) || hasReactNode(text)) && (
+              <header vkuiClass="ActionSheet__header">
+                {hasReactNode(header) && (
+                  <Caption
+                    weight={platform === IOS ? "1" : "2"}
+                    vkuiClass="ActionSheet__title"
+                  >
+                    {header}
+                  </Caption>
+                )}
+                {hasReactNode(text) && (
+                  <Caption vkuiClass="ActionSheet__text">{text}</Caption>
+                )}
+              </header>
+            )}
+            {children}
+          </ActionSheetDropdownDesktop>
+        </ActionSheetContext.Provider>
+      )}
+      {(viewWidth === undefined || viewWidth < ViewWidth.SMALL_TABLET) && (
+        <PopoutWrapper
+          closing={closing}
+          alignY="bottom"
+          className={className}
+          vkuiClass={getViewWidthClassName("ActionSheetMobile", viewWidth)}
+          style={style}
+          onClick={onClose}
+          hasMask
+          fixed
+        >
+          <ActionSheetContext.Provider value={contextMobile}>
+            <ActionSheetDropdown
+              closing={closing}
+              timeout={timeout}
+              {...(restProps as Omit<SharedDropdownProps, "closing">)}
+              onClose={onClose}
+              popupDirection={popupDirection}
+            >
+              {(hasReactNode(header) || hasReactNode(text)) && (
+                <header vkuiClass="ActionSheet__header">
+                  {hasReactNode(header) && (
+                    <Caption
+                      weight={platform === IOS ? "1" : "2"}
+                      vkuiClass="ActionSheet__title"
+                    >
+                      {header}
+                    </Caption>
+                  )}
+                  {hasReactNode(text) && (
+                    <Caption vkuiClass="ActionSheet__text">{text}</Caption>
+                  )}
+                </header>
+              )}
+              {children}
+              {platform === IOS && iosCloseItem}
+            </ActionSheetDropdown>
+          </ActionSheetContext.Provider>
+        </PopoutWrapper>
+      )}
+    </React.Fragment>
   );
-};
-
-ActionSheet.defaultProps = {
-  popupDirection: "bottom",
 };

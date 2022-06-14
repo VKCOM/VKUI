@@ -11,3 +11,14 @@
   margin-right: 16px;
   margin-bottom: 28px;
 }
+
+.SettingDesktop--viewWidth-mobile,
+.SettingDesktop--viewWidth-smallMobile {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .SettingDesktop--viewWidth-none {
+    display: none;
+  }
+}

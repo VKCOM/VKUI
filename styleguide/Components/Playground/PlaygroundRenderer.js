@@ -1,7 +1,8 @@
 import React, { cloneElement } from "react";
 import { Settings } from "../Settings/Settings";
 import { SectionSubheading } from "../SectionSubheading/SectionSubheading";
-import { useAdaptivity, ViewWidth } from "@vkui";
+import { useAdaptivity, getViewWidthClassName } from "@vkui";
+import "./PlaygroundRenderer.css";
 
 const PlaygroundRenderer = ({
   name,
@@ -48,14 +49,12 @@ const PlaygroundRenderer = ({
           exampleId,
         })}
       </div>
-      {viewWidth > ViewWidth.MOBILE && (
-        <>
-          <SectionSubheading href={`#/${name}?id=code`}>
-            Редактируемый код
-          </SectionSubheading>
-          <div className="Playground__code">{tabBody}</div>
-        </>
-      )}
+      <div className={getViewWidthClassName("Playground__editor", viewWidth)}>
+        <SectionSubheading href={`#/${name}?id=code`}>
+          Редактируемый код
+        </SectionSubheading>
+        <div className="Playground__code">{tabBody}</div>
+      </div>
     </div>
   );
 };

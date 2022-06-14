@@ -1,11 +1,9 @@
 import * as React from "react";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { ScrollSaver } from "./ScrollSaver";
 import { getNavId } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import "./Epic.css";
 
 export interface EpicProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -20,19 +18,9 @@ const warn = warnOnce("Epic");
  */
 export const Epic: React.FC<EpicProps> = (props) => {
   const platform = usePlatform();
-  const { viewWidth } = useAdaptivity();
   const scroll = React.useRef<{ [key: string]: number }>({}).current;
   const { activeStory, tabbar, children, ...restProps } = props;
 
-  if (
-    process.env.NODE_ENV === "development" &&
-    !tabbar &&
-    viewWidth < ViewWidth.SMALL_TABLET
-  ) {
-    warn(
-      `Не рекомендуется использовать Epic без Tabbar при ширине окна меньше ${ViewWidth.SMALL_TABLET}px`
-    );
-  }
   const story =
     (React.Children.toArray(children).find(
       (story) =>

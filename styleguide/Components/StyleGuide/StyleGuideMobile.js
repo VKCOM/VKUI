@@ -53,37 +53,39 @@ export const StyleGuideMobile = (props) => {
   }, []);
 
   return (
-    <SplitLayout popout={props.popout}>
-      <SplitCol>
-        <View activePanel={activePanel}>
-          <Panel id="content">
-            <StyleGuideMobileHeader
-              switchStyleGuideAppearance={props.switchStyleGuideAppearance}
-              before={
-                <PanelHeaderButton
-                  aria-label="Показать меню"
-                  onClick={() => setActivePanel("menu")}
-                >
-                  <Icon28MenuOutline />
-                </PanelHeaderButton>
-              }
-            />
-            <div className="StyleGuideMobile__content">{props.children}</div>
-          </Panel>
-          <Panel id="menu">
-            <StyleGuideMobileHeader
-              switchStyleGuideAppearance={props.switchStyleGuideAppearance}
-              before={
-                <PanelHeaderClose
-                  aria-label="Скрыть меню"
-                  onClick={() => setActivePanel("content")}
-                />
-              }
-            />
-            {props.toc}
-          </Panel>
-        </View>
-      </SplitCol>
-    </SplitLayout>
+    <div className="StyleGuideMobile">
+      <SplitLayout popout={props.popout}>
+        <SplitCol>
+          <View activePanel={activePanel}>
+            <Panel id="content">
+              <StyleGuideMobileHeader
+                switchStyleGuideAppearance={props.switchStyleGuideAppearance}
+                before={
+                  <PanelHeaderButton
+                    aria-label="Показать меню"
+                    onClick={() => setActivePanel("menu")}
+                  >
+                    <Icon28MenuOutline />
+                  </PanelHeaderButton>
+                }
+              />
+              <div className="StyleGuideMobile__content">{props.children}</div>
+            </Panel>
+            <Panel id="menu">
+              <StyleGuideMobileHeader
+                switchStyleGuideAppearance={props.switchStyleGuideAppearance}
+                before={
+                  <PanelHeaderClose
+                    aria-label="Скрыть меню"
+                    onClick={() => setActivePanel("content")}
+                  />
+                }
+              />
+              {props.toc}
+            </Panel>
+          </View>
+        </SplitCol>
+      </SplitLayout>
+    </div>
   );
 };

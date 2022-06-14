@@ -4,7 +4,7 @@
   position: relative;
 }
 
-.PopoutRoot__popout {
+.PopoutRoot .PopoutRoot__popout {
   position: fixed;
   left: 0;
   top: 0;
@@ -13,13 +13,14 @@
   height: 100%;
 }
 
-.PopoutRoot--absolute {
+.PopoutRoot--viewWidth-smallTabletPlus .PopoutRoot__popout {
   position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 100;
-  width: 100%;
-  height: 100%;
+}
+
+@media (--view-width-smallTablet) {
+  .PopoutRoot--viewWidth-none .PopoutRoot__popout {
+    position: absolute;
+  }
 }
 
 .PopoutRoot__modal {

@@ -65,8 +65,6 @@ const MainScreens = () => {
 const SideCol = () => {
   return <Panel id="nav">Navigation</Panel>;
 };
-
-// ...
 ```
 
 Почти готово. Теперь мы должны сообщить приложению, что левая колонка нужна только на больших экранах. Для доступа
@@ -104,13 +102,12 @@ function App() {
 > **Нюансы**
 >
 > - Свойство `SplitLayout.header` нужно для создания сквозной шапки, когда интерфейс состоит из нескольких колонок (или одной центрированной)
-> - Анимация перехода между панелями должна быть отключена при размерах `ViewWidth.TABLET` и более (`SplitCol.animate`)
+> - Анимация перехода между панелями должна быть включена только на `IOS` или `ANDROID` (`SplitCol.animate`)
 > - Если интерфейс состоит из нескольких колонок, то у центральных колонок должны быть отступы (в трёх-колоночном режиме это одна центральная колонка) (`SplitCol.spaced`)
 
 ### Технические детали
 
-Адаптивность базируется на четырёх свойствах: `viewWidth`, `viewHeight`, `sizeX`, `sizeY`. Эти свойства вычисляются в `AdaptivityProvider`,
-доступ к ним можно получить через hook `useAdaptivity`.
+Адаптивность базируется на четырёх свойствах: `viewWidth`, `viewHeight`, `sizeX`, `sizeY`. Эти свойства задаются либо вычисляются в `AdaptivityProvider`. Для удобства вы можете использовать готовые компоненты `SizeXConditionalRender`, `SizeYConditionalRender`, `ViewWidthConditionalRender`, `ViewHeightConditionalRender`.
 
 - `sizeX` и `sizeY` принимают значения `SizeType.REGULAR | SizeType.COMPACT`
 - `viewWidth` — `ViewWidth.SMALL_MOBILE | ViewWidth.MOBILE | ViewWidth.SMALL_TABLET | ViewWidth.TABLET | ViewWidth.DESKTOP`

@@ -7,8 +7,8 @@ import {
   classNames,
   Separator,
   Footer,
-  ViewWidth,
   useAdaptivity,
+  getViewWidthClassName,
 } from "@vkui";
 import {
   Icon28ChevronDownOutline,
@@ -298,13 +298,12 @@ class TableOfContents extends React.PureComponent {
   }
 
   render() {
-    const isMobile = this.props.viewWidth <= ViewWidth.MOBILE;
     return (
       <div
-        className={classNames("TableOfContents", {
-          "TableOfContents--desktop": !isMobile,
-          "TableOfContents--mobile": isMobile,
-        })}
+        className={classNames(
+          "TableOfContents",
+          getViewWidthClassName("TableOfContents", this.props.viewWidth)
+        )}
       >
         {this.renderSections(this.sections)}
       </div>

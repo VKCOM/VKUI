@@ -12,6 +12,7 @@ import { SharedDropdownProps } from "./types";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { Popper } from "../Popper/Popper";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
 import "./ActionSheet.css";
 
 const warn = warnOnce("ActionSheet");
@@ -33,7 +34,7 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
 }) => {
   const { document } = useDOM();
   const platform = usePlatform();
-  const { sizeY } = useAdaptivity();
+  const { sizeY, viewWidth } = useAdaptivity();
   const elementRef = React.useRef<HTMLDivElement | null>(null);
 
   useEffectDev(() => {
@@ -83,7 +84,8 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
       vkuiClass={classNames(
         getClassName("ActionSheet", platform),
         "ActionSheet--desktop",
-        getSizeYClassName("ActionSheet", sizeY)
+        getSizeYClassName("ActionSheet", sizeY),
+        getViewWidthClassName("ActionSheet", viewWidth)
       )}
       className={className}
       style={style}

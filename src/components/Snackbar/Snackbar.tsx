@@ -12,7 +12,7 @@ import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useTimeout } from "../../hooks/useTimeout";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
 import "./Snackbar.css";
 
 export interface SnackbarProps
@@ -84,7 +84,6 @@ export const Snackbar: React.FC<SnackbarProps> = (props) => {
     typeof requestAnimationFrame
   > | null>(null);
 
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
   const transitionFinishDurationFallback =
     platform === ANDROID || platform === VKCOM ? 400 : 320;
 
@@ -150,17 +149,7 @@ export const Snackbar: React.FC<SnackbarProps> = (props) => {
       const expectTranslateY = (shiftXCurrent / e.duration) * 240 * 0.6;
       shiftXCurrent = shiftXCurrent + expectTranslateY;
 
-      if (isDesktop && shiftXCurrent <= -50) {
-        closeTimeout.clear();
-        waitTransitionFinish(
-          bodyElRef.current,
-          () => {
-            onClose();
-          },
-          transitionFinishDurationFallback
-        );
-        setBodyTransform(-120);
-      } else if (!isDesktop && shiftXCurrent >= 50) {
+      if (shiftXCurrent >= 50) {
         closeTimeout.clear();
         waitTransitionFinish(
           bodyElRef.current,
@@ -186,18 +175,17 @@ export const Snackbar: React.FC<SnackbarProps> = (props) => {
 
   React.useEffect(() => closeTimeout.set(), [closeTimeout]);
 
-  const resolvedLayout = after || isDesktop ? "vertical" : layout;
-
   return (
     <AppRootPortal>
       <div
         {...restProps}
         vkuiClass={classNames(
           getClassName("Snackbar", platform),
-          `Snackbar--l-${resolvedLayout}`,
+          getViewWidthClassName("Snackbar", viewWidth),
+          `Snackbar--l-${layout}`,
           closing && "Snackbar--closing",
-          touched && "Snackbar--touched",
-          isDesktop && "Snackbar--desktop"
+          after && "Snackbar--has-after",
+          touched && "Snackbar--touched"
         )}
       >
         <Touch

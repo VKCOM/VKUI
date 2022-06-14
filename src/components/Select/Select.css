@@ -51,6 +51,26 @@
   text-align: center;
 }
 
+.Select__native--mouse-has.Select__native {
+  display: none;
+}
+
+@media (--mouse-has) {
+  .Select__native--mouse-none.Select__native {
+    display: none;
+  }
+}
+
+.Select__custom--mouse-has-not.Select__custom {
+  display: none;
+}
+
+@media (--mouse-has-not) {
+  .Select__custom--mouse-none.Select__custom {
+    display: none;
+  }
+}
+
 /**
  * sizeY REGULAR
  */

@@ -43,11 +43,9 @@ import ReactDOM from "react-dom";
 import {
   AdaptivityProvider,
   ConfigProvider,
-  useAdaptivity,
   AppRoot,
   SplitLayout,
   SplitCol,
-  ViewWidth,
   View,
   Panel,
   PanelHeader,
@@ -58,12 +56,10 @@ import {
 import "@vkontakte/vkui/dist/vkui.css";
 
 const App = () => {
-  const { viewWidth } = useAdaptivity();
-
   return (
     <AppRoot>
       <SplitLayout header={<PanelHeader separator={false} />}>
-        <SplitCol spaced={viewWidth && viewWidth > ViewWidth.MOBILE}>
+        <SplitCol>
           <View activePanel="main">
             <Panel id="main">
               <PanelHeader>VKUI</PanelHeader>

@@ -25,6 +25,8 @@ import { getNavId } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { ModalTransitionProps, withModalManager } from "./useModalManager";
+import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
+import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import "./ModalRoot.css";
 
 const warn = warnOnce("ModalRoot");
@@ -43,6 +45,8 @@ function rangeTranslate(number: number) {
 
 export interface ModalRootProps extends HasPlatform {
   activeModal?: string | null;
+
+  viewWidth?: ViewWidth;
 
   /**
    * Будет вызвано при начале открытия активной модалки с её id
@@ -657,7 +661,7 @@ class ModalRootTouchComponent extends React.Component<
   }
 
   render() {
-    const { activeModal, exitingModal, enteringModal } = this.props;
+    const { activeModal, exitingModal, enteringModal, viewWidth } = this.props;
     const { touchDown, dragging } = this.state;
 
     if (!activeModal && !exitingModal) {
@@ -668,15 +672,13 @@ class ModalRootTouchComponent extends React.Component<
       <TouchRootContext.Provider value={true}>
         <ModalRootContext.Provider value={this.modalRootContext}>
           <Touch
-            // eslint-disable-next-line vkui/no-object-expression-in-arguments
             vkuiClass={classNames(
               getClassName("ModalRoot", this.props.platform),
-              {
-                "ModalRoot--vkapps":
-                  this.props.configProvider?.webviewType === WebviewType.VKAPPS,
-                "ModalRoot--touched": touchDown,
-                "ModalRoot--switching": !!(enteringModal || exitingModal),
-              }
+              this.props.configProvider?.webviewType === WebviewType.VKAPPS &&
+                "ModalRoot--vkapps",
+              getViewWidthClassName("ModalRootMobile", viewWidth),
+              touchDown && "ModalRoot--touched",
+              !!(enteringModal || exitingModal) && "ModalRoot--switching"
             )}
             onMove={this.onTouchMove}
             onEnd={this.onTouchEnd}

@@ -34,6 +34,27 @@
   pointer-events: none;
 }
 
+.ModalRootMobile--viewWidth-smallTabletPlus {
+  display: none;
+}
+
+@media (--desktop) {
+  .ModalRootMobile--viewWidth-none {
+    display: none;
+  }
+}
+
+.ModalRootDesktop--viewWidth-mobile,
+.ModalRootDesktop--viewWidth-smallMobile {
+  display: none;
+}
+
+@media (--mobile) {
+  .ModalRootDesktop--viewWidth-none {
+    display: none;
+  }
+}
+
 :not(.ModalRoot--desktop).ModalRoot--ios .ModalRoot__viewport,
 :not(.ModalRoot--desktop).ModalRoot--android .ModalRoot__viewport {
   top: var(--safe-area-inset-top);

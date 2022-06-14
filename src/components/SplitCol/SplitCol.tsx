@@ -1,5 +1,7 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
+import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./SplitCol.css";
 
 export interface SplitColContextProps {
@@ -24,6 +26,10 @@ export interface SplitColProps extends React.HTMLAttributes<HTMLDivElement> {
    * Если true, то добавляются боковые отступы фиксированной величины
    */
   spaced?: boolean;
+  /**
+   * Если true, то добавляются боковые отступы фиксированной величины при ширине больше чем `smallTablet`
+   */
+  autoSpaced?: boolean;
   fixed?: boolean;
 }
 
@@ -40,9 +46,11 @@ export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
     animate = false,
     fixed,
     style,
+    autoSpaced,
     ...restProps
   } = props;
   const baseRef = React.useRef<HTMLDivElement>(null);
+  const { viewWidth } = useAdaptivity();
 
   const contextValue = React.useMemo(() => {
     return {
@@ -63,7 +71,10 @@ export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
       ref={baseRef}
       vkuiClass={classNames(
         "SplitCol",
+        getViewWidthClassName("SplitCol", viewWidth),
         spaced && "SplitCol--spaced",
+        spaced === undefined && "SplitCol--spaced-none",
+        autoSpaced && "SplitCol--spaced-auto",
         fixed && "SplitCol--fixed"
       )}
     >

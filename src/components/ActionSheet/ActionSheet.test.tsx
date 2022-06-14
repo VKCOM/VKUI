@@ -61,7 +61,7 @@ describe("ActionSheet", () => {
           </ActionSheet>
         );
         await waitForPopper();
-        userEvent.click(screen.getByTestId("item"));
+        userEvent.click(screen.getAllByTestId("item")[0]);
 
         runAllTimers();
         expect(handlers.onClick).toBeCalled();
@@ -70,7 +70,7 @@ describe("ActionSheet", () => {
     });
 
     it.each([
-      ["content", () => screen.getByTestId("xxx")],
+      ["content", () => screen.getAllByTestId("xxx")[0]],
       ["toggle", () => toggle],
     ])("does not close on %s click", async (_name, getNode) => {
       const onClose = jest.fn();

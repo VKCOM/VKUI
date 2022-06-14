@@ -54,8 +54,6 @@ const MODAL_CARD_NOTIFICATIONS = "notifications";
 const MODAL_CARD_CHAT_INVITE = "chat-invite";
 
 const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
-  const { viewWidth } = useAdaptivity();
-  const isMobile = viewWidth <= ViewWidth.MOBILE;
   const platform = usePlatform();
   const [expanded, setExpanded] = React.useState(false);
   const toggle = React.useCallback(() => setExpanded(!expanded), [expanded]);
@@ -66,16 +64,22 @@ const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
       header={
         <ModalPageHeader
           before={
-            isMobile &&
-            platform === ANDROID && <PanelHeaderClose onClick={onClose} />
+            <ViewWidthConditionalRender
+              mobile={
+                platform === ANDROID && <PanelHeaderClose onClick={onClose} />
+              }
+            />
           }
           after={
-            isMobile &&
-            platform === IOS && (
-              <PanelHeaderButton onClick={onClose}>
-                <Icon24Dismiss />
-              </PanelHeaderButton>
-            )
+            <ViewWidthConditionalRender
+              mobile={
+                platform === IOS && (
+                  <PanelHeaderButton onClick={onClose}>
+                    <Icon24Dismiss />
+                  </PanelHeaderButton>
+                )
+              }
+            />
           }
         >
           Dynamic modal
@@ -104,7 +108,6 @@ const App = () => {
         return getRandomUser();
       })
   );
-  const { viewWidth } = useAdaptivity();
   const platform = usePlatform();
 
   const changeActiveModal = (activeModal) => {
@@ -130,8 +133,6 @@ const App = () => {
     changeActiveModal(modalHistory[modalHistory.length - 2]);
   };
 
-  const isMobile = viewWidth <= ViewWidth.MOBILE;
-
   const modal = (
     <ModalRoot activeModal={activeModal} onClose={modalBack}>
       <ModalPage
@@ -148,8 +149,13 @@ const App = () => {
               )
             }
             before={
-              isMobile &&
-              platform === ANDROID && <PanelHeaderClose onClick={modalBack} />
+              <ViewWidthConditionalRender
+                mobile={
+                  platform === ANDROID && (
+                    <PanelHeaderClose onClick={modalBack} />
+                  )
+                }
+              />
             }
           >
             @{randomUser.screen_name}
@@ -206,7 +212,11 @@ const App = () => {
         onClose={modalBack}
         header={
           <ModalPageHeader
-            before={isMobile && <PanelHeaderClose onClick={modalBack} />}
+            before={
+              <ViewWidthConditionalRender
+                mobile={<PanelHeaderClose onClick={modalBack} />}
+              />
+            }
             after={<PanelHeaderSubmit onClick={modalBack} />}
           >
             Фильтры

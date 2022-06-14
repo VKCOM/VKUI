@@ -1,0 +1,10 @@
+.Playground__editor--viewWidth-mobile,
+.Playground__editor--viewWidth-smallMobile {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .Playground__editor--viewWidth-none {
+    display: none;
+  }
+}

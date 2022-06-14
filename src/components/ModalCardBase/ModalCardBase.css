@@ -65,7 +65,12 @@
   margin-right: 0;
 }
 
-.ModalCardBase__dismiss {
+/**
+ * iOS
+ */
+
+.ModalCardBase__dismiss-ios {
+  display: block;
   position: absolute;
   top: 4px;
   right: 4px;
@@ -75,9 +80,17 @@
   justify-content: center;
 }
 
-/**
- * iOS
- */
+.ModalCardBase--viewWidth-smallTabletPlus .ModalCardBase__dismiss-ios,
+.ModalCardBase:not(.ModalCardBase--ios) .ModalCardBase__dismiss-ios {
+  display: none;
+}
+
+@media (--view-width-smallTablet) {
+  .ModalCardBase--viewWidth-none.ModalCardBase--ios
+    .ModalCardBase__dismiss-ios {
+    display: none;
+  }
+}
 
 .ModalCardBase--ios .ModalCardBase__header:first-child {
   padding-left: 36px;
@@ -87,6 +100,21 @@
 /**
  * Android + vkcom
  */
+
+.ModalCardBase__dismiss {
+  display: none;
+}
+
+.ModalCardBase--viewWidth-smallTabletPlus .ModalCardBase__dismiss,
+.ModalCardBase--vkcom .ModalCardBase__dismiss {
+  display: block;
+}
+
+@media (--view-width-smallTablet) {
+  .ModalCardBase--viewWidth-none .ModalCardBase__dismiss {
+    display: block;
+  }
+}
 
 .ModalCardBase--android .ModalCardBase__container,
 .ModalCardBase--vkcom .ModalCardBase__container {
@@ -98,7 +126,14 @@
  * Desktop
  */
 
-.ModalCardBase--desktop .ModalCardBase__container {
+.ModalCardBase--viewWidth-smallTabletPlus .ModalCardBase__container {
   border-radius: 8px;
   box-shadow: 0 16px 16px rgba(0, 0, 0, 0.16), 0 0 8px rgba(0, 0, 0, 0.12);
+}
+
+@media (--desktop) {
+  .ModalCardBase--viewWidth-none .ModalCardBase__container {
+    border-radius: 8px;
+    box-shadow: 0 16px 16px rgba(0, 0, 0, 0.16), 0 0 8px rgba(0, 0, 0, 0.12);
+  }
 }

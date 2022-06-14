@@ -8,17 +8,13 @@ import {
 } from "../ModalRoot/ModalRootContext";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useOrientationChange } from "../../hooks/useOrientationChange";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
 import { multiRef } from "../../lib/utils";
 import { ModalType } from "../ModalRoot/types";
 import { getNavId, NavIdProps } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
-import {
-  useAdaptivity,
-  useAdaptivityIsDesktop,
-} from "../../hooks/useAdaptivity";
-import { Platform } from "../../lib/platform";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
 import "./ModalPage.css";
 
 export interface ModalPageProps
@@ -86,10 +82,6 @@ const ModalPage: React.FC<ModalPageProps> = (props) => {
     updateModalHeight,
   ]);
 
-  const isDesktop = useAdaptivityIsDesktop();
-  const canShowCloseBtn =
-    viewWidth >= ViewWidth.SMALL_TABLET || platform === Platform.VKCOM;
-
   const modalContext = React.useContext(ModalRootContext);
   const { refs } = useModalRegistry(getNavId(props, warn), ModalType.PAGE);
 
@@ -99,7 +91,7 @@ const ModalPage: React.FC<ModalPageProps> = (props) => {
       vkuiClass={classNames(
         getClassName("ModalPage", platform),
         getSizeXClassName("ModalPage", sizeX),
-        isDesktop && "ModalPage--desktop"
+        getViewWidthClassName("ModalPage", viewWidth)
       )}
     >
       <div vkuiClass="ModalPage__in-wrap" ref={refs.innerElement}>
@@ -119,9 +111,10 @@ const ModalPage: React.FC<ModalPageProps> = (props) => {
               <div vkuiClass="ModalPage__content-in">{children}</div>
             </div>
           </div>
-          {canShowCloseBtn && (
-            <ModalDismissButton onClick={onClose || modalContext.onClose} />
-          )}
+          <ModalDismissButton
+            vkuiClass="ModalPage__dismiss"
+            onClick={onClose ?? modalContext.onClose}
+          />
         </div>
       </div>
     </div>

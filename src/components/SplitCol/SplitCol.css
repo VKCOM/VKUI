@@ -10,6 +10,16 @@
   padding: 0 var(--vkui--size_split_col_padding_horizontal--regular);
 }
 
+.SplitCol--viewWidth-smallTabletPlus.SplitCol--spaced-none.SplitCol--spaced-auto {
+  padding: 0 var(--vkui--size_split_col_padding_horizontal--regular);
+}
+
+@media (--view-width-smallTablet) {
+  .SplitCol--viewWidth-none.SplitCol--spaced-none.SplitCol--spaced-auto {
+    padding: 0 var(--vkui--size_split_col_padding_horizontal--regular);
+  }
+}
+
 .SplitCol--fixed {
   height: 100%;
   width: 1px;

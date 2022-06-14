@@ -15,7 +15,7 @@ import { useScrollLock } from "../AppRoot/ScrollContext";
 import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
 import "./Alert.css";
 
 export type AlertActionInterface = AlertAction &
@@ -88,7 +88,6 @@ const AlertAction: React.FC<AlertActionProps> = ({
   ...restProps
 }) => {
   const platform = usePlatform();
-  const { viewWidth } = useAdaptivity();
   const handleItemClick = React.useCallback(
     () => onItemClick(action),
     [onItemClick, action]
@@ -116,11 +115,6 @@ const AlertAction: React.FC<AlertActionProps> = ({
 
   if (platform === ANDROID) {
     mode = "tertiary";
-
-    if (viewWidth === ViewWidth.DESKTOP && action.mode === "destructive") {
-      mode = "primary";
-      appearance = "negative";
-    }
   }
 
   return (
@@ -164,10 +158,6 @@ export const Alert: React.FC<AlertProps> = ({
 
   const resolvedActionsLayout: AlertProps["actionsLayout"] =
     platform === VKCOM ? "horizontal" : actionsLayout;
-  const canShowCloseButton =
-    platform === VKCOM ||
-    (platform === ANDROID && viewWidth >= ViewWidth.SMALL_TABLET);
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
 
   const timeout = platform === ANDROID || platform === VKCOM ? 200 : 300;
 
@@ -225,8 +215,8 @@ export const Alert: React.FC<AlertProps> = ({
         vkuiClass={classNames(
           getClassName("Alert", platform),
           resolvedActionsLayout === "vertical" ? "Alert--v" : "Alert--h",
-          closing && "Alert--closing",
-          isDesktop && "Alert--desktop"
+          getViewWidthClassName("Alert", viewWidth),
+          closing && "Alert--closing"
         )}
         role="alertdialog"
         aria-modal
@@ -247,9 +237,11 @@ export const Alert: React.FC<AlertProps> = ({
             <AlertAction key={i} action={action} onItemClick={onItemClick} />
           ))}
         </div>
-        {canShowCloseButton && (
-          <ModalDismissButton onClick={close} aria-label={dismissLabel} />
-        )}
+        <ModalDismissButton
+          vkuiClass="Alert__close"
+          onClick={close}
+          aria-label={dismissLabel}
+        />
       </FocusTrap>
     </PopoutWrapper>
   );

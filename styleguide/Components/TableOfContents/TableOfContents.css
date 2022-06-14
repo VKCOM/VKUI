@@ -7,15 +7,38 @@
   display: none;
 }
 
-.TableOfContents--desktop .TableOfContents__list .TableOfContents__list {
+.TableOfContents--viewWidth-smallTabletPlus
+  .TableOfContents__list
+  .TableOfContents__list {
   padding-left: 20px;
 }
 
-.TableOfContents--mobile
+@media (min-width: 768px) {
+  .TableOfContents--viewWidth-none
+    .TableOfContents__list
+    .TableOfContents__list {
+    padding-left: 20px;
+  }
+}
+
+.TableOfContents--viewWidth-mobile
+  .TableOfContents__list
+  .TableOfContents__list
+  .TableOfContents__section,
+.TableOfContents--viewWidth-smallMobile
   .TableOfContents__list
   .TableOfContents__list
   .TableOfContents__section {
   padding-left: 32px;
+}
+
+@media (max-width: 767px) {
+  .TableOfContents--viewWidth-none
+    .TableOfContents__list
+    .TableOfContents__list
+    .TableOfContents__section {
+    padding-left: 32px;
+  }
 }
 
 .TableOfContents__list--expanded {

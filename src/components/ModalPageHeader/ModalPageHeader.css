@@ -5,14 +5,26 @@
   --safe-area-inset-top: 0;
 }
 
-.ModalPageHeader--desktop.ModalPageHeader--android {
+.ModalPageHeader--viewWidth-smallTabletPlus.ModalPageHeader--android {
   padding-left: 6px;
   padding-right: 6px;
 }
 
-.ModalPageHeader--desktop.ModalPageHeader--ios {
+.ModalPageHeader--viewWidth-smallTabletPlus.ModalPageHeader--ios {
   padding-left: 4px;
   padding-right: 4px;
+}
+
+@media (--view-width-smallTablet) {
+  .ModalPageHeader--viewWidth-none.ModalPageHeader--android {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  .ModalPageHeader--viewWidth-none.ModalPageHeader--ios {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
 }
 
 .ModalPageHeader .Icon--dismiss_24 {

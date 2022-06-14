@@ -13,7 +13,8 @@ import {
   ModalCardBase,
   ModalCardBaseProps,
 } from "../ModalCardBase/ModalCardBase";
-import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
 import "./ModalCard.css";
 
 export interface ModalCardProps
@@ -40,7 +41,7 @@ const ModalCard: React.FC<ModalCardProps> = (props) => {
     ...restProps
   } = props;
 
-  const isDesktop = useAdaptivityIsDesktop();
+  const { viewWidth } = useAdaptivity();
 
   const modalContext = React.useContext(ModalRootContext);
   const { refs } = useModalRegistry(getNavId(props, warn), ModalType.CARD);
@@ -48,10 +49,10 @@ const ModalCard: React.FC<ModalCardProps> = (props) => {
   return (
     <div
       {...restProps}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames(getClassName("ModalCard", platform), {
-        "ModalCard--desktop": isDesktop,
-      })}
+      vkuiClass={classNames(
+        getClassName("ModalCard", platform),
+        getViewWidthClassName("ModalCard", viewWidth)
+      )}
     >
       <ModalCardBase
         vkuiClass="ModalCard__in"

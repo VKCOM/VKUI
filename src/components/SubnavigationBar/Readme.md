@@ -22,7 +22,6 @@ const FILTERS_STYLE = [
 
 const SubnavigationBarExample = () => {
   const platform = usePlatform();
-  const { viewWidth } = useAdaptivity();
 
   const [activePanel, setActivePanel] = useState("example");
   const [filtersModalOpened, setFiltersModalOpened] = useState(false);
@@ -71,6 +70,8 @@ const SubnavigationBarExample = () => {
     closeModal();
     setFiltersCount(count);
   };
+
+  const isVKCOM = platform === VKCOM;
 
   const modal = (
     <ModalRoot
@@ -195,7 +196,7 @@ const SubnavigationBarExample = () => {
                 <SubnavigationButton
                   before={<Icon24ScanViewfinderOutline />}
                   size="l"
-                  textLevel={viewWidth <= ViewWidth.MOBILE ? 3 : 1}
+                  textLevel={!isVKCOM ? 3 : 1}
                   onClick={() => setActivePanel("add_friend")}
                 >
                   Сканировать QR
@@ -204,7 +205,7 @@ const SubnavigationBarExample = () => {
                 <SubnavigationButton
                   before={<Icon24UserAddOutline />}
                   size="l"
-                  textLevel={viewWidth <= ViewWidth.MOBILE ? 3 : 1}
+                  textLevel={!isVKCOM ? 3 : 1}
                   onClick={() => setActivePanel("add_friend")}
                 >
                   Добавить друга

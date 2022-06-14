@@ -19,6 +19,7 @@ export const Setting = ({
   children,
   disabled,
   hint,
+  className,
 }) => {
   const { setPopout } = useContext(StyleGuideContext);
   const ref = useRef();
@@ -34,9 +35,11 @@ export const Setting = ({
 
   return (
     <Headline
-      className={classNames("Setting", {
-        "Setting--disabled": disabled,
-      })}
+      className={classNames(
+        "Setting",
+        className,
+        disabled && "Setting--disabled"
+      )}
       weight="3"
     >
       {hint ? (

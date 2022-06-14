@@ -49,11 +49,6 @@
   overflow: hidden;
 }
 
-.Snackbar--l-vertical .Snackbar__content {
-  flex-direction: column;
-  align-items: flex-start;
-}
-
 .Snackbar__content-text {
   flex: 1;
   color: var(--text_primary);
@@ -70,10 +65,38 @@
   top: 2px;
 }
 
-.Snackbar--l-vertical .Snackbar__action {
+.Snackbar--l-vertical .Snackbar__content,
+.Snackbar--viewWidth-smallTabletPlus .Snackbar__content,
+.Snackbar--has-after .Snackbar__content {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.Snackbar--l-vertical .Snackbar__action,
+.Snackbar--viewWidth-smallTabletPlus .Snackbar__action,
+.Snackbar--has-after .Snackbar__action {
   margin-top: 2px;
   margin-bottom: -6px;
   margin-left: -16px;
+  margin-right: 0;
+  position: static;
+  top: auto;
+}
+
+@media (--view-width-smallTablet) {
+  .Snackbar--viewWidth-none .Snackbar__content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .Snackbar--viewWidth-none .Snackbar__action {
+    margin-top: 2px;
+    margin-bottom: -6px;
+    margin-left: -16px;
+    margin-right: 0;
+    position: static;
+    top: auto;
+  }
 }
 
 .ModalRoot .Snackbar {
@@ -116,19 +139,36 @@
  * Desktop
  */
 
-.Snackbar--desktop {
+.Snackbar--viewWidth-smallTabletPlus {
   max-width: 328px;
   left: 0;
   bottom: 0;
 }
 
-.Snackbar--desktop .Snackbar__in {
+.Snackbar--viewWidth-smallTabletPlus .Snackbar__in {
   padding: 12px;
   animation-name: vkui-animation-snackbar-intro-horizontal;
 }
 
-.Snackbar--desktop.Snackbar--closing .Snackbar__in {
+.Snackbar--viewWidth-smallTabletPlus.Snackbar--closing .Snackbar__in {
   transform: translate3d(-140%, 0, 0);
+}
+
+@media (--view-width-smallTablet) {
+  .Snackbar--viewWidth-none {
+    max-width: 328px;
+    left: 0;
+    bottom: 0;
+  }
+
+  .Snackbar--viewWidth-none .Snackbar__in {
+    padding: 12px;
+    animation-name: vkui-animation-snackbar-intro-horizontal;
+  }
+
+  .Snackbar--viewWidth-none.Snackbar--closing .Snackbar__in {
+    transform: translate3d(-140%, 0, 0);
+  }
 }
 
 /**
