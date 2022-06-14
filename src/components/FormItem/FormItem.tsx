@@ -58,15 +58,12 @@ export const FormItem: React.FC<FormItemProps> = ({
     <Component
       {...restProps}
       ref={rootEl}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
-        getClassName("FormItem", platform),
+        getClassName("FormItem", platform), // TODO: v5 remove
         `FormItem--${status}`,
         `FormItem--sizeY-${sizeY}`,
-        {
-          "FormItem--withTop": hasReactNode(top),
-          "FormItem--removable": removable,
-        }
+        hasReactNode(top) && "FormItem--withTop",
+        removable && "FormItem--removable"
       )}
     >
       {removable ? (

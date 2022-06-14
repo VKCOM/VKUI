@@ -91,7 +91,7 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
       </IconButton>
       {children}
 
-      <span vkuiClass="Removable__offset" aria-hidden="true"></span>
+      <span vkuiClass="Removable__offset" aria-hidden />
 
       <Tappable
         Component="button"
@@ -165,6 +165,8 @@ export const Removable: React.FC<RemovableOwnProps> = ({
           >
             <Icon24Cancel role="presentation" />
           </IconButton>
+
+          <span vkuiClass="Removable__offset" aria-hidden />
         </div>
       )}
 

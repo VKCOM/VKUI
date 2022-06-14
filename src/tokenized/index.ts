@@ -1,6 +1,12 @@
 export { Avatar } from "../components/Avatar/Avatar";
 export type { AvatarProps } from "../components/Avatar/Avatar";
 
+export { FormItem } from "../components/FormItem/FormItem";
+export type { FormItemProps } from "../components/FormItem/FormItem";
+
+export { FormLayoutGroup } from "../components/FormLayoutGroup/FormLayoutGroup";
+export type { FormLayoutGroupProps } from "../components/FormLayoutGroup/FormLayoutGroup";
+
 export { Button } from "../components/Button/Button";
 export type { ButtonProps } from "../components/Button/Button";
 
