@@ -149,6 +149,9 @@ export type { CounterProps } from "../components/Counter/Counter";
 export { Progress } from "../components/Progress/Progress";
 export type { ProgressProps } from "../components/Progress/Progress";
 
+export { Gallery } from "../components/Gallery/Gallery";
+export type { GalleryProps } from "../components/Gallery/Gallery";
+
 export { DateInput } from "../components/DateInput/DateInput";
 export type { DateInputProps } from "../components/DateInput/DateInput";
 
