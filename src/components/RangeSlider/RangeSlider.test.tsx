@@ -1,7 +1,10 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { setRef } from "../../lib/utils";
-import RangeSliderBase, { RangeSliderProps } from "./RangeSlider";
+import {
+  RangeSlider as RangeSliderBase,
+  RangeSliderProps,
+} from "./RangeSlider";
 import { mockRect, baselineComponent } from "../../testing/utils";
 
 const RangeSlider = (props: RangeSliderProps) => {

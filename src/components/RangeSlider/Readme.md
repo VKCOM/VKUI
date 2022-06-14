@@ -2,31 +2,23 @@
 Они должны переданы в виде массива `[startValue, endValue]`. `onChange` так же возвращает подобный массив.
 
 ```jsx
-class Example extends React.Component {
-  render() {
-    return (
-      <View activePanel="slider">
-        <Panel id="slider">
-          <PanelHeader>RangerSlider</PanelHeader>
-          <Group>
-            <FormItem top="Uncontrolled">
-              <RangeSlider min={10} max={20} step={1} defaultValue={[12, 16]} />
-            </FormItem>
-            <FormItem top="Disabled">
-              <RangeSlider
-                min={10}
-                max={20}
-                step={1}
-                defaultValue={[12, 16]}
-                disabled
-              />
-            </FormItem>
-          </Group>
-        </Panel>
-      </View>
-    );
-  }
-}
-
-<Example />;
+<View activePanel="slider">
+  <Panel id="slider">
+    <PanelHeader>RangerSlider</PanelHeader>
+    <Group>
+      <FormItem top="Uncontrolled">
+        <RangeSlider min={10} max={20} step={1} defaultValue={[12, 16]} />
+      </FormItem>
+      <FormItem top="Disabled">
+        <RangeSlider
+          min={10}
+          max={20}
+          step={1}
+          defaultValue={[12, 16]}
+          disabled
+        />
+      </FormItem>
+    </Group>
+  </Panel>
+</View>
 ```

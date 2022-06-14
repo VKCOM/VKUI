@@ -11,7 +11,7 @@ export type SliderProps = UniversalSliderProps<number>;
 /**
  * @see https://vkcom.github.io/VKUI/#/Slider
  */
-const Slider = ({
+export const Slider = ({
   onChange,
   defaultValue,
   min = 0,
@@ -52,6 +52,3 @@ const Slider = ({
     />
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default Slider;

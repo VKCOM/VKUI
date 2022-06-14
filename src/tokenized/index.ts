@@ -80,6 +80,12 @@ export type { TextProps } from "../components/Typography/Text/Text";
 export { PullToRefresh } from "../components/PullToRefresh/PullToRefresh";
 export type { PullToRefreshProps } from "../components/PullToRefresh/PullToRefresh";
 
+export { Slider } from "../components/Slider/Slider";
+export type { SliderProps } from "../components/Slider/Slider";
+
+export { RangeSlider } from "../components/RangeSlider/RangeSlider";
+export type { RangeSliderProps } from "../components/RangeSlider/RangeSlider";
+
 export { Input } from "../components/Input/Input";
 export type { InputProps } from "../components/Input/Input";
 
