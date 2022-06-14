@@ -183,7 +183,8 @@ const ButtonComponent: React.FC<ButtonProps> = ({
         `Button--sizeY-${sizeY}`,
         stretched && "Button--stretched",
         hasIcons && "Button--with-icon",
-        hasIconOnly && "Button--singleIcon"
+        hasIconOnly && "Button--singleIcon",
+        loading && "Button--loading"
       )}
       getRootRef={getRootRef}
       hoverMode={hasNewTokens ? "Button--hover" : "background"}
