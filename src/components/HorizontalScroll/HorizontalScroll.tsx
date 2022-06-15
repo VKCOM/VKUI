@@ -106,7 +106,10 @@ function doScroll({
     const currentLeft = startLeft + (endLeft - startLeft) * value;
     scrollElement.scrollLeft = Math.ceil(currentLeft);
 
-    if (roundUpElementScrollLeft(scrollElement) !== Math.max(0, endLeft)) {
+    if (
+      roundUpElementScrollLeft(scrollElement) !== Math.max(0, endLeft) &&
+      elapsed !== 1
+    ) {
       requestAnimationFrame(scroll);
       return;
     }
