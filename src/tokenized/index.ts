@@ -134,6 +134,9 @@ export type { HeadlineProps } from "../components/Typography/Headline/Headline";
 export { Div } from "../components/Div/Div";
 export type { DivProps } from "../components/Div/Div";
 
+export { Banner } from "../components/Banner/Banner";
+export type { BannerProps } from "../components/Banner/Banner";
+
 export { FixedLayout } from "../components/FixedLayout/FixedLayout";
 export type { FixedLayoutProps } from "../components/FixedLayout/FixedLayout";
 
