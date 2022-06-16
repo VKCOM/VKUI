@@ -19,6 +19,9 @@ export type { CardScrollProps } from "../components/CardScroll/CardScroll";
 export { HorizontalScroll } from "../components/HorizontalScroll/HorizontalScroll";
 export type { HorizontalScrollProps } from "../components/HorizontalScroll/HorizontalScroll";
 
+export { InitialsAvatar } from "../components/InitialsAvatar/InitialsAvatar";
+export type { InitialsAvatarProps } from "../components/InitialsAvatar/InitialsAvatar";
+
 export { InfoRow } from "../components/InfoRow/InfoRow";
 export type { InfoRowProps } from "../components/InfoRow/InfoRow";
 
