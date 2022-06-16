@@ -67,10 +67,7 @@ const SimpleCellTypography: React.FC<SimpleCellTypographyProps> = (
   }
 };
 
-/**
- * @see https://vkcom.github.io/VKUI/#/SimpleCell
- */
-const SimpleCell: React.FC<SimpleCellProps> = ({
+const SimpleCellComponent: React.FC<SimpleCellProps> = ({
   badge,
   before,
   indicator,
@@ -132,5 +129,7 @@ const SimpleCell: React.FC<SimpleCellProps> = ({
   );
 };
 
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(SimpleCell, { sizeY: true });
+/**
+ * @see https://vkcom.github.io/VKUI/#/SimpleCell
+ */
+export const SimpleCell = withAdaptivity(SimpleCellComponent, { sizeY: true });

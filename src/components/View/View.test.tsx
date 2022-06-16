@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, act } from "@testing-library/react";
-import ConfigProvider from "../ConfigProvider/ConfigProvider";
+import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 import { IOS } from "../../lib/platform";
 import {
   baselineComponent,

@@ -10,15 +10,17 @@ export type ModalDismissButtonProps = React.HTMLAttributes<HTMLButtonElement>;
 /**
  * @see https://vkcom.github.io/VKUI/#/ModalDismissButton
  */
-const ModalDismissButton: React.FC<ModalDismissButtonProps> = (
-  props: ModalDismissButtonProps
-) => {
+export const ModalDismissButton: React.FC<ModalDismissButtonProps> = ({
+  "aria-label": ariaLabel = "Закрыть",
+  ...restProps
+}: ModalDismissButtonProps) => {
   const platform = usePlatform();
 
   return (
     <Tappable
       vkuiClass={getClassName("ModalDismissButton", platform)}
-      {...props}
+      {...restProps}
+      aria-label={ariaLabel}
       activeMode="ModalDismissButton--active"
       hoverMode="ModalDismissButton--hover"
     >
@@ -26,10 +28,3 @@ const ModalDismissButton: React.FC<ModalDismissButtonProps> = (
     </Tappable>
   );
 };
-
-ModalDismissButton.defaultProps = {
-  "aria-label": "Закрыть",
-};
-
-// eslint-disable-next-line import/no-default-export
-export default ModalDismissButton;

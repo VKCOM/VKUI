@@ -27,9 +27,12 @@ export type PanelHeaderBackProps = PanelHeaderButtonProps &
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderBack
  */
-const PanelHeaderBack: React.FunctionComponent<PanelHeaderBackProps> = ({
+export const PanelHeaderBackComponent: React.FunctionComponent<
+  PanelHeaderBackProps
+> = ({
   label,
   sizeX,
+  "aria-label": ariaLabel = "Назад",
   ...restProps
 }: PanelHeaderButtonProps & AdaptivityProps) => {
   const platform = usePlatform();
@@ -39,6 +42,7 @@ const PanelHeaderBack: React.FunctionComponent<PanelHeaderBackProps> = ({
   return (
     <PanelHeaderButton
       {...restProps}
+      aria-label={ariaLabel}
       // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("PanelHeaderBack", platform), {
         "PanelHeaderBack--has-label": showLabel && !!label,
@@ -52,13 +56,10 @@ const PanelHeaderBack: React.FunctionComponent<PanelHeaderBackProps> = ({
   );
 };
 
-PanelHeaderBack.defaultProps = {
-  "aria-label": "Назад",
-};
-
-// eslint-disable-next-line import/no-default-export
-export default React.memo(
-  withAdaptivity(PanelHeaderBack, {
+export const PanelHeaderBack = React.memo(
+  withAdaptivity(PanelHeaderBackComponent, {
     sizeX: true,
   })
 );
+
+PanelHeaderBack.displayName = "PanelHeaderBack";

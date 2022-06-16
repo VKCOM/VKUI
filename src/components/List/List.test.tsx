@@ -1,5 +1,5 @@
 import { baselineComponent } from "../../testing/utils";
-import List from "./List";
+import { List } from "./List";
 
 describe("List", () => {
   baselineComponent(List);

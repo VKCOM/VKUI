@@ -34,7 +34,7 @@ const warn = warnOnce("TabbarItem");
 /**
  * @see https://vkcom.github.io/VKUI/#/TabbarItem
  */
-const TabbarItem: React.FunctionComponent<TabbarItemProps> = ({
+export const TabbarItem: React.FunctionComponent<TabbarItemProps> = ({
   children,
   selected,
   label,
@@ -94,6 +94,3 @@ const TabbarItem: React.FunctionComponent<TabbarItemProps> = ({
     </Component>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default TabbarItem;

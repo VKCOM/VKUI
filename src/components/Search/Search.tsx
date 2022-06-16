@@ -65,17 +65,18 @@ export interface SearchProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Search
  */
-const Search: React.FC<SearchProps> = ({
-  before,
+const SearchComponent: React.FC<SearchProps> = ({
+  before = <Icon16SearchOutline aria-hidden />,
   className,
-  defaultValue,
-  placeholder,
-  after,
+  defaultValue = "",
+  placeholder = "Поиск",
+  after = "Отмена",
   getRef,
   platform,
   icon,
   onIconClick = noop,
   style,
+  autoComplete = "off",
   ...inputProps
 }) => {
   const inputRef = useExternRef(getRef);
@@ -136,6 +137,7 @@ const Search: React.FC<SearchProps> = ({
           <input
             type="search"
             {...inputProps}
+            autoComplete={autoComplete}
             ref={inputRef}
             vkuiClass="Search__input"
             onFocus={onFocus}
@@ -184,13 +186,6 @@ const Search: React.FC<SearchProps> = ({
   );
 };
 
-Search.defaultProps = {
-  autoComplete: "off",
-  defaultValue: "",
-  placeholder: "Поиск",
-  after: "Отмена",
-  before: <Icon16SearchOutline />,
-};
+export const Search = withPlatform(SearchComponent);
 
-// eslint-disable-next-line import/no-default-export
-export default withPlatform(Search);
+Search.displayName = "Search";

@@ -46,6 +46,3 @@ export function useModalRegistry(id: string | undefined, type: ModalType) {
   }).current;
   return { refs };
 }
-
-// eslint-disable-next-line import/no-default-export
-export default ModalRootContext;

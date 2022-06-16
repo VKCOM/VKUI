@@ -1,5 +1,6 @@
 import * as React from "react";
-import ModalRootContext, {
+import {
+  ModalRootContext,
   ModalRootContextInterface,
 } from "./ModalRootContext";
 

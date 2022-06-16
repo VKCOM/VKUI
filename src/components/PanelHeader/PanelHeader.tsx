@@ -18,7 +18,7 @@ import {
 } from "../../hoc/withAdaptivity";
 import { Text } from "../Typography/Text/Text";
 import { TooltipContainer } from "../Tooltip/TooltipContainer";
-import ModalRootContext from "../ModalRoot/ModalRootContext";
+import { ModalRootContext } from "../ModalRoot/ModalRootContext";
 import { Spacing } from "../Spacing/Spacing";
 import "./PanelHeader.css";
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Icon24Dismiss } from "@vkontakte/icons";
 import { Button } from "../Button/Button";
-import SimpleCell from "../SimpleCell/SimpleCell";
+import { SimpleCell } from "../SimpleCell/SimpleCell";
 import { Avatar } from "../Avatar/Avatar";
 import { Caption } from "../Typography/Caption/Caption";
 import { usePlatform } from "../../hooks/usePlatform";
@@ -52,7 +52,7 @@ const warn = warnOnce("PromoBanner");
 /**
  * @see https://vkcom.github.io/VKUI/#/PromoBanner
  */
-const PromoBanner = (props: PromoBannerProps) => {
+export const PromoBanner = (props: PromoBannerProps) => {
   const platform = usePlatform();
   const { bannerData = {}, onClose, ...restProps } = props;
 
@@ -134,6 +134,3 @@ const PromoBanner = (props: PromoBannerProps) => {
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default PromoBanner;

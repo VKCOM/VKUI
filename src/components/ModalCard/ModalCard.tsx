@@ -4,7 +4,8 @@ import { classNames } from "../../lib/classNames";
 import { withPlatform } from "../../hoc/withPlatform";
 import { HasPlatform } from "../../types";
 import { withAdaptivity } from "../../hoc/withAdaptivity";
-import ModalRootContext, {
+import {
+  ModalRootContext,
   useModalRegistry,
 } from "../ModalRoot/ModalRootContext";
 import { ModalType } from "../ModalRoot/types";
@@ -29,36 +30,36 @@ export interface ModalCardProps
 
 const warn = warnOnce("ModalCard");
 
-/**
- * @see https://vkcom.github.io/VKUI/#/ModalCard
- */
-const ModalCard: React.FC<ModalCardProps & AdaptivityContextInterface> = (
-  props
-) => {
-  const {
-    icon,
-    header,
-    subheader,
-    children,
-    actions,
-    actionsLayout,
-    onClose,
-    platform,
-    viewWidth,
-    viewHeight,
-    hasMouse,
-    nav,
-    ...restProps
-  } = props;
-
+const ModalCardComponent: React.FC<
+  ModalCardProps & AdaptivityContextInterface
+> = ({
+  icon,
+  header,
+  subheader,
+  children,
+  actions,
+  actionsLayout = "horizontal",
+  onClose,
+  platform,
+  viewWidth,
+  viewHeight,
+  hasMouse,
+  nav,
+  id,
+  ...restProps
+}) => {
   const isDesktop = useAdaptivityIsDesktop();
 
   const modalContext = React.useContext(ModalRootContext);
-  const { refs } = useModalRegistry(getNavId(props, warn), ModalType.CARD);
+  const { refs } = useModalRegistry(
+    getNavId({ nav, id }, warn),
+    ModalType.CARD
+  );
 
   return (
     <div
       {...restProps}
+      id={id}
       // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("ModalCard", platform), {
         "ModalCard--desktop": isDesktop,
@@ -80,13 +81,13 @@ const ModalCard: React.FC<ModalCardProps & AdaptivityContextInterface> = (
   );
 };
 
-ModalCard.defaultProps = {
-  actionsLayout: "horizontal",
-};
-
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(withPlatform(ModalCard), {
+/**
+ * @see https://vkcom.github.io/VKUI/#/ModalCard
+ */
+export const ModalCard = withAdaptivity(withPlatform(ModalCardComponent), {
   viewWidth: true,
   viewHeight: true,
   hasMouse: true,
 });
+
+ModalCard.displayName = "ModalCard";

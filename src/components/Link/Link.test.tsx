@@ -1,5 +1,5 @@
 import { baselineComponent } from "../../testing/utils";
-import Link, { LinkProps } from "./Link";
+import { Link, LinkProps } from "./Link";
 import { render, screen } from "@testing-library/react";
 
 const LinkTest = (props: LinkProps) => (

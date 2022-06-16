@@ -1,5 +1,5 @@
 import { baselineComponent } from "../../testing/utils";
-import ModalDismissButton from "./ModalDismissButton";
+import { ModalDismissButton } from "./ModalDismissButton";
 
 describe("ModalDismissButton", () => {
   baselineComponent(ModalDismissButton);

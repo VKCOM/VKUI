@@ -17,12 +17,9 @@ export interface TabsProps
 export const TabsModeContext =
   React.createContext<TabsProps["mode"]>("default");
 
-/**
- * @see https://vkcom.github.io/VKUI/#/Tabs
- */
-const Tabs: React.FunctionComponent<TabsProps> = ({
+const TabsComponent: React.FunctionComponent<TabsProps> = ({
   children,
-  mode,
+  mode = "default",
   getRootRef,
   sizeX,
   ...restProps
@@ -52,9 +49,9 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
   );
 };
 
-Tabs.defaultProps = {
-  mode: "default",
-};
+/**
+ * @see https://vkcom.github.io/VKUI/#/Tabs
+ */
+export const Tabs = withAdaptivity(TabsComponent, { sizeX: true });
 
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(Tabs, { sizeX: true });
+Tabs.displayName = "Tabs";

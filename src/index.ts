@@ -17,7 +17,7 @@ export { PanelHeaderButton } from "./components/PanelHeaderButton/PanelHeaderBut
 export type { PanelHeaderButtonProps } from "./components/PanelHeaderButton/PanelHeaderButton";
 export { PanelHeader } from "./components/PanelHeader/PanelHeader";
 export type { PanelHeaderProps } from "./components/PanelHeader/PanelHeader";
-export { default as PanelHeaderContent } from "./components/PanelHeaderContent/PanelHeaderContent";
+export { PanelHeaderContent } from "./components/PanelHeaderContent/PanelHeaderContent";
 export type { PanelHeaderContentProps } from "./components/PanelHeaderContent/PanelHeaderContent";
 export { PanelHeaderContext } from "./components/PanelHeaderContext/PanelHeaderContext";
 export type { PanelHeaderContextProps } from "./components/PanelHeaderContext/PanelHeaderContext";
@@ -25,11 +25,11 @@ export { SplitLayout } from "./components/SplitLayout/SplitLayout";
 export type { SplitLayoutProps } from "./components/SplitLayout/SplitLayout";
 export { SplitCol } from "./components/SplitCol/SplitCol";
 export type { SplitColProps } from "./components/SplitCol/SplitCol";
-export { default as Epic } from "./components/Epic/Epic";
+export { Epic } from "./components/Epic/Epic";
 export type { EpicProps } from "./components/Epic/Epic";
-export { default as Tabbar } from "./components/Tabbar/Tabbar";
+export { Tabbar } from "./components/Tabbar/Tabbar";
 export type { TabbarProps } from "./components/Tabbar/Tabbar";
-export { default as TabbarItem } from "./components/TabbarItem/TabbarItem";
+export { TabbarItem } from "./components/TabbarItem/TabbarItem";
 export type { TabbarItemProps } from "./components/TabbarItem/TabbarItem";
 export { HorizontalScroll } from "./components/HorizontalScroll/HorizontalScroll";
 export type { HorizontalScrollProps } from "./components/HorizontalScroll/HorizontalScroll";
@@ -50,7 +50,7 @@ export { ActionSheet } from "./components/ActionSheet/ActionSheet";
 export type { ActionSheetProps } from "./components/ActionSheet/ActionSheet";
 export { ActionSheetItem } from "./components/ActionSheetItem/ActionSheetItem";
 export type { ActionSheetItemProps } from "./components/ActionSheetItem/ActionSheetItem";
-export { default as ScreenSpinner } from "./components/ScreenSpinner/ScreenSpinner";
+export { ScreenSpinner } from "./components/ScreenSpinner/ScreenSpinner";
 export type { ScreenSpinnerProps } from "./components/ScreenSpinner/ScreenSpinner";
 export { Snackbar } from "./components/Snackbar/Snackbar";
 export type { SnackbarProps } from "./components/Snackbar/Snackbar";
@@ -61,14 +61,14 @@ export type { SnackbarProps } from "./components/Snackbar/Snackbar";
 export { ModalRoot } from "./components/ModalRoot/ModalRootAdaptive";
 export type { ModalRootProps } from "./components/ModalRoot/ModalRootAdaptive";
 export { withModalRootContext } from "./components/ModalRoot/withModalRootContext";
-export { default as ModalRootContext } from "./components/ModalRoot/ModalRootContext";
-export { default as ModalPage } from "./components/ModalPage/ModalPage";
+export { ModalRootContext } from "./components/ModalRoot/ModalRootContext";
+export { ModalPage } from "./components/ModalPage/ModalPage";
 export type { ModalPageProps } from "./components/ModalPage/ModalPage";
 export { ModalPageHeader } from "./components/ModalPageHeader/ModalPageHeader";
 export type { ModalPageHeaderProps } from "./components/ModalPageHeader/ModalPageHeader";
-export { default as ModalCard } from "./components/ModalCard/ModalCard";
+export { ModalCard } from "./components/ModalCard/ModalCard";
 export type { ModalCardProps } from "./components/ModalCard/ModalCard";
-export { default as ModalDismissButton } from "./components/ModalDismissButton/ModalDismissButton";
+export { ModalDismissButton } from "./components/ModalDismissButton/ModalDismissButton";
 export type { ModalDismissButtonProps } from "./components/ModalDismissButton/ModalDismissButton";
 
 /**
@@ -88,22 +88,22 @@ export { default as CardGrid } from "./components/CardGrid/CardGrid";
 export type { CardGridProps } from "./components/CardGrid/CardGrid";
 export { CardScroll } from "./components/CardScroll/CardScroll";
 export type { CardScrollProps } from "./components/CardScroll/CardScroll";
-export { default as ContentCard } from "./components/ContentCard/ContentCard";
+export { ContentCard } from "./components/ContentCard/ContentCard";
 export type { ContentCardProps } from "./components/ContentCard/ContentCard";
 export { CellButton } from "./components/CellButton/CellButton";
 export type { CellButtonProps } from "./components/CellButton/CellButton";
-export { default as Header } from "./components/Header/Header";
+export { Header } from "./components/Header/Header";
 export type { HeaderProps } from "./components/Header/Header";
-export { default as Group } from "./components/Group/Group";
+export { Group } from "./components/Group/Group";
 export type { GroupProps } from "./components/Group/Group";
 export { Gradient } from "./components/Gradient/Gradient";
 export type { GradientProps } from "./components/Gradient/Gradient";
-export { default as List } from "./components/List/List";
+export { List } from "./components/List/List";
 export { Cell } from "./components/Cell/Cell";
 export type { CellProps } from "./components/Cell/Cell";
-export { default as RichCell } from "./components/RichCell/RichCell";
+export { RichCell } from "./components/RichCell/RichCell";
 export type { RichCellProps } from "./components/RichCell/RichCell";
-export { default as SimpleCell } from "./components/SimpleCell/SimpleCell";
+export { SimpleCell } from "./components/SimpleCell/SimpleCell";
 export type { SimpleCellProps } from "./components/SimpleCell/SimpleCell";
 export { HorizontalCell } from "./components/HorizontalCell/HorizontalCell";
 export type { HorizontalCellProps } from "./components/HorizontalCell/HorizontalCell";
@@ -121,19 +121,19 @@ export { InitialsAvatar } from "./components/InitialsAvatar/InitialsAvatar";
 export type { InitialsAvatarProps } from "./components/InitialsAvatar/InitialsAvatar";
 export { Progress } from "./components/Progress/Progress";
 export type { ProgressProps } from "./components/Progress/Progress";
-export { default as Search } from "./components/Search/Search";
+export { Search } from "./components/Search/Search";
 export type { SearchProps } from "./components/Search/Search";
-export { default as Tabs } from "./components/Tabs/Tabs";
+export { Tabs } from "./components/Tabs/Tabs";
 export type { TabsProps } from "./components/Tabs/Tabs";
-export { default as TabsItem } from "./components/TabsItem/TabsItem";
+export { TabsItem } from "./components/TabsItem/TabsItem";
 export type { TabsItemProps } from "./components/TabsItem/TabsItem";
 export { Spinner } from "./components/Spinner/Spinner";
 export type { SpinnerProps } from "./components/Spinner/Spinner";
 export { PullToRefresh } from "./components/PullToRefresh/PullToRefresh";
 export type { PullToRefreshProps } from "./components/PullToRefresh/PullToRefresh";
-export { default as Link } from "./components/Link/Link";
+export { Link } from "./components/Link/Link";
 export type { LinkProps } from "./components/Link/Link";
-export { default as Tooltip } from "./components/Tooltip/Tooltip";
+export { Tooltip } from "./components/Tooltip/Tooltip";
 export type { TooltipProps } from "./components/Tooltip/Tooltip";
 export { TooltipContainer } from "./components/Tooltip/TooltipContainer";
 export { Counter } from "./components/Counter/Counter";
@@ -144,7 +144,7 @@ export { Separator } from "./components/Separator/Separator";
 export type { SeparatorProps } from "./components/Separator/Separator";
 export { Spacing } from "./components/Spacing/Spacing";
 export type { SpacingProps } from "./components/Spacing/Spacing";
-export { default as Placeholder } from "./components/Placeholder/Placeholder";
+export { Placeholder } from "./components/Placeholder/Placeholder";
 export type { PlaceholderProps } from "./components/Placeholder/Placeholder";
 export { Banner } from "./components/Banner/Banner";
 export type { BannerProps } from "./components/Banner/Banner";
@@ -164,7 +164,7 @@ export type { PaginationProps } from "./components/Pagination/Pagination";
 /**
  * Forms
  */
-export { default as FormLayout } from "./components/FormLayout/FormLayout";
+export { FormLayout } from "./components/FormLayout/FormLayout";
 export type { FormLayoutProps } from "./components/FormLayout/FormLayout";
 export { FormItem } from "./components/FormItem/FormItem";
 export type { FormItemProps } from "./components/FormItem/FormItem";
@@ -209,7 +209,7 @@ export type {
 } from "./components/CustomSelect/CustomSelect";
 export { CustomSelectOption } from "./components/CustomSelectOption/CustomSelectOption";
 export type { CustomSelectOptionProps } from "./components/CustomSelectOption/CustomSelectOption";
-export { default as DatePicker } from "./components/DatePicker/DatePicker";
+export { DatePicker } from "./components/DatePicker/DatePicker";
 export type {
   DatePickerProps,
   DatePickerDateFormat,
@@ -245,11 +245,11 @@ export { Touch } from "./components/Touch/Touch";
 export type { TouchProps } from "./components/Touch/Touch";
 export { PanelSpinner } from "./components/PanelSpinner/PanelSpinner";
 export type { PanelSpinnerProps } from "./components/PanelSpinner/PanelSpinner";
-export { default as PanelHeaderClose } from "./components/PanelHeaderClose/PanelHeaderClose";
-export { default as PanelHeaderBack } from "./components/PanelHeaderBack/PanelHeaderBack";
+export { PanelHeaderClose } from "./components/PanelHeaderClose/PanelHeaderClose";
+export { PanelHeaderBack } from "./components/PanelHeaderBack/PanelHeaderBack";
 export type { PanelHeaderBackProps } from "./components/PanelHeaderBack/PanelHeaderBack";
-export { default as PanelHeaderSubmit } from "./components/PanelHeaderSubmit/PanelHeaderSubmit";
-export { default as PanelHeaderEdit } from "./components/PanelHeaderEdit/PanelHeaderEdit";
+export { PanelHeaderSubmit } from "./components/PanelHeaderSubmit/PanelHeaderSubmit";
+export { PanelHeaderEdit } from "./components/PanelHeaderEdit/PanelHeaderEdit";
 export type { PanelHeaderEditProps } from "./components/PanelHeaderEdit/PanelHeaderEdit";
 export { ModalCardBase } from "./components/ModalCardBase/ModalCardBase";
 export type { ModalCardBaseProps } from "./components/ModalCardBase/ModalCardBase";
@@ -260,7 +260,7 @@ export type { ModalCardBaseProps } from "./components/ModalCardBase/ModalCardBas
 export { AppRoot } from "./components/AppRoot/AppRoot";
 export type { AppRootProps } from "./components/AppRoot/AppRoot";
 export { AdaptivityProvider } from "./components/AdaptivityProvider/AdaptivityProvider";
-export { default as ConfigProvider } from "./components/ConfigProvider/ConfigProvider";
+export { ConfigProvider } from "./components/ConfigProvider/ConfigProvider";
 export type { ConfigProviderProps } from "./components/ConfigProvider/ConfigProvider";
 export {
   ConfigProviderContext,
@@ -274,7 +274,7 @@ export { LocaleProviderContext } from "./components/LocaleProviderContext/Locale
 /**
  * Advertisement
  */
-export { default as PromoBanner } from "./components/PromoBanner/PromoBanner";
+export { PromoBanner } from "./components/PromoBanner/PromoBanner";
 export type { PromoBannerProps } from "./components/PromoBanner/PromoBanner";
 
 /**
@@ -317,7 +317,7 @@ export { useNavTransition } from "./components/NavTransitionContext/NavTransitio
  * Utils
  */
 export { classNamesString as classNames } from "./lib/classNames";
-export { default as animate } from "./lib/animate";
+export { animate } from "./lib/animate";
 export { removeObjectKeys } from "./lib/removeObjectKeys";
 export { SSRWrapper } from "./lib/SSR";
 export type { SSRWrapperProps } from "./lib/SSR";

@@ -155,9 +155,9 @@ function isVerticalPlacement(placement: Placement) {
 /**
  * @see https://vkcom.github.io/VKUI/#/Tooltip
  */
-const Tooltip: React.FC<TooltipProps> = ({
+export const Tooltip: React.FC<TooltipProps> = ({
   children,
-  isShown: _isShown,
+  isShown: _isShown = true,
   offsetX = 0,
   offsetY = 15,
   alignX,
@@ -165,6 +165,7 @@ const Tooltip: React.FC<TooltipProps> = ({
   onClose,
   cornerOffset = 0,
   cornerAbsoluteOffset,
+  mode = "accent",
   ...restProps
 }) => {
   const { entering } = useNavTransition();
@@ -293,6 +294,7 @@ const Tooltip: React.FC<TooltipProps> = ({
         ReactDOM.createPortal(
           <SimpleTooltip
             {...restProps}
+            mode={mode}
             ref={(el) => setTooltipRef(el)}
             arrowRef={(el) => setTooltipArrowRef(el)}
             style={{ arrow: styles.arrow, container: styles.popper }}
@@ -306,13 +308,3 @@ const Tooltip: React.FC<TooltipProps> = ({
     </React.Fragment>
   );
 };
-
-Tooltip.defaultProps = {
-  offsetX: 0,
-  offsetY: 15,
-  cornerOffset: 0,
-  isShown: true,
-  mode: "accent",
-};
-// eslint-disable-next-line import/no-default-export
-export default Tooltip;

@@ -1,7 +1,7 @@
 import { screen, render } from "@testing-library/react";
 import { baselineComponent } from "../../testing/utils";
 import { SizeType } from "../AdaptivityProvider/AdaptivityContext";
-import SimpleCell from "./SimpleCell";
+import { SimpleCell } from "./SimpleCell";
 
 describe("SimpleCell", () => {
   baselineComponent(SimpleCell);

@@ -20,10 +20,7 @@ export interface EpicProps
 
 const warn = warnOnce("Epic");
 
-/**
- * @see https://vkcom.github.io/VKUI/#/Epic
- */
-export const Epic: React.FC<EpicProps & AdaptivityContextInterface> = (
+const EpicComponent: React.FC<EpicProps & AdaptivityContextInterface> = (
   props
 ) => {
   const platform = usePlatform();
@@ -60,7 +57,11 @@ export const Epic: React.FC<EpicProps & AdaptivityContextInterface> = (
   );
 };
 
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(Epic, {
+/**
+ * @see https://vkcom.github.io/VKUI/#/Epic
+ */
+export const Epic = withAdaptivity(EpicComponent, {
   viewWidth: true,
 });
+
+Epic.displayName = "Epic";

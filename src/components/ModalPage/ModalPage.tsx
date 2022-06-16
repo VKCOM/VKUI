@@ -12,7 +12,7 @@ import {
   AdaptivityContextInterface,
   AdaptivityProps,
 } from "../AdaptivityProvider/AdaptivityContext";
-import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
+import { ModalDismissButton } from "../ModalDismissButton/ModalDismissButton";
 import { multiRef } from "../../lib/utils";
 import { ModalType } from "../ModalRoot/types";
 import { getNavId, NavIdProps } from "../../lib/getNavId";
@@ -58,31 +58,27 @@ export interface ModalPageProps
 
 const warn = warnOnce("ModalPage");
 
-/**
- * @see https://vkcom.github.io/VKUI/#/ModalPage
- */
-const ModalPage: React.FC<ModalPageProps & AdaptivityContextInterface> = (
-  props
-) => {
+const ModalPageComponent: React.FC<
+  ModalPageProps & AdaptivityContextInterface
+> = ({
+  children,
+  header,
+  viewWidth,
+  viewHeight,
+  sizeX,
+  hasMouse,
+  onOpen,
+  onOpened,
+  onClose,
+  onClosed,
+  settlingHeight, // 75
+  dynamicContentHeight,
+  getModalContentRef,
+  nav,
+  id,
+  ...restProps
+}) => {
   const { updateModalHeight } = React.useContext(ModalRootContext);
-
-  const {
-    children,
-    header,
-    viewWidth,
-    viewHeight,
-    sizeX,
-    hasMouse,
-    onOpen,
-    onOpened,
-    onClose,
-    onClosed,
-    settlingHeight,
-    dynamicContentHeight,
-    getModalContentRef,
-    nav,
-    ...restProps
-  } = props;
 
   const platform = usePlatform();
   const orientation = useOrientationChange();
@@ -98,11 +94,15 @@ const ModalPage: React.FC<ModalPageProps & AdaptivityContextInterface> = (
     viewWidth >= ViewWidth.SMALL_TABLET || platform === Platform.VKCOM;
 
   const modalContext = React.useContext(ModalRootContext);
-  const { refs } = useModalRegistry(getNavId(props, warn), ModalType.PAGE);
+  const { refs } = useModalRegistry(
+    getNavId({ nav, id }, warn),
+    ModalType.PAGE
+  );
 
   return (
     <div
       {...restProps}
+      id={id}
       // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("ModalPage", platform),
@@ -138,14 +138,14 @@ const ModalPage: React.FC<ModalPageProps & AdaptivityContextInterface> = (
   );
 };
 
-ModalPage.defaultProps = {
-  settlingHeight: 75,
-};
-
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(ModalPage, {
+/**
+ * @see https://vkcom.github.io/VKUI/#/ModalPage
+ */
+export const ModalPage = withAdaptivity(ModalPageComponent, {
   viewWidth: true,
   viewHeight: true,
   sizeX: true,
   hasMouse: true,
 });
+
+ModalPage.displayName = "ModalPage";

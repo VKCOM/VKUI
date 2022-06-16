@@ -13,7 +13,9 @@ export type FormLayoutProps = React.AllHTMLAttributes<HTMLElement> &
 /**
  * @see https://vkcom.github.io/VKUI/#/FormLayout
  */
-const FormLayout: React.FC<FormLayoutProps> = (props: FormLayoutProps) => {
+export const FormLayout: React.FC<FormLayoutProps> = (
+  props: FormLayoutProps
+) => {
   const {
     children,
     Component = "form",
@@ -37,6 +39,3 @@ const FormLayout: React.FC<FormLayoutProps> = (props: FormLayoutProps) => {
     </Component>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default FormLayout;

@@ -1,7 +1,7 @@
 import { HtmlHTMLAttributes, ReactElement, Fragment } from "react";
 import { baselineComponent, waitForPopper } from "../../testing/utils";
 import { render, screen } from "@testing-library/react";
-import Tooltip from "./Tooltip";
+import { Tooltip } from "./Tooltip";
 import { HasRootRef } from "../../types";
 import { TooltipContainer } from "./TooltipContainer";
 import userEvent from "@testing-library/user-event";
