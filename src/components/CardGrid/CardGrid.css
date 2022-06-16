@@ -5,12 +5,13 @@
   flex-wrap: wrap;
 }
 
-.CardGrid + .CardGrid {
-  margin-top: 16px;
+.CardGrid--spaced {
+  padding: var(--vkui--size_base_padding_vertical--regular)
+    var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .CardGrid .Card {
-  margin-right: 8px;
+  margin-right: var(--vkui--size_cardgrid_padding--regular);
 }
 
 .CardGrid--l .Card {
@@ -19,7 +20,7 @@
 }
 
 .CardGrid--l .Card:not(:first-child) {
-  margin-top: 8px;
+  margin-top: var(--vkui--size_cardgrid_padding--regular);
 }
 
 .CardGrid--m .Card {
@@ -27,7 +28,7 @@
 }
 
 .CardGrid--m .Card:nth-child(n + 3) {
-  margin-top: 8px;
+  margin-top: var(--vkui--size_cardgrid_padding--regular);
 }
 
 .CardGrid--m .Card:nth-child(2n) {
@@ -39,29 +40,20 @@
 }
 
 .CardGrid--s .Card:nth-child(n + 4) {
-  margin-top: 8px;
+  margin-top: var(--vkui--size_cardgrid_padding--regular);
 }
 
 .CardGrid--s .Card:nth-child(3n) {
   margin-right: 0;
 }
 
-/**
- * iOS
- */
-
-.CardGrid--ios.CardGrid--sizeX-compact {
-  padding-left: 12px;
-  padding-right: 12px;
+.CardGrid--sizeX-compact {
+  padding-left: var(--vkui--size_base_padding_horizontal--regular);
+  padding-right: var(--vkui--size_base_padding_horizontal--regular);
 }
 
-/**
- * Android & VKCOM
- */
-
-.CardGrid--android.CardGrid--sizeX-compact {
-  padding-left: 16px;
-  padding-right: 16px;
+.CardGrid + .CardGrid {
+  margin-top: 16px;
 }
 
 /**
