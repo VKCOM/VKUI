@@ -4,7 +4,7 @@ import { FC, useContext } from "react";
 import { ANDROID, VKCOM } from "../../lib/platform";
 import { baselineComponent } from "../../testing/utils";
 import { Scheme, Appearance } from "../../helpers/scheme";
-import ConfigProvider from "./ConfigProvider";
+import { ConfigProvider } from "./ConfigProvider";
 import { ConfigProviderContext, WebviewType } from "./ConfigProviderContext";
 
 describe("ConfigProvider", () => {

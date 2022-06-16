@@ -1,5 +1,5 @@
 import { describeScreenshotFuzz } from "../../testing/e2e";
-import Tooltip, { TooltipProps } from "./Tooltip";
+import { Tooltip, TooltipProps } from "./Tooltip";
 import { TooltipContainer } from "./TooltipContainer";
 
 describe("Tooltip", () => {

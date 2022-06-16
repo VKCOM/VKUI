@@ -71,8 +71,8 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/Header
  */
-const Header: React.FC<HeaderProps> = ({
-  mode,
+export const Header: React.FC<HeaderProps> = ({
+  mode = "primary",
   children,
   subtitle,
   indicator,
@@ -139,10 +139,3 @@ const Header: React.FC<HeaderProps> = ({
     </header>
   );
 };
-
-Header.defaultProps = {
-  mode: "primary",
-};
-
-// eslint-disable-next-line import/no-default-export
-export default Header;

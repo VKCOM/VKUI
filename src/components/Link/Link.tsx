@@ -9,7 +9,10 @@ export type LinkProps = TappableProps;
 /**
  * @see https://vkcom.github.io/VKUI/#/Link
  */
-const Link: React.FC<LinkProps> = ({ children, ...restProps }: LinkProps) => {
+export const Link: React.FC<LinkProps> = ({
+  children,
+  ...restProps
+}: LinkProps) => {
   const platform = usePlatform();
 
   return (
@@ -25,6 +28,3 @@ const Link: React.FC<LinkProps> = ({ children, ...restProps }: LinkProps) => {
     </Tappable>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default Link;

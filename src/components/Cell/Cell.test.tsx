@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { baselineComponent } from "../../testing/utils";
 import { Cell } from "./Cell";
 import { ListContext } from "../List/ListContext";
-import List from "../List/List";
+import { List } from "../List/List";
 
 const label = "Перенести ячейку";
 const dragger = () => screen.getByLabelText(label);

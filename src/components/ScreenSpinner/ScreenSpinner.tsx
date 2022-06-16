@@ -12,10 +12,13 @@ export type ScreenSpinnerProps = React.HTMLAttributes<HTMLDivElement> &
 /**
  * @see https://vkcom.github.io/VKUI/#/ScreenSpinner
  */
-const ScreenSpinner: React.FC<ScreenSpinnerProps> = (
-  props: ScreenSpinnerProps
-) => {
-  const { style, className, ...restProps } = props;
+export const ScreenSpinner: React.FC<ScreenSpinnerProps> = ({
+  style,
+  className,
+  size = "large",
+  "aria-label": ariaLabel = "Пожалуйста, подождите...",
+  ...restProps
+}: ScreenSpinnerProps) => {
   const platform = usePlatform();
 
   useScrollLock();
@@ -28,16 +31,13 @@ const ScreenSpinner: React.FC<ScreenSpinnerProps> = (
       style={style}
     >
       <div vkuiClass="ScreenSpinner__container">
-        <Spinner vkuiClass="ScreenSpinner__spinner" {...restProps} />
+        <Spinner
+          vkuiClass="ScreenSpinner__spinner"
+          size={size}
+          aria-label={ariaLabel}
+          {...restProps}
+        />
       </div>
     </PopoutWrapper>
   );
 };
-
-ScreenSpinner.defaultProps = {
-  size: "large",
-  "aria-label": "Пожалуйста, подождите...",
-};
-
-// eslint-disable-next-line import/no-default-export
-export default ScreenSpinner;

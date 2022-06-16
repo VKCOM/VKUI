@@ -4,7 +4,7 @@ import {
   Icon24MessageOutline,
   Icon28MessageOutline,
 } from "@vkontakte/icons";
-import SimpleCell, { SimpleCellProps } from "./SimpleCell";
+import { SimpleCell, SimpleCellProps } from "./SimpleCell";
 import { Avatar } from "../Avatar/Avatar";
 import IconButton from "../IconButton/IconButton";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";

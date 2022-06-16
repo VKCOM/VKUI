@@ -1,6 +1,6 @@
 import { screen, render } from "@testing-library/react";
 import { baselineComponent, imgOnlyAttributes } from "../../testing/utils";
-import ContentCard, { ContentCardProps } from "./ContentCard";
+import { ContentCard, ContentCardProps } from "./ContentCard";
 
 const ContentCardTest = (props: ContentCardProps) => (
   <ContentCard

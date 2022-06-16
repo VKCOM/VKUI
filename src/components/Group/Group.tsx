@@ -11,7 +11,7 @@ import {
   AdaptivityProps,
   SizeType,
 } from "../../hoc/withAdaptivity";
-import ModalRootContext from "../ModalRoot/ModalRootContext";
+import { ModalRootContext } from "../ModalRoot/ModalRootContext";
 import "./Group.css";
 
 export interface GroupProps
@@ -35,15 +35,12 @@ export interface GroupProps
   mode?: "plain" | "card";
 }
 
-/**
- * @see https://vkcom.github.io/VKUI/#/Group
- */
-const Group: React.FC<GroupProps> = (props: GroupProps) => {
+const GroupComponent: React.FC<GroupProps> = (props: GroupProps) => {
   const {
     header,
     description,
     children,
-    separator,
+    separator = "auto",
     getRootRef,
     mode,
     sizeX,
@@ -90,9 +87,9 @@ const Group: React.FC<GroupProps> = (props: GroupProps) => {
   );
 };
 
-Group.defaultProps = {
-  separator: "auto",
-};
+/**
+ * @see https://vkcom.github.io/VKUI/#/Group
+ */
+export const Group = withAdaptivity(GroupComponent, { sizeX: true });
 
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(Group, { sizeX: true });
+Group.displayName = "Group";

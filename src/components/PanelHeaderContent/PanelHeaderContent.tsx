@@ -48,7 +48,9 @@ const PanelHeaderChildren: React.FC<PanelHeaderChildrenProps> = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderContent
  */
-const PanelHeaderContent: React.FunctionComponent<PanelHeaderContentProps> = ({
+export const PanelHeaderContent: React.FunctionComponent<
+  PanelHeaderContentProps
+> = ({
   className,
   style,
   aside,
@@ -103,6 +105,3 @@ const PanelHeaderContent: React.FunctionComponent<PanelHeaderContentProps> = ({
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default PanelHeaderContent;

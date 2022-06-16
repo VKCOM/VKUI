@@ -3,7 +3,7 @@ import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { RadioGroup, RadioGroupProps } from "./RadioGroup";
 import { Radio } from "../Radio/Radio";
 import { FormItem } from "../FormItem/FormItem";
-import FormLayout from "../FormLayout/FormLayout";
+import { FormLayout } from "../FormLayout/FormLayout";
 
 type RadioGroupTestProps = RadioGroupProps & {
   RadioGroupWrapper: string | ElementType;

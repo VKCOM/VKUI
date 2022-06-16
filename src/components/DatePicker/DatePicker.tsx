@@ -210,7 +210,7 @@ const DatePickerNative: React.FC<
 /**
  * @see https://vkcom.github.io/VKUI/#/DatePicker
  */
-const DatePicker: React.FC<DatePickerProps> = ({
+const DatePickerComponent: React.FC<DatePickerProps> = ({
   hasMouse,
   defaultValue,
   ...props
@@ -235,7 +235,8 @@ const DatePicker: React.FC<DatePickerProps> = ({
   return <Cmp {...props} {...value} onDateChange={onDateChange} />;
 };
 
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(DatePicker, {
+export const DatePicker = withAdaptivity(DatePickerComponent, {
   hasMouse: true,
 });
+
+DatePicker.displayName = "DatePicker";

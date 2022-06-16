@@ -52,7 +52,9 @@ const warn = warnOnce("ContentCard");
 /**
  * @see https://vkcom.github.io/VKUI/#/ContentCard
  */
-const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
+export const ContentCard: React.FC<ContentCardProps> = (
+  props: ContentCardProps
+) => {
   const {
     subtitle,
     header,
@@ -60,7 +62,7 @@ const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
     caption,
     // card props
     className,
-    mode,
+    mode = "shadow",
     style,
     getRootRef,
     // img props
@@ -146,10 +148,3 @@ const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
     </Card>
   );
 };
-
-ContentCard.defaultProps = {
-  mode: "shadow",
-};
-
-// eslint-disable-next-line import/no-default-export
-export default ContentCard;

@@ -50,10 +50,7 @@ export interface RichCellProps extends TappableProps {
   multiline?: boolean;
 }
 
-/**
- * @see https://vkcom.github.io/VKUI/#/RichCell
- */
-const RichCell: React.FC<RichCellProps> = ({
+const RichCellComponent: React.FC<RichCellProps> = ({
   children,
   text,
   caption,
@@ -108,5 +105,9 @@ const RichCell: React.FC<RichCellProps> = ({
   );
 };
 
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(RichCell, { sizeY: true });
+/**
+ * @see https://vkcom.github.io/VKUI/#/RichCell
+ */
+export const RichCell = withAdaptivity(RichCellComponent, { sizeY: true });
+
+RichCell.displayName = "RichCell";

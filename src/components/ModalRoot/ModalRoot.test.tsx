@@ -4,8 +4,8 @@ import {
   runAllTimers,
 } from "../../testing/utils";
 import { render } from "@testing-library/react";
-import ModalPage from "../ModalPage/ModalPage";
-import ModalCard from "../ModalCard/ModalCard";
+import { ModalPage } from "../ModalPage/ModalPage";
+import { ModalCard } from "../ModalCard/ModalCard";
 import { ModalRootTouch } from "./ModalRoot";
 import { ModalRootDesktop } from "./ModalRootDesktop";
 import userEvent from "@testing-library/user-event";

@@ -19,9 +19,9 @@ export interface TabsItemProps extends React.HTMLAttributes<HTMLElement> {
 /**
  * @see https://vkcom.github.io/VKUI/#/TabsItem
  */
-const TabsItem: React.FC<TabsItemProps> = ({
+export const TabsItem: React.FC<TabsItemProps> = ({
   children,
-  selected,
+  selected = false,
   after,
   ...restProps
 }: TabsItemProps) => {
@@ -53,10 +53,3 @@ const TabsItem: React.FC<TabsItemProps> = ({
     </Tappable>
   );
 };
-
-TabsItem.defaultProps = {
-  selected: false,
-};
-
-// eslint-disable-next-line import/no-default-export
-export default TabsItem;
