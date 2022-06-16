@@ -22,6 +22,9 @@ export type { GridAvatarProps } from "../components/GridAvatar/GridAvatar";
 export { HorizontalScroll } from "../components/HorizontalScroll/HorizontalScroll";
 export type { HorizontalScrollProps } from "../components/HorizontalScroll/HorizontalScroll";
 
+export { IconButton } from "../components/IconButton/IconButton";
+export type { IconButtonProps } from "../components/IconButton/IconButton";
+
 export { InitialsAvatar } from "../components/InitialsAvatar/InitialsAvatar";
 export type { InitialsAvatarProps } from "../components/InitialsAvatar/InitialsAvatar";
 

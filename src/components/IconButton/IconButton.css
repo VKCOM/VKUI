@@ -29,7 +29,7 @@
 }
 
 .IconButton[disabled] {
-  opacity: 0.6;
+  opacity: var(--vkui--opacity_disable_accessibility);
 }
 
 .FormItem--removable .Removable__content > .IconButton,
@@ -82,12 +82,17 @@
   padding: 8px;
 }
 
-/*
- * Android & VKCOM
+/**
+ * ⚠️ WARNING ⚠️
+ * Из-за того, что для компонента SimpleCell иконка сдвигается вправо, сделан хак,
+ * что состояние `activeMode="background"` переносится на Icon путём определения
+ * своего класса для `activeMode` и копипаста состояния.
  */
-.IconButton--android.IconButton--active .Icon,
-.IconButton--vkcom.IconButton--active .Icon {
+.IconButton--active .Icon {
   transition: inherit;
   border-radius: inherit;
-  background-color: var(--background_highlighted);
+  background-color: var(
+    --background_highlighted,
+    var(--vkui--color_transparent--active)
+  );
 }
