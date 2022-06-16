@@ -3,7 +3,7 @@ import { AdaptivityProps } from "../../hoc/withAdaptivity";
 import { baselineComponent } from "../../testing/utils";
 import { SizeType } from "../AdaptivityProvider/AdaptivityContext";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import Banner, { BannerProps } from "./Banner";
+import { Banner, BannerProps } from "./Banner";
 
 const BannerTest = ({
   sizeY = SizeType.REGULAR,
