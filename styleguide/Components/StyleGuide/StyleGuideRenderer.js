@@ -73,7 +73,7 @@ let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
       styleguideAppearance: value,
       appearance: value,
     });
-  }, [platform, styleguideAppearance]);
+  }, [platform, styleguideAppearance, setContext]);
 
   const providerValue = useMemo(
     () => ({ ...state, setContext, setPopout }),
