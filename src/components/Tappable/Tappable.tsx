@@ -4,8 +4,7 @@ import { noop } from "@vkontakte/vkjs";
 import { Touch, TouchEvent, TouchProps } from "../Touch/Touch";
 import TouchRootContext from "../Touch/TouchContext";
 import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
-import { ANDROID } from "../../lib/platform";
+import { IOS, ANDROID } from "../../lib/platform";
 import { getOffsetRect } from "../../lib/offset";
 import { coordX, coordY } from "../../lib/touch";
 import { HasComponent, HasRootRef } from "../../types";
@@ -64,8 +63,9 @@ export interface TappableProps
    * Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс во время focus-visible
    */
   focusVisibleMode?: FocusVisibleMode | string;
-  onEnter?: (outputEvent: MouseEvent) => void;
-  onLeave?: (outputEvent: MouseEvent) => void;
+  children?: React.ReactNode;
+  onEnter?(outputEvent: MouseEvent): void;
+  onLeave?(outputEvent: MouseEvent): void;
 }
 
 interface Wave {
@@ -147,7 +147,7 @@ function useActivity(hasActive: boolean, stopDelay: number) {
   return [activity, { delayStart, start, stop }] as const;
 }
 
-const Tappable: React.FC<TappableProps> = ({
+const TappableComponent = ({
   children,
   Component,
   onClick,
@@ -286,7 +286,8 @@ const Tappable: React.FC<TappableProps> = ({
 
   // eslint-disable-next-line vkui/no-object-expression-in-arguments
   const classes = classNames(
-    getClassName("Tappable", platform),
+    "Tappable",
+    platform === IOS && "Tappable--ios",
     `Tappable--sizeX-${sizeX}`,
     hasHover && `Tappable--hasHover`,
     hasActive && `Tappable--hasActive`,
@@ -356,9 +357,13 @@ const Tappable: React.FC<TappableProps> = ({
   );
 };
 
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(Tappable, {
+/**
+ * @see https://vkcom.github.io/VKUI/#/Tappable
+ */
+export const Tappable = withAdaptivity(TappableComponent, {
   sizeX: true,
   hasMouse: true,
   deviceHasHover: true,
 });
+
+Tappable.displayName = "Tappable";

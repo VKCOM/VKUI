@@ -1,5 +1,5 @@
 import * as React from "react";
-import Tappable, { ACTIVE_EFFECT_DELAY } from "../Tappable/Tappable";
+import { ACTIVE_EFFECT_DELAY, Tappable } from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
 import { IOS, VKCOM } from "../../lib/platform";
 import { HasRef, HasRootRef } from "../../types";

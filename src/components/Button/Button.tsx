@@ -1,7 +1,7 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
-import Tappable, { TappableProps } from "../Tappable/Tappable";
+import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { Title } from "../Typography/Title/Title";
 import { Text } from "../Typography/Text/Text";
 import { Subhead } from "../Typography/Subhead/Subhead";

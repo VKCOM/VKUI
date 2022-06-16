@@ -47,6 +47,9 @@ export type {
   SegmentedControlValue,
 } from "../components/SegmentedControl/SegmentedControl";
 
+export { Tappable } from "../components/Tappable/Tappable";
+export type { TappableProps } from "../components/Tappable/Tappable";
+
 export { Textarea } from "../components/Textarea/Textarea";
 export type { TextareaProps } from "../components/Textarea/Textarea";
 

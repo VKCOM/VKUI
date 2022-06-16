@@ -1,6 +1,8 @@
 .Tappable {
   position: relative;
   cursor: default;
+  border-radius: var(--vkui--size_border_radius--regular);
+  transition: background-color 0.15s ease-out;
 }
 
 .Tappable--hasHover,
@@ -22,7 +24,10 @@
  * increased specificity to override CellButton styles
  */
 .Tappable--active-background.Tappable--active-background.Tappable--active-background {
-  background: var(--background_highlighted);
+  background-color: var(
+    --background_highlighted,
+    var(--vkui--color_transparent--active)
+  );
 }
 
 .Tappable--active-opacity.Tappable--active-opacity.Tappable--active-opacity {
@@ -44,7 +49,10 @@
 }
 
 .Tappable--hover-background > .Tappable__hoverShadow {
-  background: var(--background_hover);
+  background-color: var(
+    --background_hover,
+    var(--vkui--color_transparent--hover)
+  );
 }
 
 .Tappable--hover-opacity {
@@ -65,26 +73,11 @@
 /**
  * iOS tappable
  */
-.Tappable--ios {
-  position: relative;
-  border-radius: 10px;
-  transition: background-color 0.15s ease-out;
-}
-
 .Tappable--ios.Tappable--active-background {
   transition: none;
 }
 
-/**
- * Android tappable
- */
-.Tappable--android {
-  position: relative;
-  transition: background-color 0.15s ease-out;
-  border-radius: 8px;
-}
-
-.Tappable--android .Tappable__waves {
+.Tappable .Tappable__waves {
   position: absolute;
   top: 0;
   right: 0;
@@ -97,7 +90,7 @@
   will-change: transform;
 }
 
-.Tappable--android .Tappable__wave {
+.Tappable .Tappable__wave {
   position: absolute;
   top: 0;
   left: 0;
@@ -109,14 +102,6 @@
   border-radius: 50%;
   background: rgba(127, 127, 127, 0.1);
   animation: vkui-animation-wave 0.3s var(--android-easing);
-}
-
-/**
- * VKCOM tappable
- */
-.Tappable--vkcom {
-  transition: background-color 0.15s ease-out;
-  border-radius: 8px;
 }
 
 /**

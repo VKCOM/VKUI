@@ -1,5 +1,5 @@
 import * as React from "react";
-import Tappable from "../Tappable/Tappable";
+import { Tappable } from "../Tappable/Tappable";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { HasRootRef } from "../../types";

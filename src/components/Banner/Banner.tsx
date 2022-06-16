@@ -10,7 +10,7 @@ import {
   Icon24DismissDark,
   Icon24Cancel,
 } from "@vkontakte/icons";
-import Tappable from "../Tappable/Tappable";
+import { Tappable } from "../Tappable/Tappable";
 import IconButton from "../IconButton/IconButton";
 import { Headline } from "../Typography/Headline/Headline";
 import { Subhead } from "../Typography/Subhead/Subhead";
