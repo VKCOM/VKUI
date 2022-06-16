@@ -24,7 +24,6 @@
   width: initial;
 }
 
-/* TODO. v5.0.0 Новая адаптивность */
 .Textarea--sizeY-compact .Textarea__el {
   font-size: 15px;
   max-height: 196px;
