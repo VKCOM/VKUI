@@ -4,7 +4,7 @@ import {
   Icon24MessageOutline,
   Icon28MessageOutline,
 } from "@vkontakte/icons";
-import IconButton, { IconButtonProps } from "./IconButton";
+import { IconButtonProps, IconButton } from "./IconButton";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
 describe("IconButton", () => {

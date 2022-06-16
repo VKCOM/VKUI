@@ -4,7 +4,7 @@ import { Icon16Clear, Icon20CalendarOutline } from "@vkontakte/icons";
 import { Calendar, CalendarProps } from "../Calendar/Calendar";
 import { Popper, Placement } from "../Popper/Popper";
 import { multiRef } from "../../lib/utils";
-import IconButton from "../IconButton/IconButton";
+import { IconButton } from "../IconButton/IconButton";
 import { classNames } from "../../lib/classNames";
 import { FormField } from "../FormField/FormField";
 import { HasRootRef } from "../../types";
