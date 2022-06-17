@@ -239,7 +239,7 @@ export type { DateRangeInputProps } from "./components/DateRangeInput/DateRangeI
  */
 export { Div } from "./components/Div/Div";
 export type { DivProps } from "./components/Div/Div";
-export { default as Tappable } from "./components/Tappable/Tappable";
+export { Tappable } from "./components/Tappable/Tappable";
 export type { TappableProps } from "./components/Tappable/Tappable";
 export { Touch } from "./components/Touch/Touch";
 export type { TouchProps } from "./components/Touch/Touch";

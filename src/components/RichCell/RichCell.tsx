@@ -2,7 +2,7 @@ import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getClassName } from "../../helpers/getClassName";
-import Tappable, { TappableProps } from "../Tappable/Tappable";
+import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { hasReactNode } from "../../lib/utils";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
 import { Subhead } from "../Typography/Subhead/Subhead";

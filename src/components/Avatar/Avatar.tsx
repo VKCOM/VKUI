@@ -2,7 +2,7 @@ import * as React from "react";
 import { Icon12Circle, Icon12OnlineMobile } from "@vkontakte/icons";
 import { classNames } from "../../lib/classNames";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import Tappable from "../Tappable/Tappable";
+import { Tappable } from "../Tappable/Tappable";
 import { HasRef, HasRootRef } from "../../types";
 import "./Avatar.css";
 
