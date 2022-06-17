@@ -40,8 +40,12 @@ const IconButtonComponent = ({
       {...restProps}
       Component={restProps.href ? "a" : Component}
       activeEffectDelay={200}
-      activeMode={platform === IOS ? "opacity" : "IconButton--active"}
-      vkuiClass={classNames("IconButton", `IconButton--sizeY-${sizeY}`)}
+      activeMode="background"
+      vkuiClass={classNames(
+        "IconButton",
+        `IconButton--sizeY-${sizeY}`,
+        platform === IOS && "IconButton--ios"
+      )}
     >
       {icon || children}
     </Tappable>
