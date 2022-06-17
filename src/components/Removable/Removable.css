@@ -12,6 +12,11 @@
   border: none;
 }
 
+/* Увеличиваем вес селектора */
+.Removable__action.Removable__action {
+  color: var(--icon_secondary, var(--vkui--color_icon_secondary));
+}
+
 .Removable--start .Removable__action {
   align-self: flex-start;
 }
