@@ -116,6 +116,9 @@ export type { ViewProps } from "../components/View/View";
 export { Spinner } from "../components/Spinner/Spinner";
 export type { SpinnerProps } from "../components/Spinner/Spinner";
 
+export { ContentCard } from "../components/ContentCard/ContentCard";
+export type { ContentCardProps } from "../components/ContentCard/ContentCard";
+
 export { CustomSelect } from "../components/CustomSelect/CustomSelect";
 export type { CustomSelectProps } from "../components/CustomSelect/CustomSelect";
 
