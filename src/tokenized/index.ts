@@ -173,6 +173,9 @@ export type { GalleryProps } from "../components/Gallery/Gallery";
 export { DateInput } from "../components/DateInput/DateInput";
 export type { DateInputProps } from "../components/DateInput/DateInput";
 
+export { PopoutWrapper } from "../components/PopoutWrapper/PopoutWrapper";
+export type { PopoutWrapperProps } from "../components/PopoutWrapper/PopoutWrapper";
+
 export { Badge } from "../components/Badge/Badge";
 export type { BadgeProps } from "../components/Badge/Badge";
 

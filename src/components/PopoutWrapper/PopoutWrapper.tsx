@@ -1,5 +1,4 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { IOS } from "../../lib/platform";
 import { useTimeout } from "../../hooks/useTimeout";
@@ -52,22 +51,17 @@ export const PopoutWrapper: React.FC<PopoutWrapperProps> = ({
     passive: false,
   });
 
-  const baseClassNames = getClassName("PopoutWrapper", platform);
-
   return (
     <div
       {...restProps}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
-        baseClassNames,
+        "PopoutWrapper",
         `PopoutWrapper--v-${alignY}`,
         `PopoutWrapper--h-${alignX}`,
-        {
-          "PopoutWrapper--closing": closing,
-          "PopoutWrapper--opened": opened,
-          "PopoutWrapper--fixed": fixed,
-          "PopoutWrapper--masked": hasMask,
-        }
+        closing && "PopoutWrapper--closing",
+        opened && "PopoutWrapper--opened",
+        fixed && "PopoutWrapper--fixed",
+        hasMask && "PopoutWrapper--masked"
       )}
       onAnimationEnd={opened ? undefined : onFadeInEnd}
       ref={elRef}
