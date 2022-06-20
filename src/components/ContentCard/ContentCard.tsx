@@ -1,11 +1,9 @@
 import * as React from "react";
 import { Card, CardProps } from "../Card/Card";
 import { Caption } from "../Typography/Caption/Caption";
-import { Title } from "../Typography/Title/Title";
+import { Headline } from "../Typography/Headline/Headline";
 import { Text } from "../Typography/Text/Text";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
-import { getClassName } from "../../helpers/getClassName";
-import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import { warnOnce } from "../../lib/warnOnce";
 import { HasRef, HasRootRef } from "../../types";
@@ -52,38 +50,33 @@ const warn = warnOnce("ContentCard");
 /**
  * @see https://vkcom.github.io/VKUI/#/ContentCard
  */
-export const ContentCard: React.FC<ContentCardProps> = (
-  props: ContentCardProps
-) => {
-  const {
-    subtitle,
-    header,
-    text,
-    caption,
-    // card props
-    className,
-    mode = "shadow",
-    style,
-    getRootRef,
-    // img props
-    getRef,
-    maxHeight,
-    image,
-    src,
-    srcSet,
-    alt,
-    width,
-    height,
-    crossOrigin,
-    decoding,
-    loading,
-    referrerPolicy,
-    sizes,
-    useMap,
-    ...restProps
-  } = props;
-  const platform = usePlatform();
-
+export const ContentCard = ({
+  subtitle,
+  header,
+  text,
+  caption,
+  // card props
+  className,
+  mode = "shadow",
+  style,
+  getRootRef,
+  // img props
+  getRef,
+  maxHeight,
+  image,
+  src,
+  srcSet,
+  alt,
+  width,
+  height,
+  crossOrigin,
+  decoding,
+  loading,
+  referrerPolicy,
+  sizes,
+  useMap,
+  ...restProps
+}: ContentCardProps) => {
   const source = image || src;
 
   if (image && process.env.NODE_ENV === "development") {
@@ -94,10 +87,10 @@ export const ContentCard: React.FC<ContentCardProps> = (
     <Card
       mode={mode}
       getRootRef={getRootRef}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames(getClassName("ContentCard", platform), {
-        "ContentCard--disabled": restProps.disabled,
-      })}
+      vkuiClass={classNames(
+        "ContentCard",
+        restProps.disabled && "ContentCard--disabled"
+      )}
       style={style}
       className={className}
     >
@@ -128,20 +121,27 @@ export const ContentCard: React.FC<ContentCardProps> = (
         )}
         <div vkuiClass="ContentCard__body">
           {hasReactNode(subtitle) && (
-            <Caption caps vkuiClass="ContentCard__text" weight="1" level="3">
+            <Caption
+              vkuiClass="ContentCard__text ContentCard__subtitle"
+              weight="1"
+              level="3"
+              caps
+            >
               {subtitle}
             </Caption>
           )}
           {hasReactNode(header) && (
-            <Title vkuiClass="ContentCard__text" weight="3" level="1">
+            <Headline vkuiClass="ContentCard__text" weight="2" level="1">
               {header}
-            </Title>
+            </Headline>
           )}
           {hasReactNode(text) && (
             <Text vkuiClass="ContentCard__text">{text}</Text>
           )}
           {hasReactNode(caption) && (
-            <Caption vkuiClass="ContentCard__text">{caption}</Caption>
+            <Caption vkuiClass="ContentCard__text ContentCard__caption">
+              {caption}
+            </Caption>
           )}
         </div>
       </Tappable>
