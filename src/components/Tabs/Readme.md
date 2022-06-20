@@ -1,274 +1,214 @@
 ```jsx
-class Example extends React.Component {
-  constructor(props) {
-    super(props);
+const Example = ({ sizeX }) => {
+  const [mode, setMode] = React.useState("all");
+  const [menuOpened, setMenuOpened] = React.useState(false);
+  const [selected, setSelected] = React.useState("news");
 
-    this.state = {
-      activePanel: "panel1",
-      contextOpened: false,
-      mode: "all",
-      activeTab1: "recommendations",
-      activeTab2: "music",
-      activeTab3: "news",
-      activeTab4: "all",
-      activeTab5: "all",
-    };
-
-    this.select = this.select.bind(this);
-  }
-
-  select(e) {
-    const mode = e.currentTarget.dataset.mode;
-    this.setState({ mode, contextOpened: false });
-  }
-
-  render() {
-    return (
-      <View activePanel={this.state.activePanel}>
-        <Panel id="panel1">
-          <PanelHeader
-            before={
-              <PanelHeaderButton>
-                <Icon28CameraOutline />
-              </PanelHeaderButton>
-            }
-            after={
-              <PanelHeaderButton>
-                <Icon28AddOutline />
-              </PanelHeaderButton>
-            }
-            separator={this.props.sizeX === SizeType.REGULAR}
-          >
-            <Tabs>
-              <TabsItem
-                onClick={() => {
-                  if (this.state.activeTab1 === "news") {
-                    this.setState({ contextOpened: !this.state.contextOpened });
-                  }
-                  this.setState({ activeTab1: "news" });
-                }}
-                selected={this.state.activeTab1 === "news"}
-                after={
-                  <Icon16Dropdown
-                    style={{
-                      transform: `rotate(${
-                        this.state.contextOpened ? "180deg" : "0"
-                      }) translateY(1px)`,
-                    }}
-                  />
-                }
-              >
-                Новости
-              </TabsItem>
-              <TabsItem
-                onClick={() => {
-                  this.setState({
-                    activeTab1: "recommendations",
-                    contextOpened: false,
-                  });
-                }}
-                selected={this.state.activeTab1 === "recommendations"}
-              >
-                Интересное
-              </TabsItem>
-            </Tabs>
-          </PanelHeader>
-          <PanelHeaderContext
-            opened={this.state.contextOpened}
-            onClose={() => {
-              this.setState({ contextOpened: false });
+  return (
+    <View activePanel="panel">
+      <Panel id="panel">
+        <PanelHeader
+          before={
+            <PanelHeaderButton>
+              <Icon28CameraOutline />
+            </PanelHeaderButton>
+          }
+          after={
+            <PanelHeaderButton>
+              <Icon28AddOutline />
+            </PanelHeaderButton>
+          }
+          // TODO 5.0.0 Новая адаптивность
+          separator={sizeX === SizeType.REGULAR}
+        >
+          <DefaultInPanel
+            menuOpened={menuOpened}
+            onMenuClick={(opened) => {
+              setMenuOpened((prevState) => (opened ? !prevState : false));
             }}
-          >
-            <List>
-              <Cell
-                before={<Icon28UsersOutline />}
-                after={
-                  this.state.mode === "all" ? (
-                    <Icon24Done fill="var(--accent)" />
-                  ) : null
-                }
-                onClick={this.select}
-                data-mode="all"
-              >
-                Communities
-              </Cell>
-              <Cell
-                before={<Icon28SettingsOutline />}
-                after={
-                  this.state.mode === "managed" ? (
-                    <Icon24Done fill="var(--accent)" />
-                  ) : null
-                }
-                onClick={this.select}
-                data-mode="managed"
-              >
-                Managed Communities
-              </Cell>
-            </List>
-          </PanelHeaderContext>
-          <Group>
-            <CellButton
-              onClick={() => this.setState({ activePanel: "panel2" })}
+          />
+        </PanelHeader>
+
+        <Scrollable />
+
+        <PanelHeaderContext
+          opened={menuOpened}
+          onClose={() => setMenuOpened(false)}
+        >
+          <List>
+            <Cell
+              before={<Icon28UsersOutline />}
+              after={mode === "all" && <Icon24Done fill="var(--accent)" />}
+              onClick={() => setMode("all")}
             >
-              Под шапкой
-            </CellButton>
-          </Group>
-        </Panel>
-        <Panel id="panel2">
-          <PanelHeader
-            before={
-              <PanelHeaderBack
-                onClick={() => this.setState({ activePanel: "panel1" })}
-              />
-            }
-            separator={this.props.sizeX === SizeType.REGULAR}
-          >
-            Музыка
-          </PanelHeader>
-          <Group>
-            <Tabs>
-              <TabsItem
-                onClick={() => this.setState({ activeTab2: "music" })}
-                selected={this.state.activeTab2 === "music"}
-              >
-                Моя музыка
-              </TabsItem>
-              <TabsItem
-                onClick={() => this.setState({ activeTab2: "recommendations" })}
-                selected={this.state.activeTab2 === "recommendations"}
-              >
-                Рекомендации
-              </TabsItem>
-            </Tabs>
-            <CellButton
-              onClick={() => this.setState({ activePanel: "panel3" })}
+              Communities
+            </Cell>
+            <Cell
+              before={<Icon28SettingsOutline />}
+              after={mode === "managed" && <Icon24Done fill="var(--accent)" />}
+              onClick={() => setMode("managed")}
             >
-              Со скроллом
-            </CellButton>
-          </Group>
-        </Panel>
-        <Panel id="panel3">
-          <PanelHeader
-            before={
-              <PanelHeaderBack
-                onClick={() => this.setState({ activePanel: "panel2" })}
-              />
-            }
-            separator={this.props.sizeX === SizeType.REGULAR}
+              Managed Communities
+            </Cell>
+          </List>
+        </PanelHeaderContext>
+      </Panel>
+    </View>
+  );
+};
+
+const DefaultInPanel = ({ menuOpened, onMenuClick }) => {
+  const [selected, setSelected] = React.useState("news");
+
+  return (
+    <Tabs>
+      <TabsItem
+        after={
+          <Icon16Dropdown
+            style={{
+              transform: `rotate(${menuOpened ? "180deg" : "0"})`,
+            }}
+          />
+        }
+        selected={selected === "news"}
+        onClick={() => {
+          if (selected === "news") {
+            onMenuClick(true);
+          }
+          setSelected("news");
+        }}
+      >
+        Новости
+      </TabsItem>
+      <TabsItem
+        selected={selected === "recommendations"}
+        onClick={() => {
+          onMenuClick(false);
+          setSelected("recommendations");
+        }}
+      >
+        Интересное
+      </TabsItem>
+    </Tabs>
+  );
+};
+
+const Scrollable = () => {
+  const [mode, setMode] = React.useState("default");
+  const [selected, setSelected] = React.useState("news");
+  const [disabled, setDisabled] = React.useState(false);
+
+  return (
+    <Group>
+      <Tabs mode={mode}>
+        <HorizontalScroll arrowSize="m">
+          <TabsItem
+            selected={selected === "groups"}
+            disabled={disabled}
+            onClick={() => setSelected("groups")}
           >
-            Новости
-          </PanelHeader>
-          <Group>
-            <Tabs>
-              <HorizontalScroll>
-                <TabsItem
-                  onClick={() => this.setState({ activeTab3: "news" })}
-                  selected={this.state.activeTab3 === "news"}
-                >
-                  Лента
-                </TabsItem>
-                <TabsItem
-                  onClick={() =>
-                    this.setState({ activeTab3: "recommendations" })
-                  }
-                  selected={this.state.activeTab3 === "recommendations"}
-                >
-                  Рекомендации
-                </TabsItem>
-                <TabsItem
-                  onClick={() => this.setState({ activeTab3: "friends" })}
-                  selected={this.state.activeTab3 === "friends"}
-                >
-                  Друзья
-                </TabsItem>
-                <TabsItem
-                  onClick={() => this.setState({ activeTab3: "photos" })}
-                  selected={this.state.activeTab3 === "photos"}
-                >
-                  Фотографии
-                </TabsItem>
-                <TabsItem
-                  onClick={() => this.setState({ activeTab3: "groups" })}
-                  selected={this.state.activeTab3 === "groups"}
-                >
-                  Сообщества
-                </TabsItem>
-              </HorizontalScroll>
-            </Tabs>
-            <CellButton
-              onClick={() => this.setState({ activePanel: "panel4" })}
-            >
-              Табы-кнопки
-            </CellButton>
-          </Group>
-        </Panel>
-        <Panel id="panel4">
-          <PanelHeader
+            Сообщества
+          </TabsItem>
+          <TabsItem
             before={
-              <PanelHeaderBack
-                onClick={() => this.setState({ activePanel: "panel2" })}
-              />
+              mode === "default" ? (
+                <Icon24NewsfeedOutline />
+              ) : (
+                <Icon20NewsfeedOutline />
+              )
             }
-          >
-            Кнопки
-          </PanelHeader>
-          <Group>
-            <Tabs mode="buttons">
-              <TabsItem
-                onClick={() => this.setState({ activeTab4: "all" })}
-                selected={this.state.activeTab4 === "all"}
-              >
-                Все записи
-              </TabsItem>
-              <TabsItem
-                onClick={() => this.setState({ activeTab4: "user" })}
-                selected={this.state.activeTab4 === "user"}
-              >
-                Записи Павла
-              </TabsItem>
-            </Tabs>
-            <CellButton
-              onClick={() => this.setState({ activePanel: "panel5" })}
-            >
-              Segmented (iOS only)
-            </CellButton>
-          </Group>
-        </Panel>
-        <Panel id="panel5">
-          <PanelHeader
-            before={
-              <PanelHeaderBack
-                onClick={() => this.setState({ activePanel: "panel4" })}
-              />
-            }
-            separator={this.props.sizeX === SizeType.REGULAR}
+            after={<Icon16Dropdown />}
+            selected={selected === "news"}
+            disabled={disabled}
+            onClick={() => setSelected("news")}
           >
             Лента
-          </PanelHeader>
-          <Group>
-            <Tabs mode="segmented">
-              <TabsItem
-                onClick={() => this.setState({ activeTab5: "all" })}
-                selected={this.state.activeTab5 === "all"}
-              >
-                Все записи
-              </TabsItem>
-              <TabsItem
-                onClick={() => this.setState({ activeTab5: "user" })}
-                selected={this.state.activeTab5 === "user"}
-                after={<Counter>3</Counter>}
-              >
-                Записи Павла
-              </TabsItem>
-            </Tabs>
-          </Group>
-        </Panel>
-      </View>
-    );
-  }
-}
+          </TabsItem>
+          <TabsItem
+            before={
+              mode === "default" ? (
+                <Icon24ThumbsUpOutline />
+              ) : (
+                <Icon20ThumbsUpOutline />
+              )
+            }
+            status={<Badge mode="prominent" />}
+            after={<Icon16Dropdown />}
+            selected={selected === "recommendations"}
+            disabled={disabled}
+            onClick={() => setSelected("recommendations")}
+          >
+            Рекомендации
+          </TabsItem>
+          <TabsItem
+            before={
+              mode === "default" ? (
+                <Icon24UsersOutline />
+              ) : (
+                <Icon20UsersOutline />
+              )
+            }
+            status={
+              <Counter mode="prominent" size="s">
+                3
+              </Counter>
+            }
+            after={<Icon16Dropdown />}
+            selected={selected === "friends"}
+            disabled={disabled}
+            onClick={() => setSelected("friends")}
+          >
+            Друзья
+          </TabsItem>
+          <TabsItem
+            before={
+              mode === "default" ? (
+                <Icon24PictureOutline />
+              ) : (
+                <Icon20PictureOutline />
+              )
+            }
+            status={23}
+            after={<Icon16Dropdown />}
+            selected={selected === "photos"}
+            disabled={disabled}
+            onClick={() => setSelected("photos")}
+          >
+            Фотографии
+          </TabsItem>
+        </HorizontalScroll>
+      </Tabs>
+      <FormItem top="mode">
+        <CustomSelect
+          value={mode}
+          options={[
+            {
+              label: "default",
+              value: "default",
+            },
+            {
+              label: "accent",
+              value: "accent",
+            },
+            {
+              label: "secondary",
+              value: "secondary",
+            },
+          ]}
+          onChange={(event) => setMode(event.target.value)}
+        />
+      </FormItem>
+      <Checkbox onChange={() => setDisabled((prev) => !prev)}>
+        disabled
+      </Checkbox>
+    </Group>
+  );
+};
 
+// TODO 5.0.0 Новая адаптивность
 const AdaptivityExample = withAdaptivity(Example, { sizeX: true });
 
-<AdaptivityExample />;
+<ConfigProvider webviewType="internal">
+  <AdaptivityExample />
+</ConfigProvider>;
 ```

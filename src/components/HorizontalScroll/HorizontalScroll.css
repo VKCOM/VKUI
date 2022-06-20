@@ -38,3 +38,26 @@
   .HorizontalScroll__in-wrapper {
   transform: translateX(-8px);
 }
+
+/**
+ * CMP:
+ * Tabs
+ */
+.Tabs .HorizontalScroll {
+  min-width: 100%;
+}
+
+.Tabs__in .HorizontalScroll__in-wrapper {
+  display: flex;
+  align-items: stretch;
+}
+
+/* TODO v5.0.0 новая адаптивность */
+.Tabs--sizeX-compact.Tabs--withGaps .HorizontalScroll__in-wrapper::after,
+.Tabs--sizeX-compact.Tabs--withGaps .HorizontalScroll__in-wrapper::before {
+  display: block;
+  width: 8px;
+  flex-shrink: 0;
+  height: 1px;
+  content: "";
+}

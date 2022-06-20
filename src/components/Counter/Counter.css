@@ -165,3 +165,30 @@
     var(--vkui--color_background_positive)
   );
 }
+
+/**
+ * CMP:
+ * TabsItem
+ */
+.TabsItem .Counter--secondary {
+  background-color: var(--panel_tab_inactive_text);
+  color: var(--white);
+}
+
+.TabsItem--selected .Counter--secondary {
+  background-color: var(--panel_tab_active_text);
+  color: var(--panel_tab_active_background);
+}
+
+/* TODO v5.0.0 Удалить mode="segmented" */
+/* [Начало] */
+.TabsItem--ios.TabsItem--segmented .Counter--secondary {
+  background-color: var(--segmented_control_tint);
+  color: var(--background_content);
+}
+
+.TabsItem--ios.TabsItem--segmented.TabsItem--selected .Counter--secondary {
+  background-color: var(--background_content);
+  color: var(--segmented_control_tint);
+}
+/* [Конец] */
