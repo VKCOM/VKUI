@@ -3,154 +3,149 @@
 ```jsx { "props": { "layout": false, "adaptivity": true } }
 const MODAL_NAME = "modal";
 
-class App extends React.Component {
-  constructor() {
-    this.state = {
-      isModalOpened: false,
-    };
-  }
+const Example = () => {
+  const [isModalOpened, setModalOpened] = React.useState(false);
 
-  renderGroup() {
-    return (
-      <>
-        <Group>
-          <Group mode="plain">
-            <SimpleCell
-              indicator="+7 ••• •• •• 96"
-              before={<Icon28PhoneOutline />}
-            >
-              Номер телефона
-            </SimpleCell>
-            <SimpleCell
-              indicator="g•••@gmail.com"
-              before={<Icon28MailOutline />}
-            >
-              Email
-            </SimpleCell>
-          </Group>
-          <Group mode="plain">
-            <SimpleCell
-              indicator="Обновлён 3 года назад"
-              before={<Icon28KeyOutline />}
-            >
-              Пароль
-            </SimpleCell>
-            <SimpleCell
-              indicator="Вкл."
-              before={<Icon28CheckShieldDeviceOutline />}
-            >
-              Подтверждение входа
-            </SimpleCell>
-            <SimpleCell indicator="2" before={<Icon28DevicesOutline />}>
-              Привязанные устройства
-            </SimpleCell>
-          </Group>
-        </Group>
-
-        <Group header={<Header>Последняя активность</Header>}>
-          <SimpleCell
-            after={
-              <IconButton aria-label="Подробнее">
-                <Icon16MoreVertical />
-              </IconButton>
+  const modal = (
+    <ModalRoot
+      activeModal={isModalOpened ? MODAL_NAME : null}
+      onClose={() => setModalOpened(false)}
+    >
+      <ModalPage
+        id={MODAL_NAME}
+        onClose={() => setModalOpened(false)}
+        header={
+          <ModalPageHeader
+            before={
+              platform !== IOS && (
+                <PanelHeaderClose onClick={() => setModalOpened(false)} />
+              )
             }
-            description="Санкт-Петербург, Россия"
-            before={<Avatar size={32} mode="app" />}
-          >
-            VK · Приложение для iPhone
-          </SimpleCell>
-          <SimpleCell
             after={
-              <IconButton aria-label="Подробнее">
-                <Icon16MoreVertical />
-              </IconButton>
+              platform === IOS && (
+                <PanelHeaderButton onClick={() => setModalOpened(false)}>
+                  <Icon24Dismiss />
+                </PanelHeaderButton>
+              )
             }
-            description="Санкт-Петербург, Россия"
-            before={<Avatar size={32} mode="app" />}
           >
-            VK · Браузер Chrome для macOS
-          </SimpleCell>
-          <CellButton>Показать историю активности</CellButton>
-          <CellButton mode="danger">Завершить все остальные сеансы</CellButton>
-        </Group>
-
-        <Group
-          header={<Header>Адреса</Header>}
-          description="Для использования в мини-приложениях, Delivery Cub, VK Taxi и других сервисах ВКонтакте. Эти адреса видны только Вам."
-        >
-          <CellButton>Добавить домашний адрес</CellButton>
-          <CellButton>Добавить рабочий адрес</CellButton>
-        </Group>
-      </>
-    );
-  }
-
-  render() {
-    const modal = (
-      <ModalRoot
-        activeModal={this.state.isModalOpened ? MODAL_NAME : null}
-        onClose={() => this.setState({ isModalOpened: false })}
+            Group в модальном окне
+          </ModalPageHeader>
+        }
       >
-        <ModalPage
-          id={MODAL_NAME}
-          onClose={() => this.setState({ isModalOpened: false })}
-          header={
-            <ModalPageHeader
-              before={
-                this.props.platform !== IOS && (
-                  <PanelHeaderClose
-                    onClick={() => this.setState({ isModalOpened: false })}
-                  />
-                )
-              }
-              after={
-                this.props.platform === IOS && (
-                  <PanelHeaderButton
-                    onClick={() => this.setState({ isModalOpened: false })}
-                  >
-                    <Icon24Dismiss />
-                  </PanelHeaderButton>
-                )
-              }
+        <SharedContent />
+      </ModalPage>
+    </ModalRoot>
+  );
+
+  return (
+    <SplitLayout modal={modal}>
+      <SplitCol>
+        <View activePanel="group">
+          <Panel id="group">
+            <PanelHeader>Group</PanelHeader>
+
+            <SharedContent />
+
+            <Group
+              header={<Header mode="secondary">Модальное окно с Group</Header>}
             >
-              Group в модальном окне
-            </ModalPageHeader>
+              <SimpleCell onClick={() => setModalOpened(true)}>
+                Открыть Group в модальном окне
+              </SimpleCell>
+            </Group>
+          </Panel>
+        </View>
+      </SplitCol>
+    </SplitLayout>
+  );
+};
+
+const SharedContent = () => {
+  const platform = usePlatform();
+
+  return (
+    <>
+      <Group>
+        <Group mode="plain">
+          <SimpleCell
+            indicator="+7 ••• •• •• 96"
+            before={<Icon28PhoneOutline />}
+          >
+            Номер телефона
+          </SimpleCell>
+          <SimpleCell indicator="g•••@gmail.com" before={<Icon28MailOutline />}>
+            Email
+          </SimpleCell>
+        </Group>
+        <Group mode="plain">
+          <SimpleCell
+            indicator="Обновлён 3 года назад"
+            before={<Icon28KeyOutline />}
+          >
+            Пароль
+          </SimpleCell>
+          <SimpleCell
+            indicator="Вкл."
+            before={<Icon28CheckShieldDeviceOutline />}
+          >
+            Подтверждение входа
+          </SimpleCell>
+          <SimpleCell indicator="2" before={<Icon28DevicesOutline />}>
+            Привязанные устройства
+          </SimpleCell>
+        </Group>
+      </Group>
+
+      <Group header={<Header>Последняя активность</Header>}>
+        <SimpleCell
+          after={
+            platform === IOS ? (
+              <IconButton aria-label="Подробнее">
+                <Icon16MoreHorizontal />
+              </IconButton>
+            ) : (
+              <IconButton aria-label="Подробнее">
+                <Icon16MoreVertical />
+              </IconButton>
+            )
           }
+          description="Санкт-Петербург, Россия"
+          before={<Avatar size={32} mode="app" />}
         >
-          {this.renderGroup()}
-        </ModalPage>
-      </ModalRoot>
-    );
+          VK · Приложение для iPhone
+        </SimpleCell>
+        <SimpleCell
+          after={
+            platform === IOS ? (
+              <IconButton aria-label="Подробнее">
+                <Icon16MoreHorizontal />
+              </IconButton>
+            ) : (
+              <IconButton aria-label="Подробнее">
+                <Icon16MoreVertical />
+              </IconButton>
+            )
+          }
+          description="Санкт-Петербург, Россия"
+          before={<Avatar size={32} mode="app" />}
+        >
+          VK · Браузер Chrome для macOS
+        </SimpleCell>
+        <CellButton>Показать историю активности</CellButton>
+        <CellButton mode="danger">Завершить все остальные сеансы</CellButton>
+      </Group>
 
-    return (
-      <SplitLayout modal={modal}>
-        <SplitCol>
-          <View activePanel="group">
-            <Panel id="group">
-              <PanelHeader>Group</PanelHeader>
+      <Group
+        header={<Header>Адреса</Header>}
+        description="Для использования в мини-приложениях, Delivery Cub, VK Taxi и других сервисах ВКонтакте. Эти адреса видны только Вам."
+      >
+        <CellButton>Добавить домашний адрес</CellButton>
+        <CellButton>Добавить рабочий адрес</CellButton>
+      </Group>
+    </>
+  );
+};
 
-              {this.renderGroup()}
-
-              <Group
-                header={
-                  <Header mode="secondary">Модальное окно с Group</Header>
-                }
-              >
-                <SimpleCell
-                  onClick={() => this.setState({ isModalOpened: true })}
-                >
-                  Открыть Group в модальном окне
-                </SimpleCell>
-              </Group>
-            </Panel>
-          </View>
-        </SplitCol>
-      </SplitLayout>
-    );
-  }
-}
-
-const AppWithPlatform = withPlatform(App);
-
-<AppWithPlatform />;
+<Example />;
 ```

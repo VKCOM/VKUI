@@ -1,5 +1,6 @@
 import {
   Icon16MoreVertical,
+  Icon16MoreHorizontal,
   Icon16MessageHeart,
   Icon24MessageOutline,
   Icon28MessageOutline,
@@ -28,6 +29,9 @@ describe("SimpleCell", () => {
           </IconButton>,
           <IconButton key="icon-w08">
             <Icon16MoreVertical />
+          </IconButton>,
+          <IconButton key="icon-w08">
+            <Icon16MoreHorizontal />
           </IconButton>,
         ],
       },
