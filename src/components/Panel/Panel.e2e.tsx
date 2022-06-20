@@ -19,7 +19,8 @@ describe("Panel", () => {
           height: "200px",
           overflow: "auto",
           transform: "translateZ(0)",
-          border: "1px solid red",
+          // чтобы было проще видеть разницу скриншотов
+          border: "1px solid blue",
           marginBottom: "10px",
         }}
       >
