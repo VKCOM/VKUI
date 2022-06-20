@@ -223,6 +223,14 @@
   content: "";
 }
 
+.PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.ModalPageHeader__in)
+  .PanelHeader__in {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  box-shadow: 0 0 0 var(--thin-border) var(--input_border) inset;
+  border-bottom: none;
+}
+
 .PanelHeader--vkcom .PanelHeader__content {
   text-align: center;
 }
