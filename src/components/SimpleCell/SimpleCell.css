@@ -114,23 +114,7 @@
   padding-right: 2px;
 }
 
-.SimpleCell__after .IconButton .Icon--28,
-.SimpleCell__after .IconButton .Icon--28 ~ * {
-  margin-right: -8px;
-}
-
-.SimpleCell__after .IconButton .Icon--24,
-.SimpleCell__after .IconButton .Icon--24 ~ * {
-  margin-right: -10px;
-}
-
-.SimpleCell__after .IconButton .Icon--16,
-.SimpleCell__after .IconButton .Icon--16 ~ * {
-  margin-right: -14px;
-}
-
-.SimpleCell__after .IconButton .Icon--w-8,
-.SimpleCell__after .IconButton .Icon--w-8 ~ * {
+.SimpleCell__after .IconButton {
   margin-right: -12px;
 }
 
@@ -159,21 +143,8 @@
   padding-left: 12px;
 }
 
-.SimpleCell--ios .SimpleCell__after .IconButton .Icon--16,
-.SimpleCell--ios .SimpleCell__after .IconButton .Icon--16 ~ * {
-  margin-right: -12px;
-}
-
-.SimpleCell--ios.SimpleCell--sizeY-compact
-  .SimpleCell__after
-  .IconButton
-  .Icon--16,
-.SimpleCell--ios.SimpleCell--sizeY-compact
-  .SimpleCell__after
-  .IconButton
-  .Icon--16
-  ~ * {
-  margin-right: -14px;
+.SimpleCell--ios .SimpleCell__after .IconButton {
+  margin-right: -9px;
 }
 
 .SimpleCell--ios.SimpleCell--sizeY-regular
@@ -223,26 +194,6 @@
   ~ .SimpleCell__main
   .SimpleCell__description {
   margin-top: 1px;
-}
-
-.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--28,
-.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--28 ~ * {
-  margin-right: -6px;
-}
-
-.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--24,
-.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--24 ~ * {
-  margin-right: -8px;
-}
-
-.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--16,
-.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--16 ~ * {
-  margin-right: -12px;
-}
-
-.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--w-8,
-.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--w-8 ~ * {
-  margin-right: -10px;
 }
 
 .SimpleCell--sizeY-compact .SimpleCell__badge .Badge {

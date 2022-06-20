@@ -6,7 +6,7 @@ import {
   CalendarRangeProps,
 } from "../CalendarRange/CalendarRange";
 import { Popper, Placement } from "../Popper/Popper";
-import IconButton from "../IconButton/IconButton";
+import { IconButton } from "../IconButton/IconButton";
 import { HasRootRef } from "../../types";
 import { useDateInput } from "../../hooks/useDateInput";
 import { useAdaptivity } from "../../hooks/useAdaptivity";

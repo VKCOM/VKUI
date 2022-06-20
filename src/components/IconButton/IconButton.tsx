@@ -1,6 +1,5 @@
 import * as React from "react";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { withAdaptivity } from "../../hoc/withAdaptivity";
@@ -9,6 +8,7 @@ import { warnOnce } from "../../lib/warnOnce";
 import "./IconButton.css";
 
 export interface IconButtonProps extends TappableProps {
+  children?: React.ReactNode;
   /**
    * @deprecated будет удалено в 5.0.0. Используйте `children`
    */
@@ -17,14 +17,11 @@ export interface IconButtonProps extends TappableProps {
 
 const warn = warnOnce("IconButton");
 
-/**
- * @see https://vkcom.github.io/VKUI/#/IconButton
- */
-const IconButton: React.FC<IconButtonProps> = ({
+const IconButtonComponent = ({
   icon,
   sizeY,
   children,
-  Component,
+  Component = "button",
   ...restProps
 }: IconButtonProps) => {
   const platform = usePlatform();
@@ -40,10 +37,11 @@ const IconButton: React.FC<IconButtonProps> = ({
       {...restProps}
       Component={restProps.href ? "a" : Component}
       activeEffectDelay={200}
-      activeMode={platform === IOS ? "opacity" : "IconButton--active"}
+      activeMode="background"
       vkuiClass={classNames(
-        getClassName("IconButton", platform),
-        `IconButton--sizeY-${sizeY}`
+        "IconButton",
+        `IconButton--sizeY-${sizeY}`,
+        platform === IOS && "IconButton--ios"
       )}
     >
       {icon || children}
@@ -51,11 +49,11 @@ const IconButton: React.FC<IconButtonProps> = ({
   );
 };
 
-IconButton.defaultProps = {
-  Component: "button",
-};
-
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(IconButton, {
+/**
+ * @see https://vkcom.github.io/VKUI/#/IconButton
+ */
+export const IconButton = withAdaptivity(IconButtonComponent, {
   sizeY: true,
 });
+
+IconButton.displayName = "IconButton";
