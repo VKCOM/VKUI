@@ -223,6 +223,7 @@
   content: "";
 }
 
+/* TODO: v5.0.0 новая адаптивность */
 .PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.ModalPageHeader__in)
   .PanelHeader__in {
   border-top-left-radius: 8px;
