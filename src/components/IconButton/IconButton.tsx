@@ -17,9 +17,6 @@ export interface IconButtonProps extends TappableProps {
 
 const warn = warnOnce("IconButton");
 
-/**
- * @see https://vkcom.github.io/VKUI/#/IconButton
- */
 const IconButtonComponent = ({
   icon,
   sizeY,
@@ -52,6 +49,9 @@ const IconButtonComponent = ({
   );
 };
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/IconButton
+ */
 export const IconButton = withAdaptivity(IconButtonComponent, {
   sizeY: true,
 });
