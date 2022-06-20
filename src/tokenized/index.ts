@@ -143,6 +143,9 @@ export type { ChipsInputProps } from "../components/ChipsInput/ChipsInput";
 export { ChipsSelect } from "../components/ChipsSelect/ChipsSelect";
 export type { ChipsSelectProps } from "../components/ChipsSelect/ChipsSelect";
 
+export { Spacing } from "../components/Spacing/Spacing";
+export type { SpacingProps } from "../components/Spacing/Spacing";
+
 export { SplitCol } from "../components/SplitCol/SplitCol";
 export type { SplitColProps } from "../components/SplitCol/SplitCol";
 
