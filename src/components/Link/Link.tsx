@@ -1,7 +1,7 @@
 import * as React from "react";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
-import Tappable, { TappableProps } from "../Tappable/Tappable";
+import { TappableProps, Tappable } from "../Tappable/Tappable";
 import "./Link.css";
 
 export type LinkProps = TappableProps;
@@ -9,7 +9,10 @@ export type LinkProps = TappableProps;
 /**
  * @see https://vkcom.github.io/VKUI/#/Link
  */
-const Link: React.FC<LinkProps> = ({ children, ...restProps }: LinkProps) => {
+export const Link: React.FC<LinkProps> = ({
+  children,
+  ...restProps
+}: LinkProps) => {
   const platform = usePlatform();
 
   return (
@@ -25,6 +28,3 @@ const Link: React.FC<LinkProps> = ({ children, ...restProps }: LinkProps) => {
     </Tappable>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default Link;

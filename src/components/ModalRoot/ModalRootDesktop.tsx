@@ -4,7 +4,8 @@ import { transitionEvent } from "../../lib/supportEvents";
 import { HasPlatform } from "../../types";
 import { withPlatform } from "../../hoc/withPlatform";
 import { withContext } from "../../hoc/withContext";
-import ModalRootContext, {
+import {
+  ModalRootContext,
   ModalRootContextInterface,
 } from "./ModalRootContext";
 import {

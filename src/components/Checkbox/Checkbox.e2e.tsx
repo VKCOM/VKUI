@@ -10,6 +10,10 @@ describe("Checkbox", () => {
         checked: [false, true],
         disabled: [undefined, true],
       },
+      {
+        indeterminate: [true],
+        disabled: [undefined, true],
+      },
     ],
     { adaptivity: { sizeY: SizeType.REGULAR } }
   );
@@ -21,6 +25,24 @@ describe("Checkbox sizes and description", () => {
     [
       {
         description: [undefined, "Description"],
+        $adaptivity: "y",
+      },
+    ]
+  );
+});
+
+describe("Checkbox simple", () => {
+  describeScreenshotFuzz(
+    (props: CheckboxProps) => <Checkbox {...props} />,
+    [
+      {
+        checked: [undefined, true],
+        disabled: [undefined, true],
+        $adaptivity: "y",
+      },
+      {
+        indeterminate: [true],
+        disabled: [undefined, true],
         $adaptivity: "y",
       },
     ]

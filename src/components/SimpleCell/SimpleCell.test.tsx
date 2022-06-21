@@ -2,7 +2,7 @@ import { screen, render } from "@testing-library/react";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { baselineComponent } from "../../testing/utils";
 import { SizeType } from "../AdaptivityProvider/AdaptivityContext";
-import SimpleCell from "./SimpleCell";
+import { SimpleCell } from "./SimpleCell";
 
 describe("SimpleCell", () => {
   baselineComponent(SimpleCell);

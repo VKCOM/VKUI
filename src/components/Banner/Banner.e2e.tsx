@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 import { Avatar } from "../Avatar/Avatar";
-import Banner, { BannerProps } from "./Banner";
+import { Banner, BannerProps } from "./Banner";
 import { Button } from "../Button/Button";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
+import { describeScreenshotFuzz } from "../../testing/e2e";
 
 describe("Banner", () => {
   describeScreenshotFuzz(

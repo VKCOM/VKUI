@@ -1,13 +1,11 @@
 import * as React from "react";
 import { classNamesString } from "../../lib/classNames";
 import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
-import Tappable, { TappableProps } from "../Tappable/Tappable";
+import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { HasAlign } from "../../types";
-import { usePlatform } from "../../hooks/usePlatform";
 import { Spinner } from "../Spinner/Spinner";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import styles from "./Button.module.css";
 
 export interface VKUIButtonProps extends HasAlign {
@@ -44,7 +42,6 @@ const Button: React.FC<ButtonProps> = ({
   className,
   ...restProps
 }) => {
-  const platform = usePlatform();
   const hasIcons = Boolean(before || after);
   const hasIconOnly = !children && Boolean(after) !== Boolean(before);
   const hasNewTokens = React.useContext(ConfigProviderContext).hasNewTokens;
@@ -60,7 +57,6 @@ const Button: React.FC<ButtonProps> = ({
       className={classNamesString(
         className,
         styles.Button,
-        getPlatformClassName("Button", platform, styles),
         styles[`Button--sz-${size}`],
         styles[`Button--lvl-${mode}`],
         styles[`Button--clr-${appearance}`],
@@ -68,7 +64,8 @@ const Button: React.FC<ButtonProps> = ({
         getSizeYClassName("Button", sizeY, styles),
         stretched && styles["Button--stretched"],
         hasIcons && styles["Button--with-icon"],
-        hasIconOnly && styles["Button--singleIcon"]
+        hasIconOnly && styles["Button--singleIcon"],
+        loading && styles["Button--loading"]
       )}
       getRootRef={getRootRef}
       hoverMode={hasNewTokens ? styles["Button--hover"] : "background"}

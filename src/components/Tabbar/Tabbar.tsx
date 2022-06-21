@@ -15,8 +15,12 @@ export interface TabbarProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * @see https://vkcom.github.io/VKUI/#/Tabbar
  */
-const Tabbar: React.FunctionComponent<TabbarProps> = (props: TabbarProps) => {
-  const { children, shadow, itemsLayout, ...restProps } = props;
+export const Tabbar: React.FunctionComponent<TabbarProps> = ({
+  children,
+  shadow = true,
+  itemsLayout,
+  ...restProps
+}: TabbarProps) => {
   const platform = usePlatform();
 
   const getItemsLayout = () => {
@@ -45,10 +49,3 @@ const Tabbar: React.FunctionComponent<TabbarProps> = (props: TabbarProps) => {
     </div>
   );
 };
-
-Tabbar.defaultProps = {
-  shadow: true,
-};
-
-// eslint-disable-next-line import/no-default-export
-export default Tabbar;

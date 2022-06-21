@@ -1,10 +1,8 @@
 import * as React from "react";
 import { HasRootRef } from "../../types";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { noop } from "../../lib/utils";
 import { useExternRef } from "../../hooks/useExternRef";
-import { usePlatform } from "../../hooks/usePlatform";
 import { Removable, RemovableProps } from "../Removable/Removable";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
@@ -24,7 +22,7 @@ export interface FormLayoutGroupProps
 /**
  * @see https://vkcom.github.io/VKUI/#/FormLayoutGroup
  */
-const FormLayoutGroup: React.FC<FormLayoutGroupProps> = ({
+export const FormLayoutGroup: React.FC<FormLayoutGroupProps> = ({
   children,
   mode = "vertical",
   removable,
@@ -33,7 +31,6 @@ const FormLayoutGroup: React.FC<FormLayoutGroupProps> = ({
   getRootRef,
   ...restProps
 }: FormLayoutGroupProps) => {
-  const platform = usePlatform();
   const { sizeY } = useAdaptivity();
   const isRemovable = removable && mode === "horizontal";
   const rootEl = useExternRef(getRootRef);
@@ -42,7 +39,7 @@ const FormLayoutGroup: React.FC<FormLayoutGroupProps> = ({
     <div
       ref={rootEl}
       vkuiClass={classNames(
-        getClassName("FormLayoutGroup", platform),
+        "FormLayoutGroup",
         getSizeYClassName("FormLayoutGroup", sizeY),
         `FormLayoutGroup--${mode}`,
         isRemovable && "FormLayoutGroup--removable"
@@ -68,6 +65,3 @@ const FormLayoutGroup: React.FC<FormLayoutGroupProps> = ({
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default FormLayoutGroup;

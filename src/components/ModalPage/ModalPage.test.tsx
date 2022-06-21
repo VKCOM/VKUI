@@ -1,5 +1,5 @@
 import { baselineComponent } from "../../testing/utils";
-import ModalPage from "./ModalPage";
+import { ModalPage } from "./ModalPage";
 
 describe("ModalPage", () => {
   baselineComponent((p) => <ModalPage nav="id" {...p} />);

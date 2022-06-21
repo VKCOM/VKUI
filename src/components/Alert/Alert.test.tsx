@@ -5,7 +5,7 @@ import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import { baselineComponent, runAllTimers } from "../../testing/utils";
 import { Alert } from "./Alert";
 import { ANDROID, IOS } from "../../lib/platform";
-import ConfigProvider from "../ConfigProvider/ConfigProvider";
+import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 
 describe("Alert", () => {
   beforeAll(() => jest.useFakeTimers());

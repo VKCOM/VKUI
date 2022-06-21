@@ -1,5 +1,5 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { classNames } from "../../lib/classNames";
 import {
@@ -8,7 +8,7 @@ import {
 } from "../ModalRoot/ModalRootContext";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useOrientationChange } from "../../hooks/useOrientationChange";
-import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
+import { ModalDismissButton } from "../ModalDismissButton/ModalDismissButton";
 import { multiRef } from "../../lib/utils";
 import { ModalType } from "../ModalRoot/types";
 import { getNavId, NavIdProps } from "../../lib/getNavId";
@@ -56,21 +56,21 @@ const warn = warnOnce("ModalPage");
 /**
  * @see https://vkcom.github.io/VKUI/#/ModalPage
  */
-const ModalPage: React.FC<ModalPageProps> = (props) => {
+export const ModalPage: React.FC<ModalPageProps> = ({
+  children,
+  header,
+  onOpen,
+  onOpened,
+  onClose,
+  onClosed,
+  settlingHeight, // 75
+  dynamicContentHeight,
+  getModalContentRef,
+  nav,
+  id,
+  ...restProps
+}) => {
   const { updateModalHeight } = React.useContext(ModalRootContext);
-
-  const {
-    children,
-    header,
-    onOpen,
-    onOpened,
-    onClose,
-    onClosed,
-    dynamicContentHeight,
-    getModalContentRef,
-    nav,
-    ...restProps
-  } = props;
 
   const platform = usePlatform();
   const orientation = useOrientationChange();
@@ -83,13 +83,18 @@ const ModalPage: React.FC<ModalPageProps> = (props) => {
   ]);
 
   const modalContext = React.useContext(ModalRootContext);
-  const { refs } = useModalRegistry(getNavId(props, warn), ModalType.PAGE);
+  const { refs } = useModalRegistry(
+    getNavId({ nav, id }, warn),
+    ModalType.PAGE
+  );
 
   return (
     <div
       {...restProps}
+      id={id}
       vkuiClass={classNames(
-        getClassName("ModalPage", platform),
+        "ModalPage",
+        getPlatformClassName("ModalPage", platform),
         getSizeXClassName("ModalPage", sizeX),
         getViewWidthClassName("ModalPage", viewWidth)
       )}
@@ -120,6 +125,3 @@ const ModalPage: React.FC<ModalPageProps> = (props) => {
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default ModalPage;

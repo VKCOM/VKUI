@@ -1,4 +1,4 @@
-import Slider, { SliderProps } from "./Slider";
+import { Slider, SliderProps } from "./Slider";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
 describe("Slider", () => {

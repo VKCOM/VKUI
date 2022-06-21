@@ -8,10 +8,9 @@ import "./List.css";
 /**
  * @see https://vkcom.github.io/VKUI/#/List
  */
-const List: React.FunctionComponent<React.HTMLAttributes<HTMLDivElement>> = ({
-  children,
-  ...restProps
-}: React.HTMLAttributes<HTMLDivElement>) => {
+export const List: React.FunctionComponent<
+  React.HTMLAttributes<HTMLDivElement>
+> = ({ children, ...restProps }: React.HTMLAttributes<HTMLDivElement>) => {
   const platform = usePlatform();
   const [isDragging, toggleDrag] = React.useState(false);
 
@@ -30,6 +29,3 @@ const List: React.FunctionComponent<React.HTMLAttributes<HTMLDivElement>> = ({
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default List;

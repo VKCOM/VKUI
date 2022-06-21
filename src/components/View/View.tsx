@@ -1,8 +1,7 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { transitionEvent, animationEvent } from "../../lib/supportEvents";
-import { getClassName } from "../../helpers/getClassName";
-import { IOS, ANDROID, VKCOM } from "../../lib/platform";
+import { IOS } from "../../lib/platform";
 import { Touch, TouchEvent } from "../Touch/Touch";
 import { HasPlatform } from "../../types";
 import { withPlatform } from "../../hoc/withPlatform";
@@ -83,7 +82,7 @@ export interface ViewState {
   nextPanel: string | null;
 
   swipingBack: boolean;
-  swipebackStartX: number;
+  swipeBackStartX: number;
   swipeBackShift: number;
   swipeBackNextPanel: string | null;
   swipeBackPrevPanel: string | null;
@@ -94,10 +93,7 @@ export interface ViewState {
 
 const warn = warnOnce("View");
 
-/**
- * @see https://vkcom.github.io/VKUI/#/View
- */
-class View extends React.Component<ViewProps & DOMProps, ViewState> {
+class ViewComponent extends React.Component<ViewProps & DOMProps, ViewState> {
   constructor(props: ViewProps) {
     super(props);
 
@@ -111,7 +107,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
       nextPanel: null,
 
       swipingBack: false,
-      swipebackStartX: 0,
+      swipeBackStartX: 0,
       swipeBackShift: 0,
       swipeBackNextPanel: null,
       swipeBackPrevPanel: null,
@@ -190,9 +186,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
           }
           this.animationFinishTimeout = setTimeout(
             this.transitionEndHandler,
-            this.props.platform === ANDROID || this.props.platform === VKCOM
-              ? 300
-              : 600
+            this.props.platform === IOS ? 600 : 300
           );
         }
       }
@@ -214,7 +208,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
           swipeBackNextPanel: null,
           swipingBack: false,
           swipeBackResult: null,
-          swipebackStartX: 0,
+          swipeBackStartX: 0,
           swipeBackShift: 0,
           activePanel: nextPanel,
           visiblePanels: [nextPanel],
@@ -300,9 +294,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
       }
       this.transitionFinishTimeout = setTimeout(
         eventHandler,
-        this.props.platform === ANDROID || this.props.platform === VKCOM
-          ? 300
-          : 600
+        this.props.platform === IOS ? 600 : 300
       );
     }
   }
@@ -385,7 +377,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
       swipeBackNextPanel: null,
       swipingBack: false,
       swipeBackResult: null,
-      swipebackStartX: 0,
+      swipeBackStartX: 0,
       swipeBackShift: 0,
     });
   }
@@ -426,7 +418,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
         }
         this.setState({
           swipingBack: true,
-          swipebackStartX: e.startX,
+          swipeBackStartX: e.startX,
           swipeBackPrevPanel: this.state.activePanel,
           swipeBackNextPanel: this.props.history!.slice(-2)[0],
         });
@@ -437,7 +429,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
           swipeBackShift = 0;
         } else if (
           e.shiftX >
-          this.window.innerWidth - this.state.swipebackStartX
+          this.window.innerWidth - this.state.swipeBackStartX
         ) {
           swipeBackShift = this.window?.innerWidth;
         } else {
@@ -457,7 +449,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
         this.onSwipeBackSuccess();
       } else if (
         speed > 250 ||
-        this.state.swipebackStartX + this.state.swipeBackShift >
+        this.state.swipeBackStartX + this.state.swipeBackShift >
           this.window.innerWidth / 2
       ) {
         this.setState({ swipeBackResult: SwipeBackResults.success });
@@ -549,17 +541,17 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
 
     const disableAnimation = this.shouldDisableTransitionMotion();
 
-    const modifiers = {
-      "View--animated": !disableAnimation && animated,
-      "View--swiping-back": !disableAnimation && this.state.swipingBack,
-      "View--no-motion": disableAnimation,
-    };
-
     return (
       <Touch
         Component="section"
         {...restProps}
-        vkuiClass={classNames(getClassName("View", platform), modifiers)}
+        vkuiClass={classNames(
+          "View",
+          platform === IOS && "View--ios",
+          !disableAnimation && animated && "View--animated",
+          !disableAnimation && this.state.swipingBack && "View--swiping-back",
+          disableAnimation && "View--no-motion"
+        )}
         onMoveX={this.onMoveX}
         onEnd={this.onEnd}
       >
@@ -577,20 +569,20 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
 
             return (
               <div
-                // eslint-disable-next-line vkui/no-object-expression-in-arguments
-                vkuiClass={classNames("View__panel", {
-                  "View__panel--active": panelId === activePanel,
-                  "View__panel--prev": panelId === prevPanel,
-                  "View__panel--next": panelId === nextPanel,
-                  "View__panel--swipe-back-prev":
-                    panelId === swipeBackPrevPanel,
-                  "View__panel--swipe-back-next":
-                    panelId === swipeBackNextPanel,
-                  "View__panel--swipe-back-success":
-                    swipeBackResult === SwipeBackResults.success,
-                  "View__panel--swipe-back-failed":
-                    swipeBackResult === SwipeBackResults.fail,
-                })}
+                vkuiClass={classNames(
+                  "View__panel",
+                  panelId === activePanel && "View__panel--active",
+                  panelId === prevPanel && "View__panel--prev",
+                  panelId === nextPanel && "View__panel--next",
+                  panelId === swipeBackPrevPanel &&
+                    "View__panel--swipe-back-prev",
+                  panelId === swipeBackNextPanel &&
+                    "View__panel--swipe-back-next",
+                  swipeBackResult === SwipeBackResults.success &&
+                    "View__panel--swipe-back-success",
+                  swipeBackResult === SwipeBackResults.fail &&
+                    "View__panel--swipe-back-failed"
+                )}
                 onAnimationEnd={
                   isTransitionTarget ? this.transitionEndHandler : undefined
                 }
@@ -625,11 +617,13 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
   }
 }
 
-// eslint-disable-next-line import/no-default-export
-export default withContext(
+/**
+ * @see https://vkcom.github.io/VKUI/#/View
+ */
+export const View = withContext(
   withContext(
     withContext(
-      withPlatform(withDOM<ViewProps>(View)),
+      withPlatform(withDOM<ViewProps>(ViewComponent)),
       SplitColContext,
       "splitCol"
     ),
@@ -639,3 +633,5 @@ export default withContext(
   ScrollContext,
   "scroll"
 );
+
+View.displayName = "View";

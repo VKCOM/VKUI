@@ -20,7 +20,7 @@ export const TabsModeContext =
 /**
  * @see https://vkcom.github.io/VKUI/#/Tabs
  */
-const Tabs: React.FunctionComponent<TabsProps> = ({
+export const Tabs: React.FunctionComponent<TabsProps> = ({
   children,
   mode = "default",
   getRootRef,
@@ -51,6 +51,3 @@ const Tabs: React.FunctionComponent<TabsProps> = ({
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default Tabs;

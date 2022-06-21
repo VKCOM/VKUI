@@ -12,7 +12,7 @@ import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import { ActionSheet, ActionSheetProps } from "../ActionSheet/ActionSheet";
 import { ActionSheetItem } from "../ActionSheetItem/ActionSheetItem";
-import View from "../View/View";
+import { View } from "../View/View";
 import { Panel } from "../Panel/Panel";
 import { SplitLayout } from "../SplitLayout/SplitLayout";
 import { SplitCol } from "../SplitCol/SplitCol";

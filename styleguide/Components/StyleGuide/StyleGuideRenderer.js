@@ -76,7 +76,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
       styleguideAppearance: value,
       appearance: value,
     });
-  }, [platform, styleguideAppearance]);
+  }, [platform, styleguideAppearance, setContext]);
 
   const providerValue = useMemo(
     () => ({ ...state, setContext, setPopout }),

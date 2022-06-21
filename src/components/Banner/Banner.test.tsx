@@ -5,7 +5,7 @@ import {
 } from "../AdaptivityProvider/AdaptivityContext";
 import { baselineComponent } from "../../testing/utils";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import Banner, { BannerProps } from "./Banner";
+import { Banner, BannerProps } from "./Banner";
 
 const BannerTest = ({
   sizeY = SizeType.REGULAR,

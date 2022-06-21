@@ -8,7 +8,7 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { HasRootRef } from "../../types";
 import { PanelHeaderButton } from "../PanelHeaderButton/PanelHeaderButton";
 import { ANDROID } from "../../lib/platform";
-import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
+import { ModalDismissButton } from "../ModalDismissButton/ModalDismissButton";
 import { Icon24Dismiss } from "@vkontakte/icons";
 import { useKeyboard } from "../../hooks/useKeyboard";
 import { useAdaptivity } from "../../hooks/useAdaptivity";

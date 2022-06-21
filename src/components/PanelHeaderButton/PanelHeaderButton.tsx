@@ -1,5 +1,5 @@
 import * as React from "react";
-import Tappable, { TappableProps } from "../Tappable/Tappable";
+import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { warnOnce } from "../../lib/warnOnce";

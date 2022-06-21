@@ -1,5 +1,5 @@
 import { baselineComponent } from "../../testing/utils";
-import PromoBanner from "./PromoBanner";
+import { PromoBanner } from "./PromoBanner";
 
 describe("PromoBanner", () => {
   baselineComponent(PromoBanner);

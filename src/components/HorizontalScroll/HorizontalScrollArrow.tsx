@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Icon24Chevron } from "@vkontakte/icons";
 import { classNames } from "../../lib/classNames";
-import Tappable from "../Tappable/Tappable";
+import { Tappable } from "../Tappable/Tappable";
 import "./HorizontalScrollArrow.css";
 
 export interface HorizontalScrollArrowProps {

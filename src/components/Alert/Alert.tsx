@@ -1,5 +1,5 @@
 import * as React from "react";
-import Tappable from "../Tappable/Tappable";
+import { Tappable } from "../Tappable/Tappable";
 import { PopoutWrapper } from "../PopoutWrapper/PopoutWrapper";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
@@ -9,7 +9,7 @@ import { hasReactNode, stopPropagation } from "../../lib/utils";
 import { Title } from "../Typography/Title/Title";
 import { Caption } from "../Typography/Caption/Caption";
 import { Text } from "../Typography/Text/Text";
-import ModalDismissButton from "../ModalDismissButton/ModalDismissButton";
+import { ModalDismissButton } from "../ModalDismissButton/ModalDismissButton";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { useScrollLock } from "../AppRoot/ScrollContext";
 import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";

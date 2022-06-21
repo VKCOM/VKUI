@@ -35,12 +35,18 @@
   padding-right: 8px;
 }
 
-.CellButton,
-.CellButton > .Icon {
-  color: var(--accent);
+.CellButton {
+  color: var(--accent, var(--vkui--color_text_accent));
 }
 
-.CellButton--danger,
+.CellButton > .Icon {
+  color: var(--accent, var(--vkui--color_icon_accent));
+}
+
+.CellButton--danger {
+  color: var(--destructive, var(--vkui--color_text_negative));
+}
+
 .CellButton--danger > .Icon {
-  color: var(--destructive);
+  color: var(--destructive, var(--vkui--color_icon_negative));
 }

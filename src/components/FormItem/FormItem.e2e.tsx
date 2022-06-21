@@ -1,11 +1,11 @@
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { FormItem } from "./FormItem";
 import { CellButton } from "../CellButton/CellButton";
-import Checkbox from "../Checkbox/Checkbox";
+import { Checkbox } from "../Checkbox/Checkbox";
 import { Input } from "../Input/Input";
 import { Radio } from "../Radio/Radio";
-import RichCell from "../RichCell/RichCell";
-import SimpleCell from "../SimpleCell/SimpleCell";
+import { RichCell } from "../RichCell/RichCell";
+import { SimpleCell } from "../SimpleCell/SimpleCell";
 import { Cell } from "../Cell/Cell";
 
 describe("FormItem", () => {

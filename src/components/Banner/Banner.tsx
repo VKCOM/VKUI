@@ -1,9 +1,8 @@
 import * as React from "react";
 import { HasComponent } from "../../types";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
-import { ANDROID, IOS, VKCOM } from "../../lib/platform";
+import { IOS } from "../../lib/platform";
 import { hasReactNode } from "../../lib/utils";
 import {
   Icon24Chevron,
@@ -11,8 +10,8 @@ import {
   Icon24DismissDark,
   Icon24Cancel,
 } from "@vkontakte/icons";
-import Tappable from "../Tappable/Tappable";
-import IconButton from "../IconButton/IconButton";
+import { Tappable } from "../Tappable/Tappable";
+import { IconButton } from "../IconButton/IconButton";
 import { Headline } from "../Typography/Headline/Headline";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import { Text } from "../Typography/Text/Text";
@@ -97,38 +96,35 @@ const BannerHeader: React.FC<BannerTypographyProps> = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/Banner
  */
-const Banner: React.FC<BannerProps> = (props: BannerProps) => {
+export const Banner = ({
+  mode = "tint",
+  imageTheme = "dark",
+  size = "s",
+  before,
+  asideMode,
+  header,
+  subheader,
+  text,
+  children,
+  background,
+  actions,
+  onDismiss,
+  dismissLabel = "Скрыть",
+  ...restProps
+}: BannerProps) => {
   const platform = usePlatform();
-  const {
-    mode,
-    imageTheme,
-    size,
-    before,
-    asideMode,
-    header,
-    subheader,
-    text,
-    children,
-    background,
-    actions,
-    onDismiss,
-    dismissLabel,
-    ...restProps
-  } = props;
 
   const SubheaderTypography = size === "m" ? Text : Subhead;
 
   return (
     <section
       {...restProps}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
-        getClassName("Banner", platform),
+        "Banner",
+        platform === IOS && "Banner--ios",
         `Banner--md-${mode}`,
         `Banner--sz-${size}`,
-        {
-          "Banner--inverted": mode === "image" && imageTheme === "dark",
-        }
+        mode === "image" && imageTheme === "dark" && "Banner--inverted"
       )}
     >
       <Tappable
@@ -178,15 +174,15 @@ const Banner: React.FC<BannerProps> = (props: BannerProps) => {
                 hoverMode="opacity"
                 hasActive={false}
               >
-                {(platform === ANDROID || platform === VKCOM) && (
-                  <Icon24Cancel />
-                )}
-                {platform === IOS &&
-                  (mode === "image" ? (
+                {platform === IOS ? (
+                  mode === "image" ? (
                     <Icon24DismissDark />
                   ) : (
                     <Icon24DismissSubstract />
-                  ))}
+                  )
+                ) : (
+                  <Icon24Cancel />
+                )}
               </IconButton>
             )}
           </div>
@@ -195,13 +191,3 @@ const Banner: React.FC<BannerProps> = (props: BannerProps) => {
     </section>
   );
 };
-
-Banner.defaultProps = {
-  dismissLabel: "Скрыть",
-  mode: "tint",
-  size: "s",
-  imageTheme: "dark",
-};
-
-// eslint-disable-next-line import/no-default-export
-export default Banner;

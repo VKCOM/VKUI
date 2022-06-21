@@ -207,7 +207,10 @@ const DatePickerNative: React.FC<
 /**
  * @see https://vkcom.github.io/VKUI/#/DatePicker
  */
-const DatePicker: React.FC<DatePickerProps> = ({ defaultValue, ...props }) => {
+export const DatePicker: React.FC<DatePickerProps> = ({
+  defaultValue,
+  ...props
+}) => {
   const { hasMouse } = useAdaptivity();
   const [value, setValue] = React.useState<Partial<DatePickerDateFormat>>(
     () => ({
@@ -228,6 +231,3 @@ const DatePicker: React.FC<DatePickerProps> = ({ defaultValue, ...props }) => {
   const Cmp = hasMouse ? DatePickerCustom : DatePickerNative;
   return <Cmp {...props} {...value} onDateChange={onDateChange} />;
 };
-
-// eslint-disable-next-line import/no-default-export
-export default DatePicker;

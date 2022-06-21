@@ -2,7 +2,7 @@ import * as React from "react";
 import { HasComponent } from "../../types";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
-import Tappable, { TappableProps } from "../Tappable/Tappable";
+import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { Icon24Chevron } from "@vkontakte/icons";
 import { IOS } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
@@ -49,7 +49,7 @@ export interface SimpleCellProps extends SimpleCellOwnProps, TappableProps {}
 /**
  * @see https://vkcom.github.io/VKUI/#/SimpleCell
  */
-const SimpleCell: React.FC<SimpleCellProps> = ({
+export const SimpleCell: React.FC<SimpleCellProps> = ({
   badge,
   before,
   indicator,
@@ -114,6 +114,3 @@ const SimpleCell: React.FC<SimpleCellProps> = ({
     </Tappable>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default SimpleCell;

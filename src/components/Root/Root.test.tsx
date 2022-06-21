@@ -5,9 +5,9 @@ import {
   mountTest,
 } from "../../testing/utils";
 import { render } from "@testing-library/react";
-import View from "../View/View";
-import ConfigProvider from "../ConfigProvider/ConfigProvider";
-import Root from "./Root";
+import { View } from "../View/View";
+import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
+import { Root } from "./Root";
 
 const views = [
   <View id="v1" key="1" activePanel="" />,

@@ -9,9 +9,9 @@ import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useDOM } from "../../lib/dom";
 import { ANDROID, IOS, VKCOM } from "../../lib/platform";
 import { Icon24Cancel } from "@vkontakte/icons";
-import IconButton from "../IconButton/IconButton";
+import { IconButton } from "../IconButton/IconButton";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
-import Tappable from "../Tappable/Tappable";
+import { Tappable } from "../Tappable/Tappable";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "./Removable.css";
 
@@ -92,7 +92,7 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
       </IconButton>
       {children}
 
-      <span vkuiClass="Removable__offset" aria-hidden="true"></span>
+      <span vkuiClass="Removable__offset" aria-hidden />
 
       <Tappable
         Component="button"
@@ -166,6 +166,8 @@ export const Removable: React.FC<RemovableOwnProps> = ({
           >
             <Icon24Cancel role="presentation" />
           </IconButton>
+
+          <span vkuiClass="Removable__offset" aria-hidden />
         </div>
       )}
 

@@ -5,7 +5,7 @@ import {
   Icon20ChevronRightOutline,
   Icon12Dropdown,
 } from "@vkontakte/icons";
-import Tappable from "../Tappable/Tappable";
+import { Tappable } from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
 import { SelectType } from "../Select/Select";
 import { CustomSelect } from "../CustomSelect/CustomSelect";

@@ -1,5 +1,5 @@
 import { usePlatform } from "./usePlatform";
-import ConfigProvider from "../components/ConfigProvider/ConfigProvider";
+import { ConfigProvider } from "../components/ConfigProvider/ConfigProvider";
 import { renderHook } from "@testing-library/react-hooks";
 import * as React from "react";
 

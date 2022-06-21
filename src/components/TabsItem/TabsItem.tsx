@@ -1,6 +1,6 @@
 import * as React from "react";
 import { getClassName } from "../../helpers/getClassName";
-import Tappable from "../Tappable/Tappable";
+import { Tappable } from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
 import { VKCOM } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
@@ -19,9 +19,9 @@ export interface TabsItemProps extends React.HTMLAttributes<HTMLElement> {
 /**
  * @see https://vkcom.github.io/VKUI/#/TabsItem
  */
-const TabsItem: React.FC<TabsItemProps> = ({
+export const TabsItem: React.FC<TabsItemProps> = ({
   children,
-  selected,
+  selected = false,
   after,
   ...restProps
 }: TabsItemProps) => {
@@ -56,10 +56,3 @@ const TabsItem: React.FC<TabsItemProps> = ({
     </Tappable>
   );
 };
-
-TabsItem.defaultProps = {
-  selected: false,
-};
-
-// eslint-disable-next-line import/no-default-export
-export default TabsItem;

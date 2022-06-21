@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   Icon28ChevronBack,
   Icon28ChevronLeftOutline,
@@ -10,7 +9,7 @@ import {
 } from "../PanelHeaderButton/PanelHeaderButton";
 import { ANDROID, VKCOM, IOS } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
-import { getClassName } from "../../helpers/getClassName";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { classNames } from "../../lib/classNames";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
@@ -23,7 +22,7 @@ export type PanelHeaderBackProps = PanelHeaderButtonProps & {
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderBack
  */
-const PanelHeaderBack: React.FC<PanelHeaderBackProps> = ({
+export const PanelHeaderBack = ({
   label,
   "aria-label": ariaLabel = "Назад",
   ...restProps
@@ -38,9 +37,10 @@ const PanelHeaderBack: React.FC<PanelHeaderBackProps> = ({
     <PanelHeaderButton
       {...restProps}
       vkuiClass={classNames(
-        getClassName("PanelHeaderBack", platform),
+        "PanelHeaderBack",
+        getPlatformClassName("PanelHeaderBack", platform),
         getSizeXClassName("PanelHeaderBack", sizeX),
-        label && "PanelHeaderBack--has-label"
+        showLabel && !!label && "PanelHeaderBack--has-label"
       )}
       label={showLabel && label}
       aria-label={ariaLabel}
@@ -51,6 +51,3 @@ const PanelHeaderBack: React.FC<PanelHeaderBackProps> = ({
     </PanelHeaderButton>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default React.memo(PanelHeaderBack);

@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, act } from "@testing-library/react";
-import ConfigProvider from "../ConfigProvider/ConfigProvider";
+import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 import { IOS } from "../../lib/platform";
 import {
   baselineComponent,
@@ -7,7 +7,7 @@ import {
   mountTest,
 } from "../../testing/utils";
 import { Panel } from "../Panel/Panel";
-import View, { scrollsCache, ViewProps } from "./View";
+import { View, scrollsCache, ViewProps } from "./View";
 import { ViewInfinite } from "./ViewInfinite";
 import { ComponentType, Fragment } from "react";
 

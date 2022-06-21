@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { baselineComponent } from "../../testing/utils";
 import { Removable } from "./Removable";
-import ConfigProvider from "../ConfigProvider/ConfigProvider";
+import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 import { Platform } from "../../lib/platform";
 
 describe("Removable", () => {

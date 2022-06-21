@@ -24,7 +24,7 @@ export interface ConfigProviderProps
 /**
  * @see https://vkcom.github.io/VKUI/#/ConfigProvider
  */
-const ConfigProvider: React.FC<ConfigProviderProps> = ({
+export const ConfigProvider: React.FC<ConfigProviderProps> = ({
   children,
   webviewType = WebviewType.VKAPPS,
   isWebView = vkBridge.isWebView(),
@@ -59,6 +59,3 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
     </ConfigProviderContext.Provider>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default ConfigProvider;
