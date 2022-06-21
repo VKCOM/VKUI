@@ -89,6 +89,9 @@ export const Popper: React.FC<PopperProps> = ({
     const modifiers: Array<Modifier<string>> = [
       {
         name: "preventOverflow",
+        options: {
+          mainAxis: false,
+        },
       },
       {
         name: "offset",
