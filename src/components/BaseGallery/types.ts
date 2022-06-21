@@ -1,6 +1,6 @@
 import * as React from "react";
 import { HasAlign, HasRef, HasRootRef } from "../../types";
-import { TouchEventHandler } from "../Touch/Touch";
+import { TouchEvent, TouchEventHandler } from "../Touch/Touch";
 
 export interface GallerySlidesState {
   coordX: number;
@@ -35,9 +35,8 @@ export interface BaseGalleryProps
   slideWidth?: string | number;
   slideIndex?: number;
   onDragStart?: TouchEventHandler;
-  onDragEnd?: TouchEventHandler;
+  onDragEnd?(e: TouchEvent, targetIndex: number): void;
   onChange?(current: number): void;
-  onEnd?({ targetIndex }: { targetIndex: number }): void;
   /**
    * Будет вызвано при клике на кнопку-стрелку влево
    */
