@@ -39,7 +39,7 @@
 }
 
 .PullToRefresh--ios .PullToRefresh__spinner {
-  border-radius: none;
+  border-radius: 0;
   box-shadow: none;
   background: none;
   color: var(--icon_outline_secondary, var(--vkui--color_icon_medium));
