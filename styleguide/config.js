@@ -196,6 +196,7 @@ const baseConfig = {
         {
           name: "Blocks",
           components: () => [
+            "../src/components/Tappable/Tappable.tsx",
             "../src/components/Badge/Badge.tsx",
             "../src/components/ButtonGroup/ButtonGroup.tsx",
             "../src/components/Button/Button.tsx",

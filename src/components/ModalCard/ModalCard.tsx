@@ -1,9 +1,9 @@
 import * as React from "react";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
-import { withPlatform } from "../../hoc/withPlatform";
 import { HasPlatform } from "../../types";
-import ModalRootContext, {
+import {
+  ModalRootContext,
   useModalRegistry,
 } from "../ModalRoot/ModalRootContext";
 import { ModalType } from "../ModalRoot/types";
@@ -26,28 +26,31 @@ const warn = warnOnce("ModalCard");
 /**
  * @see https://vkcom.github.io/VKUI/#/ModalCard
  */
-const ModalCard: React.FC<ModalCardProps> = (props) => {
-  const {
-    icon,
-    header,
-    subheader,
-    children,
-    actions,
-    actionsLayout,
-    onClose,
-    platform,
-    nav,
-    ...restProps
-  } = props;
-
+export const ModalCard: React.FC<ModalCardProps> = ({
+  icon,
+  header,
+  subheader,
+  children,
+  actions,
+  actionsLayout = "horizontal",
+  onClose,
+  platform,
+  nav,
+  id,
+  ...restProps
+}) => {
   const isDesktop = useAdaptivityIsDesktop();
 
   const modalContext = React.useContext(ModalRootContext);
-  const { refs } = useModalRegistry(getNavId(props, warn), ModalType.CARD);
+  const { refs } = useModalRegistry(
+    getNavId({ nav, id }, warn),
+    ModalType.CARD
+  );
 
   return (
     <div
       {...restProps}
+      id={id}
       // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(getClassName("ModalCard", platform), {
         "ModalCard--desktop": isDesktop,
@@ -68,10 +71,3 @@ const ModalCard: React.FC<ModalCardProps> = (props) => {
     </div>
   );
 };
-
-ModalCard.defaultProps = {
-  actionsLayout: "horizontal",
-};
-
-// eslint-disable-next-line import/no-default-export
-export default withPlatform(ModalCard);

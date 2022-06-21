@@ -11,10 +11,9 @@ import { getTitleFromChildren } from "../../lib/utils";
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderSubmit
  */
-const PanelHeaderSubmit: React.FunctionComponent<PanelHeaderButtonProps> = ({
-  children,
-  ...restProps
-}: PanelHeaderButtonProps) => {
+export const PanelHeaderSubmit: React.FunctionComponent<
+  PanelHeaderButtonProps
+> = ({ children = "Готово", ...restProps }: PanelHeaderButtonProps) => {
   const platform = usePlatform();
 
   return (
@@ -31,10 +30,3 @@ const PanelHeaderSubmit: React.FunctionComponent<PanelHeaderButtonProps> = ({
     </PanelHeaderButton>
   );
 };
-
-PanelHeaderSubmit.defaultProps = {
-  children: "Готово",
-};
-
-// eslint-disable-next-line import/no-default-export
-export default PanelHeaderSubmit;

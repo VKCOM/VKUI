@@ -7,7 +7,7 @@ import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import { mount, screenshot } from "../../testing/e2e";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { AppRoot } from "../AppRoot/AppRoot";
-import ConfigProvider from "../ConfigProvider/ConfigProvider";
+import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 
 describe("HorizontalScroll", () => {
   const items = new Array(20).fill(0).map((_, i) => (

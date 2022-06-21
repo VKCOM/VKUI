@@ -1,6 +1,6 @@
 import { Icon28UserCircleOutline } from "@vkontakte/icons";
-import Tabbar from "./Tabbar";
-import TabbarItem from "../TabbarItem/TabbarItem";
+import { Tabbar } from "./Tabbar";
+import { TabbarItem } from "../TabbarItem/TabbarItem";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { Platform } from "../../lib/platform";
 

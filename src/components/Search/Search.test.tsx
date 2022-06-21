@@ -1,7 +1,7 @@
 import { baselineComponent } from "../../testing/utils";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Search from "./Search";
+import { Search } from "./Search";
 
 const getInput = () => screen.getByRole("searchbox");
 const getClearIcon = () => document.querySelector(".Search__icon") as Element;

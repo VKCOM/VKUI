@@ -1,39 +1,31 @@
 .ContentCard--disabled {
-  opacity: 0.6;
+  opacity: var(--vkui--opacity_disable_accessibility);
 }
 
 .ContentCard__body {
-  padding: 12px 16px;
+  padding: var(--vkui--size_base_padding_vertical--regular)
+    var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .ContentCard__tappable {
-  border-radius: 8px;
+  border-radius: var(--vkui--size_card_border_radius--regular);
   text-decoration: none;
-  color: var(--text_primary);
+  color: var(--text_primary, var(--vkui--color_text_primary));
   display: block;
 }
 
 .ContentCard__img {
   object-fit: cover;
   display: block;
-  border-radius: 8px 8px 0 0;
+  border-radius: var(--vkui--size_card_border_radius--regular)
+    var(--vkui--size_card_border_radius--regular) 0 0;
 }
 
 .ContentCard__text:not(:last-child) {
   margin-bottom: 4px;
 }
 
-.ContentCard__caption {
-  color: var(--text_secondary);
-}
-
-/*
- * iOS
- */
-.ContentCard--ios .ContentCard__tappable {
-  border-radius: 10px;
-}
-
-.ContentCard--ios .ContentCard__img {
-  border-radius: 10px 10px 0 0;
+.ContentCard__caption,
+.ContentCard__subtitle {
+  color: var(--text_secondary, var(--vkui--color_text_secondary));
 }

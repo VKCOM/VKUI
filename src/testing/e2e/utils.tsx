@@ -2,7 +2,7 @@ import { ComponentType, FC, Fragment, isValidElement } from "react";
 import { MatchImageSnapshotOptions } from "jest-image-snapshot";
 import { screenshot } from "@react-playwright";
 // Импорты из отдельных модулей помогают jest отслеживать зависимости
-import ConfigProvider from "../../components/ConfigProvider/ConfigProvider";
+import { ConfigProvider } from "../../components/ConfigProvider/ConfigProvider";
 import { Panel } from "../../components/Panel/Panel";
 import { Platform } from "../../lib/platform";
 import {
@@ -17,9 +17,9 @@ import {
   ViewWidth,
   AdaptivityProps,
 } from "../../components/AdaptivityProvider/AdaptivityContext";
-import View from "../../components/View/View";
+import { View } from "../../components/View/View";
 import { AppRoot } from "../../components/AppRoot/AppRoot";
-import Group from "../../components/Group/Group";
+import { Group } from "../../components/Group/Group";
 import { AppearanceType } from "@vkontakte/vk-bridge";
 
 type AdaptivityFlag = boolean | "x" | "y";

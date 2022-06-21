@@ -6,7 +6,7 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { Separator } from "../Separator/Separator";
 import { hasReactNode } from "../../lib/utils";
 import { Caption } from "../Typography/Caption/Caption";
-import ModalRootContext from "../ModalRoot/ModalRootContext";
+import { ModalRootContext } from "../ModalRoot/ModalRootContext";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import "./Group.css";
@@ -29,12 +29,13 @@ export interface GroupProps
    * по умолчанию 'plain'.
    */
   mode?: "plain" | "card";
+  children?: React.ReactNode;
 }
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Group
  */
-const Group: React.FC<GroupProps> = (props: GroupProps) => {
+export const Group = (props: GroupProps) => {
   const {
     header,
     description,
@@ -83,6 +84,3 @@ const Group: React.FC<GroupProps> = (props: GroupProps) => {
     </section>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default Group;

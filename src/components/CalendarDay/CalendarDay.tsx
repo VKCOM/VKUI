@@ -1,6 +1,6 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
-import Tappable from "../Tappable/Tappable";
+import { Tappable } from "../Tappable/Tappable";
 import { ENABLE_KEYBOARD_INPUT_EVENT_NAME } from "../../hooks/useKeyboardInputTracker";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
 import "./CalendarDay.css";

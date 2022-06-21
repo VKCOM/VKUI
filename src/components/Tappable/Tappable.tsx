@@ -4,9 +4,8 @@ import { noop } from "@vkontakte/vkjs";
 import { Touch, TouchEvent, TouchProps } from "../Touch/Touch";
 import TouchRootContext from "../Touch/TouchContext";
 import { classNamesString } from "../../lib/classNames";
-import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import { ANDROID } from "../../lib/platform";
+import { IOS, ANDROID } from "../../lib/platform";
 import { getOffsetRect } from "../../lib/offset";
 import { coordX, coordY } from "../../lib/touch";
 import { HasComponent, HasRootRef } from "../../types";
@@ -67,8 +66,9 @@ export interface TappableProps
    * Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс во время focus-visible
    */
   focusVisibleMode?: FocusVisibleMode | string;
-  onEnter?: (outputEvent: MouseEvent) => void;
-  onLeave?: (outputEvent: MouseEvent) => void;
+  children?: React.ReactNode;
+  onEnter?(outputEvent: MouseEvent): void;
+  onLeave?(outputEvent: MouseEvent): void;
 }
 
 interface Wave {
@@ -162,7 +162,10 @@ function useActivity(hasActive: boolean, stopDelay: number) {
   return [activity, { delayStart, start, stop }] as const;
 }
 
-const Tappable: React.FC<TappableProps> = ({
+/**
+ * @see https://vkcom.github.io/VKUI/#/Tappable
+ */
+export const Tappable = ({
   children,
   Component,
   onClick,
@@ -298,7 +301,7 @@ const Tappable: React.FC<TappableProps> = ({
   const classes = classNamesString(
     className,
     styles.Tappable,
-    getPlatformClassName("Tappable", platform, styles),
+    platform === IOS && styles["Tappable--ios"],
     getSizeXClassName("Tappable", sizeX, styles),
     getHoverClassName("Tappable", deviceHasHover, styles),
     hasActive && styles["Tappable--hasActive"],
@@ -369,6 +372,3 @@ const Tappable: React.FC<TappableProps> = ({
     </Touch>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default Tappable;

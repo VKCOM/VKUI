@@ -3,7 +3,7 @@ import { FC, useContext } from "react";
 import { ANDROID } from "../../lib/platform";
 import { baselineComponent } from "../../testing/utils";
 import { Appearance } from "../../helpers/appearance";
-import ConfigProvider from "./ConfigProvider";
+import { ConfigProvider } from "./ConfigProvider";
 import { ConfigProviderContext, WebviewType } from "./ConfigProviderContext";
 
 describe("ConfigProvider", () => {

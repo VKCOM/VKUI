@@ -13,7 +13,7 @@ import {
 } from "../ConfigProvider/ConfigProviderContext";
 import { Text } from "../Typography/Text/Text";
 import { TooltipContainer } from "../Tooltip/TooltipContainer";
-import ModalRootContext from "../ModalRoot/ModalRootContext";
+import { ModalRootContext } from "../ModalRoot/ModalRootContext";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { Spacing } from "../Spacing/Spacing";
 import { SizeXConditionalRender } from "../SizeXConditionalRender/SizeXConditionalRender";

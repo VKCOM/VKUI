@@ -13,6 +13,10 @@
   min-width: var(--vkui--size_button_minimum_width--regular);
 }
 
+.Button--loading {
+  cursor: progress;
+}
+
 .Button--singleIcon {
   min-width: var(--vkui--size_button_small_height--compact);
 }

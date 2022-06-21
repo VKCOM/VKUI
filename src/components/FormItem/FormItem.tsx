@@ -2,8 +2,6 @@ import * as React from "react";
 import { HasComponent, HasRootRef } from "../../types";
 import { classNames } from "../../lib/classNames";
 import { useExternRef } from "../../hooks/useExternRef";
-import { usePlatform } from "../../hooks/usePlatform";
-import { getClassName } from "../../helpers/getClassName";
 import { hasReactNode, noop } from "../../lib/utils";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import { Caption } from "../Typography/Caption/Caption";
@@ -41,7 +39,6 @@ export const FormItem: React.FC<FormItemProps> = ({
   getRootRef,
   ...restProps
 }: FormItemProps) => {
-  const platform = usePlatform();
   const rootEl = useExternRef(getRootRef);
   const { sizeY } = useAdaptivity();
 
@@ -60,7 +57,7 @@ export const FormItem: React.FC<FormItemProps> = ({
       {...restProps}
       ref={rootEl}
       vkuiClass={classNames(
-        getClassName("FormItem", platform),
+        "FormItem",
         `FormItem--${status}`,
         getSizeYClassName("FormItem", sizeY),
         hasReactNode(top) && "FormItem--withTop",

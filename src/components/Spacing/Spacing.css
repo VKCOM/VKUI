@@ -1,5 +1,5 @@
 .Spacing {
-  color: var(--separator_common);
+  color: var(--separator_common, var(--vkui--color_separator_primary));
   position: relative;
   box-sizing: border-box;
   display: flex;

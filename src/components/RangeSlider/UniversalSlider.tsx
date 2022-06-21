@@ -1,11 +1,9 @@
 import * as React from "react";
 import { Touch, TouchEvent, TouchEventHandler } from "../Touch/Touch";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import { rescale } from "../../helpers/math";
 import { useExternRef } from "../../hooks/useExternRef";
-import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "../Slider/Slider.css";
@@ -27,7 +25,9 @@ export interface UniversalSliderProps<Value>
   onChange?(value: Value, e: TouchEvent): void;
 }
 
-const UniversalSlider: React.FC<UniversalSliderProps<UniversalValue>> = ({
+export const UniversalSlider: React.FC<
+  UniversalSliderProps<UniversalValue>
+> = ({
   min = 0,
   max = 100,
   step,
@@ -38,7 +38,6 @@ const UniversalSlider: React.FC<UniversalSliderProps<UniversalValue>> = ({
   disabled,
   ...restProps
 }) => {
-  const platform = usePlatform();
   const [start, end] = value;
   const isRange = start != null;
   const gesture = React.useRef({
@@ -134,9 +133,8 @@ const UniversalSlider: React.FC<UniversalSliderProps<UniversalValue>> = ({
       {...restProps}
       {...(disabled ? {} : { onStart, onMove, onEnd })}
       vkuiClass={classNames(
-        getClassName("Slider", platform),
+        "Slider",
         getSizeYClassName("Slider", sizeY),
-        `Slider--sizeY-${sizeY}`,
         disabled && "Slider--disabled"
       )}
     >
@@ -157,5 +155,3 @@ const UniversalSlider: React.FC<UniversalSliderProps<UniversalValue>> = ({
     </Touch>
   );
 };
-
-export { UniversalSlider };

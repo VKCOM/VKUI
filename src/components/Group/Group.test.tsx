@@ -1,5 +1,5 @@
 import { baselineComponent } from "../../testing/utils";
-import Group from "./Group";
+import { Group } from "./Group";
 
 describe("Group", () => {
   baselineComponent(Group);

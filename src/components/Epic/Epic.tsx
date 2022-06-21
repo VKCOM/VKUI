@@ -18,7 +18,7 @@ const warn = warnOnce("Epic");
 /**
  * @see https://vkcom.github.io/VKUI/#/Epic
  */
-export const Epic: React.FC<EpicProps> = (props) => {
+export const Epic = (props: EpicProps) => {
   const platform = usePlatform();
   const { viewWidth } = useAdaptivity();
   const scroll = React.useRef<{ [key: string]: number }>({}).current;

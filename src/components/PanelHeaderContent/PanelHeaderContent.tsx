@@ -1,6 +1,6 @@
 import * as React from "react";
 import { getClassName } from "../../helpers/getClassName";
-import Tappable from "../Tappable/Tappable";
+import { Tappable } from "../Tappable/Tappable";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import { Caption } from "../Typography/Caption/Caption";
@@ -48,7 +48,9 @@ const PanelHeaderChildren: React.FC<PanelHeaderChildrenProps> = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderContent
  */
-const PanelHeaderContent: React.FunctionComponent<PanelHeaderContentProps> = ({
+export const PanelHeaderContent: React.FunctionComponent<
+  PanelHeaderContentProps
+> = ({
   className,
   style,
   aside,
@@ -103,6 +105,3 @@ const PanelHeaderContent: React.FunctionComponent<PanelHeaderContentProps> = ({
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default PanelHeaderContent;

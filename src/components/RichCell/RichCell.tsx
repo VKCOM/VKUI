@@ -2,7 +2,7 @@ import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getClassName } from "../../helpers/getClassName";
-import Tappable, { TappableProps } from "../Tappable/Tappable";
+import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { hasReactNode } from "../../lib/utils";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
 import { Subhead } from "../Typography/Subhead/Subhead";
@@ -54,7 +54,7 @@ export interface RichCellProps extends TappableProps {
 /**
  * @see https://vkcom.github.io/VKUI/#/RichCell
  */
-const RichCell: React.FC<RichCellProps> = ({
+export const RichCell: React.FC<RichCellProps> = ({
   children,
   text,
   caption,
@@ -105,6 +105,3 @@ const RichCell: React.FC<RichCellProps> = ({
     </Tappable>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default RichCell;

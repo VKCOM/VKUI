@@ -11,10 +11,9 @@ import { usePlatform } from "../../hooks/usePlatform";
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderClose
  */
-const PanelHeaderClose: React.FunctionComponent<PanelHeaderButtonProps> = ({
-  children,
-  ...restProps
-}: PanelHeaderButtonProps) => {
+export const PanelHeaderClose: React.FunctionComponent<
+  PanelHeaderButtonProps
+> = ({ children = "Отмена", ...restProps }: PanelHeaderButtonProps) => {
   const platform = usePlatform();
   return (
     <PanelHeaderButton
@@ -29,10 +28,3 @@ const PanelHeaderClose: React.FunctionComponent<PanelHeaderButtonProps> = ({
     </PanelHeaderButton>
   );
 };
-
-PanelHeaderClose.defaultProps = {
-  children: "Отмена",
-};
-
-// eslint-disable-next-line import/no-default-export
-export default PanelHeaderClose;

@@ -30,7 +30,9 @@ export interface PlaceholderProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Placeholder
  */
-const Placeholder: React.FC<PlaceholderProps> = (props: PlaceholderProps) => {
+export const Placeholder: React.FC<PlaceholderProps> = (
+  props: PlaceholderProps
+) => {
   const {
     icon,
     header,
@@ -69,6 +71,3 @@ const Placeholder: React.FC<PlaceholderProps> = (props: PlaceholderProps) => {
     </div>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default Placeholder;

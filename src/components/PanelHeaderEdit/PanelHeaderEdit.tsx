@@ -25,10 +25,10 @@ export interface PanelHeaderEditProps extends PanelHeaderButtonProps {
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderEdit
  */
-const PanelHeaderEdit: React.FunctionComponent<PanelHeaderEditProps> = ({
-  isActive,
-  editLabel,
-  doneLabel,
+export const PanelHeaderEdit: React.FunctionComponent<PanelHeaderEditProps> = ({
+  isActive = false,
+  editLabel = "Редактировать",
+  doneLabel = "Готово",
   ...restProps
 }: PanelHeaderEditProps) => {
   const iOSText = isActive ? doneLabel : editLabel;
@@ -41,12 +41,3 @@ const PanelHeaderEdit: React.FunctionComponent<PanelHeaderEditProps> = ({
     </PanelHeaderButton>
   );
 };
-
-PanelHeaderEdit.defaultProps = {
-  isActive: false,
-  editLabel: "Редактировать",
-  doneLabel: "Готово",
-};
-
-// eslint-disable-next-line import/no-default-export
-export default PanelHeaderEdit;

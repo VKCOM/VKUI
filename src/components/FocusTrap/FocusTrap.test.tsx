@@ -11,7 +11,7 @@ import { AppRoot } from "../AppRoot/AppRoot";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { ActionSheet, ActionSheetProps } from "../ActionSheet/ActionSheet";
 import { ActionSheetItem } from "../ActionSheetItem/ActionSheetItem";
-import View from "../View/View";
+import { View } from "../View/View";
 import { Panel } from "../Panel/Panel";
 import { SplitLayout } from "../SplitLayout/SplitLayout";
 import { SplitCol } from "../SplitCol/SplitCol";

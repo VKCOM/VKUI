@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { render } from "@testing-library/react";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { baselineComponent } from "../../testing/utils";
-import DatePicker from "./DatePicker";
+import { DatePicker } from "./DatePicker";
 import userEvent from "@testing-library/user-event";
 
 const getDate = (year = 2021, month = 1, day = 1) => ({ year, month, day });
