@@ -50,6 +50,7 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
   text,
   style,
   iosCloseItem,
+  popupDirection = "bottom",
   ...restProps
 }) => {
   const platform = usePlatform();
@@ -114,6 +115,7 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
         closing={closing}
         timeout={timeout}
         {...(restProps as Omit<SharedDropdownProps, "closing">)}
+        popupDirection={popupDirection}
         onClose={onClose}
         className={isDesktop ? className : undefined}
         style={isDesktop ? style : undefined}
@@ -156,8 +158,4 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
       {actionSheet}
     </PopoutWrapper>
   );
-};
-
-ActionSheet.defaultProps = {
-  popupDirection: "bottom",
 };
