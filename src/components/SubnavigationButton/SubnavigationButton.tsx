@@ -45,20 +45,17 @@ const SubnavigationButtonTypography: React.FC<SubnavButtonTypographyProps> = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/SubnavigationButton
  */
-export const SubnavigationButton: React.FC<SubnavigationButtonProps> = (
-  props: SubnavigationButtonProps
-) => {
+export const SubnavigationButton: React.FC<SubnavigationButtonProps> = ({
+  size = "m",
+  selected,
+  textLevel = 1,
+  before,
+  after,
+  expandable,
+  children,
+  ...restProps
+}: SubnavigationButtonProps) => {
   const platform = usePlatform();
-  const {
-    size,
-    selected,
-    textLevel,
-    before,
-    after,
-    expandable,
-    children,
-    ...restProps
-  } = props;
 
   return (
     <Tappable
@@ -95,9 +92,4 @@ export const SubnavigationButton: React.FC<SubnavigationButtonProps> = (
       </span>
     </Tappable>
   );
-};
-
-SubnavigationButton.defaultProps = {
-  size: "m",
-  textLevel: 1,
 };
