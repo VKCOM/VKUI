@@ -56,20 +56,18 @@ export interface SnackbarProps
 
 const SnackbarComponent: React.FC<
   SnackbarProps & AdaptivityContextInterface
-> = (props) => {
-  const {
-    children,
-    layout,
-    action,
-    before,
-    after,
-    viewWidth,
-    duration = 0,
-    onActionClick,
-    onClose,
-    ...restProps
-  } = props;
-
+> = ({
+  children,
+  layout = "horizontal",
+  action,
+  before,
+  after,
+  viewWidth,
+  duration = 4000,
+  onActionClick,
+  onClose,
+  ...restProps
+}: SnackbarProps & AdaptivityContextInterface) => {
   const platform = usePlatform();
 
   const { waitTransitionFinish } = useWaitTransitionFinish();
@@ -242,11 +240,6 @@ const SnackbarComponent: React.FC<
 };
 
 SnackbarComponent.displayName = "Snackbar";
-
-SnackbarComponent.defaultProps = {
-  duration: 4000,
-  layout: "horizontal",
-};
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Snackbar
