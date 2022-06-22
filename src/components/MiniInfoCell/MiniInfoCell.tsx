@@ -52,12 +52,16 @@ export interface MiniInfoCellProps
 /**
  * @see https://vkcom.github.io/VKUI/#/MiniInfoCell
  */
-export const MiniInfoCell: React.FC<MiniInfoCellProps> = (
-  props: MiniInfoCellProps
-) => {
+export const MiniInfoCell: React.FC<MiniInfoCellProps> = ({
+  before,
+  after,
+  mode = "base",
+  textWrap = "nowrap",
+  textLevel = "secondary",
+  children,
+  ...restProps
+}: MiniInfoCellProps) => {
   const platform = usePlatform();
-  const { before, after, mode, textWrap, textLevel, children, ...restProps } =
-    props;
 
   const isClickable = !!restProps.onClick;
 
@@ -89,10 +93,4 @@ export const MiniInfoCell: React.FC<MiniInfoCellProps> = (
       )}
     </Tappable>
   );
-};
-
-MiniInfoCell.defaultProps = {
-  mode: "base",
-  textWrap: "nowrap",
-  textLevel: "secondary",
 };
