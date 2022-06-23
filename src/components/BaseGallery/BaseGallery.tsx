@@ -48,7 +48,6 @@ export const BaseGallery = ({
   onChange,
   onPrevClick,
   onNextClick,
-  onEnd: onEndProp,
   align = "left",
   showArrows,
   getRef,
@@ -247,7 +246,8 @@ export const BaseGallery = ({
     return targetIndex;
   };
 
-  const onStart = () => {
+  const onStart = (e: TouchEvent) => {
+    onDragStart?.(e);
     setShiftState((prevState) => ({ ...prevState, animation: false }));
   };
 
@@ -256,9 +256,6 @@ export const BaseGallery = ({
       e.originalEvent.preventDefault();
 
       if (e.isSlideX) {
-        // TODO исправить в рамках issue #2698
-        onDragStart?.(e);
-
         if (shiftState.deltaX !== e.shiftX) {
           setShiftState((prevState) => ({
             ...prevState,
@@ -272,7 +269,7 @@ export const BaseGallery = ({
 
   const onEnd = (e: TouchEvent) => {
     const targetIndex = e.isSlide ? getTarget(e) : slideIndex ?? 0;
-    onDragEnd?.(e);
+    onDragEnd?.(e, targetIndex);
 
     const nextShiftState: Partial<ShiftingState> = {
       animation: true,
@@ -290,9 +287,6 @@ export const BaseGallery = ({
     if (targetIndex !== slideIndex) {
       onChange?.(targetIndex);
     }
-
-    // TODO исправить в рамках issue #2698
-    onEndProp?.({ targetIndex });
   };
 
   const indent = shiftState.dragging
