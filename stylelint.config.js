@@ -6,6 +6,7 @@ module.exports = {
   plugins: [
     "stylelint-value-no-unknown-custom-properties",
     "./tasks/styleint-atomic",
+    "./tasks/stylelint-bad-multiplication",
   ],
   rules: {
     indentation: null,
@@ -42,5 +43,6 @@ module.exports = {
         severity: "warning",
       },
     ],
+    "vkui/bad-multiplication": true,
   },
 };
