@@ -24,11 +24,11 @@ export function getViewHeightClassName<Styles extends Record<string, string>>(
     case ViewHeight.EXTRA_SMALL:
       className += "extraSmall";
       break;
-    case ViewHeight.MEDIUM:
-      className += "medium";
-      break;
     case ViewHeight.SMALL:
       className += "small";
+      break;
+    case ViewHeight.MEDIUM:
+      className += "medium";
       break;
 
     default:
