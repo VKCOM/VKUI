@@ -24,14 +24,14 @@ export function getViewWidthClassName<Styles extends Record<string, string>>(
     case ViewWidth.SMALL_MOBILE:
       className += "smallMobile";
       break;
+    case ViewWidth.MOBILE:
+      className += "mobile";
+      break;
     case ViewWidth.SMALL_TABLET:
       className += "smallTablet";
       break;
     case ViewWidth.TABLET:
       className += "tablet";
-      break;
-    case ViewWidth.MOBILE:
-      className += "mobile";
       break;
     case ViewWidth.DESKTOP:
       className += "desktop";
