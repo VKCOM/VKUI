@@ -48,6 +48,10 @@ export interface PopperCommonProps
   sameWidth?: boolean;
   forcePortal?: boolean;
   onPlacementChange?: (data: { placement?: Placement }) => void;
+  /**
+   * Массив кастомных модификаторов для Popper (необходимо мемоизировать)
+   */
+  customModifiers?: Array<Modifier<string>>;
 }
 
 export interface PopperProps extends PopperCommonProps {
@@ -74,6 +78,7 @@ export const Popper = ({
   offsetSkidding = 0,
   forcePortal = true,
   style: compStyles,
+  customModifiers = [],
   ...restProps
 }: PopperProps) => {
   const [popperNode, setPopperNode] = React.useState<HTMLDivElement | null>(
@@ -135,6 +140,7 @@ export const Popper = ({
       modifiers.push(sameWidth);
     }
 
+    modifiers.push(...customModifiers);
     return modifiers;
   }, [
     arrow,
@@ -142,6 +148,7 @@ export const Popper = ({
     smallTargetOffsetSkidding,
     offsetSkidding,
     offsetDistance,
+    customModifiers,
   ]);
 
   const { styles, state, attributes } = usePopper(
