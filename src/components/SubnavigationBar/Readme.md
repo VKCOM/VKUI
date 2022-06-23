@@ -196,7 +196,7 @@ const SubnavigationBarExample = () => {
                 <SubnavigationButton
                   before={<Icon24ScanViewfinderOutline />}
                   size="l"
-                  textLevel={!isVKCOM ? 3 : 1}
+                  textLevel={isVKCOM ? 1 : 3}
                   onClick={() => setActivePanel("add_friend")}
                 >
                   Сканировать QR
