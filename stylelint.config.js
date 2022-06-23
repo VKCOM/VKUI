@@ -5,7 +5,7 @@ module.exports = {
   extends: ["stylelint-config-standard", "stylelint-config-prettier"],
   plugins: [
     "stylelint-value-no-unknown-custom-properties",
-    "./tasks/styleint-atomic",
+    "./tasks/stylelint-atomic",
     "./tasks/stylelint-bad-multiplication",
   ],
   rules: {
