@@ -7,7 +7,7 @@ import { Separator } from "../Separator/Separator";
 import { PanelHeader, PanelHeaderProps } from "../PanelHeader/PanelHeader";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
-import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import "./ModalPageHeader.css";
 
 export interface ModalPageHeaderProps
@@ -26,13 +26,13 @@ export const ModalPageHeader = ({
 }: ModalPageHeaderProps) => {
   const platform = usePlatform();
   const hasSeparator = separator && platform === VKCOM;
-  const { viewWidth } = useAdaptivity();
+  const { sizeX } = useAdaptivity();
 
   return (
     <div
       vkuiClass={classNames(
         getClassName("ModalPageHeader", platform),
-        getViewWidthClassName("ModalPageHeader", viewWidth)
+        getSizeXClassName("ModalPageHeader", sizeX)
       )}
       ref={getRef}
     >

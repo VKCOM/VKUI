@@ -81,7 +81,23 @@ const config = {
       {
         test: /\.css$/,
         include: /styleguide/,
-        use: [styleLoader, "css-loader"],
+        use: [
+          styleLoader,
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+            },
+          },
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                isSandbox: true,
+              },
+            },
+          },
+        ],
       },
     ],
   },

@@ -21,10 +21,11 @@ const Example = () => {
       header={isVKCOM && <PanelHeader separator={false} />}
     >
       <SplitCol
-        animate={!isVKCOM}
+        autoAnimate
         autoSpaced
-        width={isVKCOM ? "560px" : "100%"}
-        maxWidth={isVKCOM ? "560px" : "100%"}
+        width="100%"
+        maxWidth="560px"
+        stretchOnMobile
       >
         <View activePanel="context2">
           <Panel id="context2">

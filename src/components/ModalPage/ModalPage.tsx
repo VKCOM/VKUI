@@ -14,7 +14,6 @@ import { ModalType } from "../ModalRoot/types";
 import { getNavId, NavIdProps } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
 import "./ModalPage.css";
 
 export interface ModalPageProps
@@ -74,7 +73,7 @@ export const ModalPage: React.FC<ModalPageProps> = ({
 
   const platform = usePlatform();
   const orientation = useOrientationChange();
-  const { viewWidth, sizeX } = useAdaptivity();
+  const { sizeX } = useAdaptivity();
 
   React.useEffect(updateModalHeight, [
     children,
@@ -95,8 +94,7 @@ export const ModalPage: React.FC<ModalPageProps> = ({
       vkuiClass={classNames(
         "ModalPage",
         getPlatformClassName("ModalPage", platform),
-        getSizeXClassName("ModalPage", sizeX),
-        getViewWidthClassName("ModalPage", viewWidth)
+        getSizeXClassName("ModalPage", sizeX)
       )}
     >
       <div vkuiClass="ModalPage__in-wrap" ref={refs.innerElement}>

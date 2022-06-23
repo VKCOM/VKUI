@@ -32,7 +32,7 @@ const Layout = ({ children }) => {
         )
       }
     >
-      <SplitCol animate={platform !== VKCOM} autoSpacedd>
+      <SplitCol autoAnimate autoSpaced>
         {children}
       </SplitCol>
     </SplitLayout>

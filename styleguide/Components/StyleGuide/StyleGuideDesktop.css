@@ -1,4 +1,4 @@
-@media (max-width: 767px) {
+@media (--size-x-compact) {
   .StyleGuideDesktop {
     display: none;
   }

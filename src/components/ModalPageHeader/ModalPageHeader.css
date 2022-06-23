@@ -5,23 +5,23 @@
   --safe-area-inset-top: 0;
 }
 
-.ModalPageHeader--viewWidth-smallTabletPlus.ModalPageHeader--android {
+.ModalPageHeader--sizeX-regular.ModalPageHeader--android {
   padding-left: 6px;
   padding-right: 6px;
 }
 
-.ModalPageHeader--viewWidth-smallTabletPlus.ModalPageHeader--ios {
+.ModalPageHeader--sizeX-regular.ModalPageHeader--ios {
   padding-left: 4px;
   padding-right: 4px;
 }
 
-@media (--view-width-smallTablet) {
-  .ModalPageHeader--viewWidth-none.ModalPageHeader--android {
+@media (--size-x-regular) {
+  .ModalPageHeader--sizeX-none.ModalPageHeader--android {
     padding-left: 6px;
     padding-right: 6px;
   }
 
-  .ModalPageHeader--viewWidth-none.ModalPageHeader--ios {
+  .ModalPageHeader--sizeX-none.ModalPageHeader--ios {
     padding-left: 4px;
     padding-right: 4px;
   }

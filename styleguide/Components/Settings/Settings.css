@@ -12,13 +12,12 @@
   margin-bottom: 28px;
 }
 
-.SettingDesktop--viewWidth-mobile,
-.SettingDesktop--viewWidth-smallMobile {
+.SettingDesktop--sizeX-compact {
   display: none;
 }
 
-@media (max-width: 767px) {
-  .SettingDesktop--viewWidth-none {
+@media (--size-x-compact) {
+  .SettingDesktop--sizeX-none {
     display: none;
   }
 }

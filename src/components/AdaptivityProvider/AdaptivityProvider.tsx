@@ -118,6 +118,28 @@ function calculateAdaptivity(
     } else {
       sizeY = SizeType.REGULAR;
     }
+  } else {
+    if (sizeX === undefined && viewWidth !== undefined) {
+      if (viewWidth <= ViewWidth.MOBILE) {
+        sizeX = SizeType.COMPACT;
+      } else {
+        sizeX = SizeType.REGULAR;
+      }
+    }
+    if (
+      sizeY === undefined &&
+      viewWidth !== undefined &&
+      viewHeight !== undefined
+    ) {
+      if (
+        (viewWidth >= ViewWidth.SMALL_TABLET && _hasMouse) ||
+        viewHeight <= ViewHeight.EXTRA_SMALL
+      ) {
+        sizeY = SizeType.COMPACT;
+      } else {
+        sizeY = SizeType.REGULAR;
+      }
+    }
   }
 
   return {

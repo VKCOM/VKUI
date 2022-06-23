@@ -2,10 +2,10 @@
 @custom-media --size-x-compact (max-width: 767px);
 
 @custom-media --size-y-compact (pointer: fine) and (min-width: 768px),
-  (max-height: 413px);
-@custom-media --size-y-regular (pointer: coarse) and (min-height: 414px),
-  (pointer: none) and (min-height: 414px),
-  (max-width: 767px) and (min-height: 414px);
+  (max-height: 414px);
+@custom-media --size-y-regular (pointer: coarse) and (min-height: 415px),
+  (pointer: none) and (min-height: 415px),
+  (max-width: 767px) and (min-height: 415px);
 
 @custom-media --hover-has (hover: hover);
 @custom-media --hover-has-not (hover: none);
@@ -13,17 +13,14 @@
 @custom-media --mouse-has (pointer: fine);
 @custom-media --mouse-has-not (pointer: coarse), (pointer: none);
 
-@custom-media --view-height-medium (min-height: 720px);
-@custom-media --view-height-small (max-height: 719px);
-@custom-media --view-height-smallOnly (min-height: 415px) and (max-height: 719px);
-@custom-media --view-height-extra-small (max-height: 414px);
-
 @custom-media --view-width-desktop (min-width: 1280px);
+@custom-media --view-width-tabletPlus (min-width: 1024px);
 @custom-media --view-width-tablet (min-width: 1024px) and (max-width: 1279px);
-@custom-media --view-width-smallTablet (min-width: 768px);
-@custom-media --view-width-smallTabletOnly (min-width: 768px) and (max-width: 1023px);
-@custom-media --view-width-mobileOnly (min-width: 320px) and (max-width: 767px);
-@custom-media --view-width-mobile (max-width: 767px);
+@custom-media --view-width-smallTabletPlus (min-width: 768px);
+@custom-media --view-width-smallTabletMinus (max-width: 1023px);
+@custom-media --view-width-smallTablet (min-width: 768px) and (max-width: 1023px);
+@custom-media --view-width-mobilePlus (min-width: 320px);
+@custom-media --view-width-mobile (min-width: 320px) and (max-width: 767px);
 @custom-media --view-width-smallMobile (max-width: 319px);
 
 @custom-media --desktop (min-width: 768px) and (pointer: fine),

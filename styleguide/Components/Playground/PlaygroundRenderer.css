@@ -1,10 +1,9 @@
-.Playground__editor--viewWidth-mobile,
-.Playground__editor--viewWidth-smallMobile {
+.Playground__editor--sizeX-compact {
   display: none;
 }
 
-@media (max-width: 767px) {
-  .Playground__editor--viewWidth-none {
+@media (--size-x-compact) {
+  .Playground__editor--sizeX-none {
     display: none;
   }
 }

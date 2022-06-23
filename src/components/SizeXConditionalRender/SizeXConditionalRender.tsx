@@ -11,10 +11,10 @@ export interface SizeXConditionalRenderProps {
   regular?: React.ReactNode;
 }
 
-const SizeXConditionalRender: React.FC<SizeXConditionalRenderProps> = ({
+export const SizeXConditionalRender = ({
   compact,
   regular,
-}) => {
+}: SizeXConditionalRenderProps) => {
   const { sizeX } = useAdaptivity();
 
   return (
@@ -34,5 +34,3 @@ const SizeXConditionalRender: React.FC<SizeXConditionalRenderProps> = ({
     </React.Fragment>
   );
 };
-
-export { SizeXConditionalRender };

@@ -15,7 +15,7 @@ import { useScrollLock } from "../AppRoot/ScrollContext";
 import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import "./Alert.css";
 
 export type AlertActionInterface = AlertAction &
@@ -149,7 +149,7 @@ export const Alert: React.FC<AlertProps> = ({
   ...restProps
 }) => {
   const platform = usePlatform();
-  const { viewWidth } = useAdaptivity();
+  const { sizeX } = useAdaptivity();
   const { waitTransitionFinish } = useWaitTransitionFinish();
 
   const [closing, setClosing] = React.useState(false);
@@ -215,7 +215,7 @@ export const Alert: React.FC<AlertProps> = ({
         vkuiClass={classNames(
           getClassName("Alert", platform),
           resolvedActionsLayout === "vertical" ? "Alert--v" : "Alert--h",
-          getViewWidthClassName("Alert", viewWidth),
+          getSizeXClassName("Alert", sizeX),
           closing && "Alert--closing"
         )}
         role="alertdialog"

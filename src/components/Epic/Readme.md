@@ -21,18 +21,18 @@ const Example = () => {
   const { viewWidth } = useAdaptivity();
   const [activeStory, setActiveStory] = React.useState("profile");
   const onStoryChange = (e) => setActiveStory(e.currentTarget.dataset.story);
-  const hasHeader = platform !== VKCOM;
+  const isVKCOM = platform !== VKCOM;
 
   return (
     <SplitLayout
-      header={hasHeader && <PanelHeader separator={false} />}
+      header={isVKCOM && <PanelHeader separator={false} />}
       style={{ justifyContent: "center" }}
     >
       <ViewWidthConditionalRender
         desktop={
           <SplitCol fixed width={280} maxWidth={280}>
             <Panel>
-              {hasHeader && <PanelHeader />}
+              {isVKCOM && <PanelHeader />}
               <Group>
                 <Cell
                   disabled={activeStory === "feed"}
@@ -121,10 +121,11 @@ const Example = () => {
       />
 
       <SplitCol
-        animate={!isDesktop}
+        autoAnimate
         autoSpaced
-        width={isDesktop ? "560px" : "100%"}
-        maxWidth={isDesktop ? "560px" : "100%"}
+        width="100%"
+        maxWidth="560px"
+        stretchOnMobile
       >
         <Epic
           activeStory={activeStory}

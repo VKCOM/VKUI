@@ -8,7 +8,7 @@ import {
   Separator,
   Footer,
   useAdaptivity,
-  getViewWidthClassName,
+  getSizeXClassName,
 } from "@vkui";
 import {
   Icon28ChevronDownOutline,
@@ -302,7 +302,7 @@ class TableOfContents extends React.PureComponent {
       <div
         className={classNames(
           "TableOfContents",
-          getViewWidthClassName("TableOfContents", this.props.viewWidth)
+          getSizeXClassName("TableOfContents", this.props.sizeX)
         )}
       >
         {this.renderSections(this.sections)}
@@ -312,7 +312,7 @@ class TableOfContents extends React.PureComponent {
 }
 
 export default (props) => {
-  const { viewWidth } = useAdaptivity();
+  const { sizeX } = useAdaptivity();
 
-  return <TableOfContents {...props} viewWidth={viewWidth} />;
+  return <TableOfContents {...props} sizeX={sizeX} />;
 };

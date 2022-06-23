@@ -1,6 +1,6 @@
 import * as React from "react";
 import mitt from "mitt";
-import { noop } from "@vkontakte/vkjs";
+import { noop, hasMouse as _hasMouse } from "@vkontakte/vkjs";
 import { Touch, TouchEvent, TouchProps } from "../Touch/Touch";
 import TouchRootContext from "../Touch/TouchContext";
 import { classNamesString } from "../../lib/classNames";
@@ -193,6 +193,8 @@ export const Tappable = ({
 
   const [clicks, setClicks] = React.useState<Wave[]>([]);
   const [childHover, setChildHover] = React.useState(false);
+  const [needWaves, setNeedWaves] = React.useState(false);
+
   const {
     value: _hovered,
     setTrue: setHoveredTrue,
@@ -228,6 +230,15 @@ export const Tappable = ({
     return () => onHoverChange(false);
   }, [hovered]);
 
+  React.useEffect(() => {
+    setNeedWaves(
+      platform === ANDROID &&
+        !(hasMouse === undefined ? _hasMouse : hasMouse) &&
+        hasActive &&
+        activeMode === "background"
+    );
+  }, [activeMode, hasActive, hasMouse, platform]);
+
   /*
    * [a11y]
    * Обрабатывает событие onkeydown
@@ -241,12 +252,6 @@ export const Tappable = ({
       containerRef.current?.click();
     }
   }
-
-  const needWaves =
-    platform === ANDROID &&
-    !hasMouse &&
-    hasActive &&
-    activeMode === "background";
 
   const clearClicks = useTimeout(() => setClicks([]), WAVE_LIVE);
 

@@ -11,10 +11,10 @@ export interface SizeYConditionalRenderProps {
   regular?: React.ReactNode;
 }
 
-const SizeYConditionalRender: React.FC<SizeYConditionalRenderProps> = ({
+export const SizeYConditionalRender = ({
   compact,
   regular,
-}) => {
+}: SizeYConditionalRenderProps) => {
   const { sizeY } = useAdaptivity();
 
   return (
@@ -34,5 +34,3 @@ const SizeYConditionalRender: React.FC<SizeYConditionalRenderProps> = ({
     </React.Fragment>
   );
 };
-
-export { SizeYConditionalRender };

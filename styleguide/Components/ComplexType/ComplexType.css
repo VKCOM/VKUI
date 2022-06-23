@@ -16,23 +16,22 @@
   word-break: break-word;
 }
 
-.ComplexTypeTypeRenderer--viewWidth-smallTabletPlus {
+.ComplexTypeTypeRenderer--sizeX-compact {
   display: none;
 }
 
-@media (min-width: 768px) {
-  .ComplexTypeTypeRenderer--viewWidth-none {
+@media (--size-x-regular) {
+  .ComplexTypeTypeRenderer--sizeX-none {
     display: none;
   }
 }
 
-.ComplexTypeDropdown--viewWidth-mobile,
-.ComplexTypeDropdown--viewWidth-smallMobile {
+.ComplexTypeDropdown--sizeX-compact {
   display: none;
 }
 
-@media (max-width: 767px) {
-  .ComplexTypeDropdown--viewWidth-none {
+@media (--size-x-compact) {
+  .ComplexTypeDropdown--sizeX-none {
     display: none;
   }
 }

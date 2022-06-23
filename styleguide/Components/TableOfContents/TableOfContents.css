@@ -7,33 +7,25 @@
   display: none;
 }
 
-.TableOfContents--viewWidth-smallTabletPlus
-  .TableOfContents__list
-  .TableOfContents__list {
+.TableOfContents--sizeX-regular .TableOfContents__list .TableOfContents__list {
   padding-left: 20px;
 }
 
-@media (min-width: 768px) {
-  .TableOfContents--viewWidth-none
-    .TableOfContents__list
-    .TableOfContents__list {
+@media (--size-x-regular) {
+  .TableOfContents--sizeX-none .TableOfContents__list .TableOfContents__list {
     padding-left: 20px;
   }
 }
 
-.TableOfContents--viewWidth-mobile
-  .TableOfContents__list
-  .TableOfContents__list
-  .TableOfContents__section,
-.TableOfContents--viewWidth-smallMobile
+.TableOfContents--sizeX-compact
   .TableOfContents__list
   .TableOfContents__list
   .TableOfContents__section {
   padding-left: 32px;
 }
 
-@media (max-width: 767px) {
-  .TableOfContents--viewWidth-none
+@media (--size-x-compact) {
+  .TableOfContents--sizeX-none
     .TableOfContents__list
     .TableOfContents__list
     .TableOfContents__section {

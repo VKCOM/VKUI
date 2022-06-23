@@ -89,12 +89,12 @@
 }
 
 .ModalPage--vkcom .ModalPage__dismiss,
-.ModalPage--viewWidth-smallTabletPlus.ModalPage--vkcom .ModalPage__dismiss {
+.ModalPage--sizeX-regular.ModalPage--vkcom .ModalPage__dismiss {
   display: block;
 }
 
-@media (--view-width-smallTablet) {
-  .ModalPage--viewWidth-none .ModalPage__dismiss {
+@media (--size-x-regular) {
+  .ModalPage--sizeX-none .ModalPage__dismiss {
     display: block;
   }
 }
@@ -122,18 +122,18 @@
  * desktop
  */
 
-.ModalPage--viewWidth-smallTabletPlus {
+.ModalPage--sizeX-regular {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.ModalPage--viewWidth-smallTabletPlus .ModalPage__content {
+.ModalPage--sizeX-regular .ModalPage__content {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-.ModalPage--viewWidth-smallTabletPlus .ModalPage__in-wrap {
+.ModalPage--sizeX-regular .ModalPage__in-wrap {
   align-items: center;
   opacity: 0;
   transition: opacity 340ms var(--android-easing);
@@ -143,7 +143,7 @@
   transform: none;
 }
 
-.ModalPage--viewWidth-smallTabletPlus .ModalPage__in {
+.ModalPage--sizeX-regular .ModalPage__in {
   height: auto;
   max-height: 640px;
   box-shadow: 0 16px 16px rgba(0, 0, 0, 0.16), 0 0 8px rgba(0, 0, 0, 0.12);
@@ -151,24 +151,24 @@
 }
 
 @media (max-height: 672px) {
-  .ModalPage--viewWidth-smallTabletPlus .ModalPage__in {
+  .ModalPage--sizeX-regular .ModalPage__in {
     max-height: calc(100vh - 32px);
   }
 }
 
 @media (--desktop) {
-  .ModalPage--viewWidth-none {
+  .ModalPage--sizeX-none {
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .ModalPage--viewWidth-none .ModalPage__content {
+  .ModalPage--sizeX-none .ModalPage__content {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
 
-  .ModalPage--viewWidth-none .ModalPage__in-wrap {
+  .ModalPage--sizeX-none .ModalPage__in-wrap {
     align-items: center;
     opacity: 0;
     transition: opacity 340ms var(--android-easing);
@@ -178,7 +178,7 @@
     transform: none;
   }
 
-  .ModalPage--viewWidth-none .ModalPage__in {
+  .ModalPage--sizeX-none .ModalPage__in {
     height: auto;
     max-height: 640px;
     box-shadow: 0 16px 16px rgba(0, 0, 0, 0.16), 0 0 8px rgba(0, 0, 0, 0.12);
@@ -186,7 +186,7 @@
   }
 
   @media (max-height: 672px) {
-    .ModalPage--viewWidth-none .ModalPage__in {
+    .ModalPage--sizeX-none .ModalPage__in {
       max-height: calc(100vh - 32px);
     }
   }

@@ -1,24 +1,24 @@
 import React from "react";
-import { Text, useAdaptivity, getViewWidthClassName, classNames } from "@vkui";
+import { Text, useAdaptivity, getSizeXClassName, classNames } from "@vkui";
 import { TextTooltip } from "@vkui/unstable";
 import { Icon16ErrorCircleOutline } from "@vkontakte/icons";
 import TypeRenderer from "../Type/TypeRenderer";
 import "./ComplexType.css";
 
 export const ComplexTypeRenderer = ({ name, raw }) => {
-  const { viewWidth } = useAdaptivity();
+  const { sizeX } = useAdaptivity();
 
   return (
     <React.Fragment>
       <TypeRenderer
-        className={getViewWidthClassName("ComplexTypeTypeRenderer", viewWidth)}
+        className={getSizeXClassName("ComplexTypeTypeRenderer", sizeX)}
       >
         {raw}
       </TypeRenderer>
       <TextTooltip
         className={classNames(
           "ComplexTypeDropdown",
-          getViewWidthClassName("ComplexTypeDropdown", viewWidth)
+          getSizeXClassName("ComplexTypeDropdown", sizeX)
         )}
         placement="right"
         text={raw}

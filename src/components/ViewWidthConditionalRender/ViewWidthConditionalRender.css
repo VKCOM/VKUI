@@ -2,18 +2,19 @@
   display: none;
 }
 
-@media (--view-width-smallTablet) {
+@media (--view-width-tabletPlus) {
   .ViewWidthConditionalRender__mobile--viewWidth-none {
     display: none;
   }
 }
 
+.ViewWidthConditionalRender__desktop--viewWidth-smallTablet,
 .ViewWidthConditionalRender__desktop--viewWidth-mobile,
 .ViewWidthConditionalRender__desktop--viewWidth-smallMobile {
   display: none;
 }
 
-@media (--view-width-mobile) {
+@media (--view-width-smallTabletMinus) {
   .ViewWidthConditionalRender__desktop--viewWidth-none {
     display: none;
   }

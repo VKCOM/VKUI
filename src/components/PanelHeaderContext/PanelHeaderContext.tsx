@@ -9,7 +9,7 @@ import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { useTimeout } from "../../hooks/useTimeout";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useScrollLock } from "../AppRoot/ScrollContext";
-import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { VKCOM } from "../../lib/platform";
 import "./PanelHeaderContext.css";
 
@@ -32,7 +32,7 @@ export const PanelHeaderContext: React.FC<PanelHeaderContextProps> = ({
   const platform = usePlatform();
   const [visible, setVisible] = React.useState(opened);
   const closing = visible && !opened;
-  const { viewWidth } = useAdaptivity();
+  const { sizeX } = useAdaptivity();
   const elementRef = React.useRef<HTMLDivElement>(null);
 
   useIsomorphicLayoutEffect(() => {
@@ -72,7 +72,7 @@ export const PanelHeaderContext: React.FC<PanelHeaderContextProps> = ({
         getClassName("PanelHeaderContext", platform),
         opened && "PanelHeaderContext--opened",
         closing && "PanelHeaderContext--closing",
-        getViewWidthClassName("PanelHeaderContext", viewWidth)
+        getSizeXClassName("PanelHeaderContext", sizeX)
       )}
       vertical="top"
     >

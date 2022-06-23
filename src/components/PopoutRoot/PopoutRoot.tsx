@@ -4,7 +4,7 @@ import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { blurActiveElement, useDOM } from "../../lib/dom";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { classNames } from "../../lib/classNames";
-import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import "./PopoutRoot.css";
 
 export interface PopoutRootProps
@@ -22,7 +22,7 @@ export const PopoutRoot: React.FC<PopoutRootProps> = ({
   ...restProps
 }) => {
   const { document } = useDOM();
-  const { viewWidth } = useAdaptivity();
+  const { sizeX } = useAdaptivity();
 
   React.useEffect(() => {
     popout && blurActiveElement(document);
@@ -33,22 +33,13 @@ export const PopoutRoot: React.FC<PopoutRootProps> = ({
       {...restProps}
       vkuiClass={classNames(
         "PopoutRoot",
-        getViewWidthClassName("PopoutRoot", viewWidth)
+        getSizeXClassName("PopoutRoot", sizeX)
       )}
       ref={getRootRef}
     >
       {children}
       <AppRootPortal>
-        {!!popout && (
-          <div
-            vkuiClass="PopoutRoot__popout"
-            // vkuiClass={
-            //   isDesktop ? "PopoutRoot--absolute" : "PopoutRoot__popout"
-            // }
-          >
-            {popout}
-          </div>
-        )}
+        {!!popout && <div vkuiClass="PopoutRoot__popout">{popout}</div>}
         {!!modal && <div vkuiClass="PopoutRoot__modal">{modal}</div>}
       </AppRootPortal>
     </div>

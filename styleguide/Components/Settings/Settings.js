@@ -5,12 +5,12 @@ import { WebviewTypeSelect } from "./WebviewTypeSelect";
 import { HasMouseCheckbox } from "./HasMouseCheckbox";
 import { ViewHeightSelect } from "./ViewHeightSelect";
 import { ViewWidthSelect } from "./ViewWidthSelect";
-import { Platform, useAdaptivity, getViewWidthClassName } from "@vkui";
+import { Platform, useAdaptivity, getSizeXClassName } from "@vkui";
 import { StyleGuideContext } from "../StyleGuide/StyleGuideRenderer";
 import "./Settings.css";
 
 export const Settings = ({ adaptivity, webviewType }) => {
-  const { viewWidth } = useAdaptivity();
+  const { sizeX } = useAdaptivity();
   return (
     <StyleGuideContext.Consumer>
       {(context) => {
@@ -34,27 +34,18 @@ export const Settings = ({ adaptivity, webviewType }) => {
               {adaptivity && (
                 <Fragment>
                   <ViewHeightSelect
-                    className={getViewWidthClassName(
-                      "SettingDesktop",
-                      viewWidth
-                    )}
+                    className={getSizeXClassName("SettingDesktop", sizeX)}
                     onChange={(height) => context.setContext({ height })}
                     value={context.height}
                   />
                   <ViewWidthSelect
-                    className={getViewWidthClassName(
-                      "SettingDesktop",
-                      viewWidth
-                    )}
+                    className={getSizeXClassName("SettingDesktop", sizeX)}
                     onChange={(width) => context.setContext({ width })}
                     value={context.width}
                     disabled={context.platform === Platform.VKCOM}
                   />
                   <HasMouseCheckbox
-                    className={getViewWidthClassName(
-                      "SettingDesktop",
-                      viewWidth
-                    )}
+                    className={getSizeXClassName("SettingDesktop", sizeX)}
                     onChange={(hasMouse) => context.setContext({ hasMouse })}
                     value={context.hasMouse}
                     disabled={context.platform === Platform.VKCOM}

@@ -4,14 +4,14 @@
   height: 100%;
 }
 
-.PanelHeaderContext--viewWidth-smallTabletPlus.PanelHeaderContext--opened,
-.PanelHeaderContext--viewWidth-smallTabletPlus.PanelHeaderContext--closing {
+.PanelHeaderContext--sizeX-regular.PanelHeaderContext--opened,
+.PanelHeaderContext--sizeX-regular.PanelHeaderContext--closing {
   height: auto;
 }
 
-@media (--view-width-smallTablet) {
-  .PanelHeaderContext--viewWidth-none.PanelHeaderContext--opened,
-  .PanelHeaderContext--viewWidth-none.PanelHeaderContext--closing {
+@media (--size-x-regular) {
+  .PanelHeaderContext--sizeX-none.PanelHeaderContext--opened,
+  .PanelHeaderContext--sizeX-none.PanelHeaderContext--closing {
     height: auto;
   }
 }
@@ -34,12 +34,12 @@
   background: rgba(0, 0, 0, 0.4);
 }
 
-.PanelHeaderContext--viewWidth-smallTabletPlus .PanelHeaderContext__fade {
+.PanelHeaderContext--sizeX-regular .PanelHeaderContext__fade {
   display: block;
 }
 
-@media (--view-width-smallTablet) {
-  .PanelHeaderContext--viewWidth-none .PanelHeaderContext__fade {
+@media (--size-x-regular) {
+  .PanelHeaderContext--sizeX-none .PanelHeaderContext__fade {
     display: block;
   }
 }
@@ -90,15 +90,15 @@
 
 .PanelHeaderContext--android .List,
 .PanelHeaderContext--vkcom .List,
-.PanelHeaderContext--viewWidth-smallTabletPlus.PanelHeaderContext--ios .List {
+.PanelHeaderContext--sizeX-regular.PanelHeaderContext--ios .List {
   overflow: hidden;
   border-radius: 12px;
   padding: 8px 0;
   background: var(--header_background);
 }
 
-@media (--view-width-smallTablet) {
-  .PanelHeaderContext--viewWidth-none.PanelHeaderContext--ios .List {
+@media (--size-x-regular) {
+  .PanelHeaderContext--sizeX-none.PanelHeaderContext--ios .List {
     overflow: hidden;
     border-radius: 12px;
     padding: 8px 0;
@@ -110,34 +110,34 @@
  Desktop
  */
 
-.PanelHeaderContext--viewWidth-smallTabletPlus .PanelHeaderContext__in {
+.PanelHeaderContext--sizeX-regular .PanelHeaderContext__in {
   padding: 12px 8px;
   box-sizing: border-box;
 }
 
-.PanelHeaderContext--viewWidth-smallTabletPlus .PanelHeaderContext__content {
+.PanelHeaderContext--sizeX-regular .PanelHeaderContext__content {
   border-radius: 12px;
   overflow: hidden;
   background: var(--header_background);
 }
 
-.PanelHeaderContext--viewWidth-smallTabletPlus .PanelHeaderContext__content {
+.PanelHeaderContext--sizeX-regular .PanelHeaderContext__content {
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.08), 0 8px 8px rgba(0, 0, 0, 0.16);
 }
 
-@media (--view-width-smallTablet) {
-  .PanelHeaderContext--viewWidth-none .PanelHeaderContext__in {
+@media (--size-x-regular) {
+  .PanelHeaderContext--sizeX-none .PanelHeaderContext__in {
     padding: 12px 8px;
     box-sizing: border-box;
   }
 
-  .PanelHeaderContext--viewWidth-none .PanelHeaderContext__content {
+  .PanelHeaderContext--sizeX-none .PanelHeaderContext__content {
     border-radius: 12px;
     overflow: hidden;
     background: var(--header_background);
   }
 
-  .PanelHeaderContext--viewWidth-none .PanelHeaderContext__content {
+  .PanelHeaderContext--sizeX-none .PanelHeaderContext__content {
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.08), 0 8px 8px rgba(0, 0, 0, 0.16);
   }
 }

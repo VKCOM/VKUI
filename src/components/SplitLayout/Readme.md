@@ -85,10 +85,11 @@ const Example = () => {
       />
 
       <SplitCol
-        animate={!isVKCOM}
+        autoAnimate
         autoSpaced
-        width={isVKCOM ? "560px" : "100%"}
-        maxWidth={isVKCOM ? "560px" : "100%"}
+        width="100%"
+        maxWidth="560px"
+        stretchOnMobile
       >
         <View activePanel={panel}>
           <Panel id={panels[0]}>

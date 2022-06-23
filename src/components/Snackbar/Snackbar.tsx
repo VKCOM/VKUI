@@ -13,6 +13,9 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useTimeout } from "../../hooks/useTimeout";
 import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
+import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import { SMALL_TABLET_SIZE } from "../AdaptivityProvider/AdaptivityProvider";
+import { useDOM } from "../../lib/dom";
 import "./Snackbar.css";
 
 export interface SnackbarProps
@@ -68,6 +71,7 @@ export const Snackbar: React.FC<SnackbarProps> = (props) => {
 
   const platform = usePlatform();
   const { viewWidth } = useAdaptivity();
+  const { window } = useDOM();
 
   const { waitTransitionFinish } = useWaitTransitionFinish();
 
@@ -148,8 +152,22 @@ export const Snackbar: React.FC<SnackbarProps> = (props) => {
       let shiftXCurrent = shiftXCurrentRef.current;
       const expectTranslateY = (shiftXCurrent / e.duration) * 240 * 0.6;
       shiftXCurrent = shiftXCurrent + expectTranslateY;
+      const isDesktop =
+        viewWidth !== undefined
+          ? viewWidth >= ViewWidth.SMALL_TABLET
+          : window!.innerWidth >= SMALL_TABLET_SIZE;
 
-      if (shiftXCurrent >= 50) {
+      if (isDesktop && shiftXCurrent <= -50) {
+        closeTimeout.clear();
+        waitTransitionFinish(
+          bodyElRef.current,
+          () => {
+            onClose();
+          },
+          transitionFinishDurationFallback
+        );
+        setBodyTransform(-120);
+      } else if (!isDesktop && shiftXCurrent >= 50) {
         closeTimeout.clear();
         waitTransitionFinish(
           bodyElRef.current,

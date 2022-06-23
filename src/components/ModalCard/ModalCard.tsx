@@ -14,7 +14,7 @@ import {
   ModalCardBaseProps,
 } from "../ModalCardBase/ModalCardBase";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import "./ModalCard.css";
 
 export interface ModalCardProps
@@ -40,7 +40,7 @@ export const ModalCard: React.FC<ModalCardProps> = ({
   id,
   ...restProps
 }) => {
-  const { viewWidth } = useAdaptivity();
+  const { sizeX } = useAdaptivity();
 
   const modalContext = React.useContext(ModalRootContext);
   const { refs } = useModalRegistry(
@@ -54,7 +54,7 @@ export const ModalCard: React.FC<ModalCardProps> = ({
       id={id}
       vkuiClass={classNames(
         getClassName("ModalCard", platform),
-        getViewWidthClassName("ModalCard", viewWidth)
+        getSizeXClassName("ModalCard", sizeX)
       )}
     >
       <ModalCardBase

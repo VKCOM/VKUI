@@ -15,8 +15,8 @@ const CustomPopout = ({ onClose }) => {
       >
         <h4>Кастомное модальное окно</h4>
 
-        <ViewWidthConditionalRender
-          desktop={<ModalDismissButton onClick={onClose} />}
+        <SizeXConditionalRender
+          regular={<ModalDismissButton onClick={onClose} />}
         />
       </div>
     </PopoutWrapper>

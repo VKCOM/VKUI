@@ -10,16 +10,16 @@ export interface ViewWidthConditionalRenderProps {
   desktop?: React.ReactNode;
 }
 
-const ViewWidthConditionalRender: React.FC<ViewWidthConditionalRenderProps> = ({
+export const ViewWidthConditionalRender = ({
   mobile,
   desktop,
-}) => {
+}: ViewWidthConditionalRenderProps) => {
   const { viewWidth } = useAdaptivity();
 
   return (
     <React.Fragment>
       {hasReactNode(mobile) &&
-        (viewWidth === undefined || viewWidth < ViewWidth.SMALL_TABLET) && (
+        (viewWidth === undefined || viewWidth < ViewWidth.TABLET) && (
           <div
             vkuiClass={getViewWidthClassName(
               "ViewWidthConditionalRender__mobile",
@@ -30,7 +30,7 @@ const ViewWidthConditionalRender: React.FC<ViewWidthConditionalRenderProps> = ({
           </div>
         )}
       {hasReactNode(desktop) &&
-        (viewWidth === undefined || viewWidth >= ViewWidth.SMALL_TABLET) && (
+        (viewWidth === undefined || viewWidth >= ViewWidth.TABLET) && (
           <div
             vkuiClass={getViewWidthClassName(
               "ViewWidthConditionalRender__desktop",
@@ -43,5 +43,3 @@ const ViewWidthConditionalRender: React.FC<ViewWidthConditionalRenderProps> = ({
     </React.Fragment>
   );
 };
-
-export { ViewWidthConditionalRender };

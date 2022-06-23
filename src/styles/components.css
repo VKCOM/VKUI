@@ -146,7 +146,6 @@
 @import "../components/SizeXConditionalRender/SizeXConditionalRender.css";
 @import "../components/DeviceConditionalRender/DeviceConditionalRender.css";
 @import "../components/ViewWidthConditionalRender/ViewWidthConditionalRender.css";
-@import "../components/ViewHeightConditionalRender/ViewHeightConditionalRender.css";
 
 /* Advertisement */
 @import "../components/PromoBanner/PromoBanner.css";

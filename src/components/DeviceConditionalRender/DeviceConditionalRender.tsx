@@ -9,10 +9,10 @@ export interface DeviceConditionalRenderProps {
   desktop?: React.ReactNode;
 }
 
-const DeviceConditionalRender: React.FC<DeviceConditionalRenderProps> = ({
+export const DeviceConditionalRender = ({
   mobile,
   desktop,
-}) => {
+}: DeviceConditionalRenderProps) => {
   const { viewWidth } = useAdaptivity();
 
   return (
@@ -40,5 +40,3 @@ const DeviceConditionalRender: React.FC<DeviceConditionalRenderProps> = ({
     </React.Fragment>
   );
 };
-
-export { DeviceConditionalRender };

@@ -13,12 +13,12 @@
   height: 100%;
 }
 
-.PopoutRoot--viewWidth-smallTabletPlus .PopoutRoot__popout {
+.PopoutRoot--sizeX-regular .PopoutRoot__popout {
   position: absolute;
 }
 
-@media (--view-width-smallTablet) {
-  .PopoutRoot--viewWidth-none .PopoutRoot__popout {
+@media (--size-x-regular) {
+  .PopoutRoot--sizeX-none .PopoutRoot__popout {
     position: absolute;
   }
 }

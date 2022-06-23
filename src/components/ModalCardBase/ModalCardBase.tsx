@@ -12,7 +12,7 @@ import { ModalDismissButton } from "../ModalDismissButton/ModalDismissButton";
 import { Icon24Dismiss } from "@vkontakte/icons";
 import { useKeyboard } from "../../hooks/useKeyboard";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import "./ModalCardBase.css";
 
 export interface ModalCardBaseProps
@@ -70,7 +70,7 @@ export const ModalCardBase: React.FC<ModalCardBaseProps> = ({
   ...restProps
 }) => {
   const platform = usePlatform();
-  const { viewWidth } = useAdaptivity();
+  const { sizeX } = useAdaptivity();
   const isSoftwareKeyboardOpened = useKeyboard().isOpened;
 
   return (
@@ -78,7 +78,7 @@ export const ModalCardBase: React.FC<ModalCardBaseProps> = ({
       {...restProps}
       vkuiClass={classNames(
         getClassName("ModalCardBase", platform),
-        getViewWidthClassName("ModalCardBase", viewWidth)
+        getSizeXClassName("ModalCardBase", sizeX)
       )}
       ref={getRootRef}
     >
