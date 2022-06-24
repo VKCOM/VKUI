@@ -191,6 +191,10 @@
   width: 416px;
 }
 
+.Alert--vkcom .Alert__close {
+  display: block;
+}
+
 .Alert--sizeX-regular.Alert--android .Alert__close {
   display: block;
 }

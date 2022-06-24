@@ -53,7 +53,7 @@
   align-items: center;
 }
 
-.ModalCard--vkcom,
+.ModalCard--vkcom .ModalCard__in,
 .ModalCard--sizeX-regular .ModalCard__in {
   transform: unset;
   opacity: 0;
