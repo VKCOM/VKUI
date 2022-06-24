@@ -58,8 +58,8 @@ export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
     animate: _animate = false,
     fixed,
     style,
-    autoSpaced,
-    autoAnimate,
+    autoSpaced = true,
+    autoAnimate = true,
     stretchOnMobile,
     ...restProps
   } = props;

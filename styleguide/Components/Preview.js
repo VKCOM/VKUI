@@ -32,9 +32,7 @@ const Layout = ({ children }) => {
         )
       }
     >
-      <SplitCol autoAnimate autoSpaced>
-        {children}
-      </SplitCol>
+      <SplitCol>{children}</SplitCol>
     </SplitLayout>
   );
 };

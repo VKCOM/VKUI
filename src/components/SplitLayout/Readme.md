@@ -84,13 +84,7 @@ const Example = () => {
         }
       />
 
-      <SplitCol
-        autoAnimate
-        autoSpaced
-        width="100%"
-        maxWidth="560px"
-        stretchOnMobile
-      >
+      <SplitCol width="100%" maxWidth="560px" stretchOnMobile>
         <View activePanel={panel}>
           <Panel id={panels[0]}>
             <PanelHeader after={<Avatar size={36} />}>Panel 1</PanelHeader>

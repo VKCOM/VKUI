@@ -59,7 +59,7 @@ const App = () => {
   return (
     <AppRoot>
       <SplitLayout header={<PanelHeader separator={false} />}>
-        <SplitCol autoAnimate autoSpaced>
+        <SplitCol>
           <View activePanel="main">
             <Panel id="main">
               <PanelHeader>VKUI</PanelHeader>

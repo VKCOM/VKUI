@@ -120,13 +120,7 @@ const Example = () => {
         }
       />
 
-      <SplitCol
-        autoAnimate
-        autoSpaced
-        width="100%"
-        maxWidth="560px"
-        stretchOnMobile
-      >
+      <SplitCol width="100%" maxWidth="560px" stretchOnMobile>
         <Epic
           activeStory={activeStory}
           tabbar={

@@ -20,13 +20,7 @@ const Example = () => {
       style={{ justifyContent: "center" }}
       header={isVKCOM && <PanelHeader separator={false} />}
     >
-      <SplitCol
-        autoAnimate
-        autoSpaced
-        width="100%"
-        maxWidth="560px"
-        stretchOnMobile
-      >
+      <SplitCol width="100%" maxWidth="560px" stretchOnMobile>
         <View activePanel="context2">
           <Panel id="context2">
             <PanelHeader
