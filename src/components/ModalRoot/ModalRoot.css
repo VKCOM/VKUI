@@ -34,23 +34,25 @@
   pointer-events: none;
 }
 
-.ModalRootMobile--viewWidth-smallTabletPlus {
+.ModalRootMobile--viewWidth-smallTabletPlus,
+.ModalRoot--vkcom.ModalRootMobile {
   display: none;
 }
 
 @media (--desktop) {
-  .ModalRootMobile--viewWidth-none {
+  .ModalRootMobile--viewWidth-none.ModalRoot--vkcom {
     display: none;
   }
 }
 
-.ModalRootDesktop--viewWidth-mobile,
-.ModalRootDesktop--viewWidth-smallMobile {
+.ModalRootDesktop:not(.ModalRoot--vkcom),
+.ModalRootDesktop--viewWidth-mobile.ModalRootDesktop:not(.ModalRoot--vkcom),
+.ModalRootDesktop--viewWidth-smallMobile.ModalRootDesktop:not(.ModalRoot--vkcom) {
   display: none;
 }
 
 @media (--mobile) {
-  .ModalRootDesktop--viewWidth-none {
+  .ModalRootDesktop--viewWidth-none:not(.ModalRoot--vkcom) {
     display: none;
   }
 }

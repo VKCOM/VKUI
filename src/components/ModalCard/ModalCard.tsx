@@ -1,7 +1,6 @@
 import * as React from "react";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
-import { HasPlatform } from "../../types";
 import {
   ModalRootContext,
   useModalRegistry,
@@ -15,12 +14,10 @@ import {
 } from "../ModalCardBase/ModalCardBase";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import { usePlatform } from "../../hooks/usePlatform";
 import "./ModalCard.css";
 
-export interface ModalCardProps
-  extends HasPlatform,
-    NavIdProps,
-    ModalCardBaseProps {}
+export interface ModalCardProps extends NavIdProps, ModalCardBaseProps {}
 
 const warn = warnOnce("ModalCard");
 
@@ -35,12 +32,12 @@ export const ModalCard: React.FC<ModalCardProps> = ({
   actions,
   actionsLayout = "horizontal",
   onClose,
-  platform,
   nav,
   id,
   ...restProps
 }) => {
   const { sizeX } = useAdaptivity();
+  const platform = usePlatform();
 
   const modalContext = React.useContext(ModalRootContext);
   const { refs } = useModalRegistry(

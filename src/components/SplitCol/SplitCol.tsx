@@ -69,12 +69,6 @@ export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
 
   const animate = React.useMemo(() => {
     if (autoAnimate) {
-      console.log(
-        viewWidth !== undefined
-          ? viewWidth < ViewWidth.TABLET
-          : window!.innerWidth < SMALL_TABLET_SIZE
-      );
-      console.log(window!.innerWidth, SMALL_TABLET_SIZE);
       return viewWidth !== undefined
         ? viewWidth < ViewWidth.TABLET
         : window!.innerWidth < SMALL_TABLET_SIZE;

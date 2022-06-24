@@ -677,6 +677,7 @@ class ModalRootTouchComponent extends React.Component<
               getClassName("ModalRoot", this.props.platform),
               this.props.configProvider?.webviewType === WebviewType.VKAPPS &&
                 "ModalRoot--vkapps",
+              "ModalRootMobile",
               getViewWidthClassName("ModalRootMobile", viewWidth),
               touchDown && "ModalRoot--touched",
               !!(enteringModal || exitingModal) && "ModalRoot--switching"

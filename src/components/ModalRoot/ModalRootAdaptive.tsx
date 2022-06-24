@@ -4,6 +4,8 @@ import { ModalRootDesktop } from "./ModalRootDesktop";
 import { useScrollLock } from "../AppRoot/ScrollContext";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import { usePlatform } from "../../hooks/usePlatform";
+import { Platform } from "../../lib/platform";
 
 export interface ModalRootProps {
   activeModal?: string | null;
@@ -34,6 +36,7 @@ export interface ModalRootProps {
  */
 export const ModalRoot: React.FC<ModalRootProps> = (props) => {
   const [closed, setClosed] = React.useState(false);
+  const platform = usePlatform();
 
   useScrollLock(!!props.activeModal);
 
@@ -51,14 +54,18 @@ export const ModalRoot: React.FC<ModalRootProps> = (props) => {
 
   return (
     <React.Fragment>
-      {(viewWidth === undefined || viewWidth >= ViewWidth.SMALL_TABLET) && (
+      {(viewWidth === undefined ||
+        viewWidth >= ViewWidth.SMALL_TABLET ||
+        platform === Platform.VKCOM) && (
         <ModalRootDesktop
           {...props}
           viewWidth={viewWidth}
           onClosed={onClosed}
         />
       )}
-      {(viewWidth === undefined || viewWidth < ViewWidth.SMALL_TABLET) && (
+      {(viewWidth === undefined ||
+        viewWidth < ViewWidth.SMALL_TABLET ||
+        platform !== Platform.VKCOM) && (
         <ModalRootTouch {...props} viewWidth={viewWidth} onClosed={onClosed} />
       )}
     </React.Fragment>

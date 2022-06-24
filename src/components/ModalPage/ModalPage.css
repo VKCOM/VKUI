@@ -122,18 +122,31 @@
  * desktop
  */
 
-.ModalPage--sizeX-regular {
+@media (max-height: 672px) {
+  .ModalPage--vkcom .ModalPage__in,
+  .ModalPage--sizeX-regular .ModalPage__in {
+    max-height: calc(100vh - 32px);
+  }
+
+  @media (--size-x-regular) {
+    .ModalPage--sizeX-none .ModalPage__in {
+      max-height: calc(100vh - 32px);
+    }
+  }
+}
+
+.ModalPage--vkcom {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.ModalPage--sizeX-regular .ModalPage__content {
+.ModalPage--vkcom .ModalPage__content {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-.ModalPage--sizeX-regular .ModalPage__in-wrap {
+.ModalPage--vkcom .ModalPage__in-wrap {
   align-items: center;
   opacity: 0;
   transition: opacity 340ms var(--android-easing);
@@ -143,32 +156,26 @@
   transform: none;
 }
 
-.ModalPage--sizeX-regular .ModalPage__in {
+.ModalPage--vkcom .ModalPage__in {
   height: auto;
   max-height: 640px;
   box-shadow: 0 16px 16px rgba(0, 0, 0, 0.16), 0 0 8px rgba(0, 0, 0, 0.12);
   border-radius: 8px;
 }
 
-@media (max-height: 672px) {
-  .ModalPage--sizeX-regular .ModalPage__in {
-    max-height: calc(100vh - 32px);
-  }
-}
-
 @media (--desktop) {
-  .ModalPage--sizeX-none {
+  .ModalPage--sizeX-none.ModalPage--vkcom {
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .ModalPage--sizeX-none .ModalPage__content {
+  .ModalPage--sizeX-none.ModalPage--vkcom .ModalPage__content {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
 
-  .ModalPage--sizeX-none .ModalPage__in-wrap {
+  .ModalPage--sizeX-none.ModalPage--vkcom .ModalPage__in-wrap {
     align-items: center;
     opacity: 0;
     transition: opacity 340ms var(--android-easing);
@@ -178,17 +185,11 @@
     transform: none;
   }
 
-  .ModalPage--sizeX-none .ModalPage__in {
+  .ModalPage--sizeX-none.ModalPage--vkcom .ModalPage__in {
     height: auto;
     max-height: 640px;
     box-shadow: 0 16px 16px rgba(0, 0, 0, 0.16), 0 0 8px rgba(0, 0, 0, 0.12);
     border-radius: 8px;
-  }
-
-  @media (max-height: 672px) {
-    .ModalPage--sizeX-none .ModalPage__in {
-      max-height: calc(100vh - 32px);
-    }
   }
 }
 

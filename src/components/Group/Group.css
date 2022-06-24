@@ -123,17 +123,3 @@
   border-top-right-radius: 0;
   border-top-left-radius: 0;
 }
-
-@media (--size-x-regular) {
-  .PanelHeader--vkcom ~ .Group--sizeX-none:first-of-type,
-  .PanelHeader--vkcom + * .Group--sizeX-none:first-of-type {
-    position: relative;
-    top: -1px;
-  }
-
-  .PanelHeader--vkcom ~ .Group--sizeX-none:first-of-type .Group__inner,
-  .PanelHeader--vkcom + * .Group--sizeX-none:first-of-type .Group__inner {
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-  }
-}

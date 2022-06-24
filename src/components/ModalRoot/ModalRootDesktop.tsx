@@ -227,6 +227,7 @@ class ModalRootDesktopComponent extends React.Component<
             getClassName("ModalRoot", this.props.platform),
             this.props.configProvider?.webviewType === WebviewType.VKAPPS &&
               "ModalRoot--vkapps",
+            "ModalRootDesktop",
             getViewWidthClassName("ModalRootDesktop", viewWidth),
             "ModalRoot--desktop"
           )}

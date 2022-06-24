@@ -48,10 +48,12 @@
  * Desktop
  */
 
+.ModalCard--vkcom,
 .ModalCard--sizeX-regular {
   align-items: center;
 }
 
+.ModalCard--vkcom,
 .ModalCard--sizeX-regular .ModalCard__in {
   transform: unset;
   opacity: 0;
