@@ -34,8 +34,7 @@
   pointer-events: none;
 }
 
-.ModalRootMobile--viewWidth-smallTabletPlus,
-.ModalRoot--vkcom.ModalRootMobile {
+.ModalRootMobile--viewWidth-smallTabletPlus.ModalRoot--vkcom {
   display: none;
 }
 
@@ -45,9 +44,8 @@
   }
 }
 
-.ModalRootDesktop:not(.ModalRoot--vkcom),
-.ModalRootDesktop--viewWidth-mobile.ModalRootDesktop:not(.ModalRoot--vkcom),
-.ModalRootDesktop--viewWidth-smallMobile.ModalRootDesktop:not(.ModalRoot--vkcom) {
+.ModalRootDesktop--viewWidth-mobile:not(.ModalRoot--vkcom),
+.ModalRootDesktop--viewWidth-smallMobile:not(.ModalRoot--vkcom) {
   display: none;
 }
 
