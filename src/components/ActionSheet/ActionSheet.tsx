@@ -1,6 +1,6 @@
 import * as React from "react";
 import { PopoutWrapper } from "../PopoutWrapper/PopoutWrapper";
-import { IOS } from "../../lib/platform";
+import { IOS, VKCOM } from "../../lib/platform";
 import { ActionSheetDropdownDesktop } from "./ActionSheetDropdownDesktop";
 import { ActionSheetDropdown } from "./ActionSheetDropdown";
 import { hasReactNode, noop } from "../../lib/utils";
@@ -13,6 +13,8 @@ import { useObjectMemo } from "../../hooks/useObjectMemo";
 import { SharedDropdownProps, PopupDirection, ToggleRef } from "./types";
 import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
 import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import { classNames } from "../../lib/classNames";
+import { getClassName } from "../../helpers/getClassName";
 import "./ActionSheet.css";
 
 export interface ActionSheetProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -92,7 +94,9 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
 
   return (
     <React.Fragment>
-      {(viewWidth === undefined || viewWidth >= ViewWidth.SMALL_TABLET) && (
+      {(viewWidth === undefined ||
+        viewWidth >= ViewWidth.SMALL_TABLET ||
+        platform === VKCOM) && (
         <ActionSheetContext.Provider value={contextDesktop}>
           <ActionSheetDropdownDesktop
             closing={closing}
@@ -122,12 +126,17 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
           </ActionSheetDropdownDesktop>
         </ActionSheetContext.Provider>
       )}
-      {(viewWidth === undefined || viewWidth < ViewWidth.SMALL_TABLET) && (
+      {(viewWidth === undefined ||
+        viewWidth < ViewWidth.SMALL_TABLET ||
+        platform !== VKCOM) && (
         <PopoutWrapper
           closing={closing}
           alignY="bottom"
           className={className}
-          vkuiClass={getViewWidthClassName("ActionSheetMobile", viewWidth)}
+          vkuiClass={classNames(
+            getClassName("ActionSheetMobile", platform),
+            getViewWidthClassName("ActionSheetMobile", viewWidth)
+          )}
           style={style}
           onClick={onClose}
           hasMask
