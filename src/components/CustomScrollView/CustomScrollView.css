@@ -44,6 +44,11 @@
   user-select: none;
 }
 
+.CustomScrollView__trackerY--hidden {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
 .CustomScrollView__trackerY::before {
   content: "";
   opacity: 0.28;
