@@ -9,6 +9,8 @@ import { ActionSheet, ActionSheetProps } from "./ActionSheet";
 import { ActionSheetItem } from "../ActionSheetItem/ActionSheetItem";
 import userEvent from "@testing-library/user-event";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
+import { VKCOM } from "../../lib/platform";
+import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 import { FC } from "react";
 
 describe("ActionSheet", () => {
@@ -16,14 +18,16 @@ describe("ActionSheet", () => {
   afterAll(() => jest.useRealTimers());
   const toggle = document.createElement("div");
   const ActionSheetDesktop: FC<Partial<ActionSheetProps>> = (props) => (
-    <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasMouse>
-      <ActionSheet
-        toggleRef={toggle}
-        onClose={jest.fn()}
-        {...props}
-        iosCloseItem={null}
-      />
-    </AdaptivityProvider>
+    <ConfigProvider platform={VKCOM}>
+      <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasMouse>
+        <ActionSheet
+          toggleRef={toggle}
+          onClose={jest.fn()}
+          {...props}
+          iosCloseItem={null}
+        />
+      </AdaptivityProvider>
+    </ConfigProvider>
   );
   const ActionSheetMobile: FC<Partial<ActionSheetProps>> = (props) => (
     <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasMouse={false}>
