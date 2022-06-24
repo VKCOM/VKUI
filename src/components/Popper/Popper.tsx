@@ -105,6 +105,20 @@ export const Popper: React.FC<PopperProps> = ({
       {
         name: "flip",
       },
+      {
+        name: "observeTargetRefSize",
+        enabled: true,
+        phase: "main",
+        effect: ({ state, instance }) => {
+          const observer = new ResizeObserver(instance.update);
+
+          observer.observe(state.elements.reference as Element);
+
+          return () => {
+            observer.disconnect();
+          };
+        },
+      },
     ];
 
     if (arrow) {
