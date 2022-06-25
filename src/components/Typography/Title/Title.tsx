@@ -21,7 +21,7 @@ export interface TitleProps
     | "1"
     | "2"
     | "3";
-  level: "1" | "2" | "3";
+  level?: "1" | "2" | "3";
 }
 
 const warn = warnOnce("Title");
