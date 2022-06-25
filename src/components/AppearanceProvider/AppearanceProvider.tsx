@@ -8,6 +8,7 @@ import { Platform } from "../../lib/platform";
 
 export interface AppearanceProviderProps {
   appearance?: AppearanceType;
+  children?: React.ReactNode;
 }
 
 export const generateVKUITokensClassName = (
@@ -35,10 +36,10 @@ export const generateVKUITokensClassName = (
 /**
  * @see https://vkcom.github.io/VKUI/#/AppearanceProvider
  */
-export const AppearanceProvider: React.FC<AppearanceProviderProps> = ({
+export const AppearanceProvider = ({
   children,
   appearance = "light",
-}) => {
+}: AppearanceProviderProps) => {
   const platform = usePlatform();
   const scheme = getScheme({
     platform,

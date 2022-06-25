@@ -5,16 +5,17 @@ import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 export interface ScrollSaverProps {
   initialScroll?: number;
   saveScroll: (scroll: number) => any;
+  children?: React.ReactNode;
 }
 
 /**
  * @see https://vkcom.github.io/VKUI/#/ScrollSaver
  */
-export const ScrollSaver: React.FC<ScrollSaverProps> = ({
+export const ScrollSaver = ({
   children,
   initialScroll,
   saveScroll,
-}) => {
+}: ScrollSaverProps) => {
   const { getScroll, scrollTo } = React.useContext(ScrollContext);
   useIsomorphicLayoutEffect(() => {
     if (typeof initialScroll === "number") {

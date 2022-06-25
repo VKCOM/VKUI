@@ -25,7 +25,7 @@ export interface SnackbarProps
   /**
    * Название кнопки действия в уведомлении
    */
-  action?: string | React.ComponentType;
+  action?: React.ReactNode;
 
   /**
    * Будет вызвано при клике на кнопку действия

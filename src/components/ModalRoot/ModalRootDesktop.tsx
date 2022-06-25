@@ -31,6 +31,7 @@ export interface ModalRootProps extends HasPlatform {
    * @ignore
    */
   configProvider?: ConfigProviderContextInterface;
+  children?: React.ReactNode;
 
   /**
    * Будет вызвано при начале открытия активной модалки с её id

@@ -36,6 +36,7 @@ export const useScroll = () => React.useContext(ScrollContext);
 
 export interface ScrollControllerProps {
   elRef: React.RefObject<HTMLElement>;
+  children?: React.ReactNode;
 }
 
 export const GlobalScrollController: React.FC<ScrollControllerProps> = ({
@@ -120,10 +121,10 @@ export const GlobalScrollController: React.FC<ScrollControllerProps> = ({
   );
 };
 
-export const ElementScrollController: React.FC<ScrollControllerProps> = ({
+export const ElementScrollController = ({
   elRef,
   children,
-}) => {
+}: ScrollControllerProps) => {
   const [isScrollLock, setScrollLock] = React.useState(false);
   const beforeScrollLockFnSetRef = React.useRef<Set<() => void>>(new Set());
 

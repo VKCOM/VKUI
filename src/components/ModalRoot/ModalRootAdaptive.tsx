@@ -31,11 +31,12 @@ export interface ModalRootProps extends AdaptivityProps {
    * Будет вызвано при окончательном закрытии активной модалки с её id
    */
   onClosed?(modalId: string): void;
+  children?: React.ReactNode;
 }
 
-const ModalRootComponent: React.FC<
-  ModalRootProps & AdaptivityContextInterface
-> = (props) => {
+const ModalRootComponent = (
+  props: ModalRootProps & AdaptivityContextInterface
+) => {
   const isDesktop = useAdaptivityIsDesktop();
 
   useScrollLock(!!props.activeModal);

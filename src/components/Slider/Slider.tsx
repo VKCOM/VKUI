@@ -5,6 +5,7 @@ import {
   UniversalSliderProps,
   UniversalValue,
 } from "../RangeSlider/UniversalSlider";
+import { TouchEvent } from "../Touch/Touch";
 
 export type SliderProps = UniversalSliderProps<number>;
 
@@ -28,7 +29,7 @@ export const Slider = ({
 
   const handleChange: UniversalSliderProps<UniversalValue>["onChange"] =
     React.useCallback(
-      (nextValue, event) => {
+      (nextValue: UniversalValue, event: TouchEvent) => {
         if (props.disabled || _value === nextValue[1]) {
           return;
         }

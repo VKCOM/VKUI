@@ -1,5 +1,5 @@
 import * as React from "react";
-import { HasComponent } from "../../types";
+import { HasComponent, HasChildren } from "../../types";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { getTitleFromChildren, hasReactNode } from "../../lib/utils";
@@ -29,9 +29,10 @@ export interface SubnavigationButtonProps extends Omit<TappableProps, "size"> {
 }
 
 type SubnavButtonTypographyProps = Pick<SubnavigationButtonProps, "textLevel"> &
-  HasComponent;
+  HasComponent &
+  HasChildren;
 
-const SubnavigationButtonTypography: React.FC<SubnavButtonTypographyProps> = ({
+const SubnavigationButtonTypography = ({
   textLevel,
   ...restProps
 }: SubnavButtonTypographyProps) => {

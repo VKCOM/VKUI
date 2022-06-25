@@ -69,6 +69,7 @@ export interface ModalRootProps extends HasPlatform {
    * @ignore
    */
   configProvider?: ConfigProviderContextInterface;
+  children?: React.ReactNode;
 }
 
 interface ModalRootState {

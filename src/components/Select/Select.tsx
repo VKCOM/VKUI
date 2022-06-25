@@ -24,9 +24,11 @@ export const SelectType = {
 /**
  * @see https://vkcom.github.io/VKUI/#/SelectTypography
  */
-export const SelectTypography: React.FC<
-  Pick<CustomSelectProps, "selectType">
-> = ({ selectType = SelectType.default, children, ...restProps }) => {
+export const SelectTypography = ({
+  selectType = SelectType.default,
+  children,
+  ...restProps
+}: React.PropsWithChildren<Pick<CustomSelectProps, "selectType">>) => {
   const platform = usePlatform();
   const { sizeY } = useAdaptivity();
 

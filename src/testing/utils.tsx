@@ -5,6 +5,7 @@ import { AdaptivityProps } from "../components/AdaptivityProvider/AdaptivityCont
 import { ImgOnlyAttributes } from "../lib/utils";
 import { ScrollContext } from "../components/AppRoot/ScrollContext";
 import { act } from "react-dom/test-utils";
+import { HasChildren } from "../types";
 
 export function fakeTimers() {
   beforeEach(() => jest.useFakeTimers());
@@ -139,7 +140,7 @@ export function mockRect(
 
 export const mockScrollContext = (
   getY: () => number
-): [React.FC, jest.Mock] => {
+): [React.FC<HasChildren>, jest.Mock] => {
   const getScroll = () => ({ x: 0, y: getY() });
   const scrollTo = jest.fn();
   const isScrollLock = false;

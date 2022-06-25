@@ -31,7 +31,7 @@ export const Gallery = ({
   const childCount = slides.length;
 
   const handleChange: GalleryProps["onChange"] = React.useCallback(
-    (current) => {
+    (current: number) => {
       if (current === slideIndex) {
         return;
       }

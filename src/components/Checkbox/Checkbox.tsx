@@ -67,7 +67,7 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   }, [defaultIndeterminate, indeterminate, inputRef]);
 
   const handleChange: CheckboxProps["onChange"] = React.useCallback(
-    (event) => {
+    (event: React.ChangeEvent<HTMLInputElement>) => {
       if (
         defaultIndeterminate !== undefined &&
         indeterminate === undefined &&
