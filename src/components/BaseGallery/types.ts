@@ -16,7 +16,7 @@ export interface ShiftingState {
 
 export interface LayoutState {
   containerWidth: number;
-  viewporOffsettWidth: number;
+  viewportOffsetWidth: number;
   layerWidth: number;
   min?: number;
   max: number;
