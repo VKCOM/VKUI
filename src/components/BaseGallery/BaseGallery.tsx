@@ -20,7 +20,7 @@ const ANIMATION_DURATION = 0.24;
 
 const LAYOUT_DEFAULT_STATE = {
   containerWidth: 0,
-  viewporOffsettWidth: 0,
+  viewportOffsetWidth: 0,
   layerWidth: 0,
   min: 0,
   max: 0,
@@ -96,7 +96,7 @@ export const BaseGallery = ({
       const { coordX, width } = targetSlide;
 
       if (isCenterWithCustomWidth) {
-        const viewportWidth = layoutState.current.viewporOffsettWidth ?? 0;
+        const viewportWidth = layoutState.current.viewportOffsetWidth ?? 0;
         return viewportWidth / 2 - coordX - width / 2;
       }
 
@@ -137,7 +137,7 @@ export const BaseGallery = ({
       ) ?? [];
 
     const localContainerWidth = rootRef.current?.offsetWidth ?? 0;
-    const localViewporOffsettWidth = viewportRef.current?.offsetWidth ?? 0;
+    const localviewportOffsetWidth = viewportRef.current?.offsetWidth ?? 0;
     const localLayerWidth = localSlides.reduce(
       (val: number, slide: GallerySlidesState) => slide.width + val,
       0
@@ -145,18 +145,18 @@ export const BaseGallery = ({
 
     layoutState.current = {
       containerWidth: localContainerWidth,
-      viewporOffsettWidth: localViewporOffsettWidth,
+      viewportOffsetWidth: localviewportOffsetWidth,
       layerWidth: localLayerWidth,
       max: calcMax({
         slides: localSlides,
-        viewporOffsettWidth: localViewporOffsettWidth,
+        viewportOffsetWidth: localviewportOffsetWidth,
         isCenterWithCustomWidth,
       }),
       min: calcMin({
         containerWidth: localContainerWidth,
         layerWidth: localLayerWidth,
         slides: localSlides,
-        viewporOffsettWidth: localViewporOffsettWidth,
+        viewportOffsetWidth: localviewportOffsetWidth,
         isCenterWithCustomWidth,
         align,
       }),
