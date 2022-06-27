@@ -27,10 +27,6 @@ export interface SplitColProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   animate?: boolean;
   /**
-   * Если true, то добавляются анимации переходов между Panel при ширине больше чем `smallTablet`
-   */
-  autoAnimate?: boolean;
-  /**
    * Если true, то добавляются боковые отступы фиксированной величины
    */
   spaced?: boolean;
@@ -55,11 +51,10 @@ export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
     maxWidth,
     minWidth,
     spaced,
-    animate: _animate = false,
+    animate: _animate,
     fixed,
     style,
     autoSpaced = true,
-    autoAnimate = true,
     stretchOnMobile,
     ...restProps
   } = props;
@@ -68,13 +63,13 @@ export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
   const { window } = useDOM();
 
   const animate = React.useMemo(() => {
-    if (autoAnimate) {
+    if (_animate === undefined) {
       return viewWidth !== undefined
         ? viewWidth < ViewWidth.TABLET
         : window!.innerWidth < SMALL_TABLET_SIZE;
     }
     return _animate;
-  }, [_animate, autoAnimate, viewWidth, window]);
+  }, [_animate, viewWidth, window]);
 
   const contextValue = React.useMemo(() => {
     return {
