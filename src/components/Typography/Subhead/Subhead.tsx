@@ -1,29 +1,54 @@
-import { AllHTMLAttributes, ElementType, FC } from 'react';
-import { usePlatform } from '../../../hooks/usePlatform';
-import { classNames } from '../../../lib/classNames';
-import { getClassName } from '../../../helpers/getClassName';
+import * as React from "react";
+import { HasComponent } from "../../../types";
+import { classNames } from "../../../lib/classNames";
+import { warnOnce } from "../../../lib/warnOnce";
+import { useAdaptivity } from "../../../hooks/useAdaptivity";
+import "./Subhead.css";
 
-export interface SubheadProps extends AllHTMLAttributes<HTMLElement> {
-  weight: 'regular' | 'medium' | 'semibold' | 'bold';
-  Component?: ElementType;
+export interface SubheadProps
+  extends React.AllHTMLAttributes<HTMLElement>,
+    HasComponent {
+  /**
+   * Задаёт начертание шрифта отличное от стандартного.
+   *
+   * > ⚠️ Начертания `"semibold"`, `medium` и `"regular"` устарели и будут удалены в 5.0.0. Используйте значения `"1"`, `"2"` и `"3"`.
+   */
+  weight?: "regular" | "medium" | "semibold" | "bold" | "1" | "2" | "3";
 }
 
-const Subhead: FC<SubheadProps> = ({
+const warn = warnOnce("Subhead");
+
+/**
+ * @see https://vkcom.github.io/VKUI/#/Subhead
+ */
+export const Subhead: React.FC<SubheadProps> = ({
   children,
   weight,
-  Component = 'h4',
+  Component = "h5",
   ...restProps
-}: SubheadProps) => {
-  const platform = usePlatform();
+}) => {
+  const { sizeY } = useAdaptivity();
+
+  if (process.env.NODE_ENV === "development") {
+    if (
+      weight &&
+      ["heavy", "bold", "semibold", "medium", "regular"].includes(weight)
+    )
+      warn(
+        `Начертание weight="${weight}" устарело и будет удалено в 5.0.0. Используйте значения "1", "2" и "3"`
+      );
+  }
 
   return (
     <Component
       {...restProps}
-      vkuiClass={classNames(getClassName('Subhead', platform), `Subhead--w-${weight}`)}
+      vkuiClass={classNames(
+        "Subhead",
+        `Subhead--sizeY-${sizeY}`,
+        weight && `Subhead--w-${weight}`
+      )}
     >
       {children}
     </Component>
   );
 };
-
-export default Subhead;

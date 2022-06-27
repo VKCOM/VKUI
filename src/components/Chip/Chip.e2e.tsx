@@ -1,8 +1,18 @@
-import Chip, { ChipProps } from './Chip';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
+import { Chip, ChipProps } from "./Chip";
+import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
-describe('Chip', () => {
-  describeScreenshotFuzz((props: ChipProps) => (<Chip value="arctic_monkeys" {...props}>Arctic Monkeys</Chip>), [{
-    removable: [false, true],
-  }]);
+describe("Chip", () => {
+  describeScreenshotFuzz(
+    (props: ChipProps) => (
+      <Chip {...props} value="arctic_monkeys">
+        Arctic Monkeys
+      </Chip>
+    ),
+    [
+      {
+        removable: [false, true],
+        $adaptivity: "y",
+      },
+    ]
+  );
 });

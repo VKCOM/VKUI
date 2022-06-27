@@ -9,34 +9,46 @@
   z-index: 3;
   border: none;
   background-color: transparent;
-  transition: opacity .15s;
+  transition: opacity 0.15s;
   transition-timing-function: var(--android-easing);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .HorizontalScroll:hover .HorizontalScrollArrow,
 .Gallery:hover .HorizontalScrollArrow {
-  opacity: .72;
+  opacity: 0.72;
 }
 
 .HorizontalScroll:hover .HorizontalScrollArrow:hover,
-.Gallery:hover .HorizontalScrollArrow:hover {
+.Gallery:hover .HorizontalScrollArrow:hover,
+.HorizontalScroll--withConstArrows .HorizontalScrollArrow,
+.HorizontalScroll--withConstArrows:hover .HorizontalScrollArrow {
   opacity: 1;
 }
 
 .HorizontalScrollArrow__icon {
-  background-color: var(--modal_card_background);
-  color: var(--icon_secondary);
+  background-color: var(
+    --modal_card_background,
+    var(--vkui--color_background_modal)
+  );
+  color: var(--icon_secondary, var(--vkui--color_icon_secondary));
   width: 40px;
   height: 40px;
   border-radius: 24px;
-  box-shadow: 0 0 2px rgba(0, 0, 0, .08), 0 0 16px rgba(0, 0, 0, .12);
+  box-shadow: var(
+    --vkui--elevation3,
+    0 0 2px rgba(0, 0, 0, 0.08),
+    0 0 16px rgba(0, 0, 0, 0.12)
+  );
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .HorizontalScrollArrow--left {
-  margin-left: 16px;
+  padding-left: var(--vkui--size_base_padding_horizontal--regular, 16px);
   left: 0;
 }
 
@@ -45,7 +57,7 @@
 }
 
 .HorizontalScrollArrow--right {
-  margin-right: 16px;
+  padding-right: var(--vkui--size_base_padding_horizontal--regular, 16px);
   right: 0;
 }
 

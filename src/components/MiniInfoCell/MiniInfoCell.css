@@ -1,24 +1,24 @@
 .MiniInfoCell {
   display: flex;
-  padding: 6px 12px;
+  padding: 6px var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .MiniInfoCell--lvl-primary {
-  color: var(--text_primary);
+  color: var(--text_primary, var(--vkui--color_text_primary));
 }
 
 .MiniInfoCell--lvl-secondary {
-  color: var(--text_subhead);
+  color: var(--text_subhead, var(--vkui--color_text_subhead));
 }
 
 .MiniInfoCell__icon {
-  color: var(--icon_outline_secondary);
+  margin-right: 12px;
+  color: var(--icon_outline_secondary, var(--vkui--color_icon_medium));
 }
 
 .MiniInfoCell__content {
   flex: 1;
   min-width: 0;
-  margin-left: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -45,23 +45,15 @@
 
 .MiniInfoCell--md-add,
 .MiniInfoCell--md-add .MiniInfoCell__icon {
-  color: var(--accent);
+  color: var(--accent, var(--vkui--color_icon_accent));
 }
 
 .MiniInfoCell--md-more,
 .MiniInfoCell--md-more .MiniInfoCell__icon {
-  color: var(--link_alternate);
+  color: var(--link_alternate, var(--vkui--color_icon_accent));
 }
 
 .MiniInfoCell--md-more {
   padding-top: 10px;
   padding-bottom: 10px;
-}
-
-/**
- * ANDROID
- */
-.MiniInfoCell--android {
-  padding-left: 16px;
-  padding-right: 16px;
 }

@@ -1,25 +1,12 @@
 .Editor {
-  background: var(--button_secondary_background);
-  border-radius: 8px;
   position: relative;
+  border-radius: 8px;
 }
 
 .Editor__inner {
-  font-family: 'JetBrainsMono', monospace;
-  font-size: 14px;
-  line-height: 24px;
   max-height: 400px;
   overflow: auto;
   border-radius: inherit;
-}
-
-.Editor textarea {
-  border-radius: inherit;
-  border: none !important;
-}
-
-.Editor textarea:focus {
-  outline: 0;
 }
 
 .Editor__copy {
@@ -27,5 +14,5 @@
   right: 16px;
   top: 16px;
   z-index: 2;
-  color: var(--icon_secondary);
+  color: var(--vkui--color_icon_secondary);
 }

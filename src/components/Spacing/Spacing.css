@@ -1,9 +1,15 @@
 .Spacing {
-  color: var(--separator_common);
+  color: var(--separator_common, var(--vkui--color_separator_primary));
   position: relative;
   box-sizing: border-box;
   display: flex;
   flex-flow: column;
+  justify-content: center;
+}
+
+.Spacing--separator {
+  padding-left: var(--vkui--size_base_padding_horizontal--regular);
+  padding-right: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .Spacing--separator-center {
@@ -24,23 +30,12 @@
 
 @media (min-resolution: 2dppx) {
   .Spacing--separator::after {
-    transform: scaleY(.5);
+    transform: scaleY(0.5);
   }
 }
 
 @media (min-resolution: 3dppx) {
   .Spacing--separator::after {
-    transform: scaleY(.32);
+    transform: scaleY(0.32);
   }
-}
-
-.Spacing--ios {
-  padding-left: 12px;
-  padding-right: 12px;
-}
-
-.Spacing--android,
-.Spacing--vkcom {
-  padding-left: 16px;
-  padding-right: 16px;
 }

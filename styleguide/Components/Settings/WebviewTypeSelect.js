@@ -1,18 +1,21 @@
-import React from 'react';
-import { WebviewType } from '@vkui';
-import { Setting } from '../Setting/Setting';
+import React from "react";
+import { WebviewType, Link } from "@vkui";
+import { Setting } from "../Setting/Setting";
 
-export const WebviewTypeSelect = ({ onChange, value }) => (
-  <Setting
-    label="Тип webview"
-    value={value}
-    onChange={onChange}
-    options={[{
-      title: WebviewType.VKAPPS,
-      value: WebviewType.VKAPPS,
-    }, {
-      title: WebviewType.INTERNAL,
-      value: WebviewType.INTERNAL,
-    }]}
-  />
-);
+export const WebviewTypeSelect = ({ onChange, value }) => {
+  React.useEffect(() => () => onChange(WebviewType.VKAPPS), []);
+
+  return (
+    <Setting
+      hint={
+        <React.Fragment>
+          Свойство <Link href="#/ConfigProvider">ConfigProvider</Link>
+        </React.Fragment>
+      }
+      label="webviewType"
+      onChange={onChange}
+      value={value}
+      options={[WebviewType.INTERNAL, WebviewType.VKAPPS]}
+    />
+  );
+};

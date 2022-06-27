@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import SectionHeading from 'rsg-components/SectionHeading';
-import Markdown from 'rsg-components/Markdown';
+import React from "react";
+import PropTypes from "prop-types";
+import SectionHeading from "@rsg-components/SectionHeading";
+import Markdown from "@rsg-components/Markdown";
 
 export const SectionRenderer = (allProps) => {
   const {
@@ -38,7 +38,6 @@ export const SectionRenderer = (allProps) => {
 };
 
 SectionRenderer.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.string.isRequired).isRequired,
   name: PropTypes.string,
   description: PropTypes.string,
   slug: PropTypes.string.isRequired,

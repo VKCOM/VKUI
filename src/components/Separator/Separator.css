@@ -10,13 +10,13 @@
 
 @media (min-resolution: 2dppx) {
   .Separator__in:not(.Separator__in--expanded) {
-    transform: scaleY(.5);
+    transform: scaleY(0.5);
   }
 }
 
 @media (min-resolution: 3dppx) {
   .Separator__in:not(.Separator__in--expanded) {
-    transform: scaleY(.32);
+    transform: scaleY(0.32);
   }
 }
 
@@ -25,13 +25,16 @@
   background: transparent;
 }
 
-.Separator:not(.Separator--wide).Separator--ios .Separator__in {
-  margin-left: 12px;
-  margin-right: 12px;
+.Separator--padded .Separator__in {
+  margin-left: var(--vkui--size_base_padding_horizontal--regular);
+  margin-right: var(--vkui--size_base_padding_horizontal--regular);
 }
 
-.Separator:not(.Separator--wide).Separator--android .Separator__in,
-.Separator:not(.Separator--wide).Separator--vkcom .Separator__in {
-  margin-left: 16px;
-  margin-right: 16px;
+/*
+ * CMP:
+ * ModalPage
+ */
+.ModalPage--sizeX-regular .Separator--padded {
+  padding-left: 8px;
+  padding-right: 8px;
 }

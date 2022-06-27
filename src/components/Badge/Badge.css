@@ -8,9 +8,17 @@
 }
 
 .Badge--new {
-  background-color: var(--blue_200);
+  background-color: var(--blue_200, var(--vkui--color_icon_accent));
 }
 
 .Badge--prominent {
-  background-color: var(--counter_prominent_background);
+  background-color: var(
+    --counter_prominent_background,
+    var(--vkui--color_icon_negative)
+  );
+}
+
+.TabsItem__after .Badge {
+  transform: translateY(-2px);
+  margin-left: 6px;
 }

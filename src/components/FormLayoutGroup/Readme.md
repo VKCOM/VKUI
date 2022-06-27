@@ -7,12 +7,12 @@ class Example extends React.Component {
     super(props);
 
     this.state = {
-      showDates: true
-    }
+      showDates: true,
+    };
   }
 
   toggleDates(showDates) {
-    this.setState({ showDates })
+    this.setState({ showDates });
   }
 
   render() {
@@ -33,26 +33,31 @@ class Example extends React.Component {
                 </FormItem>
               </FormLayoutGroup>
 
-              {!showDates
-                ? <CellButton onClick={() => this.toggleDates(true)}>Указать даты поездки</CellButton>
-                : (
-                  <FormLayoutGroup mode="horizontal" removable onRemove={() => this.toggleDates(false)}>
-                    <FormItem bottom="Дата начала поездки">
-                      <Input />
-                    </FormItem>
-                    <FormItem bottom="Дата конца поездки">
-                      <Input />
-                    </FormItem>
-                  </FormLayoutGroup>
-                )
-              }
+              {!showDates ? (
+                <CellButton onClick={() => this.toggleDates(true)}>
+                  Указать даты поездки
+                </CellButton>
+              ) : (
+                <FormLayoutGroup
+                  mode="horizontal"
+                  removable
+                  onRemove={() => this.toggleDates(false)}
+                >
+                  <FormItem bottom="Дата начала поездки">
+                    <Input />
+                  </FormItem>
+                  <FormItem bottom="Дата конца поездки">
+                    <Input />
+                  </FormItem>
+                </FormLayoutGroup>
+              )}
             </FormLayout>
           </Group>
         </Panel>
       </View>
-    )
+    );
   }
 }
 
-<Example />
+<Example />;
 ```

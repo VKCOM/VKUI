@@ -5,7 +5,7 @@
 
 Этот компонент должен быть передан в качестве свойства `modal` компоненту [`SplitLayout`](#/SplitLayout).
 
-**Важно:** структура модальных страниц и карточек должна определяться единожды на старте приложения. Структура – это *декларация* приложения.
+**Важно:** структура модальных страниц и карточек должна определяться единожды на старте приложения. Структура – это _декларация_ приложения.
 То есть, один раз определив структуру вида:
 
 ```jsx static
@@ -13,20 +13,12 @@ class App extends Component {
   render() {
     const modal = (
       <ModalRoot activeModal={this.state.activeModal}>
-        <ModalPage id="select">
-          ...
-        </ModalPage>
-        <ModalCard id="faq">
-          ...
-        </ModalCard>
+        <ModalPage id="select">...</ModalPage>
+        <ModalCard id="faq">...</ModalCard>
       </ModalRoot>
     );
 
-    return (
-      <View modal={modal}>
-        ...
-      </View>
-    );
+    return <SplitLayout modal={modal}>...</SplitLayout>;
   }
 }
 ```
@@ -47,19 +39,19 @@ class App extends Component {
 либо идентификатор предыдущей модалки, либо `null` для скрытия.
 Каждой конкретной `ModalPage` или `ModalCard` можно передать свой обработчик `onClose`, если нужно переопределить поведение.
 
-```jsx
-const MODAL_PAGE_FILTERS = 'filters';
-const MODAL_PAGE_COUNTRIES = 'countries';
-const MODAL_PAGE_STORY_FEEDBACK = 'story-feedback';
-const MODAL_PAGE_USER_INFO = 'user-info';
-const MODAL_PAGE_FULLSCREEN = 'fullscreen';
-const MODAL_PAGE_DYNAMIC = 'dynamic';
+```jsx { "props": { "layout": false, "adaptivity": true, "webviewType": true } }
+const MODAL_PAGE_FILTERS = "filters";
+const MODAL_PAGE_COUNTRIES = "countries";
+const MODAL_PAGE_STORY_FEEDBACK = "story-feedback";
+const MODAL_PAGE_USER_INFO = "user-info";
+const MODAL_PAGE_FULLSCREEN = "fullscreen";
+const MODAL_PAGE_DYNAMIC = "dynamic";
 
-const MODAL_CARD_MONEY_SEND = 'money-send';
-const MODAL_CARD_APP_TO_MENU = 'app-to-menu';
-const MODAL_CARD_ABOUT = 'say-about';
-const MODAL_CARD_NOTIFICATIONS = 'notifications';
-const MODAL_CARD_CHAT_INVITE = 'chat-invite';
+const MODAL_CARD_MONEY_SEND = "money-send";
+const MODAL_CARD_APP_TO_MENU = "app-to-menu";
+const MODAL_CARD_ABOUT = "say-about";
+const MODAL_CARD_NOTIFICATIONS = "notifications";
+const MODAL_CARD_CHAT_INVITE = "chat-invite";
 
 const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
   const { viewWidth } = useAdaptivity();
@@ -73,8 +65,18 @@ const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
       {...props}
       header={
         <ModalPageHeader
-          right={isMobile && platform === IOS && <PanelHeaderButton onClick={onClose}><Icon24Dismiss/></PanelHeaderButton>}
-          left={isMobile && platform === ANDROID && <PanelHeaderClose onClick={onClose}/>}
+          before={
+            isMobile &&
+            platform === ANDROID && <PanelHeaderClose onClick={onClose} />
+          }
+          after={
+            isMobile &&
+            platform === IOS && (
+              <PanelHeaderButton onClick={onClose}>
+                <Icon24Dismiss />
+              </PanelHeaderButton>
+            )
+          }
         >
           Dynamic modal
         </ModalPageHeader>
@@ -90,352 +92,479 @@ const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
   );
 };
 
-const App = withPlatform(withAdaptivity(class App extends React.Component {
-  constructor(props) {
-    super(props);
+const App = withPlatform(
+  withAdaptivity(
+    class App extends React.Component {
+      constructor(props) {
+        super(props);
 
-    this.state = {
-      activeModal: null,
-      modalHistory: []
-    };
+        this.state = {
+          activeModal: null,
+          modalHistory: [],
+        };
 
-    this.users = 'k'.repeat(25).split('').map(() => {
-      return getRandomUser();
-    });
-    
-    this.randomUser = getRandomUser();
+        this.users = "k"
+          .repeat(25)
+          .split("")
+          .map(() => {
+            return getRandomUser();
+          });
 
-    this.modalBack = () => {
-      this.setActiveModal(this.state.modalHistory[this.state.modalHistory.length - 2]);
-    };
-  }
+        this.randomUser = getRandomUser();
 
-  setActiveModal(activeModal) {
-    activeModal = activeModal || null;
-    let modalHistory = this.state.modalHistory ? [...this.state.modalHistory] : [];
+        this.modalBack = () => {
+          this.setActiveModal(
+            this.state.modalHistory[this.state.modalHistory.length - 2]
+          );
+        };
+      }
 
-    if (activeModal === null) {
-      modalHistory = [];
-    } else if (modalHistory.indexOf(activeModal) !== -1) {
-      modalHistory = modalHistory.splice(0, modalHistory.indexOf(activeModal) + 1);
-    } else {
-      modalHistory.push(activeModal);
+      setActiveModal(activeModal) {
+        activeModal = activeModal || null;
+        let modalHistory = this.state.modalHistory
+          ? [...this.state.modalHistory]
+          : [];
+
+        if (activeModal === null) {
+          modalHistory = [];
+        } else if (modalHistory.indexOf(activeModal) !== -1) {
+          modalHistory = modalHistory.splice(
+            0,
+            modalHistory.indexOf(activeModal) + 1
+          );
+        } else {
+          modalHistory.push(activeModal);
+        }
+
+        this.setState({
+          activeModal,
+          modalHistory,
+        });
+      }
+
+      render() {
+        const isMobile = this.props.viewWidth <= ViewWidth.MOBILE;
+        const platform = this.props.platform;
+
+        const modal = (
+          <ModalRoot
+            activeModal={this.state.activeModal}
+            onClose={this.modalBack}
+          >
+            <ModalPage
+              id={MODAL_PAGE_FULLSCREEN}
+              onClose={this.modalBack}
+              settlingHeight={100}
+              header={
+                <ModalPageHeader
+                  before={
+                    isMobile &&
+                    platform === ANDROID && (
+                      <PanelHeaderClose onClick={this.modalBack} />
+                    )
+                  }
+                  after={
+                    platform === IOS && (
+                      <PanelHeaderButton onClick={this.modalBack}>
+                        <Icon24Dismiss />
+                      </PanelHeaderButton>
+                    )
+                  }
+                >
+                  @{this.randomUser.screen_name}
+                </ModalPageHeader>
+              }
+            >
+              <Gradient
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                  padding: 32,
+                }}
+              >
+                <Avatar size={96} src={this.randomUser.photo_100} />
+                <Title
+                  style={{ marginBottom: 8, marginTop: 20 }}
+                  level="2"
+                  weight="2"
+                >
+                  {this.randomUser.first_name + " " + this.randomUser.last_name}
+                </Title>
+              </Gradient>
+              <Group
+                header={
+                  <Header mode="secondary" indicator="25">
+                    Друзья
+                  </Header>
+                }
+              >
+                {this.users.map((user) => {
+                  return (
+                    <SimpleCell
+                      before={<Avatar src={user.photo_100} />}
+                      key={user.id}
+                    >
+                      {user.name}
+                    </SimpleCell>
+                  );
+                })}
+              </Group>
+            </ModalPage>
+
+            <DynamicModalPage
+              id={MODAL_PAGE_DYNAMIC}
+              onClose={this.modalBack}
+              dynamicContentHeight
+            />
+
+            <ModalPage
+              id={MODAL_PAGE_FILTERS}
+              onClose={this.modalBack}
+              header={
+                <ModalPageHeader
+                  before={
+                    isMobile && <PanelHeaderClose onClick={this.modalBack} />
+                  }
+                  after={<PanelHeaderSubmit onClick={this.modalBack} />}
+                >
+                  Фильтры
+                </ModalPageHeader>
+              }
+            >
+              <Group>
+                <CellButton
+                  onClick={() => this.setActiveModal(MODAL_PAGE_COUNTRIES)}
+                >
+                  Выбор страны
+                </CellButton>
+                <CellButton
+                  onClick={() => this.setActiveModal(MODAL_PAGE_STORY_FEEDBACK)}
+                >
+                  Просмотры истории
+                </CellButton>
+                <CellButton
+                  onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)}
+                >
+                  Информация о пользователе
+                </CellButton>
+
+                <FormItem top="Страна">
+                  <SelectMimicry
+                    placeholder="Выбрать страну"
+                    onClick={() => this.setActiveModal(MODAL_PAGE_COUNTRIES)}
+                  />
+                </FormItem>
+                <FormItem top="Город">
+                  <SelectMimicry placeholder="Выбрать город" disabled />
+                </FormItem>
+
+                <FormItem top="Пол">
+                  <Radio name="sex" value={0} defaultChecked>
+                    Любой
+                  </Radio>
+                  <Radio name="sex" value={1}>
+                    Мужской
+                  </Radio>
+                  <Radio name="sex" value={2}>
+                    Женский
+                  </Radio>
+                </FormItem>
+
+                <FormItem top="Школа">
+                  <SelectMimicry placeholder="Выбрать школу" disabled />
+                </FormItem>
+                <FormItem top="Университет">
+                  <SelectMimicry placeholder="Выбрать университет" disabled />
+                </FormItem>
+
+                <FormItem top="Дополнительно">
+                  <Checkbox>С фотографией</Checkbox>
+                  <Checkbox>Сейчас на сайте</Checkbox>
+                </FormItem>
+
+                <FormItem top="Работа">
+                  <Input placeholder="Место работы" />
+                </FormItem>
+                <FormItem>
+                  <Input placeholder="Должность" />
+                </FormItem>
+
+                <FormItem top="Дата рождения">
+                  <DatePicker
+                    min={{ day: 1, month: 1, year: 1901 }}
+                    max={{ day: 1, month: 1, year: 2006 }}
+                    dayPlaceholder="Д"
+                    monthPlaceholder="ММ"
+                    yearPlaceholder="ГГ"
+                  />
+                </FormItem>
+              </Group>
+            </ModalPage>
+
+            <ModalPage
+              id={MODAL_PAGE_COUNTRIES}
+              onClose={this.modalBack}
+              header={
+                <ModalPageHeader
+                  before={
+                    <PanelHeaderBack label="Назад" onClick={this.modalBack} />
+                  }
+                >
+                  Выберите страну
+                </ModalPageHeader>
+              }
+              settlingHeight={80}
+            >
+              <Group>
+                <CellButton
+                  onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)}
+                >
+                  Информация о пользователе
+                </CellButton>
+
+                <FormLayoutGroup>
+                  {importantCountries.map(({ id, title }) => {
+                    return (
+                      <Radio key={id} name="country" value={id}>
+                        {title}
+                      </Radio>
+                    );
+                  })}
+                </FormLayoutGroup>
+              </Group>
+            </ModalPage>
+
+            <ModalPage
+              id={MODAL_PAGE_STORY_FEEDBACK}
+              onClose={this.modalBack}
+              header={
+                <ModalPageHeader
+                  before={
+                    <PanelHeaderBack label="Назад" onClick={this.modalBack} />
+                  }
+                >
+                  Просмотры истории
+                </ModalPageHeader>
+              }
+              settlingHeight={80}
+            >
+              <Group>
+                {this.users.map((user) => {
+                  return (
+                    <SimpleCell
+                      before={<Avatar src={user.photo_100} />}
+                      key={user.id}
+                    >
+                      {user.name}
+                    </SimpleCell>
+                  );
+                })}
+              </Group>
+            </ModalPage>
+
+            <ModalPage
+              id={MODAL_PAGE_USER_INFO}
+              onClose={this.modalBack}
+              header={
+                <ModalPageHeader
+                  before={
+                    <PanelHeaderBack label="Назад" onClick={this.modalBack} />
+                  }
+                >
+                  Информация о пользователе
+                </ModalPageHeader>
+              }
+            >
+              <Group>
+                <Cell>
+                  <InfoRow header="Дата рождения">30 января 1993</InfoRow>
+                </Cell>
+                <Cell>
+                  <InfoRow header="Родной город">Ереван</InfoRow>
+                </Cell>
+                <Cell>
+                  <InfoRow header="Место работы">Команда ВКонтакте</InfoRow>
+                </Cell>
+              </Group>
+            </ModalPage>
+
+            <ModalCard
+              id={MODAL_CARD_MONEY_SEND}
+              onClose={() => this.setActiveModal(null)}
+              icon={<Icon56MoneyTransferOutline />}
+              header="Отправляйте деньги друзьям, используя банковскую карту"
+              subheader="Номер карты получателя не нужен — он сам решит, куда зачислить средства."
+              actions={
+                <Button
+                  size="l"
+                  mode="primary"
+                  onClick={() => this.setActiveModal(MODAL_CARD_APP_TO_MENU)}
+                >
+                  Попробовать
+                </Button>
+              }
+            ></ModalCard>
+
+            <ModalCard
+              id={MODAL_CARD_APP_TO_MENU}
+              onClose={() => this.setActiveModal(null)}
+              icon={
+                <Avatar
+                  mode="app"
+                  src={getAvatarUrl("app_zagadki", 200)}
+                  size={72}
+                />
+              }
+              header="Добавить игру «Загадки детства» в меню?"
+              subheader="Игра появится под списком разделов на экране меню и будет всегда под рукой."
+              actions={
+                <Button
+                  size="l"
+                  mode="primary"
+                  onClick={() => this.setActiveModal(MODAL_CARD_ABOUT)}
+                >
+                  Добавить в меню
+                </Button>
+              }
+            />
+
+            <ModalCard
+              id={MODAL_CARD_ABOUT}
+              onClose={() => this.setActiveModal(null)}
+              header="Расскажите о себе"
+              actions={
+                <Button
+                  size="l"
+                  mode="primary"
+                  onClick={() => this.setActiveModal(MODAL_CARD_NOTIFICATIONS)}
+                >
+                  Сохранить
+                </Button>
+              }
+            >
+              <Textarea defaultValue="В Грузии" />
+            </ModalCard>
+
+            <ModalCard
+              id={MODAL_CARD_NOTIFICATIONS}
+              onClose={() => this.setActiveModal(null)}
+              icon={<Icon56NotificationOutline />}
+              header="Приложение запрашивает разрешение на отправку Вам уведомлений"
+              actions={[
+                <Button
+                  key="deny"
+                  size="l"
+                  mode="secondary"
+                  onClick={() => this.setActiveModal(MODAL_CARD_CHAT_INVITE)}
+                >
+                  Запретить
+                </Button>,
+                <Button
+                  key="allow"
+                  size="l"
+                  mode="primary"
+                  onClick={() => this.setActiveModal(MODAL_CARD_CHAT_INVITE)}
+                >
+                  Разрешить
+                </Button>,
+              ]}
+            />
+
+            <ModalCard
+              id={MODAL_CARD_CHAT_INVITE}
+              onClose={() => this.setActiveModal(null)}
+              icon={
+                <Avatar src={getAvatarUrl("chat_basketball", 200)} size={72} />
+              }
+              header="Баскетбол на выходных"
+              subheader="Приглашение в беседу"
+              actions={[
+                <Button
+                  key="join"
+                  size="l"
+                  mode="primary"
+                  onClick={() => this.setActiveModal(null)}
+                >
+                  Присоединиться
+                </Button>,
+                <Button
+                  key="copy"
+                  size="l"
+                  mode="secondary"
+                  onClick={() => this.setActiveModal(null)}
+                >
+                  Скопировать приглашение
+                </Button>,
+              ]}
+              actionsLayout="vertical"
+            >
+              <UsersStack
+                photos={[
+                  getAvatarUrl("user_mm"),
+                  getAvatarUrl("user_ilyagrshn"),
+                  getAvatarUrl("user_lihachyov"),
+                  getAvatarUrl("user_wayshev"),
+                  getAvatarUrl("user_arthurstam"),
+                  getAvatarUrl("user_xyz"),
+                ]}
+                size="m"
+                visibleCount={3}
+                layout="vertical"
+              >
+                Алексей, Илья, Михаил
+                <br />и ещё 3 человека
+              </UsersStack>
+            </ModalCard>
+          </ModalRoot>
+        );
+
+        return (
+          <SplitLayout modal={modal}>
+            <SplitCol>
+              <View activePanel="modals">
+                <Panel id="modals">
+                  <PanelHeader>Модальные окна</PanelHeader>
+                  <Group>
+                    <CellButton
+                      onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}
+                    >
+                      Открыть модальную страницу
+                    </CellButton>
+                    <CellButton
+                      multiline
+                      onClick={() => this.setActiveModal(MODAL_PAGE_FULLSCREEN)}
+                    >
+                      Открыть полноэкранную модальную страницу
+                    </CellButton>
+                    <CellButton
+                      multiline
+                      onClick={() => this.setActiveModal(MODAL_PAGE_DYNAMIC)}
+                    >
+                      Открыть модальную страницу с динамической высотой
+                    </CellButton>
+                    <CellButton
+                      onClick={() => this.setActiveModal(MODAL_CARD_MONEY_SEND)}
+                    >
+                      Открыть модальные карточки
+                    </CellButton>
+                  </Group>
+                </Panel>
+              </View>
+            </SplitCol>
+          </SplitLayout>
+        );
+      }
+    },
+    {
+      viewWidth: true,
     }
+  )
+);
 
-    this.setState({
-      activeModal,
-      modalHistory
-    });
-  };
-
-  render() {
-    const isMobile = this.props.viewWidth <= ViewWidth.MOBILE;
-    const platform = this.props.platform;
-    
-    const modal = (
-      <ModalRoot
-        activeModal={this.state.activeModal}
-        onClose={this.modalBack}
-      >
-        <ModalPage
-          id={MODAL_PAGE_FULLSCREEN}
-          onClose={this.modalBack}
-          settlingHeight={100}
-          header={
-            <ModalPageHeader
-              right={platform === IOS && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss/></PanelHeaderButton>}
-              left={isMobile && platform === ANDROID && <PanelHeaderClose onClick={this.modalBack}/>}
-            >
-              @{this.randomUser.screen_name}
-            </ModalPageHeader>
-          }
-        >
-          <Gradient style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textAlign: 'center',
-            padding: 32,
-          }}>
-            <Avatar size={96} src={this.randomUser.photo_100}/>
-            <Title style={{marginBottom: 8, marginTop: 20}} level="2"
-                   weight="medium">{this.randomUser.first_name + " " + this.randomUser.last_name}</Title>
-          </Gradient>
-          <Group header={<Header mode="secondary" indicator="25">Друзья</Header>}>
-            {this.users.map((user) => {
-              return (
-                <SimpleCell
-                  before={<Avatar src={user.photo_100}/>}
-                  key={user.id}
-                >{user.name}</SimpleCell>
-              );
-            })}
-          </Group>
-        </ModalPage>
-
-        <DynamicModalPage
-          id={MODAL_PAGE_DYNAMIC}
-          onClose={this.modalBack}
-          dynamicContentHeight
-        />
-      
-        <ModalPage
-          id={MODAL_PAGE_FILTERS}
-          onClose={this.modalBack}
-          header={
-            <ModalPageHeader
-              left={isMobile && <PanelHeaderClose onClick={this.modalBack}/>}
-              right={<PanelHeaderSubmit onClick={this.modalBack}/>}
-            >
-              Фильтры
-            </ModalPageHeader>
-          }
-        >
-          <Group>
-            <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_COUNTRIES)}>Выбор страны</CellButton>
-            <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_STORY_FEEDBACK)}>Просмотры истории</CellButton>
-            <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)}>Информация о пользователе</CellButton>
-
-            <FormItem top="Страна">            
-              <SelectMimicry placeholder="Выбрать страну" onClick={() => this.setActiveModal(MODAL_PAGE_COUNTRIES)} />
-            </FormItem>
-            <FormItem top="Город">            
-              <SelectMimicry placeholder="Выбрать город" disabled />
-            </FormItem>
-
-            <FormItem top="Пол">
-              <Radio name="sex" value={0} defaultChecked>Любой</Radio>
-              <Radio name="sex" value={1}>Мужской</Radio>
-              <Radio name="sex" value={2}>Женский</Radio>
-            </FormItem>
-
-            <FormItem top="Школа">            
-              <SelectMimicry placeholder="Выбрать школу" disabled />
-            </FormItem>
-            <FormItem top="Университет">            
-              <SelectMimicry placeholder="Выбрать университет" disabled />
-            </FormItem>
-
-            <FormItem top="Дополнительно">
-              <Checkbox>С фотографией</Checkbox>
-              <Checkbox>Сейчас на сайте</Checkbox>
-            </FormItem>
-
-            <FormItem top="Работа">
-              <Input placeholder="Место работы" />
-            </FormItem>
-            <FormItem>
-              <Input placeholder="Должность" />
-            </FormItem>
-
-            <FormItem top="Дата рождения">
-              <DatePicker 
-                min={{day: 1, month: 1, year: 1901}} 
-                max={{day: 1, month: 1, year: 2006}}
-                dayPlaceholder="Д"
-                monthPlaceholder="ММ"
-                yearPlaceholder="ГГ" 
-              />
-            </FormItem>
-          </Group>
-        </ModalPage>
-
-        <ModalPage
-          id={MODAL_PAGE_COUNTRIES}
-          onClose={this.modalBack}
-          header={
-            <ModalPageHeader
-              left={<PanelHeaderBack label="Назад" onClick={this.modalBack} />}
-            >
-              Выберите страну
-            </ModalPageHeader>
-          }
-          settlingHeight={80}
-        >
-          <Group>
-            <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)}>Информация о пользователе</CellButton>
-
-            <FormLayoutGroup>
-              {importantCountries.map(({ id, title }) => {
-                return (
-                  <Radio key={id} name="country" value={id}>{title}</Radio>
-                );
-              })}
-            </FormLayoutGroup>
-          </Group>
-        </ModalPage>
-
-        <ModalPage
-          id={MODAL_PAGE_STORY_FEEDBACK}
-          onClose={this.modalBack}
-          header={
-            <ModalPageHeader
-              left={<PanelHeaderBack label="Назад" onClick={this.modalBack} />}
-            >
-              Просмотры истории
-            </ModalPageHeader>
-          }
-          settlingHeight={80}
-        >
-          <Group>
-            {this.users.map((user) => {
-              return (
-                <SimpleCell
-                  before={<Avatar src={user.photo_100} />}
-                  key={user.id}
-                >{user.name}</SimpleCell>
-              );
-            })}
-          </Group>
-        </ModalPage>
-
-        <ModalPage
-          id={MODAL_PAGE_USER_INFO}
-          onClose={this.modalBack}
-          header={
-            <ModalPageHeader
-              left={<PanelHeaderBack label="Назад" onClick={this.modalBack} />}
-            >
-              Информация о пользователе
-            </ModalPageHeader>
-          }
-        >
-          <Group>
-            <Cell>
-              <InfoRow header="Дата рождения">
-                30 января 1993
-              </InfoRow>
-            </Cell>
-            <Cell>
-              <InfoRow header="Родной город">
-                Ереван
-              </InfoRow>
-            </Cell>
-            <Cell>
-              <InfoRow header="Место работы">
-                Команда ВКонтакте
-              </InfoRow>
-            </Cell>
-          </Group>
-        </ModalPage>
-
-        <ModalCard
-          id={MODAL_CARD_MONEY_SEND}
-          onClose={() => this.setActiveModal(null)}
-          icon={<Icon56MoneyTransferOutline />}
-          header="Отправляйте деньги друзьям, используя банковскую карту"
-          subheader="Номер карты получателя не нужен — он сам решит, куда зачислить средства."
-          actions={
-            <Button size="l" mode="primary" onClick={() => this.setActiveModal(MODAL_CARD_APP_TO_MENU)}>
-              Попробовать
-            </Button>
-          }
-        >
-
-        </ModalCard>
-
-        <ModalCard
-          id={MODAL_CARD_APP_TO_MENU}
-          onClose={() => this.setActiveModal(null)}
-          icon={<Avatar mode="app" src={getAvatarUrl('app_zagadki', 200)} size={72} />}
-          header="Добавить игру «Загадки детства» в меню?"
-          subheader="Игра появится под списком разделов на экране меню и будет всегда под рукой."
-          actions={
-            <Button size="l" mode="primary" onClick={() => this.setActiveModal(MODAL_CARD_ABOUT)}>
-              Добавить в меню
-            </Button>
-          }
-        />
-
-        <ModalCard
-          id={MODAL_CARD_ABOUT}
-          onClose={() => this.setActiveModal(null)}
-          header="Расскажите о себе"
-          actions={
-            <Button size="l" mode="primary" onClick={() => this.setActiveModal(MODAL_CARD_NOTIFICATIONS)}>
-              Сохранить
-            </Button>
-          }
-        >
-          <Textarea defaultValue="В Грузии" />
-        </ModalCard>
-
-        <ModalCard
-          id={MODAL_CARD_NOTIFICATIONS}
-          onClose={() => this.setActiveModal(null)}
-          icon={<Icon56NotificationOutline />}
-          header="Приложение запрашивает разрешение на отправку Вам уведомлений"
-          actions={[
-            <Button key="deny" size="l" mode="secondary" onClick={() => this.setActiveModal(MODAL_CARD_CHAT_INVITE)}>
-              Запретить
-            </Button>,
-            <Button key="allow" size="l" mode="primary" onClick={() => this.setActiveModal(MODAL_CARD_CHAT_INVITE)}>
-              Разрешить
-            </Button>,
-          ]}
-        />
-
-        <ModalCard
-          id={MODAL_CARD_CHAT_INVITE}
-          onClose={() => this.setActiveModal(null)}
-          icon={<Avatar src={getAvatarUrl('chat_basketball', 200)} size={72} />}
-          header="Баскетбол на выходных"
-          subheader="Приглашение в беседу"
-          actions={[
-            <Button key="join" size="l" mode="primary" onClick={() => this.setActiveModal(null)}>
-              Присоединиться
-            </Button>,
-            <Button key="copy" size="l" mode="secondary" onClick={() => this.setActiveModal(null)}>
-              Скопировать приглашение
-            </Button>,
-          ]}
-          actionsLayout="vertical"
-        >
-          <UsersStack
-            photos={[
-              getAvatarUrl('user_mm'),
-              getAvatarUrl('user_ilyagrshn'),
-              getAvatarUrl('user_lihachyov'),
-              getAvatarUrl('user_wayshev'),
-              getAvatarUrl('user_arthurstam'),
-              getAvatarUrl('user_xyz'),
-            ]}
-            size="m"
-            visibleCount={3}
-            layout="vertical"
-          >Алексей, Илья, Михаил<br />и ещё 3 человека</UsersStack>
-        </ModalCard>
-      </ModalRoot>
-    );
-
-    return (
-      <View activePanel="modals" modal={modal}>
-        <Panel id="modals">
-          <PanelHeader>Модальные окна</PanelHeader>
-            <Group>
-              <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}>
-                Открыть модальную страницу
-              </CellButton>
-              <CellButton multiline onClick={() => this.setActiveModal(MODAL_PAGE_FULLSCREEN)}>
-                Открыть полноэкранную модальную страницу
-              </CellButton>
-              <CellButton multiline onClick={() => this.setActiveModal(MODAL_PAGE_DYNAMIC)}>
-                Открыть модальную страницу с динамической высотой
-              </CellButton>
-              <CellButton onClick={() => this.setActiveModal(MODAL_CARD_MONEY_SEND)}>
-                Открыть модальные карточки
-              </CellButton>
-            </Group>
-        </Panel>
-      </View>
-    );
-  }
-}, {
-  viewWidth: true
-}));
-
-<App />
+<App />;
 ```
 
 ### Решение проблем
@@ -447,11 +576,11 @@ const App = withPlatform(withAdaptivity(class App extends React.Component {
 `src/App.js`
 
 ```jsx static
-import SelectModal from './SelectModal';
+import SelectModal from "./SelectModal";
 
 class App extends Component {
   state = {
-    activeModal: 'select',
+    activeModal: "select",
   };
 
   render() {
@@ -464,11 +593,13 @@ class App extends Component {
     );
 
     return (
-      <View activePanel="main" modal={modal}>
-        <Panel id="main">
-          ...
-        </Panel>
-      </View>
+      <SplitLayout modal={modal}>
+        <SplitCol>
+          <View activePanel="main">
+            <Panel id="main">...</Panel>
+          </View>
+        </SplitCol>
+      </SplitLayout>
     );
   }
 }
@@ -477,7 +608,7 @@ class App extends Component {
 `src/SelectModal.js`
 
 ```jsx static
-import { withModalRootContext } from '@vkontakte/vkui';
+import { withModalRootContext } from "@vkontakte/vkui";
 
 class SelectModal extends Component {
   state = {
@@ -495,34 +626,149 @@ class SelectModal extends Component {
   }
 
   fetchItems() {
-    fetch('').then((r) => r.json()).then((items) => {
-      this.setState({
-        isLoading: false,
-        items,
-      }, () => {
-        // После установки стейта и перерисовки компонента SelectModal сообщим ModalRoot об изменениях
-        this.props.updateModalHeight();
+    fetch("")
+      .then((r) => r.json())
+      .then((items) => {
+        this.setState(
+          {
+            isLoading: false,
+            items,
+          },
+          () => {
+            // После установки стейта и перерисовки компонента SelectModal сообщим ModalRoot об изменениях
+            this.props.updateModalHeight();
+          }
+        );
       });
-    });
   }
 
   render() {
     return (
       <div className="SelectModal">
         {this.state.isLoading && <Spinner />}
-        {!this.state.isLoading &&
-        <Group>
-          {this.state.items.map((item) => (
-            <Cell key={item.id}>
-              {item.title}
-            </Cell>
-          ))}
-        </Group>
-        }
+        {!this.state.isLoading && (
+          <Group>
+            {this.state.items.map((item) => (
+              <Cell key={item.id}>{item.title}</Cell>
+            ))}
+          </Group>
+        )}
       </div>
     );
   }
 }
 
 export default withModalRootContext(SelectModal);
+```
+
+#### В мобильной версии при параметре `autoFocus` у контрола ломается поведение карточки
+
+К сожалению, из-за особенностей React, `autoFocus` ломает CSS анимацию.
+
+Чтобы исправить проблему, следует отказаться от `autoFocus` и выставлять фокус в ручную при событии `onOpened`.
+Подписываться на `onOpened` можно двумя разными способами.
+
+1️⃣ `<ModalRoot onOpened={(id) => ...} />`
+
+```jsx static
+const App = () => {
+  const inputRef = useRef(null);
+
+  const handleOpen = React.useCallback((id) => {
+    if (id === "modal-with-auto-focus" && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
+
+  const modal = (
+    <ModalRoot activeModal="modal-with-auto-focus" onOpened={handleOpen}>
+      <ModalPage id="modal-with-auto-focus">
+        <Input getRootRef={inputRef} />
+      </ModalPage>
+    </ModalRoot>
+  );
+  // ...
+};
+```
+
+2️⃣ `<ModalPage onOpened={() => ...} />`
+
+> ⚠️ в этом случае `ModalPage` нельзя заворачивать в другой компонент
+> иначе `ModalRoot` не сможет получить доступ к `onOpened`.
+
+```jsx static
+const App = () => {
+  const inputRef = useRef(null);
+
+  const handleOpen = React.useCallback(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
+
+  const modal = (
+    <ModalRoot activeModal="modal-with-auto-focus">
+      <ModalPage id="modal-with-auto-focus" onOpened={handleOpen}>
+        <Input getRootRef={inputRef} />
+      </ModalPage>
+    </ModalRoot>
+  );
+  // ...
+};
+```
+
+```jsx { "props": { "layout": false, "adaptivity": true } }
+const Example = () => {
+  const firstInputRef = useRef(null);
+  const secondInputRef = useRef(null);
+  const [activeModal, setActiveModal] = React.useState(false);
+
+  const handleOpenOfModalRoot = React.useCallback((id) => {
+    if (id === "modal-1") {
+      firstInputRef.current.focus();
+    }
+  }, []);
+
+  const handleOpenOfModalPage = React.useCallback(() => {
+    secondInputRef.current.focus();
+  }, []);
+
+  const modal = (
+    <ModalRoot activeModal={activeModal} onOpened={handleOpenOfModalRoot}>
+      <ModalPage id="modal-1" onClose={() => setActiveModal(null)}>
+        <Div>
+          <input type="text" ref={firstInputRef} />
+        </Div>
+      </ModalPage>
+      <ModalPage
+        id="modal-2"
+        onOpened={handleOpenOfModalPage}
+        onClose={() => setActiveModal(null)}
+      >
+        <Div>
+          <input type="text" ref={secondInputRef} />
+        </Div>
+      </ModalPage>
+    </ModalRoot>
+  );
+
+  return (
+    <SplitLayout modal={modal}>
+      <SplitCol>
+        <View activePanel="main">
+          <Panel id="main">
+            <CellButton multiline onClick={() => setActiveModal("modal-1")}>
+              Пример с onOpened() на ModalRoot
+            </CellButton>
+            <CellButton multiline onClick={() => setActiveModal("modal-2")}>
+              Пример с onOpened() на ModalPage
+            </CellButton>
+          </Panel>
+        </View>
+      </SplitCol>
+    </SplitLayout>
+  );
+};
+
+Example();
 ```

@@ -1,25 +1,26 @@
-import {
-  FunctionComponent,
-  AllHTMLAttributes,
-  FormEvent,
-  ElementType,
-} from 'react';
-import { getClassName } from '../../helpers/getClassName';
-import { usePlatform } from '../../hooks/usePlatform';
-import { HasRef } from '../../types';
+import * as React from "react";
+import { getClassName } from "../../helpers/getClassName";
+import { usePlatform } from "../../hooks/usePlatform";
+import { HasComponent, HasRef } from "../../types";
+import "./FormLayout.css";
 
-const preventDefault = (e: FormEvent) => e.preventDefault();
+const preventDefault = (e: React.FormEvent) => e.preventDefault();
 
-export interface FormLayoutProps extends AllHTMLAttributes<HTMLElement>, HasRef<HTMLElement> {
-  Component?: ElementType;
-}
+export type FormLayoutProps = React.AllHTMLAttributes<HTMLElement> &
+  HasRef<HTMLElement> &
+  HasComponent;
 
-const FormLayout: FunctionComponent<FormLayoutProps> = (props: FormLayoutProps) => {
+/**
+ * @see https://vkcom.github.io/VKUI/#/FormLayout
+ */
+export const FormLayout: React.FC<FormLayoutProps> = (
+  props: FormLayoutProps
+) => {
   const {
     children,
-    Component,
+    Component = "form",
     getRef,
-    onSubmit,
+    onSubmit = preventDefault,
     ...restProps
   } = props;
 
@@ -27,23 +28,14 @@ const FormLayout: FunctionComponent<FormLayoutProps> = (props: FormLayoutProps) 
   return (
     <Component
       {...restProps}
-      vkuiClass={getClassName('FormLayout', platform)}
+      vkuiClass={getClassName("FormLayout", platform)}
       onSubmit={onSubmit}
       ref={getRef}
     >
-      <div vkuiClass="FormLayout__container">
-        {children}
-      </div>
-      {Component === 'form' &&
+      <div vkuiClass="FormLayout__container">{children}</div>
+      {Component === "form" && (
         <input type="submit" vkuiClass="FormLayout__submit" value="" />
-      }
+      )}
     </Component>
   );
 };
-
-FormLayout.defaultProps = {
-  Component: 'form',
-  onSubmit: preventDefault,
-};
-
-export default FormLayout;

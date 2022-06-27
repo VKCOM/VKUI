@@ -1,26 +1,28 @@
-import { FunctionComponent, HTMLAttributes } from 'react';
-import { classNames } from '../../lib/classNames';
-import { Icon24Dropdown, Icon20Dropdown } from '@vkontakte/icons';
-import FormField from '../FormField/FormField';
-import { HasAlign, HasRootRef } from '../../types';
-import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
-import { usePlatform } from '../../hooks/usePlatform';
-import { getClassName } from '../../helpers/getClassName';
-import Headline from '../Typography/Headline/Headline';
-import Text from '../Typography/Text/Text';
-import { VKCOM } from '../../lib/platform';
+import * as React from "react";
+import { classNames } from "../../lib/classNames";
+import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
+import { FormField, FormFieldProps } from "../FormField/FormField";
+import { HasAlign, HasRootRef } from "../../types";
+import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
+import { usePlatform } from "../../hooks/usePlatform";
+import { getClassName } from "../../helpers/getClassName";
+import { getFormFieldModeFromSelectType } from "../../lib/select";
+import { SelectType, SelectTypography } from "../Select/Select";
+import "../Select/Select.css";
 
-export interface SelectMimicryProps extends
-  HTMLAttributes<HTMLElement>,
-  HasAlign,
-  HasRootRef<HTMLElement>,
-  AdaptivityProps {
+export interface SelectMimicryProps
+  extends React.HTMLAttributes<HTMLElement>,
+    HasAlign,
+    HasRootRef<HTMLElement>,
+    AdaptivityProps,
+    Pick<FormFieldProps, "before" | "after"> {
   multiline?: boolean;
   disabled?: boolean;
+  selectType?: keyof typeof SelectType;
 }
 
-const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
-  tabIndex,
+const SelectMimicryComponent: React.FC<SelectMimicryProps> = ({
+  tabIndex = 0,
   placeholder,
   children,
   align,
@@ -30,40 +32,48 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
   onClick,
   sizeX,
   sizeY,
+  before,
+  after = <DropdownIcon />,
+  selectType = SelectType.default,
   ...restProps
-}: SelectMimicryProps) => {
+}) => {
   const platform = usePlatform();
-
-  const TypographyComponent = platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
+  const title = children || placeholder;
 
   return (
     <FormField
       {...restProps}
-      tabIndex={disabled ? null : tabIndex}
-      vkuiClass={classNames(getClassName('Select', platform), 'Select--mimicry', {
-        'Select--not-selected': !children,
-        'Select--multiline': multiline,
-        [`Select--align-${align}`]: !!align,
-        [`Select--sizeX--${sizeX}`]: !!sizeX,
-        [`Select--sizeY--${sizeY}`]: !!sizeY,
-      })}
+      tabIndex={disabled ? undefined : tabIndex}
+      vkuiClass={classNames(
+        getClassName("Select", platform),
+        `Select--${selectType}`,
+        !children && "Select--empty",
+        multiline && "Select--multiline",
+        align && `Select--align-${align}`,
+        `Select--sizeX-${sizeX}`,
+        `Select--sizeY-${sizeY}`
+      )}
       getRootRef={getRootRef}
-      onClick={disabled ? null : onClick}
+      onClick={disabled ? undefined : onClick}
       disabled={disabled}
-      after={sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
+      before={before}
+      after={after}
+      mode={getFormFieldModeFromSelectType(selectType)}
     >
-      <TypographyComponent Component="div" weight="regular" vkuiClass="Select__container">
-        <span vkuiClass="Select__title">{children || placeholder}</span>
-      </TypographyComponent>
+      <div vkuiClass="Select__container">
+        {/* TODO v5.0.0 поправить под новую адаптивность */}
+        <SelectTypography selectType={selectType} vkuiClass="Select__title">
+          {title}
+        </SelectTypography>
+      </div>
     </FormField>
   );
 };
 
-SelectMimicry.defaultProps = {
-  tabIndex: 0,
-};
-
-export default withAdaptivity(SelectMimicry, {
+/**
+ * @see https://vkcom.github.io/VKUI/#/SelectMimicry
+ */
+export const SelectMimicry = withAdaptivity(SelectMimicryComponent, {
   sizeX: true,
   sizeY: true,
 });

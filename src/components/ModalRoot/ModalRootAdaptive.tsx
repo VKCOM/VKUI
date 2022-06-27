@@ -1,30 +1,55 @@
-import { FC } from 'react';
-import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
-import { ModalRootTouch } from './ModalRoot';
-import { ModalRootDesktop } from './ModalRootDesktop';
+import * as React from "react";
+import { withAdaptivity } from "../../hoc/withAdaptivity";
+import { ModalRootTouch } from "./ModalRoot";
+import { ModalRootDesktop } from "./ModalRootDesktop";
+import {
+  AdaptivityContextInterface,
+  AdaptivityProps,
+} from "../AdaptivityProvider/AdaptivityContext";
+import { useScrollLock } from "../AppRoot/ScrollContext";
+import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
 
 export interface ModalRootProps extends AdaptivityProps {
   activeModal?: string | null;
 
   /**
-   * Будет вызвано при закрытии активной модалки с её id
+   * Будет вызвано при начале открытия активной модалки с её id
    */
-  onClose?: (modalId: string) => void;
+  onOpen?(modalId: string): void;
+
+  /**
+   * Будет вызвано при окончательном открытии активной модалки с её id
+   */
+  onOpened?(modalId: string): void;
+
+  /**
+   * Будет вызвано при начале закрытия активной модалки с её id
+   */
+  onClose?(modalId: string): void;
+
+  /**
+   * Будет вызвано при окончательном закрытии активной модалки с её id
+   */
+  onClosed?(modalId: string): void;
 }
 
-const ModalRootComponent: FC<ModalRootProps> = (props: ModalRootProps) => {
-  const { viewWidth, viewHeight, hasMouse } = props;
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
+const ModalRootComponent: React.FC<
+  ModalRootProps & AdaptivityContextInterface
+> = (props) => {
+  const isDesktop = useAdaptivityIsDesktop();
+
+  useScrollLock(!!props.activeModal);
 
   const RootComponent = isDesktop ? ModalRootDesktop : ModalRootTouch;
 
-  return (
-    <RootComponent {...props} />
-  );
+  return <RootComponent {...props} />;
 };
 
-ModalRootComponent.displayName = 'ModalRoot';
+ModalRootComponent.displayName = "ModalRoot";
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/ModalRoot
+ */
 export const ModalRoot = withAdaptivity(ModalRootComponent, {
   viewWidth: true,
   viewHeight: true,

@@ -1,0 +1,9 @@
+.StyleGuideMobile__content {
+  padding: 0 16px 24px;
+}
+
+.StyleGuideMobile__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

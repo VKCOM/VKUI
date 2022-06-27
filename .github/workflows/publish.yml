@@ -1,4 +1,4 @@
-name: 'Publish'
+name: "Publish"
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ on:
         description: 'version: x.y.z (without "v")'
         required: true
       tag:
-        description: 'tag'
+        description: 'tag: empty for release; "beta" or "alpha" for pre-release'
 
 jobs:
   publish:
@@ -17,10 +17,12 @@ jobs:
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: 12
-          registry-url: 'https://registry.npmjs.org'
+          node-version: 14
+          cache: "yarn"
+          always-auth: true
+          registry-url: "https://registry.npmjs.org"
 
       - run: yarn install --frozen-lockfile --ignore-scripts
 

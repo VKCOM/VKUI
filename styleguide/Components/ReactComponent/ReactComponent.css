@@ -1,12 +1,23 @@
 .ReactComponent__src {
   margin-top: 24px;
-  color: var(--text_secondary);
+  color: var(--vkui--color_text_secondary);
   display: inline-block;
   font-size: 0;
 }
 
+.ReactComponent__tokenized {
+  position: relative;
+  top: 1px;
+  left: 4px;
+}
+
 .ReactComponent__name {
   margin-top: 4px;
+}
+
+.ReactComponent__name--deprecated {
+  color: var(--vkui--color_text_subhead);
+  text-decoration: line-through;
 }
 
 .ReactComponent__title {

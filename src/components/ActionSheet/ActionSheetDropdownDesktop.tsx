@@ -1,116 +1,97 @@
-import { Component, CSSProperties, HTMLAttributes, MouseEventHandler, RefObject } from 'react';
-import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
-import { withPlatform } from '../../hoc/withPlatform';
-import { HasPlatform } from '../../types';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
-import { DOMProps, withDOM } from '../../lib/dom';
-import { ActionSheetProps } from './ActionSheet';
+import * as React from "react";
+import { getClassName } from "../../helpers/getClassName";
+import { classNames } from "../../lib/classNames";
+import { useDOM } from "../../lib/dom";
+import { usePlatform } from "../../hooks/usePlatform";
+import { useEffectDev } from "../../hooks/useEffectDev";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { isRefObject } from "../../lib/isRefObject";
+import { warnOnce } from "../../lib/warnOnce";
+import { useEventListener } from "../../hooks/useEventListener";
+import { SharedDropdownProps } from "./types";
+import { FocusTrap } from "../FocusTrap/FocusTrap";
+import { Popper } from "../Popper/Popper";
+import "./ActionSheet.css";
 
-interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
-  closing: boolean;
-  onClose(): void;
-  popupDirection?: ActionSheetProps['popupDirection'];
-  toggleRef: Element;
-  elementRef: RefObject<HTMLDivElement>;
+const warn = warnOnce("ActionSheet");
+function getEl(
+  ref: SharedDropdownProps["toggleRef"]
+): Element | null | undefined {
+  return ref && "current" in ref ? ref.current : ref;
 }
 
-interface State {
-  dropdownStyles: CSSProperties;
-}
+export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
+  children,
+  toggleRef,
+  closing,
+  popupDirection,
+  onClose,
+  className,
+  style,
+  ...restProps
+}) => {
+  const { document } = useDOM();
+  const platform = usePlatform();
+  const { sizeY } = useAdaptivity();
+  const elementRef = React.useRef<HTMLDivElement | null>(null);
 
-class ActionSheetDropdownDesktop extends Component<Props & DOMProps, State> {
-  state: State = {
-    dropdownStyles: {
-      left: '0',
-      top: '0',
-      opacity: '0',
-      pointerEvents: 'none',
-    },
-  };
-
-  get window(): Window {
-    return this.props.window;
-  }
-
-  componentDidMount = () => {
-    const { toggleRef, elementRef, popupDirection } = this.props;
-
-    const toggleRect = toggleRef.getBoundingClientRect();
-    const elementRect = elementRef.current.getBoundingClientRect();
-
-    let left = toggleRect.left + toggleRect.width - elementRect.width + this.window.pageXOffset;
-    let top: number;
-
-    if (popupDirection === 'top' || typeof popupDirection === 'function' && popupDirection(elementRef) === 'top') {
-      top = toggleRect.top - elementRect.height + this.window.pageYOffset;
-    } else {
-      top = toggleRect.top + toggleRect.height + this.window.pageYOffset;
+  useEffectDev(() => {
+    const toggleEl = getEl(toggleRef);
+    if (!toggleEl) {
+      warn(`Свойство "toggleRef" не передано`, "error");
     }
+  }, [toggleRef]);
 
-    this.setState({
-      dropdownStyles: {
-        left,
-        top,
-        opacity: 1,
-        pointerEvents: 'auto',
-      },
-    });
+  const isPopupDirectionTop = React.useMemo(
+    () =>
+      popupDirection === "top" ||
+      (typeof popupDirection === "function" &&
+        popupDirection(elementRef) === "top"),
+    [popupDirection, elementRef]
+  );
 
+  const bodyClickListener = useEventListener("click", (e: MouseEvent) => {
+    const dropdownElement = elementRef?.current;
+    if (dropdownElement && !dropdownElement.contains(e.target as Node)) {
+      onClose?.();
+    }
+  });
+
+  React.useEffect(() => {
     setTimeout(() => {
-      this.window.addEventListener('click', this.handleClickOutside);
+      bodyClickListener.add(document!.body);
     });
-  };
+  }, [bodyClickListener, document]);
 
-  componentWillUnmount = () => {
-    this.window.removeEventListener('click', this.handleClickOutside);
-  };
+  const onClick = React.useCallback((e) => e.stopPropagation(), []);
 
-  handleClickOutside = (e: MouseEvent) => {
-    const dropdownElement = this.props.elementRef.current;
-
-    if (dropdownElement !== e.target && dropdownElement && !dropdownElement.contains(e.target as Node)) {
-      this.onClose();
+  const targetRef = React.useMemo(() => {
+    if (isRefObject<SharedDropdownProps["toggleRef"], HTMLElement>(toggleRef)) {
+      return toggleRef;
     }
-  };
+    const refObject = { current: toggleRef as HTMLElement };
 
-  onClose = () => {
-    this.props.onClose();
-  };
+    return refObject;
+  }, [toggleRef]);
 
-  stopPropagation: MouseEventHandler<HTMLDivElement> = (e) => e.stopPropagation();
-
-  render() {
-    const {
-      children,
-      platform,
-      elementRef,
-      toggleRef,
-      closing,
-      sizeY,
-      window,
-      document,
-      popupDirection,
-      ...restProps
-    } = this.props;
-    const baseClaseName = getClassName('ActionSheet', platform);
-
-    return (
-      <div
-        {...restProps}
-        ref={elementRef}
-        onClick={this.stopPropagation}
-        style={this.state.dropdownStyles}
-        vkuiClass={classNames(baseClaseName, 'ActionSheet--desktop', {
-          'ActionSheet--closing': this.props.closing,
-        }, `ActionSheet--sizeY-${sizeY}`)}
-      >
+  return (
+    <Popper
+      targetRef={targetRef}
+      offsetDistance={0}
+      placement={isPopupDirectionTop ? "top-end" : "bottom-end"}
+      vkuiClass={classNames(
+        getClassName("ActionSheet", platform),
+        "ActionSheet--desktop",
+        `ActionSheet--sizeY-${sizeY}`
+      )}
+      className={className}
+      style={style}
+      getRef={elementRef}
+      forcePortal={false}
+    >
+      <FocusTrap onClose={onClose} {...restProps} onClick={onClick}>
         {children}
-      </div>
-    );
-  }
-}
-
-export default withAdaptivity(withPlatform(withDOM<Props>(ActionSheetDropdownDesktop)), {
-  sizeY: true,
-});
+      </FocusTrap>
+    </Popper>
+  );
+};

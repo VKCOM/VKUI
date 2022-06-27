@@ -1,35 +1,33 @@
 Надстройка над `<input type="checkbox" />`. Компонент принимает все валидные для этого элемента свойства.
 
 ```jsx
-  <View activePanel="switch">
-    <Panel id="switch">
-      <PanelHeader>
-        Switch
-      </PanelHeader>
-      <Group>
-        <Cell disabled after={<Switch />}>
+<View activePanel="switch">
+  <Panel id="switch">
+    <PanelHeader>Switch</PanelHeader>
+    <Group>
+      <SimpleCell Component="label" after={<Switch />}>
+        Комментарии к записям
+      </SimpleCell>
+      <SimpleCell Component="label" after={<Switch defaultChecked />}>
+        Ссылки
+      </SimpleCell>
+      <SimpleCell Component="label" disabled after={<Switch disabled />}>
+        Фотоальбомы
+      </SimpleCell>
+    </Group>
+    <Group header={<Header mode="secondary">Компактный вид</Header>}>
+      <AdaptivityProvider sizeY="compact">
+        <SimpleCell Component="label" after={<Switch />}>
           Комментарии к записям
-        </Cell>
-        <Cell disabled after={<Switch defaultChecked />}>
+        </SimpleCell>
+        <SimpleCell Component="label" after={<Switch defaultChecked />}>
           Ссылки
-        </Cell>
-        <Cell disabled after={<Switch disabled />}>
+        </SimpleCell>
+        <SimpleCell Component="label" disabled after={<Switch disabled />}>
           Фотоальбомы
-        </Cell>
-      </Group>
-      <Group header={<Header mode="secondary">Компактный вид</Header>}>
-        <AdaptivityProvider sizeY="compact">
-          <Cell disabled after={<Switch />}>
-            Комментарии к записям
-          </Cell>
-          <Cell disabled after={<Switch defaultChecked />}>
-            Ссылки
-          </Cell>
-          <Cell disabled after={<Switch disabled />}>
-            Фотоальбомы
-          </Cell>
-        </AdaptivityProvider>
-      </Group>
-    </Panel>
-  </View>
+        </SimpleCell>
+      </AdaptivityProvider>
+    </Group>
+  </Panel>
+</View>
 ```

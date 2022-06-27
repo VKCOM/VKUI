@@ -1,71 +1,37 @@
 .Tappable {
   position: relative;
+  cursor: default;
+  border-radius: var(--vkui--size_border_radius--regular);
+  transition: background-color 0.15s ease-out;
 }
 
-.Tappable:not([disabled]):not([aria-disabled="true"]) {
+.Tappable--hasHover,
+.Tappable--hasActive {
   cursor: pointer;
 }
 
-/**
- * [a11y]
- * add focus-visible outline w/ rounded corners via pseudo element
- * without animation by default
- */
-.AppRoot--keyboard-input .Tappable--focus-visible:focus::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  border-radius: inherit;
-  box-shadow: 0 0 0 2px var(--accent);
-  user-select: none;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 0;
+.Tappable[disabled],
+.Tappable[aria-disabled="true"] {
+  cursor: default;
 }
 
-/**
- * [a11y]
- * add animation for browsers that support prefers-reduced-motion
- * so that users with vestibular motion disorders have no problem
- * navigating accessible vkui apps via keyboard
- */
-@media (prefers-reduced-motion: no-preference) {
-  .AppRoot--keyboard-input .Tappable--focus-visible:focus::before {
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    animation: vkui-animation-focus-visible .15s ease-in-out forwards;
-    animation-delay: .01ms;
-  }
-
-  @keyframes vkui-animation-focus-visible {
-    0% {
-      will-change: top, left, bottom, right;
-    }
-
-    100% {
-      top: -2px;
-      left: -2px;
-      bottom: -2px;
-      right: -2px;
-      will-change: auto;
-    }
-  }
+.Tappable--focus-visible {
+  outline: none;
 }
 
 /**
  * active
+ * increased specificity to override CellButton styles
  */
-.Tappable--active-background:not([disabled]) {
-  background: var(--background_highlighted);
+.Tappable--active-background.Tappable--active-background.Tappable--active-background {
+  background-color: var(
+    --background_highlighted,
+    var(--vkui--color_transparent--active)
+  );
 }
 
-.Tappable--active-opacity:not([disabled]) {
-  opacity: .7;
+.Tappable--active-opacity.Tappable--active-opacity.Tappable--active-opacity {
+  opacity: 0.7;
 }
 
 /**
@@ -83,47 +49,35 @@
 }
 
 .Tappable--hover-background > .Tappable__hoverShadow {
-  background: var(--background_hover);
+  background-color: var(
+    --background_hover,
+    var(--vkui--color_transparent--hover)
+  );
 }
 
 .Tappable--hover-opacity {
-  opacity: .8;
+  opacity: 0.8;
 }
 
 /**
  * mouse
  */
 .Tappable--mouse {
-  transition: opacity .15s ease-out;
+  transition: opacity 0.15s ease-out;
 }
 
 .Tappable--mouse .Tappable__hoverShadow {
-  transition: background-color .15s ease-out;
+  transition: background-color 0.15s ease-out;
 }
 
 /**
  * iOS tappable
  */
-.Tappable--ios {
-  position: relative;
-  border-radius: 10px;
-  transition: background-color .15s ease-out;
-}
-
-.Tappable--ios.Tappable--active-background.Tappable--active:not([disabled]) {
+.Tappable--ios.Tappable--active-background {
   transition: none;
 }
 
-/**
- * Android tappable
- */
-.Tappable--android {
-  position: relative;
-  transition: background-color .15s ease-out;
-  border-radius: 8px;
-}
-
-.Tappable--android .Tappable__waves {
+.Tappable .Tappable__waves {
   position: absolute;
   top: 0;
   right: 0;
@@ -136,7 +90,7 @@
   will-change: transform;
 }
 
-.Tappable--android .Tappable__wave {
+.Tappable .Tappable__wave {
   position: absolute;
   top: 0;
   left: 0;
@@ -144,18 +98,10 @@
   height: 24px;
   margin: -12px 0 0 -12px;
   opacity: 0;
-  content: '';
+  content: "";
   border-radius: 50%;
-  background: rgba(127, 127, 127, .1);
-  animation: vkui-animation-wave .3s var(--android-easing);
-}
-
-/**
- * VKCOM tappable
- */
-.Tappable--vkcom {
-  transition: background-color .15s ease-out;
-  border-radius: 8px;
+  background: rgba(127, 127, 127, 0.1);
+  animation: vkui-animation-wave 0.3s var(--android-easing);
 }
 
 /**

@@ -1,11 +1,17 @@
-import { ReactNode, useEffect, useRef, useState } from 'react';
-import { hasMouse as _hasMouse } from '@vkontakte/vkjs';
-import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewHeight, ViewWidth } from './AdaptivityContext';
-import { canUseDOM, useDOM } from '../../lib/dom';
-
-export interface AdaptivityProviderProps extends AdaptivityContextInterface {
-  children?: ReactNode;
-}
+import * as React from "react";
+import { hasMouse as _hasMouse, hasHover as _hasHover } from "@vkontakte/vkjs";
+import {
+  AdaptivityContext,
+  AdaptivityProps,
+  SizeType,
+  ViewHeight,
+  ViewWidth,
+} from "./AdaptivityContext";
+import { useDOM } from "../../lib/dom";
+import {
+  useBridgeAdaptivity,
+  BridgeAdaptivity,
+} from "../../hooks/useBridgeAdaptivity";
 
 export const DESKTOP_SIZE = 1280;
 export const TABLET_SIZE = 1024;
@@ -15,31 +21,39 @@ export const MOBILE_SIZE = 320;
 export const MOBILE_LANDSCAPE_HEIGHT = 414;
 export const MEDIUM_HEIGHT = 720;
 
-export default function AdaptivityProvider(props: AdaptivityProviderProps) {
-  const adaptivityRef = useRef<AdaptivityContextInterface>(null);
-  const [, updateAdaptivity] = useState({});
+/**
+ * @see https://vkcom.github.io/VKUI/#/AdaptivityProvider
+ */
+const AdaptivityProvider: React.FC<AdaptivityProps> = (props) => {
+  const adaptivityRef = React.useRef<ReturnType<
+    typeof calculateAdaptivity
+  > | null>(null);
+  const [, updateAdaptivity] = React.useState({});
+  const bridge = useBridgeAdaptivity();
 
   const { window } = useDOM();
 
   if (!adaptivityRef.current) {
-    adaptivityRef.current = calculateAdaptivity(
-      window ? window.innerWidth : 0,
-      window ? window.innerHeight : 0,
-      props,
-    );
+    adaptivityRef.current = calculateAdaptivity(props, bridge, window);
   }
 
-  useEffect(() => {
+  React.useEffect(() => {
     function onResize() {
-      const calculated = calculateAdaptivity(window.innerWidth, window.innerHeight, props);
-      const { viewWidth, viewHeight, sizeX, sizeY, hasMouse } = adaptivityRef.current;
+      if (adaptivityRef.current === null) {
+        return;
+      }
+
+      const calculated = calculateAdaptivity(props, bridge, window);
+      const { viewWidth, viewHeight, sizeX, sizeY, hasMouse, deviceHasHover } =
+        adaptivityRef.current;
 
       if (
         viewWidth !== calculated.viewWidth ||
         viewHeight !== calculated.viewHeight ||
         sizeX !== calculated.sizeX ||
         sizeY !== calculated.sizeY ||
-        hasMouse !== calculated.hasMouse
+        hasMouse !== calculated.hasMouse ||
+        deviceHasHover !== calculated.deviceHasHover
       ) {
         adaptivityRef.current = calculated;
         updateAdaptivity({});
@@ -47,30 +61,52 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
     }
 
     onResize();
-    window.addEventListener('resize', onResize, false);
+    window!.addEventListener("resize", onResize, false);
 
     return () => {
-      window.removeEventListener('resize', onResize, false);
+      window!.removeEventListener("resize", onResize, false);
     };
-  }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse]);
+  }, [
+    props.viewWidth,
+    props.viewHeight,
+    props.sizeX,
+    props.sizeY,
+    props.hasMouse,
+    props.deviceHasHover,
+    window,
+    props,
+    bridge,
+  ]);
 
   return (
     <AdaptivityContext.Provider value={adaptivityRef.current}>
       {props.children}
     </AdaptivityContext.Provider>
   );
-}
-
-AdaptivityProvider.defaultProps = {
-  window: canUseDOM && window,
 };
 
-function calculateAdaptivity(windowWidth: number, windowHeight: number, props: AdaptivityProviderProps) {
+function calculateAdaptivity(
+  props: AdaptivityProps,
+  bridge: BridgeAdaptivity,
+  window?: Window
+) {
+  let windowWidth = 0;
+  let windowHeight = 0;
+
+  if (bridge.type === "adaptive") {
+    windowWidth = bridge.viewportWidth;
+    windowHeight = bridge.viewportHeight;
+  } else if (window) {
+    windowWidth = window.innerWidth;
+    windowHeight = window.innerHeight;
+  }
+
   let viewWidth = ViewWidth.SMALL_MOBILE;
   let viewHeight = ViewHeight.SMALL;
   let sizeY = SizeType.REGULAR;
   let sizeX = SizeType.REGULAR;
-  let hasMouse = typeof props.hasMouse === 'boolean' ? props.hasMouse : _hasMouse;
+  let hasMouse = _hasMouse;
+  let deviceHasHover = _hasHover;
 
   if (windowWidth >= DESKTOP_SIZE) {
     viewWidth = ViewWidth.DESKTOP;
@@ -92,19 +128,45 @@ function calculateAdaptivity(windowWidth: number, windowHeight: number, props: A
     viewHeight = ViewHeight.EXTRA_SMALL;
   }
 
-  props.viewWidth && (viewWidth = props.viewWidth);
-  props.viewHeight && (viewHeight = props.viewHeight);
+  if (!bridge.type) {
+    props.viewWidth && (viewWidth = props.viewWidth);
+    props.viewHeight && (viewHeight = props.viewHeight);
+
+    hasMouse = props.hasMouse ?? hasMouse;
+    deviceHasHover = props.deviceHasHover ?? deviceHasHover;
+  }
 
   if (viewWidth <= ViewWidth.MOBILE) {
     sizeX = SizeType.COMPACT;
   }
 
-  if (viewWidth >= ViewWidth.SMALL_TABLET && hasMouse || viewHeight <= ViewHeight.EXTRA_SMALL) {
+  if (
+    (viewWidth >= ViewWidth.SMALL_TABLET && hasMouse) ||
+    viewHeight <= ViewHeight.EXTRA_SMALL
+  ) {
     sizeY = SizeType.COMPACT;
   }
 
-  props.sizeX && (sizeX = props.sizeX);
-  props.sizeY && (sizeY = props.sizeY);
+  if (!bridge.type) {
+    props.sizeX && (sizeX = props.sizeX);
+    props.sizeY && (sizeY = props.sizeY);
+  }
 
-  return { viewWidth, viewHeight, sizeX, sizeY, hasMouse };
+  if (
+    bridge.type === "force_mobile" ||
+    bridge.type === "force_mobile_compact"
+  ) {
+    viewWidth = ViewWidth.MOBILE;
+    sizeX = SizeType.COMPACT;
+
+    if (bridge.type === "force_mobile_compact") {
+      sizeY = SizeType.COMPACT;
+    } else {
+      sizeY = SizeType.REGULAR;
+    }
+  }
+
+  return { viewWidth, viewHeight, sizeX, sizeY, hasMouse, deviceHasHover };
 }
+
+export { AdaptivityProvider };

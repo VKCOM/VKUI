@@ -1,22 +1,50 @@
-import { FC, HTMLAttributes, ReactNode, useContext, useEffect } from 'react';
-import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
-import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
-import { usePlatform } from '../../hooks/usePlatform';
-import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
-import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
-import { Ref } from '../../types';
-import { multiRef } from '../../lib/utils';
-import { ModalType } from '../ModalRoot/types';
-import { getNavId, NavIdProps } from '../../lib/getNavId';
-import { warnOnce } from '../../lib/warnOnce';
+import * as React from "react";
+import { getClassName } from "../../helpers/getClassName";
+import { classNames } from "../../lib/classNames";
+import {
+  ModalRootContext,
+  useModalRegistry,
+} from "../ModalRoot/ModalRootContext";
+import { usePlatform } from "../../hooks/usePlatform";
+import { useOrientationChange } from "../../hooks/useOrientationChange";
+import { withAdaptivity, ViewWidth } from "../../hoc/withAdaptivity";
+import {
+  AdaptivityContextInterface,
+  AdaptivityProps,
+} from "../AdaptivityProvider/AdaptivityContext";
+import { ModalDismissButton } from "../ModalDismissButton/ModalDismissButton";
+import { multiRef } from "../../lib/utils";
+import { ModalType } from "../ModalRoot/types";
+import { getNavId, NavIdProps } from "../../lib/getNavId";
+import { warnOnce } from "../../lib/warnOnce";
+import { Platform } from "../../lib/platform";
+import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
+import "./ModalPage.css";
 
-export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps, NavIdProps {
+export interface ModalPageProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    AdaptivityProps,
+    NavIdProps {
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`
    */
-  header?: ReactNode;
+  header?: React.ReactNode;
+  /**
+   * Будет вызвано при начале открытия модалки.
+   */
+  onOpen?: VoidFunction;
+  /**
+   * Будет вызвано при окончательном открытии модалки.
+   */
+  onOpened?: VoidFunction;
+  /**
+   * Будет вызвано при начале закрытия модалки.
+   */
   onClose?: VoidFunction;
+  /**
+   * Будет вызвано при окончательном закрытии модалки.
+   */
+  onClosed?: VoidFunction;
   /**
    * Процент, на который изначально будет открыта модальная страница. При `settlingHeight={100}` модальная страница раскрывается на всю высоту.
    */
@@ -25,44 +53,64 @@ export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, Adaptivi
    * Если высота контента в модальной странице может поменяться, нужно установить это свойство
    */
   dynamicContentHeight?: boolean;
-  getModalContentRef?: Ref<HTMLDivElement>;
+  getModalContentRef?: React.Ref<HTMLDivElement>;
 }
 
-const warn = warnOnce('ModalPage');
-const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
+const warn = warnOnce("ModalPage");
+
+const ModalPageComponent: React.FC<
+  ModalPageProps & AdaptivityContextInterface
+> = ({
+  children,
+  header,
+  viewWidth,
+  viewHeight,
+  sizeX,
+  hasMouse,
+  onOpen,
+  onOpened,
+  onClose,
+  onClosed,
+  settlingHeight, // 75
+  dynamicContentHeight,
+  getModalContentRef,
+  nav,
+  id,
+  ...restProps
+}) => {
+  const { updateModalHeight } = React.useContext(ModalRootContext);
+
   const platform = usePlatform();
-  const { updateModalHeight } = useContext(ModalRootContext);
-  const {
+  const orientation = useOrientationChange();
+
+  React.useEffect(updateModalHeight, [
     children,
-    header,
-    viewWidth,
-    viewHeight,
-    sizeX,
-    hasMouse,
-    onClose,
-    settlingHeight,
-    dynamicContentHeight,
-    getModalContentRef,
-    nav,
-    ...restProps
-  } = props;
+    orientation,
+    updateModalHeight,
+  ]);
 
-  useEffect(() => {
-    updateModalHeight();
-  }, [children]);
+  const isDesktop = useAdaptivityIsDesktop();
+  const canShowCloseBtn =
+    viewWidth >= ViewWidth.SMALL_TABLET || platform === Platform.VKCOM;
 
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
-  const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
-
-  const modalContext = useContext(ModalRootContext);
-  const { refs } = useModalRegistry(getNavId(props, warn), ModalType.PAGE);
+  const modalContext = React.useContext(ModalRootContext);
+  const { refs } = useModalRegistry(
+    getNavId({ nav, id }, warn),
+    ModalType.PAGE
+  );
 
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(getClassName('ModalPage', platform), `ModalPage--sizeX-${sizeX}`, {
-        'ModalPage--desktop': isDesktop,
-      })}
+      id={id}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
+      vkuiClass={classNames(
+        getClassName("ModalPage", platform),
+        `ModalPage--sizeX-${sizeX}`,
+        {
+          "ModalPage--desktop": isDesktop,
+        }
+      )}
     >
       <div vkuiClass="ModalPage__in-wrap" ref={refs.innerElement}>
         <div vkuiClass="ModalPage__in">
@@ -71,26 +119,33 @@ const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
           </div>
 
           <div vkuiClass="ModalPage__content-wrap">
-            <div vkuiClass="ModalPage__content" ref={multiRef<HTMLDivElement>(refs.contentElement, getModalContentRef)}>
-              <div vkuiClass="ModalPage__content-in">
-                {children}
-              </div>
+            <div
+              vkuiClass="ModalPage__content"
+              ref={multiRef<HTMLDivElement>(
+                refs.contentElement,
+                getModalContentRef
+              )}
+            >
+              <div vkuiClass="ModalPage__content-in">{children}</div>
             </div>
           </div>
-          {canShowCloseBtn && <ModalDismissButton onClick={onClose || modalContext.onClose} />}
+          {canShowCloseBtn && (
+            <ModalDismissButton onClick={onClose || modalContext.onClose} />
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-ModalPage.defaultProps = {
-  settlingHeight: 75,
-};
-
-export default withAdaptivity(ModalPage, {
+/**
+ * @see https://vkcom.github.io/VKUI/#/ModalPage
+ */
+export const ModalPage = withAdaptivity(ModalPageComponent, {
   viewWidth: true,
   viewHeight: true,
   sizeX: true,
   hasMouse: true,
 });
+
+ModalPage.displayName = "ModalPage";

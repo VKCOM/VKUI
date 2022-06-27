@@ -7,8 +7,15 @@
   display: none;
 }
 
-.TableOfContents__list .TableOfContents__list {
+.TableOfContents--desktop .TableOfContents__list .TableOfContents__list {
   padding-left: 20px;
+}
+
+.TableOfContents--mobile
+  .TableOfContents__list
+  .TableOfContents__list
+  .TableOfContents__section {
+  padding-left: 32px;
 }
 
 .TableOfContents__list--expanded {
@@ -36,5 +43,5 @@
 }
 
 .TableOfContents__section--selected {
-  background: var(--background_hover);
+  background: var(--vkui--color_transparent--hover);
 }

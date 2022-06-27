@@ -1,53 +1,65 @@
-import { ElementType, FC, AllHTMLAttributes } from 'react';
-import { usePlatform } from '../../../hooks/usePlatform';
-import { classNames } from '../../../lib/classNames';
-import { getClassName } from '../../../helpers/getClassName';
-import { ANDROID } from '../../../lib/platform';
-import Headline, { HeadlineProps } from '../Headline/Headline';
+import * as React from "react";
+import { HasComponent } from "../../../types";
+import { classNames } from "../../../lib/classNames";
+import { warnOnce } from "../../../lib/warnOnce";
+import "./Title.css";
 
-export interface TitleProps extends AllHTMLAttributes<HTMLElement> {
-  weight: 'heavy' | 'bold' | 'semibold' | 'medium' | 'regular';
-  level: '1' | '2' | '3';
-  Component?: ElementType;
+export interface TitleProps
+  extends React.AllHTMLAttributes<HTMLElement>,
+    HasComponent {
+  /**
+   * Задаёт начертание шрифта отличное от стандартного.
+   *
+   * > ⚠️ Начертания `"heavy"`, `"bold"`, `"semibold"`, `medium` и `"regular"` устарели и будут удалены в 5.0.0. Используйте значения `"1"`, `"2"` и `"3"`.
+   */
+  weight?:
+    | "heavy"
+    | "bold"
+    | "semibold"
+    | "medium"
+    | "regular"
+    | "1"
+    | "2"
+    | "3";
+  level?: "1" | "2" | "3";
 }
 
-const Title: FC<TitleProps> = ({
+const warn = warnOnce("Title");
+
+/**
+ * @see https://vkcom.github.io/VKUI/#/Title
+ */
+export const Title: React.FC<TitleProps> = ({
   children,
   weight,
-  level,
-  Component = ('h' + level) as ElementType,
+  level = "1",
+  Component,
   ...restProps
-}: TitleProps) => {
-  const platform = usePlatform();
+}) => {
+  if (!Component) {
+    Component = ("h" + level) as React.ElementType;
+  }
 
-  if (platform === ANDROID && level === '3') {
-    const headlineWeight: HeadlineProps['weight'] = weight === 'regular' ? weight : 'medium';
-
-    return (
-      <Headline
-        Component={Component}
-        {...restProps}
-        weight={headlineWeight}
-      >
-        {children}
-      </Headline>
-    );
+  if (process.env.NODE_ENV === "development") {
+    if (
+      weight &&
+      ["heavy", "bold", "semibold", "medium", "regular"].includes(weight)
+    )
+      warn(
+        `Начертание weight="${weight}" устарело и будет удалено в 5.0.0. Используйте значения "1", "2" и "3"`
+      );
   }
 
   return (
     <Component
       {...restProps}
-      vkuiClass={
-        classNames(
-          getClassName('Title', platform),
-          `Title--w-${weight}`,
-          `Title--l-${level}`,
-        )
-      }
+      vkuiClass={classNames(
+        "Title",
+        `Title--l-${level}`,
+        weight && `Title--w-${weight}`
+      )}
     >
       {children}
     </Component>
   );
 };
-
-export default Title;

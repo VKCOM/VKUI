@@ -1,31 +1,43 @@
-import { FC, HTMLAttributes } from 'react';
-import Spinner, { SpinnerProps } from '../Spinner/Spinner';
-import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
-import { getClassName } from '../../helpers/getClassName';
-import { usePlatform } from '../../hooks/usePlatform';
+import * as React from "react";
+import { Spinner, SpinnerProps } from "../Spinner/Spinner";
+import { PopoutWrapper } from "../PopoutWrapper/PopoutWrapper";
+import { getClassName } from "../../helpers/getClassName";
+import { usePlatform } from "../../hooks/usePlatform";
+import { useScrollLock } from "../AppRoot/ScrollContext";
+import "./ScreenSpinner.css";
 
-export type ScreenSpinnerProps = HTMLAttributes<HTMLDivElement> & SpinnerProps;
+export type ScreenSpinnerProps = React.HTMLAttributes<HTMLDivElement> &
+  SpinnerProps;
 
-const ScreenSpinner: FC<ScreenSpinnerProps> = (props: ScreenSpinnerProps) => {
-  const { style, className, ...restProps } = props;
+/**
+ * @see https://vkcom.github.io/VKUI/#/ScreenSpinner
+ */
+export const ScreenSpinner: React.FC<ScreenSpinnerProps> = ({
+  style,
+  className,
+  size = "large",
+  "aria-label": ariaLabel = "Пожалуйста, подождите...",
+  ...restProps
+}: ScreenSpinnerProps) => {
   const platform = usePlatform();
+
+  useScrollLock();
 
   return (
     <PopoutWrapper
-      vkuiClass={getClassName('ScreenSpinner', platform)}
+      hasMask={false}
+      vkuiClass={getClassName("ScreenSpinner", platform)}
       className={className}
       style={style}
     >
       <div vkuiClass="ScreenSpinner__container">
-        <Spinner {...restProps} />
+        <Spinner
+          vkuiClass="ScreenSpinner__spinner"
+          size={size}
+          aria-label={ariaLabel}
+          {...restProps}
+        />
       </div>
     </PopoutWrapper>
   );
 };
-
-ScreenSpinner.defaultProps = {
-  'size': 'large',
-  'aria-label': 'Пожалуйста, подождите...',
-};
-
-export default ScreenSpinner;

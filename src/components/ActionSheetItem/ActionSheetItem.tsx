@@ -1,36 +1,55 @@
-import { AnchorHTMLAttributes, ElementType, FC, Fragment, HTMLAttributes, InputHTMLAttributes, ReactNode, useContext } from 'react';
-import { classNames } from '../../lib/classNames';
-import { getClassName } from '../../helpers/getClassName';
-import Tappable from '../Tappable/Tappable';
-import { usePlatform } from '../../hooks/usePlatform';
-import { hasReactNode, noop } from '../../lib/utils';
-import Subhead from '../Typography/Subhead/Subhead';
-import Title from '../Typography/Title/Title';
-import Text from '../Typography/Text/Text';
-import { ANDROID, VKCOM } from '../../lib/platform';
-import { Icon16Done, Icon24Done } from '@vkontakte/icons';
-import { ActionSheetContext } from '../ActionSheet/ActionSheetContext';
-import Caption from '../Typography/Caption/Caption';
-import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import * as React from "react";
+import { classNames } from "../../lib/classNames";
+import { getClassName } from "../../helpers/getClassName";
+import { Tappable } from "../Tappable/Tappable";
+import { usePlatform } from "../../hooks/usePlatform";
+import { hasReactNode, noop } from "../../lib/utils";
+import { Subhead } from "../Typography/Subhead/Subhead";
+import { Title } from "../Typography/Title/Title";
+import { Text } from "../Typography/Text/Text";
+import { ANDROID, VKCOM } from "../../lib/platform";
+import { Icon16Done, Icon24Done } from "@vkontakte/icons";
+import {
+  ActionSheetContext,
+  ActionSheetContextType,
+} from "../ActionSheet/ActionSheetContext";
+import { Caption } from "../Typography/Caption/Caption";
+import { Headline } from "../Typography/Headline/Headline";
+import {
+  withAdaptivity,
+  AdaptivityProps,
+  SizeType,
+} from "../../hoc/withAdaptivity";
+import "./ActionSheetItem.css";
 
-export interface ActionSheetItemProps extends
-  HTMLAttributes<HTMLElement>,
-  AnchorHTMLAttributes<HTMLElement>,
-  Pick<InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'value'>,
-  AdaptivityProps {
-  mode?: 'default' | 'destructive' | 'cancel';
-  before?: ReactNode;
-  meta?: ReactNode;
-  subtitle?: ReactNode;
+export interface ActionSheetItemProps
+  extends React.HTMLAttributes<HTMLElement>,
+    React.AnchorHTMLAttributes<HTMLElement>,
+    Pick<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      "name" | "checked" | "value"
+    >,
+    AdaptivityProps {
+  mode?: "default" | "destructive" | "cancel";
+  before?: React.ReactNode;
+  meta?: React.ReactNode;
+  subtitle?: React.ReactNode;
   autoclose?: boolean;
   selectable?: boolean;
   disabled?: boolean;
+  /**
+   * Если autoclose === true, onClick будет вызван после завершения анимации скрытия и после вызова onClose.
+   * Из этого следует, что в объекте события значения полей типа `currentTarget` будут не определены.
+   * Если вам нужен объект события именно на момент клика, используйте `onImmediateClick`.
+   */
+  onClick?: React.MouseEventHandler<HTMLElement>;
+  onImmediateClick?: React.MouseEventHandler<HTMLElement>;
 }
 
-const ActionSheetItem: FC<ActionSheetItemProps> = ({
+const ActionSheetItemComponent: React.FC<ActionSheetItemProps> = ({
   children,
   autoclose,
-  mode,
+  mode = "default",
   meta,
   subtitle,
   before,
@@ -42,15 +61,17 @@ const ActionSheetItem: FC<ActionSheetItemProps> = ({
   onChange,
   onClick,
   sizeY,
+  onImmediateClick,
   ...restProps
 }: ActionSheetItemProps) => {
   const platform = usePlatform();
-  const { onItemClick = () => noop, isDesktop } = useContext(ActionSheetContext);
+  const { onItemClick = () => noop, isDesktop } =
+    React.useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);
 
-  let Component: ElementType = restProps.href ? 'a' : 'div';
+  let Component: React.ElementType = restProps.href ? "a" : "div";
 
   if (selectable) {
-    Component = 'label';
+    Component = "label";
   }
 
   const isCompact = hasReactNode(subtitle) || hasReactNode(meta) || selectable;
@@ -58,70 +79,82 @@ const ActionSheetItem: FC<ActionSheetItemProps> = ({
   return (
     <Tappable
       {...restProps}
-      onClick={selectable ? onClick : onItemClick(onClick, autoclose)}
-      activeMode="ActionSheetItem--active"
-      vkuiClass={
-        classNames(
-          getClassName('ActionSheetItem', platform),
-          `ActionSheetItem--${mode}`,
-          `ActionSheetItem--sizeY-${sizeY}`,
-          {
-            'ActionSheetItem--compact': isCompact,
-            'ActionSheetItem--desktop': isDesktop,
-            'ActionSheetItem--withSubtitle': hasReactNode(subtitle),
-          },
-        )
+      onClick={
+        selectable
+          ? onClick
+          : onItemClick(onClick, onImmediateClick, Boolean(autoclose))
       }
+      activeMode="ActionSheetItem--active"
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
+      vkuiClass={classNames(
+        getClassName("ActionSheetItem", platform),
+        `ActionSheetItem--${mode}`,
+        `ActionSheetItem--sizeY-${sizeY}`,
+        {
+          "ActionSheetItem--compact": isCompact,
+          "ActionSheetItem--desktop": isDesktop,
+          "ActionSheetItem--withSubtitle": hasReactNode(subtitle),
+        }
+      )}
       Component={Component}
     >
-      {hasReactNode(before) && <div vkuiClass="ActionSheetItem__before">{before}</div>}
+      {hasReactNode(before) && (
+        <div vkuiClass="ActionSheetItem__before">{before}</div>
+      )}
       <div vkuiClass="ActionSheetItem__container">
         <div vkuiClass="ActionSheetItem__content">
-          {sizeY === SizeType.COMPACT ?
-            <Fragment>
+          {sizeY === SizeType.COMPACT ? (
+            <React.Fragment>
               <Text
-                weight={mode === 'cancel' ? 'medium' : 'regular'}
+                weight={mode === "cancel" ? "2" : undefined}
                 vkuiClass="ActionSheetItem__children"
               >
                 {children}
               </Text>
-              {hasReactNode(meta) &&
-                <Text
-                  weight="regular"
-                  vkuiClass="ActionSheetItem__meta"
-                >
-                  {meta}
-                </Text>
-              }
-            </Fragment>
-            :
-            <Fragment>
-              <Title
-                weight={mode === 'cancel' ? 'medium' : 'regular'}
-                level={isCompact || hasReactNode(before) || platform === ANDROID ? '3' : '2'}
-                vkuiClass="ActionSheetItem__children"
-              >
-                {children}
-              </Title>
-              {hasReactNode(meta) &&
+              {hasReactNode(meta) && (
+                <Text vkuiClass="ActionSheetItem__meta">{meta}</Text>
+              )}
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              {platform === ANDROID ? (
+                <Headline weight={mode === "cancel" ? "2" : "3"}>
+                  {children}
+                </Headline>
+              ) : (
                 <Title
-                  weight="regular"
-                  level={isCompact || hasReactNode(before) || platform === ANDROID ? '3' : '2'}
-                  vkuiClass="ActionSheetItem__meta"
+                  weight={mode === "cancel" ? "2" : "3"}
+                  level={isCompact || hasReactNode(before) ? "3" : "2"}
+                  vkuiClass="ActionSheetItem__children"
                 >
-                  {meta}
+                  {children}
                 </Title>
-              }
-            </Fragment>
-          }
+              )}
+              {hasReactNode(meta) &&
+                (platform === ANDROID ? (
+                  <Headline weight={mode === "cancel" ? "2" : "3"}>
+                    {children}
+                  </Headline>
+                ) : (
+                  <Title
+                    weight="3"
+                    level={isCompact || hasReactNode(before) ? "3" : "2"}
+                    vkuiClass="ActionSheetItem__meta"
+                  >
+                    {meta}
+                  </Title>
+                ))}
+            </React.Fragment>
+          )}
         </div>
-        {hasReactNode(subtitle) && (sizeY === SizeType.COMPACT ?
-          <Caption weight="regular" vkuiClass="ActionSheetItem__subtitle" level="1">{subtitle}</Caption>
-          :
-          <Subhead weight="regular" vkuiClass="ActionSheetItem__subtitle">{subtitle}</Subhead>
-        )}
+        {hasReactNode(subtitle) &&
+          (sizeY === SizeType.COMPACT ? (
+            <Caption vkuiClass="ActionSheetItem__subtitle">{subtitle}</Caption>
+          ) : (
+            <Subhead vkuiClass="ActionSheetItem__subtitle">{subtitle}</Subhead>
+          ))}
       </div>
-      {selectable &&
+      {selectable && (
         <div vkuiClass="ActionSheetItem__after">
           <input
             type="radio"
@@ -129,7 +162,7 @@ const ActionSheetItem: FC<ActionSheetItemProps> = ({
             name={name}
             value={value}
             onChange={onChange}
-            onClick={onItemClick(noop, autoclose)}
+            onClick={onItemClick(noop, noop, Boolean(autoclose))}
             defaultChecked={defaultChecked}
             checked={checked}
             disabled={restProps.disabled}
@@ -138,13 +171,14 @@ const ActionSheetItem: FC<ActionSheetItemProps> = ({
             {platform === VKCOM ? <Icon24Done /> : <Icon16Done />}
           </div>
         </div>
-      }
+      )}
     </Tappable>
   );
 };
 
-ActionSheetItem.defaultProps = {
-  mode: 'default',
-};
-
-export default withAdaptivity(ActionSheetItem, { sizeY: true });
+/**
+ * @see https://vkcom.github.io/VKUI/#/ActionSheetItem
+ */
+export const ActionSheetItem = withAdaptivity(ActionSheetItemComponent, {
+  sizeY: true,
+});

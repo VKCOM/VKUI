@@ -1,42 +1,36 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { MOBILE_SIZE, TABLET_SIZE } from '@vkui/components/AdaptivityProvider/AdaptivityProvider';
-import { Appearance, defaultConfigProviderProps } from '@vkui/components/ConfigProvider/ConfigProviderContext';
-import { SMALL_HEIGHT } from '../Settings/ViewHeightSelect';
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  MOBILE_SIZE,
+  TABLET_SIZE,
+} from "@vkui/components/AdaptivityProvider/AdaptivityProvider";
+import { SMALL_HEIGHT } from "../Settings/ViewHeightSelect";
 import {
   VKCOM,
   AppRoot,
-  Scheme,
-  WebviewType,
   AdaptivityProvider,
-  SplitLayout,
   withAdaptivity,
-  SplitCol,
-  ConfigProvider, SizeType,
-} from '@vkui';
-import './StyleGuideRenderer.css';
-import { StyleGuideHeader } from './StyleGuideHeader';
-
-export const StyleGuideContext = React.createContext({
-  ...defaultConfigProviderProps,
-  webviewType: WebviewType.INTERNAL,
-  width: MOBILE_SIZE,
-  height: SMALL_HEIGHT,
-  hasMouse: true,
-  styleguideScheme: Scheme.BRIGHT_LIGHT,
-});
+  ConfigProvider,
+  ViewWidth,
+  WebviewType,
+  Platform,
+  Appearance,
+} from "@vkui";
+import "./StyleGuideRenderer.css";
+import { StyleGuideMobile } from "./StyleGuideMobile";
+import { StyleGuideDesktop } from "./StyleGuideDesktop";
 
 let initialState = {
-  ...defaultConfigProviderProps,
-  integration: 'full',
-  webviewType: WebviewType.INTERNAL,
+  platform: Platform.ANDROID,
   width: MOBILE_SIZE,
   height: SMALL_HEIGHT,
   hasMouse: true,
-  styleguideScheme: Scheme.BRIGHT_LIGHT,
+  appearance: Appearance.LIGHT,
+  styleguideAppearance: Appearance.LIGHT,
+  webviewType: WebviewType.VKAPPS,
 };
 
 try {
-  const lsState = localStorage.getItem('vkui:state');
+  const lsState = localStorage.getItem("vkui:state");
   if (lsState) {
     initialState = {
       ...initialState,
@@ -47,67 +41,79 @@ try {
   console.log(e);
 }
 
-let StyleGuideRenderer = ({ children, toc }) => {
+export const StyleGuideContext = React.createContext(initialState);
+
+let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
   const [state, setState] = useState(initialState);
   const [popout, setPopout] = useState(null);
-  const { width, height, platform, scheme, hasMouse, styleguideScheme } = state;
+  const { width, height, platform, scheme, hasMouse, styleguideAppearance } =
+    state;
 
-  const setContext = useCallback((data) => {
-    const newState = { ...state, ...data };
-    localStorage.setItem('vkui:state', JSON.stringify(newState));
-    setState(newState);
-  }, [state]);
+  const setContext = useCallback(
+    (data) => {
+      const newState = { ...state, ...data };
+      localStorage.setItem("vkui:state", JSON.stringify(newState));
+      setState(newState);
+    },
+    [state]
+  );
 
   useEffect(() => {
     if (platform === VKCOM) {
-      setContext({ hasMouse: true, width: TABLET_SIZE, scheme: Scheme.VKCOM });
-    } else if (scheme === Scheme.VKCOM) {
-      setContext({ scheme: Scheme.BRIGHT_LIGHT });
+      setContext({ hasMouse: true, width: TABLET_SIZE });
     }
-  }, [platform, scheme]);
+  }, [platform]);
 
-  useEffect(() => {
-    const styleGuideAppearance = styleguideScheme === Scheme.SPACE_GRAY ? Appearance.DARK : Appearance.LIGHT;
-    document.documentElement.style.setProperty('color-scheme', styleGuideAppearance);
-  }, [styleguideScheme]);
+  const switchStyleGuideAppearance = useCallback(() => {
+    const value =
+      styleguideAppearance === Appearance.DARK
+        ? Appearance.LIGHT
+        : Appearance.DARK;
+    setContext({
+      styleguideAppearance: value,
+      appearance: value,
+    });
+  }, [platform, styleguideAppearance, setContext]);
 
-  const providerValue = useMemo(() => ({ ...state, setContext, setPopout }), [width, height, platform, scheme, hasMouse, setContext, setPopout]);
+  const providerValue = useMemo(
+    () => ({ ...state, setContext, setPopout }),
+    [width, height, platform, scheme, hasMouse, setContext, setPopout]
+  );
+
+  const Component =
+    viewWidth > ViewWidth.MOBILE ? StyleGuideDesktop : StyleGuideMobile;
 
   return (
     <StyleGuideContext.Provider value={providerValue}>
-      <ConfigProvider scheme={styleguideScheme}>
-        <StyleGuideHeader scheme={styleguideScheme} setScheme={(value) => {
-          if (platform !== VKCOM) {
-            setContext({ styleguideScheme: value, scheme: value });
-          } else {
-            setContext({ styleguideScheme: value });
-          }
-        }} />
-        <SplitLayout className="StyleGuide" popout={popout}>
-          <SplitCol minWidth="340px" width="30%" maxWidth="480px" className="StyleGuide__sidebar">
-            <div className="StyleGuide__sidebarIn">
-              {toc}
-            </div>
-          </SplitCol>
-          <SplitCol width="100%" className="StyleGuide__content">
-            <div className="StyleGuide__contentIn">
-              {children}
-            </div>
-          </SplitCol>
-        </SplitLayout>
+      <ConfigProvider
+        platform={Platform.ANDROID}
+        appearance={styleguideAppearance}
+        transitionMotionEnabled={false}
+        webviewType="internal"
+      >
+        <AppRoot noLegacyClasses>
+          <Component
+            toc={toc}
+            popout={popout}
+            switchStyleGuideAppearance={switchStyleGuideAppearance}
+          >
+            {children}
+          </Component>
+        </AppRoot>
       </ConfigProvider>
     </StyleGuideContext.Provider>
   );
 };
 
-StyleGuideRenderer = withAdaptivity(StyleGuideRenderer, { sizeX: true });
+StyleGuideRenderer = withAdaptivity(StyleGuideRenderer, {
+  sizeX: true,
+  viewWidth: true,
+});
 
 const StyleGuideWrapper = (props) => {
   return (
-    <AdaptivityProvider sizeX={SizeType.REGULAR} sizeY={SizeType.COMPACT}>
-      <AppRoot noLegacyClasses>
-        <StyleGuideRenderer {...props} />
-      </AppRoot>
+    <AdaptivityProvider>
+      <StyleGuideRenderer {...props} />
     </AdaptivityProvider>
   );
 };

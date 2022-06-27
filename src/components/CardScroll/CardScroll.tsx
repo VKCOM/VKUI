@@ -1,28 +1,57 @@
-import { HTMLAttributes, useRef, FC } from 'react';
-import { classNames } from '../../lib/classNames';
-import { getClassName } from '../../helpers/getClassName';
-import { usePlatform } from '../../hooks/usePlatform';
-import HorizontalScroll from '../HorizontalScroll/HorizontalScroll';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
-import { useDOM } from '../../lib/dom';
+import * as React from "react";
+import { classNames } from "../../lib/classNames";
+import { getClassName } from "../../helpers/getClassName";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { usePlatform } from "../../hooks/usePlatform";
+import {
+  HorizontalScroll,
+  HorizontalScrollProps,
+} from "../HorizontalScroll/HorizontalScroll";
+import { useDOM } from "../../lib/dom";
+import "./CardScroll.css";
 
-export interface CardScrollProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
-  size?: 's' | 'm' | 'l';
+export interface CardScrollProps extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * При `size=false` ширина `Card` будет регулироваться контентом внутри. В остальных случаях — будет явно задана в процентах.
+   */
+  size?: "s" | "m" | "l" | false;
+  showArrows?: HorizontalScrollProps["showArrows"];
+  withSpaces?: boolean;
 }
 
-const CardScroll: FC<CardScrollProps> = ({ children, size, sizeX, ...restProps }: CardScrollProps) => {
+/**
+ * @see https://vkcom.github.io/VKUI/#/CardScroll
+ */
+export const CardScroll: React.FC<CardScrollProps> = ({
+  children,
+  size = "s",
+  showArrows = true,
+  withSpaces = true,
+  ...restProps
+}: CardScrollProps) => {
   const platform = usePlatform();
+  const { sizeX } = useAdaptivity();
 
-  const refContainer = useRef<HTMLDivElement>(null);
-  const gapRef = useRef<HTMLDivElement>(null);
+  const refContainer = React.useRef<HTMLDivElement>(null);
+  const gapRef = React.useRef<HTMLDivElement>(null);
 
   const { window } = useDOM();
 
   function getScrollToLeft(offset: number): number {
+    if (!refContainer.current || !gapRef.current) {
+      return offset;
+    }
     const containerWidth = refContainer.current.offsetWidth;
-    const slideIndex = Array
-      .from(refContainer.current.children)
-      .findIndex((el: HTMLElement) => el.offsetLeft + el.offsetWidth + parseInt(window.getComputedStyle(el).marginRight) - offset >= 0);
+    const slideIndex = (
+      Array.from(refContainer.current.children) as HTMLElement[]
+    ).findIndex(
+      (el: HTMLElement) =>
+        el.offsetLeft +
+          el.offsetWidth +
+          parseInt(window!.getComputedStyle(el).marginRight) -
+          offset >=
+        0
+    );
 
     if (slideIndex === -1) {
       return offset;
@@ -34,7 +63,10 @@ const CardScroll: FC<CardScrollProps> = ({ children, size, sizeX, ...restProps }
 
     const slide = refContainer.current.children[slideIndex] as HTMLElement;
 
-    const scrollTo = slide.offsetLeft - (containerWidth - slide.offsetWidth) + gapRef.current.offsetWidth;
+    const scrollTo =
+      slide.offsetLeft -
+      (containerWidth - slide.offsetWidth) +
+      gapRef.current.offsetWidth;
 
     if (scrollTo <= 2 * gapRef.current.offsetWidth) {
       return 0;
@@ -44,8 +76,16 @@ const CardScroll: FC<CardScrollProps> = ({ children, size, sizeX, ...restProps }
   }
 
   function getScrollToRight(offset: number): number {
+    if (!refContainer.current || !gapRef.current) {
+      return offset;
+    }
+
     const containerWidth = refContainer.current.offsetWidth;
-    const slide = Array.from(refContainer.current.children).find((el: HTMLElement) => el.offsetLeft + el.offsetWidth - offset > containerWidth) as HTMLElement;
+    const slide = Array.prototype.find.call(
+      refContainer.current.children,
+      (el: HTMLElement) =>
+        el.offsetLeft + el.offsetWidth - offset > containerWidth
+    ) as HTMLElement;
 
     if (!slide) {
       return offset;
@@ -57,13 +97,19 @@ const CardScroll: FC<CardScrollProps> = ({ children, size, sizeX, ...restProps }
   return (
     <div
       {...restProps}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
-        getClassName('CardScroll', platform),
-        `CardScroll--${size}`,
+        getClassName("CardScroll", platform),
         `CardScroll--sizeX-${sizeX}`,
+        `CardScroll--${size}`,
+        { ["CardScroll--withSpaces"]: withSpaces }
       )}
     >
-      <HorizontalScroll getScrollToLeft={getScrollToLeft} getScrollToRight={getScrollToRight} showArrows={true}>
+      <HorizontalScroll
+        getScrollToLeft={getScrollToLeft}
+        getScrollToRight={getScrollToRight}
+        showArrows={showArrows}
+      >
         <div vkuiClass="CardScroll__in" ref={refContainer}>
           <span vkuiClass="CardScroll__gap" ref={gapRef} />
           {children}
@@ -73,9 +119,3 @@ const CardScroll: FC<CardScrollProps> = ({ children, size, sizeX, ...restProps }
     </div>
   );
 };
-
-CardScroll.defaultProps = {
-  size: 's',
-};
-
-export default withAdaptivity(CardScroll, { sizeX: true });

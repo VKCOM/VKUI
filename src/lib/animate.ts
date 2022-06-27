@@ -1,3 +1,5 @@
+import { canUseDOM } from "@vkontakte/vkjs";
+
 /**
  * Функция для js анимации
  * @param {number} duration
@@ -15,14 +17,18 @@ export interface AnimateArgumentsInterface {
   draw: DrawInterface;
 }
 
-export default function animate({ duration, timing, draw }: AnimateArgumentsInterface): void {
-  if (typeof window === 'undefined') {
+export function animate({
+  duration,
+  timing,
+  draw,
+}: AnimateArgumentsInterface): void {
+  if (!canUseDOM) {
     return;
   }
 
-  const start = window.performance.now();
+  const start = performance.now();
 
-  window.requestAnimationFrame(function animate(time: number): void {
+  requestAnimationFrame(function animate(time: number): void {
     let timeFraction = (time - start) / duration;
 
     if (timeFraction > 1) {
@@ -34,7 +40,7 @@ export default function animate({ duration, timing, draw }: AnimateArgumentsInte
     draw(progress);
 
     if (timeFraction < 1) {
-      window.requestAnimationFrame(animate);
+      requestAnimationFrame(animate);
     }
   });
 }

@@ -1,18 +1,17 @@
-import React, { FunctionComponent } from 'react';
-import Spinner, { SpinnerProps } from '../Spinner/Spinner';
+import * as React from "react";
+import { Spinner, SpinnerProps } from "../Spinner/Spinner";
 
 export interface PanelSpinnerProps extends SpinnerProps {
   height?: number;
 }
 
-const PanelSpinner: FunctionComponent<PanelSpinnerProps> = ({ height, style, ...restProps }: PanelSpinnerProps) => {
-  return (
+/**
+ * @see https://vkcom.github.io/VKUI/#/PanelSpinner
+ */
+export const PanelSpinner = React.memo(
+  ({ height = 96, style, ...restProps }: PanelSpinnerProps) => (
     <Spinner size="regular" {...restProps} style={{ height, ...style }} />
-  );
-};
+  )
+);
 
-PanelSpinner.defaultProps = {
-  height: 96,
-};
-
-export default React.memo(PanelSpinner);
+PanelSpinner.displayName = "PanelSpinner";

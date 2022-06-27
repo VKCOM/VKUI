@@ -1,5 +1,5 @@
 .ComplexType {
-  font-family: 'JetBrainsMono', monospace;
+  font-family: "JetBrainsMono", monospace;
   display: inline-flex;
   align-items: flex-start;
 }
@@ -8,5 +8,10 @@
   position: relative;
   top: 2px;
   margin-left: 6px;
-  color: var(--icon_secondary);
+  color: var(--vkui--color_icon_secondary);
+}
+
+.ComplexTypeDropdown {
+  max-width: 340px;
+  word-break: break-word;
 }

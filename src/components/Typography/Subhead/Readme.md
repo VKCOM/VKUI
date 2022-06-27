@@ -1,18 +1,21 @@
-Упрощения в Android-версии (происходят автоматически):
-* `semibold` превращается в `medium`
+```jsx { "props": { "layout": false, "iframe": false } }
+<div style={{ padding: 20 }}>
+  <Subhead>Subhead</Subhead>
+</div>
+```
 
-```jsx
-<View activePanel="test">
-  <Panel id="test">
-    <PanelHeader>Subhead</PanelHeader>
-    <Group>
-      <Div>
-        <Subhead weight="regular" style={{ marginBottom: 16 }}>Subhead regular</Subhead>
-        <Subhead weight="medium" style={{ marginBottom: 16 }}>Subhead medium</Subhead>
-        <Subhead weight="semibold" style={{ marginBottom: 16 }}>Subhead semibold</Subhead>
-        <Subhead weight="bold" style={{ marginBottom: 16 }}>Subhead bold</Subhead>
-      </Div>
-    </Group>
-  </Panel>
-</View>
+## Кастомизация
+
+Есть возможность переопределить жирность.
+
+```jsx { "props": { "layout": false, "iframe": false } }
+<div style={{ padding: 20 }}>
+  <Subhead weight="1" style={{ marginBottom: 16 }}>
+    Subhead weight 1
+  </Subhead>
+  <Subhead weight="2" style={{ marginBottom: 16 }}>
+    Subhead weight 2
+  </Subhead>
+  <Subhead weight="3">Subhead weight 3</Subhead>
+</div>
 ```

@@ -8,6 +8,7 @@
   cursor: pointer;
   font-size: inherit;
   display: inline;
+  border-radius: 0;
 }
 
 .Link .Icon {

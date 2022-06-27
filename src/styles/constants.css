@@ -1,42 +1,61 @@
 :root {
   /* fonts */
-  --font-common: -apple-system, system-ui, Helvetica Neue, Roboto, sans-serif;
-  --font-tt: "TT Commons", -apple-system, system-ui, Helvetica Neue, Roboto, sans-serif;
+  --font-common: var(
+    --palette-vk-font,
+    -apple-system,
+    system-ui,
+    Helvetica Neue,
+    Roboto,
+    sans-serif
+  );
+  /* @deprecated
+   * --font-tt будет удален в 5.0.0, используйте --font-display
+   * В коде библиотеки использовать нельзя. Оставлен для обратной совместимости для пользователей библиотеки.
+   */
+  --font-tt: "TT Commons", -apple-system, system-ui, Helvetica Neue, Roboto,
+    sans-serif;
+  --font-display: "VK Sans Display", -apple-system, system-ui, Helvetica Neue,
+    Roboto, sans-serif;
 
   /* easings */
-  --ios-easing: cubic-bezier(.36, .66, .04, 1);
-  --android-easing: cubic-bezier(.4, 0, .2, 1);
+  --ios-easing: cubic-bezier(0.36, 0.66, 0.04, 1);
+  --android-easing: cubic-bezier(0.4, 0, 0.2, 1);
 
   /* sizes */
   --tabbar_height: 48px;
+  --panelheader_height: 56px;
   --panelheader_height_ios: 52px;
-  --panelheader_height_android: 56px;
   --panelheader_height_vkcom: 48px;
-  --modalheader_height_ios: 52px;
-  --modalheader_height_android: 56px;
   --search_default_height: 36px;
   --thin-border: 1px;
+
+  /* paddings */
+  /* TODO: v5 удалить */
+  --formitem_padding: 16px;
 
   /* colors */
   --white: #fff;
   --blue_200: #5c9ce6;
 
-  /* iOS insets */
-  --safe-area-inset-top: 20px;
+  /* insets */
+  --safe-area-inset-top: 0px;
   --safe-area-inset-right: 0px;
   --safe-area-inset-bottom: 0px;
   --safe-area-inset-left: 0px;
+
+  /* animations */
+  --duration: 0.7s;
 }
 
 @media (min-resolution: 2dppx) {
   :root {
-    --thin-border: .5px;
+    --thin-border: 0.5px;
   }
 }
 
 @media (min-resolution: 3dppx) {
   :root {
-    --thin-border: .33px;
+    --thin-border: 0.33px;
   }
 }
 

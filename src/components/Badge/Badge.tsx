@@ -1,29 +1,14 @@
-import { HTMLAttributes, FunctionComponent } from 'react';
-import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
-import { usePlatform } from '../../hooks/usePlatform';
+import * as React from "react";
+import { classNames } from "../../lib/classNames";
+import "./Badge.css";
 
-export interface BadgeProps extends HTMLAttributes<HTMLElement> {
-  mode: 'new' | 'prominent';
-};
+export interface BadgeProps extends React.HTMLAttributes<HTMLElement> {
+  mode: "new" | "prominent";
+}
 
-export const Badge: FunctionComponent<BadgeProps> = ({
-  mode,
-  ...restProps
-}: BadgeProps) => {
-  const platform = usePlatform();
-
-  return (
-    <span
-      vkuiClass={classNames(
-        getClassName('Badge', platform),
-        `Badge--${mode}`,
-      )}
-      {...restProps}>
-    </span>
-  );
-};
-
-Badge.defaultProps = {
-  mode: 'new',
-};
+/**
+ * @see https://vkcom.github.io/VKUI/#/Badge
+ */
+export const Badge: React.FC<BadgeProps> = ({ mode = "new", ...restProps }) => (
+  <span vkuiClass={classNames("Badge", `Badge--${mode}`)} {...restProps} />
+);

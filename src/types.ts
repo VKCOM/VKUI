@@ -1,23 +1,21 @@
-import { RefCallback } from 'react';
-import { PlatformType } from './lib/platform';
-import { Insets } from '@vkontakte/vk-bridge';
+import * as React from "react";
+import { PlatformType } from "./lib/platform";
+import { Insets } from "@vkontakte/vk-bridge";
 
 export type AnyFunction = (...args: any[]) => any;
 
-export type AlignType = 'left' | 'center' | 'right';
-
-export type RefWithCurrent<T> = {
-  current: T | null;
-};
-
-export type Ref<T> = RefCallback<T> | RefWithCurrent<T>;
+export type AlignType = "left" | "center" | "right";
 
 export interface HasRootRef<T> {
-  getRootRef?: Ref<T>;
+  getRootRef?: React.Ref<T>;
 }
 
 export interface HasRef<T> {
-  getRef?: Ref<T>;
+  getRef?: React.Ref<T>;
+}
+
+export interface HasComponent {
+  Component?: React.ElementType;
 }
 
 export interface HasAlign {

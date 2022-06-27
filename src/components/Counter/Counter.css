@@ -14,18 +14,32 @@
 }
 
 .Counter--primary {
-  background: var(--counter_primary_background);
-  color: var(--counter_primary_text);
+  background: var(
+    --counter_primary_background,
+    var(--vkui--color_background_accent)
+  );
+  color: var(--counter_primary_text, var(--vkui--color_text_contrast));
 }
 
 .Counter--secondary {
-  background: var(--counter_secondary_background);
-  color: var(--counter_secondary_text);
+  background: var(
+    --counter_secondary_background,
+    var(--vkui--color_icon_tertiary)
+  );
+  color: var(--counter_secondary_text, var(--vkui--color_text_contrast));
 }
 
 .Counter--prominent {
-  background: var(--counter_prominent_background);
-  color: var(--counter_prominent_text);
+  background: var(
+    --counter_prominent_background,
+    var(--vkui--color_background_negative)
+  );
+  color: var(--counter_prominent_text, var(--vkui--color_text_contrast));
+}
+
+.Counter--contrast {
+  background: var(--vkui--color_background_contrast);
+  color: var(--vkui--color_text_accent);
 }
 
 .Counter--s-m {
@@ -40,41 +54,114 @@
   border-radius: 9px;
 }
 
-.Counter--vkcom.Counter--s-m .Counter__in {
-  padding-left: 6px;
-  padding-right: 6px;
+/**
+ * CMP:
+ * Button
+ */
+.Button--lvl-primary.Button--clr-accent .Counter,
+.Button--lvl-secondary.Button--clr-neutral .Counter,
+.Button--lvl-tertiary.Button--clr-neutral .Counter {
+  background-color: var(
+    --button_primary_foreground,
+    var(--vkui--color_background_contrast)
+  );
+  color: var(--button_primary_background, var(--vkui--color_text_contrast));
+}
+
+.Button--lvl-secondary.Button--clr-accent .Counter {
+  background-color: var(
+    --button_secondary_foreground,
+    var(--vkui--color_background_accent)
+  );
+  color: var(--background_content, var(--vkui--color_text_contrast_themed));
+}
+
+.Button--lvl-tertiary.Button--clr-accent .Counter {
+  background-color: var(
+    --button_tertiary_foreground,
+    var(--vkui--color_background_accent)
+  );
+  color: var(--background_content, var(--vkui--color_text_contrast_themed));
+}
+
+.Button--lvl-outline.Button--clr-accent .Counter {
+  background-color: var(
+    --button_outline_foreground,
+    var(--vkui--color_background_accent)
+  );
+  color: var(--background_content, var(--vkui--color_text_contrast_themed));
+}
+
+.Button--lvl-primary.Button--clr-positive .Counter {
+  background-color: var(
+    --button_commerce_foreground,
+    var(--vkui--color_background_contrast)
+  );
+  color: var(--button_commerce_background, var(--vkui--color_text_positive));
+}
+
+.Button--lvl-secondary.Button--clr-positive .Counter,
+.Button--lvl-tertiary.Button--clr-positive .Counter,
+.Button--lvl-outline.Button--clr-positive .Counter {
+  background-color: var(
+    --button_commerce_background,
+    var(--vkui--color_background_positive)
+  );
+  color: var(--button_commerce_foreground, var(--vkui--color_text_contrast));
+}
+
+.Button--lvl-primary.Button--clr-negative .Counter {
+  background-color: var(--white, var(--vkui--color_background_contrast));
+  color: var(--destructive, var(--vkui--color_text_negative));
+}
+
+.Button--lvl-secondary.Button--clr-negative .Counter,
+.Button--lvl-tertiary.Button--clr-negative .Counter,
+.Button--lvl-outline.Button--clr-negative .Counter {
+  background-color: var(--destructive, var(--vkui--color_background_negative));
+  color: var(--white, var(--vkui--color_text_contrast));
+}
+
+.Button--lvl-primary.Button--clr-neutral .Counter {
+  background-color: var(
+    --media_overlay_button_background,
+    var(--vkui--color_background_contrast)
+  );
+  color: var(--text_primary, var(--vkui--color_text_primary));
+}
+
+.Button--lvl-primary.Button--clr-overlay .Counter {
+  background-color: var(
+    --media_overlay_button_foreground,
+    var(--vkui--color_icon_primary_invariably)
+  );
+  color: var(
+    --media_overlay_button_background,
+    var(--vkui--color_text_contrast)
+  );
+}
+
+.Button--lvl-secondary.Button--clr-overlay .Counter,
+.Button--lvl-tertiary.Button--clr-overlay .Counter,
+.Button--lvl-outline.Button--clr-overlay .Counter {
+  background-color: var(
+    --media_overlay_button_background,
+    var(--vkui--color_background_contrast)
+  );
+  color: var(
+    --media_overlay_button_foreground,
+    var(--vkui--color_text_primary_invariably)
+  );
 }
 
 /**
- * Button
+ * CMP:
+ * WriteBarIcon
  */
-.Button--lvl-primary .Counter {
-  background-color: var(--button_primary_foreground);
-  color: var(--button_primary_background);
-}
-
-.Button--lvl-secondary .Counter {
-  background-color: var(--button_secondary_foreground);
-  color: var(--background_content);
-}
-
-.Button--lvl-tertiary .Counter {
-  background-color: var(--button_tertiary_foreground);
-  color: var(--background_content);
-}
-
-.Button--lvl-outline .Counter {
-  background-color: var(--button_outline_foreground);
-  color: var(--background_content);
-}
-
-.Button--lvl-commerce .Counter {
-  background-color: var(--button_commerce_foreground);
-  color: var(--button_commerce_background);
-}
-
-.Button--lvl-secondary .Counter--vkcom,
-.Button--lvl-tertiary .Counter--vkcom,
-.Button--lvl-outline .Counter--vkcom {
-  opacity: .72;
+.WriteBarIcon .Counter {
+  color: var(--button_commerce_foreground, var(--vkui--color_text_contrast));
+  background: var(
+    --button_commerce_background,
+    var(--vkui--color_background_positive)
+  );
 }

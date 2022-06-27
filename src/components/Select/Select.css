@@ -1,5 +1,6 @@
 .Select {
   position: relative;
+  cursor: pointer;
   box-sizing: border-box;
 }
 
@@ -17,21 +18,19 @@
   font-size: 16px;
 }
 
-.Select__title {
-  display: block;
-}
-
 .Select__container {
   flex-grow: 1;
   flex-shrink: 1;
-  padding: 11px 11px 12px;
-  color: var(--text_primary);
+  padding: 7px 11px;
+  color: var(--text_primary, var(--vkui--color_text_primary));
   box-sizing: border-box;
-  height: 42px;
   position: relative;
   z-index: 2;
-  cursor: pointer;
   overflow: hidden;
+}
+
+.Select__title {
+  display: block;
 }
 
 .Select:not(.Select--multiline) .Select__title {
@@ -40,8 +39,8 @@
   text-overflow: ellipsis;
 }
 
-.Select--not-selected .Select__title {
-  color: var(--field_text_placeholder);
+.Select--empty .Select__title {
+  color: var(--field_text_placeholder, var(--vkui--color_text_secondary));
 }
 
 .Select--align-right .Select__title {
@@ -52,12 +51,18 @@
   text-align: center;
 }
 
-.Select--multiline .Select__title {
-  height: auto;
-  min-height: 42px;
+/**
+ * sizeY REGULAR
+ * TODO v5.0.0 поправить под новую адаптивность
+ */
+.Select--sizeY-regular .Select__container {
+  padding: 11px;
 }
 
-.Select--sizeY--compact .Select__container {
-  height: 34px;
-  padding: 7px 11px;
+/**
+ * CMP:
+ * CalendarHeader
+ */
+.CalendarHeader__picker .Select__container {
+  padding-right: 4px;
 }

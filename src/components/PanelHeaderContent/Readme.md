@@ -7,19 +7,19 @@ const Example = () => {
     <View activePanel="brand">
       <Panel id="brand">
         <PanelHeader
-          left={<PanelHeaderBack label="Назад" />}
-          right={(
+          before={<PanelHeaderBack label="Назад" />}
+          after={
             <PanelHeaderButton>
               <Icon28MessageOutline
                 width={platform === VKCOM ? 24 : 28}
                 height={platform === VKCOM ? 24 : 28}
               />
             </PanelHeaderButton>
-          )}
+          }
         >
           <PanelHeaderContent
             status="был в сети сегодня, в 18:46"
-            before={<Avatar size={36} src={getAvatarUrl('user_va')} />}
+            before={<Avatar size={36} src={getAvatarUrl("user_va")} />}
           >
             Влад Анесов
           </PanelHeaderContent>
@@ -27,7 +27,7 @@ const Example = () => {
       </Panel>
     </View>
   );
-}
+};
 
-<Example />
+<Example />;
 ```

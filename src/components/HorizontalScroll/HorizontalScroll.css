@@ -15,13 +15,17 @@
 }
 
 .HorizontalScroll__in-wrapper {
-  transition: transform .2s;
+  transition: transform 0.2s;
 }
 
-.HorizontalScrollArrow--left:hover ~ .HorizontalScroll__in .HorizontalScroll__in-wrapper {
+.HorizontalScrollArrow--left:hover
+  ~ .HorizontalScroll__in
+  .HorizontalScroll__in-wrapper {
   transform: translateX(8px);
 }
 
-.HorizontalScrollArrow--right:hover ~ .HorizontalScroll__in .HorizontalScroll__in-wrapper {
+.HorizontalScrollArrow--right:hover
+  ~ .HorizontalScroll__in
+  .HorizontalScroll__in-wrapper {
   transform: translateX(-8px);
 }

@@ -1,32 +1,57 @@
-import { FunctionComponent, InputHTMLAttributes } from 'react';
-import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
-import { usePlatform } from '../../hooks/usePlatform';
-import { HasRef, HasRootRef } from '../../types';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
-import { useExternRef } from '../../hooks/useExternRef';
+import * as React from "react";
+import { getClassName } from "../../helpers/getClassName";
+import { classNames } from "../../lib/classNames";
+import { callMultiple } from "../../lib/callMultiple";
+import { usePlatform } from "../../hooks/usePlatform";
+import { HasRootRef } from "../../types";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import {
+  VisuallyHiddenInput,
+  VisuallyHiddenInputProps,
+} from "../VisuallyHiddenInput/VisuallyHiddenInput";
+import { useFocusVisible } from "../../hooks/useFocusVisible";
+import { FocusVisible } from "../FocusVisible/FocusVisible";
+import "./Switch.css";
 
-export interface SwitchProps extends
-  InputHTMLAttributes<HTMLInputElement>,
-  HasRootRef<HTMLLabelElement>,
-  HasRef<HTMLInputElement>,
-  AdaptivityProps { }
+export interface SwitchProps
+  extends VisuallyHiddenInputProps,
+    HasRootRef<HTMLLabelElement> {}
 
-export const Switch: FunctionComponent<SwitchProps> = withAdaptivity(({
+/**
+ * @see https://vkcom.github.io/VKUI/#/Switch
+ */
+export const Switch: React.FC<SwitchProps> = ({
   style,
   className,
-  getRef,
   getRootRef,
-  sizeY,
   ...restProps
 }: SwitchProps) => {
   const platform = usePlatform();
-  const inputRef = useExternRef(getRef);
+  const { sizeY } = useAdaptivity();
+  const { focusVisible, onBlur, onFocus } = useFocusVisible();
 
   return (
-    <label vkuiClass={classNames(getClassName('Switch', platform), `Switch--sizeY-${sizeY}`)} className={className} style={style} ref={getRootRef}>
-      <input {...restProps} type="checkbox" vkuiClass="Switch__self" ref={inputRef} />
-      <span vkuiClass="Switch__pseudo" />
+    <label
+      vkuiClass={classNames(
+        getClassName("Switch", platform),
+        `Switch--sizeY-${sizeY}`,
+        restProps.disabled && "Switch--disabled",
+        focusVisible && "Switch--focus-visible"
+      )}
+      className={className}
+      style={style}
+      ref={getRootRef}
+      role="presentation"
+    >
+      <VisuallyHiddenInput
+        {...restProps}
+        type="checkbox"
+        vkuiClass="Switch__self"
+        onBlur={callMultiple(onBlur, restProps.onBlur)}
+        onFocus={callMultiple(onFocus, restProps.onFocus)}
+      />
+      <span role="presentation" vkuiClass="Switch__pseudo" />
+      <FocusVisible mode="outside" />
     </label>
   );
-}, { sizeY: true });
+};

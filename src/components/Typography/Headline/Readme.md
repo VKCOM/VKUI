@@ -1,17 +1,26 @@
-Упрощения в Android-версии (происходят автоматически):
-* `semibold` превращается в `medium`
+```jsx { "props": { "layout": false, "iframe": false } }
+<div style={{ padding: 20 }}>
+  <Headline level="1" style={{ marginBottom: 16 }}>
+    Headline 1
+  </Headline>
+  <Headline level="2">Headline 2</Headline>
+</div>
+```
 
-```jsx
-<View activePanel="test">
-  <Panel id="test">
-    <PanelHeader>Headline</PanelHeader>
-    <Group>
-      <Div>
-        <Headline weight="regular" style={{ marginBottom: 16 }}>Headline regular</Headline>
-        <Headline weight="medium" style={{ marginBottom: 16 }}>Headline medium</Headline>
-        <Headline weight="semibold" style={{ marginBottom: 16 }}>Headline semibold</Headline>
-      </Div>
-    </Group>
-  </Panel>
-</View>
+## Кастомизация
+
+Есть возможность переопределить жирность.
+
+```jsx { "props": { "layout": false, "iframe": false } }
+<div style={{ padding: 20 }}>
+  <Headline level="2" weight="1" style={{ marginBottom: 16 }}>
+    Headline 2 weight 1
+  </Headline>
+  <Headline level="2" weight="2" style={{ marginBottom: 16 }}>
+    Headline 2 weight 2
+  </Headline>
+  <Headline level="2" weight="3">
+    Headline 2 weight 3
+  </Headline>
+</div>
 ```

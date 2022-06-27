@@ -1,3 +1,5 @@
+import { canUseDOM } from "@vkontakte/vkjs";
+
 export interface VKUITouchEvent extends MouseEvent, TouchEvent {}
 export type VKUITouchEventHander = (e: VKUITouchEvent) => void;
 
@@ -21,8 +23,8 @@ const coordY = (e: VKUITouchEvent): number => {
   return e.changedTouches && e.changedTouches[0].clientY;
 };
 
-const isClient: boolean = typeof window !== 'undefined';
-const touchEnabled: boolean = isClient && 'ontouchstart' in window;
+// eslint-disable-next-line no-restricted-globals
+const touchEnabled = () => canUseDOM && "ontouchstart" in window;
 
 /*
  * Возвращает массив поддерживаемых событий
@@ -30,23 +32,28 @@ const touchEnabled: boolean = isClient && 'ontouchstart' in window;
  * Если нет, используем события мыши
  */
 function getSupportedEvents(): string[] {
-  if (touchEnabled) {
-    return ['touchstart', 'touchmove', 'touchend', 'touchcancel'];
+  if (touchEnabled()) {
+    return ["touchstart", "touchmove", "touchend", "touchcancel"];
   }
 
-  return ['mousedown', 'mousemove', 'mouseup', 'mouseleave'];
+  return ["mousedown", "mousemove", "mouseup", "mouseleave"];
 }
 
 /*
  * Рассчитывает "сопротивление" для iOS тач-событий
  */
-function rubber(offset: number, dimension: number, resistanceRate: number, isAndroid: boolean): number {
+function rubber(
+  offset: number,
+  dimension: number,
+  resistanceRate: number,
+  isAndroid: boolean
+): number {
   if (isAndroid || offset < 0) {
     return offset;
   }
 
   const offsettedResistance = offset * resistanceRate;
-  return offsettedResistance * dimension / (offsettedResistance + dimension);
+  return (offsettedResistance * dimension) / (offsettedResistance + dimension);
 }
 
 export { getSupportedEvents, coordX, coordY, touchEnabled, rubber };

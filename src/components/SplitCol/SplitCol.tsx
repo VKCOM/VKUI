@@ -1,8 +1,11 @@
-import React, { FC, HTMLAttributes, useMemo, useRef } from 'react';
-import { classNames } from '../../lib/classNames';
+import * as React from "react";
+import { useScrollLockEffect } from "../AppRoot/ScrollContext";
+import { classNames } from "../../lib/classNames";
+import { noop } from "../../lib/utils";
+import "./SplitCol.css";
 
 export interface SplitColContextProps {
-  colRef: React.RefObject<HTMLDivElement>;
+  colRef: React.RefObject<HTMLDivElement> | null;
   animate: boolean;
 }
 
@@ -11,10 +14,10 @@ export const SplitColContext = React.createContext<SplitColContextProps>({
   animate: true,
 });
 
-export interface SplitColProps extends HTMLAttributes<HTMLDivElement> {
-  width?: string;
-  maxWidth?: string;
-  minWidth?: string;
+export interface SplitColProps extends React.HTMLAttributes<HTMLDivElement> {
+  width?: number | string;
+  maxWidth?: number | string;
+  minWidth?: number | string;
   /**
    * Если false, то переходы между Panel происходят без анимации
    */
@@ -26,16 +29,44 @@ export interface SplitColProps extends HTMLAttributes<HTMLDivElement> {
   fixed?: boolean;
 }
 
-export const SplitCol: FC<SplitColProps> = (props: SplitColProps) => {
-  const { children, width, maxWidth, minWidth, spaced, animate, fixed, style, ...restProps } = props;
-  const baseRef = useRef<HTMLDivElement>();
+/**
+ * @see https://vkcom.github.io/VKUI/#/SplitCol
+ */
+export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
+  const {
+    children,
+    width,
+    maxWidth,
+    minWidth,
+    spaced,
+    animate = false,
+    fixed,
+    style,
+    ...restProps
+  } = props;
+  const baseRef = React.useRef<HTMLDivElement>(null);
 
-  const contextValue = useMemo(() => {
+  const fixedInnerRef = React.useRef<HTMLDivElement>(null);
+
+  const contextValue = React.useMemo(() => {
     return {
       colRef: baseRef,
       animate,
     };
   }, [baseRef, animate]);
+
+  useScrollLockEffect(() => {
+    const fixedInner = fixedInnerRef.current;
+    if (!fixedInner) {
+      return noop;
+    }
+
+    fixedInner.style.top = `${fixedInner.offsetTop}px`;
+
+    return () => {
+      fixedInner.style.top = "";
+    };
+  }, [fixedInnerRef.current]);
 
   return (
     <div
@@ -47,18 +78,21 @@ export const SplitCol: FC<SplitColProps> = (props: SplitColProps) => {
         minWidth: minWidth,
       }}
       ref={baseRef}
-      vkuiClass={classNames('SplitCol', {
-        'SplitCol--spaced': spaced,
-        'SplitCol--fixed': fixed,
-      })}
+      vkuiClass={classNames(
+        "SplitCol",
+        spaced && "SplitCol--spaced",
+        fixed && "SplitCol--fixed"
+      )}
     >
       <SplitColContext.Provider value={contextValue}>
-        {fixed ? <div vkuiClass="SplitCol__fixedInner">{children}</div> : children}
+        {fixed ? (
+          <div ref={fixedInnerRef} vkuiClass="SplitCol__fixedInner">
+            {children}
+          </div>
+        ) : (
+          children
+        )}
       </SplitColContext.Provider>
     </div>
   );
-};
-
-SplitCol.defaultProps = {
-  animate: false,
 };

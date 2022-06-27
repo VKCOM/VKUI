@@ -1,26 +1,30 @@
-import { HTMLAttributes, ReactNode, FC } from 'react';
-import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
-import { HasRef, HasRootRef } from '../../types';
-import { PopoutRoot } from '../PopoutRoot/PopoutRoot';
-import { usePlatform } from '../../hooks/usePlatform';
+import * as React from "react";
+import { getClassName } from "../../helpers/getClassName";
+import { classNames } from "../../lib/classNames";
+import { HasRef, HasRootRef } from "../../types";
+import { PopoutRoot } from "../PopoutRoot/PopoutRoot";
+import { usePlatform } from "../../hooks/usePlatform";
+import "./SplitLayout.css";
 
-export interface SplitLayoutProps extends
-  HTMLAttributes<HTMLDivElement>,
-  HasRootRef<HTMLDivElement>,
-  HasRef<HTMLDivElement> {
+export interface SplitLayoutProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    HasRootRef<HTMLDivElement>,
+    HasRef<HTMLDivElement> {
   /**
    * Свойство для отрисовки `Alert`, `ActionSheet` и `ScreenSpinner`.
    */
-  popout?: ReactNode;
+  popout?: React.ReactNode;
   /**
    * Свойство для отрисовки `ModalRoot`.
    */
-  modal?: ReactNode;
-  header?: ReactNode;
+  modal?: React.ReactNode;
+  header?: React.ReactNode;
 }
 
-export const SplitLayout: FC<SplitLayoutProps> = ({
+/**
+ * @see https://vkcom.github.io/VKUI/#/SplitLayout
+ */
+export const SplitLayout: React.FC<SplitLayoutProps> = ({
   popout,
   modal,
   header,
@@ -33,15 +37,20 @@ export const SplitLayout: FC<SplitLayoutProps> = ({
 
   return (
     <PopoutRoot
-      vkuiClass={getClassName('SplitLayout', platform)}
+      vkuiClass={getClassName("SplitLayout", platform)}
       popout={popout}
       modal={modal}
       getRootRef={getRootRef}
     >
       {header}
-      <div {...restProps} ref={getRef} vkuiClass={classNames('SplitLayout__inner', {
-        'SplitLayout__inner--header': !!header,
-      })}>
+      <div
+        {...restProps}
+        ref={getRef}
+        // eslint-disable-next-line vkui/no-object-expression-in-arguments
+        vkuiClass={classNames("SplitLayout__inner", {
+          "SplitLayout__inner--header": !!header,
+        })}
+      >
         {children}
       </div>
     </PopoutRoot>

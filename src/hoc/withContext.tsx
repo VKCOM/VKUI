@@ -1,11 +1,14 @@
-import React, { Context } from 'react';
+import * as React from "react";
 
-export function withContext<T, X>(Component: T, Ctx: Context<X>, prop: string): T {
-  function WithContext(props: {}) {
+export function withContext<T, X>(
+  Component: React.ComponentType<T>,
+  Ctx: React.Context<X>,
+  prop: string
+): React.FC<T> {
+  function WithContext(props: T) {
     const context = React.useContext<X>(Ctx);
 
-    // @ts-ignore
     return <Component {...props} {...{ [prop]: context }} />;
   }
-  return WithContext as unknown as T;
+  return WithContext;
 }

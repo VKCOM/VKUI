@@ -5,6 +5,8 @@
   white-space: nowrap;
   text-decoration: none;
   color: var(--text_primary);
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 .SimpleCell--mult {
@@ -20,7 +22,6 @@
   max-width: 100%;
   flex-grow: 1;
   min-width: 0;
-  flex-shrink: initial;
   overflow: hidden;
 }
 
@@ -41,6 +42,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
   margin-top: 3px;
+  display: block;
 }
 
 .SimpleCell > .Avatar--sz-32 ~ .SimpleCell__main .SimpleCell__description,
@@ -50,7 +52,6 @@
 
 .SimpleCell:not(.SimpleCell--mult) .SimpleCell__content {
   display: flex;
-  flex-flow: row nowrap;
   align-content: flex-start;
   align-items: center;
   justify-content: flex-start;
@@ -61,6 +62,7 @@
   color: inherit;
   text-overflow: ellipsis;
   overflow: hidden;
+  display: block;
 }
 
 .SimpleCell__badge {
@@ -112,27 +114,7 @@
   padding-right: 2px;
 }
 
-.SimpleCell .Switch {
-  padding-left: 10px;
-}
-
-.SimpleCell__after .IconButton .Icon--28,
-.SimpleCell__after .IconButton .Icon--28 ~ * {
-  margin-right: -8px;
-}
-
-.SimpleCell__after .IconButton .Icon--24,
-.SimpleCell__after .IconButton .Icon--24 ~ * {
-  margin-right: -10px;
-}
-
-.SimpleCell__after .IconButton .Icon--16,
-.SimpleCell__after .IconButton .Icon--16 ~ * {
-  margin-right: -14px;
-}
-
-.SimpleCell__after .IconButton .Icon--w-8,
-.SimpleCell__after .IconButton .Icon--w-8 ~ * {
+.SimpleCell__after .IconButton {
   margin-right: -12px;
 }
 
@@ -161,18 +143,17 @@
   padding-left: 12px;
 }
 
-.SimpleCell--ios .SimpleCell__after .IconButton .Icon--16,
-.SimpleCell--ios .SimpleCell__after .IconButton .Icon--16 ~ * {
-  margin-right: -12px;
+.SimpleCell--ios .SimpleCell__after .IconButton {
+  margin-right: -9px;
 }
 
-.SimpleCell--ios.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--16,
-.SimpleCell--ios.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--16 ~ * {
-  margin-right: -14px;
-}
-
-.SimpleCell--ios.SimpleCell--sizeY-regular > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__main .SimpleCell__children,
-.SimpleCell--ios.SimpleCell--sizeY-regular > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__indicator {
+.SimpleCell--ios.SimpleCell--sizeY-regular
+  > .Avatar:not(.Avatar--sz-32)
+  ~ .SimpleCell__main
+  .SimpleCell__children,
+.SimpleCell--ios.SimpleCell--sizeY-regular
+  > .Avatar:not(.Avatar--sz-32)
+  ~ .SimpleCell__indicator {
   font-size: 16px;
   line-height: 20px;
 }
@@ -180,12 +161,6 @@
 /**
  * Android & VKCOM
  */
-
-.SimpleCell--android,
-.SimpleCell--vkcom {
-  padding-left: 16px;
-  padding-right: 16px;
-}
 
 .SimpleCell--android .SimpleCell__main,
 .SimpleCell--android .SimpleCell__indicator,
@@ -210,31 +185,25 @@
 }
 
 .SimpleCell--sizeY-compact .SimpleCell__description,
-.SimpleCell--sizeY-compact > .Avatar--sz-32 ~ .SimpleCell__main .SimpleCell__description,
-.SimpleCell--sizeY-compact > .Avatar--sz-28 ~ .SimpleCell__main .SimpleCell__description {
+.SimpleCell--sizeY-compact
+  > .Avatar--sz-32
+  ~ .SimpleCell__main
+  .SimpleCell__description,
+.SimpleCell--sizeY-compact
+  > .Avatar--sz-28
+  ~ .SimpleCell__main
+  .SimpleCell__description {
   margin-top: 1px;
 }
 
-.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--28,
-.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--28 ~ * {
-  margin-right: -6px;
-}
-
-.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--24,
-.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--24 ~ * {
-  margin-right: -8px;
-}
-
-.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--16,
-.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--16 ~ * {
-  margin-right: -12px;
-}
-
-.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--w-8,
-.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--w-8 ~ * {
-  margin-right: -10px;
-}
-
 .SimpleCell--sizeY-compact .SimpleCell__badge .Badge {
-  transform: translateY(.5px);
+  transform: translateY(0.5px);
+}
+
+/**
+ * CMP:
+ * FormItem
+ */
+.FormItem > .SimpleCell {
+  margin: 0 calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }

@@ -11,7 +11,7 @@
 }
 
 .PanelHeaderButton[disabled] {
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .PanelHeaderButton .Counter {
@@ -76,8 +76,8 @@
 }
 
 .PanelHeaderButton--vkcom > :not(.Counter) {
-  transition: opacity .3s;
-  opacity: .7;
+  transition: opacity 0.3s;
+  opacity: 0.7;
 }
 
 .PanelHeaderButton--vkcom.PanelHeaderButton--hover > :not(.Counter),

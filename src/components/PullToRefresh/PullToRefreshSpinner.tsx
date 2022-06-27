@@ -1,26 +1,28 @@
-import React, { FunctionComponent, HTMLAttributes } from 'react';
-import { classNames } from '../../lib/classNames';
+import * as React from "react";
+import { classNames } from "../../lib/classNames";
+import "./PullToRefresh.css";
 
 function calcStrokeDashOffset(value: number, radius: number) {
   const progress = value / 100;
   return 2 * Math.PI * radius * (1 - progress);
 }
 
-export interface PullToRefreshSpinnerProps extends HTMLAttributes<HTMLDivElement> {
+export interface PullToRefreshSpinnerProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   size?: number;
   strokeWidth?: number;
   on?: boolean;
   progress?: number;
-  'aria-label'?: string;
+  "aria-label"?: string;
 }
 
-const PullToRefreshSpinner: FunctionComponent<PullToRefreshSpinnerProps> = ({
-  on,
-  progress,
-  size,
-  strokeWidth,
+export const PullToRefreshSpinner = ({
+  on = true,
+  size = 24,
+  strokeWidth = 2.5,
   style,
-  ...restProps
+  progress = 0,
+  "aria-label": ariaLabel = "Пожалуйста, подождите...",
 }: PullToRefreshSpinnerProps) => {
   const radius = 0.5 * size - 0.5 * strokeWidth;
   const dasharray = 2 * Math.PI * radius;
@@ -30,11 +32,12 @@ const PullToRefreshSpinner: FunctionComponent<PullToRefreshSpinnerProps> = ({
 
   return (
     <div
-      vkuiClass={classNames('PullToRefresh__spinner', {
-        'PullToRefresh__spinner--on': on,
-      })}
+      vkuiClass={classNames(
+        "PullToRefresh__spinner",
+        on && "PullToRefresh__spinner--on"
+      )}
       style={style}
-      aria-label={on ? restProps['aria-label'] : undefined}
+      aria-label={on ? ariaLabel : undefined}
     >
       <svg
         role="presentation"
@@ -69,13 +72,3 @@ const PullToRefreshSpinner: FunctionComponent<PullToRefreshSpinnerProps> = ({
     </div>
   );
 };
-
-PullToRefreshSpinner.defaultProps = {
-  'size': 24,
-  'strokeWidth': 2.5,
-  'on': true,
-  'progress': null,
-  'aria-label': 'Пожалуйста, подождите...',
-};
-
-export default React.memo(PullToRefreshSpinner);

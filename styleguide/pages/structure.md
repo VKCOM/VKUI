@@ -1,11 +1,11 @@
 Каждое VKUI-приложение – это набор экранов. Есть два типа переходов между экранами.
 
->**Важно** 
+> **Важно**
 >
 > Эта структура должна быть постоянной и не должна меняться в рантайме. То есть нельзя на лету добавлять и
-удалять `Panel` или `View`. Нельзя так же менять `id` у `Panel` или `View`. Структура – это *декларация* приложения.
-Единственный способ для перехода между `Panel` в пределах `View` и `View` в пределах `Root` – это обновление свойств `activePanel`
-и `activeView` соответственно.
+> удалять `Panel` или `View`. Нельзя так же менять `id` у `Panel` или `View`. Структура – это _декларация_ приложения.
+> Единственный способ для перехода между `Panel` в пределах `View` и `View` в пределах `Root` – это обновление свойств `activePanel`
+> и `activeView` соответственно.
 
 ## Переход между панелями
 
@@ -63,24 +63,25 @@ import { Root, View } from '@vkontakte/vkui';
 `activeView` отвечает за то, какая `View` должна быть показана. [Демо](#!/Root).
 
 ## Еще раз :)
+
 Структура любого VKUI-приложения должна выглядеть так:
 
 ```jsx static
-import { Root, View, Panel } from '@vkontakte/vkui';
+import { Root, View, Panel } from "@vkontakte/vkui";
 
 <Root activeView="view">
   <View id="view" activePanel="panel">
     <Panel id="panel" />
   </View>
-</Root>
+</Root>;
 ```
 
 Или так:
 
 ```jsx static
-import { View, Panel } from '@vkontakte/vkui';
+import { View, Panel } from "@vkontakte/vkui";
 
 <View id="view" activePanel="panel">
   <Panel id="panel" />
-</View>
+</View>;
 ```

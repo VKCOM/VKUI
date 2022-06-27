@@ -1,38 +1,63 @@
-import React, { AllHTMLAttributes, ElementType, ReactNode, useState } from 'react';
-import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
-import { usePlatform } from '../../hooks/usePlatform';
-import { HasRootRef } from '../../types';
-import { hasReactNode } from '../../lib/utils';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import * as React from "react";
+import { getClassName } from "../../helpers/getClassName";
+import { classNames } from "../../lib/classNames";
+import { usePlatform } from "../../hooks/usePlatform";
+import { HasComponent, HasRootRef } from "../../types";
+import { hasReactNode } from "../../lib/utils";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import "./FormField.css";
+
+export const FormFieldMode = {
+  default: "default",
+  plain: "plain",
+} as const;
 
 export interface FormFieldProps {
   /**
-   * Иконка 12|16|20|24|28 или `IconButton`.
+   * Добавляет иконку слева.
+   *
+   * Рекомендации:
+   *
+   * - Используйте следующие размеры иконок `12` | `16` | `20` | `24` | `28`.
+   * - Используйте [IconButton](#/IconButton), если вам нужна кликабельная иконка.
    */
-  after?: ReactNode;
+  before?: React.ReactNode;
+  /**
+   * Добавляет иконку справа.
+   *
+   * Рекомендации:
+   *
+   * - Используйте следующие размеры иконок `12` | `16` | `20` | `24` | `28`.
+   * - Используйте [IconButton](#/IconButton), если вам нужна кликабельная иконка.
+   */
+  after?: React.ReactNode;
+  mode?: keyof typeof FormFieldMode;
 }
 
-interface FormFieldOwnProps extends
-  AllHTMLAttributes<HTMLElement>,
-  HasRootRef<HTMLElement>,
-  AdaptivityProps,
-  FormFieldProps {
-  Component?: ElementType;
+interface FormFieldOwnProps
+  extends React.AllHTMLAttributes<HTMLElement>,
+    HasRootRef<HTMLElement>,
+    HasComponent,
+    FormFieldProps {
   disabled?: boolean;
 }
 
-const FormField: React.FunctionComponent<FormFieldOwnProps> = withAdaptivity(({
-  Component,
+/**
+ * @see https://vkcom.github.io/VKUI/#/FormField
+ */
+export const FormField: React.FC<FormFieldOwnProps> = ({
+  Component = "div",
   children,
   getRootRef,
+  before,
   after,
   disabled,
-  sizeY,
+  mode = FormFieldMode.default,
   ...restProps
 }: FormFieldOwnProps) => {
   const platform = usePlatform();
-  const [hover, setHover] = useState(false);
+  const { sizeY } = useAdaptivity();
+  const [hover, setHover] = React.useState(false);
 
   const handleMouseEnter = (e: MouseEvent) => {
     e.stopPropagation();
@@ -46,35 +71,31 @@ const FormField: React.FunctionComponent<FormFieldOwnProps> = withAdaptivity(({
 
   return (
     <Component
+      role="presentation"
       {...restProps}
       ref={getRootRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       vkuiClass={classNames(
-        getClassName('FormField', platform),
+        getClassName("FormField", platform),
+        `FormField--${mode}`,
         `FormField--sizeY-${sizeY}`,
-        {
-          'FormField--disabled': disabled,
-        },
+        disabled && "FormField--disabled",
+        !disabled && hover && "FormField--hover"
       )}
     >
+      {hasReactNode(before) && (
+        <div role="presentation" vkuiClass="FormField__before">
+          {before}
+        </div>
+      )}
       {children}
       {hasReactNode(after) && (
-        <div vkuiClass="FormField__after">
+        <div role="presentation" vkuiClass="FormField__after">
           {after}
         </div>
       )}
-      <div vkuiClass={classNames('FormField__border', {
-        'FormField__border--hover': !disabled && hover,
-      })} />
+      <div role="presentation" vkuiClass="FormField__border" />
     </Component>
   );
-}, {
-  sizeY: true,
-});
-
-FormField.defaultProps = {
-  Component: 'div',
 };
-
-export default FormField;

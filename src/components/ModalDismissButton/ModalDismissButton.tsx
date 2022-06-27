@@ -1,18 +1,26 @@
-import { HTMLAttributes, FC } from 'react';
-import { Icon20Cancel } from '@vkontakte/icons';
-import Tappable from '../Tappable/Tappable';
-import { getClassName } from '../../helpers/getClassName';
-import { usePlatform } from '../../hooks/usePlatform';
+import * as React from "react";
+import { Icon20Cancel } from "@vkontakte/icons";
+import { Tappable } from "../Tappable/Tappable";
+import { getClassName } from "../../helpers/getClassName";
+import { usePlatform } from "../../hooks/usePlatform";
+import "./ModalDismissButton.css";
 
-export type ModalDismissButtonProps = HTMLAttributes<HTMLButtonElement>;
+export type ModalDismissButtonProps = React.HTMLAttributes<HTMLButtonElement>;
 
-const ModalDismissButton: FC<ModalDismissButtonProps> = (props: ModalDismissButtonProps) => {
+/**
+ * @see https://vkcom.github.io/VKUI/#/ModalDismissButton
+ */
+export const ModalDismissButton: React.FC<ModalDismissButtonProps> = ({
+  "aria-label": ariaLabel = "Закрыть",
+  ...restProps
+}: ModalDismissButtonProps) => {
   const platform = usePlatform();
 
   return (
     <Tappable
-      vkuiClass={getClassName('ModalDismissButton', platform)}
-      {...props}
+      vkuiClass={getClassName("ModalDismissButton", platform)}
+      {...restProps}
+      aria-label={ariaLabel}
       activeMode="ModalDismissButton--active"
       hoverMode="ModalDismissButton--hover"
     >
@@ -20,9 +28,3 @@ const ModalDismissButton: FC<ModalDismissButtonProps> = (props: ModalDismissButt
     </Tappable>
   );
 };
-
-ModalDismissButton.defaultProps = {
-  'aria-label': 'Закрыть',
-};
-
-export default ModalDismissButton;

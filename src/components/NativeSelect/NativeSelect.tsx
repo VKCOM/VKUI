@@ -1,67 +1,87 @@
-import { FC, SelectHTMLAttributes, useState } from 'react';
-import { classNames } from '../../lib/classNames';
-import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
-import FormField from '../FormField/FormField';
-import { HasAlign, HasRef, HasRootRef } from '../../types';
-import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
-import { getClassName } from '../../helpers/getClassName';
-import Headline from '../Typography/Headline/Headline';
-import Text from '../Typography/Text/Text';
-import { VKCOM } from '../../lib/platform';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { useEnsuredControl } from '../../hooks/useEnsuredControl';
-import { useExternRef } from '../../hooks/useExternRef';
-import { usePlatform } from '../../hooks/usePlatform';
+import * as React from "react";
+import { classNames } from "../../lib/classNames";
+import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
+import { FormField } from "../FormField/FormField";
+import { HasAlign, HasRef, HasRootRef } from "../../types";
+import { withAdaptivity } from "../../hoc/withAdaptivity";
+import { getClassName } from "../../helpers/getClassName";
+import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
+import { useEnsuredControl } from "../../hooks/useEnsuredControl";
+import { useExternRef } from "../../hooks/useExternRef";
+import { usePlatform } from "../../hooks/usePlatform";
+import { SelectType, SelectTypography } from "../Select/Select";
+import {
+  AdaptivityContextInterface,
+  AdaptivityProps,
+} from "../AdaptivityProvider/AdaptivityContext";
+import "../Select/Select.css";
 
-export interface NativeSelectProps extends
-  SelectHTMLAttributes<HTMLSelectElement>,
-  HasRef<HTMLSelectElement>,
-  HasRootRef<HTMLLabelElement>,
-  HasAlign,
-  AdaptivityProps {
+export interface NativeSelectProps
+  extends React.SelectHTMLAttributes<HTMLSelectElement>,
+    HasRef<HTMLSelectElement>,
+    HasRootRef<HTMLLabelElement>,
+    HasAlign,
+    AdaptivityProps {
   placeholder?: string;
+  multiline?: boolean;
+  selectType?: keyof typeof SelectType;
 }
 
 export interface SelectState {
-  value?: SelectHTMLAttributes<HTMLSelectElement>['value'];
+  value?: React.SelectHTMLAttributes<HTMLSelectElement>["value"];
   title?: string;
   notSelected?: boolean;
 }
 
-const NativeSelect: FC<NativeSelectProps> = ({
-  style, defaultValue = '', align, placeholder, children,
-  className, getRef, getRootRef, disabled, sizeX, sizeY,
+const NativeSelectComponent: React.FC<
+  NativeSelectProps & AdaptivityContextInterface
+> = ({
+  style,
+  defaultValue = "",
+  align,
+  placeholder,
+  children,
+  className,
+  getRef,
+  getRootRef,
+  disabled,
+  sizeX,
+  sizeY,
+  multiline,
+  selectType = SelectType.default,
   ...restProps
 }) => {
   const platform = usePlatform();
-  const [title, setTitle] = useState('');
-  const [notSelected, setNotSelected] = useState(false);
+  const [title, setTitle] = React.useState("");
+  const [empty, setEmpty] = React.useState(false);
   const [value, onChange] = useEnsuredControl(restProps, { defaultValue });
   const selectRef = useExternRef(getRef);
   useIsomorphicLayoutEffect(() => {
-    const selectedOption = selectRef.current.options[selectRef.current.selectedIndex];
+    const selectedOption =
+      selectRef.current?.options[selectRef.current.selectedIndex];
     if (selectedOption) {
       setTitle(selectedOption.text);
-      setNotSelected(selectedOption.value === '' && placeholder != null);
+      setEmpty(selectedOption.value === "" && placeholder != null);
     }
   }, [value, children]);
-
-  const TypographyComponent = platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
 
   return (
     <FormField
       Component="label"
-      vkuiClass={classNames(getClassName('Select', platform), {
-        ['Select--not-selected']: notSelected,
-        [`Select--align-${align}`]: !!align,
-        [`Select--sizeX--${sizeX}`]: !!sizeX,
-        [`Select--sizeY--${sizeY}`]: !!sizeY,
-      })}
+      vkuiClass={classNames(
+        getClassName("Select", platform),
+        `Select--${selectType}`,
+        empty && "Select--empty",
+        multiline && "Select--multiline",
+        align && `Select--align-${align}`,
+        `Select--sizeX-${sizeX}`,
+        `Select--sizeY-${sizeY}`
+      )}
       className={className}
       style={style}
       getRootRef={getRootRef}
       disabled={disabled}
-      after={sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
+      after={<DropdownIcon />}
     >
       <select
         {...restProps}
@@ -74,14 +94,18 @@ const NativeSelect: FC<NativeSelectProps> = ({
         {placeholder && <option value="">{placeholder}</option>}
         {children}
       </select>
-      <TypographyComponent Component="div" weight="regular" vkuiClass="Select__container">
-        <span vkuiClass="Select__title">{title}</span>
-      </TypographyComponent>
+      <div vkuiClass="Select__container">
+        {/* TODO v5.0.0 поправить под новую адаптивность */}
+        <SelectTypography vkuiClass="Select__title">{title}</SelectTypography>
+      </div>
     </FormField>
   );
 };
 
-export default withAdaptivity(NativeSelect, {
+/**
+ * @see https://vkcom.github.io/VKUI/#/NativeSelect
+ */
+export const NativeSelect = withAdaptivity(NativeSelectComponent, {
   sizeX: true,
   sizeY: true,
 });

@@ -25,7 +25,8 @@
   color: currentColor;
 }
 
-.FormStatus b:first-child { /* хак для ошибок из API, текст в которых приходит с <b>в начале</b> */
+.FormStatus b:first-child {
+  /* хак для ошибок из API, текст в которых приходит с <b>в начале</b> */
   display: block;
   font-size: 16px;
   line-height: 20px;

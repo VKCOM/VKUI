@@ -1,46 +1,68 @@
-import { FC, useContext } from 'react';
-import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
-import { withPlatform } from '../../hoc/withPlatform';
-import { HasPlatform } from '../../types';
-import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
-import ModalRootContext, { useModalRegistry } from '../ModalRoot/ModalRootContext';
-import { ModalType } from '../ModalRoot/types';
-import { getNavId, NavIdProps } from '../../lib/getNavId';
-import { warnOnce } from '../../lib/warnOnce';
-import { ModalCardBase, ModalCardBaseProps } from '../ModalCardBase/ModalCardBase';
+import * as React from "react";
+import { getClassName } from "../../helpers/getClassName";
+import { classNames } from "../../lib/classNames";
+import { withPlatform } from "../../hoc/withPlatform";
+import { HasPlatform } from "../../types";
+import { withAdaptivity } from "../../hoc/withAdaptivity";
+import {
+  ModalRootContext,
+  useModalRegistry,
+} from "../ModalRoot/ModalRootContext";
+import { ModalType } from "../ModalRoot/types";
+import { getNavId, NavIdProps } from "../../lib/getNavId";
+import { warnOnce } from "../../lib/warnOnce";
+import {
+  ModalCardBase,
+  ModalCardBaseProps,
+} from "../ModalCardBase/ModalCardBase";
+import {
+  AdaptivityContextInterface,
+  AdaptivityProps,
+} from "../AdaptivityProvider/AdaptivityContext";
+import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
+import "./ModalCard.css";
 
-export interface ModalCardProps extends HasPlatform, AdaptivityProps, NavIdProps, ModalCardBaseProps {}
+export interface ModalCardProps
+  extends HasPlatform,
+    AdaptivityProps,
+    NavIdProps,
+    ModalCardBaseProps {}
 
-const warn = warnOnce('ModalCard');
+const warn = warnOnce("ModalCard");
 
-const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
-  const {
-    icon,
-    header,
-    subheader,
-    children,
-    actions,
-    actionsLayout,
-    onClose,
-    platform,
-    viewWidth,
-    viewHeight,
-    hasMouse,
-    nav,
-    ...restProps
-  } = props;
+const ModalCardComponent: React.FC<
+  ModalCardProps & AdaptivityContextInterface
+> = ({
+  icon,
+  header,
+  subheader,
+  children,
+  actions,
+  actionsLayout = "horizontal",
+  onClose,
+  platform,
+  viewWidth,
+  viewHeight,
+  hasMouse,
+  nav,
+  id,
+  ...restProps
+}) => {
+  const isDesktop = useAdaptivityIsDesktop();
 
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
-
-  const modalContext = useContext(ModalRootContext);
-  const { refs } = useModalRegistry(getNavId(props, warn), ModalType.CARD);
+  const modalContext = React.useContext(ModalRootContext);
+  const { refs } = useModalRegistry(
+    getNavId({ nav, id }, warn),
+    ModalType.CARD
+  );
 
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(getClassName('ModalCard', platform), {
-        'ModalCard--desktop': isDesktop,
+      id={id}
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
+      vkuiClass={classNames(getClassName("ModalCard", platform), {
+        "ModalCard--desktop": isDesktop,
       })}
     >
       <ModalCardBase
@@ -59,12 +81,13 @@ const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
   );
 };
 
-ModalCard.defaultProps = {
-  actionsLayout: 'horizontal',
-};
-
-export default withAdaptivity(withPlatform(ModalCard), {
+/**
+ * @see https://vkcom.github.io/VKUI/#/ModalCard
+ */
+export const ModalCard = withAdaptivity(withPlatform(ModalCardComponent), {
   viewWidth: true,
   viewHeight: true,
   hasMouse: true,
 });
+
+ModalCard.displayName = "ModalCard";

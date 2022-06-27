@@ -1,0 +1,51 @@
+/**
+ * ⚠ WARNING️ ⚠
+ *
+ * Если указать `position: relaitve` контейнеру, где позиционируется `Popper`, то при кейсе когда:
+ * 1. Мы передали `sameWidth`.
+ * 2. Мы позциционируем `Popper` через `position: absolute`.
+ * 3. Мы используем `height: 100%` или `height: 100vh`, чтобы растянуть страницу на всю высоту.
+ * 4. НЕТ скроллбара.
+ * будет неправильно высчитан `offsetWidth` у `targetRef` при первом вызове `effect()` модификатора `sameWdith`,
+ *  а именно из `offsetWidth` будет вычтен размер скроллабара, которого на самом деле на странице нет (см. п. 4)
+ *
+ * Второй и последующие вызовы исправляют ситуацию.
+ */
+.Popper {
+  z-index: 100;
+}
+
+.Popper__arrow-in {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 8px;
+}
+
+[data-popper-placement^="bottom"] .Popper__arrow {
+  bottom: 100%;
+}
+
+[data-popper-placement^="top"] .Popper__arrow {
+  top: 100%;
+}
+
+[data-popper-placement^="top"] .Popper__arrow-in {
+  transform: rotate(180deg);
+}
+
+[data-popper-placement^="left"] .Popper__arrow {
+  left: calc(100% - 6px);
+}
+
+[data-popper-placement^="left"] .Popper__arrow-in {
+  transform: rotate(90deg);
+}
+
+[data-popper-placement^="right"] .Popper__arrow {
+  right: calc(100% - 6px);
+}
+
+[data-popper-placement^="right"] .Popper__arrow-in {
+  transform: rotate(270deg);
+}

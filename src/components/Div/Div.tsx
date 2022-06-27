@@ -1,17 +1,22 @@
-import { HTMLAttributes, FunctionComponent } from 'react';
-import { getClassName } from '../../helpers/getClassName';
-import { usePlatform } from '../../hooks/usePlatform';
-import { HasRootRef } from '../../types';
+import * as React from "react";
+import { HasRootRef } from "../../types";
+import "./Div.css";
 
-export interface DivProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {}
+export interface DivProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    HasRootRef<HTMLDivElement> {}
 
-export const Div: FunctionComponent<DivProps> = ({ children, getRootRef, ...restProps }: DivProps) => {
-  const platform = usePlatform();
+/**
+ * @see https://vkcom.github.io/VKUI/#/Div
+ */
+export const Div: React.FC<DivProps> = ({
+  children,
+  getRootRef,
+  ...restProps
+}) => {
   return (
-    <div {...restProps} ref={getRootRef} vkuiClass={getClassName('Div', platform)}>
+    <div {...restProps} ref={getRootRef} vkuiClass="Div">
       {children}
     </div>
   );
 };
-
-export default Div;

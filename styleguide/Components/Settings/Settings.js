@@ -1,41 +1,39 @@
-import React, { Fragment } from 'react';
-import { PlatformSelect } from './PlatformSelect';
-import { SchemeSelect } from './SchemeSelect';
-import { WebviewTypeSelect } from './WebviewTypeSelect';
-import { HasMouseCheckbox } from './HasMouseCheckbox';
-import { ViewHeightSelect } from './ViewHeightSelect';
-import { ViewWidthSelect } from './ViewWidthSelect';
-// import { IntegrationSelect } from '../IntegrationSelect';
-import './Settings.css';
-import { Platform } from '@vkui';
-import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
+import React, { Fragment } from "react";
+import { PlatformSelect } from "./PlatformSelect";
+import { AppearanceSelect } from "./AppearanceSelect";
+import { WebviewTypeSelect } from "./WebviewTypeSelect";
+import { HasMouseCheckbox } from "./HasMouseCheckbox";
+import { ViewHeightSelect } from "./ViewHeightSelect";
+import { ViewWidthSelect } from "./ViewWidthSelect";
+import "./Settings.css";
+import { Platform, useAdaptivity, ViewWidth } from "@vkui";
+import { StyleGuideContext } from "../StyleGuide/StyleGuideRenderer";
 
-export const Settings = ({ layout }) => {
+export const Settings = ({ adaptivity, webviewType }) => {
+  const { viewWidth } = useAdaptivity();
+  const isMobile = viewWidth <= ViewWidth.MOBILE;
   return (
     <StyleGuideContext.Consumer>
       {(context) => {
         return (
           <div className="Settings">
             <div className="Settings__in">
-              {/* <IntegrationSelect*/}
-              {/*  onChange={(e) => context.setContext({ integration: e.target.value })}*/}
-              {/*  value={context.integration}*/}
-              {/* />*/}
               <PlatformSelect
                 onChange={(platform) => context.setContext({ platform })}
                 value={context.platform}
               />
-              <SchemeSelect
-                onChange={(scheme) => context.setContext({ scheme })}
-                value={context.scheme}
-                disabled={context.platform === Platform.VKCOM}
+              <AppearanceSelect
+                onChange={(appearance) => context.setContext({ appearance })}
+                value={context.appearance}
               />
-              {layout &&
+              {webviewType && (
+                <WebviewTypeSelect
+                  onChange={(v) => context.setContext({ webviewType: v })}
+                  value={context.webviewType}
+                />
+              )}
+              {adaptivity && !isMobile && (
                 <Fragment>
-                  <WebviewTypeSelect
-                    onChange={(webviewType) => context.setContext({ webviewType })}
-                    value={context.webviewType}
-                  />
                   <ViewHeightSelect
                     onChange={(height) => context.setContext({ height })}
                     value={context.height}
@@ -51,7 +49,7 @@ export const Settings = ({ layout }) => {
                     disabled={context.platform === Platform.VKCOM}
                   />
                 </Fragment>
-              }
+              )}
             </div>
           </div>
         );

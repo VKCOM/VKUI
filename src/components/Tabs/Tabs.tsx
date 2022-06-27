@@ -1,35 +1,44 @@
-import { FunctionComponent, HTMLAttributes, createContext } from 'react';
-import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
-import { HasRootRef } from '../../types';
-import { usePlatform } from '../../hooks/usePlatform';
-import { IOS } from '../../lib/platform';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import * as React from "react";
+import { getClassName } from "../../helpers/getClassName";
+import { classNames } from "../../lib/classNames";
+import { HasRootRef } from "../../types";
+import { usePlatform } from "../../hooks/usePlatform";
+import { IOS } from "../../lib/platform";
+import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
+import "./Tabs.css";
 
-export interface TabsProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement>, AdaptivityProps {
-  mode?: 'default' | 'buttons' | 'segmented';
+export interface TabsProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    HasRootRef<HTMLDivElement>,
+    AdaptivityProps {
+  mode?: "default" | "buttons" | "segmented";
 }
 
-export const TabsModeContext = createContext<TabsProps['mode']>('default');
+export const TabsModeContext =
+  React.createContext<TabsProps["mode"]>("default");
 
-const Tabs: FunctionComponent<TabsProps> = ({
+const TabsComponent: React.FunctionComponent<TabsProps> = ({
   children,
-  mode,
+  mode = "default",
   getRootRef,
   sizeX,
   ...restProps
 }: TabsProps) => {
   const platform = usePlatform();
 
-  if (platform !== IOS && mode === 'segmented') {
-    mode = 'default';
+  if (platform !== IOS && mode === "segmented") {
+    mode = "default";
   }
 
   return (
     <div
       {...restProps}
       ref={getRootRef}
-      vkuiClass={classNames(getClassName('Tabs', platform), `Tabs--${mode}`, `Tabs--sizeX-${sizeX}`)}
+      vkuiClass={classNames(
+        getClassName("Tabs", platform),
+        `Tabs--${mode}`,
+        `Tabs--sizeX-${sizeX}`
+      )}
     >
       <div vkuiClass="Tabs__in">
         <TabsModeContext.Provider value={mode}>
@@ -40,8 +49,9 @@ const Tabs: FunctionComponent<TabsProps> = ({
   );
 };
 
-Tabs.defaultProps = {
-  mode: 'default',
-};
+/**
+ * @see https://vkcom.github.io/VKUI/#/Tabs
+ */
+export const Tabs = withAdaptivity(TabsComponent, { sizeX: true });
 
-export default withAdaptivity(Tabs, { sizeX: true });
+Tabs.displayName = "Tabs";

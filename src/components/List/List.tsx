@@ -1,29 +1,31 @@
-import { FunctionComponent, HTMLAttributes, useMemo, useState } from 'react';
-import { classNames } from '../../lib/classNames';
-import { getClassName } from '../../helpers/getClassName';
-import { usePlatform } from '../../hooks/usePlatform';
-import { ListContext } from './ListContext';
+import * as React from "react";
+import { classNames } from "../../lib/classNames";
+import { getClassName } from "../../helpers/getClassName";
+import { usePlatform } from "../../hooks/usePlatform";
+import { ListContext } from "./ListContext";
+import "./List.css";
 
-const List: FunctionComponent<HTMLAttributes<HTMLDivElement>> = ({
-  children,
-  ...restProps
-}: HTMLAttributes<HTMLDivElement>) => {
+/**
+ * @see https://vkcom.github.io/VKUI/#/List
+ */
+export const List: React.FunctionComponent<
+  React.HTMLAttributes<HTMLDivElement>
+> = ({ children, ...restProps }: React.HTMLAttributes<HTMLDivElement>) => {
   const platform = usePlatform();
-  const [isDragging, toggleDrag] = useState(false);
+  const [isDragging, toggleDrag] = React.useState(false);
 
   return (
     <div
       role="list"
       {...restProps}
-      vkuiClass={classNames(getClassName('List', platform), {
-        'List--dragging': isDragging,
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
+      vkuiClass={classNames(getClassName("List", platform), {
+        "List--dragging": isDragging,
       })}
     >
-      <ListContext.Provider value={useMemo(() => ({ toggleDrag }), [])}>
+      <ListContext.Provider value={React.useMemo(() => ({ toggleDrag }), [])}>
         {children}
       </ListContext.Provider>
     </div>
   );
 };
-
-export default List;

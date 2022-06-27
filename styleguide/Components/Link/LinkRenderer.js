@@ -1,4 +1,4 @@
-import { Link } from '@vkui';
+import { Link } from "@vkui";
 
 export const LinkRenderer = Link;
 

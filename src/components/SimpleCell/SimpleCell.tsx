@@ -1,49 +1,41 @@
-import { ReactNode, FC, ElementType, HTMLAttributes } from 'react';
-import { classNames } from '../../lib/classNames';
-import { getClassName } from '../../helpers/getClassName';
-import Tappable, { TappableProps } from '../Tappable/Tappable';
-import { Icon24Chevron } from '@vkontakte/icons';
-import { IOS } from '../../lib/platform';
-import { usePlatform } from '../../hooks/usePlatform';
-import { hasReactNode } from '../../lib/utils';
-import { withAdaptivity, SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
-import Title from '../Typography/Title/Title';
-import Text from '../Typography/Text/Text';
-import Caption from '../Typography/Caption/Caption';
+import * as React from "react";
+import { HasComponent } from "../../types";
+import { classNames } from "../../lib/classNames";
+import { getClassName } from "../../helpers/getClassName";
+import { TappableProps, Tappable } from "../Tappable/Tappable";
+import { Icon24Chevron } from "@vkontakte/icons";
+import { ANDROID, IOS } from "../../lib/platform";
+import { usePlatform } from "../../hooks/usePlatform";
+import { hasReactNode } from "../../lib/utils";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { withAdaptivity, SizeType } from "../../hoc/withAdaptivity";
+import { Title } from "../Typography/Title/Title";
+import { Text } from "../Typography/Text/Text";
+import { Subhead } from "../Typography/Subhead/Subhead";
+import { Headline } from "../Typography/Headline/Headline";
+import "./SimpleCell.css";
 
-interface SimpleCellTypographyProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {}
-
-const SimpleCellTypography: FC<SimpleCellTypographyProps> = withAdaptivity((props: SimpleCellTypographyProps) => {
-  const { sizeY, children, ...restProps } = props;
-
-  if (sizeY === SizeType.COMPACT) {
-    return <Text weight="regular" {...restProps}>{children}</Text>;
-  }
-
-  return <Title level="3" weight="regular" {...restProps}>{children}</Title>;
-}, { sizeY: true });
-
-export interface SimpleCellOwnProps {
+export interface SimpleCellOwnProps extends HasComponent {
   /**
    * Иконка 28 или `<Avatar size={28|32|40|48|72} />`
    */
-  before?: ReactNode;
+  before?: React.ReactNode;
   /**
    * Иконка 12 или `<Badge />`. Добавится справа от текста `children`.
    */
-  badge?: ReactNode;
+  badge?: React.ReactNode;
   /**
    * Контейнер для текста справа от `children`.
    */
-  indicator?: ReactNode;
+  indicator?: React.ReactNode;
   /**
    * Иконка 24|28 или `<Switch />`. Располагается справа от `indicator`.
    */
-  after?: ReactNode;
+  after?: React.ReactNode;
   /**
    * Контейнер для текста под `children`.
    */
-  description?: ReactNode;
+  description?: React.ReactNode;
   /**
    * Убирает анимацию нажатия
    */
@@ -53,12 +45,29 @@ export interface SimpleCellOwnProps {
    */
   expandable?: boolean;
   multiline?: boolean;
-  Component?: ElementType;
 }
 
 export interface SimpleCellProps extends SimpleCellOwnProps, TappableProps {}
 
-const SimpleCell: FC<SimpleCellProps> = ({
+type SimpleCellTypographyProps = React.HTMLAttributes<HTMLDivElement> &
+  HasComponent;
+
+const SimpleCellTypography: React.FC<SimpleCellTypographyProps> = (
+  props: SimpleCellTypographyProps
+) => {
+  const { sizeY } = useAdaptivity();
+  const platform = usePlatform();
+
+  if (sizeY === SizeType.COMPACT) {
+    return <Text {...props} />;
+  } else if (platform === ANDROID) {
+    return <Headline Component="span" weight="3" {...props} />;
+  } else {
+    return <Title Component="span" level="3" weight="3" {...props} />;
+  }
+};
+
+const SimpleCellComponent: React.FC<SimpleCellProps> = ({
   badge,
   before,
   indicator,
@@ -69,47 +78,58 @@ const SimpleCell: FC<SimpleCellProps> = ({
   multiline,
   sizeY,
   ...restProps
-}) => {
+}: SimpleCellProps) => {
   const platform = usePlatform();
-  const hasAfter = hasReactNode(after) || expandable && platform === IOS;
+  const hasAfter = hasReactNode(after) || (expandable && platform === IOS);
 
   return (
     <Tappable
       {...restProps}
-      vkuiClass={
-        classNames(
-          getClassName('SimpleCell', platform),
-          {
-            'SimpleCell--exp': expandable,
-            'SimpleCell--mult': multiline,
-          },
-          `SimpleCell--sizeY-${sizeY}`,
-        )
-      }
+      // eslint-disable-next-line vkui/no-object-expression-in-arguments
+      vkuiClass={classNames(
+        getClassName("SimpleCell", platform),
+        {
+          "SimpleCell--exp": expandable,
+          "SimpleCell--mult": multiline,
+        },
+        `SimpleCell--sizeY-${sizeY}`
+      )}
     >
       {before}
       <div vkuiClass="SimpleCell__main">
         <div vkuiClass="SimpleCell__content">
-          <SimpleCellTypography vkuiClass="SimpleCell__children">{children}</SimpleCellTypography>
-          {hasReactNode(badge) &&
-            <span vkuiClass="SimpleCell__badge">
-              {badge}
-            </span>
-          }
+          <SimpleCellTypography vkuiClass="SimpleCell__children">
+            {children}
+          </SimpleCellTypography>
+          {hasReactNode(badge) && (
+            <span vkuiClass="SimpleCell__badge">{badge}</span>
+          )}
         </div>
-        {description && <Caption weight="regular" level="1" vkuiClass="SimpleCell__description">{description}</Caption>}
+        {description && (
+          <Subhead Component="span" vkuiClass="SimpleCell__description">
+            {description}
+          </Subhead>
+        )}
       </div>
-      {hasReactNode(indicator) &&
-        <SimpleCellTypography vkuiClass="SimpleCell__indicator">{indicator}</SimpleCellTypography>
-      }
-      {hasAfter &&
+      {hasReactNode(indicator) && (
+        <SimpleCellTypography
+          Component="span"
+          vkuiClass="SimpleCell__indicator"
+        >
+          {indicator}
+        </SimpleCellTypography>
+      )}
+      {hasAfter && (
         <div vkuiClass="SimpleCell__after">
           {after}
           {expandable && platform === IOS && <Icon24Chevron />}
         </div>
-      }
+      )}
     </Tappable>
   );
 };
 
-export default withAdaptivity(SimpleCell, { sizeY: true });
+/**
+ * @see https://vkcom.github.io/VKUI/#/SimpleCell
+ */
+export const SimpleCell = withAdaptivity(SimpleCellComponent, { sizeY: true });

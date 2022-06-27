@@ -1,14 +1,20 @@
-import { AllHTMLAttributes, FC } from 'react';
-import Caption from '../Typography/Caption/Caption';
+import * as React from "react";
+import { HasComponent } from "../../types";
+import { Caption } from "../Typography/Caption/Caption";
+import "./Footer.css";
 
-type FooterProps = AllHTMLAttributes<HTMLElement>;
+export type FooterProps = React.AllHTMLAttributes<HTMLElement> & HasComponent;
 
-const Footer: FC<FooterProps> = ({ children, ...restProps }: FooterProps) => {
+/**
+ * @see https://vkcom.github.io/VKUI/#/Footer
+ */
+export const Footer: React.FC<FooterProps> = ({
+  children,
+  ...restProps
+}: FooterProps) => {
   return (
-    <Caption Component="footer" {...restProps} level="1" weight="regular" vkuiClass="Footer">
+    <Caption Component="footer" {...restProps} vkuiClass="Footer">
       {children}
     </Caption>
   );
 };
-
-export default Footer;

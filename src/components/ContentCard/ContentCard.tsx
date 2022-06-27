@@ -1,80 +1,150 @@
-import { FC, ImgHTMLAttributes, ReactNode } from 'react';
-import Card, { CardProps } from '../Card/Card';
-import Caption from '../Typography/Caption/Caption';
-import Title from '../Typography/Title/Title';
-import Text from '../Typography/Text/Text';
-import Tappable from '../Tappable/Tappable';
-import { getClassName } from '../../helpers/getClassName';
-import { usePlatform } from '../../hooks/usePlatform';
-import { hasReactNode } from '../../lib/utils';
-import { HasRef, HasRootRef } from '../../types';
+import * as React from "react";
+import { Card, CardProps } from "../Card/Card";
+import { Caption } from "../Typography/Caption/Caption";
+import { Headline } from "../Typography/Headline/Headline";
+import { Text } from "../Typography/Text/Text";
+import { TappableProps, Tappable } from "../Tappable/Tappable";
+import { hasReactNode } from "../../lib/utils";
+import { warnOnce } from "../../lib/warnOnce";
+import { HasRef, HasRootRef } from "../../types";
+import { classNames } from "../../lib/classNames";
+import "./ContentCard.css";
 
-export interface ContentCardProps extends HasRootRef<HTMLDivElement>, ImgHTMLAttributes<HTMLImageElement>, HasRef<HTMLImageElement> {
+export interface ContentCardProps
+  extends HasRootRef<HTMLDivElement>,
+    Omit<TappableProps, "getRootRef" | "crossOrigin">,
+    Omit<
+      React.ImgHTMLAttributes<HTMLImageElement>,
+      keyof React.HTMLAttributes<HTMLImageElement>
+    >,
+    HasRef<HTMLImageElement> {
   /**
    Текст над заголовком
    */
-  subtitle?: ReactNode;
+  subtitle?: React.ReactNode;
   /**
    Заголовок
    */
-  header?: ReactNode;
+  header?: React.ReactNode;
   /**
    Текст
    */
-  text?: ReactNode;
+  text?: React.ReactNode;
   /**
    Нижний текст
    */
-  caption?: ReactNode;
+  caption?: React.ReactNode;
   /**
-    URL или путь к изображению
+    @deprecated будет удалено в 5.0.0. Используйте src
    */
   image?: string;
   /**
     Максимальная высота изображения
    */
   maxHeight?: number;
-  /**
-    Аналогично alt для img
-   */
-  alt?: string;
-  /**
-    Отключает Tappable у карточки
-   */
-  disabled?: boolean;
-  /**
-   В точности как у `<Card/>`
-   */
-  mode?: CardProps['mode'];
+  mode?: CardProps["mode"];
 }
 
-const ContentCard: FC<ContentCardProps> = (props: ContentCardProps) => {
-  const { getRef, onClick, subtitle, header, text, caption, className, image, maxHeight, disabled, mode, style, getRootRef, ...restProps } = props;
-  const platform = usePlatform();
+const warn = warnOnce("ContentCard");
+
+/**
+ * @see https://vkcom.github.io/VKUI/#/ContentCard
+ */
+export const ContentCard = ({
+  subtitle,
+  header,
+  text,
+  caption,
+  // card props
+  className,
+  mode = "shadow",
+  style,
+  getRootRef,
+  // img props
+  getRef,
+  maxHeight,
+  image,
+  src,
+  srcSet,
+  alt,
+  width,
+  height,
+  crossOrigin,
+  decoding,
+  loading,
+  referrerPolicy,
+  sizes,
+  useMap,
+  ...restProps
+}: ContentCardProps) => {
+  const source = image || src;
+
+  if (image && process.env.NODE_ENV === "development") {
+    warn("Свойство image устарело и будет удалено в 5.0.0. Используйте src");
+  }
 
   return (
-    <Card mode={mode} getRootRef={getRootRef} vkuiClass={getClassName('ContentCard', platform)} style={style} className={className}>
+    <Card
+      mode={mode}
+      getRootRef={getRootRef}
+      vkuiClass={classNames(
+        "ContentCard",
+        restProps.disabled && "ContentCard--disabled"
+      )}
+      style={style}
+      className={className}
+    >
       <Tappable
-        Component="div"
-        disabled={disabled || typeof onClick !== 'function'}
-        role="button"
-        onClick={onClick}
+        {...restProps}
+        disabled={restProps.disabled || (!restProps.onClick && !restProps.href)}
+        hasHover={false}
+        hasActive={false}
         vkuiClass="ContentCard__tappable"
       >
-        {image && <img {...restProps} ref={getRef} src={image} vkuiClass="ContentCard__img" style={{ maxHeight }} width="100%" />}
+        {(source || srcSet) && (
+          <img
+            ref={getRef}
+            vkuiClass="ContentCard__img"
+            src={source}
+            srcSet={srcSet}
+            alt={alt}
+            crossOrigin={crossOrigin}
+            decoding={decoding}
+            loading={loading}
+            referrerPolicy={referrerPolicy}
+            sizes={sizes}
+            useMap={useMap}
+            height={height}
+            style={{ maxHeight }}
+            width="100%"
+          />
+        )}
         <div vkuiClass="ContentCard__body">
-          {hasReactNode(subtitle) && <Caption caps vkuiClass="ContentCard__text" weight="semibold" level="3">{subtitle}</Caption>}
-          {hasReactNode(header) && <Title vkuiClass="ContentCard__text" weight="semibold" level="3">{header}</Title>}
-          {hasReactNode(text) && <Text vkuiClass="ContentCard__text" weight="regular">{text}</Text>}
-          {hasReactNode(caption) && <Caption vkuiClass="ContentCard__text" weight="regular" level="1">{caption}</Caption>}
+          {hasReactNode(subtitle) && (
+            <Caption
+              vkuiClass="ContentCard__text ContentCard__subtitle"
+              weight="1"
+              level="3"
+              caps
+            >
+              {subtitle}
+            </Caption>
+          )}
+          {hasReactNode(header) && (
+            <Headline vkuiClass="ContentCard__text" weight="2" level="1">
+              {header}
+            </Headline>
+          )}
+          {hasReactNode(text) && (
+            <Text vkuiClass="ContentCard__text">{text}</Text>
+          )}
+          {hasReactNode(caption) && (
+            <Caption vkuiClass="ContentCard__text ContentCard__caption">
+              {caption}
+            </Caption>
+          )}
         </div>
       </Tappable>
     </Card>
   );
 };
-
-ContentCard.defaultProps = {
-  mode: 'shadow',
-};
-
-export default ContentCard;

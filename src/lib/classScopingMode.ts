@@ -8,7 +8,9 @@ export const __controller = {
   set noConflict(v: boolean) {
     if (this._isSet && v !== this.noConflict) {
       setTimeout(() => {
-        throw new Error('[vkui]: Single VKUI instance can not have different globalClassName settings');
+        throw new Error(
+          "[vkui]: Single VKUI instance can not have different globalClassName settings"
+        );
       }, 0);
     }
     this._noConflict = v;

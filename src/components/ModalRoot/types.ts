@@ -1,6 +1,6 @@
 export enum ModalType {
-  PAGE = 'page',
-  CARD = 'card',
+  PAGE = "page",
+  CARD = "card",
 }
 
 export type TranslateRange = [number, number];
@@ -12,12 +12,26 @@ export interface ModalElements {
   innerElement?: HTMLElement | null;
   headerElement?: HTMLElement | null;
   contentElement?: HTMLElement | null;
-  footerElement?: HTMLElement | null;
 }
 
 export interface ModalsStateEntry extends ModalElements {
-  id: string;
-  onClose?: () => any;
+  id: string | null;
+  /**
+   * Событие начала открытия модалки.
+   */
+  onOpen?: VoidFunction;
+  /**
+   * Событие открытия модалки.
+   */
+  onOpened?: VoidFunction;
+  /**
+   * Событие начала закрытия модалки.
+   */
+  onClose?: VoidFunction;
+  /**
+   * Событие закрытия модалки.
+   */
+  onClosed?: VoidFunction;
   type?: ModalType;
 
   settlingHeight?: number;
@@ -37,7 +51,6 @@ export interface ModalsStateEntry extends ModalElements {
    */
   translateYCurrent?: number;
 
-  touchStartTime?: Date;
   touchStartContentScrollTop?: number;
   touchMovePositive?: boolean | null;
   touchShiftYPercent?: number;
@@ -47,7 +60,7 @@ export interface ModalsStateEntry extends ModalElements {
   hidden?: boolean;
 
   contentScrolled?: boolean;
-  contentScrollStopTimeout?: number;
+  contentScrollStopTimeout?: ReturnType<typeof setTimeout>;
 
   expandedRange?: TranslateRange;
   collapsedRange?: TranslateRange;

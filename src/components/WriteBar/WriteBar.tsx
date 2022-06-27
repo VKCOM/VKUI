@@ -1,30 +1,28 @@
-import {
-  ChangeEventHandler,
-  FC,
-  ReactNode,
-  useEffect,
-  useRef,
-  TextareaHTMLAttributes,
-} from 'react';
-import { usePlatform } from '../../hooks/usePlatform';
-import { useExternRef } from '../../hooks/useExternRef';
-import { hasReactNode, isFunction } from '../../lib/utils';
-import { getClassName } from '../../helpers/getClassName';
-import { HasRef, HasRootRef } from '../../types';
+import * as React from "react";
+import { usePlatform } from "../../hooks/usePlatform";
+import { useExternRef } from "../../hooks/useExternRef";
+import { hasReactNode, isFunction } from "../../lib/utils";
+import { useDOM } from "../../lib/dom";
+import { getClassName } from "../../helpers/getClassName";
+import { HasRef, HasRootRef } from "../../types";
+import "./WriteBar.css";
 
-export interface WriteBarProps extends TextareaHTMLAttributes<HTMLTextAreaElement>, HasRootRef<HTMLDivElement>, HasRef<HTMLTextAreaElement> {
+export interface WriteBarProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+    HasRootRef<HTMLDivElement>,
+    HasRef<HTMLTextAreaElement> {
   /**
-   * Содержимое, отображаемое слево от поля ввода.
+   * Содержимое, отображаемое слева от поля ввода.
    */
-  before?: ReactNode;
+  before?: React.ReactNode;
   /**
    * Содержимое, отображаемое поверх поля ввода (актуально для iOS)
    */
-  inlineAfter?: ReactNode;
+  inlineAfter?: React.ReactNode;
   /**
    * Содержимое, отображаемое справа от поля ввода
    */
-  after?: ReactNode;
+  after?: React.ReactNode;
   /**
    * Вызывается при смене высоты поля ввода
    */
@@ -33,7 +31,10 @@ export interface WriteBarProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   children?: never;
 }
 
-export const WriteBar: FC<WriteBarProps> = (props: WriteBarProps) => {
+/**
+ * @see https://vkcom.github.io/VKUI/#/WriteBar
+ */
+export const WriteBar: React.FC<WriteBarProps> = (props: WriteBarProps) => {
   const platform = usePlatform();
   const {
     className,
@@ -54,17 +55,18 @@ export const WriteBar: FC<WriteBarProps> = (props: WriteBarProps) => {
 
   const isControlledOutside = value != null;
 
+  const { window } = useDOM();
   const textareaRef = useExternRef(getRef);
-  const textareaMinHeightRef = useRef<number | null>(null);
+  const textareaMinHeightRef = React.useRef<number | null>(null);
 
-  const resize = () => {
+  const resize = React.useCallback(() => {
     const textareaEl = textareaRef.current;
     if (!textareaEl) {
       return;
     }
 
     const { offsetHeight, scrollHeight } = textareaEl;
-    const style = window.getComputedStyle(textareaEl);
+    const style = window!.getComputedStyle(textareaEl);
     const paddingTop = parseInt(style.paddingTop);
     const paddingBottom = parseInt(style.paddingBottom);
 
@@ -78,17 +80,20 @@ export const WriteBar: FC<WriteBarProps> = (props: WriteBarProps) => {
       diff = 0;
     }
 
-    textareaEl.style.height = '0px';
+    textareaEl.style.height = "0px";
 
     const height = textareaEl.scrollHeight - diff / 4;
-    textareaEl.style.height = String(Math.max(height, textareaMinHeightRef.current)) + 'px';
+    textareaEl.style.height =
+      String(Math.max(height, textareaMinHeightRef.current)) + "px";
 
     if (isFunction(onHeightChange)) {
       onHeightChange();
     }
-  };
+  }, [onHeightChange, textareaRef, window]);
 
-  const onTextareaChange: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
+  const onTextareaChange: React.ChangeEventHandler<HTMLTextAreaElement> = (
+    event
+  ) => {
     if (isFunction(onChange)) {
       onChange(event);
     }
@@ -98,23 +103,21 @@ export const WriteBar: FC<WriteBarProps> = (props: WriteBarProps) => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     resize();
-  }, [value]);
+  }, [resize, value]);
 
   return (
     <div
       ref={getRootRef}
-      vkuiClass={getClassName('WriteBar', platform)}
+      vkuiClass={getClassName("WriteBar", platform)}
       className={className}
       style={style}
     >
       <form vkuiClass="WriteBar__form" onSubmit={(e) => e.preventDefault()}>
-        {hasReactNode(before) &&
-        <div vkuiClass="WriteBar__before">
-          {before}
-        </div>
-        }
+        {hasReactNode(before) && (
+          <div vkuiClass="WriteBar__before">{before}</div>
+        )}
 
         <div vkuiClass="WriteBar__formIn">
           <textarea
@@ -125,18 +128,12 @@ export const WriteBar: FC<WriteBarProps> = (props: WriteBarProps) => {
             value={value}
           />
 
-          {hasReactNode(inlineAfter) &&
-          <div vkuiClass="WriteBar__inlineAfter">
-            {inlineAfter}
-          </div>
-          }
+          {hasReactNode(inlineAfter) && (
+            <div vkuiClass="WriteBar__inlineAfter">{inlineAfter}</div>
+          )}
         </div>
 
-        {hasReactNode(after) &&
-        <div vkuiClass="WriteBar__after">
-          {after}
-        </div>
-        }
+        {hasReactNode(after) && <div vkuiClass="WriteBar__after">{after}</div>}
       </form>
     </div>
   );

@@ -1,14 +1,14 @@
-import { FC, HTMLAttributes } from 'react';
-import { classNames } from '../../lib/classNames';
-import { usePlatform } from '../../hooks/usePlatform';
-import { getClassName } from '../../helpers/getClassName';
+import * as React from "react";
+import { classNames } from "../../lib/classNames";
+import "./Spacing.css";
 
-export interface SpacingProps extends HTMLAttributes<HTMLDivElement> {
+export interface SpacingProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Высота спэйсинга
    */
   size?: number;
   /**
+   * @deprecated Это свойство устарело и будет удалено в 5.0.0. Используйте [`Separator`](#/Separator) вместе с Spacing.
    * Настройка положения сепаратора:
    *
    * - separator=false (default) - без сепаратора
@@ -16,11 +16,19 @@ export interface SpacingProps extends HTMLAttributes<HTMLDivElement> {
    * - separator='top'
    * - separator='bottom'
    */
-  separator?: boolean | 'top' | 'bottom' | 'center';
+  separator?: boolean | "top" | "bottom" | "center";
+  children?: React.ReactNode;
 }
 
-export const Spacing: FC<SpacingProps> = ({ size, separator, style, ...restProps }: SpacingProps) => {
-  const platfrom = usePlatform();
+/**
+ * @see https://vkcom.github.io/VKUI/#/Spacing
+ */
+export const Spacing = ({
+  size = 8,
+  separator,
+  style,
+  ...restProps
+}: SpacingProps) => {
   const styles = {
     height: size,
     ...style,
@@ -30,17 +38,15 @@ export const Spacing: FC<SpacingProps> = ({ size, separator, style, ...restProps
     <div
       {...restProps}
       aria-hidden="true"
-      vkuiClass={classNames(getClassName('Spacing', platfrom), {
-        'Spacing--separator': !!separator,
-        'Spacing--separator-center': separator === true || separator === 'center',
-        'Spacing--separator-top': separator === 'top',
-        'Spacing--separator-bottom': separator === 'bottom',
-      })}
+      vkuiClass={classNames(
+        "Spacing",
+        !!separator && "Spacing--separator",
+        (separator === true || separator === "center") &&
+          "Spacing--separator-center",
+        separator === "top" && "Spacing--separator-top",
+        separator === "bottom" && "Spacing--separator-bottom"
+      )}
       style={styles}
     />
   );
-};
-
-Spacing.defaultProps = {
-  size: 8,
 };

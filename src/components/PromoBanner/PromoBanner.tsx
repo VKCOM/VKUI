@@ -1,15 +1,17 @@
-import { HTMLAttributes, useEffect, useMemo, useState, useCallback } from 'react';
-import { Icon24Dismiss } from '@vkontakte/icons';
-import Button from '../Button/Button';
-import SimpleCell from '../SimpleCell/SimpleCell';
-import Avatar from '../Avatar/Avatar';
-import Caption from '../Typography/Caption/Caption';
-import { usePlatform } from '../../hooks/usePlatform';
-import { getClassName } from '../../helpers/getClassName';
+import * as React from "react";
+import { Icon24Dismiss } from "@vkontakte/icons";
+import { Button } from "../Button/Button";
+import { SimpleCell } from "../SimpleCell/SimpleCell";
+import { Avatar } from "../Avatar/Avatar";
+import { Caption } from "../Typography/Caption/Caption";
+import { usePlatform } from "../../hooks/usePlatform";
+import { getClassName } from "../../helpers/getClassName";
+import { warnOnce } from "../../lib/warnOnce";
+import "./PromoBanner.css";
 
 type StatsType =
-  | 'playbackStarted' // Начало показа
-  | 'click'; // Клик по баннеру
+  | "playbackStarted" // Начало показа
+  | "click"; // Клик по баннеру
 
 type BannerData = {
   title?: string;
@@ -36,7 +38,7 @@ type BannerData = {
   ageRestriction?: number;
 };
 
-export interface PromoBannerProps extends HTMLAttributes<HTMLDivElement> {
+export interface PromoBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Данные рекламного баннера, полученные из VKWebAppGetAds */
   bannerData: BannerData;
   /** Флаг скрытия кнопки закрытия рекламы */
@@ -45,7 +47,12 @@ export interface PromoBannerProps extends HTMLAttributes<HTMLDivElement> {
   onClose: () => void;
 }
 
-const PromoBanner = (props: PromoBannerProps) => {
+const warn = warnOnce("PromoBanner");
+
+/**
+ * @see https://vkcom.github.io/VKUI/#/PromoBanner
+ */
+export const PromoBanner = (props: PromoBannerProps) => {
   const platform = usePlatform();
   const { bannerData = {}, onClose, ...restProps } = props;
 
@@ -54,35 +61,51 @@ const PromoBanner = (props: PromoBannerProps) => {
       ? parseInt(bannerData.ageRestrictions)
       : bannerData.ageRestriction;
 
-  const [currentPixel, setCurrentPixel] = useState('');
+  if (bannerData.ageRestriction && process.env.NODE_ENV === "development") {
+    warn(
+      "Свойство bannerData.ageRestriction устарело и будет удалено в 5.0.0. Используйте bannerData.ageRestrictions"
+    );
+  }
 
-  const statsPixels = useMemo(
+  const [currentPixel, setCurrentPixel] = React.useState("");
+
+  const statsPixels = React.useMemo(
     () =>
       (bannerData.statistics
-        ? bannerData.statistics.reduce((acc, item) => ({ ...acc, [item.type]: item.url }), {})
+        ? bannerData.statistics.reduce(
+            (acc, item) => ({ ...acc, [item.type]: item.url }),
+            {}
+          )
         : {}) as Record<StatsType, string | void>,
-    [bannerData.statistics],
+    [bannerData.statistics]
   );
 
-  const onClick = useCallback(() => setCurrentPixel(statsPixels.click || ''), [statsPixels.click]);
+  const onClick = React.useCallback(
+    () => setCurrentPixel(statsPixels.click || ""),
+    [statsPixels.click]
+  );
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (statsPixels.playbackStarted) {
       setCurrentPixel(statsPixels.playbackStarted);
     }
   }, [statsPixels.playbackStarted]);
 
   return (
-    <div vkuiClass={getClassName('PromoBanner', platform)} {...restProps}>
+    <div vkuiClass={getClassName("PromoBanner", platform)} {...restProps}>
       <div vkuiClass="PromoBanner__head">
-        <Caption weight="regular" level="1" vkuiClass="PromoBanner__label">{bannerData.advertisingLabel || 'Advertisement'}</Caption>
-        {ageRestrictions != null && <Caption weight="regular" level="1" vkuiClass="PromoBanner__age">{ageRestrictions}+</Caption>}
+        <Caption vkuiClass="PromoBanner__label">
+          {bannerData.advertisingLabel || "Advertisement"}
+        </Caption>
+        {ageRestrictions != null && (
+          <Caption vkuiClass="PromoBanner__age">{ageRestrictions}+</Caption>
+        )}
 
-        {!props.isCloseButtonHidden &&
+        {!props.isCloseButtonHidden && (
           <div vkuiClass="PromoBanner__close" onClick={props.onClose}>
             <Icon24Dismiss />
           </div>
-        }
+        )}
       </div>
       <SimpleCell
         href={bannerData.trackingLink}
@@ -90,7 +113,12 @@ const PromoBanner = (props: PromoBannerProps) => {
         rel="nofollow noopener noreferrer"
         target="_blank"
         before={
-          <Avatar mode="image" size={48} src={bannerData.iconLink} alt={bannerData.title} />
+          <Avatar
+            mode="image"
+            size={48}
+            src={bannerData.iconLink}
+            alt={bannerData.title}
+          />
         }
         after={<Button mode="outline">{bannerData.ctaText}</Button>}
         description={bannerData.domain}
@@ -98,13 +126,11 @@ const PromoBanner = (props: PromoBannerProps) => {
         {bannerData.title}
       </SimpleCell>
 
-      {currentPixel.length > 0 &&
+      {currentPixel.length > 0 && (
         <div vkuiClass="PromoBanner__pixels">
           <img src={currentPixel} alt="" />
         </div>
-      }
+      )}
     </div>
   );
 };
-
-export default PromoBanner;

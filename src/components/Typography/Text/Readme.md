@@ -1,17 +1,19 @@
-Упрощения в Android-версии (происходят автоматически):
-* `semibold` превращается в `medium`
+```jsx { "props": { "layout": false, "iframe": false } }
+<div style={{ padding: 20 }}>
+  <Text>Text</Text>
+</div>
+```
 
-```jsx
-<View activePanel="test">
-  <Panel id="test">
-    <PanelHeader>Text</PanelHeader>
-    <Group>
-      <Div>
-        <Text weight="regular" style={{ marginBottom: 16 }}>Text regular</Text>
-        <Text weight="medium" style={{ marginBottom: 16 }}>Text medium</Text>
-        <Text weight="semibold">Text semibold</Text>
-      </Div>
-    </Group>
-  </Panel>
-</View>
+## Кастомизация
+
+Есть возможность переопределить жирность.
+
+```jsx { "props": { "layout": false, "iframe": false } }
+<div style={{ padding: 20 }}>
+  <Text weight="1">Text weight 1</Text>
+  <Spacing size={16} />
+  <Text weight="2">Text weight 2</Text>
+  <Spacing size={16} />
+  <Text weight="3">Text weight 3</Text>
+</div>
 ```
