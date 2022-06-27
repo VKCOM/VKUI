@@ -1,0 +1,35 @@
+name: "Clear styleguide for closed PR"
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  clear_styleguide:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+      - name: Remove styleguide
+        run: rm -rf pull/${{ github.event.pull_request.number }}
+      - name: Unpublish styleguide
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Remove PR ${{ github.event.pull_request.number }}"
+          branch: gh-pages
+
+  patch:
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'patch')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+      - name: Set Git credentials
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Action"
+      - run: node ./.github/gitflow/patch.js
+        env:
+          GITHUB_PULL_NUMBER: ${{ github.event.number }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
