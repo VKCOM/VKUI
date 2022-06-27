@@ -14,6 +14,7 @@ import {
   withAdaptivity,
 } from "../../hoc/withAdaptivity";
 import { PlatformType, IOS, VKCOM, ANDROID } from "../../lib/platform";
+import { getTitleFromChildren } from "../../lib/utils";
 import { Spinner } from "../Spinner/Spinner";
 import { Headline } from "../Typography/Headline/Headline";
 import "./Button.css";
@@ -159,8 +160,13 @@ const ButtonComponent: React.FC<ButtonProps> = ({
   ...restProps
 }) => {
   const platform = usePlatform();
+  const hasChildrenIcon = children && getTitleFromChildren(children) === "";
   const hasIcons = Boolean(before || after);
-  const hasIconOnly = !children && Boolean(after) !== Boolean(before);
+  const hasIconOnly =
+    (((hasChildrenIcon && Boolean(after) && Boolean(before)) !==
+      hasChildrenIcon) !==
+      Boolean(after)) !==
+    Boolean(before);
   const { resolvedMode, resolvedAppearance } = resolveButtonAppearance(
     appearance,
     mode

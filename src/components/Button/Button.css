@@ -176,8 +176,10 @@
 }
 
 .Button--singleIcon .Button__after,
+.Button--singleIcon .Button__content,
 .Button--singleIcon .Button__before,
 .Button--lvl-tertiary.Button--singleIcon .Button__after,
+.Button--lvl-tertiary.Button--singleIcon .Button__content,
 .Button--lvl-tertiary.Button--singleIcon .Button__before {
   margin-left: auto;
   margin-right: auto;
