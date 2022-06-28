@@ -97,7 +97,7 @@
     margin-top: 2px;
     margin-bottom: -6px;
     margin-left: calc(
-      (var(--vkui--size_button_tertiary_small_padding_horizontal--regular) * -1)
+      -1 * var(--vkui--size_button_tertiary_small_padding_horizontal--regular)
     );
     margin-right: 0;
     position: static;
