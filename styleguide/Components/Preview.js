@@ -32,7 +32,7 @@ const Layout = ({ children }) => {
         )
       }
     >
-      <SplitCol>{children}</SplitCol>
+      <SplitCol autoSpaced={platform !== VKCOM}>{children}</SplitCol>
     </SplitLayout>
   );
 };

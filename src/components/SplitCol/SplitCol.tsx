@@ -38,7 +38,7 @@ export interface SplitColProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Если true, то ширина контейнера становится 100% при ширине меньше чем `tablet`
    */
-  stretchOnMobile?: boolean;
+  stretchedOnMobile?: boolean;
 }
 
 /**
@@ -54,8 +54,8 @@ export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
     animate: _animate,
     fixed,
     style,
-    autoSpaced = true,
-    stretchOnMobile,
+    autoSpaced,
+    stretchedOnMobile,
     ...restProps
   } = props;
   const baseRef = React.useRef<HTMLDivElement>(null);
@@ -96,7 +96,7 @@ export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
         spaced === undefined && "SplitCol--spaced-none",
         autoSpaced && "SplitCol--spaced-auto",
         fixed && "SplitCol--fixed",
-        stretchOnMobile && "SplitCol--stretch-on-mobile"
+        stretchedOnMobile && "SplitCol--stretched-on-mobile"
       )}
     >
       <SplitColContext.Provider value={contextValue}>

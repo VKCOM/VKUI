@@ -20,15 +20,15 @@
   }
 }
 
-.SplitCol--viewWidth-smallTablet.SplitCol--stretch-on-mobile,
-.SplitCol--viewWidth-mobile.SplitCol--stretch-on-mobile,
-.SplitCol--viewWidth-smallMobile.SplitCol--stretch-on-mobile {
+.SplitCol--viewWidth-smallTablet.SplitCol--stretched-on-mobile,
+.SplitCol--viewWidth-mobile.SplitCol--stretched-on-mobile,
+.SplitCol--viewWidth-smallMobile.SplitCol--stretched-on-mobile {
   width: 100% !important;
   max-width: 100% !important;
 }
 
 @media (--view-width-smallTabletMinus) {
-  .SplitCol--viewWidth-none.SplitCol--stretch-on-mobile {
+  .SplitCol--viewWidth-none.SplitCol--stretched-on-mobile {
     width: 100% !important;
     max-width: 100% !important;
   }

@@ -42,7 +42,7 @@ const Example = () => {
   return (
     <AppRoot>
       <SplitLayout header={<PanelHeader separator={false} />}>
-        <SplitCol>
+        <SplitCol autoSpaced>
           <View activePanel="main">
             <Panel id="main">
               <PanelHeader>VKUI</PanelHeader>

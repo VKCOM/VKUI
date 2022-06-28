@@ -72,24 +72,20 @@ const SideCol = () => {
 
 ```jsx static
 function App() {
-  const { viewWidth } = useAdaptivity();
+  const platform = usePlatform();
+  const isVKCOM = platform === VKCOM;
 
   // ...
 
-  <SplitLayout
-    header={
-      viewWidth >= ViewWidth.SMALL_TABLET && <PanelHeader separator={false} />
-    }
-  >
-    {viewWidth === ViewWidth.DESKTOP && (
-      <SplitCol width={280}>
-        <Panel id="nav">Navigation</Panel>
-      </SplitCol>
-    )}
-    <SplitCol
-      spaced={viewWidth >= ViewWidth.SMALL_TABLET}
-      animate={viewWidth <= ViewWidth.MOBILE}
-    >
+  <SplitLayout header={!isVKCOM && <PanelHeader separator={false} />}>
+    <ViewWidthConditionalRender
+      desktop={
+        <SplitCol width={280}>
+          <Panel id="nav">Navigation</Panel>
+        </SplitCol>
+      }
+    />
+    <SplitCol autoSpaced>
       <View activePanel="profile">
         <Panel id="profile">Profile</Panel>
       </View>
