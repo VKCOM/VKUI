@@ -205,7 +205,7 @@ const SubnavigationBarExample = () => {
                 <SubnavigationButton
                   before={<Icon24UserAddOutline />}
                   size="l"
-                  textLevel={!isVKCOM ? 3 : 1}
+                  textLevel={isVKCOM ? 1 : 3}
                   onClick={() => setActivePanel("add_friend")}
                 >
                   Добавить друга
