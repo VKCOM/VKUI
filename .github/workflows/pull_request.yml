@@ -4,7 +4,7 @@ on: ["pull_request"]
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
@@ -24,7 +24,7 @@ jobs:
             lint-results.json
             test-results.json
   test_e2e:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
         with:
@@ -53,7 +53,7 @@ jobs:
             __diff_output__/
             e2e-results.json
   styleguide:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
@@ -68,7 +68,7 @@ jobs:
           name: styleguide
           path: docs/
   size:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       CI_JOB_NUMBER: 1
     steps:
@@ -85,7 +85,7 @@ jobs:
           skip_step: install
           build_script: "size:ci"
   deploy_styleguide:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: styleguide
     # Skip deploy from forked repo or from dependabot
     if: ${{ (github.event.pull_request.base.repo.id == github.event.pull_request.head.repo.id) && (github.actor != 'dependabot[bot]') }}
@@ -122,7 +122,7 @@ jobs:
             ## 👀 Styleguide deployed
             See the styleguide for this PR at https://vkcom.github.io/VKUI/pull/${{ github.event.pull_request.number }}/
   report_tests:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs:
       - test
       - test_e2e
