@@ -222,7 +222,7 @@
   content: "";
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .PanelHeader--vkcom.PanelHeader--sizeX-none:not(.ModalPageHeader__in)::after {
     position: absolute;
     left: var(--thin-border);
@@ -242,7 +242,7 @@
   border-bottom: none;
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .PanelHeader--vkcom.PanelHeader--sizeX-none:not(.ModalPageHeader__in)
     .PanelHeader__in {
     border-top-left-radius: 8px;

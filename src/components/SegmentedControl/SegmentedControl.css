@@ -52,7 +52,7 @@
   height: 44px;
 }
 
-@media (--size-y-regular) {
+@media (--sizeY-regular) {
   .SegmentedControl--sizeY-none {
     height: 36px;
   }

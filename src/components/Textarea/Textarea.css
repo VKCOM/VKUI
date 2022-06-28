@@ -29,7 +29,7 @@
   max-height: 196px;
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .Textarea--sizeY-none .Textarea__el {
     padding-top: 7px;
     padding-bottom: 7px;

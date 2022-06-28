@@ -93,7 +93,7 @@
   display: block;
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .ModalPage--sizeX-none .ModalPage__dismiss {
     display: block;
   }
@@ -128,7 +128,7 @@
     max-height: calc(100vh - 32px);
   }
 
-  @media (--size-x-regular) {
+  @media (--sizeX-regular) {
     .ModalPage--sizeX-none .ModalPage__in {
       max-height: calc(100vh - 32px);
     }

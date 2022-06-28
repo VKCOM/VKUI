@@ -55,7 +55,7 @@
   padding-right: 12px;
 }
 
-@media (--size-x-compact) {
+@media (--sizeX-compact) {
   .CardGrid--sizeX-none.CardGrid--ios {
     padding-left: 12px;
     padding-right: 12px;
@@ -71,7 +71,7 @@
   padding-right: 16px;
 }
 
-@media (--size-x-compact) {
+@media (--sizeX-compact) {
   .CardGrid--sizeX-none.CardGrid--android {
     padding-left: 16px;
     padding-right: 16px;
@@ -87,7 +87,7 @@
   padding-right: 8px;
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .Group--none .CardGrid {
     padding-left: 8px;
     padding-right: 8px;

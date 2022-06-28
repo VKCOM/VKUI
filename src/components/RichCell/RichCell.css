@@ -106,7 +106,7 @@
   min-height: 60px;
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .RichCell--sizeY-none {
     min-height: 60px;
   }

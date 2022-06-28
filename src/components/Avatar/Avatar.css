@@ -198,7 +198,7 @@
   margin-bottom: 4px;
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .SimpleCell--sizeY-none > .Avatar--sz-28,
   .SimpleCell--sizeY-none > .Avatar--sz-32 {
     margin-top: 8px;

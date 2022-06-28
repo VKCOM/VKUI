@@ -199,7 +199,7 @@
   display: block;
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .Alert--sizeX-none.Alert--android {
     width: 416px;
   }

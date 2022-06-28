@@ -129,7 +129,7 @@
   border-radius: 0;
 }
 
-@media (--size-x-compact) {
+@media (--sizeX-compact) {
   .Tappable--sizeX-none {
     border-radius: 0;
   }

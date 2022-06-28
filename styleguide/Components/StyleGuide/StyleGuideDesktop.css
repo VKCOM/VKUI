@@ -1,4 +1,4 @@
-@media (--size-x-compact) {
+@media (--sizeX-compact) {
   .StyleGuideDesktop {
     display: none;
   }

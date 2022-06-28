@@ -2,7 +2,7 @@
   display: none;
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .SizeYRegular--sizeY-none {
     display: none;
   }
@@ -12,7 +12,7 @@
   display: none;
 }
 
-@media (--size-y-regular) {
+@media (--sizeY-regular) {
   .SizeYCompact--sizeY-none {
     display: none;
   }

@@ -44,7 +44,7 @@
   line-height: var(--vkui--font_headline1--line_height--regular);
 }
 
-@media (--size-y-regular) {
+@media (--sizeY-regular) {
   .Checkbox--sizeY-none:not(.Checkbox--vkcom) .Checkbox__content {
     font-size: var(--vkui--font_headline1--font_size--regular);
     line-height: var(--vkui--font_headline1--line_height--regular);
@@ -57,7 +57,7 @@
   line-height: var(--vkui--font_text--line_height--compact);
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .Checkbox--sizeY-none .Checkbox__content {
     font-size: var(--vkui--font_text--font_size--compact);
     line-height: var(--vkui--font_text--line_height--compact);
@@ -122,7 +122,7 @@
   margin-bottom: 8px;
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .Checkbox--sizeY-none {
     min-width: var(--vkui--size_field_height--compact);
     min-height: var(--vkui--size_field_height--compact);

@@ -38,7 +38,7 @@
   font-weight: var(--vkui--font_weight_accent3);
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .SegmentedControlOption__content--sizeY-none.SegmentedControlOption__content {
     font-size: var(--vkui--font_footnote--font_size--regular);
     line-height: var(--vkui--font_footnote--line_height--regular);

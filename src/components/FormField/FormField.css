@@ -102,7 +102,7 @@
   height: 36px;
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .FormField--sizeY-none .FormField__before,
   .FormField--sizeY-none .FormField__after {
     min-width: 36px;

@@ -87,7 +87,7 @@
   top: auto;
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .Snackbar--sizeX-none .Snackbar__content {
     flex-direction: column;
     align-items: flex-start;
@@ -160,7 +160,7 @@
   transform: translate3d(-140%, 0, 0);
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .Snackbar--sizeX-none {
     max-width: 328px;
     left: 0;

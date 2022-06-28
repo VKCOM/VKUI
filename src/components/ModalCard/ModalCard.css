@@ -60,7 +60,7 @@
   transition: opacity 340ms var(--android-easing);
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .ModalCard--sizeX-none {
     align-items: center;
   }

@@ -15,7 +15,7 @@
   padding-right: 4px;
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .ModalPageHeader--sizeX-none.ModalPageHeader--android {
     padding-left: 6px;
     padding-right: 6px;

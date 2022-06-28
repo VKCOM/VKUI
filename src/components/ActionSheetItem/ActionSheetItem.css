@@ -79,7 +79,7 @@
   font-weight: var(--vkui--font_weight_accent2);
 }
 
-@media (--size-y-regular) {
+@media (--sizeY-regular) {
   .ActionSheetItem--sizeY-none .ActionSheetItem__children,
   .ActionSheetItem--sizeY-none .ActionSheetItem__meta {
     font-size: var(--vkui--font_title2--font_size--regular);
@@ -408,7 +408,7 @@
   font-weight: var(--vkui--font_weight_accent2);
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .ActionSheetItem--sizeY-none .ActionSheetItem__meta,
   .ActionSheetItem--sizeY-none .ActionSheetItem__children {
     font-size: var(--vkui--font_text--font_size--compact);

@@ -8,7 +8,7 @@
   justify-content: center;
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .StyleGuideMobile {
     display: none;
   }

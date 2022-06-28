@@ -11,7 +11,7 @@
   padding-left: 20px;
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .TableOfContents--sizeX-none .TableOfContents__list .TableOfContents__list {
     padding-left: 20px;
   }
@@ -24,7 +24,7 @@
   padding-left: 32px;
 }
 
-@media (--size-x-compact) {
+@media (--sizeX-compact) {
   .TableOfContents--sizeX-none
     .TableOfContents__list
     .TableOfContents__list

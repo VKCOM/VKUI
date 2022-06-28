@@ -85,7 +85,7 @@
   display: none;
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .ModalCardBase--sizeX-none.ModalCardBase--ios .ModalCardBase__dismiss-ios {
     display: none;
   }
@@ -109,7 +109,7 @@
   display: block;
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .ModalCardBase--sizeX-none .ModalCardBase__dismiss {
     display: block;
   }

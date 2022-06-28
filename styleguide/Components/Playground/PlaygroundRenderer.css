@@ -2,7 +2,7 @@
   display: none;
 }
 
-@media (--size-x-compact) {
+@media (--sizeX-compact) {
   .Playground__editor--sizeX-none {
     display: none;
   }

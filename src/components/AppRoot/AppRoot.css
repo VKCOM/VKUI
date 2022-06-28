@@ -15,7 +15,7 @@
   background: var(--background_page);
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .vkui--sizeX-none {
     background: var(--background_page);
   }

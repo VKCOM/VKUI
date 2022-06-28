@@ -66,14 +66,14 @@ _Component.module.css_
   padding: 10px;
 }
 
-@media (--size-x-compact) {
+@media (--sizeX-compact) {
   .Component--sizeX-none {
     padding: 10px;
   }
 }
 ```
 
-В данном случае мы задаём `padding: 10px;` для размера `sizeX-compact` и `padding: 20px;` для размера `sizeX-regular`. В `@media (--size-x-compact)` мы задаём `padding: 10px;` для компонента только если `sizeX` не переопределен.
+В данном случае мы задаём `padding: 10px;` для размера `sizeX-compact` и `padding: 20px;` для размера `sizeX-regular`. В `@media (--sizeX-compact)` мы задаём `padding: 10px;` для компонента только если `sizeX` не переопределен.
 
 ## Примечание
 
@@ -91,7 +91,7 @@ _Component.module.css_
   padding-right: 8px;
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   /* Применяем стили .Group--card если не задан `mode` и `sizeX=regular` */
   .Group--none .CardGrid {
     padding-left: 8px;

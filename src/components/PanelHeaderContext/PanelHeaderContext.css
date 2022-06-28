@@ -9,7 +9,7 @@
   height: auto;
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .PanelHeaderContext--sizeX-none.PanelHeaderContext--opened,
   .PanelHeaderContext--sizeX-none.PanelHeaderContext--closing {
     height: auto;
@@ -38,7 +38,7 @@
   display: block;
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .PanelHeaderContext--sizeX-none .PanelHeaderContext__fade {
     display: block;
   }
@@ -97,7 +97,7 @@
   background: var(--header_background);
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .PanelHeaderContext--sizeX-none.PanelHeaderContext--ios .List {
     overflow: hidden;
     border-radius: 12px;
@@ -125,7 +125,7 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.08), 0 8px 8px rgba(0, 0, 0, 0.16);
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .PanelHeaderContext--sizeX-none .PanelHeaderContext__in {
     padding: 12px 8px;
     box-sizing: border-box;

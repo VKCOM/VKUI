@@ -2,7 +2,7 @@
   display: none;
 }
 
-@media (--size-x-compact) {
+@media (--sizeX-compact) {
   .SizeXRegular--sizeX-none {
     display: none;
   }
@@ -12,7 +12,7 @@
   display: none;
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .SizeXCompact--sizeX-none {
     display: none;
   }

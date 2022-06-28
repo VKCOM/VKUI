@@ -125,7 +125,7 @@
   padding-bottom: 8px;
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .ActionSheet--sizeY-none.ActionSheet--desktop {
     padding-top: 8px;
     padding-bottom: 8px;

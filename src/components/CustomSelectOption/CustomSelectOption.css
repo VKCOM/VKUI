@@ -24,7 +24,7 @@
   min-height: 44px;
 }
 
-@media (--size-y-regular) {
+@media (--sizeY-regular) {
   .CustomSelectOption--sizeY-none {
     min-height: 44px;
   }

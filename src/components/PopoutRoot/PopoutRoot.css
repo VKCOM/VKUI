@@ -17,7 +17,7 @@
   position: absolute;
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .PopoutRoot--sizeX-none .PopoutRoot__popout {
     position: absolute;
   }

@@ -20,7 +20,7 @@
   display: none;
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .ComplexTypeTypeRenderer--sizeX-none {
     display: none;
   }
@@ -30,7 +30,7 @@
   display: none;
 }
 
-@media (--size-x-compact) {
+@media (--sizeX-compact) {
   .ComplexTypeDropdown--sizeX-none {
     display: none;
   }

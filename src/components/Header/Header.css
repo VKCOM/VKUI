@@ -147,7 +147,7 @@
   margin-top: -16px;
 }
 
-@media (--size-x-compact) {
+@media (--sizeX-compact) {
   .Group--none:not(:first-of-type) .Group__inner > .Header:first-child {
     margin-top: -16px;
   }
@@ -157,7 +157,7 @@
   margin-top: -4px;
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .Group--none
     > .Group__inner
     > .Header:not(.Header--mode-tertiary):first-child {

@@ -2,7 +2,7 @@
   display: none;
 }
 
-@media (--view-width-tabletPlus) {
+@media (--viewWidth-tabletPlus) {
   .ViewWidthConditionalRender__mobile--viewWidth-none {
     display: none;
   }
@@ -14,7 +14,7 @@
   display: none;
 }
 
-@media (--view-width-smallTabletMinus) {
+@media (--viewWidth-smallTabletMinus) {
   .ViewWidthConditionalRender__desktop--viewWidth-none {
     display: none;
   }

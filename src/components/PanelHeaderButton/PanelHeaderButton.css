@@ -101,7 +101,7 @@
   border-radius: 50%;
 }
 
-@media (--size-x-compact) {
+@media (--sizeX-compact) {
   .PanelHeaderBack--sizeX-none.PanelHeaderBack--ios .PanelHeaderButton__label {
     display: none;
   }

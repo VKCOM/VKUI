@@ -83,7 +83,7 @@
   margin-right: 0;
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .Group--none .CardScroll--l .Card:last-of-type {
     margin-right: 0;
   }

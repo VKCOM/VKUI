@@ -14,7 +14,7 @@
   padding: 0 var(--vkui--size_split_col_padding_horizontal--regular);
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .SplitCol--sizeX-none.SplitCol--spaced-none.SplitCol--spaced-auto {
     padding: 0 var(--vkui--size_split_col_padding_horizontal--regular);
   }
@@ -27,7 +27,7 @@
   max-width: 100% !important;
 }
 
-@media (--view-width-smallTabletMinus) {
+@media (--viewWidth-smallTabletMinus) {
   .SplitCol--viewWidth-none.SplitCol--stretched-on-mobile {
     width: 100% !important;
     max-width: 100% !important;

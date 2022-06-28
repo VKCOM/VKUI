@@ -120,7 +120,7 @@
   height: calc(2px + var(--vkui--font_subhead--line_height--compact) + 6px);
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .FormItem--sizeY-none.FormItem--withTop
     .FormItem__removable
     ~ .Removable__offset,
