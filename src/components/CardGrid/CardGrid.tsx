@@ -16,7 +16,7 @@ export interface CardGridProps
  */
 const CardGrid: React.FunctionComponent<CardGridProps> = ({
   children,
-  size,
+  size = "s",
   sizeX,
   ...restProps
 }: CardGridProps) => {
@@ -34,10 +34,6 @@ const CardGrid: React.FunctionComponent<CardGridProps> = ({
       {children}
     </div>
   );
-};
-
-CardGrid.defaultProps = {
-  size: "s",
 };
 
 // eslint-disable-next-line import/no-default-export
