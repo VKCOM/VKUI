@@ -17,6 +17,25 @@ module.exports = {
     "no-descending-specificity": null,
     "no-duplicate-selectors": null,
     "value-keyword-case": null,
+    "selector-class-pattern": null,
+    "custom-property-pattern": null,
+    "value-no-vendor-prefix": null,
+    "property-no-vendor-prefix": null,
+    "alpha-value-notation": "number",
+    /**
+     * https://caniuse.com/mdn-css_types_color_hsl_space_separated_parameters
+     */
+    "color-function-notation": "legacy",
+    /**
+     * // In Selectors Level 3, only a single simple selector was allowed as the argument to :not(), whereas Selectors Level 4 allows a selector list.
+     */
+    "selector-not-notation": "simple",
+    "function-no-unknown": [
+      true,
+      {
+        ignoreFunctions: ["constant"],
+      },
+    ],
     "length-zero-no-unit": [
       true,
       {
