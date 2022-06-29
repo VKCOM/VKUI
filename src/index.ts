@@ -325,6 +325,16 @@ export type { AdaptivityProps } from "./components/AdaptivityProvider/Adaptivity
 export { calcInitialsAvatarColor } from "./helpers/avatar";
 export { Popper } from "./components/Popper/Popper";
 export type { PopperProps } from "./components/Popper/Popper";
+export { getHoverClassName } from "./helpers/getHoverClassName";
+export { getMouseClassName } from "./helpers/getMouseClassName";
+export { getSizeXClassName } from "./helpers/getSizeXClassName";
+export { getSizeYClassName } from "./helpers/getSizeYClassName";
+export { getViewHeightClassName } from "./helpers/getViewHeightClassName";
+export { getViewWidthClassName } from "./helpers/getViewWidthClassName";
+export { SizeXConditionalRender } from "./components/SizeXConditionalRender/SizeXConditionalRender";
+export { SizeYConditionalRender } from "./components/SizeYConditionalRender/SizeYConditionalRender";
+export { DeviceConditionalRender } from "./components/DeviceConditionalRender/DeviceConditionalRender";
+export { ViewWidthConditionalRender } from "./components/ViewWidthConditionalRender/ViewWidthConditionalRender";
 
 /**
  * Types

@@ -40,7 +40,7 @@
   padding-right: 8px;
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .ModalPage--sizeX-none .Separator--padded {
     padding-left: 8px;
     padding-right: 8px;

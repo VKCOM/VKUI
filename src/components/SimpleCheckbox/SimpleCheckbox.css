@@ -84,7 +84,7 @@
   height: 20px;
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .SimpleCheckbox--sizeY-none.SimpleCheckbox--ios,
   .SimpleCheckbox--sizeY-none.SimpleCheckbox--android {
     margin: -8px;
@@ -147,7 +147,7 @@
   height: 24px !important;
 }
 
-@media (--size-y-regular) {
+@media (--sizeY-regular) {
   .SimpleCheckbox--sizeY-none:not(.SimpleCheckbox--vkcom)
     .SimpleCheckbox__icon--inner,
   .SimpleCheckbox--sizeY-none:not(.SimpleCheckbox--vkcom)

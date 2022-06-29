@@ -65,7 +65,12 @@
   margin-right: 0;
 }
 
-.ModalCardBase__dismiss {
+/**
+ * iOS
+ */
+
+.ModalCardBase__dismiss-ios {
+  display: block;
   position: absolute;
   top: 4px;
   right: 4px;
@@ -75,9 +80,16 @@
   justify-content: center;
 }
 
-/**
- * iOS
- */
+.ModalCardBase--sizeX-regular .ModalCardBase__dismiss-ios,
+.ModalCardBase:not(.ModalCardBase--ios) .ModalCardBase__dismiss-ios {
+  display: none;
+}
+
+@media (--sizeX-regular) {
+  .ModalCardBase--sizeX-none.ModalCardBase--ios .ModalCardBase__dismiss-ios {
+    display: none;
+  }
+}
 
 .ModalCardBase--ios .ModalCardBase__header:first-child {
   padding-left: 36px;
@@ -87,6 +99,21 @@
 /**
  * Android + vkcom
  */
+
+.ModalCardBase__dismiss {
+  display: none;
+}
+
+.ModalCardBase--sizeX-regular .ModalCardBase__dismiss,
+.ModalCardBase--vkcom .ModalCardBase__dismiss {
+  display: block;
+}
+
+@media (--sizeX-regular) {
+  .ModalCardBase--sizeX-none .ModalCardBase__dismiss {
+    display: block;
+  }
+}
 
 .ModalCardBase--android .ModalCardBase__container,
 .ModalCardBase--vkcom .ModalCardBase__container {
@@ -98,7 +125,14 @@
  * Desktop
  */
 
-.ModalCardBase--desktop .ModalCardBase__container {
+.ModalCardBase--sizeX-regular .ModalCardBase__container {
   border-radius: 8px;
   box-shadow: 0 16px 16px rgba(0, 0, 0, 0.16), 0 0 8px rgba(0, 0, 0, 0.12);
+}
+
+@media (--desktop) {
+  .ModalCardBase--sizeX-none .ModalCardBase__container {
+    border-radius: 8px;
+    box-shadow: 0 16px 16px rgba(0, 0, 0, 0.16), 0 0 8px rgba(0, 0, 0, 0.12);
+  }
 }

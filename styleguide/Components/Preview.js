@@ -7,7 +7,6 @@ import {
   VKCOM,
   SplitCol,
   SplitLayout,
-  ViewWidth,
   PanelHeader,
   usePlatform,
   AppRoot,
@@ -25,7 +24,6 @@ const logPerf = (id, phase, time) => perfLogger.log(`${id}.${phase}`, time);
 
 const Layout = ({ children }) => {
   const platform = usePlatform();
-  const { viewWidth } = useAdaptivity();
   return (
     <SplitLayout
       header={
@@ -34,12 +32,7 @@ const Layout = ({ children }) => {
         )
       }
     >
-      <SplitCol
-        spaced={viewWidth !== ViewWidth.MOBILE && platform !== VKCOM}
-        animate={viewWidth <= ViewWidth.MOBILE && platform !== VKCOM}
-      >
-        {children}
-      </SplitCol>
+      <SplitCol autoSpaced={platform !== VKCOM}>{children}</SplitCol>
     </SplitLayout>
   );
 };
@@ -79,7 +72,6 @@ class Preview extends PreviewParent {
       adaptivity = true,
       iframe = true,
       exampleId,
-      viewWidth,
     } = this.props;
     const { error } = this.state;
 
@@ -99,10 +91,7 @@ class Preview extends PreviewParent {
             />
           );
 
-          const isMobile = viewWidth <= ViewWidth.MOBILE;
-          const width = isMobile
-            ? window.innerWidth - 32
-            : styleGuideContext.width;
+          const width = styleGuideContext.width;
 
           return (
             <Profiler id={exampleId} onRender={logPerf}>

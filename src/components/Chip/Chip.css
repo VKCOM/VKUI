@@ -60,7 +60,7 @@
   height: 28px;
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .Chip--sizeY-none {
     height: 28px;
   }

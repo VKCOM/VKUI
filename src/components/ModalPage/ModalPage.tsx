@@ -8,17 +8,12 @@ import {
 } from "../ModalRoot/ModalRootContext";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useOrientationChange } from "../../hooks/useOrientationChange";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import { ModalDismissButton } from "../ModalDismissButton/ModalDismissButton";
 import { multiRef } from "../../lib/utils";
 import { ModalType } from "../ModalRoot/types";
 import { getNavId, NavIdProps } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
-import {
-  useAdaptivity,
-  useAdaptivityIsDesktop,
-} from "../../hooks/useAdaptivity";
-import { Platform } from "../../lib/platform";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./ModalPage.css";
 
 export interface ModalPageProps
@@ -78,17 +73,13 @@ export const ModalPage: React.FC<ModalPageProps> = ({
 
   const platform = usePlatform();
   const orientation = useOrientationChange();
-  const { viewWidth, sizeX } = useAdaptivity();
+  const { sizeX } = useAdaptivity();
 
   React.useEffect(updateModalHeight, [
     children,
     orientation,
     updateModalHeight,
   ]);
-
-  const isDesktop = useAdaptivityIsDesktop();
-  const canShowCloseBtn =
-    viewWidth >= ViewWidth.SMALL_TABLET || platform === Platform.VKCOM;
 
   const modalContext = React.useContext(ModalRootContext);
   const { refs } = useModalRegistry(
@@ -103,8 +94,7 @@ export const ModalPage: React.FC<ModalPageProps> = ({
       vkuiClass={classNames(
         "ModalPage",
         getPlatformClassName("ModalPage", platform),
-        getSizeXClassName("ModalPage", sizeX),
-        isDesktop && "ModalPage--desktop"
+        getSizeXClassName("ModalPage", sizeX)
       )}
     >
       <div vkuiClass="ModalPage__in-wrap" ref={refs.innerElement}>
@@ -124,9 +114,10 @@ export const ModalPage: React.FC<ModalPageProps> = ({
               <div vkuiClass="ModalPage__content-in">{children}</div>
             </div>
           </div>
-          {canShowCloseBtn && (
-            <ModalDismissButton onClick={onClose || modalContext.onClose} />
-          )}
+          <ModalDismissButton
+            vkuiClass="ModalPage__dismiss"
+            onClick={onClose ?? modalContext.onClose}
+          />
         </div>
       </div>
     </div>

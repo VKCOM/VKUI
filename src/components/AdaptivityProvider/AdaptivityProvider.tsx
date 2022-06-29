@@ -7,7 +7,6 @@ import {
   ViewHeight,
   ViewWidth,
 } from "./AdaptivityContext";
-import { useDOM } from "../../lib/dom";
 import {
   useBridgeAdaptivity,
   BridgeAdaptivity,
@@ -24,117 +23,75 @@ export const MEDIUM_HEIGHT = 720;
 /**
  * @see https://vkcom.github.io/VKUI/#/AdaptivityProvider
  */
-const AdaptivityProvider: React.FC<AdaptivityProps> = (props) => {
-  const adaptivityRef = React.useRef<ReturnType<
-    typeof calculateAdaptivity
-  > | null>(null);
-  const [, updateAdaptivity] = React.useState({});
+const AdaptivityProvider = ({
+  viewWidth,
+  viewHeight,
+  sizeX,
+  sizeY,
+  hasMouse,
+  deviceHasHover,
+  children,
+}: React.PropsWithChildren<AdaptivityProps>) => {
   const bridge = useBridgeAdaptivity();
-
-  const { window } = useDOM();
-
-  if (!adaptivityRef.current) {
-    adaptivityRef.current = calculateAdaptivity(props, bridge, window);
-  }
+  const [adaptivity, setAdaptivity] = React.useState({});
 
   React.useEffect(() => {
-    function onResize() {
-      if (adaptivityRef.current === null) {
-        return;
-      }
-
-      const calculated = calculateAdaptivity(props, bridge, window);
-      const { viewWidth, viewHeight, sizeX, sizeY, hasMouse, deviceHasHover } =
-        adaptivityRef.current;
-
-      if (
-        viewWidth !== calculated.viewWidth ||
-        viewHeight !== calculated.viewHeight ||
-        sizeX !== calculated.sizeX ||
-        sizeY !== calculated.sizeY ||
-        hasMouse !== calculated.hasMouse ||
-        deviceHasHover !== calculated.deviceHasHover
-      ) {
-        adaptivityRef.current = calculated;
-        updateAdaptivity({});
-      }
-    }
-
-    onResize();
-    window!.addEventListener("resize", onResize, false);
-
-    return () => {
-      window!.removeEventListener("resize", onResize, false);
-    };
-  }, [
-    props.viewWidth,
-    props.viewHeight,
-    props.sizeX,
-    props.sizeY,
-    props.hasMouse,
-    props.deviceHasHover,
-    window,
-    props,
-    bridge,
-  ]);
+    setAdaptivity(
+      calculateAdaptivity(
+        {
+          viewWidth,
+          viewHeight,
+          sizeX,
+          sizeY,
+          hasMouse,
+          deviceHasHover,
+        },
+        bridge
+      )
+    );
+  }, [viewWidth, viewHeight, sizeX, sizeY, hasMouse, deviceHasHover, bridge]);
 
   return (
-    <AdaptivityContext.Provider value={adaptivityRef.current}>
-      {props.children}
+    <AdaptivityContext.Provider value={adaptivity}>
+      {children}
     </AdaptivityContext.Provider>
   );
 };
 
 function calculateAdaptivity(
-  props: AdaptivityProps,
-  bridge: BridgeAdaptivity,
-  window?: Window
+  {
+    viewWidth,
+    viewHeight,
+    sizeX,
+    sizeY,
+    hasMouse,
+    deviceHasHover,
+  }: AdaptivityProps,
+  bridge: BridgeAdaptivity
 ) {
-  let windowWidth = 0;
-  let windowHeight = 0;
-
   if (bridge.type === "adaptive") {
-    windowWidth = bridge.viewportWidth;
-    windowHeight = bridge.viewportHeight;
-  } else if (window) {
-    windowWidth = window.innerWidth;
-    windowHeight = window.innerHeight;
-  }
+    const { viewportWidth, viewportHeight } = bridge;
 
-  let viewWidth = ViewWidth.SMALL_MOBILE;
-  let viewHeight = ViewHeight.SMALL;
-  let sizeY: SizeType | undefined = undefined;
-  let sizeX: SizeType | undefined = undefined;
-  let hasMouse = _hasMouse;
+    if (viewportWidth >= DESKTOP_SIZE) {
+      viewWidth = ViewWidth.DESKTOP;
+    } else if (viewportWidth >= TABLET_SIZE) {
+      viewWidth = ViewWidth.TABLET;
+    } else if (viewportWidth >= SMALL_TABLET_SIZE) {
+      viewWidth = ViewWidth.SMALL_TABLET;
+    } else if (viewportWidth >= MOBILE_SIZE) {
+      viewWidth = ViewWidth.MOBILE;
+    } else {
+      viewWidth = ViewWidth.SMALL_MOBILE;
+    }
 
-  if (windowWidth >= DESKTOP_SIZE) {
-    viewWidth = ViewWidth.DESKTOP;
-  } else if (windowWidth >= TABLET_SIZE) {
-    viewWidth = ViewWidth.TABLET;
-  } else if (windowWidth >= SMALL_TABLET_SIZE) {
-    viewWidth = ViewWidth.SMALL_TABLET;
-  } else if (windowWidth >= MOBILE_SIZE) {
-    viewWidth = ViewWidth.MOBILE;
-  } else {
-    viewWidth = ViewWidth.SMALL_MOBILE;
-  }
+    if (viewportHeight >= MEDIUM_HEIGHT) {
+      viewHeight = ViewHeight.MEDIUM;
+    } else if (viewportHeight > MOBILE_LANDSCAPE_HEIGHT) {
+      viewHeight = ViewHeight.SMALL;
+    } else {
+      viewHeight = ViewHeight.EXTRA_SMALL;
+    }
 
-  if (windowHeight >= MEDIUM_HEIGHT) {
-    viewHeight = ViewHeight.MEDIUM;
-  } else if (windowHeight > MOBILE_LANDSCAPE_HEIGHT) {
-    viewHeight = ViewHeight.SMALL;
-  } else {
-    viewHeight = ViewHeight.EXTRA_SMALL;
-  }
-
-  if (!bridge.type) {
-    props.viewWidth && (viewWidth = props.viewWidth);
-    props.viewHeight && (viewHeight = props.viewHeight);
-
-    hasMouse = props.hasMouse ?? hasMouse;
-    props.sizeX && (sizeX = props.sizeX);
-    props.sizeY && (sizeY = props.sizeY);
-  } else {
     if (viewWidth <= ViewWidth.MOBILE) {
       sizeX = SizeType.COMPACT;
     } else {
@@ -142,16 +99,14 @@ function calculateAdaptivity(
     }
 
     if (
-      (viewWidth >= ViewWidth.SMALL_TABLET && hasMouse) ||
+      (viewWidth >= ViewWidth.SMALL_TABLET && _hasMouse) ||
       viewHeight <= ViewHeight.EXTRA_SMALL
     ) {
       sizeY = SizeType.COMPACT;
     } else {
       sizeY = SizeType.REGULAR;
     }
-  }
-
-  if (
+  } else if (
     bridge.type === "force_mobile" ||
     bridge.type === "force_mobile_compact"
   ) {
@@ -163,6 +118,28 @@ function calculateAdaptivity(
     } else {
       sizeY = SizeType.REGULAR;
     }
+  } else {
+    if (sizeX === undefined && viewWidth !== undefined) {
+      if (viewWidth <= ViewWidth.MOBILE) {
+        sizeX = SizeType.COMPACT;
+      } else {
+        sizeX = SizeType.REGULAR;
+      }
+    }
+    if (
+      sizeY === undefined &&
+      viewWidth !== undefined &&
+      viewHeight !== undefined
+    ) {
+      if (
+        (viewWidth >= ViewWidth.SMALL_TABLET && _hasMouse) ||
+        viewHeight <= ViewHeight.EXTRA_SMALL
+      ) {
+        sizeY = SizeType.COMPACT;
+      } else {
+        sizeY = SizeType.REGULAR;
+      }
+    }
   }
 
   return {
@@ -171,7 +148,7 @@ function calculateAdaptivity(
     sizeX,
     sizeY,
     hasMouse,
-    deviceHasHover: props.deviceHasHover,
+    deviceHasHover,
   };
 }
 

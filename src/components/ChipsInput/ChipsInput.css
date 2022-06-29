@@ -71,7 +71,7 @@
   padding: 1px;
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .ChipsInput--sizeY-none .ChipsInput__container {
     padding: 1px;
   }

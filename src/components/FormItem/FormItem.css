@@ -54,7 +54,7 @@
   padding-top: 6px;
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .FormItem--sizeY-none .FormItem__top {
     padding-bottom: 6px;
   }
@@ -95,7 +95,7 @@
   );
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .FormItem--sizeY-none.FormItem--withTop .FormItem__removable,
   .FormLayoutGroup--removable .FormItem--sizeY-none.FormItem--withTop {
     margin-top: calc(

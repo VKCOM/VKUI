@@ -1,27 +1,26 @@
 import * as React from "react";
+import { hasMouse as _hasMouse } from "@vkontakte/vkjs";
 import {
   AdaptivityContext,
   AdaptivityProps,
-  AdaptivityContextInterface,
-  ViewWidth,
-  ViewHeight,
 } from "../components/AdaptivityProvider/AdaptivityContext";
-import { usePlatform } from "./usePlatform";
-import { VKCOM } from "../lib/platform";
 
 export type { AdaptivityProps };
 
-export const useAdaptivity = (): AdaptivityContextInterface => {
-  return React.useContext(AdaptivityContext);
-};
+export const useAdaptivity = (): AdaptivityProps => {
+  const { hasMouse: hasMouseContext, ...adaptivity } =
+    React.useContext(AdaptivityContext);
+  const [hasMouse, setHasMouse] = React.useState(hasMouseContext);
 
-export const useAdaptivityIsDesktop = (): boolean => {
-  const platform = usePlatform();
-  const { viewWidth, viewHeight, hasMouse } = useAdaptivity();
+  // определение hasMouse в @vkontakte/vkjs происходит через window.matchMedia
+  // чтобы не было ошибок при гидрации определяем значение после первого рендера
+  React.useEffect(() => {
+    if (hasMouseContext !== undefined) {
+      setHasMouse(hasMouseContext);
+    } else {
+      setHasMouse(_hasMouse);
+    }
+  }, [hasMouseContext]);
 
-  return (
-    (viewWidth >= ViewWidth.SMALL_TABLET &&
-      (hasMouse || viewHeight >= ViewHeight.MEDIUM)) ||
-    platform === VKCOM
-  );
+  return { hasMouse, ...adaptivity };
 };

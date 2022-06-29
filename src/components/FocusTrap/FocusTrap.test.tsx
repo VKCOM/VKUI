@@ -9,6 +9,7 @@ import {
 import { FocusTrap, FocusTrapProps } from "./FocusTrap";
 import { AppRoot } from "../AppRoot/AppRoot";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
+import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import { ActionSheet, ActionSheetProps } from "../ActionSheet/ActionSheet";
 import { ActionSheetItem } from "../ActionSheetItem/ActionSheetItem";
 import { View } from "../View/View";
@@ -47,7 +48,7 @@ const ActionSheetTest: React.FC<
 
   return (
     <AppRoot>
-      <AdaptivityProvider hasMouse>
+      <AdaptivityProvider hasMouse viewWidth={ViewWidth.MOBILE}>
         <SplitLayout popout={actionSheet}>
           <SplitCol>
             <View activePanel="panel">

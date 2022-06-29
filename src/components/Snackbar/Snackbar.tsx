@@ -12,7 +12,10 @@ import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useTimeout } from "../../hooks/useTimeout";
+import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
 import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import { SMALL_TABLET_SIZE } from "../AdaptivityProvider/AdaptivityProvider";
+import { useDOM } from "../../lib/dom";
 import "./Snackbar.css";
 
 export interface SnackbarProps
@@ -68,6 +71,7 @@ export const Snackbar: React.FC<SnackbarProps> = (props) => {
 
   const platform = usePlatform();
   const { viewWidth } = useAdaptivity();
+  const { window } = useDOM();
 
   const { waitTransitionFinish } = useWaitTransitionFinish();
 
@@ -84,7 +88,6 @@ export const Snackbar: React.FC<SnackbarProps> = (props) => {
     typeof requestAnimationFrame
   > | null>(null);
 
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
   const transitionFinishDurationFallback =
     platform === ANDROID || platform === VKCOM ? 400 : 320;
 
@@ -149,6 +152,10 @@ export const Snackbar: React.FC<SnackbarProps> = (props) => {
       let shiftXCurrent = shiftXCurrentRef.current;
       const expectTranslateY = (shiftXCurrent / e.duration) * 240 * 0.6;
       shiftXCurrent = shiftXCurrent + expectTranslateY;
+      const isDesktop =
+        viewWidth !== undefined
+          ? viewWidth >= ViewWidth.SMALL_TABLET
+          : window!.innerWidth >= SMALL_TABLET_SIZE;
 
       if (isDesktop && shiftXCurrent <= -50) {
         closeTimeout.clear();
@@ -186,18 +193,17 @@ export const Snackbar: React.FC<SnackbarProps> = (props) => {
 
   React.useEffect(() => closeTimeout.set(), [closeTimeout]);
 
-  const resolvedLayout = after || isDesktop ? "vertical" : layout;
-
   return (
     <AppRootPortal>
       <div
         {...restProps}
         vkuiClass={classNames(
           getClassName("Snackbar", platform),
-          `Snackbar--l-${resolvedLayout}`,
+          getViewWidthClassName("Snackbar", viewWidth),
+          `Snackbar--l-${layout}`,
           closing && "Snackbar--closing",
-          touched && "Snackbar--touched",
-          isDesktop && "Snackbar--desktop"
+          after && "Snackbar--has-after",
+          touched && "Snackbar--touched"
         )}
       >
         <Touch

@@ -90,7 +90,7 @@
   height: 12px;
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .Radio--sizeY-none .Radio__children {
     margin-top: 8px;
   }

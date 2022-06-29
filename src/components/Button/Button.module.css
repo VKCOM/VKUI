@@ -25,7 +25,7 @@
   width: var(--vkui--size_button_small_height--regular);
 }
 
-@media (--size-y-regular) {
+@media (--sizeY-regular) {
   .Button--sizeY-none.Button--singleIcon {
     width: var(--vkui--size_button_small_height--regular);
   }
@@ -603,7 +603,7 @@
   line-height: var(--vkui--font_subhead--line_height--regular);
 }
 
-@media (--size-y-regular) {
+@media (--sizeY-regular) {
   .Button--sizeY-none.Button--sz-s.Button--ios .Button__content {
     font-size: var(--vkui--font_subhead--font_size--regular);
     line-height: var(--vkui--font_subhead--line_height--regular);
@@ -627,7 +627,7 @@
   font-weight: var(--vkui--font_weight_accent2);
 }
 
-@media (--size-y-regular) {
+@media (--sizeY-regular) {
   .Button--sizeY-none.Button--sz-s.Button--android .Button__content {
     font-size: var(--vkui--font_subhead--font_size--regular);
     line-height: var(--vkui--font_subhead--line_height--regular);
@@ -650,7 +650,7 @@
   font-weight: var(--vkui--font_weight_accent2);
 }
 
-@media (--size-y-regular) {
+@media (--sizeY-regular) {
   .Button--sizeY-none.Button--sz-m .Button__content {
     font-size: var(--vkui--font_text--font_size--regular);
     line-height: var(--vkui--font_text--line_height--regular);
@@ -673,7 +673,7 @@
   line-height: var(--vkui--font_headline1--line_height--regular);
 }
 
-@media (--size-y-regular) {
+@media (--sizeY-regular) {
   .Button--sizeY-none.Button--sz-l .Button__content {
     font-size: var(--vkui--font_title3--font_size--regular);
     line-height: var(--vkui--font_title3--line_height--regular);
@@ -693,7 +693,7 @@
   min-height: var(--vkui--size_button_medium_height--regular);
 }
 
-@media (--size-y-regular) {
+@media (--sizeY-regular) {
   .Button--sizeY-none.Button--sz-m {
     min-height: var(--vkui--size_button_medium_height--regular);
   }
@@ -707,7 +707,7 @@
   width: var(--vkui--size_button_medium_height--regular);
 }
 
-@media (--size-y-regular) {
+@media (--sizeY-regular) {
   .Button--sizeY-none.Button--sz-m.Button--singleIcon {
     width: var(--vkui--size_button_medium_height--regular);
   }
@@ -721,7 +721,7 @@
   min-height: var(--vkui--size_button_large_height--regular);
 }
 
-@media (--size-y-regular) {
+@media (--sizeY-regular) {
   .Button--sizeY-none.Button--sz-l {
     min-height: var(--vkui--size_button_large_height--regular);
   }
@@ -735,7 +735,7 @@
   width: var(--vkui--size_button_large_height--regular);
 }
 
-@media (--size-y-regular) {
+@media (--sizeY-regular) {
   .Button--sizeY-none.Button--sz-l.Button--singleIcon {
     width: var(--vkui--size_button_large_height--regular);
   }
@@ -745,7 +745,7 @@
   min-height: var(--vkui--size_button_small_height--regular);
 }
 
-@media (--size-y-regular) {
+@media (--sizeY-regular) {
   .Button--sizeY-none {
     min-height: var(--vkui--size_button_small_height--regular);
   }

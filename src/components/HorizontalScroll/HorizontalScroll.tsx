@@ -213,10 +213,10 @@ export const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
         ["HorizontalScroll--withConstArrows"]: showArrows === "always",
       })}
     >
-      {showArrows && hasMouse && canScrollLeft && (
+      {showArrows && (hasMouse || hasMouse === undefined) && canScrollLeft && (
         <HorizontalScrollArrow direction="left" onClick={scrollToLeft} />
       )}
-      {showArrows && hasMouse && canScrollRight && (
+      {showArrows && (hasMouse || hasMouse === undefined) && canScrollRight && (
         <HorizontalScrollArrow direction="right" onClick={scrollToRight} />
       )}
       <div vkuiClass="HorizontalScroll__in" ref={scrollerRef}>

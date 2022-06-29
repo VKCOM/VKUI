@@ -39,7 +39,7 @@
   font-size: 15px;
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .Input--sizeY-none .Input__el {
     height: 34px;
     padding-top: 9px;

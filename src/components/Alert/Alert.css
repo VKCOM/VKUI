@@ -183,8 +183,30 @@
   animation: vkui-animation-android-alert-intro 0.2s ease;
 }
 
-.Alert--desktop.Alert--android {
+.Alert__close {
+  display: none;
+}
+
+.Alert--sizeX-regular.Alert--android {
   width: 416px;
+}
+
+.Alert--vkcom .Alert__close {
+  display: block;
+}
+
+.Alert--sizeX-regular.Alert--android .Alert__close {
+  display: block;
+}
+
+@media (--sizeX-regular) {
+  .Alert--sizeX-none.Alert--android {
+    width: 416px;
+  }
+
+  .Alert--sizeX-none.Alert--android .Alert__close {
+    display: block;
+  }
 }
 
 .Alert--android.Alert--closing,

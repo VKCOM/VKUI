@@ -1,12 +1,13 @@
 import * as React from "react";
 import { usePlatform } from "../../hooks/usePlatform";
-import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { HasRef } from "../../types";
 import { VKCOM } from "../../lib/platform";
 import { Separator } from "../Separator/Separator";
 import { PanelHeader, PanelHeaderProps } from "../PanelHeader/PanelHeader";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import "./ModalPageHeader.css";
 
 export interface ModalPageHeaderProps
@@ -25,13 +26,13 @@ export const ModalPageHeader = ({
 }: ModalPageHeaderProps) => {
   const platform = usePlatform();
   const hasSeparator = separator && platform === VKCOM;
-  const isDesktop = useAdaptivityIsDesktop();
+  const { sizeX } = useAdaptivity();
 
   return (
     <div
       vkuiClass={classNames(
         getClassName("ModalPageHeader", platform),
-        isDesktop && "ModalPageHeader--desktop"
+        getSizeXClassName("ModalPageHeader", sizeX)
       )}
       ref={getRef}
     >

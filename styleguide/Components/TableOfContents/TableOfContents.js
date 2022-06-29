@@ -7,8 +7,8 @@ import {
   classNames,
   Separator,
   Footer,
-  ViewWidth,
   useAdaptivity,
+  getSizeXClassName,
 } from "@vkui";
 import {
   Icon28ChevronDownOutline,
@@ -298,13 +298,12 @@ class TableOfContents extends React.PureComponent {
   }
 
   render() {
-    const isMobile = this.props.viewWidth <= ViewWidth.MOBILE;
     return (
       <div
-        className={classNames("TableOfContents", {
-          "TableOfContents--desktop": !isMobile,
-          "TableOfContents--mobile": isMobile,
-        })}
+        className={classNames(
+          "TableOfContents",
+          getSizeXClassName("TableOfContents", this.props.sizeX)
+        )}
       >
         {this.renderSections(this.sections)}
       </div>
@@ -313,7 +312,7 @@ class TableOfContents extends React.PureComponent {
 }
 
 export default (props) => {
-  const { viewWidth } = useAdaptivity();
+  const { sizeX } = useAdaptivity();
 
-  return <TableOfContents {...props} viewWidth={viewWidth} />;
+  return <TableOfContents {...props} sizeX={sizeX} />;
 };

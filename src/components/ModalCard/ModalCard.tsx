@@ -1,7 +1,6 @@
 import * as React from "react";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
-import { HasPlatform } from "../../types";
 import {
   ModalRootContext,
   useModalRegistry,
@@ -13,13 +12,12 @@ import {
   ModalCardBase,
   ModalCardBaseProps,
 } from "../ModalCardBase/ModalCardBase";
-import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import { usePlatform } from "../../hooks/usePlatform";
 import "./ModalCard.css";
 
-export interface ModalCardProps
-  extends HasPlatform,
-    NavIdProps,
-    ModalCardBaseProps {}
+export interface ModalCardProps extends NavIdProps, ModalCardBaseProps {}
 
 const warn = warnOnce("ModalCard");
 
@@ -34,12 +32,12 @@ export const ModalCard: React.FC<ModalCardProps> = ({
   actions,
   actionsLayout = "horizontal",
   onClose,
-  platform,
   nav,
   id,
   ...restProps
 }) => {
-  const isDesktop = useAdaptivityIsDesktop();
+  const { sizeX } = useAdaptivity();
+  const platform = usePlatform();
 
   const modalContext = React.useContext(ModalRootContext);
   const { refs } = useModalRegistry(
@@ -51,10 +49,10 @@ export const ModalCard: React.FC<ModalCardProps> = ({
     <div
       {...restProps}
       id={id}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames(getClassName("ModalCard", platform), {
-        "ModalCard--desktop": isDesktop,
-      })}
+      vkuiClass={classNames(
+        getClassName("ModalCard", platform),
+        getSizeXClassName("ModalCard", sizeX)
+      )}
     >
       <ModalCardBase
         vkuiClass="ModalCard__in"

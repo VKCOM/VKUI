@@ -1,5 +1,6 @@
-import { StyleGuideHeader } from "./StyleGuideHeader";
 import React from "react";
+import { StyleGuideHeader } from "./StyleGuideHeader";
+import "./StyleGuideDesktop.css";
 
 export const StyleGuideDesktop = ({
   popout,
@@ -8,7 +9,7 @@ export const StyleGuideDesktop = ({
   children,
 }) => {
   return (
-    <React.Fragment>
+    <div className="StyleGuideDesktop">
       <StyleGuideHeader
         switchStyleGuideAppearance={switchStyleGuideAppearance}
       />
@@ -25,6 +26,6 @@ export const StyleGuideDesktop = ({
           <div className="StyleGuide__contentIn">{children}</div>
         </SplitCol>
       </SplitLayout>
-    </React.Fragment>
+    </div>
   );
 };

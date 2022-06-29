@@ -6,6 +6,7 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import { getMouseClassName } from "../../helpers/getMouseClassName";
 
 export const SelectType = {
   default: "default",
@@ -41,24 +42,44 @@ export const SelectTypography: React.FC<Pick<SelectProps, "selectType">> = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/Select
  */
-export const Select: React.FC<SelectProps> = (props) => {
+export const Select: React.FC<SelectProps> = ({
+  children,
+  options = [],
+  popupDirection,
+  renderOption,
+  ...props
+}) => {
   const { hasMouse } = useAdaptivity();
-  // Use custom select if device has connected a mouse
-  if (hasMouse) {
-    const { children, ...restProps } = props;
-
-    return <CustomSelect {...restProps} />;
-  }
-
-  const { options = [], popupDirection, renderOption, ...restProps } = props;
 
   return (
-    <NativeSelect {...restProps}>
-      {options.map(({ label, value }) => (
-        <option value={value} key={`${value}`}>
-          {label}
-        </option>
-      ))}
-    </NativeSelect>
+    <React.Fragment>
+      {(hasMouse === undefined || hasMouse === true) && (
+        <CustomSelect
+          vkuiClass={classNames(
+            "Select__custom",
+            getMouseClassName("Select__custom", hasMouse)
+          )}
+          options={options}
+          popupDirection={popupDirection}
+          renderOption={renderOption}
+          {...props}
+        />
+      )}
+      {(hasMouse === undefined || hasMouse === false) && (
+        <NativeSelect
+          vkuiClass={classNames(
+            "Select__native",
+            getMouseClassName("Select__native", hasMouse)
+          )}
+          {...props}
+        >
+          {options.map(({ label, value }) => (
+            <option value={value} key={`${value}`}>
+              {label}
+            </option>
+          ))}
+        </NativeSelect>
+      )}
+    </React.Fragment>
   );
 };

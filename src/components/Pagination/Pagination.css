@@ -49,7 +49,7 @@
   height: var(--vkui--size_button_large_height--compact);
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .Pagination__page--sizeY-none {
     font-size: var(--vkui--font_text--font_size--compact);
     line-height: var(--vkui--size_button_large_height--compact);
@@ -63,7 +63,7 @@
   height: var(--vkui--size_button_large_height--regular);
 }
 
-@media (--size-y-regular) {
+@media (--sizeY-regular) {
   .Pagination__page--sizeY-none {
     font-size: var(--vkui--font_text--font_size--regular);
     line-height: var(--vkui--size_button_large_height--regular);

@@ -1,7 +1,8 @@
 import React, { cloneElement } from "react";
 import { Settings } from "../Settings/Settings";
 import { SectionSubheading } from "../SectionSubheading/SectionSubheading";
-import { useAdaptivity, ViewWidth } from "@vkui";
+import { useAdaptivity, getSizeXClassName } from "@vkui";
+import "./PlaygroundRenderer.css";
 
 const PlaygroundRenderer = ({
   name,
@@ -22,7 +23,7 @@ const PlaygroundRenderer = ({
   } = previewProps;
   const exampleId = `${name}-${exampleIndex}`;
 
-  const { viewWidth } = useAdaptivity();
+  const { sizeX } = useAdaptivity();
 
   const adaptivity = _adaptivity ?? layout;
 
@@ -48,14 +49,12 @@ const PlaygroundRenderer = ({
           exampleId,
         })}
       </div>
-      {viewWidth > ViewWidth.MOBILE && (
-        <>
-          <SectionSubheading href={`#/${name}?id=code`}>
-            Редактируемый код
-          </SectionSubheading>
-          <div className="Playground__code">{tabBody}</div>
-        </>
-      )}
+      <div className={getSizeXClassName("Playground__editor", sizeX)}>
+        <SectionSubheading href={`#/${name}?id=code`}>
+          Редактируемый код
+        </SectionSubheading>
+        <div className="Playground__code">{tabBody}</div>
+      </div>
     </div>
   );
 };

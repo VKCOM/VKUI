@@ -7,13 +7,10 @@ import { SMALL_HEIGHT } from "../Settings/ViewHeightSelect";
 import {
   VKCOM,
   AppRoot,
-  AdaptivityProvider,
   ConfigProvider,
-  ViewWidth,
   WebviewType,
   Platform,
   Appearance,
-  useAdaptivity,
 } from "@vkui";
 import "./StyleGuideRenderer.css";
 import { StyleGuideMobile } from "./StyleGuideMobile";
@@ -54,7 +51,6 @@ let StyleGuideRenderer = ({ children, toc }) => {
     hasMouse,
     styleguideAppearance,
   } = state;
-  const { viewWidth } = useAdaptivity();
 
   const setContext = useCallback(
     (data) => {
@@ -87,9 +83,6 @@ let StyleGuideRenderer = ({ children, toc }) => {
     [width, height, platform, appearance, hasMouse, setContext, setPopout]
   );
 
-  const Component =
-    viewWidth > ViewWidth.MOBILE ? StyleGuideDesktop : StyleGuideMobile;
-
   return (
     <StyleGuideContext.Provider value={providerValue}>
       <ConfigProvider
@@ -99,25 +92,24 @@ let StyleGuideRenderer = ({ children, toc }) => {
         webviewType="internal"
       >
         <AppRoot noLegacyClasses>
-          <Component
+          <StyleGuideMobile
             toc={toc}
             popout={popout}
             switchStyleGuideAppearance={switchStyleGuideAppearance}
           >
             {children}
-          </Component>
+          </StyleGuideMobile>
+          <StyleGuideDesktop
+            toc={toc}
+            popout={popout}
+            switchStyleGuideAppearance={switchStyleGuideAppearance}
+          >
+            {children}
+          </StyleGuideDesktop>
         </AppRoot>
       </ConfigProvider>
     </StyleGuideContext.Provider>
   );
 };
 
-const StyleGuideWrapper = ({ viewWidth, ...props }) => {
-  return (
-    <AdaptivityProvider viewWidth={viewWidth}>
-      <StyleGuideRenderer {...props} />
-    </AdaptivityProvider>
-  );
-};
-
-export default StyleGuideWrapper;
+export default StyleGuideRenderer;

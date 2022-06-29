@@ -3,6 +3,7 @@ import { classNames } from "../../lib/classNames";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { hasReactNode } from "../../lib/utils";
+import { SizeType } from "../AdaptivityProvider/AdaptivityContext";
 import "./SizeYConditionalRender.css";
 
 export interface SizeYConditionalRenderProps {
@@ -10,26 +11,26 @@ export interface SizeYConditionalRenderProps {
   regular?: React.ReactNode;
 }
 
-const SizeYConditionalRender: React.FC<SizeYConditionalRenderProps> = ({
+export const SizeYConditionalRender = ({
   compact,
   regular,
-}) => {
+}: SizeYConditionalRenderProps) => {
   const { sizeY } = useAdaptivity();
 
   return (
     <React.Fragment>
-      {hasReactNode(compact) && (
-        <div vkuiClass={classNames(getSizeYClassName("SizeYCompact", sizeY))}>
-          {compact}
-        </div>
-      )}
-      {hasReactNode(regular) && (
-        <div vkuiClass={classNames(getSizeYClassName("SizeYRegular", sizeY))}>
-          {regular}
-        </div>
-      )}
+      {hasReactNode(compact) &&
+        (sizeY === undefined || sizeY === SizeType.COMPACT) && (
+          <div vkuiClass={classNames(getSizeYClassName("SizeYCompact", sizeY))}>
+            {compact}
+          </div>
+        )}
+      {hasReactNode(regular) &&
+        (sizeY === undefined || sizeY === SizeType.REGULAR) && (
+          <div vkuiClass={classNames(getSizeYClassName("SizeYRegular", sizeY))}>
+            {regular}
+          </div>
+        )}
     </React.Fragment>
   );
 };
-
-export { SizeYConditionalRender };

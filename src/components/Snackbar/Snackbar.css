@@ -49,11 +49,6 @@
   overflow: hidden;
 }
 
-.Snackbar--l-vertical .Snackbar__content {
-  flex-direction: column;
-  align-items: flex-start;
-}
-
 .Snackbar__content-text {
   flex: 1;
   color: var(--text_primary);
@@ -72,12 +67,42 @@
   top: 2px;
 }
 
-.Snackbar--l-vertical .Snackbar__action {
+.Snackbar--l-vertical .Snackbar__content,
+.Snackbar--sizeX-regular .Snackbar__content,
+.Snackbar--has-after .Snackbar__content {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.Snackbar--l-vertical .Snackbar__action,
+.Snackbar--sizeX-regular .Snackbar__action,
+.Snackbar--has-after .Snackbar__action {
   margin-top: 2px;
   margin-bottom: -6px;
   margin-left: calc(
     (var(--vkui--size_button_tertiary_small_padding_horizontal--regular) * -1)
   );
+  margin-right: 0;
+  position: static;
+  top: auto;
+}
+
+@media (--sizeX-regular) {
+  .Snackbar--sizeX-none .Snackbar__content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .Snackbar--sizeX-none .Snackbar__action {
+    margin-top: 2px;
+    margin-bottom: -6px;
+    margin-left: calc(
+      -1 * var(--vkui--size_button_tertiary_small_padding_horizontal--regular)
+    );
+    margin-right: 0;
+    position: static;
+    top: auto;
+  }
 }
 
 .ModalRoot .Snackbar {
@@ -120,19 +145,36 @@
  * Desktop
  */
 
-.Snackbar--desktop {
+.Snackbar--sizeX-regular {
   max-width: 328px;
   left: 0;
   bottom: 0;
 }
 
-.Snackbar--desktop .Snackbar__in {
+.Snackbar--sizeX-regular .Snackbar__in {
   padding: 12px;
   animation-name: vkui-animation-snackbar-intro-horizontal;
 }
 
-.Snackbar--desktop.Snackbar--closing .Snackbar__in {
+.Snackbar--sizeX-regular.Snackbar--closing .Snackbar__in {
   transform: translate3d(-140%, 0, 0);
+}
+
+@media (--sizeX-regular) {
+  .Snackbar--sizeX-none {
+    max-width: 328px;
+    left: 0;
+    bottom: 0;
+  }
+
+  .Snackbar--sizeX-none .Snackbar__in {
+    padding: 12px;
+    animation-name: vkui-animation-snackbar-intro-horizontal;
+  }
+
+  .Snackbar--sizeX-none.Snackbar--closing .Snackbar__in {
+    transform: translate3d(-140%, 0, 0);
+  }
 }
 
 /**

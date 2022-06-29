@@ -46,7 +46,7 @@
   padding-bottom: var(--vkui--size_cardgrid_padding_vertical--regular);
 }
 
-@media (--size-x-regular) {
+@media (--sizeX-regular) {
   .Group--none .CardScroll--withSpaces {
     margin-left: -8px;
     margin-right: -8px;

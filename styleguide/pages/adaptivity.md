@@ -65,8 +65,6 @@ const MainScreens = () => {
 const SideCol = () => {
   return <Panel id="nav">Navigation</Panel>;
 };
-
-// ...
 ```
 
 Почти готово. Теперь мы должны сообщить приложению, что левая колонка нужна только на больших экранах. Для доступа
@@ -74,24 +72,20 @@ const SideCol = () => {
 
 ```jsx static
 function App() {
-  const { viewWidth } = useAdaptivity();
+  const platform = usePlatform();
+  const isVKCOM = platform === VKCOM;
 
   // ...
 
-  <SplitLayout
-    header={
-      viewWidth >= ViewWidth.SMALL_TABLET && <PanelHeader separator={false} />
-    }
-  >
-    {viewWidth === ViewWidth.DESKTOP && (
-      <SplitCol width={280}>
-        <Panel id="nav">Navigation</Panel>
-      </SplitCol>
-    )}
-    <SplitCol
-      spaced={viewWidth >= ViewWidth.SMALL_TABLET}
-      animate={viewWidth <= ViewWidth.MOBILE}
-    >
+  <SplitLayout header={!isVKCOM && <PanelHeader separator={false} />}>
+    <ViewWidthConditionalRender
+      desktop={
+        <SplitCol width={280}>
+          <Panel id="nav">Navigation</Panel>
+        </SplitCol>
+      }
+    />
+    <SplitCol autoSpaced>
       <View activePanel="profile">
         <Panel id="profile">Profile</Panel>
       </View>
@@ -109,8 +103,7 @@ function App() {
 
 ### Технические детали
 
-Адаптивность базируется на четырёх свойствах: `viewWidth`, `viewHeight`, `sizeX`, `sizeY`. Эти свойства вычисляются в `AdaptivityProvider`,
-доступ к ним можно получить через hook `useAdaptivity`.
+Адаптивность базируется на четырёх свойствах: `viewWidth`, `viewHeight`, `sizeX`, `sizeY`. Эти свойства задаются либо вычисляются в `AdaptivityProvider`. Для удобства вы можете использовать готовые компоненты `SizeXConditionalRender`, `SizeYConditionalRender`, `ViewWidthConditionalRender`.
 
 - `sizeX` и `sizeY` принимают значения `SizeType.REGULAR | SizeType.COMPACT`
 - `viewWidth` — `ViewWidth.SMALL_MOBILE | ViewWidth.MOBILE | ViewWidth.SMALL_TABLET | ViewWidth.TABLET | ViewWidth.DESKTOP`

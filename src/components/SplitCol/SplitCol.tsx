@@ -1,5 +1,11 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import { SMALL_TABLET_SIZE } from "../AdaptivityProvider/AdaptivityProvider";
+import { useDOM } from "../../lib/dom";
 import "./SplitCol.css";
 
 export interface SplitColContextProps {
@@ -24,7 +30,15 @@ export interface SplitColProps extends React.HTMLAttributes<HTMLDivElement> {
    * Если true, то добавляются боковые отступы фиксированной величины
    */
   spaced?: boolean;
+  /**
+   * Если true, то добавляются боковые отступы фиксированной величины при ширине больше чем `smallTablet`
+   */
+  autoSpaced?: boolean;
   fixed?: boolean;
+  /**
+   * Если true, то ширина контейнера становится 100% при ширине меньше чем `tablet`
+   */
+  stretchedOnMobile?: boolean;
 }
 
 /**
@@ -37,12 +51,25 @@ export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
     maxWidth,
     minWidth,
     spaced,
-    animate = false,
+    animate: _animate,
     fixed,
     style,
+    autoSpaced,
+    stretchedOnMobile,
     ...restProps
   } = props;
   const baseRef = React.useRef<HTMLDivElement>(null);
+  const { viewWidth, sizeX } = useAdaptivity();
+  const { window } = useDOM();
+
+  const animate = React.useMemo(() => {
+    if (_animate === undefined) {
+      return viewWidth !== undefined
+        ? viewWidth < ViewWidth.TABLET
+        : window!.innerWidth < SMALL_TABLET_SIZE;
+    }
+    return _animate;
+  }, [_animate, viewWidth, window]);
 
   const contextValue = React.useMemo(() => {
     return {
@@ -63,8 +90,13 @@ export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
       ref={baseRef}
       vkuiClass={classNames(
         "SplitCol",
+        getSizeXClassName("SplitCol", sizeX),
+        getViewWidthClassName("SplitCol", viewWidth),
         spaced && "SplitCol--spaced",
-        fixed && "SplitCol--fixed"
+        spaced === undefined && "SplitCol--spaced-none",
+        autoSpaced && "SplitCol--spaced-auto",
+        fixed && "SplitCol--fixed",
+        stretchedOnMobile && "SplitCol--stretched-on-mobile"
       )}
     >
       <SplitColContext.Provider value={contextValue}>

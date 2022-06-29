@@ -7,6 +7,22 @@
   color: var(--text_secondary);
 }
 
+.ActionSheetMobile--vkcom,
+.ActionSheetMobile--viewWidth-none {
+  display: none;
+}
+
+.ActionSheetMobile--viewWidth-mobile:not(.ActionSheetMobile--vkcom),
+.ActionSheetMobile--viewWidth-smallMobile:not(.ActionSheetMobile--vkcom) {
+  display: block;
+}
+
+@media (--mobile) {
+  .ActionSheetMobile--viewWidth-none:not(.ActionSheetMobile--vkcom) {
+    display: block;
+  }
+}
+
 /**
  * iOS
  */
@@ -109,7 +125,7 @@
   padding-bottom: 8px;
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .ActionSheet--sizeY-none.ActionSheet--desktop {
     padding-top: 8px;
     padding-bottom: 8px;
@@ -136,6 +152,21 @@
 
 .ActionSheet--desktop.ActionSheet--vkcom .ActionSheet__header {
   padding: 14px 20px;
+}
+
+.ActionSheet--viewWidth-none:not(.ActionSheet--vkcom) {
+  display: none;
+}
+
+.ActionSheet--vkcom.ActionSheet--desktop,
+.ActionSheet--viewWidth-smallTabletPlus.ActionSheet--desktop {
+  display: flex;
+}
+
+@media (--desktop) {
+  .ActionSheet--viewWidth-none.ActionSheet--desktop {
+    display: flex;
+  }
 }
 
 /**

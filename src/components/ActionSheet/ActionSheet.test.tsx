@@ -9,6 +9,8 @@ import { ActionSheet, ActionSheetProps } from "./ActionSheet";
 import { ActionSheetItem } from "../ActionSheetItem/ActionSheetItem";
 import userEvent from "@testing-library/user-event";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
+import { VKCOM } from "../../lib/platform";
+import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 import { FC } from "react";
 
 describe("ActionSheet", () => {
@@ -16,14 +18,16 @@ describe("ActionSheet", () => {
   afterAll(() => jest.useRealTimers());
   const toggle = document.createElement("div");
   const ActionSheetDesktop: FC<Partial<ActionSheetProps>> = (props) => (
-    <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasMouse>
-      <ActionSheet
-        toggleRef={toggle}
-        onClose={jest.fn()}
-        {...props}
-        iosCloseItem={null}
-      />
-    </AdaptivityProvider>
+    <ConfigProvider platform={VKCOM}>
+      <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasMouse>
+        <ActionSheet
+          toggleRef={toggle}
+          onClose={jest.fn()}
+          {...props}
+          iosCloseItem={null}
+        />
+      </AdaptivityProvider>
+    </ConfigProvider>
   );
   const ActionSheetMobile: FC<Partial<ActionSheetProps>> = (props) => (
     <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasMouse={false}>
@@ -61,7 +65,7 @@ describe("ActionSheet", () => {
           </ActionSheet>
         );
         await waitForPopper();
-        userEvent.click(screen.getByTestId("item"));
+        userEvent.click(screen.getAllByTestId("item")[0]);
 
         runAllTimers();
         expect(handlers.onClick).toBeCalled();
@@ -70,7 +74,7 @@ describe("ActionSheet", () => {
     });
 
     it.each([
-      ["content", () => screen.getByTestId("xxx")],
+      ["content", () => screen.getAllByTestId("xxx")[0]],
       ["toggle", () => toggle],
     ])("does not close on %s click", async (_name, getNode) => {
       const onClose = jest.fn();

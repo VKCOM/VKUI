@@ -18,7 +18,7 @@
   line-height: var(--vkui--font_text--line_height--compact);
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .SimpleCell--sizeY-none .SimpleCell__typography {
     font-size: var(--vkui--font_text--font_size--compact);
     line-height: var(--vkui--font_text--line_height--compact);
@@ -35,7 +35,7 @@
   line-height: var(--vkui--font_headline1--line_height--regular);
 }
 
-@media (--size-y-regular) {
+@media (--sizeY-regular) {
   .SimpleCell--sizeY-none .SimpleCell__typography {
     font-size: var(--vkui--font_title3--font_size--regular);
     line-height: var(--vkui--font_title3--line_height--regular);
@@ -196,7 +196,7 @@
   line-height: 20px;
 }
 
-@media (--size-y-regular) {
+@media (--sizeY-regular) {
   .SimpleCell--sizeY-none.SimpleCell--ios
     > .Avatar:not(.Avatar--sz-32)
     ~ .SimpleCell__main
@@ -251,7 +251,7 @@
   transform: translateY(0.5px);
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .SimpleCell--sizeY-none {
     min-height: 44px;
   }

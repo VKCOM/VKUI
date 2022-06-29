@@ -14,7 +14,7 @@
   line-height: var(--vkui--font_headline1--line_height--compact);
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .Headline--sizeY-none.Headline--l-1 {
     font-size: var(--vkui--font_headline1--font_size--compact);
     line-height: var(--vkui--font_headline1--line_height--compact);
@@ -32,7 +32,7 @@
   line-height: var(--vkui--font_headline2--line_height--compact);
 }
 
-@media (--size-y-compact) {
+@media (--sizeY-compact) {
   .Headline--sizeY-none.Headline--l-2 {
     font-size: var(--vkui--font_headline2--font_size--compact);
     line-height: var(--vkui--font_headline2--line_height--compact);

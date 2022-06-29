@@ -2,7 +2,6 @@ import * as React from "react";
 import { FixedLayout } from "../FixedLayout/FixedLayout";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useDOM } from "../../lib/dom";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
@@ -10,6 +9,8 @@ import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { useTimeout } from "../../hooks/useTimeout";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useScrollLock } from "../AppRoot/ScrollContext";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import { VKCOM } from "../../lib/platform";
 import "./PanelHeaderContext.css";
 
 export interface PanelHeaderContextProps
@@ -31,22 +32,20 @@ export const PanelHeaderContext: React.FC<PanelHeaderContextProps> = ({
   const platform = usePlatform();
   const [visible, setVisible] = React.useState(opened);
   const closing = visible && !opened;
-  const { viewWidth } = useAdaptivity();
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
+  const { sizeX } = useAdaptivity();
   const elementRef = React.useRef<HTMLDivElement>(null);
 
   useIsomorphicLayoutEffect(() => {
     opened && setVisible(true);
   }, [opened]);
 
-  useScrollLock(!isDesktop && opened);
+  useScrollLock(platform !== VKCOM && opened);
 
   // start closing on outer click
   useGlobalEventListener(
     document,
     "click",
-    isDesktop &&
-      opened &&
+    opened &&
       !closing &&
       ((event) => {
         if (
@@ -73,7 +72,7 @@ export const PanelHeaderContext: React.FC<PanelHeaderContextProps> = ({
         getClassName("PanelHeaderContext", platform),
         opened && "PanelHeaderContext--opened",
         closing && "PanelHeaderContext--closing",
-        isDesktop && "PanelHeaderContext--desktop"
+        getSizeXClassName("PanelHeaderContext", sizeX)
       )}
       vertical="top"
     >
@@ -84,8 +83,14 @@ export const PanelHeaderContext: React.FC<PanelHeaderContextProps> = ({
       >
         <div vkuiClass="PanelHeaderContext__content">{visible && children}</div>
       </div>
-      {!isDesktop && visible && (
-        <div onClick={onClose} vkuiClass="PanelHeaderContext__fade" />
+      {visible && (
+        <div
+          onClick={(event) => {
+            event.stopPropagation();
+            onClose();
+          }}
+          vkuiClass="PanelHeaderContext__fade"
+        />
       )}
     </FixedLayout>
   );
