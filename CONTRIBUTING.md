@@ -31,12 +31,7 @@
 Бывают случаи, например, поле ввода, когда главным является именно `input`, а не обёртка:
 
 ```jsx
-const Input: React.FC<InputProps> = ({
-  mode,
-  style,
-  className,
-  ...restProps
-}) => {
+const Input = ({ mode, style, className, ...restProps }: InputProps) => {
   return (
     <div
       vkuiClass={classNames("Input", `Input--${mode}`)}
@@ -52,10 +47,10 @@ const Input: React.FC<InputProps> = ({
 - Компонент корректно отрисовывается, если не передавать никаких свойств. Вместо `defaultProps`, [deprecated для функциональных компонентов](https://github.com/facebook/react/pull/16210), используем спред:
 
 ```jsx
-const Cmp: React.FC<CmpProps> = ({
+const Cmp = ({
   mode = "default",
   ...restProps,
-}) => <div vkuiClass={classNames("Cmp", `Cmp--${mode}`)} {...restProps} />;
+}: CmpProps) => <div vkuiClass={classNames("Cmp", `Cmp--${mode}`)} {...restProps} />;
 ```
 
 - Для цветов используются цветовые токены. Старые компоненты поддерживают [Appearance](https://github.com/VKCOM/Appearance) и [vkui-tokens](https://github.com/VKCOM/vkui-tokens), новые — только vkui-tokens. [Гайд по миграции](https://github.com/VKCOM/VKUI/blob/master/VKUI_TOKENS_MIGRATION_GUIDE.md)

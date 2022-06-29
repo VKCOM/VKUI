@@ -21,12 +21,12 @@ export interface PanelHeaderContextProps
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderContext
  */
-export const PanelHeaderContext: React.FC<PanelHeaderContextProps> = ({
+export const PanelHeaderContext = ({
   children,
   onClose,
   opened = false,
   ...restProps
-}) => {
+}: PanelHeaderContextProps) => {
   const { document } = useDOM();
   const platform = usePlatform();
   const [visible, setVisible] = React.useState(opened);

@@ -23,9 +23,11 @@ const _children = ["first", "middle", "last"].map((item) => (
   </ActionSheetItem>
 ));
 
-const ActionSheetTest: React.FC<
-  Partial<ActionSheetProps> & Partial<FocusTrapProps>
-> = ({ children = _children, onClose, ...props }) => {
+const ActionSheetTest = ({
+  children = _children,
+  onClose,
+  ...props
+}: Partial<ActionSheetProps> & Partial<FocusTrapProps>) => {
   const toggleRef = React.useRef(null);
   const [actionSheet, toggleActionSheet] = React.useState<any>(null);
 

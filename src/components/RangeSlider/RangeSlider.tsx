@@ -9,7 +9,7 @@ export type RangeSliderProps = UniversalSliderProps<Value>;
 /**
  * @see https://vkcom.github.io/VKUI/#/RangeSlider
  */
-export const RangeSlider: React.FC<RangeSliderProps> = ({
+export const RangeSlider = ({
   onChange,
   defaultValue,
   min = 0,

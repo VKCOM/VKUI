@@ -13,10 +13,10 @@ export interface VisuallyHiddenInputProps
  * скрыть его визуально и оставить
  * доступным для ассистивных технологий.
  */
-export const VisuallyHiddenInput: React.FC<VisuallyHiddenInputProps> = ({
+export const VisuallyHiddenInput = ({
   getRef,
   ...restProps
-}) => {
+}: VisuallyHiddenInputProps) => {
   const inputRef = useExternRef(getRef);
 
   return (

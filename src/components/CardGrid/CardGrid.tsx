@@ -14,7 +14,7 @@ export interface CardGridProps
 /**
  * @see https://vkcom.github.io/VKUI/#/CardGrid
  */
-const CardGrid: React.FunctionComponent<CardGridProps> = ({
+const CardGrid = ({
   children,
   size = "s",
   sizeX,

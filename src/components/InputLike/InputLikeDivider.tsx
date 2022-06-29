@@ -1,9 +1,10 @@
 import * as React from "react";
 import "./InputLikeDivider.css";
 
-export const InputLikeDivider: React.FC<
-  React.InputHTMLAttributes<HTMLSpanElement>
-> = ({ children, ...props }) => {
+export const InputLikeDivider = ({
+  children,
+  ...props
+}: React.InputHTMLAttributes<HTMLSpanElement>) => {
   return (
     <span vkuiClass="InputLikeDivider" {...props}>
       {children}

@@ -45,7 +45,7 @@ interface FormFieldOwnProps
 /**
  * @see https://vkcom.github.io/VKUI/#/FormField
  */
-export const FormField: React.FC<FormFieldOwnProps> = ({
+export const FormField = ({
   Component = "div",
   children,
   getRootRef,

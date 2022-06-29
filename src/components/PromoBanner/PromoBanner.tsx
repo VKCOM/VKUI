@@ -52,9 +52,13 @@ const warn = warnOnce("PromoBanner");
 /**
  * @see https://vkcom.github.io/VKUI/#/PromoBanner
  */
-export const PromoBanner = (props: PromoBannerProps) => {
+export const PromoBanner = ({
+  bannerData = {},
+  onClose,
+  isCloseButtonHidden,
+  ...restProps
+}: PromoBannerProps) => {
   const platform = usePlatform();
-  const { bannerData = {}, onClose, ...restProps } = props;
 
   const ageRestrictions =
     bannerData.ageRestrictions != null
@@ -101,8 +105,8 @@ export const PromoBanner = (props: PromoBannerProps) => {
           <Caption vkuiClass="PromoBanner__age">{ageRestrictions}+</Caption>
         )}
 
-        {!props.isCloseButtonHidden && (
-          <div vkuiClass="PromoBanner__close" onClick={props.onClose}>
+        {!isCloseButtonHidden && (
+          <div vkuiClass="PromoBanner__close" onClick={onClose}>
             <Icon24Dismiss />
           </div>
         )}

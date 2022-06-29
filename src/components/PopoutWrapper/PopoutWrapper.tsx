@@ -19,7 +19,7 @@ export interface PopoutWrapperProps
 /**
  * @see https://vkcom.github.io/VKUI/#/PopoutWrapper
  */
-export const PopoutWrapper: React.FC<PopoutWrapperProps> = ({
+export const PopoutWrapper = ({
   alignY = "center",
   alignX = "center",
   closing = false,

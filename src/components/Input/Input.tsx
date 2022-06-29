@@ -15,7 +15,7 @@ export interface InputProps
     AdaptivityProps,
     FormFieldProps {}
 
-const InputComponent: React.FunctionComponent<InputProps> = ({
+const InputComponent = ({
   type = "text",
   align,
   getRef,

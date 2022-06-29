@@ -19,7 +19,7 @@ export interface FileProps
 /**
  * @see https://vkcom.github.io/VKUI/#/File
  */
-export const File: React.FC<FileProps> = ({
+export const File = ({
   children = "Выберите файл",
   align = "left",
   // TODO: v5.0.0 удалить controlSize
@@ -34,7 +34,7 @@ export const File: React.FC<FileProps> = ({
   getRootRef,
   appearance,
   ...restProps
-}) => {
+}: FileProps) => {
   const platform = usePlatform();
 
   return (

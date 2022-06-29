@@ -20,7 +20,7 @@ function getEl(
   return ref && "current" in ref ? ref.current : ref;
 }
 
-export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
+export const ActionSheetDropdownDesktop = ({
   children,
   toggleRef,
   closing,
@@ -29,7 +29,7 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
   className,
   style,
   ...restProps
-}) => {
+}: SharedDropdownProps) => {
   const { document } = useDOM();
   const platform = usePlatform();
   const { sizeY } = useAdaptivity();

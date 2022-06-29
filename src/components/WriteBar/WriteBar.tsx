@@ -33,24 +33,20 @@ export interface WriteBarProps
 /**
  * @see https://vkcom.github.io/VKUI/#/WriteBar
  */
-export const WriteBar: React.FC<WriteBarProps> = (props: WriteBarProps) => {
+export const WriteBar = ({
+  className,
+  style,
+  before,
+  inlineAfter,
+  after,
+  value,
+  onChange,
+  getRootRef,
+  getRef,
+  onHeightChange,
+  ...restProps
+}: WriteBarProps) => {
   const platform = usePlatform();
-  const {
-    className,
-    style,
-
-    before,
-    inlineAfter,
-    after,
-
-    value,
-    onChange,
-
-    getRootRef,
-    getRef,
-    onHeightChange,
-    ...restProps
-  } = props;
 
   const isControlledOutside = value != null;
 

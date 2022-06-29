@@ -66,7 +66,7 @@ export type DragHandler = (e: React.DragEvent<HTMLElement>) => void;
 /**
  * @see https://vkcom.github.io/VKUI/#/Touch
  */
-export const Touch: React.FC<TouchProps> = ({
+export const Touch = ({
   onStart,
   onStartX,
   onStartY,

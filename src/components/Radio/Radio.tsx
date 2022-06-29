@@ -51,16 +51,15 @@ export interface RadioProps
   description?: React.ReactNode;
 }
 
-const RadioComponent: React.FC<RadioProps> = (props: RadioProps) => {
-  const {
-    children,
-    description,
-    style,
-    className,
-    getRootRef,
-    sizeY,
-    ...restProps
-  } = props;
+const RadioComponent = ({
+  children,
+  description,
+  style,
+  className,
+  getRootRef,
+  sizeY,
+  ...restProps
+}: RadioProps) => {
   const platform = usePlatform();
 
   const RadioTypography =

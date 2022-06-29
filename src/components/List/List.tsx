@@ -8,9 +8,10 @@ import "./List.css";
 /**
  * @see https://vkcom.github.io/VKUI/#/List
  */
-export const List: React.FunctionComponent<
-  React.HTMLAttributes<HTMLDivElement>
-> = ({ children, ...restProps }: React.HTMLAttributes<HTMLDivElement>) => {
+export const List = ({
+  children,
+  ...restProps
+}: React.HTMLAttributes<HTMLDivElement>) => {
   const platform = usePlatform();
   const [isDragging, toggleDrag] = React.useState(false);
 

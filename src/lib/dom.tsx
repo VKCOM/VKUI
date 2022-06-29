@@ -31,7 +31,7 @@ export const useDOM = () => {
 export function withDOM<Props>(
   Component: React.ComponentType<Props & DOMProps>
 ): React.ComponentType<Props> {
-  const WithDOM: React.FC<Props> = (props: Props) => {
+  const WithDOM = (props: Props) => {
     const dom = useDOM();
     return <Component {...props} {...dom} />;
   };

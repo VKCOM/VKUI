@@ -97,7 +97,7 @@ const getInternalValue = (value: CalendarProps["value"]) => {
 /**
  * @see https://vkcom.github.io/VKUI/#/DateInput
  */
-export const DateInput: React.FC<DateInputProps> = ({
+export const DateInput = ({
   enableTime,
   shouldDisableDate,
   disableFuture,
@@ -134,7 +134,7 @@ export const DateInput: React.FC<DateInputProps> = ({
   prevMonthIcon,
   nextMonthIcon,
   ...props
-}) => {
+}: DateInputProps) => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
   const monthsRef = React.useRef<HTMLSpanElement>(null);
   const yearsRef = React.useRef<HTMLSpanElement>(null);

@@ -14,7 +14,7 @@ export interface CardProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Card
  */
-export const Card: React.FC<CardProps> = ({
+export const Card = ({
   mode = "tint",
   children,
   getRootRef,

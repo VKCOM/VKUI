@@ -24,7 +24,7 @@ export interface SplitLayoutProps
 /**
  * @see https://vkcom.github.io/VKUI/#/SplitLayout
  */
-export const SplitLayout: React.FC<SplitLayoutProps> = ({
+export const SplitLayout = ({
   popout,
   modal,
   header,

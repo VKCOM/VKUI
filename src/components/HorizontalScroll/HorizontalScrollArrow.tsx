@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Icon24Chevron } from "@vkontakte/icons";
 import { classNames } from "../../lib/classNames";
 import { Tappable } from "../Tappable/Tappable";
@@ -9,7 +8,7 @@ export interface HorizontalScrollArrowProps {
   direction: "left" | "right";
 }
 
-const HorizontalScrollArrow: React.FC<HorizontalScrollArrowProps> = ({
+const HorizontalScrollArrow = ({
   onClick,
   direction,
 }: HorizontalScrollArrowProps) => {

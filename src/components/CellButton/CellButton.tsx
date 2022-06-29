@@ -1,4 +1,3 @@
-import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { SimpleCell, SimpleCellProps } from "../SimpleCell/SimpleCell";
 import "./CellButton.css";
@@ -11,7 +10,7 @@ export interface CellButtonProps extends SimpleCellProps {
 /**
  * @see https://vkcom.github.io/VKUI/#/CellButton
  */
-export const CellButton: React.FC<CellButtonProps> = ({
+export const CellButton = ({
   centered = false,
   mode = "primary",
   ...restProps

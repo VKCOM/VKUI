@@ -27,7 +27,7 @@ export interface FocusTrapProps
 /**
  * @see https://vkcom.github.io/VKUI/#/FocusTrap
  */
-export const FocusTrap: React.FC<FocusTrapProps> = ({
+export const FocusTrap = ({
   Component = "div",
   onClose = noop,
   restoreFocus = true,
@@ -35,7 +35,7 @@ export const FocusTrap: React.FC<FocusTrapProps> = ({
   getRootRef,
   children,
   ...restProps
-}) => {
+}: FocusTrapProps) => {
   const ref = useExternRef<HTMLElement>(getRootRef);
 
   const { document, window } = useDOM();

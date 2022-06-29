@@ -41,7 +41,7 @@ const warn = warnOnce("Checkbox");
 /**
  * @see https://vkcom.github.io/VKUI/#/Checkbox
  */
-export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
+export const Checkbox = ({
   children,
   className,
   style,

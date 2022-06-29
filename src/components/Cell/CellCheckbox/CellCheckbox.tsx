@@ -15,11 +15,11 @@ import "./CellCheckbox.css";
 export type CellCheckboxProps = Pick<CellProps, "defaultChecked" | "checked"> &
   React.InputHTMLAttributes<HTMLInputElement>;
 
-export const CellCheckbox: React.FC<CellCheckboxProps> = ({
+export const CellCheckbox = ({
   className,
   style,
   ...restProps
-}) => {
+}: CellCheckboxProps) => {
   const platform = usePlatform();
 
   const IconOff =

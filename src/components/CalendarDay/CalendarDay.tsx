@@ -25,7 +25,7 @@ export interface CalendarDayProps {
   onLeave?(value: Date): void;
 }
 
-export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
+export const CalendarDay = React.memo(
   ({
     day,
     today,
@@ -44,7 +44,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
     hintedSelectionEnd,
     sameMonth,
     size,
-  }) => {
+  }: CalendarDayProps) => {
     const locale = React.useContext(LocaleProviderContext);
     const ref = React.useRef<HTMLElement>(null);
     const onClick = React.useCallback(() => onChange(day), [day, onChange]);

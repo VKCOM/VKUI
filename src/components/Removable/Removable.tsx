@@ -122,7 +122,7 @@ interface RemovableOwnProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Removable
  */
-export const Removable: React.FC<RemovableOwnProps> = ({
+export const Removable = ({
   getRootRef,
   children,
   onRemove = noop,

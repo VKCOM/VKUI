@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   PanelHeaderButton,
   PanelHeaderButtonProps,
@@ -11,9 +10,10 @@ import { getTitleFromChildren } from "../../lib/utils";
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderSubmit
  */
-export const PanelHeaderSubmit: React.FunctionComponent<
-  PanelHeaderButtonProps
-> = ({ children = "Готово", ...restProps }: PanelHeaderButtonProps) => {
+export const PanelHeaderSubmit = ({
+  children = "Готово",
+  ...restProps
+}: PanelHeaderButtonProps) => {
   const platform = usePlatform();
 
   return (

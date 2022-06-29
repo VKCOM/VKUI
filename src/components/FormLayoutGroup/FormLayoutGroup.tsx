@@ -23,7 +23,7 @@ export interface FormLayoutGroupProps
 /**
  * @see https://vkcom.github.io/VKUI/#/FormLayoutGroup
  */
-export const FormLayoutGroup: React.FC<FormLayoutGroupProps> = ({
+export const FormLayoutGroup = ({
   children,
   mode = "vertical",
   removable,

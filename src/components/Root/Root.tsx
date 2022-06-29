@@ -45,7 +45,7 @@ const warn = warnOnce("Root");
 /**
  * @see https://vkcom.github.io/VKUI/#/Root
  */
-export const Root: React.FC<RootProps> = ({
+export const Root = ({
   popout = null,
   modal,
   children,

@@ -50,7 +50,7 @@ export interface RichCellProps extends TappableProps {
   multiline?: boolean;
 }
 
-const RichCellComponent: React.FC<RichCellProps> = ({
+const RichCellComponent = ({
   children,
   text,
   caption,
@@ -61,7 +61,7 @@ const RichCellComponent: React.FC<RichCellProps> = ({
   multiline,
   sizeY,
   ...restProps
-}) => {
+}: RichCellProps) => {
   const platform = usePlatform();
 
   return (

@@ -140,7 +140,7 @@ export function mockRect(
 
 export const mockScrollContext = (
   getY: () => number
-): [React.FC<HasChildren>, jest.Mock] => {
+): [React.ComponentType<HasChildren>, jest.Mock] => {
   const getScroll = () => ({ x: 0, y: getY() });
   const scrollTo = jest.fn();
   const isScrollLock = false;

@@ -15,7 +15,7 @@ export interface FormStatusProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * @see https://vkcom.github.io/VKUI/#/FormStatus
  */
-export const FormStatus: React.FunctionComponent<FormStatusProps> = ({
+export const FormStatus = ({
   mode,
   header,
   children,

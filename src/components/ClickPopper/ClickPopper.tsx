@@ -25,7 +25,7 @@ export interface ClickPopperProps extends PopperCommonProps {
   children?: React.ReactElement;
 }
 
-export const ClickPopper: React.FC<ClickPopperProps> = ({
+export const ClickPopper = ({
   getRef,
   content,
   children,

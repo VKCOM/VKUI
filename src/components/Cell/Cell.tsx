@@ -63,7 +63,7 @@ const warn = warnOnce("Cell");
 /**
  * @see https://vkcom.github.io/VKUI/#/Cell
  */
-export const Cell: React.FC<CellProps> = ({
+export const Cell = ({
   mode: propsMode, // TODO: убрать переименование в propsMode перед 5.0.0
   onRemove = noop,
   removePlaceholder = "Удалить",

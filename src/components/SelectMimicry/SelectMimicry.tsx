@@ -21,7 +21,7 @@ export interface SelectMimicryProps
   selectType?: keyof typeof SelectType;
 }
 
-const SelectMimicryComponent: React.FC<SelectMimicryProps> = ({
+const SelectMimicryComponent = ({
   tabIndex = 0,
   placeholder,
   children,
@@ -36,7 +36,7 @@ const SelectMimicryComponent: React.FC<SelectMimicryProps> = ({
   after = <DropdownIcon />,
   selectType = SelectType.default,
   ...restProps
-}) => {
+}: SelectMimicryProps) => {
   const platform = usePlatform();
   const title = children || placeholder;
 

@@ -83,11 +83,11 @@ interface AlertActionProps {
   onItemClick: ItemClickHandler;
 }
 
-const AlertAction: React.FC<AlertActionProps> = ({
+const AlertAction = ({
   action,
   onItemClick,
   ...restProps
-}) => {
+}: AlertActionProps) => {
   const platform = usePlatform();
   const { viewWidth } = useAdaptivity();
   const handleItemClick = React.useCallback(
@@ -140,7 +140,7 @@ const AlertAction: React.FC<AlertActionProps> = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/Alert
  */
-export const Alert: React.FC<AlertProps> = ({
+export const Alert = ({
   actions = [],
   actionsLayout = "horizontal",
   children,
@@ -151,7 +151,7 @@ export const Alert: React.FC<AlertProps> = ({
   onClose,
   dismissLabel = "Закрыть предупреждение",
   ...restProps
-}) => {
+}: AlertProps) => {
   const platform = usePlatform();
   const { viewWidth } = useAdaptivity();
   const { waitTransitionFinish } = useWaitTransitionFinish();

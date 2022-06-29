@@ -9,11 +9,7 @@ export interface DivProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Div
  */
-export const Div: React.FC<DivProps> = ({
-  children,
-  getRootRef,
-  ...restProps
-}) => {
+export const Div = ({ children, getRootRef, ...restProps }: DivProps) => {
   return (
     <div {...restProps} ref={getRootRef} vkuiClass="Div">
       {children}

@@ -52,9 +52,7 @@ export interface SimpleCellProps extends SimpleCellOwnProps, TappableProps {}
 type SimpleCellTypographyProps = React.HTMLAttributes<HTMLDivElement> &
   HasComponent;
 
-const SimpleCellTypography: React.FC<SimpleCellTypographyProps> = (
-  props: SimpleCellTypographyProps
-) => {
+const SimpleCellTypography = (props: SimpleCellTypographyProps) => {
   const { sizeY } = useAdaptivity();
   const platform = usePlatform();
 
@@ -67,7 +65,7 @@ const SimpleCellTypography: React.FC<SimpleCellTypographyProps> = (
   }
 };
 
-const SimpleCellComponent: React.FC<SimpleCellProps> = ({
+const SimpleCellComponent = ({
   badge,
   before,
   indicator,

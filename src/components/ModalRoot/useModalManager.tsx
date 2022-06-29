@@ -232,7 +232,7 @@ export function withModalManager(
 ) {
   return function <Props extends ModalTransitionProps>(
     Wrapped: React.ComponentType<Props>
-  ): React.FC<
+  ): React.ComponentType<
     Omit<Props, keyof ModalTransitionProps> & {
       activeModal?: string | null;
       children?: React.ReactNode;

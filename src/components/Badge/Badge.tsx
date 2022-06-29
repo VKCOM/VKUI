@@ -9,6 +9,6 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLElement> {
 /**
  * @see https://vkcom.github.io/VKUI/#/Badge
  */
-export const Badge: React.FC<BadgeProps> = ({ mode = "new", ...restProps }) => (
+export const Badge = ({ mode = "new", ...restProps }: BadgeProps) => (
   <span vkuiClass={classNames("Badge", `Badge--${mode}`)} {...restProps} />
 );

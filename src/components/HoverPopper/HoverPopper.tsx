@@ -32,7 +32,7 @@ export interface HoverPopperProps extends PopperCommonProps {
   children?: React.ReactElement;
 }
 
-export const HoverPopper: React.FC<HoverPopperProps> = ({
+export const HoverPopper = ({
   getRef,
   content,
   children,

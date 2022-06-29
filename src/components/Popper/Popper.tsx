@@ -61,7 +61,7 @@ const ARROW_HEIGHT = 8;
 /**
  * @see https://vkcom.github.io/VKUI/#/Popper
  */
-export const Popper: React.FC<PopperProps> = ({
+export const Popper = ({
   targetRef,
   children,
   getRef,

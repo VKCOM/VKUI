@@ -93,7 +93,7 @@ const getInternalValue = (value: CalendarRangeProps["value"]) => {
 /**
  * @see https://vkcom.github.io/VKUI/#/DateRangeInput
  */
-export const DateRangeInput: React.FC<DateRangeInputProps> = ({
+export const DateRangeInput = ({
   shouldDisableDate,
   disableFuture,
   disablePast,
@@ -126,7 +126,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
   prevMonthIcon,
   nextMonthIcon,
   ...props
-}) => {
+}: DateRangeInputProps) => {
   const daysStartRef = React.useRef<HTMLSpanElement>(null);
   const monthsStartRef = React.useRef<HTMLSpanElement>(null);
   const yearsStartRef = React.useRef<HTMLSpanElement>(null);

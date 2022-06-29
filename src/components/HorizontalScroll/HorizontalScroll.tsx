@@ -122,7 +122,7 @@ function doScroll({
   })();
 }
 
-const HorizontalScrollComponent: React.FC<HorizontalScrollProps> = ({
+const HorizontalScrollComponent = ({
   children,
   getScrollToLeft,
   getScrollToRight,
@@ -131,7 +131,7 @@ const HorizontalScrollComponent: React.FC<HorizontalScrollProps> = ({
   hasMouse,
   getRef,
   ...restProps
-}) => {
+}: HorizontalScrollProps) => {
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(false);
 

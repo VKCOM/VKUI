@@ -10,12 +10,12 @@ import "./CellDragger.css";
 
 type CellDraggerProps = DraggableProps & React.HTMLAttributes<HTMLElement>;
 
-export const CellDragger: React.FC<CellDraggerProps> = ({
+export const CellDragger = ({
   onDragStart,
   onDragMove,
   onDragEnd,
   ...restProps
-}) => {
+}: CellDraggerProps) => {
   const platform = usePlatform();
 
   const onClick = React.useCallback((e: React.MouseEvent) => {

@@ -43,7 +43,7 @@ const warn = warnOnce("ActionSheet");
 /**
  * @see https://vkcom.github.io/VKUI/#/ActionSheet
  */
-export const ActionSheet: React.FC<ActionSheetProps> = ({
+export const ActionSheet = ({
   children,
   className,
   header,
@@ -52,7 +52,7 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
   iosCloseItem,
   popupDirection = "bottom",
   ...restProps
-}) => {
+}: ActionSheetProps) => {
   const platform = usePlatform();
   const [closing, setClosing] = React.useState(false);
   const onClose = () => setClosing(true);

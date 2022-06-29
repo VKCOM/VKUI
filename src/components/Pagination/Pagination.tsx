@@ -64,7 +64,7 @@ export interface PaginationProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Pagination
  */
-export const Pagination: React.FC<PaginationProps> = ({
+export const Pagination = ({
   currentPage = 1,
   siblingCount = 1,
   boundaryCount = 1,
@@ -76,7 +76,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   getRootRef,
   onChange,
   ...resetProps
-}) => {
+}: PaginationProps) => {
   const { sizeY } = useAdaptivity();
 
   const pages = usePagination({
