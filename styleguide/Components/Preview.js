@@ -89,8 +89,6 @@ export default withAdaptivity(
         console.clear();
       }
 
-      console.log(layout, adaptivity, iframe);
-
       return (
         <StyleGuideContext.Consumer>
           {(styleGuideContext) => {
