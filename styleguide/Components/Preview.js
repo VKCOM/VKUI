@@ -89,6 +89,8 @@ export default withAdaptivity(
         console.clear();
       }
 
+      console.log(layout, adaptivity, iframe);
+
       return (
         <StyleGuideContext.Consumer>
           {(styleGuideContext) => {
@@ -143,8 +145,11 @@ export default withAdaptivity(
                           <PlaygroundError message={error} />
                         ) : iframe ? (
                           <Frame
-                            width={adaptivity && width}
-                            height={adaptivity && styleGuideContext.height}
+                            style={
+                              adaptivity
+                                ? { width, height: styleGuideContext.height }
+                                : undefined
+                            }
                             appearance={styleGuideContext.appearance}
                           >
                             <Config
