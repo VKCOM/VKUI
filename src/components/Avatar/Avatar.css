@@ -140,20 +140,6 @@
 }
 
 /**
- * .RichCell
- */
-.RichCell > .Avatar {
-  margin-right: 12px;
-  margin-top: 8px;
-  margin-bottom: 8px;
-}
-
-.RichCell > .Avatar--sz-48 {
-  margin-top: 6px;
-  margin-bottom: 6px;
-}
-
-/**
  * .SimpleCell
  */
 .SimpleCell > .Avatar {

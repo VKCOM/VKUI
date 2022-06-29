@@ -55,6 +55,9 @@ export type { RadioProps } from "../components/Radio/Radio";
 export { RadioGroup } from "../components/RadioGroup/RadioGroup";
 export type { RadioGroupProps } from "../components/RadioGroup/RadioGroup";
 
+export { RichCell } from "../components/RichCell/RichCell";
+export type { RichCellProps } from "../components/RichCell/RichCell";
+
 export { SegmentedControl } from "../components/SegmentedControl/SegmentedControl";
 export type {
   SegmentedControlProps,
