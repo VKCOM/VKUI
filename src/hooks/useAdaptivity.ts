@@ -12,6 +12,8 @@ export const useAdaptivity = (): AdaptivityProps => {
     React.useContext(AdaptivityContext);
   const [hasMouse, setHasMouse] = React.useState(hasMouseContext);
 
+  // определение hasMouse в @vkontakte/vkjs происходит через window.matchMedia
+  // чтобы не было ошибок при гидрации определяем значение после первого рендера
   React.useEffect(() => {
     if (hasMouseContext !== undefined) {
       setHasMouse(hasMouseContext);
