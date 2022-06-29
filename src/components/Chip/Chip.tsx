@@ -22,7 +22,7 @@ export interface ChipProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * @see https://vkcom.github.io/VKUI/#/Chip
  */
-export const Chip: React.FC<ChipProps> = ({
+export const Chip = ({
   value = "",
   option,
   removable = true,

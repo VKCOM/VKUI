@@ -40,7 +40,7 @@ const IS_DEV = process.env.NODE_ENV === "development";
 /**
  * @see https://vkcom.github.io/VKUI/#/WriteBarIcon
  */
-export const WriteBarIcon: React.FC<WriteBarIconProps> = ({
+export const WriteBarIcon = ({
   mode,
   children,
   count,

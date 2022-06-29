@@ -17,10 +17,13 @@ export interface ButtonProps
 /**
  * @deprecated Этот компонент устарел и будет удален в 5.0.0.
  */
-export const SliderSwitchButton: React.FunctionComponent<ButtonProps> = (
-  props: ButtonProps
-) => {
-  const { active, hovered, children, getRootRef, ...restProps } = props;
+export const SliderSwitchButton = ({
+  active,
+  hovered,
+  children,
+  getRootRef,
+  ...restProps
+}: ButtonProps) => {
   const platform = usePlatform();
   const [focus, setFocus] = React.useState(false);
 

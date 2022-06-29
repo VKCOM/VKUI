@@ -17,7 +17,7 @@ export interface TabsProps
 export const TabsModeContext =
   React.createContext<TabsProps["mode"]>("default");
 
-const TabsComponent: React.FunctionComponent<TabsProps> = ({
+const TabsComponent = ({
   children,
   mode = "default",
   getRootRef,

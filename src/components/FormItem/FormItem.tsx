@@ -28,7 +28,7 @@ export interface FormItemProps
 /**
  * @see https://vkcom.github.io/VKUI/#/FormItem
  */
-export const FormItem: React.FC<FormItemProps> = ({
+export const FormItem = ({
   children,
   top,
   bottom,

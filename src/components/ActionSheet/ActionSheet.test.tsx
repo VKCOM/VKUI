@@ -9,18 +9,17 @@ import { ActionSheet, ActionSheetProps } from "./ActionSheet";
 import { ActionSheetItem } from "../ActionSheetItem/ActionSheetItem";
 import userEvent from "@testing-library/user-event";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import { FC } from "react";
 
 describe("ActionSheet", () => {
   beforeAll(() => jest.useFakeTimers());
   afterAll(() => jest.useRealTimers());
   const toggle = document.createElement("div");
-  const ActionSheetDesktop: FC<Partial<ActionSheetProps>> = (props) => (
+  const ActionSheetDesktop = (props: Partial<ActionSheetProps>) => (
     <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasMouse>
       <ActionSheet toggleRef={toggle} {...props} iosCloseItem={null} />
     </AdaptivityProvider>
   );
-  const ActionSheetMobile: FC<Partial<ActionSheetProps>> = (props) => (
+  const ActionSheetMobile = (props: Partial<ActionSheetProps>) => (
     <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasMouse={false}>
       <ActionSheet toggleRef={toggle} {...props} iosCloseItem={null} />
     </AdaptivityProvider>

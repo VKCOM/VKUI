@@ -21,7 +21,7 @@ export interface TextareaProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Textarea
  */
-const TextareaComponent: React.FC<TextareaProps> = ({
+const TextareaComponent = ({
   defaultValue = "",
   grow = true,
   style,

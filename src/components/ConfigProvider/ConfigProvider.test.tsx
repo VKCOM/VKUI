@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import { AppearanceType } from "@vkontakte/vk-bridge";
-import { FC, useContext } from "react";
+import { useContext } from "react";
 import { ANDROID, VKCOM } from "../../lib/platform";
 import { baselineComponent } from "../../testing/utils";
 import { Scheme, Appearance } from "../../helpers/scheme";
@@ -17,7 +17,7 @@ describe("ConfigProvider", () => {
       hasNewTokens: undefined,
       transitionMotionEnabled: false,
     };
-    const ConfigUser: FC = () => {
+    const ConfigUser = () => {
       expect(useContext(ConfigProviderContext)).toEqual({
         platform: ANDROID,
         isWebView: false,
@@ -85,7 +85,7 @@ describe("ConfigProvider", () => {
   describe("resolves appearance from external scheme", () => {
     afterEach(() => () => document.body.removeAttribute("scheme"));
     let appearance: AppearanceType | undefined;
-    const ReadAppearance: FC = () => {
+    const ReadAppearance = () => {
       appearance = useContext(ConfigProviderContext).appearance;
       return null;
     };

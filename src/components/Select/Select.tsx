@@ -55,10 +55,10 @@ export const SelectTypography = ({
 
 export interface SelectProps extends CustomSelectProps, AdaptivityProps {}
 
-const SelectComponent: React.FC<SelectProps & AdaptivityContextInterface> = ({
+const SelectComponent = ({
   hasMouse,
   ...props
-}: SelectProps) => {
+}: SelectProps & AdaptivityContextInterface) => {
   // Use custom select if device has connected a mouse
   if (hasMouse) {
     const { children, ...restProps } = props;

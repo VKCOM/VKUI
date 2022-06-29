@@ -1,4 +1,3 @@
-import * as React from "react";
 import { HoverPopper, HoverPopperProps } from "../HoverPopper/HoverPopper";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
@@ -12,7 +11,7 @@ export type RichTooltipProps = Omit<HoverPopperProps, "arrowClassName">;
 /**
  * @see https://vkcom.github.io/VKUI/#/RichTooltip
  */
-export const RichTooltip: React.FC<RichTooltipProps> = ({
+export const RichTooltip = ({
   children,
   arrow = true,
   ...popperProps

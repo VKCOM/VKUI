@@ -20,12 +20,15 @@ export interface EpicProps
 
 const warn = warnOnce("Epic");
 
-const EpicComponent: React.FC<EpicProps & AdaptivityContextInterface> = (
-  props
-) => {
+const EpicComponent = ({
+  activeStory,
+  tabbar,
+  children,
+  viewWidth,
+  ...restProps
+}: EpicProps & AdaptivityContextInterface) => {
   const platform = usePlatform();
   const scroll = React.useRef<{ [key: string]: number }>({}).current;
-  const { activeStory, tabbar, children, viewWidth, ...restProps } = props;
 
   if (
     process.env.NODE_ENV === "development" &&

@@ -36,19 +36,16 @@ export interface SimpleCheckboxProps
  * @deprecated Этот компонент устарел и будет удален в 5.0.0. Используйте [`Checkbox`](#/Checkbox).
  * @see https://vkcom.github.io/VKUI/#/SimpleCheckbox
  */
-export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
-  props: SimpleCheckboxProps
-) => {
-  const {
-    className,
-    style,
-    getRootRef,
-    getRef,
-    indeterminate,
-    defaultIndeterminate,
-    onChange,
-    ...restProps
-  } = props;
+export const SimpleCheckbox = ({
+  className,
+  style,
+  getRootRef,
+  getRef,
+  indeterminate,
+  defaultIndeterminate,
+  onChange,
+  ...restProps
+}: SimpleCheckboxProps) => {
   const { sizeY } = useAdaptivity();
   const platform = usePlatform();
   const inputRef = useExternRef(getRef);

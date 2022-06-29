@@ -27,9 +27,7 @@ export type PanelHeaderBackProps = PanelHeaderButtonProps &
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderBack
  */
-export const PanelHeaderBackComponent: React.FunctionComponent<
-  PanelHeaderBackProps
-> = ({
+export const PanelHeaderBackComponent = ({
   label,
   sizeX,
   "aria-label": ariaLabel = "Назад",

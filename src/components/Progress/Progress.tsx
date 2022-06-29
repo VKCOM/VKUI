@@ -14,7 +14,7 @@ const PROGRESS_MAX_VALUE = 100;
 /**
  * @see https://vkcom.github.io/VKUI/#/Progress
  */
-export const Progress: React.FC<ProgressProps> = ({
+export const Progress = ({
   value = 0,
   getRootRef,
   ...restProps

@@ -21,7 +21,7 @@ export interface CustomSelectDropdownProps
 
 const calcIsTop = (placement?: Placement) => placement?.includes("top");
 
-export const CustomSelectDropdown: React.FC<CustomSelectDropdownProps> = ({
+export const CustomSelectDropdown = ({
   children,
   targetRef,
   scrollBoxRef,
@@ -32,7 +32,7 @@ export const CustomSelectDropdown: React.FC<CustomSelectDropdownProps> = ({
   sameWidth = true,
   forcePortal = true,
   ...restProps
-}) => {
+}: CustomSelectDropdownProps) => {
   const [isTop, setIsTop] = React.useState(() => calcIsTop(placement));
 
   const onPlacementChange = React.useCallback(

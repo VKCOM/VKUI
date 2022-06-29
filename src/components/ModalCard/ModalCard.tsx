@@ -30,9 +30,7 @@ export interface ModalCardProps
 
 const warn = warnOnce("ModalCard");
 
-const ModalCardComponent: React.FC<
-  ModalCardProps & AdaptivityContextInterface
-> = ({
+const ModalCardComponent = ({
   icon,
   header,
   subheader,
@@ -47,7 +45,7 @@ const ModalCardComponent: React.FC<
   nav,
   id,
   ...restProps
-}) => {
+}: ModalCardProps & AdaptivityContextInterface) => {
   const isDesktop = useAdaptivityIsDesktop();
 
   const modalContext = React.useContext(ModalRootContext);

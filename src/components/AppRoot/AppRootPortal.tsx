@@ -4,9 +4,17 @@ import { AppRootContext } from "./AppRootContext";
 import { AppearanceProvider } from "../AppearanceProvider/AppearanceProvider";
 import { useAppearance } from "../../hooks/useAppearance";
 
-export const AppRootPortal: React.FC<
-  React.PropsWithChildren<{ className?: string; forcePortal?: boolean }>
-> = ({ children, className, forcePortal }) => {
+export interface AppRootPortalProps {
+  className?: string;
+  forcePortal?: boolean;
+  children?: React.ReactNode;
+}
+
+export const AppRootPortal = ({
+  children,
+  className,
+  forcePortal,
+}: AppRootPortalProps) => {
   const { portalRoot, mode } = React.useContext(AppRootContext);
   const appearance = useAppearance();
 

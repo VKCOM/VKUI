@@ -18,19 +18,16 @@ export interface PopoutRootProps
   modal?: React.ReactNode;
 }
 
-export const PopoutRootComponent: React.FC<
-  PopoutRootProps & AdaptivityContextInterface
-> = (props) => {
-  const {
-    popout,
-    modal,
-    viewWidth,
-    viewHeight,
-    hasMouse,
-    children,
-    getRootRef,
-    ...restProps
-  } = props;
+export const PopoutRootComponent = ({
+  popout,
+  modal,
+  viewWidth,
+  viewHeight,
+  hasMouse,
+  children,
+  getRootRef,
+  ...restProps
+}: PopoutRootProps & AdaptivityContextInterface) => {
   const { document } = useDOM();
 
   const isDesktop = useAdaptivityIsDesktop();

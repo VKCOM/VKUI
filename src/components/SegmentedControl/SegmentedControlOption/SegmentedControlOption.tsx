@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useAdaptivity } from "../../../hooks/useAdaptivity";
 import { useFocusVisible } from "../../../hooks/useFocusVisible";
 import { callMultiple } from "../../../lib/callMultiple";
@@ -16,12 +15,12 @@ import "./SegmentedControlOption.css";
 /**
  * @see https://vkcom.github.io/VKUI/#/SegmentedControl
  */
-export const SegmentedControlOption: React.FC<VisuallyHiddenInputProps> = ({
+export const SegmentedControlOption = ({
   className,
   style,
   children,
   ...restProps
-}) => {
+}: VisuallyHiddenInputProps) => {
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
   const { sizeY } = useAdaptivity();
 

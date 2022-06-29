@@ -21,7 +21,7 @@ const warn = warnOnce("Text");
 /**
  * @see https://vkcom.github.io/VKUI/#/Text
  */
-export const Text: React.FC<TextProps> = ({
+export const Text = ({
   children,
   weight,
   Component = "span",

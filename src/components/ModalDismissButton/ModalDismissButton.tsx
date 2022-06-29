@@ -10,7 +10,7 @@ export type ModalDismissButtonProps = React.HTMLAttributes<HTMLButtonElement>;
 /**
  * @see https://vkcom.github.io/VKUI/#/ModalDismissButton
  */
-export const ModalDismissButton: React.FC<ModalDismissButtonProps> = ({
+export const ModalDismissButton = ({
   "aria-label": ariaLabel = "Закрыть",
   ...restProps
 }: ModalDismissButtonProps) => {

@@ -63,7 +63,7 @@ const warn = warnOnce("Calendar");
 /**
  * @see https://vkcom.github.io/VKUI/#/Calendar
  */
-export const Calendar: React.FC<CalendarProps> = ({
+export const Calendar = ({
   value,
   onChange,
   disablePast,
@@ -91,7 +91,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   prevMonthIcon,
   nextMonthIcon,
   ...props
-}) => {
+}: CalendarProps) => {
   const {
     viewDate,
     setViewDate,

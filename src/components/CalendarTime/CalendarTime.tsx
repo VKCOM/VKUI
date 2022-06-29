@@ -30,14 +30,14 @@ for (let i = 0; i < 60; i += 1) {
   minutes.push({ value: i, label: String(i).padStart(2, "0") });
 }
 
-export const CalendarTime: React.FC<CalendarTimeProps> = ({
+export const CalendarTime = ({
   value,
   doneButtonText = "Готово",
   onChange,
   onClose,
   changeHoursAriaLabel = "Изменить час",
   changeMinutesAriaLabel = "Изменить минуту",
-}) => {
+}: CalendarTimeProps) => {
   const onHoursChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>
       onChange?.(setHours(value, Number(event.target.value))),

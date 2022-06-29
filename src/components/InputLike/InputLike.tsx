@@ -28,7 +28,7 @@ function getMaskElements(length: number) {
   return result;
 }
 
-export const InputLike: React.FC<InputLikeProps> = ({
+export const InputLike = ({
   value,
   length,
   index,
@@ -37,7 +37,7 @@ export const InputLike: React.FC<InputLikeProps> = ({
   onFocus,
   getRootRef,
   ...props
-}) => {
+}: InputLikeProps) => {
   const handleElementSelect = React.useCallback(
     (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
       stopPropagation(event);

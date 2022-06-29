@@ -35,17 +35,16 @@ export interface GroupProps
   mode?: "plain" | "card";
 }
 
-const GroupComponent: React.FC<GroupProps> = (props: GroupProps) => {
-  const {
-    header,
-    description,
-    children,
-    separator = "auto",
-    getRootRef,
-    mode,
-    sizeX,
-    ...restProps
-  } = props;
+const GroupComponent = ({
+  header,
+  description,
+  children,
+  separator = "auto",
+  getRootRef,
+  mode,
+  sizeX,
+  ...restProps
+}: GroupProps) => {
   const { isInsideModal } = React.useContext(ModalRootContext);
   const platform = usePlatform();
 

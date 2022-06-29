@@ -49,9 +49,7 @@ const PanelHeaderChildren = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderContent
  */
-export const PanelHeaderContent: React.FunctionComponent<
-  PanelHeaderContentProps
-> = ({
+export const PanelHeaderContent = ({
   className,
   style,
   aside,

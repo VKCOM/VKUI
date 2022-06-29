@@ -54,9 +54,7 @@ export interface SnackbarProps
   onClose: () => void;
 }
 
-const SnackbarComponent: React.FC<
-  SnackbarProps & AdaptivityContextInterface
-> = ({
+const SnackbarComponent = ({
   children,
   layout = "horizontal",
   action,

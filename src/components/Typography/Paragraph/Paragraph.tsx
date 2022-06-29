@@ -19,13 +19,13 @@ const warn = warnOnce("Paragraph");
 /**
  * @see https://vkcom.github.io/VKUI/#/Paragraph
  */
-export const Paragraph: React.FC<ParagraphProps> = ({
+export const Paragraph = ({
   Component = "span",
   getRootRef,
   weight,
   children,
   ...restProps
-}) => {
+}: ParagraphProps) => {
   if (
     process.env.NODE_ENV === "development" &&
     typeof Component !== "string" &&

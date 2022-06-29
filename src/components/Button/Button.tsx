@@ -51,10 +51,12 @@ interface ButtonTypographyProps extends HasComponent {
   children?: ButtonProps["children"];
 }
 
-const ButtonTypography: React.FC<ButtonTypographyProps> = (
-  props: ButtonTypographyProps
-) => {
-  const { size, sizeY, platform, ...restProps } = props;
+const ButtonTypography = ({
+  size,
+  sizeY,
+  platform,
+  ...restProps
+}: ButtonTypographyProps) => {
   const isCompact = sizeY === SizeType.COMPACT;
 
   switch (size) {
@@ -141,7 +143,7 @@ function resolveButtonAppearance(
   };
 }
 
-const ButtonComponent: React.FC<ButtonProps> = ({
+const ButtonComponent = ({
   size = "s",
   mode = "primary",
   appearance,
@@ -157,7 +159,7 @@ const ButtonComponent: React.FC<ButtonProps> = ({
   onClick,
   stopPropagation = true,
   ...restProps
-}) => {
+}: ButtonProps) => {
   const platform = usePlatform();
   const hasIcons = Boolean(before || after);
   const hasIconOnly = !children && Boolean(after) !== Boolean(before);

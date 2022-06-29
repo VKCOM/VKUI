@@ -60,7 +60,7 @@ const getIsDaySelected = (day: Date, value?: Array<Date | null>) => {
 /**
  * @see https://vkcom.github.io/VKUI/#/CalendarRange
  */
-export const CalendarRange: React.FC<CalendarRangeProps> = ({
+export const CalendarRange = ({
   value,
   onChange,
   disablePast,
@@ -78,7 +78,7 @@ export const CalendarRange: React.FC<CalendarRangeProps> = ({
   prevMonthIcon,
   nextMonthIcon,
   ...props
-}) => {
+}: CalendarRangeProps) => {
   const {
     viewDate,
     setViewDate,

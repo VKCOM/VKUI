@@ -26,9 +26,11 @@ interface SearchPlaceholderTypographyProps
   extends HasPlatform,
     React.HTMLAttributes<HTMLElement> {}
 
-const SearchPlaceholderTypography: React.FC<
-  SearchPlaceholderTypographyProps
-> = ({ platform, children, ...restProps }) => {
+const SearchPlaceholderTypography = ({
+  platform,
+  children,
+  ...restProps
+}: SearchPlaceholderTypographyProps) => {
   switch (platform) {
     case IOS:
       return (
@@ -65,7 +67,7 @@ export interface SearchProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Search
  */
-const SearchComponent: React.FC<SearchProps> = ({
+const SearchComponent = ({
   before = <Icon16SearchOutline aria-hidden />,
   className,
   defaultValue = "",
@@ -78,7 +80,7 @@ const SearchComponent: React.FC<SearchProps> = ({
   style,
   autoComplete = "off",
   ...inputProps
-}) => {
+}: SearchProps) => {
   const inputRef = useExternRef(getRef);
   const [isFocused, setFocused] = React.useState(false);
   const [value, onChange] = useEnsuredControl(inputProps, { defaultValue });

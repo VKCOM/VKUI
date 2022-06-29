@@ -32,7 +32,7 @@ const warn = warnOnce("SegmentedControl");
 /**
  * @see https://vkcom.github.io/VKUI/#/SegmentedControl
  */
-export const SegmentedControl: React.FC<SegmentedControlProps> = ({
+export const SegmentedControl = ({
   size = "l",
   name,
   options,
@@ -42,7 +42,7 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({
   defaultValue,
   children,
   ...restProps
-}) => {
+}: SegmentedControlProps) => {
   const { sizeY } = useAdaptivity();
   const initialValue = defaultValue ?? options[0]?.value;
 

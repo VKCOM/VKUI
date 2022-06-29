@@ -9,11 +9,11 @@ export interface RadioGroupProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * @see https://vkcom.github.io/VKUI/#/RadioGroup
  */
-export const RadioGroup: React.FC<RadioGroupProps> = ({
+export const RadioGroup = ({
   mode = "vertical",
   children,
   ...restProps
-}) => (
+}: RadioGroupProps) => (
   <div
     vkuiClass={classNames("RadioGroup", `RadioGroup--${mode}`)}
     {...restProps}

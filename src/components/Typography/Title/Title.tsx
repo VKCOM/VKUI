@@ -29,13 +29,13 @@ const warn = warnOnce("Title");
 /**
  * @see https://vkcom.github.io/VKUI/#/Title
  */
-export const Title: React.FC<TitleProps> = ({
+export const Title = ({
   children,
   weight,
   level = "1",
   Component,
   ...restProps
-}) => {
+}: TitleProps) => {
   if (!Component) {
     Component = ("h" + level) as React.ElementType;
   }

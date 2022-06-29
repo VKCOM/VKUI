@@ -158,7 +158,7 @@ function isVerticalPlacement(placement: Placement) {
 /**
  * @see https://vkcom.github.io/VKUI/#/Tooltip
  */
-export const Tooltip: React.FC<TooltipProps> = ({
+export const Tooltip = ({
   children,
   isShown: _isShown = true,
   offsetX = 0,
@@ -170,7 +170,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
   cornerAbsoluteOffset,
   mode = "accent",
   ...restProps
-}) => {
+}: TooltipProps) => {
   const { entering } = useNavTransition();
   const isShown = _isShown && !entering;
   const [tooltipRef, setTooltipRef] = React.useState<HTMLElement | null>(null);

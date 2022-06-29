@@ -17,11 +17,7 @@ export interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * @see https://vkcom.github.io/VKUI/#/Separator
  */
-export const Separator: React.FC<SeparatorProps> = ({
-  wide,
-  expanded,
-  ...restProps
-}) => (
+export const Separator = ({ wide, expanded, ...restProps }: SeparatorProps) => (
   <div
     {...restProps}
     aria-hidden="true"

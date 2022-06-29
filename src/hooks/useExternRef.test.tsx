@@ -11,7 +11,7 @@ const RefForwarder = (props: HasRef<HTMLDivElement>) => (
 describe(useExternRef, () => {
   describe("manages inner ref", () => {
     it("ensures ref exists", () => {
-      const OuterRef: React.FC = () => {
+      const OuterRef = () => {
         expect(useExternRef()).toBeTruthy();
         return null;
       };
@@ -20,7 +20,7 @@ describe(useExternRef, () => {
     it("keeps inner ref.current up-to-date", () => {
       let firstRef: React.MutableRefObject<any> | undefined = undefined;
       let counter = 0;
-      const RefForwarder: React.FC<HasRef<any>> = (props) => {
+      const RefForwarder = (props: HasRef<any>) => {
         const ref = useExternRef(props.getRef);
         firstRef = firstRef || ref;
         counter += 1;

@@ -1,4 +1,3 @@
-import * as React from "react";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { callMultiple } from "../../lib/callMultiple";
@@ -20,7 +19,7 @@ export interface SwitchProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Switch
  */
-export const Switch: React.FC<SwitchProps> = ({
+export const Switch = ({
   style,
   className,
   getRootRef,

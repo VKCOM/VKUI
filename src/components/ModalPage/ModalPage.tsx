@@ -58,9 +58,7 @@ export interface ModalPageProps
 
 const warn = warnOnce("ModalPage");
 
-const ModalPageComponent: React.FC<
-  ModalPageProps & AdaptivityContextInterface
-> = ({
+const ModalPageComponent = ({
   children,
   header,
   viewWidth,
@@ -77,7 +75,7 @@ const ModalPageComponent: React.FC<
   nav,
   id,
   ...restProps
-}) => {
+}: ModalPageProps & AdaptivityContextInterface) => {
   const { updateModalHeight } = React.useContext(ModalRootContext);
 
   const platform = usePlatform();

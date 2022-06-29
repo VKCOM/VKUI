@@ -46,7 +46,7 @@ const SubnavigationButtonTypography = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/SubnavigationButton
  */
-export const SubnavigationButton: React.FC<SubnavigationButtonProps> = ({
+export const SubnavigationButton = ({
   size = "m",
   selected,
   textLevel = 1,
