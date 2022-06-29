@@ -21,7 +21,7 @@
 @custom-media --viewWidth-smallTablet (min-width: 768px) and (max-width: 1023px);
 @custom-media --viewWidth-mobilePlus (min-width: 320px);
 @custom-media --viewWidth-mobile (min-width: 320px) and (max-width: 767px);
-@custom-media --viewWidth-smallMobile (max-width: 319px);
+@custom-media --viewWidth-smallMobileMinus (max-width: 319px);
 
 @custom-media --desktop (min-width: 768px) and (pointer: fine),
   (min-width: 768px) and (min-height: 720px);
