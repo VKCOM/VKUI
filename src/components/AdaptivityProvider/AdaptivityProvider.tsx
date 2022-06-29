@@ -24,7 +24,9 @@ export const MEDIUM_HEIGHT = 720;
 /**
  * @see https://vkcom.github.io/VKUI/#/AdaptivityProvider
  */
-const AdaptivityProvider: React.FC<AdaptivityProps> = (props) => {
+const AdaptivityProvider = (
+  props: React.PropsWithChildren<AdaptivityProps>
+) => {
   const adaptivityRef = React.useRef<ReturnType<
     typeof calculateAdaptivity
   > | null>(null);

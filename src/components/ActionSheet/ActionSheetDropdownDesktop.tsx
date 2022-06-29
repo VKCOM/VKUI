@@ -63,7 +63,10 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
     });
   }, [bodyClickListener, document]);
 
-  const onClick = React.useCallback((e) => e.stopPropagation(), []);
+  const onClick = React.useCallback(
+    (e: React.MouseEvent<HTMLElement, MouseEvent>) => e.stopPropagation(),
+    []
+  );
 
   const targetRef = React.useMemo(() => {
     if (isRefObject<SharedDropdownProps["toggleRef"], HTMLElement>(toggleRef)) {

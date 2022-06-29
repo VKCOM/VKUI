@@ -33,6 +33,7 @@ export interface ConfigProviderProps
     Локаль ([список](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry))
    */
   locale?: string;
+  children?: React.ReactNode;
 }
 
 const warn = warnOnce("ConfigProvider");
@@ -71,7 +72,7 @@ const deriveAppearance = (scheme: Scheme | undefined): AppearanceType =>
 /**
  * @see https://vkcom.github.io/VKUI/#/ConfigProvider
  */
-export const ConfigProvider: React.FC<ConfigProviderProps> = ({
+export const ConfigProvider = ({
   children,
   webviewType = WebviewType.VKAPPS,
   isWebView = vkBridge.isWebView(),
@@ -81,7 +82,7 @@ export const ConfigProvider: React.FC<ConfigProviderProps> = ({
   appearance,
   scheme,
   locale = "ru",
-}) => {
+}: ConfigProviderProps) => {
   const normalizedScheme = normalizeScheme({
     scheme,
     platform,

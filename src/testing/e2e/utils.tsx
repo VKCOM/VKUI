@@ -1,4 +1,4 @@
-import { ComponentType, FC, Fragment, isValidElement } from "react";
+import { ComponentType, Fragment, isValidElement } from "react";
 import { MatchImageSnapshotOptions } from "jest-image-snapshot";
 import { screenshot } from "@react-playwright";
 // Импорты из отдельных модулей помогают jest отслеживать зависимости
@@ -21,6 +21,7 @@ import { AdaptivityProps, withAdaptivity } from "../../hoc/withAdaptivity";
 import { View } from "../../components/View/View";
 import { AppRoot } from "../../components/AppRoot/AppRoot";
 import { Group } from "../../components/Group/Group";
+import { HasChildren } from "../../types";
 
 type AdaptivityFlag = boolean | "x" | "y";
 type PropDesc<Props> = { [K in keyof Props]?: Array<Props[K]> } & {
@@ -130,7 +131,7 @@ function getAdaptivePxWidth(viewWidth: ViewWidth) {
   }
 }
 
-const AppWrapper: FC = (props) => (
+const AppWrapper = (props: HasChildren) => (
   <AppRoot mode="embedded">
     <View activePanel="panel">
       <Panel id="panel">

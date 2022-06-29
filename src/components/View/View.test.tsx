@@ -10,6 +10,7 @@ import { Panel } from "../Panel/Panel";
 import { View, scrollsCache, ViewProps } from "./View";
 import { ViewInfinite } from "./ViewInfinite";
 import { ComponentType, Fragment } from "react";
+import { HasChildren } from "../../types";
 
 // Basically the same as Root.test.tsx
 
@@ -120,7 +121,7 @@ describe.each([
   describe("can swipeBack", () => {
     let nowMock: jest.SpyInstance;
     const setupSwipeBack = (
-      Wrapper: ComponentType = Fragment,
+      Wrapper: ComponentType<HasChildren> = Fragment,
       children: any = null
     ) => {
       const events = {

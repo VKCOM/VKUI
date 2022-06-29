@@ -6,9 +6,7 @@ import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { usePlatform } from "../../hooks/usePlatform";
 import "./DropdownIcon.css";
 
-export const DropdownIcon: React.FC<React.HTMLAttributes<HTMLElement>> = (
-  props
-) => {
+export const DropdownIcon = (props: React.HTMLAttributes<HTMLDivElement>) => {
   const platform = usePlatform();
   const { sizeY } = useAdaptivity();
 

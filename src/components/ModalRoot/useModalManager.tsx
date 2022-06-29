@@ -233,7 +233,10 @@ export function withModalManager(
   return function <Props extends ModalTransitionProps>(
     Wrapped: React.ComponentType<Props>
   ): React.FC<
-    Omit<Props, keyof ModalTransitionProps> & { activeModal?: string | null }
+    Omit<Props, keyof ModalTransitionProps> & {
+      activeModal?: string | null;
+      children?: React.ReactNode;
+    }
   > {
     return function WithModalManager(props) {
       const transitionManager = useModalManager(

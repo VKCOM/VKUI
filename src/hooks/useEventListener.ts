@@ -34,7 +34,10 @@ export function useEventListener<
   useIsomorphicLayoutEffect(() => {
     cbRef.current = _cb;
   }, [_cb]);
-  const cb = React.useCallback((e) => cbRef.current && cbRef.current(e), []);
+  const cb = React.useCallback(
+    (e: any) => cbRef.current && cbRef.current(e),
+    []
+  );
 
   const detach = React.useRef(noop);
   const remove = React.useCallback(() => {

@@ -45,9 +45,10 @@ type ItemClickHandler = (item: AlertActionInterface) => void;
 
 interface AlertTypography {
   id: string;
+  children?: React.ReactNode;
 }
 
-const AlertHeader: React.FC<AlertTypography> = (props) => {
+const AlertHeader = (props: AlertTypography) => {
   const platform = usePlatform();
 
   switch (platform) {
@@ -62,7 +63,7 @@ const AlertHeader: React.FC<AlertTypography> = (props) => {
   }
 };
 
-const AlertText: React.FC<AlertTypography> = (props) => {
+const AlertText = (props: AlertTypography) => {
   const platform = usePlatform();
 
   switch (platform) {

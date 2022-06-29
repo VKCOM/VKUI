@@ -1,4 +1,4 @@
-import { Fragment, FC } from "react";
+import { Fragment } from "react";
 import { ModalCard, ModalCardProps } from "./ModalCard";
 import { Button } from "../Button/Button";
 import { ModalRoot } from "../ModalRoot/ModalRootAdaptive";
@@ -10,8 +10,9 @@ import { AppRoot } from "../AppRoot/AppRoot";
 import { Icon56MoneyTransferOutline } from "@vkontakte/icons";
 import { Platform } from "../../lib/platform";
 import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import { HasChildren } from "../../types";
 
-const AppWrapper: FC = (props) => (
+const AppWrapper = (props: HasChildren) => (
   <AppRoot mode="embedded" scroll="contain">
     {props.children}
   </AppRoot>
