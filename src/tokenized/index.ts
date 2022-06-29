@@ -34,6 +34,9 @@ export type { InitialsAvatarProps } from "../components/InitialsAvatar/InitialsA
 export { InfoRow } from "../components/InfoRow/InfoRow";
 export type { InfoRowProps } from "../components/InfoRow/InfoRow";
 
+export { Link } from "../components/Link/Link";
+export type { LinkProps } from "../components/Link/Link";
+
 export { ButtonGroup } from "../components/ButtonGroup/ButtonGroup";
 export type { ButtonGroupProps } from "../components/ButtonGroup/ButtonGroup";
 

@@ -1,28 +1,26 @@
-import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
-import { usePlatform } from "../../hooks/usePlatform";
+import { classNames } from "../../lib/classNames";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
 import "./Link.css";
 
-export type LinkProps = TappableProps;
+export interface LinkProps extends TappableProps {
+  /**
+   * Включает состояние `visited`, которое позволяет пользователю понять посещал ли он ссылку или нет
+   */
+  hasVisited?: boolean;
+}
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Link
  */
-export const Link: React.FC<LinkProps> = ({
-  children,
-  ...restProps
-}: LinkProps) => {
-  const platform = usePlatform();
-
+export const Link = ({ hasVisited, children, ...restProps }: LinkProps) => {
   return (
     <Tappable
       Component={restProps.href ? "a" : "button"}
       {...restProps}
-      vkuiClass={getClassName("Link", platform)}
-      hasActive={false}
-      hoverMode="opacity"
-      focusVisibleMode="outside"
+      vkuiClass={classNames("Link", hasVisited && "Link--has-visited")}
+      hasHover={false}
+      activeMode="opacity"
+      focusVisibleMode="Link--focus-visible"
     >
       {children}
     </Tappable>
