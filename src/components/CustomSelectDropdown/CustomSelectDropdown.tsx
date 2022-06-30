@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Modifier } from "react-popper";
 import { CustomScrollView } from "../CustomScrollView/CustomScrollView";
 import { classNames } from "../../lib/classNames";
 import { Popper, Placement } from "../Popper/Popper";
@@ -11,7 +12,7 @@ export interface CustomSelectDropdownProps
     HasRef<HTMLDivElement> {
   targetRef: React.RefObject<HTMLElement>;
   placement?: Placement;
-  scrollBoxRef?: React.Ref<HTMLDivElement>;
+  scrollBoxRef?: React.RefObject<HTMLDivElement>;
   fetching?: boolean;
   offsetDistance?: number;
   sameWidth?: boolean;
@@ -34,6 +35,32 @@ export const CustomSelectDropdown = ({
   ...restProps
 }: CustomSelectDropdownProps) => {
   const [isTop, setIsTop] = React.useState(() => calcIsTop(placement));
+
+  const customModifiers = React.useMemo<Array<Modifier<string>>>(() => {
+    if (!scrollBoxRef?.current) {
+      return [];
+    }
+
+    return [
+      {
+        name: "customSelectChildrenChange",
+        enabled: true,
+        phase: "main",
+        effect: ({ instance }) => {
+          const observer = new MutationObserver(instance.forceUpdate);
+
+          observer.observe(scrollBoxRef.current as Element, {
+            childList: true,
+          });
+
+          return () => {
+            observer.disconnect();
+          };
+        },
+      },
+    ];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scrollBoxRef?.current]);
 
   const onPlacementChange = React.useCallback(
     ({ placement }: { placement?: Placement }) => {
@@ -59,6 +86,7 @@ export const CustomSelectDropdown = ({
         sameWidth && "CustomSelectDropdown--wide"
       )}
       forcePortal={forcePortal}
+      customModifiers={customModifiers}
       {...restProps}
     >
       <CustomScrollView
