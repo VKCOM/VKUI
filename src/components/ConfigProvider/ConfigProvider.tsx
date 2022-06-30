@@ -83,7 +83,7 @@ export const ConfigProvider = (props: ConfigProviderProps) => {
     hasNewTokens = parentConfig.hasNewTokens,
     appearance = parentConfig.appearance,
     scheme,
-    locale = parentLocale,
+    locale = parentLocale ?? "ru",
   } = props;
 
   const normalizedScheme = normalizeScheme({
