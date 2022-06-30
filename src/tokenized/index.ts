@@ -19,6 +19,9 @@ export type { CardProps } from "../components/Card/Card";
 export { CardScroll } from "../components/CardScroll/CardScroll";
 export type { CardScrollProps } from "../components/CardScroll/CardScroll";
 
+export { Group } from "../components/Group/Group";
+export type { GroupProps } from "../components/Group/Group";
+
 export { GridAvatar } from "../components/GridAvatar/GridAvatar";
 export type { GridAvatarProps } from "../components/GridAvatar/GridAvatar";
 

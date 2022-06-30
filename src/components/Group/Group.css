@@ -1,5 +1,5 @@
 .Group {
-  color: var(--text_primary);
+  color: var(--text_primary, var(--vkui--color_text_primary));
 }
 
 .Group__inner {
@@ -7,13 +7,14 @@
   padding-bottom: 8px;
 }
 
+/* TODO v5.0.0 Новая адаптивность */
 .Group--sizeX-regular > .Group__inner {
   padding: 8px;
 }
 
 .Group--card > .Group__inner {
-  background: var(--background_content);
-  border-radius: 8px;
+  background: var(--background_content, var(--vkui--color_background_content));
+  border-radius: var(--vkui--size_border_radius--regular);
   position: relative;
 }
 
@@ -29,19 +30,12 @@
   box-shadow: inset 0 0 0 var(--thin-border) var(--input_border);
 }
 
-.Group--plain .Group__inner > .Tabs--default:first-child {
-  margin-top: -8px;
-}
-
-.Group--card > .Group__inner > .Tabs--default:first-child {
-  margin-top: -4px;
-}
-
 .Group--plain > .Group__separator {
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
+/* TODO v5.0.0 Новая адаптивность */
 .Group--sizeX-regular.Group--plain > .Group__separator {
   padding: 8px;
 }
@@ -51,6 +45,7 @@
 }
 
 .Group:last-of-type > .Group__separator--force,
+/* TODO v5.0.0 Новая адаптивность */
 .Group--sizeX-regular.Group--card:last-of-type > .Group__separator {
   display: block;
 }
@@ -58,7 +53,7 @@
 .Group__description {
   display: block;
   padding: 4px 16px 16px;
-  color: var(--text_secondary);
+  color: var(--text_secondary, var(--vkui--color_text_secondary));
 }
 
 .Group .Group > .Group__inner,
@@ -82,8 +77,9 @@
   padding: 4px 12px 16px;
 }
 
-/**
- * VKCOM
+/*
+ * CMP:
+ * PanelHeader
  */
 .PanelHeader--vkcom ~ .Group--card:first-of-type,
 .PanelHeader--vkcom + * .Group--card:first-of-type {

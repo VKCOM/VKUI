@@ -1,8 +1,9 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
+import { IOS } from "../../lib/platform";
 import { classNames } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
+import { Spacing } from "../Spacing/Spacing";
 import { Separator } from "../Separator/Separator";
 import { hasReactNode } from "../../lib/utils";
 import { Caption } from "../Typography/Caption/Caption";
@@ -33,6 +34,7 @@ export interface GroupProps
    * по умолчанию 'plain'.
    */
   mode?: "plain" | "card";
+  children?: React.ReactNode;
 }
 
 const GroupComponent = ({
@@ -55,12 +57,29 @@ const GroupComponent = ({
       sizeX === SizeType.COMPACT || isInsideModal ? "plain" : "card";
   }
 
+  let separatorElement = null;
+
+  if (separator !== "hide") {
+    const separatorClassName = classNames(
+      "Group__separator",
+      separator === "show" && "Group__separator--force"
+    );
+    separatorElement =
+      computedMode === "card" ? (
+        <Spacing vkuiClass={separatorClassName} size={16} />
+      ) : (
+        <Separator vkuiClass={separatorClassName} />
+      );
+  }
+
   return (
     <section
       {...restProps}
       ref={getRootRef}
       vkuiClass={classNames(
-        getClassName("Group", platform),
+        "Group",
+        platform === IOS && "Group--ios",
+        // TODO v5.0.0 Новая адаптивность
         `Group--sizeX-${sizeX}`,
         `Group--${computedMode}`
       )}
@@ -72,16 +91,7 @@ const GroupComponent = ({
           <Caption vkuiClass="Group__description">{description}</Caption>
         )}
       </div>
-
-      {separator !== "hide" && (
-        <Separator
-          // eslint-disable-next-line vkui/no-object-expression-in-arguments
-          vkuiClass={classNames("Group__separator", {
-            "Group__separator--force": separator === "show",
-          })}
-          expanded={computedMode === "card"}
-        />
-      )}
+      {separatorElement}
     </section>
   );
 };
