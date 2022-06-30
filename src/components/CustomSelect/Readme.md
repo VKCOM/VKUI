@@ -122,6 +122,18 @@ const Example = () => {
         />
       </FormItem>
 
+      <FormItem
+        top="Администратор"
+        bottom="Ползунок скроллбара по умолчанию скрыт"
+      >
+        <CustomSelect
+          placeholder="Не выбран"
+          options={users}
+          selectType={selectType}
+          autoHideScrollbar
+        />
+      </FormItem>
+
       <Header>Поиск</Header>
       <FormItem top="Администратор" bottom="Поиск по списку">
         <CustomSelect

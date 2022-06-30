@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Modifier } from "react-popper";
 import { CustomScrollView } from "../CustomScrollView/CustomScrollView";
+import { TrackerOptionsProps } from "../CustomScrollView/useTrackerVisibility";
 import { classNames } from "../../lib/classNames";
 import { Popper, Placement } from "../Popper/Popper";
 import { Spinner } from "../Spinner/Spinner";
@@ -9,7 +10,8 @@ import "./CustomSelectDropdown.css";
 
 export interface CustomSelectDropdownProps
   extends React.HTMLAttributes<HTMLElement>,
-    HasRef<HTMLDivElement> {
+    HasRef<HTMLDivElement>,
+    TrackerOptionsProps {
   targetRef: React.RefObject<HTMLElement>;
   placement?: Placement;
   scrollBoxRef?: React.RefObject<HTMLDivElement>;
@@ -32,6 +34,8 @@ export const CustomSelectDropdown = ({
   offsetDistance = 0,
   sameWidth = true,
   forcePortal = true,
+  autoHideScrollbar,
+  autoHideScrollbarDelay,
   ...restProps
 }: CustomSelectDropdownProps) => {
   const [isTop, setIsTop] = React.useState(() => calcIsTop(placement));
@@ -92,6 +96,8 @@ export const CustomSelectDropdown = ({
       <CustomScrollView
         boxRef={scrollBoxRef}
         vkuiClass="CustomSelectDropdown__in"
+        autoHideScrollbar={autoHideScrollbar}
+        autoHideScrollbarDelay={autoHideScrollbarDelay}
       >
         {fetching ? (
           <div vkuiClass="CustomSelectDropdown__fetching">
