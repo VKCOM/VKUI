@@ -60,15 +60,18 @@ export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
   } = props;
   const baseRef = React.useRef<HTMLDivElement>(null);
   const { viewWidth, sizeX } = useAdaptivity();
+  const [animate, setAnimate] = React.useState(_animate);
   const { window } = useDOM();
 
-  const animate = React.useMemo(() => {
+  React.useEffect(() => {
     if (_animate === undefined) {
-      return viewWidth !== undefined
-        ? viewWidth < ViewWidth.TABLET
-        : window!.innerWidth < SMALL_TABLET_SIZE;
+      setAnimate(
+        viewWidth !== undefined
+          ? viewWidth < ViewWidth.TABLET
+          : window!.innerWidth < SMALL_TABLET_SIZE
+      );
     }
-    return _animate;
+    return setAnimate(_animate);
   }, [_animate, viewWidth, window]);
 
   const contextValue = React.useMemo(() => {
