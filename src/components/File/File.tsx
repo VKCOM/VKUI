@@ -28,6 +28,8 @@ export const File: React.FC<FileProps> = ({
   mode,
   stretched,
   before,
+  after,
+  loading,
   className,
   style,
   getRef,
@@ -49,6 +51,8 @@ export const File: React.FC<FileProps> = ({
       // TODO: v5.0.0 удалить controlSize
       size={size ?? controlSize}
       before={before}
+      after={after}
+      loading={loading}
       style={style}
       getRootRef={getRootRef}
       disabled={restProps.disabled}
