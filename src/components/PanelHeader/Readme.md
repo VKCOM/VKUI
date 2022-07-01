@@ -11,7 +11,7 @@
 
 > **Важно**
 >
-> Правая часть шапки скрыта по умолчанию, если требуется показать её, передайте в [`ConfigProvider`](#/ConfigProvider) свойство `webviewType={WebviewType.INTERNAL}`.
+> Правая часть шапки скрыта по умолчанию, если требуется показать её, передайте в [`ConfigProvider`](https://vkcom.github.io/VKUI/#/ConfigProvider) свойство `webviewType={WebviewType.INTERNAL}`.
 
 ```jsx { "props": { "webviewType": true } }
 class Example extends React.Component {

@@ -2,7 +2,7 @@
 хочется представить новый функционал. Это достаточно сложный с точки зрения управления компонент, поэтому он
 требует подробной документации.
 
-Для показа тултипа по ховеру, воспользуйтесь [`RichTooltip`](#/RichTooltip) или [`TextTooltip`](#/TextTooltip).
+Для показа тултипа по ховеру, воспользуйтесь [`RichTooltip`](https://vkcom.github.io/VKUI/#/RichTooltip) или [`TextTooltip`](https://vkcom.github.io/VKUI/#/TextTooltip).
 
 ### Концепция
 

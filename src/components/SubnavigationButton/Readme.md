@@ -1,4 +1,4 @@
-Компонент, используемый в качестве кнопок в [SubnavigationBar](#/SubnavigationBar).
+Компонент, используемый в качестве кнопок в [SubnavigationBar](https://vkcom.github.io/VKUI/#/SubnavigationBar).
 
 Этот компонент может использоваться:
 

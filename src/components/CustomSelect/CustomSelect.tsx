@@ -125,7 +125,7 @@ export interface CustomSelectProps
   popupDirection?: "top" | "bottom";
   /**
    * Рендер-проп для кастомного рендера опции.
-   * В объекте аргумента приходят [свойства опции](#/CustomSelectOption?id=props)
+   * В объекте аргумента приходят [свойства опции](https://vkcom.github.io/VKUI/#/CustomSelectOption?id=props)
    */
   renderOption?: (props: CustomSelectOptionProps) => React.ReactNode;
   /**

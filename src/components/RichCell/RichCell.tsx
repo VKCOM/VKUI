@@ -25,12 +25,12 @@ export interface RichCellProps extends TappableProps {
   /**
    * Кнопки-действия.
    *
-   * Рекомендуется использовать [Button](#/Button) с параметрами:
+   * Рекомендуется использовать [Button](https://vkcom.github.io/VKUI/#/Button) с параметрами:
    *
    * - `mode="primary" size="s"`
    * - `mode="secondary" size="s"`
    *
-   * Для набора кнопок следует использовать [ButtonGroup](#/ButtonGroup) с параметрами:
+   * Для набора кнопок следует использовать [ButtonGroup](https://vkcom.github.io/VKUI/#/ButtonGroup) с параметрами:
    *
    * - `mode="horizontal" gap="s" stretched`
    */

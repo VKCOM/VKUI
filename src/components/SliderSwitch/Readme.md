@@ -1,6 +1,6 @@
 > **Deprecated:** этот компонент устарел и будет удален в 5.0.0.
 >
-> Используйте [`SegmentedControl`](#/SegmentedControl).
+> Используйте [`SegmentedControl`](https://vkcom.github.io/VKUI/#/SegmentedControl).
 
 ```jsx
 <View activePanel="progress">
