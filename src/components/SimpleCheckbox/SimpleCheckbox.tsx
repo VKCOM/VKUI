@@ -33,7 +33,7 @@ export interface SimpleCheckboxProps
 }
 
 /**
- * @deprecated Этот компонент устарел и будет удален в 5.0.0. Используйте [`Checkbox`](#/Checkbox).
+ * @deprecated Этот компонент устарел и будет удален в 5.0.0. Используйте [`Checkbox`](https://vkcom.github.io/VKUI/#/Checkbox).
  * @see https://vkcom.github.io/VKUI/#/SimpleCheckbox
  */
 export const SimpleCheckbox = ({

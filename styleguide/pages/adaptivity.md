@@ -3,7 +3,7 @@
 От наличия мышки, высоты и ширины экрана зависит отображение кнопок, элементов форм и так далее.
 В этой статье мы разберём, как сделать ваш интерфейс отзывчивым.
 
-Для начала, нужно обернуть ваше приложение в [`AdaptivityProvider`](#/AdaptivityProvider).
+Для начала, нужно обернуть ваше приложение в [`AdaptivityProvider`](https://vkcom.github.io/VKUI/#/AdaptivityProvider).
 
 > **Важно**
 >
@@ -28,7 +28,7 @@ function App() {
 ReactDOM.render(<App />, document.getElementById("root"));
 ```
 
-Далее, нужно добавить [`SplitLayout`](#/SplitLayout) и хотя бы один [`SplitCol`](#/SplitCol).
+Далее, нужно добавить [`SplitLayout`](https://vkcom.github.io/VKUI/#/SplitLayout) и хотя бы один [`SplitCol`](https://vkcom.github.io/VKUI/#/SplitCol).
 
 `SplitLayout` — компонент-обертка для отрисовки макета с одной или несколькими колонками. `SplitCol` — компонент для отрисовки колонки.
 

@@ -1,4 +1,4 @@
-Передаётся в качестве значения свойства `popout` компонента [`SplitLayout`](#/SplitLayout).
+Передаётся в качестве значения свойства `popout` компонента [`SplitLayout`](https://vkcom.github.io/VKUI/#/SplitLayout).
 
 В Алертах особое внимание нужно уделить кнопкам. Всего есть три типа кнопок:
 `cancel`, `destructive` и `default`.
