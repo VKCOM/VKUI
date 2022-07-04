@@ -4,7 +4,8 @@
     "prettier",
     "prettier/react",
     "prettier/@typescript-eslint",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "plugin:compat/recommended"
   ],
   "parserOptions": {
     "project": "./tsconfig.json",
@@ -15,6 +16,13 @@
       "restParams": true,
       "spread": true
     }
+  },
+  "settings": {
+    "polyfills": [
+      "Array.prototype.includes",
+      "Array.prototype.find",
+      "String.prototype.padStart"
+    ]
   },
   "globals": {
     "Element": true
@@ -140,7 +148,8 @@
       },
       "rules": {
         "no-restricted-properties": "off",
-        "no-restricted-globals": "off"
+        "no-restricted-globals": "off",
+        "compat/compat": "off"
       }
     },
     {

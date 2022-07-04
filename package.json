@@ -63,6 +63,7 @@
     "css-loader": "^6.5.1",
     "eslint": "~6.8.0",
     "eslint-config-prettier": "6.15.0",
+    "eslint-plugin-compat": "^4.0.2",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jest-playwright": "^0.2.1",
     "eslint-plugin-prettier": "^3.4.1",
