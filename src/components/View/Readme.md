@@ -76,7 +76,9 @@ const go = (panel) => setHistory([...history, panel]);
     <Panel id="main">
       <PanelHeader>Main</PanelHeader>
       <Group>
+        <div style={{ height: 200 }} />
         <CellButton onClick={() => go("profile")}>profile</CellButton>
+        <div style={{ height: 600 }} />
       </Group>
     </Panel>
     <Panel id="profile">
