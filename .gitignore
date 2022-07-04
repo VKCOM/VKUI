@@ -12,6 +12,8 @@ PUBLISHING.md
 .idea/tasks.xml
 .idea/markdown-navigator-enh.xml
 .idea/markdown-navigator.xml
+docs/
+!docs/*.md
 .vscode/
 test-results.json
 lint-results.json
