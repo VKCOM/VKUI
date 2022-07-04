@@ -20,7 +20,7 @@
 ### Требования к разработке
 
 - CSS-классы компонента передаем через `vkuiClass="Cmp"`
-- CSS-классы названы по БЭМ: `.Component__element-name--modificator`. [Гайд по написанию стилей](https://github.com/VKCOM/VKUI/blob/master/CSS_GUIDE.md)
+- CSS-классы названы по БЭМ: `.Component__element-name--modificator`. [Гайд по написанию стилей](https://github.com/VKCOM/VKUI/blob/master/docs/CSS_GUIDE.md)
 - Свойства `className` и `style` навешиваются на корневой элемент компонента
 - Свойства, не используемые в коде компонента, навешиваются на **главный** элемент компонента. По умолчанию главным является корневой элемент:
 
@@ -53,9 +53,9 @@ const Cmp = ({
 }: CmpProps) => <div vkuiClass={classNames("Cmp", `Cmp--${mode}`)} {...restProps} />;
 ```
 
-- Для цветов используются цветовые токены. Старые компоненты поддерживают [Appearance](https://github.com/VKCOM/Appearance) и [vkui-tokens](https://github.com/VKCOM/vkui-tokens), новые — только vkui-tokens. [Гайд по миграции](https://github.com/VKCOM/VKUI/blob/master/VKUI_TOKENS_MIGRATION_GUIDE.md)
+- Для цветов используются цветовые токены. Старые компоненты поддерживают [Appearance](https://github.com/VKCOM/Appearance) и [vkui-tokens](https://github.com/VKCOM/vkui-tokens), новые — только [vkui-tokens](https://github.com/VKCOM/vkui-tokens). [Гайд по миграции](https://github.com/VKCOM/VKUI/blob/master/docs/VKUI_TOKENS_MIGRATION_GUIDE.md)
 - Для типографии используются компоненты [Typography](https://vkcom.github.io/VKUI/#!/Typography) там, где это возможно
 - Добавлен `export` компонента и его свойств в `src/index.ts`
-- Компонент покрыт юнит- и скриншотными тестами. [Гайд по тестированию](./TESTING.md)
+- Компонент покрыт юнит- и скриншотными тестами. [Гайд по тестированию](https://github.com/VKCOM/VKUI/blob/master/docs/TESTING.md)
 - Компонент корректно отображается на всех платформах, размерах и цветовых схемах. В styleguide для всех этих параметров есть переключатели
 - Код корректно работает на [поддерживаемых нами браузерах](https://github.com/VKCOM/VKUI#%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D1%8B)
