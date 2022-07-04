@@ -91,7 +91,7 @@ let plugins = [
     shouldTransformableDecl: (decl) =>
       /(^|[^\w-])var\([\W\w]+\)/.test(decl.value) &&
       decl.value.match(/var\(/g).length ===
-        (decl.value.match(/var\(--vkui--/g) || []).length,
+        (decl.value.match(/--vkui--/g) || []).length,
   }),
 ];
 
