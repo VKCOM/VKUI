@@ -17,15 +17,11 @@
       "spread": true
     }
   },
-  "settings": {
-    "polyfills": [
-      "Array.prototype.includes",
-      "Array.prototype.find",
-      "String.prototype.padStart"
-    ]
-  },
   "globals": {
     "Element": true
+  },
+  "settings": {
+    "builtin-compat-ignore": ["includes", "find", "padStart", "count"]
   },
   "ignorePatterns": ["unstable/**/*.ts", "tokenized/**/*.ts"],
   "env": {
@@ -33,7 +29,7 @@
     "browser": true,
     "node": true
   },
-  "plugins": ["import", "vkui"],
+  "plugins": ["import", "vkui", "builtin-compat"],
   "rules": {
     "@typescript-eslint/explicit-member-accessibility": "off",
     "@typescript-eslint/no-unnecessary-condition": "off",
@@ -134,7 +130,8 @@
       {
         "onlyForFunctionsWithNames": ["classNames", "classNamesString"]
       }
-    ]
+    ],
+    "builtin-compat/no-incompatible-builtins": 2
   },
   "overrides": [
     {
@@ -149,7 +146,8 @@
       "rules": {
         "no-restricted-properties": "off",
         "no-restricted-globals": "off",
-        "compat/compat": "off"
+        "compat/compat": "off",
+        "builtin-compat/no-incompatible-builtins": "off"
       }
     },
     {
