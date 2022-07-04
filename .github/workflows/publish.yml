@@ -41,6 +41,9 @@ jobs:
           github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           branch: ${{ github.ref }}
 
+      - name: Create stable branch
+        run: node ./.github/gitflow/stable_branch.js
+
       - name: Publishing prerelase
         run: yarn publish --non-interactive --tag ${{ github.event.inputs.tag }}
         if: ${{ github.event.inputs.tag }}

@@ -97,6 +97,7 @@
     "react-dom": "^16.8.6",
     "react-frame-component": "^3.0.0",
     "react-styleguidist": "^11.2.0",
+    "semver": "^7.3.5",
     "shx": "^0.3.2",
     "size-limit": "^5.0.5",
     "source-map-loader": "^3.0.1",
