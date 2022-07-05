@@ -6,12 +6,12 @@ jobs:
   update_screens:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@2541b12 #v3.0.2
         with:
           lfs: true
       - name: Checkout LFS objects
         run: git lfs checkout
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@eeb10cf #v3.3.0
         with:
           node-version: 14
           cache: "yarn"
@@ -19,7 +19,7 @@ jobs:
       - name: Update screenshots
         run: yarn test:e2e -u
       - name: Push updated screenshots
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@49620cd #v4.14.1
         with:
           # dangerfile depends on this message
           commit_message: "CHORE: Update screenshots"

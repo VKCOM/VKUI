@@ -6,8 +6,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@2541b12 #v3.0.2
+      - uses: actions/setup-node@eeb10cf #v3.3.0
         with:
           node-version: 14
           cache: "yarn"
@@ -15,7 +15,7 @@ jobs:
       - name: Run tests
         run: yarn test:ci
       - name: Upload test artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@3cea537 #v3.1.0
         if: always()
         with:
           name: test-output
@@ -26,14 +26,14 @@ jobs:
   test_e2e:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@2541b12 #v3.0.2
         with:
           lfs: true
       - name: Checkout LFS objects
         run: git lfs checkout
       - name: Checkout base snapshots
         run: git fetch --no-tags --depth=1 origin $GITHUB_BASE_REF && git checkout origin/$GITHUB_BASE_REF src/**/__image_snapshots__/*.png
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@eeb10cf #v3.3.0
         with:
           node-version: 14
           cache: "yarn"
@@ -44,7 +44,7 @@ jobs:
         run: yarn test:e2e:ci
         continue-on-error: true
       - name: Upload test artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@3cea537 #v3.1.0
         if: always()
         with:
           name: e2e-output
@@ -55,15 +55,15 @@ jobs:
   styleguide:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@2541b12 #v3.0.2
+      - uses: actions/setup-node@eeb10cf #v3.3.0
         with:
           node-version: 14
           cache: "yarn"
       - run: yarn install --frozen-lockfile --ignore-scripts
       - run: yarn styleguide:build
       - name: Uploading styleguide artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@3cea537 #v3.1.0
         with:
           name: styleguide
           path: docs/
@@ -72,13 +72,13 @@ jobs:
     env:
       CI_JOB_NUMBER: 1
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@2541b12 #v3.0.2
+      - uses: actions/setup-node@eeb10cf #v3.3.0
         with:
           node-version: 14
           cache: "yarn"
       - run: yarn install --frozen-lockfile --ignore-scripts
-      - uses: andresz1/size-limit-action@v1
+      - uses: andresz1/size-limit-action@4135860 #v1.7.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # only affects current branch
@@ -90,14 +90,14 @@ jobs:
     # Skip deploy from forked repo or from dependabot
     if: ${{ (github.event.pull_request.base.repo.id == github.event.pull_request.head.repo.id) && (github.actor != 'dependabot[bot]') }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@2541b12 #v3.0.2
       - name: Download styleguide artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@fb598a6 #v3.0.0
         with:
           name: styleguide
           path: tmp
       - name: Publishing styleguide to GitHub pages
-        uses: JamesIves/github-pages-deploy-action@e6d003d
+        uses: JamesIves/github-pages-deploy-action@e6d003d #v4.3.4
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           commit-message: "Publish PR ${{ github.event.pull_request.number }}"
@@ -106,7 +106,7 @@ jobs:
           target-folder: pull/${{ github.event.pull_request.number }}
           clean: true
       - name: Find styleguide URL comment
-        uses: peter-evans/find-comment@v1
+        uses: peter-evans/find-comment@1769778 #v2.0.0
         id: find_url_comment
         with:
           issue-number: ${{ github.event.pull_request.number }}
@@ -114,7 +114,7 @@ jobs:
           body-includes: <!-- styleguide_url -->
       - name: Post styleguide URL to PR
         if: steps.find_url_comment.outputs.comment-id == 0
-        uses: peter-evans/create-or-update-comment@v1
+        uses: peter-evans/create-or-update-comment@c9fcb64 #v2.0.0
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
@@ -128,17 +128,17 @@ jobs:
       - test_e2e
     if: always()
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@2541b12 #v3.0.2
+      - uses: actions/setup-node@eeb10cf #v3.3.0
         with:
           node-version: 14
           cache: "yarn"
       - name: Download test artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@fb598a6 #v3.0.0
         with:
           name: test-output
       - name: Download e2e artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@fb598a6 #v3.0.0
         with:
           name: e2e-output
       - name: Install reporting deps

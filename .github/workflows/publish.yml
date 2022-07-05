@@ -13,11 +13,11 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@2541b12 #v3.0.2
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@eeb10cf #v3.3.0
         with:
           node-version: 14
           cache: "yarn"
@@ -36,7 +36,7 @@ jobs:
       - run: yarn version --new-version ${{ github.event.inputs.version }} --no-commit-hooks
 
       - name: Pushing changes
-        uses: ad-m/github-push-action@master
+        uses: ad-m/github-push-action@9a46ba8
         with:
           github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           branch: ${{ github.ref }}
@@ -69,7 +69,7 @@ jobs:
         if: ${{ github.event.inputs.tag }}
 
       - name: Publishing doc
-        uses: JamesIves/github-pages-deploy-action@e6d003d
+        uses: JamesIves/github-pages-deploy-action@e6d003d #v4.3.4
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           branch: gh-pages
