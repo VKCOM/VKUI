@@ -1,7 +1,5 @@
 import { HoverPopper, HoverPopperProps } from "../HoverPopper/HoverPopper";
 import { ClickPopper, ClickPopperProps } from "../ClickPopper/ClickPopper";
-import { getClassName } from "../../helpers/getClassName";
-import { usePlatform } from "../../hooks/usePlatform";
 import "./Dropdown.css";
 
 export interface DropdownProps
@@ -19,8 +17,6 @@ export const Dropdown = ({
   showDelay,
   ...popperProps
 }: DropdownProps) => {
-  const platform = usePlatform();
-
   let Component;
   let actionSpecificProps: Partial<DropdownProps> = {};
 
@@ -35,10 +31,6 @@ export const Dropdown = ({
   }
 
   return (
-    <Component
-      vkuiClass={getClassName("Dropdown", platform)}
-      {...actionSpecificProps}
-      {...popperProps}
-    />
+    <Component vkuiClass="Dropdown" {...actionSpecificProps} {...popperProps} />
   );
 };

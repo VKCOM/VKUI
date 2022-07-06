@@ -80,6 +80,9 @@ export type { CellButtonProps } from "../components/CellButton/CellButton";
 export { ScreenSpinner } from "../components/ScreenSpinner/ScreenSpinner";
 export type { ScreenSpinnerProps } from "../components/ScreenSpinner/ScreenSpinner";
 
+export { Dropdown } from "../components/Dropdown/Dropdown";
+export type { DropdownProps } from "../components/Dropdown/Dropdown";
+
 export { Pagination } from "../components/Pagination/Pagination";
 export type { PaginationProps } from "../components/Pagination/Pagination";
 
