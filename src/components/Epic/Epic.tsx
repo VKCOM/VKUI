@@ -9,6 +9,7 @@ import {
   AdaptivityContextInterface,
   AdaptivityProps,
 } from "../AdaptivityProvider/AdaptivityContext";
+import { SMALL_TABLET_SIZE } from "../AdaptivityProvider/AdaptivityProvider";
 import "./Epic.css";
 
 export interface EpicProps
@@ -33,7 +34,7 @@ const EpicComponent: React.FC<EpicProps & AdaptivityContextInterface> = (
     viewWidth < ViewWidth.SMALL_TABLET
   ) {
     warn(
-      `Не рекомендуется использовать Epic без Tabbar при ширине окна меньше ${ViewWidth.SMALL_TABLET}px`
+      `Не рекомендуется использовать Epic без Tabbar при ширине окна меньше ${SMALL_TABLET_SIZE}px`
     );
   }
   const story =
