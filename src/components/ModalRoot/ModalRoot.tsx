@@ -215,7 +215,7 @@ class ModalRootTouchComponent extends React.Component<
       // https://github.com/VKCOM/VKUI/issues/444
       this.window!.removeEventListener("touchmove", this.preventTouch, {
         // @ts-ignore (В интерфейсе EventListenerOptions нет поля passive)
-        passive: true,
+        passive: false,
       });
 
       this.window!.removeEventListener("touchstart", this.preventTouch, {
@@ -224,7 +224,7 @@ class ModalRootTouchComponent extends React.Component<
       });
     } else {
       this.window!.addEventListener("touchmove", this.preventTouch, {
-        passive: true,
+        passive: false,
       });
 
       this.window!.addEventListener("touchstart", this.preventTouch, {
