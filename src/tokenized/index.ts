@@ -52,6 +52,9 @@ export type { ModalCardProps } from "../components/ModalCard/ModalCard";
 export { Link } from "../components/Link/Link";
 export type { LinkProps } from "../components/Link/Link";
 
+export { SimpleCell } from "../components/SimpleCell/SimpleCell";
+export type { SimpleCellProps } from "../components/SimpleCell/SimpleCell";
+
 export { ButtonGroup } from "../components/ButtonGroup/ButtonGroup";
 export type { ButtonGroupProps } from "../components/ButtonGroup/ButtonGroup";
 
