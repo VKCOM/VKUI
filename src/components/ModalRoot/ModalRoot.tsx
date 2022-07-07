@@ -214,12 +214,12 @@ class ModalRootTouchComponent extends React.Component<
       // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
       // https://github.com/VKCOM/VKUI/issues/444
       this.window!.removeEventListener("touchmove", this.preventTouch, {
-        // @ts-expect-error (В интерфейсе EventListenerOptions нет поля passive)
+        // @ts-ignore (В интерфейсе EventListenerOptions нет поля passive)
         passive: true,
       });
 
       this.window!.removeEventListener("touchstart", this.preventTouch, {
-        // @ts-expect-error (В интерфейсе EventListenerOptions нет поля passive)
+        // @ts-ignore (В интерфейсе EventListenerOptions нет поля passive)
         passive: false,
       });
     } else {
