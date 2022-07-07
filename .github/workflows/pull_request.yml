@@ -105,6 +105,7 @@ jobs:
           folder: tmp
           target-folder: pull/${{ github.event.pull_request.number }}
           clean: true
+          force: false
       - name: Find styleguide URL comment
         uses: peter-evans/find-comment@v1
         id: find_url_comment

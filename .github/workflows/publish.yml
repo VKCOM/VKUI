@@ -75,3 +75,4 @@ jobs:
           branch: gh-pages
           folder: docs
           clean: false
+          force: false
