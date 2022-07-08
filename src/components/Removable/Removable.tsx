@@ -4,10 +4,9 @@ import { classNames } from "../../lib/classNames";
 import { getTitleFromChildren, noop } from "../../lib/utils";
 import { useExternRef } from "../../hooks/useExternRef";
 import { usePlatform } from "../../hooks/usePlatform";
-import { getClassName } from "../../helpers/getClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useDOM } from "../../lib/dom";
-import { ANDROID, IOS, VKCOM } from "../../lib/platform";
+import { IOS } from "../../lib/platform";
 import { Icon24Cancel } from "@vkontakte/icons";
 import { IconButton } from "../IconButton/IconButton";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
@@ -148,12 +147,13 @@ export const Removable = ({
       {...restProps}
       ref={ref}
       vkuiClass={classNames(
-        getClassName("Removable", platform),
+        "Removable",
+        platform === IOS && "Removable--ios",
         `Removable--${align}`,
         `Removable--sizeY-${sizeY}`
       )}
     >
-      {(platform === ANDROID || platform === VKCOM) && (
+      {platform !== IOS && (
         <div vkuiClass="Removable__content">
           {children}
 
