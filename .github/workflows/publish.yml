@@ -9,6 +9,9 @@ on:
       tag:
         description: 'tag: empty for release; "beta" or "alpha" for pre-release'
 
+permissions:
+  contents: write
+
 jobs:
   publish:
     runs-on: ubuntu-latest

@@ -2,6 +2,9 @@ name: "Update screenshots"
 
 on: workflow_dispatch
 
+permissions:
+  contents: write
+
 jobs:
   update_screens:
     runs-on: ubuntu-latest
