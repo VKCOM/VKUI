@@ -85,6 +85,7 @@ jobs:
           skip_step: install
           build_script: "size:ci"
   deploy_styleguide:
+    concurrency: ci-gh-pages
     runs-on: ubuntu-latest
     needs: styleguide
     # Skip deploy from forked repo or from dependabot
