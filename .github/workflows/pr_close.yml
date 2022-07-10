@@ -6,6 +6,7 @@ on:
 
 jobs:
   clear_styleguide:
+    concurrency: ci-gh-pages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -20,6 +21,7 @@ jobs:
           branch: gh-pages
 
   patch:
+    concurrency: ci-stable
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'patch')
     runs-on: ubuntu-latest
     steps:

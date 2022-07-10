@@ -11,6 +11,7 @@ on:
 
 jobs:
   publish:
+    concurrency: ci-gh-pages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -75,3 +76,4 @@ jobs:
           branch: gh-pages
           folder: docs
           clean: false
+          force: false

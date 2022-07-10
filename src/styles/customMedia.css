@@ -1,3 +1,4 @@
+/* stylelint-disable custom-media-pattern */
 @custom-media --sizeX-regular (min-width: 768px);
 @custom-media --sizeX-compact (max-width: 767px);
 

@@ -1,6 +1,5 @@
 .ButtonGroup {
   display: inline-flex;
-  align-items: flex-start; /* [Примечание 1] Чтобы блоки по-умолчанию не растягивались на всю ширину контейнера */
   max-width: 100%; /* [Примечание 2] Чтобы блок не выходил за границы контейнера (связано с [Примечание 4]) */
 }
 
@@ -62,3 +61,15 @@
 }
 
 /* stylelint-enable vkui/atomic */
+
+.ButtonGroup--align-left {
+  align-items: flex-start;
+}
+
+.ButtonGroup--align-center {
+  align-items: center;
+}
+
+.ButtonGroup--align-right {
+  align-items: flex-end;
+}

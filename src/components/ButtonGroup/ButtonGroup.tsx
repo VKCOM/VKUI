@@ -1,11 +1,12 @@
 import * as React from "react";
 import { classNamesString } from "../../lib/classNames";
-import type { HasRootRef } from "../../types";
+import type { HasRootRef, HasAlign } from "../../types";
 import styles from "./ButtonGroup.module.css";
 
 export interface ButtonGroupProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    HasRootRef<HTMLDivElement> {
+    HasRootRef<HTMLDivElement>,
+    HasAlign {
   /**
    * Задает расположение элементов внутри группы, вертикальное или горизонтальное.
    */
@@ -29,6 +30,7 @@ export const ButtonGroup = ({
   mode = "horizontal",
   gap = "m",
   stretched = false,
+  align = "left" /* NOTE: Чтобы блоки по-умолчанию не растягивались на всю ширину контейнера */,
   getRootRef,
   className,
   children,
@@ -41,7 +43,8 @@ export const ButtonGroup = ({
         styles.ButtonGroup,
         styles[`ButtonGroup--mode-${mode}`],
         gap !== "none" && styles[`ButtonGroup--gap-${gap}`],
-        stretched && styles["ButtonGroup--stretched"]
+        stretched && styles["ButtonGroup--stretched"],
+        `ButtonGroup--align-${align}`
       )}
       role="group"
       ref={getRootRef}
