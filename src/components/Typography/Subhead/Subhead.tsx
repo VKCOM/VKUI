@@ -17,12 +17,12 @@ export interface SubheadProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Subhead
  */
-export const Subhead: React.FC<SubheadProps> = ({
+export const Subhead = ({
   children,
   weight,
   Component = "h5",
   ...restProps
-}) => {
+}: SubheadProps) => {
   const { sizeY } = useAdaptivity();
 
   return (

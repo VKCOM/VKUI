@@ -8,10 +8,7 @@ export type FooterProps = React.AllHTMLAttributes<HTMLElement> & HasComponent;
 /**
  * @see https://vkcom.github.io/VKUI/#/Footer
  */
-export const Footer: React.FC<FooterProps> = ({
-  children,
-  ...restProps
-}: FooterProps) => {
+export const Footer = ({ children, ...restProps }: FooterProps) => {
   return (
     <Caption Component="footer" {...restProps} vkuiClass="Footer">
       {children}

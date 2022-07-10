@@ -24,7 +24,7 @@ export interface SnackbarProps
   /**
    * Название кнопки действия в уведомлении
    */
-  action?: string | React.ComponentType;
+  action?: React.ReactNode;
 
   /**
    * Будет вызвано при клике на кнопку действия
@@ -56,7 +56,7 @@ export interface SnackbarProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Snackbar
  */
-export const Snackbar: React.FC<SnackbarProps> = (props) => {
+export const Snackbar = (props: SnackbarProps) => {
   const {
     children,
     layout = "horizontal",

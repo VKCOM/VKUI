@@ -1,5 +1,5 @@
 import * as React from "react";
-import { HasComponent } from "../../types";
+import { HasComponent, HasChildren } from "../../types";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { IOS } from "../../lib/platform";
@@ -80,12 +80,11 @@ export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
   actions?: React.ReactNode;
 }
 
-type BannerTypographyProps = Pick<BannerProps, "size"> & HasComponent;
+type BannerTypographyProps = Pick<BannerProps, "size"> &
+  HasComponent &
+  HasChildren;
 
-const BannerHeader: React.FC<BannerTypographyProps> = ({
-  size,
-  ...restProps
-}) => {
+const BannerHeader = ({ size, ...restProps }: BannerTypographyProps) => {
   return size === "m" ? (
     <Title level="2" weight="2" {...restProps} />
   ) : (

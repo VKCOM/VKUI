@@ -14,20 +14,22 @@ export interface FileProps
 /**
  * @see https://vkcom.github.io/VKUI/#/File
  */
-export const File: React.FC<FileProps> = ({
+export const File = ({
   children = "Выберите файл",
   align = "left",
   size,
   mode,
   stretched,
   before,
+  after,
+  loading,
   className,
   style,
   getRef,
   getRootRef,
   appearance,
   ...restProps
-}) => {
+}: FileProps) => {
   const platform = usePlatform();
 
   return (
@@ -41,6 +43,8 @@ export const File: React.FC<FileProps> = ({
       appearance={appearance}
       size={size}
       before={before}
+      after={after}
+      loading={loading}
       style={style}
       getRootRef={getRootRef}
       disabled={restProps.disabled}

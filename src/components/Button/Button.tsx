@@ -25,7 +25,7 @@ export interface ButtonProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Button
  */
-const Button: React.FC<ButtonProps> = ({
+const Button = ({
   size = "s",
   mode = "primary",
   appearance = "accent",
@@ -41,7 +41,7 @@ const Button: React.FC<ButtonProps> = ({
   stopPropagation = true,
   className,
   ...restProps
-}) => {
+}: ButtonProps) => {
   const hasIcons = Boolean(before || after);
   const hasIconOnly = !children && Boolean(after) !== Boolean(before);
   const hasNewTokens = React.useContext(ConfigProviderContext).hasNewTokens;

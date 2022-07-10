@@ -39,6 +39,7 @@
   color: var(--text_placeholder);
 }
 
+/* stylelint-disable-next-line selector-no-vendor-prefix */
 .WriteBar__textarea::-moz-placeholder {
   opacity: 1;
   color: var(--text_placeholder);

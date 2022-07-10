@@ -18,14 +18,17 @@ export const SSRContext = React.createContext<SSRContextInterface>({
 export interface SSRWrapperProps {
   userAgent?: string;
   browserInfo?: BrowserInfo;
+  children?: React.ReactNode;
 }
 
 /**
  * @see https://vkcom.github.io/VKUI/#/SSR
  */
-export const SSRWrapper: React.FC<SSRWrapperProps> = (props) => {
-  let { userAgent, browserInfo, children } = props;
-
+export const SSRWrapper = ({
+  userAgent,
+  browserInfo,
+  children,
+}: SSRWrapperProps) => {
   if (!browserInfo && userAgent) {
     browserInfo = computeBrowserInfo(userAgent);
   }

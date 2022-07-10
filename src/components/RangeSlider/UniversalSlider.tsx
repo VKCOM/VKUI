@@ -25,9 +25,7 @@ export interface UniversalSliderProps<Value>
   onChange?(value: Value, e: TouchEvent): void;
 }
 
-export const UniversalSlider: React.FC<
-  UniversalSliderProps<UniversalValue>
-> = ({
+export const UniversalSlider = ({
   min = 0,
   max = 100,
   step,
@@ -37,7 +35,7 @@ export const UniversalSlider: React.FC<
   getRootRef,
   disabled,
   ...restProps
-}) => {
+}: UniversalSliderProps<UniversalValue>) => {
   const [start, end] = value;
   const isRange = start != null;
   const gesture = React.useRef({

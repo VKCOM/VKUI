@@ -24,7 +24,7 @@ const warn = warnOnce("ModalCard");
 /**
  * @see https://vkcom.github.io/VKUI/#/ModalCard
  */
-export const ModalCard: React.FC<ModalCardProps> = ({
+export const ModalCard = ({
   icon,
   header,
   subheader,
@@ -35,7 +35,7 @@ export const ModalCard: React.FC<ModalCardProps> = ({
   nav,
   id,
   ...restProps
-}) => {
+}: ModalCardProps) => {
   const { sizeX } = useAdaptivity();
   const platform = usePlatform();
 

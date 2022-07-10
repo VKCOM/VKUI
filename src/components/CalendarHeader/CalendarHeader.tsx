@@ -39,7 +39,7 @@ export interface CalendarHeaderProps
   onPrevMonth?(): void;
 }
 
-export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
+export const CalendarHeader = ({
   viewDate,
   onChange,
   prevMonth = true,
@@ -66,7 +66,7 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
       height={30}
     />
   ),
-}) => {
+}: CalendarHeaderProps) => {
   const locale = React.useContext(LocaleProviderContext);
   const onMonthsChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>

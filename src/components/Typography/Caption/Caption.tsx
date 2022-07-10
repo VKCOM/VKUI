@@ -17,7 +17,7 @@ export interface CaptionProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Caption
  */
-export const Caption: React.FC<CaptionProps> = ({
+export const Caption = ({
   children,
   weight,
   level = "1",

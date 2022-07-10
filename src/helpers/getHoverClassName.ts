@@ -22,7 +22,7 @@ export function getHoverClassName<Styles extends Record<string, string>>(
     hoverState = "has-not";
   }
 
-  const hoverClassName = `${base}--hover-${hoverState}`;
+  const hoverClassName = `${String(base)}--hover-${hoverState}`;
 
   return styles ? styles[hoverClassName] : hoverClassName;
 }

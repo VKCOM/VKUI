@@ -66,7 +66,7 @@ export type DragHandler = (e: React.DragEvent<HTMLElement>) => void;
 /**
  * @see https://vkcom.github.io/VKUI/#/Touch
  */
-export const Touch: React.FC<TouchProps> = ({
+export const Touch = ({
   onStart,
   onStartX,
   onStartY,
@@ -172,13 +172,15 @@ export const Touch: React.FC<TouchProps> = ({
         const willBeSlidedX = willBeX && (!!onMoveX || !!_onMove);
         const willBeSlidedY = willBeY && (!!onMoveY || !!_onMove);
 
-        Object.assign(gesture.current, {
-          isY: willBeY,
-          isX: willBeX,
-          isSlideX: willBeSlidedX,
-          isSlideY: willBeSlidedY,
-          isSlide: willBeSlidedX || willBeSlidedY,
-        });
+        if (gesture.current) {
+          Object.assign(gesture.current, {
+            isY: willBeY,
+            isX: willBeX,
+            isSlideX: willBeSlidedX,
+            isSlideY: willBeSlidedY,
+            isSlide: willBeSlidedX || willBeSlidedY,
+          });
+        }
       }
 
       if (gesture.current?.isSlide) {

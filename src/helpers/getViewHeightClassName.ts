@@ -18,7 +18,7 @@ export function getViewHeightClassName<Styles extends Record<string, string>>(
    */
   styles?: Styles
 ): string | undefined {
-  let className = `${base}--viewHeight-`;
+  let className = `${String(base)}--viewHeight-`;
 
   switch (viewHeight) {
     case ViewHeight.EXTRA_SMALL:

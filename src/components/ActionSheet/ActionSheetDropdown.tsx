@@ -8,14 +8,14 @@ import "./ActionSheet.css";
 
 const stopPropagation: React.MouseEventHandler = (e) => e.stopPropagation();
 
-export const ActionSheetDropdown: React.FC<SharedDropdownProps> = ({
+export const ActionSheetDropdown = ({
   children,
   closing,
   // these 2 props are only omitted - ActionSheetDesktop compat
   toggleRef,
   popupDirection,
   ...restProps
-}) => {
+}: SharedDropdownProps) => {
   const platform = usePlatform();
   const baseClaseName = getClassName("ActionSheet", platform);
 

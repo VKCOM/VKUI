@@ -46,7 +46,7 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
   multiline,
   selectType = SelectType.default,
   ...restProps
-}) => {
+}: NativeSelectProps) => {
   const platform = usePlatform();
   const [title, setTitle] = React.useState("");
   const [empty, setEmpty] = React.useState(false);

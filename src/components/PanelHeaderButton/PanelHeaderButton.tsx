@@ -19,10 +19,7 @@ interface ButtonTypographyProps extends React.AllHTMLAttributes<HTMLElement> {
   primary?: PanelHeaderButtonProps["primary"];
 }
 
-const ButtonTypography: React.FC<ButtonTypographyProps> = ({
-  primary,
-  children,
-}: ButtonTypographyProps) => {
+const ButtonTypography = ({ primary, children }: ButtonTypographyProps) => {
   const platform = usePlatform();
 
   if (platform === IOS) {
@@ -41,7 +38,7 @@ const warn = warnOnce("PanelHeaderButton");
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderButton
  */
-export const PanelHeaderButton: React.FC<PanelHeaderButtonProps> = ({
+export const PanelHeaderButton = ({
   children,
   primary = false,
   label,

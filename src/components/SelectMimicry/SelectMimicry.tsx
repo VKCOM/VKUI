@@ -25,7 +25,7 @@ export interface SelectMimicryProps
 /**
  * @see https://vkcom.github.io/VKUI/#/SelectMimicry
  */
-const SelectMimicry: React.FC<SelectMimicryProps> = ({
+const SelectMimicry = ({
   tabIndex = 0,
   placeholder,
   children,
@@ -38,7 +38,7 @@ const SelectMimicry: React.FC<SelectMimicryProps> = ({
   after = <DropdownIcon />,
   selectType = SelectType.default,
   ...restProps
-}) => {
+}: SelectMimicryProps) => {
   const platform = usePlatform();
   const { sizeX, sizeY } = useAdaptivity();
   const title = children || placeholder;

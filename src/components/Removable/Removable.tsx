@@ -28,17 +28,18 @@ export interface RemovableProps {
 
 interface RemovableIosOwnProps extends RemovableProps {
   removePlaceholderString?: string;
+  children?: React.ReactNode;
 }
 
 /**
  * @see https://vkcom.github.io/VKUI/#/RemovableIos
  */
-const RemovableIos: React.FC<RemovableIosOwnProps> = ({
+const RemovableIos = ({
   onRemove,
   removePlaceholder,
   removePlaceholderString,
   children,
-}) => {
+}: RemovableIosOwnProps) => {
   const { window } = useDOM();
 
   const removeButtonRef = React.useRef<HTMLElement>(null);
@@ -122,7 +123,7 @@ interface RemovableOwnProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Removable
  */
-export const Removable: React.FC<RemovableOwnProps> = ({
+export const Removable = ({
   getRootRef,
   children,
   onRemove = noop,

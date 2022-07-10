@@ -53,7 +53,7 @@
   border-radius: 50%;
   box-sizing: border-box;
   background: var(--vkui--color_icon_contrast_secondary);
-  box-shadow: 0 0 2px 0 rgb(0 0 0 / 12%), 0 2px 2px 0 rgb(0 0 0 / 24%);
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
 
   /* Делаем пин по центру */
   top: calc(
@@ -178,8 +178,8 @@
  */
 .Switch--ios .Switch__pseudo::before {
   background: var(--white);
-  box-shadow: 0 3px 8px rgb(0 0 0 / 15%), 0 3px 1px rgb(0 0 0 / 6%),
-    inset 0 0 0 0.5px rgb(0 0 0 / 4%);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15), 0 3px 1px rgba(0, 0, 0, 0.06),
+    inset 0 0 0 0.5px rgba(0, 0, 0, 0.04);
 }
 
 .Switch--ios .Switch__self:checked + .Switch__pseudo::before {

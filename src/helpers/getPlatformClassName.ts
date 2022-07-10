@@ -18,6 +18,6 @@ export function getPlatformClassName<Styles extends Record<string, string>>(
    */
   styles?: Styles
 ): string | undefined {
-  const platformClassName = `${base}--${osname}`;
+  const platformClassName = `${String(base)}--${osname}`;
   return styles ? styles[platformClassName] : platformClassName;
 }

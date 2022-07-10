@@ -52,7 +52,7 @@ export interface CellProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Cell
  */
-export const Cell: React.FC<CellProps> = ({
+export const Cell = ({
   mode,
   onRemove = noop,
   removePlaceholder = "Удалить",

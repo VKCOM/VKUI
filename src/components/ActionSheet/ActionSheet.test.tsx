@@ -11,13 +11,12 @@ import userEvent from "@testing-library/user-event";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { VKCOM } from "../../lib/platform";
 import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
-import { FC } from "react";
 
 describe("ActionSheet", () => {
   beforeAll(() => jest.useFakeTimers());
   afterAll(() => jest.useRealTimers());
   const toggle = document.createElement("div");
-  const ActionSheetDesktop: FC<Partial<ActionSheetProps>> = (props) => (
+  const ActionSheetDesktop = (props: Partial<ActionSheetProps>) => (
     <ConfigProvider platform={VKCOM}>
       <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasMouse>
         <ActionSheet
@@ -29,7 +28,7 @@ describe("ActionSheet", () => {
       </AdaptivityProvider>
     </ConfigProvider>
   );
-  const ActionSheetMobile: FC<Partial<ActionSheetProps>> = (props) => (
+  const ActionSheetMobile = (props: Partial<ActionSheetProps>) => (
     <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasMouse={false}>
       <ActionSheet
         toggleRef={toggle}

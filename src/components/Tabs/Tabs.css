@@ -111,3 +111,15 @@
   position: relative;
   top: 1px;
 }
+
+/*
+ * CMP:
+ * Group
+ */
+.Group--plain .Group__inner > .Tabs--default:first-child {
+  margin-top: -8px;
+}
+
+.Group--card > .Group__inner > .Tabs--default:first-child {
+  margin-top: -4px;
+}

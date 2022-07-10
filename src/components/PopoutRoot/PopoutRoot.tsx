@@ -14,13 +14,13 @@ export interface PopoutRootProps
   modal?: React.ReactNode;
 }
 
-export const PopoutRoot: React.FC<PopoutRootProps> = ({
+export const PopoutRoot = ({
   popout,
   modal,
   children,
   getRootRef,
   ...restProps
-}) => {
+}: PopoutRootProps) => {
   const { document } = useDOM();
   const { sizeX } = useAdaptivity();
 

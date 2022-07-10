@@ -10,11 +10,17 @@ export type { FormLayoutGroupProps } from "../components/FormLayoutGroup/FormLay
 export { Button } from "../components/Button/Button";
 export type { ButtonProps } from "../components/Button/Button";
 
+export { MiniInfoCell } from "../components/MiniInfoCell/MiniInfoCell";
+export type { MiniInfoCellProps } from "../components/MiniInfoCell/MiniInfoCell";
+
 export { Card } from "../components/Card/Card";
 export type { CardProps } from "../components/Card/Card";
 
 export { CardScroll } from "../components/CardScroll/CardScroll";
 export type { CardScrollProps } from "../components/CardScroll/CardScroll";
+
+export { Group } from "../components/Group/Group";
+export type { GroupProps } from "../components/Group/Group";
 
 export { GridAvatar } from "../components/GridAvatar/GridAvatar";
 export type { GridAvatarProps } from "../components/GridAvatar/GridAvatar";
@@ -30,6 +36,9 @@ export type { InitialsAvatarProps } from "../components/InitialsAvatar/InitialsA
 
 export { InfoRow } from "../components/InfoRow/InfoRow";
 export type { InfoRowProps } from "../components/InfoRow/InfoRow";
+
+export { Link } from "../components/Link/Link";
+export type { LinkProps } from "../components/Link/Link";
 
 export { ButtonGroup } from "../components/ButtonGroup/ButtonGroup";
 export type { ButtonGroupProps } from "../components/ButtonGroup/ButtonGroup";
@@ -67,6 +76,12 @@ export type { SubheadProps } from "../components/Typography/Subhead/Subhead";
 
 export { CellButton } from "../components/CellButton/CellButton";
 export type { CellButtonProps } from "../components/CellButton/CellButton";
+
+export { ScreenSpinner } from "../components/ScreenSpinner/ScreenSpinner";
+export type { ScreenSpinnerProps } from "../components/ScreenSpinner/ScreenSpinner";
+
+export { Dropdown } from "../components/Dropdown/Dropdown";
+export type { DropdownProps } from "../components/Dropdown/Dropdown";
 
 export { Pagination } from "../components/Pagination/Pagination";
 export type { PaginationProps } from "../components/Pagination/Pagination";
@@ -106,6 +121,9 @@ export type { InputProps } from "../components/Input/Input";
 
 export { File } from "../components/File/File";
 export type { FileProps } from "../components/File/File";
+
+export { CardGrid } from "../components/CardGrid/CardGrid";
+export type { CardGridProps } from "../components/CardGrid/CardGrid";
 
 export { FocusVisible } from "../components/FocusVisible/FocusVisible";
 export type { FocusVisibleProps } from "../components/FocusVisible/FocusVisible";

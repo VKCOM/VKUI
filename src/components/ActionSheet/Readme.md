@@ -3,7 +3,7 @@ ActionSheet – имитация [нативного компонента](https
 коллекцию `ActionSheetItem`.
 На больших экранах прокрутка не отключается.
 
-Передаётся в качестве значения свойства `popout` компонента [`SplitLayout`](#/SplitLayout).
+Передаётся в качестве значения свойства `popout` компонента [`SplitLayout`](https://vkcom.github.io/VKUI/#/SplitLayout).
 
 > **Важно**
 >

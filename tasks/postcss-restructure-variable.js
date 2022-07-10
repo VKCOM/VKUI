@@ -1,4 +1,4 @@
-const { Rule } = require("postcss");
+const postcss = require("postcss");
 
 function setEquals(a, b) {
   return a.size === b.size && [...a].every((value) => b.has(value));
@@ -194,16 +194,23 @@ module.exports = (importFrom = []) => {
         }
       });
 
+      const source = root.source;
+      if (source.end === undefined) {
+        source.end = source.start;
+      }
+
       const rules = graph.restructure();
 
       let lastRule = undefined;
+
       rules.forEach(({ decls, selectors }) => {
-        const rule = new Rule({
+        const rule = postcss.rule({
           selectors: Array.from(selectors),
+          source: source,
         });
 
-        decls.forEach((value, key) => {
-          rule.append({ prop: key, value: value });
+        decls.forEach((value, prop) => {
+          rule.append({ prop, value, source });
         });
 
         if (lastRule) {

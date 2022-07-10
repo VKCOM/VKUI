@@ -58,7 +58,7 @@ const warn = warnOnce("CustomSelectOption");
 /**
  * @see https://vkcom.github.io/VKUI/#/CustomSelectOption
  */
-export const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
+export const CustomSelectOption = ({
   children,
   hierarchy = 0,
   hovered,

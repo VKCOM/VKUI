@@ -1,6 +1,7 @@
 import * as React from "react";
 import { clamp } from "../../helpers/math";
 import { UniversalSlider, UniversalSliderProps } from "./UniversalSlider";
+import { TouchEvent } from "../Touch/Touch";
 
 export type Value = [number, number];
 export type RangeSliderProps = UniversalSliderProps<Value>;
@@ -8,7 +9,7 @@ export type RangeSliderProps = UniversalSliderProps<Value>;
 /**
  * @see https://vkcom.github.io/VKUI/#/RangeSlider
  */
-export const RangeSlider: React.FC<RangeSliderProps> = ({
+export const RangeSlider = ({
   onChange,
   defaultValue,
   min = 0,
@@ -28,7 +29,7 @@ export const RangeSlider: React.FC<RangeSliderProps> = ({
   );
 
   const handleChange: RangeSliderProps["onChange"] = React.useCallback(
-    (nextValue, event) => {
+    (nextValue: Value, event: TouchEvent) => {
       if (
         props.disabled ||
         (value[0] === nextValue[0] && value[1] === nextValue[1])

@@ -1,8 +1,9 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
+import { IOS } from "../../lib/platform";
 import { classNames } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
+import { Spacing } from "../Spacing/Spacing";
 import { Separator } from "../Separator/Separator";
 import { hasReactNode } from "../../lib/utils";
 import { Caption } from "../Typography/Caption/Caption";
@@ -56,12 +57,28 @@ export const Group = (props: GroupProps) => {
     computedMode = isInsideModal ? "plain" : "none";
   }
 
+  let separatorElement = null;
+
+  if (separator !== "hide") {
+    const separatorClassName = classNames(
+      "Group__separator",
+      separator === "show" && "Group__separator--force"
+    );
+    separatorElement =
+      computedMode === "card" ? (
+        <Spacing vkuiClass={separatorClassName} size={16} />
+      ) : (
+        <Separator vkuiClass={separatorClassName} />
+      );
+  }
+
   return (
     <section
       {...restProps}
       ref={getRootRef}
       vkuiClass={classNames(
-        getClassName("Group", platform),
+        "Group",
+        platform === IOS && "Group--ios",
         getSizeXClassName("Group", sizeX),
         computedMode && `Group--${computedMode}`
       )}
@@ -73,14 +90,7 @@ export const Group = (props: GroupProps) => {
           <Caption vkuiClass="Group__description">{description}</Caption>
         )}
       </div>
-      {separator !== "hide" && (
-        <Separator
-          vkuiClass={classNames(
-            "Group__separator",
-            separator === "show" && "Group__separator--force"
-          )}
-        />
-      )}
+      {separatorElement}
     </section>
   );
 };

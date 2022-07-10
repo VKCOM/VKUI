@@ -1,5 +1,5 @@
 .Link {
-  color: var(--accent);
+  color: var(--accent, var(--vkui--color_text_link));
   text-decoration: none;
   border: 0;
   background: none;
@@ -9,6 +9,26 @@
   font-size: inherit;
   display: inline;
   border-radius: 0;
+}
+
+@media (hover: hover) {
+  .Link:hover {
+    text-decoration: underline;
+  }
+}
+
+.Link--focus-visible {
+  /**
+   * На момент v4.33.0, реализация <FocusVisible /> не подошла, т.к. текст может быть многострочным.
+   * Поэтому используем свой класс и применяем `outline`.
+   *
+   * `!important` – чтобы перебить глобальное обнуление `outline` на `:focus`.
+   */
+  outline: 2px solid var(--accent, var(--vkui--color_stroke_accent)) !important;
+}
+
+.Link--has-visited:visited {
+  color: var(--vkui--color_text_link_visited);
 }
 
 .Link .Icon {

@@ -33,6 +33,7 @@ export interface ModalRootProps extends HasPlatform {
    * @ignore
    */
   configProvider?: ConfigProviderContextInterface;
+  children?: React.ReactNode;
 
   viewWidth?: ViewWidth;
 
@@ -68,7 +69,7 @@ class ModalRootDesktopComponent extends React.Component<
     this.modalRootContext = {
       updateModalHeight: () => undefined,
       registerModal: ({ id, ...data }) =>
-        Object.assign(this.getModalState(id), data),
+        Object.assign(this.getModalState(id) ?? {}, data),
       onClose: () => this.props.onExit(),
       isInsideModal: true,
     };

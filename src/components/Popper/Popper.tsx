@@ -48,6 +48,10 @@ export interface PopperCommonProps
   sameWidth?: boolean;
   forcePortal?: boolean;
   onPlacementChange?: (data: { placement?: Placement }) => void;
+  /**
+   * Массив кастомных модификаторов для Popper (необходимо мемоизировать)
+   */
+  customModifiers?: Array<Modifier<string>>;
 }
 
 export interface PopperProps extends PopperCommonProps {
@@ -61,7 +65,7 @@ const ARROW_HEIGHT = 8;
 /**
  * @see https://vkcom.github.io/VKUI/#/Popper
  */
-export const Popper: React.FC<PopperProps> = ({
+export const Popper = ({
   targetRef,
   children,
   getRef,
@@ -74,6 +78,7 @@ export const Popper: React.FC<PopperProps> = ({
   offsetSkidding = 0,
   forcePortal = true,
   style: compStyles,
+  customModifiers = [],
   ...restProps
 }: PopperProps) => {
   const [popperNode, setPopperNode] = React.useState<HTMLDivElement | null>(
@@ -89,6 +94,9 @@ export const Popper: React.FC<PopperProps> = ({
     const modifiers: Array<Modifier<string>> = [
       {
         name: "preventOverflow",
+        options: {
+          mainAxis: false,
+        },
       },
       {
         name: "offset",
@@ -132,6 +140,7 @@ export const Popper: React.FC<PopperProps> = ({
       modifiers.push(sameWidth);
     }
 
+    modifiers.push(...customModifiers);
     return modifiers;
   }, [
     arrow,
@@ -139,6 +148,7 @@ export const Popper: React.FC<PopperProps> = ({
     smallTargetOffsetSkidding,
     offsetSkidding,
     offsetDistance,
+    customModifiers,
   ]);
 
   const { styles, state, attributes } = usePopper(

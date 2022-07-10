@@ -30,19 +30,15 @@ export interface PlaceholderProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Placeholder
  */
-export const Placeholder: React.FC<PlaceholderProps> = (
-  props: PlaceholderProps
-) => {
-  const {
-    icon,
-    header,
-    action,
-    children,
-    stretched,
-    getRootRef,
-    ...restProps
-  } = props;
-
+export const Placeholder = ({
+  icon,
+  header,
+  action,
+  children,
+  stretched,
+  getRootRef,
+  ...restProps
+}: PlaceholderProps) => {
   return (
     <div
       {...restProps}

@@ -47,9 +47,13 @@ export interface PromoBannerProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * @see https://vkcom.github.io/VKUI/#/PromoBanner
  */
-export const PromoBanner = (props: PromoBannerProps) => {
+export const PromoBanner = ({
+  bannerData = {},
+  onClose,
+  isCloseButtonHidden,
+  ...restProps
+}: PromoBannerProps) => {
   const platform = usePlatform();
-  const { bannerData = {}, onClose, ...restProps } = props;
 
   const [currentPixel, setCurrentPixel] = React.useState("");
 
@@ -87,8 +91,8 @@ export const PromoBanner = (props: PromoBannerProps) => {
           </Caption>
         )}
 
-        {!props.isCloseButtonHidden && (
-          <div vkuiClass="PromoBanner__close" onClick={props.onClose}>
+        {!isCloseButtonHidden && (
+          <div vkuiClass="PromoBanner__close" onClick={onClose}>
             <Icon24Dismiss />
           </div>
         )}

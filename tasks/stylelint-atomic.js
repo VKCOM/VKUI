@@ -33,7 +33,7 @@ module.exports = stylelint.createPlugin(ruleName, function () {
               selTarget = "";
               return;
             }
-            selTarget += String(selector);
+            selTarget += String(selector.value || "");
             if (selector.type === "class") {
               const ruleCmp = selector.value.split(/(--|__)/g)[0];
               hasComponentScope = hasComponentScope || ruleCmp === cssCmp;

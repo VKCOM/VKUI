@@ -9,10 +9,10 @@ const TransitionContext = React.createContext<TransitionContextProps>({
 });
 export const useNavTransition = () => React.useContext(TransitionContext);
 
-export const NavTransitionProvider: React.FC<TransitionContextProps> = ({
+export const NavTransitionProvider = ({
   children,
   entering,
-}) => {
+}: React.PropsWithChildren<TransitionContextProps>) => {
   const parentContext = useNavTransition();
   const contextValue = useObjectMemo({
     entering: parentContext.entering || entering,

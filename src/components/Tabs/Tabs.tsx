@@ -20,7 +20,7 @@ export const TabsModeContext =
 /**
  * @see https://vkcom.github.io/VKUI/#/Tabs
  */
-export const Tabs: React.FunctionComponent<TabsProps> = ({
+export const Tabs = ({
   children,
   mode = "default",
   getRootRef,

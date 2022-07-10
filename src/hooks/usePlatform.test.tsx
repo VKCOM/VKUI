@@ -1,11 +1,11 @@
 import { usePlatform } from "./usePlatform";
 import { ConfigProvider } from "../components/ConfigProvider/ConfigProvider";
 import { renderHook } from "@testing-library/react-hooks";
-import * as React from "react";
+import { HasChildren } from "../types";
 
 describe(usePlatform, () => {
   it("returns ConfigProvider's platform", () => {
-    const wrapper: React.FC = ({ children }) => (
+    const wrapper = ({ children }: HasChildren) => (
       <ConfigProvider platform="ios">{children}</ConfigProvider>
     );
 
@@ -15,7 +15,7 @@ describe(usePlatform, () => {
   });
 
   it("handles ConfigProvider's undefined platform", () => {
-    const wrapper: React.FC = ({ children }) => (
+    const wrapper = ({ children }: HasChildren) => (
       <ConfigProvider platform={undefined}>{children}</ConfigProvider>
     );
 
@@ -25,7 +25,7 @@ describe(usePlatform, () => {
   });
 
   it("handles ConfigProvider's no platform", () => {
-    const wrapper: React.FC = ({ children }) => (
+    const wrapper = ({ children }: HasChildren) => (
       <ConfigProvider>{children}</ConfigProvider>
     );
 

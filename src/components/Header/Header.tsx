@@ -32,11 +32,11 @@ type HeaderContentProps = Pick<HeaderProps, "children" | "mode"> &
   HasPlatform &
   HasComponent;
 
-const HeaderContent: React.FC<HeaderContentProps> = ({
+const HeaderContent = ({
   platform,
   mode,
   ...restProps
-}) => {
+}: HeaderContentProps) => {
   if (platform === Platform.IOS) {
     switch (mode) {
       case "primary":
@@ -71,7 +71,7 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/Header
  */
-export const Header: React.FC<HeaderProps> = ({
+export const Header = ({
   mode = "primary",
   children,
   subtitle,

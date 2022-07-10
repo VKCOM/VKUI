@@ -20,14 +20,15 @@ export interface PanelHeaderContentProps
 interface PanelHeaderChildrenProps extends HasPlatform {
   hasStatus: boolean;
   hasBefore: boolean;
+  children?: React.ReactNode;
 }
 
-const PanelHeaderChildren: React.FC<PanelHeaderChildrenProps> = ({
+const PanelHeaderChildren = ({
   platform,
   hasStatus,
   hasBefore,
   children,
-}) => {
+}: PanelHeaderChildrenProps) => {
   if (platform === Platform.VKCOM) {
     return (
       <Text Component="div" weight="2">
@@ -48,9 +49,7 @@ const PanelHeaderChildren: React.FC<PanelHeaderChildrenProps> = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderContent
  */
-export const PanelHeaderContent: React.FunctionComponent<
-  PanelHeaderContentProps
-> = ({
+export const PanelHeaderContent = ({
   className,
   style,
   aside,

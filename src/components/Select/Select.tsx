@@ -17,11 +17,11 @@ export const SelectType = {
 /**
  * @see https://vkcom.github.io/VKUI/#/SelectTypography
  */
-export const SelectTypography: React.FC<Pick<SelectProps, "selectType">> = ({
+export const SelectTypography = ({
   selectType = SelectType.default,
   children,
   ...restProps
-}) => {
+}: React.PropsWithChildren<Pick<SelectProps, "selectType">>) => {
   const platform = usePlatform();
   const { sizeY } = useAdaptivity();
 

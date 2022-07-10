@@ -28,7 +28,7 @@ export interface CalendarDaysProps
   onDayLeave?(value: Date): void;
 }
 
-export const CalendarDays: React.FC<CalendarDaysProps> = ({
+export const CalendarDays = ({
   viewDate,
   value,
   weekStartsOn,
@@ -47,7 +47,7 @@ export const CalendarDays: React.FC<CalendarDaysProps> = ({
   size,
   showNeighboringMonth = false,
   ...props
-}) => {
+}: CalendarDaysProps) => {
   const locale = React.useContext(LocaleProviderContext);
   const ref = React.useRef<HTMLDivElement>(null);
   const [now] = React.useState(new Date());

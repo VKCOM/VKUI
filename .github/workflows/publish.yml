@@ -41,6 +41,9 @@ jobs:
           github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           branch: ${{ github.ref }}
 
+      - name: Create stable branch
+        run: node ./.github/gitflow/stable_branch.js
+
       - name: Publishing prerelase
         run: yarn publish --non-interactive --tag ${{ github.event.inputs.tag }}
         if: ${{ github.event.inputs.tag }}
@@ -66,9 +69,9 @@ jobs:
         if: ${{ github.event.inputs.tag }}
 
       - name: Publishing doc
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+        uses: JamesIves/github-pages-deploy-action@v4.3.4
         with:
-          GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: docs
-          CLEAN: false
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: docs
+          clean: false

@@ -15,7 +15,7 @@
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  transform: translateY(100%);
+  transform: translateY(calc(100% + 16px));
 }
 
 /**

@@ -2,7 +2,6 @@ import * as React from "react";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useExternRef } from "../../hooks/useExternRef";
 import { hasReactNode, isFunction } from "../../lib/utils";
-import { useDOM } from "../../lib/dom";
 import { getClassName } from "../../helpers/getClassName";
 import { HasRef, HasRootRef } from "../../types";
 import "./WriteBar.css";
@@ -34,30 +33,25 @@ export interface WriteBarProps
 /**
  * @see https://vkcom.github.io/VKUI/#/WriteBar
  */
-export const WriteBar: React.FC<WriteBarProps> = (props: WriteBarProps) => {
+export const WriteBar = ({
+  className,
+  style,
+  before,
+  inlineAfter,
+  after,
+  value,
+  onChange,
+  getRootRef,
+  getRef,
+  onHeightChange,
+  ...restProps
+}: WriteBarProps) => {
   const platform = usePlatform();
-  const {
-    className,
-    style,
-
-    before,
-    inlineAfter,
-    after,
-
-    value,
-    onChange,
-
-    getRootRef,
-    getRef,
-    onHeightChange,
-    ...restProps
-  } = props;
 
   const isControlledOutside = value != null;
 
-  const { window } = useDOM();
   const textareaRef = useExternRef(getRef);
-  const textareaMinHeightRef = React.useRef<number | null>(null);
+  const currentScrollHeight = React.useRef<number>();
 
   const resize = React.useCallback(() => {
     const textareaEl = textareaRef.current;
@@ -65,31 +59,19 @@ export const WriteBar: React.FC<WriteBarProps> = (props: WriteBarProps) => {
       return;
     }
 
-    const { offsetHeight, scrollHeight } = textareaEl;
-    const style = window!.getComputedStyle(textareaEl);
-    const paddingTop = parseInt(style.paddingTop);
-    const paddingBottom = parseInt(style.paddingBottom);
+    if (textareaEl.offsetParent) {
+      textareaEl.style.height = "";
+      textareaEl.style.height = `${textareaEl.scrollHeight}px`;
 
-    if (textareaMinHeightRef.current === null) {
-      textareaMinHeightRef.current = offsetHeight;
+      if (
+        textareaEl.scrollHeight !== currentScrollHeight.current &&
+        onHeightChange
+      ) {
+        onHeightChange();
+        currentScrollHeight.current = textareaEl.scrollHeight;
+      }
     }
-
-    let diff = paddingTop + paddingBottom + 10;
-
-    if (scrollHeight + diff <= offsetHeight) {
-      diff = 0;
-    }
-
-    textareaEl.style.height = "0px";
-
-    const height = textareaEl.scrollHeight - diff / 4;
-    textareaEl.style.height =
-      String(Math.max(height, textareaMinHeightRef.current)) + "px";
-
-    if (isFunction(onHeightChange)) {
-      onHeightChange();
-    }
-  }, [onHeightChange, textareaRef, window]);
+  }, [onHeightChange, textareaRef]);
 
   const onTextareaChange: React.ChangeEventHandler<HTMLTextAreaElement> = (
     event

@@ -22,7 +22,7 @@ export function getMouseClassName<Styles extends Record<string, string>>(
     mouseState = "has-not";
   }
 
-  const className = `${base}--mouse-${mouseState}`;
+  const className = `${String(base)}--mouse-${mouseState}`;
 
   return styles ? styles[className] : className;
 }

@@ -13,17 +13,13 @@ export type FormLayoutProps = React.AllHTMLAttributes<HTMLElement> &
 /**
  * @see https://vkcom.github.io/VKUI/#/FormLayout
  */
-export const FormLayout: React.FC<FormLayoutProps> = (
-  props: FormLayoutProps
-) => {
-  const {
-    children,
-    Component = "form",
-    getRef,
-    onSubmit = preventDefault,
-    ...restProps
-  } = props;
-
+export const FormLayout = ({
+  children,
+  Component = "form",
+  getRef,
+  onSubmit = preventDefault,
+  ...restProps
+}: FormLayoutProps) => {
   const platform = usePlatform();
   return (
     <Component

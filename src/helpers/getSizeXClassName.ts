@@ -17,6 +17,6 @@ export function getSizeXClassName<Styles extends Record<string, string>>(
    */
   styles?: Styles
 ): string | undefined {
-  const sizeXClassName = `${base}--sizeX-${sizeX}`;
+  const sizeXClassName = `${String(base)}--sizeX-${sizeX}`;
   return styles ? styles[sizeXClassName] : sizeXClassName;
 }

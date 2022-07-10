@@ -1,10 +1,10 @@
-import { FC } from "react";
 import { AppRoot } from "../AppRoot/AppRoot";
 import { Alert, AlertProps, AlertAction } from "./Alert";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { VKCOM, ANDROID, IOS } from "../../lib/platform";
+import { HasChildren } from "../../types";
 
-const AppWrapper: FC = (props) => (
+const AppWrapper = (props: HasChildren) => (
   <AppRoot mode="embedded" scroll="contain">
     {props.children}
   </AppRoot>

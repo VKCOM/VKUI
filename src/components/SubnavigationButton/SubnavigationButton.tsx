@@ -1,5 +1,5 @@
 import * as React from "react";
-import { HasComponent } from "../../types";
+import { HasComponent, HasChildren } from "../../types";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { getTitleFromChildren, hasReactNode } from "../../lib/utils";
@@ -29,9 +29,10 @@ export interface SubnavigationButtonProps extends Omit<TappableProps, "size"> {
 }
 
 type SubnavButtonTypographyProps = Pick<SubnavigationButtonProps, "textLevel"> &
-  HasComponent;
+  HasComponent &
+  HasChildren;
 
-const SubnavigationButtonTypography: React.FC<SubnavButtonTypographyProps> = ({
+const SubnavigationButtonTypography = ({
   textLevel,
   ...restProps
 }: SubnavButtonTypographyProps) => {
@@ -45,20 +46,17 @@ const SubnavigationButtonTypography: React.FC<SubnavButtonTypographyProps> = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/SubnavigationButton
  */
-export const SubnavigationButton: React.FC<SubnavigationButtonProps> = (
-  props: SubnavigationButtonProps
-) => {
+export const SubnavigationButton = ({
+  size = "m",
+  selected,
+  textLevel = 1,
+  before,
+  after,
+  expandable,
+  children,
+  ...restProps
+}: SubnavigationButtonProps) => {
   const platform = usePlatform();
-  const {
-    size,
-    selected,
-    textLevel,
-    before,
-    after,
-    expandable,
-    children,
-    ...restProps
-  } = props;
 
   return (
     <Tappable
@@ -95,9 +93,4 @@ export const SubnavigationButton: React.FC<SubnavigationButtonProps> = (
       </span>
     </Tappable>
   );
-};
-
-SubnavigationButton.defaultProps = {
-  size: "m",
-  textLevel: 1,
 };

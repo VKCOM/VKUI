@@ -26,12 +26,12 @@ export interface RichCellProps extends TappableProps {
   /**
    * Кнопки-действия.
    *
-   * Рекомендуется использовать [Button](#/Button) с параметрами:
+   * Рекомендуется использовать [Button](https://vkcom.github.io/VKUI/#/Button) с параметрами:
    *
    * - `mode="primary" size="s"`
    * - `mode="secondary" size="s"`
    *
-   * Для набора кнопок следует использовать [ButtonGroup](#/ButtonGroup) с параметрами:
+   * Для набора кнопок следует использовать [ButtonGroup](https://vkcom.github.io/VKUI/#/ButtonGroup) с параметрами:
    *
    * - `mode="horizontal" gap="s" stretched`
    */
@@ -54,7 +54,7 @@ export interface RichCellProps extends TappableProps {
 /**
  * @see https://vkcom.github.io/VKUI/#/RichCell
  */
-export const RichCell: React.FC<RichCellProps> = ({
+export const RichCell = ({
   children,
   text,
   caption,
@@ -64,7 +64,7 @@ export const RichCell: React.FC<RichCellProps> = ({
   actions,
   multiline,
   ...restProps
-}) => {
+}: RichCellProps) => {
   const platform = usePlatform();
   const { sizeY } = useAdaptivity();
 

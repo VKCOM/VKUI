@@ -18,7 +18,7 @@ export function getViewWidthClassName<Styles extends Record<string, string>>(
    */
   styles?: Styles
 ): string | undefined {
-  let className = `${base}--viewWidth-`;
+  let className = `${String(base)}--viewWidth-`;
 
   switch (viewWidth) {
     case ViewWidth.SMALL_MOBILE:
@@ -46,9 +46,9 @@ export function getViewWidthClassName<Styles extends Record<string, string>>(
 
   if (viewWidth && viewWidth >= ViewWidth.SMALL_TABLET) {
     if (styles) {
-      className += " " + styles[`${base}--viewWidth-smallTabletPlus`];
+      className += " " + styles[`${String(base)}--viewWidth-smallTabletPlus`];
     } else {
-      className += ` ${base}--viewWidth-smallTabletPlus`;
+      className += ` ${String(base)}--viewWidth-smallTabletPlus`;
     }
   }
 

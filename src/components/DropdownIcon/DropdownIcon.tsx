@@ -6,9 +6,7 @@ import { classNames } from "../../lib/classNames";
 import { SizeYConditionalRender } from "../SizeYConditionalRender/SizeYConditionalRender";
 import "./DropdownIcon.css";
 
-export const DropdownIcon: React.FC<React.HTMLAttributes<HTMLElement>> = (
-  props
-) => {
+export const DropdownIcon = (props: React.HTMLAttributes<HTMLDivElement>) => {
   const platform = usePlatform();
 
   return (

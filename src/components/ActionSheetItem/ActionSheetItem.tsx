@@ -40,7 +40,7 @@ export interface ActionSheetItemProps
 /**
  * @see https://vkcom.github.io/VKUI/#/ActionSheetItem
  */
-const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
+const ActionSheetItem = ({
   children,
   autoClose,
   mode = "default",

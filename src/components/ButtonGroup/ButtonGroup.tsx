@@ -25,7 +25,7 @@ export interface ButtonGroupProps
 /**
  * @see https://vkcom.github.io/VKUI/#/ButtonGroup
  */
-export const ButtonGroup: React.FC<ButtonGroupProps> = ({
+export const ButtonGroup = ({
   mode = "horizontal",
   gap = "m",
   stretched = false,
@@ -33,7 +33,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   className,
   children,
   ...restProps
-}) => {
+}: ButtonGroupProps) => {
   return (
     <div
       className={classNamesString(

@@ -14,7 +14,7 @@ interface CellTypographyProps extends React.HTMLAttributes<HTMLDivElement> {
   size: HorizontalCellProps["size"];
 }
 
-const CellTypography: React.FC<CellTypographyProps> = ({
+const CellTypography = ({
   size,
   children,
   ...restProps
@@ -42,7 +42,7 @@ export interface HorizontalCellProps
 /**
  * @see https://vkcom.github.io/VKUI/#/HorizontalCell
  */
-export const HorizontalCell: React.FC<HorizontalCellProps> = ({
+export const HorizontalCell = ({
   className,
   header,
   style,

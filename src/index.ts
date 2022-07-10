@@ -84,7 +84,7 @@ export { IconButton } from "./components/IconButton/IconButton";
 export type { IconButtonProps } from "./components/IconButton/IconButton";
 export { Card } from "./components/Card/Card";
 export type { CardProps } from "./components/Card/Card";
-export { default as CardGrid } from "./components/CardGrid/CardGrid";
+export { CardGrid } from "./components/CardGrid/CardGrid";
 export type { CardGridProps } from "./components/CardGrid/CardGrid";
 export { CardScroll } from "./components/CardScroll/CardScroll";
 export type { CardScrollProps } from "./components/CardScroll/CardScroll";

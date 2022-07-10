@@ -1,43 +1,39 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./CardGrid.css";
 
 export interface CardGridProps extends React.HTMLAttributes<HTMLDivElement> {
-  size: "s" | "m" | "l";
+  size?: "s" | "m" | "l";
+  /**
+   * Если true, то вокруг компонента присутствуют стандартные отсупы сверху/снизу и слева/справа
+   */
+  spaced?: boolean;
 }
 
 /**
  * @see https://vkcom.github.io/VKUI/#/CardGrid
  */
-const CardGrid: React.FunctionComponent<CardGridProps> = ({
+export const CardGrid = ({
   children,
-  size,
+  size = "s",
+  spaced = false,
   ...restProps
 }: CardGridProps) => {
-  const platform = usePlatform();
   const { sizeX } = useAdaptivity();
 
   return (
     <div
       {...restProps}
       vkuiClass={classNames(
-        getClassName("CardGrid", platform),
-        getSizeXClassName("CardGrid", sizeX),
-        `CardGrid--${size}`
+        "CardGrid",
+        spaced && "CardGrid--spaced",
+        `CardGrid--${size}`,
+        getSizeXClassName("CardGrid", sizeX)
       )}
     >
       {children}
     </div>
   );
 };
-
-CardGrid.defaultProps = {
-  size: "s",
-};
-
-// eslint-disable-next-line import/no-default-export
-export default CardGrid;

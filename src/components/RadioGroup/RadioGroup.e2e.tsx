@@ -1,4 +1,4 @@
-import { ElementType, FC, Fragment } from "react";
+import { ElementType, Fragment } from "react";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { RadioGroup, RadioGroupProps } from "./RadioGroup";
 import { Radio } from "../Radio/Radio";
@@ -9,10 +9,10 @@ type RadioGroupTestProps = RadioGroupProps & {
   RadioGroupWrapper: string | ElementType;
 };
 
-const RadioGroupTest: FC<RadioGroupTestProps> = ({
+const RadioGroupTest = ({
   RadioGroupWrapper = "div",
   ...restProps
-}) => {
+}: RadioGroupTestProps) => {
   // hack to show wrapper component name in props list
   if (RadioGroupWrapper === "FormItem") {
     RadioGroupWrapper = FormItem;

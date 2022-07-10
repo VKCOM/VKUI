@@ -42,7 +42,7 @@ export interface ActionSheetProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * @see https://vkcom.github.io/VKUI/#/ActionSheet
  */
-export const ActionSheet: React.FC<ActionSheetProps> = ({
+export const ActionSheet = ({
   children,
   className,
   header,
@@ -51,7 +51,7 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
   iosCloseItem,
   popupDirection = "bottom",
   ...restProps
-}) => {
+}: ActionSheetProps) => {
   const platform = usePlatform();
   const { viewWidth } = useAdaptivity();
   const [closing, setClosing] = React.useState(false);

@@ -18,7 +18,7 @@ export interface InputProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Input
  */
-const Input: React.FunctionComponent<InputProps> = ({
+const Input = ({
   type = "text",
   align,
   getRef,

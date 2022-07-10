@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   PanelHeaderButton,
   PanelHeaderButtonProps,
@@ -25,7 +24,7 @@ export interface PanelHeaderEditProps extends PanelHeaderButtonProps {
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderEdit
  */
-export const PanelHeaderEdit: React.FunctionComponent<PanelHeaderEditProps> = ({
+export const PanelHeaderEdit = ({
   isActive = false,
   editLabel = "Редактировать",
   doneLabel = "Готово",

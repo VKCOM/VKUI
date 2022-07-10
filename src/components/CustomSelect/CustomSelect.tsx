@@ -27,6 +27,7 @@ import {
 import { is } from "../../lib/is";
 import { Placement } from "../Popper/Popper";
 import { CustomSelectDropdown } from "../CustomSelectDropdown/CustomSelectDropdown";
+import { TrackerOptionsProps } from "../CustomScrollView/useTrackerVisibility";
 import { SelectType } from "../Select/Select";
 import "./CustomSelect.css";
 
@@ -45,7 +46,7 @@ const findIndexBefore = (
   endIndex: number = options.length
 ) => {
   let result = -1;
-  if (options === undefined || endIndex <= 0) {
+  if (endIndex <= 0) {
     return result;
   }
   for (let i = endIndex - 1; i >= 0; i--) {
@@ -92,7 +93,8 @@ interface CustomSelectState {
 export interface SelectProps
   extends NativeSelectProps,
     HasPlatform,
-    FormFieldProps {
+    FormFieldProps,
+    TrackerOptionsProps {
   /**
    * Если `true`, то при клике на селект в нём появится текстовое поле для поиска по `options`. По умолчанию поиск
    * производится по `option.label`.
@@ -122,7 +124,7 @@ export interface SelectProps
   popupDirection?: "top" | "bottom";
   /**
    * Рендер-проп для кастомного рендера опции.
-   * В объекте аргумента приходят [свойства опции](#/CustomSelectOption?id=props)
+   * В объекте аргумента приходят [свойства опции](https://vkcom.github.io/VKUI/#/CustomSelectOption?id=props)
    */
   renderOption?: (props: CustomSelectOptionProps) => React.ReactNode;
   /**
@@ -648,6 +650,8 @@ class CustomSelectComponent extends React.Component<
       fixDropdownWidth,
       forceDropdownPortal,
       selectType = SelectType.default,
+      autoHideScrollbar,
+      autoHideScrollbarDelay,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
@@ -747,6 +751,8 @@ class CustomSelectComponent extends React.Component<
             offsetDistance={dropdownOffsetDistance}
             sameWidth={fixDropdownWidth}
             forcePortal={forceDropdownPortal}
+            autoHideScrollbar={autoHideScrollbar}
+            autoHideScrollbarDelay={autoHideScrollbarDelay}
           >
             {resolvedContent}
           </CustomSelectDropdown>

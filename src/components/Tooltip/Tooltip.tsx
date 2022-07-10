@@ -12,6 +12,7 @@ import { useDOM } from "../../lib/dom";
 import { warnOnce } from "../../lib/warnOnce";
 import { hasReactNode } from "../../lib/utils";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
+import { HasRootRef } from "../../types";
 import "./Tooltip.css";
 
 interface SimpleTooltipProps extends Partial<TooltipProps> {
@@ -76,7 +77,7 @@ export interface TooltipProps {
    * свойство `getRootRef`, которое должно возвращаться ссылку на корневой DOM-элемент компонента,
    * иначе тултип показан не будет. Если передан React-element, то такой проблемы нет.
    */
-  children: React.ReactElement;
+  children: React.ReactElement<HasRootRef<any>> | React.ReactElement;
   mode?: "accent" | "light";
   /**
    * Если передан `false`, то рисуется просто `children`.
@@ -155,7 +156,7 @@ function isVerticalPlacement(placement: Placement) {
 /**
  * @see https://vkcom.github.io/VKUI/#/Tooltip
  */
-export const Tooltip: React.FC<TooltipProps> = ({
+export const Tooltip = ({
   children,
   isShown: _isShown = true,
   offsetX = 0,
@@ -167,7 +168,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
   cornerAbsoluteOffset,
   mode = "accent",
   ...restProps
-}) => {
+}: TooltipProps) => {
   const { entering } = useNavTransition();
   const isShown = _isShown && !entering;
   const [tooltipRef, setTooltipRef] = React.useState<HTMLElement | null>(null);

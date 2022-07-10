@@ -31,7 +31,7 @@ export const AVATAR_DEFAULT_SHADOW = true;
 /**
  * @see https://vkcom.github.io/VKUI/#/Avatar
  */
-export const Avatar: React.FC<AvatarProps> = ({
+export const Avatar = ({
   alt,
   crossOrigin,
   decoding,

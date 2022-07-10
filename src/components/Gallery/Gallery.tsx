@@ -1,7 +1,6 @@
 import * as React from "react";
 import { clamp } from "../../helpers/math";
 import { useTimeout } from "../../hooks/useTimeout";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { BaseGallery } from "../BaseGallery/BaseGallery";
 import { BaseGalleryProps } from "../BaseGallery/types";
 
@@ -22,7 +21,6 @@ export const Gallery = ({
   ...props
 }: GalleryProps) => {
   const [localSlideIndex, setSlideIndex] = React.useState(initialSlideIndex);
-  const { hasMouse } = useAdaptivity();
   const isControlled = typeof props.slideIndex === "number";
   const slideIndex = isControlled ? props.slideIndex ?? 0 : localSlideIndex;
   const isDraggable = !isControlled || Boolean(onChange);
@@ -33,7 +31,7 @@ export const Gallery = ({
   const childCount = slides.length;
 
   const handleChange: GalleryProps["onChange"] = React.useCallback(
-    (current) => {
+    (current: number) => {
       if (current === slideIndex) {
         return;
       }
@@ -66,7 +64,6 @@ export const Gallery = ({
   return (
     <BaseGallery
       isDraggable={isDraggable}
-      hasMouse={hasMouse}
       {...props}
       bullets={childCount > 0 && bullets}
       slideIndex={safeSlideIndex}

@@ -55,7 +55,7 @@ const warn = warnOnce("ModalPage");
 /**
  * @see https://vkcom.github.io/VKUI/#/ModalPage
  */
-export const ModalPage: React.FC<ModalPageProps> = ({
+export const ModalPage = ({
   children,
   header,
   onOpen,
@@ -68,7 +68,7 @@ export const ModalPage: React.FC<ModalPageProps> = ({
   nav,
   id,
   ...restProps
-}) => {
+}: ModalPageProps) => {
   const { updateModalHeight } = React.useContext(ModalRootContext);
 
   const platform = usePlatform();

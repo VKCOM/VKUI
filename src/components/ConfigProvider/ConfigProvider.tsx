@@ -1,14 +1,11 @@
 import * as React from "react";
-import vkBridge from "@vkontakte/vk-bridge";
 import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
-  WebviewType,
 } from "./ConfigProviderContext";
 import { useObjectMemo } from "../../hooks/useObjectMemo";
 import { AppearanceProvider } from "../AppearanceProvider/AppearanceProvider";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
-import { platform as resolvePlatform } from "../../lib/platform";
 import { useAutoDetectAppearance } from "../../hooks/useAutoDetectAppearance";
 import { noop } from "../../lib/utils";
 
@@ -19,22 +16,28 @@ export interface ConfigProviderProps
    */
   locale?: string;
   onDetectAppearanceByBridge?: () => void;
+  children?: React.ReactNode;
 }
 
 /**
  * @see https://vkcom.github.io/VKUI/#/ConfigProvider
  */
-export const ConfigProvider: React.FC<ConfigProviderProps> = ({
-  children,
-  webviewType = WebviewType.VKAPPS,
-  isWebView = vkBridge.isWebView(),
-  transitionMotionEnabled = true,
-  platform = resolvePlatform(),
-  hasNewTokens = false,
-  appearance: appearanceProp,
-  onDetectAppearanceByBridge = noop,
-  locale = "ru",
-}) => {
+export const ConfigProvider = (props: ConfigProviderProps) => {
+  const parentLocale = React.useContext(LocaleProviderContext);
+  const parentConfig = React.useContext(ConfigProviderContext);
+
+  const {
+    children,
+    webviewType = parentConfig.webviewType,
+    isWebView = parentConfig.isWebView,
+    transitionMotionEnabled = parentConfig.transitionMotionEnabled,
+    platform = parentConfig.platform,
+    hasNewTokens = parentConfig.hasNewTokens,
+    appearance: appearanceProp = parentConfig.appearance,
+    locale = parentLocale ?? "ru",
+    onDetectAppearanceByBridge = noop,
+  } = props;
+
   const appearance = useAutoDetectAppearance(
     appearanceProp,
     onDetectAppearanceByBridge

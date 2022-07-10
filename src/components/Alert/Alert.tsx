@@ -45,9 +45,10 @@ type ItemClickHandler = (item: AlertActionInterface) => void;
 
 interface AlertTypography {
   id: string;
+  children?: React.ReactNode;
 }
 
-const AlertHeader: React.FC<AlertTypography> = (props) => {
+const AlertHeader = (props: AlertTypography) => {
   const platform = usePlatform();
 
   switch (platform) {
@@ -62,7 +63,7 @@ const AlertHeader: React.FC<AlertTypography> = (props) => {
   }
 };
 
-const AlertText: React.FC<AlertTypography> = (props) => {
+const AlertText = (props: AlertTypography) => {
   const platform = usePlatform();
 
   switch (platform) {
@@ -82,11 +83,11 @@ interface AlertActionProps {
   onItemClick: ItemClickHandler;
 }
 
-const AlertAction: React.FC<AlertActionProps> = ({
+const AlertAction = ({
   action,
   onItemClick,
   ...restProps
-}) => {
+}: AlertActionProps) => {
   const platform = usePlatform();
   const handleItemClick = React.useCallback(
     () => onItemClick(action),
@@ -136,7 +137,7 @@ const AlertAction: React.FC<AlertActionProps> = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/Alert
  */
-export const Alert: React.FC<AlertProps> = ({
+export const Alert = ({
   actions = [],
   actionsLayout = "horizontal",
   children,
@@ -147,7 +148,7 @@ export const Alert: React.FC<AlertProps> = ({
   onClose,
   dismissLabel = "Закрыть предупреждение",
   ...restProps
-}) => {
+}: AlertProps) => {
   const platform = usePlatform();
   const { sizeX } = useAdaptivity();
   const { waitTransitionFinish } = useWaitTransitionFinish();

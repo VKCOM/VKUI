@@ -124,7 +124,7 @@ function doScroll({
 /**
  * @see https://vkcom.github.io/VKUI/#/HorizontalScroll
  */
-export const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
+export const HorizontalScroll = ({
   children,
   getScrollToLeft,
   getScrollToRight,
@@ -132,7 +132,7 @@ export const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
   scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
   getRef,
   ...restProps
-}) => {
+}: HorizontalScrollProps) => {
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(false);
 

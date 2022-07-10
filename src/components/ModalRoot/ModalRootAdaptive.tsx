@@ -29,12 +29,13 @@ export interface ModalRootProps {
    * Будет вызвано при окончательном закрытии активной модалки с её id
    */
   onClosed?(modalId: string): void;
+  children?: React.ReactNode;
 }
 
 /**
  * @see https://vkcom.github.io/VKUI/#/ModalRoot
  */
-export const ModalRoot: React.FC<ModalRootProps> = (props) => {
+export const ModalRoot = (props: ModalRootProps) => {
   const [closed, setClosed] = React.useState(false);
   const platform = usePlatform();
 

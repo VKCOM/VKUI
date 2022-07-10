@@ -28,7 +28,7 @@ const defaultScrollToRight: ScrollPositionHandler = (x) => x + 240;
 /**
  * @see https://vkcom.github.io/VKUI/#/SubnavigationBar
  */
-export const SubnavigationBar: React.FC<SubnavigationBarProps> = ({
+export const SubnavigationBar = ({
   mode = "overflow",
   children,
   showArrows = true,

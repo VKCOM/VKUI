@@ -97,14 +97,14 @@ jobs:
           name: styleguide
           path: tmp
       - name: Publishing styleguide to GitHub pages
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+        uses: JamesIves/github-pages-deploy-action@v4.3.4
         with:
-          GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
-          COMMIT_MESSAGE: "Publish PR ${{ github.event.pull_request.number }}"
-          BRANCH: gh-pages
-          FOLDER: tmp
-          TARGET_FOLDER: pull/${{ github.event.pull_request.number }}
-          CLEAN: true
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          commit-message: "Publish PR ${{ github.event.pull_request.number }}"
+          branch: gh-pages
+          folder: tmp
+          target-folder: pull/${{ github.event.pull_request.number }}
+          clean: true
       - name: Find styleguide URL comment
         uses: peter-evans/find-comment@v1
         id: find_url_comment

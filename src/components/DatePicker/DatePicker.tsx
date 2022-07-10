@@ -79,9 +79,7 @@ const range = (start: number, end: number) => {
   return swap ? arr.reverse() : arr;
 };
 
-const DatePickerCustom: React.FC<
-  DatePickerProps & Partial<DatePickerDateFormat>
-> = ({
+const DatePickerCustom = ({
   name,
   min = { day: 0, month: 0, year: 0 },
   max = { day: 31, month: 12, year: 2100 },
@@ -97,7 +95,7 @@ const DatePickerCustom: React.FC<
   onDateChange,
   disabled,
   ...restProps
-}) => {
+}: DatePickerProps & Partial<DatePickerDateFormat>) => {
   const onSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     onDateChange?.({
       day,
@@ -165,9 +163,7 @@ const DatePickerCustom: React.FC<
   );
 };
 
-const DatePickerNative: React.FC<
-  DatePickerProps & Partial<DatePickerDateFormat>
-> = ({
+const DatePickerNative = ({
   min = { day: 0, month: 0, year: 0 },
   max = { day: 31, month: 12, year: 2100 },
   dayPlaceholder,
@@ -180,7 +176,7 @@ const DatePickerNative: React.FC<
   year,
   onDateChange,
   ...restProps
-}) => {
+}: DatePickerProps & Partial<DatePickerDateFormat>) => {
   const defProps =
     day && month && year
       ? { defaultValue: convertToInputFormat({ day, month, year }) }
@@ -207,10 +203,7 @@ const DatePickerNative: React.FC<
 /**
  * @see https://vkcom.github.io/VKUI/#/DatePicker
  */
-export const DatePicker: React.FC<DatePickerProps> = ({
-  defaultValue,
-  ...props
-}) => {
+export const DatePicker = ({ defaultValue, ...props }: DatePickerProps) => {
   const { hasMouse } = useAdaptivity();
   const [value, setValue] = React.useState<Partial<DatePickerDateFormat>>(
     () => ({
