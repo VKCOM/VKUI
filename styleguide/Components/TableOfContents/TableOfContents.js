@@ -250,22 +250,24 @@ class TableOfContents extends React.PureComponent {
                     )}
                   </IconButton>
                 )) ||
-                (unstable.includes(section.name) && (
-                  <img
-                    className="ReactComponent__unstable"
-                    width={22}
-                    alt="Компонент является нестабильным"
-                    src={require("../../assets/static/unstable.png")}
-                  />
-                )) ||
-                (tokenized.includes(section.name) && (
-                  <img
-                    className="ReactComponent__tokenized"
-                    width={22}
-                    alt="Компонент поддерживает vkui-tokens"
-                    src={require("../../assets/static/tokenized.png")}
-                  />
-                ))
+                (unstable.includes(section.name) &&
+                  !deprecated.includes(section.name) && (
+                    <img
+                      className="ReactComponent__unstable"
+                      width={22}
+                      alt="Компонент является нестабильным"
+                      src={require("../../assets/static/unstable.png")}
+                    />
+                  )) ||
+                (tokenized.includes(section.name) &&
+                  !deprecated.includes(section.name) && (
+                    <img
+                      className="ReactComponent__tokenized"
+                      width={22}
+                      alt="Компонент поддерживает vkui-tokens"
+                      src={require("../../assets/static/tokenized.png")}
+                    />
+                  ))
               }
               onClick={!section.href ? this.onExpandCellClick : undefined}
               data-section-name={section.name}
