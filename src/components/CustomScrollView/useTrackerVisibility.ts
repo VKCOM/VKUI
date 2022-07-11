@@ -89,21 +89,21 @@ export interface TrackerVisibilityProps {
   /**
    * Функция для обработки события у блока со скроллом
    */
-  onTargetScroll(): void;
+  onTargetScroll(this: void): void;
   /**
    * Функция для обработки начала drag event ползунка
    */
-  onTrackerDragStart(): void;
+  onTrackerDragStart(this: void): void;
   /**
    * Функция для обработки окончания drag event ползунка
    */
-  onTrackerDragStop(): void;
+  onTrackerDragStop(this: void): void;
   /**
    * Функция для обработки mouseLeave event ползунка
    */
-  onTrackerMouseEnter(): void;
+  onTrackerMouseEnter(this: void): void;
   /**
    * Функция для обработки mouseEnter event ползунка
    */
-  onTrackerMouseLeave(): void;
+  onTrackerMouseLeave(this: void): void;
 }

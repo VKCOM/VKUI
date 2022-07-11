@@ -54,13 +54,13 @@ const normalizer = (sections) => {
       name,
       title,
       content,
-      sections = [],
+      sections: childrenSections = [],
       components = [],
       expand = false,
       search,
     }) => {
       const children = normalizer([
-        ...sections,
+        ...childrenSections,
         ...components.map((component) => {
           return {
             name: component.name,

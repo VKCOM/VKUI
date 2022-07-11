@@ -16,11 +16,11 @@ const clearDisableScrollStyle = (node: HTMLElement) => {
 };
 
 export interface ScrollContextInterface {
-  getScroll(): { x: number; y: number };
-  scrollTo(x?: number, y?: number): void;
+  getScroll(this: void): { x: number; y: number };
+  scrollTo(this: void, x?: number, y?: number): void;
   isScrollLock: boolean;
-  enableScrollLock(): void;
-  disableScrollLock(): void;
+  enableScrollLock(this: void): void;
+  disableScrollLock(this: void): void;
   beforeScrollLockFnSetRef?: React.RefObject<Set<() => void>>;
 }
 

@@ -27,6 +27,8 @@
   },
   "plugins": ["import", "vkui"],
   "rules": {
+    "no-shadow": "off", // Need using @typescript-eslint/no-shadow
+    "@typescript-eslint/prefer-ts-expect-error": "off", // Need typescript > 3.9
     "@typescript-eslint/explicit-member-accessibility": "off",
     "@typescript-eslint/no-unnecessary-condition": "off",
     "@typescript-eslint/no-magic-numbers": "off",
@@ -140,7 +142,8 @@
       },
       "rules": {
         "no-restricted-properties": "off",
-        "no-restricted-globals": "off"
+        "no-restricted-globals": "off",
+        "react/display-name": "off"
       }
     },
     {
