@@ -69,10 +69,7 @@ const ReactComponent = ({ component, exampleMode }) => {
             placement="right"
             text={
               <React.Fragment>
-                Компонент является{" "}
-                <Link href="https://vkcom.github.io/VKUI/#/Unstable">
-                  нестабильным
-                </Link>
+                Компонент является <Link href="#/Unstable">нестабильным</Link>
               </React.Fragment>
             }
           >
