@@ -3,6 +3,12 @@
   padding-bottom: 8px;
 }
 
+.TableOfContents__unstable {
+  /* Переопределение паддингов по бокам, временное решение*/
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
 .TableOfContents__list {
   display: none;
 }
