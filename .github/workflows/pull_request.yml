@@ -98,7 +98,7 @@ jobs:
           name: styleguide
           path: tmp
       - name: Publishing styleguide to GitHub pages
-        uses: JamesIves/github-pages-deploy-action@v4.3.4
+        uses: JamesIves/github-pages-deploy-action@e6d003d
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           commit-message: "Publish PR ${{ github.event.pull_request.number }}"

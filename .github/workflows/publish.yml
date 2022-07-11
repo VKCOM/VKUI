@@ -70,7 +70,7 @@ jobs:
         if: ${{ github.event.inputs.tag }}
 
       - name: Publishing doc
-        uses: JamesIves/github-pages-deploy-action@v4.3.4
+        uses: JamesIves/github-pages-deploy-action@e6d003d
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           branch: gh-pages
