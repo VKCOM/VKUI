@@ -8,6 +8,7 @@ import { Caption, Link } from "@vkui";
 import { classNames } from "@vkontakte/vkjs";
 import { deprecated } from "../../deprecated";
 import { tokenized } from "../../tokenized";
+import { unstable } from "../../unstable";
 import { TextTooltip } from "@vkui/components/TextTooltip/TextTooltip";
 import pkg from "../../../package.json";
 import "./ReactComponent.css";
@@ -60,6 +61,26 @@ const ReactComponent = ({ component, exampleMode }) => {
               width={20}
               alt="Компонент поддерживает vkui-tokens"
               src={require("../../assets/static/tokenized.png")}
+            />
+          </TextTooltip>
+        )}
+        {unstable.includes(visibleName) && (
+          <TextTooltip
+            placement="right"
+            text={
+              <React.Fragment>
+                Компонент является{" "}
+                <Link href="https://vkcom.github.io/VKUI/#/Unstable">
+                  нестабильным
+                </Link>
+              </React.Fragment>
+            }
+          >
+            <img
+              className="ReactComponent__unstable"
+              width={20}
+              alt="Компонент является нестабильным"
+              src={require("../../assets/static/unstable.png")}
             />
           </TextTooltip>
         )}

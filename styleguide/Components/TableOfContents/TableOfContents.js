@@ -17,6 +17,7 @@ import {
 import { deprecated } from "../../deprecated";
 import getInfoFromHash from "react-styleguidist/lib/client/utils/getInfoFromHash";
 import { tokenized } from "../../tokenized";
+import { unstable } from "../../unstable";
 import "./TableOfContents.css";
 
 function capitalize(string = "") {
@@ -248,6 +249,14 @@ class TableOfContents extends React.PureComponent {
                       <Icon28ChevronDownOutline fill="var(--vkui--color_text_tertiary)" />
                     )}
                   </IconButton>
+                )) ||
+                (unstable.includes(section.name) && (
+                  <img
+                    className="ReactComponent__unstable"
+                    width={22}
+                    alt="Компонент является нестабильным"
+                    src={require("../../assets/static/unstable.png")}
+                  />
                 )) ||
                 (tokenized.includes(section.name) && (
                   <img
