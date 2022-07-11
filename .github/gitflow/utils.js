@@ -6,6 +6,8 @@ module.exports.stableBranchName = (semVer) => {
   return `${semVer.major}.${semVer.minor}-stable`;
 };
 
+module.exports.remoteRepository = `https://${process.env.GITHUB_ACTOR}:${process.env.GITHUB_TOKEN}@github.com/VKCOM/VKUI.git`;
+
 module.exports.GhApi = class GhApi {
   constructor() {}
   /**
