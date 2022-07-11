@@ -120,9 +120,11 @@ export const ConfigProvider = (props: ConfigProviderProps) => {
       derivedAppearance
     );
 
+    // eslint-disable-next-line no-restricted-properties
     target?.classList.add(VKUITokensClassName);
 
     return () => {
+      // eslint-disable-next-line no-restricted-properties
       target?.classList.remove(VKUITokensClassName);
     };
   }, [platform, derivedAppearance]);

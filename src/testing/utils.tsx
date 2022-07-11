@@ -116,10 +116,7 @@ export function baselineComponent<Props extends BasicProps>(
 }
 
 type RectOptions = { x?: number; y?: number; w?: number; h?: number };
-export function mockRect(
-  el: HTMLElement | ({} & any),
-  { x = 0, y = 0, w = 0, h = 0 }: RectOptions
-) {
+export function mockRect(el: any, { x = 0, y = 0, w = 0, h = 0 }: RectOptions) {
   if (!el) {
     return;
   }
