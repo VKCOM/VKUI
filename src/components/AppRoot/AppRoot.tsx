@@ -57,16 +57,14 @@ export const AppRoot = withAdaptivity<AppRootProps>(
     hasMouse,
     noLegacyClasses = false,
     scroll = "global",
-    portalRoot,
+    portalRoot: portalRootProp = null,
     ...props
   }) => {
     // normalize mode
     const mode = _mode || (_embedded ? "embedded" : "full");
     const isKeyboardInputActive = useKeyboardInputTracker();
     const rootRef = React.useRef<HTMLDivElement | null>(null);
-    const [_portalRoot, setPortalRoot] = React.useState<HTMLDivElement | null>(
-      null
-    );
+    const [portalRoot, setPortalRoot] = React.useState(portalRootProp);
     const { document } = useDOM();
     const insets = useInsets();
     const { appearance } = React.useContext(ConfigProviderContext);
@@ -94,17 +92,17 @@ export const AppRoot = withAdaptivity<AppRootProps>(
 
     // setup portal
     useIsomorphicLayoutEffect(() => {
-      let portal = portalRoot;
-      if (!portal) {
-        portal = document!.createElement("div");
-        portal.classList.add("vkui__portal-root");
-        document!.body.appendChild(portal);
+      if (portalRootProp) {
+        return;
       }
+      const portal = document!.createElement("div");
+      portal.classList.add("vkui__portal-root");
+      document!.body.appendChild(portal);
       setPortalRoot(portal);
       return () => {
         portal?.parentElement?.removeChild(portal);
       };
-    }, [portalRoot]);
+    }, [portalRootProp]);
 
     // setup root classes
     useIsomorphicLayoutEffect(() => {
@@ -141,8 +139,8 @@ export const AppRoot = withAdaptivity<AppRootProps>(
         ) {
           const inset = insets[key as keyof Insets];
           parent.style.setProperty(`--safe-area-inset-${key}`, `${inset}px`);
-          _portalRoot &&
-            _portalRoot.style.setProperty(
+          portalRoot &&
+            portalRoot.style.setProperty(
               `--safe-area-inset-${key}`,
               `${inset}px`
             );
@@ -153,12 +151,12 @@ export const AppRoot = withAdaptivity<AppRootProps>(
         for (const key in insets) {
           if (insets.hasOwnProperty(key)) {
             parent.style.removeProperty(`--safe-area-inset-${key}`);
-            _portalRoot &&
-              _portalRoot.style.removeProperty(`--safe-area-inset-${key}`);
+            portalRoot &&
+              portalRoot.style.removeProperty(`--safe-area-inset-${key}`);
           }
         }
       };
-    }, [insets, _portalRoot]);
+    }, [insets, portalRoot]);
 
     // adaptivity handler
     useIsomorphicLayoutEffect(() => {
@@ -191,7 +189,7 @@ export const AppRoot = withAdaptivity<AppRootProps>(
       <AppRootContext.Provider
         value={{
           appRoot: rootRef,
-          portalRoot: _portalRoot,
+          portalRoot,
           embedded: mode === "embedded",
           keyboardInput: isKeyboardInputActive,
           mode,
