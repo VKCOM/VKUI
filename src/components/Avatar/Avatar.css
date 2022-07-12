@@ -18,6 +18,7 @@
   height: 100%;
   border: none;
   border-radius: inherit;
+  object-fit: cover;
 }
 
 .Avatar__children,
