@@ -44,6 +44,8 @@ jobs:
 
       - name: Create stable branch
         run: node ./.github/gitflow/stable_branch.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
       - name: Publishing prerelase
         run: yarn publish --non-interactive --tag ${{ github.event.inputs.tag }}

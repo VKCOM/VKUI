@@ -1,6 +1,6 @@
 const { execSync } = require("child_process");
 const SemVer = require("semver/classes/semver");
-const { stableBranchName, GhApi } = require("./utils.js");
+const { stableBranchName, remoteRepository, GhApi } = require("./utils.js");
 const pkg = require("../../package.json");
 
 const semVer = new SemVer(pkg.version);
@@ -20,4 +20,4 @@ const patchRefs = patchCommits.map((commit) => commit.sha).join(" ");
 execSync(`git fetch origin ${stableBranchRef} ${patchRefs}`);
 execSync(`git checkout ${stableBranchRef}`);
 execSync(`git cherry-pick ${patchRefs}`);
-execSync(`git push origin ${stableBranchRef}`);
+execSync(`git push "${remoteRepository}" ${stableBranchRef}`);
