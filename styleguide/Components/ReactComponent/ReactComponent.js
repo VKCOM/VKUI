@@ -71,9 +71,7 @@ const ReactComponent = ({ component, exampleMode }) => {
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-              >
-                <title>Компонент поддерживает vkui-tokens</title>
-              </path>
+              />
             </svg>
           </TextTooltip>
         )}
