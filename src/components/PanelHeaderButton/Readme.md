@@ -1,7 +1,7 @@
 Компонент для отрисовки кнопок в шапке панели. Внутрь компонента передается либо [иконка](https://vkcom.github.io/icons/),
 либо текст. Текстовые кнопки чаще всего используются в iOS, но есть исключения для Android.
 
-Кнопки могут быть переданы в `left` или `right` компонента `PanelHeader`:
+Кнопки могут быть переданы в `before` или `after` компонента `PanelHeader`:
 
 ```jsx static
 import { PanelHeader, PanelHeaderButton } from "@vkontakte/vkui";
