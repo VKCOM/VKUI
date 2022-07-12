@@ -6,15 +6,9 @@
 }
 
 .ReactComponent__tokenized {
-  position: relative;
-  top: 4px;
-  left: 4px;
-}
-
-.ReactComponent__unstable {
   display: inline-block;
   position: relative;
-  top: 5px;
+  top: 4px;
   left: 4px;
 }
 

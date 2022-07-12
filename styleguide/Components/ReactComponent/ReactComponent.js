@@ -8,11 +8,10 @@ import { Caption, Link } from "@vkui";
 import { classNames } from "@vkontakte/vkjs";
 import { deprecated } from "../../deprecated";
 import { tokenized } from "../../tokenized";
-import { unstable } from "../../unstable";
 import { TextTooltip } from "@vkui/components/TextTooltip/TextTooltip";
-import { Icon28WarningTriangleOutline } from "@vkontakte/icons";
 import pkg from "../../../package.json";
 import "./ReactComponent.css";
+import { Icon28TokenizedOutline } from "../Icon28TokenizedOutline/Icon28TokenizedOutline";
 
 const ReactComponent = ({ component, exampleMode }) => {
   const { name, visibleName, pathLine } = component;
@@ -57,38 +56,10 @@ const ReactComponent = ({ component, exampleMode }) => {
               </React.Fragment>
             }
           >
-            <svg
+            <Icon28TokenizedOutline
               className="ReactComponent__tokenized"
               width={24}
-              viewBox="0 0 28 28"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              id="tokenized_outline_28"
-            >
-              <path
-                d="M8 4H7C6.20435 4 5.44129 4.31607 4.87868 4.87868C4.31607 5.44129 4 6.20435 4 7V8M24 8V7C24 6.20435 23.6839 5.44129 23.1213 4.87868C22.5587 4.31607 21.7956 4 21 4H20M20 24H21C21.7956 24 22.5587 23.6839 23.1213 23.1213C23.6839 22.5587 24 21.7956 24 21V20M4 20V21C4 21.7956 4.31607 22.5587 4.87868 23.1213C5.44129 23.6839 6.20435 24 7 24H8M18 10H10M14 18V10"
-                stroke="var(--vkui--color_icon_accent)"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </TextTooltip>
-        )}
-        {unstable.includes(visibleName) && (
-          <TextTooltip
-            placement="right"
-            text={
-              <React.Fragment>
-                Компонент является <Link href="#/Unstable">нестабильным</Link>
-              </React.Fragment>
-            }
-          >
-            <Icon28WarningTriangleOutline
-              className="ReactComponent__unstable"
-              width={24}
-              fill="var(--vkui--color_accent_orange)"
-              title="Компонент является нестабильным"
+              stroke="var(--vkui--color_icon_accent)"
             />
           </TextTooltip>
         )}
