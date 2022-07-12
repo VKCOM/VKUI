@@ -14,8 +14,8 @@ import {
   Icon28ChevronDownOutline,
   Icon28ChevronUpOutline,
   Icon28WarningTriangleOutline,
-  Icon28TokenizedOutline,
 } from "@vkontakte/icons";
+import { Icon28TokenizedOutline } from "../Icon28TokenizedOutline/Icon28TokenizedOutline";
 import { deprecated } from "../../deprecated";
 import getInfoFromHash from "react-styleguidist/lib/client/utils/getInfoFromHash";
 import { tokenized } from "../../tokenized";
