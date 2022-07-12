@@ -63,12 +63,12 @@ jobs:
         run: |
           yarn styleguide:build
           mkdir ${{ github.event.inputs.version }}
-          cp -R docs/* ${{ github.event.inputs.version }}
-          mv ${{ github.event.inputs.version }} docs/${{ github.event.inputs.version }}
+          cp -R styleguide-build/* ${{ github.event.inputs.version }}
+          mv ${{ github.event.inputs.version }} styleguide-build/${{ github.event.inputs.version }}
         if: ${{ !github.event.inputs.tag }}
 
       - name: Creating doc for prerelease
-        run: yarn styleguide:build --dist docs/${{ github.event.inputs.version }}
+        run: yarn styleguide:build --dist styleguide-build/${{ github.event.inputs.version }}
         if: ${{ github.event.inputs.tag }}
 
       - name: Publishing doc
@@ -76,5 +76,5 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: docs
+          FOLDER: styleguide-build
           CLEAN: false
