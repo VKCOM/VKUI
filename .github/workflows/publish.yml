@@ -72,10 +72,9 @@ jobs:
         if: ${{ github.event.inputs.tag }}
 
       - name: Publishing doc
-        uses: JamesIves/github-pages-deploy-action@v4.3.4
+        uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
-          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
-          branch: gh-pages
-          folder: docs
-          clean: false
-          force: false
+          GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: docs
+          CLEAN: false
