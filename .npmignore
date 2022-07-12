@@ -2,6 +2,7 @@ styleguide
 node_modules
 coverage
 docs
+styleguide-build
 
 npm-debug.log
 stats.json
