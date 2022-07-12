@@ -14,6 +14,7 @@ import {
   Icon28ChevronDownOutline,
   Icon28ChevronUpOutline,
   Icon28WarningTriangleOutline,
+  Icon28TokenizedOutline,
 } from "@vkontakte/icons";
 import { deprecated } from "../../deprecated";
 import getInfoFromHash from "react-styleguidist/lib/client/utils/getInfoFromHash";
@@ -254,7 +255,6 @@ class TableOfContents extends React.PureComponent {
                 (unstable.includes(section.name) &&
                   !deprecated.includes(section.name) && (
                     <Icon28WarningTriangleOutline
-                      className="TableOfContents__unstable"
                       width={28}
                       fill="var(--vkui--color_accent_orange)"
                       title="Компонент является нестабильным"
@@ -262,23 +262,11 @@ class TableOfContents extends React.PureComponent {
                   )) ||
                 (tokenized.includes(section.name) &&
                   !deprecated.includes(section.name) && (
-                    <svg
+                    <Icon28TokenizedOutline
                       width={28}
-                      viewBox="0 0 28 28"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      id="tokenized_outline_28"
-                    >
-                      <path
-                        d="M8 4H7C6.20435 4 5.44129 4.31607 4.87868 4.87868C4.31607 5.44129 4 6.20435 4 7V8M24 8V7C24 6.20435 23.6839 5.44129 23.1213 4.87868C22.5587 4.31607 21.7956 4 21 4H20M20 24H21C21.7956 24 22.5587 23.6839 23.1213 23.1213C23.6839 22.5587 24 21.7956 24 21V20M4 20V21C4 21.7956 4.31607 22.5587 4.87868 23.1213C5.44129 23.6839 6.20435 24 7 24H8M18 10H10M14 18V10"
-                        stroke="var(--vkui--color_icon_accent)"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <title>Компонент поддерживает vkui-tokens</title>
-                      </path>
-                    </svg>
+                      stroke="var(--vkui--color_icon_accent)"
+                      title="Компонент поддерживает vkui-tokens"
+                    />
                   ))
               }
               onClick={!section.href ? this.onExpandCellClick : undefined}
