@@ -18,7 +18,7 @@ export const Icon28TokenizedOutline = (props) => {
           stroke-linecap="round"
           stroke-linejoin="round"
         >
-          {props.title && <title>{props.title}</title>}
+          <title>{props.title}</title>
         </path>
       </svg>
     </div>
