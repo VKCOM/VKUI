@@ -40,7 +40,7 @@ export interface AppRootProps
    * При передаче своего элемента необходимо задать ему class="vkui__portal-root" и добавить в DOM
    */
   // TODO: v5.0.0 изменить тип на HTMLElement
-  portalRoot?: HTMLDivElement;
+  portalRoot?: HTMLDivElement | null;
 }
 
 const warn = warnOnce("AppRoot");
