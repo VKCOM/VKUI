@@ -1,8 +1,8 @@
 Делает из [SelectMimicry](#!/SelectMimicry) селект с выпадающим списком. Используется внутри [Select](#!/Select).
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-const getUsers = () =>
-  getRandomUsers(10).map((user) => ({
+const getUsers = (usersArray) =>
+  usersArray.map((user) => ({
     label: user.name,
     value: `${user.id}`,
     avatar: user.photo_100,
@@ -27,7 +27,7 @@ const Example = () => {
 
   const [selectType, setSelectType] = React.useState(undefined);
 
-  const users = [...getUsers()];
+  const users = [...getUsers(getRandomUsers(10))];
 
   return (
     <Div>
@@ -113,7 +113,9 @@ const Example = () => {
 const CustomSearchLogicSelect = () => {
   const [value, setValue] = React.useState("");
   const [query, setQuery] = React.useState("");
-  const [newUsers, setNewUsers] = React.useState([...getUsers()]);
+  const [newUsers, setNewUsers] = React.useState([
+    ...getUsers(getRandomUsers(10)),
+  ]);
 
   const customSearchOptions = () => {
     const options = [...newUsers];
@@ -234,7 +236,7 @@ const AsyncCustomSelect = () => {
   const fetchRemoteUsers = () => {
     setFetching(true);
     timeout = setTimeout(() => {
-      setRemoteUsers([...getUsers()]);
+      setRemoteUsers([...getUsers(getAllUsers())]);
       setFetching(false);
       cleanFetchingTimeout();
     }, 1500);
