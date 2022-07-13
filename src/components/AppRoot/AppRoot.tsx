@@ -64,7 +64,9 @@ export const AppRoot = withAdaptivity<AppRootProps>(
     const mode = _mode || (_embedded ? "embedded" : "full");
     const isKeyboardInputActive = useKeyboardInputTracker();
     const rootRef = React.useRef<HTMLDivElement | null>(null);
-    const [portalRoot, setPortalRoot] = React.useState(portalRootProp);
+    const [portalRoot, setPortalRoot] = React.useState<HTMLDivElement | null>(
+      null
+    );
     const { document } = useDOM();
     const insets = useInsets();
     const { appearance } = React.useContext(ConfigProviderContext);
@@ -92,12 +94,12 @@ export const AppRoot = withAdaptivity<AppRootProps>(
 
     // setup portal
     useIsomorphicLayoutEffect(() => {
-      if (portalRootProp) {
-        return;
+      let portal = portalRootProp;
+      if (!portal) {
+        portal = document!.createElement("div");
+        portal.classList.add("vkui__portal-root");
+        document!.body.appendChild(portal);
       }
-      const portal = document!.createElement("div");
-      portal.classList.add("vkui__portal-root");
-      document!.body.appendChild(portal);
       setPortalRoot(portal);
       return () => {
         portal?.parentElement?.removeChild(portal);
