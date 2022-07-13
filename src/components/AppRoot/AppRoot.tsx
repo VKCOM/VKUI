@@ -40,7 +40,7 @@ export interface AppRootProps
    * При передаче своего элемента необходимо задать ему class="vkui__portal-root" и добавить в DOM
    */
   // TODO: v5.0.0 изменить тип на HTMLElement
-  portalRoot?: HTMLDivElement | null;
+  portalRoot?: HTMLDivElement | React.RefObject<HTMLDivElement> | null;
 }
 
 const warn = warnOnce("AppRoot");
@@ -94,8 +94,14 @@ export const AppRoot = withAdaptivity<AppRootProps>(
 
     // setup portal
     useIsomorphicLayoutEffect(() => {
-      let portal = portalRootProp;
-      if (!portal) {
+      let portal: HTMLDivElement | null = null;
+      if (portalRootProp) {
+        if (portalRootProp instanceof HTMLElement) {
+          portal = portalRootProp;
+        } else {
+          portal = portalRootProp.current;
+        }
+      } else {
         portal = document!.createElement("div");
         portal.classList.add("vkui__portal-root");
         document!.body.appendChild(portal);
