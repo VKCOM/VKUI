@@ -255,7 +255,6 @@ class TableOfContents extends React.PureComponent {
                 (unstable.includes(section.name) &&
                   !deprecated.includes(section.name) && (
                     <Icon28WarningTriangleOutline
-                      width={28}
                       fill="var(--vkui--color_accent_orange)"
                       title="Компонент является нестабильным"
                     />

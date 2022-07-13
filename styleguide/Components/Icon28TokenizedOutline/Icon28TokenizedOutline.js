@@ -2,7 +2,7 @@ import React from "react";
 
 export const Icon28TokenizedOutline = (props) => {
   return (
-    <div role="presentational" className={"vkui-icon " + props.className}>
+    <div role="presentational" className={"vkuiIcon " + props.className}>
       <svg
         viewBox="0 0 28 28"
         width={props.width}
