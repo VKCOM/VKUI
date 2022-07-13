@@ -39,6 +39,10 @@ describe("ConfigProvider", () => {
     );
   });
   describe("manages body[scheme]", () => {
+    it("default scheme", () => {
+      render(<ConfigProvider />);
+      expect(document.body).toHaveAttribute("scheme", "bright_light");
+    });
     it("sets body[scheme] on first render", () => {
       render(<ConfigProvider scheme="space_gray" />);
       expect(document.body).toHaveAttribute("scheme", "space_gray");
