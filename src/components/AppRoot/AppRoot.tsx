@@ -20,6 +20,7 @@ import { useKeyboardInputTracker } from "../../hooks/useKeyboardInputTracker";
 import { useInsets } from "../../hooks/useInsets";
 import { Insets } from "@vkontakte/vk-bridge";
 import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
+import { isRefObject } from "../../lib/isRefObject";
 import "./AppRoot.css";
 
 // Используйте classList, но будьте осторожны
@@ -96,10 +97,10 @@ export const AppRoot = withAdaptivity<AppRootProps>(
     useIsomorphicLayoutEffect(() => {
       let portal: HTMLDivElement | null = null;
       if (portalRootProp) {
-        if (portalRootProp instanceof HTMLElement) {
-          portal = portalRootProp;
-        } else {
+        if (isRefObject(portalRootProp)) {
           portal = portalRootProp.current;
+        } else {
+          portal = portalRootProp;
         }
       }
       if (!portal) {
