@@ -13,6 +13,9 @@ export type { ButtonProps } from "../components/Button/Button";
 export { MiniInfoCell } from "../components/MiniInfoCell/MiniInfoCell";
 export type { MiniInfoCellProps } from "../components/MiniInfoCell/MiniInfoCell";
 
+export { Gradient } from "../components/Gradient/Gradient";
+export type { GradientProps } from "../components/Gradient/Gradient";
+
 export { Card } from "../components/Card/Card";
 export type { CardProps } from "../components/Card/Card";
 
