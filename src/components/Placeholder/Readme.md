@@ -6,99 +6,86 @@
 Если плейсхолдер используется со свойством `stretched` (показывается во всю высоту панели), то на экране не должно быть ничего другого.
 
 ```jsx
-class PlaceholderExample extends React.Component {
-  constructor(props) {
-    super(props);
+const [activePanel, setActivePanel] = React.useState("example-1");
 
-    this.state = {
-      activePanel: "example-1",
-    };
+const onNavClick = (e) => {
+  const activePanel = e.currentTarget.dataset.to;
+  setActivePanel(activePanel);
+};
 
-    this.onNavClick = this.onNavClick.bind(this);
-  }
+<View activePanel={activePanel}>
+  <Panel id="example-1">
+    <PanelHeader>Плейсхолдеры</PanelHeader>
+    <Group>
+      <Placeholder
+        icon={<Icon56UsersOutline />}
+        header="Уведомления от сообществ"
+        action={<Button size="m">Подключить сообщества</Button>}
+      >
+        Подключите сообщества, от которых Вы хотите получать уведомления
+      </Placeholder>
+      <Separator />
+      <Placeholder icon={<Icon56MentionOutline />}>
+        Введите адрес страницы в поле поиска
+      </Placeholder>
+    </Group>
+    <Group>
+      <CellButton onClick={onNavClick} data-to="example-2">
+        Ещё примеры
+      </CellButton>
+    </Group>
+  </Panel>
 
-  onNavClick(e) {
-    const activePanel = e.currentTarget.dataset.to;
-    this.setState({ activePanel });
-  }
+  <Panel id="example-2">
+    <PanelHeader
+      before={<PanelHeaderBack onClick={onNavClick} data-to="example-1" />}
+    >
+      Плейсхолдеры
+    </PanelHeader>
+    <Group>
+      <Placeholder>Доступ запрещён</Placeholder>
+      <Separator />
+      <Placeholder
+        header="Находите друзей"
+        action={
+          <ButtonGroup mode="vertical" align="center">
+            <Button size="m">Найти друзей</Button>
+            <Button size="m" mode="tertiary">
+              Подробнее
+            </Button>
+          </ButtonGroup>
+        }
+      >
+        Здесь будут отображаться люди, которых вы добавите в друзья
+      </Placeholder>
+    </Group>
+    <Group>
+      <CellButton onClick={onNavClick} data-to="example-3">
+        Полноэкранный плейсхолдер
+      </CellButton>
+    </Group>
+  </Panel>
 
-  render() {
-    return (
-      <View activePanel={this.state.activePanel}>
-        <Panel id="example-1">
-          <PanelHeader>Плейсхолдеры</PanelHeader>
-          <Group>
-            <Placeholder
-              icon={<Icon56UsersOutline />}
-              header="Уведомления от сообществ"
-              action={<Button size="m">Подключить сообщества</Button>}
-            >
-              Подключите сообщества, от которых Вы хотите получать уведомления
-            </Placeholder>
-            <Separator />
-            <Placeholder icon={<Icon56MentionOutline />}>
-              Введите адрес страницы в поле поиска
-            </Placeholder>
-          </Group>
-          <Group>
-            <CellButton onClick={this.onNavClick} data-to="example-2">
-              Ещё примеры
-            </CellButton>
-          </Group>
-        </Panel>
+  <Panel id="example-3">
+    <PanelHeader
+      before={<PanelHeaderBack onClick={onNavClick} data-to="example-1" />}
+    >
+      Плейсхолдеры
+    </PanelHeader>
 
-        <Panel id="example-2">
-          <PanelHeader
-            before={
-              <PanelHeaderBack onClick={this.onNavClick} data-to="example-1" />
-            }
-          >
-            Плейсхолдеры
-          </PanelHeader>
-          <Group>
-            <Placeholder>Доступ запрещён</Placeholder>
-            <Separator />
-            <Placeholder
-              header="Находите друзей"
-              action={<Button size="m">Найти друзей</Button>}
-            >
-              Здесь будут отображаться люди, которых вы добавите в друзья
-            </Placeholder>
-          </Group>
-          <Group>
-            <CellButton onClick={this.onNavClick} data-to="example-3">
-              Полноэкранный плейсхолдер
-            </CellButton>
-          </Group>
-        </Panel>
-
-        <Panel id="example-3">
-          <PanelHeader
-            before={
-              <PanelHeaderBack onClick={this.onNavClick} data-to="example-1" />
-            }
-          >
-            Плейсхолдеры
-          </PanelHeader>
-
-          <Placeholder
-            icon={<Icon56MessageReadOutline />}
-            action={
-              <Button size="m" mode="tertiary">
-                Показать все сообщения
-              </Button>
-            }
-            stretched
-          >
-            Нет непрочитанных
-            <br />
-            сообщений
-          </Placeholder>
-        </Panel>
-      </View>
-    );
-  }
-}
-
-<PlaceholderExample />;
+    <Placeholder
+      icon={<Icon56MessageReadOutline />}
+      action={
+        <Button size="m" mode="tertiary">
+          Показать все сообщения
+        </Button>
+      }
+      stretched
+    >
+      Нет непрочитанных
+      <br />
+      сообщений
+    </Placeholder>
+  </Panel>
+</View>;
 ```

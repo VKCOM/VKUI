@@ -119,6 +119,9 @@ export type { SliderProps } from "../components/Slider/Slider";
 export { RangeSlider } from "../components/RangeSlider/RangeSlider";
 export type { RangeSliderProps } from "../components/RangeSlider/RangeSlider";
 
+export { Placeholder } from "../components/Placeholder/Placeholder";
+export type { PlaceholderProps } from "../components/Placeholder/Placeholder";
+
 export { Input } from "../components/Input/Input";
 export type { InputProps } from "../components/Input/Input";
 
