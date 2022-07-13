@@ -4,23 +4,38 @@
 @import "../src/styles/unstable.css";
 
 @font-face {
+  /* stylelint-disable-next-line */
   font-family: "Roboto";
   font-style: italic;
   font-weight: 400;
+  /* stylelint-disable-next-line */
   src: url(/font/Roboto-Italic.ttf) format("truetype");
 }
 /* cyrillic */
 @font-face {
+  /* stylelint-disable-next-line */
   font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
+  /* stylelint-disable-next-line */
   src: url(/font/Roboto-Regular.ttf) format("truetype");
 }
 /* cyrillic */
 @font-face {
+  /* stylelint-disable-next-line */
   font-family: "Roboto";
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
+  /* stylelint-disable-next-line */
+  src: url(/font/Roboto-Medium.ttf) format("truetype");
+}
+/* cyrillic */
+@font-face {
+  /* stylelint-disable-next-line */
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  /* stylelint-disable-next-line */
   src: url(/font/Roboto-Bold.ttf) format("truetype");
 }
 
@@ -29,7 +44,7 @@
   --font-common: "Roboto";
   --font-display: "Roboto";
 
-  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  /* stylelint-disable-next-line */
   font-family: "Roboto";
   -webkit-font-smoothing: antialiased;
   caret-color: transparent;
