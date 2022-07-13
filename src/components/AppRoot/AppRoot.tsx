@@ -101,7 +101,8 @@ export const AppRoot = withAdaptivity<AppRootProps>(
         } else {
           portal = portalRootProp.current;
         }
-      } else {
+      }
+      if (!portal) {
         portal = document!.createElement("div");
         portal.classList.add("vkui__portal-root");
         document!.body.appendChild(portal);
