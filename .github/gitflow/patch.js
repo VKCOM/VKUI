@@ -15,7 +15,10 @@ const pullNumber = process.env.GITHUB_PULL_NUMBER;
 const patchCommits = gh.listCommitsOnPullRequest(owner, repo, pullNumber);
 
 const stableBranchRef = stableBranchName(semVer);
-const patchRefs = patchCommits.map((commit) => commit.sha).join(" ");
+const patchRefs = patchCommits
+  .filter((commit) => commit.commit.message !== "CHORE: Update screenshots")
+  .map((commit) => commit.sha)
+  .join(" ");
 
 execSync(`git fetch origin ${stableBranchRef} ${patchRefs}`);
 execSync(`git checkout ${stableBranchRef}`);
