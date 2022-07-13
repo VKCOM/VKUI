@@ -290,7 +290,9 @@ const AsyncCustomSelect = () => {
               ? undefined
               : remoteUsers.length === 0 && fetchRemoteUsers
           }
-          onClose={searchable ? clearRemoteUsers : undefined}
+          onClose={() => {
+            console.log("CLOSED [async CustomSelect]");
+          }}
           fetching={fetching}
           renderDropdown={searchable && !fetching && renderDropdown}
         />
