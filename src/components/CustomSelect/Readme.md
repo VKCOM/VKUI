@@ -229,7 +229,6 @@ const AsyncCustomSelect = () => {
   const cleanFetchingTimeout = () => {
     if (timeout) {
       clearTimeout(timeout);
-      console.log("timeout cleared");
     }
   };
 
