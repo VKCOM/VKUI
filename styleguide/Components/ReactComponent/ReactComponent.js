@@ -12,11 +12,16 @@ import { TextTooltip } from "@vkui/components/TextTooltip/TextTooltip";
 import pkg from "../../../package.json";
 import "./ReactComponent.css";
 import { Icon28TokenizedOutline } from "../Icon28TokenizedOutline/Icon28TokenizedOutline";
+import { ViewWidth } from "../../../src/hoc/withAdaptivity";
+import { useAdaptivity } from "../../../src/hooks/useAdaptivity";
 
 const ReactComponent = ({ component, exampleMode }) => {
   const { name, visibleName, pathLine } = component;
   const { description = "", examples = [] } = component.props || {};
   const isDeprecated = deprecated.includes(name);
+
+  const { viewWidth } = useAdaptivity();
+  const isMobile = viewWidth <= ViewWidth.MOBILE;
 
   const showPropsPlaceholder =
     process.env.NODE_ENV === "development" &&
@@ -43,7 +48,7 @@ const ReactComponent = ({ component, exampleMode }) => {
         {visibleName}{" "}
         {tokenized.includes(visibleName) && (
           <TextTooltip
-            placement="right"
+            placement={isMobile ? "bottom" : "right"}
             text={
               <React.Fragment>
                 Компонент поддерживает{" "}
