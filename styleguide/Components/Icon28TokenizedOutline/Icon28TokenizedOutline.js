@@ -6,9 +6,11 @@ export const Icon28TokenizedOutline = ({
   height = 28,
   stroke,
   title,
+  getRootRef,
 }) => {
   return (
     <div
+      ref={getRootRef}
       role="presentation"
       className={`vkuiIcon vkuiIcon--28 vkuiIcon--w-${width} vkuiIcon--h-${height} ${
         className ? className : ""
