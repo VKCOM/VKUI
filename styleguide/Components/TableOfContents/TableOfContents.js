@@ -262,7 +262,6 @@ class TableOfContents extends React.PureComponent {
                 (tokenized.includes(section.name) &&
                   !deprecated.includes(section.name) && (
                     <Icon28TokenizedOutline
-                      width={28}
                       stroke="var(--vkui--color_icon_accent)"
                       title="Компонент поддерживает vkui-tokens"
                     />
