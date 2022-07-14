@@ -51,7 +51,7 @@ export function normalizeScheme({
   scheme,
   appearance,
 }: NormalizeSchemeProps): Scheme | "inherit" {
-  if (appearance) {
+  if (appearance || scheme === undefined) {
     return getScheme({ platform, appearance });
   }
 
