@@ -350,6 +350,12 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
     setFocusedOptionIndex(null);
   }, [setFocusedOptionIndex]);
 
+  const handleDropdownIconClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+
+    setOpened((isOpened) => !isOpened);
+  };
+
   return (
     <div
       vkuiClass={classNames("ChipsSelect", `ChipsSelect--sizeY-${sizeY}`)}
@@ -377,7 +383,9 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
         getRef={getRef}
         disabled={disabled}
         onInputChange={handleInputChange}
-        after={<DropdownIcon />}
+        after={
+          <DropdownIcon onClick={handleDropdownIconClick} flipped={opened} />
+        }
       />
       {opened && (
         <CustomSelectDropdown
