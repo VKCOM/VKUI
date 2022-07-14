@@ -77,5 +77,20 @@ describe("AppRoot", () => {
       render(<AppRoot mode="embedded" />).unmount();
       expect(document.body).toContainElement(portalRoot1 as HTMLElement);
     });
+    it("Accepts custom portal root", () => {
+      const customPortalRoot = document.createElement("div");
+      let portalRoot: HTMLElement | undefined | null;
+      render(
+        <AppRoot portalRoot={customPortalRoot}>
+          <AppRootContext.Consumer>
+            {(ctx) => {
+              portalRoot = ctx.portalRoot;
+              return null;
+            }}
+          </AppRootContext.Consumer>
+        </AppRoot>
+      );
+      expect(portalRoot).toEqual(customPortalRoot);
+    });
   });
 });
