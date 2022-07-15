@@ -28,7 +28,7 @@ module.exports.GhApi = class GhApi {
    * @param  {string} owner
    * @param  {string} repo
    * @param  {string|number} pull_number
-   * @return {{sha:string}[]}
+   * @return {{sha:string;commit:{message:string}}[]}
    */
   listCommitsOnPullRequest(owner, repo, pull_number) {
     return this.request(`/repos/${owner}/${repo}/pulls/${pull_number}/commits`);
