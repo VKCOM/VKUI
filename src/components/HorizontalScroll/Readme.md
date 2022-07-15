@@ -39,6 +39,7 @@ const HorizontalScrollExample = () => {
         <Group header={<Header mode="secondary">Общие друзья</Header>}>
           <HorizontalScroll
             showArrows
+            arrowSize="m"
             getScrollToLeft={(i) => i - 120}
             getScrollToRight={(i) => i + 120}
           >

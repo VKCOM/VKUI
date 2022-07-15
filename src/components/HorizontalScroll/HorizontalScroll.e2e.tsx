@@ -21,6 +21,8 @@ describe("HorizontalScroll", () => {
     HorizontalScroll,
     [
       {
+        showArrows: ["always"],
+        arrowSize: ["m", "l"],
         children: [
           <div key="0" style={{ display: "flex" }}>
             {items}
