@@ -3,7 +3,13 @@ import { classNames } from "../../lib/classNames";
 import "./Gradient.css";
 
 export interface GradientProps extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * Тип градиента
+   */
   mode?: "tint" | "white" | "black";
+  /**
+   * Направление градиента
+   */
   to?: "top" | "bottom";
 }
 
