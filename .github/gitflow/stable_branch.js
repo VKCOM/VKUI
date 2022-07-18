@@ -11,4 +11,9 @@ if (semVer.patch !== 0) {
 const stableBranchRef = stableBranchName(semVer);
 
 execSync(`git branch ${stableBranchRef}`);
-execSync(`git push "${remoteRepository}" ${stableBranchRef}`);
+
+try {
+  execSync(`git push "${remoteRepository}" HEAD:${stableBranchRef} --verbose`);
+} catch (e) {
+  console.log("Errors:", e);
+}
