@@ -152,6 +152,12 @@ export type { FileProps } from "../components/File/File";
 export { CardGrid } from "../components/CardGrid/CardGrid";
 export type { CardGridProps } from "../components/CardGrid/CardGrid";
 
+export { ActionSheet } from "../components/ActionSheet/ActionSheet";
+export type { ActionSheetProps } from "../components/ActionSheet/ActionSheet";
+
+export { ActionSheetItem } from "../components/ActionSheetItem/ActionSheetItem";
+export type { ActionSheetItemProps } from "../components/ActionSheetItem/ActionSheetItem";
+
 export { FocusVisible } from "../components/FocusVisible/FocusVisible";
 export type { FocusVisibleProps } from "../components/FocusVisible/FocusVisible";
 
