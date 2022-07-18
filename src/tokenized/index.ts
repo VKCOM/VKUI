@@ -40,6 +40,12 @@ export type { InitialsAvatarProps } from "../components/InitialsAvatar/InitialsA
 export { InfoRow } from "../components/InfoRow/InfoRow";
 export type { InfoRowProps } from "../components/InfoRow/InfoRow";
 
+export { ModalCardBase } from "../components/ModalCardBase/ModalCardBase";
+export type { ModalCardBaseProps } from "../components/ModalCardBase/ModalCardBase";
+
+export { ModalCard } from "../components/ModalCard/ModalCard";
+export type { ModalCardProps } from "../components/ModalCard/ModalCard";
+
 export { Link } from "../components/Link/Link";
 export type { LinkProps } from "../components/Link/Link";
 

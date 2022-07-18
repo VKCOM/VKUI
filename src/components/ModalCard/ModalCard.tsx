@@ -58,10 +58,10 @@ const ModalCardComponent = ({
     <div
       {...restProps}
       id={id}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames(getClassName("ModalCard", platform), {
-        "ModalCard--desktop": isDesktop,
-      })}
+      vkuiClass={classNames(
+        getClassName("ModalCard", platform),
+        isDesktop && "ModalCard--desktop"
+      )}
     >
       <ModalCardBase
         vkuiClass="ModalCard__in"
