@@ -12,7 +12,7 @@
 }
 
 .SegmentedControlOption .Icon {
-  color: var(--vkui--color_icon_secondary);
+  color: var(--vkui--color_icon_primary);
 }
 
 .SegmentedControlOption:not(.SegmentedControlOption--checked):hover {
