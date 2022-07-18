@@ -10,7 +10,7 @@ const full_repository = process.env.GITHUB_REPOSITORY.split("/");
 
 const owner = full_repository[0];
 const repo = full_repository[1];
-const pullNumber = process.env.GITHUB_PULL_NUMBER;
+const pullNumber = process.env.INPUT_GITHUB_PULL_NUMBER;
 
 const patchCommits = gh.listCommitsOnPullRequest(owner, repo, pullNumber);
 
@@ -23,4 +23,4 @@ const patchRefs = patchCommits
 execSync(`git fetch origin ${stableBranchRef} ${patchRefs}`);
 execSync(`git checkout ${stableBranchRef}`);
 execSync(`git cherry-pick ${patchRefs}`);
-execSync(`git push "${remoteRepository}" ${stableBranchRef}`);
+execSync(`git push "${remoteRepository}" HEAD:${stableBranchRef} --verbose`);

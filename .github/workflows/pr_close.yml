@@ -37,5 +37,5 @@ jobs:
           git config --local user.name "GitHub Action"
       - run: node ./.github/gitflow/patch.js
         env:
-          GITHUB_PULL_NUMBER: ${{ github.event.number }}
-          GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          INPUT_GITHUB_PULL_NUMBER: ${{ github.event.number }}
+          INPUT_GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
