@@ -42,6 +42,8 @@ export interface AppRootProps
    */
   // TODO: v5.0.0 изменить тип на HTMLElement
   portalRoot?: HTMLDivElement | React.RefObject<HTMLDivElement> | null;
+  /** Disable portal for components */
+  disablePortal?: boolean;
 }
 
 const warn = warnOnce("AppRoot");
@@ -59,6 +61,7 @@ export const AppRoot = withAdaptivity<AppRootProps>(
     noLegacyClasses = false,
     scroll = "global",
     portalRoot: portalRootProp = null,
+    disablePortal,
     ...props
   }) => {
     // normalize mode
@@ -203,6 +206,7 @@ export const AppRoot = withAdaptivity<AppRootProps>(
           embedded: mode === "embedded",
           keyboardInput: isKeyboardInputActive,
           mode,
+          disablePortal,
         }}
       >
         <ScrollController elRef={rootRef}>
