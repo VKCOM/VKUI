@@ -22,6 +22,9 @@ export type { CardScrollProps } from "../components/CardScroll/CardScroll";
 export { Group } from "../components/Group/Group";
 export type { GroupProps } from "../components/Group/Group";
 
+export { Cell } from "../components/Cell/Cell";
+export type { CellProps } from "../components/Cell/Cell";
+
 export { GridAvatar } from "../components/GridAvatar/GridAvatar";
 export type { GridAvatarProps } from "../components/GridAvatar/GridAvatar";
 
