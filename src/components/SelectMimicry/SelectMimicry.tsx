@@ -79,3 +79,5 @@ export const SelectMimicry = withAdaptivity(SelectMimicryComponent, {
   sizeX: true,
   sizeY: true,
 });
+
+SelectMimicry.displayName = "SelectMimicry";

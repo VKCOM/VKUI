@@ -157,3 +157,5 @@ const UniversalSliderDumb = ({
 export const UniversalSlider = withAdaptivity(UniversalSliderDumb, {
   sizeY: true,
 });
+
+UniversalSlider.displayName = "UniversalSlider";
