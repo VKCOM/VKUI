@@ -171,3 +171,5 @@ export const PanelHeader = withAdaptivity(PanelHeaderComponent, {
   sizeX: true,
   sizeY: true,
 });
+
+PanelHeader.displayName = "PanelHeader";

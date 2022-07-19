@@ -53,3 +53,5 @@ const InputComponent = ({
 export const Input = withAdaptivity(InputComponent, {
   sizeY: true,
 });
+
+Input.displayName = "Input";

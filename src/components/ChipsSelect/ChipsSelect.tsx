@@ -456,3 +456,5 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
 export const ChipsSelect = withAdaptivity(ChipsSelectComponent, {
   sizeY: true,
 });
+
+ChipsSelect.displayName = "ChipsSelect";

@@ -60,3 +60,5 @@ export const Panel = withAdaptivity<PanelProps & AdaptivityContextInterface>(
     sizeX: true,
   }
 );
+
+Panel.displayName = "Panel";
