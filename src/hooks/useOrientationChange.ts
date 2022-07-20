@@ -14,6 +14,7 @@ function getOrientation(window: Window | undefined): Orientation {
   }
 
   const angle = Math.abs(
+    // eslint-disable-next-line compat/compat
     window.screen?.orientation?.angle ?? Number(window.orientation)
   );
 
