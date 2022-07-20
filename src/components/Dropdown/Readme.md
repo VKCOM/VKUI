@@ -23,6 +23,7 @@ return (
     </Dropdown>
 
     <Dropdown
+      action="click"
       shown={shown}
       onShownChange={setShown}
       content={
