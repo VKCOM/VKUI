@@ -92,8 +92,17 @@ class ModalRootTouchComponent extends React.Component<
 
     this.modalRootContext = {
       updateModalHeight: this.updateModalHeight,
-      registerModal: ({ id, ...data }) =>
-        Object.assign(this.getModalState(id), data),
+      registerModal: ({ id, ...data }) => {
+        const state = this.getModalState(id);
+
+        if (state) {
+          for (const _key of Object.keys(data)) {
+            const key = _key as keyof typeof data;
+
+            state[key] = data[key] as any;
+          }
+        }
+      },
       onClose: () => this.props.onExit(),
       isInsideModal: true,
     };
