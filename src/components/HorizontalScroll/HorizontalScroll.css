@@ -1,13 +1,22 @@
 .HorizontalScroll {
   position: relative;
-  overflow: hidden;
+
+  /**
+   * ⚠️ WARNING ⚠️
+   * `overflow-y` мы не трогаем, т.к. из-за `hidden` могут обрезаться тени у потомков.
+   */
+  overflow-x: hidden;
 }
 
 .HorizontalScroll__in {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 20px;
-  margin-bottom: -20px;
+
+  /**
+   * Для удаление скролла в Firefox.
+   * В версии ниже 64 будет виден скролл, но это не ломает функциональность.
+   */
+  scrollbar-width: none;
 }
 
 .HorizontalScroll__in::-webkit-scrollbar {
@@ -18,13 +27,13 @@
   transition: transform 0.2s;
 }
 
-.HorizontalScrollArrow--left:hover
+.HorizontalScroll__arrowLeft:hover
   ~ .HorizontalScroll__in
   .HorizontalScroll__in-wrapper {
   transform: translateX(8px);
 }
 
-.HorizontalScrollArrow--right:hover
+.HorizontalScroll__arrowRight:hover
   ~ .HorizontalScroll__in
   .HorizontalScroll__in-wrapper {
   transform: translateX(-8px);

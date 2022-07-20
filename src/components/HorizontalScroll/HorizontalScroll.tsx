@@ -207,15 +207,16 @@ const HorizontalScrollComponent = ({
   return (
     <div
       {...restProps}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames("HorizontalScroll", {
-        ["HorizontalScroll--withConstArrows"]: showArrows === "always",
-      })}
+      vkuiClass={classNames(
+        "HorizontalScroll",
+        showArrows === "always" && "HorizontalScroll--withConstArrows"
+      )}
     >
       {showArrows && hasMouse && canScrollLeft && (
         <HorizontalScrollArrow
           size={arrowSize}
           direction="left"
+          vkuiClass="HorizontalScroll__arrowLeft"
           onClick={scrollToLeft}
         />
       )}
@@ -223,6 +224,7 @@ const HorizontalScrollComponent = ({
         <HorizontalScrollArrow
           size={arrowSize}
           direction="right"
+          vkuiClass="HorizontalScroll__arrowRight"
           onClick={scrollToRight}
         />
       )}
