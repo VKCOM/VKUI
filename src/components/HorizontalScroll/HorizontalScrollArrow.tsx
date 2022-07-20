@@ -21,6 +21,7 @@ export const HorizontalScrollArrow = ({
   size = "l",
   direction,
   onClick,
+  ...restProps
 }: HorizontalScrollArrowProps) => {
   const platform = usePlatform();
   let ArrowIcon: React.ComponentType<unknown>;
@@ -33,6 +34,7 @@ export const HorizontalScrollArrow = ({
 
   return (
     <Tappable
+      {...restProps}
       Component="button"
       hasHover={false}
       hasActive={false}
