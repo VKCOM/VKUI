@@ -1,10 +1,9 @@
 import * as React from "react";
-import vkBridge, { AppearanceType } from "@vkontakte/vk-bridge";
+import { AppearanceType } from "@vkontakte/vk-bridge";
 import { canUseDOM, useDOM } from "../../lib/dom";
 import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
-  WebviewType,
 } from "./ConfigProviderContext";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { useObjectMemo } from "../../hooks/useObjectMemo";
@@ -20,7 +19,6 @@ import {
   generateVKUITokensClassName,
 } from "../AppearanceProvider/AppearanceProvider";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
-import { platform as resolvePlatform } from "../../lib/platform";
 
 export interface ConfigProviderProps
   extends Partial<ConfigProviderContextInterface> {
@@ -72,17 +70,22 @@ const deriveAppearance = (scheme: Scheme | undefined): AppearanceType =>
 /**
  * @see https://vkcom.github.io/VKUI/#/ConfigProvider
  */
-export const ConfigProvider = ({
-  children,
-  webviewType = WebviewType.VKAPPS,
-  isWebView = vkBridge.isWebView(),
-  transitionMotionEnabled = true,
-  platform = resolvePlatform(),
-  hasNewTokens = false,
-  appearance,
-  scheme,
-  locale = "ru",
-}: ConfigProviderProps) => {
+export const ConfigProvider = (props: ConfigProviderProps) => {
+  const parentLocale = React.useContext(LocaleProviderContext);
+  const parentConfig = React.useContext(ConfigProviderContext);
+
+  const {
+    children,
+    webviewType = parentConfig.webviewType,
+    isWebView = parentConfig.isWebView,
+    transitionMotionEnabled = parentConfig.transitionMotionEnabled,
+    platform = parentConfig.platform,
+    hasNewTokens = parentConfig.hasNewTokens,
+    appearance = parentConfig.appearance,
+    scheme,
+    locale = parentLocale ?? "ru",
+  } = props;
+
   const normalizedScheme = normalizeScheme({
     scheme,
     platform,
@@ -97,7 +100,8 @@ export const ConfigProvider = ({
     }
     if (
       process.env.NODE_ENV === "development" &&
-      target?.hasAttribute("scheme")
+      target?.hasAttribute("scheme") &&
+      parentConfig.appearance === undefined // appearance не была вычислена в родительском конфиге, @deprecated будет удалено в 5.0.0
     ) {
       warn(
         '<body scheme> был установлен перед монтированием VKUI - вы не забыли scheme="inherit"?'
@@ -116,9 +120,11 @@ export const ConfigProvider = ({
       derivedAppearance
     );
 
+    // eslint-disable-next-line no-restricted-properties
     target?.classList.add(VKUITokensClassName);
 
     return () => {
+      // eslint-disable-next-line no-restricted-properties
       target?.classList.remove(VKUITokensClassName);
     };
   }, [platform, derivedAppearance]);

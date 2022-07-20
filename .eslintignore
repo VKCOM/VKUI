@@ -1,6 +1,7 @@
 node_modules/
 dist/
 docs/
+styleguide-build/
 *.test.js
 src/vkui.js
 stylelint.config.js

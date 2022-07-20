@@ -1,19 +1,6 @@
 .Dropdown {
   animation: vkui-popper-fadein 0.2s ease;
-  background: var(--background_content);
-}
-
-.Dropdown--ios {
-  box-shadow: 0 0 96px rgba(0, 0, 0, 0.16), 0 0 2px rgba(0, 0, 0, 0.12);
-  border-radius: 14px;
-}
-
-.Dropdown--android {
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.08), 0 8px 8px rgba(0, 0, 0, 0.16);
-  border-radius: 12px;
-}
-
-.Dropdown--vkcom {
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.08);
-  border-radius: 12px;
+  background: var(--modal_card_background, var(--vkui--color_background_modal));
+  border-radius: var(--vkui--size_border_radius--regular);
+  box-shadow: var(--vkui--elevation3);
 }

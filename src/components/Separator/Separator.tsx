@@ -26,6 +26,7 @@ export const Separator = ({ wide, expanded, ...restProps }: SeparatorProps) => (
       wide && "Separator--wide", // TODO: v5 remove
       !wide && "Separator--padded"
     )}
+    role="separator"
   >
     <div
       vkuiClass={classNames(

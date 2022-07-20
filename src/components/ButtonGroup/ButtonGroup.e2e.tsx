@@ -54,3 +54,31 @@ describe("ButtonGroup", () => {
     ]
   );
 });
+
+describe("ButtonGroup align", () => {
+  describeScreenshotFuzz(
+    ({ align }: ButtonGroupProps) => (
+      <ButtonGroup mode="vertical" align={align} style={{ width: "100%" }}>
+        <Button size="l" appearance="accent">
+          Разрешить
+        </Button>
+        <Button size="l" appearance="accent">
+          Завершить
+        </Button>
+        <ButtonGroup>
+          <Button size="l" appearance="negative">
+            Не сейчас
+          </Button>
+          <Button size="l" appearance="positive">
+            Продолжить
+          </Button>
+        </ButtonGroup>
+      </ButtonGroup>
+    ),
+    [
+      {
+        align: ["left", "center", "right"],
+      },
+    ]
+  );
+});

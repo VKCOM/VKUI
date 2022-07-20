@@ -7,7 +7,7 @@
 
 ```jsx { "props": { "layout": false, "iframe": false } }
 const ButtonGroupPropsForm = ({ caption, defaultProps, onChange }) => {
-  const [{ mode, gap }, setProps] = React.useState(() => defaultProps);
+  const [{ mode, gap, align }, setProps] = React.useState(() => defaultProps);
 
   const handleChange = React.useCallback(
     (key, value) => {
@@ -41,6 +41,17 @@ const ButtonGroupPropsForm = ({ caption, defaultProps, onChange }) => {
             { label: "space", value: "space" },
             { label: "s", value: "s" },
             { label: "m", value: "m" },
+          ]}
+        />
+      </FormItem>
+      <FormItem top="align">
+        <Select
+          value={align}
+          onChange={(e) => handleChange("align", e.target.value)}
+          options={[
+            { label: "left", value: "left" },
+            { label: "center", value: "center" },
+            { label: "right", value: "right" },
           ]}
         />
       </FormItem>
@@ -135,6 +146,7 @@ const ExampleBase = () => {
   const [props, setProps] = useState({
     mode: "horizontal",
     gap: "s",
+    align: "left",
     stretched: false,
   });
 
@@ -167,12 +179,14 @@ const ExampleBase = () => {
 
 const buttonGroupHighlightStyles = {
   border: "2px dotted tomato",
+  boxSizing: "border-box",
 };
 
 const ExampleNested = () => {
   const [props, setProps] = useState({
     mode: "vertical",
     gap: "s",
+    align: "left",
     stretched: false,
   });
 

@@ -4,7 +4,7 @@
 .ModalCardBase__container {
   box-sizing: border-box;
   position: relative;
-  background: var(--modal_card_background);
+  background: var(--modal_card_background, var(--vkui--color_background_modal));
   border-radius: 18px;
   padding: 16px;
   margin-bottom: var(--safe-area-inset-bottom);
@@ -12,6 +12,7 @@
   flex-direction: column;
   justify-content: center;
   pointer-events: initial;
+  box-shadow: var(--vkui--elevation3);
 }
 
 .ModalCardBase__container--softwareKeyboardOpened {
@@ -27,11 +28,11 @@
 }
 
 .ModalCardBase__header {
-  color: var(--text_primary);
+  color: var(--text_primary, var(--vkui--color_text_primary));
 }
 
 .ModalCardBase__subheader {
-  color: var(--text_secondary);
+  color: var(--text_secondary, var(--vkui--color_text_subhead));
 }
 
 .ModalCardBase__header + .ModalCardBase__subheader {
@@ -40,7 +41,7 @@
 
 .ModalCardBase__icon {
   margin: 8px auto 16px;
-  color: var(--accent);
+  color: var(--accent, var(--vkui--color_icon_accent));
 }
 
 .ModalCardBase__actions {
@@ -51,7 +52,7 @@
 }
 
 .ModalCardBase .UsersStack + .ModalCardBase__actions {
-  margin-top: 32px;
+  margin-top: 24px;
 }
 
 .ModalCardBase__header + .ModalCardBase__actions,
@@ -71,14 +72,19 @@
   right: 4px;
   width: 48px;
   height: 48px;
-  color: var(--placeholder_icon_foreground_primary);
+  color: var(
+    --placeholder_icon_foreground_primary,
+    var(--vkui--color_icon_secondary)
+  );
   justify-content: center;
 }
 
 /**
  * iOS
  */
-
+/*
+ * TODO v5.0.0: зачем этот стиль? Удалить?
+*/
 .ModalCardBase--ios .ModalCardBase__header:first-child {
   padding-left: 36px;
   padding-right: 36px;
@@ -91,7 +97,6 @@
 .ModalCardBase--android .ModalCardBase__container,
 .ModalCardBase--vkcom .ModalCardBase__container {
   border-radius: 12px;
-  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.16), 0 0 4px 0 rgba(0, 0, 0, 0.08);
 }
 
 /**
@@ -100,5 +105,4 @@
 
 .ModalCardBase--desktop .ModalCardBase__container {
   border-radius: 8px;
-  box-shadow: 0 16px 16px rgba(0, 0, 0, 0.16), 0 0 8px rgba(0, 0, 0, 0.12);
 }

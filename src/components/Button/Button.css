@@ -185,10 +185,6 @@
   padding-right: 0;
 }
 
-.Button__content--caps {
-  transform: translateY(0);
-}
-
 .Button__spinner {
   position: absolute;
   left: 0;
@@ -570,10 +566,6 @@
 
 .Button--sz-l .Button__in {
   justify-content: center;
-}
-
-.Button:not(.Button--sz-s) .Button__content {
-  transform: translateY(-1px);
 }
 
 /**

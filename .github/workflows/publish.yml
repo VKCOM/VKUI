@@ -11,6 +11,7 @@ on:
 
 jobs:
   publish:
+    concurrency: ci-gh-pages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -41,6 +42,11 @@ jobs:
           github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           branch: ${{ github.ref }}
 
+      - name: Create stable branch
+        run: node ./.github/gitflow/stable_branch.js
+        env:
+          INPUT_GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+
       - name: Publishing prerelase
         run: yarn publish --non-interactive --tag ${{ github.event.inputs.tag }}
         if: ${{ github.event.inputs.tag }}
@@ -57,12 +63,12 @@ jobs:
         run: |
           yarn styleguide:build
           mkdir ${{ github.event.inputs.version }}
-          cp -R docs/* ${{ github.event.inputs.version }}
-          mv ${{ github.event.inputs.version }} docs/${{ github.event.inputs.version }}
+          cp -R styleguide-build/* ${{ github.event.inputs.version }}
+          mv ${{ github.event.inputs.version }} styleguide-build/${{ github.event.inputs.version }}
         if: ${{ !github.event.inputs.tag }}
 
       - name: Creating doc for prerelease
-        run: yarn styleguide:build --dist docs/${{ github.event.inputs.version }}
+        run: yarn styleguide:build --dist styleguide-build/${{ github.event.inputs.version }}
         if: ${{ github.event.inputs.tag }}
 
       - name: Publishing doc
@@ -70,5 +76,5 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: docs
+          FOLDER: styleguide-build
           CLEAN: false

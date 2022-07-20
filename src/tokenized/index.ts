@@ -13,6 +13,9 @@ export type { ButtonProps } from "../components/Button/Button";
 export { MiniInfoCell } from "../components/MiniInfoCell/MiniInfoCell";
 export type { MiniInfoCellProps } from "../components/MiniInfoCell/MiniInfoCell";
 
+export { Gradient } from "../components/Gradient/Gradient";
+export type { GradientProps } from "../components/Gradient/Gradient";
+
 export { Card } from "../components/Card/Card";
 export type { CardProps } from "../components/Card/Card";
 
@@ -21,6 +24,9 @@ export type { CardScrollProps } from "../components/CardScroll/CardScroll";
 
 export { Group } from "../components/Group/Group";
 export type { GroupProps } from "../components/Group/Group";
+
+export { Cell } from "../components/Cell/Cell";
+export type { CellProps } from "../components/Cell/Cell";
 
 export { GridAvatar } from "../components/GridAvatar/GridAvatar";
 export type { GridAvatarProps } from "../components/GridAvatar/GridAvatar";
@@ -36,6 +42,12 @@ export type { InitialsAvatarProps } from "../components/InitialsAvatar/InitialsA
 
 export { InfoRow } from "../components/InfoRow/InfoRow";
 export type { InfoRowProps } from "../components/InfoRow/InfoRow";
+
+export { ModalCardBase } from "../components/ModalCardBase/ModalCardBase";
+export type { ModalCardBaseProps } from "../components/ModalCardBase/ModalCardBase";
+
+export { ModalCard } from "../components/ModalCard/ModalCard";
+export type { ModalCardProps } from "../components/ModalCard/ModalCard";
 
 export { Link } from "../components/Link/Link";
 export type { LinkProps } from "../components/Link/Link";
@@ -54,6 +66,9 @@ export type { RadioProps } from "../components/Radio/Radio";
 
 export { RadioGroup } from "../components/RadioGroup/RadioGroup";
 export type { RadioGroupProps } from "../components/RadioGroup/RadioGroup";
+
+export { RichCell } from "../components/RichCell/RichCell";
+export type { RichCellProps } from "../components/RichCell/RichCell";
 
 export { SegmentedControl } from "../components/SegmentedControl/SegmentedControl";
 export type {
@@ -79,6 +94,9 @@ export type { CellButtonProps } from "../components/CellButton/CellButton";
 
 export { ScreenSpinner } from "../components/ScreenSpinner/ScreenSpinner";
 export type { ScreenSpinnerProps } from "../components/ScreenSpinner/ScreenSpinner";
+
+export { Dropdown } from "../components/Dropdown/Dropdown";
+export type { DropdownProps } from "../components/Dropdown/Dropdown";
 
 export { Pagination } from "../components/Pagination/Pagination";
 export type { PaginationProps } from "../components/Pagination/Pagination";
@@ -113,11 +131,17 @@ export type { SliderProps } from "../components/Slider/Slider";
 export { RangeSlider } from "../components/RangeSlider/RangeSlider";
 export type { RangeSliderProps } from "../components/RangeSlider/RangeSlider";
 
+export { Placeholder } from "../components/Placeholder/Placeholder";
+export type { PlaceholderProps } from "../components/Placeholder/Placeholder";
+
 export { Input } from "../components/Input/Input";
 export type { InputProps } from "../components/Input/Input";
 
 export { File } from "../components/File/File";
 export type { FileProps } from "../components/File/File";
+
+export { CardGrid } from "../components/CardGrid/CardGrid";
+export type { CardGridProps } from "../components/CardGrid/CardGrid";
 
 export { FocusVisible } from "../components/FocusVisible/FocusVisible";
 export type { FocusVisibleProps } from "../components/FocusVisible/FocusVisible";
@@ -154,6 +178,9 @@ export type { CheckboxProps } from "../components/Checkbox/Checkbox";
 
 export { ChipsInput } from "../components/ChipsInput/ChipsInput";
 export type { ChipsInputProps } from "../components/ChipsInput/ChipsInput";
+
+export { Separator } from "../components/Separator/Separator";
+export type { SeparatorProps } from "../components/Separator/Separator";
 
 export { ChipsSelect } from "../components/ChipsSelect/ChipsSelect";
 export type { ChipsSelectProps } from "../components/ChipsSelect/ChipsSelect";
@@ -202,3 +229,6 @@ export type { DateRangeInputProps } from "../components/DateRangeInput/DateRange
 
 export { Footer } from "../components/Footer/Footer";
 export type { FooterProps } from "../components/Footer/Footer";
+
+export { Tabbar } from "../components/Tabbar/Tabbar";
+export type { TabbarProps } from "../components/Tabbar/Tabbar";

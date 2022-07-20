@@ -1,7 +1,7 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
+import { Platform } from "../../lib/platform";
 import "./Tabbar.css";
 
 export interface TabbarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -35,13 +35,11 @@ export const Tabbar = ({
 
   return (
     <div
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
-        getClassName("Tabbar", platform),
+        "Tabbar",
+        platform === Platform.IOS && "Tabbar--ios",
         `Tabbar--l-${getItemsLayout()}`,
-        {
-          "Tabbar--shadow": shadow,
-        }
+        shadow && "Tabbar--shadow"
       )}
       {...restProps}
     >

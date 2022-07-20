@@ -20,6 +20,7 @@ import { useKeyboardInputTracker } from "../../hooks/useKeyboardInputTracker";
 import { useInsets } from "../../hooks/useInsets";
 import { Insets } from "@vkontakte/vk-bridge";
 import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
+import { isRefObject } from "../../lib/isRefObject";
 import "./AppRoot.css";
 
 // Используйте classList, но будьте осторожны
@@ -36,6 +37,13 @@ export interface AppRootProps
   /** Убирает классы без префикса (.Button) */
   noLegacyClasses?: boolean;
   scroll?: "global" | "contain";
+  /** Элемент используемый в качестве root для порталов
+   * При передаче своего элемента необходимо задать ему class="vkui__portal-root" и добавить в DOM
+   */
+  // TODO: v5.0.0 изменить тип на HTMLElement
+  portalRoot?: HTMLDivElement | React.RefObject<HTMLDivElement> | null;
+  /** Disable portal for components */
+  disablePortal?: boolean;
 }
 
 const warn = warnOnce("AppRoot");
@@ -52,6 +60,8 @@ export const AppRoot = withAdaptivity<AppRootProps>(
     hasMouse,
     noLegacyClasses = false,
     scroll = "global",
+    portalRoot: portalRootProp = null,
+    disablePortal,
     ...props
   }) => {
     // normalize mode
@@ -88,14 +98,24 @@ export const AppRoot = withAdaptivity<AppRootProps>(
 
     // setup portal
     useIsomorphicLayoutEffect(() => {
-      const portal = document!.createElement("div");
-      portal.classList.add("vkui__portal-root");
-      document!.body.appendChild(portal);
+      let portal: HTMLDivElement | null = null;
+      if (portalRootProp) {
+        if (isRefObject(portalRootProp)) {
+          portal = portalRootProp.current;
+        } else {
+          portal = portalRootProp;
+        }
+      }
+      if (!portal) {
+        portal = document!.createElement("div");
+        portal.classList.add("vkui__portal-root");
+        document!.body.appendChild(portal);
+      }
       setPortalRoot(portal);
       return () => {
-        portal.parentElement?.removeChild(portal);
+        portal?.parentElement?.removeChild(portal);
       };
-    }, []);
+    }, [portalRootProp]);
 
     // setup root classes
     useIsomorphicLayoutEffect(() => {
@@ -182,10 +202,11 @@ export const AppRoot = withAdaptivity<AppRootProps>(
       <AppRootContext.Provider
         value={{
           appRoot: rootRef,
-          portalRoot: portalRoot,
+          portalRoot,
           embedded: mode === "embedded",
           keyboardInput: isKeyboardInputActive,
           mode,
+          disablePortal,
         }}
       >
         <ScrollController elRef={rootRef}>

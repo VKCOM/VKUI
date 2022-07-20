@@ -48,3 +48,13 @@
 .PanelHeader ~ * .FixedLayout--top:not(.PanelHeader__fixed) {
   top: calc(var(--panelheader_height) + var(--safe-area-inset-top));
 }
+
+.PanelHeader--ios ~ .FixedLayout--top,
+.PanelHeader--ios ~ * .FixedLayout--top:not(.PanelHeader__fixed) {
+  top: calc(var(--panelheader_height_ios) + var(--safe-area-inset-top));
+}
+
+.PanelHeader--vkcom ~ .FixedLayout--top,
+.PanelHeader--vkcom ~ * .FixedLayout--top:not(.PanelHeader__fixed) {
+  top: calc(var(--panelheader_height_vkcom) + var(--safe-area-inset-top));
+}

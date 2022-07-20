@@ -7,7 +7,10 @@
   height: var(--tabbar_height);
   padding-bottom: var(--safe-area-inset-bottom);
   box-sizing: content-box;
-  background: var(--header_alternate_background);
+  background: var(
+    --header_alternate_background,
+    var(--vkui--color_background_tertiary)
+  );
 }
 
 .Tabbar__in {
@@ -16,9 +19,17 @@
   overflow: hidden;
 }
 
+.Tabbar--shadow {
+  box-shadow: var(--vkui--elevation3);
+}
+
 /**
  * iOS
  */
+
+.Tabbar--ios.Tabbar--shadow {
+  box-shadow: none;
+}
 
 .Tabbar--ios.Tabbar--shadow::before {
   position: absolute;
@@ -41,13 +52,4 @@
   .Tabbar--ios::before {
     transform: scaleY(0.33);
   }
-}
-
-/**
- * Android & VKCOM
- */
-
-.Tabbar--android.Tabbar--shadow,
-.Tabbar--vkcom.Tabbar--shadow {
-  box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.06), 0 0 2px 0 rgba(0, 0, 0, 0.08);
 }

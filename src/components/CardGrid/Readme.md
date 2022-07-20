@@ -35,6 +35,11 @@
         <div style={{ paddingBottom: "30%" }} />
       </Card>
     </CardGrid>
+    <CardGrid size="l" spaced>
+      <Card>
+        <div style={{ paddingBottom: "30%" }} />
+      </Card>
+    </CardGrid>
     <Spacing size={16} />
   </Panel>
 </View>

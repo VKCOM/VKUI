@@ -4,7 +4,7 @@ import { Scheme } from "./scheme";
 
 export interface GetSchemeProps {
   platform?: PlatformType;
-  appearance: AppearanceType;
+  appearance?: AppearanceType;
 }
 
 export function getScheme({ platform, appearance }: GetSchemeProps): Scheme {
@@ -16,7 +16,7 @@ export function getScheme({ platform, appearance }: GetSchemeProps): Scheme {
         default:
           return Scheme.SPACE_GRAY;
       }
-    case "light":
+    default:
       switch (platform) {
         case VKCOM:
           return Scheme.VKCOM_LIGHT;

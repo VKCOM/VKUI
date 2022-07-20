@@ -1,0 +1,41 @@
+name: "Close PR"
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  clear_styleguide:
+    concurrency: ci-gh-pages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+      - name: Remove styleguide
+        run: rm -rf pull/${{ github.event.pull_request.number }}
+      - name: Unpublish styleguide
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Remove PR ${{ github.event.pull_request.number }}"
+          branch: gh-pages
+
+  patch:
+    concurrency: ci-stable
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'patch')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          cache: "yarn"
+      - run: yarn install --frozen-lockfile --ignore-scripts
+      - name: Set Git credentials
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Action"
+      - run: node ./.github/gitflow/patch.js
+        env:
+          INPUT_GITHUB_PULL_NUMBER: ${{ github.event.number }}
+          INPUT_GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}

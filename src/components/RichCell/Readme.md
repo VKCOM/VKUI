@@ -4,28 +4,36 @@
     <PanelHeader>RichCell</PanelHeader>
     <Group>
       <RichCell
-        disabled
-        multiline
-        before={<Avatar size={72} src={getAvatarUrl("user_ti")} />}
-        text="Держи за обед в EZO"
-        caption="Вчера в 20:30"
-        after="+ 1 500 ₽"
+        before={<Avatar size={72} src={getAvatarUrl("")} />}
+        subhead="Subhead"
+        text="Text"
+        caption="Caption"
+        after="After"
+        afterCaption="After Caption"
+        bottom={
+          <UsersStack
+            photos={[getAvatarUrl(""), getAvatarUrl(""), getAvatarUrl("")]}
+          >
+            N общих друга
+          </UsersStack>
+        }
         actions={
           <ButtonGroup mode="horizontal" gap="s" stretched>
             <Button mode="primary" size="s">
-              Принять
+              Primary
             </Button>
             <Button mode="secondary" size="s">
-              Отклонить
+              Secondary
             </Button>
           </ButtonGroup>
         }
-      >
-        Тарас Иванов
-      </RichCell>
-      <RichCell
         disabled
-        after={<Icon28UserAddOutline />}
+      >
+        Children
+      </RichCell>
+    </Group>
+    <Group header={<Header>Рекомендации друзей</Header>}>
+      <RichCell
         before={<Avatar size={72} src={getAvatarUrl("user_ilyagrshn")} />}
         caption="Команда ВКонтакте, Санкт-Петербург"
         bottom={
@@ -49,23 +57,74 @@
             </Button>
           </ButtonGroup>
         }
+        disabled
       >
         Илья Гришин
       </RichCell>
       <RichCell
-        before={<Avatar size={48} src={getAvatarUrl("user_lihachyov")} />}
-        text="Поездка в Лиссабон"
-        caption="Вчера в 20:30"
-        after="+ 1 500 ₽"
+        before={<Avatar size={72} src={getAvatarUrl("user_rom")} />}
+        after={<Icon24UserAddOutline />}
+        bottom={
+          <UsersStack
+            photos={[
+              getAvatarUrl("user_casper6479"),
+              getAvatarUrl("user_me"),
+              getAvatarUrl("user_evg"),
+            ]}
+          >
+            12 общих друзей
+          </UsersStack>
+        }
+        actions={
+          <ButtonGroup mode="horizontal" gap="s" stretched>
+            <Button mode="primary" size="s">
+              Добавить
+            </Button>
+            <Button mode="secondary" size="s">
+              Скрыть
+            </Button>
+          </ButtonGroup>
+        }
+        disabled
       >
-        Михаил Лихачев
+        Ром Захаров
+      </RichCell>
+    </Group>
+    <Group header={<Header>История переводов</Header>}>
+      <RichCell
+        before={<Avatar size={48} src={getAvatarUrl("user_ti")} />}
+        text="Держи за обед в EZO"
+        caption="сегодня в 18:00"
+        after="+ 1 232 ₽"
+        afterCaption="Комиссия 1%"
+        actions={
+          <ButtonGroup mode="horizontal" gap="s" stretched>
+            <Button mode="primary" size="s">
+              Принять
+            </Button>
+            <Button mode="secondary" size="s">
+              Отклонить
+            </Button>
+          </ButtonGroup>
+        }
+        multiline
+        disabled
+      >
+        Тарас Иванов{" "}
+        <Icon16Verified
+          style={{
+            display: "inline-block",
+            color: "var(--vkui--color_icon_accent)",
+            verticalAlign: "text-top",
+          }}
+        />
       </RichCell>
       <RichCell
-        before={<Avatar size={48} src={getAvatarUrl("user_tc")} />}
+        before={<Avatar size={48} src={getAvatarUrl("user_lihachyov")} />}
         caption="Вчера в 20:30"
-        after="- 700 ₽"
+        after="- 1 800 ₽"
       >
-        Тимофей Чаптыков
+        Михаил Лихачев
       </RichCell>
     </Group>
   </Panel>

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { Touch, TouchEvent } from "../Touch/Touch";
-import HorizontalScrollArrow from "../HorizontalScroll/HorizontalScrollArrow";
+import { HorizontalScrollArrow } from "../HorizontalScroll/HorizontalScrollArrow";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useDOM } from "../../lib/dom";
 import { useAdaptivity } from "../../hooks/useAdaptivity";

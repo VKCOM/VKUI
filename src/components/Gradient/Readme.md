@@ -1,21 +1,30 @@
 ```jsx
-const Example = ({ sizeX }) => {
+import { Icon16Done, Icon16Down, Icon16Up } from "@vkontakte/icons";
+
+const ExampleWithAdaptivity = () => {
+  const { sizeX } = useAdaptivity();
+  const [direction, setDirection] = React.useState("top");
+
+  const styles = {
+    margin: sizeX === SizeType.REGULAR ? "-7px -7px 0 -7px" : 0,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    padding: 32,
+  };
+
+  if (direction === "bottom") {
+    styles.borderRadius = "inherit";
+  }
+
   return (
     <View activePanel="gradient">
       <Panel id="gradient">
         <PanelHeader>Gradient</PanelHeader>
         <Group>
-          <Gradient
-            style={{
-              margin: sizeX === SizeType.REGULAR ? "-7px -7px 0 -7px" : 0,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              textAlign: "center",
-              padding: 32,
-            }}
-          >
+          <Gradient mode="tint" to={direction} style={styles}>
             <Avatar size={96} />
             <Title
               style={{ marginBottom: 8, marginTop: 20 }}
@@ -24,7 +33,12 @@ const Example = ({ sizeX }) => {
             >
               Алексей Мазелюк
             </Title>
-            <Text style={{ marginBottom: 24, color: "var(--text_secondary)" }}>
+            <Text
+              style={{
+                marginBottom: 24,
+                color: "var(--vkui--color_text_secondary)",
+              }}
+            >
               Учащийся
             </Text>
             <Button size="m" mode="secondary">
@@ -44,12 +58,36 @@ const Example = ({ sizeX }) => {
             </CellButton>
           </Group>
         </Group>
+        <Group>
+          <Group
+            mode="plain"
+            header={<Header mode="secondary">Направление to="bottom"</Header>}
+          >
+            <Gradient to="bottom">
+              <div style={{ height: 150 }} />
+            </Gradient>
+          </Group>
+          <Group
+            mode="plain"
+            header={<Header mode="secondary">Тип градиента white</Header>}
+          >
+            <Gradient mode="white">
+              <div style={{ height: 150 }} />
+            </Gradient>
+          </Group>
+          <Group
+            mode="plain"
+            header={<Header mode="secondary">Тип градиента black</Header>}
+          >
+            <Gradient mode="black">
+              <div style={{ height: 150 }} />
+            </Gradient>
+          </Group>
+        </Group>
       </Panel>
     </View>
   );
 };
-
-const ExampleWithAdaptivity = withAdaptivity(Example, { sizeX: true });
 
 <ExampleWithAdaptivity />;
 ```
