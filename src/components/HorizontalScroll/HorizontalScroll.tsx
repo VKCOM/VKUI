@@ -1,6 +1,9 @@
 import * as React from "react";
 import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
-import { HorizontalScrollArrow } from "./HorizontalScrollArrow";
+import {
+  HorizontalScrollArrow,
+  HorizontalScrollArrowController,
+} from "../HorizontalScrollArrow/HorizontalScrollArrow";
 import { easeInOutSine } from "../../lib/fx";
 import { useEventListener } from "../../hooks/useEventListener";
 import { useExternRef } from "../../hooks/useExternRef";
@@ -30,15 +33,25 @@ export interface HorizontalScrollProps
     AdaptivityProps,
     HasRef<HTMLDivElement> {
   /**
-   * Функция для расчета величины прокрутки при клике на левую стрелку.
+   * Функция для расчёта величины прокрутки при клике на левую стрелку.
    */
   getScrollToLeft?: ScrollPositionHandler;
   /**
-   * Функция для расчета величины прокрутки при клике на правую стрелку.
+   * Функция для расчёта величины прокрутки при клике на правую стрелку.
    */
   getScrollToRight?: ScrollPositionHandler;
   arrowSize?: "m" | "l";
   showArrows?: boolean | "always";
+  /**
+   * Задаёт невидимые отступы сверху и снизу, чтобы расширить область контейнера со скроллом.
+   *
+   * Используйте в кейсах, когда у переданных в `children` компонентов обрезается, например, тени.
+   *
+   * > ⚠️ Из-за отрицательных отступов компонент будет залезать на соседей сверху и снизу.
+   *  Поэтому если соседи интерактивные, то важно задать `position: relative`. Для соседа сверху дополнительно надо
+   *  задать `z-index >= 1`.
+   */
+  overflowVisible?: boolean;
   scrollAnimationDuration?: number;
 }
 
@@ -130,16 +143,20 @@ const HorizontalScrollComponent = ({
   showArrows = true,
   arrowSize = "l",
   scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
+  overflowVisible,
   hasMouse,
   getRef,
   ...restProps
 }: HorizontalScrollProps) => {
-  const [canScrollLeft, setCanScrollLeft] = React.useState(false);
-  const [canScrollRight, setCanScrollRight] = React.useState(false);
+  const arrowLeftController =
+    React.useRef<HorizontalScrollArrowController>(null);
+  const arrowRightController =
+    React.useRef<HorizontalScrollArrowController>(null);
 
   const isCustomScrollingRef = React.useRef(false);
 
   const scrollerRef = useExternRef(getRef);
+  const scrollInnerRef = React.useRef<HTMLDivElement>(null);
 
   const animationQueue = React.useRef<VoidFunction[]>([]);
 
@@ -152,11 +169,11 @@ const HorizontalScrollComponent = ({
           scrollElement,
           getScrollPosition,
           animationQueue: animationQueue.current,
-          onScrollToRightBorder: () => setCanScrollRight(false),
+          onScrollToRightBorder: () =>
+            arrowRightController.current?.setAvailable(false),
           onScrollEnd: () => (isCustomScrollingRef.current = false),
           onScrollStart: () => (isCustomScrollingRef.current = true),
-          initialScrollWidth:
-            scrollElement?.firstElementChild?.scrollWidth || 0,
+          initialScrollWidth: scrollInnerRef.current?.scrollWidth || 0,
           scrollAnimationDuration,
         })
       );
@@ -179,7 +196,7 @@ const HorizontalScrollComponent = ({
     scrollTo(getScrollPosition);
   }, [getScrollToRight, scrollTo, scrollerRef]);
 
-  const onscroll = React.useCallback(() => {
+  const handleScroll = React.useCallback(() => {
     if (
       showArrows &&
       hasMouse &&
@@ -188,48 +205,75 @@ const HorizontalScrollComponent = ({
     ) {
       const scrollElement = scrollerRef.current;
 
-      setCanScrollLeft(scrollElement.scrollLeft > 0);
-      setCanScrollRight(
+      arrowLeftController.current?.setAvailable(scrollElement.scrollLeft > 0);
+      arrowRightController.current?.setAvailable(
         roundUpElementScrollLeft(scrollElement) + scrollElement.offsetWidth <
           scrollElement.scrollWidth
       );
     }
   }, [hasMouse, scrollerRef, showArrows]);
 
-  const scrollEvent = useEventListener("scroll", onscroll);
+  const handleScrollerMouseEnter = () => {
+    arrowLeftController.current?.setVisible(true);
+    arrowRightController.current?.setVisible(true);
+  };
+
+  const handleScrollerMouseLeave = () => {
+    arrowLeftController.current?.setVisible(false);
+    arrowRightController.current?.setVisible(false);
+  };
+
+  const scrollEvent = useEventListener("scroll", handleScroll);
+
   React.useEffect(() => {
     if (scrollerRef.current) {
       scrollEvent.add(scrollerRef.current);
     }
   }, [scrollEvent, scrollerRef]);
-  React.useEffect(onscroll, [scrollerRef, children, onscroll]);
+
+  React.useEffect(handleScroll, [scrollerRef, children, handleScroll]);
 
   return (
     <div
       {...restProps}
       vkuiClass={classNames(
         "HorizontalScroll",
-        showArrows === "always" && "HorizontalScroll--withConstArrows"
+        overflowVisible && "HorizontalScroll--overflowVisible"
       )}
     >
-      {showArrows && hasMouse && canScrollLeft && (
-        <HorizontalScrollArrow
-          size={arrowSize}
-          direction="left"
-          vkuiClass="HorizontalScroll__arrowLeft"
-          onClick={scrollToLeft}
-        />
-      )}
-      {showArrows && hasMouse && canScrollRight && (
-        <HorizontalScrollArrow
-          size={arrowSize}
-          direction="right"
-          vkuiClass="HorizontalScroll__arrowRight"
-          onClick={scrollToRight}
-        />
-      )}
-      <div vkuiClass="HorizontalScroll__in" ref={scrollerRef}>
-        <div vkuiClass="HorizontalScroll__in-wrapper">{children}</div>
+      <div
+        vkuiClass="HorizontalScroll__in"
+        ref={scrollerRef}
+        onMouseEnter={
+          showArrows === "always" ? undefined : handleScrollerMouseEnter
+        }
+        onMouseLeave={
+          showArrows === "always" ? undefined : handleScrollerMouseLeave
+        }
+      >
+        {showArrows && hasMouse && (
+          <HorizontalScrollArrow
+            size={arrowSize}
+            direction="left"
+            vkuiClass="HorizontalScroll__arrow HorizontalScroll__arrow--left"
+            visilble={showArrows === "always"}
+            controller={arrowLeftController}
+            onClick={scrollToLeft}
+          />
+        )}
+        {showArrows && hasMouse && (
+          <HorizontalScrollArrow
+            size={arrowSize}
+            direction="right"
+            vkuiClass="HorizontalScroll__arrow HorizontalScroll__arrow--right"
+            visilble={showArrows === "always"}
+            controller={arrowRightController}
+            onClick={scrollToRight}
+          />
+        )}
+        <div vkuiClass="HorizontalScroll__in-wrapper" ref={scrollInnerRef}>
+          {children}
+        </div>
       </div>
     </div>
   );

@@ -3,17 +3,30 @@
   cursor: pointer;
   user-select: auto;
   top: 0;
-  height: 100%;
+  bottom: 0;
   padding: 0;
   opacity: 0;
+  visibility: hidden;
   z-index: 3;
   border: none;
   background-color: transparent;
-  transition: opacity 0.15s;
+  transition: opacity 0.15s, visibility 0.15s 0.15s;
   transition-timing-function: var(--android-easing);
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.HorizontalScrollArrow--visible {
+  opacity: var(--vkui--opacity_disable_accessibility);
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.HorizontalScrollArrow--hover {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
 }
 
 .HorizontalScrollArrow__icon {
@@ -55,19 +68,4 @@
  */
 .HorizontalScrollArrow--ios .HorizontalScrollArrow {
   transition-timing-function: var(--ios-easing);
-}
-
-/**
- * CMP: Gallery, HorizontalScroll
- */
-.Gallery:hover .HorizontalScrollArrow,
-.HorizontalScroll:hover .HorizontalScrollArrow {
-  opacity: var(--vkui--opacity_disable_accessibility);
-}
-
-.Gallery:hover .HorizontalScrollArrow:hover,
-.HorizontalScroll:hover .HorizontalScrollArrow:hover,
-.HorizontalScroll--withConstArrows .HorizontalScrollArrow,
-.HorizontalScroll--withConstArrows:hover .HorizontalScrollArrow {
-  opacity: 1;
 }

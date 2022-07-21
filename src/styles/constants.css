@@ -28,6 +28,21 @@
   --panelheader_height_vkcom: 48px;
   --search_default_height: 36px;
   --thin-border: 1px;
+  /**
+   * Параметр для увелечения видимой области контейнера, чтобы не обрезались тени, если они есть у внутренних элементов.
+   *
+   * Пример:
+   * ```
+   * margin-top: calc(-1 * var(--horizonalscroll-fake-gap));
+   * padding-top: var(--horizonalscroll-fake-gap);
+   * margin-bottom: calc(-1 * var(--horizonalscroll-fake-gap));
+   * padding-bottom: var(--horizonalscroll-fake-gap);
+   * ```
+   *
+   * ⚠️ WARNING ⚠️
+   * На хост-элементе не должно быть `overflow: hidden`.
+   */
+  --horizonalscroll-invisible-gap: 32px;
 
   /* paddings */
   /* TODO: v5 удалить */

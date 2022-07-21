@@ -11,11 +11,26 @@ import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 import { Scheme } from "../../helpers/scheme";
 
 describe("HorizontalScroll", () => {
-  const items = new Array(20).fill(0).map((_, i) => (
-    <HorizontalCell key={i} header={`item ${i}`}>
-      <Avatar size={56} />
-    </HorizontalCell>
-  ));
+  const getItem = (i: number, withShadow?: boolean) => {
+    return (
+      <HorizontalCell
+        key={i}
+        header={`item ${i}`}
+        style={
+          withShadow
+            ? {
+                boxShadow:
+                  "0px 0px 8px rgba(0, 0, 0, 0.12), 0px 16px 16px rgba(0, 0, 0, 0.16)",
+              }
+            : undefined
+        }
+      >
+        <Avatar size={56} />
+      </HorizontalCell>
+    );
+  };
+
+  const items = new Array(20).fill(0).map((_, i) => getItem(i));
 
   describeScreenshotFuzz(
     HorizontalScroll,
@@ -23,6 +38,7 @@ describe("HorizontalScroll", () => {
       {
         showArrows: ["always"],
         arrowSize: ["m", "l"],
+        overflowVisible: [undefined, true],
         children: [
           <div key="0" style={{ display: "flex" }}>
             {items}
@@ -34,7 +50,7 @@ describe("HorizontalScroll", () => {
       platforms: [ANDROID],
       adaptivity: {
         viewWidth: ViewWidth.MOBILE,
-        hasMouse: false,
+        hasMouse: true,
       },
     }
   );
@@ -55,6 +71,29 @@ describe("HorizontalScroll", () => {
       adaptivity: {
         viewWidth: ViewWidth.SMALL_TABLET,
         hasMouse: true,
+      },
+    }
+  );
+
+  const itemsWithShadow = new Array(20).fill(0).map((_, i) => getItem(i, true));
+
+  describeScreenshotFuzz(
+    HorizontalScroll,
+    [
+      {
+        overflowVisible: [true],
+        children: [
+          <div key="0" style={{ display: "flex" }}>
+            {itemsWithShadow}
+          </div>,
+        ],
+      },
+    ],
+    {
+      platforms: [ANDROID],
+      adaptivity: {
+        viewWidth: ViewWidth.MOBILE,
+        hasMouse: false,
       },
     }
   );

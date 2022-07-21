@@ -1,7 +1,10 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { Touch, TouchEvent } from "../Touch/Touch";
-import { HorizontalScrollArrow } from "../HorizontalScroll/HorizontalScrollArrow";
+import {
+  HorizontalScrollArrow,
+  HorizontalScrollArrowController,
+} from "../HorizontalScrollArrow/HorizontalScrollArrow";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useDOM } from "../../lib/dom";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
@@ -54,6 +57,11 @@ export const BaseGallery = ({
   getRef,
   ...restProps
 }: BaseGalleryProps) => {
+  const arrowLeftController =
+    React.useRef<HorizontalScrollArrowController>(null);
+  const arrowRightController =
+    React.useRef<HorizontalScrollArrowController>(null);
+
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
   const layoutState = React.useRef<LayoutState>(LAYOUT_DEFAULT_STATE);
   const [shiftState, setShiftState] =
@@ -314,18 +322,35 @@ export const BaseGallery = ({
     slidesStore.current[`slide-${slideIndex}`] = slideRef;
   };
 
-  // shiftX is negative number <= 0, we can swipe back only if it is < 0
-  const canSlideLeft =
-    !layoutState.current.isFullyVisible && shiftState.shiftX < 0;
+  const handleMouseEnter = () => {
+    arrowLeftController.current?.setVisible(true);
+    arrowRightController.current?.setVisible(true);
+  };
 
-  const canSlideRight =
-    !layoutState.current.isFullyVisible &&
+  const handleMouseLeave = () => {
+    arrowLeftController.current?.setVisible(false);
+    arrowRightController.current?.setVisible(false);
+  };
+
+  if (arrowLeftController.current) {
+    // shiftX is negative number <= 0, we can swipe back only if it is < 0
+    arrowLeftController.current.setAvailable(
+      !layoutState.current.isFullyVisible && shiftState.shiftX < 0
+    );
+  }
+
+  if (arrowRightController.current) {
     // we can't move right when gallery layer fully scrolled right, if gallery aligned by left side
-    ((align === "left" &&
-      layoutState.current.containerWidth - shiftState.shiftX <
-        (layoutState.current.layerWidth ?? 0)) ||
-      // otherwise we need to check current slide index (align = right or align = center)
-      (align !== "left" && slideIndex < layoutState.current.slides.length - 1));
+    arrowRightController.current.setAvailable(
+      !layoutState.current.isFullyVisible &&
+        ((align === "left" &&
+          layoutState.current.containerWidth - shiftState.shiftX <
+            (layoutState.current.layerWidth ?? 0)) ||
+          // otherwise we need to check current slide index (align = right or align = center)
+          (align !== "left" &&
+            slideIndex < layoutState.current.slides.length - 1))
+    );
+  }
 
   return (
     <div
@@ -337,6 +362,8 @@ export const BaseGallery = ({
         slideWidth === "custom" && "Gallery--custom-width"
       )}
       ref={rootRef}
+      onMouseEnter={showArrows ? handleMouseEnter : undefined}
+      onMouseLeave={showArrows ? handleMouseLeave : undefined}
     >
       <Touch
         vkuiClass="Gallery__viewport"
@@ -383,11 +410,19 @@ export const BaseGallery = ({
         </div>
       )}
 
-      {showArrows && hasMouse && canSlideLeft && (
-        <HorizontalScrollArrow direction="left" onClick={slideLeft} />
+      {showArrows && hasMouse && (
+        <HorizontalScrollArrow
+          direction="left"
+          controller={arrowLeftController}
+          onClick={slideLeft}
+        />
       )}
-      {showArrows && hasMouse && canSlideRight && (
-        <HorizontalScrollArrow direction="right" onClick={slideRight} />
+      {showArrows && hasMouse && (
+        <HorizontalScrollArrow
+          direction="right"
+          controller={arrowRightController}
+          onClick={slideRight}
+        />
       )}
     </div>
   );
