@@ -14,7 +14,6 @@ import {
   CustomSelectOptionProps,
 } from "../CustomSelectOption/CustomSelectOption";
 import { useChipsSelect } from "./useChipsSelect";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { noop } from "../../lib/utils";
 import { useDOM } from "../../lib/dom";
 import { Caption } from "../Typography/Caption/Caption";
@@ -27,8 +26,7 @@ import { CustomSelectDropdown } from "../CustomSelectDropdown/CustomSelectDropdo
 import "./ChipsSelect.css";
 
 export interface ChipsSelectProps<Option extends ChipsInputOption>
-  extends ChipsInputProps<Option>,
-    AdaptivityProps {
+  extends ChipsInputProps<Option> {
   popupDirection?: "top" | "bottom";
   options?: Option[];
   filterFn?:
@@ -96,7 +94,10 @@ const chipsSelectDefaultProps: ChipsSelectProps<any> = {
   },
 };
 
-const ChipsSelectComponent = <Option extends ChipsInputOption>(
+/**
+ * @see https://vkcom.github.io/VKUI/#/ChipsSelect
+ */
+export const ChipsSelect = <Option extends ChipsInputOption>(
   props: ChipsSelectProps<Option>
 ) => {
   const propsWithDefault = { ...chipsSelectDefaultProps, ...props };
@@ -123,7 +124,6 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
     filterFn,
     inputValue,
     creatableText,
-    sizeY,
     closeAfterSelect,
     onChangeStart,
     after,
@@ -357,7 +357,7 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
 
   return (
     <div
-      vkuiClass={classNames("ChipsSelect", `ChipsSelect--sizeY-${sizeY}`)}
+      vkuiClass={classNames("ChipsSelect")}
       ref={rootRef}
       style={style}
       className={className}
@@ -455,12 +455,3 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
     </div>
   );
 };
-
-/**
- * @see https://vkcom.github.io/VKUI/#/ChipsSelect
- */
-export const ChipsSelect = withAdaptivity(ChipsSelectComponent, {
-  sizeY: true,
-});
-
-ChipsSelect.displayName = "ChipsSelect";
