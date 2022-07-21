@@ -19,7 +19,7 @@
   margin: 2px;
 }
 
-.ChipsInput__input-container {
+.ChipsInput__label {
   display: flex;
   flex-direction: column;
   flex: 1;

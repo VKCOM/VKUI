@@ -215,10 +215,7 @@ export const ChipsInput = <Option extends ChipsInputOption>(
             </React.Fragment>
           );
         })}
-        <label
-          vkuiClass="ChipsInput__input-container"
-          aria-label={inputAriaLabel}
-        >
+        <label vkuiClass="ChipsInput__label" aria-label={inputAriaLabel}>
           <input
             ref={inputRef}
             value={fieldValue}
