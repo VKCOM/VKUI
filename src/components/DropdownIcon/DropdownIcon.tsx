@@ -8,7 +8,6 @@ import {
 import { classNames } from "../../lib/classNames";
 import { SizeType } from "../AdaptivityProvider/AdaptivityContext";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import "./DropdownIcon.css";
 
 export interface DropdownIconProps
   extends React.HTMLAttributes<HTMLDivElement> {
