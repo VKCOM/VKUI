@@ -18,6 +18,7 @@ import { Headline } from "../Typography/Headline/Headline";
 import { Separator } from "../Separator/Separator";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./Search.css";
 
 export type InputRef = (element: HTMLInputElement) => void;
@@ -84,6 +85,7 @@ const SearchComponent = ({
   const inputRef = useExternRef(getRef);
   const [isFocused, setFocused] = React.useState(false);
   const [value, onChange] = useEnsuredControl(inputProps, { defaultValue });
+  const { sizeY } = useAdaptivity();
 
   const onFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setFocused(true);
@@ -123,13 +125,15 @@ const SearchComponent = ({
 
   return (
     <div
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames(getClassName("Search", platform), {
-        "Search--focused": isFocused,
-        "Search--has-value": !!value,
-        "Search--has-after": !!after,
-        "Search--has-icon": !!icon,
-      })}
+      vkuiClass={classNames(
+        getClassName("Search", platform),
+        // TODO: V5 перенести на новую адаптивность
+        `Search--sizeY-${sizeY}`,
+        isFocused && "Search--focused",
+        Boolean(value) && "Search--has-value",
+        Boolean(icon) && "Search--has-after",
+        Boolean(after) && "Search--has-icon"
+      )}
       className={className}
       style={style}
     >

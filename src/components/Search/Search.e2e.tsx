@@ -13,6 +13,9 @@ describe("Search", () => {
         value: [undefined, "value"],
         icon: [undefined, <Icon16Add key="" />],
       },
+      {
+        $adaptivity: "y",
+      },
     ]
   );
   it("shows after when focused on iOS", async () => {
