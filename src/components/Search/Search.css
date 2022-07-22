@@ -4,6 +4,7 @@
   font-family: var(--font-common);
   transform: translate3d(0, 0, 0);
   line-height: normal;
+  padding: 8px 16px;
 }
 
 .Search__in {
@@ -341,22 +342,12 @@
 }
 
 /**
-  iOS
- */
-.Search--ios {
-  padding: 8px 12px;
-}
-
-/**
-  Android
- */
-.Search--android {
-  padding: 8px 16px;
-}
-
-/**
   VKCOM
 */
+
+.Search--vkcom {
+  padding: initial;
+}
 
 .Search--vkcom,
 .PanelHeader--vkcom .Search {

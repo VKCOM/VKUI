@@ -1,7 +1,6 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { withPlatform } from "../../hoc/withPlatform";
-import { getClassName } from "../../helpers/getClassName";
 import {
   Icon16SearchOutline,
   Icon16Clear,
@@ -126,7 +125,8 @@ const SearchComponent = ({
   return (
     <div
       vkuiClass={classNames(
-        getClassName("Search", platform),
+        "Search",
+        platform === VKCOM && "Search--vkcom",
         // TODO: V5 перенести на новую адаптивность
         `Search--sizeY-${sizeY}`,
         isFocused && "Search--focused",
