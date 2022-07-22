@@ -171,6 +171,8 @@ const ButtonComponent = ({
 
   return (
     <Tappable
+      hoverMode={hasNewTokens ? "Button--hover" : "background"}
+      activeMode={hasNewTokens ? "Button--active" : "opacity"}
       {...restProps}
       Component={restProps.href ? "a" : Component}
       onClick={loading ? undefined : onClick}
@@ -189,8 +191,6 @@ const ButtonComponent = ({
         loading && "Button--loading"
       )}
       getRootRef={getRootRef}
-      hoverMode={hasNewTokens ? "Button--hover" : "background"}
-      activeMode={hasNewTokens ? "Button--active" : "opacity"}
     >
       {loading && <Spinner size="small" vkuiClass="Button__spinner" />}
       <span vkuiClass="Button__in">
