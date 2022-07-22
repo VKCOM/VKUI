@@ -76,6 +76,9 @@ export type { RadioProps } from "../components/Radio/Radio";
 export { RadioGroup } from "../components/RadioGroup/RadioGroup";
 export type { RadioGroupProps } from "../components/RadioGroup/RadioGroup";
 
+export { InputGroup } from "../components/InputGroup/InputGroup";
+export type { InputGroupProps } from "../components/InputGroup/InputGroup";
+
 export { RichCell } from "../components/RichCell/RichCell";
 export type { RichCellProps } from "../components/RichCell/RichCell";
 

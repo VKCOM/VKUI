@@ -144,6 +144,7 @@
 @import "../components/InputLike/InputLikeDivider.css";
 @import "../components/DateInput/DateInput.css";
 @import "../components/DateRangeInput/DateRangeInput.css";
+@import "../components/InputGroup/InputGroup.css";
 
 /* Advertisement */
 @import "../components/PromoBanner/PromoBanner.css";

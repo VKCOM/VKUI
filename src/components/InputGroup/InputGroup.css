@@ -1,0 +1,22 @@
+.InputGroup {
+  position: relative;
+  z-index: 1;
+}
+
+.InputGroup--horizontal {
+  display: flex;
+}
+
+/* stylelint-disable vkui/atomic */
+.InputGroup--horizontal > * {
+  min-width: 0;
+  flex: 1;
+}
+
+.InputGroup--vertical > *:not(:first-child) {
+  margin-top: calc(-1 * var(--thin-border));
+}
+
+.InputGroup--horizontal > *:not(:first-child) {
+  margin-left: calc(-1 * var(--thin-border));
+}

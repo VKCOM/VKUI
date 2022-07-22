@@ -233,6 +233,8 @@ export { DateInput } from "./components/DateInput/DateInput";
 export type { DateInputProps } from "./components/DateInput/DateInput";
 export { DateRangeInput } from "./components/DateRangeInput/DateRangeInput";
 export type { DateRangeInputProps } from "./components/DateRangeInput/DateRangeInput";
+export { InputGroup } from "./components/InputGroup/InputGroup";
+export type { InputGroupProps } from "./components/InputGroup/InputGroup";
 
 /**
  * Helpers
