@@ -7,6 +7,7 @@ const containerStyles = {
 };
 
 const Example = () => {
+  const [align, setAlign] = useState("center");
   const [appearance, setAppearance] = useState("accent");
   const [sizeY, setSizeY] = useState("compact");
   const [stretched, setStretched] = useState(false);
@@ -48,65 +49,24 @@ const Example = () => {
             ...containerStyles,
           }}
         >
-          <Div>
-            <Button
-              href={buttonLink}
-              before={buttonBefore}
-              after={buttonAfter}
-              appearance={appearance}
-              stretched={stretched}
-              disabled={disabled}
-              size={size}
-              loading={loading}
-            >
-              {buttonText}
-            </Button>
-          </Div>
-          <Div>
-            <Button
-              href={buttonLink}
-              before={buttonBefore}
-              after={buttonAfter}
-              appearance={appearance}
-              stretched={stretched}
-              mode="secondary"
-              disabled={disabled}
-              size={size}
-              loading={loading}
-            >
-              {buttonText}
-            </Button>
-          </Div>
-          <Div>
-            <Button
-              href={buttonLink}
-              before={buttonBefore}
-              after={buttonAfter}
-              appearance={appearance}
-              stretched={stretched}
-              mode="tertiary"
-              disabled={disabled}
-              size={size}
-              loading={loading}
-            >
-              {buttonText}
-            </Button>
-          </Div>
-          <Div>
-            <Button
-              href={buttonLink}
-              before={buttonBefore}
-              after={buttonAfter}
-              appearance={appearance}
-              stretched={stretched}
-              mode="outline"
-              disabled={disabled}
-              size={size}
-              loading={loading}
-            >
-              {buttonText}
-            </Button>
-          </Div>
+          {["primary", "secondary", "tertiary", "outline"].map((mode) => (
+            <Div>
+              <Button
+                align={align}
+                href={buttonLink}
+                before={buttonBefore}
+                after={buttonAfter}
+                appearance={appearance}
+                stretched={stretched}
+                mode={mode}
+                disabled={disabled}
+                size={size}
+                loading={loading}
+              >
+                {buttonText}
+              </Button>
+            </Div>
+          ))}
         </div>
       </AdaptivityProvider>
       <div style={{ minWidth: 200 }}>
@@ -131,6 +91,17 @@ const Example = () => {
               { label: "s", value: "s" },
               { label: "m", value: "m" },
               { label: "l", value: "l" },
+            ]}
+          />
+        </FormItem>
+        <FormItem top="align">
+          <Select
+            value={align}
+            onChange={(e) => setAlign(e.target.value)}
+            options={[
+              { label: "left", value: "left" },
+              { label: "center", value: "center" },
+              { label: "right", value: "right" },
             ]}
           />
         </FormItem>
