@@ -6,6 +6,7 @@ import { classNames } from "../../lib/classNames";
 import { Popper, Placement } from "../Popper/Popper";
 import { Spinner } from "../Spinner/Spinner";
 import { HasRef } from "../../types";
+import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import "./CustomSelectDropdown.css";
 
 export interface CustomSelectDropdownProps
@@ -15,6 +16,9 @@ export interface CustomSelectDropdownProps
   targetRef: React.RefObject<HTMLElement>;
   placement?: Placement;
   scrollBoxRef?: React.RefObject<HTMLDivElement>;
+  observableRefs?:
+    | Array<React.RefObject<HTMLElement>>
+    | React.RefObject<HTMLElement>;
   fetching?: boolean;
   offsetDistance?: number;
   sameWidth?: boolean;
@@ -23,6 +27,28 @@ export interface CustomSelectDropdownProps
 }
 
 const calcIsTop = (placement?: Placement) => placement?.includes("top");
+
+function getObserverModifier<T extends HTMLElement>(
+  element: T
+): Modifier<string> {
+  return {
+    name: "customSelectChildrenChange",
+    enabled: true,
+    phase: "main",
+    effect: ({ instance }) => {
+      const observer = new MutationObserver(instance.forceUpdate);
+
+      observer.observe(element, {
+        childList: true,
+        subtree: true,
+      });
+
+      return () => {
+        observer.disconnect();
+      };
+    },
+  };
+}
 
 export const CustomSelectDropdown = ({
   children,
@@ -36,35 +62,32 @@ export const CustomSelectDropdown = ({
   forcePortal = true,
   autoHideScrollbar,
   autoHideScrollbarDelay,
+  observableRefs,
   ...restProps
 }: CustomSelectDropdownProps) => {
   const [isTop, setIsTop] = React.useState(() => calcIsTop(placement));
+  const [customModifiers, setCustomModifiers] = React.useState<
+    Array<Modifier<string>>
+  >([]);
 
-  const customModifiers = React.useMemo<Array<Modifier<string>>>(() => {
-    if (!scrollBoxRef?.current) {
-      return [];
+  useIsomorphicLayoutEffect(() => {
+    if (!observableRefs) {
+      return;
+    }
+    const customModifiers: Array<Modifier<string>> = [];
+
+    if (Array.isArray(observableRefs)) {
+      for (const ref of observableRefs) {
+        if (ref?.current) {
+          customModifiers.push(getObserverModifier(ref.current));
+        }
+      }
+    } else if (observableRefs.current) {
+      customModifiers.push(getObserverModifier(observableRefs.current));
     }
 
-    return [
-      {
-        name: "customSelectChildrenChange",
-        enabled: true,
-        phase: "main",
-        effect: ({ instance }) => {
-          const observer = new MutationObserver(instance.forceUpdate);
-
-          observer.observe(scrollBoxRef.current as Element, {
-            childList: true,
-          });
-
-          return () => {
-            observer.disconnect();
-          };
-        },
-      },
-    ];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scrollBoxRef?.current]);
+    setCustomModifiers(customModifiers);
+  }, [observableRefs]);
 
   const onPlacementChange = React.useCallback(
     ({ placement }: { placement?: Placement }) => {
