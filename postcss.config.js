@@ -5,7 +5,7 @@ const restructureVariable = require("./tasks/postcss-restructure-variable.js");
 const cssImport = require("postcss-import");
 const autoprefixer = require("autoprefixer");
 const cssModules = require("postcss-modules");
-const csso = require("postcss-csso");
+const cssnano = require("cssnano");
 const checkKeyframes = require("./tasks/postcss-check-keyframes");
 const { defaultSchemeId } = require("./package.json");
 // TODO: включить после добавления поддержки VK-Sans-Text
@@ -96,7 +96,7 @@ let plugins = [
 ];
 
 if (process.env.NODE_ENV === "production") {
-  plugins.push(csso({ restructure: false }));
+  plugins.push(cssnano());
 }
 
 module.exports = { plugins, cssPropSources };
