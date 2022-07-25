@@ -382,7 +382,7 @@ export const ChipsSelect = <Option extends ChipOption>(
           aria-label={opened ? "Скрыть" : "Развернуть"}
           onClick={toggleOpened}
         >
-          <DropdownIcon />
+          <DropdownIcon opened={opened} />
         </IconButton>
       }
       before={before}
