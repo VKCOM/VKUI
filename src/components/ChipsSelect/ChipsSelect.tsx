@@ -27,7 +27,7 @@ import { FormField } from "../FormField/FormField";
 import "./ChipsSelect.css";
 
 export interface ChipsSelectProps<Option extends ChipsInputOption>
-  extends ChipsInputProps<Option> {
+  extends Omit<ChipsInputProps<Option>, "after"> {
   popupDirection?: "top" | "bottom";
   options?: Option[];
   filterFn?:
@@ -128,7 +128,6 @@ export const ChipsSelect = <Option extends ChipsInputOption>(
     closeAfterSelect,
     onChangeStart,
     before,
-    after,
     options,
     ...restProps
   } = propsWithDefault;
