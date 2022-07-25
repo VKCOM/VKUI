@@ -6,7 +6,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 14
@@ -26,7 +26,7 @@ jobs:
   test_e2e:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           lfs: true
       - name: Checkout LFS objects
@@ -55,7 +55,7 @@ jobs:
   styleguide:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 14
@@ -72,7 +72,7 @@ jobs:
     env:
       CI_JOB_NUMBER: 1
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 14
@@ -91,7 +91,7 @@ jobs:
     # Skip deploy from forked repo or from dependabot
     if: ${{ (github.event.pull_request.base.repo.id == github.event.pull_request.head.repo.id) && (github.actor != 'dependabot[bot]') }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Download styleguide artifact
         uses: actions/download-artifact@v2
         with:
@@ -129,7 +129,7 @@ jobs:
       - test_e2e
     if: always()
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 14
