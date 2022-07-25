@@ -15,7 +15,7 @@ jobs:
       - name: Run tests
         run: yarn test:ci
       - name: Upload test artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: test-output
@@ -44,7 +44,7 @@ jobs:
         run: yarn test:e2e:ci
         continue-on-error: true
       - name: Upload test artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: e2e-output
@@ -63,7 +63,7 @@ jobs:
       - run: yarn install --frozen-lockfile --ignore-scripts
       - run: yarn styleguide:build
       - name: Uploading styleguide artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: styleguide
           path: styleguide-build/
