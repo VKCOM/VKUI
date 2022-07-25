@@ -165,7 +165,6 @@ class CustomSelectComponent extends React.Component<
     options: [],
     emptyText: "Ничего не найдено",
     filterFn: defaultFilterFn,
-    icon: <DropdownIcon />,
     dropdownOffsetDistance: 0,
     fixDropdownWidth: true,
   };
@@ -637,12 +636,6 @@ class CustomSelectComponent extends React.Component<
     }));
   };
 
-  handleIconClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-
-    this.setState((prevState) => ({ opened: !prevState.opened }));
-  };
-
   render() {
     const { opened, nativeSelectValue, options: stateOptions } = this.state;
     const {
@@ -670,7 +663,7 @@ class CustomSelectComponent extends React.Component<
       onOpen,
       onClose,
       fetching,
-      icon,
+      icon = <DropdownIcon opened={opened} />,
       dropdownOffsetDistance,
       fixDropdownWidth,
       forceDropdownPortal,
@@ -708,16 +701,6 @@ class CustomSelectComponent extends React.Component<
           : "Select--pop-down")
     );
 
-    /**
-     * TODO в v5, возможно, стоит присвоить icon тип ReactElement, а не ReactNode?
-     */
-    const afterIcon = React.isValidElement(icon)
-      ? React.cloneElement(icon, {
-          flipped: opened,
-          onClick: this.handleIconClick,
-        })
-      : icon;
-
     return (
       <label
         vkuiClass={getClassName("CustomSelect", platform)}
@@ -740,7 +723,7 @@ class CustomSelectComponent extends React.Component<
             // @ts-ignore
             onClick={onClick}
             before={before}
-            after={afterIcon}
+            after={icon}
             placeholder={restProps.placeholder}
             mode={getFormFieldModeFromSelectType(selectType)}
           />
@@ -754,7 +737,7 @@ class CustomSelectComponent extends React.Component<
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             vkuiClass={openedClassNames}
-            after={afterIcon}
+            after={icon}
             selectType={selectType}
           >
             {label}

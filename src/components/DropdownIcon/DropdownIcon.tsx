@@ -7,24 +7,18 @@ import "./DropdownIcon.css";
 
 export interface DropdownIconProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  /**
-   * Отразить иконку по горизонтали
-   */
-  flipped?: boolean;
+  opened?: boolean;
 }
 
 export const DropdownIcon = ({
-  flipped = false,
+  opened = false,
   ...restProps
 }: DropdownIconProps) => {
   const { sizeY } = useAdaptivity();
 
   const Icon = sizeY === SizeType.COMPACT ? Icon20Dropdown : Icon24ChevronDown;
 
-  return (
-    <Icon
-      vkuiClass={classNames("DropdownIcon", flipped && "DropdownIcon--flipped")}
-      {...restProps}
-    />
-  );
+  console.log("DropdownIcon[opened]", opened);
+
+  return <Icon vkuiClass={classNames("DropdownIcon")} {...restProps} />;
 };

@@ -1,7 +1,3 @@
 .DropdownIcon {
   cursor: pointer;
 }
-
-.DropdownIcon--flipped {
-  transform: scale(1, -1);
-}

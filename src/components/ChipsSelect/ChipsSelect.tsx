@@ -350,12 +350,6 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
     setFocusedOptionIndex(null);
   }, [setFocusedOptionIndex]);
 
-  const handleDropdownIconClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-
-    setOpened((isOpened) => !isOpened);
-  };
-
   return (
     <div
       vkuiClass={classNames("ChipsSelect", `ChipsSelect--sizeY-${sizeY}`)}
@@ -383,9 +377,9 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
         getRef={getRef}
         disabled={disabled}
         onInputChange={handleInputChange}
-        after={
-          <DropdownIcon onClick={handleDropdownIconClick} flipped={opened} />
-        }
+        // TODO: дождаться мерджа рефакторинга ChipsInput/ChipsSelect
+        //       и передать там в новую кнопку opened={opened}
+        after={<DropdownIcon opened={opened} />}
       />
       {opened && (
         <CustomSelectDropdown
