@@ -39,3 +39,4 @@ jobs:
         env:
           INPUT_GITHUB_PULL_NUMBER: ${{ github.event.number }}
           INPUT_GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
