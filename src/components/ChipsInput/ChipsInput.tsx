@@ -181,12 +181,7 @@ export const ChipsInput = <Option extends ChipsInputOption>(
   return (
     <FormField
       getRootRef={getRootRef}
-      vkuiClass={classNames(
-        "ChipsInput",
-        `ChipsInput--sizeY-${sizeY}`,
-        focused && "ChipsInput--focused",
-        !!selectedOptions.length && "ChipsInput--withChips"
-      )}
+      vkuiClass={classNames("ChipsInput", `ChipsInput--sizeY-${sizeY}`)}
       className={className}
       style={style}
       disabled={restProps.disabled}
