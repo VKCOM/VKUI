@@ -2,7 +2,7 @@ import * as React from "react";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { classNames } from "../../lib/classNames";
 import {
-  ChipsInput,
+  ChipsInputBase,
   ChipsInputOption,
   ChipsInputProps,
   ChipsInputValue,
@@ -23,6 +23,7 @@ import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { defaultFilterFn } from "../../lib/select";
 import { Placement } from "../Popper/Popper";
 import { CustomSelectDropdown } from "../CustomSelectDropdown/CustomSelectDropdown";
+import { FormField } from "../FormField/FormField";
 import "./ChipsSelect.css";
 
 export interface ChipsSelectProps<Option extends ChipsInputOption>
@@ -126,6 +127,7 @@ export const ChipsSelect = <Option extends ChipsInputOption>(
     creatableText,
     closeAfterSelect,
     onChangeStart,
+    before,
     after,
     options,
     ...restProps
@@ -356,13 +358,23 @@ export const ChipsSelect = <Option extends ChipsInputOption>(
   );
 
   return (
-    <div
-      vkuiClass={classNames("ChipsSelect")}
-      ref={rootRef}
+    <FormField
+      vkuiClass={classNames(
+        "ChipsSelect",
+        opened && "Select--open",
+        opened && (isPopperDirectionTop ? "Select--pop-up" : "Select--pop-down")
+      )}
+      getRootRef={rootRef}
       style={style}
       className={className}
+      disabled={disabled}
+      role="application"
+      aria-disabled={disabled}
+      aria-readonly={restProps.readOnly}
+      after={<DropdownIcon />}
+      before={before}
     >
-      <ChipsInput
+      <ChipsInputBase
         {...restProps}
         tabIndex={tabIndex}
         value={selectedOptions}
@@ -374,15 +386,9 @@ export const ChipsSelect = <Option extends ChipsInputOption>(
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
-        vkuiClass={classNames(
-          opened && "Select--open",
-          opened &&
-            (isPopperDirectionTop ? "Select--pop-up" : "Select--pop-down")
-        )}
         getRef={getRef}
         disabled={disabled}
         onInputChange={handleInputChange}
-        after={<DropdownIcon />}
       />
       {opened && (
         <CustomSelectDropdown
@@ -452,6 +458,6 @@ export const ChipsSelect = <Option extends ChipsInputOption>(
           )}
         </CustomSelectDropdown>
       )}
-    </div>
+    </FormField>
   );
 };
