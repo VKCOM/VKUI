@@ -74,15 +74,16 @@ export const chipsInputDefaultProps: ChipsInputProps<any> = {
   },
 };
 
-/**
- * @see https://vkcom.github.io/VKUI/#/ChipsInput
- */
-export const ChipsInput = <Option extends ChipsInputOption>(
-  props: ChipsInputProps<Option>
+export type ChipsInputBaseProps<Option extends ChipsInputOption> = Omit<
+  ChipsInputProps<Option>,
+  "style" | "className" | "before" | "after" | "getRootRef"
+>;
+
+export const ChipsInputBase = <Option extends ChipsInputOption>(
+  props: ChipsInputBaseProps<Option>
 ) => {
   const propsWithDefault = { ...chipsInputDefaultProps, ...props };
   const {
-    style,
     value,
     onChange,
     onInputChange,
@@ -90,17 +91,13 @@ export const ChipsInput = <Option extends ChipsInputOption>(
     onBlur,
     onFocus,
     children,
-    className,
     inputValue,
     getRef,
-    getRootRef,
     placeholder,
     getOptionValue,
     getOptionLabel,
     getNewOptionData,
     renderChip,
-    before,
-    after,
     inputAriaLabel,
     ...restProps
   } = propsWithDefault;
@@ -179,56 +176,75 @@ export const ChipsInput = <Option extends ChipsInputOption>(
   };
 
   return (
+    <div
+      vkuiClass={classNames("ChipsInput", `ChipsInput--sizeY-${sizeY}`)}
+      onClick={handleClick}
+      role="presentation"
+    >
+      {selectedOptions.map((option: Option) => {
+        const value = getOptionValue!(option);
+        const label = getOptionLabel!(option);
+
+        return (
+          <React.Fragment key={`${typeof value}-${value}`}>
+            {renderChip!({
+              option,
+              value,
+              label,
+              onRemove: handleChipRemove,
+              disabled: Boolean(restProps.disabled),
+              className: prefixClass("ChipsInput__chip"),
+            })}
+          </React.Fragment>
+        );
+      })}
+      <label vkuiClass="ChipsInput__label" aria-label={inputAriaLabel}>
+        <input
+          ref={inputRef}
+          value={fieldValue}
+          autoCapitalize="none"
+          autoComplete="off"
+          autoCorrect="off"
+          spellCheck={false}
+          aria-autocomplete="list"
+          vkuiClass="ChipsInput__el"
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          placeholder={selectedOptions.length ? undefined : placeholder}
+          {...restProps}
+        />
+      </label>
+    </div>
+  );
+};
+
+/**
+ * @see https://vkcom.github.io/VKUI/#/ChipsInput
+ */
+export const ChipsInput = <Option extends ChipsInputOption>({
+  style,
+  className,
+  getRootRef,
+  before,
+  after,
+  ...restProps
+}: ChipsInputProps<Option>) => {
+  return (
     <FormField
       getRootRef={getRootRef}
-      vkuiClass={classNames("ChipsInput", `ChipsInput--sizeY-${sizeY}`)}
+      vkuiClass={classNames("ChipsInput__wrapper")}
       className={className}
       style={style}
       disabled={restProps.disabled}
       before={before}
       after={after}
-      onClick={handleClick}
       role="application"
       aria-disabled={restProps.disabled}
       aria-readonly={restProps.readOnly}
     >
-      <div vkuiClass="ChipsInput__container" role="presentation">
-        {selectedOptions.map((option: Option) => {
-          const value = getOptionValue!(option);
-          const label = getOptionLabel!(option);
-
-          return (
-            <React.Fragment key={`${typeof value}-${value}`}>
-              {renderChip!({
-                option,
-                value,
-                label,
-                onRemove: handleChipRemove,
-                disabled: Boolean(restProps.disabled),
-                className: prefixClass("ChipsInput__chip"),
-              })}
-            </React.Fragment>
-          );
-        })}
-        <label vkuiClass="ChipsInput__label" aria-label={inputAriaLabel}>
-          <input
-            ref={inputRef}
-            value={fieldValue}
-            autoCapitalize="none"
-            autoComplete="off"
-            autoCorrect="off"
-            spellCheck={false}
-            aria-autocomplete="list"
-            vkuiClass="ChipsInput__el"
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            placeholder={selectedOptions.length ? undefined : placeholder}
-            {...restProps}
-          />
-        </label>
-      </div>
+      <ChipsInputBase {...restProps} />
     </FormField>
   );
 };

@@ -1,8 +1,8 @@
-.ChipsInput {
+.ChipsInput__wrapper {
   max-width: 100%;
 }
 
-.ChipsInput__container {
+.ChipsInput {
   flex-grow: 1;
   flex-shrink: 1;
   position: relative;
@@ -72,6 +72,6 @@
 /**
  * sizeY COMPACT
  */
-.ChipsInput--sizeY-compact .ChipsInput__container {
+.ChipsInput--sizeY-compact {
   padding: 1px;
 }
