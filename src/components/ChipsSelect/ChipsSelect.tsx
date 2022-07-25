@@ -24,6 +24,7 @@ import { defaultFilterFn } from "../../lib/select";
 import { Placement } from "../Popper/Popper";
 import { CustomSelectDropdown } from "../CustomSelectDropdown/CustomSelectDropdown";
 import { FormField } from "../FormField/FormField";
+import { IconButton } from "../IconButton/IconButton";
 import "./ChipsSelect.css";
 
 export interface ChipsSelectProps<Option extends ChipsInputOption>
@@ -356,6 +357,10 @@ export const ChipsSelect = <Option extends ChipsInputOption>(
     [rootRef, scrollBoxRef]
   );
 
+  const toggleOpened = React.useCallback(() => {
+    setOpened(!opened);
+  }, [setOpened, opened]);
+
   return (
     <FormField
       vkuiClass={classNames(
@@ -370,7 +375,18 @@ export const ChipsSelect = <Option extends ChipsInputOption>(
       role="application"
       aria-disabled={disabled}
       aria-readonly={restProps.readOnly}
-      after={<DropdownIcon />}
+      after={
+        <IconButton
+          vkuiClass="ChipsSelect__dropdown"
+          activeMode=""
+          hoverMode=""
+          // TODO: add label customization
+          aria-label={opened ? "Скрыть" : "Развернуть"}
+          onClick={toggleOpened}
+        >
+          <DropdownIcon />
+        </IconButton>
+      }
       before={before}
     >
       <ChipsInputBase
