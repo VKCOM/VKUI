@@ -1,12 +1,15 @@
 import { HoverPopper, HoverPopperProps } from "../HoverPopper/HoverPopper";
-import { getClassName } from "../../helpers/getClassName";
-import { usePlatform } from "../../hooks/usePlatform";
-import { useAppearance } from "../../hooks/useAppearance";
 import { classNames } from "../../lib/classNames";
 import { prefixClass } from "../../lib/prefixClass";
 import "./RichTooltip.css";
 
-export type RichTooltipProps = Omit<HoverPopperProps, "arrowClassName">;
+export interface RichTooltipProps
+  extends Omit<HoverPopperProps, "arrowClassName"> {
+  /**
+   * Стиль отображения подсказки
+   */
+  appearance?: "accent" | "neutral" | "white" | "black" | "inversion";
+}
 
 /**
  * @see https://vkcom.github.io/VKUI/#/RichTooltip
@@ -14,17 +17,12 @@ export type RichTooltipProps = Omit<HoverPopperProps, "arrowClassName">;
 export const RichTooltip = ({
   children,
   arrow = true,
+  appearance = "neutral",
   ...popperProps
 }: RichTooltipProps) => {
-  const platform = usePlatform();
-  const appearance = useAppearance();
-
   return (
     <HoverPopper
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames(getClassName("RichTooltip", platform), {
-        [`RichTooltip--${appearance}`]: !!appearance,
-      })}
+      vkuiClass={classNames("RichTooltip", `RichTooltip--${appearance}`)}
       arrow={arrow}
       arrowClassName={prefixClass("RichTooltip__arrow")}
       {...popperProps}
