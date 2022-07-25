@@ -25,6 +25,9 @@ export type { CardScrollProps } from "../components/CardScroll/CardScroll";
 export { Group } from "../components/Group/Group";
 export type { GroupProps } from "../components/Group/Group";
 
+export { WriteBar } from "../components/WriteBar/WriteBar";
+export type { WriteBarProps } from "../components/WriteBar/WriteBar";
+
 export { Cell } from "../components/Cell/Cell";
 export type { CellProps } from "../components/Cell/Cell";
 
