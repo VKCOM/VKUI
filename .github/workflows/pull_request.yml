@@ -93,7 +93,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Download styleguide artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: styleguide
           path: tmp
@@ -135,11 +135,11 @@ jobs:
           node-version: 14
           cache: "yarn"
       - name: Download test artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: test-output
       - name: Download e2e artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: e2e-output
       - name: Install reporting deps
