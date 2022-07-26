@@ -92,7 +92,7 @@ describe("ChipsInput", () => {
   it("focuses ChipsInput on surrounding container click", () => {
     render(<ChipsInputTest value={chipsInputValue} />);
 
-    userEvent.click(screen.getByRole("application"));
+    userEvent.click(document.querySelector(".ChipsInput") as Element);
     expect(getChipsInput()).toHaveFocus();
   });
 
