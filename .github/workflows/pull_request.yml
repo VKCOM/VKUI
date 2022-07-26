@@ -115,7 +115,7 @@ jobs:
           body-includes: <!-- styleguide_url -->
       - name: Post styleguide URL to PR
         if: steps.find_url_comment.outputs.comment-id == 0
-        uses: peter-evans/create-or-update-comment@v1
+        uses: peter-evans/create-or-update-comment@v2
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
