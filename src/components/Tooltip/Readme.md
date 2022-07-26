@@ -31,109 +31,100 @@ import { Tooltip, Button } from "@vkontakte/vkui";
 О возможностях тултипа можно прочитать в описании свойств и методов.
 
 ```jsx
-class Example extends React.Component {
-  constructor() {
-    this.state = {
-      tooltip: true,
-      tooltip2: true,
-      tooltip3: false,
-      activePanel: "tooltip",
-    };
-  }
+const Example = () => {
+  const [tooltip, setTooltip] = React.useState(true);
+  const [tooltip2, setTooltip2] = React.useState(true);
+  const [tooltip3, setTooltip3] = React.useState(false);
+  const [activePanel, setActivePanel] = React.useState("tooltip");
 
-  render() {
-    return (
-      <View activePanel={this.state.activePanel}>
-        <Panel id="tooltip">
-          <PanelHeader>Tooltip</PanelHeader>
-          <Group>
-            <List>
-              <SimpleCell>Музыка</SimpleCell>
-              <SimpleCell>Видео</SimpleCell>
-              <SimpleCell>Игры</SimpleCell>
-              <SimpleCell>Закладки</SimpleCell>
-              <SimpleCell>Документы</SimpleCell>
-              <SimpleCell>Денежные переводы</SimpleCell>
-            </List>
-          </Group>
-          <Group>
-            <Tooltip
-              mode="light"
-              text="У нас тут brand new функционал подвезли. Зацените!"
-              isShown={this.state.tooltip}
-              onClose={() => this.setState({ tooltip: false })}
-              offsetX={10}
-            >
-              <SimpleCell
-                onClick={() => this.setState({ activePanel: "tooltip2" })}
-              >
-                VK Pay
-              </SimpleCell>
-            </Tooltip>
-          </Group>
-        </Panel>
-
-        <Panel id="tooltip2">
-          <PanelHeader
-            before={
-              <Tooltip
-                isShown={this.state.tooltip2}
-                onClose={() =>
-                  this.setState({ tooltip2: false, tooltip3: true })
-                }
-                text="Нажмите на кнопку, если хотите вернуться"
-                header="Назад"
-              >
-                <PanelHeaderBack
-                  onClick={() => this.setState({ activePanel: "tooltip" })}
-                />
-              </Tooltip>
-            }
+  return (
+    <View activePanel={activePanel}>
+      <Panel id="tooltip">
+        <PanelHeader>Tooltip</PanelHeader>
+        <Group>
+          <List>
+            <SimpleCell>Музыка</SimpleCell>
+            <SimpleCell>Видео</SimpleCell>
+            <SimpleCell>Игры</SimpleCell>
+            <SimpleCell>Закладки</SimpleCell>
+            <SimpleCell>Документы</SimpleCell>
+            <SimpleCell>Денежные переводы</SimpleCell>
+          </List>
+        </Group>
+        <Group>
+          <Tooltip
+            mode="light"
+            text="У нас тут brand new функционал подвезли. Зацените!"
+            isShown={tooltip}
+            onClose={() => setTooltip(false)}
+            offsetX={10}
           >
-            Tooltip
-          </PanelHeader>
-          <Group>
-            <List>
-              <SimpleCell
-                before={
-                  <Tooltip
-                    text="Теперь у нас появились аватарки в списках. Правда круто?"
-                    isShown={this.state.tooltip3}
-                    onClose={() => this.setState({ tooltip3: false })}
-                    cornerOffset={-6}
-                  >
-                    <Avatar />
-                  </Tooltip>
-                }
-                description="Веб-сайт"
-              >
-                Команда ВКонтакте
-              </SimpleCell>
-              <SimpleCell before={<Avatar />} description="Музыкант">
-                Robbie Williams
-              </SimpleCell>
-              <SimpleCell before={<Avatar />} description="Издательский дом">
-                ПостНаука
-              </SimpleCell>
-              <SimpleCell before={<Avatar />} description="Издательский дом">
-                ПостНаука
-              </SimpleCell>
-              <SimpleCell before={<Avatar />} description="Издательский дом">
-                ПостНаука
-              </SimpleCell>
-              <SimpleCell before={<Avatar />} description="Издательский дом">
-                ПостНаука
-              </SimpleCell>
-              <SimpleCell before={<Avatar />} description="Издательский дом">
-                ПостНаука
-              </SimpleCell>
-            </List>
-          </Group>
-        </Panel>
-      </View>
-    );
-  }
-}
+            <SimpleCell onClick={() => setActivePanel("tooltip2")}>
+              VK Pay
+            </SimpleCell>
+          </Tooltip>
+        </Group>
+      </Panel>
+
+      <Panel id="tooltip2">
+        <PanelHeader
+          before={
+            <Tooltip
+              isShown={tooltip2}
+              onClose={() => {
+                setTooltip2(false);
+                setTooltip3(true);
+              }}
+              text="Нажмите на кнопку, если хотите вернуться"
+              header="Назад"
+            >
+              <PanelHeaderBack onClick={() => setActivePanel("tooltip")} />
+            </Tooltip>
+          }
+        >
+          Tooltip
+        </PanelHeader>
+        <Group>
+          <List>
+            <SimpleCell
+              before={
+                <Tooltip
+                  text="Теперь у нас появились аватарки в списках. Правда круто?"
+                  isShown={tooltip3}
+                  onClose={() => setTooltip3(false)}
+                  cornerOffset={-6}
+                >
+                  <Avatar />
+                </Tooltip>
+              }
+              description="Веб-сайт"
+            >
+              Команда ВКонтакте
+            </SimpleCell>
+            <SimpleCell before={<Avatar />} description="Музыкант">
+              Robbie Williams
+            </SimpleCell>
+            <SimpleCell before={<Avatar />} description="Издательский дом">
+              ПостНаука
+            </SimpleCell>
+            <SimpleCell before={<Avatar />} description="Издательский дом">
+              ПостНаука
+            </SimpleCell>
+            <SimpleCell before={<Avatar />} description="Издательский дом">
+              ПостНаука
+            </SimpleCell>
+            <SimpleCell before={<Avatar />} description="Издательский дом">
+              ПостНаука
+            </SimpleCell>
+            <SimpleCell before={<Avatar />} description="Издательский дом">
+              ПостНаука
+            </SimpleCell>
+          </List>
+        </Group>
+      </Panel>
+    </View>
+  );
+};
 
 const ExampleWithPlatform = withPlatform(Example);
 
@@ -147,7 +138,7 @@ const ExampleWithPlatform = withPlatform(Example);
 - в скроллящемся контейнере — замените какой-нибудь элемент, внутри которого нет скролла, на `<TooltipContainer>` и добавьте ему `position: relative` (или другую не-static).
 - внутри `position: fixed` — `<TooltipContainer fixed>`
 
-```jsx { "props": { "layout": false, "frame": true } }
+```jsx { "props": { "layout": false } }
 <>
   <TooltipContainer style={{ minHeight: "120vh" }}>
     <Tooltip text="Я скроллюсь">
@@ -248,4 +239,40 @@ const ExampleWithPlatform = withPlatform(Example);
     </Tooltip>
   </TooltipContainer>
 </>
+```
+
+## Цветовые варианты
+
+```jsx { "props": { "layout": false } }
+<TooltipContainer>
+  <Tooltip placement="right" text={`appearance="accent"`} appearance="accent">
+    <div style={{ width: 50, margin: 10 }}>
+      <Avatar />
+    </div>
+  </Tooltip>
+  <Tooltip placement="right" text={`appearance="neutral"`} appearance="neutral">
+    <div style={{ width: 50, margin: 10 }}>
+      <Avatar />
+    </div>
+  </Tooltip>
+  <Tooltip placement="right" text={`appearance="white`} appearance="white">
+    <div style={{ width: 50, margin: 10 }}>
+      <Avatar />
+    </div>
+  </Tooltip>
+  <Tooltip placement="right" text={`appearance="black"`} appearance="black">
+    <div style={{ width: 50, margin: 10 }}>
+      <Avatar />
+    </div>
+  </Tooltip>
+  <Tooltip
+    placement="right"
+    text={`appearance="inversion"`}
+    appearance="inversion"
+  >
+    <div style={{ width: 50, margin: 10 }}>
+      <Avatar />
+    </div>
+  </Tooltip>
+</TooltipContainer>
 ```

@@ -75,14 +75,7 @@ export const AppRoot = withAdaptivity<AppRootProps>(
     const insets = useInsets();
     const { appearance } = React.useContext(ConfigProviderContext);
 
-    const initialized = React.useRef(false);
-    if (!initialized.current) {
-      if (document && mode === "full") {
-        document.documentElement.classList.add("vkui");
-      }
-      classScopingMode.noConflict = noLegacyClasses;
-      initialized.current = true;
-    }
+    classScopingMode.noConflict = noLegacyClasses;
 
     if (process.env.NODE_ENV === "development") {
       if (scroll !== "global" && mode !== "embedded") {
@@ -131,11 +124,20 @@ export const AppRoot = withAdaptivity<AppRootProps>(
 
       return () => {
         parent?.classList.remove(...classes);
-        if (mode === "full") {
-          document?.documentElement.classList.remove("vkui");
-        }
       };
     }, []);
+
+    useIsomorphicLayoutEffect(() => {
+      if (mode === "full") {
+        document!.documentElement.classList.add("vkui");
+
+        return () => {
+          document!.documentElement.classList.remove("vkui");
+        };
+      }
+
+      return undefined;
+    }, [document, mode]);
 
     // setup insets
     useIsomorphicLayoutEffect(() => {

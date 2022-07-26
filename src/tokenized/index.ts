@@ -83,6 +83,15 @@ export type { TappableProps } from "../components/Tappable/Tappable";
 export { Textarea } from "../components/Textarea/Textarea";
 export type { TextareaProps } from "../components/Textarea/Textarea";
 
+export { Tooltip } from "../components/Tooltip/Tooltip";
+export type { TooltipProps } from "../components/Tooltip/Tooltip";
+
+export { TextTooltip } from "../components/TextTooltip/TextTooltip";
+export type { TextTooltipProps } from "../components/TextTooltip/TextTooltip";
+
+export { RichTooltip } from "../components/RichTooltip/RichTooltip";
+export type { RichTooltipProps } from "../components/RichTooltip/RichTooltip";
+
 export { Title } from "../components/Typography/Title/Title";
 export type { TitleProps } from "../components/Typography/Title/Title";
 
