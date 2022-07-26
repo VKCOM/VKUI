@@ -58,6 +58,9 @@ export type { ModalCardBaseProps } from "../components/ModalCardBase/ModalCardBa
 export { ModalCard } from "../components/ModalCard/ModalCard";
 export type { ModalCardProps } from "../components/ModalCard/ModalCard";
 
+export { ModalDismissButton } from "../components/ModalDismissButton/ModalDismissButton";
+export type { ModalDismissButtonProps } from "../components/ModalDismissButton/ModalDismissButton";
+
 export { Link } from "../components/Link/Link";
 export type { LinkProps } from "../components/Link/Link";
 
