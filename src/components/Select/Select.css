@@ -21,7 +21,7 @@
 .Select__container {
   flex-grow: 1;
   flex-shrink: 1;
-  padding: 7px 11px;
+  padding: 12px;
   color: var(--text_primary, var(--vkui--color_text_primary));
   box-sizing: border-box;
   position: relative;
@@ -52,11 +52,12 @@
 }
 
 /**
- * sizeY REGULAR
+ * sizeY COMPACT
  * TODO v5.0.0 поправить под новую адаптивность
  */
-.Select--sizeY-regular .Select__container {
-  padding: 11px;
+.Select--sizeY-compact .Select__container {
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 /**
