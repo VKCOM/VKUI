@@ -5,12 +5,14 @@ import { clamp } from "../../helpers/math";
 import { useDOM } from "../../lib/dom";
 
 const clearDisableScrollStyle = (node: HTMLElement) => {
-  node.style.position = "";
-  node.style.top = "";
-  node.style.left = "";
-  node.style.right = "";
-  node.style.overflowY = "";
-  node.style.overflowX = "";
+  Object.assign(node.style, {
+    position: "",
+    top: "",
+    left: "",
+    right: "",
+    overflowY: "",
+    overflowX: "",
+  });
 };
 
 export interface ScrollContextInterface {
@@ -75,12 +77,14 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps) => {
         ? "scroll"
         : "";
 
-    document!.body.style.position = "fixed";
-    document!.body.style.top = `-${scrollY}px`;
-    document!.body.style.left = `-${scrollX}px`;
-    document!.body.style.right = "0";
-    document!.body.style.overflowY = overflowY;
-    document!.body.style.overflowX = overflowX;
+    Object.assign(document!.body.style, {
+      position: "fixed",
+      top: `-${scrollY}px`,
+      left: `-${scrollX}px`,
+      right: "0",
+      overflowY,
+      overflowX,
+    });
     setScrollLock(true);
   }, [document, window]);
 
@@ -157,12 +161,14 @@ export const ElementScrollController = ({
     const overflowY = el.scrollWidth > el.clientWidth ? "scroll" : "";
     const overflowX = el.scrollHeight > el.clientHeight ? "scroll" : "";
 
-    el.style.position = "absolute";
-    el.style.top = `-${scrollY}px`;
-    el.style.left = `-${scrollX}px`;
-    el.style.right = "0";
-    el.style.overflowY = overflowY;
-    el.style.overflowX = overflowX;
+    Object.assign(el.style, {
+      position: "absolute",
+      top: `-${scrollY}px`,
+      left: `-${scrollX}px`,
+      right: "0",
+      overflowY,
+      overflowX,
+    });
     setScrollLock(true);
   }, [elRef]);
 

@@ -64,17 +64,8 @@ class ModalRootDesktopComponent extends React.Component<
 
     this.modalRootContext = {
       updateModalHeight: () => undefined,
-      registerModal: ({ id, ...data }) => {
-        const state = this.getModalState(id);
-
-        if (state) {
-          for (const _key of Object.keys(data)) {
-            const key = _key as keyof typeof data;
-
-            state[key] = data[key] as any;
-          }
-        }
-      },
+      registerModal: ({ id, ...data }) =>
+        Object.assign(this.getModalState(id), data),
       onClose: () => this.props.onExit(),
       isInsideModal: true,
     };
