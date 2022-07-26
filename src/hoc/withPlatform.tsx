@@ -5,7 +5,7 @@ import { ConfigProviderContext } from "../components/ConfigProvider/ConfigProvid
 
 export function withPlatform<T extends HasPlatform>(
   Component: React.ComponentType<T>
-): React.ComponentType<Omit<T, keyof HasPlatform>> {
+): React.FC<Omit<T, keyof HasPlatform>> {
   function WithPlatform(props: Omit<T, keyof HasPlatform>) {
     const ssrContext = React.useContext(SSRContext);
     const { platform } = React.useContext(ConfigProviderContext);
