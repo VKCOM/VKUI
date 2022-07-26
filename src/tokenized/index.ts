@@ -232,3 +232,6 @@ export type { FooterProps } from "../components/Footer/Footer";
 
 export { Tabbar } from "../components/Tabbar/Tabbar";
 export type { TabbarProps } from "../components/Tabbar/Tabbar";
+
+export { Search } from "../components/Search/Search";
+export type { SearchProps } from "../components/Search/Search";
