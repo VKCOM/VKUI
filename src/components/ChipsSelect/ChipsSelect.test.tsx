@@ -1,7 +1,7 @@
-import { baselineComponent, waitForPopper } from "../../testing/utils";
 import { fireEvent, render, screen, queryByText } from "@testing-library/react";
-import { ChipsSelect, ChipsSelectProps } from "./ChipsSelect";
 import userEvent from "@testing-library/user-event";
+import { baselineComponent, waitForPopper } from "../../testing/utils";
+import { ChipsSelect, ChipsSelectProps } from "./ChipsSelect";
 import { ChipsInputOption } from "../ChipsInput/ChipsInput";
 
 const ChipsSelectTest = (props: ChipsSelectProps<ChipsInputOption>) => (
@@ -93,6 +93,31 @@ describe("ChipsSelect", () => {
       await toggleDropdown();
       userEvent.click(queryListOption(colors[0]) as Element);
       expect(value).toEqual([colors[0]]);
+    });
+
+    it("via keyboard", async () => {
+      let value;
+      const options = new Array(20)
+        .fill(0)
+        .map((_, i) => ({ value: i, label: `Option #${i}` }));
+
+      render(
+        <ChipsSelectTest
+          value={[]}
+          options={options}
+          onChange={(e) => (value = e)}
+        />
+      );
+      await toggleDropdown();
+
+      const idx = 7;
+      for (let i = 0; i < idx; i++) {
+        userEvent.keyboard("{arrowdown}");
+      }
+      userEvent.keyboard("{enter}");
+
+      expect(queryListOption(options[idx])).toBeNull();
+      expect(value).toEqual([options[idx]]);
     });
     it("hides selected option from list", async () => {
       render(<ChipsSelect options={colors} value={[colors[0]]} />);
