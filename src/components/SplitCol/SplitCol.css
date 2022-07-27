@@ -7,7 +7,7 @@
 }
 
 .SplitCol--spaced {
-  padding: 0 var(--vkui--size_split_col_padding_horizontal--regular);
+  margin: 0 var(--vkui--size_split_col_padding_horizontal--regular);
 }
 
 .SplitCol--fixed {
