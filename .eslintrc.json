@@ -2,8 +2,6 @@
   "extends": [
     "@vkontakte/eslint-config/typescript/react",
     "prettier",
-    "prettier/react",
-    "prettier/@typescript-eslint",
     "plugin:react-hooks/recommended",
     "plugin:compat/recommended"
   ],
