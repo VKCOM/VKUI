@@ -74,7 +74,8 @@ jobs:
       - name: Publishing doc
         uses: JamesIves/github-pages-deploy-action@v4.4.0
         with:
-          GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: styleguide-build
-          CLEAN: false
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: docs
+          clean: false
+          force: false
