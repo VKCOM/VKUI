@@ -164,6 +164,9 @@ export type { SelectProps } from "../components/Select/Select";
 export { View } from "../components/View/View";
 export type { ViewProps } from "../components/View/View";
 
+export { HorizontalCell } from "../components/HorizontalCell/HorizontalCell";
+export type { HorizontalCellProps } from "../components/HorizontalCell/HorizontalCell";
+
 export { Spinner } from "../components/Spinner/Spinner";
 export type { SpinnerProps } from "../components/Spinner/Spinner";
 
