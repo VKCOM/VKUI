@@ -38,6 +38,19 @@
   padding-right: 0;
 }
 
+.Select--multiline .Select__container {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+/**
+ * TODO v5.0.0 поправить под новую адаптивность
+ */
+.Select--sizeY-compact.Select--multiline .Select__container {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
 .Select__title {
   display: block;
 }
