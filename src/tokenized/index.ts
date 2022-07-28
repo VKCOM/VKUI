@@ -40,6 +40,9 @@ export type { IconButtonProps } from "../components/IconButton/IconButton";
 export { InitialsAvatar } from "../components/InitialsAvatar/InitialsAvatar";
 export type { InitialsAvatarProps } from "../components/InitialsAvatar/InitialsAvatar";
 
+export { Epic } from "../components/Epic/Epic";
+export type { EpicProps } from "../components/Epic/Epic";
+
 export { InfoRow } from "../components/InfoRow/InfoRow";
 export type { InfoRowProps } from "../components/InfoRow/InfoRow";
 
