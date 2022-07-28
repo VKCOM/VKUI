@@ -772,6 +772,7 @@ class CustomSelectComponent extends React.Component<
             forcePortal={forceDropdownPortal}
             autoHideScrollbar={autoHideScrollbar}
             autoHideScrollbarDelay={autoHideScrollbarDelay}
+            observableRefs={this.scrollBoxRef}
           >
             {resolvedContent}
           </CustomSelectDropdown>
