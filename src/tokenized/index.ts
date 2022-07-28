@@ -242,5 +242,8 @@ export type { DateRangeInputProps } from "../components/DateRangeInput/DateRange
 export { Footer } from "../components/Footer/Footer";
 export type { FooterProps } from "../components/Footer/Footer";
 
+export { WriteBarIcon } from "../components/WriteBarIcon/WriteBarIcon";
+export type { WriteBarIconProps } from "../components/WriteBarIcon/WriteBarIcon";
+
 export { Tabbar } from "../components/Tabbar/Tabbar";
 export type { TabbarProps } from "../components/Tabbar/Tabbar";
