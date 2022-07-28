@@ -1,10 +1,8 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasAlign, HasRef, HasRootRef } from "../../types";
 import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
-import { usePlatform } from "../../hooks/usePlatform";
 import "./Input.css";
 
 export interface InputProps
@@ -27,13 +25,14 @@ const InputComponent = ({
   after,
   ...restProps
 }: InputProps) => {
-  const platform = usePlatform();
   return (
     <FormField
       vkuiClass={classNames(
-        getClassName("Input", platform),
+        "Input",
         !!align && `Input--${align}`,
-        `Input--sizeY-${sizeY}`
+        `Input--sizeY-${sizeY}`, // TODO v5.0.0 поправить под новую адаптивность
+        before && "Input--hasBefore",
+        after && "Input--hasAfter"
       )}
       style={style}
       className={className}
