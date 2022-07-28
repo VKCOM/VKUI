@@ -104,7 +104,7 @@
 }
 
 .TabsItem--selected.TabsItem--accent .TabsItem__before {
-  color: var(--accent, var(--vkui--color_icon_accent_themed));
+  color: var(--header_tint, var(--vkui--color_icon_accent_themed));
 }
 
 .TabsItem--selected.TabsItem--secondary .TabsItem__before {
@@ -127,7 +127,7 @@
 }
 
 .TabsItem--selected.TabsItem--accent .TabsItem__label {
-  color: var(--accent, var(--vkui--color_text_accent_themed));
+  color: var(--header_tint, var(--vkui--color_text_accent_themed));
 }
 
 .TabsItem--selected.TabsItem--secondary .TabsItem__label {
@@ -146,7 +146,7 @@
 /* Элемент */
 .TabsItem__after {
   margin-left: 6px;
-  color: var(--accent, var(--vkui--color_icon_accent_themed));
+  color: var(--header_tint, var(--vkui--color_icon_accent_themed));
 }
 
 /* Элемент */
@@ -245,7 +245,7 @@
 }
 
 .TabsItem--ios.TabsItem--segmented.TabsItem--selected .TabsItem__label {
-  color: var(--background_content, var(--vkui--color_text_contrast_themed));
+  color: var(--background_content);
 }
 
 .PanelHeader--ios
