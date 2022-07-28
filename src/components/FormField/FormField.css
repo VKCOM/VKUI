@@ -34,12 +34,10 @@
 }
 
 .FormField__before {
-  margin-right: -12px; /* Сбрасываем отступы `children` (см. Input, Select) */
   color: var(--vkui--color_icon_accent);
 }
 
 .FormField__after {
-  margin-left: -12px; /* Сбрасываем отступы `children` (см. Input, Select) */
   color: var(--icon_secondary, var(--vkui--color_icon_secondary));
 }
 

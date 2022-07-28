@@ -37,6 +37,14 @@
   font-size: 15px;
 }
 
+.Input--hasBefore .Input__el {
+  padding-left: 0;
+}
+
+.Input--hasAfter .Input__el {
+  padding-right: 0;
+}
+
 .Input__el:disabled {
   opacity: var(--vkui--opacity_disable_accessibility);
 }

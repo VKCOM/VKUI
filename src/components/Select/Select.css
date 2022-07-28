@@ -29,6 +29,22 @@
   overflow: hidden;
 }
 
+/**
+ * TODO v5.0.0 поправить под новую адаптивность
+ */
+.Select--sizeY-compact .Select__container {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.Select--hasBefore .Select__container {
+  padding-left: 0;
+}
+
+.Select--hasAfter .Select__container {
+  padding-right: 0;
+}
+
 .Select__title {
   display: block;
 }
@@ -49,15 +65,6 @@
 
 .Select--align-center .Select__title {
   text-align: center;
-}
-
-/**
- * sizeY COMPACT
- * TODO v5.0.0 поправить под новую адаптивность
- */
-.Select--sizeY-compact .Select__container {
-  padding-top: 8px;
-  padding-bottom: 8px;
 }
 
 /**
