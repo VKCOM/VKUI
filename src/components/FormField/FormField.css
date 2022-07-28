@@ -6,6 +6,9 @@
   min-height: var(--vkui--size_field_height--regular);
 }
 
+/**
+ * TODO v5.0.0 поправить под новую адаптивность
+ */
 .FormField--sizeY-compact {
   min-height: var(--vkui--size_field_height--compact);
 }
