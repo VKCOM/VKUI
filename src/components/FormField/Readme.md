@@ -1,6 +1,6 @@
 Компонент-оболочка для элементов форм ([Input](https://vkcom.github.io/VKUI/#/Input), [Select](https://vkcom.github.io/VKUI/#/Select), [Textarea](https://vkcom.github.io/VKUI/#/Textarea) и другие).
 
-```jsx { "props": { "layout": false, "iframe": false } }
+```jsx
 const Example = () => {
   return (
     <FormItem>
@@ -17,7 +17,8 @@ const CustomInput = () => {
     display: "block",
     width: "100%",
     margin: 0,
-    padding: 12,
+    paddingRight: 12,
+    paddingLeft: 12,
     fontSize: 16,
     lineHeight: "20px",
     textOverflow: "ellipsis",

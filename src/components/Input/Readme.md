@@ -141,7 +141,10 @@ const demoContainerStyles = {
   minWidth: 320,
 };
 
-const propsContainerStyles = { minWidth: 200 };
+const propsContainerStyles = {
+  minWidth: 200,
+  marginRight: "auto",
+};
 
 <Example />;
 ```

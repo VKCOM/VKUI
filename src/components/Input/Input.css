@@ -24,15 +24,14 @@
   line-height: 20px;
   font-size: 16px;
   color: var(--text_primary, var(--vkui--color_text_primary));
-  padding: 12px;
+  padding-right: 12px;
+  padding-left: 12px;
   position: relative;
   z-index: 2;
   background: transparent;
 }
 
 .Input--sizeY-compact .Input__el {
-  padding-top: 8px;
-  padding-bottom: 8px;
   line-height: 20px;
   font-size: 15px;
 }
