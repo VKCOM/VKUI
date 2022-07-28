@@ -23,4 +23,6 @@ const patchRefs = patchCommits
 execSync(`git fetch origin ${stableBranchRef} ${patchRefs}`);
 execSync(`git checkout ${stableBranchRef}`);
 execSync(`git cherry-pick ${patchRefs}`);
-execSync(`git push "${remoteRepository}" HEAD:${stableBranchRef} --verbose`);
+execSync(
+  `git push "${remoteRepository}" HEAD:refs/heads/${stableBranchRef} --verbose`
+);
