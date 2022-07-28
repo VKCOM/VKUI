@@ -44,7 +44,7 @@ export const ButtonGroup = ({
         styles[`ButtonGroup--mode-${mode}`],
         gap !== "none" && styles[`ButtonGroup--gap-${gap}`],
         stretched && styles["ButtonGroup--stretched"],
-        `ButtonGroup--align-${align}`
+        align && styles[`ButtonGroup--align-${align}`]
       )}
       role="group"
       ref={getRootRef}

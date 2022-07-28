@@ -45,8 +45,6 @@
 
 .ModalCardBase__actions {
   display: flex;
-  margin-left: -6px;
-  margin-right: -6px;
   margin-top: 16px;
 }
 
@@ -57,12 +55,6 @@
 .ModalCardBase__header + .ModalCardBase__actions,
 .ModalCardBase__subheader + .ModalCardBase__actions {
   margin-top: 32px;
-}
-
-.ModalCardBase__actions--v {
-  flex-direction: column;
-  margin-left: 0;
-  margin-right: 0;
 }
 
 /**

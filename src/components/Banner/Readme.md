@@ -46,12 +46,10 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
         subheader="Предложение действует только до конца февраля"
         asideMode="dismiss"
         actions={
-          <React.Fragment>
-            <Button mode="primary">Подробнее</Button>
-            <Button mode="tertiary" hasHover={false}>
-              Напомнить позже
-            </Button>
-          </React.Fragment>
+          <ButtonGroup mode="horizontal" gap="m">
+            <Button mode="primary">Попробовать сейчас</Button>
+            <Button mode="secondary">Напомнить позже</Button>
+          </ButtonGroup>
         }
       />
 
@@ -79,11 +77,7 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
             доступ к старому номеру.
           </React.Fragment>
         }
-        actions={
-          <Button mode="tertiary" hasHover={false}>
-            Отменить заявку
-          </Button>
-        }
+        actions={<Button mode="secondary">Отменить заявку</Button>}
       />
 
       <Banner
@@ -92,12 +86,10 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
         }
         text="Хотите, чтобы вам меньше мешали? Включите режим «невидимка»!"
         actions={
-          <React.Fragment>
+          <ButtonGroup mode="horizontal" gap="m">
             <Button>Включить</Button>
-            <Button mode="tertiary" hasHover={false}>
-              Подробнее
-            </Button>
-          </React.Fragment>
+            <Button mode="secondary">Подробнее</Button>
+          </ButtonGroup>
         }
       />
 

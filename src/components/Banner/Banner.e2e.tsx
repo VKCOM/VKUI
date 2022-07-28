@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
 import { Avatar } from "../Avatar/Avatar";
 import { Banner, BannerProps } from "./Banner";
 import { Button } from "../Button/Button";
@@ -27,12 +27,10 @@ describe("Banner", () => {
         before: [undefined],
         actions: [
           undefined,
-          <Fragment key="fragment">
-            <Button mode="primary">Подробнее</Button>
-            <Button mode="tertiary" hasHover={false}>
-              Напомнить позже
-            </Button>
-          </Fragment>,
+          <ButtonGroup mode="vertical" gap="m" key="fragment">
+            <Button mode="primary">Попробовать сейчас</Button>
+            <Button mode="secondary">Напомнить позже</Button>
+          </ButtonGroup>,
         ],
       },
       {
