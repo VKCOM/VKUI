@@ -233,6 +233,9 @@ export type { BannerProps } from "../components/Banner/Banner";
 export { FixedLayout } from "../components/FixedLayout/FixedLayout";
 export type { FixedLayoutProps } from "../components/FixedLayout/FixedLayout";
 
+export { Snackbar } from "../components/Snackbar/Snackbar";
+export type { SnackbarProps } from "../components/Snackbar/Snackbar";
+
 export { Counter } from "../components/Counter/Counter";
 export type { CounterProps } from "../components/Counter/Counter";
 
