@@ -380,16 +380,20 @@ function CustomSelectComponent(props: CustomSelectProps) {
     setOpened(true);
     setFocusedOptionIndex(selectedOptionIndex);
 
+    if (typeof onOpen === "function") {
+      onOpen();
+    }
+  }, [onOpen, selectedOptionIndex]);
+
+  React.useEffect(() => {
     if (
+      opened &&
       selectedOptionIndex !== undefined &&
       isValidIndex(selectedOptionIndex)
     ) {
       scrollToElement(selectedOptionIndex, true);
     }
-    if (typeof onOpen === "function") {
-      onOpen();
-    }
-  }, [isValidIndex, onOpen, scrollToElement, selectedOptionIndex]);
+  }, [isValidIndex, opened, scrollToElement, selectedOptionIndex]);
 
   const onBlur = React.useCallback(() => {
     close();
