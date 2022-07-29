@@ -185,11 +185,8 @@ function CustomSelectComponent(props: CustomSelectProps) {
     platform,
     style,
     onChange,
-    onBlur: onBlurProp,
-    onFocus: onFocusProp,
-    onClick: onClickProp,
     children,
-    onInputChange: onInputChangeProps,
+    onInputChange: onInputChangeProp,
     renderDropdown,
     onOpen,
     onClose,
@@ -200,7 +197,7 @@ function CustomSelectComponent(props: CustomSelectProps) {
     autoHideScrollbarDelay,
     searchable = false,
     renderOption: renderOptionProp = defaultRenderOptionFn,
-    options: optionsProps = defaultOptions,
+    options: optionsProp = defaultOptions,
     emptyText = "Ничего не найдено",
     filterFn = defaultFilterFn,
     icon = defaultIcon,
@@ -210,7 +207,7 @@ function CustomSelectComponent(props: CustomSelectProps) {
   } = props;
 
   if (process.env.NODE_ENV === "development") {
-    checkOptionsValueType(optionsProps);
+    checkOptionsValueType(optionsProp);
   }
 
   const containerRef = React.useRef<HTMLLabelElement>(null);
@@ -231,10 +228,10 @@ function CustomSelectComponent(props: CustomSelectProps) {
   const [popperPlacement, setPopperPlacement] = React.useState<
     Placement | undefined
   >(undefined);
-  const [options, setOptions] = React.useState(optionsProps);
+  const [options, setOptions] = React.useState(optionsProp);
   const [selectedOptionIndex, setSelectedOptionIndex] = React.useState<
     number | undefined
-  >(findSelectedIndex(optionsProps, props.value ?? props.defaultValue));
+  >(findSelectedIndex(optionsProp, props.value ?? props.defaultValue));
   const [opened, setOpened] = React.useState(false);
 
   React.useEffect(() => {
@@ -365,9 +362,9 @@ function CustomSelectComponent(props: CustomSelectProps) {
     setInputValue("");
     setOpened(false);
     setFocusedOptionIndex(-1);
-    setOptions(optionsProps);
+    setOptions(optionsProp);
     onClose?.();
-  }, [onClose, optionsProps, resetKeyboardInput]);
+  }, [onClose, optionsProp, resetKeyboardInput]);
 
   const selectFocused = React.useCallback(() => {
     if (focusedOptionIndex !== undefined && isValidIndex(focusedOptionIndex)) {
@@ -443,8 +440,8 @@ function CustomSelectComponent(props: CustomSelectProps) {
 
     const options =
       searchable && inputValue !== undefined
-        ? filter(optionsProps, inputValue, filterFn)
-        : optionsProps;
+        ? filter(optionsProp, inputValue, filterFn)
+        : optionsProp;
 
     setOptions(options);
     setSelectedOptionIndex(findSelectedIndex(options, value));
@@ -452,7 +449,7 @@ function CustomSelectComponent(props: CustomSelectProps) {
     filterFn,
     inputValue,
     nativeSelectValue,
-    optionsProps,
+    optionsProp,
     props.defaultValue,
     props.value,
     searchable,
@@ -517,8 +514,8 @@ function CustomSelectComponent(props: CustomSelectProps) {
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> =
     React.useCallback(
       (e) => {
-        if (onInputChangeProps) {
-          const options = onInputChangeProps(e, optionsProps);
+        if (onInputChangeProp) {
+          const options = onInputChangeProp(e, optionsProp);
           if (options) {
             if (process.env.NODE_ENV === "development") {
               warn(
@@ -532,13 +529,13 @@ function CustomSelectComponent(props: CustomSelectProps) {
             );
           }
         } else {
-          const options = filter(optionsProps, e.target.value, filterFn);
+          const options = filter(optionsProp, e.target.value, filterFn);
           setOptions(options);
           setSelectedOptionIndex(findSelectedIndex(options, nativeSelectValue));
         }
         setInputValue(e.target.value);
       },
-      [filterFn, nativeSelectValue, onInputChangeProps, optionsProps]
+      [filterFn, nativeSelectValue, onInputChangeProp, optionsProp]
     );
 
   const handleKeyDownSelect = React.useCallback(
@@ -692,7 +689,7 @@ function CustomSelectComponent(props: CustomSelectProps) {
           // TODO Ожидается, что клик поймает нативный select, но его перехватывает Input. К сожалению, это приводит к конфликтам типизации.
           // TODO Нужно перестать пытаться превратить CustomSelect в select. Тогда эта проблема уйдёт.
           // @ts-ignore
-          onClick={onClickProp}
+          onClick={props.onClick}
           before={before}
           after={icon}
           placeholder={restProps.placeholder}
@@ -718,14 +715,14 @@ function CustomSelectComponent(props: CustomSelectProps) {
         ref={selectElRef}
         name={name}
         onChange={onNativeSelectChange}
-        onBlur={onBlurProp}
-        onFocus={onFocusProp}
-        onClick={onClickProp}
+        onBlur={props.onBlur}
+        onFocus={props.onFocus}
+        onClick={props.onClick}
         value={nativeSelectValue}
         aria-hidden={true}
         vkuiClass="CustomSelect__control"
       >
-        {optionsProps.map((item) => (
+        {optionsProp.map((item) => (
           <option key={`${item.value}`} value={item.value} />
         ))}
       </select>
