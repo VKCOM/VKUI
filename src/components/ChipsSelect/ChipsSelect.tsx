@@ -357,9 +357,9 @@ export const ChipsSelect = <Option extends ChipsInputOption>(
     [rootRef, scrollBoxRef]
   );
 
-  const toggleOpened = React.useCallback(() => {
-    setOpened(!opened);
-  }, [setOpened, opened]);
+  const toggleOpened = () => {
+    setOpened((prevOpened) => !prevOpened);
+  };
 
   return (
     <FormField
