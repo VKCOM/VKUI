@@ -14,6 +14,9 @@ describe("DateRangeInput", () => {
           [null, null],
         ],
       },
+      {
+        status: ["error", "valid"],
+      },
     ]
   );
 });

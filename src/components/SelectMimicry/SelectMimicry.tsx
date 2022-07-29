@@ -15,7 +15,7 @@ export interface SelectMimicryProps
     HasAlign,
     HasRootRef<HTMLElement>,
     AdaptivityProps,
-    Pick<FormFieldProps, "before" | "after"> {
+    Pick<FormFieldProps, "before" | "after" | "status"> {
   multiline?: boolean;
   disabled?: boolean;
   selectType?: keyof typeof SelectType;
@@ -35,6 +35,7 @@ const SelectMimicryComponent = ({
   before,
   after = <DropdownIcon />,
   selectType = SelectType.default,
+  status,
   ...restProps
 }: SelectMimicryProps) => {
   const platform = usePlatform();
@@ -61,6 +62,7 @@ const SelectMimicryComponent = ({
       before={before}
       after={after}
       mode={getFormFieldModeFromSelectType(selectType)}
+      status={status}
     >
       <div vkuiClass="Select__container">
         {/* TODO v5.0.0 поправить под новую адаптивность */}

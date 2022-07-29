@@ -9,6 +9,9 @@ describe("DateInput", () => {
         value: [new Date("1970-05-05"), undefined],
         enableTime: [true, false],
       },
+      {
+        status: ["error", "valid"],
+      },
     ]
   );
 });

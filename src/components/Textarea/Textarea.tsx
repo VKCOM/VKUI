@@ -1,6 +1,6 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
-import { FormField } from "../FormField/FormField";
+import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasRef, HasRootRef } from "../../types";
 import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
@@ -12,7 +12,8 @@ export interface TextareaProps
     HasRef<HTMLTextAreaElement>,
     HasRootRef<HTMLElement>,
     AdaptivityProps,
-    Pick<React.CSSProperties, "maxHeight"> {
+    Pick<React.CSSProperties, "maxHeight">,
+    Pick<FormFieldProps, "status"> {
   grow?: boolean;
   onResize?(el: HTMLTextAreaElement): void;
   defaultValue?: string;
@@ -29,6 +30,7 @@ const TextareaComponent = ({
   sizeY,
   rows = 2,
   maxHeight,
+  status,
   ...restProps
 }: TextareaProps) => {
   const [value, onChange] = useEnsuredControl(restProps, { defaultValue });
@@ -61,6 +63,7 @@ const TextareaComponent = ({
       style={style}
       getRootRef={getRootRef}
       disabled={restProps.disabled}
+      status={status}
     >
       <textarea
         {...restProps}

@@ -22,6 +22,9 @@ describe("ChipsInput", () => {
       {
         $adaptivity: "y",
       },
+      {
+        status: ["error", "valid"],
+      },
     ]
   );
 });

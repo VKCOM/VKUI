@@ -26,6 +26,9 @@ describe("SelectMimicry", () => {
         children: ["Россия"],
         $adaptivity: "y",
       },
+      {
+        status: ["error", "valid"],
+      },
     ]
   );
 });

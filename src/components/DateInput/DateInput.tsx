@@ -6,7 +6,7 @@ import { Popper, Placement } from "../Popper/Popper";
 import { multiRef } from "../../lib/utils";
 import { IconButton } from "../IconButton/IconButton";
 import { classNames } from "../../lib/classNames";
-import { FormField } from "../FormField/FormField";
+import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasRootRef } from "../../types";
 import { useDateInput } from "../../hooks/useDateInput";
 import { InputLike } from "../InputLike/InputLike";
@@ -47,7 +47,8 @@ export interface DateInputProps
       | "prevMonthIcon"
       | "nextMonthIcon"
     >,
-    HasRootRef<HTMLDivElement> {
+    HasRootRef<HTMLDivElement>,
+    FormFieldProps {
   calendarPlacement?: Placement;
   closeOnChange?: boolean;
   clearFieldAriaLabel?: string;

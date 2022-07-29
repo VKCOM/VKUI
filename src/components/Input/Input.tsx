@@ -23,6 +23,7 @@ const InputComponent = ({
   style,
   before,
   after,
+  status,
   ...restProps
 }: InputProps) => {
   return (
@@ -40,6 +41,7 @@ const InputComponent = ({
       before={before}
       after={after}
       disabled={restProps.disabled}
+      status={status}
     >
       <input {...restProps} type={type} vkuiClass="Input__el" ref={getRef} />
     </FormField>
