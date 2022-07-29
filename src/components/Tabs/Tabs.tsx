@@ -14,7 +14,9 @@ export interface TabsProps
   /**
    * Задаёт вид кнопок.
    *
-   * > ⚠️ Значения `"buttons"`, `"segmented"` устарели и будет удалены в 5.0.0. Используйте `"secondary"` и [`SegmentedControl`](https://vkcom.github.io/VKUI#/SegmentedControl).
+   * > ⚠️ Значения `"buttons"`, `"segmented"` устарели и будут удалены в 5.0.0. Вместо `"buttons"` используйте `"secondary"`.
+   * > Режим `"segmented"` переехал в отдельный компонент [`SegmentedControl`](https://vkcom.github.io/VKUI#/SegmentedControl),
+   * > поэтому используйте его вместо `Tabs`.
    */
   mode?: "buttons" | "segmented" | "default" | "accent" | "secondary";
 }

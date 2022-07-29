@@ -170,6 +170,8 @@
  * CMP:
  * TabsItem
  */
+/* TODO v5.0.0 Удалить. Относится к <Tabs mode="segmented" />. По дизайну надо использовать <Counter mode="prominent" />  */
+/* [Начало] */
 .TabsItem .Counter--secondary {
   background-color: var(--panel_tab_inactive_text);
   color: var(--white);
@@ -179,6 +181,7 @@
   background-color: var(--panel_tab_active_text);
   color: var(--panel_tab_active_background);
 }
+/* [Конец] */
 
 /* TODO v5.0.0 Удалить mode="segmented" */
 /* [Начало] */

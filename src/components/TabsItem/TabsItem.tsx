@@ -3,6 +3,7 @@ import { Tappable } from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
 import { IOS, VKCOM } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { TabsModeContext, TabsContextProps } from "../Tabs/Tabs";
 import { Headline } from "../Typography/Headline/Headline";
 import { Subhead } from "../Typography/Subhead/Subhead";
@@ -46,6 +47,7 @@ export const TabsItem = ({
   ...restProps
 }: TabsItemProps) => {
   const platform = usePlatform();
+  const { sizeY } = useAdaptivity();
   const { mode, withGaps }: TabsContextProps =
     React.useContext(TabsModeContext);
   let statusComponent = null;
@@ -73,6 +75,8 @@ export const TabsItem = ({
         (platform === IOS || platform === VKCOM) && `TabsItem--${platform}`,
         mode && `TabsItem--${mode}`,
         selected && "TabsItem--selected",
+        // TODO v5.0.0 новая адаптивность
+        sizeY && `TabsItem--sizeY-${sizeY}`,
         withGaps && "TabsItem--withGaps"
       )}
       hoverMode="TabsItem--hover"

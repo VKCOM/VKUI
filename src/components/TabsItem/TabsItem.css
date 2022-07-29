@@ -18,11 +18,10 @@
 }
 
 /* TODO v5.0.0 новая адаптивность */
-.TabsItem--sizeX-compact.TabsItem {
+.TabsItem--sizeY-compact {
   padding-top: 2px;
   padding-bottom: 2px;
   min-height: 28px;
-  border-radius: var(--vkui--size_border_radius--regular);
 }
 
 .TabsItem[disabled] {
@@ -40,7 +39,7 @@
 }
 
 /* TODO v5.0.0 новая адаптивность */
-.TabsItem--sizeX-compact.TabsItem--default {
+.TabsItem--sizeY-compact.TabsItem--default {
   padding-top: 10px;
   padding-bottom: 10px;
   min-height: 44px;
@@ -64,7 +63,10 @@
 }
 
 .TabsItem--hover.TabsItem--accent {
-  background-color: var(--vkui--color_background_secondary);
+  background-color: var(
+    --control_background,
+    var(--vkui--color_background_secondary)
+  );
 }
 
 .TabsItem--accent::before {
@@ -80,7 +82,7 @@
 }
 
 .TabsItem--selected.TabsItem--accent::before {
-  border-color: var(--vkui--color_separator_primary);
+  border-color: var(--separator_common, var(--vkui--color_separator_primary));
 }
 
 /* mode="secondary" */
@@ -104,7 +106,7 @@
 }
 
 .TabsItem--selected.TabsItem--accent .TabsItem__before {
-  color: var(--header_tint, var(--vkui--color_icon_accent_themed));
+  color: var(--header_tint_alternate, var(--vkui--color_icon_accent_themed));
 }
 
 .TabsItem--selected.TabsItem--secondary .TabsItem__before {
@@ -127,7 +129,7 @@
 }
 
 .TabsItem--selected.TabsItem--accent .TabsItem__label {
-  color: var(--header_tint, var(--vkui--color_text_accent_themed));
+  color: var(--header_tint_alternate, var(--vkui--color_text_accent_themed));
 }
 
 .TabsItem--selected.TabsItem--secondary .TabsItem__label {
@@ -140,13 +142,13 @@
 }
 
 .TabsItem__status--count {
-  color: var(--vkui--color_text_tertiary);
+  color: var(--text_tertiary, var(--vkui--color_text_tertiary));
 }
 
 /* Элемент */
 .TabsItem__after {
   margin-left: 6px;
-  color: var(--header_tint, var(--vkui--color_icon_accent_themed));
+  color: var(--header_tint_alternate, var(--vkui--color_icon_accent_themed));
 }
 
 /* Элемент */
@@ -164,7 +166,7 @@
 }
 
 /* TODO v5.0.0 новая адаптивность */
-.TabsItem--sizeX-compact.TabsItem__underline {
+.TabsItem--sizeY-compact .TabsItem__underline {
   bottom: 3px;
 }
 
@@ -185,7 +187,7 @@
 
 .Tabs--vkcom .TabsItem__underline {
   right: 2px;
-  bottom: 2px;
+  bottom: 0;
   left: 2px;
 }
 
@@ -236,7 +238,7 @@
 }
 
 .Tabs--header .TabsItem--ios.TabsItem--segmented.TabsItem--selected {
-  background-color: var(--header_tint);
+  background-color: var(--header_tint_alternate);
   color: var(--header_background);
 }
 
@@ -255,7 +257,7 @@
 }
 
 .PanelHeader--ios .TabsItem--segmented {
-  border-color: var(--header_tint);
-  color: var(--header_tint);
+  border-color: var(--header_tint_alternate);
+  color: var(--header_tint_alternate);
 }
 /* [Конец] */
