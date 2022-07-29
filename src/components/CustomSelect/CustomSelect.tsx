@@ -22,6 +22,7 @@ import { Placement } from "../Popper/Popper";
 import { CustomSelectDropdown } from "../CustomSelectDropdown/CustomSelectDropdown";
 import { TrackerOptionsProps } from "../CustomScrollView/useTrackerVisibility";
 import { SelectType } from "../Select/Select";
+import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import "./CustomSelect.css";
 
 const findIndexAfter = (
@@ -241,7 +242,7 @@ function CustomSelectComponent(props: CustomSelectProps) {
     );
   }, [props.value]);
 
-  React.useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (nativeSelectValue) {
       const event = new Event("change", { bubbles: true });
 
