@@ -85,3 +85,5 @@ const SelectComponent = ({
 export const Select = withAdaptivity(SelectComponent, {
   hasMouse: true,
 });
+
+Select.displayName = "Select";

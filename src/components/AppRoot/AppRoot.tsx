@@ -242,3 +242,5 @@ export const AppRoot = withAdaptivity<AppRootProps>(
     hasMouse: true,
   }
 );
+
+AppRoot.displayName = "AppRoot";

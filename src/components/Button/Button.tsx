@@ -226,3 +226,5 @@ const ButtonComponent = ({
 export const Button = withAdaptivity(ButtonComponent, {
   sizeY: true,
 });
+
+Button.displayName = "Button";

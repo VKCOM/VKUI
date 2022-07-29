@@ -241,3 +241,5 @@ const HorizontalScrollComponent = ({
 export const HorizontalScroll = withAdaptivity(HorizontalScrollComponent, {
   hasMouse: true,
 });
+
+HorizontalScroll.displayName = "HorizontalScroll";
