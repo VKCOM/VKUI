@@ -67,6 +67,12 @@ export type { ButtonGroupProps } from "../components/ButtonGroup/ButtonGroup";
 export { Switch } from "../components/Switch/Switch";
 export type { SwitchProps } from "../components/Switch/Switch";
 
+export { Tabs } from "../components/Tabs/Tabs";
+export type { TabsProps } from "../components/Tabs/Tabs";
+
+export { TabsItem } from "../components/TabsItem/TabsItem";
+export type { TabsItemProps } from "../components/TabsItem/TabsItem";
+
 export { Footnote } from "../components/Typography/Footnote/Footnote";
 export type { FootnoteProps } from "../components/Typography/Footnote/Footnote";
 
