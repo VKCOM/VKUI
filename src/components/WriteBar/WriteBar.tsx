@@ -1,8 +1,10 @@
 import * as React from "react";
+import { Headline } from "../Typography/Headline/Headline";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useExternRef } from "../../hooks/useExternRef";
 import { hasReactNode, isFunction } from "../../lib/utils";
-import { getClassName } from "../../helpers/getClassName";
+import { classNames } from "../../lib/classNames";
+import { IOS } from "../../lib/platform";
 import { HasRef, HasRootRef } from "../../types";
 import "./WriteBar.css";
 
@@ -26,6 +28,10 @@ export interface WriteBarProps
    * Вызывается при смене высоты поля ввода
    */
   onHeightChange?: VoidFunction;
+  /**
+   * Добавляет тень вокруг поля ввода
+   */
+  shadow?: boolean;
 
   children?: never;
 }
@@ -44,6 +50,7 @@ export const WriteBar = ({
   getRootRef,
   getRef,
   onHeightChange,
+  shadow = false,
   ...restProps
 }: WriteBarProps) => {
   const platform = usePlatform();
@@ -92,7 +99,11 @@ export const WriteBar = ({
   return (
     <div
       ref={getRootRef}
-      vkuiClass={getClassName("WriteBar", platform)}
+      vkuiClass={classNames(
+        "WriteBar",
+        platform === IOS && "WriteBar--ios",
+        shadow && "WriteBar--shadow"
+      )}
       className={className}
       style={style}
     >
@@ -102,14 +113,14 @@ export const WriteBar = ({
         )}
 
         <div vkuiClass="WriteBar__formIn">
-          <textarea
+          <Headline
             {...restProps}
+            Component="textarea"
             vkuiClass="WriteBar__textarea"
             onChange={onTextareaChange}
-            ref={textareaRef}
+            getRootRef={textareaRef}
             value={value}
           />
-
           {hasReactNode(inlineAfter) && (
             <div vkuiClass="WriteBar__inlineAfter">{inlineAfter}</div>
           )}
