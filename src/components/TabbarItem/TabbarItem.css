@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--tabbar_inactive_icon);
+  color: var(--tabbar_inactive_icon, var(--vkui--color_text_tertiary));
   text-decoration: none;
   border: none;
   outline: none;
@@ -21,7 +21,7 @@
 }
 
 .TabbarItem--selected {
-  color: var(--tabbar_active_icon);
+  color: var(--tabbar_active_icon, var(--vkui--color_text_accent_themed));
 }
 
 .TabbarItem__tappable {
@@ -53,7 +53,12 @@
 }
 
 .TabbarItem__icon {
+  color: var(--tabbar_inactive_icon, var(--vkui--color_icon_secondary));
   position: relative;
+}
+
+.TabbarItem--selected .TabbarItem__icon {
+  color: var(--tabbar_active_icon, var(--vkui--color_icon_accent_themed));
 }
 
 .TabbarItem__label .Counter {
@@ -78,13 +83,10 @@
 .Tabbar--l-vertical .TabbarItem__text {
   font-size: 10px;
   line-height: 12px;
-  font-weight: 500;
   margin-top: 2px;
 }
 
 .Tabbar--l-horizontal .TabbarItem__text {
-  font-size: 13px;
-  font-weight: 500;
   margin-left: 8px;
 }
 

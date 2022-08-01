@@ -247,3 +247,6 @@ export type { FooterProps } from "../components/Footer/Footer";
 
 export { Tabbar } from "../components/Tabbar/Tabbar";
 export type { TabbarProps } from "../components/Tabbar/Tabbar";
+
+export { TabbarItem } from "../components/TabbarItem/TabbarItem";
+export type { TabbarItemProps } from "../components/TabbarItem/TabbarItem";

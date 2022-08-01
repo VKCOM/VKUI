@@ -37,7 +37,10 @@
   left: 0;
   width: 100%;
   height: 1px;
-  background: var(--separator_common);
+  background: var(
+    --separator_common,
+    var(--vkui--color_separator_primary_alpha)
+  );
   transform-origin: center bottom;
   content: "";
 }
