@@ -1,6 +1,6 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
+import { IOS } from "../../lib/platform";
 import { HasRef, HasRootRef } from "../../types";
 import { PopoutRoot } from "../PopoutRoot/PopoutRoot";
 import { usePlatform } from "../../hooks/usePlatform";
@@ -37,7 +37,10 @@ export const SplitLayout = ({
 
   return (
     <PopoutRoot
-      vkuiClass={getClassName("SplitLayout", platform)}
+      vkuiClass={classNames(
+        "SplitLayout",
+        platform === IOS && "SplitLayout--ios"
+      )}
       popout={popout}
       modal={modal}
       getRootRef={getRootRef}
@@ -46,10 +49,10 @@ export const SplitLayout = ({
       <div
         {...restProps}
         ref={getRef}
-        // eslint-disable-next-line vkui/no-object-expression-in-arguments
-        vkuiClass={classNames("SplitLayout__inner", {
-          "SplitLayout__inner--header": !!header,
-        })}
+        vkuiClass={classNames(
+          "SplitLayout__inner",
+          !!header && "SplitLayout__inner--header"
+        )}
       >
         {children}
       </div>
