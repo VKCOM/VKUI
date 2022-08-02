@@ -1,2 +1,7 @@
 android >= 4.4
 iOS >= 9
+Chrome >= 48
+Firefox >= 50
+Edge >= 18
+Opera >= 35
+Safari >= 9
