@@ -78,7 +78,7 @@ export const Popper = ({
   offsetSkidding = 0,
   forcePortal = true,
   style: compStyles,
-  customModifiers = [],
+  customModifiers,
   ...restProps
 }: PopperProps) => {
   const [popperNode, setPopperNode] = React.useState<HTMLDivElement | null>(
@@ -140,7 +140,9 @@ export const Popper = ({
       modifiers.push(sameWidth);
     }
 
-    modifiers.push(...customModifiers);
+    if (customModifiers) {
+      modifiers.push(...customModifiers);
+    }
     return modifiers;
   }, [
     arrow,
