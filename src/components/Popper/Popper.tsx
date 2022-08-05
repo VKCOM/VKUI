@@ -26,6 +26,10 @@ export type Placement =
   | "left"
   | "right";
 
+export interface PopperRenderContentProps {
+  className: string;
+}
+
 export interface PopperCommonProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRef<HTMLDivElement> {
@@ -59,6 +63,14 @@ export interface PopperCommonProps
    * Массив кастомных модификаторов для Popper (необходимо мемоизировать)
    */
   customModifiers?: Array<Modifier<string>>;
+  /**
+   * При передаче содержимого в `children`, он будет обёрнут во внутренний контейнер.
+   *
+   * Если хочется управлять этим контейнером, то используйте данную функцию.
+   *
+   * > ⚠️ Параметр `children` будет проигнорирован.
+   */
+  renderContent?(props: PopperRenderContentProps): React.ReactNode;
 }
 
 export interface PopperProps extends PopperCommonProps {
@@ -86,6 +98,7 @@ export const Popper = ({
   forcePortal = true,
   style: compStyles,
   customModifiers,
+  renderContent,
   ...restProps
 }: PopperProps) => {
   const [popperNode, setPopperNode] = React.useState<HTMLDivElement | null>(
@@ -223,7 +236,11 @@ export const Popper = ({
           arrowClassName={arrowClassName}
         />
       )}
-      <div vkuiClass="Popper__content">{children}</div>
+      {renderContent ? (
+        renderContent({ className: "Popper__content" })
+      ) : (
+        <div vkuiClass="Popper__content">{children}</div>
+      )}
     </div>
   );
 
