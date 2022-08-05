@@ -2726,10 +2726,10 @@
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@vkontakte/vk-bridge/-/vk-bridge-2.1.5.tgz#eae6598c955a894421fd4b63f6f12abdfd0f4e6b"
 
-"@vkontakte/vkjs@^0.22.2":
-  version "0.22.2"
-  resolved "https://registry.yarnpkg.com/@vkontakte/vkjs/-/vkjs-0.22.2.tgz#b530195b009bb598289a6c6382f1c35c4d1e66c2"
-  integrity sha512-dOnRGhcKzCuex/RRTmi74uckqAQtGcVPhsKXSptmKz1/KqVt6WpmOT2rrr2rPyyWcfjHBbPwnF8A4Z0jkFz+Zg==
+"@vkontakte/vkjs@^0.23.0":
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/@vkontakte/vkjs/-/vkjs-0.23.0.tgz#d047a1d7a56bb1ed671a9c82cc2525afaa67d26f"
+  integrity sha512-qRQFkQqbN5UyG/zBAUgmmzId6DpNp8HoUPt7Zv9Zj1HAelwS5vpR8Mczs8dlwa5Q5V0YB22YVCtvvOF/2Ucmnw==
 
 "@vkontakte/vkui-tokens@4.14.3":
   version "4.14.3"
