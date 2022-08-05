@@ -245,4 +245,5 @@
 - Удалены константы `IS_PLATFORM_ANDROID` и `IS_PLATFORM_IOS`
 - Удален тип `Scheme`
 - Удалена css переменная `--font-tt`, используйте `--font-display`
+- Тип `VKUITouchEventHander` переименован в `VKUITouchEventHandler`
 - Удалены константы `ANDROID`, `IOS` и `VKCOM`, используйте `enum` `Platform.ANDROID / Platform.IOS, Platform.VKCOM`
