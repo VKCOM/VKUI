@@ -183,6 +183,10 @@
  * CMP:
  * SimpleCell
  */
-.SimpleCell .Switch {
-  margin-left: 10px;
+.SimpleCell__after > .Switch {
+  margin-left: 12px;
+}
+
+.SimpleCell > .Switch:first-child {
+  margin-right: 12px;
 }
