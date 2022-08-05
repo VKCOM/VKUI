@@ -24,14 +24,11 @@
 ```diff
 - <SplitLayout>
 -   <View popout={popout} modal={modal}>
--      ...
--   </View>
-- </SplitLayout>
 + <SplitLayout popout={popout} modal={modal}>
 +   <View>
-+      ...
-+   </View>
-+ </SplitLayout>
+     ...
+   </View>
+ </SplitLayout>
 ```
 
 ### Alert
