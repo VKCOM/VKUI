@@ -1,16 +1,16 @@
-Документацию по миграции c v3 на v4, можно найти [здесь](https://github.com/VKCOM/VKUI/releases/tag/v4.0.0).
+Документацию по миграции c v3 на v4 можно найти [здесь](https://github.com/VKCOM/VKUI/releases/tag/v4.0.0).
 
 ## Обновление React и Typescript
 
-- Минимальная поддерживаемая версия **React** была увеличена до v17.0.0
-- Минимальная поддерживаемая версия **Typescript** была увеличена до v4.4.4
+- Минимальная поддерживаемая версия **React** увеличена до v17.0.0
+- Минимальная поддерживаемая версия **Typescript** увеличена до v4.4.4
 
 ## Обратно несовместимые изменения
 
 ### ConfigProvider
 
-- По умолчанию `appearance` определяется автоматически, в зависимости от темы указанной в VK или настроек ОС.
-- Удалено устаревшее свойство `scheme`. Для определения темы используйте свойство `appearance`.
+- По умолчанию `appearance` определяется автоматически — в зависимости от темы, указанной в VK, или настроек ОС
+- Удалено устаревшее свойство `scheme`. Для определения темы используйте свойство `appearance`
 
 ```diff
 - <ConfigProvider scheme={scheme}>...</ConfigProvider>
@@ -19,7 +19,7 @@
 
 ### Root и View
 
-- Удалено устаревшее свойство `popout` и `modal`. Используйте эти свойства в компоненте [`SplitLayout`](#/SplitLayout)
+- Удалены устаревшие свойства `popout` и `modal`. Используйте эти свойства в компоненте [`SplitLayout`](#/SplitLayout)
 
 ```diff
 - <SplitLayout>
@@ -34,9 +34,9 @@
 + </SplitLayout>
 ```
 
-# Alert
+### Alert
 
-- Свойство `autoclose` типа AlertAction было переименовано в `autoClose`
+- Свойство `autoclose` типа _`AlertAction`_ переименовано в `autoClose`
 
 ```diff
  <Alert
@@ -61,7 +61,7 @@
 
 ### BannerData
 
-- Удалено свойство `ageRestriction` добавленное по ошибке. Используйте свойство `ageRestrictions`
+- Удалено свойство `ageRestriction`, добавленное по ошибке. Используйте свойство `ageRestrictions`
 
 ### ContentCard
 
@@ -69,7 +69,7 @@
 
 ### IconButton
 
-- Удалено устаревшее свойство `icon`. Необходимо сделать иконки дочерним элементом
+- Удалено устаревшее свойство `icon`. Передавайте иконки как `children`
 
 ```diff
 - <IconButton icon={<Icon16Clear />}/>
@@ -97,7 +97,7 @@
 
 ### Cell
 
-- Удалено устаревшие свойства `removable` и `selectable`. Используйте свойства `mode="removable"` и `mode="selectable"`
+- Удалены устаревшие свойства `removable` и `selectable`. Используйте свойства `mode="removable"` и `mode="selectable"`
 
 ```diff
 - <Cell removable>
@@ -117,11 +117,11 @@
 
 ### CustomSelect
 
-- Обновлено свойство onInputChange. Для фильтрации обновляйте props.options самостоятельно или используйте свойство filterFn.
+- Обновлено свойство `onInputChange`. Для фильтрации обновляйте `props.options` самостоятельно или используйте свойство `filterFn`
 
 ### Button
 
-- Удалены устаревшие значения свойства `mode` (`commerce`, `destructive`, `overlay_...`). Используйте свойства `mode` и `appearance`.
+- Удалены устаревшие значения свойства `mode` (`commerce`, `destructive`, `overlay_...`). Используйте свойства `mode` и `appearance`
 
 ```diff
 - <Button mode="commerce">
@@ -142,7 +142,7 @@
 
 ### ButtonGroup
 
-- В параметр `actions` компонентов `Banner` и `ModalCardBase` для группировки кнопок теперь нужно передавать `ButtonGroup` вместо `React.Fragment`.
+- В параметр `actions` компонентов `Banner` и `ModalCardBase` для группировки кнопок теперь нужно передавать `ButtonGroup` вместо `React.Fragment`
 
   ```diff
   - <Banner
@@ -189,7 +189,7 @@
 
 ### SliderSwitch
 
-Компонент устарел и был удален. Используйте [`SegmentedControl`](#/SegmentedControl).
+Устаревший компонент удален. Используйте [`SegmentedControl`](#/SegmentedControl)
 
 ```diff
 - <SliderSwitch
@@ -211,8 +211,8 @@
 
 ### Gallery
 
-- Вызов функции `onDragStart` теперь происходит только в начале drag event.
-- Удалено свойство `onEnd`. Используйте свойство `onDragEnd`, которое теперь принимает индекс слайда вторым параметром.
+- Вызов функции `onDragStart` теперь происходит только в начале drag event
+- Удалено свойство `onEnd`. Используйте свойство `onDragEnd`, которое теперь принимает индекс слайда вторым параметром
 
 ### Импорты
 
