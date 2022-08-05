@@ -119,6 +119,21 @@
 
 - Обновлено свойство `onInputChange`. Для фильтрации обновляйте `props.options` самостоятельно или используйте свойство `filterFn`
 
+### PanelHeader
+
+- Свойства `left` и `right` переименованы в `before` и `after`
+
+```diff
+ <PanelHeader
+-  left={<PanelHeaderClose />}
++  before={<PanelHeaderClose />}
+-  right={<Avatar size={36} />}
++  after={<Avatar size={36} />}
+ >
+   Стартовый экран
+ </PanelHeader>
+```
+
 ### Button
 
 - Удалены устаревшие значения свойства `mode` (`commerce`, `destructive`, `overlay_...`). Используйте свойства `mode` и `appearance`
