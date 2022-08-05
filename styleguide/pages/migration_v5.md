@@ -1,13 +1,15 @@
 Документацию по миграции c v3 на v4 можно найти [здесь](https://github.com/VKCOM/VKUI/releases/tag/v4.0.0).
 
+### &nbsp;
+
 ## Обновление React и Typescript
 
 - Минимальная поддерживаемая версия **React** увеличена до v17.0.0
 - Минимальная поддерживаемая версия **Typescript** увеличена до v4.4.4
 
-## Обратно несовместимые изменения
+### &nbsp;
 
-### ConfigProvider
+## [`ConfigProvider`](#/ConfigProvider)
 
 - По умолчанию `appearance` определяется автоматически — в зависимости от темы, указанной в VK, или настроек ОС
 - Удалено устаревшее свойство `scheme`. Для определения темы используйте свойство `appearance`
@@ -17,7 +19,9 @@
 + <ConfigProvider appearance={appearance}>...</ConfigProvider>
 ```
 
-### Root и View
+### &nbsp;
+
+## [`Root`](#/Root) и [`View`](#/View)
 
 - Удалены устаревшие свойства `popout` и `modal`. Используйте эти свойства в компоненте [`SplitLayout`](#/SplitLayout)
 
@@ -31,7 +35,9 @@
  </SplitLayout>
 ```
 
-### Alert
+### &nbsp;
+
+## [`Alert`](#/Alert)
 
 - Свойство `autoclose` типа _`AlertAction`_ переименовано в `autoClose`
 
@@ -56,7 +62,9 @@
  />
 ```
 
-### ActionSheetItem
+### &nbsp;
+
+## [`ActionSheetItem`](#/ActionSheetItem)
 
 - Свойство `autoclose` типа _`ItemClickHandler`_ переименовано в `autoClose`
 
@@ -67,15 +75,21 @@
 </ActionSheet>
 ```
 
-### PromoBanner
+### &nbsp;
+
+## [`PromoBanner`](#/PromoBanner)
 
 - Удалено свойство `ageRestriction` в типe _`BannerData`_, добавленное по ошибке. Используйте свойство `ageRestrictions`
 
-### ContentCard
+### &nbsp;
+
+## [`ContentCard`](#/ContentCard)
 
 - Удалено устаревшее свойство `image`. Используйте свойство `src`
 
-### IconButton
+### &nbsp;
+
+## [`IconButton`](#/IconButton)
 
 - Удалено устаревшее свойство `icon`. Передавайте иконки как `children`
 
@@ -86,7 +100,9 @@
 + </IconButton>
 ```
 
-### TabbarItem
+### &nbsp;
+
+## [`TabbarItem`](#/TabbarItem)
 
 - Удалено устаревшее свойство `label`. Используйте свойство `indicator`
 
@@ -103,7 +119,9 @@
  </TabbarItem>
 ```
 
-### Cell
+### &nbsp;
+
+## [`Cell`](#/Cell)
 
 - Удалены устаревшие свойства `removable` и `selectable`. Используйте свойства `mode="removable"` и `mode="selectable"`
 
@@ -114,7 +132,9 @@
 + <Cell mode="selectable">
 ```
 
-### AppRoot
+### &nbsp;
+
+## [`AppRoot`](#/AppRoot)
 
 - Удалено устаревшее свойство `embedded`. Используйте свойство `mode="embedded"`
 
@@ -123,11 +143,15 @@
 + <AppRoot mode="embedded">...</AppRoot>
 ```
 
-### CustomSelect
+### &nbsp;
+
+## [`CustomSelect`](#/CustomSelect)
 
 - Обновлено свойство `onInputChange`. Для фильтрации обновляйте `props.options` самостоятельно или используйте свойство `filterFn`
 
-### PanelHeader
+### &nbsp;
+
+## [`PanelHeader`](#/PanelHeader)
 
 - Свойства `left` и `right` переименованы в `before` и `after`
 
@@ -142,7 +166,9 @@
  </PanelHeader>
 ```
 
-### Button
+### &nbsp;
+
+## [`Button`](#/Button)
 
 - Удалены устаревшие значения свойства `mode` (`commerce`, `destructive`, `overlay_...`). Используйте свойства `mode` и `appearance`
 
@@ -163,7 +189,9 @@
 + <Button mode="outline" appearance="overlay">
 ```
 
-### Banner
+### &nbsp;
+
+## [`Banner`](#/Banner)
 
 - В параметр `actions` для группировки кнопок теперь передается `ButtonGroup` вместо `React.Fragment`
 
@@ -180,7 +208,9 @@
 />
 ```
 
-### ModalCardBase
+### &nbsp;
+
+## [`ModalCardBase`](#/ModalCardBase)
 
 - Устаревшее свойство `actionsLayout` удалено
 - В параметр `actions` для группировки кнопок теперь передается `ButtonGroup` вместо `React.Fragment`
@@ -199,7 +229,9 @@
 />
 ```
 
-### SliderSwitch
+### &nbsp;
+
+## [`SliderSwitch`](#/SliderSwitch)
 
 Устаревший компонент удален. Используйте [`SegmentedControl`](#/SegmentedControl)
 
@@ -221,12 +253,16 @@
  />
 ```
 
-### Gallery
+### &nbsp;
+
+## [`Gallery`](#/Gallery)
 
 - Вызов функции `onDragStart` теперь происходит только в начале drag event
 - Удалено свойство `onEnd`. Используйте свойство `onDragEnd`, которое теперь принимает индекс слайда вторым параметром
 
-### Импорты
+### &nbsp;
+
+## Типы и импорты
 
 - Удалены константы `IS_PLATFORM_ANDROID` и `IS_PLATFORM_IOS`
 - Удален тип `Scheme`
