@@ -1,13 +1,13 @@
 Документацию по миграции c v3 на v4 можно найти [здесь](https://github.com/VKCOM/VKUI/releases/tag/v4.0.0).
 
-### &nbsp;
+<br/><br/>
 
 ## Обновление React и Typescript
 
 - Минимальная поддерживаемая версия **React** увеличена до v17.0.0
 - Минимальная поддерживаемая версия **Typescript** увеличена до v4.4.4
 
-### &nbsp;
+<br/><br/>
 
 ## [`ConfigProvider`](#/ConfigProvider)
 
@@ -19,7 +19,7 @@
 + <ConfigProvider appearance={appearance}>...</ConfigProvider>
 ```
 
-### &nbsp;
+<br/><br/>
 
 ## [`Root`](#/Root) и [`View`](#/View)
 
@@ -35,11 +35,11 @@
  </SplitLayout>
 ```
 
-### &nbsp;
+<br/><br/>
 
 ## [`Alert`](#/Alert)
 
-- Свойство `autoclose` типа _`AlertAction`_ переименовано в `autoClose`
+- Свойство `autoclose` типа `AlertAction` переименовано в `autoClose`
 
 ```diff
  <Alert
@@ -62,11 +62,11 @@
  />
 ```
 
-### &nbsp;
+<br/><br/>
 
 ## [`ActionSheetItem`](#/ActionSheetItem)
 
-- Свойство `autoclose` типа _`ItemClickHandler`_ переименовано в `autoClose`
+- Свойство `autoclose` типа `ItemClickHandler` переименовано в `autoClose`
 
 ```diff
 <ActionSheet>
@@ -75,19 +75,19 @@
 </ActionSheet>
 ```
 
-### &nbsp;
+<br/><br/>
 
 ## [`PromoBanner`](#/PromoBanner)
 
-- Удалено свойство `ageRestriction` в типe _`BannerData`_, добавленное по ошибке. Используйте свойство `ageRestrictions`
+- Удалено свойство `ageRestriction` в типe `BannerData`, добавленное по ошибке. Используйте свойство `ageRestrictions`
 
-### &nbsp;
+<br/><br/>
 
 ## [`ContentCard`](#/ContentCard)
 
 - Удалено устаревшее свойство `image`. Используйте свойство `src`
 
-### &nbsp;
+<br/><br/>
 
 ## [`IconButton`](#/IconButton)
 
@@ -100,7 +100,7 @@
 + </IconButton>
 ```
 
-### &nbsp;
+<br/><br/>
 
 ## [`TabbarItem`](#/TabbarItem)
 
@@ -119,7 +119,7 @@
  </TabbarItem>
 ```
 
-### &nbsp;
+<br/><br/>
 
 ## [`Cell`](#/Cell)
 
@@ -132,7 +132,7 @@
 + <Cell mode="selectable">
 ```
 
-### &nbsp;
+<br/><br/>
 
 ## [`AppRoot`](#/AppRoot)
 
@@ -143,13 +143,13 @@
 + <AppRoot mode="embedded">...</AppRoot>
 ```
 
-### &nbsp;
+<br/><br/>
 
 ## [`CustomSelect`](#/CustomSelect)
 
 - Обновлено свойство `onInputChange`. Для фильтрации обновляйте `props.options` самостоятельно или используйте свойство `filterFn`
 
-### &nbsp;
+<br/><br/>
 
 ## [`PanelHeader`](#/PanelHeader)
 
@@ -166,7 +166,7 @@
  </PanelHeader>
 ```
 
-### &nbsp;
+<br/><br/>
 
 ## [`Button`](#/Button)
 
@@ -189,7 +189,7 @@
 + <Button mode="outline" appearance="overlay">
 ```
 
-### &nbsp;
+<br/><br/>
 
 ## [`Banner`](#/Banner)
 
@@ -208,7 +208,7 @@
 />
 ```
 
-### &nbsp;
+<br/><br/>
 
 ## [`ModalCardBase`](#/ModalCardBase)
 
@@ -229,7 +229,7 @@
 />
 ```
 
-### &nbsp;
+<br/><br/>
 
 ## [`SliderSwitch`](#/SliderSwitch)
 
@@ -253,14 +253,14 @@
  />
 ```
 
-### &nbsp;
+<br/><br/>
 
 ## [`Gallery`](#/Gallery)
 
 - Вызов функции `onDragStart` теперь происходит только в начале drag event
 - Удалено свойство `onEnd`. Используйте свойство `onDragEnd`, которое теперь принимает индекс слайда вторым параметром
 
-### &nbsp;
+<br/><br/>
 
 ## Типы и импорты
 
