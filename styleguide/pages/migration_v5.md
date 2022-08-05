@@ -59,6 +59,17 @@
  />
 ```
 
+### ActionSheetItem
+
+- Свойство `autoclose` типа _`ItemClickHandler`_ переименовано в `autoClose`
+
+```diff
+<ActionSheet>
+-  <ActionSheetItem autoclose>Сохранить в закладках</ActionSheetItem>
++  <ActionSheetItem autoClose>Сохранить в закладках</ActionSheetItem>
+</ActionSheet>
+```
+
 ### BannerData
 
 - Удалено свойство `ageRestriction`, добавленное по ошибке. Используйте свойство `ageRestrictions`
