@@ -1,0 +1,22 @@
+name: Feature request
+description: Есть идея, как улучшить библиотеку? Напишите нам!
+title: "[Feature]: "
+labels: ["type:feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Спасибо за то, что помогаете нам стать лучше!
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Описание
+      description: Дайте описание фичи или улучшения текущего функционала.
+      placeholder: Пару строк об улучшении...
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Скриншоты
+      description: Если у вас есть примеры того, как это будет выглядеть, прикрепите их ниже.
