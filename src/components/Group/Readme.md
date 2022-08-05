@@ -138,7 +138,7 @@ const SharedContent = () => {
 
       <Group
         header={<Header>Адреса</Header>}
-        description="Для использования в мини-приложениях, Delivery Cub, VK Taxi и других сервисах ВКонтакте. Эти адреса видны только Вам."
+        description="Для использования в мини-приложениях, Delivery Club, VK Taxi и других сервисах ВКонтакте. Эти адреса видны только Вам."
       >
         <CellButton>Добавить домашний адрес</CellButton>
         <CellButton>Добавить рабочий адрес</CellButton>
