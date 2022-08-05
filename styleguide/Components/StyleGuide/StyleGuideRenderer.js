@@ -24,6 +24,7 @@ let initialState = {
   appearance: Appearance.LIGHT,
   styleguideAppearance: Appearance.LIGHT,
   webviewType: WebviewType.VKAPPS,
+  transitionMotionEnabled: true,
 };
 
 try {

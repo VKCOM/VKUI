@@ -21,31 +21,34 @@
   border: none;
   appearance: none;
   text-overflow: ellipsis;
-  height: 42px;
-  line-height: 20px;
-  font-size: 16px;
+  font-weight: var(--vkui--font_text--font_weight--regular);
+  font-size: var(--vkui--font_text--font_size--regular);
+  line-height: var(--vkui--font_text--line_height--regular);
   color: var(--text_primary, var(--vkui--color_text_primary));
-  padding: 11px;
+  padding-right: 12px;
+  padding-left: 12px;
   position: relative;
   z-index: 2;
   background: transparent;
 }
 
 .Input--sizeY-compact .Input__el {
-  height: 34px;
-  padding-top: 9px;
-  padding-bottom: 9px;
-  line-height: 20px;
-  font-size: 15px;
+  font-size: var(--vkui--font_text--font_size--compact);
+  line-height: var(--vkui--font_text--line_height--compact);
+}
+
+.Input--hasBefore .Input__el {
+  padding-left: 0;
+}
+
+.Input--hasAfter .Input__el {
+  padding-right: 0;
 }
 
 @media (--sizeY-compact) {
   .Input--sizeY-none .Input__el {
-    height: 34px;
-    padding-top: 9px;
-    padding-bottom: 9px;
-    line-height: 20px;
-    font-size: 15px;
+    font-size: var(--vkui--font_text--font_size--compact);
+    line-height: var(--vkui--font_text--line_height--compact);
   }
 }
 

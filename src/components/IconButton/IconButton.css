@@ -17,6 +17,10 @@
   border-radius: 9999px;
 }
 
+.IconButton--sizeY-compact {
+  height: 44px;
+}
+
 .IconButton[disabled] {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
@@ -33,53 +37,20 @@
   padding: 16px 14px;
 }
 
-.IconButton .Icon--24 {
-  padding: 12px;
-}
-
-.IconButton .Icon--28 {
-  padding: 10px;
-}
-
-.FormItem--removable .Removable__content > .IconButton,
-.FormLayoutGroup--removable .Removable__content > .IconButton,
-.FormField__after .IconButton {
-  display: flex;
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: inherit;
-}
-
-.FormField__after .IconButton .Icon.Icon.Icon {
-  padding: 0;
-}
-
-/*
- * sizeY: COMPACT
- */
-.IconButton--sizeY-compact {
-  height: 44px;
-}
-
-.FormField__after .IconButton--sizeY-compact {
-  width: 36px;
-  height: 36px;
-}
-
-.FormItem--removable .Removable__content > .IconButton--sizeY-compact,
-.FormLayoutGroup--removable .Removable__content > .IconButton--sizeY-compact {
-  height: 36px;
-}
-
 .IconButton--sizeY-compact .Icon--16,
 .IconButton--sizeY-compact .Icon--16.Icon--w-8 {
   padding: 14px;
 }
 
+.IconButton .Icon--24 {
+  padding: 12px;
+}
+
 .IconButton--sizeY-compact .Icon--24 {
+  padding: 10px;
+}
+
+.IconButton .Icon--28 {
   padding: 10px;
 }
 
@@ -90,16 +61,6 @@
 @media (--sizeY-compact) {
   .IconButton--sizeY-none {
     height: 44px;
-  }
-
-  .FormField__after .IconButton--sizeY-none {
-    width: 36px;
-    height: 36px;
-  }
-
-  .FormItem--removable .Removable__content > .IconButton--sizeY-none,
-  .FormLayoutGroup--removable .Removable__content > .IconButton--sizeY-none {
-    height: 36px;
   }
 
   .IconButton--sizeY-none .Icon--16,
@@ -113,5 +74,49 @@
 
   .IconButton--sizeY-none .Icon--28 {
     padding: 8px;
+  }
+}
+
+/**
+ * CMP:
+ * - FormItem
+ * - FormLayoutGroup
+ * - FormField
+ */
+.FormItem--removable .Removable__content > .IconButton,
+.FormLayoutGroup--removable .Removable__content > .IconButton,
+.FormField__after .IconButton {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  width: var(--vkui--size_field_height--regular);
+  height: var(--vkui--size_field_height--regular);
+  border-radius: var(--vkui--size_border_radius--regular);
+}
+
+.FormField__after .IconButton .Icon.Icon.Icon {
+  padding: 0;
+}
+
+.FormField__after .IconButton--sizeY-compact {
+  width: var(--vkui--size_field_height--compact);
+  height: var(--vkui--size_field_height--compact);
+}
+
+.FormItem--removable .Removable__content > .IconButton--sizeY-compact,
+.FormLayoutGroup--removable .Removable__content > .IconButton--sizeY-compact {
+  height: var(--vkui--size_field_height--compact);
+}
+
+@media (--sizeY-compact) {
+  .FormField__after .IconButton--sizeY-none {
+    width: var(--vkui--size_field_height--compact);
+    height: var(--vkui--size_field_height--compact);
+  }
+
+  .FormItem--removable .Removable__content > .IconButton--sizeY-none,
+  .FormLayoutGroup--removable .Removable__content > .IconButton--sizeY-none {
+    height: var(--vkui--size_field_height--compact);
   }
 }

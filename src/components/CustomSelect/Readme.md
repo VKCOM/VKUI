@@ -1,44 +1,15 @@
 Делает из [SelectMimicry](#!/SelectMimicry) селект с выпадающим списком. Используется внутри [Select](#!/Select).
 
 ```jsx { "props": { "layout": false, "iframe": false } }
+const getUsers = (usersArray) =>
+  usersArray.map((user) => ({
+    label: user.name,
+    value: `${user.id}`,
+    avatar: user.photo_100,
+    description: user.screen_name,
+  }));
+
 const Example = () => {
-  const getUsers = () =>
-    getRandomUsers(10).map((user) => ({
-      label: user.name,
-      value: user.id,
-      avatar: user.photo_100,
-      description: user.screen_name,
-    }));
-
-  const cities = [
-    {
-      label: "Санкт-Петербург",
-      description: "Россия",
-      value: 0,
-    },
-    {
-      label: "Москва",
-      description: "Россия",
-      value: 1,
-    },
-    {
-      label: "Новосибирск",
-      description: "Россия",
-      disabled: true,
-      value: 2,
-    },
-    {
-      label: "Нью-Йорк",
-      description: "США",
-      value: 3,
-    },
-    {
-      label: "Чикаго",
-      description: "США",
-      value: 4,
-    },
-  ];
-
   const selectTypes = [
     {
       label: "SelectType.default",
@@ -55,29 +26,8 @@ const Example = () => {
   ];
 
   const [selectType, setSelectType] = React.useState(undefined);
-  const [value, setValue] = React.useState("0");
-  const [query, setQuery] = React.useState("");
-  const [newUsers, setNewUsers] = React.useState([...getUsers()]);
 
-  const [searchable, setSearchable] = React.useState(false);
-  const [remoteQuery, setRemoteQuery] = React.useState("");
-  const [fetching, setFetching] = React.useState(false);
-  const [remoteUsers, setRemoteUsers] = React.useState([]);
-
-  let timeout;
-
-  const users = [...getUsers()];
-
-  const customSearchOptions = () => {
-    const options = [...newUsers];
-    if (query.length > 0) {
-      options.unshift({
-        label: `Добавить пользователя ${query}`,
-        value: "0",
-      });
-    }
-    return options;
-  };
+  const users = [...getUsers(getRandomUsers(10))];
 
   return (
     <Div>
@@ -144,124 +94,220 @@ const Example = () => {
       </FormItem>
 
       <FormItem top="Администратор" bottom="Кастомное поведение при поиске">
-        <CustomSelect
-          placeholder="Введите имя пользователя"
-          searchable
-          options={customSearchOptions()}
-          onInputChange={(e) => {
-            setQuery(e.target.value);
-          }}
-          renderOption={({ option, ...restProps }) => (
-            <CustomSelectOption
-              style={option.value === "0" ? { color: "var(--accent)" } : {}}
-              {...restProps}
-            >
-              {option.label}
-            </CustomSelectOption>
-          )}
-          onChange={(e) => {
-            if (e.target.value === "0") {
-              setNewUsers([...newUsers, { label: query, value: query }]);
-              setQuery("");
-            } else {
-              setValue(e.target.value);
-            }
-            setQuery("");
-          }}
-        />
+        <CustomSearchLogicSelect />
       </FormItem>
+
       <FormItem top="Город" bottom="Кастомный алгоритм поиска">
-        <CustomSelect
-          placeholder="Введите название города или страны"
-          searchable
-          filterFn={(value, option) =>
-            option.label.toLowerCase().includes(value.toLowerCase()) ||
-            option.description.toLowerCase().includes(value.toLowerCase())
-          }
-          renderOption={({ option, ...restProps }) => (
-            <CustomSelectOption
-              {...restProps}
-              description={option.description}
-            />
-          )}
-          options={cities}
-        />
+        <CustomSearchAlgoSelect />
       </FormItem>
 
       <Header>Асинхронная загрузка списка</Header>
-      <FormLayoutGroup mode="horizontal">
-        <FormItem style={{ flexGrow: 1, flexShrink: 1 }}>
-          <CustomSelect
-            searchable={searchable}
-            placeholder={searchable ? "Введите имя пользователя" : "Не выбран"}
-            disabled={searchable && fetching}
-            onInputChange={
-              searchable
-                ? (e) => {
-                    const _remoteQuery = e.target.value;
-                    clearTimeout(timeout);
-                    setRemoteQuery(_remoteQuery);
-                    if (_remoteQuery.length < 3) {
-                      setRemoteUsers([]);
-                      setFetching(false);
-                    } else {
-                      setFetching(true);
-                      timeout = setTimeout(() => {
-                        setRemoteUsers([...getUsers()]);
-                        setFetching(false);
-                      }, 1500);
-                    }
-                  }
-                : undefined
-            }
-            onOpen={
-              !searchable
-                ? () => {
-                    if (remoteUsers.length === 0) {
-                      setFetching(true);
-                      timeout = setTimeout(() => {
-                        setRemoteUsers([...getUsers()]);
-                        setFetching(false);
-                        clearTimeout(timeout);
-                      }, 1500);
-                    }
-                  }
-                : undefined
-            }
-            onClose={() => {
-              clearTimeout(timeout);
-              setRemoteUsers([]);
-              setRemoteQuery("");
-            }}
-            fetching={fetching}
-            options={remoteUsers}
-            renderDropdown={
-              searchable &&
-              !fetching &&
-              (({ defaultDropdownContent }) => {
-                if (remoteQuery.length < 3) {
-                  return (
-                    <Text
-                      style={{ padding: 12, color: "var(--text_secondary)" }}
-                    >
-                      Нужно ввести хотя бы три символа
-                    </Text>
-                  );
-                } else {
-                  return defaultDropdownContent;
-                }
-              })
-            }
-          />
-        </FormItem>
-
-        <FormItem style={{ flexBasis: "200px", flexGrow: 0 }}>
-          <Checkbox onChange={(e) => setSearchable(e.target.checked)}>
-            Использовать поиск
-          </Checkbox>
-        </FormItem>
-      </FormLayoutGroup>
+      <AsyncCustomSelect />
     </Div>
+  );
+};
+
+// **
+// * Кастомное поведение при поиске
+// **
+const CustomSearchLogicSelect = () => {
+  const [value, setValue] = React.useState("");
+  const [query, setQuery] = React.useState("");
+  const [newUsers, setNewUsers] = React.useState([
+    ...getUsers(getRandomUsers(10)),
+  ]);
+
+  const customSearchOptions = () => {
+    const options = [...newUsers];
+    if (
+      query.length > 0 &&
+      !options.find((user) => user.value === query || user.label === query)
+    ) {
+      options.unshift({
+        label: `Добавить пользователя ${query}`,
+        value: "0",
+      });
+    }
+    return options;
+  };
+
+  const onCustomSearchChange = (e) => {
+    if (e.target.value === "0") {
+      setNewUsers([...newUsers, { label: query, value: query }]);
+      setValue(query);
+    } else {
+      setValue(e.target.value);
+    }
+    setQuery("");
+  };
+
+  const onCustomSearchInputChange = (e) => {
+    setQuery(e.target.value);
+  };
+
+  return (
+    <CustomSelect
+      value={value}
+      placeholder="Введите имя пользователя"
+      searchable
+      options={customSearchOptions()}
+      onInputChange={onCustomSearchInputChange}
+      renderOption={({ option, ...restProps }) => (
+        <CustomSelectOption
+          style={option.value === "0" ? { color: "var(--accent)" } : {}}
+          {...restProps}
+        >
+          {option.label}
+        </CustomSelectOption>
+      )}
+      onChange={onCustomSearchChange}
+    />
+  );
+};
+
+// **
+// * Кастомный алгоритм поиска
+// **
+const CustomSearchAlgoSelect = () => {
+  const cities = [
+    {
+      label: "Санкт-Петербург",
+      description: "Россия",
+      value: "0",
+    },
+    {
+      label: "Москва",
+      description: "Россия",
+      value: "1",
+    },
+    {
+      label: "Новосибирск",
+      description: "Россия",
+      disabled: true,
+      value: "2",
+    },
+    {
+      label: "Нью-Йорк",
+      description: "США",
+      value: "3",
+    },
+    {
+      label: "Чикаго",
+      description: "США",
+      value: "4",
+    },
+  ];
+
+  const customSearchFilter = (value, option) =>
+    option.label.toLowerCase().includes(value.toLowerCase()) ||
+    option.description.toLowerCase().includes(value.toLowerCase());
+
+  return (
+    <CustomSelect
+      placeholder="Введите название города или страны"
+      searchable
+      filterFn={customSearchFilter}
+      renderOption={({ option, ...restProps }) => (
+        <CustomSelectOption {...restProps} description={option.description} />
+      )}
+      options={cities}
+    />
+  );
+};
+
+// **
+// * Асинхронная загрузка списка
+// **
+const AsyncCustomSelect = () => {
+  const [searchable, setSearchable] = React.useState(false);
+  const [remoteQuery, setRemoteQuery] = React.useState("");
+  const [fetching, setFetching] = React.useState(false);
+  const [remoteUsers, setRemoteUsers] = React.useState([]);
+
+  let timeout;
+
+  const cleanFetchingTimeout = () => {
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+  };
+
+  const fetchRemoteUsers = () => {
+    setFetching(true);
+    timeout = setTimeout(() => {
+      setRemoteUsers([...getUsers(getAllUsers())]);
+      setFetching(false);
+      cleanFetchingTimeout();
+    }, 1500);
+  };
+
+  const searchRemoteUsers = (e) => {
+    const _remoteQuery = e.target.value;
+    cleanFetchingTimeout();
+    setRemoteQuery(_remoteQuery);
+
+    if (_remoteQuery.length < 3) {
+      setRemoteUsers([]);
+      setFetching(false);
+    } else {
+      fetchRemoteUsers();
+    }
+  };
+
+  const clearRemoteUsers = () => {
+    setRemoteUsers([]);
+    setRemoteQuery("");
+    cleanFetchingTimeout();
+  };
+
+  const renderDropdown = ({ defaultDropdownContent }) => {
+    if (remoteQuery.length < 3) {
+      return (
+        <Text style={{ padding: 12, color: "var(--text_secondary)" }}>
+          Нужно ввести хотя бы три символа
+        </Text>
+      );
+    }
+    return defaultDropdownContent;
+  };
+
+  React.useEffect(() => {
+    return () => cleanFetchingTimeout();
+  }, []);
+
+  return (
+    <FormLayoutGroup mode="horizontal">
+      <FormItem style={{ flexGrow: 1, flexShrink: 1 }}>
+        <CustomSelect
+          options={remoteUsers}
+          searchable={searchable}
+          placeholder={searchable ? "Введите имя пользователя" : "Не выбран"}
+          disabled={searchable && fetching}
+          onInputChange={searchable ? searchRemoteUsers : undefined}
+          onOpen={
+            searchable
+              ? undefined
+              : remoteUsers.length === 0 && fetchRemoteUsers
+          }
+          onClose={() => {
+            console.log("CLOSED [async CustomSelect]");
+          }}
+          fetching={fetching}
+          renderDropdown={searchable && !fetching && renderDropdown}
+        />
+      </FormItem>
+
+      <FormItem style={{ flexBasis: "200px", flexGrow: 0 }}>
+        <Checkbox
+          onChange={(e) => {
+            setSearchable(e.target.checked);
+            clearRemoteUsers();
+          }}
+        >
+          Использовать поиск
+        </Checkbox>
+      </FormItem>
+    </FormLayoutGroup>
   );
 };
 

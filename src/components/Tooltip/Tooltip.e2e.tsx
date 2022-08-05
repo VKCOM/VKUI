@@ -26,10 +26,6 @@ describe("Tooltip", () => {
         header: [undefined, "header"],
       },
       {
-        header: ["header"],
-        mode: ["light"],
-      },
-      {
         alignX: ["left", "right"],
         alignY: ["top", "bottom"],
       },

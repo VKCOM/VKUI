@@ -25,7 +25,7 @@ export interface SelectMimicryProps
 /**
  * @see https://vkcom.github.io/VKUI/#/SelectMimicry
  */
-const SelectMimicry = ({
+export const SelectMimicry = ({
   tabIndex = 0,
   placeholder,
   children,
@@ -56,7 +56,8 @@ const SelectMimicry = ({
         !children && "Select--not-selected",
         multiline && "Select--multiline",
         align && `Select--align-${align}`,
-        !children && "Select--empty"
+        before && "Select--hasBefore",
+        after && "Select--hasAfter"
       )}
       getRootRef={getRootRef}
       onClick={disabled ? undefined : onClick}
@@ -73,5 +74,3 @@ const SelectMimicry = ({
     </FormField>
   );
 };
-
-export { SelectMimicry };

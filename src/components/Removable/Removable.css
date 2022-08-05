@@ -37,7 +37,7 @@
   font-size: 15px;
   line-height: 45px;
   color: var(--white);
-  background-color: var(--destructive);
+  background-color: var(--destructive, var(--vkui--color_background_negative));
   border: none;
   border-radius: 0;
 }
@@ -79,7 +79,7 @@
   content: "";
   width: 22px;
   height: 22px;
-  background-color: var(--destructive);
+  background-color: var(--destructive, var(--vkui--color_background_negative));
   border-radius: 50%;
 }
 

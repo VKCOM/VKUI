@@ -97,6 +97,10 @@ export function getRandomUser() {
   return prepareUser(user);
 }
 
+export function getAllUsers() {
+  return users.map((user) => prepareUser(user));
+}
+
 export function getRandomUsers(count) {
   let items = [];
   let names = {};

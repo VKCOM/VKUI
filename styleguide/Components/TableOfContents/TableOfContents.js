@@ -13,10 +13,13 @@ import {
 import {
   Icon28ChevronDownOutline,
   Icon28ChevronUpOutline,
+  Icon28WarningTriangleOutline,
 } from "@vkontakte/icons";
+import { Icon28TokenizedOutline } from "../Icon28TokenizedOutline/Icon28TokenizedOutline";
 import { deprecated } from "../../deprecated";
 import getInfoFromHash from "react-styleguidist/lib/client/utils/getInfoFromHash";
 import { tokenized } from "../../tokenized";
+import { unstable } from "../../unstable";
 import "./TableOfContents.css";
 
 function capitalize(string = "") {
@@ -54,13 +57,13 @@ const normalizer = (sections) => {
       name,
       title,
       content,
-      sections = [],
+      sections: childrenSections = [],
       components = [],
       expand = false,
       search,
     }) => {
       const children = normalizer([
-        ...sections,
+        ...childrenSections,
         ...components.map((component) => {
           return {
             name: component.name,
@@ -249,14 +252,20 @@ class TableOfContents extends React.PureComponent {
                     )}
                   </IconButton>
                 )) ||
-                (tokenized.includes(section.name) && (
-                  <img
-                    className="ReactComponent__tokenized"
-                    width={22}
-                    alt="Компонент поддерживает vkui-tokens"
-                    src={require("../../assets/static/tokenized.png")}
-                  />
-                ))
+                (unstable.includes(section.name) &&
+                  !deprecated.includes(section.name) && (
+                    <Icon28WarningTriangleOutline
+                      fill="var(--vkui--color_accent_orange)"
+                      title="Компонент является нестабильным"
+                    />
+                  )) ||
+                (tokenized.includes(section.name) &&
+                  !deprecated.includes(section.name) && (
+                    <Icon28TokenizedOutline
+                      stroke="var(--vkui--color_icon_accent)"
+                      title="Компонент поддерживает vkui-tokens"
+                    />
+                  ))
               }
               onClick={!section.href ? this.onExpandCellClick : undefined}
               data-section-name={section.name}

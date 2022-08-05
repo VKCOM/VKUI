@@ -1,9 +1,9 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import { Tappable } from "../Tappable/Tappable";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { Platform } from "../../lib/platform";
 import { HasComponent, HasRootRef } from "../../types";
 import "./TabbarItem.css";
@@ -43,11 +43,13 @@ export const TabbarItem = ({
       {...restProps}
       disabled={disabled}
       href={href}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames(getClassName("TabbarItem", platform), {
-        "TabbarItem--selected": selected,
-        "TabbarItem--text": !!text,
-      })}
+      vkuiClass={classNames(
+        "TabbarItem",
+        platform === Platform.IOS && "TabbarItem--ios",
+        platform === Platform.ANDROID && "TabbarItem--android",
+        selected && "TabbarItem--selected",
+        !!text && "TabbarItem--text"
+      )}
     >
       <Tappable
         role="presentation"
@@ -69,7 +71,11 @@ export const TabbarItem = ({
             {hasReactNode(indicator) && indicator}
           </div>
         </div>
-        {text && <div vkuiClass="TabbarItem__text">{text}</div>}
+        {text && (
+          <Footnote Component="div" vkuiClass="TabbarItem__text" weight="2">
+            {text}
+          </Footnote>
+        )}
       </div>
     </Component>
   );

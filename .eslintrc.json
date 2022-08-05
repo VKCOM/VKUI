@@ -4,7 +4,8 @@
     "prettier",
     "prettier/react",
     "prettier/@typescript-eslint",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "plugin:compat/recommended"
   ],
   "parserOptions": {
     "project": "./tsconfig.json",
@@ -15,6 +16,15 @@
       "restParams": true,
       "spread": true
     }
+  },
+  "settings": {
+    "lintAllEsApis": true,
+    "polyfills": [
+      "Array.includes",
+      "Array.find",
+      "String.padStart",
+      "Intl" // Отсутствует. Не поддерживается в iOS Safari 9, Calendar должен использоваться только на desktop
+    ]
   },
   "globals": {
     "Element": true
@@ -27,6 +37,8 @@
   },
   "plugins": ["import", "vkui"],
   "rules": {
+    "no-shadow": "off", // Need using @typescript-eslint/no-shadow
+    "@typescript-eslint/prefer-ts-expect-error": "off", // Need typescript > 3.9
     "@typescript-eslint/explicit-member-accessibility": "off",
     "@typescript-eslint/no-unnecessary-condition": "off",
     "@typescript-eslint/no-magic-numbers": "off",
@@ -127,6 +139,7 @@
         "onlyForFunctionsWithNames": ["classNames", "classNamesString"]
       }
     ],
+    "compat/compat": "error",
     "no-shadow": "off"
   },
   "overrides": [
@@ -141,7 +154,9 @@
       },
       "rules": {
         "no-restricted-properties": "off",
-        "no-restricted-globals": "off"
+        "no-restricted-globals": "off",
+        "compat/compat": "off",
+        "react/display-name": "off"
       }
     },
     {

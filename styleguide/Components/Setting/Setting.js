@@ -63,13 +63,13 @@ export const Setting = ({
                 {options.map((item) => {
                   const isPrimitive =
                     typeof item === "string" || typeof item === "number";
-                  const value = isPrimitive ? item : item.value;
+                  const option = isPrimitive ? item : item.value;
                   const title = isPrimitive ? item : item.title;
                   return (
                     <ActionSheetItem
                       autoClose
-                      key={value}
-                      value={value}
+                      key={option}
+                      value={option}
                       onClick={() => onChange(value)}
                     >
                       {title}

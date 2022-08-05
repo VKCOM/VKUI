@@ -7,139 +7,111 @@
 После закрытия компонент вызывает обязательное свойство `onClose`, и вам необходимо убрать `Snackbar` со страницы.
 
 ```jsx
-class SnackBarExample extends React.Component {
-  constructor(props) {
-    super(props);
+const SnackBarExample = () => {
+  const [text, setText] = React.useState("");
+  const [snackbar, setSnackbar] = React.useState(null);
 
-    this.state = {
-      text: "",
-      snackbar: null,
-    };
-
-    this.openBaseWithAction = this.openBaseWithAction.bind(this);
-    this.openVertical = this.openVertical.bind(this);
-    this.openWithAvatar = this.openWithAvatar.bind(this);
-    this.openDark = this.openDark.bind(this);
-  }
-
-  componentDidMount() {
-    this.openBaseWithAction();
-  }
-
-  openBaseWithAction() {
-    if (this.state.snackbar) return;
-    this.setState({
-      snackbar: (
-        <Snackbar
-          onClose={() => this.setState({ snackbar: null })}
-          action="Поделиться"
-          onActionClick={() => this.setState({ text: "Добавляем метку." })}
-          before={
-            <Avatar size={24} style={{ background: "var(--accent)" }}>
-              <Icon16Done fill="#fff" width={14} height={14} />
-            </Avatar>
-          }
-        >
-          Ссылка скопирована
-        </Snackbar>
-      ),
-    });
-  }
-
-  openVertical() {
-    if (this.state.snackbar) return;
-    this.setState({
-      snackbar: (
-        <Snackbar
-          layout="vertical"
-          onClose={() => this.setState({ snackbar: null })}
-          action="Перейти в раздел «Понравилось»"
-          onActionClick={() =>
-            this.setState({ text: "Открыта подробная информация." })
-          }
-          before={
-            <Avatar size={24} style={{ background: "var(--accent)" }}>
-              <Icon16Done fill="#fff" width={14} height={14} />
-            </Avatar>
-          }
-        >
-          Ссылка сохранена в закладки
-        </Snackbar>
-      ),
-    });
-  }
-
-  openWithAvatar() {
-    if (this.state.snackbar) return;
-    this.setState({
-      snackbar: (
-        <Snackbar
-          onClose={() => this.setState({ snackbar: null })}
-          onActionClick={() =>
-            this.setState({ text: "Сообщение Ивану было отменено." })
-          }
-          after={<Avatar src={getAvatarUrl("user_wayshev")} size={32} />}
-        >
-          Отправлено Ивану Барышеву
-        </Snackbar>
-      ),
-    });
-  }
-
-  openDark() {
-    if (this.state.snackbar) return;
-    this.setState({
-      snackbar: (
-        <AppearanceProvider appearance="dark">
-          <Snackbar
-            onClose={() => this.setState({ snackbar: null })}
-            action="Поделиться"
-            onActionClick={() => this.setState({ text: "Добавляем метку." })}
-            before={
-              <Avatar size={24} style={{ background: "var(--accent)" }}>
-                <Icon16Done fill="#fff" width={14} height={14} />
-              </Avatar>
-            }
-          >
-            Ссылка скопирована
-          </Snackbar>
-        </AppearanceProvider>
-      ),
-    });
-  }
-
-  render() {
-    return (
-      <View activePanel="example">
-        <Panel id="example">
-          <PanelHeader>Snackbar</PanelHeader>
-          <Group>
-            <CellButton onClick={this.openBaseWithAction}>
-              Уведомление с иконкой и кнопкой
-            </CellButton>
-            <CellButton onClick={this.openVertical}>
-              Вертикальное расположение
-            </CellButton>
-            <CellButton onClick={this.openWithAvatar}>
-              Уведомление с аватаркой
-            </CellButton>
-            <CellButton onClick={this.openDark}>
-              Уведомление с темной темой
-            </CellButton>
-          </Group>
-
-          {this.state.text && (
-            <Group>
-              <Div>{this.state.text}</Div>
-            </Group>
-          )}
-
-          {this.state.snackbar}
-        </Panel>
-      </View>
+  const openBaseWithAction = () => {
+    if (snackbar) return;
+    setSnackbar(
+      <Snackbar
+        onClose={() => setSnackbar(null)}
+        action="Поделиться"
+        onActionClick={() => setText("Добавляем метку.")}
+        before={
+          <Avatar size={24} style={{ background: "var(--accent)" }}>
+            <Icon16Done fill="#fff" width={14} height={14} />
+          </Avatar>
+        }
+      >
+        Ссылка скопирована
+      </Snackbar>
     );
-  }
-}
+  };
+
+  const openVertical = () => {
+    if (snackbar) return;
+    setSnackbar(
+      <Snackbar
+        layout="vertical"
+        onClose={() => setSnackbar(null)}
+        action="Перейти в раздел «Понравилось»"
+        onActionClick={() => setText("Открыта подробная информация.")}
+        before={
+          <Avatar size={24} style={{ background: "var(--accent)" }}>
+            <Icon16Done fill="#fff" width={14} height={14} />
+          </Avatar>
+        }
+      >
+        Ссылка сохранена в закладки
+      </Snackbar>
+    );
+  };
+
+  const openWithAvatar = () => {
+    if (snackbar) return;
+    setSnackbar(
+      <Snackbar
+        onClose={() => setSnackbar(null)}
+        onActionClick={() => setText("Сообщение Ивану было отменено.")}
+        after={<Avatar src={getAvatarUrl("user_wayshev")} size={32} />}
+      >
+        Отправлено Ивану Барышеву
+      </Snackbar>
+    );
+  };
+
+  const openDark = () => {
+    if (snackbar) return;
+    setSnackbar(
+      <Snackbar
+        mode="dark"
+        onClose={() => setSnackbar(null)}
+        action="Поделиться"
+        onActionClick={() => setText("Добавляем метку.")}
+        before={
+          <Avatar size={24} style={{ background: "var(--accent)" }}>
+            <Icon16Done fill="#fff" width={14} height={14} />
+          </Avatar>
+        }
+      >
+        Ссылка скопирована
+      </Snackbar>
+    );
+  };
+
+  React.useEffect(() => {
+    openBaseWithAction();
+  }, []);
+
+  return (
+    <View activePanel="example">
+      <Panel id="example">
+        <PanelHeader>Snackbar</PanelHeader>
+        <Group>
+          <CellButton onClick={openBaseWithAction}>
+            Уведомление с иконкой и кнопкой
+          </CellButton>
+          <CellButton onClick={openVertical}>
+            Вертикальное расположение
+          </CellButton>
+          <CellButton onClick={openWithAvatar}>
+            Уведомление с аватаркой
+          </CellButton>
+          <CellButton onClick={openDark}>Уведомление с темной темой</CellButton>
+        </Group>
+
+        {text && (
+          <Group>
+            <Div>{text}</Div>
+          </Group>
+        )}
+
+        {snackbar}
+      </Panel>
+    </View>
+  );
+};
 
 <SnackBarExample />;
 ```

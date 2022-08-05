@@ -1,11 +1,10 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
-import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import { Caption } from "../Typography/Caption/Caption";
 import { Tappable } from "../Tappable/Tappable";
 import { Subhead } from "../Typography/Subhead/Subhead";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { Avatar } from "../Avatar/Avatar";
 import { HasComponent, HasRef, HasRootRef } from "../../types";
 import "./HorizontalCell.css";
@@ -53,14 +52,9 @@ export const HorizontalCell = ({
   getRef,
   ...restProps
 }: HorizontalCellProps) => {
-  const platform = usePlatform();
-
   return (
     <div
-      vkuiClass={classNames(
-        getClassName("HorizontalCell", platform),
-        `HorizontalCell--${size}`
-      )}
+      vkuiClass={classNames("HorizontalCell", `HorizontalCell--${size}`)}
       ref={getRootRef}
       style={style}
       className={className}
@@ -80,7 +74,7 @@ export const HorizontalCell = ({
             </CellTypography>
           )}
           {hasReactNode(subtitle) && (
-            <Caption vkuiClass="HorizontalCell__subtitle">{subtitle}</Caption>
+            <Footnote vkuiClass="HorizontalCell__subtitle">{subtitle}</Footnote>
           )}
         </div>
       </Tappable>

@@ -130,8 +130,11 @@ class Preview extends PreviewParent {
                         <PlaygroundError message={error} />
                       ) : iframe ? (
                         <Frame
-                          width={adaptivity && width}
-                          height={adaptivity && styleGuideContext.height}
+                          style={
+                            adaptivity
+                              ? { width, height: styleGuideContext.height }
+                              : undefined
+                          }
                           appearance={styleGuideContext.appearance}
                         >
                           <Config {...styleGuideContext} exampleId={exampleId}>

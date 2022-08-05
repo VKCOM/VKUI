@@ -1,6 +1,4 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
-import { usePlatform } from "../../hooks/usePlatform";
 import { ScrollSaver } from "./ScrollSaver";
 import { getNavId } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
@@ -17,7 +15,6 @@ const warn = warnOnce("Epic");
  * @see https://vkcom.github.io/VKUI/#/Epic
  */
 export const Epic = (props: EpicProps) => {
-  const platform = usePlatform();
   const scroll = React.useRef<{ [key: string]: number }>({}).current;
   const { activeStory, tabbar, children, ...restProps } = props;
 
@@ -29,7 +26,7 @@ export const Epic = (props: EpicProps) => {
     ) as React.ReactElement | undefined) ?? null;
 
   return (
-    <div {...restProps} vkuiClass={getClassName("Epic", platform)}>
+    <div {...restProps} vkuiClass="Epic">
       <ScrollSaver
         key={activeStory}
         initialScroll={scroll[activeStory] || 0}

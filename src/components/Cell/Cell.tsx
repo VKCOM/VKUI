@@ -1,8 +1,7 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { noop } from "../../lib/utils";
-import { getClassName } from "../../helpers/getClassName";
-import { ANDROID, IOS, VKCOM } from "../../lib/platform";
+import { IOS } from "../../lib/platform";
 import { SimpleCell, SimpleCellProps } from "../SimpleCell/SimpleCell";
 import { HasPlatform, HasRootRef } from "../../types";
 import { Removable, RemovableProps } from "../Removable/Removable";
@@ -122,13 +121,14 @@ export const Cell = ({
     (draggable && !selectable) || removable || disabled;
   const hasActive = !simpleCellDisabled && !dragging;
 
-  // eslint-disable-next-line vkui/no-object-expression-in-arguments
-  const cellClasses = classNames(getClassName("Cell", platform), {
-    "Cell--dragging": dragging,
-    "Cell--removable": removable,
-    "Cell--selectable": selectable,
-    "Cell--disabled": disabled,
-  });
+  const cellClasses = classNames(
+    "Cell",
+    platform === IOS && "Cell--ios",
+    dragging && "Cell--dragging",
+    removable && "Cell--removable",
+    selectable && "Cell--selectable",
+    disabled && "Cell--disabled"
+  );
 
   const simpleCell = (
     <SimpleCell
@@ -140,7 +140,7 @@ export const Cell = ({
       Component={selectable ? "label" : Component}
       before={
         <React.Fragment>
-          {draggable && (platform === ANDROID || platform === VKCOM) && dragger}
+          {draggable && platform !== IOS && dragger}
           {selectable && checkbox}
           {before}
         </React.Fragment>

@@ -11,6 +11,7 @@ import {
   getRandomInt,
   getRandomUser,
   getRandomUsers,
+  getAllUsers,
   importantCountries,
   getAvatarUrl,
   perfLogger,
@@ -47,6 +48,7 @@ window.importantCountries = importantCountries;
 window.getRandomInt = getRandomInt;
 window.getRandomUser = getRandomUser;
 window.getRandomUsers = getRandomUsers;
+window.getAllUsers = getAllUsers;
 window.importantCountries = importantCountries;
 window.getAvatarUrl = getAvatarUrl;
 window.perfLogger = perfLogger;

@@ -56,6 +56,11 @@ describe("Button", () => {
         size: ["s", "m", "l"],
         $adaptivity: "y",
       },
+      {
+        size: ["s", "m", "l"],
+        stretched: [true],
+        align: ["left", "center", "right"],
+      },
     ]
   );
 });

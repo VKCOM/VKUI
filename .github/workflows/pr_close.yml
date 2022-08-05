@@ -1,4 +1,4 @@
-name: "Clear styleguide for closed PR"
+name: "Close PR"
 
 on:
   pull_request:
@@ -9,7 +9,7 @@ jobs:
     concurrency: ci-gh-pages
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: gh-pages
       - name: Remove styleguide
@@ -25,7 +25,9 @@ jobs:
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'patch')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
       - uses: actions/setup-node@v3
         with:
           node-version: 14
@@ -37,5 +39,6 @@ jobs:
           git config --local user.name "GitHub Action"
       - run: node ./.github/gitflow/patch.js
         env:
-          GITHUB_PULL_NUMBER: ${{ github.event.number }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INPUT_GITHUB_PULL_NUMBER: ${{ github.event.number }}
+          INPUT_GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

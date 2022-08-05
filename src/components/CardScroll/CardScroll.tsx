@@ -44,7 +44,7 @@ export const CardScroll = ({
     }
     const containerWidth = refContainer.current.offsetWidth;
     const slideIndex = (
-      Array.from(refContainer.current.children) as HTMLElement[]
+      [...refContainer.current.children] as HTMLElement[]
     ).findIndex(
       (el: HTMLElement) =>
         el.offsetLeft +

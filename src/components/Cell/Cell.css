@@ -1,16 +1,24 @@
+.Cell {
+  position: relative;
+}
+
 .List--dragging .Cell:not(.Cell--dragging) {
   transition: transform 0.3s ease;
   pointer-events: none;
 }
 
 .Cell--dragging {
-  background-color: var(--background_content);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+  background-color: var(
+    --background_content,
+    var(--vkui--color_background_modal)
+  );
+  box-shadow: var(--vkui--elevation3);
+  opacity: 0.8;
   z-index: 3;
 }
 
 .Cell--selectable.Cell--disabled {
-  opacity: 0.6;
+  opacity: var(--vkui--opacity_disable_accessibility);
 }
 
 .Cell__checkbox,

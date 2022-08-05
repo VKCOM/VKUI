@@ -3,7 +3,7 @@
     "jsx": "react",
     "jsxFactory": "createScopedElement",
     "target": "esnext",
-    "lib": ["es6", "dom"],
+    "lib": ["es6", "dom", "dom.Iterable"],
     "outDir": "dist",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,

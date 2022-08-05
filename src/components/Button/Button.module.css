@@ -202,10 +202,6 @@
   padding-right: 0;
 }
 
-.Button__content--caps {
-  transform: translateY(0);
-}
-
 .Button__spinner {
   position: absolute;
   left: 0;
@@ -644,49 +640,29 @@
   line-height: var(--vkui--font_subhead--line_height--compact);
 }
 
-.Button--sizeY-regular.Button--sz-m .Button__content {
-  font-size: var(--vkui--font_text--font_size--regular);
-  line-height: var(--vkui--font_text--line_height--regular);
-  font-weight: var(--vkui--font_weight_accent2);
+.Button--sz-m.Button--singleIcon {
+  width: var(--vkui--size_button_medium_height--compact);
 }
 
-@media (--sizeY-regular) {
-  .Button--sizeY-none.Button--sz-m .Button__content {
-    font-size: var(--vkui--font_text--font_size--regular);
-    line-height: var(--vkui--font_text--line_height--regular);
-    font-weight: var(--vkui--font_weight_accent2);
-  }
+.Button--sz-l {
+  min-height: var(--vkui--size_button_large_height--compact);
 }
 
-.Button--sz-l .Button__content {
-  font-size: var(--vkui--font_text--font_size--compact);
-  line-height: var(--vkui--font_text--line_height--compact);
+.Button--sz-l.Button--singleIcon {
+  width: var(--vkui--size_button_large_height--compact);
 }
 
-.Button--sizeY-regular.Button--sz-l .Button__content {
-  font-size: var(--vkui--font_title3--font_size--regular);
-  line-height: var(--vkui--font_title3--line_height--regular);
+/**
+ * sizeY REGULAR
+ */
+.Button--sizeY-regular {
+  min-height: var(--vkui--size_button_small_height--regular);
 }
-
-.Button--sizeY-regular.Button--android.Button--sz-l .Button__content {
-  font-size: var(--vkui--font_headline1--font_size--regular);
-  line-height: var(--vkui--font_headline1--line_height--regular);
-}
-
-@media (--sizeY-regular) {
-  .Button--sizeY-none.Button--sz-l .Button__content {
-    font-size: var(--vkui--font_title3--font_size--regular);
-    line-height: var(--vkui--font_title3--line_height--regular);
-  }
-
-  .Button--sizeY-none.Button--android.Button--sz-l .Button__content {
-    font-size: var(--vkui--font_headline1--font_size--regular);
-    line-height: var(--vkui--font_headline1--line_height--regular);
-  }
-}
-
-.Button--sz-m {
-  min-height: var(--vkui--size_button_medium_height--compact);
+/**
+ * v5 MOVE TO NEW ADAPTIVITY
+ */
+.Button--sizeY-regular.Button--singleIcon {
+  width: var(--vkui--size_button_small_height--regular);
 }
 
 .Button--sizeY-regular.Button--sz-m {

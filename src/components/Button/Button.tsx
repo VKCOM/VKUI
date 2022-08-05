@@ -25,7 +25,7 @@ export interface ButtonProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Button
  */
-const Button = ({
+export const Button = ({
   size = "s",
   mode = "primary",
   appearance = "accent",
@@ -49,6 +49,8 @@ const Button = ({
 
   return (
     <Tappable
+      hoverMode={hasNewTokens ? styles["Button--hover"] : "background"}
+      activeMode={hasNewTokens ? styles["Button--active"] : "opacity"}
       {...restProps}
       Component={restProps.href ? "a" : Component}
       onClick={loading ? undefined : onClick}
@@ -68,8 +70,6 @@ const Button = ({
         loading && styles["Button--loading"]
       )}
       getRootRef={getRootRef}
-      hoverMode={hasNewTokens ? styles["Button--hover"] : "background"}
-      activeMode={hasNewTokens ? styles["Button--active"] : "opacity"}
     >
       {loading && <Spinner size="small" className={styles.Button__spinner} />}
       <span className={styles.Button__in}>
@@ -88,5 +88,3 @@ const Button = ({
     </Tappable>
   );
 };
-
-export { Button };

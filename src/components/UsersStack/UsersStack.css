@@ -71,11 +71,3 @@
 .ModalCardBase .UsersStack {
   margin-top: 20px;
 }
-
-/**
- * CMP:
- * RichCell
- */
-.RichCell__bottom .UsersStack {
-  padding: 5px 0 0;
-}

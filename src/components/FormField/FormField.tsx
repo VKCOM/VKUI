@@ -1,9 +1,6 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
-import { usePlatform } from "../../hooks/usePlatform";
 import { HasComponent, HasRootRef } from "../../types";
-import { hasReactNode } from "../../lib/utils";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "./FormField.css";
@@ -56,7 +53,6 @@ export const FormField = ({
   mode = FormFieldMode.default,
   ...restProps
 }: FormFieldOwnProps) => {
-  const platform = usePlatform();
   const { sizeY } = useAdaptivity();
   const [hover, setHover] = React.useState(false);
 
@@ -78,20 +74,20 @@ export const FormField = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       vkuiClass={classNames(
-        getClassName("FormField", platform),
+        "FormField",
         `FormField--${mode}`,
         getSizeYClassName("FormField", sizeY),
         disabled && "FormField--disabled",
         !disabled && hover && "FormField--hover"
       )}
     >
-      {hasReactNode(before) && (
+      {before && (
         <div role="presentation" vkuiClass="FormField__before">
           {before}
         </div>
       )}
       {children}
-      {hasReactNode(after) && (
+      {after && (
         <div role="presentation" vkuiClass="FormField__after">
           {after}
         </div>

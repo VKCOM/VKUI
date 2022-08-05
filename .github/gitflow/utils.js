@@ -6,6 +6,8 @@ module.exports.stableBranchName = (semVer) => {
   return `${semVer.major}.${semVer.minor}-stable`;
 };
 
+module.exports.remoteRepository = `https://${process.env.GITHUB_ACTOR}:${process.env.INPUT_GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}`;
+
 module.exports.GhApi = class GhApi {
   constructor() {}
   /**
@@ -26,9 +28,16 @@ module.exports.GhApi = class GhApi {
    * @param  {string} owner
    * @param  {string} repo
    * @param  {string|number} pull_number
-   * @return {{sha:string}[]}
+   * @return {{sha:string;commit:{message:string}}[]}
    */
   listCommitsOnPullRequest(owner, repo, pull_number) {
     return this.request(`/repos/${owner}/${repo}/pulls/${pull_number}/commits`);
+  }
+
+  prComment(pr, body) {
+    const command = `gh pr comment ${pr} -F -`;
+    execSync(command, {
+      input: body,
+    });
   }
 };

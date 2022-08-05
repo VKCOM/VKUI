@@ -4,6 +4,7 @@ import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import { useNavTransition } from "../NavTransitionContext/NavTransitionContext";
+import { PopperArrow } from "../PopperArrow/PopperArrow";
 import { Modifier, usePopper } from "react-popper";
 import { Placement } from "@popperjs/core";
 import { tooltipContainerAttr } from "./TooltipContainer";
@@ -11,13 +12,13 @@ import { useExternRef } from "../../hooks/useExternRef";
 import { useDOM } from "../../lib/dom";
 import { warnOnce } from "../../lib/warnOnce";
 import { hasReactNode } from "../../lib/utils";
+import { prefixClass } from "../../lib/prefixClass";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { HasRootRef } from "../../types";
 import "./Tooltip.css";
 
 interface SimpleTooltipProps extends Partial<TooltipProps> {
   target?: HTMLDivElement;
-  arrowRef?: React.Ref<HTMLDivElement>;
   style?: {
     arrow: React.CSSProperties;
     container: React.CSSProperties;
@@ -40,26 +41,27 @@ const IS_DEV = process.env.NODE_ENV === "development";
 
 const SimpleTooltip = React.forwardRef<HTMLDivElement, SimpleTooltipProps>(
   function SimpleTooltip(
-    { mode = "accent", header, text, arrowRef, style = {}, attributes },
+    { appearance = "accent", header, text, arrow, style = {}, attributes },
     ref
   ) {
     return (
-      <div vkuiClass={classNames(baseClassName, `Tooltip--${mode}`)}>
+      <div vkuiClass={classNames(baseClassName, `Tooltip--${appearance}`)}>
         <div
           vkuiClass="Tooltip__container"
           ref={ref}
           style={style.container}
           {...attributes?.container}
         >
-          <div
-            vkuiClass="Tooltip__corner"
-            style={style.arrow}
-            {...attributes?.arrow}
-            ref={arrowRef}
-          />
+          {arrow && (
+            <PopperArrow
+              style={style.arrow}
+              attributes={attributes?.arrow}
+              arrowClassName={prefixClass("Tooltip__arrow")}
+            />
+          )}
           <div vkuiClass="Tooltip__content">
             {header && (
-              <Subhead weight="1" vkuiClass="Tooltip__title">
+              <Subhead weight="2" vkuiClass="Tooltip__title">
                 {header}
               </Subhead>
             )}
@@ -78,7 +80,10 @@ export interface TooltipProps {
    * иначе тултип показан не будет. Если передан React-element, то такой проблемы нет.
    */
   children: React.ReactElement<HasRootRef<any>> | React.ReactElement;
-  mode?: "accent" | "light";
+  /**
+   * Стиль отображения подсказки
+   */
+  appearance?: "accent" | "neutral" | "white" | "black" | "inversion";
   /**
    * Если передан `false`, то рисуется просто `children`.
    */
@@ -110,6 +115,10 @@ export interface TooltipProps {
    */
   offsetY?: number;
   /**
+   * Отображать ли стрелку, указывающую на якорный элемент
+   */
+  arrow?: boolean;
+  /**
    * Сдвиг стрелочки относительно центра дочернего элемента.
    */
   cornerOffset?: number;
@@ -121,15 +130,11 @@ export interface TooltipProps {
    * Callback, который вызывается при клике по любому месту в пределах экрана.
    */
   onClose?: () => void;
+  /**
+   * По умолчанию компонент выберет наилучшее расположение сам. Но его можно задать извне с помощью этого свойства
+   */
+  placement?: Placement;
 }
-
-declare type ArrowOffsetModifierOptions = {
-  offset: number;
-};
-declare type ArrowOffsetModifier = Modifier<
-  "arrowOffset",
-  ArrowOffsetModifierOptions
->;
 
 function mapAlignX(x: TooltipProps["alignX"]) {
   switch (x) {
@@ -166,14 +171,14 @@ export const Tooltip = ({
   onClose,
   cornerOffset = 0,
   cornerAbsoluteOffset,
-  mode = "accent",
+  appearance,
+  arrow = true,
+  placement,
   ...restProps
 }: TooltipProps) => {
   const { entering } = useNavTransition();
   const isShown = _isShown && !entering;
   const [tooltipRef, setTooltipRef] = React.useState<HTMLElement | null>(null);
-  const [tooltipArrowRef, setTooltipArrowRef] =
-    React.useState<HTMLElement | null>(null);
   const [target, setTarget] = React.useState<HTMLElement>();
 
   if (IS_DEV) {
@@ -213,52 +218,12 @@ export const Tooltip = ({
     );
   }
 
-  const arrowOffsetModifier = React.useMemo<ArrowOffsetModifier>(() => {
-    return {
-      name: "arrowOffset",
-      enabled: true,
-      phase: "main",
-      fn({ state }) {
-        if (!state.modifiersData.arrow) {
-          return;
-        }
-        if (isVerticalPlacement(state.placement)) {
-          if (cornerAbsoluteOffset !== undefined) {
-            state.modifiersData.arrow.x = cornerAbsoluteOffset;
-          } else {
-            if (state.modifiersData.arrow?.x !== undefined) {
-              state.modifiersData.arrow.x += cornerOffset;
-            }
-          }
-        } else {
-          if (cornerAbsoluteOffset !== undefined) {
-            state.modifiersData.arrow.y = cornerAbsoluteOffset;
-          } else {
-            if (state.modifiersData.arrow?.y !== undefined) {
-              state.modifiersData.arrow.y += cornerOffset;
-            }
-          }
-        }
-      },
-    };
-  }, [cornerOffset, cornerAbsoluteOffset]);
-
-  const placement = getPlacement(alignX, alignY);
-  const { styles, attributes } = usePopper(target, tooltipRef, {
-    strategy,
-    placement,
-    modifiers: [
+  const modifiers = React.useMemo(() => {
+    const modifiers: Array<Modifier<string>> = [
       {
         name: "offset",
         options: {
           offset: [offsetX, offsetY],
-        },
-      },
-      {
-        name: "arrow",
-        options: {
-          element: tooltipArrowRef,
-          padding: 14,
         },
       },
       {
@@ -267,8 +232,52 @@ export const Tooltip = ({
       {
         name: "flip",
       },
-      arrowOffsetModifier,
-    ],
+    ];
+
+    if (arrow) {
+      modifiers.push({
+        name: "arrow",
+        options: {
+          padding: 14,
+        },
+      });
+      modifiers.push({
+        name: "arrowOffset",
+        enabled: true,
+        phase: "main",
+        fn({ state }) {
+          if (!state.modifiersData.arrow) {
+            return;
+          }
+          if (isVerticalPlacement(state.placement)) {
+            if (cornerAbsoluteOffset !== undefined) {
+              state.modifiersData.arrow.x = cornerAbsoluteOffset;
+            } else {
+              if (state.modifiersData.arrow?.x !== undefined) {
+                state.modifiersData.arrow.x += cornerOffset;
+              }
+            }
+          } else {
+            if (cornerAbsoluteOffset !== undefined) {
+              state.modifiersData.arrow.y = cornerAbsoluteOffset;
+            } else {
+              if (state.modifiersData.arrow?.y !== undefined) {
+                state.modifiersData.arrow.y += cornerOffset;
+              }
+            }
+          }
+        },
+      });
+    }
+
+    return modifiers;
+  }, [arrow, cornerAbsoluteOffset, cornerOffset, offsetX, offsetY]);
+
+  const _placement = placement ?? getPlacement(alignX, alignY);
+  const { styles, attributes } = usePopper(target, tooltipRef, {
+    strategy,
+    placement: _placement,
+    modifiers,
   });
 
   const { document } = useDOM();
@@ -295,9 +304,9 @@ export const Tooltip = ({
         ReactDOM.createPortal(
           <SimpleTooltip
             {...restProps}
-            mode={mode}
+            appearance={appearance}
+            arrow={arrow}
             ref={(el) => setTooltipRef(el)}
-            arrowRef={(el) => setTooltipArrowRef(el)}
             style={{ arrow: styles.arrow, container: styles.popper }}
             attributes={{
               arrow: attributes.arrow ?? null,

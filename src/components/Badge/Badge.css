@@ -17,8 +17,3 @@
     var(--vkui--color_icon_negative)
   );
 }
-
-.TabsItem__after .Badge {
-  transform: translateY(-2px);
-  margin-left: 6px;
-}

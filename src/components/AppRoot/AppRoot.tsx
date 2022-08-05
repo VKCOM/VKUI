@@ -14,9 +14,9 @@ import { useKeyboardInputTracker } from "../../hooks/useKeyboardInputTracker";
 import { useInsets } from "../../hooks/useInsets";
 import { Insets } from "@vkontakte/vk-bridge";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
-import { generateVKUITokensClassName } from "../AppearanceProvider/AppearanceProvider";
+import { isRefObject } from "../../lib/isRefObject";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import "./AppRoot.css";
 
 // Используйте classList, но будьте осторожны
@@ -29,6 +29,12 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Убирает классы без префикса (.Button) */
   noLegacyClasses?: boolean;
   scroll?: "global" | "contain";
+  /** Элемент используемый в качестве root для порталов
+   * При передаче своего элемента необходимо задать ему class="vkui__portal-root" и добавить в DOM
+   */
+  portalRoot?: HTMLElement | React.RefObject<HTMLElement> | null;
+  /** Disable portal for components */
+  disablePortal?: boolean;
 }
 
 /**
@@ -39,38 +45,41 @@ export const AppRoot: React.FC<AppRootProps> = ({
   mode = "full",
   noLegacyClasses = false,
   scroll = "global",
+  portalRoot: portalRootProp = null,
+  disablePortal,
   ...props
 }) => {
   const isKeyboardInputActive = useKeyboardInputTracker();
   const rootRef = React.useRef<HTMLDivElement | null>(null);
-  const [portalRoot, setPortalRoot] = React.useState<HTMLDivElement | null>(
-    null
-  );
+  const [portalRoot, setPortalRoot] = React.useState<HTMLElement | null>(null);
   const { document } = useDOM();
   const insets = useInsets();
-  const { platform, appearance } = React.useContext(ConfigProviderContext);
+  const { appearance } = React.useContext(ConfigProviderContext);
 
-  const initialized = React.useRef(false);
-  if (!initialized.current) {
-    if (document && mode === "full") {
-      document.documentElement.classList.add("vkui");
-    }
-    classScopingMode.noConflict = noLegacyClasses;
-    initialized.current = true;
-  }
+  classScopingMode.noConflict = noLegacyClasses;
 
   const { hasMouse, sizeX } = useAdaptivity();
 
   // setup portal
   useIsomorphicLayoutEffect(() => {
-    const portal = document!.createElement("div");
-    portal.classList.add("vkui__portal-root");
-    document!.body.appendChild(portal);
+    let portal: HTMLElement | null = null;
+    if (portalRootProp) {
+      if (isRefObject(portalRootProp)) {
+        portal = portalRootProp.current;
+      } else {
+        portal = portalRootProp;
+      }
+    }
+    if (!portal) {
+      portal = document!.createElement("div");
+      portal.classList.add("vkui__portal-root");
+      document!.body.appendChild(portal);
+    }
     setPortalRoot(portal);
     return () => {
-      portal.parentElement?.removeChild(portal);
+      portal?.parentElement?.removeChild(portal);
     };
-  }, []);
+  }, [portalRootProp]);
 
   // setup root classes
   useIsomorphicLayoutEffect(() => {
@@ -86,11 +95,20 @@ export const AppRoot: React.FC<AppRootProps> = ({
 
     return () => {
       parent?.classList.remove(...classes);
-      if (mode === "full") {
-        document?.documentElement.classList.remove("vkui");
-      }
     };
   }, []);
+
+  useIsomorphicLayoutEffect(() => {
+    if (mode === "full") {
+      document!.documentElement.classList.add("vkui");
+
+      return () => {
+        document!.documentElement.classList.remove("vkui");
+      };
+    }
+
+    return undefined;
+  }, [document, mode]);
 
   // setup insets
   useIsomorphicLayoutEffect(() => {
@@ -138,43 +156,30 @@ export const AppRoot: React.FC<AppRootProps> = ({
     return () => container?.classList.remove(className);
   }, [sizeX]);
 
+  useIsomorphicLayoutEffect(() => {
+    if (mode !== "full" || appearance === undefined) {
+      return noop;
+    }
+    document!.documentElement.style.setProperty("color-scheme", appearance);
+
+    return () => document!.documentElement.style.removeProperty("color-scheme");
+  }, [appearance]);
+
   const ScrollController = React.useMemo(
     () =>
       scroll === "contain" ? ElementScrollController : GlobalScrollController,
     [scroll]
   );
 
-  // Прикрепляем vkui-token класс
-  React.useEffect(() => {
-    if (mode === "partial") {
-      return noop;
-    }
-
-    const VKUITokensClassName = generateVKUITokensClassName(
-      platform,
-      appearance
-    );
-
-    const container =
-      mode === "embedded"
-        ? rootRef.current?.parentElement
-        : document?.documentElement;
-
-    container?.classList.add(VKUITokensClassName);
-
-    return () => {
-      container?.classList.remove(VKUITokensClassName);
-    };
-  }, [platform, appearance, mode, document]);
-
   const content = (
     <AppRootContext.Provider
       value={{
         appRoot: rootRef,
-        portalRoot: portalRoot,
+        portalRoot,
         embedded: mode === "embedded",
         keyboardInput: isKeyboardInputActive,
         mode,
+        disablePortal,
       }}
     >
       <ScrollController elRef={rootRef}>

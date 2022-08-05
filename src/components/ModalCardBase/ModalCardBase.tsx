@@ -7,7 +7,6 @@ import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
 import { HasRootRef } from "../../types";
 import { PanelHeaderButton } from "../PanelHeaderButton/PanelHeaderButton";
-import { ANDROID } from "../../lib/platform";
 import { ModalDismissButton } from "../ModalDismissButton/ModalDismissButton";
 import { Icon24Dismiss } from "@vkontakte/icons";
 import { useKeyboard } from "../../hooks/useKeyboard";
@@ -36,18 +35,16 @@ export interface ModalCardBaseProps
   subheader?: React.ReactNode;
 
   /**
-   * Кнопки-действия. Принимает [`Button`](https://vkcom.github.io/VKUI/#/Button) с параметрами:
+   * Кнопки-действия.
    *
-   * - `size="l" mode="primary" stretched`
-   * - `size="l" mode="secondary" stretched`
-   *
-   * Для набора кнопок используйте [`ButtonGroup`](https://vkcom.github.io/VKUI/#/ButtonGroup) с параметрами:
-   *
-   * - `gap="s" mode="horizontal" stretched`
-   * - `gap="m" mode="vertical" stretched`
+   * Рекомендуется использовать `<Button size="l" mode="primary" />` или `<Button size="l" mode="secondary" />`
    */
   actions?: React.ReactNode;
 
+  /**
+   * Тип отображения кнопок: вертикальный или горизонтальный
+   */
+  actionsLayout?: "vertical" | "horizontal";
   onClose?: VoidFunction;
 
   /**
@@ -67,6 +64,7 @@ export const ModalCardBase: React.FC<ModalCardBaseProps> = ({
   children,
   actions,
   onClose,
+  actionsLayout,
   dismissLabel = "Скрыть",
   ...restProps
 }) => {
@@ -94,11 +92,7 @@ export const ModalCardBase: React.FC<ModalCardBaseProps> = ({
           <div vkuiClass="ModalCardBase__icon">{icon}</div>
         )}
         {hasReactNode(header) && (
-          <Title
-            level="2"
-            weight={platform === ANDROID ? "2" : "1"}
-            vkuiClass="ModalCardBase__header"
-          >
+          <Title level="2" weight="2" vkuiClass="ModalCardBase__header">
             {header}
           </Title>
         )}
@@ -109,7 +103,14 @@ export const ModalCardBase: React.FC<ModalCardBaseProps> = ({
         {children}
 
         {hasReactNode(actions) && (
-          <div vkuiClass="ModalCardBase__actions">{actions}</div>
+          <div
+            vkuiClass={classNames(
+              "ModalCardBase__actions",
+              actionsLayout === "vertical" && "ModalCardBase__actions--v"
+            )}
+          >
+            {actions}
+          </div>
         )}
 
         <ModalDismissButton

@@ -15,11 +15,11 @@ export const AppRootPortal = ({
   className,
   forcePortal,
 }: AppRootPortalProps) => {
-  const { portalRoot, mode } = React.useContext(AppRootContext);
+  const { portalRoot, mode, disablePortal } = React.useContext(AppRootContext);
   const appearance = useAppearance();
 
   forcePortal = forcePortal ?? mode !== "full";
-  return portalRoot && forcePortal ? (
+  return !disablePortal && portalRoot && forcePortal ? (
     createPortal(
       <AppearanceProvider appearance={appearance}>
         <div className={className}>{children}</div>

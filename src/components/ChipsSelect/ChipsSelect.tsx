@@ -99,7 +99,7 @@ const chipsSelectDefaultProps: ChipsSelectProps<any> = {
 /**
  * @see https://vkcom.github.io/VKUI/#/ChipsSelect
  */
-const ChipsSelect = <Option extends ChipsInputOption>(
+export const ChipsSelect = <Option extends ChipsInputOption>(
   props: ChipsSelectProps<Option>
 ) => {
   const propsWithDefault = { ...chipsSelectDefaultProps, ...props };
@@ -353,6 +353,11 @@ const ChipsSelect = <Option extends ChipsInputOption>(
     setFocusedOptionIndex(null);
   }, [setFocusedOptionIndex]);
 
+  const observableRefs = React.useMemo(
+    () => [scrollBoxRef, rootRef],
+    [rootRef, scrollBoxRef]
+  );
+
   return (
     <div
       vkuiClass={classNames(
@@ -390,6 +395,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(
           targetRef={rootRef}
           placement={popupDirection}
           scrollBoxRef={scrollBoxRef}
+          observableRefs={observableRefs}
           onPlacementChange={onPlacementChange}
           onMouseLeave={onDropdownMouseLeave}
           fetching={fetching}
@@ -455,5 +461,3 @@ const ChipsSelect = <Option extends ChipsInputOption>(
     </div>
   );
 };
-
-export { ChipsSelect };

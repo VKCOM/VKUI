@@ -124,7 +124,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--search_bar_field_tint);
+  color: var(--search_bar_field_tint, var(--vkui--color_icon_secondary));
 }
 
 .Search__icon {
@@ -133,6 +133,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .Search__after {
@@ -207,7 +208,7 @@
 }
 
 .Search__placeholder {
-  color: var(--search_bar_field_tint);
+  color: var(--search_bar_field_tint, var(--vkui--color_icon_medium));
 }
 
 .Search__after-width {
@@ -301,11 +302,13 @@
 
 .Search--vkcom .Search__placeholder {
   padding-left: 16px;
+  color: var(--vkui--color_icon_secondary);
 }
 
 .Search--vkcom .Search__icons {
   top: 4px;
   right: calc(100% + 8px);
+  color: var(--search_bar_field_tint, var(--vkui--color_icon_medium));
 }
 
 .Search--vkcom.Search--has-value .Search__input {
@@ -319,6 +322,7 @@
 .Search--vkcom .Search__icon {
   width: 40px;
   height: 40px;
+  opacity: 0.8;
 }
 
 .Search--vkcom .Search__icon:hover {

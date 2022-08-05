@@ -5,7 +5,7 @@ const restructureVariable = require("./tasks/postcss-restructure-variable");
 const cssImport = require("postcss-import");
 const autoprefixer = require("autoprefixer");
 const cssModules = require("postcss-modules");
-const csso = require("postcss-csso");
+const cssnano = require("cssnano");
 const checkKeyframes = require("./tasks/postcss-check-keyframes");
 const { generateScopedName, cssCustomPropertiesPaths } = require("./shared");
 const { defaultSchemeId } = require("./package.json");
@@ -83,7 +83,7 @@ module.exports = (ctx) => {
   ];
 
   if (process.env.NODE_ENV === "production") {
-    plugins.push(csso({ restructure: false }));
+    plugins.push(cssnano());
   }
 
   return { plugins };

@@ -1,9 +1,8 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
-import { IOS } from "../../lib/platform";
+import { IOS, VKCOM } from "../../lib/platform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import "./Tabs.css";
@@ -11,11 +10,18 @@ import "./Tabs.css";
 export interface TabsProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement> {
-  mode?: "default" | "buttons" | "segmented";
+  mode?: "default" | "accent" | "secondary";
 }
 
-export const TabsModeContext =
-  React.createContext<TabsProps["mode"]>("default");
+export interface TabsContextProps {
+  mode: TabsProps["mode"];
+  withGaps: boolean;
+}
+
+export const TabsModeContext = React.createContext<TabsContextProps>({
+  mode: "default",
+  withGaps: false,
+});
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Tabs
@@ -29,22 +35,22 @@ export const Tabs = ({
   const platform = usePlatform();
   const { sizeX } = useAdaptivity();
 
-  if (platform !== IOS && mode === "segmented") {
-    mode = "default";
-  }
+  const withGaps = mode === "accent" || mode === "secondary";
 
   return (
     <div
       {...restProps}
       ref={getRootRef}
       vkuiClass={classNames(
-        getClassName("Tabs", platform),
+        "Tabs",
+        (platform === IOS || platform === VKCOM) && `Tabs--${platform}`,
         getSizeXClassName("Tabs", sizeX),
+        withGaps && "Tabs--withGaps",
         `Tabs--${mode}`
       )}
     >
       <div vkuiClass="Tabs__in">
-        <TabsModeContext.Provider value={mode}>
+        <TabsModeContext.Provider value={{ mode, withGaps }}>
           {children}
         </TabsModeContext.Provider>
       </div>

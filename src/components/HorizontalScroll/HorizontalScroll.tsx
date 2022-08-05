@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import HorizontalScrollArrow from "./HorizontalScrollArrow";
+import { HorizontalScrollArrow } from "./HorizontalScrollArrow";
 import { easeInOutSine } from "../../lib/fx";
 import { useEventListener } from "../../hooks/useEventListener";
 import { useExternRef } from "../../hooks/useExternRef";
@@ -36,6 +36,7 @@ export interface HorizontalScrollProps
    * Функция для расчета величины прокрутки при клике на правую стрелку.
    */
   getScrollToRight?: ScrollPositionHandler;
+  arrowSize?: "m" | "l";
   showArrows?: boolean | "always";
   scrollAnimationDuration?: number;
 }
@@ -129,6 +130,7 @@ export const HorizontalScroll = ({
   getScrollToLeft,
   getScrollToRight,
   showArrows = true,
+  arrowSize = "l",
   scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
   getRef,
   ...restProps
@@ -208,16 +210,26 @@ export const HorizontalScroll = ({
   return (
     <div
       {...restProps}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames("HorizontalScroll", {
-        ["HorizontalScroll--withConstArrows"]: showArrows === "always",
-      })}
+      vkuiClass={classNames(
+        "HorizontalScroll",
+        showArrows === "always" && "HorizontalScroll--withConstArrows"
+      )}
     >
       {showArrows && (hasMouse || hasMouse === undefined) && canScrollLeft && (
-        <HorizontalScrollArrow direction="left" onClick={scrollToLeft} />
+        <HorizontalScrollArrow
+          size={arrowSize}
+          direction="left"
+          vkuiClass="HorizontalScroll__arrowLeft"
+          onClick={scrollToLeft}
+        />
       )}
       {showArrows && (hasMouse || hasMouse === undefined) && canScrollRight && (
-        <HorizontalScrollArrow direction="right" onClick={scrollToRight} />
+        <HorizontalScrollArrow
+          size={arrowSize}
+          direction="right"
+          vkuiClass="HorizontalScroll__arrowRight"
+          onClick={scrollToRight}
+        />
       )}
       <div vkuiClass="HorizontalScroll__in" ref={scrollerRef}>
         <div vkuiClass="HorizontalScroll__in-wrapper">{children}</div>

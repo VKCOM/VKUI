@@ -24,7 +24,7 @@
   top: 0;
   left: 0;
   bottom: 0;
-  background-color: var(--vkui--color_background_modal);
+  background-color: var(--vkui--color_segmented_control);
   transition: transform 150ms;
   transform-origin: 0 0;
   border-radius: inherit;

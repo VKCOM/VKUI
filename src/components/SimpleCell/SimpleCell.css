@@ -9,49 +9,10 @@
   padding-right: 16px;
 }
 
-.SimpleCell__typography {
-  font-weight: var(--vkui--font_weight_accent3);
-}
-
-.SimpleCell--sizeY-compact .SimpleCell__typography {
-  font-size: var(--vkui--font_text--font_size--compact);
-  line-height: var(--vkui--font_text--line_height--compact);
-}
-
-@media (--sizeY-compact) {
-  .SimpleCell--sizeY-none .SimpleCell__typography {
-    font-size: var(--vkui--font_text--font_size--compact);
-    line-height: var(--vkui--font_text--line_height--compact);
-  }
-}
-
-.SimpleCell--sizeY-regular .SimpleCell__typography {
-  font-size: var(--vkui--font_title3--font_size--regular);
-  line-height: var(--vkui--font_title3--line_height--regular);
-}
-
-.SimpleCell--sizeY-regular.SimpleCell--android .SimpleCell__typography {
-  font-size: var(--vkui--font_headline1--font_size--regular);
-  line-height: var(--vkui--font_headline1--line_height--regular);
-}
-
-@media (--sizeY-regular) {
-  .SimpleCell--sizeY-none .SimpleCell__typography {
-    font-size: var(--vkui--font_title3--font_size--regular);
-    line-height: var(--vkui--font_title3--line_height--regular);
-  }
-
-  .SimpleCell--sizeY-none.SimpleCell--android .SimpleCell__typography {
-    font-size: var(--vkui--font_headline1--font_size--regular);
-    line-height: var(--vkui--font_headline1--line_height--regular);
-  }
-}
-
 .SimpleCell--mult {
   white-space: normal;
 }
 
-.SimpleCell--mult .SimpleCell__description,
 .SimpleCell--mult .SimpleCell__children {
   text-overflow: initial;
 }
@@ -68,32 +29,32 @@
   padding-bottom: 10px;
   padding-right: 12px;
   flex-shrink: 0;
-  color: var(--accent);
+  color: var(--accent, var(--vkui--color_icon_accent));
 }
 
 .SimpleCell > .Icon--28 {
   padding-right: 16px;
 }
 
-.SimpleCell__description {
-  color: var(--text_secondary);
+.SimpleCell__text {
   text-overflow: ellipsis;
   overflow: hidden;
-  margin-top: 3px;
-  display: block;
 }
 
-.SimpleCell > .Avatar--sz-32 ~ .SimpleCell__main .SimpleCell__description,
-.SimpleCell > .Avatar--sz-28 ~ .SimpleCell__main .SimpleCell__description {
-  margin-top: 2px;
+.SimpleCell__subtitle {
+  color: var(--text_secondary, var(--vkui--color_text_secondary));
 }
 
-.SimpleCell:not(.SimpleCell--mult) .SimpleCell__content {
+.SimpleCell .SimpleCell__content {
   display: flex;
   align-content: flex-start;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   max-width: 100%;
+}
+
+.SimpleCell:not(.SimpleCell--mult) .SimpleCell__content {
+  justify-content: flex-start;
 }
 
 .SimpleCell__children {
@@ -103,33 +64,24 @@
   display: block;
 }
 
+.SimpleCell--mult .SimpleCell__children,
+.SimpleCell--mult .SimpleCell__subtitle {
+  flex: 1 1 auto;
+}
+
 .SimpleCell__badge {
   display: inline-block;
   flex-grow: 0;
   flex-shrink: 0;
-  margin-left: 4px;
-  color: var(--blue_200);
+  color: var(--blue_200, var(--vkui--color_icon_accent));
 }
 
-.SimpleCell__badge .Badge {
-  margin-top: 2px;
-  margin-left: 3px;
-}
-
-.SimpleCell--mult .SimpleCell__badge {
-  vertical-align: top;
-}
-
-.SimpleCell--mult .SimpleCell__badge .Icon {
-  transform: translateY(2px);
-}
-
-.SimpleCell--mult .SimpleCell__badge .Badge {
-  margin-top: 8px;
+.SimpleCell__content > *:not(:last-child) {
+  margin-right: 4px;
 }
 
 .SimpleCell__indicator {
-  color: var(--text_secondary);
+  color: var(--text_secondary, var(--vkui--color_text_secondary));
   min-width: 0;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -141,7 +93,7 @@
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  color: var(--accent);
+  color: var(--accent, var(--vkui--color_icon_accent));
 }
 
 .SimpleCell__after > .Icon {
@@ -152,18 +104,13 @@
   padding-right: 2px;
 }
 
-.SimpleCell__after .IconButton {
+.SimpleCell__after .IconButton:last-child {
   margin-right: -12px;
 }
 
 /**
  * iOS
  */
-
-.SimpleCell--ios {
-  padding-left: 12px;
-  padding-right: 12px;
-}
 
 .SimpleCell--ios .SimpleCell__main,
 .SimpleCell--ios .SimpleCell__indicator {
@@ -176,12 +123,12 @@
 }
 
 .SimpleCell--ios .SimpleCell__after .Icon--chevron_24 {
-  color: var(--icon_tertiary);
+  color: var(--icon_tertiary, var(--vkui--color_icon_tertiary));
   padding-right: 4px;
   padding-left: 12px;
 }
 
-.SimpleCell--ios .SimpleCell__after .IconButton {
+.SimpleCell--ios .SimpleCell__after .IconButton:last-child {
   margin-right: -9px;
 }
 
@@ -285,4 +232,8 @@
  */
 .FormItem > .SimpleCell {
   margin: 0 calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
+}
+
+.SimpleCell__main > *:not(:first-child) {
+  margin-top: 2px;
 }

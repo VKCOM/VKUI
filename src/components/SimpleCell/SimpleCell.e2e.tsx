@@ -8,7 +8,8 @@ import {
 import { SimpleCell, SimpleCellProps } from "./SimpleCell";
 import { Avatar } from "../Avatar/Avatar";
 import { IconButton } from "../IconButton/IconButton";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
+import { Switch } from "../Switch/Switch";
+import { describeScreenshotFuzz } from "../../testing/e2e";
 
 describe("SimpleCell", () => {
   describeScreenshotFuzz(
@@ -50,6 +51,14 @@ describe("SimpleCell", () => {
             <Icon28MessageOutline />
           </IconButton>,
         ],
+      },
+      {
+        before: [<Switch key="switch" />],
+        children: ["Title"],
+      },
+      {
+        after: [<Switch key="switch" />],
+        children: ["Title"],
       },
     ]
   );

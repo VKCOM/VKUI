@@ -4,7 +4,7 @@ const { reactDocgenTypescript } = require("./propsParser.config");
 
 const baseConfig = {
   title: "VKUI styleguide",
-  styleguideDir: path.join(__dirname, `../${argv.dist || "docs"}`),
+  styleguideDir: path.join(__dirname, `../${argv.dist || "styleguide-build"}`),
   styleguideComponents: {
     PlaygroundRenderer: path.join(
       __dirname,

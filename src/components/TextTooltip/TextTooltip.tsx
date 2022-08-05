@@ -1,10 +1,9 @@
 import * as React from "react";
 import { HoverPopper, HoverPopperProps } from "../HoverPopper/HoverPopper";
-import { getClassName } from "../../helpers/getClassName";
-import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import { prefixClass } from "../../lib/prefixClass";
+import { classNames } from "../../lib/classNames";
 import "./TextTooltip.css";
 
 export interface TextTooltipProps
@@ -17,6 +16,10 @@ export interface TextTooltipProps
    * Заголовок тултипа
    */
   header?: React.ReactNode;
+  /**
+   * Стиль отображения подсказки
+   */
+  appearance?: "accent" | "neutral" | "white" | "black" | "inversion";
 }
 
 /**
@@ -26,30 +29,23 @@ export const TextTooltip = ({
   children,
   text,
   header,
+  appearance = "neutral",
   ...popperProps
 }: TextTooltipProps) => {
-  const platform = usePlatform();
-
   return (
     <HoverPopper
-      vkuiClass={getClassName("TextTooltip", platform)}
+      vkuiClass={classNames("TextTooltip", `TextTooltip--${appearance}`)}
       arrow
       arrowClassName={prefixClass("TextTooltip__arrow")}
       content={
         <React.Fragment>
           {hasReactNode(header) && (
-            <Subhead
-              Component="span"
-              weight="2"
-              vkuiClass="TextTooltip__header"
-            >
+            <Subhead weight="2" vkuiClass="TextTooltip__header">
               {header}
             </Subhead>
           )}
           {hasReactNode(text) && (
-            <Subhead Component="span" vkuiClass="TextTooltip__text">
-              {text}
-            </Subhead>
+            <Subhead vkuiClass="TextTooltip__text">{text}</Subhead>
           )}
         </React.Fragment>
       }

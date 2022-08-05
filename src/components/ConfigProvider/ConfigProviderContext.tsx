@@ -46,3 +46,5 @@ export const ConfigProviderContext =
     hasNewTokens: false,
     appearance: Appearance.LIGHT,
   });
+
+export const useConfigProvider = () => React.useContext(ConfigProviderContext);

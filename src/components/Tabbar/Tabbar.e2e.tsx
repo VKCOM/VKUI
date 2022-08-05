@@ -45,7 +45,7 @@ describe("Tabbar", () => {
       },
       {
         children: [longTabs],
-        itemsLayout: ["horizontal", "vertical"],
+        mode: ["horizontal", "vertical", "auto"],
       },
     ],
     {
