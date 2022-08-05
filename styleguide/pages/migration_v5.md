@@ -70,9 +70,9 @@
 </ActionSheet>
 ```
 
-### BannerData
+### PromoBanner
 
-- Удалено свойство `ageRestriction`, добавленное по ошибке. Используйте свойство `ageRestrictions`
+- Удалено свойство `ageRestriction` в типe _`BannerData`_, добавленное по ошибке. Используйте свойство `ageRestrictions`
 
 ### ContentCard
 
