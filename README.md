@@ -72,13 +72,13 @@ ReactDOM.render(
 
 На данный момент мы поддерживаем WebView следующих операционных систем:
 
-- Android >= 4.4
+- Android >= 5
 - iOS >= 9
 
 Иными словами, мы поддерживаем браузеры следующих версий:
 
 - Safari для iOS >= 9
-- Android Browser >= 4.4 (Chrome 30)
+- Android Browser >= 5 (Chrome 36)
 - Chrome для Android, начиная с Android 5.0 (Chrome 36)
 
 ## Тестирование
