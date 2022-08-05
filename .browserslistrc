@@ -1,4 +1,4 @@
-android >= 4.4
+android >= 5
 iOS >= 9
 Chrome >= 48
 Firefox >= 50
