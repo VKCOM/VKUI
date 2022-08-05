@@ -42,7 +42,7 @@ git checkout -b patch/pr${pullNumber} ${stableBranchRef}
 git cherry-pick ${patchRefs}
 \`\`\`
 
-2. Исправьте конфликты, пометьте файлы \`git add/rm <pathspec>\`, запустите \`git cherry-pick --continue\`
+2. Исправьте конфликты, следуя инструкциям из терминала
 3. Отправьте ветку на GitHub и создайте новый PR с последней стабильной веткой (метка patch не нужна)
 
 \`\`\`bash
