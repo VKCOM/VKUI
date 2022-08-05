@@ -166,52 +166,41 @@
 + <Button mode="outline" appearance="overlay">
 ```
 
-### ButtonGroup
+### Banner
 
-- В параметр `actions` компонентов `Banner` и `ModalCardBase` для группировки кнопок теперь нужно передавать `ButtonGroup` вместо `React.Fragment`
+- В параметр `actions` для группировки кнопок теперь передается `ButtonGroup` вместо `React.Fragment`
 
-  ```diff
-  - <Banner
-  -   actions={{
-  -     <React.Fragment>
-  -       <Button mode="primary">Подробнее</Button>
-  -       <Button mode="tertiary" hasHover={false}>Напомнить позже</Button>
-  -     </React.Fragment>
-  -   }}
-  - />
-  + <Banner
-  +   actions={{
-  +     <ButtonGroup mode="horizontal" gap="m">
-  +       <Button>Подробнее</Button>
-  +       <Button mode="secondary">Напомнить позже</Button>
-  +     </ButtonGroup>
-  +   }}
-  + />
-  ```
+```diff
+<Banner
+  actions={{
+-  <React.Fragment>
++  <ButtonGroup mode="horizontal" gap="m">
+    <Button>Подробнее</Button>
+    <Button mode="secondary">Напомнить позже</Button>
+-  </React.Fragment>
++  </ButtonGroup>
+  }}
+/>
+```
 
-  ```diff
-  - <ModalCardBase
-  -   actionsLayout="vertical"
-  -   actions={{
-  -     <React.Fragment key="buttons">
-  -       <Button size="l" mode="primary">Присоединиться</Button>
-  -       <Button size="l" mode="secondary">Скопировать приглашение</Button>
-  -     </React.Fragment>
-  -   }}
-  - />
-  + <ModalCardBase
-  +   actions={{
-  +     <ButtonGroup mode="vertical" gap="m" stretched>
-  +       <Button size="l" mode="primary" stretched>
-  +         Присоединиться
-  +       </Button>
-  +       <Button size="l" mode="secondary" stretched>
-  +         Скопировать приглашение
-  +       </Button>
-  +     </ButtonGroup>
-  +   }}
-  + />
-  ```
+### ModalCardBase
+
+- Устаревшее свойство `actionsLayout` удалено
+- В параметр `actions` для группировки кнопок теперь передается `ButtonGroup` вместо `React.Fragment`
+
+```diff
+<ModalCardBase
+-  actionsLayout="vertical"
+  actions={{
+-    <React.Fragment key="buttons">
++    <ButtonGroup mode="vertical" gap="m" stretched>
+      <Button size="l" mode="primary">Присоединиться</Button>
+      <Button size="l" mode="secondary">Скопировать приглашение</Button>
+-    </React.Fragment>
++    </ButtonGroup>
+  }}
+/>
+```
 
 ### SliderSwitch
 
