@@ -31,17 +31,21 @@
 }
 
 .ModalPage__in {
-  width: 416px;
+  width: 400px;
   max-width: 100%;
   margin: 0 auto;
-  background: var(--background_content);
+  background-color: var(
+    --background_content,
+    var(--vkui--color_background_modal)
+  );
   overflow: visible;
   position: relative;
   box-sizing: border-box;
   height: 100%;
   display: flex;
   flex-direction: column;
-  border-radius: 12px 12px 0 0;
+  border-top-right-radius: var(--vkui--size_border_radius_paper--regular);
+  border-top-left-radius: var(--vkui--size_border_radius_paper--regular);
 }
 
 .ModalPage__header {
@@ -82,7 +86,10 @@
 }
 
 .ModalPage__footer {
-  background: var(--background_content);
+  background-color: var(
+    --background_content,
+    var(--vkui--color_background_modal)
+  );
   position: relative;
   z-index: 10;
 }
@@ -98,15 +105,10 @@
   transition: transform 400ms var(--ios-easing);
 }
 
-.ModalPage--ios .ModalPage__in {
-  border-radius: 14px 14px 0 0;
-}
-
 /**
  * VKCOM
  */
 .ModalPage--vkcom .ModalPage__in {
-  border-radius: 8px 8px 0 0;
   width: 448px;
 }
 
@@ -127,8 +129,9 @@
 .ModalPage--desktop .ModalPage__in {
   height: auto;
   max-height: 640px;
-  box-shadow: 0 16px 16px rgba(0, 0, 0, 0.16), 0 0 8px rgba(0, 0, 0, 0.12);
-  border-radius: 8px;
+  box-shadow: var(--vkui--elevation3);
+  border-bottom-right-radius: var(--vkui--size_border_radius_paper--regular);
+  border-bottom-left-radius: var(--vkui--size_border_radius_paper--regular);
 }
 
 @media (max-height: 672px) {

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import {
   ModalRootContext,
@@ -93,7 +92,6 @@ const ModalPageComponent = ({
   ]);
 
   const isDesktop = useAdaptivityIsDesktop();
-  // TODO v5.0.0 поправить под новую адаптивность
   const isCloseButtonShown =
     !hideCloseButton &&
     (platform === Platform.VKCOM || viewWidth >= ViewWidth.SMALL_TABLET);
@@ -108,13 +106,13 @@ const ModalPageComponent = ({
     <div
       {...restProps}
       id={id}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
-        getClassName("ModalPage", platform),
+        "ModalPage",
+        platform === Platform.IOS && "ModalPage--ios",
+        platform === Platform.VKCOM && "ModalPage--vkcom",
+        // TODO v5.0.0 поправить под новую адаптивность
         `ModalPage--sizeX-${sizeX}`,
-        {
-          "ModalPage--desktop": isDesktop,
-        }
+        isDesktop && "ModalPage--desktop"
       )}
     >
       <div vkuiClass="ModalPage__in-wrap" ref={refs.innerElement}>
