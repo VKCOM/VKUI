@@ -74,19 +74,21 @@
   min-width: 1px;
 }
 
-.FormLayoutGroup--horizontal .FormItem + .FormItem {
+.FormLayoutGroup--horizontal:not(.FormLayoutGroup--segmented)
+  .FormItem
+  + .FormItem {
   margin-left: 24px;
 }
 
 .FormItem--withTop .FormItem__removable,
-.FormLayoutGroup--removable .FormItem--withTop {
+.FormLayoutGroup--horizontal .FormItem--withTop {
   margin-top: calc(
     -2px - var(--vkui--font_subhead--line_height--regular) - 8px
   );
 }
 
 .FormItem--withTop.FormItem--sizeY-compact .FormItem__removable,
-.FormLayoutGroup--removable .FormItem--withTop.FormItem--sizeY-compact {
+.FormLayoutGroup--horizontal .FormItem--withTop.FormItem--sizeY-compact {
   margin-top: calc(
     -2px - var(--vkui--font_subhead--line_height--compact) - 6px
   );

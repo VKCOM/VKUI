@@ -1,8 +1,22 @@
 import { Fragment } from "react";
 import { FormLayoutGroup } from "./FormLayoutGroup";
 import { Input } from "../Input/Input";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { FormItem } from "../FormItem/FormItem";
+import { Select } from "../Select/Select";
+import { DatePicker } from "../DatePicker/DatePicker";
+import { ChipsSelect } from "../ChipsSelect/ChipsSelect";
+import { CustomSelect } from "../CustomSelect/CustomSelect";
+import { NativeSelect } from "../NativeSelect/NativeSelect";
+import { ChipsInput } from "../ChipsInput/ChipsInput";
+import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
+import { describeScreenshotFuzz } from "../../testing/e2e/utils";
+
+const chips = [
+  {
+    value: "chip",
+    label: "chip",
+  },
+];
 
 describe("FormLayoutGroup", () => {
   describeScreenshotFuzz(FormLayoutGroup, [
@@ -73,6 +87,108 @@ describe("FormLayoutGroup", () => {
             <Input />
           </FormItem>
         </Fragment>,
+      ],
+    },
+    {
+      mode: ["horizontal"],
+      segmented: [true],
+      children: [
+        <Fragment key="kids">
+          <FormItem>
+            <Input defaultValue="Иванов" />
+          </FormItem>
+          <FormItem>
+            <Input defaultValue="Иван" />
+          </FormItem>
+          <FormItem>
+            <Input defaultValue="Иванович" />
+          </FormItem>
+        </Fragment>,
+        <Fragment key="kids">
+          <FormItem>
+            <Input defaultValue="Иванов" />
+          </FormItem>
+          <FormItem status="error">
+            <Input defaultValue="Иван" />
+          </FormItem>
+          <FormItem>
+            <Input defaultValue="Иванович" />
+          </FormItem>
+        </Fragment>,
+        <Fragment key="kids">
+          <FormItem>
+            <ChipsInput value={chips} />
+          </FormItem>
+          <FormItem>
+            <ChipsInput value={chips} />
+          </FormItem>
+          <FormItem>
+            <ChipsInput value={chips} />
+          </FormItem>
+        </Fragment>,
+        <Fragment key="kids">
+          <FormItem>
+            <Select options={[]} placeholder="День" />
+          </FormItem>
+          <FormItem>
+            <Select options={[]} placeholder="Месяц" />
+          </FormItem>
+          <FormItem>
+            <Select options={[]} placeholder="Год" />
+          </FormItem>
+        </Fragment>,
+        <Fragment key="kids">
+          <FormItem>
+            <NativeSelect placeholder="День" />
+          </FormItem>
+          <FormItem>
+            <NativeSelect placeholder="Месяц" />
+          </FormItem>
+          <FormItem>
+            <NativeSelect placeholder="Год" />
+          </FormItem>
+        </Fragment>,
+        <Fragment key="kids">
+          <FormItem>
+            <CustomSelect options={[]} placeholder="День" />
+          </FormItem>
+          <FormItem>
+            <CustomSelect options={[]} placeholder="Месяц" />
+          </FormItem>
+          <FormItem>
+            <CustomSelect options={[]} placeholder="Год" />
+          </FormItem>
+        </Fragment>,
+        <Fragment key="kids">
+          <FormItem>
+            <ChipsSelect value={chips} />
+          </FormItem>
+          <FormItem>
+            <ChipsSelect value={chips} />
+          </FormItem>
+          <FormItem>
+            <ChipsSelect value={chips} />
+          </FormItem>
+        </Fragment>,
+        <Fragment key="kids">
+          <FormItem>
+            <ChipsSelect value={[]} placeholder="День" />
+          </FormItem>
+          <FormItem>
+            <ChipsSelect value={[]} placeholder="Месяц" />
+          </FormItem>
+          <FormItem>
+            <ChipsSelect value={[]} placeholder="Год" />
+          </FormItem>
+        </Fragment>,
+        <AdaptivityProvider hasMouse={false} key="kids">
+          <FormItem>
+            <Input defaultValue="Текст" />
+          </FormItem>
+          <FormItem>
+            <DatePicker />
+          </FormItem>
+        </AdaptivityProvider>,
       ],
     },
   ]);
