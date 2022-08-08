@@ -70,7 +70,7 @@ export const Setting = ({
                       autoClose
                       key={option}
                       value={option}
-                      onClick={() => onChange(value)}
+                      onClick={() => onChange(option)}
                     >
                       {title}
                     </ActionSheetItem>
