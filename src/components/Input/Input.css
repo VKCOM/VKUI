@@ -54,6 +54,8 @@
 
 .Input__el::placeholder {
   color: var(--field_text_placeholder, var(--vkui--color_text_secondary));
+  /* Для Firefox */
+  opacity: 1;
 }
 
 .Input__el:disabled::placeholder {

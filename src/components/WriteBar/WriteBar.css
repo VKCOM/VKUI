@@ -40,12 +40,8 @@
 
 .WriteBar__textarea::placeholder {
   color: var(--text_placeholder, var(--vkui--color_text_subhead));
-}
-
-/* stylelint-disable-next-line selector-no-vendor-prefix */
-.WriteBar__textarea::-moz-placeholder {
+  /* Для Firefox */
   opacity: 1;
-  color: var(--text_placeholder, var(--vkui--color_text_subhead));
 }
 
 .WriteBar__inlineAfter {
