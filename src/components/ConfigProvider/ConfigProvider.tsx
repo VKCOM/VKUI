@@ -4,10 +4,15 @@ import {
   ConfigProviderContextInterface,
 } from "./ConfigProviderContext";
 import { useObjectMemo } from "../../hooks/useObjectMemo";
-import { AppearanceProvider } from "../AppearanceProvider/AppearanceProvider";
+import {
+  AppearanceProvider,
+  generateVKUITokensClassName,
+} from "../AppearanceProvider/AppearanceProvider";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
 import { useAutoDetectAppearance } from "../../hooks/useAutoDetectAppearance";
 import { noop } from "../../lib/utils";
+import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
+import { useDOM } from "../../lib/dom";
 
 export interface ConfigProviderProps
   extends Partial<ConfigProviderContextInterface> {
@@ -42,6 +47,23 @@ export const ConfigProvider = (props: ConfigProviderProps) => {
     appearanceProp,
     onDetectAppearanceByBridge
   );
+
+  const { document } = useDOM();
+
+  useIsomorphicLayoutEffect(() => {
+    const VKUITokensClassName = generateVKUITokensClassName(
+      platform,
+      appearance
+    );
+
+    // eslint-disable-next-line no-restricted-properties
+    document!.body.classList.add(VKUITokensClassName);
+
+    return () => {
+      // eslint-disable-next-line no-restricted-properties
+      document!.body.classList.remove(VKUITokensClassName);
+    };
+  }, [platform, appearance]);
 
   const configContext = useObjectMemo({
     webviewType,
