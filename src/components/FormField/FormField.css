@@ -2,32 +2,42 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding: 1px;
   box-sizing: border-box;
-  border-radius: var(--vkui--size_border_radius--regular);
+  min-height: var(--vkui--size_field_height--regular);
 }
 
-.FormField > * {
-  border-radius: inherit;
+/**
+ * TODO v5.0.0 поправить под новую адаптивность
+ */
+.FormField--sizeY-compact {
+  min-height: var(--vkui--size_field_height--compact);
 }
 
 .FormField__before,
 .FormField__after {
-  flex-shrink: 0;
   position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   align-content: center;
   justify-content: center;
-  min-width: 44px;
-  height: 44px;
-  margin: -1px;
+  flex-shrink: 0;
+  min-width: var(--vkui--size_field_height--regular);
+  height: 100%;
   color: var(--icon_secondary, var(--vkui--color_icon_secondary));
-  z-index: 2;
+}
+
+/**
+ * TODO v5.0.0 поправить под новую адаптивность
+ */
+.FormField--sizeY-compact .FormField__before,
+.FormField--sizeY-compact .FormField__after {
+  min-width: var(--vkui--size_field_height--compact);
+  height: var(--vkui--size_field_height--compact);
 }
 
 .FormField__before {
-  color: var(--vkui--color_icon_accent);
+  color: var(--accent, var(--vkui--color_icon_accent));
 }
 
 .FormField__after {
@@ -36,15 +46,15 @@
 
 .FormField__border {
   position: absolute;
+  z-index: 1;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  content: "";
   box-sizing: border-box;
-  z-index: 1;
   transform-origin: left top;
   border: var(--thin-border) solid transparent;
+  border-radius: var(--vkui--size_border_radius--regular);
 }
 
 .FormField--default .FormField__border {
@@ -55,6 +65,11 @@
   );
 }
 
+/**
+ * [start]
+ * CMP:
+ * FormItem
+ */
 .FormItem--error .FormField__border {
   background-color: var(
     --field_error_background,
@@ -66,6 +81,7 @@
 .FormItem--valid .FormField__border {
   border-color: var(--field_valid_border, var(--vkui--color_stroke_positive));
 }
+/* [end] */
 
 .FormField--disabled {
   opacity: var(--vkui--opacity_disable_accessibility);
@@ -87,20 +103,13 @@
   );
 }
 
+/**
+ * FIXME: необходимо заменить на `useFocusVisible()`
+ */
 .FormField:focus-within .FormField__border,
 .FormField *:focus ~ .FormField__border,
 .ChipsInput--focused .FormField__border {
   border-color: var(--accent, var(--vkui--color_stroke_accent));
-}
-
-/**
- * sizeY COMPACT
- * TODO v5.0.0 поправить под новую адаптивность
- */
-.FormField--sizeY-compact .FormField__before,
-.FormField--sizeY-compact .FormField__after {
-  min-width: 36px;
-  height: 36px;
 }
 
 /**

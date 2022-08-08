@@ -145,3 +145,5 @@ export const ModalCardBase = withAdaptivity<
     hasMouse: true,
   }
 );
+
+ModalCardBase.displayName = "ModalCardBase";

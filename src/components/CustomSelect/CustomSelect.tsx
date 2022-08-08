@@ -1,20 +1,13 @@
 import * as React from "react";
 import { SelectMimicry } from "../SelectMimicry/SelectMimicry";
-import {
-  debounce,
-  setRef,
-  multiRef,
-  getTitleFromChildren,
-} from "../../lib/utils";
+import { debounce, multiRef, getTitleFromChildren } from "../../lib/utils";
 import { classNames } from "../../lib/classNames";
 import { NativeSelectProps } from "../NativeSelect/NativeSelect";
 import { withAdaptivity } from "../../hoc/withAdaptivity";
-import { withPlatform } from "../../hoc/withPlatform";
 import {
   CustomSelectOption,
   CustomSelectOptionProps,
 } from "../CustomSelectOption/CustomSelectOption";
-import { getClassName } from "../../helpers/getClassName";
 import { FormFieldProps } from "../FormField/FormField";
 import { HasPlatform } from "../../types";
 import { Input } from "../Input/Input";
@@ -25,11 +18,11 @@ import {
   defaultFilterFn,
   getFormFieldModeFromSelectType,
 } from "../../lib/select";
-import { is } from "../../lib/is";
 import { Placement } from "../Popper/Popper";
 import { CustomSelectDropdown } from "../CustomSelectDropdown/CustomSelectDropdown";
 import { TrackerOptionsProps } from "../CustomScrollView/useTrackerVisibility";
 import { SelectType } from "../Select/Select";
+import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import "./CustomSelect.css";
 
 const findIndexAfter = (
@@ -72,6 +65,44 @@ const checkOptionsValueType = (options: CustomSelectOptionInterface[]) => {
   }
 };
 
+function defaultRenderOptionFn({
+  option,
+  ...props
+}: CustomSelectOptionProps): React.ReactNode {
+  return <CustomSelectOption {...props} />;
+}
+
+const handleOptionDown: MouseEventHandler = (
+  e: React.MouseEvent<HTMLElement>
+) => {
+  e.preventDefault();
+};
+
+function findSelectedIndex(
+  options: CustomSelectOptionInterface[],
+  value: SelectValue
+) {
+  return (
+    options.findIndex((item) => {
+      value = typeof item.value === "number" ? Number(value) : value;
+      return item.value === value;
+    }) ?? -1
+  );
+}
+
+const filter = (
+  options: CustomSelectProps["options"],
+  inputValue: string,
+  filterFn: CustomSelectProps["filterFn"]
+) => {
+  return typeof filterFn === "function"
+    ? options.filter((option) => filterFn(inputValue, option))
+    : options;
+};
+
+const defaultOptions: CustomSelectOptionInterface[] = [];
+const defaultIcon = <DropdownIcon />;
+
 type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>["value"];
 
 export interface CustomSelectOptionInterface {
@@ -79,16 +110,6 @@ export interface CustomSelectOptionInterface {
   label: React.ReactElement | string;
   disabled?: boolean;
   [index: string]: any;
-}
-
-interface CustomSelectState {
-  inputValue?: string;
-  opened?: boolean;
-  focusedOptionIndex?: number;
-  selectedOptionIndex?: number;
-  nativeSelectValue?: SelectValue;
-  options?: CustomSelectOptionInterface[];
-  popperPlacement?: Placement;
 }
 
 export interface CustomSelectProps
@@ -153,178 +174,111 @@ export interface CustomSelectProps
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
-class CustomSelectComponent extends React.Component<
-  CustomSelectProps,
-  CustomSelectState
-> {
-  static defaultProps: Partial<CustomSelectProps> = {
-    searchable: false,
-    renderOption({ option, ...props }): React.ReactNode {
-      return <CustomSelectOption {...props} />;
-    },
-    options: [],
-    emptyText: "Ничего не найдено",
-    filterFn: defaultFilterFn,
-    icon: <DropdownIcon />,
-    dropdownOffsetDistance: 0,
-    fixDropdownWidth: true,
-  };
+function CustomSelectComponent(props: CustomSelectProps) {
+  const {
+    before,
+    name,
+    className,
+    getRef,
+    getRootRef,
+    popupDirection,
+    sizeY,
+    platform,
+    style,
+    onChange,
+    children,
+    onInputChange: onInputChangeProp,
+    renderDropdown,
+    onOpen,
+    onClose,
+    fetching,
+    forceDropdownPortal,
+    selectType = SelectType.default,
+    autoHideScrollbar,
+    autoHideScrollbarDelay,
+    searchable = false,
+    renderOption: renderOptionProp = defaultRenderOptionFn,
+    options: optionsProp = defaultOptions,
+    emptyText = "Ничего не найдено",
+    filterFn = defaultFilterFn,
+    icon = defaultIcon,
+    dropdownOffsetDistance = 0,
+    fixDropdownWidth = true,
+    ...restProps
+  } = props;
 
-  public constructor(props: CustomSelectProps) {
-    super(props);
-
-    const { value, defaultValue } = props;
-
-    const initialValue = value !== undefined ? value : defaultValue;
-
-    this.keyboardInput = "";
-
-    if (process.env.NODE_ENV === "development") {
-      checkOptionsValueType(props.options);
-    }
-
-    this.state = {
-      opened: false,
-      focusedOptionIndex: -1,
-      selectedOptionIndex: this.findSelectedIndex(props.options, initialValue),
-      nativeSelectValue: initialValue,
-      options: props.options,
-      inputValue: "",
-    };
-
-    if (props.value !== undefined) {
-      this.isControlledOutside = true;
-    }
+  if (process.env.NODE_ENV === "development") {
+    checkOptionsValueType(optionsProp);
   }
 
-  private keyboardInput: string;
-  private isControlledOutside = false;
-  private selectEl: HTMLSelectElement | null = null;
-  private readonly scrollBoxRef = React.createRef<HTMLDivElement>();
-  private readonly containerRef = React.createRef<HTMLLabelElement>();
+  const containerRef = React.useRef<HTMLLabelElement>(null);
+  const scrollBoxRef = React.useRef<HTMLDivElement>(null);
+  const selectElRef = React.useRef<HTMLSelectElement>(null);
 
-  private readonly resetKeyboardInput = () => {
-    this.keyboardInput = "";
-  };
+  const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<
+    number | undefined
+  >(-1);
+  const [isControlledOutside, setIsControlledOutside] = React.useState(
+    props.value !== undefined
+  );
+  const [inputValue, setInputValue] = React.useState("");
+  const [nativeSelectValue, setNativeSelectValue] = React.useState(
+    props.value ?? props.defaultValue
+  );
+  const [keyboardInput, setKeyboardInput] = React.useState("");
+  const [popperPlacement, setPopperPlacement] = React.useState<
+    Placement | undefined
+  >(undefined);
+  const [options, setOptions] = React.useState(optionsProp);
+  const [selectedOptionIndex, setSelectedOptionIndex] = React.useState<
+    number | undefined
+  >(findSelectedIndex(optionsProp, props.value ?? props.defaultValue));
+  const [opened, setOpened] = React.useState(false);
 
-  private readonly getSelectedItem = () => {
-    const { selectedOptionIndex, options } = this.state;
+  React.useEffect(() => {
+    setIsControlledOutside(props.value !== undefined);
+    setNativeSelectValue(
+      (nativeSelectValue) => props.value ?? nativeSelectValue
+    );
+  }, [props.value]);
 
-    if (!options?.length) {
+  useIsomorphicLayoutEffect(() => {
+    if (nativeSelectValue) {
+      const event = new Event("change", { bubbles: true });
+
+      selectElRef.current?.dispatchEvent(event);
+    }
+  }, [nativeSelectValue]);
+
+  const selected = React.useMemo(() => {
+    if (!options.length) {
       return null;
     }
 
     return selectedOptionIndex !== undefined
       ? options[selectedOptionIndex]
       : undefined;
-  };
+  }, [options, selectedOptionIndex]);
 
-  get areOptionsShown() {
-    return this.scrollBoxRef.current !== null;
-  }
+  const openedClassNames = React.useMemo(
+    () =>
+      classNames(
+        opened && "Select--open",
+        opened &&
+          dropdownOffsetDistance === 0 &&
+          (popperPlacement?.includes("top")
+            ? "Select--pop-up"
+            : "Select--pop-down")
+      ),
+    [dropdownOffsetDistance, opened, popperPlacement]
+  );
 
-  filter = (
-    options: CustomSelectProps["options"],
-    inputValue: string,
-    filterFn: CustomSelectProps["filterFn"]
-  ) => {
-    return typeof filterFn === "function"
-      ? options.filter((option) => filterFn(inputValue, option))
-      : options;
-  };
+  const resetKeyboardInput = React.useCallback(() => {
+    setKeyboardInput("");
+  }, []);
 
-  findSelectedIndex(
-    options: CustomSelectOptionInterface[] | undefined,
-    value: SelectValue
-  ) {
-    return (
-      options?.findIndex((item) => {
-        value = typeof item.value === "number" ? Number(value) : value;
-        return item.value === value;
-      }) ?? -1
-    );
-  }
-
-  open = () => {
-    this.setState(
-      ({ selectedOptionIndex }) => ({
-        opened: true,
-        focusedOptionIndex: selectedOptionIndex,
-      }),
-      () => {
-        const { selectedOptionIndex } = this.state;
-
-        if (
-          selectedOptionIndex !== undefined &&
-          this.isValidIndex(selectedOptionIndex)
-        ) {
-          this.scrollToElement(selectedOptionIndex, true);
-        }
-      }
-    );
-    typeof this.props.onOpen === "function" && this.props.onOpen();
-  };
-
-  close = () => {
-    this.resetKeyboardInput();
-
-    this.setState(() => ({
-      inputValue: "",
-      opened: false,
-      focusedOptionIndex: -1,
-      options: this.props.options,
-    }));
-    typeof this.props.onClose === "function" && this.props.onClose();
-  };
-
-  private isValidIndex(index: number) {
-    return index >= 0 && index < (this.state.options?.length ?? 0);
-  }
-
-  selectFocused = () => {
-    const { focusedOptionIndex } = this.state;
-
-    if (focusedOptionIndex !== undefined) {
-      this.select(focusedOptionIndex);
-    }
-  };
-
-  select = (index: number) => {
-    if (!this.isValidIndex(index)) {
-      return;
-    }
-
-    const item = this.state.options?.[index];
-
-    this.setState(
-      {
-        nativeSelectValue: item?.value,
-      },
-      () => {
-        const event = new Event("change", { bubbles: true });
-        this.selectEl?.dispatchEvent(event);
-      }
-    );
-    this.close();
-  };
-
-  onClick = () => {
-    this.state.opened ? this.close() : this.open();
-  };
-
-  onFocus = () => {
-    const event = new Event("focus");
-    this.selectEl?.dispatchEvent(event);
-  };
-
-  onBlur = () => {
-    this.close();
-    const event = new Event("blur");
-    this.selectEl?.dispatchEvent(event);
-  };
-
-  private scrollToElement(index: number, center = false) {
-    const dropdown = this.scrollBoxRef.current;
+  const scrollToElement = React.useCallback((index: number, center = false) => {
+    const dropdown = scrollBoxRef.current;
     const item = dropdown ? (dropdown.children[index] as HTMLElement) : null;
 
     if (!item || !dropdown) {
@@ -343,449 +297,465 @@ class CustomSelectComponent extends React.Component<
     } else if (itemTop < scrollTop) {
       dropdown.scrollTop = itemTop;
     }
-  }
+  }, []);
 
-  focusOptionByIndex = (index: number | undefined, scrollTo = true) => {
-    if (
-      index === undefined ||
-      index < 0 ||
-      index > (this.state.options?.length ?? 0) - 1
-    ) {
-      return;
-    }
+  const isValidIndex = React.useCallback(
+    (index: number) => {
+      return index >= 0 && index < (options.length ?? 0);
+    },
+    [options.length]
+  );
 
-    const option = this.state.options?.[index];
+  const focusOptionByIndex = React.useCallback(
+    (index: number | undefined, scrollTo = true) => {
+      if (
+        index === undefined ||
+        index < 0 ||
+        index > (options.length ?? 0) - 1
+      ) {
+        return;
+      }
 
-    if (option?.disabled) {
-      return;
-    }
+      const option = options[index];
 
-    scrollTo && this.scrollToElement(index);
+      if (option?.disabled) {
+        return;
+      }
 
-    this.setState((prevState) =>
+      if (scrollTo) {
+        scrollToElement(index);
+      }
+
       // Это оптимизация, прежде всего, под `onMouseOver`
-      prevState.focusedOptionIndex !== index
-        ? {
-            focusedOptionIndex: index,
-          }
-        : null
-    );
-  };
+      setFocusedOptionIndex((focusedOptionIndex) =>
+        focusedOptionIndex !== index ? index : focusedOptionIndex
+      );
+    },
+    [options, scrollToElement]
+  );
 
-  focusOption = (type: "next" | "prev") => {
-    const { focusedOptionIndex } = this.state;
-    let index = focusedOptionIndex;
+  const areOptionsShown = React.useCallback(() => {
+    return scrollBoxRef.current !== null;
+  }, []);
 
-    if (type === "next") {
-      const nextIndex = findIndexAfter(this.state.options, index);
-      index = nextIndex === -1 ? findIndexAfter(this.state.options) : nextIndex; // Следующий за index или первый валидный до index
-    } else if (type === "prev") {
-      const beforeIndex = findIndexBefore(this.state.options, index);
-      index =
-        beforeIndex === -1 ? findIndexBefore(this.state.options) : beforeIndex; // Предшествующий index или последний валидный после index
+  const onKeyboardInput = React.useCallback(
+    (key: string) => {
+      const fullInput = keyboardInput + key;
+
+      const optionIndex = options.findIndex((option) => {
+        return getTitleFromChildren(option.label)
+          .toLowerCase()
+          .includes(fullInput);
+      });
+
+      if (optionIndex !== undefined && optionIndex > -1) {
+        focusOptionByIndex(optionIndex);
+      }
+
+      setKeyboardInput(fullInput);
+    },
+    [focusOptionByIndex, keyboardInput, options]
+  );
+
+  const close = React.useCallback(() => {
+    resetKeyboardInput();
+
+    setInputValue("");
+    setOpened(false);
+    setFocusedOptionIndex(-1);
+    setOptions(optionsProp);
+    onClose?.();
+  }, [onClose, optionsProp, resetKeyboardInput]);
+
+  const selectFocused = React.useCallback(() => {
+    if (focusedOptionIndex !== undefined && isValidIndex(focusedOptionIndex)) {
+      const item = options[focusedOptionIndex];
+
+      setNativeSelectValue(item?.value);
+      close();
     }
+  }, [close, focusedOptionIndex, isValidIndex, options]);
 
-    this.focusOptionByIndex(index);
-  };
+  const open = React.useCallback(() => {
+    setOpened(true);
+    setFocusedOptionIndex(selectedOptionIndex);
 
-  handleOptionHover: MouseEventHandler = (e: React.MouseEvent<HTMLElement>) => {
-    this.focusOptionByIndex(
-      Array.prototype.indexOf.call(
-        e.currentTarget.parentNode?.children,
-        e.currentTarget
-      ),
-      false
-    );
-  };
-
-  handleOptionDown: MouseEventHandler = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-  };
-
-  handleOptionClick: MouseEventHandler = (e: React.MouseEvent<HTMLElement>) => {
-    const index = Array.prototype.indexOf.call(
-      e.currentTarget.parentNode?.children,
-      e.currentTarget
-    );
-    const option = this.state.options?.[index];
-
-    if (option && !option.disabled) {
-      this.selectFocused();
+    if (typeof onOpen === "function") {
+      onOpen();
     }
-  };
+  }, [onOpen, selectedOptionIndex]);
 
-  resetFocusedOption = () => {
-    this.setState({ focusedOptionIndex: -1 });
-  };
-
-  onKeyboardInput = (key: string) => {
-    const fullInput = this.keyboardInput + key;
-
-    const optionIndex = this.state.options?.findIndex((option) => {
-      return getTitleFromChildren(option.label)
-        .toLowerCase()
-        .includes(fullInput);
-    });
-
-    if (optionIndex !== undefined && optionIndex > -1) {
-      this.focusOptionByIndex(optionIndex);
+  React.useEffect(() => {
+    if (
+      opened &&
+      selectedOptionIndex !== undefined &&
+      isValidIndex(selectedOptionIndex)
+    ) {
+      scrollToElement(selectedOptionIndex, true);
     }
+  }, [isValidIndex, opened, scrollToElement, selectedOptionIndex]);
 
-    this.keyboardInput = fullInput;
-  };
+  const onBlur = React.useCallback(() => {
+    close();
+    const event = new Event("blur");
+    selectElRef.current?.dispatchEvent(event);
+  }, [close]);
+
+  const resetFocusedOption = React.useCallback(() => {
+    setFocusedOptionIndex(-1);
+  }, []);
+
+  const onFocus = React.useCallback(() => {
+    const event = new Event("focus");
+    selectElRef.current?.dispatchEvent(event);
+  }, []);
+
+  const onClick = React.useCallback(() => {
+    if (opened) {
+      close();
+    } else {
+      open();
+    }
+  }, [close, open, opened]);
+
+  const handleKeyUp = React.useMemo(
+    () => debounce(resetKeyboardInput, 1000),
+    [resetKeyboardInput]
+  );
+
+  const focusOption = React.useCallback(
+    (type: "next" | "prev") => {
+      let index = focusedOptionIndex;
+
+      if (type === "next") {
+        const nextIndex = findIndexAfter(options, index);
+        index = nextIndex === -1 ? findIndexAfter(options) : nextIndex; // Следующий за index или первый валидный до index
+      } else if (type === "prev") {
+        const beforeIndex = findIndexBefore(options, index);
+        index = beforeIndex === -1 ? findIndexBefore(options) : beforeIndex; // Предшествующий index или последний валидный после index
+      }
+
+      focusOptionByIndex(index);
+    },
+    [focusOptionByIndex, focusedOptionIndex, options]
+  );
+
+  React.useEffect(() => {
+    const value = props.value ?? nativeSelectValue ?? props.defaultValue;
+
+    const options =
+      searchable && inputValue !== undefined
+        ? filter(optionsProp, inputValue, filterFn)
+        : optionsProp;
+
+    setOptions(options);
+    setSelectedOptionIndex(findSelectedIndex(options, value));
+  }, [
+    filterFn,
+    inputValue,
+    nativeSelectValue,
+    optionsProp,
+    props.defaultValue,
+    props.value,
+    searchable,
+  ]);
 
   /**
    * Нужен для правильного поведения обработчика onClick на select. Фильтрует клики, которые были сделаны по
    * выпадающему списку.
    */
-  onLabelClick = (e: React.MouseEvent<HTMLLabelElement>) => {
-    if (this.scrollBoxRef.current?.contains(e.target as Node)) {
-      e.preventDefault();
-    }
-  };
+  const onLabelClick = React.useCallback(
+    (e: React.MouseEvent<HTMLLabelElement>) => {
+      if (scrollBoxRef.current?.contains(e.target as Node)) {
+        e.preventDefault();
+      }
+    },
+    []
+  );
 
-  onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const newSelectedOptionIndex = this.findSelectedIndex(
-      this.state.options,
-      e.currentTarget.value
+  const onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> =
+    React.useCallback(
+      (e) => {
+        const newSelectedOptionIndex = findSelectedIndex(
+          options,
+          e.currentTarget.value
+        );
+
+        if (selectedOptionIndex !== newSelectedOptionIndex) {
+          if (!isControlledOutside) {
+            setSelectedOptionIndex(newSelectedOptionIndex);
+          }
+          onChange?.(e);
+        }
+      },
+      [isControlledOutside, onChange, options, selectedOptionIndex]
     );
 
-    if (this.state.selectedOptionIndex !== newSelectedOptionIndex) {
-      if (!this.isControlledOutside) {
-        this.setState({
-          selectedOptionIndex: newSelectedOptionIndex,
-        });
-      }
-      this.props.onChange?.(e);
-    }
-  };
+  const onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> =
+    React.useCallback(
+      (event) => {
+        ["ArrowUp", "ArrowDown", "Escape", "Enter"].includes(event.key) &&
+          areOptionsShown() &&
+          event.preventDefault();
 
-  onInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    if (this.props.onInputChange) {
-      const options = this.props.onInputChange(e, this.props.options);
-      if (options) {
-        if (process.env.NODE_ENV === "development") {
-          warn(
-            "Этот метод фильтрации устарел. Возвращаемое значение onInputChange будет " +
-              "проигнорировано в v5.0.0. Для фильтрации обновляйте props.options самостоятельно или используйте свойство filterFn."
-          );
+        switch (event.key) {
+          case "ArrowUp":
+            areOptionsShown() && focusOption("prev");
+            break;
+          case "ArrowDown":
+            areOptionsShown() && focusOption("next");
+            break;
+          case "Escape":
+            close();
+            break;
+          case "Enter":
+            areOptionsShown() && selectFocused();
+            break;
         }
-        this.setState({
-          options,
-          selectedOptionIndex: this.findSelectedIndex(
-            options,
-            this.state.nativeSelectValue
-          ),
-          inputValue: e.target.value,
-        });
-      } else {
-        this.setState({ inputValue: e.target.value });
+      },
+      [areOptionsShown, close, focusOption, selectFocused]
+    );
+
+  const onInputChange: React.ChangeEventHandler<HTMLInputElement> =
+    React.useCallback(
+      (e) => {
+        if (onInputChangeProp) {
+          const options = onInputChangeProp(e, optionsProp);
+          if (options) {
+            if (process.env.NODE_ENV === "development") {
+              warn(
+                "Этот метод фильтрации устарел. Возвращаемое значение onInputChange будет " +
+                  "проигнорировано в v5.0.0. Для фильтрации обновляйте props.options самостоятельно или используйте свойство filterFn."
+              );
+            }
+            setOptions(options);
+            setSelectedOptionIndex(
+              findSelectedIndex(options, nativeSelectValue)
+            );
+          }
+        } else {
+          const options = filter(optionsProp, e.target.value, filterFn);
+          setOptions(options);
+          setSelectedOptionIndex(findSelectedIndex(options, nativeSelectValue));
+        }
+        setInputValue(e.target.value);
+      },
+      [filterFn, nativeSelectValue, onInputChangeProp, optionsProp]
+    );
+
+  const handleKeyDownSelect = React.useCallback(
+    (event: React.KeyboardEvent) => {
+      if (event.key.length === 1 && event.key !== " ") {
+        onKeyboardInput(event.key);
+        return;
       }
-    } else {
-      const options = this.filter(
-        this.props.options,
-        e.target.value,
-        this.props.filterFn
+
+      ["ArrowUp", "ArrowDown", "Escape", "Enter"].includes(event.key) &&
+        areOptionsShown() &&
+        event.preventDefault();
+
+      switch (event.key) {
+        case "ArrowUp":
+          if (opened) {
+            areOptionsShown() && focusOption("prev");
+          } else {
+            open();
+          }
+          break;
+        case "ArrowDown":
+          if (opened) {
+            areOptionsShown() && focusOption("next");
+          } else {
+            open();
+          }
+          break;
+        case "Escape":
+          close();
+          break;
+        case "Enter":
+        case "Spacebar":
+        case " ":
+          if (opened) {
+            areOptionsShown() && selectFocused();
+          } else {
+            open();
+          }
+          break;
+      }
+    },
+    [
+      areOptionsShown,
+      close,
+      focusOption,
+      onKeyboardInput,
+      open,
+      opened,
+      selectFocused,
+    ]
+  );
+
+  const handleOptionClick = React.useCallback(
+    (e: React.MouseEvent<HTMLElement>) => {
+      const index = Array.prototype.indexOf.call(
+        e.currentTarget.parentNode?.children,
+        e.currentTarget
       );
-      this.setState({
-        options,
-        selectedOptionIndex: this.findSelectedIndex(
-          options,
-          this.state.nativeSelectValue
+      const option = options[index];
+
+      if (option && !option.disabled) {
+        selectFocused();
+      }
+    },
+    [options, selectFocused]
+  );
+
+  const handleOptionHover = React.useCallback(
+    (e: React.MouseEvent<HTMLElement>) => {
+      focusOptionByIndex(
+        Array.prototype.indexOf.call(
+          e.currentTarget.parentNode?.children,
+          e.currentTarget
         ),
-        inputValue: e.target.value,
-      });
-    }
-  };
-
-  onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (event) => {
-    ["ArrowUp", "ArrowDown", "Escape", "Enter"].includes(event.key) &&
-      this.areOptionsShown &&
-      event.preventDefault();
-
-    switch (event.key) {
-      case "ArrowUp":
-        this.areOptionsShown && this.focusOption("prev");
-        break;
-      case "ArrowDown":
-        this.areOptionsShown && this.focusOption("next");
-        break;
-      case "Escape":
-        this.close();
-        break;
-      case "Enter":
-        this.areOptionsShown && this.selectFocused();
-        break;
-    }
-  };
-
-  handleKeyDownSelect = (event: React.KeyboardEvent) => {
-    const { opened } = this.state;
-
-    if (event.key.length === 1 && event.key !== " ") {
-      this.onKeyboardInput(event.key);
-      return;
-    }
-
-    ["ArrowUp", "ArrowDown", "Escape", "Enter"].includes(event.key) &&
-      this.areOptionsShown &&
-      event.preventDefault();
-
-    switch (event.key) {
-      case "ArrowUp":
-        if (opened) {
-          this.areOptionsShown && this.focusOption("prev");
-        } else {
-          this.open();
-        }
-        break;
-      case "ArrowDown":
-        if (opened) {
-          this.areOptionsShown && this.focusOption("next");
-        } else {
-          this.open();
-        }
-        break;
-      case "Escape":
-        this.close();
-        break;
-      case "Enter":
-      case "Spacebar":
-      case " ":
-        if (opened) {
-          this.areOptionsShown && this.selectFocused();
-        } else {
-          this.open();
-        }
-        break;
-    }
-  };
-
-  handleKeyUp = debounce(this.resetKeyboardInput, 1000);
-
-  componentDidUpdate(prevProps: CustomSelectProps) {
-    // Внутри useEffect и так is, можно убрать
-    if (
-      !is(prevProps.value, this.props.value) ||
-      prevProps.options !== this.props.options
-    ) {
-      if (process.env.NODE_ENV === "development") {
-        checkOptionsValueType(this.props.options);
-      }
-
-      this.isControlledOutside = this.props.value !== undefined;
-      const value =
-        this.props.value === undefined
-          ? this.state.nativeSelectValue
-          : this.props.value;
-      const options =
-        this.props.searchable && this.state.inputValue !== undefined
-          ? this.filter(
-              this.props.options,
-              this.state.inputValue,
-              this.props.filterFn
-            )
-          : this.props.options;
-      this.setState({
-        nativeSelectValue: value,
-        selectedOptionIndex: this.findSelectedIndex(options, value),
-        options,
-      });
-    }
-  }
-
-  renderOption = (option: CustomSelectOptionInterface, index: number) => {
-    const { focusedOptionIndex, selectedOptionIndex } = this.state;
-    const { renderOption } = this.props;
-    const hovered = index === focusedOptionIndex;
-    const selected = index === selectedOptionIndex;
-
-    return (
-      <React.Fragment key={`${option.value}`}>
-        {renderOption!({
-          option,
-          hovered,
-          children: option.label,
-          selected,
-          disabled: option.disabled,
-          onClick: this.handleOptionClick,
-          onMouseDown: this.handleOptionDown,
-          // Используем `onMouseOver` вместо `onMouseEnter`.
-          // При параметре `searchable`, обновляется "ребёнок", из-за чего `onMouseEnter` не срабатывает в следующих кейсах:
-          //  1. До загрузки выпадающего списка, курсор мышки находится над произвольным элементом этого списка.
-          //     > Лечение: только увод курсора мыши и возвращении его обратно вызывает событие `onMouseEnter` на этот элемент.
-          //  2. Если это тач-устройство.
-          //     > Лечение: нужно нажать на какой-нибудь произвольный элемент списка, после чего `onMouseEnter` будет работать на соседние элементы,
-          //     но не на тот, на который нажали в первый раз.
-          // Более подробно по ссылке https://github.com/facebook/react/issues/13956#issuecomment-1082055744
-          onMouseOver: this.handleOptionHover,
-        })}
-      </React.Fragment>
-    );
-  };
-
-  selectRef = (element: HTMLSelectElement) => {
-    this.selectEl = element;
-    if (this.props.getRef) {
-      setRef(element, this.props.getRef);
-    }
-  };
-
-  onPlacementChange = (placement?: Placement) => {
-    this.setState(() => ({
-      popperPlacement: placement,
-    }));
-  };
-
-  render() {
-    const { opened, nativeSelectValue, options: stateOptions } = this.state;
-    const {
-      before,
-      searchable,
-      name,
-      className,
-      getRef,
-      getRootRef,
-      popupDirection,
-      options,
-      sizeY,
-      platform,
-      style,
-      onChange,
-      onBlur,
-      onFocus,
-      onClick,
-      renderOption,
-      children,
-      emptyText,
-      onInputChange,
-      filterFn,
-      renderDropdown,
-      onOpen,
-      onClose,
-      fetching,
-      icon,
-      dropdownOffsetDistance,
-      fixDropdownWidth,
-      forceDropdownPortal,
-      selectType = SelectType.default,
-      autoHideScrollbar,
-      autoHideScrollbarDelay,
-      ...restProps
-    } = this.props;
-    const selected = this.getSelectedItem();
-    const label = selected ? selected.label : undefined;
-
-    const defaultDropdownContent =
-      stateOptions !== undefined && stateOptions.length > 0 ? (
-        stateOptions.map(this.renderOption)
-      ) : (
-        <Caption vkuiClass="CustomSelect__empty">
-          {this.props.emptyText}
-        </Caption>
+        false
       );
+    },
+    [focusOptionByIndex]
+  );
 
-    let resolvedContent;
+  const renderOption = React.useCallback(
+    (option: CustomSelectOptionInterface, index: number) => {
+      const hovered = index === focusedOptionIndex;
+      const selected = index === selectedOptionIndex;
+
+      return (
+        <React.Fragment key={`${option.value}`}>
+          {renderOptionProp({
+            option,
+            hovered,
+            children: option.label,
+            selected,
+            disabled: option.disabled,
+            onClick: handleOptionClick,
+            onMouseDown: handleOptionDown,
+            // Используем `onMouseOver` вместо `onMouseEnter`.
+            // При параметре `searchable`, обновляется "ребёнок", из-за чего `onMouseEnter` не срабатывает в следующих кейсах:
+            //  1. До загрузки выпадающего списка, курсор мышки находится над произвольным элементом этого списка.
+            //     > Лечение: только увод курсора мыши и возвращении его обратно вызывает событие `onMouseEnter` на этот элемент.
+            //  2. Если это тач-устройство.
+            //     > Лечение: нужно нажать на какой-нибудь произвольный элемент списка, после чего `onMouseEnter` будет работать на соседние элементы,
+            //     но не на тот, на который нажали в первый раз.
+            // Более подробно по ссылке https://github.com/facebook/react/issues/13956#issuecomment-1082055744
+            onMouseOver: handleOptionHover,
+          })}
+        </React.Fragment>
+      );
+    },
+    [
+      focusedOptionIndex,
+      handleOptionClick,
+      handleOptionHover,
+      renderOptionProp,
+      selectedOptionIndex,
+    ]
+  );
+
+  const resolvedContent = React.useMemo(() => {
+    const defaultDropdownContent =
+      options?.length > 0 ? (
+        options.map(renderOption)
+      ) : (
+        <Caption vkuiClass="CustomSelect__empty">{emptyText}</Caption>
+      );
 
     if (typeof renderDropdown === "function") {
-      resolvedContent = renderDropdown({ defaultDropdownContent });
+      return renderDropdown({ defaultDropdownContent });
     } else {
-      resolvedContent = defaultDropdownContent;
+      return defaultDropdownContent;
     }
+  }, [emptyText, options, renderDropdown, renderOption]);
 
-    const openedClassNames = classNames(
-      opened && "Select--open",
-      opened &&
-        (dropdownOffsetDistance as number) === 0 &&
-        (this.state.popperPlacement?.includes("top")
-          ? "Select--pop-up"
-          : "Select--pop-down")
-    );
-
-    return (
-      <label
-        vkuiClass={getClassName("CustomSelect", platform)}
-        className={className}
-        style={style}
-        ref={multiRef(this.containerRef, getRootRef)}
-        onClick={this.onLabelClick}
-      >
-        {opened && searchable ? (
-          <Input
-            {...restProps}
-            autoFocus
-            onBlur={this.onBlur}
-            vkuiClass={openedClassNames}
-            value={this.state.inputValue}
-            onKeyDown={this.onInputKeyDown}
-            onChange={this.onInputChange}
-            // TODO Ожидается, что клик поймает нативный select, но его перехватывает Input. К сожалению, это приводит к конфликтам типизации.
-            // TODO Нужно перестать пытаться превратить CustomSelect в select. Тогда эта проблема уйдёт.
-            // @ts-ignore
-            onClick={onClick}
-            before={before}
-            after={icon}
-            placeholder={restProps.placeholder}
-            mode={getFormFieldModeFromSelectType(selectType)}
-          />
-        ) : (
-          <SelectMimicry
-            {...restProps}
-            aria-hidden={true}
-            onClick={this.onClick}
-            onKeyDown={this.handleKeyDownSelect}
-            onKeyUp={this.handleKeyUp}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            vkuiClass={openedClassNames}
-            after={icon}
-            selectType={selectType}
-          >
-            {label}
-          </SelectMimicry>
-        )}
-        <select
-          ref={this.selectRef}
-          name={name}
-          onChange={this.onNativeSelectChange}
+  return (
+    <label
+      vkuiClass="CustomSelect"
+      className={className}
+      style={style}
+      ref={multiRef(containerRef, getRootRef)}
+      onClick={onLabelClick}
+    >
+      {opened && searchable ? (
+        <Input
+          {...restProps}
+          autoFocus
           onBlur={onBlur}
-          onFocus={onFocus}
-          onClick={onClick}
-          value={nativeSelectValue}
+          vkuiClass={openedClassNames}
+          value={inputValue}
+          onKeyDown={onInputKeyDown}
+          onChange={onInputChange}
+          // TODO Ожидается, что клик поймает нативный select, но его перехватывает Input. К сожалению, это приводит к конфликтам типизации.
+          // TODO Нужно перестать пытаться превратить CustomSelect в select. Тогда эта проблема уйдёт.
+          // @ts-ignore
+          onClick={props.onClick}
+          before={before}
+          after={icon}
+          placeholder={restProps.placeholder}
+          mode={getFormFieldModeFromSelectType(selectType)}
+        />
+      ) : (
+        <SelectMimicry
+          {...restProps}
           aria-hidden={true}
-          vkuiClass="CustomSelect__control"
+          onClick={onClick}
+          onKeyDown={handleKeyDownSelect}
+          onKeyUp={handleKeyUp}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          vkuiClass={openedClassNames}
+          after={icon}
+          selectType={selectType}
         >
-          {options.map((item) => (
-            <option key={`${item.value}`} value={item.value} />
-          ))}
-        </select>
-        {opened && (
-          <CustomSelectDropdown
-            targetRef={this.containerRef}
-            placement={popupDirection}
-            scrollBoxRef={this.scrollBoxRef}
-            onPlacementChange={this.onPlacementChange}
-            onMouseLeave={this.resetFocusedOption}
-            fetching={fetching}
-            offsetDistance={dropdownOffsetDistance}
-            sameWidth={fixDropdownWidth}
-            forcePortal={forceDropdownPortal}
-            autoHideScrollbar={autoHideScrollbar}
-            autoHideScrollbarDelay={autoHideScrollbarDelay}
-          >
-            {resolvedContent}
-          </CustomSelectDropdown>
-        )}
-      </label>
-    );
-  }
+          {selected?.label}
+        </SelectMimicry>
+      )}
+      <select
+        ref={selectElRef}
+        name={name}
+        onChange={onNativeSelectChange}
+        onBlur={props.onBlur}
+        onFocus={props.onFocus}
+        onClick={props.onClick}
+        value={nativeSelectValue}
+        aria-hidden={true}
+        vkuiClass="CustomSelect__control"
+      >
+        {optionsProp.map((item) => (
+          <option key={`${item.value}`} value={item.value} />
+        ))}
+      </select>
+      {opened && (
+        <CustomSelectDropdown
+          targetRef={containerRef}
+          placement={popupDirection}
+          scrollBoxRef={scrollBoxRef}
+          onPlacementChange={setPopperPlacement}
+          onMouseLeave={resetFocusedOption}
+          fetching={fetching}
+          offsetDistance={dropdownOffsetDistance}
+          sameWidth={fixDropdownWidth}
+          forcePortal={forceDropdownPortal}
+          autoHideScrollbar={autoHideScrollbar}
+          autoHideScrollbarDelay={autoHideScrollbarDelay}
+          observableRefs={scrollBoxRef}
+        >
+          {resolvedContent}
+        </CustomSelectDropdown>
+      )}
+    </label>
+  );
 }
 
 /**
  * @see https://vkcom.github.io/VKUI/#/CustomSelect
  */
-export const CustomSelect = withPlatform(
-  withAdaptivity(CustomSelectComponent, {
-    sizeY: true,
-  })
-);
+export const CustomSelect = withAdaptivity(CustomSelectComponent, {
+  sizeY: true,
+});

@@ -99,3 +99,5 @@ const RadioComponent = ({
 export const Radio = withAdaptivity(RadioComponent, {
   sizeY: true,
 });
+
+Radio.displayName = "Radio";

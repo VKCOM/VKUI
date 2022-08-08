@@ -1,6 +1,7 @@
 import * as React from "react";
 import { usePopper, Modifier } from "react-popper";
 import { AppRootPortal } from "../AppRoot/AppRootPortal";
+import { PopperArrow } from "../PopperArrow/PopperArrow";
 import { HasRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getClassName } from "../../helpers/getClassName";
@@ -25,6 +26,10 @@ export type Placement =
   | "left"
   | "right";
 
+export interface PopperRenderContentProps {
+  className: string;
+}
+
 export interface PopperCommonProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRef<HTMLDivElement> {
@@ -40,7 +45,13 @@ export interface PopperCommonProps
    * Отступ по главной оси
    */
   offsetDistance?: number;
+  /**
+   * Отображать ли стрелку, указывающую на якорный элемент
+   */
   arrow?: boolean;
+  /**
+   * Стиль стрелки
+   */
   arrowClassName?: string;
   /**
    * Выставлять ширину равной target элементу
@@ -52,6 +63,14 @@ export interface PopperCommonProps
    * Массив кастомных модификаторов для Popper (необходимо мемоизировать)
    */
   customModifiers?: Array<Modifier<string>>;
+  /**
+   * При передаче содержимого в `children`, он будет обёрнут во внутренний контейнер.
+   *
+   * Если хочется управлять этим контейнером, то используйте данную функцию.
+   *
+   * > ⚠️ Параметр `children` будет проигнорирован.
+   */
+  renderContent?(props: PopperRenderContentProps): React.ReactNode;
 }
 
 export interface PopperProps extends PopperCommonProps {
@@ -78,7 +97,8 @@ export const Popper = ({
   offsetSkidding = 0,
   forcePortal = true,
   style: compStyles,
-  customModifiers = [],
+  customModifiers,
+  renderContent,
   ...restProps
 }: PopperProps) => {
   const [popperNode, setPopperNode] = React.useState<HTMLDivElement | null>(
@@ -140,7 +160,9 @@ export const Popper = ({
       modifiers.push(sameWidth);
     }
 
-    modifiers.push(...customModifiers);
+    if (customModifiers) {
+      modifiers.push(...customModifiers);
+    }
     return modifiers;
   }, [
     arrow,
@@ -208,31 +230,17 @@ export const Popper = ({
       }}
     >
       {arrow && (
-        <div
-          {...attributes.arrow}
-          vkuiClass="Popper__arrow"
-          data-popper-arrow={true}
+        <PopperArrow
+          attributes={attributes.arrow}
           style={styles.arrow}
-        >
-          <svg
-            vkuiClass="Popper__arrow-in"
-            className={arrowClassName}
-            width="20"
-            height="8"
-            viewBox="0 0 20 8"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M10 0C13 0 15.9999 8 20 8H0C3.9749 8 7 0 10 0Z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
+          arrowClassName={arrowClassName}
+        />
       )}
-      <div vkuiClass="Popper__content">{children}</div>
+      {renderContent ? (
+        renderContent({ className: "Popper__content" })
+      ) : (
+        <div vkuiClass="Popper__content">{children}</div>
+      )}
     </div>
   );
 

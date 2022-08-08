@@ -18,9 +18,6 @@ export interface TextareaProps
   defaultValue?: string;
 }
 
-/**
- * @see https://vkcom.github.io/VKUI/#/Textarea
- */
 const TextareaComponent = ({
   defaultValue = "",
   grow = true,
@@ -78,5 +75,9 @@ const TextareaComponent = ({
   );
 };
 
-// eslint-disable-next-line import/no-default-export
+/**
+ * @see https://vkcom.github.io/VKUI/#/Textarea
+ */
 export const Textarea = withAdaptivity(TextareaComponent, { sizeY: true });
+
+Textarea.displayName = "Textarea";

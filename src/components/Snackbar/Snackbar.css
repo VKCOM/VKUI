@@ -14,8 +14,14 @@
   padding-bottom: calc(var(--tabbar_height) + var(--safe-area-inset-bottom));
 }
 
+.Snackbar__in,
+.Snackbar__body {
+  transition: transform 320ms var(--android-easing);
+}
+
 .Snackbar__in {
   padding: 8px;
+  animation: vkui-animation-snackbar-intro-vertical 340ms var(--android-easing);
 }
 
 .Snackbar--closing .Snackbar__in {
@@ -28,8 +34,13 @@
   min-height: 56px;
   display: flex;
   align-items: center;
-  background: var(--modal_card_background);
-  box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.08);
+  background: var(--modal_card_background, var(--vkui--color_background_modal));
+  box-shadow: var(--vkui--elevation4);
+  border-radius: var(--vkui--size_border_radius--regular);
+}
+
+.Snackbar--dark .Snackbar__body {
+  background: var(--vkui--color_background_contrast_inverse);
 }
 
 .Snackbar__before {
@@ -56,7 +67,7 @@
 
 .Snackbar__content-text {
   flex: 1;
-  color: var(--text_primary);
+  color: var(--text_primary, var(--vkui--color_text_primary));
   width: 100%;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -64,16 +75,18 @@
   overflow: hidden;
 }
 
+.Snackbar--dark .Snackbar__content-text {
+  color: var(--vkui--color_text_contrast);
+}
+
 .Snackbar--l-horizontal .Snackbar__action {
   margin-right: calc(
     -1 * var(--vkui--size_button_tertiary_small_padding_horizontal--regular)
   );
   position: relative;
-  top: 2px;
 }
 
 .Snackbar--l-vertical .Snackbar__action {
-  margin-top: 2px;
   margin-bottom: -6px;
   margin-left: calc(
     -1 * var(--vkui--size_button_tertiary_small_padding_horizontal--regular)
@@ -92,28 +105,6 @@
 
 .Snackbar--ios .Snackbar__in {
   animation: vkui-animation-snackbar-intro-vertical 340ms var(--ios-easing);
-}
-
-.Snackbar--ios .Snackbar__body {
-  border-radius: 10px;
-}
-
-/* Android */
-.Snackbar--android .Snackbar__in,
-.Snackbar--android .Snackbar__body,
-.Snackbar--vkcom .Snackbar__in,
-.Snackbar--vkcom .Snackbar__body {
-  transition: transform 320ms var(--android-easing);
-}
-
-.Snackbar--android .Snackbar__in,
-.Snackbar--vkcom .Snackbar__in {
-  animation: vkui-animation-snackbar-intro-vertical 340ms var(--android-easing);
-}
-
-.Snackbar--android .Snackbar__body,
-.Snackbar--vkcom .Snackbar__body {
-  border-radius: 8px;
 }
 
 /**

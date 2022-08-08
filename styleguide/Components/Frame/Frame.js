@@ -81,12 +81,12 @@ const initialFrameContent = `
 </html>
 `;
 
-export const Frame = ({ children, width, height, appearance }) => {
+export const Frame = ({ children, style, appearance }) => {
   return (
     <ReactFrame
       mountTarget="body"
       className="Frame"
-      style={{ height, width }}
+      style={style}
       initialContent={initialFrameContent}
     >
       <FrameDomProvider appearance={appearance}>{children}</FrameDomProvider>
@@ -95,7 +95,9 @@ export const Frame = ({ children, width, height, appearance }) => {
 };
 
 Frame.propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
+  style: PropTypes.shape({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+  }),
   appearance: PropTypes.oneOf(Object.values(Appearance)).isRequired,
 };

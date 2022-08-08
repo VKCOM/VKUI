@@ -4,7 +4,7 @@ export function withContext<T, X>(
   Component: React.ComponentType<T>,
   Ctx: React.Context<X>,
   prop: string
-): React.ComponentType<T> {
+): React.FC<T> {
   function WithContext(props: T) {
     const context = React.useContext<X>(Ctx);
 

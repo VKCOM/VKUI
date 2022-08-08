@@ -1,6 +1,4 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
-import { usePlatform } from "../../hooks/usePlatform";
 import { withAdaptivity, ViewWidth } from "../../hoc/withAdaptivity";
 import { ScrollSaver } from "./ScrollSaver";
 import { getNavId } from "../../lib/getNavId";
@@ -28,7 +26,6 @@ const EpicComponent = ({
   viewWidth,
   ...restProps
 }: EpicProps & AdaptivityContextInterface) => {
-  const platform = usePlatform();
   const scroll = React.useRef<{ [key: string]: number }>({}).current;
 
   if (
@@ -48,7 +45,7 @@ const EpicComponent = ({
     ) as React.ReactElement | undefined) ?? null;
 
   return (
-    <div {...restProps} vkuiClass={getClassName("Epic", platform)}>
+    <div {...restProps} vkuiClass="Epic">
       <ScrollSaver
         key={activeStory}
         initialScroll={scroll[activeStory] || 0}

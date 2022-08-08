@@ -46,3 +46,5 @@ export const ConfigProviderContext =
     // appearance is auto-detected by default
     // appearance: Appearance.LIGHT,
   });
+
+export const useConfigProvider = () => React.useContext(ConfigProviderContext);

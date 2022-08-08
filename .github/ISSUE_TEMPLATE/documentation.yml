@@ -1,0 +1,17 @@
+name: Documentation
+description: Нашли ошибку в документации или есть идеи по её улучшению? Пишите! Нам очень важен фидбэк
+title: "[Doc]: "
+labels: ["docs"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Спасибо за то, что помогаете нам стать лучше!
+  - type: textarea
+    id: description
+    attributes:
+      label: Описание
+      description: Постарайтесь как можно более подробнее описать желаемое поведение/доработки.
+      placeholder: Пару строк описания...
+    validations:
+      required: true

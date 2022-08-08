@@ -350,6 +350,11 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
     setFocusedOptionIndex(null);
   }, [setFocusedOptionIndex]);
 
+  const observableRefs = React.useMemo(
+    () => [scrollBoxRef, rootRef],
+    [rootRef, scrollBoxRef]
+  );
+
   return (
     <div
       vkuiClass={classNames("ChipsSelect", `ChipsSelect--sizeY-${sizeY}`)}
@@ -384,6 +389,7 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
           targetRef={rootRef}
           placement={popupDirection}
           scrollBoxRef={scrollBoxRef}
+          observableRefs={observableRefs}
           onPlacementChange={onPlacementChange}
           onMouseLeave={onDropdownMouseLeave}
           fetching={fetching}
@@ -456,3 +462,5 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
 export const ChipsSelect = withAdaptivity(ChipsSelectComponent, {
   sizeY: true,
 });
+
+ChipsSelect.displayName = "ChipsSelect";

@@ -21,12 +21,34 @@
 .Select__container {
   flex-grow: 1;
   flex-shrink: 1;
-  padding: 7px 11px;
+  padding-right: 12px;
+  padding-left: 12px;
   color: var(--text_primary, var(--vkui--color_text_primary));
   box-sizing: border-box;
   position: relative;
   z-index: 2;
   overflow: hidden;
+}
+
+.Select--hasBefore .Select__container {
+  padding-left: 0;
+}
+
+.Select--hasAfter .Select__container {
+  padding-right: 0;
+}
+
+.Select--multiline .Select__container {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+/**
+ * TODO v5.0.0 поправить под новую адаптивность
+ */
+.Select--sizeY-compact.Select--multiline .Select__container {
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .Select__title {
@@ -49,14 +71,6 @@
 
 .Select--align-center .Select__title {
   text-align: center;
-}
-
-/**
- * sizeY REGULAR
- * TODO v5.0.0 поправить под новую адаптивность
- */
-.Select--sizeY-regular .Select__container {
-  padding: 11px;
 }
 
 /**

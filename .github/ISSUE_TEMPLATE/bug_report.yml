@@ -1,0 +1,57 @@
+name: Bug Report
+description: Помогите нам сделать библиотеку более стабильной
+title: "[Bug]: "
+labels: ["type:bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Спасибо за то, что помогаете нам стать лучше!
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Описание
+      description: Дайте как можно более полное описание проблемы.
+      placeholder: Пару строк о случившемся...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Версия
+      description: Поможет локализовать проблему.
+    validations:
+      required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: В каких браузерах воспроизводится проблема?
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge
+        - Yandex Browser
+        - Другое (укажите в описании)
+  - type: textarea
+    id: steps
+    attributes:
+      label: Шаги воспроизведения
+      description: Желательно описать последовательность, при которой ошибка стабильно воспроизводится.
+  - type: textarea
+    id: expectations
+    attributes:
+      label: Ожидаемое поведение
+      description: Если считаете, что из описания ожидаемое поведение непонятно.
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Скриншоты
+      description: Прикрепите скриншоты, если есть такая возможность.
+  - type: textarea
+    id: reproduce-example
+    attributes:
+      label: Пример с воспроизведением
+      description: Сделайте форк отсюда https://codesandbox.io/s/vkui-boilerplate-oj149 и приложите ссылку. Сильно ускоряет поиск причин проблемы.
+      render: shell

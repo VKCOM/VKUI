@@ -107,3 +107,5 @@ export const NativeSelect = withAdaptivity(NativeSelectComponent, {
   sizeX: true,
   sizeY: true,
 });
+
+NativeSelect.displayName = "NativeSelect";

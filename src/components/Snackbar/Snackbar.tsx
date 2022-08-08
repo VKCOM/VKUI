@@ -2,11 +2,10 @@ import * as React from "react";
 import { Touch, TouchEvent } from "../Touch/Touch";
 import { classNames } from "../../lib/classNames";
 import { HasPlatform } from "../../types";
-import { getClassName } from "../../helpers/getClassName";
-import { ANDROID, VKCOM } from "../../lib/platform";
+import { ANDROID, IOS, VKCOM } from "../../lib/platform";
 import { rubber } from "../../lib/touch";
 import { withAdaptivity, ViewWidth } from "../../hoc/withAdaptivity";
-import { Text } from "../Typography/Text/Text";
+import { Paragraph } from "../Typography/Paragraph/Paragraph";
 import { Button } from "../Button/Button";
 import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
@@ -52,6 +51,10 @@ export interface SnackbarProps
    * Обработчик закрытия уведомления
    */
   onClose: () => void;
+  /**
+   * Задает стиль снекбара
+   */
+  mode?: "default" | "dark";
 }
 
 const SnackbarComponent = ({
@@ -64,6 +67,7 @@ const SnackbarComponent = ({
   duration = 4000,
   onActionClick,
   onClose,
+  mode = "default",
   ...restProps
 }: SnackbarProps & AdaptivityContextInterface) => {
   const platform = usePlatform();
@@ -191,15 +195,14 @@ const SnackbarComponent = ({
     <AppRootPortal>
       <div
         {...restProps}
-        // eslint-disable-next-line vkui/no-object-expression-in-arguments
         vkuiClass={classNames(
-          getClassName("Snackbar", platform),
+          "Snackbar",
+          platform === IOS && "Snackbar--ios",
           `Snackbar--l-${resolvedLayout}`,
-          {
-            "Snackbar--closing": closing,
-            "Snackbar--touched": touched,
-            "Snackbar--desktop": isDesktop,
-          }
+          `Snackbar--${mode}`,
+          closing && "Snackbar--closing",
+          touched && "Snackbar--touched",
+          isDesktop && "Snackbar--desktop"
         )}
       >
         <Touch
@@ -213,13 +216,16 @@ const SnackbarComponent = ({
             {before && <div vkuiClass="Snackbar__before">{before}</div>}
 
             <div vkuiClass="Snackbar__content">
-              <Text vkuiClass="Snackbar__content-text">{children}</Text>
+              <Paragraph vkuiClass="Snackbar__content-text">
+                {children}
+              </Paragraph>
 
               {action && (
                 <Button
                   align="left"
                   hasHover={false}
                   mode="tertiary"
+                  appearance={mode === "dark" ? "overlay" : "accent"}
                   size="s"
                   vkuiClass="Snackbar__action"
                   onClick={handleActionClick}

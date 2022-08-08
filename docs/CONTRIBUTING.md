@@ -47,10 +47,9 @@ const Input = ({ mode, style, className, ...restProps }: InputProps) => {
 - Компонент корректно отрисовывается, если не передавать никаких свойств. Вместо `defaultProps`, [deprecated для функциональных компонентов](https://github.com/facebook/react/pull/16210), используем спред:
 
 ```jsx
-const Cmp = ({
-  mode = "default",
-  ...restProps,
-}: CmpProps) => <div vkuiClass={classNames("Cmp", `Cmp--${mode}`)} {...restProps} />;
+const Cmp = ({ mode = "default", ...restProps }: CmpProps) => (
+  <div vkuiClass={classNames("Cmp", `Cmp--${mode}`)} {...restProps} />
+);
 ```
 
 - Для цветов используются цветовые токены. Старые компоненты поддерживают [Appearance](https://github.com/VKCOM/Appearance) и [vkui-tokens](https://github.com/VKCOM/vkui-tokens), новые — только [vkui-tokens](https://github.com/VKCOM/vkui-tokens). [Гайд по миграции](https://github.com/VKCOM/VKUI/blob/master/docs/VKUI_TOKENS_MIGRATION_GUIDE.md)

@@ -17,6 +17,13 @@
   border-radius: 9999px;
 }
 
+/**
+ * TODO v5.0.0 поправить под новую адаптивность
+ */
+.IconButton--sizeY-compact {
+  height: 44px;
+}
+
 .IconButton[disabled] {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
@@ -33,14 +40,42 @@
   padding: 16px 14px;
 }
 
+/**
+ * TODO v5.0.0 поправить под новую адаптивность
+ */
+.IconButton--sizeY-compact .Icon--16,
+.IconButton--sizeY-compact .Icon--16.Icon--w-8 {
+  padding: 14px;
+}
+
 .IconButton .Icon--24 {
   padding: 12px;
+}
+
+/**
+ * TODO v5.0.0 поправить под новую адаптивность
+ */
+.IconButton--sizeY-compact .Icon--24 {
+  padding: 10px;
 }
 
 .IconButton .Icon--28 {
   padding: 10px;
 }
 
+/**
+ * TODO v5.0.0 поправить под новую адаптивность
+ */
+.IconButton--sizeY-compact .Icon--28 {
+  padding: 8px;
+}
+
+/**
+ * CMP:
+ * - FormItem
+ * - FormLayoutGroup
+ * - FormField
+ */
 .FormItem--removable .Removable__content > .IconButton,
 .FormLayoutGroup--removable .Removable__content > .IconButton,
 .FormField__after .IconButton {
@@ -48,41 +83,27 @@
   align-items: center;
   align-content: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: inherit;
+  width: var(--vkui--size_field_height--regular);
+  height: var(--vkui--size_field_height--regular);
+  border-radius: var(--vkui--size_border_radius--regular);
 }
 
 .FormField__after .IconButton .Icon.Icon.Icon {
   padding: 0;
 }
 
-/*
- * sizeY: COMPACT
+/**
+ * TODO v5.0.0 поправить под новую адаптивность
  */
-.IconButton--sizeY-compact {
-  height: 44px;
-}
-
 .FormField__after .IconButton--sizeY-compact {
-  width: 36px;
-  height: 36px;
+  width: var(--vkui--size_field_height--compact);
+  height: var(--vkui--size_field_height--compact);
 }
 
+/**
+ * TODO v5.0.0 поправить под новую адаптивность
+ */
 .FormItem--removable .Removable__content > .IconButton--sizeY-compact,
 .FormLayoutGroup--removable .Removable__content > .IconButton--sizeY-compact {
-  height: 36px;
-}
-
-.IconButton--sizeY-compact .Icon--16,
-.IconButton--sizeY-compact .Icon--16.Icon--w-8 {
-  padding: 14px;
-}
-
-.IconButton--sizeY-compact .Icon--24 {
-  padding: 10px;
-}
-
-.IconButton--sizeY-compact .Icon--28 {
-  padding: 8px;
+  height: var(--vkui--size_field_height--compact);
 }

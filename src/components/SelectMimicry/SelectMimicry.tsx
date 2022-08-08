@@ -50,8 +50,10 @@ const SelectMimicryComponent = ({
         !children && "Select--empty",
         multiline && "Select--multiline",
         align && `Select--align-${align}`,
-        `Select--sizeX-${sizeX}`,
-        `Select--sizeY-${sizeY}`
+        `Select--sizeX-${sizeX}`, // TODO v5.0.0 поправить под новую адаптивность
+        `Select--sizeY-${sizeY}`, // TODO v5.0.0 поправить под новую адаптивность
+        before && "Select--hasBefore",
+        after && "Select--hasAfter"
       )}
       getRootRef={getRootRef}
       onClick={disabled ? undefined : onClick}
@@ -77,3 +79,5 @@ export const SelectMimicry = withAdaptivity(SelectMimicryComponent, {
   sizeX: true,
   sizeY: true,
 });
+
+SelectMimicry.displayName = "SelectMimicry";

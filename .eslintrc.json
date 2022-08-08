@@ -2,9 +2,8 @@
   "extends": [
     "@vkontakte/eslint-config/typescript/react",
     "prettier",
-    "prettier/react",
-    "prettier/@typescript-eslint",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "plugin:compat/recommended"
   ],
   "parserOptions": {
     "project": "./tsconfig.json",
@@ -15,6 +14,15 @@
       "restParams": true,
       "spread": true
     }
+  },
+  "settings": {
+    "lintAllEsApis": true,
+    "polyfills": [
+      "Array.includes",
+      "Array.find",
+      "String.padStart",
+      "Intl" // Отсутствует. Не поддерживается в iOS Safari 9, Calendar должен использоваться только на desktop
+    ]
   },
   "globals": {
     "Element": true
@@ -128,7 +136,8 @@
       {
         "onlyForFunctionsWithNames": ["classNames", "classNamesString"]
       }
-    ]
+    ],
+    "compat/compat": "error"
   },
   "overrides": [
     {
@@ -143,6 +152,7 @@
       "rules": {
         "no-restricted-properties": "off",
         "no-restricted-globals": "off",
+        "compat/compat": "off",
         "react/display-name": "off"
       }
     },

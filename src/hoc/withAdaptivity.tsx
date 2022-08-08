@@ -24,10 +24,10 @@ interface Config {
 export function withAdaptivity<T extends AdaptivityProps>(
   TargetComponent: React.ComponentType<T>,
   config: Config
-): React.ComponentType<Omit<T, keyof AdaptivityContextInterface> & SizeProps> {
-  const AdaptivityConsumer: React.ComponentType<
-    Omit<T, keyof AdaptivityContextInterface> & SizeProps
-  > = (props: Omit<T, keyof AdaptivityContextInterface> & SizeProps) => {
+): React.FC<Omit<T, keyof AdaptivityContextInterface> & SizeProps> {
+  const AdaptivityConsumer = (
+    props: Omit<T, keyof AdaptivityContextInterface> & SizeProps
+  ) => {
     const context = React.useContext(AdaptivityContext);
     let update = false;
 

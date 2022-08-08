@@ -165,3 +165,33 @@
     var(--vkui--color_background_positive)
   );
 }
+
+/**
+ * CMP:
+ * TabsItem
+ */
+/* TODO v5.0.0 Удалить. Относится к <Tabs mode="segmented" />. По дизайну надо использовать <Counter mode="prominent" />  */
+/* [Начало] */
+.TabsItem .Counter--secondary {
+  background-color: var(--panel_tab_inactive_text);
+  color: var(--white);
+}
+
+.TabsItem--selected .Counter--secondary {
+  background-color: var(--panel_tab_active_text);
+  color: var(--panel_tab_active_background);
+}
+/* [Конец] */
+
+/* TODO v5.0.0 Удалить mode="segmented" */
+/* [Начало] */
+.TabsItem--ios.TabsItem--segmented .Counter--secondary {
+  background-color: var(--segmented_control_tint);
+  color: var(--background_content);
+}
+
+.TabsItem--ios.TabsItem--segmented.TabsItem--selected .Counter--secondary {
+  background-color: var(--background_content);
+  color: var(--segmented_control_tint);
+}
+/* [Конец] */

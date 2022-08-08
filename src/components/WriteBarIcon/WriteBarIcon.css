@@ -2,11 +2,11 @@
   background: none;
   border: 0;
   position: relative;
-  color: var(--icon_secondary);
+  color: var(--icon_secondary, var(--vkui--color_icon_secondary));
   height: 52px;
   width: 44px;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: var(--vkui--size_border_radius--regular);
 }
 
 .WriteBarIcon__in {
@@ -30,30 +30,25 @@
   position: absolute;
   top: 6px;
   right: 2px;
-  box-shadow: 0 0 0 2px var(--background_content);
+  box-shadow: 0 0 0 2px
+    var(--background_content, var(--vkui--color_background_modal));
 }
 
 .WriteBarIcon.WriteBarIcon--send,
 .WriteBarIcon.WriteBarIcon--done {
-  color: var(--accent);
+  color: var(--accent, var(--vkui--color_icon_accent));
 }
 
 /**
  * iOS
  */
 .WriteBarIcon--ios {
-  color: var(--writebar_icon);
-  border-radius: 10px;
+  color: var(--writebar_icon, var(--vkui--color_icon_accent));
 }
 
 .WriteBarIcon--ios.WriteBarIcon--send,
 .WriteBarIcon--ios.WriteBarIcon--done {
   width: 48px;
-  color: var(--writebar_icon);
-}
-
-.WriteBarIcon--ios.WriteBarIcon--send:not(:disabled) {
-  color: var(--accent);
 }
 
 .WriteBarIcon--ios.WriteBarIcon--send:first-child,
@@ -64,12 +59,4 @@
 .WriteBarIcon--ios.WriteBarIcon--send:last-child,
 .WriteBarIcon--ios.WriteBarIcon--done:last-child {
   margin-right: -4px;
-}
-
-/**
- * VKCOM
- */
-.WriteBarIcon--vkcom {
-  color: var(--icon_secondary);
-  border-radius: 10px;
 }

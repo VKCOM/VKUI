@@ -33,4 +33,11 @@ module.exports.GhApi = class GhApi {
   listCommitsOnPullRequest(owner, repo, pull_number) {
     return this.request(`/repos/${owner}/${repo}/pulls/${pull_number}/commits`);
   }
+
+  prComment(pr, body) {
+    const command = `gh pr comment ${pr} -F -`;
+    execSync(command, {
+      input: body,
+    });
+  }
 };
