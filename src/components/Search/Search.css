@@ -190,14 +190,17 @@
 .Search__placeholder,
 .Search__placeholder-in,
 .Search__icon {
-  height: var(--search_default_height, var(--vkui--size_field_height--compact));
+  height: var(
+    --search_default_height,
+    var(--vkui--size_search_height--compact)
+  );
 }
 
 .Search__after-width,
 .Search__after {
   line-height: var(
     --search_default_height,
-    var(--vkui--size_field_height--compact)
+    var(--vkui--size_search_height--compact)
   );
 }
 
@@ -211,12 +214,12 @@
 .Search--sizeY-regular .Search__placeholder,
 .Search--sizeY-regular .Search__placeholder-in,
 .Search--sizeY-regular .Search__icon {
-  height: var(--vkui--size_field_height--regular);
+  height: var(--vkui--size_search_height--regular);
 }
 
 .Search--sizeY-regular .Search__after-width,
 .Search--sizeY-regular .Search__after {
-  line-height: var(--vkui--size_field_height--regular);
+  line-height: var(--vkui--size_search_height--regular);
 }
 
 /*
