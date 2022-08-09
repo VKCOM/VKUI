@@ -64,10 +64,9 @@ const checkOptionsValueType = (options: CustomSelectOptionInterface[]) => {
   }
 };
 
-function defaultRenderOptionFn({
-  option,
-  ...props
-}: CustomSelectOptionProps): React.ReactNode {
+function defaultRenderOptionFn(
+  props: CustomSelectOptionProps
+): React.ReactNode {
   return <CustomSelectOption {...props} />;
 }
 
@@ -631,7 +630,6 @@ export function CustomSelect(props: SelectProps) {
       return (
         <React.Fragment key={`${option.value}`}>
           {renderOptionProp({
-            option,
             hovered,
             children: option.label,
             selected,
