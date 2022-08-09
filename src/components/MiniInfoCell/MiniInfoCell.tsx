@@ -1,6 +1,6 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
-import { Text } from "../Typography/Text/Text";
+import { Paragraph } from "../Typography/Paragraph/Paragraph";
 import { Tappable } from "../Tappable/Tappable";
 import { hasReactNode } from "../../lib/utils";
 import "./MiniInfoCell.css";
@@ -75,12 +75,12 @@ export const MiniInfoCell = ({
       )}
     >
       <span vkuiClass="MiniInfoCell__icon">{before}</span>
-      <Text
+      <Paragraph
         vkuiClass="MiniInfoCell__content"
         weight={mode === "more" ? "2" : undefined}
       >
         {children}
-      </Text>
+      </Paragraph>
       {hasReactNode(after) && (
         <span vkuiClass="MiniInfoCell__after">{after}</span>
       )}
