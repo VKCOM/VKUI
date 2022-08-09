@@ -13,7 +13,7 @@
 
 .MiniInfoCell__icon {
   margin-right: 12px;
-  color: var(--icon_outline_secondary, var(--vkui--color_icon_medium));
+  color: var(--icon_outline_secondary, var(--vkui--color_icon_secondary));
 }
 
 .MiniInfoCell__content {
@@ -43,12 +43,22 @@
   margin-bottom: -2px;
 }
 
-.MiniInfoCell--md-add,
+/**
+* TODO Когда избавимся от appearance токенов - объединить классы
+ */
+
+.MiniInfoCell--md-add {
+  color: var(--accent, var(--vkui--color_text_link));
+}
+
 .MiniInfoCell--md-add .MiniInfoCell__icon {
   color: var(--accent, var(--vkui--color_icon_accent));
 }
 
-.MiniInfoCell--md-more,
+.MiniInfoCell--md-more {
+  color: var(--link_alternate, var(--vkui--color_text_link));
+}
+
 .MiniInfoCell--md-more .MiniInfoCell__icon {
   color: var(--link_alternate, var(--vkui--color_icon_accent));
 }
