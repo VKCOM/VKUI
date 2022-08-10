@@ -3,7 +3,7 @@ import { Icon16Done } from "@vkontakte/icons";
 import { classNames } from "../../lib/classNames";
 import { hasReactNode } from "../../lib/utils";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
-import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { HasRootRef } from "../../types";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { warnOnce } from "../../lib/warnOnce";
@@ -112,9 +112,9 @@ export const CustomSelectOption = ({
       <div vkuiClass="CustomSelectOption__main">
         <div vkuiClass="CustomSelectOption__children">{children}</div>
         {hasReactNode(description) && (
-          <Caption vkuiClass="CustomSelectOption__description">
+          <Footnote vkuiClass="CustomSelectOption__description">
             {description}
-          </Caption>
+          </Footnote>
         )}
       </div>
       <div vkuiClass="CustomSelectOption__after">

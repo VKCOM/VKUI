@@ -4,7 +4,7 @@ import { classNames } from "../../lib/classNames";
 import { useExternRef } from "../../hooks/useExternRef";
 import { hasReactNode, noop } from "../../lib/utils";
 import { Subhead } from "../Typography/Subhead/Subhead";
-import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { Removable, RemovableProps } from "../Removable/Removable";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
@@ -47,7 +47,7 @@ export const FormItem = ({
       {hasReactNode(top) && <Subhead vkuiClass="FormItem__top">{top}</Subhead>}
       {children}
       {hasReactNode(bottom) && (
-        <Caption vkuiClass="FormItem__bottom">{bottom}</Caption>
+        <Footnote vkuiClass="FormItem__bottom">{bottom}</Footnote>
       )}
     </React.Fragment>
   );

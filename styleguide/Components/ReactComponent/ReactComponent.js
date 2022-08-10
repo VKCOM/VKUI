@@ -4,7 +4,7 @@ import Slot from "@rsg-components/Slot";
 import Markdown from "@rsg-components/Markdown";
 import Examples from "@rsg-components/Examples";
 import { SectionSubheading } from "../SectionSubheading/SectionSubheading";
-import { Caption, Link } from "@vkui";
+import { Footnote, Link } from "@vkui";
 import { classNames } from "@vkontakte/vkjs";
 import { deprecated } from "../../deprecated";
 import { tokenized } from "../../tokenized";
@@ -32,7 +32,7 @@ const ReactComponent = ({ component, exampleMode }) => {
           ""
         )}`}
       >
-        <Caption>Github</Caption>
+        <Footnote>Github</Footnote>
       </Link>
       <Heading
         level={1}

@@ -275,7 +275,7 @@ class TableOfContents extends React.PureComponent {
               })}
               indicator={
                 deprecated.includes(section.name) && (
-                  <Caption level="3">deprecated</Caption>
+                  <Caption level="2">deprecated</Caption>
                 )
               }
             >

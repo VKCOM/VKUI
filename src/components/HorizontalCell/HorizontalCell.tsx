@@ -19,9 +19,7 @@ const CellTypography = ({
   ...restProps
 }: CellTypographyProps) => {
   return size === "s" ? (
-    <Caption level="2" {...restProps}>
-      {children}
-    </Caption>
+    <Caption {...restProps}>{children}</Caption>
   ) : (
     <Subhead {...restProps}>{children}</Subhead>
   );

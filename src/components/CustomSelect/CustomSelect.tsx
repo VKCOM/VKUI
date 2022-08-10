@@ -11,7 +11,7 @@ import { FormFieldProps } from "../FormField/FormField";
 import { HasPlatform } from "../../types";
 import { Input } from "../Input/Input";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
-import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { warnOnce } from "../../lib/warnOnce";
 import {
   defaultFilterFn,
@@ -665,7 +665,7 @@ export function CustomSelect(props: SelectProps) {
       options?.length > 0 ? (
         options.map(renderOption)
       ) : (
-        <Caption vkuiClass="CustomSelect__empty">{emptyText}</Caption>
+        <Footnote vkuiClass="CustomSelect__empty">{emptyText}</Footnote>
       );
 
     if (typeof renderDropdown === "function") {

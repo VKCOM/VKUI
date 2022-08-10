@@ -60,7 +60,7 @@ const ButtonGroupPropsForm = ({ caption, defaultProps, onChange }) => {
       </Checkbox>
       {caption && (
         <FormItem>
-          <Caption level="1">({caption})</Caption>
+          <Footnote>({caption})</Footnote>
         </FormItem>
       )}
     </React.Fragment>

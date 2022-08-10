@@ -7,6 +7,7 @@ import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { Icon16Dropdown } from "@vkontakte/icons";
 import { usePlatform } from "../../hooks/usePlatform";
 import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import "./SubnavigationButton.css";
 
@@ -40,7 +41,11 @@ const SubnavigationButtonTypography = ({
     return <Subhead {...restProps} />;
   }
 
-  return <Caption level={textLevel === 2 ? "1" : "2"} {...restProps} />;
+  return textLevel === 2 ? (
+    <Footnote {...restProps} />
+  ) : (
+    <Caption {...restProps} />
+  );
 };
 
 /**

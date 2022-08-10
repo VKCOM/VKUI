@@ -4,7 +4,7 @@ import { CalendarDay } from "../CalendarDay/CalendarDay";
 import { getDaysNames, getWeeks } from "../../lib/calendar";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
 import { classNames } from "../../lib/classNames";
-import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import "./CalendarDays.css";
 
 export interface CalendarDaysProps
@@ -80,9 +80,9 @@ export const CalendarDays = ({
         )}
       >
         {daysNames.map((dayName) => (
-          <Caption key={dayName} level="1" vkuiClass="CalendarDays__weekday">
+          <Footnote key={dayName} vkuiClass="CalendarDays__weekday">
             {dayName}
-          </Caption>
+          </Footnote>
         ))}
       </div>
 

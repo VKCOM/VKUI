@@ -6,7 +6,7 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { Spacing } from "../Spacing/Spacing";
 import { Separator } from "../Separator/Separator";
 import { hasReactNode } from "../../lib/utils";
-import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { ModalRootContext } from "../ModalRoot/ModalRootContext";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
@@ -87,7 +87,7 @@ export const Group = (props: GroupProps) => {
         {header}
         {children}
         {hasReactNode(description) && (
-          <Caption vkuiClass="Group__description">{description}</Caption>
+          <Footnote vkuiClass="Group__description">{description}</Footnote>
         )}
       </div>
       {separatorElement}

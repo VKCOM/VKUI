@@ -3,7 +3,7 @@ import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
 import { Headline } from "../Typography/Headline/Headline";
-import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { hasReactNode } from "../../lib/utils";
 import "./FormStatus.css";
 
@@ -38,10 +38,10 @@ export const FormStatus = ({
         </Headline>
       )}
       {dangerouslySetInnerHTML && (
-        <Caption dangerouslySetInnerHTML={dangerouslySetInnerHTML} />
+        <Footnote dangerouslySetInnerHTML={dangerouslySetInnerHTML} />
       )}
       {hasReactNode(children) && !dangerouslySetInnerHTML && (
-        <Caption>{children}</Caption>
+        <Footnote>{children}</Footnote>
       )}
     </div>
   );

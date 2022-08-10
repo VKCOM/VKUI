@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Card, CardProps } from "../Card/Card";
 import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { Headline } from "../Typography/Headline/Headline";
 import { Text } from "../Typography/Text/Text";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
@@ -125,9 +126,9 @@ export const ContentCard = ({
             <Text vkuiClass="ContentCard__text">{text}</Text>
           )}
           {hasReactNode(caption) && (
-            <Caption vkuiClass="ContentCard__text ContentCard__caption">
+            <Footnote vkuiClass="ContentCard__text ContentCard__caption">
               {caption}
-            </Caption>
+            </Footnote>
           )}
         </div>
       </Tappable>

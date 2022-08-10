@@ -10,7 +10,7 @@ describe("Caption", () => {
     ),
     [
       {
-        level: ["1", "2", "3", "4"],
+        level: ["1", "2", "3"],
         weight: [undefined, "1", "2", "3"],
         caps: [undefined, true],
       },
