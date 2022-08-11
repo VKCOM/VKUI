@@ -1,7 +1,7 @@
 import * as React from "react";
 import {
   Icon24Chevron,
-  Icon24ChevronLeft,
+  Icon24ChevronCompactLeft,
   Icon16Chevron,
   Icon16ChevronLeft,
 } from "@vkontakte/icons";
@@ -29,7 +29,7 @@ export const HorizontalScrollArrow = ({
   if (size === "m") {
     ArrowIcon = direction === "left" ? Icon16ChevronLeft : Icon16Chevron;
   } else {
-    ArrowIcon = direction === "left" ? Icon24ChevronLeft : Icon24Chevron;
+    ArrowIcon = direction === "left" ? Icon24ChevronCompactLeft : Icon24Chevron;
   }
 
   return (
