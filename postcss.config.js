@@ -103,7 +103,18 @@ let plugins = [
 ];
 
 if (process.env.NODE_ENV === "production") {
-  plugins.push(cssnano());
+  plugins.push(
+    cssnano({
+      preset: [
+        "default",
+        {
+          // Отключаем из-за того, что `postcss-calc` меняет порядок операндов при умножении -1 на переменную
+          // Подробности здесь https://github.com/VKCOM/VKUI/issues/2963
+          calc: false,
+        },
+      ],
+    })
+  );
 }
 
 module.exports = { plugins, cssPropSources };
