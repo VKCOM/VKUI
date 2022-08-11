@@ -16,7 +16,7 @@ import {
 import { useChipsSelect } from "./useChipsSelect";
 import { noop } from "../../lib/utils";
 import { useDOM } from "../../lib/dom";
-import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { prefixClass } from "../../lib/prefixClass";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
@@ -411,7 +411,7 @@ export const ChipsSelect = <Option extends ChipsInputOption>(
             </CustomSelectOption>
           )}
           {!filteredOptions?.length && !showCreatable && emptyText ? (
-            <Caption vkuiClass="ChipsSelect__empty">{emptyText}</Caption>
+            <Footnote vkuiClass="ChipsSelect__empty">{emptyText}</Footnote>
           ) : (
             filteredOptions.map((option: Option, index: number) => {
               const label = getOptionLabel!(option);

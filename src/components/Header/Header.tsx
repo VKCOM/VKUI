@@ -6,7 +6,7 @@ import { HasComponent, HasPlatform, HasRootRef } from "../../types";
 import { hasReactNode, isPrimitiveReactNode } from "../../lib/utils";
 import { Platform } from "../../lib/platform";
 import { Headline } from "../Typography/Headline/Headline";
-import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { Title } from "../Typography/Title/Title";
 import { Text } from "../Typography/Text/Text";
 import { Subhead } from "../Typography/Subhead/Subhead";
@@ -43,7 +43,7 @@ const HeaderContent = ({
       case "tertiary":
         return <Title weight="1" level="3" {...restProps} />;
       case "secondary":
-        return <Caption weight="2" caps {...restProps} />;
+        return <Footnote weight="2" caps {...restProps} />;
     }
   }
 
@@ -53,7 +53,7 @@ const HeaderContent = ({
         return <Headline weight="3" {...restProps} />;
       case "secondary":
       case "tertiary":
-        return <Caption {...restProps} />;
+        return <Footnote {...restProps} />;
     }
   }
 
@@ -62,7 +62,7 @@ const HeaderContent = ({
     case "tertiary":
       return <Headline weight="2" {...restProps} />;
     case "secondary":
-      return <Caption weight="1" caps {...restProps} />;
+      return <Footnote weight="1" caps {...restProps} />;
   }
 
   return null;
@@ -84,7 +84,7 @@ export const Header = ({
   const platform = usePlatform();
 
   const AsideTypography = platform === Platform.VKCOM ? Subhead : Text;
-  const SubtitleTypography = mode === "secondary" ? Subhead : Caption;
+  const SubtitleTypography = mode === "secondary" ? Subhead : Footnote;
 
   return (
     <header
@@ -113,14 +113,14 @@ export const Header = ({
             {children}
           </span>
           {hasReactNode(indicator) && (
-            <Caption
+            <Footnote
               vkuiClass="Header__indicator"
               weight={
                 mode === "primary" || mode === "secondary" ? "1" : undefined
               }
             >
               {indicator}
-            </Caption>
+            </Footnote>
           )}
         </HeaderContent>
 

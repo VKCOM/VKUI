@@ -6,7 +6,7 @@ import { HasRef, HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import { VisuallyHiddenInput } from "../VisuallyHiddenInput/VisuallyHiddenInput";
-import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./Radio.css";
@@ -79,7 +79,7 @@ export const Radio = ({
         <div vkuiClass="Radio__content">
           <div vkuiClass="Radio__children">{children}</div>
           {hasReactNode(description) && (
-            <Caption vkuiClass="Radio__description">{description}</Caption>
+            <Footnote vkuiClass="Radio__description">{description}</Footnote>
           )}
         </div>
       </div>

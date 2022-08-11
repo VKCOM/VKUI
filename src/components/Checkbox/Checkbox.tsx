@@ -12,7 +12,7 @@ import {
 import { HasRef, HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
-import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useExternRef } from "../../hooks/useExternRef";
@@ -155,7 +155,7 @@ export const Checkbox = ({
       <div vkuiClass="Checkbox__content">
         <div vkuiClass="Checkbox__children">{children}</div>
         {hasReactNode(description) && (
-          <Caption vkuiClass="Checkbox__description">{description}</Caption>
+          <Footnote vkuiClass="Checkbox__description">{description}</Footnote>
         )}
       </div>
     </Tappable>

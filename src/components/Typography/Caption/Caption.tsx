@@ -10,7 +10,7 @@ export interface CaptionProps
    * Задаёт начертание шрифта отличное от стандартного.
    */
   weight?: "1" | "2" | "3";
-  level?: "1" | "2" | "3" | "4";
+  level?: "1" | "2" | "3";
   caps?: boolean;
 }
 

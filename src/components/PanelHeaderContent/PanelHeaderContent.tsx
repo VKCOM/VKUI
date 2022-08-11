@@ -3,7 +3,7 @@ import { getClassName } from "../../helpers/getClassName";
 import { Tappable } from "../Tappable/Tappable";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
-import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { Headline } from "../Typography/Headline/Headline";
 import { IOS, Platform } from "../../lib/platform";
 import { Text } from "../Typography/Text/Text";
@@ -85,7 +85,7 @@ export const PanelHeaderContent = ({
       )}
       <InComponent {...inProps} vkuiClass="PanelHeaderContent__in">
         {hasReactNode(status) && (
-          <Caption vkuiClass="PanelHeaderContent__status">{status}</Caption>
+          <Footnote vkuiClass="PanelHeaderContent__status">{status}</Footnote>
         )}
         <div vkuiClass="PanelHeaderContent__children">
           <PanelHeaderChildren

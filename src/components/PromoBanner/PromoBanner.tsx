@@ -3,7 +3,7 @@ import { Icon24Dismiss } from "@vkontakte/icons";
 import { Button } from "../Button/Button";
 import { SimpleCell } from "../SimpleCell/SimpleCell";
 import { Avatar } from "../Avatar/Avatar";
-import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getClassName } from "../../helpers/getClassName";
 import "./PromoBanner.css";
@@ -82,13 +82,13 @@ export const PromoBanner = ({
   return (
     <div vkuiClass={getClassName("PromoBanner", platform)} {...restProps}>
       <div vkuiClass="PromoBanner__head">
-        <Caption vkuiClass="PromoBanner__label">
+        <Footnote vkuiClass="PromoBanner__label">
           {bannerData.advertisingLabel || "Advertisement"}
-        </Caption>
+        </Footnote>
         {bannerData.ageRestrictions && (
-          <Caption vkuiClass="PromoBanner__age">
+          <Footnote vkuiClass="PromoBanner__age">
             {bannerData.ageRestrictions}
-          </Caption>
+          </Footnote>
         )}
 
         {!isCloseButtonHidden && (

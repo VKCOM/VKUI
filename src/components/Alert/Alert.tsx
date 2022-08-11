@@ -8,6 +8,7 @@ import { Button, ButtonProps } from "../Button/Button";
 import { hasReactNode, stopPropagation } from "../../lib/utils";
 import { Title } from "../Typography/Title/Title";
 import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { Text } from "../Typography/Text/Text";
 import { ModalDismissButton } from "../ModalDismissButton/ModalDismissButton";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
@@ -68,9 +69,9 @@ const AlertText = (props: AlertTypography) => {
 
   switch (platform) {
     case VKCOM:
-      return <Caption vkuiClass="Alert__text" {...props} />;
+      return <Footnote vkuiClass="Alert__text" {...props} />;
     case IOS:
-      return <Caption vkuiClass="Alert__text" level="2" {...props} />;
+      return <Caption vkuiClass="Alert__text" {...props} />;
     default:
       return (
         <Text Component="span" vkuiClass="Alert__text" weight="3" {...props} />

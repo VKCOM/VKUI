@@ -2,7 +2,7 @@ import * as React from "react";
 import { Icon16Cancel } from "@vkontakte/icons";
 import { getTitleFromChildren, hasReactNode, noop } from "../../lib/utils";
 import { classNames } from "../../lib/classNames";
-import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { Tappable } from "../Tappable/Tappable";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
@@ -56,9 +56,9 @@ export const Chip = ({
     >
       <div vkuiClass="Chip__in" role="presentation">
         {hasReactNode(before) && <div vkuiClass="Chip__before">{before}</div>}
-        <Caption vkuiClass="Chip__content" title={title} aria-hidden="true">
+        <Footnote vkuiClass="Chip__content" title={title} aria-hidden="true">
           {children}
-        </Caption>
+        </Footnote>
         {hasReactNode(after) && <div vkuiClass="Chip__after">{after}</div>}
 
         {removable && (

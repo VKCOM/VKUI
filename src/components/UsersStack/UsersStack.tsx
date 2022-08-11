@@ -96,7 +96,6 @@ export const UsersStack = ({
           <CounterTypography
             caps
             weight="1"
-            level="2" // TODO: remove only level in #2343
             vkuiClass="UsersStack__photo UsersStack__photo--others"
             aria-hidden
           >
