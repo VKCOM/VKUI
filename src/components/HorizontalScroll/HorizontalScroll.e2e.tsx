@@ -43,6 +43,7 @@ describe("HorizontalScroll", () => {
     HorizontalScroll,
     [
       {
+        arrowSize: ["m", "l"],
         children: [
           <div key="0" style={{ display: "flex" }}>
             {items}
@@ -65,7 +66,14 @@ describe("HorizontalScroll", () => {
       <ConfigProvider scheme={Scheme.BRIGHT_LIGHT}>
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasMouse>
           <AppRoot>
-            <HorizontalScroll>
+            <HorizontalScroll
+              getRef={(element) => {
+                if (!element) {
+                  return;
+                }
+                element.scrollLeft = 32;
+              }}
+            >
               <div key="0" style={{ display: "flex" }}>
                 {items}
               </div>
