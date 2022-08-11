@@ -6,17 +6,12 @@ import { Paragraph } from "../Typography/Paragraph/Paragraph";
 import { Caption } from "../Typography/Caption/Caption";
 import { HasRootRef } from "../../types";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { warnOnce } from "../../lib/warnOnce";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "./CustomSelectOption.css";
 
 export interface CustomSelectOptionProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement> {
-  /**
-   * Вставляет основной контент.
-   */
-  option?: any;
   /**
    * Добавляет описание под основным блоком.
    */
@@ -53,8 +48,6 @@ export interface CustomSelectOptionProps
   disabled?: boolean;
 }
 
-const warn = warnOnce("CustomSelectOption");
-
 /**
  * @see https://vkcom.github.io/VKUI/#/CustomSelectOption
  */
@@ -65,7 +58,6 @@ export const CustomSelectOption = ({
   selected,
   before,
   after,
-  option,
   description,
   disabled,
   style: styleProp,
@@ -83,10 +75,6 @@ export const CustomSelectOption = ({
         : styleProp,
     [hierarchy, styleProp]
   );
-
-  if (!!option && process.env.NODE_ENV === "development") {
-    warn("Свойство option было добавлено по ошибке и будет удалено в 5.0.0.");
-  }
 
   return (
     <Paragraph
