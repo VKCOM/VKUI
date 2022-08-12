@@ -1,19 +1,40 @@
-node_modules/
-coverage
-.DS_Store
-.env
-npm-debug.log
-stats.json
-dist/*
-!e2e/dist/index.html
+# Project
 src/styles/generated/
 PUBLISHING.md
-.idea/
+
+# Builds
+dist/*
+!e2e/dist/index.html
 styleguide-build/
-.vscode/
+
+# Dependency directory
+node_modules/
+
+# Logs
+npm-debug.log
+stats.json
 test-results.json
 lint-results.json
 e2e-results.json
-.nyc_output
-__diff_output__
+
+# Caches
 .cache
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# nyc test coverage
+.nyc_output
+
+# Snapshot directory of Cypress Image Diff
+__diff_output__
+
+# CI
+.env
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
