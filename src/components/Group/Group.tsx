@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IOS } from "../../lib/platform";
-import { classNames } from "../../lib/classNames";
+import { classNames, classNamesString } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import { Spacing } from "../Spacing/Spacing";
@@ -57,20 +57,10 @@ export const Group = (props: GroupProps) => {
     computedMode = isInsideModal ? "plain" : "none";
   }
 
-  let separatorElement = null;
-
-  if (separator !== "hide") {
-    const separatorClassName = classNames(
-      "Group__separator",
-      separator === "show" && "Group__separator--force"
-    );
-    separatorElement =
-      computedMode === "card" ? (
-        <Spacing vkuiClass={separatorClassName} size={16} />
-      ) : (
-        <Separator vkuiClass={separatorClassName} />
-      );
-  }
+  const separatorClassName = classNamesString(
+    "Group__separator",
+    separator === "show" && "Group__separator--force"
+  );
 
   return (
     <section
@@ -90,7 +80,23 @@ export const Group = (props: GroupProps) => {
           <Footnote vkuiClass="Group__description">{description}</Footnote>
         )}
       </div>
-      {separatorElement}
+      {separator !== "hide" && (
+        <React.Fragment>
+          <Spacing
+            vkuiClass={classNames(
+              separatorClassName,
+              "Group__separator--spacing"
+            )}
+            size={16}
+          />
+          <Separator
+            vkuiClass={classNames(
+              separatorClassName,
+              "Group__separator--separator"
+            )}
+          />
+        </React.Fragment>
+      )}
     </section>
   );
 };
