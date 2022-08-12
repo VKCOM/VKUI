@@ -8,10 +8,7 @@ dist/*
 !e2e/dist/index.html
 src/styles/generated/
 PUBLISHING.md
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/markdown-navigator-enh.xml
-.idea/markdown-navigator.xml
+.idea/
 styleguide-build/
 .vscode/
 test-results.json
