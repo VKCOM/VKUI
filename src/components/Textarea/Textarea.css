@@ -16,7 +16,7 @@
   padding: 12px;
   max-height: 204px;
   border: none;
-  z-index: 2;
+  z-index: 6;
   position: relative;
   background: transparent;
 }
