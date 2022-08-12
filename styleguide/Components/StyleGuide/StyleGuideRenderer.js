@@ -15,6 +15,7 @@ import {
 import "./StyleGuideRenderer.css";
 import { StyleGuideMobile } from "./StyleGuideMobile";
 import { StyleGuideDesktop } from "./StyleGuideDesktop";
+import { useViewPortSize } from "../../utils";
 
 let initialState = {
   platform: Platform.ANDROID,
@@ -53,6 +54,8 @@ let StyleGuideRenderer = ({ children, toc }) => {
     styleguideAppearance,
   } = state;
 
+  const { viewWidth } = useViewPortSize();
+
   const setContext = useCallback(
     (data) => {
       const newState = { ...state, ...data };
@@ -84,6 +87,8 @@ let StyleGuideRenderer = ({ children, toc }) => {
     [width, height, platform, appearance, hasMouse, setContext, setPopout]
   );
 
+  const Component = viewWidth > 320 ? StyleGuideDesktop : StyleGuideMobile;
+
   return (
     <StyleGuideContext.Provider value={providerValue}>
       <ConfigProvider
@@ -93,20 +98,13 @@ let StyleGuideRenderer = ({ children, toc }) => {
         webviewType="internal"
       >
         <AppRoot noLegacyClasses>
-          <StyleGuideMobile
+          <Component
             toc={toc}
             popout={popout}
             switchStyleGuideAppearance={switchStyleGuideAppearance}
           >
             {children}
-          </StyleGuideMobile>
-          <StyleGuideDesktop
-            toc={toc}
-            popout={popout}
-            switchStyleGuideAppearance={switchStyleGuideAppearance}
-          >
-            {children}
-          </StyleGuideDesktop>
+          </Component>
         </AppRoot>
       </ConfigProvider>
     </StyleGuideContext.Provider>
