@@ -7,6 +7,7 @@ import { Popper, Placement } from "../Popper/Popper";
 import { Spinner } from "../Spinner/Spinner";
 import { HasRef } from "../../types";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
+import { noop } from "../../lib/utils";
 import "./CustomSelectDropdown.css";
 
 export interface CustomSelectDropdownProps
@@ -35,6 +36,7 @@ function getObserverModifier<T extends HTMLElement>(
     name: "customSelectChildrenChange",
     enabled: true,
     phase: "main",
+    fn: noop,
     effect: ({ instance }) => {
       const observer = new MutationObserver(instance.forceUpdate);
 
