@@ -13,7 +13,7 @@ import {
   CustomSelectOption,
   CustomSelectOptionProps,
 } from "../CustomSelectOption/CustomSelectOption";
-import { useChipsSelect } from "./useChipsSelect";
+import { useChipsSelect } from "../../hooks/useChipsSelect";
 import { noop } from "../../lib/utils";
 import { useDOM } from "../../lib/dom";
 import { Caption } from "../Typography/Caption/Caption";

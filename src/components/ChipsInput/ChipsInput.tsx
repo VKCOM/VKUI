@@ -4,7 +4,7 @@ import { FormField, FormFieldProps } from "../FormField/FormField";
 import { classNames } from "../../lib/classNames";
 import { Chip, ChipProps } from "../Chip/Chip";
 import { noop } from "../../lib/utils";
-import { useChipsInput } from "./useChipsInput";
+import { useChipsInput } from "../../hooks/useChipsInput";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { prefixClass } from "../../lib/prefixClass";
 import { useExternRef } from "../../hooks/useExternRef";
