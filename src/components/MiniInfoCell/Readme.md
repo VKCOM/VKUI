@@ -127,6 +127,8 @@ function MiniInfoCellExample() {
                 before={<Icon20WorkOutline />}
                 mode="add"
                 onClick={() => console.log("Указать место учёбы")}
+                textWrap="short"
+                expandable
               >
                 Укажите место учёбы
               </MiniInfoCell>
@@ -135,6 +137,7 @@ function MiniInfoCellExample() {
                 before={<Icon20Info />}
                 mode="more"
                 onClick={handleExtendedInfoClick}
+                expandable
               >
                 Подробная информация
               </MiniInfoCell>

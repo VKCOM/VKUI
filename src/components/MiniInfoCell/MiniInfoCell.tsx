@@ -3,6 +3,7 @@ import { classNames } from "../../lib/classNames";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
 import { Tappable } from "../Tappable/Tappable";
 import { hasReactNode } from "../../lib/utils";
+import { Icon16Chevron } from "@vkontakte/icons";
 import "./MiniInfoCell.css";
 
 export interface MiniInfoCellProps
@@ -27,7 +28,7 @@ export interface MiniInfoCellProps
    * - `add` – тип ячейки, который показывает, что взаимодействие с ней должно вызывать действие добавления чего-то.
    * - `more` – взаимодействие с такой ячейкой должно открывать какую-то подробную информацию.
    */
-  mode?: "base" | "add" | "more";
+  mode?: "base" | "accent" | "add" | "more";
 
   /**
    * Тип отображения текста:
@@ -39,12 +40,9 @@ export interface MiniInfoCellProps
   textWrap?: "nowrap" | "short" | "full";
 
   /**
-   * Стиль текста:
-   *
-   * - `primary` – используйте этот стиль, если хотите выделить информацию в общем списке.<br />Пример использования: подробная информация на странице сообщества
-   * - `secondary` – стиль по-умолчанию.
+   * Передавать `true`, если предполагается переход при клике по ячейке.
    */
-  textLevel?: "primary" | "secondary";
+  expandable?: boolean;
 }
 
 /**
@@ -53,10 +51,10 @@ export interface MiniInfoCellProps
 export const MiniInfoCell = ({
   before,
   after,
+  children,
   mode = "base",
   textWrap = "nowrap",
-  textLevel = "secondary",
-  children,
+  expandable = false,
   ...restProps
 }: MiniInfoCellProps) => {
   const isClickable = !!restProps.onClick;
@@ -69,18 +67,20 @@ export const MiniInfoCell = ({
       {...restProps}
       vkuiClass={classNames(
         "MiniInfoCell",
-        mode !== "base" && `MiniInfoCell--md-${mode}`,
-        textWrap !== "nowrap" && `MiniInfoCell--wr-${textWrap}`,
-        `MiniInfoCell--lvl-${textLevel}`
+        `MiniInfoCell--${textWrap}`,
+        mode !== "base" && `MiniInfoCell--${mode}`
       )}
     >
-      <span vkuiClass="MiniInfoCell__icon">{before}</span>
-      <Paragraph
-        vkuiClass="MiniInfoCell__content"
-        weight={mode === "more" ? "2" : undefined}
-      >
-        {children}
-      </Paragraph>
+      <span vkuiClass="MiniInfoCell__before">{before}</span>
+      <div vkuiClass="MiniInfoCell__middle">
+        <Paragraph
+          vkuiClass="MiniInfoCell__content"
+          weight={mode === "more" ? "2" : undefined}
+        >
+          {children}
+        </Paragraph>
+        {expandable && <Icon16Chevron />}
+      </div>
       {hasReactNode(after) && (
         <span vkuiClass="MiniInfoCell__after">{after}</span>
       )}
