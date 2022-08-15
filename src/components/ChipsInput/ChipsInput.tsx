@@ -2,7 +2,7 @@ import * as React from "react";
 import { HasAlign, HasRef, HasRootRef } from "../../types";
 import { FormField, FormFieldProps } from "../FormField/FormField";
 import { classNames } from "../../lib/classNames";
-import { Chip, ChipProps } from "../Chip/Chip";
+import { Chip, ChipProps, ChipValue } from "../Chip/Chip";
 import { noop } from "../../lib/utils";
 import { useChipsInput } from "../../hooks/useChipsInput";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
@@ -10,10 +10,8 @@ import { prefixClass } from "../../lib/prefixClass";
 import { useExternRef } from "../../hooks/useExternRef";
 import "./ChipsInput.css";
 
-export type ChipsInputValue = string | number;
-
 export interface ChipsInputOption {
-  value?: ChipsInputValue;
+  value?: ChipValue;
   label?: string;
   [otherProp: string]: any;
 }
@@ -37,9 +35,9 @@ export interface ChipsInputProps<Option extends ChipsInputOption>
   inputValue?: string;
   onChange?: (o: Option[]) => void;
   onInputChange?: (e?: React.ChangeEvent<HTMLInputElement>) => void;
-  getOptionValue?: (o?: Option) => ChipsInputValue;
+  getOptionValue?: (o?: Option) => ChipValue;
   getOptionLabel?: (o?: Option) => string;
-  getNewOptionData?: (v?: ChipsInputValue, l?: string) => Option;
+  getNewOptionData?: (v?: ChipValue, l?: string) => Option;
   renderChip?: (props?: RenderChip<Option>) => React.ReactNode;
   inputAriaLabel?: string;
 }
@@ -157,7 +155,7 @@ export const ChipsInputBase = <Option extends ChipsInputOption>(
 
   const handleChipRemove = (
     _: React.MouseEvent | undefined,
-    value: ChipsInputValue | undefined
+    value: ChipValue | undefined
   ) => {
     if (value !== undefined) {
       removeOption(value);

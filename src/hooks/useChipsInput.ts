@@ -1,8 +1,8 @@
 import * as React from "react";
+import { ChipValue } from "../components/Chip/Chip";
 import {
   ChipsInputBaseProps,
   ChipsInputOption,
-  ChipsInputValue,
 } from "../components/ChipsInput/ChipsInput";
 
 export const useChipsInput = <Option extends ChipsInputOption>(
@@ -57,7 +57,7 @@ export const useChipsInput = <Option extends ChipsInputOption>(
     }
   }, [addOption, clearInput, getNewOptionData, fieldValue]);
   const removeOption = React.useCallback(
-    (value: ChipsInputValue) => {
+    (value: ChipValue) => {
       toggleOption(getNewOptionData!(undefined, value as string), false);
     },
     [toggleOption, getNewOptionData]

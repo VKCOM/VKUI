@@ -7,7 +7,7 @@ import { Tappable } from "../Tappable/Tappable";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./Chip.css";
 
-type ChipValue = string | number;
+export type ChipValue = string | number;
 
 export interface ChipProps extends React.HTMLAttributes<HTMLDivElement> {
   value: ChipValue;

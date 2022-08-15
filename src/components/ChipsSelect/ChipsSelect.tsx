@@ -1,11 +1,11 @@
 import * as React from "react";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { classNames } from "../../lib/classNames";
+import { ChipValue } from "../Chip/Chip";
 import {
   ChipsInputBase,
   ChipsInputOption,
   ChipsInputProps,
-  ChipsInputValue,
   RenderChip,
   chipsInputDefaultProps,
 } from "../ChipsInput/ChipsInput";
@@ -325,7 +325,7 @@ export const ChipsSelect = <Option extends ChipsInputOption>(
     }
     const onRemoveWrapper = (
       e: React.MouseEvent | undefined,
-      value: ChipsInputValue | undefined
+      value: ChipValue | undefined
     ) => {
       e?.preventDefault();
       e?.stopPropagation();
