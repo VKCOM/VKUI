@@ -34,7 +34,6 @@ export interface ChipsInputProps<Option extends ChipOption>
     FormFieldProps {}
 
 export const chipsInputDefaultProps: ChipsInputProps<any> = {
-  type: "text",
   onChange: noop,
   onInputChange: noop,
   onKeyDown: noop,
@@ -190,20 +189,21 @@ export const ChipsInputBase = <Option extends ChipOption>(
       })}
       <label vkuiClass="ChipsInput__label" aria-label={inputAriaLabel}>
         <input
-          ref={inputRef}
-          value={fieldValue}
+          type="text"
           autoCapitalize="none"
           autoComplete="off"
           autoCorrect="off"
           spellCheck={false}
           aria-autocomplete="list"
           vkuiClass="ChipsInput__el"
+          {...restProps}
+          ref={inputRef}
+          value={fieldValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           onFocus={handleFocus}
           onBlur={handleBlur}
           placeholder={selectedOptions.length ? undefined : placeholder}
-          {...restProps}
         />
       </label>
     </div>
