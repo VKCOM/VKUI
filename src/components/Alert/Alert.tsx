@@ -1,9 +1,8 @@
 import * as React from "react";
 import { Tappable } from "../Tappable/Tappable";
 import { PopoutWrapper } from "../PopoutWrapper/PopoutWrapper";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
-import { ANDROID, VKCOM, IOS } from "../../lib/platform";
+import { VKCOM, IOS } from "../../lib/platform";
 import { Button, ButtonProps } from "../Button/Button";
 import { hasReactNode, stopPropagation } from "../../lib/utils";
 import { Title } from "../Typography/Title/Title";
@@ -111,19 +110,16 @@ const AlertAction = ({
     );
   }
 
-  let mode: ButtonProps["mode"] =
-    action.mode === "cancel" ? "secondary" : "primary";
-  let appearance: ButtonProps["appearance"] = "accent";
+  let mode: ButtonProps["mode"] = "tertiary";
 
-  if (platform === ANDROID) {
-    mode = "tertiary";
+  if (platform === VKCOM) {
+    mode = action.mode === "cancel" ? "secondary" : "primary";
   }
 
   return (
     <Button
       vkuiClass={classNames("Alert__button", `Alert__button--${action.mode}`)}
       mode={mode}
-      appearance={appearance}
       size="m"
       onClick={handleItemClick}
       Component={action.Component}
@@ -161,7 +157,7 @@ export const Alert = ({
   const resolvedActionsLayout: AlertProps["actionsLayout"] =
     platform === VKCOM ? "horizontal" : actionsLayout;
 
-  const timeout = platform === ANDROID || platform === VKCOM ? 200 : 300;
+  const timeout = platform === IOS ? 300 : 200;
 
   const close = React.useCallback(() => {
     setClosing(true);
@@ -215,7 +211,9 @@ export const Alert = ({
         onClose={close}
         timeout={timeout}
         vkuiClass={classNames(
-          getClassName("Alert", platform),
+          "Alert",
+          platform === IOS && "Alert--ios",
+          platform === VKCOM && "Alert--vkcom",
           resolvedActionsLayout === "vertical" ? "Alert--v" : "Alert--h",
           getSizeXClassName("Alert", sizeX),
           closing && "Alert--closing"

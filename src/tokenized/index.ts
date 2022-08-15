@@ -1,3 +1,6 @@
+export { Alert } from "../components/Alert/Alert";
+export type { AlertProps } from "../components/Alert/Alert";
+
 export { Avatar } from "../components/Avatar/Avatar";
 export type { AvatarProps } from "../components/Avatar/Avatar";
 

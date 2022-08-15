@@ -17,6 +17,11 @@ export interface FormLayoutGroupProps
    * Только для режима horizontal. Дает возможность удалить всю группу `FormItem`.
    */
   removable?: boolean;
+
+  /**
+   * Только для режима horizontal. Дает возможность склеить несколько `FormItem`.
+   */
+  segmented?: boolean;
 }
 
 /**
@@ -26,6 +31,7 @@ export const FormLayoutGroup = ({
   children,
   mode = "vertical",
   removable,
+  segmented,
   removePlaceholder = "Удалить",
   onRemove = noop,
   getRootRef,
@@ -33,6 +39,7 @@ export const FormLayoutGroup = ({
 }: FormLayoutGroupProps) => {
   const { sizeY } = useAdaptivity();
   const isRemovable = removable && mode === "horizontal";
+  const isSegmented = segmented && mode === "horizontal";
   const rootEl = useExternRef(getRootRef);
 
   return (
@@ -42,7 +49,8 @@ export const FormLayoutGroup = ({
         "FormLayoutGroup",
         getSizeYClassName("FormLayoutGroup", sizeY),
         `FormLayoutGroup--${mode}`,
-        isRemovable && "FormLayoutGroup--removable"
+        isRemovable && "FormLayoutGroup--removable",
+        isSegmented && "FormLayoutGroup--segmented"
       )}
       {...restProps}
     >
@@ -60,7 +68,10 @@ export const FormLayoutGroup = ({
           {children}
         </Removable>
       ) : (
-        children
+        <React.Fragment>
+          {children}
+          <span vkuiClass="FormLayoutGroup__offset" aria-hidden />
+        </React.Fragment>
       )}
     </div>
   );
