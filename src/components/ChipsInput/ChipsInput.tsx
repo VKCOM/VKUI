@@ -22,15 +22,14 @@ export interface RenderChip<Option extends ChipsInputOption> extends ChipProps {
   disabled: boolean;
 }
 
-export interface ChipsInputProps<Option extends ChipsInputOption>
+export interface ChipsInputBaseProps<Option extends ChipsInputOption>
   extends Omit<
       React.InputHTMLAttributes<HTMLInputElement>,
       "value" | "onChange"
     >,
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLDivElement>,
-    HasAlign,
-    FormFieldProps {
+    HasAlign {
   value: Option[];
   inputValue?: string;
   onChange?: (o: Option[]) => void;
@@ -41,6 +40,10 @@ export interface ChipsInputProps<Option extends ChipsInputOption>
   renderChip?: (props?: RenderChip<Option>) => React.ReactNode;
   inputAriaLabel?: string;
 }
+
+export interface ChipsInputProps<Option extends ChipsInputOption>
+  extends ChipsInputBaseProps<Option>,
+    FormFieldProps {}
 
 export const chipsInputDefaultProps: ChipsInputProps<any> = {
   type: "text",
@@ -72,16 +75,14 @@ export const chipsInputDefaultProps: ChipsInputProps<any> = {
   },
 };
 
-export type ChipsInputBaseProps<Option extends ChipsInputOption> = Omit<
-  ChipsInputProps<Option>,
-  "style" | "className" | "before" | "after" | "getRootRef"
->;
-
 export const ChipsInputBase = <Option extends ChipsInputOption>(
   props: ChipsInputBaseProps<Option>
 ) => {
   const propsWithDefault = { ...chipsInputDefaultProps, ...props };
   const {
+    style,
+    className,
+    getRootRef,
     value,
     onChange,
     onInputChange,
@@ -178,6 +179,9 @@ export const ChipsInputBase = <Option extends ChipsInputOption>(
       vkuiClass={classNames("ChipsInput", `ChipsInput--sizeY-${sizeY}`)}
       onClick={handleClick}
       role="presentation"
+      style={style}
+      className={className}
+      ref={getRootRef}
     >
       {selectedOptions.map((option: Option) => {
         const value = getOptionValue!(option);
