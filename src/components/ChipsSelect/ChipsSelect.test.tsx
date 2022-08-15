@@ -2,15 +2,15 @@ import { baselineComponent, waitForPopper } from "../../testing/utils";
 import { fireEvent, render, screen, queryByText } from "@testing-library/react";
 import { ChipsSelect, ChipsSelectProps } from "./ChipsSelect";
 import userEvent from "@testing-library/user-event";
-import { ChipsInputOption } from "../ChipsInput/ChipsInput";
+import { ChipOption } from "../Chip/Chip";
 
-const ChipsSelectTest = (props: ChipsSelectProps<ChipsInputOption>) => (
+const ChipsSelectTest = (props: ChipsSelectProps<ChipOption>) => (
   <ChipsSelect data-testid="chips-select" {...props} />
 );
 // const redChip = () => screen.queryByText('Красный');
 const getChipsSelect = () => screen.getByTestId("chips-select");
 
-const colors: ChipsInputOption[] = [
+const colors: ChipOption[] = [
   { value: "red", label: "Красный" },
   { value: "blue", label: "Синий" },
   { value: "navarin", label: "Наваринского пламени с дымом" },
@@ -20,7 +20,7 @@ const toggleDropdown = async () => {
   await waitForPopper();
 };
 // получить опцию из дропдауна (не чип)
-const queryListOption = (o: ChipsInputOption | null | undefined) => {
+const queryListOption = (o: ChipOption | null | undefined) => {
   const list = document.querySelector(".ChipsSelect__options") as HTMLElement;
   return list ? queryByText(list, o?.label as string) : null;
 };
@@ -114,10 +114,8 @@ describe("ChipsSelect", () => {
   });
 
   it("does not focus ChipsSelect on chip click", () => {
-    let selectedColors: ChipsInputOption[] = [
-      { value: "red", label: "Красный" },
-    ];
-    const setSelectedColors = (updatedColors: ChipsInputOption[]) => {
+    let selectedColors: ChipOption[] = [{ value: "red", label: "Красный" }];
+    const setSelectedColors = (updatedColors: ChipOption[]) => {
       selectedColors = [...updatedColors];
     };
 

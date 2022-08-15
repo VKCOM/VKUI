@@ -2,7 +2,7 @@ import * as React from "react";
 import { HasAlign, HasRef, HasRootRef } from "../../types";
 import { FormField, FormFieldProps } from "../FormField/FormField";
 import { classNames } from "../../lib/classNames";
-import { Chip, ChipProps, ChipValue } from "../Chip/Chip";
+import { Chip, ChipOption, ChipProps, ChipValue } from "../Chip/Chip";
 import { noop } from "../../lib/utils";
 import { useChipsInput } from "../../hooks/useChipsInput";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
@@ -10,19 +10,13 @@ import { prefixClass } from "../../lib/prefixClass";
 import { useExternRef } from "../../hooks/useExternRef";
 import "./ChipsInput.css";
 
-export interface ChipsInputOption {
-  value?: ChipValue;
-  label?: string;
-  [otherProp: string]: any;
-}
-
-export interface RenderChip<Option extends ChipsInputOption> extends ChipProps {
+export interface RenderChip<Option extends ChipOption> extends ChipProps {
   label: string;
   option: Option;
   disabled: boolean;
 }
 
-export interface ChipsInputBaseProps<Option extends ChipsInputOption>
+export interface ChipsInputBaseProps<Option extends ChipOption>
   extends Omit<
       React.InputHTMLAttributes<HTMLInputElement>,
       "value" | "onChange"
@@ -41,7 +35,7 @@ export interface ChipsInputBaseProps<Option extends ChipsInputOption>
   inputAriaLabel?: string;
 }
 
-export interface ChipsInputProps<Option extends ChipsInputOption>
+export interface ChipsInputProps<Option extends ChipOption>
   extends ChipsInputBaseProps<Option>,
     FormFieldProps {}
 
@@ -75,7 +69,7 @@ export const chipsInputDefaultProps: ChipsInputProps<any> = {
   },
 };
 
-export const ChipsInputBase = <Option extends ChipsInputOption>(
+export const ChipsInputBase = <Option extends ChipOption>(
   props: ChipsInputBaseProps<Option>
 ) => {
   const propsWithDefault = { ...chipsInputDefaultProps, ...props };
@@ -225,7 +219,7 @@ export const ChipsInputBase = <Option extends ChipsInputOption>(
 /**
  * @see https://vkcom.github.io/VKUI/#/ChipsInput
  */
-export const ChipsInput = <Option extends ChipsInputOption>({
+export const ChipsInput = <Option extends ChipOption>({
   style,
   className,
   getRootRef,

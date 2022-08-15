@@ -9,9 +9,15 @@ import "./Chip.css";
 
 export type ChipValue = string | number;
 
+export interface ChipOption {
+  value?: ChipValue;
+  label?: string;
+  [otherProp: string]: any;
+}
+
 export interface ChipProps extends React.HTMLAttributes<HTMLDivElement> {
   value: ChipValue;
-  option?: { value?: ChipValue };
+  option?: ChipOption;
   onRemove?: (event?: React.MouseEvent, value?: ChipValue) => void;
   removable?: boolean;
   removeAriaLabel?: string;

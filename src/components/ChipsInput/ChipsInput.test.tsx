@@ -1,15 +1,14 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { baselineComponent } from "../../testing/utils";
-import { ChipsInput, ChipsInputOption, ChipsInputProps } from "./ChipsInput";
+import { ChipOption } from "../Chip/Chip";
+import { ChipsInput, ChipsInputProps } from "./ChipsInput";
 
-const ChipsInputTest = (props: ChipsInputProps<ChipsInputOption>) => (
+const ChipsInputTest = (props: ChipsInputProps<ChipOption>) => (
   <ChipsInput data-testid="chips-input" {...props} />
 );
 
-const chipsInputValue: ChipsInputOption[] = [
-  { value: "red", label: "Красный" },
-];
+const chipsInputValue: ChipOption[] = [{ value: "red", label: "Красный" }];
 const redChip = () => screen.queryByText("Красный");
 const getChipsInput = () => screen.getByTestId("chips-input");
 
@@ -38,7 +37,7 @@ describe("ChipsInput", () => {
   });
 
   it("does not lose data when adding an already existing chip", () => {
-    let value: ChipsInputOption[] | undefined = undefined;
+    let value: ChipOption[] | undefined = undefined;
 
     render(
       <ChipsInputTest
@@ -59,7 +58,7 @@ describe("ChipsInput", () => {
   });
 
   it("removes chip on hitting backspace", () => {
-    let value: ChipsInputOption[] | undefined = undefined;
+    let value: ChipOption[] | undefined = undefined;
 
     render(
       <ChipsInputTest
@@ -74,7 +73,7 @@ describe("ChipsInput", () => {
   });
 
   it("does not delete chips on hitting backspace in readonly mode", () => {
-    let value: ChipsInputOption[] = [...chipsInputValue];
+    let value: ChipOption[] = [...chipsInputValue];
 
     render(
       <ChipsInputTest

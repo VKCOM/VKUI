@@ -1,10 +1,9 @@
 import * as React from "react";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { classNames } from "../../lib/classNames";
-import { ChipValue } from "../Chip/Chip";
+import { ChipOption, ChipValue } from "../Chip/Chip";
 import {
   ChipsInputBase,
-  ChipsInputOption,
   ChipsInputProps,
   RenderChip,
   chipsInputDefaultProps,
@@ -27,7 +26,7 @@ import { FormField } from "../FormField/FormField";
 import { IconButton } from "../IconButton/IconButton";
 import "./ChipsSelect.css";
 
-export interface ChipsSelectProps<Option extends ChipsInputOption>
+export interface ChipsSelectProps<Option extends ChipOption>
   extends Omit<ChipsInputProps<Option>, "after"> {
   popupDirection?: "top" | "bottom";
   options?: Option[];
@@ -99,7 +98,7 @@ const chipsSelectDefaultProps: ChipsSelectProps<any> = {
 /**
  * @see https://vkcom.github.io/VKUI/#/ChipsSelect
  */
-export const ChipsSelect = <Option extends ChipsInputOption>(
+export const ChipsSelect = <Option extends ChipOption>(
   props: ChipsSelectProps<Option>
 ) => {
   const propsWithDefault = { ...chipsSelectDefaultProps, ...props };
