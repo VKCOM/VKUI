@@ -334,11 +334,6 @@ const baseConfig = {
           content: "./pages/icons.md",
         },
         {
-          title: "Шрифты",
-          name: "Fonts",
-          content: "./pages/fonts.md",
-        },
-        {
           title: "Утилиты",
           name: "Utils",
           content: "./pages/utils.md",
