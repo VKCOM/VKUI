@@ -1,11 +1,10 @@
 import * as React from "react";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { classNames } from "../../lib/classNames";
-import { ChipOption, ChipValue } from "../Chip/Chip";
+import { ChipOption, ChipValue, RenderChip } from "../Chip/Chip";
 import {
   ChipsInputBase,
   ChipsInputProps,
-  RenderChip,
   chipsInputDefaultProps,
 } from "../ChipsInput/ChipsInput";
 import {

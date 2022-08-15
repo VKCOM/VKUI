@@ -2,19 +2,13 @@ import * as React from "react";
 import { HasAlign, HasRef, HasRootRef } from "../../types";
 import { FormField, FormFieldProps } from "../FormField/FormField";
 import { classNames } from "../../lib/classNames";
-import { Chip, ChipOption, ChipProps, ChipValue } from "../Chip/Chip";
+import { Chip, ChipOption, ChipValue, RenderChip } from "../Chip/Chip";
 import { noop } from "../../lib/utils";
 import { useChipsInput } from "../../hooks/useChipsInput";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { prefixClass } from "../../lib/prefixClass";
 import { useExternRef } from "../../hooks/useExternRef";
 import "./ChipsInput.css";
-
-export interface RenderChip<Option extends ChipOption> extends ChipProps {
-  label: string;
-  option: Option;
-  disabled: boolean;
-}
 
 export interface ChipsInputBaseProps<Option extends ChipOption>
   extends Omit<
