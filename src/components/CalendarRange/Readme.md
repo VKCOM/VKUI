@@ -1,5 +1,8 @@
 Компонент выбора диапазона дат.
 
+- Если нужно поле ввода с выпадающим календарем, используйте [DateRangeInput](#!/DateRangeInput).
+- Если нужен выбор одной даты, используйте [Calendar](#!/Calendar).
+
 ```jsx { "props": { "layout": false, "iframe": false } }
 import { addDays, format } from "../../lib/date";
 
