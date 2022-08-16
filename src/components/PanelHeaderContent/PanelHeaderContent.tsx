@@ -3,6 +3,7 @@ import { classNames } from "../../lib/classNames";
 import { Tappable } from "../Tappable/Tappable";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
+import { getClassName } from "../../helpers/getClassName";
 import { Caption } from "../Typography/Caption/Caption";
 import { Headline } from "../Typography/Headline/Headline";
 import { IOS, ANDROID, Platform } from "../../lib/platform";
@@ -75,11 +76,7 @@ export const PanelHeaderContent = ({
   return (
     <div
       {...rootProps}
-      vkuiClass={classNames(
-        "PanelHeaderContent",
-        platform === ANDROID && "PanelHeaderContent--android",
-        platform === IOS && "PanelHeaderContent--ios"
-      )}
+      vkuiClass={getClassName("PanelHeaderContent", platform)}
       style={style}
       className={className}
     >
