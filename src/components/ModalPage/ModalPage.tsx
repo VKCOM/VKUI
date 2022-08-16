@@ -7,7 +7,7 @@ import {
 } from "../ModalRoot/ModalRootContext";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useOrientationChange } from "../../hooks/useOrientationChange";
-import { withAdaptivity, ViewWidth } from "../../hoc/withAdaptivity";
+import { ViewWidth, withAdaptivity } from "../../hoc/withAdaptivity";
 import {
   AdaptivityContextInterface,
   AdaptivityProps,
@@ -54,6 +54,10 @@ export interface ModalPageProps
    */
   dynamicContentHeight?: boolean;
   getModalContentRef?: React.Ref<HTMLDivElement>;
+  /**
+   * Скрывает кнопку закрытия (актуально для iOS, т.к. можно отрисовать кнопку закрытия внутри модалки)
+   */
+  hideCloseButton?: boolean;
 }
 
 const warn = warnOnce("ModalPage");
@@ -74,6 +78,7 @@ const ModalPageComponent = ({
   getModalContentRef,
   nav,
   id,
+  hideCloseButton = false,
   ...restProps
 }: ModalPageProps & AdaptivityContextInterface) => {
   const { updateModalHeight } = React.useContext(ModalRootContext);
@@ -88,8 +93,10 @@ const ModalPageComponent = ({
   ]);
 
   const isDesktop = useAdaptivityIsDesktop();
-  const canShowCloseBtn =
-    viewWidth >= ViewWidth.SMALL_TABLET || platform === Platform.VKCOM;
+  // TODO v5.0.0 поправить под новую адаптивность
+  const isCloseButtonShown =
+    !hideCloseButton &&
+    (platform === Platform.VKCOM || viewWidth >= ViewWidth.SMALL_TABLET);
 
   const modalContext = React.useContext(ModalRootContext);
   const { refs } = useModalRegistry(
@@ -127,7 +134,7 @@ const ModalPageComponent = ({
               <div vkuiClass="ModalPage__content-in">{children}</div>
             </div>
           </div>
-          {canShowCloseBtn && (
+          {isCloseButtonShown && (
             <ModalDismissButton onClick={onClose || modalContext.onClose} />
           )}
         </div>
