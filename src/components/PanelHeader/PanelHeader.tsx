@@ -127,20 +127,19 @@ const PanelHeaderComponent = ({
   return (
     <div
       {...restProps}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("PanelHeader", platform),
-        {
-          "PanelHeader--trnsp": transparent,
-          "PanelHeader--shadow": needShadow,
-          "PanelHeader--vis": visor,
-          "PanelHeader--sep": separator && visor,
-          "PanelHeader--vkapps":
-            webviewType === WebviewType.VKAPPS && !isInsideModal,
-          "PanelHeader--no-before": !before,
-          "PanelHeader--no-after": !after,
-          "PanelHeader--fixed": isFixed,
-        },
+        transparent && "PanelHeader--trnsp",
+        needShadow && "PanelHeader--shadow",
+        visor && "PanelHeader--vis",
+        separator && visor && "PanelHeader--sep",
+        webviewType === WebviewType.VKAPPS &&
+          !isInsideModal &&
+          "PanelHeader--vkapps",
+        !before && "PanelHeader--no-before",
+        !after && "PanelHeader--no-after",
+        isFixed && "PanelHeader--fixed",
+        // TODO v5.0.0 поправить под новую адаптивность
         `PanelHeader--sizeX-${sizeX}`
       )}
       ref={isFixed ? getRootRef : getRef}

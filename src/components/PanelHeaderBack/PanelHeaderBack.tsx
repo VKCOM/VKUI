@@ -15,7 +15,6 @@ import {
   SizeType,
   AdaptivityProps,
 } from "../../hoc/withAdaptivity";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import "./PanelHeaderBack.css";
 
@@ -41,10 +40,12 @@ export const PanelHeaderBackComponent = ({
     <PanelHeaderButton
       {...restProps}
       aria-label={ariaLabel}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames(getClassName("PanelHeaderBack", platform), {
-        "PanelHeaderBack--has-label": showLabel && !!label,
-      })}
+      vkuiClass={classNames(
+        "PanelHeaderBack",
+        platform === IOS && "PanelHeaderBack--ios",
+        platform === VKCOM && "PanelHeaderBack--vkcom",
+        showLabel && !!label && "PanelHeaderBack--has-label"
+      )}
       label={showLabel && label}
     >
       {platform === ANDROID && <Icon28ArrowLeftOutline />}
