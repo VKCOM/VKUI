@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ChipOption, ChipValue } from "../components/Chip/Chip";
-import { ChipsInputBaseProps } from "../components/ChipsInput/ChipsInput";
+import { ChipsInputBaseProps } from "../components/ChipsInputBase/ChipsInputBase";
 
 export const useChipsInput = <Option extends ChipOption>(
   props: Partial<ChipsInputBaseProps<Option>>
