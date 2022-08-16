@@ -7,7 +7,7 @@
   height: 56px;
   padding: 18px;
   box-sizing: border-box;
-  color: var(--white);
+  color: var(--white, var(--vkui--color_icon_contrast));
   transition: opacity 0.15s ease-out;
 }
 
@@ -18,7 +18,7 @@
   right: 14px;
   bottom: 14px;
   left: 14px;
-  background-color: rgba(0, 0, 0, 0.35);
+  background: var(--vkui--color_overlay_primary);
   border-radius: 50%;
   position: absolute;
 }
@@ -28,10 +28,10 @@
   transform: translateX(0);
 }
 
-.ModalDismissButton--hover {
-  opacity: 0.6;
+.ModalDismissButton--hover.ModalDismissButton::before {
+  background: var(--vkui--color_overlay_primary--hover);
 }
 
-.ModalDismissButton--active {
-  opacity: 1;
+.ModalDismissButton--active.ModalDismissButton::before {
+  background: var(--vkui--color_overlay_primary--active);
 }
