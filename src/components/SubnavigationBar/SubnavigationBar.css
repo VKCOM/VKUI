@@ -4,29 +4,17 @@
 }
 
 .SubnavigationBar__scrollIn {
-  padding: 20px 0;
+  padding-top: calc(
+    var(--vkui--size_subnavigation_bar_padding_vertical--regular) + 8px
+  );
+  padding-bottom: calc(
+    var(--vkui--size_subnavigation_bar_padding_vertical--regular) + 8px
+  );
   display: flex;
 }
 
 .SubnavigationBar__scrollIn::before,
 .SubnavigationBar__scrollIn::after {
   content: "";
-  min-width: 16px;
-}
-
-.SubnavigationBar .SubnavigationButton + .SubnavigationButton {
-  margin-left: 8px;
-}
-
-.SubnavigationBar--fixed .SubnavigationButton {
-  flex: 1;
-  min-width: 0;
-}
-
-/**
- * iOS
- */
-.SubnavigationBar--ios .SubnavigationBar__scrollIn::before,
-.SubnavigationBar--ios .SubnavigationBar__scrollIn::after {
-  min-width: 12px;
+  min-width: var(--vkui--size_base_padding_horizontal--regular);
 }
