@@ -1,9 +1,8 @@
 import * as React from "react";
 import { Tappable } from "../Tappable/Tappable";
 import { PopoutWrapper } from "../PopoutWrapper/PopoutWrapper";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
-import { ANDROID, VKCOM, IOS } from "../../lib/platform";
+import { VKCOM, IOS } from "../../lib/platform";
 import { ViewWidth } from "../../hoc/withAdaptivity";
 import { Button, ButtonProps } from "../Button/Button";
 import { hasReactNode, stopPropagation } from "../../lib/utils";
@@ -111,15 +110,15 @@ const AlertAction = ({
     );
   }
 
-  let mode: ButtonProps["mode"] =
-    action.mode === "cancel" ? "secondary" : "primary";
+  let mode: ButtonProps["mode"] = "tertiary";
 
-  if (platform === ANDROID) {
-    mode = "tertiary";
+  // TODO v5.0.0 поправить под новую адаптивность
+  if (viewWidth === ViewWidth.DESKTOP && action.mode === "destructive") {
+    mode = "destructive";
+  }
 
-    if (viewWidth === ViewWidth.DESKTOP && action.mode === "destructive") {
-      mode = "destructive";
-    }
+  if (platform === VKCOM) {
+    mode = action.mode === "cancel" ? "secondary" : "primary";
   }
 
   return (
@@ -163,11 +162,10 @@ export const Alert = ({
   const resolvedActionsLayout: AlertProps["actionsLayout"] =
     platform === VKCOM ? "horizontal" : actionsLayout;
   const canShowCloseButton =
-    platform === VKCOM ||
-    (platform === ANDROID && viewWidth >= ViewWidth.SMALL_TABLET);
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
+    platform !== IOS && viewWidth >= ViewWidth.SMALL_TABLET;
+  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET; // TODO v5.0.0 поправить под новую адаптивность
 
-  const timeout = platform === ANDROID || platform === VKCOM ? 200 : 300;
+  const timeout = platform === IOS ? 300 : 200;
 
   const close = React.useCallback(() => {
     setClosing(true);
@@ -221,7 +219,9 @@ export const Alert = ({
         onClose={close}
         timeout={timeout}
         vkuiClass={classNames(
-          getClassName("Alert", platform),
+          "Alert",
+          platform === IOS && "Alert--ios",
+          platform === VKCOM && "Alert--vkcom",
           resolvedActionsLayout === "vertical" ? "Alert--v" : "Alert--h",
           closing && "Alert--closing",
           isDesktop && "Alert--desktop"

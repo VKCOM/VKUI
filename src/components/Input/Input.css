@@ -28,7 +28,7 @@
   padding-right: 12px;
   padding-left: 12px;
   position: relative;
-  z-index: 2;
+  z-index: 6;
   background: transparent;
 }
 
@@ -54,6 +54,8 @@
 
 .Input__el::placeholder {
   color: var(--field_text_placeholder, var(--vkui--color_text_secondary));
+  /* Для Firefox */
+  opacity: 1;
 }
 
 .Input__el:disabled::placeholder {
