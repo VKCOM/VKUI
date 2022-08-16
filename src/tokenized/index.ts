@@ -278,6 +278,9 @@ export type { TabbarProps } from "../components/Tabbar/Tabbar";
 export { TabbarItem } from "../components/TabbarItem/TabbarItem";
 export type { TabbarItemProps } from "../components/TabbarItem/TabbarItem";
 
+export { Header } from "../components/Header/Header";
+export type { HeaderProps } from "../components/Header/Header";
+
 export { Panel } from "../components/Panel/Panel";
 export type { PanelProps } from "../components/Panel/Panel";
 
