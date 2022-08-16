@@ -23,13 +23,19 @@ function isPlatformAlias(
  * @see {@link https://dev.vk.com/mini-apps/development/launch-params#vk_platform vk_platform}
  */
 function getPlatformByQueryString(queryString: string): Platform | undefined {
-  const parsedQuery = querystring.parse(queryString);
-  const platformAliasByQuery = parsedQuery["vk_platform"];
+  try {
+    const parsedQuery = querystring.parse(queryString);
+    const platformAliasByQuery = parsedQuery["vk_platform"];
 
-  return typeof platformAliasByQuery === "string" &&
-    isPlatformAlias(platformAliasByQuery)
-    ? PLATFORM_ALIAS[platformAliasByQuery]
-    : undefined;
+    return typeof platformAliasByQuery === "string" &&
+      isPlatformAlias(platformAliasByQuery)
+      ? PLATFORM_ALIAS[platformAliasByQuery]
+      : undefined;
+  } catch (e) {
+    console.warn(e);
+
+    return undefined;
+  }
 }
 
 const platformByQueryString = canUseDOM
