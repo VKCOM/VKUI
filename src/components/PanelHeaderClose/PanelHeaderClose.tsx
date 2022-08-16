@@ -3,7 +3,7 @@ import {
   PanelHeaderButton,
   PanelHeaderButtonProps,
 } from "../PanelHeaderButton/PanelHeaderButton";
-import { ANDROID, VKCOM } from "../../lib/platform";
+import { IOS } from "../../lib/platform";
 import { getTitleFromChildren } from "../../lib/utils";
 import { usePlatform } from "../../hooks/usePlatform";
 
@@ -20,11 +20,7 @@ export const PanelHeaderClose = ({
       aria-label={getTitleFromChildren(children)}
       {...restProps}
     >
-      {platform === ANDROID || platform === VKCOM ? (
-        <Icon28CancelOutline />
-      ) : (
-        children
-      )}
+      {platform === IOS ? children : <Icon28CancelOutline />}
     </PanelHeaderButton>
   );
 };

@@ -1,11 +1,10 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { Touch } from "../Touch/Touch";
 import { TooltipContainer } from "../Tooltip/TooltipContainer";
 import { HasRootRef } from "../../types";
 import { withAdaptivity } from "../../hoc/withAdaptivity";
-import { IOS } from "../../lib/platform";
+import { IOS, VKCOM } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
 import { NavIdProps } from "../../lib/getNavId";
 import {
@@ -33,14 +32,13 @@ export const Panel = withAdaptivity<PanelProps & AdaptivityContextInterface>(
       <div
         {...restProps}
         ref={getRootRef}
-        // eslint-disable-next-line vkui/no-object-expression-in-arguments
         vkuiClass={classNames(
-          getClassName("Panel", platform),
-          `Panel--${sizeX}`,
-          {
-            "Panel--centered": centered,
-            [`Panel--sizeX-${sizeX}`]: true,
-          }
+          "Panel",
+          platform === IOS && "Panel--ios",
+          platform === VKCOM && "Panel--vkcom",
+          // TODO v5.0.0 поправить под новую адаптивность
+          `Panel--sizeX-${sizeX}`,
+          centered && "Panel--centered"
         )}
       >
         <Touch Component={TooltipContainer} vkuiClass="Panel__in">

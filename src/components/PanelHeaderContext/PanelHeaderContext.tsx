@@ -1,10 +1,10 @@
 import * as React from "react";
 import { FixedLayout } from "../FixedLayout/FixedLayout";
 import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
 import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useDOM } from "../../lib/dom";
+import { IOS } from "../../lib/platform";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { useTimeout } from "../../hooks/useTimeout";
@@ -69,12 +69,16 @@ export const PanelHeaderContext = ({
   return (
     <FixedLayout
       {...restProps}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames(getClassName("PanelHeaderContext", platform), {
-        "PanelHeaderContext--opened": opened,
-        "PanelHeaderContext--closing": closing,
-        "PanelHeaderContext--desktop": isDesktop,
-      })}
+      vkuiClass={classNames(
+        "PanelHeaderContext",
+        platform === IOS && "PanelHeaderContext--ios",
+        opened && "PanelHeaderContext--opened",
+        closing && "PanelHeaderContext--closing",
+        isDesktop && "PanelHeaderContext--desktop",
+        // TODO v5.0.0 поправить под новую адаптивность
+        (platform !== IOS || (platform === IOS && isDesktop)) &&
+          "PanelHeaderContext--rounded"
+      )}
       vertical="top"
     >
       <div

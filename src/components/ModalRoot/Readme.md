@@ -155,6 +155,7 @@ const App = withPlatform(
               id={MODAL_PAGE_FULLSCREEN}
               onClose={this.modalBack}
               settlingHeight={100}
+              hideCloseButton={platform === IOS}
               header={
                 <ModalPageHeader
                   before={
