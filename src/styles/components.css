@@ -19,6 +19,9 @@
 /* Service */
 @import "../components/Tappable/Tappable.module.css";
 @import "../components/FixedLayout/FixedLayout.css";
+@import "../components/ImageBase/ImageBaseBadge/ImageBaseBadge.module.css";
+@import "../components/ImageBase/ImageBaseOverlay/ImageBaseOverlay.module.css";
+@import "../components/ImageBase/ImageBase.module.css";
 
 /* Primitives */
 @import "../components/Button/Button.module.css";
