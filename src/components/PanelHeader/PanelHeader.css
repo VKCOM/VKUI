@@ -110,10 +110,6 @@
   padding: 0 4px;
 }
 
-.PanelHeader--ios.PanelHeader--no-before .PanelHeader__content > * {
-  padding-left: 0;
-}
-
 .PanelHeader--ios.PanelHeader--no-before .PanelHeader__content {
   padding-left: 8px;
 }
@@ -167,15 +163,6 @@
   padding: 0 4px;
 }
 
-.PanelHeader--android.PanelHeader--no-before .PanelHeader__content > *,
-.PanelHeader--vkcom.PanelHeader--no-before .PanelHeader__content > * {
-  padding-left: 0;
-}
-
-.PanelHeader--android.PanelHeader--no-before .PanelHeader__content {
-  padding-left: 16px;
-}
-
 .SplitCol--spaced
   .PanelHeader--android.PanelHeader--no-before:not(.ModalPageHeader__in)
   .PanelHeader__content {
@@ -189,6 +176,10 @@
 
 .PanelHeader--android.PanelHeader--no-after .PanelHeader__content {
   padding-right: 16px;
+}
+
+.PanelHeader--android.PanelHeader--no-before .PanelHeader__content {
+  padding-left: 16px;
 }
 
 .SplitCol--spaced
@@ -245,4 +236,8 @@
   flex-basis: 0;
   flex-shrink: 0;
   flex-grow: 1;
+}
+
+.PanelHeader--no-before .PanelHeader__content > * {
+  padding-left: 0;
 }
