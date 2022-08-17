@@ -262,6 +262,13 @@
 
 <br/><br/>
 
+## [`Tabs`](#/Tabs)
+
+- `mode="buttons"` удалён. Используйте `mode="secondary"`.
+- `mode="segmented"` удалён. Используйте [`SegmentedControl`](#/SegmentedControl).
+
+<br/><br/>
+
 ## Типы и импорты
 
 - Удалены константы `IS_PLATFORM_ANDROID` и `IS_PLATFORM_IOS`
