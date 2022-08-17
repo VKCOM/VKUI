@@ -14,16 +14,10 @@
   }
 }
 
-@media (min-resolution: 3dppx) {
-  .Separator__in:not(.Separator__in--expanded) {
-    transform: scaleY(0.32);
-  }
-}
-
-.Separator__in--expanded,
-.Group--card .Separator__in {
-  height: 16px;
-  background: transparent;
+.Separator__in {
+  height: var(--thin-border);
+  background: currentColor;
+  transform-origin: center top;
 }
 
 .Separator--padded .Separator__in {
