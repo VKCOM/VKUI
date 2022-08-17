@@ -401,8 +401,7 @@ class ModalRootTouchComponent extends React.Component<
         shiftYPercent,
         72,
         0.8,
-        this.props.platform === Platform.ANDROID ||
-          this.props.platform === Platform.VKCOM
+        this.props.platform !== Platform.IOS
       );
 
       modalState.touchShiftYPercent = shiftYPercent;
