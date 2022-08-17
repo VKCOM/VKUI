@@ -1,15 +1,7 @@
 :root {
   /* fonts */
-  --font-common: var(
-    --palette-vk-font,
-    -apple-system,
-    system-ui,
-    Helvetica Neue,
-    Roboto,
-    sans-serif
-  );
-  --font-display: "VK Sans Display", -apple-system, system-ui, Helvetica Neue,
-    Roboto, sans-serif;
+  --font-common: var(--vkui--font_family_base);
+  --font-display: var(--vkui--font_family_accent);
 
   /* easings */
   --ios-easing: cubic-bezier(0.36, 0.66, 0.04, 1);

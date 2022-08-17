@@ -15,7 +15,6 @@ module.exports = {
     unstable: "./src/styles/unstable.css",
     components: "./src/styles/components.css",
     default_scheme: `./src/styles/${defaultSchemeId}.css`,
-    fonts: "./src/fonts/fonts.css",
   },
   output: {
     path: path.resolve(__dirname, "dist"),

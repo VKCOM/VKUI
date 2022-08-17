@@ -1,7 +1,6 @@
 import "../src/styles/themes.css";
 import "../src/styles/unstable.css";
 import "../src/styles/common.css";
-import "../src/fonts/fonts.css";
 
 import { useState, useRef } from "react";
 import * as VKUI from "../src";
