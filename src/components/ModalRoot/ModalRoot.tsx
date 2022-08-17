@@ -116,10 +116,9 @@ class ModalRootTouchComponent extends React.Component<
   private restoreFocusTo: HTMLElement | undefined | null = undefined;
 
   get timeout(): number {
-    return this.props.platform === Platform.ANDROID ||
-      this.props.platform === Platform.VKCOM
-      ? 320
-      : 400;
+    return this.props.platform === Platform.IOS
+      ? 400
+      : 320;
   }
 
   get document() {
