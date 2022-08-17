@@ -1,42 +1,45 @@
-Документацию по миграции c v3 на v4, можно найти [здесь](https://github.com/VKCOM/VKUI/releases/tag/v4.0.0).
+Документацию по миграции c v3 на v4 можно найти [здесь](https://github.com/VKCOM/VKUI/releases/tag/v4.0.0).
+
+<br/><br/>
 
 ## Обновление React и Typescript
 
-- Минимальная поддерживаемая версия **React** была увеличена до v17.0.0
-- Минимальная поддерживаемая версия **Typescript** была увеличена до v4.4.4
+- Минимальная поддерживаемая версия **React** увеличена до v17.0.0
+- Минимальная поддерживаемая версия **Typescript** увеличена до v4.4.4
 
-## Обратно несовместимые изменения
+<br/><br/>
 
-### ConfigProvider
+## [`ConfigProvider`](#/ConfigProvider)
 
-- По умолчанию `appearance` определяется автоматически, в зависимости от темы указанной в VK или настроек ОС.
-- Удалено устаревшее свойство `scheme`. Для определения темы используйте свойство `appearance`.
+- По умолчанию `appearance` определяется автоматически — в зависимости от темы, указанной в VK, или настроек ОС
+- Удалено устаревшее свойство `scheme`. Для определения темы используйте свойство `appearance`
 
 ```diff
 - <ConfigProvider scheme={scheme}>...</ConfigProvider>
 + <ConfigProvider appearance={appearance}>...</ConfigProvider>
 ```
 
-### Root и View
+<br/><br/>
 
-- Удалено устаревшее свойство `popout` и `modal`. Используйте эти свойства в компоненте [`SplitLayout`](#/SplitLayout)
+## [`Root`](#/Root) и [`View`](#/View)
+
+- Удалены устаревшие свойства `popout` и `modal`. Используйте эти свойства в компоненте [`SplitLayout`](#/SplitLayout)
 
 ```diff
 - <SplitLayout>
 -   <View popout={popout} modal={modal}>
--      ...
--   </View>
-- </SplitLayout>
 + <SplitLayout popout={popout} modal={modal}>
 +   <View>
-+      ...
-+   </View>
-+ </SplitLayout>
+     ...
+   </View>
+ </SplitLayout>
 ```
 
-# Alert
+<br/><br/>
 
-- Свойство `autoclose` типа AlertAction было переименовано в `autoClose`
+## [`Alert`](#/Alert)
+
+- Свойство `autoclose` типа `AlertAction` переименовано в `autoClose`
 
 ```diff
  <Alert
@@ -59,17 +62,36 @@
  />
 ```
 
-### BannerData
+<br/><br/>
 
-- Удалено свойство `ageRestriction` добавленное по ошибке. Используйте свойство `ageRestrictions`
+## [`ActionSheetItem`](#/ActionSheetItem)
 
-### ContentCard
+- Свойство `autoclose` типа `ItemClickHandler` переименовано в `autoClose`
+
+```diff
+<ActionSheet>
+-  <ActionSheetItem autoclose>Сохранить в закладках</ActionSheetItem>
++  <ActionSheetItem autoClose>Сохранить в закладках</ActionSheetItem>
+</ActionSheet>
+```
+
+<br/><br/>
+
+## [`PromoBanner`](#/PromoBanner)
+
+- Удалено свойство `ageRestriction` в типe `BannerData`, добавленное по ошибке. Используйте свойство `ageRestrictions`
+
+<br/><br/>
+
+## [`ContentCard`](#/ContentCard)
 
 - Удалено устаревшее свойство `image`. Используйте свойство `src`
 
-### IconButton
+<br/><br/>
 
-- Удалено устаревшее свойство `icon`. Необходимо сделать иконки дочерним элементом
+## [`IconButton`](#/IconButton)
+
+- Удалено устаревшее свойство `icon`. Передавайте иконки как `children`
 
 ```diff
 - <IconButton icon={<Icon16Clear />}/>
@@ -78,7 +100,9 @@
 + </IconButton>
 ```
 
-### TabbarItem
+<br/><br/>
+
+## [`TabbarItem`](#/TabbarItem)
 
 - Удалено устаревшее свойство `label`. Используйте свойство `indicator`
 
@@ -95,9 +119,11 @@
  </TabbarItem>
 ```
 
-### Cell
+<br/><br/>
 
-- Удалено устаревшие свойства `removable` и `selectable`. Используйте свойства `mode="removable"` и `mode="selectable"`
+## [`Cell`](#/Cell)
+
+- Удалены устаревшие свойства `removable` и `selectable`. Используйте свойства `mode="removable"` и `mode="selectable"`
 
 ```diff
 - <Cell removable>
@@ -106,7 +132,9 @@
 + <Cell mode="selectable">
 ```
 
-### AppRoot
+<br/><br/>
+
+## [`AppRoot`](#/AppRoot)
 
 - Удалено устаревшее свойство `embedded`. Используйте свойство `mode="embedded"`
 
@@ -115,13 +143,34 @@
 + <AppRoot mode="embedded">...</AppRoot>
 ```
 
-### CustomSelect
+<br/><br/>
 
-- Обновлено свойство onInputChange. Для фильтрации обновляйте props.options самостоятельно или используйте свойство filterFn.
+## [`CustomSelect`](#/CustomSelect)
 
-### Button
+- Обновлено свойство `onInputChange`. Для фильтрации обновляйте `props.options` самостоятельно или используйте свойство `filterFn`
 
-- Удалены устаревшие значения свойства `mode` (`commerce`, `destructive`, `overlay_...`). Используйте свойства `mode` и `appearance`.
+<br/><br/>
+
+## [`PanelHeader`](#/PanelHeader)
+
+- Свойства `left` и `right` переименованы в `before` и `after`
+
+```diff
+ <PanelHeader
+-  left={<PanelHeaderClose />}
++  before={<PanelHeaderClose />}
+-  right={<Avatar size={36} />}
++  after={<Avatar size={36} />}
+ >
+   Стартовый экран
+ </PanelHeader>
+```
+
+<br/><br/>
+
+## [`Button`](#/Button)
+
+- Удалены устаревшие значения свойства `mode` (`commerce`, `destructive`, `overlay_...`). Используйте свойства `mode` и `appearance`
 
 ```diff
 - <Button mode="commerce">
@@ -140,56 +189,51 @@
 + <Button mode="outline" appearance="overlay">
 ```
 
-### ButtonGroup
+<br/><br/>
 
-- В параметр `actions` компонентов `Banner` и `ModalCardBase` для группировки кнопок теперь нужно передавать `ButtonGroup` вместо `React.Fragment`.
+## [`Banner`](#/Banner)
 
-  ```diff
-  - <Banner
-  -   actions={{
-  -     <React.Fragment>
-  -       <Button mode="primary">Подробнее</Button>
-  -       <Button mode="tertiary" hasHover={false}>Напомнить позже</Button>
-  -     </React.Fragment>
-  -   }}
-  - />
-  + <Banner
-  +   actions={{
-  +     <ButtonGroup mode="horizontal" gap="m">
-  +       <Button>Подробнее</Button>
-  +       <Button mode="secondary">Напомнить позже</Button>
-  +     </ButtonGroup>
-  +   }}
-  + />
-  ```
+- В параметр `actions` для группировки кнопок теперь передается `ButtonGroup` вместо `React.Fragment`
 
-  ```diff
-  - <ModalCardBase
-  -   actionsLayout="vertical"
-  -   actions={{
-  -     <React.Fragment key="buttons">
-  -       <Button size="l" mode="primary">Присоединиться</Button>
-  -       <Button size="l" mode="secondary">Скопировать приглашение</Button>
-  -     </React.Fragment>
-  -   }}
-  - />
-  + <ModalCardBase
-  +   actions={{
-  +     <ButtonGroup mode="vertical" gap="m" stretched>
-  +       <Button size="l" mode="primary" stretched>
-  +         Присоединиться
-  +       </Button>
-  +       <Button size="l" mode="secondary" stretched>
-  +         Скопировать приглашение
-  +       </Button>
-  +     </ButtonGroup>
-  +   }}
-  + />
-  ```
+```diff
+<Banner
+  actions={{
+-  <React.Fragment>
++  <ButtonGroup mode="horizontal" gap="m">
+    <Button>Подробнее</Button>
+    <Button mode="secondary">Напомнить позже</Button>
+-  </React.Fragment>
++  </ButtonGroup>
+  }}
+/>
+```
 
-### SliderSwitch
+<br/><br/>
 
-Компонент устарел и был удален. Используйте [`SegmentedControl`](#/SegmentedControl).
+## [`ModalCardBase`](#/ModalCardBase)
+
+- Устаревшее свойство `actionsLayout` удалено
+- В параметр `actions` для группировки кнопок теперь передается `ButtonGroup` вместо `React.Fragment`
+
+```diff
+<ModalCardBase
+-  actionsLayout="vertical"
+  actions={{
+-    <React.Fragment key="buttons">
++    <ButtonGroup mode="vertical" gap="m" stretched>
+      <Button size="l" mode="primary">Присоединиться</Button>
+      <Button size="l" mode="secondary">Скопировать приглашение</Button>
+-    </React.Fragment>
++    </ButtonGroup>
+  }}
+/>
+```
+
+<br/><br/>
+
+## [`SliderSwitch`](#/SliderSwitch)
+
+Устаревший компонент удален. Используйте [`SegmentedControl`](#/SegmentedControl)
 
 ```diff
 - <SliderSwitch
@@ -209,14 +253,26 @@
  />
 ```
 
-### Gallery
+<br/><br/>
 
-- Вызов функции `onDragStart` теперь происходит только в начале drag event.
-- Удалено свойство `onEnd`. Используйте свойство `onDragEnd`, которое теперь принимает индекс слайда вторым параметром.
+## [`Gallery`](#/Gallery)
 
-### Импорты
+- Вызов функции `onDragStart` теперь происходит только в начале drag event
+- Удалено свойство `onEnd`. Используйте свойство `onDragEnd`, которое теперь принимает индекс слайда вторым параметром
+
+<br/><br/>
+
+## [`Tabs`](#/Tabs)
+
+- `mode="buttons"` удалён. Используйте `mode="secondary"`.
+- `mode="segmented"` удалён. Используйте [`SegmentedControl`](#/SegmentedControl).
+
+<br/><br/>
+
+## Типы и импорты
 
 - Удалены константы `IS_PLATFORM_ANDROID` и `IS_PLATFORM_IOS`
 - Удален тип `Scheme`
 - Удалена css переменная `--font-tt`, используйте `--font-display`
+- Тип `VKUITouchEventHander` переименован в `VKUITouchEventHandler`
 - Удалены константы `ANDROID`, `IOS` и `VKCOM`, используйте `enum` `Platform.ANDROID / Platform.IOS, Platform.VKCOM`
