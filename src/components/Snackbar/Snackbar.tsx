@@ -93,7 +93,7 @@ export const Snackbar = (props: SnackbarProps) => {
   > | null>(null);
 
   const transitionFinishDurationFallback =
-    platform === Platform.ANDROID || platform === Platform.VKCOM ? 400 : 320;
+    platform === Platform.IOS ? 320 : 400;
 
   const close = () => {
     setClosing(true);
