@@ -143,7 +143,7 @@ export const Snackbar = (props: SnackbarProps) => {
       shiftXPercentRef.current,
       72,
       1.2,
-      platform === Platform.ANDROID || platform === Platform.VKCOM
+      platform !== Platform.IOS
     );
 
     setBodyTransform(shiftXCurrentRef.current);
