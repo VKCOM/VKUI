@@ -92,14 +92,14 @@
 }
 
 .Group:last-of-type > .Group__separator--force,
-.Group--sizeX-regular.Group--none:last-of-type > .Group__separator,
-.Group--sizeX-regular.Group--card:last-of-type > .Group__separator {
+.Group--sizeX-regular.Group--none:last-of-type > .Group__separator--spacing,
+.Group--sizeX-regular.Group--card:last-of-type > .Group__separator--spacing {
   display: block;
 }
 
 @media (--sizeX-regular) {
-  .Group--sizeX-none.Group--card:last-of-type > .Group__separator,
-  .Group--sizeX-none.Group--none:last-of-type > .Group__separator {
+  .Group--sizeX-none.Group--card:last-of-type > .Group__separator--spacing,
+  .Group--sizeX-none.Group--none:last-of-type > .Group__separator--spacing {
     display: block;
   }
 }
