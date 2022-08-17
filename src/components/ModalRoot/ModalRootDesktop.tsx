@@ -81,10 +81,9 @@ class ModalRootDesktopComponent extends React.Component<
   private restoreFocusTo: HTMLElement | undefined = undefined;
 
   private get timeout() {
-    return this.props.platform === Platform.ANDROID ||
-      this.props.platform === Platform.VKCOM
-      ? 320
-      : 400;
+    return this.props.platform === Platform.IOS
+      ? 400
+      : 320;
   }
 
   private get modals() {
