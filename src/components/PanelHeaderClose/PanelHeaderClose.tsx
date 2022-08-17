@@ -20,7 +20,7 @@ export const PanelHeaderClose = ({
       aria-label={getTitleFromChildren(children)}
       {...restProps}
     >
-      {platform === Platform.ANDROID || platform === Platform.VKCOM ? (
+      {platform !== Platform.IOS ? (
         <Icon28CancelOutline />
       ) : (
         children
