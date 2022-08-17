@@ -22,7 +22,7 @@ export const PanelHeaderSubmit = ({
       primary
       {...restProps}
     >
-      {platform === Platform.ANDROID || platform === Platform.VKCOM ? (
+      {platform !== Platform.IOS ? (
         <Icon28DoneOutline />
       ) : (
         children
