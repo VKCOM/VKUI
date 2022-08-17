@@ -36,11 +36,7 @@ export const PanelHeaderEdit = ({
 
   return (
     <PanelHeaderButton aria-label={iOSText} {...restProps}>
-      {platform === Platform.IOS ? (
-        iOSText
-      ) : (
-        <AndroidIcon />
-      )}
+      {platform === Platform.IOS ? iOSText : <AndroidIcon />}
     </PanelHeaderButton>
   );
 };

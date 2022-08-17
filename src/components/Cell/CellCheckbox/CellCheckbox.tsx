@@ -23,10 +23,14 @@ export const CellCheckbox = ({
   const platform = usePlatform();
 
   const IconOff =
-    platform === Platform.IOS || platform === Platform.VKCOM ? Icon24CheckCircleOff : Icon24CheckBoxOff;
+    platform === Platform.IOS || platform === Platform.VKCOM
+      ? Icon24CheckCircleOff
+      : Icon24CheckBoxOff;
 
   const IconOn =
-    platform === Platform.IOS || platform === Platform.VKCOM  ? Icon24CheckCircleOn : Icon24CheckBoxOn;
+    platform === Platform.IOS || platform === Platform.VKCOM
+      ? Icon24CheckCircleOn
+      : Icon24CheckBoxOn;
 
   return (
     <div

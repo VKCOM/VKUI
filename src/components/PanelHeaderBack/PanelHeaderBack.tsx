@@ -33,6 +33,16 @@ export const PanelHeaderBack = ({
   // https://github.com/VKCOM/VKUI/blob/master/src/components/PanelHeaderButton/PanelHeaderButton.css#L104
   const showLabel = platform === Platform.VKCOM || platform === Platform.IOS;
 
+  let icon = <Icon28ArrowLeftOutline />;
+  switch (platform) {
+    case Platform.IOS:
+      icon = <Icon28ChevronBack />;
+      break;
+    case Platform.VKCOM:
+      icon = <Icon28ChevronLeftOutline />;
+      break;
+  }
+
   return (
     <PanelHeaderButton
       {...restProps}
@@ -45,9 +55,7 @@ export const PanelHeaderBack = ({
       label={showLabel && label}
       aria-label={ariaLabel}
     >
-      {platform === Platform.ANDROID && <Icon28ArrowLeftOutline />}
-      {platform === Platform.VKCOM && <Icon28ChevronLeftOutline />}
-      {platform === Platform.IOS && <Icon28ChevronBack />}
+      {icon}
     </PanelHeaderButton>
   );
 };

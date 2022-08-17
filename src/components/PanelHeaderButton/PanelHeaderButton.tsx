@@ -56,10 +56,6 @@ export const PanelHeaderButton = ({
   let activeMode;
 
   switch (platform) {
-    case Platform.ANDROID:
-      hoverMode = "background";
-      activeMode = "background";
-      break;
     case Platform.IOS:
       hoverMode = "background";
       activeMode = "opacity";
@@ -67,6 +63,10 @@ export const PanelHeaderButton = ({
     case Platform.VKCOM:
       hoverMode = "PanelHeaderButton--hover";
       activeMode = "PanelHeaderButton--active";
+      break;
+    default:
+      hoverMode = "background";
+      activeMode = "background";
   }
 
   if (process.env.NODE_ENV === "development") {
