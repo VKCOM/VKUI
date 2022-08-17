@@ -2,7 +2,7 @@ import * as React from "react";
 import { Touch, TouchEvent } from "../Touch/Touch";
 import { classNames } from "../../lib/classNames";
 import { HasPlatform } from "../../types";
-import { ANDROID, IOS, VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { rubber } from "../../lib/touch";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
 import { Button } from "../Button/Button";
@@ -93,7 +93,7 @@ export const Snackbar = (props: SnackbarProps) => {
   > | null>(null);
 
   const transitionFinishDurationFallback =
-    platform === ANDROID || platform === VKCOM ? 400 : 320;
+    platform === Platform.IOS ? 320 : 400;
 
   const close = () => {
     setClosing(true);
@@ -143,7 +143,7 @@ export const Snackbar = (props: SnackbarProps) => {
       shiftXPercentRef.current,
       72,
       1.2,
-      platform === ANDROID || platform === VKCOM
+      platform !== Platform.IOS
     );
 
     setBodyTransform(shiftXCurrentRef.current);
@@ -204,7 +204,7 @@ export const Snackbar = (props: SnackbarProps) => {
         vkuiClass={classNames(
           "Snackbar",
           getViewWidthClassName("Snackbar", viewWidth),
-          platform === IOS && "Snackbar--ios",
+          platform === Platform.IOS && "Snackbar--ios",
           `Snackbar--${mode}`,
           `Snackbar--l-${layout}`,
           closing && "Snackbar--closing",

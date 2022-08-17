@@ -73,7 +73,7 @@ const SideCol = () => {
 ```jsx static
 function App() {
   const platform = usePlatform();
-  const isVKCOM = platform === VKCOM;
+  const isVKCOM = platform === Platform.VKCOM;
 
   // ...
 

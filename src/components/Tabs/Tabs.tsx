@@ -2,7 +2,7 @@ import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
-import { IOS, VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import "./Tabs.css";
@@ -43,7 +43,8 @@ export const Tabs = ({
       ref={getRootRef}
       vkuiClass={classNames(
         "Tabs",
-        (platform === IOS || platform === VKCOM) && `Tabs--${platform}`,
+        (platform === Platform.IOS || platform === Platform.VKCOM) &&
+          `Tabs--${platform}`,
         getSizeXClassName("Tabs", sizeX),
         withGaps && "Tabs--withGaps",
         `Tabs--${mode}`

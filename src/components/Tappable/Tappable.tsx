@@ -5,7 +5,7 @@ import { Touch, TouchEvent, TouchProps } from "../Touch/Touch";
 import TouchRootContext from "../Touch/TouchContext";
 import { classNamesString } from "../../lib/classNames";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import { IOS, ANDROID } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { getOffsetRect } from "../../lib/offset";
 import { coordX, coordY } from "../../lib/touch";
 import { HasComponent, HasRootRef } from "../../types";
@@ -243,7 +243,7 @@ export const Tappable = ({
   }
 
   const needWaves =
-    platform === ANDROID &&
+    platform === Platform.ANDROID &&
     !hasMouse &&
     hasActive &&
     activeMode === "background";
@@ -301,7 +301,7 @@ export const Tappable = ({
   const classes = classNamesString(
     className,
     styles.Tappable,
-    platform === IOS && styles["Tappable--ios"],
+    platform === Platform.IOS && styles["Tappable--ios"],
     getSizeXClassName("Tappable", sizeX, styles),
     getHoverClassName("Tappable", deviceHasHover, styles),
     hasActive && styles["Tappable--hasActive"],

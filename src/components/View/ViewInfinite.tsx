@@ -2,7 +2,7 @@ import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { transitionEvent, animationEvent } from "../../lib/supportEvents";
 import { getClassName } from "../../helpers/getClassName";
-import { IOS, ANDROID, VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { Touch, TouchEvent } from "../Touch/Touch";
 import { HasPlatform } from "../../types";
 import { withPlatform } from "../../hoc/withPlatform";
@@ -220,7 +220,8 @@ class ViewInfiniteComponent extends React.Component<
           }
           this.animationFinishTimeout = setTimeout(
             this.transitionEndHandler,
-            this.props.platform === ANDROID || this.props.platform === VKCOM
+            this.props.platform === Platform.ANDROID ||
+              this.props.platform === Platform.VKCOM
               ? 300
               : 600
           );
@@ -349,7 +350,8 @@ class ViewInfiniteComponent extends React.Component<
 
       this.transitionFinishTimeout = setTimeout(
         eventHandler,
-        this.props.platform === ANDROID || this.props.platform === VKCOM
+        this.props.platform === Platform.ANDROID ||
+          this.props.platform === Platform.VKCOM
           ? 300
           : 600
       );
@@ -456,7 +458,7 @@ class ViewInfiniteComponent extends React.Component<
     const { platform, configProvider } = this.props;
 
     if (
-      platform === IOS &&
+      platform === Platform.IOS &&
       !configProvider?.isWebView &&
       (e.startX <= 70 || e.startX >= this.window.innerWidth - 70) &&
       !this.state.browserSwipe
@@ -465,7 +467,7 @@ class ViewInfiniteComponent extends React.Component<
     }
 
     if (
-      platform === IOS &&
+      platform === Platform.IOS &&
       configProvider?.isWebView &&
       this.props.onSwipeBack
     ) {

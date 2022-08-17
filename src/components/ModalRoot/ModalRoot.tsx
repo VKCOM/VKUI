@@ -5,7 +5,7 @@ import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { setTransformStyle } from "../../lib/styles";
 import { rubber } from "../../lib/touch";
-import { ANDROID, IOS, VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { transitionEvent } from "../../lib/supportEvents";
 import { HasPlatform } from "../../types";
 import { withPlatform } from "../../hoc/withPlatform";
@@ -116,9 +116,7 @@ class ModalRootTouchComponent extends React.Component<
   private restoreFocusTo: HTMLElement | undefined | null = undefined;
 
   get timeout(): number {
-    return this.props.platform === ANDROID || this.props.platform === VKCOM
-      ? 320
-      : 400;
+    return this.props.platform === Platform.IOS ? 400 : 320;
   }
 
   get document() {
@@ -142,7 +140,7 @@ class ModalRootTouchComponent extends React.Component<
 
   componentDidMount() {
     // Отслеживаем изменение размеров viewport (Необходимо для iOS)
-    if (this.props.platform === IOS) {
+    if (this.props.platform === Platform.IOS) {
       this.window?.addEventListener("resize", this.updateModalTranslate, false);
     }
   }
@@ -400,7 +398,7 @@ class ModalRootTouchComponent extends React.Component<
         shiftYPercent,
         72,
         0.8,
-        this.props.platform === ANDROID || this.props.platform === VKCOM
+        this.props.platform !== Platform.IOS
       );
 
       modalState.touchShiftYPercent = shiftYPercent;
@@ -427,7 +425,7 @@ class ModalRootTouchComponent extends React.Component<
         shiftYPercent,
         72,
         1.2,
-        this.props.platform === ANDROID || this.props.platform === VKCOM
+        this.props.platform !== Platform.IOS
       );
 
       modalState.touchShiftYPercent = shiftYPercent;

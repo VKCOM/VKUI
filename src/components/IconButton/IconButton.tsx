@@ -2,7 +2,7 @@ import * as React from "react";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./IconButton.css";
@@ -31,7 +31,7 @@ export const IconButton = ({
       vkuiClass={classNames(
         "IconButton",
         getSizeYClassName("IconButton", sizeY),
-        platform === IOS && "IconButton--ios"
+        platform === Platform.IOS && "IconButton--ios"
       )}
     >
       {children}

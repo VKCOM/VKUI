@@ -21,7 +21,7 @@ const Example = () => {
   const { viewWidth } = useAdaptivity();
   const [activeStory, setActiveStory] = React.useState("profile");
   const onStoryChange = (e) => setActiveStory(e.currentTarget.dataset.story);
-  const isVKCOM = platform !== VKCOM;
+  const isVKCOM = platform !== Platform.VKCOM;
 
   return (
     <SplitLayout

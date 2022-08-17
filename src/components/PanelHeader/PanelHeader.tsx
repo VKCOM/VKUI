@@ -5,7 +5,7 @@ import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { classNames } from "../../lib/classNames";
 import { FixedLayout } from "../FixedLayout/FixedLayout";
 import { Separator } from "../Separator/Separator";
-import { Platform, VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { HasRef, HasRootRef } from "../../types";
 import {
   ConfigProviderContext,
@@ -53,7 +53,7 @@ const PanelHeaderIn = ({
       <TooltipContainer fixed vkuiClass="PanelHeader__in">
         <div vkuiClass="PanelHeader__before">{before}</div>
         <div vkuiClass="PanelHeader__content">
-          {platform === VKCOM ? (
+          {platform === Platform.VKCOM ? (
             <Text weight="2">{children}</Text>
           ) : (
             <span vkuiClass="PanelHeader__content-in">{children}</span>
@@ -63,7 +63,7 @@ const PanelHeaderIn = ({
           {(webviewType === WebviewType.INTERNAL || isInsideModal) && after}
         </div>
       </TooltipContainer>
-      {separator && platform === VKCOM && <Separator wide />}
+      {separator && platform === Platform.VKCOM && <Separator wide />}
     </React.Fragment>
   );
 };
@@ -124,7 +124,7 @@ export const PanelHeader = ({
           {children}
         </PanelHeaderIn>
       )}
-      {separator && visor && platform !== VKCOM && (
+      {separator && visor && platform !== Platform.VKCOM && (
         <SizeXConditionalRender
           compact={<Separator />}
           regular={<Spacing size={16} />}

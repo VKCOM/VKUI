@@ -7,7 +7,7 @@ import {
   PanelHeaderButton,
   PanelHeaderButtonProps,
 } from "../PanelHeaderButton/PanelHeaderButton";
-import { ANDROID, VKCOM, IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
@@ -29,9 +29,19 @@ export const PanelHeaderBack = ({
 }: PanelHeaderButtonProps) => {
   const platform = usePlatform();
   const { sizeX } = useAdaptivity();
-  // так-же label нужно скрывать при platform === IOS && sizeX === regular
+  // так-же label нужно скрывать при platform === Platform.IOS && sizeX === regular
   // https://github.com/VKCOM/VKUI/blob/master/src/components/PanelHeaderButton/PanelHeaderButton.css#L104
-  const showLabel = platform === VKCOM || platform === IOS;
+  const showLabel = platform === Platform.VKCOM || platform === Platform.IOS;
+
+  let icon = <Icon28ArrowLeftOutline />;
+  switch (platform) {
+    case Platform.IOS:
+      icon = <Icon28ChevronBack />;
+      break;
+    case Platform.VKCOM:
+      icon = <Icon28ChevronLeftOutline />;
+      break;
+  }
 
   return (
     <PanelHeaderButton
@@ -45,9 +55,7 @@ export const PanelHeaderBack = ({
       label={showLabel && label}
       aria-label={ariaLabel}
     >
-      {platform === ANDROID && <Icon28ArrowLeftOutline />}
-      {platform === VKCOM && <Icon28ChevronLeftOutline />}
-      {platform === IOS && <Icon28ChevronBack />}
+      {icon}
     </PanelHeaderButton>
   );
 };

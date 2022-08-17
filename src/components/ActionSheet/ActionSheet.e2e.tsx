@@ -4,7 +4,7 @@ import { ActionSheetItem } from "../ActionSheetItem/ActionSheetItem";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { withPlatform } from "../../hoc/withPlatform";
 import { HasPlatform } from "../../types";
-import { VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { TooltipContainer } from "../Tooltip/TooltipContainer";
 import { ViewWidth, SizeType } from "../AdaptivityProvider/AdaptivityContext";
 
@@ -14,7 +14,7 @@ describe("ActionSheet", () => {
     withPlatform<ActionSheetProps & HasPlatform>((props) => {
       const toggleRef = React.useRef<HTMLDivElement>(null);
 
-      if (props.platform === VKCOM) {
+      if (props.platform === Platform.VKCOM) {
         return (
           <TooltipContainer
             style={{

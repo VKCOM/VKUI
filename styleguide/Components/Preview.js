@@ -4,7 +4,7 @@ import ReactExample from "@rsg-components/ReactExample/ReactExample";
 import PlaygroundError from "@rsg-components/PlaygroundError";
 import { StyleGuideContext } from "./StyleGuide/StyleGuideRenderer";
 import {
-  VKCOM,
+  Platform,
   SplitCol,
   SplitLayout,
   PanelHeader,
@@ -27,12 +27,12 @@ const Layout = ({ children }) => {
   return (
     <SplitLayout
       header={
-        platform !== VKCOM && (
+        platform !== Platform.VKCOM && (
           <PanelHeader className="Layout__header" separator={false} />
         )
       }
     >
-      <SplitCol autoSpaced={platform !== VKCOM}>{children}</SplitCol>
+      <SplitCol autoSpaced={platform !== Platform.VKCOM}>{children}</SplitCol>
     </SplitLayout>
   );
 };

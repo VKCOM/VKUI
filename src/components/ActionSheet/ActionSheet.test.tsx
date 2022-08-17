@@ -9,7 +9,7 @@ import { ActionSheet, ActionSheetProps } from "./ActionSheet";
 import { ActionSheetItem } from "../ActionSheetItem/ActionSheetItem";
 import userEvent from "@testing-library/user-event";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import { VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 
 describe("ActionSheet", () => {
@@ -17,7 +17,7 @@ describe("ActionSheet", () => {
   afterAll(() => jest.useRealTimers());
   const toggle = document.createElement("div");
   const ActionSheetDesktop = (props: Partial<ActionSheetProps>) => (
-    <ConfigProvider platform={VKCOM}>
+    <ConfigProvider platform={Platform.VKCOM}>
       <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasMouse>
         <ActionSheet
           toggleRef={toggle}

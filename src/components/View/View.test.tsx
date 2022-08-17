@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, act } from "@testing-library/react";
 import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import {
   baselineComponent,
   mockScrollContext,
@@ -118,7 +118,7 @@ describe.each([
       };
       const SwipeBack = (p: Partial<ViewProps>) => (
         <Wrapper>
-          <ConfigProvider platform={IOS} isWebView>
+          <ConfigProvider platform={Platform.IOS} isWebView>
             <View
               id="scroll"
               activePanel="p2"

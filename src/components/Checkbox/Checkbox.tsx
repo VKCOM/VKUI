@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ACTIVE_EFFECT_DELAY, Tappable } from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
-import { IOS, VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import {
   Icon20CheckBoxOn,
   Icon24CheckBoxOn,
@@ -100,7 +100,7 @@ export const Checkbox = ({
       Component="label"
       vkuiClass={classNames(
         "Checkbox",
-        platform === VKCOM && "Checkbox--vkcom",
+        platform === Platform.VKCOM && "Checkbox--vkcom",
         getSizeYClassName("Checkbox", sizeY),
         !(hasReactNode(children) || hasReactNode(description)) &&
           "Checkbox--simple"
@@ -108,7 +108,7 @@ export const Checkbox = ({
       className={className}
       style={style}
       disabled={restProps.disabled}
-      activeEffectDelay={platform === IOS ? 100 : ACTIVE_EFFECT_DELAY}
+      activeEffectDelay={platform === Platform.IOS ? 100 : ACTIVE_EFFECT_DELAY}
       getRootRef={getRootRef}
     >
       <VisuallyHiddenInput
@@ -119,7 +119,7 @@ export const Checkbox = ({
         getRef={inputRef}
       />
       <div vkuiClass="Checkbox__icon Checkbox__icon--on">
-        {platform === VKCOM ? (
+        {platform === Platform.VKCOM ? (
           <Icon20CheckBoxOn aria-hidden />
         ) : (
           <SizeYConditionalRender
@@ -129,7 +129,7 @@ export const Checkbox = ({
         )}
       </div>
       <div vkuiClass="Checkbox__icon Checkbox__icon--off">
-        {platform === VKCOM ? (
+        {platform === Platform.VKCOM ? (
           <Icon20CheckBoxOff aria-hidden />
         ) : (
           <SizeYConditionalRender
@@ -139,7 +139,7 @@ export const Checkbox = ({
         )}
       </div>
       <div vkuiClass="Checkbox__icon Checkbox__icon--indeterminate">
-        {platform === VKCOM ? (
+        {platform === Platform.VKCOM ? (
           <Icon20CheckBoxIndetermanate aria-hidden width={20} height={20} />
         ) : (
           <SizeYConditionalRender

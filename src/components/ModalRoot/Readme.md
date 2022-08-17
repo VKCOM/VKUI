@@ -66,14 +66,16 @@ const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
           before={
             <SizeXConditionalRender
               compact={
-                platform === ANDROID && <PanelHeaderClose onClick={onClose} />
+                platform === Platform.ANDROID && (
+                  <PanelHeaderClose onClick={onClose} />
+                )
               }
             />
           }
           after={
             <SizeXConditionalRender
               compact={
-                platform === IOS && (
+                platform === Platform.IOS && (
                   <PanelHeaderButton onClick={onClose}>
                     <Icon24Dismiss />
                   </PanelHeaderButton>
@@ -142,7 +144,7 @@ const App = () => {
         header={
           <ModalPageHeader
             after={
-              platform === IOS && (
+              platform === Platform.IOS && (
                 <PanelHeaderButton onClick={modalBack}>
                   <Icon24Dismiss />
                 </PanelHeaderButton>
@@ -151,7 +153,7 @@ const App = () => {
             before={
               <SizeXConditionalRender
                 compact={
-                  platform === ANDROID && (
+                  platform === Platform.ANDROID && (
                     <PanelHeaderClose onClick={modalBack} />
                   )
                 }

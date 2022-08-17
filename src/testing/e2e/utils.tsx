@@ -145,7 +145,7 @@ export function describeScreenshotFuzz<Props>(
 ) {
   const {
     matchScreenshot,
-    platforms = Object.values(Platform),
+    platforms = [Platform.ANDROID, Platform.IOS, Platform.VKCOM],
     appearance = "light",
     adaptivity = {},
     Wrapper = AppWrapper,

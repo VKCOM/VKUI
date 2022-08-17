@@ -7,7 +7,7 @@ import {
 } from "@vkontakte/icons";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { Tappable } from "../Tappable/Tappable";
 import "./HorizontalScrollArrow.css";
 
@@ -42,7 +42,7 @@ export const HorizontalScrollArrow = ({
         "HorizontalScrollArrow",
         `HorizontalScrollArrow--${size}`,
         `HorizontalScrollArrow--${direction}`,
-        platform === IOS && "HorizontalScrollArrow--ios"
+        platform === Platform.IOS && "HorizontalScrollArrow--ios"
       )}
       onClick={onClick}
     >

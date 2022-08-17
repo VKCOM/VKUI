@@ -4,7 +4,7 @@ import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import { baselineComponent, runAllTimers } from "../../testing/utils";
 import { Alert } from "./Alert";
-import { ANDROID, IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 
 describe("Alert", () => {
@@ -31,7 +31,7 @@ describe("Alert", () => {
     });
   });
   describe("calls actions", () => {
-    describe.each([ANDROID, IOS])("on %s", (platform) => {
+    describe.each([Platform.ANDROID, Platform.IOS])("on %s", (platform) => {
       it("calls action", () => {
         const action = jest.fn();
         render(

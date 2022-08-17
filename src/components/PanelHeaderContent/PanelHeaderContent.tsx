@@ -5,7 +5,7 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import { Footnote } from "../Typography/Footnote/Footnote";
 import { Headline } from "../Typography/Headline/Headline";
-import { IOS, Platform } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { Text } from "../Typography/Text/Text";
 import { HasPlatform } from "../../types";
 import "./PanelHeaderContent.css";
@@ -67,7 +67,7 @@ export const PanelHeaderContent = ({
         ...restProps,
         onClick,
         activeEffectDelay: 200,
-        hasActive: platform === IOS,
+        hasActive: platform === Platform.IOS,
         activeMode: "opacity",
       }
     : {};

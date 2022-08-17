@@ -2,7 +2,7 @@ import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { HorizontalScroll } from "./HorizontalScroll";
 import { HorizontalCell } from "../HorizontalCell/HorizontalCell";
 import { Avatar } from "../Avatar/Avatar";
-import { ANDROID } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import { mount, screenshot } from "../../testing/e2e";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
@@ -30,7 +30,7 @@ describe("HorizontalScroll", () => {
       },
     ],
     {
-      platforms: [ANDROID],
+      platforms: [Platform.ANDROID],
       adaptivity: {
         viewWidth: ViewWidth.MOBILE,
         hasMouse: false,
@@ -51,7 +51,7 @@ describe("HorizontalScroll", () => {
       },
     ],
     {
-      platforms: [ANDROID],
+      platforms: [Platform.ANDROID],
       adaptivity: {
         viewWidth: ViewWidth.SMALL_TABLET,
         hasMouse: true,

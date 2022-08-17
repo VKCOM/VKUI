@@ -5,7 +5,6 @@ import {
 } from "@vkui/components/AdaptivityProvider/AdaptivityProvider";
 import { SMALL_HEIGHT } from "../Settings/ViewHeightSelect";
 import {
-  VKCOM,
   AppRoot,
   ConfigProvider,
   WebviewType,
@@ -66,7 +65,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
   );
 
   useEffect(() => {
-    if (platform === VKCOM) {
+    if (platform === Platform.VKCOM) {
       setContext({ hasMouse: true, width: TABLET_SIZE });
     }
   }, [platform]);

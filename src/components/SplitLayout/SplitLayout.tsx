@@ -1,6 +1,6 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { HasRef, HasRootRef } from "../../types";
 import { PopoutRoot } from "../PopoutRoot/PopoutRoot";
 import { usePlatform } from "../../hooks/usePlatform";
@@ -39,7 +39,7 @@ export const SplitLayout = ({
     <PopoutRoot
       vkuiClass={classNames(
         "SplitLayout",
-        platform === IOS && "SplitLayout--ios"
+        platform === Platform.IOS && "SplitLayout--ios"
       )}
       popout={popout}
       modal={modal}

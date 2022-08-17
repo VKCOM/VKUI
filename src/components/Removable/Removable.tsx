@@ -6,7 +6,7 @@ import { useExternRef } from "../../hooks/useExternRef";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useDOM } from "../../lib/dom";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { Icon24Cancel } from "@vkontakte/icons";
 import { IconButton } from "../IconButton/IconButton";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
@@ -149,12 +149,12 @@ export const Removable = ({
       ref={ref}
       vkuiClass={classNames(
         "Removable",
-        platform === IOS && "Removable--ios",
+        platform === Platform.IOS && "Removable--ios",
         `Removable--${align}`,
         getSizeYClassName("Removable", sizeY)
       )}
     >
-      {platform !== IOS && (
+      {platform !== Platform.IOS && (
         <div vkuiClass="Removable__content">
           {children}
 
@@ -172,7 +172,7 @@ export const Removable = ({
         </div>
       )}
 
-      {platform === IOS && (
+      {platform === Platform.IOS && (
         <RemovableIos
           onRemove={onRemoveClick}
           removePlaceholder={removePlaceholder}
