@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Tappable } from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
-import { IOS, VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { TabsModeContext, TabsContextProps } from "../Tabs/Tabs";
@@ -73,7 +73,8 @@ export const TabsItem = ({
       {...restProps}
       vkuiClass={classNames(
         "TabsItem",
-        (platform === IOS || platform === VKCOM) && `TabsItem--${platform}`,
+        (platform === Platform.IOS || platform === Platform.VKCOM) &&
+          `TabsItem--${platform}`,
         mode && `TabsItem--${mode}`,
         selected && "TabsItem--selected",
         getSizeYClassName("TabsItem", sizeY),

@@ -2,7 +2,7 @@ import * as React from "react";
 import { AnyFunction, HasPlatform } from "../../types";
 import { DOMProps, useDOM } from "../../lib/dom";
 import { classNames } from "../../lib/classNames";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { runTapticImpactOccurred } from "../../lib/taptic";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { usePlatform } from "../../hooks/usePlatform";
@@ -66,11 +66,11 @@ export const PullToRefresh = ({
 
   const initParams = React.useMemo(
     () => ({
-      start: platform === IOS ? -10 : -45,
-      max: platform === IOS ? 50 : 80,
-      maxY: platform === IOS ? 400 : 80,
-      refreshing: platform === IOS ? 36 : 50,
-      positionMultiplier: platform === IOS ? 0.21 : 1,
+      start: platform === Platform.IOS ? -10 : -45,
+      max: platform === Platform.IOS ? 50 : 80,
+      maxY: platform === Platform.IOS ? 400 : 80,
+      refreshing: platform === Platform.IOS ? 36 : 50,
+      positionMultiplier: platform === Platform.IOS ? 0.21 : 1,
     }),
     [platform]
   );
@@ -137,7 +137,7 @@ export const PullToRefresh = ({
 
       setRefreshing(true);
       setSpinnerY((prevSpinnerY) =>
-        platform === IOS ? prevSpinnerY : initParams.refreshing
+        platform === Platform.IOS ? prevSpinnerY : initParams.refreshing
       );
 
       onRefresh();
@@ -209,7 +209,7 @@ export const PullToRefresh = ({
       setCanRefresh(progress > 80);
       setContentShift((currentY + 10) * 2.3);
 
-      if (progress > 85 && !refreshing && platform === IOS) {
+      if (progress > 85 && !refreshing && platform === Platform.IOS) {
         runRefreshing();
       }
     } else if (
@@ -236,9 +236,9 @@ export const PullToRefresh = ({
   const spinnerTransform = `translate3d(0, ${spinnerY}px, 0)`;
   let contentTransform = "";
 
-  if (platform === IOS && refreshing && !touchDown) {
+  if (platform === Platform.IOS && refreshing && !touchDown) {
     contentTransform = "translate3d(0, 100px, 0)";
-  } else if (platform === IOS && (contentShift || refreshing)) {
+  } else if (platform === Platform.IOS && (contentShift || refreshing)) {
     contentTransform = `translate3d(0, ${contentShift}px, 0)`;
   }
 
@@ -251,7 +251,7 @@ export const PullToRefresh = ({
         onEnd={onTouchEnd}
         vkuiClass={classNames(
           "PullToRefresh",
-          platform === IOS && "PullToRefresh--ios",
+          platform === Platform.IOS && "PullToRefresh--ios",
           watching && "PullToRefresh--watching",
           refreshing && "PullToRefresh--refreshing"
         )}

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { classNames } from "../../lib/classNames";
 import { HasRef, HasRootRef } from "../../types";
 import { SplitColContext } from "../SplitCol/SplitCol";
@@ -56,7 +56,7 @@ export const FixedLayout = ({
       ref={getRootRef}
       vkuiClass={classNames(
         "FixedLayout",
-        platform === IOS && "FixedLayout--ios",
+        platform === Platform.IOS && "FixedLayout--ios",
         filled && "FixedLayout--filled",
         `FixedLayout--${vertical}`
       )}

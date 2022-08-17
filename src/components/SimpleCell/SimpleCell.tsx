@@ -4,7 +4,7 @@ import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { Icon24Chevron } from "@vkontakte/icons";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
@@ -61,7 +61,8 @@ export const SimpleCell = ({
   ...restProps
 }: SimpleCellProps) => {
   const platform = usePlatform();
-  const hasAfter = hasReactNode(after) || (expandable && platform === IOS);
+  const hasAfter =
+    hasReactNode(after) || (expandable && platform === Platform.IOS);
   const { sizeY } = useAdaptivity();
 
   return (
@@ -108,7 +109,7 @@ export const SimpleCell = ({
       {hasAfter && (
         <div vkuiClass="SimpleCell__after">
           {after}
-          {expandable && platform === IOS && <Icon24Chevron />}
+          {expandable && platform === Platform.IOS && <Icon24Chevron />}
         </div>
       )}
     </Tappable>

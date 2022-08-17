@@ -1,7 +1,7 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { animationEvent } from "../../lib/supportEvents";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { Touch, TouchEvent } from "../Touch/Touch";
 import { useConfigProvider } from "../ConfigProvider/ConfigProviderContext";
 import { useSplitCol } from "../SplitCol/SplitCol";
@@ -246,7 +246,7 @@ export const View = ({
   const { waitTransitionFinish } = useWaitTransitionFinish();
   const animationFinishTimeout = useTimeout(
     transitionEndHandler,
-    platform === IOS ? 600 : 300
+    platform === Platform.IOS ? 600 : 300
   );
 
   const onSwipeBackSuccess = React.useCallback(() => {
@@ -289,7 +289,7 @@ export const View = ({
     }
 
     if (
-      platform === IOS &&
+      platform === Platform.IOS &&
       !configProvider?.isWebView &&
       (e.startX <= 70 || e.startX >= window!.innerWidth - 70) &&
       !browserSwipe
@@ -297,7 +297,7 @@ export const View = ({
       setBrowserSwipe(true);
     }
 
-    if (platform === IOS && configProvider?.isWebView && onSwipeBack) {
+    if (platform === Platform.IOS && configProvider?.isWebView && onSwipeBack) {
       if ((animated && e.startX <= 70) || !window) {
         return;
       }
@@ -486,7 +486,7 @@ export const View = ({
       waitTransitionFinish(
         pickPanel(swipeBackNextPanel),
         swipingBackTransitionEndHandler,
-        platform === IOS ? 600 : 300
+        platform === Platform.IOS ? 600 : 300
       );
     }
 
@@ -540,7 +540,7 @@ export const View = ({
       {...restProps}
       vkuiClass={classNames(
         "View",
-        platform === IOS && "View--ios",
+        platform === Platform.IOS && "View--ios",
         !disableAnimation && animated && "View--animated",
         !disableAnimation && swipingBack && "View--swiping-back",
         disableAnimation && "View--no-motion"

@@ -9,7 +9,7 @@ import {
 } from "@vkontakte/icons";
 import { usePlatform } from "../../hooks/usePlatform";
 import { classNames } from "../../lib/classNames";
-import { IOS, Platform } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { Counter } from "../Counter/Counter";
 import { Tappable } from "../Tappable/Tappable";
 import { warnOnce } from "../../lib/warnOnce";
@@ -53,18 +53,23 @@ export const WriteBarIcon = ({
   switch (mode) {
     case "attach":
       icon =
-        platform === IOS ? <Icon28AddCircleOutline /> : <Icon28AttachOutline />;
+        platform === Platform.IOS ? (
+          <Icon28AddCircleOutline />
+        ) : (
+          <Icon28AttachOutline />
+        );
       ariaLabel = "Прикрепить файл";
       break;
 
     case "send":
-      icon = platform === IOS ? <Icon48WritebarSend /> : <Icon24Send />;
+      icon =
+        platform === Platform.IOS ? <Icon48WritebarSend /> : <Icon24Send />;
       ariaLabel = "Отправить";
       break;
 
     case "done":
       icon =
-        platform === IOS ? (
+        platform === Platform.IOS ? (
           <Icon48WritebarDone />
         ) : (
           <Icon28CheckCircleOutline />

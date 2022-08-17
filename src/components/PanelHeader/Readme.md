@@ -50,7 +50,7 @@ class Example extends React.Component {
               before={
                 <PanelHeaderBack
                   onClick={() => this.setState({ mainPanel: "panel1" })}
-                  label={platform === VKCOM ? "Назад" : undefined}
+                  label={platform === Platform.VKCOM ? "Назад" : undefined}
                 />
               }
               after={
@@ -166,7 +166,7 @@ class Example extends React.Component {
               before={
                 <PanelHeaderBack
                   onClick={() => this.setState({ modalPanel: "modal-panel1" })}
-                  label={platform === VKCOM ? "Назад" : undefined}
+                  label={platform === Platform.VKCOM ? "Назад" : undefined}
                 />
               }
             >
@@ -188,7 +188,7 @@ class Example extends React.Component {
           <Panel id="modal-panel3">
             <PanelHeader
               before={
-                platform !== VKCOM && (
+                platform !== Platform.VKCOM && (
                   <PanelHeaderBack
                     onClick={() =>
                       this.setState({ modalPanel: "modal-panel2" })
@@ -205,7 +205,7 @@ class Example extends React.Component {
               >
                 Табы
               </CellButton>
-              {platform === VKCOM && (
+              {platform === Platform.VKCOM && (
                 <CellButton
                   onClick={() => this.setState({ modalPanel: "modal-panel2" })}
                 >

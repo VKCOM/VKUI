@@ -2,7 +2,7 @@ import * as React from "react";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { HasRef } from "../../types";
-import { VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { Separator } from "../Separator/Separator";
 import { PanelHeader, PanelHeaderProps } from "../PanelHeader/PanelHeader";
 import { classNames } from "../../lib/classNames";
@@ -25,7 +25,7 @@ export const ModalPageHeader = ({
   ...restProps
 }: ModalPageHeaderProps) => {
   const platform = usePlatform();
-  const hasSeparator = separator && platform === VKCOM;
+  const hasSeparator = separator && platform === Platform.VKCOM;
   const { sizeX } = useAdaptivity();
 
   return (

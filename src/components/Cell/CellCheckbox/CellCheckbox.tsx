@@ -8,7 +8,7 @@ import {
 import { getClassName } from "../../../helpers/getClassName";
 import { usePlatform } from "../../../hooks/usePlatform";
 import { classNames } from "../../../lib/classNames";
-import { ANDROID } from "../../../lib/platform";
+import { Platform } from "../../../lib/platform";
 import { CellProps } from "../Cell";
 import "./CellCheckbox.css";
 
@@ -23,9 +23,10 @@ export const CellCheckbox = ({
   const platform = usePlatform();
 
   const IconOff =
-    platform === ANDROID ? Icon24CheckBoxOff : Icon24CheckCircleOff;
+    platform === Platform.ANDROID ? Icon24CheckBoxOff : Icon24CheckCircleOff;
 
-  const IconOn = platform === ANDROID ? Icon24CheckBoxOn : Icon24CheckCircleOn;
+  const IconOn =
+    platform === Platform.ANDROID ? Icon24CheckBoxOn : Icon24CheckCircleOn;
 
   return (
     <div

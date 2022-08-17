@@ -5,7 +5,7 @@ import { classNames } from "../../lib/classNames";
 import { warnOnce } from "../../lib/warnOnce";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getTitleFromChildren, isPrimitiveReactNode } from "../../lib/utils";
-import { IOS, VKCOM, ANDROID } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { Text } from "../Typography/Text/Text";
 import { Title } from "../Typography/Title/Title";
 import "./PanelHeaderButton.css";
@@ -22,7 +22,7 @@ interface ButtonTypographyProps extends React.AllHTMLAttributes<HTMLElement> {
 const ButtonTypography = ({ primary, children }: ButtonTypographyProps) => {
   const platform = usePlatform();
 
-  if (platform === IOS) {
+  if (platform === Platform.IOS) {
     return (
       <Title Component="span" level="3" weight={primary ? "1" : "3"}>
         {children}
@@ -30,7 +30,11 @@ const ButtonTypography = ({ primary, children }: ButtonTypographyProps) => {
     );
   }
 
-  return <Text weight={platform === VKCOM ? undefined : "2"}>{children}</Text>;
+  return (
+    <Text weight={platform === Platform.VKCOM ? undefined : "2"}>
+      {children}
+    </Text>
+  );
 };
 
 const warn = warnOnce("PanelHeaderButton");
@@ -52,15 +56,15 @@ export const PanelHeaderButton = ({
   let activeMode;
 
   switch (platform) {
-    case ANDROID:
+    case Platform.ANDROID:
       hoverMode = "background";
       activeMode = "background";
       break;
-    case IOS:
+    case Platform.IOS:
       hoverMode = "background";
       activeMode = "opacity";
       break;
-    case VKCOM:
+    case Platform.VKCOM:
       hoverMode = "PanelHeaderButton--hover";
       activeMode = "PanelHeaderButton--active";
   }

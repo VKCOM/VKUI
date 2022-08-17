@@ -1,6 +1,6 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
 import { SplitColContext } from "../SplitCol/SplitCol";
 import { ScrollContext } from "../AppRoot/ScrollContext";
@@ -99,7 +99,7 @@ export const Root = ({
 
   const fallbackTransition = useTimeout(
     finishTransition,
-    platform === IOS ? 600 : 300
+    platform === Platform.IOS ? 600 : 300
   );
   React.useEffect(() => {
     if (!transition) {
@@ -127,7 +127,7 @@ export const Root = ({
       {...restProps}
       vkuiClass={classNames(
         "Root",
-        platform === IOS && "Root--ios",
+        platform === Platform.IOS && "Root--ios",
         transition && "Root--transition"
       )}
     >

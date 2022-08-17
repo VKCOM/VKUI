@@ -14,7 +14,7 @@ import {
   WebviewType,
 } from "../ConfigProvider/ConfigProviderContext";
 import { ModalsStateEntry } from "./types";
-import { ANDROID, VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { getClassName } from "../../helpers/getClassName";
 import { DOMProps, withDOM } from "../../lib/dom";
 import { getNavId } from "../../lib/getNavId";
@@ -81,7 +81,8 @@ class ModalRootDesktopComponent extends React.Component<
   private restoreFocusTo: HTMLElement | undefined = undefined;
 
   private get timeout() {
-    return this.props.platform === ANDROID || this.props.platform === VKCOM
+    return this.props.platform === Platform.ANDROID ||
+      this.props.platform === Platform.VKCOM
       ? 320
       : 400;
   }

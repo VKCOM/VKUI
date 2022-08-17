@@ -2,7 +2,7 @@ import * as React from "react";
 import { Tappable } from "../Tappable/Tappable";
 import { PopoutWrapper } from "../PopoutWrapper/PopoutWrapper";
 import { classNames } from "../../lib/classNames";
-import { VKCOM, IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { Button, ButtonProps } from "../Button/Button";
 import { hasReactNode, stopPropagation } from "../../lib/utils";
 import { Title } from "../Typography/Title/Title";
@@ -52,7 +52,7 @@ const AlertHeader = (props: AlertTypography) => {
   const platform = usePlatform();
 
   switch (platform) {
-    case IOS:
+    case Platform.IOS:
       return (
         <Title vkuiClass="Alert__header" weight="1" level="3" {...props} />
       );
@@ -67,9 +67,9 @@ const AlertText = (props: AlertTypography) => {
   const platform = usePlatform();
 
   switch (platform) {
-    case VKCOM:
+    case Platform.VKCOM:
       return <Footnote vkuiClass="Alert__text" {...props} />;
-    case IOS:
+    case Platform.IOS:
       return <Caption vkuiClass="Alert__text" {...props} />;
     default:
       return (
@@ -94,7 +94,7 @@ const AlertAction = ({
     [onItemClick, action]
   );
 
-  if (platform === IOS) {
+  if (platform === Platform.IOS) {
     const { Component = "button" } = action;
     return (
       <Tappable
@@ -112,7 +112,7 @@ const AlertAction = ({
 
   let mode: ButtonProps["mode"] = "tertiary";
 
-  if (platform === VKCOM) {
+  if (platform === Platform.VKCOM) {
     mode = action.mode === "cancel" ? "secondary" : "primary";
   }
 
@@ -155,9 +155,9 @@ export const Alert = ({
   const elementRef = React.useRef<HTMLDivElement>(null);
 
   const resolvedActionsLayout: AlertProps["actionsLayout"] =
-    platform === VKCOM ? "horizontal" : actionsLayout;
+    platform === Platform.VKCOM ? "horizontal" : actionsLayout;
 
-  const timeout = platform === IOS ? 300 : 200;
+  const timeout = platform === Platform.IOS ? 300 : 200;
 
   const close = React.useCallback(() => {
     setClosing(true);
@@ -212,8 +212,8 @@ export const Alert = ({
         timeout={timeout}
         vkuiClass={classNames(
           "Alert",
-          platform === IOS && "Alert--ios",
-          platform === VKCOM && "Alert--vkcom",
+          platform === Platform.IOS && "Alert--ios",
+          platform === Platform.VKCOM && "Alert--vkcom",
           resolvedActionsLayout === "vertical" ? "Alert--v" : "Alert--h",
           getSizeXClassName("Alert", sizeX),
           closing && "Alert--closing"

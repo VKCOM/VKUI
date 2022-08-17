@@ -1,6 +1,6 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { useTimeout } from "../../hooks/useTimeout";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
@@ -40,7 +40,7 @@ export const PopoutWrapper = ({
   };
   const animationFinishFallback = useTimeout(
     onFadeInEnd,
-    platform === IOS ? 300 : 200
+    platform === Platform.IOS ? 300 : 200
   );
   React.useEffect(() => {
     !opened && animationFinishFallback.set();

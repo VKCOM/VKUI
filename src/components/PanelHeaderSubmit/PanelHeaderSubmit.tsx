@@ -3,7 +3,7 @@ import {
   PanelHeaderButtonProps,
 } from "../PanelHeaderButton/PanelHeaderButton";
 import { Icon28DoneOutline } from "@vkontakte/icons";
-import { ANDROID, VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getTitleFromChildren } from "../../lib/utils";
 
@@ -22,7 +22,7 @@ export const PanelHeaderSubmit = ({
       primary
       {...restProps}
     >
-      {platform === ANDROID || platform === VKCOM ? (
+      {platform === Platform.ANDROID || platform === Platform.VKCOM ? (
         <Icon28DoneOutline />
       ) : (
         children

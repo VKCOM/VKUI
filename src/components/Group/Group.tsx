@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { classNames, classNamesString } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
@@ -68,7 +68,7 @@ export const Group = (props: GroupProps) => {
       ref={getRootRef}
       vkuiClass={classNames(
         "Group",
-        platform === IOS && "Group--ios",
+        platform === Platform.IOS && "Group--ios",
         getSizeXClassName("Group", sizeX),
         computedMode && `Group--${computedMode}`
       )}

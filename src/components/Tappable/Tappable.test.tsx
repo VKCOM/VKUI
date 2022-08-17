@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 import { baselineComponent } from "../../testing/utils";
 import { TappableProps, Tappable } from "./Tappable";
-import { ANDROID } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { act } from "react-dom/test-utils";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import styles from "./Tappable.module.css";
@@ -195,7 +195,7 @@ describe("Tappable", () => {
         document.querySelectorAll(`.${styles.Tappable__wave}`).length;
       render(
         <AdaptivityProvider hasMouse={false}>
-          <ConfigProvider platform={ANDROID}>
+          <ConfigProvider platform={Platform.ANDROID}>
             <Tappable data-testid="x" />
           </ConfigProvider>
         </AdaptivityProvider>

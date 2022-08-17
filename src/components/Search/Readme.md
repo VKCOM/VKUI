@@ -102,7 +102,11 @@ class HeaderSearch extends React.Component {
     return (
       <React.Fragment>
         <PanelHeader
-          before={platform !== VKCOM && <PanelHeaderBack onClick={goSearch} />}
+          before={
+            platform !== Platform.VKCOM && (
+              <PanelHeaderBack onClick={goSearch} />
+            )
+          }
         >
           <Search
             value={this.state.search}
@@ -166,7 +170,7 @@ class SearchExample extends React.Component {
               header={
                 <ModalPageHeader
                   before={
-                    platform === ANDROID && (
+                    platform === Platform.ANDROID && (
                       <PanelHeaderButton onClick={this.hideModal}>
                         <Icon24Cancel />
                       </PanelHeaderButton>
@@ -174,7 +178,7 @@ class SearchExample extends React.Component {
                   }
                   after={
                     <PanelHeaderButton onClick={this.hideModal}>
-                      {platform === IOS ? "Готово" : <Icon24Done />}
+                      {platform === Platform.IOS ? "Готово" : <Icon24Done />}
                     </PanelHeaderButton>
                   }
                 >

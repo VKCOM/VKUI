@@ -71,7 +71,7 @@ const openIcons = () =>
       <ActionSheetItem
         autoClose
         before={
-          platform === IOS ? (
+          platform === Platform.IOS ? (
             <Icon28DeleteOutline />
           ) : (
             <Icon28DeleteOutlineAndroid />

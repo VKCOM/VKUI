@@ -1,6 +1,6 @@
 import * as React from "react";
 import { PopoutWrapper } from "../PopoutWrapper/PopoutWrapper";
-import { IOS, VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { ActionSheetDropdownDesktop } from "./ActionSheetDropdownDesktop";
 import { ActionSheetDropdown } from "./ActionSheetDropdown";
 import { hasReactNode, noop } from "../../lib/utils";
@@ -64,7 +64,7 @@ export const ActionSheet = ({
     _action.current = noop;
   };
 
-  let timeout = platform === IOS ? 300 : 200;
+  let timeout = platform === Platform.IOS ? 300 : 200;
 
   const fallbackTransitionFinish = useTimeout(afterClose, timeout);
   React.useEffect(() => {
@@ -96,7 +96,7 @@ export const ActionSheet = ({
     <React.Fragment>
       {(viewWidth === undefined ||
         viewWidth >= ViewWidth.SMALL_TABLET ||
-        platform === VKCOM) && (
+        platform === Platform.VKCOM) && (
         <ActionSheetContext.Provider value={contextDesktop}>
           <ActionSheetDropdownDesktop
             closing={closing}
@@ -111,7 +111,7 @@ export const ActionSheet = ({
               <header vkuiClass="ActionSheet__header">
                 {hasReactNode(header) && (
                   <Footnote
-                    weight={platform === IOS ? "1" : "2"}
+                    weight={platform === Platform.IOS ? "1" : "2"}
                     vkuiClass="ActionSheet__title"
                   >
                     {header}
@@ -128,7 +128,7 @@ export const ActionSheet = ({
       )}
       {(viewWidth === undefined ||
         viewWidth < ViewWidth.SMALL_TABLET ||
-        platform !== VKCOM) && (
+        platform !== Platform.VKCOM) && (
         <PopoutWrapper
           closing={closing}
           alignY="bottom"
@@ -154,7 +154,7 @@ export const ActionSheet = ({
                 <header vkuiClass="ActionSheet__header">
                   {hasReactNode(header) && (
                     <Footnote
-                      weight={platform === IOS ? "1" : "2"}
+                      weight={platform === Platform.IOS ? "1" : "2"}
                       vkuiClass="ActionSheet__title"
                     >
                       {header}
@@ -166,7 +166,7 @@ export const ActionSheet = ({
                 </header>
               )}
               {children}
-              {platform === IOS && iosCloseItem}
+              {platform === Platform.IOS && iosCloseItem}
             </ActionSheetDropdown>
           </ActionSheetContext.Provider>
         </PopoutWrapper>

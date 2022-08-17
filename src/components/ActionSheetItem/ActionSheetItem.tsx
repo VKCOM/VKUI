@@ -4,7 +4,7 @@ import { getClassName } from "../../helpers/getClassName";
 import { Tappable } from "../Tappable/Tappable";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode, noop } from "../../lib/utils";
-import { VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { Icon16Done, Icon24Done } from "@vkontakte/icons";
 import {
   ActionSheetContext,
@@ -118,7 +118,7 @@ const ActionSheetItem = ({
             disabled={restProps.disabled}
           />
           <div vkuiClass="ActionSheetItem__marker">
-            {platform === VKCOM ? <Icon24Done /> : <Icon16Done />}
+            {platform === Platform.VKCOM ? <Icon24Done /> : <Icon16Done />}
           </div>
         </div>
       )}

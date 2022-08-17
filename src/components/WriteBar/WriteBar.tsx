@@ -4,7 +4,7 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { useExternRef } from "../../hooks/useExternRef";
 import { hasReactNode, isFunction } from "../../lib/utils";
 import { classNames } from "../../lib/classNames";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { HasRef, HasRootRef } from "../../types";
 import "./WriteBar.css";
 
@@ -101,7 +101,7 @@ export const WriteBar = ({
       ref={getRootRef}
       vkuiClass={classNames(
         "WriteBar",
-        platform === IOS && "WriteBar--ios",
+        platform === Platform.IOS && "WriteBar--ios",
         shadow && "WriteBar--shadow"
       )}
       className={className}

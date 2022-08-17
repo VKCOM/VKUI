@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import { useContext } from "react";
-import { ANDROID, VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { baselineComponent } from "../../testing/utils";
 import { Appearance } from "../../helpers/appearance";
 import { ConfigProvider } from "./ConfigProvider";
@@ -22,7 +22,7 @@ describe("ConfigProvider", () => {
     };
     const ConfigUser = () => {
       expect(useContext(ConfigProviderContext)).toEqual({
-        platform: ANDROID,
+        platform: Platform.ANDROID,
         isWebView: false,
         appearance: Appearance.LIGHT,
         webviewType: WebviewType.INTERNAL,
@@ -45,7 +45,7 @@ describe("ConfigProvider", () => {
     };
 
     const defaultConfig: ConfigProviderContextInterface = {
-      platform: VKCOM,
+      platform: Platform.VKCOM,
       appearance: Appearance.DARK,
       webviewType: WebviewType.INTERNAL,
       hasNewTokens: true,
@@ -53,7 +53,7 @@ describe("ConfigProvider", () => {
       isWebView: true,
     };
     it.each([
-      ["platform", ANDROID],
+      ["platform", Platform.ANDROID],
       ["webviewType", WebviewType.VKAPPS],
       ["hasNewTokens", false],
       ["transitionMotionEnabled", true],

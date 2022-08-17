@@ -2,7 +2,7 @@ import * as React from "react";
 import { ACTIVE_EFFECT_DELAY, Tappable } from "../Tappable/Tappable";
 import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
-import { IOS, VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import {
   Icon20CheckBoxOn,
   Icon20CheckBoxOff,
@@ -102,9 +102,13 @@ export const SimpleCheckbox = ({
       className={className}
       style={style}
       disabled={restProps.disabled}
-      activeMode={platform === VKCOM ? "SimpleCheckbox--active" : "background"}
-      hoverMode={platform === VKCOM ? "SimpleCheckbox--hover" : "background"}
-      activeEffectDelay={platform === IOS ? 100 : ACTIVE_EFFECT_DELAY}
+      activeMode={
+        platform === Platform.VKCOM ? "SimpleCheckbox--active" : "background"
+      }
+      hoverMode={
+        platform === Platform.VKCOM ? "SimpleCheckbox--hover" : "background"
+      }
+      activeEffectDelay={platform === Platform.IOS ? 100 : ACTIVE_EFFECT_DELAY}
       getRootRef={getRootRef}
     >
       <input
@@ -116,7 +120,7 @@ export const SimpleCheckbox = ({
       />
       <div vkuiClass="SimpleCheckbox__container">
         <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--on">
-          {platform === VKCOM ? (
+          {platform === Platform.VKCOM ? (
             <Icon20CheckBoxOn />
           ) : (
             <SizeYConditionalRender
@@ -126,7 +130,7 @@ export const SimpleCheckbox = ({
           )}
         </div>
         <div vkuiClass="SimpleCheckbox__icon SimpleCheckbox__icon--off">
-          {platform === VKCOM ? (
+          {platform === Platform.VKCOM ? (
             <Icon20CheckBoxOff />
           ) : (
             <SizeYConditionalRender
@@ -139,10 +143,10 @@ export const SimpleCheckbox = ({
           <Icon20CheckBoxIndetermanate vkuiClass="SimpleCheckbox__icon--inner" />
         </div>
       </div>
-      {platform === VKCOM && (
+      {platform === Platform.VKCOM && (
         <div aria-hidden={true} vkuiClass="SimpleCheckbox__activeShadow" />
       )}
-      {platform === VKCOM && (
+      {platform === Platform.VKCOM && (
         <div aria-hidden={true} vkuiClass="SimpleCheckbox__hoverShadow" />
       )}
     </Tappable>

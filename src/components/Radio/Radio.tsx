@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ACTIVE_EFFECT_DELAY, Tappable } from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { HasRef, HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
@@ -65,7 +65,7 @@ export const Radio = ({
       style={style}
       className={className}
       vkuiClass={classNames("Radio", getSizeYClassName("Radio", sizeY))}
-      activeEffectDelay={platform === IOS ? 100 : ACTIVE_EFFECT_DELAY}
+      activeEffectDelay={platform === Platform.IOS ? 100 : ACTIVE_EFFECT_DELAY}
       disabled={restProps.disabled}
       getRootRef={getRootRef}
     >

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { noop } from "../../lib/utils";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { SimpleCell, SimpleCellProps } from "../SimpleCell/SimpleCell";
 import { HasPlatform, HasRootRef } from "../../types";
 import { Removable, RemovableProps } from "../Removable/Removable";
@@ -123,7 +123,7 @@ export const Cell = ({
 
   const cellClasses = classNames(
     "Cell",
-    platform === IOS && "Cell--ios",
+    platform === Platform.IOS && "Cell--ios",
     dragging && "Cell--dragging",
     removable && "Cell--removable",
     selectable && "Cell--selectable",
@@ -140,14 +140,14 @@ export const Cell = ({
       Component={selectable ? "label" : Component}
       before={
         <React.Fragment>
-          {draggable && platform !== IOS && dragger}
+          {draggable && platform !== Platform.IOS && dragger}
           {selectable && checkbox}
           {before}
         </React.Fragment>
       }
       after={
         <React.Fragment>
-          {draggable && platform === IOS && dragger}
+          {draggable && platform === Platform.IOS && dragger}
           {after}
         </React.Fragment>
       }

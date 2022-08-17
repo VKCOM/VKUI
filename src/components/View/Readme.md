@@ -71,7 +71,7 @@ React.useEffect(() => {
 const goBack = () => setHistory(history.slice(0, -1));
 const go = (panel) => setHistory([...history, panel]);
 
-<ConfigProvider platform={IOS} isWebView>
+<ConfigProvider platform={Platform.IOS} isWebView>
   <View onSwipeBack={goBack} history={history} activePanel={activePanel}>
     <Panel id="main">
       <PanelHeader>Main</PanelHeader>

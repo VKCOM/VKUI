@@ -5,7 +5,7 @@ import { classNames } from "../../lib/classNames";
 import { Touch } from "../Touch/Touch";
 import { TooltipContainer } from "../Tooltip/TooltipContainer";
 import { HasRootRef } from "../../types";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
 import { NavIdProps } from "../../lib/getNavId";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
@@ -42,7 +42,7 @@ export const Panel: React.FC<PanelProps> = ({
       )}
     >
       <Touch Component={TooltipContainer} vkuiClass="Panel__in">
-        {platform === IOS && <div vkuiClass="Panel__fade" />}
+        {platform === Platform.IOS && <div vkuiClass="Panel__fade" />}
         <div vkuiClass="Panel__in-before" />
         {centered ? (
           <div vkuiClass="Panel__centered">{children}</div>

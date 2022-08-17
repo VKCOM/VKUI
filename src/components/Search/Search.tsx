@@ -7,7 +7,7 @@ import {
   Icon16Clear,
   Icon24Cancel,
 } from "@vkontakte/icons";
-import { IOS, VKCOM, ANDROID } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { HasPlatform, HasRef } from "../../types";
 import { Touch, TouchEvent } from "../Touch/Touch";
 import { VKUITouchEvent } from "../../lib/touch";
@@ -32,15 +32,15 @@ const SearchPlaceholderTypography = ({
   ...restProps
 }: SearchPlaceholderTypographyProps) => {
   switch (platform) {
-    case IOS:
+    case Platform.IOS:
       return (
         <Title {...restProps} level="3" weight="3">
           {children}
         </Title>
       );
-    case VKCOM:
+    case Platform.VKCOM:
       return <Text {...restProps}>{children}</Text>;
-    case ANDROID:
+    case Platform.ANDROID:
     default:
       return (
         <Headline {...restProps} weight="3">
@@ -147,7 +147,7 @@ const SearchComponent = ({
             onChange={onChange}
             value={value}
           />
-          {platform === IOS && after && (
+          {platform === Platform.IOS && after && (
             <div vkuiClass="Search__after-width">{after}</div>
           )}
           <div vkuiClass="Search__placeholder">
@@ -160,7 +160,7 @@ const SearchComponent = ({
                 {placeholder}
               </SearchPlaceholderTypography>
             </div>
-            {isFocused && platform === IOS && after && (
+            {isFocused && platform === Platform.IOS && after && (
               <div vkuiClass="Search__after-width">{after}</div>
             )}
           </div>
@@ -174,16 +174,18 @@ const SearchComponent = ({
             )}
             {!!value && (
               <Touch onStart={onIconCancelClickStart} vkuiClass="Search__icon">
-                {platform === IOS ? <Icon16Clear /> : <Icon24Cancel />}
+                {platform === Platform.IOS ? <Icon16Clear /> : <Icon24Cancel />}
               </Touch>
             )}
           </div>
-          {platform === IOS && after && (
+          {platform === Platform.IOS && after && (
             <div vkuiClass="Search__after-in">{after}</div>
           )}
         </div>
       </div>
-      {platform === VKCOM && <Separator vkuiClass="Search__separator" wide />}
+      {platform === Platform.VKCOM && (
+        <Separator vkuiClass="Search__separator" wide />
+      )}
     </div>
   );
 };

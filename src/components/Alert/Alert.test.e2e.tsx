@@ -1,7 +1,7 @@
 import { AppRoot } from "../AppRoot/AppRoot";
 import { Alert, AlertProps, AlertAction } from "./Alert";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import { VKCOM, ANDROID, IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { HasChildren } from "../../types";
 
 const AppWrapper = (props: HasChildren) => (
@@ -43,7 +43,7 @@ describe("Alert", () => {
     ],
     {
       Wrapper: AppWrapper,
-      platforms: [IOS, ANDROID],
+      platforms: [Platform.IOS, Platform.ANDROID],
     }
   );
 
@@ -61,7 +61,7 @@ describe("Alert", () => {
     ],
     {
       Wrapper: AppWrapper,
-      platforms: [VKCOM],
+      platforms: [Platform.VKCOM],
     }
   );
 });

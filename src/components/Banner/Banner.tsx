@@ -2,7 +2,7 @@ import * as React from "react";
 import { HasComponent, HasChildren } from "../../types";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { hasReactNode } from "../../lib/utils";
 import {
   Icon24Chevron,
@@ -128,7 +128,7 @@ export const Banner = ({
       {...restProps}
       vkuiClass={classNames(
         "Banner",
-        platform === IOS && "Banner--ios",
+        platform === Platform.IOS && "Banner--ios",
         `Banner--md-${mode}`,
         `Banner--sz-${size}`,
         mode === "image" && imageTheme === "dark" && "Banner--inverted"
@@ -136,7 +136,7 @@ export const Banner = ({
     >
       <Tappable
         vkuiClass="Banner__in"
-        activeMode={platform === IOS ? "opacity" : "background"}
+        activeMode={platform === Platform.IOS ? "opacity" : "background"}
         disabled={asideMode !== "expand"}
         role={asideMode === "expand" ? "button" : undefined}
       >
@@ -181,7 +181,7 @@ export const Banner = ({
                 hoverMode="opacity"
                 hasActive={false}
               >
-                {platform === IOS ? (
+                {platform === Platform.IOS ? (
                   mode === "image" ? (
                     <Icon24DismissDark />
                   ) : (

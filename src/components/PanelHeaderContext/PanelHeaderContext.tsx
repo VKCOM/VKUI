@@ -10,7 +10,7 @@ import { useTimeout } from "../../hooks/useTimeout";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useScrollLock } from "../AppRoot/ScrollContext";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import { VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import "./PanelHeaderContext.css";
 
 export interface PanelHeaderContextProps
@@ -39,7 +39,7 @@ export const PanelHeaderContext = ({
     opened && setVisible(true);
   }, [opened]);
 
-  useScrollLock(platform !== VKCOM && opened);
+  useScrollLock(platform !== Platform.VKCOM && opened);
 
   // start closing on outer click
   useGlobalEventListener(
