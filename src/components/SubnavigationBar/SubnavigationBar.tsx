@@ -1,7 +1,5 @@
 import * as React from "react";
-import { usePlatform } from "../../hooks/usePlatform";
 import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
 import {
   HorizontalScroll,
   HorizontalScrollProps,
@@ -37,8 +35,6 @@ export const SubnavigationBar = ({
   scrollAnimationDuration,
   ...restProps
 }: SubnavigationBarProps) => {
-  const platform = usePlatform();
-
   let ScrollWrapper: React.ElementType;
   let scrollWrapperProps = {};
 
@@ -57,10 +53,7 @@ export const SubnavigationBar = ({
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(
-        getClassName("SubnavigationBar", platform),
-        `SubnavigationBar--${mode}`
-      )}
+      vkuiClass={classNames("SubnavigationBar", `SubnavigationBar--${mode}`)}
     >
       <ScrollWrapper vkuiClass="SubnavigationBar__in" {...scrollWrapperProps}>
         <div vkuiClass="SubnavigationBar__scrollIn">{children}</div>

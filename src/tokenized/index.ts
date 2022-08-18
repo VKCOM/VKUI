@@ -224,6 +224,9 @@ export type { SeparatorProps } from "../components/Separator/Separator";
 export { ChipsSelect } from "../components/ChipsSelect/ChipsSelect";
 export type { ChipsSelectProps } from "../components/ChipsSelect/ChipsSelect";
 
+export { SubnavigationBar } from "../components/SubnavigationBar/SubnavigationBar";
+export type { SubnavigationBarProps } from "../components/SubnavigationBar/SubnavigationBar";
+
 export { Spacing } from "../components/Spacing/Spacing";
 export type { SpacingProps } from "../components/Spacing/Spacing";
 
