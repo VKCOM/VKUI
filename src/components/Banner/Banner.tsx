@@ -1,5 +1,4 @@
 import * as React from "react";
-import { HasComponent, HasChildren } from "../../types";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { IOS } from "../../lib/platform";
@@ -80,18 +79,6 @@ export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
   actions?: React.ReactNode;
 }
 
-type BannerTypographyProps = Pick<BannerProps, "size"> &
-  HasComponent &
-  HasChildren;
-
-const BannerHeader = ({ size, ...restProps }: BannerTypographyProps) => {
-  return size === "m" ? (
-    <Title level="2" weight="2" {...restProps} />
-  ) : (
-    <Headline weight="2" {...restProps} />
-  );
-};
-
 /**
  * @see https://vkcom.github.io/VKUI/#/Banner
  */
@@ -113,6 +100,7 @@ export const Banner = ({
 }: BannerProps) => {
   const platform = usePlatform();
 
+  const HeaderTypography = size === "m" ? Title : Headline;
   const SubheaderTypography = size === "m" ? Text : Subhead;
 
   const Icon24DismissIOS =
@@ -130,9 +118,14 @@ export const Banner = ({
 
       <div vkuiClass="Banner__content">
         {hasReactNode(header) && (
-          <BannerHeader size={size} Component="span" vkuiClass="Banner__header">
+          <HeaderTypography
+            Component="span"
+            vkuiClass="Banner__header"
+            weight="2"
+            level={size === "m" ? "2" : "1"}
+          >
             {header}
-          </BannerHeader>
+          </HeaderTypography>
         )}
         {hasReactNode(subheader) && (
           <SubheaderTypography Component="span" vkuiClass="Banner__subheader">
