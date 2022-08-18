@@ -103,7 +103,7 @@ export const Banner = ({
   const HeaderTypography = size === "m" ? Title : Headline;
   const SubheaderTypography = size === "m" ? Text : Subhead;
 
-  const Icon24DismissIOS =
+  const IconDismissIOS =
     mode === "image" ? Icon24DismissDark : Icon24DismissSubstract;
 
   const content = (
@@ -176,7 +176,7 @@ export const Banner = ({
                 hoverMode="opacity"
                 hasActive={false}
               >
-                {platform === IOS ? <Icon24DismissIOS /> : <Icon24Cancel />}
+                {platform === IOS ? <IconDismissIOS /> : <Icon24Cancel />}
               </IconButton>
             </div>
           )}
