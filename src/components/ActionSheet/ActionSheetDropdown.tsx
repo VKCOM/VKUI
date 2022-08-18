@@ -1,7 +1,8 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
+import { Platform } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { SharedDropdownProps } from "./types";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import "./ActionSheet.css";
@@ -16,17 +17,19 @@ export const ActionSheetDropdown = ({
   popupDirection,
   ...restProps
 }: SharedDropdownProps) => {
+  const { sizeY } = useAdaptivity();
   const platform = usePlatform();
-  const baseClaseName = getClassName("ActionSheet", platform);
 
   return (
     <FocusTrap
       {...restProps}
       onClick={stopPropagation}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames(baseClaseName, {
-        "ActionSheet--closing": closing,
-      })}
+      vkuiClass={classNames(
+        "ActionSheet",
+        platform === Platform.IOS && "ActionSheet--ios",
+        closing && "ActionSheet--closing",
+        `ActionSheet--sizeY-${sizeY}`
+      )}
     >
       {children}
     </FocusTrap>

@@ -5,7 +5,7 @@ import { ActionSheetDropdownDesktop } from "./ActionSheetDropdownDesktop";
 import { ActionSheetDropdown } from "./ActionSheetDropdown";
 import { hasReactNode, noop } from "../../lib/utils";
 import { ActionSheetContext, ItemClickHandler } from "./ActionSheetContext";
-import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useTimeout } from "../../hooks/useTimeout";
 import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
@@ -123,15 +123,12 @@ export const ActionSheet = ({
         {(hasReactNode(header) || hasReactNode(text)) && (
           <header vkuiClass="ActionSheet__header">
             {hasReactNode(header) && (
-              <Caption
-                weight={platform === IOS ? "1" : "2"}
-                vkuiClass="ActionSheet__title"
-              >
+              <Footnote weight="2" vkuiClass="ActionSheet__title">
                 {header}
-              </Caption>
+              </Footnote>
             )}
             {hasReactNode(text) && (
-              <Caption vkuiClass="ActionSheet__text">{text}</Caption>
+              <Footnote vkuiClass="ActionSheet__text">{text}</Footnote>
             )}
           </header>
         )}

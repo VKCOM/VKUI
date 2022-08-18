@@ -1,5 +1,4 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { useDOM } from "../../lib/dom";
 import { usePlatform } from "../../hooks/usePlatform";
@@ -7,6 +6,7 @@ import { useEffectDev } from "../../hooks/useEffectDev";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { isRefObject } from "../../lib/isRefObject";
 import { warnOnce } from "../../lib/warnOnce";
+import { Platform } from "../../lib/platform";
 import { useEventListener } from "../../hooks/useEventListener";
 import { SharedDropdownProps } from "./types";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
@@ -72,9 +72,8 @@ export const ActionSheetDropdownDesktop = ({
     if (isRefObject<SharedDropdownProps["toggleRef"], HTMLElement>(toggleRef)) {
       return toggleRef;
     }
-    const refObject = { current: toggleRef as HTMLElement };
 
-    return refObject;
+    return { current: toggleRef as HTMLElement };
   }, [toggleRef]);
 
   return (
@@ -83,7 +82,8 @@ export const ActionSheetDropdownDesktop = ({
       offsetDistance={0}
       placement={isPopupDirectionTop ? "top-end" : "bottom-end"}
       vkuiClass={classNames(
-        getClassName("ActionSheet", platform),
+        "ActionSheet",
+        platform === Platform.IOS && "ActionSheet--ios",
         "ActionSheet--desktop",
         `ActionSheet--sizeY-${sizeY}`
       )}

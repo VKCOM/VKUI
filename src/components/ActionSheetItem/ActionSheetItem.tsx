@@ -1,25 +1,17 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
 import { Tappable } from "../Tappable/Tappable";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode, noop } from "../../lib/utils";
+import { Platform } from "../../lib/platform";
 import { Subhead } from "../Typography/Subhead/Subhead";
-import { Title } from "../Typography/Title/Title";
 import { Text } from "../Typography/Text/Text";
-import { ANDROID, VKCOM } from "../../lib/platform";
-import { Icon16Done, Icon24Done } from "@vkontakte/icons";
+import { Icon24CheckCircleOn } from "@vkontakte/icons";
 import {
   ActionSheetContext,
   ActionSheetContextType,
 } from "../ActionSheet/ActionSheetContext";
-import { Caption } from "../Typography/Caption/Caption";
-import { Headline } from "../Typography/Headline/Headline";
-import {
-  withAdaptivity,
-  AdaptivityProps,
-  SizeType,
-} from "../../hoc/withAdaptivity";
+import { AdaptivityProps, withAdaptivity } from "../../hoc/withAdaptivity";
 import "./ActionSheetItem.css";
 
 export interface ActionSheetItemProps
@@ -37,6 +29,10 @@ export interface ActionSheetItemProps
   autoclose?: boolean;
   selectable?: boolean;
   disabled?: boolean;
+  /**
+   * Все текстовые элементы при необходимости занимают несколько строк
+   */
+  multiline?: boolean;
   /**
    * Если autoclose === true, onClick будет вызван после завершения анимации скрытия и после вызова onClose.
    * Из этого следует, что в объекте события значения полей типа `currentTarget` будут не определены.
@@ -62,6 +58,7 @@ const ActionSheetItemComponent = ({
   onClick,
   sizeY,
   onImmediateClick,
+  multiline = false,
   ...restProps
 }: ActionSheetItemProps) => {
   const platform = usePlatform();
@@ -74,7 +71,9 @@ const ActionSheetItemComponent = ({
     Component = "label";
   }
 
-  const isCompact = hasReactNode(subtitle) || hasReactNode(meta) || selectable;
+  const isRich = hasReactNode(subtitle) || hasReactNode(meta) || selectable;
+  const isCentered =
+    !isRich && !hasReactNode(before) && platform === Platform.IOS;
 
   return (
     <Tappable
@@ -84,75 +83,47 @@ const ActionSheetItemComponent = ({
           ? onClick
           : onItemClick(onClick, onImmediateClick, Boolean(autoclose))
       }
-      activeMode="ActionSheetItem--active"
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
+      activeMode={
+        platform === Platform.IOS ? "ActionSheetItem--active" : undefined
+      }
       vkuiClass={classNames(
-        getClassName("ActionSheetItem", platform),
+        "ActionSheetItem",
+        platform === Platform.IOS && "ActionSheetItem--ios",
         `ActionSheetItem--${mode}`,
         `ActionSheetItem--sizeY-${sizeY}`,
-        {
-          "ActionSheetItem--compact": isCompact,
-          "ActionSheetItem--desktop": isDesktop,
-          "ActionSheetItem--withSubtitle": hasReactNode(subtitle),
-        }
+        isRich && "ActionSheetItem--rich",
+        isDesktop && "ActionSheetItem--desktop"
       )}
       Component={Component}
     >
       {hasReactNode(before) && (
         <div vkuiClass="ActionSheetItem__before">{before}</div>
       )}
-      <div vkuiClass="ActionSheetItem__container">
-        <div vkuiClass="ActionSheetItem__content">
-          {sizeY === SizeType.COMPACT ? (
-            <React.Fragment>
-              <Text
-                weight={mode === "cancel" ? "2" : undefined}
-                vkuiClass="ActionSheetItem__children"
-              >
-                {children}
-              </Text>
-              {hasReactNode(meta) && (
-                <Text vkuiClass="ActionSheetItem__meta">{meta}</Text>
-              )}
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              {platform === ANDROID ? (
-                <Headline weight={mode === "cancel" ? "2" : "3"}>
-                  {children}
-                </Headline>
-              ) : (
-                <Title
-                  weight={mode === "cancel" ? "2" : "3"}
-                  level={isCompact || hasReactNode(before) ? "3" : "2"}
-                  vkuiClass="ActionSheetItem__children"
-                >
-                  {children}
-                </Title>
-              )}
-              {hasReactNode(meta) &&
-                (platform === ANDROID ? (
-                  <Headline weight={mode === "cancel" ? "2" : "3"}>
-                    {children}
-                  </Headline>
-                ) : (
-                  <Title
-                    weight="3"
-                    level={isCompact || hasReactNode(before) ? "3" : "2"}
-                    vkuiClass="ActionSheetItem__meta"
-                  >
-                    {meta}
-                  </Title>
-                ))}
-            </React.Fragment>
+      <div
+        vkuiClass={classNames(
+          "ActionSheetItem__container",
+          !multiline && "ActionSheetItem--ellipsis"
+        )}
+      >
+        <div
+          vkuiClass={classNames(
+            "ActionSheetItem__content",
+            isCentered && "ActionSheetItem--centered"
+          )}
+        >
+          <Text
+            weight={mode === "cancel" ? "2" : undefined}
+            vkuiClass="ActionSheetItem__children"
+          >
+            {children}
+          </Text>
+          {hasReactNode(meta) && (
+            <Text vkuiClass="ActionSheetItem__meta">{meta}</Text>
           )}
         </div>
-        {hasReactNode(subtitle) &&
-          (sizeY === SizeType.COMPACT ? (
-            <Caption vkuiClass="ActionSheetItem__subtitle">{subtitle}</Caption>
-          ) : (
-            <Subhead vkuiClass="ActionSheetItem__subtitle">{subtitle}</Subhead>
-          ))}
+        {hasReactNode(subtitle) && (
+          <Subhead vkuiClass="ActionSheetItem__subtitle">{subtitle}</Subhead>
+        )}
       </div>
       {selectable && (
         <div vkuiClass="ActionSheetItem__after">
@@ -168,7 +139,7 @@ const ActionSheetItemComponent = ({
             disabled={restProps.disabled}
           />
           <div vkuiClass="ActionSheetItem__marker">
-            {platform === VKCOM ? <Icon24Done /> : <Icon16Done />}
+            <Icon24CheckCircleOn />
           </div>
         </div>
       )}
