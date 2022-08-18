@@ -71,12 +71,11 @@ export const PanelHeaderContent = ({
         activeMode: "opacity",
       }
     : {};
-  const baseClassNames = getClassName("PanelHeaderContent", platform);
 
   return (
     <div
       {...rootProps}
-      vkuiClass={baseClassNames}
+      vkuiClass={getClassName("PanelHeaderContent", platform)}
       style={style}
       className={className}
     >

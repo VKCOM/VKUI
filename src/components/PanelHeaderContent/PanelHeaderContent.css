@@ -25,8 +25,7 @@
 }
 
 .PanelHeaderContent__status,
-.PanelHeaderContent__children-in,
-.PanelHeaderContent__children .Headline {
+.PanelHeaderContent__children-in {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -104,4 +103,11 @@
 
 .PanelHeaderContent--vkcom .PanelHeaderContent__in {
   align-items: center;
+}
+
+/**
+ * VKCOM
+ */
+.PanelHeader--no-before .PanelHeaderContent--vkcom {
+  padding-left: 16px;
 }
