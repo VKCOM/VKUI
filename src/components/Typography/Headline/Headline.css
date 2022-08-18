@@ -60,3 +60,13 @@
 .Headline--w-3 {
   font-weight: var(--vkui--font_weight_accent3);
 }
+
+/**
+ * CMP:
+ * PanelHeaderContent
+ */
+.PanelHeaderContent__children .Headline {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
