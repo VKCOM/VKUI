@@ -1,20 +1,17 @@
 import * as React from "react";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { classNames } from "../../lib/classNames";
+import { ChipOption, ChipValue, RenderChip } from "../Chip/Chip";
+import { ChipsInputProps } from "../ChipsInput/ChipsInput";
 import {
-  ChipsInput,
-  ChipsInputOption,
-  ChipsInputProps,
-  ChipsInputValue,
-  RenderChip,
+  ChipsInputBase,
   chipsInputDefaultProps,
-} from "../ChipsInput/ChipsInput";
+} from "../ChipsInputBase/ChipsInputBase";
 import {
   CustomSelectOption,
   CustomSelectOptionProps,
 } from "../CustomSelectOption/CustomSelectOption";
-import { useChipsSelect } from "./useChipsSelect";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
+import { useChipsSelect } from "../../hooks/useChipsSelect";
 import { noop } from "../../lib/utils";
 import { useDOM } from "../../lib/dom";
 import { Caption } from "../Typography/Caption/Caption";
@@ -24,11 +21,12 @@ import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { defaultFilterFn } from "../../lib/select";
 import { Placement } from "../Popper/Popper";
 import { CustomSelectDropdown } from "../CustomSelectDropdown/CustomSelectDropdown";
+import { FormField } from "../FormField/FormField";
+import { IconButton } from "../IconButton/IconButton";
 import "./ChipsSelect.css";
 
-export interface ChipsSelectProps<Option extends ChipsInputOption>
-  extends ChipsInputProps<Option>,
-    AdaptivityProps {
+export interface ChipsSelectProps<Option extends ChipOption>
+  extends Omit<ChipsInputProps<Option>, "after"> {
   popupDirection?: "top" | "bottom";
   options?: Option[];
   filterFn?:
@@ -96,7 +94,10 @@ const chipsSelectDefaultProps: ChipsSelectProps<any> = {
   },
 };
 
-const ChipsSelectComponent = <Option extends ChipsInputOption>(
+/**
+ * @see https://vkcom.github.io/VKUI/#/ChipsSelect
+ */
+export const ChipsSelect = <Option extends ChipOption>(
   props: ChipsSelectProps<Option>
 ) => {
   const propsWithDefault = { ...chipsSelectDefaultProps, ...props };
@@ -123,10 +124,9 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
     filterFn,
     inputValue,
     creatableText,
-    sizeY,
     closeAfterSelect,
     onChangeStart,
-    after,
+    before,
     options,
     ...restProps
   } = propsWithDefault;
@@ -323,7 +323,7 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
     }
     const onRemoveWrapper = (
       e: React.MouseEvent | undefined,
-      value: ChipsInputValue | undefined
+      value: ChipValue | undefined
     ) => {
       e?.preventDefault();
       e?.stopPropagation();
@@ -355,14 +355,39 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
     [rootRef, scrollBoxRef]
   );
 
+  const toggleOpened = () => {
+    setOpened((prevOpened) => !prevOpened);
+  };
+
   return (
-    <div
-      vkuiClass={classNames("ChipsSelect", `ChipsSelect--sizeY-${sizeY}`)}
-      ref={rootRef}
+    <FormField
+      vkuiClass={classNames(
+        "ChipsSelect",
+        opened && "Select--open",
+        opened && (isPopperDirectionTop ? "Select--pop-up" : "Select--pop-down")
+      )}
+      getRootRef={rootRef}
       style={style}
       className={className}
+      disabled={disabled}
+      role="application"
+      aria-disabled={disabled}
+      aria-readonly={restProps.readOnly}
+      after={
+        <IconButton
+          vkuiClass="ChipsSelect__dropdown"
+          activeMode=""
+          hoverMode=""
+          // TODO: add label customization
+          aria-label={opened ? "Скрыть" : "Развернуть"}
+          onClick={toggleOpened}
+        >
+          <DropdownIcon />
+        </IconButton>
+      }
+      before={before}
     >
-      <ChipsInput
+      <ChipsInputBase
         {...restProps}
         tabIndex={tabIndex}
         value={selectedOptions}
@@ -374,15 +399,9 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
-        vkuiClass={classNames(
-          opened && "Select--open",
-          opened &&
-            (isPopperDirectionTop ? "Select--pop-up" : "Select--pop-down")
-        )}
         getRef={getRef}
         disabled={disabled}
         onInputChange={handleInputChange}
-        after={<DropdownIcon />}
       />
       {opened && (
         <CustomSelectDropdown
@@ -452,15 +471,6 @@ const ChipsSelectComponent = <Option extends ChipsInputOption>(
           )}
         </CustomSelectDropdown>
       )}
-    </div>
+    </FormField>
   );
 };
-
-/**
- * @see https://vkcom.github.io/VKUI/#/ChipsSelect
- */
-export const ChipsSelect = withAdaptivity(ChipsSelectComponent, {
-  sizeY: true,
-});
-
-ChipsSelect.displayName = "ChipsSelect";
