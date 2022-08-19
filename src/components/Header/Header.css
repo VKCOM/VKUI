@@ -41,13 +41,9 @@
   margin-top: -1px;
 }
 
-.Header--mode-secondary .Header__main,
+.Header--mode-secondary:not(.Header--pi) .Header__main,
 .Header--mode-tertiary .Header__main {
   color: var(--text_secondary);
-}
-
-.Header--pi .Header__main {
-  color: var(--text_primary);
 }
 
 .Header__indicator {
