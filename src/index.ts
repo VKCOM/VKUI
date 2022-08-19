@@ -262,6 +262,7 @@ export type { ModalCardBaseProps } from "./components/ModalCardBase/ModalCardBas
 export { AppRoot } from "./components/AppRoot/AppRoot";
 export type { AppRootProps } from "./components/AppRoot/AppRoot";
 export { AdaptivityProvider } from "./components/AdaptivityProvider/AdaptivityProvider";
+export type { AdaptivityProviderProps } from "./components/AdaptivityProvider/AdaptivityProvider";
 export { ConfigProvider } from "./components/ConfigProvider/ConfigProvider";
 export type { ConfigProviderProps } from "./components/ConfigProvider/ConfigProvider";
 export {
