@@ -9,7 +9,7 @@ const circleStyle = {
   width: 40,
   height: 40,
   borderRadius: "50%",
-  background: "var(--accent)",
+  background: "var(--vkui--color_background_accent)",
   position: "absolute",
   left: "50%",
   top: "50%",
@@ -19,7 +19,7 @@ const circleStyle = {
 
 const containerStyle = {
   height: 200,
-  border: "8px solid var(--icon_secondary)",
+  border: "8px solid var(--vkui--color_icon_secondary)",
   position: "relative",
 };
 
@@ -91,8 +91,8 @@ class Example extends React.Component {
               style={{
                 ...containerStyle,
                 borderColor: this.limitExceeded
-                  ? "var(--destructive)"
-                  : "var(--icon_secondary)",
+                  ? "var(--vkui--color_icon_negative)"
+                  : "var(--vkui--color_icon_secondary)",
               }}
             >
               <Touch

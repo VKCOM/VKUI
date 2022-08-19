@@ -57,7 +57,9 @@ const Example = () => {
                 <Cell
                   before={<Icon28UsersOutline />}
                   after={
-                    mode === "all" ? <Icon24Done fill="var(--accent)" /> : null
+                    mode === "all" ? (
+                      <Icon24Done fill="var(--vkui--color_icon_accent)" />
+                    ) : null
                   }
                   onClick={select}
                   data-mode="all"
@@ -68,7 +70,7 @@ const Example = () => {
                   before={<Icon28SettingsOutline />}
                   after={
                     mode === "managed" ? (
-                      <Icon24Done fill="var(--accent)" />
+                      <Icon24Done fill="var(--vkui--color_icon_accent)" />
                     ) : null
                   }
                   onClick={select}

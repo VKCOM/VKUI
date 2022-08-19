@@ -39,7 +39,8 @@ const Example = withAdaptivity(
                   style={
                     activeStory === "feed"
                       ? {
-                          backgroundColor: "var(--button_secondary_background)",
+                          backgroundColor:
+                            "var(--vkui--color_background_secondary)",
                           borderRadius: 8,
                         }
                       : {}
@@ -55,7 +56,8 @@ const Example = withAdaptivity(
                   style={
                     activeStory === "services"
                       ? {
-                          backgroundColor: "var(--button_secondary_background)",
+                          backgroundColor:
+                            "var(--vkui--color_background_secondary)",
                           borderRadius: 8,
                         }
                       : {}
@@ -71,7 +73,8 @@ const Example = withAdaptivity(
                   style={
                     activeStory === "messages"
                       ? {
-                          backgroundColor: "var(--button_secondary_background)",
+                          backgroundColor:
+                            "var(--vkui--color_background_secondary)",
                           borderRadius: 8,
                         }
                       : {}
@@ -87,7 +90,8 @@ const Example = withAdaptivity(
                   style={
                     activeStory === "clips"
                       ? {
-                          backgroundColor: "var(--button_secondary_background)",
+                          backgroundColor:
+                            "var(--vkui--color_background_secondary)",
                           borderRadius: 8,
                         }
                       : {}
@@ -103,7 +107,8 @@ const Example = withAdaptivity(
                   style={
                     activeStory === "profile"
                       ? {
-                          backgroundColor: "var(--button_secondary_background)",
+                          backgroundColor:
+                            "var(--vkui--color_background_secondary)",
                           borderRadius: 8,
                         }
                       : {}

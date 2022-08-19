@@ -38,14 +38,22 @@ const Example = ({ sizeX }) => {
           <List>
             <Cell
               before={<Icon28UsersOutline />}
-              after={mode === "all" && <Icon24Done fill="var(--accent)" />}
+              after={
+                mode === "all" && (
+                  <Icon24Done fill="var(--vkui--color_icon_accent)" />
+                )
+              }
               onClick={() => setMode("all")}
             >
               Communities
             </Cell>
             <Cell
               before={<Icon28SettingsOutline />}
-              after={mode === "managed" && <Icon24Done fill="var(--accent)" />}
+              after={
+                mode === "managed" && (
+                  <Icon24Done fill="var(--vkui--color_icon_accent)" />
+                )
+              }
               onClick={() => setMode("managed")}
             >
               Managed Communities
