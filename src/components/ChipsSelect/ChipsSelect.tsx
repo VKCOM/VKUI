@@ -166,11 +166,9 @@ export const ChipsSelect = <Option extends ChipOption>(
   };
 
   const handleClickOutside = (e: MouseEvent) => {
-    const { current: rootNode } = rootRef;
     if (
-      rootNode &&
-      e.target !== rootNode &&
-      !rootNode.contains(e.target as Node)
+      e.target !== rootRef.current &&
+      !rootRef.current?.contains(e.target as Node)
     ) {
       setOpened(false);
     }
@@ -382,7 +380,7 @@ export const ChipsSelect = <Option extends ChipOption>(
           aria-label={opened ? "Скрыть" : "Развернуть"}
           onClick={toggleOpened}
         >
-          <DropdownIcon opened={opened} />
+          <DropdownIcon vkuiClass="ChipsSelect__icon" opened={opened} />
         </IconButton>
       }
       before={before}

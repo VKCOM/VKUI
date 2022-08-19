@@ -6,6 +6,10 @@
   cursor: pointer;
 }
 
+.ChipsSelect__icon {
+  pointer-events: none;
+}
+
 .ChipsSelect__empty {
   padding: 12px 0;
   text-align: center;
