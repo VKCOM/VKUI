@@ -100,6 +100,7 @@ export type { GroupProps } from "./components/Group/Group";
 export { Gradient } from "./components/Gradient/Gradient";
 export type { GradientProps } from "./components/Gradient/Gradient";
 export { List } from "./components/List/List";
+export type { ListProps } from "./components/List/List";
 export { Cell } from "./components/Cell/Cell";
 export type { CellProps } from "./components/Cell/Cell";
 export { RichCell } from "./components/RichCell/RichCell";
