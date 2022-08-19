@@ -317,3 +317,6 @@ export type { PanelHeaderEditProps } from "../components/PanelHeaderEdit/PanelHe
 
 export { List } from "../components/List/List";
 export type { ListProps } from "../components/List/List";
+
+export { AppRoot } from "../components/AppRoot/AppRoot";
+export type { AppRootProps } from "../components/AppRoot/AppRoot";
