@@ -12,7 +12,7 @@
 
 ## Как пользоваться `css media queries`
 
-Для `@media` запросов мы используем [custom-media-queries](https://preset-env.cssdb.org/features/#custom-media-queries), значения хранятся в файле [src/styles/customMedia.css](src/styles/customMedia.css)
+Для `@media` запросов мы используем [custom-media-queries](https://preset-env.cssdb.org/features/#custom-media-queries), значения хранятся в файле [src/styles/customMedia.css](../src/styles/customMedia.css)
 
 При разработке следует предусмотреть возможность переопределения параметров адаптивности через `AdaptivityProvider`, поэтому в `@media` следует применять стили только если компонент имеет CSS класс с модификатором `--sizeX-none` (адаптивность не переопределена), а также написать стили для `--sizeX-regular` и `--sizeX-compact`.
 
@@ -81,7 +81,7 @@ _Component.module.css_
 
 ### `.Group--none`
 
-В компоненте [Group](src/components/Group/Group.tsx) появился класс `.Group--none`. Этот класс означает что у `Group` не передан `mode` и не удалось вычислить его автоматически. `.Group--none` должен вести себя как `.Group--card` при `sizeX=regular` и как `.Group--plain` при `sizeX=compact`.
+В компоненте [Group](../src/components/Group/Group.tsx) появился класс `.Group--none`. Этот класс означает что у `Group` не передан `mode` и не удалось вычислить его автоматически. `.Group--none` должен вести себя как `.Group--card` при `sizeX=regular` и как `.Group--plain` при `sizeX=compact`.
 
 Пример использования:
 
