@@ -131,6 +131,9 @@ export type { DropdownProps } from "../components/Dropdown/Dropdown";
 export { Pagination } from "../components/Pagination/Pagination";
 export type { PaginationProps } from "../components/Pagination/Pagination";
 
+export { PromoBanner } from "../components/PromoBanner/PromoBanner";
+export type { PromoBannerProps } from "../components/PromoBanner/PromoBanner";
+
 export { Calendar } from "../components/Calendar/Calendar";
 export type { CalendarProps } from "../components/Calendar/Calendar";
 
