@@ -1,12 +1,11 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
-import type { HasRootRef, HasAlign } from "../../types";
+import type { HasRootRef, AlignType } from "../../types";
 import "./ButtonGroup.css";
 
 export interface ButtonGroupProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    HasRootRef<HTMLDivElement>,
-    HasAlign {
+    HasRootRef<HTMLDivElement> {
   /**
    * Задает расположение элементов внутри группы, вертикальное или горизонтальное.
    */
@@ -21,6 +20,10 @@ export interface ButtonGroupProps
    * Note: Для потомков соответствующее поведение нужно определять самостоятельно, где это необходимо.
    */
   stretched?: boolean;
+  /**
+   * Горизонтальное выравнивание элементов внутри группы. Работает только с mode="vertical".
+   */
+  align?: AlignType;
 }
 
 /**
