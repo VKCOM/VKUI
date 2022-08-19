@@ -38,7 +38,7 @@ describe("Header", () => {
         indicator: [12],
       },
       {
-        mode: ["secondary"],
+        mode: ["secondary", "tertiary"],
         indicator: [
           12,
           <Counter key="counter" size="s" mode="prominent">
