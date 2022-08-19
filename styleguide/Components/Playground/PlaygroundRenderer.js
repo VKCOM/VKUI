@@ -23,7 +23,7 @@ class PlaygroundRenderer extends React.Component {
 
     return (
       <div className="Playground">
-        <SectionSubheading href={`#/${name}?id=example`}>
+        <SectionSubheading href={`#/${name}?id=example${exampleIndex}`}>
           Пример реализации
         </SectionSubheading>
         <Settings adaptivity={adaptivity} webviewType={webviewType} />
@@ -45,7 +45,7 @@ class PlaygroundRenderer extends React.Component {
         </div>
         {viewWidth > ViewWidth.MOBILE && (
           <>
-            <SectionSubheading href={`#/${name}?id=code`}>
+            <SectionSubheading href={`#/${name}?id=code${exampleIndex}`}>
               Редактируемый код
             </SectionSubheading>
             <div className="Playground__code">{tabBody}</div>
