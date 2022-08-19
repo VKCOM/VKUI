@@ -173,6 +173,12 @@ export type { FileProps } from "../components/File/File";
 export { CardGrid } from "../components/CardGrid/CardGrid";
 export type { CardGridProps } from "../components/CardGrid/CardGrid";
 
+export { ActionSheet } from "../components/ActionSheet/ActionSheet";
+export type { ActionSheetProps } from "../components/ActionSheet/ActionSheet";
+
+export { ActionSheetItem } from "../components/ActionSheetItem/ActionSheetItem";
+export type { ActionSheetItemProps } from "../components/ActionSheetItem/ActionSheetItem";
+
 export { FocusVisible } from "../components/FocusVisible/FocusVisible";
 export type { FocusVisibleProps } from "../components/FocusVisible/FocusVisible";
 
@@ -217,6 +223,9 @@ export type { SeparatorProps } from "../components/Separator/Separator";
 
 export { ChipsSelect } from "../components/ChipsSelect/ChipsSelect";
 export type { ChipsSelectProps } from "../components/ChipsSelect/ChipsSelect";
+
+export { SubnavigationBar } from "../components/SubnavigationBar/SubnavigationBar";
+export type { SubnavigationBarProps } from "../components/SubnavigationBar/SubnavigationBar";
 
 export { Spacing } from "../components/Spacing/Spacing";
 export type { SpacingProps } from "../components/Spacing/Spacing";
@@ -280,6 +289,9 @@ export type { TabbarItemProps } from "../components/TabbarItem/TabbarItem";
 
 export { Search } from "../components/Search/Search";
 export type { SearchProps } from "../components/Search/Search";
+
+export { Header } from "../components/Header/Header";
+export type { HeaderProps } from "../components/Header/Header";
 
 export { Panel } from "../components/Panel/Panel";
 export type { PanelProps } from "../components/Panel/Panel";

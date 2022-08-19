@@ -31,23 +31,23 @@
     <Group
       header={<Header mode="secondary">Default Spacing (empty, 8px)</Header>}
     >
-      <Cell before={<Icon28Notifications />}>Уведомления</Cell>
-      <Cell before={<Icon28BlockOutline />}>Не беспокоить</Cell>
+      <SimpleCell before={<Icon28Notifications />}>Уведомления</SimpleCell>
+      <SimpleCell before={<Icon28BlockOutline />}>Не беспокоить</SimpleCell>
 
       <Spacing />
 
-      <Cell before={<Icon28UserOutline />}>Учётная запись</Cell>
-      <Cell before={<Icon28SlidersOutline />}>Основные</Cell>
+      <SimpleCell before={<Icon28UserOutline />}>Учётная запись</SimpleCell>
+      <SimpleCell before={<Icon28SlidersOutline />}>Основные</SimpleCell>
     </Group>
 
     <Group header={<Header mode="secondary">Spacing 16px</Header>}>
-      <Cell before={<Icon28Notifications />}>Уведомления</Cell>
-      <Cell before={<Icon28BlockOutline />}>Не беспокоить</Cell>
+      <SimpleCell before={<Icon28Notifications />}>Уведомления</SimpleCell>
+      <SimpleCell before={<Icon28BlockOutline />}>Не беспокоить</SimpleCell>
 
       <Spacing size={16} />
 
-      <Cell before={<Icon28UserOutline />}>Учётная запись</Cell>
-      <Cell before={<Icon28SlidersOutline />}>Основные</Cell>
+      <SimpleCell before={<Icon28UserOutline />}>Учётная запись</SimpleCell>
+      <SimpleCell before={<Icon28SlidersOutline />}>Основные</SimpleCell>
     </Group>
 
     <Group
@@ -55,15 +55,15 @@
         <Header mode="secondary">Spacing with centered separator 16px</Header>
       }
     >
-      <Cell before={<Icon28Notifications />}>Уведомления</Cell>
-      <Cell before={<Icon28BlockOutline />}>Не беспокоить</Cell>
+      <SimpleCell before={<Icon28Notifications />}>Уведомления</SimpleCell>
+      <SimpleCell before={<Icon28BlockOutline />}>Не беспокоить</SimpleCell>
 
       <Spacing size={16}>
         <Separator />
       </Spacing>
 
-      <Cell before={<Icon28UserOutline />}>Учётная запись</Cell>
-      <Cell before={<Icon28SlidersOutline />}>Основные</Cell>
+      <SimpleCell before={<Icon28UserOutline />}>Учётная запись</SimpleCell>
+      <SimpleCell before={<Icon28SlidersOutline />}>Основные</SimpleCell>
     </Group>
 
     <Group
@@ -73,15 +73,15 @@
         </Header>
       }
     >
-      <Cell before={<Icon28Notifications />}>Уведомления</Cell>
-      <Cell before={<Icon28BlockOutline />}>Не беспокоить</Cell>
+      <SimpleCell before={<Icon28Notifications />}>Уведомления</SimpleCell>
+      <SimpleCell before={<Icon28BlockOutline />}>Не беспокоить</SimpleCell>
 
       <Spacing>
         <Separator />
       </Spacing>
 
-      <Cell before={<Icon28UserOutline />}>Учётная запись</Cell>
-      <Cell before={<Icon28SlidersOutline />}>Основные</Cell>
+      <SimpleCell before={<Icon28UserOutline />}>Учётная запись</SimpleCell>
+      <SimpleCell before={<Icon28SlidersOutline />}>Основные</SimpleCell>
     </Group>
 
     <Group
@@ -91,15 +91,15 @@
         </Header>
       }
     >
-      <Cell before={<Icon28Notifications />}>Уведомления</Cell>
-      <Cell before={<Icon28BlockOutline />}>Не беспокоить</Cell>
+      <SimpleCell before={<Icon28Notifications />}>Уведомления</SimpleCell>
+      <SimpleCell before={<Icon28BlockOutline />}>Не беспокоить</SimpleCell>
 
       <Spacing size={12} />
       <Separator />
       <Spacing size={20} />
 
-      <Cell before={<Icon28UserOutline />}>Учётная запись</Cell>
-      <Cell before={<Icon28SlidersOutline />}>Основные</Cell>
+      <SimpleCell before={<Icon28UserOutline />}>Учётная запись</SimpleCell>
+      <SimpleCell before={<Icon28SlidersOutline />}>Основные</SimpleCell>
     </Group>
   </Panel>
 </View>

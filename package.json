@@ -124,8 +124,8 @@
   "peerDependencies": {
     "@vkontakte/icons": "^1.136.0",
     "@vkontakte/vk-bridge": "^2.0.2",
-    "react": "^16.8.6 || ^17.0.0",
-    "react-dom": "^16.8.6 || ^17.0.0"
+    "react": "^16.8.6 || ^17.0.0 || ^18.1.0",
+    "react-dom": "^16.8.6 || ^17.0.0 || ^18.1.0"
   },
   "size-limit": [
     {

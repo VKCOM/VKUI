@@ -1,5 +1,4 @@
 import * as React from "react";
-import { HasComponent, HasChildren } from "../../types";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { IOS } from "../../lib/platform";
@@ -80,18 +79,6 @@ export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
   actions?: React.ReactNode;
 }
 
-type BannerTypographyProps = Pick<BannerProps, "size"> &
-  HasComponent &
-  HasChildren;
-
-const BannerHeader = ({ size, ...restProps }: BannerTypographyProps) => {
-  return size === "m" ? (
-    <Title level="2" weight="2" {...restProps} />
-  ) : (
-    <Headline weight="2" {...restProps} />
-  );
-};
-
 /**
  * @see https://vkcom.github.io/VKUI/#/Banner
  */
@@ -113,7 +100,45 @@ export const Banner = ({
 }: BannerProps) => {
   const platform = usePlatform();
 
+  const HeaderTypography = size === "m" ? Title : Headline;
   const SubheaderTypography = size === "m" ? Text : Subhead;
+
+  const IconDismissIOS =
+    mode === "image" ? Icon24DismissDark : Icon24DismissSubstract;
+
+  const content = (
+    <React.Fragment>
+      {mode === "image" && background && (
+        <div aria-hidden="true" vkuiClass="Banner__bg">
+          {background}
+        </div>
+      )}
+
+      {before && <div vkuiClass="Banner__before">{before}</div>}
+
+      <div vkuiClass="Banner__content">
+        {hasReactNode(header) && (
+          <HeaderTypography
+            Component="span"
+            vkuiClass="Banner__header"
+            weight="2"
+            level={size === "m" ? "2" : "1"}
+          >
+            {header}
+          </HeaderTypography>
+        )}
+        {hasReactNode(subheader) && (
+          <SubheaderTypography Component="span" vkuiClass="Banner__subheader">
+            {subheader}
+          </SubheaderTypography>
+        )}
+        {hasReactNode(text) && <Text vkuiClass="Banner__text">{text}</Text>}
+        {hasReactNode(actions) && React.Children.count(actions) > 0 && (
+          <div vkuiClass="Banner__actions">{actions}</div>
+        )}
+      </div>
+    </React.Fragment>
+  );
 
   return (
     <section
@@ -126,46 +151,24 @@ export const Banner = ({
         mode === "image" && imageTheme === "dark" && "Banner--inverted"
       )}
     >
-      <Tappable
-        vkuiClass="Banner__in"
-        activeMode={platform === IOS ? "opacity" : "background"}
-        disabled={asideMode !== "expand"}
-        role={asideMode === "expand" ? "button" : undefined}
-      >
-        {mode === "image" && background && (
-          <div aria-hidden="true" vkuiClass="Banner__bg">
-            {background}
-          </div>
-        )}
+      {asideMode === "expand" ? (
+        <Tappable
+          vkuiClass="Banner__in"
+          activeMode={platform === IOS ? "opacity" : "background"}
+          role="button"
+        >
+          {content}
 
-        {before && <div vkuiClass="Banner__before">{before}</div>}
-
-        <div vkuiClass="Banner__content">
-          {hasReactNode(header) && (
-            <BannerHeader
-              size={size}
-              Component="span"
-              vkuiClass="Banner__header"
-            >
-              {header}
-            </BannerHeader>
-          )}
-          {hasReactNode(subheader) && (
-            <SubheaderTypography Component="span" vkuiClass="Banner__subheader">
-              {subheader}
-            </SubheaderTypography>
-          )}
-          {hasReactNode(text) && <Text vkuiClass="Banner__text">{text}</Text>}
-          {hasReactNode(actions) && React.Children.count(actions) > 0 && (
-            <div vkuiClass="Banner__actions">{actions}</div>
-          )}
-        </div>
-
-        {!!asideMode && (
           <div vkuiClass="Banner__aside">
-            {asideMode === "expand" && <Icon24Chevron />}
+            <Icon24Chevron />
+          </div>
+        </Tappable>
+      ) : (
+        <div vkuiClass="Banner__in">
+          {content}
 
-            {asideMode === "dismiss" && (
+          {asideMode === "dismiss" && (
+            <div vkuiClass="Banner__aside">
               <IconButton
                 aria-label={dismissLabel}
                 vkuiClass="Banner__dismiss"
@@ -173,20 +176,12 @@ export const Banner = ({
                 hoverMode="opacity"
                 hasActive={false}
               >
-                {platform === IOS ? (
-                  mode === "image" ? (
-                    <Icon24DismissDark />
-                  ) : (
-                    <Icon24DismissSubstract />
-                  )
-                ) : (
-                  <Icon24Cancel />
-                )}
+                {platform === IOS ? <IconDismissIOS /> : <Icon24Cancel />}
               </IconButton>
-            )}
-          </div>
-        )}
-      </Tappable>
+            </div>
+          )}
+        </div>
+      )}
     </section>
   );
 };

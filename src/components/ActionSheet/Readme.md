@@ -28,11 +28,7 @@ const openBase = () =>
   setPopout(
     <ActionSheet
       onClose={onClose}
-      iosCloseItem={
-        <ActionSheetItem autoclose mode="cancel">
-          Отменить
-        </ActionSheetItem>
-      }
+      iosCloseItem={<ActionSheetDefaultIosCloseItem />}
       toggleRef={baseTargetRef}
     >
       <ActionSheetItem autoclose>Сохранить в закладках</ActionSheetItem>
@@ -49,11 +45,7 @@ const openIcons = () =>
   setPopout(
     <ActionSheet
       onClose={onClose}
-      iosCloseItem={
-        <ActionSheetItem autoclose mode="cancel">
-          Отменить
-        </ActionSheetItem>
-      }
+      iosCloseItem={<ActionSheetDefaultIosCloseItem />}
       toggleRef={iconsTargetRef}
     >
       <ActionSheetItem autoclose before={<Icon28EditOutline />}>
@@ -88,11 +80,7 @@ const openSubtitle = () =>
   setPopout(
     <ActionSheet
       onClose={onClose}
-      iosCloseItem={
-        <ActionSheetItem autoclose mode="cancel">
-          Отменить
-        </ActionSheetItem>
-      }
+      iosCloseItem={<ActionSheetDefaultIosCloseItem />}
       toggleRef={subtitleTargetRef}
     >
       <ActionSheetItem
@@ -124,11 +112,7 @@ const openSelectable = () =>
   setPopout(
     <ActionSheet
       onClose={onClose}
-      iosCloseItem={
-        <ActionSheetItem autoclose mode="cancel">
-          Отменить
-        </ActionSheetItem>
-      }
+      iosCloseItem={<ActionSheetDefaultIosCloseItem />}
       toggleRef={selectableTargetRef}
     >
       <ActionSheetItem
@@ -188,11 +172,7 @@ const openTitle = () =>
   setPopout(
     <ActionSheet
       onClose={onClose}
-      iosCloseItem={
-        <ActionSheetItem autoclose mode="cancel">
-          Отменить
-        </ActionSheetItem>
-      }
+      iosCloseItem={<ActionSheetDefaultIosCloseItem />}
       header="Вы действительно хотите удалить это видео из Ваших видео?"
       toggleRef={titleTargetRef}
     >
@@ -206,11 +186,7 @@ const openBaseTop = () =>
   setPopout(
     <ActionSheet
       onClose={onClose}
-      iosCloseItem={
-        <ActionSheetItem autoclose mode="cancel">
-          Отменить
-        </ActionSheetItem>
-      }
+      iosCloseItem={<ActionSheetDefaultIosCloseItem />}
       toggleRef={baseTopTargetRef}
     >
       <ActionSheetItem autoclose>Сохранить в закладках</ActionSheetItem>
