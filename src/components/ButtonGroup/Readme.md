@@ -44,17 +44,19 @@ const ButtonGroupPropsForm = ({ caption, defaultProps, onChange }) => {
           ]}
         />
       </FormItem>
-      <FormItem top="align">
-        <Select
-          value={align}
-          onChange={(e) => handleChange("align", e.target.value)}
-          options={[
-            { label: "left", value: "left" },
-            { label: "center", value: "center" },
-            { label: "right", value: "right" },
-          ]}
-        />
-      </FormItem>
+      {mode === "vertical" && (
+        <FormItem top="align">
+          <Select
+            value={align}
+            onChange={(e) => handleChange("align", e.target.value)}
+            options={[
+              { label: "left", value: "left" },
+              { label: "center", value: "center" },
+              { label: "right", value: "right" },
+            ]}
+          />
+        </FormItem>
+      )}
       <Checkbox onChange={(e) => handleChange("stretched", e.target.checked)}>
         stretched
       </Checkbox>
