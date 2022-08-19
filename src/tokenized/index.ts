@@ -305,6 +305,9 @@ export type { SearchProps } from "../components/Search/Search";
 export { Header } from "../components/Header/Header";
 export type { HeaderProps } from "../components/Header/Header";
 
+export { SubnavigationButton } from "../components/SubnavigationButton/SubnavigationButton";
+export type { SubnavigationButtonProps } from "../components/SubnavigationButton/SubnavigationButton";
+
 export { Panel } from "../components/Panel/Panel";
 export type { PanelProps } from "../components/Panel/Panel";
 
