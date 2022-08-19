@@ -3,7 +3,7 @@ import {
   Icon20Dropdown,
   Icon24ChevronDown,
   Icon24ChevronUp,
-  Icon20ChevronUpOutline,
+  Icon20ChevronUp,
 } from "@vkontakte/icons";
 import { classNames } from "../../lib/classNames";
 import { SizeType } from "../AdaptivityProvider/AdaptivityContext";
@@ -23,9 +23,7 @@ export const DropdownIcon = ({
   let Icon = sizeY === SizeType.COMPACT ? Icon20Dropdown : Icon24ChevronDown;
 
   if (opened) {
-    // TODO: заменить Icon20ChevronUpOutline на новую иконку, как только ее подвезут
-    Icon =
-      sizeY === SizeType.COMPACT ? Icon20ChevronUpOutline : Icon24ChevronUp;
+    Icon = sizeY === SizeType.COMPACT ? Icon20ChevronUp : Icon24ChevronUp;
   }
 
   return <Icon vkuiClass={classNames("DropdownIcon")} {...restProps} />;
