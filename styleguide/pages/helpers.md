@@ -98,7 +98,7 @@ class Example extends React.Component {
               <List>
                 {!editing && (
                   <CellButton
-                    style={{ color: "var(--accent)" }}
+                    style={{ color: "var(--vkui--color_icon_accent)" }}
                     before={
                       <div
                         style={{

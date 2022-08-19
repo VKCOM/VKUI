@@ -159,7 +159,7 @@ const ExampleWithPlatform = withPlatform(Example);
       border: "1px solid",
       margin: "100px 100px 0",
       position: "relative",
-      background: "var(--background_content)",
+      background: "var(--vkui--color_background_content)",
       zIndex: 1,
     }}
   >
@@ -175,7 +175,7 @@ const ExampleWithPlatform = withPlatform(Example);
       border: "1px solid",
       margin: "64px 100px 100px",
       position: "relative",
-      background: "var(--background_content)",
+      background: "var(--vkui--color_background_content)",
       zIndex: 1,
     }}
   >

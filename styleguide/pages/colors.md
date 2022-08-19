@@ -4,9 +4,9 @@
 
 ```css static
 .MyBlock {
-  background: var(--background_content);
-  color: var(--text_primary);
+  background: var(--vkui--color_background_content);
+  color: var(--vkui--color_text_primary);
 }
 ```
 
-Доступные цвета находятся [тут](https://github.com/VKCOM/VKUI/blob/master/src/styles/bright_light.css)
+Доступные цвета находятся [тут](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkBase/cssVars/declarations/onlyVariables.css)

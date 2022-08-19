@@ -6,7 +6,12 @@ const [text, setText] = useState("one");
 const [horizontalText, setHorizontalText] = useState("one");
 const [indicator, setIndicator] = useState("one");
 
-<div style={{ background: "var(--background_page)", padding: "10px 0" }}>
+<div
+  style={{
+    background: "var(--vkui--color_background)",
+    padding: "10px 0",
+  }}
+>
   <div style={{ maxWidth: 768, margin: "auto" }}>
     <Tabbar style={{ position: "static", margin: "0 0 10px" }}>
       <TabbarItem selected={simple === "one"} onClick={() => setSimple("one")}>

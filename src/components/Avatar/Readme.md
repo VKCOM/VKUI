@@ -551,14 +551,14 @@
           <Avatar mode="image" src={getAvatarUrl("audio_arctic_monkeys")} />
         }
         description="Arctic Monkeys"
-        after={<Icon24MoreHorizontal fill="var(--accent)" />}
+        after={<Icon24MoreHorizontal fill="var(--vkui--color_icon_accent)" />}
       >
         I Wanna Be Yours
       </SimpleCell>
       <SimpleCell
         before={<Avatar mode="image" src={getAvatarUrl("audio_leto_zveri")} />}
         description="Лето (звери)"
-        after={<Icon24MoreHorizontal fill="var(--accent)" />}
+        after={<Icon24MoreHorizontal fill="var(--vkui--color_icon_accent)" />}
       >
         6 утра
       </SimpleCell>
@@ -567,7 +567,7 @@
           <Avatar mode="image" src={getAvatarUrl("audio_depeche_mode")} />
         }
         description="Depeche Mode"
-        after={<Icon24MoreHorizontal fill="var(--accent)" />}
+        after={<Icon24MoreHorizontal fill="var(--vkui--color_icon_accent)" />}
       >
         Enjoy the Silence
       </SimpleCell>

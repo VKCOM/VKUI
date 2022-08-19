@@ -8,39 +8,73 @@ const [showArrows, setShowArrows] = useState(true);
     <PanelHeader>Gallery</PanelHeader>
     <Group header={<Header mode="secondary">Sticks right</Header>}>
       <Gallery slideWidth="90%" bullets="dark">
-        <div style={{ backgroundColor: "var(--destructive)" }} />
+        <div
+          style={{ backgroundColor: "var(--vkui--color_background_negative)" }}
+        />
         <img
           src="https://picsum.photos/1024/640"
           style={{ display: "block" }}
         />
-        <div style={{ backgroundColor: "var(--accent)" }} />
+        <div
+          style={{ backgroundColor: "var(--vkui--color_background_accent)" }}
+        />
       </Gallery>
     </Group>
     <Group header={<Header mode="secondary">Sticks left</Header>}>
       <Gallery slideWidth="90%" align="right">
-        <div style={{ height: 150, backgroundColor: "var(--destructive)" }} />
-        <div style={{ backgroundColor: "var(--button_commerce_background)" }} />
-        <div style={{ backgroundColor: "var(--accent)" }} />
+        <div
+          style={{
+            height: 150,
+            backgroundColor: "var(--vkui--color_background_negative)",
+          }}
+        />
+        <div
+          style={{ backgroundColor: "var(--vkui--color_background_positive)" }}
+        />
+        <div
+          style={{ backgroundColor: "var(--vkui--color_background_accent)" }}
+        />
       </Gallery>
     </Group>
     <Group header={<Header mode="secondary">Centered</Header>}>
       <Gallery slideWidth="90%" align="center">
-        <div style={{ backgroundColor: "var(--destructive)" }} />
-        <div style={{ backgroundColor: "var(--button_commerce_background)" }} />
-        <div style={{ backgroundColor: "var(--accent)" }} />
+        <div
+          style={{ backgroundColor: "var(--vkui--color_background_negative)" }}
+        />
+        <div
+          style={{ backgroundColor: "var(--vkui--color_background_positive)" }}
+        />
+        <div
+          style={{ backgroundColor: "var(--vkui--color_background_accent)" }}
+        />
       </Gallery>
     </Group>
     <Group header={<Header mode="secondary">Custom width</Header>}>
       <Gallery slideWidth="custom" style={{ height: 150 }}>
-        <div style={{ width: 200, backgroundColor: "var(--destructive)" }} />
+        <div
+          style={{
+            width: 200,
+            backgroundColor: "var(--vkui--color_background_negative)",
+          }}
+        />
         <div
           style={{
             width: 120,
-            backgroundColor: "var(--button_commerce_background)",
+            backgroundColor: "var(--vkui--color_background_positive)",
           }}
         />
-        <div style={{ width: 70, backgroundColor: "var(--accent)" }} />
-        <div style={{ width: 220, backgroundColor: "var(--icon_secondary)" }} />
+        <div
+          style={{
+            width: 70,
+            backgroundColor: "var(--vkui--color_background_accent)",
+          }}
+        />
+        <div
+          style={{
+            width: 220,
+            backgroundColor: "var(--vkui--color_icon_secondary)",
+          }}
+        />
       </Gallery>
     </Group>
     <Group header={<Header mode="secondary">Arrows</Header>}>
@@ -50,9 +84,15 @@ const [showArrows, setShowArrows] = useState(true);
         bullets="dark"
         showArrows
       >
-        <div style={{ backgroundColor: "var(--destructive)" }} />
-        <div style={{ backgroundColor: "var(--button_commerce_background)" }} />
-        <div style={{ backgroundColor: "var(--accent)" }} />
+        <div
+          style={{ backgroundColor: "var(--vkui--color_background_negative)" }}
+        />
+        <div
+          style={{ backgroundColor: "var(--vkui--color_background_positive)" }}
+        />
+        <div
+          style={{ backgroundColor: "var(--vkui--color_background_accent)" }}
+        />
       </Gallery>
     </Group>
     <Group header={<Header mode="secondary">Controlled</Header>}>
@@ -65,9 +105,15 @@ const [showArrows, setShowArrows] = useState(true);
         isDraggable={isDraggable}
         showArrows={showArrows}
       >
-        <div style={{ backgroundColor: "var(--destructive)" }} />
-        <div style={{ backgroundColor: "var(--button_commerce_background)" }} />
-        <div style={{ backgroundColor: "var(--accent)" }} />
+        <div
+          style={{ backgroundColor: "var(--vkui--color_background_negative)" }}
+        />
+        <div
+          style={{ backgroundColor: "var(--vkui--color_background_positive)" }}
+        />
+        <div
+          style={{ backgroundColor: "var(--vkui--color_background_accent)" }}
+        />
       </Gallery>
 
       <FormItem>

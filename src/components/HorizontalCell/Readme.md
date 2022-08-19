@@ -25,7 +25,7 @@ const HorizontalCellExample = withPlatform(
         width: 220,
         height: 124,
         borderRadius: 8,
-        border: "1px solid var(--placeholder_icon_background)",
+        border: "1px solid var(--vkui--color_image_placeholder_alpha)",
         objectFit: "cover",
       };
 
