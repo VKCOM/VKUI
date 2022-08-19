@@ -10,6 +10,9 @@ export type { FormItemProps } from "../components/FormItem/FormItem";
 export { FormLayoutGroup } from "../components/FormLayoutGroup/FormLayoutGroup";
 export type { FormLayoutGroupProps } from "../components/FormLayoutGroup/FormLayoutGroup";
 
+export { FormStatus } from "../components/FormStatus/FormStatus";
+export type { FormStatusProps } from "../components/FormStatus/FormStatus";
+
 export { Button } from "../components/Button/Button";
 export type { ButtonProps } from "../components/Button/Button";
 

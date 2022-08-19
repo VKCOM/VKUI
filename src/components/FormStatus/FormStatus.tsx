@@ -1,7 +1,5 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
-import { usePlatform } from "../../hooks/usePlatform";
 import { Headline } from "../Typography/Headline/Headline";
 import { Caption } from "../Typography/Caption/Caption";
 import { hasReactNode } from "../../lib/utils";
@@ -12,7 +10,10 @@ export interface FormStatusProps extends React.HTMLAttributes<HTMLDivElement> {
   header?: React.ReactNode;
 }
 
+/* TODO: v5.0.0 удалить */
+
 /**
+ * @deprecated Этот компонент устарел и будет удален в v5.0.0. Используйте [`Banner`](#/Banner).
  * @see https://vkcom.github.io/VKUI/#/FormStatus
  */
 export const FormStatus = ({
@@ -22,15 +23,10 @@ export const FormStatus = ({
   dangerouslySetInnerHTML,
   ...restProps
 }: FormStatusProps) => {
-  const platform = usePlatform();
-
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(
-        getClassName("FormStatus", platform),
-        `FormStatus--${mode}`
-      )}
+      vkuiClass={classNames("FormStatus", `FormStatus--${mode}`)}
     >
       {hasReactNode(header) && (
         <Headline weight="2" vkuiClass="FormStatus__header">
