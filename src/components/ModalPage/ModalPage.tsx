@@ -35,13 +35,7 @@ export interface ModalPageProps
    * > - Для `viewWidth < SMALL_TABLET_SIZE` будет всегда `"s"`
    * > - Для `platform === VKCOM` максимальная ширина зашита, её не изменить.
    */
-  maxWidth?: false | "s" | "m" | "l";
-  /**
-   * Включает растягивание до `maxWidth`.
-   *
-   * > ⚠️ Для `viewWidth < SMALL_TABLET_SIZE` будет всегда `true`.
-   */
-  stretched?: boolean;
+  size?: "s" | "m" | "l";
   /**
    * Будет вызвано при начале открытия модалки.
    */
@@ -78,8 +72,7 @@ const warn = warnOnce("ModalPage");
 const ModalPageComponent = ({
   children,
   header,
-  maxWidth: maxWidthProp = "s",
-  stretched: stretchedProp = true,
+  size: sizeProp = "s",
   viewWidth,
   viewHeight,
   sizeX,
@@ -109,8 +102,7 @@ const ModalPageComponent = ({
 
   const isDesktop = useAdaptivityIsDesktop();
   const isCloseButtonShown = !hideCloseButton && isDesktop;
-  const maxWidth: typeof maxWidthProp = isDesktop ? maxWidthProp : "s";
-  const stretched = isDesktop ? stretchedProp : true;
+  const size = isDesktop ? sizeProp : "s";
 
   const modalContext = React.useContext(ModalRootContext);
   const { refs } = useModalRegistry(
@@ -128,8 +120,7 @@ const ModalPageComponent = ({
         platform === Platform.VKCOM && "ModalPage--vkcom",
         `ModalPage--sizeX-${sizeX}`, // TODO v5.0.0 поправить под новую адаптивность
         isDesktop && "ModalPage--desktop",
-        maxWidth !== false && `ModalPage--${maxWidth}`,
-        stretched && "ModalPage--stretched"
+        size && `ModalPage--${size}`
       )}
     >
       <div vkuiClass="ModalPage__in-wrap" ref={refs.innerElement}>
