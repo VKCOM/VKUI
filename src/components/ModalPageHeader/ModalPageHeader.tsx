@@ -6,7 +6,6 @@ import { VKCOM } from "../../lib/platform";
 import { Separator } from "../Separator/Separator";
 import { PanelHeader, PanelHeaderProps } from "../PanelHeader/PanelHeader";
 import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
 import "./ModalPageHeader.css";
 
 export interface ModalPageHeaderProps
@@ -25,12 +24,14 @@ export const ModalPageHeader = ({
 }: ModalPageHeaderProps) => {
   const platform = usePlatform();
   const hasSeparator = separator && platform === VKCOM;
+  // TODO v5.0.0 поправить под новую адаптивность
   const isDesktop = useAdaptivityIsDesktop();
 
   return (
     <div
       vkuiClass={classNames(
-        getClassName("ModalPageHeader", platform),
+        "ModalPageHeader",
+        platform !== VKCOM && "ModalPageHeader--withGaps",
         isDesktop && "ModalPageHeader--desktop"
       )}
       ref={getRef}
