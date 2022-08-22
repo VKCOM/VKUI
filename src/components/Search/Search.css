@@ -54,8 +54,8 @@
 }
 
 .Search--has-after .Search__input {
-  border-radius: var(--vkui--size_border_radius--regular) 0 0
-    var(--vkui--size_border_radius--regular);
+border-top-right-radius: 0px;
+border-bottom-right-radius: 0px;
 }
 
 .Search--has-value .Search__input,
