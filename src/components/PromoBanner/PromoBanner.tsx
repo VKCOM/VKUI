@@ -4,8 +4,6 @@ import { Button } from "../Button/Button";
 import { SimpleCell } from "../SimpleCell/SimpleCell";
 import { Avatar } from "../Avatar/Avatar";
 import { Caption } from "../Typography/Caption/Caption";
-import { usePlatform } from "../../hooks/usePlatform";
-import { getClassName } from "../../helpers/getClassName";
 import { warnOnce } from "../../lib/warnOnce";
 import "./PromoBanner.css";
 
@@ -58,8 +56,6 @@ export const PromoBanner = ({
   isCloseButtonHidden,
   ...restProps
 }: PromoBannerProps) => {
-  const platform = usePlatform();
-
   const ageRestrictions =
     bannerData.ageRestrictions != null
       ? parseInt(bannerData.ageRestrictions)
@@ -96,7 +92,7 @@ export const PromoBanner = ({
   }, [statsPixels.playbackStarted]);
 
   return (
-    <div vkuiClass={getClassName("PromoBanner", platform)} {...restProps}>
+    <div vkuiClass="PromoBanner" {...restProps}>
       <div vkuiClass="PromoBanner__head">
         <Caption vkuiClass="PromoBanner__label">
           {bannerData.advertisingLabel || "Advertisement"}

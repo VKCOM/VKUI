@@ -57,7 +57,7 @@ const Example = withAdaptivity(
                       i === panel
                         ? {
                             backgroundColor:
-                              "var(--button_secondary_background)",
+                              "var(--vkui--color_background_secondary)",
                             borderRadius: 8,
                           }
                         : {}

@@ -21,12 +21,14 @@ export const MOBILE_SIZE = 320;
 export const MOBILE_LANDSCAPE_HEIGHT = 414;
 export const MEDIUM_HEIGHT = 720;
 
+export interface AdaptivityProviderProps extends AdaptivityProps {
+  children?: React.ReactNode;
+}
+
 /**
  * @see https://vkcom.github.io/VKUI/#/AdaptivityProvider
  */
-const AdaptivityProvider = (
-  props: React.PropsWithChildren<AdaptivityProps>
-) => {
+export const AdaptivityProvider = (props: AdaptivityProviderProps) => {
   const adaptivityRef = React.useRef<ReturnType<
     typeof calculateAdaptivity
   > | null>(null);
@@ -170,5 +172,3 @@ function calculateAdaptivity(
 
   return { viewWidth, viewHeight, sizeX, sizeY, hasMouse, deviceHasHover };
 }
-
-export { AdaptivityProvider };
