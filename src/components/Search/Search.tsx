@@ -130,9 +130,9 @@ const SearchComponent = ({
         // TODO: V5 перенести на новую адаптивность
         `Search--sizeY-${sizeY}`,
         isFocused && "Search--focused",
-        Boolean(value) && "Search--has-value",
-        Boolean(icon) && "Search--has-after",
-        Boolean(after) && "Search--has-icon"
+        value && "Search--has-value",
+        icon && "Search--has-after",
+        after && "Search--has-icon"
       )}
       className={className}
       style={style}
