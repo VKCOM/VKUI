@@ -54,8 +54,8 @@
 }
 
 .Search--has-after .Search__input {
-border-top-right-radius: 0px;
-border-bottom-right-radius: 0px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .Search--has-value .Search__input,
