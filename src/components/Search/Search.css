@@ -190,18 +190,12 @@
 .Search__placeholder,
 .Search__placeholder-in,
 .Search__icon {
-  height: var(
-    --search_default_height,
-    var(--vkui--size_search_height--compact)
-  );
+  height: var(--vkui--size_search_height--compact);
 }
 
 .Search__after-width,
 .Search__after {
-  line-height: var(
-    --search_default_height,
-    var(--vkui--size_search_height--compact)
-  );
+  line-height: var(--vkui--size_search_height--compact);
 }
 
 /*
