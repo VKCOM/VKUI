@@ -299,6 +299,9 @@ export type { TabbarProps } from "../components/Tabbar/Tabbar";
 export { TabbarItem } from "../components/TabbarItem/TabbarItem";
 export type { TabbarItemProps } from "../components/TabbarItem/TabbarItem";
 
+export { Search } from "../components/Search/Search";
+export type { SearchProps } from "../components/Search/Search";
+
 export { Header } from "../components/Header/Header";
 export type { HeaderProps } from "../components/Header/Header";
 
