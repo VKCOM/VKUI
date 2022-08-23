@@ -93,7 +93,7 @@ const SubnavigationButtonExample = () => {
             <SubnavigationButton
               before={<Icon24ScanViewfinderOutline />}
               size="l"
-              textLevel={1}
+              textLevel="1"
             >
               Сканировать QR
             </SubnavigationButton>
@@ -103,7 +103,7 @@ const SubnavigationButtonExample = () => {
             <SubnavigationButton
               before={<Icon24ScanViewfinderOutline />}
               size="l"
-              textLevel={2}
+              textLevel="2"
             >
               Сканировать QR
             </SubnavigationButton>
@@ -113,7 +113,7 @@ const SubnavigationButtonExample = () => {
             <SubnavigationButton
               before={<Icon24ScanViewfinderOutline />}
               size="l"
-              textLevel={3}
+              textLevel="3"
             >
               Сканировать QR
             </SubnavigationButton>

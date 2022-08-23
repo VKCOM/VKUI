@@ -17,7 +17,7 @@ export interface SubnavigationButtonProps extends Omit<TappableProps, "size"> {
   /**
    * Размер шрифта. Этим свойством рекомендуется пользоваться, чтобы отрегулировать размер шрифта у кнопок в `<SubnavigationBar mode="fixed" />`
    */
-  textLevel?: 1 | 2 | 3;
+  textLevel?: "1" | "2" | "3";
   /**
    * Рекомендуется использовать только иконки с размером 24
    */
@@ -37,11 +37,11 @@ const SubnavigationButtonTypography = ({
   textLevel,
   ...restProps
 }: SubnavButtonTypographyProps) => {
-  if (textLevel === 1) {
+  if (textLevel === "1") {
     return <Subhead {...restProps} />;
   }
 
-  return textLevel === 2 ? (
+  return textLevel === "2" ? (
     <Footnote {...restProps} />
   ) : (
     <Caption {...restProps} />
@@ -54,7 +54,7 @@ const SubnavigationButtonTypography = ({
 export const SubnavigationButton = ({
   size = "m",
   selected,
-  textLevel = 1,
+  textLevel = "1",
   before,
   after,
   expandable,
