@@ -1,19 +1,24 @@
 .MiniInfoCell {
   display: flex;
   padding: 6px var(--vkui--size_base_padding_horizontal--regular);
-}
-
-.MiniInfoCell--lvl-primary {
-  color: var(--text_primary, var(--vkui--color_text_primary));
-}
-
-.MiniInfoCell--lvl-secondary {
   color: var(--text_subhead, var(--vkui--color_text_subhead));
 }
 
-.MiniInfoCell__icon {
+.MiniInfoCell--accent {
+  color: var(--text_primary, var(--vkui--color_text_primary));
+}
+
+.MiniInfoCell__before {
   margin-right: 12px;
   color: var(--icon_outline_secondary, var(--vkui--color_icon_secondary));
+}
+
+.MiniInfoCell__middle {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
 }
 
 .MiniInfoCell__content {
@@ -24,7 +29,7 @@
   white-space: nowrap;
 }
 
-.MiniInfoCell--wr-short .MiniInfoCell__content {
+.MiniInfoCell--short .MiniInfoCell__content {
   white-space: initial;
   display: -webkit-box;
   max-height: 60px;
@@ -32,9 +37,13 @@
   -webkit-box-orient: vertical;
 }
 
-.MiniInfoCell--wr-full .MiniInfoCell__content {
+.MiniInfoCell--full .MiniInfoCell__content {
   overflow: inherit;
   white-space: initial;
+}
+
+.MiniInfoCell--nowrap .MiniInfoCell__content {
+  flex: 0 1 auto;
 }
 
 .MiniInfoCell__after {
@@ -47,23 +56,28 @@
 * TODO Когда избавимся от appearance токенов - объединить классы
  */
 
-.MiniInfoCell--md-add {
+.MiniInfoCell--add {
   color: var(--accent, var(--vkui--color_text_link));
 }
 
-.MiniInfoCell--md-add .MiniInfoCell__icon {
+.MiniInfoCell--add .MiniInfoCell__before {
   color: var(--accent, var(--vkui--color_icon_accent));
 }
 
-.MiniInfoCell--md-more {
+.MiniInfoCell--more {
   color: var(--link_alternate, var(--vkui--color_text_link));
 }
 
-.MiniInfoCell--md-more .MiniInfoCell__icon {
+.MiniInfoCell--more .MiniInfoCell__before {
   color: var(--link_alternate, var(--vkui--color_icon_accent));
 }
 
-.MiniInfoCell--md-more {
+.MiniInfoCell--more {
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+.MiniInfoCell__middle .Icon {
+  margin-left: 4px;
+  color: var(--accent, var(--vkui--color_text_accent));
 }
