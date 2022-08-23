@@ -37,7 +37,7 @@ describe("SubnavigationButton", () => {
       },
       {
         size: ["l"],
-        textLevel: [1, 2, 3],
+        textLevel: ["1", "2", "3"],
         children: ["Сканировать QR"],
       },
     ]
