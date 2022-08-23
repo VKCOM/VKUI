@@ -72,7 +72,7 @@
 
 .Search__after-width {
   font-size: 17px;
-  padding-left: 12px;
+  padding-left: 16px;
   padding-right: 4px;
   flex-shrink: 0;
   pointer-events: none;
@@ -162,7 +162,7 @@
   z-index: 2;
   cursor: pointer;
   font-size: 17px;
-  padding-left: 12px;
+  padding-left: 16px;
   padding-right: 4px;
 }
 
@@ -237,12 +237,24 @@
   );
 }
 
-.Search__control:hover {
+.Search__in:hover .Search__control,
+.Search__in:hover .Search__after-width,
+.Search__in:hover .Search__after::after {
   background-color: var(--vkui--color_search_field_background--hover);
 }
 
-.Search__control:active {
+.Search__in:hover .Search__after-width {
+  color: var(--vkui--color_search_field_background--hover);
+}
+
+.Search__in:active .Search__control,
+.Search__in:active .Search__after-width,
+.Search__in:active .Search__after::after {
   background-color: var(--vkui--color_search_field_background--active);
+}
+
+.Search__in:active .Search__after-width {
+  color: var(--vkui--color_search_field_background--active);
 }
 
 .Search__input {
@@ -347,6 +359,8 @@
 }
 
 .Search--vkcom,
+.Search--vkcom .Search__in:hover .Search__control,
+.Search--vkcom .Search__in:active .Search__control,
 .PanelHeader--vkcom .Search {
   background: transparent;
 }

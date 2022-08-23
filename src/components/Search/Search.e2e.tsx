@@ -26,7 +26,7 @@ describe("Search", () => {
     await mount(
       <ConfigProvider platform={IOS}>
         <AppRoot embedded>
-          <AdaptivityProvider sizeY={SizeType.COMPACT}>
+          <AdaptivityProvider sizeY={SizeType.REGULAR}>
             <Search after="after" style={{ maxWidth: "320px" }} />
           </AdaptivityProvider>
         </AppRoot>
