@@ -10,6 +10,7 @@ export const FormFieldMode = {
 } as const;
 
 export interface FormFieldProps {
+  status?: "default" | "error" | "valid";
   /**
    * Добавляет иконку слева.
    *
@@ -44,6 +45,7 @@ interface FormFieldOwnProps
  */
 export const FormField = ({
   Component = "div",
+  status = "default",
   children,
   getRootRef,
   before,
@@ -75,6 +77,7 @@ export const FormField = ({
       vkuiClass={classNames(
         "FormField",
         `FormField--${mode}`,
+        `FormField--status-${status}`,
         `FormField--sizeY-${sizeY}`, // TODO v5.0.0 поправить под новую адаптивность
         disabled && "FormField--disabled",
         !disabled && hover && "FormField--hover"

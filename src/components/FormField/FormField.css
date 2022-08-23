@@ -77,7 +77,8 @@
  * CMP:
  * FormItem
  */
-.FormItem--error .FormField__border {
+.FormItem--error .FormField__border,
+.FormField--status-error .FormField__border {
   background-color: var(
     --field_error_background,
     var(--vkui--color_background_negative_tint)
@@ -86,7 +87,8 @@
   z-index: 3;
 }
 
-.FormItem--valid .FormField__border {
+.FormItem--valid .FormField__border,
+.FormField--status-valid .FormField__border {
   border-color: var(--field_valid_border, var(--vkui--color_stroke_positive));
   z-index: 3;
 }

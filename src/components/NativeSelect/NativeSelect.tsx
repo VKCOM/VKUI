@@ -1,7 +1,7 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
-import { FormField } from "../FormField/FormField";
+import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasAlign, HasRef, HasRootRef } from "../../types";
 import { withAdaptivity } from "../../hoc/withAdaptivity";
 import { getClassName } from "../../helpers/getClassName";
@@ -21,7 +21,8 @@ export interface NativeSelectProps
     HasRef<HTMLSelectElement>,
     HasRootRef<HTMLLabelElement>,
     HasAlign,
-    AdaptivityProps {
+    AdaptivityProps,
+    Pick<FormFieldProps, "status"> {
   placeholder?: string;
   multiline?: boolean;
   selectType?: keyof typeof SelectType;
@@ -47,6 +48,7 @@ const NativeSelectComponent = ({
   sizeY,
   multiline,
   selectType = SelectType.default,
+  status,
   ...restProps
 }: NativeSelectProps & AdaptivityContextInterface) => {
   const platform = usePlatform();
@@ -80,6 +82,7 @@ const NativeSelectComponent = ({
       getRootRef={getRootRef}
       disabled={disabled}
       after={<DropdownIcon />}
+      status={status}
     >
       <select
         {...restProps}

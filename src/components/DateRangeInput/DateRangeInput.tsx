@@ -12,7 +12,7 @@ import { useDateInput } from "../../hooks/useDateInput";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { classNames } from "../../lib/classNames";
 import { multiRef } from "../../lib/utils";
-import { FormField } from "../FormField/FormField";
+import { FormField, FormFieldProps } from "../FormField/FormField";
 import { InputLike } from "../InputLike/InputLike";
 import { InputLikeDivider } from "../InputLike/InputLikeDivider";
 import { callMultiple } from "../../lib/callMultiple";
@@ -37,7 +37,8 @@ export interface DateRangeInputProps
       | "prevMonthIcon"
       | "nextMonthIcon"
     >,
-    HasRootRef<HTMLDivElement> {
+    HasRootRef<HTMLDivElement>,
+    FormFieldProps {
   calendarPlacement?: Placement;
   closeOnChange?: boolean;
   clearFieldAriaLabel?: string;

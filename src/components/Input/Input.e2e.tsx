@@ -14,6 +14,9 @@ describe("Input", () => {
       {
         $adaptivity: "y",
       },
+      {
+        status: ["error", "valid"],
+      },
     ]
   );
 });

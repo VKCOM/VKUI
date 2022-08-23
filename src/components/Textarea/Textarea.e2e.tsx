@@ -23,6 +23,9 @@ describe("Textarea", () => {
         "Музыка\nСпорт\nФотография\nПлавание\nПрограммирование\nПутешествия\nКниги\nСериалы\nФильмы\nНастольные игры",
       ],
     },
+    {
+      status: ["error", "valid"],
+    },
   ]);
   it("fits size to content", async () => {
     await mount(
