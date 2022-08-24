@@ -33,15 +33,9 @@ interface PathElementProps extends React.SVGAttributes<SVGElement> {
 function PathElement({ photoSize, direction, ...props }: PathElementProps) {
   switch (direction) {
     case "circle":
-      switch (photoSize) {
-        case 16:
-          return <circle cx="8" cy="8" r="8" {...props} />;
-        case 24:
-          return <circle cx="12" cy="12" r="12" {...props} />;
-
-        default:
-          return <circle cx="16" cy="16" r="16" {...props} />;
-      }
+      const radius = photoSize / 2;
+      
+      return <circle cx={radius} cy={radius} r={radius} {...props} />;
 
     case "right":
       switch (photoSize) {
