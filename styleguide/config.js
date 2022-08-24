@@ -345,7 +345,7 @@ const baseConfig = {
           content: "./pages/design.md",
         },
         {
-          title: "Кастомизация",
+          title: "Цвета и кастомизация",
           name: "Customize",
           content: "./pages/customize.md",
         },
