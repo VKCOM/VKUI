@@ -25,6 +25,71 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
   visibleCount?: number;
 }
 
+interface PathElementProps extends React.SVGAttributes<SVGElement> {
+  photoSize: number;
+  direction: "circle" | "right" | "left";
+}
+
+function PathElement({ photoSize, direction, ...props }: PathElementProps) {
+  switch (direction) {
+    case "circle":
+      switch (photoSize) {
+        case 16:
+          return <circle cx="8" cy="8" r="8" {...props} />;
+        case 24:
+          return <circle cx="12" cy="12" r="12" {...props} />;
+
+        default:
+          return <circle cx="16" cy="16" r="16" {...props} />;
+      }
+
+    case "right":
+      switch (photoSize) {
+        case 24:
+          return (
+            <path
+              d="M22,18.625A12 12 0 0 1 12 24A12 12 0 0 1 12 0A12 12 0 0 1 22 5.375A12 12 0 0 0 22,18.625"
+              {...props}
+            />
+          );
+
+        default:
+          return (
+            <path
+              d="M30,23.75A16 16 0 0 1 16 32A16 16 0 0 1 16 0A16 16 0 0 1 30 8.25A16 16 0 0 0 30,23.75"
+              {...props}
+            />
+          );
+      }
+
+    default:
+      switch (photoSize) {
+        case 16:
+          return (
+            <path
+              d="M2,13.285A8 8 0 0 0 8 16A8 8 0 0 0 8 0A8 8 0 0 0 2 2.715A8 8 0 0 1 2,13.285"
+              {...props}
+            />
+          );
+        case 24:
+          return (
+            <path
+              d="M2,18.625A12 12 0 0 0 12 24A12 12 0 0 0 12 0A12 12 0 0 0 2 5.375A12 12 0 0 1 2,18.625"
+              {...props}
+            />
+          );
+
+        default:
+          return (
+            <path
+              d="M2,23.75A16 16 0 0 0 16 32A16 16 0 0 0 16 0A16 16 0 0 0 2 8.25A16 16 0 0 1 2,23.75"
+              {...props}
+            />
+          );
+      }
+  }
+}
+
 /**
  * @see https://vkcom.github.io/VKUI/#/UsersStack
  */
@@ -64,9 +129,6 @@ export const UsersStack = ({
           const direction =
             i === 0 && !canShowOthers ? "circle" : directionClip;
 
-          const pathClassName = `UsersStack--${photoSize}-${direction}`;
-          const PathComponent = direction === "circle" ? "circle" : "path";
-
           return (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -75,12 +137,15 @@ export const UsersStack = ({
               aria-hidden
             >
               <g vkuiClass={`UsersStack__mask--${photoSize}-${direction}`}>
-                <PathComponent
-                  vkuiClass={classNames("UsersStack__fill", pathClassName)}
+                <PathElement
+                  direction={direction}
+                  photoSize={photoSize}
+                  vkuiClass="UsersStack__fill"
                 />
                 <image href={photo} width={photoSize} height={photoSize} />
-                <PathComponent
-                  vkuiClass={pathClassName}
+                <PathElement
+                  direction={direction}
+                  photoSize={photoSize}
                   fill="none"
                   stroke="rgba(0, 0, 0, 0.08)"
                 />
