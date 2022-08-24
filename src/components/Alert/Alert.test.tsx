@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import { ViewWidth } from "../../lib/adaptivity";
 import { baselineComponent, runAllTimers } from "../../testing/utils";
 import { Alert } from "./Alert";
 import { Platform } from "../../lib/platform";

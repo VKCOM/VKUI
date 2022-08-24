@@ -4,7 +4,7 @@ import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { PanelHeader } from "../PanelHeader/PanelHeader";
 import { Group } from "../Group/Group";
 import { AppRoot } from "../AppRoot/AppRoot";
-import { SizeType } from "../AdaptivityProvider/AdaptivityContext";
+import { SizeType } from "../../lib/adaptivity";
 
 describe("Panel", () => {
   const content = (h: number) => (

@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import { ViewWidth } from "../../lib/adaptivity";
 import {
   baselineComponent,
   waitForPopper,

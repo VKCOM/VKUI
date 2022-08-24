@@ -1,24 +1,16 @@
 import * as React from "react";
 import { hasMouse as _hasMouse } from "@vkontakte/vkjs";
 import {
-  AdaptivityContext,
-  AdaptivityProps,
   SizeType,
-  ViewHeight,
   ViewWidth,
-} from "./AdaptivityContext";
+  ViewHeight,
+  Breakpoints,
+} from "../../lib/adaptivity";
 import {
   useBridgeAdaptivity,
   BridgeAdaptivity,
 } from "../../hooks/useBridgeAdaptivity";
-
-export const DESKTOP_SIZE = 1280;
-export const TABLET_SIZE = 1024;
-export const SMALL_TABLET_SIZE = 768;
-export const MOBILE_SIZE = 320;
-
-export const MOBILE_LANDSCAPE_HEIGHT = 414;
-export const MEDIUM_HEIGHT = 720;
+import { type AdaptivityProps, AdaptivityContext } from "./AdaptivityContext";
 
 /**
  * @see https://vkcom.github.io/VKUI/#/AdaptivityProvider
@@ -72,21 +64,21 @@ function calculateAdaptivity(
   if (bridge.type === "adaptive") {
     const { viewportWidth, viewportHeight } = bridge;
 
-    if (viewportWidth >= DESKTOP_SIZE) {
+    if (viewportWidth >= Breakpoints.DESKTOP) {
       viewWidth = ViewWidth.DESKTOP;
-    } else if (viewportWidth >= TABLET_SIZE) {
+    } else if (viewportWidth >= Breakpoints.TABLET) {
       viewWidth = ViewWidth.TABLET;
-    } else if (viewportWidth >= SMALL_TABLET_SIZE) {
+    } else if (viewportWidth >= Breakpoints.SMALL_TABLET) {
       viewWidth = ViewWidth.SMALL_TABLET;
-    } else if (viewportWidth >= MOBILE_SIZE) {
+    } else if (viewportWidth >= Breakpoints.MOBILE) {
       viewWidth = ViewWidth.MOBILE;
     } else {
       viewWidth = ViewWidth.SMALL_MOBILE;
     }
 
-    if (viewportHeight >= MEDIUM_HEIGHT) {
+    if (viewportHeight >= Breakpoints.MEDIUM_HEIGHT) {
       viewHeight = ViewHeight.MEDIUM;
-    } else if (viewportHeight > MOBILE_LANDSCAPE_HEIGHT) {
+    } else if (viewportHeight > Breakpoints.MOBILE_LANDSCAPE_HEIGHT) {
       viewHeight = ViewHeight.SMALL;
     } else {
       viewHeight = ViewHeight.EXTRA_SMALL;

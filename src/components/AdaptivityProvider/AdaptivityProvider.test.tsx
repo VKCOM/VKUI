@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import { baselineComponent } from "../../testing/utils";
 import { AdaptivityProvider } from "./AdaptivityProvider";
-import { SizeType, ViewHeight, ViewWidth } from "./AdaptivityContext";
+import { SizeType, ViewHeight, ViewWidth } from "../../lib/adaptivity";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useBridgeAdaptivity } from "../../hooks/useBridgeAdaptivity";
 

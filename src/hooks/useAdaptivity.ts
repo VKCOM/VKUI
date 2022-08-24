@@ -2,7 +2,7 @@ import * as React from "react";
 import { hasMouse as _hasMouse } from "@vkontakte/vkjs";
 import {
   AdaptivityContext,
-  AdaptivityProps,
+  type AdaptivityProps,
 } from "../components/AdaptivityProvider/AdaptivityContext";
 
 export type { AdaptivityProps };

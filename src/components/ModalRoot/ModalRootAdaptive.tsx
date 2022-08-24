@@ -3,7 +3,7 @@ import { ModalRootTouch } from "./ModalRoot";
 import { ModalRootDesktop } from "./ModalRootDesktop";
 import { useScrollLock } from "../AppRoot/ScrollContext";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import { ViewWidth } from "../../lib/adaptivity";
 import { usePlatform } from "../../hooks/usePlatform";
 import { Platform } from "../../lib/platform";
 

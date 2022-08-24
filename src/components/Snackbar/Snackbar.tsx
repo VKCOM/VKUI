@@ -12,8 +12,7 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useTimeout } from "../../hooks/useTimeout";
 import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
-import { SMALL_TABLET_SIZE } from "../AdaptivityProvider/AdaptivityProvider";
+import { Breakpoints, ViewWidth } from "../../lib/adaptivity";
 import { useDOM } from "../../lib/dom";
 import "./Snackbar.css";
 
@@ -159,7 +158,7 @@ export const Snackbar = (props: SnackbarProps) => {
       const isDesktop =
         viewWidth !== undefined
           ? viewWidth >= ViewWidth.SMALL_TABLET
-          : window!.innerWidth >= SMALL_TABLET_SIZE;
+          : window!.innerWidth >= Breakpoints.SMALL_TABLET;
 
       if (isDesktop && shiftXCurrent <= -50) {
         closeTimeout.clear();

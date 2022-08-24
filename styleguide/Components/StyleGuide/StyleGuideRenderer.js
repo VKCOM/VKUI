@@ -1,8 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  MOBILE_SIZE,
-  TABLET_SIZE,
-} from "@vkui/components/AdaptivityProvider/AdaptivityProvider";
+import { Breakpoints } from "@vkui/lib/adaptivity";
 import { SMALL_HEIGHT } from "../Settings/ViewHeightSelect";
 import {
   AppRoot,
@@ -18,7 +15,7 @@ import { useViewPortSize } from "../../utils";
 
 let initialState = {
   platform: Platform.ANDROID,
-  width: MOBILE_SIZE,
+  width: Breakpoints.MOBILE,
   height: SMALL_HEIGHT,
   hasMouse: true,
   appearance: Appearance.LIGHT,
@@ -66,7 +63,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
 
   useEffect(() => {
     if (platform === Platform.VKCOM) {
-      setContext({ hasMouse: true, width: TABLET_SIZE });
+      setContext({ hasMouse: true, width: Breakpoints.TABLET });
     }
   }, [platform]);
 

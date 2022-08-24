@@ -6,7 +6,7 @@ import { withPlatform } from "../../hoc/withPlatform";
 import { HasPlatform } from "../../types";
 import { Platform } from "../../lib/platform";
 import { TooltipContainer } from "../Tooltip/TooltipContainer";
-import { ViewWidth, SizeType } from "../AdaptivityProvider/AdaptivityContext";
+import { ViewWidth, SizeType } from "../../lib/adaptivity";
 
 describe("ActionSheet", () => {
   const cancel = <ActionSheetItem mode="cancel">Отменить</ActionSheetItem>;

@@ -12,7 +12,7 @@ import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useObjectMemo } from "../../hooks/useObjectMemo";
 import { SharedDropdownProps, PopupDirection, ToggleRef } from "./types";
 import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import { ViewWidth } from "../../lib/adaptivity";
 import { classNames } from "../../lib/classNames";
 import { getClassName } from "../../helpers/getClassName";
 import "./ActionSheet.css";

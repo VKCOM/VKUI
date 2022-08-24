@@ -3,7 +3,7 @@ import { classNames } from "../../lib/classNames";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { hasReactNode } from "../../lib/utils";
-import { SizeType } from "../AdaptivityProvider/AdaptivityContext";
+import { SizeType } from "../../lib/adaptivity";
 import "./SizeXConditionalRender.css";
 
 export interface SizeXConditionalRenderProps {

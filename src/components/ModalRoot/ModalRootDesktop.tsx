@@ -22,7 +22,7 @@ import { warnOnce } from "../../lib/warnOnce";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { ModalTransitionProps, withModalManager } from "./useModalManager";
 import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import { ViewWidth } from "../../lib/adaptivity";
 import "./ModalRoot.css";
 
 const warn = warnOnce("ModalRoot");

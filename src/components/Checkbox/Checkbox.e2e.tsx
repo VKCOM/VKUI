@@ -1,6 +1,6 @@
 import { Checkbox, CheckboxProps } from "./Checkbox";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import { SizeType } from "../AdaptivityProvider/AdaptivityContext";
+import { SizeType } from "../../lib/adaptivity";
 
 describe("Checkbox", () => {
   describeScreenshotFuzz(

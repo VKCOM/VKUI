@@ -1,8 +1,6 @@
 import { screen, render } from "@testing-library/react";
-import {
-  AdaptivityProps,
-  SizeType,
-} from "../AdaptivityProvider/AdaptivityContext";
+import { SizeType } from "../../lib/adaptivity";
+import { type AdaptivityProps } from "../AdaptivityProvider/AdaptivityContext";
 import { baselineComponent } from "../../testing/utils";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { Banner, BannerProps } from "./Banner";

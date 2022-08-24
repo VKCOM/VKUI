@@ -1,4 +1,4 @@
-import { SizeType } from "../components/AdaptivityProvider/AdaptivityContext";
+import { SizeType } from "../lib/adaptivity";
 
 type SizeXType = SizeType | "none";
 

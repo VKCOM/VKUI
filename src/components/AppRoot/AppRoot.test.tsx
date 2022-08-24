@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import { baselineComponent } from "../../testing/utils";
 import { AppRootContext } from "./AppRootContext";
 import { AppRoot } from "./AppRoot";
-import { SizeType } from "../AdaptivityProvider/AdaptivityContext";
+import { SizeType } from "../../lib/adaptivity";
 import { AdaptivityProvider } from "../../components/AdaptivityProvider/AdaptivityProvider";
 
 describe("AppRoot", () => {
