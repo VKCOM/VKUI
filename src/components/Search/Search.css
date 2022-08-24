@@ -317,7 +317,7 @@
 }
 
 .PanelHeader .Search__placeholder {
-  color: var(--header_search_field_tint);
+  color: var(--header_search_field_tint, var(--vkui--color_icon_secondary));
 }
 
 .PanelHeader .Search__after-width {
@@ -402,7 +402,10 @@
 }
 
 .Search--vkcom .Search__icon:hover {
-  background-color: var(--background_hover);
+  background-color: var(
+    --background_hover,
+    var(--vkui--color_background_secondary_alpha--hover)
+  );
   border-radius: 50%;
 }
 
@@ -415,7 +418,7 @@
 }
 
 .Search--vkcom .Search__separator {
-  color: var(--input_border);
+  color: var(--input_border, var(--vkui--color_separator_primary));
 }
 
 .Group--card .Search--vkcom {
