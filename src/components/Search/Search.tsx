@@ -127,6 +127,7 @@ const SearchComponent = ({
       vkuiClass={classNames(
         "Search",
         platform === VKCOM && "Search--vkcom",
+        platform === IOS && "Search--ios",
         // TODO: V5 перенести на новую адаптивность
         `Search--sizeY-${sizeY}`,
         isFocused && "Search--focused",
