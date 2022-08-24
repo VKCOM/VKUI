@@ -1,9 +1,5 @@
-:root {
-  --styleguide_header_height: 56px;
-}
-
 .StyleGuideHeader {
-  height: var(--styleguide_header_height);
+  height: var(--vkui--size_panel_header_height--regular);
   background: var(--vkui--color_background_content);
   border-bottom: 1px solid var(--vkui--color_image_border_alpha);
   box-sizing: border-box;
