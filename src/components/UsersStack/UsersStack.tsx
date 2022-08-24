@@ -34,7 +34,7 @@ function PathElement({ photoSize, direction, ...props }: PathElementProps) {
   switch (direction) {
     case "circle":
       const radius = photoSize / 2;
-      
+
       return <circle cx={radius} cy={radius} r={radius} {...props} />;
 
     case "right":
