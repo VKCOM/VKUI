@@ -1,11 +1,8 @@
 import * as React from "react";
 import { hasReactNode } from "../../lib/utils";
 import { classNames } from "../../lib/classNames";
-import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { Footnote } from "../Typography/Footnote/Footnote";
 import { Caption } from "../Typography/Caption/Caption";
-import { createMasks } from "./masks";
-import { useDOM } from "../../lib/dom";
 import "./UsersStack.css";
 
 export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -39,12 +36,6 @@ export const UsersStack = ({
   children,
   ...restProps
 }: UsersStackProps) => {
-  const { document } = useDOM();
-
-  useIsomorphicLayoutEffect(() => {
-    createMasks(document);
-  }, [document]);
-
   const othersCount = Math.max(0, photos.length - visibleCount);
   const canShowOthers = othersCount > 0 && size !== "xs";
   const CounterTypography = size === "m" ? Footnote : Caption;
@@ -73,8 +64,8 @@ export const UsersStack = ({
           const direction =
             i === 0 && !canShowOthers ? "circle" : directionClip;
 
-          const pathHref = `#users_stack_${photoSize}_${direction}`;
-          const clipPathHref = `url(#users_stack_mask_${photoSize}_${direction})`;
+          const pathClassName = `UsersStack--${photoSize}-${direction}`;
+          const PathComponent = direction === "circle" ? "circle" : "path";
 
           return (
             <svg
@@ -83,10 +74,16 @@ export const UsersStack = ({
               key={i}
               aria-hidden
             >
-              <g clipPath={clipPathHref}>
-                <use vkuiClass="UsersStack__fill" href={pathHref} />
+              <g vkuiClass={`UsersStack__mask--${photoSize}-${direction}`}>
+                <PathComponent
+                  vkuiClass={classNames("UsersStack__fill", pathClassName)}
+                />
                 <image href={photo} width={photoSize} height={photoSize} />
-                <use href={pathHref} fill="none" stroke="rgba(0, 0, 0, 0.08)" />
+                <PathComponent
+                  vkuiClass={pathClassName}
+                  fill="none"
+                  stroke="rgba(0, 0, 0, 0.08)"
+                />
               </g>
             </svg>
           );
