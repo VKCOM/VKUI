@@ -7,21 +7,13 @@ import { SectionSubheading } from "../SectionSubheading/SectionSubheading";
 import { Caption, Link } from "@vkui";
 import { classNames } from "@vkontakte/vkjs";
 import { deprecated } from "../../deprecated";
-import { tokenized } from "../../tokenized";
-import { TextTooltip } from "@vkui/components/TextTooltip/TextTooltip";
 import pkg from "../../../package.json";
 import "./ReactComponent.css";
-import { Icon28TokenizedOutline } from "../Icon28TokenizedOutline/Icon28TokenizedOutline";
-import { ViewWidth } from "../../../src/hoc/withAdaptivity";
-import { useAdaptivity } from "../../../src/hooks/useAdaptivity";
 
 const ReactComponent = ({ component, exampleMode }) => {
   const { name, visibleName, pathLine } = component;
   const { description = "", examples = [] } = component.props || {};
   const isDeprecated = deprecated.includes(name);
-
-  const { viewWidth } = useAdaptivity();
-  const isMobile = viewWidth <= ViewWidth.MOBILE;
 
   const showPropsPlaceholder =
     process.env.NODE_ENV === "development" &&
@@ -45,29 +37,7 @@ const ReactComponent = ({ component, exampleMode }) => {
           "ReactComponent__name--deprecated": isDeprecated,
         })}
       >
-        {visibleName}{" "}
-        {tokenized.includes(visibleName) && (
-          <TextTooltip
-            placement={isMobile ? "bottom" : "right"}
-            text={
-              <React.Fragment>
-                Компонент поддерживает{" "}
-                <Link
-                  target="_blank"
-                  href="https://github.com/VKCOM/vkui-tokens"
-                >
-                  vkui-tokens
-                </Link>
-              </React.Fragment>
-            }
-          >
-            <Icon28TokenizedOutline
-              className="ReactComponent__tokenized"
-              width={24}
-              stroke="var(--vkui--color_icon_accent)"
-            />
-          </TextTooltip>
-        )}
+        {visibleName}
       </Heading>
       {description && <Markdown text={description} />}
       {examples.length > 0 && (

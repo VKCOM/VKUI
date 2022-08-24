@@ -52,7 +52,7 @@ const Cmp = ({ mode = "default", ...restProps }: CmpProps) => (
 );
 ```
 
-- Для цветов используются цветовые токены. Старые компоненты поддерживают [Appearance](https://github.com/VKCOM/Appearance) и [vkui-tokens](https://github.com/VKCOM/vkui-tokens), новые — только [vkui-tokens](https://github.com/VKCOM/vkui-tokens). [Гайд по миграции](https://github.com/VKCOM/VKUI/blob/master/docs/VKUI_TOKENS_MIGRATION_GUIDE.md)
+- Для цветов, скруглений, размеров, отступов и теней используются css-переменные из [vkui-tokens](https://github.com/VKCOM/vkui-tokens)
 - Для типографии используются компоненты [Typography](https://vkcom.github.io/VKUI/#!/Typography) там, где это возможно
 - Добавлен `export` компонента и его свойств в `src/index.ts`
 - Компонент покрыт юнит- и скриншотными тестами. [Гайд по тестированию](https://github.com/VKCOM/VKUI/blob/master/docs/TESTING.md)
