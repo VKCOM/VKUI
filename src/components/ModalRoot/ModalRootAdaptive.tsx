@@ -2,10 +2,7 @@ import * as React from "react";
 import { ModalRootTouch } from "./ModalRoot";
 import { ModalRootDesktop } from "./ModalRootDesktop";
 import { useScrollLock } from "../AppRoot/ScrollContext";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { ViewWidth } from "../../lib/adaptivity";
-import { usePlatform } from "../../hooks/usePlatform";
-import { Platform } from "../../lib/platform";
+import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
 
 export interface ModalRootProps {
   activeModal?: string | null;
@@ -36,39 +33,11 @@ export interface ModalRootProps {
  * @see https://vkcom.github.io/VKUI/#/ModalRoot
  */
 export const ModalRoot = (props: ModalRootProps) => {
-  const [closed, setClosed] = React.useState(false);
-  const platform = usePlatform();
+  const { isDesktop } = useAdaptivityWithMediaQueries();
 
   useScrollLock(!!props.activeModal);
 
-  const { viewWidth } = useAdaptivity();
+  const RootComponent = isDesktop ? ModalRootDesktop : ModalRootTouch;
 
-  if (closed && !props.activeModal) {
-    return null;
-  }
-
-  // Удаление обеих модалок из DOM при закрытии последней одной
-  function onClosed(modalId: string) {
-    setClosed(true);
-    props.onClosed?.(modalId);
-  }
-
-  return (
-    <React.Fragment>
-      {(viewWidth === undefined ||
-        viewWidth >= ViewWidth.SMALL_TABLET ||
-        platform === Platform.VKCOM) && (
-        <ModalRootDesktop
-          {...props}
-          viewWidth={viewWidth}
-          onClosed={onClosed}
-        />
-      )}
-      {(viewWidth === undefined ||
-        viewWidth < ViewWidth.SMALL_TABLET ||
-        platform !== Platform.VKCOM) && (
-        <ModalRootTouch {...props} viewWidth={viewWidth} onClosed={onClosed} />
-      )}
-    </React.Fragment>
-  );
+  return <RootComponent {...props} />;
 };

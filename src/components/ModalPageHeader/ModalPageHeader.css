@@ -5,26 +5,14 @@
   --safe-area-inset-top: 0;
 }
 
-.ModalPageHeader--sizeX-regular.ModalPageHeader--android {
+.ModalPageHeader--desktop.ModalPageHeader--android {
   padding-left: 6px;
   padding-right: 6px;
 }
 
-.ModalPageHeader--sizeX-regular.ModalPageHeader--ios {
+.ModalPageHeader--desktop.ModalPageHeader--ios {
   padding-left: 4px;
   padding-right: 4px;
-}
-
-@media (--sizeX-regular) {
-  .ModalPageHeader--sizeX-none.ModalPageHeader--android {
-    padding-left: 6px;
-    padding-right: 6px;
-  }
-
-  .ModalPageHeader--sizeX-none.ModalPageHeader--ios {
-    padding-left: 4px;
-    padding-right: 4px;
-  }
 }
 
 .ModalPageHeader .Icon--dismiss_24 {

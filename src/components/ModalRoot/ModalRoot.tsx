@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Touch, TouchEvent } from "../Touch/Touch";
 import TouchRootContext from "../Touch/TouchContext";
-import { getClassName } from "../../helpers/getClassName";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { classNames } from "../../lib/classNames";
 import { setTransformStyle } from "../../lib/styles";
 import { rubber } from "../../lib/touch";
@@ -26,8 +26,6 @@ import { getNavId } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { ModalTransitionProps, withModalManager } from "./useModalManager";
-import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
-import { ViewWidth } from "../../lib/adaptivity";
 import "./ModalRoot.css";
 
 const warn = warnOnce("ModalRoot");
@@ -46,8 +44,6 @@ function rangeTranslate(number: number) {
 
 export interface ModalRootProps extends HasPlatform {
   activeModal?: string | null;
-
-  viewWidth?: ViewWidth;
 
   /**
    * Будет вызвано при начале открытия активной модалки с её id
@@ -661,7 +657,7 @@ class ModalRootTouchComponent extends React.Component<
   }
 
   render() {
-    const { activeModal, exitingModal, enteringModal, viewWidth } = this.props;
+    const { activeModal, exitingModal, enteringModal, platform } = this.props;
     const { touchDown, dragging } = this.state;
 
     if (!activeModal && !exitingModal) {
@@ -673,11 +669,10 @@ class ModalRootTouchComponent extends React.Component<
         <ModalRootContext.Provider value={this.modalRootContext}>
           <Touch
             vkuiClass={classNames(
-              getClassName("ModalRoot", this.props.platform),
+              "ModalRoot",
+              getPlatformClassName("ModalRoot", platform),
               this.props.configProvider?.webviewType === WebviewType.VKAPPS &&
                 "ModalRoot--vkapps",
-              "ModalRootMobile",
-              getViewWidthClassName("ModalRootMobile", viewWidth),
               touchDown && "ModalRoot--touched",
               !!(enteringModal || exitingModal) && "ModalRoot--switching"
             )}

@@ -1,18 +1,17 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { classNames } from "../../lib/classNames";
 import { useDOM } from "../../lib/dom";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useEffectDev } from "../../hooks/useEffectDev";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
 import { isRefObject } from "../../lib/isRefObject";
 import { warnOnce } from "../../lib/warnOnce";
+import { Platform } from "../../lib/platform";
 import { useEventListener } from "../../hooks/useEventListener";
 import { SharedDropdownProps } from "./types";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { Popper } from "../Popper/Popper";
-import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
 import "./ActionSheet.css";
 
 const warn = warnOnce("ActionSheet");
@@ -34,7 +33,7 @@ export const ActionSheetDropdownDesktop = ({
 }: SharedDropdownProps) => {
   const { document } = useDOM();
   const platform = usePlatform();
-  const { sizeY, viewWidth } = useAdaptivity();
+  const { sizeY } = useAdaptivityWithMediaQueries();
   const elementRef = React.useRef<HTMLDivElement | null>(null);
 
   useEffectDev(() => {
@@ -74,9 +73,8 @@ export const ActionSheetDropdownDesktop = ({
     if (isRefObject<SharedDropdownProps["toggleRef"], HTMLElement>(toggleRef)) {
       return toggleRef;
     }
-    const refObject = { current: toggleRef as HTMLElement };
 
-    return refObject;
+    return { current: toggleRef as HTMLElement };
   }, [toggleRef]);
 
   return (
@@ -85,10 +83,10 @@ export const ActionSheetDropdownDesktop = ({
       offsetDistance={0}
       placement={isPopupDirectionTop ? "top-end" : "bottom-end"}
       vkuiClass={classNames(
-        getClassName("ActionSheet", platform),
+        "ActionSheet",
+        platform === Platform.IOS && "ActionSheet--ios",
         "ActionSheet--desktop",
-        getSizeYClassName("ActionSheet", sizeY),
-        getViewWidthClassName("ActionSheet", viewWidth)
+        getSizeYClassName("ActionSheet", sizeY)
       )}
       className={className}
       style={style}

@@ -48,28 +48,14 @@
  * Desktop
  */
 
-.ModalCard--vkcom,
-.ModalCard--sizeX-regular {
+.ModalCard--desktop {
   align-items: center;
 }
 
-.ModalCard--vkcom .ModalCard__in,
-.ModalCard--sizeX-regular .ModalCard__in {
+.ModalCard--desktop .ModalCard__in {
   transform: unset;
   opacity: 0;
   transition: opacity 340ms var(--android-easing);
-}
-
-@media (--sizeX-regular) {
-  .ModalCard--sizeX-none {
-    align-items: center;
-  }
-
-  .ModalCard--sizeX-none .ModalCard__in {
-    transform: unset;
-    opacity: 0;
-    transition: opacity 340ms var(--android-easing);
-  }
 }
 
 /**

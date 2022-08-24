@@ -25,7 +25,14 @@ const AdaptivityProvider = ({
   children,
 }: React.PropsWithChildren<AdaptivityProps>) => {
   const bridge = useBridgeAdaptivity();
-  const [adaptivity, setAdaptivity] = React.useState({});
+  const [adaptivity, setAdaptivity] = React.useState({
+    viewWidth,
+    viewHeight,
+    sizeX,
+    sizeY,
+    hasMouse,
+    deviceHasHover,
+  });
 
   React.useEffect(() => {
     setAdaptivity(
