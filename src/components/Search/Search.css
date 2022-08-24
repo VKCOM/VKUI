@@ -72,7 +72,7 @@
 
 .Search__after-width {
   font-size: 17px;
-  padding-left: 16px;
+  padding-left: 12px;
   padding-right: 4px;
   flex-shrink: 0;
   pointer-events: none;
@@ -162,7 +162,7 @@
   z-index: 2;
   cursor: pointer;
   font-size: 17px;
-  padding-left: 16px;
+  padding-left: 12px;
   padding-right: 4px;
 }
 
@@ -436,4 +436,11 @@
 
 .Group--card .Search--vkcom .Search__input {
   padding-left: 44px;
+}
+
+/**
+  IOS
+*/
+.Search--ios {
+  padding: 8px 12px;
 }
