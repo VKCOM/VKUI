@@ -58,7 +58,7 @@
     "chalk": "^4.1.0",
     "classnames": "^2.2.6",
     "clean-webpack-plugin": "^4.0.0",
-    "concurrently": "^4.1.2",
+    "concurrently": "^7.3.0",
     "cross-env": "^7.0.2",
     "css-loader": "^6.5.1",
     "cssnano": "^5.1.12",
