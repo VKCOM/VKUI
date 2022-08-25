@@ -14,6 +14,7 @@ const Example = () => {
   const [disableFuture, setDisableFuture] = useState(false);
   const [disablePickers, setDisablePickers] = useState(false);
   const [closeOnChange, setCloseOnChange] = useState(true);
+  const [disableCalendar, setDisableCalendar] = useState(false);
   const [locale, setLocale] = useState("ru");
 
   return (
@@ -47,6 +48,14 @@ const Example = () => {
           <Checkbox
             checked={disablePickers}
             onChange={(e) => setDisablePickers(e.target.checked)}
+          >
+            Включено
+          </Checkbox>
+        </FormItem>
+        <FormItem top="Отключить отображение выпадающего календаря">
+          <Checkbox
+            checked={disableCalendar}
+            onChange={(e) => setDisableCalendar(e.target.checked)}
           >
             Включено
           </Checkbox>
@@ -86,6 +95,7 @@ const Example = () => {
                 disableFuture={disableFuture}
                 closeOnChange={closeOnChange}
                 disablePickers={disablePickers}
+                disableCalendar={disableCalendar}
               />
             </LocaleProviderContext.Provider>
           </div>
