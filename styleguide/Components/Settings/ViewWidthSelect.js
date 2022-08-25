@@ -1,5 +1,5 @@
 import React from "react";
-import { Breakpoints } from "@vkui/lib/adaptivity";
+import { BREAKPOINTS } from "@vkui/lib/adaptivity";
 import { Setting } from "../Setting/Setting";
 
 export const ViewWidthSelect = ({ onChange, value, ...restProps }) => (
@@ -9,10 +9,10 @@ export const ViewWidthSelect = ({ onChange, value, ...restProps }) => (
     onChange={onChange}
     value={value}
     options={[
-      Breakpoints.MOBILE,
-      Breakpoints.SMALL_TABLET,
-      Breakpoints.TABLET,
-      Breakpoints.DESKTOP,
+      BREAKPOINTS.MOBILE,
+      BREAKPOINTS.SMALL_TABLET,
+      BREAKPOINTS.TABLET,
+      BREAKPOINTS.DESKTOP,
     ]}
   />
 );

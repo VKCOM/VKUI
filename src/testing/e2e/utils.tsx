@@ -5,7 +5,7 @@ import { screenshot } from "@react-playwright";
 import { ConfigProvider } from "../../components/ConfigProvider/ConfigProvider";
 import { Panel } from "../../components/Panel/Panel";
 import { Platform } from "../../lib/platform";
-import { Breakpoints, SizeType, ViewWidth } from "../../lib/adaptivity";
+import { BREAKPOINTS, SizeType, ViewWidth } from "../../lib/adaptivity";
 import { AdaptivityProvider } from "../../components/AdaptivityProvider/AdaptivityProvider";
 import { type AdaptivityProps } from "../../components/AdaptivityProvider/AdaptivityContext";
 import { View } from "../../components/View/View";
@@ -107,15 +107,15 @@ type ScreenshotOptions = {
 function getAdaptivePxWidth(viewWidth: ViewWidth) {
   switch (viewWidth) {
     case ViewWidth.SMALL_MOBILE:
-      return Breakpoints.MOBILE - 10;
+      return BREAKPOINTS.MOBILE - 10;
     case ViewWidth.MOBILE:
-      return Breakpoints.MOBILE;
+      return BREAKPOINTS.MOBILE;
     case ViewWidth.SMALL_TABLET:
-      return Breakpoints.SMALL_TABLET;
+      return BREAKPOINTS.SMALL_TABLET;
     case ViewWidth.TABLET:
-      return Breakpoints.TABLET;
+      return BREAKPOINTS.TABLET;
     case ViewWidth.DESKTOP:
-      return Breakpoints.DESKTOP;
+      return BREAKPOINTS.DESKTOP;
   }
 }
 
@@ -145,7 +145,7 @@ export function describeScreenshotFuzz<Props>(
     describe(platform, () => {
       const isVKCOM = platform === Platform.VKCOM;
 
-      let width: number | "auto" = isVKCOM ? "auto" : Breakpoints.MOBILE;
+      let width: number | "auto" = isVKCOM ? "auto" : BREAKPOINTS.MOBILE;
       if (adaptivity.viewWidth) {
         width = getAdaptivePxWidth(adaptivity.viewWidth);
       }
@@ -165,7 +165,7 @@ export function describeScreenshotFuzz<Props>(
                 <div
                   style={{
                     width,
-                    maxWidth: Breakpoints.DESKTOP,
+                    maxWidth: BREAKPOINTS.DESKTOP,
                     position: "absolute",
                     height: "auto",
                   }}

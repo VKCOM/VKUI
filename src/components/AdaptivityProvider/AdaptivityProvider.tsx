@@ -4,7 +4,7 @@ import {
   SizeType,
   ViewWidth,
   ViewHeight,
-  Breakpoints,
+  BREAKPOINTS,
 } from "../../lib/adaptivity";
 import {
   useBridgeAdaptivity,
@@ -71,21 +71,21 @@ function calculateAdaptivity(
   if (bridge.type === "adaptive") {
     const { viewportWidth, viewportHeight } = bridge;
 
-    if (viewportWidth >= Breakpoints.DESKTOP) {
+    if (viewportWidth >= BREAKPOINTS.DESKTOP) {
       viewWidth = ViewWidth.DESKTOP;
-    } else if (viewportWidth >= Breakpoints.TABLET) {
+    } else if (viewportWidth >= BREAKPOINTS.TABLET) {
       viewWidth = ViewWidth.TABLET;
-    } else if (viewportWidth >= Breakpoints.SMALL_TABLET) {
+    } else if (viewportWidth >= BREAKPOINTS.SMALL_TABLET) {
       viewWidth = ViewWidth.SMALL_TABLET;
-    } else if (viewportWidth >= Breakpoints.MOBILE) {
+    } else if (viewportWidth >= BREAKPOINTS.MOBILE) {
       viewWidth = ViewWidth.MOBILE;
     } else {
       viewWidth = ViewWidth.SMALL_MOBILE;
     }
 
-    if (viewportHeight >= Breakpoints.MEDIUM_HEIGHT) {
+    if (viewportHeight >= BREAKPOINTS.MEDIUM_HEIGHT) {
       viewHeight = ViewHeight.MEDIUM;
-    } else if (viewportHeight > Breakpoints.MOBILE_LANDSCAPE_HEIGHT) {
+    } else if (viewportHeight > BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT) {
       viewHeight = ViewHeight.SMALL;
     } else {
       viewHeight = ViewHeight.EXTRA_SMALL;

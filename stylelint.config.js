@@ -1,10 +1,11 @@
 const path = require("path");
-const { cssCustomPropertiesPaths } = require("./shared");
+const { cssCustomPropertiesPaths, getCustomMedias } = require("./shared");
 
 module.exports = {
   extends: ["stylelint-config-standard", "stylelint-config-prettier"],
   plugins: [
     "stylelint-value-no-unknown-custom-properties",
+    "stylelint-media-use-custom-media",
     "./tasks/stylelint-atomic",
     "./tasks/stylelint-bad-multiplication",
   ],
@@ -53,6 +54,12 @@ module.exports = {
             "node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css"
           ),
         ],
+      },
+    ],
+    "csstools/media-use-custom-media": [
+      "known",
+      {
+        importFrom: getCustomMedias,
       },
     ],
     // Skip reporting in pprecommit run, highlight in editor

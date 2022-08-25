@@ -3,7 +3,7 @@ import { classNames } from "../../lib/classNames";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { Breakpoints, ViewWidth } from "../../lib/adaptivity";
+import { BREAKPOINTS, ViewWidth } from "../../lib/adaptivity";
 import { useDOM } from "../../lib/dom";
 import "./SplitCol.css";
 
@@ -69,7 +69,7 @@ export const SplitCol = (props: SplitColProps) => {
       setAnimate(
         viewWidth !== undefined
           ? viewWidth < ViewWidth.TABLET
-          : window!.innerWidth < Breakpoints.SMALL_TABLET
+          : window!.innerWidth < BREAKPOINTS.SMALL_TABLET
       );
     } else {
       setAnimate(_animate);

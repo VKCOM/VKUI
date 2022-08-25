@@ -1,3 +1,4 @@
+import { BREAKPOINTS, MEDIA_QUERIES } from "../shared/breakpoints";
 import { type PlatformType, Platform } from "./platform";
 
 /**
@@ -25,21 +26,11 @@ export enum SizeType {
 /**
  * Брейкпоинты.
  */
-export const enum Breakpoints {
-  DESKTOP = 1280,
-  TABLET = 1024,
-  SMALL_TABLET = 768,
-  MOBILE = 320,
-  MOBILE_LANDSCAPE_HEIGHT = 414,
-  MEDIUM_HEIGHT = 720,
-}
+export { BREAKPOINTS };
 
 /**
  * Медиа выражения.
- *
- * Должны соответствовать аналогичным медиа выражениям в `styles/customMedia.css`.
  */
-
 export type MediaQueries = Record<
   | "desktopPlus"
   | "tablet"
@@ -50,19 +41,7 @@ export type MediaQueries = Record<
   MediaQueryList
 >;
 
-export const MEDIA_QUERIES = {
-  DESKTOP_PLUS: `(min-width: ${Breakpoints.DESKTOP}px)`,
-
-  TABLET: `(min-width: ${Breakpoints.TABLET}px) and (max-width: ${Breakpoints.DESKTOP - 1}px)`, // prettier-ignore
-
-  SMALL_TABLET: `(min-width: ${Breakpoints.SMALL_TABLET}px) and (max-width: ${Breakpoints.TABLET - 1}px)`, // prettier-ignore
-
-  MOBILE: `(min-width: ${Breakpoints.MOBILE}px) and (max-width: ${Breakpoints.SMALL_TABLET - 1}px)`, // prettier-ignore
-
-  MEDIUM_HEIGHT: `(min-height: ${Breakpoints.MEDIUM_HEIGHT}px)`,
-
-  MOBILE_LANDSCAPE_HEIGHT: `(min-height: ${Breakpoints.MOBILE_LANDSCAPE_HEIGHT + 1}px)`, // prettier-ignore
-};
+export { MEDIA_QUERIES };
 
 /**
  * Утилиты для определения текущих параметров адаптивности.

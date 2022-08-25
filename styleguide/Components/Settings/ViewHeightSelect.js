@@ -1,5 +1,5 @@
 import React from "react";
-import { Breakpoints } from "@vkui/lib/adaptivity";
+import { BREAKPOINTS } from "@vkui/lib/adaptivity";
 import { Setting } from "../Setting/Setting";
 
 export const SMALL_HEIGHT = 667;
@@ -11,9 +11,9 @@ export const ViewHeightSelect = ({ onChange, value, ...restProps }) => (
     onChange={onChange}
     value={value}
     options={[
-      Breakpoints.MOBILE_LANDSCAPE_HEIGHT,
+      BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT,
       SMALL_HEIGHT,
-      Breakpoints.MEDIUM_HEIGHT,
+      BREAKPOINTS.MEDIUM_HEIGHT,
     ]}
   />
 );
