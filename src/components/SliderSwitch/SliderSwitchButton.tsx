@@ -34,13 +34,13 @@ export const SliderSwitchButton = ({
   return (
     <Tappable
       {...restProps}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames(getClassName("SliderSwitch__button", platform), {
-        ["SliderSwitch__button--active"]: active,
-        ["SliderSwitch__button--hover"]: !active && hovered,
-        ["SliderSwitch__button--activeHover"]: active && hovered,
-        ["SliderSwitch__button--focus"]: focus && !hovered,
-      })}
+      vkuiClass={classNames(
+        getClassName("SliderSwitch__button", platform),
+        active && "SliderSwitch__button--active",
+        !active && hovered && "SliderSwitch__button--hover",
+        active && hovered && "SliderSwitch__button--activeHover",
+        focus && !hovered && "SliderSwitch__button--focus"
+      )}
       Component="button"
       type="button"
       getRootRef={getRootRef}

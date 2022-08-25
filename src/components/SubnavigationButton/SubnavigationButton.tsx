@@ -63,13 +63,10 @@ export const SubnavigationButton = ({
       {...restProps}
       hasActive={false}
       focusVisibleMode="outside"
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         getClassName("SubnavigationButton", platform),
         `SubnavigationButton--${size}`,
-        {
-          "SubnavigationButton--selected": selected,
-        }
+        selected && "SubnavigationButton--selected"
       )}
       aria-label={getTitleFromChildren(children)}
     >

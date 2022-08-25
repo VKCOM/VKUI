@@ -670,15 +670,12 @@ class ModalRootTouchComponent extends React.Component<
       <TouchRootContext.Provider value={true}>
         <ModalRootContext.Provider value={this.modalRootContext}>
           <Touch
-            // eslint-disable-next-line vkui/no-object-expression-in-arguments
             vkuiClass={classNames(
               getClassName("ModalRoot", this.props.platform),
-              {
-                "ModalRoot--vkapps":
-                  this.props.configProvider?.webviewType === WebviewType.VKAPPS,
-                "ModalRoot--touched": touchDown,
-                "ModalRoot--switching": !!(enteringModal || exitingModal),
-              }
+              this.props.configProvider?.webviewType === WebviewType.VKAPPS &&
+                "ModalRoot--vkapps",
+              touchDown && "ModalRoot--touched",
+              !!(enteringModal || exitingModal) && "ModalRoot--switching"
             )}
             onMove={this.onTouchMove}
             onEnd={this.onTouchEnd}
@@ -715,23 +712,26 @@ class ModalRootTouchComponent extends React.Component<
                     }}
                     onClose={this.props.onExit}
                     timeout={this.timeout}
-                    // eslint-disable-next-line vkui/no-object-expression-in-arguments
-                    vkuiClass={classNames("ModalRoot__modal", {
-                      "ModalRoot__modal--active": modalId === activeModal,
-                      "ModalRoot__modal--prev": modalId === exitingModal,
-                      "ModalRoot__modal--next":
-                        (exitingModal && modalId === activeModal) ||
-                        modalId === enteringModal,
+                    vkuiClass={classNames(
+                      "ModalRoot__modal",
+                      modalId === activeModal && "ModalRoot__modal--active",
+                      modalId === exitingModal && "ModalRoot__modal--prev",
+                      ((exitingModal && modalId === activeModal) ||
+                        modalId === enteringModal) &&
+                        "ModalRoot__modal--next",
 
-                      "ModalRoot__modal--dragging": dragging,
+                      dragging && "ModalRoot__modal--dragging",
 
-                      "ModalRoot__modal--expandable":
-                        isPage && modalState.expandable,
-                      "ModalRoot__modal--expanded":
-                        isPage && modalState.expanded,
-                      "ModalRoot__modal--collapsed":
-                        isPage && modalState.collapsed,
-                    })}
+                      isPage &&
+                        modalState.expandable &&
+                        "ModalRoot__modal--expandable",
+                      isPage &&
+                        modalState.expanded &&
+                        "ModalRoot__modal--expanded",
+                      isPage &&
+                        modalState.collapsed &&
+                        "ModalRoot__modal--collapsed"
+                    )}
                     restoreFocus={false}
                   >
                     {Modal}
