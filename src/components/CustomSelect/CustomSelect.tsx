@@ -101,7 +101,6 @@ const filter = (
 };
 
 const defaultOptions: CustomSelectOptionInterface[] = [];
-const defaultIcon = <DropdownIcon />;
 
 type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>["value"];
 
@@ -175,6 +174,7 @@ export interface CustomSelectProps
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
 function CustomSelectComponent(props: CustomSelectProps) {
+  const [opened, setOpened] = React.useState(false);
   const {
     before,
     name,
@@ -201,7 +201,7 @@ function CustomSelectComponent(props: CustomSelectProps) {
     options: optionsProp = defaultOptions,
     emptyText = "Ничего не найдено",
     filterFn = defaultFilterFn,
-    icon = defaultIcon,
+    icon = <DropdownIcon opened={opened} />,
     dropdownOffsetDistance = 0,
     fixDropdownWidth = true,
     ...restProps
@@ -233,7 +233,6 @@ function CustomSelectComponent(props: CustomSelectProps) {
   const [selectedOptionIndex, setSelectedOptionIndex] = React.useState<
     number | undefined
   >(findSelectedIndex(optionsProp, props.value ?? props.defaultValue));
-  const [opened, setOpened] = React.useState(false);
 
   React.useEffect(() => {
     setIsControlledOutside(props.value !== undefined);

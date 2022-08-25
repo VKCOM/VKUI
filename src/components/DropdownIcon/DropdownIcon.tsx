@@ -1,16 +1,30 @@
 import * as React from "react";
-import { Icon20Dropdown, Icon24ChevronDown } from "@vkontakte/icons";
+import {
+  Icon20Dropdown,
+  Icon24ChevronDown,
+  Icon24ChevronUp,
+  Icon20ChevronUp,
+} from "@vkontakte/icons";
+import { classNames } from "../../lib/classNames";
 import { SizeType } from "../AdaptivityProvider/AdaptivityContext";
-import { getClassName } from "../../helpers/getClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { usePlatform } from "../../hooks/usePlatform";
-import "./DropdownIcon.css";
 
-export const DropdownIcon = (props: React.HTMLAttributes<HTMLDivElement>) => {
-  const platform = usePlatform();
+export interface DropdownIconProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  opened?: boolean;
+}
+
+export const DropdownIcon = ({
+  opened = false,
+  ...restProps
+}: DropdownIconProps) => {
   const { sizeY } = useAdaptivity();
 
-  const Icon = sizeY === SizeType.COMPACT ? Icon20Dropdown : Icon24ChevronDown;
+  let Icon = sizeY === SizeType.COMPACT ? Icon20Dropdown : Icon24ChevronDown;
 
-  return <Icon vkuiClass={getClassName("DropdownIcon", platform)} {...props} />;
+  if (opened) {
+    Icon = sizeY === SizeType.COMPACT ? Icon20ChevronUp : Icon24ChevronUp;
+  }
+
+  return <Icon vkuiClass={classNames("DropdownIcon")} {...restProps} />;
 };
