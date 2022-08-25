@@ -148,7 +148,6 @@ export default withAdaptivity(
                                 ? { width, height: styleGuideContext.height }
                                 : undefined
                             }
-                            appearance={styleGuideContext.appearance}
                           >
                             <Config
                               {...styleGuideContext}
