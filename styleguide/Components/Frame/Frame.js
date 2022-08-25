@@ -1,42 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Appearance } from "@vkui";
 import { DOMContext } from "@vkui/lib/dom";
-import ReactFrame from "react-frame-component";
+import ReactFrame, { useFrame } from "react-frame-component";
 import "./Frame.css";
 
-class FrameDomProvider extends React.Component {
-  static contextTypes = {
-    document: PropTypes.any,
-    window: PropTypes.any,
-  };
+const FrameDomProvider = ({ children }) => {
+  const [ready, setReady] = React.useState(false);
+  const frame = useFrame();
 
-  static propTypes = {
-    appearance: PropTypes.oneOf(Object.values(Appearance)),
-  };
-
-  state = { ready: false };
-
-  componentDidMount() {
+  React.useEffect(() => {
     // Пихаем в iFrame с примером спрайты для иконок
     const sprite = document.getElementById("__SVG_SPRITE_NODE__");
     const masks = document.getElementById("__SVG_MASKS_NODE__");
 
     if (sprite) {
-      this.context.document.body.appendChild(sprite.cloneNode(true));
+      frame.document.body.appendChild(sprite.cloneNode(true));
     }
 
     if (masks) {
-      this.context.document.body.appendChild(masks.cloneNode(true));
+      frame.document.body.appendChild(masks.cloneNode(true));
     }
 
-    this.context.document
-      .querySelector(".frame-content")
-      .setAttribute("id", "root");
+    frame.document.querySelector(".frame-content").setAttribute("id", "root");
 
     // Пихаем в iFrame vkui стили
     const frameAssets = document.createDocumentFragment();
-    this.hotObservers = [];
+    const hotObservers = [];
     Array.from(document.getElementsByClassName("vkui-style")).map((style) => {
       const frameStyle = style.cloneNode(true);
       frameAssets.appendChild(frameStyle);
@@ -46,25 +35,21 @@ class FrameDomProvider extends React.Component {
           frameStyle.firstChild.nodeValue = style.firstChild.nodeValue;
         });
         hotStyleChange.observe(style, { characterData: true, childList: true });
-        this.hotObservers.push(hotStyleChange);
+        hotObservers.push(hotStyleChange);
       }
     });
-    this.context.document.head.appendChild(frameAssets);
-    this.setState({ ready: true });
-  }
+    frame.document.head.appendChild(frameAssets);
+    setReady(true);
 
-  componentWillUnmount() {
-    this.hotObservers.forEach((o) => o.disconnect());
-  }
+    return () => {
+      hotObservers.forEach((o) => o.disconnect());
+    };
+  }, []);
 
-  render() {
-    return this.state.ready ? (
-      <DOMContext.Provider value={this.context}>
-        {this.props.children}
-      </DOMContext.Provider>
-    ) : null;
-  }
-}
+  return ready ? (
+    <DOMContext.Provider value={frame}>{children}</DOMContext.Provider>
+  ) : null;
+};
 
 const initialFrameContent = `
 <!DOCTYPE html>
@@ -89,7 +74,7 @@ export const Frame = ({ children, style, appearance }) => {
       style={style}
       initialContent={initialFrameContent}
     >
-      <FrameDomProvider appearance={appearance}>{children}</FrameDomProvider>
+      <FrameDomProvider>{children}</FrameDomProvider>
     </ReactFrame>
   );
 };
@@ -99,5 +84,4 @@ Frame.propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
   }),
-  appearance: PropTypes.oneOf(Object.values(Appearance)).isRequired,
 };
