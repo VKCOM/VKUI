@@ -49,6 +49,7 @@ export interface DateRangeInputProps
   changeEndDayAriaLabel?: string;
   changeEndMonthAriaLabel?: string;
   changeEndYearAriaLabel?: string;
+  disableCalendar?: boolean;
 }
 
 const elementsConfig = (index: number) => {
@@ -126,6 +127,7 @@ export const DateRangeInput = ({
   showCalendarAriaLabel = "Показать календарь",
   prevMonthIcon,
   nextMonthIcon,
+  disableCalendar = false,
   ...props
 }: DateRangeInputProps) => {
   const daysStartRef = React.useRef<HTMLSpanElement>(null);
@@ -330,7 +332,7 @@ export const DateRangeInput = ({
           aria-label={changeEndYearAriaLabel}
         />
       </span>
-      {open && (
+      {open && !disableCalendar && (
         <Popper
           targetRef={rootRef}
           offsetDistance={8}

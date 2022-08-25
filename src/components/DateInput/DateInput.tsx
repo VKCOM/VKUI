@@ -53,6 +53,7 @@ export interface DateInputProps
   closeOnChange?: boolean;
   clearFieldAriaLabel?: string;
   showCalendarAriaLabel?: string;
+  disableCalendar?: boolean;
 }
 
 const elementsConfig = (index: number) => {
@@ -134,6 +135,7 @@ export const DateInput = ({
   onPrevMonth,
   prevMonthIcon,
   nextMonthIcon,
+  disableCalendar = false,
   ...props
 }: DateInputProps) => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -299,7 +301,7 @@ export const DateInput = ({
           </React.Fragment>
         )}
       </span>
-      {open && (
+      {open && !disableCalendar && (
         <Popper
           targetRef={rootRef}
           offsetDistance={8}
