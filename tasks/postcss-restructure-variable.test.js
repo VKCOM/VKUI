@@ -25,8 +25,7 @@ it("rewrite custom property", async () => {
 }
 `;
 
-  const output = `
-.a, .b {
+  const output = `.a, .b {
     --color: #000
 }
 `;
@@ -46,8 +45,7 @@ it("merge one", async () => {
 }
 `;
 
-  const output = `
-:root, .b {
+  const output = `:root, .b {
     --color: #fff;
 }
 .b {
@@ -72,8 +70,7 @@ it("merge three", async () => {
 }
 `;
 
-  const output = `
-:root, .b {
+  const output = `:root, .b {
     --color: #fff;
 }
 :root {
@@ -154,8 +151,7 @@ it("example", async () => {
 }
 `;
 
-  const output = `
-.a, .b {
+  const output = `.a, .b {
     --color1: #ff0000;
     --color2: #ff0000
 }
