@@ -14,8 +14,7 @@ import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { useScrollLock } from "../AppRoot/ScrollContext";
 import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
 import { usePlatform } from "../../hooks/usePlatform";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
 import "./Alert.css";
 
 export type AlertActionInterface = AlertAction &
@@ -147,7 +146,7 @@ export const Alert = ({
   ...restProps
 }: AlertProps) => {
   const platform = usePlatform();
-  const { sizeX } = useAdaptivity();
+  const { isDesktop } = useAdaptivityWithMediaQueries();
   const { waitTransitionFinish } = useWaitTransitionFinish();
 
   const [closing, setClosing] = React.useState(false);
@@ -215,8 +214,8 @@ export const Alert = ({
           platform === Platform.IOS && "Alert--ios",
           platform === Platform.VKCOM && "Alert--vkcom",
           resolvedActionsLayout === "vertical" ? "Alert--v" : "Alert--h",
-          getSizeXClassName("Alert", sizeX),
-          closing && "Alert--closing"
+          closing && "Alert--closing",
+          isDesktop && "Alert--desktop"
         )}
         role="alertdialog"
         aria-modal
@@ -237,11 +236,9 @@ export const Alert = ({
             <AlertAction key={i} action={action} onItemClick={onItemClick} />
           ))}
         </div>
-        <ModalDismissButton
-          vkuiClass="Alert__close"
-          onClick={close}
-          aria-label={dismissLabel}
-        />
+        {isDesktop && (
+          <ModalDismissButton onClick={close} aria-label={dismissLabel} />
+        )}
       </FocusTrap>
     </PopoutWrapper>
   );

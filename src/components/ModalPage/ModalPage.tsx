@@ -13,7 +13,7 @@ import { multiRef } from "../../lib/utils";
 import { ModalType } from "../ModalRoot/types";
 import { getNavId, NavIdProps } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
 import "./ModalPage.css";
 
 export interface ModalPageProps
@@ -73,7 +73,7 @@ export const ModalPage = ({
 
   const platform = usePlatform();
   const orientation = useOrientationChange();
-  const { sizeX } = useAdaptivity();
+  const { sizeX, isDesktop } = useAdaptivityWithMediaQueries();
 
   React.useEffect(updateModalHeight, [
     children,
@@ -94,7 +94,8 @@ export const ModalPage = ({
       vkuiClass={classNames(
         "ModalPage",
         getPlatformClassName("ModalPage", platform),
-        getSizeXClassName("ModalPage", sizeX)
+        getSizeXClassName("ModalPage", sizeX),
+        isDesktop && "ModalPage--desktop"
       )}
     >
       <div vkuiClass="ModalPage__in-wrap" ref={refs.innerElement}>
@@ -114,10 +115,9 @@ export const ModalPage = ({
               <div vkuiClass="ModalPage__content-in">{children}</div>
             </div>
           </div>
-          <ModalDismissButton
-            vkuiClass="ModalPage__dismiss"
-            onClick={onClose ?? modalContext.onClose}
-          />
+          {isDesktop && (
+            <ModalDismissButton onClick={onClose ?? modalContext.onClose} />
+          )}
         </div>
       </div>
     </div>

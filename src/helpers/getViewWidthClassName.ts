@@ -1,4 +1,4 @@
-import { ViewWidth } from "../components/AdaptivityProvider/AdaptivityContext";
+import { ViewWidth } from "../lib/adaptivity";
 
 export function getViewWidthClassName(
   base: string,

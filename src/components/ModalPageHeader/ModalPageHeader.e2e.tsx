@@ -3,7 +3,7 @@ import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { PanelHeaderButton } from "../PanelHeaderButton/PanelHeaderButton";
 import { Icon24Cancel, Icon24Dismiss, Icon24Done } from "@vkontakte/icons";
 import { Platform } from "../../lib/platform";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import { ViewWidth } from "../../lib/adaptivity";
 import { ModalRootContext } from "../ModalRoot/ModalRootContext";
 import { noop } from "../../lib/utils";
 

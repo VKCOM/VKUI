@@ -1,5 +1,5 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { classNames } from "../../lib/classNames";
 import {
   ModalRootContext,
@@ -12,8 +12,7 @@ import {
   ModalCardBase,
   ModalCardBaseProps,
 } from "../ModalCardBase/ModalCardBase";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
 import { usePlatform } from "../../hooks/usePlatform";
 import "./ModalCard.css";
 
@@ -35,7 +34,7 @@ export const ModalCard = ({
   id,
   ...restProps
 }: ModalCardProps) => {
-  const { sizeX } = useAdaptivity();
+  const { isDesktop } = useAdaptivityWithMediaQueries();
   const platform = usePlatform();
 
   const modalContext = React.useContext(ModalRootContext);
@@ -49,8 +48,9 @@ export const ModalCard = ({
       {...restProps}
       id={id}
       vkuiClass={classNames(
-        getClassName("ModalCard", platform),
-        getSizeXClassName("ModalCard", sizeX)
+        "ModalCard",
+        getPlatformClassName("ModalCard", platform),
+        isDesktop && "ModalCard--desktop"
       )}
     >
       <ModalCardBase

@@ -3,18 +3,15 @@ import { PopoutWrapper } from "../PopoutWrapper/PopoutWrapper";
 import { Platform } from "../../lib/platform";
 import { ActionSheetDropdownDesktop } from "./ActionSheetDropdownDesktop";
 import { ActionSheetDropdown } from "./ActionSheetDropdown";
-import { hasReactNode, noop } from "../../lib/utils";
+import { noop } from "../../lib/utils";
 import { ActionSheetContext, ItemClickHandler } from "./ActionSheetContext";
 import { Footnote } from "../Typography/Footnote/Footnote";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useTimeout } from "../../hooks/useTimeout";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
 import { useObjectMemo } from "../../hooks/useObjectMemo";
-import { SharedDropdownProps, PopupDirection, ToggleRef } from "./types";
-import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
-import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
+import { PopupDirection, SharedDropdownProps, ToggleRef } from "./types";
+import { useScrollLock } from "../AppRoot/ScrollContext";
 import "./ActionSheet.css";
 
 export interface ActionSheetProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -53,7 +50,6 @@ export const ActionSheet = ({
   ...restProps
 }: ActionSheetProps) => {
   const platform = usePlatform();
-  const { viewWidth } = useAdaptivity();
   const [closing, setClosing] = React.useState(false);
   const onClose = () => setClosing(true);
   const _action = React.useRef(noop);
@@ -64,7 +60,15 @@ export const ActionSheet = ({
     _action.current = noop;
   };
 
+  const { isDesktop } = useAdaptivityWithMediaQueries();
+
+  useScrollLock(!isDesktop);
+
   let timeout = platform === Platform.IOS ? 300 : 200;
+
+  if (isDesktop) {
+    timeout = 0;
+  }
 
   const fallbackTransitionFinish = useTimeout(afterClose, timeout);
   React.useEffect(() => {
@@ -88,89 +92,57 @@ export const ActionSheet = ({
     },
     []
   );
+  const contextValue = useObjectMemo({ onItemClick, isDesktop });
 
-  const contextDesktop = useObjectMemo({ onItemClick, isDesktop: true });
-  const contextMobile = useObjectMemo({ onItemClick, isDesktop: false });
+  const DropdownComponent = isDesktop
+    ? ActionSheetDropdownDesktop
+    : ActionSheetDropdown;
+
+  const actionSheet = (
+    <ActionSheetContext.Provider value={contextValue}>
+      <DropdownComponent
+        closing={closing}
+        timeout={timeout}
+        {...(restProps as Omit<SharedDropdownProps, "closing">)}
+        popupDirection={popupDirection}
+        onClose={onClose}
+        className={isDesktop ? className : undefined}
+        style={isDesktop ? style : undefined}
+      >
+        {(header || text) && (
+          <header vkuiClass="ActionSheet__header">
+            {header && (
+              <Footnote
+                weight={platform === Platform.IOS ? "1" : "2"}
+                vkuiClass="ActionSheet__title"
+              >
+                {header}
+              </Footnote>
+            )}
+            {text && <Footnote vkuiClass="ActionSheet__text">{text}</Footnote>}
+          </header>
+        )}
+        {children}
+        {platform === Platform.IOS && !isDesktop && iosCloseItem}
+      </DropdownComponent>
+    </ActionSheetContext.Provider>
+  );
+
+  if (isDesktop) {
+    return actionSheet;
+  }
 
   return (
-    <React.Fragment>
-      {(viewWidth === undefined ||
-        viewWidth >= ViewWidth.SMALL_TABLET ||
-        platform === Platform.VKCOM) && (
-        <ActionSheetContext.Provider value={contextDesktop}>
-          <ActionSheetDropdownDesktop
-            closing={closing}
-            timeout={timeout}
-            {...(restProps as Omit<SharedDropdownProps, "closing">)}
-            onClose={onClose}
-            className={className}
-            style={style}
-            popupDirection={popupDirection}
-          >
-            {(hasReactNode(header) || hasReactNode(text)) && (
-              <header vkuiClass="ActionSheet__header">
-                {hasReactNode(header) && (
-                  <Footnote
-                    weight={platform === Platform.IOS ? "1" : "2"}
-                    vkuiClass="ActionSheet__title"
-                  >
-                    {header}
-                  </Footnote>
-                )}
-                {hasReactNode(text) && (
-                  <Footnote vkuiClass="ActionSheet__text">{text}</Footnote>
-                )}
-              </header>
-            )}
-            {children}
-          </ActionSheetDropdownDesktop>
-        </ActionSheetContext.Provider>
-      )}
-      {(viewWidth === undefined ||
-        viewWidth < ViewWidth.SMALL_TABLET ||
-        platform !== Platform.VKCOM) && (
-        <PopoutWrapper
-          closing={closing}
-          alignY="bottom"
-          className={className}
-          vkuiClass={classNames(
-            getClassName("ActionSheetMobile", platform),
-            getViewWidthClassName("ActionSheetMobile", viewWidth)
-          )}
-          style={style}
-          onClick={onClose}
-          hasMask
-          fixed
-        >
-          <ActionSheetContext.Provider value={contextMobile}>
-            <ActionSheetDropdown
-              closing={closing}
-              timeout={timeout}
-              {...(restProps as Omit<SharedDropdownProps, "closing">)}
-              onClose={onClose}
-              popupDirection={popupDirection}
-            >
-              {(hasReactNode(header) || hasReactNode(text)) && (
-                <header vkuiClass="ActionSheet__header">
-                  {hasReactNode(header) && (
-                    <Footnote
-                      weight={platform === Platform.IOS ? "1" : "2"}
-                      vkuiClass="ActionSheet__title"
-                    >
-                      {header}
-                    </Footnote>
-                  )}
-                  {hasReactNode(text) && (
-                    <Footnote vkuiClass="ActionSheet__text">{text}</Footnote>
-                  )}
-                </header>
-              )}
-              {children}
-              {platform === Platform.IOS && iosCloseItem}
-            </ActionSheetDropdown>
-          </ActionSheetContext.Provider>
-        </PopoutWrapper>
-      )}
-    </React.Fragment>
+    <PopoutWrapper
+      closing={closing}
+      alignY="bottom"
+      className={className}
+      style={style}
+      onClick={onClose}
+      hasMask
+      fixed
+    >
+      {actionSheet}
+    </PopoutWrapper>
   );
 };

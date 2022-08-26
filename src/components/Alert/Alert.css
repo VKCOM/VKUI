@@ -10,10 +10,8 @@
   animation: vkui-animation-android-alert-intro 0.2s var(--android-easing);
 }
 
-@media (--viewWidth-desktopPlus) {
-  .Alert {
-    width: 100%;
-  }
+.Alert--desktop {
+  width: 100%;
 }
 
 .Alert--closing {
@@ -269,32 +267,6 @@
 
 .Alert--vkcom .Alert__button--cancel {
   order: 1;
-}
-
-.Alert__close {
-  display: none;
-}
-
-.Alert--sizeX-regular.Alert--android {
-  width: 416px;
-}
-
-.Alert--vkcom .Alert__close {
-  display: block;
-}
-
-.Alert--sizeX-regular.Alert--android .Alert__close {
-  display: block;
-}
-
-@media (--sizeX-regular) {
-  .Alert--sizeX-none.Alert--android {
-    width: 416px;
-  }
-
-  .Alert--sizeX-none.Alert--android .Alert__close {
-    display: block;
-  }
 }
 
 /**

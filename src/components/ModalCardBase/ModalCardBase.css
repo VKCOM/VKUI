@@ -62,8 +62,7 @@
  * iOS
  */
 
-.ModalCardBase__dismiss-ios {
-  display: block;
+.ModalCardBase__dismiss {
   position: absolute;
   top: 4px;
   right: 4px;
@@ -76,17 +75,12 @@
   justify-content: center;
 }
 
-.ModalCardBase--sizeX-regular .ModalCardBase__dismiss-ios,
-.ModalCardBase:not(.ModalCardBase--ios) .ModalCardBase__dismiss-ios {
-  display: none;
-}
-
-@media (--sizeX-regular) {
-  .ModalCardBase--sizeX-none.ModalCardBase--ios .ModalCardBase__dismiss-ios {
-    display: none;
-  }
-}
-
+/**
+ * iOS
+ */
+/*
+ * TODO v5.0.0: зачем этот стиль? Удалить?
+*/
 .ModalCardBase--ios .ModalCardBase__header:first-child {
   padding-left: 36px;
   padding-right: 36px;
@@ -95,21 +89,6 @@
 /**
  * Android + vkcom
  */
-
-.ModalCardBase__dismiss {
-  display: none;
-}
-
-.ModalCardBase--sizeX-regular .ModalCardBase__dismiss,
-.ModalCardBase--vkcom .ModalCardBase__dismiss {
-  display: block;
-}
-
-@media (--sizeX-regular) {
-  .ModalCardBase--sizeX-none .ModalCardBase__dismiss {
-    display: block;
-  }
-}
 
 .ModalCardBase--android .ModalCardBase__container,
 .ModalCardBase--vkcom .ModalCardBase__container {
@@ -122,10 +101,4 @@
 
 .ModalCardBase--desktop .ModalCardBase__container {
   border-radius: 8px;
-}
-
-@media (--desktop) {
-  .ModalCardBase--sizeX-none .ModalCardBase__container {
-    border-radius: 8px;
-  }
 }

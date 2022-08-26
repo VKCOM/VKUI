@@ -2,11 +2,11 @@ import { PlatformType, platform } from "../lib/platform";
 
 export function getPlatformClassName(
   base: string,
-  osname: PlatformType
+  osname?: PlatformType
 ): string;
 export function getPlatformClassName<Styles extends Record<string, string>>(
   base: keyof Styles,
-  osname: PlatformType,
+  osname?: PlatformType,
   styles?: Styles
 ): string | undefined;
 export function getPlatformClassName<Styles extends Record<string, string>>(

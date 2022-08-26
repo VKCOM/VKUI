@@ -7,7 +7,11 @@ const autoprefixer = require("autoprefixer");
 const cssModules = require("postcss-modules");
 const cssnano = require("cssnano");
 const checkKeyframes = require("./tasks/postcss-check-keyframes");
-const { generateScopedName, cssCustomPropertiesPaths } = require("./shared");
+const {
+  generateScopedName,
+  cssCustomPropertiesPaths,
+  getCustomMedias,
+} = require("./shared");
 const { defaultSchemeId } = require("./package.json");
 // TODO: включить после добавления поддержки VK-Sans-Text
 // const VkSansMandatoryDeclarations = require("./postcss-plugin-vk-sans");
@@ -78,7 +82,9 @@ module.exports = (ctx) => {
     //   ],
     // }),
     postcssCustomMedia({
-      importFrom: path.resolve("./src/styles/customMedia.css"),
+      importFrom: getCustomMedias,
+      // см. CONTRIBUTING.md
+      exportTo: path.resolve("./src/styles/customMedias.generated.css"),
     }),
   ];
 

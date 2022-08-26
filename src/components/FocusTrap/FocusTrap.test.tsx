@@ -9,7 +9,7 @@ import {
 import { FocusTrap, FocusTrapProps } from "./FocusTrap";
 import { AppRoot } from "../AppRoot/AppRoot";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import { ViewWidth } from "../../lib/adaptivity";
 import { ActionSheet, ActionSheetProps } from "../ActionSheet/ActionSheet";
 import { ActionSheetItem } from "../ActionSheetItem/ActionSheetItem";
 import { View } from "../View/View";

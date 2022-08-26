@@ -5,18 +5,9 @@ import { screenshot } from "@react-playwright";
 import { ConfigProvider } from "../../components/ConfigProvider/ConfigProvider";
 import { Panel } from "../../components/Panel/Panel";
 import { Platform } from "../../lib/platform";
-import {
-  AdaptivityProvider,
-  DESKTOP_SIZE,
-  MOBILE_SIZE,
-  SMALL_TABLET_SIZE,
-  TABLET_SIZE,
-} from "../../components/AdaptivityProvider/AdaptivityProvider";
-import {
-  SizeType,
-  ViewWidth,
-  AdaptivityProps,
-} from "../../components/AdaptivityProvider/AdaptivityContext";
+import { BREAKPOINTS, SizeType, ViewWidth } from "../../lib/adaptivity";
+import { AdaptivityProvider } from "../../components/AdaptivityProvider/AdaptivityProvider";
+import { type AdaptivityProps } from "../../components/AdaptivityProvider/AdaptivityContext";
 import { View } from "../../components/View/View";
 import { AppRoot } from "../../components/AppRoot/AppRoot";
 import { Group } from "../../components/Group/Group";
@@ -116,15 +107,15 @@ type ScreenshotOptions = {
 function getAdaptivePxWidth(viewWidth: ViewWidth) {
   switch (viewWidth) {
     case ViewWidth.SMALL_MOBILE:
-      return MOBILE_SIZE - 10;
+      return BREAKPOINTS.MOBILE - 10;
     case ViewWidth.MOBILE:
-      return MOBILE_SIZE;
+      return BREAKPOINTS.MOBILE;
     case ViewWidth.SMALL_TABLET:
-      return SMALL_TABLET_SIZE;
+      return BREAKPOINTS.SMALL_TABLET;
     case ViewWidth.TABLET:
-      return TABLET_SIZE;
+      return BREAKPOINTS.TABLET;
     case ViewWidth.DESKTOP:
-      return DESKTOP_SIZE;
+      return BREAKPOINTS.DESKTOP;
   }
 }
 
@@ -154,7 +145,7 @@ export function describeScreenshotFuzz<Props>(
     describe(platform, () => {
       const isVKCOM = platform === Platform.VKCOM;
 
-      let width: ViewWidth | "auto" = isVKCOM ? "auto" : MOBILE_SIZE;
+      let width: number | "auto" = isVKCOM ? "auto" : BREAKPOINTS.MOBILE;
       if (adaptivity.viewWidth) {
         width = getAdaptivePxWidth(adaptivity.viewWidth);
       }
@@ -174,7 +165,7 @@ export function describeScreenshotFuzz<Props>(
                 <div
                   style={{
                     width,
-                    maxWidth: DESKTOP_SIZE,
+                    maxWidth: BREAKPOINTS.DESKTOP,
                     position: "absolute",
                     height: "auto",
                   }}

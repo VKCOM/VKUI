@@ -34,27 +34,6 @@
   pointer-events: none;
 }
 
-.ModalRootMobile--viewWidth-smallTabletPlus.ModalRoot--vkcom {
-  display: none;
-}
-
-@media (--desktop) {
-  .ModalRootMobile--viewWidth-none.ModalRoot--vkcom {
-    display: none;
-  }
-}
-
-.ModalRootDesktop--viewWidth-mobile:not(.ModalRoot--vkcom),
-.ModalRootDesktop--viewWidth-smallMobile:not(.ModalRoot--vkcom) {
-  display: none;
-}
-
-@media (--mobile) {
-  .ModalRootDesktop--viewWidth-none:not(.ModalRoot--vkcom) {
-    display: none;
-  }
-}
-
 :not(.ModalRoot--desktop).ModalRoot--ios .ModalRoot__viewport,
 :not(.ModalRoot--desktop).ModalRoot--android .ModalRoot__viewport {
   top: var(--safe-area-inset-top);

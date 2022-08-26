@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    // см. `./src/shared/breakpoints.js`
+    "allowJs": true,
     "jsx": "react",
     "jsxFactory": "createScopedElement",
     "target": "esnext",

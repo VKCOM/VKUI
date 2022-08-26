@@ -3,15 +3,15 @@ import { hasReactNode } from "../../lib/utils";
 import { Title } from "../Typography/Title/Title";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { usePlatform } from "../../hooks/usePlatform";
 import { HasRootRef } from "../../types";
 import { PanelHeaderButton } from "../PanelHeaderButton/PanelHeaderButton";
+import { Platform } from "../../lib/platform";
 import { ModalDismissButton } from "../ModalDismissButton/ModalDismissButton";
 import { Icon24Dismiss } from "@vkontakte/icons";
 import { useKeyboard } from "../../hooks/useKeyboard";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
 import "./ModalCardBase.css";
 
 export interface ModalCardBaseProps
@@ -69,15 +69,18 @@ export const ModalCardBase: React.FC<ModalCardBaseProps> = ({
   ...restProps
 }) => {
   const platform = usePlatform();
-  const { sizeX } = useAdaptivity();
+  const { isDesktop } = useAdaptivityWithMediaQueries();
   const isSoftwareKeyboardOpened = useKeyboard().isOpened;
+
+  const canShowCloseButtonIOS = platform === Platform.IOS && !isDesktop;
 
   return (
     <div
       {...restProps}
       vkuiClass={classNames(
-        getClassName("ModalCardBase", platform),
-        getSizeXClassName("ModalCardBase", sizeX)
+        "ModalCardBase",
+        getPlatformClassName("ModalCardBase", platform),
+        isDesktop && "ModalCardBase--desktop"
       )}
       ref={getRootRef}
     >
@@ -113,17 +116,16 @@ export const ModalCardBase: React.FC<ModalCardBaseProps> = ({
           </div>
         )}
 
-        <ModalDismissButton
-          vkuiClass="ModalCardBase__dismiss"
-          onClick={onClose}
-        />
-        <PanelHeaderButton
-          aria-label={dismissLabel}
-          vkuiClass="ModalCardBase__dismiss-ios"
-          onClick={onClose}
-        >
-          <Icon24Dismiss />
-        </PanelHeaderButton>
+        {isDesktop && <ModalDismissButton onClick={onClose} />}
+        {canShowCloseButtonIOS && (
+          <PanelHeaderButton
+            aria-label={dismissLabel}
+            vkuiClass="ModalCardBase__dismiss"
+            onClick={onClose}
+          >
+            <Icon24Dismiss />
+          </PanelHeaderButton>
+        )}
       </div>
     </div>
   );

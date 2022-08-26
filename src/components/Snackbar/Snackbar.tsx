@@ -9,12 +9,8 @@ import { Button } from "../Button/Button";
 import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
 import { usePlatform } from "../../hooks/usePlatform";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
 import { useTimeout } from "../../hooks/useTimeout";
-import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
-import { SMALL_TABLET_SIZE } from "../AdaptivityProvider/AdaptivityProvider";
-import { useDOM } from "../../lib/dom";
 import "./Snackbar.css";
 
 export interface SnackbarProps
@@ -59,23 +55,20 @@ export interface SnackbarProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Snackbar
  */
-export const Snackbar = (props: SnackbarProps) => {
-  const {
-    children,
-    layout = "horizontal",
-    action,
-    before,
-    after,
-    duration = 4000,
-    onActionClick,
-    onClose,
-    mode = "default",
-    ...restProps
-  } = props;
-
+export const Snackbar = ({
+  children,
+  layout = "horizontal",
+  action,
+  before,
+  after,
+  duration = 4000,
+  onActionClick,
+  onClose,
+  mode = "default",
+  ...restProps
+}: SnackbarProps) => {
   const platform = usePlatform();
-  const { viewWidth } = useAdaptivity();
-  const { window } = useDOM();
+  const { isDesktop } = useAdaptivityWithMediaQueries();
 
   const { waitTransitionFinish } = useWaitTransitionFinish();
 
@@ -156,10 +149,6 @@ export const Snackbar = (props: SnackbarProps) => {
       let shiftXCurrent = shiftXCurrentRef.current;
       const expectTranslateY = (shiftXCurrent / e.duration) * 240 * 0.6;
       shiftXCurrent = shiftXCurrent + expectTranslateY;
-      const isDesktop =
-        viewWidth !== undefined
-          ? viewWidth >= ViewWidth.SMALL_TABLET
-          : window!.innerWidth >= SMALL_TABLET_SIZE;
 
       if (isDesktop && shiftXCurrent <= -50) {
         closeTimeout.clear();
@@ -197,19 +186,20 @@ export const Snackbar = (props: SnackbarProps) => {
 
   React.useEffect(() => closeTimeout.set(), [closeTimeout]);
 
+  const resolvedLayout = after || isDesktop ? "vertical" : layout;
+
   return (
     <AppRootPortal>
       <div
         {...restProps}
         vkuiClass={classNames(
           "Snackbar",
-          getViewWidthClassName("Snackbar", viewWidth),
           platform === Platform.IOS && "Snackbar--ios",
+          `Snackbar--l-${resolvedLayout}`,
           `Snackbar--${mode}`,
-          `Snackbar--l-${layout}`,
           closing && "Snackbar--closing",
-          after && "Snackbar--has-after",
-          touched && "Snackbar--touched"
+          touched && "Snackbar--touched",
+          isDesktop && "Snackbar--desktop"
         )}
       >
         <Touch

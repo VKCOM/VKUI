@@ -2,7 +2,7 @@ import * as React from "react";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
 import { hasReactNode } from "../../lib/utils";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import { ViewWidth } from "../../lib/adaptivity";
 import "./ViewWidthConditionalRender.css";
 
 export interface ViewWidthConditionalRenderProps {

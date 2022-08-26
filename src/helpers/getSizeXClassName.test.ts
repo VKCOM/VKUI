@@ -1,4 +1,4 @@
-import { SizeType } from "../components/AdaptivityProvider/AdaptivityContext";
+import { SizeType } from "../lib/adaptivity";
 import { getSizeXClassName } from "./getSizeXClassName";
 
 describe("getSizeXClassName", () => {

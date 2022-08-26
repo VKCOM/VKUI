@@ -2,7 +2,7 @@ import {
   ViewWidthConditionalRender,
   ViewWidthConditionalRenderProps,
 } from "./ViewWidthConditionalRender";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import { ViewWidth } from "../../lib/adaptivity";
 import { describeScreenshotFuzz } from "../../testing/e2e";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 

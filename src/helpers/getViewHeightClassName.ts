@@ -1,4 +1,4 @@
-import { ViewHeight } from "../components/AdaptivityProvider/AdaptivityContext";
+import { ViewHeight } from "../lib/adaptivity";
 
 export function getViewHeightClassName(
   base: string,

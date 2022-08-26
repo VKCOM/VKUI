@@ -9,7 +9,7 @@ import { describeScreenshotFuzz } from "../../testing/e2e";
 import { AppRoot } from "../AppRoot/AppRoot";
 import { Icon56MoneyTransferOutline } from "@vkontakte/icons";
 import { Platform } from "../../lib/platform";
-import { ViewWidth, SizeType } from "../AdaptivityProvider/AdaptivityContext";
+import { ViewWidth, SizeType } from "../../lib/adaptivity";
 import { HasChildren } from "../../types";
 
 const AppWrapper = (props: HasChildren) => (

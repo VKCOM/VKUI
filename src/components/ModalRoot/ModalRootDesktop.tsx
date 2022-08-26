@@ -15,14 +15,12 @@ import {
 } from "../ConfigProvider/ConfigProviderContext";
 import { ModalsStateEntry } from "./types";
 import { Platform } from "../../lib/platform";
-import { getClassName } from "../../helpers/getClassName";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { DOMProps, withDOM } from "../../lib/dom";
 import { getNavId } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { ModalTransitionProps, withModalManager } from "./useModalManager";
-import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
 import "./ModalRoot.css";
 
 const warn = warnOnce("ModalRoot");
@@ -34,8 +32,6 @@ export interface ModalRootProps extends HasPlatform {
    */
   configProvider?: ConfigProviderContextInterface;
   children?: React.ReactNode;
-
-  viewWidth?: ViewWidth;
 
   /**
    * Будет вызвано при начале открытия активной модалки с её id
@@ -213,7 +209,7 @@ class ModalRootDesktopComponent extends React.Component<
   }
 
   render() {
-    const { exitingModal, activeModal, enteringModal, viewWidth } = this.props;
+    const { exitingModal, activeModal, enteringModal, platform } = this.props;
 
     if (!activeModal && !exitingModal) {
       return null;
@@ -223,11 +219,10 @@ class ModalRootDesktopComponent extends React.Component<
       <ModalRootContext.Provider value={this.modalRootContext}>
         <div
           vkuiClass={classNames(
-            getClassName("ModalRoot", this.props.platform),
+            "ModalRoot",
+            getPlatformClassName("ModalRoot", platform),
             this.props.configProvider?.webviewType === WebviewType.VKAPPS &&
               "ModalRoot--vkapps",
-            "ModalRootDesktop",
-            getViewWidthClassName("ModalRootDesktop", viewWidth),
             "ModalRoot--desktop"
           )}
         >

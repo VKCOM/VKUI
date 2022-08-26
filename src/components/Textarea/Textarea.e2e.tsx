@@ -2,7 +2,7 @@ import { Textarea } from "./Textarea";
 import { screenshot, mount, describeScreenshotFuzz } from "../../testing/e2e";
 import { AppRoot } from "../AppRoot/AppRoot";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import { SizeType } from "../AdaptivityProvider/AdaptivityContext";
+import { SizeType } from "../../lib/adaptivity";
 
 describe("Textarea", () => {
   describeScreenshotFuzz(Textarea, [
