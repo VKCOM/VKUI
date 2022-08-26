@@ -34,6 +34,10 @@ export interface GroupProps
    * по умолчанию 'plain'.
    */
   mode?: "plain" | "card";
+  /**
+   * Отвечает за отступы вокруг контента в режиме 'card'.
+   */
+  padding?: "s" | "m";
   children?: React.ReactNode;
 }
 
@@ -44,6 +48,7 @@ const GroupComponent = ({
   separator = "auto",
   getRootRef,
   mode,
+  padding = "m",
   sizeX,
   ...restProps
 }: GroupProps) => {
@@ -81,7 +86,8 @@ const GroupComponent = ({
         platform === IOS && "Group--ios",
         // TODO v5.0.0 Новая адаптивность
         `Group--sizeX-${sizeX}`,
-        `Group--${computedMode}`
+        `Group--${computedMode}`,
+        `Group--padding-${padding}`
       )}
     >
       <div vkuiClass="Group__inner">
