@@ -22,7 +22,7 @@ export const PanelHeaderSubmit = ({
       primary
       {...restProps}
     >
-      {platform !== Platform.IOS ? <Icon28DoneOutline /> : children}
+      {platform === Platform.IOS ? children : <Icon28DoneOutline />}
     </PanelHeaderButton>
   );
 };

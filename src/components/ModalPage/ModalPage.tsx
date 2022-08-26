@@ -1,7 +1,7 @@
 import * as React from "react";
-import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { classNames } from "../../lib/classNames";
+import { Platform } from "../../lib/platform";
 import {
   ModalRootContext,
   useModalRegistry,
@@ -23,6 +23,14 @@ export interface ModalPageProps
    * Шапка модальной страницы, `<ModalPageHeader />`
    */
   header?: React.ReactNode;
+  /**
+   * Задаёт контенту максимальную ширину.
+   *
+   * > ⚠️ **Заметки:**
+   * > - Для `viewWidth < SMALL_TABLET_SIZE` будет всегда `"s"`
+   * > - Для `platform === VKCOM` максимальная ширина зашита, её не изменить.
+   */
+  size?: "s" | "m" | "l";
   /**
    * Будет вызвано при начале открытия модалки.
    */
@@ -48,6 +56,10 @@ export interface ModalPageProps
    */
   dynamicContentHeight?: boolean;
   getModalContentRef?: React.Ref<HTMLDivElement>;
+  /**
+   * Скрывает кнопку закрытия (актуально для iOS, т.к. можно отрисовать кнопку закрытия внутри модалки)
+   */
+  hideCloseButton?: boolean;
 }
 
 const warn = warnOnce("ModalPage");
@@ -58,6 +70,7 @@ const warn = warnOnce("ModalPage");
 export const ModalPage = ({
   children,
   header,
+  size: sizeProp = "s",
   onOpen,
   onOpened,
   onClose,
@@ -67,6 +80,7 @@ export const ModalPage = ({
   getModalContentRef,
   nav,
   id,
+  hideCloseButton = false,
   ...restProps
 }: ModalPageProps) => {
   const { updateModalHeight } = React.useContext(ModalRootContext);
@@ -81,6 +95,9 @@ export const ModalPage = ({
     updateModalHeight,
   ]);
 
+  const isCloseButtonShown = !hideCloseButton && isDesktop;
+  const size = isDesktop ? sizeProp : "s";
+
   const modalContext = React.useContext(ModalRootContext);
   const { refs } = useModalRegistry(
     getNavId({ nav, id }, warn),
@@ -93,9 +110,11 @@ export const ModalPage = ({
       id={id}
       vkuiClass={classNames(
         "ModalPage",
-        getPlatformClassName("ModalPage", platform),
+        platform === Platform.IOS && "ModalPage--ios",
+        platform === Platform.VKCOM && "ModalPage--vkcom",
         getSizeXClassName("ModalPage", sizeX),
-        isDesktop && "ModalPage--desktop"
+        isDesktop && "ModalPage--desktop",
+        size && `ModalPage--${size}`
       )}
     >
       <div vkuiClass="ModalPage__in-wrap" ref={refs.innerElement}>
@@ -115,8 +134,8 @@ export const ModalPage = ({
               <div vkuiClass="ModalPage__content-in">{children}</div>
             </div>
           </div>
-          {isDesktop && (
-            <ModalDismissButton onClick={onClose ?? modalContext.onClose} />
+          {isCloseButtonShown && (
+            <ModalDismissButton onClick={onClose || modalContext.onClose} />
           )}
         </div>
       </div>

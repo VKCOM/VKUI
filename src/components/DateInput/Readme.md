@@ -1,5 +1,8 @@
 Компонент выбора даты.
 
+- Если нужен календарь без поля ввода, используйте [Calendar](#!/Calendar).
+- Если нужен выбор диапазона дат, используйте [DateRangeInput](#!/DateRangeInput).
+
 > ⚠️ Данный компонент предназначен для использования на desktop. При использовании на ios/android работа компонента не гарантируется
 
 ```jsx { "props": { "layout": false, "iframe": false } }
@@ -13,6 +16,7 @@ const Example = () => {
   const [disablePickers, setDisablePickers] = useState(false);
   const [closeOnChange, setCloseOnChange] = useState(true);
   const [showNeighboringMonth, setShowNeighboringMonth] = useState(false);
+  const [disableCalendar, setDisableCalendar] = useState(false);
   const [locale, setLocale] = useState("ru");
 
   return (
@@ -66,6 +70,14 @@ const Example = () => {
             Включено
           </Checkbox>
         </FormItem>
+        <FormItem top="Отключить отображение выпадающего календаря">
+          <Checkbox
+            checked={disableCalendar}
+            onChange={(e) => setDisableCalendar(e.target.checked)}
+          >
+            Включено
+          </Checkbox>
+        </FormItem>
         <FormItem top="Локаль">
           <Select
             style={{ width: 100 }}
@@ -103,6 +115,7 @@ const Example = () => {
                 closeOnChange={closeOnChange}
                 disablePickers={disablePickers}
                 showNeighboringMonth={showNeighboringMonth}
+                disableCalendar={disableCalendar}
               />
             </LocaleProviderContext.Provider>
           </div>

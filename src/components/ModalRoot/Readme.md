@@ -5,8 +5,8 @@
 
 Этот компонент должен быть передан в качестве свойства `modal` компоненту [`SplitLayout`](https://vkcom.github.io/VKUI/#/SplitLayout).
 
-**Важно:** структура модальных страниц и карточек должна определяться единожды на старте приложения. Структура – это _декларация_ приложения.
-То есть, один раз определив структуру вида:
+> ⚠️ Структура модальных страниц и карточек должна определяться единожды на старте приложения. Структура – это _декларация_ приложения.
+> То есть, один раз определив структуру вида:
 
 ```jsx static
 class App extends Component {
@@ -141,15 +141,9 @@ const App = () => {
         id={MODAL_PAGE_FULLSCREEN}
         onClose={modalBack}
         settlingHeight={100}
+        hideCloseButton={platform === Platform.IOS}
         header={
           <ModalPageHeader
-            after={
-              platform === Platform.IOS && (
-                <PanelHeaderButton onClick={modalBack}>
-                  <Icon24Dismiss />
-                </PanelHeaderButton>
-              )
-            }
             before={
               <SizeXConditionalRender
                 compact={
@@ -158,6 +152,13 @@ const App = () => {
                   )
                 }
               />
+            }
+            after={
+              platform === Platform.IOS && (
+                <PanelHeaderButton onClick={modalBack}>
+                  <Icon24Dismiss />
+                </PanelHeaderButton>
+              )
             }
           >
             @{randomUser.screen_name}
@@ -542,7 +543,11 @@ const App = () => {
 <App />;
 ```
 
-### Решение проблем
+### FAQ
+
+#### Как поменять максимальную ширину контента?
+
+Используйте параметр `size`.
 
 #### Я указал `dynamicContentHeight` у `ModalPage`, но высота модальной страницы не меняется
 

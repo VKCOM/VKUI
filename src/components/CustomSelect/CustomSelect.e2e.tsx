@@ -31,6 +31,9 @@ describe("CustomSelect", () => {
         selectType: [SelectType.plain, SelectType.accent],
         $adaptivity: "y",
       },
+      {
+        status: ["error", "valid"],
+      },
     ]
   );
 });

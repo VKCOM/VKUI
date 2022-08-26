@@ -7,7 +7,7 @@ const CustomPopout = ({ onClose }) => {
     <PopoutWrapper onClick={onClose}>
       <div
         style={{
-          backgroundColor: "var(--background_content)",
+          backgroundColor: "var(--vkui--color_background_content)",
           borderRadius: 8,
           position: "relative",
           padding: "12px",

@@ -112,10 +112,7 @@ export const ActionSheet = ({
         {(header || text) && (
           <header vkuiClass="ActionSheet__header">
             {header && (
-              <Footnote
-                weight={platform === Platform.IOS ? "1" : "2"}
-                vkuiClass="ActionSheet__title"
-              >
+              <Footnote weight="2" vkuiClass="ActionSheet__title">
                 {header}
               </Footnote>
             )}

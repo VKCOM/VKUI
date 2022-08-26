@@ -1,6 +1,6 @@
 import * as React from "react";
 import mitt from "mitt";
-import { noop } from "@vkontakte/vkjs";
+import { noop } from "../../lib/utils";
 import { Touch, TouchEvent, TouchProps } from "../Touch/Touch";
 import TouchRootContext from "../Touch/TouchContext";
 import { classNamesString } from "../../lib/classNames";

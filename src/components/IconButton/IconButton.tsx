@@ -24,10 +24,10 @@ export const IconButton = ({
 
   return (
     <Tappable
-      {...restProps}
-      Component={restProps.href ? "a" : Component}
       activeEffectDelay={200}
       activeMode="background"
+      {...restProps}
+      Component={restProps.href ? "a" : Component}
       vkuiClass={classNames(
         "IconButton",
         getSizeYClassName("IconButton", sizeY),

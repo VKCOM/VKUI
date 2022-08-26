@@ -4,14 +4,10 @@ import Slot from "@rsg-components/Slot";
 import Markdown from "@rsg-components/Markdown";
 import Examples from "@rsg-components/Examples";
 import { SectionSubheading } from "../SectionSubheading/SectionSubheading";
-import { Footnote, Link } from "@vkui";
-import { classNames } from "@vkontakte/vkjs";
+import { Footnote, Link, classNames } from "@vkui";
 import { deprecated } from "../../deprecated";
-import { tokenized } from "../../tokenized";
-import { TextTooltip } from "@vkui/components/TextTooltip/TextTooltip";
 import pkg from "../../../package.json";
 import "./ReactComponent.css";
-import { Icon28TokenizedOutline } from "../Icon28TokenizedOutline/Icon28TokenizedOutline";
 
 const ReactComponent = ({ component, exampleMode }) => {
   const { name, visibleName, pathLine } = component;
@@ -40,28 +36,7 @@ const ReactComponent = ({ component, exampleMode }) => {
           "ReactComponent__name--deprecated": isDeprecated,
         })}
       >
-        {visibleName}{" "}
-        {tokenized.includes(visibleName) && (
-          <TextTooltip
-            text={
-              <React.Fragment>
-                Компонент поддерживает{" "}
-                <Link
-                  target="_blank"
-                  href="https://github.com/VKCOM/vkui-tokens"
-                >
-                  vkui-tokens
-                </Link>
-              </React.Fragment>
-            }
-          >
-            <Icon28TokenizedOutline
-              className="ReactComponent__tokenized"
-              width={24}
-              stroke="var(--vkui--color_icon_accent)"
-            />
-          </TextTooltip>
-        )}
+        {visibleName}
       </Heading>
       {description && <Markdown text={description} />}
       {examples.length > 0 && (

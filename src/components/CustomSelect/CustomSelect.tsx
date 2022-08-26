@@ -99,7 +99,6 @@ const filter = (
 };
 
 const defaultOptions: CustomSelectOptionInterface[] = [];
-const defaultIcon = <DropdownIcon />;
 
 type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>["value"];
 
@@ -176,6 +175,7 @@ type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
  * @see https://vkcom.github.io/VKUI/#/CustomSelect
  */
 export function CustomSelect(props: SelectProps) {
+  const [opened, setOpened] = React.useState(false);
   const {
     before,
     name,
@@ -201,7 +201,7 @@ export function CustomSelect(props: SelectProps) {
     options: optionsProp = defaultOptions,
     emptyText = "Ничего не найдено",
     filterFn = defaultFilterFn,
-    icon = defaultIcon,
+    icon = <DropdownIcon opened={opened} />,
     dropdownOffsetDistance = 0,
     fixDropdownWidth = true,
     ...restProps
@@ -233,7 +233,6 @@ export function CustomSelect(props: SelectProps) {
   const [selectedOptionIndex, setSelectedOptionIndex] = React.useState<
     number | undefined
   >(findSelectedIndex(optionsProp, props.value ?? props.defaultValue));
-  const [opened, setOpened] = React.useState(false);
 
   React.useEffect(() => {
     setIsControlledOutside(props.value !== undefined);
@@ -243,7 +242,7 @@ export function CustomSelect(props: SelectProps) {
   }, [props.value]);
 
   useIsomorphicLayoutEffect(() => {
-    if (nativeSelectValue) {
+    if (nativeSelectValue !== undefined) {
       const event = new Event("change", { bubbles: true });
 
       selectElRef.current?.dispatchEvent(event);

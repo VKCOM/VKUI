@@ -50,6 +50,7 @@ export { ActionSheet } from "./components/ActionSheet/ActionSheet";
 export type { ActionSheetProps } from "./components/ActionSheet/ActionSheet";
 export { ActionSheetItem } from "./components/ActionSheetItem/ActionSheetItem";
 export type { ActionSheetItemProps } from "./components/ActionSheetItem/ActionSheetItem";
+export { ActionSheetDefaultIosCloseItem } from "./components/ActionSheet/ActionSheetDefaultIosCloseItem";
 export { ScreenSpinner } from "./components/ScreenSpinner/ScreenSpinner";
 export type { ScreenSpinnerProps } from "./components/ScreenSpinner/ScreenSpinner";
 export { Snackbar } from "./components/Snackbar/Snackbar";
@@ -99,6 +100,7 @@ export type { GroupProps } from "./components/Group/Group";
 export { Gradient } from "./components/Gradient/Gradient";
 export type { GradientProps } from "./components/Gradient/Gradient";
 export { List } from "./components/List/List";
+export type { ListProps } from "./components/List/List";
 export { Cell } from "./components/Cell/Cell";
 export type { CellProps } from "./components/Cell/Cell";
 export { RichCell } from "./components/RichCell/RichCell";
@@ -254,6 +256,7 @@ export type { ModalCardBaseProps } from "./components/ModalCardBase/ModalCardBas
 export { AppRoot } from "./components/AppRoot/AppRoot";
 export type { AppRootProps } from "./components/AppRoot/AppRoot";
 export { AdaptivityProvider } from "./components/AdaptivityProvider/AdaptivityProvider";
+export type { AdaptivityProviderProps } from "./components/AdaptivityProvider/AdaptivityProvider";
 export { ConfigProvider } from "./components/ConfigProvider/ConfigProvider";
 export type { ConfigProviderProps } from "./components/ConfigProvider/ConfigProvider";
 export {

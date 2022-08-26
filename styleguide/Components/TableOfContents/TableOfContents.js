@@ -15,10 +15,8 @@ import {
   Icon28ChevronUpOutline,
   Icon28WarningTriangleOutline,
 } from "@vkontakte/icons";
-import { Icon28TokenizedOutline } from "../Icon28TokenizedOutline/Icon28TokenizedOutline";
 import { deprecated } from "../../deprecated";
 import getInfoFromHash from "react-styleguidist/lib/client/utils/getInfoFromHash";
-import { tokenized } from "../../tokenized";
 import { unstable } from "../../unstable";
 import "./TableOfContents.css";
 
@@ -257,13 +255,6 @@ class TableOfContents extends React.PureComponent {
                     <Icon28WarningTriangleOutline
                       fill="var(--vkui--color_accent_orange)"
                       title="Компонент является нестабильным"
-                    />
-                  )) ||
-                (tokenized.includes(section.name) &&
-                  !deprecated.includes(section.name) && (
-                    <Icon28TokenizedOutline
-                      stroke="var(--vkui--color_icon_accent)"
-                      title="Компонент поддерживает vkui-tokens"
                     />
                   ))
               }

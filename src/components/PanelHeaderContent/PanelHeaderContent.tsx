@@ -1,8 +1,9 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
+import { classNames } from "../../lib/classNames";
 import { Tappable } from "../Tappable/Tappable";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { Footnote } from "../Typography/Footnote/Footnote";
 import { Headline } from "../Typography/Headline/Headline";
 import { Platform } from "../../lib/platform";
@@ -71,19 +72,29 @@ export const PanelHeaderContent = ({
         activeMode: "opacity",
       }
     : {};
-  const baseClassNames = getClassName("PanelHeaderContent", platform);
 
   return (
     <div
       {...rootProps}
-      vkuiClass={baseClassNames}
+      vkuiClass={classNames(
+        "PanelHeaderContent",
+        getPlatformClassName("PanelHeaderContent", platform)
+      )}
       style={style}
       className={className}
     >
       {hasReactNode(before) && (
         <div vkuiClass="PanelHeaderContent__before">{before}</div>
       )}
-      <InComponent {...inProps} vkuiClass="PanelHeaderContent__in">
+      <InComponent
+        {...inProps}
+        vkuiClass={classNames(
+          "PanelHeaderContent__in",
+          !before &&
+            platform !== Platform.ANDROID &&
+            "PanelHeaderContent__in--centered"
+        )}
+      >
         {hasReactNode(status) && (
           <Footnote vkuiClass="PanelHeaderContent__status">{status}</Footnote>
         )}

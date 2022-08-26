@@ -25,6 +25,7 @@ export const Input = ({
   style,
   before,
   after,
+  status,
   ...restProps
 }: InputProps) => {
   const { sizeY } = useAdaptivity();
@@ -44,6 +45,7 @@ export const Input = ({
       before={before}
       after={after}
       disabled={restProps.disabled}
+      status={status}
     >
       <input {...restProps} type={type} vkuiClass="Input__el" ref={getRef} />
     </FormField>

@@ -1,28 +1,28 @@
 import * as React from "react";
-import { Icon20Dropdown, Icon24ChevronDown } from "@vkontakte/icons";
-import { getClassName } from "../../helpers/getClassName";
-import { usePlatform } from "../../hooks/usePlatform";
-import { classNames } from "../../lib/classNames";
+import {
+  Icon20Dropdown,
+  Icon24ChevronDown,
+  Icon24ChevronUp,
+  Icon20ChevronUp,
+} from "@vkontakte/icons";
 import { SizeYConditionalRender } from "../SizeYConditionalRender/SizeYConditionalRender";
-import "./DropdownIcon.css";
 
-export const DropdownIcon = (props: React.HTMLAttributes<HTMLDivElement>) => {
-  const platform = usePlatform();
+export interface DropdownIconProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  opened?: boolean;
+}
+
+export const DropdownIcon = ({
+  opened = false,
+  ...restProps
+}: DropdownIconProps) => {
+  const IconCompact = opened ? Icon20ChevronUp : Icon20Dropdown;
+  const IconRegular = opened ? Icon24ChevronUp : Icon24ChevronDown;
 
   return (
     <SizeYConditionalRender
-      compact={
-        <Icon20Dropdown
-          vkuiClass={classNames(getClassName("DropdownIcon", platform))}
-          {...props}
-        />
-      }
-      regular={
-        <Icon24ChevronDown
-          vkuiClass={classNames(getClassName("DropdownIcon", platform))}
-          {...props}
-        />
-      }
+      compact={<IconCompact vkuiClass="DropdownIcon" {...restProps} />}
+      regular={<IconRegular vkuiClass="DropdownIcon" {...restProps} />}
     />
   );
 };

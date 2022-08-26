@@ -12,10 +12,14 @@ import {
 } from "../../hooks/useBridgeAdaptivity";
 import { type AdaptivityProps, AdaptivityContext } from "./AdaptivityContext";
 
+export interface AdaptivityProviderProps extends AdaptivityProps {
+  children?: React.ReactNode;
+}
+
 /**
  * @see https://vkcom.github.io/VKUI/#/AdaptivityProvider
  */
-const AdaptivityProvider = ({
+export const AdaptivityProvider = ({
   viewWidth,
   viewHeight,
   sizeX,
@@ -150,5 +154,3 @@ function calculateAdaptivity(
     deviceHasHover,
   };
 }
-
-export { AdaptivityProvider };

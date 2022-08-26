@@ -8,9 +8,8 @@ import {
   PanelHeaderButtonProps,
 } from "../PanelHeaderButton/PanelHeaderButton";
 import { Platform } from "../../lib/platform";
-import { usePlatform } from "../../hooks/usePlatform";
-import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import { usePlatform } from "../../hooks/usePlatform";
 import { classNames } from "../../lib/classNames";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./PanelHeaderBack.css";
@@ -48,8 +47,9 @@ export const PanelHeaderBack = ({
       {...restProps}
       vkuiClass={classNames(
         "PanelHeaderBack",
-        getPlatformClassName("PanelHeaderBack", platform),
         getSizeXClassName("PanelHeaderBack", sizeX),
+        platform === Platform.IOS && "PanelHeaderBack--ios",
+        platform === Platform.VKCOM && "PanelHeaderBack--vkcom",
         showLabel && !!label && "PanelHeaderBack--has-label"
       )}
       label={showLabel && label}

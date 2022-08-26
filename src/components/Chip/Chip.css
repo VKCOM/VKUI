@@ -46,6 +46,7 @@
   border-radius: 2px;
   background: transparent;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .Chip__before {

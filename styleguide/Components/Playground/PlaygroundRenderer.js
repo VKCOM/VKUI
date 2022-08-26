@@ -29,7 +29,7 @@ const PlaygroundRenderer = ({
 
   return (
     <div className="Playground">
-      <SectionSubheading href={`#/${name}?id=example`}>
+      <SectionSubheading href={`#/${name}?id=example${exampleIndex}`}>
         Пример реализации
       </SectionSubheading>
       <Settings adaptivity={adaptivity} webviewType={webviewType} />
@@ -50,7 +50,7 @@ const PlaygroundRenderer = ({
         })}
       </div>
       <div className={getSizeXClassName("Playground__editor", sizeX)}>
-        <SectionSubheading href={`#/${name}?id=code`}>
+        <SectionSubheading href={`#/${name}?id=code${exampleIndex}`}>
           Редактируемый код
         </SectionSubheading>
         <div className="Playground__code">{tabBody}</div>

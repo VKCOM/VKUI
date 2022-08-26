@@ -2,6 +2,7 @@
   width: 100%;
   position: relative;
   display: block;
+  cursor: pointer;
 }
 
 .CustomSelect__control {

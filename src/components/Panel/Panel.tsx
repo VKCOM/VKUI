@@ -1,5 +1,4 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { classNames } from "../../lib/classNames";
 import { Touch } from "../Touch/Touch";
@@ -36,9 +35,11 @@ export const Panel: React.FC<PanelProps> = ({
       {...restProps}
       ref={getRootRef}
       vkuiClass={classNames(
-        getClassName("Panel", platform),
-        centered && "Panel--centered",
-        getSizeXClassName("Panel", sizeX)
+        "Panel",
+        platform === Platform.IOS && "Panel--ios",
+        platform === Platform.VKCOM && "Panel--vkcom",
+        getSizeXClassName("Panel", sizeX),
+        centered && "Panel--centered"
       )}
     >
       <Touch Component={TooltipContainer} vkuiClass="Panel__in">

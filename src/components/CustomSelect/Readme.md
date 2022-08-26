@@ -154,7 +154,11 @@ const CustomSearchLogicSelect = () => {
       onInputChange={onCustomSearchInputChange}
       renderOption={({ option, ...restProps }) => (
         <CustomSelectOption
-          style={option.value === "0" ? { color: "var(--accent)" } : {}}
+          style={
+            option.value === "0"
+              ? { color: "var(--vkui--color_background_accent)" }
+              : {}
+          }
           {...restProps}
         >
           {option.label}
@@ -263,7 +267,9 @@ const AsyncCustomSelect = () => {
   const renderDropdown = ({ defaultDropdownContent }) => {
     if (remoteQuery.length < 3) {
       return (
-        <Text style={{ padding: 12, color: "var(--text_secondary)" }}>
+        <Text
+          style={{ padding: 12, color: "var(--vkui--color_text_secondary)" }}
+        >
           Нужно ввести хотя бы три символа
         </Text>
       );

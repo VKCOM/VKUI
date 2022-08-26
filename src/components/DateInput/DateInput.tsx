@@ -6,7 +6,7 @@ import { Popper, Placement } from "../Popper/Popper";
 import { multiRef } from "../../lib/utils";
 import { IconButton } from "../IconButton/IconButton";
 import { classNames } from "../../lib/classNames";
-import { FormField } from "../FormField/FormField";
+import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasRootRef } from "../../types";
 import { useDateInput } from "../../hooks/useDateInput";
 import { InputLike } from "../InputLike/InputLike";
@@ -48,11 +48,13 @@ export interface DateInputProps
       | "prevMonthIcon"
       | "nextMonthIcon"
     >,
-    HasRootRef<HTMLDivElement> {
+    HasRootRef<HTMLDivElement>,
+    FormFieldProps {
   calendarPlacement?: Placement;
   closeOnChange?: boolean;
   clearFieldAriaLabel?: string;
   showCalendarAriaLabel?: string;
+  disableCalendar?: boolean;
 }
 
 const elementsConfig = (index: number) => {
@@ -134,6 +136,7 @@ export const DateInput = ({
   onPrevMonth,
   prevMonthIcon,
   nextMonthIcon,
+  disableCalendar = false,
   ...props
 }: DateInputProps) => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -299,7 +302,7 @@ export const DateInput = ({
           </React.Fragment>
         )}
       </span>
-      {open && (
+      {open && !disableCalendar && (
         <Popper
           targetRef={rootRef}
           offsetDistance={8}

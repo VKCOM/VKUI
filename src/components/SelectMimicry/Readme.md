@@ -44,7 +44,7 @@ class Example extends React.Component {
                   }
                   after={
                     this.state.country === "Россия" ? (
-                      <Icon24Done fill="var(--accent)" />
+                      <Icon24Done fill="var(--vkui--color_icon_accent)" />
                     ) : null
                   }
                 >
@@ -56,7 +56,7 @@ class Example extends React.Component {
                   }
                   after={
                     this.state.country === "Италия" ? (
-                      <Icon24Done fill="var(--accent)" />
+                      <Icon24Done fill="var(--vkui--color_icon_accent)" />
                     ) : null
                   }
                 >
@@ -68,7 +68,7 @@ class Example extends React.Component {
                   }
                   after={
                     this.state.country === "Англия" ? (
-                      <Icon24Done fill="var(--accent)" />
+                      <Icon24Done fill="var(--vkui--color_icon_accent)" />
                     ) : null
                   }
                 >

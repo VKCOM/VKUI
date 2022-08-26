@@ -21,6 +21,12 @@
   right: 2px;
 }
 
+.PanelHeaderButton--primitive {
+  height: 48px;
+  line-height: 48px;
+  padding: 0 12px;
+}
+
 /*
  * iOS
  */
@@ -35,7 +41,6 @@
 .PanelHeaderButton--ios.PanelHeaderButton--primitive {
   height: 44px;
   line-height: 44px;
-  padding: 0 12px;
 }
 
 .PanelHeaderButton--ios .Icon--24 {
@@ -50,14 +55,8 @@
  * Android
  */
 
-.PanelHeaderButton--android {
+.PanelHeaderButton--android.PanelHeaderButton--notPrimitive {
   border-radius: 50%;
-}
-
-.PanelHeaderButton--android.PanelHeaderButton--primitive {
-  height: 48px;
-  line-height: 48px;
-  padding: 0 12px;
 }
 
 .PanelHeaderButton--android .Icon--24 {
@@ -72,7 +71,7 @@
 * VKCOM
 */
 .PanelHeaderButton--vkcom {
-  color: var(--header_text_secondary);
+  color: var(--header_text_secondary, var(--vkui--color_text_secondary));
 }
 
 .PanelHeaderButton--vkcom > :not(.Counter) {
@@ -89,12 +88,6 @@
   display: flex;
   align-items: center;
   padding: 10px;
-}
-
-.PanelHeaderButton--vkcom.PanelHeaderButton--primitive {
-  height: 48px;
-  line-height: 48px;
-  padding: 0 10px;
 }
 
 .PanelHeaderButton--vkcom.PanelHeaderButton--notPrimitive {

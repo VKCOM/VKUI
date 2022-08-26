@@ -1,7 +1,6 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { withPlatform } from "../../hoc/withPlatform";
-import { getClassName } from "../../helpers/getClassName";
 import {
   Icon16SearchOutline,
   Icon16Clear,
@@ -18,6 +17,7 @@ import { Headline } from "../Typography/Headline/Headline";
 import { Separator } from "../Separator/Separator";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import "./Search.css";
 
 export type InputRef = (element: HTMLInputElement) => void;
@@ -84,6 +84,7 @@ const SearchComponent = ({
   const inputRef = useExternRef(getRef);
   const [isFocused, setFocused] = React.useState(false);
   const [value, onChange] = useEnsuredControl(inputProps, { defaultValue });
+  const { sizeY } = useAdaptivity();
 
   const onFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setFocused(true);
@@ -123,13 +124,17 @@ const SearchComponent = ({
 
   return (
     <div
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
-      vkuiClass={classNames(getClassName("Search", platform), {
-        "Search--focused": isFocused,
-        "Search--has-value": !!value,
-        "Search--has-after": !!after,
-        "Search--has-icon": !!icon,
-      })}
+      vkuiClass={classNames(
+        "Search",
+        platform === Platform.VKCOM && "Search--vkcom",
+        platform === Platform.IOS && "Search--ios",
+        // TODO: V5 перенести на новую адаптивность
+        `Search--sizeY-${sizeY}`,
+        isFocused && "Search--focused",
+        value && "Search--has-value",
+        icon && "Search--has-after",
+        after && "Search--has-icon"
+      )}
       className={className}
       style={style}
     >

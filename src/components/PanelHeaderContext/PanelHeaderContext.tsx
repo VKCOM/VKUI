@@ -1,16 +1,15 @@
 import * as React from "react";
 import { FixedLayout } from "../FixedLayout/FixedLayout";
 import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useDOM } from "../../lib/dom";
+import { Platform } from "../../lib/platform";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { useTimeout } from "../../hooks/useTimeout";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useScrollLock } from "../AppRoot/ScrollContext";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import { Platform } from "../../lib/platform";
 import "./PanelHeaderContext.css";
 
 export interface PanelHeaderContextProps
@@ -69,10 +68,12 @@ export const PanelHeaderContext = ({
     <FixedLayout
       {...restProps}
       vkuiClass={classNames(
-        getClassName("PanelHeaderContext", platform),
+        "PanelHeaderContext",
+        platform === Platform.IOS && "PanelHeaderContext--ios",
         opened && "PanelHeaderContext--opened",
         closing && "PanelHeaderContext--closing",
-        getSizeXClassName("PanelHeaderContext", sizeX)
+        getSizeXClassName("PanelHeaderContext", sizeX),
+        "PanelHeaderContext--rounded"
       )}
       vertical="top"
     >

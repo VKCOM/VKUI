@@ -81,6 +81,39 @@ const ARROW_PADDING = 8;
 const ARROW_WIDTH = 20;
 const ARROW_HEIGHT = 8;
 
+const preventOverflowModifier: Modifier<string> = {
+  name: "preventOverflow",
+  options: {
+    mainAxis: false,
+  },
+};
+
+const flipModifier: Modifier<string> = {
+  name: "flip",
+};
+
+const arrowModifier: Modifier<string> = {
+  name: "arrow",
+  options: {
+    padding: ARROW_PADDING,
+  },
+};
+
+const sameWidthModifier: Modifier<string> = {
+  name: "sameWidth",
+  enabled: true,
+  phase: "beforeWrite",
+  requires: ["computeStyles"],
+  fn: ({ state }) => {
+    state.styles.popper.width = `${state.rects.reference.width}px`;
+  },
+  effect: ({ state }) => {
+    state.elements.popper.style.width = `${
+      (state.elements.reference as HTMLElement).offsetWidth
+    }px`;
+  },
+};
+
 /**
  * @see https://vkcom.github.io/VKUI/#/Popper
  */
@@ -112,12 +145,7 @@ export const Popper = ({
 
   const modifiers = React.useMemo(() => {
     const modifiers: Array<Modifier<string>> = [
-      {
-        name: "preventOverflow",
-        options: {
-          mainAxis: false,
-        },
-      },
+      preventOverflowModifier,
       {
         name: "offset",
         options: {
@@ -127,37 +155,15 @@ export const Popper = ({
           ],
         },
       },
-      {
-        name: "flip",
-      },
+      flipModifier,
     ];
 
     if (arrow) {
-      modifiers.push({
-        name: "arrow",
-        options: {
-          padding: ARROW_PADDING,
-        },
-      });
+      modifiers.push(arrowModifier);
     }
 
     if (sameWidth) {
-      const sameWidth: Modifier<string> = {
-        name: "sameWidth",
-        enabled: true,
-        phase: "beforeWrite",
-        requires: ["computeStyles"],
-        fn: ({ state }) => {
-          state.styles.popper.width = `${state.rects.reference.width}px`;
-        },
-        effect: ({ state }) => {
-          state.elements.popper.style.width = `${
-            (state.elements.reference as HTMLElement).offsetWidth
-          }px`;
-        },
-      };
-
-      modifiers.push(sameWidth);
+      modifiers.push(sameWidthModifier);
     }
 
     if (customModifiers) {

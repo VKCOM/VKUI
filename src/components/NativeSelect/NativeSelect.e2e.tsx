@@ -33,6 +33,9 @@ describe("NativeSelect", () => {
         value: ["th"],
         multiline: [undefined, true],
       },
+      {
+        status: ["error", "valid"],
+      },
     ]
   );
 });

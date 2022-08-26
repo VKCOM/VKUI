@@ -32,6 +32,7 @@ export const ModalPageHeader = ({
       vkuiClass={classNames(
         "ModalPageHeader",
         getPlatformClassName("ModalPageHeader", platform),
+        platform !== Platform.VKCOM && "ModalPageHeader--withGaps",
         isDesktop && "ModalPageHeader--desktop"
       )}
       ref={getRef}

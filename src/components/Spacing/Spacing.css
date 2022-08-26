@@ -12,12 +12,16 @@
   padding-right: var(--vkui--size_base_padding_horizontal--regular);
 }
 
+.Spacing--separator-top {
+  justify-content: start;
+}
+
 .Spacing--separator-center {
   justify-content: center;
 }
 
 .Spacing--separator-bottom {
-  flex-direction: column-reverse;
+  justify-content: end;
 }
 
 .Spacing--separator::after {

@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Panel, PanelProps } from "./Panel";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
+import { describeScreenshotFuzz } from "../../testing/e2e";
 import { PanelHeader } from "../PanelHeader/PanelHeader";
 import { Group } from "../Group/Group";
 import { AppRoot } from "../AppRoot/AppRoot";

@@ -19,7 +19,10 @@ const SnackBarExample = () => {
         action="Поделиться"
         onActionClick={() => setText("Добавляем метку.")}
         before={
-          <Avatar size={24} style={{ background: "var(--accent)" }}>
+          <Avatar
+            size={24}
+            style={{ background: "var(--vkui--color_background_accent)" }}
+          >
             <Icon16Done fill="#fff" width={14} height={14} />
           </Avatar>
         }
@@ -38,7 +41,10 @@ const SnackBarExample = () => {
         action="Перейти в раздел «Понравилось»"
         onActionClick={() => setText("Открыта подробная информация.")}
         before={
-          <Avatar size={24} style={{ background: "var(--accent)" }}>
+          <Avatar
+            size={24}
+            style={{ background: "var(--vkui--color_background_accent)" }}
+          >
             <Icon16Done fill="#fff" width={14} height={14} />
           </Avatar>
         }
@@ -70,7 +76,10 @@ const SnackBarExample = () => {
         action="Поделиться"
         onActionClick={() => setText("Добавляем метку.")}
         before={
-          <Avatar size={24} style={{ background: "var(--accent)" }}>
+          <Avatar
+            size={24}
+            style={{ background: "var(--vkui--color_background_accent)" }}
+          >
             <Icon16Done fill="#fff" width={14} height={14} />
           </Avatar>
         }

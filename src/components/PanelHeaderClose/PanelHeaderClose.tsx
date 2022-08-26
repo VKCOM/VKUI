@@ -20,7 +20,7 @@ export const PanelHeaderClose = ({
       aria-label={getTitleFromChildren(children)}
       {...restProps}
     >
-      {platform !== Platform.IOS ? <Icon28CancelOutline /> : children}
+      {platform === Platform.IOS ? children : <Icon28CancelOutline />}
     </PanelHeaderButton>
   );
 };

@@ -120,6 +120,7 @@
 @import "../components/Checkbox/Checkbox.css";
 @import "../components/Input/Input.css";
 @import "../components/ChipsInput/ChipsInput.css";
+@import "../components/ChipsInputBase/ChipsInputBase.css";
 @import "../components/Chip/Chip.css";
 @import "../components/Select/Select.css";
 @import "../components/Textarea/Textarea.css";

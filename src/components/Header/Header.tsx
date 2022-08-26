@@ -1,5 +1,4 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { HasComponent, HasPlatform, HasRootRef } from "../../types";
@@ -90,11 +89,13 @@ export const Header = ({
     <header
       {...restProps}
       ref={getRootRef}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
-        getClassName("Header", platform),
+        "Header",
+        platform === Platform.VKCOM && "Header--vkcom",
+        platform === Platform.ANDROID && "Header--android",
+        platform === Platform.IOS && "Header--ios",
         `Header--mode-${mode}`,
-        { "Header--pi": isPrimitiveReactNode(indicator) }
+        isPrimitiveReactNode(indicator) && "Header--pi"
       )}
     >
       <div vkuiClass="Header__main">
@@ -105,10 +106,10 @@ export const Header = ({
           platform={platform}
         >
           <span
-            // eslint-disable-next-line vkui/no-object-expression-in-arguments
-            vkuiClass={classNames("Header__content-in", {
-              "Header__content-in--multiline": multiline,
-            })}
+            vkuiClass={classNames(
+              "Header__content-in",
+              multiline && "Header__content-in--multiline"
+            )}
           >
             {children}
           </span>

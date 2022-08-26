@@ -10,7 +10,7 @@
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--text_primary);
+  color: var(--text_primary, var(--vkui--color_text_primary));
 }
 
 .Header__content {
@@ -34,30 +34,26 @@
 }
 
 .Header__subtitle {
-  color: var(--text_secondary);
+  color: var(--text_secondary, var(--vkui--color_text_secondary));
 }
 
 .Header--mode-primary .Header__content:not(:last-child) {
   margin-top: -1px;
 }
 
-.Header--mode-secondary .Header__main,
+.Header--mode-secondary:not(.Header--pi) .Header__main,
 .Header--mode-tertiary .Header__main {
-  color: var(--text_secondary);
-}
-
-.Header--pi .Header__main {
-  color: var(--text_primary);
+  color: var(--text_secondary, var(--vkui--color_text_secondary));
 }
 
 .Header__indicator {
-  color: var(--text_secondary);
+  color: var(--text_secondary, var(--vkui--color_text_secondary));
   margin-left: 6px;
   flex-shrink: 0;
 }
 
 .Header--mode-primary .Header__indicator {
-  color: var(--text_subhead);
+  color: var(--text_subhead, var(--vkui--color_text_subhead));
 }
 
 .Header:not(.Header--pi) .Header__indicator {
@@ -75,7 +71,7 @@
 
 .Header__aside > .Icon {
   position: relative;
-  color: var(--icon_secondary);
+  color: var(--icon_secondary, var(--vkui--color_icon_secondary));
 }
 
 .Header__aside > .Icon--24 {
@@ -125,7 +121,7 @@
 }
 
 .Header--vkcom .Header__main {
-  color: var(--text_primary);
+  color: var(--text_primary, var(--vkui--color_text_primary));
 }
 
 .Header--vkcom.Header--mode-primary .Header__content:not(:last-child) {

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
-import { FormField } from "../FormField/FormField";
+import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasAlign, HasRef, HasRootRef } from "../../types";
 import { getClassName } from "../../helpers/getClassName";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
@@ -18,7 +18,8 @@ export interface NativeSelectProps
   extends React.SelectHTMLAttributes<HTMLSelectElement>,
     HasRef<HTMLSelectElement>,
     HasRootRef<HTMLLabelElement>,
-    HasAlign {
+    HasAlign,
+    Pick<FormFieldProps, "status"> {
   placeholder?: string;
   multiline?: boolean;
   selectType?: keyof typeof SelectType;
@@ -45,6 +46,7 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
   disabled,
   multiline,
   selectType = SelectType.default,
+  status,
   ...restProps
 }: NativeSelectProps) => {
   const platform = usePlatform();
@@ -80,6 +82,7 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
       getRootRef={getRootRef}
       disabled={disabled}
       after={<DropdownIcon />}
+      status={status}
     >
       <select
         {...restProps}

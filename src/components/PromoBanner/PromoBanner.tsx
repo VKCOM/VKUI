@@ -4,8 +4,6 @@ import { Button } from "../Button/Button";
 import { SimpleCell } from "../SimpleCell/SimpleCell";
 import { Avatar } from "../Avatar/Avatar";
 import { Footnote } from "../Typography/Footnote/Footnote";
-import { usePlatform } from "../../hooks/usePlatform";
-import { getClassName } from "../../helpers/getClassName";
 import "./PromoBanner.css";
 
 type StatsType =
@@ -53,8 +51,6 @@ export const PromoBanner = ({
   isCloseButtonHidden,
   ...restProps
 }: PromoBannerProps) => {
-  const platform = usePlatform();
-
   const [currentPixel, setCurrentPixel] = React.useState("");
 
   const statsPixels = React.useMemo(
@@ -80,7 +76,7 @@ export const PromoBanner = ({
   }, [statsPixels.playbackStarted]);
 
   return (
-    <div vkuiClass={getClassName("PromoBanner", platform)} {...restProps}>
+    <div vkuiClass="PromoBanner" {...restProps}>
       <div vkuiClass="PromoBanner__head">
         <Footnote vkuiClass="PromoBanner__label">
           {bannerData.advertisingLabel || "Advertisement"}

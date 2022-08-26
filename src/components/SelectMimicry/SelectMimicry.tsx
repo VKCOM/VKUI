@@ -16,7 +16,7 @@ export interface SelectMimicryProps
   extends React.HTMLAttributes<HTMLElement>,
     HasAlign,
     HasRootRef<HTMLElement>,
-    Pick<FormFieldProps, "before" | "after"> {
+    Pick<FormFieldProps, "before" | "after" | "status"> {
   multiline?: boolean;
   disabled?: boolean;
   selectType?: keyof typeof SelectType;
@@ -37,6 +37,7 @@ export const SelectMimicry = ({
   before,
   after = <DropdownIcon />,
   selectType = SelectType.default,
+  status,
   ...restProps
 }: SelectMimicryProps) => {
   const platform = usePlatform();
@@ -65,6 +66,7 @@ export const SelectMimicry = ({
       before={before}
       after={after}
       mode={getFormFieldModeFromSelectType(selectType)}
+      status={status}
     >
       <div vkuiClass="Select__container">
         <SelectTypography selectType={selectType} vkuiClass="Select__title">
