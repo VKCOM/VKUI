@@ -96,15 +96,12 @@ export const Avatar = ({
   return (
     <div
       {...restProps}
-      // eslint-disable-next-line vkui/no-object-expression-in-arguments
       vkuiClass={classNames(
         "Avatar",
         `Avatar--type-${mode}`,
         `Avatar--sz-${size}`,
-        {
-          "Avatar--shadow": shadow,
-          "Avatar--failed": failedImage,
-        }
+        shadow && "Avatar--shadow",
+        failedImage && "Avatar--failed"
       )}
       className={className}
       ref={getRootRef}
@@ -136,12 +133,12 @@ export const Avatar = ({
       {overlayIcon && (
         <Tappable
           Component="button"
-          // eslint-disable-next-line vkui/no-object-expression-in-arguments
-          vkuiClass={classNames("Avatar__overlay", {
-            "Avatar__overlay--visible": overlayAction === "always",
-            "Avatar__overlay--light": overlayMode === "light",
-            "Avatar__overlay--dark": overlayMode === "dark",
-          })}
+          vkuiClass={classNames(
+            "Avatar__overlay",
+            overlayAction === "always" && "Avatar__overlay--visible",
+            overlayMode === "light" && "Avatar__overlay--light",
+            overlayMode === "dark" && "Avatar__overlay--dark"
+          )}
           hoverMode="Avatar__overlay--visible"
           focusVisibleMode="Avatar__overlay--focus-visible"
           hasActive={false}
@@ -152,12 +149,13 @@ export const Avatar = ({
       )}
       {badge && (
         <div
-          // eslint-disable-next-line vkui/no-object-expression-in-arguments
-          vkuiClass={classNames("Avatar__badge", {
-            "Avatar__badge--large": size >= 96,
-            "Avatar__badge--shadow":
-              badge !== "online" && badge !== "online-mobile",
-          })}
+          vkuiClass={classNames(
+            "Avatar__badge",
+            size >= 96 && "Avatar__badge--large",
+            badge !== "online" &&
+              badge !== "online-mobile" &&
+              "Avatar__badge--shadow"
+          )}
         >
           {badge === "online" ? (
             <div vkuiClass="Avatar__badge-online">

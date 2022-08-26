@@ -178,11 +178,11 @@ class SliderSwitch extends React.Component<
           <div vkuiClass="SliderSwitch__border" />
         )}
         <div
-          // eslint-disable-next-line vkui/no-object-expression-in-arguments
-          vkuiClass={classNames("SliderSwitch__slider", {
-            ["SliderSwitch--firstActive"]: firstActive,
-            ["SliderSwitch--secondActive"]: secondActive,
-          })}
+          vkuiClass={classNames(
+            "SliderSwitch__slider",
+            firstActive && "SliderSwitch--firstActive",
+            secondActive && "SliderSwitch--secondActive"
+          )}
         />
         <input type="hidden" name={name} value={activeValue} />
         <SliderSwitchButton

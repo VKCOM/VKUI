@@ -284,7 +284,6 @@ const TappableComponent = ({
     stop(activeDuration >= 100 ? 0 : activeEffectDelay - activeDuration);
   }
 
-  // eslint-disable-next-line vkui/no-object-expression-in-arguments
   const classes = classNames(
     "Tappable",
     platform === IOS && "Tappable--ios",
@@ -294,15 +293,14 @@ const TappableComponent = ({
     hasHover && hovered && !isPresetHoverMode && hoverMode,
     hasActive && active && !isPresetActiveMode && activeMode,
     focusVisible && !isPresetFocusVisibleMode && focusVisibleMode,
-    {
-      "Tappable--active": hasActive && active,
-      "Tappable--mouse": hasMouse,
-      [`Tappable--hover-${hoverMode}`]:
-        hasHover && hovered && isPresetHoverMode,
-      [`Tappable--active-${activeMode}`]:
-        hasActive && active && isPresetActiveMode,
-      "Tappable--focus-visible": focusVisible,
-    }
+    hasActive && active && "Tappable--active",
+    hasMouse && "Tappable--mouse",
+    hasHover && hovered && isPresetHoverMode && `Tappable--hover-${hoverMode}`,
+    hasActive &&
+      active &&
+      isPresetActiveMode &&
+      `Tappable--active-${activeMode}`,
+    focusVisible && "Tappable--focus-visible"
   );
 
   const handlers: RootComponentProps = {

@@ -227,10 +227,7 @@ export const AppRoot = withAdaptivity<AppRootProps>(
     ) : (
       <div
         ref={rootRef}
-        // eslint-disable-next-line vkui/no-object-expression-in-arguments
-        vkuiClass={classNames("AppRoot", {
-          "AppRoot--no-mouse": !hasMouse,
-        })}
+        vkuiClass={classNames("AppRoot", !hasMouse && "AppRoot--no-mouse")}
         {...props}
       >
         {content}

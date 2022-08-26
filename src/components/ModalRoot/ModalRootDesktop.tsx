@@ -220,13 +220,10 @@ class ModalRootDesktopComponent extends React.Component<
     return (
       <ModalRootContext.Provider value={this.modalRootContext}>
         <div
-          // eslint-disable-next-line vkui/no-object-expression-in-arguments
           vkuiClass={classNames(
             getClassName("ModalRoot", this.props.platform),
-            {
-              "ModalRoot--vkapps":
-                this.props.configProvider?.webviewType === WebviewType.VKAPPS,
-            },
+            this.props.configProvider?.webviewType === WebviewType.VKAPPS &&
+              "ModalRoot--vkapps",
             "ModalRoot--desktop"
           )}
         >
@@ -250,16 +247,17 @@ class ModalRootDesktopComponent extends React.Component<
                   onClose={this.props.onExit}
                   timeout={this.timeout}
                   key={key}
-                  // eslint-disable-next-line vkui/no-object-expression-in-arguments
-                  vkuiClass={classNames("ModalRoot__modal", {
-                    "ModalRoot__modal--active":
-                      !exitingModal &&
+                  vkuiClass={classNames(
+                    "ModalRoot__modal",
+                    !exitingModal &&
                       !enteringModal &&
-                      modalId === activeModal,
-                    "ModalRoot__modal--prev": modalId === exitingModal,
-                    "ModalRoot__modal--next":
-                      Boolean(exitingModal) && modalId === activeModal,
-                  })}
+                      modalId === activeModal &&
+                      "ModalRoot__modal--active",
+                    modalId === exitingModal && "ModalRoot__modal--prev",
+                    Boolean(exitingModal) &&
+                      modalId === activeModal &&
+                      "ModalRoot__modal--next"
+                  )}
                 >
                   {Modal}
                 </FocusTrap>
