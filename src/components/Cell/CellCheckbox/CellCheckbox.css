@@ -1,5 +1,5 @@
 .CellCheckbox__icon {
-  color: var(--icon_tertiary);
+  color: var(--icon_tertiary, var(--vkui--color_icon_tertiary));
 }
 
 .CellCheckbox__input,
@@ -8,7 +8,7 @@
 }
 
 .CellCheckbox__icon--on {
-  color: var(--accent);
+  color: var(--accent, var(--vkui--color_icon_accent));
 }
 
 .CellCheckbox__input:not(:checked) ~ .CellCheckbox__icon--off,

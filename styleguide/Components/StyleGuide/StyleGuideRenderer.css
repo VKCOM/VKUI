@@ -1,11 +1,7 @@
-:root {
-  --styleguide_header_height: 56px;
-}
-
 .StyleGuide {
   height: auto;
   align-items: stretch;
-  padding-top: var(--styleguide_header_height);
+  padding-top: var(--vkui--size_panel_header_height--regular);
 }
 
 .StyleGuide__sidebar,
@@ -28,14 +24,14 @@
   padding-right: 16px;
   padding-left: 16px;
   box-sizing: border-box;
-  height: calc(100vh - var(--styleguide_header_height));
+  height: calc(100vh - var(--vkui--size_panel_header_height--regular));
   position: fixed;
   overflow: auto;
 }
 
 .StyleGuide__content {
   background: var(--vkui--color_background_content);
-  min-height: calc(100vh - var(--styleguide_header_height));
+  min-height: calc(100vh - var(--vkui--size_panel_header_height--regular));
   position: relative;
   z-index: 1;
   overflow: hidden;

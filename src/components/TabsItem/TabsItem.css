@@ -102,7 +102,7 @@
 }
 
 .TabsItem--selected .TabsItem__before {
-  color: var(--text_primary, var(--vkui--color_icon_primary));
+  color: var(--vkui--color_icon_primary);
 }
 
 .TabsItem--selected.TabsItem--accent .TabsItem__before {
