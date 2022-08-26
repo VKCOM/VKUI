@@ -1,4 +1,4 @@
-import { canUseDOM } from "@vkontakte/vkjs";
+import { canUseDOM } from "./dom";
 
 /**
  * Функция для js анимации
