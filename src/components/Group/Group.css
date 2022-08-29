@@ -7,9 +7,18 @@
   padding-bottom: 8px;
 }
 
-/* TODO v5.0.0 Новая адаптивность */
-.Group--sizeX-regular > .Group__inner {
+.Group--card.Group--padding-s > .Group__inner {
+  padding: 4px;
+}
+
+.Group--card.Group--padding-m > .Group__inner {
   padding: 8px;
+}
+
+/* TODO v5.0.0 Новая адаптивность */
+.Group--sizeX-compact > .Group__inner {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .Group--card > .Group__inner {
