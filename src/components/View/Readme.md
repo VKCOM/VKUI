@@ -44,12 +44,12 @@ const [activePanel, setActivePanel] = useState("panel1");
 ### <a id="/View?id=iosswipeback"></a>[iOS Swipe Back](https://vkcom.github.io/VKUI/#/View?id=iosswipeback)
 
 В iOS есть возможность свайпнуть от левого края назад, чтобы перейти на предыдущую панель. Для того, чтобы
-повторить такое поведение в VKUI нужно:
+повторить такое поведение в VKUI, нужно:
 
 - Передать во `View` коллбек `onSwipeBack` — он сработает при завершении анимации свайпа. Поменяйте в нем `activePanel` и обновите `history`.
 - Передать во `View` проп `history` — массив из id панелей в порядке открытия. Например, если пользователь из `main` перешел в `profile`, а оттуда попал в `education`, то `history=['main', 'profile', 'education']`.
 - Обернуть ваше приложение в `ConfigProvider` — он определит, открыто приложение в webview клиента VK или в браузере (там есть свой swipe back, который будет конфликтовать с нашим). Для проверки в браузере форсируйте определение webview: `<ConfigProvider isWebView>`.
-- На первой панели должен включаться свайпбек нативного клиента, чтобы пользователь смог выйти из приложения — для этого используют `vk-bridge`. **Если вы не из ВК,** при переходах отправляйте [событие `VKWebAppSetSwipeSettings`](https://dev.vk.com/bridge/VKWebAppSetSwipeSettings) с `history: true` на первой панели или `history: false` на других. **Если вы из ВК,** при переходе на первую панель отправляйте событие `VKWebAppEnableSwipeBack`, на любую другую — `VKWebAppDisableSwipeBack`.
+- На первой панели должен включаться свайпбек нативного клиента, чтобы пользователь смог выйти из приложения — для этого используют `vk-bridge`. **Если вы делаете стандартное мини-приложение ВКонтакте,** при переходах отправляйте [событие `VKWebAppSetSwipeSettings`](https://dev.vk.com/bridge/VKWebAppSetSwipeSettings) с `history: true` на первой панели или `history: false` на других. **Если тип вашего мини-приложения — `WebviewType.INTERNAL`,** отправляйте событие `VKWebAppEnableSwipeBack` при переходе на первую панель и событие `VKWebAppDisableSwipeBack` при переходе на любую другух.
 - Компоненты, которые сами обрабатывают жесты (например, карта), могут конфликтовать со свайпбеком — повесьте на них свойство `data-vkui-swipe-back={false}`
 
 ```jsx
@@ -60,12 +60,12 @@ const activePanel = history[history.length - 1];
 const isFirst = history.length === 1;
 
 React.useEffect(() => {
-  // Если вы из ВК, делайте так
+  // В стандартных мини-приложениях делайте так:
+  vkBridge.send("VKWebAppSetSwipeSettings", { history: isFirst });
+  // В мини-приложениях `WebviewType.INTERNAL` делайте так:
   vkBridge.send(
     isFirst ? "VKWebAppEnableSwipeBack" : "VKWebAppDisableSwipeBack"
   );
-  // Если вы не из ВК, то так:
-  vkBridge.send("VKWebAppSetSwipeSettings", { history: isFirst });
 }, [isFirst]);
 
 const goBack = () => setHistory(history.slice(0, -1));
