@@ -54,6 +54,7 @@
   );
 }
 
+/* TODO: v5.0.0 новая адаптивность - 6 селекторов внизу */
 .Panel--sizeX-compact .Panel__centered .PanelHeader--sep + * {
   margin-top: calc(
     var(--panelheader_height, var(--vkui--size_panel_header_height--regular)) +
@@ -138,6 +139,7 @@
   );
 }
 
+/* TODO: v5.0.0 новая адаптивность */
 .Panel.Panel--sizeX-regular .Panel__in,
 .Panel.Panel--sizeX-regular::after {
   background-color: transparent;
