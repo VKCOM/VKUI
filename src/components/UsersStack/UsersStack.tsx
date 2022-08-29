@@ -23,6 +23,12 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
    * Если в массиве `photos` больше элементов и используется размер `m`, то будет показано количество остальных элементов
    */
   visibleCount?: number;
+  /**
+   * Число, которое будет указано в счетчике.
+   * По умолчанию высчитывается по формуле `photos.length - visibleCount`.
+   * Если число больше 99, то счетчик скроется.
+   */
+  count?: number;
 }
 
 interface PathElementProps extends React.SVGAttributes<SVGElement> {
@@ -90,13 +96,13 @@ function PathElement({ photoSize, direction, ...props }: PathElementProps) {
 export const UsersStack = ({
   photos = [],
   visibleCount = 3,
+  count = Math.max(0, photos.length - visibleCount),
   size = "s",
   layout = "horizontal",
   children,
   ...restProps
 }: UsersStackProps) => {
-  const othersCount = Math.max(0, photos.length - visibleCount);
-  const canShowOthers = othersCount > 0 && size !== "xs";
+  const canShowOthers = count > 0 && size !== "xs";
   const CounterTypography = size === "m" ? Footnote : Caption;
 
   const photoSize = {
@@ -156,7 +162,7 @@ export const UsersStack = ({
             vkuiClass="UsersStack__photo UsersStack__photo--others"
             aria-hidden
           >
-            <span>+{othersCount}</span>
+            <span>+{count}</span>
           </CounterTypography>
         )}
       </div>
