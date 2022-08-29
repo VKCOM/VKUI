@@ -11,13 +11,12 @@ import { HasPlatform, HasRef } from "../../types";
 import { Touch, TouchEvent } from "../Touch/Touch";
 import { VKUITouchEvent } from "../../lib/touch";
 import { noop } from "../../lib/utils";
-import { Text } from "../Typography/Text/Text";
 import { Title } from "../Typography/Title/Title";
 import { Headline } from "../Typography/Headline/Headline";
-import { Separator } from "../Separator/Separator";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "./Search.css";
 
 export type InputRef = (element: HTMLInputElement) => void;
@@ -38,9 +37,6 @@ const SearchPlaceholderTypography = ({
           {children}
         </Title>
       );
-    case Platform.VKCOM:
-      return <Text {...restProps}>{children}</Text>;
-    case Platform.ANDROID:
     default:
       return (
         <Headline {...restProps} weight="3">
@@ -126,10 +122,8 @@ const SearchComponent = ({
     <div
       vkuiClass={classNames(
         "Search",
-        platform === Platform.VKCOM && "Search--vkcom",
         platform === Platform.IOS && "Search--ios",
-        // TODO: V5 перенести на новую адаптивность
-        `Search--sizeY-${sizeY}`,
+        getSizeYClassName("Search", sizeY),
         isFocused && "Search--focused",
         value && "Search--has-value",
         icon && "Search--has-after",
@@ -188,9 +182,6 @@ const SearchComponent = ({
           )}
         </div>
       </div>
-      {platform === Platform.VKCOM && (
-        <Separator vkuiClass="Search__separator" wide />
-      )}
     </div>
   );
 };
