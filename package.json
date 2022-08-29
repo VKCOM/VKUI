@@ -105,7 +105,7 @@
     "style-loader": "^3.3.1",
     "stylelint": "^14.9.1",
     "stylelint-config-prettier": "^9.0.3",
-    "stylelint-config-standard": "^26.0.0",
+    "stylelint-config-standard": "^28.0.0",
     "stylelint-value-no-unknown-custom-properties": "^4.0.0",
     "typescript": "3.8",
     "wait-port": "^0.2.9",
