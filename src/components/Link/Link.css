@@ -1,5 +1,5 @@
 .Link {
-  color: var(--accent, var(--vkui--color_text_link));
+  color: var(--text_link, var(--vkui--color_text_link));
   text-decoration: none;
   border: 0;
   background: none;
@@ -31,6 +31,7 @@
   color: var(--vkui--color_text_link_visited);
 }
 
+/* stylelint-disable-next-line vkui/atomic */
 .Link .Icon {
   margin-left: 4px;
   display: inline-block;
