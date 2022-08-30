@@ -54,6 +54,7 @@
   );
 }
 
+/* TODO: v5.0.0 новая адаптивность - 6 селекторов внизу */
 .Panel--sizeX-compact .Panel__centered .PanelHeader--sep + * {
   margin-top: calc(
     var(--panelheader_height, var(--vkui--size_panel_header_height--regular)) +
@@ -161,7 +162,7 @@
   );
 }
 
-@media (--sizeX-compact) {
+@media (--sizeX-regular) {
   .Panel--sizeX-none .Panel__centered .PanelHeader--vkcom.PanelHeader--sep + * {
     margin-top: calc(
       var(

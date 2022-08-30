@@ -19,8 +19,8 @@ export interface GroupProps
   description?: React.ReactNode;
   /**
     show - разделитель всегда показывается,
-    hide – разделитель всегда спрятан,
-    auto – разделитель рисуется автоматически между соседними группами.
+    hide - разделитель всегда спрятан,
+    auto - разделитель рисуется автоматически между соседними группами.
    */
   separator?: "show" | "hide" | "auto";
   /**
@@ -30,6 +30,10 @@ export interface GroupProps
    * по умолчанию 'plain'.
    */
   mode?: "plain" | "card";
+  /**
+   * Отвечает за отступы вокруг контента в режиме 'card'.
+   */
+  padding?: "s" | "m";
   children?: React.ReactNode;
 }
 
@@ -44,6 +48,7 @@ export const Group = (props: GroupProps) => {
     separator = "auto",
     getRootRef,
     mode,
+    padding = "m",
     ...restProps
   } = props;
   const { isInsideModal } = React.useContext(ModalRootContext);
@@ -70,7 +75,8 @@ export const Group = (props: GroupProps) => {
         "Group",
         platform === Platform.IOS && "Group--ios",
         getSizeXClassName("Group", sizeX),
-        computedMode && `Group--${computedMode}`
+        computedMode && `Group--${computedMode}`,
+        `Group--padding-${padding}`
       )}
     >
       <div vkuiClass="Group__inner">
