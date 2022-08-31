@@ -1,0 +1,50 @@
+name: "Publish token-translator"
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "token-translator version (without v)"
+        required: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./packages/token-translator
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          cache: "yarn"
+          always-auth: true
+          registry-url: "https://registry.npmjs.org"
+
+      - run: yarn install --frozen-lockfile
+
+      - run: yarn test
+      - run: yarn build
+
+      - name: Set Git credentials
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Action"
+      - run: yarn version --new-version ${{ github.event.inputs.version }} --no-commit-hooks --no-git-tag-version
+      - run: git add -A && git commit -m '[token-translator] v${{ github.event.inputs.version }}'
+
+      - name: Pushing changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+
+      - name: Publishing release
+        run: yarn publish --non-interactive --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
