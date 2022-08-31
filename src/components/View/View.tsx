@@ -167,9 +167,6 @@ export const View = ({
   const prevSwipeBackPrevPanel = usePrevious(swipeBackPrevPanel);
   const prevOnTransition = usePrevious(onTransition);
 
-  const hasPopout = !!popout;
-  const hasModal = !!modal;
-
   const panels = (
     React.Children.toArray(children) as React.ReactElement[]
   ).filter((panel: React.ReactElement) => {
@@ -403,10 +400,6 @@ export const View = ({
   }, [document, popout]);
 
   React.useEffect(() => {
-    modal && blurActiveElement(document);
-  }, [document, modal]);
-
-  React.useEffect(() => {
     // Нужен переход
     if (
       prevActivePanel &&
@@ -606,8 +599,8 @@ export const View = ({
         })}
       </div>
       <AppRootPortal>
-        {hasPopout && <div vkuiClass="View__popout">{popout}</div>}
-        {hasModal && <div vkuiClass="View__modal">{modal}</div>}
+        {!!popout && <div vkuiClass="View__popout">{popout}</div>}
+        {!!modal && <div vkuiClass="View__modal">{modal}</div>}
       </AppRootPortal>
     </Touch>
   );
