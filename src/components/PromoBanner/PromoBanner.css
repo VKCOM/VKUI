@@ -1,17 +1,16 @@
 .PromoBanner {
   width: 100%;
   box-sizing: border-box;
-  outline: var(--thin-border) solid
-    var(--separator_alpha, var(--vkui--color_separator_primary_alpha));
-  color: var(--text_primary, var(--vkui--color_text_primary));
-  background: var(--background_content, var(--vkui--color_background_content));
+  outline: var(--thin-border) solid var(--vkui--color_separator_primary_alpha);
+  color: var(--vkui--color_text_primary);
+  background: var(--vkui--color_background_content);
   padding-bottom: 10px;
   position: relative;
 }
 
 .PromoBanner__head {
   display: flex;
-  color: var(--text_secondary, var(--vkui--color_text_secondary));
+  color: var(--vkui--color_text_secondary);
   padding: 14px var(--vkui--size_base_padding_horizontal--regular) 10px;
 }
 
@@ -25,10 +24,7 @@
   right: 0;
   width: 48px;
   height: 48px;
-  color: var(
-    --placeholder_icon_foreground_primary,
-    var(--vkui--color_icon_secondary)
-  );
+  color: var(--vkui--color_icon_secondary);
   display: flex;
   justify-content: center;
   align-items: center;

@@ -17,11 +17,8 @@
 }
 
 .HorizontalScrollArrow__icon {
-  background-color: var(
-    --modal_card_background,
-    var(--vkui--color_background_modal)
-  );
-  color: var(--icon_secondary, var(--vkui--color_icon_secondary));
+  background-color: var(--vkui--color_background_modal);
+  color: var(--vkui--color_icon_secondary);
   box-shadow: var(--vkui--elevation3);
   display: flex;
   align-items: center;

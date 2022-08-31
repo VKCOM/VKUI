@@ -17,5 +17,5 @@
 
 .ModalPageHeader .Icon--dismiss_24, /* Note: <Icon24Dismiss /> по документации используется только для iOS  */
 .ModalPageHeader .Icon--cancel_24 {
-  color: var(--icon_secondary, var(--vkui--color_icon_secondary));
+  color: var(--vkui--color_icon_secondary);
 }

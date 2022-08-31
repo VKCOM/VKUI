@@ -19,10 +19,10 @@
   position: relative;
   width: 88px;
   height: 88px;
-  background: var(--tabbar_background, var(--vkui--color_background_modal));
+  background: var(--vkui--color_background_modal);
   box-shadow: var(--vkui--elevation4);
   border-radius: var(--vkui--size_border_radius--regular);
-  color: var(--overlay_status_icon, var(--vkui--color_icon_medium));
+  color: var(--vkui--color_icon_medium);
 }
 
 .ScreenSpinner__icon {

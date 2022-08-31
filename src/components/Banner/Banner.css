@@ -1,7 +1,7 @@
 .Banner {
   margin: 12px 0;
   padding: 0 var(--vkui--size_base_padding_horizontal--regular);
-  color: var(--text_primary, var(--vkui--color_text_primary));
+  color: var(--vkui--color_text_primary);
 }
 
 .Banner__in {
@@ -10,10 +10,7 @@
   flex-flow: row nowrap;
   align-items: stretch;
   padding: 12px 12px 12px 16px;
-  background-color: var(
-    --content_tint_background,
-    var(--vkui--color_background_secondary)
-  );
+  background-color: var(--vkui--color_background_secondary);
   border-radius: var(--vkui--size_border_radius--regular);
   overflow: hidden;
 }
@@ -26,8 +23,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  border: var(--thin-border) solid
-    var(--image_border, var(--vkui--color_image_border_alpha));
+  border: var(--thin-border) solid var(--vkui--color_image_border_alpha);
   border-radius: inherit;
   pointer-events: none;
   box-sizing: border-box;
@@ -56,7 +52,7 @@
 
 .Banner__subheader {
   display: block;
-  color: var(--text_subhead, var(--vkui--color_text_subhead));
+  color: var(--vkui--color_text_subhead);
 }
 
 .Banner__text {
@@ -83,7 +79,7 @@
   align-items: center;
   justify-content: flex-end;
   width: 28px;
-  color: var(--icon_tertiary, var(--vkui--color_icon_tertiary));
+  color: var(--vkui--color_icon_tertiary);
 }
 
 .Banner__dismiss {
@@ -95,7 +91,7 @@
   align-content: center;
   align-items: center;
   justify-content: center;
-  color: var(--icon_secondary, var(--vkui--color_icon_secondary));
+  color: var(--vkui--color_icon_secondary);
   z-index: 3;
 }
 
@@ -112,19 +108,16 @@
  * Mode "image"
  */
 .Banner--md-image .Banner__in {
-  background-color: var(
-    --content_tint_background,
-    var(--vkui--color_background_secondary)
-  );
+  background-color: var(--vkui--color_background_secondary);
 }
 
 .Banner--md-image .Banner__dismiss,
 .Banner--inverted {
-  color: var(--white, var(--vkui--color_text_contrast));
+  color: var(--vkui--color_text_contrast);
 }
 
 .Banner--inverted .Banner__subheader {
-  color: var(--white, var(--vkui--color_text_contrast));
+  color: var(--vkui--color_text_contrast);
   opacity: 0.72;
 }
 
@@ -149,5 +142,5 @@
 
 .Banner--ios .Banner__dismiss,
 .Banner--ios.Banner--md-image .Banner__dismiss {
-  color: var(--icon_tertiary, var(--vkui--color_icon_tertiary));
+  color: var(--vkui--color_icon_tertiary);
 }

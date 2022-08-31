@@ -21,7 +21,7 @@
   align-items: center;
   white-space: nowrap;
   position: relative;
-  background: var(--header_background, var(--vkui--color_background_content));
+  background: var(--vkui--color_background_content);
 }
 
 .PanelHeader--trnsp .PanelHeader__in {
@@ -40,7 +40,7 @@
 
 .PanelHeader__before {
   box-sizing: border-box;
-  color: var(--header_tint, var(--vkui--color_icon_accent_themed));
+  color: var(--vkui--color_icon_accent_themed);
   display: flex;
   flex-shrink: 0;
 }
@@ -56,17 +56,14 @@
 }
 
 .PanelHeader__content-in {
-  color: var(--header_text, var(--vkui--color_text_primary));
+  color: var(--vkui--color_text_primary);
   font-weight: 500;
   font-family: var(--font-display);
 }
 
 .PanelHeader::before,
 .PanelHeader__in {
-  height: var(
-    --panelheader_height,
-    var(--vkui--size_panel_header_height--regular)
-  );
+  height: var(--vkui--size_panel_header_height--regular);
   padding-top: var(--safe-area-inset-top);
 }
 
@@ -74,7 +71,7 @@
   display: flex;
   justify-content: flex-end;
   box-sizing: border-box;
-  color: var(--header_tint, var(--vkui--color_icon_accent_themed));
+  color: var(--vkui--color_icon_accent_themed);
 }
 
 .PanelHeader--vkapps .PanelHeader__after {
@@ -85,10 +82,7 @@
  * iOS
  */
 .PanelHeader--ios {
-  --panelheader_height: var(
-    --panelheader_height_ios,
-    var(--vkui--size_panel_header_height--regular)
-  );
+  --panelheader_height: var(--vkui--size_panel_header_height--regular);
 }
 
 .PanelHeader--ios .PanelHeader__before {
@@ -209,10 +203,7 @@
  * VKCOM
  */
 .PanelHeader--vkcom {
-  --panelheader_height: var(
-    --panelheader_height_vkcom,
-    var(--vkui--size_panel_header_height--regular)
-  );
+  --panelheader_height: var(--vkui--size_panel_header_height--regular);
 
   position: relative;
   z-index: 10;
@@ -224,10 +215,7 @@
   right: var(--thin-border);
   bottom: 0;
   height: var(--thin-border);
-  background-color: var(
-    --header_background,
-    var(--vkui--color_background_content)
-  );
+  background-color: var(--vkui--color_background_content);
   content: "";
 }
 
@@ -238,7 +226,7 @@
     right: var(--thin-border);
     bottom: 0;
     height: var(--thin-border);
-    background-color: var(--header_background);
+    background-color: var(--vkui--color_background_content);
     content: "";
   }
 }
@@ -247,7 +235,8 @@
   .PanelHeader__in {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  box-shadow: 0 0 0 var(--thin-border) var(--input_border) inset;
+  box-shadow: 0 0 0 var(--thin-border) var(--vkui--color_field_border_alpha)
+    inset;
   border-bottom: none;
 }
 
@@ -256,7 +245,8 @@
     .PanelHeader__in {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    box-shadow: 0 0 0 var(--thin-border) var(--input_border) inset;
+    box-shadow: 0 0 0 var(--thin-border) var(--vkui--color_field_border_alpha)
+      inset;
     border-bottom: none;
   }
 }

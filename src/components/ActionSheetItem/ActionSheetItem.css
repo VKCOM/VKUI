@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: var(--text_primary, var(--vkui--color_text_primary));
+  color: var(--vkui--color_text_primary);
   padding: 0 20px;
   min-height: 48px;
   border-radius: 0;
@@ -58,28 +58,28 @@
 }
 
 .ActionSheetItem__subtitle {
-  color: var(--text_secondary, var(--vkui--color_text_secondary));
+  color: var(--vkui--color_text_secondary);
   overflow: hidden;
   text-overflow: ellipsis;
   margin-top: 2px;
 }
 
 .ActionSheetItem__meta {
-  color: var(--text_secondary, var(--vkui--color_text_secondary));
+  color: var(--vkui--color_text_secondary);
   margin-left: 6px;
   flex-shrink: 0;
 }
 
 .ActionSheetItem__before {
-  color: var(--action_sheet_action_foreground, var(--vkui--color_icon_accent));
+  color: var(--vkui--color_icon_accent);
 }
 
 .ActionSheetItem--destructive .ActionSheetItem__container:first-child {
-  color: var(--destructive, var(--vkui--color_text_negative));
+  color: var(--vkui--color_text_negative);
 }
 
 .ActionSheetItem--destructive .ActionSheetItem__before {
-  color: var(--destructive, var(--vkui--color_icon_negative));
+  color: var(--vkui--color_icon_negative);
 }
 
 .ActionSheetItem__radio {
@@ -94,7 +94,7 @@
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  color: var(--accent, var(--vkui--color_icon_accent));
+  color: var(--vkui--color_icon_accent);
   margin-left: 16px;
 }
 
@@ -110,16 +110,16 @@
   padding: 14px 20px 14px 19px;
   min-height: 56px;
   border-radius: 0;
-  color: var(--action_sheet_action_foreground, var(--vkui--color_text_accent));
-  background: var(--modal_card_background, var(--vkui--color_background_modal));
+  color: var(--vkui--color_text_accent);
+  background: var(--vkui--color_background_modal);
 }
 
 .ActionSheetItem--rich {
-  color: var(--text_primary, var(--vkui--color_text_primary));
+  color: var(--vkui--color_text_primary);
 }
 
 .ActionSheetItem--ios.ActionSheetItem--destructive {
-  color: var(--destructive, var(--vkui--color_text_negative));
+  color: var(--vkui--color_text_negative);
 }
 
 .ActionSheetItem--ios:first-child {
@@ -139,10 +139,7 @@
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: var(
-    --modal_card_background,
-    var(--vkui--color_background_modal)
-  );
+  background-color: var(--vkui--color_background_modal);
   z-index: -1;
   content: "";
   transition: opacity 0.15s ease-out, background-color 0.15s ease-out;
@@ -156,10 +153,7 @@
   height: 1px;
   content: "";
   top: 0;
-  background: var(
-    --action_sheet_separator,
-    var(--vkui--color_separator_primary)
-  );
+  background: var(--vkui--color_separator_primary);
   transform-origin: center bottom;
 }
 
@@ -183,10 +177,7 @@
 }
 
 .ActionSheetItem--ios.ActionSheetItem--active::before {
-  background-color: var(
-    --separator_common,
-    var(--vkui--color_transparent--active)
-  );
+  background-color: var(--vkui--color_transparent--active);
   opacity: 1;
   transition: none;
 }
@@ -222,12 +213,12 @@
 .ActionSheetItem[disabled] .ActionSheetItem__children,
 .ActionSheetItem[disabled] .ActionSheetItem__meta,
 .ActionSheetItem[disabled] .ActionSheetItem__subtitle {
-  color: var(--text_secondary, var(--vkui--color_text_secondary));
+  color: var(--vkui--color_text_secondary);
 }
 
 .ActionSheetItem[disabled] .ActionSheetItem__marker,
 .ActionSheetItem[disabled] .ActionSheetItem__before {
-  color: var(--icon_secondary, var(--vkui--color_icon_secondary));
+  color: var(--vkui--color_icon_secondary);
 }
 
 /**

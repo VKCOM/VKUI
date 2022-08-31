@@ -61,7 +61,7 @@
 }
 
 .PanelHeaderContext .List {
-  background: var(--header_background, var(--vkui--color_background_content));
+  background: var(--vkui--color_background_content);
 }
 
 /*
@@ -111,7 +111,7 @@
 .PanelHeaderContext--sizeX-regular .PanelHeaderContext__content {
   border-radius: 12px;
   overflow: hidden;
-  background: var(--header_background, var(--vkui--color_background_content));
+  background: var(--vkui--color_background_content);
 }
 
 .PanelHeaderContext--sizeX-regular .PanelHeaderContext__content {
@@ -126,7 +126,7 @@
   .PanelHeaderContext--sizeX-none .PanelHeaderContext__content {
     border-radius: 12px;
     overflow: hidden;
-    background: var(--header_background, var(--vkui--color_background_content));
+    background: var(--vkui--color_background_content);
   }
 
   .PanelHeaderContext--sizeX-none .PanelHeaderContext__content {

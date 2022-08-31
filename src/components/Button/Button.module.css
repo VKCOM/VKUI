@@ -217,10 +217,7 @@
 /* Button's backgrounds */
 /* Mode  = Primary */
 .Button--lvl-primary.Button--clr-accent {
-  background-color: var(
-    --button_primary_background,
-    var(--vkui--color_background_accent)
-  );
+  background-color: var(--vkui--color_background_accent);
 }
 
 .Button--lvl-primary.Button--clr-accent.Button--hover {
@@ -232,10 +229,7 @@
 }
 
 .Button--lvl-primary.Button--clr-positive {
-  background-color: var(
-    --button_commerce_background,
-    var(--vkui--color_background_positive)
-  );
+  background-color: var(--vkui--color_background_positive);
 }
 
 .Button--lvl-primary.Button--clr-positive.Button--hover {
@@ -247,7 +241,7 @@
 }
 
 .Button--lvl-primary.Button--clr-negative {
-  background-color: var(--destructive, var(--vkui--color_background_negative));
+  background-color: var(--vkui--color_background_negative);
 }
 
 .Button--lvl-primary.Button--clr-negative.Button--hover {
@@ -259,10 +253,7 @@
 }
 
 .Button--lvl-primary.Button--clr-neutral {
-  background-color: var(
-    --content_tint_background,
-    var(--vkui--color_background_secondary)
-  );
+  background-color: var(--vkui--color_background_secondary);
 }
 
 .Button--lvl-primary.Button--clr-neutral.Button--hover {
@@ -275,10 +266,7 @@
 
 /* Mode = Secondary */
 .Button--lvl-secondary {
-  background-color: var(
-    --button_secondary_background,
-    var(--vkui--color_background_secondary)
-  );
+  background-color: var(--vkui--color_background_secondary);
 }
 
 .Button--lvl-secondary.Button--hover {
@@ -292,10 +280,7 @@
 /* Mode = Tertiary */
 .Button--lvl-tertiary,
 .Button--lvl-outline {
-  background-color: var(
-    --button_tertiary_background,
-    var(--vkui--color_transparent)
-  );
+  background-color: var(--vkui--color_transparent);
 }
 
 .Button--lvl-tertiary.Button--hover,
@@ -312,15 +297,15 @@
   Buttons text colors
 */
 .Button--lvl-primary.Button--clr-accent {
-  color: var(--button_primary_foreground, var(--vkui--color_text_contrast));
+  color: var(--vkui--color_text_contrast);
 }
 
 .Button--lvl-primary.Button--clr-negative {
-  color: var(--white, var(--vkui--color_text_contrast));
+  color: var(--vkui--color_text_contrast);
 }
 
 .Button--lvl-primary.Button--clr-positive {
-  color: var(--button_commerce_foreground, var(--vkui--color_text_contrast));
+  color: var(--vkui--color_text_contrast);
 }
 
 .Button--lvl-primary.Button--clr-accent.Button--hover,
@@ -339,15 +324,15 @@
   Text colors of background-colored buttons
 */
 .Button--lvl-tertiary.Button--clr-accent {
-  color: var(--button_tertiary_foreground, var(--vkui--color_text_accent));
+  color: var(--vkui--color_text_accent);
 }
 
 .Button--lvl-secondary.Button--clr-accent {
-  color: var(--button_secondary_foreground, var(--vkui--color_text_accent));
+  color: var(--vkui--color_text_accent);
 }
 
 .Button--lvl-outline.Button--clr-accent {
-  color: var(--button_outline_foreground, var(--vkui--color_text_accent));
+  color: var(--vkui--color_text_accent);
 }
 
 .Button--lvl-tertiary.Button--clr-accent.Button--hover,
@@ -365,7 +350,7 @@
 .Button--lvl-tertiary.Button--clr-positive,
 .Button--lvl-secondary.Button--clr-positive,
 .Button--lvl-outline.Button--clr-positive {
-  color: var(--button_commerce_background, var(--vkui--color_text_positive));
+  color: var(--vkui--color_text_positive);
 }
 
 .Button--lvl-tertiary.Button--clr-positive.Button--hover,
@@ -383,7 +368,7 @@
 .Button--lvl-tertiary.Button--clr-negative,
 .Button--lvl-secondary.Button--clr-negative,
 .Button--lvl-outline.Button--clr-negative {
-  color: var(--destructive, var(--vkui--color_text_negative));
+  color: var(--vkui--color_text_negative);
 }
 
 .Button--lvl-tertiary.Button--clr-negative.Button--hover,
@@ -402,7 +387,7 @@
 .Button--lvl-secondary.Button--clr-neutral,
 .Button--lvl-tertiary.Button--clr-neutral,
 .Button--lvl-outline.Button--clr-neutral {
-  color: var(--text_primary, var(--vkui--color_text_primary));
+  color: var(--vkui--color_text_primary);
 }
 
 .Button--lvl-primary.Button--clr-neutral.Button--hover,
@@ -423,8 +408,7 @@
   Outline buttons borders
 */
 .Button--lvl-outline.Button--clr-accent {
-  box-shadow: inset 0 0 0 1px
-    var(--button_outline_border, var(--vkui--color_stroke_accent));
+  box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_accent);
 }
 
 .Button--lvl-outline.Button--clr-accent.Button--hover {
@@ -436,8 +420,7 @@
 }
 
 .Button--lvl-outline.Button--clr-positive {
-  box-shadow: inset 0 0 0 1px
-    var(--button_commerce_background, var(--vkui--color_stroke_positive));
+  box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_positive);
 }
 
 .Button--lvl-outline.Button--clr-positive.Button--hover {
@@ -449,8 +432,7 @@
 }
 
 .Button--lvl-outline.Button--clr-negative {
-  box-shadow: inset 0 0 0 1px
-    var(--destructive, var(--vkui--color_stroke_negative));
+  box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_negative);
 }
 
 .Button--lvl-outline.Button--clr-negative.Button--hover {
@@ -462,8 +444,7 @@
 }
 
 .Button--lvl-outline.Button--clr-neutral {
-  box-shadow: inset 0 0 0 1px
-    var(--field_border, var(--vkui--color_field_border_alpha));
+  box-shadow: inset 0 0 0 1px var (--vkui--color_field_border_alpha);
 }
 
 .Button--lvl-outline.Button--clr-neutral.Button--hover {
@@ -481,10 +462,7 @@
   Background colors
 */
 .Button--lvl-primary.Button--clr-overlay {
-  background-color: var(
-    --media_overlay_button_background,
-    var(--vkui--color_background_contrast)
-  );
+  background-color: var(--vkui--color_background_contrast);
 }
 
 .Button--lvl-primary.Button--clr-overlay.Button--hover {
@@ -496,10 +474,7 @@
 }
 
 .Button--lvl-secondary.Button--clr-overlay {
-  background-color: var(
-    --vkui--color_background_contrast_secondary_alpha,
-    rgba(255, 255, 255, 0.2)
-  );
+  background-color: var(--vkui--color_background_contrast_secondary_alpha);
 }
 
 .Button--lvl-secondary.Button--clr-overlay.Button--hover,
@@ -520,10 +495,7 @@
 
 /* Text colors */
 .Button--lvl-primary.Button--clr-overlay {
-  color: var(
-    --media_overlay_button_foreground,
-    var(--vkui--color_text_primary_invariably)
-  );
+  color: var(--vkui--color_text_primary_invariably);
 }
 
 .Button--lvl-primary.Button--clr-overlay.Button--hover {
@@ -537,7 +509,7 @@
 .Button--lvl-secondary.Button--clr-overlay,
 .Button--lvl-tertiary.Button--clr-overlay,
 .Button--lvl-outline.Button--clr-overlay {
-  color: var(--white, var(--vkui--color_text_contrast));
+  color: var(--vkui--color_text_contrast);
 }
 
 .Button--lvl-secondary.Button--clr-overlay.Button--hover,
@@ -554,7 +526,7 @@
 
 /* Borders */
 .Button--lvl-outline.Button--clr-overlay {
-  box-shadow: inset 0 0 0 1px var(--white, var(--vkui--color_stroke_contrast));
+  box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_contrast);
 }
 
 .Button--lvl-outline.Button--clr-overlay.Button--hover {

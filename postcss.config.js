@@ -40,10 +40,6 @@ module.exports = (ctx) => {
     }),
     restructureVariable(
       [
-        "./src/styles/bright_light.css",
-        "./src/styles/space_gray.css",
-        "./src/styles/vkcom_light.css",
-        "./src/styles/vkcom_dark.css",
         "./node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css",
         "./node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css",
         "./node_modules/@vkontakte/vkui-tokens/themes/vkBaseDark/cssVars/declarations/onlyVariablesLocal.css",

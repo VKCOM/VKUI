@@ -18,7 +18,7 @@
 }
 
 .FixedLayout--filled {
-  background: var(--background_content, var(--vkui--color_background_content));
+  background: var(--vkui--color_background_content);
 }
 
 .FixedLayout--top {
@@ -44,33 +44,9 @@
  * CMP:
  * PanelHeader
  */
-/*
- * TODO v5.0.0 объединить после удаления appearance токенов
-*/
 .PanelHeader ~ .FixedLayout--top,
 .PanelHeader ~ * .FixedLayout--top:not(.PanelHeader__fixed) {
   top: calc(
-    var(--panelheader_height, var(--vkui--size_panel_header_height--regular)) +
-      var(--safe-area-inset-top)
-  );
-}
-
-.PanelHeader--ios ~ .FixedLayout--top,
-.PanelHeader--ios ~ * .FixedLayout--top:not(.PanelHeader__fixed) {
-  top: calc(
-    var(
-        --panelheader_height_ios,
-        var(--vkui--size_panel_header_height--regular)
-      ) + var(--safe-area-inset-top)
-  );
-}
-
-.PanelHeader--vkcom ~ .FixedLayout--top,
-.PanelHeader--vkcom ~ * .FixedLayout--top:not(.PanelHeader__fixed) {
-  top: calc(
-    var(
-        --panelheader_height_vkcom,
-        var(--vkui--size_panel_header_height--regular)
-      ) + var(--safe-area-inset-top)
+    var(--vkui--size_panel_header_height--regular) + var(--safe-area-inset-top)
   );
 }
