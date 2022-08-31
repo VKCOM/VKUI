@@ -2,10 +2,33 @@
 
 <br/><br/>
 
+## Добавлена поддержка SSR
+
+<br/><br/>
+
+## Адаптивность
+
+- Удалены `withAdaptivity` и `useAdaptivity`
+- Для адаптивности рекомендуется использовать `CSS Media queries` либо компоненты `ViewWidthConditionalRender`, `SizeXConditionalRender` или `SizeYConditionalRender`
+
+<br/><br/>
+
 ## Обновление React и Typescript
 
 - Минимальная поддерживаемая версия **React** увеличена до v17.0.0
-- Минимальная поддерживаемая версия **Typescript** увеличена до v4.4.4
+- Минимальная поддерживаемая версия **Typescript** увеличена до v4.7.4
+
+<br/><br/>
+
+## Типографика
+
+- Для компонентов типографики применяются токены `font-family` из [`vkui-tokens`](https://github.com/VKCOM/vkui-tokens)
+
+<br/><br/>
+
+## Убрана поддержка **Android < 5**
+
+- Минимальная поддерживаемая версия **Android** увеличена до 5
 
 <br/><br/>
 
@@ -61,6 +84,12 @@
    text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
  />
 ```
+
+<br/><br/>
+
+## [`ActionSheet`](#/ActionSheet)
+
+- Свойства `onClose`, `toggleRef` и `iosCloseItem` теперь обязательные
 
 <br/><br/>
 
@@ -145,9 +174,34 @@
 
 <br/><br/>
 
+## [`Caption`](#/Caption)
+
+- `<Caption level="1" />` заменен на [`Footnote`](#/Footnote)
+
+```diff
+- <Caption level="1" >...</Caption>
++ <Footnote>...</Footnote>
+```
+
+- Свойство `level` сдвинуто на 1 уровень вниз
+
+```diff
+- <Caption level="2" >...</Caption>
++ <Caption level="1" >...</Caption>
+
+- <Caption level="3" >...</Caption>
++ <Caption level="2" >...</Caption>
+
+- <Caption level="4" >...</Caption>
++ <Caption level="3" >...</Caption>
+```
+
+<br/><br/>
+
 ## [`CustomSelect`](#/CustomSelect)
 
 - Обновлено свойство `onInputChange`. Для фильтрации обновляйте `props.options` самостоятельно или используйте свойство `filterFn`
+- Удалено свойство `option` из `CustomSelectOption`
 
 <br/><br/>
 
@@ -252,6 +306,37 @@
    ]}
  />
 ```
+
+## [`SubnavigationButton`](#/SubnavigationButton)
+
+- Свойство `textLevel` теперь имеет тип `string`
+
+```diff
+  <SubnavigationButton
+-   textLevel={1}
++   textLevel="1"
+  >
+    Сканировать QR
+  </SubnavigationButton>
+
+  <SubnavigationButton
+-   textLevel={2}
++   textLevel="2"
+  >
+    Сканировать QR
+  </SubnavigationButton>
+
+  <SubnavigationButton
+-   textLevel={3}
++   textLevel="3"
+  >
+    Сканировать QR
+  </SubnavigationButton>
+```
+
+## [`Search`](#/Search)
+
+- Внешний вид для `VKCOM` теперь соответствует `ANDROID`
 
 <br/><br/>
 
