@@ -94,7 +94,7 @@
     "postcss-custom-properties": "^12.1.7",
     "postcss-import": "^14.0.2",
     "postcss-loader": "^7.0.1",
-    "postcss-modules": "^4.3.0",
+    "postcss-modules": "^5.0.0",
     "postcss-value-parser": "^4.2.0",
     "postcss-values-parser": "^6.0.2",
     "prettier": "^2.5.1",
