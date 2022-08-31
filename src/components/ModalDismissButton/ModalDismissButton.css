@@ -7,7 +7,7 @@
   height: 56px;
   padding: 18px;
   box-sizing: border-box;
-  color: var(--white, var(--vkui--color_icon_contrast));
+  color: var(--vkui--color_icon_contrast);
   transition: opacity 0.15s ease-out;
 }
 

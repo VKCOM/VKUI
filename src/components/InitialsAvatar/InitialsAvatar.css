@@ -46,7 +46,7 @@
 .InitialsAvatar__text {
   font-family: var(--font-display);
   font-weight: 600;
-  color: var(--white, var(--vkui--color_text_contrast));
+  color: var(--vkui--color_text_contrast);
   text-transform: uppercase;
   text-align: center;
 }

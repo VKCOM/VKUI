@@ -81,10 +81,6 @@
 /**
  * iOS
  */
-.PanelHeader--ios {
-  --panelheader_height: var(--vkui--size_panel_header_height--regular);
-}
-
 .PanelHeader--ios .PanelHeader__before {
   flex-basis: 0;
   flex-shrink: 0;
@@ -203,8 +199,6 @@
  * VKCOM
  */
 .PanelHeader--vkcom {
-  --panelheader_height: var(--vkui--size_panel_header_height--regular);
-
   position: relative;
   z-index: 10;
 }
