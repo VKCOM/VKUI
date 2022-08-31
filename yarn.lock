@@ -4062,13 +4062,6 @@ clean-webpack-plugin@^3.0.0:
     "@types/webpack" "^4.4.31"
     del "^4.1.1"
 
-clean-webpack-plugin@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/clean-webpack-plugin/-/clean-webpack-plugin-4.0.0.tgz#72947d4403d452f38ed61a9ff0ada8122aacd729"
-  integrity sha512-WuWE1nyTNAyW5T7oNyys2EN0cfP2fdRxhxnIQWiAp0bMabPdHhoGxM8A6YL2GhqwgrPnnaemVE7nv5XJ2Fhh2w==
-  dependencies:
-    del "^4.1.1"
-
 cli-cursor@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/cli-cursor/-/cli-cursor-3.1.0.tgz#264305a7ae490d1d03bf0c9ba7c925d1753af307"
