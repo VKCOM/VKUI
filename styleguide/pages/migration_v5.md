@@ -32,6 +32,12 @@
 
 <br/><br/>
 
+## Убрана поддержка **Appearance** токенов
+
+- Для кастомизации необходимо использовать [`vkui-tokens`](https://github.com/VKCOM/vkui-tokens)
+
+<br/><br/>
+
 ## [`ConfigProvider`](#/ConfigProvider)
 
 - По умолчанию `appearance` определяется автоматически — в зависимости от темы, указанной в VK, или настроек ОС
