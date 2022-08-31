@@ -102,7 +102,7 @@ describe.each([
       );
       expect(document.activeElement === document.body).toBe(true);
     });
-    it.each(["popout", "modal"])("on %s", (key) => {
+    it.each(["popout"])("on %s", (key) => {
       const props = { [key]: <div /> };
       renderFocused();
       render(
