@@ -1,4 +1,4 @@
-Документацию по миграции c v3 на v4 можно найти [здесь](https://github.com/VKCOM/VKUI/releases/tag/v4.0.0).
+Документацию по миграции с v3 на v4 можно найти [здесь](https://github.com/VKCOM/VKUI/releases/tag/v4.0.0).
 
 <br/><br/>
 
@@ -108,7 +108,7 @@
 
 ## [`PromoBanner`](#/PromoBanner)
 
-- Удалено свойство `ageRestriction` в типe `BannerData`, добавленное по ошибке. Используйте свойство `ageRestrictions`
+- Удалено свойство `ageRestriction` в типе `BannerData`, добавленное по ошибке. Используйте свойство `ageRestrictions`
 
 <br/><br/>
 
@@ -351,6 +351,12 @@
 
 - `mode="buttons"` удалён. Используйте `mode="secondary"`.
 - `mode="segmented"` удалён. Используйте [`SegmentedControl`](#/SegmentedControl).
+
+<br/><br/>
+
+## [`MiniInfoCell`](#/MiniInfoCell)
+
+- Свойство `text-level` удалено. Используйте `mode="accent"` для визуального выделения текста.
 
 <br/><br/>
 
