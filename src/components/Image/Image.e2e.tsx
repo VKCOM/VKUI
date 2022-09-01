@@ -1,5 +1,5 @@
-import { Icon20GiftCircleFillRed } from "@vkontakte/icons";
-import { Avatar } from "./Avatar";
+import { Icon28Users, Icon20GiftCircleFillRed } from "@vkontakte/icons";
+import { Image } from "./Image";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
 const base64Image =
@@ -9,30 +9,16 @@ const base64Image =
   "gViBWIFYgViBWIFYgViBWIFYgViBWIFYgVjB8RH2dywrECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxApOni4IwwZ+iSIAAAAA" +
   "SUVORK5CYII=";
 
-describe("Avatar", () => {
-  describeScreenshotFuzz(Avatar, [
+describe("Image", () => {
+  describeScreenshotFuzz(Image, [
     {
       src: [undefined, base64Image],
       children: [undefined, "AB"],
-      FallbackIcon: [undefined, null],
-    },
-    {
-      size: [96, 16],
-      gradientColor: [1],
-      children: ["AB"],
-    },
-    {
-      gradientColor: [1, 2, 3, 5, 6, "blue"],
-    },
-    {
-      gradientColor: ["custom"],
-      style: [{ backgroundImage: "linear-gradient(#e66465, #9198e5)" }],
+      FallbackIcon: [undefined, Icon28Users],
     },
     {
       size: [96, 24],
       badge: [
-        "online",
-        "online-mobile",
         Icon20GiftCircleFillRed,
         { background: "stroke", Icon: Icon20GiftCircleFillRed },
       ],
@@ -41,6 +27,7 @@ describe("Avatar", () => {
       size: [72],
       badge: [{ background: "stroke", Icon: Icon20GiftCircleFillRed }],
       overlay: [
+        undefined,
         true,
         { theme: "dark", visibility: "always", Icon: Icon20GiftCircleFillRed },
       ],

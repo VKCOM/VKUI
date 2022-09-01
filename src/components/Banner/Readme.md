@@ -11,9 +11,8 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
     <Group header={<Header>Content: tint, size: regular</Header>}>
       <Banner
         before={
-          <Avatar
+          <Image
             size={96}
-            mode="image"
             src="https://sun9-63.userapi.com/yOEQYPHrNHjZEoanbqPb65HPl5iojmiLgLzfGA/W3geVMMt8TI.jpg"
           />
         }
@@ -25,9 +24,8 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
 
       <Banner
         before={
-          <Avatar
+          <Image
             size={96}
-            mode="image"
             src="https://sun9-32.userapi.com/uFzLOK55iY7pC0DHjneEdP9G6gXcXi2Mxj9wVA/wnTmzh_blNM.jpg"
           />
         }
@@ -38,7 +36,7 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
 
       <Banner
         before={
-          <Avatar mode="image" style={{ backgroundImage: musicGradient }}>
+          <Image style={{ backgroundImage: musicGradient }}>
             <Icon28MusicOutline fill="#fff" />
           </Avatar>
         }

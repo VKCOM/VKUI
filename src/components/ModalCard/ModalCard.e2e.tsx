@@ -2,7 +2,7 @@ import { ModalCard, ModalCardProps } from "./ModalCard";
 import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
 import { Button } from "../Button/Button";
 import { ModalRoot } from "../ModalRoot/ModalRootAdaptive";
-import { Avatar } from "../Avatar/Avatar";
+import { Image } from "../Image/Image";
 import { UsersStack } from "../UsersStack/UsersStack";
 import { Textarea } from "../Textarea/Textarea";
 import { describeScreenshotFuzz } from "../../testing/e2e";
@@ -42,7 +42,7 @@ const propSets = [
   },
   {
     nav: ["2"],
-    icon: [<Avatar key="avatar" mode="app" size={72} />],
+    icon: [<Image key="image" size={72} borderRadius="l" />],
     header: ["Добавить игру «Загадки детства» в меню?"],
     subheader: [
       "Игра появится под списком разделов на экране меню и будет всегда под рукой.",

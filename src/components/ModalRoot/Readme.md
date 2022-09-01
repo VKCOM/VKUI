@@ -393,7 +393,11 @@ const App = () => {
         id={MODAL_CARD_APP_TO_MENU}
         onClose={() => changeActiveModal(null)}
         icon={
-          <Avatar mode="app" src={getAvatarUrl("app_zagadki", 200)} size={72} />
+          <Image
+            borderRadius="l"
+            src={getAvatarUrl("app_zagadki", 200)}
+            size={72}
+          />
         }
         header="Добавить игру «Загадки детства» в меню?"
         subheader="Игра появится под списком разделов на экране меню и будет всегда под рукой."

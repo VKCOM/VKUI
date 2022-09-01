@@ -7,7 +7,7 @@ import "./GridAvatar.css";
 export interface GridAvatarProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement>,
-    Pick<AvatarProps, "size" | "shadow" | "badge"> {
+    Pick<AvatarProps, "size" | "badge"> {
   /**
    * Массив со ссылками. От 1 до 4 элементов.
    */

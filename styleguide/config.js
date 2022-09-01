@@ -223,7 +223,7 @@ const baseConfig = {
             "../src/components/InfoRow/InfoRow.tsx",
             "../src/components/Avatar/Avatar.tsx",
             "../src/components/GridAvatar/GridAvatar.tsx",
-            "../src/components/InitialsAvatar/InitialsAvatar.tsx",
+            "../src/components/Image/Image.tsx",
             "../src/components/Gallery/Gallery.tsx",
             "../src/components/Progress/Progress.tsx",
             "../src/components/Search/Search.tsx",

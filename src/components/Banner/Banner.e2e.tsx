@@ -1,5 +1,5 @@
 import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
-import { Avatar } from "../Avatar/Avatar";
+import { Image } from "../Image/Image";
 import { Banner, BannerProps } from "./Banner";
 import { Button } from "../Button/Button";
 import { describeScreenshotFuzz } from "../../testing/e2e";
@@ -8,7 +8,7 @@ describe("Banner", () => {
   describeScreenshotFuzz(
     (props: BannerProps) => (
       <Banner
-        before={<Avatar size={96} mode="image" src="" />}
+        before={<Image size={96} src="" />}
         header="Баста в Ледовом"
         subheader="Большой концерт"
         asideMode="dismiss"
