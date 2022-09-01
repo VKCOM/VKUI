@@ -120,3 +120,16 @@
   color: var(--vkui--color_text_contrast);
   background: var(--vkui--color_background_positive);
 }
+
+/**
+ * CMP:
+ * SubnavigationButton
+ */
+.SubnavigationButton--selected:not(.SubnavigationButton--mode-tertiary)
+  .Counter {
+  background-color: var(
+    --button_primary_foreground,
+    var(--vkui--color_background_contrast)
+  );
+  color: var(--button_primary_background, var(--vkui--color_text_accent));
+}
