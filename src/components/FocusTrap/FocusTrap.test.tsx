@@ -71,7 +71,7 @@ const ActionSheetTest = ({
 };
 
 describe("FocusTrap", () => {
-  beforeAll(() => jest.useFakeTimers());
+  beforeAll(() => jest.useFakeTimers("modern"));
   afterAll(() => jest.useRealTimers());
   baselineComponent(FocusTrap);
 

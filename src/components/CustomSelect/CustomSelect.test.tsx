@@ -178,7 +178,7 @@ describe("CustomSelect", () => {
     expect(screen.getByTestId("target")).toHaveFocus(); // now target is Input
 
     fireEvent.change(screen.getByTestId("target"), { target: { value: "Mi" } });
-    expect((screen.getByTestId("target") as HTMLInputElement).value).toBe("Mi");
+    expect(screen.getByTestId<HTMLInputElement>("target").value).toBe("Mi");
     fireEvent.keyDown(screen.getByTestId("target"), {
       key: "ArrowUp",
       code: "ArrowUp",

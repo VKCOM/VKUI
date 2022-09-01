@@ -24,9 +24,9 @@ describe("NativeSelect", () => {
 
     render(<SelectController />);
 
-    expect((screen.getByTestId("target") as HTMLSelectElement).value).toBe("0");
+    expect(screen.getByTestId<HTMLSelectElement>("target").value).toBe("0");
     userEvent.selectOptions(screen.getByTestId("target"), ["1"]);
-    expect((screen.getByTestId("target") as HTMLSelectElement).value).toBe("1");
+    expect(screen.getByTestId<HTMLSelectElement>("target").value).toBe("1");
   });
 
   it("works correctly with pinned value", () => {
@@ -37,9 +37,9 @@ describe("NativeSelect", () => {
       </NativeSelect>
     );
 
-    expect((screen.getByTestId("target") as HTMLSelectElement).value).toBe("0");
+    expect(screen.getByTestId<HTMLSelectElement>("target").value).toBe("0");
     userEvent.selectOptions(screen.getByTestId("target"), ["1"]);
-    expect((screen.getByTestId("target") as HTMLSelectElement).value).toBe("0");
+    expect(screen.getByTestId<HTMLSelectElement>("target").value).toBe("0");
   });
 
   it("accept defaultValue", () => {
@@ -50,6 +50,6 @@ describe("NativeSelect", () => {
       </NativeSelect>
     );
 
-    expect((screen.getByTestId("target") as HTMLSelectElement).value).toBe("1");
+    expect(screen.getByTestId<HTMLSelectElement>("target").value).toBe("1");
   });
 });

@@ -18,7 +18,7 @@ describe.each([
   ["View", View],
   ["ViewInfinite", ViewInfinite],
 ])("%s", (name, View) => {
-  beforeAll(() => jest.useFakeTimers());
+  beforeAll(() => jest.useFakeTimers("modern"));
   afterAll(() => jest.useRealTimers());
   baselineComponent(View);
   describe("With Panel", () =>
