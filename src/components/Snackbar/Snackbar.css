@@ -34,7 +34,7 @@
   min-height: 56px;
   display: flex;
   align-items: center;
-  background: var(--modal_card_background, var(--vkui--color_background_modal));
+  background: var(--vkui--color_background_modal);
   box-shadow: var(--vkui--elevation4);
   border-radius: var(--vkui--size_border_radius--regular);
 }
@@ -67,7 +67,7 @@
 
 .Snackbar__content-text {
   flex: 1;
-  color: var(--text_primary, var(--vkui--color_text_primary));
+  color: var(--vkui--color_text_primary);
   width: 100%;
   display: -webkit-box;
   -webkit-line-clamp: 3;

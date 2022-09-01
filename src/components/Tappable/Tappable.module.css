@@ -38,10 +38,7 @@
  * increased specificity to override CellButton styles
  */
 .Tappable--active-background.Tappable--active-background.Tappable--active-background {
-  background-color: var(
-    --background_highlighted,
-    var(--vkui--color_transparent--active)
-  );
+  background-color: var(--vkui--color_transparent--active);
 }
 
 .Tappable--active-opacity.Tappable--active-opacity.Tappable--active-opacity {
@@ -63,10 +60,7 @@
 }
 
 .Tappable--hover-background > .Tappable__hoverShadow {
-  background-color: var(
-    --background_hover,
-    var(--vkui--color_transparent--hover)
-  );
+  background-color: var(--vkui--color_transparent--hover);
 }
 
 .Tappable--hover-opacity {

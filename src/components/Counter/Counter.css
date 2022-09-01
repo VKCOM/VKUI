@@ -14,27 +14,18 @@
 }
 
 .Counter--primary {
-  background: var(
-    --counter_primary_background,
-    var(--vkui--color_background_accent)
-  );
-  color: var(--counter_primary_text, var(--vkui--color_text_contrast));
+  background: var(--vkui--color_background_accent);
+  color: var(--vkui--color_text_contrast);
 }
 
 .Counter--secondary {
-  background: var(
-    --counter_secondary_background,
-    var(--vkui--color_icon_tertiary)
-  );
-  color: var(--counter_secondary_text, var(--vkui--color_text_contrast));
+  background: var(--vkui--color_icon_tertiary);
+  color: var(--vkui--color_text_contrast);
 }
 
 .Counter--prominent {
-  background: var(
-    --counter_prominent_background,
-    var(--vkui--color_background_negative)
-  );
-  color: var(--counter_prominent_text, var(--vkui--color_text_contrast));
+  background: var(--vkui--color_background_negative);
+  color: var(--vkui--color_text_contrast);
 }
 
 .Counter--contrast {
@@ -61,97 +52,64 @@
 .Button--lvl-primary.Button--clr-accent .Counter,
 .Button--lvl-secondary.Button--clr-neutral .Counter,
 .Button--lvl-tertiary.Button--clr-neutral .Counter {
-  background-color: var(
-    --button_primary_foreground,
-    var(--vkui--color_background_contrast)
-  );
-  color: var(--button_primary_background, var(--vkui--color_text_contrast));
+  background-color: var(--vkui--color_background_contrast);
+  color: var(--vkui--color_text_contrast);
 }
 
 .Button--lvl-secondary.Button--clr-accent .Counter {
-  background-color: var(
-    --button_secondary_foreground,
-    var(--vkui--color_background_accent)
-  );
-  color: var(--background_content, var(--vkui--color_text_contrast_themed));
+  background-color: var(--vkui--color_background_accent);
+  color: var(--vkui--color_text_contrast_themed);
 }
 
 .Button--lvl-tertiary.Button--clr-accent .Counter {
-  background-color: var(
-    --button_tertiary_foreground,
-    var(--vkui--color_background_accent)
-  );
-  color: var(--background_content, var(--vkui--color_text_contrast_themed));
+  background-color: var(--vkui--color_background_accent);
+  color: var(--vkui--color_text_contrast_themed);
 }
 
 .Button--lvl-outline.Button--clr-accent .Counter {
-  background-color: var(
-    --button_outline_foreground,
-    var(--vkui--color_background_accent)
-  );
-  color: var(--background_content, var(--vkui--color_text_contrast_themed));
+  background-color: var(--vkui--color_background_accent);
+  color: var(--vkui--color_text_contrast_themed);
 }
 
 .Button--lvl-primary.Button--clr-positive .Counter {
-  background-color: var(
-    --button_commerce_foreground,
-    var(--vkui--color_background_contrast)
-  );
-  color: var(--button_commerce_background, var(--vkui--color_text_positive));
+  background-color: var(--vkui--color_background_contrast);
+  color: var(--vkui--color_text_positive);
 }
 
 .Button--lvl-secondary.Button--clr-positive .Counter,
 .Button--lvl-tertiary.Button--clr-positive .Counter,
 .Button--lvl-outline.Button--clr-positive .Counter {
-  background-color: var(
-    --button_commerce_background,
-    var(--vkui--color_background_positive)
-  );
-  color: var(--button_commerce_foreground, var(--vkui--color_text_contrast));
+  background-color: var(--vkui--color_background_positive);
+  color: var(--vkui--color_text_contrast);
 }
 
 .Button--lvl-primary.Button--clr-negative .Counter {
-  background-color: var(--white, var(--vkui--color_background_contrast));
-  color: var(--destructive, var(--vkui--color_text_negative));
+  background-color: var(--vkui--color_background_contrast);
+  color: var(--vkui--color_text_negative);
 }
 
 .Button--lvl-secondary.Button--clr-negative .Counter,
 .Button--lvl-tertiary.Button--clr-negative .Counter,
 .Button--lvl-outline.Button--clr-negative .Counter {
-  background-color: var(--destructive, var(--vkui--color_background_negative));
-  color: var(--white, var(--vkui--color_text_contrast));
+  background-color: var(--vkui--color_background_negative);
+  color: var(--vkui--color_text_contrast);
 }
 
 .Button--lvl-primary.Button--clr-neutral .Counter {
-  background-color: var(
-    --media_overlay_button_background,
-    var(--vkui--color_background_contrast)
-  );
-  color: var(--text_primary, var(--vkui--color_text_primary));
+  background-color: var(--vkui--color_background_contrast);
+  color: var(--vkui--color_text_primary);
 }
 
 .Button--lvl-primary.Button--clr-overlay .Counter {
-  background-color: var(
-    --media_overlay_button_foreground,
-    var(--vkui--color_icon_primary_invariably)
-  );
-  color: var(
-    --media_overlay_button_background,
-    var(--vkui--color_text_contrast)
-  );
+  background-color: var(--vkui--color_icon_primary_invariably);
+  color: var(--vkui--color_text_contrast);
 }
 
 .Button--lvl-secondary.Button--clr-overlay .Counter,
 .Button--lvl-tertiary.Button--clr-overlay .Counter,
 .Button--lvl-outline.Button--clr-overlay .Counter {
-  background-color: var(
-    --media_overlay_button_background,
-    var(--vkui--color_background_contrast)
-  );
-  color: var(
-    --media_overlay_button_foreground,
-    var(--vkui--color_text_primary_invariably)
-  );
+  background-color: var(--vkui--color_background_contrast);
+  color: var(--vkui--color_text_primary_invariably);
 }
 
 /**
@@ -159,11 +117,8 @@
  * WriteBarIcon
  */
 .WriteBarIcon .Counter {
-  color: var(--button_commerce_foreground, var(--vkui--color_text_contrast));
-  background: var(
-    --button_commerce_background,
-    var(--vkui--color_background_positive)
-  );
+  color: var(--vkui--color_text_contrast);
+  background: var(--vkui--color_background_positive);
 }
 
 /**
@@ -172,9 +127,6 @@
  */
 .SubnavigationButton--selected:not(.SubnavigationButton--mode-tertiary)
   .Counter {
-  background-color: var(
-    --button_primary_foreground,
-    var(--vkui--color_background_contrast)
-  );
-  color: var(--button_primary_background, var(--vkui--color_text_accent));
+  background-color: var(--vkui--color_background_contrast);
+  color: var(--vkui--color_text_accent);
 }

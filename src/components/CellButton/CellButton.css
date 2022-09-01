@@ -36,17 +36,17 @@
 }
 
 .CellButton {
-  color: var(--accent, var(--vkui--color_text_accent));
+  color: var(--vkui--color_text_accent);
 }
 
 .CellButton > .Icon {
-  color: var(--accent, var(--vkui--color_icon_accent));
+  color: var(--vkui--color_icon_accent);
 }
 
 .CellButton--danger {
-  color: var(--destructive, var(--vkui--color_text_negative));
+  color: var(--vkui--color_text_negative);
 }
 
 .CellButton--danger > .Icon {
-  color: var(--destructive, var(--vkui--color_icon_negative));
+  color: var(--vkui--color_icon_negative);
 }

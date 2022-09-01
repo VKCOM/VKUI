@@ -25,21 +25,21 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  color: var(--text_subhead, var(--vkui--color_text_subhead));
+  color: var(--vkui--color_text_subhead);
 }
 
 .FormItem__bottom {
-  color: var(--text_secondary, var(--vkui--color_text_secondary));
+  color: var(--vkui--color_text_secondary);
   padding-top: 8px;
 }
 
 .FormItem--error .FormItem__bottom {
-  color: var(--field_error_border, var(--vkui--color_text_negative));
+  color: var(--vkui--color_text_negative);
 }
 
 .FormItem--valid .FormItem__bottom,
 .FormItem--verified .FormItem__bottom {
-  color: var(--field_valid_border, var(--vkui--color_text_positive));
+  color: var(--vkui--color_text_positive);
 }
 
 /**

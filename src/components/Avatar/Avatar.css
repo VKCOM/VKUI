@@ -1,7 +1,7 @@
 .Avatar {
   flex-shrink: 0;
   box-sizing: border-box;
-  color: var(--placeholder_icon_background, var(--vkui--color_background));
+  color: var(--vkui--color_background);
   background: currentColor;
   background-size: cover;
   position: relative;
@@ -35,7 +35,7 @@
 .Avatar--shadow::after {
   content: "";
   box-shadow: inset 0 0 0 var(--thin-border)
-    var(--image_border, var(--vkui--color_image_border_alpha));
+    var(--vkui--color_image_border_alpha);
 }
 
 .Avatar__overlay {
@@ -55,12 +55,12 @@
 }
 
 .Avatar__overlay--light {
-  color: var(--accent, var(--vkui--color_icon_accent));
+  color: var(--vkui--color_icon_accent);
   background-color: var(--vkui--color_avatar_overlay_inverse_alpha);
 }
 
 .Avatar__overlay--dark {
-  color: var(--button_commerce_foreground, var(--vkui--color_icon_contrast));
+  color: var(--vkui--color_icon_contrast);
   background-color: var(--vkui--color_avatar_overlay);
 }
 
@@ -70,14 +70,14 @@
 
 .Avatar__overlay--focus-visible {
   opacity: 1;
-  box-shadow: 0 0 0 2px var(--accent, var(--vkui--color_stroke_accent));
+  box-shadow: 0 0 0 2px var(--vkui--color_stroke_accent);
 }
 
 .Avatar__children {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--icon_secondary, var(--vkui--color_icon_secondary));
+  color: var(--vkui--color_icon_secondary);
 }
 
 .Avatar__badge {
@@ -100,20 +100,14 @@
 }
 
 .Avatar__badge-online {
-  color: var(--button_commerce_background, var(--vkui--color_accent_green));
-  background-color: var(
-    --background_content,
-    var(--vkui--color_background_content)
-  );
+  color: var(--vkui--color_accent_green);
+  background-color: var(--vkui--color_background_content);
   border-radius: 50%;
 }
 
 .Avatar__badge-online-mobile {
-  color: var(--button_commerce_background, var(--vkui--color_accent_green));
-  background-color: var(
-    --background_content,
-    var(--vkui--color_background_content)
-  );
+  color: var(--vkui--color_accent_green);
+  background-color: var(--vkui--color_background_content);
   border-radius: 3px;
   padding: 2px;
 }
@@ -122,11 +116,11 @@
  * .CellButton
  */
 .CellButton > .Avatar .Icon {
-  color: var(--accent, var(--vkui--color_icon_accent));
+  color: var(--vkui--color_icon_accent);
 }
 
 .CellButton--danger > .Avatar .Icon {
-  color: var(--destructive, var(--vkui--color_icon_negative));
+  color: var(--vkui--color_icon_negative);
 }
 
 /**

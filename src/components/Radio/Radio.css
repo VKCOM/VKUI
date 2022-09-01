@@ -24,12 +24,12 @@
   width: 22px;
   height: 22px;
   margin-right: 14px;
-  color: var(--icon_tertiary, var(--vkui--color_icon_tertiary));
+  color: var(--vkui--color_icon_tertiary);
   transition: color 0.15s var(--ios-easing);
 }
 
 .Radio__input:checked ~ .Radio__container .Radio__icon {
-  color: var(--accent, var(--vkui--color_icon_accent));
+  color: var(--vkui--color_icon_accent);
 }
 
 .Radio__icon .Radio__pin {
@@ -46,12 +46,12 @@
   display: block;
   flex-grow: 1;
   max-width: 100%;
-  color: var(--text_primary, var(--vkui--color_text_primary));
+  color: var(--vkui--color_text_primary);
 }
 
 .Radio__description {
   display: block;
-  color: var(--text_secondary, var(--vkui--color_text_secondary));
+  color: var(--vkui--color_text_secondary);
   margin-bottom: 12px;
   margin-top: 2px;
 }

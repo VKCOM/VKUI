@@ -1,16 +1,16 @@
 .Separator {
-  color: var(--separator_common, var(--vkui--color_separator_primary));
+  color: var(--vkui--color_separator_primary);
 }
 
 @media (min-resolution: 2dppx) {
   .Separator {
-    color: var(--separator_common, var(--vkui--color_separator_primary2x));
+    color: var(--vkui--color_separator_primary2x);
   }
 }
 
 @media (min-resolution: 3dppx) {
   .Separator {
-    color: var(--separator_common, var(--vkui--color_separator_primary3x));
+    color: var(--vkui--color_separator_primary3x);
   }
 }
 

@@ -109,7 +109,7 @@
 }
 
 .Switch__self:checked + .Switch__pseudo::before {
-  background: var(--accent, var(--vkui--color_icon_accent));
+  background: var(--vkui--color_icon_accent);
   transform: translateX(
     calc(
       var(--vkui--size_switch_width--regular) -
@@ -146,7 +146,7 @@
 
 .Switch__self:checked + .Switch__pseudo::after {
   opacity: 0.48;
-  background: var(--accent, var(--vkui--color_icon_accent));
+  background: var(--vkui--color_icon_accent);
 }
 
 .Switch--sizeY-compact .Switch__self:checked + .Switch__pseudo::before {
@@ -190,10 +190,7 @@
  * Трек
  */
 .Switch--ios .Switch__pseudo::after {
-  background: var(
-    --placeholder_icon_background,
-    var(--vkui--color_track_background)
-  );
+  background: var(--vkui--color_track_background);
 }
 
 .Switch--ios .Switch__self:checked + .Switch__pseudo::after {

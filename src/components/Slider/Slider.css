@@ -9,10 +9,7 @@
   position: absolute;
   left: 0;
   width: 100%;
-  background-color: var(
-    --placeholder_icon_background,
-    var(--vkui--color_track_background)
-  );
+  background-color: var(--vkui--color_track_background);
   content: "";
   z-index: -1;
   top: 13px;
@@ -37,7 +34,7 @@
   position: absolute;
   top: 0;
   width: calc(100% + 28px);
-  background: var(--accent, var(--vkui--color_background_accent));
+  background: var(--vkui--color_background_accent);
   content: "";
   left: -14px;
   height: 2px;

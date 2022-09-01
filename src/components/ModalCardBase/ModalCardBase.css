@@ -4,7 +4,7 @@
 .ModalCardBase__container {
   box-sizing: border-box;
   position: relative;
-  background: var(--modal_card_background, var(--vkui--color_background_modal));
+  background: var(--vkui--color_background_modal);
   border-radius: 18px;
   padding: 16px;
   margin-bottom: var(--safe-area-inset-bottom);
@@ -28,11 +28,11 @@
 }
 
 .ModalCardBase__header {
-  color: var(--text_primary, var(--vkui--color_text_primary));
+  color: var(--vkui--color_text_primary);
 }
 
 .ModalCardBase__subheader {
-  color: var(--text_secondary, var(--vkui--color_text_subhead));
+  color: var(--vkui--color_text_subhead);
 }
 
 .ModalCardBase__header + .ModalCardBase__subheader {
@@ -41,7 +41,7 @@
 
 .ModalCardBase__icon {
   margin: 8px auto 16px;
-  color: var(--accent, var(--vkui--color_icon_accent));
+  color: var(--vkui--color_icon_accent);
 }
 
 .ModalCardBase__actions {
@@ -68,10 +68,7 @@
   right: 4px;
   width: 48px;
   height: 48px;
-  color: var(
-    --placeholder_icon_foreground_primary,
-    var(--vkui--color_icon_secondary)
-  );
+  color: var(--vkui--color_icon_secondary);
   justify-content: center;
 }
 

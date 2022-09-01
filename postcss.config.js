@@ -12,7 +12,6 @@ const {
   cssCustomPropertiesPaths,
   getCustomMedias,
 } = require("./shared");
-const { defaultSchemeId } = require("./package.json");
 // TODO: включить после добавления поддержки VK-Sans-Text
 // const VkSansMandatoryDeclarations = require("./postcss-plugin-vk-sans");
 const postcssCustomMedia = require("postcss-custom-media");
@@ -32,7 +31,6 @@ module.exports = (ctx) => {
     scopeRoot({
       customPropRoot: ".vkui__root, .vkui__portal-root",
       except: [
-        path.resolve(`./src/styles/${defaultSchemeId}.css`),
         path.resolve(
           "./node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css"
         ),
@@ -40,10 +38,6 @@ module.exports = (ctx) => {
     }),
     restructureVariable(
       [
-        "./src/styles/bright_light.css",
-        "./src/styles/space_gray.css",
-        "./src/styles/vkcom_light.css",
-        "./src/styles/vkcom_dark.css",
         "./node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css",
         "./node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css",
         "./node_modules/@vkontakte/vkui-tokens/themes/vkBaseDark/cssVars/declarations/onlyVariablesLocal.css",

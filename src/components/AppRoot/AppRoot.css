@@ -13,12 +13,12 @@
 }
 
 .vkui--sizeX-regular {
-  background: var(--background_page, var(--vkui--color_background));
+  background: var(--vkui--color_background);
 }
 
 @media (--sizeX-regular) {
   .vkui--sizeX-none {
-    background: var(--background_page);
+    background: var(--vkui--color_background);
   }
 }
 

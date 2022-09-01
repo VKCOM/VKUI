@@ -43,7 +43,7 @@
   min-width: 0;
   background-color: transparent;
   z-index: 2;
-  color: var(--text_primary, var(--vkui--color_text_primary));
+  color: var(--vkui--color_text_primary);
 }
 
 .Search__input::-webkit-search-decoration,
@@ -121,7 +121,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--search_bar_field_tint, var(--vkui--color_icon_secondary));
+  color: var(--vkui--color_icon_secondary);
 }
 
 .Search__icon {
@@ -240,17 +240,11 @@
   default
  */
 .Search {
-  background: var(
-    --search_bar_background,
-    var(--vkui--color_background_content)
-  );
+  background: var(--vkui--color_background_content);
 }
 
 .Search__control {
-  background-color: var(
-    --search_bar_field_background,
-    var(--vkui--color_search_field_background)
-  );
+  background-color: var(--vkui--color_search_field_background);
 }
 
 .Search__in:hover .Search__control,
@@ -274,96 +268,66 @@
 }
 
 .Search__input {
-  color: var(--text_primary, var(--vkui--color_text_primary));
+  color: var(--vkui--color_text_primary);
 }
 
 .Search__placeholder {
-  color: var(--search_bar_field_tint, var(--vkui--color_icon_medium));
+  color: var(--vkui--color_icon_medium);
 }
 
 .Search__after-width {
-  background: var(
-    --search_bar_field_background,
-    var(--vkui--color_search_field_background)
-  );
-  color: var(
-    --search_bar_field_background,
-    var(--vkui--color_search_field_background)
-  );
+  background: var(--vkui--color_search_field_background);
+  color: var(--vkui--color_search_field_background);
 }
 
 .Search__after {
-  background: var(
-    --search_bar_background,
-    var(--vkui--color_background_content)
-  );
-  color: var(--accent, var(--vkui--color_icon_accent_themed));
+  background: var(--vkui--color_background_content);
+  color: var(--vkui--color_icon_accent_themed);
 }
 
 .Search__after::after {
-  background-color: var(
-    --search_bar_field_background,
-    var(--vkui--color_search_field_background)
-  );
+  background-color: var(--vkui--color_search_field_background);
 }
 
 .Search__after::before {
-  background-color: var(
-    --search_bar_background,
-    var(--vkui--color_background_content)
-  );
+  background-color: var(--vkui--color_background_content);
 }
 
 /*
   header
  */
 .PanelHeader .Search {
-  background: var(--header_background, var(--vkui--color_header_background));
+  background: var(--vkui--color_header_background);
 }
 
 .PanelHeader .Search__control {
-  background-color: var(
-    --header_search_field_background,
-    var(--vkui--color_search_field_background)
-  );
+  background-color: var(--vkui--color_search_field_background);
 }
 
 .PanelHeader .Search__input {
-  color: var(--text_primary, var(--vkui--color_text_primary));
+  color: var(--vkui--color_text_primary);
 }
 
 .PanelHeader .Search__placeholder {
-  color: var(--header_search_field_tint, var(--vkui--color_icon_secondary));
+  color: var(--vkui--color_icon_secondary);
 }
 
 .PanelHeader .Search__after-width {
-  background: var(
-    --header_search_field_background,
-    var(--vkui--color_search_field_background)
-  );
-  color: var(
-    --header_search_field_background,
-    var(--vkui--color_search_field_background)
-  );
+  background: var(--vkui--color_search_field_background);
+  color: var(--vkui--color_search_field_background);
 }
 
 .PanelHeader .Search__after {
-  background: var(--header_background, var(--vkui--color_header_background));
-  color: var(--header_tint, var(--vkui--color_icon_accent_themed));
+  background: var(--vkui--color_header_background);
+  color: var(--vkui--color_icon_accent_themed);
 }
 
 .PanelHeader .Search__after::after {
-  background-color: var(
-    --header_search_field_background,
-    var(--vkui--color_search_field_background)
-  );
+  background-color: var(--vkui--color_search_field_background);
 }
 
 .PanelHeader .Search__after::before {
-  background-color: var(
-    --header_background,
-    var(--vkui--color_header_background)
-  );
+  background-color: var(--vkui--color_header_background);
 }
 
 /**

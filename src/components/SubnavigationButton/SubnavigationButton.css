@@ -57,7 +57,7 @@
 
 .SubnavigationButton__before {
   margin-right: 8px;
-  color: var(--accent, var(--vkui--color_icon_accent));
+  color: var(--vkui--color_icon_accent);
 }
 
 .SubnavigationButton__label {
@@ -74,7 +74,7 @@
 .SubnavigationButton__expandableIcon {
   margin-left: 8px;
   margin-top: 1px; /* Смещает иконку относительно текста */
-  color: var(--icon_secondary, var(--vkui--color_icon_secondary));
+  color: var(--vkui--color_icon_secondary);
 }
 
 .SubnavigationButton__before:first-child,
@@ -97,10 +97,7 @@
  */
 
 .SubnavigationButton--mode-primary {
-  background-color: var(
-    --modal_card_background,
-    var(--vkui--color_background_modal)
-  );
+  background-color: var(--vkui--color_background_modal);
   box-shadow: var(--vkui--elevation3);
 }
 
@@ -114,11 +111,8 @@
  */
 
 .SubnavigationButton--selected {
-  background-color: var(
-    --button_primary_background,
-    var(--vkui--color_background_accent)
-  );
-  color: var(--button_primary_foreground, var(--vkui--color_text_contrast));
+  background-color: var(--vkui--color_background_accent);
+  color: var(--vkui--color_text_contrast);
   box-shadow: none;
   border: none;
 }

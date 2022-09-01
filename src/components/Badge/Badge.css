@@ -8,12 +8,9 @@
 }
 
 .Badge--new {
-  background-color: var(--blue_200, var(--vkui--color_icon_accent));
+  background-color: var(--vkui--color_icon_accent);
 }
 
 .Badge--prominent {
-  background-color: var(
-    --counter_prominent_background,
-    var(--vkui--color_icon_negative)
-  );
+  background-color: var(--vkui--color_icon_negative);
 }

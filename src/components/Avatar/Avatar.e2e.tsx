@@ -25,7 +25,7 @@ describe("Avatar", () => {
         shadow: [undefined, false],
       },
       {
-        style: [{ background: "var(--accent)" }],
+        style: [{ background: "var(--vkui--color_icon_accent)" }],
         size: [28],
         shadow: [false],
         children: [<Icon16Add key="icon-add" fill="var(--white)" />],

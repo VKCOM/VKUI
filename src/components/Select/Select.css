@@ -23,7 +23,7 @@
   flex-shrink: 1;
   padding-right: 12px;
   padding-left: 12px;
-  color: var(--text_primary, var(--vkui--color_text_primary));
+  color: var(--vkui--color_text_primary);
   box-sizing: border-box;
   position: relative;
   z-index: 6;
@@ -66,7 +66,7 @@
 }
 
 .Select--empty .Select__title {
-  color: var(--field_text_placeholder, var(--vkui--color_text_secondary));
+  color: var(--vkui--color_text_secondary);
 }
 
 .Select--align-right .Select__title {

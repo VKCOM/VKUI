@@ -60,7 +60,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  background-color: var(--icon_medium, var(--vkui--color_icon_medium));
+  background-color: var(--vkui--color_icon_medium);
   border-radius: 12px;
   transition: transform 200ms, opacity 200ms;
 }

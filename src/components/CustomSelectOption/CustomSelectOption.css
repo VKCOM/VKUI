@@ -8,7 +8,7 @@
   white-space: nowrap;
   user-select: none;
   cursor: pointer;
-  color: var(--text_primary, var(--vkui--color_text_primary));
+  color: var(--vkui--color_text_primary);
 }
 
 .CustomSelectOption--hierarchy {
@@ -36,10 +36,7 @@
 }
 
 .CustomSelectOption--hover {
-  background-color: var(
-    --button_muted_background,
-    var(--vkui--color_transparent--hover)
-  );
+  background-color: var(--vkui--color_transparent--hover);
 }
 
 .CustomSelectOption__before {
@@ -67,13 +64,13 @@
 }
 
 .CustomSelectOption__description {
-  color: var(--text_secondary, var(--vkui--color_text_secondary));
+  color: var(--vkui--color_text_secondary);
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
 .CustomSelectOption__selectedIcon {
-  color: var(--accent, var(--vkui--color_icon_accent));
+  color: var(--vkui--color_icon_accent);
 }
 
 .CustomSelectOption__selectedIcon:not(:first-child) {

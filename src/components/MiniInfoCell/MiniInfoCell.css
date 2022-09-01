@@ -1,16 +1,16 @@
 .MiniInfoCell {
   display: flex;
   padding: 6px var(--vkui--size_base_padding_horizontal--regular);
-  color: var(--text_subhead, var(--vkui--color_text_subhead));
+  color: var(--vkui--color_text_subhead);
 }
 
 .MiniInfoCell--accent {
-  color: var(--text_primary, var(--vkui--color_text_primary));
+  color: var(--vkui--color_text_primary);
 }
 
 .MiniInfoCell__before {
   margin-right: 12px;
-  color: var(--icon_outline_secondary, var(--vkui--color_icon_secondary));
+  color: var(--vkui--color_icon_secondary);
 }
 
 .MiniInfoCell__middle {
@@ -52,24 +52,14 @@
   margin-bottom: -2px;
 }
 
-/**
-* TODO Когда избавимся от appearance токенов - объединить классы
- */
-
-.MiniInfoCell--add {
-  color: var(--accent, var(--vkui--color_text_link));
-}
-
-.MiniInfoCell--add .MiniInfoCell__before {
-  color: var(--accent, var(--vkui--color_icon_accent));
-}
-
+.MiniInfoCell--add,
 .MiniInfoCell--more {
-  color: var(--link_alternate, var(--vkui--color_text_link));
+  color: var(--vkui--color_text_link);
 }
 
+.MiniInfoCell--add .MiniInfoCell__before,
 .MiniInfoCell--more .MiniInfoCell__before {
-  color: var(--link_alternate, var(--vkui--color_icon_accent));
+  color: var(--vkui--color_icon_accent);
 }
 
 .MiniInfoCell--more {
@@ -79,5 +69,5 @@
 
 .MiniInfoCell__middle .Icon {
   margin-left: 4px;
-  color: var(--accent, var(--vkui--color_text_accent));
+  color: var(--vkui--color_text_accent);
 }

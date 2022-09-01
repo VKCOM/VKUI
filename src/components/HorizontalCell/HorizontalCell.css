@@ -12,13 +12,13 @@
 }
 
 .HorizontalCell__content {
-  color: var(--text_primary, var(--vkui--color_text_primary));
+  color: var(--vkui--color_text_primary);
   word-break: break-all;
   text-overflow: ellipsis;
 }
 
 .HorizontalCell__subtitle {
-  color: var(--text_secondary, var(--vkui--color_text_secondary));
+  color: var(--vkui--color_text_secondary);
 }
 
 .HorizontalCell__content .HorizontalCell__subtitle {

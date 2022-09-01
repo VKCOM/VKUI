@@ -65,10 +65,7 @@
 }
 
 .ModalPage__in {
-  background-color: var(
-    --background_content,
-    var(--vkui--color_background_modal)
-  );
+  background-color: var(--vkui--color_background_modal);
   overflow: visible;
   position: relative;
   box-sizing: border-box;
@@ -119,10 +116,7 @@
 }
 
 .ModalPage__footer {
-  background-color: var(
-    --background_content,
-    var(--vkui--color_background_modal)
-  );
+  background-color: var(--vkui--color_background_modal);
   position: relative;
   z-index: 10;
 }

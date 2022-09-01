@@ -11,7 +11,7 @@ describe("IconButton", () => {
   describeScreenshotFuzz(
     (props: IconButtonProps) => (
       <IconButton
-        style={{ backgroundColor: "var(--background_highlighted)" }}
+        style={{ backgroundColor: "var(--vkui--color_transparent--active)" }}
         {...props}
       />
     ),

@@ -9,10 +9,6 @@
 
   /* sizes */
   --tabbar_height: 48px;
-  --panelheader_height: 56px;
-  --panelheader_height_ios: 52px;
-  --panelheader_height_vkcom: 48px;
-  --search_default_height: 36px;
   --thin-border: 1px;
 
   /**
@@ -25,7 +21,6 @@
 
   /* colors */
   --white: #fff;
-  --blue_200: #5c9ce6;
 
   /* insets */
   --safe-area-inset-top: 0px;

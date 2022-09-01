@@ -1,6 +1,5 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
-const { defaultSchemeId } = require("./package.json");
 
 process.env.BABEL_KEEP_CSS = "1";
 
@@ -14,7 +13,6 @@ module.exports = {
     stable: ["./src/styles/themes.css", "./src/styles/components.css"],
     unstable: "./src/styles/unstable.css",
     components: "./src/styles/components.css",
-    default_scheme: `./src/styles/${defaultSchemeId}.css`,
   },
   output: {
     path: path.resolve(__dirname, "dist"),
