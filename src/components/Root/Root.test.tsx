@@ -16,7 +16,7 @@ const views = [
 ];
 
 describe("Root", () => {
-  beforeAll(() => jest.useFakeTimers());
+  beforeAll(() => jest.useFakeTimers("modern"));
   afterAll(() => jest.useRealTimers());
   baselineComponent(Root);
   describe("With View", () =>

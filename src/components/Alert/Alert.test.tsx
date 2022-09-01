@@ -8,7 +8,7 @@ import { ANDROID, IOS } from "../../lib/platform";
 import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 
 describe("Alert", () => {
-  beforeAll(() => jest.useFakeTimers());
+  beforeAll(() => jest.useFakeTimers("modern"));
   afterAll(() => jest.useRealTimers());
   baselineComponent(Alert);
   describe("closes", () => {

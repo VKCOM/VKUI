@@ -3,7 +3,7 @@ import { noop } from "../lib/utils";
 import { useTimeout } from "./useTimeout";
 
 describe(useTimeout, () => {
-  beforeAll(() => jest.useFakeTimers());
+  beforeAll(() => jest.useFakeTimers("modern"));
   afterAll(() => jest.useRealTimers());
   it("sets timeout", () => {
     const cb = jest.fn();
