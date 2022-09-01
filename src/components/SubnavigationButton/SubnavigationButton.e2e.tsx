@@ -36,9 +36,25 @@ describe("SubnavigationButton", () => {
         children: ["Новинки"],
       },
       {
-        size: ["l"],
         textLevel: [1, 2, 3],
         children: ["Сканировать QR"],
+      },
+      {
+        size: ["l", "m", "s"],
+        children: ["Сканировать QR"],
+        $adaptivity: true,
+      },
+      {
+        expandable: [true],
+        selected: [undefined, true],
+        before: [<Icon24Filter key="icon" />],
+        mode: ["primary", "outline", "tertiary"],
+        after: [
+          <Counter key="counter" mode="primary" size="s">
+            3
+          </Counter>,
+        ],
+        children: ["Фильтры"],
       },
     ]
   );

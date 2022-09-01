@@ -1,17 +1,17 @@
 import * as React from "react";
 import { HasComponent, HasChildren } from "../../types";
 import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
-import { getTitleFromChildren, hasReactNode } from "../../lib/utils";
+import { getTitleFromChildren } from "../../lib/utils";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { Icon16Dropdown } from "@vkontakte/icons";
-import { usePlatform } from "../../hooks/usePlatform";
 import { Caption } from "../Typography/Caption/Caption";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import "./SubnavigationButton.css";
 
 export interface SubnavigationButtonProps extends Omit<TappableProps, "size"> {
-  size?: "m" | "l";
+  mode?: "primary" | "outline" | "tertiary";
+  size?: "s" | "m" | "l";
   selected?: boolean;
   /**
    * Размер шрифта. Этим свойством рекомендуется пользоваться, чтобы отрегулировать размер шрифта у кнопок в `<SubnavigationBar mode="fixed" />`
@@ -28,25 +28,29 @@ export interface SubnavigationButtonProps extends Omit<TappableProps, "size"> {
   expandable?: boolean;
 }
 
-type SubnavButtonTypographyProps = Pick<SubnavigationButtonProps, "textLevel"> &
+type SubnavigationButtonTypographyProps = Pick<
+  SubnavigationButtonProps,
+  "textLevel"
+> &
   HasComponent &
   HasChildren;
 
 const SubnavigationButtonTypography = ({
   textLevel,
   ...restProps
-}: SubnavButtonTypographyProps) => {
+}: SubnavigationButtonTypographyProps) => {
   if (textLevel === 1) {
     return <Subhead {...restProps} />;
   }
 
-  return <Caption level={textLevel === 2 ? "1" : "2"} {...restProps} />;
+  return <Caption level={textLevel === 2 ? "2" : "3"} {...restProps} />;
 };
 
 /**
  * @see https://vkcom.github.io/VKUI/#/SubnavigationButton
  */
 export const SubnavigationButton = ({
+  mode = "primary",
   size = "m",
   selected,
   textLevel = 1,
@@ -56,7 +60,7 @@ export const SubnavigationButton = ({
   children,
   ...restProps
 }: SubnavigationButtonProps) => {
-  const platform = usePlatform();
+  const { sizeY } = useAdaptivity();
 
   return (
     <Tappable
@@ -64,14 +68,16 @@ export const SubnavigationButton = ({
       hasActive={false}
       focusVisibleMode="outside"
       vkuiClass={classNames(
-        getClassName("SubnavigationButton", platform),
+        "SubnavigationButton",
         `SubnavigationButton--${size}`,
-        selected && "SubnavigationButton--selected"
+        `SubnavigationButton--mode-${mode}`,
+        selected && "SubnavigationButton--selected",
+        `SubnavigationButton--sizeY-${sizeY}`
       )}
       aria-label={getTitleFromChildren(children)}
     >
       <span vkuiClass="SubnavigationButton__in">
-        {hasReactNode(before) && (
+        {before && (
           <span vkuiClass="SubnavigationButton__before">{before}</span>
         )}
         <SubnavigationButtonTypography
@@ -81,11 +87,12 @@ export const SubnavigationButton = ({
         >
           {children}
         </SubnavigationButtonTypography>
-        {hasReactNode(after) && (
-          <span vkuiClass="SubnavigationButton__after">{after}</span>
-        )}
+        {after && <span vkuiClass="SubnavigationButton__after">{after}</span>}
         {expandable && (
-          <Icon16Dropdown vkuiClass="SubnavigationButton__expandableIcon" />
+          <Icon16Dropdown
+            vkuiClass="SubnavigationButton__expandableIcon"
+            aria-hidden
+          />
         )}
       </span>
     </Tappable>
