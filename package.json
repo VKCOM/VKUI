@@ -63,7 +63,6 @@
     "babel-plugin-module-resolver": "^4.1.0",
     "babel-plugin-transform-remove-imports": "^1.7.0",
     "chalk": "^4.1.0",
-    "clean-webpack-plugin": "^4.0.0",
     "concurrently": "^7.3.0",
     "cross-env": "^7.0.2",
     "css-loader": "^6.5.1",
