@@ -2,7 +2,9 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  padding: 0 16px;
+  padding: 0;
+  padding-left: var(--vkui--size_base_padding_horizontal--regular);
+  padding-right: var(--vkui--size_base_padding_horizontal--regular);
   user-select: text;
 }
 
@@ -96,9 +98,6 @@
 /**
  * iOS
  */
-.Header--ios {
-  padding: 0 12px;
-}
 
 .Header--ios .Header__main {
   margin: 13px 0 9px;
