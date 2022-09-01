@@ -1,3 +1,2 @@
-*          @VKCOM/vkui-core
-yarn.lock  @VKCOM/vk-sec
-.yarnrc    @VKCOM/vk-sec
+*                       @VKCOM/vkui-core
+.github/dependabot.yml  @VKCOM/vk-sec
