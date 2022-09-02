@@ -4,8 +4,8 @@
 export { ChipsSelect } from "../components/ChipsSelect/ChipsSelect";
 export type { ChipsSelectProps } from "../components/ChipsSelect/ChipsSelect";
 
-export { Dropdown } from "../components/Dropdown/Dropdown";
-export type { DropdownProps } from "../components/Dropdown/Dropdown";
+export { Popover } from "../components/Popover/Popover";
+export type { PopoverProps } from "../components/Popover/Popover";
 
 export { TextTooltip } from "../components/TextTooltip/TextTooltip";
 export type { TextTooltipProps } from "../components/TextTooltip/TextTooltip";

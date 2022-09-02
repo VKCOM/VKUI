@@ -176,7 +176,7 @@ const baseConfig = {
         {
           name: "Poppers",
           components: () => [
-            "../src/components/Dropdown/Dropdown.tsx",
+            "../src/components/Popover/Popover.tsx",
             "../src/components/TextTooltip/TextTooltip.tsx",
             "../src/components/RichTooltip/RichTooltip.tsx",
             "../src/components/Tooltip/Tooltip.tsx",

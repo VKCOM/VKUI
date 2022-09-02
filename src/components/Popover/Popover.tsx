@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useDOM } from "../../lib/dom";
+import { classNamesString } from "../../lib/classNames";
 import { PopperCommonProps, Popper } from "../Popper/Popper";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { useTimeout } from "../../hooks/useTimeout";
@@ -7,9 +8,9 @@ import { useExternRef } from "../../hooks/useExternRef";
 import { useEventListener } from "../../hooks/useEventListener";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { usePatchChildrenRef } from "../../hooks/usePatchChildrenRef";
-import "./Dropdown.css";
+import styles from "./Popover.module.css";
 
-export interface DropdownProps
+export interface PopoverProps
   extends Omit<PopperCommonProps, "arrow" | "arrowClassName"> {
   /**
    * Механика вызова всплывающего окна.
@@ -55,11 +56,9 @@ export interface DropdownProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Dropdown
- *
- * TODO v5.0.0 Переименовать в `Popover` (см. https://github.com/VKCOM/VKUI/issues/2523)
+ * @see https://vkcom.github.io/VKUI/#/Popover
  */
-export const Dropdown = ({
+export const Popover = ({
   action = "click",
   shown: shownProp,
   showDelay = 150,
@@ -67,11 +66,12 @@ export const Dropdown = ({
   offsetDistance = 8,
   content,
   children,
-  style,
+  style: styleProp,
+  className,
   getRef,
   onShownChange,
   ...restProps
-}: DropdownProps) => {
+}: PopoverProps) => {
   const { document } = useDOM();
 
   const hoverable = action === "hover";
@@ -80,13 +80,6 @@ export const Dropdown = ({
   const [dropdownNode, setPopperNode] = React.useState<HTMLElement | null>(
     null
   );
-
-  // Reason: Typescript ругается на CSS Custom Properties в объекте
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  const styles = {
-    ...style,
-    "--popover-safe-zone-padding": `${offsetDistance}px`,
-  } as React.CSSProperties;
 
   const shown = typeof shownProp === "boolean" ? shownProp : computedShown;
 
@@ -168,11 +161,18 @@ export const Dropdown = ({
       {shown && (
         <Popper
           {...restProps}
-          vkuiClass="Dropdown"
+          className={classNamesString(styles["Popover"], className)}
           targetRef={childRef}
           getRef={patchedPopperRef}
           offsetDistance={offsetDistance}
-          style={styles}
+          style={
+            // Reason: Typescript ругается на CSS Custom Properties в объекте
+            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+            {
+              ...styleProp,
+              "--popover-safe-zone-padding": `${offsetDistance}px`,
+            } as React.CSSProperties
+          }
           renderContent={({ className }) => (
             <FocusTrap
               vkuiClass={className}

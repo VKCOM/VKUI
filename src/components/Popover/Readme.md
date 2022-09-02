@@ -10,7 +10,7 @@ const [shown, setShown] = React.useState(true);
 
 return (
   <React.Fragment>
-    <Dropdown
+    <Popover
       action="hover"
       placement="right"
       content={
@@ -20,9 +20,9 @@ return (
       }
     >
       <Button style={{ margin: 20 }}>Наведи</Button>
-    </Dropdown>
+    </Popover>
 
-    <Dropdown
+    <Popover
       action="click"
       shown={shown}
       onShownChange={setShown}
@@ -44,7 +44,7 @@ return (
       }
     >
       <Button style={{ margin: "20px 0 0 0" }}>Кликни</Button>
-    </Dropdown>
+    </Popover>
   </React.Fragment>
 );
 ```
