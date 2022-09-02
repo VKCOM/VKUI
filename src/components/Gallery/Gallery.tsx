@@ -59,6 +59,7 @@ export const Gallery = ({
     if (onChange && safeSlideIndex !== slideIndex) {
       onChange(safeSlideIndex);
     }
+    setSlideIndex(safeSlideIndex);
   }, [onChange, safeSlideIndex, slideIndex]);
 
   return (

@@ -137,26 +137,30 @@ export const BaseGallery = ({
       ) ?? [];
 
     const localContainerWidth = rootRef.current?.offsetWidth ?? 0;
-    const localviewportOffsetWidth = viewportRef.current?.offsetWidth ?? 0;
+    const localViewportOffsetWidth = viewportRef.current?.offsetWidth ?? 0;
     const localLayerWidth = localSlides.reduce(
       (val: number, slide: GallerySlidesState) => slide.width + val,
       0
     );
+    const adjustShiftX =
+      localSlides.length <= layoutState.current.slides.length ||
+      layoutState.current.slides[slideIndex]?.coordX !==
+        localSlides[slideIndex]?.coordX;
 
     layoutState.current = {
       containerWidth: localContainerWidth,
-      viewportOffsetWidth: localviewportOffsetWidth,
+      viewportOffsetWidth: localViewportOffsetWidth,
       layerWidth: localLayerWidth,
       max: calcMax({
         slides: localSlides,
-        viewportOffsetWidth: localviewportOffsetWidth,
+        viewportOffsetWidth: localViewportOffsetWidth,
         isCenterWithCustomWidth,
       }),
       min: calcMin({
         containerWidth: localContainerWidth,
         layerWidth: localLayerWidth,
         slides: localSlides,
-        viewportOffsetWidth: localviewportOffsetWidth,
+        viewportOffsetWidth: localViewportOffsetWidth,
         isCenterWithCustomWidth,
         align,
       }),
@@ -166,7 +170,7 @@ export const BaseGallery = ({
 
     setShiftState((prevState) => ({
       ...prevState,
-      shiftX: calculateIndent(slideIndex),
+      shiftX: adjustShiftX ? calculateIndent(slideIndex) : prevState.shiftX,
       animation:
         options.animation ??
         prevState.shiftX === validateIndent(prevState.shiftX),
