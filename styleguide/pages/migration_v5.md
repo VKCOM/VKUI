@@ -366,6 +366,14 @@
 
 <br/><br/>
 
+## `Drowpdown` -> [`Popover`](#/Popover)
+
+> ⚠️Компонент остаётся нестабильным (см. [Unstable](#//Unstable)).
+
+- `Dropdown` переименован в `Popover`.
+
+<br/><br/>
+
 ## Типы и импорты
 
 - Удалены константы `IS_PLATFORM_ANDROID` и `IS_PLATFORM_IOS`
