@@ -8,7 +8,7 @@ import { act } from "react-dom/test-utils";
 import { HasChildren } from "../types";
 
 export function fakeTimers() {
-  beforeEach(() => jest.useFakeTimers());
+  beforeEach(() => jest.useFakeTimers("modern"));
   afterEach(() => jest.useRealTimers());
 }
 

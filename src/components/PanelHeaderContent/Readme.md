@@ -1,6 +1,10 @@
 Компонент для отрисовки "сложного" содержимого шапки.
 
-```jsx
+> **Важно**
+>
+> Правая часть шапки скрыта по умолчанию, если требуется показать её, передайте в [`ConfigProvider`](https://vkcom.github.io/VKUI/#/ConfigProvider) свойство `webviewType={WebviewType.INTERNAL}`.
+
+```jsx { "props": { "webviewType": true } }
 const Example = () => {
   const platform = usePlatform();
   return (

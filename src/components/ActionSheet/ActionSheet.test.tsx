@@ -13,7 +13,7 @@ import { Platform } from "../../lib/platform";
 import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 
 describe("ActionSheet", () => {
-  beforeAll(() => jest.useFakeTimers());
+  beforeAll(() => jest.useFakeTimers("modern"));
   afterAll(() => jest.useRealTimers());
   const toggle = document.createElement("div");
   const ActionSheetDesktop = (props: Partial<ActionSheetProps>) => (
