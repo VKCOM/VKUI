@@ -38,14 +38,14 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * @see https://vkcom.github.io/VKUI/#/AppRoot
  */
-export const AppRoot: React.FC<AppRootProps> = ({
+export const AppRoot = ({
   children,
   mode = "full",
   scroll = "global",
   portalRoot: portalRootProp = null,
   disablePortal,
   ...props
-}) => {
+}: AppRootProps) => {
   const isKeyboardInputActive = useKeyboardInputTracker();
   const rootRef = React.useRef<HTMLDivElement | null>(null);
   const [portalRoot, setPortalRoot] = React.useState<HTMLElement | null>(null);
