@@ -26,8 +26,9 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
   mode?: "partial" | "embedded" | "full";
   window?: Window;
   scroll?: "global" | "contain";
-  /** Элемент используемый в качестве root для порталов
-   * При передаче своего элемента необходимо задать ему class="vkui__portal-root" и добавить в DOM
+  /** root-элемент для порталов.
+   *
+   * При передаче своего элемента задайте этому элементу `class="vkui__portal-root"` и добавьте его в DOM.
    */
   portalRoot?: HTMLElement | React.RefObject<HTMLElement> | null;
   /** Disable portal for components */
