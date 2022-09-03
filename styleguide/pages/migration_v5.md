@@ -66,6 +66,12 @@ npx @vkontakte/vkui-token-translator
 
 <br/><br/>
 
+## [`AppRoot`](#/AppRoot)
+
+- Удалено свойство `noLegacyClasses`. Теперь к классам на компонентах VKUI всегда добавляется префикс `vkui` (например, `class="vkuiButton vkuiButton--primary"`).
+
+<br/><br/>
+
 ## [`Root`](#/Root) и [`View`](#/View)
 
 - Удалены устаревшие свойства `popout` и `modal`. Используйте эти свойства в компоненте [`SplitLayout`](#/SplitLayout)

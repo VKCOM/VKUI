@@ -93,7 +93,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
         transitionMotionEnabled={false}
         webviewType="internal"
       >
-        <AppRoot noLegacyClasses>
+        <AppRoot>
           <Component
             toc={toc}
             popout={popout}

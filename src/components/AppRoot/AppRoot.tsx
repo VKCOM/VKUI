@@ -3,7 +3,6 @@ import { useDOM } from "../../lib/dom";
 import { classNames } from "../../lib/classNames";
 import { AppRootContext } from "./AppRootContext";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import { classScopingMode } from "../../lib/classScopingMode";
 import { IconSettingsProvider } from "@vkontakte/icons";
 import {
   ElementScrollController,
@@ -26,8 +25,6 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Режим встраивания */
   mode?: "partial" | "embedded" | "full";
   window?: Window;
-  /** Убирает классы без префикса (.Button) */
-  noLegacyClasses?: boolean;
   scroll?: "global" | "contain";
   /** Элемент используемый в качестве root для порталов
    * При передаче своего элемента необходимо задать ему class="vkui__portal-root" и добавить в DOM
@@ -43,7 +40,6 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
 export const AppRoot: React.FC<AppRootProps> = ({
   children,
   mode = "full",
-  noLegacyClasses = false,
   scroll = "global",
   portalRoot: portalRootProp = null,
   disablePortal,
@@ -55,8 +51,6 @@ export const AppRoot: React.FC<AppRootProps> = ({
   const { document } = useDOM();
   const insets = useInsets();
   const { appearance } = React.useContext(ConfigProviderContext);
-
-  classScopingMode.noConflict = noLegacyClasses;
 
   const { hasMouse, sizeX } = useAdaptivity();
 
@@ -183,10 +177,7 @@ export const AppRoot: React.FC<AppRootProps> = ({
       }}
     >
       <ScrollController elRef={rootRef}>
-        <IconSettingsProvider
-          classPrefix="vkui"
-          globalClasses={!noLegacyClasses}
-        >
+        <IconSettingsProvider classPrefix="vkui">
           {children}
         </IconSettingsProvider>
       </ScrollController>

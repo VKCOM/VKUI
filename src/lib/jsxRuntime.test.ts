@@ -1,9 +1,7 @@
 import { HTMLAttributes, Attributes } from "react";
 import { createScopedElement } from "./jsxRuntime";
-import { __controller } from "./classScopingMode";
 
 describe(createScopedElement, () => {
-  beforeEach(() => (__controller._noConflict = false));
   const processProps = (props: Attributes & HTMLAttributes<any>): any => {
     return createScopedElement("div", props).props;
   };
@@ -42,17 +40,5 @@ describe(createScopedElement, () => {
       expect(
         classSet(processProps({ vkuiClass: ["S"], className: "B C" }))
       ).toEqual(new Set(["vkuiS", "S", "B", "C"])));
-  });
-  it("legacy classes can be controlled", () => {
-    // can be disabled...
-    __controller._noConflict = true;
-    expect(classSet(processProps({ vkuiClass: ["A", "B"] }))).toEqual(
-      new Set(["vkuiA", "vkuiB"])
-    );
-    // ...and enabled back again
-    __controller._noConflict = false;
-    expect(classSet(processProps({ vkuiClass: ["A", "B"] }))).toEqual(
-      new Set(["vkuiA", "vkuiB", "A", "B"])
-    );
   });
 });
