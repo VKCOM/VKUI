@@ -84,7 +84,7 @@
     "postcss": "^8.4.5",
     "postcss-cli": "^9.1.0",
     "postcss-custom-properties": "^12.1.7",
-    "postcss-import": "^14.0.2",
+    "postcss-import": "^15.0.0",
     "postcss-loader": "^7.0.1",
     "postcss-modules": "^5.0.0",
     "postcss-value-parser": "^4.2.0",
