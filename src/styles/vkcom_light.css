@@ -28,10 +28,10 @@ body[scheme="vkcom_light"],
   --button_commerce_background: #4bb34b;
   --button_commerce_foreground: #ffffff;
   --button_muted_background: #e5ebf1;
-  --button_muted_foreground: #55677d;
-  --button_outline_border: #2873c7;
-  --button_outline_foreground: #2873c7;
-  --button_primary_background: #2873c7;
+  --button_muted_foreground: #2a6fbd;
+  --button_outline_border: #2b81d6;
+  --button_outline_foreground: #2b81d6;
+  --button_primary_background: #2b81d6;
   --button_primary_foreground: #ffffff;
   --button_secondary_background: #e5ebf1;
   --button_secondary_background_highlighted: #dae2ea;
@@ -49,11 +49,11 @@ body[scheme="vkcom_light"],
     70,
     0.12
   );
-  --button_secondary_foreground: #55677d;
-  --button_secondary_foreground_highlighted: #55677d;
+  --button_secondary_foreground: #2a6fbd;
+  --button_secondary_foreground_highlighted: #2a6fbd;
   --button_tertiary_background: rgba(0, 0, 0, 0);
-  --button_tertiary_foreground: #2873c7;
-  --cell_button_foreground: #2873c7;
+  --button_tertiary_foreground: #2a6fbd;
+  --cell_button_foreground: #2a6fbd;
   --content_negative_background: #faebeb;
   --content_placeholder_icon: #99a2ad;
   --content_placeholder_text: #818c99;
@@ -63,7 +63,7 @@ body[scheme="vkcom_light"],
   --content_warning_background: #faefd2;
   --control_background: #edeef0;
   --control_background_secondary: #ffffff;
-  --control_foreground: #2873c7;
+  --control_foreground: #2a6fbd;
   --control_tint: #ffffff;
   --control_tint_muted: #828282;
   --counter_primary_background: #2b81d6;
@@ -82,7 +82,7 @@ body[scheme="vkcom_light"],
   --dynamic_raspberry_pink: #e03fab;
   --dynamic_red: #ff3347;
   --dynamic_violet: #792ec0;
-  --feed_recommended_friend_promo_background: #2873c7;
+  --feed_recommended_friend_promo_background: #2a6fbd;
   --field_background: #f7f8fa;
   --field_border: #dce1e6;
   --field_error_background: #faebeb;
@@ -152,9 +152,9 @@ body[scheme="vkcom_light"],
   --im_bubble_wallpaper_outgoing: #cce4ff;
   --im_bubble_wallpaper_outgoing_highlighted: #add3ff;
   --im_forward_line_tint: rgba(0, 20, 51, 0.12);
-  --im_reply_separator: #2873c7;
+  --im_reply_separator: #2a6fbd;
   --im_service_message_text: #818c99;
-  --im_text_name: #2873c7;
+  --im_text_name: #2a6fbd;
   --im_toolbar_separator: #001c3d;
   --im_toolbar_voice_msg_background: #99a2ad;
   --image_border: rgba(0, 0, 0, 0.08);
@@ -177,7 +177,7 @@ body[scheme="vkcom_light"],
   --landing_text_secondary: #818c99;
   --landing_text_title: #2b81d6;
   --like_text_tint: #ff3347;
-  --link_alternate: #2873c7;
+  --link_alternate: #2a6fbd;
   --loader_background: #edeef0;
   --loader_tint: #c5d0db;
   --loader_track_fill: #d3d9de;
@@ -236,10 +236,10 @@ body[scheme="vkcom_light"],
   --tabbar_tablet_text_primary: #000000;
   --tabbar_tablet_text_secondary: #818c99;
   --text_action_counter: #818c99;
-  --text_link: #2873c7;
+  --text_link: #2a6fbd;
   --text_link_highlighted_background: #000000;
   --text_muted: #333333;
-  --text_name: #2873c7;
+  --text_name: #2a6fbd;
   --text_placeholder: #818c99;
   --text_primary: #000000;
   --text_secondary: #818c99;
