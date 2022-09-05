@@ -9,7 +9,7 @@ describe(createScopedElement, () => {
     new Set(className ? className.split(" ").filter(Boolean) : []);
 
   describe("prefixes vkuiClass", () => {
-    const prefixed = new Set(["A", "B", "vkuiA", "vkuiB"]);
+    const prefixed = new Set(["vkuiA", "vkuiB"]);
     it("from array", () =>
       expect(classSet(processProps({ vkuiClass: ["A", "B"] }))).toEqual(
         prefixed
@@ -39,6 +39,6 @@ describe(createScopedElement, () => {
     it("merges className with vkuiClass", () =>
       expect(
         classSet(processProps({ vkuiClass: ["S"], className: "B C" }))
-      ).toEqual(new Set(["vkuiS", "S", "B", "C"])));
+      ).toEqual(new Set(["vkuiS", "B", "C"])));
   });
 });
