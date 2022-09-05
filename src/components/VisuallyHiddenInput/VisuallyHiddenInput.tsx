@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useExternRef } from "../../hooks/useExternRef";
 import { HasRef } from "../../types";
 import "./VisuallyHiddenInput.css";
 
@@ -17,9 +16,5 @@ export const VisuallyHiddenInput = ({
   getRef,
   ...restProps
 }: VisuallyHiddenInputProps) => {
-  const inputRef = useExternRef(getRef);
-
-  return (
-    <input {...restProps} vkuiClass="VisuallyHiddenInput" ref={inputRef} />
-  );
+  return <input {...restProps} vkuiClass="VisuallyHiddenInput" ref={getRef} />;
 };
