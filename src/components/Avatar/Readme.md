@@ -7,7 +7,7 @@
     <Group>
       <Header mode="secondary">Дефолтный размер</Header>
       <SimpleCell
-        description="VKontakte"
+        subtitle="VKontakte"
         before={<Avatar src={getAvatarUrl("user_arthurstam")} />}
       >
         Артур Стамбульцян
@@ -48,7 +48,7 @@
             <Icon28Users />
           </Avatar>
         }
-        description="Только от друзей друзей"
+        subtitle="Только от друзей друзей"
       >
         Заявки в друзья
       </SimpleCell>
@@ -526,20 +526,20 @@
       <Header mode="secondary">Приложения</Header>
       <SimpleCell
         before={<Avatar mode="app" src={getAvatarUrl("app_shorm_online")} />}
-        description="Ролевая"
+        subtitle="Ролевая"
       >
         Шторм онлайн
       </SimpleCell>
       <SimpleCell
         before={<Avatar mode="app" src={getAvatarUrl("app_shashki")} />}
-        description="Настольная"
+        subtitle="Настольная"
         multiline={false}
       >
         Шашки - 3 вида: шашки, уголки, поддавки
       </SimpleCell>
       <SimpleCell
         before={<Avatar mode="app" src={getAvatarUrl("app_vega_mix")} />}
-        description="Головоломка"
+        subtitle="Головоломка"
       >
         Вега Микс на даче
       </SimpleCell>
@@ -550,14 +550,14 @@
         before={
           <Avatar mode="image" src={getAvatarUrl("audio_arctic_monkeys")} />
         }
-        description="Arctic Monkeys"
+        subtitle="Arctic Monkeys"
         after={<Icon24MoreHorizontal fill="var(--vkui--color_icon_accent)" />}
       >
         I Wanna Be Yours
       </SimpleCell>
       <SimpleCell
         before={<Avatar mode="image" src={getAvatarUrl("audio_leto_zveri")} />}
-        description="Лето (звери)"
+        subtitle="Лето (звери)"
         after={<Icon24MoreHorizontal fill="var(--vkui--color_icon_accent)" />}
       >
         6 утра
@@ -566,7 +566,7 @@
         before={
           <Avatar mode="image" src={getAvatarUrl("audio_depeche_mode")} />
         }
-        description="Depeche Mode"
+        subtitle="Depeche Mode"
         after={<Icon24MoreHorizontal fill="var(--vkui--color_icon_accent)" />}
       >
         Enjoy the Silence

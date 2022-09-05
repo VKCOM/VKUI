@@ -36,12 +36,17 @@
   padding-right: 16px;
 }
 
+.SimpleCell__subhead {
+  color: var(--text_subhead, var(--vkui--color_text_subhead));
+}
+
 .SimpleCell__text {
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
-.SimpleCell__subtitle {
+.SimpleCell__subtitle,
+.SimpleCell__extraSubtitle {
   color: var(--text_secondary, var(--vkui--color_text_secondary));
 }
 

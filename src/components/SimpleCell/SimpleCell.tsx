@@ -9,6 +9,7 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { withAdaptivity, SizeType } from "../../hoc/withAdaptivity";
+import { Subhead } from "../Typography/Subhead/Subhead";
 import { Headline } from "../Typography/Headline/Headline";
 import { Footnote } from "../Typography/Footnote/Footnote";
 import { Caption } from "../Typography/Caption/Caption";
@@ -20,18 +21,48 @@ export interface SimpleCellOwnProps extends HasComponent {
    */
   before?: React.ReactNode;
   /**
+   * @deprecated будет удалено в v5.0.0, используйте свойство rightBadge
    * Иконка 12 или `<Badge />`. Добавится справа от текста `children`.
    */
   badge?: React.ReactNode;
+  /**
+   * Иконка 12 или `<Badge />`. Добавится слева от текста `children`.
+   */
+  badgeBeforeTitle?: React.ReactNode;
+  /**
+   * Иконка 12 или `<Badge />`. Добавится справа от текста `children`.
+   */
+  badgeAfterTitle?: React.ReactNode;
+  /**
+   * Иконка 12. Добавится слева от текста `subtitle`.
+   */
+  badgeBeforeSubtitle?: React.ReactNode;
+  /**
+   * Иконка 12. Добавится справа от текста `subtitle`.
+   */
+  badgeAfterSubtitle?: React.ReactNode;
   /**
    * Контейнер для текста справа от `children`.
    */
   indicator?: React.ReactNode;
   /**
+   * Дополнительная строка текста над `children`.
+   */
+  subhead?: React.ReactNode;
+  /**
+   * Дополнительная строка текста под `children`.
+   */
+  subtitle?: React.ReactNode;
+  /**
+   * Дополнительная строка текста под `children` и `subtitle`.
+   */
+  extraSubtitle?: React.ReactNode;
+  /**
    * Иконка 24|28 или `<Switch />`. Располагается справа от `indicator`.
    */
   after?: React.ReactNode;
   /**
+   * @deprecated будет удалено в v5.0.0, используйте свойство subtitle
    * Контейнер для текста под `children`.
    */
   description?: React.ReactNode;
@@ -43,15 +74,18 @@ export interface SimpleCellOwnProps extends HasComponent {
    * В iOS добавляет chevron справа. Передавать `true`, если предполагается переход при клике по ячейке.
    */
   expandable?: boolean;
+  /**
+   * Включает многострочный режим для отображения текста
+   */
   multiline?: boolean;
 }
 
 export interface SimpleCellProps extends SimpleCellOwnProps, TappableProps {}
 
-type SimpleCellTypographyProps = React.HTMLAttributes<HTMLDivElement> &
+type SubtitleTypographyProps = React.HTMLAttributes<HTMLDivElement> &
   HasComponent;
 
-const SimpleCellTypography = (props: SimpleCellTypographyProps) => {
+const SubtitleTypography = (props: SubtitleTypographyProps) => {
   const { sizeY } = useAdaptivity();
 
   if (sizeY === SizeType.COMPACT) {
@@ -63,6 +97,10 @@ const SimpleCellTypography = (props: SimpleCellTypographyProps) => {
 
 const SimpleCellComponent = ({
   badge,
+  badgeBeforeTitle,
+  badgeAfterTitle = badge,
+  badgeBeforeSubtitle,
+  badgeAfterSubtitle,
   before,
   indicator,
   children,
@@ -71,6 +109,9 @@ const SimpleCellComponent = ({
   expandable,
   multiline,
   sizeY,
+  subhead,
+  subtitle = description,
+  extraSubtitle,
   ...restProps
 }: SimpleCellProps) => {
   const platform = usePlatform();
@@ -88,7 +129,18 @@ const SimpleCellComponent = ({
     >
       {before}
       <div vkuiClass="SimpleCell__main">
+        {subhead && (
+          <Subhead
+            Component="span"
+            vkuiClass="SimpleCell__text SimpleCell__subhead"
+          >
+            {subhead}
+          </Subhead>
+        )}
         <div vkuiClass="SimpleCell__content">
+          {badgeBeforeTitle && (
+            <span vkuiClass="SimpleCell__badge">{badgeBeforeTitle}</span>
+          )}
           <Headline
             Component="span"
             vkuiClass="SimpleCell__children"
@@ -96,16 +148,27 @@ const SimpleCellComponent = ({
           >
             {children}
           </Headline>
-          {hasReactNode(badge) && (
-            <span vkuiClass="SimpleCell__badge">{badge}</span>
+          {hasReactNode(badgeAfterTitle) && (
+            <span vkuiClass="SimpleCell__badge">{badgeAfterTitle}</span>
           )}
         </div>
-        {description && (
+        {subtitle && (
           <div vkuiClass="SimpleCell__content">
-            <SimpleCellTypography vkuiClass="SimpleCell__text SimpleCell__subtitle">
-              {description}
-            </SimpleCellTypography>
+            {badgeBeforeSubtitle && (
+              <span vkuiClass="SimpleCell__badge">{badgeBeforeSubtitle}</span>
+            )}
+            <SubtitleTypography vkuiClass="SimpleCell__text SimpleCell__subtitle">
+              {subtitle}
+            </SubtitleTypography>
+            {badgeAfterSubtitle && (
+              <span vkuiClass="SimpleCell__badge">{badgeAfterSubtitle}</span>
+            )}
           </div>
+        )}
+        {extraSubtitle && (
+          <SubtitleTypography vkuiClass="SimpleCell__text SimpleCell__extraSubtitle">
+            {extraSubtitle}
+          </SubtitleTypography>
         )}
       </div>
       {hasReactNode(indicator) && (

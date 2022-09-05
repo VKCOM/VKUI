@@ -121,7 +121,7 @@ export const PromoBanner = ({
           />
         }
         after={<Button mode="outline">{bannerData.ctaText}</Button>}
-        description={bannerData.domain}
+        subtitle={bannerData.domain}
       >
         {bannerData.title}
       </SimpleCell>
