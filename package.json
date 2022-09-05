@@ -43,7 +43,7 @@
     "@types/webpack-dev-server": "^3.11.2",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.0.0",
-    "@vkontakte/appearance": "https://github.com/VKCOM/Appearance#v9.46.1",
+    "@vkontakte/appearance": "https://github.com/VKCOM/Appearance#v9.46.2",
     "@vkontakte/eslint-config": "3.1.0",
     "@vkontakte/icons": "^1.145.1",
     "@vkontakte/vk-bridge": "^2.1.3",
