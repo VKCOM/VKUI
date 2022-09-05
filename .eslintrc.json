@@ -27,7 +27,11 @@
   "globals": {
     "Element": true
   },
-  "ignorePatterns": ["unstable/**/*.ts", "tokenized/**/*.ts"],
+  "ignorePatterns": [
+    "unstable/**/*.ts",
+    "tokenized/**/*.ts",
+    "packages/**/*.ts"
+  ],
   "env": {
     "es6": true, // Enable global es6 variables, like Set, Map, etc
     "browser": true,
@@ -137,8 +141,7 @@
         "onlyForFunctionsWithNames": ["classNames", "classNamesString"]
       }
     ],
-    "compat/compat": "error",
-    "no-shadow": "off"
+    "compat/compat": "error"
   },
   "overrides": [
     {
