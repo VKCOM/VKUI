@@ -71,6 +71,8 @@ export interface ChipsSelectProps<Option extends ChipOption>
    * Закрытие выпадающего списка после выбора элемента
    */
   closeAfterSelect?: boolean;
+  fixDropdownWidth?: boolean;
+  forceDropdownPortal?: boolean;
 }
 
 type FocusActionType = "next" | "prev";
@@ -128,6 +130,8 @@ export const ChipsSelect = <Option extends ChipOption>(
     onChangeStart,
     before,
     options,
+    fixDropdownWidth,
+    forceDropdownPortal,
     ...restProps
   } = propsWithDefault;
 
@@ -411,6 +415,8 @@ export const ChipsSelect = <Option extends ChipOption>(
           onMouseLeave={onDropdownMouseLeave}
           fetching={fetching}
           vkuiClass="ChipsSelect__options"
+          sameWidth={fixDropdownWidth}
+          forcePortal={forceDropdownPortal}
         >
           {showCreatable && (
             <CustomSelectOption
