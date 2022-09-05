@@ -253,6 +253,8 @@ export { PanelHeaderEdit } from "./components/PanelHeaderEdit/PanelHeaderEdit";
 export type { PanelHeaderEditProps } from "./components/PanelHeaderEdit/PanelHeaderEdit";
 export { ModalCardBase } from "./components/ModalCardBase/ModalCardBase";
 export type { ModalCardBaseProps } from "./components/ModalCardBase/ModalCardBase";
+export { VisuallyHiddenInput } from "./components/VisuallyHiddenInput/VisuallyHiddenInput";
+export type { VisuallyHiddenInputProps } from "./components/VisuallyHiddenInput/VisuallyHiddenInput";
 
 /**
  * Wrappers
