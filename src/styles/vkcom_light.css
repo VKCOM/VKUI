@@ -28,10 +28,10 @@ body[scheme="vkcom_light"],
   --button_commerce_background: #4bb34b;
   --button_commerce_foreground: #ffffff;
   --button_muted_background: #e5ebf1;
-  --button_muted_foreground: #55677d;
-  --button_outline_border: #2a6fbd;
-  --button_outline_foreground: #2a6fbd;
-  --button_primary_background: #2a6fbd;
+  --button_muted_foreground: #2a6fbd;
+  --button_outline_border: #2b81d6;
+  --button_outline_foreground: #2b81d6;
+  --button_primary_background: #2b81d6;
   --button_primary_foreground: #ffffff;
   --button_secondary_background: #e5ebf1;
   --button_secondary_background_highlighted: #dae2ea;
@@ -49,8 +49,8 @@ body[scheme="vkcom_light"],
     70,
     0.12
   );
-  --button_secondary_foreground: #55677d;
-  --button_secondary_foreground_highlighted: #55677d;
+  --button_secondary_foreground: #2a6fbd;
+  --button_secondary_foreground_highlighted: #2a6fbd;
   --button_tertiary_background: rgba(0, 0, 0, 0);
   --button_tertiary_foreground: #2a6fbd;
   --cell_button_foreground: #2a6fbd;
