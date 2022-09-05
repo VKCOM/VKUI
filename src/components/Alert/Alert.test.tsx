@@ -21,8 +21,8 @@ describe("Alert", () => {
       );
       const target =
         trigger === "overlay"
-          ? ".PopoutWrapper__overlay"
-          : ".ModalDismissButton";
+          ? ".vkuiPopoutWrapper__overlay"
+          : ".vkuiModalDismissButton";
 
       userEvent.click(document.querySelector(target) as Element);
       expect(onClose).not.toBeCalled();

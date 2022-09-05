@@ -12,9 +12,6 @@ const TEST_LOCATORS = {
   },
   ICON: {
     id: "test-icon",
-    get selector() {
-      return `[data-testid="${this.id}"]`;
-    },
   },
 };
 
@@ -22,7 +19,7 @@ const AvatarTest = (props: AvatarProps) => (
   <Avatar {...props} data-testid={TEST_LOCATORS.HOST.id} />
 );
 
-const Icon20GiftCircleFillRedTest = (
+const BadgeTest = (
   props: React.ComponentProps<typeof Icon20GiftCircleFillRedLib>
 ) => {
   return (
@@ -40,23 +37,21 @@ describe("Avatar", () => {
 
   describe("Badge", () => {
     it("Renders badge if passed", () => {
-      render(<AvatarTest badge={Icon20GiftCircleFillRedTest} />);
+      render(<AvatarTest badge={BadgeTest} />);
 
-      expect(
-        avatar().querySelector(TEST_LOCATORS.ICON.selector)
-      ).toBeInTheDocument();
+      expect(screen.getByTestId(TEST_LOCATORS.ICON.id)).toBeInTheDocument();
     });
 
     it("Doesn't render badge if not passed", () => {
       render(<AvatarTest />);
 
       expect(
-        avatar().querySelector(TEST_LOCATORS.ICON.selector)
+        avatar().querySelector(`.${styles["Avatar__badge"]}`)
       ).not.toBeInTheDocument();
     });
 
     it("Adds shifted class if size < 96", () => {
-      render(<AvatarTest badge={Icon20GiftCircleFillRedTest} size={88} />);
+      render(<AvatarTest badge={BadgeTest} size={88} />);
 
       expect(
         avatar().querySelector(`.${styles["Avatar__badge--shifted"]}`)

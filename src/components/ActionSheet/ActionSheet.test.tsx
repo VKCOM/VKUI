@@ -104,7 +104,7 @@ describe("ActionSheet", () => {
       render(<ActionSheetDesktop popupDirection={popupDirection} />);
       await waitForPopper();
       expect(popupDirection).toBeCalledWith({
-        current: document.querySelector(".ActionSheet"),
+        current: document.querySelector(".vkuiActionSheet"),
       });
     });
   });
@@ -116,7 +116,7 @@ describe("ActionSheet", () => {
       await waitForPopper();
       runAllTimers();
       userEvent.click(
-        document.querySelector(".PopoutWrapper__overlay") as Element
+        document.querySelector(".vkuiPopoutWrapper__overlay") as Element
       );
       runAllTimers();
       expect(onClose).toBeCalledTimes(1);

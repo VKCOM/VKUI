@@ -41,7 +41,7 @@ const Config = ({ hasMouse, children, ...config }) => {
   return (
     <ConfigProvider {...config}>
       <AdaptivityProvider hasMouse={hasMouse}>
-        <AppRoot noLegacyClasses>{children}</AppRoot>
+        <AppRoot>{children}</AppRoot>
       </AdaptivityProvider>
     </ConfigProvider>
   );
