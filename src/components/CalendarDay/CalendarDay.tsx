@@ -1,11 +1,16 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
-import { Tappable } from "../Tappable/Tappable";
+import { Tappable, TappableElementProps } from "../Tappable/Tappable";
 import { ENABLE_KEYBOARD_INPUT_EVENT_NAME } from "../../hooks/useKeyboardInputTracker";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
 import "./CalendarDay.css";
 
-export interface CalendarDayProps {
+export type CalendarDayElementProps = Omit<
+  TappableElementProps,
+  "onChange" | "size" | "disabled" | "selected"
+>;
+
+export interface CalendarDayProps extends CalendarDayElementProps {
   day: Date;
   today?: boolean;
   selected?: boolean;
@@ -44,6 +49,7 @@ export const CalendarDay = React.memo(
     hintedSelectionEnd,
     sameMonth,
     size,
+    ...props
   }: CalendarDayProps) => {
     const locale = React.useContext(LocaleProviderContext);
     const ref = React.useRef<HTMLElement>(null);
@@ -92,6 +98,7 @@ export const CalendarDay = React.memo(
         focusVisibleMode={active ? "outside" : "inside"}
         onEnter={handleEnter}
         onLeave={handleLeave}
+        {...props}
       >
         <div
           vkuiClass={classNames(

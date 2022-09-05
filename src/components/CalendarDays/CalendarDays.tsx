@@ -1,6 +1,9 @@
 import * as React from "react";
 import { isSameDay, isSameMonth } from "../../lib/date";
-import { CalendarDay } from "../CalendarDay/CalendarDay";
+import {
+  CalendarDay,
+  CalendarDayElementProps,
+} from "../CalendarDay/CalendarDay";
 import { getDaysNames, getWeeks } from "../../lib/calendar";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
 import { classNames } from "../../lib/classNames";
@@ -14,6 +17,7 @@ export interface CalendarDaysProps
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   showNeighboringMonth?: boolean;
   size?: "s" | "m";
+  dayProps?: CalendarDayElementProps;
   onDayChange(value: Date): void;
   isDayDisabled(value: Date): boolean;
   isDaySelectionStart(value: Date, dayOfWeek: number): boolean;
@@ -46,6 +50,7 @@ export const CalendarDays = ({
   isDayDisabled,
   size,
   showNeighboringMonth = false,
+  dayProps,
   ...props
 }: CalendarDaysProps) => {
   const locale = React.useContext(LocaleProviderContext);
@@ -116,6 +121,7 @@ export const CalendarDays = ({
                 hinted={isDayHinted?.(day)}
                 sameMonth={sameMonth}
                 size={size}
+                {...dayProps}
               />
             );
           })}
