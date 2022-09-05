@@ -2,7 +2,7 @@ import { Textarea } from "./Textarea";
 import { screenshot, mount, describeScreenshotFuzz } from "../../testing/e2e";
 import { AppRoot } from "../AppRoot/AppRoot";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import { SizeType } from "../../lib/adaptivity";
+import { BREAKPOINTS, SizeType } from "../../lib/adaptivity";
 
 describe("Textarea", () => {
   describeScreenshotFuzz(Textarea, [
@@ -31,11 +31,19 @@ describe("Textarea", () => {
   ]);
   it("fits size to content", async () => {
     await mount(
-      <AppRoot mode="embedded">
-        <AdaptivityProvider sizeY={SizeType.REGULAR}>
-          <Textarea id="textarea" />
-        </AdaptivityProvider>
-      </AppRoot>
+      <div
+        style={{
+          height: "auto",
+          position: "absolute",
+          width: BREAKPOINTS.MOBILE,
+        }}
+      >
+        <AppRoot mode="embedded">
+          <AdaptivityProvider sizeY={SizeType.REGULAR}>
+            <Textarea id="textarea" />
+          </AdaptivityProvider>
+        </AppRoot>
+      </div>
     );
     await page.type("#textarea", "1\n2\n3\n4\n5\n6\n7\n8");
     expect(await screenshot()).toMatchImageSnapshot();

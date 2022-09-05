@@ -11,7 +11,7 @@ import { ModalRootDesktop } from "./ModalRootDesktop";
 import userEvent from "@testing-library/user-event";
 
 const clickFade = () =>
-  userEvent.click(document.querySelector(".ModalRoot__mask") as Element);
+  userEvent.click(document.querySelector(".vkuiModalRoot__mask") as Element);
 let rafSpies: jest.SpyInstance[];
 
 describe.each([

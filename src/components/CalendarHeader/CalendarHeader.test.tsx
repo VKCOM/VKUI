@@ -10,7 +10,7 @@ describe("CalendarHeader", () => {
     );
 
     expect(
-      container.getElementsByClassName("CalendarHeader__nav-icon-prev")[0]
+      container.getElementsByClassName("vkuiCalendarHeader__nav-icon-prev")[0]
     ).toBeTruthy();
   });
   it("displays next month button", () => {
@@ -21,7 +21,7 @@ describe("CalendarHeader", () => {
     );
 
     expect(
-      container.getElementsByClassName("CalendarHeader__nav-icon-next")[0]
+      container.getElementsByClassName("vkuiCalendarHeader__nav-icon-next")[0]
     ).toBeTruthy();
   });
 });

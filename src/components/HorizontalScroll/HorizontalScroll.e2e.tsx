@@ -82,11 +82,11 @@ describe("HorizontalScroll", () => {
       </ConfigProvider>
     );
 
-    await page.hover(".HorizontalScroll");
+    await page.hover(".vkuiHorizontalScroll");
 
     expect(
       await screenshot(undefined, {
-        selector: ".HorizontalScroll",
+        selector: ".vkuiHorizontalScroll",
       })
     ).toMatchImageSnapshot();
   });
@@ -107,11 +107,11 @@ describe("HorizontalScroll", () => {
       </ConfigProvider>
     );
 
-    await page.hover(".HorizontalScroll");
+    await page.hover(".vkuiHorizontalScroll");
 
     expect(
       await screenshot(undefined, {
-        selector: ".HorizontalScroll",
+        selector: ".vkuiHorizontalScroll",
       })
     ).toMatchImageSnapshot();
   });

@@ -8,7 +8,7 @@ import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 import { Platform } from "../../lib/platform";
 
 const hasSpinner = () =>
-  !!document.querySelector(".PullToRefresh__spinner--on");
+  !!document.querySelector(".vkuiPullToRefresh__spinner--on");
 
 function firePull(el: HTMLElement, { end = true } = {}) {
   fireEvent.mouseDown(el, { clientY: 0 });

@@ -5,7 +5,7 @@ import { Icon16Add } from "@vkontakte/icons";
 import { AppRoot } from "../AppRoot/AppRoot";
 import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import { SizeType } from "../../lib/adaptivity";
+import { BREAKPOINTS, SizeType } from "../../lib/adaptivity";
 
 describe("Search", () => {
   describeScreenshotFuzz(
@@ -25,11 +25,19 @@ describe("Search", () => {
   it("shows after when focused on iOS", async () => {
     await mount(
       <ConfigProvider platform={Platform.IOS}>
-        <AppRoot mode="embedded">
-          <AdaptivityProvider sizeY={SizeType.REGULAR}>
-            <Search after="after" style={{ maxWidth: "320px" }} />
-          </AdaptivityProvider>
-        </AppRoot>
+        <div
+          style={{
+            height: "auto",
+            position: "absolute",
+            width: BREAKPOINTS.MOBILE,
+          }}
+        >
+          <AppRoot mode="embedded">
+            <AdaptivityProvider sizeY={SizeType.REGULAR}>
+              <Search after="after" />
+            </AdaptivityProvider>
+          </AppRoot>
+        </div>
       </ConfigProvider>
     );
     await page.focus("input");
