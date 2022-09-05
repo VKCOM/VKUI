@@ -22,18 +22,20 @@ import "./Tappable.css";
 
 const WAVE_LIVE = 225;
 
+export type TappableElementProps = Omit<
+  React.AllHTMLAttributes<HTMLElement>,
+  | "onTouchStart"
+  | "onTouchMove"
+  | "onTouchEnd"
+  | "onTouchCancel"
+  | "onMouseDown"
+  | "onMouseMove"
+  | "onMouseUp"
+  | "onMouseLeave"
+>;
+
 export interface TappableProps
-  extends Omit<
-      React.AllHTMLAttributes<HTMLElement>,
-      | "onTouchStart"
-      | "onTouchMove"
-      | "onTouchEnd"
-      | "onTouchCancel"
-      | "onMouseDown"
-      | "onMouseMove"
-      | "onMouseUp"
-      | "onMouseLeave"
-    >,
+  extends TappableElementProps,
     HasRootRef<HTMLElement>,
     AdaptivityProps,
     HasComponent,
