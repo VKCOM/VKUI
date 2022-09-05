@@ -19,6 +19,9 @@
 /* Service */
 @import "../components/Tappable/Tappable.module.css";
 @import "../components/FixedLayout/FixedLayout.css";
+@import "../components/ImageBase/ImageBaseBadge/ImageBaseBadge.module.css";
+@import "../components/ImageBase/ImageBaseOverlay/ImageBaseOverlay.module.css";
+@import "../components/ImageBase/ImageBase.module.css";
 
 /* Primitives */
 @import "../components/Button/Button.module.css";
@@ -85,8 +88,7 @@
 @import "../components/Spinner/Spinner.css";
 @import "../components/Switch/Switch.css";
 @import "../components/InfoRow/InfoRow.css";
-@import "../components/Avatar/Avatar.css";
-@import "../components/InitialsAvatar/InitialsAvatar.css";
+@import "../components/Avatar/Avatar.module.css";
 @import "../components/GridAvatar/GridAvatar.css";
 @import "../components/BaseGallery/BaseGallery.css";
 @import "../components/Progress/Progress.css";

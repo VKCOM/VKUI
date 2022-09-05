@@ -46,8 +46,8 @@ export type { HorizontalScrollProps } from "../components/HorizontalScroll/Horiz
 export { IconButton } from "../components/IconButton/IconButton";
 export type { IconButtonProps } from "../components/IconButton/IconButton";
 
-export { InitialsAvatar } from "../components/InitialsAvatar/InitialsAvatar";
-export type { InitialsAvatarProps } from "../components/InitialsAvatar/InitialsAvatar";
+export { Image } from "../components/Image/Image";
+export type { ImageProps } from "../components/Image/Image";
 
 export { Epic } from "../components/Epic/Epic";
 export type { EpicProps } from "../components/Epic/Epic";

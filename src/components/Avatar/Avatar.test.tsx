@@ -1,93 +1,73 @@
-import { baselineComponent, imgOnlyAttributes } from "../../testing/utils";
+import * as React from "react";
+import "@testing-library/jest-dom/extend-expect";
 import { render, screen } from "@testing-library/react";
+import { baselineComponent } from "../../testing/utils";
 import { Avatar, AvatarProps } from "./Avatar";
-import { Icon20GiftCircleFillRed } from "@vkontakte/icons";
+import { Icon20GiftCircleFillRed as Icon20GiftCircleFillRedLib } from "@vkontakte/icons";
+import styles from "./Avatar.module.css";
+
+const TEST_LOCATORS = {
+  HOST: {
+    id: "avatar",
+  },
+  ICON: {
+    id: "test-icon",
+    get selector() {
+      return `[data-testid="${this.id}"]`;
+    },
+  },
+};
 
 const AvatarTest = (props: AvatarProps) => (
-  <Avatar {...props} data-testid="avatar" />
+  <Avatar {...props} data-testid={TEST_LOCATORS.HOST.id} />
 );
 
-const avatar = () => screen.getByTestId("avatar");
-const img = () => avatar().querySelector("img");
+const Icon20GiftCircleFillRedTest = (
+  props: React.ComponentProps<typeof Icon20GiftCircleFillRedLib>
+) => {
+  return (
+    <Icon20GiftCircleFillRedLib
+      {...props}
+      data-testid={TEST_LOCATORS.ICON.id}
+    />
+  );
+};
+
+const avatar = () => screen.getByTestId(TEST_LOCATORS.HOST.id);
 
 describe("Avatar", () => {
   baselineComponent(Avatar);
 
-  describe("Image", () => {
-    it("Renders img if src is passed", () => {
-      render(<AvatarTest src="#" />);
-
-      expect(img()).toBeInTheDocument();
-    });
-
-    it("does not render img if there is no src", () => {
-      render(<AvatarTest />);
-
-      expect(img()).not.toBeInTheDocument();
-    });
-
-    it("Passes ref to img", () => {
-      const refCallback = jest.fn();
-      render(<AvatarTest src="#" getRef={refCallback} />);
-
-      expect(refCallback).toBeCalled();
-    });
-
-    it("Passes all img attributes to img", () => {
-      render(<AvatarTest {...imgOnlyAttributes} />);
-
-      Object.keys(imgOnlyAttributes).forEach((attr) => {
-        expect(img()).toHaveAttribute(attr);
-      });
-    });
-  });
-
   describe("Badge", () => {
     it("Renders badge if passed", () => {
-      render(
-        <AvatarTest
-          badge={<Icon20GiftCircleFillRed className="test-badge" />}
-        />
-      );
+      render(<AvatarTest badge={Icon20GiftCircleFillRedTest} />);
 
-      expect(avatar().querySelector(".test-badge")).toBeInTheDocument();
+      expect(
+        avatar().querySelector(TEST_LOCATORS.ICON.selector)
+      ).toBeInTheDocument();
     });
 
     it("Doesn't render badge if not passed", () => {
       render(<AvatarTest />);
 
-      expect(avatar().querySelector(".Avatar__badge")).not.toBeInTheDocument();
+      expect(
+        avatar().querySelector(TEST_LOCATORS.ICON.selector)
+      ).not.toBeInTheDocument();
     });
 
-    it("Adds large class if size >= 96", () => {
-      render(<AvatarTest badge={<Icon20GiftCircleFillRed />} size={96} />);
+    it("Adds shifted class if size < 96", () => {
+      render(<AvatarTest badge={Icon20GiftCircleFillRedTest} size={88} />);
 
       expect(
-        avatar().querySelector(".Avatar__badge--large")
+        avatar().querySelector(`.${styles["Avatar__badge--shifted"]}`)
       ).toBeInTheDocument();
-    });
-
-    it("Doesn\t render badge shadow if passed online badge", () => {
-      render(<AvatarTest badge="online" size={96} />);
-
-      expect(
-        avatar().querySelector(".Avatar__badge--shadow")
-      ).not.toBeInTheDocument();
-    });
-
-    it("Doesn\t render badge shadow if passed online badge", () => {
-      render(<AvatarTest badge="online" size={96} />);
-
-      expect(
-        avatar().querySelector(".Avatar__badge--shadow")
-      ).not.toBeInTheDocument();
     });
 
     it("Renders online badge if passed", () => {
       render(<AvatarTest badge="online" />);
 
       expect(
-        avatar().querySelector(".Avatar__badge-online")
+        avatar().querySelector(`.${styles["Avatar__badge--online"]}`)
       ).toBeInTheDocument();
     });
 
@@ -95,16 +75,8 @@ describe("Avatar", () => {
       render(<AvatarTest badge="online-mobile" />);
 
       expect(
-        avatar().querySelector(".Avatar__badge-online-mobile")
+        avatar().querySelector(`.${styles["Avatar__badge--online-mobile"]}`)
       ).toBeInTheDocument();
-    });
-  });
-
-  describe("Overlay", () => {
-    it("Renders overlay icon if passed", () => {
-      render(<AvatarTest overlayIcon={<Icon20GiftCircleFillRed />} />);
-
-      expect(avatar().querySelector(".Avatar__overlay")).toBeInTheDocument();
     });
   });
 });

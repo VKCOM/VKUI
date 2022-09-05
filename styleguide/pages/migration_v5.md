@@ -128,6 +128,94 @@ npx @vkontakte/vkui-token-translator
 
 <br/><br/>
 
+## [`Avatar`](#/Avatar)
+
+- Изменены типы св-ва `badge`. Вместо `JSX.Element` теперь надо передавать `React.ComponentType<ImageBaseExpectedIconProps>` или [`ImageBaseBadgeProps`](https://github.com/VKCOM/VKUI/blob/2e72d08bcfd955a8a5c658dd189cdb5b741b12c0/src/components/ImageBase/ImageBase.tsx#L32).
+
+  > Размер иконки теперь выставляется внутри компонента.
+  >
+  > ⚠ ️Поэтому переданная иконка должна принимать `width` и `height` (см. [`ImageBaseExpectedIconProps`](https://github.com/VKCOM/VKUI/blob/2e72d08bcfd955a8a5c658dd189cdb5b741b12c0/src/components/ImageBase/types.ts#L20)).
+
+  ```diff
+  import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
+  - <Avatar size={24} badge={<Icon20GiftCircleFillRed width={12} height={12} />} />
+  + <Avatar size={24} badge={Icon20GiftCircleFillRed} />
+  ```
+
+  ```diff
+  // Кейс, когда мы внесли изменения в иконку
+
+  - import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
+  - <Avatar size={24} badge={<Icon20GiftCircleFillRed style={{ opacity: 0.5 }} width={12} height={12} />} />
+  + import { Icon20GiftCircleFillRed as Icon20GiftCircleFillRedLib } from '@vkontakte/icons';
+  + const Icon20GiftCircleFillRed = (props: React.ComponentProps<typeof Icon20GiftCircleFillRedLib>) => <Icon20GiftCircleFillRed {...props} style={{ opacity: 0.5 }} />;
+  + <Avatar size={24} badge={Icon20GiftCircleFillRed} />
+  ```
+
+- Св-ва `overlayMode`, `overlayAction` и `overlayIcon` объедены в одно св-во `overlay`.
+
+  ### Как мигрировать с `overlayMode`?
+
+  ```diff
+  - <Avatar overlayMode="light" />
+  + <Avatar overlay />
+  ```
+
+  ```diff
+  - <Avatar overlayMode="dark" />
+  + <Avatar overlay={{ theme: "dark" }} />
+  ```
+
+  ### Как мигрировать с `overlayAction`?
+
+  ```diff
+  - <Avatar overlayAction="hover" />
+  + <Avatar overlay={{ visibility: "on-hover" }} />
+  ```
+
+  ```diff
+  - <Avatar overlayAction="always" />
+  + <Avatar overlay={{ visibility: "always" }} />
+  ```
+
+  ### Как мигрировать с `overlayIcon`?
+
+  > Размер иконки теперь выставляется внутри компонента.
+  >
+  > ⚠ ️Поэтому переданная иконка должна принимать `width` и `height` (см. [`ImageBaseExpectedIconProps`](https://github.com/VKCOM/VKUI/blob/2e72d08bcfd955a8a5c658dd189cdb5b741b12c0/src/components/ImageBase/types.ts#L20)).
+
+  ```diff
+  import { Icon24Camera } from '@vkontakte/icons';
+  - <Avatar size={24} overlayIcon={<Icon24Camera width={16} height={16} />} />
+  + <Avatar size={24} overlay={{ Icon: Icon24Camera }} />
+  ```
+
+  ```diff
+  // Кейс, когда мы внесли изменения в иконку
+
+  - import { Icon24Camera } from '@vkontakte/icons';
+  - <Avatar size={24} overlayIcon={<Icon24Camera style={{ color: "tomato" }} width={16} height={16} />} />
+  + import { Icon24Camera as Icon24CameraLib } from '@vkontakte/icons';
+  + const Icon24Camera = (props: React.ComponentProps<typeof Icon24CameraLib>) => <Icon24Camera {...props} style={{ color: "tomato" }} />;
+  + <Avatar size={24} overlay={{ Icon: Icon24Camera }} />
+  ```
+
+- Удалено св-во `mode`. Используйте отдельный компонент [`Image`](#/Image).
+
+  ```diff
+  - <Avatar mode="image" />
+  + <Image />
+  ```
+
+  ```diff
+  - <Avatar mode="app" />
+  + <Image borderRadius="l" />
+  ```
+
+- Удалено св-во `shadow`. Теперь обводка есть всегда.
+
+<br/><br/>
+
 ## [`PromoBanner`](#/PromoBanner)
 
 - Удалено свойство `ageRestriction` в типе `BannerData`, добавленное по ошибке. Используйте свойство `ageRestrictions`

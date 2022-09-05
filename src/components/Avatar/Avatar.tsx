@@ -1,181 +1,148 @@
-import * as React from "react";
-import { Icon12Circle, Icon12OnlineMobile } from "@vkontakte/icons";
-import { classNames } from "../../lib/classNames";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { Tappable } from "../Tappable/Tappable";
-import { HasRef, HasRootRef } from "../../types";
-import "./Avatar.css";
+import { Icon28Users } from "@vkontakte/icons";
+import { classNamesString } from "../../lib/classNames";
+import {
+  type ImageBaseProps,
+  type ImageBaseBadgeProps,
+  ImageBase,
+} from "../ImageBase/ImageBase";
+import { getInitialsFontSize } from "./helpers";
+import { Icon12Circle, Icon12OnlineMobile } from "./icons";
+import styles from "./Avatar.module.css";
 
-export interface AvatarProps
-  extends React.ImgHTMLAttributes<HTMLElement>,
-    HasRootRef<HTMLDivElement>,
-    HasRef<HTMLImageElement> {
-  /**
-   * Рекомендуемый сет значений: 96 | 88 | 80 | 72 | 64 | 56 | 48 | 44 | 40 | 36 | 32 | 28 | 24
-   */
-  size?: number;
-  mode?: "default" | "image" | "app";
-  shadow?: boolean;
-  badge?: "online" | "online-mobile" | JSX.Element;
-  overlayIcon?: JSX.Element;
-  overlayMode?: "dark" | "light";
-  /**
-   * Поведение показа overlay: "hover" - при наведении, "always" - всегда
-   */
-  overlayAction?: "hover" | "always";
-}
+const BADGE_ONLINE = {
+  className: classNamesString(
+    styles["Avatar__badge"],
+    styles[`Avatar__badge--online`]
+  ),
+  background: "stroke" as const,
+  Icon: Icon12Circle,
+};
+
+const BADGE_ONLINE_MOBILE = {
+  className: classNamesString(
+    styles["Avatar__badge"],
+    styles[`Avatar__badge--online-mobile`]
+  ),
+  background: "stroke" as const,
+  Icon: Icon12OnlineMobile,
+};
+
+const COLORS_NUMBER_TO_TEXT_MAP = {
+  1: "red",
+  2: "orange",
+  3: "yellow",
+  4: "green",
+  5: "l-blue",
+  6: "violet",
+} as const;
 
 export const AVATAR_DEFAULT_SIZE = 48;
-export const AVATAR_DEFAULT_SHADOW = true;
+
+/**
+ * Градиенты, которые можно использовать в алгоритме поиска градиентов по числовому идентификатору пользователя.
+ * @example user.id % 6 + 1
+ */
+export type InitialsAvatarNumberGradients =
+  keyof typeof COLORS_NUMBER_TO_TEXT_MAP;
+
+export type InitialsAvatarTextGradients =
+  | typeof COLORS_NUMBER_TO_TEXT_MAP[InitialsAvatarNumberGradients]
+  | "blue";
+
+export interface AvatarProps extends Omit<ImageBaseProps, "badge"> {
+  /**
+   * > Не показывается при `size < 24`
+   *
+   * Бейдж в правом нижнем углу компонента.
+   *
+   * Можно передать алиасы, конструктор иконки или конфигурацию.
+   */
+  badge?:
+    | "online"
+    | "online-mobile"
+    | ImageBaseBadgeProps["Icon"]
+    | ImageBaseBadgeProps;
+  /**
+   * Задаёт градиент для фона.
+   *
+   * Если передано число, то оно будет сконвертировано в строчное представление цвета по следующей схеме:
+   *
+   * 1: 'red'
+   * 2: 'orange'
+   * 3: 'yellow'
+   * 4: 'green'
+   * 5: 'l-blue'
+   * 6: 'violet'
+   *
+   * > Если необходимо задать свой градиент, то используйте значение `"custom"` и определите цвет градиента либо через
+   * > свой класс в `className`, либо через `style={{ backgroundImage: "..." }}`.
+   */
+  gradientColor?:
+    | InitialsAvatarNumberGradients
+    | InitialsAvatarTextGradients
+    | "custom";
+}
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Avatar
  */
 export const Avatar = ({
-  alt,
-  crossOrigin,
-  decoding,
-  height,
-  loading,
-  referrerPolicy,
-  sizes,
-  src,
-  srcSet,
-  useMap,
-  width,
-  getRef,
   size = AVATAR_DEFAULT_SIZE,
-  shadow = AVATAR_DEFAULT_SHADOW,
-  mode = "default",
   className,
+  badge: badgeProp,
+  gradientColor,
   children,
-  getRootRef,
-  style,
-  "aria-label": ariaLabel,
-  badge,
-  overlayIcon,
-  overlayMode = "light",
-  overlayAction: passedOverlayAction,
-  onClick,
+  FallbackIcon = Icon28Users,
   ...restProps
 }: AvatarProps) => {
-  const { hasMouse } = useAdaptivity();
-  const [failedImage, setFailedImage] = React.useState(false);
+  const gradientName =
+    typeof gradientColor === "number"
+      ? COLORS_NUMBER_TO_TEXT_MAP[gradientColor]
+      : gradientColor;
 
-  const overlayAction = passedOverlayAction ?? (hasMouse ? "hover" : "always");
-
-  const onImageError = () => {
-    setFailedImage(true);
-  };
-
-  const onImageLoad = () => {
-    setFailedImage(false);
-  };
-
-  let borderRadius: string | number = "50%";
-
-  switch (mode) {
-    case "image":
-      size < 64 && (borderRadius = 4);
-      size >= 64 && size < 96 && (borderRadius = 6);
-      size >= 96 && (borderRadius = 8);
+  let badge: ImageBaseProps["badge"] | undefined = undefined;
+  switch (badgeProp) {
+    case undefined:
       break;
-    case "app":
-      size <= 40 && (borderRadius = 8);
-      size > 40 && size < 56 && (borderRadius = 10);
-      size >= 56 && size < 64 && (borderRadius = 12);
-      size >= 64 && size < 84 && (borderRadius = 16);
-      size >= 84 && (borderRadius = 18);
+    case "online":
+      badge = BADGE_ONLINE;
+      break;
+    case "online-mobile":
+      badge = BADGE_ONLINE_MOBILE;
       break;
     default:
-      break;
+      badge = {
+        ...(typeof badgeProp === "function" ? { Icon: badgeProp } : badgeProp),
+        className: classNamesString(
+          styles["Avatar__badge"],
+          size < 96 && styles["Avatar__badge--shifted"]
+        ),
+      };
   }
 
-  const hasSrc = src || srcSet;
-
   return (
-    <div
+    <ImageBase
       {...restProps}
-      vkuiClass={classNames(
-        "Avatar",
-        `Avatar--type-${mode}`,
-        `Avatar--sz-${size}`,
-        shadow && "Avatar--shadow",
-        failedImage && "Avatar--failed"
+      size={size}
+      badge={badge}
+      className={classNamesString(
+        styles["Avatar"],
+        gradientName && styles[`Avatar--has-gradient`],
+        gradientName !== "custom" && styles[`Avatar--gradient-${gradientName}`],
+        className
       )}
-      className={className}
-      ref={getRootRef}
-      role={hasSrc ? "img" : "presentation"}
-      aria-label={alt || ariaLabel}
-      onClick={!overlayIcon ? onClick : undefined}
-      style={{ ...style, width: size, height: size, borderRadius }}
+      FallbackIcon={FallbackIcon}
     >
-      {hasSrc && (
-        <img
-          crossOrigin={crossOrigin}
-          decoding={decoding}
-          height={height}
-          loading={loading}
-          referrerPolicy={referrerPolicy}
-          sizes={sizes}
-          src={src}
-          srcSet={srcSet}
-          useMap={useMap}
-          width={width}
-          ref={getRef}
-          onError={onImageError}
-          onLoad={onImageLoad}
-          vkuiClass="Avatar__img"
-          alt=""
-        />
-      )}
-      {children && <div vkuiClass="Avatar__children">{children}</div>}
-      {overlayIcon && (
-        <Tappable
-          Component="button"
-          vkuiClass={classNames(
-            "Avatar__overlay",
-            overlayAction === "always" && "Avatar__overlay--visible",
-            overlayMode === "light" && "Avatar__overlay--light",
-            overlayMode === "dark" && "Avatar__overlay--dark"
-          )}
-          hoverMode="Avatar__overlay--visible"
-          focusVisibleMode="Avatar__overlay--focus-visible"
-          hasActive={false}
-          onClick={onClick}
-        >
-          {overlayIcon}
-        </Tappable>
-      )}
-      {badge && (
+      {children && (
         <div
-          vkuiClass={classNames(
-            "Avatar__badge",
-            size >= 96 && "Avatar__badge--large",
-            badge !== "online" &&
-              badge !== "online-mobile" &&
-              "Avatar__badge--shadow"
-          )}
+          className={styles["Avatar__content"]}
+          style={{
+            fontSize: getInitialsFontSize(size),
+          }}
         >
-          {badge === "online" ? (
-            <div vkuiClass="Avatar__badge-online">
-              <Icon12Circle
-                width={size >= 72 ? 15 : 12}
-                height={size >= 72 ? 15 : 12}
-              />
-            </div>
-          ) : badge === "online-mobile" ? (
-            <div vkuiClass="Avatar__badge-online-mobile">
-              <Icon12OnlineMobile
-                width={size >= 72 ? 9 : 8}
-                height={size >= 72 ? 15 : 12}
-              />
-            </div>
-          ) : (
-            badge
-          )}
+          {children}
         </div>
       )}
-    </div>
+    </ImageBase>
   );
 };

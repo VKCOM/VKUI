@@ -2,7 +2,7 @@ import * as React from "react";
 import { Icon24Dismiss } from "@vkontakte/icons";
 import { Button } from "../Button/Button";
 import { SimpleCell } from "../SimpleCell/SimpleCell";
-import { Avatar } from "../Avatar/Avatar";
+import { Image } from "../Image/Image";
 import { Footnote } from "../Typography/Footnote/Footnote";
 import "./PromoBanner.css";
 
@@ -99,12 +99,7 @@ export const PromoBanner = ({
         rel="nofollow noopener noreferrer"
         target="_blank"
         before={
-          <Avatar
-            mode="image"
-            size={48}
-            src={bannerData.iconLink}
-            alt={bannerData.title}
-          />
+          <Image size={48} src={bannerData.iconLink} alt={bannerData.title} />
         }
         after={<Button mode="outline">{bannerData.ctaText}</Button>}
         description={bannerData.domain}

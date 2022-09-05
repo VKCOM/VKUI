@@ -75,6 +75,10 @@ export type { ModalDismissButtonProps } from "./components/ModalDismissButton/Mo
 /**
  * Blocks
  */
+export type {
+  ImageBaseSize,
+  ImageBaseExpectedIconProps,
+} from "./components/ImageBase/ImageBase";
 export { Badge } from "./components/Badge/Badge";
 export type { BadgeProps } from "./components/Badge/Badge";
 export { ButtonGroup } from "./components/ButtonGroup/ButtonGroup";
@@ -119,8 +123,8 @@ export { Avatar } from "./components/Avatar/Avatar";
 export type { AvatarProps } from "./components/Avatar/Avatar";
 export { GridAvatar } from "./components/GridAvatar/GridAvatar";
 export type { GridAvatarProps } from "./components/GridAvatar/GridAvatar";
-export { InitialsAvatar } from "./components/InitialsAvatar/InitialsAvatar";
-export type { InitialsAvatarProps } from "./components/InitialsAvatar/InitialsAvatar";
+export { Image } from "./components/Image/Image";
+export type { ImageProps } from "./components/Image/Image";
 export { Progress } from "./components/Progress/Progress";
 export type { ProgressProps } from "./components/Progress/Progress";
 export { Search } from "./components/Search/Search";
