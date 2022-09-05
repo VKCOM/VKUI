@@ -137,7 +137,8 @@
         "onlyForFunctionsWithNames": ["classNames", "classNamesString"]
       }
     ],
-    "compat/compat": "error"
+    "compat/compat": "error",
+    "react/no-unknown-property": ["error", { "ignore": ["vkuiClass"] }]
   },
   "overrides": [
     {
