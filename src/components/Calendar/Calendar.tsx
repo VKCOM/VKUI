@@ -4,7 +4,7 @@ import {
   CalendarHeader,
   CalendarHeaderProps,
 } from "../CalendarHeader/CalendarHeader";
-import { CalendarDays } from "../CalendarDays/CalendarDays";
+import { CalendarDays, CalendarDaysProps } from "../CalendarDays/CalendarDays";
 import { CalendarTime, CalendarTimeProps } from "../CalendarTime/CalendarTime";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import {
@@ -32,7 +32,10 @@ export interface CalendarProps
       | "onPrevMonth"
       | "prevMonthIcon"
       | "nextMonthIcon"
+      | "prevMonthProps"
+      | "nextMonthProps"
     >,
+    Pick<CalendarDaysProps, "dayProps">,
     HasRootRef<HTMLDivElement> {
   value?: Date;
   disablePast?: boolean;
@@ -90,6 +93,9 @@ export const Calendar = ({
   onPrevMonth,
   prevMonthIcon,
   nextMonthIcon,
+  prevMonthProps,
+  nextMonthProps,
+  dayProps,
   ...props
 }: CalendarProps) => {
   const {
@@ -182,6 +188,8 @@ export const Calendar = ({
         changeYearAriaLabel={changeYearAriaLabel}
         prevMonthIcon={prevMonthIcon}
         nextMonthIcon={nextMonthIcon}
+        prevMonthProps={prevMonthProps}
+        nextMonthProps={nextMonthProps}
       />
       <CalendarDays
         viewDate={externalViewDate || viewDate}
@@ -199,6 +207,7 @@ export const Calendar = ({
         onBlur={resetSelectedDay}
         showNeighboringMonth={showNeighboringMonth}
         size={size}
+        dayProps={dayProps}
       />
       {enableTime && value && size !== "s" && (
         <div vkuiClass="Calendar__time">

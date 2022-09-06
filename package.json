@@ -36,7 +36,7 @@
     "@size-limit/preset-small-lib": "^5.0.5",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^5.1.2",
+    "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^13.2.1",
     "@types/css-font-loading-module": "^0.0.7",
     "@types/jest": "^26.0.15",
@@ -88,7 +88,7 @@
     "playwright": "1.17.2",
     "playwright-chromium": "1.17.2",
     "postcss": "^8.4.5",
-    "postcss-cli": "^9.1.0",
+    "postcss-cli": "^10.0.0",
     "postcss-csso": "^6.0.0",
     "postcss-custom-media": "^8.0.0",
     "postcss-custom-properties": "^12.1.7",
@@ -120,7 +120,7 @@
     "webpack": "^5.66.0",
     "webpack-cli": "^4.9.1",
     "webpack-merge": "^5.8.0",
-    "yargs": "^15.4.1"
+    "yargs": "^17.5.1"
   },
   "resolutions": {
     "@types/react": "^17.0.0",

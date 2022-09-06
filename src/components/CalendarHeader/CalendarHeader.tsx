@@ -5,7 +5,7 @@ import {
   Icon20ChevronRightOutline,
   Icon12Dropdown,
 } from "@vkontakte/icons";
-import { Tappable } from "../Tappable/Tappable";
+import { Tappable, TappableElementProps } from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
 import { SelectType } from "../Select/Select";
 import { CustomSelect } from "../CustomSelect/CustomSelect";
@@ -15,6 +15,8 @@ import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderCo
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import "./CalendarHeader.css";
+
+type ArrowMonthProps = Omit<TappableElementProps, "onClick" | "aria-label">;
 
 export interface CalendarHeaderProps
   extends Pick<React.HTMLAttributes<HTMLDivElement>, "className"> {
@@ -28,6 +30,8 @@ export interface CalendarHeaderProps
   changeYearAriaLabel?: string;
   prevMonthIcon?: React.ReactNode;
   nextMonthIcon?: React.ReactNode;
+  prevMonthProps?: ArrowMonthProps;
+  nextMonthProps?: ArrowMonthProps;
   onChange(viewDate: Date): void;
   /**
    * Нажатие на кнопку переключения на следующий месяц.
@@ -48,6 +52,8 @@ export const CalendarHeader = ({
   onNextMonth,
   onPrevMonth,
   className,
+  prevMonthProps,
+  nextMonthProps,
   prevMonthAriaLabel = "Предыдущий месяц",
   nextMonthAriaLabel = "Следующий месяц",
   changeMonthAriaLabel = "Изменить месяц",
@@ -110,6 +116,7 @@ export const CalendarHeader = ({
             aria-label={`${prevMonthAriaLabel}, ${formatter.format(
               subMonths(viewDate, 1)
             )}`}
+            {...prevMonthProps}
           >
             {prevMonthIcon}
           </Tappable>
@@ -168,6 +175,7 @@ export const CalendarHeader = ({
             aria-label={`${nextMonthAriaLabel}, ${formatter.format(
               addMonths(viewDate, 1)
             )}`}
+            {...nextMonthProps}
           >
             {nextMonthIcon}
           </Tappable>
