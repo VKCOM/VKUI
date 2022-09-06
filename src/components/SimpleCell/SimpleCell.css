@@ -113,6 +113,13 @@
   margin-right: -12px;
 }
 
+.SimpleCell__typography {
+  font-size: var(--vkui--font_footnote--font_size--regular);
+  line-height: var(--vkui--font_footnote--line_height--regular);
+  font-weight: var(--vkui--font_footnote--font_weight--regular);
+  font-family: var(--vkui--font_footnote--font_family--regular);
+}
+
 /**
  * iOS
  */
@@ -228,6 +235,13 @@
 
   .SimpleCell--sizeY-none .SimpleCell__badge .Badge {
     transform: translateY(0.5px);
+  }
+
+  .SimpleCell--sizeY-none .SimpleCell__typography {
+    font-size: var(--vkui--font_caption2--font_size--regular);
+    line-height: var(--vkui--font_caption2--line_height--regular);
+    font-weight: var(--vkui--font_caption2--font_weight--regular);
+    font-family: var(--vkui--font_caption2--font_family--regular);
   }
 }
 

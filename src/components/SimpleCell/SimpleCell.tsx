@@ -9,10 +9,8 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { Headline } from "../Typography/Headline/Headline";
-import { Footnote } from "../Typography/Footnote/Footnote";
-import { Caption } from "../Typography/Caption/Caption";
+import { Subhead } from "../Typography/Subhead/Subhead";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import { SizeType } from "../../lib/adaptivity";
 import "./SimpleCell.css";
 
 export interface SimpleCellOwnProps extends HasComponent {
@@ -72,19 +70,6 @@ export interface SimpleCellOwnProps extends HasComponent {
 
 export interface SimpleCellProps extends SimpleCellOwnProps, TappableProps {}
 
-type SubtitleTypographyProps = React.HTMLAttributes<HTMLDivElement> &
-  HasComponent;
-
-const SubtitleTypography = (props: SubtitleTypographyProps) => {
-  const { sizeY } = useAdaptivity();
-
-  if (sizeY === SizeType.COMPACT) {
-    return <Caption level="2" {...props} />;
-  }
-
-  return <Footnote {...props} />;
-};
-
 /**
  * @see https://vkcom.github.io/VKUI/#/SimpleCell
  */
@@ -121,6 +106,14 @@ export const SimpleCell = ({
     >
       {before}
       <div vkuiClass="SimpleCell__main">
+        {subhead && (
+          <Subhead
+            Component="span"
+            vkuiClass="SimpleCell__text SimpleCell__subhead"
+          >
+            {subhead}
+          </Subhead>
+        )}
         <div vkuiClass="SimpleCell__content">
           {badgeBeforeTitle && (
             <span vkuiClass="SimpleCell__badge">{badgeBeforeTitle}</span>
@@ -141,29 +134,24 @@ export const SimpleCell = ({
             {badgeBeforeSubtitle && (
               <span vkuiClass="SimpleCell__badge">{badgeBeforeSubtitle}</span>
             )}
-            <SubtitleTypography vkuiClass="SimpleCell__text SimpleCell__subtitle">
+            <span vkuiClass="SimpleCell__typography SimpleCell__text SimpleCell__subtitle">
               {subtitle}
-            </SubtitleTypography>
+            </span>
             {badgeAfterSubtitle && (
               <span vkuiClass="SimpleCell__badge">{badgeAfterSubtitle}</span>
             )}
           </div>
         )}
         {extraSubtitle && (
-          <SubtitleTypography vkuiClass="SimpleCell__text SimpleCell__extraSubtitle">
+          <span vkuiClass="SimpleCell__typography SimpleCell__text SimpleCell__extraSubtitle">
             {extraSubtitle}
-          </SubtitleTypography>
+          </span>
         )}
       </div>
       {hasReactNode(indicator) && (
-        <span
-          vkuiClass={classNames(
-            "SimpleCell__typography",
-            "SimpleCell__indicator"
-          )}
-        >
+        <Headline Component="span" weight="3" vkuiClass="SimpleCell__indicator">
           {indicator}
-        </span>
+        </Headline>
       )}
       {hasAfter && (
         <div vkuiClass="SimpleCell__after">
