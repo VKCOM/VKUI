@@ -34,18 +34,11 @@
   pointer-events: none;
 }
 
-:not(.ModalRoot--desktop).ModalRoot--ios .ModalRoot__viewport,
-:not(.ModalRoot--desktop).ModalRoot--android .ModalRoot__viewport {
+:not(.ModalRoot--desktop).ModalRoot .ModalRoot__viewport {
   top: var(--safe-area-inset-top);
 }
 
-/*
- * TODO v5.0.0 объединить после удаления appearance токенов
-*/
-:not(.ModalRoot--desktop).ModalRoot--vkapps.ModalRoot--android
-  .ModalRoot__viewport,
-:not(.ModalRoot--desktop).ModalRoot--vkapps.ModalRoot--ios
-  .ModalRoot__viewport {
+:not(.ModalRoot--desktop).ModalRoot--vkapps .ModalRoot__viewport {
   top: calc(
     var(--safe-area-inset-top) + var(--vkui--size_panel_header_height--regular)
   );
