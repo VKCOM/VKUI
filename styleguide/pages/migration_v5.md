@@ -476,6 +476,12 @@ npx @vkontakte/vkui-token-translator
 
 <br/><br/>
 
+## `FormStatus` -> [`Banner`](#/Banner)
+
+- `FormStatus` удален, вместо него используйте [`Banner`](#/Banner).
+
+<br/><br/>
+
 ## `Drowpdown` -> [`Popover`](#/Popover)
 
 > ⚠️Компонент остаётся нестабильным (см. [Unstable](#//Unstable)).
