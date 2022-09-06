@@ -102,20 +102,6 @@ describe.each([
       );
       expect(document.activeElement === document.body).toBe(true);
     });
-    it.each(["popout"])("on %s", (key) => {
-      const props = { [key]: <div /> };
-      renderFocused();
-      render(
-        <View activePanel="focus">
-          <Panel id="focus" />
-        </View>
-      ).rerender(
-        <View activePanel="focus" {...props}>
-          <Panel id="focus" />
-        </View>
-      );
-      expect(document.activeElement === document.body).toBe(true);
-    });
   });
 
   describe("can swipeBack", () => {

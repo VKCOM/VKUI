@@ -5,7 +5,6 @@ import { Platform } from "../../lib/platform";
 import { Touch, TouchEvent } from "../Touch/Touch";
 import { useConfigProvider } from "../ConfigProvider/ConfigProviderContext";
 import { useSplitCol } from "../SplitCol/SplitCol";
-import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { canUseDOM, useDOM, blurActiveElement } from "../../lib/dom";
 import { useScroll } from "../AppRoot/ScrollContext";
 import { NavTransitionProvider } from "../NavTransitionContext/NavTransitionContext";
@@ -39,18 +38,6 @@ export interface ViewProps
   extends React.HTMLAttributes<HTMLElement>,
     NavIdProps {
   activePanel: string;
-  /**
-   * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
-   *
-   * Свойство для отрисовки `Alert`, `ActionSheet` и `ScreenSpinner`.
-   */
-  popout?: React.ReactNode;
-  /**
-   * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
-   *
-   * Свойство для отрисовки `ModalRoot`.
-   */
-  modal?: React.ReactNode;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   /**
    * callback свайпа назад
@@ -92,8 +79,6 @@ const warn = warnOnce("View");
  * @see https://vkcom.github.io/VKUI/#/View
  */
 export const View = ({
-  popout,
-  modal,
   activePanel: activePanelProp,
   history,
   nav,
@@ -105,17 +90,6 @@ export const View = ({
 
   ...restProps
 }: ViewProps) => {
-  if (process.env.NODE_ENV === "development") {
-    popout &&
-      warn(
-        "Свойство popout устарело и будет удалено в 5.0.0. Используйте одноименное свойство у SplitLayout."
-      );
-    modal &&
-      warn(
-        "Свойство modal устарело и будет удалено в 5.0.0. Используйте одноименное свойство у SplitLayout."
-      );
-  }
-
   const scrolls = React.useRef(
     scrollsCache[getNavId({ nav, id: restProps.id }) as string] || {}
   );
@@ -396,10 +370,6 @@ export const View = ({
   };
 
   React.useEffect(() => {
-    popout && blurActiveElement(document);
-  }, [document, popout]);
-
-  React.useEffect(() => {
     // Нужен переход
     if (
       prevActivePanel &&
@@ -598,10 +568,6 @@ export const View = ({
           );
         })}
       </div>
-      <AppRootPortal>
-        {!!popout && <div vkuiClass="View__popout">{popout}</div>}
-        {!!modal && <div vkuiClass="View__modal">{modal}</div>}
-      </AppRootPortal>
     </Touch>
   );
 };
