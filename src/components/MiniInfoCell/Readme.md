@@ -113,6 +113,7 @@ function MiniInfoCellExample() {
               </MiniInfoCell>
 
               <MiniInfoCell
+                mode="accent"
                 before={<Icon20WorkOutline />}
                 after={
                   <Avatar
