@@ -60,7 +60,8 @@ export interface ImageBaseProps
   /**
    * Интерактивный оверлей над картинкой.
    *
-   * Если передать `true`, то будет применён оверлей с параметрами по умолчанию.
+   * Если передать `true`, то будет применён оверлей с параметрами по умолчанию. Значение для `theme` будет браться из
+   * параметра `appearance` в `ConfigProvider`.
    */
   overlay?: boolean | ImageBaseOverlayProps;
   /**

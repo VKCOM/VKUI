@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Icon28AddOutline } from "@vkontakte/icons";
 import { classNamesString } from "../../../lib/classNames";
+import { useAppearance } from "../../../hooks/useAppearance";
 import { useAdaptivity } from "../../../hooks/useAdaptivity";
 import { Tappable } from "../../Tappable/Tappable";
 import type { ImageBaseSize, ImageBaseExpectedIconProps } from "../types";
@@ -31,7 +32,7 @@ export interface ImageBaseOverlayProps {
   /**
    * Задаёт тему оформления.
    *
-   * @default "light"
+   * > По умолчанию берётся из параметра `appearance` в `ConfigProvider`.
    */
   theme?: "dark" | "light";
   /**
@@ -56,12 +57,14 @@ export interface ImageBaseOverlayProps {
 export const ImageBaseOverlay = ({
   imageSize,
   className,
-  theme = "light",
+  theme: themeProp,
   visibility: visibilityProp,
   Icon = Icon28AddOutline,
   onClick,
 }: ImageBaseOverlayProps) => {
+  const appearance = useAppearance();
   const { hasMouse } = useAdaptivity();
+  const theme = themeProp ?? appearance;
   const visibility = visibilityProp ?? (hasMouse ? "on-hover" : "always");
 
   const iconSize = getRelativeSizeOfIcon(imageSize);
