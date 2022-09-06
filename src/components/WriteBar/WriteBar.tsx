@@ -107,7 +107,7 @@ export const WriteBar = ({
       className={className}
       style={style}
     >
-      <form vkuiClass="WriteBar__form" onSubmit={(e) => e.preventDefault()}>
+      <div vkuiClass="WriteBar__form">
         {hasReactNode(before) && (
           <div vkuiClass="WriteBar__before">{before}</div>
         )}
@@ -127,7 +127,7 @@ export const WriteBar = ({
         </div>
 
         {hasReactNode(after) && <div vkuiClass="WriteBar__after">{after}</div>}
-      </form>
+      </div>
     </div>
   );
 };
