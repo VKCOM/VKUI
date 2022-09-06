@@ -6,7 +6,7 @@
   flex-shrink: 0;
   box-sizing: border-box;
   color: var(--vkui--color_icon_secondary);
-  background-color: var(--vkui--color_background);
+  background-color: var(--vkui--color_background_secondary);
   background-size: cover;
   box-shadow: inset 0 0 0 var(--thin-border)
     var(--vkui--color_image_border_alpha);
