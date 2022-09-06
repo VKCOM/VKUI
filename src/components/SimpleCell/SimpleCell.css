@@ -238,10 +238,10 @@
   }
 
   .SimpleCell--sizeY-none .SimpleCell__typography {
-    font-size: var(--vkui--font_caption2--font_size--regular);
-    line-height: var(--vkui--font_caption2--line_height--regular);
-    font-weight: var(--vkui--font_caption2--font_weight--regular);
-    font-family: var(--vkui--font_caption2--font_family--regular);
+    font-size: var(--vkui--font_caption1--font_size--regular);
+    line-height: var(--vkui--font_caption1--line_height--regular);
+    font-weight: var(--vkui--font_caption1--font_weight--regular);
+    font-family: var(--vkui--font_caption1--font_family--regular);
   }
 }
 
