@@ -162,6 +162,8 @@ npx @vkontakte/vkui-token-translator
 
   ### Как мигрировать с `overlayMode`?
 
+  > При передаче `overlay={true}` тема берётся из параметра `appearance`, который определяется в `ConfigProvider`.
+
   ```diff
   - <Avatar overlayMode="light" />
   + <Avatar overlay />
