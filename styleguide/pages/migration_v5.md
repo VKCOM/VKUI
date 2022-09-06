@@ -492,6 +492,12 @@ npx @vkontakte/vkui-token-translator
 
 <br/><br/>
 
+## `SimpleCheckbox` -> [`Checkbox`](#/Checkbox)
+
+- `SimpleCheckbox` был удален. Используйте [`Checkbox`](#/Checkbox)
+
+<br/><br/>
+
 ## Типы и импорты
 
 - Удалены константы `IS_PLATFORM_ANDROID` и `IS_PLATFORM_IOS`

@@ -18,6 +18,3 @@ export type { PopperProps } from "../components/Popper/Popper";
 
 export { ViewInfinite } from "../components/View/ViewInfinite";
 export type { ViewInfiniteProps } from "../components/View/ViewInfinite";
-
-export { SimpleCheckbox } from "../components/SimpleCheckbox/SimpleCheckbox";
-export type { SimpleCheckboxProps } from "../components/SimpleCheckbox/SimpleCheckbox";
