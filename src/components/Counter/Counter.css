@@ -49,25 +49,21 @@
  * CMP:
  * Button
  */
-.Button--mode-primary.Button--appearance-accent .Counter,
+.Button--mode-primary.Button--appearance-accent .Counter {
+  background-color: var(--vkui--color_background_content);
+  color: var(--vkui--color_text_accent_themed);
+}
+
 .Button--mode-secondary.Button--appearance-neutral .Counter,
 .Button--mode-tertiary.Button--appearance-neutral .Counter {
   background-color: var(--vkui--color_background_contrast);
   color: var(--vkui--color_text_contrast);
 }
 
-.Button--mode-secondary.Button--appearance-accent .Counter {
-  background-color: var(--vkui--color_background_accent);
-  color: var(--vkui--color_text_contrast_themed);
-}
-
-.Button--mode-tertiary.Button--appearance-accent .Counter {
-  background-color: var(--vkui--color_background_accent);
-  color: var(--vkui--color_text_contrast_themed);
-}
-
+.Button--mode-secondary.Button--appearance-accent .Counter,
+.Button--mode-tertiary.Button--appearance-accent .Counter,
 .Button--mode-outline.Button--appearance-accent .Counter {
-  background-color: var(--vkui--color_background_accent);
+  background-color: var(--vkui--color_background_accent_themed);
   color: var(--vkui--color_text_contrast_themed);
 }
 
