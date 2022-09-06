@@ -1,11 +1,13 @@
 import * as React from "react";
 import { classNamesString } from "../../lib/classNames";
+import { Platform } from "../../lib/platform";
 import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { HasAlign } from "../../types";
 import { Spinner } from "../Spinner/Spinner";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { usePlatform } from "../../hooks/usePlatform";
 import styles from "./Button.module.css";
 
 export interface VKUIButtonProps extends HasAlign {
@@ -46,6 +48,7 @@ export const Button = ({
   const hasIconOnly = !children && Boolean(after) !== Boolean(before);
   const hasNewTokens = React.useContext(ConfigProviderContext).hasNewTokens;
   const { sizeY } = useAdaptivity();
+  const platform = usePlatform();
 
   return (
     <Tappable
@@ -64,6 +67,8 @@ export const Button = ({
         styles[`Button--appearance-${appearance}`],
         styles[`Button--align-${align}`],
         getSizeYClassName("Button", sizeY, styles),
+        platform === Platform.ANDROID && styles[`Button--android`],
+        platform === Platform.IOS && styles[`Button--ios`],
         stretched && styles["Button--stretched"],
         hasIcons && styles["Button--with-icon"],
         hasIconOnly && styles["Button--singleIcon"],
