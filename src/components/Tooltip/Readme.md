@@ -97,26 +97,26 @@ const Example = () => {
                   <Avatar />
                 </Tooltip>
               }
-              description="Веб-сайт"
+              subtitle="Веб-сайт"
             >
               Команда ВКонтакте
             </SimpleCell>
-            <SimpleCell before={<Avatar />} description="Музыкант">
+            <SimpleCell before={<Avatar />} subtitle="Музыкант">
               Robbie Williams
             </SimpleCell>
-            <SimpleCell before={<Avatar />} description="Издательский дом">
+            <SimpleCell before={<Avatar />} subtitle="Издательский дом">
               ПостНаука
             </SimpleCell>
-            <SimpleCell before={<Avatar />} description="Издательский дом">
+            <SimpleCell before={<Avatar />} subtitle="Издательский дом">
               ПостНаука
             </SimpleCell>
-            <SimpleCell before={<Avatar />} description="Издательский дом">
+            <SimpleCell before={<Avatar />} subtitle="Издательский дом">
               ПостНаука
             </SimpleCell>
-            <SimpleCell before={<Avatar />} description="Издательский дом">
+            <SimpleCell before={<Avatar />} subtitle="Издательский дом">
               ПостНаука
             </SimpleCell>
-            <SimpleCell before={<Avatar />} description="Издательский дом">
+            <SimpleCell before={<Avatar />} subtitle="Издательский дом">
               ПостНаука
             </SimpleCell>
           </List>

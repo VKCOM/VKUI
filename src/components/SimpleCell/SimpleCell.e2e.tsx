@@ -4,6 +4,10 @@ import {
   Icon16MessageHeart,
   Icon24MessageOutline,
   Icon28MessageOutline,
+  Icon12Fire,
+  Icon12Tag,
+  Icon20AddCircleFillBlue,
+  Icon12Verified,
 } from "@vkontakte/icons";
 import { SimpleCell, SimpleCellProps } from "./SimpleCell";
 import { Avatar } from "../Avatar/Avatar";
@@ -42,7 +46,7 @@ describe("SimpleCell", () => {
         children: [
           "Very long children Very long children Very long children Very long children Very long children Very long children Very long children Very long children",
         ],
-        description: [
+        subtitle: [
           "Very long description Very long description Very long description Very long description Very long " +
             "description Very long description Very long description Very long description Very long description Very long description Very long description Very long description",
         ],
@@ -59,6 +63,22 @@ describe("SimpleCell", () => {
       {
         after: [<Switch key="switch" />],
         children: ["Title"],
+      },
+      {
+        before: [<Avatar key="avatar" size={40} />],
+        subhead: ["Subhead"],
+        children: ["Title"],
+        subtitle: ["Subtitle"],
+        extraSubtitle: ["Extra Subtitle"],
+        badgeAfterSubtitle: [
+          <Icon12Fire key="iconFire" fill="var(--vkui--color_icon_negative)" />,
+        ],
+        badgeBeforeSubtitle: [
+          <Icon12Tag key="iconTag" fill="var(--vkui--color_icon_tertiary)" />,
+        ],
+        badgeBeforeTitle: [<Icon20AddCircleFillBlue key="leftBadge" />],
+        badgeAfterTitle: [<Icon12Verified key="rightBadge" />],
+        multiline: [true, false],
       },
     ]
   );
