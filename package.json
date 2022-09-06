@@ -32,7 +32,7 @@
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
-    "@testing-library/user-event": "^13.2.1",
+    "@testing-library/user-event": "^14.4.3",
     "@types/css-font-loading-module": "^0.0.7",
     "@types/jest": "^26.0.15",
     "@types/jest-image-snapshot": "^4.1.3",
