@@ -15,7 +15,6 @@ import {
 } from "../ConfigProvider/ConfigProviderContext";
 import { ModalsStateEntry } from "./types";
 import { Platform } from "../../lib/platform";
-import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { DOMProps, withDOM } from "../../lib/dom";
 import { getNavId } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
@@ -209,7 +208,7 @@ class ModalRootDesktopComponent extends React.Component<
   }
 
   render() {
-    const { exitingModal, activeModal, enteringModal, platform } = this.props;
+    const { exitingModal, activeModal, enteringModal } = this.props;
 
     if (!activeModal && !exitingModal) {
       return null;
@@ -220,7 +219,6 @@ class ModalRootDesktopComponent extends React.Component<
         <div
           vkuiClass={classNames(
             "ModalRoot",
-            getPlatformClassName("ModalRoot", platform),
             this.props.configProvider?.webviewType === WebviewType.VKAPPS &&
               "ModalRoot--vkapps",
             "ModalRoot--desktop"

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Touch, TouchEvent } from "../Touch/Touch";
 import TouchRootContext from "../Touch/TouchContext";
-import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { classNames } from "../../lib/classNames";
 import { setTransformStyle } from "../../lib/styles";
 import { rubber } from "../../lib/touch";
@@ -657,7 +656,7 @@ class ModalRootTouchComponent extends React.Component<
   }
 
   render() {
-    const { activeModal, exitingModal, enteringModal, platform } = this.props;
+    const { activeModal, exitingModal, enteringModal } = this.props;
     const { touchDown, dragging } = this.state;
 
     if (!activeModal && !exitingModal) {
@@ -670,7 +669,6 @@ class ModalRootTouchComponent extends React.Component<
           <Touch
             vkuiClass={classNames(
               "ModalRoot",
-              getPlatformClassName("ModalRoot", platform),
               this.props.configProvider?.webviewType === WebviewType.VKAPPS &&
                 "ModalRoot--vkapps",
               touchDown && "ModalRoot--touched",
