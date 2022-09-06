@@ -25,7 +25,7 @@ const Fallbacks = () => {
       <Header mode="secondary">Фолбеки</Header>
       <SimpleCell
         before={<Avatar size={48} src="#" />}
-        description="Только от друзей друзей"
+        subtitle="Только от друзей друзей"
       >
         Заявки в друзья
       </SimpleCell>
@@ -35,7 +35,7 @@ const Fallbacks = () => {
             ИБ
           </Avatar>
         }
-        description="Только от друзей друзей"
+        subtitle="Только от друзей друзей"
       >
         Заявки в друзья
       </SimpleCell>
