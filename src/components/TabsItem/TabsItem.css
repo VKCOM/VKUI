@@ -106,7 +106,10 @@
 }
 
 .TabsItem--selected.TabsItem--accent .TabsItem__before {
-  color: var(--header_tint_alternate, var(--vkui--color_icon_accent_themed));
+  color: var(
+    --button_secondary_foreground,
+    var(--vkui--color_icon_accent_themed)
+  );
 }
 
 .TabsItem--selected.TabsItem--secondary .TabsItem__before {
@@ -129,7 +132,10 @@
 }
 
 .TabsItem--selected.TabsItem--accent .TabsItem__label {
-  color: var(--header_tint_alternate, var(--vkui--color_text_accent_themed));
+  color: var(
+    --button_secondary_foreground,
+    var(--vkui--color_text_accent_themed)
+  );
 }
 
 .TabsItem--selected.TabsItem--secondary .TabsItem__label {
