@@ -102,7 +102,7 @@ export const PromoBanner = ({
           <Image size={48} src={bannerData.iconLink} alt={bannerData.title} />
         }
         after={<Button mode="outline">{bannerData.ctaText}</Button>}
-        description={bannerData.domain}
+        subtitle={bannerData.domain}
       >
         {bannerData.title}
       </SimpleCell>

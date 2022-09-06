@@ -48,7 +48,7 @@ const Example = () => {
             <Header>Учебные заведения и классы</Header>
             <SimpleCell
               before={<Icon28SchoolOutline />}
-              description="Екатеринбург"
+              subtitle="Екатеринбург"
             >
               Школа №180
             </SimpleCell>

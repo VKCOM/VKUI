@@ -83,13 +83,13 @@ const Example = () => {
           <Header mode="secondary">Список друзей</Header>
           <SimpleCell
             before={<Avatar size={48} src={getAvatarUrl("user_xyz")} />}
-            badge={<Icon12Verified />}
+            badgeAfterTitle={<Icon12Verified />}
             after={
               <IconButton>
                 <Icon28MessageOutline />
               </IconButton>
             }
-            description="Команда ВКонтакте"
+            subtitle="Команда ВКонтакте"
           >
             Игорь Фёдоров
           </SimpleCell>
@@ -100,7 +100,7 @@ const Example = () => {
                 <Icon28MessageOutline />
               </IconButton>
             }
-            description="Бот"
+            subtitle="Бот"
           >
             Artur Stambultsian
           </SimpleCell>

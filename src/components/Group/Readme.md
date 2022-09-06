@@ -110,8 +110,8 @@ const SharedContent = () => {
               </IconButton>
             )
           }
-          description="Санкт-Петербург, Россия"
-          before={<Image size={32} borderRadius="l" />}
+          subtitle="Санкт-Петербург, Россия"
+          before={<Avatar size={32} mode="app" />}
         >
           VK · Приложение для iPhone
         </SimpleCell>
@@ -127,8 +127,8 @@ const SharedContent = () => {
               </IconButton>
             )
           }
-          description="Санкт-Петербург, Россия"
-          before={<Image size={32} borderRadius="l" />}
+          subtitle="Санкт-Петербург, Россия"
+          before={<Avatar size={32} mode="app" />}
         >
           VK · Браузер Chrome для macOS
         </SimpleCell>
