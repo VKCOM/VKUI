@@ -26,21 +26,21 @@
  * CMP:
  * Group
  */
-.Group--plain .Group__inner > .Tabs--default:first-child {
+.Group--mode-plain .Group__inner > .Tabs--mode-default:first-child {
   margin-top: -8px;
 }
 
-.Group--card > .Group__inner > .Tabs--default:first-child {
+.Group--mode-card > .Group__inner > .Tabs--mode-default:first-child {
   margin-top: -4px;
 }
 
-.Tabs--default,
-.Tabs--default .HorizontalScroll__in-wrapper {
+.Tabs--mode-default,
+.Tabs--mode-default .HorizontalScroll__in-wrapper {
   justify-content: center;
 }
 
 .Tabs--buttons,
-.Tabs--default .HorizontalScroll__in-wrapper {
+.Tabs--mode-default .HorizontalScroll__in-wrapper {
   justify-content: flex-start;
 }
 
@@ -65,7 +65,7 @@
 }
 
 /* Нужно для закрашивания прозрачной области нижнего инсета на iphone x */
-.FixedLayout--ios.FixedLayout--bottom .Tabs::after {
+.FixedLayout--ios.FixedLayout--vertical-bottom .Tabs::after {
   position: absolute;
   left: 0;
   top: 0;
@@ -75,8 +75,8 @@
   background: var(--vkui--color_background_content);
 }
 
-.FixedLayout--ios.FixedLayout--bottom .Tabs__in,
-.FixedLayout--ios.FixedLayout--bottom .Separator {
+.FixedLayout--ios.FixedLayout--vertical-bottom .Tabs__in,
+.FixedLayout--ios.FixedLayout--vertical-bottom .Separator {
   position: relative;
   z-index: 2;
 }
@@ -93,10 +93,10 @@
  * CMP:
  * Group
  */
-.Group--plain .Group__inner > .Tabs--default:first-child {
+.Group--mode-plain .Group__inner > .Tabs--mode-default:first-child {
   margin-top: -8px;
 }
 
-.Group--card > .Group__inner > .Tabs--default:first-child {
+.Group--mode-card > .Group__inner > .Tabs--mode-default:first-child {
   margin-top: -4px;
 }

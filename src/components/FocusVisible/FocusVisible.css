@@ -12,7 +12,7 @@
   z-index: 0;
 }
 
-[class$="--focus-visible"] > .FocusVisible--outside {
+[class$="--focus-visible"] > .FocusVisible--mode-outside {
   top: -2px;
   left: -2px;
   right: -2px;
@@ -36,7 +36,7 @@
     will-change: top, left, bottom, right;
   }
 
-  [class$="--focus-visible"] > .FocusVisible--outside {
+  [class$="--focus-visible"] > .FocusVisible--mode-outside {
     top: 0;
     left: 0;
     bottom: 0;

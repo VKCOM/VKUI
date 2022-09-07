@@ -107,11 +107,11 @@
 /**
  * Mode "image"
  */
-.Banner--md-image .Banner__in {
+.Banner--mode-image .Banner__in {
   background-color: var(--vkui--color_background_secondary);
 }
 
-.Banner--md-image .Banner__dismiss,
+.Banner--mode-image .Banner__dismiss,
 .Banner--inverted {
   color: var(--vkui--color_text_contrast);
 }
@@ -124,23 +124,23 @@
 /**
  * Size "s"
  */
-.Banner--sz-s .Banner__before {
+.Banner--size-s .Banner__before {
   margin-left: -4px;
 }
 
 /**
  * Size "m"
  */
-.Banner--sz-m .Banner__in {
+.Banner--size-m .Banner__in {
   padding: 16px;
 }
 
-.Banner--sz-m .Banner__subheader:not(:first-child),
-.Banner--sz-m .Banner__text:not(:first-child) {
+.Banner--size-m .Banner__subheader:not(:first-child),
+.Banner--size-m .Banner__text:not(:first-child) {
   margin-top: 4px;
 }
 
 .Banner--ios .Banner__dismiss,
-.Banner--ios.Banner--md-image .Banner__dismiss {
+.Banner--ios.Banner--mode-image .Banner__dismiss {
   color: var(--vkui--color_icon_tertiary);
 }

@@ -1,7 +1,6 @@
 import * as React from "react";
 import ReactDOM from "react-dom";
 import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import { useNavTransition } from "../NavTransitionContext/NavTransitionContext";
 import { PopperArrow } from "../PopperArrow/PopperArrow";
@@ -35,7 +34,6 @@ const isDOMTypeElement = (
   return React.isValidElement(element) && typeof element.type === "string";
 };
 
-const baseClassName = getClassName("Tooltip");
 const warn = warnOnce("Tooltip");
 const IS_DEV = process.env.NODE_ENV === "development";
 
@@ -45,7 +43,9 @@ const SimpleTooltip = React.forwardRef<HTMLDivElement, SimpleTooltipProps>(
     ref
   ) {
     return (
-      <div vkuiClass={classNames(baseClassName, `Tooltip--${appearance}`)}>
+      <div
+        vkuiClass={classNames("Tooltip", `Tooltip--appearance-${appearance}`)}
+      >
         <div
           vkuiClass="Tooltip__container"
           ref={ref}

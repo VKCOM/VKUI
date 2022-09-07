@@ -25,7 +25,7 @@
   margin-top: 2px;
 }
 
-.HorizontalCell--s {
+.HorizontalCell--size-s {
   max-width: 80px;
 }
 
@@ -38,20 +38,20 @@
   text-align: left;
 }
 
-.HorizontalCell--s .HorizontalCell__image {
+.HorizontalCell--size-s .HorizontalCell__image {
   padding: 4px 8px;
 }
 
-.HorizontalCell--s .HorizontalCell__content {
+.HorizontalCell--size-s .HorizontalCell__content {
   padding: 2px 4px 8px;
   text-align: center;
 }
 
-.HorizontalCell--m {
+.HorizontalCell--size-m {
   width: 100px;
 }
 
-.HorizontalCell--l {
+.HorizontalCell--size-l {
   width: auto;
 }
 
@@ -61,17 +61,17 @@
   min-width: 10px;
 }
 
-.HorizontalCell--s:first-child::before,
-.HorizontalCell--s:last-child::after {
+.HorizontalCell--size-s:first-child::before,
+.HorizontalCell--size-s:last-child::after {
   min-width: 8px;
 }
 
-.HorizontalCell--s:first-child,
-.HorizontalCell--s:last-child {
+.HorizontalCell--size-s:first-child,
+.HorizontalCell--size-s:last-child {
   max-width: 88px;
 }
 
-.HorizontalCell--m:first-child,
-.HorizontalCell--m:last-child {
+.HorizontalCell--size-m:first-child,
+.HorizontalCell--size-m:last-child {
   width: 110px;
 }

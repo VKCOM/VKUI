@@ -21,12 +21,12 @@
   background: var(--vkui--color_background_content);
 }
 
-.FixedLayout--top {
+.FixedLayout--vertical-top {
   width: 100%;
   top: 0;
 }
 
-.FixedLayout--bottom {
+.FixedLayout--vertical-bottom {
   width: 100%;
   bottom: 0;
   padding-bottom: var(--safe-area-inset-bottom);
@@ -36,7 +36,7 @@
  * CMP:
  * Epic
  */
-.Epic .FixedLayout--bottom {
+.Epic .FixedLayout--vertical-bottom {
   padding-bottom: calc(var(--tabbar_height) + var(--safe-area-inset-bottom));
 }
 
@@ -44,8 +44,8 @@
  * CMP:
  * PanelHeader
  */
-.PanelHeader ~ .FixedLayout--top,
-.PanelHeader ~ * .FixedLayout--top:not(.PanelHeader__fixed) {
+.PanelHeader ~ .FixedLayout--vertical-top,
+.PanelHeader ~ * .FixedLayout--vertical-top:not(.PanelHeader__fixed) {
   top: calc(
     var(--vkui--size_panel_header_height--regular) + var(--safe-area-inset-top)
   );

@@ -29,7 +29,7 @@ export const Footnote = ({
       vkuiClass={classNames(
         "Footnote",
         caps && "Footnote--caps",
-        weight && `Footnote--w-${weight}`
+        weight && `Footnote--weight-${weight}`
       )}
     >
       {children}

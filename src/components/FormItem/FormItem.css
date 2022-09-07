@@ -33,11 +33,11 @@
   padding-top: 8px;
 }
 
-.FormItem--error .FormItem__bottom {
+.FormItem--status-error .FormItem__bottom {
   color: var(--vkui--color_text_negative);
 }
 
-.FormItem--valid .FormItem__bottom,
+.FormItem--status-valid .FormItem__bottom,
 .FormItem--verified .FormItem__bottom {
   color: var(--vkui--color_text_positive);
 }
@@ -68,7 +68,7 @@
  * CMP:
  * FormLayoutGroup
  */
-.FormLayoutGroup--horizontal .FormItem {
+.FormLayoutGroup--mode-horizontal .FormItem {
   max-width: 100%;
   flex-grow: 1;
   flex-shrink: 0;
@@ -77,21 +77,21 @@
   min-width: 1px;
 }
 
-.FormLayoutGroup--horizontal:not(.FormLayoutGroup--segmented)
+.FormLayoutGroup--mode-horizontal:not(.FormLayoutGroup--segmented)
   .FormItem
   + .FormItem {
   margin-left: 24px;
 }
 
 .FormItem--withTop .FormItem__removable,
-.FormLayoutGroup--horizontal .FormItem--withTop {
+.FormLayoutGroup--mode-horizontal .FormItem--withTop {
   margin-top: calc(
     -2px - var(--vkui--font_subhead--line_height--regular) - 8px
   );
 }
 
 .FormItem--sizeY-compact.FormItem--withTop .FormItem__removable,
-.FormLayoutGroup--horizontal .FormItem--sizeY-compact.FormItem--withTop {
+.FormLayoutGroup--mode-horizontal .FormItem--sizeY-compact.FormItem--withTop {
   margin-top: calc(
     -2px - var(--vkui--font_subhead--line_height--compact) - 6px
   );
@@ -99,7 +99,7 @@
 
 @media (--sizeY-compact) {
   .FormItem--sizeY-none.FormItem--withTop .FormItem__removable,
-  .FormLayoutGroup--horizontal .FormItem--sizeY-none.FormItem--withTop {
+  .FormLayoutGroup--mode-horizontal .FormItem--sizeY-none.FormItem--withTop {
     margin-top: calc(
       -2px - var(--vkui--font_subhead--line_height--compact) - 6px
     );

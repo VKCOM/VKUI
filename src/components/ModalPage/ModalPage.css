@@ -47,15 +47,15 @@
   }
 }
 
-.ModalPage--s .ModalPage__in-wrap {
+.ModalPage--size-s .ModalPage__in-wrap {
   max-width: var(--vkui--size_popup_small--regular);
 }
 
-.ModalPage--m .ModalPage__in-wrap {
+.ModalPage--size-m .ModalPage__in-wrap {
   max-width: var(--vkui--size_popup_medium--regular);
 }
 
-.ModalPage--l .ModalPage__in-wrap {
+.ModalPage--size-l .ModalPage__in-wrap {
   max-width: var(--vkui--size_popup_large--regular);
 }
 

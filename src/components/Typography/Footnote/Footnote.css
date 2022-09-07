@@ -15,14 +15,14 @@
   text-transform: uppercase;
 }
 
-.Footnote--w-1 {
+.Footnote--weight-1 {
   font-weight: var(--vkui--font_weight_accent1);
 }
 
-.Footnote--w-2 {
+.Footnote--weight-2 {
   font-weight: var(--vkui--font_weight_accent2);
 }
 
-.Footnote--w-3 {
+.Footnote--weight-3 {
   font-weight: var(--vkui--font_weight_accent3);
 }

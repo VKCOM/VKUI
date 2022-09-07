@@ -57,7 +57,7 @@ export interface SnackbarProps
  */
 export const Snackbar = ({
   children,
-  layout = "horizontal",
+  layout: layoutProps = "horizontal",
   action,
   before,
   after,
@@ -186,7 +186,7 @@ export const Snackbar = ({
 
   React.useEffect(() => closeTimeout.set(), [closeTimeout]);
 
-  const resolvedLayout = after || isDesktop ? "vertical" : layout;
+  const layout = after || isDesktop ? "vertical" : layoutProps;
 
   return (
     <AppRootPortal>
@@ -195,8 +195,8 @@ export const Snackbar = ({
         vkuiClass={classNames(
           "Snackbar",
           platform === Platform.IOS && "Snackbar--ios",
-          `Snackbar--l-${resolvedLayout}`,
-          `Snackbar--${mode}`,
+          `Snackbar--layout-${layout}`,
+          `Snackbar--mode-${mode}`,
           closing && "Snackbar--closing",
           touched && "Snackbar--touched",
           isDesktop && "Snackbar--desktop"

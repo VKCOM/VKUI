@@ -48,7 +48,7 @@ export const FormLayoutGroup = ({
       vkuiClass={classNames(
         "FormLayoutGroup",
         getSizeYClassName("FormLayoutGroup", sizeY),
-        `FormLayoutGroup--${mode}`,
+        `FormLayoutGroup--mode-${mode}`,
         isRemovable && "FormLayoutGroup--removable",
         isSegmented && "FormLayoutGroup--segmented"
       )}

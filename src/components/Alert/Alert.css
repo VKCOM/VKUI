@@ -227,11 +227,11 @@
   }
 }
 
-.Alert--ios .Alert__action--cancel {
+.Alert--ios .Alert__action--mode-cancel {
   font-weight: 600;
 }
 
-.Alert--ios .Alert__action--destructive {
+.Alert--ios .Alert__action--mode-destructive {
   color: var(--vkui--color_text_negative);
 }
 
@@ -256,7 +256,7 @@
   order: 2;
 }
 
-.Alert--vkcom .Alert__button--cancel {
+.Alert--vkcom .Alert__button--mode-cancel {
   order: 1;
 }
 

@@ -30,9 +30,9 @@ export const Caption = ({
       {...restProps}
       vkuiClass={classNames(
         "Caption",
-        `Caption--l-${level}`,
+        `Caption--level-${level}`,
         caps && "Caption--caps",
-        weight && `Caption--w-${weight}`
+        weight && `Caption--weight-${weight}`
       )}
     >
       {children}

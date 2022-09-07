@@ -7,7 +7,6 @@ import {
 } from "@vkontakte/icons";
 import { Tappable, TappableElementProps } from "../Tappable/Tappable";
 import { classNames } from "../../lib/classNames";
-import { SelectType } from "../Select/Select";
 import { CustomSelect } from "../CustomSelect/CustomSelect";
 import { SizeType } from "../../lib/adaptivity";
 import { getMonths, getYears } from "../../lib/calendar";
@@ -146,7 +145,7 @@ export const CalendarHeader = ({
               icon={<Icon12Dropdown />}
               onChange={onMonthsChange}
               forceDropdownPortal={false}
-              selectType={SelectType.accent}
+              selectType="accent"
               aria-label={changeMonthAriaLabel}
             />
             <CustomSelect
@@ -158,7 +157,7 @@ export const CalendarHeader = ({
               icon={<Icon12Dropdown />}
               onChange={onYearChange}
               forceDropdownPortal={false}
-              selectType={SelectType.accent}
+              selectType="accent"
               aria-label={changeYearAriaLabel}
             />
           </div>

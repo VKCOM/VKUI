@@ -47,7 +47,7 @@ export const Group = (props: GroupProps) => {
     children,
     separator = "auto",
     getRootRef,
-    mode,
+    mode: modeProps,
     padding = "m",
     ...restProps
   } = props;
@@ -55,11 +55,11 @@ export const Group = (props: GroupProps) => {
   const platform = usePlatform();
   const { sizeX } = useAdaptivity();
 
-  let computedMode: GroupProps["mode"] | "none" = mode;
+  let mode: GroupProps["mode"] | "none" = modeProps;
 
-  if (!mode) {
+  if (!modeProps) {
     // Подробнее в "none" можно прочитать в ADAPTIVITY_GUIDE.md
-    computedMode = isInsideModal ? "plain" : "none";
+    mode = isInsideModal ? "plain" : "none";
   }
 
   const separatorClassName = classNamesString(
@@ -75,7 +75,7 @@ export const Group = (props: GroupProps) => {
         "Group",
         platform === Platform.IOS && "Group--ios",
         getSizeXClassName("Group", sizeX),
-        computedMode && `Group--${computedMode}`,
+        mode && `Group--mode-${mode}`,
         `Group--padding-${padding}`
       )}
     >

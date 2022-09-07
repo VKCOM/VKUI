@@ -47,8 +47,8 @@ export const Headline = ({
       vkuiClass={classNames(
         "Headline",
         getSizeYClassName("Headline", sizeY),
-        `Headline--l-${level}`,
-        `Headline--w-${weight}`
+        `Headline--level-${level}`,
+        `Headline--weight-${weight}`
       )}
     >
       {children}

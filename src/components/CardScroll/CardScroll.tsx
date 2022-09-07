@@ -1,9 +1,7 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { usePlatform } from "../../hooks/usePlatform";
 import {
   HorizontalScroll,
   HorizontalScrollProps,
@@ -30,7 +28,6 @@ export const CardScroll = ({
   withSpaces = true,
   ...restProps
 }: CardScrollProps) => {
-  const platform = usePlatform();
   const { sizeX } = useAdaptivity();
 
   const refContainer = React.useRef<HTMLDivElement>(null);
@@ -99,9 +96,9 @@ export const CardScroll = ({
     <div
       {...restProps}
       vkuiClass={classNames(
-        getClassName("CardScroll", platform),
+        "CardScroll",
         getSizeXClassName("CardScroll", sizeX),
-        `CardScroll--${size}`,
+        `CardScroll--size-${size}`,
         withSpaces && "CardScroll--withSpaces"
       )}
     >

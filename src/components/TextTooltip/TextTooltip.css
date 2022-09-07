@@ -11,38 +11,38 @@
   color: var(--vkui--color_background_modal);
 }
 
-.TextTooltip--accent {
+.TextTooltip--appearance-accent {
   background-color: var(--vkui--color_background_accent_tint);
   color: var(--vkui--color_text_contrast);
 }
 
-.TextTooltip--accent .TextTooltip__arrow {
+.TextTooltip--appearance-accent .TextTooltip__arrow {
   color: var(--vkui--color_background_accent_tint);
 }
 
-.TextTooltip--white {
+.TextTooltip--appearance-white {
   background-color: var(--vkui--color_background_contrast);
   color: var(--vkui--color_text_primary_invariably);
 }
 
-.TextTooltip--white .TextTooltip__arrow {
+.TextTooltip--appearance-white .TextTooltip__arrow {
   color: var(--vkui--color_background_contrast);
 }
 
-.TextTooltip--black {
+.TextTooltip--appearance-black {
   background-color: var(--vkui--color_background_contrast_inverse);
   color: var(--vkui--color_text_contrast);
 }
 
-.TextTooltip--black .TextTooltip__arrow {
+.TextTooltip--appearance-black .TextTooltip__arrow {
   color: var(--vkui--color_background_contrast_inverse);
 }
 
-.TextTooltip--inversion {
+.TextTooltip--appearance-inversion {
   background-color: var(--vkui--color_background_modal_inverse);
   color: var(--vkui--color_text_contrast_themed);
 }
 
-.TextTooltip--inversion .TextTooltip__arrow {
+.TextTooltip--appearance-inversion .TextTooltip__arrow {
   color: var(--vkui--color_background_modal_inverse);
 }

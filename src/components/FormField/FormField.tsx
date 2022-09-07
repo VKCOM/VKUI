@@ -5,11 +5,6 @@ import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import "./FormField.css";
 
-export const FormFieldMode = {
-  default: "default",
-  plain: "plain",
-} as const;
-
 export interface FormFieldProps {
   status?: "default" | "error" | "valid";
   /**
@@ -30,7 +25,7 @@ export interface FormFieldProps {
    * - Используйте [IconButton](https://vkcom.github.io/VKUI/#/IconButton), если вам нужна кликабельная иконка.
    */
   after?: React.ReactNode;
-  mode?: keyof typeof FormFieldMode;
+  mode?: "default" | "plain";
 }
 
 interface FormFieldOwnProps
@@ -52,7 +47,7 @@ export const FormField = ({
   before,
   after,
   disabled,
-  mode = FormFieldMode.default,
+  mode = "default",
   ...restProps
 }: FormFieldOwnProps) => {
   const { sizeY } = useAdaptivity();
@@ -77,7 +72,7 @@ export const FormField = ({
       onMouseLeave={handleMouseLeave}
       vkuiClass={classNames(
         "FormField",
-        `FormField--${mode}`,
+        `FormField--mode-${mode}`,
         `FormField--status-${status}`,
         getSizeYClassName("FormField", sizeY),
         disabled && "FormField--disabled",

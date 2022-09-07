@@ -47,7 +47,7 @@ export const Tabs = ({
           `Tabs--${platform}`,
         getSizeXClassName("Tabs", sizeX),
         withGaps && "Tabs--withGaps",
-        `Tabs--${mode}`
+        `Tabs--mode-${mode}`
       )}
     >
       <div vkuiClass="Tabs__in">

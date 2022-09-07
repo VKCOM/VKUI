@@ -6,7 +6,7 @@
   box-sizing: border-box;
 }
 
-.SegmentedControl--l {
+.SegmentedControl--size-l {
   height: 36px;
 }
 
@@ -48,7 +48,7 @@
   height: 36px;
 }
 
-.SegmentedControl--sizeY-regular.SegmentedControl--l {
+.SegmentedControl--sizeY-regular.SegmentedControl--size-l {
   height: 44px;
 }
 
@@ -57,7 +57,7 @@
     height: 36px;
   }
 
-  .SegmentedControl--sizeY-none.SegmentedControl--l {
+  .SegmentedControl--sizeY-none.SegmentedControl--size-l {
     height: 44px;
   }
 }

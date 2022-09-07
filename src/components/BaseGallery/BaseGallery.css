@@ -10,7 +10,7 @@
   position: relative;
 }
 
-.Gallery--center .Gallery__viewport {
+.Gallery--mode-center .Gallery__viewport {
   margin: 0 auto;
 }
 

@@ -40,8 +40,8 @@ export const HorizontalScrollArrow = ({
       hasActive={false}
       vkuiClass={classNames(
         "HorizontalScrollArrow",
-        `HorizontalScrollArrow--${size}`,
-        `HorizontalScrollArrow--${direction}`,
+        `HorizontalScrollArrow--size-${size}`,
+        `HorizontalScrollArrow--direction-${direction}`,
         platform === Platform.IOS && "HorizontalScrollArrow--ios"
       )}
       onClick={onClick}

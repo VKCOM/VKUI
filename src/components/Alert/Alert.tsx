@@ -98,7 +98,10 @@ const AlertAction = ({
     return (
       <Tappable
         Component={action.href ? "a" : Component}
-        vkuiClass={classNames("Alert__action", `Alert__action--${action.mode}`)}
+        vkuiClass={classNames(
+          "Alert__action",
+          `Alert__action--mode-${action.mode}`
+        )}
         onClick={handleItemClick}
         href={action.href}
         target={action.target}
@@ -117,7 +120,10 @@ const AlertAction = ({
 
   return (
     <Button
-      vkuiClass={classNames("Alert__button", `Alert__button--${action.mode}`)}
+      vkuiClass={classNames(
+        "Alert__button",
+        `Alert__button--mode-${action.mode}`
+      )}
       mode={mode}
       size="m"
       onClick={handleItemClick}

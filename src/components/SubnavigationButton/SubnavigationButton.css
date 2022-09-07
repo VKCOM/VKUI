@@ -14,7 +14,7 @@
  * size s
  */
 
-.SubnavigationButton--s .SubnavigationButton__in {
+.SubnavigationButton--size-s .SubnavigationButton__in {
   height: var(--vkui--size_button_small_height--regular);
 }
 
@@ -22,7 +22,7 @@
  * size m
  */
 
-.SubnavigationButton--m .SubnavigationButton__in {
+.SubnavigationButton--size-m .SubnavigationButton__in {
   height: var(--vkui--size_button_medium_height--regular);
 }
 
@@ -30,7 +30,7 @@
  * size l
  */
 
-.SubnavigationButton--l .SubnavigationButton__in {
+.SubnavigationButton--size-l .SubnavigationButton__in {
   height: var(--vkui--size_button_large_height--regular);
 }
 
@@ -40,17 +40,17 @@
  * TODO v5.0.0 поправить под новую адаптивность
  */
 
-.SubnavigationButton--sizeY-compact.SubnavigationButton--s
+.SubnavigationButton--sizeY-compact.SubnavigationButton--size-s
   .SubnavigationButton__in {
   height: var(--vkui--size_button_small_height--compact);
 }
 
-.SubnavigationButton--sizeY-compact.SubnavigationButton--m
+.SubnavigationButton--sizeY-compact.SubnavigationButton--size-m
   .SubnavigationButton__in {
   height: var(--vkui--size_button_medium_height--compact);
 }
 
-.SubnavigationButton--sizeY-compact.SubnavigationButton--l
+.SubnavigationButton--sizeY-compact.SubnavigationButton--size-l
   .SubnavigationButton__in {
   height: var(--vkui--size_button_large_height--compact);
 }
@@ -137,7 +137,7 @@
   margin-left: var(--vkui--size_subnavigation_bar_gap--regular);
 }
 
-.SubnavigationBar--fixed .SubnavigationButton {
+.SubnavigationBar--mode-fixed .SubnavigationButton {
   flex: 1;
   min-width: 0;
 }

@@ -1,6 +1,5 @@
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { SelectMimicry, SelectMimicryProps } from "./SelectMimicry";
-import { SelectType } from "../Select/Select";
 
 describe("SelectMimicry", () => {
   describeScreenshotFuzz(
@@ -22,7 +21,7 @@ describe("SelectMimicry", () => {
         multiline: [undefined, true],
       },
       {
-        selectType: [SelectType.plain, SelectType.accent],
+        selectType: ["plain", "accent"],
         children: ["Россия"],
         $adaptivity: "y",
       },

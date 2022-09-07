@@ -15,7 +15,7 @@ export const RadioGroup = ({
   ...restProps
 }: RadioGroupProps) => (
   <div
-    vkuiClass={classNames("RadioGroup", `RadioGroup--${mode}`)}
+    vkuiClass={classNames("RadioGroup", `RadioGroup--mode-${mode}`)}
     {...restProps}
   >
     {children}

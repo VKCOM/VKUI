@@ -58,7 +58,7 @@ export const FormItem = ({
       ref={rootEl}
       vkuiClass={classNames(
         "FormItem",
-        `FormItem--${status}`,
+        `FormItem--status-${status}`,
         getSizeYClassName("FormItem", sizeY),
         hasReactNode(top) && "FormItem--withTop",
         removable && "FormItem--removable"

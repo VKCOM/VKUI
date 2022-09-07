@@ -114,7 +114,7 @@ export const ModalPage = ({
         platform === Platform.VKCOM && "ModalPage--vkcom",
         getSizeXClassName("ModalPage", sizeX),
         isDesktop && "ModalPage--desktop",
-        size && `ModalPage--${size}`
+        `ModalPage--size-${size}`
       )}
     >
       <div vkuiClass="ModalPage__in-wrap" ref={refs.innerElement}>

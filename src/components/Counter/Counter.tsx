@@ -33,8 +33,8 @@ export const Counter = ({
       {...restProps}
       vkuiClass={classNames(
         "Counter",
-        `Counter--${mode}`,
-        `Counter--s-${size}`
+        `Counter--mode-${mode}`,
+        `Counter--size-${size}`
       )}
     >
       {hasReactNode(children) && (

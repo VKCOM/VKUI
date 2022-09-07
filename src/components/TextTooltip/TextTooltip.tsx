@@ -34,7 +34,10 @@ export const TextTooltip = ({
 }: TextTooltipProps) => {
   return (
     <HoverPopper
-      vkuiClass={classNames("TextTooltip", `TextTooltip--${appearance}`)}
+      vkuiClass={classNames(
+        "TextTooltip",
+        `TextTooltip--appearance-${appearance}`
+      )}
       arrow
       arrowClassName={prefixClass("TextTooltip__arrow")}
       content={

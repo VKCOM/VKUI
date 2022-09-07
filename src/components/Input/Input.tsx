@@ -34,7 +34,7 @@ export const Input = ({
     <FormField
       vkuiClass={classNames(
         "Input",
-        !!align && `Input--${align}`,
+        align && `Input--align-${align}`,
         getSizeYClassName("Input", sizeY),
         before && "Input--hasBefore",
         after && "Input--hasAfter"

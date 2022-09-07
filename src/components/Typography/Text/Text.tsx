@@ -47,7 +47,7 @@ export const Text = ({
       vkuiClass={classNames(
         "Text",
         getSizeYClassName("Text", sizeY),
-        weight && `Text--w-${weight}`
+        weight && `Text--weight-${weight}`
       )}
     >
       {children}

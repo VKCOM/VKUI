@@ -29,7 +29,7 @@ export const CardGrid = ({
       vkuiClass={classNames(
         "CardGrid",
         spaced && "CardGrid--spaced",
-        `CardGrid--${size}`,
+        `CardGrid--size-${size}`,
         getSizeXClassName("CardGrid", sizeX)
       )}
     >

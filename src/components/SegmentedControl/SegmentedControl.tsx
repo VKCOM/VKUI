@@ -92,7 +92,7 @@ export const SegmentedControl = ({
       vkuiClass={classNames(
         "SegmentedControl",
         getSizeYClassName("SegmentedControl", sizeY),
-        `SegmentedControl--${size}`
+        `SegmentedControl--size-${size}`
       )}
       ref={getRootRef}
     >

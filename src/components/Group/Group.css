@@ -8,7 +8,7 @@
 }
 
 .Group--sizeX-compact > .Group__separator--separator,
-.Group--plain > .Group__separator--separator {
+.Group--mode-plain > .Group__separator--separator {
   display: block;
 }
 
@@ -18,12 +18,12 @@
   }
 }
 
-.Group--sizeX-regular.Group--none > .Group__separator--spacing {
+.Group--sizeX-regular.Group--mode-none > .Group__separator--spacing {
   display: block;
 }
 
 @media (--sizeX-regular) {
-  .Group--sizeX-none.Group--none > .Group__separator--spacing {
+  .Group--sizeX-none.Group--mode-none > .Group__separator--spacing {
     display: block;
   }
 }
@@ -33,11 +33,11 @@
   padding-bottom: 8px;
 }
 
-.Group--card.Group--padding-s > .Group__inner {
+.Group--mode-card.Group--padding-s > .Group__inner {
   padding: 4px;
 }
 
-.Group--card.Group--padding-m > .Group__inner {
+.Group--mode-card.Group--padding-m > .Group__inner {
   padding: 8px;
 }
 
@@ -53,21 +53,21 @@
   }
 }
 
-.Group--card > .Group__inner {
+.Group--mode-card > .Group__inner {
   background: var(--vkui--color_background_content);
   border-radius: var(--vkui--size_border_radius_paper--regular);
   position: relative;
 }
 
 @media (--sizeX-regular) {
-  .Group--none.Group--sizeX-none > .Group__inner {
+  .Group--mode-none.Group--sizeX-none > .Group__inner {
     background: var(--vkui--color_background_content);
     border-radius: var(--vkui--size_border_radius_paper--regular);
     position: relative;
   }
 }
 
-.Group--card > .Group__inner::after {
+.Group--mode-card > .Group__inner::after {
   content: "";
   left: 0;
   top: 0;
@@ -80,13 +80,13 @@
     var(--vkui--color_field_border_alpha);
 }
 
-.Group--plain > .Group__separator {
+.Group--mode-plain > .Group__separator {
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
 @media (--sizeX-compact) {
-  .Group--sizeX-none.Group--none > .Group__separator {
+  .Group--sizeX-none.Group--mode-none > .Group__separator {
     padding-top: 8px;
     padding-bottom: 8px;
   }
@@ -97,14 +97,17 @@
 }
 
 .Group:last-of-type > .Group__separator--force,
-.Group--sizeX-regular.Group--none:last-of-type > .Group__separator--spacing,
-.Group--sizeX-regular.Group--card:last-of-type > .Group__separator--spacing {
+.Group--sizeX-regular.Group--mode-none:last-of-type
+  > .Group__separator--spacing,
+.Group--sizeX-regular.Group--mode-card:last-of-type
+  > .Group__separator--spacing {
   display: block;
 }
 
 @media (--sizeX-regular) {
-  .Group--sizeX-none.Group--card:last-of-type > .Group__separator--spacing,
-  .Group--sizeX-none.Group--none:last-of-type > .Group__separator--spacing {
+  .Group--sizeX-none.Group--mode-card:last-of-type > .Group__separator--spacing,
+  .Group--sizeX-none.Group--mode-none:last-of-type
+    > .Group__separator--spacing {
     display: block;
   }
 }

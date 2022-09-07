@@ -167,7 +167,7 @@ export interface SelectProps
   dropdownOffsetDistance?: number;
   fixDropdownWidth?: boolean;
   forceDropdownPortal?: boolean;
-  selectType?: keyof typeof SelectType;
+  selectType?: SelectType;
 }
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
@@ -194,7 +194,7 @@ export function CustomSelect(props: SelectProps) {
     onClose,
     fetching,
     forceDropdownPortal,
-    selectType = SelectType.default,
+    selectType = "default",
     autoHideScrollbar,
     autoHideScrollbarDelay,
     searchable = false,
