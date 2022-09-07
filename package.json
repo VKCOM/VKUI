@@ -75,7 +75,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "7.31.6",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "eslint-plugin-vkui": "file:./eslint-plugin-vkui",
+    "eslint-plugin-vkui": "file:./packages/eslint-plugin-vkui",
     "expect-playwright": "^0.2.6",
     "husky": "^8.0.1",
     "identity-obj-proxy": "^3.0.0",

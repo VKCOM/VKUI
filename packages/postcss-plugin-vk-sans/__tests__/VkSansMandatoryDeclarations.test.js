@@ -200,7 +200,7 @@ test("Test Custom Properties handling", () =>
       `.a { font-size: var(--avatar-size-40-font-size); letter-spacing: var(--vk-sans-ls-1); }`,
       {
         customPropertiesFiles: [
-          "postcss-plugin-vk-sans/__tests__/custom_properties.css",
+          "packages/postcss-plugin-vk-sans/__tests__/custom_properties.css",
         ],
       }
     ),

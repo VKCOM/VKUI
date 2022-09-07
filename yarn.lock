@@ -4955,7 +4955,7 @@ eslint-plugin-react@7.31.6:
     semver "^6.3.0"
     string.prototype.matchall "^4.0.7"
 
-"eslint-plugin-vkui@file:./eslint-plugin-vkui":
+"eslint-plugin-vkui@file:./packages/eslint-plugin-vkui":
   version "1.0.0"
 
 eslint-scope@5.1.1, eslint-scope@^5.1.1:

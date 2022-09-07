@@ -1,19 +1,19 @@
 const path = require("path");
 const cssCustomProperties = require("postcss-custom-properties");
-const scopeRoot = require("./tasks/postcss-scope-root");
-const restructureVariable = require("./tasks/postcss-restructure-variable");
+const scopeRoot = require("./packages/postcss-scope-root");
+const restructureVariable = require("./packages/postcss-restructure-variable");
 const cssImport = require("postcss-import");
 const autoprefixer = require("autoprefixer");
 const cssModules = require("postcss-modules");
 const cssnano = require("cssnano");
-const checkKeyframes = require("./tasks/postcss-check-keyframes");
+const checkKeyframes = require("./packages/postcss-check-keyframes");
 const {
   generateScopedName,
   cssCustomPropertiesPaths,
   getCustomMedias,
 } = require("./shared");
 // TODO: включить после добавления поддержки VK-Sans-Text
-// const VkSansMandatoryDeclarations = require("./postcss-plugin-vk-sans");
+// const VkSansMandatoryDeclarations = require("./packages/postcss-plugin-vk-sans");
 const postcssCustomMedia = require("postcss-custom-media");
 
 module.exports = (ctx) => {

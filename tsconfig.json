@@ -36,12 +36,11 @@
     "e2e/**/*.ts",
     "e2e/**/*.tsx",
     "e2e/**/*.js",
-    "tasks/**/*.js",
     ".github/**/*.js",
-    "eslint-plugin-vkui/*.js",
-    "postcss-plugin-vk-sans/*.js",
+    "packages/**/*.js",
     "*.js"
   ],
+  "exclude": ["packages/token-translator/**/*"],
   "files": [
     "node_modules/jest-playwright-preset/types/global.d.ts",
     "node_modules/expect-playwright/global.d.ts",

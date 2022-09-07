@@ -6,8 +6,8 @@ module.exports = {
   plugins: [
     "stylelint-value-no-unknown-custom-properties",
     "stylelint-media-use-custom-media",
-    "./tasks/stylelint-atomic",
-    "./tasks/stylelint-bad-multiplication",
+    "./packages/stylelint-atomic",
+    "./packages/stylelint-bad-multiplication",
   ],
   rules: {
     indentation: null,

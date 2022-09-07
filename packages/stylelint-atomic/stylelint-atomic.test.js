@@ -1,7 +1,7 @@
-const { ruleName } = require("./stylelint-atomic");
+const { ruleName } = require(".");
 
 testRule({
-  plugins: ["./tasks/stylelint-atomic.js"],
+  plugins: ["./packages/stylelint-atomic"],
   ruleName,
   config: true,
   codeFilename: "src/Cmp.css",
