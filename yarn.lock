@@ -12126,6 +12126,15 @@ wait-port@^0.2.9:
     commander "^3.0.2"
     debug "^4.1.1"
 
+wait-port@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/wait-port/-/wait-port-0.3.1.tgz#d4309654b88a82333459eb264bc278e0be998d37"
+  integrity sha512-o8kW8xjslQDrbazXgXeDFt53l128J9xBAiG4aBmr9DcQA05jt0VBf2TE2vc9rxctgZjIuWpiXuO0gIYFo3pZSA==
+  dependencies:
+    chalk "^4.1.2"
+    commander "^9.3.0"
+    debug "^4.3.4"
+
 walker@^1.0.7, walker@~1.0.5:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/walker/-/walker-1.0.7.tgz#2f7f9b8fd10d677262b18a884e28d19618e028fb"
