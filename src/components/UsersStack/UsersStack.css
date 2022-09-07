@@ -21,17 +21,17 @@
   border-radius: 50%;
 }
 
-.UsersStack--size-xs .UsersStack__photo {
+.UsersStack--size-s .UsersStack__photo {
   width: 16px;
   height: 16px;
 }
 
-.UsersStack--size-s .UsersStack__photo {
+.UsersStack--size-m .UsersStack__photo {
   width: 24px;
   height: 24px;
 }
 
-.UsersStack--size-m .UsersStack__photo {
+.UsersStack--size-l .UsersStack__photo {
   width: 32px;
   height: 32px;
 }
@@ -48,12 +48,12 @@
 
 /* Vertical layout */
 
-.UsersStack--l-vertical {
+.UsersStack--layout-vertical {
   flex-direction: column;
   justify-content: center;
 }
 
-.UsersStack--l-vertical .UsersStack__text {
+.UsersStack--layout-vertical .UsersStack__text {
   margin: 8px 0 0;
   text-align: center;
 }

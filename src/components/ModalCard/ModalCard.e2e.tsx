@@ -60,7 +60,7 @@ const propSets = [
     children: [
       <UsersStack
         photos={["", "", "", ""]}
-        size="m"
+        size="l"
         visibleCount={3}
         key="usersstack"
         layout="vertical"
