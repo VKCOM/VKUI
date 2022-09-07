@@ -38,7 +38,7 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
         before={
           <Image style={{ backgroundImage: musicGradient }}>
             <Icon28MusicOutline fill="#fff" />
-          </Avatar>
+          </Image>
         }
         header="Подписка за рубль!"
         subheader="Предложение действует только до конца февраля"
