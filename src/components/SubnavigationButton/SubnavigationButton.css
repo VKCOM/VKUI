@@ -111,7 +111,7 @@
  */
 
 .SubnavigationButton--selected {
-  background-color: var(--vkui--color_background_accent);
+  background-color: var(--vkui--color_background_accent_themed);
   color: var(--vkui--color_text_contrast);
   box-shadow: none;
   border: none;
