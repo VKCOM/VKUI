@@ -54,25 +54,29 @@ export const WriteBarIcon = ({
     case "attach":
       icon =
         platform === Platform.IOS ? (
-          <Icon28AddCircleOutline />
+          <Icon28AddCircleOutline aria-hidden />
         ) : (
-          <Icon28AttachOutline />
+          <Icon28AttachOutline aria-hidden />
         );
       ariaLabel = "Прикрепить файл";
       break;
 
     case "send":
       icon =
-        platform === Platform.IOS ? <Icon48WritebarSend /> : <Icon24Send />;
+        platform === Platform.IOS ? (
+          <Icon48WritebarSend aria-hidden />
+        ) : (
+          <Icon24Send aria-hidden />
+        );
       ariaLabel = "Отправить";
       break;
 
     case "done":
       icon =
         platform === Platform.IOS ? (
-          <Icon48WritebarDone />
+          <Icon48WritebarDone aria-hidden />
         ) : (
-          <Icon28CheckCircleOutline />
+          <Icon28CheckCircleOutline aria-hidden />
         );
       ariaLabel = "Готово";
       break;
