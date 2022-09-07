@@ -44,7 +44,7 @@ function rangeTranslate(number: number) {
 
 export interface ModalRootProps extends HasPlatform {
   activeModal?: string | null;
-
+  hasClosing?: boolean | null;
   /**
    * Будет вызвано при начале открытия активной модалки с её id
    */
@@ -135,6 +135,7 @@ class ModalRootTouchComponent extends React.Component<
   getModals() {
     return React.Children.toArray(this.props.children) as React.ReactElement[];
   }
+
 
   componentDidMount() {
     // Отслеживаем изменение размеров viewport (Необходимо для iOS)
@@ -325,7 +326,7 @@ class ModalRootTouchComponent extends React.Component<
   }
 
   onTouchMove = (e: TouchEvent) => {
-    if (this.props.exitingModal) {
+    if (this.props.exitingModal || this.props.hasClosing) {
       return;
     }
     const modalState = this.getModalState(this.props.activeModal);
