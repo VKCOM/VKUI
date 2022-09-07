@@ -498,7 +498,7 @@ const App = () => {
             getAvatarUrl("user_arthurstam"),
             getAvatarUrl("user_xyz"),
           ]}
-          size="m"
+          size="l"
           visibleCount={3}
           layout="vertical"
         >

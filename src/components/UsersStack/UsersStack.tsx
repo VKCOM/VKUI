@@ -13,7 +13,7 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Размер аватарок
    */
-  size?: "xs" | "s" | "m"; // TODO: "s" | "m" | "l"
+  size?: "s" | "m" | "l";
   /**
    * Вертикальный режим рекомендуется использовать с размером `m`
    */
@@ -97,18 +97,18 @@ export const UsersStack = ({
   photos = [],
   visibleCount = 3,
   count = Math.max(0, photos.length - visibleCount),
-  size = "s",
+  size = "m",
   layout = "horizontal",
   children,
   ...restProps
 }: UsersStackProps) => {
-  const canShowOthers = count > 0 && size !== "xs";
+  const canShowOthers = count > 0 && size !== "s";
   const CounterTypography = size === "m" ? Footnote : Caption;
 
   const photoSize = {
-    xs: 16,
-    s: 24,
-    m: 32,
+    s: 16,
+    m: 24,
+    l: 32,
   }[size];
   const directionClip = canShowOthers ? "right" : "left";
 
@@ -120,7 +120,7 @@ export const UsersStack = ({
       vkuiClass={classNames(
         "UsersStack",
         `UsersStack--size-${size}`,
-        `UsersStack--l-${layout}`,
+        `UsersStack--layout-${layout}`,
         canShowOthers && "UsersStack--others"
       )}
     >

@@ -452,6 +452,27 @@ npx @vkontakte/vkui-token-translator
   </SubnavigationButton>
 ```
 
+## [`UsersStack`](#/UsersStack)
+
+- Свойство `size` теперь имеет тип `"s" | "m" | "l"`
+
+```diff
+  <UsersStack
+-   size="xs"
++   size="s"
+  />
+
+  <UsersStack
+-   size="s"
++   size="m"
+  />
+
+  <UsersStack
+-   size="m"
++   size="l"
+  />
+```
+
 ## [`Search`](#/Search)
 
 - Внешний вид для `VKCOM` теперь соответствует `ANDROID`

@@ -20,7 +20,7 @@ export interface RichCellProps extends TappableProps {
    */
   caption?: React.ReactNode;
   /**
-   * Контейнер для контента под `caption`. Например `<UsersStack size="s" />`.
+   * Контейнер для контента под `caption`. Например `<UsersStack size="m" />`.
    */
   bottom?: React.ReactNode;
   /**
