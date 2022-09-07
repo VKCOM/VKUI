@@ -16,7 +16,7 @@ export interface CustomSelectDropdownProps
     TrackerOptionsProps {
   targetRef: React.RefObject<HTMLElement>;
   placement?: Placement;
-  scrollBoxRef?: React.RefObject<HTMLDivElement>;
+  scrollBoxRef?: React.Ref<HTMLDivElement>;
   observableRefs?:
     | Array<React.RefObject<HTMLElement>>
     | React.RefObject<HTMLElement>;

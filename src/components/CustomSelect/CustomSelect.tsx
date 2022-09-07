@@ -213,7 +213,7 @@ export function CustomSelect(props: SelectProps) {
   }
 
   const containerRef = React.useRef<HTMLLabelElement>(null);
-  const scrollBoxRef = React.useRef<HTMLDivElement>(null);
+  const scrollBoxRef = React.useRef<HTMLDivElement | null>(null);
   const selectElRef = React.useRef<HTMLSelectElement>(null);
 
   const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<
@@ -338,6 +338,23 @@ export function CustomSelect(props: SelectProps) {
     return scrollBoxRef.current !== null;
   }, []);
 
+  const setScrollBoxRef = React.useCallback(
+    (ref: HTMLDivElement | null) => {
+      scrollBoxRef.current = ref;
+
+      if (
+        ref &&
+        selectedOptionIndex !== undefined &&
+        isValidIndex(selectedOptionIndex)
+      ) {
+        {
+          scrollToElement(selectedOptionIndex, true);
+        }
+      }
+    },
+    [isValidIndex, scrollToElement, selectedOptionIndex]
+  );
+
   const onKeyboardInput = React.useCallback(
     (key: string) => {
       const fullInput = keyboardInput + key;
@@ -384,16 +401,6 @@ export function CustomSelect(props: SelectProps) {
       onOpen();
     }
   }, [onOpen, selectedOptionIndex]);
-
-  React.useEffect(() => {
-    if (
-      opened &&
-      selectedOptionIndex !== undefined &&
-      isValidIndex(selectedOptionIndex)
-    ) {
-      scrollToElement(selectedOptionIndex, true);
-    }
-  }, [isValidIndex, opened, scrollToElement, selectedOptionIndex]);
 
   const onBlur = React.useCallback(() => {
     close();
@@ -735,7 +742,7 @@ export function CustomSelect(props: SelectProps) {
         <CustomSelectDropdown
           targetRef={containerRef}
           placement={popupDirection}
-          scrollBoxRef={scrollBoxRef}
+          scrollBoxRef={setScrollBoxRef}
           onPlacementChange={setPopperPlacement}
           onMouseLeave={resetFocusedOption}
           fetching={fetching}
