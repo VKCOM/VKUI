@@ -34,11 +34,11 @@
   background: rgba(0, 0, 0, 0.4);
 }
 
-.PanelHeaderContext--sizeX-regular .PanelHeaderContext__fade {
+.PanelHeaderContext--sizeX-compact .PanelHeaderContext__fade {
   display: block;
 }
 
-@media (--sizeX-regular) {
+@media (--sizeX-compact) {
   .PanelHeaderContext--sizeX-none .PanelHeaderContext__fade {
     display: block;
   }

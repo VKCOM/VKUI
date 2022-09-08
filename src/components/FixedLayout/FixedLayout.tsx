@@ -44,9 +44,22 @@ export const FixedLayout = ({
   const [width, setWidth] = React.useState<string | undefined>(undefined);
   const { window } = useDOM();
   const { colRef } = React.useContext(SplitColContext);
-  const doResize = () =>
-    setWidth(colRef?.current ? `${colRef.current.offsetWidth}px` : undefined);
-  React.useEffect(doResize, [colRef]);
+  const doResize = () => {
+    if (colRef?.current) {
+      const computedStyle = getComputedStyle(colRef.current);
+
+      setWidth(
+        `${
+          colRef.current.clientWidth -
+          parseFloat(computedStyle.paddingLeft) -
+          parseFloat(computedStyle.paddingRight)
+        }px`
+      );
+    } else {
+      setWidth(undefined);
+    }
+  };
+  React.useEffect(doResize, [colRef, platform]);
   useGlobalEventListener(window, "resize", doResize);
 
   return (
