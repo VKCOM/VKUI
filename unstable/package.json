@@ -1,4 +1,0 @@
-{
-  "main": "../dist/cjs/unstable/index.js",
-  "module": "../dist/unstable/index.js"
-}
