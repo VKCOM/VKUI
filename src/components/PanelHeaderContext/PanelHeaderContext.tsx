@@ -53,9 +53,11 @@ export const PanelHeaderContext = ({
           elementRef.current &&
           !elementRef.current.contains(event.target as Node)
         ) {
+          event.stopPropagation();
           onClose();
         }
-      })
+      }),
+    { capture: true }
   );
 
   // fallback onAnimationEnd when animationend not supported
