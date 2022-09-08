@@ -47,9 +47,12 @@
 }
 
 @media (--sizeX-regular) {
-  .Group--sizeX-none > .Group__inner {
-    padding-left: 0;
-    padding-right: 0;
+  .Group--sizeX-none.Group--padding-s > .Group__inner {
+    padding: 4px;
+  }
+
+  .Group--sizeX-none.Group--padding-m > .Group__inner {
+    padding: 8px;
   }
 }
 
