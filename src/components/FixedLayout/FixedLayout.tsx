@@ -59,7 +59,7 @@ export const FixedLayout = ({
       setWidth(undefined);
     }
   };
-  React.useEffect(doResize, [colRef]);
+  React.useEffect(doResize, [colRef, platform]);
   useGlobalEventListener(window, "resize", doResize);
 
   return (
