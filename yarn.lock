@@ -12130,10 +12130,10 @@ wait-port@^0.2.9:
     commander "^3.0.2"
     debug "^4.1.1"
 
-wait-port@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/wait-port/-/wait-port-0.3.1.tgz#d4309654b88a82333459eb264bc278e0be998d37"
-  integrity sha512-o8kW8xjslQDrbazXgXeDFt53l128J9xBAiG4aBmr9DcQA05jt0VBf2TE2vc9rxctgZjIuWpiXuO0gIYFo3pZSA==
+wait-port@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/wait-port/-/wait-port-1.0.0.tgz#05d080d6bf31c15e92985accc487f8c72d358297"
+  integrity sha512-t+FzbdAucG6RpUbKBg0TJMdQrxWM7mHKPnp85kh6KbnSDS021FLLHtolBMtEANn22Uqcf2R6JeSCjYtkdhEcsA==
   dependencies:
     chalk "^4.1.2"
     commander "^9.3.0"
