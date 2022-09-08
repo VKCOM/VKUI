@@ -46,7 +46,7 @@ export const FixedLayout = ({
   const { colRef } = React.useContext(SplitColContext);
   const doResize = () =>
     setWidth(colRef?.current ? `${colRef.current.offsetWidth}px` : undefined);
-  React.useEffect(doResize, [colRef]);
+  React.useEffect(doResize, [colRef, platform]);
   useGlobalEventListener(window, "resize", doResize);
 
   return (
