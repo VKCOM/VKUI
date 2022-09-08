@@ -11,12 +11,12 @@
 }
 
 .SplitCol--sizeX-regular.SplitCol--spaced-none.SplitCol--spaced-auto {
-  padding: 0 var(--vkui--size_split_col_padding_horizontal--regular);
+  margin: 0 var(--vkui--size_split_col_padding_horizontal--regular);
 }
 
 @media (--sizeX-regular) {
   .SplitCol--sizeX-none.SplitCol--spaced-none.SplitCol--spaced-auto {
-    padding: 0 var(--vkui--size_split_col_padding_horizontal--regular);
+    margin: 0 var(--vkui--size_split_col_padding_horizontal--regular);
   }
 }
 
