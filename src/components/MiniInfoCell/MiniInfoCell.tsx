@@ -67,8 +67,8 @@ export const MiniInfoCell = ({
       {...restProps}
       vkuiClass={classNames(
         "MiniInfoCell",
-        `MiniInfoCell--${textWrap}`,
-        mode !== "base" && `MiniInfoCell--${mode}`
+        `MiniInfoCell--textWrap-${textWrap}`,
+        mode !== "base" && `MiniInfoCell--mode-${mode}`
       )}
     >
       <span vkuiClass="MiniInfoCell__before">{before}</span>

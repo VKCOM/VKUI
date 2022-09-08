@@ -102,7 +102,7 @@ export const WriteBarIcon = ({
       vkuiClass={classNames(
         "WriteBarIcon",
         platform === Platform.IOS && "WriteBarIcon--ios",
-        !!mode && `WriteBarIcon--${mode}`
+        mode && `WriteBarIcon--mode-${mode}`
       )}
     >
       <span vkuiClass="WriteBarIcon__in">

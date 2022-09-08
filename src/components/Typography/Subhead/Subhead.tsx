@@ -31,7 +31,7 @@ export const Subhead = ({
       vkuiClass={classNames(
         "Subhead",
         getSizeYClassName("Subhead", sizeY),
-        weight && `Subhead--w-${weight}`
+        weight && `Subhead--weight-${weight}`
       )}
     >
       {children}

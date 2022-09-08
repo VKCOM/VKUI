@@ -52,7 +52,7 @@ export const HorizontalCell = ({
 }: HorizontalCellProps) => {
   return (
     <div
-      vkuiClass={classNames("HorizontalCell", `HorizontalCell--${size}`)}
+      vkuiClass={classNames("HorizontalCell", `HorizontalCell--size-${size}`)}
       ref={getRootRef}
       style={style}
       className={className}

@@ -10,7 +10,7 @@
   border-radius: inherit;
 }
 
-.Card--md-shadow {
+.Card--mode-shadow {
   box-shadow: var(
     --vkui--elevation3,
     0 2px 24px 0 rgba(0, 0, 0, 0.08),
@@ -19,11 +19,11 @@
   background: var(--vkui--color_background_modal);
 }
 
-.Card--md-outline {
+.Card--mode-outline {
   background: var(--vkui--color_background_modal);
 }
 
-.Card--md-outline::before {
+.Card--mode-outline::before {
   position: absolute;
   left: 0;
   top: 0;
@@ -50,15 +50,15 @@
   margin-right: 0;
 }
 
-.CardScroll--s .Card {
+.CardScroll--size-s .Card {
   width: 40%;
 }
 
-.CardScroll--m .Card {
+.CardScroll--size-m .Card {
   width: 62%;
 }
 
-.CardScroll--l .Card {
+.CardScroll--size-l .Card {
   width: calc(100% - var(--vkui--size_base_padding_horizontal--regular) * 2);
   margin-right: var(--vkui--size_base_padding_horizontal--regular);
 }
@@ -68,23 +68,23 @@
  * Group
  * SplitCol
  */
-.Group--card .CardScroll--l .Card,
-.SplitCol--spaced .CardScroll--l .Card {
+.Group--mode-card .CardScroll--size-l .Card,
+.SplitCol--spaced .CardScroll--size-l .Card {
   width: calc(100% - 32px);
   margin-right: 16px;
 }
 
-.Group--card .CardScroll--l .Card:last-of-type,
-.SplitCol--spaced .CardScroll--l .Card:last-of-type {
+.Group--mode-card .CardScroll--size-l .Card:last-of-type,
+.SplitCol--spaced .CardScroll--size-l .Card:last-of-type {
   margin-right: 0;
 }
 
 @media (--sizeX-regular) {
-  .Group--none .CardScroll--l .Card:last-of-type {
+  .Group--mode-none .CardScroll--size-l .Card:last-of-type {
     margin-right: 0;
   }
 
-  .Group--none .CardScroll--l .Card {
+  .Group--mode-none .CardScroll--size-l .Card {
     width: calc(100% - 32px);
     margin-right: 16px;
   }

@@ -1,6 +1,4 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
-import { usePlatform } from "../../hooks/usePlatform";
 import { HasComponent, HasRef } from "../../types";
 import "./FormLayout.css";
 
@@ -20,11 +18,10 @@ export const FormLayout = ({
   onSubmit = preventDefault,
   ...restProps
 }: FormLayoutProps) => {
-  const platform = usePlatform();
   return (
     <Component
       {...restProps}
-      vkuiClass={getClassName("FormLayout", platform)}
+      vkuiClass="FormLayout"
       onSubmit={onSubmit}
       ref={getRef}
     >

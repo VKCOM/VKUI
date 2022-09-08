@@ -43,10 +43,10 @@
   color: var(--vkui--color_icon_accent);
 }
 
-.CellButton--danger {
+.CellButton--mode-danger {
   color: var(--vkui--color_text_negative);
 }
 
-.CellButton--danger > .Icon {
+.CellButton--mode-danger > .Icon {
   color: var(--vkui--color_icon_negative);
 }

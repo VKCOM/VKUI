@@ -56,8 +56,8 @@ export const PopoutWrapper = ({
       {...restProps}
       vkuiClass={classNames(
         "PopoutWrapper",
-        `PopoutWrapper--v-${alignY}`,
-        `PopoutWrapper--h-${alignX}`,
+        `PopoutWrapper--alignY-${alignY}`,
+        `PopoutWrapper--alignX-${alignX}`,
         closing && "PopoutWrapper--closing",
         opened && "PopoutWrapper--opened",
         fixed && "PopoutWrapper--fixed",

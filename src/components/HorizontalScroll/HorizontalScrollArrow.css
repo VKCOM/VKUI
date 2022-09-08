@@ -25,24 +25,24 @@
   justify-content: center;
 }
 
-.HorizontalScrollArrow--m .HorizontalScrollArrow__icon {
+.HorizontalScrollArrow--size-m .HorizontalScrollArrow__icon {
   width: 28px;
   height: 28px;
   border-radius: 14px;
 }
 
-.HorizontalScrollArrow--l .HorizontalScrollArrow__icon {
+.HorizontalScrollArrow--size-l .HorizontalScrollArrow__icon {
   width: 40px;
   height: 40px;
   border-radius: 24px;
 }
 
-.HorizontalScrollArrow--left {
+.HorizontalScrollArrow--direction-left {
   padding-left: var(--vkui--size_base_padding_horizontal--regular, 16px);
   left: 0;
 }
 
-.HorizontalScrollArrow--right {
+.HorizontalScrollArrow--direction-right {
   padding-right: var(--vkui--size_base_padding_horizontal--regular, 16px);
   right: 0;
 }

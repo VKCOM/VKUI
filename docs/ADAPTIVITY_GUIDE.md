@@ -79,21 +79,21 @@ _Component.module.css_
 
 В процессе перевода существующих компонентов на новую систему адаптивности возникли места в которых пришлось отступить от стандартного поведения:
 
-### `.Group--none`
+### `.Group--mode-none`
 
-В компоненте [Group](../src/components/Group/Group.tsx) появился класс `.Group--none`. Этот класс означает что у `Group` не передан `mode` и не удалось вычислить его автоматически. `.Group--none` должен вести себя как `.Group--card` при `sizeX=regular` и как `.Group--plain` при `sizeX=compact`.
+В компоненте [Group](../src/components/Group/Group.tsx) появился класс `.Group--mode-none`. Этот класс означает что у `Group` не передан `mode` и не удалось вычислить его автоматически. `.Group--mode-none` должен вести себя как `.Group--mode-card` при `sizeX=regular` и как `.Group--mode-plain` при `sizeX=compact`.
 
 Пример использования:
 
 ```css
-.Group--card .CardGrid {
+.Group--mode-card .CardGrid {
   padding-left: 8px;
   padding-right: 8px;
 }
 
 @media (--sizeX-regular) {
-  /* Применяем стили .Group--card если не задан `mode` и `sizeX=regular` */
-  .Group--none .CardGrid {
+  /* Применяем стили .Group--mode-card если не задан `mode` и `sizeX=regular` */
+  .Group--mode-none .CardGrid {
     padding-left: 8px;
     padding-right: 8px;
   }

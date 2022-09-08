@@ -28,7 +28,7 @@ export const Gradient = ({
       {...restProps}
       vkuiClass={classNames(
         "Gradient",
-        `Gradient--md-${mode}`,
+        `Gradient--mode-${mode}`,
         `Gradient--to-${to}`
       )}
     >

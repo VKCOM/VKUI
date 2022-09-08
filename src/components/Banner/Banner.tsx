@@ -154,8 +154,8 @@ export const Banner = ({
       vkuiClass={classNames(
         "Banner",
         platform === Platform.IOS && "Banner--ios",
-        `Banner--md-${mode}`,
-        `Banner--sz-${size}`,
+        `Banner--mode-${mode}`,
+        `Banner--size-${size}`,
         mode === "image" && imageTheme === "dark" && "Banner--inverted"
       )}
     >

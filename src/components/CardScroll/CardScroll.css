@@ -33,30 +33,30 @@
  * CMP:
  * Group
  */
-.Group--card .CardScroll--withSpaces {
+.Group--mode-card .CardScroll--withSpaces {
   margin-left: -8px;
   margin-right: -8px;
 }
 
-.Group--card .CardScroll--withSpaces:first-child {
+.Group--mode-card .CardScroll--withSpaces:first-child {
   padding-top: var(--vkui--size_cardgrid_padding_vertical--regular);
 }
 
-.Group--card .CardScroll--withSpaces:last-child {
+.Group--mode-card .CardScroll--withSpaces:last-child {
   padding-bottom: var(--vkui--size_cardgrid_padding_vertical--regular);
 }
 
 @media (--sizeX-regular) {
-  .Group--none .CardScroll--withSpaces {
+  .Group--mode-none .CardScroll--withSpaces {
     margin-left: -8px;
     margin-right: -8px;
   }
 
-  .Group--none .CardScroll--withSpaces:first-child {
+  .Group--mode-none .CardScroll--withSpaces:first-child {
     padding-top: var(--vkui--size_cardgrid_padding_vertical--regular);
   }
 
-  .Group--none .CardScroll--withSpaces:last-child {
+  .Group--mode-none .CardScroll--withSpaces:last-child {
     padding-bottom: var(--vkui--size_cardgrid_padding_vertical--regular);
   }
 }

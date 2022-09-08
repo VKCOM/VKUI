@@ -330,7 +330,7 @@ export const BaseGallery = ({
       {...restProps}
       vkuiClass={classNames(
         "Gallery",
-        `Gallery--${align}`,
+        `Gallery--align-${align}`,
         shiftState.dragging && "Gallery--dragging",
         slideWidth === "custom" && "Gallery--custom-width"
       )}

@@ -49,7 +49,7 @@ export const ImageBaseBadge = ({
     <div
       className={classNamesString(
         styles["ImageBaseBadge"],
-        styles[`ImageBaseBadge--bg-${background}`],
+        styles[`ImageBaseBadge--background-${background}`],
         className
       )}
     >

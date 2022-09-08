@@ -44,7 +44,7 @@ export const Tabbar = ({
       vkuiClass={classNames(
         "Tabbar",
         platform === Platform.IOS && "Tabbar--ios",
-        `Tabbar--l-${getItemsLayout(mode, children)}`,
+        `Tabbar-layout-${getItemsLayout(mode, children)}`,
         shadow && "Tabbar--shadow"
       )}
       {...restProps}

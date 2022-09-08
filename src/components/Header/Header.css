@@ -138,22 +138,24 @@
 /**
  * .Group
  */
-.Group--plain:not(:first-of-type) .Group__inner > .Header:first-child {
+.Group--mode-plain:not(:first-of-type) .Group__inner > .Header:first-child {
   margin-top: -16px;
 }
 
 @media (--sizeX-compact) {
-  .Group--none:not(:first-of-type) .Group__inner > .Header:first-child {
+  .Group--mode-none:not(:first-of-type) .Group__inner > .Header:first-child {
     margin-top: -16px;
   }
 }
 
-.Group--card > .Group__inner > .Header:not(.Header--mode-tertiary):first-child {
+.Group--mode-card
+  > .Group__inner
+  > .Header:not(.Header--mode-tertiary):first-child {
   margin-top: -4px;
 }
 
 @media (--sizeX-regular) {
-  .Group--none
+  .Group--mode-none
     > .Group__inner
     > .Header:not(.Header--mode-tertiary):first-child {
     margin-top: -4px;

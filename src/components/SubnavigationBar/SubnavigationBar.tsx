@@ -53,7 +53,10 @@ export const SubnavigationBar = ({
   return (
     <div
       {...restProps}
-      vkuiClass={classNames("SubnavigationBar", `SubnavigationBar--${mode}`)}
+      vkuiClass={classNames(
+        "SubnavigationBar",
+        `SubnavigationBar--mode-${mode}`
+      )}
     >
       <ScrollWrapper vkuiClass="SubnavigationBar__in" {...scrollWrapperProps}>
         <div vkuiClass="SubnavigationBar__scrollIn">{children}</div>

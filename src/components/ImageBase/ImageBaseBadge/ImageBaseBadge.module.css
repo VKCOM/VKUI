@@ -9,11 +9,11 @@
   padding: 2px;
 }
 
-.ImageBaseBadge--bg-stroke {
+.ImageBaseBadge--background-stroke {
   background-color: var(--vkui--color_background_content);
 }
 
-.ImageBaseBadge--bg-shadow::before {
+.ImageBaseBadge--background-shadow::before {
   content: "";
   position: absolute;
   top: 2px;

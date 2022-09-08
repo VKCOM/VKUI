@@ -13,6 +13,6 @@ export interface FocusVisibleProps {
 export const FocusVisible = ({ mode }: FocusVisibleProps) => (
   <span
     aria-hidden="true"
-    vkuiClass={classNames("FocusVisible", `FocusVisible--${mode}`)}
+    vkuiClass={classNames("FocusVisible", `FocusVisible--mode-${mode}`)}
   />
 );

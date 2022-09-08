@@ -69,7 +69,7 @@ export const SubnavigationButton = ({
       focusVisibleMode="outside"
       vkuiClass={classNames(
         "SubnavigationButton",
-        `SubnavigationButton--${size}`,
+        `SubnavigationButton--size-${size}`,
         `SubnavigationButton--mode-${mode}`,
         selected && "SubnavigationButton--selected",
         `SubnavigationButton--sizeY-${sizeY}`

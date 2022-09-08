@@ -14,36 +14,36 @@
   margin-right: var(--vkui--size_cardgrid_padding--regular);
 }
 
-.CardGrid--l .Card {
+.CardGrid--size-l .Card {
   width: 100%;
   margin-right: 0;
 }
 
-.CardGrid--l .Card:not(:first-child) {
+.CardGrid--size-l .Card:not(:first-child) {
   margin-top: var(--vkui--size_cardgrid_padding--regular);
 }
 
-.CardGrid--m .Card {
+.CardGrid--size-m .Card {
   width: calc((100% - 8px) / 2);
 }
 
-.CardGrid--m .Card:nth-child(n + 3) {
+.CardGrid--size-m .Card:nth-child(n + 3) {
   margin-top: var(--vkui--size_cardgrid_padding--regular);
 }
 
-.CardGrid--m .Card:nth-child(2n) {
+.CardGrid--size-m .Card:nth-child(2n) {
   margin-right: 0;
 }
 
-.CardGrid--s .Card {
+.CardGrid--size-s .Card {
   width: calc((100% - 2 * 8px) / 3);
 }
 
-.CardGrid--s .Card:nth-child(n + 4) {
+.CardGrid--size-s .Card:nth-child(n + 4) {
   margin-top: var(--vkui--size_cardgrid_padding--regular);
 }
 
-.CardGrid--s .Card:nth-child(3n) {
+.CardGrid--size-s .Card:nth-child(3n) {
   margin-right: 0;
 }
 
@@ -74,13 +74,13 @@
  * Group
  */
 
-.Group--card .CardGrid {
+.Group--mode-card .CardGrid {
   padding-left: 8px;
   padding-right: 8px;
 }
 
 @media (--sizeX-regular) {
-  .Group--none .CardGrid {
+  .Group--mode-none .CardGrid {
     padding-left: 8px;
     padding-right: 8px;
   }

@@ -39,7 +39,7 @@
   border-radius: var(--vkui--size_border_radius--regular);
 }
 
-.Snackbar--dark .Snackbar__body {
+.Snackbar--mode-dark .Snackbar__body {
   background: var(--vkui--color_background_contrast_inverse);
 }
 
@@ -60,7 +60,7 @@
   overflow: hidden;
 }
 
-.Snackbar--l-vertical .Snackbar__content {
+.Snackbar--layout-vertical .Snackbar__content {
   flex-direction: column;
   align-items: flex-start;
 }
@@ -75,18 +75,18 @@
   overflow: hidden;
 }
 
-.Snackbar--dark .Snackbar__content-text {
+.Snackbar--mode-dark .Snackbar__content-text {
   color: var(--vkui--color_text_contrast);
 }
 
-.Snackbar--l-horizontal .Snackbar__action {
+.Snackbar--layout-horizontal .Snackbar__action {
   margin-right: calc(
     -1 * var(--vkui--size_button_tertiary_small_padding_horizontal--regular)
   );
   position: relative;
 }
 
-.Snackbar--l-vertical .Snackbar__action {
+.Snackbar--layout-vertical .Snackbar__action {
   margin-bottom: -6px;
   margin-left: calc(
     -1 * var(--vkui--size_button_tertiary_small_padding_horizontal--regular)

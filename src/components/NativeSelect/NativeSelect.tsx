@@ -22,7 +22,7 @@ export interface NativeSelectProps
     Pick<FormFieldProps, "status"> {
   placeholder?: string;
   multiline?: boolean;
-  selectType?: keyof typeof SelectType;
+  selectType?: SelectType;
 }
 
 export interface SelectState {
@@ -45,7 +45,7 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
   getRootRef,
   disabled,
   multiline,
-  selectType = SelectType.default,
+  selectType = "default",
   status,
   ...restProps
 }: NativeSelectProps) => {
@@ -70,7 +70,6 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
       Component="label"
       vkuiClass={classNames(
         getClassName("Select", platform),
-        `Select--${selectType}`,
         empty && "Select--empty",
         multiline && "Select--multiline",
         align && `Select--align-${align}`,
@@ -96,7 +95,9 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
         {children}
       </select>
       <div vkuiClass="Select__container">
-        <SelectTypography vkuiClass="Select__title">{title}</SelectTypography>
+        <SelectTypography vkuiClass="Select__title" selectType={selectType}>
+          {title}
+        </SelectTypography>
       </div>
     </FormField>
   );

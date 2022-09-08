@@ -8,17 +8,13 @@ import { getClassName } from "../../helpers/getClassName";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { getMouseClassName } from "../../helpers/getMouseClassName";
 
-export const SelectType = {
-  default: "default",
-  plain: "plain",
-  accent: "accent",
-} as const;
+export type SelectType = "default" | "plain" | "accent";
 
 /**
  * @see https://vkcom.github.io/VKUI/#/SelectTypography
  */
 export const SelectTypography = ({
-  selectType = SelectType.default,
+  selectType = "default",
   children,
   ...restProps
 }: React.PropsWithChildren<Pick<SelectProps, "selectType">>) => {
@@ -30,7 +26,7 @@ export const SelectTypography = ({
       vkuiClass={classNames(
         getClassName("SelectTypography", platform),
         getSizeYClassName("SelectTypography", sizeY),
-        `SelectTypography--${selectType}`
+        `SelectTypography--selectType-${selectType}`
       )}
       {...restProps}
     >

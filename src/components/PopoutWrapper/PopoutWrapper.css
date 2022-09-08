@@ -63,27 +63,27 @@
   pointer-events: auto;
 }
 
-.PopoutWrapper--v-center .PopoutWrapper__container {
+.PopoutWrapper--alignY-center .PopoutWrapper__container {
   align-items: center;
 }
 
-.PopoutWrapper--v-bottom .PopoutWrapper__container {
+.PopoutWrapper--alignY-bottom .PopoutWrapper__container {
   align-items: flex-end;
 }
 
-.PopoutWrapper--v-top .PopoutWrapper__container {
+.PopoutWrapper--alignY-top .PopoutWrapper__container {
   align-items: flex-start;
 }
 
-.PopoutWrapper--h-center .PopoutWrapper__container {
+.PopoutWrapper--alignX-center .PopoutWrapper__container {
   justify-content: center;
 }
 
-.PopoutWrapper--h-left .PopoutWrapper__container {
+.PopoutWrapper--alignX-left .PopoutWrapper__container {
   justify-content: flex-start;
 }
 
-.PopoutWrapper--h-right .PopoutWrapper__container {
+.PopoutWrapper--alignX-right .PopoutWrapper__container {
   justify-content: flex-end;
 }
 

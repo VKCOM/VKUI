@@ -75,7 +75,7 @@ export const TabsItem = ({
         "TabsItem",
         (platform === Platform.IOS || platform === Platform.VKCOM) &&
           `TabsItem--${platform}`,
-        mode && `TabsItem--${mode}`,
+        mode && `TabsItem--mode-${mode}`,
         selected && "TabsItem--selected",
         getSizeYClassName("TabsItem", sizeY),
         withGaps && "TabsItem--withGaps"

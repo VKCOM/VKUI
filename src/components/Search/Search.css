@@ -180,7 +180,7 @@
   pointer-events: none;
 }
 
-.Group--plain .Search {
+.Group--mode-plain .Search {
   padding-top: 4px;
 }
 

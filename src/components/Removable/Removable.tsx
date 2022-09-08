@@ -150,7 +150,7 @@ export const Removable = ({
       vkuiClass={classNames(
         "Removable",
         platform === Platform.IOS && "Removable--ios",
-        `Removable--${align}`,
+        `Removable--align-${align}`,
         getSizeYClassName("Removable", sizeY)
       )}
     >

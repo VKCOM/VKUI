@@ -4,11 +4,11 @@
   font-size: 16px;
 }
 
-.Input--center .Input__el {
+.Input--align-center .Input__el {
   text-align: center;
 }
 
-.Input--right .Input__el {
+.Input--align-right .Input__el {
   text-align: right;
 }
 

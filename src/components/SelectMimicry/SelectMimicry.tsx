@@ -19,7 +19,7 @@ export interface SelectMimicryProps
     Pick<FormFieldProps, "before" | "after" | "status"> {
   multiline?: boolean;
   disabled?: boolean;
-  selectType?: keyof typeof SelectType;
+  selectType?: SelectType;
 }
 
 /**
@@ -36,7 +36,7 @@ export const SelectMimicry = ({
   onClick,
   before,
   after = <DropdownIcon />,
-  selectType = SelectType.default,
+  selectType = "default",
   status,
   ...restProps
 }: SelectMimicryProps) => {
@@ -52,9 +52,6 @@ export const SelectMimicry = ({
         getClassName("Select", platform),
         getSizeXClassName("Select", sizeX),
         getSizeYClassName("Select", sizeY),
-        "Select--mimicry",
-        `Select--mimicry-${selectType}`,
-        !children && "Select--not-selected",
         multiline && "Select--multiline",
         align && `Select--align-${align}`,
         before && "Select--hasBefore",

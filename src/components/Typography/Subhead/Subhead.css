@@ -18,14 +18,14 @@
   }
 }
 
-.Subhead--w-1 {
+.Subhead--weight-1 {
   font-weight: var(--vkui--font_weight_accent1);
 }
 
-.Subhead--w-2 {
+.Subhead--weight-2 {
   font-weight: var(--vkui--font_weight_accent2);
 }
 
-.Subhead--w-3 {
+.Subhead--weight-3 {
   font-weight: var(--vkui--font_weight_accent3);
 }

@@ -19,15 +19,15 @@
   }
 }
 
-.Text--w-1 {
+.Text--weight-1 {
   font-weight: var(--vkui--font_weight_accent1);
 }
 
-.Text--w-2 {
+.Text--weight-2 {
   font-weight: var(--vkui--font_weight_accent2);
 }
 
-.Text--w-3 {
+.Text--weight-3 {
   font-weight: var(--vkui--font_weight_accent3);
 }
 

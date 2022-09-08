@@ -32,8 +32,8 @@ export const Title = ({
       {...restProps}
       vkuiClass={classNames(
         "Title",
-        `Title--l-${level}`,
-        weight && `Title--w-${weight}`
+        `Title--level-${level}`,
+        weight && `Title--weight-${weight}`
       )}
     >
       {children}

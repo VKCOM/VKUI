@@ -21,7 +21,7 @@ export const CellButton = ({
       {...restProps}
       vkuiClass={classNames(
         "CellButton",
-        `CellButton--${mode}`,
+        `CellButton--mode-${mode}`,
         centered && "CellButton--centered"
       )}
     />

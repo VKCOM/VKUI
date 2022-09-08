@@ -91,7 +91,7 @@ const ActionSheetItem = ({
       vkuiClass={classNames(
         "ActionSheetItem",
         platform === Platform.IOS && "ActionSheetItem--ios",
-        `ActionSheetItem--${mode}`,
+        `ActionSheetItem--mode-${mode}`,
         getSizeYClassName("ActionSheetItem", sizeY),
         isRich && "ActionSheetItem--rich",
         isDesktop && "ActionSheetItem--desktop"

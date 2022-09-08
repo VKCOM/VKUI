@@ -80,7 +80,7 @@
         className={classNamesString(
           className,
           styles.Input,
-          styles[`Input--${mode}`]
+          styles[`Input--mode-${mode}`]
         )}
         style={style}
       >
@@ -100,7 +100,7 @@
       className={classNamesString(
         className,
         styles.Component,
-        styles[`Component--${mode}`]
+        styles[`Component--mode-${mode}`]
       )}
       {...restProps}
     />

@@ -1,7 +1,5 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
-import { usePlatform } from "../../hooks/usePlatform";
 import { HasRootRef } from "../../types";
 import "./Card.css";
 
@@ -20,13 +18,11 @@ export const Card = ({
   getRootRef,
   ...restProps
 }: CardProps) => {
-  const platform = usePlatform();
-
   return (
     <div
       {...restProps}
       ref={getRootRef}
-      vkuiClass={classNames(getClassName("Card", platform), `Card--md-${mode}`)}
+      vkuiClass={classNames("Card", `Card--mode-${mode}`)}
     >
       <div vkuiClass="Card__in">{children}</div>
     </div>

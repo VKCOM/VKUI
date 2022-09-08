@@ -38,7 +38,10 @@ export const Paragraph = ({
     <Component
       {...restProps}
       ref={getRootRef}
-      vkuiClass={classNames("Paragraph", weight && `Paragraph--w-${weight}`)}
+      vkuiClass={classNames(
+        "Paragraph",
+        weight && `Paragraph--weight-${weight}`
+      )}
     >
       {children}
     </Component>

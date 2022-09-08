@@ -22,7 +22,10 @@ export const RichTooltip = ({
 }: RichTooltipProps) => {
   return (
     <HoverPopper
-      vkuiClass={classNames("RichTooltip", `RichTooltip--${appearance}`)}
+      vkuiClass={classNames(
+        "RichTooltip",
+        `RichTooltip--appearance-${appearance}`
+      )}
       arrow={arrow}
       arrowClassName={prefixClass("RichTooltip__arrow")}
       {...popperProps}

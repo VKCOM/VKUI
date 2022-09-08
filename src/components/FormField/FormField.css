@@ -72,7 +72,7 @@
   border-radius: var(--vkui--size_border_radius--regular);
 }
 
-.FormField--default .FormField__border {
+.FormField--mode-default .FormField__border {
   border-color: var(--vkui--color_field_border_alpha);
   background-color: var(--vkui--color_field_background);
 }
@@ -82,14 +82,14 @@
  * CMP:
  * FormItem
  */
-.FormItem--error .FormField__border,
+.FormItem--status-error .FormField__border,
 .FormField--status-error .FormField__border {
   background-color: var(--vkui--color_background_negative_tint);
   border-color: var(--vkui--color_stroke_negative);
   z-index: 3;
 }
 
-.FormItem--valid .FormField__border,
+.FormItem--status-valid .FormField__border,
 .FormField--status-valid .FormField__border {
   border-color: var(--vkui--color_stroke_positive);
   z-index: 3;
@@ -106,7 +106,7 @@
   background-color: var(--vkui--color_field_background);
 }
 
-.FormField--default.FormField--hover .FormField__border {
+.FormField--mode-default.FormField--hover .FormField__border {
   border-color: var(--vkui--color_field_border_alpha--hover);
   z-index: 4;
 }
