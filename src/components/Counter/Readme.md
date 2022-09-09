@@ -47,7 +47,12 @@
         </Button>
       </FormItem>
       <FormItem>
-        <Button mode="commerce" size="m" after={<Counter>4</Counter>}>
+        <Button
+          mode="primary"
+          appearance="positive"
+          size="m"
+          after={<Counter>4</Counter>}
+        >
           Commerce medium
         </Button>
       </FormItem>
