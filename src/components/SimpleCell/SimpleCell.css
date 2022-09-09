@@ -37,7 +37,7 @@
 }
 
 .SimpleCell__subhead {
-  color: var(--text_subhead, var(--vkui--color_text_subhead));
+  color: var(--vkui--color_text_subhead);
 }
 
 .SimpleCell__text {
@@ -235,13 +235,6 @@
 
   .SimpleCell--sizeY-none .SimpleCell__badge .Badge {
     transform: translateY(0.5px);
-  }
-
-  .SimpleCell--sizeY-none .SimpleCell__typography {
-    font-size: var(--vkui--font_caption1--font_size--regular);
-    line-height: var(--vkui--font_caption1--line_height--regular);
-    font-weight: var(--vkui--font_caption1--font_weight--regular);
-    font-family: var(--vkui--font_caption1--font_family--regular);
   }
 }
 
