@@ -27,7 +27,7 @@
   max-width: 100% !important;
 }
 
-@media (--viewWidth-smallTabletMinus) {
+@media (--viewWidth-tabletMinus) {
   .SplitCol--viewWidth-none.SplitCol--stretched-on-mobile {
     width: 100% !important;
     max-width: 100% !important;
