@@ -1,6 +1,6 @@
 const postcss = require("postcss");
 
-const plugin = require("./postcss-restructure-variable");
+const plugin = require(".");
 
 async function run(input, output, opts = [undefined]) {
   let result = await postcss([plugin(opts)]).process(input, {

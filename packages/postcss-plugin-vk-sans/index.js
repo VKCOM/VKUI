@@ -1,3 +1,4 @@
+/* eslint-disable compat/compat */
 /* stylelint-disable */
 const fs = require("fs");
 const path = require("path");

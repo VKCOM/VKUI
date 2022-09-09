@@ -1,7 +1,7 @@
-const { ruleName } = require("./stylelint-bad-multiplication");
+const { ruleName } = require(".");
 
 testRule({
-  plugins: ["./tasks/stylelint-bad-multiplication.js"],
+  plugins: ["./packages/stylelint-bad-multiplication"],
   ruleName,
   config: true,
 
