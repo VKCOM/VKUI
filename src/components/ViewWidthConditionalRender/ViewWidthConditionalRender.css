@@ -14,7 +14,7 @@
   display: none;
 }
 
-@media (--viewWidth-smallTabletMinus) {
+@media (--viewWidth-tabletMinus) {
   .ViewWidthConditionalRender__desktop--viewWidth-none {
     display: none;
   }
