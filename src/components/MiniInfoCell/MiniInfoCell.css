@@ -54,12 +54,12 @@
 
 .MiniInfoCell--mode-add,
 .MiniInfoCell--mode-more {
-  color: var(--vkui--color_text_link);
+  color: var(--vkui--color_text_link_themed);
 }
 
 .MiniInfoCell--mode-add .MiniInfoCell__before,
 .MiniInfoCell--mode-more .MiniInfoCell__before {
-  color: var(--vkui--color_icon_accent);
+  color: var(--vkui--color_icon_accent_themed);
 }
 
 .MiniInfoCell--mode-more {
@@ -70,4 +70,9 @@
 .MiniInfoCell__middle .Icon {
   margin-left: 4px;
   color: var(--vkui--color_text_accent);
+}
+
+.MiniInfoCell--mode-add .MiniInfoCell__middle .Icon,
+.MiniInfoCell--mode-more .MiniInfoCell__middle .Icon {
+  color: var(--vkui--color_icon_accent_themed);
 }
