@@ -8,11 +8,11 @@ describe("getViewWidthClassName", () => {
 
     it("returns desktop className", () =>
       expect(getViewWidthClassName("base", ViewWidth.DESKTOP)).toBe(
-        `base--viewWidth-desktop base--viewWidth-smallTabletPlus`
+        `base--viewWidth-desktop base--viewWidth-smallTabletPlus base--viewWidth-tabletPlus`
       ));
     it("returns tablet className", () =>
       expect(getViewWidthClassName("base", ViewWidth.TABLET)).toBe(
-        `base--viewWidth-tablet base--viewWidth-smallTabletPlus`
+        `base--viewWidth-tablet base--viewWidth-smallTabletPlus base--viewWidth-tabletPlus`
       ));
     it("returns smallTablet className", () =>
       expect(getViewWidthClassName("base", ViewWidth.SMALL_TABLET)).toBe(
@@ -38,6 +38,7 @@ describe("getViewWidthClassName", () => {
       "base--viewWidth-smallTablet": "some-hash-smallTablet",
       "base--viewWidth-tablet": "some-hash-tablet",
       "base--viewWidth-smallTabletPlus": "some-hash-smallTabletPlus",
+      "base--viewWidth-tabletPlus": "some-hash-tabletPlus",
     };
 
     it("returns 'none' className if there is no viewWidth", () =>
@@ -53,6 +54,10 @@ describe("getViewWidthClassName", () => {
       expect(
         getViewWidthClassName("base", ViewWidth.DESKTOP, styles)
       ).toContain(styles[`base--viewWidth-smallTabletPlus`]));
+    it("returns desktop className", () =>
+      expect(
+        getViewWidthClassName("base", ViewWidth.DESKTOP, styles)
+      ).toContain(styles[`base--viewWidth-tabletPlus`]));
     it("returns tablet className", () =>
       expect(getViewWidthClassName("base", ViewWidth.TABLET, styles)).toContain(
         styles[`base--viewWidth-tablet`]
@@ -60,6 +65,10 @@ describe("getViewWidthClassName", () => {
     it("returns tablet className", () =>
       expect(getViewWidthClassName("base", ViewWidth.TABLET, styles)).toContain(
         styles[`base--viewWidth-smallTabletPlus`]
+      ));
+    it("returns tablet className", () =>
+      expect(getViewWidthClassName("base", ViewWidth.TABLET, styles)).toContain(
+        styles[`base--viewWidth-tabletPlus`]
       ));
     it("returns smallTablet className", () =>
       expect(

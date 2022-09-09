@@ -32,7 +32,7 @@ export interface SplitColProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   spaced?: boolean;
   /**
-   * Если true, то добавляются боковые отступы фиксированной величины при ширине больше чем `smallTablet`
+   * Если true, то добавляются боковые отступы фиксированной величины при ширине больше чем `tablet`
    */
   autoSpaced?: boolean;
   fixed?: boolean;

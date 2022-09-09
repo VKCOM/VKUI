@@ -17,13 +17,15 @@ import {
   useAdaptivity,
 } from "@vkui";
 import { Frame } from "./Frame/Frame";
-import { perfLogger } from "../utils";
+import { perfLogger, useViewPortSize } from "../utils";
 import "./Preview.css";
 
 const logPerf = (id, phase, time) => perfLogger.log(`${id}.${phase}`, time);
 
 const Layout = ({ children }) => {
   const platform = usePlatform();
+  const { viewWidth } = useViewPortSize();
+
   return (
     <SplitLayout
       header={
@@ -32,7 +34,9 @@ const Layout = ({ children }) => {
         )
       }
     >
-      <SplitCol autoSpaced={platform !== Platform.VKCOM}>{children}</SplitCol>
+      <SplitCol spaced={viewWidth > 768 && platform !== Platform.VKCOM}>
+        {children}
+      </SplitCol>
     </SplitLayout>
   );
 };
