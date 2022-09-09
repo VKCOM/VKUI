@@ -7,12 +7,10 @@ import { Icon24Chevron } from "@vkontakte/icons";
 import { IOS } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { withAdaptivity, SizeType } from "../../hoc/withAdaptivity";
+import { withAdaptivity } from "../../hoc/withAdaptivity";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import { Headline } from "../Typography/Headline/Headline";
 import { Footnote } from "../Typography/Footnote/Footnote";
-import { Caption } from "../Typography/Caption/Caption";
 import "./SimpleCell.css";
 
 export interface SimpleCellOwnProps extends HasComponent {
@@ -82,19 +80,6 @@ export interface SimpleCellOwnProps extends HasComponent {
 
 export interface SimpleCellProps extends SimpleCellOwnProps, TappableProps {}
 
-type SubtitleTypographyProps = React.HTMLAttributes<HTMLDivElement> &
-  HasComponent;
-
-const SubtitleTypography = (props: SubtitleTypographyProps) => {
-  const { sizeY } = useAdaptivity();
-
-  if (sizeY === SizeType.COMPACT) {
-    return <Caption level="2" {...props} />;
-  }
-
-  return <Footnote {...props} />;
-};
-
 const SimpleCellComponent = ({
   badge,
   badgeBeforeTitle,
@@ -157,18 +142,18 @@ const SimpleCellComponent = ({
             {badgeBeforeSubtitle && (
               <span vkuiClass="SimpleCell__badge">{badgeBeforeSubtitle}</span>
             )}
-            <SubtitleTypography vkuiClass="SimpleCell__text SimpleCell__subtitle">
+            <Footnote vkuiClass="SimpleCell__text SimpleCell__subtitle">
               {subtitle}
-            </SubtitleTypography>
+            </Footnote>
             {badgeAfterSubtitle && (
               <span vkuiClass="SimpleCell__badge">{badgeAfterSubtitle}</span>
             )}
           </div>
         )}
         {extraSubtitle && (
-          <SubtitleTypography vkuiClass="SimpleCell__text SimpleCell__extraSubtitle">
+          <Footnote vkuiClass="SimpleCell__text SimpleCell__extraSubtitle">
             {extraSubtitle}
-          </SubtitleTypography>
+          </Footnote>
         )}
       </div>
       {hasReactNode(indicator) && (
