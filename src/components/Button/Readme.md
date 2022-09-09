@@ -18,6 +18,13 @@ const Example = () => {
   const [addAfter, setAddAfter] = useState(false);
   const [addText, setAddText] = useState(true);
   const [hasLink, setHasLink] = useState(false);
+  const platform = usePlatform();
+
+  React.useEffect(() => {
+    if (platform === Platform.VKCOM) {
+      setSizeY("compact");
+    }
+  }, [platform]);
 
   const buttonBefore =
     addBefore &&
@@ -111,7 +118,11 @@ const Example = () => {
             onChange={(e) => setSizeY(e.target.value)}
             options={[
               { label: "compact", value: "compact" },
-              { label: "regular", value: "regular" },
+              {
+                label: "regular",
+                value: "regular",
+                disabled: platform === Platform.VKCOM,
+              },
             ]}
           />
         </FormItem>

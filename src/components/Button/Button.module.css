@@ -444,7 +444,7 @@
 }
 
 .Button--mode-outline.Button--appearance-neutral {
-  box-shadow: inset 0 0 0 1px var (--vkui--color_field_border_alpha);
+  box-shadow: inset 0 0 0 1px var(--vkui--color_field_border_alpha);
 }
 
 .Button--mode-outline.Button--appearance-neutral.Button--hover {
@@ -561,80 +561,73 @@
   transform: translateY(-1px);
 }
 
-.Button--size-s.Button--ios .Button__content {
+/* Fonts sizes  */
+.Button--size-s .Button__content {
   font-size: var(--vkui--font_subhead--font_size--compact);
   line-height: var(--vkui--font_subhead--line_height--compact);
 }
 
-.Button--sizeY-regular.Button--size-s.Button--ios .Button__content {
+.Button--sizeY-regular.Button--size-s .Button__content {
   font-size: var(--vkui--font_subhead--font_size--regular);
   line-height: var(--vkui--font_subhead--line_height--regular);
 }
 
 @media (--sizeY-regular) {
-  .Button--sizeY-none.Button--size-s.Button--ios .Button__content {
+  .Button--sizeY-none.Button--size-s .Button__content {
     font-size: var(--vkui--font_subhead--font_size--regular);
     line-height: var(--vkui--font_subhead--line_height--regular);
   }
-}
-
-.Button--size-s.Button--vkcom .Button__content {
-  font-size: var(--vkui--font_footnote--font_size--regular);
-  line-height: var(--vkui--font_footnote--line_height--regular);
-  font-weight: var(--vkui--font_footnote--font_weight--regular);
-}
-
-.Button--size-s.Button--android .Button__content {
-  font-size: var(--vkui--font_footnote--font_size--regular);
-  line-height: var(--vkui--font_footnote--line_height--regular);
-}
-
-.Button--sizeY-regular.Button--size-s.Button--android .Button__content {
-  font-size: var(--vkui--font_subhead--font_size--regular);
-  line-height: var(--vkui--font_subhead--line_height--regular);
-  font-weight: var(--vkui--font_weight_accent2);
-}
-
-@media (--sizeY-regular) {
-  .Button--sizeY-none.Button--size-s.Button--android .Button__content {
-    font-size: var(--vkui--font_subhead--font_size--regular);
-    line-height: var(--vkui--font_subhead--line_height--regular);
-    font-weight: var(--vkui--font_weight_accent2);
-  }
-}
-
-.Button--size-m.Button--vkcom .Button__content {
-  font-weight: var(--vkui--font_weight_accent3);
 }
 
 .Button--size-m .Button__content {
-  font-size: var(--vkui--font_subhead--font_size--compact);
-  line-height: var(--vkui--font_subhead--line_height--compact);
+  font-size: var(--vkui--font_headline2--font_size--compact);
+  line-height: var(--vkui--font_headline2--line_height--compact);
 }
 
-.Button--size-m.Button--singleIcon {
-  width: var(--vkui--size_button_medium_height--compact);
+.Button--sizeY-regular.Button--size-m .Button__content {
+  font-size: var(--vkui--font_headline2--font_size--regular);
+  line-height: var(--vkui--font_headline2--line_height--regular);
 }
 
-.Button--size-l {
-  min-height: var(--vkui--size_button_large_height--compact);
+@media (--sizeY-regular) {
+  .Button--sizeY-none.Button--size-m .Button__content {
+    font-size: var(--vkui--font_headline2--font_size--regular);
+    line-height: var(--vkui--font_headline2--line_height--regular);
+  }
 }
 
-.Button--size-l.Button--singleIcon {
-  width: var(--vkui--size_button_large_height--compact);
+.Button--size-l .Button__content {
+  font-size: var(--vkui--font_headline1--font_size--compact);
+  line-height: var(--vkui--font_headline1--line_height--compact);
 }
 
-/**
- * sizeY REGULAR
- */
-.Button--sizeY-regular {
-  min-height: var(--vkui--size_button_small_height--regular);
+.Button--sizeY-regular.Button--size-l.Button--android .Button__content {
+  font-size: var(--vkui--font_headline1--font_size--regular);
+  line-height: var(--vkui--font_headline1--line_height--regular);
 }
-/**
- * v5 MOVE TO NEW ADAPTIVITY
- */
-.Button--sizeY-regular.Button--singleIcon {
-  width: var(--vkui--size_button_small_height--regular);
+
+@media (--sizeY-regular) {
+  .Button--sizeY-none.Button--size-l.Button--android .Button__content {
+    font-size: var(--vkui--font_headline1--font_size--regular);
+    line-height: var(--vkui--font_headline1--line_height--regular);
+  }
+}
+
+.Button--sizeY-regular.Button--size-l.Button--ios .Button__content {
+  font-size: var(--vkui--font_title3--font_size--regular);
+  line-height: var(--vkui--font_title3--line_height--regular);
+}
+
+@media (--sizeY-regular) {
+  .Button--sizeY-none.Button--size-l.Button--ios .Button__content {
+    font-size: var(--vkui--font_title3--font_size--regular);
+    line-height: var(--vkui--font_title3--line_height--regular);
+  }
+}
+
+/* Sizes */
+.Button--size-m {
+  min-height: var(--vkui--size_button_medium_height--compact);
 }
 
 .Button--sizeY-regular.Button--size-m {
