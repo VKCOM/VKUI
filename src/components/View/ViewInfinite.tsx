@@ -1,7 +1,7 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { transitionEvent, animationEvent } from "../../lib/supportEvents";
-import { getClassName } from "../../helpers/getClassName";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { Platform } from "../../lib/platform";
 import { Touch, TouchEvent } from "../Touch/Touch";
 import { HasPlatform } from "../../types";
@@ -654,7 +654,11 @@ class ViewInfiniteComponent extends React.Component<
       <Touch
         Component="section"
         {...restProps}
-        vkuiClass={classNames(getClassName("View", platform), modifiers)}
+        vkuiClass={classNames(
+          "View",
+          getPlatformClassName("View", platform),
+          modifiers
+        )}
         onMoveX={this.onMoveX}
         onEnd={this.onEnd}
       >

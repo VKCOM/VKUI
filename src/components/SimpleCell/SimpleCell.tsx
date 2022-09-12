@@ -1,7 +1,7 @@
 import * as React from "react";
 import { HasComponent } from "../../types";
 import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { Icon24Chevron } from "@vkontakte/icons";
 import { Platform } from "../../lib/platform";
@@ -98,7 +98,8 @@ export const SimpleCell = ({
     <Tappable
       {...restProps}
       vkuiClass={classNames(
-        getClassName("SimpleCell", platform),
+        "SimpleCell",
+        getPlatformClassName("SimpleCell", platform),
         getSizeYClassName("SimpleCell", sizeY),
         expandable && "SimpleCell--exp",
         multiline && "SimpleCell--mult"

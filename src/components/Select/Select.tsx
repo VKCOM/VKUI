@@ -4,7 +4,7 @@ import { CustomSelect, SelectProps } from "../CustomSelect/CustomSelect";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { usePlatform } from "../../hooks/usePlatform";
 import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { getMouseClassName } from "../../helpers/getMouseClassName";
 
@@ -24,7 +24,8 @@ export const SelectTypography = ({
   return (
     <span
       vkuiClass={classNames(
-        getClassName("SelectTypography", platform),
+        "SelectTypography",
+        getPlatformClassName("SelectTypography", platform),
         getSizeYClassName("SelectTypography", sizeY),
         `SelectTypography--selectType-${selectType}`
       )}

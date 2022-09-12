@@ -5,7 +5,7 @@ import {
   Icon24CheckCircleOff,
   Icon24CheckCircleOn,
 } from "@vkontakte/icons";
-import { getClassName } from "../../../helpers/getClassName";
+import { getPlatformClassName } from "../../../helpers/getPlatformClassName";
 import { usePlatform } from "../../../hooks/usePlatform";
 import { classNames } from "../../../lib/classNames";
 import { Platform } from "../../../lib/platform";
@@ -34,7 +34,10 @@ export const CellCheckbox = ({
 
   return (
     <div
-      vkuiClass={classNames(getClassName("CellCheckbox", platform))}
+      vkuiClass={classNames(
+        "CellCheckbox",
+        getPlatformClassName("CellCheckbox", platform)
+      )}
       className={className}
       style={style}
     >

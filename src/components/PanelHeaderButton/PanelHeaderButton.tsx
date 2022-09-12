@@ -1,6 +1,6 @@
 import * as React from "react";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
-import { getClassName } from "../../helpers/getClassName";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { classNames } from "../../lib/classNames";
 import { warnOnce } from "../../lib/warnOnce";
 import { usePlatform } from "../../hooks/usePlatform";
@@ -93,7 +93,8 @@ export const PanelHeaderButton = ({
       activeEffectDelay={200}
       activeMode={activeMode}
       vkuiClass={classNames(
-        getClassName("PanelHeaderButton", platform),
+        "PanelHeaderButton",
+        getPlatformClassName("PanelHeaderButton", platform),
         primary && "PanelHeaderButton--primary",
         isPrimitive && "PanelHeaderButton--primitive",
         !isPrimitive && !isPrimitiveLabel && "PanelHeaderButton--notPrimitive"

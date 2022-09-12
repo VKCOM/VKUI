@@ -1,9 +1,10 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { Button, VKUIButtonProps } from "../Button/Button";
 import { HasRef, HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import { VisuallyHiddenInput } from "../VisuallyHiddenInput/VisuallyHiddenInput";
+import { classNames } from "../../lib/classNames";
 
 export interface FileProps
   extends Omit<VKUIButtonProps, "type">,
@@ -36,7 +37,7 @@ export const File = ({
     <Button
       Component="label"
       align={align}
-      vkuiClass={getClassName("File", platform)}
+      vkuiClass={classNames("File", getPlatformClassName("File", platform))}
       className={className}
       stretched={stretched}
       mode={mode}
