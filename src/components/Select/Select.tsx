@@ -38,13 +38,13 @@ export const SelectTypography = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/Select
  */
-export const Select: React.FC<SelectProps> = ({
+export const Select = ({
   children,
   options = [],
   popupDirection,
   renderOption,
   ...props
-}) => {
+}: SelectProps) => {
   const { hasMouse } = useAdaptivity();
 
   return (

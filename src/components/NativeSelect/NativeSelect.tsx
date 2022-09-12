@@ -34,7 +34,7 @@ export interface SelectState {
 /**
  * @see https://vkcom.github.io/VKUI/#/NativeSelect
  */
-const NativeSelect: React.FC<NativeSelectProps> = ({
+const NativeSelect = ({
   style,
   defaultValue = "",
   align,
