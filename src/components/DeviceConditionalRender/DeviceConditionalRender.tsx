@@ -2,7 +2,7 @@ import * as React from "react";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
 import { hasReactNode } from "../../lib/utils";
-import "./DeviceConditionalRender.css";
+import styles from "./DeviceConditionalRender.module.css";
 
 export interface DeviceConditionalRenderProps {
   mobile?: React.ReactNode;
@@ -19,9 +19,10 @@ export const DeviceConditionalRender = ({
     <React.Fragment>
       {hasReactNode(mobile) && (
         <div
-          vkuiClass={getViewWidthClassName(
+          className={getViewWidthClassName(
             "DeviceConditionalRender__mobile",
-            viewWidth
+            viewWidth,
+            styles
           )}
         >
           {mobile}
@@ -29,9 +30,10 @@ export const DeviceConditionalRender = ({
       )}
       {hasReactNode(desktop) && (
         <div
-          vkuiClass={getViewWidthClassName(
+          className={getViewWidthClassName(
             "DeviceConditionalRender__desktop",
-            viewWidth
+            viewWidth,
+            styles
           )}
         >
           {desktop}

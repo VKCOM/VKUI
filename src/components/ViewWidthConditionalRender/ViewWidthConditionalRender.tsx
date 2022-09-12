@@ -3,7 +3,7 @@ import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
 import { hasReactNode } from "../../lib/utils";
 import { ViewWidth } from "../../lib/adaptivity";
-import "./ViewWidthConditionalRender.css";
+import styles from "./ViewWidthConditionalRender.module.css";
 
 export interface ViewWidthConditionalRenderProps {
   mobile?: React.ReactNode;
@@ -21,9 +21,10 @@ export const ViewWidthConditionalRender = ({
       {hasReactNode(mobile) &&
         (viewWidth === undefined || viewWidth < ViewWidth.TABLET) && (
           <div
-            vkuiClass={getViewWidthClassName(
+            className={getViewWidthClassName(
               "ViewWidthConditionalRender__mobile",
-              viewWidth
+              viewWidth,
+              styles
             )}
           >
             {mobile}
@@ -32,9 +33,10 @@ export const ViewWidthConditionalRender = ({
       {hasReactNode(desktop) &&
         (viewWidth === undefined || viewWidth >= ViewWidth.TABLET) && (
           <div
-            vkuiClass={getViewWidthClassName(
+            className={getViewWidthClassName(
               "ViewWidthConditionalRender__desktop",
-              viewWidth
+              viewWidth,
+              styles
             )}
           >
             {desktop}
