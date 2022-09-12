@@ -1,7 +1,7 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
-import { HasComponent, HasPlatform, HasRootRef } from "../../types";
+import { HasComponent, HasRootRef } from "../../types";
 import { hasReactNode, isPrimitiveReactNode } from "../../lib/utils";
 import { Platform } from "../../lib/platform";
 import { Headline } from "../Typography/Headline/Headline";
@@ -27,15 +27,10 @@ export interface HeaderProps
   multiline?: boolean;
 }
 
-type HeaderContentProps = Pick<HeaderProps, "children" | "mode"> &
-  HasPlatform &
-  HasComponent;
+type HeaderContentProps = Pick<HeaderProps, "children" | "mode"> & HasComponent;
 
-const HeaderContent = ({
-  platform,
-  mode,
-  ...restProps
-}: HeaderContentProps) => {
+const HeaderContent = ({ mode, ...restProps }: HeaderContentProps) => {
+  const platform = usePlatform();
   if (platform === Platform.IOS) {
     switch (mode) {
       case "primary":
@@ -99,12 +94,7 @@ export const Header = ({
       )}
     >
       <div vkuiClass="Header__main">
-        <HeaderContent
-          vkuiClass="Header__content"
-          Component="span"
-          mode={mode}
-          platform={platform}
-        >
+        <HeaderContent vkuiClass="Header__content" Component="span" mode={mode}>
           <span
             vkuiClass={classNames(
               "Header__content-in",

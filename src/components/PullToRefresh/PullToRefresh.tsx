@@ -1,5 +1,5 @@
 import * as React from "react";
-import { AnyFunction, HasPlatform } from "../../types";
+import { AnyFunction } from "../../types";
 import { DOMProps, useDOM } from "../../lib/dom";
 import { classNames } from "../../lib/classNames";
 import { Platform } from "../../lib/platform";
@@ -31,7 +31,7 @@ function cancelEvent(event: any) {
   return false;
 }
 
-export interface PullToRefreshProps extends DOMProps, TouchProps, HasPlatform {
+export interface PullToRefreshProps extends DOMProps, TouchProps {
   /**
    * Будет вызвана для обновления контента (прим.: функция должна быть мемоизированным коллбэком)
    */

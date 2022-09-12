@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Input } from "../Input/Input";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { HasPlatform } from "../../types";
 import { leadingZero } from "../../lib/utils";
 import { CustomSelect } from "../CustomSelect/CustomSelect";
 import "./DatePicker.css";
@@ -29,10 +28,9 @@ export type DatePickerDateFormat = {
 
 export interface DatePickerProps
   extends Omit<
-      React.HTMLAttributes<HTMLDivElement>,
-      "defaultValue" | "min" | "max"
-    >,
-    HasPlatform {
+    React.HTMLAttributes<HTMLDivElement>,
+    "defaultValue" | "min" | "max"
+  > {
   min?: DatePickerDateFormat;
   max?: DatePickerDateFormat;
   name?: string;

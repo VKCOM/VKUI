@@ -125,9 +125,7 @@ const Example = () => {
   );
 };
 
-const ExampleWithPlatform = withPlatform(Example);
-
-<ExampleWithPlatform />;
+<Example />;
 ```
 
 ## TooltipContainer
