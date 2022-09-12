@@ -52,5 +52,13 @@ export function getViewWidthClassName<Styles extends Record<string, string>>(
     }
   }
 
+  if (viewWidth && viewWidth >= ViewWidth.TABLET) {
+    if (styles) {
+      className += " " + styles[`${String(base)}--viewWidth-tabletPlus`];
+    } else {
+      className += ` ${String(base)}--viewWidth-tabletPlus`;
+    }
+  }
+
   return className;
 }

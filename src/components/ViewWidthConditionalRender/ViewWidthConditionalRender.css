@@ -1,4 +1,4 @@
-.ViewWidthConditionalRender__mobile--viewWidth-smallTabletPlus {
+.ViewWidthConditionalRender__mobile--viewWidth-tabletPlus {
   display: none;
 }
 
@@ -14,7 +14,7 @@
   display: none;
 }
 
-@media (--viewWidth-smallTabletMinus) {
+@media (--viewWidth-tabletMinus) {
   .ViewWidthConditionalRender__desktop--viewWidth-none {
     display: none;
   }
