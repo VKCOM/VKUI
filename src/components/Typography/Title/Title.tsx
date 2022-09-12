@@ -1,7 +1,7 @@
 import * as React from "react";
 import { HasComponent } from "../../../types";
-import { classNames } from "../../../lib/classNames";
-import "./Title.css";
+import { classNamesString } from "../../../lib/classNames";
+import styles from "./Title.module.css";
 
 export interface TitleProps
   extends React.AllHTMLAttributes<HTMLElement>,
@@ -17,6 +17,7 @@ export interface TitleProps
  * @see https://vkcom.github.io/VKUI/#/Title
  */
 export const Title = ({
+  className,
   children,
   weight,
   level = "1",
@@ -30,10 +31,11 @@ export const Title = ({
   return (
     <Component
       {...restProps}
-      vkuiClass={classNames(
-        "Title",
-        `Title--level-${level}`,
-        weight && `Title--weight-${weight}`
+      className={classNamesString(
+        className,
+        styles["Title"],
+        styles[`Title--level-${level}`],
+        weight && styles[`Title--weight-${weight}`]
       )}
     >
       {children}

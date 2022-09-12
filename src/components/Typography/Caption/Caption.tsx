@@ -1,7 +1,7 @@
 import * as React from "react";
 import { HasComponent } from "../../../types";
-import { classNames } from "../../../lib/classNames";
-import "./Caption.css";
+import { classNamesString } from "../../../lib/classNames";
+import styles from "./Caption.module.css";
 
 export interface CaptionProps
   extends React.AllHTMLAttributes<HTMLElement>,
@@ -18,6 +18,7 @@ export interface CaptionProps
  * @see https://vkcom.github.io/VKUI/#/Caption
  */
 export const Caption = ({
+  className,
   children,
   weight,
   level = "1",
@@ -28,11 +29,12 @@ export const Caption = ({
   return (
     <Component
       {...restProps}
-      vkuiClass={classNames(
-        "Caption",
-        `Caption--level-${level}`,
-        caps && "Caption--caps",
-        weight && `Caption--weight-${weight}`
+      className={classNamesString(
+        className,
+        styles["Caption"],
+        styles[`Caption--level-${level}`],
+        caps && styles["Caption--caps"],
+        weight && styles[`Caption--weight-${weight}`]
       )}
     >
       {children}

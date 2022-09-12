@@ -8,13 +8,13 @@
 @import "../components/AppRoot/AppRoot.css";
 
 /* Typography */
-@import "../components/Typography/Title/Title.css";
-@import "../components/Typography/Headline/Headline.css";
-@import "../components/Typography/Text/Text.css";
-@import "../components/Typography/Paragraph/Paragraph.css";
-@import "../components/Typography/Subhead/Subhead.css";
-@import "../components/Typography/Footnote/Footnote.css";
-@import "../components/Typography/Caption/Caption.css";
+@import "../components/Typography/Title/Title.module.css";
+@import "../components/Typography/Headline/Headline.module.css";
+@import "../components/Typography/Text/Text.module.css";
+@import "../components/Typography/Paragraph/Paragraph.module.css";
+@import "../components/Typography/Subhead/Subhead.module.css";
+@import "../components/Typography/Footnote/Footnote.module.css";
+@import "../components/Typography/Caption/Caption.module.css";
 
 /* Service */
 @import "../components/Tappable/Tappable.module.css";

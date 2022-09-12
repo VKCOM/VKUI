@@ -1,10 +1,10 @@
 import * as React from "react";
 import { useAdaptivity } from "../../../hooks/useAdaptivity";
-import { classNames } from "../../../lib/classNames";
+import { classNamesString } from "../../../lib/classNames";
 import { HasComponent, HasRootRef } from "../../../types";
 import { warnOnce } from "../../../lib/warnOnce";
 import { getSizeYClassName } from "../../../helpers/getSizeYClassName";
-import "./Text.css";
+import styles from "./Text.module.css";
 
 export interface TextProps
   extends React.AllHTMLAttributes<HTMLElement>,
@@ -21,6 +21,7 @@ const warn = warnOnce("Text");
  * @see https://vkcom.github.io/VKUI/#/Text
  */
 export const Text = ({
+  className,
   children,
   weight,
   Component = "span",
@@ -44,10 +45,11 @@ export const Text = ({
     <Component
       {...restProps}
       ref={getRootRef}
-      vkuiClass={classNames(
-        "Text",
-        getSizeYClassName("Text", sizeY),
-        weight && `Text--weight-${weight}`
+      className={classNamesString(
+        className,
+        styles["Text"],
+        getSizeYClassName("Text", sizeY, styles),
+        weight && styles[`Text--weight-${weight}`]
       )}
     >
       {children}

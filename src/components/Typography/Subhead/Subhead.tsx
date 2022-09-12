@@ -1,9 +1,9 @@
 import * as React from "react";
 import { HasComponent } from "../../../types";
-import { classNames } from "../../../lib/classNames";
+import { classNamesString } from "../../../lib/classNames";
 import { useAdaptivity } from "../../../hooks/useAdaptivity";
 import { getSizeYClassName } from "../../../helpers/getSizeYClassName";
-import "./Subhead.css";
+import styles from "./Subhead.module.css";
 
 export interface SubheadProps
   extends React.AllHTMLAttributes<HTMLElement>,
@@ -18,6 +18,7 @@ export interface SubheadProps
  * @see https://vkcom.github.io/VKUI/#/Subhead
  */
 export const Subhead = ({
+  className,
   children,
   weight,
   Component = "h5",
@@ -28,10 +29,11 @@ export const Subhead = ({
   return (
     <Component
       {...restProps}
-      vkuiClass={classNames(
-        "Subhead",
-        getSizeYClassName("Subhead", sizeY),
-        weight && `Subhead--weight-${weight}`
+      className={classNamesString(
+        className,
+        styles["Subhead"],
+        getSizeYClassName("Subhead", sizeY, styles),
+        weight && styles[`Subhead--weight-${weight}`]
       )}
     >
       {children}

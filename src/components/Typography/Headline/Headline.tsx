@@ -1,10 +1,10 @@
 import * as React from "react";
 import { HasComponent, HasRootRef } from "../../../types";
 import { useAdaptivity } from "../../../hooks/useAdaptivity";
-import { classNames } from "../../../lib/classNames";
+import { classNamesString } from "../../../lib/classNames";
 import { warnOnce } from "../../../lib/warnOnce";
 import { getSizeYClassName } from "../../../helpers/getSizeYClassName";
-import "./Headline.css";
+import styles from "./Headline.module.css";
 
 export interface HeadlineProps
   extends React.AllHTMLAttributes<HTMLElement>,
@@ -23,6 +23,7 @@ const warn = warnOnce("Headline");
  * @see https://vkcom.github.io/VKUI/#/Headline
  */
 export const Headline = ({
+  className,
   children,
   weight = "3",
   level = "1",
@@ -44,11 +45,12 @@ export const Headline = ({
     <Component
       {...restProps}
       ref={getRootRef}
-      vkuiClass={classNames(
-        "Headline",
-        getSizeYClassName("Headline", sizeY),
-        `Headline--level-${level}`,
-        `Headline--weight-${weight}`
+      className={classNamesString(
+        className,
+        styles["Headline"],
+        getSizeYClassName("Headline", sizeY, styles),
+        styles[`Headline--level-${level}`],
+        styles[`Headline--weight-${weight}`]
       )}
     >
       {children}
