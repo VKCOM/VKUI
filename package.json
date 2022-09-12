@@ -5,9 +5,6 @@
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "!dist/*.hot-update.*",
-    "!dist/*.tmp",
-    "!dist/**/*.tmp",
     "dist"
   ],
   "sideEffects": [
