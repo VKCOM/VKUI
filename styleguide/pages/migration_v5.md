@@ -473,6 +473,12 @@ npx @vkontakte/vkui-token-translator
   />
 ```
 
+## [`Spacing`](#/Spacing)
+
+- Свойство `separator` удалено. Используйте компонент [`Separator`](#/Separator)
+
+<br/><br/>
+
 ## [`Search`](#/Search)
 
 - Внешний вид для `VKCOM` теперь соответствует `ANDROID`
