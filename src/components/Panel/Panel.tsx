@@ -20,13 +20,13 @@ export interface PanelProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Panel
  */
-export const Panel: React.FC<PanelProps> = ({
+export const Panel = ({
   centered = false,
   children,
   getRootRef,
   nav,
   ...restProps
-}) => {
+}: PanelProps) => {
   const platform = usePlatform();
   const { sizeX } = useAdaptivity();
 

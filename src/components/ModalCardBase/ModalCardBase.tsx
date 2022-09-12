@@ -56,7 +56,7 @@ export interface ModalCardBaseProps
 /**
  * @see https://vkcom.github.io/VKUI/#/ModalCardBase
  */
-export const ModalCardBase: React.FC<ModalCardBaseProps> = ({
+export const ModalCardBase = ({
   getRootRef,
   icon,
   header,
@@ -67,7 +67,7 @@ export const ModalCardBase: React.FC<ModalCardBaseProps> = ({
   actionsLayout,
   dismissLabel = "Скрыть",
   ...restProps
-}) => {
+}: ModalCardBaseProps) => {
   const platform = usePlatform();
   const { isDesktop } = useAdaptivityWithMediaQueries();
   const isSoftwareKeyboardOpened = useKeyboard().isOpened;
