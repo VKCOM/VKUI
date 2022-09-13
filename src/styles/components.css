@@ -145,10 +145,10 @@
 @import "../components/InputLike/InputLikeDivider.css";
 @import "../components/DateInput/DateInput.css";
 @import "../components/DateRangeInput/DateRangeInput.css";
-@import "../components/SizeYConditionalRender/SizeYConditionalRender.css";
-@import "../components/SizeXConditionalRender/SizeXConditionalRender.css";
-@import "../components/DeviceConditionalRender/DeviceConditionalRender.css";
-@import "../components/ViewWidthConditionalRender/ViewWidthConditionalRender.css";
+@import "../components/SizeYConditionalRender/SizeYConditionalRender.module.css";
+@import "../components/SizeXConditionalRender/SizeXConditionalRender.module.css";
+@import "../components/DeviceConditionalRender/DeviceConditionalRender.module.css";
+@import "../components/ViewWidthConditionalRender/ViewWidthConditionalRender.module.css";
 
 /* Advertisement */
 @import "../components/PromoBanner/PromoBanner.css";

@@ -1,10 +1,9 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { hasReactNode } from "../../lib/utils";
 import { SizeType } from "../../lib/adaptivity";
-import "./SizeXConditionalRender.css";
+import styles from "./SizeXConditionalRender.module.css";
 
 export interface SizeXConditionalRenderProps {
   compact?: React.ReactNode;
@@ -21,13 +20,13 @@ export const SizeXConditionalRender = ({
     <React.Fragment>
       {hasReactNode(compact) &&
         (sizeX === undefined || sizeX === SizeType.COMPACT) && (
-          <div vkuiClass={classNames(getSizeXClassName("SizeXCompact", sizeX))}>
+          <div className={getSizeXClassName("SizeXCompact", sizeX, styles)}>
             {compact}
           </div>
         )}
       {hasReactNode(regular) &&
         (sizeX === undefined || sizeX === SizeType.REGULAR) && (
-          <div vkuiClass={classNames(getSizeXClassName("SizeXRegular", sizeX))}>
+          <div className={getSizeXClassName("SizeXRegular", sizeX, styles)}>
             {regular}
           </div>
         )}

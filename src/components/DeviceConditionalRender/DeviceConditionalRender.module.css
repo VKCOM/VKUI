@@ -18,3 +18,8 @@
     display: none;
   }
 }
+
+.DeviceConditionalRender__mobile,
+.DeviceConditionalRender__desktop {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
+}

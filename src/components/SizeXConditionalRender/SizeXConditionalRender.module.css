@@ -1,3 +1,4 @@
+/* stylelint-disable vkui/atomic */
 .SizeXRegular--sizeX-compact {
   display: none;
 }
@@ -16,4 +17,11 @@
   .SizeXCompact--sizeX-none {
     display: none;
   }
+}
+
+.SizeXRegular,
+.SizeXRegular--sizeX-regular,
+.SizeXCompact,
+.SizeXCompact--sizeX-compact {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }
