@@ -4,7 +4,7 @@ import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasAlign, HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
-import { getClassName } from "../../helpers/getClassName";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { getFormFieldModeFromSelectType } from "../../lib/select";
 import { SelectType, SelectTypography } from "../Select/Select";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
@@ -49,7 +49,8 @@ export const SelectMimicry = ({
       {...restProps}
       tabIndex={disabled ? undefined : tabIndex}
       vkuiClass={classNames(
-        getClassName("Select", platform),
+        "Select",
+        getPlatformClassName("Select", platform),
         getSizeXClassName("Select", sizeX),
         getSizeYClassName("Select", sizeY),
         multiline && "Select--multiline",

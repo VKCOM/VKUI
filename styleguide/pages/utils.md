@@ -29,18 +29,18 @@ withPlatform(MyComponent);
 Способ определения платформы вне компонента устарел, так как мы начинаем поддерживать
 [SSR](https://reactjs.org/docs/react-dom-server.html).
 
-## getClassName
+## getPlatformClassName
 
-Допустим, вы решили создать собственный компонент, внешний вид которого зависит от платформы. Функция `getClassName`
-вернет вам строку, представляющую набор CSS-классов с модификатором платформы:
+Допустим, вы решили создать собственный компонент, внешний вид которого зависит от платформы. Функция `getPlatformClassName`
+вернет вам CSS-класс с модификатором платформы:
 
 ```jsx static
-import { usePlatform, getClassName } from "@vkontakte/vkui";
+import { usePlatform, getPlatformClassName } from "@vkontakte/vkui";
 
 const MyButton = ({ children }) => {
   const platform = usePlatform();
-  const baseClassNames = getClassName("MyButton", platform); // 'MyButton MyButton--ios'
-  return <button className={baseClassNames}>{children}</button>;
+  const platformClassName = getPlatformClassName("MyButton", platform); // MyButton--ios'
+  return <button className={platformClassName}>{children}</button>;
 };
 ```
 

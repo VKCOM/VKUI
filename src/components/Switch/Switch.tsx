@@ -1,4 +1,4 @@
-import { getClassName } from "../../helpers/getClassName";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { classNames } from "../../lib/classNames";
 import { callMultiple } from "../../lib/callMultiple";
 import { usePlatform } from "../../hooks/usePlatform";
@@ -33,7 +33,8 @@ export const Switch = ({
   return (
     <label
       vkuiClass={classNames(
-        getClassName("Switch", platform),
+        "Switch",
+        getPlatformClassName("Switch", platform),
         getSizeYClassName("Switch", sizeY),
         restProps.disabled && "Switch--disabled",
         focusVisible && "Switch--focus-visible"

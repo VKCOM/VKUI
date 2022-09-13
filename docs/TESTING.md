@@ -1,6 +1,6 @@
 Мы используем три вида тестов:
 
-**Юнит-тесты** на jest в файлах `moduleName.test.ts` [пример](./src/helpers/getClassName.test.ts)
+**Юнит-тесты** на jest в файлах `moduleName.test.ts` [пример](./src/helpers/getPlatformClassName.test.ts)
 
 **Компонентные тесты** на jest + [react-testing-library](https://testing-library.com/docs/react-testing-library/example-intro) + [jest-dom](https://github.com/testing-library/jest-dom#table-of-contents) в `ComponentName.test.tsx` [пример](./src/components/Checkbox/Checkbox.test.tsx)
 

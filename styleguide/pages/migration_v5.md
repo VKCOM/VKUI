@@ -525,6 +525,12 @@ npx @vkontakte/vkui-token-translator
 
 <br/><br/>
 
+## `getClassName`
+
+- `getClassName` был удален. Используйте `getPlatformClassName`
+
+<br/><br/>
+
 ## Типы и импорты
 
 - Удалены константы `IS_PLATFORM_ANDROID` и `IS_PLATFORM_IOS`

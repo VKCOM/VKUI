@@ -3,7 +3,7 @@ import { classNames } from "../../lib/classNames";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasAlign, HasRef, HasRootRef } from "../../types";
-import { getClassName } from "../../helpers/getClassName";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
 import { useExternRef } from "../../hooks/useExternRef";
@@ -69,7 +69,8 @@ const NativeSelect = ({
     <FormField
       Component="label"
       vkuiClass={classNames(
-        getClassName("Select", platform),
+        "Select",
+        getPlatformClassName("Select", platform),
         empty && "Select--empty",
         multiline && "Select--multiline",
         align && `Select--align-${align}`,

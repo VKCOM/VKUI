@@ -4,9 +4,10 @@ import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { PopperArrow } from "../PopperArrow/PopperArrow";
 import { HasRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
-import { getClassName } from "../../helpers/getClassName";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
+import { classNames } from "../../lib/classNames";
 import "./Popper.css";
 
 export type Placement =
@@ -227,7 +228,7 @@ export const Popper = ({
     <div
       {...restProps}
       {...attributes.popper}
-      vkuiClass={getClassName("Popper", platform)}
+      vkuiClass={classNames("Popper", getPlatformClassName("Popper", platform))}
       ref={setExternalRef}
       style={{
         ...compStyles,
