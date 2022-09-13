@@ -27,7 +27,6 @@ export async function screenshot(
   /* istanbul ignore next */
   await page.evaluate(() => document.fonts.ready);
   const { selector = "#mount > *:not(.AppRoot), .AppRoot > *" } = options;
-
   /* istanbul ignore next */
   const { x, y, bottom, right } = await page.evaluate((selector) => {
     const size = { right: 0, bottom: 0, x: Infinity, y: Infinity };
@@ -40,9 +39,6 @@ export async function screenshot(
     });
     return size;
   }, selector);
-
-  await page.setViewportSize({ width: right, height: bottom });
-
   return page.screenshot({
     fullPage: true,
     clip: { x, y, width: right - x, height: bottom - y },
