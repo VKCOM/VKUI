@@ -229,11 +229,11 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.14.6",
-    "@popperjs/core": "^2.11.6",
+    "@popperjs/core": "^2.9.2",
     "@vkontakte/vkjs": "^0.23.0",
     "dayjs": "^1.11.0",
     "mitt": "^3.0.0",
-    "react-popper": "^2.3.0"
+    "react-popper": "^2.2.5"
   },
   "engines": {
     "yarn": "^1.21.1"
