@@ -44,6 +44,7 @@ jobs:
 
       - name: Create stable branch
         run: node ./.github/gitflow/stable_branch.js
+        if: ${{ !github.event.inputs.tag }}
         env:
           INPUT_GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
