@@ -39,6 +39,9 @@ export async function screenshot(
     });
     return size;
   }, selector);
+
+  await page.setViewportSize({ width: right, height: bottom });
+
   return page.screenshot({
     fullPage: true,
     clip: { x, y, width: right - x, height: bottom - y },
