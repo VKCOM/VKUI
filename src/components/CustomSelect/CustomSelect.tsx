@@ -8,7 +8,6 @@ import {
   CustomSelectOptionProps,
 } from "../CustomSelectOption/CustomSelectOption";
 import { FormFieldProps } from "../FormField/FormField";
-import { HasPlatform } from "../../types";
 import { Input } from "../Input/Input";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { Footnote } from "../Typography/Footnote/Footnote";
@@ -112,7 +111,6 @@ export interface CustomSelectOptionInterface {
 
 export interface SelectProps
   extends NativeSelectProps,
-    HasPlatform,
     FormFieldProps,
     TrackerOptionsProps {
   /**
@@ -184,7 +182,6 @@ export function CustomSelect(props: SelectProps) {
     getRef,
     getRootRef,
     popupDirection,
-    platform,
     style,
     onChange,
     children,

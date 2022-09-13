@@ -8,7 +8,6 @@ import { Footnote } from "../Typography/Footnote/Footnote";
 import { Headline } from "../Typography/Headline/Headline";
 import { Platform } from "../../lib/platform";
 import { Text } from "../Typography/Text/Text";
-import { HasPlatform } from "../../types";
 import "./PanelHeaderContent.css";
 
 export interface PanelHeaderContentProps
@@ -18,18 +17,18 @@ export interface PanelHeaderContentProps
   status?: React.ReactNode;
 }
 
-interface PanelHeaderChildrenProps extends HasPlatform {
+interface PanelHeaderChildrenProps {
   hasStatus: boolean;
   hasBefore: boolean;
   children?: React.ReactNode;
 }
 
 const PanelHeaderChildren = ({
-  platform,
   hasStatus,
   hasBefore,
   children,
 }: PanelHeaderChildrenProps) => {
+  const platform = usePlatform();
   if (platform === Platform.VKCOM) {
     return (
       <Text Component="div" weight="2">
@@ -100,7 +99,6 @@ export const PanelHeaderContent = ({
         )}
         <div vkuiClass="PanelHeaderContent__children">
           <PanelHeaderChildren
-            platform={platform}
             hasStatus={hasReactNode(status)}
             hasBefore={hasReactNode(before)}
           >

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Touch, TouchEvent } from "../Touch/Touch";
 import { classNames } from "../../lib/classNames";
-import { HasPlatform } from "../../types";
 import { Platform } from "../../lib/platform";
 import { rubber } from "../../lib/touch";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
@@ -13,9 +12,7 @@ import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMedi
 import { useTimeout } from "../../hooks/useTimeout";
 import "./Snackbar.css";
 
-export interface SnackbarProps
-  extends React.HTMLAttributes<HTMLElement>,
-    HasPlatform {
+export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * Название кнопки действия в уведомлении
    */

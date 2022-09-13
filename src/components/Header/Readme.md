@@ -1,5 +1,7 @@
 ```jsx
-const Example = withPlatform(({ platform }) => {
+const Example = () => {
+  const platform = usePlatform();
+
   return (
     <View activePanel="header">
       <Panel id="header">
@@ -115,7 +117,7 @@ const Example = withPlatform(({ platform }) => {
       </Panel>
     </View>
   );
-});
+};
 
 <Example />;
 ```

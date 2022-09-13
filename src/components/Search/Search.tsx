@@ -1,13 +1,13 @@
 import * as React from "react";
 import { classNames } from "../../lib/classNames";
-import { withPlatform } from "../../hoc/withPlatform";
+import { usePlatform } from "../../hooks/usePlatform";
 import {
   Icon16SearchOutline,
   Icon16Clear,
   Icon24Cancel,
 } from "@vkontakte/icons";
 import { Platform } from "../../lib/platform";
-import { HasPlatform, HasRef } from "../../types";
+import { HasRef } from "../../types";
 import { Touch, TouchEvent } from "../Touch/Touch";
 import { VKUITouchEvent } from "../../lib/touch";
 import { noop } from "../../lib/utils";
@@ -21,15 +21,12 @@ import "./Search.css";
 
 export type InputRef = (element: HTMLInputElement) => void;
 
-interface SearchPlaceholderTypographyProps
-  extends HasPlatform,
-    React.HTMLAttributes<HTMLElement> {}
-
 const SearchPlaceholderTypography = ({
-  platform,
   children,
   ...restProps
-}: SearchPlaceholderTypographyProps) => {
+}: React.HTMLAttributes<HTMLElement>) => {
+  const platform = usePlatform();
+
   switch (platform) {
     case Platform.IOS:
       return (
@@ -48,8 +45,7 @@ const SearchPlaceholderTypography = ({
 
 export interface SearchProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
-    HasRef<HTMLInputElement>,
-    HasPlatform {
+    HasRef<HTMLInputElement> {
   /**
    * iOS only. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
    */
@@ -63,14 +59,13 @@ export interface SearchProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Search
  */
-const SearchComponent = ({
+export const Search = ({
   before = <Icon16SearchOutline aria-hidden />,
   className,
   defaultValue = "",
   placeholder = "Поиск",
   after = "Отмена",
   getRef,
-  platform,
   icon,
   onIconClick = noop,
   style,
@@ -81,6 +76,7 @@ const SearchComponent = ({
   const [isFocused, setFocused] = React.useState(false);
   const [value, onChange] = useEnsuredControl(inputProps, { defaultValue });
   const { sizeY } = useAdaptivity();
+  const platform = usePlatform();
 
   const onFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setFocused(true);
@@ -152,10 +148,7 @@ const SearchComponent = ({
           <div vkuiClass="Search__placeholder">
             <div vkuiClass="Search__placeholder-in">
               {before}
-              <SearchPlaceholderTypography
-                vkuiClass="Search__placeholder-text"
-                platform={platform}
-              >
+              <SearchPlaceholderTypography vkuiClass="Search__placeholder-text">
                 {placeholder}
               </SearchPlaceholderTypography>
             </div>
@@ -185,7 +178,3 @@ const SearchComponent = ({
     </div>
   );
 };
-
-export const Search = withPlatform(SearchComponent);
-
-Search.displayName = "Search";

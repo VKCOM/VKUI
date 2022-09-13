@@ -3,7 +3,7 @@ import { classNames } from "../../lib/classNames";
 import { noop } from "../../lib/utils";
 import { Platform } from "../../lib/platform";
 import { SimpleCell, SimpleCellProps } from "../SimpleCell/SimpleCell";
-import { HasPlatform, HasRootRef } from "../../types";
+import { HasRootRef } from "../../types";
 import { Removable, RemovableProps } from "../Removable/Removable";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useExternRef } from "../../hooks/useExternRef";
@@ -15,7 +15,6 @@ import "./Cell.css";
 
 export interface CellProps
   extends Omit<SimpleCellProps, "getRootRef">,
-    HasPlatform,
     RemovableProps,
     HasRootRef<HTMLDivElement> {
   mode?: "removable" | "selectable";
