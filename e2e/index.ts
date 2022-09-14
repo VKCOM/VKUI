@@ -40,7 +40,10 @@ export async function screenshot(
     return size;
   }, selector);
 
-  await page.setViewportSize({ width: right, height: bottom });
+  await page.setViewportSize({
+    width: Math.round(right),
+    height: Math.round(bottom),
+  });
 
   return page.screenshot({
     fullPage: true,
