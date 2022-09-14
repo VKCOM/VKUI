@@ -41,8 +41,8 @@ export async function screenshot(
   }, selector);
 
   await page.setViewportSize({
-    width: Math.round(right),
-    height: Math.round(bottom),
+    width: Math.ceil(right),
+    height: Math.ceil(bottom),
   });
 
   return page.screenshot({
