@@ -5,7 +5,7 @@ import { screenshot } from "@react-playwright";
 import { ConfigProvider } from "../../components/ConfigProvider/ConfigProvider";
 import { Panel } from "../../components/Panel/Panel";
 import { Platform } from "../../lib/platform";
-import { Scheme } from "../../helpers/scheme";
+import { Appearance } from "../../helpers/scheme";
 import {
   AdaptivityProvider,
   DESKTOP_SIZE,
@@ -108,10 +108,7 @@ function prettyProps(props: any) {
 type ScreenshotOptions = {
   matchScreenshot?: MatchImageSnapshotOptions;
   platforms?: Platform[];
-  // pass [BRIGHT_LIGHT, SPACE_GRAY] if component depends on appearance
-  mobileSchemes?: Array<Scheme.BRIGHT_LIGHT | Scheme.SPACE_GRAY>;
-  // pass [VKCOM_LIGHT, VKCOM_DARK] if component depends on appearance
-  vkcomSchemes?: Array<Scheme.VKCOM_LIGHT | Scheme.VKCOM_DARK>;
+  appearances?: Appearance[];
   adaptivity?: Partial<AdaptivityProps>;
   Wrapper?: ComponentType;
 };
@@ -149,8 +146,7 @@ export function describeScreenshotFuzz<Props>(
   const {
     matchScreenshot,
     platforms = Object.values(Platform),
-    mobileSchemes = [Scheme.BRIGHT_LIGHT],
-    vkcomSchemes = [Scheme.VKCOM_LIGHT],
+    appearances = [Appearance.DARK, Appearance.LIGHT],
     adaptivity = {},
     Wrapper = AppWrapper,
   } = options;
@@ -173,13 +169,13 @@ export function describeScreenshotFuzz<Props>(
         sizeY: true,
       });
 
-      (isVKCOM ? vkcomSchemes : mobileSchemes).forEach((scheme: Scheme) => {
-        it(`light${
+      appearances.forEach((appearance: Appearance) => {
+        it(`${appearance}${
           adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ""
         }`, async () => {
           expect(
             await screenshot(
-              <ConfigProvider scheme={scheme} platform={platform}>
+              <ConfigProvider appearance={appearance} platform={platform}>
                 <AdaptivityProvider {...adaptivityProps}>
                   <div
                     style={{
