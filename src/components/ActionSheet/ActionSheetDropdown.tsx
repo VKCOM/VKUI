@@ -1,12 +1,12 @@
 import * as React from "react";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Platform } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
 import { SharedDropdownProps } from "./types";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
-import "./ActionSheet.css";
+import styles from "./ActionSheet.module.css";
 
 const stopPropagation: React.MouseEventHandler = (e) => e.stopPropagation();
 
@@ -16,6 +16,7 @@ export const ActionSheetDropdown = ({
   // these 2 props are only omitted - ActionSheetDesktop compat
   toggleRef,
   popupDirection,
+  className,
   ...restProps
 }: SharedDropdownProps) => {
   const { sizeY } = useAdaptivityWithMediaQueries();
@@ -25,11 +26,12 @@ export const ActionSheetDropdown = ({
     <FocusTrap
       {...restProps}
       onClick={stopPropagation}
-      vkuiClass={classNames(
-        "ActionSheet",
-        platform === Platform.IOS && "ActionSheet--ios",
-        closing && "ActionSheet--closing",
-        getSizeYClassName("ActionSheet", sizeY)
+      className={classNamesString(
+        styles["ActionSheet"],
+        platform === Platform.IOS && styles["ActionSheet--ios"],
+        closing && styles["ActionSheet--closing"],
+        getSizeYClassName("ActionSheet", sizeY, styles),
+        className
       )}
     >
       {children}

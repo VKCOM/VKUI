@@ -1,6 +1,6 @@
 import * as React from "react";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Tappable } from "../Tappable/Tappable";
 import { usePlatform } from "../../hooks/usePlatform";
 import { noop } from "../../lib/utils";
@@ -13,7 +13,7 @@ import {
   type ActionSheetContextType,
 } from "../ActionSheet/ActionSheetContext";
 import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
-import "./ActionSheetItem.css";
+import styles from "./ActionSheetItem.module.css";
 
 export interface ActionSheetItemProps
   extends React.HTMLAttributes<HTMLElement>,
@@ -61,6 +61,7 @@ const ActionSheetItem = ({
   onClick,
   onImmediateClick,
   multiline = false,
+  className,
   ...restProps
 }: ActionSheetItemProps) => {
   const platform = usePlatform();
@@ -86,48 +87,57 @@ const ActionSheetItem = ({
           : onItemClick(onClick, onImmediateClick, Boolean(autoClose))
       }
       activeMode={
-        platform === Platform.IOS ? "ActionSheetItem--active" : undefined
+        platform === Platform.IOS
+          ? styles["ActionSheetItem--active"]
+          : undefined
       }
-      vkuiClass={classNames(
-        "ActionSheetItem",
-        platform === Platform.IOS && "ActionSheetItem--ios",
-        `ActionSheetItem--mode-${mode}`,
-        getSizeYClassName("ActionSheetItem", sizeY),
-        isRich && "ActionSheetItem--rich",
-        isDesktop && "ActionSheetItem--desktop"
+      className={classNamesString(
+        styles["ActionSheetItem"],
+        platform === Platform.IOS && styles["ActionSheetItem--ios"],
+        styles[`ActionSheetItem--mode-${mode}`],
+        getSizeYClassName("ActionSheetItem", sizeY, styles),
+        isRich && styles["ActionSheetItem--rich"],
+        isDesktop && styles["ActionSheetItem--desktop"],
+        className
       )}
       Component={Component}
     >
-      {before && <div vkuiClass="ActionSheetItem__before">{before}</div>}
+      {before && (
+        <div className={styles["ActionSheetItem__before"]}>{before}</div>
+      )}
       <div
-        vkuiClass={classNames(
-          "ActionSheetItem__container",
-          !multiline && "ActionSheetItem--ellipsis"
+        className={classNamesString(
+          styles["ActionSheetItem__container"],
+          !multiline && styles["ActionSheetItem--ellipsis"]
         )}
       >
         <div
-          vkuiClass={classNames(
-            "ActionSheetItem__content",
-            isCentered && "ActionSheetItem--centered"
+          className={classNamesString(
+            styles["ActionSheetItem__content"],
+            isCentered && styles["ActionSheetItem--centered"]
           )}
         >
           <Text
             weight={mode === "cancel" ? "2" : undefined}
-            vkuiClass="ActionSheetItem__children"
+            className={styles["ActionSheetItem__children"]}
           >
             {children}
           </Text>
-          {meta && <Text vkuiClass="ActionSheetItem__meta">{meta}</Text>}
+          {meta && (
+            <Text className={styles["ActionSheetItem__meta"]}>{meta}</Text>
+          )}
         </div>
         {subtitle && (
-          <Subhead vkuiClass="ActionSheetItem__subtitle">{subtitle}</Subhead>
+          <Subhead className={styles["ActionSheetItem__subtitle"]}>
+            {subtitle}
+          </Subhead>
         )}
       </div>
       {selectable && (
-        <div vkuiClass="ActionSheetItem__after">
+        <div className={styles["ActionSheetItem__after"]}>
           <input
             type="radio"
-            vkuiClass="ActionSheetItem__radio"
+            className={styles["ActionSheetItem__radio"]}
             name={name}
             value={value}
             onChange={onChange}
@@ -136,7 +146,7 @@ const ActionSheetItem = ({
             checked={checked}
             disabled={restProps.disabled}
           />
-          <div vkuiClass="ActionSheetItem__marker">
+          <div className={styles["ActionSheetItem__marker"]}>
             <Icon24CheckCircleOn />
           </div>
         </div>

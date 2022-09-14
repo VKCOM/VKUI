@@ -49,8 +49,8 @@
 
 /* Popouts */
 @import "../components/PopoutWrapper/PopoutWrapper.css";
-@import "../components/ActionSheet/ActionSheet.css";
-@import "../components/ActionSheetItem/ActionSheetItem.css";
+@import "../components/ActionSheet/ActionSheet.module.css";
+@import "../components/ActionSheetItem/ActionSheetItem.module.css";
 @import "../components/Alert/Alert.module.css";
 @import "../components/ScreenSpinner/ScreenSpinner.css";
 @import "../components/Snackbar/Snackbar.css";
