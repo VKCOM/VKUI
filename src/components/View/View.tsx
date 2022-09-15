@@ -301,6 +301,8 @@ export const View = ({
 
       if (e.startX <= 70 && !swipingBack && history && history.length > 1) {
         if (activePanel !== null) {
+          // Note: вызываем закрытие клавиатуры. В iOS это нативное поведение при свайпе.
+          blurActiveElement(document);
           scrolls.current[activePanel] = scroll?.getScroll().y;
         }
 
