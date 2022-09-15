@@ -825,7 +825,7 @@ function initPageModal(modalState: ModalsStateEntry) {
 
   // Если модалка может открываться на весь экран, и новый сдвиг больше предыдущего, то откроем её на весь экран
   if (
-    (modalState.expandable && translateY > (prevTranslateY ?? 0)) ||
+    (modalState.expandable && translateY > (prevTranslateY ?? 100)) ||
     modalState.settlingHeight === 100
   ) {
     translateY = 0;
