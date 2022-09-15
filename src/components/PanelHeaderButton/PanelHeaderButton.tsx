@@ -1,14 +1,14 @@
 import * as React from "react";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { getPlatformClassName } from "../../helpers/getPlatformClassName";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { warnOnce } from "../../lib/warnOnce";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getTitleFromChildren, isPrimitiveReactNode } from "../../lib/utils";
 import { Platform } from "../../lib/platform";
 import { Text } from "../Typography/Text/Text";
 import { Title } from "../Typography/Title/Title";
-import "./PanelHeaderButton.css";
+import styles from "./PanelHeaderButton.module.css";
 
 export interface PanelHeaderButtonProps extends Omit<TappableProps, "label"> {
   primary?: boolean;
@@ -46,6 +46,7 @@ export const PanelHeaderButton = ({
   children,
   primary = false,
   label,
+  className,
   ...restProps
 }: PanelHeaderButtonProps) => {
   const isPrimitive = isPrimitiveReactNode(children);
@@ -61,8 +62,8 @@ export const PanelHeaderButton = ({
       activeMode = "opacity";
       break;
     case Platform.VKCOM:
-      hoverMode = "PanelHeaderButton--hover";
-      activeMode = "PanelHeaderButton--active";
+      hoverMode = styles["PanelHeaderButton--hover"];
+      activeMode = styles["PanelHeaderButton--active"];
       break;
     default:
       hoverMode = "background";
@@ -92,12 +93,15 @@ export const PanelHeaderButton = ({
       Component={restProps.href ? "a" : "button"}
       activeEffectDelay={200}
       activeMode={activeMode}
-      vkuiClass={classNames(
-        "PanelHeaderButton",
-        getPlatformClassName("PanelHeaderButton", platform),
-        primary && "PanelHeaderButton--primary",
-        isPrimitive && "PanelHeaderButton--primitive",
-        !isPrimitive && !isPrimitiveLabel && "PanelHeaderButton--notPrimitive"
+      className={classNamesString(
+        styles["PanelHeaderButton"],
+        getPlatformClassName("PanelHeaderButton", platform, styles),
+        primary && styles["PanelHeaderButton--primary"],
+        isPrimitive && styles["PanelHeaderButton--primitive"],
+        !isPrimitive &&
+          !isPrimitiveLabel &&
+          styles["PanelHeaderButton--notPrimitive"],
+        className
       )}
     >
       {isPrimitive ? (
@@ -105,7 +109,7 @@ export const PanelHeaderButton = ({
       ) : (
         children
       )}
-      <div vkuiClass="PanelHeaderButton__label">
+      <div className={styles["PanelHeaderButton__label"]}>
         {isPrimitiveLabel ? (
           <ButtonTypography primary={primary}>{label}</ButtonTypography>
         ) : (

@@ -5,20 +5,22 @@ import {
   Icon16Chevron,
   Icon16ChevronLeft,
 } from "@vkontakte/icons";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Tappable } from "../Tappable/Tappable";
-import "./HorizontalScrollArrow.css";
+import styles from "./HorizontalScrollArrow.module.css";
 
 export interface HorizontalScrollArrowProps {
   direction: "left" | "right";
   size?: "m" | "l";
   onClick(): void;
+  className?: string;
 }
 
 export const HorizontalScrollArrow = ({
   size = "l",
   direction,
   onClick,
+  className,
   ...restProps
 }: HorizontalScrollArrowProps) => {
   let ArrowIcon: React.ComponentType<unknown>;
@@ -35,14 +37,15 @@ export const HorizontalScrollArrow = ({
       Component="button"
       hasHover={false}
       hasActive={false}
-      vkuiClass={classNames(
-        "HorizontalScrollArrow",
-        `HorizontalScrollArrow--size-${size}`,
-        `HorizontalScrollArrow--direction-${direction}`
+      className={classNamesString(
+        styles["HorizontalScrollArrow"],
+        styles[`HorizontalScrollArrow--size-${size}`],
+        styles[`HorizontalScrollArrow--direction-${direction}`],
+        className
       )}
       onClick={onClick}
     >
-      <span vkuiClass="HorizontalScrollArrow__icon">
+      <span className={styles["HorizontalScrollArrow__icon"]}>
         <ArrowIcon />
       </span>
     </Tappable>

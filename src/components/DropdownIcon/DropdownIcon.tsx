@@ -6,6 +6,7 @@ import {
   Icon20ChevronUp,
 } from "@vkontakte/icons";
 import { SizeYConditionalRender } from "../SizeYConditionalRender/SizeYConditionalRender";
+import styles from "./DropdownIcon.module.css";
 
 export interface DropdownIconProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -21,8 +22,12 @@ export const DropdownIcon = ({
 
   return (
     <SizeYConditionalRender
-      compact={<IconCompact vkuiClass="DropdownIcon" {...restProps} />}
-      regular={<IconRegular vkuiClass="DropdownIcon" {...restProps} />}
+      compact={
+        <IconCompact className={styles["DropdownIcon"]} {...restProps} />
+      }
+      regular={
+        <IconRegular className={styles["DropdownIcon"]} {...restProps} />
+      }
     />
   );
 };

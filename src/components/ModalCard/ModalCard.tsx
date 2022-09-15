@@ -1,6 +1,6 @@
 import * as React from "react";
 import { getPlatformClassName } from "../../helpers/getPlatformClassName";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import {
   ModalRootContext,
   useModalRegistry,
@@ -14,7 +14,7 @@ import {
 } from "../ModalCardBase/ModalCardBase";
 import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
 import { usePlatform } from "../../hooks/usePlatform";
-import "./ModalCard.css";
+import styles from "./ModalCard.module.css";
 
 export interface ModalCardProps extends NavIdProps, ModalCardBaseProps {}
 
@@ -32,6 +32,7 @@ export const ModalCard = ({
   onClose,
   nav,
   id,
+  className,
   ...restProps
 }: ModalCardProps) => {
   const { isDesktop } = useAdaptivityWithMediaQueries();
@@ -47,14 +48,15 @@ export const ModalCard = ({
     <div
       {...restProps}
       id={id}
-      vkuiClass={classNames(
-        "ModalCard",
-        getPlatformClassName("ModalCard", platform),
-        isDesktop && "ModalCard--desktop"
+      className={classNamesString(
+        styles["ModalCard"],
+        getPlatformClassName("ModalCard", platform, styles),
+        isDesktop && styles["ModalCard--desktop"],
+        className
       )}
     >
       <ModalCardBase
-        vkuiClass="ModalCard__in"
+        className={styles["ModalCard__in"]}
         getRootRef={refs.innerElement}
         icon={icon}
         header={header}

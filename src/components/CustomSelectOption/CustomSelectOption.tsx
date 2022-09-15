@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Icon16Done } from "@vkontakte/icons";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { hasReactNode } from "../../lib/utils";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
 import { Footnote } from "../Typography/Footnote/Footnote";
@@ -8,7 +8,7 @@ import { HasRootRef } from "../../types";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { warnOnce } from "../../lib/warnOnce";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import "./CustomSelectOption.css";
+import styles from "./CustomSelectOption.module.css";
 
 export interface CustomSelectOptionProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -69,6 +69,7 @@ export const CustomSelectOption = ({
   description,
   disabled,
   style: styleProp,
+  className,
   ...restProps
 }: CustomSelectOptionProps) => {
   const title = typeof children === "string" ? children : undefined;
@@ -96,33 +97,35 @@ export const CustomSelectOption = ({
       title={title}
       aria-disabled={disabled}
       aria-selected={selected}
-      vkuiClass={classNames(
-        "CustomSelectOption",
-        getSizeYClassName("CustomSelectOption", sizeY),
-        hovered && !disabled && "CustomSelectOption--hover",
-        selected && "CustomSelectOption--selected", // Note: пустой класс
-        disabled && "CustomSelectOption--disabled",
-        hierarchy > 0 && "CustomSelectOption--hierarchy"
+      className={classNamesString(
+        styles["CustomSelectOption"],
+        getSizeYClassName("CustomSelectOption", sizeY, styles),
+        hovered && !disabled && styles["CustomSelectOption--hover"],
+        // Note: пустой класс
+        selected && styles["CustomSelectOption--selected"],
+        disabled && styles["CustomSelectOption--disabled"],
+        hierarchy > 0 && styles["CustomSelectOption--hierarchy"],
+        className
       )}
       style={style}
     >
       {hasReactNode(before) && (
-        <div vkuiClass="CustomSelectOption__before">{before}</div>
+        <div className={styles["CustomSelectOption__before"]}>{before}</div>
       )}
-      <div vkuiClass="CustomSelectOption__main">
-        <div vkuiClass="CustomSelectOption__children">{children}</div>
+      <div className={styles["CustomSelectOption__main"]}>
+        <div className={styles["CustomSelectOption__children"]}>{children}</div>
         {hasReactNode(description) && (
-          <Footnote vkuiClass="CustomSelectOption__description">
+          <Footnote className={styles["CustomSelectOption__description"]}>
             {description}
           </Footnote>
         )}
       </div>
-      <div vkuiClass="CustomSelectOption__after">
+      <div className={styles["CustomSelectOption__after"]}>
         {hasReactNode(after) && (
-          <div vkuiClass="CustomSelectOption__afterIn">{after}</div>
+          <div className={styles["CustomSelectOption__afterIn"]}>{after}</div>
         )}
         {selected && (
-          <Icon16Done vkuiClass="CustomSelectOption__selectedIcon" />
+          <Icon16Done className={styles["CustomSelectOption__selectedIcon"]} />
         )}
       </div>
     </Paragraph>

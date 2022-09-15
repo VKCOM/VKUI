@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Platform } from "../../lib/platform";
 import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
 import { SplitColContext } from "../SplitCol/SplitCol";
@@ -11,7 +11,7 @@ import { useDOM } from "../../lib/dom";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { useTimeout } from "../../hooks/useTimeout";
 import { usePlatform } from "../../hooks/usePlatform";
-import "./Root.css";
+import styles from "./Root.module.css";
 
 export interface RootProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -37,6 +37,7 @@ export const Root = ({
   activeView: _activeView,
   onTransition,
   nav,
+  className,
   ...restProps
 }: RootProps) => {
   const scroll = React.useContext(ScrollContext);
@@ -125,10 +126,11 @@ export const Root = ({
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(
-        "Root",
-        platform === Platform.IOS && "Root--ios",
-        transition && "Root--transition"
+      className={classNamesString(
+        styles["Root"],
+        platform === Platform.IOS && styles["Root--ios"],
+        transition && styles["Root--transition"],
+        className
       )}
     >
       {views.map((view) => {
@@ -146,32 +148,34 @@ export const Root = ({
             key={viewId}
             ref={(e) => viewId && (viewNodes[viewId] = e)}
             onAnimationEnd={isTransitionTarget ? onAnimationEnd : undefined}
-            vkuiClass={classNames(
-              "Root__view",
+            className={classNamesString(
+              styles["Root__view"],
               transition &&
                 viewId === prevView &&
                 isBack &&
-                "Root__view--hide-back",
+                styles["Root__view--hide-back"],
               transition &&
                 viewId === prevView &&
                 !isBack &&
-                "Root__view--hide-forward",
+                styles["Root__view--hide-forward"],
               transition &&
                 viewId === activeView &&
                 isBack &&
-                "Root__view--show-back",
+                styles["Root__view--show-back"],
               transition &&
                 viewId === activeView &&
                 !isBack &&
-                "Root__view--show-forward",
-              !transition && viewId === activeView && "Root__view--active"
+                styles["Root__view--show-forward"],
+              !transition &&
+                viewId === activeView &&
+                styles["Root__view--active"]
             )}
           >
             <NavTransitionProvider
               entering={transition && viewId === activeView}
             >
               <div
-                vkuiClass="Root__scrollCompensation"
+                className={styles["Root__scrollCompensation"]}
                 style={{
                   marginTop: compensateScroll
                     ? viewId && -(scrolls[viewId] ?? 0)

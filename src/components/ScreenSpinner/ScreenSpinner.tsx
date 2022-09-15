@@ -4,8 +4,8 @@ import { Icon48DoneOutline } from "./Icon48DoneOutline";
 import { Icon48CancelCircle } from "./Icon48CancelCircle";
 import { PopoutWrapper } from "../PopoutWrapper/PopoutWrapper";
 import { useScrollLock } from "../AppRoot/ScrollContext";
-import { classNames } from "../../lib/classNames";
-import "./ScreenSpinner.css";
+import { classNamesString } from "../../lib/classNames";
+import styles from "./ScreenSpinner.module.css";
 
 export interface ScreenSpinnerProps extends SpinnerProps {
   state?: "loading" | "cancelable" | "done" | "error";
@@ -37,22 +37,22 @@ export const ScreenSpinner = ({
   return (
     <PopoutWrapper
       hasMask={false}
-      vkuiClass={classNames(
-        "ScreenSpinner",
-        hideSpinner && "ScreenSpinner--hideSpinner",
-        `ScreenSpinner--state-${state}`
+      className={classNamesString(
+        styles["ScreenSpinner"],
+        hideSpinner && styles["ScreenSpinner--hideSpinner"],
+        styles[`ScreenSpinner--state-${state}`],
+        className
       )}
-      className={className}
       style={style}
     >
-      <div vkuiClass="ScreenSpinner__container" onClick={onClick}>
+      <div className={styles["ScreenSpinner__container"]} onClick={onClick}>
         <Spinner
-          vkuiClass="ScreenSpinner__spinner"
+          className={styles["ScreenSpinner__spinner"]}
           size={size}
           aria-label={ariaLabel}
           {...restProps}
         />
-        <div vkuiClass="ScreenSpinner__icon">
+        <div className={styles["ScreenSpinner__icon"]}>
           <Icon aria-hidden />
         </div>
       </div>

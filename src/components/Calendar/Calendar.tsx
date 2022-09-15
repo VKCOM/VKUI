@@ -15,9 +15,9 @@ import {
 } from "../../lib/calendar";
 import { useCalendar } from "../../hooks/useCalendar";
 import { HasRootRef } from "../../types";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { warnOnce } from "../../lib/warnOnce";
-import "./Calendar.css";
+import styles from "./Calendar.module.css";
 
 export interface CalendarProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange">,
@@ -96,6 +96,7 @@ export const Calendar = ({
   prevMonthProps,
   nextMonthProps,
   dayProps,
+  className,
   ...props
 }: CalendarProps) => {
   const {
@@ -173,7 +174,11 @@ export const Calendar = ({
     <div
       {...props}
       ref={getRootRef}
-      vkuiClass={classNames("Calendar", `Calendar--size-${size}`)}
+      className={classNamesString(
+        styles["Calendar"],
+        styles[`Calendar--size-${size}`],
+        className
+      )}
     >
       <CalendarHeader
         viewDate={externalViewDate || viewDate}
@@ -181,7 +186,7 @@ export const Calendar = ({
         onNextMonth={setNextMonth}
         onPrevMonth={setPrevMonth}
         disablePickers={disablePickers || size === "s"}
-        vkuiClass="Calendar__header"
+        className={styles["Calendar__header"]}
         prevMonthAriaLabel={prevMonthAriaLabel}
         nextMonthAriaLabel={nextMonthAriaLabel}
         changeMonthAriaLabel={changeMonthAriaLabel}
@@ -210,7 +215,7 @@ export const Calendar = ({
         dayProps={dayProps}
       />
       {enableTime && value && size !== "s" && (
-        <div vkuiClass="Calendar__time">
+        <div className={styles["Calendar__time"]}>
           <CalendarTime
             value={value}
             onChange={onChange}

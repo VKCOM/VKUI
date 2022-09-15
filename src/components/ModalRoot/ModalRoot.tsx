@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Touch, TouchEvent } from "../Touch/Touch";
 import TouchRootContext from "../Touch/TouchContext";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { setTransformStyle } from "../../lib/styles";
 import { rubber } from "../../lib/touch";
 import { Platform } from "../../lib/platform";
@@ -25,7 +25,7 @@ import { getNavId } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { ModalTransitionProps, withModalManager } from "./useModalManager";
-import "./ModalRoot.css";
+import styles from "./ModalRoot.module.css";
 
 const warn = warnOnce("ModalRoot");
 const IS_DEV = process.env.NODE_ENV === "development";
@@ -667,23 +667,27 @@ class ModalRootTouchComponent extends React.Component<
       <TouchRootContext.Provider value={true}>
         <ModalRootContext.Provider value={this.modalRootContext}>
           <Touch
-            vkuiClass={classNames(
-              "ModalRoot",
+            className={classNamesString(
+              styles["ModalRoot"],
               this.props.configProvider?.webviewType === WebviewType.VKAPPS &&
-                "ModalRoot--vkapps",
-              touchDown && "ModalRoot--touched",
-              !!(enteringModal || exitingModal) && "ModalRoot--switching"
+                styles["ModalRoot--vkapps"],
+              touchDown && styles["ModalRoot--touched"],
+              !!(enteringModal || exitingModal) &&
+                styles["ModalRoot--switching"]
             )}
             onMove={this.onTouchMove}
             onEnd={this.onTouchEnd}
             onScroll={this.onScroll}
           >
             <div
-              vkuiClass="ModalRoot__mask"
+              className={styles["ModalRoot__mask"]}
               onClick={this.props.onExit}
               ref={this.maskElementRef}
             />
-            <div vkuiClass="ModalRoot__viewport" ref={this.viewportRef}>
+            <div
+              className={styles["ModalRoot__viewport"]}
+              ref={this.viewportRef}
+            >
               {this.getModals().map((Modal) => {
                 const modalId = getNavId(Modal.props, warn);
                 const _modalState = this.getModalState(modalId);
@@ -709,25 +713,27 @@ class ModalRootTouchComponent extends React.Component<
                     }}
                     onClose={this.props.onExit}
                     timeout={this.timeout}
-                    vkuiClass={classNames(
-                      "ModalRoot__modal",
-                      modalId === activeModal && "ModalRoot__modal--active",
-                      modalId === exitingModal && "ModalRoot__modal--prev",
+                    className={classNamesString(
+                      styles["ModalRoot__modal"],
+                      modalId === activeModal &&
+                        styles["ModalRoot__modal--active"],
+                      modalId === exitingModal &&
+                        styles["ModalRoot__modal--prev"],
                       ((exitingModal && modalId === activeModal) ||
                         modalId === enteringModal) &&
-                        "ModalRoot__modal--next",
+                        styles["ModalRoot__modal--next"],
 
-                      dragging && "ModalRoot__modal--dragging",
+                      dragging && styles["ModalRoot__modal--dragging"],
 
                       isPage &&
                         modalState.expandable &&
-                        "ModalRoot__modal--expandable",
+                        styles["ModalRoot__modal--expandable"],
                       isPage &&
                         modalState.expanded &&
-                        "ModalRoot__modal--expanded",
+                        styles["ModalRoot__modal--expanded"],
                       isPage &&
                         modalState.collapsed &&
-                        "ModalRoot__modal--collapsed"
+                        styles["ModalRoot__modal--collapsed"]
                     )}
                     restoreFocus={false}
                   >

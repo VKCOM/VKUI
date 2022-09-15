@@ -1,8 +1,8 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { Platform } from "../../lib/platform";
-import "./Tabbar.css";
+import styles from "./Tabbar.module.css";
 
 export interface TabbarProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -35,21 +35,23 @@ export const Tabbar = ({
   children,
   shadow = true,
   mode,
+  className,
   ...restProps
 }: TabbarProps) => {
   const platform = usePlatform();
 
   return (
     <div
-      vkuiClass={classNames(
-        "Tabbar",
-        platform === Platform.IOS && "Tabbar--ios",
-        `Tabbar-layout-${getItemsLayout(mode, children)}`,
-        shadow && "Tabbar--shadow"
+      className={classNamesString(
+        styles["Tabbar"],
+        platform === Platform.IOS && styles["Tabbar--ios"],
+        styles[`Tabbar-layout-${getItemsLayout(mode, children)}`],
+        shadow && styles["Tabbar--shadow"],
+        className
       )}
       {...restProps}
     >
-      <div vkuiClass="Tabbar__in">{children}</div>
+      <div className={styles["Tabbar__in"]}>{children}</div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AnyFunction } from "../../types";
 import { DOMProps, useDOM } from "../../lib/dom";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Platform } from "../../lib/platform";
 import { runTapticImpactOccurred } from "../../lib/taptic";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
@@ -14,6 +14,7 @@ import { PullToRefreshSpinner } from "./PullToRefreshSpinner";
 import TouchRootContext from "../Touch/TouchContext";
 import { usePrevious } from "../../hooks/usePrevious";
 import { useTimeout } from "../../hooks/useTimeout";
+import styles from "./PullToRefresh.module.css";
 
 function cancelEvent(event: any) {
   if (!event) {
@@ -57,6 +58,7 @@ export const PullToRefresh = ({
   children,
   isFetching,
   onRefresh,
+  className,
   ...restProps
 }: PullToRefreshProps) => {
   const platform = usePlatform();
@@ -249,14 +251,15 @@ export const PullToRefresh = ({
         onStart={onTouchStart}
         onMove={onTouchMove}
         onEnd={onTouchEnd}
-        vkuiClass={classNames(
-          "PullToRefresh",
-          platform === Platform.IOS && "PullToRefresh--ios",
-          watching && "PullToRefresh--watching",
-          refreshing && "PullToRefresh--refreshing"
+        className={classNamesString(
+          styles["PullToRefresh"],
+          platform === Platform.IOS && styles["PullToRefresh--ios"],
+          watching && styles["PullToRefresh--watching"],
+          refreshing && styles["PullToRefresh--refreshing"],
+          className
         )}
       >
-        <FixedLayout vkuiClass="PullToRefresh__controls">
+        <FixedLayout className={styles["PullToRefresh__controls"]}>
           <PullToRefreshSpinner
             style={{
               transform: spinnerTransform,
@@ -269,7 +272,7 @@ export const PullToRefresh = ({
         </FixedLayout>
 
         <div
-          vkuiClass="PullToRefresh__content"
+          className={styles["PullToRefresh__content"]}
           style={{
             transform: contentTransform,
             WebkitTransform: contentTransform,

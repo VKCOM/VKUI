@@ -1,6 +1,7 @@
 import * as React from "react";
+import { classNamesString } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
-import "./Progress.css";
+import styles from "./Progress.module.css";
 
 export interface ProgressProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -17,6 +18,7 @@ const PROGRESS_MAX_VALUE = 100;
 export const Progress = ({
   value = 0,
   getRootRef,
+  className,
   ...restProps
 }: ProgressProps) => {
   const progress = Math.max(
@@ -32,10 +34,10 @@ export const Progress = ({
       aria-valuemin={PROGRESS_MIN_VALUE}
       aria-valuemax={PROGRESS_MAX_VALUE}
       ref={getRootRef}
-      vkuiClass="Progress"
+      className={classNamesString(styles["Progress"], className)}
     >
       <div
-        vkuiClass="Progress__in"
+        className={styles["Progress__in"]}
         style={{ width: `${progress}%` }}
         aria-hidden
       />

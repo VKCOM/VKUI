@@ -3,10 +3,11 @@ import { NativeSelect } from "../NativeSelect/NativeSelect";
 import { CustomSelect, SelectProps } from "../CustomSelect/CustomSelect";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { usePlatform } from "../../hooks/usePlatform";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { getMouseClassName } from "../../helpers/getMouseClassName";
+import styles from "./Select.module.css";
 
 export type SelectType = "default" | "plain" | "accent";
 
@@ -16,18 +17,20 @@ export type SelectType = "default" | "plain" | "accent";
 export const SelectTypography = ({
   selectType = "default",
   children,
+  className,
   ...restProps
-}: React.PropsWithChildren<Pick<SelectProps, "selectType">>) => {
+}: React.PropsWithChildren<Pick<SelectProps, "selectType" | "className">>) => {
   const platform = usePlatform();
   const { sizeY } = useAdaptivity();
 
   return (
     <span
-      vkuiClass={classNames(
-        "SelectTypography",
-        getPlatformClassName("SelectTypography", platform),
-        getSizeYClassName("SelectTypography", sizeY),
-        `SelectTypography--selectType-${selectType}`
+      className={classNamesString(
+        styles["SelectTypography"],
+        getPlatformClassName("SelectTypography", platform, styles),
+        getSizeYClassName("SelectTypography", sizeY, styles),
+        styles[`SelectTypography--selectType-${selectType}`],
+        className
       )}
       {...restProps}
     >
@@ -44,6 +47,7 @@ export const Select = ({
   options = [],
   popupDirection,
   renderOption,
+  className,
   ...props
 }: SelectProps) => {
   const { hasMouse } = useAdaptivity();
@@ -52,9 +56,10 @@ export const Select = ({
     <React.Fragment>
       {(hasMouse === undefined || hasMouse === true) && (
         <CustomSelect
-          vkuiClass={classNames(
-            "Select__custom",
-            getMouseClassName("Select__custom", hasMouse)
+          className={classNamesString(
+            styles["Select__custom"],
+            getMouseClassName("Select__custom", hasMouse, styles),
+            className
           )}
           options={options}
           popupDirection={popupDirection}
@@ -64,9 +69,10 @@ export const Select = ({
       )}
       {(hasMouse === undefined || hasMouse === false) && (
         <NativeSelect
-          vkuiClass={classNames(
-            "Select__native",
-            getMouseClassName("Select__native", hasMouse)
+          className={classNamesString(
+            styles["Select__native"],
+            getMouseClassName("Select__native", hasMouse, styles),
+            className
           )}
           {...props}
         >

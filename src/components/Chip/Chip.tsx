@@ -1,12 +1,12 @@
 import * as React from "react";
 import { Icon16Cancel } from "@vkontakte/icons";
 import { getTitleFromChildren, hasReactNode, noop } from "../../lib/utils";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Footnote } from "../Typography/Footnote/Footnote";
 import { Tappable } from "../Tappable/Tappable";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import "./Chip.css";
+import styles from "./Chip.module.css";
 
 export type ChipValue = string | number;
 
@@ -44,6 +44,7 @@ export const Chip = ({
   before = null,
   after,
   children,
+  className,
   ...restProps
 }: ChipProps) => {
   const { sizeY } = useAdaptivity();
@@ -57,26 +58,35 @@ export const Chip = ({
 
   return (
     <div
-      vkuiClass={classNames(
-        "Chip",
-        getSizeYClassName("Chip", sizeY),
-        removable && "Chip--removable"
+      className={classNamesString(
+        styles["Chip"],
+        getSizeYClassName("Chip", sizeY, styles),
+        removable && styles["Chip--removable"],
+        className
       )}
       role="option"
       aria-label={title}
       {...restProps}
     >
-      <div vkuiClass="Chip__in" role="presentation">
-        {hasReactNode(before) && <div vkuiClass="Chip__before">{before}</div>}
-        <Footnote vkuiClass="Chip__content" title={title} aria-hidden="true">
+      <div className={styles["Chip__in"]} role="presentation">
+        {hasReactNode(before) && (
+          <div className={styles["Chip__before"]}>{before}</div>
+        )}
+        <Footnote
+          className={styles["Chip__content"]}
+          title={title}
+          aria-hidden="true"
+        >
           {children}
         </Footnote>
-        {hasReactNode(after) && <div vkuiClass="Chip__after">{after}</div>}
+        {hasReactNode(after) && (
+          <div className={styles["Chip__after"]}>{after}</div>
+        )}
 
         {removable && (
           <Tappable
             Component="button"
-            vkuiClass="Chip__remove"
+            className={styles["Chip__remove"]}
             onClick={onRemoveWrapper}
             hasHover={false}
             hasActive={false}

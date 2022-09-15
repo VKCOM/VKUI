@@ -1,9 +1,9 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { HasComponent, HasRootRef } from "../../types";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import "./FormField.css";
+import styles from "./FormField.module.css";
 
 export interface FormFieldProps {
   status?: "default" | "error" | "valid";
@@ -48,6 +48,7 @@ export const FormField = ({
   after,
   disabled,
   mode = "default",
+  className,
   ...restProps
 }: FormFieldOwnProps) => {
   const { sizeY } = useAdaptivity();
@@ -70,27 +71,28 @@ export const FormField = ({
       ref={getRootRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      vkuiClass={classNames(
-        "FormField",
-        `FormField--mode-${mode}`,
-        `FormField--status-${status}`,
-        getSizeYClassName("FormField", sizeY),
-        disabled && "FormField--disabled",
-        !disabled && hover && "FormField--hover"
+      className={classNamesString(
+        styles["FormField"],
+        styles[`FormField--mode-${mode}`],
+        styles[`FormField--status-${status}`],
+        getSizeYClassName("FormField", sizeY, styles),
+        disabled && styles["FormField--disabled"],
+        !disabled && hover && styles["FormField--hover"],
+        className
       )}
     >
       {before && (
-        <div role="presentation" vkuiClass="FormField__before">
+        <div role="presentation" className={styles["FormField__before"]}>
           {before}
         </div>
       )}
       {children}
       {after && (
-        <div role="presentation" vkuiClass="FormField__after">
+        <div role="presentation" className={styles["FormField__after"]}>
           {after}
         </div>
       )}
-      <div role="presentation" vkuiClass="FormField__border" />
+      <div role="presentation" className={styles["FormField__border"]} />
     </Component>
   );
 };

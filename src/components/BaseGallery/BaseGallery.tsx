@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Touch, TouchEvent } from "../Touch/Touch";
 import { HorizontalScrollArrow } from "../HorizontalScroll/HorizontalScrollArrow";
 import { useExternRef } from "../../hooks/useExternRef";
@@ -14,7 +14,7 @@ import {
   LayoutState,
   ShiftingState,
 } from "./types";
-import "./BaseGallery.css";
+import styles from "./BaseGallery.module.css";
 
 const ANIMATION_DURATION = 0.24;
 
@@ -51,6 +51,7 @@ export const BaseGallery = ({
   align = "left",
   showArrows,
   getRef,
+  className,
   ...restProps
 }: BaseGalleryProps) => {
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
@@ -328,16 +329,17 @@ export const BaseGallery = ({
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(
-        "Gallery",
-        `Gallery--align-${align}`,
-        shiftState.dragging && "Gallery--dragging",
-        slideWidth === "custom" && "Gallery--custom-width"
+      className={classNamesString(
+        styles["BaseGallery"],
+        styles[`BaseGallery--align-${align}`],
+        shiftState.dragging && styles["BaseGallery--dragging"],
+        slideWidth === "custom" && styles["BaseGallery--custom-width"],
+        className
       )}
       ref={rootRef}
     >
       <Touch
-        vkuiClass="Gallery__viewport"
+        className={styles["BaseGallery__viewport"]}
         onStartX={onStart}
         onMoveX={onMoveX}
         onEnd={onEnd}
@@ -345,10 +347,10 @@ export const BaseGallery = ({
         getRootRef={viewportRef}
         noSlideClick
       >
-        <div vkuiClass="Gallery__layer" style={layerStyle}>
+        <div className={styles["BaseGallery__layer"]} style={layerStyle}>
           {React.Children.map(children, (item: React.ReactNode, i: number) => (
             <div
-              vkuiClass="Gallery__slide"
+              className={styles["BaseGallery__slide"]}
               key={`slide-${i}`}
               ref={(el) => setSlideRef(el, i)}
             >
@@ -361,18 +363,18 @@ export const BaseGallery = ({
       {bullets && (
         <div
           aria-hidden="true"
-          vkuiClass={classNames(
-            "Gallery__bullets",
-            `Gallery__bullets--${bullets}`
+          className={classNamesString(
+            styles["BaseGallery__bullets"],
+            styles[`BaseGallery__bullets--${bullets}`]
           )}
         >
           {React.Children.map(
             children,
             (_item: React.ReactNode, index: number) => (
               <div
-                vkuiClass={classNames(
-                  "Gallery__bullet",
-                  index === slideIndex && "Gallery__bullet--active"
+                className={classNamesString(
+                  styles["BaseGallery__bullet"],
+                  index === slideIndex && styles["BaseGallery__bullet--active"]
                 )}
                 key={index}
               />

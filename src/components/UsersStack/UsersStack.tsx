@@ -1,9 +1,9 @@
 import * as React from "react";
 import { hasReactNode } from "../../lib/utils";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Footnote } from "../Typography/Footnote/Footnote";
 import { Caption } from "../Typography/Caption/Caption";
-import "./UsersStack.css";
+import styles from "./UsersStack.module.css";
 
 export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -35,6 +35,8 @@ interface PathElementProps extends React.SVGAttributes<SVGElement> {
   photoSize: number;
   direction: "circle" | "right" | "left";
 }
+
+type PhotoSizeType = 16 | 24 | 32;
 
 function PathElement({ photoSize, direction, ...props }: PathElementProps) {
   switch (direction) {
@@ -100,6 +102,7 @@ export const UsersStack = ({
   size = "m",
   layout = "horizontal",
   children,
+  className,
   ...restProps
 }: UsersStackProps) => {
   const canShowOthers = count > 0 && size !== "s";
@@ -109,7 +112,7 @@ export const UsersStack = ({
     s: 16,
     m: 24,
     l: 32,
-  }[size];
+  }[size] as PhotoSizeType;
   const directionClip = canShowOthers ? "right" : "left";
 
   const photosShown = photos.slice(0, visibleCount);
@@ -117,14 +120,15 @@ export const UsersStack = ({
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(
-        "UsersStack",
-        `UsersStack--size-${size}`,
-        `UsersStack--layout-${layout}`,
-        canShowOthers && "UsersStack--others"
+      className={classNamesString(
+        styles["UsersStack"],
+        styles[`UsersStack--size-${size}`],
+        styles[`UsersStack--layout-${layout}`],
+        canShowOthers && styles["UsersStack--others"],
+        className
       )}
     >
-      <div vkuiClass="UsersStack__photos" role="presentation">
+      <div className={styles["UsersStack__photos"]} role="presentation">
         {photosShown.map((photo, i) => {
           const direction =
             i === 0 && !canShowOthers ? "circle" : directionClip;
@@ -132,15 +136,19 @@ export const UsersStack = ({
           return (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              vkuiClass="UsersStack__photo"
+              className={styles["UsersStack__photo"]}
               key={i}
               aria-hidden
             >
-              <g vkuiClass={`UsersStack__mask--${photoSize}-${direction}`}>
+              <g
+                className={
+                  styles[`UsersStack__mask--${photoSize}-${direction}`]
+                }
+              >
                 <PathElement
                   direction={direction}
                   photoSize={photoSize}
-                  vkuiClass="UsersStack__fill"
+                  className={styles["UsersStack__fill"]}
                 />
                 <image href={photo} width={photoSize} height={photoSize} />
                 <PathElement
@@ -158,7 +166,10 @@ export const UsersStack = ({
           <CounterTypography
             caps
             weight="1"
-            vkuiClass="UsersStack__photo UsersStack__photo--others"
+            className={classNamesString(
+              styles["UsersStack__photo"],
+              styles["UsersStack__photo--others"]
+            )}
             aria-hidden
           >
             <span>+{count}</span>
@@ -166,7 +177,7 @@ export const UsersStack = ({
         )}
       </div>
       {hasReactNode(children) && (
-        <Footnote vkuiClass="UsersStack__text">{children}</Footnote>
+        <Footnote className={styles["UsersStack__text"]}>{children}</Footnote>
       )}
     </div>
   );

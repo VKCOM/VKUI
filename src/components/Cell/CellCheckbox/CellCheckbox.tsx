@@ -7,10 +7,10 @@ import {
 } from "@vkontakte/icons";
 import { getPlatformClassName } from "../../../helpers/getPlatformClassName";
 import { usePlatform } from "../../../hooks/usePlatform";
-import { classNames } from "../../../lib/classNames";
+import { classNamesString } from "../../../lib/classNames";
 import { Platform } from "../../../lib/platform";
 import { CellProps } from "../Cell";
-import "./CellCheckbox.css";
+import styles from "./CellCheckbox.module.css";
 
 export type CellCheckboxProps = Pick<CellProps, "defaultChecked" | "checked"> &
   React.InputHTMLAttributes<HTMLInputElement>;
@@ -34,16 +34,30 @@ export const CellCheckbox = ({
 
   return (
     <div
-      vkuiClass={classNames(
-        "CellCheckbox",
-        getPlatformClassName("CellCheckbox", platform)
+      className={classNamesString(
+        styles["CellCheckbox"],
+        getPlatformClassName("CellCheckbox", platform, styles),
+        className
       )}
-      className={className}
       style={style}
     >
-      <input vkuiClass="CellCheckbox__input" type="checkbox" {...restProps} />
-      <IconOff vkuiClass="CellCheckbox__icon CellCheckbox__icon--off" />
-      <IconOn vkuiClass="CellCheckbox__icon CellCheckbox__icon--on" />
+      <input
+        className={styles["CellCheckbox__input"]}
+        type="checkbox"
+        {...restProps}
+      />
+      <IconOff
+        className={classNamesString(
+          styles["CellCheckbox__icon"],
+          styles["CellCheckbox__icon--off"]
+        )}
+      />
+      <IconOn
+        className={classNamesString(
+          styles["CellCheckbox__icon"],
+          styles["CellCheckbox__icon--on"]
+        )}
+      />
     </div>
   );
 };

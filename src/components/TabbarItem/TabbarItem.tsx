@@ -1,12 +1,12 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import { Tappable } from "../Tappable/Tappable";
 import { Footnote } from "../Typography/Footnote/Footnote";
 import { Platform } from "../../lib/platform";
 import { HasComponent, HasRootRef } from "../../types";
-import "./TabbarItem.css";
+import styles from "./TabbarItem.module.css";
 
 export interface TabbarItemProps
   extends React.AllHTMLAttributes<HTMLElement>,
@@ -34,6 +34,7 @@ export const TabbarItem = ({
   href,
   Component = href ? "a" : "button",
   disabled,
+  className,
   ...restProps
 }: TabbarItemProps) => {
   const platform = usePlatform();
@@ -43,12 +44,13 @@ export const TabbarItem = ({
       {...restProps}
       disabled={disabled}
       href={href}
-      vkuiClass={classNames(
-        "TabbarItem",
-        platform === Platform.IOS && "TabbarItem--ios",
-        platform === Platform.ANDROID && "TabbarItem--android",
-        selected && "TabbarItem--selected",
-        !!text && "TabbarItem--text"
+      className={classNamesString(
+        styles["TabbarItem"],
+        platform === Platform.IOS && styles["TabbarItem--ios"],
+        platform === Platform.ANDROID && styles["TabbarItem--android"],
+        selected && styles["TabbarItem--selected"],
+        !!text && styles["TabbarItem--text"],
+        className
       )}
     >
       <Tappable
@@ -57,22 +59,26 @@ export const TabbarItem = ({
         disabled={disabled}
         activeMode={
           platform === Platform.IOS
-            ? "TabbarItem__tappable--active"
+            ? styles["TabbarItem__tappable--active"]
             : "background"
         }
         activeEffectDelay={platform === Platform.IOS ? 0 : 300}
         hasHover={false}
-        vkuiClass="TabbarItem__tappable"
+        className={styles["TabbarItem__tappable"]}
       />
-      <div vkuiClass="TabbarItem__in">
-        <div vkuiClass="TabbarItem__icon">
+      <div className={styles["TabbarItem__in"]}>
+        <div className={styles["TabbarItem__icon"]}>
           {children}
-          <div vkuiClass="TabbarItem__label">
+          <div className={styles["TabbarItem__label"]}>
             {hasReactNode(indicator) && indicator}
           </div>
         </div>
         {text && (
-          <Footnote Component="div" vkuiClass="TabbarItem__text" weight="2">
+          <Footnote
+            Component="div"
+            className={styles["TabbarItem__text"]}
+            weight="2"
+          >
             {text}
           </Footnote>
         )}

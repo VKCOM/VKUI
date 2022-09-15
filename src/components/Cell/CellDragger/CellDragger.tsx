@@ -2,11 +2,11 @@ import * as React from "react";
 import { Icon24Reorder, Icon24ReorderIos } from "@vkontakte/icons";
 import { getPlatformClassName } from "../../../helpers/getPlatformClassName";
 import { usePlatform } from "../../../hooks/usePlatform";
-import { classNames } from "../../../lib/classNames";
+import { classNamesString } from "../../../lib/classNames";
 import { Platform } from "../../../lib/platform";
 import { Touch } from "../../Touch/Touch";
 import { DraggableProps } from "../useDraggable";
-import "./CellDragger.css";
+import styles from "./CellDragger.module.css";
 
 type CellDraggerProps = DraggableProps & React.HTMLAttributes<HTMLElement>;
 
@@ -14,6 +14,7 @@ export const CellDragger = ({
   onDragStart,
   onDragMove,
   onDragEnd,
+  className,
   ...restProps
 }: CellDraggerProps) => {
   const platform = usePlatform();
@@ -24,9 +25,10 @@ export const CellDragger = ({
 
   return (
     <Touch
-      vkuiClass={classNames(
-        "CellDragger",
-        getPlatformClassName("CellDragger", platform)
+      className={classNamesString(
+        styles["CellDragger"],
+        getPlatformClassName("CellDragger", platform, styles),
+        className
       )}
       onStart={onDragStart}
       onMoveY={onDragMove}

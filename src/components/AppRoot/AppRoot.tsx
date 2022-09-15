@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useDOM } from "../../lib/dom";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { AppRootContext } from "./AppRootContext";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { IconSettingsProvider } from "@vkontakte/icons";
@@ -16,7 +16,7 @@ import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
 import { isRefObject } from "../../lib/isRefObject";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import "./AppRoot.css";
+import styles from "./AppRoot.module.css";
 
 // Используйте classList, но будьте осторожны
 /* eslint-disable no-restricted-properties */
@@ -44,6 +44,7 @@ export const AppRoot = ({
   scroll = "global",
   portalRoot: portalRootProp = null,
   disablePortal,
+  className,
   ...props
 }: AppRootProps) => {
   const isKeyboardInputActive = useKeyboardInputTracker();
@@ -190,7 +191,11 @@ export const AppRoot = ({
   ) : (
     <div
       ref={rootRef}
-      vkuiClass={classNames("AppRoot", !hasMouse && "AppRoot--no-mouse")}
+      className={classNamesString(
+        styles["AppRoot"],
+        !hasMouse && styles["AppRoot--no-mouse"],
+        className
+      )}
       {...props}
     >
       {content}

@@ -1,6 +1,6 @@
 export const Icon48DoneOutline = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
-    vkuiClass="Icon"
+    className="Icon"
     width="48"
     height="48"
     viewBox="0 0 48 48"

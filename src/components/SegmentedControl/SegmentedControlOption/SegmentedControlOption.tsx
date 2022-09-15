@@ -1,14 +1,14 @@
 import { useAdaptivity } from "../../../hooks/useAdaptivity";
 import { useFocusVisible } from "../../../hooks/useFocusVisible";
 import { callMultiple } from "../../../lib/callMultiple";
-import { classNames } from "../../../lib/classNames";
+import { classNamesString } from "../../../lib/classNames";
 import { FocusVisible } from "../../FocusVisible/FocusVisible";
 import {
   VisuallyHiddenInput,
   VisuallyHiddenInputProps,
 } from "../../VisuallyHiddenInput/VisuallyHiddenInput";
 import { getSizeYClassName } from "../../../helpers/getSizeYClassName";
-import "./SegmentedControlOption.css";
+import styles from "./SegmentedControlOption.module.css";
 
 /**
  * @see https://vkcom.github.io/VKUI/#/SegmentedControl
@@ -24,13 +24,13 @@ export const SegmentedControlOption = ({
 
   return (
     <label
-      className={className}
-      style={style}
-      vkuiClass={classNames(
-        "SegmentedControlOption",
-        restProps.checked && "SegmentedControlOption--checked",
-        focusVisible && "SegmentedControlOption--focus-visible"
+      className={classNamesString(
+        styles["SegmentedControlOption"],
+        restProps.checked && styles["SegmentedControlOption--checked"],
+        focusVisible && styles["SegmentedControlOption--focus-visible"],
+        className
       )}
+      style={style}
     >
       <VisuallyHiddenInput
         {...restProps}
@@ -39,9 +39,9 @@ export const SegmentedControlOption = ({
         onFocus={callMultiple(onFocus, restProps.onFocus)}
       />
       <span
-        vkuiClass={classNames(
-          "SegmentedControlOption__content",
-          getSizeYClassName("SegmentedControlOption__content", sizeY)
+        className={classNamesString(
+          styles["SegmentedControlOption__content"],
+          getSizeYClassName("SegmentedControlOption__content", sizeY, styles)
         )}
       >
         {children}

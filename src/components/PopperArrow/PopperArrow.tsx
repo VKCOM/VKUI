@@ -1,5 +1,6 @@
 import * as React from "react";
-import "./PopperArrow.css";
+import { classNamesString } from "../../lib/classNames";
+import styles from "./PopperArrow.module.css";
 
 export interface PopperArrowProps {
   style?: React.CSSProperties;
@@ -12,16 +13,17 @@ export const PopperArrow = ({
   attributes,
   arrowClassName,
 }: PopperArrowProps) => {
+  const { className: arrowWrapperClassName, ...restAttributes } =
+    attributes ?? {};
   return (
     <div
       style={style}
-      {...attributes}
-      vkuiClass="PopperArrow"
+      {...restAttributes}
+      className={classNamesString(styles["PopperArrow"], arrowWrapperClassName)}
       data-popper-arrow={true}
     >
       <svg
-        vkuiClass="PopperArrow__in"
-        className={arrowClassName}
+        className={classNamesString(styles["PopperArrow__in"], arrowClassName)}
         width="20"
         height="8"
         viewBox="0 0 20 8"

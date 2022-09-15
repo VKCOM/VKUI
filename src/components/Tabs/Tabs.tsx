@@ -1,11 +1,11 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import { Platform } from "../../lib/platform";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import "./Tabs.css";
+import styles from "./Tabs.module.css";
 
 export interface TabsProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -30,6 +30,7 @@ export const Tabs = ({
   children,
   mode = "default",
   getRootRef,
+  className,
   ...restProps
 }: TabsProps) => {
   const platform = usePlatform();
@@ -41,16 +42,16 @@ export const Tabs = ({
     <div
       {...restProps}
       ref={getRootRef}
-      vkuiClass={classNames(
-        "Tabs",
-        (platform === Platform.IOS || platform === Platform.VKCOM) &&
-          `Tabs--${platform}`,
-        getSizeXClassName("Tabs", sizeX),
-        withGaps && "Tabs--withGaps",
-        `Tabs--mode-${mode}`
+      className={classNamesString(
+        styles["Tabs"],
+        platform === Platform.VKCOM && styles[`Tabs--${platform}`],
+        getSizeXClassName("Tabs", sizeX, styles),
+        withGaps && styles["Tabs--withGaps"],
+        styles[`Tabs--mode-${mode}`],
+        className
       )}
     >
-      <div vkuiClass="Tabs__in">
+      <div className={styles["Tabs__in"]}>
         <TabsModeContext.Provider value={{ mode, withGaps }}>
           {children}
         </TabsModeContext.Provider>

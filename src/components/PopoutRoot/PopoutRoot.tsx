@@ -1,9 +1,10 @@
 import * as React from "react";
+import { classNamesString } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { blurActiveElement, useDOM } from "../../lib/dom";
 import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
-import "./PopoutRoot.css";
+import styles from "./PopoutRoot.module.css";
 
 export interface PopoutRootProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -17,6 +18,7 @@ export const PopoutRoot = ({
   modal,
   children,
   getRootRef,
+  className,
   ...restProps
 }: PopoutRootProps) => {
   const { document } = useDOM();
@@ -28,19 +30,25 @@ export const PopoutRoot = ({
   }, [document, popout]);
 
   return (
-    <div {...restProps} vkuiClass="PopoutRoot" ref={getRootRef}>
+    <div
+      {...restProps}
+      className={classNamesString(styles["PopoutRoot"], className)}
+      ref={getRootRef}
+    >
       {children}
       <AppRootPortal>
         {!!popout && (
           <div
-            vkuiClass={
-              isDesktop ? "PopoutRoot--absolute" : "PopoutRoot__popout"
+            className={
+              isDesktop
+                ? styles["PopoutRoot--absolute"]
+                : styles["PopoutRoot__popout"]
             }
           >
             {popout}
           </div>
         )}
-        {!!modal && <div vkuiClass="PopoutRoot__modal">{modal}</div>}
+        {!!modal && <div className={styles["PopoutRoot__modal"]}>{modal}</div>}
       </AppRootPortal>
     </div>
   );

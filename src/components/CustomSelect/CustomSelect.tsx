@@ -1,7 +1,7 @@
 import * as React from "react";
 import { SelectMimicry } from "../SelectMimicry/SelectMimicry";
 import { debounce, multiRef, getTitleFromChildren } from "../../lib/utils";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { NativeSelectProps } from "../NativeSelect/NativeSelect";
 import {
   CustomSelectOption,
@@ -21,7 +21,7 @@ import { CustomSelectDropdown } from "../CustomSelectDropdown/CustomSelectDropdo
 import { TrackerOptionsProps } from "../CustomScrollView/useTrackerVisibility";
 import { SelectType } from "../Select/Select";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import "./CustomSelect.css";
+import styles from "./CustomSelect.module.css";
 
 const findIndexAfter = (
   options: CustomSelectOptionInterface[] = [],
@@ -259,13 +259,13 @@ export function CustomSelect(props: SelectProps) {
 
   const openedClassNames = React.useMemo(
     () =>
-      classNames(
-        opened && "Select--open",
+      classNamesString(
+        opened && styles["Select--open"],
         opened &&
           dropdownOffsetDistance === 0 &&
           (popperPlacement?.includes("top")
-            ? "Select--pop-up"
-            : "Select--pop-down")
+            ? styles["Select--pop-up"]
+            : styles["Select--pop-down"])
       ),
     [dropdownOffsetDistance, opened, popperPlacement]
   );
@@ -668,7 +668,9 @@ export function CustomSelect(props: SelectProps) {
       options?.length > 0 ? (
         options.map(renderOption)
       ) : (
-        <Footnote vkuiClass="CustomSelect__empty">{emptyText}</Footnote>
+        <Footnote className={styles["CustomSelect__empty"]}>
+          {emptyText}
+        </Footnote>
       );
 
     if (typeof renderDropdown === "function") {
@@ -680,8 +682,7 @@ export function CustomSelect(props: SelectProps) {
 
   return (
     <label
-      vkuiClass="CustomSelect"
-      className={className}
+      className={classNamesString(styles["CustomSelect"], className)}
       style={style}
       ref={multiRef(containerRef, getRootRef)}
       onClick={onLabelClick}
@@ -691,7 +692,7 @@ export function CustomSelect(props: SelectProps) {
           {...restProps}
           autoFocus
           onBlur={onBlur}
-          vkuiClass={openedClassNames}
+          className={openedClassNames}
           value={inputValue}
           onKeyDown={onInputKeyDown}
           onChange={onInputChange}
@@ -713,7 +714,7 @@ export function CustomSelect(props: SelectProps) {
           onKeyUp={handleKeyUp}
           onFocus={onFocus}
           onBlur={onBlur}
-          vkuiClass={openedClassNames}
+          className={openedClassNames}
           after={icon}
           selectType={selectType}
         >
@@ -729,7 +730,7 @@ export function CustomSelect(props: SelectProps) {
         onClick={props.onClick}
         value={nativeSelectValue}
         aria-hidden={true}
-        vkuiClass="CustomSelect__control"
+        className={styles["CustomSelect__control"]}
       >
         {optionsProp.map((item) => (
           <option key={`${item.value}`} value={item.value} />

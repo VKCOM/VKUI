@@ -1,6 +1,7 @@
 import * as React from "react";
+import { classNamesString } from "../../lib/classNames";
 import { HasComponent, HasRef } from "../../types";
-import "./FormLayout.css";
+import styles from "./FormLayout.module.css";
 
 const preventDefault = (e: React.FormEvent) => e.preventDefault();
 
@@ -16,18 +17,23 @@ export const FormLayout = ({
   Component = "form",
   getRef,
   onSubmit = preventDefault,
+  className,
   ...restProps
 }: FormLayoutProps) => {
   return (
     <Component
       {...restProps}
-      vkuiClass="FormLayout"
+      className={classNamesString(styles["FormLayout"], className)}
       onSubmit={onSubmit}
       ref={getRef}
     >
-      <div vkuiClass="FormLayout__container">{children}</div>
+      <div className={styles["FormLayout__container"]}>{children}</div>
       {Component === "form" && (
-        <input type="submit" vkuiClass="FormLayout__submit" value="" />
+        <input
+          type="submit"
+          className={styles["FormLayout__submit"]}
+          value=""
+        />
       )}
     </Component>
   );
