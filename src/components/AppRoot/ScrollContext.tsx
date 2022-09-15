@@ -15,6 +15,15 @@ const clearDisableScrollStyle = (node: HTMLElement) => {
   });
 };
 
+const getPageYOffsetWithoutKeyboardHeight = (window: Window) => {
+  // Note: здесь расчёт на то, что `clientHeight` равен `window.innerHeight`.
+  //  Это достигается тем, что тегу `html` задали`height: 100%` и у него нет отступов сверху и снизу. Если есть отступы,
+  //  то надо задать `box-sizing: border-box`, чтобы они не учитывались.
+  const diffOfClientHeightAndViewportHeight =
+    window.document.documentElement.clientHeight - window.innerHeight;
+  return window.pageYOffset - diffOfClientHeightAndViewportHeight;
+};
+
 export interface ScrollContextInterface {
   getScroll(this: void): { x: number; y: number };
   scrollTo(this: void, x?: number, y?: number): void;
@@ -45,7 +54,10 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps) => {
   const beforeScrollLockFnSetRef = React.useRef<Set<() => void>>(new Set());
 
   const getScroll = React.useCallback<ScrollContextInterface["getScroll"]>(
-    () => ({ x: window!.pageXOffset, y: window!.pageYOffset }),
+    () => ({
+      x: window!.pageXOffset,
+      y: getPageYOffsetWithoutKeyboardHeight(window!),
+    }),
     [window]
   );
   const scrollTo = React.useCallback<ScrollContextInterface["scrollTo"]>(
