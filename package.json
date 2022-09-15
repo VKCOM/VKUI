@@ -185,7 +185,7 @@
     "babel-dev": "yarn babel-base --out-dir dist/ --watch",
     "babel-cjs-dev": "yarn babel-base --config-file ./babel.cjs.config.js --out-dir dist/cjs/ --watch",
     "tsc-dev": "tsc --emitDeclarationOnly --declaration --outDir dist/ --watch --preserveWatchOutput",
-    "build:types": "yarn tsc && yarn tsc-cssm",
+    "build:types": "yarn tsc && yarn tsc-cjs && yarn tsc-cssm",
     "build:no-types": "concurrently 'yarn:babel' 'yarn:babel-cssm' 'yarn:babel-cjs' 'yarn:postcss'",
     "build": "yarn build:types && yarn build:no-types",
     "postcss": "cross-env NODE_ENV=production concurrently 'yarn:postcss-bundle' 'yarn:postcss-modules'",
