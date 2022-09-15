@@ -1,10 +1,11 @@
 import * as React from "react";
+import { classNamesString } from "../../lib/classNames";
 import { Icon24Dismiss } from "@vkontakte/icons";
 import { Button } from "../Button/Button";
 import { SimpleCell } from "../SimpleCell/SimpleCell";
 import { Image } from "../Image/Image";
 import { Footnote } from "../Typography/Footnote/Footnote";
-import "./PromoBanner.css";
+import styles from "./PromoBanner.module.css";
 
 type StatsType =
   | "playbackStarted" // Начало показа
@@ -49,6 +50,7 @@ export const PromoBanner = ({
   bannerData = {},
   onClose,
   isCloseButtonHidden,
+  className,
   ...restProps
 }: PromoBannerProps) => {
   const [currentPixel, setCurrentPixel] = React.useState("");
@@ -76,19 +78,22 @@ export const PromoBanner = ({
   }, [statsPixels.playbackStarted]);
 
   return (
-    <div vkuiClass="PromoBanner" {...restProps}>
-      <div vkuiClass="PromoBanner__head">
-        <Footnote vkuiClass="PromoBanner__label">
+    <div
+      className={classNamesString(styles["PromoBanner"], className)}
+      {...restProps}
+    >
+      <div className={styles["PromoBanner__head"]}>
+        <Footnote className={styles["PromoBanner__label"]}>
           {bannerData.advertisingLabel || "Advertisement"}
         </Footnote>
         {bannerData.ageRestrictions && (
-          <Footnote vkuiClass="PromoBanner__age">
+          <Footnote className={styles["PromoBanner__age"]}>
             {bannerData.ageRestrictions}
           </Footnote>
         )}
 
         {!isCloseButtonHidden && (
-          <div vkuiClass="PromoBanner__close" onClick={onClose}>
+          <div className={styles["PromoBanner__close"]} onClick={onClose}>
             <Icon24Dismiss />
           </div>
         )}
@@ -108,7 +113,7 @@ export const PromoBanner = ({
       </SimpleCell>
 
       {currentPixel.length > 0 && (
-        <div vkuiClass="PromoBanner__pixels">
+        <div className={styles["PromoBanner__pixels"]}>
           <img src={currentPixel} alt="" />
         </div>
       )}

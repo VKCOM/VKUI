@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { transitionEvent } from "../../lib/supportEvents";
 import { HasPlatform } from "../../types";
 import { withPlatform } from "../../hoc/withPlatform";
@@ -20,7 +20,7 @@ import { getNavId } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { ModalTransitionProps, withModalManager } from "./useModalManager";
-import "./ModalRoot.css";
+import styles from "./ModalRoot.module.css";
 
 const warn = warnOnce("ModalRoot");
 
@@ -217,19 +217,19 @@ class ModalRootDesktopComponent extends React.Component<
     return (
       <ModalRootContext.Provider value={this.modalRootContext}>
         <div
-          vkuiClass={classNames(
-            "ModalRoot",
+          className={classNamesString(
+            styles["ModalRoot"],
             this.props.configProvider?.webviewType === WebviewType.VKAPPS &&
-              "ModalRoot--vkapps",
-            "ModalRoot--desktop"
+              styles["ModalRoot--vkapps"],
+            styles["ModalRoot--desktop"]
           )}
         >
           <div
-            vkuiClass="ModalRoot__mask"
+            className={styles["ModalRoot__mask"]}
             ref={this.maskElementRef}
             onClick={this.props.onExit}
           />
-          <div vkuiClass="ModalRoot__viewport">
+          <div className={styles["ModalRoot__viewport"]}>
             {this.modals.map((Modal: React.ReactElement) => {
               const modalId = getNavId(Modal.props, warn);
               if (modalId !== activeModal && modalId !== exitingModal) {
@@ -244,16 +244,17 @@ class ModalRootDesktopComponent extends React.Component<
                   onClose={this.props.onExit}
                   timeout={this.timeout}
                   key={key}
-                  vkuiClass={classNames(
-                    "ModalRoot__modal",
+                  className={classNamesString(
+                    styles["ModalRoot__modal"],
                     !exitingModal &&
                       !enteringModal &&
                       modalId === activeModal &&
-                      "ModalRoot__modal--active",
-                    modalId === exitingModal && "ModalRoot__modal--prev",
+                      styles["ModalRoot__modal--active"],
+                    modalId === exitingModal &&
+                      styles["ModalRoot__modal--prev"],
                     Boolean(exitingModal) &&
                       modalId === activeModal &&
-                      "ModalRoot__modal--next"
+                      styles["ModalRoot__modal--next"]
                   )}
                 >
                   {Modal}

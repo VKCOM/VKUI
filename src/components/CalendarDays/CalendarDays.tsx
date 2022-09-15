@@ -6,9 +6,9 @@ import {
 } from "../CalendarDay/CalendarDay";
 import { getDaysNames, getWeeks } from "../../lib/calendar";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Footnote } from "../Typography/Footnote/Footnote";
-import "./CalendarDays.css";
+import styles from "./CalendarDays.module.css";
 
 export interface CalendarDaysProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
@@ -51,6 +51,7 @@ export const CalendarDays = ({
   size,
   showNeighboringMonth = false,
   dayProps,
+  className,
   ...props
 }: CalendarDaysProps) => {
   const locale = React.useContext(LocaleProviderContext);
@@ -77,15 +78,19 @@ export const CalendarDays = ({
   );
 
   return (
-    <div {...props} vkuiClass="CalendarDays" ref={ref}>
+    <div
+      {...props}
+      className={classNamesString(styles["CalendarDays"], className)}
+      ref={ref}
+    >
       <div
-        vkuiClass={classNames(
-          "CalendarDays__row",
-          `CalendarDays__row--size-${size}`
+        className={classNamesString(
+          styles["CalendarDays__row"],
+          size && styles[`CalendarDays__row--size-${size}`]
         )}
       >
         {daysNames.map((dayName) => (
-          <Footnote key={dayName} vkuiClass="CalendarDays__weekday">
+          <Footnote key={dayName} className={styles["CalendarDays__weekday"]}>
             {dayName}
           </Footnote>
         ))}
@@ -93,9 +98,9 @@ export const CalendarDays = ({
 
       {weeks.map((week, i) => (
         <div
-          vkuiClass={classNames(
-            "CalendarDays__row",
-            `CalendarDays__row--size-${size}`
+          className={classNamesString(
+            styles["CalendarDays__row"],
+            size && styles[`CalendarDays__row--size-${size}`]
           )}
           key={i}
         >

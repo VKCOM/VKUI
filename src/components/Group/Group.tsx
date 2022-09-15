@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Platform } from "../../lib/platform";
-import { classNames, classNamesString } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import { Spacing } from "../Spacing/Spacing";
@@ -10,7 +10,7 @@ import { Footnote } from "../Typography/Footnote/Footnote";
 import { ModalRootContext } from "../ModalRoot/ModalRootContext";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import "./Group.css";
+import styles from "./Group.module.css";
 
 export interface GroupProps
   extends HasRootRef<HTMLElement>,
@@ -49,6 +49,7 @@ export const Group = (props: GroupProps) => {
     getRootRef,
     mode: modeProps,
     padding = "m",
+    className,
     ...restProps
   } = props;
   const { isInsideModal } = React.useContext(ModalRootContext);
@@ -63,42 +64,45 @@ export const Group = (props: GroupProps) => {
   }
 
   const separatorClassName = classNamesString(
-    "Group__separator",
-    separator === "show" && "Group__separator--force"
+    styles["Group__separator"],
+    separator === "show" && styles["Group__separator--force"]
   );
 
   return (
     <section
       {...restProps}
       ref={getRootRef}
-      vkuiClass={classNames(
-        "Group",
-        platform === Platform.IOS && "Group--ios",
-        getSizeXClassName("Group", sizeX),
-        mode && `Group--mode-${mode}`,
-        `Group--padding-${padding}`
+      className={classNamesString(
+        styles["Group"],
+        platform === Platform.IOS && styles["Group--ios"],
+        getSizeXClassName("Group", sizeX, styles),
+        mode && styles[`Group--mode-${mode}`],
+        styles[`Group--padding-${padding}`],
+        className
       )}
     >
-      <div vkuiClass="Group__inner">
+      <div className={styles["Group__inner"]}>
         {header}
         {children}
         {hasReactNode(description) && (
-          <Footnote vkuiClass="Group__description">{description}</Footnote>
+          <Footnote className={styles["Group__description"]}>
+            {description}
+          </Footnote>
         )}
       </div>
       {separator !== "hide" && (
         <React.Fragment>
           <Spacing
-            vkuiClass={classNames(
+            className={classNamesString(
               separatorClassName,
-              "Group__separator--spacing"
+              styles["Group__separator--spacing"]
             )}
             size={16}
           />
           <Separator
-            vkuiClass={classNames(
+            className={classNamesString(
               separatorClassName,
-              "Group__separator--separator"
+              styles["Group__separator--separator"]
             )}
           />
         </React.Fragment>

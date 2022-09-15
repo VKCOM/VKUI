@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { HasComponent, HasRootRef } from "../../types";
 import { hasReactNode, isPrimitiveReactNode } from "../../lib/utils";
@@ -9,7 +9,7 @@ import { Footnote } from "../Typography/Footnote/Footnote";
 import { Title } from "../Typography/Title/Title";
 import { Text } from "../Typography/Text/Text";
 import { Subhead } from "../Typography/Subhead/Subhead";
-import "./Header.css";
+import styles from "./Header.module.css";
 
 export interface HeaderProps
   extends React.HTMLAttributes<HTMLElement>,
@@ -27,7 +27,8 @@ export interface HeaderProps
   multiline?: boolean;
 }
 
-type HeaderContentProps = Pick<HeaderProps, "children" | "mode"> & HasComponent;
+type HeaderContentProps = Pick<HeaderProps, "children" | "mode" | "className"> &
+  HasComponent;
 
 const HeaderContent = ({ mode, ...restProps }: HeaderContentProps) => {
   const platform = usePlatform();
@@ -73,6 +74,7 @@ export const Header = ({
   aside,
   getRootRef,
   multiline,
+  className,
   ...restProps
 }: HeaderProps) => {
   const platform = usePlatform();
@@ -84,28 +86,33 @@ export const Header = ({
     <header
       {...restProps}
       ref={getRootRef}
-      vkuiClass={classNames(
-        "Header",
-        platform === Platform.VKCOM && "Header--vkcom",
-        platform === Platform.ANDROID && "Header--android",
-        platform === Platform.IOS && "Header--ios",
-        `Header--mode-${mode}`,
-        isPrimitiveReactNode(indicator) && "Header--pi"
+      className={classNamesString(
+        styles["Header"],
+        platform === Platform.VKCOM && styles["Header--vkcom"],
+        platform === Platform.ANDROID && styles["Header--android"],
+        platform === Platform.IOS && styles["Header--ios"],
+        styles[`Header--mode-${mode}`],
+        isPrimitiveReactNode(indicator) && styles["Header--pi"],
+        className
       )}
     >
-      <div vkuiClass="Header__main">
-        <HeaderContent vkuiClass="Header__content" Component="span" mode={mode}>
+      <div className={styles["Header__main"]}>
+        <HeaderContent
+          className={styles["Header__content"]}
+          Component="span"
+          mode={mode}
+        >
           <span
-            vkuiClass={classNames(
-              "Header__content-in",
-              multiline && "Header__content-in--multiline"
+            className={classNamesString(
+              styles["Header__content-in"],
+              multiline && styles["Header__content-in--multiline"]
             )}
           >
             {children}
           </span>
           {hasReactNode(indicator) && (
             <Footnote
-              vkuiClass="Header__indicator"
+              className={styles["Header__indicator"]}
               weight={
                 mode === "primary" || mode === "secondary" ? "1" : undefined
               }
@@ -116,14 +123,17 @@ export const Header = ({
         </HeaderContent>
 
         {hasReactNode(subtitle) && (
-          <SubtitleTypography vkuiClass="Header__subtitle" Component="span">
+          <SubtitleTypography
+            className={styles["Header__subtitle"]}
+            Component="span"
+          >
             {subtitle}
           </SubtitleTypography>
         )}
       </div>
 
       {hasReactNode(aside) && (
-        <AsideTypography vkuiClass="Header__aside" Component="span">
+        <AsideTypography className={styles["Header__aside"]} Component="span">
           {aside}
         </AsideTypography>
       )}

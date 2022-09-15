@@ -5,8 +5,8 @@ import { easeInOutSine } from "../../lib/fx";
 import { useEventListener } from "../../hooks/useEventListener";
 import { useExternRef } from "../../hooks/useExternRef";
 import { HasRef } from "../../types";
-import { classNames } from "../../lib/classNames";
-import "./HorizontalScroll.css";
+import { classNamesString } from "../../lib/classNames";
+import styles from "./HorizontalScroll.module.css";
 
 interface ScrollContext {
   scrollElement: HTMLElement | null;
@@ -133,6 +133,7 @@ export const HorizontalScroll = ({
   arrowSize = "l",
   scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
   getRef,
+  className,
   ...restProps
 }: HorizontalScrollProps) => {
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
@@ -210,16 +211,17 @@ export const HorizontalScroll = ({
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(
-        "HorizontalScroll",
-        showArrows === "always" && "HorizontalScroll--withConstArrows"
+      className={classNamesString(
+        styles["HorizontalScroll"],
+        showArrows === "always" && styles["HorizontalScroll--withConstArrows"],
+        className
       )}
     >
       {showArrows && (hasMouse || hasMouse === undefined) && canScrollLeft && (
         <HorizontalScrollArrow
           size={arrowSize}
           direction="left"
-          vkuiClass="HorizontalScroll__arrowLeft"
+          className={styles["HorizontalScroll__arrowLeft"]}
           onClick={scrollToLeft}
         />
       )}
@@ -227,12 +229,12 @@ export const HorizontalScroll = ({
         <HorizontalScrollArrow
           size={arrowSize}
           direction="right"
-          vkuiClass="HorizontalScroll__arrowRight"
+          className={styles["HorizontalScroll__arrowRight"]}
           onClick={scrollToRight}
         />
       )}
-      <div vkuiClass="HorizontalScroll__in" ref={scrollerRef}>
-        <div vkuiClass="HorizontalScroll__in-wrapper">{children}</div>
+      <div className={styles["HorizontalScroll__in"]} ref={scrollerRef}>
+        <div className={styles["HorizontalScroll__in-wrapper"]}>{children}</div>
       </div>
     </div>
   );

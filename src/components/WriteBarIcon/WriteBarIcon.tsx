@@ -8,13 +8,13 @@ import {
   Icon48WritebarSend,
 } from "@vkontakte/icons";
 import { usePlatform } from "../../hooks/usePlatform";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Platform } from "../../lib/platform";
 import { Counter } from "../Counter/Counter";
 import { Tappable } from "../Tappable/Tappable";
 import { warnOnce } from "../../lib/warnOnce";
 import { hasReactNode } from "../../lib/utils";
-import "./WriteBarIcon.css";
+import styles from "./WriteBarIcon.module.css";
 
 export interface WriteBarIconProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -43,6 +43,7 @@ export const WriteBarIcon = ({
   mode,
   children,
   count,
+  className,
   ...restProps
 }: WriteBarIconProps) => {
   const platform = usePlatform();
@@ -98,17 +99,18 @@ export const WriteBarIcon = ({
       {...restProps}
       Component="button"
       hasHover={false}
-      activeMode="WriteBarIcon__active"
-      vkuiClass={classNames(
-        "WriteBarIcon",
-        platform === Platform.IOS && "WriteBarIcon--ios",
-        mode && `WriteBarIcon--mode-${mode}`
+      activeMode={styles["WriteBarIcon__active"]}
+      className={classNamesString(
+        styles["WriteBarIcon"],
+        platform === Platform.IOS && styles["WriteBarIcon--ios"],
+        mode && styles[`WriteBarIcon--mode-${mode}`],
+        className
       )}
     >
-      <span vkuiClass="WriteBarIcon__in">
+      <span className={styles["WriteBarIcon__in"]}>
         {icon || children}
         {hasReactNode(count) && (
-          <Counter vkuiClass="WriteBarIcon__counter" size="s">
+          <Counter className={styles["WriteBarIcon__counter"]} size="s">
             {count}
           </Counter>
         )}

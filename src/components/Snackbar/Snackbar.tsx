@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Touch, TouchEvent } from "../Touch/Touch";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Platform } from "../../lib/platform";
 import { rubber } from "../../lib/touch";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
@@ -10,7 +10,7 @@ import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
 import { useTimeout } from "../../hooks/useTimeout";
-import "./Snackbar.css";
+import styles from "./Snackbar.module.css";
 
 export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
   /**
@@ -62,6 +62,7 @@ export const Snackbar = ({
   onActionClick,
   onClose,
   mode = "default",
+  className,
   ...restProps
 }: SnackbarProps) => {
   const platform = usePlatform();
@@ -189,28 +190,31 @@ export const Snackbar = ({
     <AppRootPortal>
       <div
         {...restProps}
-        vkuiClass={classNames(
-          "Snackbar",
-          platform === Platform.IOS && "Snackbar--ios",
-          `Snackbar--layout-${layout}`,
-          `Snackbar--mode-${mode}`,
-          closing && "Snackbar--closing",
-          touched && "Snackbar--touched",
-          isDesktop && "Snackbar--desktop"
+        className={classNamesString(
+          styles["Snackbar"],
+          platform === Platform.IOS && styles["Snackbar--ios"],
+          styles[`Snackbar--layout-${layout}`],
+          styles[`Snackbar--mode-${mode}`],
+          closing && styles["Snackbar--closing"],
+          touched && styles["Snackbar--touched"],
+          isDesktop && styles["Snackbar--desktop"],
+          className
         )}
       >
         <Touch
-          vkuiClass="Snackbar__in"
+          className={styles["Snackbar__in"]}
           getRootRef={innerElRef}
           onStart={onTouchStart}
           onMoveX={onTouchMoveX}
           onEnd={onTouchEnd}
         >
-          <div vkuiClass="Snackbar__body" ref={bodyElRef}>
-            {before && <div vkuiClass="Snackbar__before">{before}</div>}
+          <div className={styles["Snackbar__body"]} ref={bodyElRef}>
+            {before && (
+              <div className={styles["Snackbar__before"]}>{before}</div>
+            )}
 
-            <div vkuiClass="Snackbar__content">
-              <Paragraph vkuiClass="Snackbar__content-text">
+            <div className={styles["Snackbar__content"]}>
+              <Paragraph className={styles["Snackbar__content-text"]}>
                 {children}
               </Paragraph>
 
@@ -221,7 +225,7 @@ export const Snackbar = ({
                   mode="tertiary"
                   appearance={mode === "dark" ? "overlay" : "accent"}
                   size="s"
-                  vkuiClass="Snackbar__action"
+                  className={styles["Snackbar__action"]}
                   onClick={handleActionClick}
                 >
                   {action}
@@ -229,7 +233,7 @@ export const Snackbar = ({
               )}
             </div>
 
-            {after && <div vkuiClass="Snackbar__after">{after}</div>}
+            {after && <div className={styles["Snackbar__after"]}>{after}</div>}
           </div>
         </Touch>
       </div>

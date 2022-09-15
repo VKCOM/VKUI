@@ -4,7 +4,8 @@ import { Button, VKUIButtonProps } from "../Button/Button";
 import { HasRef, HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import { VisuallyHiddenInput } from "../VisuallyHiddenInput/VisuallyHiddenInput";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
+import styles from "./File.module.css";
 
 export interface FileProps
   extends Omit<VKUIButtonProps, "type">,
@@ -37,8 +38,11 @@ export const File = ({
     <Button
       Component="label"
       align={align}
-      vkuiClass={classNames("File", getPlatformClassName("File", platform))}
-      className={className}
+      className={classNamesString(
+        styles["File"],
+        getPlatformClassName("File", platform, styles),
+        className
+      )}
       stretched={stretched}
       mode={mode}
       appearance={appearance}
@@ -52,7 +56,7 @@ export const File = ({
     >
       <VisuallyHiddenInput
         {...restProps}
-        vkuiClass="File__input"
+        className={styles["File__input"]}
         type="file"
         getRef={getRef}
       />

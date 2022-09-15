@@ -1,7 +1,6 @@
 import { HoverPopper, HoverPopperProps } from "../HoverPopper/HoverPopper";
-import { classNames } from "../../lib/classNames";
-import { prefixClass } from "../../lib/prefixClass";
-import "./RichTooltip.css";
+import { classNamesString } from "../../lib/classNames";
+import styles from "./RichTooltip.module.css";
 
 export interface RichTooltipProps
   extends Omit<HoverPopperProps, "arrowClassName"> {
@@ -18,16 +17,18 @@ export const RichTooltip = ({
   children,
   arrow = true,
   appearance = "neutral",
+  className,
   ...popperProps
 }: RichTooltipProps) => {
   return (
     <HoverPopper
-      vkuiClass={classNames(
-        "RichTooltip",
-        `RichTooltip--appearance-${appearance}`
+      className={classNamesString(
+        styles["RichTooltip"],
+        styles[`RichTooltip--appearance-${appearance}`],
+        className
       )}
       arrow={arrow}
-      arrowClassName={prefixClass("RichTooltip__arrow")}
+      arrowClassName={styles["RichTooltip__arrow"]}
       {...popperProps}
     >
       {children}

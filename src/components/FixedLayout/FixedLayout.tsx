@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Platform } from "../../lib/platform";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { HasRef, HasRootRef } from "../../types";
 import { SplitColContext } from "../SplitCol/SplitCol";
 import { TooltipContainer } from "../Tooltip/TooltipContainer";
 import { useDOM } from "../../lib/dom";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { usePlatform } from "../../hooks/usePlatform";
-import "./FixedLayout.css";
+import styles from "./FixedLayout.module.css";
 
 export interface FixedLayoutProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -38,6 +38,7 @@ export const FixedLayout = ({
   getRootRef,
   getRef,
   filled,
+  className,
   ...restProps
 }: FixedLayoutProps) => {
   const platform = usePlatform();
@@ -67,15 +68,16 @@ export const FixedLayout = ({
       {...restProps}
       fixed
       ref={getRootRef}
-      vkuiClass={classNames(
-        "FixedLayout",
-        platform === Platform.IOS && "FixedLayout--ios",
-        filled && "FixedLayout--filled",
-        vertical && `FixedLayout--vertical-${vertical}`
+      className={classNamesString(
+        styles["FixedLayout"],
+        platform === Platform.IOS && styles["FixedLayout--ios"],
+        filled && styles["FixedLayout--filled"],
+        vertical && styles[`FixedLayout--vertical-${vertical}`],
+        className
       )}
       style={{ ...style, width }}
     >
-      <div vkuiClass="FixedLayout__in" ref={getRef}>
+      <div className={styles["FixedLayout__in"]} ref={getRef}>
         {children}
       </div>
     </TooltipContainer>

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { noop } from "../../lib/utils";
 import { Platform } from "../../lib/platform";
 import { SimpleCell, SimpleCellProps } from "../SimpleCell/SimpleCell";
@@ -11,7 +11,7 @@ import { useDraggable } from "./useDraggable";
 import { ListContext } from "../List/ListContext";
 import { CellDragger } from "./CellDragger/CellDragger";
 import { CellCheckbox, CellCheckboxProps } from "./CellCheckbox/CellCheckbox";
-import "./Cell.css";
+import styles from "./Cell.module.css";
 
 export interface CellProps
   extends Omit<SimpleCellProps, "getRootRef">,
@@ -96,7 +96,7 @@ export const Cell = ({
   if (draggable) {
     dragger = (
       <CellDragger
-        vkuiClass="Cell__dragger"
+        className={styles["Cell__dragger"]}
         aria-label={draggerLabel}
         {...draggableProps}
       />
@@ -113,20 +113,22 @@ export const Cell = ({
       checked,
       disabled,
     };
-    checkbox = <CellCheckbox vkuiClass="Cell__checkbox" {...checkboxProps} />;
+    checkbox = (
+      <CellCheckbox className={styles["Cell__checkbox"]} {...checkboxProps} />
+    );
   }
 
   const simpleCellDisabled =
     (draggable && !selectable) || removable || disabled;
   const hasActive = !simpleCellDisabled && !dragging;
 
-  const cellClasses = classNames(
-    "Cell",
-    platform === Platform.IOS && "Cell--ios",
-    dragging && "Cell--dragging",
-    removable && "Cell--removable",
-    selectable && "Cell--selectable",
-    disabled && "Cell--disabled"
+  const cellClasses = classNamesString(
+    styles["Cell"],
+    platform === Platform.IOS && styles["Cell--ios"],
+    dragging && styles["Cell--dragging"],
+    removable && styles["Cell--removable"],
+    selectable && styles["Cell--selectable"],
+    disabled && styles["Cell--disabled"]
   );
 
   const simpleCell = (
@@ -134,7 +136,7 @@ export const Cell = ({
       hasActive={hasActive}
       hasHover={hasActive}
       {...restProps}
-      vkuiClass="Cell__content"
+      className={styles["Cell__content"]}
       disabled={simpleCellDisabled}
       Component={selectable ? "label" : Component}
       before={
@@ -156,8 +158,7 @@ export const Cell = ({
   if (removable) {
     return (
       <Removable
-        vkuiClass={cellClasses}
-        className={className}
+        className={classNamesString(cellClasses, className)}
         style={style}
         getRootRef={rootElRef}
         removePlaceholder={removePlaceholder}
@@ -170,8 +171,7 @@ export const Cell = ({
 
   return (
     <div
-      vkuiClass={cellClasses}
-      className={className}
+      className={classNamesString(cellClasses, className)}
       style={style}
       ref={rootElRef}
     >

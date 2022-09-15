@@ -1,11 +1,11 @@
 import * as React from "react";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { Platform } from "../../lib/platform";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import "./IconButton.css";
+import styles from "./IconButton.module.css";
 
 export interface IconButtonProps extends TappableProps {
   children?: React.ReactNode;
@@ -17,6 +17,7 @@ export interface IconButtonProps extends TappableProps {
 export const IconButton = ({
   children,
   Component = "button",
+  className,
   ...restProps
 }: IconButtonProps) => {
   const platform = usePlatform();
@@ -28,10 +29,11 @@ export const IconButton = ({
       activeMode="background"
       {...restProps}
       Component={restProps.href ? "a" : Component}
-      vkuiClass={classNames(
-        "IconButton",
-        getSizeYClassName("IconButton", sizeY),
-        platform === Platform.IOS && "IconButton--ios"
+      className={classNamesString(
+        styles["IconButton"],
+        getSizeYClassName("IconButton", sizeY, styles),
+        platform === Platform.IOS && styles["IconButton--ios"],
+        className
       )}
     >
       {children}

@@ -10,9 +10,9 @@ import {
 import { Platform } from "../../lib/platform";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { usePlatform } from "../../hooks/usePlatform";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import "./PanelHeaderBack.css";
+import styles from "./PanelHeaderBack.module.css";
 
 export type PanelHeaderBackProps = PanelHeaderButtonProps & {
   "aria-label"?: string;
@@ -24,6 +24,7 @@ export type PanelHeaderBackProps = PanelHeaderButtonProps & {
 export const PanelHeaderBack = ({
   label,
   "aria-label": ariaLabel = "Назад",
+  className,
   ...restProps
 }: PanelHeaderButtonProps) => {
   const platform = usePlatform();
@@ -45,12 +46,13 @@ export const PanelHeaderBack = ({
   return (
     <PanelHeaderButton
       {...restProps}
-      vkuiClass={classNames(
-        "PanelHeaderBack",
-        getSizeXClassName("PanelHeaderBack", sizeX),
-        platform === Platform.IOS && "PanelHeaderBack--ios",
-        platform === Platform.VKCOM && "PanelHeaderBack--vkcom",
-        showLabel && !!label && "PanelHeaderBack--has-label"
+      className={classNamesString(
+        styles["PanelHeaderBack"],
+        getSizeXClassName("PanelHeaderBack", sizeX, styles),
+        platform === Platform.IOS && styles["PanelHeaderBack--ios"],
+        platform === Platform.VKCOM && styles["PanelHeaderBack--vkcom"],
+        showLabel && !!label && styles["PanelHeaderBack--has-label"],
+        className
       )}
       label={showLabel && label}
       aria-label={ariaLabel}

@@ -4,7 +4,7 @@ import { CustomSelect } from "../CustomSelect/CustomSelect";
 import { Button } from "../Button/Button";
 import { SizeType } from "../../lib/adaptivity";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import "./CalendarTime.css";
+import styles from "./CalendarTime.module.css";
 
 export interface CalendarTimeProps {
   value: Date;
@@ -51,8 +51,8 @@ export const CalendarTime = ({
   );
 
   return (
-    <div vkuiClass="CalendarTime">
-      <div vkuiClass="CalendarTime__picker">
+    <div className={styles["CalendarTime"]}>
+      <div className={styles["CalendarTime__picker"]}>
         <AdaptivityProvider sizeY={SizeType.COMPACT}>
           <CustomSelect
             value={value.getHours()}
@@ -63,8 +63,8 @@ export const CalendarTime = ({
           />
         </AdaptivityProvider>
       </div>
-      <div vkuiClass="CalendarTime__divider">:</div>
-      <div vkuiClass="CalendarTime__picker">
+      <div className={styles["CalendarTime__divider"]}>:</div>
+      <div className={styles["CalendarTime__picker"]}>
         <AdaptivityProvider sizeY={SizeType.COMPACT}>
           <CustomSelect
             value={value.getMinutes()}
@@ -75,7 +75,7 @@ export const CalendarTime = ({
           />
         </AdaptivityProvider>
       </div>
-      <div vkuiClass="CalendarTime__button">
+      <div className={styles["CalendarTime__button"]}>
         <AdaptivityProvider sizeY={SizeType.COMPACT}>
           <Button
             mode="secondary"

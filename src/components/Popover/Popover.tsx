@@ -173,9 +173,9 @@ export const Popover = ({
               "--popover-safe-zone-padding": `${offsetDistance}px`,
             } as React.CSSProperties
           }
-          renderContent={({ className }) => (
+          renderContent={({ className: wrapperClassName }) => (
             <FocusTrap
-              vkuiClass={className}
+              className={wrapperClassName}
               onClose={handleContentKeyDownEscape}
             >
               {content}

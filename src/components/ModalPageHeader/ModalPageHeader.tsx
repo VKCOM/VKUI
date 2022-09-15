@@ -5,9 +5,9 @@ import { HasRef } from "../../types";
 import { Platform } from "../../lib/platform";
 import { Separator } from "../Separator/Separator";
 import { PanelHeader, PanelHeaderProps } from "../PanelHeader/PanelHeader";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { getPlatformClassName } from "../../helpers/getPlatformClassName";
-import "./ModalPageHeader.css";
+import styles from "./ModalPageHeader.module.css";
 
 export interface ModalPageHeaderProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -21,6 +21,7 @@ export const ModalPageHeader = ({
   children,
   separator = true,
   getRef,
+  className,
   ...restProps
 }: ModalPageHeaderProps) => {
   const platform = usePlatform();
@@ -29,16 +30,16 @@ export const ModalPageHeader = ({
 
   return (
     <div
-      vkuiClass={classNames(
-        "ModalPageHeader",
-        getPlatformClassName("ModalPageHeader", platform),
-        platform !== Platform.VKCOM && "ModalPageHeader--withGaps",
-        isDesktop && "ModalPageHeader--desktop"
+      className={classNamesString(
+        styles["ModalPageHeader"],
+        getPlatformClassName("ModalPageHeader", platform, styles),
+        platform !== Platform.VKCOM && styles["ModalPageHeader--withGaps"],
+        isDesktop && styles["ModalPageHeader--desktop"]
       )}
       ref={getRef}
     >
       <PanelHeader
-        vkuiClass="ModalPageHeader__in"
+        className={classNamesString(styles["ModalPageHeader__in"], className)}
         {...restProps}
         fixed={false}
         separator={false}

@@ -1,12 +1,12 @@
 import * as React from "react";
 import { HasRootRef } from "../../types";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { noop } from "../../lib/utils";
 import { useExternRef } from "../../hooks/useExternRef";
 import { Removable, RemovableProps } from "../Removable/Removable";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import "./FormLayoutGroup.css";
+import styles from "./FormLayoutGroup.module.css";
 
 export interface FormLayoutGroupProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -35,6 +35,7 @@ export const FormLayoutGroup = ({
   removePlaceholder = "Удалить",
   onRemove = noop,
   getRootRef,
+  className,
   ...restProps
 }: FormLayoutGroupProps) => {
   const { sizeY } = useAdaptivity();
@@ -45,18 +46,19 @@ export const FormLayoutGroup = ({
   return (
     <div
       ref={rootEl}
-      vkuiClass={classNames(
-        "FormLayoutGroup",
-        getSizeYClassName("FormLayoutGroup", sizeY),
-        `FormLayoutGroup--mode-${mode}`,
-        isRemovable && "FormLayoutGroup--removable",
-        isSegmented && "FormLayoutGroup--segmented"
+      className={classNamesString(
+        styles["FormLayoutGroup"],
+        getSizeYClassName("FormLayoutGroup", sizeY, styles),
+        styles[`FormLayoutGroup--mode-${mode}`],
+        isRemovable && styles["FormLayoutGroup--removable"],
+        isSegmented && styles["FormLayoutGroup--segmented"],
+        className
       )}
       {...restProps}
     >
       {isRemovable ? (
         <Removable
-          vkuiClass="FormLayoutGroup__removable"
+          className={styles["FormLayoutGroup__removable"]}
           align="start"
           removePlaceholder={removePlaceholder}
           onRemove={(e) => {
@@ -70,7 +72,7 @@ export const FormLayoutGroup = ({
       ) : (
         <React.Fragment>
           {children}
-          <span vkuiClass="FormLayoutGroup__offset" aria-hidden />
+          <span className={styles["FormLayoutGroup__offset"]} aria-hidden />
         </React.Fragment>
       )}
     </div>

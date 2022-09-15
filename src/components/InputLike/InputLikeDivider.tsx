@@ -1,12 +1,17 @@
 import * as React from "react";
-import "./InputLikeDivider.css";
+import { classNamesString } from "../../lib/classNames";
+import styles from "./InputLikeDivider.module.css";
 
 export const InputLikeDivider = ({
   children,
+  className,
   ...props
 }: React.InputHTMLAttributes<HTMLSpanElement>) => {
   return (
-    <span vkuiClass="InputLikeDivider" {...props}>
+    <span
+      className={classNamesString(styles["InputLikeDivider"], className)}
+      {...props}
+    >
       {children}
     </span>
   );

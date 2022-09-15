@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasAlign, HasRootRef } from "../../types";
@@ -10,7 +10,7 @@ import { SelectType, SelectTypography } from "../Select/Select";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import "../Select/Select.css";
+import styles from "../Select/Select.module.css";
 
 export interface SelectMimicryProps
   extends React.HTMLAttributes<HTMLElement>,
@@ -38,6 +38,7 @@ export const SelectMimicry = ({
   after = <DropdownIcon />,
   selectType = "default",
   status,
+  className,
   ...restProps
 }: SelectMimicryProps) => {
   const platform = usePlatform();
@@ -48,15 +49,16 @@ export const SelectMimicry = ({
     <FormField
       {...restProps}
       tabIndex={disabled ? undefined : tabIndex}
-      vkuiClass={classNames(
-        "Select",
-        getPlatformClassName("Select", platform),
-        getSizeXClassName("Select", sizeX),
-        getSizeYClassName("Select", sizeY),
-        multiline && "Select--multiline",
-        align && `Select--align-${align}`,
-        before && "Select--hasBefore",
-        after && "Select--hasAfter"
+      className={classNamesString(
+        styles["Select"],
+        getPlatformClassName("Select", platform, styles),
+        getSizeXClassName("Select", sizeX, styles),
+        getSizeYClassName("Select", sizeY, styles),
+        multiline && styles["Select--multiline"],
+        align && styles[`Select--align-${align}`],
+        before && styles["Select--hasBefore"],
+        after && styles["Select--hasAfter"],
+        className
       )}
       getRootRef={getRootRef}
       onClick={disabled ? undefined : onClick}
@@ -66,8 +68,11 @@ export const SelectMimicry = ({
       mode={getFormFieldModeFromSelectType(selectType)}
       status={status}
     >
-      <div vkuiClass="Select__container">
-        <SelectTypography selectType={selectType} vkuiClass="Select__title">
+      <div className={styles["Select__container"]}>
+        <SelectTypography
+          selectType={selectType}
+          className={styles["Select__title"]}
+        >
           {title}
         </SelectTypography>
       </div>

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Platform } from "../../lib/platform";
 import {
   ModalRootContext,
@@ -14,7 +14,7 @@ import { ModalType } from "../ModalRoot/types";
 import { getNavId, NavIdProps } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
 import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
-import "./ModalPage.css";
+import styles from "./ModalPage.module.css";
 
 export interface ModalPageProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -81,6 +81,7 @@ export const ModalPage = ({
   nav,
   id,
   hideCloseButton = false,
+  className,
   ...restProps
 }: ModalPageProps) => {
   const { updateModalHeight } = React.useContext(ModalRootContext);
@@ -108,30 +109,31 @@ export const ModalPage = ({
     <div
       {...restProps}
       id={id}
-      vkuiClass={classNames(
-        "ModalPage",
-        platform === Platform.IOS && "ModalPage--ios",
-        platform === Platform.VKCOM && "ModalPage--vkcom",
-        getSizeXClassName("ModalPage", sizeX),
-        isDesktop && "ModalPage--desktop",
-        `ModalPage--size-${size}`
+      className={classNamesString(
+        styles["ModalPage"],
+        platform === Platform.IOS && styles["ModalPage--ios"],
+        platform === Platform.VKCOM && styles["ModalPage--vkcom"],
+        getSizeXClassName("ModalPage", sizeX, styles),
+        isDesktop && styles["ModalPage--desktop"],
+        styles[`ModalPage--size-${size}`],
+        className
       )}
     >
-      <div vkuiClass="ModalPage__in-wrap" ref={refs.innerElement}>
-        <div vkuiClass="ModalPage__in">
-          <div vkuiClass="ModalPage__header" ref={refs.headerElement}>
+      <div className={styles["ModalPage__in-wrap"]} ref={refs.innerElement}>
+        <div className={styles["ModalPage__in"]}>
+          <div className={styles["ModalPage__header"]} ref={refs.headerElement}>
             {header}
           </div>
 
-          <div vkuiClass="ModalPage__content-wrap">
+          <div className={styles["ModalPage__content-wrap"]}>
             <div
-              vkuiClass="ModalPage__content"
+              className={styles["ModalPage__content"]}
               ref={multiRef<HTMLDivElement>(
                 refs.contentElement,
                 getModalContentRef
               )}
             >
-              <div vkuiClass="ModalPage__content-in">{children}</div>
+              <div className={styles["ModalPage__content-in"]}>{children}</div>
             </div>
           </div>
           {isCloseButtonShown && (

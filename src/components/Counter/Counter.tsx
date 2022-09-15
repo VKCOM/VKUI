@@ -1,9 +1,9 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Caption } from "../Typography/Caption/Caption";
 import { Headline } from "../Typography/Headline/Headline";
 import { hasReactNode } from "../../lib/utils";
-import "./Counter.css";
+import styles from "./Counter.module.css";
 
 export interface CounterProps extends React.HTMLAttributes<HTMLSpanElement> {
   /**
@@ -20,6 +20,7 @@ export const Counter = ({
   mode = "secondary",
   size = "m",
   children,
+  className,
   ...restProps
 }: CounterProps) => {
   if (React.Children.count(children) === 0) {
@@ -31,14 +32,19 @@ export const Counter = ({
   return (
     <span
       {...restProps}
-      vkuiClass={classNames(
-        "Counter",
-        `Counter--mode-${mode}`,
-        `Counter--size-${size}`
+      className={classNamesString(
+        styles["Counter"],
+        styles[`Counter--mode-${mode}`],
+        styles[`Counter--size-${size}`],
+        className
       )}
     >
       {hasReactNode(children) && (
-        <CounterTypography Component="span" vkuiClass="Counter__in" level="2">
+        <CounterTypography
+          Component="span"
+          className={styles["Counter__in"]}
+          level="2"
+        >
           {children}
         </CounterTypography>
       )}

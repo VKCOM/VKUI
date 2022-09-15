@@ -6,7 +6,7 @@ import {
 
 import type { HasRootRef } from "../../types";
 
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { PaginationPageType, usePagination } from "../../hooks/usePagination";
@@ -15,7 +15,7 @@ import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { Tappable } from "../Tappable/Tappable";
 import { Button } from "../Button/Button";
 
-import "./Pagination.css";
+import styles from "./Pagination.module.css";
 
 function getPageAriaLabelDefault(page: number, isCurrent: boolean): string {
   return isCurrent ? `${page} страница` : `Перейти на ${page} страницу`;
@@ -76,6 +76,7 @@ export const Pagination = ({
   nextButtonAriaLabel = "Перейти на следующую страницу",
   getRootRef,
   onChange,
+  className,
   ...resetProps
 }: PaginationProps) => {
   const { sizeY } = useAdaptivity();
@@ -117,11 +118,11 @@ export const Pagination = ({
           return (
             <li key={page}>
               <div
-                vkuiClass={classNames(
-                  "Pagination__page",
-                  "Pagination__page--type-ellipsis",
-                  getSizeYClassName("Pagination__page", sizeY),
-                  disabled && "Pagination__page--disabled"
+                className={classNamesString(
+                  styles["Pagination__page"],
+                  styles["Pagination__page--type-ellipsis"],
+                  getSizeYClassName("Pagination__page", sizeY, styles),
+                  disabled && styles["Pagination__page--disabled"]
                 )}
               >
                 ...
@@ -133,14 +134,14 @@ export const Pagination = ({
           return (
             <li key={page}>
               <Tappable
-                vkuiClass={classNames(
-                  "Pagination__page",
-                  getSizeYClassName("Pagination__page", sizeY),
-                  isCurrent && "Pagination__page--current",
-                  disabled && "Pagination__page--disabled"
+                className={classNamesString(
+                  styles["Pagination__page"],
+                  getSizeYClassName("Pagination__page", sizeY, styles),
+                  isCurrent && styles["Pagination__page--current"],
+                  disabled && styles["Pagination__page--disabled"]
                 )}
-                activeMode="Pagination__page--state-active"
-                hoverMode="Pagination__page--state-hover"
+                activeMode={styles["Pagination__page--state-active"]}
+                hoverMode={styles["Pagination__page--state-hover"]}
                 hasActive={!isCurrent}
                 hasHover={!isCurrent}
                 focusVisibleMode="outside"
@@ -162,14 +163,14 @@ export const Pagination = ({
 
   return (
     <nav
-      vkuiClass="Pagination"
+      className={classNamesString(styles["Pagination"], className)}
       role="navigation"
       aria-label="Навигация по страницам"
       ref={getRootRef}
       {...resetProps}
     >
-      <ul vkuiClass="Pagination__list">
-        <li vkuiClass="Pagination__prevButtonContainer">
+      <ul className={styles["Pagination__list"]}>
+        <li className={styles["Pagination__prevButtonContainer"]}>
           <Button
             size="l"
             before={<Icon24ChevronCompactLeft width={24} />}
@@ -182,7 +183,7 @@ export const Pagination = ({
           />
         </li>
         {pages.map(renderPages)}
-        <li vkuiClass="Pagination__nextButtonContainer">
+        <li className={styles["Pagination__nextButtonContainer"]}>
           <Button
             size="l"
             after={<Icon24ChevronCompactRight width={24} />}

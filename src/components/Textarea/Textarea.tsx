@@ -1,12 +1,12 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasRef, HasRootRef } from "../../types";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import "./Textarea.css";
+import styles from "./Textarea.module.css";
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
@@ -57,8 +57,11 @@ export const Textarea = ({
 
   return (
     <FormField
-      vkuiClass={classNames("Textarea", getSizeYClassName("Textarea", sizeY))}
-      className={className}
+      className={classNamesString(
+        styles["Textarea"],
+        getSizeYClassName("Textarea", sizeY, styles),
+        className
+      )}
       style={style}
       getRootRef={getRootRef}
       disabled={restProps.disabled}
@@ -68,7 +71,7 @@ export const Textarea = ({
         {...restProps}
         style={{ maxHeight }}
         rows={rows}
-        vkuiClass="Textarea__el"
+        className={styles["Textarea__el"]}
         value={value}
         onChange={onChange}
         ref={elementRef}
