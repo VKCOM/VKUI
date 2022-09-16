@@ -96,21 +96,6 @@
   top: -1px;
 }
 
-.PanelHeader--vkcom ~ .Group--card:first-of-type::before,
-.PanelHeader--vkcom + * .Group--card:first-of-type::before {
-  position: absolute;
-  left: var(--thin-border);
-  right: var(--thin-border);
-  top: 0;
-  height: 1px;
-  background-color: var(
-    --header_background,
-    var(--vkui--color_background_content)
-  );
-  content: "";
-  z-index: 10;
-}
-
 .PanelHeader--vkcom ~ .Group--card:first-of-type .Group__inner,
 .PanelHeader--vkcom + * .Group--card:first-of-type .Group__inner {
   border-top-right-radius: 0;

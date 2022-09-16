@@ -213,7 +213,9 @@
 }
 
 /* TODO: v5.0.0 новая адаптивность */
-.PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.ModalPageHeader__in)::after {
+.PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.ModalPageHeader__in)::after,
+.PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.PanelHeader--sep)
+  .PanelHeader__in::after {
   position: absolute;
   left: var(--thin-border);
   right: var(--thin-border);
