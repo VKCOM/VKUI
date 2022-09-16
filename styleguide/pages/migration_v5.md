@@ -220,7 +220,7 @@ npx @vkontakte/vkui-token-translator
   + <Image borderRadius="l" />
   ```
 
-- Удалено св-во `shadow`. Теперь обводка есть всегда.
+- Св-во `shadow` переименовано в `withBorder`.
 
 <br/><br/>
 
