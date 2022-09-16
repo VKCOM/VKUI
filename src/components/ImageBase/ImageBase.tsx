@@ -148,7 +148,7 @@ export const ImageBase = ({
       className={classNamesString(
         className,
         styles["ImageBase"],
-        styles[`ImageBase--size-${size}`],
+        styles[`ImageBase--size-${size as ImageBaseSize}`],
         loaded && styles["ImageBase--loaded"]
       )}
       role={hasSrc ? "img" : "presentation"}
