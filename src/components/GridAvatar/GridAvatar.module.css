@@ -1,3 +1,7 @@
+.GridAvatar {
+  border-radius: 50%;
+}
+
 .GridAvatar__in {
   display: flex;
   flex-flow: column wrap;
@@ -5,8 +9,6 @@
   width: 100%;
   overflow: hidden;
   border-radius: inherit;
-
-  --grid-avatar-image-offset: 2px;
 }
 
 .GridAvatar__item {
@@ -31,4 +33,14 @@
 /* четвертый с конца */
 .GridAvatar__item:nth-last-child(4) {
   margin-bottom: var(--grid-avatar-image-offset);
+}
+
+.GridAvatar__badge {
+  right: 0;
+  bottom: 0;
+}
+
+.GridAvatar__badge--shifted {
+  right: -2px;
+  bottom: -2px;
 }

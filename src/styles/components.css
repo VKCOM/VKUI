@@ -89,7 +89,7 @@
 @import "../components/Switch/Switch.css";
 @import "../components/InfoRow/InfoRow.css";
 @import "../components/Avatar/Avatar.module.css";
-@import "../components/GridAvatar/GridAvatar.css";
+@import "../components/GridAvatar/GridAvatar.module.css";
 @import "../components/BaseGallery/BaseGallery.css";
 @import "../components/Progress/Progress.css";
 @import "../components/Search/Search.css";
