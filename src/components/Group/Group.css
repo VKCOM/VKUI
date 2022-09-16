@@ -96,8 +96,8 @@
   top: -1px;
 }
 
-.PanelHeader--vkcom.PanelHeader--fixed ~ .Group--card:first-of-type::before,
-.PanelHeader--vkcom.PanelHeader--fixed + * .Group--card:first-of-type::before {
+.PanelHeader--vkcom ~ .Group--card:first-of-type::before,
+.PanelHeader--vkcom + * .Group--card:first-of-type::before {
   position: absolute;
   left: var(--thin-border);
   right: var(--thin-border);
