@@ -42,62 +42,20 @@
   bottom: -2px;
 }
 
-.ImageBase--size-16 {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md) */
-}
-
-.ImageBase--size-20 {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md) */
-}
-
-.ImageBase--size-24 {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md) */
-}
-
-.ImageBase--size-28 {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md) */
-}
-
-.ImageBase--size-32 {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md) */
-}
-
-.ImageBase--size-36 {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md) */
-}
-
-.ImageBase--size-40 {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md) */
-}
-
-.ImageBase--size-44 {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md) */
-}
-
-.ImageBase--size-48 {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md) */
-}
-
-.ImageBase--size-56 {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md) */
-}
-
-.ImageBase--size-64 {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md) */
-}
-
-.ImageBase--size-72 {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md) */
-}
-
-.ImageBase--size-80 {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md) */
-}
-
-.ImageBase--size-88 {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md) */
-}
-
+.ImageBase--size-16,
+.ImageBase--size-20,
+.ImageBase--size-24,
+.ImageBase--size-28,
+.ImageBase--size-32,
+.ImageBase--size-36,
+.ImageBase--size-40,
+.ImageBase--size-44,
+.ImageBase--size-48,
+.ImageBase--size-56,
+.ImageBase--size-64,
+.ImageBase--size-72,
+.ImageBase--size-80,
+.ImageBase--size-88,
 .ImageBase--size-96 {
   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md) */
 }
