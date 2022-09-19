@@ -22,6 +22,9 @@ describe("Avatar", () => {
       children: ["AB"],
     },
     {
+      withBorder: [undefined, false],
+    },
+    {
       gradientColor: [1, 2, 3, 5, 6, "blue"],
     },
     {

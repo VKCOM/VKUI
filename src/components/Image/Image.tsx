@@ -14,7 +14,7 @@ export interface ImageProps extends Omit<ImageBaseProps, "badge"> {
    *
    * Бейдж в правом нижнем углу компонента.
    *
-   * Можно конструктор иконки или конфигурацию.
+   * Принимает конструктор иконки или конфигурацию.
    */
   badge?: ImageBaseBadgeProps["Icon"] | ImageBaseBadgeProps;
   /**

@@ -65,6 +65,10 @@ export interface ImageBaseProps
    */
   overlay?: boolean | ImageBaseOverlayProps;
   /**
+   * Включает или отключает обводку.
+   */
+  withBorder?: boolean;
+  /**
    * Фолбек на случай, если картинка не прогрузилась. Принимает конструктор иконки.
    *
    * > Если передан `children`, то фолбек будет проигнорирован.
@@ -94,6 +98,7 @@ export const ImageBase = ({
   getRootRef,
   badge: badgeProp,
   overlay: overlayProp,
+  withBorder = true,
   FallbackIcon,
   children,
   "aria-label": ariaLabel,
@@ -148,7 +153,8 @@ export const ImageBase = ({
       className={classNamesString(
         className,
         styles["ImageBase"],
-        styles[`ImageBase--size-${size}`],
+        styles[`ImageBase--size-${size as ImageBaseSize}`],
+        withBorder && styles["ImageBase--withBorder"],
         loaded && styles["ImageBase--loaded"]
       )}
       role={hasSrc ? "img" : "presentation"}

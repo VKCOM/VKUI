@@ -17,6 +17,9 @@ describe("Image", () => {
       FallbackIcon: [undefined, Icon28Users],
     },
     {
+      withBorder: [undefined, false],
+    },
+    {
       size: [96, 24],
       badge: [
         Icon20GiftCircleFillRed,

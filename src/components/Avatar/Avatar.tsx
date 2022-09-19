@@ -55,7 +55,7 @@ export interface AvatarProps extends Omit<ImageBaseProps, "badge"> {
    *
    * Бейдж в правом нижнем углу компонента.
    *
-   * Можно передать алиасы, конструктор иконки или конфигурацию.
+   * Принимает алиасы, конструктор иконки или конфигурацию.
    */
   badge?:
     | "online"
@@ -99,6 +99,7 @@ export const Avatar = ({
     typeof gradientColor === "number"
       ? COLORS_NUMBER_TO_TEXT_MAP[gradientColor]
       : gradientColor;
+  const isGradientNotCustom = gradientName && gradientName !== "custom";
 
   let badge: ImageBaseProps["badge"] | undefined = undefined;
   switch (badgeProp) {
@@ -128,7 +129,7 @@ export const Avatar = ({
       className={classNamesString(
         styles["Avatar"],
         gradientName && styles[`Avatar--has-gradient`],
-        gradientName !== "custom" && styles[`Avatar--gradient-${gradientName}`],
+        isGradientNotCustom && styles[`Avatar--gradient-${gradientName}`],
         className
       )}
       FallbackIcon={FallbackIcon}
