@@ -1,5 +1,6 @@
+import { Icon20GiftCircleFillRed } from "@vkontakte/icons";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import { GridAvatarProps, GridAvatar } from "./GridAvatar";
+import { type GridAvatarProps, GridAvatar } from "./GridAvatar";
 
 const base64Image =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAACXBIWXMAAC4jAAAuIwF4pT92AAAA+" +
@@ -21,6 +22,7 @@ describe("GridAvatar", () => {
           [base64Image, base64Image, base64Image],
           [base64Image, base64Image, base64Image, base64Image],
         ],
+        badge: [Icon20GiftCircleFillRed],
       },
     ]
   );

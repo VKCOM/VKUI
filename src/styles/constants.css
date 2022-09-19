@@ -10,6 +10,7 @@
   /* sizes */
   --tabbar_height: 48px;
   --thin-border: 1px;
+  --grid-avatar-image-offset: 2px;
 
   /**
    * "Safe Zone" добавляет невидимую интерактивную область, по которой пользователь будет вводить мышкой и тем самым

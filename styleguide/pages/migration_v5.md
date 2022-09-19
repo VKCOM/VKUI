@@ -224,6 +224,32 @@ npx @vkontakte/vkui-token-translator
 
 <br/><br/>
 
+## [`GridAvatar`](#/GridAvatar)
+
+- Изменены типы св-ва `badge`. Вместо `JSX.Element` теперь надо передавать `React.ComponentType<ImageBaseExpectedIconProps>` или [`ImageBaseBadgeProps`](https://github.com/VKCOM/VKUI/blob/2e72d08bcfd955a8a5c658dd189cdb5b741b12c0/src/components/ImageBase/ImageBase.tsx#L32).
+
+  > Размер иконки теперь выставляется внутри компонента.
+  >
+  > ⚠ ️Поэтому переданная иконка должна принимать `width` и `height` (см. [`ImageBaseExpectedIconProps`](https://github.com/VKCOM/VKUI/blob/2e72d08bcfd955a8a5c658dd189cdb5b741b12c0/src/components/ImageBase/types.ts#L20)).
+
+  ```diff
+  import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
+  - <GridAvatar size={24} badge={<Icon20GiftCircleFillRed width={12} height={12} />} />
+  + <GridAvatar size={24} badge={Icon20GiftCircleFillRed} />
+  ```
+
+  ```diff
+  // Кейс, когда мы внесли изменения в иконку
+
+  - import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
+  - <GridAvatar size={24} badge={<Icon20GiftCircleFillRed style={{ opacity: 0.5 }} width={12} height={12} />} />
+  + import { Icon20GiftCircleFillRed as Icon20GiftCircleFillRedLib } from '@vkontakte/icons';
+  + const Icon20GiftCircleFillRed = (props: React.ComponentProps<typeof Icon20GiftCircleFillRedLib>) => <Icon20GiftCircleFillRed {...props} style={{ opacity: 0.5 }} />;
+  + <GridAvatar size={24} badge={Icon20GiftCircleFillRed} />
+  ```
+
+<br/><br/>
+
 ## [`PromoBanner`](#/PromoBanner)
 
 - Удалено свойство `ageRestriction` в типе `BannerData`, добавленное по ошибке. Используйте свойство `ageRestrictions`
