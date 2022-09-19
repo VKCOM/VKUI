@@ -14,17 +14,16 @@ import {
   AdaptivityProvider,
   classNames,
   AppearanceProvider,
-  useAdaptivity,
 } from "@vkui";
 import { Frame } from "./Frame/Frame";
 import { perfLogger, useViewPortSize } from "../utils";
 import "./Preview.css";
+import { BREAKPOINTS } from "@vkui/shared/breakpoints";
 
 const logPerf = (id, phase, time) => perfLogger.log(`${id}.${phase}`, time);
 
-const Layout = ({ children }) => {
+const Layout = ({ spaced, children }) => {
   const platform = usePlatform();
-  const { viewWidth } = useViewPortSize();
 
   return (
     <SplitLayout
@@ -34,7 +33,7 @@ const Layout = ({ children }) => {
         )
       }
     >
-      <SplitCol spaced={viewWidth > 768 && platform !== Platform.VKCOM}>
+      <SplitCol spaced={spaced && platform !== Platform.VKCOM}>
         {children}
       </SplitCol>
     </SplitLayout>
@@ -76,6 +75,7 @@ class Preview extends PreviewParent {
       adaptivity = true,
       iframe = true,
       exampleId,
+      viewWidth,
     } = this.props;
     const { error } = this.state;
 
@@ -95,7 +95,14 @@ class Preview extends PreviewParent {
             />
           );
 
-          const width = styleGuideContext.width;
+          let width;
+          let spaced = false;
+          if (viewWidth >= BREAKPOINTS.SMALL_TABLET) {
+            width = styleGuideContext.width;
+            spaced = width >= BREAKPOINTS.SMALL_TABLET;
+          } else {
+            width = viewWidth - 32;
+          }
 
           return (
             <Profiler id={exampleId} onRender={logPerf}>
@@ -142,7 +149,11 @@ class Preview extends PreviewParent {
                           appearance={styleGuideContext.appearance}
                         >
                           <Config {...styleGuideContext} exampleId={exampleId}>
-                            {layout ? <Layout>{example}</Layout> : example}
+                            {layout ? (
+                              <Layout spaced={spaced}>{example}</Layout>
+                            ) : (
+                              example
+                            )}
                           </Config>
                         </Frame>
                       ) : (
@@ -161,7 +172,7 @@ class Preview extends PreviewParent {
 }
 
 export default (props) => {
-  const { viewWidth } = useAdaptivity();
+  const { viewWidth } = useViewPortSize();
 
   return <Preview {...props} viewWidth={viewWidth} />;
 };

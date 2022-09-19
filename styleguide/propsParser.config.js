@@ -70,10 +70,7 @@ module.exports = {
         return languageService.getProgram();
       }
 
-      const servicesHost = createServiceHost(
-        tsConfigFile.compilerOptions,
-        filesCache
-      );
+      const servicesHost = createServiceHost(tsConfigFile.options, filesCache);
 
       languageService = ts.createLanguageService(
         servicesHost,

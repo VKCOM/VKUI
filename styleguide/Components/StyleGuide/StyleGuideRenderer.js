@@ -83,7 +83,10 @@ let StyleGuideRenderer = ({ children, toc }) => {
     [width, height, platform, appearance, hasMouse, setContext, setPopout]
   );
 
-  const Component = viewWidth > 320 ? StyleGuideDesktop : StyleGuideMobile;
+  const Component =
+    viewWidth >= BREAKPOINTS.SMALL_TABLET
+      ? StyleGuideDesktop
+      : StyleGuideMobile;
 
   return (
     <StyleGuideContext.Provider value={providerValue}>
