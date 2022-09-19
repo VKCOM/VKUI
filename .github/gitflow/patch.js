@@ -1,7 +1,11 @@
 const process = require("process");
 const { execSync } = require("child_process");
-const SemVer = require("semver/classes/semver");
-const { stableBranchName, remoteRepository, GhApi } = require("./utils.js");
+const {
+  stableBranchName,
+  remoteRepository,
+  GhApi,
+  SemVer,
+} = require("./utils.js");
 const pkg = require("../../package.json");
 
 const semVer = new SemVer(pkg.version);
