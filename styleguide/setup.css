@@ -1,5 +1,1 @@
-@font-face {
-  font-family: "JetBrainsMono";
-  src: url("./fonts/JetBrainsMono-Regular.woff2") format("woff2");
-  font-weight: 400;
-}
+@import "https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap";
