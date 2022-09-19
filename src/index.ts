@@ -78,6 +78,8 @@ export type { ModalDismissButtonProps } from "./components/ModalDismissButton/Mo
 export type {
   ImageBaseSize,
   ImageBaseExpectedIconProps,
+  ImageBaseBadgeProps,
+  ImageBaseOverlayProps,
 } from "./components/ImageBase/ImageBase";
 export { Badge } from "./components/Badge/Badge";
 export type { BadgeProps } from "./components/Badge/Badge";
