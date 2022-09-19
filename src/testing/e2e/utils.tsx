@@ -108,7 +108,6 @@ function prettyProps(props: any) {
 type ScreenshotOptions = {
   matchScreenshot?: MatchImageSnapshotOptions;
   platforms?: Platform[];
-  appearances?: Appearance[];
   adaptivity?: Partial<AdaptivityProps>;
   Wrapper?: ComponentType;
 };
@@ -146,7 +145,6 @@ export function describeScreenshotFuzz<Props>(
   const {
     matchScreenshot,
     platforms = Object.values(Platform),
-    appearances = [Appearance.LIGHT],
     adaptivity = {},
     Wrapper = AppWrapper,
   } = options;
@@ -169,40 +167,41 @@ export function describeScreenshotFuzz<Props>(
         sizeY: true,
       });
 
-      appearances.forEach((appearance: Appearance) => {
-        it(`${appearance}${
-          adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ""
-        }`, async () => {
-          expect(
-            await screenshot(
-              <ConfigProvider appearance={appearance} platform={platform}>
-                <AdaptivityProvider {...adaptivityProps}>
-                  <div
-                    style={{
-                      width,
-                      maxWidth: DESKTOP_SIZE,
-                      position: "absolute",
-                      height: "auto",
-                    }}
-                  >
-                    <Wrapper>
-                      {multiCartesian(propSets, { adaptive: !isVKCOM }).map(
-                        (props, i) => (
-                          <Fragment key={i}>
-                            <div>{prettyProps(props)}</div>
-                            <div>
-                              <AdaptiveComponent {...props} />
-                            </div>
-                          </Fragment>
-                        )
-                      )}
-                    </Wrapper>
-                  </div>
-                </AdaptivityProvider>
-              </ConfigProvider>
-            )
-          ).toMatchImageSnapshot(matchScreenshot);
-        });
+      const appearance = (process.env.APPEARANCE ??
+        Appearance.LIGHT) as Appearance;
+
+      it(`${appearance}${
+        adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ""
+      }`, async () => {
+        expect(
+          await screenshot(
+            <ConfigProvider appearance={appearance} platform={platform}>
+              <AdaptivityProvider {...adaptivityProps}>
+                <div
+                  style={{
+                    width,
+                    maxWidth: DESKTOP_SIZE,
+                    position: "absolute",
+                    height: "auto",
+                  }}
+                >
+                  <Wrapper>
+                    {multiCartesian(propSets, { adaptive: !isVKCOM }).map(
+                      (props, i) => (
+                        <Fragment key={i}>
+                          <div>{prettyProps(props)}</div>
+                          <div>
+                            <AdaptiveComponent {...props} />
+                          </div>
+                        </Fragment>
+                      )
+                    )}
+                  </Wrapper>
+                </div>
+              </AdaptivityProvider>
+            </ConfigProvider>
+          )
+        ).toMatchImageSnapshot(matchScreenshot);
       });
     });
   });
