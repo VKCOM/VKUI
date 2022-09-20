@@ -20,7 +20,11 @@ jobs:
         with:
           node-version: 14
           cache: "yarn"
-      - run: yarn --frozen-lockfile
+      - run: yarn --frozen-lockfile --ignore-scripts
+      - name: Install browser for E2E
+        run: yarn --cwd node_modules/playwright-${{ matrix.browser }} run install
+      - name: Install deps for playwright
+        run: npx playwright install-deps ${{ matrix.browser }}
       - name: Update screenshots
         run: yarn test:e2e -u
         env:
