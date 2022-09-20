@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Tappable } from "../Tappable/Tappable";
 import { PopoutWrapper } from "../PopoutWrapper/PopoutWrapper";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Platform } from "../../lib/platform";
 import { Button, ButtonProps } from "../Button/Button";
 import { hasReactNode, stopPropagation } from "../../lib/utils";
@@ -15,7 +15,7 @@ import { useScrollLock } from "../AppRoot/ScrollContext";
 import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
-import "./Alert.css";
+import styles from "./Alert.module.css";
 
 export type AlertActionInterface = AlertAction &
   React.AnchorHTMLAttributes<HTMLElement>;
@@ -53,11 +53,21 @@ const AlertHeader = (props: AlertTypography) => {
   switch (platform) {
     case Platform.IOS:
       return (
-        <Title vkuiClass="Alert__header" weight="1" level="3" {...props} />
+        <Title
+          className={styles["Alert__header"]}
+          weight="1"
+          level="3"
+          {...props}
+        />
       );
     default:
       return (
-        <Title vkuiClass="Alert__header" weight="2" level="2" {...props} />
+        <Title
+          className={styles["Alert__header"]}
+          weight="2"
+          level="2"
+          {...props}
+        />
       );
   }
 };
@@ -67,12 +77,17 @@ const AlertText = (props: AlertTypography) => {
 
   switch (platform) {
     case Platform.VKCOM:
-      return <Footnote vkuiClass="Alert__text" {...props} />;
+      return <Footnote className={styles["Alert__text"]} {...props} />;
     case Platform.IOS:
-      return <Caption vkuiClass="Alert__text" {...props} />;
+      return <Caption className={styles["Alert__text"]} {...props} />;
     default:
       return (
-        <Text Component="span" vkuiClass="Alert__text" weight="3" {...props} />
+        <Text
+          Component="span"
+          className={styles["Alert__text"]}
+          weight="3"
+          {...props}
+        />
       );
   }
 };
@@ -98,9 +113,9 @@ const AlertAction = ({
     return (
       <Tappable
         Component={action.href ? "a" : Component}
-        vkuiClass={classNames(
-          "Alert__action",
-          `Alert__action--mode-${action.mode}`
+        className={classNamesString(
+          styles["Alert__action"],
+          styles[`Alert__action--mode-${action.mode}`]
         )}
         onClick={handleItemClick}
         href={action.href}
@@ -120,9 +135,9 @@ const AlertAction = ({
 
   return (
     <Button
-      vkuiClass={classNames(
-        "Alert__button",
-        `Alert__button--mode-${action.mode}`
+      className={classNamesString(
+        styles["Alert__button"],
+        styles[`Alert__button--mode-${action.mode}`]
       )}
       mode={mode}
       size="m"
@@ -215,20 +230,22 @@ export const Alert = ({
         onClick={stopPropagation}
         onClose={close}
         timeout={timeout}
-        vkuiClass={classNames(
-          "Alert",
-          platform === Platform.IOS && "Alert--ios",
-          platform === Platform.VKCOM && "Alert--vkcom",
-          resolvedActionsLayout === "vertical" ? "Alert--v" : "Alert--h",
-          closing && "Alert--closing",
-          isDesktop && "Alert--desktop"
+        className={classNamesString(
+          styles["Alert"],
+          platform === Platform.IOS && styles["Alert--ios"],
+          platform === Platform.VKCOM && styles["Alert--vkcom"],
+          resolvedActionsLayout === "vertical"
+            ? styles["Alert--v"]
+            : styles["Alert--h"],
+          closing && styles["Alert--closing"],
+          isDesktop && styles["Alert--desktop"]
         )}
         role="alertdialog"
         aria-modal
         aria-labelledby="vkui--alert--title"
         aria-describedby="vkui--alert--desc"
       >
-        <div vkuiClass="Alert__content">
+        <div className={styles["Alert__content"]}>
           {hasReactNode(header) && (
             <AlertHeader id="vkui--alert--title">{header}</AlertHeader>
           )}
@@ -237,7 +254,7 @@ export const Alert = ({
           )}
           {children}
         </div>
-        <div vkuiClass="Alert__actions">
+        <div className={styles["Alert__actions"]}>
           {actions.map((action, i) => (
             <AlertAction key={i} action={action} onItemClick={onItemClick} />
           ))}
