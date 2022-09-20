@@ -137,7 +137,7 @@ const AppWrapper = (props: HasChildren) => (
   </AppRoot>
 );
 
-const appearance = (process.env.APPEARANCE ?? Appearance.LIGHT) as Appearance;
+const appearance = (process.env.APPEARANCE ?? Appearance.DARK) as Appearance;
 
 export function describeScreenshotFuzz<Props>(
   Component: ComponentType<Props>,
