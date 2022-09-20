@@ -23,6 +23,6 @@ while (true) {
       throw e;
     }
 
-    execSync("git pull");
+    execSync("git pull --rebase");
   }
 }
