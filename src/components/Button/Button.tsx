@@ -207,7 +207,7 @@ const ButtonComponent = ({
             vkuiClass="Button__content"
             Component="span"
           >
-            {children}!
+            {children}
           </ButtonTypography>
         )}
         {after && (
