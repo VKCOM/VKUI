@@ -45,6 +45,8 @@ jobs:
       - run: yarn install --frozen-lockfile --ignore-scripts
       - name: Install browser for E2E
         run: yarn --cwd node_modules/playwright-${{ matrix.browser }} run install
+      - name: Install deps for playwright
+        run: npx playwright install-deps ${{ matrix.browser }}
       - name: FYI visual tests
         run: yarn test:e2e:ci
         env:
