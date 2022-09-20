@@ -28,7 +28,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        appearance: ["dark", light]
+        appearance: [dark, light]
     steps:
       - uses: actions/checkout@v3
         with:
