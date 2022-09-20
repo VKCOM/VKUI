@@ -31,7 +31,6 @@ const config = {
   setupFilesAfterEnv: [path.join(__dirname, "jest/matchers.ts")],
   globalSetup: path.join(__dirname, "jest/globalSetup.ts"),
   globalTeardown: path.join(__dirname, "jest/globalTeardown.ts"),
-  testEnvironment: path.join(__dirname, "jest/jsdomPlaywrightEnv.js"),
   testEnvironmentOptions: {
     ...(base.testEnvironmentOptions || {}),
     "jest-playwright": jestPlaywrightOptions,
