@@ -39,6 +39,14 @@ export async function screenshot(
     });
     return size;
   }, selector);
+
+  const viewportSize = page.viewportSize();
+
+  await page.setViewportSize({
+    width: Math.max(Math.ceil(right + x), viewportSize?.width ?? 0),
+    height: Math.max(Math.ceil(bottom + y), viewportSize?.height ?? 0),
+  });
+
   return page.screenshot({
     fullPage: true,
     clip: { x, y, width: right - x, height: bottom - y },
