@@ -2040,9 +2040,9 @@
     "@typescript-eslint/types" "5.36.1"
     eslint-visitor-keys "^3.3.0"
 
-"@vkontakte/appearance@https://github.com/VKCOM/Appearance#v9.51.0":
+"@vkontakte/appearance@https://github.com/VKCOM/Appearance#v9.51.1":
   version "1.0.0"
-  resolved "https://github.com/VKCOM/Appearance#f82ecfbc533fd7334b412205724c4f4c32413707"
+  resolved "https://github.com/VKCOM/Appearance#00b9c0712711669727fed97f1073e85d2483f930"
 
 "@vkontakte/eslint-config@3.1.0":
   version "3.1.0"
@@ -12135,9 +12135,9 @@ wait-port@^0.2.9:
     debug "^4.1.1"
 
 wait-port@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/wait-port/-/wait-port-1.0.0.tgz#05d080d6bf31c15e92985accc487f8c72d358297"
-  integrity sha512-t+FzbdAucG6RpUbKBg0TJMdQrxWM7mHKPnp85kh6KbnSDS021FLLHtolBMtEANn22Uqcf2R6JeSCjYtkdhEcsA==
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/wait-port/-/wait-port-1.0.1.tgz#6a002cf71e64d59fccc56cba56cd5a7641bd153c"
+  integrity sha512-JkEgxQRZqqBz449/bRVQAvl+e8LJ8fpW8J1W7WkKKo8PypoXX7EXGE47BmkNLTb5Ly/eI15IyTeAxDBwOEQ8DQ==
   dependencies:
     chalk "^4.1.2"
     commander "^9.3.0"
