@@ -3,7 +3,7 @@ const { execSync } = require("child_process");
 // dangerfile depends on this message
 execSync('git config --global user.name "GitHub Action"');
 
-execSync("git pull --rebase --autostash");
+execSync("git pull");
 execSync("git add ./**/*.png");
 execSync(`git commit -m "CHORE: Update screenshots"`);
 
@@ -23,6 +23,6 @@ while (true) {
       throw e;
     }
 
-    execSync("git pull --rebase --autostash");
+    execSync("git pull");
   }
 }
