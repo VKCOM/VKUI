@@ -44,7 +44,7 @@ jobs:
           cache: "yarn"
       - run: yarn install --frozen-lockfile --ignore-scripts
       - name: Install browser for E2E
-        run: yarn --cwd node_modules/playwright-chromium run install
+        run: yarn --cwd node_modules/playwright-${{ matrix.browser }} run install
       - name: FYI visual tests
         run: yarn test:e2e:ci
         env:
