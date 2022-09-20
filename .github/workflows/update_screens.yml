@@ -30,11 +30,14 @@ jobs:
         env:
           APPEARANCE: ${{ matrix.appearance }}
           BROWSER: ${{ matrix.browser }}
-      - name: Pull Remote Changes
-        run: git pull
       - name: Push updated screenshots
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: Wandalen/wretry.action@v1.0.11
         with:
-          # dangerfile depends on this message
-          commit_message: "CHORE: Update screenshots"
-          file_pattern: "./**/*.png"
+          action: EndBug/add-and-commit@v9
+          with:
+            # dangerfile depends on this message
+            message: "CHORE: Update screenshots"
+            add: "./**/*.png"
+            pull: "--rebase"
+          attempt_limit: 6
+          attempt_delay: 10000
