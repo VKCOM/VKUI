@@ -31,7 +31,7 @@ jobs:
           APPEARANCE: ${{ matrix.appearance }}
           BROWSER: ${{ matrix.browser }}
       - name: Pull Remote Changes
-        run: git pull --rebase
+        run: git pull --rebase --autostash
       - name: Push updated screenshots
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
