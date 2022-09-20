@@ -159,14 +159,6 @@
   color: var(--vkui--color_icon_accent_themed);
 }
 
-/* TODO удалить блок в v5.0.0 */
-.TabsItem--selected.TabsItem--accent .TabsItem__after {
-  color: var(
-    --button_secondary_foreground,
-    var(--vkui--color_icon_accent_themed)
-  );
-}
-
 /* Элемент */
 .TabsItem__underline {
   position: absolute;

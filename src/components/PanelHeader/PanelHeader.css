@@ -203,7 +203,6 @@
   z-index: 10;
 }
 
-/* TODO: v5.0.0 новая адаптивность */
 .PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.ModalPageHeader__in)::after,
 .PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.PanelHeader--sep)
   .PanelHeader__in::after {
@@ -217,7 +216,9 @@
 }
 
 @media (--sizeX-regular) {
-  .PanelHeader--vkcom.PanelHeader--sizeX-none:not(.ModalPageHeader__in)::after {
+  .PanelHeader--vkcom.PanelHeader--sizeX-none:not(.ModalPageHeader__in)::after,
+  .PanelHeader--vkcom.PanelHeader--sizeX-none:not(.PanelHeader--sep)
+    .PanelHeader__in::after {
     position: absolute;
     left: var(--thin-border);
     right: var(--thin-border);
