@@ -68,7 +68,7 @@ const baseConfig = {
   styles: {
     Pre: {
       pre: {
-        fontFamily: '"JetBrainsMono", monospace',
+        fontFamily: '"JetBrains Mono", monospace',
         borderRadius: "8px",
         fontSize: 14,
         lineHeight: "24px",
@@ -76,7 +76,7 @@ const baseConfig = {
     },
     Editor: {
       root: {
-        fontFamily: '"JetBrainsMono", monospace',
+        fontFamily: '"JetBrains Mono", monospace',
         fontSize: 14,
         lineHeight: "24px",
         "& textarea": {
