@@ -46,7 +46,6 @@ jobs:
         run: yarn --cwd node_modules/playwright-chromium run install
       - name: FYI visual tests
         env:
-          INPUT_GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           APPEARANCE: ${{ matrix.appearance }}
         run: yarn test:e2e:ci
         continue-on-error: true
