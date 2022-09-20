@@ -4,7 +4,8 @@ const { execSync } = require("child_process");
 execSync('git config --global user.name "GitHub Action"');
 
 let count = 6;
-while (count >= 0) {
+
+while (true) {
   try {
     execSync("git add ./**/*.png");
     execSync(`git commit -m "CHORE: Update screenshots"`);
@@ -15,6 +16,10 @@ while (count >= 0) {
     console.error(e);
 
     count -= 1;
+
+    if (count < 0) {
+      throw e;
+    }
 
     execSync("git pull --rebase --autostash");
   }
