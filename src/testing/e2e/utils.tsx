@@ -137,6 +137,8 @@ const AppWrapper = (props: HasChildren) => (
   </AppRoot>
 );
 
+const appearance = (process.env.APPEARANCE ?? Appearance.LIGHT) as Appearance;
+
 export function describeScreenshotFuzz<Props>(
   Component: ComponentType<Props>,
   propSets: Array<PropDesc<Props>> = [],
@@ -166,9 +168,6 @@ export function describeScreenshotFuzz<Props>(
         sizeX: true,
         sizeY: true,
       });
-
-      const appearance = (process.env.APPEARANCE ??
-        Appearance.LIGHT) as Appearance;
 
       it(`${appearance}${
         adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ""
