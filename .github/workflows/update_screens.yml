@@ -30,6 +30,8 @@ jobs:
         env:
           APPEARANCE: ${{ matrix.appearance }}
           BROWSER: ${{ matrix.browser }}
+      - name: Pull Remote Changes
+        run: git pull
       - name: Push updated screenshots
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
