@@ -22,6 +22,7 @@ import { View } from "../../components/View/View";
 import { AppRoot } from "../../components/AppRoot/AppRoot";
 import { Group } from "../../components/Group/Group";
 import { HasChildren } from "../../types";
+import { BrowserType } from "jest-playwright-preset";
 
 type AdaptivityFlag = boolean | "x" | "y";
 type PropDesc<Props> = { [K in keyof Props]?: Array<Props[K]> } & {
@@ -138,6 +139,7 @@ const AppWrapper = (props: HasChildren) => (
 );
 
 const appearance = (process.env.APPEARANCE ?? Appearance.LIGHT) as Appearance;
+const browser = (process.env.BROWSER ?? "chromium") as BrowserType;
 
 export function describeScreenshotFuzz<Props>(
   Component: ComponentType<Props>,
@@ -169,9 +171,13 @@ export function describeScreenshotFuzz<Props>(
         sizeY: true,
       });
 
-      it(`${appearance}${
-        adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ""
-      }`, async () => {
+      const viewWidth = adaptivityProps.viewWidth
+        ? ` w_${adaptivityProps.viewWidth}`
+        : "";
+
+      const currentBrowser = browser !== "chromium" ? ` ${browser}-` : "";
+
+      it(`${currentBrowser}${appearance}${viewWidth}`, async () => {
         expect(
           await screenshot(
             <ConfigProvider appearance={appearance} platform={platform}>

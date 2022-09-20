@@ -5,6 +5,7 @@ const { canRunTests, useDocker } = require("./detectEnv");
 
 const jestPlaywrightOptions = Object.assign(
   {
+    browsers: [process.env.BROWSER ?? "chromium"],
     collectCoverage: true,
     contextOptions: {
       viewport: {

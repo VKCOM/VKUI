@@ -9,6 +9,7 @@ jobs:
       fail-fast: false
       matrix:
         appearance: [dark, light]
+        browser: [chromium, firefox, webkit]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -24,6 +25,7 @@ jobs:
         run: yarn test:e2e -u
         env:
           APPEARANCE: ${{ matrix.appearance }}
+          BROWSER: ${{ matrix.browser }}
       - name: Push updated screenshots
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
