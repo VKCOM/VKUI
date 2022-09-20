@@ -5,7 +5,7 @@ import { screenshot } from "@react-playwright";
 import { ConfigProvider } from "../../components/ConfigProvider/ConfigProvider";
 import { Panel } from "../../components/Panel/Panel";
 import { Platform } from "../../lib/platform";
-import { Scheme } from "../../helpers/scheme";
+import { Appearance } from "../../helpers/scheme";
 import {
   AdaptivityProvider,
   DESKTOP_SIZE,
@@ -108,10 +108,6 @@ function prettyProps(props: any) {
 type ScreenshotOptions = {
   matchScreenshot?: MatchImageSnapshotOptions;
   platforms?: Platform[];
-  // pass [BRIGHT_LIGHT, SPACE_GRAY] if component depends on appearance
-  mobileSchemes?: Array<Scheme.BRIGHT_LIGHT | Scheme.SPACE_GRAY>;
-  // pass [VKCOM_LIGHT, VKCOM_DARK] if component depends on appearance
-  vkcomSchemes?: Array<Scheme.VKCOM_LIGHT | Scheme.VKCOM_DARK>;
   adaptivity?: Partial<AdaptivityProps>;
   Wrapper?: ComponentType;
 };
@@ -141,6 +137,8 @@ const AppWrapper = (props: HasChildren) => (
   </AppRoot>
 );
 
+const appearance = (process.env.APPEARANCE ?? Appearance.LIGHT) as Appearance;
+
 export function describeScreenshotFuzz<Props>(
   Component: ComponentType<Props>,
   propSets: Array<PropDesc<Props>> = [],
@@ -149,8 +147,6 @@ export function describeScreenshotFuzz<Props>(
   const {
     matchScreenshot,
     platforms = Object.values(Platform),
-    mobileSchemes = [Scheme.BRIGHT_LIGHT],
-    vkcomSchemes = [Scheme.VKCOM_LIGHT],
     adaptivity = {},
     Wrapper = AppWrapper,
   } = options;
@@ -173,40 +169,38 @@ export function describeScreenshotFuzz<Props>(
         sizeY: true,
       });
 
-      (isVKCOM ? vkcomSchemes : mobileSchemes).forEach((scheme: Scheme) => {
-        it(`light${
-          adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ""
-        }`, async () => {
-          expect(
-            await screenshot(
-              <ConfigProvider scheme={scheme} platform={platform}>
-                <AdaptivityProvider {...adaptivityProps}>
-                  <div
-                    style={{
-                      width,
-                      maxWidth: DESKTOP_SIZE,
-                      position: "absolute",
-                      height: "auto",
-                    }}
-                  >
-                    <Wrapper>
-                      {multiCartesian(propSets, { adaptive: !isVKCOM }).map(
-                        (props, i) => (
-                          <Fragment key={i}>
-                            <div>{prettyProps(props)}</div>
-                            <div>
-                              <AdaptiveComponent {...props} />
-                            </div>
-                          </Fragment>
-                        )
-                      )}
-                    </Wrapper>
-                  </div>
-                </AdaptivityProvider>
-              </ConfigProvider>
-            )
-          ).toMatchImageSnapshot(matchScreenshot);
-        });
+      it(`${appearance}${
+        adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ""
+      }`, async () => {
+        expect(
+          await screenshot(
+            <ConfigProvider appearance={appearance} platform={platform}>
+              <AdaptivityProvider {...adaptivityProps}>
+                <div
+                  style={{
+                    width,
+                    maxWidth: DESKTOP_SIZE,
+                    position: "absolute",
+                    height: "auto",
+                  }}
+                >
+                  <Wrapper>
+                    {multiCartesian(propSets, { adaptive: !isVKCOM }).map(
+                      (props, i) => (
+                        <Fragment key={i}>
+                          <div>{prettyProps(props)}</div>
+                          <div>
+                            <AdaptiveComponent {...props} />
+                          </div>
+                        </Fragment>
+                      )
+                    )}
+                  </Wrapper>
+                </div>
+              </AdaptivityProvider>
+            </ConfigProvider>
+          )
+        ).toMatchImageSnapshot(matchScreenshot);
       });
     });
   });
