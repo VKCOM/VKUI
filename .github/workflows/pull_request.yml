@@ -45,9 +45,9 @@ jobs:
       - name: Install browser for E2E
         run: yarn --cwd node_modules/playwright-chromium run install
       - name: FYI visual tests
-        env:
-          APPEARANCE: ${{ matrix.appearance }}
-        run: yarn test:e2e:ci
+        run: |
+          export APPEARANCE=${{ matrix.appearance }}
+          yarn test:e2e:ci
         continue-on-error: true
       - name: Upload test artifact
         uses: actions/upload-artifact@v3
