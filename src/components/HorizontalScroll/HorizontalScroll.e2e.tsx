@@ -1,4 +1,7 @@
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
+import {
+  describeScreenshotFuzz,
+  customSnapshotIdentifier,
+} from "../../testing/e2e/utils";
 import { HorizontalScroll } from "./HorizontalScroll";
 import { HorizontalCell } from "../HorizontalCell/HorizontalCell";
 import { Avatar } from "../Avatar/Avatar";
@@ -89,7 +92,9 @@ describe("HorizontalScroll", () => {
       await screenshot(undefined, {
         selector: ".HorizontalScroll",
       })
-    ).toMatchImageSnapshot();
+    ).toMatchImageSnapshot({
+      customSnapshotIdentifier,
+    });
   });
 
   it("does not have arrows without mouse", async () => {
@@ -114,6 +119,8 @@ describe("HorizontalScroll", () => {
       await screenshot(undefined, {
         selector: ".HorizontalScroll",
       })
-    ).toMatchImageSnapshot();
+    ).toMatchImageSnapshot({
+      customSnapshotIdentifier,
+    });
   });
 });

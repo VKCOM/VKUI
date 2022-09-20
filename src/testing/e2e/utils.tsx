@@ -211,3 +211,11 @@ export function describeScreenshotFuzz<Props>(
     });
   });
 }
+
+export function customSnapshotIdentifier({
+  defaultIdentifier,
+}: {
+  defaultIdentifier: string;
+}): string {
+  return `${browser}-${appearance}-${defaultIdentifier}`;
+}

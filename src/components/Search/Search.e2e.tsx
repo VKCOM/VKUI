@@ -1,5 +1,10 @@
 import { Search } from "./Search";
-import { screenshot, mount, describeScreenshotFuzz } from "../../testing/e2e";
+import {
+  screenshot,
+  mount,
+  describeScreenshotFuzz,
+  customSnapshotIdentifier,
+} from "../../testing/e2e";
 import { IOS } from "../../lib/platform";
 import { Icon16Add } from "@vkontakte/icons";
 import { AppRoot } from "../AppRoot/AppRoot";
@@ -33,6 +38,8 @@ describe("Search", () => {
       </ConfigProvider>
     );
     await page.focus("input");
-    expect(await screenshot()).toMatchImageSnapshot();
+    expect(await screenshot()).toMatchImageSnapshot({
+      customSnapshotIdentifier,
+    });
   });
 });
