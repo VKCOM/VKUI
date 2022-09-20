@@ -45,10 +45,10 @@ jobs:
       - name: Install browser for E2E
         run: yarn --cwd node_modules/playwright-chromium run install
       - name: FYI visual tests
-        run: yarn test:e2e:ci
         env:
           INPUT_GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           APPEARANCE: ${{ matrix.appearance }}
+        run: yarn test:e2e:ci
         continue-on-error: true
       - name: Upload test artifact
         uses: actions/upload-artifact@v3
