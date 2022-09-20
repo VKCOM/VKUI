@@ -1,5 +1,6 @@
 const { execSync } = require("child_process");
 
+// dangerfile depends on this message
 execSync('git config --global user.name "GitHub Action"');
 execSync("git add ./**/*.png");
 execSync(`git commit -m "CHORE: Update screenshots"`);
