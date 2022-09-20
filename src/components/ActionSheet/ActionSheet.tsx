@@ -12,7 +12,7 @@ import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMedi
 import { useObjectMemo } from "../../hooks/useObjectMemo";
 import { PopupDirection, SharedDropdownProps, ToggleRef } from "./types";
 import { useScrollLock } from "../AppRoot/ScrollContext";
-import "./ActionSheet.css";
+import styles from "./ActionSheet.module.css";
 
 export interface ActionSheetProps extends React.HTMLAttributes<HTMLDivElement> {
   header?: React.ReactNode;
@@ -110,13 +110,17 @@ export const ActionSheet = ({
         style={isDesktop ? style : undefined}
       >
         {(header || text) && (
-          <header vkuiClass="ActionSheet__header">
+          <header className={styles["ActionSheet__header"]}>
             {header && (
-              <Footnote weight="2" vkuiClass="ActionSheet__title">
+              <Footnote weight="2" className={styles["ActionSheet__title"]}>
                 {header}
               </Footnote>
             )}
-            {text && <Footnote vkuiClass="ActionSheet__text">{text}</Footnote>}
+            {text && (
+              <Footnote className={styles["ActionSheet__text"]}>
+                {text}
+              </Footnote>
+            )}
           </header>
         )}
         {children}

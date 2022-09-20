@@ -1,6 +1,6 @@
 import * as React from "react";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { useDOM } from "../../lib/dom";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useEffectDev } from "../../hooks/useEffectDev";
@@ -12,7 +12,7 @@ import { useEventListener } from "../../hooks/useEventListener";
 import { SharedDropdownProps } from "./types";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { Popper } from "../Popper/Popper";
-import "./ActionSheet.css";
+import styles from "./ActionSheet.module.css";
 
 const warn = warnOnce("ActionSheet");
 function getEl(
@@ -82,13 +82,13 @@ export const ActionSheetDropdownDesktop = ({
       targetRef={targetRef}
       offsetDistance={0}
       placement={isPopupDirectionTop ? "top-end" : "bottom-end"}
-      vkuiClass={classNames(
-        "ActionSheet",
-        platform === Platform.IOS && "ActionSheet--ios",
-        "ActionSheet--desktop",
-        getSizeYClassName("ActionSheet", sizeY)
+      className={classNamesString(
+        styles["ActionSheet"],
+        platform === Platform.IOS && styles["ActionSheet--ios"],
+        styles["ActionSheet--desktop"],
+        getSizeYClassName("ActionSheet", sizeY, styles),
+        className
       )}
-      className={className}
       style={style}
       getRef={elementRef}
       forcePortal={false}
