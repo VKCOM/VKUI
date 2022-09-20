@@ -4,6 +4,7 @@ import {
   mount,
   describeScreenshotFuzz,
   customSnapshotIdentifier,
+  APPEARANCE,
 } from "../../testing/e2e";
 import { IOS } from "../../lib/platform";
 import { Icon16Add } from "@vkontakte/icons";
@@ -29,7 +30,7 @@ describe("Search", () => {
   );
   it("shows after when focused on iOS", async () => {
     await mount(
-      <ConfigProvider platform={IOS}>
+      <ConfigProvider platform={IOS} appearance={APPEARANCE}>
         <AppRoot embedded>
           <AdaptivityProvider sizeY={SizeType.REGULAR}>
             <Search after="after" style={{ maxWidth: "320px" }} />

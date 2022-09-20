@@ -138,8 +138,9 @@ const AppWrapper = (props: HasChildren) => (
   </AppRoot>
 );
 
-const appearance = (process.env.APPEARANCE ?? Appearance.LIGHT) as Appearance;
-const browser = (process.env.BROWSER ?? "chromium") as BrowserType;
+export const APPEARANCE = (process.env.APPEARANCE ??
+  Appearance.LIGHT) as Appearance;
+export const BROWSER = (process.env.BROWSER ?? "chromium") as BrowserType;
 
 export function describeScreenshotFuzz<Props>(
   Component: ComponentType<Props>,
@@ -175,12 +176,12 @@ export function describeScreenshotFuzz<Props>(
         ? ` w_${adaptivityProps.viewWidth}`
         : "";
 
-      const currentBrowser = browser !== "chromium" ? ` ${browser}-` : "";
+      const currentBrowser = BROWSER !== "chromium" ? ` ${BROWSER}-` : "";
 
-      it(`${currentBrowser}${appearance}${viewWidth}`, async () => {
+      it(`${currentBrowser}${APPEARANCE}${viewWidth}`, async () => {
         expect(
           await screenshot(
-            <ConfigProvider appearance={appearance} platform={platform}>
+            <ConfigProvider appearance={APPEARANCE} platform={platform}>
               <AdaptivityProvider {...adaptivityProps}>
                 <div
                   style={{
@@ -217,5 +218,5 @@ export function customSnapshotIdentifier({
 }: {
   defaultIdentifier: string;
 }): string {
-  return `${browser}-${appearance}-${defaultIdentifier}`;
+  return `${BROWSER}-${APPEARANCE}-${defaultIdentifier}`;
 }

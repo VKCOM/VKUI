@@ -4,8 +4,10 @@ import {
   mount,
   describeScreenshotFuzz,
   customSnapshotIdentifier,
+  APPEARANCE,
 } from "../../testing/e2e";
 import { AppRoot } from "../AppRoot/AppRoot";
+import { AppearanceProvider } from "../AppearanceProvider/AppearanceProvider";
 
 describe("Textarea", () => {
   describeScreenshotFuzz(Textarea, [
@@ -35,7 +37,9 @@ describe("Textarea", () => {
   it("fits size to content", async () => {
     await mount(
       <AppRoot embedded>
-        <Textarea id="textarea" />
+        <AppearanceProvider appearance={APPEARANCE}>
+          <Textarea id="textarea" />
+        </AppearanceProvider>
       </AppRoot>
     );
     await page.type("#textarea", "1\n2\n3\n4\n5\n6\n7\n8");
