@@ -21,9 +21,9 @@ jobs:
           cache: "yarn"
       - run: yarn --frozen-lockfile
       - name: Update screenshots
-        run: |
-          export APPEARANCE=${{ matrix.appearance }}
-          yarn test:e2e -u
+        run: yarn test:e2e -u
+        env:
+          APPEARANCE: ${{ matrix.appearance }}
       - name: Push updated screenshots
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
