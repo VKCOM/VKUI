@@ -142,6 +142,14 @@ const AppWrapper = (props: HasChildren) => (
   </AppRoot>
 );
 
+export function customSnapshotIdentifier({
+  defaultIdentifier,
+}: {
+  defaultIdentifier: string;
+}): string {
+  return `${BROWSER}-${APPEARANCE}-${defaultIdentifier}`;
+}
+
 export function describeScreenshotFuzz<Props>(
   Component: ComponentType<Props>,
   propSets: Array<PropDesc<Props>> = [],
@@ -211,12 +219,4 @@ export function describeScreenshotFuzz<Props>(
       });
     });
   });
-}
-
-export function customSnapshotIdentifier({
-  defaultIdentifier,
-}: {
-  defaultIdentifier: string;
-}): string {
-  return `${BROWSER}-${APPEARANCE}-${defaultIdentifier}`;
 }
