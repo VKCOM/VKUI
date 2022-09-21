@@ -32,6 +32,10 @@ type SizeProps = Pick<AdaptivityProps, "sizeX" | "sizeY">;
 type TestProps<Props> = Array<Props & SizeProps>;
 type CartesianOptions = { adaptive: boolean };
 
+export const APPEARANCE = (process.env.APPEARANCE ??
+  Appearance.LIGHT) as Appearance;
+export const BROWSER = (process.env.BROWSER ?? "chromium") as BrowserType;
+
 function getAdaptivity(adaptivity?: AdaptivityFlag) {
   const extra: PropDesc<SizeProps> = {};
   if (adaptivity && adaptivity !== "y") {
@@ -137,10 +141,6 @@ const AppWrapper = (props: HasChildren) => (
     </View>
   </AppRoot>
 );
-
-export const APPEARANCE = (process.env.APPEARANCE ??
-  Appearance.LIGHT) as Appearance;
-export const BROWSER = (process.env.BROWSER ?? "chromium") as BrowserType;
 
 export function describeScreenshotFuzz<Props>(
   Component: ComponentType<Props>,
