@@ -3,7 +3,7 @@ import { useExternRef } from "../../hooks/useExternRef";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { useTimeout } from "../../hooks/useTimeout";
 import {
-  FOCUSABLE_ELEMENTS_LIST,
+  FOCUSABLE_ELEMENTS_QUERY,
   Keys,
   pressedKey,
 } from "../../lib/accessibility";
@@ -11,8 +11,6 @@ import { useDOM } from "../../lib/dom";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { HasComponent, HasRootRef } from "../../types";
 import { AppRootContext } from "../AppRoot/AppRootContext";
-
-const FOCUSABLE_ELEMENTS: string = FOCUSABLE_ELEMENTS_LIST.join();
 
 export interface FocusTrapProps
   extends React.AllHTMLAttributes<HTMLElement>,
@@ -71,7 +69,7 @@ export const FocusTrap = ({
     const nodes: HTMLElement[] = [];
     Array.prototype.forEach.call(
       // eslint-disable-next-line no-restricted-properties
-      ref.current.querySelectorAll(FOCUSABLE_ELEMENTS),
+      ref.current.querySelectorAll(FOCUSABLE_ELEMENTS_QUERY),
       (focusableEl: Element) => {
         const { display, visibility } = window!.getComputedStyle(focusableEl);
 
