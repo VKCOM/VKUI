@@ -7,6 +7,8 @@ import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { TabsModeContext, TabsContextProps } from "../Tabs/Tabs";
 import { Headline } from "../Typography/Headline/Headline";
 import { Subhead } from "../Typography/Subhead/Subhead";
+import { Text } from "../Typography/Text/Text";
+import { warnOnce } from "../../lib/warnOnce";
 import "./TabsItem.css";
 
 export interface TabsItemProps extends React.HTMLAttributes<HTMLElement> {
@@ -34,6 +36,8 @@ export interface TabsItemProps extends React.HTMLAttributes<HTMLElement> {
   selected?: boolean;
   disabled?: boolean;
 }
+
+const warn = warnOnce("TabsItem");
 
 /**
  * @see https://vkcom.github.io/VKUI/#/TabsItem
@@ -67,6 +71,15 @@ export const TabsItem = ({
       );
   }
 
+  if (process.env.NODE_ENV === "development" && !restProps["aria-controls"]) {
+    warn(`Передайте в "aria-controls" id контролируемого блока`, "warn");
+  } else if (process.env.NODE_ENV === "development" && !restProps["id"]) {
+    warn(
+      `Передайте "id" компоненту для использования в "aria-labelledby" контролируемого блока`,
+      "warn"
+    );
+  }
+
   return (
     <Tappable
       {...restProps}
@@ -83,6 +96,9 @@ export const TabsItem = ({
       activeMode="TabsItem--active"
       focusVisibleMode={mode === "segmented" ? "outside" : "inside"}
       hasActive={mode === "segmented"}
+      role="tab"
+      aria-selected={selected}
+      tabIndex={selected ? 0 : -1}
     >
       {before && <div vkuiClass="TabsItem__before">{before}</div>}
       <Headline

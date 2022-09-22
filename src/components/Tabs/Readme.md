@@ -1,3 +1,8 @@
+## Доступность
+
+Чтобы скриридеры понимали, каким элементом управляет `TabsItem`, ему нужно задать `id`, и ссылаться на него в управляемом элементе с помощью `aria-labelledby`<br />
+Управляемый табом элемент должен содержать параметры `id` и `aria-controls`, ссылающийся на его таб, а также `tabIndex = 0`.
+
 ```jsx
 const Example = ({ sizeX }) => {
   const [mode, setMode] = React.useState("all");
@@ -22,12 +27,33 @@ const Example = ({ sizeX }) => {
           separator={sizeX === SizeType.REGULAR}
         >
           <DefaultInPanel
+            selected={selected}
+            setSelected={setSelected}
             menuOpened={menuOpened}
             onMenuClick={(opened) => {
               setMenuOpened((prevState) => (opened ? !prevState : false));
             }}
           />
         </PanelHeader>
+
+        {selected === "news" && (
+          <Group
+            id="tab-content-news"
+            aria-labelledby="tab-news"
+            role="tabpanel"
+          >
+            <Div>Контент новостей</Div>
+          </Group>
+        )}
+        {selected === "recommendations" && (
+          <Group
+            id="tab-content-recommendations"
+            aria-labelledby="tab-recommendations"
+            role="tabpanel"
+          >
+            <Div>Контент рекомендаций</Div>
+          </Group>
+        )}
 
         <Scrollable />
 
@@ -65,9 +91,7 @@ const Example = ({ sizeX }) => {
   );
 };
 
-const DefaultInPanel = ({ menuOpened, onMenuClick }) => {
-  const [selected, setSelected] = React.useState("news");
-
+const DefaultInPanel = ({ menuOpened, onMenuClick, selected, setSelected }) => {
   return (
     <Tabs>
       <TabsItem
@@ -85,6 +109,8 @@ const DefaultInPanel = ({ menuOpened, onMenuClick }) => {
           }
           setSelected("news");
         }}
+        id="tab-news"
+        aria-controls="tab-content-news"
       >
         Новости
       </TabsItem>
@@ -94,6 +120,8 @@ const DefaultInPanel = ({ menuOpened, onMenuClick }) => {
           onMenuClick(false);
           setSelected("recommendations");
         }}
+        id="tab-recommendations"
+        aria-controls="tab-content-recommendations"
       >
         Интересное
       </TabsItem>

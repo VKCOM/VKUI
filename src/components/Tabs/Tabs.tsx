@@ -5,6 +5,9 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { IOS, VKCOM } from "../../lib/platform";
 import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { warnOnce } from "../../lib/warnOnce";
+import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
+import { useDOM } from "../../lib/dom";
+import { pressedKey } from "../../lib/accessibility";
 import "./Tabs.css";
 
 export interface TabsProps
@@ -41,6 +44,9 @@ const TabsComponent = ({
   ...restProps
 }: TabsProps) => {
   const platform = usePlatform();
+  const { document } = useDOM();
+
+  const tabsRef = React.useRef<HTMLDivElement | null>();
 
   if (
     (mode === "buttons" || mode === "segmented") &&
@@ -65,6 +71,103 @@ const TabsComponent = ({
 
   const withGaps = mode === "accent" || mode === "secondary";
 
+  function getTabEls(): HTMLDivElement[] {
+    if (!tabsRef.current) {
+      return [];
+    }
+
+    return Array.from(
+      // eslint-disable-next-line
+      tabsRef.current.querySelectorAll<HTMLDivElement>("[role=tab]")
+    );
+  }
+
+  function onDocumentKeydown(e: KeyboardEvent) {
+    if (!document || !tabsRef.current) {
+      return;
+    }
+
+    const key = pressedKey(e);
+
+    switch (key) {
+      case "ArrowLeft":
+      case "ArrowRight":
+      case "End":
+      case "Home": {
+        const tabEls = getTabEls();
+        const currentFocusedElIndex = tabEls.findIndex(
+          (el) => document.activeElement === el
+        );
+        if (currentFocusedElIndex === -1) {
+          return;
+        }
+
+        let nextIndex = 0;
+        if (key === "Home") {
+          nextIndex = 0;
+        } else if (key === "End") {
+          nextIndex = tabEls.length - 1;
+        } else {
+          const offset = key === "ArrowRight" ? 1 : -1;
+          nextIndex = currentFocusedElIndex + offset;
+        }
+
+        const nextTabEl = tabEls[nextIndex];
+
+        if (nextTabEl) {
+          e.preventDefault();
+          nextTabEl.focus();
+        }
+
+        break;
+      }
+      /*
+       В JAWS и NVDA стрелка вниз активирует контент.
+       Это не прописано в стандартах, но по ссылке ниже это рекомендуется делать.
+       https://inclusive-components.design/tabbed-interfaces/
+      */
+      case "ArrowDown": {
+        const tabEls = getTabEls();
+        const currentFocusedEl = tabEls.find(
+          (el) => document.activeElement === el
+        );
+
+        if (!currentFocusedEl || currentFocusedEl.getAttribute('aria-selected') !== 'true') {
+          return;
+        }
+
+        const relatedContentElId = currentFocusedEl.getAttribute('aria-controls');
+        if (!relatedContentElId) {
+          return;
+        }
+
+        const relatedContentEl = document.querySelector('#' + relatedContentElId) as HTMLElement;
+        if (!relatedContentEl) {
+          return;
+        }
+
+        e.preventDefault();
+        relatedContentEl.focus();
+
+        break;
+      }
+      case "Space":
+      case "Enter": {
+        const tabEls = getTabEls();
+        const currentFocusedEl = tabEls.find(
+          (el) => document.activeElement === el
+        );
+        if (currentFocusedEl) {
+          currentFocusedEl.click();
+        }
+      }
+    }
+  }
+
+  useGlobalEventListener(document, "keydown", onDocumentKeydown, {
+    capture: true,
+  });
+
   return (
     <div
       {...restProps}
@@ -77,8 +180,9 @@ const TabsComponent = ({
         // TODO v5.0.0 новая адаптивность
         `Tabs--sizeX-${sizeX}`
       )}
+      role="tablist"
     >
-      <div vkuiClass="Tabs__in">
+      <div vkuiClass="Tabs__in" ref={(el) => (tabsRef.current = el)}>
         <TabsModeContext.Provider value={{ mode, withGaps }}>
           {children}
         </TabsModeContext.Provider>
