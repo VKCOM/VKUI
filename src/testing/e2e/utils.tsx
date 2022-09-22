@@ -193,7 +193,7 @@ export function describeScreenshotFuzz<Props>(
               <AdaptivityProvider {...adaptivityProps}>
                 <div
                   style={{
-                    minWidth: width,
+                    width,
                     maxWidth: DESKTOP_SIZE,
                     position: "absolute",
                     height: "auto",
