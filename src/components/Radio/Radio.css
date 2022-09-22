@@ -25,7 +25,7 @@
   height: 22px;
   margin-right: 14px;
   color: var(--vkui--color_icon_tertiary);
-  transition: color 0.15s var(--ios-easing);
+  transition: color 0.15s var(--vkui--animation_easing_platform);
 }
 
 .Radio__input:checked ~ .Radio__container .Radio__icon {
@@ -35,7 +35,7 @@
 .Radio__icon .Radio__pin {
   transform-origin: 12px 12px;
   transform: scale(0);
-  transition: transform 0.15s var(--ios-easing);
+  transition: transform 0.15s var(--vkui--animation_easing_platform);
 }
 
 .Radio__input:checked ~ .Radio__container .Radio__icon .Radio__pin {

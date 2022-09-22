@@ -16,12 +16,13 @@
 
 .Snackbar__in,
 .Snackbar__body {
-  transition: transform 320ms var(--android-easing);
+  transition: transform 320ms var(--vkui--animation_easing_platform);
 }
 
 .Snackbar__in {
   padding: 8px;
-  animation: vkui-animation-snackbar-intro-vertical 340ms var(--android-easing);
+  animation: vkui-animation-snackbar-intro-vertical 340ms
+    var(--vkui--animation_easing_platform);
 }
 
 .Snackbar--closing .Snackbar__in {
@@ -100,11 +101,7 @@
 /* iOS */
 .Snackbar--ios .Snackbar__in,
 .Snackbar--ios .Snackbar__body {
-  transition: transform 400ms var(--ios-easing);
-}
-
-.Snackbar--ios .Snackbar__in {
-  animation: vkui-animation-snackbar-intro-vertical 340ms var(--ios-easing);
+  transition: transform 400ms var(--vkui--animation_easing_platform);
 }
 
 /**

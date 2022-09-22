@@ -16,6 +16,7 @@
   margin-left: auto;
   margin-right: auto;
   transform: translateY(calc(100% + 16px));
+  transition: transform 340ms var(--vkui--animation_easing_platform);
 }
 
 /**
@@ -23,18 +24,12 @@
  */
 
 .ModalCard--ios .ModalCard__in {
-  transition: transform 340ms var(--ios-easing);
   max-width: 414px;
 }
 
 /**
  * Android + vkcom
  */
-
-.ModalCard--android .ModalCard__in,
-.ModalCard--vkcom .ModalCard__in {
-  transition: transform 340ms var(--android-easing);
-}
 
 .ModalCard--android .ModalCard__in {
   max-width: 440px;
@@ -55,7 +50,7 @@
 .ModalCard--desktop .ModalCard__in {
   transform: unset;
   opacity: 0;
-  transition: opacity 340ms var(--android-easing);
+  transition: opacity 340ms var(--vkui--animation_easing_platform);
 }
 
 /**

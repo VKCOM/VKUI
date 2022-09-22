@@ -109,7 +109,7 @@
   content: "";
   border-radius: 50%;
   background: rgba(127, 127, 127, 0.1);
-  animation: vkui-animation-wave 0.3s var(--android-easing);
+  animation: vkui-animation-wave 0.3s var(--vkui--animation_easing_platform);
 }
 
 /**

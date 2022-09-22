@@ -3,10 +3,6 @@
   --font-common: var(--vkui--font_family_base);
   --font-display: var(--vkui--font_family_accent);
 
-  /* easings */
-  --ios-easing: cubic-bezier(0.36, 0.66, 0.04, 1);
-  --android-easing: cubic-bezier(0.4, 0, 0.2, 1);
-
   /* sizes */
   --tabbar_height: 48px;
   --thin-border: 1px;

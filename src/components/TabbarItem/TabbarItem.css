@@ -122,7 +122,7 @@
 }
 
 .TabbarItem--ios .TabbarItem__in {
-  transition: transform 0.07s var(--ios-easing);
+  transition: transform 0.07s var(--vkui--animation_easing_platform);
 }
 
 .TabbarItem--ios .TabbarItem__tappable--active + .TabbarItem__in {

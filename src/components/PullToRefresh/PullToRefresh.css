@@ -71,7 +71,7 @@
 
 .PullToRefresh__content {
   overflow: hidden;
-  transition: transform 400ms var(--ios-easing);
+  transition: transform 400ms var(--vkui--animation_easing_platform);
 }
 
 .PullToRefresh--watching .PullToRefresh__content {
