@@ -13,7 +13,6 @@ export const FOCUSABLE_ELEMENTS_LIST = [
   "[contenteditable]",
   '[tabindex]:not([tabindex="-1"])',
 ];
-export const FOCUSABLE_ELEMENTS_QUERY: string = FOCUSABLE_ELEMENTS_LIST.join();
 
 export enum Keys {
   ENTER = "Enter",

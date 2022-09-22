@@ -7,7 +7,6 @@ import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { TabsModeContext, TabsContextProps } from "../Tabs/Tabs";
 import { Headline } from "../Typography/Headline/Headline";
 import { Subhead } from "../Typography/Subhead/Subhead";
-import { Text } from "../Typography/Text/Text";
 import { warnOnce } from "../../lib/warnOnce";
 import "./TabsItem.css";
 

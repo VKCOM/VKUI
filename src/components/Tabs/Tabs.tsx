@@ -7,7 +7,7 @@ import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { warnOnce } from "../../lib/warnOnce";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { useDOM } from "../../lib/dom";
-import { FOCUSABLE_ELEMENTS_QUERY, pressedKey } from "../../lib/accessibility";
+import { pressedKey } from "../../lib/accessibility";
 import "./Tabs.css";
 
 export interface TabsProps
@@ -78,7 +78,9 @@ const TabsComponent = ({
 
     return Array.from(
       // eslint-disable-next-line
-      tabsRef.current.querySelectorAll<HTMLDivElement>("[role=tab]:not([disabled])")
+      tabsRef.current.querySelectorAll<HTMLDivElement>(
+        "[role=tab]:not([disabled])"
+      )
     );
   }
 
