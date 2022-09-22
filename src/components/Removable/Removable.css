@@ -52,7 +52,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .Removable--ios .Removable__content {
-    transition: transform 0.6s var(--ios-easing);
+    transition: transform 0.6s var(--vkui--animation_easing_platform);
   }
 }
 

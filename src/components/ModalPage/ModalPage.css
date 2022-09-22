@@ -23,11 +23,11 @@
   align-items: flex-end;
   pointer-events: initial;
   transform: translateY(100%);
-  transition: transform 320ms var(--android-easing);
+  transition: transform 320ms var(--vkui--animation_easing_platform);
 }
 
 .ModalPage--ios .ModalPage__in-wrap {
-  transition: transform 400ms var(--ios-easing);
+  transition: transform 400ms var(--vkui--animation_easing_platform);
 }
 
 .ModalPage--desktop .ModalPage__in-wrap {
@@ -38,7 +38,7 @@
   max-height: 640px;
   opacity: 0;
   transform: none;
-  transition: opacity 340ms var(--android-easing);
+  transition: opacity 340ms var(--vkui--animation_easing_platform);
 }
 
 @media (max-height: 672px) {

@@ -19,22 +19,22 @@
 }
 
 .View--ios .View__panel--swipe-back-prev.View__panel--swipe-back-success {
-  transition: transform 0.3s var(--ios-easing);
+  transition: transform 0.3s var(--vkui--animation_easing_platform);
   transform: translate3d(100%, 0, 0);
 }
 
 .View--ios .View__panel--swipe-back-next.View__panel--swipe-back-success {
-  transition: transform 0.3s var(--ios-easing);
+  transition: transform 0.3s var(--vkui--animation_easing_platform);
   transform: translate3d(0, 0, 0);
 }
 
 .View--ios .View__panel--swipe-back-prev.View__panel--swipe-back-failed {
-  transition: transform 0.3s var(--ios-easing);
+  transition: transform 0.3s var(--vkui--animation_easing_platform);
   transform: translate3d(0, 0, 0);
 }
 
 .View--ios .View__panel--swipe-back-next.View__panel--swipe-back-failed {
-  transition: transform 0.3s var(--ios-easing);
+  transition: transform 0.3s var(--vkui--animation_easing_platform);
   transform: translate3d(-50%, 0, 0);
 }
 
@@ -42,19 +42,23 @@
  * Panel transition
  */
 .View--ios .View__panel--prev {
-  animation: vkui-animation-ios-prev-forward 0.6s var(--ios-easing);
+  animation: vkui-animation-ios-prev-forward 0.6s
+    var(--vkui--animation_easing_platform);
 }
 
 .View--ios .View__panel--next {
-  animation: vkui-animation-ios-next-back 0.6s var(--ios-easing);
+  animation: vkui-animation-ios-next-back 0.6s
+    var(--vkui--animation_easing_platform);
 }
 
 .View--ios .View__panel--prev ~ .View__panel--next {
-  animation: vkui-animation-ios-next-forward 0.6s var(--ios-easing);
+  animation: vkui-animation-ios-next-forward 0.6s
+    var(--vkui--animation_easing_platform);
 }
 
 .View--ios .View__panel--next ~ .View__panel--prev {
-  animation: vkui-animation-ios-prev-back 0.6s var(--ios-easing) forwards;
+  animation: vkui-animation-ios-prev-back 0.6s
+    var(--vkui--animation_easing_platform) forwards;
 }
 
 .View--ios .View__panel--prev .Panel__fade,
@@ -70,11 +74,13 @@
 }
 
 .View--ios .View__panel--prev .Panel__fade {
-  animation: vkui-animation-ios-fade-in 0.6s var(--ios-easing);
+  animation: vkui-animation-ios-fade-in 0.6s
+    var(--vkui--animation_easing_platform);
 }
 
 .View--ios .View__panel--next .Panel__fade {
-  animation: vkui-animation-ios-fade-out 0.6s var(--ios-easing) forwards;
+  animation: vkui-animation-ios-fade-out 0.6s
+    var(--vkui--animation_easing_platform) forwards;
 }
 
 .View--ios .View__panel--prev ~ .View__panel--next .Panel__fade,

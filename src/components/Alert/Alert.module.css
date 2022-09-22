@@ -7,7 +7,8 @@
   margin: auto 24px;
   box-shadow: var(--vkui--elevation4);
   border-radius: var(--vkui--size_border_radius_paper--regular);
-  animation: vkui-animation-android-alert-intro 0.2s var(--android-easing);
+  animation: vkui-animation-android-alert-intro 0.2s
+    var(--vkui--animation_easing_platform);
 }
 
 .Alert--desktop {
@@ -17,8 +18,8 @@
 .Alert--closing {
   transform: scale(0.95);
   opacity: 0;
-  transition: transform 0.2s var(--android-easing),
-    opacity 0.2s var(--android-easing);
+  transition: transform 0.2s var(--vkui--animation_easing_platform),
+    opacity 0.2s var(--vkui--animation_easing_platform);
 }
 
 .Alert::before {
@@ -93,14 +94,15 @@
   width: 270px;
   min-width: 270px;
   overflow: hidden;
-  animation: vkui-animation-ios-alert-intro 0.3s var(--ios-easing);
+  animation: vkui-animation-ios-alert-intro 0.3s
+    var(--vkui--animation_easing_platform);
   box-shadow: none;
 }
 
 .Alert--ios.Alert--closing {
   transform: none;
   opacity: 0;
-  transition: opacity 0.3s var(--ios-easing);
+  transition: opacity 0.3s var(--vkui--animation_easing_platform);
 }
 
 .Alert--ios .Alert__content {

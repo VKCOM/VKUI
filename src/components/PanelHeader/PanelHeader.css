@@ -86,7 +86,7 @@
   flex-shrink: 0;
   flex-grow: 1;
   opacity: 1;
-  transition: opacity 0.3s var(--ios-easing);
+  transition: opacity 0.3s var(--vkui--animation_easing_platform);
   padding: 4px 0 4px 4px;
 }
 
@@ -101,7 +101,7 @@
 .PanelHeader--ios .PanelHeader__content {
   text-align: center;
   opacity: 1;
-  transition: opacity 0.3s var(--ios-easing);
+  transition: opacity 0.3s var(--vkui--animation_easing_platform);
 }
 
 .PanelHeader--ios .PanelHeader__content-in {
@@ -129,7 +129,7 @@
   flex-shrink: 0;
   flex-grow: 1;
   opacity: 1;
-  transition: opacity 0.3s var(--ios-easing);
+  transition: opacity 0.3s var(--vkui--animation_easing_platform);
   padding: 4px 4px 4px 0;
 }
 

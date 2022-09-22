@@ -6,8 +6,6 @@ import {
   Icon16ChevronLeft,
 } from "@vkontakte/icons";
 import { classNames } from "../../lib/classNames";
-import { usePlatform } from "../../hooks/usePlatform";
-import { Platform } from "../../lib/platform";
 import { Tappable } from "../Tappable/Tappable";
 import "./HorizontalScrollArrow.css";
 
@@ -23,7 +21,6 @@ export const HorizontalScrollArrow = ({
   onClick,
   ...restProps
 }: HorizontalScrollArrowProps) => {
-  const platform = usePlatform();
   let ArrowIcon: React.ComponentType<unknown>;
 
   if (size === "m") {
@@ -41,8 +38,7 @@ export const HorizontalScrollArrow = ({
       vkuiClass={classNames(
         "HorizontalScrollArrow",
         `HorizontalScrollArrow--size-${size}`,
-        `HorizontalScrollArrow--direction-${direction}`,
-        platform === Platform.IOS && "HorizontalScrollArrow--ios"
+        `HorizontalScrollArrow--direction-${direction}`
       )}
       onClick={onClick}
     >

@@ -10,7 +10,7 @@
   border: none;
   background-color: transparent;
   transition: opacity 0.15s;
-  transition-timing-function: var(--android-easing);
+  transition-timing-function: var(--vkui--animation_easing_platform);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -45,13 +45,6 @@
 .HorizontalScrollArrow--direction-right {
   padding-right: var(--vkui--size_base_padding_horizontal--regular, 16px);
   right: 0;
-}
-
-/*
- * iOS
- */
-.HorizontalScrollArrow--ios .HorizontalScrollArrow {
-  transition-timing-function: var(--ios-easing);
 }
 
 /**
