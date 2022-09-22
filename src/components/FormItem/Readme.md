@@ -3,181 +3,168 @@
 располагать в форме без оборачивания в `FormItem`.
 
 ```jsx
-class Example extends React.Component {
-  constructor(props) {
-    super(props);
+const addressItems = [
+  { label: "Почтовый индекс", name: "zip" },
+  { label: "Страна", name: "country" },
+  { label: "Город", name: "city" },
+];
 
-    this.state = {
-      email: "",
-      purpose: "",
-      showPatronym: true,
-    };
+const Example = () => {
+  const [email, setEmail] = React.useState("");
+  const [purpose, setPurpose] = React.useState("");
+  const [showPatronymic, setShowPatronymic] = React.useState(true);
 
-    this.addressItems = [
-      { label: "Почтовый индекс", name: "zip" },
-      { label: "Страна", name: "country" },
-      { label: "Город", name: "city" },
-    ];
-
-    this.onChange = this.onChange.bind(this);
-    this.onRemove = this.onRemove.bind(this);
-  }
-
-  onChange(e) {
+  const onChange = (e) => {
     const { name, value } = e.currentTarget;
-    this.setState({ [name]: value });
-  }
 
-  onShowPatronym() {
-    this.setState({ showPatronym: true });
-  }
+    const setStateAction = {
+      email: setEmail,
+      purpose: setPurpose,
+    }[name];
 
-  onRemove(e) {
-    this.setState({ showPatronym: false });
-  }
+    setStateAction && setStateAction(value);
+  };
 
-  render() {
-    const { email, purpose, showPatronym } = this.state;
+  const onShowPatronymic = () => setShowPatronymic(true);
 
-    return (
-      <View activePanel="new-user">
-        <Panel id="new-user">
-          <PanelHeader>Регистрация</PanelHeader>
-          <Group>
-            <FormLayout>
+  const onRemove = () => setShowPatronymic(false);
+
+  return (
+    <View activePanel="new-user">
+      <Panel id="new-user">
+        <PanelHeader>Регистрация</PanelHeader>
+        <Group>
+          <FormLayout>
+            <FormItem
+              top="E-mail"
+              status={email ? "valid" : "error"}
+              bottom={
+                email
+                  ? "Электронная почта введена верно!"
+                  : "Пожалуйста, введите электронную почту"
+              }
+            >
+              <Input
+                type="email"
+                name="email"
+                value={email}
+                onChange={onChange}
+              />
+            </FormItem>
+
+            <FormItem top="Пароль">
+              <Input type="password" placeholder="Введите пароль" />
+            </FormItem>
+
+            <FormItem bottom="Пароль может содержать только латинские буквы и цифры.">
+              <Input type="password" placeholder="Повторите пароль" />
+            </FormItem>
+
+            <FormLayoutGroup mode="horizontal">
+              <FormItem top="Имя">
+                <Input />
+              </FormItem>
+              <FormItem top="Фамилия">
+                <Input />
+              </FormItem>
+            </FormLayoutGroup>
+
+            {!showPatronymic ? (
+              <CellButton onClick={onShowPatronymic}>
+                Указать отчество
+              </CellButton>
+            ) : (
               <FormItem
-                top="E-mail"
-                status={email ? "valid" : "error"}
-                bottom={
-                  email
-                    ? "Электронная почта введена верно!"
-                    : "Пожалуйста, введите электронную почту"
-                }
+                removable
+                onRemove={onRemove}
+                top="Отчество"
+                bottom="Если у вас нет отчества — удалите этот пункт."
               >
-                <Input
-                  type="email"
-                  name="email"
-                  value={email}
-                  onChange={this.onChange}
-                />
+                <Input />
               </FormItem>
+            )}
 
-              <FormItem top="Пароль">
-                <Input type="password" placeholder="Введите пароль" />
-              </FormItem>
+            <FormItem top="Пол">
+              <Select
+                placeholder="Выберите пол"
+                options={[
+                  {
+                    value: "0",
+                    label: "Мужской",
+                  },
+                  {
+                    value: "1",
+                    label: "Женский",
+                  },
+                ]}
+              />
+            </FormItem>
 
-              <FormItem bottom="Пароль может содержать только латинские буквы и цифры.">
-                <Input type="password" placeholder="Повторите пароль" />
-              </FormItem>
+            <FormItem top="Тип документа">
+              <SegmentedControl
+                size="m"
+                name="type"
+                options={[
+                  {
+                    label: "Паспорт РФ",
+                    value: "russian",
+                  },
+                  {
+                    label: "Заграничный",
+                    value: "international",
+                  },
+                ]}
+              />
+            </FormItem>
 
-              <FormLayoutGroup mode="horizontal">
-                <FormItem top="Имя">
-                  <Input />
-                </FormItem>
-                <FormItem top="Фамилия">
-                  <Input />
-                </FormItem>
-              </FormLayoutGroup>
-
-              {!this.state.showPatronym ? (
-                <CellButton
-                  onClick={() => this.setState({ showPatronym: true })}
-                >
-                  Указать отчество
-                </CellButton>
-              ) : (
-                <FormItem
-                  removable
-                  onRemove={this.onRemove}
-                  top="Отчество"
-                  bottom="Если у вас нет отчества — удалите этот пункт."
-                >
-                  <Input />
-                </FormItem>
-              )}
-
-              <FormItem top="Пол">
-                <Select
-                  placeholder="Выберите пол"
-                  options={[
-                    {
-                      value: "0",
-                      label: "Мужской",
-                    },
-                    {
-                      value: "1",
-                      label: "Женский",
-                    },
-                  ]}
-                />
+            {addressItems.map(({ label, name }) => (
+              <FormItem top={label} key={name}>
+                <Input name={name} />
               </FormItem>
-
-              <FormItem top="Тип документа">
-                <SegmentedControl
-                  size="m"
-                  name="type"
-                  options={[
-                    {
-                      label: "Паспорт РФ",
-                      value: "russian",
-                    },
-                    {
-                      label: "Заграничный",
-                      value: "international",
-                    },
-                  ]}
-                />
-              </FormItem>
-
-              {this.addressItems.map(({ label, name }) => (
-                <FormItem top={label} key={name}>
-                  <Input name={name} />
-                </FormItem>
-              ))}
-              <FormItem
-                top="Цель поездки"
-                bottom={purpose ? "" : "Пожалуйста, укажите цель поездки"}
-                status={purpose ? "valid" : "error"}
-              >
-                <Select
-                  placeholder="Выберите цель поездки"
-                  onChange={this.onChange}
-                  value={purpose}
-                  name="purpose"
-                  options={[
-                    {
-                      value: "0",
-                      label: "Бизнес или работа",
-                    },
-                    {
-                      value: "1",
-                      label: "Индивидуальный туризм",
-                    },
-                    {
-                      value: "2",
-                      label: "Посещение близких родственников",
-                    },
-                  ]}
-                />
-              </FormItem>
-              <FormItem top="О себе">
-                <Textarea />
-              </FormItem>
-              <Checkbox>
-                Согласен со всем <Link>этим</Link>
-              </Checkbox>
-              <FormItem>
-                <Button size="l" stretched>
-                  Зарегистрироваться
-                </Button>
-              </FormItem>
-            </FormLayout>
-          </Group>
-        </Panel>
-      </View>
-    );
-  }
-}
+            ))}
+            <FormItem
+              top="Цель поездки"
+              bottom={purpose ? "" : "Пожалуйста, укажите цель поездки"}
+              status={purpose ? "valid" : "error"}
+            >
+              <Select
+                placeholder="Выберите цель поездки"
+                onChange={onChange}
+                value={purpose}
+                name="purpose"
+                options={[
+                  {
+                    value: "0",
+                    label: "Бизнес или работа",
+                  },
+                  {
+                    value: "1",
+                    label: "Индивидуальный туризм",
+                  },
+                  {
+                    value: "2",
+                    label: "Посещение близких родственников",
+                  },
+                ]}
+              />
+            </FormItem>
+            <FormItem top="О себе">
+              <Textarea />
+            </FormItem>
+            <Checkbox>
+              Согласен со всем <Link>этим</Link>
+            </Checkbox>
+            <FormItem>
+              <Button size="l" stretched>
+                Зарегистрироваться
+              </Button>
+            </FormItem>
+          </FormLayout>
+        </Group>
+      </Panel>
+    </View>
+  );
+};
 
 <Example />;
 ```

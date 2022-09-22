@@ -23,94 +23,65 @@ const containerStyle = {
   position: "relative",
 };
 
-class Example extends React.Component {
-  constructor(props) {
-    super(props);
+const Example = () => {
+  const [shiftX, setShiftX] = React.useState(0);
+  const [shiftY, setShiftY] = React.useState(0);
+  const [limitX, setLimitX] = React.useState(0);
+  const [limitY, setLimitY] = React.useState(0);
 
-    this.state = {
-      shiftX: 0,
-      shiftY: 0,
-    };
+  const circleRef = React.useRef();
+  const startX = React.useRef(0);
+  const startY = React.useRef(0);
 
-    this.startX = 0;
-    this.startY = 0;
+  React.useLayoutEffect(() => {
+    setLimitX(circleRef.current.offsetLeft);
+    setLimitY(circleRef.current.offsetTop);
+  });
 
-    this.onMove = this.onMove.bind(this);
-    this.onEnd = this.onEnd.bind(this);
-    this.getCircleRef = this.getCircleRef.bind(this);
-  }
+  const onMove = (e) => {
+    const shiftX = startX.current + e.shiftX;
+    const shiftY = startY.current + e.shiftY;
 
-  componentDidMount() {
-    this.limitX = this.circleRef.offsetLeft;
-    this.limitY = this.circleRef.offsetTop;
-  }
+    setShiftX(shiftX > limitX ? limitX : shiftX < -limitX ? -limitX : shiftX);
+    setShiftY(shiftY > limitY ? limitY : shiftY < -limitY ? -limitY : shiftY);
+  };
 
-  onMove(e) {
-    let shiftX = this.startX + e.shiftX;
-    let shiftY = this.startY + e.shiftY;
+  const onEnd = (e) => {
+    startX.current += e.shiftX;
+    startY.current += e.shiftY;
+  };
 
-    this.setState({
-      shiftX:
-        shiftX > this.limitX
-          ? this.limitX
-          : shiftX < -this.limitX
-          ? -this.limitX
-          : shiftX,
-      shiftY:
-        shiftY > this.limitY
-          ? this.limitY
-          : shiftY < -this.limitY
-          ? -this.limitY
-          : shiftY,
-    });
-  }
+  const limitExceeded =
+    Math.abs(shiftX) >= limitX || Math.abs(shiftY) >= limitY;
 
-  onEnd(e) {
-    this.startX += e.shiftX;
-    this.startY += e.shiftY;
-  }
-
-  getCircleRef(el) {
-    this.circleRef = el;
-  }
-
-  get limitExceeded() {
-    const { shiftX, shiftY } = this.state;
-    return Math.abs(shiftX) >= this.limitX || Math.abs(shiftY) >= this.limitY;
-  }
-
-  render() {
-    const { shiftX, shiftY, limitExceeded } = this.state;
-
-    return (
-      <View activePanel="gallery">
-        <Panel id="gallery">
-          <PanelHeader>Touch</PanelHeader>
-          <Group header={<Header mode="secondary">Перетащите кружок</Header>}>
-            <div
+  return (
+    <View activePanel="gallery">
+      <Panel id="gallery">
+        <PanelHeader>Touch</PanelHeader>
+        <Group header={<Header mode="secondary">Перетащите кружок</Header>}>
+          <div
+            style={{
+              ...containerStyle,
+              borderColor: limitExceeded
+                ? "var(--vkui--color_icon_negative)"
+                : "var(--vkui--color_icon_secondary)",
+            }}
+          >
+            <Touch
+              getRootRef={circleRef}
+              onMove={onMove}
+              onEnd={onEnd}
               style={{
-                ...containerStyle,
-                borderColor: this.limitExceeded
-                  ? "var(--vkui--color_icon_negative)"
-                  : "var(--vkui--color_icon_secondary)",
+                ...circleStyle,
+                transform: `translate(${shiftX}px, ${shiftY}px)`,
               }}
-            >
-              <Touch
-                getRootRef={this.getCircleRef}
-                onMove={this.onMove}
-                onEnd={this.onEnd}
-                style={{
-                  ...circleStyle,
-                  transform: `translate(${shiftX}px, ${shiftY}px)`,
-                }}
-              />
-            </div>
-          </Group>
-        </Panel>
-      </View>
-    );
-  }
-}
+            />
+          </div>
+        </Group>
+      </Panel>
+    </View>
+  );
+};
 
 <Example />;
 ```

@@ -9,18 +9,16 @@
 > То есть, один раз определив структуру вида:
 
 ```jsx static
-class App extends Component {
-  render() {
-    const modal = (
-      <ModalRoot activeModal={this.state.activeModal}>
-        <ModalPage id="select">...</ModalPage>
-        <ModalCard id="faq">...</ModalCard>
-      </ModalRoot>
-    );
+const App = () => {
+  const modal = (
+    <ModalRoot activeModal={this.state.activeModal}>
+      <ModalPage id="select">...</ModalPage>
+      <ModalCard id="faq">...</ModalCard>
+    </ModalRoot>
+  );
 
-    return <SplitLayout modal={modal}>...</SplitLayout>;
-  }
-}
+  return <SplitLayout modal={modal}>...</SplitLayout>;
+};
 ```
 
 она не должна меняться в ходе работы приложения. Нельзя добавлять новые `ModalPage` и `ModalCard`, нельзя менять их `id`.
@@ -562,31 +560,27 @@ const App = () => {
 ```jsx static
 import SelectModal from "./SelectModal";
 
-class App extends Component {
-  state = {
-    activeModal: "select",
-  };
+const App = () => {
+  const [activeModal, setActiveModal] = React.useState("select");
 
-  render() {
-    const modal = (
-      <ModalRoot activeModal={this.state.activeModal}>
-        <ModalPage id="select" dynamicContentHeight>
-          <SelectModal />
-        </ModalPage>
-      </ModalRoot>
-    );
+  const modal = (
+    <ModalRoot activeModal={activeModal}>
+      <ModalPage id="select" dynamicContentHeight>
+        <SelectModal />
+      </ModalPage>
+    </ModalRoot>
+  );
 
-    return (
-      <SplitLayout modal={modal}>
-        <SplitCol>
-          <View activePanel="main">
-            <Panel id="main">...</Panel>
-          </View>
-        </SplitCol>
-      </SplitLayout>
-    );
-  }
-}
+  return (
+    <SplitLayout modal={modal}>
+      <SplitCol>
+        <View activePanel="main">
+          <Panel id="main">...</Panel>
+        </View>
+      </SplitCol>
+    </SplitLayout>
+  );
+};
 ```
 
 `src/SelectModal.js`
