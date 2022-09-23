@@ -114,21 +114,21 @@ const App = () => {
 
   const changeActiveModal = (activeModal) => {
     activeModal = activeModal || null;
-    let modalHistory = modalHistory ? [...modalHistory] : [];
+    let localModalHistory = modalHistory ? [...modalHistory] : [];
 
     if (activeModal === null) {
-      modalHistory = [];
+      localModalHistory = [];
     } else if (modalHistory.indexOf(activeModal) !== -1) {
-      modalHistory = modalHistory.splice(
+      localModalHistory = localModalHistory.splice(
         0,
-        modalHistory.indexOf(activeModal) + 1
+        localModalHistory.indexOf(activeModal) + 1
       );
     } else {
-      modalHistory.push(activeModal);
+      localModalHistory.push(activeModal);
     }
 
     setActiveModal(activeModal);
-    setModalHistory(modalHistory);
+    setModalHistory(localModalHistory);
   };
 
   const modalBack = () => {
