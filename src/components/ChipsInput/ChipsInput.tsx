@@ -1,3 +1,4 @@
+import * as React from "react";
 import { FormField, FormFieldProps } from "../FormField/FormField";
 import { classNamesString } from "../../lib/classNames";
 import { ChipOption } from "../Chip/Chip";

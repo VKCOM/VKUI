@@ -1,3 +1,4 @@
+import * as React from "react";
 import { screen, render } from "@testing-library/react";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { baselineComponent } from "../../testing/utils";

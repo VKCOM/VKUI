@@ -1,3 +1,4 @@
+import * as React from "react";
 import { baselineComponent } from "../../testing/utils";
 import { Link, LinkProps } from "./Link";
 import { render, screen } from "@testing-library/react";

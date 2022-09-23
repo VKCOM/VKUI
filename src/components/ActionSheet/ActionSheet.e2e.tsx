@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Icon28SettingsOutline } from "@vkontakte/icons";
 import { ActionSheet, ActionSheetProps } from "./ActionSheet";
 import { ActionSheetItem } from "../ActionSheetItem/ActionSheetItem";

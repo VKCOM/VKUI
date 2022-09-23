@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Icon28Users } from "@vkontakte/icons";
 import { classNamesString } from "../../lib/classNames";
 import {

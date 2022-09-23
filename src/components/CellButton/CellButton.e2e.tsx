@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Icon24Add, Icon28AddOutline } from "@vkontakte/icons";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { CellButton } from "./CellButton";

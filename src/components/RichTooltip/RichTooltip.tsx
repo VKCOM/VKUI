@@ -1,3 +1,4 @@
+import * as React from "react";
 import { HoverPopper, HoverPopperProps } from "../HoverPopper/HoverPopper";
 import { classNamesString } from "../../lib/classNames";
 import styles from "./RichTooltip.module.css";

@@ -1,3 +1,4 @@
+import * as React from "react";
 import { screen, render } from "@testing-library/react";
 import { Fragment } from "react";
 import { Platform } from "../../lib/platform";

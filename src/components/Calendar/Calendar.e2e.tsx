@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Calendar, CalendarProps } from "./Calendar";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 

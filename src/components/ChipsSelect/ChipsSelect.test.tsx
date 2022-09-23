@@ -1,3 +1,4 @@
+import * as React from "react";
 import { fireEvent, render, screen, queryByText } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { baselineComponent, waitForPopper } from "../../testing/utils";

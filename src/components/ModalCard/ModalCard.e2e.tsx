@@ -1,3 +1,4 @@
+import * as React from "react";
 import { ModalCard, ModalCardProps } from "./ModalCard";
 import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
 import { Button } from "../Button/Button";

@@ -1,3 +1,4 @@
+import * as React from "react";
 import { classNamesString } from "../../lib/classNames";
 import { warnOnce } from "../../lib/warnOnce";
 import {

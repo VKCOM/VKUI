@@ -1,3 +1,4 @@
+import * as React from "react";
 import { classNamesString } from "../../lib/classNames";
 import { SimpleCell, SimpleCellProps } from "../SimpleCell/SimpleCell";
 import styles from "./CellButton.module.css";

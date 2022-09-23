@@ -1,7 +1,7 @@
 const { NODE_ENV, BABEL_KEEP_CSS } = process.env;
 const isProduction = NODE_ENV === "production";
 const isDevelopment = NODE_ENV === "development";
-const useModules = isProduction || isDevelopment;
+const useESModules = isProduction || isDevelopment;
 const keepCss = Boolean(BABEL_KEEP_CSS);
 const runtimeVersion = require("./package.json").dependencies["@babel/runtime"];
 const { generateScopedName } = require("./shared");
@@ -22,7 +22,7 @@ module.exports = {
     [
       "@babel/preset-env",
       {
-        modules: useModules ? false : "commonjs",
+        modules: useESModules ? false : "commonjs",
         exclude: [
           "@babel/plugin-proposal-unicode-property-regex",
           "@babel/plugin-transform-unicode-regex",
@@ -32,37 +32,17 @@ module.exports = {
     [
       "@babel/preset-react",
       {
-        pragma: "createScopedElement",
-        pragmaFrag: "createScopedElement.Fragment",
+        runtime: "classic",
       },
     ],
-    [
-      "@babel/preset-typescript",
-      {
-        jsxPragma: "createScopedElement",
-        jsxPragmaFrag: "createScopedElement.Fragment",
-      },
-    ],
+    "@babel/preset-typescript",
   ],
   plugins: [
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-proposal-object-rest-spread",
-    ["@babel/plugin-transform-runtime", { version: runtimeVersion }],
     [
-      require.resolve("babel-plugin-auto-import"),
-      {
-        declarations: [
-          { members: ["createScopedElement"], path: "#jsxRuntime" },
-        ],
-      },
-    ],
-    [
-      require.resolve("babel-plugin-module-resolver"),
-      {
-        alias: {
-          "#jsxRuntime": "./src/lib/jsxRuntime",
-        },
-      },
+      "@babel/plugin-transform-runtime",
+      { useESModules, version: runtimeVersion },
     ],
     [
       require.resolve("babel-plugin-css-modules-transform"),

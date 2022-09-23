@@ -1,3 +1,4 @@
+import * as React from "react";
 import { fireEvent, render, screen, act } from "@testing-library/react";
 import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 import { Platform } from "../../lib/platform";

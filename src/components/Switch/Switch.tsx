@@ -1,3 +1,4 @@
+import * as React from "react";
 import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { classNamesString } from "../../lib/classNames";
 import { callMultiple } from "../../lib/callMultiple";

@@ -1,3 +1,4 @@
+import * as React from "react";
 import { render, screen } from "@testing-library/react";
 import { baselineComponent } from "../../testing/utils";
 import { GridAvatar, GridAvatarProps, MAX_GRID_LENGTH } from "./GridAvatar";

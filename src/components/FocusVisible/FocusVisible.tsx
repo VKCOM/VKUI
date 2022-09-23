@@ -1,3 +1,4 @@
+import * as React from "react";
 import { classNamesString } from "../../lib/classNames";
 import styles from "./FocusVisible.module.css";
 
