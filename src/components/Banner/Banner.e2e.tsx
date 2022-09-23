@@ -1,3 +1,4 @@
+import * as React from "react";
 import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
 import { Image } from "../Image/Image";
 import { Banner, BannerProps } from "./Banner";

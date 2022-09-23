@@ -1,3 +1,4 @@
+import * as React from "react";
 import { CustomSelectOption } from "./CustomSelectOption";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { Avatar } from "../Avatar/Avatar";

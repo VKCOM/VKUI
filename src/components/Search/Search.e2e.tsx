@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Search } from "./Search";
 import { screenshot, mount, describeScreenshotFuzz } from "../../testing/e2e";
 import { Platform } from "../../lib/platform";

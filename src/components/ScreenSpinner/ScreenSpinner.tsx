@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Spinner, SpinnerProps } from "../Spinner/Spinner";
 import { Icon24Cancel } from "@vkontakte/icons";
 import { Icon48DoneOutline } from "./Icon48DoneOutline";

@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import { Panel, PanelProps } from "./Panel";
 import { describeScreenshotFuzz } from "../../testing/e2e";
 import { PanelHeader } from "../PanelHeader/PanelHeader";

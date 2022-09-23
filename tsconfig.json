@@ -3,7 +3,6 @@
     // см. `./src/shared/breakpoints.js`
     "allowJs": true,
     "jsx": "react",
-    "jsxFactory": "createScopedElement",
     "target": "esnext",
     "lib": ["es6", "dom", "dom.Iterable"],
     "outDir": "dist",
@@ -44,7 +43,6 @@
   "files": [
     "node_modules/jest-playwright-preset/types/global.d.ts",
     "node_modules/expect-playwright/global.d.ts",
-    "src/lib/jsxRuntime.d.ts",
     "types/global.d.ts",
     "types/env.d.ts"
   ]

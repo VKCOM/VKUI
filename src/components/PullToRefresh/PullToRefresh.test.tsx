@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { baselineComponent, runAllTimers } from "../../testing/utils";
 import { noop } from "../../lib/utils";

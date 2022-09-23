@@ -1,3 +1,4 @@
+import * as React from "react";
 import { usePlatform } from "./usePlatform";
 import { ConfigProvider } from "../components/ConfigProvider/ConfigProvider";
 import { renderHook } from "@testing-library/react-hooks";

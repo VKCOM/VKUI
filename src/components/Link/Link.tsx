@@ -1,3 +1,4 @@
+import * as React from "react";
 import { classNamesString } from "../../lib/classNames";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
 import styles from "./Link.module.css";

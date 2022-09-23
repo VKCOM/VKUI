@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   Icon20ArticleOutline,
   Icon20PlaceOutline,

@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Icon20GiftCircleFillRed } from "@vkontakte/icons";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { type GridAvatarProps, GridAvatar } from "./GridAvatar";

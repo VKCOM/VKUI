@@ -1,3 +1,4 @@
+import * as React from "react";
 import { CalendarRange, CalendarRangeProps } from "./CalendarRange";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 

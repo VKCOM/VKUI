@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Icon28CancelOutline } from "@vkontakte/icons";
 import {
   PanelHeaderButton,
