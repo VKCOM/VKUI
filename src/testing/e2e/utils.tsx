@@ -137,7 +137,7 @@ export function describeScreenshotFuzz<Props>(
   const {
     matchScreenshot,
     platforms = [Platform.ANDROID, Platform.IOS, Platform.VKCOM],
-    appearance = "light",
+    appearance = (process.env.APPEARANCE ?? "light") as AppearanceType,
     adaptivity = {},
     Wrapper = AppWrapper,
   } = options;
@@ -155,7 +155,7 @@ export function describeScreenshotFuzz<Props>(
         adaptivity
       );
 
-      it(`light${
+      it(`${appearance}${
         adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ""
       }`, async () => {
         expect(

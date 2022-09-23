@@ -25,6 +25,10 @@ jobs:
             test-results.json
   test_e2e:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        appearance: [dark, light]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -42,6 +46,8 @@ jobs:
         run: yarn --cwd node_modules/playwright-chromium run install
       - name: FYI visual tests
         run: yarn test:e2e:ci
+        env:
+          APPEARANCE: ${{ matrix.appearance }}
         continue-on-error: true
       - name: Upload test artifact
         uses: actions/upload-artifact@v3

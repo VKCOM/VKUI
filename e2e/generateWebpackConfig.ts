@@ -1,6 +1,7 @@
 import * as path from "path";
 import { promisify } from "util";
 import cbGlob from "glob";
+import webpack from "webpack";
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpackConfig = require("../webpack.config.js");
 const glob = promisify(cbGlob);
@@ -79,6 +80,12 @@ export async function generateWebpackConfig() {
         },
       ],
     },
-    plugins: [...plugins, new MiniCssExtractPlugin()],
+    plugins: [
+      ...plugins,
+      new MiniCssExtractPlugin(),
+      new webpack.DefinePlugin({
+        "process.env.APPEARANCE": JSON.stringify(process.env.APPEARANCE),
+      }),
+    ],
   };
 }
