@@ -318,10 +318,6 @@ const baseConfig = {
           content: "./pages/unstable.md",
         },
         {
-          name: "Helpers",
-          content: "./pages/helpers.md",
-        },
-        {
           title: "Серверный рендеринг",
           name: "SSR",
           content: "./pages/ssr.md",
