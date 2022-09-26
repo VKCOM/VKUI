@@ -344,6 +344,7 @@ export {
 export { calcInitialsAvatarColor } from "./helpers/avatar";
 export { Popper } from "./components/Popper/Popper";
 export type { PopperProps } from "./components/Popper/Popper";
+export { CustomScrollView } from "./components/CustomScrollView/CustomScrollView";
 
 /**
  * Types
