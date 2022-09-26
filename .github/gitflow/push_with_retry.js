@@ -12,7 +12,7 @@ function retry(cb, onError) {
 
       break;
     } catch (e) {
-      console.log(JSON.stringify(e));
+      console.error(e);
 
       count -= 1;
 
