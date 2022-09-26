@@ -134,16 +134,23 @@ const TabsComponent = ({
           (el) => document.activeElement === el
         );
 
-        if (!currentFocusedEl || currentFocusedEl.getAttribute('aria-selected') !== 'true') {
+        if (
+          !currentFocusedEl ||
+          currentFocusedEl.getAttribute("aria-selected") !== "true"
+        ) {
           return;
         }
 
-        const relatedContentElId = currentFocusedEl.getAttribute('aria-controls');
+        const relatedContentElId =
+          currentFocusedEl.getAttribute("aria-controls");
         if (!relatedContentElId) {
           return;
         }
 
-        const relatedContentEl = document.querySelector('#' + relatedContentElId) as HTMLElement;
+        // eslint-disable-next-line no-restricted-properties
+        const relatedContentEl = document.querySelector(
+          "#" + relatedContentElId
+        ) as HTMLElement;
         if (!relatedContentEl) {
           return;
         }
