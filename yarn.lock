@@ -2040,9 +2040,9 @@
     "@typescript-eslint/types" "5.36.1"
     eslint-visitor-keys "^3.3.0"
 
-"@vkontakte/appearance@https://github.com/VKCOM/Appearance#v9.51.1":
+"@vkontakte/appearance@https://github.com/VKCOM/Appearance#v9.51.4":
   version "1.0.0"
-  resolved "https://github.com/VKCOM/Appearance#00b9c0712711669727fed97f1073e85d2483f930"
+  resolved "https://github.com/VKCOM/Appearance#b38b6c9448c79d39f2618cfb821e7199e82e8f38"
 
 "@vkontakte/eslint-config@3.1.0":
   version "3.1.0"
