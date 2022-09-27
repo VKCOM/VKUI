@@ -1,19 +1,28 @@
-name: "Publish"
+name: "Publish pre-release"
 
 on:
   workflow_dispatch:
     inputs:
       type:
-        description: "version type:"
+        description: "version type (prerelease for bumping pre-release version):"
         required: true
         type: choice
-        default: "minor"
+        default: "prerelease"
         options:
-          - patch
-          - minor
-          - major
+          - prepatch
+          - preminor
+          - premajor
+          - prerelease
+      tag:
+        required: true
+        description: 'tag ("beta" or "alpha"):'
+        type: choice
+        default: "beta"
+        options:
+          - beta
+          - alpha
       custom_version:
-        description: 'custom version: x.y.z (without "v")'
+        description: 'custom version: x.y.z-beta.0 (without "v")'
         required: false
 
 jobs:
@@ -43,7 +52,7 @@ jobs:
 
       - name: Bump by version type
         if: ${{ !github.event.inputs.custom_version }}
-        run: yarn version --${{ github.event.inputs.type }} --no-commit-hooks
+        run: yarn version --${{ github.event.inputs.type }} --preid ${{ github.event.inputs.tag }} --no-commit-hooks
 
       - name: Bump by custom version
         if: ${{ github.event.inputs.custom_version }}
@@ -55,13 +64,8 @@ jobs:
           github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           branch: ${{ github.ref }}
 
-      - name: Create stable branch
-        run: node ./.github/gitflow/stable_branch.js
-        env:
-          INPUT_GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
-
-      - name: Publishing release
-        run: yarn publish --non-interactive
+      - name: Publishing prerelase
+        run: yarn publish --non-interactive --tag ${{ github.event.inputs.tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
 
@@ -69,12 +73,8 @@ jobs:
         id: updated_version
         run: echo "::set-output name=version::$(node -p "require('./package.json').version")"
 
-      - name: Creating doc for stable release
-        run: |
-          yarn styleguide:build
-          mkdir ${{ steps.updated_version.outputs.version }}
-          cp -R styleguide-build/* ${{ steps.updated_version.outputs.version }}
-          mv ${{ steps.updated_version.outputs.version }} styleguide-build/${{ steps.updated_version.outputs.version }}
+      - name: Creating doc for prerelease
+        run: yarn styleguide:build --dist styleguide-build/${{ steps.updated_version.outputs.version }}
 
       - name: Publishing doc
         uses: JamesIves/github-pages-deploy-action@3.7.1
