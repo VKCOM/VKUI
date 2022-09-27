@@ -17,7 +17,7 @@ body[scheme="vkcom_dark"],
   --attach_picker_tab_inactive_icon: #e1e3e6;
   --attach_picker_tab_inactive_text: #828282;
   --background_content: #222222;
-  --background_highlighted: rgba(255, 255, 255, 0.12);
+  --background_highlighted: rgba(255, 255, 255, 0.08);
   --background_hover: rgba(255, 255, 255, 0.08);
   --background_keyboard: #333333;
   --background_light: #292929;
@@ -33,7 +33,7 @@ body[scheme="vkcom_dark"],
   --button_outline_foreground: #e1e3e6;
   --button_primary_background: #e1e3e6;
   --button_primary_foreground: #222222;
-  --button_secondary_background: #484848;
+  --button_secondary_background: #424242;
   --button_secondary_background_highlighted: #555555;
   --button_secondary_destructive_background: #555555;
   --button_secondary_destructive_background_highlighted: rgba(85, 85, 85, 0.6);
@@ -79,7 +79,7 @@ body[scheme="vkcom_dark"],
   --dynamic_violet: #a393f5;
   --feed_recommended_friend_promo_background: #6f7985;
   --field_background: #292929;
-  --field_border: #484848;
+  --field_border: #424242;
   --field_error_background: rgba(230, 70, 70, 0.16);
   --field_error_border: #e64646;
   --field_text_placeholder: #828282;
@@ -95,7 +95,7 @@ body[scheme="vkcom_dark"],
   --header_background: #222222;
   --header_background_before_blur: #0a0a0a;
   --header_background_before_blur_alternate: #0a0a0a;
-  --header_search_field_background: #484848;
+  --header_search_field_background: #424242;
   --header_search_field_tint: #b2b2b2;
   --header_tab_active_background: #656565;
   --header_tab_active_indicator: #397dcc;
@@ -153,7 +153,7 @@ body[scheme="vkcom_dark"],
   --im_toolbar_separator: #b2b2b2;
   --im_toolbar_voice_msg_background: #555555;
   --image_border: rgba(255, 255, 255, 0.08);
-  --input_background: #484848;
+  --input_background: #424242;
   --input_border: #555555;
   --landing_background: #222222;
   --landing_field_background: #292929;
@@ -179,7 +179,7 @@ body[scheme="vkcom_dark"],
   --loader_track_value_fill: #ffffff;
   --media_overlay_button_background: #ffffff;
   --media_overlay_button_foreground: #333333;
-  --modal_card_background: #333333;
+  --modal_card_background: #292929;
   --modal_card_border: rgba(255, 255, 255, 0.12);
   --modal_card_header_close: #ffffff;
   --music_playback_icon: #ffffff;
@@ -197,7 +197,7 @@ body[scheme="vkcom_dark"],
   --poll_option_background: #ffffff;
   --primary_overlay_badge: rgba(255, 255, 255, 0.4);
   --search_bar_background: #222222;
-  --search_bar_field_background: #484848;
+  --search_bar_field_background: #424242;
   --search_bar_field_tint: #b2b2b2;
   --search_bar_segmented_control_tint: #939393;
   --secondary_overlay_badge: rgba(255, 255, 255, 0.16);
@@ -206,7 +206,7 @@ body[scheme="vkcom_dark"],
   --selection_off_icon: #656565;
   --separator_alpha: rgba(255, 255, 255, 0.16);
   --separator_alternate: #292929;
-  --separator_common: #484848;
+  --separator_common: #424242;
   --skeleton_foreground_from: #292929;
   --skeleton_foreground_to: #333333;
   --skeleton_shimmer_from: #222222;
@@ -216,8 +216,8 @@ body[scheme="vkcom_dark"],
   --snippet_icon_tertiary: #656565;
   --splashscreen_icon: #333333;
   --statusbar_alternate_legacy_background: rgba(0, 0, 0, 0);
-  --stories_create_button_background_from: #484848;
-  --stories_create_button_background_to: #484848;
+  --stories_create_button_background_from: #424242;
+  --stories_create_button_background_to: #424242;
   --stories_create_button_foreground: #cccccc;
   --stories_create_button_icon_background: #555555;
   --stories_skeleton_loader_background: #555555;
