@@ -176,9 +176,7 @@ export function describeScreenshotFuzz<Props>(
         ? ` w_${adaptivityProps.viewWidth}`
         : "";
 
-      const currentBrowser = BROWSER !== "chromium" ? ` ${BROWSER}-` : "";
-
-      it(`${currentBrowser}${APPEARANCE}${viewWidth}`, async () => {
+      it(`${BROWSER}-${APPEARANCE}${viewWidth}`, async () => {
         expect(
           await screenshot(
             <ConfigProvider appearance={APPEARANCE} platform={platform}>
