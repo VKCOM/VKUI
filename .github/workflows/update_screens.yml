@@ -2,6 +2,8 @@ name: "Update screenshots"
 
 on: workflow_dispatch
 
+run-name: Update screenshots for ${{ github.ref_name }}
+
 jobs:
   update_screens:
     runs-on: ubuntu-latest
