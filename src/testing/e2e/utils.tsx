@@ -167,14 +167,14 @@ export function describeScreenshotFuzz<Props>(
         adaptivity
       );
 
+      const viewWidth = adaptivityProps.viewWidth
+        ? ` w_${adaptivityProps.viewWidth}`
+        : "";
+
       const AdaptiveComponent = withAdaptivity(Component, {
         sizeX: true,
         sizeY: true,
       });
-
-      const viewWidth = adaptivityProps.viewWidth
-        ? ` w_${adaptivityProps.viewWidth}`
-        : "";
 
       it(`${BROWSER}-${APPEARANCE}${viewWidth}`, async () => {
         expect(
