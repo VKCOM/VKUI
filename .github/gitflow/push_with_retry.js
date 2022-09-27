@@ -30,7 +30,9 @@ execSync("git pull");
 retry(
   function () {
     execSync("git add ./**/*.png");
-    execSync(`git commit -m "CHORE: Update screenshots"`);
+    execSync(
+      `git diff-index --quiet HEAD || git commit -m "CHORE: Update screenshots"`
+    );
   },
   function () {
     execSync("git pull --rebase --autostash");
