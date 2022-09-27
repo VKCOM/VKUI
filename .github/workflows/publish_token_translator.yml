@@ -7,6 +7,8 @@ on:
         description: "token-translator version (without v)"
         required: true
 
+run-name: Publish token-translator@${{ inputs.version }}
+
 jobs:
   publish:
     runs-on: ubuntu-latest
