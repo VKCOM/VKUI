@@ -25,6 +25,8 @@ on:
         description: 'custom version: x.y.z-beta.0 (without "v")'
         required: false
 
+run-name: Publish pre-release ${{ inputs.type }} ${{ inputs.custom_version }} (tag ${{ inputs.tag }})
+
 jobs:
   publish:
     concurrency: ci-gh-pages

@@ -16,6 +16,8 @@ on:
         description: 'custom version: x.y.z (without "v")'
         required: false
 
+run-name: Publish ${{ inputs.type }} ${{ inputs.custom_version }}
+
 jobs:
   publish:
     concurrency: ci-gh-pages
