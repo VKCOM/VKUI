@@ -1,4 +1,8 @@
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
+import {
+  describeScreenshotFuzz,
+  customSnapshotIdentifier,
+  APPEARANCE,
+} from "../../testing/e2e/utils";
 import { HorizontalScroll } from "./HorizontalScroll";
 import { HorizontalCell } from "../HorizontalCell/HorizontalCell";
 import { Avatar } from "../Avatar/Avatar";
@@ -62,7 +66,7 @@ describe("HorizontalScroll", () => {
   it("has arrows on mouse hover", async () => {
     jest.setTimeout(5000);
     await mount(
-      <ConfigProvider appearance="light">
+      <ConfigProvider appearance={APPEARANCE}>
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasMouse>
           <AppRoot>
             <HorizontalScroll
@@ -88,13 +92,15 @@ describe("HorizontalScroll", () => {
       await screenshot(undefined, {
         selector: ".vkuiHorizontalScroll",
       })
-    ).toMatchImageSnapshot();
+    ).toMatchImageSnapshot({
+      customSnapshotIdentifier,
+    });
   });
 
   it("does not have arrows without mouse", async () => {
     jest.setTimeout(5000);
     await mount(
-      <ConfigProvider appearance="light">
+      <ConfigProvider appearance={APPEARANCE}>
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasMouse={false}>
           <AppRoot>
             <HorizontalScroll>
@@ -113,6 +119,8 @@ describe("HorizontalScroll", () => {
       await screenshot(undefined, {
         selector: ".vkuiHorizontalScroll",
       })
-    ).toMatchImageSnapshot();
+    ).toMatchImageSnapshot({
+      customSnapshotIdentifier,
+    });
   });
 });

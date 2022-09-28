@@ -2,6 +2,8 @@ name: "Update screenshots"
 
 on: workflow_dispatch
 
+run-name: Update screenshots for ${{ github.ref_name }}
+
 jobs:
   update_screens:
     runs-on: ubuntu-latest
@@ -9,6 +11,7 @@ jobs:
       fail-fast: false
       matrix:
         appearance: [dark, light]
+        browser: [chromium, firefox, webkit]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -19,14 +22,15 @@ jobs:
         with:
           node-version: 14
           cache: "yarn"
-      - run: yarn --frozen-lockfile
+      - run: yarn --frozen-lockfile --ignore-scripts
+      - name: Install browser for E2E
+        run: yarn --cwd node_modules/playwright-${{ matrix.browser }} run install
+      - name: Install deps for playwright
+        run: npx playwright install-deps ${{ matrix.browser }}
       - name: Update screenshots
         run: yarn test:e2e -u
         env:
           APPEARANCE: ${{ matrix.appearance }}
+          BROWSER: ${{ matrix.browser }}
       - name: Push updated screenshots
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          # dangerfile depends on this message
-          commit_message: "CHORE: Update screenshots"
-          file_pattern: "./**/*.png"
+        run: node ./.github/gitflow/push_with_retry.js

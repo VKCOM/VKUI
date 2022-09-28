@@ -1,0 +1,87 @@
+name: "Publish pre-release"
+
+on:
+  workflow_dispatch:
+    inputs:
+      type:
+        description: "version type (prerelease for bumping pre-release version):"
+        required: true
+        type: choice
+        default: "prerelease"
+        options:
+          - prepatch
+          - preminor
+          - premajor
+          - prerelease
+      tag:
+        required: true
+        description: 'tag ("beta" or "alpha"):'
+        type: choice
+        default: "beta"
+        options:
+          - beta
+          - alpha
+      custom_version:
+        description: 'custom version: x.y.z-beta.0 (without "v")'
+        required: false
+
+run-name: Publish pre-release ${{ inputs.type }} ${{ inputs.custom_version }} (tag ${{ inputs.tag }})
+
+jobs:
+  publish:
+    concurrency: ci-gh-pages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          cache: "yarn"
+          always-auth: true
+          registry-url: "https://registry.npmjs.org"
+
+      - run: yarn install --frozen-lockfile --ignore-scripts
+
+      - run: yarn test
+
+      - name: Set Git credentials
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Bump by version type
+        if: ${{ !github.event.inputs.custom_version }}
+        run: yarn version --${{ github.event.inputs.type }} --preid ${{ github.event.inputs.tag }} --no-commit-hooks
+
+      - name: Bump by custom version
+        if: ${{ github.event.inputs.custom_version }}
+        run: yarn version --new-version ${{ github.event.inputs.custom_version }} --no-commit-hooks
+
+      - name: Pushing changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+
+      - name: Publishing prerelase
+        run: yarn publish --non-interactive --tag ${{ github.event.inputs.tag }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
+
+      - name: Save updated package version to env
+        id: updated_version
+        run: echo "::set-output name=version::$(node -p "require('./package.json').version")"
+
+      - name: Creating doc for prerelease
+        run: yarn styleguide:build --dist styleguide-build/${{ steps.updated_version.outputs.version }}
+
+      - name: Publishing doc
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: styleguide-build
+          CLEAN: false

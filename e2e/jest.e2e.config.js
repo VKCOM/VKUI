@@ -5,6 +5,7 @@ const { canRunTests, useDocker } = require("./detectEnv");
 
 const jestPlaywrightOptions = Object.assign(
   {
+    browsers: [process.env.BROWSER ?? "chromium"],
     collectCoverage: true,
     contextOptions: {
       viewport: {
@@ -30,7 +31,6 @@ const config = {
   setupFilesAfterEnv: [path.join(__dirname, "jest/matchers.ts")],
   globalSetup: path.join(__dirname, "jest/globalSetup.ts"),
   globalTeardown: path.join(__dirname, "jest/globalTeardown.ts"),
-  testEnvironment: path.join(__dirname, "jest/jsdomPlaywrightEnv.js"),
   testEnvironmentOptions: {
     ...(base.testEnvironmentOptions || {}),
     "jest-playwright": jestPlaywrightOptions,

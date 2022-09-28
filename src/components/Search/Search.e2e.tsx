@@ -1,6 +1,12 @@
 import { Search } from "./Search";
-import { screenshot, mount, describeScreenshotFuzz } from "../../testing/e2e";
 import { Platform } from "../../lib/platform";
+import {
+  screenshot,
+  mount,
+  describeScreenshotFuzz,
+  customSnapshotIdentifier,
+  APPEARANCE,
+} from "../../testing/e2e";
 import { Icon16Add } from "@vkontakte/icons";
 import { AppRoot } from "../AppRoot/AppRoot";
 import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
@@ -24,7 +30,7 @@ describe("Search", () => {
   );
   it("shows after when focused on iOS", async () => {
     await mount(
-      <ConfigProvider platform={Platform.IOS}>
+      <ConfigProvider platform={Platform.IOS} appearance={APPEARANCE}>
         <div
           style={{
             height: "auto",
@@ -41,6 +47,8 @@ describe("Search", () => {
       </ConfigProvider>
     );
     await page.focus("input");
-    expect(await screenshot()).toMatchImageSnapshot();
+    expect(await screenshot()).toMatchImageSnapshot({
+      customSnapshotIdentifier,
+    });
   });
 });

@@ -49,6 +49,6 @@ export async function screenshot(
 
   return page.screenshot({
     fullPage: true,
-    clip: { x, y, width: right - x, height: bottom - y },
+    clip: { x, y, width: Math.ceil(right - x), height: Math.ceil(bottom - y) },
   });
 }

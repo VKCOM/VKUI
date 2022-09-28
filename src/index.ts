@@ -340,6 +340,7 @@ export { SizeXConditionalRender } from "./components/SizeXConditionalRender/Size
 export { SizeYConditionalRender } from "./components/SizeYConditionalRender/SizeYConditionalRender";
 export { DeviceConditionalRender } from "./components/DeviceConditionalRender/DeviceConditionalRender";
 export { ViewWidthConditionalRender } from "./components/ViewWidthConditionalRender/ViewWidthConditionalRender";
+export { CustomScrollView } from "./components/CustomScrollView/CustomScrollView";
 
 /**
  * Types

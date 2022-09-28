@@ -1,8 +1,15 @@
 import { Textarea } from "./Textarea";
-import { screenshot, mount, describeScreenshotFuzz } from "../../testing/e2e";
+import {
+  screenshot,
+  mount,
+  describeScreenshotFuzz,
+  customSnapshotIdentifier,
+  APPEARANCE,
+} from "../../testing/e2e";
 import { AppRoot } from "../AppRoot/AppRoot";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { BREAKPOINTS, SizeType } from "../../lib/adaptivity";
+import { AppearanceProvider } from "../AppearanceProvider/AppearanceProvider";
 
 describe("Textarea", () => {
   describeScreenshotFuzz(Textarea, [
@@ -39,17 +46,23 @@ describe("Textarea", () => {
         }}
       >
         <AppRoot mode="embedded">
-          <AdaptivityProvider sizeY={SizeType.REGULAR}>
-            <Textarea id="textarea" />
-          </AdaptivityProvider>
+          <AppearanceProvider appearance={APPEARANCE}>
+            <AdaptivityProvider sizeY={SizeType.REGULAR}>
+              <Textarea id="textarea" />
+            </AdaptivityProvider>
+          </AppearanceProvider>
         </AppRoot>
       </div>
     );
     await page.type("#textarea", "1\n2\n3\n4\n5\n6\n7\n8");
-    expect(await screenshot()).toMatchImageSnapshot();
+    expect(await screenshot()).toMatchImageSnapshot({
+      customSnapshotIdentifier,
+    });
     for (let i = 0; i < 12; i++) {
       await page.press("#textarea", "Backspace");
     }
-    expect(await screenshot()).toMatchImageSnapshot();
+    expect(await screenshot()).toMatchImageSnapshot({
+      customSnapshotIdentifier,
+    });
   });
 });

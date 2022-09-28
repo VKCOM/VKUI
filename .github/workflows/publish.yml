@@ -3,11 +3,20 @@ name: "Publish"
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: 'version: x.y.z (without "v")'
+      type:
+        description: "version type:"
         required: true
-      tag:
-        description: 'tag: empty for release; "beta" or "alpha" for pre-release'
+        type: choice
+        default: "minor"
+        options:
+          - patch
+          - minor
+          - major
+      custom_version:
+        description: 'custom version: x.y.z (without "v")'
+        required: false
+
+run-name: Publish ${{ inputs.type }} ${{ inputs.custom_version }}
 
 jobs:
   publish:
@@ -34,7 +43,13 @@ jobs:
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Action"
 
-      - run: yarn version --new-version ${{ github.event.inputs.version }} --no-commit-hooks
+      - name: Bump by version type
+        if: ${{ !github.event.inputs.custom_version }}
+        run: yarn version --${{ github.event.inputs.type }} --no-commit-hooks
+
+      - name: Bump by custom version
+        if: ${{ github.event.inputs.custom_version }}
+        run: yarn version --new-version ${{ github.event.inputs.custom_version }} --no-commit-hooks
 
       - name: Pushing changes
         uses: ad-m/github-push-action@master
@@ -44,33 +59,24 @@ jobs:
 
       - name: Create stable branch
         run: node ./.github/gitflow/stable_branch.js
-        if: ${{ !github.event.inputs.tag }}
         env:
           INPUT_GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
-      - name: Publishing prerelase
-        run: yarn publish --non-interactive --tag ${{ github.event.inputs.tag }}
-        if: ${{ github.event.inputs.tag }}
+      - name: Publishing release
+        run: yarn publish --non-interactive
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
 
-      - name: Publishing release
-        run: yarn publish --non-interactive
-        if: ${{ !github.event.inputs.tag }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
+      - name: Save updated package version to env
+        id: updated_version
+        run: echo "::set-output name=version::$(node -p "require('./package.json').version")"
 
       - name: Creating doc for stable release
         run: |
           yarn styleguide:build
-          mkdir ${{ github.event.inputs.version }}
-          cp -R styleguide-build/* ${{ github.event.inputs.version }}
-          mv ${{ github.event.inputs.version }} styleguide-build/${{ github.event.inputs.version }}
-        if: ${{ !github.event.inputs.tag }}
-
-      - name: Creating doc for prerelease
-        run: yarn styleguide:build --dist styleguide-build/${{ github.event.inputs.version }}
-        if: ${{ github.event.inputs.tag }}
+          mkdir ${{ steps.updated_version.outputs.version }}
+          cp -R styleguide-build/* ${{ steps.updated_version.outputs.version }}
+          mv ${{ steps.updated_version.outputs.version }} styleguide-build/${{ steps.updated_version.outputs.version }}
 
       - name: Publishing doc
         uses: JamesIves/github-pages-deploy-action@3.7.1
