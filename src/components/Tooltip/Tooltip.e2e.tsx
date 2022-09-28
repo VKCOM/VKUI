@@ -7,7 +7,7 @@ describe("Tooltip", () => {
     (props) => (
       <TooltipContainer
         style={{
-          minWidth: "320px",
+          minWidth: "300px",
           height: "100px",
           position: "relative",
           display: "flex",

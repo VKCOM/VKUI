@@ -22,6 +22,7 @@ import { View } from "../../components/View/View";
 import { AppRoot } from "../../components/AppRoot/AppRoot";
 import { Group } from "../../components/Group/Group";
 import { HasChildren } from "../../types";
+import { BrowserType } from "jest-playwright-preset";
 
 type AdaptivityFlag = boolean | "x" | "y";
 type PropDesc<Props> = { [K in keyof Props]?: Array<Props[K]> } & {
@@ -30,6 +31,10 @@ type PropDesc<Props> = { [K in keyof Props]?: Array<Props[K]> } & {
 type SizeProps = Pick<AdaptivityProps, "sizeX" | "sizeY">;
 type TestProps<Props> = Array<Props & SizeProps>;
 type CartesianOptions = { adaptive: boolean };
+
+export const APPEARANCE = (process.env.APPEARANCE ??
+  Appearance.LIGHT) as Appearance;
+export const BROWSER = (process.env.BROWSER ?? "chromium") as BrowserType;
 
 function getAdaptivity(adaptivity?: AdaptivityFlag) {
   const extra: PropDesc<SizeProps> = {};
@@ -137,8 +142,6 @@ const AppWrapper = (props: HasChildren) => (
   </AppRoot>
 );
 
-const appearance = (process.env.APPEARANCE ?? Appearance.LIGHT) as Appearance;
-
 export function describeScreenshotFuzz<Props>(
   Component: ComponentType<Props>,
   propSets: Array<PropDesc<Props>> = [],
@@ -164,17 +167,19 @@ export function describeScreenshotFuzz<Props>(
         adaptivity
       );
 
+      const viewWidth = adaptivityProps.viewWidth
+        ? ` w_${adaptivityProps.viewWidth}`
+        : "";
+
       const AdaptiveComponent = withAdaptivity(Component, {
         sizeX: true,
         sizeY: true,
       });
 
-      it(`${appearance}${
-        adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ""
-      }`, async () => {
+      it(`${BROWSER}-${APPEARANCE}${viewWidth}`, async () => {
         expect(
           await screenshot(
-            <ConfigProvider appearance={appearance} platform={platform}>
+            <ConfigProvider appearance={APPEARANCE} platform={platform}>
               <AdaptivityProvider {...adaptivityProps}>
                 <div
                   style={{
@@ -204,4 +209,12 @@ export function describeScreenshotFuzz<Props>(
       });
     });
   });
+}
+
+export function customSnapshotIdentifier({
+  defaultIdentifier,
+}: {
+  defaultIdentifier: string;
+}): string {
+  return `${BROWSER}-${APPEARANCE}-${defaultIdentifier}`;
 }

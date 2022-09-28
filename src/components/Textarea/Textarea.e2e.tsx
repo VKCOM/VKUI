@@ -1,6 +1,13 @@
 import { Textarea } from "./Textarea";
-import { screenshot, mount, describeScreenshotFuzz } from "../../testing/e2e";
+import {
+  screenshot,
+  mount,
+  describeScreenshotFuzz,
+  customSnapshotIdentifier,
+  APPEARANCE,
+} from "../../testing/e2e";
 import { AppRoot } from "../AppRoot/AppRoot";
+import { AppearanceProvider } from "../AppearanceProvider/AppearanceProvider";
 
 describe("Textarea", () => {
   describeScreenshotFuzz(Textarea, [
@@ -30,14 +37,20 @@ describe("Textarea", () => {
   it("fits size to content", async () => {
     await mount(
       <AppRoot embedded>
-        <Textarea id="textarea" />
+        <AppearanceProvider appearance={APPEARANCE}>
+          <Textarea id="textarea" />
+        </AppearanceProvider>
       </AppRoot>
     );
     await page.type("#textarea", "1\n2\n3\n4\n5\n6\n7\n8");
-    expect(await screenshot()).toMatchImageSnapshot();
+    expect(await screenshot()).toMatchImageSnapshot({
+      customSnapshotIdentifier,
+    });
     for (let i = 0; i < 12; i++) {
       await page.press("#textarea", "Backspace");
     }
-    expect(await screenshot()).toMatchImageSnapshot();
+    expect(await screenshot()).toMatchImageSnapshot({
+      customSnapshotIdentifier,
+    });
   });
 });
