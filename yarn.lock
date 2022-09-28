@@ -8965,11 +8965,11 @@ playwright-firefox@^1.26.0:
     playwright-core "1.26.0"
 
 playwright-webkit@^1.26.0:
-  version "1.26.0"
-  resolved "https://registry.yarnpkg.com/playwright-webkit/-/playwright-webkit-1.26.0.tgz#139f692d600c62cc34a5b59a6ec2fba2a18dd602"
-  integrity sha512-U9G4/pb4pRND3QF+Iv0JQGodIAbNLe02WSaW9DtQp91w4JkaZrP+iWfGGHCB409+rwiIfdCzVaWDp1ixfG1Mlw==
+  version "1.26.1"
+  resolved "https://registry.yarnpkg.com/playwright-webkit/-/playwright-webkit-1.26.1.tgz#f65abf358acb35696964cfbb33513ab332aa6f3e"
+  integrity sha512-SWdExktVOwTu9EcqDR5PR7EjS9Opc5jipBWn3lJkL7vcnVoYJmDajY+s9aZ+8vnQE7GdF3bwu16voH7BVEaqkA==
   dependencies:
-    playwright-core "1.26.0"
+    playwright-core "1.26.1"
 
 playwright@^1.26.0:
   version "1.26.0"
