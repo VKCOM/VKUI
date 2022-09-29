@@ -1,0 +1,51 @@
+/* stylelint-disable */
+.Component {
+}
+
+.Component--disabled {
+}
+
+.Component--mode-vertical {
+}
+
+.Component--mode-horizontal {
+}
+
+.Component--gradient-light-blue {
+}
+
+.Component--gradient-light-gold {
+}
+
+.Component--gradient-light-green {
+}
+
+.Component--gradient-dark-blue {
+}
+
+.Component--gradient-dark-gold {
+}
+
+.Component--gradient-dark-green {
+}
+
+.Component__header {
+}
+
+.Component__header--level-1 {
+}
+
+.Component__header--level-2 {
+}
+
+/**
+ * Side Effects
+ */
+* > .Component {
+}
+
+.SecondComponent .Component {
+}
+
+.ThirdComponent > .Component {
+}
