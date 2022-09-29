@@ -8958,11 +8958,11 @@ playwright-core@1.26.1, playwright-core@>=1.2.0:
   integrity sha512-hzFchhhxnEiPc4qVPs9q2ZR+5eKNifY2hQDHtg1HnTTUuphYCBP8ZRb2si+B1TR7BHirgXaPi48LIye5SgrLAA==
 
 playwright-firefox@^1.26.0:
-  version "1.26.0"
-  resolved "https://registry.yarnpkg.com/playwright-firefox/-/playwright-firefox-1.26.0.tgz#4375e8c4eff71c169237260840cf13042527eb89"
-  integrity sha512-9cKbCBQo4VUeKUdBHkh5Cwx95DPbYr3JYlAJWJlAcItBqlTyxUSfXrptBA7zwZCMQ11cjBAVuumVRJhqOMplPQ==
+  version "1.26.1"
+  resolved "https://registry.yarnpkg.com/playwright-firefox/-/playwright-firefox-1.26.1.tgz#5dc52f535929364d205f0edd183567f705cffd72"
+  integrity sha512-HyAqLOPKiwhNZjWW+oggIdo3VzTONcenR9VV7nBxdEtpG43iSrvc8EqshaY9V3Kze12u3tOaR+5Z6z9ohcKmWw==
   dependencies:
-    playwright-core "1.26.0"
+    playwright-core "1.26.1"
 
 playwright-webkit@^1.26.0:
   version "1.26.1"
