@@ -43,6 +43,22 @@
   /* Force use embedded Roboto font for cross-platformity */
   --font-common: "Roboto";
   --font-display: "Roboto";
+  --vkui--font_caption1--font_family--regular: "Roboto";
+  --vkui--font_caption1_caps--font_family--regular: "Roboto";
+  --vkui--font_caption2--font_family--regular: "Roboto";
+  --vkui--font_caption2_caps--font_family--regular: "Roboto";
+  --vkui--font_caption3--font_family--regular: "Roboto";
+  --vkui--font_caption3_caps--font_family--regular: "Roboto";
+  --vkui--font_footnote--font_family--regular: "Roboto";
+  --vkui--font_footnote_caps--font_family--regular: "Roboto";
+  --vkui--font_headline1--font_family--regular: "Roboto";
+  --vkui--font_headline2--font_family--regular: "Roboto";
+  --vkui--font_paragraph--font_family--regular: "Roboto";
+  --vkui--font_subhead--font_family--regular: "Roboto";
+  --vkui--font_text--font_family--regular: "Roboto";
+  --vkui--font_title1--font_family--regular: "Roboto";
+  --vkui--font_title2--font_family--regular: "Roboto";
+  --vkui--font_title3--font_family--regular: "Roboto";
 
   /* stylelint-disable-next-line */
   font-family: "Roboto";
