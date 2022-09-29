@@ -95,7 +95,7 @@ export const PanelHeaderButton = ({
       activeMode={activeMode}
       className={classNamesString(
         styles["PanelHeaderButton"],
-        getPlatformClassName("PanelHeaderButton", platform, styles),
+        getPlatformClassName(styles["PanelHeaderButton"], platform),
         primary && styles["PanelHeaderButton--primary"],
         isPrimitive && styles["PanelHeaderButton--primitive"],
         !isPrimitive &&

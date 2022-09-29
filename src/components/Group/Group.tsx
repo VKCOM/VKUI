@@ -75,7 +75,7 @@ export const Group = (props: GroupProps) => {
       className={classNamesString(
         styles["Group"],
         platform === Platform.IOS && styles["Group--ios"],
-        getSizeXClassName("Group", sizeX, styles),
+        getSizeXClassName(styles["Group"], sizeX),
         mode && styles[`Group--mode-${mode}`],
         styles[`Group--padding-${padding}`],
         className

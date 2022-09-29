@@ -37,7 +37,7 @@ export const Panel = ({
       ref={getRootRef}
       className={classNamesString(
         styles["Panel"],
-        getSizeXClassName("Panel", sizeX, styles),
+        getSizeXClassName(styles["Panel"], sizeX),
         centered && styles["Panel--centered"],
         className
       )}

@@ -32,7 +32,7 @@ export const Subhead = ({
       className={classNamesString(
         className,
         styles["Subhead"],
-        getSizeYClassName("Subhead", sizeY, styles),
+        getSizeYClassName(styles["Subhead"], sizeY),
         weight && styles[`Subhead--weight-${weight}`]
       )}
     >

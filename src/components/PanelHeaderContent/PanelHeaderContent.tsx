@@ -78,7 +78,7 @@ export const PanelHeaderContent = ({
       style={style}
       className={classNamesString(
         styles["PanelHeaderContent"],
-        getPlatformClassName("PanelHeaderContent", platform, styles),
+        getPlatformClassName(styles["PanelHeaderContent"], platform),
         className
       )}
     >

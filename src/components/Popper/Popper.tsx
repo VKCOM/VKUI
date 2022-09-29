@@ -231,7 +231,7 @@ export const Popper = ({
       {...attributes.popper}
       className={classNamesString(
         styles["Popper"],
-        getPlatformClassName("Popper", platform, styles),
+        getPlatformClassName(styles["Popper"], platform),
         className
       )}
       ref={setExternalRef}

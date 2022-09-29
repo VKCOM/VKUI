@@ -98,7 +98,7 @@ export const PanelHeader = ({
       {...restProps}
       className={classNamesString(
         styles["PanelHeader"],
-        getPlatformClassName("PanelHeader", platform, styles),
+        getPlatformClassName(styles["PanelHeader"], platform),
         transparent && styles["PanelHeader--trnsp"],
         shadow && styles["PanelHeader--shadow"],
         visor && styles["PanelHeader--vis"],
@@ -109,7 +109,7 @@ export const PanelHeader = ({
         !before && styles["PanelHeader--no-before"],
         !after && styles["PanelHeader--no-after"],
         isFixed && styles["PanelHeader--fixed"],
-        getSizeXClassName("PanelHeader", sizeX, styles),
+        getSizeXClassName(styles["PanelHeader"], sizeX),
         className
       )}
       ref={isFixed ? getRootRef : getRef}

@@ -133,7 +133,7 @@ export const UniversalSlider = ({
       {...(disabled ? {} : { onStart, onMove, onEnd })}
       className={classNamesString(
         styles["Slider"],
-        getSizeYClassName("Slider", sizeY, styles),
+        getSizeYClassName(styles["Slider"], sizeY),
         disabled && styles["Slider--disabled"],
         className
       )}

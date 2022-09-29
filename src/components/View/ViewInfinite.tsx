@@ -652,7 +652,7 @@ class ViewInfiniteComponent extends React.Component<
         {...restProps}
         className={classNamesString(
           styles["View"],
-          getPlatformClassName("View", platform, styles),
+          getPlatformClassName(styles["View"], platform),
           !disableAnimation && this.state.animated && styles["View--animated"],
           !disableAnimation &&
             this.state.swipingBack &&

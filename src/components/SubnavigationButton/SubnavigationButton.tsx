@@ -74,7 +74,7 @@ export const SubnavigationButton = ({
         styles[`SubnavigationButton--size-${size}`],
         styles[`SubnavigationButton--mode-${mode}`],
         selected && styles["SubnavigationButton--selected"],
-        getSizeYClassName("SubnavigationButton", sizeY, styles),
+        getSizeYClassName(styles["SubnavigationButton"], sizeY),
         className
       )}
       aria-label={getTitleFromChildren(children)}

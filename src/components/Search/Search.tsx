@@ -117,7 +117,7 @@ export const Search = ({
       className={classNamesString(
         styles["Search"],
         platform === Platform.IOS && styles["Search--ios"],
-        getSizeYClassName("Search", sizeY, styles),
+        getSizeYClassName(styles["Search"], sizeY),
         isFocused && styles["Search--focused"],
         value && styles["Search--has-value"],
         icon && styles["Search--has-after"],

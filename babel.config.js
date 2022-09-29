@@ -1,7 +1,8 @@
-const { NODE_ENV, BABEL_KEEP_CSS } = process.env;
+const { NODE_ENV, BABEL_KEEP_CSS, BABEL_USED_BY_WEBPACK } = process.env;
 const isProduction = NODE_ENV === "production";
 const isDevelopment = NODE_ENV === "development";
 const useESModules = isProduction || isDevelopment;
+const isUsedByWebpack = Boolean(BABEL_USED_BY_WEBPACK);
 const keepCss = Boolean(BABEL_KEEP_CSS);
 const runtimeVersion = require("./package.json").dependencies["@babel/runtime"];
 const { generateScopedName } = require("./shared");
@@ -17,6 +18,26 @@ const testFiles = [
   "./src/testing/",
 ];
 
+const plugins = [
+  "@babel/plugin-proposal-class-properties",
+  "@babel/plugin-proposal-object-rest-spread",
+  ["@babel/plugin-transform-runtime", { version: runtimeVersion }],
+];
+
+if (!isUsedByWebpack) {
+  plugins.push([
+    "babel-plugin-transform-css-modules",
+    {
+      generateScopedName: generateScopedName,
+      keep: keepCss,
+    },
+  ]);
+}
+
+if (!keepCss) {
+  plugins.push(["babel-plugin-transform-remove-imports", { test: "\\.css$" }]);
+}
+
 module.exports = {
   presets: [
     [
@@ -29,50 +50,9 @@ module.exports = {
         ],
       },
     ],
-    [
-      "@babel/preset-react",
-      {
-        runtime: "classic",
-      },
-    ],
+    ["@babel/preset-react", { runtime: "classic" }],
     "@babel/preset-typescript",
   ],
-  plugins: [
-    "@babel/plugin-proposal-class-properties",
-    "@babel/plugin-proposal-object-rest-spread",
-    [
-      "@babel/plugin-transform-runtime",
-      { useESModules, version: runtimeVersion },
-    ],
-    [
-      require.resolve("babel-plugin-css-modules-transform"),
-      {
-        mode: "pure",
-        camelCase: false,
-        extensions: [".module.css"],
-        generateScopedName: generateScopedName,
-        keepImport: keepCss,
-      },
-    ],
-  ].concat(
-    keepCss
-      ? []
-      : [
-          [
-            "babel-plugin-transform-remove-imports",
-            {
-              /**
-               * ⚠️ WARNING ⚠️
-               *
-               * Исключаем `.module.css`, т.к. этот плагин аффектит `babel-plugin-css-modules-transform`.
-               * Предполагаю он обрабатывает код раньше и удаляет импортирование стилей.
-               *
-               * У плагина `babel-plugin-css-modules-transform` есть своя опция `keepImport`, поэтому в неё передаём `keepCss`.
-               */
-              test: /^(?!.*module\.css$).*\.css$/,
-            },
-          ],
-        ]
-  ),
-  ignore: ["./src/vkui.js"].concat(isProduction ? testFiles : []),
+  plugins: plugins,
+  ignore: ["./src/vkui.js", ...(isProduction ? testFiles : [])],
 };

@@ -49,7 +49,7 @@ export const PanelHeaderBack = ({
       {...restProps}
       className={classNamesString(
         styles["PanelHeaderBack"],
-        getSizeXClassName("PanelHeaderBack", sizeX, styles),
+        getSizeXClassName(styles["PanelHeaderBack"], sizeX),
         platform === Platform.IOS && styles["PanelHeaderBack--ios"],
         platform === Platform.VKCOM && styles["PanelHeaderBack--vkcom"],
         showLabel && !!label && styles["PanelHeaderBack--has-label"],

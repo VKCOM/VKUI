@@ -45,7 +45,7 @@ export const Tabs = ({
       className={classNamesString(
         styles["Tabs"],
         platform === Platform.VKCOM && styles[`Tabs--${platform}`],
-        getSizeXClassName("Tabs", sizeX, styles),
+        getSizeXClassName(styles["Tabs"], sizeX),
         withGaps && styles["Tabs--withGaps"],
         styles[`Tabs--mode-${mode}`],
         className

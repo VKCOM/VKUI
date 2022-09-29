@@ -48,7 +48,7 @@ export const FormLayoutGroup = ({
       ref={rootEl}
       className={classNamesString(
         styles["FormLayoutGroup"],
-        getSizeYClassName("FormLayoutGroup", sizeY, styles),
+        getSizeYClassName(styles["FormLayoutGroup"], sizeY),
         styles[`FormLayoutGroup--mode-${mode}`],
         isRemovable && styles["FormLayoutGroup--removable"],
         isSegmented && styles["FormLayoutGroup--segmented"],

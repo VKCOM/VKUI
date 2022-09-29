@@ -48,7 +48,7 @@ export const Headline = ({
       className={classNamesString(
         className,
         styles["Headline"],
-        getSizeYClassName("Headline", sizeY, styles),
+        getSizeYClassName(styles["Headline"], sizeY),
         styles[`Headline--level-${level}`],
         styles[`Headline--weight-${weight}`]
       )}

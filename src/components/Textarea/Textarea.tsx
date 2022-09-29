@@ -59,7 +59,7 @@ export const Textarea = ({
     <FormField
       className={classNamesString(
         styles["Textarea"],
-        getSizeYClassName("Textarea", sizeY, styles),
+        getSizeYClassName(styles["Textarea"], sizeY),
         className
       )}
       style={style}

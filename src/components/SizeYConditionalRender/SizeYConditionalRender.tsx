@@ -20,13 +20,13 @@ export const SizeYConditionalRender = ({
     <React.Fragment>
       {hasReactNode(compact) &&
         (sizeY === undefined || sizeY === SizeType.COMPACT) && (
-          <div className={getSizeYClassName("SizeYCompact", sizeY, styles)}>
+          <div className={getSizeYClassName(styles["SizeYCompact"], sizeY)}>
             {compact}
           </div>
         )}
       {hasReactNode(regular) &&
         (sizeY === undefined || sizeY === SizeType.REGULAR) && (
-          <div className={getSizeYClassName("SizeYRegular", sizeY, styles)}>
+          <div className={getSizeYClassName(styles["SizeYRegular"], sizeY)}>
             {regular}
           </div>
         )}

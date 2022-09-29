@@ -243,7 +243,7 @@ export const DateRangeInput = ({
       style={style}
       className={classNamesString(
         styles["DateRangeInput"],
-        getSizeYClassName("DateRangeInput", sizeY, styles),
+        getSizeYClassName(styles["DateRangeInput"], sizeY),
         className
       )}
       getRootRef={multiRef(rootRef, getRootRef)}

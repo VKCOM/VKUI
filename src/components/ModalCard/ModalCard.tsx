@@ -50,7 +50,7 @@ export const ModalCard = ({
       id={id}
       className={classNamesString(
         styles["ModalCard"],
-        getPlatformClassName("ModalCard", platform, styles),
+        getPlatformClassName(styles["ModalCard"], platform),
         isDesktop && styles["ModalCard--desktop"],
         className
       )}

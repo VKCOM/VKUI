@@ -42,7 +42,7 @@ export const SegmentedControlOption = ({
       <span
         className={classNamesString(
           styles["SegmentedControlOption__content"],
-          getSizeYClassName("SegmentedControlOption__content", sizeY, styles)
+          getSizeYClassName(styles["SegmentedControlOption__content"], sizeY)
         )}
       >
         {children}

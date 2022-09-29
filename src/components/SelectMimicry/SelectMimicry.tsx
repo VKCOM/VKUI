@@ -51,9 +51,9 @@ export const SelectMimicry = ({
       tabIndex={disabled ? undefined : tabIndex}
       className={classNamesString(
         styles["Select"],
-        getPlatformClassName("Select", platform, styles),
-        getSizeXClassName("Select", sizeX, styles),
-        getSizeYClassName("Select", sizeY, styles),
+        getPlatformClassName(styles["Select"], platform),
+        getSizeXClassName(styles["Select"], sizeX),
+        getSizeYClassName(styles["Select"], sizeY),
         multiline && styles["Select--multiline"],
         align && styles[`Select--align-${align}`],
         before && styles["Select--hasBefore"],

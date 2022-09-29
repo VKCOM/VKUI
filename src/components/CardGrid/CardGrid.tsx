@@ -31,7 +31,7 @@ export const CardGrid = ({
         styles["CardGrid"],
         spaced && styles["CardGrid--spaced"],
         styles[`CardGrid--size-${size}`],
-        getSizeXClassName("CardGrid", sizeX, styles),
+        getSizeXClassName(styles["CardGrid"], sizeX),
         className
       )}
     >

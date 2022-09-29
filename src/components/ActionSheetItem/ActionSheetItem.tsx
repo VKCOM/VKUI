@@ -95,7 +95,7 @@ const ActionSheetItem = ({
         styles["ActionSheetItem"],
         platform === Platform.IOS && styles["ActionSheetItem--ios"],
         styles[`ActionSheetItem--mode-${mode}`],
-        getSizeYClassName("ActionSheetItem", sizeY, styles),
+        getSizeYClassName(styles["ActionSheetItem"], sizeY),
         isRich && styles["ActionSheetItem--rich"],
         isDesktop && styles["ActionSheetItem--desktop"],
         className

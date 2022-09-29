@@ -70,12 +70,12 @@ const NativeSelect = ({
       Component="label"
       className={classNamesString(
         styles["Select"],
-        getPlatformClassName("Select", platform, styles),
+        getPlatformClassName(styles["Select"], platform),
         empty && styles["Select--empty"],
         multiline && styles["Select--multiline"],
         align && styles[`Select--align-${align}`],
-        getSizeXClassName("Select", sizeX, styles),
-        getSizeYClassName("Select", sizeY, styles),
+        getSizeXClassName(styles["Select"], sizeX),
+        getSizeYClassName(styles["Select"], sizeY),
         className
       )}
       style={style}

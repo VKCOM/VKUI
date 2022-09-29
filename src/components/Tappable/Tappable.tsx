@@ -302,10 +302,10 @@ export const Tappable = ({
 
   const classes = classNamesString(
     className,
-    styles.Tappable,
+    styles["Tappable"],
     platform === Platform.IOS && styles["Tappable--ios"],
-    getSizeXClassName("Tappable", sizeX, styles),
-    getHoverClassName("Tappable", deviceHasHover, styles),
+    getSizeXClassName(styles["Tappable"], sizeX),
+    getHoverClassName(styles["Tappable"], deviceHasHover),
     hasActive && styles["Tappable--hasActive"],
     hasHover && hovered && !isPresetHoverMode && hoverMode,
     hasActive && active && !isPresetActiveMode && activeMode,

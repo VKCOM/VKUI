@@ -157,7 +157,7 @@ export const Removable = ({
         styles["Removable"],
         platform === Platform.IOS && styles["Removable--ios"],
         styles[`Removable--align-${align}`],
-        getSizeYClassName("Removable", sizeY, styles),
+        getSizeYClassName(styles["Removable"], sizeY),
         className
       )}
     >

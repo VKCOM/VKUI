@@ -31,7 +31,7 @@ export const IconButton = ({
       Component={restProps.href ? "a" : Component}
       className={classNamesString(
         styles["IconButton"],
-        getSizeYClassName("IconButton", sizeY, styles),
+        getSizeYClassName(styles["IconButton"], sizeY),
         platform === Platform.IOS && styles["IconButton--ios"],
         className
       )}
