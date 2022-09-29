@@ -75,7 +75,7 @@ export const FormField = ({
         styles["FormField"],
         styles[`FormField--mode-${mode}`],
         styles[`FormField--status-${status}`],
-        getSizeYClassName("FormField", sizeY, styles),
+        getSizeYClassName(styles["FormField"], sizeY),
         disabled && styles["FormField--disabled"],
         !disabled && hover && styles["FormField--hover"],
         className

@@ -20,9 +20,8 @@ export const DeviceConditionalRender = ({
       {hasReactNode(mobile) && (
         <div
           className={getViewWidthClassName(
-            "DeviceConditionalRender__mobile",
-            viewWidth,
-            styles
+            styles["DeviceConditionalRender__mobile"],
+            viewWidth
           )}
         >
           {mobile}
@@ -31,9 +30,8 @@ export const DeviceConditionalRender = ({
       {hasReactNode(desktop) && (
         <div
           className={getViewWidthClassName(
-            "DeviceConditionalRender__desktop",
-            viewWidth,
-            styles
+            styles["DeviceConditionalRender__desktop"],
+            viewWidth
           )}
         >
           {desktop}

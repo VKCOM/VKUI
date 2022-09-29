@@ -30,7 +30,7 @@ export const ActionSheetDropdown = ({
         styles["ActionSheet"],
         platform === Platform.IOS && styles["ActionSheet--ios"],
         closing && styles["ActionSheet--closing"],
-        getSizeYClassName("ActionSheet", sizeY, styles),
+        getSizeYClassName(styles["ActionSheet"], sizeY),
         className
       )}
     >

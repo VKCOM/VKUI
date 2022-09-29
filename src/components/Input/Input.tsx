@@ -36,7 +36,7 @@ export const Input = ({
       className={classNamesString(
         styles["Input"],
         align && styles[`Input--align-${align}`],
-        getSizeYClassName("Input", sizeY, styles),
+        getSizeYClassName(styles["Input"], sizeY),
         before && styles["Input--hasBefore"],
         after && styles["Input--hasAfter"],
         className

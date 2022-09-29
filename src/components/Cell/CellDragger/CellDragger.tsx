@@ -27,7 +27,7 @@ export const CellDragger = ({
     <Touch
       className={classNamesString(
         styles["CellDragger"],
-        getPlatformClassName("CellDragger", platform, styles),
+        getPlatformClassName(styles["CellDragger"], platform),
         className
       )}
       onStart={onDragStart}

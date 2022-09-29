@@ -163,7 +163,7 @@ export const ChipsInputBase = <Option extends ChipOption>(
       style={style}
       className={classNamesString(
         styles["ChipsInputBase"],
-        getSizeYClassName("ChipsInputBase", sizeY, styles),
+        getSizeYClassName(styles["ChipsInputBase"], sizeY),
         className
       )}
       ref={getRootRef}

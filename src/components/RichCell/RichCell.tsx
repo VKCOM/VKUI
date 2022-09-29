@@ -81,7 +81,7 @@ export const RichCell = ({
       className={classNamesString(
         styles["RichCell"],
         !multiline && styles["RichCell--text-ellipsis"],
-        getSizeYClassName("RichCell", sizeY, styles),
+        getSizeYClassName(styles["RichCell"], sizeY),
         className
       )}
     >

@@ -65,7 +65,7 @@ export const Radio = ({
       style={style}
       className={classNamesString(
         styles["Radio"],
-        getSizeYClassName("Radio", sizeY, styles),
+        getSizeYClassName(styles["Radio"], sizeY),
         className
       )}
       activeEffectDelay={platform === Platform.IOS ? 100 : ACTIVE_EFFECT_DELAY}

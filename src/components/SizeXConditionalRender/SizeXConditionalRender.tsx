@@ -20,13 +20,13 @@ export const SizeXConditionalRender = ({
     <React.Fragment>
       {hasReactNode(compact) &&
         (sizeX === undefined || sizeX === SizeType.COMPACT) && (
-          <div className={getSizeXClassName("SizeXCompact", sizeX, styles)}>
+          <div className={getSizeXClassName(styles["SizeXCompact"], sizeX)}>
             {compact}
           </div>
         )}
       {hasReactNode(regular) &&
         (sizeX === undefined || sizeX === SizeType.REGULAR) && (
-          <div className={getSizeXClassName("SizeXRegular", sizeX, styles)}>
+          <div className={getSizeXClassName(styles["SizeXRegular"], sizeX)}>
             {regular}
           </div>
         )}

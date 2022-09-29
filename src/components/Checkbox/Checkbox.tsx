@@ -101,7 +101,7 @@ export const Checkbox = ({
       className={classNamesString(
         styles["Checkbox"],
         platform === Platform.VKCOM && styles["Checkbox--vkcom"],
-        getSizeYClassName("Checkbox", sizeY, styles),
+        getSizeYClassName(styles["Checkbox"], sizeY),
         !(hasReactNode(children) || hasReactNode(description)) &&
           styles["Checkbox--simple"],
         className

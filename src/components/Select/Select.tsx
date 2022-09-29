@@ -27,8 +27,8 @@ export const SelectTypography = ({
     <span
       className={classNamesString(
         styles["SelectTypography"],
-        getPlatformClassName("SelectTypography", platform, styles),
-        getSizeYClassName("SelectTypography", sizeY, styles),
+        getPlatformClassName(styles["SelectTypography"], platform),
+        getSizeYClassName(styles["SelectTypography"], sizeY),
         styles[`SelectTypography--selectType-${selectType}`],
         className
       )}
@@ -58,7 +58,7 @@ export const Select = ({
         <CustomSelect
           className={classNamesString(
             styles["Select__custom"],
-            getMouseClassName("Select__custom", hasMouse, styles),
+            getMouseClassName(styles["Select__custom"], hasMouse),
             className
           )}
           options={options}
@@ -71,7 +71,7 @@ export const Select = ({
         <NativeSelect
           className={classNamesString(
             styles["Select__native"],
-            getMouseClassName("Select__native", hasMouse, styles),
+            getMouseClassName(styles["Select__native"], hasMouse),
             className
           )}
           {...props}

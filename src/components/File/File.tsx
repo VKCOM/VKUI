@@ -40,7 +40,7 @@ export const File = ({
       align={align}
       className={classNamesString(
         styles["File"],
-        getPlatformClassName("File", platform, styles),
+        getPlatformClassName(styles["File"], platform),
         className
       )}
       stretched={stretched}

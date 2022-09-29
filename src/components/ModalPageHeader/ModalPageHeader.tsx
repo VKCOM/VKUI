@@ -32,7 +32,7 @@ export const ModalPageHeader = ({
     <div
       className={classNamesString(
         styles["ModalPageHeader"],
-        getPlatformClassName("ModalPageHeader", platform, styles),
+        getPlatformClassName(styles["ModalPageHeader"], platform),
         platform !== Platform.VKCOM && styles["ModalPageHeader--withGaps"],
         isDesktop && styles["ModalPageHeader--desktop"]
       )}

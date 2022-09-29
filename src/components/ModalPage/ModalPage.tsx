@@ -113,7 +113,7 @@ export const ModalPage = ({
         styles["ModalPage"],
         platform === Platform.IOS && styles["ModalPage--ios"],
         platform === Platform.VKCOM && styles["ModalPage--vkcom"],
-        getSizeXClassName("ModalPage", sizeX, styles),
+        getSizeXClassName(styles["ModalPage"], sizeX),
         isDesktop && styles["ModalPage--desktop"],
         styles[`ModalPage--size-${size}`],
         className

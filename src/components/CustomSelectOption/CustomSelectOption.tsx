@@ -99,7 +99,7 @@ export const CustomSelectOption = ({
       aria-selected={selected}
       className={classNamesString(
         styles["CustomSelectOption"],
-        getSizeYClassName("CustomSelectOption", sizeY, styles),
+        getSizeYClassName(styles["CustomSelectOption"], sizeY),
         hovered && !disabled && styles["CustomSelectOption--hover"],
         // Note: пустой класс
         selected && styles["CustomSelectOption--selected"],

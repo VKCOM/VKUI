@@ -75,7 +75,7 @@ export const PanelHeaderContext = ({
         platform === Platform.IOS && styles["PanelHeaderContext--ios"],
         opened && styles["PanelHeaderContext--opened"],
         closing && styles["PanelHeaderContext--closing"],
-        getSizeXClassName("PanelHeaderContext", sizeX, styles),
+        getSizeXClassName(styles["PanelHeaderContext"], sizeX),
         styles["PanelHeaderContext--rounded"],
         className
       )}

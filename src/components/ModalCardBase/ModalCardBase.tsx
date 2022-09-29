@@ -80,7 +80,7 @@ export const ModalCardBase = ({
       {...restProps}
       className={classNamesString(
         styles["ModalCardBase"],
-        getPlatformClassName("ModalCardBase", platform, styles),
+        getPlatformClassName(styles["ModalCardBase"], platform),
         isDesktop && styles["ModalCardBase--desktop"],
         className
       )}

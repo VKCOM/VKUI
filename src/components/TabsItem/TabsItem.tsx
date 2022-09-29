@@ -76,7 +76,7 @@ export const TabsItem = ({
         styles["TabsItem"],
         mode && styles[`TabsItem--mode-${mode}`],
         selected && styles["TabsItem--selected"],
-        getSizeYClassName("TabsItem", sizeY, styles),
+        getSizeYClassName(styles["TabsItem"], sizeY),
         withGaps && styles["TabsItem--withGaps"],
         className
       )}

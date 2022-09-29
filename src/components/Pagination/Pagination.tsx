@@ -121,7 +121,7 @@ export const Pagination = ({
                 className={classNamesString(
                   styles["Pagination__page"],
                   styles["Pagination__page--type-ellipsis"],
-                  getSizeYClassName("Pagination__page", sizeY, styles),
+                  getSizeYClassName(styles["Pagination__page"], sizeY),
                   disabled && styles["Pagination__page--disabled"]
                 )}
               >
@@ -136,7 +136,7 @@ export const Pagination = ({
               <Tappable
                 className={classNamesString(
                   styles["Pagination__page"],
-                  getSizeYClassName("Pagination__page", sizeY, styles),
+                  getSizeYClassName(styles["Pagination__page"], sizeY),
                   isCurrent && styles["Pagination__page--current"],
                   disabled && styles["Pagination__page--disabled"]
                 )}

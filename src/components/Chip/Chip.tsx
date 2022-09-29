@@ -60,7 +60,7 @@ export const Chip = ({
     <div
       className={classNamesString(
         styles["Chip"],
-        getSizeYClassName("Chip", sizeY, styles),
+        getSizeYClassName(styles["Chip"], sizeY),
         removable && styles["Chip--removable"],
         className
       )}

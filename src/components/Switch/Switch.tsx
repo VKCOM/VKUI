@@ -35,8 +35,8 @@ export const Switch = ({
     <label
       className={classNamesString(
         styles["Switch"],
-        getPlatformClassName("Switch", platform, styles),
-        getSizeYClassName("Switch", sizeY, styles),
+        getPlatformClassName(styles["Switch"], platform),
+        getSizeYClassName(styles["Switch"], sizeY),
         restProps.disabled && styles["Switch--disabled"],
         focusVisible && styles["Switch--focus-visible"],
         className

@@ -22,9 +22,8 @@ export const ViewWidthConditionalRender = ({
         (viewWidth === undefined || viewWidth < ViewWidth.TABLET) && (
           <div
             className={getViewWidthClassName(
-              "ViewWidthConditionalRender__mobile",
-              viewWidth,
-              styles
+              styles["ViewWidthConditionalRender__mobile"],
+              viewWidth
             )}
           >
             {mobile}
@@ -34,9 +33,8 @@ export const ViewWidthConditionalRender = ({
         (viewWidth === undefined || viewWidth >= ViewWidth.TABLET) && (
           <div
             className={getViewWidthClassName(
-              "ViewWidthConditionalRender__desktop",
-              viewWidth,
-              styles
+              styles["ViewWidthConditionalRender__desktop"],
+              viewWidth
             )}
           >
             {desktop}

@@ -96,8 +96,8 @@ export const SplitCol = (props: SplitColProps) => {
       ref={baseRef}
       className={classNamesString(
         styles["SplitCol"],
-        getSizeXClassName("SplitCol", sizeX, styles),
-        getViewWidthClassName("SplitCol", viewWidth, styles),
+        getSizeXClassName(styles["SplitCol"], sizeX),
+        getViewWidthClassName(styles["SplitCol"], viewWidth),
         spaced && styles["SplitCol--spaced"],
         spaced === undefined && styles["SplitCol--spaced-none"],
         autoSpaced && styles["SplitCol--spaced-auto"],

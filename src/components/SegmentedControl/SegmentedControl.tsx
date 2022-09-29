@@ -92,7 +92,7 @@ export const SegmentedControl = ({
       {...restProps}
       className={classNamesString(
         styles["SegmentedControl"],
-        getSizeYClassName("SegmentedControl", sizeY, styles),
+        getSizeYClassName(styles["SegmentedControl"], sizeY),
         styles[`SegmentedControl--size-${size}`],
         className
       )}

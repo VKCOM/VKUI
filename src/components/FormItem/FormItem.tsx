@@ -62,7 +62,7 @@ export const FormItem = ({
       className={classNamesString(
         styles["FormItem"],
         styles[`FormItem--status-${status}`],
-        getSizeYClassName("FormItem", sizeY, styles),
+        getSizeYClassName(styles["FormItem"], sizeY),
         hasReactNode(top) && styles["FormItem--withTop"],
         removable && styles["FormItem--removable"],
         className

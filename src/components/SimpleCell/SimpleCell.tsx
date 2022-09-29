@@ -100,8 +100,8 @@ export const SimpleCell = ({
       {...restProps}
       className={classNamesString(
         styles["SimpleCell"],
-        getPlatformClassName("SimpleCell", platform, styles),
-        getSizeYClassName("SimpleCell", sizeY, styles),
+        getPlatformClassName(styles["SimpleCell"], platform),
+        getSizeYClassName(styles["SimpleCell"], sizeY),
         expandable && styles["SimpleCell--exp"],
         multiline && styles["SimpleCell--mult"],
         className

@@ -36,7 +36,7 @@ export const CellCheckbox = ({
     <div
       className={classNamesString(
         styles["CellCheckbox"],
-        getPlatformClassName("CellCheckbox", platform, styles),
+        getPlatformClassName(styles["CellCheckbox"], platform),
         className
       )}
       style={style}
