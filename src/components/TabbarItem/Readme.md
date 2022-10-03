@@ -46,10 +46,7 @@ const [indicator, setIndicator] = useState("one");
       </TabbarItem>
     </Tabbar>
 
-    <Tabbar
-      itemsLayout="horizontal"
-      style={{ position: "static", margin: "10px 0" }}
-    >
+    <Tabbar mode="horizontal" style={{ position: "static", margin: "10px 0" }}>
       <TabbarItem
         selected={horizontalText === "one"}
         onClick={() => setHorizontalText("one")}
