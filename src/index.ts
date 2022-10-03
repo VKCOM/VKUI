@@ -314,6 +314,7 @@ export { useAppearance } from "./hooks/useAppearance";
 export { usePagination } from "./hooks/usePagination";
 export { useScrollLock } from "./components/AppRoot/ScrollContext";
 export { useNavTransition } from "./components/NavTransitionContext/NavTransitionContext";
+export { useModalRootContext } from "./components/ModalRoot/useModalRootContext";
 
 /**
  * Utils
