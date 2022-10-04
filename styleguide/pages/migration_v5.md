@@ -39,6 +39,18 @@ npx @vkontakte/vkui-token-translator
 ## Типографика
 
 - Для компонентов типографики применяются токены `font-family` из [`vkui-tokens`](https://github.com/VKCOM/vkui-tokens)
+- Начертания `"heavy"`, `"bold"`, `"semibold"`, `medium` и `"regular"` были удалены. Используйте значения `"1"`, `"2"` и `"3"`.
+
+```diff
+- <Headline weight="semibold">Text</Headline>
++ <Headline weight="1">Text</Headline>
+
+- <Headline weight="medium">Text</Headline>
++ <Headline weight="2">Text</Headline>
+
+- <Headline weight="regular">Text</Headline>
++ <Headline weight="3">Text</Headline>
+```
 
 <br/><br/>
 
