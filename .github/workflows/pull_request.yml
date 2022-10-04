@@ -102,20 +102,18 @@ jobs:
     if: ${{ (github.event.pull_request.base.repo.id == github.event.pull_request.head.repo.id) && (github.actor != 'dependabot[bot]') }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: gh-pages
       - name: Download styleguide artifact
         uses: actions/download-artifact@v3
         with:
           name: styleguide
-          path: tmp
-      - name: Publishing styleguide to GitHub pages
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+          path: pull/${{ github.event.pull_request.number }}
+      - name: Publishing styleguide to GitHub pagese
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
-          COMMIT_MESSAGE: "Publish PR ${{ github.event.pull_request.number }}"
-          BRANCH: gh-pages
-          FOLDER: tmp
-          TARGET_FOLDER: pull/${{ github.event.pull_request.number }}
-          CLEAN: true
+          commit_message: "Publish PR ${{ github.event.pull_request.number }}"
+          branch: gh-pages
       - name: Find styleguide URL comment
         uses: peter-evans/find-comment@v2
         id: find_url_comment
