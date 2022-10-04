@@ -109,7 +109,7 @@ jobs:
         with:
           name: styleguide
           path: pull/${{ github.event.pull_request.number }}
-      - name: Publishing styleguide to GitHub pagese
+      - name: Publishing styleguide to GitHub pages
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Publish PR ${{ github.event.pull_request.number }}"
