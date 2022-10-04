@@ -1,19 +1,19 @@
-.vkui > body {
+:global(.vkui) > body {
   overflow-x: hidden;
 }
 
-.vkui,
-.vkui > body,
-.vkui__root {
+:global(.vkui),
+:global(.vkui) > body,
+:global(.vkui__root) {
   margin: 0;
   padding: 0;
   height: 100%;
 }
 
-.vkui,
-.vkui > body,
-.vkui__root,
-.vkui__portal-root {
+:global(.vkui),
+:global(.vkui) > body,
+:global(.vkui__root),
+:global(.vkui__portal-root) {
   -webkit-font-smoothing: subpixel-antialiased;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
@@ -23,18 +23,18 @@
   color-scheme: var(--vkui--colors_scheme);
 }
 
-.vkui__root input,
-.vkui__root textarea,
-.vkui__root select,
-.vkui__root button,
-.vkui__portal-root input,
-.vkui__portal-root textarea,
-.vkui__portal-root select,
-.vkui__portal-root button {
+:global(.vkui__root) input,
+:global(.vkui__root) textarea,
+:global(.vkui__root) select,
+:global(.vkui__root) button,
+:global(.vkui__portal-root) input,
+:global(.vkui__portal-root) textarea,
+:global(.vkui__portal-root) select,
+:global(.vkui__portal-root) button {
   font-family: inherit;
 }
 
-.vkui__root *:focus,
-.vkui__portal-root *:focus {
+:global(.vkui__root) *:focus,
+:global(.vkui__portal-root) *:focus {
   outline: none;
 }

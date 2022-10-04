@@ -71,16 +71,16 @@
   margin-left: 12px;
 }
 
-.Header__aside > .Icon {
+.Header__aside > :global(.vkuiIcon) {
   position: relative;
   color: var(--vkui--color_icon_secondary);
 }
 
-.Header__aside > .Icon--24 {
+.Header__aside > :global(.vkuiIcon--24) {
   top: 3px;
 }
 
-.Header__aside > .Icon--16 {
+.Header__aside > :global(.vkuiIcon--16) {
   top: 1px;
 }
 

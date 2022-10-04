@@ -32,7 +32,7 @@
 }
 
 /* stylelint-disable-next-line vkui/atomic */
-.Link .Icon {
+.Link :global(.vkuiIcon) {
   margin-left: 4px;
   display: inline-block;
   vertical-align: middle;

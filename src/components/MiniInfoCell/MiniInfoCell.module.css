@@ -67,12 +67,12 @@
   padding-bottom: 10px;
 }
 
-.MiniInfoCell__middle .Icon {
+.MiniInfoCell__middle :global(.vkuiIcon) {
   margin-left: 4px;
   color: var(--vkui--color_text_accent);
 }
 
-.MiniInfoCell--mode-add .MiniInfoCell__middle .Icon,
-.MiniInfoCell--mode-more .MiniInfoCell__middle .Icon {
+.MiniInfoCell--mode-add .MiniInfoCell__middle :global(.vkuiIcon),
+.MiniInfoCell--mode-more .MiniInfoCell__middle :global(.vkuiIcon) {
   color: var(--vkui--color_icon_accent_themed);
 }

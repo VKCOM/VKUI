@@ -1,5 +1,5 @@
 /* stylelint-disable vkui/atomic */
-.vkui__root--embedded {
+:global(.vkui__root--embedded) {
   transform: translate3d(0, 0, 0);
   overflow-x: hidden;
 }
@@ -8,16 +8,16 @@
   height: 100%;
 }
 
-.vkui__root--embedded .AppRoot {
+:global(.vkui__root--embedded) .AppRoot {
   overflow: auto;
 }
 
-.vkui--sizeX-regular {
+:global(.vkui--sizeX-regular) {
   background: var(--vkui--color_background);
 }
 
 @media (--sizeX-regular) {
-  .vkui--sizeX-none {
+  :global(.vkui--sizeX-none) {
     background: var(--vkui--color_background);
   }
 }

@@ -15,8 +15,8 @@
   padding-left: 8px;
 }
 
-.ModalPageHeader .Icon--dismiss_24, /* Note: <Icon24Dismiss /> по документации используется только для iOS  */
-.ModalPageHeader .Icon--cancel_24 {
+.ModalPageHeader :global(.vkuiIcon--dismiss_24), /* Note: <Icon24Dismiss /> по документации используется только для iOS  */
+.ModalPageHeader :global(.vkuiIcon--cancel_24) {
   color: var(--vkui--color_icon_secondary);
 }
 

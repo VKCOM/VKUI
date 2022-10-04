@@ -11,7 +11,7 @@
   appearance: none;
 }
 
-.SegmentedControlOption .Icon {
+.SegmentedControlOption :global(.vkuiIcon) {
   color: var(--vkui--color_icon_primary);
 }
 

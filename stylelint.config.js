@@ -31,6 +31,12 @@ module.exports = {
      * // In Selectors Level 3, only a single simple selector was allowed as the argument to :not(), whereas Selectors Level 4 allows a selector list.
      */
     "selector-not-notation": "simple",
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        ignorePseudoClasses: ["global"],
+      },
+    ],
     "function-no-unknown": [
       true,
       {

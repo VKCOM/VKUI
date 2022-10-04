@@ -29,32 +29,32 @@
   border-radius: var(--vkui--size_border_radius--regular);
 }
 
-.IconButton .Icon--16 {
+.IconButton :global(.vkuiIcon--16) {
   padding: 16px;
 }
 
-.IconButton .Icon--16.Icon--w-8 {
+.IconButton :global(.vkuiIcon--16.vkuiIcon--w-8) {
   padding: 16px 14px;
 }
 
-.IconButton--sizeY-compact .Icon--16,
-.IconButton--sizeY-compact .Icon--16.Icon--w-8 {
+.IconButton--sizeY-compact :global(.vkuiIcon--16),
+.IconButton--sizeY-compact :global(.vkuiIcon--16.vkuiIcon--w-8) {
   padding: 14px;
 }
 
-.IconButton .Icon--24 {
+.IconButton :global(.vkuiIcon--24) {
   padding: 12px;
 }
 
-.IconButton--sizeY-compact .Icon--24 {
+.IconButton--sizeY-compact :global(.vkuiIcon--24) {
   padding: 10px;
 }
 
-.IconButton .Icon--28 {
+.IconButton :global(.vkuiIcon--28) {
   padding: 10px;
 }
 
-.IconButton--sizeY-compact .Icon--28 {
+.IconButton--sizeY-compact :global(.vkuiIcon--28) {
   padding: 8px;
 }
 
@@ -63,16 +63,16 @@
     height: 44px;
   }
 
-  .IconButton--sizeY-none .Icon--16,
-  .IconButton--sizeY-none .Icon--16.Icon--w-8 {
+  .IconButton--sizeY-none :global(.vkuiIcon--16),
+  .IconButton--sizeY-none :global(.vkuiIcon--16.vkuiIcon--w-8) {
     padding: 14px;
   }
 
-  .IconButton--sizeY-none .Icon--24 {
+  .IconButton--sizeY-none :global(.vkuiIcon--24) {
     padding: 10px;
   }
 
-  .IconButton--sizeY-none .Icon--28 {
+  .IconButton--sizeY-none :global(.vkuiIcon--28) {
     padding: 8px;
   }
 }
@@ -95,7 +95,7 @@
   border-radius: var(--vkui--size_border_radius--regular);
 }
 
-.FormField__after .IconButton .Icon.Icon.Icon {
+.FormField__after .IconButton :global(.vkuiIcon.vkuiIcon.vkuiIcon) {
   padding: 0;
 }
 

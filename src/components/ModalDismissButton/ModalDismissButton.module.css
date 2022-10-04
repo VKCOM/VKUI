@@ -24,7 +24,7 @@
 }
 
 /* fixes icon misplacement on Safari in some cases */
-.ModalDismissButton .Icon {
+.ModalDismissButton :global(.vkuiIcon) {
   transform: translateX(0);
 }
 

@@ -43,11 +43,11 @@
   line-height: 44px;
 }
 
-.PanelHeaderButton--ios .Icon--24 {
+.PanelHeaderButton--ios :global(.vkuiIcon--24) {
   padding: 10px;
 }
 
-.PanelHeaderButton--ios .Icon--28 {
+.PanelHeaderButton--ios :global(.vkuiIcon--28) {
   padding: 8px;
 }
 
@@ -59,11 +59,11 @@
   border-radius: 50%;
 }
 
-.PanelHeaderButton--android .Icon--24 {
+.PanelHeaderButton--android :global(.vkuiIcon--24) {
   padding: 12px;
 }
 
-.PanelHeaderButton--android .Icon--28 {
+.PanelHeaderButton--android :global(.vkuiIcon--28) {
   padding: 10px;
 }
 
