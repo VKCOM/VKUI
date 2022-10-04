@@ -283,7 +283,7 @@ export const DateInput = ({
         {enableTime && (
           <React.Fragment>
             <InputLikeDivider
-              className={styles["DateInput__input-time-divider"]}
+              className={styles["DateInput__input--time-divider"]}
             >
               {" "}
             </InputLikeDivider>

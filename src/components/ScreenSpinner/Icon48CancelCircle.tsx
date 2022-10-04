@@ -2,7 +2,7 @@ import * as React from "react";
 
 export const Icon48CancelCircle = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
-    className="Icon"
+    className="vkuiIcon"
     width="48"
     height="48"
     viewBox="0 0 48 48"

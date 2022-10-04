@@ -51,7 +51,7 @@
   }
 }
 
-.Tabbar-layout-vertical,
-.Tabbar-layout-horizontal {
+.Tabbar--layout-vertical,
+.Tabbar--layout-horizontal {
   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

@@ -16,8 +16,9 @@
   color: var(--vkui--color_text_secondary);
 }
 
-.ChipsSelect__options,
+.ChipsSelect--pop-up,
+.ChipsSelect--pop-down,
 .ChipsSelect__option,
-.Select--open {
+.ChipsSelect__options {
   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

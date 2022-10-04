@@ -92,6 +92,15 @@ function PathElement({ photoSize, direction, ...props }: PathElementProps) {
   }
 }
 
+const photoSizes: Record<
+  NonNullable<UsersStackProps["size"]>,
+  PhotoSizeType
+> = {
+  s: 16,
+  m: 24,
+  l: 32,
+};
+
 /**
  * @see https://vkcom.github.io/VKUI/#/UsersStack
  */
@@ -108,11 +117,7 @@ export const UsersStack = ({
   const canShowOthers = count > 0 && size !== "s";
   const CounterTypography = size === "m" ? Footnote : Caption;
 
-  const photoSize = {
-    s: 16,
-    m: 24,
-    l: 32,
-  }[size] as PhotoSizeType;
+  const photoSize = photoSizes[size];
   const directionClip = canShowOthers ? "right" : "left";
 
   const photosShown = photos.slice(0, visibleCount);

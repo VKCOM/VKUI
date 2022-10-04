@@ -15,16 +15,19 @@ export interface TabbarProps extends React.HTMLAttributes<HTMLDivElement> {
   mode?: "vertical" | "horizontal" | "auto";
 }
 
-const getItemsLayout = (
+const getItemsLayoutClassName = (
   itemsLayout: TabbarProps["mode"],
   children: TabbarProps["children"]
-) => {
+): string => {
   switch (itemsLayout) {
     case "horizontal":
+      return styles["Tabbar--layout-horizontal"];
     case "vertical":
-      return itemsLayout;
+      return styles["Tabbar--layout-vertical"];
     default:
-      return React.Children.count(children) > 2 ? "vertical" : "horizontal";
+      return React.Children.count(children) > 2
+        ? getItemsLayoutClassName("vertical", [])
+        : getItemsLayoutClassName("horizontal", []);
   }
 };
 
@@ -45,7 +48,7 @@ export const Tabbar = ({
       className={classNamesString(
         styles["Tabbar"],
         platform === Platform.IOS && styles["Tabbar--ios"],
-        styles[`Tabbar-layout-${getItemsLayout(mode, children)}`],
+        getItemsLayoutClassName(mode, children),
         shadow && styles["Tabbar--shadow"],
         className
       )}

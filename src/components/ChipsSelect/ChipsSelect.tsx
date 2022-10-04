@@ -366,9 +366,10 @@ export const ChipsSelect = <Option extends ChipOption>(
       style={style}
       className={classNamesString(
         styles["ChipsSelect"],
-        opened && styles["Select--open"],
         opened &&
-          (isPopperDirectionTop ? "Select--pop-up" : "Select--pop-down"),
+          (isPopperDirectionTop
+            ? styles["ChipsSelect--pop-up"]
+            : styles["ChipsSelect--pop-down"]),
         className
       )}
       disabled={disabled}

@@ -35,16 +35,18 @@ export interface ModalCardBaseProps
   subheader?: React.ReactNode;
 
   /**
-   * Кнопки-действия.
+   * Кнопки-действия. Принимает [`Button`](https://vkcom.github.io/VKUI/#/Button) с параметрами:
    *
-   * Рекомендуется использовать `<Button size="l" mode="primary" />` или `<Button size="l" mode="secondary" />`
+   * - `size="l" mode="primary" stretched`
+   * - `size="l" mode="secondary" stretched`
+   *
+   * Для набора кнопок используйте [`ButtonGroup`](https://vkcom.github.io/VKUI/#/ButtonGroup) с параметрами:
+   *
+   * - `gap="s" mode="horizontal" stretched`
+   * - `gap="m" mode="vertical" stretched`
    */
   actions?: React.ReactNode;
 
-  /**
-   * Тип отображения кнопок: вертикальный или горизонтальный
-   */
-  actionsLayout?: "vertical" | "horizontal";
   onClose?: VoidFunction;
 
   /**
@@ -64,7 +66,6 @@ export const ModalCardBase = ({
   children,
   actions,
   onClose,
-  actionsLayout,
   dismissLabel = "Скрыть",
   className,
   ...restProps
@@ -114,15 +115,7 @@ export const ModalCardBase = ({
         {children}
 
         {hasReactNode(actions) && (
-          <div
-            className={classNamesString(
-              styles["ModalCardBase__actions"],
-              actionsLayout === "vertical" &&
-                styles["ModalCardBase__actions--v"]
-            )}
-          >
-            {actions}
-          </div>
+          <div className={styles["ModalCardBase__actions"]}>{actions}</div>
         )}
 
         {isDesktop && <ModalDismissButton onClick={onClose} />}

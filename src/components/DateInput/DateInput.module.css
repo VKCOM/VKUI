@@ -10,7 +10,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-.DateInput__input-time-divider {
+.DateInput__input--time-divider {
   letter-spacing: 6px !important;
 }
 
