@@ -46,11 +46,11 @@
 
   /* stylelint-disable-next-line */
   font-family: "Roboto";
-  -webkit-font-smoothing: antialiased;
-  caret-color: transparent;
 }
 
-* {
+*,
+*::before,
+*::after {
   animation: none !important;
   transition: none !important;
 }
