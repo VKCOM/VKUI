@@ -1,14 +1,12 @@
 import * as React from "react";
 import { Tappable } from "../Tappable/Tappable";
-import { classNames } from "../../lib/classNames";
-import { Platform } from "../../lib/platform";
-import { usePlatform } from "../../hooks/usePlatform";
+import { classNamesString } from "../../lib/classNames";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { TabsModeContext, TabsContextProps } from "../Tabs/Tabs";
 import { Headline } from "../Typography/Headline/Headline";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import "./TabsItem.css";
+import styles from "./TabsItem.module.css";
 
 export interface TabsItemProps extends React.HTMLAttributes<HTMLElement> {
   /**
@@ -45,9 +43,9 @@ export const TabsItem = ({
   status,
   after,
   selected = false,
+  className,
   ...restProps
 }: TabsItemProps) => {
-  const platform = usePlatform();
   const { sizeY } = useAdaptivity();
   const { mode, withGaps }: TabsContextProps =
     React.useContext(TabsModeContext);
@@ -58,47 +56,49 @@ export const TabsItem = ({
       typeof status === "number" ? (
         <Subhead
           Component="span"
-          vkuiClass="TabsItem__status TabsItem__status--count"
+          className={classNamesString(
+            styles["TabsItem__status"],
+            styles["TabsItem__status--count"]
+          )}
           weight="2"
         >
           {status}
         </Subhead>
       ) : (
-        <span vkuiClass="TabsItem__status">{status}</span>
+        <span className={styles["TabsItem__status"]}>{status}</span>
       );
   }
 
   return (
     <Tappable
       {...restProps}
-      vkuiClass={classNames(
-        "TabsItem",
-        (platform === Platform.IOS || platform === Platform.VKCOM) &&
-          `TabsItem--${platform}`,
-        mode && `TabsItem--mode-${mode}`,
-        selected && "TabsItem--selected",
-        getSizeYClassName("TabsItem", sizeY),
-        withGaps && "TabsItem--withGaps"
+      className={classNamesString(
+        styles["TabsItem"],
+        mode && styles[`TabsItem--mode-${mode}`],
+        selected && styles["TabsItem--selected"],
+        getSizeYClassName(styles["TabsItem"], sizeY),
+        withGaps && styles["TabsItem--withGaps"],
+        className
       )}
-      hoverMode="TabsItem--hover"
-      activeMode="TabsItem--active"
+      hoverMode={styles["TabsItem--hover"]}
+      activeMode={styles["TabsItem--active"]}
       focusVisibleMode="inside"
       hasActive={false}
     >
-      {before && <div vkuiClass="TabsItem__before">{before}</div>}
+      {before && <div className={styles["TabsItem__before"]}>{before}</div>}
       <Headline
         Component="span"
-        vkuiClass="TabsItem__label"
+        className={styles["TabsItem__label"]}
         level={mode === "default" ? "1" : "2"}
         weight="2"
       >
         {children}
       </Headline>
       {statusComponent}
-      {after && <div vkuiClass="TabsItem__after">{after}</div>}
+      {after && <div className={styles["TabsItem__after"]}>{after}</div>}
       {mode === "default" && (
         <div
-          vkuiClass="TabsItem__underline"
+          className={styles["TabsItem__underline"]}
           aria-hidden
           data-selected={selected}
         />

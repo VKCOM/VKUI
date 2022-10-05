@@ -64,11 +64,11 @@
  * CMP:
  * CellButton
  */
-.CellButton > .ImageBase .Icon {
+.CellButton > .ImageBase :global(.vkuiIcon) {
   color: var(--vkui--color_icon_accent);
 }
 
-.CellButton--mode-danger > .ImageBase .Icon {
+.CellButton--mode-danger > .ImageBase :global(.vkuiIcon) {
   color: var(--vkui--color_icon_negative);
 }
 

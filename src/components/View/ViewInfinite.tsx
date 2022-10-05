@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { transitionEvent, animationEvent } from "../../lib/supportEvents";
 import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { Platform } from "../../lib/platform";
@@ -22,7 +22,8 @@ import { NavTransitionProvider } from "../NavTransitionContext/NavTransitionCont
 import { getNavId, NavIdProps } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
 import { swipeBackExcluded } from "./utils";
-import "./View.css";
+import styles from "./View.module.css";
+import iosStyles from "./ViewIOS.module.css";
 
 const warn = warnOnce("ViewInfinite");
 
@@ -596,6 +597,7 @@ class ViewInfiniteComponent extends React.Component<
       document,
       scroll,
       isBackCheck,
+      className,
       ...restProps
     } = this.props;
     const {
@@ -644,25 +646,24 @@ class ViewInfiniteComponent extends React.Component<
 
     const disableAnimation = this.shouldDisableTransitionMotion();
 
-    const modifiers = {
-      "View--animated": !disableAnimation && this.state.animated,
-      "View--swiping-back": !disableAnimation && this.state.swipingBack,
-      "View--no-motion": disableAnimation,
-    };
-
     return (
       <Touch
         Component="section"
         {...restProps}
-        vkuiClass={classNames(
-          "View",
-          getPlatformClassName("View", platform),
-          modifiers
+        className={classNamesString(
+          styles["View"],
+          getPlatformClassName(styles["View"], platform),
+          !disableAnimation && this.state.animated && styles["View--animated"],
+          !disableAnimation &&
+            this.state.swipingBack &&
+            styles["View--swiping-back"],
+          disableAnimation && styles["View--no-motion"],
+          className
         )}
         onMoveX={this.onMoveX}
         onEnd={this.onEnd}
       >
-        <div vkuiClass="View__panels">
+        <div className={styles["View__panels"]}>
           {panels.map((panel: React.ReactElement) => {
             const panelId = getNavId(panel.props, warn);
             const isPrev =
@@ -678,19 +679,19 @@ class ViewInfiniteComponent extends React.Component<
 
             return (
               <div
-                vkuiClass={classNames(
-                  "View__panel",
-                  panelId === activePanel && "View__panel--active",
-                  panelId === prevPanel && "View__panel--prev",
-                  panelId === nextPanel && "View__panel--next",
+                className={classNamesString(
+                  styles["View__panel"],
+                  panelId === activePanel && iosStyles["View__panel--active"],
+                  panelId === prevPanel && styles["View__panel--prev"],
+                  panelId === nextPanel && styles["View__panel--next"],
                   panelId === swipeBackPrevPanel &&
-                    "View__panel--swipe-back-prev",
+                    iosStyles["View__panel--swipe-back-prev"],
                   panelId === swipeBackNextPanel &&
-                    "View__panel--swipe-back-next",
+                    iosStyles["View__panel--swipe-back-next"],
                   swipeBackResult === SwipeBackResults.success &&
-                    "View__panel--swipe-back-success",
+                    iosStyles["View__panel--swipe-back-success"],
                   swipeBackResult === SwipeBackResults.fail &&
-                    "View__panel--swipe-back-failed"
+                    iosStyles["View__panel--swipe-back-failed"]
                 )}
                 onAnimationEnd={
                   isTransitionTarget ? this.transitionEndHandler : undefined
@@ -702,7 +703,7 @@ class ViewInfiniteComponent extends React.Component<
                 key={panelId}
               >
                 <div
-                  vkuiClass="View__panel-in"
+                  className={styles["View__panel-in"]}
                   style={{ marginTop: compensateScroll ? -scroll : undefined }}
                 >
                   <NavTransitionProvider
@@ -718,8 +719,8 @@ class ViewInfiniteComponent extends React.Component<
           })}
         </div>
         <AppRootPortal>
-          {hasPopout && <div vkuiClass="View__popout">{popout}</div>}
-          {hasModal && <div vkuiClass="View__modal">{modal}</div>}
+          {hasPopout && <div className={styles["View__popout"]}>{popout}</div>}
+          {hasModal && <div className={styles["View__modal"]}>{modal}</div>}
         </AppRootPortal>
       </Touch>
     );

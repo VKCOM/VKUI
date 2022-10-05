@@ -66,7 +66,7 @@ export const Button = ({
         styles[`Button--mode-${mode}`],
         styles[`Button--appearance-${appearance}`],
         styles[`Button--align-${align}`],
-        getSizeYClassName("Button", sizeY, styles),
+        getSizeYClassName(styles["Button"], sizeY),
         platform === Platform.ANDROID && styles[`Button--android`],
         platform === Platform.IOS && styles[`Button--ios`],
         stretched && styles["Button--stretched"],

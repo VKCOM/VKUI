@@ -1,6 +1,6 @@
 import * as React from "react";
 import ReactDOM from "react-dom";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import { useNavTransition } from "../NavTransitionContext/NavTransitionContext";
 import { PopperArrow } from "../PopperArrow/PopperArrow";
@@ -11,10 +11,9 @@ import { useExternRef } from "../../hooks/useExternRef";
 import { useDOM } from "../../lib/dom";
 import { warnOnce } from "../../lib/warnOnce";
 import { hasReactNode } from "../../lib/utils";
-import { prefixClass } from "../../lib/prefixClass";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { HasRootRef } from "../../types";
-import "./Tooltip.css";
+import styles from "./Tooltip.module.css";
 
 interface SimpleTooltipProps extends Partial<TooltipProps> {
   target?: HTMLDivElement;
@@ -39,33 +38,51 @@ const IS_DEV = process.env.NODE_ENV === "development";
 
 const SimpleTooltip = React.forwardRef<HTMLDivElement, SimpleTooltipProps>(
   function SimpleTooltip(
-    { appearance = "accent", header, text, arrow, style = {}, attributes },
+    {
+      appearance = "accent",
+      header,
+      text,
+      arrow,
+      style: popperStyles = {},
+      attributes,
+    },
     ref
   ) {
+    const { className: containerClassName, ...restContainerAttributes } =
+      attributes?.container ?? {};
+
     return (
       <div
-        vkuiClass={classNames("Tooltip", `Tooltip--appearance-${appearance}`)}
+        className={classNamesString(
+          styles["Tooltip"],
+          styles[`Tooltip--appearance-${appearance}`]
+        )}
       >
         <div
-          vkuiClass="Tooltip__container"
+          className={classNamesString(
+            styles["Tooltip__container"],
+            containerClassName
+          )}
           ref={ref}
-          style={style.container}
-          {...attributes?.container}
+          style={popperStyles.container}
+          {...restContainerAttributes}
         >
           {arrow && (
             <PopperArrow
-              style={style.arrow}
+              style={popperStyles.arrow}
               attributes={attributes?.arrow}
-              arrowClassName={prefixClass("Tooltip__arrow")}
+              arrowClassName={styles["Tooltip__arrow"]}
             />
           )}
-          <div vkuiClass="Tooltip__content">
+          <div className={styles["Tooltip__content"]}>
             {header && (
-              <Subhead weight="2" vkuiClass="Tooltip__title">
+              <Subhead weight="2" className={styles["Tooltip__title"]}>
                 {header}
               </Subhead>
             )}
-            {text && <Subhead vkuiClass="Tooltip__text">{text}</Subhead>}
+            {text && (
+              <Subhead className={styles["Tooltip__text"]}>{text}</Subhead>
+            )}
           </div>
         </div>
       </div>
@@ -274,7 +291,7 @@ export const Tooltip = ({
   }, [arrow, cornerAbsoluteOffset, cornerOffset, offsetX, offsetY]);
 
   const _placement = placement ?? getPlacement(alignX, alignY);
-  const { styles, attributes } = usePopper(target, tooltipRef, {
+  const { styles: popperStyles, attributes } = usePopper(target, tooltipRef, {
     strategy,
     placement: _placement,
     modifiers,
@@ -307,7 +324,10 @@ export const Tooltip = ({
             appearance={appearance}
             arrow={arrow}
             ref={(el) => setTooltipRef(el)}
-            style={{ arrow: styles.arrow, container: styles.popper }}
+            style={{
+              arrow: popperStyles.arrow,
+              container: popperStyles.popper,
+            }}
             attributes={{
               arrow: attributes.arrow ?? null,
               container: attributes.popper ?? null,

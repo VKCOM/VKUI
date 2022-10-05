@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Search } from "./Search";
 import { Platform } from "../../lib/platform";
 import {

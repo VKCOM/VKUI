@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasAlign, HasRef, HasRootRef } from "../../types";
@@ -12,7 +12,7 @@ import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { SelectType, SelectTypography } from "../Select/Select";
-import "../Select/Select.css";
+import styles from "../Select/Select.module.css";
 
 export interface NativeSelectProps
   extends React.SelectHTMLAttributes<HTMLSelectElement>,
@@ -68,16 +68,16 @@ const NativeSelect = ({
   return (
     <FormField
       Component="label"
-      vkuiClass={classNames(
-        "Select",
-        getPlatformClassName("Select", platform),
-        empty && "Select--empty",
-        multiline && "Select--multiline",
-        align && `Select--align-${align}`,
-        getSizeXClassName("Select", sizeX),
-        getSizeYClassName("Select", sizeY)
+      className={classNamesString(
+        styles["Select"],
+        getPlatformClassName(styles["Select"], platform),
+        empty && styles["Select--empty"],
+        multiline && styles["Select--multiline"],
+        align && styles[`Select--align-${align}`],
+        getSizeXClassName(styles["Select"], sizeX),
+        getSizeYClassName(styles["Select"], sizeY),
+        className
       )}
-      className={className}
       style={style}
       getRootRef={getRootRef}
       disabled={disabled}
@@ -87,7 +87,7 @@ const NativeSelect = ({
       <select
         {...restProps}
         disabled={disabled}
-        vkuiClass="Select__el"
+        className={styles["Select__el"]}
         onChange={onChange}
         value={value}
         ref={selectRef}
@@ -95,8 +95,11 @@ const NativeSelect = ({
         {placeholder && <option value="">{placeholder}</option>}
         {children}
       </select>
-      <div vkuiClass="Select__container">
-        <SelectTypography vkuiClass="Select__title" selectType={selectType}>
+      <div className={styles["Select__container"]}>
+        <SelectTypography
+          className={styles["Select__title"]}
+          selectType={selectType}
+        >
           {title}
         </SelectTypography>
       </div>

@@ -1,0 +1,69 @@
+.CardScroll__in {
+  display: flex;
+  align-items: stretch;
+}
+
+.CardScroll__gap {
+  display: block;
+  flex-shrink: 0;
+}
+
+.CardScroll + .CardScroll {
+  margin-top: 16px;
+}
+
+.CardScroll--withSpaces .CardScroll__gap {
+  width: var(--vkui--size_base_padding_horizontal--regular);
+}
+
+/**
+ * CMP:
+ * SplitCol
+ */
+.SplitCol--spaced .CardScroll--withSpaces .CardScroll {
+  margin-left: -16px;
+  margin-right: -16px;
+}
+
+.SplitCol--spaced .CardScroll--withSpaces .CardScroll__gap {
+  width: 16px;
+}
+
+/**
+ * CMP:
+ * Group
+ */
+.Group--mode-card .CardScroll--withSpaces {
+  margin-left: -8px;
+  margin-right: -8px;
+}
+
+.Group--mode-card .CardScroll--withSpaces:first-child {
+  padding-top: var(--vkui--size_cardgrid_padding_vertical--regular);
+}
+
+.Group--mode-card .CardScroll--withSpaces:last-child {
+  padding-bottom: var(--vkui--size_cardgrid_padding_vertical--regular);
+}
+
+@media (--sizeX-regular) {
+  .Group--mode-none .CardScroll--withSpaces {
+    margin-left: -8px;
+    margin-right: -8px;
+  }
+
+  .Group--mode-none .CardScroll--withSpaces:first-child {
+    padding-top: var(--vkui--size_cardgrid_padding_vertical--regular);
+  }
+
+  .Group--mode-none .CardScroll--withSpaces:last-child {
+    padding-bottom: var(--vkui--size_cardgrid_padding_vertical--regular);
+  }
+}
+
+.CardScroll--size-false,
+.CardScroll--size-m,
+.CardScroll--size-l,
+.CardScroll--size-s {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
+}

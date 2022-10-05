@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Icon24UserAddOutline } from "@vkontakte/icons";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { Avatar } from "../Avatar/Avatar";

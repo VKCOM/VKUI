@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Tappable } from "../Tappable/Tappable";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
@@ -8,7 +8,7 @@ import { Footnote } from "../Typography/Footnote/Footnote";
 import { Headline } from "../Typography/Headline/Headline";
 import { Platform } from "../../lib/platform";
 import { Text } from "../Typography/Text/Text";
-import "./PanelHeaderContent.css";
+import styles from "./PanelHeaderContent.module.css";
 
 export interface PanelHeaderContentProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -42,7 +42,7 @@ const PanelHeaderChildren = ({
       {children}
     </Headline>
   ) : (
-    <div vkuiClass="PanelHeaderContent__children-in">{children}</div>
+    <div className={styles["PanelHeaderContent__children-in"]}>{children}</div>
   );
 };
 
@@ -75,29 +75,31 @@ export const PanelHeaderContent = ({
   return (
     <div
       {...rootProps}
-      vkuiClass={classNames(
-        "PanelHeaderContent",
-        getPlatformClassName("PanelHeaderContent", platform)
-      )}
       style={style}
-      className={className}
+      className={classNamesString(
+        styles["PanelHeaderContent"],
+        getPlatformClassName(styles["PanelHeaderContent"], platform),
+        className
+      )}
     >
       {hasReactNode(before) && (
-        <div vkuiClass="PanelHeaderContent__before">{before}</div>
+        <div className={styles["PanelHeaderContent__before"]}>{before}</div>
       )}
       <InComponent
         {...inProps}
-        vkuiClass={classNames(
-          "PanelHeaderContent__in",
+        className={classNamesString(
+          styles["PanelHeaderContent__in"],
           !before &&
             platform !== Platform.ANDROID &&
-            "PanelHeaderContent__in--centered"
+            styles["PanelHeaderContent__in--centered"]
         )}
       >
         {hasReactNode(status) && (
-          <Footnote vkuiClass="PanelHeaderContent__status">{status}</Footnote>
+          <Footnote className={styles["PanelHeaderContent__status"]}>
+            {status}
+          </Footnote>
         )}
-        <div vkuiClass="PanelHeaderContent__children">
+        <div className={styles["PanelHeaderContent__children"]}>
           <PanelHeaderChildren
             hasStatus={hasReactNode(status)}
             hasBefore={hasReactNode(before)}
@@ -105,10 +107,12 @@ export const PanelHeaderContent = ({
             {children}
           </PanelHeaderChildren>
           {hasReactNode(aside) && (
-            <div vkuiClass="PanelHeaderContent__aside">{aside}</div>
+            <div className={styles["PanelHeaderContent__aside"]}>{aside}</div>
           )}
         </div>
-        {hasReactNode(before) && <div vkuiClass="PanelHeaderContent__width" />}
+        {hasReactNode(before) && (
+          <div className={styles["PanelHeaderContent__width"]} />
+        )}
       </InComponent>
     </div>
   );

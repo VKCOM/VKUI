@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import {
   Icon16SearchOutline,
@@ -17,9 +17,7 @@ import { useExternRef } from "../../hooks/useExternRef";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import "./Search.css";
-
-export type InputRef = (element: HTMLInputElement) => void;
+import styles from "./Search.module.css";
 
 const SearchPlaceholderTypography = ({
   children,
@@ -116,62 +114,70 @@ export const Search = ({
 
   return (
     <div
-      vkuiClass={classNames(
-        "Search",
-        platform === Platform.IOS && "Search--ios",
-        getSizeYClassName("Search", sizeY),
-        isFocused && "Search--focused",
-        value && "Search--has-value",
-        icon && "Search--has-after",
-        after && "Search--has-icon"
+      className={classNamesString(
+        styles["Search"],
+        platform === Platform.IOS && styles["Search--ios"],
+        getSizeYClassName(styles["Search"], sizeY),
+        isFocused && styles["Search--focused"],
+        value && styles["Search--has-value"],
+        icon && styles["Search--has-after"],
+        after && styles["Search--has-icon"],
+        className
       )}
-      className={className}
       style={style}
     >
-      <div vkuiClass="Search__in">
-        <div vkuiClass="Search__width" />
-        <label vkuiClass="Search__control">
+      <div className={styles["Search__in"]}>
+        <div className={styles["Search__width"]} />
+        <label className={styles["Search__control"]}>
           <input
             type="search"
             {...inputProps}
             autoComplete={autoComplete}
             ref={inputRef}
-            vkuiClass="Search__input"
+            className={styles["Search__input"]}
             onFocus={onFocus}
             onBlur={onBlur}
             onChange={onChange}
             value={value}
           />
           {platform === Platform.IOS && after && (
-            <div vkuiClass="Search__after-width">{after}</div>
+            <div className={styles["Search__after-width"]}>{after}</div>
           )}
-          <div vkuiClass="Search__placeholder">
-            <div vkuiClass="Search__placeholder-in">
+          <div className={styles["Search__placeholder"]}>
+            <div className={styles["Search__placeholder-in"]}>
               {before}
-              <SearchPlaceholderTypography vkuiClass="Search__placeholder-text">
+              <SearchPlaceholderTypography
+                className={styles["Search__placeholder-text"]}
+              >
                 {placeholder}
               </SearchPlaceholderTypography>
             </div>
             {isFocused && platform === Platform.IOS && after && (
-              <div vkuiClass="Search__after-width">{after}</div>
+              <div className={styles["Search__after-width"]}>{after}</div>
             )}
           </div>
         </label>
-        <div vkuiClass="Search__after" onClick={onCancel}>
-          <div vkuiClass="Search__icons">
+        <div className={styles["Search__after"]} onClick={onCancel}>
+          <div className={styles["Search__icons"]}>
             {icon && (
-              <Touch onStart={onIconClickStart} vkuiClass="Search__icon">
+              <Touch
+                onStart={onIconClickStart}
+                className={styles["Search__icon"]}
+              >
                 {icon}
               </Touch>
             )}
             {!!value && (
-              <Touch onStart={onIconCancelClickStart} vkuiClass="Search__icon">
+              <Touch
+                onStart={onIconCancelClickStart}
+                className={styles["Search__icon"]}
+              >
                 {platform === Platform.IOS ? <Icon16Clear /> : <Icon24Cancel />}
               </Touch>
             )}
           </div>
           {platform === Platform.IOS && after && (
-            <div vkuiClass="Search__after-in">{after}</div>
+            <div className={styles["Search__after-in"]}>{after}</div>
           )}
         </div>
       </div>

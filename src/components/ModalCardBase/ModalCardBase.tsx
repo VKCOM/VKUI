@@ -2,7 +2,7 @@ import * as React from "react";
 import { hasReactNode } from "../../lib/utils";
 import { Title } from "../Typography/Title/Title";
 import { Subhead } from "../Typography/Subhead/Subhead";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { usePlatform } from "../../hooks/usePlatform";
 import { HasRootRef } from "../../types";
@@ -12,7 +12,7 @@ import { ModalDismissButton } from "../ModalDismissButton/ModalDismissButton";
 import { Icon24Dismiss } from "@vkontakte/icons";
 import { useKeyboard } from "../../hooks/useKeyboard";
 import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
-import "./ModalCardBase.css";
+import styles from "./ModalCardBase.module.css";
 
 export interface ModalCardBaseProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -35,16 +35,18 @@ export interface ModalCardBaseProps
   subheader?: React.ReactNode;
 
   /**
-   * Кнопки-действия.
+   * Кнопки-действия. Принимает [`Button`](https://vkcom.github.io/VKUI/#/Button) с параметрами:
    *
-   * Рекомендуется использовать `<Button size="l" mode="primary" />` или `<Button size="l" mode="secondary" />`
+   * - `size="l" mode="primary" stretched`
+   * - `size="l" mode="secondary" stretched`
+   *
+   * Для набора кнопок используйте [`ButtonGroup`](https://vkcom.github.io/VKUI/#/ButtonGroup) с параметрами:
+   *
+   * - `gap="s" mode="horizontal" stretched`
+   * - `gap="m" mode="vertical" stretched`
    */
   actions?: React.ReactNode;
 
-  /**
-   * Тип отображения кнопок: вертикальный или горизонтальный
-   */
-  actionsLayout?: "vertical" | "horizontal";
   onClose?: VoidFunction;
 
   /**
@@ -64,8 +66,8 @@ export const ModalCardBase = ({
   children,
   actions,
   onClose,
-  actionsLayout,
   dismissLabel = "Скрыть",
+  className,
   ...restProps
 }: ModalCardBaseProps) => {
   const platform = usePlatform();
@@ -77,50 +79,50 @@ export const ModalCardBase = ({
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(
-        "ModalCardBase",
-        getPlatformClassName("ModalCardBase", platform),
-        isDesktop && "ModalCardBase--desktop"
+      className={classNamesString(
+        styles["ModalCardBase"],
+        getPlatformClassName(styles["ModalCardBase"], platform),
+        isDesktop && styles["ModalCardBase--desktop"],
+        className
       )}
       ref={getRootRef}
     >
       <div
-        vkuiClass={classNames(
-          "ModalCardBase__container",
+        className={classNamesString(
+          styles["ModalCardBase__container"],
           isSoftwareKeyboardOpened &&
-            "ModalCardBase__container--softwareKeyboardOpened"
+            styles["ModalCardBase__container--softwareKeyboardOpened"]
         )}
       >
         {hasReactNode(icon) && (
-          <div vkuiClass="ModalCardBase__icon">{icon}</div>
+          <div className={styles["ModalCardBase__icon"]}>{icon}</div>
         )}
         {hasReactNode(header) && (
-          <Title level="2" weight="2" vkuiClass="ModalCardBase__header">
+          <Title
+            level="2"
+            weight="2"
+            className={styles["ModalCardBase__header"]}
+          >
             {header}
           </Title>
         )}
         {hasReactNode(subheader) && (
-          <Subhead vkuiClass="ModalCardBase__subheader">{subheader}</Subhead>
+          <Subhead className={styles["ModalCardBase__subheader"]}>
+            {subheader}
+          </Subhead>
         )}
 
         {children}
 
         {hasReactNode(actions) && (
-          <div
-            vkuiClass={classNames(
-              "ModalCardBase__actions",
-              actionsLayout === "vertical" && "ModalCardBase__actions--v"
-            )}
-          >
-            {actions}
-          </div>
+          <div className={styles["ModalCardBase__actions"]}>{actions}</div>
         )}
 
         {isDesktop && <ModalDismissButton onClick={onClose} />}
         {canShowCloseButtonIOS && (
           <PanelHeaderButton
             aria-label={dismissLabel}
-            vkuiClass="ModalCardBase__dismiss"
+            className={styles["ModalCardBase__dismiss"]}
             onClick={onClose}
           >
             <Icon24Dismiss />

@@ -1,3 +1,4 @@
+import * as React from "react";
 import { screen, render } from "@testing-library/react";
 import { SizeType } from "../../lib/adaptivity";
 import { type AdaptivityProps } from "../AdaptivityProvider/AdaptivityContext";

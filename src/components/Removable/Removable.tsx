@@ -1,6 +1,6 @@
 import * as React from "react";
 import { HasRootRef } from "../../types";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { getTitleFromChildren, noop } from "../../lib/utils";
 import { useExternRef } from "../../hooks/useExternRef";
 import { usePlatform } from "../../hooks/usePlatform";
@@ -12,7 +12,7 @@ import { IconButton } from "../IconButton/IconButton";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { Tappable } from "../Tappable/Tappable";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import "./Removable.css";
+import styles from "./Removable.module.css";
 
 export interface RemovableProps {
   /**
@@ -76,7 +76,7 @@ const RemovableIos = ({
 
   return (
     <div
-      vkuiClass="Removable__content"
+      className={styles["Removable__content"]}
       style={{ transform: `translateX(-${removeOffset ?? 0}px)` }}
       onTransitionEnd={onRemoveTransitionEnd}
     >
@@ -84,15 +84,18 @@ const RemovableIos = ({
         hasActive={false}
         hasHover={false}
         aria-label={removePlaceholderString}
-        vkuiClass="Removable__action Removable__toggle"
+        className={classNamesString(
+          styles["Removable__action"],
+          styles["Removable__toggle"]
+        )}
         onClick={onRemoveActivateClick}
         disabled={removeOffset > 0}
       >
-        <i vkuiClass="Removable__toggle-in" role="presentation" />
+        <i className={styles["Removable__toggle-in"]} role="presentation" />
       </IconButton>
       {children}
 
-      <span vkuiClass="Removable__offset" aria-hidden />
+      <span className={styles["Removable__offset"]} aria-hidden />
 
       <Tappable
         Component="button"
@@ -100,10 +103,12 @@ const RemovableIos = ({
         hasHover={false}
         disabled={disabledRef.current}
         getRootRef={removeButtonRef}
-        vkuiClass="Removable__remove"
+        className={styles["Removable__remove"]}
         onClick={onRemove}
       >
-        <span vkuiClass="Removable__remove-in">{removePlaceholder}</span>
+        <span className={styles["Removable__remove-in"]}>
+          {removePlaceholder}
+        </span>
       </Tappable>
     </div>
   );
@@ -128,6 +133,7 @@ export const Removable = ({
   onRemove = noop,
   removePlaceholder = "Удалить",
   align = "center",
+  className,
   ...restProps
 }: RemovableOwnProps) => {
   const platform = usePlatform();
@@ -147,28 +153,29 @@ export const Removable = ({
     <div
       {...restProps}
       ref={ref}
-      vkuiClass={classNames(
-        "Removable",
-        platform === Platform.IOS && "Removable--ios",
-        `Removable--align-${align}`,
-        getSizeYClassName("Removable", sizeY)
+      className={classNamesString(
+        styles["Removable"],
+        platform === Platform.IOS && styles["Removable--ios"],
+        styles[`Removable--align-${align}`],
+        getSizeYClassName(styles["Removable"], sizeY),
+        className
       )}
     >
       {platform !== Platform.IOS && (
-        <div vkuiClass="Removable__content">
+        <div className={styles["Removable__content"]}>
           {children}
 
           <IconButton
             activeMode="opacity"
             hoverMode="opacity"
-            vkuiClass="Removable__action"
+            className={styles["Removable__action"]}
             onClick={onRemoveClick}
             aria-label={removePlaceholderString}
           >
             <Icon24Cancel role="presentation" />
           </IconButton>
 
-          <span vkuiClass="Removable__offset" aria-hidden />
+          <span className={styles["Removable__offset"]} aria-hidden />
         </div>
       )}
 

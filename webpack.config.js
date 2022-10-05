@@ -4,7 +4,10 @@ const { merge } = require("webpack-merge");
 const { generateScopedName } = require("./shared");
 
 const isProduction = process.env.NODE_ENV === "production";
-process.env.BABEL_KEEP_CSS = "1";
+
+process.env.BABEL_USED_BY_WEBPACK = JSON.stringify(true);
+process.env.BABEL_KEEP_CSS = JSON.stringify(true);
+
 const styleLoader = {
   loader: "style-loader",
   options: {

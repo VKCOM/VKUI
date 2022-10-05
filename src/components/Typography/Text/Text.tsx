@@ -48,7 +48,7 @@ export const Text = ({
       className={classNamesString(
         className,
         styles["Text"],
-        getSizeYClassName("Text", sizeY, styles),
+        getSizeYClassName(styles["Text"], sizeY),
         weight && styles[`Text--weight-${weight}`]
       )}
     >

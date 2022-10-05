@@ -1,10 +1,10 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
 import { Tappable } from "../Tappable/Tappable";
 import { hasReactNode } from "../../lib/utils";
 import { Icon16Chevron } from "@vkontakte/icons";
-import "./MiniInfoCell.css";
+import styles from "./MiniInfoCell.module.css";
 
 export interface MiniInfoCellProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -55,6 +55,7 @@ export const MiniInfoCell = ({
   mode = "base",
   textWrap = "nowrap",
   expandable = false,
+  className,
   ...restProps
 }: MiniInfoCellProps) => {
   const isClickable = !!restProps.onClick;
@@ -65,16 +66,17 @@ export const MiniInfoCell = ({
       disabled={!isClickable}
       role={isClickable ? "button" : undefined}
       {...restProps}
-      vkuiClass={classNames(
-        "MiniInfoCell",
-        `MiniInfoCell--textWrap-${textWrap}`,
-        mode !== "base" && `MiniInfoCell--mode-${mode}`
+      className={classNamesString(
+        styles["MiniInfoCell"],
+        styles[`MiniInfoCell--textWrap-${textWrap}`],
+        mode !== "base" && styles[`MiniInfoCell--mode-${mode}`],
+        className
       )}
     >
-      <span vkuiClass="MiniInfoCell__before">{before}</span>
-      <div vkuiClass="MiniInfoCell__middle">
+      <span className={styles["MiniInfoCell__before"]}>{before}</span>
+      <div className={styles["MiniInfoCell__middle"]}>
         <Paragraph
-          vkuiClass="MiniInfoCell__content"
+          className={styles["MiniInfoCell__content"]}
           weight={mode === "more" ? "2" : undefined}
         >
           {children}
@@ -82,7 +84,7 @@ export const MiniInfoCell = ({
         {expandable && <Icon16Chevron />}
       </div>
       {hasReactNode(after) && (
-        <span vkuiClass="MiniInfoCell__after">{after}</span>
+        <span className={styles["MiniInfoCell__after"]}>{after}</span>
       )}
     </Tappable>
   );

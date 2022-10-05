@@ -1,3 +1,4 @@
+import * as React from "react";
 import { describeScreenshotFuzz } from "../../testing/e2e";
 import { Card, CardProps } from "./Card";
 

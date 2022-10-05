@@ -1,12 +1,12 @@
 import * as React from "react";
 import { Touch, TouchEvent, TouchEventHandler } from "../Touch/Touch";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import { rescale } from "../../helpers/math";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import "../Slider/Slider.css";
+import styles from "../Slider/Slider.module.css";
 
 export type UniversalValue = [number | null, number];
 
@@ -34,6 +34,7 @@ export const UniversalSlider = ({
   onChange,
   getRootRef,
   disabled,
+  className,
   ...restProps
 }: UniversalSliderProps<UniversalValue>) => {
   const [start, end] = value;
@@ -130,22 +131,29 @@ export const UniversalSlider = ({
       data-value={isRange ? value.join(",") : value}
       {...restProps}
       {...(disabled ? {} : { onStart, onMove, onEnd })}
-      vkuiClass={classNames(
-        "Slider",
-        getSizeYClassName("Slider", sizeY),
-        disabled && "Slider--disabled"
+      className={classNamesString(
+        styles["Slider"],
+        getSizeYClassName(styles["Slider"], sizeY),
+        disabled && styles["Slider--disabled"],
+        className
       )}
     >
-      <div ref={container} vkuiClass="Slider__in">
-        <div vkuiClass="Slider__dragger" style={draggerStyle}>
+      <div ref={container} className={styles["Slider__in"]}>
+        <div className={styles["Slider__dragger"]} style={draggerStyle}>
           {isRange && (
             <span
-              vkuiClass={classNames("Slider__thumb", "Slider__thumb--start")}
+              className={classNamesString(
+                styles["Slider__thumb"],
+                styles["Slider__thumb--start"]
+              )}
               ref={thumbStart}
             />
           )}
           <span
-            vkuiClass={classNames("Slider__thumb", "Slider__thumb--end")}
+            className={classNamesString(
+              styles["Slider__thumb"],
+              styles["Slider__thumb--end"]
+            )}
             ref={thumbEnd}
           />
         </div>

@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Icon56UserAddOutline } from "@vkontakte/icons";
 import { Button } from "../Button/Button";
 import { ButtonGroup } from "../ButtonGroup/ButtonGroup";

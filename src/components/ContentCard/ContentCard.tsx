@@ -7,8 +7,8 @@ import { Text } from "../Typography/Text/Text";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { hasReactNode } from "../../lib/utils";
 import { HasRef, HasRootRef } from "../../types";
-import { classNames } from "../../lib/classNames";
-import "./ContentCard.css";
+import { classNamesString } from "../../lib/classNames";
+import styles from "./ContentCard.module.css";
 
 export interface ContentCardProps
   extends HasRootRef<HTMLDivElement>,
@@ -74,24 +74,24 @@ export const ContentCard = ({
     <Card
       mode={mode}
       getRootRef={getRootRef}
-      vkuiClass={classNames(
-        "ContentCard",
-        restProps.disabled && "ContentCard--disabled"
-      )}
       style={style}
-      className={className}
+      className={classNamesString(
+        styles["ContentCard"],
+        restProps.disabled && styles["ContentCard--disabled"],
+        className
+      )}
     >
       <Tappable
         {...restProps}
         disabled={restProps.disabled || (!restProps.onClick && !restProps.href)}
         hasHover={false}
         hasActive={false}
-        vkuiClass="ContentCard__tappable"
+        className={styles["ContentCard__tappable"]}
       >
         {(src || srcSet) && (
           <img
             ref={getRef}
-            vkuiClass="ContentCard__img"
+            className={styles["ContentCard__img"]}
             src={src}
             srcSet={srcSet}
             alt={alt}
@@ -106,10 +106,13 @@ export const ContentCard = ({
             width="100%"
           />
         )}
-        <div vkuiClass="ContentCard__body">
+        <div className={styles["ContentCard__body"]}>
           {hasReactNode(subtitle) && (
             <Caption
-              vkuiClass="ContentCard__text ContentCard__subtitle"
+              className={classNamesString(
+                styles["ContentCard__text"],
+                styles["ContentCard__subtitle"]
+              )}
               weight="1"
               level="3"
               caps
@@ -118,15 +121,24 @@ export const ContentCard = ({
             </Caption>
           )}
           {hasReactNode(header) && (
-            <Headline vkuiClass="ContentCard__text" weight="2" level="1">
+            <Headline
+              className={styles["ContentCard__text"]}
+              weight="2"
+              level="1"
+            >
               {header}
             </Headline>
           )}
           {hasReactNode(text) && (
-            <Text vkuiClass="ContentCard__text">{text}</Text>
+            <Text className={styles["ContentCard__text"]}>{text}</Text>
           )}
           {hasReactNode(caption) && (
-            <Footnote vkuiClass="ContentCard__text ContentCard__caption">
+            <Footnote
+              className={classNamesString(
+                styles["ContentCard__text"],
+                styles["ContentCard__caption"]
+              )}
+            >
               {caption}
             </Footnote>
           )}

@@ -1,8 +1,8 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import "./CardGrid.css";
+import styles from "./CardGrid.module.css";
 
 export interface CardGridProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: "s" | "m" | "l";
@@ -19,6 +19,7 @@ export const CardGrid = ({
   children,
   size = "s",
   spaced = false,
+  className,
   ...restProps
 }: CardGridProps) => {
   const { sizeX } = useAdaptivity();
@@ -26,11 +27,12 @@ export const CardGrid = ({
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(
-        "CardGrid",
-        spaced && "CardGrid--spaced",
-        `CardGrid--size-${size}`,
-        getSizeXClassName("CardGrid", sizeX)
+      className={classNamesString(
+        styles["CardGrid"],
+        spaced && styles["CardGrid--spaced"],
+        styles[`CardGrid--size-${size}`],
+        getSizeXClassName(styles["CardGrid"], sizeX),
+        className
       )}
     >
       {children}

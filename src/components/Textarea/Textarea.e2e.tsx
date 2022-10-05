@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Textarea } from "./Textarea";
 import {
   screenshot,

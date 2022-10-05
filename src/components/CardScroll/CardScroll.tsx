@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import {
@@ -7,7 +7,7 @@ import {
   HorizontalScrollProps,
 } from "../HorizontalScroll/HorizontalScroll";
 import { useDOM } from "../../lib/dom";
-import "./CardScroll.css";
+import styles from "./CardScroll.module.css";
 
 export interface CardScrollProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -26,6 +26,7 @@ export const CardScroll = ({
   size = "s",
   showArrows = true,
   withSpaces = true,
+  className,
   ...restProps
 }: CardScrollProps) => {
   const { sizeX } = useAdaptivity();
@@ -95,11 +96,12 @@ export const CardScroll = ({
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(
-        "CardScroll",
-        getSizeXClassName("CardScroll", sizeX),
-        `CardScroll--size-${size}`,
-        withSpaces && "CardScroll--withSpaces"
+      className={classNamesString(
+        styles["CardScroll"],
+        getSizeXClassName(styles["CardScroll"], sizeX),
+        styles[`CardScroll--size-${size}`],
+        withSpaces && styles["CardScroll--withSpaces"],
+        className
       )}
     >
       <HorizontalScroll
@@ -107,10 +109,10 @@ export const CardScroll = ({
         getScrollToRight={getScrollToRight}
         showArrows={showArrows}
       >
-        <div vkuiClass="CardScroll__in" ref={refContainer}>
-          <span vkuiClass="CardScroll__gap" ref={gapRef} />
+        <div className={styles["CardScroll__in"]} ref={refContainer}>
+          <span className={styles["CardScroll__gap"]} ref={gapRef} />
           {children}
-          <span vkuiClass="CardScroll__gap" />
+          <span className={styles["CardScroll__gap"]} />
         </div>
       </HorizontalScroll>
     </div>

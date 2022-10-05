@@ -2,7 +2,7 @@ import * as React from "react";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { FixedLayout } from "../FixedLayout/FixedLayout";
 import { Separator } from "../Separator/Separator";
 import { Platform } from "../../lib/platform";
@@ -17,7 +17,7 @@ import { ModalRootContext } from "../ModalRoot/ModalRootContext";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { Spacing } from "../Spacing/Spacing";
 import { SizeXConditionalRender } from "../SizeXConditionalRender/SizeXConditionalRender";
-import "./PanelHeader.css";
+import styles from "./PanelHeader.module.css";
 
 export interface PanelHeaderProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -50,16 +50,18 @@ const PanelHeaderIn = ({
 
   return (
     <React.Fragment>
-      <TooltipContainer fixed vkuiClass="PanelHeader__in">
-        <div vkuiClass="PanelHeader__before">{before}</div>
-        <div vkuiClass="PanelHeader__content">
+      <TooltipContainer fixed className={styles["PanelHeader__in"]}>
+        <div className={styles["PanelHeader__before"]}>{before}</div>
+        <div className={styles["PanelHeader__content"]}>
           {platform === Platform.VKCOM ? (
             <Text weight="2">{children}</Text>
           ) : (
-            <span vkuiClass="PanelHeader__content-in">{children}</span>
+            <span className={styles["PanelHeader__content-in"]}>
+              {children}
+            </span>
           )}
         </div>
-        <div vkuiClass="PanelHeader__after">
+        <div className={styles["PanelHeader__after"]}>
           {(webviewType === WebviewType.INTERNAL || isInsideModal) && after}
         </div>
       </TooltipContainer>
@@ -82,6 +84,7 @@ export const PanelHeader = ({
   getRef,
   getRootRef,
   fixed,
+  className,
   ...restProps
 }: PanelHeaderProps) => {
   const platform = usePlatform();
@@ -93,26 +96,27 @@ export const PanelHeader = ({
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(
-        "PanelHeader",
-        getPlatformClassName("PanelHeader", platform),
-        transparent && "PanelHeader--trnsp",
-        shadow && "PanelHeader--shadow",
-        visor && "PanelHeader--vis",
-        separator && visor && "PanelHeader--sep",
+      className={classNamesString(
+        styles["PanelHeader"],
+        getPlatformClassName(styles["PanelHeader"], platform),
+        transparent && styles["PanelHeader--trnsp"],
+        shadow && styles["PanelHeader--shadow"],
+        visor && styles["PanelHeader--vis"],
+        separator && visor && styles["PanelHeader--sep"],
         webviewType === WebviewType.VKAPPS &&
           !isInsideModal &&
-          "PanelHeader--vkapps",
-        !before && "PanelHeader--no-before",
-        !after && "PanelHeader--no-after",
-        isFixed && "PanelHeader--fixed",
-        getSizeXClassName("PanelHeader", sizeX)
+          styles["PanelHeader--vkapps"],
+        !before && styles["PanelHeader--no-before"],
+        !after && styles["PanelHeader--no-after"],
+        isFixed && styles["PanelHeader--fixed"],
+        getSizeXClassName(styles["PanelHeader"], sizeX),
+        className
       )}
       ref={isFixed ? getRootRef : getRef}
     >
       {isFixed ? (
         <FixedLayout
-          vkuiClass="PanelHeader__fixed"
+          className={styles["PanelHeader__fixed"]}
           vertical="top"
           getRootRef={getRef}
         >

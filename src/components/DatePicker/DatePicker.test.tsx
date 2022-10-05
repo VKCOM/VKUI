@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import { render } from "@testing-library/react";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { baselineComponent } from "../../testing/utils";

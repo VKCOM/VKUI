@@ -1,7 +1,7 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
-import "./Card.css";
+import styles from "./Card.module.css";
 
 export interface CardProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -16,15 +16,20 @@ export const Card = ({
   mode = "tint",
   children,
   getRootRef,
+  className,
   ...restProps
 }: CardProps) => {
   return (
     <div
       {...restProps}
       ref={getRootRef}
-      vkuiClass={classNames("Card", `Card--mode-${mode}`)}
+      className={classNamesString(
+        styles["Card"],
+        styles[`Card--mode-${mode}`],
+        className
+      )}
     >
-      <div vkuiClass="Card__in">{children}</div>
+      <div className={styles["Card__in"]}>{children}</div>
     </div>
   );
 };

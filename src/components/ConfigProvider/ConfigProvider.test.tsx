@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { Platform } from "../../lib/platform";
 import { baselineComponent } from "../../testing/utils";
 import { Appearance } from "../../helpers/appearance";

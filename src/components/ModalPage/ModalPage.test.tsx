@@ -1,3 +1,4 @@
+import * as React from "react";
 import { baselineComponent } from "../../testing/utils";
 import { ModalPage } from "./ModalPage";
 

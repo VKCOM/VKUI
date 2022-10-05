@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FixedLayout } from "../FixedLayout/FixedLayout";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useDOM } from "../../lib/dom";
 import { Platform } from "../../lib/platform";
@@ -10,7 +10,7 @@ import { useTimeout } from "../../hooks/useTimeout";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useScrollLock } from "../AppRoot/ScrollContext";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import "./PanelHeaderContext.css";
+import styles from "./PanelHeaderContext.module.css";
 
 export interface PanelHeaderContextProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -25,6 +25,7 @@ export const PanelHeaderContext = ({
   children,
   onClose,
   opened = false,
+  className,
   ...restProps
 }: PanelHeaderContextProps) => {
   const { document } = useDOM();
@@ -69,22 +70,25 @@ export const PanelHeaderContext = ({
   return (
     <FixedLayout
       {...restProps}
-      vkuiClass={classNames(
-        "PanelHeaderContext",
-        platform === Platform.IOS && "PanelHeaderContext--ios",
-        opened && "PanelHeaderContext--opened",
-        closing && "PanelHeaderContext--closing",
-        getSizeXClassName("PanelHeaderContext", sizeX),
-        "PanelHeaderContext--rounded"
+      className={classNamesString(
+        styles["PanelHeaderContext"],
+        platform === Platform.IOS && styles["PanelHeaderContext--ios"],
+        opened && styles["PanelHeaderContext--opened"],
+        closing && styles["PanelHeaderContext--closing"],
+        getSizeXClassName(styles["PanelHeaderContext"], sizeX),
+        styles["PanelHeaderContext--rounded"],
+        className
       )}
       vertical="top"
     >
       <div
-        vkuiClass="PanelHeaderContext__in"
+        className={styles["PanelHeaderContext__in"]}
         ref={elementRef}
         onAnimationEnd={closing ? onAnimationEnd : undefined}
       >
-        <div vkuiClass="PanelHeaderContext__content">{visible && children}</div>
+        <div className={styles["PanelHeaderContext__content"]}>
+          {visible && children}
+        </div>
       </div>
       {visible && (
         <div
@@ -92,7 +96,7 @@ export const PanelHeaderContext = ({
             event.stopPropagation();
             onClose();
           }}
-          vkuiClass="PanelHeaderContext__fade"
+          className={styles["PanelHeaderContext__fade"]}
         />
       )}
     </FixedLayout>

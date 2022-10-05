@@ -1,9 +1,10 @@
 import * as React from "react";
+import { classNamesString } from "../../lib/classNames";
 import { Input } from "../Input/Input";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { leadingZero } from "../../lib/utils";
 import { CustomSelect } from "../CustomSelect/CustomSelect";
-import "./DatePicker.css";
+import styles from "./DatePicker.module.css";
 
 const DefaultMonths: string[] = [
   "Января",
@@ -92,6 +93,7 @@ const DatePickerCustom = ({
   year = 0,
   onDateChange,
   disabled,
+  className,
   ...restProps
 }: DatePickerProps & Partial<DatePickerDateFormat>) => {
   const onSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
@@ -115,9 +117,12 @@ const DatePickerCustom = ({
     value: value,
   }));
   return (
-    <div vkuiClass="DatePicker" {...restProps}>
-      <div vkuiClass="DatePicker__container">
-        <div vkuiClass="DatePicker__day">
+    <div
+      className={classNamesString(styles["DatePicker"], className)}
+      {...restProps}
+    >
+      <div className={styles["DatePicker__container"]}>
+        <div className={styles["DatePicker__day"]}>
           <CustomSelect
             name="day"
             value={day}
@@ -128,9 +133,9 @@ const DatePickerCustom = ({
             disabled={disabled}
           />
         </div>
-        <div vkuiClass="DatePicker__month">
+        <div className={styles["DatePicker__month"]}>
           <CustomSelect
-            vkuiClass="DatePicker__monthSelect"
+            className={styles["DatePicker__monthSelect"]}
             name="month"
             value={month}
             options={monthOptions}
@@ -140,7 +145,7 @@ const DatePickerCustom = ({
             disabled={disabled}
           />
         </div>
-        <div vkuiClass="DatePicker__year">
+        <div className={styles["DatePicker__year"]}>
           <CustomSelect
             name="year"
             value={year}

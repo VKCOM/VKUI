@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { animationEvent } from "../../lib/supportEvents";
 import { Platform } from "../../lib/platform";
 import { Touch, TouchEvent } from "../Touch/Touch";
@@ -17,7 +17,8 @@ import { useTimeout } from "../../hooks/useTimeout";
 import { usePrevious } from "../../hooks/usePrevious";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { noop } from "../../lib/utils";
-import "./View.css";
+import styles from "./View.module.css";
+import iosStyles from "./ViewIOS.module.css";
 
 enum SwipeBackResults {
   fail = 1,
@@ -87,7 +88,7 @@ export const View = ({
   onSwipeBackStart,
   onSwipeBackCancel: onSwipeBackCancelProp,
   children,
-
+  className,
   ...restProps
 }: ViewProps) => {
   const scrolls = React.useRef(
@@ -503,17 +504,18 @@ export const View = ({
     <Touch
       Component="section"
       {...restProps}
-      vkuiClass={classNames(
-        "View",
-        platform === Platform.IOS && "View--ios",
-        !disableAnimation && animated && "View--animated",
-        !disableAnimation && swipingBack && "View--swiping-back",
-        disableAnimation && "View--no-motion"
+      className={classNamesString(
+        styles["View"],
+        platform === Platform.IOS && iosStyles["View--ios"],
+        !disableAnimation && animated && styles["View--animated"],
+        !disableAnimation && swipingBack && styles["View--swiping-back"],
+        disableAnimation && styles["View--no-motion"],
+        className
       )}
       onMoveX={onMoveX}
       onEnd={onEnd}
     >
-      <div vkuiClass="View__panels">
+      <div className={styles["View__panels"]}>
         {panels.map((panel: React.ReactElement) => {
           const panelId = getNavId(panel.props, warn);
           const isPrev =
@@ -527,19 +529,19 @@ export const View = ({
 
           return (
             <div
-              vkuiClass={classNames(
-                "View__panel",
-                panelId === activePanel && "View__panel--active",
-                panelId === prevPanel && "View__panel--prev",
-                panelId === nextPanel && "View__panel--next",
+              className={classNamesString(
+                styles["View__panel"],
+                panelId === activePanel && iosStyles["View__panel--active"],
+                panelId === prevPanel && styles["View__panel--prev"],
+                panelId === nextPanel && styles["View__panel--next"],
                 panelId === swipeBackPrevPanel &&
-                  "View__panel--swipe-back-prev",
+                  iosStyles["View__panel--swipe-back-prev"],
                 panelId === swipeBackNextPanel &&
-                  "View__panel--swipe-back-next",
+                  iosStyles["View__panel--swipe-back-next"],
                 swipeBackResult === SwipeBackResults.success &&
-                  "View__panel--swipe-back-success",
+                  iosStyles["View__panel--swipe-back-success"],
                 swipeBackResult === SwipeBackResults.fail &&
-                  "View__panel--swipe-back-failed"
+                  iosStyles["View__panel--swipe-back-failed"]
               )}
               onAnimationEnd={
                 isTransitionTarget ? transitionEndHandler : undefined
@@ -551,7 +553,7 @@ export const View = ({
               key={panelId}
             >
               <div
-                vkuiClass="View__panel-in"
+                className={styles["View__panel-in"]}
                 style={{
                   marginTop: compensateScroll
                     ? -(scrolls.current[panelId] ?? 0)

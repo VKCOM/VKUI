@@ -1,11 +1,11 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { BREAKPOINTS, ViewWidth } from "../../lib/adaptivity";
 import { useDOM } from "../../lib/dom";
-import "./SplitCol.css";
+import styles from "./SplitCol.module.css";
 
 export interface SplitColContextProps {
   colRef: React.RefObject<HTMLDivElement> | null;
@@ -57,6 +57,7 @@ export const SplitCol = (props: SplitColProps) => {
     style,
     autoSpaced,
     stretchedOnMobile,
+    className,
     ...restProps
   } = props;
   const baseRef = React.useRef<HTMLDivElement>(null);
@@ -93,20 +94,21 @@ export const SplitCol = (props: SplitColProps) => {
         minWidth: minWidth,
       }}
       ref={baseRef}
-      vkuiClass={classNames(
-        "SplitCol",
-        getSizeXClassName("SplitCol", sizeX),
-        getViewWidthClassName("SplitCol", viewWidth),
-        spaced && "SplitCol--spaced",
-        spaced === undefined && "SplitCol--spaced-none",
-        autoSpaced && "SplitCol--spaced-auto",
-        fixed && "SplitCol--fixed",
-        stretchedOnMobile && "SplitCol--stretched-on-mobile"
+      className={classNamesString(
+        styles["SplitCol"],
+        getSizeXClassName(styles["SplitCol"], sizeX),
+        getViewWidthClassName(styles["SplitCol"], viewWidth),
+        spaced && styles["SplitCol--spaced"],
+        spaced === undefined && styles["SplitCol--spaced-none"],
+        autoSpaced && styles["SplitCol--spaced-auto"],
+        fixed && styles["SplitCol--fixed"],
+        stretchedOnMobile && styles["SplitCol--stretched-on-mobile"],
+        className
       )}
     >
       <SplitColContext.Provider value={contextValue}>
         {fixed ? (
-          <div vkuiClass="SplitCol__fixedInner">{children}</div>
+          <div className={styles["SplitCol__fixedInner"]}>{children}</div>
         ) : (
           children
         )}

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ACTIVE_EFFECT_DELAY, Tappable } from "../Tappable/Tappable";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Platform } from "../../lib/platform";
 import { HasRef, HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
@@ -9,7 +9,7 @@ import { VisuallyHiddenInput } from "../VisuallyHiddenInput/VisuallyHiddenInput"
 import { Footnote } from "../Typography/Footnote/Footnote";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import "./Radio.css";
+import styles from "./Radio.module.css";
 
 const RadioIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
@@ -31,7 +31,7 @@ const RadioIcon = (props: React.SVGProps<SVGSVGElement>) => {
         cx="12"
         cy="12"
         r="7.5"
-        vkuiClass="Radio__pin"
+        className={styles["Radio__pin"]}
         fill="currentColor"
       />
     </svg>
@@ -63,23 +63,28 @@ export const Radio = ({
     <Tappable
       Component="label"
       style={style}
-      className={className}
-      vkuiClass={classNames("Radio", getSizeYClassName("Radio", sizeY))}
+      className={classNamesString(
+        styles["Radio"],
+        getSizeYClassName(styles["Radio"], sizeY),
+        className
+      )}
       activeEffectDelay={platform === Platform.IOS ? 100 : ACTIVE_EFFECT_DELAY}
       disabled={restProps.disabled}
       getRootRef={getRootRef}
     >
       <VisuallyHiddenInput
         {...restProps}
-        vkuiClass="Radio__input"
+        className={styles["Radio__input"]}
         type="radio"
       />
-      <div vkuiClass="Radio__container">
-        <RadioIcon vkuiClass="Radio__icon" />
-        <div vkuiClass="Radio__content">
-          <div vkuiClass="Radio__children">{children}</div>
+      <div className={styles["Radio__container"]}>
+        <RadioIcon className={styles["Radio__icon"]} />
+        <div className={styles["Radio__content"]}>
+          <div className={styles["Radio__children"]}>{children}</div>
           {hasReactNode(description) && (
-            <Footnote vkuiClass="Radio__description">{description}</Footnote>
+            <Footnote className={styles["Radio__description"]}>
+              {description}
+            </Footnote>
           )}
         </div>
       </div>

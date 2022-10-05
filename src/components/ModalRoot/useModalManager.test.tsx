@@ -1,3 +1,4 @@
+import * as React from "react";
 import { renderHook, act } from "@testing-library/react-hooks";
 import { noop } from "../../lib/utils";
 import { ModalType } from "./types";

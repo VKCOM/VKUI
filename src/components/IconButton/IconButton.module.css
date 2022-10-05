@@ -1,0 +1,122 @@
+.IconButton {
+  appearance: none;
+  background: none;
+  border: none;
+  box-shadow: none;
+  display: block;
+  color: currentColor;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  height: 48px;
+
+  /**
+   * Чтобы закргуление было равно половине высоты.
+   * см. https://stackoverflow.com/questions/27233295/possible-to-make-border-radius-equal-to-half-the-total-height-without-javascript
+   */
+  border-radius: 9999px;
+}
+
+.IconButton--sizeY-compact {
+  height: 44px;
+}
+
+.IconButton[disabled] {
+  opacity: var(--vkui--opacity_disable_accessibility);
+}
+
+.IconButton--ios {
+  border-radius: var(--vkui--size_border_radius--regular);
+}
+
+.IconButton :global(.vkuiIcon--16) {
+  padding: 16px;
+}
+
+.IconButton :global(.vkuiIcon--16.vkuiIcon--w-8) {
+  padding: 16px 14px;
+}
+
+.IconButton--sizeY-compact :global(.vkuiIcon--16),
+.IconButton--sizeY-compact :global(.vkuiIcon--16.vkuiIcon--w-8) {
+  padding: 14px;
+}
+
+.IconButton :global(.vkuiIcon--24) {
+  padding: 12px;
+}
+
+.IconButton--sizeY-compact :global(.vkuiIcon--24) {
+  padding: 10px;
+}
+
+.IconButton :global(.vkuiIcon--28) {
+  padding: 10px;
+}
+
+.IconButton--sizeY-compact :global(.vkuiIcon--28) {
+  padding: 8px;
+}
+
+@media (--sizeY-compact) {
+  .IconButton--sizeY-none {
+    height: 44px;
+  }
+
+  .IconButton--sizeY-none :global(.vkuiIcon--16),
+  .IconButton--sizeY-none :global(.vkuiIcon--16.vkuiIcon--w-8) {
+    padding: 14px;
+  }
+
+  .IconButton--sizeY-none :global(.vkuiIcon--24) {
+    padding: 10px;
+  }
+
+  .IconButton--sizeY-none :global(.vkuiIcon--28) {
+    padding: 8px;
+  }
+}
+
+/**
+ * CMP:
+ * - FormItem
+ * - FormLayoutGroup
+ * - FormField
+ */
+.FormItem--removable .Removable__content > .IconButton,
+.FormLayoutGroup--removable .Removable__content > .IconButton,
+.FormField__after .IconButton {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  width: var(--vkui--size_field_height--regular);
+  height: var(--vkui--size_field_height--regular);
+  border-radius: var(--vkui--size_border_radius--regular);
+}
+
+.FormField__after .IconButton :global(.vkuiIcon.vkuiIcon.vkuiIcon) {
+  padding: 0;
+}
+
+.FormField__after .IconButton--sizeY-compact {
+  width: var(--vkui--size_field_height--compact);
+  height: var(--vkui--size_field_height--compact);
+}
+
+.FormItem--removable .Removable__content > .IconButton--sizeY-compact,
+.FormLayoutGroup--removable .Removable__content > .IconButton--sizeY-compact {
+  height: var(--vkui--size_field_height--compact);
+}
+
+@media (--sizeY-compact) {
+  .FormField__after .IconButton--sizeY-none {
+    width: var(--vkui--size_field_height--compact);
+    height: var(--vkui--size_field_height--compact);
+  }
+
+  .FormItem--removable .Removable__content > .IconButton--sizeY-none,
+  .FormLayoutGroup--removable .Removable__content > .IconButton--sizeY-none {
+    height: var(--vkui--size_field_height--compact);
+  }
+}

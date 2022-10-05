@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ACTIVE_EFFECT_DELAY, Tappable } from "../Tappable/Tappable";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Platform } from "../../lib/platform";
 import {
   Icon20CheckBoxOn,
@@ -19,7 +19,7 @@ import { useExternRef } from "../../hooks/useExternRef";
 import { SizeYConditionalRender } from "../SizeYConditionalRender/SizeYConditionalRender";
 import { VisuallyHiddenInput } from "../VisuallyHiddenInput/VisuallyHiddenInput";
 import { warnOnce } from "../../lib/warnOnce";
-import "./Checkbox.css";
+import styles from "./Checkbox.module.css";
 
 export interface CheckboxProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
@@ -98,14 +98,14 @@ export const Checkbox = ({
   return (
     <Tappable
       Component="label"
-      vkuiClass={classNames(
-        "Checkbox",
-        platform === Platform.VKCOM && "Checkbox--vkcom",
-        getSizeYClassName("Checkbox", sizeY),
+      className={classNamesString(
+        styles["Checkbox"],
+        platform === Platform.VKCOM && styles["Checkbox--vkcom"],
+        getSizeYClassName(styles["Checkbox"], sizeY),
         !(hasReactNode(children) || hasReactNode(description)) &&
-          "Checkbox--simple"
+          styles["Checkbox--simple"],
+        className
       )}
-      className={className}
       style={style}
       disabled={restProps.disabled}
       activeEffectDelay={platform === Platform.IOS ? 100 : ACTIVE_EFFECT_DELAY}
@@ -115,10 +115,15 @@ export const Checkbox = ({
         {...restProps}
         onChange={handleChange}
         type="checkbox"
-        vkuiClass="Checkbox__input"
+        className={styles["Checkbox__input"]}
         getRef={inputRef}
       />
-      <div vkuiClass="Checkbox__icon Checkbox__icon--on">
+      <div
+        className={classNamesString(
+          styles["Checkbox__icon"],
+          styles["Checkbox__icon--on"]
+        )}
+      >
         {platform === Platform.VKCOM ? (
           <Icon20CheckBoxOn aria-hidden />
         ) : (
@@ -128,7 +133,12 @@ export const Checkbox = ({
           />
         )}
       </div>
-      <div vkuiClass="Checkbox__icon Checkbox__icon--off">
+      <div
+        className={classNamesString(
+          styles["Checkbox__icon"],
+          styles["Checkbox__icon--off"]
+        )}
+      >
         {platform === Platform.VKCOM ? (
           <Icon20CheckBoxOff aria-hidden />
         ) : (
@@ -138,7 +148,12 @@ export const Checkbox = ({
           />
         )}
       </div>
-      <div vkuiClass="Checkbox__icon Checkbox__icon--indeterminate">
+      <div
+        className={classNamesString(
+          styles["Checkbox__icon"],
+          styles["Checkbox__icon--indeterminate"]
+        )}
+      >
         {platform === Platform.VKCOM ? (
           <Icon20CheckBoxIndetermanate aria-hidden width={20} height={20} />
         ) : (
@@ -152,15 +167,14 @@ export const Checkbox = ({
           />
         )}
       </div>
-      <div vkuiClass="Checkbox__content">
-        <div vkuiClass="Checkbox__children">{children}</div>
+      <div className={styles["Checkbox__content"]}>
+        <div className={styles["Checkbox__children"]}>{children}</div>
         {hasReactNode(description) && (
-          <Footnote vkuiClass="Checkbox__description">{description}</Footnote>
+          <Footnote className={styles["Checkbox__description"]}>
+            {description}
+          </Footnote>
         )}
       </div>
     </Tappable>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default Checkbox;

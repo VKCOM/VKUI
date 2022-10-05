@@ -1,5 +1,6 @@
+import * as React from "react";
 import { getPlatformClassName } from "../../helpers/getPlatformClassName";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { callMultiple } from "../../lib/callMultiple";
 import { usePlatform } from "../../hooks/usePlatform";
 import { HasRootRef } from "../../types";
@@ -11,7 +12,7 @@ import {
 import { useFocusVisible } from "../../hooks/useFocusVisible";
 import { FocusVisible } from "../FocusVisible/FocusVisible";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import "./Switch.css";
+import styles from "./Switch.module.css";
 
 export interface SwitchProps
   extends VisuallyHiddenInputProps,
@@ -32,14 +33,14 @@ export const Switch = ({
 
   return (
     <label
-      vkuiClass={classNames(
-        "Switch",
-        getPlatformClassName("Switch", platform),
-        getSizeYClassName("Switch", sizeY),
-        restProps.disabled && "Switch--disabled",
-        focusVisible && "Switch--focus-visible"
+      className={classNamesString(
+        styles["Switch"],
+        getPlatformClassName(styles["Switch"], platform),
+        getSizeYClassName(styles["Switch"], sizeY),
+        restProps.disabled && styles["Switch--disabled"],
+        focusVisible && styles["Switch--focus-visible"],
+        className
       )}
-      className={className}
       style={style}
       ref={getRootRef}
       role="presentation"
@@ -47,11 +48,11 @@ export const Switch = ({
       <VisuallyHiddenInput
         {...restProps}
         type="checkbox"
-        vkuiClass="Switch__self"
+        className={styles["Switch__self"]}
         onBlur={callMultiple(onBlur, restProps.onBlur)}
         onFocus={callMultiple(onFocus, restProps.onFocus)}
       />
-      <span role="presentation" vkuiClass="Switch__pseudo" />
+      <span role="presentation" className={styles["Switch__pseudo"]} />
       <FocusVisible mode="outside" />
     </label>
   );

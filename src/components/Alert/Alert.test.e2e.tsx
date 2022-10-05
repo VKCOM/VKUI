@@ -1,3 +1,4 @@
+import * as React from "react";
 import { AppRoot } from "../AppRoot/AppRoot";
 import { Alert, AlertProps, AlertAction } from "./Alert";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
