@@ -46,6 +46,8 @@
 
   /* stylelint-disable-next-line */
   font-family: "Roboto";
+  -webkit-font-smoothing: antialiased;
+  caret-color: transparent;
 }
 
 *,
