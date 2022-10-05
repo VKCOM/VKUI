@@ -26,6 +26,8 @@ export async function screenshot(
   // font load affects layout
   /* istanbul ignore next */
   await page.evaluate(() => document.fonts.ready);
+  await page.waitForLoadState("networkidle");
+
   const { selector = "#mount > *:not(.AppRoot), .AppRoot > *" } = options;
   /* istanbul ignore next */
   const { x, y, bottom, right } = await page.evaluate((selector) => {
