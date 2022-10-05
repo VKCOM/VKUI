@@ -38,5 +38,9 @@ testRule({
 `,
       message: `"Icon" must reference .Cmp`,
     },
+    {
+      code: `.Cmp :global(.vkuiIcon) {}`,
+      message: `"vkuiIcon" must reference .Cmp`,
+    },
   ],
 });

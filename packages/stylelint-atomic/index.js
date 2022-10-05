@@ -5,7 +5,8 @@ const selectorParser = require("postcss-selector-parser");
 const ruleName = "vkui/atomic";
 const messages = stylelint.utils.ruleMessages(ruleName, {});
 const isPseudo = (sel) =>
-  sel.type === "pseudo" || (sel.parent && isPseudo(sel.parent));
+  (sel.type === "pseudo" && !sel.value.startsWith(":global")) ||
+  (sel.parent && isPseudo(sel.parent));
 
 module.exports = stylelint.createPlugin(ruleName, function () {
   return function (root, result) {
@@ -33,7 +34,9 @@ module.exports = stylelint.createPlugin(ruleName, function () {
               selTarget = "";
               return;
             }
-            selTarget += String(selector.value || "");
+            if (selector.type !== "pseudo") {
+              selTarget += String(selector.value || "");
+            }
             if (selector.type === "class") {
               const ruleCmp = selector.value.split(/(--|__)/g)[0];
               hasComponentScope = hasComponentScope || ruleCmp === cssCmp;
