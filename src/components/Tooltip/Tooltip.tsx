@@ -291,7 +291,7 @@ export const Tooltip = ({
   }, [arrow, cornerAbsoluteOffset, cornerOffset, offsetX, offsetY]);
 
   const _placement = placement ?? getPlacement(alignX, alignY);
-  const { styles, attributes } = usePopper(target, tooltipRef, {
+  const { styles: popperStyles, attributes } = usePopper(target, tooltipRef, {
     strategy,
     placement: _placement,
     modifiers,
@@ -324,7 +324,10 @@ export const Tooltip = ({
             appearance={appearance}
             arrow={arrow}
             ref={(el) => setTooltipRef(el)}
-            style={{ arrow: styles.arrow, container: styles.popper }}
+            style={{
+              arrow: popperStyles.arrow,
+              container: popperStyles.popper,
+            }}
             attributes={{
               arrow: attributes.arrow ?? null,
               container: attributes.popper ?? null,
