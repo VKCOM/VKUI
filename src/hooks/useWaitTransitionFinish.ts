@@ -1,10 +1,17 @@
 import * as React from "react";
 import { useDOM } from "../lib/dom";
+import { noop } from "../lib/utils";
 import { transitionEvent } from "../lib/supportEvents";
 
 export const useWaitTransitionFinish = () => {
   const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
   const { document } = useDOM();
+  const detach = React.useRef(noop);
+
+  const remove = React.useCallback(() => {
+    detach.current();
+    detach.current = noop;
+  }, []);
 
   const waitTransitionFinish = React.useCallback(
     (
@@ -18,8 +25,13 @@ export const useWaitTransitionFinish = () => {
           transitionEvent.supported &&
           transitionEvent.name
         ) {
-          element.removeEventListener(transitionEvent.name, eventHandler);
+          remove();
           element.addEventListener(transitionEvent.name, eventHandler);
+          detach.current = () => {
+            if (transitionEvent.name) {
+              element.removeEventListener(transitionEvent.name, eventHandler);
+            }
+          };
         } else {
           if (timeoutRef?.current) {
             clearTimeout(timeoutRef.current);
@@ -28,7 +40,7 @@ export const useWaitTransitionFinish = () => {
         }
       }
     },
-    [document, timeoutRef]
+    [document, remove, timeoutRef]
   );
 
   return {
