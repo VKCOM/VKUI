@@ -41,12 +41,12 @@ const TabsComponent = ({
   mode = "default",
   getRootRef,
   sizeX,
+  role = "tablist",
   ...restProps
 }: TabsProps) => {
   const platform = usePlatform();
   const { document } = useDOM();
 
-  const role = restProps.role || "tablist";
   const isTabFlow = role === "tablist";
 
   const tabsRef = React.useRef<HTMLDivElement>(null);
@@ -74,7 +74,7 @@ const TabsComponent = ({
 
   const withGaps = mode === "accent" || mode === "secondary";
 
-  function getTabEls(): HTMLDivElement[] {
+  const getTabEls = () => {
     if (!tabsRef.current) {
       return [];
     }
@@ -85,9 +85,9 @@ const TabsComponent = ({
         "[role=tab]:not([disabled])"
       )
     );
-  }
+  };
 
-  function handleDocumentKeydown(event: KeyboardEvent) {
+  const handleDocumentKeydown = (event: KeyboardEvent) => {
     if (!document || !tabsRef.current || !isTabFlow) {
       return;
     }
@@ -172,7 +172,7 @@ const TabsComponent = ({
         }
       }
     }
-  }
+  };
 
   useGlobalEventListener(document, "keydown", handleDocumentKeydown, {
     capture: true,

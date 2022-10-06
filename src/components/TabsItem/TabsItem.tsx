@@ -47,6 +47,7 @@ export const TabsItem = ({
   status,
   after,
   selected = false,
+  role = "tab",
   ...restProps
 }: TabsItemProps) => {
   const platform = usePlatform();
@@ -55,7 +56,6 @@ export const TabsItem = ({
     React.useContext(TabsModeContext);
   let statusComponent = null;
 
-  const role = restProps.role || "tab";
   const isTabFlow = role === "tab";
 
   if (status) {
@@ -84,8 +84,9 @@ export const TabsItem = ({
     }
   }
 
-  let tabIndex: React.HTMLAttributes<HTMLElement>["tabIndex"] = undefined;
-  if (isTabFlow) {
+  let tabIndex: React.HTMLAttributes<HTMLElement>["tabIndex"] =
+    restProps.tabIndex;
+  if (isTabFlow && tabIndex === undefined) {
     tabIndex = selected ? 0 : -1;
   }
 
@@ -105,7 +106,7 @@ export const TabsItem = ({
       activeMode="TabsItem--active"
       focusVisibleMode={mode === "segmented" ? "outside" : "inside"}
       hasActive={mode === "segmented"}
-      role={restProps.role || "tab"}
+      role={role}
       aria-selected={selected}
       tabIndex={tabIndex}
     >
