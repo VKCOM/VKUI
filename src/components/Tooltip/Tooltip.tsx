@@ -27,9 +27,25 @@ interface SimpleTooltipProps extends Partial<TooltipProps> {
   };
 }
 
-const isDOMTypeElement = (
+/**
+ * Перебиваем `ref`.
+ *
+ * В оригинальном `React.DOMElement` задаётся `React.LegacyRef<T>`, в котором есть `string`.
+ * Когда как `{ ref: "string" }` уже давно депрекейтнут.
+ */
+interface DOMElement<
+  P extends React.HTMLAttributes<T> | React.SVGAttributes<T>,
+  T extends Element
+> extends React.DOMElement<P, T> {
+  ref: React.Ref<T>;
+}
+
+const isDOMTypeElement = <
+  P extends React.HTMLAttributes<T> | React.SVGAttributes<T>,
+  T extends Element
+>(
   element: React.ReactElement
-): element is React.DOMElement<any, any> => {
+): element is DOMElement<P, T> => {
   return React.isValidElement(element) && typeof element.type === "string";
 };
 
@@ -303,9 +319,14 @@ export const Tooltip = ({
   });
   // NOTE: setting isShown to true used to trigger usePopper().forceUpdate()
 
-  const childRef =
-    React.isValidElement(children) &&
-    (isDOMTypeElement(children) ? children.ref : children.props.getRootRef);
+  const childRef = isDOMTypeElement<
+    React.HTMLAttributes<HTMLElement>,
+    HTMLElement
+  >(children)
+    ? children.ref
+    : React.isValidElement<HasRootRef<HTMLElement>>(children)
+    ? children.props.getRootRef
+    : null;
   const patchedRef = useExternRef(setTarget, childRef);
   const child = React.isValidElement(children)
     ? React.cloneElement(children, {

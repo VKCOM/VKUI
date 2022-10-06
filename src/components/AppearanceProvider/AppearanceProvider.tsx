@@ -44,7 +44,7 @@ export const AppearanceProvider = ({
   return (
     <AppearanceProviderContext.Provider value={appearance}>
       {React.Children.map(children, (child) => {
-        if (React.isValidElement(child)) {
+        if (React.isValidElement<{ className?: string }>(child)) {
           return React.cloneElement(child, {
             className: classNamesString(
               child.props.className,
