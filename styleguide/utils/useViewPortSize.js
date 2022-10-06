@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
+import { useDOM } from "@vkui/lib/dom";
 
 export function useViewPortSize() {
+  const { window } = useDOM();
+
   const [viewPortSize, setViewPortSize] = useState({
     viewWidth: 0,
     viewHeight: 0,
@@ -15,7 +18,7 @@ export function useViewPortSize() {
     window.addEventListener("resize", handleResize);
     handleResize();
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [window]);
 
   return viewPortSize;
 }
