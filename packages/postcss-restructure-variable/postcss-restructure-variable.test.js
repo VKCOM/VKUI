@@ -2,12 +2,13 @@ const postcss = require("postcss");
 
 const plugin = require(".");
 
-async function run(input, output, opts = [undefined]) {
+async function run(input, opts = [undefined]) {
   let result = await postcss([plugin(opts)]).process(input, {
     from: undefined,
   });
-  expect(result.css).toEqual(output);
   expect(result.warnings()).toHaveLength(0);
+
+  return result.css;
 }
 
 it("rewrite custom property", async () => {
@@ -25,12 +26,7 @@ it("rewrite custom property", async () => {
 }
 `;
 
-  const output = `.a, .b {
-    --color: #000
-}
-`;
-
-  await run(input, output);
+  expect(await run(input)).toMatchSnapshot();
 });
 
 it("merge one", async () => {
@@ -45,15 +41,7 @@ it("merge one", async () => {
 }
 `;
 
-  const output = `:root, .b {
-    --color: #fff;
-}
-.b {
-    color: var(--color);
-}
-`;
-
-  await run(input, output);
+  expect(await run(input)).toMatchSnapshot();
 });
 
 it("merge three", async () => {
@@ -70,21 +58,7 @@ it("merge three", async () => {
 }
 `;
 
-  const output = `:root, .b {
-    --color: #fff;
-}
-:root {
-    --size: 1px;
-}
-.b {
-    --size: 2px;
-}
-.b {
-    color: var(--color);
-}
-`;
-
-  await run(input, output);
+  expect(await run(input)).toMatchSnapshot();
 });
 
 // PS: по идеи @media в итоге не должно быть, но чтобы ничего не сломать оставлю так
@@ -105,7 +79,7 @@ it("check cascading", async () => {
     --color: blue;
 }`;
 
-  await run(input, input);
+  expect(await run(input)).toMatchSnapshot();
 });
 
 it("check deep cascading", async () => {
@@ -121,7 +95,7 @@ it("check deep cascading", async () => {
     --color: blue;
 }`;
 
-  await run(input, input);
+  expect(await run(input)).toMatchSnapshot();
 });
 
 it("no custom properties", async () => {
@@ -130,7 +104,7 @@ it("no custom properties", async () => {
   color: var(--color);
 }`;
 
-  await run(input, input);
+  expect(await run(input)).toMatchSnapshot();
 });
 
 it("example", async () => {
@@ -166,5 +140,5 @@ it("example", async () => {
 }
 `;
 
-  await run(input, output);
+  expect(await run(input)).toMatchSnapshot();
 });
