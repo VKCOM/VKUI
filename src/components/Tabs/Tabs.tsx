@@ -46,6 +46,9 @@ const TabsComponent = ({
   const platform = usePlatform();
   const { document } = useDOM();
 
+  const role = restProps.role || "tablist";
+  const isTabFlow = role === "tablist";
+
   const tabsRef = React.useRef<HTMLDivElement>(null);
 
   if (
@@ -85,7 +88,7 @@ const TabsComponent = ({
   }
 
   function handleDocumentKeydown(event: KeyboardEvent) {
-    if (!document || !tabsRef.current) {
+    if (!document || !tabsRef.current || !isTabFlow) {
       return;
     }
 
@@ -187,7 +190,7 @@ const TabsComponent = ({
         // TODO v5.0.0 новая адаптивность
         `Tabs--sizeX-${sizeX}`
       )}
-      role="tablist"
+      role={role}
     >
       <div vkuiClass="Tabs__in" ref={tabsRef}>
         <TabsModeContext.Provider value={{ mode, withGaps }}>

@@ -55,6 +55,9 @@ export const TabsItem = ({
     React.useContext(TabsModeContext);
   let statusComponent = null;
 
+  const role = restProps.role || "tab";
+  const isTabFlow = role === "tab";
+
   if (status) {
     statusComponent =
       typeof status === "number" ? (
@@ -70,13 +73,20 @@ export const TabsItem = ({
       );
   }
 
-  if (process.env.NODE_ENV === "development" && !restProps["aria-controls"]) {
-    warn(`Передайте в "aria-controls" id контролируемого блока`, "warn");
-  } else if (process.env.NODE_ENV === "development" && !restProps["id"]) {
-    warn(
-      `Передайте "id" компоненту для использования в "aria-labelledby" контролируемого блока`,
-      "warn"
-    );
+  if (process.env.NODE_ENV === "development" && isTabFlow) {
+    if (!restProps["aria-controls"]) {
+      warn(`Передайте в "aria-controls" id контролируемого блока`, "warn");
+    } else if (!restProps["id"]) {
+      warn(
+        `Передайте "id" компоненту для использования в "aria-labelledby" контролируемого блока`,
+        "warn"
+      );
+    }
+  }
+
+  let tabIndex: React.HTMLAttributes<HTMLElement>["tabIndex"] = undefined;
+  if (isTabFlow) {
+    tabIndex = selected ? 0 : -1;
   }
 
   return (
@@ -95,9 +105,9 @@ export const TabsItem = ({
       activeMode="TabsItem--active"
       focusVisibleMode={mode === "segmented" ? "outside" : "inside"}
       hasActive={mode === "segmented"}
-      role="tab"
+      role={restProps.role || "tab"}
       aria-selected={selected}
-      tabIndex={selected ? 0 : -1}
+      tabIndex={tabIndex}
     >
       {before && <div vkuiClass="TabsItem__before">{before}</div>}
       <Headline
