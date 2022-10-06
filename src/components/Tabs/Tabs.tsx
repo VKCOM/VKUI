@@ -46,7 +46,7 @@ const TabsComponent = ({
   const platform = usePlatform();
   const { document } = useDOM();
 
-  const tabsRef = React.useRef<HTMLDivElement | null>();
+  const tabsRef = React.useRef<HTMLDivElement>(null);
 
   if (
     (mode === "buttons" || mode === "segmented") &&
@@ -84,12 +84,12 @@ const TabsComponent = ({
     );
   }
 
-  function onDocumentKeydown(e: KeyboardEvent) {
+  function handleDocumentKeydown(event: KeyboardEvent) {
     if (!document || !tabsRef.current) {
       return;
     }
 
-    const key = pressedKey(e);
+    const key = pressedKey(event);
 
     switch (key) {
       case "ArrowLeft":
@@ -117,7 +117,7 @@ const TabsComponent = ({
         const nextTabEl = tabEls[nextIndex];
 
         if (nextTabEl) {
-          e.preventDefault();
+          event.preventDefault();
           nextTabEl.focus();
         }
 
@@ -148,14 +148,12 @@ const TabsComponent = ({
         }
 
         // eslint-disable-next-line no-restricted-properties
-        const relatedContentEl = document.querySelector(
-          "#" + relatedContentElId
-        ) as HTMLElement;
+        const relatedContentEl = document.getElementById(relatedContentElId);
         if (!relatedContentEl) {
           return;
         }
 
-        e.preventDefault();
+        event.preventDefault();
         relatedContentEl.focus();
 
         break;
@@ -173,7 +171,7 @@ const TabsComponent = ({
     }
   }
 
-  useGlobalEventListener(document, "keydown", onDocumentKeydown, {
+  useGlobalEventListener(document, "keydown", handleDocumentKeydown, {
     capture: true,
   });
 
@@ -191,7 +189,7 @@ const TabsComponent = ({
       )}
       role="tablist"
     >
-      <div vkuiClass="Tabs__in" ref={(el) => (tabsRef.current = el)}>
+      <div vkuiClass="Tabs__in" ref={tabsRef}>
         <TabsModeContext.Provider value={{ mode, withGaps }}>
           {children}
         </TabsModeContext.Provider>

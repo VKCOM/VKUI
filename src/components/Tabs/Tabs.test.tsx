@@ -82,10 +82,6 @@ function renderTestTabs(props: ComponentProps<typeof TestTabs> = {}) {
   render(<TestTabs {...props} />);
   screen.getByTestId("first").focus();
   screen.getByTestId("first").click();
-  expect(screen.getByTestId("first").getAttribute("aria-selected")).toEqual(
-    "true"
-  );
-  expect(isTabSelected(screen.getByTestId("first"))).toBeTruthy();
 }
 
 function pressKey(key: string) {
@@ -107,9 +103,6 @@ describe("Tabs", () => {
 
       fireEvent.click(screen.getByTestId("third"));
 
-      expect(screen.getByTestId("third").getAttribute("aria-selected")).toEqual(
-        "true"
-      );
       expect(isTabSelected(screen.getByTestId("third"))).toBeTruthy();
     });
     it("doesn't select disabled element on click", () => {

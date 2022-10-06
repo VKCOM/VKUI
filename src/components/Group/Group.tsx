@@ -77,10 +77,8 @@ const GroupComponent = ({
     );
   }
 
-  let tabIndex = restProps.tabIndex;
-  if (isTabPanel && tabIndex === undefined) {
-    tabIndex = 0;
-  }
+  const tabIndex =
+    isTabPanel && restProps.tabIndex === undefined ? 0 : restProps.tabIndex;
 
   let separatorElement = null;
 
