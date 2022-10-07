@@ -155,10 +155,10 @@ export function describeScreenshotFuzz<Props>(
     Wrapper = AppWrapper,
   } = options;
 
-  if (platforms && !platforms.includes(PLATFORM)) {
-    return;
-  }
-  describe(PLATFORM, () => {
+  const describeConditional =
+    platforms && !platforms.includes(PLATFORM) ? describe.skip : describe;
+
+  describeConditional(PLATFORM, () => {
     const isVKCOM = PLATFORM === Platform.VKCOM;
 
     let width: ViewWidth | "auto" = isVKCOM ? "auto" : MOBILE_SIZE;
