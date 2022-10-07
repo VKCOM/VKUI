@@ -1,3 +1,11 @@
+## Доступность
+
+Для корректной работы скринридеров необходимо вручную передавать некоторые параметры:
+<br />
+
+- В компонент вкладки (`TabsItem`) нужно передать `id` и `aria-controls`, указывающий на id области с его контентом. <br />
+- В область контента необходимо передать параметры `id`, `tabIndex = 0` и `aria-labelledby`, ссылающийся на компонент таба
+
 ```jsx
 const Example = () => {
   const [mode, setMode] = React.useState("all");
@@ -20,12 +28,33 @@ const Example = () => {
           }
         >
           <DefaultInPanel
+            selected={selected}
+            setSelected={setSelected}
             menuOpened={menuOpened}
             onMenuClick={(opened) => {
               setMenuOpened((prevState) => (opened ? !prevState : false));
             }}
           />
         </PanelHeader>
+
+        {selected === "news" && (
+          <Group
+            id="tab-content-news"
+            aria-labelledby="tab-news"
+            role="tabpanel"
+          >
+            <Div>Контент новостей</Div>
+          </Group>
+        )}
+        {selected === "recommendations" && (
+          <Group
+            id="tab-content-recommendations"
+            aria-labelledby="tab-recommendations"
+            role="tabpanel"
+          >
+            <Div>Контент рекомендаций</Div>
+          </Group>
+        )}
 
         <Scrollable />
 
@@ -63,9 +92,7 @@ const Example = () => {
   );
 };
 
-const DefaultInPanel = ({ menuOpened, onMenuClick }) => {
-  const [selected, setSelected] = React.useState("news");
-
+const DefaultInPanel = ({ menuOpened, onMenuClick, selected, setSelected }) => {
   return (
     <Tabs>
       <TabsItem
@@ -83,6 +110,8 @@ const DefaultInPanel = ({ menuOpened, onMenuClick }) => {
           }
           setSelected("news");
         }}
+        id="tab-news"
+        aria-controls="tab-content-news"
       >
         Новости
       </TabsItem>
@@ -92,6 +121,8 @@ const DefaultInPanel = ({ menuOpened, onMenuClick }) => {
           onMenuClick(false);
           setSelected("recommendations");
         }}
+        id="tab-recommendations"
+        aria-controls="tab-content-recommendations"
       >
         Интересное
       </TabsItem>

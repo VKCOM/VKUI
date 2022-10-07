@@ -7,6 +7,7 @@ import { Spacing } from "../Spacing/Spacing";
 import { Separator } from "../Separator/Separator";
 import { hasReactNode } from "../../lib/utils";
 import { Footnote } from "../Typography/Footnote/Footnote";
+import { warnOnce } from "../../lib/warnOnce";
 import { ModalRootContext } from "../ModalRoot/ModalRootContext";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
@@ -37,21 +38,20 @@ export interface GroupProps
   children?: React.ReactNode;
 }
 
-/**
- * @see https://vkcom.github.io/VKUI/#/Group
- */
-export const Group = (props: GroupProps) => {
-  const {
-    header,
-    description,
-    children,
-    separator = "auto",
-    getRootRef,
-    mode: modeProps,
-    padding = "m",
-    className,
-    ...restProps
-  } = props;
+const warn = warnOnce("TabsItem");
+
+export const Group = ({
+  header,
+  description,
+  children,
+  separator = "auto",
+  getRootRef,
+  mode: modeProps,
+  padding = "m",
+  className,
+  tabIndex: tabIndexProp,
+  ...restProps
+}: GroupProps) => {
   const { isInsideModal } = React.useContext(ModalRootContext);
   const platform = usePlatform();
   const { sizeX } = useAdaptivity();
@@ -63,6 +63,20 @@ export const Group = (props: GroupProps) => {
     mode = isInsideModal ? "plain" : "none";
   }
 
+  const isTabPanel = restProps.role === "tabpanel";
+
+  if (
+    process.env.NODE_ENV === "development" &&
+    isTabPanel &&
+    (!restProps["aria-controls"] || !restProps["id"])
+  ) {
+    warn(
+      'При использовании роли "tabpanel" необходимо задать значение свойств "aria-controls" и "id"'
+    );
+  }
+
+  const tabIndex = isTabPanel && tabIndexProp === undefined ? 0 : tabIndexProp;
+
   const separatorClassName = classNamesString(
     styles["Group__separator"],
     separator === "show" && styles["Group__separator--force"]
@@ -71,6 +85,7 @@ export const Group = (props: GroupProps) => {
   return (
     <section
       {...restProps}
+      tabIndex={tabIndex}
       ref={getRootRef}
       className={classNamesString(
         styles["Group"],

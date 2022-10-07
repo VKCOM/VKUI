@@ -6,6 +6,7 @@ import { TabsModeContext, TabsContextProps } from "../Tabs/Tabs";
 import { Headline } from "../Typography/Headline/Headline";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import { warnOnce } from "../../lib/warnOnce";
 import styles from "./TabsItem.module.css";
 
 export interface TabsItemProps extends React.HTMLAttributes<HTMLElement> {
@@ -34,6 +35,8 @@ export interface TabsItemProps extends React.HTMLAttributes<HTMLElement> {
   disabled?: boolean;
 }
 
+const warn = warnOnce("TabsItem");
+
 /**
  * @see https://vkcom.github.io/VKUI/#/TabsItem
  */
@@ -44,12 +47,16 @@ export const TabsItem = ({
   after,
   selected = false,
   className,
+  role = "tab",
+  tabIndex: tabIndexProp,
   ...restProps
 }: TabsItemProps) => {
   const { sizeY } = useAdaptivity();
   const { mode, withGaps }: TabsContextProps =
     React.useContext(TabsModeContext);
   let statusComponent = null;
+
+  const isTabFlow = role === "tab";
 
   if (status) {
     statusComponent =
@@ -69,6 +76,22 @@ export const TabsItem = ({
       );
   }
 
+  if (process.env.NODE_ENV === "development" && isTabFlow) {
+    if (!restProps["aria-controls"]) {
+      warn(`Передайте в "aria-controls" id контролируемого блока`, "warn");
+    } else if (!restProps["id"]) {
+      warn(
+        `Передайте "id" компоненту для использования в "aria-labelledby" контролируемого блока`,
+        "warn"
+      );
+    }
+  }
+
+  let tabIndex = tabIndexProp;
+  if (isTabFlow && tabIndex === undefined) {
+    tabIndex = selected ? 0 : -1;
+  }
+
   return (
     <Tappable
       {...restProps}
@@ -84,6 +107,9 @@ export const TabsItem = ({
       activeMode={styles["TabsItem--active"]}
       focusVisibleMode="inside"
       hasActive={false}
+      role={role}
+      aria-selected={selected}
+      tabIndex={tabIndex}
     >
       {before && <div className={styles["TabsItem__before"]}>{before}</div>}
       <Headline
