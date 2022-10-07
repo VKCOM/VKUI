@@ -159,6 +159,8 @@ export function describeScreenshotFuzz<Props>(
     platforms && !platforms.includes(PLATFORM) ? describe.skip : describe;
 
   describeConditional(PLATFORM, () => {
+    jest.setTimeout(40000);
+
     const isVKCOM = PLATFORM === Platform.VKCOM;
 
     let width: ViewWidth | "auto" = isVKCOM ? "auto" : MOBILE_SIZE;
