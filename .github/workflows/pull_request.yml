@@ -31,6 +31,15 @@ jobs:
         appearance: [dark, light]
         browser: [chromium, firefox, webkit]
         platform: [android, ios, vkcom]
+        exclude:
+          - platform: android
+            browser: firefox
+          - platform: android
+            browser: webkit
+          - platform: ios
+            browser: firefox
+          - platform: ios
+            browser: chromium
     steps:
       - uses: actions/checkout@v3
         with:
