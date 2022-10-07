@@ -48,6 +48,7 @@ export const TabsItem = ({
   after,
   selected = false,
   role = "tab",
+  tabIndex: tabIndexProp,
   ...restProps
 }: TabsItemProps) => {
   const platform = usePlatform();
@@ -84,7 +85,7 @@ export const TabsItem = ({
     }
   }
 
-  let tabIndex = restProps.tabIndex;
+  let tabIndex = tabIndexProp;
   if (isTabFlow && tabIndex === undefined) {
     tabIndex = selected ? 0 : -1;
   }

@@ -53,6 +53,7 @@ const GroupComponent = ({
   mode,
   padding = "m",
   sizeX,
+  tabIndex: tabIndexProp,
   ...restProps
 }: GroupProps) => {
   const { isInsideModal } = React.useContext(ModalRootContext);
@@ -77,8 +78,7 @@ const GroupComponent = ({
     );
   }
 
-  const tabIndex =
-    isTabPanel && restProps.tabIndex === undefined ? 0 : restProps.tabIndex;
+  const tabIndex = isTabPanel && tabIndexProp === undefined ? 0 : tabIndexProp;
 
   let separatorElement = null;
 
