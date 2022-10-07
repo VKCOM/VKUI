@@ -30,13 +30,11 @@ jobs:
         run: git lfs checkout
       - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
           cache: "yarn"
       - run: yarn --frozen-lockfile --ignore-scripts
-      - name: Install browser for E2E
-        run: yarn --cwd node_modules/playwright-${{ matrix.browser }} run install
       - name: Install deps for playwright
-        run: npx playwright install-deps ${{ matrix.browser }}
+        run: yarn playwright:install
       - name: Update screenshots
         run: yarn test:e2e -u
         env:

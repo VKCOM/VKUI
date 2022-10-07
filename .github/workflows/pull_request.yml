@@ -50,13 +50,11 @@ jobs:
         run: git fetch --no-tags --depth=1 origin $GITHUB_BASE_REF && git checkout origin/$GITHUB_BASE_REF src/**/__image_snapshots__/*.png
       - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
           cache: "yarn"
       - run: yarn install --frozen-lockfile --ignore-scripts
-      - name: Install browser for E2E
-        run: yarn --cwd node_modules/playwright-${{ matrix.browser }} run install
       - name: Install deps for playwright
-        run: npx playwright install-deps ${{ matrix.browser }}
+        run: yarn playwright:install
       - name: FYI visual tests
         run: yarn test:e2e:ci
         env:
