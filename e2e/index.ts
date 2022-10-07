@@ -25,8 +25,8 @@ export async function screenshot(
   }
   // font load affects layout
   /* istanbul ignore next */
-  // await page.evaluate(() => document.fonts.ready);
-  // await page.waitForLoadState("networkidle", { timeout: 3000 });
+  await page.evaluate(() => document.fonts.ready);
+  await page.waitForLoadState("networkidle", { timeout: 3000 });
 
   const { selector = "#mount > *:not(.AppRoot), .AppRoot > *" } = options;
   /* istanbul ignore next */
