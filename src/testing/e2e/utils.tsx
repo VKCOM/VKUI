@@ -35,9 +35,7 @@ type CartesianOptions = { adaptive: boolean };
 export const APPEARANCE = (process.env.APPEARANCE ??
   Appearance.LIGHT) as Appearance;
 export const BROWSER = (process.env.BROWSER ?? "chromium") as BrowserType;
-export const PLATFORMS = process.env.PLATFORM
-  ? ([process.env.PLATFORM] as Platform[])
-  : Object.values(Platform);
+export const PLATFORM = (process.env.PLATFORM ?? "vkcom") as Platform;
 
 function getAdaptivity(adaptivity?: AdaptivityFlag) {
   const extra: PropDesc<SizeProps> = {};
@@ -152,64 +150,66 @@ export function describeScreenshotFuzz<Props>(
 ) {
   const {
     matchScreenshot,
-    platforms = Object.values(Platform),
+    platforms,
     adaptivity = {},
     Wrapper = AppWrapper,
   } = options;
-  platforms.forEach((platform) => {
-    describe(platform, () => {
-      const isVKCOM = platform === Platform.VKCOM;
 
-      let width: ViewWidth | "auto" = isVKCOM ? "auto" : MOBILE_SIZE;
-      if (adaptivity.viewWidth) {
-        width = getAdaptivePxWidth(adaptivity.viewWidth);
-      }
+  if (platforms && !platforms.includes(PLATFORM)) {
+    return;
+  }
+  describe(PLATFORM, () => {
+    const isVKCOM = PLATFORM === Platform.VKCOM;
 
-      const adaptivityProps: AdaptivityProps = Object.assign(
-        isVKCOM ? { sizeX: SizeType.COMPACT, sizeY: SizeType.COMPACT } : {},
-        adaptivity
-      );
+    let width: ViewWidth | "auto" = isVKCOM ? "auto" : MOBILE_SIZE;
+    if (adaptivity.viewWidth) {
+      width = getAdaptivePxWidth(adaptivity.viewWidth);
+    }
 
-      const viewWidth = adaptivityProps.viewWidth
-        ? ` w_${adaptivityProps.viewWidth}`
-        : "";
+    const adaptivityProps: AdaptivityProps = Object.assign(
+      isVKCOM ? { sizeX: SizeType.COMPACT, sizeY: SizeType.COMPACT } : {},
+      adaptivity
+    );
 
-      const AdaptiveComponent = withAdaptivity(Component, {
-        sizeX: true,
-        sizeY: true,
-      });
+    const viewWidth = adaptivityProps.viewWidth
+      ? ` w_${adaptivityProps.viewWidth}`
+      : "";
 
-      it(`${BROWSER}-${APPEARANCE}${viewWidth}`, async () => {
-        expect(
-          await screenshot(
-            <ConfigProvider appearance={APPEARANCE} platform={platform}>
-              <AdaptivityProvider {...adaptivityProps}>
-                <div
-                  style={{
-                    width,
-                    maxWidth: DESKTOP_SIZE,
-                    position: "absolute",
-                    height: "auto",
-                  }}
-                >
-                  <Wrapper>
-                    {multiCartesian(propSets, { adaptive: !isVKCOM }).map(
-                      (props, i) => (
-                        <Fragment key={i}>
-                          <div>{prettyProps(props)}</div>
-                          <div>
-                            <AdaptiveComponent {...props} />
-                          </div>
-                        </Fragment>
-                      )
-                    )}
-                  </Wrapper>
-                </div>
-              </AdaptivityProvider>
-            </ConfigProvider>
-          )
-        ).toMatchImageSnapshot(matchScreenshot);
-      });
+    const AdaptiveComponent = withAdaptivity(Component, {
+      sizeX: true,
+      sizeY: true,
+    });
+
+    it(`${BROWSER}-${APPEARANCE}${viewWidth}`, async () => {
+      expect(
+        await screenshot(
+          <ConfigProvider appearance={APPEARANCE} platform={PLATFORM}>
+            <AdaptivityProvider {...adaptivityProps}>
+              <div
+                style={{
+                  width,
+                  maxWidth: DESKTOP_SIZE,
+                  position: "absolute",
+                  height: "auto",
+                }}
+              >
+                <Wrapper>
+                  {multiCartesian(propSets, { adaptive: !isVKCOM }).map(
+                    (props, i) => (
+                      <Fragment key={i}>
+                        <div>{prettyProps(props)}</div>
+                        <div>
+                          <AdaptiveComponent {...props} />
+                        </div>
+                      </Fragment>
+                    )
+                  )}
+                </Wrapper>
+              </div>
+            </AdaptivityProvider>
+          </ConfigProvider>
+        )
+      ).toMatchImageSnapshot(matchScreenshot);
     });
   });
 }
