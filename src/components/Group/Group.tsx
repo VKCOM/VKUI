@@ -7,6 +7,7 @@ import { Spacing } from "../Spacing/Spacing";
 import { Separator } from "../Separator/Separator";
 import { hasReactNode } from "../../lib/utils";
 import { Caption } from "../Typography/Caption/Caption";
+import { warnOnce } from "../../lib/warnOnce";
 import {
   withAdaptivity,
   AdaptivityProps,
@@ -41,6 +42,8 @@ export interface GroupProps
   children?: React.ReactNode;
 }
 
+const warn = warnOnce("TabsItem");
+
 const GroupComponent = ({
   header,
   description,
@@ -50,6 +53,7 @@ const GroupComponent = ({
   mode,
   padding = "m",
   sizeX,
+  tabIndex: tabIndexProp,
   ...restProps
 }: GroupProps) => {
   const { isInsideModal } = React.useContext(ModalRootContext);
@@ -61,6 +65,20 @@ const GroupComponent = ({
     computedMode =
       sizeX === SizeType.COMPACT || isInsideModal ? "plain" : "card";
   }
+
+  const isTabPanel = restProps.role === "tabpanel";
+
+  if (
+    process.env.NODE_ENV === "development" &&
+    isTabPanel &&
+    (!restProps["aria-controls"] || !restProps["id"])
+  ) {
+    warn(
+      'При использовании роли "tabpanel" необходимо задать значение свойств "aria-controls" и "id"'
+    );
+  }
+
+  const tabIndex = isTabPanel && tabIndexProp === undefined ? 0 : tabIndexProp;
 
   let separatorElement = null;
 
@@ -80,6 +98,7 @@ const GroupComponent = ({
   return (
     <section
       {...restProps}
+      tabIndex={tabIndex}
       ref={getRootRef}
       vkuiClass={classNames(
         "Group",

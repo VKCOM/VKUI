@@ -7,6 +7,7 @@ import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { TabsModeContext, TabsContextProps } from "../Tabs/Tabs";
 import { Headline } from "../Typography/Headline/Headline";
 import { Subhead } from "../Typography/Subhead/Subhead";
+import { warnOnce } from "../../lib/warnOnce";
 import "./TabsItem.css";
 
 export interface TabsItemProps extends React.HTMLAttributes<HTMLElement> {
@@ -35,6 +36,8 @@ export interface TabsItemProps extends React.HTMLAttributes<HTMLElement> {
   disabled?: boolean;
 }
 
+const warn = warnOnce("TabsItem");
+
 /**
  * @see https://vkcom.github.io/VKUI/#/TabsItem
  */
@@ -44,6 +47,8 @@ export const TabsItem = ({
   status,
   after,
   selected = false,
+  role = "tab",
+  tabIndex: tabIndexProp,
   ...restProps
 }: TabsItemProps) => {
   const platform = usePlatform();
@@ -51,6 +56,8 @@ export const TabsItem = ({
   const { mode, withGaps }: TabsContextProps =
     React.useContext(TabsModeContext);
   let statusComponent = null;
+
+  const isTabFlow = role === "tab";
 
   if (status) {
     statusComponent =
@@ -65,6 +72,22 @@ export const TabsItem = ({
       ) : (
         <span vkuiClass="TabsItem__status">{status}</span>
       );
+  }
+
+  if (process.env.NODE_ENV === "development" && isTabFlow) {
+    if (!restProps["aria-controls"]) {
+      warn(`Передайте в "aria-controls" id контролируемого блока`, "warn");
+    } else if (!restProps["id"]) {
+      warn(
+        `Передайте "id" компоненту для использования в "aria-labelledby" контролируемого блока`,
+        "warn"
+      );
+    }
+  }
+
+  let tabIndex = tabIndexProp;
+  if (isTabFlow && tabIndex === undefined) {
+    tabIndex = selected ? 0 : -1;
   }
 
   return (
@@ -83,6 +106,9 @@ export const TabsItem = ({
       activeMode="TabsItem--active"
       focusVisibleMode={mode === "segmented" ? "outside" : "inside"}
       hasActive={mode === "segmented"}
+      role={role}
+      aria-selected={selected}
+      tabIndex={tabIndex}
     >
       {before && <div vkuiClass="TabsItem__before">{before}</div>}
       <Headline

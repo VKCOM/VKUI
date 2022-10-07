@@ -13,7 +13,6 @@ import { HasComponent, HasRootRef } from "../../types";
 import { AppRootContext } from "../AppRoot/AppRootContext";
 
 const FOCUSABLE_ELEMENTS: string = FOCUSABLE_ELEMENTS_LIST.join();
-
 export interface FocusTrapProps
   extends React.AllHTMLAttributes<HTMLElement>,
     HasRootRef<HTMLElement>,

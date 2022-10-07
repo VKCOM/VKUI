@@ -19,6 +19,11 @@ export enum Keys {
   SPACE = "Space",
   TAB = "Tab",
   ESCAPE = "Escape",
+  HOME = "Home",
+  END = "End",
+  ARROW_LEFT = "ArrowLeft",
+  ARROW_RIGHT = "ArrowRight",
+  ARROW_DOWN = "ArrowDown",
 }
 
 interface AccessibleKey {
@@ -47,6 +52,31 @@ const ACCESSIBLE_KEYS: AccessibleKey[] = [
     code: Keys.ESCAPE,
     key: ["Escape"],
     keyCode: 27,
+  },
+  {
+    code: Keys.HOME,
+    key: ["Home"],
+    keyCode: 36,
+  },
+  {
+    code: Keys.END,
+    key: ["End"],
+    keyCode: 35,
+  },
+  {
+    code: Keys.ARROW_LEFT,
+    key: ["ArrowLeft"],
+    keyCode: 37,
+  },
+  {
+    code: Keys.ARROW_RIGHT,
+    key: ["ArrowRight"],
+    keyCode: 39,
+  },
+  {
+    code: Keys.ARROW_DOWN,
+    key: ["ArrowDown"],
+    keyCode: 40,
   },
 ];
 
