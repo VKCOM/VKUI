@@ -3,9 +3,16 @@ const path = require("path");
 const chalk = require("chalk");
 const { canRunTests, useDocker } = require("./detectEnv");
 
+const devicesMap = {
+  android: ["Pixel 5"],
+  ios: ["iPhone 12"],
+  vkcom: undefined,
+};
+
 const jestPlaywrightOptions = Object.assign(
   {
     browsers: [process.env.BROWSER ?? "chromium"],
+    devices: devicesMap[process.env.PLATFORM ?? "vkcom"],
     collectCoverage: true,
     contextOptions: {
       viewport: {
