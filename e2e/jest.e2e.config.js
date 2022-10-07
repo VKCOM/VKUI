@@ -14,7 +14,7 @@ const vkcomBrowserMap = {
 
 const devicesMap = {
   android: "Pixel 5",
-  ios: "iPhone 12",
+  ios: "iPhone XR",
   vkcom: vkcomBrowserMap[BROWSER],
 };
 
