@@ -84,8 +84,7 @@ export const TabsItem = ({
     }
   }
 
-  let tabIndex: React.HTMLAttributes<HTMLElement>["tabIndex"] =
-    restProps.tabIndex;
+  let tabIndex = restProps.tabIndex;
   if (isTabFlow && tabIndex === undefined) {
     tabIndex = selected ? 0 : -1;
   }

@@ -80,7 +80,7 @@ const TabsComponent = ({
     }
 
     return Array.from(
-      // eslint-disable-next-line
+      // eslint-disable-next-line no-restricted-properties
       tabsRef.current.querySelectorAll<HTMLDivElement>(
         "[role=tab]:not([disabled])"
       )

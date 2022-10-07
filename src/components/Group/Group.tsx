@@ -73,7 +73,7 @@ const GroupComponent = ({
     (!restProps["aria-controls"] || !restProps["id"])
   ) {
     warn(
-      'При использовани роли "tabpanel" необходимо задать значение пропов "aria-controls" и "id"'
+      'При использовании роли "tabpanel" необходимо задать значение свойств "aria-controls" и "id"'
     );
   }
 
