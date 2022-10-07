@@ -12,6 +12,7 @@ jobs:
       matrix:
         appearance: [dark, light]
         browser: [chromium, firefox, webkit]
+        platform: [android, ios, vkcom]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -32,5 +33,6 @@ jobs:
         env:
           APPEARANCE: ${{ matrix.appearance }}
           BROWSER: ${{ matrix.browser }}
+          PLATFORM: ${{ matrix.platform }}
       - name: Push updated screenshots
         run: node ./.github/gitflow/push_with_retry.js

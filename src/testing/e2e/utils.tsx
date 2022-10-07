@@ -35,6 +35,9 @@ type CartesianOptions = { adaptive: boolean };
 export const APPEARANCE = (process.env.APPEARANCE ??
   Appearance.LIGHT) as Appearance;
 export const BROWSER = (process.env.BROWSER ?? "chromium") as BrowserType;
+export const PLATFORMS = process.env.PLATFORM
+  ? ([process.env.PLATFORM] as Platform[])
+  : Object.values(Platform);
 
 function getAdaptivity(adaptivity?: AdaptivityFlag) {
   const extra: PropDesc<SizeProps> = {};

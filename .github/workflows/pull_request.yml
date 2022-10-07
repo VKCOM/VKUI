@@ -30,6 +30,7 @@ jobs:
       matrix:
         appearance: [dark, light]
         browser: [chromium, firefox, webkit]
+        platform: [android, ios, vkcom]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -52,6 +53,7 @@ jobs:
         env:
           APPEARANCE: ${{ matrix.appearance }}
           BROWSER: ${{ matrix.browser }}
+          PLATFORM: ${{ matrix.platform }}
         continue-on-error: true
       - name: Upload test artifact
         uses: actions/upload-artifact@v3
