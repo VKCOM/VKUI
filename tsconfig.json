@@ -41,10 +41,5 @@
     "*.js"
   ],
   "exclude": ["packages/token-translator/**/*"],
-  "files": [
-    "node_modules/jest-playwright-preset/types/global.d.ts",
-    "node_modules/expect-playwright/global.d.ts",
-    "types/global.d.ts",
-    "types/env.d.ts"
-  ]
+  "files": ["types/global.d.ts", "types/env.d.ts"]
 }
