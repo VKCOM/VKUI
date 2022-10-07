@@ -142,7 +142,7 @@
       }
     ],
     "compat/compat": "error",
-    "react/no-unknown-property": ["error", { "ignore": ["vkuiClass"] }]
+    "react/no-unknown-property": ["error"]
   },
   "overrides": [
     {

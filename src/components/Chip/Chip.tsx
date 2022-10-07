@@ -26,7 +26,7 @@ export interface ChipProps extends React.HTMLAttributes<HTMLDivElement> {
   after?: React.ReactNode;
 }
 
-export interface RenderChip<T> extends ChipProps {
+export interface RenderChip<T extends ChipOption> extends ChipProps {
   label: string;
   option: T;
   disabled: boolean;
