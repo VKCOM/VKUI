@@ -42,7 +42,8 @@ try {
 1. Создайте новую ветку от стабильной и примените исправления используя cherry-pick
 
 \`\`\`bash
-git checkout -b patch/pr${pullNumber} ${stableBranchRef}
+git fetch origin ${stableBranchRef}
+git checkout -b patch/pr${pullNumber} origin/${stableBranchRef}
 git cherry-pick ${patchRefs}
 \`\`\`
 
