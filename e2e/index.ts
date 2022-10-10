@@ -52,5 +52,6 @@ export async function screenshot(
   return page.screenshot({
     fullPage: true,
     clip: { x, y, width: Math.ceil(right - x), height: Math.ceil(bottom - y) },
+    animations: "disabled",
   });
 }
