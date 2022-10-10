@@ -148,7 +148,7 @@ jobs:
     needs:
       - test
       - test_e2e
-    if: always()
+    if: ${{ !cancelled() }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
