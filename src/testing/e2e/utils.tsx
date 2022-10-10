@@ -221,5 +221,5 @@ export function customSnapshotIdentifier({
 }: {
   defaultIdentifier: string;
 }): string {
-  return `${BROWSER}-${APPEARANCE}-${defaultIdentifier}`;
+  return `${BROWSER}-${APPEARANCE}-${PLATFORM}-${defaultIdentifier}`;
 }

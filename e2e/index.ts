@@ -28,6 +28,16 @@ export async function screenshot(
   await page.evaluate(() => document.fonts.ready);
   await page.waitForLoadState("networkidle", { timeout: 3000 });
 
+  // getBoundingClientRect в webkit возвращает некорректные значения, спасает timeout 500ms
+  if (process.env.BROWSER === "webkit") {
+    await page.evaluate(
+      () =>
+        new Promise((resolve) => {
+          setTimeout(resolve, 500);
+        })
+    );
+  }
+
   const { selector = "#mount > *:not(.AppRoot), .AppRoot > *" } = options;
   /* istanbul ignore next */
   const { x, y, bottom, right } = await page.evaluate((selector) => {
@@ -52,5 +62,6 @@ export async function screenshot(
   return page.screenshot({
     fullPage: true,
     clip: { x, y, width: Math.ceil(right - x), height: Math.ceil(bottom - y) },
+    animations: "disabled",
   });
 }
