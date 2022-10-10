@@ -120,8 +120,8 @@ export const Search = ({
         getSizeYClassName(styles["Search"], sizeY),
         isFocused && styles["Search--focused"],
         value && styles["Search--has-value"],
-        icon && styles["Search--has-after"],
-        after && styles["Search--has-icon"],
+        after && styles["Search--has-after"],
+        icon && styles["Search--has-icon"],
         className
       )}
       style={style}
