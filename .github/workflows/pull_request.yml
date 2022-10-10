@@ -2,6 +2,10 @@ name: "Pull Request"
 
 on: ["pull_request"]
 
+concurrency:
+  group: pr-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
