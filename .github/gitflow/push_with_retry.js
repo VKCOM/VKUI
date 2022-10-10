@@ -1,4 +1,7 @@
 const { execSync } = require("child_process");
+const process = require("process");
+
+const branch = process.env.BRANCH;
 
 // dangerfile depends on this message
 execSync('git config --global user.name "GitHub Action"');
@@ -26,7 +29,7 @@ function retry(cb, onError) {
   }
 }
 
-execSync("git pull");
+execSync(`git pull --depth=1 origin ${branch}`);
 
 retry(
   function () {
@@ -36,7 +39,7 @@ retry(
     );
   },
   function () {
-    execSync("git pull --rebase --autostash");
+    execSync(`git pull --rebase --autostash --depth=1 origin ${branch}`);
   }
 );
 
@@ -45,6 +48,6 @@ retry(
     execSync("git push --verbose");
   },
   function () {
-    execSync("git pull --rebase");
+    execSync(`git pull --rebase --depth=1 origin ${branch}`);
   }
 );
