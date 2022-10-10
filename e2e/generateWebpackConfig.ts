@@ -86,6 +86,7 @@ export async function generateWebpackConfig() {
       new webpack.DefinePlugin({
         "process.env.APPEARANCE": JSON.stringify(process.env.APPEARANCE),
         "process.env.BROWSER": JSON.stringify(process.env.BROWSER),
+        "process.env.PLATFORM": JSON.stringify(process.env.PLATFORM),
       }),
     ],
   };

@@ -3,16 +3,26 @@ const path = require("path");
 const chalk = require("chalk");
 const { canRunTests, useDocker } = require("./detectEnv");
 
+const BROWSER = process.env.BROWSER ?? "chromium";
+const PLATFORM = process.env.PLATFORM ?? "vkcom";
+
+const vkcomBrowserMap = {
+  firefox: "Desktop Firefox",
+  chromium: "Desktop Chrome",
+  webkit: "Desktop Safari",
+};
+
+const devicesMap = {
+  android: "Pixel 5",
+  ios: "iPhone XR",
+  vkcom: vkcomBrowserMap[BROWSER],
+};
+
 const jestPlaywrightOptions = Object.assign(
   {
-    browsers: [process.env.BROWSER ?? "chromium"],
+    browsers: [BROWSER],
+    devices: [devicesMap[PLATFORM]],
     collectCoverage: true,
-    contextOptions: {
-      viewport: {
-        width: 800,
-        height: 600,
-      },
-    },
   },
   useDocker
     ? {

@@ -4,7 +4,7 @@ const { execSync } = require("child_process");
 execSync('git config --global user.name "GitHub Action"');
 execSync('git config --global user.email "actions@github.com"');
 
-let count = 10;
+let count = 18;
 
 function retry(cb, onError) {
   while (true) {
