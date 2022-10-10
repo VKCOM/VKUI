@@ -40,6 +40,10 @@ export interface ActionSheetItemProps
    */
   onClick?: React.MouseEventHandler<HTMLElement>;
   onImmediateClick?: React.MouseEventHandler<HTMLElement>;
+  /**
+   * Иконка для `checked` режима.
+   */
+  iconChecked?: React.ReactNode;
 }
 
 const ActionSheetItemComponent = ({
@@ -59,6 +63,7 @@ const ActionSheetItemComponent = ({
   sizeY,
   onImmediateClick,
   multiline = false,
+  iconChecked = <Icon24CheckCircleOn aria-hidden />,
   ...restProps
 }: ActionSheetItemProps) => {
   const platform = usePlatform();
@@ -138,9 +143,7 @@ const ActionSheetItemComponent = ({
             checked={checked}
             disabled={restProps.disabled}
           />
-          <div vkuiClass="ActionSheetItem__marker">
-            <Icon24CheckCircleOn />
-          </div>
+          <div vkuiClass="ActionSheetItem__marker">{iconChecked}</div>
         </div>
       )}
     </Tappable>
