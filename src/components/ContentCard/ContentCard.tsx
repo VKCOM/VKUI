@@ -75,6 +75,8 @@ export const ContentCard = ({
   referrerPolicy,
   sizes,
   useMap,
+  hasHover = false,
+  hasActive = false,
   ...restProps
 }: ContentCardProps) => {
   const source = image || src;
@@ -97,8 +99,8 @@ export const ContentCard = ({
       <Tappable
         {...restProps}
         disabled={restProps.disabled || (!restProps.onClick && !restProps.href)}
-        hasHover={false}
-        hasActive={false}
+        hasHover={hasHover}
+        hasActive={hasActive}
         vkuiClass="ContentCard__tappable"
       >
         {(source || srcSet) && (
