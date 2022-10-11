@@ -549,7 +549,7 @@ npx @vkontakte/vkui-token-translator
 
 <br/><br/>
 
-## `Drowpdown` -> [`Popover`](#/Popover)
+## `Dropdown` -> [`Popover`](#/Popover)
 
 > ⚠️Компонент остаётся нестабильным (см. [Unstable](#//Unstable)).
 
