@@ -52,6 +52,8 @@ export interface ViewProps
    * callback завершения анимации отмененного пользователем свайпа
    */
   onSwipeBackCancel?(): void;
+  onBeforeSwipeBack?(): void;
+  swipeBackDisabled?: boolean;
   history?: string[];
 }
 
@@ -87,6 +89,8 @@ export const View = ({
   onSwipeBack,
   onSwipeBackStart,
   onSwipeBackCancel: onSwipeBackCancelProp,
+  onBeforeSwipeBack,
+  swipeBackDisabled = false,
   children,
   className,
   ...restProps
@@ -260,6 +264,8 @@ export const View = ({
       return;
     }
 
+    onBeforeSwipeBack && onBeforeSwipeBack();
+
     if (
       platform === Platform.IOS &&
       !configProvider?.isWebView &&
@@ -269,7 +275,12 @@ export const View = ({
       setBrowserSwipe(true);
     }
 
-    if (platform === Platform.IOS && configProvider?.isWebView && onSwipeBack) {
+    if (
+      !swipeBackDisabled &&
+      platform === Platform.IOS &&
+      configProvider?.isWebView &&
+      onSwipeBack
+    ) {
       if ((animated && e.startX <= 70) || !window) {
         return;
       }
