@@ -58,7 +58,7 @@ jobs:
           cache: "yarn"
       - run: yarn install --frozen-lockfile --ignore-scripts
       - name: Install deps for playwright
-        run: yarn playwright:install
+        run: yarn playwright:install ${{ matrix.browser }}
       - name: FYI visual tests
         run: yarn test:e2e:ci
         env:
