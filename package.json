@@ -67,7 +67,7 @@
     "eslint-plugin-jest": "^27.0.1",
     "eslint-plugin-jest-playwright": "^0.9.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "7.31.8",
+    "eslint-plugin-react": "7.31.10",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-vkui": "file:./packages/eslint-plugin-vkui",
     "husky": "^8.0.1",
@@ -78,10 +78,10 @@
     "jest-preset-stylelint": "^5.0.4",
     "lint-staged": "^13.0.3",
     "mini-css-extract-plugin": "^2.5.2",
-    "playwright": "^1.26.0",
-    "playwright-chromium": "^1.26.0",
-    "playwright-firefox": "^1.26.0",
-    "playwright-webkit": "^1.26.0",
+    "playwright": "1.27.0",
+    "playwright-chromium": "1.27.0",
+    "playwright-firefox": "1.27.0",
+    "playwright-webkit": "1.27.0",
     "postcss": "^8.4.5",
     "postcss-cli": "^10.0.0",
     "postcss-csso": "^6.0.0",
@@ -214,7 +214,8 @@
     "test:ci": "concurrently 'yarn test:unit:ci' 'yarn test:static:ci'",
     "codesandbox:install": "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 yarn install",
     "prepare": "husky install",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "playwright:install": "playwright install --with-deps"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [

@@ -3,7 +3,7 @@ const { execSync } = require("child_process");
 // dangerfile depends on this message
 execSync('git config --global user.name "GitHub Action"');
 
-let count = 10;
+let count = 18;
 
 function retry(cb, onError) {
   while (true) {

@@ -28,6 +28,7 @@ type CartesianOptions = { adaptive: boolean };
 export const APPEARANCE = (process.env.APPEARANCE ??
   Appearance.LIGHT) as Appearance;
 export const BROWSER = (process.env.BROWSER ?? "chromium") as BrowserType;
+export const PLATFORM = (process.env.PLATFORM ?? "vkcom") as Platform;
 
 function getAdaptivity(adaptivity?: AdaptivityFlag) {
   const extra: PropDesc<SizeProps> = {};
@@ -143,73 +144,77 @@ export function describeScreenshotFuzz<Props>(
 ) {
   const {
     matchScreenshot,
-    platforms = [Platform.ANDROID, Platform.IOS, Platform.VKCOM],
+    platforms,
     adaptivity = {},
     Wrapper = AppWrapper,
   } = options;
-  platforms.forEach((platform) => {
-    describe(platform, () => {
-      const isVKCOM = platform === Platform.VKCOM;
 
-      let width: number | "auto" = isVKCOM ? "auto" : BREAKPOINTS.MOBILE;
-      if (adaptivity.viewWidth) {
-        width = getAdaptivePxWidth(adaptivity.viewWidth);
-      }
+  const describeConditional =
+    platforms && !platforms.includes(PLATFORM) ? describe.skip : describe;
 
-      const adaptivityProps: AdaptivityProps = Object.assign(
-        isVKCOM ? { sizeX: SizeType.COMPACT, sizeY: SizeType.COMPACT } : {},
-        adaptivity
-      );
+  describeConditional(PLATFORM, () => {
+    jest.setTimeout(40000);
 
-      const viewWidth = adaptivityProps.viewWidth
-        ? ` w_${adaptivityProps.viewWidth}`
-        : "";
+    const isVKCOM = PLATFORM === Platform.VKCOM;
 
-      it(`${BROWSER}-${APPEARANCE}${viewWidth}`, async () => {
-        expect(
-          await screenshot(
-            <ConfigProvider appearance={APPEARANCE} platform={platform}>
-              <AdaptivityProvider {...adaptivityProps}>
-                <div
-                  style={{
-                    width,
-                    maxWidth: BREAKPOINTS.DESKTOP,
-                    position: "absolute",
-                    height: "auto",
-                  }}
-                >
-                  <Wrapper>
-                    {multiCartesian(propSets, { adaptive: !isVKCOM }).map(
-                      (props, i) => {
-                        const adaptivityProviderProps = {
-                          ...adaptivityProps,
-                        };
-                        if (props.sizeX) {
-                          adaptivityProviderProps.sizeX = props.sizeX;
-                        }
-                        if (props.sizeY) {
-                          adaptivityProviderProps.sizeY = props.sizeY;
-                        }
+    let width: number | "auto" = isVKCOM ? "auto" : BREAKPOINTS.MOBILE;
+    if (adaptivity.viewWidth) {
+      width = getAdaptivePxWidth(adaptivity.viewWidth);
+    }
 
-                        return (
-                          <Fragment key={i}>
-                            <div>{prettyProps(props)}</div>
-                            <div>
-                              <AdaptivityProvider {...adaptivityProviderProps}>
-                                <Component {...props} />
-                              </AdaptivityProvider>
-                            </div>
-                          </Fragment>
-                        );
+    const adaptivityProps: AdaptivityProps = Object.assign(
+      isVKCOM ? { sizeX: SizeType.COMPACT, sizeY: SizeType.COMPACT } : {},
+      adaptivity
+    );
+
+    const viewWidth = adaptivityProps.viewWidth
+      ? ` w_${adaptivityProps.viewWidth}`
+      : "";
+
+    it(`${BROWSER}-${APPEARANCE}${viewWidth}`, async () => {
+      expect(
+        await screenshot(
+          <ConfigProvider appearance={APPEARANCE} platform={PLATFORM}>
+            <AdaptivityProvider {...adaptivityProps}>
+              <div
+                style={{
+                  width,
+                  maxWidth: BREAKPOINTS.DESKTOP,
+                  position: "absolute",
+                  height: "auto",
+                }}
+              >
+                <Wrapper>
+                  {multiCartesian(propSets, { adaptive: !isVKCOM }).map(
+                    (props, i) => {
+                      const adaptivityProviderProps = {
+                        ...adaptivityProps,
+                      };
+                      if (props.sizeX) {
+                        adaptivityProviderProps.sizeX = props.sizeX;
                       }
-                    )}
-                  </Wrapper>
-                </div>
-              </AdaptivityProvider>
-            </ConfigProvider>
-          )
-        ).toMatchImageSnapshot(matchScreenshot);
-      });
+                      if (props.sizeY) {
+                        adaptivityProviderProps.sizeY = props.sizeY;
+                      }
+
+                      return (
+                        <Fragment key={i}>
+                          <div>{prettyProps(props)}</div>
+                          <div>
+                            <AdaptivityProvider {...adaptivityProviderProps}>
+                              <Component {...props} />
+                            </AdaptivityProvider>
+                          </div>
+                        </Fragment>
+                      );
+                    }
+                  )}
+                </Wrapper>
+              </div>
+            </AdaptivityProvider>
+          </ConfigProvider>
+        )
+      ).toMatchImageSnapshot(matchScreenshot);
     });
   });
 }
@@ -219,5 +224,5 @@ export function customSnapshotIdentifier({
 }: {
   defaultIdentifier: string;
 }): string {
-  return `${BROWSER}-${APPEARANCE}-${defaultIdentifier}`;
+  return `${BROWSER}-${APPEARANCE}-${PLATFORM}-${defaultIdentifier}`;
 }

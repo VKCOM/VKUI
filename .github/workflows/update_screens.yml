@@ -12,6 +12,16 @@ jobs:
       matrix:
         appearance: [dark, light]
         browser: [chromium, firefox, webkit]
+        platform: [android, ios, vkcom]
+        exclude:
+          - platform: android
+            browser: firefox
+          - platform: android
+            browser: webkit
+          - platform: ios
+            browser: firefox
+          - platform: ios
+            browser: chromium
     steps:
       - uses: actions/checkout@v3
         with:
@@ -20,17 +30,16 @@ jobs:
         run: git lfs checkout
       - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
           cache: "yarn"
       - run: yarn --frozen-lockfile --ignore-scripts
-      - name: Install browser for E2E
-        run: yarn --cwd node_modules/playwright-${{ matrix.browser }} run install
       - name: Install deps for playwright
-        run: npx playwright install-deps ${{ matrix.browser }}
+        run: yarn playwright:install ${{ matrix.browser }}
       - name: Update screenshots
         run: yarn test:e2e -u
         env:
           APPEARANCE: ${{ matrix.appearance }}
           BROWSER: ${{ matrix.browser }}
+          PLATFORM: ${{ matrix.platform }}
       - name: Push updated screenshots
         run: node ./.github/gitflow/push_with_retry.js
