@@ -7,13 +7,21 @@ import { noop } from "../../lib/utils";
 import { Platform } from "../../lib/platform";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import { Text } from "../Typography/Text/Text";
-import { Icon24CheckCircleOn } from "@vkontakte/icons";
+import { Icon20CheckCircleOn, Icon24CheckCircleOn } from "@vkontakte/icons";
 import {
   ActionSheetContext,
   type ActionSheetContextType,
 } from "../ActionSheet/ActionSheetContext";
 import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
+import { SizeYConditionalRender } from "../SizeYConditionalRender/SizeYConditionalRender";
 import styles from "./ActionSheetItem.module.css";
+
+const defaultIconChecked = (
+  <SizeYConditionalRender
+    compact={<Icon20CheckCircleOn aria-hidden />}
+    regular={<Icon24CheckCircleOn aria-hidden />}
+  />
+);
 
 export interface ActionSheetItemProps
   extends React.HTMLAttributes<HTMLElement>,
@@ -65,7 +73,7 @@ const ActionSheetItem = ({
   onClick,
   onImmediateClick,
   multiline = false,
-  iconChecked = <Icon24CheckCircleOn aria-hidden />,
+  iconChecked = defaultIconChecked,
   className,
   ...restProps
 }: ActionSheetItemProps) => {
