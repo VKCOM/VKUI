@@ -5,6 +5,16 @@ const { reactDocgenTypescript } = require("./propsParser.config");
 const baseConfig = {
   title: "VKUI styleguide",
   styleguideDir: path.join(__dirname, `../${argv.dist || "styleguide-build"}`),
+  template: {
+    head: {
+      links: [
+        {
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap",
+        },
+      ],
+    },
+  },
   styleguideComponents: {
     PlaygroundRenderer: path.join(
       __dirname,
@@ -345,10 +355,7 @@ const baseConfig = {
       ],
     },
   ],
-  require: [
-    path.resolve(__dirname, "./setup.js"),
-    path.resolve(__dirname, "./setup.css"),
-  ],
+  require: [path.resolve(__dirname, "./setup.js")],
   webpackConfig: require("./webpack.config"),
 };
 
