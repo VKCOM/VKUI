@@ -8947,10 +8947,15 @@ playwright-chromium@1.27.0:
   dependencies:
     playwright-core "1.27.0"
 
-playwright-core@1.27.0, playwright-core@>=1.2.0:
+playwright-core@1.27.0:
   version "1.27.0"
   resolved "https://registry.yarnpkg.com/playwright-core/-/playwright-core-1.27.0.tgz#e5f9d2bc19ebdd9581a01e74f019bb91aa7cf55d"
   integrity sha512-VBKaaFUVKDo3akW+o4DwbK1ZyXh46tcSwQKPK3lruh8IJd5feu55XVZx4vOkbb2uqrNdIF51sgsadYT533SdpA==
+
+playwright-core@1.27.1, playwright-core@>=1.2.0:
+  version "1.27.1"
+  resolved "https://registry.yarnpkg.com/playwright-core/-/playwright-core-1.27.1.tgz#840ef662e55a3ed759d8b5d3d00a5f885a7184f4"
+  integrity sha512-9EmeXDncC2Pmp/z+teoVYlvmPWUC6ejSSYZUln7YaP89Z6lpAaiaAnqroUt/BoLo8tn7WYShcfaCh+xofZa44Q==
 
 playwright-firefox@1.27.0:
   version "1.27.0"
@@ -8959,12 +8964,12 @@ playwright-firefox@1.27.0:
   dependencies:
     playwright-core "1.27.0"
 
-playwright-webkit@1.27.0:
-  version "1.27.0"
-  resolved "https://registry.yarnpkg.com/playwright-webkit/-/playwright-webkit-1.27.0.tgz#060017f856fd1203f92e56f2196d1e2e8647f4a0"
-  integrity sha512-Zz8m9i6jWYoJZnk/Yy29r3yyEfSc0SQnjGskz7uo6MRLcNbVEEYU6q3KkmaQk+BjKP5fEseVWlLtqOU5vokWhQ==
+playwright-webkit@1.27.1:
+  version "1.27.1"
+  resolved "https://registry.yarnpkg.com/playwright-webkit/-/playwright-webkit-1.27.1.tgz#d466fae6d7ace3d2ba7b62b20ccd26a369aea771"
+  integrity sha512-2HM93FdGJxBfvw2wS8z4ntSwCleLbEPj+JN2/RdkS0HanrSKQc9WK+OiJNM3mwMn7IMZzEuRuf4UjnvO7C0MHQ==
   dependencies:
-    playwright-core "1.27.0"
+    playwright-core "1.27.1"
 
 playwright@1.27.0:
   version "1.27.0"
