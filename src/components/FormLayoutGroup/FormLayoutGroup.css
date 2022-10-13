@@ -54,6 +54,7 @@
   flex: 1;
 }
 
-.FormLayoutGroup--segmented > *:not(:first-child) {
+.FormLayoutGroup--segmented
+  > *:not(:first-child):not(.FormLayoutGroup__offset) {
   margin-left: calc(-1 * var(--thin-border));
 }
