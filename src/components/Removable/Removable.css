@@ -103,6 +103,10 @@
   align-items: flex-start;
 }
 
+.Removable__offset {
+  display: none;
+}
+
 .FormItem--withTop .FormItem__removable ~ .Removable__offset,
 .FormLayoutGroup--removable .FormItem--withTop ~ .Removable__offset {
   order: -1;
