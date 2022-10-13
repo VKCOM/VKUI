@@ -20,6 +20,13 @@ function getEl(
   return ref && "current" in ref ? ref.current : ref;
 }
 
+interface ActionSheetDropdownDesktopProps extends SharedDropdownProps {
+  /**
+   * Отступ, где заданное кол-во единиц равняется пикселям
+   * */
+  popupOffsetDistance?: number;
+}
+
 export const ActionSheetDropdownDesktop = ({
   children,
   toggleRef,
@@ -28,8 +35,9 @@ export const ActionSheetDropdownDesktop = ({
   onClose,
   className,
   style,
+  popupOffsetDistance = 0,
   ...restProps
-}: SharedDropdownProps) => {
+}: ActionSheetDropdownDesktopProps) => {
   const { document } = useDOM();
   const platform = usePlatform();
   const { sizeY } = useAdaptivity();
@@ -79,7 +87,7 @@ export const ActionSheetDropdownDesktop = ({
   return (
     <Popper
       targetRef={targetRef}
-      offsetDistance={0}
+      offsetDistance={popupOffsetDistance}
       placement={isPopupDirectionTop ? "top-end" : "bottom-end"}
       vkuiClass={classNames(
         "ActionSheet",
