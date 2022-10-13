@@ -11994,9 +11994,9 @@ wait-port@^0.2.9:
     debug "^4.1.1"
 
 wait-port@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/wait-port/-/wait-port-1.0.1.tgz#6a002cf71e64d59fccc56cba56cd5a7641bd153c"
-  integrity sha512-JkEgxQRZqqBz449/bRVQAvl+e8LJ8fpW8J1W7WkKKo8PypoXX7EXGE47BmkNLTb5Ly/eI15IyTeAxDBwOEQ8DQ==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/wait-port/-/wait-port-1.0.3.tgz#17ec4b48fbda5cec27c4875ffa85c8c7ca807654"
+  integrity sha512-vILozNLF4VNJ8H9AzWvqH30wYRP6Ha/owMjuXPCmdDig8Qlr12rvIgU2J2V1nB2TlEV80IA8MrPJdi0BGIeCUg==
   dependencies:
     chalk "^4.1.2"
     commander "^9.3.0"
