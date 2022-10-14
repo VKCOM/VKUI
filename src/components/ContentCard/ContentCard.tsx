@@ -68,6 +68,8 @@ export const ContentCard = ({
   referrerPolicy,
   sizes,
   useMap,
+  hasHover = false,
+  hasActive = false,
   ...restProps
 }: ContentCardProps) => {
   return (
@@ -84,8 +86,8 @@ export const ContentCard = ({
       <Tappable
         {...restProps}
         disabled={restProps.disabled || (!restProps.onClick && !restProps.href)}
-        hasHover={false}
-        hasActive={false}
+        hasHover={hasHover}
+        hasActive={hasActive}
         className={styles["ContentCard__tappable"]}
       >
         {(src || srcSet) && (
