@@ -3,6 +3,7 @@ import { hasReactNode } from "../../lib/utils";
 import { classNames } from "../../lib/classNames";
 import { Footnote } from "../Typography/Footnote/Footnote";
 import { Caption } from "../Typography/Caption/Caption";
+import { useId } from "../../hooks/useId";
 import "./UsersStack.css";
 
 export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -102,6 +103,8 @@ export const UsersStack = ({
   children,
   ...restProps
 }: UsersStackProps) => {
+  const cmpId = useId();
+
   const canShowOthers = count > 0 && size !== "xs";
   const CounterTypography = size === "m" ? Footnote : Caption;
 
@@ -129,6 +132,10 @@ export const UsersStack = ({
           const direction =
             i === 0 && !canShowOthers ? "circle" : directionClip;
 
+          const id = `UsersStackDefs${cmpId}${i}`;
+          const hrefID = `#${id}`;
+          const maskID = `UsersStackMask${cmpId}${i}`;
+
           return (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -136,19 +143,20 @@ export const UsersStack = ({
               key={i}
               aria-hidden
             >
-              <g vkuiClass={`UsersStack__mask--${photoSize}-${direction}`}>
+              <defs>
                 <PathElement
+                  id={id}
                   direction={direction}
                   photoSize={photoSize}
-                  vkuiClass="UsersStack__fill"
                 />
+              </defs>
+              <clipPath id={maskID}>
+                <use href={hrefID} />
+              </clipPath>
+              <g clipPath={`url(#${maskID})`}>
+                <use href={hrefID} vkuiClass="UsersStack__fill" />
                 <image href={photo} width={photoSize} height={photoSize} />
-                <PathElement
-                  direction={direction}
-                  photoSize={photoSize}
-                  fill="none"
-                  stroke="rgba(0, 0, 0, 0.08)"
-                />
+                <use href={hrefID} fill="none" stroke="rgba(0, 0, 0, 0.08)" />
               </g>
             </svg>
           );
