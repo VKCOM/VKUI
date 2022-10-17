@@ -20,13 +20,6 @@ function getEl(
   return ref && "current" in ref ? ref.current : ref;
 }
 
-interface ActionSheetDropdownDesktopProps extends SharedDropdownProps {
-  /**
-   * Отступ, где заданное кол-во единиц равняется пикселям
-   * */
-  popupOffsetDistance?: number;
-}
-
 export const ActionSheetDropdownDesktop = ({
   children,
   toggleRef,
@@ -37,7 +30,7 @@ export const ActionSheetDropdownDesktop = ({
   style,
   popupOffsetDistance = 0,
   ...restProps
-}: ActionSheetDropdownDesktopProps) => {
+}: SharedDropdownProps) => {
   const { document } = useDOM();
   const platform = usePlatform();
   const { sizeY } = useAdaptivity();
