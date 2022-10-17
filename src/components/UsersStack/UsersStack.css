@@ -4,8 +4,21 @@
   color: var(--text_secondary, var(--vkui--color_text_secondary));
 }
 
+.UsersStack--l-vertical {
+  flex-direction: column;
+  justify-content: center;
+}
+
 .UsersStack__photos {
   display: flex;
+}
+
+.UsersStack--l-horizontal .UsersStack__photos {
+  margin-right: 8px;
+}
+
+.UsersStack--l-vertical .UsersStack__photos {
+  margin-bottom: 8px;
 }
 
 .UsersStack__fill {
@@ -49,18 +62,9 @@
 .UsersStack__text {
   min-width: 0;
   flex: 1;
-  margin: 0 0 0 8px;
-}
-
-/* Vertical layout */
-
-.UsersStack--l-vertical {
-  flex-direction: column;
-  justify-content: center;
 }
 
 .UsersStack--l-vertical .UsersStack__text {
-  margin: 8px 0 0;
   text-align: center;
 }
 

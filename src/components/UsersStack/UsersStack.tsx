@@ -115,7 +115,45 @@ export const UsersStack = ({
   }[size];
   const directionClip = canShowOthers ? "right" : "left";
 
-  const photosShown = photos.slice(0, visibleCount);
+  const photosElements = photos.slice(0, visibleCount).map((photo, i) => {
+    const direction = i === 0 && !canShowOthers ? "circle" : directionClip;
+
+    const id = `UsersStackDefs${cmpId}${i}`;
+    const hrefID = `#${id}`;
+    const maskID = `UsersStackMask${cmpId}${i}`;
+
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        vkuiClass="UsersStack__photo"
+        key={i}
+        aria-hidden
+      >
+        <defs>
+          <PathElement id={id} direction={direction} photoSize={photoSize} />
+        </defs>
+        <clipPath id={maskID}>
+          <use href={hrefID} />
+        </clipPath>
+        <g clipPath={`url(#${maskID})`}>
+          <use href={hrefID} vkuiClass="UsersStack__fill" />
+          <image href={photo} width={photoSize} height={photoSize} />
+          <use href={hrefID} fill="none" stroke="rgba(0, 0, 0, 0.08)" />
+        </g>
+      </svg>
+    );
+  });
+  const othersElement = canShowOthers ? (
+    <CounterTypography
+      caps
+      weight="1"
+      level="2" // TODO: remove only level in #2343
+      vkuiClass="UsersStack__photo UsersStack__photo--others"
+      aria-hidden
+    >
+      <span>+{count}</span>
+    </CounterTypography>
+  ) : null;
 
   return (
     <div
@@ -127,53 +165,12 @@ export const UsersStack = ({
         canShowOthers && "UsersStack--others"
       )}
     >
-      <div vkuiClass="UsersStack__photos" role="presentation">
-        {photosShown.map((photo, i) => {
-          const direction =
-            i === 0 && !canShowOthers ? "circle" : directionClip;
-
-          const id = `UsersStackDefs${cmpId}${i}`;
-          const hrefID = `#${id}`;
-          const maskID = `UsersStackMask${cmpId}${i}`;
-
-          return (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              vkuiClass="UsersStack__photo"
-              key={i}
-              aria-hidden
-            >
-              <defs>
-                <PathElement
-                  id={id}
-                  direction={direction}
-                  photoSize={photoSize}
-                />
-              </defs>
-              <clipPath id={maskID}>
-                <use href={hrefID} />
-              </clipPath>
-              <g clipPath={`url(#${maskID})`}>
-                <use href={hrefID} vkuiClass="UsersStack__fill" />
-                <image href={photo} width={photoSize} height={photoSize} />
-                <use href={hrefID} fill="none" stroke="rgba(0, 0, 0, 0.08)" />
-              </g>
-            </svg>
-          );
-        })}
-
-        {canShowOthers && (
-          <CounterTypography
-            caps
-            weight="1"
-            level="2" // TODO: remove only level in #2343
-            vkuiClass="UsersStack__photo UsersStack__photo--others"
-            aria-hidden
-          >
-            <span>+{count}</span>
-          </CounterTypography>
-        )}
-      </div>
+      {(photosElements.length > 0 || othersElement) && (
+        <div vkuiClass="UsersStack__photos" role="presentation">
+          {photosElements}
+          {othersElement}
+        </div>
+      )}
       {hasReactNode(children) && (
         <Footnote vkuiClass="UsersStack__text">{children}</Footnote>
       )}
