@@ -40,7 +40,14 @@
   "plugins": ["import", "vkui"],
   "rules": {
     "no-shadow": "off", // Need using @typescript-eslint/no-shadow
-    "@typescript-eslint/prefer-ts-expect-error": "off", // Need typescript > 3.9
+    "@typescript-eslint/ban-ts-comment": [
+      "error",
+      {
+        "ts-expect-error": {
+          "descriptionFormat": "^: TS\\d+ .+$"
+        }
+      }
+    ],
     "@typescript-eslint/explicit-member-accessibility": "off",
     "@typescript-eslint/no-unnecessary-condition": "off",
     "@typescript-eslint/no-magic-numbers": "off",

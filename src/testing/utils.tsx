@@ -164,7 +164,8 @@ export const mockScrollContext = (
   ];
 };
 
-const isNullOrUndefined = (val: any) => val === null || val === undefined;
+const isNullOrUndefined = (val: unknown): val is null | undefined =>
+  val === null || val === undefined;
 
 // Согласно спеке, offsetParent в ряде случаев будет null
 Object.defineProperty(HTMLElement.prototype, "offsetParent", {
@@ -177,7 +178,7 @@ Object.defineProperty(HTMLElement.prototype, "offsetParent", {
         isNullOrUndefined(element.style.display) ||
         element.style.display.toLowerCase() !== "none")
     ) {
-      // @ts-expect-error
+      // @ts-expect-error: TS2322 `parentNode: ParentNode | null`, а ожидается HTMLElement
       element = element.parentNode;
     }
 
