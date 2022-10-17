@@ -27,13 +27,17 @@ async function setupWebpack() {
     });
   });
 
-  devServer = new WebpackDevServer(compiler as any, {
-    noInfo: true,
-    stats: "minimal",
-    disableHostCheck: true,
-    ...webpackConfig.devServer,
-  });
-  devServer.listen(9000);
+  devServer = new WebpackDevServer(
+    {
+      allowedHosts: "all",
+      devMiddleware: {
+        stats: "minimal",
+      },
+      ...webpackConfig.devServer,
+    },
+    compiler as any
+  );
+  devServer.listen(9000, "localhost", console.error);
   (global as any)["__DEV_SERVER__"] = devServer;
 
   return compilerDone;

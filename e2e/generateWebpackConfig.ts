@@ -42,7 +42,9 @@ export async function generateWebpackConfig() {
     },
     devServer: {
       ...devServer,
-      contentBase: path.join(__dirname, "dist"),
+      static: {
+        directory: path.join(__dirname, "dist"),
+      },
     },
     module: {
       ...webpackConfig.module,
