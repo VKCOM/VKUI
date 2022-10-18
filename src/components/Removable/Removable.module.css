@@ -36,7 +36,7 @@
   padding: 0 10px;
   font-size: 15px;
   line-height: 45px;
-  color: var(--white);
+  color: var(--vkui_internal--white);
   background-color: var(--vkui--color_background_negative);
   border: none;
   border-radius: 0;
@@ -89,7 +89,7 @@
   display: block;
   width: 12px;
   height: 2px;
-  background-color: var(--white);
+  background-color: var(--vkui_internal--white);
 }
 
 .Removable--ios .Removable__content {

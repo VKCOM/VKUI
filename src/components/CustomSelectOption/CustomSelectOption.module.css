@@ -12,10 +12,10 @@
 }
 
 .CustomSelectOption--hierarchy {
-  --custom-select-option-hierarchy-level: 0;
+  --vkui_internal--custom_select_option_hierarchy_level: 0;
 
   padding-left: calc(
-    var(--custom-select-option-hierarchy-level) *
+    var(--vkui_internal--custom_select_option_hierarchy_level) *
       var(--vkui--size_option_hierarchy--regular)
   );
 }

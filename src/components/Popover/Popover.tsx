@@ -170,7 +170,7 @@ export const Popover = ({
             // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
             {
               ...styleProp,
-              "--popover-safe-zone-padding": `${offsetDistance}px`,
+              "--vkui_internal--popover_safe_zone_padding": `${offsetDistance}px`,
             } as React.CSSProperties
           }
           renderContent={({ className: wrapperClassName }) => (

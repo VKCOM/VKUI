@@ -13,8 +13,8 @@
    */
   left: auto;
   z-index: 3;
-  padding-left: var(--safe-area-inset-left);
-  padding-right: var(--safe-area-inset-right);
+  padding-left: var(--vkui_internal--safe_area_inset_left);
+  padding-right: var(--vkui_internal--safe_area_inset_right);
 }
 
 .FixedLayout--filled {
@@ -29,7 +29,7 @@
 .FixedLayout--vertical-bottom {
   width: 100%;
   bottom: 0;
-  padding-bottom: var(--safe-area-inset-bottom);
+  padding-bottom: var(--vkui_internal--safe_area_inset_bottom);
 }
 
 /**
@@ -37,7 +37,10 @@
  * Epic
  */
 .Epic .FixedLayout--vertical-bottom {
-  padding-bottom: calc(var(--tabbar_height) + var(--safe-area-inset-bottom));
+  padding-bottom: calc(
+    var(--vkui_internal--tabbar_height) +
+      var(--vkui_internal--safe_area_inset_bottom)
+  );
 }
 
 /**
@@ -47,7 +50,8 @@
 .PanelHeader ~ .FixedLayout--vertical-top,
 .PanelHeader ~ * .FixedLayout--vertical-top:not(.PanelHeader__fixed) {
   top: calc(
-    var(--vkui--size_panel_header_height--regular) + var(--safe-area-inset-top)
+    var(--vkui--size_panel_header_height--regular) +
+      var(--vkui_internal--safe_area_inset_top)
   );
 }
 

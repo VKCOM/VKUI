@@ -2,12 +2,13 @@
 }
 
 .View--ios .Panel__in {
-  padding-bottom: var(--safe-area-inset-bottom);
+  padding-bottom: var(--vkui_internal--safe_area_inset_bottom);
 }
 
 .View--ios .Panel__in {
-  padding: 0 var(--safe-area-inset-right) var(--safe-area-inset-bottom)
-    var(--safe-area-inset-left);
+  padding: 0 var(--vkui_internal--safe_area_inset_right)
+    var(--vkui_internal--safe_area_inset_bottom)
+    var(--vkui_internal--safe_area_inset_left);
 }
 
 /**

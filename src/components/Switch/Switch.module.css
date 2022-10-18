@@ -177,13 +177,13 @@
  * Пин
  */
 .Switch--ios .Switch__pseudo::before {
-  background: var(--white);
+  background: var(--vkui_internal--white);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15), 0 3px 1px rgba(0, 0, 0, 0.06),
     inset 0 0 0 0.5px rgba(0, 0, 0, 0.04);
 }
 
 .Switch--ios .Switch__self:checked + .Switch__pseudo::before {
-  background: var(--white);
+  background: var(--vkui_internal--white);
 }
 
 /**

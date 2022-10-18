@@ -5,7 +5,7 @@
   height: 100%;
   width: 100%;
   word-wrap: break-word;
-  font-family: var(--font-common);
+  font-family: var(--vkui_internal--font_common);
 }
 
 .View--animated,

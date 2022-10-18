@@ -115,8 +115,11 @@
 }
 
 .Epic .Panel__in {
-  padding-bottom: var(--tabbar_height);
-  padding-bottom: calc(var(--safe-area-inset-bottom) + var(--tabbar_height));
+  padding-bottom: var(--vkui_internal--tabbar_height);
+  padding-bottom: calc(
+    var(--vkui_internal--safe_area_inset_bottom) +
+      var(--vkui_internal--tabbar_height)
+  );
 }
 
 .Panel__in-before {

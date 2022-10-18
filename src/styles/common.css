@@ -18,7 +18,7 @@
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
-  font-family: var(--font-common);
+  font-family: var(--vkui_internal--font_common);
   color: var(--vkui--color_text_primary);
   color-scheme: var(--vkui--colors_scheme);
 }

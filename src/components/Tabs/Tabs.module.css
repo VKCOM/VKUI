@@ -13,7 +13,7 @@
  */
 .PanelHeader .Tabs {
   overflow: hidden;
-  font-family: var(--font-common);
+  font-family: var(--vkui_internal--font_common);
 }
 
 .PanelHeader .Tabs::after {

@@ -12,9 +12,9 @@
 }
 
 .GridAvatar__item {
-  width: calc(50% - var(--grid-avatar-image-offset) / 2);
-  height: calc(50% - var(--grid-avatar-image-offset) / 2);
-  margin-right: var(--grid-avatar-image-offset);
+  width: calc(50% - var(--vkui_internal--grid_avatar_image_offset) / 2);
+  height: calc(50% - var(--vkui_internal--grid_avatar_image_offset) / 2);
+  margin-right: var(--vkui_internal--grid_avatar_image_offset);
   background-size: cover;
   background-position: center;
 }
@@ -32,7 +32,7 @@
 .GridAvatar__item:nth-last-child(n + 3) ~ .GridAvatar__item:nth-last-child(2),
 /* четвертый с конца */
 .GridAvatar__item:nth-last-child(4) {
-  margin-bottom: var(--grid-avatar-image-offset);
+  margin-bottom: var(--vkui_internal--grid_avatar_image_offset);
 }
 
 .GridAvatar__badge {
