@@ -16,7 +16,10 @@ import { useScrollLock } from "../AppRoot/ScrollContext";
 import "./ActionSheet.css";
 
 export interface ActionSheetProps
-  extends Pick<SharedDropdownProps, "toggleRef" | "popupDirection">,
+  extends Pick<
+      SharedDropdownProps,
+      "toggleRef" | "popupDirection" | "popupOffsetDistance"
+    >,
     React.HTMLAttributes<HTMLDivElement> {
   header?: React.ReactNode;
   text?: React.ReactNode;
