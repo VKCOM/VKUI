@@ -43,8 +43,10 @@ export interface ViewProps extends React.HTMLAttributes<HTMLElement>, NavIdProps
   onSwipeBack?(): void;
   /**
    * callback начала анимации свайпа назад.
+   *
+   * Чтобы остановить свайп назад, возвращайте `"prevent"`.
    */
-  onSwipeBackStart?(): void;
+  onSwipeBackStart?(activePanel: string | null): void | "prevent";
   /**
    * callback завершения анимации отмененного пользователем свайпа
    */
@@ -115,6 +117,8 @@ export const View = ({
   const [nextPanel, setNextPanel] = React.useState<string | null>(null);
 
   const [swipingBack, setSwipingBack] = React.useState<boolean>(false);
+  const [swipeBackPrevented, setSwipeBackPrevented] =
+    React.useState<boolean>(false);
   const [swipeBackStartX, setSwipeBackStartX] = React.useState<number>(0);
   const [swipeBackShift, setSwipeBackShift] = React.useState<number>(0);
   const [swipeBackNextPanel, setSwipeBackNextPanel] = React.useState<string | null>(null);
@@ -239,7 +243,7 @@ export const View = ({
   );
 
   const onMoveX = (e: TouchEvent): void => {
-    if (swipeBackExcluded(e)) {
+    if (swipeBackPrevented || swipeBackExcluded(e)) {
       return;
     }
 
@@ -258,6 +262,15 @@ export const View = ({
       }
 
       if (e.startX <= 70 && !swipingBack && history && history.length > 1) {
+        // Начался свайп назад
+        if (onSwipeBackStart) {
+          const result = onSwipeBackStart(activePanel);
+          if (result === "prevent") {
+            setSwipeBackPrevented(true);
+            return;
+          }
+        }
+
         if (activePanel !== null) {
           // Note: вызываем закрытие клавиатуры. В iOS это нативное поведение при свайпе.
           blurActiveElement(document);
@@ -297,8 +310,19 @@ export const View = ({
           setSwipeBackResult(SwipeBackResults.fail);
         }
       }
+      if (swipeBackPrevented) {
+        setSwipeBackPrevented(false);
+      }
     },
-    [onSwipeBackCancel, onSwipeBackSuccess, swipeBackShift, swipeBackStartX, swipingBack, window],
+    [
+      onSwipeBackCancel,
+      onSwipeBackSuccess,
+      swipeBackShift,
+      swipeBackStartX,
+      swipingBack,
+      swipeBackPrevented,
+      window,
+    ]
   );
 
   const calcPanelSwipeStyles = (panelId: string | undefined): React.CSSProperties => {
@@ -400,11 +424,6 @@ export const View = ({
             to: nextPanel,
           });
       };
-    }
-
-    // Начался свайп назад
-    if (!prevSwipingBack && swipingBack) {
-      onSwipeBackStart && onSwipeBackStart();
     }
 
     // Началась анимация завершения свайпа назад.
