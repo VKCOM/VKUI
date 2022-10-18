@@ -101,11 +101,6 @@ export const ActionSheet = ({
     ? ActionSheetDropdownDesktop
     : ActionSheetDropdown;
 
-  // const dropdownProps = isDesktop
-  //   ? { popupDirection, ...restProps }
-  //   : { ...restProps };
-  //       {/*{...dropdownProps}*/}
-
   const actionSheet = (
     <ActionSheetContext.Provider value={contextValue}>
       <DropdownComponent
