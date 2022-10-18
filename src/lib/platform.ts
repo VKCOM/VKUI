@@ -2,7 +2,7 @@ import { BrowserInfo, computeBrowserInfo } from "./browser";
 import { querystring } from "@vkontakte/vkjs";
 import { canUseDOM } from "./dom";
 
-export const enum Platform {
+export enum Platform {
   ANDROID = "android",
   IOS = "ios",
   VKCOM = "vkcom",
