@@ -46,6 +46,7 @@ export const ActionSheet = ({
   style,
   iosCloseItem,
   popupDirection = "bottom",
+  popupOffsetDistance,
   ...restProps
 }: ActionSheetProps) => {
   const platform = usePlatform();
@@ -104,13 +105,16 @@ export const ActionSheet = ({
     ? ActionSheetDropdownDesktop
     : ActionSheetDropdown;
 
+  const dropdownProps = isDesktop
+    ? Object.assign(restProps, { popupOffsetDistance, popupDirection })
+    : restProps;
+
   const actionSheet = (
     <ActionSheetContext.Provider value={contextValue}>
       <DropdownComponent
         closing={closing}
         timeout={timeout}
-        popupDirection={popupDirection}
-        {...restProps}
+        {...dropdownProps}
         onClose={onClose}
         className={isDesktop ? className : undefined}
         style={isDesktop ? style : undefined}
