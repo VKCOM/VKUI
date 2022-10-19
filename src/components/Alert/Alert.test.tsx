@@ -35,9 +35,11 @@ describe("Alert", () => {
     describe.each([Platform.ANDROID, Platform.IOS])("on %s", (platform) => {
       it("calls action", () => {
         const action = jest.fn();
+        const onClose = jest.fn();
         render(
           <ConfigProvider platform={platform}>
             <Alert
+              onClose={onClose}
               actions={[{ action, title: "__action__", mode: "default" }]}
             />
           </ConfigProvider>

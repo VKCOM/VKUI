@@ -32,7 +32,7 @@ export interface AlertProps extends React.HTMLAttributes<HTMLElement> {
   actions?: AlertAction[];
   header?: React.ReactNode;
   text?: React.ReactNode;
-  onClose?: VoidFunction;
+  onClose: VoidFunction;
 
   /**
    * `aria-label` для кнопки закрытия. Необходим, чтобы кнопка была доступной.
@@ -185,7 +185,7 @@ export const Alert = ({
       elementRef.current,
       (e?: TransitionEvent) => {
         if (!e || e.propertyName === "opacity") {
-          onClose && onClose();
+          onClose();
         }
       },
       timeout
@@ -202,7 +202,7 @@ export const Alert = ({
           elementRef.current,
           (e?: TransitionEvent) => {
             if (!e || e.propertyName === "opacity") {
-              onClose && onClose();
+              onClose();
               action && action();
             }
           },
