@@ -10,7 +10,7 @@ import { getMillisecondsToTomorrow } from "../lib/date";
  * Часы, минуты, секунды, миллисекунды - произвольные
  */
 export function useNow() {
-  const [now, setNow] = React.useState(new Date());
+  const [now, setNow] = React.useState(() => new Date());
 
   React.useEffect(() => {
     const timeToDayChange = getMillisecondsToTomorrow(now);
