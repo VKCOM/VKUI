@@ -11,27 +11,22 @@ import { useTimeout } from "../../hooks/useTimeout";
 import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
 import { useObjectMemo } from "../../hooks/useObjectMemo";
 import { warnOnce } from "../../lib/warnOnce";
-import { SharedDropdownProps, PopupDirection, ToggleRef } from "./types";
+import { SharedDropdownProps } from "./types";
 import { useScrollLock } from "../AppRoot/ScrollContext";
 import "./ActionSheet.css";
 
-export interface ActionSheetProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ActionSheetProps
+  extends Pick<
+      SharedDropdownProps,
+      "toggleRef" | "popupDirection" | "popupOffsetDistance"
+    >,
+    React.HTMLAttributes<HTMLDivElement> {
   header?: React.ReactNode;
   text?: React.ReactNode;
   /**
    * Закрыть попап по клику снаружи. В v5 будет обязательным.
    */
   onClose?: VoidFunction;
-  /**
-   * Элемент, рядом с которым вылезает попап на десктопе.
-   * Лучше передавать RefObject c current.
-   * В v5 будет обязательным.
-   */
-  toggleRef?: ToggleRef;
-  /**
-   * Направление на десктопе
-   */
-  popupDirection?: PopupDirection;
   /**
    * Только iOS. В v5 будет обязательным.
    */
@@ -51,6 +46,7 @@ export const ActionSheet = ({
   style,
   iosCloseItem,
   popupDirection = "bottom",
+  popupOffsetDistance,
   ...restProps
 }: ActionSheetProps) => {
   const platform = usePlatform();
@@ -109,13 +105,16 @@ export const ActionSheet = ({
     ? ActionSheetDropdownDesktop
     : ActionSheetDropdown;
 
+  const dropdownProps = isDesktop
+    ? Object.assign(restProps, { popupOffsetDistance, popupDirection })
+    : restProps;
+
   const actionSheet = (
     <ActionSheetContext.Provider value={contextValue}>
       <DropdownComponent
         closing={closing}
         timeout={timeout}
-        {...(restProps as Omit<SharedDropdownProps, "closing">)}
-        popupDirection={popupDirection}
+        {...dropdownProps}
         onClose={onClose}
         className={isDesktop ? className : undefined}
         style={isDesktop ? style : undefined}
