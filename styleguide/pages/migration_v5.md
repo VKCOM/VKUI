@@ -100,6 +100,24 @@ npx @vkontakte/vkui-token-translator
 
 <br/><br/>
 
+## [`SimpleCell`](#/SimpleCell)
+
+- Свойство `description` переименовано в `subtitle`
+- Свойство `badge` переименовано в `badgeAfterTitle`
+
+```diff
+ <SimpleCell
+-  badge={<Icon12Verified />}
++  badgeAfterTitle={<Icon12Verified />}
+-  description="Команда ВКонтакте"
++  subtitle="Команда ВКонтакте"
+ />
+   Игорь Фёдоров
+ </SimpleCell>
+```
+
+<br/><br/>
+
 ## [`Alert`](#/Alert)
 
 - Свойство `onClose` стало обязательным
