@@ -102,6 +102,7 @@ npx @vkontakte/vkui-token-translator
 
 ## [`Alert`](#/Alert)
 
+- Свойство `onClose` стало обязательным
 - Свойство `autoclose` типа `AlertAction` переименовано в `autoClose`
 
 ```diff
