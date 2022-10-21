@@ -42,6 +42,7 @@ const ActionSheetTest = ({
       data-testid="sheet"
       toggleRef={toggleRef}
       onClose={_onClose}
+      iosCloseItem={null}
       {...props}
     >
       {children}
