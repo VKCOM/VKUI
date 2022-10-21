@@ -10,11 +10,16 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { useTimeout } from "../../hooks/useTimeout";
 import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
 import { useObjectMemo } from "../../hooks/useObjectMemo";
-import { PopupDirection, SharedDropdownProps, ToggleRef } from "./types";
+import { SharedDropdownProps } from "./types";
 import { useScrollLock } from "../AppRoot/ScrollContext";
 import styles from "./ActionSheet.module.css";
 
-export interface ActionSheetProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ActionSheetProps
+  extends Pick<
+      SharedDropdownProps,
+      "toggleRef" | "popupDirection" | "popupOffsetDistance"
+    >,
+    React.HTMLAttributes<HTMLDivElement> {
   header?: React.ReactNode;
   text?: React.ReactNode;
   /**
@@ -22,18 +27,9 @@ export interface ActionSheetProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   onClose: VoidFunction;
   /**
-   * Элемент, рядом с которым вылезает попап на десктопе.
-   * Лучше передавать RefObject c current.
-   */
-  toggleRef: ToggleRef;
-  /**
-   * Направление на десктопе
-   */
-  popupDirection?: PopupDirection;
-  /**
    * Только iOS.
    */
-  iosCloseItem?: React.ReactNode;
+  iosCloseItem: React.ReactNode;
 }
 
 /**
@@ -47,6 +43,7 @@ export const ActionSheet = ({
   style,
   iosCloseItem,
   popupDirection = "bottom",
+  popupOffsetDistance,
   ...restProps
 }: ActionSheetProps) => {
   const platform = usePlatform();
@@ -98,13 +95,16 @@ export const ActionSheet = ({
     ? ActionSheetDropdownDesktop
     : ActionSheetDropdown;
 
+  const dropdownProps = isDesktop
+    ? Object.assign(restProps, { popupOffsetDistance, popupDirection })
+    : restProps;
+
   const actionSheet = (
     <ActionSheetContext.Provider value={contextValue}>
       <DropdownComponent
         closing={closing}
         timeout={timeout}
-        {...(restProps as Omit<SharedDropdownProps, "closing">)}
-        popupDirection={popupDirection}
+        {...dropdownProps}
         onClose={onClose}
         className={isDesktop ? className : undefined}
         style={isDesktop ? style : undefined}

@@ -15,6 +15,7 @@ describe("UsersStack", () => {
       size: ["s", "m", "l"],
       layout: ["horizontal", "vertical"],
       photos: [
+        [],
         [base64Image],
         [base64Image, base64Image],
         [base64Image, base64Image, base64Image],

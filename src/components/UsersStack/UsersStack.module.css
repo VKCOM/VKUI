@@ -4,8 +4,21 @@
   color: var(--vkui--color_text_secondary);
 }
 
+.UsersStack--layout-vertical {
+  flex-direction: column;
+  justify-content: center;
+}
+
 .UsersStack__photos {
   display: flex;
+}
+
+.UsersStack--layout-horizontal .UsersStack__photos {
+  margin-right: 8px;
+}
+
+.UsersStack--layout-vertical .UsersStack__photos {
+  margin-bottom: 8px;
 }
 
 .UsersStack__fill {
@@ -43,18 +56,9 @@
 .UsersStack__text {
   min-width: 0;
   flex: 1;
-  margin: 0 0 0 8px;
-}
-
-/* Vertical layout */
-
-.UsersStack--layout-vertical {
-  flex-direction: column;
-  justify-content: center;
 }
 
 .UsersStack--layout-vertical .UsersStack__text {
-  margin: 8px 0 0;
   text-align: center;
 }
 
@@ -66,50 +70,7 @@
   margin-top: 20px;
 }
 
-.UsersStack__mask--16-left {
-  clip-path: path(
-    "M2,13.285A8 8 0 0 0 8 16A8 8 0 0 0 8 0A8 8 0 0 0 2 2.715A8 8 0 0 1 2,13.285"
-  );
-}
-
-.UsersStack__mask--16-circle {
-  clip-path: circle(8px);
-}
-
-.UsersStack__mask--24-left {
-  clip-path: path(
-    "M2,18.625A12 12 0 0 0 12 24A12 12 0 0 0 12 0A12 12 0 0 0 2 5.375A12 12 0 0 1 2,18.625"
-  );
-}
-
-.UsersStack__mask--24-circle {
-  clip-path: circle(12px);
-}
-
-.UsersStack__mask--24-right {
-  clip-path: path(
-    "M22,18.625A12 12 0 0 1 12 24A12 12 0 0 1 12 0A12 12 0 0 1 22 5.375A12 12 0 0 0 22,18.625"
-  );
-}
-
-.UsersStack__mask--32-left {
-  clip-path: path(
-    "M2,23.75A16 16 0 0 0 16 32A16 16 0 0 0 16 0A16 16 0 0 0 2 8.25A16 16 0 0 1 2,23.75"
-  );
-}
-
-.UsersStack__mask--32-circle {
-  clip-path: circle(16px);
-}
-
-.UsersStack__mask--32-right {
-  clip-path: path(
-    "M30,23.75A16 16 0 0 1 16 32A16 16 0 0 1 16 0A16 16 0 0 1 30 8.25A16 16 0 0 0 30,23.75"
-  );
-}
-
 .UsersStack--layout-horizontal,
-.UsersStack--others,
-.UsersStack__mask--16-right {
+.UsersStack--others {
   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

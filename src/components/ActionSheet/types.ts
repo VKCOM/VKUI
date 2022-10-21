@@ -11,6 +11,18 @@ export interface SharedDropdownProps
   extends React.AllHTMLAttributes<HTMLElement>,
     FocusTrapProps {
   closing: boolean;
-  toggleRef: ToggleRef;
-  popupDirection: PopupDirection;
+  /**
+   * Элемент, рядом с которым вылезает попап на десктопе.
+   * Лучше передавать RefObject c current.
+   * В v5 будет обязательным.
+   */
+  toggleRef?: ToggleRef;
+  /**
+   * Направление на десктопе
+   */
+  popupDirection?: PopupDirection;
+  /**
+   * Отступ, где заданное кол-во единиц равняется пикселям
+   * */
+  popupOffsetDistance?: number;
 }
