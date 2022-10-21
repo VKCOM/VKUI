@@ -59,21 +59,15 @@ export const MiniInfoCell = ({
   children,
   ...restProps
 }: MiniInfoCellProps) => {
-  const isClickable = !!restProps.onClick;
+  const cellClasses = classNames(
+    "MiniInfoCell",
+    mode !== "base" && `MiniInfoCell--md-${mode}`,
+    textWrap !== "nowrap" && `MiniInfoCell--wr-${textWrap}`,
+    `MiniInfoCell--lvl-${textLevel}`
+  );
 
-  return (
-    <Tappable
-      Component="div"
-      disabled={!isClickable}
-      role={isClickable ? "button" : undefined}
-      {...restProps}
-      vkuiClass={classNames(
-        "MiniInfoCell",
-        mode !== "base" && `MiniInfoCell--md-${mode}`,
-        textWrap !== "nowrap" && `MiniInfoCell--wr-${textWrap}`,
-        `MiniInfoCell--lvl-${textLevel}`
-      )}
-    >
+  const cellContent = (
+    <React.Fragment>
       <span vkuiClass="MiniInfoCell__icon">{before}</span>
       <Paragraph
         vkuiClass="MiniInfoCell__content"
@@ -84,6 +78,21 @@ export const MiniInfoCell = ({
       {hasReactNode(after) && (
         <span vkuiClass="MiniInfoCell__after">{after}</span>
       )}
+    </React.Fragment>
+  );
+
+  return restProps.onClick ? (
+    <Tappable
+      Component="div"
+      role="button"
+      {...restProps}
+      vkuiClass={cellClasses}
+    >
+      {cellContent}
     </Tappable>
+  ) : (
+    <div {...restProps} vkuiClass={cellClasses}>
+      {cellContent}
+    </div>
   );
 };
