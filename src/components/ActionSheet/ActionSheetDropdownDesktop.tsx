@@ -29,6 +29,7 @@ export const ActionSheetDropdownDesktop = ({
   onClose,
   className,
   style,
+  popupOffsetDistance = 0,
   ...restProps
 }: SharedDropdownProps) => {
   const { document } = useDOM();
@@ -80,7 +81,7 @@ export const ActionSheetDropdownDesktop = ({
   return (
     <Popper
       targetRef={targetRef}
-      offsetDistance={0}
+      offsetDistance={popupOffsetDistance}
       placement={isPopupDirectionTop ? "top-end" : "bottom-end"}
       className={classNamesString(
         styles["ActionSheet"],

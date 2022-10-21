@@ -3,6 +3,7 @@ import { hasReactNode } from "../../lib/utils";
 import { classNamesString } from "../../lib/classNames";
 import { Footnote } from "../Typography/Footnote/Footnote";
 import { Caption } from "../Typography/Caption/Caption";
+import { useId } from "../../hooks/useId";
 import styles from "./UsersStack.module.css";
 
 export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -114,13 +115,55 @@ export const UsersStack = ({
   className,
   ...restProps
 }: UsersStackProps) => {
+  const cmpId = useId();
+
   const canShowOthers = count > 0 && size !== "s";
   const CounterTypography = size === "m" ? Footnote : Caption;
 
   const photoSize = photoSizes[size];
   const directionClip = canShowOthers ? "right" : "left";
 
-  const photosShown = photos.slice(0, visibleCount);
+  const photosElements = photos.slice(0, visibleCount).map((photo, i) => {
+    const direction = i === 0 && !canShowOthers ? "circle" : directionClip;
+
+    const id = `UsersStackDefs${cmpId}${i}`;
+    const hrefID = `#${id}`;
+    const maskID = `UsersStackMask${cmpId}${i}`;
+
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className={styles["UsersStack__photo"]}
+        key={i}
+        aria-hidden
+      >
+        <defs>
+          <PathElement id={id} direction={direction} photoSize={photoSize} />
+        </defs>
+        <clipPath id={maskID}>
+          <use href={hrefID} />
+        </clipPath>
+        <g clipPath={`url(#${maskID})`}>
+          <use href={hrefID} className={styles["UsersStack__fill"]} />
+          <image href={photo} width={photoSize} height={photoSize} />
+          <use href={hrefID} fill="none" stroke="rgba(0, 0, 0, 0.08)" />
+        </g>
+      </svg>
+    );
+  });
+  const othersElement = canShowOthers ? (
+    <CounterTypography
+      caps
+      weight="1"
+      className={classNamesString(
+        styles["UsersStack__photo"],
+        styles["UsersStack__photo--others"]
+      )}
+      aria-hidden
+    >
+      <span>+{count}</span>
+    </CounterTypography>
+  ) : null;
 
   return (
     <div
@@ -133,54 +176,12 @@ export const UsersStack = ({
         className
       )}
     >
-      <div className={styles["UsersStack__photos"]} role="presentation">
-        {photosShown.map((photo, i) => {
-          const direction =
-            i === 0 && !canShowOthers ? "circle" : directionClip;
-
-          return (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className={styles["UsersStack__photo"]}
-              key={i}
-              aria-hidden
-            >
-              <g
-                className={
-                  styles[`UsersStack__mask--${photoSize}-${direction}`]
-                }
-              >
-                <PathElement
-                  direction={direction}
-                  photoSize={photoSize}
-                  className={styles["UsersStack__fill"]}
-                />
-                <image href={photo} width={photoSize} height={photoSize} />
-                <PathElement
-                  direction={direction}
-                  photoSize={photoSize}
-                  fill="none"
-                  stroke="rgba(0, 0, 0, 0.08)"
-                />
-              </g>
-            </svg>
-          );
-        })}
-
-        {canShowOthers && (
-          <CounterTypography
-            caps
-            weight="1"
-            className={classNamesString(
-              styles["UsersStack__photo"],
-              styles["UsersStack__photo--others"]
-            )}
-            aria-hidden
-          >
-            <span>+{count}</span>
-          </CounterTypography>
-        )}
-      </div>
+      {(photosElements.length > 0 || othersElement) && (
+        <div className={styles["UsersStack__photos"]} role="presentation">
+          {photosElements}
+          {othersElement}
+        </div>
+      )}
       {hasReactNode(children) && (
         <Footnote className={styles["UsersStack__text"]}>{children}</Footnote>
       )}

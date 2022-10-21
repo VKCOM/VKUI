@@ -10,12 +10,16 @@ import styles from "./ActionSheet.module.css";
 
 const stopPropagation: React.MouseEventHandler = (e) => e.stopPropagation();
 
+export type ActionSheetDropdownProps = Omit<
+  SharedDropdownProps,
+  "popupDirection" | "popupOffsetDistance"
+>;
+
 export const ActionSheetDropdown = ({
   children,
   closing,
   // these 2 props are only omitted - ActionSheetDesktop compat
   toggleRef,
-  popupDirection,
   className,
   ...restProps
 }: SharedDropdownProps) => {
