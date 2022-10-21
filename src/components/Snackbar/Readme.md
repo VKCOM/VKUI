@@ -67,6 +67,19 @@ const SnackBarExample = () => {
     );
   };
 
+  const openWithSibtitle = () => {
+    if (snackbar) return;
+    setSnackbar(
+      <Snackbar
+        onClose={() => setSnackbar(null)}
+        subtitle="Вы можете порекомендовать сервис в дополнительном меню"
+        before={<Icon24ThumbsUpOutline fill="var(--vkui--color_icon_accent)" />}
+      >
+        Этот сервис рекомендует один друг
+      </Snackbar>
+    );
+  };
+
   const openDark = () => {
     if (snackbar) return;
     setSnackbar(
@@ -106,6 +119,9 @@ const SnackBarExample = () => {
           </CellButton>
           <CellButton onClick={openWithAvatar}>
             Уведомление с аватаркой
+          </CellButton>
+          <CellButton onClick={openWithSibtitle}>
+            Уведомление с дополнительным текстом
           </CellButton>
           <CellButton onClick={openDark}>Уведомление с темной темой</CellButton>
         </Group>

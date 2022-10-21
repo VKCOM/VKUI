@@ -79,6 +79,11 @@
   overflow: hidden;
 }
 
+.Snackbar__content-subtitle {
+  color: var(--vkui--color_text_subhead);
+  margin-top: 2px;
+}
+
 .Snackbar--mode-dark .Snackbar__content-text {
   color: var(--vkui--color_text_contrast);
 }
@@ -112,7 +117,7 @@
  */
 
 .Snackbar--desktop {
-  max-width: 328px;
+  max-width: 351px;
   left: 0;
   bottom: 0;
 }
