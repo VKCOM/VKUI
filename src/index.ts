@@ -315,7 +315,7 @@ export { usePlatform } from "./hooks/usePlatform";
 export { useAdaptivity } from "./hooks/useAdaptivity";
 export { useAppearance } from "./hooks/useAppearance";
 export { usePagination } from "./hooks/usePagination";
-export { useNow } from "./hooks/useNow";
+export { useTodayDate } from "./hooks/useTodayDate";
 export { useScrollLock } from "./components/AppRoot/ScrollContext";
 export { useNavTransition } from "./components/NavTransitionContext/NavTransitionContext";
 

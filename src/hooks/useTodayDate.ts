@@ -9,20 +9,20 @@ import { getMillisecondsToTomorrow } from "../lib/date";
  *
  * Часы, минуты, секунды, миллисекунды - произвольные
  */
-export function useNow() {
-  const [now, setNow] = React.useState(() => new Date());
+export function useTodayDate() {
+  const [todayDate, setTodayDate] = React.useState(() => new Date());
 
   React.useEffect(() => {
-    const timeToDayChange = getMillisecondsToTomorrow(now);
+    const timeToDayChange = getMillisecondsToTomorrow(todayDate);
 
     const timeout = setTimeout(() => {
-      setNow(new Date());
+      setTodayDate(new Date());
     }, timeToDayChange);
 
     return () => {
       clearTimeout(timeout);
     };
-  }, [now]);
+  }, [todayDate]);
 
-  return now;
+  return todayDate;
 }

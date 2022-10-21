@@ -7,7 +7,7 @@ import {
 import { getDaysNames, getWeeks } from "../../lib/calendar";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
 import { classNames } from "../../lib/classNames";
-import { useNow } from "../../hooks/useNow";
+import { useTodayDate } from "../../hooks/useTodayDate";
 import { Caption } from "../Typography/Caption/Caption";
 import "./CalendarDays.css";
 
@@ -56,7 +56,7 @@ export const CalendarDays = ({
 }: CalendarDaysProps) => {
   const locale = React.useContext(LocaleProviderContext);
   const ref = React.useRef<HTMLDivElement>(null);
-  const now = useNow();
+  const now = useTodayDate();
 
   const weeks = React.useMemo(
     () => getWeeks(viewDate, weekStartsOn),
