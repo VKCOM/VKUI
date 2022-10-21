@@ -5,11 +5,24 @@ import { Headline } from "../Typography/Headline/Headline";
 import { hasReactNode } from "../../lib/utils";
 import styles from "./Counter.module.css";
 
+const modeClassNames = {
+  secondary: styles["Counter--mode-secondary"],
+  primary: styles["Counter--mode-primary"],
+  prominent: styles["Counter--mode-prominent"],
+  contrast: styles["Counter--mode-contrast"],
+  inherit: styles["Counter--mode-inherit"],
+};
+
+const sizeClassNames = {
+  s: styles["Counter--size-s"],
+  m: styles["Counter--size-m"],
+};
+
 export interface CounterProps extends React.HTMLAttributes<HTMLSpanElement> {
   /**
-   * Тип счетчика. При использовании компонента в качестве значения свойства `after` у `Button` эти значения игнорируются
+   * Тип счетчика
    */
-  mode?: "secondary" | "primary" | "prominent" | "contrast";
+  mode?: "secondary" | "primary" | "prominent" | "contrast" | "inherit";
   size?: "s" | "m";
 }
 
@@ -17,7 +30,7 @@ export interface CounterProps extends React.HTMLAttributes<HTMLSpanElement> {
  * @see https://vkcom.github.io/VKUI/#/Counter
  */
 export const Counter = ({
-  mode = "secondary",
+  mode = "inherit",
   size = "m",
   children,
   className,
@@ -34,8 +47,8 @@ export const Counter = ({
       {...restProps}
       className={classNamesString(
         styles["Counter"],
-        styles[`Counter--mode-${mode}`],
-        styles[`Counter--size-${size}`],
+        modeClassNames[mode],
+        sizeClassNames[size],
         className
       )}
     >

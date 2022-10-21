@@ -2,6 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--vkui--color_icon_tertiary);
+  color: var(--vkui--color_text_contrast);
 }
 
 .Counter__in {
@@ -19,8 +21,7 @@
 }
 
 .Counter--mode-secondary {
-  background: var(--vkui--color_icon_tertiary);
-  color: var(--vkui--color_text_contrast);
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }
 
 .Counter--mode-prominent {
@@ -49,62 +50,62 @@
  * CMP:
  * Button
  */
-.Button--mode-primary.Button--appearance-accent .Counter {
+.Button--mode-primary.Button--appearance-accent .Counter--mode-inherit {
   background-color: var(--vkui--color_background_content);
   color: var(--vkui--color_text_accent_themed);
 }
 
-.Button--mode-secondary.Button--appearance-accent .Counter,
-.Button--mode-tertiary.Button--appearance-accent .Counter,
-.Button--mode-outline.Button--appearance-accent .Counter {
+.Button--mode-secondary.Button--appearance-accent .Counter--mode-inherit,
+.Button--mode-tertiary.Button--appearance-accent .Counter--mode-inherit,
+.Button--mode-outline.Button--appearance-accent .Counter--mode-inherit {
   background-color: var(--vkui--color_background_accent_themed);
   color: var(--vkui--color_text_contrast_themed);
 }
 
-.Button--mode-primary.Button--appearance-positive .Counter {
+.Button--mode-primary.Button--appearance-positive .Counter--mode-inherit {
   background-color: var(--vkui--color_background_contrast);
   color: var(--vkui--color_text_positive);
 }
 
-.Button--mode-secondary.Button--appearance-positive .Counter,
-.Button--mode-tertiary.Button--appearance-positive .Counter,
-.Button--mode-outline.Button--appearance-positive .Counter {
+.Button--mode-secondary.Button--appearance-positive .Counter--mode-inherit,
+.Button--mode-tertiary.Button--appearance-positive .Counter--mode-inherit,
+.Button--mode-outline.Button--appearance-positive .Counter--mode-inherit {
   background-color: var(--vkui--color_background_positive);
   color: var(--vkui--color_text_contrast);
 }
 
-.Button--mode-primary.Button--appearance-negative .Counter {
+.Button--mode-primary.Button--appearance-negative .Counter--mode-inherit {
   background-color: var(--vkui--color_background_contrast);
   color: var(--vkui--color_text_negative);
 }
 
-.Button--mode-secondary.Button--appearance-negative .Counter,
-.Button--mode-tertiary.Button--appearance-negative .Counter,
-.Button--mode-outline.Button--appearance-negative .Counter {
+.Button--mode-secondary.Button--appearance-negative .Counter--mode-inherit,
+.Button--mode-tertiary.Button--appearance-negative .Counter--mode-inherit,
+.Button--mode-outline.Button--appearance-negative .Counter--mode-inherit {
   background-color: var(--vkui--color_background_negative);
   color: var(--vkui--color_text_contrast);
 }
 
-.Button--mode-primary.Button--appearance-neutral .Counter {
+.Button--mode-primary.Button--appearance-neutral .Counter--mode-inherit {
   background-color: var(--vkui--color_background_content);
   color: var(--vkui--color_text_primary_invariably);
 }
 
-.Button--mode-secondary.Button--appearance-neutral .Counter,
-.Button--mode-tertiary.Button--appearance-neutral .Counter,
-.Button--mode-outline.Button--appearance-neutral .Counter {
+.Button--mode-secondary.Button--appearance-neutral .Counter--mode-inherit,
+.Button--mode-tertiary.Button--appearance-neutral .Counter--mode-inherit,
+.Button--mode-outline.Button--appearance-neutral .Counter--mode-inherit {
   background-color: var(--vkui--color_background_accent);
   color: var(--vkui--color_text_contrast);
 }
 
-.Button--mode-primary.Button--appearance-overlay .Counter {
+.Button--mode-primary.Button--appearance-overlay .Counter--mode-inherit {
   background-color: var(--vkui--color_icon_primary_invariably);
   color: var(--vkui--color_text_contrast);
 }
 
-.Button--mode-secondary.Button--appearance-overlay .Counter,
-.Button--mode-tertiary.Button--appearance-overlay .Counter,
-.Button--mode-outline.Button--appearance-overlay .Counter {
+.Button--mode-secondary.Button--appearance-overlay .Counter--mode-inherit,
+.Button--mode-tertiary.Button--appearance-overlay .Counter--mode-inherit,
+.Button--mode-outline.Button--appearance-overlay .Counter--mode-inherit {
   background-color: var(--vkui--color_background_contrast);
   color: var(--vkui--color_text_primary_invariably);
 }
@@ -113,7 +114,7 @@
  * CMP:
  * WriteBarIcon
  */
-.WriteBarIcon .Counter {
+.WriteBarIcon .Counter--mode-inherit {
   color: var(--vkui--color_text_contrast);
   background: var(--vkui--color_background_positive);
 }
@@ -122,8 +123,13 @@
  * CMP:
  * SubnavigationButton
  */
+.SubnavigationButton .Counter--mode-inherit {
+  background: var(--vkui--color_background_accent);
+  color: var(--vkui--color_text_contrast);
+}
+
 .SubnavigationButton--selected:not(.SubnavigationButton--mode-tertiary)
-  .Counter {
+  .Counter--mode-inherit {
   background-color: var(--vkui--color_background_content);
   color: var(--vkui--color_text_accent_themed);
 }

@@ -580,6 +580,12 @@ import "@vkontakte/vkui/dist/vkui.css";
 
 <br/><br/>
 
+## [`Counter`](#/Counter)
+
+- Свойство `mode` теперь не игнорируется в кнопке.
+
+<br/><br/>
+
 ## `FormStatus` -> [`Banner`](#/Banner)
 
 - `FormStatus` удален, вместо него используйте [`Banner`](#/Banner).
