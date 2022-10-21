@@ -19,6 +19,7 @@ export interface CalendarDaysProps
   showNeighboringMonth?: boolean;
   size?: "s" | "m";
   dayProps?: CalendarDayElementProps;
+  listenDayChangesForUpdate?: boolean;
   onDayChange(value: Date): void;
   isDayDisabled(value: Date): boolean;
   isDaySelectionStart(value: Date, dayOfWeek: number): boolean;
@@ -52,11 +53,12 @@ export const CalendarDays = ({
   size,
   showNeighboringMonth = false,
   dayProps,
+  listenDayChangesForUpdate = false,
   ...props
 }: CalendarDaysProps) => {
   const locale = React.useContext(LocaleProviderContext);
   const ref = React.useRef<HTMLDivElement>(null);
-  const now = useTodayDate();
+  const now = useTodayDate(listenDayChangesForUpdate);
 
   const weeks = React.useMemo(
     () => getWeeks(viewDate, weekStartsOn),
