@@ -15,7 +15,8 @@ const Example = () => {
   const [showNeighboringMonth, setShowNeighboringMonth] = useState(false);
   const [locale, setLocale] = useState("ru");
   const [size, setSize] = useState("m");
-  const [listenDayChangesForUpdate, setListenDayChangesForUpdate] = useState(false);
+  const [listenDayChangesForUpdate, setListenDayChangesForUpdate] =
+    useState(false);
 
   return (
     <FormLayout>
