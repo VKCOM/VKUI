@@ -8,7 +8,7 @@
   background: var(--vkui--color_background_modal);
   border-radius: 18px;
   padding: 16px;
-  margin-bottom: var(--safe-area-inset-bottom);
+  margin-bottom: var(--vkui_internal--safe_area_inset_bottom);
   display: flex;
   flex-direction: column;
   justify-content: center;

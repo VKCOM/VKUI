@@ -8,7 +8,7 @@
   outline: none;
   padding: 0;
   background: transparent;
-  height: var(--tabbar_height);
+  height: var(--vkui_internal--tabbar_height);
   position: relative;
 }
 

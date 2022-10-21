@@ -35,12 +35,13 @@
 }
 
 :not(.ModalRoot--desktop).ModalRoot .ModalRoot__viewport {
-  top: var(--safe-area-inset-top);
+  top: var(--vkui_internal--safe_area_inset_top);
 }
 
 :not(.ModalRoot--desktop).ModalRoot--vkapps .ModalRoot__viewport {
   top: calc(
-    var(--safe-area-inset-top) + var(--vkui--size_panel_header_height--regular)
+    var(--vkui_internal--safe_area_inset_top) +
+      var(--vkui--size_panel_header_height--regular)
   );
 }
 

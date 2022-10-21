@@ -4,8 +4,8 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: var(--tabbar_height);
-  padding-bottom: var(--safe-area-inset-bottom);
+  height: var(--vkui_internal--tabbar_height);
+  padding-bottom: var(--vkui_internal--safe_area_inset_bottom);
   box-sizing: content-box;
   background: var(--vkui--color_background_tertiary);
 }

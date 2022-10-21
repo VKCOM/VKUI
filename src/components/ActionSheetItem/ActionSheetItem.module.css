@@ -189,7 +189,7 @@
 
 .ActionSheetItem--mode-cancel {
   margin-top: 8px;
-  margin-bottom: var(--safe-area-inset-bottom);
+  margin-bottom: var(--vkui_internal--safe_area_inset_bottom);
   border-radius: 14px;
   min-height: 52px;
 }

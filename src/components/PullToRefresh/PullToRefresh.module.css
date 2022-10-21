@@ -66,7 +66,7 @@
 }
 
 .PullToRefresh__spinner--on .PullToRefresh__spinner-path {
-  animation: vkui-rotator var(--duration) linear infinite;
+  animation: vkui-rotator var(--vkui_internal--duration) linear infinite;
 }
 
 .PullToRefresh__content {

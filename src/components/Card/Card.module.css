@@ -31,7 +31,8 @@
   height: 100%;
   content: "";
   display: block;
-  border: var(--thin-border) solid var(--vkui--color_image_border_alpha);
+  border: var(--vkui_internal--thin_border) solid
+    var(--vkui--color_image_border_alpha);
   z-index: 1;
   box-sizing: border-box;
   border-radius: inherit;

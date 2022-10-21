@@ -1,7 +1,7 @@
 .Search {
   overflow: hidden;
   font-weight: normal;
-  font-family: var(--font-common);
+  font-family: var(--vkui_internal--font_common);
   transform: translate3d(0, 0, 0);
   line-height: normal;
   padding: 8px 16px;

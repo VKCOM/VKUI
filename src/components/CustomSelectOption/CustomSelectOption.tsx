@@ -78,7 +78,7 @@ export const CustomSelectOption = ({
     () =>
       hierarchy > 0
         ? {
-            "--custom-select-option-hierarchy-level": hierarchy,
+            "--vkui_internal--custom_select_option_hierarchy_level": hierarchy,
             ...styleProp,
           }
         : styleProp,

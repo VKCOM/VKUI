@@ -15,7 +15,7 @@
 }
 
 .Separator__in {
-  height: var(--thin-border);
+  height: var(--vkui_internal--thin_border);
   background: currentColor;
   transform-origin: center top;
 }

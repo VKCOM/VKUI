@@ -41,8 +41,8 @@
 
 .vkui__root {
   /* Force use embedded Roboto font for cross-platformity */
-  --font-common: "Roboto";
-  --font-display: "Roboto";
+  --vkui_internal--font_common: "Roboto";
+  --vkui_internal--font_display: "Roboto";
   --vkui--font_caption1--font_family--regular: "Roboto";
   --vkui--font_caption1_caps--font_family--regular: "Roboto";
   --vkui--font_caption2--font_family--regular: "Roboto";

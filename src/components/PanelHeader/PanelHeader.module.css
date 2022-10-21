@@ -58,13 +58,13 @@
 .PanelHeader__content-in {
   color: var(--vkui--color_text_primary);
   font-weight: 500;
-  font-family: var(--font-display);
+  font-family: var(--vkui_internal--font_display);
 }
 
 .PanelHeader::before,
 .PanelHeader__in {
   height: var(--vkui--size_panel_header_height--regular);
-  padding-top: var(--safe-area-inset-top);
+  padding-top: var(--vkui_internal--safe_area_inset_top);
 }
 
 .PanelHeader__after {
@@ -207,10 +207,10 @@
 .PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.PanelHeader--sep)
   .PanelHeader__in::after {
   position: absolute;
-  left: var(--thin-border);
-  right: var(--thin-border);
+  left: var(--vkui_internal--thin_border);
+  right: var(--vkui_internal--thin_border);
   bottom: 0;
-  height: var(--thin-border);
+  height: var(--vkui_internal--thin_border);
   background-color: var(--vkui--color_background_content);
   content: "";
 }
@@ -220,10 +220,10 @@
   .PanelHeader--vkcom.PanelHeader--sizeX-none:not(.PanelHeader--sep)
     .PanelHeader__in::after {
     position: absolute;
-    left: var(--thin-border);
-    right: var(--thin-border);
+    left: var(--vkui_internal--thin_border);
+    right: var(--vkui_internal--thin_border);
     bottom: 0;
-    height: var(--thin-border);
+    height: var(--vkui_internal--thin_border);
     background-color: var(--vkui--color_background_content);
     content: "";
   }
@@ -233,8 +233,8 @@
   .PanelHeader__in {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  box-shadow: 0 0 0 var(--thin-border) var(--vkui--color_field_border_alpha)
-    inset;
+  box-shadow: 0 0 0 var(--vkui_internal--thin_border)
+    var(--vkui--color_field_border_alpha) inset;
   border-bottom: none;
 }
 
@@ -243,8 +243,8 @@
     .PanelHeader__in {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    box-shadow: 0 0 0 var(--thin-border) var(--vkui--color_field_border_alpha)
-      inset;
+    box-shadow: 0 0 0 var(--vkui_internal--thin_border)
+      var(--vkui--color_field_border_alpha) inset;
     border-bottom: none;
   }
 }

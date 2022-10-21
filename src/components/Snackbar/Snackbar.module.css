@@ -5,13 +5,16 @@
   bottom: 0;
   left: auto;
   width: 100%;
-  padding-left: var(--safe-area-inset-left);
-  padding-right: var(--safe-area-inset-right);
-  padding-bottom: var(--safe-area-inset-bottom);
+  padding-left: var(--vkui_internal--safe_area_inset_left);
+  padding-right: var(--vkui_internal--safe_area_inset_right);
+  padding-bottom: var(--vkui_internal--safe_area_inset_bottom);
 }
 
 .Epic .Snackbar {
-  padding-bottom: calc(var(--tabbar_height) + var(--safe-area-inset-bottom));
+  padding-bottom: calc(
+    var(--vkui_internal--tabbar_height) +
+      var(--vkui_internal--safe_area_inset_bottom)
+  );
 }
 
 .Snackbar__in,
@@ -95,7 +98,7 @@
 }
 
 .ModalRoot .Snackbar {
-  padding-bottom: var(--safe-area-inset-bottom);
+  padding-bottom: var(--vkui_internal--safe_area_inset_bottom);
 }
 
 /* iOS */

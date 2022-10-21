@@ -1,6 +1,5 @@
 const path = require("path");
 const cssCustomProperties = require("postcss-custom-properties");
-const scopeRoot = require("./packages/postcss-scope-root");
 const restructureVariable = require("./packages/postcss-restructure-variable");
 const cssImport = require("postcss-import");
 const autoprefixer = require("autoprefixer");
@@ -26,15 +25,6 @@ module.exports = (ctx) => {
       importFrom: cssCustomPropertiesPaths,
       preserve: true,
       disableDeprecationNotice: true,
-    }),
-    // postcss-custom-properties only works with :root
-    scopeRoot({
-      customPropRoot: ".vkui__root, .vkui__portal-root",
-      except: [
-        path.resolve(
-          "./node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css"
-        ),
-      ],
     }),
     restructureVariable(
       [
@@ -68,7 +58,7 @@ module.exports = (ctx) => {
     //     overrideToVkSansDisplay: true,
     //     overrideCustomFonts: true,
     //   },
-    //   varName: "--font-display",
+    //   varName: "--vkui_internal--font_display",
     //   customPropertiesFiles: [
     //     path.resolve(
     //       "./node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css"
