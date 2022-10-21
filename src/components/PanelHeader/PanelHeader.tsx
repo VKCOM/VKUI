@@ -6,7 +6,11 @@ import { classNamesString } from "../../lib/classNames";
 import { FixedLayout } from "../FixedLayout/FixedLayout";
 import { Separator } from "../Separator/Separator";
 import { Platform } from "../../lib/platform";
-import { HasRef, HasRootRef } from "../../types";
+import type {
+  ExpectedConditionalRenderComponentProps,
+  HasRef,
+  HasRootRef,
+} from "../../types";
 import {
   ConfigProviderContext,
   WebviewType,
@@ -18,6 +22,10 @@ import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { Spacing } from "../Spacing/Spacing";
 import { SizeXConditionalRender } from "../SizeXConditionalRender/SizeXConditionalRender";
 import styles from "./PanelHeader.module.css";
+
+const SpacingWithProps = (props: ExpectedConditionalRenderComponentProps) => (
+  <Spacing {...props} size={16} />
+);
 
 export interface PanelHeaderProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -131,8 +139,8 @@ export const PanelHeader = ({
       )}
       {separator && visor && platform !== Platform.VKCOM && (
         <SizeXConditionalRender
-          compact={<Separator />}
-          regular={<Spacing size={16} />}
+          Compact={Separator}
+          Regular={SpacingWithProps}
         />
       )}
     </div>

@@ -1,35 +1,29 @@
 import * as React from "react";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import { hasReactNode } from "../../lib/utils";
 import { SizeType } from "../../lib/adaptivity";
+import type { ExpectedConditionalRenderComponentProps } from "../../types";
 import styles from "./SizeYConditionalRender.module.css";
 
 export interface SizeYConditionalRenderProps {
-  compact?: React.ReactNode;
-  regular?: React.ReactNode;
+  Compact?: React.ComponentType<ExpectedConditionalRenderComponentProps>;
+  Regular?: React.ComponentType<ExpectedConditionalRenderComponentProps>;
 }
 
 export const SizeYConditionalRender = ({
-  compact,
-  regular,
+  Compact,
+  Regular,
 }: SizeYConditionalRenderProps) => {
   const { sizeY } = useAdaptivity();
 
   return (
     <React.Fragment>
-      {hasReactNode(compact) &&
-        (sizeY === undefined || sizeY === SizeType.COMPACT) && (
-          <div className={getSizeYClassName(styles["SizeYCompact"], sizeY)}>
-            {compact}
-          </div>
-        )}
-      {hasReactNode(regular) &&
-        (sizeY === undefined || sizeY === SizeType.REGULAR) && (
-          <div className={getSizeYClassName(styles["SizeYRegular"], sizeY)}>
-            {regular}
-          </div>
-        )}
+      {Compact && (sizeY === undefined || sizeY === SizeType.COMPACT) && (
+        <Compact className={getSizeYClassName(styles["SizeYCompact"], sizeY)} />
+      )}
+      {Regular && (sizeY === undefined || sizeY === SizeType.REGULAR) && (
+        <Regular className={getSizeYClassName(styles["SizeYRegular"], sizeY)} />
+      )}
     </React.Fragment>
   );
 };

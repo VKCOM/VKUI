@@ -45,3 +45,12 @@ export interface Version {
   minor?: number;
   patch?: number;
 }
+
+export interface ExpectedConditionalRenderComponentProps {
+  className: string;
+}
+
+export interface ConditionalRenderComponentProps {
+  Compact?: React.ComponentType<ExpectedConditionalRenderComponentProps>;
+  Regular?: React.ComponentType<ExpectedConditionalRenderComponentProps>;
+}

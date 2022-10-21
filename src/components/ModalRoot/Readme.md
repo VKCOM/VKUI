@@ -56,6 +56,20 @@ const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
   const [expanded, setExpanded] = React.useState(false);
   const toggle = React.useCallback(() => setExpanded(!expanded), [expanded]);
 
+  const PanelHeaderClosedCompact = React.useCallback(
+    (props) => <PanelHeaderClose {...props} onClick={onClose} />,
+    [onClose]
+  );
+
+  const PanelHeaderButtonCompact = React.useCallback(
+    (props) => (
+      <PanelHeaderButton {...props} onClick={onClose}>
+        <Icon24Dismiss />
+      </PanelHeaderButton>
+    ),
+    [onClose]
+  );
+
   return (
     <ModalPage
       {...props}
@@ -63,22 +77,14 @@ const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
         <ModalPageHeader
           before={
             <SizeXConditionalRender
-              compact={
-                platform === Platform.ANDROID && (
-                  <PanelHeaderClose onClick={onClose} />
-                )
+              Compact={
+                platform === Platform.ANDROID && PanelHeaderClosedCompact
               }
             />
           }
           after={
             <SizeXConditionalRender
-              compact={
-                platform === Platform.IOS && (
-                  <PanelHeaderButton onClick={onClose}>
-                    <Icon24Dismiss />
-                  </PanelHeaderButton>
-                )
-              }
+              Compact={platform === Platform.IOS && PanelHeaderButtonCompact}
             />
           }
         >
@@ -133,6 +139,11 @@ const App = () => {
     changeActiveModal(modalHistory[modalHistory.length - 2]);
   };
 
+  const PanelHeaderCloseCompact = React.useCallback(
+    (props) => <PanelHeaderClose onClick={modalBack} />,
+    [modalBack]
+  );
+
   const modal = (
     <ModalRoot activeModal={activeModal} onClose={modalBack}>
       <ModalPage
@@ -144,10 +155,8 @@ const App = () => {
           <ModalPageHeader
             before={
               <SizeXConditionalRender
-                compact={
-                  platform === Platform.ANDROID && (
-                    <PanelHeaderClose onClick={modalBack} />
-                  )
+                Compact={
+                  platform === Platform.ANDROID && PanelHeaderCloseCompact
                 }
               />
             }
@@ -214,9 +223,7 @@ const App = () => {
         header={
           <ModalPageHeader
             before={
-              <SizeXConditionalRender
-                compact={<PanelHeaderClose onClick={modalBack} />}
-              />
+              <SizeXConditionalRender Compact={PanelHeaderCloseCompact} />
             }
             after={<PanelHeaderSubmit onClick={modalBack} />}
           >

@@ -346,7 +346,12 @@ export { CustomScrollView } from "./components/CustomScrollView/CustomScrollView
 /**
  * Types
  */
-export type { AlignType, HasPlatform, HasInsets } from "./types";
+export type {
+  AlignType,
+  HasPlatform,
+  HasInsets,
+  ExpectedConditionalRenderComponentProps,
+} from "./types";
 export type { NavIdProps } from "./lib/getNavId";
 export type { PlatformType } from "./lib/platform";
 export type { TransitionContextProps } from "./components/NavTransitionContext/NavTransitionContext";

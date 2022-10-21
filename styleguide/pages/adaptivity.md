@@ -67,31 +67,54 @@ const SideCol = () => {
 };
 ```
 
-Почти готово. Теперь мы должны сообщить приложению, что левая колонка нужна только на больших экранах. Для доступа
-к рассчитанным в `AdaptivityProvider` свойствам вы можете использовать hook `useAdaptivity` в своих компонентах.
+Почти готово. Теперь мы должны сообщить приложению, что левая колонка нужна только на больших экранах. Для этого у нас
+есть утилитарные компоненты, такие как:
 
-```jsx static
+- [`SizeXConditionalRender`](https://github.com/VKCOM/VKUI/tree/master/src/components/SizeXConditionalRender/SizeXConditionalRender.tsx)
+- [`SizeYConditionalRender`](https://github.com/VKCOM/VKUI/tree/master/src/components/SizeYConditionalRender/SizeYConditionalRender.tsx)
+- [`ViewWidthConditionalRender`](https://github.com/VKCOM/VKUI/tree/master/src/components/ViewWidthConditionalRender/ViewWidthConditionalRender.tsx)
+- [`DeviceConditionalRender`](https://github.com/VKCOM/VKUI/tree/master/src/components/DeviceConditionalRender/DeviceConditionalRender.tsx)
+
+```tsx static
+import type { ExpectedConditionalRenderComponentProps } from "@vkontakte/vkui";
+
+// 1️⃣ Оборачиваем в HOC для дальнейшей передачи в утилитарный компонент
+const SplitColDesktop = (props: ExpectedConditionalRenderComponentProps) => (
+  <SplitCol width={280}>
+    <Panel id="nav">Navigation</Panel>
+  </SplitCol>
+);
+
 function App() {
   const platform = usePlatform();
   const isVKCOM = platform === Platform.VKCOM;
 
+  // 2️⃣ В кейсах, когда у оборачиваемого компонента есть зависимости, мы оборачиваем в HOC внутри основного компонента.
+  // В данном примере использутся `platform`.
+  // Оборачиваем в `useCallback()`, чтобы сохранить жизненный цикл компонентов внутри. Иначе они будут при каждом
+  // ре-рендере полностью пересоздаваться.
+  const SplitColDesktop = React.useCallback(
+    (props: ExpectedConditionalRenderComponentProps) => (
+      <SplitCol width={280}>
+        <Panel id="nav">Navigation</Panel>
+        <Group>{platform}</Group>
+      </SplitCol>
+    ),
+    [platform]
+  );
+
   // ...
 
-  <SplitLayout header={!isVKCOM && <PanelHeader separator={false} />}>
-    <ViewWidthConditionalRender
-      desktop={
-        <SplitCol width={280}>
-          <Panel id="nav">Navigation</Panel>
-        </SplitCol>
-      }
-    />
-    <SplitCol autoSpaced>
-      <View activePanel="profile">
-        <Panel id="profile">Profile</Panel>
-      </View>
-    </SplitCol>
-  </SplitLayout>;
-  // ...
+  return (
+    <SplitLayout header={!isVKCOM && <PanelHeader separator={false} />}>
+      <ViewWidthConditionalRender Desktop={SplitColDesktop} />
+      <SplitCol autoSpaced>
+        <View activePanel="profile">
+          <Panel id="profile">Profile</Panel>
+        </View>
+      </SplitCol>
+    </SplitLayout>
+  );
 }
 ```
 
@@ -103,8 +126,10 @@ function App() {
 
 ### Технические детали
 
-Адаптивность базируется на четырёх свойствах: `viewWidth`, `viewHeight`, `sizeX`, `sizeY`. Эти свойства задаются либо вычисляются в `AdaptivityProvider`. Для удобства вы можете использовать готовые компоненты `SizeXConditionalRender`, `SizeYConditionalRender`, `ViewWidthConditionalRender`.
+Адаптивность базируется на четырёх свойствах:
 
 - `sizeX` и `sizeY` принимают значения `SizeType.REGULAR | SizeType.COMPACT`
 - `viewWidth` — `ViewWidth.SMALL_MOBILE | ViewWidth.MOBILE | ViewWidth.SMALL_TABLET | ViewWidth.TABLET | ViewWidth.DESKTOP`
 - `viewHeight` — `ViewHeight.SMALL | ViewHeight.MEDIUM`
+
+Эти свойства задаются в `AdaptivityProvider`.

@@ -35,6 +35,49 @@ const Example = () => {
 
   const isVKCOM = platform === Platform.VKCOM;
 
+  const FixedSplitColDesktop = React.useCallback(
+    (props) => (
+      <SplitCol {...props} fixed width={280} maxWidth={280}>
+        <Panel>
+          {!isVKCOM && <PanelHeader />}
+          <Group>
+            {panels.map((i) => (
+              <Cell
+                key={i}
+                disabled={i === panel}
+                style={
+                  i === panel
+                    ? {
+                        backgroundColor:
+                          "var(--vkui--color_background_secondary)",
+                        borderRadius: 8,
+                      }
+                    : {}
+                }
+                onClick={() => setPanel(i)}
+              >
+                {i}
+              </Cell>
+            ))}
+            <Separator />
+            <Cell onClick={() => setModal(modals[0])}>modal 1</Cell>
+            <Cell onClick={() => setModal(modals[1])}>modal 2</Cell>
+            <Cell
+              onClick={() =>
+                setPopout(
+                  <Alert header="Alert!" onClose={() => setPopout(null)} />
+                )
+              }
+            >
+              alert
+            </Cell>
+          </Group>
+        </Panel>
+      </SplitCol>
+    ),
+    [panels, isVKCOM]
+  );
+
   return (
     <SplitLayout
       style={{ justifyContent: "center" }}
@@ -42,47 +85,7 @@ const Example = () => {
       popout={popout}
       modal={modalRoot}
     >
-      <ViewWidthConditionalRender
-        desktop={
-          <SplitCol fixed width={280} maxWidth={280}>
-            <Panel>
-              {!isVKCOM && <PanelHeader />}
-              <Group>
-                {panels.map((i) => (
-                  <Cell
-                    key={i}
-                    disabled={i === panel}
-                    style={
-                      i === panel
-                        ? {
-                            backgroundColor:
-                              "var(--vkui--color_background_secondary)",
-                            borderRadius: 8,
-                          }
-                        : {}
-                    }
-                    onClick={() => setPanel(i)}
-                  >
-                    {i}
-                  </Cell>
-                ))}
-                <Separator />
-                <Cell onClick={() => setModal(modals[0])}>modal 1</Cell>
-                <Cell onClick={() => setModal(modals[1])}>modal 2</Cell>
-                <Cell
-                  onClick={() =>
-                    setPopout(
-                      <Alert header="Alert!" onClose={() => setPopout(null)} />
-                    )
-                  }
-                >
-                  alert
-                </Cell>
-              </Group>
-            </Panel>
-          </SplitCol>
-        }
-      />
+      <ViewWidthConditionalRender Desktop={FixedSplitColDesktop} />
 
       <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
         <View activePanel={panel}>

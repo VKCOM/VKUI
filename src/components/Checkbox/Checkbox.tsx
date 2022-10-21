@@ -9,7 +9,11 @@ import {
   Icon24CheckBoxOff,
   Icon20CheckBoxIndetermanate,
 } from "@vkontakte/icons";
-import { HasRef, HasRootRef } from "../../types";
+import type {
+  HasRef,
+  HasRootRef,
+  ExpectedConditionalRenderComponentProps,
+} from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import { Footnote } from "../Typography/Footnote/Footnote";
@@ -20,6 +24,34 @@ import { SizeYConditionalRender } from "../SizeYConditionalRender/SizeYCondition
 import { VisuallyHiddenInput } from "../VisuallyHiddenInput/VisuallyHiddenInput";
 import { warnOnce } from "../../lib/warnOnce";
 import styles from "./Checkbox.module.css";
+
+const Icon20CheckBoxOnWithProps = (
+  props: ExpectedConditionalRenderComponentProps
+) => <Icon20CheckBoxOn {...props} aria-hidden />;
+
+const Icon24CheckBoxOnWithProps = (
+  props: ExpectedConditionalRenderComponentProps
+) => <Icon24CheckBoxOn {...props} aria-hidden />;
+
+const Icon20CheckBoxOffWithProps = (
+  props: ExpectedConditionalRenderComponentProps
+) => <Icon20CheckBoxOff {...props} aria-hidden />;
+
+const Icon24CheckBoxOffWithProps = (
+  props: ExpectedConditionalRenderComponentProps
+) => <Icon24CheckBoxOff {...props} aria-hidden />;
+
+const Icon20CheckBoxIndetermanateWithProps = (
+  props: ExpectedConditionalRenderComponentProps
+) => (
+  <Icon20CheckBoxIndetermanate {...props} aria-hidden width={20} height={20} />
+);
+
+const Icon24CheckBoxIndetermanateWithProps = (
+  props: ExpectedConditionalRenderComponentProps
+) => (
+  <Icon20CheckBoxIndetermanate {...props} aria-hidden width={24} height={24} />
+);
 
 export interface CheckboxProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
@@ -128,8 +160,8 @@ export const Checkbox = ({
           <Icon20CheckBoxOn aria-hidden />
         ) : (
           <SizeYConditionalRender
-            compact={<Icon20CheckBoxOn aria-hidden />}
-            regular={<Icon24CheckBoxOn aria-hidden />}
+            Compact={Icon20CheckBoxOnWithProps}
+            Regular={Icon24CheckBoxOnWithProps}
           />
         )}
       </div>
@@ -143,8 +175,8 @@ export const Checkbox = ({
           <Icon20CheckBoxOff aria-hidden />
         ) : (
           <SizeYConditionalRender
-            compact={<Icon20CheckBoxOff aria-hidden />}
-            regular={<Icon24CheckBoxOff aria-hidden />}
+            Compact={Icon20CheckBoxOffWithProps}
+            Regular={Icon24CheckBoxOffWithProps}
           />
         )}
       </div>
@@ -158,12 +190,8 @@ export const Checkbox = ({
           <Icon20CheckBoxIndetermanate aria-hidden width={20} height={20} />
         ) : (
           <SizeYConditionalRender
-            compact={
-              <Icon20CheckBoxIndetermanate aria-hidden width={20} height={20} />
-            }
-            regular={
-              <Icon20CheckBoxIndetermanate aria-hidden width={24} height={24} />
-            }
+            Compact={Icon20CheckBoxIndetermanateWithProps}
+            Regular={Icon24CheckBoxIndetermanateWithProps}
           />
         )}
       </div>

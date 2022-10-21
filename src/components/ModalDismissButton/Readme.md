@@ -2,7 +2,14 @@
 Для правильной отрисовки нужно расположить в контейнере с `position: "relative"` и отображать при достаточной ширине экрана (от `ViewWidth.SMALL_TABLET`)
 
 ```jsx { "props": { "layout": false, "adaptivity": true } }
+import { useCallback } from "react";
+
 const CustomPopout = ({ onClose }) => {
+  const ModalDismissButtonRegular = React.useCallback(
+    (props) => <ModalDismissButton {...props} onClick={onClose} />,
+    [onClose]
+  );
+
   return (
     <PopoutWrapper onClick={onClose}>
       <div
@@ -15,9 +22,7 @@ const CustomPopout = ({ onClose }) => {
       >
         <h4>Кастомное модальное окно</h4>
 
-        <SizeXConditionalRender
-          regular={<ModalDismissButton onClick={onClose} />}
-        />
+        <SizeXConditionalRender Regular={ModalDismissButtonRegular} />
       </div>
     </PopoutWrapper>
   );

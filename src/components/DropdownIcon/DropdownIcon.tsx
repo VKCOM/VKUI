@@ -5,7 +5,9 @@ import {
   Icon24ChevronUp,
   Icon20ChevronUp,
 } from "@vkontakte/icons";
+import { classNamesString } from "../../lib/classNames";
 import { SizeYConditionalRender } from "../SizeYConditionalRender/SizeYConditionalRender";
+import type { ExpectedConditionalRenderComponentProps } from "../../types";
 import styles from "./DropdownIcon.module.css";
 
 export interface DropdownIconProps
@@ -15,19 +17,47 @@ export interface DropdownIconProps
 
 export const DropdownIcon = ({
   opened = false,
+  className: classNameProp,
   ...restProps
 }: DropdownIconProps) => {
-  const IconCompact = opened ? Icon20ChevronUp : Icon20Dropdown;
-  const IconRegular = opened ? Icon24ChevronUp : Icon24ChevronDown;
+  const IconCompactWithProps = React.useCallback(
+    ({ className }: ExpectedConditionalRenderComponentProps) => {
+      const IconCompact = opened ? Icon20ChevronUp : Icon20Dropdown;
+      return (
+        <IconCompact
+          className={classNamesString(
+            styles["DropdownIcon"],
+            classNameProp,
+            className
+          )}
+          {...restProps}
+        />
+      );
+    },
+    [classNameProp, opened, restProps]
+  );
+
+  const IconRegularWithProps = React.useCallback(
+    ({ className }: ExpectedConditionalRenderComponentProps) => {
+      const IconRegular = opened ? Icon24ChevronUp : Icon24ChevronDown;
+      return (
+        <IconRegular
+          className={classNamesString(
+            styles["DropdownIcon"],
+            classNameProp,
+            className
+          )}
+          {...restProps}
+        />
+      );
+    },
+    [classNameProp, opened, restProps]
+  );
 
   return (
     <SizeYConditionalRender
-      compact={
-        <IconCompact className={styles["DropdownIcon"]} {...restProps} />
-      }
-      regular={
-        <IconRegular className={styles["DropdownIcon"]} {...restProps} />
-      }
+      Compact={IconCompactWithProps}
+      Regular={IconRegularWithProps}
     />
   );
 };

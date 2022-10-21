@@ -14,12 +14,21 @@ import {
 } from "../ActionSheet/ActionSheetContext";
 import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
 import { SizeYConditionalRender } from "../SizeYConditionalRender/SizeYConditionalRender";
+import type { ExpectedConditionalRenderComponentProps } from "../../types";
 import styles from "./ActionSheetItem.module.css";
+
+const Icon20CheckCircleOnWithProps = (
+  props: ExpectedConditionalRenderComponentProps
+) => <Icon20CheckCircleOn {...props} aria-hidden />;
+
+const Icon24CheckCircleOnWithProps = (
+  props: ExpectedConditionalRenderComponentProps
+) => <Icon24CheckCircleOn {...props} aria-hidden />;
 
 const defaultIconChecked = (
   <SizeYConditionalRender
-    compact={<Icon20CheckCircleOn aria-hidden />}
-    regular={<Icon24CheckCircleOn aria-hidden />}
+    Compact={Icon20CheckCircleOnWithProps}
+    Regular={Icon24CheckCircleOnWithProps}
   />
 );
 
