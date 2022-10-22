@@ -15,12 +15,12 @@ export function useNow() {
   React.useEffect(() => {
     const timeToDayChange = getMillisecondsToTomorrow(now);
 
-    const timout = setTimeout(() => {
+    const timeout = setTimeout(() => {
       setNow(new Date());
     }, timeToDayChange);
 
     return () => {
-      clearTimeout(timout);
+      clearTimeout(timeout);
     };
   }, [now]);
 
