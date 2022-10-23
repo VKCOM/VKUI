@@ -205,7 +205,10 @@ export const Tappable = ({
   const hasActive = _hasActive && !childHover && !props.disabled;
   const hasHover = deviceHasHover !== false && _hasHover && !childHover;
   const isCustomElement =
-    Component !== "a" && Component !== "button" && !props.contentEditable;
+    Component !== "a" &&
+    Component !== "button" &&
+    Component !== "label" &&
+    !props.contentEditable;
   const isPresetHoverMode = isPresetStateMode(hoverMode);
   const isPresetActiveMode = isPresetStateMode(activeMode);
   const isPresetFocusVisibleMode = ["inside", "outside"].includes(
