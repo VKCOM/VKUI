@@ -15,6 +15,8 @@ const Example = () => {
   const [showNeighboringMonth, setShowNeighboringMonth] = useState(false);
   const [locale, setLocale] = useState("ru");
   const [size, setSize] = useState("m");
+  const [listenDayChangesForUpdate, setListenDayChangesForUpdate] =
+    useState(false);
 
   return (
     <FormLayout>
@@ -58,6 +60,14 @@ const Example = () => {
           <Checkbox
             checked={showNeighboringMonth}
             onChange={(e) => setShowNeighboringMonth(e.target.checked)}
+          >
+            Включено
+          </Checkbox>
+        </FormItem>
+        <FormItem top="Переключать сегодняшний день в 00:00">
+          <Checkbox
+            checked={listenDayChangesForUpdate}
+            onChange={(e) => setListenDayChangesForUpdate(e.target.checked)}
           >
             Включено
           </Checkbox>
@@ -115,6 +125,7 @@ const Example = () => {
               disablePickers={disablePickers}
               showNeighboringMonth={showNeighboringMonth}
               size={size}
+              listenDayChangesForUpdate={listenDayChangesForUpdate}
             />
           </LocaleProviderContext.Provider>
         </FormItem>
