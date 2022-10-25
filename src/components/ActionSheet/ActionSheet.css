@@ -1,6 +1,6 @@
 .ActionSheet {
   position: relative;
-  overflow: hidden;
+  overflow: auto;
   box-shadow: var(--vkui--elevation3);
   width: calc(100% - 20px);
   align-items: stretch;
