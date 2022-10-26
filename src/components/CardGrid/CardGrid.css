@@ -24,7 +24,7 @@
 }
 
 .CardGrid--m .Card {
-  width: calc(50% - 4px);
+  width: calc(50% - (var(--vkui--size_cardgrid_padding--regular) / 2));
 }
 
 .CardGrid--m .Card:nth-child(n + 3) {
