@@ -24,7 +24,7 @@
 }
 
 .CardGrid--m .Card {
-  width: calc((100% - 8px) / 2);
+  width: calc(50% - 4px);
 }
 
 .CardGrid--m .Card:nth-child(n + 3) {
@@ -61,8 +61,8 @@
  */
 
 .Group--card .CardGrid {
-  padding-left: 8px;
-  padding-right: 8px;
+  padding-left: var(--vkui--size_base_padding_horizontal--regular);
+  padding-right: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .Group .CardGrid:first-child {
