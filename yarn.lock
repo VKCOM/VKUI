@@ -2075,12 +2075,12 @@
   resolved "https://registry.yarnpkg.com/@vkontakte/vkjs/-/vkjs-0.25.0.tgz#75cb786a780f4459e76805189c3754482bcf2e44"
   integrity sha512-2BBP/IPjm4YXnJw8rDNI2Bj4ddFsl9UJcImaqnJ39JMdz9iKUGG7LdMAHOQChLcIic7L6ipHOpOkLgtJjWj4tg==
 
-"@vkontakte/vkui-tokens@4.17.0":
-  version "4.17.0"
-  resolved "https://registry.yarnpkg.com/@vkontakte/vkui-tokens/-/vkui-tokens-4.17.0.tgz#3c837b700eafd3314fd67f4d24c333c1bd1d489f"
-  integrity sha512-6OOhfrldEHjTUoPWVOxCeK5LaQGp7E1pQvgodU4fnnN2EoTesslHvNWiPDSQe4xKb9cuBIy+FmT76fXEa5zFLA==
+"@vkontakte/vkui-tokens@4.21.0":
+  version "4.21.0"
+  resolved "https://registry.yarnpkg.com/@vkontakte/vkui-tokens/-/vkui-tokens-4.21.0.tgz#3161e95ba7ac4dabe50472261e9348a431d820fb"
+  integrity sha512-sUqtbP+2S5W5amM4oFIwqYlSbTnG5LHWD2aLRGuylnzpob+y1fPGKpnruehsT4AFDK352C4bTQ1WRQ6zmqvM/A==
   dependencies:
-    csstype "3.0.8"
+    csstype "3.1.1"
 
 "@vxna/mini-html-webpack-template@^2.0.0":
   version "2.0.0"
@@ -4089,10 +4089,10 @@ cssstyle@^2.3.0:
   dependencies:
     cssom "~0.3.6"
 
-csstype@3.0.8, csstype@^3.0.2:
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.8.tgz#d2266a792729fb227cd216fb572f43728e1ad340"
-  integrity sha512-jXKhWqXPmlUeoQnF/EhTtTl4C9SnrxSH/jZUih3jmO6lBKr99rP3/+FmrMj4EFpOXzMtXHAZkd3x0E6h6Fgflw==
+csstype@3.1.1, csstype@^3.0.2:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.1.tgz#841b532c45c758ee546a11d5bd7b7b473c8c30b9"
+  integrity sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==
 
 csstype@^2.6.5:
   version "2.6.10"
