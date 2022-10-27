@@ -29,8 +29,8 @@
 }
 
 .Counter--mode-contrast {
-  background: var(--vkui--color_background_contrast);
-  color: var(--vkui--color_text_accent);
+  background: var(--vkui--color_background_content);
+  color: var(--vkui--color_text_accent_themed);
 }
 
 .Counter--size-m {
@@ -123,6 +123,6 @@
  */
 .SubnavigationButton--selected:not(.SubnavigationButton--mode-tertiary)
   .Counter {
-  background-color: var(--vkui--color_background_contrast);
-  color: var(--vkui--color_text_accent);
+  background-color: var(--vkui--color_background_content);
+  color: var(--vkui--color_text_accent_themed);
 }
