@@ -538,14 +538,6 @@
   margin-left: 8px;
 }
 
-.Button--size-l .Button__in {
-  justify-content: center;
-}
-
-.Button:not(.Button--size-s) .Button__content {
-  transform: translateY(-1px);
-}
-
 /* Fonts sizes  */
 .Button--size-s .Button__content {
   font-size: var(--vkui--font_subhead--font_size--compact);
