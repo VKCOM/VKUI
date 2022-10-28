@@ -147,6 +147,10 @@
   border-top-right-radius: 0;
 }
 
+.Select .FormField__after {
+  pointer-events: none;
+}
+
 /**
  * CMP:
  * CalendarHeader

@@ -26,5 +26,7 @@ export const DropdownIcon = ({
     Icon = sizeY === SizeType.COMPACT ? Icon20ChevronUp : Icon24ChevronUp;
   }
 
-  return <Icon vkuiClass={classNames("DropdownIcon")} {...restProps} />;
+  return (
+    <Icon vkuiClass={classNames("DropdownIcon")} aria-hidden {...restProps} />
+  );
 };
