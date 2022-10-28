@@ -74,3 +74,11 @@
       ) + var(--safe-area-inset-top)
   );
 }
+
+/**
+ * CMP:
+ * PanelHeaderContext
+ */
+.FixedLayout.PanelHeaderContext {
+  z-index: 4;
+}
