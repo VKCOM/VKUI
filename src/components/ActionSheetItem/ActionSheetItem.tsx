@@ -12,7 +12,7 @@ import {
   ActionSheetContext,
   type ActionSheetContextType,
 } from "../ActionSheet/ActionSheetContext";
-import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
+import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
 import { SizeYConditionalRender } from "../SizeYConditionalRender/SizeYConditionalRender";
 import styles from "./ActionSheetItem.module.css";
 
@@ -80,7 +80,7 @@ const ActionSheetItem = ({
   const platform = usePlatform();
   const { onItemClick = () => noop, isDesktop } =
     React.useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);
-  const { sizeY } = useAdaptivityWithMediaQueries();
+  const { sizeY } = useAdaptivityWithJSMediaQueries();
 
   let Component: React.ElementType = restProps.href ? "a" : "div";
 

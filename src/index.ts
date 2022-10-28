@@ -310,6 +310,10 @@ export { withPlatform } from "./hoc/withPlatform";
 export { useInsets } from "./hooks/useInsets";
 export { usePlatform } from "./hooks/usePlatform";
 export { useAdaptivity } from "./hooks/useAdaptivity";
+export {
+  type UseAdaptivityWithJSMediaQueries,
+  useAdaptivityWithJSMediaQueries,
+} from "./hooks/useAdaptivityWithJSMediaQueries";
 export { useAppearance } from "./hooks/useAppearance";
 export { usePagination } from "./hooks/usePagination";
 export { useScrollLock } from "./components/AppRoot/ScrollContext";

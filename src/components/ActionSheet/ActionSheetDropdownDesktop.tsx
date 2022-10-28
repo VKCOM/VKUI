@@ -4,7 +4,7 @@ import { classNamesString } from "../../lib/classNames";
 import { useDOM } from "../../lib/dom";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useEffectDev } from "../../hooks/useEffectDev";
-import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
+import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
 import { isRefObject } from "../../lib/isRefObject";
 import { warnOnce } from "../../lib/warnOnce";
 import { Platform } from "../../lib/platform";
@@ -34,7 +34,7 @@ export const ActionSheetDropdownDesktop = ({
 }: SharedDropdownProps) => {
   const { document } = useDOM();
   const platform = usePlatform();
-  const { sizeY } = useAdaptivityWithMediaQueries();
+  const { sizeY } = useAdaptivityWithJSMediaQueries();
   const elementRef = React.useRef<HTMLDivElement | null>(null);
 
   useEffectDev(() => {

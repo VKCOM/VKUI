@@ -3,7 +3,7 @@ import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { classNamesString } from "../../lib/classNames";
 import { Platform } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
-import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
+import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
 import { SharedDropdownProps } from "./types";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import styles from "./ActionSheet.module.css";
@@ -23,7 +23,7 @@ export const ActionSheetDropdown = ({
   className,
   ...restProps
 }: SharedDropdownProps) => {
-  const { sizeY } = useAdaptivityWithMediaQueries();
+  const { sizeY } = useAdaptivityWithJSMediaQueries();
   const platform = usePlatform();
 
   return (
