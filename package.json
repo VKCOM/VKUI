@@ -50,7 +50,7 @@
     "@vkontakte/vkui-tokens": "4.17.0",
     "autoprefixer": "^10.4.2",
     "babel-jest": "^26.6.3",
-    "babel-loader": "^8.2.3",
+    "babel-loader": "^9.0.0",
     "babel-plugin-auto-import": "^1.1.0",
     "babel-plugin-istanbul": "^6.1.1",
     "babel-plugin-module-resolver": "^4.1.0",
