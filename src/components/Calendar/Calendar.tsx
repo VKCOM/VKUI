@@ -35,7 +35,7 @@ export interface CalendarProps
       | "prevMonthProps"
       | "nextMonthProps"
     >,
-    Pick<CalendarDaysProps, "dayProps">,
+    Pick<CalendarDaysProps, "dayProps" | "listenDayChangesForUpdate">,
     HasRootRef<HTMLDivElement> {
   value?: Date;
   disablePast?: boolean;
@@ -97,6 +97,7 @@ export const Calendar = ({
   nextMonthProps,
   dayProps,
   className,
+  listenDayChangesForUpdate,
   ...props
 }: CalendarProps) => {
   const {
@@ -213,6 +214,7 @@ export const Calendar = ({
         showNeighboringMonth={showNeighboringMonth}
         size={size}
         dayProps={dayProps}
+        listenDayChangesForUpdate={listenDayChangesForUpdate}
       />
       {enableTime && value && size !== "s" && (
         <div className={styles["Calendar__time"]}>

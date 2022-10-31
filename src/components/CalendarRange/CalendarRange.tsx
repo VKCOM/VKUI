@@ -14,7 +14,7 @@ import {
   CalendarHeader,
   CalendarHeaderProps,
 } from "../CalendarHeader/CalendarHeader";
-import { CalendarDays } from "../CalendarDays/CalendarDays";
+import { CalendarDays, CalendarDaysProps } from "../CalendarDays/CalendarDays";
 import {
   navigateDate,
   setTimeEqual,
@@ -36,6 +36,7 @@ export interface CalendarRangeProps
       | "prevMonthIcon"
       | "nextMonthIcon"
     >,
+    Pick<CalendarDaysProps, "listenDayChangesForUpdate">,
     HasRootRef<HTMLDivElement> {
   value?: Array<Date | null>;
   disablePast?: boolean;
@@ -79,6 +80,7 @@ export const CalendarRange = ({
   prevMonthIcon,
   nextMonthIcon,
   className,
+  listenDayChangesForUpdate,
   ...props
 }: CalendarRangeProps) => {
   const {
@@ -246,6 +248,7 @@ export const CalendarRange = ({
           isHintedDaySelectionEnd={isHintedDaySelectionEnd}
           isHintedDaySelectionStart={isHintedDaySelectionStart}
           isDayDisabled={isDayDisabled}
+          listenDayChangesForUpdate={listenDayChangesForUpdate}
           aria-label={changeDayAriaLabel}
         />
       </div>
@@ -281,6 +284,7 @@ export const CalendarRange = ({
           isHintedDaySelectionEnd={isHintedDaySelectionEnd}
           isHintedDaySelectionStart={isHintedDaySelectionStart}
           isDayDisabled={isDayDisabled}
+          listenDayChangesForUpdate={listenDayChangesForUpdate}
           tabIndex={0}
           onBlur={resetSelectedDay}
         />

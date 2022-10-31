@@ -55,6 +55,14 @@
   );
 }
 
+/**
+ * CMP:
+ * PanelHeaderContext
+ */
+.FixedLayout.PanelHeaderContext {
+  z-index: 4;
+}
+
 .FixedLayout--ios,
 .FixedLayout__in {
   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */

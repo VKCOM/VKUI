@@ -58,21 +58,15 @@ export const MiniInfoCell = ({
   className,
   ...restProps
 }: MiniInfoCellProps) => {
-  const isClickable = !!restProps.onClick;
+  const cellClasses = classNamesString(
+    styles["MiniInfoCell"],
+    styles[`MiniInfoCell--textWrap-${textWrap}`],
+    mode !== "base" && styles[`MiniInfoCell--mode-${mode}`],
+    className
+  );
 
-  return (
-    <Tappable
-      Component="div"
-      disabled={!isClickable}
-      role={isClickable ? "button" : undefined}
-      {...restProps}
-      className={classNamesString(
-        styles["MiniInfoCell"],
-        styles[`MiniInfoCell--textWrap-${textWrap}`],
-        mode !== "base" && styles[`MiniInfoCell--mode-${mode}`],
-        className
-      )}
-    >
+  const cellContent = (
+    <React.Fragment>
       <span className={styles["MiniInfoCell__before"]}>{before}</span>
       <div className={styles["MiniInfoCell__middle"]}>
         <Paragraph
@@ -86,6 +80,21 @@ export const MiniInfoCell = ({
       {hasReactNode(after) && (
         <span className={styles["MiniInfoCell__after"]}>{after}</span>
       )}
+    </React.Fragment>
+  );
+
+  return restProps.onClick ? (
+    <Tappable
+      Component="div"
+      role="button"
+      {...restProps}
+      className={cellClasses}
+    >
+      {cellContent}
     </Tappable>
+  ) : (
+    <div {...restProps} className={cellClasses}>
+      {cellContent}
+    </div>
   );
 };
