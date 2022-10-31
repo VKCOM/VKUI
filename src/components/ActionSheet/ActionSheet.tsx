@@ -8,7 +8,7 @@ import { ActionSheetContext, ItemClickHandler } from "./ActionSheetContext";
 import { Footnote } from "../Typography/Footnote/Footnote";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useTimeout } from "../../hooks/useTimeout";
-import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
+import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
 import { useObjectMemo } from "../../hooks/useObjectMemo";
 import { SharedDropdownProps } from "./types";
 import { useScrollLock } from "../AppRoot/ScrollContext";
@@ -57,7 +57,7 @@ export const ActionSheet = ({
     _action.current = noop;
   };
 
-  const { isDesktop } = useAdaptivityWithMediaQueries();
+  const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
   useScrollLock(!isDesktop);
 

@@ -3,7 +3,7 @@ import { classNamesString } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { blurActiveElement, useDOM } from "../../lib/dom";
-import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
+import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
 import styles from "./PopoutRoot.module.css";
 
 export interface PopoutRootProps
@@ -23,7 +23,7 @@ export const PopoutRoot = ({
 }: PopoutRootProps) => {
   const { document } = useDOM();
 
-  const { isDesktop } = useAdaptivityWithMediaQueries();
+  const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
   React.useEffect(() => {
     popout && blurActiveElement(document);

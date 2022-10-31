@@ -14,7 +14,7 @@ import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { useScrollLock } from "../AppRoot/ScrollContext";
 import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
 import { usePlatform } from "../../hooks/usePlatform";
-import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
+import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
 import styles from "./Alert.module.css";
 
 export type AlertActionInterface = AlertAction &
@@ -167,7 +167,7 @@ export const Alert = ({
   ...restProps
 }: AlertProps) => {
   const platform = usePlatform();
-  const { isDesktop } = useAdaptivityWithMediaQueries();
+  const { isDesktop } = useAdaptivityWithJSMediaQueries();
   const { waitTransitionFinish } = useWaitTransitionFinish();
 
   const [closing, setClosing] = React.useState(false);

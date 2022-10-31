@@ -12,7 +12,7 @@ import {
   ModalCardBase,
   ModalCardBaseProps,
 } from "../ModalCardBase/ModalCardBase";
-import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
+import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
 import { usePlatform } from "../../hooks/usePlatform";
 import styles from "./ModalCard.module.css";
 
@@ -35,7 +35,7 @@ export const ModalCard = ({
   className,
   ...restProps
 }: ModalCardProps) => {
-  const { isDesktop } = useAdaptivityWithMediaQueries();
+  const { isDesktop } = useAdaptivityWithJSMediaQueries();
   const platform = usePlatform();
 
   const modalContext = React.useContext(ModalRootContext);

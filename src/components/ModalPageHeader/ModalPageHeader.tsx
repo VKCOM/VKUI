@@ -1,6 +1,6 @@
 import * as React from "react";
 import { usePlatform } from "../../hooks/usePlatform";
-import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
+import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
 import { HasRef } from "../../types";
 import { Platform } from "../../lib/platform";
 import { Separator } from "../Separator/Separator";
@@ -26,7 +26,7 @@ export const ModalPageHeader = ({
 }: ModalPageHeaderProps) => {
   const platform = usePlatform();
   const hasSeparator = separator && platform === Platform.VKCOM;
-  const { isDesktop } = useAdaptivityWithMediaQueries();
+  const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
   return (
     <div

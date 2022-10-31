@@ -13,7 +13,7 @@ import { multiRef } from "../../lib/utils";
 import { ModalType } from "../ModalRoot/types";
 import { getNavId, NavIdProps } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
-import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
+import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
 import styles from "./ModalPage.module.css";
 
 export interface ModalPageProps
@@ -88,7 +88,7 @@ export const ModalPage = ({
 
   const platform = usePlatform();
   const orientation = useOrientationChange();
-  const { sizeX, isDesktop } = useAdaptivityWithMediaQueries();
+  const { sizeX, isDesktop } = useAdaptivityWithJSMediaQueries();
 
   React.useEffect(updateModalHeight, [
     children,

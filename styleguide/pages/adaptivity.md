@@ -68,7 +68,8 @@ const SideCol = () => {
 ```
 
 Почти готово. Теперь мы должны сообщить приложению, что левая колонка нужна только на больших экранах. Для доступа
-к рассчитанным в `AdaptivityProvider` свойствам вы можете использовать hook `useAdaptivity` в своих компонентах.
+к рассчитанным в `AdaptivityProvider` свойствам вы можете использовать утилитарный компонент
+`ViewWidthConditionalRender` в своих компонентах.
 
 ```jsx static
 function App() {
@@ -101,10 +102,55 @@ function App() {
 > - Анимация перехода между панелями должна быть отключена при размерах `ViewWidth.TABLET` и более (`SplitCol.animate`)
 > - Если интерфейс состоит из нескольких колонок, то у центральных колонок должны быть отступы (в трёх-колоночном режиме это одна центральная колонка) (`SplitCol.spaced`)
 
+### Адаптивность через JS
+
+Если вы:
+
+- **не поддерживаете SSR** или
+- **у вас есть компонент, который не показывается при первом рендере**,
+
+то вы можете смело использовать хук `useAdaptivityWithJSMediaQueries()`.
+
+Мы используем этот хук для _всплывающих окон_. Как раз из-за того, что они удовлетворяют условию показа только после
+первого рендера.
+
+Вот небольшой и наглядный пример:
+
+```tsx
+// ❌ bad for SSR
+const App = () => {
+  return (
+    <ModalRoot activeModal="main">
+      <ModalPage id="main">Hello World!</ModalPage>
+    </ModalRoot>
+  );
+};
+
+// ✅ good for SSR
+const App = () => {
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(function componentDidMount() {
+    setMounted(true);
+  }, []);
+
+  return mounted ? (
+    <ModalRoot activeModal="main">
+      <ModalPage id="main">Hello World!</ModalPage>
+    </ModalRoot>
+  ) : null;
+};
+```
+
+В нашем примере внутри `<ModalRoot />` и `<ModalPage />` используется `useAdaptivityWithJSMediaQueries()` для
+переключения компонентов на мобильный или десктопный виды.
+
 ### Технические детали
 
-Адаптивность базируется на четырёх свойствах: `viewWidth`, `viewHeight`, `sizeX`, `sizeY`. Эти свойства задаются либо вычисляются в `AdaptivityProvider`. Для удобства вы можете использовать готовые компоненты `SizeXConditionalRender`, `SizeYConditionalRender`, `ViewWidthConditionalRender`.
+Адаптивность базируется на четырёх свойствах:
 
 - `sizeX` и `sizeY` принимают значения `SizeType.REGULAR | SizeType.COMPACT`
 - `viewWidth` — `ViewWidth.SMALL_MOBILE | ViewWidth.MOBILE | ViewWidth.SMALL_TABLET | ViewWidth.TABLET | ViewWidth.DESKTOP`
 - `viewHeight` — `ViewHeight.SMALL | ViewHeight.MEDIUM`
+
+Эти свойства задаются в `AdaptivityProvider`.

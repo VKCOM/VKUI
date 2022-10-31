@@ -2,7 +2,7 @@ import * as React from "react";
 import { ModalRootTouch } from "./ModalRoot";
 import { ModalRootDesktop } from "./ModalRootDesktop";
 import { useScrollLock } from "../AppRoot/ScrollContext";
-import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
+import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
 
 export interface ModalRootProps {
   activeModal?: string | null;
@@ -33,7 +33,7 @@ export interface ModalRootProps {
  * @see https://vkcom.github.io/VKUI/#/ModalRoot
  */
 export const ModalRoot = (props: ModalRootProps) => {
-  const { isDesktop } = useAdaptivityWithMediaQueries();
+  const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
   useScrollLock(!!props.activeModal);
 

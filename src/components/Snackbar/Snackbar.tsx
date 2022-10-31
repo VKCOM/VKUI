@@ -8,7 +8,7 @@ import { Button } from "../Button/Button";
 import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
 import { usePlatform } from "../../hooks/usePlatform";
-import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
+import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
 import { useTimeout } from "../../hooks/useTimeout";
 import styles from "./Snackbar.module.css";
 
@@ -66,7 +66,7 @@ export const Snackbar = ({
   ...restProps
 }: SnackbarProps) => {
   const platform = usePlatform();
-  const { isDesktop } = useAdaptivityWithMediaQueries();
+  const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
   const { waitTransitionFinish } = useWaitTransitionFinish();
 

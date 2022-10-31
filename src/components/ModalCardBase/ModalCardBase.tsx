@@ -11,7 +11,7 @@ import { Platform } from "../../lib/platform";
 import { ModalDismissButton } from "../ModalDismissButton/ModalDismissButton";
 import { Icon24Dismiss } from "@vkontakte/icons";
 import { useKeyboard } from "../../hooks/useKeyboard";
-import { useAdaptivityWithMediaQueries } from "../../hooks/useAdaptivityWithMediaQueries";
+import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
 import styles from "./ModalCardBase.module.css";
 
 export interface ModalCardBaseProps
@@ -71,7 +71,7 @@ export const ModalCardBase = ({
   ...restProps
 }: ModalCardBaseProps) => {
   const platform = usePlatform();
-  const { isDesktop } = useAdaptivityWithMediaQueries();
+  const { isDesktop } = useAdaptivityWithJSMediaQueries();
   const isSoftwareKeyboardOpened = useKeyboard().isOpened;
 
   const canShowCloseButtonIOS = platform === Platform.IOS && !isDesktop;

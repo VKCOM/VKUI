@@ -50,7 +50,7 @@ export function computeBrowserInfo(userAgent = ""): BrowserInfo {
  * ⚠️ Желательно избегать использование этой эмуляции в SSR.
  */
 export function mediaQueryNull(query: string): MediaQueryList {
-  console.warn(`[mediaQueryNull] Похоже вы пытаетесь использовать \`Window.matchMedia()\` API вне браузера.
+  console.error(`[mediaQueryNull] Похоже вы пытаетесь использовать \`Window.matchMedia()\` API вне браузера.
 
 Во избежание ошибок при гидрации, рекомендуется избегать этого, т.к. при SSR нет информации о размерах экрана.
 
