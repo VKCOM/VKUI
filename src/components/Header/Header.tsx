@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { HasComponent, HasRootRef } from '../../types';
+import { HasComponent } from '../../types';
 import { hasReactNode } from '../../lib/utils';
 import { Platform } from '../../lib/platform';
 import { Headline } from '../Typography/Headline/Headline';
@@ -9,9 +9,10 @@ import { Footnote } from '../Typography/Footnote/Footnote';
 import { Title } from '../Typography/Title/Title';
 import { Text } from '../Typography/Text/Text';
 import { Subhead } from '../Typography/Subhead/Subhead';
+import { Tappable, TappableProps } from '../Tappable/Tappable';
 import styles from './Header.module.css';
 
-export interface HeaderProps extends React.HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+export interface HeaderProps extends TappableProps {
   mode?: 'primary' | 'secondary' | 'tertiary';
   subtitle?: React.ReactNode;
   /**
@@ -69,7 +70,6 @@ export const Header = ({
   subtitle,
   indicator,
   aside,
-  getRootRef,
   multiline,
   className,
   ...restProps
@@ -79,10 +79,17 @@ export const Header = ({
   const AsideTypography = platform === Platform.VKCOM ? Subhead : Text;
   const SubtitleTypography = mode === 'secondary' ? Subhead : Footnote;
 
+  const isTappable = Boolean(restProps.onClick || restProps.href);
+  const role = isTappable ? (restProps.href ? 'link' : 'button') : undefined;
+
   return (
-    <header
+    <Tappable
+      hasHover={isTappable}
+      hasActive={isTappable}
+      role={role}
+      tabIndex={isTappable && !restProps.disabled ? 0 : undefined}
+      Component="header"
       {...restProps}
-      ref={getRootRef}
       className={classNames(
         styles['Header'],
         platform === Platform.VKCOM && styles['Header--vkcom'],
@@ -125,6 +132,6 @@ export const Header = ({
           {aside}
         </AsideTypography>
       )}
-    </header>
+    </Tappable>
   );
 };

@@ -10,6 +10,8 @@
 }
 
 .Header__main {
+  flex-grow: 1;
+  max-width: 100%;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
