@@ -20,6 +20,7 @@ export const InfoRow = ({
 }: InfoRowProps) => (
   <Headline
     {...restProps}
+    Component="span"
     className={classNamesString(styles["InfoRow"], className)}
     weight="3"
   >

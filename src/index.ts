@@ -316,6 +316,7 @@ export {
 } from "./hooks/useAdaptivityWithJSMediaQueries";
 export { useAppearance } from "./hooks/useAppearance";
 export { usePagination } from "./hooks/usePagination";
+export { useTodayDate } from "./hooks/useTodayDate";
 export { useScrollLock } from "./components/AppRoot/ScrollContext";
 export { useNavTransition } from "./components/NavTransitionContext/NavTransitionContext";
 export { useModalRootContext } from "./components/ModalRoot/useModalRootContext";

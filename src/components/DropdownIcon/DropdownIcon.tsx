@@ -23,10 +23,18 @@ export const DropdownIcon = ({
   return (
     <SizeYConditionalRender
       compact={
-        <IconCompact className={styles["DropdownIcon"]} {...restProps} />
+        <IconCompact
+          className={styles["DropdownIcon"]}
+          aria-hidden
+          {...restProps}
+        />
       }
       regular={
-        <IconRegular className={styles["DropdownIcon"]} {...restProps} />
+        <IconRegular
+          className={styles["DropdownIcon"]}
+          aria-hidden
+          {...restProps}
+        />
       }
     />
   );

@@ -8,6 +8,7 @@ import { getDaysNames, getWeeks } from "../../lib/calendar";
 import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
 import { classNamesString } from "../../lib/classNames";
 import { Footnote } from "../Typography/Footnote/Footnote";
+import { useTodayDate } from "../../hooks/useTodayDate";
 import styles from "./CalendarDays.module.css";
 
 export interface CalendarDaysProps
@@ -18,6 +19,7 @@ export interface CalendarDaysProps
   showNeighboringMonth?: boolean;
   size?: "s" | "m";
   dayProps?: CalendarDayElementProps;
+  listenDayChangesForUpdate?: boolean;
   onDayChange(value: Date): void;
   isDayDisabled(value: Date): boolean;
   isDaySelectionStart(value: Date, dayOfWeek: number): boolean;
@@ -52,11 +54,12 @@ export const CalendarDays = ({
   showNeighboringMonth = false,
   dayProps,
   className,
+  listenDayChangesForUpdate = false,
   ...props
 }: CalendarDaysProps) => {
   const locale = React.useContext(LocaleProviderContext);
   const ref = React.useRef<HTMLDivElement>(null);
-  const [now] = React.useState(new Date());
+  const now = useTodayDate(listenDayChangesForUpdate);
 
   const weeks = React.useMemo(
     () => getWeeks(viewDate, weekStartsOn),

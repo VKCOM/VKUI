@@ -272,3 +272,7 @@ export function parse(
 export function isMatch(input: string, format: string) {
   return !isNaN(+parse(input, format));
 }
+
+export function getMillisecondsToTomorrow(date: DirtyDate) {
+  return dayjs(endOfDay(date)).diff(dayjs(date), "ms");
+}
