@@ -14,7 +14,7 @@ import "./HorizontalScrollArrow.css";
 export interface HorizontalScrollArrowProps {
   direction: "left" | "right";
   size?: "m" | "l";
-  onClick(): void;
+  onClick(event: React.MouseEvent): void;
 }
 
 export const HorizontalScrollArrow = ({
