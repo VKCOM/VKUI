@@ -94,12 +94,7 @@ _Component.module.css_
 В данном случае мы задаём `padding: 10px;` для размера `sizeX-compact` и `padding: 20px;` для размера `sizeX-regular`.
 В `@media (--sizeX-compact)` мы задаём `padding: 10px;` для компонента только если `sizeX` не переопределен.
 
-Помимо утилитарных функций, есть и условные компоненты:
-
-- [`SizeXConditionalRender`](../src/components/SizeXConditionalRender/SizeXConditionalRender.tsx)
-- [`SizeYConditionalRender`](../src/components/SizeYConditionalRender/SizeYConditionalRender.tsx)
-- [`ViewWidthConditionalRender`](../src/components/ViewWidthConditionalRender/ViewWidthConditionalRender.tsx)
-- [`DeviceConditionalRender`](../src/components/DeviceConditionalRender/DeviceConditionalRender.tsx)
+Помимо утилитарных функций, есть хук [`useAdaptivityConditionalRender`](../src/hooks/useAdaptivityConditionalRender/useAdaptivityConditionalRender.tsx).
 
 ### Подводные камни
 

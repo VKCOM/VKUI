@@ -315,6 +315,10 @@ export { useInsets } from "./hooks/useInsets";
 export { usePlatform } from "./hooks/usePlatform";
 export { useAdaptivity } from "./hooks/useAdaptivity";
 export {
+  type UseAdaptivityConditionalRender,
+  useAdaptivityConditionalRender,
+} from "./hooks/useAdaptivityConditionalRender";
+export {
   type UseAdaptivityWithJSMediaQueries,
   useAdaptivityWithJSMediaQueries,
 } from "./hooks/useAdaptivityWithJSMediaQueries";

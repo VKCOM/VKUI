@@ -14,7 +14,7 @@ import {
   getViewHeightByMediaQueries,
   getSizeX,
   getSizeY,
-  checkIsDesktop,
+  tryToCheckIsDesktop,
 } from "../lib/adaptivity";
 import { useMediaQueries } from "./useMediaQueries";
 import { usePlatform } from "./usePlatform";
@@ -84,7 +84,7 @@ export const useAdaptivityWithJSMediaQueries =
         sizeYContext,
         getSizeY(viewWidth, viewHeight, hasMouse)
       );
-      const isDesktop = checkIsDesktop(
+      const isDesktop = tryToCheckIsDesktop(
         viewWidth,
         viewHeight,
         hasMouse,

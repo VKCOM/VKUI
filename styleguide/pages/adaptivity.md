@@ -30,7 +30,8 @@ ReactDOM.render(<App />, document.getElementById("root"));
 
 Далее, нужно добавить [`SplitLayout`](https://vkcom.github.io/VKUI/#/SplitLayout) и хотя бы один [`SplitCol`](https://vkcom.github.io/VKUI/#/SplitCol).
 
-`SplitLayout` — компонент-обертка для отрисовки макета с одной или несколькими колонками. `SplitCol` — компонент для отрисовки колонки.
+- `SplitLayout` — компонент-обертка для отрисовки макета с одной или несколькими колонками.
+- `SplitCol` — компонент для отрисовки колонки.
 
 ```jsx static
 // ...
@@ -67,25 +68,24 @@ const SideCol = () => {
 };
 ```
 
-Почти готово. Теперь мы должны сообщить приложению, что левая колонка нужна только на больших экранах. Для доступа
-к рассчитанным в `AdaptivityProvider` свойствам вы можете использовать утилитарный компонент
-`ViewWidthConditionalRender` в своих компонентах.
+Почти готово. Теперь мы должны сообщить приложению, что левая колонка нужна только на больших экранах. Для этого нам
+нужно использовать хук `useAdaptivityConditionalRender` в своих компонентах. Далее будет пример, а следом объяснение,
+что делает хук.
 
 ```jsx static
 function App() {
   const platform = usePlatform();
   const isVKCOM = platform === Platform.VKCOM;
+  const { viewWidth } = useAdaptivityConditionalRender();
 
   // ...
 
   <SplitLayout header={!isVKCOM && <PanelHeader separator={false} />}>
-    <ViewWidthConditionalRender
-      desktop={
-        <SplitCol width={280}>
-          <Panel id="nav">Navigation</Panel>
-        </SplitCol>
-      }
-    />
+    {viewWidth.tabletPlus && (
+      <SplitCol width={280} className={viewWidth.tabletPlus.className}>
+        <Panel id="nav">Navigation</Panel>
+      </SplitCol>
+    )}
     <SplitCol autoSpaced>
       <View activePanel="profile">
         <Panel id="profile">Profile</Panel>
@@ -96,13 +96,34 @@ function App() {
 }
 ```
 
-> **Нюансы**
->
-> - Свойство `SplitLayout.header` нужно для создания сквозной шапки, когда интерфейс состоит из нескольких колонок (или одной центрированной)
-> - Анимация перехода между панелями должна быть отключена при размерах `ViewWidth.TABLET` и более (`SplitCol.animate`)
-> - Если интерфейс состоит из нескольких колонок, то у центральных колонок должны быть отступы (в трёх-колоночном режиме это одна центральная колонка) (`SplitCol.spaced`)
+`useAdaptivityConditionalRender` возвращает параметры адаптивности (см. **Технические детали**), каждый из которых имеет
+дополнительную мета-информацию.
 
-### Адаптивность через JS
+В зависимости от того, что мы передали в `AdaptivityProvider`, значение у каждого отдельного параметра адаптивности
+может быть двух типов:
+
+- `false` – мы строго задали какой-то из параметров адаптивности в
+  `AdaptivityProvider`.
+
+  > Например, при `<AdaptivityProvider viewWidth={ViewWidth.MOBILE}>` значение `viewWidth.tabletPlus` будет `false`,
+  > т.к. мы говорим, что у нас всегда мобильный вид.
+
+- `{ className: string }` – CSS селектор, который на основе CSS Media Query будет переключать видимость вашего
+  элемента. В данном случае в `AdaptivityProvider` не передавали соответствующий параметр адаптивности.
+
+  > Например, при `<AdaptivityProvider sizeX={SizeType.COMPACT}>` значение `viewWidth.tabletPlus` будет
+  > `{ className: "..." }`.
+  >
+  > ⚠️ Видимость элемента управляется через `display: none` – отсюда можно сделать вывод, что элемент будет всегда
+  > рендерится как в **Virtual DOM**, так и в **DOM**.
+
+## Требования для адаптивности
+
+- Свойство `SplitLayout.header` нужно для создания сквозной шапки, когда интерфейс состоит из нескольких колонок (или одной центрированной)
+- Анимация перехода между панелями должна быть отключена при размерах `ViewWidth.TABLET` и более (`SplitCol.animate`)
+- Если интерфейс состоит из нескольких колонок, то у центральных колонок должны быть отступы (в трёх-колоночном режиме это одна центральная колонка) (`SplitCol.spaced`)
+
+## Адаптивность через JS
 
 Если вы:
 
@@ -145,7 +166,7 @@ const App = () => {
 В нашем примере внутри `<ModalRoot />` и `<ModalPage />` используется `useAdaptivityWithJSMediaQueries()` для
 переключения компонентов на мобильный или десктопный виды.
 
-### Технические детали
+## Технические детали
 
 Адаптивность базируется на четырёх свойствах:
 
