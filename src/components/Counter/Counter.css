@@ -58,9 +58,7 @@
  * CMP:
  * Button
  */
-.Button--lvl-primary.Button--clr-accent .Counter,
-.Button--lvl-secondary.Button--clr-neutral .Counter,
-.Button--lvl-tertiary.Button--clr-neutral .Counter {
+.Button--lvl-primary.Button--clr-accent .Counter {
   background-color: var(
     --button_primary_foreground,
     var(--vkui--color_background_contrast)
@@ -125,9 +123,16 @@
 .Button--lvl-primary.Button--clr-neutral .Counter {
   background-color: var(
     --media_overlay_button_background,
-    var(--vkui--color_background_contrast)
+    var(--vkui--color_background_content)
   );
-  color: var(--text_primary, var(--vkui--color_text_primary));
+  color: var(--vkui--color_text_primary_invariably);
+}
+
+.Button--lvl-secondary.Button--clr-neutral .Counter,
+.Button--lvl-tertiary.Button--clr-neutral .Counter,
+.Button--lvl-outline.Button--clr-neutral .Counter {
+  background-color: var(--accent, var(--vkui--color_background_accent));
+  color: var(--white, var(--vkui--color_text_contrast));
 }
 
 .Button--lvl-primary.Button--clr-overlay .Counter {
