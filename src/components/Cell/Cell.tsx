@@ -149,9 +149,8 @@ export const Cell = ({
     checkbox = <CellCheckbox vkuiClass="Cell__checkbox" {...checkboxProps} />;
   }
 
-  const simpleCellDisabled =
-    (draggable && !selectable) || removable || disabled;
-  const hasActive = !simpleCellDisabled && !dragging;
+  const simpleCellDisabled = (removable && !draggable) || disabled;
+  const hasActive = !simpleCellDisabled && !dragging && selectable;
 
   const cellClasses = classNames(
     "Cell",
@@ -166,6 +165,7 @@ export const Cell = ({
     <SimpleCell
       hasActive={hasActive}
       hasHover={hasActive}
+      {...(draggable ? { tabIndex: undefined } : {})}
       {...restProps}
       vkuiClass="Cell__content"
       disabled={simpleCellDisabled}
