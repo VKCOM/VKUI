@@ -1,12 +1,31 @@
 .Progress {
-  border-radius: 1px;
   background: var(--vkui--color_track_background);
   height: 2px;
+  width: 100%;
+  border: none;
+  border-radius: 1px;
+
+  /* Note: For ::-webkit-progress-value to take effect, appearance needs to be set to none on the <progress> element.*/
+  appearance: none;
 }
 
-.Progress__in {
-  height: 100%;
-  border-radius: inherit;
+.Progress::-webkit-progress-bar {
+  background-color: var(--vkui--color_track_background);
+  border-radius: 1px;
+}
+
+.Progress::-webkit-progress-value {
   transition: width 0.2s ease;
-  background: var(--vkui--color_stroke_accent);
+  background-color: var(--vkui--color_stroke_accent);
+  border-radius: 1px;
+}
+
+/*
+BUG: В FireFox не работает анимация
+https://bugzilla.mozilla.org/show_bug.cgi?id=662351
+*/
+.Progress::-moz-progress-bar {
+  transition: width 0.2s ease;
+  background-color: var(--vkui--color_stroke_accent);
+  border-radius: 1px;
 }

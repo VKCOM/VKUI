@@ -562,6 +562,13 @@ npx @vkontakte/vkui-token-translator
 
 <br/><br/>
 
+## [`Progress`](#/Progress)
+
+- Компонент использует [html элемент `<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress),
+  вместо `<div>` элемента с `role="progressbar"`
+
+<br/><br/>
+
 ## `FormStatus` -> [`Banner`](#/Banner)
 
 - `FormStatus` удален, вместо него используйте [`Banner`](#/Banner).

@@ -3,8 +3,8 @@
   <Panel id="progress">
     <PanelHeader>Progress</PanelHeader>
     <Group>
-      <FormItem id="progresslabel" top="Прогресс">
-        <Progress aria-labelledby="progresslabel" value={40} />
+      <FormItem Component="label" top="Прогресс">
+        <Progress value="40" max="100" />
       </FormItem>
     </Group>
   </Panel>
