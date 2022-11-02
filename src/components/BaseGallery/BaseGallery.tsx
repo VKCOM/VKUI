@@ -200,14 +200,14 @@ export const BaseGallery = ({
     }
   }, [slideIndex]);
 
-  const slideLeft = () => {
+  const slideLeft = (event: React.MouseEvent) => {
     onChange?.(slideIndex - 1);
-    onPrevClick?.();
+    onPrevClick?.(event);
   };
 
-  const slideRight = () => {
+  const slideRight = (event: React.MouseEvent) => {
     onChange?.(slideIndex + 1);
-    onNextClick?.();
+    onNextClick?.(event);
   };
 
   /*

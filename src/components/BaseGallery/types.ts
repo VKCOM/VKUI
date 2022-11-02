@@ -41,11 +41,11 @@ export interface BaseGalleryProps
   /**
    * Будет вызвано при клике на кнопку-стрелку влево
    */
-  onPrevClick?(): void;
+  onPrevClick?(event: React.MouseEvent): void;
   /**
    * Будет вызвано при клике на кнопку-стрелку вправо
    */
-  onNextClick?(): void;
+  onNextClick?(event: React.MouseEvent): void;
   bullets?: "dark" | "light" | false;
   isDraggable?: boolean;
   showArrows?: boolean;
