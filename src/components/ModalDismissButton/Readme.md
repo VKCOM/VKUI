@@ -3,6 +3,7 @@
 
 ```jsx { "props": { "layout": false, "adaptivity": true } }
 const CustomPopout = ({ onClose }) => {
+  const { sizeX } = useAdaptivityConditionalRender();
   return (
     <PopoutWrapper onClick={onClose}>
       <div
@@ -15,9 +16,12 @@ const CustomPopout = ({ onClose }) => {
       >
         <h4>Кастомное модальное окно</h4>
 
-        <SizeXConditionalRender
-          regular={<ModalDismissButton onClick={onClose} />}
-        />
+        {sizeX.regular && (
+          <ModalDismissButton
+            className={sizeX.regular.className}
+            onClick={onClose}
+          />
+        )}
       </div>
     </PopoutWrapper>
   );

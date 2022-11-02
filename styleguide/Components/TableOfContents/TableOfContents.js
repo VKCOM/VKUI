@@ -7,8 +7,7 @@ import {
   classNames,
   Separator,
   Footer,
-  useAdaptivity,
-  getSizeXClassName,
+  useAdaptivityWithJSMediaQueries,
 } from "@vkui";
 import {
   Icon28ChevronDownOutline,
@@ -298,11 +297,14 @@ class TableOfContents extends React.PureComponent {
   }
 
   render() {
+    const { sizeX } = this.props;
     return (
       <div
         className={classNames(
           "TableOfContents",
-          getSizeXClassName("TableOfContents", this.props.sizeX)
+          sizeX === "none"
+            ? "TableOfContents--sizeX-none"
+            : `TableOfContents--sizeX-${sizeX}`
         )}
       >
         {this.renderSections(this.sections)}
@@ -312,7 +314,8 @@ class TableOfContents extends React.PureComponent {
 }
 
 export default (props) => {
-  const { sizeX } = useAdaptivity();
+  // FIXME Не SSR ready.
+  const { sizeX } = useAdaptivityWithJSMediaQueries();
 
   return <TableOfContents {...props} sizeX={sizeX} />;
 };

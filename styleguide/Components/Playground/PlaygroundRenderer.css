@@ -1,9 +1,0 @@
-.Playground__editor--sizeX-compact {
-  display: none;
-}
-
-@media (--sizeX-compact) {
-  .Playground__editor--sizeX-none {
-    display: none;
-  }
-}

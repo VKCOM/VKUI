@@ -18,7 +18,7 @@ Android. Внизу располагается панель с иконками,
 ```jsx { "props": { "layout": false, "adaptivity": true } }
 const Example = () => {
   const platform = usePlatform();
-  const { viewWidth } = useAdaptivity();
+  const { viewWidth } = useAdaptivityConditionalRender();
   const [activeStory, setActiveStory] = React.useState("profile");
   const onStoryChange = (e) => setActiveStory(e.currentTarget.dataset.story);
   const isVKCOM = platform !== Platform.VKCOM;
@@ -28,159 +28,160 @@ const Example = () => {
       header={isVKCOM && <PanelHeader separator={false} />}
       style={{ justifyContent: "center" }}
     >
-      <ViewWidthConditionalRender
-        desktop={
-          <SplitCol fixed width={280} maxWidth={280}>
-            <Panel>
-              {isVKCOM && <PanelHeader />}
-              <Group>
-                <Cell
-                  disabled={activeStory === "feed"}
-                  style={
-                    activeStory === "feed"
-                      ? {
-                          backgroundColor:
-                            "var(--vkui--color_background_secondary)",
-                          borderRadius: 8,
-                        }
-                      : {}
-                  }
-                  data-story="feed"
-                  onClick={onStoryChange}
-                  before={<Icon28NewsfeedOutline />}
-                >
-                  feed
-                </Cell>
-                <Cell
-                  disabled={activeStory === "services"}
-                  style={
-                    activeStory === "services"
-                      ? {
-                          backgroundColor:
-                            "var(--vkui--color_background_secondary)",
-                          borderRadius: 8,
-                        }
-                      : {}
-                  }
-                  data-story="services"
-                  onClick={onStoryChange}
-                  before={<Icon28ServicesOutline />}
-                >
-                  services
-                </Cell>
-                <Cell
-                  disabled={activeStory === "messages"}
-                  style={
-                    activeStory === "messages"
-                      ? {
-                          backgroundColor:
-                            "var(--vkui--color_background_secondary)",
-                          borderRadius: 8,
-                        }
-                      : {}
-                  }
-                  data-story="messages"
-                  onClick={onStoryChange}
-                  before={<Icon28MessageOutline />}
-                >
-                  messages
-                </Cell>
-                <Cell
-                  disabled={activeStory === "clips"}
-                  style={
-                    activeStory === "clips"
-                      ? {
-                          backgroundColor:
-                            "var(--vkui--color_background_secondary)",
-                          borderRadius: 8,
-                        }
-                      : {}
-                  }
-                  data-story="clips"
-                  onClick={onStoryChange}
-                  before={<Icon28ClipOutline />}
-                >
-                  clips
-                </Cell>
-                <Cell
-                  disabled={activeStory === "profile"}
-                  style={
-                    activeStory === "profile"
-                      ? {
-                          backgroundColor:
-                            "var(--vkui--color_background_secondary)",
-                          borderRadius: 8,
-                        }
-                      : {}
-                  }
-                  data-story="profile"
-                  onClick={onStoryChange}
-                  before={<Icon28UserCircleOutline />}
-                >
-                  profile
-                </Cell>
-              </Group>
-            </Panel>
-          </SplitCol>
-        }
-      />
+      {viewWidth.tabletPlus && (
+        <SplitCol
+          className={viewWidth.tabletPlus.className}
+          fixed
+          width={280}
+          maxWidth={280}
+        >
+          <Panel>
+            {isVKCOM && <PanelHeader />}
+            <Group>
+              <Cell
+                disabled={activeStory === "feed"}
+                style={
+                  activeStory === "feed"
+                    ? {
+                        backgroundColor:
+                          "var(--vkui--color_background_secondary)",
+                        borderRadius: 8,
+                      }
+                    : {}
+                }
+                data-story="feed"
+                onClick={onStoryChange}
+                before={<Icon28NewsfeedOutline />}
+              >
+                feed
+              </Cell>
+              <Cell
+                disabled={activeStory === "services"}
+                style={
+                  activeStory === "services"
+                    ? {
+                        backgroundColor:
+                          "var(--vkui--color_background_secondary)",
+                        borderRadius: 8,
+                      }
+                    : {}
+                }
+                data-story="services"
+                onClick={onStoryChange}
+                before={<Icon28ServicesOutline />}
+              >
+                services
+              </Cell>
+              <Cell
+                disabled={activeStory === "messages"}
+                style={
+                  activeStory === "messages"
+                    ? {
+                        backgroundColor:
+                          "var(--vkui--color_background_secondary)",
+                        borderRadius: 8,
+                      }
+                    : {}
+                }
+                data-story="messages"
+                onClick={onStoryChange}
+                before={<Icon28MessageOutline />}
+              >
+                messages
+              </Cell>
+              <Cell
+                disabled={activeStory === "clips"}
+                style={
+                  activeStory === "clips"
+                    ? {
+                        backgroundColor:
+                          "var(--vkui--color_background_secondary)",
+                        borderRadius: 8,
+                      }
+                    : {}
+                }
+                data-story="clips"
+                onClick={onStoryChange}
+                before={<Icon28ClipOutline />}
+              >
+                clips
+              </Cell>
+              <Cell
+                disabled={activeStory === "profile"}
+                style={
+                  activeStory === "profile"
+                    ? {
+                        backgroundColor:
+                          "var(--vkui--color_background_secondary)",
+                        borderRadius: 8,
+                      }
+                    : {}
+                }
+                data-story="profile"
+                onClick={onStoryChange}
+                before={<Icon28UserCircleOutline />}
+              >
+                profile
+              </Cell>
+            </Group>
+          </Panel>
+        </SplitCol>
+      )}
 
       <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
         <Epic
           activeStory={activeStory}
           tabbar={
-            <ViewWidthConditionalRender
-              mobile={
-                <Tabbar>
-                  <TabbarItem
-                    onClick={onStoryChange}
-                    selected={activeStory === "feed"}
-                    data-story="feed"
-                    text="Новости"
-                  >
-                    <Icon28NewsfeedOutline />
-                  </TabbarItem>
-                  <TabbarItem
-                    onClick={onStoryChange}
-                    selected={activeStory === "services"}
-                    data-story="services"
-                    text="Сервисы"
-                  >
-                    <Icon28ServicesOutline />
-                  </TabbarItem>
-                  <TabbarItem
-                    onClick={onStoryChange}
-                    selected={activeStory === "messages"}
-                    data-story="messages"
-                    indicator={
-                      <Counter size="s" mode="prominent">
-                        12
-                      </Counter>
-                    }
-                    text="Сообщения"
-                  >
-                    <Icon28MessageOutline />
-                  </TabbarItem>
-                  <TabbarItem
-                    onClick={onStoryChange}
-                    selected={activeStory === "clips"}
-                    data-story="clips"
-                    text="Клипы"
-                  >
-                    <Icon28ClipOutline />
-                  </TabbarItem>
-                  <TabbarItem
-                    onClick={onStoryChange}
-                    selected={activeStory === "profile"}
-                    data-story="profile"
-                    indicator={<Badge mode="prominent" />}
-                    text="Профиль"
-                  >
-                    <Icon28UserCircleOutline />
-                  </TabbarItem>
-                </Tabbar>
-              }
-            />
+            viewWidth.tabletMinus && (
+              <Tabbar className={viewWidth.tabletMinus.className}>
+                <TabbarItem
+                  onClick={onStoryChange}
+                  selected={activeStory === "feed"}
+                  data-story="feed"
+                  text="Новости"
+                >
+                  <Icon28NewsfeedOutline />
+                </TabbarItem>
+                <TabbarItem
+                  onClick={onStoryChange}
+                  selected={activeStory === "services"}
+                  data-story="services"
+                  text="Сервисы"
+                >
+                  <Icon28ServicesOutline />
+                </TabbarItem>
+                <TabbarItem
+                  onClick={onStoryChange}
+                  selected={activeStory === "messages"}
+                  data-story="messages"
+                  indicator={
+                    <Counter size="s" mode="prominent">
+                      12
+                    </Counter>
+                  }
+                  text="Сообщения"
+                >
+                  <Icon28MessageOutline />
+                </TabbarItem>
+                <TabbarItem
+                  onClick={onStoryChange}
+                  selected={activeStory === "clips"}
+                  data-story="clips"
+                  text="Клипы"
+                >
+                  <Icon28ClipOutline />
+                </TabbarItem>
+                <TabbarItem
+                  onClick={onStoryChange}
+                  selected={activeStory === "profile"}
+                  data-story="profile"
+                  indicator={<Badge mode="prominent" />}
+                  text="Профиль"
+                >
+                  <Icon28UserCircleOutline />
+                </TabbarItem>
+              </Tabbar>
+            )
           }
         >
           <View id="feed" activePanel="feed">

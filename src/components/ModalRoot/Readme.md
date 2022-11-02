@@ -53,6 +53,7 @@ const MODAL_CARD_CHAT_INVITE = "chat-invite";
 
 const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
   const platform = usePlatform();
+  const { sizeX } = useAdaptivityConditionalRender();
   const [expanded, setExpanded] = React.useState(false);
   const toggle = React.useCallback(() => setExpanded(!expanded), [expanded]);
 
@@ -62,24 +63,24 @@ const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
       header={
         <ModalPageHeader
           before={
-            <SizeXConditionalRender
-              compact={
-                platform === Platform.ANDROID && (
-                  <PanelHeaderClose onClick={onClose} />
-                )
-              }
-            />
+            sizeX.compact &&
+            platform === Platform.ANDROID && (
+              <PanelHeaderClose
+                className={sizeX.compact.className}
+                onClick={onClose}
+              />
+            )
           }
           after={
-            <SizeXConditionalRender
-              compact={
-                platform === Platform.IOS && (
-                  <PanelHeaderButton onClick={onClose}>
-                    <Icon24Dismiss />
-                  </PanelHeaderButton>
-                )
-              }
-            />
+            sizeX.compact &&
+            platform === Platform.IOS && (
+              <PanelHeaderButton
+                className={sizeX.compact.className}
+                onClick={onClose}
+              >
+                <Icon24Dismiss />
+              </PanelHeaderButton>
+            )
           }
         >
           Dynamic modal
@@ -97,6 +98,7 @@ const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
 };
 
 const App = () => {
+  const { sizeX } = useAdaptivityConditionalRender();
   const [activeModal, setActiveModal] = useState(null);
   const [modalHistory, setModalHistory] = useState([]);
   const [randomUser] = useState(() => getRandomUser());
@@ -143,13 +145,13 @@ const App = () => {
         header={
           <ModalPageHeader
             before={
-              <SizeXConditionalRender
-                compact={
-                  platform === Platform.ANDROID && (
-                    <PanelHeaderClose onClick={modalBack} />
-                  )
-                }
-              />
+              sizeX.compact &&
+              platform === Platform.ANDROID && (
+                <PanelHeaderClose
+                  className={sizeX.compact.className}
+                  onClick={modalBack}
+                />
+              )
             }
             after={
               platform === Platform.IOS && (
@@ -214,9 +216,12 @@ const App = () => {
         header={
           <ModalPageHeader
             before={
-              <SizeXConditionalRender
-                compact={<PanelHeaderClose onClick={modalBack} />}
-              />
+              sizeX.compact && (
+                <PanelHeaderClose
+                  className={sizeX.compact.className}
+                  onClick={modalBack}
+                />
+              )
             }
             after={<PanelHeaderSubmit onClick={modalBack} />}
           >
