@@ -42,7 +42,7 @@ export const BaseGallery = ({
   children,
   slideWidth = "100%",
   slideIndex = 0,
-  isDraggable = true,
+  isDraggable: isDraggableProp = true,
   onDragStart,
   onDragEnd,
   onChange,
@@ -256,7 +256,7 @@ export const BaseGallery = ({
   };
 
   const onMoveX = (e: TouchEvent) => {
-    if (isDraggable && !layoutState.current.isFullyVisible) {
+    if (isDraggableProp && !layoutState.current.isFullyVisible) {
       e.originalEvent.preventDefault();
 
       if (e.isSlideX) {
@@ -331,6 +331,8 @@ export const BaseGallery = ({
       // otherwise we need to check current slide index (align = right or align = center)
       (align !== "left" && slideIndex < layoutState.current.slides.length - 1));
 
+  const isDraggable = isDraggableProp && !layoutState.current.isFullyVisible;
+
   return (
     <div
       {...restProps}
@@ -338,6 +340,7 @@ export const BaseGallery = ({
         "Gallery",
         `Gallery--${align}`,
         shiftState.dragging && "Gallery--dragging",
+        isDraggable && "Gallery--draggable",
         slideWidth === "custom" && "Gallery--custom-width"
       )}
       ref={rootRef}
