@@ -12,7 +12,7 @@ import styles from "./HorizontalScrollArrow.module.css";
 export interface HorizontalScrollArrowProps {
   direction: "left" | "right";
   size?: "m" | "l";
-  onClick(): void;
+  onClick(event: React.MouseEvent): void;
   className?: string;
 }
 

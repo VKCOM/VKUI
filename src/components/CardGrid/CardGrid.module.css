@@ -24,7 +24,7 @@
 }
 
 .CardGrid--size-m .Card {
-  width: calc((100% - 8px) / 2);
+  width: calc(50% - (var(--vkui--size_cardgrid_padding--regular) / 2));
 }
 
 .CardGrid--size-m .Card:nth-child(n + 3) {
@@ -36,7 +36,7 @@
 }
 
 .CardGrid--size-s .Card {
-  width: calc((100% - 2 * 8px) / 3);
+  width: calc((100% - 2 * var(--vkui--size_cardgrid_padding--regular)) / 3);
 }
 
 .CardGrid--size-s .Card:nth-child(n + 4) {
@@ -60,7 +60,7 @@
 }
 
 .CardGrid + .CardGrid {
-  margin-top: 16px;
+  margin-top: calc(var(--vkui--size_cardgrid_padding_vertical--regular) * 2);
 }
 
 @media (--sizeX-compact) {
@@ -75,8 +75,8 @@
  */
 
 .Group--mode-card .CardGrid {
-  padding-left: 8px;
-  padding-right: 8px;
+  padding-left: var(--vkui--size_base_padding_horizontal--regular);
+  padding-right: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 @media (--sizeX-regular) {
@@ -87,9 +87,9 @@
 }
 
 .Group .CardGrid:first-child {
-  margin-top: 8px;
+  margin-top: var(--vkui--size_cardgrid_padding_vertical--regular);
 }
 
 .Group .CardGrid:last-child {
-  margin-bottom: 8px;
+  margin-bottom: var(--vkui--size_cardgrid_padding_vertical--regular);
 }
