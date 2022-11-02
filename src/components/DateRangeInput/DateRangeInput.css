@@ -2,7 +2,11 @@
   flex-grow: 1;
   margin-left: 10px;
   margin-right: 14px;
-  font-size: 16px;
+  font-family: var(--vkui--font_text--font_family--regular);
+  font-weight: var(--vkui--font_text--font_weight--regular);
+  font-size: var(--vkui--font_text--font_size--regular);
+  line-height: var(--vkui--font_text--line_height--regular);
+  letter-spacing: var(--vkui--font_text--letter_spacing--regular);
   z-index: 6;
   cursor: text;
   white-space: nowrap;
@@ -11,6 +15,8 @@
 }
 
 .DateRangeInput--sizeY-compact .DateRangeInput__input {
-  font-size: 15px;
+  font-size: var(--vkui--font_text--font_size--compact);
+  line-height: var(--vkui--font_text--line_height--compact);
+  letter-spacing: var(--vkui--font_text--letter_spacing--compact);
   margin-right: 22px;
 }

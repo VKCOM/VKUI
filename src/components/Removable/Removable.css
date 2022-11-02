@@ -34,8 +34,11 @@
   top: 0;
   height: 100%;
   padding: 0 10px;
-  font-size: 15px;
-  line-height: 45px;
+  font-family: var(--vkui--font_headline2--font_family--regular);
+  font-weight: var(--vkui--font_weight_accent3);
+  font-size: var(--vkui--font_headline2--font_size--regular);
+  line-height: 100%; /* для центрирования равно `height` */
+  letter-spacing: var(--vkui--font_headline2--letter_spacing--regular);
   color: var(--white);
   background-color: var(--destructive, var(--vkui--color_background_negative));
   border: none;

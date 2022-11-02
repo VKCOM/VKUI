@@ -28,9 +28,11 @@
   width: 100%;
   margin-bottom: 2px;
   padding: 0;
-  /* Визуальная компенсация - центрируем строчные буквы */
-  font-size: 15px;
-  line-height: 26px;
+  font-family: var(--vkui--font_text--font_family--regular);
+  font-weight: var(--vkui--font_text--font_weight--regular);
+  font-size: var(--vkui--font_text--font_size--regular);
+  line-height: 28px; /* Визуальная компенсация - центрируем строчные буквы */
+  letter-spacing: var(--vkui--font_text--letter_spacing--regular);
   color: var(--text_primary, var(--vkui--color_text_primary));
   background: transparent;
   border: none;
@@ -70,4 +72,10 @@
  */
 .ChipsInputBase--sizeY-compact {
   padding: 1px;
+}
+
+.ChipsInputBase--sizeY-compact .ChipsInputBase__el {
+  font-size: var(--vkui--font_text--font_size--compact);
+  line-height: 26px; /* Визуальная компенсация - центрируем строчные буквы */
+  letter-spacing: var(--vkui--font_text--letter_spacing--compact);
 }

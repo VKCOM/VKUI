@@ -96,6 +96,9 @@
 .WriteBar--ios .WriteBar__textarea {
   height: 34px;
   padding: 6px 11px;
-  font-size: 17px;
-  line-height: 22px;
+  font-family: var(--vkui--font_title3--font_family--regular);
+  font-weight: var(--vkui--font_weight_accent3);
+  font-size: var(--vkui--font_title3--font_size--regular);
+  line-height: var(--vkui--font_title3--line_height--regular);
+  letter-spacing: var(--vkui--font_title3--letter_spacing--regular);
 }

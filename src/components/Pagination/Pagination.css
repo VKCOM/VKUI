@@ -44,14 +44,17 @@
 }
 
 .Pagination__page--sizeY-compact {
+  font-family: var(--vkui--font_text--font_family--regular);
   font-size: var(--vkui--font_text--font_size--compact);
   line-height: var(--vkui--size_button_large_height--compact);
+  letter-spacing: var(--vkui--font_text--letter_spacing--compact);
   height: var(--vkui--size_button_large_height--compact);
 }
 
 .Pagination__page--sizeY-regular {
   font-size: var(--vkui--font_text--font_size--regular);
   line-height: var(--vkui--size_button_large_height--regular);
+  letter-spacing: var(--vkui--font_text--letter_spacing--regular);
   height: var(--vkui--size_button_large_height--regular);
 }
 

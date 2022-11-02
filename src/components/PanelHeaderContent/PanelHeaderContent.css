@@ -70,7 +70,7 @@
  */
 
 .PanelHeaderContent--ios .PanelHeaderContent__children-in {
-  font-size: 21px;
+  font-size: 21px; /* Нет токена на такой размер. Соответственно нет понимаю какой должен быть letter-spacing */
   font-family: var(--font-display);
   font-weight: 500;
   line-height: var(
@@ -84,7 +84,7 @@
  */
 
 .PanelHeaderContent--android .PanelHeaderContent__children-in {
-  font-size: 23px;
+  font-size: 23px; /* Нет токена на такой размер. Соответственно нет понимаю какой должен быть letter-spacing */
   font-family: var(--font-display);
   font-weight: 500;
   line-height: var(

@@ -1,6 +1,9 @@
 .CalendarDay {
   border-radius: 0;
-  font-size: 14px;
+  font-family: var(--vkui--font_subhead--font_family--regular);
+  font-weight: var(--vkui--font_subhead--font_weight--regular);
+  font-size: var(--vkui--font_subhead--font_size--regular);
+  letter-spacing: var(--vkui--font_subhead--letter_spacing--regular);
   color: var(--vkui--color_text_primary);
 }
 
@@ -42,7 +45,7 @@
 }
 
 .CalendarDay--today {
-  font-weight: 600;
+  font-weight: var(--vkui--font_weight_accent1);
 }
 
 .CalendarDay--today .CalendarDay__day-number::after {
