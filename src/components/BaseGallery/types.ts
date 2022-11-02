@@ -1,6 +1,7 @@
 import * as React from "react";
 import { HasAlign, HasRef, HasRootRef } from "../../types";
 import { TouchEventHandler } from "../Touch/Touch";
+import { HorizontalScrollArrowProps } from "../HorizontalScroll/HorizontalScrollArrow";
 
 export interface GallerySlidesState {
   coordX: number;
@@ -49,4 +50,5 @@ export interface BaseGalleryProps
   bullets?: "dark" | "light" | false;
   isDraggable?: boolean;
   showArrows?: boolean;
+  arrowSize?: HorizontalScrollArrowProps["size"];
 }

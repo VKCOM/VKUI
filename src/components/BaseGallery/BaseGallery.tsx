@@ -52,6 +52,7 @@ export const BaseGallery = ({
   align = "left",
   showArrows,
   getRef,
+  arrowSize = "l",
   ...restProps
 }: BaseGalleryProps) => {
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
@@ -391,10 +392,18 @@ export const BaseGallery = ({
       )}
 
       {showArrows && hasMouse && canSlideLeft && (
-        <HorizontalScrollArrow direction="left" onClick={slideLeft} />
+        <HorizontalScrollArrow
+          direction="left"
+          onClick={slideLeft}
+          size={arrowSize}
+        />
       )}
       {showArrows && hasMouse && canSlideRight && (
-        <HorizontalScrollArrow direction="right" onClick={slideRight} />
+        <HorizontalScrollArrow
+          direction="right"
+          onClick={slideRight}
+          size={arrowSize}
+        />
       )}
     </div>
   );
