@@ -673,6 +673,7 @@ export function CustomSelect(props: SelectProps) {
         aria-hidden
         className={styles['CustomSelect__control']}
       >
+        <option value="" />
         {optionsProp.map((item) => (
           <option key={`${item.value}`} value={item.value} />
         ))}

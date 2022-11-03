@@ -159,7 +159,35 @@ describe('CustomSelect', () => {
     expect(getCustomSelectValue()).toEqual('Mike');
   });
 
-  it('accept defaultValue', () => {
+  it("clears value from outside", () => {
+    const { rerender } = render(
+      <CustomSelect
+        data-testid="target"
+        options={[
+          { value: 0, label: "Mike" },
+          { value: 1, label: "Josh" },
+        ]}
+        value={1}
+      />
+    );
+
+    expect(screen.getByTestId("target").textContent).toEqual("Josh");
+
+    rerender(
+      <CustomSelect
+        data-testid="target"
+        options={[
+          { value: 1, label: "Josh" },
+          { value: 2, label: "Anna" },
+        ]}
+        value=""
+      />
+    );
+
+    expect(screen.getByTestId("target").textContent).toEqual("");
+  });
+
+  it("accept defaultValue", () => {
     render(
       <CustomSelect
         data-testid="target"
