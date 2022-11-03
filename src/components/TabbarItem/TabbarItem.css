@@ -81,7 +81,7 @@
 }
 
 .Tabbar--l-vertical .TabbarItem__text {
-  font-size: 10px; /* Нет токена на такой размер. Соответственно нет понимаю какой должен быть letter-spacing */
+  font-size: 10px; /* [hardcode] Токена не будет. В дизайне также зашито (ответственный за дизайн @Zaycevq) */
   line-height: 12px;
   margin-top: 2px;
 }
