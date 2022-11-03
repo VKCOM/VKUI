@@ -3,7 +3,9 @@ import { Touch, TouchEvent } from "../Touch/Touch";
 import { classNamesString } from "../../lib/classNames";
 import { Platform } from "../../lib/platform";
 import { rubber } from "../../lib/touch";
+import { ViewWidth } from "../../lib/adaptivity";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
+import { Subhead } from "../Typography/Subhead/Subhead";
 import { Button } from "../Button/Button";
 import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
@@ -15,6 +17,7 @@ import styles from "./Snackbar.module.css";
 export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * Название кнопки действия в уведомлении
+   * Не может использоваться одновременно с `subtitle`
    */
   action?: React.ReactNode;
 
@@ -32,7 +35,8 @@ export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
    */
   after?: React.ReactNode;
   /**
-   * Варианты расположения кнопки
+   * Варианты расположения кнопки действия
+   * Игнорируется на десктопах и при наличии элементов `after` или `subtitle`
    */
   layout?: "vertical" | "horizontal";
   /**
@@ -47,6 +51,11 @@ export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
    * Задает стиль снекбара
    */
   mode?: "default" | "dark";
+  /**
+   * Дополнительная строка текста под `children`.
+   * Не может использоваться одновременно с `action`
+   */
+  subtitle?: React.ReactNode;
 }
 
 /**
@@ -63,11 +72,12 @@ export const Snackbar = ({
   onClose,
   mode = "default",
   className,
+  subtitle,
   ...restProps
 }: SnackbarProps) => {
   const platform = usePlatform();
-  const { isDesktop } = useAdaptivityWithJSMediaQueries();
-
+  const { viewWidth } = useAdaptivityWithJSMediaQueries();
+  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
   const { waitTransitionFinish } = useWaitTransitionFinish();
 
   const [closing, setClosing] = React.useState(false);
@@ -184,7 +194,7 @@ export const Snackbar = ({
 
   React.useEffect(() => closeTimeout.set(), [closeTimeout]);
 
-  const layout = after || isDesktop ? "vertical" : layoutProps;
+  const layout = after || isDesktop || subtitle ? "vertical" : layoutProps;
 
   return (
     <AppRootPortal>
@@ -217,8 +227,13 @@ export const Snackbar = ({
               <Paragraph className={styles["Snackbar__content-text"]}>
                 {children}
               </Paragraph>
+              {subtitle && !action && (
+                <Subhead className={styles["Snackbar__content-subtitle"]}>
+                  {subtitle}
+                </Subhead>
+              )}
 
-              {action && (
+              {action && !subtitle && (
                 <Button
                   align="left"
                   hasHover={false}
