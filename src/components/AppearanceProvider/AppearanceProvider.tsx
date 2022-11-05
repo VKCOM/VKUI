@@ -1,13 +1,13 @@
 import * as React from "react";
 import { AppearanceType } from "@vkontakte/vk-bridge";
-import { AppearanceProviderContext } from "./AppearanceProviderContext";
 import { classNamesString } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { Platform } from "../../lib/platform";
+import { ConfigProviderPartial } from "../ConfigProvider/ConfigProviderPartial";
 
 export interface AppearanceProviderProps {
-  appearance?: AppearanceType;
-  children?: React.ReactNode;
+  appearance: AppearanceType;
+  children: React.ReactNode;
 }
 
 export const generateVKUITokensClassName = (
@@ -36,13 +36,13 @@ export const generateVKUITokensClassName = (
  * @see https://vkcom.github.io/VKUI/#/AppearanceProvider
  */
 export const AppearanceProvider = ({
+  appearance,
   children,
-  appearance = "light",
 }: AppearanceProviderProps) => {
   const platform = usePlatform();
 
   return (
-    <AppearanceProviderContext.Provider value={appearance}>
+    <ConfigProviderPartial appearance={appearance}>
       {React.Children.map(children, (child) => {
         if (React.isValidElement<{ className?: string }>(child)) {
           return React.cloneElement(child, {
@@ -54,6 +54,6 @@ export const AppearanceProvider = ({
         }
         return child;
       })}
-    </AppearanceProviderContext.Provider>
+    </ConfigProviderPartial>
   );
 };

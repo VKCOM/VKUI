@@ -1,17 +1,17 @@
 import * as React from "react";
-import { PlatformType, platform } from "./platform";
+import { platform as getPlatform } from "./platform";
 import { BrowserInfo, computeBrowserInfo } from "./browser";
 import { DOMContext, getDOM } from "../lib/dom";
+import { useObjectMemo } from "../hooks/useObjectMemo";
+import { ConfigProviderPartial } from "../components/ConfigProvider/ConfigProviderPartial";
 
 export interface SSRContextInterface {
-  platform: PlatformType | null;
-  userAgent?: string;
-  browserInfo?: BrowserInfo;
+  userAgent: string | undefined;
+  browserInfo: BrowserInfo | undefined;
 }
 
 export const SSRContext = React.createContext<SSRContextInterface>({
-  platform: null,
-  userAgent: "",
+  userAgent: undefined,
   browserInfo: undefined,
 });
 
@@ -33,19 +33,18 @@ export const SSRWrapper = ({
     browserInfo = computeBrowserInfo(userAgent);
   }
 
-  // TODO: Каждый раз создаётся новый объект для контекста - плохо
-  const contextValue = {
-    platform: platform(browserInfo),
+  const contextValue = useObjectMemo({
     browserInfo,
     userAgent,
-  };
+  });
 
-  // TODO: move to state, and update in effect?
-  const dom = getDOM();
+  const dom = useObjectMemo(getDOM());
 
   return (
     <SSRContext.Provider value={contextValue}>
-      <DOMContext.Provider value={dom}>{children}</DOMContext.Provider>
+      <ConfigProviderPartial platform={getPlatform(browserInfo)}>
+        <DOMContext.Provider value={dom}>{children}</DOMContext.Provider>
+      </ConfigProviderPartial>
     </SSRContext.Provider>
   );
 };

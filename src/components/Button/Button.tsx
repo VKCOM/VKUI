@@ -1,7 +1,7 @@
 import * as React from "react";
 import { classNamesString } from "../../lib/classNames";
 import { Platform } from "../../lib/platform";
-import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
+import { useConfigProvider } from "../ConfigProvider/ConfigProviderContext";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { HasAlign } from "../../types";
 import { Spinner } from "../Spinner/Spinner";
@@ -46,7 +46,7 @@ export const Button = ({
 }: ButtonProps) => {
   const hasIcons = Boolean(before || after);
   const hasIconOnly = !children && Boolean(after) !== Boolean(before);
-  const hasNewTokens = React.useContext(ConfigProviderContext).hasNewTokens;
+  const { hasNewTokens } = useConfigProvider();
   const { sizeY } = useAdaptivity();
   const platform = usePlatform();
 

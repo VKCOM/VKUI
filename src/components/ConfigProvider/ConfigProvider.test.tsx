@@ -14,16 +14,15 @@ describe("ConfigProvider", () => {
   baselineComponent<any>(ConfigProvider, { forward: false });
   it("provides config context", () => {
     const config = {
-      platform: undefined,
       appearance: Appearance.LIGHT,
       webviewType: WebviewType.INTERNAL,
-      hasNewTokens: undefined,
       transitionMotionEnabled: false,
     };
     const ConfigUser = () => {
       expect(useContext(ConfigProviderContext)).toEqual({
         platform: Platform.ANDROID,
         isWebView: false,
+        locale: "ru",
         appearance: Appearance.LIGHT,
         webviewType: WebviewType.INTERNAL,
         hasNewTokens: false,
@@ -51,6 +50,7 @@ describe("ConfigProvider", () => {
       hasNewTokens: true,
       transitionMotionEnabled: false,
       isWebView: true,
+      locale: "en",
     };
     it.each([
       ["platform", Platform.ANDROID],
@@ -59,6 +59,7 @@ describe("ConfigProvider", () => {
       ["transitionMotionEnabled", true],
       ["isWebView", false],
       ["platform", Appearance.LIGHT],
+      ["locale", "ru"],
     ])("%s => %s", (prop, value) => {
       const newConfig = { [prop]: value };
       render(

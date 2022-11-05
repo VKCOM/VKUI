@@ -13,7 +13,7 @@ import { useKeyboardInputTracker } from "../../hooks/useKeyboardInputTracker";
 import { useInsets } from "../../hooks/useInsets";
 import { Insets } from "@vkontakte/vk-bridge";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
+import { useAppearance } from "../../hooks/useAppearance";
 import { isRefObject } from "../../lib/isRefObject";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import styles from "./AppRoot.module.css";
@@ -52,7 +52,7 @@ export const AppRoot = ({
   const [portalRoot, setPortalRoot] = React.useState<HTMLElement | null>(null);
   const { document } = useDOM();
   const insets = useInsets();
-  const { appearance } = React.useContext(ConfigProviderContext);
+  const appearance = useAppearance();
 
   const { hasMouse, sizeX } = useAdaptivity();
 

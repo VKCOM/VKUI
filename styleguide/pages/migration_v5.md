@@ -582,6 +582,12 @@ npx @vkontakte/vkui-token-translator
 
 <br/><br/>
 
+## `LocaleProviderContext` -> `ConfigProviderContext`
+
+- `LocaleProviderContext` был удален. Используйте `ConfigProviderContext`
+
+<br/><br/>
+
 ## `getClassName`
 
 - `getClassName` был удален. Используйте `getPlatformClassName`

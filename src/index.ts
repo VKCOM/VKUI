@@ -266,13 +266,13 @@ export type { AdaptivityProviderProps } from "./components/AdaptivityProvider/Ad
 export { ConfigProvider } from "./components/ConfigProvider/ConfigProvider";
 export type { ConfigProviderProps } from "./components/ConfigProvider/ConfigProvider";
 export {
+  useConfigProvider,
   ConfigProviderContext,
   WebviewType,
 } from "./components/ConfigProvider/ConfigProviderContext";
 export { AppearanceProvider } from "./components/AppearanceProvider/AppearanceProvider";
 export type { AppearanceProviderProps } from "./components/AppearanceProvider/AppearanceProvider";
 export { Appearance } from "./helpers/appearance";
-export { LocaleProviderContext } from "./components/LocaleProviderContext/LocaleProviderContext";
 
 /**
  * Advertisement

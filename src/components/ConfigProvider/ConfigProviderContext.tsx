@@ -1,7 +1,6 @@
 import * as React from "react";
 import vkBridge, { AppearanceType } from "@vkontakte/vk-bridge";
-import { PlatformType, platform } from "../../lib/platform";
-import { Appearance } from "../../helpers/appearance";
+import { platform, PlatformType } from "../../lib/platform";
 
 export enum WebviewType {
   VKAPPS = "vkapps",
@@ -19,13 +18,9 @@ export interface ConfigProviderContextInterface {
    */
   webviewType: WebviewType.INTERNAL | WebviewType.VKAPPS;
   /**
-   * Тип приложения
-   */
-  app?: string;
-  /**
    * Тип цветовой схемы – `light` или `dark`
    */
-  appearance: AppearanceType;
+  appearance: AppearanceType | undefined;
   /**
    * Включена ли анимация переходов между экранами в `Root` и `View`
    */
@@ -35,6 +30,10 @@ export interface ConfigProviderContextInterface {
    */
   platform: PlatformType;
   hasNewTokens: boolean;
+  /**
+    Локаль ([список](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry))
+   */
+  locale: string;
 }
 
 export const ConfigProviderContext =
@@ -44,7 +43,8 @@ export const ConfigProviderContext =
     transitionMotionEnabled: true,
     platform: platform(),
     hasNewTokens: false,
-    appearance: Appearance.LIGHT,
+    appearance: undefined,
+    locale: "ru",
   });
 
 export const useConfigProvider = () => React.useContext(ConfigProviderContext);
