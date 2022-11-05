@@ -116,7 +116,7 @@ function App() {
 
 Вот небольшой и наглядный пример:
 
-```tsx
+```jsx static
 // ❌ bad for SSR
 const App = () => {
   return (
@@ -130,7 +130,7 @@ const App = () => {
 const App = () => {
   const [mounted, setMounted] = React.useState(false);
 
-  React.useEffect(function componentDidMount() {
+  React.useEffect(() => {
     setMounted(true);
   }, []);
 
