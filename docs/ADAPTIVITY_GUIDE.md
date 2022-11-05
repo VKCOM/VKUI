@@ -159,7 +159,7 @@ const App = () => {
 const App = () => {
   const [mounted, setMounted] = React.useState(false);
 
-  React.useEffect(function componentDidMount() {
+  React.useEffect(() => {
     setMounted(true);
   }, []);
 
