@@ -28,6 +28,8 @@ export enum Scheme {
 
 export type AppearanceScheme =
   | AppearanceSchemeType
+  | Scheme.DEPRECATED_CLIENT_LIGHT
+  | Scheme.DEPRECATED_CLIENT_DARK
   | Scheme.VKCOM
   | Scheme.VKCOM_DARK
   | Scheme.VKCOM_LIGHT
