@@ -144,10 +144,6 @@
       "brotli": true
     },
     {
-      "name": "JS, unstable",
-      "path": "dist/unstable/index.js"
-    },
-    {
       "name": "CSS",
       "path": "dist/vkui.css",
       "webpack": false,
@@ -163,11 +159,6 @@
       "path": "dist/vkui.css",
       "webpack": false,
       "brotli": true
-    },
-    {
-      "name": "CSS, unstable",
-      "path": "dist/unstable.css",
-      "webpack": false
     }
   ],
   "scripts": {

@@ -1,6 +1,11 @@
 import React from "react";
-import { Text, useAdaptivity, getSizeXClassName, classNames } from "@vkui";
-import { TextTooltip } from "@vkui/unstable";
+import {
+  Text,
+  useAdaptivity,
+  getSizeXClassName,
+  classNames,
+  unstable_TextTooltip as TextTooltip,
+} from "@vkui";
 import { Icon16ErrorCircleOutline } from "@vkontakte/icons";
 import TypeRenderer from "../Type/TypeRenderer";
 import "./ComplexType.css";

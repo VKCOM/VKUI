@@ -8,10 +8,8 @@ module.exports = {
   mode: "none",
   // TODO: Once CSS is modular, replace
   // './src/styles/components.css' -> './src/index.ts'
-  // './src/styles/unstable.css' -> './src/unstable/index.ts'
   entry: {
     stable: ["./src/styles/themes.css", "./src/styles/components.css"],
-    unstable: "./src/styles/unstable.css",
     components: "./src/styles/components.css",
   },
   output: {
@@ -37,9 +35,9 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
-      chunks: (chunk) => ["stable", "unstable"].includes(chunk.name),
+      chunks: (chunk) => ["stable"].includes(chunk.name),
       cacheGroups: {
-        // capture all common deps between stable & unstable
+        // capture all common deps
         vkui: {
           name: "vkui",
           test: (module, { chunkGraph }) =>

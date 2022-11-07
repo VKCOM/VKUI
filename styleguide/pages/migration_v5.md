@@ -66,6 +66,24 @@ npx @vkontakte/vkui-token-translator
 
 <br/><br/>
 
+## Unstable
+
+Импорт нестабильных компонентов использует подход как в React (смотри [#3581](https://github.com/VKCOM/VKUI/issues/3581))
+
+```diff
+- import { ChipsSelect } from "@vkontakte/vkui/dist/unstable";
++ import { unstable_ChipsSelect as ChipsSelect } from "@vkontakte/vkui";
+```
+
+Нестабильные стили теперь находятся в `vkui.css`
+
+```diff
+import "@vkontakte/vkui/dist/vkui.css";
+- import "@vkontakte/vkui/dist/unstable.css";
+```
+
+<br/><br/>
+
 ## [`ConfigProvider`](#/ConfigProvider)
 
 - По умолчанию `appearance` определяется автоматически — в зависимости от темы, указанной в VK, или настроек ОС

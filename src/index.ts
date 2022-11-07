@@ -334,8 +334,6 @@ export { ViewWidth, ViewHeight, SizeType } from "./lib/adaptivity";
 export { getPlatformClassName } from "./helpers/getPlatformClassName";
 export type { AdaptivityProps } from "./components/AdaptivityProvider/AdaptivityContext";
 export { calcInitialsAvatarColor } from "./helpers/avatar";
-export { Popper } from "./components/Popper/Popper";
-export type { PopperProps } from "./components/Popper/Popper";
 export { getHoverClassName } from "./helpers/getHoverClassName";
 export { getMouseClassName } from "./helpers/getMouseClassName";
 export { getSizeXClassName } from "./helpers/getSizeXClassName";
@@ -355,3 +353,24 @@ export type { AlignType, HasPlatform, HasInsets } from "./types";
 export type { NavIdProps } from "./lib/getNavId";
 export type { PlatformType } from "./lib/platform";
 export type { TransitionContextProps } from "./components/NavTransitionContext/NavTransitionContext";
+
+/**
+ * Unstable
+ */
+export { ChipsSelect as unstable_ChipsSelect } from "./components/ChipsSelect/ChipsSelect";
+export type { ChipsSelectProps as unstable_ChipsSelectProps } from "./components/ChipsSelect/ChipsSelect";
+
+export { Popover as unstable_Popover } from "./components/Popover/Popover";
+export type { PopoverProps as unstable_PopoverProps } from "./components/Popover/Popover";
+
+export { TextTooltip as unstable_TextTooltip } from "./components/TextTooltip/TextTooltip";
+export type { TextTooltipProps as unstable_TextTooltipProps } from "./components/TextTooltip/TextTooltip";
+
+export { RichTooltip as unstable_RichTooltip } from "./components/RichTooltip/RichTooltip";
+export type { RichTooltipProps as unstable_RichTooltipProps } from "./components/RichTooltip/RichTooltip";
+
+export { Popper as unstable_Popper } from "./components/Popper/Popper";
+export type { PopperProps as unstable_PopperProps } from "./components/Popper/Popper";
+
+export { ViewInfinite as unstable_ViewInfinite } from "./components/View/ViewInfinite";
+export type { ViewInfiniteProps as unstable_ViewInfiniteProps } from "./components/View/ViewInfinite";
