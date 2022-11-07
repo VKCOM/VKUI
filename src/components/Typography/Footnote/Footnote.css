@@ -1,15 +1,19 @@
 .Footnote {
   display: block;
   margin: 0;
+  font-family: var(--vkui--font_footnote--font_family--regular);
   font-size: var(--vkui--font_footnote--font_size--regular);
   line-height: var(--vkui--font_footnote--line_height--regular);
   font-weight: var(--vkui--font_footnote--font_weight--regular);
+  letter-spacing: var(--vkui--font_footnote--letter_spacing--regular);
 }
 
 .Footnote--caps {
+  font-family: var(--vkui--font_footnote_caps--font_family--regular);
   font-size: var(--vkui--font_footnote_caps--font_size--regular);
   line-height: var(--vkui--font_footnote_caps--line_height--regular);
   font-weight: var(--vkui--font_footnote_caps--font_weight--regular);
+  letter-spacing: var(--vkui--font_footnote_caps--letter_spacing--regular);
   text-transform: uppercase;
 }
 

@@ -109,7 +109,7 @@
 }
 
 .PanelHeader--ios .PanelHeader__content-in {
-  font-size: 21px;
+  font-size: 21px; /* [hardcode] TODO ждём токена в vkui-tokens (ответственный @Zaycevq) */
 }
 
 .PanelHeader--ios .PanelHeader__content > * {
@@ -157,7 +157,7 @@
 }
 
 .PanelHeader--android .PanelHeader__content-in {
-  font-size: 23px;
+  font-size: 23px; /* [hardcode] TODO ждём токена в vkui-tokens (ответственный @Zaycevq) */
 }
 
 .PanelHeader--android .PanelHeader__content > * {

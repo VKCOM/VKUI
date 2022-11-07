@@ -277,7 +277,7 @@ export const DateRangeInput = ({
             : ""
         }
       />
-      <span vkuiClass="DateInput__input" onKeyDown={handleKeyDown}>
+      <span vkuiClass="DateRangeInput__input" onKeyDown={handleKeyDown}>
         <InputLike
           length={2}
           getRootRef={daysStartRef}

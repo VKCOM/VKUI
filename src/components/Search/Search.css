@@ -36,7 +36,11 @@
   position: relative;
   padding: 0 22px 0 36px;
   box-sizing: border-box;
-  font-size: 17px;
+  font-family: var(--vkui--font_headline1--font_family--regular);
+  font-weight: var(--vkui--font_weight_accent3);
+  font-size: var(--vkui--font_headline1--font_size--compact);
+  line-height: var(--vkui--font_headline1--line_height--compact);
+  letter-spacing: var(--vkui--font_headline1--letter_spacing--compact);
   border-radius: var(--vkui--size_border_radius--regular);
   max-width: 100%;
   flex-grow: 1;
@@ -71,9 +75,6 @@
 }
 
 .Search__after-width {
-  font-size: 17px;
-  padding-left: 12px;
-  padding-right: 4px;
   flex-shrink: 0;
   pointer-events: none;
   cursor: text;
@@ -161,7 +162,14 @@
   position: relative;
   z-index: 2;
   cursor: pointer;
-  font-size: 17px;
+}
+
+.Search__after-width,
+.Search__after-in {
+  font-family: var(--vkui--font_headline2--font_family--regular);
+  font-weight: var(--vkui--font_headline2--font_weight--regular);
+  font-size: var(--vkui--font_headline2--font_size--compact);
+  letter-spacing: var(--vkui--font_headline2--letter_spacing--compact);
   padding-left: 12px;
   padding-right: 4px;
 }
@@ -214,6 +222,20 @@
 .Search--sizeY-regular .Search__after-width,
 .Search--sizeY-regular .Search__after {
   line-height: var(--vkui--size_search_height--regular);
+}
+
+/* TODO v5.0.0 поправить под новую адаптивность */
+.Search--sizeY-regular .Search__input {
+  font-size: var(--vkui--font_headline1--font_size--regular);
+  line-height: var(--vkui--font_headline1--line_height--regular);
+  letter-spacing: var(--vkui--font_headline1--letter_spacing--regular);
+}
+
+/* TODO v5.0.0 поправить под новую адаптивность */
+.Search--sizeY-regular .Search__after-width,
+.Search--sizeY-regular .Search__after-in {
+  font-size: var(--vkui--font_headline2--font_size--regular);
+  letter-spacing: var(--vkui--font_headline2--letter_spacing--regular);
 }
 
 /*
@@ -371,8 +393,11 @@
 }
 
 .Search--vkcom .Search__input {
-  font-size: 15px;
-  line-height: 20px;
+  font-family: var(--vkui--font_headline1--font_family--regular);
+  font-weight: var(--vkui--font_headline1--font_weight--regular);
+  font-size: var(--vkui--font_headline1--font_size--compact);
+  line-height: var(--vkui--font_headline1--line_height--compact);
+  letter-spacing: var(--vkui--font_headline1--letter_spacing--compact);
   padding-left: 40px;
 }
 

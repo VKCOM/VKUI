@@ -1,8 +1,11 @@
 .Text {
-  font-size: 16px;
-  line-height: 24px;
+  font-family: var(--vkui--font_text--font_family--regular);
+  font-weight: var(--vkui--font_text--font_weight--regular);
+  font-size: var(--vkui--font_text--font_size--regular);
+  line-height: var(--vkui--font_text--line_height--regular);
+  letter-spacing: var(--vkui--font_text--letter_spacing--regular);
 }
 
 .Text--medium {
-  font-weight: 500;
+  font-weight: var(--vkui--font_weight_accent2);
 }

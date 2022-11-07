@@ -4,21 +4,27 @@
 }
 
 .Title--l-1 {
+  font-family: var(--vkui--font_title1--font_family--regular);
   font-size: var(--vkui--font_title1--font_size--regular);
   line-height: var(--vkui--font_title1--line_height--regular);
   font-weight: var(--vkui--font_title1--font_weight--regular);
+  letter-spacing: var(--vkui--font_title1--letter_spacing--regular);
 }
 
 .Title--l-2 {
+  font-family: var(--vkui--font_title2--font_family--regular);
   font-size: var(--vkui--font_title2--font_size--regular);
   line-height: var(--vkui--font_title2--line_height--regular);
   font-weight: var(--vkui--font_title2--font_weight--regular);
+  letter-spacing: var(--vkui--font_title2--letter_spacing--regular);
 }
 
 .Title--l-3 {
+  font-family: var(--vkui--font_title3--font_family--regular);
   font-size: var(--vkui--font_title3--font_size--regular);
   line-height: var(--vkui--font_title3--line_height--regular);
   font-weight: var(--vkui--font_title3--font_weight--regular);
+  letter-spacing: var(--vkui--font_title3--letter_spacing--regular);
 }
 
 /* TODO удалить перед релизом 5.0.0 */

@@ -56,15 +56,19 @@
 
 .RichCell__after-caption {
   margin-top: 2px;
+  font-family: var(--vkui--font_footnote--font_family--regular);
   font-size: var(--vkui--font_footnote--font_size--regular);
   line-height: var(--vkui--font_footnote--line_height--regular);
+  letter-spacing: var(--vkui--font_footnote--letter_spacing--regular);
   color: var(--text_secondary, var(--vkui--color_text_secondary));
 }
 
 /* TODO v5.0.0 Новая адаптивность */
 .RichCell--sizeY-compact .RichCell__after-caption {
+  font-family: var(--vkui--font_caption1--font_family--regular);
   font-size: var(--vkui--font_caption1--font_size--regular);
   line-height: var(--vkui--font_caption1--line_height--regular);
+  letter-spacing: var(--vkui--font_caption1--letter_spacing--regular);
 }
 
 .RichCell__subhead {
@@ -102,16 +106,20 @@
 .RichCell__children,
 .RichCell__text,
 .RichCell__after-children {
+  font-family: var(--vkui--font_paragraph--font_family--regular);
   font-size: var(--vkui--font_paragraph--font_size--regular);
   line-height: var(--vkui--font_paragraph--line_height--regular);
+  letter-spacing: var(--vkui--font_paragraph--letter_spacing--regular);
 }
 
 /* TODO v5.0.0 Новая адаптивность */
 .RichCell--sizeY-compact .RichCell__children,
 .RichCell--sizeY-compact .RichCell__text,
 .RichCell--sizeY-compact .RichCell__after-children {
+  font-family: var(--vkui--font_subhead--font_family--regular);
   font-size: var(--vkui--font_subhead--font_size--regular);
   line-height: var(--vkui--font_subhead--line_height--regular);
+  letter-spacing: var(--vkui--font_subhead--letter_spacing--regular);
 }
 
 /**

@@ -144,8 +144,10 @@
 
 .Alert--ios .Alert__action {
   position: relative;
-  font-size: 17px;
-  line-height: 44px;
+  font-family: var(--vkui--font_title3--font_family--regular);
+  font-size: var(--vkui--font_title3--font_size--regular);
+  line-height: 44px; /* для центрирования равно `height` */
+  letter-spacing: var(--vkui--font_title3--letter_spacing--regular);
   color: var(--accent, var(--vkui--color_text_accent));
   border: 0;
   padding: 0 6px;

@@ -81,7 +81,7 @@
 }
 
 .Tabbar--l-vertical .TabbarItem__text {
-  font-size: 10px;
+  font-size: 10px; /* [hardcode] Токена не будет. В дизайне также зашито (ответственный за дизайн @Zaycevq) */
   line-height: 12px;
   margin-top: 2px;
 }
