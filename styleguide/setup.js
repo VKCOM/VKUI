@@ -1,10 +1,8 @@
 import "../src/styles/themes.css";
-import "../src/styles/unstable.css";
 import "../src/styles/common.css";
 
 import { useState, useRef } from "react";
 import * as VKUI from "../src";
-import * as VKUIUnstable from "../src/unstable";
 import * as Icons from "@vkontakte/icons";
 import {
   getRandomInt,
@@ -16,11 +14,12 @@ import {
   perfLogger,
 } from "./utils";
 
-const ui = { ...VKUI, ...VKUIUnstable };
+const unstablePrefix = "unstable_";
+const ui = { ...VKUI };
 
-for (let i in ui) {
-  if (ui.hasOwnProperty(i)) {
-    window[i] = ui[i];
+for (let name in ui) {
+  if (ui.hasOwnProperty(name)) {
+    window[name.replace(unstablePrefix, "")] = ui[name];
   }
 }
 

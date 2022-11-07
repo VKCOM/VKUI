@@ -155,6 +155,12 @@
 /* Advertisement */
 @import "../components/PromoBanner/PromoBanner.module.css";
 
+/* Unstable */
+@import "../components/ChipsSelect/ChipsSelect.module.css";
+@import "../components/Popover/Popover.module.css";
+@import "../components/TextTooltip/TextTooltip.module.css";
+@import "../components/RichTooltip/RichTooltip.module.css";
+
 /* Глобальные стили vkui.
  */
 @import "./common.css";
