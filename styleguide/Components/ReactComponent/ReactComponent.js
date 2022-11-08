@@ -38,6 +38,7 @@ const ReactComponent = ({ component, exampleMode }) => {
       >
         <Caption>Source</Caption>
       </Link>
+      <div className="ReactComponent__divider">•</div>
       <Link
         target="_blank"
         className="ReactComponent__src"
