@@ -22,7 +22,7 @@ describe("SubnavigationButton", () => {
         before: [undefined, <Icon24Filter key="icon" />],
         after: [
           undefined,
-          <Counter key="counter" mode="primary" size="s">
+          <Counter key="counter" size="s">
             3
           </Counter>,
         ],
@@ -52,7 +52,7 @@ describe("SubnavigationButton", () => {
         before: [<Icon24Filter key="icon" />],
         mode: ["primary", "outline", "tertiary"],
         after: [
-          <Counter key="counter" mode="primary" size="s">
+          <Counter key="counter" size="s">
             3
           </Counter>,
         ],

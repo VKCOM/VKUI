@@ -152,9 +152,7 @@ const SubnavigationBarExample = () => {
                   expandable
                   after={
                     filtersCount > 0 && (
-                      <Counter mode="primary" size="s">
-                        {filtersCount}
-                      </Counter>
+                      <Counter size="s">{filtersCount}</Counter>
                     )
                   }
                   onClick={openModal}
