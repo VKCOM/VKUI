@@ -14,9 +14,19 @@ VKUI — это библиотека адаптивных React-компонен
 
 ## Установка
 
-`npm i @vkontakte/vkui` или `yarn add @vkontakte/vkui`
+**npm:**
 
-**Важно:** Нужно установить вручную [`peerDependencies`](package.json#L104-L112), либо использовать npm7+ который делает это автоматически.
+```sh
+npm i @vkontakte/vkui @vkontakte/icons @vkontakte/vk-bridge
+```
+
+**yarn:**
+
+```sh
+yarn add @vkontakte/vkui @vkontakte/icons @vkontakte/vk-bridge
+```
+
+> _Обратите внимание_: мы поддерживаем [react](https://www.npmjs.com/package/react) и [react-dom](https://www.npmjs.com/package/react-dom) версий `^16.8.6`, `^17.0.0` и `^18.1.0`
 
 ## Hello World
 
