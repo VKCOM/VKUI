@@ -42,7 +42,7 @@ export const BaseGallery = ({
   children,
   slideWidth = "100%",
   slideIndex = 0,
-  isDraggable = true,
+  isDraggable: isDraggableProp = true,
   onDragStart,
   onDragEnd,
   onChange,
@@ -52,6 +52,7 @@ export const BaseGallery = ({
   showArrows,
   getRef,
   className,
+  arrowSize = "l",
   ...restProps
 }: BaseGalleryProps) => {
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
@@ -200,14 +201,14 @@ export const BaseGallery = ({
     }
   }, [slideIndex]);
 
-  const slideLeft = () => {
+  const slideLeft = (event: React.MouseEvent) => {
     onChange?.(slideIndex - 1);
-    onPrevClick?.();
+    onPrevClick?.(event);
   };
 
-  const slideRight = () => {
+  const slideRight = (event: React.MouseEvent) => {
     onChange?.(slideIndex + 1);
-    onNextClick?.();
+    onNextClick?.(event);
   };
 
   /*
@@ -257,7 +258,7 @@ export const BaseGallery = ({
   };
 
   const onMoveX = (e: TouchEvent) => {
-    if (isDraggable && !layoutState.current.isFullyVisible) {
+    if (isDraggableProp && !layoutState.current.isFullyVisible) {
       e.originalEvent.preventDefault();
 
       if (e.isSlideX) {
@@ -326,6 +327,8 @@ export const BaseGallery = ({
       // otherwise we need to check current slide index (align = right or align = center)
       (align !== "left" && slideIndex < layoutState.current.slides.length - 1));
 
+  const isDraggable = isDraggableProp && !layoutState.current.isFullyVisible;
+
   return (
     <div
       {...restProps}
@@ -334,6 +337,7 @@ export const BaseGallery = ({
         styles[`BaseGallery--align-${align}`],
         shiftState.dragging && styles["BaseGallery--dragging"],
         slideWidth === "custom" && styles["BaseGallery--custom-width"],
+        isDraggable && styles["BaseGallery--draggable"],
         className
       )}
       ref={rootRef}
@@ -384,10 +388,18 @@ export const BaseGallery = ({
       )}
 
       {showArrows && hasMouse && canSlideLeft && (
-        <HorizontalScrollArrow direction="left" onClick={slideLeft} />
+        <HorizontalScrollArrow
+          direction="left"
+          onClick={slideLeft}
+          size={arrowSize}
+        />
       )}
       {showArrows && hasMouse && canSlideRight && (
-        <HorizontalScrollArrow direction="right" onClick={slideRight} />
+        <HorizontalScrollArrow
+          direction="right"
+          onClick={slideRight}
+          size={arrowSize}
+        />
       )}
     </div>
   );
