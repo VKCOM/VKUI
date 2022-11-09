@@ -5,16 +5,6 @@ import { DOMContext, getDOM } from "../lib/dom";
 import { useObjectMemo } from "../hooks/useObjectMemo";
 import { ConfigProviderPartial } from "../components/ConfigProvider/ConfigProviderPartial";
 
-export interface SSRContextInterface {
-  userAgent: string | undefined;
-  browserInfo: BrowserInfo | undefined;
-}
-
-export const SSRContext = React.createContext<SSRContextInterface>({
-  userAgent: undefined,
-  browserInfo: undefined,
-});
-
 export interface SSRWrapperProps {
   userAgent?: string;
   browserInfo?: BrowserInfo;
@@ -33,18 +23,11 @@ export const SSRWrapper = ({
     browserInfo = computeBrowserInfo(userAgent);
   }
 
-  const contextValue = useObjectMemo({
-    browserInfo,
-    userAgent,
-  });
-
   const dom = useObjectMemo(getDOM());
 
   return (
-    <SSRContext.Provider value={contextValue}>
-      <ConfigProviderPartial platform={getPlatform(browserInfo)}>
-        <DOMContext.Provider value={dom}>{children}</DOMContext.Provider>
-      </ConfigProviderPartial>
-    </SSRContext.Provider>
+    <ConfigProviderPartial platform={getPlatform(browserInfo)}>
+      <DOMContext.Provider value={dom}>{children}</DOMContext.Provider>
+    </ConfigProviderPartial>
   );
 };
