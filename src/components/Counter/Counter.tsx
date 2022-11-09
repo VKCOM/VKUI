@@ -20,7 +20,9 @@ const sizeClassNames = {
 
 export interface CounterProps extends React.HTMLAttributes<HTMLSpanElement> {
   /**
-   * Тип счетчика
+   * Тип счетчика.  В режиме `inherit` если компонент находится в кнопке, то
+   * цвета зависят от кнопки. Если компонент находится вне кнопки, применяется
+   * режим `secondary`
    */
   mode?: "secondary" | "primary" | "prominent" | "contrast" | "inherit";
   size?: "s" | "m";
