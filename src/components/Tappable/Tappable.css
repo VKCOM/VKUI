@@ -13,7 +13,6 @@
 .Tappable[disabled],
 .Tappable[aria-disabled="true"] {
   cursor: default;
-  pointer-events: none;
 }
 
 .Tappable--focus-visible {
