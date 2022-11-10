@@ -25,7 +25,6 @@ describe("ConfigProvider", () => {
         locale: "ru",
         appearance: Appearance.LIGHT,
         webviewType: WebviewType.INTERNAL,
-        hasNewTokens: false,
         transitionMotionEnabled: false,
       });
       return null;
@@ -47,7 +46,6 @@ describe("ConfigProvider", () => {
       platform: Platform.VKCOM,
       appearance: Appearance.DARK,
       webviewType: WebviewType.INTERNAL,
-      hasNewTokens: true,
       transitionMotionEnabled: false,
       isWebView: true,
       locale: "en",
@@ -55,7 +53,6 @@ describe("ConfigProvider", () => {
     it.each([
       ["platform", Platform.ANDROID],
       ["webviewType", WebviewType.VKAPPS],
-      ["hasNewTokens", false],
       ["transitionMotionEnabled", true],
       ["isWebView", false],
       ["platform", Appearance.LIGHT],

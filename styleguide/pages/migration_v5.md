@@ -70,6 +70,7 @@ npx @vkontakte/vkui-token-translator
 
 - По умолчанию `appearance` определяется автоматически — в зависимости от темы, указанной в VK, или настроек ОС
 - Удалено устаревшее свойство `scheme`. Для определения темы используйте свойство `appearance`
+- Удалено свойство `hasNewTokens`
 
 ```diff
 - <ConfigProvider scheme={scheme}>...</ConfigProvider>

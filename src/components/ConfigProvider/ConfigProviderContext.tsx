@@ -29,7 +29,6 @@ export interface ConfigProviderContextInterface {
    * Платформа
    */
   platform: PlatformType;
-  hasNewTokens: boolean;
   /**
     Локаль ([список](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry))
    */
@@ -42,7 +41,6 @@ export const ConfigProviderContext =
     isWebView: vkBridge.isWebView(),
     transitionMotionEnabled: true,
     platform: platform(),
-    hasNewTokens: false,
     appearance: undefined,
     locale: "ru",
   });
