@@ -273,6 +273,8 @@ export {
 export { AppearanceProvider } from "./components/AppearanceProvider/AppearanceProvider";
 export type { AppearanceProviderProps } from "./components/AppearanceProvider/AppearanceProvider";
 export { Appearance } from "./helpers/appearance";
+export { LocaleProvider } from "./components/LocaleProvider/LocaleProvider";
+export type { LocaleProviderProps } from "./components/LocaleProvider/LocaleProvider";
 
 /**
  * Advertisement

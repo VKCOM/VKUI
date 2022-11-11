@@ -585,7 +585,7 @@ npx @vkontakte/vkui-token-translator
 
 ## `LocaleProviderContext` -> `ConfigProviderContext`
 
-- `LocaleProviderContext` был удален. Используйте `ConfigProviderContext`
+- `LocaleProviderContext` был удален. Используйте [`LocaleProvider`](https://vkcom.github.io/VKUI/#/LocaleProvider) и `useConfigProvider`
 
 <br/><br/>
 

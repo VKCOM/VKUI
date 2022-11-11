@@ -317,6 +317,7 @@ const baseConfig = {
             "../src/components/AppRoot/AppRoot.tsx",
             "../src/components/AdaptivityProvider/AdaptivityProvider.tsx",
             "../src/components/ConfigProvider/ConfigProvider.tsx",
+            "../src/components/LocaleProvider/LocaleProvider.tsx",
             "../src/components/Touch/Touch.tsx",
           ],
         },

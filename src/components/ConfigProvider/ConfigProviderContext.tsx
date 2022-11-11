@@ -30,7 +30,7 @@ export interface ConfigProviderContextInterface {
    */
   platform: PlatformType;
   /**
-    Локаль ([список](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry))
+   * Строка с языковой меткой BCP 47
    */
   locale: string;
 }
