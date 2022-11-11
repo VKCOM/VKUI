@@ -1,7 +1,6 @@
 import * as React from "react";
 import { classNamesString } from "../../lib/classNames";
 import { Platform } from "../../lib/platform";
-import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { HasAlign } from "../../types";
 import { Spinner } from "../Spinner/Spinner";
@@ -46,14 +45,13 @@ export const Button = ({
 }: ButtonProps) => {
   const hasIcons = Boolean(before || after);
   const hasIconOnly = !children && Boolean(after) !== Boolean(before);
-  const hasNewTokens = React.useContext(ConfigProviderContext).hasNewTokens;
   const { sizeY } = useAdaptivity();
   const platform = usePlatform();
 
   return (
     <Tappable
-      hoverMode={hasNewTokens ? styles["Button--hover"] : "background"}
-      activeMode={hasNewTokens ? styles["Button--active"] : "opacity"}
+      hoverMode={styles["Button--hover"]}
+      activeMode={styles["Button--active"]}
       {...restProps}
       Component={restProps.href ? "a" : Component}
       onClick={loading ? undefined : onClick}

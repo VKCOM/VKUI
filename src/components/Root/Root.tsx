@@ -1,7 +1,7 @@
 import * as React from "react";
 import { classNamesString } from "../../lib/classNames";
 import { Platform } from "../../lib/platform";
-import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
+import { useConfigProvider } from "../ConfigProvider/ConfigProviderContext";
 import { SplitColContext } from "../SplitCol/SplitCol";
 import { ScrollContext } from "../AppRoot/ScrollContext";
 import { NavTransitionProvider } from "../NavTransitionContext/NavTransitionContext";
@@ -48,9 +48,7 @@ export const Root = ({
     {}
   ).current;
 
-  const { transitionMotionEnabled = true } = React.useContext(
-    ConfigProviderContext
-  );
+  const { transitionMotionEnabled = true } = useConfigProvider();
   const { animate } = React.useContext(SplitColContext);
   const disableAnimation = !transitionMotionEnabled || !animate;
 

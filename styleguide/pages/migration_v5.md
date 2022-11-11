@@ -88,6 +88,7 @@ import "@vkontakte/vkui/dist/vkui.css";
 
 - По умолчанию `appearance` определяется автоматически — в зависимости от темы, указанной в VK, или настроек ОС
 - Удалено устаревшее свойство `scheme`. Для определения темы используйте свойство `appearance`
+- Удалено свойство `hasNewTokens`
 
 ```diff
 - <ConfigProvider scheme={scheme}>...</ConfigProvider>
@@ -603,6 +604,12 @@ import "@vkontakte/vkui/dist/vkui.css";
 ## `SimpleCheckbox` -> [`Checkbox`](#/Checkbox)
 
 - `SimpleCheckbox` был удален. Используйте [`Checkbox`](#/Checkbox)
+
+<br/><br/>
+
+## `LocaleProviderContext` -> `ConfigProviderContext`
+
+- `LocaleProviderContext` был удален. Используйте [`LocaleProvider`](https://vkcom.github.io/VKUI/#/LocaleProvider) и `useConfigProvider`
 
 <br/><br/>
 

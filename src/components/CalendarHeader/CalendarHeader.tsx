@@ -10,7 +10,7 @@ import { classNamesString } from "../../lib/classNames";
 import { CustomSelect } from "../CustomSelect/CustomSelect";
 import { SizeType } from "../../lib/adaptivity";
 import { getMonths, getYears } from "../../lib/calendar";
-import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
+import { useConfigProvider } from "../ConfigProvider/ConfigProviderContext";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import styles from "./CalendarHeader.module.css";
@@ -72,7 +72,7 @@ export const CalendarHeader = ({
     />
   ),
 }: CalendarHeaderProps) => {
-  const locale = React.useContext(LocaleProviderContext);
+  const { locale } = useConfigProvider();
   const onMonthsChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>
       onChange(setMonth(viewDate, Number(event.target.value))),

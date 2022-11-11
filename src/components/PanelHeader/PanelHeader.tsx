@@ -8,7 +8,7 @@ import { Separator } from "../Separator/Separator";
 import { Platform } from "../../lib/platform";
 import { HasRef, HasRootRef } from "../../types";
 import {
-  ConfigProviderContext,
+  useConfigProvider,
   WebviewType,
 } from "../ConfigProvider/ConfigProviderContext";
 import { Text } from "../Typography/Text/Text";
@@ -44,7 +44,7 @@ const PanelHeaderIn = ({
   separator,
   children,
 }: PanelHeaderProps) => {
-  const { webviewType } = React.useContext(ConfigProviderContext);
+  const { webviewType } = useConfigProvider();
   const { isInsideModal } = React.useContext(ModalRootContext);
   const platform = usePlatform();
 
@@ -88,7 +88,7 @@ export const PanelHeader = ({
   ...restProps
 }: PanelHeaderProps) => {
   const platform = usePlatform();
-  const { webviewType } = React.useContext(ConfigProviderContext);
+  const { webviewType } = useConfigProvider();
   const { isInsideModal } = React.useContext(ModalRootContext);
   const { sizeX } = useAdaptivity();
   let isFixed = fixed !== undefined ? fixed : platform !== Platform.VKCOM;

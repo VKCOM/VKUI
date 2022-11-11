@@ -1,14 +1,14 @@
 import * as React from "react";
 import {
-  ConfigProviderContext,
-  ConfigProviderContextInterface,
-} from "./ConfigProviderContext";
-import { useObjectMemo } from "../../hooks/useObjectMemo";
-import {
   AppearanceProvider,
   generateVKUITokensClassName,
 } from "../AppearanceProvider/AppearanceProvider";
-import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
+import {
+  ConfigProviderContext,
+  ConfigProviderContextInterface,
+  useConfigProvider,
+} from "./ConfigProviderContext";
+import { useObjectMemo } from "../../hooks/useObjectMemo";
 import { useAutoDetectAppearance } from "../../hooks/useAutoDetectAppearance";
 import { noop } from "../../lib/utils";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
@@ -16,32 +16,29 @@ import { useDOM } from "../../lib/dom";
 
 export interface ConfigProviderProps
   extends Partial<ConfigProviderContextInterface> {
-  /**
-    Локаль ([список](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry))
-   */
-  locale?: string;
   onDetectAppearanceByBridge?: () => void;
-  children?: React.ReactNode;
+  children: React.ReactNode;
 }
 
 /**
  * @see https://vkcom.github.io/VKUI/#/ConfigProvider
  */
 export const ConfigProvider = (props: ConfigProviderProps) => {
-  const parentLocale = React.useContext(LocaleProviderContext);
-  const parentConfig = React.useContext(ConfigProviderContext);
+  const parentConfig = useConfigProvider();
 
   const {
     children,
-    webviewType = parentConfig.webviewType,
-    isWebView = parentConfig.isWebView,
-    transitionMotionEnabled = parentConfig.transitionMotionEnabled,
-    platform = parentConfig.platform,
-    hasNewTokens = parentConfig.hasNewTokens,
-    appearance: appearanceProp = parentConfig.appearance,
-    locale = parentLocale ?? "ru",
+    webviewType,
+    isWebView,
+    transitionMotionEnabled,
+    platform,
+    locale,
+    appearance: appearanceProp,
     onDetectAppearanceByBridge = noop,
-  } = props;
+  } = {
+    ...parentConfig,
+    ...props,
+  };
 
   const appearance = useAutoDetectAppearance(
     appearanceProp,
@@ -69,18 +66,16 @@ export const ConfigProvider = (props: ConfigProviderProps) => {
     webviewType,
     isWebView,
     transitionMotionEnabled,
-    hasNewTokens,
     platform,
+    locale,
     appearance,
   });
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
-      <LocaleProviderContext.Provider value={locale}>
-        <AppearanceProvider appearance={configContext.appearance}>
-          {children}
-        </AppearanceProvider>
-      </LocaleProviderContext.Provider>
+      <AppearanceProvider appearance={appearance}>
+        {children}
+      </AppearanceProvider>
     </ConfigProviderContext.Provider>
   );
 };

@@ -5,7 +5,7 @@ import {
   CalendarDayElementProps,
 } from "../CalendarDay/CalendarDay";
 import { getDaysNames, getWeeks } from "../../lib/calendar";
-import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
+import { useConfigProvider } from "../ConfigProvider/ConfigProviderContext";
 import { classNamesString } from "../../lib/classNames";
 import { Footnote } from "../Typography/Footnote/Footnote";
 import { useTodayDate } from "../../hooks/useTodayDate";
@@ -57,7 +57,7 @@ export const CalendarDays = ({
   listenDayChangesForUpdate = false,
   ...props
 }: CalendarDaysProps) => {
-  const locale = React.useContext(LocaleProviderContext);
+  const { locale } = useConfigProvider();
   const ref = React.useRef<HTMLDivElement>(null);
   const now = useTodayDate(listenDayChangesForUpdate);
 

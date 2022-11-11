@@ -2,7 +2,7 @@ import * as React from "react";
 import { classNamesString } from "../../lib/classNames";
 import { Tappable, TappableElementProps } from "../Tappable/Tappable";
 import { ENABLE_KEYBOARD_INPUT_EVENT_NAME } from "../../hooks/useKeyboardInputTracker";
-import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
+import { useConfigProvider } from "../ConfigProvider/ConfigProviderContext";
 import styles from "./CalendarDay.module.css";
 
 export type CalendarDayElementProps = Omit<
@@ -52,7 +52,7 @@ export const CalendarDay = React.memo(
     className,
     ...props
   }: CalendarDayProps) => {
-    const locale = React.useContext(LocaleProviderContext);
+    const { locale } = useConfigProvider();
     const ref = React.useRef<HTMLElement>(null);
     const onClick = React.useCallback(() => onChange(day), [day, onChange]);
     const handleEnter = React.useCallback(() => onEnter?.(day), [day, onEnter]);
