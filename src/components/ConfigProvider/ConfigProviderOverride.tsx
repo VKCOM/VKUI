@@ -11,6 +11,9 @@ export interface ConfigProviderOverrideProps
   children: React.ReactNode;
 }
 
+/**
+ * Компонент предназначен для перебивания одного из значений контекста
+ */
 export function ConfigProviderOverride({
   children,
   ...contextValue

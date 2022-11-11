@@ -41,7 +41,7 @@ export const ConfigProviderContext =
     isWebView: vkBridge.isWebView(),
     transitionMotionEnabled: true,
     platform: platform(),
-    appearance: undefined,
+    appearance: undefined, // undefined обозначает что тема должна определиться автоматически
     locale: "ru",
   });
 
