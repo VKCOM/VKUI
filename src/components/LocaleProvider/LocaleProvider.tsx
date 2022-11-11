@@ -11,7 +11,8 @@ export interface LocaleProviderProps {
 }
 
 /**
- * Компонент, прокидывающий локаль
+ * Компонент, прокидывающий локаль. Список можно найти в
+ * [реестре языковых подмёток IANA](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry)
  *
  * @version 5.0.0
  * @see https://vkcom.github.io/VKUI/#/LocaleProvider
