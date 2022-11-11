@@ -32,10 +32,10 @@ const Example = () => {
         </Group>
         <Group>
           <Header mode="secondary">Настройки</Header>
-          <SimpleCell disabled after={<Switch defaultChecked />}>
+          <SimpleCell Component="label" after={<Switch defaultChecked />}>
             Сжимать фотографии
           </SimpleCell>
-          <SimpleCell disabled after={<Switch />}>
+          <SimpleCell Component="label" after={<Switch />}>
             Сжимать видео
           </SimpleCell>
         </Group>

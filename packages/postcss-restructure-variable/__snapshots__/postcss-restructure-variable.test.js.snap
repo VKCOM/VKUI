@@ -52,7 +52,8 @@ exports[`example 1`] = `
 exports[`merge one 1`] = `
 ":root, .b {
     --color: #fff;
-}.b {
+}
+.b {
     color: var(--color);
 }
 "
@@ -61,11 +62,14 @@ exports[`merge one 1`] = `
 exports[`merge three 1`] = `
 ":root, .b {
     --color: #fff;
-}:root {
+}
+:root {
     --size: 1px;
-}.b {
+}
+.b {
     --size: 2px;
-}.b {
+}
+.b {
     color: var(--color);
 }
 "
