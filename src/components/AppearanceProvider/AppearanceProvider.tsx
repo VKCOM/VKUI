@@ -3,7 +3,7 @@ import { AppearanceType } from "@vkontakte/vk-bridge";
 import { classNamesString } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { Platform } from "../../lib/platform";
-import { ConfigProviderPartial } from "../ConfigProvider/ConfigProviderPartial";
+import { ConfigProviderOverride } from "../ConfigProvider/ConfigProviderOverride";
 
 export interface AppearanceProviderProps {
   appearance: AppearanceType;
@@ -42,7 +42,7 @@ export const AppearanceProvider = ({
   const platform = usePlatform();
 
   return (
-    <ConfigProviderPartial appearance={appearance}>
+    <ConfigProviderOverride appearance={appearance}>
       {React.Children.map(children, (child) => {
         if (React.isValidElement<{ className?: string }>(child)) {
           return React.cloneElement(child, {
@@ -54,6 +54,6 @@ export const AppearanceProvider = ({
         }
         return child;
       })}
-    </ConfigProviderPartial>
+    </ConfigProviderOverride>
   );
 };

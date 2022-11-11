@@ -1,5 +1,5 @@
 import React from "react";
-import { ConfigProviderPartial } from "../ConfigProvider/ConfigProviderPartial";
+import { ConfigProviderOverride } from "../ConfigProvider/ConfigProviderOverride";
 import { ConfigProviderContextInterface } from "../ConfigProvider/ConfigProviderContext";
 
 export interface LocaleProviderProps {
@@ -18,6 +18,6 @@ export interface LocaleProviderProps {
  */
 export function LocaleProvider({ value, children }: LocaleProviderProps) {
   return (
-    <ConfigProviderPartial locale={value}>{children}</ConfigProviderPartial>
+    <ConfigProviderOverride locale={value}>{children}</ConfigProviderOverride>
   );
 }

@@ -6,15 +6,15 @@ import {
 } from "./ConfigProviderContext";
 import { useObjectMemo } from "../../hooks/useObjectMemo";
 
-export interface ConfigProviderPartialProps
+export interface ConfigProviderOverrideProps
   extends Partial<ConfigProviderContextInterface> {
   children: React.ReactNode;
 }
 
-export function ConfigProviderPartial({
+export function ConfigProviderOverride({
   children,
   ...contextValue
-}: ConfigProviderPartialProps) {
+}: ConfigProviderOverrideProps) {
   const parentConfig = useConfigProvider();
 
   const configContext = useObjectMemo({

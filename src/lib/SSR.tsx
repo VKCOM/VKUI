@@ -3,7 +3,7 @@ import { platform as getPlatform } from "./platform";
 import { BrowserInfo, computeBrowserInfo } from "./browser";
 import { DOMContext, getDOM } from "../lib/dom";
 import { useObjectMemo } from "../hooks/useObjectMemo";
-import { ConfigProviderPartial } from "../components/ConfigProvider/ConfigProviderPartial";
+import { ConfigProviderOverride } from "../components/ConfigProvider/ConfigProviderOverride";
 
 export interface SSRWrapperProps {
   userAgent?: string;
@@ -26,8 +26,8 @@ export const SSRWrapper = ({
   const dom = useObjectMemo(getDOM());
 
   return (
-    <ConfigProviderPartial platform={getPlatform(browserInfo)}>
+    <ConfigProviderOverride platform={getPlatform(browserInfo)}>
       <DOMContext.Provider value={dom}>{children}</DOMContext.Provider>
-    </ConfigProviderPartial>
+    </ConfigProviderOverride>
   );
 };
