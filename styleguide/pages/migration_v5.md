@@ -439,6 +439,21 @@ import "@vkontakte/vkui/dist/vkui.css";
 
 <br/><br/>
 
+## [`File`](#/File)
+
+- Удалено устаревшее свойство `controlSize`. Используйте свойство `size`
+
+```diff
+<File
+-  controlSize="s"
++  size="s"
+>
+  Загрузить
+</File>
+```
+
+<br/><br/>
+
 ## [`Banner`](#/Banner)
 
 - В параметр `actions` для группировки кнопок теперь передается `ButtonGroup` вместо `React.Fragment`
