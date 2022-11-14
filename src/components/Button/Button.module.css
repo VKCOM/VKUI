@@ -322,18 +322,6 @@
   color: var(--vkui--color_text_contrast);
 }
 
-.Button--mode-primary.Button--appearance-accent.Button--hover,
-.Button--mode-primary.Button--appearance-positive.Button--hover,
-.Button--mode-primary.Button--appearance-negative.Button--hover {
-  color: var(--vkui--color_text_contrast_themed);
-}
-
-.Button--mode-primary.Button--appearance-accent.Button--active,
-.Button--mode-primary.Button--appearance-positive.Button--active,
-.Button--mode-primary.Button--appearance-negative.Button--active {
-  color: var(--vkui--color_text_contrast--active);
-}
-
 /*
   Text colors of background-colored buttons
 */
@@ -343,34 +331,10 @@
   color: var(--vkui--color_text_accent_themed);
 }
 
-.Button--mode-tertiary.Button--appearance-accent.Button--hover,
-.Button--mode-secondary.Button--appearance-accent.Button--hover,
-.Button--mode-outline.Button--appearance-accent.Button--hover {
-  color: var(--vkui--color_text_accent--hover);
-}
-
-.Button--mode-tertiary.Button--appearance-accent.Button--active,
-.Button--mode-secondary.Button--appearance-accent.Button--active,
-.Button--mode-outline.Button--appearance-accent.Button--active {
-  color: var(--vkui--color_text_accent--active);
-}
-
 .Button--mode-tertiary.Button--appearance-positive,
 .Button--mode-secondary.Button--appearance-positive,
 .Button--mode-outline.Button--appearance-positive {
   color: var(--vkui--color_text_positive);
-}
-
-.Button--mode-tertiary.Button--appearance-positive.Button--hover,
-.Button--mode-secondary.Button--appearance-positive.Button--hover,
-.Button--mode-outline.Button--appearance-positive.Button--hover {
-  color: var(--vkui--color_text_positive--hover);
-}
-
-.Button--mode-tertiary.Button--appearance-positive.Button--active,
-.Button--mode-secondary.Button--appearance-positive.Button--active,
-.Button--mode-outline.Button--appearance-positive.Button--active {
-  color: var(--vkui--color_text_positive--active);
 }
 
 .Button--mode-tertiary.Button--appearance-negative,
@@ -379,37 +343,11 @@
   color: var(--vkui--color_text_negative);
 }
 
-.Button--mode-tertiary.Button--appearance-negative.Button--hover,
-.Button--mode-secondary.Button--appearance-negative.Button--hover,
-.Button--mode-outline.Button--appearance-negative.Button--hover {
-  color: var(--vkui--color_text_negative--hover);
-}
-
-.Button--mode-tertiary.Button--appearance-negative.Button--active,
-.Button--mode-secondary.Button--appearance-negative.Button--active,
-.Button--mode-outline.Button--appearance-negative.Button--active {
-  color: var(--vkui--color_text_negative--active);
-}
-
 .Button--mode-primary.Button--appearance-neutral,
 .Button--mode-secondary.Button--appearance-neutral,
 .Button--mode-tertiary.Button--appearance-neutral,
 .Button--mode-outline.Button--appearance-neutral {
   color: var(--vkui--color_text_primary);
-}
-
-.Button--mode-primary.Button--appearance-neutral.Button--hover,
-.Button--mode-secondary.Button--appearance-neutral.Button--hover,
-.Button--mode-tertiary.Button--appearance-neutral.Button--hover,
-.Button--mode-outline.Button--appearance-neutral.Button--hover {
-  color: var(--vkui--color_text_primary--hover);
-}
-
-.Button--mode-primary.Button--appearance-neutral.Button--active,
-.Button--mode-secondary.Button--appearance-neutral.Button--active,
-.Button--mode-tertiary.Button--appearance-neutral.Button--active,
-.Button--mode-outline.Button--appearance-neutral.Button--active {
-  color: var(--vkui--color_text_primary--active);
 }
 
 .Button--mode-tertiary.Button--appearance-accent_invariable,
@@ -522,18 +460,6 @@
 .Button--mode-tertiary.Button--appearance-overlay,
 .Button--mode-outline.Button--appearance-overlay {
   color: var(--vkui--color_text_contrast);
-}
-
-.Button--mode-secondary.Button--appearance-overlay.Button--hover,
-.Button--mode-tertiary.Button--appearance-overlay.Button--hover,
-.Button--mode-outline.Button--appearance-overlay.Button--hover {
-  color: var(--vkui--color_text_contrast--hover);
-}
-
-.Button--mode-secondary.Button--appearance-overlay.Button--active,
-.Button--mode-tertiary.Button--appearance-overlay.Button--active,
-.Button--mode-outline.Button--appearance-overlay.Button--active {
-  color: var(--vkui--color_text_contrast--active);
 }
 
 /* Borders */
