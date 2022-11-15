@@ -82,6 +82,7 @@ const baseConfig = {
       codePunctuation: "var(--vkui--color_text_secondary)",
       codeKeyword: "var(--vkui--color_accent_blue)",
       codeFunction: "var(--vkui--color_accent_red)",
+      codeDeleted: "var(--vkui--color_text_negative)",
     },
   },
   styles: {
