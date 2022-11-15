@@ -36,7 +36,8 @@
   position: absolute;
   border-radius: inherit;
   pointer-events: none;
-  box-shadow: inset 0 0 0 var(--thin-border) var(--input_border);
+  box-shadow: inset 0 0 0 var(--thin-border)
+    var(--separator_common, var(--vkui--color_separator_primary));
 }
 
 .Group--plain > .Group__separator {

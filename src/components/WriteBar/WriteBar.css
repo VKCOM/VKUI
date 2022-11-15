@@ -75,10 +75,10 @@
   box-sizing: border-box;
   background-color: var(
     --input_background,
-    var(--vkui--color_field_background)
+    var(--vkui--color_write_bar_input_background)
   );
   border: var(--thin-border) solid
-    var(--input_border, var(--vkui--color_field_border_alpha));
+    var(--input_border, var(--vkui--color_write_bar_input_border_alpha));
   border-radius: 18px;
   margin: 8px 0;
 }

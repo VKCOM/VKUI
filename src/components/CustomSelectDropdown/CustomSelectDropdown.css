@@ -6,7 +6,7 @@
   );
   box-sizing: border-box;
   border: var(--thin-border) solid
-    var(--field_border, var(--vkui--color_separator_primary_alpha));
+    var(--field_border, var(--vkui--color_field_border_alpha));
   box-shadow: var(--vkui--elevation1);
   border-radius: 8px;
 }
