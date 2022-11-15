@@ -454,6 +454,28 @@ import "@vkontakte/vkui/dist/vkui.css";
 
 <br/><br/>
 
+## [`Tooltip`](#/Tooltip)
+
+- Удалено устаревшее свойство `mode`. Используйте свойство `appearance`
+
+```diff
+<Tooltip
+-  mode="light"
++  appearance="white"
+>
+  ...
+</Tooltip>
+
+<Tooltip
+-  mode="accent"
++  appearance="accent"
+>
+  ...
+</Tooltip>
+```
+
+<br/><br/>
+
 ## [`Banner`](#/Banner)
 
 - В параметр `actions` для группировки кнопок теперь передается `ButtonGroup` вместо `React.Fragment`
