@@ -1,0 +1,7 @@
+.FormStatus {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
+}
+
+.FormStatus--mode-error {
+  color: var(--vkui--color_background_negative);
+}

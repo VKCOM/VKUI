@@ -136,6 +136,7 @@
 @import "../components/SegmentedControl/SegmentedControlOption/SegmentedControlOption.module.css";
 @import "../components/VisuallyHiddenInput/VisuallyHiddenInput.module.css";
 @import "../components/File/File.module.css";
+@import "../components/FormStatus/FormStatus.module.css";
 
 @import "../components/Calendar/Calendar.module.css";
 @import "../components/CalendarDay/CalendarDay.module.css";
