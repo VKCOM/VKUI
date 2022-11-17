@@ -180,6 +180,8 @@ export { FormField } from "./components/FormField/FormField";
 export type { FormFieldProps } from "./components/FormField/FormField";
 export { FormLayoutGroup } from "./components/FormLayoutGroup/FormLayoutGroup";
 export type { FormLayoutGroupProps } from "./components/FormLayoutGroup/FormLayoutGroup";
+export { FormStatus } from "./components/FormStatus/FormStatus";
+export type { FormStatusProps } from "./components/FormStatus/FormStatus";
 export { Switch } from "./components/Switch/Switch";
 export type { SwitchProps } from "./components/Switch/Switch";
 export { File } from "./components/File/File";

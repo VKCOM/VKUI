@@ -586,6 +586,18 @@ import "@vkontakte/vkui/dist/vkui.css";
   />
 ```
 
+## `FormStatus`
+
+Компоненту были добавлены боковые отступы
+
+```diff
+- <FormItem>
+    <FormStatus header="Некорректный мобильный номер" mode="error">
+      Необходимо корректно ввести номер в международном формате
+    </FormStatus>
+- </FormItem>
+```
+
 ## [`Spacing`](#/Spacing)
 
 - Свойство `separator` удалено. Используйте компонент [`Separator`](#/Separator)
@@ -621,12 +633,6 @@ import "@vkontakte/vkui/dist/vkui.css";
 ## [`Counter`](#/Counter)
 
 - Свойство `mode` теперь не игнорируется в кнопке.
-
-<br/><br/>
-
-## `FormStatus` -> [`Banner`](#/Banner)
-
-- `FormStatus` удален, вместо него используйте [`Banner`](#/Banner).
 
 <br/><br/>
 
