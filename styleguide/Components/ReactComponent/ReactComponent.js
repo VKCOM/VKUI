@@ -42,7 +42,7 @@ const ReactComponent = ({ component, exampleMode }) => {
       <Link
         target="_blank"
         className="ReactComponent__src"
-        href={`${pkg.repository}/issues?q=${encodeURIComponent(issuesQuery)}`}
+        href={`${pkg.bugs}?q=${encodeURIComponent(issuesQuery)}`}
       >
         <Caption>Issues</Caption>
       </Link>
