@@ -85,7 +85,7 @@
     "playwright-webkit": "1.28.0",
     "postcss": "^8.4.5",
     "postcss-cli": "^10.0.0",
-    "postcss-custom-properties": "^12.1.7",
+    "postcss-custom-properties": "^13.0.0",
     "postcss-import": "^15.0.0",
     "postcss-loader": "^7.0.1",
     "postcss-modules": "^6.0.0",
