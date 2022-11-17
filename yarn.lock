@@ -11173,7 +11173,7 @@ stylelint-value-no-unknown-custom-properties@^4.0.0:
     postcss-value-parser "^4.2.0"
     resolve "^1.22.0"
 
-stylelint@^14.12.1:
+stylelint@^14.14.0:
   version "14.15.0"
   resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-14.15.0.tgz#4df55078e734869f81f6b85bbec2d56a4b478ece"
   integrity sha512-JOgDAo5QRsqiOZPZO+B9rKJvBm64S0xasbuRPAbPs6/vQDgDCnZLIiw6XcAS6GQKk9k1sBWR6rmH3Mfj8OknKg==
