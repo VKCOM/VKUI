@@ -9,6 +9,11 @@ import { deprecated } from "../../deprecated";
 import pkg from "../../../package.json";
 import "./ReactComponent.css";
 
+const toKebabCase = (str) =>
+  str
+    .replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)
+    .replace(/^-/, "");
+
 const ReactComponent = ({ component, exampleMode }) => {
   const { name, visibleName, pathLine } = component;
   const { description = "", examples = [] } = component.props || {};
@@ -17,6 +22,9 @@ const ReactComponent = ({ component, exampleMode }) => {
   const showPropsPlaceholder =
     process.env.NODE_ENV === "development" &&
     process.env.VKUI_STYLEGUIDE_PROPSPARSER !== 1;
+
+  const githubTag = `cmp:${toKebabCase(visibleName)}`;
+  const issuesQuery = `is:open is:issue label:${githubTag}`;
 
   return (
     <div className="ReactComponent">
@@ -28,7 +36,15 @@ const ReactComponent = ({ component, exampleMode }) => {
           ""
         )}`}
       >
-        <Caption>Github</Caption>
+        <Caption>Source</Caption>
+      </Link>
+      <div className="ReactComponent__divider">•</div>
+      <Link
+        target="_blank"
+        className="ReactComponent__src"
+        href={`${pkg.bugs}?q=${encodeURIComponent(issuesQuery)}`}
+      >
+        <Caption>Issues</Caption>
       </Link>
       <Heading
         level={1}
