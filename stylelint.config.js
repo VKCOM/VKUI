@@ -76,5 +76,6 @@ module.exports = {
       },
     ],
     "vkui/bad-multiplication": true,
+    "import-notation": null,
   },
 };
