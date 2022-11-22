@@ -314,7 +314,6 @@ export const Tappable = ({
     hasActive && active && !isPresetActiveMode && activeMode,
     focusVisible && !isPresetFocusVisibleMode && focusVisibleMode,
     hasActive && active && styles["Tappable--active"],
-    hasMouse && styles["Tappable--mouse"],
     hasHover &&
       hovered &&
       isPresetHoverMode &&
@@ -369,7 +368,7 @@ export const Tappable = ({
         </span>
       )}
       {hasHover && hoverMode === "background" && (
-        <span aria-hidden="true" className={styles.Tappable__hoverShadow} />
+        <span aria-hidden="true" className={styles.Tappable__stateLayer} />
       )}
       {!props.disabled && isPresetFocusVisibleMode && (
         <FocusVisible mode={focusVisibleMode as FocusVisibleMode} />
