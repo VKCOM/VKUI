@@ -107,14 +107,12 @@ export const WriteBarIcon = ({
         className
       )}
     >
-      <span className={styles["WriteBarIcon__in"]}>
-        {icon || children}
-        {hasReactNode(count) && (
-          <Counter className={styles["WriteBarIcon__counter"]} size="s">
-            {count}
-          </Counter>
-        )}
-      </span>
+      <span className={styles["WriteBarIcon__in"]}>{icon || children}</span>
+      {hasReactNode(count) && (
+        <Counter className={styles["WriteBarIcon__counter"]} size="s">
+          {count}
+        </Counter>
+      )}
     </Tappable>
   );
 };
