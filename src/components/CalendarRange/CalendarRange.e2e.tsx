@@ -16,8 +16,18 @@ describe("CalendarRange", () => {
       },
       {
         value: [[new Date("1970-05-05"), new Date("1970-06-05")]],
-        nextMonthIcon: [undefined, <span key="next">&gt;</span>],
-        prevMonthIcon: [undefined, <span key="prev">&lt;</span>],
+        nextMonthIcon: [
+          undefined,
+          <span key="next" className="vkuiProps">
+            &gt;
+          </span>,
+        ],
+        prevMonthIcon: [
+          undefined,
+          <span key="prev" className="vkuiProps">
+            &lt;
+          </span>,
+        ],
       },
     ]
   );

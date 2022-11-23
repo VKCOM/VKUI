@@ -6,6 +6,7 @@
   padding-left: var(--vkui--size_base_padding_horizontal--regular);
   padding-right: var(--vkui--size_base_padding_horizontal--regular);
   user-select: text;
+  font-family: var(--vkui--font_family_base);
 }
 
 .Header__main {

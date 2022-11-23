@@ -41,7 +41,9 @@ describe("Search", () => {
         >
           <AppRoot mode="embedded">
             <AdaptivityProvider sizeY={SizeType.REGULAR}>
-              <Search after="after" />
+              <div className="vkuiTestWrapper">
+                <Search after="after" />
+              </div>
             </AdaptivityProvider>
           </AppRoot>
         </div>

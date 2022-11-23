@@ -37,6 +37,7 @@
   box-shadow: none;
   appearance: none;
   z-index: 2;
+  font-family: inherit;
 }
 
 .ChipsInputBase__el:focus {

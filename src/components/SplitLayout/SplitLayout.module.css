@@ -2,7 +2,6 @@
   width: 100%;
   height: 100%;
   position: relative;
-  font-family: var(--vkui_internal--font_common);
 }
 
 .SplitLayout__inner {

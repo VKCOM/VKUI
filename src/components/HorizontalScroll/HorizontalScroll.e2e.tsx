@@ -70,18 +70,20 @@ describe("HorizontalScroll", () => {
       <ConfigProvider appearance={APPEARANCE}>
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasMouse>
           <AppRoot>
-            <HorizontalScroll
-              getRef={(element) => {
-                if (!element) {
-                  return;
-                }
-                element.scrollLeft = 32;
-              }}
-            >
-              <div key="0" style={{ display: "flex" }}>
-                {items}
-              </div>
-            </HorizontalScroll>
+            <div className="vkuiTestWrapper">
+              <HorizontalScroll
+                getRef={(element) => {
+                  if (!element) {
+                    return;
+                  }
+                  element.scrollLeft = 32;
+                }}
+              >
+                <div key="0" style={{ display: "flex" }}>
+                  {items}
+                </div>
+              </HorizontalScroll>
+            </div>
           </AppRoot>
         </AdaptivityProvider>
       </ConfigProvider>
@@ -104,11 +106,13 @@ describe("HorizontalScroll", () => {
       <ConfigProvider appearance={APPEARANCE}>
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasMouse={false}>
           <AppRoot>
-            <HorizontalScroll>
-              <div key="0" style={{ display: "flex" }}>
-                {items}
-              </div>
-            </HorizontalScroll>
+            <div className="vkuiTestWrapper">
+              <HorizontalScroll>
+                <div key="0" style={{ display: "flex" }}>
+                  {items}
+                </div>
+              </HorizontalScroll>
+            </div>
           </AppRoot>
         </AdaptivityProvider>
       </ConfigProvider>

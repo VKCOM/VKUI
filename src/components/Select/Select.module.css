@@ -2,6 +2,7 @@
   position: relative;
   cursor: pointer;
   box-sizing: border-box;
+  font-family: var(--vkui--font_family_base);
 }
 
 .Select__el {
@@ -16,6 +17,7 @@
   opacity: 0;
   z-index: 7;
   font-size: 16px;
+  font-family: inherit;
 }
 
 .Select__container {

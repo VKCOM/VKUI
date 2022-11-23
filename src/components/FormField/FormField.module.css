@@ -5,6 +5,12 @@
   align-items: center;
   box-sizing: border-box;
   min-height: var(--vkui--size_field_height--regular);
+  font-family: var(--vkui--font_family_base);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.FormField:focus {
+  outline: none;
 }
 
 .FormField--sizeY-compact {

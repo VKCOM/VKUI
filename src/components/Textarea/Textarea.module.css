@@ -9,6 +9,7 @@
   box-sizing: border-box;
   resize: none;
   appearance: none;
+  font-family: inherit;
   font-weight: var(--vkui--font_text--font_weight--regular);
   font-size: var(--vkui--font_text--font_size--regular);
   line-height: var(--vkui--font_text--line_height--regular);
@@ -19,6 +20,10 @@
   z-index: 6;
   position: relative;
   background: transparent;
+}
+
+.Textarea__el:focus {
+  outline: none;
 }
 
 .Textarea__el[cols] {

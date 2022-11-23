@@ -2,6 +2,7 @@
   border-radius: 0;
   font-size: 14px;
   color: var(--vkui--color_text_primary);
+  font-family: var(--vkui--font_family_base);
 }
 
 .CalendarDay__hidden,

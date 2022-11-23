@@ -177,6 +177,7 @@ export function describeScreenshotFuzz<Props>(
           <ConfigProvider appearance={APPEARANCE} platform={PLATFORM}>
             <AdaptivityProvider {...adaptivityProps}>
               <div
+                className="vkuiTestWrapper"
                 style={{
                   width,
                   maxWidth: BREAKPOINTS.DESKTOP,
@@ -199,7 +200,7 @@ export function describeScreenshotFuzz<Props>(
 
                       return (
                         <Fragment key={i}>
-                          <div>{prettyProps(props)}</div>
+                          <div className="vkuiProps">{prettyProps(props)}</div>
                           <div>
                             <AdaptivityProvider {...adaptivityProviderProps}>
                               <Component {...props} />

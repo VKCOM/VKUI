@@ -34,18 +34,14 @@ describe("AppRoot", () => {
         unmount();
         expect(document.documentElement).not.toHaveClass("vkui");
       });
-      it.each(["embedded", "full"] as const)(
-        "container class in %s mode",
-        (mode) => {
-          const { unmount, container } = render(<AppRoot mode={mode} />);
-          expect(container).toHaveClass(
-            "vkui__root",
-            mode === "embedded" ? "vkui__root--embedded" : ""
-          );
-          unmount();
-          expect(container).not.toHaveClass();
-        }
-      );
+      it.each(["embedded"] as const)("container class in %s mode", (mode) => {
+        const { unmount, container } = render(<AppRoot mode={mode} />);
+        expect(container).toHaveClass(
+          mode === "embedded" ? "vkui__root--embedded" : ""
+        );
+        unmount();
+        expect(container).not.toHaveClass();
+      });
       it.each(["embedded", "full"] as const)(
         "adaptivity class in %s mode",
         (mode) => {

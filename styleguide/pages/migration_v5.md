@@ -84,6 +84,15 @@ import "@vkontakte/vkui/dist/vkui.css";
 
 <br/><br/>
 
+## `vkui__root` и `vkui__portal-root`
+
+Теперь для [Partial](https://vkcom.github.io/VKUI/#/Modes) режима подключения
+не требуется добавлять класс `vkui__root`.
+
+Также для `portalRoot` портала не требуется добавлять класс `vkui__portal-root`.
+
+<br/><br/>
+
 ## [`ConfigProvider`](#/ConfigProvider)
 
 - По умолчанию `appearance` определяется автоматически — в зависимости от темы, указанной в VK, или настроек ОС
