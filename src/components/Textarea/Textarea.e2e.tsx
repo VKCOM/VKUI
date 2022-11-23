@@ -40,6 +40,7 @@ describe("Textarea", () => {
   it("fits size to content", async () => {
     await mount(
       <div
+        className="vkuiTestWrapper"
         style={{
           height: "auto",
           position: "absolute",

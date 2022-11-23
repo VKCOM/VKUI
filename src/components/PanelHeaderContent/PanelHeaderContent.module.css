@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  font-family: var(--vkui_internal--font_common);
+  font-family: var(--vkui--font_family_base);
 }
 
 .PanelHeaderContent__before {
@@ -71,7 +71,7 @@
 
 .PanelHeaderContent--ios .PanelHeaderContent__children-in {
   font-size: 21px;
-  font-family: var(--vkui_internal--font_display);
+  font-family: var(--vkui--font_family_accent);
   font-weight: 500;
   line-height: var(--vkui--size_panel_header_height--regular);
 }
@@ -82,7 +82,7 @@
 
 .PanelHeaderContent--android .PanelHeaderContent__children-in {
   font-size: 23px;
-  font-family: var(--vkui_internal--font_display);
+  font-family: var(--vkui--font_family_accent);
   font-weight: 500;
   line-height: var(--vkui--size_panel_header_height--regular);
 }

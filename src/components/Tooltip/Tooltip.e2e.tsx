@@ -18,7 +18,9 @@ describe("Tooltip", () => {
         }}
       >
         <Tooltip text="text" {...props}>
-          <div style={{ display: "flex" }}>Tooltip target</div>
+          <div className="vkuiProps" style={{ display: "flex" }}>
+            Tooltip target
+          </div>
         </Tooltip>
       </TooltipContainer>
     ),

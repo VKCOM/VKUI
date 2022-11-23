@@ -1,8 +1,4 @@
 :root {
-  /* fonts */
-  --vkui_internal--font_common: var(--vkui--font_family_base);
-  --vkui_internal--font_display: var(--vkui--font_family_accent);
-
   /* sizes */
   --vkui_internal--tabbar_height: 48px;
   --vkui_internal--thin_border: 1px;

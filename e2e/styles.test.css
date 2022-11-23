@@ -38,10 +38,10 @@
   src: url(/font/Roboto-Bold.ttf) format("truetype");
 }
 
-.vkui__root {
+.vkuiTestWrapper {
   /* Force use embedded Roboto font for cross-platformity */
-  --vkui_internal--font_common: "Roboto";
-  --vkui_internal--font_display: "Roboto";
+  --vkui--font_family_base: "Roboto";
+  --vkui--font_family_accent: "Roboto";
   --vkui--font_caption1--font_family--regular: "Roboto";
   --vkui--font_caption1_caps--font_family--regular: "Roboto";
   --vkui--font_caption2--font_family--regular: "Roboto";
@@ -59,15 +59,20 @@
   --vkui--font_title2--font_family--regular: "Roboto";
   --vkui--font_title3--font_family--regular: "Roboto";
 
+  color-scheme: var(--vkui--colors_scheme);
+  caret-color: transparent;
+}
+
+.vkuiProps {
   /* stylelint-disable-next-line */
   font-family: "Roboto";
-  -webkit-font-smoothing: antialiased;
-  caret-color: transparent;
+  color: var(--vkui--color_text_primary);
 }
 
 * {
   animation: none !important;
   transition: none !important;
+  -webkit-font-smoothing: antialiased !important;
 }
 
 #mount {

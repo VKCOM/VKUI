@@ -4,6 +4,7 @@
   border-radius: var(--vkui--size_border_radius--regular);
   background-color: var(--vkui--color_background_secondary);
   box-sizing: border-box;
+  font-family: var(--vkui--font_family_base);
 }
 
 .SegmentedControl--size-l {

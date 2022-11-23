@@ -58,7 +58,7 @@
 .PanelHeader__content-in {
   color: var(--vkui--color_text_primary);
   font-weight: 500;
-  font-family: var(--vkui_internal--font_display);
+  font-family: var(--vkui--font_family_accent);
 }
 
 .PanelHeader::before,

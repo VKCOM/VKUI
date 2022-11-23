@@ -26,9 +26,8 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
   mode?: "partial" | "embedded" | "full";
   window?: Window;
   scroll?: "global" | "contain";
-  /** root-элемент для порталов.
-   *
-   * При передаче своего элемента задайте этому элементу `class="vkui__portal-root"` и добавьте его в DOM.
+  /**
+   * Кастомный root-элемент портала
    */
   portalRoot?: HTMLElement | React.RefObject<HTMLElement> | null;
   /** Disable portal for components */
@@ -68,7 +67,6 @@ export const AppRoot = ({
     }
     if (!portal) {
       portal = document!.createElement("div");
-      portal.classList.add("vkui__portal-root");
       document!.body.appendChild(portal);
     }
     setPortalRoot(portal);
@@ -79,18 +77,15 @@ export const AppRoot = ({
 
   // setup root classes
   useIsomorphicLayoutEffect(() => {
-    if (mode === "partial") {
+    if (mode !== "embedded") {
       return noop;
     }
 
     const parent = rootRef.current?.parentElement;
-    const classes = ["vkui__root"].concat(
-      mode === "embedded" ? "vkui__root--embedded" : []
-    );
-    parent?.classList.add(...classes);
+    parent?.classList.add("vkui__root--embedded");
 
     return () => {
-      parent?.classList.remove(...classes);
+      parent?.classList.remove("vkui__root--embedded");
     };
   }, []);
 

@@ -5,6 +5,7 @@
   box-sizing: border-box;
   color: var(--vkui--color_text_primary);
   text-decoration: none; /* в случае если Component="a" */
+  font-family: var(--vkui--font_family_base);
 }
 
 .RichCell--sizeY-compact {

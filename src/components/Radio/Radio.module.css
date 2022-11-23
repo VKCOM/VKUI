@@ -1,6 +1,7 @@
 .Radio {
   display: block;
   padding: 0 var(--vkui--size_base_padding_horizontal--regular);
+  font-family: var(--vkui--font_family_base);
 }
 
 .FormItem .Radio {

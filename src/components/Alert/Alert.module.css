@@ -139,6 +139,7 @@
 }
 
 .Alert--ios .Alert__action {
+  font-family: var(--vkui--font_family_base);
   position: relative;
   font-size: 17px;
   line-height: 44px;

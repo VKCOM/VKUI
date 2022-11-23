@@ -69,7 +69,7 @@ describe("HorizontalScroll", () => {
     await mount(
       <ConfigProvider appearance={APPEARANCE}>
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasMouse>
-          <AppRoot>
+          <AppRoot className="vkuiTestWrapper">
             <HorizontalScroll
               getRef={(element) => {
                 if (!element) {
@@ -103,7 +103,7 @@ describe("HorizontalScroll", () => {
     await mount(
       <ConfigProvider appearance={APPEARANCE}>
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasMouse={false}>
-          <AppRoot>
+          <AppRoot className="vkuiTestWrapper">
             <HorizontalScroll>
               <div key="0" style={{ display: "flex" }}>
                 {items}

@@ -1,5 +1,6 @@
 .InputLike__mask {
   position: relative;
+  font-family: var(--vkui--font_family_base);
 }
 
 .InputLike__mask::after {

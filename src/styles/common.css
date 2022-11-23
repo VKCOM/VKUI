@@ -3,38 +3,18 @@
 }
 
 :global(.vkui),
-:global(.vkui) > body,
-:global(.vkui__root) {
+:global(.vkui) > body {
   margin: 0;
   padding: 0;
   height: 100%;
 }
 
 :global(.vkui),
-:global(.vkui) > body,
-:global(.vkui__root),
-:global(.vkui__portal-root) {
+:global(.vkui) > body {
   -webkit-font-smoothing: subpixel-antialiased;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
-  font-family: var(--vkui_internal--font_common);
+  font-family: var(--vkui--font_family_base);
   color: var(--vkui--color_text_primary);
   color-scheme: var(--vkui--colors_scheme);
-}
-
-:global(.vkui__root) input,
-:global(.vkui__root) textarea,
-:global(.vkui__root) select,
-:global(.vkui__root) button,
-:global(.vkui__portal-root) input,
-:global(.vkui__portal-root) textarea,
-:global(.vkui__portal-root) select,
-:global(.vkui__portal-root) button {
-  font-family: inherit;
-}
-
-:global(.vkui__root) *:focus,
-:global(.vkui__portal-root) *:focus {
-  outline: none;
 }

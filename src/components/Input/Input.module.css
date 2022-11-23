@@ -21,6 +21,7 @@
   border: none;
   appearance: none;
   text-overflow: ellipsis;
+  font-family: inherit;
   font-weight: var(--vkui--font_text--font_weight--regular);
   font-size: var(--vkui--font_text--font_size--regular);
   line-height: var(--vkui--font_text--line_height--regular);
@@ -64,6 +65,10 @@
 
 .Input__el:disabled::placeholder {
   color: var(--vkui--color_text_secondary);
+}
+
+.Input__el:focus {
+  outline: none;
 }
 
 .Input--align-left {

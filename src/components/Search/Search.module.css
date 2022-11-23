@@ -1,10 +1,11 @@
 .Search {
   overflow: hidden;
   font-weight: normal;
-  font-family: var(--vkui_internal--font_common);
+  font-family: var(--vkui--font_family_base);
   transform: translate3d(0, 0, 0);
   line-height: normal;
   padding: 8px 16px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .Search__in {
@@ -38,6 +39,7 @@
   box-sizing: border-box;
   font-size: 17px;
   border-radius: var(--vkui--size_border_radius--regular);
+  font-family: inherit;
   max-width: 100%;
   flex-grow: 1;
   min-width: 0;
@@ -51,6 +53,10 @@
 .Search__input::-webkit-search-results-button,
 .Search__input::-webkit-search-results-decoration {
   display: none;
+}
+
+.Search__input:focus {
+  outline: none;
 }
 
 .Search--has-after .Search__input {

@@ -5,6 +5,7 @@
   padding: 0 var(--vkui--size_base_padding_horizontal--regular);
   min-width: var(--vkui--size_field_height--regular);
   min-height: var(--vkui--size_field_height--regular);
+  font-family: var(--vkui--font_family_base);
 }
 
 .FormItem .Checkbox {

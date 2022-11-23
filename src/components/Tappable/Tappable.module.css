@@ -3,6 +3,7 @@
   cursor: default;
   border-radius: var(--vkui--size_border_radius--regular);
   transition: background-color 0.15s ease-out, opacity 0.15s ease-out;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /*

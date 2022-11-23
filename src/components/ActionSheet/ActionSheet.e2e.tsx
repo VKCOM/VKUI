@@ -22,7 +22,9 @@ const ActionSheetWrapper = (props: ActionSheetProps) => {
 
   return (
     <div style={platform === Platform.VKCOM ? { height: 900 } : {}}>
-      <button ref={toggleRef}>target</button>
+      <button ref={toggleRef} className="vkuiProps">
+        target
+      </button>
       <ActionSheet
         {...props}
         iosCloseItem={<ActionSheetItem mode="cancel">Отменить</ActionSheetItem>}

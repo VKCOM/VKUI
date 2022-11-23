@@ -9,6 +9,7 @@
 .CalendarHeader__pickers {
   display: flex;
   position: absolute;
+  color: var(--vkui--color_text_primary);
 }
 
 .CalendarHeader__picker + .CalendarHeader__picker {
