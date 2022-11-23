@@ -2,7 +2,7 @@
   position: relative;
   cursor: default;
   border-radius: var(--vkui--size_border_radius--regular);
-  transition: background-color 0.15s ease-out;
+  transition: background-color 0.15s ease-out, opacity 0.15s ease-out;
 }
 
 .Tappable--hover-has-not {
@@ -34,21 +34,9 @@
 }
 
 /**
- * active
- * increased specificity to override CellButton styles
+ * hover & active state
  */
-.Tappable--active-background.Tappable--active-background.Tappable--active-background {
-  background-color: var(--vkui--color_transparent--active);
-}
-
-.Tappable--active-opacity.Tappable--active-opacity.Tappable--active-opacity {
-  opacity: 0.7;
-}
-
-/**
- * hover
- */
-.Tappable__hoverShadow {
+.Tappable__stateLayer {
   position: absolute;
   top: 0;
   right: 0;
@@ -57,9 +45,10 @@
   pointer-events: none;
   overflow: hidden;
   border-radius: inherit;
+  transition: background-color 0.15s ease-out;
 }
 
-.Tappable--hover-background > .Tappable__hoverShadow {
+.Tappable--hover-background > .Tappable__stateLayer {
   background-color: var(--vkui--color_transparent--hover);
 }
 
@@ -67,15 +56,12 @@
   opacity: 0.8;
 }
 
-/**
- * mouse
- */
-.Tappable--mouse {
-  transition: opacity 0.15s ease-out;
+.Tappable--active-background > .Tappable__stateLayer {
+  background-color: var(--vkui--color_transparent--active);
 }
 
-.Tappable--mouse .Tappable__hoverShadow {
-  transition: background-color 0.15s ease-out;
+.Tappable--active-opacity {
+  opacity: 0.7;
 }
 
 /**
@@ -108,7 +94,7 @@
   opacity: 0;
   content: "";
   border-radius: 50%;
-  background: rgba(127, 127, 127, 0.1);
+  background: var(--vkui--color_transparent--active);
   animation: vkui-animation-wave 0.3s var(--vkui--animation_easing_platform);
 }
 
