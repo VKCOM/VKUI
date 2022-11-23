@@ -39,11 +39,9 @@ describe("Search", () => {
             width: BREAKPOINTS.MOBILE,
           }}
         >
-          <AppRoot mode="embedded">
+          <AppRoot mode="embedded" className="vkuiTestWrapper">
             <AdaptivityProvider sizeY={SizeType.REGULAR}>
-              <div className="vkuiTestWrapper">
-                <Search after="after" />
-              </div>
+              <Search after="after" />
             </AdaptivityProvider>
           </AppRoot>
         </div>
