@@ -67,7 +67,9 @@
   opacity: var(--vkui--opacity_disable);
 }
 
-.Button--mode-primary[disabled]:not(.Button--appearance-overlay):not(.Button--appearance-negative):not(.Button--appearance-positive),
+.Button--mode-primary[disabled]:not(.Button--appearance-overlay):not(
+    .Button--appearance-negative
+  ):not(.Button--appearance-positive),
 .Button--mode-secondary[disabled]:not(.Button--appearance-overlay),
 .Button--mode-tertiary[disabled]:not(.Button--appearance-overlay),
 .Button--mode-outline[disabled]:not(.Button--appearance-overlay) {
