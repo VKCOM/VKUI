@@ -15,7 +15,7 @@ Android. Внизу располагается панель с иконками,
 > При `viewWidth < SMALL_TABLET` в `Epic` всегда должен быть передан `Tabbar`, так как он является единственным способом переключения
 > между окнами.
 
-```jsx
+```jsx { "props": { "layout": false, "adaptivity": true } }
 const Example = () => {
   const platform = usePlatform();
   const { viewWidth } = useAdaptivity();

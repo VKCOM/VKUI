@@ -22,7 +22,7 @@ import { BREAKPOINTS } from "@vkui/shared/breakpoints";
 
 const logPerf = (id, phase, time) => perfLogger.log(`${id}.${phase}`, time);
 
-const Layout = ({ spaced, children }) => {
+const Layout = ({ children }) => {
   const platform = usePlatform();
 
   return (
@@ -33,9 +33,7 @@ const Layout = ({ spaced, children }) => {
         )
       }
     >
-      <SplitCol spaced={spaced && platform !== Platform.VKCOM}>
-        {children}
-      </SplitCol>
+      <SplitCol autoSpaced={platform !== Platform.VKCOM}>{children}</SplitCol>
     </SplitLayout>
   );
 };
@@ -96,10 +94,8 @@ class Preview extends PreviewParent {
           );
 
           let width;
-          let spaced = false;
           if (viewWidth >= BREAKPOINTS.SMALL_TABLET) {
             width = styleGuideContext.width;
-            spaced = width >= BREAKPOINTS.SMALL_TABLET;
           } else {
             width = viewWidth - 32;
           }
@@ -149,11 +145,7 @@ class Preview extends PreviewParent {
                           appearance={styleGuideContext.appearance}
                         >
                           <Config {...styleGuideContext} exampleId={exampleId}>
-                            {layout ? (
-                              <Layout spaced={spaced}>{example}</Layout>
-                            ) : (
-                              example
-                            )}
+                            {layout ? <Layout>{example}</Layout> : example}
                           </Config>
                         </Frame>
                       ) : (

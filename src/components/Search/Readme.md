@@ -1,6 +1,6 @@
 Надстройка над `<input type="text" />`. Компонент принимает все валидные для этого элемента свойства.
 
-```jsx { "props": { "webviewType": true } }
+```jsx { "props": { "layout": false, "adaptivity": true, "webviewType": true } }
 const thematics = [
   { id: 3201, name: "Аренда автомобилей" },
   { id: 3273, name: "Автотовары" },
@@ -123,8 +123,11 @@ const SearchExample = () => {
 
   const hideModal = () => setActiveModal(null);
 
+  const isVKCOM = platform === Platform.VKCOM;
+
   return (
     <SplitLayout
+      header={!isVKCOM && <PanelHeader separator={false} />}
       modal={
         <ModalRoot activeModal={activeModal}>
           <ModalPage
@@ -176,14 +179,16 @@ const SearchExample = () => {
         </ModalRoot>
       }
     >
-      <View activePanel={activePanel}>
-        <Panel id="search">
-          <SimpleSearch goHeaderSearch={goHeaderSearch} />
-        </Panel>
-        <Panel id="header-search">
-          <HeaderSearch onFiltersClick={openFilters} goSearch={goSearch} />
-        </Panel>
-      </View>
+      <SplitCol autoSpaced={!isVKCOM}>
+        <View activePanel={activePanel}>
+          <Panel id="search">
+            <SimpleSearch goHeaderSearch={goHeaderSearch} />
+          </Panel>
+          <Panel id="header-search">
+            <HeaderSearch onFiltersClick={openFilters} goSearch={goSearch} />
+          </Panel>
+        </View>
+      </SplitCol>
     </SplitLayout>
   );
 };

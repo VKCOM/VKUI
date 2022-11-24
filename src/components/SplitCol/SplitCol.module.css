@@ -14,7 +14,7 @@
   margin: 0 var(--vkui--size_split_col_padding_horizontal--regular);
 }
 
-@media (--viewWidth-tabletPlus) {
+@media (--viewWidth-smallTabletPlus) {
   .SplitCol--viewWidth-none.SplitCol--spaced-none.SplitCol--spaced-auto {
     margin: 0 var(--vkui--size_split_col_padding_horizontal--regular);
   }
