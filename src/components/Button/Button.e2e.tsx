@@ -49,7 +49,14 @@ describe("Button", () => {
       },
       {
         mode: ["primary", "secondary", "tertiary", "outline"],
-        appearance: ["accent", "positive", "negative", "neutral", "overlay"],
+        appearance: [
+          "accent",
+          "positive",
+          "negative",
+          "neutral",
+          "overlay",
+          "accent_invariable",
+        ],
       },
       {
         mode: ["primary"],

@@ -11,7 +11,13 @@ import styles from "./Button.module.css";
 
 export interface VKUIButtonProps extends HasAlign {
   mode?: "primary" | "secondary" | "tertiary" | "outline";
-  appearance?: "accent" | "positive" | "negative" | "neutral" | "overlay";
+  appearance?:
+    | "accent"
+    | "positive"
+    | "negative"
+    | "neutral"
+    | "overlay"
+    | "accent_invariable";
   size?: "s" | "m" | "l";
   stretched?: boolean;
   before?: React.ReactNode;

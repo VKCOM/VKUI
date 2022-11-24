@@ -266,6 +266,18 @@
   background-color: var(--vkui--color_background_secondary--active);
 }
 
+.Button--mode-primary.Button--appearance-accent_invariable {
+  background-color: var(--vkui--color_background_accent);
+}
+
+.Button--mode-primary.Button--appearance-accent_invariable.Button--hover {
+  background-color: var(--vkui--color_background_accent--hover);
+}
+
+.Button--mode-primary.Button--appearance-accent_invariable.Button--active {
+  background-color: var(--vkui--color_background_accent--active);
+}
+
 /* Mode = Secondary */
 .Button--mode-secondary {
   background-color: var(--vkui--color_background_secondary_alpha);
@@ -303,7 +315,8 @@
 }
 
 .Button--mode-primary.Button--appearance-negative,
-.Button--mode-primary.Button--appearance-positive {
+.Button--mode-primary.Button--appearance-positive,
+.Button--mode-primary.Button--appearance-accent_invariable {
   color: var(--vkui--color_text_contrast);
 }
 
@@ -397,6 +410,12 @@
   color: var(--vkui--color_text_primary--active);
 }
 
+.Button--mode-tertiary.Button--appearance-accent_invariable,
+.Button--mode-secondary.Button--appearance-accent_invariable,
+.Button--mode-outline.Button--appearance-accent_invariable {
+  color: var(--vkui--color_text_accent);
+}
+
 /*
   Outline buttons borders
 */
@@ -442,6 +461,10 @@
 .Button--mode-outline.Button--appearance-neutral.Button--active {
   background-color: var(--vkui--color_background_secondary--active);
   box-shadow: unset;
+}
+
+.Button--mode-outline.Button--appearance-accent_invariable {
+  box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_accent);
 }
 
 /*
