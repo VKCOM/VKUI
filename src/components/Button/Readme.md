@@ -87,6 +87,7 @@ const Example = () => {
               { label: "negative", value: "negative" },
               { label: "neutral", value: "neutral" },
               { label: "overlay", value: "overlay" },
+              { label: "accent_invariable", value: "accent_invariable" },
             ]}
           />
         </FormItem>
