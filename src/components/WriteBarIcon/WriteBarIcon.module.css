@@ -22,7 +22,7 @@
   pointer-events: none;
 }
 
-.WriteBarIcon__active {
+.WriteBarIcon--active {
   opacity: 0.6;
 }
 

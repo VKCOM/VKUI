@@ -99,7 +99,7 @@ export const WriteBarIcon = ({
       {...restProps}
       Component="button"
       hasHover={false}
-      activeMode={styles["WriteBarIcon__active"]}
+      activeMode={styles["WriteBarIcon--active"]}
       className={classNamesString(
         styles["WriteBarIcon"],
         platform === Platform.IOS && styles["WriteBarIcon--ios"],
