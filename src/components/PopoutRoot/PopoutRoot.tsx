@@ -6,6 +6,33 @@ import { blurActiveElement, useDOM } from "../../lib/dom";
 import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
 import styles from "./PopoutRoot.module.css";
 
+interface PopoutRootPopoutProps {
+  children: React.ReactNode;
+}
+
+const PopoutRootPopout = ({ children }: PopoutRootPopoutProps) => {
+  const { isDesktop } = useAdaptivityWithJSMediaQueries();
+
+  return (
+    <div
+      className={classNamesString(
+        styles["PopoutRoot__popout"],
+        isDesktop && styles["PopoutRoot__popout--absolute"]
+      )}
+    >
+      {children}
+    </div>
+  );
+};
+
+interface PopoutRootModalProps {
+  children: React.ReactNode;
+}
+
+const PopoutRootModal = ({ children }: PopoutRootModalProps) => {
+  return <div className={styles["PopoutRoot__modal"]}>{children}</div>;
+};
+
 export interface PopoutRootProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement> {
@@ -23,8 +50,6 @@ export const PopoutRoot = ({
 }: PopoutRootProps) => {
   const { document } = useDOM();
 
-  const { isDesktop } = useAdaptivityWithJSMediaQueries();
-
   React.useEffect(() => {
     popout && blurActiveElement(document);
   }, [document, popout]);
@@ -37,18 +62,8 @@ export const PopoutRoot = ({
     >
       {children}
       <AppRootPortal>
-        {!!popout && (
-          <div
-            className={
-              isDesktop
-                ? styles["PopoutRoot--absolute"]
-                : styles["PopoutRoot__popout"]
-            }
-          >
-            {popout}
-          </div>
-        )}
-        {!!modal && <div className={styles["PopoutRoot__modal"]}>{modal}</div>}
+        {!!popout && <PopoutRootPopout>{popout}</PopoutRootPopout>}
+        {!!modal && <PopoutRootModal>{modal}</PopoutRootModal>}
       </AppRootPortal>
     </div>
   );
