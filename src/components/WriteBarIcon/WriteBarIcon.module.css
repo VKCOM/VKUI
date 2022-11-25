@@ -5,6 +5,8 @@
   color: var(--vkui--color_icon_secondary);
   height: 52px;
   width: 44px;
+  padding-left: 0;
+  padding-right: 0;
   cursor: pointer;
   border-radius: var(--vkui--size_border_radius--regular);
 }
@@ -48,16 +50,6 @@
 .WriteBarIcon--ios.WriteBarIcon--mode-send,
 .WriteBarIcon--ios.WriteBarIcon--mode-done {
   width: 48px;
-}
-
-.WriteBarIcon--ios.WriteBarIcon--mode-send:first-child,
-.WriteBarIcon--ios.WriteBarIcon--mode-done:first-child {
-  margin-left: -4px;
-}
-
-.WriteBarIcon--ios.WriteBarIcon--mode-send:last-child,
-.WriteBarIcon--ios.WriteBarIcon--mode-done:last-child {
-  margin-right: -4px;
 }
 
 .WriteBarIcon--mode-attach {

@@ -48,37 +48,28 @@ export const WriteBarIcon = ({
 }: WriteBarIconProps) => {
   const platform = usePlatform();
 
-  let icon: React.ReactNode;
+  let Icon;
   let ariaLabel: string | undefined = undefined;
 
   switch (mode) {
     case "attach":
-      icon =
-        platform === Platform.IOS ? (
-          <Icon28AddCircleOutline aria-hidden />
-        ) : (
-          <Icon28AttachOutline aria-hidden />
-        );
+      Icon =
+        platform === Platform.IOS
+          ? Icon28AddCircleOutline
+          : Icon28AttachOutline;
       ariaLabel = "Прикрепить файл";
       break;
 
     case "send":
-      icon =
-        platform === Platform.IOS ? (
-          <Icon48WritebarSend aria-hidden />
-        ) : (
-          <Icon24Send aria-hidden />
-        );
+      Icon = platform === Platform.IOS ? Icon48WritebarSend : Icon24Send;
       ariaLabel = "Отправить";
       break;
 
     case "done":
-      icon =
-        platform === Platform.IOS ? (
-          <Icon48WritebarDone aria-hidden />
-        ) : (
-          <Icon28CheckCircleOutline aria-hidden />
-        );
+      Icon =
+        platform === Platform.IOS
+          ? Icon48WritebarDone
+          : Icon28CheckCircleOutline;
       ariaLabel = "Готово";
       break;
 
@@ -107,7 +98,9 @@ export const WriteBarIcon = ({
         className
       )}
     >
-      <span className={styles["WriteBarIcon__in"]}>{icon || children}</span>
+      <span className={styles["WriteBarIcon__in"]}>
+        {Icon ? <Icon className={styles["WriteBarIcon__icon"]} /> : children}
+      </span>
       {hasReactNode(count) && (
         <Counter className={styles["WriteBarIcon__counter"]} size="s">
           {count}
