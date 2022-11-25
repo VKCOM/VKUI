@@ -56,24 +56,26 @@ const Example = () => {
             ...containerStyles,
           }}
         >
-          {["primary", "secondary", "tertiary", "outline"].map((mode) => (
-            <Div>
-              <Button
-                align={align}
-                href={buttonLink}
-                before={buttonBefore}
-                after={buttonAfter}
-                appearance={appearance}
-                stretched={stretched}
-                mode={mode}
-                disabled={disabled}
-                size={size}
-                loading={loading}
-              >
-                {buttonText}
-              </Button>
-            </Div>
-          ))}
+          {["primary", "secondary", "tertiary", "outline", "link"].map(
+            (mode) => (
+              <Div>
+                <Button
+                  align={align}
+                  href={buttonLink}
+                  before={buttonBefore}
+                  after={buttonAfter}
+                  appearance={appearance}
+                  stretched={stretched}
+                  mode={mode}
+                  disabled={disabled}
+                  size={size}
+                  loading={loading}
+                >
+                  {buttonText}
+                </Button>
+              </Div>
+            )
+          )}
         </div>
       </AdaptivityProvider>
       <div style={{ minWidth: 200 }}>

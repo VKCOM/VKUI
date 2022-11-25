@@ -48,7 +48,7 @@ describe("Button", () => {
         loading: [true],
       },
       {
-        mode: ["primary", "secondary", "tertiary", "outline"],
+        mode: ["primary", "secondary", "tertiary", "outline", "link"],
         appearance: [
           "accent",
           "positive",

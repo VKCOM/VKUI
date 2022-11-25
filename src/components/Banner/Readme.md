@@ -44,9 +44,9 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
         subheader="Предложение действует только до конца февраля"
         asideMode="dismiss"
         actions={
-          <ButtonGroup mode="horizontal" gap="m">
+          <ButtonGroup mode="vertical" gap="m">
             <Button mode="primary">Попробовать сейчас</Button>
-            <Button mode="secondary">Напомнить позже</Button>
+            <Button mode="link">Напомнить позже</Button>
           </ButtonGroup>
         }
       />
@@ -75,7 +75,7 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
             доступ к старому номеру.
           </React.Fragment>
         }
-        actions={<Button mode="secondary">Отменить заявку</Button>}
+        actions={<Button mode="link">Отменить заявку</Button>}
       />
 
       <Banner
@@ -86,7 +86,7 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
         actions={
           <ButtonGroup mode="horizontal" gap="m">
             <Button>Включить</Button>
-            <Button mode="secondary">Подробнее</Button>
+            <Button mode="link">Подробнее</Button>
           </ButtonGroup>
         }
       />
