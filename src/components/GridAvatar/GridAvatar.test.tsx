@@ -13,7 +13,7 @@ describe("GridAvatar", () => {
   baselineComponent(GridAvatar);
 
   it(`doesn't show more than ${MAX_GRID_LENGTH} items in grid`, () => {
-    render(<GridAvatarTest src={["#", "#", "#", "#", "#"]} />);
+    render(<GridAvatarTest src={["#01", "#02", "#03", "#04", "#05"]} />);
     expect(items().length).toBe(MAX_GRID_LENGTH);
   });
 });
