@@ -15,23 +15,3 @@
   max-width: 340px;
   word-break: break-word;
 }
-
-.ComplexTypeTypeRenderer--sizeX-regular {
-  display: none;
-}
-
-@media (--sizeX-regular) {
-  .ComplexTypeTypeRenderer--sizeX-none {
-    display: none;
-  }
-}
-
-.ComplexTypeDropdown--sizeX-compact {
-  display: none;
-}
-
-@media (--sizeX-compact) {
-  .ComplexTypeDropdown--sizeX-none {
-    display: none;
-  }
-}

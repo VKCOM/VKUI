@@ -16,7 +16,7 @@ import { Footnote } from "../Typography/Footnote/Footnote";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useExternRef } from "../../hooks/useExternRef";
-import { SizeYConditionalRender } from "../SizeYConditionalRender/SizeYConditionalRender";
+import { useAdaptivityConditionalRender } from "../../hooks/useAdaptivityConditionalRender";
 import { VisuallyHiddenInput } from "../VisuallyHiddenInput/VisuallyHiddenInput";
 import { warnOnce } from "../../lib/warnOnce";
 import styles from "./Checkbox.module.css";
@@ -50,6 +50,7 @@ export const Checkbox = ({
   const inputRef = useExternRef(getRef);
   const platform = usePlatform();
   const { sizeY } = useAdaptivity();
+  const { sizeY: adaptiveSizeY } = useAdaptivityConditionalRender();
 
   React.useEffect(() => {
     const indeterminateValue =
@@ -127,10 +128,20 @@ export const Checkbox = ({
         {platform === Platform.VKCOM ? (
           <Icon20CheckBoxOn aria-hidden />
         ) : (
-          <SizeYConditionalRender
-            compact={<Icon20CheckBoxOn aria-hidden />}
-            regular={<Icon24CheckBoxOn aria-hidden />}
-          />
+          <React.Fragment>
+            {adaptiveSizeY.compact && (
+              <Icon20CheckBoxOn
+                className={adaptiveSizeY.compact.className}
+                aria-hidden
+              />
+            )}
+            {adaptiveSizeY.regular && (
+              <Icon24CheckBoxOn
+                className={adaptiveSizeY.regular.className}
+                aria-hidden
+              />
+            )}
+          </React.Fragment>
         )}
       </div>
       <div
@@ -142,10 +153,20 @@ export const Checkbox = ({
         {platform === Platform.VKCOM ? (
           <Icon20CheckBoxOff aria-hidden />
         ) : (
-          <SizeYConditionalRender
-            compact={<Icon20CheckBoxOff aria-hidden />}
-            regular={<Icon24CheckBoxOff aria-hidden />}
-          />
+          <React.Fragment>
+            {adaptiveSizeY.compact && (
+              <Icon20CheckBoxOff
+                className={adaptiveSizeY.compact.className}
+                aria-hidden
+              />
+            )}
+            {adaptiveSizeY.regular && (
+              <Icon24CheckBoxOff
+                className={adaptiveSizeY.regular.className}
+                aria-hidden
+              />
+            )}
+          </React.Fragment>
         )}
       </div>
       <div
@@ -157,14 +178,24 @@ export const Checkbox = ({
         {platform === Platform.VKCOM ? (
           <Icon20CheckBoxIndetermanate aria-hidden width={20} height={20} />
         ) : (
-          <SizeYConditionalRender
-            compact={
-              <Icon20CheckBoxIndetermanate aria-hidden width={20} height={20} />
-            }
-            regular={
-              <Icon20CheckBoxIndetermanate aria-hidden width={24} height={24} />
-            }
-          />
+          <React.Fragment>
+            {adaptiveSizeY.compact && (
+              <Icon20CheckBoxIndetermanate
+                className={adaptiveSizeY.compact.className}
+                aria-hidden
+                width={20}
+                height={20}
+              />
+            )}
+            {adaptiveSizeY.regular && (
+              <Icon20CheckBoxIndetermanate
+                className={adaptiveSizeY.regular.className}
+                aria-hidden
+                width={24}
+                height={24}
+              />
+            )}
+          </React.Fragment>
         )}
       </div>
       <div className={styles["Checkbox__content"]}>

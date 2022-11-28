@@ -315,6 +315,10 @@ export { useInsets } from "./hooks/useInsets";
 export { usePlatform } from "./hooks/usePlatform";
 export { useAdaptivity } from "./hooks/useAdaptivity";
 export {
+  type UseAdaptivityConditionalRender,
+  useAdaptivityConditionalRender,
+} from "./hooks/useAdaptivityConditionalRender";
+export {
   type UseAdaptivityWithJSMediaQueries,
   useAdaptivityWithJSMediaQueries,
 } from "./hooks/useAdaptivityWithJSMediaQueries";
@@ -344,10 +348,6 @@ export { getSizeXClassName } from "./helpers/getSizeXClassName";
 export { getSizeYClassName } from "./helpers/getSizeYClassName";
 export { getViewHeightClassName } from "./helpers/getViewHeightClassName";
 export { getViewWidthClassName } from "./helpers/getViewWidthClassName";
-export { SizeXConditionalRender } from "./components/SizeXConditionalRender/SizeXConditionalRender";
-export { SizeYConditionalRender } from "./components/SizeYConditionalRender/SizeYConditionalRender";
-export { DeviceConditionalRender } from "./components/DeviceConditionalRender/DeviceConditionalRender";
-export { ViewWidthConditionalRender } from "./components/ViewWidthConditionalRender/ViewWidthConditionalRender";
 export { CustomScrollView } from "./components/CustomScrollView/CustomScrollView";
 
 /**

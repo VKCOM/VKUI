@@ -5,7 +5,8 @@ import {
   Icon24ChevronUp,
   Icon20ChevronUp,
 } from "@vkontakte/icons";
-import { SizeYConditionalRender } from "../SizeYConditionalRender/SizeYConditionalRender";
+import { classNamesString } from "../../lib/classNames";
+import { useAdaptivityConditionalRender } from "../../hooks/useAdaptivityConditionalRender";
 import styles from "./DropdownIcon.module.css";
 
 export interface DropdownIconProps
@@ -15,27 +16,37 @@ export interface DropdownIconProps
 
 export const DropdownIcon = ({
   opened = false,
+  className,
   ...restProps
 }: DropdownIconProps) => {
+  const { sizeY } = useAdaptivityConditionalRender();
   const IconCompact = opened ? Icon20ChevronUp : Icon20Dropdown;
   const IconRegular = opened ? Icon24ChevronUp : Icon24ChevronDown;
 
   return (
-    <SizeYConditionalRender
-      compact={
+    <React.Fragment>
+      {sizeY.compact && (
         <IconCompact
-          className={styles["DropdownIcon"]}
+          className={classNamesString(
+            styles["DropdownIcon"],
+            sizeY.compact.className,
+            className
+          )}
           aria-hidden
           {...restProps}
         />
-      }
-      regular={
+      )}
+      {sizeY.regular && (
         <IconRegular
-          className={styles["DropdownIcon"]}
+          className={classNamesString(
+            styles["DropdownIcon"],
+            sizeY.regular.className,
+            className
+          )}
           aria-hidden
           {...restProps}
         />
-      }
-    />
+      )}
+    </React.Fragment>
   );
 };

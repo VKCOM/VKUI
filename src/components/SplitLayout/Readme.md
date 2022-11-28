@@ -6,6 +6,7 @@ const modals = ["modal 1", "modal 2"];
 
 const Example = () => {
   const platform = usePlatform();
+  const { viewWidth } = useAdaptivityConditionalRender();
   const [panel, setPanel] = React.useState(panels[0]);
   const [modal, setModal] = React.useState(null);
   const [popout, setPopout] = React.useState(null);
@@ -42,47 +43,50 @@ const Example = () => {
       popout={popout}
       modal={modalRoot}
     >
-      <ViewWidthConditionalRender
-        desktop={
-          <SplitCol fixed width={280} maxWidth={280}>
-            <Panel>
-              {!isVKCOM && <PanelHeader />}
-              <Group>
-                {panels.map((i) => (
-                  <Cell
-                    key={i}
-                    disabled={i === panel}
-                    style={
-                      i === panel
-                        ? {
-                            backgroundColor:
-                              "var(--vkui--color_background_secondary)",
-                            borderRadius: 8,
-                          }
-                        : {}
-                    }
-                    onClick={() => setPanel(i)}
-                  >
-                    {i}
-                  </Cell>
-                ))}
-                <Separator />
-                <Cell onClick={() => setModal(modals[0])}>modal 1</Cell>
-                <Cell onClick={() => setModal(modals[1])}>modal 2</Cell>
+      {viewWidth.tabletPlus && (
+        <SplitCol
+          className={viewWidth.tabletPlus.className}
+          fixed
+          width={280}
+          maxWidth={280}
+        >
+          <Panel>
+            {!isVKCOM && <PanelHeader />}
+            <Group>
+              {panels.map((i) => (
                 <Cell
-                  onClick={() =>
-                    setPopout(
-                      <Alert header="Alert!" onClose={() => setPopout(null)} />
-                    )
+                  key={i}
+                  disabled={i === panel}
+                  style={
+                    i === panel
+                      ? {
+                          backgroundColor:
+                            "var(--vkui--color_background_secondary)",
+                          borderRadius: 8,
+                        }
+                      : {}
                   }
+                  onClick={() => setPanel(i)}
                 >
-                  alert
+                  {i}
                 </Cell>
-              </Group>
-            </Panel>
-          </SplitCol>
-        }
-      />
+              ))}
+              <Separator />
+              <Cell onClick={() => setModal(modals[0])}>modal 1</Cell>
+              <Cell onClick={() => setModal(modals[1])}>modal 2</Cell>
+              <Cell
+                onClick={() =>
+                  setPopout(
+                    <Alert header="Alert!" onClose={() => setPopout(null)} />
+                  )
+                }
+              >
+                alert
+              </Cell>
+            </Group>
+          </Panel>
+        </SplitCol>
+      )}
 
       <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
         <View activePanel={panel}>

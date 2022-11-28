@@ -3,6 +3,7 @@ import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { classNamesString } from "../../lib/classNames";
 import { Tappable } from "../Tappable/Tappable";
 import { usePlatform } from "../../hooks/usePlatform";
+import { SizeType } from "../../lib/adaptivity";
 import { noop } from "../../lib/utils";
 import { Platform } from "../../lib/platform";
 import { Subhead } from "../Typography/Subhead/Subhead";
@@ -13,15 +14,7 @@ import {
   type ActionSheetContextType,
 } from "../ActionSheet/ActionSheetContext";
 import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
-import { SizeYConditionalRender } from "../SizeYConditionalRender/SizeYConditionalRender";
 import styles from "./ActionSheetItem.module.css";
-
-const defaultIconChecked = (
-  <SizeYConditionalRender
-    compact={<Icon20CheckCircleOn aria-hidden />}
-    regular={<Icon24CheckCircleOn aria-hidden />}
-  />
-);
 
 export interface ActionSheetItemProps
   extends React.HTMLAttributes<HTMLElement>,
@@ -73,7 +66,7 @@ const ActionSheetItem = ({
   onClick,
   onImmediateClick,
   multiline = false,
-  iconChecked = defaultIconChecked,
+  iconChecked: iconCheckedProp,
   className,
   ...restProps
 }: ActionSheetItemProps) => {
@@ -81,6 +74,14 @@ const ActionSheetItem = ({
   const { onItemClick = () => noop, isDesktop } =
     React.useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);
   const { sizeY } = useAdaptivityWithJSMediaQueries();
+
+  const iconChecked =
+    iconCheckedProp ||
+    (sizeY === SizeType.COMPACT ? (
+      <Icon20CheckCircleOn aria-hidden />
+    ) : (
+      <Icon24CheckCircleOn aria-hidden />
+    ));
 
   let Component: React.ElementType = restProps.href ? "a" : "div";
 

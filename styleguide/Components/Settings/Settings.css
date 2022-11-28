@@ -11,13 +11,3 @@
   margin-right: 16px;
   margin-bottom: 28px;
 }
-
-.SettingDesktop--sizeX-compact {
-  display: none;
-}
-
-@media (--sizeX-compact) {
-  .SettingDesktop--sizeX-none {
-    display: none;
-  }
-}

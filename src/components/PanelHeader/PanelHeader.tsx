@@ -15,8 +15,8 @@ import { Text } from "../Typography/Text/Text";
 import { TooltipContainer } from "../Tooltip/TooltipContainer";
 import { ModalRootContext } from "../ModalRoot/ModalRootContext";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { useAdaptivityConditionalRender } from "../../hooks/useAdaptivityConditionalRender";
 import { Spacing } from "../Spacing/Spacing";
-import { SizeXConditionalRender } from "../SizeXConditionalRender/SizeXConditionalRender";
 import styles from "./PanelHeader.module.css";
 
 export interface PanelHeaderProps
@@ -91,6 +91,7 @@ export const PanelHeader = ({
   const { webviewType } = useConfigProvider();
   const { isInsideModal } = React.useContext(ModalRootContext);
   const { sizeX } = useAdaptivity();
+  const { sizeX: adaptiveSizeX } = useAdaptivityConditionalRender();
   let isFixed = fixed !== undefined ? fixed : platform !== Platform.VKCOM;
 
   return (
@@ -130,10 +131,14 @@ export const PanelHeader = ({
         </PanelHeaderIn>
       )}
       {separator && visor && platform !== Platform.VKCOM && (
-        <SizeXConditionalRender
-          compact={<Separator />}
-          regular={<Spacing size={16} />}
-        />
+        <React.Fragment>
+          {adaptiveSizeX.compact && (
+            <Separator className={adaptiveSizeX.compact.className} />
+          )}
+          {adaptiveSizeX.regular && (
+            <Spacing className={adaptiveSizeX.regular.className} size={16} />
+          )}
+        </React.Fragment>
       )}
     </div>
   );
