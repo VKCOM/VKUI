@@ -18,6 +18,8 @@ import { isRefObject } from "../../lib/isRefObject";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import styles from "./AppRoot.module.css";
 
+const INSET_CUSTOM_PROPERTY_PREFIX = `--vkui_internal--safe_area_inset_`;
+
 // Используйте classList, но будьте осторожны
 /* eslint-disable no-restricted-properties */
 
@@ -109,27 +111,29 @@ export const AppRoot = ({
 
     const parent = rootRef.current.parentElement;
 
-    for (const key in insets) {
-      if (
-        insets.hasOwnProperty(key) &&
-        typeof insets[key as keyof Insets] === "number"
-      ) {
-        const inset = insets[key as keyof Insets];
-        parent.style.setProperty(`--safe-area-inset-${key}`, `${inset}px`);
+    let key: keyof Insets;
+    for (key in insets) {
+      if (insets.hasOwnProperty(key) && typeof insets[key] === "number") {
+        const inset = insets[key];
+        parent.style.setProperty(
+          INSET_CUSTOM_PROPERTY_PREFIX + key,
+          `${inset}px`
+        );
         portalRoot &&
           portalRoot.style.setProperty(
-            `--safe-area-inset-${key}`,
+            INSET_CUSTOM_PROPERTY_PREFIX + key,
             `${inset}px`
           );
       }
     }
 
     return () => {
-      for (const key in insets) {
+      let key: keyof Insets;
+      for (key in insets) {
         if (insets.hasOwnProperty(key)) {
-          parent.style.removeProperty(`--safe-area-inset-${key}`);
+          parent.style.removeProperty(INSET_CUSTOM_PROPERTY_PREFIX + key);
           portalRoot &&
-            portalRoot.style.removeProperty(`--safe-area-inset-${key}`);
+            portalRoot.style.removeProperty(INSET_CUSTOM_PROPERTY_PREFIX + key);
         }
       }
     };
