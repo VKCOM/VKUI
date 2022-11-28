@@ -171,6 +171,20 @@
   padding-left: 0;
 }
 
+.SplitCol--viewWidth-tabletPlus.SplitCol--spaced-none.SplitCol--spaced-auto
+  .PanelHeader--android.PanelHeader--no-before:not(.ModalPageHeader__in)
+  .PanelHeader__content {
+  padding-left: 0;
+}
+
+@media (--viewWidth-smallTabletPlus) {
+  .SplitCol--viewWidth-none.SplitCol--spaced-none.SplitCol--spaced-auto
+    .PanelHeader--android.PanelHeader--no-before:not(.ModalPageHeader__in)
+    .PanelHeader__content {
+    padding-left: 0;
+  }
+}
+
 .PanelHeader--android.PanelHeader--no-after .PanelHeader__content > *,
 .PanelHeader--vkcom.PanelHeader--no-after .PanelHeader__content > * {
   padding-right: 0;
@@ -188,6 +202,20 @@
   .PanelHeader--android.PanelHeader--no-after:not(.ModalPageHeader__in)
   .PanelHeader__content {
   padding-right: 0;
+}
+
+.SplitCol--viewWidth-tabletPlus.SplitCol--spaced-none.SplitCol--spaced-auto
+  .PanelHeader--android.PanelHeader--no-after:not(.ModalPageHeader__in)
+  .PanelHeader__content {
+  padding-right: 0;
+}
+
+@media (--viewWidth-smallTabletPlus) {
+  .SplitCol--viewWidth-none.SplitCol--spaced-none.SplitCol--spaced-auto
+    .PanelHeader--android.PanelHeader--no-after:not(.ModalPageHeader__in)
+    .PanelHeader__content {
+    padding-right: 0;
+  }
 }
 
 .PanelHeader--android .PanelHeader__after:not(:empty),

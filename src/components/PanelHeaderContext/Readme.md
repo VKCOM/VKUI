@@ -1,4 +1,4 @@
-```jsx
+```jsx { "props": { "layout": false, "adaptivity": true } }
 const Example = () => {
   const [contextOpened, setContextOpened] = React.useState(true);
   const [mode, setMode] = React.useState("all");
