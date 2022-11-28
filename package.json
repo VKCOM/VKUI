@@ -21,7 +21,6 @@
   "repository": "https://github.com/VKCOM/VKUI",
   "homepage": "https://vkcom.github.io/VKUI/",
   "bugs": "https://github.com/VKCOM/VKUI/issues",
-  "defaultSchemeId": "bright_light",
   "devDependencies": {
     "@babel/cli": "^7.16.8",
     "@babel/core": "^7.16.7",
