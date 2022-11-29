@@ -1,4 +1,5 @@
 import * as React from "react";
+import { clamp } from "../helpers/math";
 
 interface UsePaginationProps {
   /**
@@ -62,9 +63,10 @@ export const usePagination = ({
 
     const lowerBoundaryWhenCurrentPageHigh =
       endPage - boundaryCount - 1 - 2 * siblingCount;
-    const siblingsStart = Math.max(
-      Math.min(currentPage - siblingCount, lowerBoundaryWhenCurrentPageHigh),
-      boundaryCount + 2
+    const siblingsStart = clamp(
+      currentPage - siblingCount,
+      boundaryCount + 2,
+      lowerBoundaryWhenCurrentPageHigh
     );
 
     const upperBoundaryWhenCurrentPageLow =

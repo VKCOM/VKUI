@@ -20,6 +20,7 @@ import { getNavId } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { ModalTransitionProps, withModalManager } from "./useModalManager";
+import { clamp } from "../../helpers/math";
 import styles from "./ModalRoot.module.css";
 
 const warn = warnOnce("ModalRoot");
@@ -199,9 +200,10 @@ class ModalRootDesktopComponent extends React.Component<
           forceOpacity === null
             ? 1 - (translateYCurrent - translateY) / (100 - translateY) || 0
             : forceOpacity;
-        this.maskElementRef.current.style.opacity = Math.max(
+        this.maskElementRef.current.style.opacity = clamp(
+          opacity,
           0,
-          Math.min(100, opacity)
+          100
         ).toString();
       }
     });

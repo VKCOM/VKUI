@@ -14,6 +14,7 @@ import { PullToRefreshSpinner } from "./PullToRefreshSpinner";
 import TouchRootContext from "../Touch/TouchContext";
 import { usePrevious } from "../../hooks/usePrevious";
 import { useTimeout } from "../../hooks/useTimeout";
+import { clamp } from "../../helpers/math";
 import styles from "./PullToRefresh.module.css";
 
 function cancelEvent(event: any) {
@@ -199,15 +200,12 @@ export const PullToRefresh = ({
 
       const shift = Math.max(0, shiftY - touchY.current);
 
-      const currentY = Math.max(
-        start,
-        Math.min(maxY, start + shift * positionMultiplier)
-      );
+      const currentY = clamp(start + shift * positionMultiplier, start, maxY);
       const progress =
         currentY > -10 ? Math.abs((currentY + 10) / max) * 80 : 0;
 
       setSpinnerY(currentY);
-      setSpinnerProgress(Math.min(80, Math.max(0, progress)));
+      setSpinnerProgress(clamp(progress, 0, 80));
       setCanRefresh(progress > 80);
       setContentShift((currentY + 10) * 2.3);
 
