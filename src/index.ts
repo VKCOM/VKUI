@@ -342,12 +342,6 @@ export { ViewWidth, ViewHeight, SizeType } from "./lib/adaptivity";
 export { getPlatformClassName } from "./helpers/getPlatformClassName";
 export type { AdaptivityProps } from "./components/AdaptivityProvider/AdaptivityContext";
 export { calcInitialsAvatarColor } from "./helpers/avatar";
-export { getHoverClassName } from "./helpers/getHoverClassName";
-export { getMouseClassName } from "./helpers/getMouseClassName";
-export { getSizeXClassName } from "./helpers/getSizeXClassName";
-export { getSizeYClassName } from "./helpers/getSizeYClassName";
-export { getViewHeightClassName } from "./helpers/getViewHeightClassName";
-export { getViewWidthClassName } from "./helpers/getViewWidthClassName";
 export { CustomScrollView } from "./components/CustomScrollView/CustomScrollView";
 
 /**
