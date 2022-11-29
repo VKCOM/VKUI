@@ -4,10 +4,15 @@ import Slot from "@rsg-components/Slot";
 import Markdown from "@rsg-components/Markdown";
 import Examples from "@rsg-components/Examples";
 import { SectionSubheading } from "../SectionSubheading/SectionSubheading";
-import { Footnote, Link, classNames } from "@vkui";
+import { Link, classNames } from "@vkui";
 import { deprecated } from "../../deprecated";
 import pkg from "../../../package.json";
 import "./ReactComponent.css";
+
+const toKebabCase = (str) =>
+  str
+    .replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)
+    .replace(/^-/, "");
 
 const ReactComponent = ({ component, exampleMode }) => {
   const { name, visibleName, pathLine } = component;
@@ -17,6 +22,9 @@ const ReactComponent = ({ component, exampleMode }) => {
   const showPropsPlaceholder =
     process.env.NODE_ENV === "development" &&
     process.env.VKUI_STYLEGUIDE_PROPSPARSER !== 1;
+
+  const githubTag = `cmp:${toKebabCase(visibleName)}`;
+  const issuesQuery = `is:open is:issue label:${githubTag}`;
 
   return (
     <div className="ReactComponent">
@@ -28,7 +36,15 @@ const ReactComponent = ({ component, exampleMode }) => {
           ""
         )}`}
       >
-        <Footnote>Github</Footnote>
+        <Caption>Source</Caption>
+      </Link>
+      <div className="ReactComponent__divider">•</div>
+      <Link
+        target="_blank"
+        className="ReactComponent__src"
+        href={`${pkg.bugs}?q=${encodeURIComponent(issuesQuery)}`}
+      >
+        <Caption>Issues</Caption>
       </Link>
       <Heading
         level={1}
