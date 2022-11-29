@@ -14,18 +14,15 @@ export type SliderProps = UniversalSliderProps<number>;
  */
 export const Slider = ({
   onChange,
-  defaultValue,
   min = 0,
   max = 100,
-  value = 0,
+  defaultValue = min,
   ...props
 }: SliderProps) => {
-  const isControlled = value != null;
+  const isControlled = props.value !== undefined;
 
-  const [localValue, setValue] = React.useState(
-    defaultValue == null ? min : defaultValue
-  );
-  const _value = clamp(isControlled ? value : localValue, min, max);
+  const [localValue, setValue] = React.useState(defaultValue);
+  const _value = clamp(props.value || localValue, min, max);
 
   const handleChange: UniversalSliderProps<UniversalValue>["onChange"] =
     React.useCallback(

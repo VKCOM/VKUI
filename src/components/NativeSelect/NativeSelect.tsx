@@ -47,12 +47,19 @@ const NativeSelect = ({
   multiline,
   selectType = "default",
   status,
+  onChange: onChangeProp,
+  value: valueProp,
   ...restProps
 }: NativeSelectProps) => {
   const platform = usePlatform();
   const [title, setTitle] = React.useState("");
   const [empty, setEmpty] = React.useState(false);
-  const [value, onChange] = useEnsuredControl(restProps, { defaultValue });
+  const [value, onChange] = useEnsuredControl({
+    defaultValue,
+    disabled,
+    onChange: onChangeProp,
+    value: valueProp,
+  });
   const selectRef = useExternRef(getRef);
   const { sizeX, sizeY } = useAdaptivity();
 

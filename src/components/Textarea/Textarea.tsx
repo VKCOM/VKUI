@@ -33,9 +33,15 @@ export const Textarea = ({
   rows = 2,
   maxHeight,
   status,
+  onChange: onChangeProp,
+  value: valueProp,
   ...restProps
 }: TextareaProps) => {
-  const [value, onChange] = useEnsuredControl(restProps, { defaultValue });
+  const [value, onChange] = useEnsuredControl({
+    defaultValue,
+    onChange: onChangeProp,
+    value: valueProp,
+  });
   const currentScrollHeight = React.useRef<number>();
   const elementRef = useExternRef(getRef);
   const { sizeY } = useAdaptivity();
