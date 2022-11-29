@@ -17,7 +17,7 @@ export interface VKUIButtonProps extends HasAlign {
     | "negative"
     | "neutral"
     | "overlay"
-    | "accent_invariable";
+    | "accent-invariable";
   size?: "s" | "m" | "l";
   stretched?: boolean;
   before?: React.ReactNode;

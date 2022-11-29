@@ -55,7 +55,7 @@ describe("Button", () => {
           "negative",
           "neutral",
           "overlay",
-          "accent_invariable",
+          "accent-invariable",
         ],
       },
       {
