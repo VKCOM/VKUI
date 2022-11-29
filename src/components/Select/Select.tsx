@@ -2,11 +2,11 @@ import * as React from "react";
 import { NativeSelect } from "../NativeSelect/NativeSelect";
 import { CustomSelect, SelectProps } from "../CustomSelect/CustomSelect";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { useAdaptivityHasPointer } from "../../hooks/useAdaptivityHasPointer";
 import { usePlatform } from "../../hooks/usePlatform";
 import { classNamesString } from "../../lib/classNames";
 import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import { getMouseClassName } from "../../helpers/getMouseClassName";
 import styles from "./Select.module.css";
 
 export type SelectType = "default" | "plain" | "accent";
@@ -50,30 +50,22 @@ export const Select = ({
   className,
   ...props
 }: SelectProps) => {
-  const { hasMouse } = useAdaptivity();
+  const hasPointer = useAdaptivityHasPointer();
 
   return (
     <React.Fragment>
-      {(hasMouse === undefined || hasMouse === true) && (
+      {(hasPointer === undefined || hasPointer) && (
         <CustomSelect
-          className={classNamesString(
-            styles["Select__custom"],
-            getMouseClassName(styles["Select__custom"], hasMouse),
-            className
-          )}
+          className={classNamesString(styles["Select__custom"], className)}
           options={options}
           popupDirection={popupDirection}
           renderOption={renderOption}
           {...props}
         />
       )}
-      {(hasMouse === undefined || hasMouse === false) && (
+      {(hasPointer === undefined || !hasPointer) && (
         <NativeSelect
-          className={classNamesString(
-            styles["Select__native"],
-            getMouseClassName(styles["Select__native"], hasMouse),
-            className
-          )}
+          className={classNamesString(styles["Select__native"], className)}
           {...props}
         >
           {options.map(({ label, value }) => (

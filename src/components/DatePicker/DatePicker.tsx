@@ -1,7 +1,7 @@
 import * as React from "react";
 import { classNamesString } from "../../lib/classNames";
 import { Input } from "../Input/Input";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { useAdaptivityHasPointer } from "../../hooks/useAdaptivityHasPointer";
 import { leadingZero } from "../../lib/utils";
 import { CustomSelect } from "../CustomSelect/CustomSelect";
 import { range } from "../../helpers/range";
@@ -199,7 +199,7 @@ const DatePickerNative = ({
  * @see https://vkcom.github.io/VKUI/#/DatePicker
  */
 export const DatePicker = ({ defaultValue, ...props }: DatePickerProps) => {
-  const { hasMouse } = useAdaptivity();
+  const hasPointer = useAdaptivityHasPointer();
   const [value, setValue] = React.useState<Partial<DatePickerDateFormat>>(
     () => ({
       day: defaultValue?.day || 0,
@@ -216,6 +216,6 @@ export const DatePicker = ({ defaultValue, ...props }: DatePickerProps) => {
     [props]
   );
 
-  const Cmp = hasMouse ? DatePickerCustom : DatePickerNative;
+  const Cmp = hasPointer ? DatePickerCustom : DatePickerNative;
   return <Cmp {...props} {...value} onDateChange={onDateChange} />;
 };

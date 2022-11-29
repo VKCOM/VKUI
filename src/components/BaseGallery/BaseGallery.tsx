@@ -4,7 +4,7 @@ import { Touch, TouchEvent } from "../Touch/Touch";
 import { HorizontalScrollArrow } from "../HorizontalScroll/HorizontalScrollArrow";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useDOM } from "../../lib/dom";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { useAdaptivityHasPointer } from "../../hooks/useAdaptivityHasPointer";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { calcMax, calcMin } from "./helpers";
@@ -64,7 +64,7 @@ export const BaseGallery = ({
   const viewportRef = useExternRef(getRef);
 
   const { window } = useDOM();
-  const { hasMouse } = useAdaptivity();
+  const hasPointer = useAdaptivityHasPointer();
 
   const isCenterWithCustomWidth = slideWidth === "custom" && align === "center";
 
@@ -387,14 +387,14 @@ export const BaseGallery = ({
         </div>
       )}
 
-      {showArrows && hasMouse && canSlideLeft && (
+      {showArrows && hasPointer && canSlideLeft && (
         <HorizontalScrollArrow
           direction="left"
           onClick={slideLeft}
           size={arrowSize}
         />
       )}
-      {showArrows && hasMouse && canSlideRight && (
+      {showArrows && hasPointer && canSlideRight && (
         <HorizontalScrollArrow
           direction="right"
           onClick={slideRight}

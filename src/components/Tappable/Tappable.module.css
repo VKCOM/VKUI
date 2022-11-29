@@ -22,19 +22,9 @@ https://github.com/VKCOM/VKUI/pull/3641
   z-index: 1;
 }
 
-.Tappable--hover-has-not {
-  /* keep for css modules */
-}
-
 .Tappable--hover-has,
 .Tappable--hasActive {
   cursor: pointer;
-}
-
-@media (--hover-has) {
-  .Tappable--hover-none {
-    cursor: pointer;
-  }
 }
 
 .Tappable[disabled],
