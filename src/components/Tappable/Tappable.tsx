@@ -367,7 +367,8 @@ export const Tappable = ({
           ))}
         </span>
       )}
-      {hasHover && hoverMode === "background" && (
+      {((hasHover && hoverMode === "background") ||
+        (hasActive && activeMode === "background")) && (
         <span aria-hidden="true" className={styles.Tappable__stateLayer} />
       )}
       {!props.disabled && isPresetFocusVisibleMode && (
