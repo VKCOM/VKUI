@@ -1,4 +1,5 @@
 import * as React from "react";
+import { clamp } from "../../helpers/math";
 import { classNamesString } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import styles from "./Progress.module.css";
@@ -21,10 +22,7 @@ export const Progress = ({
   className,
   ...restProps
 }: ProgressProps) => {
-  const progress = Math.max(
-    PROGRESS_MIN_VALUE,
-    Math.min(value, PROGRESS_MAX_VALUE)
-  );
+  const progress = clamp(value, PROGRESS_MIN_VALUE, PROGRESS_MAX_VALUE);
 
   return (
     <div
