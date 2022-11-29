@@ -4,6 +4,7 @@ import { Input } from "../Input/Input";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { leadingZero } from "../../lib/utils";
 import { CustomSelect } from "../CustomSelect/CustomSelect";
+import { range } from "../../helpers/range";
 import styles from "./DatePicker.module.css";
 
 const DefaultMonths: string[] = [
@@ -68,15 +69,6 @@ function parseInputDate(date: string): DatePickerDateFormat {
 function getMonthMaxDay(month?: number, year?: number) {
   return month ? new Date(year || 2016, month, 0).getDate() : 31;
 }
-
-const range = (start: number, end: number) => {
-  const swap = start > end;
-  const arr = [];
-  for (let i = Math.min(start, end); i <= Math.max(start, end); i++) {
-    arr.push(i);
-  }
-  return swap ? arr.reverse() : arr;
-};
 
 const DatePickerCustom = ({
   name,
