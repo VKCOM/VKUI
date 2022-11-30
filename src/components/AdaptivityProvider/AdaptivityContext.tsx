@@ -18,7 +18,7 @@ export interface AdaptivityProps extends SizeProps {
   /**
    * @ignore
    */
-  hasMouse?: boolean;
+  hasPointer?: boolean;
   /**
    * @ignore
    */

@@ -61,7 +61,7 @@ export const getAdaptiveViewWidth = (
 export const getAdaptiveDeviceType = (
   viewWidth: undefined | ViewWidth,
   viewHeight: undefined | ViewHeight,
-  hasMouse: undefined | boolean,
+  hasPointer: undefined | boolean,
   platform: PlatformType,
   deviceTypeClassNames: Record<
     DeviceTypeCSSBreakpoints,
@@ -71,7 +71,7 @@ export const getAdaptiveDeviceType = (
   const isDesktop = tryToCheckIsDesktop(
     viewWidth,
     viewHeight,
-    hasMouse,
+    hasPointer,
     platform
   );
 

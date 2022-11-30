@@ -1,5 +1,5 @@
 import * as React from "react";
-import { hasMouse as _hasMouse } from "@vkontakte/vkjs";
+import { hasMouse as _hasPointer } from "@vkontakte/vkjs";
 import {
   SizeType,
   ViewWidth,
@@ -24,7 +24,7 @@ export const AdaptivityProvider = ({
   viewHeight,
   sizeX,
   sizeY,
-  hasMouse,
+  hasPointer,
   hasHover,
   children,
 }: React.PropsWithChildren<AdaptivityProps>) => {
@@ -34,7 +34,7 @@ export const AdaptivityProvider = ({
     viewHeight,
     sizeX,
     sizeY,
-    hasMouse,
+    hasPointer,
     hasHover,
   });
 
@@ -46,13 +46,13 @@ export const AdaptivityProvider = ({
           viewHeight,
           sizeX,
           sizeY,
-          hasMouse,
+          hasPointer,
           hasHover,
         },
         bridge
       )
     );
-  }, [viewWidth, viewHeight, sizeX, sizeY, hasMouse, hasHover, bridge]);
+  }, [viewWidth, viewHeight, sizeX, sizeY, hasPointer, hasHover, bridge]);
 
   return (
     <AdaptivityContext.Provider value={adaptivity}>
@@ -62,7 +62,14 @@ export const AdaptivityProvider = ({
 };
 
 function calculateAdaptivity(
-  { viewWidth, viewHeight, sizeX, sizeY, hasMouse, hasHover }: AdaptivityProps,
+  {
+    viewWidth,
+    viewHeight,
+    sizeX,
+    sizeY,
+    hasPointer,
+    hasHover,
+  }: AdaptivityProps,
   bridge: BridgeAdaptivity
 ) {
   if (bridge.type === "adaptive") {
@@ -95,7 +102,7 @@ function calculateAdaptivity(
     }
 
     if (
-      (viewWidth >= ViewWidth.SMALL_TABLET && _hasMouse) ||
+      (viewWidth >= ViewWidth.SMALL_TABLET && _hasPointer) ||
       viewHeight <= ViewHeight.EXTRA_SMALL
     ) {
       sizeY = SizeType.COMPACT;
@@ -128,7 +135,7 @@ function calculateAdaptivity(
       viewHeight !== undefined
     ) {
       if (
-        (viewWidth >= ViewWidth.SMALL_TABLET && _hasMouse) ||
+        (viewWidth >= ViewWidth.SMALL_TABLET && _hasPointer) ||
         viewHeight <= ViewHeight.EXTRA_SMALL
       ) {
         sizeY = SizeType.COMPACT;
@@ -143,7 +150,7 @@ function calculateAdaptivity(
     viewHeight,
     sizeX,
     sizeY,
-    hasMouse,
+    hasPointer,
     hasHover,
   };
 }

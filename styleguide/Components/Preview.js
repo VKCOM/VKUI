@@ -38,10 +38,10 @@ const Layout = ({ children }) => {
   );
 };
 
-const Config = ({ hasMouse, children, ...config }) => {
+const Config = ({ hasPointer, children, ...config }) => {
   return (
     <ConfigProvider {...config}>
-      <AdaptivityProvider hasMouse={hasMouse}>
+      <AdaptivityProvider hasPointer={hasPointer}>
         <AppRoot>{children}</AppRoot>
       </AdaptivityProvider>
     </ConfigProvider>

@@ -51,7 +51,7 @@ const ActionSheetTest = ({
 
   return (
     <AppRoot>
-      <AdaptivityProvider hasMouse viewWidth={ViewWidth.MOBILE}>
+      <AdaptivityProvider hasPointer viewWidth={ViewWidth.MOBILE}>
         <SplitLayout popout={actionSheet}>
           <SplitCol>
             <View activePanel="panel">

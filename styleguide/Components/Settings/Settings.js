@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { PlatformSelect } from "./PlatformSelect";
 import { AppearanceSelect } from "./AppearanceSelect";
 import { WebviewTypeSelect } from "./WebviewTypeSelect";
-import { HasMouseCheckbox } from "./HasMouseCheckbox";
+import { HasPointerCheckbox } from "./HasPointerCheckbox";
 import { ViewHeightSelect } from "./ViewHeightSelect";
 import { ViewWidthSelect } from "./ViewWidthSelect";
 import { Platform, useAdaptivityConditionalRender } from "@vkui";
@@ -49,10 +49,12 @@ export const Settings = ({ adaptivity, webviewType }) => {
                     />
                   )}
                   {sizeX.regular && (
-                    <HasMouseCheckbox
+                    <HasPointerCheckbox
                       className={sizeX.regular.className}
-                      onChange={(hasMouse) => context.setContext({ hasMouse })}
-                      value={context.hasMouse}
+                      onChange={(hasPointer) =>
+                        context.setContext({ hasPointer })
+                      }
+                      value={context.hasPointer}
                       disabled={context.platform === Platform.VKCOM}
                     />
                   )}

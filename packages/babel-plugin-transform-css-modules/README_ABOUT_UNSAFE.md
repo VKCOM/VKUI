@@ -89,7 +89,7 @@ styles[`Component--mode-${mode}`];
 Речь о:
 
 - `getHoverClassName()`
-- `getMouseClassName()`
+- `getPointerClassName()`
 - `getPlatformClassName()`
 - `getSizeXClassName()`
 - `getSizeYClassName()`
