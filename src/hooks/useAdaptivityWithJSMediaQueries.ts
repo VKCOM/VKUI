@@ -2,7 +2,7 @@ import * as React from "react";
 import {
   canUseDOM,
   hasMouse as hasMouseLib,
-  hasHover as deviceHasHoverLib,
+  hasHover as hasHoverLib,
 } from "@vkontakte/vkjs";
 import {
   AdaptivityContext,
@@ -53,7 +53,7 @@ export const useAdaptivityWithJSMediaQueries =
       sizeX: sizeXContext,
       sizeY: sizeYContext,
       hasMouse: hasMouseContext,
-      deviceHasHover: deviceHasHoverContext,
+      hasHover: hasHoverContext,
     } = React.useContext(AdaptivityContext);
 
     const platform = usePlatform();
@@ -73,10 +73,7 @@ export const useAdaptivityWithJSMediaQueries =
 
     const adaptivityProps = React.useMemo(() => {
       const hasMouse = getOrDefault(hasMouseContext, hasMouseLib);
-      const deviceHasHover = getOrDefault(
-        deviceHasHoverContext,
-        deviceHasHoverLib
-      );
+      const hasHover = getOrDefault(hasHoverContext, hasHoverLib);
       const viewWidth = getOrDefault(viewWidthContext, viewWidthLocal);
       const viewHeight = getOrDefault(viewHeightContext, viewHeightLocal);
       const sizeX = getOrDefault(sizeXContext, getSizeX(viewWidth));
@@ -97,7 +94,7 @@ export const useAdaptivityWithJSMediaQueries =
         sizeX,
         sizeY,
         hasMouse,
-        deviceHasHover,
+        hasHover,
         isDesktop,
       };
     }, [
@@ -108,7 +105,7 @@ export const useAdaptivityWithJSMediaQueries =
       sizeXContext,
       sizeYContext,
       hasMouseContext,
-      deviceHasHoverContext,
+      hasHoverContext,
       platform,
     ]);
 

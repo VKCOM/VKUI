@@ -25,7 +25,7 @@ export const AdaptivityProvider = ({
   sizeX,
   sizeY,
   hasMouse,
-  deviceHasHover,
+  hasHover,
   children,
 }: React.PropsWithChildren<AdaptivityProps>) => {
   const bridge = useBridgeAdaptivity();
@@ -35,7 +35,7 @@ export const AdaptivityProvider = ({
     sizeX,
     sizeY,
     hasMouse,
-    deviceHasHover,
+    hasHover,
   });
 
   React.useEffect(() => {
@@ -47,12 +47,12 @@ export const AdaptivityProvider = ({
           sizeX,
           sizeY,
           hasMouse,
-          deviceHasHover,
+          hasHover,
         },
         bridge
       )
     );
-  }, [viewWidth, viewHeight, sizeX, sizeY, hasMouse, deviceHasHover, bridge]);
+  }, [viewWidth, viewHeight, sizeX, sizeY, hasMouse, hasHover, bridge]);
 
   return (
     <AdaptivityContext.Provider value={adaptivity}>
@@ -62,14 +62,7 @@ export const AdaptivityProvider = ({
 };
 
 function calculateAdaptivity(
-  {
-    viewWidth,
-    viewHeight,
-    sizeX,
-    sizeY,
-    hasMouse,
-    deviceHasHover,
-  }: AdaptivityProps,
+  { viewWidth, viewHeight, sizeX, sizeY, hasMouse, hasHover }: AdaptivityProps,
   bridge: BridgeAdaptivity
 ) {
   if (bridge.type === "adaptive") {
@@ -151,6 +144,6 @@ function calculateAdaptivity(
     sizeX,
     sizeY,
     hasMouse,
-    deviceHasHover,
+    hasHover,
   };
 }

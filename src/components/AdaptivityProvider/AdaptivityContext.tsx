@@ -22,7 +22,7 @@ export interface AdaptivityProps extends SizeProps {
   /**
    * @ignore
    */
-  deviceHasHover?: boolean;
+  hasHover?: boolean;
 }
 
 export const AdaptivityContext = React.createContext<AdaptivityProps>({});
