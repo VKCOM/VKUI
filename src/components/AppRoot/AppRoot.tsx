@@ -192,7 +192,9 @@ export const AppRoot = ({
       ref={rootRef}
       className={classNamesString(
         styles["AppRoot"],
-        !hasMouse && styles["AppRoot--no-mouse"],
+        hasMouse === undefined
+          ? styles["AppRoot--pointer-none"]
+          : !hasMouse && styles["AppRoot--pointer-has-not"],
         className
       )}
       {...props}

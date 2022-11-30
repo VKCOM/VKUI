@@ -79,26 +79,6 @@
   text-align: center;
 }
 
-.Select__native--mouse-has.Select__native {
-  display: none;
-}
-
-@media (--mouse-has) {
-  .Select__native--mouse-none.Select__native {
-    display: none;
-  }
-}
-
-.Select__custom--mouse-has-not.Select__custom {
-  display: none;
-}
-
-@media (--mouse-has-not) {
-  .Select__custom--mouse-none.Select__custom {
-    display: none;
-  }
-}
-
 /**
  * CMP:
  * CalendarHeader
@@ -140,6 +120,8 @@
 
 .SelectTypography--selectType-default,
 .SelectTypography--selectType-plain,
-.Select--align-left {
+.Select--align-left,
+.Select__custom,
+.Select__native {
   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

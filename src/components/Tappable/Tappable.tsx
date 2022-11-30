@@ -4,7 +4,6 @@ import { noop } from "../../lib/utils";
 import { Touch, TouchEvent, TouchProps } from "../Touch/Touch";
 import TouchRootContext from "../Touch/TouchContext";
 import { classNamesString } from "../../lib/classNames";
-import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { Platform } from "../../lib/platform";
 import { getOffsetRect } from "../../lib/offset";
 import { coordX, coordY } from "../../lib/touch";
@@ -19,8 +18,15 @@ import { useFocusVisible } from "../../hooks/useFocusVisible";
 import { callMultiple } from "../../lib/callMultiple";
 import { useBooleanState } from "../../hooks/useBooleanState";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { getHoverClassName } from "../../helpers/getHoverClassName";
+import { useAdaptivityHasHover } from "../../hooks/useAdaptivityHasHover";
+import { useAdaptivityHasPointer } from "../../hooks/useAdaptivityHasPointer";
 import styles from "./Tappable.module.css";
+
+const sizeXClassNames = {
+  none: styles["Tappable--sizeX-none"],
+  compact: styles["Tappable--sizeX-compact"],
+  regular: styles["Tappable--sizeX-regular"],
+};
 
 type StateMode = "opacity" | "background";
 
@@ -191,7 +197,9 @@ export const Tappable = ({
   const insideTouchRoot = React.useContext(TouchRootContext);
   const platform = usePlatform();
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
-  const { sizeX, hasMouse, deviceHasHover } = useAdaptivity();
+  const { sizeX = "none" } = useAdaptivity();
+  const hasPointerContext = useAdaptivityHasPointer();
+  const hasHoverContext = useAdaptivityHasHover();
 
   const [clicks, setClicks] = React.useState<Wave[]>([]);
   const [childHover, setChildHover] = React.useState(false);
@@ -203,7 +211,7 @@ export const Tappable = ({
 
   const hovered = _hovered && !props.disabled;
   const hasActive = _hasActive && !childHover && !props.disabled;
-  const hasHover = deviceHasHover !== false && _hasHover && !childHover;
+  const hasHover = hasHoverContext === true && _hasHover && !childHover;
   const isCustomElement =
     Component !== "a" &&
     Component !== "button" &&
@@ -249,7 +257,7 @@ export const Tappable = ({
 
   const needWaves =
     platform === Platform.ANDROID &&
-    !hasMouse &&
+    !hasPointerContext &&
     hasActive &&
     activeMode === "background";
 
@@ -307,8 +315,8 @@ export const Tappable = ({
     className,
     styles["Tappable"],
     platform === Platform.IOS && styles["Tappable--ios"],
-    getSizeXClassName(styles["Tappable"], sizeX),
-    getHoverClassName(styles["Tappable"], deviceHasHover),
+    sizeXClassNames[sizeX],
+    hasHoverContext && styles["Tappable--hover-has"],
     hasActive && styles["Tappable--hasActive"],
     hasHover && hovered && !isPresetHoverMode && hoverMode,
     hasActive && active && !isPresetActiveMode && activeMode,
@@ -367,7 +375,8 @@ export const Tappable = ({
           ))}
         </span>
       )}
-      {hasHover && hoverMode === "background" && (
+      {((hasHover && hoverMode === "background") ||
+        (hasActive && activeMode === "background")) && (
         <span aria-hidden="true" className={styles.Tappable__stateLayer} />
       )}
       {!props.disabled && isPresetFocusVisibleMode && (

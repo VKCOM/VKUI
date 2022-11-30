@@ -1,11 +1,21 @@
+.AppRoot {
+  height: 100%;
+}
+
+.AppRoot--pointer-has-not {
+  user-select: none;
+}
+
+@media (--mouse-has-not) {
+  .AppRoot--pointer-none {
+    user-select: none;
+  }
+}
+
 /* stylelint-disable vkui/atomic */
 :global(.vkui__root--embedded) {
   transform: translate3d(0, 0, 0);
   overflow-x: hidden;
-}
-
-.AppRoot {
-  height: 100%;
 }
 
 :global(.vkui__root--embedded) .AppRoot {
@@ -20,8 +30,4 @@
   :global(.vkui--sizeX-none) {
     background: var(--vkui--color_background);
   }
-}
-
-.AppRoot--no-mouse {
-  user-select: none;
 }

@@ -2,7 +2,7 @@ import * as React from "react";
 import { Icon28AddOutline } from "@vkontakte/icons";
 import { classNamesString } from "../../../lib/classNames";
 import { useAppearance } from "../../../hooks/useAppearance";
-import { useAdaptivity } from "../../../hooks/useAdaptivity";
+import { useAdaptivityHasPointer } from "../../../hooks/useAdaptivityHasPointer";
 import { Tappable } from "../../Tappable/Tappable";
 import type { ImageBaseSize, ImageBaseExpectedIconProps } from "../types";
 import styles from "./ImageBaseOverlay.module.css";
@@ -63,9 +63,9 @@ export const ImageBaseOverlay = ({
   onClick,
 }: ImageBaseOverlayProps) => {
   const appearance = useAppearance();
-  const { hasMouse } = useAdaptivity();
+  const hasPointer = useAdaptivityHasPointer();
   const theme = themeProp ?? appearance;
-  const visibility = visibilityProp ?? (hasMouse ? "on-hover" : "always");
+  const visibility = visibilityProp ?? (hasPointer ? "on-hover" : "always");
 
   const iconSize = getRelativeSizeOfIcon(imageSize);
 
