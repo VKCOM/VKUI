@@ -46,18 +46,22 @@ export const CellCheckbox = ({
         type="checkbox"
         {...restProps}
       />
-      <IconOff
+      <span
         className={classNamesString(
           styles["CellCheckbox__icon"],
           styles["CellCheckbox__icon--off"]
         )}
-      />
-      <IconOn
+      >
+        <IconOff />
+      </span>
+      <span
         className={classNamesString(
           styles["CellCheckbox__icon"],
           styles["CellCheckbox__icon--on"]
         )}
-      />
+      >
+        <IconOn />
+      </span>
     </div>
   );
 };
