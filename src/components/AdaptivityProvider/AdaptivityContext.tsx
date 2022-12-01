@@ -18,11 +18,11 @@ export interface AdaptivityProps extends SizeProps {
   /**
    * @ignore
    */
-  hasMouse?: boolean;
+  hasPointer?: boolean;
   /**
    * @ignore
    */
-  deviceHasHover?: boolean;
+  hasHover?: boolean;
 }
 
 export const AdaptivityContext = React.createContext<AdaptivityProps>({});

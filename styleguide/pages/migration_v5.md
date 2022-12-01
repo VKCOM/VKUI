@@ -64,7 +64,20 @@ const WithSizeXOverride = () => {
 
 ### Другие изменения касаемые адаптивности
 
-- Удалён HOC `withAdaptivity`
+- Удалён HOC `withAdaptivity` – используйте хук `useAdaptivity()`
+- `deviceHasHover` переименован в `hasHover`
+
+  ```diff
+  - <AdaptivityProvider deviceHasHover>
+  + <AdaptivityProvider hasHover>
+  ```
+
+- `hasMouse` переименован в `hasPointer`
+
+  ```diff
+  - <AdaptivityProvider hasMouse>
+  + <AdaptivityProvider hasPointer>
+  ```
 
 <br/><br/>
 

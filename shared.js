@@ -24,8 +24,8 @@ module.exports = {
       "--hover-has": "(hover: hover)",
       "--hover-has-not": "(hover: none)",
 
-      "--mouse-has": "(pointer: fine)",
-      "--mouse-has-not": "(pointer: coarse), (pointer: none)",
+      "--pointer-has": "(pointer: fine)",
+      "--pointer-has-not": "(pointer: coarse), (pointer: none)",
 
       "--desktop": `(min-width: ${BREAKPOINTS.SMALL_TABLET}px) and (pointer: fine), (min-width: ${BREAKPOINTS.SMALL_TABLET}px) and (min-height: ${BREAKPOINTS.MEDIUM_HEIGHT}px)`, // prettier-ignore
       "--mobile": `(max-width: ${BREAKPOINTS.SMALL_TABLET - 1}px), (pointer: none) and (max-height: ${BREAKPOINTS.MEDIUM_HEIGHT - 1}px), (pointer: coarse) and (max-height: ${BREAKPOINTS.MEDIUM_HEIGHT - 1}px)`, // prettier-ignore

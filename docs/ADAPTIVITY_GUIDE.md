@@ -29,7 +29,7 @@
 Для удобного получения `className` в зависимости от адаптивности есть такие функции как:
 
 - [`getHoverClassName()`](../src/helpers/getHoverClassName.ts)
-- [`getMouseClassName()`](../src/helpers/getMouseClassName.ts)
+- [`getPointerClassName()`](../src/helpers/getPointerClassName.ts)
 - [`getPlatformClassName()`](../src/helpers/getPlatformClassName.ts)
 - [`getSizeXClassName()`](../src/helpers/getSizeXClassName.ts)
 - [`getSizeYClassName()`](../src/helpers/getSizeYClassName.ts)

@@ -5,7 +5,7 @@ import { Select } from "./Select";
 
 describe("Select", () => {
   baselineComponent((props) => (
-    <AdaptivityProvider hasMouse>
+    <AdaptivityProvider hasPointer>
       <Select options={[]} {...props} />
     </AdaptivityProvider>
   ));

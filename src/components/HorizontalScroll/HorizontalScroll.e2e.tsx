@@ -38,7 +38,7 @@ describe("HorizontalScroll", () => {
       platforms: [Platform.ANDROID],
       adaptivity: {
         viewWidth: ViewWidth.MOBILE,
-        hasMouse: false,
+        hasPointer: false,
       },
     }
   );
@@ -59,7 +59,7 @@ describe("HorizontalScroll", () => {
       platforms: [Platform.ANDROID],
       adaptivity: {
         viewWidth: ViewWidth.SMALL_TABLET,
-        hasMouse: true,
+        hasPointer: true,
       },
     }
   );
@@ -68,7 +68,7 @@ describe("HorizontalScroll", () => {
     jest.setTimeout(5000);
     await mount(
       <ConfigProvider appearance={APPEARANCE}>
-        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasMouse>
+        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
           <AppRoot className="vkuiTestWrapper">
             <HorizontalScroll
               getRef={(element) => {
@@ -102,7 +102,10 @@ describe("HorizontalScroll", () => {
     jest.setTimeout(5000);
     await mount(
       <ConfigProvider appearance={APPEARANCE}>
-        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasMouse={false}>
+        <AdaptivityProvider
+          viewWidth={ViewWidth.SMALL_TABLET}
+          hasPointer={false}
+        >
           <AppRoot className="vkuiTestWrapper">
             <HorizontalScroll>
               <div key="0" style={{ display: "flex" }}>

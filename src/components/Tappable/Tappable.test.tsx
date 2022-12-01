@@ -195,7 +195,7 @@ describe("Tappable", () => {
       const waveCount = () =>
         document.querySelectorAll(`.${styles.Tappable__wave}`).length;
       render(
-        <AdaptivityProvider hasMouse={false}>
+        <AdaptivityProvider hasPointer={false}>
           <ConfigProvider platform={Platform.ANDROID}>
             <Tappable data-testid="x" />
           </ConfigProvider>

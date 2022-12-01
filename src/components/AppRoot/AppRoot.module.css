@@ -6,7 +6,7 @@
   user-select: none;
 }
 
-@media (--mouse-has-not) {
+@media (--pointer-has-not) {
   .AppRoot--pointer-none {
     user-select: none;
   }

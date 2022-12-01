@@ -23,7 +23,7 @@ export const useAdaptivityConditionalRender =
       sizeY: sizeYContext,
       viewWidth: viewWidthContext,
       viewHeight: viewHeightContext,
-      hasMouse: hasMouseContext,
+      hasPointer: hasPointerContext,
     } = React.useContext(AdaptivityContext);
     const platform = usePlatform();
 
@@ -45,7 +45,7 @@ export const useAdaptivityConditionalRender =
       const deviceType = getAdaptiveDeviceType(
         viewWidthContext,
         viewHeightContext,
-        hasMouseContext,
+        hasPointerContext,
         platform,
         deviceTypeClassNames
       );
@@ -60,7 +60,7 @@ export const useAdaptivityConditionalRender =
       sizeYContext,
       viewWidthContext,
       viewHeightContext,
-      hasMouseContext,
+      hasPointerContext,
       platform,
     ]);
   };

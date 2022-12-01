@@ -43,10 +43,10 @@ export function getSizeX(viewWidth: ViewWidth): SizeType {
 export function getSizeY(
   viewWidth: ViewWidth,
   viewHeight: ViewHeight,
-  hasMouse: boolean
+  hasPointer: boolean
 ): SizeType {
   if (
-    (viewWidth >= ViewWidth.SMALL_TABLET && hasMouse) ||
+    (viewWidth >= ViewWidth.SMALL_TABLET && hasPointer) ||
     viewHeight <= ViewHeight.EXTRA_SMALL
   ) {
     return SizeType.COMPACT;
@@ -63,32 +63,32 @@ export function getSizeY(
  *
  * ⚠️ При передаче Platform.VKCOM всегда будет возвращать `true`.
  */
-export function tryToCheckIsDesktop(viewWidth: ViewWidth, viewHeight: ViewHeight, hasMouse: undefined | boolean, platform?: PlatformType): boolean; // prettier-ignore
-export function tryToCheckIsDesktop(viewWidth: ViewWidth, viewHeight: undefined, hasMouse: boolean, platform?: PlatformType): boolean; // prettier-ignore
-export function tryToCheckIsDesktop(viewWidth: undefined | ViewWidth, viewHeight: undefined, hasMouse: undefined, platform?: PlatformType): null; // prettier-ignore
-export function tryToCheckIsDesktop(viewWidth: undefined, viewHeight: undefined | ViewHeight, hasMouse: undefined, platform?: PlatformType): null; // prettier-ignore
-export function tryToCheckIsDesktop(viewWidth: undefined, viewHeight: undefined, hasMouse: undefined | boolean, platform?: PlatformType): null; // prettier-ignore
-export function tryToCheckIsDesktop(viewWidth: undefined | ViewWidth, viewHeight: undefined | ViewHeight, hasMouse: undefined | boolean, platform?: PlatformType): null | boolean; // prettier-ignore
+export function tryToCheckIsDesktop(viewWidth: ViewWidth, viewHeight: ViewHeight, hasPointer: undefined | boolean, platform?: PlatformType): boolean; // prettier-ignore
+export function tryToCheckIsDesktop(viewWidth: ViewWidth, viewHeight: undefined, hasPointer: boolean, platform?: PlatformType): boolean; // prettier-ignore
+export function tryToCheckIsDesktop(viewWidth: undefined | ViewWidth, viewHeight: undefined, hasPointer: undefined, platform?: PlatformType): null; // prettier-ignore
+export function tryToCheckIsDesktop(viewWidth: undefined, viewHeight: undefined | ViewHeight, hasPointer: undefined, platform?: PlatformType): null; // prettier-ignore
+export function tryToCheckIsDesktop(viewWidth: undefined, viewHeight: undefined, hasPointer: undefined | boolean, platform?: PlatformType): null; // prettier-ignore
+export function tryToCheckIsDesktop(viewWidth: undefined | ViewWidth, viewHeight: undefined | ViewHeight, hasPointer: undefined | boolean, platform?: PlatformType): null | boolean; // prettier-ignore
 export function tryToCheckIsDesktop(
   viewWidth: undefined | ViewWidth,
   viewHeight: undefined | ViewHeight,
-  hasMouse: undefined | boolean,
+  hasPointer: undefined | boolean,
   platform?: PlatformType
 ): null | boolean {
   // см. https://github.com/VKCOM/VKUI/pull/2473
   const IS_VKCOM_CRUTCH = platform === Platform.VKCOM;
 
   if (
-    ((viewWidth === undefined || hasMouse === undefined) &&
+    ((viewWidth === undefined || hasPointer === undefined) &&
       (viewWidth === undefined || viewHeight === undefined)) ||
-    (hasMouse === undefined && viewHeight === undefined)
+    (hasPointer === undefined && viewHeight === undefined)
   ) {
     return IS_VKCOM_CRUTCH ? true : null;
   }
 
   const widthIsLikeDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
   const otherParametersIsLikeDesktop =
-    hasMouse ||
+    hasPointer ||
     (viewHeight !== undefined ? viewHeight >= ViewHeight.MEDIUM : false);
 
   return (

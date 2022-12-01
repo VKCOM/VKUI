@@ -11,8 +11,7 @@ import { AdaptivityContext } from "../components/AdaptivityProvider/AdaptivityCo
 export function useAdaptivityHasHover(deferDetect?: true): undefined | boolean;
 export function useAdaptivityHasHover(deferDetect?: false): boolean;
 export function useAdaptivityHasHover(deferDetect = true): undefined | boolean {
-  const { deviceHasHover: hasHoverContext } =
-    React.useContext(AdaptivityContext);
+  const { hasHover: hasHoverContext } = React.useContext(AdaptivityContext);
   const [hasHover, setHasHover] = React.useState(() =>
     !deferDetect && hasHoverContext === undefined
       ? hasHoverLib

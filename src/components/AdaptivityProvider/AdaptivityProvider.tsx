@@ -1,5 +1,5 @@
 import * as React from "react";
-import { hasMouse as _hasMouse } from "@vkontakte/vkjs";
+import { hasMouse as _hasPointer } from "@vkontakte/vkjs";
 import {
   SizeType,
   ViewWidth,
@@ -24,8 +24,8 @@ export const AdaptivityProvider = ({
   viewHeight,
   sizeX,
   sizeY,
-  hasMouse,
-  deviceHasHover,
+  hasPointer,
+  hasHover,
   children,
 }: React.PropsWithChildren<AdaptivityProps>) => {
   const bridge = useBridgeAdaptivity();
@@ -34,8 +34,8 @@ export const AdaptivityProvider = ({
     viewHeight,
     sizeX,
     sizeY,
-    hasMouse,
-    deviceHasHover,
+    hasPointer,
+    hasHover,
   });
 
   React.useEffect(() => {
@@ -46,13 +46,13 @@ export const AdaptivityProvider = ({
           viewHeight,
           sizeX,
           sizeY,
-          hasMouse,
-          deviceHasHover,
+          hasPointer,
+          hasHover,
         },
         bridge
       )
     );
-  }, [viewWidth, viewHeight, sizeX, sizeY, hasMouse, deviceHasHover, bridge]);
+  }, [viewWidth, viewHeight, sizeX, sizeY, hasPointer, hasHover, bridge]);
 
   return (
     <AdaptivityContext.Provider value={adaptivity}>
@@ -67,8 +67,8 @@ function calculateAdaptivity(
     viewHeight,
     sizeX,
     sizeY,
-    hasMouse,
-    deviceHasHover,
+    hasPointer,
+    hasHover,
   }: AdaptivityProps,
   bridge: BridgeAdaptivity
 ) {
@@ -102,7 +102,7 @@ function calculateAdaptivity(
     }
 
     if (
-      (viewWidth >= ViewWidth.SMALL_TABLET && _hasMouse) ||
+      (viewWidth >= ViewWidth.SMALL_TABLET && _hasPointer) ||
       viewHeight <= ViewHeight.EXTRA_SMALL
     ) {
       sizeY = SizeType.COMPACT;
@@ -135,7 +135,7 @@ function calculateAdaptivity(
       viewHeight !== undefined
     ) {
       if (
-        (viewWidth >= ViewWidth.SMALL_TABLET && _hasMouse) ||
+        (viewWidth >= ViewWidth.SMALL_TABLET && _hasPointer) ||
         viewHeight <= ViewHeight.EXTRA_SMALL
       ) {
         sizeY = SizeType.COMPACT;
@@ -150,7 +150,7 @@ function calculateAdaptivity(
     viewHeight,
     sizeX,
     sizeY,
-    hasMouse,
-    deviceHasHover,
+    hasPointer,
+    hasHover,
   };
 }

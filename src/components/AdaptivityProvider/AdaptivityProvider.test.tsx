@@ -33,14 +33,14 @@ function Adaptive() {
   );
 }
 
-function renderExtractAdaptive(hasMouse?: boolean): {
+function renderExtractAdaptive(hasPointer?: boolean): {
   sizeX: string;
   sizeY: string;
   viewHeight: number;
   viewWidth: number;
 } {
   const renderResult = render(
-    <AdaptivityProvider hasMouse={hasMouse}>
+    <AdaptivityProvider hasPointer={hasPointer}>
       <Adaptive />
     </AdaptivityProvider>
   );
@@ -59,7 +59,7 @@ function renderExtractAdaptive(hasMouse?: boolean): {
 function renderBridgeAdaptive(
   viewWidth = 0,
   viewHeight = 0,
-  hasMouse?: boolean
+  hasPointer?: boolean
 ) {
   (useBridgeAdaptivity as jest.Mock).mockReturnValue({
     type: "adaptive",
@@ -67,7 +67,7 @@ function renderBridgeAdaptive(
     viewportHeight: viewHeight,
   });
 
-  return renderExtractAdaptive(hasMouse);
+  return renderExtractAdaptive(hasPointer);
 }
 
 // TODO: More tests for these variations

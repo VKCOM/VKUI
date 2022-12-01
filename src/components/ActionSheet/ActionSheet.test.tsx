@@ -19,7 +19,7 @@ describe("ActionSheet", () => {
   const toggle = document.createElement("div");
   const ActionSheetDesktop = (props: Partial<ActionSheetProps>) => (
     <ConfigProvider platform={Platform.VKCOM}>
-      <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasMouse>
+      <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
         <ActionSheet
           toggleRef={toggle}
           onClose={jest.fn()}
@@ -30,7 +30,7 @@ describe("ActionSheet", () => {
     </ConfigProvider>
   );
   const ActionSheetMobile = (props: Partial<ActionSheetProps>) => (
-    <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasMouse={false}>
+    <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer={false}>
       <ActionSheet
         toggleRef={toggle}
         onClose={jest.fn()}

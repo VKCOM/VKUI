@@ -17,7 +17,7 @@ let initialState = {
   platform: Platform.ANDROID,
   width: BREAKPOINTS.MOBILE,
   height: SMALL_HEIGHT,
-  hasMouse: true,
+  hasPointer: true,
   appearance: Appearance.LIGHT,
   styleguideAppearance: Appearance.LIGHT,
   webviewType: WebviewType.VKAPPS,
@@ -46,7 +46,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
     height,
     platform,
     appearance,
-    hasMouse,
+    hasPointer,
     styleguideAppearance,
   } = state;
 
@@ -63,7 +63,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
 
   useEffect(() => {
     if (platform === Platform.VKCOM) {
-      setContext({ hasMouse: true, width: BREAKPOINTS.TABLET });
+      setContext({ hasPointer: true, width: BREAKPOINTS.TABLET });
     }
   }, [platform]);
 
@@ -80,7 +80,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
 
   const providerValue = useMemo(
     () => ({ ...state, setContext, setPopout }),
-    [width, height, platform, appearance, hasMouse, setContext, setPopout]
+    [width, height, platform, appearance, hasPointer, setContext, setPopout]
   );
 
   const Component =

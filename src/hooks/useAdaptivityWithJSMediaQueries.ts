@@ -1,8 +1,8 @@
 import * as React from "react";
 import {
   canUseDOM,
-  hasMouse as hasMouseLib,
-  hasHover as deviceHasHoverLib,
+  hasMouse as hasPointerLib,
+  hasHover as hasHoverLib,
 } from "@vkontakte/vkjs";
 import {
   AdaptivityContext,
@@ -52,8 +52,8 @@ export const useAdaptivityWithJSMediaQueries =
       viewHeight: viewHeightContext,
       sizeX: sizeXContext,
       sizeY: sizeYContext,
-      hasMouse: hasMouseContext,
-      deviceHasHover: deviceHasHoverContext,
+      hasPointer: hasPointerContext,
+      hasHover: hasHoverContext,
     } = React.useContext(AdaptivityContext);
 
     const platform = usePlatform();
@@ -72,22 +72,19 @@ export const useAdaptivityWithJSMediaQueries =
       ]);
 
     const adaptivityProps = React.useMemo(() => {
-      const hasMouse = getOrDefault(hasMouseContext, hasMouseLib);
-      const deviceHasHover = getOrDefault(
-        deviceHasHoverContext,
-        deviceHasHoverLib
-      );
+      const hasPointer = getOrDefault(hasPointerContext, hasPointerLib);
+      const hasHover = getOrDefault(hasHoverContext, hasHoverLib);
       const viewWidth = getOrDefault(viewWidthContext, viewWidthLocal);
       const viewHeight = getOrDefault(viewHeightContext, viewHeightLocal);
       const sizeX = getOrDefault(sizeXContext, getSizeX(viewWidth));
       const sizeY = getOrDefault(
         sizeYContext,
-        getSizeY(viewWidth, viewHeight, hasMouse)
+        getSizeY(viewWidth, viewHeight, hasPointer)
       );
       const isDesktop = tryToCheckIsDesktop(
         viewWidth,
         viewHeight,
-        hasMouse,
+        hasPointer,
         platform
       );
 
@@ -96,8 +93,8 @@ export const useAdaptivityWithJSMediaQueries =
         viewHeight,
         sizeX,
         sizeY,
-        hasMouse,
-        deviceHasHover,
+        hasPointer,
+        hasHover,
         isDesktop,
       };
     }, [
@@ -107,8 +104,8 @@ export const useAdaptivityWithJSMediaQueries =
       viewHeightContext,
       sizeXContext,
       sizeYContext,
-      hasMouseContext,
-      deviceHasHoverContext,
+      hasPointerContext,
+      hasHoverContext,
       platform,
     ]);
 

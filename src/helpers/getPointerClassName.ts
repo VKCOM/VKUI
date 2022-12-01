@@ -1,12 +1,12 @@
 type MouseType = "none" | "has" | "has-not";
 
-export function getMouseClassName(base: string, mouse?: boolean): string;
-export function getMouseClassName<Styles extends Record<string, string>>(
+export function getPointerClassName(base: string, mouse?: boolean): string;
+export function getPointerClassName<Styles extends Record<string, string>>(
   base: string,
   mouse?: boolean,
   styles?: Styles
 ): string | undefined;
-export function getMouseClassName<Styles extends Record<string, string>>(
+export function getPointerClassName<Styles extends Record<string, string>>(
   base: keyof Styles,
   mouse?: boolean,
   /**
@@ -22,7 +22,7 @@ export function getMouseClassName<Styles extends Record<string, string>>(
     mouseState = "has-not";
   }
 
-  const className = `${String(base)}--mouse-${mouseState}`;
+  const className = `${String(base)}--pointer-${mouseState}`;
 
   return styles ? styles[className] : className;
 }

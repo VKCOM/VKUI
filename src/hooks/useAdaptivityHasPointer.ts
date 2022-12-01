@@ -13,7 +13,7 @@ export function useAdaptivityHasPointer(deferDetect?: false): boolean;
 export function useAdaptivityHasPointer(
   deferDetect = true
 ): undefined | boolean {
-  const { hasMouse: hasPointerContext } = React.useContext(AdaptivityContext);
+  const { hasPointer: hasPointerContext } = React.useContext(AdaptivityContext);
   const [hasPointer, setHasPointer] = React.useState(() =>
     !deferDetect && hasPointerContext === undefined
       ? hasPointerLib

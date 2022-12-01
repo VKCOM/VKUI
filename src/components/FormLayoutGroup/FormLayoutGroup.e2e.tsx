@@ -181,7 +181,7 @@ describe("FormLayoutGroup", () => {
             <ChipsSelect value={[]} placeholder="Год" />
           </FormItem>
         </Fragment>,
-        <AdaptivityProvider hasMouse={false} key="kids">
+        <AdaptivityProvider hasPointer={false} key="kids">
           <FormItem>
             <Input defaultValue="Текст" />
           </FormItem>

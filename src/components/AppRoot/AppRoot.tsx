@@ -55,7 +55,7 @@ export const AppRoot = ({
   const insets = useInsets();
   const appearance = useAppearance();
 
-  const { hasMouse, sizeX } = useAdaptivity();
+  const { hasPointer, sizeX } = useAdaptivity();
 
   // setup portal
   useIsomorphicLayoutEffect(() => {
@@ -192,9 +192,9 @@ export const AppRoot = ({
       ref={rootRef}
       className={classNamesString(
         styles["AppRoot"],
-        hasMouse === undefined
+        hasPointer === undefined
           ? styles["AppRoot--pointer-none"]
-          : !hasMouse && styles["AppRoot--pointer-has-not"],
+          : !hasPointer && styles["AppRoot--pointer-has-not"],
         className
       )}
       {...props}

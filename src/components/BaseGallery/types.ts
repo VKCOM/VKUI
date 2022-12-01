@@ -49,6 +49,6 @@ export interface BaseGalleryProps
   bullets?: "dark" | "light" | false;
   isDraggable?: boolean;
   showArrows?: boolean;
-  hasMouse?: boolean;
+  hasPointer?: boolean;
   arrowSize?: HorizontalScrollArrowProps["size"];
 }
