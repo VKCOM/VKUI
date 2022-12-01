@@ -17,23 +17,25 @@ describe("PromoBanner", () => {
       <PromoBanner
         data-testid="test"
         bannerData={{
-          iconLink: "source-mock",
+          iconLink: "#",
         }}
         onClose={noop}
       />
     );
 
-    expect(
-      screen.getByTestId("test").querySelector(".Avatar")
-    ).toBeInTheDocument();
+    const container = screen.getByTestId("test");
+    const avatar = container.querySelector<HTMLElement>(".vkuiAvatar");
+
+    expect(container).toContainElement(avatar);
   });
 
   it("renders no Avatar if bannerData.iconLink isn't passed", () => {
     render(<PromoBanner data-testid="test" bannerData={{}} onClose={noop} />);
 
-    expect(
-      screen.getByTestId("test").querySelector(".Avatar")
-    ).not.toBeInTheDocument();
+    const container = screen.getByTestId("test");
+    const avatar = container.querySelector<HTMLElement>(".vkuiAvatar");
+
+    expect(container).not.toContainElement(avatar);
   });
 
   it("renders Button if bannerData.ctaText is passed", () => {
@@ -51,6 +53,9 @@ describe("PromoBanner", () => {
   it("renders no Button if bannerData.ctaText isn't passed", () => {
     render(<PromoBanner data-testid="test" bannerData={{}} onClose={noop} />);
 
-    expect(screen.getByTestId("test")).not.toHaveTextContent("Press Me");
+    const container = screen.getByTestId("test");
+    const button = container.querySelector<HTMLElement>(".vkuiButton");
+
+    expect(container).not.toContainElement(button);
   });
 });
