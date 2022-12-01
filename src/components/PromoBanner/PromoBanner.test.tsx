@@ -24,7 +24,7 @@ describe("PromoBanner", () => {
     );
 
     const container = screen.getByTestId("test");
-    const avatar = container.querySelector<HTMLElement>(".vkuiAvatar");
+    const avatar = screen.queryByTestId("avatar");
 
     expect(container).toContainElement(avatar);
   });
@@ -33,7 +33,7 @@ describe("PromoBanner", () => {
     render(<PromoBanner data-testid="test" bannerData={{}} onClose={noop} />);
 
     const container = screen.getByTestId("test");
-    const avatar = container.querySelector<HTMLElement>(".vkuiAvatar");
+    const avatar = screen.queryByTestId("avatar");
 
     expect(container).not.toContainElement(avatar);
   });
@@ -54,7 +54,7 @@ describe("PromoBanner", () => {
     render(<PromoBanner data-testid="test" bannerData={{}} onClose={noop} />);
 
     const container = screen.getByTestId("test");
-    const button = container.querySelector<HTMLElement>(".vkuiButton");
+    const button = screen.queryByTestId("button");
 
     expect(container).not.toContainElement(button);
   });

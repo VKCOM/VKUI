@@ -119,12 +119,22 @@ export const PromoBanner = ({
               size={48}
               src={bannerData.iconLink}
               alt={bannerData.title}
+              data-testid={
+                process.env.NODE_ENV === "test" ? "avatar" : undefined
+              }
             />
           )
         }
         after={
           bannerData.ctaText && (
-            <Button mode="outline">{bannerData.ctaText}</Button>
+            <Button
+              mode="outline"
+              data-testid={
+                process.env.NODE_ENV === "test" ? "button-ctaText" : undefined
+              }
+            >
+              {bannerData.ctaText}
+            </Button>
           )
         }
         subtitle={bannerData.domain}
