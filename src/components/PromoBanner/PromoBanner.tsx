@@ -113,14 +113,20 @@ export const PromoBanner = ({
         rel="nofollow noopener noreferrer"
         target="_blank"
         before={
-          <Avatar
-            mode="image"
-            size={48}
-            src={bannerData.iconLink}
-            alt={bannerData.title}
-          />
+          bannerData.iconLink && (
+            <Avatar
+              mode="image"
+              size={48}
+              src={bannerData.iconLink}
+              alt={bannerData.title}
+            />
+          )
         }
-        after={<Button mode="outline">{bannerData.ctaText}</Button>}
+        after={
+          bannerData.ctaText && (
+            <Button mode="outline">{bannerData.ctaText}</Button>
+          )
+        }
         subtitle={bannerData.domain}
       >
         {bannerData.title}
