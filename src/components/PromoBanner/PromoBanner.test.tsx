@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { noop } from "../../lib/utils";
 import { baselineComponent } from "../../testing/utils";
 import { PromoBanner } from "./PromoBanner";
 
@@ -6,17 +7,9 @@ describe("PromoBanner", () => {
   baselineComponent(PromoBanner);
 
   it("renders by default", () => {
-    render(
-      <PromoBanner
-        data-testid="test"
-        bannerData={{}}
-        onClose={() => {
-          return;
-        }}
-      />
-    );
+    render(<PromoBanner data-testid="test" bannerData={{}} onClose={noop} />);
 
-    expect(screen.getByTestId("test").tagName.toLowerCase()).toBe("div");
+    expect(screen.getByTestId("test")).toBeVisible();
   });
 
   it("renders Avatar if bannerData.iconLink is passed", () => {
@@ -26,9 +19,7 @@ describe("PromoBanner", () => {
         bannerData={{
           iconLink: "source-mock",
         }}
-        onClose={() => {
-          return;
-        }}
+        onClose={noop}
       />
     );
 
@@ -38,48 +29,28 @@ describe("PromoBanner", () => {
   });
 
   it("renders no Avatar if bannerData.iconLink isn't passed", () => {
-    render(
-      <PromoBanner
-        data-testid="test"
-        bannerData={{}}
-        onClose={() => {
-          return;
-        }}
-      />
-    );
+    render(<PromoBanner data-testid="test" bannerData={{}} onClose={noop} />);
 
     expect(
       screen.getByTestId("test").querySelector(".Avatar")
     ).not.toBeInTheDocument();
   });
 
-  it("renders Button if bannerData.ctaText is provided", () => {
+  it("renders Button if bannerData.ctaText is passed", () => {
     render(
       <PromoBanner
         data-testid="test"
         bannerData={{ ctaText: "Press Me" }}
-        onClose={() => {
-          return;
-        }}
+        onClose={noop}
       />
     );
 
-    expect(screen.getByText(/Press Me/i)).toBeInTheDocument();
+    expect(screen.getByTestId("test")).toHaveTextContent("Press Me");
   });
 
-  it("renders no Button if bannerData.ctaText is not provided", () => {
-    render(
-      <PromoBanner
-        data-testid="test"
-        bannerData={{}}
-        onClose={() => {
-          return;
-        }}
-      />
-    );
+  it("renders no Button if bannerData.ctaText isn't passed", () => {
+    render(<PromoBanner data-testid="test" bannerData={{}} onClose={noop} />);
 
-    expect(
-      screen.getByTestId("test").querySelector(".Button")
-    ).not.toBeInTheDocument();
+    expect(screen.getByTestId("test")).not.toHaveTextContent("Press Me");
   });
 });
