@@ -159,7 +159,6 @@ export const UsersStack = ({
         styles["UsersStack__photo"],
         styles["UsersStack__photo--others"]
       )}
-      aria-hidden
     >
       <span>+{count}</span>
     </CounterTypography>

@@ -54,7 +54,7 @@ export const ScreenSpinner = ({
           {...restProps}
         />
         <div className={styles["ScreenSpinner__icon"]}>
-          <Icon aria-hidden />
+          <Icon />
         </div>
       </div>
     </PopoutWrapper>

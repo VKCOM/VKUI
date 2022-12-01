@@ -1,5 +1,3 @@
-import type { AriaAttributes } from "react";
-
 export type ImageBaseSize =
   | 16
   | 20
@@ -20,5 +18,4 @@ export type ImageBaseSize =
 export type ImageBaseExpectedIconProps = {
   width?: number;
   height?: number;
-  "aria-hidden"?: AriaAttributes["aria-hidden"];
 };

@@ -92,7 +92,7 @@ export const Chip = ({
             hasActive={false}
             aria-label={`${removeAriaLabel} ${title}`}
           >
-            <Icon16Cancel aria-hidden={true} />
+            <Icon16Cancel />
           </Tappable>
         )}
       </div>

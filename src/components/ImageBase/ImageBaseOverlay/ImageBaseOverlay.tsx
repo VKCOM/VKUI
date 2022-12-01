@@ -90,7 +90,7 @@ export const ImageBaseOverlay = ({
       hasActive={false}
       onClick={onClick}
     >
-      <Icon width={iconSize} height={iconSize} aria-hidden={true} />
+      <Icon width={iconSize} height={iconSize} />
     </Tappable>
   );
 };

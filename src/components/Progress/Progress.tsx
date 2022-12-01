@@ -37,7 +37,6 @@ export const Progress = ({
       <div
         className={styles["Progress__in"]}
         style={{ width: `${progress}%` }}
-        aria-hidden
       />
     </div>
   );

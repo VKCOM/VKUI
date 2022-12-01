@@ -126,20 +126,14 @@ export const Checkbox = ({
         )}
       >
         {platform === Platform.VKCOM ? (
-          <Icon20CheckBoxOn aria-hidden />
+          <Icon20CheckBoxOn />
         ) : (
           <React.Fragment>
             {adaptiveSizeY.compact && (
-              <Icon20CheckBoxOn
-                className={adaptiveSizeY.compact.className}
-                aria-hidden
-              />
+              <Icon20CheckBoxOn className={adaptiveSizeY.compact.className} />
             )}
             {adaptiveSizeY.regular && (
-              <Icon24CheckBoxOn
-                className={adaptiveSizeY.regular.className}
-                aria-hidden
-              />
+              <Icon24CheckBoxOn className={adaptiveSizeY.regular.className} />
             )}
           </React.Fragment>
         )}
@@ -151,20 +145,14 @@ export const Checkbox = ({
         )}
       >
         {platform === Platform.VKCOM ? (
-          <Icon20CheckBoxOff aria-hidden />
+          <Icon20CheckBoxOff />
         ) : (
           <React.Fragment>
             {adaptiveSizeY.compact && (
-              <Icon20CheckBoxOff
-                className={adaptiveSizeY.compact.className}
-                aria-hidden
-              />
+              <Icon20CheckBoxOff className={adaptiveSizeY.compact.className} />
             )}
             {adaptiveSizeY.regular && (
-              <Icon24CheckBoxOff
-                className={adaptiveSizeY.regular.className}
-                aria-hidden
-              />
+              <Icon24CheckBoxOff className={adaptiveSizeY.regular.className} />
             )}
           </React.Fragment>
         )}
@@ -176,13 +164,12 @@ export const Checkbox = ({
         )}
       >
         {platform === Platform.VKCOM ? (
-          <Icon20CheckBoxIndetermanate aria-hidden width={20} height={20} />
+          <Icon20CheckBoxIndetermanate width={20} height={20} />
         ) : (
           <React.Fragment>
             {adaptiveSizeY.compact && (
               <Icon20CheckBoxIndetermanate
                 className={adaptiveSizeY.compact.className}
-                aria-hidden
                 width={20}
                 height={20}
               />
@@ -190,7 +177,6 @@ export const Checkbox = ({
             {adaptiveSizeY.regular && (
               <Icon20CheckBoxIndetermanate
                 className={adaptiveSizeY.regular.className}
-                aria-hidden
                 width={24}
                 height={24}
               />

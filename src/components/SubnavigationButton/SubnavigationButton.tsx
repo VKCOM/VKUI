@@ -98,7 +98,6 @@ export const SubnavigationButton = ({
         {expandable && (
           <Icon16Dropdown
             className={styles["SubnavigationButton__expandableIcon"]}
-            aria-hidden
           />
         )}
       </span>

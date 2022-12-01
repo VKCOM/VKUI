@@ -78,9 +78,9 @@ const ActionSheetItem = ({
   const iconChecked =
     iconCheckedProp ||
     (sizeY === SizeType.COMPACT ? (
-      <Icon20CheckCircleOn aria-hidden />
+      <Icon20CheckCircleOn />
     ) : (
-      <Icon24CheckCircleOn aria-hidden />
+      <Icon24CheckCircleOn />
     ));
 
   let Component: React.ElementType = restProps.href ? "a" : "div";
