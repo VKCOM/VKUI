@@ -54,7 +54,7 @@ describe("PromoBanner", () => {
     render(<PromoBanner data-testid="test" bannerData={{}} onClose={noop} />);
 
     const container = screen.getByTestId("test");
-    const button = screen.queryByTestId("button");
+    const button = screen.queryByTestId("button-ctaText");
 
     expect(container).not.toContainElement(button);
   });
