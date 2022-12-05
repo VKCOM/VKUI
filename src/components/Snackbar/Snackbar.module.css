@@ -89,17 +89,13 @@
 }
 
 .Snackbar--layout-horizontal .Snackbar__action {
-  margin-right: calc(
-    -1 * var(--vkui--size_button_tertiary_small_padding_horizontal--regular)
-  );
+  margin-left: 12px;
   position: relative;
 }
 
 .Snackbar--layout-vertical .Snackbar__action {
-  margin-bottom: -6px;
-  margin-left: calc(
-    -1 * var(--vkui--size_button_tertiary_small_padding_horizontal--regular)
-  );
+  margin-top: 2px;
+  min-height: initial;
 }
 
 .ModalRoot .Snackbar {

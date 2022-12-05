@@ -236,8 +236,7 @@ export const Snackbar = ({
               {action && !subtitle && (
                 <Button
                   align="left"
-                  hasHover={false}
-                  mode="tertiary"
+                  mode="link"
                   appearance={mode === "dark" ? "overlay" : "accent"}
                   size="s"
                   className={styles["Snackbar__action"]}

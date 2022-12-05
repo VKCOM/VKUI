@@ -206,6 +206,19 @@
   padding-right: 0;
 }
 
+.Button--mode-link {
+  background: none;
+  min-width: initial;
+}
+
+.Button--mode-link .Button__after,
+.Button--mode-link .Button__before,
+.Button--mode-link .Button__content:first-child,
+.Button--mode-link .Button__content:last-child {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .Button__spinner {
   position: absolute;
   left: 0;
@@ -312,6 +325,26 @@
 /*
   Buttons text colors
 */
+.Button.Button--appearance-accent {
+  color: var(--vkui--color_text_accent_themed);
+}
+
+.Button.Button--appearance-positive {
+  color: var(--vkui--color_text_positive);
+}
+
+.Button.Button--appearance-negative {
+  color: var(--vkui--color_text_negative);
+}
+
+.Button.Button--appearance-neutral {
+  color: var(--vkui--color_text_primary);
+}
+
+.Button.Button--appearance-accent-invariable {
+  color: var(--vkui--color_text_accent);
+}
+
 .Button--mode-primary.Button--appearance-accent {
   color: var(--vkui--color_text_contrast_themed);
 }
@@ -322,38 +355,12 @@
   color: var(--vkui--color_text_contrast);
 }
 
-/*
-  Text colors of background-colored buttons
-*/
-.Button--mode-tertiary.Button--appearance-accent,
-.Button--mode-secondary.Button--appearance-accent,
-.Button--mode-outline.Button--appearance-accent {
-  color: var(--vkui--color_text_accent_themed);
+.Button--mode-link.Button--hover {
+  opacity: 0.8;
 }
 
-.Button--mode-tertiary.Button--appearance-positive,
-.Button--mode-secondary.Button--appearance-positive,
-.Button--mode-outline.Button--appearance-positive {
-  color: var(--vkui--color_text_positive);
-}
-
-.Button--mode-tertiary.Button--appearance-negative,
-.Button--mode-secondary.Button--appearance-negative,
-.Button--mode-outline.Button--appearance-negative {
-  color: var(--vkui--color_text_negative);
-}
-
-.Button--mode-primary.Button--appearance-neutral,
-.Button--mode-secondary.Button--appearance-neutral,
-.Button--mode-tertiary.Button--appearance-neutral,
-.Button--mode-outline.Button--appearance-neutral {
-  color: var(--vkui--color_text_primary);
-}
-
-.Button--mode-tertiary.Button--appearance-accent-invariable,
-.Button--mode-secondary.Button--appearance-accent-invariable,
-.Button--mode-outline.Button--appearance-accent-invariable {
-  color: var(--vkui--color_text_accent);
+.Button--mode-link.Button--active {
+  opacity: 0.7;
 }
 
 /*
@@ -458,7 +465,8 @@
 
 .Button--mode-secondary.Button--appearance-overlay,
 .Button--mode-tertiary.Button--appearance-overlay,
-.Button--mode-outline.Button--appearance-overlay {
+.Button--mode-outline.Button--appearance-overlay,
+.Button--mode-link.Button--appearance-overlay {
   color: var(--vkui--color_text_contrast);
 }
 

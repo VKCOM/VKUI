@@ -10,7 +10,7 @@ import { usePlatform } from "../../hooks/usePlatform";
 import styles from "./Button.module.css";
 
 export interface VKUIButtonProps extends HasAlign {
-  mode?: "primary" | "secondary" | "tertiary" | "outline";
+  mode?: "primary" | "secondary" | "tertiary" | "outline" | "link";
   appearance?:
     | "accent"
     | "positive"
