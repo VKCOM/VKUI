@@ -2071,10 +2071,10 @@
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@vkontakte/vk-bridge/-/vk-bridge-2.1.5.tgz#eae6598c955a894421fd4b63f6f12abdfd0f4e6b"
 
-"@vkontakte/vkjs@^0.28.0":
-  version "0.28.0"
-  resolved "https://registry.yarnpkg.com/@vkontakte/vkjs/-/vkjs-0.28.0.tgz#9bf035b095402b6abb1f8d87e0873d22d91e3874"
-  integrity sha512-yTpKpblNTOUo05FySyj8Qkecey5oeqwuwBxhnd75yhCcapap6XNWKSQtNmt4wIQE+1KjtC1b9CeazsaUuFlZ6w==
+"@vkontakte/vkjs@^0.29.0":
+  version "0.29.0"
+  resolved "https://registry.yarnpkg.com/@vkontakte/vkjs/-/vkjs-0.29.0.tgz#b5fe58798217f1da8ff8b2926c46f42232a679d0"
+  integrity sha512-JuiLR9bGtpwpVSkKdTNFwPQLKVfL3EgfvuLCjIOC2DkIZsbUESysLPvbC8n1s+vuhBGYWaRsJfZ/33ltGDUBOQ==
 
 "@vkontakte/vkui-tokens@4.17.0":
   version "4.17.0"
