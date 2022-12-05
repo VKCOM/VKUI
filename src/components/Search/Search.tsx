@@ -58,7 +58,7 @@ export interface SearchProps
  * @see https://vkcom.github.io/VKUI/#/Search
  */
 export const Search = ({
-  before = <Icon16SearchOutline aria-hidden />,
+  before = <Icon16SearchOutline />,
   className,
   defaultValue = "",
   placeholder = "Поиск",

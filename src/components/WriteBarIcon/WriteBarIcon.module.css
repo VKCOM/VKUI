@@ -48,6 +48,8 @@
 .WriteBarIcon--ios.WriteBarIcon--mode-send,
 .WriteBarIcon--ios.WriteBarIcon--mode-done {
   width: 48px;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .WriteBarIcon--ios.WriteBarIcon--mode-send:first-child,

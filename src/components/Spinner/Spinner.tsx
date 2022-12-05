@@ -36,7 +36,7 @@ export const Spinner = React.memo(
         {...restProps}
         className={classNamesString(styles["Spinner"], className)}
       >
-        <SpinnerIcon aria-hidden="true" className={styles["Spinner__self"]} />
+        <SpinnerIcon className={styles["Spinner__self"]} />
       </span>
     );
   }

@@ -47,7 +47,7 @@ const SimpleSearch = ({ goHeaderSearch }) => {
       <PanelHeader
         after={
           <PanelHeaderButton aria-label="Добавить" onClick={goHeaderSearch}>
-            <Icon28AddOutline aria-hidden />
+            <Icon28AddOutline />
           </PanelHeaderButton>
         }
       >
@@ -88,7 +88,7 @@ const HeaderSearch = ({ goSearch, onFiltersClick }) => {
         <Search
           value={search}
           onChange={onChange}
-          icon={<Icon24Filter aria-hidden />}
+          icon={<Icon24Filter />}
           onIconClick={onFiltersClick}
         />
       </PanelHeader>
@@ -138,17 +138,13 @@ const SearchExample = () => {
                 before={
                   platform === Platform.ANDROID && (
                     <PanelHeaderButton aria-label="Отмена" onClick={hideModal}>
-                      <Icon24Cancel aria-hidden />
+                      <Icon24Cancel />
                     </PanelHeaderButton>
                   )
                 }
                 after={
                   <PanelHeaderButton aria-label="Готово" onClick={hideModal}>
-                    {platform === Platform.IOS ? (
-                      "Готово"
-                    ) : (
-                      <Icon24Done aria-hidden />
-                    )}
+                    {platform === Platform.IOS ? "Готово" : <Icon24Done />}
                   </PanelHeaderButton>
                 }
               >

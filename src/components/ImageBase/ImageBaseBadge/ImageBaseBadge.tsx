@@ -53,7 +53,7 @@ export const ImageBaseBadge = ({
         className
       )}
     >
-      <Icon width={iconSize} height={iconSize} aria-hidden={true} />
+      <Icon width={iconSize} height={iconSize} />
     </div>
   );
 };

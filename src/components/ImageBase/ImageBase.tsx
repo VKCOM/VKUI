@@ -115,11 +115,7 @@ export const ImageBase = ({
     ? getRelativeSizeOfFallbackIcon(size)
     : undefined;
   const fallbackIcon = needShowFallbackIcon ? (
-    <FallbackIcon
-      width={fallbackIconSize}
-      height={fallbackIconSize}
-      aria-hidden={true}
-    />
+    <FallbackIcon width={fallbackIconSize} height={fallbackIconSize} />
   ) : null;
 
   const badgeComponent =

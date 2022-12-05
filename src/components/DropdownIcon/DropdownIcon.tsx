@@ -9,8 +9,7 @@ import { classNamesString } from "../../lib/classNames";
 import { useAdaptivityConditionalRender } from "../../hooks/useAdaptivityConditionalRender";
 import styles from "./DropdownIcon.module.css";
 
-export interface DropdownIconProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface DropdownIconProps extends React.HTMLAttributes<SVGSVGElement> {
   opened?: boolean;
 }
 
@@ -32,7 +31,6 @@ export const DropdownIcon = ({
             sizeY.compact.className,
             className
           )}
-          aria-hidden
           {...restProps}
         />
       )}
@@ -43,7 +41,6 @@ export const DropdownIcon = ({
             sizeY.regular.className,
             className
           )}
-          aria-hidden
           {...restProps}
         />
       )}
