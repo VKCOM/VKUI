@@ -90,7 +90,11 @@
 @import "../components/Spinner/Spinner.module.css";
 @import "../components/Switch/Switch.module.css";
 @import "../components/InfoRow/InfoRow.module.css";
+@import "../components/Avatar/AvatarBadge/AvatarBadge.module.css";
 @import "../components/Avatar/Avatar.module.css";
+@import "../components/Image/ImageBadge/ImageBadge.module.css";
+@import "../components/Image/Image.module.css";
+@import "../components/GridAvatar/GridAvatarBadge/GridAvatarBadge.module.css";
 @import "../components/GridAvatar/GridAvatar.module.css";
 @import "../components/BaseGallery/BaseGallery.module.css";
 @import "../components/Progress/Progress.module.css";

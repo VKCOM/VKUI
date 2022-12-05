@@ -34,13 +34,3 @@
 .GridAvatar__item:nth-last-child(4) {
   margin-bottom: var(--vkui_internal--grid_avatar_image_offset);
 }
-
-.GridAvatar__badge {
-  right: 0;
-  bottom: 0;
-}
-
-.GridAvatar__badge--shifted {
-  right: -2px;
-  bottom: -2px;
-}

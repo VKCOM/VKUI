@@ -32,14 +32,12 @@
   visibility: visible;
 }
 
-.ImageBase__badge {
-  right: 0;
-  bottom: 0;
-}
+.ImageBase__fallback {
+  position: absolute;
 
-.ImageBase__badge--shift {
-  right: -2px;
-  bottom: -2px;
+  /* Расчитываем на ценитрирование через родительский `display: flex` */
+  top: auto;
+  left: auto;
 }
 
 .ImageBase--size-16,

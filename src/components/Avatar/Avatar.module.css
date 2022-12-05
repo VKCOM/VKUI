@@ -46,39 +46,10 @@
   background-image: linear-gradient(135deg, #d3a6ff, #8f3fe0);
 }
 
-.Avatar__content {
+.Avatar__initials {
   font-family: var(--vkui--font_family_accent);
   font-weight: 600;
   line-height: 1;
   text-transform: uppercase;
   text-align: center;
-}
-
-.Avatar__badge {
-  right: 0;
-  bottom: 0;
-}
-
-.Avatar__badge--shifted {
-  right: -2px;
-  bottom: -2px;
-}
-
-.Avatar__badge--online,
-.Avatar__badge--online-mobile {
-  right: 14%;
-  bottom: 14%;
-  color: var(--vkui--color_accent_green);
-  transform: translate(50%, 50%);
-}
-
-/**
- * Перебиваем св-ва `ImageBaseBadge` для этих кейсов
- */
-.Avatar__badge--online {
-  padding: 0;
-}
-
-.Avatar__badge--online-mobile {
-  border-radius: 3px;
 }

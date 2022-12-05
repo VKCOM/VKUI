@@ -17,6 +17,9 @@ export const runAllTimers = () =>
     jest.runAllTimers();
   });
 
+export const tryToGetByTestId = (id: string, elParent: HTMLElement) =>
+  elParent.querySelector<HTMLElement>(`[data-testid="${id}"]`);
+
 export const imgOnlyAttributes: ImgOnlyAttributes = {
   alt: "test",
   crossOrigin: "anonymous",

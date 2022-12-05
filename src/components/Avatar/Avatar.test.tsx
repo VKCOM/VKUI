@@ -1,77 +1,111 @@
 import * as React from "react";
 import "@testing-library/jest-dom/extend-expect";
 import { render, screen } from "@testing-library/react";
-import { baselineComponent } from "../../testing/utils";
+import {
+  IconExampleForBadgeBasedOnImageBaseSize,
+  IconExampleForFallbackBasedOnImageBaseSize,
+} from "../../testing/icons";
+import { baselineComponent, tryToGetByTestId } from "../../testing/utils";
 import { Avatar, AvatarProps } from "./Avatar";
-import { Icon20GiftCircleFillRed as Icon20GiftCircleFillRedLib } from "@vkontakte/icons";
-import styles from "./Avatar.module.css";
+import avatarBadgeStyles from "./AvatarBadge/AvatarBadge.module.css";
 
 const TEST_LOCATORS = {
-  HOST: {
-    id: "avatar",
-  },
-  ICON: {
-    id: "test-icon",
-  },
+  ROOT: "avatar",
+  BADGE: "avatar-badge",
 };
 
 const AvatarTest = (props: AvatarProps) => (
-  <Avatar {...props} data-testid={TEST_LOCATORS.HOST.id} />
+  <Avatar {...props} data-testid={TEST_LOCATORS.ROOT} />
 );
 
-const BadgeTest = (
-  props: React.ComponentProps<typeof Icon20GiftCircleFillRedLib>
-) => {
-  return (
-    <Icon20GiftCircleFillRedLib
-      {...props}
-      data-testid={TEST_LOCATORS.ICON.id}
-    />
-  );
-};
+const getAvatarRootEl = () => screen.getByTestId(TEST_LOCATORS.ROOT);
 
-const avatar = () => screen.getByTestId(TEST_LOCATORS.HOST.id);
+const getAvatarBadgeEl = () => screen.getByTestId(TEST_LOCATORS.BADGE);
 
-describe("Avatar", () => {
+describe(Avatar, () => {
   baselineComponent(Avatar);
 
-  describe("Badge", () => {
-    it("Renders badge if passed", () => {
-      render(<AvatarTest badge={BadgeTest} />);
+  it("should use `initials` instead `fallbackIcon`", () => {
+    const INITIALS = "ПД";
 
-      expect(screen.getByTestId(TEST_LOCATORS.ICON.id)).toBeInTheDocument();
-    });
+    render(
+      <AvatarTest
+        initials={INITIALS}
+        fallbackIcon={<IconExampleForFallbackBasedOnImageBaseSize />}
+      />
+    );
 
-    it("Doesn't render badge if not passed", () => {
-      render(<AvatarTest />);
+    const elAvatar = getAvatarRootEl();
+    const fallbackIcon = tryToGetByTestId(
+      IconExampleForFallbackBasedOnImageBaseSize.DATA_TEST_ID,
+      elAvatar
+    );
 
-      expect(
-        avatar().querySelector(`.${styles["Avatar__badge"]}`)
-      ).not.toBeInTheDocument();
-    });
+    expect(elAvatar).toHaveTextContent(INITIALS);
+    expect(elAvatar).not.toContainElement(fallbackIcon);
+  });
 
-    it("Adds shifted class if size < 96", () => {
-      render(<AvatarTest badge={BadgeTest} size={88} />);
+  it("should use `fallbackIcon` if `initials` is not provided", () => {
+    render(
+      <AvatarTest
+        fallbackIcon={<IconExampleForFallbackBasedOnImageBaseSize />}
+      />
+    );
 
-      expect(
-        avatar().querySelector(`.${styles["Avatar__badge--shifted"]}`)
-      ).toBeInTheDocument();
-    });
+    const elAvatar = getAvatarRootEl();
+    const fallbackIcon = tryToGetByTestId(
+      IconExampleForFallbackBasedOnImageBaseSize.DATA_TEST_ID,
+      elAvatar
+    );
 
-    it("Renders online badge if passed", () => {
-      render(<AvatarTest badge="online" />);
+    expect(elAvatar).toContainElement(fallbackIcon);
+  });
+});
 
-      expect(
-        avatar().querySelector(`.${styles["Avatar__badge--online"]}`)
-      ).toBeInTheDocument();
-    });
+describe(Avatar.Badge, () => {
+  it("should add class name for shift position if size < 96", () => {
+    render(
+      <AvatarTest size={88}>
+        <Avatar.Badge data-testid={TEST_LOCATORS.BADGE}>
+          <IconExampleForBadgeBasedOnImageBaseSize />
+        </Avatar.Badge>
+      </AvatarTest>
+    );
 
-    it("Renders online mobile badge if passed", () => {
-      render(<AvatarTest badge="online-mobile" />);
+    expect(getAvatarBadgeEl()).toHaveClass(
+      avatarBadgeStyles["AvatarBadge--shifted"]
+    );
+  });
+});
 
-      expect(
-        avatar().querySelector(`.${styles["Avatar__badge--online-mobile"]}`)
-      ).toBeInTheDocument();
-    });
+describe(Avatar.BadgeWithPreset, () => {
+  it("should renders 'online' badge", () => {
+    render(
+      <AvatarTest>
+        <Avatar.BadgeWithPreset
+          data-testid={TEST_LOCATORS.BADGE}
+          preset="online"
+        />
+      </AvatarTest>
+    );
+
+    expect(getAvatarBadgeEl()).toHaveClass(
+      avatarBadgeStyles["AvatarBadge--preset-online"]
+    );
+  });
+
+  it("should renders 'online-mobile' badge", () => {
+    render(
+      <AvatarTest>
+        <Avatar.BadgeWithPreset
+          data-testid={TEST_LOCATORS.BADGE}
+          preset="online-mobile"
+        />
+      </AvatarTest>
+    );
+
+    expect(getAvatarBadgeEl()).toHaveClass(
+      avatarBadgeStyles["AvatarBadge--preset-onlineMobile"]
+    );
   });
 });

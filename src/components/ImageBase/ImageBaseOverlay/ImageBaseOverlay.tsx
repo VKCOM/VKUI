@@ -1,34 +1,14 @@
 import * as React from "react";
-import { Icon28AddOutline } from "@vkontakte/icons";
 import { classNamesString } from "../../../lib/classNames";
 import { useAppearance } from "../../../hooks/useAppearance";
 import { useAdaptivityHasPointer } from "../../../hooks/useAdaptivityHasPointer";
 import { Tappable } from "../../Tappable/Tappable";
-import type { ImageBaseSize, ImageBaseExpectedIconProps } from "../types";
+import { ImageBaseContext } from "../context";
+import type { ImageBaseExpectedIconProps } from "../types";
+import { validateOverlayIcon } from "../validators";
 import styles from "./ImageBaseOverlay.module.css";
 
-function getRelativeSizeOfIcon(imageSize: number): number {
-  if (imageSize <= 20) {
-    return 12;
-  } else if (imageSize <= 24) {
-    return 16;
-  } else if (imageSize <= 28) {
-    return 18;
-  } else if (imageSize <= 40) {
-    return 20;
-  } else if (imageSize <= 48) {
-    return 24;
-  } else if (imageSize <= 88) {
-    return 28;
-  }
-  return 32;
-}
-
-export interface ImageBaseOverlayProps {
-  /**
-   * Размер картинки, над которой будет располагаться оверлей.
-   */
-  imageSize: ImageBaseSize | number;
+export interface ImageBaseOverlayProps extends React.AriaAttributes {
   /**
    * Задаёт тему оформления.
    *
@@ -45,32 +25,49 @@ export interface ImageBaseOverlayProps {
    */
   visibility?: "on-hover" | "always";
   /**
-   * Иконка по середине оверлей.
+   * Принимает иконку.
    *
-   * @default `Icon28AddOutline`
+   *
+   * > 📝 Нужный для `<ImageBase size={...} />` размер можно узнать из функции `getOverlayIconSizeByImageBaseSize()`.
+   *
+   * > Предпочтительней использовать иконки из `@vkontakte/icons`.
+   *
+   * > 📊️ Если вы хотите передать кастомную иконку, то следует именовать её по шаблону `Icon<size><name>`. Или же
+   * > чтобы в неё был передан параметр `width`. Тогда мы сможем выводить в консоль подсказку правильного ли размера вы
+   * > использовали иконку.
    */
-  Icon?: React.ComponentType<ImageBaseExpectedIconProps>;
+  children: React.ReactElement<ImageBaseExpectedIconProps>;
   className?: string;
   onClick?: React.MouseEventHandler<HTMLElement>;
 }
 
+/**
+ * Интерактивный оверлей над картинкой.
+ */
 export const ImageBaseOverlay = ({
-  imageSize,
   className,
   theme: themeProp,
   visibility: visibilityProp,
-  Icon = Icon28AddOutline,
+  children,
   onClick,
+  ...restProps
 }: ImageBaseOverlayProps) => {
   const appearance = useAppearance();
   const hasPointer = useAdaptivityHasPointer();
   const theme = themeProp ?? appearance;
   const visibility = visibilityProp ?? (hasPointer ? "on-hover" : "always");
 
-  const iconSize = getRelativeSizeOfIcon(imageSize);
+  if (process.env.NODE_ENV === "development") {
+    if (children) {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const { size } = React.useContext(ImageBaseContext);
+      validateOverlayIcon(size, { name: "children", value: children });
+    }
+  }
 
   return (
     <Tappable
+      {...restProps}
       type="button"
       Component="button"
       className={classNamesString(
@@ -90,7 +87,7 @@ export const ImageBaseOverlay = ({
       hasActive={false}
       onClick={onClick}
     >
-      <Icon width={iconSize} height={iconSize} />
+      {children}
     </Tappable>
   );
 };

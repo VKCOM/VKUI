@@ -24,17 +24,13 @@ const Fallbacks = () => {
     <Group description="На случаи если аватарка не загрузилась или она отсутсвует">
       <Header mode="secondary">Фолбеки</Header>
       <SimpleCell
-        before={<Avatar size={48} src="#" />}
+        before={<Avatar size={48} fallbackIcon={<Icon28Users />} src="#" />}
         subtitle="Только от друзей друзей"
       >
         Заявки в друзья
       </SimpleCell>
       <SimpleCell
-        before={
-          <Avatar size={48} src="#" gradientColor="blue">
-            ИБ
-          </Avatar>
-        }
+        before={<Avatar size={48} src="#" initials="ИБ" gradientColor="blue" />}
         subtitle="Только от друзей друзей"
       >
         Заявки в друзья
@@ -76,10 +72,24 @@ const OthersFeatures = () => {
               size={size}
               src={useInitials ? undefined : getAvatarUrl("user_id34")}
               gradientColor={gradientColor}
-              badge={badge}
-              overlay={overlay}
+              initials={useInitials ? "ТП" : null}
             >
-              {useInitials ? "ТП" : null}
+              {size >= 24 &&
+              (badge === "online" || badge === "online-mobile") ? (
+                <Avatar.BadgeWithPreset preset={badge} />
+              ) : (
+                size >= 24 &&
+                badge && (
+                  <Avatar.Badge background={badge.background}>
+                    <IconExampleForBadgeBasedOnImageBaseSize />
+                  </Avatar.Badge>
+                )
+              )}
+              {overlay && (
+                <Avatar.Overlay {...overlay}>
+                  <IconExampleForOverlayBasedOnImageBaseSize />
+                </Avatar.Overlay>
+              )}
             </Avatar>
           )
         )}
@@ -119,7 +129,8 @@ const AvatarPropsForm = ({
   const [badge, setBadge] = React.useState(DEFAULT_VALUE);
   const [badgeBackground, setBadgeBackground] = React.useState(DEFAULT_VALUE);
 
-  const [overlay, setOverlay] = React.useState(DEFAULT_VALUE);
+  const [overlay, setOverlay] = React.useState(false);
+  const [overlayTheme, setOverlayTheme] = React.useState(DEFAULT_VALUE);
   const [overlayVisibility, setOverlayVisibility] =
     React.useState(DEFAULT_VALUE);
 
@@ -136,11 +147,10 @@ const AvatarPropsForm = ({
   React.useEffect(() => {
     if (badge === DEFAULT_VALUE) {
       onBadgeChange();
-    } else if (badge === "custom") {
+    } else if (badge === "children") {
       onBadgeChange({
         background:
           badgeBackground === DEFAULT_VALUE ? undefined : badgeBackground,
-        Icon: Icon20GiftCircleFillRed,
       });
     } else {
       onBadgeChange(badge);
@@ -148,18 +158,16 @@ const AvatarPropsForm = ({
   }, [badge, badgeBackground, onBadgeChange]);
 
   React.useEffect(() => {
-    if (overlay === DEFAULT_VALUE) {
+    if (!overlay) {
       onOverlayChange();
-    } else if (overlay === "true") {
-      onOverlayChange(true);
-    } else {
+    } else if (overlay) {
       onOverlayChange({
-        theme: overlay,
+        theme: overlayTheme === DEFAULT_VALUE ? undefined : overlayTheme,
         visibility:
           overlayVisibility === DEFAULT_VALUE ? undefined : overlayVisibility,
       });
     }
-  }, [overlay, overlayVisibility, onOverlayChange]);
+  }, [overlay, overlayTheme, overlayVisibility, onOverlayChange]);
 
   return (
     <React.Fragment>
@@ -191,22 +199,28 @@ const AvatarPropsForm = ({
       </FormItem>
 
       <FormLayoutGroup mode="horizontal">
-        <FormItem top="badge">
+        <FormItem top="Avatar.Badge or Avatar.BadgeWithPreset">
           <Select
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
-              { label: "online", value: "online" },
-              { label: "online-mobile", value: "online-mobile" },
+              { label: "📝 Avatar.Badge", value: "header-1", disabled: true },
               {
-                label: "Provide custom icon (example, Icon20GiftCircleFillRed)",
-                value: "custom",
+                label: "children={<Icon20GiftCircleFillRed />}",
+                value: "children",
               },
+              {
+                label: "📝 Avatar.BadgeWithPreset",
+                value: "header-2",
+                disabled: true,
+              },
+              { label: 'preset="online"', value: "online", hierarchy: 1 },
+              { label: 'preset="online-mobile"', value: "online-mobile" },
             ]}
             value={badge}
             onChange={(e) => setBadge(e.target.value)}
           />
         </FormItem>
-        <FormItem top="badge[background]">
+        <FormItem top="Avatar.Badge[background]">
           <Select
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
@@ -214,26 +228,37 @@ const AvatarPropsForm = ({
               { label: "shadow", value: "shadow" },
             ]}
             value={badgeBackground}
-            disabled={badge !== "custom"}
+            disabled={badge !== "children"}
             onChange={(e) => setBadgeBackground(e.target.value)}
           />
         </FormItem>
       </FormLayoutGroup>
 
       <FormLayoutGroup mode="horizontal">
-        <FormItem top="overlay">
+        <FormItem top="Avatar.Overlay">
+          <Checkbox
+            checked={overlay}
+            onChange={(e) => setOverlay(e.target.checked)}
+          >
+            overlay (example, Icon24AddOutline, Icon28AddOutline)
+          </Checkbox>
+        </FormItem>
+      </FormLayoutGroup>
+
+      <FormLayoutGroup mode="horizontal">
+        <FormItem top="Avatar.Overlay[theme]">
           <Select
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
-              { label: "true", value: "true" },
-              { label: '{ theme: "light" }', value: "light" },
-              { label: '{ theme: "dark" }', value: "dark" },
+              { label: "light", value: "light" },
+              { label: "dark", value: "dark" },
             ]}
-            value={overlay}
-            onChange={(e) => setOverlay(e.target.value)}
+            value={overlayTheme}
+            disabled={!overlay}
+            onChange={(e) => setOverlayTheme(e.target.value)}
           />
         </FormItem>
-        <FormItem top="overlay[visibility]">
+        <FormItem top="Avatar.Overlay[visibility]">
           <Select
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
@@ -241,7 +266,7 @@ const AvatarPropsForm = ({
               { label: "always", value: "always" },
             ]}
             value={overlayVisibility}
-            disabled={overlay === "true" || overlay === DEFAULT_VALUE}
+            disabled={!overlay}
             onChange={(e) => setOverlayVisibility(e.target.value)}
           />
         </FormItem>
