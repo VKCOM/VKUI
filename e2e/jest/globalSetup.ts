@@ -29,6 +29,8 @@ async function setupWebpack() {
 
   devServer = new WebpackDevServer(
     {
+      host: 'localhost',
+      port: 9000,
       allowedHosts: 'all',
       devMiddleware: {
         stats: 'minimal',
@@ -37,7 +39,7 @@ async function setupWebpack() {
     },
     compiler as any,
   );
-  devServer.listen(9000, 'localhost', console.error);
+  await devServer.start();
   (global as any)['__DEV_SERVER__'] = devServer;
 
   return compilerDone;
