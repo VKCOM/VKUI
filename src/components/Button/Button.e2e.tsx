@@ -9,7 +9,7 @@ describe("Button", () => {
     (props: ButtonProps) => <Button {...props}>Кнопка</Button>,
     [
       {
-        mode: ["primary", "secondary", "tertiary", "outline"],
+        mode: ["primary", "secondary", "tertiary", "outline", "link"],
         disabled: [undefined, true],
       },
       {
