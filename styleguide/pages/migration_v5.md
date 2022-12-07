@@ -8,7 +8,7 @@
 
 В **v4** были проблемы с SSR, т.к. для адаптивности мы использовали браузерный API для получения размеров экрана и
 дальнейшего высчитывания параметров адаптивности. А на сервере нет ни браузерного API, ни знаний о размерах экрана.
-Из-за этого на сервере и на клиенте могли рендерится разные HTML, следовательно, это вызывало ошибки при гидрации.
+Из-за этого на сервере и на клиенте могли рендерится разные HTML, следовательно, это вызывало ошибки при гидратации.
 
 В **v5** компоненты, которые гарантировано могут отрендерится на сервере, мы перевели на адаптивность через
 `CSS Media Queries`. Для всплывающих окон адаптивность осталась через браузерное API, т.к. такие окна появляется после
@@ -317,7 +317,7 @@ import "@vkontakte/vkui/dist/vkui.css";
 
 ## [`Avatar`](#/Avatar)
 
-- Св-во `badge` выделено в саб-компонент. Используйте `Avatar.Badge` или `Avatar.BadgeWidthPreset` (для `"online"` и `"online-mobile"`).
+- Свойство `badge` выделено в саб-компонент. Используйте `Avatar.Badge` или `Avatar.BadgeWidthPreset` (для `"online"` и `"online-mobile"`).
 
   ```diff
   import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
@@ -341,7 +341,7 @@ import "@vkontakte/vkui/dist/vkui.css";
 
   Аналогично для `badge="online-mobile"`.
 
-- Св-ва `overlayMode`, `overlayAction` и `overlayIcon` вынесены и объедены в общем саб-компоненте `Avatar.Overlay`.
+- Свойства `overlayMode`, `overlayAction` и `overlayIcon` вынесены и объедены в общем саб-компоненте `Avatar.Overlay`.
 
   ### Как мигрировать с `overlayIcon`?
 
@@ -397,7 +397,7 @@ import "@vkontakte/vkui/dist/vkui.css";
   + </Avatar>
   ```
 
-- Удалено св-во `mode`. Используйте отдельный компонент [`Image`](#/Image).
+- Удалено свойство `mode`. Используйте отдельный компонент [`Image`](#/Image).
 
   ```diff
   - <Avatar mode="image" />
@@ -409,7 +409,7 @@ import "@vkontakte/vkui/dist/vkui.css";
   + <Image borderRadius="l" />
   ```
 
-- Св-во `shadow` переименовано в `withBorder`.
+- Свойство `shadow` переименовано в `withBorder`.
 
 <br/><br/>
 
@@ -426,7 +426,7 @@ import "@vkontakte/vkui/dist/vkui.css";
 
 ## [`GridAvatar`](#/GridAvatar)
 
-- Св-во `badge` выделено в саб-компонент. Используйте `GridAvatar.Badge`.
+- Свойство `badge` выделено в саб-компонент. Используйте `GridAvatar.Badge`.
 
   ```diff
   import { Icon20GiftCircleFillRed } from '@vkontakte/icons';

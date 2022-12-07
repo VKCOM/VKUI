@@ -17,7 +17,7 @@
 }
 
 /**
- * Перебиваем св-ва `ImageBaseBadge` для этих кейсов
+ * Перебиваем свойства `ImageBaseBadge` для этих кейсов
  */
 .AvatarBadge--preset-online {
   padding: 0;
