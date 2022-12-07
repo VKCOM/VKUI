@@ -10,7 +10,7 @@ updates:
       - "VKCOM/vk-sec"
       - "VKCOM/vkui-core"
   - package-ecosystem: "npm"
-    directory: "/packages/eslint-plugin-vkui"
+    directory: "/eslint-plugin-vkui"
     schedule:
       interval: "daily"
     allow:
