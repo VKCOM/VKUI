@@ -12,8 +12,33 @@ import React from "react";
 import pkg from "../../../package.json";
 import "./StyleGuideHeader.css";
 
+const prRegExp = /https:\/\/([\w]+)\.github.io\/([\w]+)\/pull\/([\d]+)/;
+const prData = prRegExp.exec(location.href);
+
 export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
   const appearance = useAppearance();
+
+  const links = [
+    {
+      title: "v" + pkg.version,
+      href: "https://www.npmjs.com/package/@vkontakte/vkui",
+    },
+    {
+      title: "Github",
+      href: "https://github.com/VKCOM/VKUI",
+    },
+    {
+      title: "Релизы",
+      href: "https://github.com/VKCOM/VKUI/releases",
+    },
+  ];
+
+  if (prData) {
+    links.unshift({
+      title: `pull/${prData[3]}`,
+      href: `https://github.com/${prData[1]}/${prData[2]}/pull/${prData[3]}`,
+    });
+  }
 
   return (
     <div className="StyleGuideHeader">
@@ -38,27 +63,16 @@ export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
         </SplitCol>
         <SplitCol width="100%" className="StyleGuideHeader__main">
           <div className="StyleGuideHeader__links">
-            <Link
-              target="_blank"
-              className="StyleGuideHeader__link"
-              href="https://www.npmjs.com/package/@vkontakte/vkui"
-            >
-              <Text>v{pkg.version}</Text>
-            </Link>
-            <Link
-              target="_blank"
-              className="StyleGuideHeader__link"
-              href="https://github.com/VKCOM/VKUI"
-            >
-              <Text>Github</Text>
-            </Link>
-            <Link
-              target="_blank"
-              className="StyleGuideHeader__link"
-              href="https://github.com/VKCOM/VKUI/releases"
-            >
-              <Text>Релизы</Text>
-            </Link>
+            {links.map((item, i) => (
+              <Link
+                key={i}
+                target="_blank"
+                className="StyleGuideHeader__link"
+                href={item.href}
+              >
+                <Text>{item.title}</Text>
+              </Link>
+            ))}
           </div>
           <div className="StyleGuideHeader__aside">
             <IconButton
