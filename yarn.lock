@@ -2125,10 +2125,10 @@
     "@typescript-eslint/parser" "^4.22.0"
     eslint-config-google "^0.9.1"
 
-"@vkontakte/icons@^2.0.0-alpha.3":
-  version "2.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/@vkontakte/icons/-/icons-2.0.0-alpha.3.tgz#7b6a390c54fa534af0c1c303421d9f9f9b2c0218"
-  integrity sha512-CyStYzcQl9XFAZ4MEK64jlQs9bCG7BgYnukjpfD80rGzYb0D1Bq3xSJA9Qd19JxSElV8EMtjBc0tYCAOkW+BtA==
+"@vkontakte/icons@1.209.0":
+  version "1.209.0"
+  resolved "https://registry.yarnpkg.com/@vkontakte/icons/-/icons-1.209.0.tgz#83a2ebf80b70d2b1918b72702cf27756cd9972bb"
+  integrity sha512-6j/6exq9oipZc1WSy5/jPt+UBrS21VMyqwbTYCs1LJZ2CO5Wohr9F+7mgtiFFma+U6CsBgYWYRhA3JqdHiEPKQ==
   dependencies:
     svg-baker-runtime "1.4.7"
 
