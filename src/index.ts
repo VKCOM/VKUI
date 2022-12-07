@@ -75,6 +75,13 @@ export type { ModalDismissButtonProps } from "./components/ModalDismissButton/Mo
 /**
  * Blocks
  */
+export {
+  ImageBaseContext,
+  ImageBase,
+  getBadgeIconSizeByImageBaseSize,
+  getFallbackIconSizeByImageBaseSize,
+  getOverlayIconSizeByImageBaseSize,
+} from "./components/ImageBase/ImageBase";
 export type {
   ImageBaseSize,
   ImageBaseExpectedIconProps,
@@ -122,11 +129,23 @@ export type { InfoRowProps } from "./components/InfoRow/InfoRow";
 export { Gallery } from "./components/Gallery/Gallery";
 export type { GalleryProps } from "./components/Gallery/Gallery";
 export { Avatar } from "./components/Avatar/Avatar";
-export type { AvatarProps } from "./components/Avatar/Avatar";
+export type {
+  AvatarProps,
+  AvatarBadgeProps,
+  AvatarBadgeWithPresetProps,
+  AvatarOverlayProps,
+} from "./components/Avatar/Avatar";
 export { GridAvatar } from "./components/GridAvatar/GridAvatar";
-export type { GridAvatarProps } from "./components/GridAvatar/GridAvatar";
+export type {
+  GridAvatarProps,
+  GridAvatarBadgeProps,
+} from "./components/GridAvatar/GridAvatar";
 export { Image } from "./components/Image/Image";
-export type { ImageProps } from "./components/Image/Image";
+export type {
+  ImageProps,
+  ImageBadgeProps,
+  ImageOverlayProps,
+} from "./components/Image/Image";
 export { Progress } from "./components/Progress/Progress";
 export type { ProgressProps } from "./components/Progress/Progress";
 export { Search } from "./components/Search/Search";

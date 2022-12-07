@@ -1,6 +1,12 @@
+import * as React from "react";
 import { Icon20GiftCircleFillRed } from "@vkontakte/icons";
+import { describeScreenshotFuzz } from "../../testing/e2e";
+import {
+  IconExampleForFallbackBasedOnImageBaseSize,
+  IconExampleForBadgeBasedOnImageBaseSize,
+  IconExampleForOverlayBasedOnImageBaseSize,
+} from "../../testing/icons";
 import { Avatar } from "./Avatar";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
 const base64Image =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAACXBIWXMAAC4jAAAuIwF4pT92AAAA+" +
@@ -13,13 +19,22 @@ describe("Avatar", () => {
   describeScreenshotFuzz(Avatar, [
     {
       src: [undefined, base64Image],
-      children: [undefined, "AB"],
-      FallbackIcon: [undefined, null],
+      initials: [undefined, "AB"],
+      fallbackIcon: [
+        <IconExampleForFallbackBasedOnImageBaseSize key="icon-fallback" />,
+        undefined,
+      ],
     },
     {
       size: [96, 16],
       gradientColor: [1],
-      children: ["AB"],
+      initials: ["AB"],
+    },
+    {
+      gradientColor: [1],
+      fallbackIcon: [
+        <IconExampleForFallbackBasedOnImageBaseSize key="icon-fallback" />,
+      ],
     },
     {
       withBorder: [undefined, false],
@@ -33,19 +48,44 @@ describe("Avatar", () => {
     },
     {
       size: [96, 24],
-      badge: [
-        "online",
-        "online-mobile",
-        Icon20GiftCircleFillRed,
-        { background: "stroke", Icon: Icon20GiftCircleFillRed },
+      children: [
+        <Avatar.BadgeWithPreset key="preset-online" preset="online" />,
+        <Avatar.BadgeWithPreset
+          key="preset-online-mobile"
+          preset="online-mobile"
+        />,
+        <Avatar.Badge key="example-icon">
+          <IconExampleForBadgeBasedOnImageBaseSize />
+        </Avatar.Badge>,
+        <Avatar.Badge key="example-icon-with-bg-stroke" background="stroke">
+          <IconExampleForBadgeBasedOnImageBaseSize />
+        </Avatar.Badge>,
       ],
     },
     {
       size: [72],
-      badge: [{ background: "stroke", Icon: Icon20GiftCircleFillRed }],
-      overlay: [
-        true,
-        { theme: "dark", visibility: "always", Icon: Icon20GiftCircleFillRed },
+      children: [
+        <Avatar.Badge key="example-icon-with-bg-stroke" background="stroke">
+          <IconExampleForBadgeBasedOnImageBaseSize />
+        </Avatar.Badge>,
+
+        <React.Fragment key="overlay-base">
+          <Avatar.Badge key="example-icon-with-bg-stroke" background="stroke">
+            <IconExampleForBadgeBasedOnImageBaseSize />
+          </Avatar.Badge>
+          <Avatar.Overlay theme="light" visibility="always">
+            <IconExampleForOverlayBasedOnImageBaseSize />
+          </Avatar.Overlay>
+        </React.Fragment>,
+
+        <React.Fragment key="overlay-dark-always">
+          <Avatar.Badge key="example-icon-with-bg-stroke" background="stroke">
+            <IconExampleForBadgeBasedOnImageBaseSize />
+          </Avatar.Badge>
+          <Avatar.Overlay theme="dark" visibility="always">
+            <Icon20GiftCircleFillRed width={32} height={32} />
+          </Avatar.Overlay>
+        </React.Fragment>,
       ],
     },
   ]);

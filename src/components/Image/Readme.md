@@ -45,10 +45,19 @@ const OthersFeatures = () => {
               key={size}
               size={size}
               src={getAvatarUrl("app_shorm_online")}
-              badge={badge}
               borderRadius={borderRadius}
-              overlay={overlay}
-            />
+            >
+              {size >= 24 && badge && (
+                <Image.Badge {...badge}>
+                  <IconExampleForBadgeBasedOnImageBaseSize />
+                </Image.Badge>
+              )}
+              {overlay && (
+                <Image.Overlay {...overlay}>
+                  <IconExampleForOverlayBasedOnImageBaseSize />
+                </Image.Overlay>
+              )}
+            </Image>
           )
         )}
       </div>
@@ -82,7 +91,8 @@ const ImagePropsForm = ({
   const [badge, setBadge] = React.useState(false);
   const [badgeBackground, setBadgeBackground] = React.useState(DEFAULT_VALUE);
 
-  const [overlay, setOverlay] = React.useState(DEFAULT_VALUE);
+  const [overlay, setOverlay] = React.useState(false);
+  const [overlayTheme, setOverlayTheme] = React.useState(DEFAULT_VALUE);
   const [overlayVisibility, setOverlayVisibility] =
     React.useState(DEFAULT_VALUE);
 
@@ -103,24 +113,21 @@ const ImagePropsForm = ({
       onBadgeChange({
         background:
           badgeBackground === DEFAULT_VALUE ? undefined : badgeBackground,
-        Icon: Icon20GiftCircleFillRed,
       });
     }
   }, [badge, badgeBackground, onBadgeChange]);
 
   React.useEffect(() => {
-    if (overlay === DEFAULT_VALUE) {
+    if (!overlay) {
       onOverlayChange();
-    } else if (overlay === "true") {
-      onOverlayChange(true);
-    } else {
+    } else if (overlay) {
       onOverlayChange({
-        theme: overlay,
+        theme: overlayTheme === DEFAULT_VALUE ? undefined : overlayTheme,
         visibility:
           overlayVisibility === DEFAULT_VALUE ? undefined : overlayVisibility,
       });
     }
-  }, [overlay, overlayVisibility, onOverlayChange]);
+  }, [overlay, overlayTheme, overlayVisibility, onOverlayChange]);
 
   return (
     <React.Fragment>
@@ -138,7 +145,7 @@ const ImagePropsForm = ({
       </FormItem>
 
       <FormLayoutGroup mode="horizontal">
-        <FormItem top="badge">
+        <FormItem top="Image.Badge">
           <Checkbox
             checked={badge}
             onChange={(e) => setBadge(e.target.checked)}
@@ -146,7 +153,7 @@ const ImagePropsForm = ({
             badge (example, Icon20GiftCircleFillRed)
           </Checkbox>
         </FormItem>
-        <FormItem top="badge[background]">
+        <FormItem top="Image.Badge[background]">
           <Select
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
@@ -161,19 +168,30 @@ const ImagePropsForm = ({
       </FormLayoutGroup>
 
       <FormLayoutGroup mode="horizontal">
-        <FormItem top="overlay">
+        <FormItem top="Image.Overlay">
+          <Checkbox
+            checked={overlay}
+            onChange={(e) => setOverlay(e.target.checked)}
+          >
+            overlay (example, Icon24AddOutline, Icon28AddOutline)
+          </Checkbox>
+        </FormItem>
+      </FormLayoutGroup>
+
+      <FormLayoutGroup mode="horizontal">
+        <FormItem top="Image.Overlay[theme]">
           <Select
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
-              { label: "true", value: "true" },
-              { label: '{ theme: "light" }', value: "light" },
-              { label: '{ theme: "dark" }', value: "dark" },
+              { label: "light", value: "light" },
+              { label: "dark", value: "dark" },
             ]}
-            value={overlay}
-            onChange={(e) => setOverlay(e.target.value)}
+            value={overlayTheme}
+            disabled={!overlay}
+            onChange={(e) => setOverlayTheme(e.target.value)}
           />
         </FormItem>
-        <FormItem top="overlay[visibility]">
+        <FormItem top="Image.Overlay[visibility]">
           <Select
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
@@ -181,7 +199,7 @@ const ImagePropsForm = ({
               { label: "always", value: "always" },
             ]}
             value={overlayVisibility}
-            disabled={overlay === "true" || overlay === DEFAULT_VALUE}
+            disabled={!overlay}
             onChange={(e) => setOverlayVisibility(e.target.value)}
           />
         </FormItem>

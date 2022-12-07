@@ -1,6 +1,12 @@
-import { Icon28Users, Icon20GiftCircleFillRed } from "@vkontakte/icons";
+import * as React from "react";
+import { Icon20GiftCircleFillRed } from "@vkontakte/icons";
+import {
+  IconExampleForFallbackBasedOnImageBaseSize,
+  IconExampleForBadgeBasedOnImageBaseSize,
+  IconExampleForOverlayBasedOnImageBaseSize,
+} from "../../testing/icons";
+import { describeScreenshotFuzz } from "../../testing/e2e";
 import { Image } from "./Image";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
 const base64Image =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAACXBIWXMAAC4jAAAuIwF4pT92AAAA+" +
@@ -13,26 +19,49 @@ describe("Image", () => {
   describeScreenshotFuzz(Image, [
     {
       src: [undefined, base64Image],
-      children: [undefined, "AB"],
-      FallbackIcon: [undefined, Icon28Users],
+      fallbackIcon: [
+        undefined,
+        <IconExampleForFallbackBasedOnImageBaseSize key="fallback-icon" />,
+      ],
     },
     {
       withBorder: [undefined, false],
     },
     {
       size: [96, 24],
-      badge: [
-        Icon20GiftCircleFillRed,
-        { background: "stroke", Icon: Icon20GiftCircleFillRed },
+      children: [
+        <Image.Badge key="example-icon">
+          <IconExampleForBadgeBasedOnImageBaseSize />
+        </Image.Badge>,
+        <Image.Badge key="example-icon-with-bg-stroke" background="stroke">
+          <IconExampleForBadgeBasedOnImageBaseSize />
+        </Image.Badge>,
       ],
     },
     {
       size: [72],
-      badge: [{ background: "stroke", Icon: Icon20GiftCircleFillRed }],
-      overlay: [
-        undefined,
-        true,
-        { theme: "dark", visibility: "always", Icon: Icon20GiftCircleFillRed },
+      children: [
+        <Image.Badge key="example-icon-with-bg-stroke" background="stroke">
+          <IconExampleForBadgeBasedOnImageBaseSize />
+        </Image.Badge>,
+
+        <React.Fragment key="overlay-base">
+          <Image.Badge background="stroke">
+            <IconExampleForBadgeBasedOnImageBaseSize />
+          </Image.Badge>
+          <Image.Overlay theme="light" visibility="always">
+            <IconExampleForOverlayBasedOnImageBaseSize />
+          </Image.Overlay>
+        </React.Fragment>,
+
+        <React.Fragment key="overlay-dark-always">
+          <Image.Badge background="stroke">
+            <IconExampleForBadgeBasedOnImageBaseSize />
+          </Image.Badge>
+          <Image.Overlay theme="dark" visibility="always">
+            <Icon20GiftCircleFillRed width={32} height={32} />
+          </Image.Overlay>
+        </React.Fragment>,
       ],
     },
   ]);

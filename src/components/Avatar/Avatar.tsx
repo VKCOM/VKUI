@@ -1,32 +1,25 @@
 import * as React from "react";
-import { Icon28Users } from "@vkontakte/icons";
 import { classNamesString } from "../../lib/classNames";
 import {
   type ImageBaseProps,
-  type ImageBaseBadgeProps,
+  type ImageBaseOverlayProps,
   ImageBase,
 } from "../ImageBase/ImageBase";
 import { getInitialsFontSize } from "./helpers";
-import { Icon12Circle, Icon12OnlineMobile } from "./icons";
+import { type AvatarBadgeProps, AvatarBadge } from "./AvatarBadge/AvatarBadge";
+import {
+  type AvatarBadgeWithPresetProps,
+  AvatarBadgeWithPreset,
+} from "./AvatarBadge/AvatarBadgeWithPreset";
 import styles from "./Avatar.module.css";
 
-const BADGE_ONLINE = {
-  className: classNamesString(
-    styles["Avatar__badge"],
-    styles[`Avatar__badge--online`]
-  ),
-  background: "stroke" as const,
-  Icon: Icon12Circle,
+export type {
+  AvatarBadgeProps,
+  AvatarBadgeWithPresetProps,
+  ImageBaseOverlayProps as AvatarOverlayProps,
 };
 
-const BADGE_ONLINE_MOBILE = {
-  className: classNamesString(
-    styles["Avatar__badge"],
-    styles[`Avatar__badge--online-mobile`]
-  ),
-  background: "stroke" as const,
-  Icon: Icon12OnlineMobile,
-};
+export const AVATAR_DEFAULT_SIZE = 48;
 
 const COLORS_NUMBER_TO_TEXT_MAP = {
   1: "red",
@@ -36,8 +29,6 @@ const COLORS_NUMBER_TO_TEXT_MAP = {
   5: "l-blue",
   6: "violet",
 } as const;
-
-export const AVATAR_DEFAULT_SIZE = 48;
 
 /**
  * Градиенты, которые можно использовать в алгоритме поиска градиентов по числовому идентификатору пользователя.
@@ -50,19 +41,25 @@ export type InitialsAvatarTextGradients =
   | typeof COLORS_NUMBER_TO_TEXT_MAP[InitialsAvatarNumberGradients]
   | "blue";
 
-export interface AvatarProps extends Omit<ImageBaseProps, "badge"> {
+const gradientStyles = {
+  red: styles["Avatar--gradient-red"],
+  orange: styles["Avatar--gradient-orange"],
+  yellow: styles["Avatar--gradient-yellow"],
+  green: styles["Avatar--gradient-green"],
+  blue: styles["Avatar--gradient-blue"],
+  "l-blue": styles["Avatar--gradient-l-blue"],
+  violet: styles["Avatar--gradient-violet"],
+};
+
+export interface AvatarProps extends ImageBaseProps {
   /**
-   * > Не показывается при `size < 24`
+   * Инициалы пользователя.
    *
-   * Бейдж в правом нижнем углу компонента.
+   * > Note: Если аватарка не прогрузится, то пользователь увидит инициалы.
    *
-   * Принимает алиасы, конструктор иконки или конфигурацию.
+   * > ⚠️ Перебивает `fallbackIcon`.
    */
-  badge?:
-    | "online"
-    | "online-mobile"
-    | ImageBaseBadgeProps["Icon"]
-    | ImageBaseBadgeProps;
+  initials?: string;
   /**
    * Задаёт градиент для фона.
    *
@@ -90,10 +87,10 @@ export interface AvatarProps extends Omit<ImageBaseProps, "badge"> {
 export const Avatar = ({
   size = AVATAR_DEFAULT_SIZE,
   className,
-  badge: badgeProp,
   gradientColor,
+  initials,
+  fallbackIcon,
   children,
-  FallbackIcon = Icon28Users,
   ...restProps
 }: AvatarProps) => {
   const gradientName =
@@ -101,50 +98,37 @@ export const Avatar = ({
       ? COLORS_NUMBER_TO_TEXT_MAP[gradientColor]
       : gradientColor;
   const isGradientNotCustom = gradientName && gradientName !== "custom";
-
-  let badge: ImageBaseProps["badge"] | undefined = undefined;
-  switch (badgeProp) {
-    case undefined:
-      break;
-    case "online":
-      badge = BADGE_ONLINE;
-      break;
-    case "online-mobile":
-      badge = BADGE_ONLINE_MOBILE;
-      break;
-    default:
-      badge = {
-        ...(typeof badgeProp === "function" ? { Icon: badgeProp } : badgeProp),
-        className: classNamesString(
-          styles["Avatar__badge"],
-          size < 96 && styles["Avatar__badge--shifted"]
-        ),
-      };
-  }
+  const rewrittenFallbackIcon = initials ? undefined : fallbackIcon;
 
   return (
     <ImageBase
       {...restProps}
       size={size}
-      badge={badge}
+      fallbackIcon={rewrittenFallbackIcon}
       className={classNamesString(
         styles["Avatar"],
         gradientName && styles[`Avatar--has-gradient`],
-        isGradientNotCustom && styles[`Avatar--gradient-${gradientName}`],
+        isGradientNotCustom && gradientStyles[gradientName],
         className
       )}
-      FallbackIcon={FallbackIcon}
     >
-      {children && (
+      {initials && (
         <div
-          className={styles["Avatar__content"]}
+          className={styles["Avatar__initials"]}
           style={{
             fontSize: getInitialsFontSize(size),
           }}
         >
-          {children}
+          {initials}
         </div>
       )}
+      {children}
     </ImageBase>
   );
 };
+
+Avatar.Badge = AvatarBadge;
+
+Avatar.BadgeWithPreset = AvatarBadgeWithPreset;
+
+Avatar.Overlay = ImageBase.Overlay;

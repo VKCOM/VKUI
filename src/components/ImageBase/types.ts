@@ -18,4 +18,9 @@ export type ImageBaseSize =
 export type ImageBaseExpectedIconProps = {
   width?: number;
   height?: number;
+  className?: string;
 };
+
+export interface ImageBaseContextProps {
+  size: ImageBaseSize | number;
+}

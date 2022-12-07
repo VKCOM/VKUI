@@ -2,22 +2,17 @@ import * as React from "react";
 import { classNamesString } from "../../lib/classNames";
 import {
   type ImageBaseProps,
-  type ImageBaseBadgeProps,
+  type ImageBaseOverlayProps,
   ImageBase,
 } from "../ImageBase/ImageBase";
+import { type ImageBadgeProps, ImageBadge } from "./ImageBadge/ImageBadge";
 import styles from "./Image.module.css";
+
+export type { ImageBadgeProps, ImageBaseOverlayProps as ImageOverlayProps };
 
 export const IMAGE_DEFAULT_SIZE = 48;
 
 export interface ImageProps extends Omit<ImageBaseProps, "badge"> {
-  /**
-   * > Не показывается при `size < 24`
-   *
-   * Бейдж в правом нижнем углу компонента.
-   *
-   * Принимает конструктор иконки или конфигурацию.
-   */
-  badge?: ImageBaseBadgeProps["Icon"] | ImageBaseBadgeProps;
   /**
    * Размер закругления.
    */
@@ -29,22 +24,11 @@ export interface ImageProps extends Omit<ImageBaseProps, "badge"> {
  */
 export const Image = ({
   size = IMAGE_DEFAULT_SIZE,
-  badge: badgeProp,
   borderRadius: borderRadiusProp = "m",
   style,
   className,
   ...restProps
 }: ImageProps) => {
-  const badge: ImageBaseProps["badge"] | undefined = badgeProp
-    ? {
-        ...(typeof badgeProp === "function" ? { Icon: badgeProp } : badgeProp),
-        className: classNamesString(
-          styles["Image__badge"],
-          size < 96 && styles["Image__badge--shifted"]
-        ),
-      }
-    : undefined;
-
   let borderRadius: number;
 
   switch (borderRadiusProp) {
@@ -94,9 +78,12 @@ export const Image = ({
     <ImageBase
       {...restProps}
       size={size}
-      badge={badge}
       style={{ ...style, borderRadius }}
       className={classNamesString(styles["Image"], className)}
     />
   );
 };
+
+Image.Badge = ImageBadge;
+
+Image.Overlay = ImageBase.Overlay;

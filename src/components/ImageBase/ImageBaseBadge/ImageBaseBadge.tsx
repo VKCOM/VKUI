@@ -1,59 +1,67 @@
 import * as React from "react";
 import { classNamesString } from "../../../lib/classNames";
-import type { ImageBaseSize, ImageBaseExpectedIconProps } from "../types";
+import { ImageBaseContext } from "../context";
+import type { ImageBaseExpectedIconProps } from "../types";
+import { validateBadgeIcon } from "../validators";
 import styles from "./ImageBaseBadge.module.css";
 
-function getRelativeSizeOfIcon(imageSize: number): number {
-  if (imageSize <= 36) {
-    return 12;
-  } else if (imageSize <= 48) {
-    return 16;
-  } else if (imageSize <= 64) {
-    return 20;
-  }
-  return 24;
-}
+const backgroundStyles = {
+  stroke: styles["ImageBaseBadge--background-stroke"],
+  shadow: styles["ImageBaseBadge--background-shadow"],
+};
 
-export interface ImageBaseBadgeProps {
-  /**
-   * Размер картинки, над которой будет располагаться оверлей.
-   */
-  imageSize: ImageBaseSize | number;
+export interface ImageBaseBadgeProps extends React.AriaAttributes {
   /**
    * Вид подложки под иконку.
    *
-   * - `"stroke"` – имитирует вырез (⚠️ если фон под компонентом динамический, то будет бага).
+   * - `"stroke"` – имитирует вырез (⚠️ если фон под компонентом динамический, то ожидайте баг).
    * - `"shadow"` – добавляет небольшую тень.
-   *
-   * @default "shadow"
    */
   background?: "stroke" | "shadow";
   /**
-   * Иконка.
+   * Принимает иконку.
    *
-   * @default `Icon28AddOutline`
+   * > 📝 Нужный для `<ImageBase size={...} />` размер можно узнать из функции `getBadgeIconSizeByImageBaseSize()`.
+   *
+   * > Предпочтительней использовать иконки из `@vkontakte/icons`.
+   *
+   * > 📊️ Если вы хотите передать кастомную иконку, то следует именовать её по шаблону `Icon<size><name>`. Или же
+   * > чтобы в неё был передан параметр `width`. Тогда мы сможем выводить в консоль подсказку правильного ли размера вы
+   * > использовали иконку.
    */
-  Icon: React.ComponentType<ImageBaseExpectedIconProps>;
+  children: React.ReactElement<ImageBaseExpectedIconProps>;
   className?: string;
 }
 
+/**
+ * Бейдж в правом нижнем углу компонента.
+ *
+ * > Не используйте при `size < 24`
+ */
 export const ImageBaseBadge = ({
-  imageSize,
   background = "shadow",
+  children,
   className,
-  Icon,
+  ...restProps
 }: ImageBaseBadgeProps) => {
-  const iconSize = getRelativeSizeOfIcon(imageSize);
+  if (process.env.NODE_ENV === "development") {
+    if (children) {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const { size } = React.useContext(ImageBaseContext);
+      validateBadgeIcon(size, { name: "children", value: children });
+    }
+  }
 
   return (
     <div
+      {...restProps}
       className={classNamesString(
         styles["ImageBaseBadge"],
-        styles[`ImageBaseBadge--background-${background}`],
+        backgroundStyles[background],
         className
       )}
     >
-      <Icon width={iconSize} height={iconSize} />
+      {children}
     </div>
   );
 };

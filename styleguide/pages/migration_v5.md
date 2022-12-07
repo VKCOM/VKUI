@@ -263,76 +263,84 @@ import "@vkontakte/vkui/dist/vkui.css";
 
 ## [`Avatar`](#/Avatar)
 
-- Изменены типы св-ва `badge`. Вместо `JSX.Element` теперь надо передавать `React.ComponentType<ImageBaseExpectedIconProps>` или [`ImageBaseBadgeProps`](https://github.com/VKCOM/VKUI/blob/2e72d08bcfd955a8a5c658dd189cdb5b741b12c0/src/components/ImageBase/ImageBase.tsx#L32).
-
-  > Размер иконки теперь выставляется внутри компонента.
-  >
-  > ⚠ ️Поэтому переданная иконка должна принимать `width` и `height` (см. [`ImageBaseExpectedIconProps`](https://github.com/VKCOM/VKUI/blob/2e72d08bcfd955a8a5c658dd189cdb5b741b12c0/src/components/ImageBase/types.ts#L20)).
+- Св-во `badge` выделено в саб-компонент. Используйте `Avatar.Badge` или `Avatar.BadgeWidthPreset` (для `"online"` и `"online-mobile"`).
 
   ```diff
   import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
-  - <Avatar size={24} badge={<Icon20GiftCircleFillRed width={12} height={12} />} />
-  + <Avatar size={24} badge={Icon20GiftCircleFillRed} />
+  - <Avatar size={24} src="#" badge={<Icon20GiftCircleFillRed width={24} height={24} />}  />
+  + <Avatar size={24} src="#">
+  +   <Avatar.Badge>
+  +     <Icon20GiftCircleFillRed width={24} height={24} />
+  +   </Avatar.Badge>
+  + </Avatar>
   ```
+
+  > `Avatar.Badge` принимает параметр `background` со значениями `"stroke"` или `"shadow"` (по умолчанию).
 
   ```diff
-  // Кейс, когда мы внесли изменения в иконку
-
-  - import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
-  - <Avatar size={24} badge={<Icon20GiftCircleFillRed style={{ opacity: 0.5 }} width={12} height={12} />} />
-  + import { Icon20GiftCircleFillRed as Icon20GiftCircleFillRedLib } from '@vkontakte/icons';
-  + const Icon20GiftCircleFillRed = (props: React.ComponentProps<typeof Icon20GiftCircleFillRedLib>) => <Icon20GiftCircleFillRed {...props} style={{ opacity: 0.5 }} />;
-  + <Avatar size={24} badge={Icon20GiftCircleFillRed} />
+  import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
+  - <Avatar size={24} src="#" badge="online"  />
+  + <Avatar size={24} src="#">
+  +   <Avatar.BadgeBadgeWidthPreset preset="online" />
+  + </Avatar>
   ```
 
-- Св-ва `overlayMode`, `overlayAction` и `overlayIcon` объедены в одно св-во `overlay`.
+  Аналогично для `badge="online-mobile"`.
+
+- Св-ва `overlayMode`, `overlayAction` и `overlayIcon` вынесены и объедены в общем саб-компоненте `Avatar.Overlay`.
+
+  ### Как мигрировать с `overlayIcon`?
+
+  ```diff
+  import { Icon24AddOutline } from '@vkontakte/icons';
+  - <Avatar size={24} overlayIcon={<Icon24Camera width={16} height={16} />} />
+  + <Avatar size={24}>
+  +   <Avatar.Overlay>
+  +     <Icon24AddOutline />
+  +   </Avatar.Overlay>
+  + </Avatar>
+  ```
 
   ### Как мигрировать с `overlayMode`?
 
-  > При передаче `overlay={true}` тема берётся из параметра `appearance`, который определяется в `ConfigProvider`.
-
   ```diff
-  - <Avatar overlayMode="light" />
-  + <Avatar overlay />
+  - <Avatar size={24} overlayMode="light" />
+  + <Avatar size={24}>
+  +   <Avatar.Overlay theme="light">
+  +     <Icon24AddOutline />
+  +   </Avatar.Overlay>
+  + </Avatar>
   ```
 
   ```diff
-  - <Avatar overlayMode="dark" />
-  + <Avatar overlay={{ theme: "dark" }} />
+  - <Avatar size={24} overlayMode="dark" />
+  + <Avatar size={24}>
+  +   <Avatar.Overlay theme="dark">
+  +     <Icon24AddOutline />
+  +   </Avatar.Overlay>
+  + </Avatar>
   ```
+
+  > Если не передавать `theme`, то тема будет браться из параметра `appearance`, который определяется в `ConfigProvider`.
 
   ### Как мигрировать с `overlayAction`?
 
   ```diff
-  - <Avatar overlayAction="hover" />
-  + <Avatar overlay={{ visibility: "on-hover" }} />
+  - <Avatar size={24} overlayAction="hover" />
+  + <Avatar size={24}>
+  +   <Avatar.Overlay visibility="on-hover">
+  +     <Icon24AddOutline />
+  +   </Avatar.Overlay>
+  + </Avatar>
   ```
 
   ```diff
-  - <Avatar overlayAction="always" />
-  + <Avatar overlay={{ visibility: "always" }} />
-  ```
-
-  ### Как мигрировать с `overlayIcon`?
-
-  > Размер иконки теперь выставляется внутри компонента.
-  >
-  > ⚠ ️Поэтому переданная иконка должна принимать `width` и `height` (см. [`ImageBaseExpectedIconProps`](https://github.com/VKCOM/VKUI/blob/2e72d08bcfd955a8a5c658dd189cdb5b741b12c0/src/components/ImageBase/types.ts#L20)).
-
-  ```diff
-  import { Icon24Camera } from '@vkontakte/icons';
-  - <Avatar size={24} overlayIcon={<Icon24Camera width={16} height={16} />} />
-  + <Avatar size={24} overlay={{ Icon: Icon24Camera }} />
-  ```
-
-  ```diff
-  // Кейс, когда мы внесли изменения в иконку
-
-  - import { Icon24Camera } from '@vkontakte/icons';
-  - <Avatar size={24} overlayIcon={<Icon24Camera style={{ color: "tomato" }} width={16} height={16} />} />
-  + import { Icon24Camera as Icon24CameraLib } from '@vkontakte/icons';
-  + const Icon24Camera = (props: React.ComponentProps<typeof Icon24CameraLib>) => <Icon24Camera {...props} style={{ color: "tomato" }} />;
-  + <Avatar size={24} overlay={{ Icon: Icon24Camera }} />
+  - <Avatar size={24} overlayAction="always" />
+  + <Avatar size={24}>
+  +   <Avatar.Overlay visibility="always">
+  +     <Icon24AddOutline />
+  +   </Avatar.Overlay>
+  + </Avatar>
   ```
 
 - Удалено св-во `mode`. Используйте отдельный компонент [`Image`](#/Image).
@@ -351,29 +359,34 @@ import "@vkontakte/vkui/dist/vkui.css";
 
 <br/><br/>
 
+## [`InitialsAvatar`](#/InitialsAvatar)
+
+- Компонент удалён. Используйте [`Avatar`](#/Avatar)
+
+  ```diff
+  - <InitialsAvatar gradientColor="blue">ИМ</InitialsAvatar>
+  + <Avatar gradientColor="blue" initials="ИМ" />
+  ```
+
+<br/><br/>
+
 ## [`GridAvatar`](#/GridAvatar)
 
-- Изменены типы св-ва `badge`. Вместо `JSX.Element` теперь надо передавать `React.ComponentType<ImageBaseExpectedIconProps>` или [`ImageBaseBadgeProps`](https://github.com/VKCOM/VKUI/blob/2e72d08bcfd955a8a5c658dd189cdb5b741b12c0/src/components/ImageBase/ImageBase.tsx#L32).
-
-  > Размер иконки теперь выставляется внутри компонента.
-  >
-  > ⚠ ️Поэтому переданная иконка должна принимать `width` и `height` (см. [`ImageBaseExpectedIconProps`](https://github.com/VKCOM/VKUI/blob/2e72d08bcfd955a8a5c658dd189cdb5b741b12c0/src/components/ImageBase/types.ts#L20)).
+- Св-во `badge` выделено в саб-компонент. Используйте `GridAvatar.Badge`.
 
   ```diff
   import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
-  - <GridAvatar size={24} badge={<Icon20GiftCircleFillRed width={12} height={12} />} />
-  + <GridAvatar size={24} badge={Icon20GiftCircleFillRed} />
+  - <GridAvatar size={24} src="#" badge={<Icon20GiftCircleFillRed width={24} height={24} />}  />
+  + <GridAvatar size={24} src="#">
+  +   <GridAvatar.Badge>
+  +     <Icon20GiftCircleFillRed width={24} height={24} />
+  +   </GridAvatar.Badge>
+  + </GridAvatar>
   ```
 
-  ```diff
-  // Кейс, когда мы внесли изменения в иконку
+  > `GridAvatar.Badge` принимает параметр `background` со значениями `"stroke"` или `"shadow"` (по умолчанию).
 
-  - import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
-  - <GridAvatar size={24} badge={<Icon20GiftCircleFillRed style={{ opacity: 0.5 }} width={12} height={12} />} />
-  + import { Icon20GiftCircleFillRed as Icon20GiftCircleFillRedLib } from '@vkontakte/icons';
-  + const Icon20GiftCircleFillRed = (props: React.ComponentProps<typeof Icon20GiftCircleFillRedLib>) => <Icon20GiftCircleFillRed {...props} style={{ opacity: 0.5 }} />;
-  + <GridAvatar size={24} badge={Icon20GiftCircleFillRed} />
-  ```
+  Раньше можно было передать `badge="online"` или `badge="online-mobile"`. Эта возможность удалена, т.к. эти статусы не соответствуют сущности `GridAvatar`.
 
 <br/><br/>
 

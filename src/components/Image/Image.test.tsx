@@ -1,66 +1,37 @@
 import * as React from "react";
 import "@testing-library/jest-dom/extend-expect";
 import { render, screen } from "@testing-library/react";
+import { IconExampleForBadgeBasedOnImageBaseSize } from "../../testing/icons";
 import { baselineComponent } from "../../testing/utils";
 import { Image, ImageProps } from "./Image";
-import { Icon20GiftCircleFillRed as Icon20GiftCircleFillRedLib } from "@vkontakte/icons";
-import styles from "./Image.module.css";
+import imageBadgeStyles from "./ImageBadge/ImageBadge.module.css";
 
 const TEST_LOCATORS = {
-  HOST: {
-    id: "image",
-  },
-  ICON: {
-    id: "test-icon",
-    get selector() {
-      return `[data-testid="${this.id}"]`;
-    },
-  },
+  HOST: "image",
+  BADGE: "image-badge",
 };
 
 const ImageTest = (props: ImageProps) => (
-  <Image {...props} data-testid={TEST_LOCATORS.HOST.id} />
+  <Image {...props} data-testid={TEST_LOCATORS.HOST} />
 );
+const getImageBadgeEl = () => screen.getByTestId(TEST_LOCATORS.BADGE);
 
-const Icon20GiftCircleFillRedTest = (
-  props: React.ComponentProps<typeof Icon20GiftCircleFillRedLib>
-) => {
-  return (
-    <Icon20GiftCircleFillRedLib
-      {...props}
-      data-testid={TEST_LOCATORS.ICON.id}
-    />
-  );
-};
-
-const image = () => screen.getByTestId(TEST_LOCATORS.HOST.id);
-
-describe("Image", () => {
+describe(Image, () => {
   baselineComponent(Image);
+});
 
-  describe("Badge", () => {
-    it("Renders badge if passed", () => {
-      render(<ImageTest badge={Icon20GiftCircleFillRedTest} />);
+describe(Image.Badge, () => {
+  it("should add class name for shift position if size < 96", () => {
+    render(
+      <ImageTest size={88}>
+        <Image.Badge data-testid={TEST_LOCATORS.BADGE}>
+          <IconExampleForBadgeBasedOnImageBaseSize />
+        </Image.Badge>
+      </ImageTest>
+    );
 
-      expect(
-        image().querySelector(TEST_LOCATORS.ICON.selector)
-      ).toBeInTheDocument();
-    });
-
-    it("Doesn't render badge if not passed", () => {
-      render(<ImageTest />);
-
-      expect(
-        image().querySelector(TEST_LOCATORS.ICON.selector)
-      ).not.toBeInTheDocument();
-    });
-
-    it("Adds shifted class if size < 96", () => {
-      render(<ImageTest badge={Icon20GiftCircleFillRedTest} size={88} />);
-
-      expect(
-        image().querySelector(`.${styles["Image__badge--shifted"]}`)
-      ).toBeInTheDocument();
-    });
+    expect(getImageBadgeEl()).toHaveClass(
+      imageBadgeStyles["ImageBadge--shifted"]
+    );
   });
 });

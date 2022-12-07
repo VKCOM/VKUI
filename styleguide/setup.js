@@ -3,6 +3,11 @@ import "../src/styles/common.css";
 
 import { useState, useRef } from "react";
 import * as VKUI from "../src";
+import {
+  IconExampleForOverlayBasedOnImageBaseSize,
+  IconExampleForFallbackBasedOnImageBaseSize,
+  IconExampleForBadgeBasedOnImageBaseSize,
+} from "../src/testing/icons";
 import * as Icons from "@vkontakte/icons";
 import {
   getRandomInt,
@@ -49,6 +54,12 @@ window.getRandomUsers = getRandomUsers;
 window.getAllUsers = getAllUsers;
 window.importantCountries = importantCountries;
 window.getAvatarUrl = getAvatarUrl;
+window.IconExampleForOverlayBasedOnImageBaseSize =
+  IconExampleForOverlayBasedOnImageBaseSize;
+window.IconExampleForFallbackBasedOnImageBaseSize =
+  IconExampleForFallbackBasedOnImageBaseSize;
+window.IconExampleForBadgeBasedOnImageBaseSize =
+  IconExampleForBadgeBasedOnImageBaseSize;
 window.perfLogger = perfLogger;
 
 window.useState = useState;
