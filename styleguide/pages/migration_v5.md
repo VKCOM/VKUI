@@ -88,6 +88,21 @@ const WithSizeXOverride = () => {
 
 <br/><br/>
 
+## Обновление [`@vkontakte/icons`](https://github.com/VKCOM/icons) до v2.0.1
+
+Установите через
+
+```sh
+npm install @vkontakte/icons@2.0.1
+# или
+yarn add @vkontakte/icons@2.0.1
+```
+
+По изменениям в версии смотрите [release note](https://github.com/VKCOM/icons/releases/tag/v2.0.1). Вряд ли они вас
+коснутся. Главное — это удаление лишней `div`-обёртки вокруг `svg`.
+
+<br/><br/>
+
 ## Отказ от Appearance
 
 Мы отказываемся от Appearance в пользу [`vkui-tokens`](https://github.com/VKCOM/vkui-tokens).
@@ -341,7 +356,7 @@ import "@vkontakte/vkui/dist/vkui.css";
 
   Аналогично для `badge="online-mobile"`.
 
-- Свойства `overlayMode`, `overlayAction` и `overlayIcon` вынесены и объедены в общем саб-компоненте `Avatar.Overlay`.
+- Свойства `overlayMode`, `overlayAction` и `overlayIcon` вынесены и объединены в саб-компонент. Используйте `Avatar.Overlay`.
 
   ### Как мигрировать с `overlayIcon`?
 
@@ -730,9 +745,9 @@ import "@vkontakte/vkui/dist/vkui.css";
   />
 ```
 
-## `FormStatus`
+## [`FormStatus`](#/FormStatus)
 
-Компоненту были добавлены боковые отступы
+Компонент получил боковые отступы, поэтому оборачивать его в `FormItem` больше не нужно.
 
 ```diff
 - <FormItem>
@@ -782,7 +797,7 @@ import "@vkontakte/vkui/dist/vkui.css";
 
 ## `Dropdown` -> [`Popover`](#/Popover)
 
-> ⚠️Компонент остаётся нестабильным (см. [Unstable](#//Unstable)).
+> ⚠️ Компонент остаётся нестабильным (см. [Unstable](#/Unstable)).
 
 - `Dropdown` переименован в `Popover`.
 

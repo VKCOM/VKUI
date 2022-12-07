@@ -3,7 +3,7 @@ import { hasHover as hasHoverLib } from "@vkontakte/vkjs";
 import { AdaptivityContext } from "../components/AdaptivityProvider/AdaptivityContext";
 
 /**
- * Определение происходит с помощью `window.matchMedia`. Для того чтобы не было ошибок при гидратации, по умолчанию
+ * Определение происходит с помощью `window.matchMedia`. Для того, чтобы не было ошибок при гидратации, по умолчанию
  * откладываем определение на второй рендер.
  *
  * [No SSR] Если передать `false`, то определение будет сразу.
