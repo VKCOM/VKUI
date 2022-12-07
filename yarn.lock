@@ -11243,9 +11243,9 @@ stylelint-config-standard@^29.0.0:
     stylelint-config-recommended "^9.0.0"
 
 stylelint-media-use-custom-media@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/stylelint-media-use-custom-media/-/stylelint-media-use-custom-media-2.0.0.tgz#1b911933a23e72f2b64f9e58ac1697fbc6fe1442"
-  integrity sha512-G7Hwma8HIMFJOChqrX9ie8hAGbtEMUbEjuiaR3olHIXjloDWqYlFHIJKsCyyckigkm+4LtCwtZDQASrVY4pRBg==
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/stylelint-media-use-custom-media/-/stylelint-media-use-custom-media-2.0.1.tgz#41a835cc00c1779310fdde29cc8b33906e6bff44"
+  integrity sha512-DWxw48xIRNJ8SoJkNU8GPMv7ZEMjqww1NiQP13TvQ5m1UfAkTeJFJzENCGkKnp6LJipJhhLeiUiVE5yQ6rbYPw==
 
 stylelint-value-no-unknown-custom-properties@^4.0.0:
   version "4.0.0"
