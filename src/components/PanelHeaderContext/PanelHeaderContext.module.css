@@ -21,6 +21,9 @@
   left: 0;
   width: 100%;
   z-index: 2;
+  padding: 8px;
+  box-sizing: border-box;
+  pointer-events: none;
 }
 
 .PanelHeaderContext__fade {
@@ -53,6 +56,7 @@
 }
 
 .PanelHeaderContext--opened .PanelHeaderContext__in {
+  pointer-events: auto;
   animation: vkui-animation-panelheadercontext-translate-in 0.2s ease;
 }
 
@@ -62,14 +66,6 @@
 
 .PanelHeaderContext .List {
   background: var(--vkui--color_background_content);
-}
-
-/*
- Android
- */
-.PanelHeaderContext__in {
-  padding: 8px;
-  box-sizing: border-box;
 }
 
 .PanelHeaderContext--ios .PanelHeaderContext__in {
