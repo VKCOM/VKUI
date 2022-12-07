@@ -5,28 +5,45 @@ import {
   Icon24ChevronUp,
   Icon20ChevronUp,
 } from "@vkontakte/icons";
-import { classNames } from "../../lib/classNames";
-import { SizeType } from "../AdaptivityProvider/AdaptivityContext";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { classNamesString } from "../../lib/classNames";
+import { useAdaptivityConditionalRender } from "../../hooks/useAdaptivityConditionalRender";
+import styles from "./DropdownIcon.module.css";
 
-export interface DropdownIconProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface DropdownIconProps extends React.HTMLAttributes<SVGSVGElement> {
   opened?: boolean;
 }
 
 export const DropdownIcon = ({
   opened = false,
+  className,
   ...restProps
 }: DropdownIconProps) => {
-  const { sizeY } = useAdaptivity();
-
-  let Icon = sizeY === SizeType.COMPACT ? Icon20Dropdown : Icon24ChevronDown;
-
-  if (opened) {
-    Icon = sizeY === SizeType.COMPACT ? Icon20ChevronUp : Icon24ChevronUp;
-  }
+  const { sizeY } = useAdaptivityConditionalRender();
+  const IconCompact = opened ? Icon20ChevronUp : Icon20Dropdown;
+  const IconRegular = opened ? Icon24ChevronUp : Icon24ChevronDown;
 
   return (
-    <Icon vkuiClass={classNames("DropdownIcon")} aria-hidden {...restProps} />
+    <React.Fragment>
+      {sizeY.compact && (
+        <IconCompact
+          className={classNamesString(
+            styles["DropdownIcon"],
+            sizeY.compact.className,
+            className
+          )}
+          {...restProps}
+        />
+      )}
+      {sizeY.regular && (
+        <IconRegular
+          className={classNamesString(
+            styles["DropdownIcon"],
+            sizeY.regular.className,
+            className
+          )}
+          {...restProps}
+        />
+      )}
+    </React.Fragment>
   );
 };

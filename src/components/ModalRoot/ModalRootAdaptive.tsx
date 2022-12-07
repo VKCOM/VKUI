@@ -1,15 +1,10 @@
 import * as React from "react";
-import { withAdaptivity } from "../../hoc/withAdaptivity";
 import { ModalRootTouch } from "./ModalRoot";
 import { ModalRootDesktop } from "./ModalRootDesktop";
-import {
-  AdaptivityContextInterface,
-  AdaptivityProps,
-} from "../AdaptivityProvider/AdaptivityContext";
 import { useScrollLock } from "../AppRoot/ScrollContext";
-import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
+import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
 
-export interface ModalRootProps extends AdaptivityProps {
+export interface ModalRootProps {
   activeModal?: string | null;
 
   /**
@@ -34,10 +29,11 @@ export interface ModalRootProps extends AdaptivityProps {
   children?: React.ReactNode;
 }
 
-const ModalRootComponent = (
-  props: ModalRootProps & AdaptivityContextInterface
-) => {
-  const isDesktop = useAdaptivityIsDesktop();
+/**
+ * @see https://vkcom.github.io/VKUI/#/ModalRoot
+ */
+export const ModalRoot = (props: ModalRootProps) => {
+  const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
   useScrollLock(!!props.activeModal);
 
@@ -45,14 +41,3 @@ const ModalRootComponent = (
 
   return <RootComponent {...props} />;
 };
-
-ModalRootComponent.displayName = "ModalRoot";
-
-/**
- * @see https://vkcom.github.io/VKUI/#/ModalRoot
- */
-export const ModalRoot = withAdaptivity(ModalRootComponent, {
-  viewWidth: true,
-  viewHeight: true,
-  hasMouse: true,
-});

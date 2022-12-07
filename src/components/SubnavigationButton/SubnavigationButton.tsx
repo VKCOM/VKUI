@@ -1,13 +1,14 @@
 import * as React from "react";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { HasComponent, HasChildren } from "../../types";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { getTitleFromChildren } from "../../lib/utils";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { Icon16Dropdown } from "@vkontakte/icons";
 import { Caption } from "../Typography/Caption/Caption";
 import { Subhead } from "../Typography/Subhead/Subhead";
-import "./SubnavigationButton.css";
+import styles from "./SubnavigationButton.module.css";
 
 export interface SubnavigationButtonProps extends Omit<TappableProps, "size"> {
   mode?: "primary" | "outline" | "tertiary";
@@ -16,7 +17,7 @@ export interface SubnavigationButtonProps extends Omit<TappableProps, "size"> {
   /**
    * Размер шрифта. Этим свойством рекомендуется пользоваться, чтобы отрегулировать размер шрифта у кнопок в `<SubnavigationBar mode="fixed" />`
    */
-  textLevel?: 1 | 2 | 3;
+  textLevel?: "1" | "2" | "3";
   /**
    * Рекомендуется использовать только иконки с размером 24
    */
@@ -30,7 +31,7 @@ export interface SubnavigationButtonProps extends Omit<TappableProps, "size"> {
 
 type SubnavigationButtonTypographyProps = Pick<
   SubnavigationButtonProps,
-  "textLevel"
+  "textLevel" | "className"
 > &
   HasComponent &
   HasChildren;
@@ -39,11 +40,11 @@ const SubnavigationButtonTypography = ({
   textLevel,
   ...restProps
 }: SubnavigationButtonTypographyProps) => {
-  if (textLevel === 1) {
+  if (textLevel === "1") {
     return <Subhead {...restProps} />;
   }
 
-  return <Caption level={textLevel === 2 ? "2" : "3"} {...restProps} />;
+  return <Caption level={textLevel === "2" ? "1" : "2"} {...restProps} />;
 };
 
 /**
@@ -53,11 +54,12 @@ export const SubnavigationButton = ({
   mode = "primary",
   size = "m",
   selected,
-  textLevel = 1,
+  textLevel = "1",
   before,
   after,
   expandable,
   children,
+  className,
   ...restProps
 }: SubnavigationButtonProps) => {
   const { sizeY } = useAdaptivity();
@@ -67,31 +69,35 @@ export const SubnavigationButton = ({
       {...restProps}
       hasActive={false}
       focusVisibleMode="outside"
-      vkuiClass={classNames(
-        "SubnavigationButton",
-        `SubnavigationButton--${size}`,
-        `SubnavigationButton--mode-${mode}`,
-        selected && "SubnavigationButton--selected",
-        `SubnavigationButton--sizeY-${sizeY}`
+      className={classNamesString(
+        styles["SubnavigationButton"],
+        styles[`SubnavigationButton--size-${size}`],
+        styles[`SubnavigationButton--mode-${mode}`],
+        selected && styles["SubnavigationButton--selected"],
+        getSizeYClassName(styles["SubnavigationButton"], sizeY),
+        className
       )}
       aria-label={getTitleFromChildren(children)}
     >
-      <span vkuiClass="SubnavigationButton__in">
+      <span className={styles["SubnavigationButton__in"]}>
         {before && (
-          <span vkuiClass="SubnavigationButton__before">{before}</span>
+          <span className={styles["SubnavigationButton__before"]}>
+            {before}
+          </span>
         )}
         <SubnavigationButtonTypography
           textLevel={textLevel}
-          vkuiClass="SubnavigationButton__label"
+          className={styles["SubnavigationButton__label"]}
           Component="span"
         >
           {children}
         </SubnavigationButtonTypography>
-        {after && <span vkuiClass="SubnavigationButton__after">{after}</span>}
+        {after && (
+          <span className={styles["SubnavigationButton__after"]}>{after}</span>
+        )}
         {expandable && (
           <Icon16Dropdown
-            vkuiClass="SubnavigationButton__expandableIcon"
-            aria-hidden
+            className={styles["SubnavigationButton__expandableIcon"]}
           />
         )}
       </span>

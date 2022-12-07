@@ -1,10 +1,10 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Touch, TouchEvent } from "../Touch/Touch";
 import { HorizontalScrollArrow } from "../HorizontalScroll/HorizontalScrollArrow";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useDOM } from "../../lib/dom";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { useAdaptivityHasPointer } from "../../hooks/useAdaptivityHasPointer";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { calcMax, calcMin } from "./helpers";
@@ -14,7 +14,7 @@ import {
   LayoutState,
   ShiftingState,
 } from "./types";
-import "./BaseGallery.css";
+import styles from "./BaseGallery.module.css";
 
 const ANIMATION_DURATION = 0.24;
 
@@ -48,10 +48,10 @@ export const BaseGallery = ({
   onChange,
   onPrevClick,
   onNextClick,
-  onEnd: onEndProp,
   align = "left",
   showArrows,
   getRef,
+  className,
   arrowSize = "l",
   ...restProps
 }: BaseGalleryProps) => {
@@ -64,7 +64,7 @@ export const BaseGallery = ({
   const viewportRef = useExternRef(getRef);
 
   const { window } = useDOM();
-  const { hasMouse } = useAdaptivity();
+  const hasPointer = useAdaptivityHasPointer();
 
   const isCenterWithCustomWidth = slideWidth === "custom" && align === "center";
 
@@ -252,7 +252,8 @@ export const BaseGallery = ({
     return targetIndex;
   };
 
-  const onStart = () => {
+  const onStart = (e: TouchEvent) => {
+    onDragStart?.(e);
     setShiftState((prevState) => ({ ...prevState, animation: false }));
   };
 
@@ -261,9 +262,6 @@ export const BaseGallery = ({
       e.originalEvent.preventDefault();
 
       if (e.isSlideX) {
-        // TODO исправить в рамках issue #2698
-        onDragStart?.(e);
-
         if (shiftState.deltaX !== e.shiftX) {
           setShiftState((prevState) => ({
             ...prevState,
@@ -277,7 +275,7 @@ export const BaseGallery = ({
 
   const onEnd = (e: TouchEvent) => {
     const targetIndex = e.isSlide ? getTarget(e) : slideIndex ?? 0;
-    onDragEnd?.(e);
+    onDragEnd?.(e, targetIndex);
 
     const nextShiftState: Partial<ShiftingState> = {
       animation: true,
@@ -295,9 +293,6 @@ export const BaseGallery = ({
     if (targetIndex !== slideIndex) {
       onChange?.(targetIndex);
     }
-
-    // TODO исправить в рамках issue #2698
-    onEndProp?.({ targetIndex });
   };
 
   const indent = shiftState.dragging
@@ -337,17 +332,18 @@ export const BaseGallery = ({
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(
-        "Gallery",
-        `Gallery--${align}`,
-        shiftState.dragging && "Gallery--dragging",
-        isDraggable && "Gallery--draggable",
-        slideWidth === "custom" && "Gallery--custom-width"
+      className={classNamesString(
+        styles["BaseGallery"],
+        styles[`BaseGallery--align-${align}`],
+        shiftState.dragging && styles["BaseGallery--dragging"],
+        slideWidth === "custom" && styles["BaseGallery--custom-width"],
+        isDraggable && styles["BaseGallery--draggable"],
+        className
       )}
       ref={rootRef}
     >
       <Touch
-        vkuiClass="Gallery__viewport"
+        className={styles["BaseGallery__viewport"]}
         onStartX={onStart}
         onMoveX={onMoveX}
         onEnd={onEnd}
@@ -355,10 +351,10 @@ export const BaseGallery = ({
         getRootRef={viewportRef}
         noSlideClick
       >
-        <div vkuiClass="Gallery__layer" style={layerStyle}>
+        <div className={styles["BaseGallery__layer"]} style={layerStyle}>
           {React.Children.map(children, (item: React.ReactNode, i: number) => (
             <div
-              vkuiClass="Gallery__slide"
+              className={styles["BaseGallery__slide"]}
               key={`slide-${i}`}
               ref={(el) => setSlideRef(el, i)}
             >
@@ -371,18 +367,18 @@ export const BaseGallery = ({
       {bullets && (
         <div
           aria-hidden="true"
-          vkuiClass={classNames(
-            "Gallery__bullets",
-            `Gallery__bullets--${bullets}`
+          className={classNamesString(
+            styles["BaseGallery__bullets"],
+            styles[`BaseGallery__bullets--${bullets}`]
           )}
         >
           {React.Children.map(
             children,
             (_item: React.ReactNode, index: number) => (
               <div
-                vkuiClass={classNames(
-                  "Gallery__bullet",
-                  index === slideIndex && "Gallery__bullet--active"
+                className={classNamesString(
+                  styles["BaseGallery__bullet"],
+                  index === slideIndex && styles["BaseGallery__bullet--active"]
                 )}
                 key={index}
               />
@@ -391,14 +387,14 @@ export const BaseGallery = ({
         </div>
       )}
 
-      {showArrows && hasMouse && canSlideLeft && (
+      {showArrows && hasPointer && canSlideLeft && (
         <HorizontalScrollArrow
           direction="left"
           onClick={slideLeft}
           size={arrowSize}
         />
       )}
-      {showArrows && hasMouse && canSlideRight && (
+      {showArrows && hasPointer && canSlideRight && (
         <HorizontalScrollArrow
           direction="right"
           onClick={slideRight}

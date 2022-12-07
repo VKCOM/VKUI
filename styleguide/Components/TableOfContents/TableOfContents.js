@@ -7,8 +7,7 @@ import {
   classNames,
   Separator,
   Footer,
-  withAdaptivity,
-  ViewWidth,
+  useAdaptivityWithJSMediaQueries,
 } from "@vkui";
 import {
   Icon28ChevronDownOutline,
@@ -266,7 +265,7 @@ class TableOfContents extends React.PureComponent {
               })}
               indicator={
                 deprecated.includes(section.name) && (
-                  <Caption level="3">deprecated</Caption>
+                  <Caption level="2">deprecated</Caption>
                 )
               }
             >
@@ -298,13 +297,15 @@ class TableOfContents extends React.PureComponent {
   }
 
   render() {
-    const isMobile = this.props.viewWidth <= ViewWidth.MOBILE;
+    const { sizeX } = this.props;
     return (
       <div
-        className={classNames("TableOfContents", {
-          "TableOfContents--desktop": !isMobile,
-          "TableOfContents--mobile": isMobile,
-        })}
+        className={classNames(
+          "TableOfContents",
+          sizeX === "none"
+            ? "TableOfContents--sizeX-none"
+            : `TableOfContents--sizeX-${sizeX}`
+        )}
       >
         {this.renderSections(this.sections)}
       </div>
@@ -312,4 +313,9 @@ class TableOfContents extends React.PureComponent {
   }
 }
 
-export default withAdaptivity(TableOfContents, { viewWidth: true });
+export default (props) => {
+  // FIXME Не SSR ready.
+  const { sizeX } = useAdaptivityWithJSMediaQueries();
+
+  return <TableOfContents {...props} sizeX={sizeX} />;
+};

@@ -1,7 +1,8 @@
 {
   "extends": ["@vkontakte/eslint-config/react", "prettier"],
   "rules": {
-    "react/prop-types": [0]
+    "react/prop-types": [0],
+    "no-shadow": "off"
   },
   "env": {
     "node": true,

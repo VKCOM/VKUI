@@ -1,15 +1,14 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Tappable } from "../Tappable/Tappable";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
-import { getClassName } from "../../helpers/getClassName";
-import { Caption } from "../Typography/Caption/Caption";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { Headline } from "../Typography/Headline/Headline";
-import { IOS, ANDROID, Platform } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { Text } from "../Typography/Text/Text";
-import { HasPlatform } from "../../types";
-import "./PanelHeaderContent.css";
+import styles from "./PanelHeaderContent.module.css";
 
 export interface PanelHeaderContentProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -18,18 +17,18 @@ export interface PanelHeaderContentProps
   status?: React.ReactNode;
 }
 
-interface PanelHeaderChildrenProps extends HasPlatform {
+interface PanelHeaderChildrenProps {
   hasStatus: boolean;
   hasBefore: boolean;
   children?: React.ReactNode;
 }
 
 const PanelHeaderChildren = ({
-  platform,
   hasStatus,
   hasBefore,
   children,
 }: PanelHeaderChildrenProps) => {
+  const platform = usePlatform();
   if (platform === Platform.VKCOM) {
     return (
       <Text Component="div" weight="2">
@@ -43,7 +42,7 @@ const PanelHeaderChildren = ({
       {children}
     </Headline>
   ) : (
-    <div vkuiClass="PanelHeaderContent__children-in">{children}</div>
+    <div className={styles["PanelHeaderContent__children-in"]}>{children}</div>
   );
 };
 
@@ -68,7 +67,7 @@ export const PanelHeaderContent = ({
         ...restProps,
         onClick,
         activeEffectDelay: 200,
-        hasActive: platform === IOS,
+        hasActive: platform === Platform.IOS,
         activeMode: "opacity",
       }
     : {};
@@ -76,36 +75,44 @@ export const PanelHeaderContent = ({
   return (
     <div
       {...rootProps}
-      vkuiClass={getClassName("PanelHeaderContent", platform)}
       style={style}
-      className={className}
+      className={classNamesString(
+        styles["PanelHeaderContent"],
+        getPlatformClassName(styles["PanelHeaderContent"], platform),
+        className
+      )}
     >
       {hasReactNode(before) && (
-        <div vkuiClass="PanelHeaderContent__before">{before}</div>
+        <div className={styles["PanelHeaderContent__before"]}>{before}</div>
       )}
       <InComponent
         {...inProps}
-        vkuiClass={classNames(
-          "PanelHeaderContent__in",
-          !before && platform !== ANDROID && "PanelHeaderContent__in--centered"
+        className={classNamesString(
+          styles["PanelHeaderContent__in"],
+          !before &&
+            platform !== Platform.ANDROID &&
+            styles["PanelHeaderContent__in--centered"]
         )}
       >
         {hasReactNode(status) && (
-          <Caption vkuiClass="PanelHeaderContent__status">{status}</Caption>
+          <Footnote className={styles["PanelHeaderContent__status"]}>
+            {status}
+          </Footnote>
         )}
-        <div vkuiClass="PanelHeaderContent__children">
+        <div className={styles["PanelHeaderContent__children"]}>
           <PanelHeaderChildren
-            platform={platform}
             hasStatus={hasReactNode(status)}
             hasBefore={hasReactNode(before)}
           >
             {children}
           </PanelHeaderChildren>
           {hasReactNode(aside) && (
-            <div vkuiClass="PanelHeaderContent__aside">{aside}</div>
+            <div className={styles["PanelHeaderContent__aside"]}>{aside}</div>
           )}
         </div>
-        {hasReactNode(before) && <div vkuiClass="PanelHeaderContent__width" />}
+        {hasReactNode(before) && (
+          <div className={styles["PanelHeaderContent__width"]} />
+        )}
       </InComponent>
     </div>
   );

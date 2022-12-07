@@ -11,6 +11,5 @@
     "src/**/*.e2e.ts",
     "src/**/*.e2e.tsx",
     "src/testing/"
-  ],
-  "files": ["src/lib/jsxRuntime.d.ts", "types/global.d.ts"]
+  ]
 }

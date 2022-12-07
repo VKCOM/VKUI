@@ -1,7 +1,10 @@
+import * as React from "react";
 import { baselineComponent, waitForPopper } from "../../testing/utils";
 import { CustomSelect } from "./CustomSelect";
 import { useState } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
+
+const getCustomSelectValue = () => screen.getByTestId("target").textContent;
 
 describe("CustomSelect", () => {
   baselineComponent(CustomSelect);
@@ -24,13 +27,13 @@ describe("CustomSelect", () => {
       />
     );
 
-    expect(screen.getByTestId("target").textContent).toEqual("");
+    expect(getCustomSelectValue()).toEqual("");
 
     fireEvent.click(screen.getByTestId("target"));
     fireEvent.mouseEnter(screen.getByTitle("Josh"));
     fireEvent.click(screen.getByTitle("Josh"));
 
-    expect(screen.getByTestId("target").textContent).toEqual("Josh");
+    expect(getCustomSelectValue()).toEqual("Josh");
   });
 
   it("works correctly as controlled component", () => {
@@ -50,11 +53,11 @@ describe("CustomSelect", () => {
       );
     };
     render(<SelectController />);
-    expect(screen.getByTestId("target").textContent).toEqual("Mike");
+    expect(getCustomSelectValue()).toEqual("Mike");
     fireEvent.click(screen.getByTestId("target"));
     fireEvent.mouseEnter(screen.getByTitle("Josh"));
     fireEvent.click(screen.getByTitle("Josh"));
-    expect(screen.getByTestId("target").textContent).toEqual("Josh");
+    expect(getCustomSelectValue()).toEqual("Josh");
   });
 
   it("works correctly with pinned value", () => {
@@ -65,11 +68,11 @@ describe("CustomSelect", () => {
 
     render(<CustomSelect data-testid="target" options={options} value={0} />);
 
-    expect(screen.getByTestId("target").textContent).toEqual("Mike");
+    expect(getCustomSelectValue()).toEqual("Mike");
     fireEvent.click(screen.getByTestId("target"));
     fireEvent.mouseEnter(screen.getByTitle("Josh"));
     fireEvent.click(screen.getByTitle("Josh"));
-    expect(screen.getByTestId("target").textContent).toEqual("Mike");
+    expect(getCustomSelectValue()).toEqual("Mike");
   });
 
   it("correctly reacts on options change", () => {
@@ -84,7 +87,7 @@ describe("CustomSelect", () => {
       />
     );
 
-    expect(screen.getByTestId("target").textContent).toEqual("Josh");
+    expect(getCustomSelectValue()).toEqual("Josh");
 
     rerender(
       <CustomSelect
@@ -97,7 +100,7 @@ describe("CustomSelect", () => {
       />
     );
 
-    expect(screen.getByTestId("target").textContent).toEqual("Josh");
+    expect(getCustomSelectValue()).toEqual("Josh");
 
     rerender(
       <CustomSelect
@@ -110,7 +113,7 @@ describe("CustomSelect", () => {
       />
     );
 
-    expect(screen.getByTestId("target").textContent).toEqual("Felix");
+    expect(getCustomSelectValue()).toEqual("Felix");
   });
 
   it("correctly converts from controlled to uncontrolled state", () => {
@@ -125,7 +128,7 @@ describe("CustomSelect", () => {
       />
     );
 
-    expect(screen.getByTestId("target").textContent).toEqual("Josh");
+    expect(getCustomSelectValue()).toEqual("Josh");
 
     rerender(
       <CustomSelect
@@ -137,13 +140,13 @@ describe("CustomSelect", () => {
       />
     );
 
-    expect(screen.getByTestId("target").textContent).toEqual("Josh");
+    expect(getCustomSelectValue()).toEqual("Josh");
 
     fireEvent.click(screen.getByTestId("target"));
     fireEvent.mouseEnter(screen.getByTitle("Mike"));
     fireEvent.click(screen.getByTitle("Mike"));
 
-    expect(screen.getByTestId("target").textContent).toEqual("Mike");
+    expect(getCustomSelectValue()).toEqual("Mike");
   });
 
   it("accept defaultValue", () => {
@@ -158,7 +161,7 @@ describe("CustomSelect", () => {
       />
     );
 
-    expect(screen.getByTestId("target").textContent).toEqual("Josh");
+    expect(getCustomSelectValue()).toEqual("Josh");
   });
 
   it("is searchable", () => {
@@ -187,7 +190,7 @@ describe("CustomSelect", () => {
       key: "Enter",
       code: "Enter",
     });
-    expect(screen.getByTestId("target").textContent).toBe("Mike");
+    expect(getCustomSelectValue()).toEqual("Mike");
   });
 
   it("is custom searchable", () => {
@@ -221,7 +224,7 @@ describe("CustomSelect", () => {
       key: "Enter",
       code: "Enter",
     });
-    expect(screen.getByTestId("target").textContent).toBe("New York");
+    expect(getCustomSelectValue()).toEqual("New York");
   });
 
   it("is searchable and keeps search results up to date during props.options updates", async () => {
@@ -395,21 +398,29 @@ describe("CustomSelect", () => {
       key: "ArrowDown",
       code: "ArrowDown",
     });
+    fireEvent.keyDown(screen.getByTestId("target"), {
+      key: "Enter",
+      code: "Enter",
+    });
 
     await waitForPopper();
 
-    expect(
-      document.querySelector(".CustomSelectOption--hover")?.textContent
-    ).toEqual("Bob");
+    expect(getCustomSelectValue()).toEqual("Bob");
 
+    fireEvent.keyDown(screen.getByTestId("target"), {
+      key: "Enter",
+      code: "Enter",
+    });
     fireEvent.keyDown(screen.getByTestId("target"), {
       key: "ArrowUp",
       code: "ArrowUp",
     });
+    fireEvent.keyDown(screen.getByTestId("target"), {
+      key: "Enter",
+      code: "Enter",
+    });
 
-    expect(
-      document.querySelector(".CustomSelectOption--hover")?.textContent
-    ).toEqual("Josh");
+    expect(getCustomSelectValue()).toEqual("Josh");
 
     rerender(
       <CustomSelect
@@ -423,12 +434,18 @@ describe("CustomSelect", () => {
     );
 
     fireEvent.keyDown(screen.getByTestId("target"), {
+      key: "Enter",
+      code: "Enter",
+    });
+    fireEvent.keyDown(screen.getByTestId("target"), {
       key: "ArrowUp",
       code: "ArrowUp",
     });
+    fireEvent.keyDown(screen.getByTestId("target"), {
+      key: "Enter",
+      code: "Enter",
+    });
 
-    expect(
-      document.querySelector(".CustomSelectOption--hover")?.textContent
-    ).toEqual("Bob");
+    expect(getCustomSelectValue()).toEqual("Bob");
   });
 });

@@ -1,3 +1,4 @@
+import * as React from "react";
 import { HtmlHTMLAttributes, ReactElement, Fragment } from "react";
 import { baselineComponent, waitForPopper } from "../../testing/utils";
 import { render, screen } from "@testing-library/react";

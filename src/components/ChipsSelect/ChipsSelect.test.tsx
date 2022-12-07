@@ -1,3 +1,4 @@
+import * as React from "react";
 import { fireEvent, render, screen, queryByText } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { baselineComponent, waitForPopper } from "../../testing/utils";
@@ -21,7 +22,9 @@ const toggleDropdown = async () => {
 };
 // получить опцию из дропдауна (не чип)
 const queryListOption = (o: ChipOption | null | undefined) => {
-  const list = document.querySelector(".ChipsSelect__options") as HTMLElement;
+  const list = document.querySelector(
+    ".vkuiChipsSelect__options"
+  ) as HTMLElement;
   return list ? queryByText(list, o?.label as string) : null;
 };
 

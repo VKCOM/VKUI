@@ -10,13 +10,15 @@ import { IconButton } from "../IconButton/IconButton";
 import { HasRootRef } from "../../types";
 import { useDateInput } from "../../hooks/useDateInput";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { multiRef } from "../../lib/utils";
 import { FormField, FormFieldProps } from "../FormField/FormField";
 import { InputLike } from "../InputLike/InputLike";
 import { InputLikeDivider } from "../InputLike/InputLikeDivider";
 import { callMultiple } from "../../lib/callMultiple";
-import "./DateRangeInput.css";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import styles from "./DateRangeInput.module.css";
+import dateInputStyles from "../DateInput/DateInput.module.css";
 
 export interface DateRangeInputProps
   extends Omit<React.InputHTMLAttributes<HTMLDivElement>, "value" | "onChange">,
@@ -238,9 +240,12 @@ export const DateRangeInput = ({
 
   return (
     <FormField
-      vkuiClass={classNames("DateRangeInput", `DateRangeInput--sizeY-${sizeY}`)}
       style={style}
-      className={className}
+      className={classNamesString(
+        styles["DateRangeInput"],
+        getSizeYClassName(styles["DateRangeInput"], sizeY),
+        className
+      )}
       getRootRef={multiRef(rootRef, getRootRef)}
       after={
         value ? (
@@ -277,7 +282,10 @@ export const DateRangeInput = ({
             : ""
         }
       />
-      <span vkuiClass="DateInput__input" onKeyDown={handleKeyDown}>
+      <span
+        className={dateInputStyles["DateInput__input"]}
+        onKeyDown={handleKeyDown}
+      >
         <InputLike
           length={2}
           getRootRef={daysStartRef}

@@ -1,0 +1,114 @@
+@import "./ViewIOS.module.css";
+
+.View {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.View--animated,
+.View--swiping-back {
+  overflow: hidden;
+}
+
+.View__header {
+  z-index: 2;
+  position: fixed;
+  width: 100%;
+}
+
+.View--animated .View__panel,
+.View--animated .View__header,
+.View--swiping-back .View__panel,
+.View--swiping-back .View__header {
+  pointer-events: none;
+}
+
+.View__panels {
+  height: 100%;
+  width: 100%;
+}
+
+.View__panel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+.View__panel-in {
+  height: 100%;
+}
+
+.View--animated .View__panel,
+.View--swiping-back .View__panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.View__popout {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+}
+
+.View__modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 99;
+  width: 100%;
+  height: 100%;
+}
+
+.View__modal:empty {
+  display: none;
+}
+
+/**
+ * Panel transition
+ */
+.View__panel--next ~ .View__panel--prev {
+  animation: vkui-animation-view-prev-back 0.3s
+    var(--vkui--animation_easing_platform) forwards;
+}
+
+.View__panel--prev ~ .View__panel--next {
+  animation: vkui-animation-view-next-forward 0.3s
+    var(--vkui--animation_easing_platform);
+}
+
+.View--no-motion .View__panel {
+  animation: none;
+}
+
+@keyframes vkui-animation-view-prev-back {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(80px);
+  }
+}
+
+@keyframes vkui-animation-view-next-forward {
+  from {
+    opacity: 0;
+    transform: translateY(80px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,9 +1,10 @@
+import * as React from "react";
 import { ModalPageHeader, ModalPageHeaderProps } from "./ModalPageHeader";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { PanelHeaderButton } from "../PanelHeaderButton/PanelHeaderButton";
 import { Icon24Cancel, Icon24Dismiss, Icon24Done } from "@vkontakte/icons";
 import { Platform } from "../../lib/platform";
-import { ViewWidth } from "../../hoc/withAdaptivity";
+import { ViewWidth } from "../../lib/adaptivity";
 import { ModalRootContext } from "../ModalRoot/ModalRootContext";
 import { noop } from "../../lib/utils";
 

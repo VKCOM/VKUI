@@ -1,10 +1,12 @@
+import * as React from "react";
 import { baselineComponent } from "../../testing/utils";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Search } from "./Search";
 
 const getInput = () => screen.getByRole("searchbox");
-const getClearIcon = () => document.querySelector(".Search__icon") as Element;
+const getClearIcon = () =>
+  document.querySelector(".vkuiSearch__icon") as Element;
 
 describe("Search", () => {
   baselineComponent(Search);

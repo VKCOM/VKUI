@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   describeScreenshotFuzz,
   customSnapshotIdentifier,
@@ -6,8 +7,8 @@ import {
 import { HorizontalScroll } from "./HorizontalScroll";
 import { HorizontalCell } from "../HorizontalCell/HorizontalCell";
 import { Avatar } from "../Avatar/Avatar";
-import { ANDROID } from "../../lib/platform";
-import { ViewWidth } from "../../hoc/withAdaptivity";
+import { Platform } from "../../lib/platform";
+import { ViewWidth } from "../../lib/adaptivity";
 import { mount, screenshot } from "../../testing/e2e";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { AppRoot } from "../AppRoot/AppRoot";
@@ -34,10 +35,10 @@ describe("HorizontalScroll", () => {
       },
     ],
     {
-      platforms: [ANDROID],
+      platforms: [Platform.ANDROID],
       adaptivity: {
         viewWidth: ViewWidth.MOBILE,
-        hasMouse: false,
+        hasPointer: false,
       },
     }
   );
@@ -55,10 +56,10 @@ describe("HorizontalScroll", () => {
       },
     ],
     {
-      platforms: [ANDROID],
+      platforms: [Platform.ANDROID],
       adaptivity: {
         viewWidth: ViewWidth.SMALL_TABLET,
-        hasMouse: true,
+        hasPointer: true,
       },
     }
   );
@@ -67,8 +68,8 @@ describe("HorizontalScroll", () => {
     jest.setTimeout(5000);
     await mount(
       <ConfigProvider appearance={APPEARANCE}>
-        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasMouse>
-          <AppRoot>
+        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
+          <AppRoot className="vkuiTestWrapper">
             <HorizontalScroll
               getRef={(element) => {
                 if (!element) {
@@ -86,11 +87,11 @@ describe("HorizontalScroll", () => {
       </ConfigProvider>
     );
 
-    await page.hover(".HorizontalScroll");
+    await page.hover(".vkuiHorizontalScroll");
 
     expect(
       await screenshot(undefined, {
-        selector: ".HorizontalScroll",
+        selector: ".vkuiHorizontalScroll",
       })
     ).toMatchImageSnapshot({
       customSnapshotIdentifier,
@@ -101,8 +102,11 @@ describe("HorizontalScroll", () => {
     jest.setTimeout(5000);
     await mount(
       <ConfigProvider appearance={APPEARANCE}>
-        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasMouse={false}>
-          <AppRoot>
+        <AdaptivityProvider
+          viewWidth={ViewWidth.SMALL_TABLET}
+          hasPointer={false}
+        >
+          <AppRoot className="vkuiTestWrapper">
             <HorizontalScroll>
               <div key="0" style={{ display: "flex" }}>
                 {items}
@@ -113,11 +117,11 @@ describe("HorizontalScroll", () => {
       </ConfigProvider>
     );
 
-    await page.hover(".HorizontalScroll");
+    await page.hover(".vkuiHorizontalScroll");
 
     expect(
       await screenshot(undefined, {
-        selector: ".HorizontalScroll",
+        selector: ".vkuiHorizontalScroll",
       })
     ).toMatchImageSnapshot({
       customSnapshotIdentifier,

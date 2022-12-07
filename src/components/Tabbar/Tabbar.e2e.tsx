@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Icon28UserCircleOutline } from "@vkontakte/icons";
 import { Tabbar } from "./Tabbar";
 import { TabbarItem } from "../TabbarItem/TabbarItem";
@@ -45,7 +46,7 @@ describe("Tabbar", () => {
       },
       {
         children: [longTabs],
-        itemsLayout: ["horizontal", "vertical"],
+        mode: ["horizontal", "vertical", "auto"],
       },
     ],
     {

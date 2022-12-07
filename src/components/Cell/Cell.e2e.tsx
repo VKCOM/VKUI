@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Cell } from "./Cell";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { Avatar } from "../Avatar/Avatar";
@@ -5,7 +6,7 @@ import { Avatar } from "../Avatar/Avatar";
 describe("Cell", () => {
   describeScreenshotFuzz(Cell, [
     {
-      selectable: [true],
+      mode: ["selectable"],
       before: [<Avatar key="avatar" />],
       children: ["Мария Саломея Склодовская-Кюри", "Михаил Лихачев"],
       $adaptivity: "y",
@@ -14,7 +15,7 @@ describe("Cell", () => {
       multiline: [true, false],
     },
     {
-      removable: [true],
+      mode: ["removable"],
       $adaptivity: "y",
       children: ["Мария Саломея Склодовская-Кюри", "Евгения Полозова"],
       multiline: [true, false],

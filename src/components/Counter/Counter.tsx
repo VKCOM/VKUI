@@ -1,15 +1,30 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Caption } from "../Typography/Caption/Caption";
 import { Headline } from "../Typography/Headline/Headline";
 import { hasReactNode } from "../../lib/utils";
-import "./Counter.css";
+import styles from "./Counter.module.css";
+
+const modeClassNames = {
+  secondary: styles["Counter--mode-secondary"],
+  primary: styles["Counter--mode-primary"],
+  prominent: styles["Counter--mode-prominent"],
+  contrast: styles["Counter--mode-contrast"],
+  inherit: styles["Counter--mode-inherit"],
+};
+
+const sizeClassNames = {
+  s: styles["Counter--size-s"],
+  m: styles["Counter--size-m"],
+};
 
 export interface CounterProps extends React.HTMLAttributes<HTMLSpanElement> {
   /**
-   * Тип счетчика. При использовании компонента в качестве значения свойства `after` у `Button` эти значения игнорируются
+   * Тип счетчика.  В режиме `inherit` если компонент находится в кнопке, то
+   * цвета зависят от кнопки. Если компонент находится вне кнопки, применяется
+   * режим `secondary`
    */
-  mode?: "secondary" | "primary" | "prominent" | "contrast";
+  mode?: "secondary" | "primary" | "prominent" | "contrast" | "inherit";
   size?: "s" | "m";
 }
 
@@ -17,9 +32,10 @@ export interface CounterProps extends React.HTMLAttributes<HTMLSpanElement> {
  * @see https://vkcom.github.io/VKUI/#/Counter
  */
 export const Counter = ({
-  mode = "secondary",
+  mode = "inherit",
   size = "m",
   children,
+  className,
   ...restProps
 }: CounterProps) => {
   if (React.Children.count(children) === 0) {
@@ -31,14 +47,19 @@ export const Counter = ({
   return (
     <span
       {...restProps}
-      vkuiClass={classNames(
-        "Counter",
-        `Counter--${mode}`,
-        `Counter--s-${size}`
+      className={classNamesString(
+        styles["Counter"],
+        modeClassNames[mode],
+        sizeClassNames[size],
+        className
       )}
     >
       {hasReactNode(children) && (
-        <CounterTypography Component="span" vkuiClass="Counter__in" level="2">
+        <CounterTypography
+          Component="span"
+          className={styles["Counter__in"]}
+          level="2"
+        >
           {children}
         </CounterTypography>
       )}

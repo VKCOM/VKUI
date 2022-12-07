@@ -1,28 +1,23 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import { classNamesString } from "../../lib/classNames";
+import { Platform } from "../../lib/platform";
 import {
   ModalRootContext,
   useModalRegistry,
 } from "../ModalRoot/ModalRootContext";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useOrientationChange } from "../../hooks/useOrientationChange";
-import { withAdaptivity } from "../../hoc/withAdaptivity";
-import {
-  AdaptivityContextInterface,
-  AdaptivityProps,
-} from "../AdaptivityProvider/AdaptivityContext";
 import { ModalDismissButton } from "../ModalDismissButton/ModalDismissButton";
 import { multiRef } from "../../lib/utils";
 import { ModalType } from "../ModalRoot/types";
 import { getNavId, NavIdProps } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
-import { Platform } from "../../lib/platform";
-import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
-import "./ModalPage.css";
+import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
+import styles from "./ModalPage.module.css";
 
 export interface ModalPageProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    AdaptivityProps,
     NavIdProps {
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`
@@ -69,14 +64,13 @@ export interface ModalPageProps
 
 const warn = warnOnce("ModalPage");
 
-const ModalPageComponent = ({
+/**
+ * @see https://vkcom.github.io/VKUI/#/ModalPage
+ */
+export const ModalPage = ({
   children,
   header,
   size: sizeProp = "s",
-  viewWidth,
-  viewHeight,
-  sizeX,
-  hasMouse,
   onOpen,
   onOpened,
   onClose,
@@ -87,12 +81,14 @@ const ModalPageComponent = ({
   nav,
   id,
   hideCloseButton = false,
+  className,
   ...restProps
-}: ModalPageProps & AdaptivityContextInterface) => {
+}: ModalPageProps) => {
   const { updateModalHeight } = React.useContext(ModalRootContext);
 
   const platform = usePlatform();
   const orientation = useOrientationChange();
+  const { sizeX, isDesktop } = useAdaptivityWithJSMediaQueries();
 
   React.useEffect(updateModalHeight, [
     children,
@@ -100,7 +96,6 @@ const ModalPageComponent = ({
     updateModalHeight,
   ]);
 
-  const isDesktop = useAdaptivityIsDesktop();
   const isCloseButtonShown = !hideCloseButton && isDesktop;
   const size = isDesktop ? sizeProp : "s";
 
@@ -114,30 +109,31 @@ const ModalPageComponent = ({
     <div
       {...restProps}
       id={id}
-      vkuiClass={classNames(
-        "ModalPage",
-        platform === Platform.IOS && "ModalPage--ios",
-        platform === Platform.VKCOM && "ModalPage--vkcom",
-        `ModalPage--sizeX-${sizeX}`, // TODO v5.0.0 поправить под новую адаптивность
-        isDesktop && "ModalPage--desktop",
-        size && `ModalPage--${size}`
+      className={classNamesString(
+        styles["ModalPage"],
+        platform === Platform.IOS && styles["ModalPage--ios"],
+        platform === Platform.VKCOM && styles["ModalPage--vkcom"],
+        getSizeXClassName(styles["ModalPage"], sizeX),
+        isDesktop && styles["ModalPage--desktop"],
+        styles[`ModalPage--size-${size}`],
+        className
       )}
     >
-      <div vkuiClass="ModalPage__in-wrap" ref={refs.innerElement}>
-        <div vkuiClass="ModalPage__in">
-          <div vkuiClass="ModalPage__header" ref={refs.headerElement}>
+      <div className={styles["ModalPage__in-wrap"]} ref={refs.innerElement}>
+        <div className={styles["ModalPage__in"]}>
+          <div className={styles["ModalPage__header"]} ref={refs.headerElement}>
             {header}
           </div>
 
-          <div vkuiClass="ModalPage__content-wrap">
+          <div className={styles["ModalPage__content-wrap"]}>
             <div
-              vkuiClass="ModalPage__content"
+              className={styles["ModalPage__content"]}
               ref={multiRef<HTMLDivElement>(
                 refs.contentElement,
                 getModalContentRef
               )}
             >
-              <div vkuiClass="ModalPage__content-in">{children}</div>
+              <div className={styles["ModalPage__content-in"]}>{children}</div>
             </div>
           </div>
           {isCloseButtonShown && (
@@ -148,15 +144,3 @@ const ModalPageComponent = ({
     </div>
   );
 };
-
-/**
- * @see https://vkcom.github.io/VKUI/#/ModalPage
- */
-export const ModalPage = withAdaptivity(ModalPageComponent, {
-  viewWidth: true,
-  viewHeight: true,
-  sizeX: true,
-  hasMouse: true,
-});
-
-ModalPage.displayName = "ModalPage";

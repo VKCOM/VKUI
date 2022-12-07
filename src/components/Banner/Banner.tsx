@@ -1,7 +1,7 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { hasReactNode } from "../../lib/utils";
 import {
   Icon24Chevron,
@@ -15,7 +15,7 @@ import { Headline } from "../Typography/Headline/Headline";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import { Text } from "../Typography/Text/Text";
 import { Title } from "../Typography/Title/Title";
-import "./Banner.css";
+import styles from "./Banner.module.css";
 
 export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -71,10 +71,18 @@ export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   background?: React.ReactNode;
   /**
-   * Кнопки, отображаемые в баннере.
+   * Кнопки-действия. Принимает [`Button`](https://vkcom.github.io/VKUI/#/Button).
    *
-   * - В режиме `tint` или в `image` со светлым фоном рекомендуется использовать только `<Button mode="primary" />` или `<Button mode="tertiary" hasHover={false} />`.
-   * - В режиме `image` с тёмным фоном – `<Button mode="overlay_primary" />`.
+   * - В режиме `tint` или `image` со светлым фоном используйте только с параметрами:
+   *    - `mode="primary"`
+   *    - `mode="secondary"`
+   * - В режиме `image` с тёмным фоном используйте с параметрами:
+   *    - `appearance="overlay"`.
+   *
+   * Для набора кнопок используйте [`ButtonGroup`](https://vkcom.github.io/VKUI/#/ButtonGroup) с параметрами:
+   *
+   * - `gap="m" mode="horizontal" stretched`
+   * - `gap="m" mode="vertical" stretched`
    */
   actions?: React.ReactNode;
 }
@@ -96,6 +104,7 @@ export const Banner = ({
   actions,
   onDismiss,
   dismissLabel = "Скрыть",
+  className,
   ...restProps
 }: BannerProps) => {
   const platform = usePlatform();
@@ -109,18 +118,18 @@ export const Banner = ({
   const content = (
     <React.Fragment>
       {mode === "image" && background && (
-        <div aria-hidden="true" vkuiClass="Banner__bg">
+        <div aria-hidden="true" className={styles["Banner__bg"]}>
           {background}
         </div>
       )}
 
-      {before && <div vkuiClass="Banner__before">{before}</div>}
+      {before && <div className={styles["Banner__before"]}>{before}</div>}
 
-      <div vkuiClass="Banner__content">
+      <div className={styles["Banner__content"]}>
         {hasReactNode(header) && (
           <HeaderTypography
             Component="span"
-            vkuiClass="Banner__header"
+            className={styles["Banner__header"]}
             weight="2"
             level={size === "m" ? "2" : "1"}
           >
@@ -128,13 +137,18 @@ export const Banner = ({
           </HeaderTypography>
         )}
         {hasReactNode(subheader) && (
-          <SubheaderTypography Component="span" vkuiClass="Banner__subheader">
+          <SubheaderTypography
+            Component="span"
+            className={styles["Banner__subheader"]}
+          >
             {subheader}
           </SubheaderTypography>
         )}
-        {hasReactNode(text) && <Text vkuiClass="Banner__text">{text}</Text>}
+        {hasReactNode(text) && (
+          <Text className={styles["Banner__text"]}>{text}</Text>
+        )}
         {hasReactNode(actions) && React.Children.count(actions) > 0 && (
-          <div vkuiClass="Banner__actions">{actions}</div>
+          <div className={styles["Banner__actions"]}>{actions}</div>
         )}
       </div>
     </React.Fragment>
@@ -143,40 +157,45 @@ export const Banner = ({
   return (
     <section
       {...restProps}
-      vkuiClass={classNames(
-        "Banner",
-        platform === IOS && "Banner--ios",
-        `Banner--md-${mode}`,
-        `Banner--sz-${size}`,
-        mode === "image" && imageTheme === "dark" && "Banner--inverted"
+      className={classNamesString(
+        styles["Banner"],
+        platform === Platform.IOS && styles["Banner--ios"],
+        styles[`Banner--mode-${mode}`],
+        styles[`Banner--size-${size}`],
+        mode === "image" && imageTheme === "dark" && styles["Banner--inverted"],
+        className
       )}
     >
       {asideMode === "expand" ? (
         <Tappable
-          vkuiClass="Banner__in"
-          activeMode={platform === IOS ? "opacity" : "background"}
+          className={styles["Banner__in"]}
+          activeMode={platform === Platform.IOS ? "opacity" : "background"}
           role="button"
         >
           {content}
 
-          <div vkuiClass="Banner__aside">
+          <div className={styles["Banner__aside"]}>
             <Icon24Chevron />
           </div>
         </Tappable>
       ) : (
-        <div vkuiClass="Banner__in">
+        <div className={styles["Banner__in"]}>
           {content}
 
           {asideMode === "dismiss" && (
-            <div vkuiClass="Banner__aside">
+            <div className={styles["Banner__aside"]}>
               <IconButton
                 aria-label={dismissLabel}
-                vkuiClass="Banner__dismiss"
+                className={styles["Banner__dismiss"]}
                 onClick={onDismiss}
                 hoverMode="opacity"
                 hasActive={false}
               >
-                {platform === IOS ? <IconDismissIOS /> : <Icon24Cancel />}
+                {platform === Platform.IOS ? (
+                  <IconDismissIOS />
+                ) : (
+                  <Icon24Cancel />
+                )}
               </IconButton>
             </div>
           )}

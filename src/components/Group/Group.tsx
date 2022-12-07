@@ -1,31 +1,27 @@
 import * as React from "react";
-import { IOS } from "../../lib/platform";
-import { classNames } from "../../lib/classNames";
+import { Platform } from "../../lib/platform";
+import { classNamesString } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import { Spacing } from "../Spacing/Spacing";
 import { Separator } from "../Separator/Separator";
 import { hasReactNode } from "../../lib/utils";
-import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { warnOnce } from "../../lib/warnOnce";
-import {
-  withAdaptivity,
-  AdaptivityProps,
-  SizeType,
-} from "../../hoc/withAdaptivity";
 import { ModalRootContext } from "../ModalRoot/ModalRootContext";
-import "./Group.css";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import styles from "./Group.module.css";
 
 export interface GroupProps
   extends HasRootRef<HTMLElement>,
-    React.HTMLAttributes<HTMLElement>,
-    AdaptivityProps {
+    React.HTMLAttributes<HTMLElement> {
   header?: React.ReactNode;
   description?: React.ReactNode;
   /**
     show - разделитель всегда показывается,
-    hide – разделитель всегда спрятан,
-    auto – разделитель рисуется автоматически между соседними группами.
+    hide - разделитель всегда спрятан,
+    auto - разделитель рисуется автоматически между соседними группами.
    */
   separator?: "show" | "hide" | "auto";
   /**
@@ -44,26 +40,27 @@ export interface GroupProps
 
 const warn = warnOnce("TabsItem");
 
-const GroupComponent = ({
+export const Group = ({
   header,
   description,
   children,
   separator = "auto",
   getRootRef,
-  mode,
+  mode: modeProps,
   padding = "m",
-  sizeX,
+  className,
   tabIndex: tabIndexProp,
   ...restProps
 }: GroupProps) => {
   const { isInsideModal } = React.useContext(ModalRootContext);
   const platform = usePlatform();
+  const { sizeX } = useAdaptivity();
 
-  let computedMode: GroupProps["mode"] = mode;
+  let mode: GroupProps["mode"] | "none" = modeProps;
 
-  if (!mode) {
-    computedMode =
-      sizeX === SizeType.COMPACT || isInsideModal ? "plain" : "card";
+  if (!modeProps) {
+    // Подробнее в "none" можно прочитать в ADAPTIVITY_GUIDE.md
+    mode = isInsideModal ? "plain" : "none";
   }
 
   const isTabPanel = restProps.role === "tabpanel";
@@ -80,50 +77,51 @@ const GroupComponent = ({
 
   const tabIndex = isTabPanel && tabIndexProp === undefined ? 0 : tabIndexProp;
 
-  let separatorElement = null;
-
-  if (separator !== "hide") {
-    const separatorClassName = classNames(
-      "Group__separator",
-      separator === "show" && "Group__separator--force"
-    );
-    separatorElement =
-      computedMode === "card" ? (
-        <Spacing vkuiClass={separatorClassName} size={16} />
-      ) : (
-        <Separator vkuiClass={separatorClassName} />
-      );
-  }
+  const separatorClassName = classNamesString(
+    styles["Group__separator"],
+    separator === "show" && styles["Group__separator--force"]
+  );
 
   return (
     <section
       {...restProps}
       tabIndex={tabIndex}
       ref={getRootRef}
-      vkuiClass={classNames(
-        "Group",
-        platform === IOS && "Group--ios",
-        // TODO v5.0.0 Новая адаптивность
-        `Group--sizeX-${sizeX}`,
-        `Group--${computedMode}`,
-        `Group--padding-${padding}`
+      className={classNamesString(
+        styles["Group"],
+        platform === Platform.IOS && styles["Group--ios"],
+        getSizeXClassName(styles["Group"], sizeX),
+        mode && styles[`Group--mode-${mode}`],
+        styles[`Group--padding-${padding}`],
+        className
       )}
     >
-      <div vkuiClass="Group__inner">
+      <div className={styles["Group__inner"]}>
         {header}
         {children}
         {hasReactNode(description) && (
-          <Caption vkuiClass="Group__description">{description}</Caption>
+          <Footnote className={styles["Group__description"]}>
+            {description}
+          </Footnote>
         )}
       </div>
-      {separatorElement}
+      {separator !== "hide" && (
+        <React.Fragment>
+          <Spacing
+            className={classNamesString(
+              separatorClassName,
+              styles["Group__separator--spacing"]
+            )}
+            size={16}
+          />
+          <Separator
+            className={classNamesString(
+              separatorClassName,
+              styles["Group__separator--separator"]
+            )}
+          />
+        </React.Fragment>
+      )}
     </section>
   );
 };
-
-/**
- * @see https://vkcom.github.io/VKUI/#/Group
- */
-export const Group = withAdaptivity(GroupComponent, { sizeX: true });
-
-Group.displayName = "Group";

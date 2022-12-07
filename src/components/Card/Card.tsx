@@ -1,9 +1,7 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
-import { usePlatform } from "../../hooks/usePlatform";
+import { classNamesString } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
-import "./Card.css";
+import styles from "./Card.module.css";
 
 export interface CardProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -18,17 +16,20 @@ export const Card = ({
   mode = "tint",
   children,
   getRootRef,
+  className,
   ...restProps
 }: CardProps) => {
-  const platform = usePlatform();
-
   return (
     <div
       {...restProps}
       ref={getRootRef}
-      vkuiClass={classNames(getClassName("Card", platform), `Card--md-${mode}`)}
+      className={classNamesString(
+        styles["Card"],
+        styles[`Card--mode-${mode}`],
+        className
+      )}
     >
-      <div vkuiClass="Card__in">{children}</div>
+      <div className={styles["Card__in"]}>{children}</div>
     </div>
   );
 };

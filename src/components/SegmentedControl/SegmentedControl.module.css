@@ -1,0 +1,68 @@
+.SegmentedControl {
+  height: 30px;
+  padding: 2px;
+  border-radius: var(--vkui--size_border_radius--regular);
+  background-color: var(--vkui--color_background_secondary);
+  box-sizing: border-box;
+  font-family: var(--vkui--font_family_base);
+}
+
+.SegmentedControl--size-l {
+  height: 36px;
+}
+
+.SegmentedControl__in {
+  position: relative;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  transition: all 100ms ease-out;
+  border-radius: inherit;
+}
+
+.SegmentedControl__slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: var(--vkui--color_segmented_control);
+  transition: transform 150ms;
+  transform-origin: 0 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 0.5px var(--vkui--color_image_border_alpha),
+    0 3px 8px rgba(0, 0, 0, 0.12), 0 3px 1px rgba(0, 0, 0, 0.04);
+}
+
+.SegmentedControl__option {
+  position: relative;
+  flex: 1;
+  display: block;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+}
+
+/**
+ * sizeY REGULAR
+ */
+.SegmentedControl--sizeY-regular {
+  height: 36px;
+}
+
+.SegmentedControl--sizeY-regular.SegmentedControl--size-l {
+  height: 44px;
+}
+
+@media (--sizeY-regular) {
+  .SegmentedControl--sizeY-none {
+    height: 36px;
+  }
+
+  .SegmentedControl--sizeY-none.SegmentedControl--size-l {
+    height: 44px;
+  }
+}
+
+.SegmentedControl--size-m {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
+}

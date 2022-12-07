@@ -53,7 +53,6 @@ const Example = () => {
         </Group>
         <Group>
           <Tooltip
-            mode="light"
             text="У нас тут brand new функционал подвезли. Зацените!"
             isShown={tooltip}
             onClose={() => setTooltip(false)}
@@ -126,9 +125,7 @@ const Example = () => {
   );
 };
 
-const ExampleWithPlatform = withPlatform(Example);
-
-<ExampleWithPlatform />;
+<Example />;
 ```
 
 ## TooltipContainer

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { DOMProps, useDOM } from "../../lib/dom";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useEventListener } from "../../hooks/useEventListener";
@@ -8,7 +8,7 @@ import {
   TrackerOptionsProps,
   useTrackerVisibility,
 } from "./useTrackerVisibility";
-import "./CustomScrollView.css";
+import styles from "./CustomScrollView.module.css";
 
 export interface CustomScrollViewProps extends DOMProps, TrackerOptionsProps {
   windowResize?: boolean;
@@ -182,12 +182,12 @@ export const CustomScrollView = ({
   };
 
   return (
-    <div vkuiClass="CustomScrollView" className={className}>
-      <div vkuiClass="CustomScrollView__barY" ref={barY}>
+    <div className={classNamesString(styles["CustomScrollView"], className)}>
+      <div className={styles["CustomScrollView__barY"]} ref={barY}>
         <div
-          vkuiClass={classNames(
-            "CustomScrollView__trackerY",
-            !trackerVisible && `CustomScrollView__trackerY--hidden`
+          className={classNamesString(
+            styles["CustomScrollView__trackerY"],
+            !trackerVisible && styles[`CustomScrollView__trackerY--hidden`]
           )}
           onMouseEnter={autoHideScrollbar ? onTrackerMouseEnter : undefined}
           onMouseLeave={autoHideScrollbar ? onTrackerMouseLeave : undefined}
@@ -197,7 +197,7 @@ export const CustomScrollView = ({
       </div>
 
       <div
-        vkuiClass="CustomScrollView__box"
+        className={styles["CustomScrollView__box"]}
         tabIndex={-1}
         ref={boxRef}
         onScroll={scroll}

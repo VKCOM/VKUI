@@ -1,5 +1,6 @@
+import * as React from "react";
 import { render, screen } from "@testing-library/react";
-import { ViewWidth } from "../../hoc/withAdaptivity";
+import { ViewWidth } from "../../lib/adaptivity";
 import {
   baselineComponent,
   waitForPopper,
@@ -9,19 +10,33 @@ import { ActionSheet, ActionSheetProps } from "./ActionSheet";
 import { ActionSheetItem } from "../ActionSheetItem/ActionSheetItem";
 import userEvent from "@testing-library/user-event";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
+import { Platform } from "../../lib/platform";
+import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 
 describe("ActionSheet", () => {
   beforeAll(() => jest.useFakeTimers("modern"));
   afterAll(() => jest.useRealTimers());
   const toggle = document.createElement("div");
   const ActionSheetDesktop = (props: Partial<ActionSheetProps>) => (
-    <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasMouse>
-      <ActionSheet toggleRef={toggle} {...props} iosCloseItem={null} />
-    </AdaptivityProvider>
+    <ConfigProvider platform={Platform.VKCOM}>
+      <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
+        <ActionSheet
+          toggleRef={toggle}
+          onClose={jest.fn()}
+          {...props}
+          iosCloseItem={null}
+        />
+      </AdaptivityProvider>
+    </ConfigProvider>
   );
   const ActionSheetMobile = (props: Partial<ActionSheetProps>) => (
-    <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasMouse={false}>
-      <ActionSheet toggleRef={toggle} {...props} iosCloseItem={null} />
+    <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer={false}>
+      <ActionSheet
+        toggleRef={toggle}
+        onClose={jest.fn()}
+        {...props}
+        iosCloseItem={null}
+      />
     </AdaptivityProvider>
   );
 
@@ -35,8 +50,8 @@ describe("ActionSheet", () => {
       it.each([
         {},
         { selectable: true },
-        { autoclose: true },
-        { autoclose: true, selectable: true },
+        { autoClose: true },
+        { autoClose: true, selectable: true },
       ])("when %s", async (props) => {
         const handlers = { onClick: jest.fn(), onChange: jest.fn() };
         const { unmount } = render(
@@ -90,7 +105,7 @@ describe("ActionSheet", () => {
       render(<ActionSheetDesktop popupDirection={popupDirection} />);
       await waitForPopper();
       expect(popupDirection).toBeCalledWith({
-        current: document.querySelector(".ActionSheet"),
+        current: document.querySelector(".vkuiActionSheet"),
       });
     });
   });
@@ -102,7 +117,7 @@ describe("ActionSheet", () => {
       await waitForPopper();
       runAllTimers();
       userEvent.click(
-        document.querySelector(".PopoutWrapper__overlay") as Element
+        document.querySelector(".vkuiPopoutWrapper__overlay") as Element
       );
       runAllTimers();
       expect(onClose).toBeCalledTimes(1);

@@ -1,27 +1,31 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasAlign, HasRootRef } from "../../types";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { usePlatform } from "../../hooks/usePlatform";
-import { getClassName } from "../../helpers/getClassName";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { getFormFieldModeFromSelectType } from "../../lib/select";
 import { SelectType, SelectTypography } from "../Select/Select";
-import "../Select/Select.css";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import styles from "../Select/Select.module.css";
 
 export interface SelectMimicryProps
   extends React.HTMLAttributes<HTMLElement>,
     HasAlign,
     HasRootRef<HTMLElement>,
-    AdaptivityProps,
     Pick<FormFieldProps, "before" | "after" | "status"> {
   multiline?: boolean;
   disabled?: boolean;
-  selectType?: keyof typeof SelectType;
+  selectType?: SelectType;
 }
 
-const SelectMimicryComponent = ({
+/**
+ * @see https://vkcom.github.io/VKUI/#/SelectMimicry
+ */
+export const SelectMimicry = ({
   tabIndex = 0,
   placeholder,
   children,
@@ -30,31 +34,31 @@ const SelectMimicryComponent = ({
   multiline,
   disabled,
   onClick,
-  sizeX,
-  sizeY,
   before,
   after = <DropdownIcon />,
-  selectType = SelectType.default,
+  selectType = "default",
   status,
+  className,
   ...restProps
 }: SelectMimicryProps) => {
   const platform = usePlatform();
+  const { sizeX, sizeY } = useAdaptivity();
   const title = children || placeholder;
 
   return (
     <FormField
       {...restProps}
       tabIndex={disabled ? undefined : tabIndex}
-      vkuiClass={classNames(
-        getClassName("Select", platform),
-        `Select--${selectType}`,
-        !children && "Select--empty",
-        multiline && "Select--multiline",
-        align && `Select--align-${align}`,
-        `Select--sizeX-${sizeX}`, // TODO v5.0.0 поправить под новую адаптивность
-        `Select--sizeY-${sizeY}`, // TODO v5.0.0 поправить под новую адаптивность
-        before && "Select--hasBefore",
-        after && "Select--hasAfter"
+      className={classNamesString(
+        styles["Select"],
+        getPlatformClassName(styles["Select"], platform),
+        getSizeXClassName(styles["Select"], sizeX),
+        getSizeYClassName(styles["Select"], sizeY),
+        multiline && styles["Select--multiline"],
+        align && styles[`Select--align-${align}`],
+        before && styles["Select--hasBefore"],
+        after && styles["Select--hasAfter"],
+        className
       )}
       getRootRef={getRootRef}
       onClick={disabled ? undefined : onClick}
@@ -64,22 +68,14 @@ const SelectMimicryComponent = ({
       mode={getFormFieldModeFromSelectType(selectType)}
       status={status}
     >
-      <div vkuiClass="Select__container">
-        {/* TODO v5.0.0 поправить под новую адаптивность */}
-        <SelectTypography selectType={selectType} vkuiClass="Select__title">
+      <div className={styles["Select__container"]}>
+        <SelectTypography
+          selectType={selectType}
+          className={styles["Select__title"]}
+        >
           {title}
         </SelectTypography>
       </div>
     </FormField>
   );
 };
-
-/**
- * @see https://vkcom.github.io/VKUI/#/SelectMimicry
- */
-export const SelectMimicry = withAdaptivity(SelectMimicryComponent, {
-  sizeX: true,
-  sizeY: true,
-});
-
-SelectMimicry.displayName = "SelectMimicry";

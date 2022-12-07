@@ -35,7 +35,7 @@ const Example = () => {
   return (
     <div style={gaps}>
       <ConfigProvider platform="android">
-        <AdaptivityProvider hasMouse={false}>
+        <AdaptivityProvider hasPointer={false}>
           <Tappable activeMode="background" hasActive>
             <Text style={gaps}>Нажми на меня</Text>
           </Tappable>

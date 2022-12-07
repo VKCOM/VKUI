@@ -13,12 +13,22 @@ export interface AppRootPortalProps {
 export const AppRootPortal = ({
   children,
   className,
-  forcePortal,
+  forcePortal: forcePortalProp,
 }: AppRootPortalProps) => {
+  const [mounted, setMounted] = React.useState(false);
   const { portalRoot, mode, disablePortal } = React.useContext(AppRootContext);
   const appearance = useAppearance();
 
-  forcePortal = forcePortal ?? mode !== "full";
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  const forcePortal = forcePortalProp ?? mode !== "full";
+
   return !disablePortal && portalRoot && forcePortal ? (
     createPortal(
       <AppearanceProvider appearance={appearance}>

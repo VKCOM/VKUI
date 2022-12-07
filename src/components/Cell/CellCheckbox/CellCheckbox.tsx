@@ -5,12 +5,12 @@ import {
   Icon24CheckCircleOff,
   Icon24CheckCircleOn,
 } from "@vkontakte/icons";
-import { getClassName } from "../../../helpers/getClassName";
+import { getPlatformClassName } from "../../../helpers/getPlatformClassName";
 import { usePlatform } from "../../../hooks/usePlatform";
-import { classNames } from "../../../lib/classNames";
-import { ANDROID } from "../../../lib/platform";
+import { classNamesString } from "../../../lib/classNames";
+import { Platform } from "../../../lib/platform";
 import { CellProps } from "../Cell";
-import "./CellCheckbox.css";
+import styles from "./CellCheckbox.module.css";
 
 export type CellCheckboxProps = Pick<CellProps, "defaultChecked" | "checked"> &
   React.InputHTMLAttributes<HTMLInputElement>;
@@ -23,19 +23,45 @@ export const CellCheckbox = ({
   const platform = usePlatform();
 
   const IconOff =
-    platform === ANDROID ? Icon24CheckBoxOff : Icon24CheckCircleOff;
+    platform === Platform.IOS || platform === Platform.VKCOM
+      ? Icon24CheckCircleOff
+      : Icon24CheckBoxOff;
 
-  const IconOn = platform === ANDROID ? Icon24CheckBoxOn : Icon24CheckCircleOn;
+  const IconOn =
+    platform === Platform.IOS || platform === Platform.VKCOM
+      ? Icon24CheckCircleOn
+      : Icon24CheckBoxOn;
 
   return (
     <div
-      vkuiClass={classNames(getClassName("CellCheckbox", platform))}
-      className={className}
+      className={classNamesString(
+        styles["CellCheckbox"],
+        getPlatformClassName(styles["CellCheckbox"], platform),
+        className
+      )}
       style={style}
     >
-      <input vkuiClass="CellCheckbox__input" type="checkbox" {...restProps} />
-      <IconOff vkuiClass="CellCheckbox__icon CellCheckbox__icon--off" />
-      <IconOn vkuiClass="CellCheckbox__icon CellCheckbox__icon--on" />
+      <input
+        className={styles["CellCheckbox__input"]}
+        type="checkbox"
+        {...restProps}
+      />
+      <span
+        className={classNamesString(
+          styles["CellCheckbox__icon"],
+          styles["CellCheckbox__icon--off"]
+        )}
+      >
+        <IconOff />
+      </span>
+      <span
+        className={classNamesString(
+          styles["CellCheckbox__icon"],
+          styles["CellCheckbox__icon--on"]
+        )}
+      >
+        <IconOn />
+      </span>
     </div>
   );
 };

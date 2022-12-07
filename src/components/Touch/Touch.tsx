@@ -172,13 +172,15 @@ export const Touch = ({
         const willBeSlidedX = willBeX && (!!onMoveX || !!_onMove);
         const willBeSlidedY = willBeY && (!!onMoveY || !!_onMove);
 
-        Object.assign(gesture.current, {
-          isY: willBeY,
-          isX: willBeX,
-          isSlideX: willBeSlidedX,
-          isSlideY: willBeSlidedY,
-          isSlide: willBeSlidedX || willBeSlidedY,
-        });
+        if (gesture.current) {
+          Object.assign(gesture.current, {
+            isY: willBeY,
+            isX: willBeX,
+            isSlideX: willBeSlidedX,
+            isSlideY: willBeSlidedY,
+            isSlide: willBeSlidedX || willBeSlidedY,
+          });
+        }
       }
 
       if (gesture.current?.isSlide) {

@@ -1,10 +1,10 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { hasReactNode } from "../../lib/utils";
 import { Title } from "../Typography/Title/Title";
 import { Headline } from "../Typography/Headline/Headline";
 import { HasRootRef } from "../../types";
-import "./Placeholder.css";
+import styles from "./Placeholder.module.css";
 
 export interface PlaceholderProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -37,27 +37,34 @@ export const Placeholder = ({
   children,
   stretched,
   getRootRef,
+  className,
   ...restProps
 }: PlaceholderProps) => (
   <div
     {...restProps}
     ref={getRootRef}
-    vkuiClass={classNames("Placeholder", stretched && "Placeholder--stretched")}
+    className={classNamesString(
+      styles["Placeholder"],
+      stretched && styles["Placeholder--stretched"],
+      className
+    )}
   >
-    <div vkuiClass="Placeholder__in">
-      {hasReactNode(icon) && <div vkuiClass="Placeholder__icon">{icon}</div>}
+    <div className={styles["Placeholder__in"]}>
+      {hasReactNode(icon) && (
+        <div className={styles["Placeholder__icon"]}>{icon}</div>
+      )}
       {hasReactNode(header) && (
-        <Title level="2" weight="2" vkuiClass="Placeholder__header">
+        <Title level="2" weight="2" className={styles["Placeholder__header"]}>
           {header}
         </Title>
       )}
       {hasReactNode(children) && (
-        <Headline weight="3" vkuiClass="Placeholder__text">
+        <Headline weight="3" className={styles["Placeholder__text"]}>
           {children}
         </Headline>
       )}
       {hasReactNode(action) && (
-        <div vkuiClass="Placeholder__action">{action}</div>
+        <div className={styles["Placeholder__action"]}>{action}</div>
       )}
     </div>
   </div>

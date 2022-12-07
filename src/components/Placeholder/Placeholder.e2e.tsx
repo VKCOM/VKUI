@@ -1,9 +1,10 @@
+import * as React from "react";
 import { Icon56UserAddOutline } from "@vkontakte/icons";
 import { Button } from "../Button/Button";
 import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
 import { Placeholder, PlaceholderProps } from "./Placeholder";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import { SizeType } from "../AdaptivityProvider/AdaptivityContext";
+import { SizeType } from "../../lib/adaptivity";
 
 const propsPlaceholder = {
   icon: [<Icon56UserAddOutline key="icon-56" />, undefined],

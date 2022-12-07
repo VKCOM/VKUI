@@ -1,42 +1,24 @@
 import * as React from "react";
-import { withAdaptivity, ViewWidth } from "../../hoc/withAdaptivity";
+import { classNamesString } from "../../lib/classNames";
 import { ScrollSaver } from "./ScrollSaver";
 import { getNavId } from "../../lib/getNavId";
 import { warnOnce } from "../../lib/warnOnce";
-import {
-  AdaptivityContextInterface,
-  AdaptivityProps,
-} from "../AdaptivityProvider/AdaptivityContext";
-import { SMALL_TABLET_SIZE } from "../AdaptivityProvider/AdaptivityProvider";
-import "./Epic.css";
+import styles from "./Epic.module.css";
 
-export interface EpicProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    AdaptivityProps {
+export interface EpicProps extends React.HTMLAttributes<HTMLDivElement> {
   tabbar?: React.ReactNode;
   activeStory: string;
 }
 
 const warn = warnOnce("Epic");
 
-const EpicComponent = ({
-  activeStory,
-  tabbar,
-  children,
-  viewWidth,
-  ...restProps
-}: EpicProps & AdaptivityContextInterface) => {
+/**
+ * @see https://vkcom.github.io/VKUI/#/Epic
+ */
+export const Epic = (props: EpicProps) => {
   const scroll = React.useRef<{ [key: string]: number }>({}).current;
+  const { activeStory, tabbar, children, className, ...restProps } = props;
 
-  if (
-    process.env.NODE_ENV === "development" &&
-    !tabbar &&
-    viewWidth < ViewWidth.SMALL_TABLET
-  ) {
-    warn(
-      `Не рекомендуется использовать Epic без Tabbar при ширине окна меньше ${SMALL_TABLET_SIZE}px`
-    );
-  }
   const story =
     (React.Children.toArray(children).find(
       (story) =>
@@ -45,7 +27,7 @@ const EpicComponent = ({
     ) as React.ReactElement | undefined) ?? null;
 
   return (
-    <div {...restProps} vkuiClass="Epic">
+    <div {...restProps} className={classNamesString(styles["Epic"], className)}>
       <ScrollSaver
         key={activeStory}
         initialScroll={scroll[activeStory] || 0}
@@ -57,12 +39,3 @@ const EpicComponent = ({
     </div>
   );
 };
-
-/**
- * @see https://vkcom.github.io/VKUI/#/Epic
- */
-export const Epic = withAdaptivity(EpicComponent, {
-  viewWidth: true,
-});
-
-Epic.displayName = "Epic";

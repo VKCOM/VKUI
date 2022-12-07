@@ -1,3 +1,4 @@
+import * as React from "react";
 import { describeScreenshotFuzz } from "../../../testing/e2e/utils";
 import { Caption, CaptionProps } from "./Caption";
 
@@ -10,7 +11,7 @@ describe("Caption", () => {
     ),
     [
       {
-        level: ["1", "2", "3", "4"],
+        level: ["1", "2", "3"],
         weight: [undefined, "1", "2", "3"],
         caps: [undefined, true],
       },

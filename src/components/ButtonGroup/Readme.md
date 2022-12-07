@@ -3,7 +3,7 @@
 ## Что следует знать?
 
 1. [ButtonGroup](#!/ButtonGroup) не отвечает за параметры [Button](#!/Button) и вложенных [ButtonGroup](#!/ButtonGroup).
-2. Исходя из п. 1, параметр `stretched` растягивает тот [ButtonGroup](#!/ButtonGroup), который имеет это св-во. Для компонента [Button](#!/Button) и вложенных [ButtonGroup](#!/ButtonGroup) его следует определять самостоятельно, где это необходимо.
+2. Исходя из п. 1, параметр `stretched` растягивает тот [ButtonGroup](#!/ButtonGroup), который имеет это свойство. Для компонента [Button](#!/Button) и вложенных [ButtonGroup](#!/ButtonGroup) его следует определять самостоятельно, где это необходимо.
 
 ```jsx { "props": { "layout": false, "iframe": false } }
 const ButtonGroupPropsForm = ({ caption, defaultProps, onChange }) => {
@@ -62,7 +62,7 @@ const ButtonGroupPropsForm = ({ caption, defaultProps, onChange }) => {
       </Checkbox>
       {caption && (
         <FormItem>
-          <Caption level="1">({caption})</Caption>
+          <Footnote>({caption})</Footnote>
         </FormItem>
       )}
     </React.Fragment>

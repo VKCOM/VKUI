@@ -1,0 +1,18 @@
+.Paragraph {
+  font-size: var(--vkui--font_paragraph--font_size--regular);
+  line-height: var(--vkui--font_paragraph--line_height--regular);
+  font-weight: var(--vkui--font_paragraph--font_weight--regular);
+  font-family: var(--vkui--font_paragraph--font_family--regular);
+}
+
+.Paragraph--weight-1 {
+  font-weight: var(--vkui--font_weight_accent1);
+}
+
+.Paragraph--weight-2 {
+  font-weight: var(--vkui--font_weight_accent2);
+}
+
+.Paragraph--weight-3 {
+  font-weight: var(--vkui--font_weight_accent3);
+}

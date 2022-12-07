@@ -1,20 +1,17 @@
 import * as React from "react";
-import { getClassName } from "../../helpers/getClassName";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { Button, VKUIButtonProps } from "../Button/Button";
 import { HasRef, HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
 import { VisuallyHiddenInput } from "../VisuallyHiddenInput/VisuallyHiddenInput";
+import { classNamesString } from "../../lib/classNames";
+import styles from "./File.module.css";
 
 export interface FileProps
   extends Omit<VKUIButtonProps, "type">,
     Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size">,
     HasRef<HTMLInputElement>,
-    HasRootRef<HTMLElement> {
-  /**
-   * @deprecated Будет удалено в 5.0.0. Используйте size
-   */
-  controlSize?: VKUIButtonProps["size"];
-}
+    HasRootRef<HTMLElement> {}
 
 /**
  * @see https://vkcom.github.io/VKUI/#/File
@@ -22,8 +19,6 @@ export interface FileProps
 export const File = ({
   children = "Выберите файл",
   align = "left",
-  // TODO: v5.0.0 удалить controlSize
-  controlSize,
   size,
   mode,
   stretched,
@@ -43,13 +38,15 @@ export const File = ({
     <Button
       Component="label"
       align={align}
-      vkuiClass={getClassName("File", platform)}
-      className={className}
+      className={classNamesString(
+        styles["File"],
+        getPlatformClassName(styles["File"], platform),
+        className
+      )}
       stretched={stretched}
       mode={mode}
       appearance={appearance}
-      // TODO: v5.0.0 удалить controlSize
-      size={size ?? controlSize}
+      size={size}
       before={before}
       after={after}
       loading={loading}
@@ -59,7 +56,7 @@ export const File = ({
     >
       <VisuallyHiddenInput
         {...restProps}
-        vkuiClass="File__input"
+        className={styles["File__input"]}
         type="file"
         getRef={getRef}
       />

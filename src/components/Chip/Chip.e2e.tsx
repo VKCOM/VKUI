@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Chip, ChipProps } from "./Chip";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 

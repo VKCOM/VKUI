@@ -10,15 +10,13 @@
 Также на Android могут быть какие-то дополнительные кнопки-иконки справа, а на iOS – слева.
 
 ```jsx static
-import { ModalPageHeader, ANDROID, IOS, usePlatform } from "@vkontakte/vkui";
-
 const platform = usePlatform();
 
 return (
   <ModalPageHeader
     before={
       <Fragment>
-        {(platform === ANDROID || platform === VKCOM) && (
+        {(platform === Platform.ANDROID || platform === Platform.VKCOM) && (
           <PanelHeaderButton onClick={this.backModal}>
             <Icon24Cancel />
           </PanelHeaderButton>
@@ -27,12 +25,12 @@ return (
     }
     after={
       <Fragment>
-        {(platform === ANDROID || platform === VKCOM) && (
+        {(platform === Platform.ANDROID || platform === Platform.VKCOM) && (
           <PanelHeaderButton onClick={this.backModal}>
             <Icon24Done />
           </PanelHeaderButton>
         )}
-        {platform === IOS && (
+        {platform === Platform.IOS && (
           <PanelHeaderButton onClick={this.backModal}>Готово</PanelHeaderButton>
         )}
       </Fragment>

@@ -8,57 +8,57 @@ import {
   PanelHeaderButton,
   PanelHeaderButtonProps,
 } from "../PanelHeaderButton/PanelHeaderButton";
-import { ANDROID, VKCOM, IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { usePlatform } from "../../hooks/usePlatform";
-import {
-  withAdaptivity,
-  SizeType,
-  AdaptivityProps,
-} from "../../hoc/withAdaptivity";
-import { classNames } from "../../lib/classNames";
-import "./PanelHeaderBack.css";
+import { classNamesString } from "../../lib/classNames";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import styles from "./PanelHeaderBack.module.css";
 
-export type PanelHeaderBackProps = PanelHeaderButtonProps &
-  AdaptivityProps & {
-    "aria-label"?: string;
-  };
+export type PanelHeaderBackProps = PanelHeaderButtonProps & {
+  "aria-label"?: string;
+};
 
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderBack
  */
-export const PanelHeaderBackComponent = ({
+export const PanelHeaderBack = ({
   label,
-  sizeX,
   "aria-label": ariaLabel = "Назад",
+  className,
   ...restProps
-}: PanelHeaderButtonProps & AdaptivityProps) => {
+}: PanelHeaderButtonProps) => {
   const platform = usePlatform();
-  const showLabel =
-    platform === VKCOM || (platform === IOS && sizeX === SizeType.REGULAR);
+  const { sizeX } = useAdaptivity();
+  // так-же label нужно скрывать при platform === Platform.IOS && sizeX === regular
+  // https://github.com/VKCOM/VKUI/blob/master/src/components/PanelHeaderButton/PanelHeaderButton.css#L104
+  const showLabel = platform === Platform.VKCOM || platform === Platform.IOS;
+
+  let icon = <Icon28ArrowLeftOutline />;
+  switch (platform) {
+    case Platform.IOS:
+      icon = <Icon28ChevronBack />;
+      break;
+    case Platform.VKCOM:
+      icon = <Icon28ChevronLeftOutline />;
+      break;
+  }
 
   return (
     <PanelHeaderButton
       {...restProps}
-      aria-label={ariaLabel}
-      vkuiClass={classNames(
-        "PanelHeaderBack",
-        platform === IOS && "PanelHeaderBack--ios",
-        platform === VKCOM && "PanelHeaderBack--vkcom",
-        showLabel && !!label && "PanelHeaderBack--has-label"
+      className={classNamesString(
+        styles["PanelHeaderBack"],
+        getSizeXClassName(styles["PanelHeaderBack"], sizeX),
+        platform === Platform.IOS && styles["PanelHeaderBack--ios"],
+        platform === Platform.VKCOM && styles["PanelHeaderBack--vkcom"],
+        showLabel && !!label && styles["PanelHeaderBack--has-label"],
+        className
       )}
       label={showLabel && label}
+      aria-label={ariaLabel}
     >
-      {platform === ANDROID && <Icon28ArrowLeftOutline />}
-      {platform === VKCOM && <Icon28ChevronLeftOutline />}
-      {platform === IOS && <Icon28ChevronBack />}
+      {icon}
     </PanelHeaderButton>
   );
 };
-
-export const PanelHeaderBack = React.memo(
-  withAdaptivity(PanelHeaderBackComponent, {
-    sizeX: true,
-  })
-);
-
-PanelHeaderBack.displayName = "PanelHeaderBack";

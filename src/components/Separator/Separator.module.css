@@ -1,0 +1,42 @@
+.Separator {
+  color: var(--vkui--color_separator_primary);
+}
+
+@media (min-resolution: 2dppx) {
+  .Separator {
+    color: var(--vkui--color_separator_primary2x);
+  }
+}
+
+@media (min-resolution: 3dppx) {
+  .Separator {
+    color: var(--vkui--color_separator_primary3x);
+  }
+}
+
+.Separator__in {
+  height: var(--vkui_internal--thin_border);
+  background: currentColor;
+  transform-origin: center top;
+}
+
+.Separator--padded .Separator__in {
+  margin-left: var(--vkui--size_base_padding_horizontal--regular);
+  margin-right: var(--vkui--size_base_padding_horizontal--regular);
+}
+
+/*
+ * CMP:
+ * ModalPage
+ */
+.ModalPage--sizeX-regular .Separator--padded {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+@media (--sizeX-regular) {
+  .ModalPage--sizeX-none .Separator--padded {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}

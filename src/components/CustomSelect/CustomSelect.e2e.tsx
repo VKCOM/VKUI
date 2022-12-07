@@ -1,10 +1,10 @@
+import * as React from "react";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import { CustomSelect, CustomSelectProps } from "../CustomSelect/CustomSelect";
-import { SelectType } from "../Select/Select";
+import { CustomSelect, SelectProps } from "../CustomSelect/CustomSelect";
 
 describe("CustomSelect", () => {
   describeScreenshotFuzz(
-    (props: CustomSelectProps) => (
+    (props: SelectProps) => (
       <CustomSelect
         placeholder="Не выбрана"
         {...props}
@@ -28,7 +28,7 @@ describe("CustomSelect", () => {
         value: [3],
       },
       {
-        selectType: [SelectType.plain, SelectType.accent],
+        selectType: ["plain", "accent"],
         $adaptivity: "y",
       },
       {

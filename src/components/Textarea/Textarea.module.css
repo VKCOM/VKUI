@@ -1,0 +1,59 @@
+.Textarea {
+  position: relative;
+}
+
+.Textarea__el {
+  margin: 0;
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  resize: none;
+  appearance: none;
+  font-family: inherit;
+  font-weight: var(--vkui--font_text--font_weight--regular);
+  font-size: var(--vkui--font_text--font_size--regular);
+  line-height: var(--vkui--font_text--line_height--regular);
+  color: var(--vkui--color_text_primary);
+  padding: 12px;
+  max-height: 204px;
+  border: none;
+  z-index: 6;
+  position: relative;
+  background: transparent;
+}
+
+.Textarea__el:focus {
+  outline: none;
+}
+
+.Textarea__el[cols] {
+  width: initial;
+}
+
+.Textarea--sizeY-compact .Textarea__el {
+  font-size: var(--vkui--font_text--font_size--compact);
+  line-height: var(--vkui--font_text--line_height--compact);
+  max-height: 196px;
+}
+
+@media (--sizeY-compact) {
+  .Textarea--sizeY-none .Textarea__el {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    font-size: 15px;
+  }
+}
+
+.Textarea__el::placeholder {
+  color: var(--vkui--color_text_secondary);
+  /* Для Firefox */
+  opacity: 1;
+}
+
+.Textarea__el:disabled {
+  opacity: var(--vkui--opacity_disable_accessibility);
+}
+
+.Textarea__el:disabled::placeholder {
+  color: var(--vkui--color_text_secondary);
+}

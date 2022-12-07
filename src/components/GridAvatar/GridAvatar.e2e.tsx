@@ -1,5 +1,7 @@
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import { GridAvatarProps, GridAvatar } from "./GridAvatar";
+import * as React from "react";
+import { IconExampleForBadgeBasedOnImageBaseSize } from "../../testing/icons";
+import { describeScreenshotFuzz } from "../../testing/e2e";
+import { GridAvatar } from "./GridAvatar";
 
 const base64Image =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAACXBIWXMAAC4jAAAuIwF4pT92AAAA+" +
@@ -9,19 +11,21 @@ const base64Image =
   "SUVORK5CYII=";
 
 describe("GridAvatar", () => {
-  describeScreenshotFuzz(
-    (props: GridAvatarProps) => <GridAvatar {...props} />,
-    [
-      {
-        size: [96, 28],
-        src: [
-          [],
-          [base64Image],
-          [base64Image, base64Image],
-          [base64Image, base64Image, base64Image],
-          [base64Image, base64Image, base64Image, base64Image],
-        ],
-      },
-    ]
-  );
+  describeScreenshotFuzz(GridAvatar, [
+    {
+      size: [96, 28],
+      src: [
+        [],
+        [base64Image],
+        [base64Image, base64Image],
+        [base64Image, base64Image, base64Image],
+        [base64Image, base64Image, base64Image, base64Image],
+      ],
+      children: [
+        <GridAvatar.Badge key="badge">
+          <IconExampleForBadgeBasedOnImageBaseSize />
+        </GridAvatar.Badge>,
+      ],
+    },
+  ]);
 });

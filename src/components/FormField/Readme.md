@@ -25,7 +25,6 @@ const CustomInput = () => {
     color: "#000",
     border: "none",
     background: "transparent",
-    zIndex: 2,
   };
 
   return <input type="text" style={style} placeholder="Кастомный инпут" />;

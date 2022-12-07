@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Icon28VoiceOutline } from "@vkontakte/icons";
 import { describeScreenshotFuzz } from "../../testing/e2e";
 import { WriteBarIcon } from "./WriteBarIcon";

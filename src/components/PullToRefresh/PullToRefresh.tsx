@@ -1,8 +1,8 @@
 import * as React from "react";
-import { AnyFunction, HasPlatform } from "../../types";
+import { AnyFunction } from "../../types";
 import { DOMProps, useDOM } from "../../lib/dom";
-import { classNames } from "../../lib/classNames";
-import { IOS } from "../../lib/platform";
+import { classNamesString } from "../../lib/classNames";
+import { Platform } from "../../lib/platform";
 import { runTapticImpactOccurred } from "../../lib/taptic";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { usePlatform } from "../../hooks/usePlatform";
@@ -14,6 +14,8 @@ import { PullToRefreshSpinner } from "./PullToRefreshSpinner";
 import TouchRootContext from "../Touch/TouchContext";
 import { usePrevious } from "../../hooks/usePrevious";
 import { useTimeout } from "../../hooks/useTimeout";
+import { clamp } from "../../helpers/math";
+import styles from "./PullToRefresh.module.css";
 
 function cancelEvent(event: any) {
   if (!event) {
@@ -31,7 +33,7 @@ function cancelEvent(event: any) {
   return false;
 }
 
-export interface PullToRefreshProps extends DOMProps, TouchProps, HasPlatform {
+export interface PullToRefreshProps extends DOMProps, TouchProps {
   /**
    * Будет вызвана для обновления контента (прим.: функция должна быть мемоизированным коллбэком)
    */
@@ -57,6 +59,7 @@ export const PullToRefresh = ({
   children,
   isFetching,
   onRefresh,
+  className,
   ...restProps
 }: PullToRefreshProps) => {
   const platform = usePlatform();
@@ -66,11 +69,11 @@ export const PullToRefresh = ({
 
   const initParams = React.useMemo(
     () => ({
-      start: platform === IOS ? -10 : -45,
-      max: platform === IOS ? 50 : 80,
-      maxY: platform === IOS ? 400 : 80,
-      refreshing: platform === IOS ? 36 : 50,
-      positionMultiplier: platform === IOS ? 0.21 : 1,
+      start: platform === Platform.IOS ? -10 : -45,
+      max: platform === Platform.IOS ? 50 : 80,
+      maxY: platform === Platform.IOS ? 400 : 80,
+      refreshing: platform === Platform.IOS ? 36 : 50,
+      positionMultiplier: platform === Platform.IOS ? 0.21 : 1,
     }),
     [platform]
   );
@@ -137,7 +140,7 @@ export const PullToRefresh = ({
 
       setRefreshing(true);
       setSpinnerY((prevSpinnerY) =>
-        platform === IOS ? prevSpinnerY : initParams.refreshing
+        platform === Platform.IOS ? prevSpinnerY : initParams.refreshing
       );
 
       onRefresh();
@@ -197,19 +200,16 @@ export const PullToRefresh = ({
 
       const shift = Math.max(0, shiftY - touchY.current);
 
-      const currentY = Math.max(
-        start,
-        Math.min(maxY, start + shift * positionMultiplier)
-      );
+      const currentY = clamp(start + shift * positionMultiplier, start, maxY);
       const progress =
         currentY > -10 ? Math.abs((currentY + 10) / max) * 80 : 0;
 
       setSpinnerY(currentY);
-      setSpinnerProgress(Math.min(80, Math.max(0, progress)));
+      setSpinnerProgress(clamp(progress, 0, 80));
       setCanRefresh(progress > 80);
       setContentShift((currentY + 10) * 2.3);
 
-      if (progress > 85 && !refreshing && platform === IOS) {
+      if (progress > 85 && !refreshing && platform === Platform.IOS) {
         runRefreshing();
       }
     } else if (
@@ -236,9 +236,9 @@ export const PullToRefresh = ({
   const spinnerTransform = `translate3d(0, ${spinnerY}px, 0)`;
   let contentTransform = "";
 
-  if (platform === IOS && refreshing && !touchDown) {
+  if (platform === Platform.IOS && refreshing && !touchDown) {
     contentTransform = "translate3d(0, 100px, 0)";
-  } else if (platform === IOS && (contentShift || refreshing)) {
+  } else if (platform === Platform.IOS && (contentShift || refreshing)) {
     contentTransform = `translate3d(0, ${contentShift}px, 0)`;
   }
 
@@ -249,14 +249,15 @@ export const PullToRefresh = ({
         onStart={onTouchStart}
         onMove={onTouchMove}
         onEnd={onTouchEnd}
-        vkuiClass={classNames(
-          "PullToRefresh",
-          platform === IOS && "PullToRefresh--ios",
-          watching && "PullToRefresh--watching",
-          refreshing && "PullToRefresh--refreshing"
+        className={classNamesString(
+          styles["PullToRefresh"],
+          platform === Platform.IOS && styles["PullToRefresh--ios"],
+          watching && styles["PullToRefresh--watching"],
+          refreshing && styles["PullToRefresh--refreshing"],
+          className
         )}
       >
-        <FixedLayout vkuiClass="PullToRefresh__controls">
+        <FixedLayout className={styles["PullToRefresh__controls"]}>
           <PullToRefreshSpinner
             style={{
               transform: spinnerTransform,
@@ -269,7 +270,7 @@ export const PullToRefresh = ({
         </FixedLayout>
 
         <div
-          vkuiClass="PullToRefresh__content"
+          className={styles["PullToRefresh__content"]}
           style={{
             transform: contentTransform,
             WebkitTransform: contentTransform,

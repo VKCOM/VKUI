@@ -17,12 +17,12 @@ const Example = () => {
         header={
           <ModalPageHeader
             before={
-              platform !== IOS && (
+              platform !== Platform.IOS && (
                 <PanelHeaderClose onClick={() => setModalOpened(false)} />
               )
             }
             after={
-              platform === IOS && (
+              platform === Platform.IOS && (
                 <PanelHeaderButton onClick={() => setModalOpened(false)}>
                   <Icon24Dismiss />
                 </PanelHeaderButton>
@@ -100,7 +100,7 @@ const SharedContent = () => {
       <Group header={<Header>Последняя активность</Header>}>
         <SimpleCell
           after={
-            platform === IOS ? (
+            platform === Platform.IOS ? (
               <IconButton aria-label="Подробнее">
                 <Icon16MoreHorizontal />
               </IconButton>
@@ -117,7 +117,7 @@ const SharedContent = () => {
         </SimpleCell>
         <SimpleCell
           after={
-            platform === IOS ? (
+            platform === Platform.IOS ? (
               <IconButton aria-label="Подробнее">
                 <Icon16MoreHorizontal />
               </IconButton>

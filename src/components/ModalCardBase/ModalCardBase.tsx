@@ -2,19 +2,17 @@ import * as React from "react";
 import { hasReactNode } from "../../lib/utils";
 import { Title } from "../Typography/Title/Title";
 import { Subhead } from "../Typography/Subhead/Subhead";
-import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
+import { classNamesString } from "../../lib/classNames";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { usePlatform } from "../../hooks/usePlatform";
-import { ViewWidth, withAdaptivity } from "../../hoc/withAdaptivity";
 import { HasRootRef } from "../../types";
 import { PanelHeaderButton } from "../PanelHeaderButton/PanelHeaderButton";
-import { IOS, Platform } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { ModalDismissButton } from "../ModalDismissButton/ModalDismissButton";
 import { Icon24Dismiss } from "@vkontakte/icons";
 import { useKeyboard } from "../../hooks/useKeyboard";
-import { AdaptivityContextInterface } from "../AdaptivityProvider/AdaptivityContext";
-import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
-import "./ModalCardBase.css";
+import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
+import styles from "./ModalCardBase.module.css";
 
 export interface ModalCardBaseProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -37,16 +35,18 @@ export interface ModalCardBaseProps
   subheader?: React.ReactNode;
 
   /**
-   * Кнопки-действия.
+   * Кнопки-действия. Принимает [`Button`](https://vkcom.github.io/VKUI/#/Button) с параметрами:
    *
-   * Рекомендуется использовать `<Button size="l" mode="primary" />` или `<Button size="l" mode="secondary" />`
+   * - `size="l" mode="primary" stretched`
+   * - `size="l" mode="secondary" stretched`
+   *
+   * Для набора кнопок используйте [`ButtonGroup`](https://vkcom.github.io/VKUI/#/ButtonGroup) с параметрами:
+   *
+   * - `gap="s" mode="horizontal" stretched`
+   * - `gap="m" mode="vertical" stretched`
    */
   actions?: React.ReactNode;
 
-  /**
-   * Тип отображения кнопок: вертикальный или горизонтальный
-   */
-  actionsLayout?: "vertical" | "horizontal";
   onClose?: VoidFunction;
 
   /**
@@ -58,92 +58,77 @@ export interface ModalCardBaseProps
 /**
  * @see https://vkcom.github.io/VKUI/#/ModalCardBase
  */
-export const ModalCardBase = withAdaptivity<
-  ModalCardBaseProps & AdaptivityContextInterface
->(
-  ({
-    getRootRef,
-    icon,
-    header,
-    subheader,
-    children,
-    actions,
-    actionsLayout,
-    viewWidth,
-    hasMouse,
-    viewHeight,
-    onClose,
-    dismissLabel = "Скрыть",
-    ...restProps
-  }) => {
-    const platform = usePlatform();
-    const isDesktop = useAdaptivityIsDesktop();
-    const isSoftwareKeyboardOpened = useKeyboard().isOpened;
+export const ModalCardBase = ({
+  getRootRef,
+  icon,
+  header,
+  subheader,
+  children,
+  actions,
+  onClose,
+  dismissLabel = "Скрыть",
+  className,
+  ...restProps
+}: ModalCardBaseProps) => {
+  const platform = usePlatform();
+  const { isDesktop } = useAdaptivityWithJSMediaQueries();
+  const isSoftwareKeyboardOpened = useKeyboard().isOpened;
 
-    const canShowCloseBtn =
-      viewWidth >= ViewWidth.SMALL_TABLET || platform === Platform.VKCOM;
-    const canShowCloseBtnIos = platform === IOS && !canShowCloseBtn;
+  const canShowCloseButtonIOS = platform === Platform.IOS && !isDesktop;
 
-    return (
+  return (
+    <div
+      {...restProps}
+      className={classNamesString(
+        styles["ModalCardBase"],
+        getPlatformClassName(styles["ModalCardBase"], platform),
+        isDesktop && styles["ModalCardBase--desktop"],
+        className
+      )}
+      ref={getRootRef}
+    >
       <div
-        {...restProps}
-        vkuiClass={classNames(
-          getClassName("ModalCardBase", platform),
-          isDesktop && "ModalCardBase--desktop"
+        className={classNamesString(
+          styles["ModalCardBase__container"],
+          isSoftwareKeyboardOpened &&
+            styles["ModalCardBase__container--softwareKeyboardOpened"]
         )}
-        ref={getRootRef}
       >
-        <div
-          vkuiClass={classNames(
-            "ModalCardBase__container",
-            isSoftwareKeyboardOpened &&
-              "ModalCardBase__container--softwareKeyboardOpened"
-          )}
-        >
-          {hasReactNode(icon) && (
-            <div vkuiClass="ModalCardBase__icon">{icon}</div>
-          )}
-          {hasReactNode(header) && (
-            <Title level="2" weight="2" vkuiClass="ModalCardBase__header">
-              {header}
-            </Title>
-          )}
-          {hasReactNode(subheader) && (
-            <Subhead vkuiClass="ModalCardBase__subheader">{subheader}</Subhead>
-          )}
+        {hasReactNode(icon) && (
+          <div className={styles["ModalCardBase__icon"]}>{icon}</div>
+        )}
+        {hasReactNode(header) && (
+          <Title
+            level="2"
+            weight="2"
+            className={styles["ModalCardBase__header"]}
+          >
+            {header}
+          </Title>
+        )}
+        {hasReactNode(subheader) && (
+          <Subhead className={styles["ModalCardBase__subheader"]}>
+            {subheader}
+          </Subhead>
+        )}
 
-          {children}
+        {children}
 
-          {hasReactNode(actions) && (
-            <div
-              vkuiClass={classNames(
-                "ModalCardBase__actions",
-                actionsLayout === "vertical" && "ModalCardBase__actions--v"
-              )}
-            >
-              {actions}
-            </div>
-          )}
+        {hasReactNode(actions) && (
+          <div className={styles["ModalCardBase__actions"]}>{actions}</div>
+        )}
 
-          {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}
-          {canShowCloseBtnIos && (
-            <PanelHeaderButton
-              aria-label={dismissLabel}
-              vkuiClass="ModalCardBase__dismiss"
-              onClick={onClose}
-            >
-              <Icon24Dismiss />
-            </PanelHeaderButton>
-          )}
-        </div>
+        {isDesktop && <ModalDismissButton onClick={onClose} />}
+        {canShowCloseButtonIOS && (
+          <PanelHeaderButton
+            aria-label={dismissLabel}
+            className={styles["ModalCardBase__dismiss"]}
+            onClick={onClose}
+          >
+            <Icon24Dismiss />
+          </PanelHeaderButton>
+        )}
       </div>
-    );
-  },
-  {
-    viewWidth: true,
-    viewHeight: true,
-    hasMouse: true,
-  }
-);
-
-ModalCardBase.displayName = "ModalCardBase";
+    </div>
+  );
+};

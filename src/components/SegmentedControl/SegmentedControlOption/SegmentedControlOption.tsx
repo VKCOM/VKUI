@@ -1,16 +1,15 @@
+import * as React from "react";
 import { useAdaptivity } from "../../../hooks/useAdaptivity";
 import { useFocusVisible } from "../../../hooks/useFocusVisible";
 import { callMultiple } from "../../../lib/callMultiple";
-import { classNames } from "../../../lib/classNames";
-import { SizeType } from "../../AdaptivityProvider/AdaptivityContext";
+import { classNamesString } from "../../../lib/classNames";
 import { FocusVisible } from "../../FocusVisible/FocusVisible";
-import { Text } from "../../Typography/Text/Text";
-import { Caption } from "../../Typography/Caption/Caption";
 import {
   VisuallyHiddenInput,
   VisuallyHiddenInputProps,
 } from "../../VisuallyHiddenInput/VisuallyHiddenInput";
-import "./SegmentedControlOption.css";
+import { getSizeYClassName } from "../../../helpers/getSizeYClassName";
+import styles from "./SegmentedControlOption.module.css";
 
 /**
  * @see https://vkcom.github.io/VKUI/#/SegmentedControl
@@ -26,13 +25,13 @@ export const SegmentedControlOption = ({
 
   return (
     <label
-      className={className}
-      style={style}
-      vkuiClass={classNames(
-        "SegmentedControlOption",
-        restProps.checked && "SegmentedControlOption--checked",
-        focusVisible && "SegmentedControlOption--focus-visible"
+      className={classNamesString(
+        styles["SegmentedControlOption"],
+        restProps.checked && styles["SegmentedControlOption--checked"],
+        focusVisible && styles["SegmentedControlOption--focus-visible"],
+        className
       )}
+      style={style}
     >
       <VisuallyHiddenInput
         {...restProps}
@@ -40,20 +39,14 @@ export const SegmentedControlOption = ({
         onBlur={callMultiple(onBlur, restProps.onBlur)}
         onFocus={callMultiple(onFocus, restProps.onFocus)}
       />
-      {/* TODO v5.0.0 поправить под новую адаптивность */}
-      {sizeY === SizeType.COMPACT ? (
-        <Caption
-          level="1"
-          vkuiClass="SegmentedControlOption__content"
-          weight="3"
-        >
-          {children}
-        </Caption>
-      ) : (
-        <Text vkuiClass="SegmentedControlOption__content" weight="2">
-          {children}
-        </Text>
-      )}
+      <span
+        className={classNamesString(
+          styles["SegmentedControlOption__content"],
+          getSizeYClassName(styles["SegmentedControlOption__content"], sizeY)
+        )}
+      >
+        {children}
+      </span>
       <FocusVisible mode="inside" />
     </label>
   );

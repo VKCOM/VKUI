@@ -1,20 +1,15 @@
 import * as React from "react";
 import { ACTIVE_EFFECT_DELAY, Tappable } from "../Tappable/Tappable";
-import { classNames } from "../../lib/classNames";
-import { IOS, VKCOM } from "../../lib/platform";
+import { classNamesString } from "../../lib/classNames";
+import { Platform } from "../../lib/platform";
 import { HasRef, HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
-import {
-  withAdaptivity,
-  AdaptivityProps,
-  SizeType,
-} from "../../hoc/withAdaptivity";
 import { hasReactNode } from "../../lib/utils";
 import { VisuallyHiddenInput } from "../VisuallyHiddenInput/VisuallyHiddenInput";
-import { Caption } from "../Typography/Caption/Caption";
-import { Headline } from "../Typography/Headline/Headline";
-import { Text } from "../Typography/Text/Text";
-import "./Radio.css";
+import { Footnote } from "../Typography/Footnote/Footnote";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import styles from "./Radio.module.css";
 
 const RadioIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
@@ -36,7 +31,7 @@ const RadioIcon = (props: React.SVGProps<SVGSVGElement>) => {
         cx="12"
         cy="12"
         r="7.5"
-        vkuiClass="Radio__pin"
+        className={styles["Radio__pin"]}
         fill="currentColor"
       />
     </svg>
@@ -46,58 +41,53 @@ const RadioIcon = (props: React.SVGProps<SVGSVGElement>) => {
 export interface RadioProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     HasRef<HTMLInputElement>,
-    HasRootRef<HTMLLabelElement>,
-    AdaptivityProps {
+    HasRootRef<HTMLLabelElement> {
   description?: React.ReactNode;
 }
 
-const RadioComponent = ({
+/**
+ * @see https://vkcom.github.io/VKUI/#/Radio
+ */
+export const Radio = ({
   children,
   description,
   style,
   className,
   getRootRef,
-  sizeY,
   ...restProps
 }: RadioProps) => {
   const platform = usePlatform();
-
-  const RadioTypography =
-    platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
+  const { sizeY } = useAdaptivity();
 
   return (
     <Tappable
       Component="label"
       style={style}
-      className={className}
-      vkuiClass={classNames("Radio", `Radio--sizeY-${sizeY}`)}
-      activeEffectDelay={platform === IOS ? 100 : ACTIVE_EFFECT_DELAY}
+      className={classNamesString(
+        styles["Radio"],
+        getSizeYClassName(styles["Radio"], sizeY),
+        className
+      )}
+      activeEffectDelay={platform === Platform.IOS ? 100 : ACTIVE_EFFECT_DELAY}
       disabled={restProps.disabled}
       getRootRef={getRootRef}
     >
       <VisuallyHiddenInput
         {...restProps}
-        vkuiClass="Radio__input"
+        className={styles["Radio__input"]}
         type="radio"
       />
-      <div vkuiClass="Radio__container">
-        <RadioIcon vkuiClass="Radio__icon" />
-        <RadioTypography vkuiClass="Radio__content" Component="div">
-          <div vkuiClass="Radio__children">{children}</div>
+      <div className={styles["Radio__container"]}>
+        <RadioIcon className={styles["Radio__icon"]} />
+        <div className={styles["Radio__content"]}>
+          <div className={styles["Radio__children"]}>{children}</div>
           {hasReactNode(description) && (
-            <Caption vkuiClass="Radio__description">{description}</Caption>
+            <Footnote className={styles["Radio__description"]}>
+              {description}
+            </Footnote>
           )}
-        </RadioTypography>
+        </div>
       </div>
     </Tappable>
   );
 };
-
-/**
- * @see https://vkcom.github.io/VKUI/#/Radio
- */
-export const Radio = withAdaptivity(RadioComponent, {
-  sizeY: true,
-});
-
-Radio.displayName = "Radio";

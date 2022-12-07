@@ -1,3 +1,4 @@
+import * as React from "react";
 import { CardScroll, CardScrollProps } from "./CardScroll";
 import { describeScreenshotFuzz } from "../../testing/e2e";
 import { Card } from "../Card/Card";

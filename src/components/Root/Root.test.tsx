@@ -1,3 +1,4 @@
+import * as React from "react";
 import { act } from "react-dom/test-utils";
 import {
   baselineComponent,
@@ -160,19 +161,6 @@ describe("Root", () => {
       ];
       render(<Root activeView="focus">{views}</Root>).rerender(
         <Root activeView="other">{views}</Root>
-      );
-      expect(document.activeElement === document.body).toBe(true);
-    });
-    it("on popout", () => {
-      renderFocused();
-      render(
-        <Root activeView="focus">
-          <View id="focus" activePanel="" />
-        </Root>
-      ).rerender(
-        <Root activeView="focus" popout={<div />}>
-          <View id="focus" activePanel="" />
-        </Root>
       );
       expect(document.activeElement === document.body).toBe(true);
     });

@@ -1,28 +1,23 @@
 import * as React from "react";
 import { Touch, TouchEvent } from "../Touch/Touch";
-import { classNames } from "../../lib/classNames";
-import { HasPlatform } from "../../types";
-import { ANDROID, IOS, VKCOM } from "../../lib/platform";
+import { classNamesString } from "../../lib/classNames";
+import { Platform } from "../../lib/platform";
 import { rubber } from "../../lib/touch";
-import { withAdaptivity, ViewWidth } from "../../hoc/withAdaptivity";
+import { ViewWidth } from "../../lib/adaptivity";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
+import { Subhead } from "../Typography/Subhead/Subhead";
 import { Button } from "../Button/Button";
 import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
 import { usePlatform } from "../../hooks/usePlatform";
+import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
 import { useTimeout } from "../../hooks/useTimeout";
-import {
-  AdaptivityContextInterface,
-  AdaptivityProps,
-} from "../AdaptivityProvider/AdaptivityContext";
-import "./Snackbar.css";
+import styles from "./Snackbar.module.css";
 
-export interface SnackbarProps
-  extends React.HTMLAttributes<HTMLElement>,
-    HasPlatform,
-    AdaptivityProps {
+export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * Название кнопки действия в уведомлении
+   * Не может использоваться одновременно с `subtitle`
    */
   action?: React.ReactNode;
 
@@ -40,7 +35,8 @@ export interface SnackbarProps
    */
   after?: React.ReactNode;
   /**
-   * Варианты расположения кнопки
+   * Варианты расположения кнопки действия
+   * Игнорируется на десктопах и при наличии элементов `after` или `subtitle`
    */
   layout?: "vertical" | "horizontal";
   /**
@@ -55,23 +51,33 @@ export interface SnackbarProps
    * Задает стиль снекбара
    */
   mode?: "default" | "dark";
+  /**
+   * Дополнительная строка текста под `children`.
+   * Не может использоваться одновременно с `action`
+   */
+  subtitle?: React.ReactNode;
 }
 
-const SnackbarComponent = ({
+/**
+ * @see https://vkcom.github.io/VKUI/#/Snackbar
+ */
+export const Snackbar = ({
   children,
-  layout = "horizontal",
+  layout: layoutProps = "horizontal",
   action,
   before,
   after,
-  viewWidth,
   duration = 4000,
   onActionClick,
   onClose,
   mode = "default",
+  className,
+  subtitle,
   ...restProps
-}: SnackbarProps & AdaptivityContextInterface) => {
+}: SnackbarProps) => {
   const platform = usePlatform();
-
+  const { viewWidth } = useAdaptivityWithJSMediaQueries();
+  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
   const { waitTransitionFinish } = useWaitTransitionFinish();
 
   const [closing, setClosing] = React.useState(false);
@@ -87,9 +93,8 @@ const SnackbarComponent = ({
     typeof requestAnimationFrame
   > | null>(null);
 
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
   const transitionFinishDurationFallback =
-    platform === ANDROID || platform === VKCOM ? 400 : 320;
+    platform === Platform.IOS ? 320 : 400;
 
   const close = () => {
     setClosing(true);
@@ -139,7 +144,7 @@ const SnackbarComponent = ({
       shiftXPercentRef.current,
       72,
       1.2,
-      platform === ANDROID || platform === VKCOM
+      platform !== Platform.IOS
     );
 
     setBodyTransform(shiftXCurrentRef.current);
@@ -189,45 +194,52 @@ const SnackbarComponent = ({
 
   React.useEffect(() => closeTimeout.set(), [closeTimeout]);
 
-  const resolvedLayout = after || isDesktop ? "vertical" : layout;
+  const layout = after || isDesktop || subtitle ? "vertical" : layoutProps;
 
   return (
     <AppRootPortal>
       <div
         {...restProps}
-        vkuiClass={classNames(
-          "Snackbar",
-          platform === IOS && "Snackbar--ios",
-          `Snackbar--l-${resolvedLayout}`,
-          `Snackbar--${mode}`,
-          closing && "Snackbar--closing",
-          touched && "Snackbar--touched",
-          isDesktop && "Snackbar--desktop"
+        className={classNamesString(
+          styles["Snackbar"],
+          platform === Platform.IOS && styles["Snackbar--ios"],
+          styles[`Snackbar--layout-${layout}`],
+          styles[`Snackbar--mode-${mode}`],
+          closing && styles["Snackbar--closing"],
+          touched && styles["Snackbar--touched"],
+          isDesktop && styles["Snackbar--desktop"],
+          className
         )}
       >
         <Touch
-          vkuiClass="Snackbar__in"
+          className={styles["Snackbar__in"]}
           getRootRef={innerElRef}
           onStart={onTouchStart}
           onMoveX={onTouchMoveX}
           onEnd={onTouchEnd}
         >
-          <div vkuiClass="Snackbar__body" ref={bodyElRef}>
-            {before && <div vkuiClass="Snackbar__before">{before}</div>}
+          <div className={styles["Snackbar__body"]} ref={bodyElRef}>
+            {before && (
+              <div className={styles["Snackbar__before"]}>{before}</div>
+            )}
 
-            <div vkuiClass="Snackbar__content">
-              <Paragraph vkuiClass="Snackbar__content-text">
+            <div className={styles["Snackbar__content"]}>
+              <Paragraph className={styles["Snackbar__content-text"]}>
                 {children}
               </Paragraph>
+              {subtitle && !action && (
+                <Subhead className={styles["Snackbar__content-subtitle"]}>
+                  {subtitle}
+                </Subhead>
+              )}
 
-              {action && (
+              {action && !subtitle && (
                 <Button
                   align="left"
-                  hasHover={false}
-                  mode="tertiary"
+                  mode="link"
                   appearance={mode === "dark" ? "overlay" : "accent"}
                   size="s"
-                  vkuiClass="Snackbar__action"
+                  className={styles["Snackbar__action"]}
                   onClick={handleActionClick}
                 >
                   {action}
@@ -235,19 +247,10 @@ const SnackbarComponent = ({
               )}
             </div>
 
-            {after && <div vkuiClass="Snackbar__after">{after}</div>}
+            {after && <div className={styles["Snackbar__after"]}>{after}</div>}
           </div>
         </Touch>
       </div>
     </AppRootPortal>
   );
 };
-
-SnackbarComponent.displayName = "Snackbar";
-
-/**
- * @see https://vkcom.github.io/VKUI/#/Snackbar
- */
-export const Snackbar = withAdaptivity(SnackbarComponent, {
-  viewWidth: true,
-});

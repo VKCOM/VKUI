@@ -1,0 +1,27 @@
+.CustomSelect {
+  width: 100%;
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+.CustomSelect--pop-up,
+.CustomSelect--pop-down {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
+}
+
+.CustomSelect__control {
+  display: none;
+}
+
+.CustomSelect__empty {
+  padding: 12px 0;
+  text-align: center;
+  color: var(--vkui--color_text_secondary);
+}
+
+.CustomSelect__fetching {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

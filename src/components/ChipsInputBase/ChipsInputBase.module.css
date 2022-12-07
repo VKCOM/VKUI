@@ -1,0 +1,73 @@
+.ChipsInputBase {
+  flex-grow: 1;
+  flex-shrink: 1;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+  padding: 3px;
+  z-index: 6;
+  overflow: hidden;
+}
+
+.ChipsInputBase__chip {
+  max-width: calc(100% - 4px);
+  margin: 2px;
+}
+
+.ChipsInputBase__label {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 2px 2px 2px 10px;
+}
+
+.ChipsInputBase__el {
+  position: relative;
+  width: 100%;
+  margin-bottom: 2px;
+  padding: 0;
+  /* Визуальная компенсация - центрируем строчные буквы */
+  font-size: 15px;
+  line-height: 26px;
+  color: var(--vkui--color_text_primary);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  appearance: none;
+  z-index: 2;
+  font-family: inherit;
+}
+
+.ChipsInputBase__el:focus {
+  min-width: 64px;
+}
+
+.ChipsInputBase__el::-ms-clear {
+  display: none;
+}
+
+.ChipsInputBase__el:disabled {
+  opacity: var(--vkui--opacity_disable_accessibility);
+}
+
+.ChipsInputBase__el::placeholder {
+  color: var(--vkui--color_text_secondary);
+  /* Для Firefox */
+  opacity: 1;
+}
+
+.ChipsInputBase__el:disabled::placeholder {
+  color: var(--vkui--color_text_secondary);
+}
+
+.ChipsInputBase__el[readonly] {
+  cursor: default;
+}
+
+/**
+ * sizeY COMPACT
+ */
+.ChipsInputBase--sizeY-compact {
+  padding: 1px;
+}

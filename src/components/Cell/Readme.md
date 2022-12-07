@@ -110,7 +110,7 @@ const reorderList = ({ from, to }, list, updateListFn) => {
             key={label}
             mode="selectable"
             draggable
-            before={<Avatar mode="app" size={32} />}
+            before={<Image borderRadius="l" size={32} />}
             onDragFinish={({ from, to }) =>
               reorderList(
                 { from, to },

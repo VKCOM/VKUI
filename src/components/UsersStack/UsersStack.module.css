@@ -1,0 +1,76 @@
+.UsersStack {
+  display: flex;
+  align-items: center;
+  color: var(--vkui--color_text_secondary);
+}
+
+.UsersStack--layout-vertical {
+  flex-direction: column;
+  justify-content: center;
+}
+
+.UsersStack__photos {
+  display: flex;
+}
+
+.UsersStack--layout-horizontal .UsersStack__photos {
+  margin-right: 8px;
+}
+
+.UsersStack--layout-vertical .UsersStack__photos {
+  margin-bottom: 8px;
+}
+
+.UsersStack__fill {
+  fill: var(--vkui--color_image_placeholder_alpha);
+}
+
+.UsersStack__photo--others {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--vkui--color_icon_contrast_secondary);
+  background: var(--vkui--color_icon_secondary);
+  border-radius: 50%;
+}
+
+.UsersStack--size-s .UsersStack__photo {
+  width: 16px;
+  height: 16px;
+}
+
+.UsersStack--size-m .UsersStack__photo {
+  width: 24px;
+  height: 24px;
+}
+
+.UsersStack--size-l .UsersStack__photo {
+  width: 32px;
+  height: 32px;
+}
+
+.UsersStack__photo + .UsersStack__photo {
+  margin-left: -2px;
+}
+
+.UsersStack__text {
+  min-width: 0;
+  flex: 1;
+}
+
+.UsersStack--layout-vertical .UsersStack__text {
+  text-align: center;
+}
+
+/**
+ * CMP:
+ * ModalCardBase
+ */
+.ModalCardBase .UsersStack {
+  margin-top: 20px;
+}
+
+.UsersStack--layout-horizontal,
+.UsersStack--others {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
+}

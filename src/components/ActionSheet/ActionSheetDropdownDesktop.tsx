@@ -1,9 +1,10 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import { classNamesString } from "../../lib/classNames";
 import { useDOM } from "../../lib/dom";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useEffectDev } from "../../hooks/useEffectDev";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
 import { isRefObject } from "../../lib/isRefObject";
 import { warnOnce } from "../../lib/warnOnce";
 import { Platform } from "../../lib/platform";
@@ -11,7 +12,7 @@ import { useEventListener } from "../../hooks/useEventListener";
 import { SharedDropdownProps } from "./types";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { Popper } from "../Popper/Popper";
-import "./ActionSheet.css";
+import styles from "./ActionSheet.module.css";
 
 const warn = warnOnce("ActionSheet");
 function getEl(
@@ -33,7 +34,7 @@ export const ActionSheetDropdownDesktop = ({
 }: SharedDropdownProps) => {
   const { document } = useDOM();
   const platform = usePlatform();
-  const { sizeY } = useAdaptivity();
+  const { sizeY } = useAdaptivityWithJSMediaQueries();
   const elementRef = React.useRef<HTMLDivElement | null>(null);
 
   useEffectDev(() => {
@@ -65,7 +66,7 @@ export const ActionSheetDropdownDesktop = ({
   }, [bodyClickListener, document]);
 
   const onClick = React.useCallback(
-    (e: React.MouseEvent<HTMLElement, MouseEvent>) => e.stopPropagation(),
+    (e: React.MouseEvent<HTMLElement>) => e.stopPropagation(),
     []
   );
 
@@ -82,13 +83,13 @@ export const ActionSheetDropdownDesktop = ({
       targetRef={targetRef}
       offsetDistance={popupOffsetDistance}
       placement={isPopupDirectionTop ? "top-end" : "bottom-end"}
-      vkuiClass={classNames(
-        "ActionSheet",
-        platform === Platform.IOS && "ActionSheet--ios",
-        "ActionSheet--desktop",
-        `ActionSheet--sizeY-${sizeY}`
+      className={classNamesString(
+        styles["ActionSheet"],
+        platform === Platform.IOS && styles["ActionSheet--ios"],
+        styles["ActionSheet--desktop"],
+        getSizeYClassName(styles["ActionSheet"], sizeY),
+        className
       )}
-      className={className}
       style={style}
       getRef={elementRef}
       forcePortal={false}

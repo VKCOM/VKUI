@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Icon24Attach, Icon24Add } from "@vkontakte/icons";
 import { Button } from "../Button/Button";
 import { ButtonGroup, ButtonGroupProps } from "./ButtonGroup";

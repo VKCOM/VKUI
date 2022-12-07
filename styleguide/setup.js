@@ -1,12 +1,13 @@
 import "../src/styles/themes.css";
-import "../src/styles/unstable.css";
 import "../src/styles/common.css";
-import "../src/fonts/fonts.css";
 
 import { useState, useRef } from "react";
-import pkg from "../package";
 import * as VKUI from "../src";
-import * as VKUIUnstable from "../src/unstable";
+import {
+  IconExampleForOverlayBasedOnImageBaseSize,
+  IconExampleForFallbackBasedOnImageBaseSize,
+  IconExampleForBadgeBasedOnImageBaseSize,
+} from "../src/testing/icons";
 import * as Icons from "@vkontakte/icons";
 import {
   getRandomInt,
@@ -18,11 +19,12 @@ import {
   perfLogger,
 } from "./utils";
 
-const ui = { ...VKUI, ...VKUIUnstable };
+const unstablePrefix = "unstable_";
+const ui = { ...VKUI };
 
-for (let i in ui) {
-  if (ui.hasOwnProperty(i)) {
-    window[i] = ui[i];
+for (let name in ui) {
+  if (ui.hasOwnProperty(name)) {
+    window[name.replace(unstablePrefix, "")] = ui[name];
   }
 }
 
@@ -42,10 +44,6 @@ Object.getOwnPropertyNames(Icons).forEach((name) => {
 
 window.osname = VKUI.platform();
 
-window.schemeId =
-  window.localStorage.getItem("vkui-styleguide:schemeId") ||
-  pkg.defaultSchemeId;
-
 window.getRandomInt = getRandomInt;
 window.getRandomUser = getRandomUser;
 window.importantCountries = importantCountries;
@@ -56,6 +54,12 @@ window.getRandomUsers = getRandomUsers;
 window.getAllUsers = getAllUsers;
 window.importantCountries = importantCountries;
 window.getAvatarUrl = getAvatarUrl;
+window.IconExampleForOverlayBasedOnImageBaseSize =
+  IconExampleForOverlayBasedOnImageBaseSize;
+window.IconExampleForFallbackBasedOnImageBaseSize =
+  IconExampleForFallbackBasedOnImageBaseSize;
+window.IconExampleForBadgeBasedOnImageBaseSize =
+  IconExampleForBadgeBasedOnImageBaseSize;
 window.perfLogger = perfLogger;
 
 window.useState = useState;

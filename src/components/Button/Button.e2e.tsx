@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Icon16Add, Icon24Camera } from "@vkontakte/icons";
 import { Button, ButtonProps } from "./Button";
 import { Counter } from "../Counter/Counter";
@@ -8,17 +9,7 @@ describe("Button", () => {
     (props: ButtonProps) => <Button {...props}>Кнопка</Button>,
     [
       {
-        mode: [
-          "primary",
-          "secondary",
-          "tertiary",
-          "outline",
-          "commerce",
-          "destructive",
-          "overlay_primary",
-          "overlay_secondary",
-          "overlay_outline",
-        ],
+        mode: ["primary", "secondary", "tertiary", "outline", "link"],
         disabled: [undefined, true],
       },
       {
@@ -50,15 +41,22 @@ describe("Button", () => {
         size: ["l"],
       },
       {
-        mode: ["primary", "secondary", "overlay_primary"],
+        mode: ["primary", "secondary"],
         before: [<Icon24Camera key="icon-24" />],
         after: [<Counter key="counter">16</Counter>],
         size: ["s", "m", "l"],
         loading: [true],
       },
       {
-        mode: ["primary", "secondary", "tertiary", "outline"],
-        appearance: ["accent", "positive", "negative", "neutral", "overlay"],
+        mode: ["primary", "secondary", "tertiary", "outline", "link"],
+        appearance: [
+          "accent",
+          "positive",
+          "negative",
+          "neutral",
+          "overlay",
+          "accent-invariable",
+        ],
       },
       {
         mode: ["primary"],

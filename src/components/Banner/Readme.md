@@ -11,9 +11,8 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
     <Group header={<Header>Content: tint, size: regular</Header>}>
       <Banner
         before={
-          <Avatar
+          <Image
             size={96}
-            mode="image"
             src="https://sun9-63.userapi.com/yOEQYPHrNHjZEoanbqPb65HPl5iojmiLgLzfGA/W3geVMMt8TI.jpg"
           />
         }
@@ -25,9 +24,8 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
 
       <Banner
         before={
-          <Avatar
+          <Image
             size={96}
-            mode="image"
             src="https://sun9-32.userapi.com/uFzLOK55iY7pC0DHjneEdP9G6gXcXi2Mxj9wVA/wnTmzh_blNM.jpg"
           />
         }
@@ -38,20 +36,18 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
 
       <Banner
         before={
-          <Avatar mode="image" style={{ backgroundImage: musicGradient }}>
+          <Image style={{ backgroundImage: musicGradient }}>
             <Icon28MusicOutline fill="#fff" />
-          </Avatar>
+          </Image>
         }
         header="Подписка за рубль!"
         subheader="Предложение действует только до конца февраля"
         asideMode="dismiss"
         actions={
-          <React.Fragment>
-            <Button mode="primary">Подробнее</Button>
-            <Button mode="tertiary" hasHover={false}>
-              Напомнить позже
-            </Button>
-          </React.Fragment>
+          <ButtonGroup mode="vertical" gap="m">
+            <Button mode="primary">Попробовать сейчас</Button>
+            <Button mode="link">Напомнить позже</Button>
+          </ButtonGroup>
         }
       />
 
@@ -79,11 +75,7 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
             доступ к старому номеру.
           </React.Fragment>
         }
-        actions={
-          <Button mode="tertiary" hasHover={false}>
-            Отменить заявку
-          </Button>
-        }
+        actions={<Button mode="link">Отменить заявку</Button>}
       />
 
       <Banner
@@ -92,12 +84,10 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
         }
         text="Хотите, чтобы вам меньше мешали? Включите режим «невидимка»!"
         actions={
-          <React.Fragment>
+          <ButtonGroup mode="horizontal" gap="m">
             <Button>Включить</Button>
-            <Button mode="tertiary" hasHover={false}>
-              Подробнее
-            </Button>
-          </React.Fragment>
+            <Button mode="link">Подробнее</Button>
+          </ButtonGroup>
         }
       />
 
@@ -126,7 +116,7 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
             }}
           />
         }
-        actions={<Button mode="overlay_primary">Подробнее</Button>}
+        actions={<Button appearance="overlay">Подробнее</Button>}
       />
     </Group>
     <Group header={<Header>Content: tint, size: medium</Header>}>
@@ -173,7 +163,7 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
         }
         asideMode="dismiss"
         actions={
-          <Button mode="overlay_primary" size="m">
+          <Button appearance="overlay" size="m">
             Подробнее
           </Button>
         }
@@ -204,7 +194,7 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
         }
         asideMode="dismiss"
         actions={
-          <Button mode="overlay_primary" size="m">
+          <Button appearance="overlay" size="m">
             Подробнее
           </Button>
         }

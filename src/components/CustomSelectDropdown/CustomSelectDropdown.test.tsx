@@ -1,6 +1,6 @@
 import * as React from "react";
+import { screen, render } from "@testing-library/react";
 import { CustomSelectDropdown } from "./CustomSelectDropdown";
-import { render } from "@testing-library/react";
 
 describe("CustomSelectDropdown", () => {
   it("Displays only spinner if fetching: true", () => {
@@ -10,11 +10,11 @@ describe("CustomSelectDropdown", () => {
         scrollBoxRef={React.createRef()}
         fetching
       >
-        <div className="test-content">test</div>
+        <div data-testid="test-content">test</div>
       </CustomSelectDropdown>
     );
     expect(
-      document.querySelector(".CustomSelectDropdown__fetching")
+      document.querySelector(".vkuiCustomSelectDropdown__fetching")
     ).not.toBeNull();
   });
 
@@ -24,9 +24,9 @@ describe("CustomSelectDropdown", () => {
         targetRef={React.createRef()}
         scrollBoxRef={React.createRef()}
       >
-        <div className="test-content">test</div>
+        <div data-testid="test-content">test</div>
       </CustomSelectDropdown>
     );
-    expect(document.querySelector(".test-content")).not.toBeNull();
+    expect(screen.getByTestId("test-content")).not.toBeNull();
   });
 });

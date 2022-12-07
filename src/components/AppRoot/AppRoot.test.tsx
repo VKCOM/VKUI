@@ -1,8 +1,10 @@
+import * as React from "react";
 import { render } from "@testing-library/react";
 import { baselineComponent } from "../../testing/utils";
 import { AppRootContext } from "./AppRootContext";
 import { AppRoot } from "./AppRoot";
-import { SizeType } from "../../hoc/withAdaptivity";
+import { SizeType } from "../../lib/adaptivity";
+import { AdaptivityProvider } from "../../components/AdaptivityProvider/AdaptivityProvider";
 
 describe("AppRoot", () => {
   baselineComponent(AppRoot);
@@ -32,18 +34,14 @@ describe("AppRoot", () => {
         unmount();
         expect(document.documentElement).not.toHaveClass("vkui");
       });
-      it.each(["embedded", "full"] as const)(
-        "container class in %s mode",
-        (mode) => {
-          const { unmount, container } = render(<AppRoot mode={mode} />);
-          expect(container).toHaveClass(
-            "vkui__root",
-            mode === "embedded" ? "vkui__root--embedded" : ""
-          );
-          unmount();
-          expect(container).not.toHaveClass();
-        }
-      );
+      it.each(["embedded"] as const)("container class in %s mode", (mode) => {
+        const { unmount, container } = render(<AppRoot mode={mode} />);
+        expect(container).toHaveClass(
+          mode === "embedded" ? "vkui__root--embedded" : ""
+        );
+        unmount();
+        expect(container).not.toHaveClass();
+      });
       it.each(["embedded", "full"] as const)(
         "adaptivity class in %s mode",
         (mode) => {
@@ -54,7 +52,11 @@ describe("AppRoot", () => {
             mode === "embedded" ? container : document.body;
           expect(adaptiveTarget).not.toHaveClass("vkui--sizeX-regular");
           // adds class
-          rerender(<AppRoot mode={mode} sizeX={SizeType.REGULAR} />);
+          rerender(
+            <AdaptivityProvider sizeX={SizeType.REGULAR}>
+              <AppRoot mode={mode} />
+            </AdaptivityProvider>
+          );
           expect(adaptiveTarget).toHaveClass("vkui--sizeX-regular");
           unmount();
           // removes class on unmount

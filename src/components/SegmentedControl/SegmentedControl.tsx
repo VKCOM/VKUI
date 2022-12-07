@@ -1,12 +1,13 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { generateRandomId, noop } from "../../lib/utils";
 import { warnOnce } from "../../lib/warnOnce";
 import { SegmentedControlOption } from "./SegmentedControlOption/SegmentedControlOption";
 import { HasRootRef } from "../../types";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import "./SegmentedControl.css";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import styles from "./SegmentedControl.module.css";
 
 export type SegmentedControlValue = string | number | undefined;
 
@@ -41,6 +42,7 @@ export const SegmentedControl = ({
   value: valueProp,
   defaultValue,
   children,
+  className,
   ...restProps
 }: SegmentedControlProps) => {
   const { sizeY } = useAdaptivity();
@@ -88,19 +90,19 @@ export const SegmentedControl = ({
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(
-        "SegmentedControl",
-        // TODO v5.0.0 поправить под новую адаптивность
-        `SegmentedControl--sizeY-${sizeY}`,
-        `SegmentedControl--${size}`
+      className={classNamesString(
+        styles["SegmentedControl"],
+        getSizeYClassName(styles["SegmentedControl"], sizeY),
+        styles[`SegmentedControl--size-${size}`],
+        className
       )}
       ref={getRootRef}
     >
-      <div role="radiogroup" vkuiClass="SegmentedControl__in">
+      <div role="radiogroup" className={styles["SegmentedControl__in"]}>
         {activeOptionIdx > -1 && (
           <div
             aria-hidden="true"
-            vkuiClass="SegmentedControl__slider"
+            className={styles["SegmentedControl__slider"]}
             style={{
               width: `${100 / options.length}%`,
               transform: translateX,
@@ -108,18 +110,23 @@ export const SegmentedControl = ({
             }}
           />
         )}
-        {options.map(({ label, ...optionProps }) => (
-          <SegmentedControlOption
-            key={`${optionProps.value}`}
-            {...optionProps}
-            vkuiClass="SegmentedControl__option"
-            name={nameRef.current}
-            checked={value === optionProps.value}
-            onChange={() => handleOnChange(optionProps.value)}
-          >
-            {label}
-          </SegmentedControlOption>
-        ))}
+        {options.map(
+          ({ label, className: optionClassName, ...optionProps }) => (
+            <SegmentedControlOption
+              key={`${optionProps.value}`}
+              {...optionProps}
+              className={classNamesString(
+                styles["SegmentedControl__option"],
+                optionClassName
+              )}
+              name={nameRef.current}
+              checked={value === optionProps.value}
+              onChange={() => handleOnChange(optionProps.value)}
+            >
+              {label}
+            </SegmentedControlOption>
+          )
+        )}
       </div>
     </div>
   );

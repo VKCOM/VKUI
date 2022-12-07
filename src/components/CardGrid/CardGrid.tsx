@@ -1,43 +1,41 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
-import "./CardGrid.css";
+import { classNamesString } from "../../lib/classNames";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import styles from "./CardGrid.module.css";
 
-export interface CardGridProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    AdaptivityProps {
-  size: "s" | "m" | "l";
+export interface CardGridProps extends React.HTMLAttributes<HTMLDivElement> {
+  size?: "s" | "m" | "l";
   /**
    * Если true, то вокруг компонента присутствуют стандартные отсупы сверху/снизу и слева/справа
    */
   spaced?: boolean;
 }
 
-const CardGridComponent = ({
+/**
+ * @see https://vkcom.github.io/VKUI/#/CardGrid
+ */
+export const CardGrid = ({
   children,
   size = "s",
   spaced = false,
-  sizeX,
+  className,
   ...restProps
 }: CardGridProps) => {
+  const { sizeX } = useAdaptivity();
+
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(
-        "CardGrid",
-        spaced && "CardGrid--spaced",
-        `CardGrid--${size}`,
-        `CardGrid--sizeX-${sizeX}` // TODO: v5 новая адаптивность
+      className={classNamesString(
+        styles["CardGrid"],
+        spaced && styles["CardGrid--spaced"],
+        styles[`CardGrid--size-${size}`],
+        getSizeXClassName(styles["CardGrid"], sizeX),
+        className
       )}
     >
       {children}
     </div>
   );
 };
-
-/**
- * @see https://vkcom.github.io/VKUI/#/CardGrid
- */
-export const CardGrid = withAdaptivity(CardGridComponent, { sizeX: true });
-
-CardGrid.displayName = "CardGrid"; // TODO: v5 remove

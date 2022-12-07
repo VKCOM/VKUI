@@ -1,14 +1,14 @@
-import React from "react";
+import * as React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { baselineComponent, runAllTimers } from "../../testing/utils";
 import { noop } from "../../lib/utils";
 import { PullToRefresh } from "./PullToRefresh";
 import { act } from "react-dom/test-utils";
 import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
-import { IOS, ANDROID } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 
 const hasSpinner = () =>
-  !!document.querySelector(".PullToRefresh__spinner--on");
+  !!document.querySelector(".vkuiPullToRefresh__spinner--on");
 
 function firePull(el: HTMLElement, { end = true } = {}) {
   fireEvent.mouseDown(el, { clientY: 0 });
@@ -32,7 +32,7 @@ function Refresher(props: any) {
   );
 }
 
-function renderRefresher({ platform = ANDROID } = {}) {
+function renderRefresher({ platform = Platform.ANDROID } = {}) {
   let controller: (v: boolean) => void;
   const setFetching = (v: boolean) => act(() => controller(v));
   const handle = render(
@@ -58,7 +58,7 @@ describe("PullToRefresh", () => {
     it("during pull on iOS", () => {
       const onRefresh = jest.fn();
       render(
-        <ConfigProvider platform={IOS}>
+        <ConfigProvider platform={Platform.IOS}>
           <PullToRefresh onRefresh={onRefresh} data-testid="xxx" />
         </ConfigProvider>
       );
@@ -84,7 +84,7 @@ describe("PullToRefresh", () => {
       expect(hasSpinner()).toBe(false);
     });
     it("until touch release after isFetching=false on iOS", () => {
-      const { setFetching } = renderRefresher({ platform: IOS });
+      const { setFetching } = renderRefresher({ platform: Platform.IOS });
       firePull(screen.getByTestId("xxx"), { end: false });
       setFetching(false);
       expect(hasSpinner()).toBe(true);

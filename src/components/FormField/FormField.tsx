@@ -1,13 +1,9 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { HasComponent, HasRootRef } from "../../types";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import "./FormField.css";
-
-export const FormFieldMode = {
-  default: "default",
-  plain: "plain",
-} as const;
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import styles from "./FormField.module.css";
 
 export interface FormFieldProps {
   status?: "default" | "error" | "valid";
@@ -29,7 +25,7 @@ export interface FormFieldProps {
    * - Используйте [IconButton](https://vkcom.github.io/VKUI/#/IconButton), если вам нужна кликабельная иконка.
    */
   after?: React.ReactNode;
-  mode?: keyof typeof FormFieldMode;
+  mode?: "default" | "plain";
 }
 
 interface FormFieldOwnProps
@@ -51,7 +47,8 @@ export const FormField = ({
   before,
   after,
   disabled,
-  mode = FormFieldMode.default,
+  mode = "default",
+  className,
   ...restProps
 }: FormFieldOwnProps) => {
   const { sizeY } = useAdaptivity();
@@ -74,27 +71,28 @@ export const FormField = ({
       ref={getRootRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      vkuiClass={classNames(
-        "FormField",
-        `FormField--${mode}`,
-        `FormField--status-${status}`,
-        `FormField--sizeY-${sizeY}`, // TODO v5.0.0 поправить под новую адаптивность
-        disabled && "FormField--disabled",
-        !disabled && hover && "FormField--hover"
+      className={classNamesString(
+        styles["FormField"],
+        styles[`FormField--mode-${mode}`],
+        styles[`FormField--status-${status}`],
+        getSizeYClassName(styles["FormField"], sizeY),
+        disabled && styles["FormField--disabled"],
+        !disabled && hover && styles["FormField--hover"],
+        className
       )}
     >
       {before && (
-        <div role="presentation" vkuiClass="FormField__before">
+        <div role="presentation" className={styles["FormField__before"]}>
           {before}
         </div>
       )}
       {children}
       {after && (
-        <div role="presentation" vkuiClass="FormField__after">
+        <div role="presentation" className={styles["FormField__after"]}>
           {after}
         </div>
       )}
-      <div role="presentation" vkuiClass="FormField__border" />
+      <div role="presentation" className={styles["FormField__border"]} />
     </Component>
   );
 };

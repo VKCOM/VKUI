@@ -1,11 +1,11 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
-import { IOS } from "../../lib/platform";
+import { classNamesString } from "../../lib/classNames";
+import { Platform } from "../../lib/platform";
 import { useTimeout } from "../../hooks/useTimeout";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { useDOM } from "../../lib/dom";
-import "./PopoutWrapper.css";
+import styles from "./PopoutWrapper.module.css";
 
 export interface PopoutWrapperProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -27,6 +27,7 @@ export const PopoutWrapper = ({
   fixed = true,
   children,
   onClick,
+  className,
   ...restProps
 }: PopoutWrapperProps) => {
   const platform = usePlatform();
@@ -40,7 +41,7 @@ export const PopoutWrapper = ({
   };
   const animationFinishFallback = useTimeout(
     onFadeInEnd,
-    platform === IOS ? 300 : 200
+    platform === Platform.IOS ? 300 : 200
   );
   React.useEffect(() => {
     !opened && animationFinishFallback.set();
@@ -54,21 +55,22 @@ export const PopoutWrapper = ({
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(
-        "PopoutWrapper",
-        `PopoutWrapper--v-${alignY}`,
-        `PopoutWrapper--h-${alignX}`,
-        closing && "PopoutWrapper--closing",
-        opened && "PopoutWrapper--opened",
-        fixed && "PopoutWrapper--fixed",
-        hasMask && "PopoutWrapper--masked"
+      className={classNamesString(
+        styles["PopoutWrapper"],
+        styles[`PopoutWrapper--alignY-${alignY}`],
+        styles[`PopoutWrapper--alignX-${alignX}`],
+        closing && styles["PopoutWrapper--closing"],
+        opened && styles["PopoutWrapper--opened"],
+        fixed && styles["PopoutWrapper--fixed"],
+        hasMask && styles["PopoutWrapper--masked"],
+        className
       )}
       onAnimationEnd={opened ? undefined : onFadeInEnd}
       ref={elRef}
     >
-      <div vkuiClass="PopoutWrapper__container">
-        <div vkuiClass="PopoutWrapper__overlay" onClick={onClick} />
-        <div vkuiClass="PopoutWrapper__content">{children}</div>
+      <div className={styles["PopoutWrapper__container"]}>
+        <div className={styles["PopoutWrapper__overlay"]} onClick={onClick} />
+        <div className={styles["PopoutWrapper__content"]}>{children}</div>
       </div>
     </div>
   );

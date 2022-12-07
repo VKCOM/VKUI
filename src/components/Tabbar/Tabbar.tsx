@@ -1,8 +1,8 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { Platform } from "../../lib/platform";
-import "./Tabbar.css";
+import styles from "./Tabbar.module.css";
 
 export interface TabbarProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -10,25 +10,24 @@ export interface TabbarProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   shadow?: boolean;
   /**
-   * @deprecated будет удалено в 5.0.0. Используйте `mode`
-   */
-  itemsLayout?: "vertical" | "horizontal" | "auto"; // TODO v5.0.0 удалить, будет использоваться mode
-  /**
    * Задает расположение элементов (вертикальное/горизонтальное)
    */
   mode?: "vertical" | "horizontal" | "auto";
 }
 
-const getItemsLayout = (
+const getItemsLayoutClassName = (
   itemsLayout: TabbarProps["mode"],
   children: TabbarProps["children"]
-) => {
+): string => {
   switch (itemsLayout) {
     case "horizontal":
+      return styles["Tabbar--layout-horizontal"];
     case "vertical":
-      return itemsLayout;
+      return styles["Tabbar--layout-vertical"];
     default:
-      return React.Children.count(children) > 2 ? "vertical" : "horizontal";
+      return React.Children.count(children) > 2
+        ? getItemsLayoutClassName("vertical", [])
+        : getItemsLayoutClassName("horizontal", []);
   }
 };
 
@@ -38,23 +37,24 @@ const getItemsLayout = (
 export const Tabbar = ({
   children,
   shadow = true,
-  itemsLayout,
   mode,
+  className,
   ...restProps
 }: TabbarProps) => {
   const platform = usePlatform();
 
   return (
     <div
-      vkuiClass={classNames(
-        "Tabbar",
-        platform === Platform.IOS && "Tabbar--ios",
-        `Tabbar--l-${getItemsLayout(itemsLayout ?? mode, children)}`,
-        shadow && "Tabbar--shadow"
+      className={classNamesString(
+        styles["Tabbar"],
+        platform === Platform.IOS && styles["Tabbar--ios"],
+        getItemsLayoutClassName(mode, children),
+        shadow && styles["Tabbar--shadow"],
+        className
       )}
       {...restProps}
     >
-      <div vkuiClass="Tabbar__in">{children}</div>
+      <div className={styles["Tabbar__in"]}>{children}</div>
     </div>
   );
 };

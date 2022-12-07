@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Textarea } from "./Textarea";
 import {
   screenshot,
@@ -7,6 +8,8 @@ import {
   APPEARANCE,
 } from "../../testing/e2e";
 import { AppRoot } from "../AppRoot/AppRoot";
+import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
+import { BREAKPOINTS, SizeType } from "../../lib/adaptivity";
 import { AppearanceProvider } from "../AppearanceProvider/AppearanceProvider";
 
 describe("Textarea", () => {
@@ -36,11 +39,22 @@ describe("Textarea", () => {
   ]);
   it("fits size to content", async () => {
     await mount(
-      <AppRoot embedded>
-        <AppearanceProvider appearance={APPEARANCE}>
-          <Textarea id="textarea" />
-        </AppearanceProvider>
-      </AppRoot>
+      <div
+        className="vkuiTestWrapper"
+        style={{
+          height: "auto",
+          position: "absolute",
+          width: BREAKPOINTS.MOBILE,
+        }}
+      >
+        <AppRoot mode="embedded">
+          <AppearanceProvider appearance={APPEARANCE}>
+            <AdaptivityProvider sizeY={SizeType.REGULAR}>
+              <Textarea id="textarea" />
+            </AdaptivityProvider>
+          </AppearanceProvider>
+        </AppRoot>
+      </div>
     );
     await page.type("#textarea", "1\n2\n3\n4\n5\n6\n7\n8");
     expect(await screenshot()).toMatchImageSnapshot({

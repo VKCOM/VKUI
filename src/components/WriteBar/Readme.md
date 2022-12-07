@@ -46,15 +46,15 @@ const WriteBarExample = (props) => {
             after={
               <Fragment>
                 <WriteBarIcon aria-label="Эмоджи и стикеры">
-                  <Icon28SmileOutline aria-hidden />
+                  <Icon28SmileOutline />
                 </WriteBarIcon>
 
                 <WriteBarIcon aria-label="Записать видео-сообщение">
-                  <Icon28CameraOutline aria-hidden />
+                  <Icon28CameraOutline />
                 </WriteBarIcon>
 
                 <WriteBarIcon aria-label="Записать голосовое сообщение">
-                  <Icon28VoiceOutline aria-hidden />
+                  <Icon28VoiceOutline />
                 </WriteBarIcon>
               </Fragment>
             }
@@ -71,13 +71,13 @@ const WriteBarExample = (props) => {
               <Fragment>
                 {text2.length === 0 && (
                   <WriteBarIcon aria-label="Открыть меню бота">
-                    <Icon28KeyboardBotsOutline aria-hidden />
+                    <Icon28KeyboardBotsOutline />
                   </WriteBarIcon>
                 )}
 
                 {text2.length > 0 && (
                   <WriteBarIcon aria-label="Эмоджи и стикеры">
-                    <Icon28SmileOutline aria-hidden />
+                    <Icon28SmileOutline />
                   </WriteBarIcon>
                 )}
               </Fragment>
@@ -86,13 +86,13 @@ const WriteBarExample = (props) => {
               <Fragment>
                 {text2.length === 0 && (
                   <WriteBarIcon aria-label="Эмоджи и стикеры">
-                    <Icon28SmileOutline aria-hidden />
+                    <Icon28SmileOutline />
                   </WriteBarIcon>
                 )}
 
                 {text2.length === 0 && (
                   <WriteBarIcon aria-label="Записать голосовое сообщение">
-                    <Icon28VoiceOutline aria-hidden />
+                    <Icon28VoiceOutline />
                   </WriteBarIcon>
                 )}
 
@@ -112,7 +112,7 @@ const WriteBarExample = (props) => {
               <Fragment>
                 {text3.length > 0 && (
                   <WriteBarIcon aria-label="Смайлы и стикеры">
-                    <Icon28SmileOutline aria-hidden />
+                    <Icon28SmileOutline />
                   </WriteBarIcon>
                 )}
               </Fragment>
@@ -121,7 +121,7 @@ const WriteBarExample = (props) => {
               <Fragment>
                 {text3.length === 0 && (
                   <WriteBarIcon aria-label="Смайлы и стикеры">
-                    <Icon28SmileOutline aria-hidden />
+                    <Icon28SmileOutline />
                   </WriteBarIcon>
                 )}
 
@@ -141,7 +141,7 @@ const WriteBarExample = (props) => {
               <Fragment>
                 {text4.length > 0 && (
                   <WriteBarIcon aria-label="Смайлы и стикеры">
-                    <Icon28SmileOutline aria-hidden />
+                    <Icon28SmileOutline />
                   </WriteBarIcon>
                 )}
               </Fragment>
@@ -150,7 +150,7 @@ const WriteBarExample = (props) => {
               <Fragment>
                 {text4.length === 0 && (
                   <WriteBarIcon aria-label="Смайлы и стикеры">
-                    <Icon28SmileOutline aria-hidden />
+                    <Icon28SmileOutline />
                   </WriteBarIcon>
                 )}
 
@@ -186,7 +186,7 @@ const WriteBarExample = (props) => {
                 <Fragment>
                   {text.length > 0 && (
                     <WriteBarIcon aria-label="Смайлы и стикеры">
-                      <Icon28SmileOutline aria-hidden />
+                      <Icon28SmileOutline />
                     </WriteBarIcon>
                   )}
                 </Fragment>
@@ -195,13 +195,13 @@ const WriteBarExample = (props) => {
                 <Fragment>
                   {text.length === 0 && (
                     <WriteBarIcon aria-label="Смайлы и стикеры">
-                      <Icon28SmileOutline aria-hidden />
+                      <Icon28SmileOutline />
                     </WriteBarIcon>
                   )}
 
                   {text.length === 0 && (
                     <WriteBarIcon aria-label="Записать голосовое сообщение">
-                      <Icon28VoiceOutline aria-hidden />
+                      <Icon28VoiceOutline />
                     </WriteBarIcon>
                   )}
 

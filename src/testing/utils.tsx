@@ -17,6 +17,9 @@ export const runAllTimers = () =>
     jest.runAllTimers();
   });
 
+export const tryToGetByTestId = (id: string, elParent: HTMLElement) =>
+  elParent.querySelector<HTMLElement>(`[data-testid="${id}"]`);
+
 export const imgOnlyAttributes: ImgOnlyAttributes = {
   alt: "test",
   crossOrigin: "anonymous",
@@ -116,7 +119,10 @@ export function baselineComponent<Props extends BasicProps>(
 }
 
 type RectOptions = { x?: number; y?: number; w?: number; h?: number };
-export function mockRect(el: any, { x = 0, y = 0, w = 0, h = 0 }: RectOptions) {
+export function mockRect(
+  el: HTMLElement | null,
+  { x = 0, y = 0, w = 0, h = 0 }: RectOptions
+) {
   if (!el) {
     return;
   }
@@ -161,7 +167,8 @@ export const mockScrollContext = (
   ];
 };
 
-const isNullOrUndefined = (val: any) => val === null || val === undefined;
+const isNullOrUndefined = (val: unknown): val is null | undefined =>
+  val === null || val === undefined;
 
 // Согласно спеке, offsetParent в ряде случаев будет null
 Object.defineProperty(HTMLElement.prototype, "offsetParent", {
@@ -174,7 +181,7 @@ Object.defineProperty(HTMLElement.prototype, "offsetParent", {
         isNullOrUndefined(element.style.display) ||
         element.style.display.toLowerCase() !== "none")
     ) {
-      // @ts-ignore
+      // @ts-expect-error: TS2322 `parentNode: ParentNode | null`, а ожидается HTMLElement
       element = element.parentNode;
     }
 
@@ -208,3 +215,19 @@ export async function waitForPopper() {
     await null;
   });
 }
+
+// Не реализован в JSDOM.
+// Объявление скопировано с документации https://jestjs.io/ru/docs/26.x/manual-mocks
+Object.defineProperty(window, "matchMedia", {
+  writable: true,
+  value: jest.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // устарело
+    removeListener: jest.fn(), // устарело
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});

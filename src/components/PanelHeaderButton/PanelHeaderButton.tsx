@@ -1,14 +1,14 @@
 import * as React from "react";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
-import { getClassName } from "../../helpers/getClassName";
-import { classNames } from "../../lib/classNames";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
+import { classNamesString } from "../../lib/classNames";
 import { warnOnce } from "../../lib/warnOnce";
 import { usePlatform } from "../../hooks/usePlatform";
 import { getTitleFromChildren, isPrimitiveReactNode } from "../../lib/utils";
-import { IOS, VKCOM, ANDROID } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { Text } from "../Typography/Text/Text";
 import { Title } from "../Typography/Title/Title";
-import "./PanelHeaderButton.css";
+import styles from "./PanelHeaderButton.module.css";
 
 export interface PanelHeaderButtonProps extends Omit<TappableProps, "label"> {
   primary?: boolean;
@@ -22,7 +22,7 @@ interface ButtonTypographyProps extends React.AllHTMLAttributes<HTMLElement> {
 const ButtonTypography = ({ primary, children }: ButtonTypographyProps) => {
   const platform = usePlatform();
 
-  if (platform === IOS) {
+  if (platform === Platform.IOS) {
     return (
       <Title Component="span" level="3" weight={primary ? "1" : "3"}>
         {children}
@@ -30,7 +30,11 @@ const ButtonTypography = ({ primary, children }: ButtonTypographyProps) => {
     );
   }
 
-  return <Text weight={platform === VKCOM ? undefined : "2"}>{children}</Text>;
+  return (
+    <Text weight={platform === Platform.VKCOM ? undefined : "2"}>
+      {children}
+    </Text>
+  );
 };
 
 const warn = warnOnce("PanelHeaderButton");
@@ -42,6 +46,7 @@ export const PanelHeaderButton = ({
   children,
   primary = false,
   label,
+  className,
   ...restProps
 }: PanelHeaderButtonProps) => {
   const isPrimitive = isPrimitiveReactNode(children);
@@ -52,17 +57,17 @@ export const PanelHeaderButton = ({
   let activeMode;
 
   switch (platform) {
-    case ANDROID:
-      hoverMode = "background";
-      activeMode = "background";
-      break;
-    case IOS:
+    case Platform.IOS:
       hoverMode = "background";
       activeMode = "opacity";
       break;
-    case VKCOM:
-      hoverMode = "PanelHeaderButton--hover";
-      activeMode = "PanelHeaderButton--active";
+    case Platform.VKCOM:
+      hoverMode = styles["PanelHeaderButton--hover"];
+      activeMode = styles["PanelHeaderButton--active"];
+      break;
+    default:
+      hoverMode = "background";
+      activeMode = "background";
   }
 
   if (process.env.NODE_ENV === "development") {
@@ -88,11 +93,14 @@ export const PanelHeaderButton = ({
       Component={restProps.href ? "a" : "button"}
       activeEffectDelay={200}
       activeMode={activeMode}
-      vkuiClass={classNames(
-        getClassName("PanelHeaderButton", platform),
-        primary && "PanelHeaderButton--primary",
-        isPrimitive && "PanelHeaderButton--primitive",
-        !isPrimitive && !isPrimitiveLabel && "PanelHeaderButton--notPrimitive"
+      className={classNamesString(
+        styles["PanelHeaderButton"],
+        getPlatformClassName(styles["PanelHeaderButton"], platform),
+        isPrimitive && styles["PanelHeaderButton--primitive"],
+        !isPrimitive &&
+          !isPrimitiveLabel &&
+          styles["PanelHeaderButton--notPrimitive"],
+        className
       )}
     >
       {isPrimitive ? (
@@ -100,11 +108,13 @@ export const PanelHeaderButton = ({
       ) : (
         children
       )}
-      {isPrimitiveLabel ? (
-        <ButtonTypography primary={primary}>{label}</ButtonTypography>
-      ) : (
-        label
-      )}
+      <div className={styles["PanelHeaderButton__label"]}>
+        {isPrimitiveLabel ? (
+          <ButtonTypography primary={primary}>{label}</ButtonTypography>
+        ) : (
+          label
+        )}
+      </div>
     </Tappable>
   );
 };

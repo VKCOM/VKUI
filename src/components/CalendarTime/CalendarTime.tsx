@@ -2,8 +2,9 @@ import * as React from "react";
 import { setHours, setMinutes } from "../../lib/date";
 import { CustomSelect } from "../CustomSelect/CustomSelect";
 import { Button } from "../Button/Button";
-import { SizeType } from "../../hoc/withAdaptivity";
-import "./CalendarTime.css";
+import { SizeType } from "../../lib/adaptivity";
+import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
+import styles from "./CalendarTime.module.css";
 
 export interface CalendarTimeProps {
   value: Date;
@@ -50,38 +51,41 @@ export const CalendarTime = ({
   );
 
   return (
-    <div vkuiClass="CalendarTime">
-      <div vkuiClass="CalendarTime__picker">
-        <CustomSelect
-          value={value.getHours()}
-          options={hours}
-          onChange={onHoursChange}
-          forceDropdownPortal={false}
-          sizeY={SizeType.COMPACT}
-          aria-label={changeHoursAriaLabel}
-        />
+    <div className={styles["CalendarTime"]}>
+      <div className={styles["CalendarTime__picker"]}>
+        <AdaptivityProvider sizeY={SizeType.COMPACT}>
+          <CustomSelect
+            value={value.getHours()}
+            options={hours}
+            onChange={onHoursChange}
+            forceDropdownPortal={false}
+            aria-label={changeHoursAriaLabel}
+          />
+        </AdaptivityProvider>
       </div>
-      <div vkuiClass="CalendarTime__divider">:</div>
-      <div vkuiClass="CalendarTime__picker">
-        <CustomSelect
-          value={value.getMinutes()}
-          options={minutes}
-          onChange={onMinutesChange}
-          forceDropdownPortal={false}
-          sizeY={SizeType.COMPACT}
-          aria-label={changeMinutesAriaLabel}
-        />
+      <div className={styles["CalendarTime__divider"]}>:</div>
+      <div className={styles["CalendarTime__picker"]}>
+        <AdaptivityProvider sizeY={SizeType.COMPACT}>
+          <CustomSelect
+            value={value.getMinutes()}
+            options={minutes}
+            onChange={onMinutesChange}
+            forceDropdownPortal={false}
+            aria-label={changeMinutesAriaLabel}
+          />
+        </AdaptivityProvider>
       </div>
-      <div vkuiClass="CalendarTime__button">
-        <Button
-          sizeY={SizeType.COMPACT}
-          mode="secondary"
-          onClick={onClose}
-          size="l"
-          aria-label={doneButtonText}
-        >
-          {doneButtonText}
-        </Button>
+      <div className={styles["CalendarTime__button"]}>
+        <AdaptivityProvider sizeY={SizeType.COMPACT}>
+          <Button
+            mode="secondary"
+            onClick={onClose}
+            size="l"
+            aria-label={doneButtonText}
+          >
+            {doneButtonText}
+          </Button>
+        </AdaptivityProvider>
       </div>
     </div>
   );

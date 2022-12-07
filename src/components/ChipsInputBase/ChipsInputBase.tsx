@@ -1,13 +1,13 @@
 import * as React from "react";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { HasAlign, HasRef, HasRootRef } from "../../types";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Chip, ChipOption, ChipValue, RenderChip } from "../Chip/Chip";
 import { noop } from "../../lib/utils";
 import { useChipsInput } from "../../hooks/useChipsInput";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { prefixClass } from "../../lib/prefixClass";
 import { useExternRef } from "../../hooks/useExternRef";
-import "./ChipsInputBase.css";
+import styles from "./ChipsInputBase.module.css";
 
 export interface ChipsInputBaseProps<Option extends ChipOption>
   extends Omit<
@@ -158,11 +158,14 @@ export const ChipsInputBase = <Option extends ChipOption>(
 
   return (
     <div
-      vkuiClass={classNames("ChipsInputBase", `ChipsInputBase--sizeY-${sizeY}`)}
       onClick={handleClick}
       role="presentation"
       style={style}
-      className={className}
+      className={classNamesString(
+        styles["ChipsInputBase"],
+        getSizeYClassName(styles["ChipsInputBase"], sizeY),
+        className
+      )}
       ref={getRootRef}
     >
       {selectedOptions.map((option: Option) => {
@@ -177,12 +180,15 @@ export const ChipsInputBase = <Option extends ChipOption>(
               label,
               onRemove: handleChipRemove,
               disabled: Boolean(restProps.disabled),
-              className: prefixClass("ChipsInputBase__chip"),
+              className: styles["ChipsInputBase__chip"],
             })}
           </React.Fragment>
         );
       })}
-      <label vkuiClass="ChipsInputBase__label" aria-label={inputAriaLabel}>
+      <label
+        className={styles["ChipsInputBase__label"]}
+        aria-label={inputAriaLabel}
+      >
         <input
           type="text"
           autoCapitalize="none"
@@ -190,7 +196,7 @@ export const ChipsInputBase = <Option extends ChipOption>(
           autoCorrect="off"
           spellCheck={false}
           aria-autocomplete="list"
-          vkuiClass="ChipsInputBase__el"
+          className={styles["ChipsInputBase__el"]}
           {...restProps}
           ref={inputRef}
           value={fieldValue}

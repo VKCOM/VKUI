@@ -1,3 +1,4 @@
+import * as React from "react";
 import { describeScreenshotFuzz } from "../../../testing/e2e/utils";
 import { Headline, HeadlineProps } from "./Headline";
 

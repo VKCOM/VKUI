@@ -1,9 +1,8 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
-import { IOS } from "../../lib/platform";
-import { ConfigProviderContext } from "../ConfigProvider/ConfigProviderContext";
+import { classNamesString } from "../../lib/classNames";
+import { Platform } from "../../lib/platform";
+import { useConfigProvider } from "../ConfigProvider/ConfigProviderContext";
 import { SplitColContext } from "../SplitCol/SplitCol";
-import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { ScrollContext } from "../AppRoot/ScrollContext";
 import { NavTransitionProvider } from "../NavTransitionContext/NavTransitionContext";
 import { getNavId, NavIdProps } from "../../lib/getNavId";
@@ -12,25 +11,13 @@ import { useDOM } from "../../lib/dom";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { useTimeout } from "../../hooks/useTimeout";
 import { usePlatform } from "../../hooks/usePlatform";
-import "./Root.css";
+import styles from "./Root.module.css";
 
 export interface RootProps
   extends React.HTMLAttributes<HTMLDivElement>,
     NavIdProps {
   activeView: string;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
-  /**
-   * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
-   *
-   * Свойство для отрисовки `Alert`, `ActionSheet` и `ScreenSpinner`.
-   */
-  popout?: React.ReactNode;
-  /**
-   * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
-   *
-   * Свойство для отрисовки `ModalRoot`.
-   */
-  modal?: React.ReactNode;
 }
 
 export interface RootState {
@@ -46,12 +33,11 @@ const warn = warnOnce("Root");
  * @see https://vkcom.github.io/VKUI/#/Root
  */
 export const Root = ({
-  popout = null,
-  modal,
   children,
   activeView: _activeView,
   onTransition,
   nav,
+  className,
   ...restProps
 }: RootProps) => {
   const scroll = React.useContext(ScrollContext);
@@ -62,9 +48,7 @@ export const Root = ({
     {}
   ).current;
 
-  const { transitionMotionEnabled = true } = React.useContext(
-    ConfigProviderContext
-  );
+  const { transitionMotionEnabled = true } = useConfigProvider();
   const { animate } = React.useContext(SplitColContext);
   const disableAnimation = !transitionMotionEnabled || !animate;
 
@@ -95,7 +79,7 @@ export const Root = ({
 
   useIsomorphicLayoutEffect(() => {
     (document!.activeElement as HTMLElement).blur();
-  }, [!!popout, activeView]);
+  }, [activeView]);
 
   // Нужен переход
   useIsomorphicLayoutEffect(() => transitionTo(_activeView), [_activeView]);
@@ -114,7 +98,7 @@ export const Root = ({
 
   const fallbackTransition = useTimeout(
     finishTransition,
-    platform === IOS ? 600 : 300
+    platform === Platform.IOS ? 600 : 300
   );
   React.useEffect(() => {
     if (!transition) {
@@ -137,24 +121,14 @@ export const Root = ({
     }
   };
 
-  if (process.env.NODE_ENV === "development") {
-    popout &&
-      warn(
-        "Свойство popout устарело и будет удалено в 5.0.0. Используйте одноименное свойство у SplitLayout."
-      );
-    modal &&
-      warn(
-        "Свойство modal устарело и будет удалено в 5.0.0. Используйте одноименное свойство у SplitLayout."
-      );
-  }
-
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(
-        "Root",
-        platform === IOS && "Root--ios",
-        transition && "Root--transition"
+      className={classNamesString(
+        styles["Root"],
+        platform === Platform.IOS && styles["Root--ios"],
+        transition && styles["Root--transition"],
+        className
       )}
     >
       {views.map((view) => {
@@ -172,32 +146,34 @@ export const Root = ({
             key={viewId}
             ref={(e) => viewId && (viewNodes[viewId] = e)}
             onAnimationEnd={isTransitionTarget ? onAnimationEnd : undefined}
-            vkuiClass={classNames(
-              "Root__view",
+            className={classNamesString(
+              styles["Root__view"],
               transition &&
                 viewId === prevView &&
                 isBack &&
-                "Root__view--hide-back",
+                styles["Root__view--hide-back"],
               transition &&
                 viewId === prevView &&
                 !isBack &&
-                "Root__view--hide-forward",
+                styles["Root__view--hide-forward"],
               transition &&
                 viewId === activeView &&
                 isBack &&
-                "Root__view--show-back",
+                styles["Root__view--show-back"],
               transition &&
                 viewId === activeView &&
                 !isBack &&
-                "Root__view--show-forward",
-              !transition && viewId === activeView && "Root__view--active"
+                styles["Root__view--show-forward"],
+              !transition &&
+                viewId === activeView &&
+                styles["Root__view--active"]
             )}
           >
             <NavTransitionProvider
               entering={transition && viewId === activeView}
             >
               <div
-                vkuiClass="Root__scrollCompensation"
+                className={styles["Root__scrollCompensation"]}
                 style={{
                   marginTop: compensateScroll
                     ? viewId && -(scrolls[viewId] ?? 0)
@@ -210,10 +186,6 @@ export const Root = ({
           </div>
         );
       })}
-      <AppRootPortal>
-        {!!popout && <div vkuiClass="Root__popout">{popout}</div>}
-        {!!modal && <div vkuiClass="Root__modal">{modal}</div>}
-      </AppRootPortal>
     </div>
   );
 };

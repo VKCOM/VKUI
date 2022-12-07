@@ -3,12 +3,11 @@ import mitt from "mitt";
 import { noop } from "../../lib/utils";
 import { Touch, TouchEvent, TouchProps } from "../Touch/Touch";
 import TouchRootContext from "../Touch/TouchContext";
-import { classNames } from "../../lib/classNames";
-import { IOS, ANDROID } from "../../lib/platform";
+import { classNamesString } from "../../lib/classNames";
+import { Platform } from "../../lib/platform";
 import { getOffsetRect } from "../../lib/offset";
 import { coordX, coordY } from "../../lib/touch";
 import { HasComponent, HasRootRef } from "../../types";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { shouldTriggerClickOnEnterOrSpace } from "../../lib/accessibility";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { FocusVisible, FocusVisibleMode } from "../FocusVisible/FocusVisible";
@@ -18,7 +17,18 @@ import { usePlatform } from "../../hooks/usePlatform";
 import { useFocusVisible } from "../../hooks/useFocusVisible";
 import { callMultiple } from "../../lib/callMultiple";
 import { useBooleanState } from "../../hooks/useBooleanState";
-import "./Tappable.css";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { useAdaptivityHasHover } from "../../hooks/useAdaptivityHasHover";
+import { useAdaptivityHasPointer } from "../../hooks/useAdaptivityHasPointer";
+import styles from "./Tappable.module.css";
+
+const sizeXClassNames = {
+  none: styles["Tappable--sizeX-none"],
+  compact: styles["Tappable--sizeX-compact"],
+  regular: styles["Tappable--sizeX-regular"],
+};
+
+type StateMode = "opacity" | "background";
 
 const WAVE_LIVE = 225;
 
@@ -37,7 +47,6 @@ export type TappableElementProps = Omit<
 export interface TappableProps
   extends TappableElementProps,
     HasRootRef<HTMLElement>,
-    AdaptivityProps,
     HasComponent,
     Pick<TouchProps, "onStart" | "onEnd" | "onMove"> {
   /**
@@ -56,11 +65,11 @@ export interface TappableProps
   /**
    * Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active
    */
-  activeMode?: "opacity" | "background" | string;
+  activeMode?: StateMode | string;
   /**
    * Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover
    */
-  hoverMode?: "opacity" | "background" | string;
+  hoverMode?: StateMode | string;
   /**
    * Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс во время focus-visible
    */
@@ -90,6 +99,18 @@ type TappableContextInterface = { onHoverChange: (s: boolean) => void };
 const TappableContext = React.createContext<TappableContextInterface>({
   onHoverChange: noop,
 });
+
+function isPresetStateMode(
+  stateMode: StateMode | string
+): stateMode is StateMode {
+  switch (stateMode) {
+    case "opacity":
+    case "background":
+      return true;
+    default:
+      return false;
+  }
+}
 
 function useActivity(hasActive: boolean, stopDelay: number) {
   const id = React.useMemo(
@@ -149,7 +170,10 @@ function useActivity(hasActive: boolean, stopDelay: number) {
   return [activity, { delayStart, start, stop }] as const;
 }
 
-const TappableComponent = ({
+/**
+ * @see https://vkcom.github.io/VKUI/#/Tappable
+ */
+export const Tappable = ({
   children,
   Component,
   onClick,
@@ -157,9 +181,6 @@ const TappableComponent = ({
   activeEffectDelay = ACTIVE_EFFECT_DELAY,
   stopPropagation = false,
   getRootRef,
-  sizeX,
-  hasMouse,
-  deviceHasHover,
   hasHover: _hasHover = true,
   hoverMode = "background",
   hasActive: _hasActive = true,
@@ -167,6 +188,7 @@ const TappableComponent = ({
   focusVisibleMode = "inside",
   onEnter,
   onLeave,
+  className,
   ...props
 }: TappableProps) => {
   Component = Component || ((props.href ? "a" : "div") as React.ElementType);
@@ -175,6 +197,9 @@ const TappableComponent = ({
   const insideTouchRoot = React.useContext(TouchRootContext);
   const platform = usePlatform();
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
+  const { sizeX = "none" } = useAdaptivity();
+  const hasPointerContext = useAdaptivityHasPointer();
+  const hasHoverContext = useAdaptivityHasHover();
 
   const [clicks, setClicks] = React.useState<Wave[]>([]);
   const [childHover, setChildHover] = React.useState(false);
@@ -186,14 +211,14 @@ const TappableComponent = ({
 
   const hovered = _hovered && !props.disabled;
   const hasActive = _hasActive && !childHover && !props.disabled;
-  const hasHover = deviceHasHover && _hasHover && !childHover;
+  const hasHover = hasHoverContext === true && _hasHover && !childHover;
   const isCustomElement =
     Component !== "a" &&
     Component !== "button" &&
     Component !== "label" &&
     !props.contentEditable;
-  const isPresetHoverMode = ["opacity", "background"].includes(hoverMode);
-  const isPresetActiveMode = ["opacity", "background"].includes(activeMode);
+  const isPresetHoverMode = isPresetStateMode(hoverMode);
+  const isPresetActiveMode = isPresetStateMode(activeMode);
   const isPresetFocusVisibleMode = ["inside", "outside"].includes(
     focusVisibleMode
   );
@@ -231,8 +256,8 @@ const TappableComponent = ({
   }
 
   const needWaves =
-    platform === ANDROID &&
-    !hasMouse &&
+    platform === Platform.ANDROID &&
+    !hasPointerContext &&
     hasActive &&
     activeMode === "background";
 
@@ -286,23 +311,26 @@ const TappableComponent = ({
     stop(activeDuration >= 100 ? 0 : activeEffectDelay - activeDuration);
   }
 
-  const classes = classNames(
-    "Tappable",
-    platform === IOS && "Tappable--ios",
-    `Tappable--sizeX-${sizeX}`,
-    hasHover && `Tappable--hasHover`,
-    hasActive && `Tappable--hasActive`,
+  const classes = classNamesString(
+    className,
+    styles["Tappable"],
+    platform === Platform.IOS && styles["Tappable--ios"],
+    sizeXClassNames[sizeX],
+    hasHoverContext && styles["Tappable--hover-has"],
+    hasActive && styles["Tappable--hasActive"],
     hasHover && hovered && !isPresetHoverMode && hoverMode,
     hasActive && active && !isPresetActiveMode && activeMode,
     focusVisible && !isPresetFocusVisibleMode && focusVisibleMode,
-    hasActive && active && "Tappable--active",
-    hasMouse && "Tappable--mouse",
-    hasHover && hovered && isPresetHoverMode && `Tappable--hover-${hoverMode}`,
+    hasActive && active && styles["Tappable--active"],
+    hasHover &&
+      hovered &&
+      isPresetHoverMode &&
+      styles[`Tappable--hover-${hoverMode}`],
     hasActive &&
       active &&
       isPresetActiveMode &&
-      `Tappable--active-${activeMode}`,
-    focusVisible && "Tappable--focus-visible"
+      styles[`Tappable--active-${activeMode}`],
+    focusVisible && styles["Tappable--focus-visible"]
   );
 
   const handlers: RootComponentProps = {
@@ -326,7 +354,7 @@ const TappableComponent = ({
       {...props}
       slideThreshold={20}
       usePointerHover
-      vkuiClass={classes}
+      className={classes}
       Component={Component}
       getRootRef={containerRef}
       onBlur={callMultiple(onBlur, props.onBlur)}
@@ -337,18 +365,19 @@ const TappableComponent = ({
         {children}
       </TappableContext.Provider>
       {needWaves && (
-        <span aria-hidden="true" vkuiClass="Tappable__waves">
+        <span aria-hidden="true" className={styles.Tappable__waves}>
           {clicks.map((wave) => (
             <span
               key={wave.id}
-              vkuiClass="Tappable__wave"
+              className={styles.Tappable__wave}
               style={{ top: wave.y, left: wave.x }}
             />
           ))}
         </span>
       )}
-      {hasHover && hoverMode === "background" && (
-        <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />
+      {((hasHover && hoverMode === "background") ||
+        (hasActive && activeMode === "background")) && (
+        <span aria-hidden="true" className={styles.Tappable__stateLayer} />
       )}
       {!props.disabled && isPresetFocusVisibleMode && (
         <FocusVisible mode={focusVisibleMode as FocusVisibleMode} />
@@ -356,14 +385,3 @@ const TappableComponent = ({
     </Touch>
   );
 };
-
-/**
- * @see https://vkcom.github.io/VKUI/#/Tappable
- */
-export const Tappable = withAdaptivity(TappableComponent, {
-  sizeX: true,
-  hasMouse: true,
-  deviceHasHover: true,
-});
-
-Tappable.displayName = "Tappable";

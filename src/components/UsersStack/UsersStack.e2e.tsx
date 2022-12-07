@@ -12,7 +12,7 @@ describe("UsersStack", () => {
   describeScreenshotFuzz(UsersStack, [
     {
       children: ["Понравилось Анне и ещё XX людям"],
-      size: ["xs", "s", "m"],
+      size: ["s", "m", "l"],
       layout: ["horizontal", "vertical"],
       photos: [
         [],

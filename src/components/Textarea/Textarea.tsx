@@ -1,17 +1,17 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasRef, HasRootRef } from "../../types";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
 import { useExternRef } from "../../hooks/useExternRef";
-import "./Textarea.css";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import styles from "./Textarea.module.css";
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
     HasRef<HTMLTextAreaElement>,
     HasRootRef<HTMLElement>,
-    AdaptivityProps,
     Pick<React.CSSProperties, "maxHeight">,
     Pick<FormFieldProps, "status"> {
   grow?: boolean;
@@ -19,7 +19,10 @@ export interface TextareaProps
   defaultValue?: string;
 }
 
-const TextareaComponent = ({
+/**
+ * @see https://vkcom.github.io/VKUI/#/Textarea
+ */
+export const Textarea = ({
   defaultValue = "",
   grow = true,
   style,
@@ -27,7 +30,6 @@ const TextareaComponent = ({
   className,
   getRootRef,
   getRef,
-  sizeY,
   rows = 2,
   maxHeight,
   status,
@@ -36,6 +38,7 @@ const TextareaComponent = ({
   const [value, onChange] = useEnsuredControl(restProps, { defaultValue });
   const currentScrollHeight = React.useRef<number>();
   const elementRef = useExternRef(getRef);
+  const { sizeY } = useAdaptivity();
 
   // autosize input
   React.useEffect(() => {
@@ -54,12 +57,11 @@ const TextareaComponent = ({
 
   return (
     <FormField
-      vkuiClass={classNames(
-        "Textarea",
-        // TODO. v5.0.0 Новая адаптивность
-        `Textarea--sizeY-${sizeY}`
+      className={classNamesString(
+        styles["Textarea"],
+        getSizeYClassName(styles["Textarea"], sizeY),
+        className
       )}
-      className={className}
       style={style}
       getRootRef={getRootRef}
       disabled={restProps.disabled}
@@ -69,7 +71,7 @@ const TextareaComponent = ({
         {...restProps}
         style={{ maxHeight }}
         rows={rows}
-        vkuiClass="Textarea__el"
+        className={styles["Textarea__el"]}
         value={value}
         onChange={onChange}
         ref={elementRef}
@@ -77,10 +79,3 @@ const TextareaComponent = ({
     </FormField>
   );
 };
-
-/**
- * @see https://vkcom.github.io/VKUI/#/Textarea
- */
-export const Textarea = withAdaptivity(TextareaComponent, { sizeY: true });
-
-Textarea.displayName = "Textarea";

@@ -1,10 +1,10 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
-import { IOS } from "../../lib/platform";
+import { classNamesString } from "../../lib/classNames";
+import { Platform } from "../../lib/platform";
 import { HasRef, HasRootRef } from "../../types";
 import { PopoutRoot } from "../PopoutRoot/PopoutRoot";
 import { usePlatform } from "../../hooks/usePlatform";
-import "./SplitLayout.css";
+import styles from "./SplitLayout.module.css";
 
 export interface SplitLayoutProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -31,15 +31,16 @@ export const SplitLayout = ({
   children,
   getRootRef,
   getRef,
+  className,
   ...restProps
 }: SplitLayoutProps) => {
   const platform = usePlatform();
 
   return (
     <PopoutRoot
-      vkuiClass={classNames(
-        "SplitLayout",
-        platform === IOS && "SplitLayout--ios"
+      className={classNamesString(
+        styles["SplitLayout"],
+        platform === Platform.IOS && styles["SplitLayout--ios"]
       )}
       popout={popout}
       modal={modal}
@@ -49,9 +50,10 @@ export const SplitLayout = ({
       <div
         {...restProps}
         ref={getRef}
-        vkuiClass={classNames(
-          "SplitLayout__inner",
-          !!header && "SplitLayout__inner--header"
+        className={classNamesString(
+          styles["SplitLayout__inner"],
+          !!header && styles["SplitLayout__inner--header"],
+          className
         )}
       >
         {children}

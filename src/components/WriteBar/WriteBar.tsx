@@ -3,10 +3,10 @@ import { Headline } from "../Typography/Headline/Headline";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useExternRef } from "../../hooks/useExternRef";
 import { hasReactNode, isFunction } from "../../lib/utils";
-import { classNames } from "../../lib/classNames";
-import { IOS } from "../../lib/platform";
+import { classNamesString } from "../../lib/classNames";
+import { Platform } from "../../lib/platform";
 import { HasRef, HasRootRef } from "../../types";
-import "./WriteBar.css";
+import styles from "./WriteBar.module.css";
 
 export interface WriteBarProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
@@ -99,34 +99,36 @@ export const WriteBar = ({
   return (
     <div
       ref={getRootRef}
-      vkuiClass={classNames(
-        "WriteBar",
-        platform === IOS && "WriteBar--ios",
-        shadow && "WriteBar--shadow"
+      className={classNamesString(
+        styles["WriteBar"],
+        platform === Platform.IOS && styles["WriteBar--ios"],
+        shadow && styles["WriteBar--shadow"],
+        className
       )}
-      className={className}
       style={style}
     >
-      <div vkuiClass="WriteBar__form">
+      <div className={styles["WriteBar__form"]}>
         {hasReactNode(before) && (
-          <div vkuiClass="WriteBar__before">{before}</div>
+          <div className={styles["WriteBar__before"]}>{before}</div>
         )}
 
-        <div vkuiClass="WriteBar__formIn">
+        <div className={styles["WriteBar__formIn"]}>
           <Headline
             {...restProps}
             Component="textarea"
-            vkuiClass="WriteBar__textarea"
+            className={styles["WriteBar__textarea"]}
             onChange={onTextareaChange}
             getRootRef={textareaRef}
             value={value}
           />
           {hasReactNode(inlineAfter) && (
-            <div vkuiClass="WriteBar__inlineAfter">{inlineAfter}</div>
+            <div className={styles["WriteBar__inlineAfter"]}>{inlineAfter}</div>
           )}
         </div>
 
-        {hasReactNode(after) && <div vkuiClass="WriteBar__after">{after}</div>}
+        {hasReactNode(after) && (
+          <div className={styles["WriteBar__after"]}>{after}</div>
+        )}
       </div>
     </div>
   );

@@ -1,11 +1,11 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import {
   HorizontalScroll,
   HorizontalScrollProps,
   ScrollPositionHandler,
 } from "../HorizontalScroll/HorizontalScroll";
-import "./SubnavigationBar.css";
+import styles from "./SubnavigationBar.module.css";
 
 export interface SubnavigationBarProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -33,6 +33,7 @@ export const SubnavigationBar = ({
   getScrollToLeft = defaultScrollToLeft,
   getScrollToRight = defaultScrollToRight,
   scrollAnimationDuration,
+  className,
   ...restProps
 }: SubnavigationBarProps) => {
   let ScrollWrapper: React.ElementType;
@@ -53,10 +54,17 @@ export const SubnavigationBar = ({
   return (
     <div
       {...restProps}
-      vkuiClass={classNames("SubnavigationBar", `SubnavigationBar--${mode}`)}
+      className={classNamesString(
+        styles["SubnavigationBar"],
+        styles[`SubnavigationBar--mode-${mode}`],
+        className
+      )}
     >
-      <ScrollWrapper vkuiClass="SubnavigationBar__in" {...scrollWrapperProps}>
-        <div vkuiClass="SubnavigationBar__scrollIn">{children}</div>
+      <ScrollWrapper
+        className={styles["SubnavigationBar__in"]}
+        {...scrollWrapperProps}
+      >
+        <div className={styles["SubnavigationBar__scrollIn"]}>{children}</div>
       </ScrollWrapper>
     </div>
   );

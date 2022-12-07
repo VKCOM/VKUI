@@ -9,7 +9,7 @@
 VKUI — это библиотека адаптивных React-компонентов, <br> для создания веб-приложений и <a href="https://vk.com/dev/vk_apps_docs">VK Mini Apps</a> в экосистеме ВКонтакте.<br>
 Библиотека основана на <a href="https://www.figma.com/@vk">дизайн-системе ВКонтакте</a> и реализует её интерфейсы для различных платформ.<br>
 Релизы: <a href="https://github.com/VKCOM/VKUI/releases">https://github.com/VKCOM/VKUI/releases</a>.<br>
-Гайд по миграции на версию 4: <a href="https://github.com/VKCOM/VKUI/releases/tag/v4.0.0">https://github.com/VKCOM/VKUI/releases/tag/v4.0.0</a>.
+Гайд по миграции <a href="https://vkcom.github.io/VKUI/#/Migration">на версию 5</a>.
 </p>
 
 ## Установка
@@ -26,7 +26,7 @@ npm i @vkontakte/vkui @vkontakte/icons @vkontakte/vk-bridge
 yarn add @vkontakte/vkui @vkontakte/icons @vkontakte/vk-bridge
 ```
 
-> _Обратите внимание_: мы поддерживаем [react](https://www.npmjs.com/package/react) и [react-dom](https://www.npmjs.com/package/react-dom) версий `^16.8.6`, `^17.0.0` и `^18.1.0`
+> _Обратите внимание_: мы поддерживаем [react](https://www.npmjs.com/package/react) и [react-dom](https://www.npmjs.com/package/react-dom) `^17.0.0` и `^18.1.0`
 
 ## Hello World
 
@@ -36,11 +36,9 @@ import ReactDOM from "react-dom";
 import {
   AdaptivityProvider,
   ConfigProvider,
-  useAdaptivity,
   AppRoot,
   SplitLayout,
   SplitCol,
-  ViewWidth,
   View,
   Panel,
   PanelHeader,
@@ -51,12 +49,10 @@ import {
 import "@vkontakte/vkui/dist/vkui.css";
 
 const Example = () => {
-  const { viewWidth } = useAdaptivity();
-
   return (
     <AppRoot>
       <SplitLayout header={<PanelHeader separator={false} />}>
-        <SplitCol spaced={viewWidth > ViewWidth.MOBILE}>
+        <SplitCol autoSpaced>
           <View activePanel="main">
             <Panel id="main">
               <PanelHeader>VKUI</PanelHeader>
@@ -86,13 +82,13 @@ ReactDOM.render(
 
 На данный момент мы поддерживаем WebView следующих операционных систем:
 
-- Android >= 4.4
+- Android >= 5
 - iOS >= 9
 
 Иными словами, мы поддерживаем браузеры следующих версий:
 
 - Safari для iOS >= 9
-- Android Browser >= 4.4 (Chrome 30)
+- Android Browser >= 5 (Chrome 36)
 - Chrome для Android, начиная с Android 5.0 (Chrome 36)
 
 ## Тестирование

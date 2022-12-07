@@ -1,7 +1,6 @@
 import * as React from "react";
 import ReactDOM from "react-dom";
-import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
+import { classNamesString } from "../../lib/classNames";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import { useNavTransition } from "../NavTransitionContext/NavTransitionContext";
 import { PopperArrow } from "../PopperArrow/PopperArrow";
@@ -12,10 +11,9 @@ import { useExternRef } from "../../hooks/useExternRef";
 import { useDOM } from "../../lib/dom";
 import { warnOnce } from "../../lib/warnOnce";
 import { hasReactNode } from "../../lib/utils";
-import { prefixClass } from "../../lib/prefixClass";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { HasRootRef } from "../../types";
-import "./Tooltip.css";
+import styles from "./Tooltip.module.css";
 
 interface SimpleTooltipProps extends Partial<TooltipProps> {
   target?: HTMLDivElement;
@@ -29,43 +27,78 @@ interface SimpleTooltipProps extends Partial<TooltipProps> {
   };
 }
 
-const isDOMTypeElement = (
+/**
+ * Перебиваем `ref`.
+ *
+ * В оригинальном `React.DOMElement` задаётся `React.LegacyRef<T>`, в котором есть `string`.
+ * Когда как `{ ref: "string" }` уже давно депрекейтнут.
+ */
+interface DOMElement<
+  P extends React.HTMLAttributes<T> | React.SVGAttributes<T>,
+  T extends Element
+> extends React.DOMElement<P, T> {
+  ref: React.Ref<T>;
+}
+
+const isDOMTypeElement = <
+  P extends React.HTMLAttributes<T> | React.SVGAttributes<T>,
+  T extends Element
+>(
   element: React.ReactElement
-): element is React.DOMElement<any, any> => {
+): element is DOMElement<P, T> => {
   return React.isValidElement(element) && typeof element.type === "string";
 };
 
-const baseClassName = getClassName("Tooltip");
 const warn = warnOnce("Tooltip");
 const IS_DEV = process.env.NODE_ENV === "development";
 
 const SimpleTooltip = React.forwardRef<HTMLDivElement, SimpleTooltipProps>(
   function SimpleTooltip(
-    { appearance = "accent", header, text, arrow, style = {}, attributes },
+    {
+      appearance = "accent",
+      header,
+      text,
+      arrow,
+      style: popperStyles = {},
+      attributes,
+    },
     ref
   ) {
+    const { className: containerClassName, ...restContainerAttributes } =
+      attributes?.container ?? {};
+
     return (
-      <div vkuiClass={classNames(baseClassName, `Tooltip--${appearance}`)}>
+      <div
+        className={classNamesString(
+          styles["Tooltip"],
+          styles[`Tooltip--appearance-${appearance}`]
+        )}
+      >
         <div
-          vkuiClass="Tooltip__container"
+          className={classNamesString(
+            styles["Tooltip__container"],
+            containerClassName
+          )}
           ref={ref}
-          style={style.container}
-          {...attributes?.container}
+          style={popperStyles.container}
+          {...restContainerAttributes}
         >
           {arrow && (
             <PopperArrow
-              style={style.arrow}
+              style={popperStyles.arrow}
               attributes={attributes?.arrow}
-              arrowClassName={prefixClass("Tooltip__arrow")}
+              arrowClassName={styles["Tooltip__arrow"]}
             />
           )}
-          <div vkuiClass="Tooltip__content">
+          <div className={styles["Tooltip__content"]}>
             {header && (
-              <Subhead weight="2" vkuiClass="Tooltip__title">
+              <Subhead weight="2" className={styles["Tooltip__title"]}>
                 {header}
               </Subhead>
             )}
-            {text && <Subhead vkuiClass="Tooltip__text">{text}</Subhead>}
+            {text && (
+              <Subhead className={styles["Tooltip__text"]}>{text}</Subhead>
+            )}
           </div>
         </div>
       </div>
@@ -79,14 +112,7 @@ export interface TooltipProps {
    * свойство `getRootRef`, которое должно возвращаться ссылку на корневой DOM-элемент компонента,
    * иначе тултип показан не будет. Если передан React-element, то такой проблемы нет.
    */
-  children:
-    | React.ReactElement<HasRootRef<any>>
-    | React.ReactElement<React.PropsWithRef<any>>;
-  /**
-   * @deprecated будет удалено в 5.0.0, устанавливать стиль следует через appearance
-   * Стиль отображения подсказки
-   */
-  mode?: "accent" | "light";
+  children: React.ReactElement<HasRootRef<any>> | React.ReactElement;
   /**
    * Стиль отображения подсказки
    */
@@ -166,21 +192,6 @@ function isVerticalPlacement(placement: Placement) {
 }
 
 /**
- * Вычисляем стиль подсказки: параметр appearance имеет приоритет, иначе мапим mode на подходящее значение из appearance
- * TODO: v5 избавиться от пропа mode и этого метода, для appearance по умолчанию сделать "accent"
- */
-function calculateAppearance(
-  mode: TooltipProps["mode"],
-  appearance: TooltipProps["appearance"]
-): TooltipProps["appearance"] {
-  if (appearance) {
-    return appearance;
-  }
-
-  return mode === "light" ? "white" : "accent";
-}
-
-/**
  * @see https://vkcom.github.io/VKUI/#/Tooltip
  */
 export const Tooltip = ({
@@ -193,7 +204,6 @@ export const Tooltip = ({
   onClose,
   cornerOffset = 0,
   cornerAbsoluteOffset,
-  mode = "accent",
   appearance,
   arrow = true,
   placement,
@@ -297,7 +307,7 @@ export const Tooltip = ({
   }, [arrow, cornerAbsoluteOffset, cornerOffset, offsetX, offsetY]);
 
   const _placement = placement ?? getPlacement(alignX, alignY);
-  const { styles, attributes } = usePopper(target, tooltipRef, {
+  const { styles: popperStyles, attributes } = usePopper(target, tooltipRef, {
     strategy,
     placement: _placement,
     modifiers,
@@ -309,17 +319,20 @@ export const Tooltip = ({
   });
   // NOTE: setting isShown to true used to trigger usePopper().forceUpdate()
 
-  const childRef =
-    React.isValidElement(children) &&
-    (isDOMTypeElement(children) ? children.ref : children.props.getRootRef);
+  const childRef = isDOMTypeElement<
+    React.HTMLAttributes<HTMLElement>,
+    HTMLElement
+  >(children)
+    ? children.ref
+    : React.isValidElement<HasRootRef<HTMLElement>>(children)
+    ? children.props.getRootRef
+    : null;
   const patchedRef = useExternRef(setTarget, childRef);
   const child = React.isValidElement(children)
     ? React.cloneElement(children, {
         [isDOMTypeElement(children) ? "ref" : "getRootRef"]: patchedRef,
       })
     : children;
-
-  const _appearance = calculateAppearance(mode, appearance);
 
   return (
     <React.Fragment>
@@ -329,10 +342,13 @@ export const Tooltip = ({
         ReactDOM.createPortal(
           <SimpleTooltip
             {...restProps}
-            appearance={_appearance}
+            appearance={appearance}
             arrow={arrow}
             ref={(el) => setTooltipRef(el)}
-            style={{ arrow: styles.arrow, container: styles.popper }}
+            style={{
+              arrow: popperStyles.arrow,
+              container: popperStyles.popper,
+            }}
             attributes={{
               arrow: attributes.arrow ?? null,
               container: attributes.popper ?? null,

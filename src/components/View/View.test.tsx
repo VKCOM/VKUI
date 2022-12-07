@@ -1,6 +1,7 @@
+import * as React from "react";
 import { fireEvent, render, screen, act } from "@testing-library/react";
 import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import {
   baselineComponent,
   mockScrollContext,
@@ -102,20 +103,6 @@ describe.each([
       );
       expect(document.activeElement === document.body).toBe(true);
     });
-    it.each(["popout"])("on %s", (key) => {
-      const props = { [key]: <div /> };
-      renderFocused();
-      render(
-        <View activePanel="focus">
-          <Panel id="focus" />
-        </View>
-      ).rerender(
-        <View activePanel="focus" {...props}>
-          <Panel id="focus" />
-        </View>
-      );
-      expect(document.activeElement === document.body).toBe(true);
-    });
   });
 
   describe("can swipeBack", () => {
@@ -132,7 +119,7 @@ describe.each([
       };
       const SwipeBack = (p: Partial<ViewProps>) => (
         <Wrapper>
-          <ConfigProvider platform={IOS} isWebView>
+          <ConfigProvider platform={Platform.IOS} isWebView>
             <View
               id="scroll"
               activePanel="p2"

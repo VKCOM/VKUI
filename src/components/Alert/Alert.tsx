@@ -1,21 +1,21 @@
 import * as React from "react";
 import { Tappable } from "../Tappable/Tappable";
 import { PopoutWrapper } from "../PopoutWrapper/PopoutWrapper";
-import { classNames } from "../../lib/classNames";
-import { VKCOM, IOS } from "../../lib/platform";
-import { ViewWidth } from "../../hoc/withAdaptivity";
+import { classNamesString } from "../../lib/classNames";
+import { Platform } from "../../lib/platform";
 import { Button, ButtonProps } from "../Button/Button";
 import { hasReactNode, stopPropagation } from "../../lib/utils";
 import { Title } from "../Typography/Title/Title";
 import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { Text } from "../Typography/Text/Text";
 import { ModalDismissButton } from "../ModalDismissButton/ModalDismissButton";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { useScrollLock } from "../AppRoot/ScrollContext";
 import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
 import { usePlatform } from "../../hooks/usePlatform";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import "./Alert.css";
+import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
+import styles from "./Alert.module.css";
 
 export type AlertActionInterface = AlertAction &
   React.AnchorHTMLAttributes<HTMLElement>;
@@ -23,7 +23,7 @@ export type AlertActionInterface = AlertAction &
 export interface AlertAction extends Pick<ButtonProps, "Component" | "href"> {
   title: string;
   action?: VoidFunction;
-  autoclose?: boolean;
+  autoClose?: boolean;
   mode: "cancel" | "destructive" | "default";
 }
 
@@ -32,7 +32,7 @@ export interface AlertProps extends React.HTMLAttributes<HTMLElement> {
   actions?: AlertAction[];
   header?: React.ReactNode;
   text?: React.ReactNode;
-  onClose?: VoidFunction;
+  onClose: VoidFunction;
 
   /**
    * `aria-label` для кнопки закрытия. Необходим, чтобы кнопка была доступной.
@@ -51,13 +51,23 @@ const AlertHeader = (props: AlertTypography) => {
   const platform = usePlatform();
 
   switch (platform) {
-    case IOS:
+    case Platform.IOS:
       return (
-        <Title vkuiClass="Alert__header" weight="1" level="3" {...props} />
+        <Title
+          className={styles["Alert__header"]}
+          weight="1"
+          level="3"
+          {...props}
+        />
       );
     default:
       return (
-        <Title vkuiClass="Alert__header" weight="2" level="2" {...props} />
+        <Title
+          className={styles["Alert__header"]}
+          weight="2"
+          level="2"
+          {...props}
+        />
       );
   }
 };
@@ -66,13 +76,18 @@ const AlertText = (props: AlertTypography) => {
   const platform = usePlatform();
 
   switch (platform) {
-    case VKCOM:
-      return <Caption vkuiClass="Alert__text" {...props} />;
-    case IOS:
-      return <Caption vkuiClass="Alert__text" level="2" {...props} />;
+    case Platform.VKCOM:
+      return <Footnote className={styles["Alert__text"]} {...props} />;
+    case Platform.IOS:
+      return <Caption className={styles["Alert__text"]} {...props} />;
     default:
       return (
-        <Text Component="span" vkuiClass="Alert__text" weight="3" {...props} />
+        <Text
+          Component="span"
+          className={styles["Alert__text"]}
+          weight="3"
+          {...props}
+        />
       );
   }
 };
@@ -88,18 +103,20 @@ const AlertAction = ({
   ...restProps
 }: AlertActionProps) => {
   const platform = usePlatform();
-  const { viewWidth } = useAdaptivity();
   const handleItemClick = React.useCallback(
     () => onItemClick(action),
     [onItemClick, action]
   );
 
-  if (platform === IOS) {
+  if (platform === Platform.IOS) {
     const { Component = "button" } = action;
     return (
       <Tappable
         Component={action.href ? "a" : Component}
-        vkuiClass={classNames("Alert__action", `Alert__action--${action.mode}`)}
+        className={classNamesString(
+          styles["Alert__action"],
+          styles[`Alert__action--mode-${action.mode}`]
+        )}
         onClick={handleItemClick}
         href={action.href}
         target={action.target}
@@ -112,18 +129,16 @@ const AlertAction = ({
 
   let mode: ButtonProps["mode"] = "tertiary";
 
-  // TODO v5.0.0 поправить под новую адаптивность
-  if (viewWidth === ViewWidth.DESKTOP && action.mode === "destructive") {
-    mode = "destructive";
-  }
-
-  if (platform === VKCOM) {
+  if (platform === Platform.VKCOM) {
     mode = action.mode === "cancel" ? "secondary" : "primary";
   }
 
   return (
     <Button
-      vkuiClass={classNames("Alert__button", `Alert__button--${action.mode}`)}
+      className={classNamesString(
+        styles["Alert__button"],
+        styles[`Alert__button--mode-${action.mode}`]
+      )}
       mode={mode}
       size="m"
       onClick={handleItemClick}
@@ -152,7 +167,7 @@ export const Alert = ({
   ...restProps
 }: AlertProps) => {
   const platform = usePlatform();
-  const { viewWidth } = useAdaptivity();
+  const { isDesktop } = useAdaptivityWithJSMediaQueries();
   const { waitTransitionFinish } = useWaitTransitionFinish();
 
   const [closing, setClosing] = React.useState(false);
@@ -160,12 +175,9 @@ export const Alert = ({
   const elementRef = React.useRef<HTMLDivElement>(null);
 
   const resolvedActionsLayout: AlertProps["actionsLayout"] =
-    platform === VKCOM ? "horizontal" : actionsLayout;
-  const canShowCloseButton =
-    platform !== IOS && viewWidth >= ViewWidth.SMALL_TABLET;
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET; // TODO v5.0.0 поправить под новую адаптивность
+    platform === Platform.VKCOM ? "horizontal" : actionsLayout;
 
-  const timeout = platform === IOS ? 300 : 200;
+  const timeout = platform === Platform.IOS ? 300 : 200;
 
   const close = React.useCallback(() => {
     setClosing(true);
@@ -173,7 +185,7 @@ export const Alert = ({
       elementRef.current,
       (e?: TransitionEvent) => {
         if (!e || e.propertyName === "opacity") {
-          onClose && onClose();
+          onClose();
         }
       },
       timeout
@@ -182,15 +194,15 @@ export const Alert = ({
 
   const onItemClick: ItemClickHandler = React.useCallback(
     (item: AlertActionInterface) => {
-      const { action, autoclose } = item;
+      const { action, autoClose } = item;
 
-      if (autoclose) {
+      if (autoClose) {
         setClosing(true);
         waitTransitionFinish(
           elementRef.current,
           (e?: TransitionEvent) => {
             if (!e || e.propertyName === "opacity") {
-              onClose && onClose();
+              onClose();
               action && action();
             }
           },
@@ -218,20 +230,22 @@ export const Alert = ({
         onClick={stopPropagation}
         onClose={close}
         timeout={timeout}
-        vkuiClass={classNames(
-          "Alert",
-          platform === IOS && "Alert--ios",
-          platform === VKCOM && "Alert--vkcom",
-          resolvedActionsLayout === "vertical" ? "Alert--v" : "Alert--h",
-          closing && "Alert--closing",
-          isDesktop && "Alert--desktop"
+        className={classNamesString(
+          styles["Alert"],
+          platform === Platform.IOS && styles["Alert--ios"],
+          platform === Platform.VKCOM && styles["Alert--vkcom"],
+          resolvedActionsLayout === "vertical"
+            ? styles["Alert--v"]
+            : styles["Alert--h"],
+          closing && styles["Alert--closing"],
+          isDesktop && styles["Alert--desktop"]
         )}
         role="alertdialog"
         aria-modal
         aria-labelledby="vkui--alert--title"
         aria-describedby="vkui--alert--desc"
       >
-        <div vkuiClass="Alert__content">
+        <div className={styles["Alert__content"]}>
           {hasReactNode(header) && (
             <AlertHeader id="vkui--alert--title">{header}</AlertHeader>
           )}
@@ -240,12 +254,12 @@ export const Alert = ({
           )}
           {children}
         </div>
-        <div vkuiClass="Alert__actions">
+        <div className={styles["Alert__actions"]}>
           {actions.map((action, i) => (
             <AlertAction key={i} action={action} onItemClick={onItemClick} />
           ))}
         </div>
-        {canShowCloseButton && (
+        {isDesktop && (
           <ModalDismissButton onClick={close} aria-label={dismissLabel} />
         )}
       </FocusTrap>

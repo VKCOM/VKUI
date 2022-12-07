@@ -1,11 +1,10 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { animationEvent } from "../../lib/supportEvents";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { Touch, TouchEvent } from "../Touch/Touch";
 import { useConfigProvider } from "../ConfigProvider/ConfigProviderContext";
 import { useSplitCol } from "../SplitCol/SplitCol";
-import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { canUseDOM, useDOM, blurActiveElement } from "../../lib/dom";
 import { useScroll } from "../AppRoot/ScrollContext";
 import { NavTransitionProvider } from "../NavTransitionContext/NavTransitionContext";
@@ -18,7 +17,8 @@ import { useTimeout } from "../../hooks/useTimeout";
 import { usePrevious } from "../../hooks/usePrevious";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { noop } from "../../lib/utils";
-import "./View.css";
+import styles from "./View.module.css";
+import iosStyles from "./ViewIOS.module.css";
 
 enum SwipeBackResults {
   fail = 1,
@@ -39,18 +39,6 @@ export interface ViewProps
   extends React.HTMLAttributes<HTMLElement>,
     NavIdProps {
   activePanel: string;
-  /**
-   * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
-   *
-   * Свойство для отрисовки `Alert`, `ActionSheet` и `ScreenSpinner`.
-   */
-  popout?: React.ReactNode;
-  /**
-   * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
-   *
-   * Свойство для отрисовки `ModalRoot`.
-   */
-  modal?: React.ReactNode;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   /**
    * callback свайпа назад
@@ -92,8 +80,6 @@ const warn = warnOnce("View");
  * @see https://vkcom.github.io/VKUI/#/View
  */
 export const View = ({
-  popout,
-  modal,
   activePanel: activePanelProp,
   history,
   nav,
@@ -102,20 +88,9 @@ export const View = ({
   onSwipeBackStart,
   onSwipeBackCancel: onSwipeBackCancelProp,
   children,
-
+  className,
   ...restProps
 }: ViewProps) => {
-  if (process.env.NODE_ENV === "development") {
-    popout &&
-      warn(
-        "Свойство popout устарело и будет удалено в 5.0.0. Используйте одноименное свойство у SplitLayout."
-      );
-    modal &&
-      warn(
-        "Свойство modal устарело и будет удалено в 5.0.0. Используйте одноименное свойство у SplitLayout."
-      );
-  }
-
   const scrolls = React.useRef(
     scrollsCache[getNavId({ nav, id: restProps.id }) as string] || {}
   );
@@ -243,7 +218,7 @@ export const View = ({
   const { waitTransitionFinish } = useWaitTransitionFinish();
   const animationFinishTimeout = useTimeout(
     transitionEndHandler,
-    platform === IOS ? 600 : 300
+    platform === Platform.IOS ? 600 : 300
   );
 
   const onSwipeBackSuccess = React.useCallback(() => {
@@ -286,7 +261,7 @@ export const View = ({
     }
 
     if (
-      platform === IOS &&
+      platform === Platform.IOS &&
       !configProvider?.isWebView &&
       (e.startX <= 70 || e.startX >= window!.innerWidth - 70) &&
       !browserSwipe
@@ -294,7 +269,7 @@ export const View = ({
       setBrowserSwipe(true);
     }
 
-    if (platform === IOS && configProvider?.isWebView && onSwipeBack) {
+    if (platform === Platform.IOS && configProvider?.isWebView && onSwipeBack) {
       if ((animated && e.startX <= 70) || !window) {
         return;
       }
@@ -398,10 +373,6 @@ export const View = ({
   };
 
   React.useEffect(() => {
-    popout && blurActiveElement(document);
-  }, [document, popout]);
-
-  React.useEffect(() => {
     // Нужен переход
     if (
       prevActivePanel &&
@@ -481,7 +452,7 @@ export const View = ({
       waitTransitionFinish(
         pickPanel(swipeBackNextPanel),
         swipingBackTransitionEndHandler,
-        platform === IOS ? 600 : 300
+        platform === Platform.IOS ? 600 : 300
       );
     }
 
@@ -533,17 +504,18 @@ export const View = ({
     <Touch
       Component="section"
       {...restProps}
-      vkuiClass={classNames(
-        "View",
-        platform === IOS && "View--ios",
-        !disableAnimation && animated && "View--animated",
-        !disableAnimation && swipingBack && "View--swiping-back",
-        disableAnimation && "View--no-motion"
+      className={classNamesString(
+        styles["View"],
+        platform === Platform.IOS && iosStyles["View--ios"],
+        !disableAnimation && animated && styles["View--animated"],
+        !disableAnimation && swipingBack && styles["View--swiping-back"],
+        disableAnimation && styles["View--no-motion"],
+        className
       )}
       onMoveX={onMoveX}
       onEnd={onEnd}
     >
-      <div vkuiClass="View__panels">
+      <div className={styles["View__panels"]}>
         {panels.map((panel: React.ReactElement) => {
           const panelId = getNavId(panel.props, warn);
           const isPrev =
@@ -557,19 +529,19 @@ export const View = ({
 
           return (
             <div
-              vkuiClass={classNames(
-                "View__panel",
-                panelId === activePanel && "View__panel--active",
-                panelId === prevPanel && "View__panel--prev",
-                panelId === nextPanel && "View__panel--next",
+              className={classNamesString(
+                styles["View__panel"],
+                panelId === activePanel && iosStyles["View__panel--active"],
+                panelId === prevPanel && styles["View__panel--prev"],
+                panelId === nextPanel && styles["View__panel--next"],
                 panelId === swipeBackPrevPanel &&
-                  "View__panel--swipe-back-prev",
+                  iosStyles["View__panel--swipe-back-prev"],
                 panelId === swipeBackNextPanel &&
-                  "View__panel--swipe-back-next",
+                  iosStyles["View__panel--swipe-back-next"],
                 swipeBackResult === SwipeBackResults.success &&
-                  "View__panel--swipe-back-success",
+                  iosStyles["View__panel--swipe-back-success"],
                 swipeBackResult === SwipeBackResults.fail &&
-                  "View__panel--swipe-back-failed"
+                  iosStyles["View__panel--swipe-back-failed"]
               )}
               onAnimationEnd={
                 isTransitionTarget ? transitionEndHandler : undefined
@@ -581,10 +553,10 @@ export const View = ({
               key={panelId}
             >
               <div
-                vkuiClass="View__panel-in"
+                className={styles["View__panel-in"]}
                 style={{
                   marginTop: compensateScroll
-                    ? -(scrolls.current[panelId as string] ?? 0)
+                    ? -(scrolls.current[panelId] ?? 0)
                     : undefined,
                 }}
               >
@@ -600,10 +572,6 @@ export const View = ({
           );
         })}
       </div>
-      <AppRootPortal>
-        {!!popout && <div vkuiClass="View__popout">{popout}</div>}
-        {!!modal && <div vkuiClass="View__modal">{modal}</div>}
-      </AppRootPortal>
     </Touch>
   );
 };

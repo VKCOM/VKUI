@@ -1,0 +1,16 @@
+.RadioGroup--mode-horizontal {
+  display: flex;
+}
+
+/**
+ * CMP:
+ * FormItem
+ */
+.FormItem .RadioGroup {
+  margin: 0 calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
+  box-sizing: content-box;
+}
+
+.RadioGroup--mode-vertical {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
+}

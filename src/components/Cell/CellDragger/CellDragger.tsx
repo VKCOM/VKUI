@@ -1,12 +1,12 @@
 import * as React from "react";
 import { Icon24Reorder, Icon24ReorderIos } from "@vkontakte/icons";
-import { getClassName } from "../../../helpers/getClassName";
+import { getPlatformClassName } from "../../../helpers/getPlatformClassName";
 import { usePlatform } from "../../../hooks/usePlatform";
-import { classNames } from "../../../lib/classNames";
-import { IOS } from "../../../lib/platform";
+import { classNamesString } from "../../../lib/classNames";
+import { Platform } from "../../../lib/platform";
 import { Touch } from "../../Touch/Touch";
 import { DraggableProps } from "../useDraggable";
-import "./CellDragger.css";
+import styles from "./CellDragger.module.css";
 
 type CellDraggerProps = DraggableProps & React.HTMLAttributes<HTMLElement>;
 
@@ -14,6 +14,7 @@ export const CellDragger = ({
   onDragStart,
   onDragMove,
   onDragEnd,
+  className,
   ...restProps
 }: CellDraggerProps) => {
   const platform = usePlatform();
@@ -24,14 +25,18 @@ export const CellDragger = ({
 
   return (
     <Touch
-      vkuiClass={classNames(getClassName("CellDragger", platform))}
+      className={classNamesString(
+        styles["CellDragger"],
+        getPlatformClassName(styles["CellDragger"], platform),
+        className
+      )}
       onStart={onDragStart}
       onMoveY={onDragMove}
       onEnd={onDragEnd}
       onClick={onClick}
       {...restProps}
     >
-      {platform === IOS ? <Icon24ReorderIos /> : <Icon24Reorder />}
+      {platform === Platform.IOS ? <Icon24ReorderIos /> : <Icon24Reorder />}
     </Touch>
   );
 };

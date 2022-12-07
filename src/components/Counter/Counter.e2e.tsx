@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Counter, CounterProps } from "./Counter";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 

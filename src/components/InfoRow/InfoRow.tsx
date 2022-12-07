@@ -1,8 +1,9 @@
 import * as React from "react";
+import { classNamesString } from "../../lib/classNames";
 import { Subhead } from "../Typography/Subhead/Subhead";
 import { Headline } from "../Typography/Headline/Headline";
 import { hasReactNode } from "../../lib/utils";
-import "./InfoRow.css";
+import styles from "./InfoRow.module.css";
 
 export interface InfoRowProps extends React.HTMLAttributes<HTMLDivElement> {
   header: React.ReactNode;
@@ -11,10 +12,20 @@ export interface InfoRowProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * @see https://vkcom.github.io/VKUI/#/InfoRow
  */
-export const InfoRow = ({ header, children, ...restProps }: InfoRowProps) => (
-  <Headline Component="span" {...restProps} vkuiClass="InfoRow" weight="3">
+export const InfoRow = ({
+  header,
+  children,
+  className,
+  ...restProps
+}: InfoRowProps) => (
+  <Headline
+    {...restProps}
+    Component="span"
+    className={classNamesString(styles["InfoRow"], className)}
+    weight="3"
+  >
     {hasReactNode(header) && (
-      <Subhead Component="span" vkuiClass="InfoRow__header">
+      <Subhead Component="span" className={styles["InfoRow__header"]}>
         {header}
       </Subhead>
     )}

@@ -7,7 +7,7 @@
 - В область контента необходимо передать параметры `id`, `tabIndex = 0` и `aria-labelledby`, ссылающийся на компонент таба
 
 ```jsx
-const Example = ({ sizeX }) => {
+const Example = () => {
   const [mode, setMode] = React.useState("all");
   const [menuOpened, setMenuOpened] = React.useState(false);
   const [selected, setSelected] = React.useState("news");
@@ -26,8 +26,6 @@ const Example = ({ sizeX }) => {
               <Icon28AddOutline />
             </PanelHeaderButton>
           }
-          // TODO 5.0.0 Новая адаптивность
-          separator={sizeX === SizeType.REGULAR}
         >
           <DefaultInPanel
             selected={selected}
@@ -244,10 +242,7 @@ const Scrollable = () => {
   );
 };
 
-// TODO 5.0.0 Новая адаптивность
-const AdaptivityExample = withAdaptivity(Example, { sizeX: true });
-
 <ConfigProvider webviewType="internal">
-  <AdaptivityExample />
+  <Example />
 </ConfigProvider>;
 ```

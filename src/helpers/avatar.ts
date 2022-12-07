@@ -1,4 +1,4 @@
-import { InitialsAvatarNumberGradients } from "../components/InitialsAvatar/InitialsAvatar";
+import type { InitialsAvatarNumberGradients } from "../components/Avatar/Avatar";
 
 /**
  * Вычисляет цвет InitialsAvatar на основании переданного идентификатора объекта

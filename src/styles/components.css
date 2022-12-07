@@ -1,153 +1,167 @@
 @import "./constants.css";
 @import "./animations.css";
+@import "./adaptivity.module.css";
 
 /* Файлы с CSS компонентов подключаются здесь неслучайно. Пока не удалось делать импорты через JS так,
  * чтобы в каждом файле были доступны CSS переменные без их дублирования.
  */
 
-@import "../components/AppRoot/AppRoot.css";
+@import "../components/AppRoot/AppRoot.module.css";
 
 /* Typography */
-@import "../components/Typography/Title/Title.css";
-@import "../components/Typography/Headline/Headline.css";
-@import "../components/Typography/Text/Text.css";
-@import "../components/Typography/Paragraph/Paragraph.css";
-@import "../components/Typography/Subhead/Subhead.css";
-@import "../components/Typography/Footnote/Footnote.css";
-@import "../components/Typography/Caption/Caption.css";
+@import "../components/Typography/Title/Title.module.css";
+@import "../components/Typography/Headline/Headline.module.css";
+@import "../components/Typography/Text/Text.module.css";
+@import "../components/Typography/Paragraph/Paragraph.module.css";
+@import "../components/Typography/Subhead/Subhead.module.css";
+@import "../components/Typography/Footnote/Footnote.module.css";
+@import "../components/Typography/Caption/Caption.module.css";
 
 /* Service */
-@import "../components/Tappable/Tappable.css";
-@import "../components/FixedLayout/FixedLayout.css";
+@import "../components/Tappable/Tappable.module.css";
+@import "../components/FixedLayout/FixedLayout.module.css";
+@import "../components/ImageBase/ImageBaseBadge/ImageBaseBadge.module.css";
+@import "../components/ImageBase/ImageBaseOverlay/ImageBaseOverlay.module.css";
+@import "../components/ImageBase/ImageBase.module.css";
 
 /* Primitives */
-@import "../components/Button/Button.css";
-@import "../components/Removable/Removable.css";
-@import "../components/FocusVisible/FocusVisible.css";
-@import "../components/PopperArrow/PopperArrow.css";
+@import "../components/Button/Button.module.css";
+@import "../components/Removable/Removable.module.css";
+@import "../components/FocusVisible/FocusVisible.module.css";
+@import "../components/PopperArrow/PopperArrow.module.css";
+@import "../components/DropdownIcon/DropdownIcon.module.css";
 
 /* Layout */
-@import "../components/Root/Root.css";
-@import "../components/View/View.css";
-@import "../components/Panel/Panel.css";
-@import "../components/PanelHeader/PanelHeader.css";
-@import "../components/PanelHeaderButton/PanelHeaderButton.css";
-@import "../components/PanelHeaderBack/PanelHeaderBack.css";
-@import "../components/PanelHeaderContent/PanelHeaderContent.css";
-@import "../components/PanelHeaderContext/PanelHeaderContext.css";
-@import "../components/PopoutRoot/PopoutRoot.css";
-@import "../components/SplitLayout/SplitLayout.css";
-@import "../components/SplitCol/SplitCol.css";
-@import "../components/Epic/Epic.css";
-@import "../components/Tabbar/Tabbar.css";
-@import "../components/TabbarItem/TabbarItem.css";
-@import "../components/HorizontalScroll/HorizontalScroll.css";
-@import "../components/HorizontalScroll/HorizontalScrollArrow.css";
+@import "../components/Root/Root.module.css";
+@import "../components/View/View.module.css";
+@import "../components/Panel/Panel.module.css";
+@import "../components/PanelHeader/PanelHeader.module.css";
+@import "../components/PanelHeaderButton/PanelHeaderButton.module.css";
+@import "../components/PanelHeaderBack/PanelHeaderBack.module.css";
+@import "../components/PanelHeaderContent/PanelHeaderContent.module.css";
+@import "../components/PanelHeaderContext/PanelHeaderContext.module.css";
+@import "../components/PopoutRoot/PopoutRoot.module.css";
+@import "../components/SplitLayout/SplitLayout.module.css";
+@import "../components/SplitCol/SplitCol.module.css";
+@import "../components/Epic/Epic.module.css";
+@import "../components/Tabbar/Tabbar.module.css";
+@import "../components/TabbarItem/TabbarItem.module.css";
+@import "../components/HorizontalScroll/HorizontalScroll.module.css";
+@import "../components/HorizontalScroll/HorizontalScrollArrow.module.css";
 
 /* Popouts */
-@import "../components/PopoutWrapper/PopoutWrapper.css";
-@import "../components/ActionSheet/ActionSheet.css";
-@import "../components/ActionSheetItem/ActionSheetItem.css";
-@import "../components/Alert/Alert.css";
-@import "../components/ScreenSpinner/ScreenSpinner.css";
-@import "../components/Snackbar/Snackbar.css";
+@import "../components/PopoutWrapper/PopoutWrapper.module.css";
+@import "../components/ActionSheet/ActionSheet.module.css";
+@import "../components/ActionSheetItem/ActionSheetItem.module.css";
+@import "../components/Alert/Alert.module.css";
+@import "../components/ScreenSpinner/ScreenSpinner.module.css";
+@import "../components/Snackbar/Snackbar.module.css";
 
 /* Modals */
-@import "../components/ModalCardBase/ModalCardBase.css";
-@import "../components/ModalRoot/ModalRoot.css";
-@import "../components/ModalCard/ModalCard.css";
-@import "../components/ModalPage/ModalPage.css";
-@import "../components/ModalDismissButton/ModalDismissButton.css";
-@import "../components/ModalPageHeader/ModalPageHeader.css";
+@import "../components/ModalCardBase/ModalCardBase.module.css";
+@import "../components/ModalRoot/ModalRoot.module.css";
+@import "../components/ModalCard/ModalCard.module.css";
+@import "../components/ModalPage/ModalPage.module.css";
+@import "../components/ModalDismissButton/ModalDismissButton.module.css";
+@import "../components/ModalPageHeader/ModalPageHeader.module.css";
 
 /* Blocks */
-@import "../components/ButtonGroup/ButtonGroup.css";
-@import "../components/Badge/Badge.css";
-@import "../components/IconButton/IconButton.css";
-@import "../components/Card/Card.css";
-@import "../components/CardGrid/CardGrid.css";
-@import "../components/CardScroll/CardScroll.css";
-@import "../components/ContentCard/ContentCard.css";
-@import "../components/Div/Div.css";
-@import "../components/Link/Link.css";
-@import "../components/Header/Header.css";
-@import "../components/Group/Group.css";
-@import "../components/Gradient/Gradient.css";
-@import "../components/SimpleCell/SimpleCell.css";
-@import "../components/Cell/Cell.css";
-@import "../components/Cell/CellCheckbox/CellCheckbox.css";
-@import "../components/Cell/CellDragger/CellDragger.css";
-@import "../components/CellButton/CellButton.css";
-@import "../components/RichCell/RichCell.css";
-@import "../components/HorizontalCell/HorizontalCell.css";
-@import "../components/List/List.css";
-@import "../components/Footer/Footer.css";
-@import "../components/Spinner/Spinner.css";
-@import "../components/Switch/Switch.css";
-@import "../components/InfoRow/InfoRow.css";
-@import "../components/Avatar/Avatar.css";
-@import "../components/InitialsAvatar/InitialsAvatar.css";
-@import "../components/GridAvatar/GridAvatar.css";
-@import "../components/BaseGallery/BaseGallery.css";
-@import "../components/Progress/Progress.css";
-@import "../components/Search/Search.css";
-@import "../components/Tabs/Tabs.css";
-@import "../components/TabsItem/TabsItem.css";
-@import "../components/Tooltip/Tooltip.css";
-@import "../components/PullToRefresh/PullToRefresh.css";
-@import "../components/Counter/Counter.css";
-@import "../components/UsersStack/UsersStack.css";
-@import "../components/Separator/Separator.css";
-@import "../components/Spacing/Spacing.css";
-@import "../components/Placeholder/Placeholder.css";
-@import "../components/Banner/Banner.css";
-@import "../components/MiniInfoCell/MiniInfoCell.css";
-@import "../components/WriteBar/WriteBar.css";
-@import "../components/WriteBarIcon/WriteBarIcon.css";
-@import "../components/SubnavigationBar/SubnavigationBar.css";
-@import "../components/SubnavigationButton/SubnavigationButton.css";
-@import "../components/Pagination/Pagination.css";
+@import "../components/ButtonGroup/ButtonGroup.module.css";
+@import "../components/Badge/Badge.module.css";
+@import "../components/IconButton/IconButton.module.css";
+@import "../components/Card/Card.module.css";
+@import "../components/CardGrid/CardGrid.module.css";
+@import "../components/CardScroll/CardScroll.module.css";
+@import "../components/ContentCard/ContentCard.module.css";
+@import "../components/Div/Div.module.css";
+@import "../components/Link/Link.module.css";
+@import "../components/Header/Header.module.css";
+@import "../components/Group/Group.module.css";
+@import "../components/Gradient/Gradient.module.css";
+@import "../components/SimpleCell/SimpleCell.module.css";
+@import "../components/Cell/Cell.module.css";
+@import "../components/Cell/CellCheckbox/CellCheckbox.module.css";
+@import "../components/Cell/CellDragger/CellDragger.module.css";
+@import "../components/CellButton/CellButton.module.css";
+@import "../components/RichCell/RichCell.module.css";
+@import "../components/HorizontalCell/HorizontalCell.module.css";
+@import "../components/List/List.module.css";
+@import "../components/Footer/Footer.module.css";
+@import "../components/Spinner/Spinner.module.css";
+@import "../components/Switch/Switch.module.css";
+@import "../components/InfoRow/InfoRow.module.css";
+@import "../components/Avatar/AvatarBadge/AvatarBadge.module.css";
+@import "../components/Avatar/Avatar.module.css";
+@import "../components/Image/ImageBadge/ImageBadge.module.css";
+@import "../components/Image/Image.module.css";
+@import "../components/GridAvatar/GridAvatarBadge/GridAvatarBadge.module.css";
+@import "../components/GridAvatar/GridAvatar.module.css";
+@import "../components/BaseGallery/BaseGallery.module.css";
+@import "../components/Progress/Progress.module.css";
+@import "../components/Search/Search.module.css";
+@import "../components/Tabs/Tabs.module.css";
+@import "../components/TabsItem/TabsItem.module.css";
+@import "../components/Tooltip/Tooltip.module.css";
+@import "../components/PullToRefresh/PullToRefresh.module.css";
+@import "../components/Counter/Counter.module.css";
+@import "../components/UsersStack/UsersStack.module.css";
+@import "../components/Separator/Separator.module.css";
+@import "../components/Spacing/Spacing.module.css";
+@import "../components/Placeholder/Placeholder.module.css";
+@import "../components/Banner/Banner.module.css";
+@import "../components/MiniInfoCell/MiniInfoCell.module.css";
+@import "../components/WriteBar/WriteBar.module.css";
+@import "../components/WriteBarIcon/WriteBarIcon.module.css";
+@import "../components/SubnavigationBar/SubnavigationBar.module.css";
+@import "../components/SubnavigationButton/SubnavigationButton.module.css";
+@import "../components/Pagination/Pagination.module.css";
 
 /* Forms */
-@import "../components/FormLayout/FormLayout.css";
-@import "../components/FormItem/FormItem.css";
-@import "../components/FormLayoutGroup/FormLayoutGroup.css";
-@import "../components/FormStatus/FormStatus.css";
-@import "../components/Slider/Slider.css";
-@import "../components/FormField/FormField.css";
-@import "../components/Radio/Radio.css";
-@import "../components/RadioGroup/RadioGroup.css";
-@import "../components/Checkbox/Checkbox.css";
-@import "../components/Input/Input.css";
-@import "../components/ChipsInput/ChipsInput.css";
-@import "../components/ChipsInputBase/ChipsInputBase.css";
-@import "../components/Chip/Chip.css";
-@import "../components/Select/Select.css";
-@import "../components/Textarea/Textarea.css";
-@import "../components/CustomScrollView/CustomScrollView.css";
-@import "../components/CustomSelect/CustomSelect.css";
-@import "../components/CustomSelectOption/CustomSelectOption.css";
-@import "../components/DatePicker/DatePicker.css";
-@import "../components/SliderSwitch/SliderSwitch.css";
-@import "../components/Popper/Popper.css";
-@import "../components/CustomSelectDropdown/CustomSelectDropdown.css";
-@import "../components/SegmentedControl/SegmentedControl.css";
-@import "../components/SegmentedControl/SegmentedControlOption/SegmentedControlOption.css";
-@import "../components/VisuallyHiddenInput/VisuallyHiddenInput.css";
+@import "../components/FormLayout/FormLayout.module.css";
+@import "../components/FormItem/FormItem.module.css";
+@import "../components/FormLayoutGroup/FormLayoutGroup.module.css";
+@import "../components/Slider/Slider.module.css";
+@import "../components/FormField/FormField.module.css";
+@import "../components/Radio/Radio.module.css";
+@import "../components/RadioGroup/RadioGroup.module.css";
+@import "../components/Checkbox/Checkbox.module.css";
+@import "../components/Input/Input.module.css";
+@import "../components/ChipsInput/ChipsInput.module.css";
+@import "../components/ChipsInputBase/ChipsInputBase.module.css";
+@import "../components/Chip/Chip.module.css";
+@import "../components/Select/Select.module.css";
+@import "../components/Textarea/Textarea.module.css";
+@import "../components/CustomScrollView/CustomScrollView.module.css";
+@import "../components/CustomSelect/CustomSelect.module.css";
+@import "../components/CustomSelectOption/CustomSelectOption.module.css";
+@import "../components/DatePicker/DatePicker.module.css";
+@import "../components/Popper/Popper.module.css";
+@import "../components/CustomSelectDropdown/CustomSelectDropdown.module.css";
+@import "../components/SegmentedControl/SegmentedControl.module.css";
+@import "../components/SegmentedControl/SegmentedControlOption/SegmentedControlOption.module.css";
+@import "../components/VisuallyHiddenInput/VisuallyHiddenInput.module.css";
+@import "../components/File/File.module.css";
+@import "../components/FormStatus/FormStatus.module.css";
 
-@import "../components/Calendar/Calendar.css";
-@import "../components/CalendarDay/CalendarDay.css";
-@import "../components/CalendarDays/CalendarDays.css";
-@import "../components/CalendarHeader/CalendarHeader.css";
-@import "../components/CalendarRange/CalendarRange.css";
-@import "../components/CalendarTime/CalendarTime.css";
-@import "../components/InputLike/InputLike.css";
-@import "../components/InputLike/InputLikeDivider.css";
-@import "../components/DateInput/DateInput.css";
-@import "../components/DateRangeInput/DateRangeInput.css";
+@import "../components/Calendar/Calendar.module.css";
+@import "../components/CalendarDay/CalendarDay.module.css";
+@import "../components/CalendarDays/CalendarDays.module.css";
+@import "../components/CalendarHeader/CalendarHeader.module.css";
+@import "../components/CalendarRange/CalendarRange.module.css";
+@import "../components/CalendarTime/CalendarTime.module.css";
+@import "../components/InputLike/InputLike.module.css";
+@import "../components/InputLike/InputLikeDivider.module.css";
+@import "../components/DateInput/DateInput.module.css";
+@import "../components/DateRangeInput/DateRangeInput.module.css";
 
 /* Advertisement */
-@import "../components/PromoBanner/PromoBanner.css";
+@import "../components/PromoBanner/PromoBanner.module.css";
+
+/* Unstable */
+@import "../components/ChipsSelect/ChipsSelect.module.css";
+@import "../components/Popover/Popover.module.css";
+@import "../components/TextTooltip/TextTooltip.module.css";
+@import "../components/RichTooltip/RichTooltip.module.css";
 
 /* Глобальные стили vkui.
  */

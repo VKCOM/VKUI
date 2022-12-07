@@ -6,15 +6,14 @@ import {
   Icon12Dropdown,
 } from "@vkontakte/icons";
 import { Tappable, TappableElementProps } from "../Tappable/Tappable";
-import { classNames } from "../../lib/classNames";
-import { SelectType } from "../Select/Select";
+import { classNamesString } from "../../lib/classNames";
 import { CustomSelect } from "../CustomSelect/CustomSelect";
-import { SizeType } from "../../hoc/withAdaptivity";
+import { SizeType } from "../../lib/adaptivity";
 import { getMonths, getYears } from "../../lib/calendar";
-import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
+import { useConfigProvider } from "../ConfigProvider/ConfigProviderContext";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import "./CalendarHeader.css";
+import styles from "./CalendarHeader.module.css";
 
 type ArrowMonthProps = Omit<TappableElementProps, "onClick" | "aria-label">;
 
@@ -52,28 +51,28 @@ export const CalendarHeader = ({
   onNextMonth,
   onPrevMonth,
   className,
-  prevMonthProps,
-  nextMonthProps,
+  prevMonthProps = {},
+  nextMonthProps = {},
   prevMonthAriaLabel = "Предыдущий месяц",
   nextMonthAriaLabel = "Следующий месяц",
   changeMonthAriaLabel = "Изменить месяц",
   changeYearAriaLabel = "Изменить год",
   prevMonthIcon = (
     <Icon20ChevronLeftOutline
-      vkuiClass="CalendarHeader__nav-icon--accent"
+      className={styles["CalendarHeader__nav-icon--accent"]}
       width={30}
       height={30}
     />
   ),
   nextMonthIcon = (
     <Icon20ChevronRightOutline
-      vkuiClass="CalendarHeader__nav-icon--accent"
+      className={styles["CalendarHeader__nav-icon--accent"]}
       width={30}
       height={30}
     />
   ),
 }: CalendarHeaderProps) => {
-  const locale = React.useContext(LocaleProviderContext);
+  const { locale } = useConfigProvider();
   const onMonthsChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>
       onChange(setMonth(viewDate, Number(event.target.value))),
@@ -89,7 +88,7 @@ export const CalendarHeader = ({
     () =>
       getMonths(locale).map(({ value, label }) => ({
         value,
-        label: <span vkuiClass="CalendarHeader__month">{label}</span>,
+        label: <span className={styles["CalendarHeader__month"]}>{label}</span>,
       })),
     [locale]
   );
@@ -103,28 +102,34 @@ export const CalendarHeader = ({
     month: "long",
   });
 
+  const { className: prevMonthClassName, ...restPrevMonthProps } =
+    prevMonthProps;
+  const { className: nextMonthClassName, ...restNextMonthProps } =
+    nextMonthProps;
+
   return (
-    <div vkuiClass="CalendarHeader" className={className}>
+    <div className={classNamesString(styles["CalendarHeader"], className)}>
       {prevMonth && (
         <AdaptivityProvider sizeX={SizeType.REGULAR}>
           <Tappable
-            vkuiClass={classNames(
-              "CalendarHeader__nav-icon",
-              "CalendarHeader__nav-icon-prev"
+            className={classNamesString(
+              styles["CalendarHeader__nav-icon"],
+              styles["CalendarHeader__nav-icon-prev"],
+              prevMonthClassName
             )}
             onClick={onPrevMonth}
             aria-label={`${prevMonthAriaLabel}, ${formatter.format(
               subMonths(viewDate, 1)
             )}`}
-            {...prevMonthProps}
+            {...restPrevMonthProps}
           >
             {prevMonthIcon}
           </Tappable>
         </AdaptivityProvider>
       )}
       {disablePickers ? (
-        <Paragraph vkuiClass="CalendarHeader__pickers" weight="2">
-          <span vkuiClass="CalendarHeader__month">
+        <Paragraph className={styles["CalendarHeader__pickers"]} weight="2">
+          <span className={styles["CalendarHeader__month"]}>
             {new Intl.DateTimeFormat(locale, {
               month: "long",
             }).format(viewDate)}
@@ -135,47 +140,48 @@ export const CalendarHeader = ({
           }).format(viewDate)}
         </Paragraph>
       ) : (
-        <div vkuiClass="CalendarHeader__pickers">
-          <CustomSelect
-            vkuiClass="CalendarHeader__picker"
-            value={viewDate.getMonth()}
-            options={months}
-            dropdownOffsetDistance={4}
-            fixDropdownWidth={false}
-            sizeY={SizeType.COMPACT}
-            icon={<Icon12Dropdown />}
-            onChange={onMonthsChange}
-            forceDropdownPortal={false}
-            selectType={SelectType.accent}
-            aria-label={changeMonthAriaLabel}
-          />
-          <CustomSelect
-            vkuiClass="CalendarHeader__picker"
-            value={viewDate.getFullYear()}
-            options={years}
-            dropdownOffsetDistance={4}
-            fixDropdownWidth={false}
-            sizeY={SizeType.COMPACT}
-            icon={<Icon12Dropdown />}
-            onChange={onYearChange}
-            forceDropdownPortal={false}
-            selectType={SelectType.accent}
-            aria-label={changeYearAriaLabel}
-          />
-        </div>
+        <AdaptivityProvider sizeY={SizeType.COMPACT}>
+          <div className={styles["CalendarHeader__pickers"]}>
+            <CustomSelect
+              className={styles["CalendarHeader__picker"]}
+              value={viewDate.getMonth()}
+              options={months}
+              dropdownOffsetDistance={4}
+              fixDropdownWidth={false}
+              icon={<Icon12Dropdown />}
+              onChange={onMonthsChange}
+              forceDropdownPortal={false}
+              selectType="accent"
+              aria-label={changeMonthAriaLabel}
+            />
+            <CustomSelect
+              className={styles["CalendarHeader__picker"]}
+              value={viewDate.getFullYear()}
+              options={years}
+              dropdownOffsetDistance={4}
+              fixDropdownWidth={false}
+              icon={<Icon12Dropdown />}
+              onChange={onYearChange}
+              forceDropdownPortal={false}
+              selectType="accent"
+              aria-label={changeYearAriaLabel}
+            />
+          </div>
+        </AdaptivityProvider>
       )}
       {nextMonth && (
         <AdaptivityProvider sizeX={SizeType.REGULAR}>
           <Tappable
-            vkuiClass={classNames(
-              "CalendarHeader__nav-icon",
-              "CalendarHeader__nav-icon-next"
+            className={classNamesString(
+              styles["CalendarHeader__nav-icon"],
+              styles["CalendarHeader__nav-icon-next"],
+              nextMonthClassName
             )}
             onClick={onNextMonth}
             aria-label={`${nextMonthAriaLabel}, ${formatter.format(
               addMonths(viewDate, 1)
             )}`}
-            {...nextMonthProps}
+            {...restNextMonthProps}
           >
             {nextMonthIcon}
           </Tappable>

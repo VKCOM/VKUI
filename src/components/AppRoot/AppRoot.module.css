@@ -1,0 +1,33 @@
+.AppRoot {
+  height: 100%;
+}
+
+.AppRoot--pointer-has-not {
+  user-select: none;
+}
+
+@media (--pointer-has-not) {
+  .AppRoot--pointer-none {
+    user-select: none;
+  }
+}
+
+/* stylelint-disable vkui/atomic */
+:global(.vkui__root--embedded) {
+  transform: translate3d(0, 0, 0);
+  overflow-x: hidden;
+}
+
+:global(.vkui__root--embedded) .AppRoot {
+  overflow: auto;
+}
+
+:global(.vkui--sizeX-regular) {
+  background: var(--vkui--color_background);
+}
+
+@media (--sizeX-regular) {
+  :global(.vkui--sizeX-none) {
+    background: var(--vkui--color_background);
+  }
+}

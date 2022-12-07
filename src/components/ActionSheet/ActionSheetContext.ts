@@ -5,7 +5,7 @@ export type ActionType<T> = (event: React.MouseEvent<T>) => void;
 export type ItemClickHandler<T extends Element = Element> = (
   action: ActionType<T> | undefined,
   immediateAction: ActionType<T> | undefined,
-  autoclose: boolean
+  autoClose: boolean
 ) => (event: React.MouseEvent) => void;
 
 export type ActionSheetContextType<T extends Element = Element> = {

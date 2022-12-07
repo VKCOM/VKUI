@@ -15,8 +15,8 @@ const Example = () => {
           after={
             <PanelHeaderButton>
               <Icon28MessageOutline
-                width={platform === VKCOM ? 24 : 28}
-                height={platform === VKCOM ? 24 : 28}
+                width={platform === Platform.VKCOM ? 24 : 28}
+                height={platform === Platform.VKCOM ? 24 : 28}
               />
             </PanelHeaderButton>
           }

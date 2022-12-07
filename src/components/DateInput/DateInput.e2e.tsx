@@ -1,3 +1,4 @@
+import * as React from "react";
 import { DateInput, DateInputProps } from "./DateInput";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 

@@ -1,14 +1,14 @@
 import * as React from "react";
 import { Card, CardProps } from "../Card/Card";
 import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { Headline } from "../Typography/Headline/Headline";
 import { Text } from "../Typography/Text/Text";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { hasReactNode } from "../../lib/utils";
-import { warnOnce } from "../../lib/warnOnce";
 import { HasRef, HasRootRef } from "../../types";
-import { classNames } from "../../lib/classNames";
-import "./ContentCard.css";
+import { classNamesString } from "../../lib/classNames";
+import styles from "./ContentCard.module.css";
 
 export interface ContentCardProps
   extends HasRootRef<HTMLDivElement>,
@@ -35,17 +35,11 @@ export interface ContentCardProps
    */
   caption?: React.ReactNode;
   /**
-    @deprecated будет удалено в 5.0.0. Используйте src
-   */
-  image?: string;
-  /**
     Максимальная высота изображения
    */
   maxHeight?: number;
   mode?: CardProps["mode"];
 }
-
-const warn = warnOnce("ContentCard");
 
 /**
  * @see https://vkcom.github.io/VKUI/#/ContentCard
@@ -63,7 +57,6 @@ export const ContentCard = ({
   // img props
   getRef,
   maxHeight,
-  image,
   src,
   srcSet,
   alt,
@@ -79,35 +72,29 @@ export const ContentCard = ({
   hasActive = false,
   ...restProps
 }: ContentCardProps) => {
-  const source = image || src;
-
-  if (image && process.env.NODE_ENV === "development") {
-    warn("Свойство image устарело и будет удалено в 5.0.0. Используйте src");
-  }
-
   return (
     <Card
       mode={mode}
       getRootRef={getRootRef}
-      vkuiClass={classNames(
-        "ContentCard",
-        restProps.disabled && "ContentCard--disabled"
-      )}
       style={style}
-      className={className}
+      className={classNamesString(
+        styles["ContentCard"],
+        restProps.disabled && styles["ContentCard--disabled"],
+        className
+      )}
     >
       <Tappable
         {...restProps}
         disabled={restProps.disabled || (!restProps.onClick && !restProps.href)}
         hasHover={hasHover}
         hasActive={hasActive}
-        vkuiClass="ContentCard__tappable"
+        className={styles["ContentCard__tappable"]}
       >
-        {(source || srcSet) && (
+        {(src || srcSet) && (
           <img
             ref={getRef}
-            vkuiClass="ContentCard__img"
-            src={source}
+            className={styles["ContentCard__img"]}
+            src={src}
             srcSet={srcSet}
             alt={alt}
             crossOrigin={crossOrigin}
@@ -121,10 +108,13 @@ export const ContentCard = ({
             width="100%"
           />
         )}
-        <div vkuiClass="ContentCard__body">
+        <div className={styles["ContentCard__body"]}>
           {hasReactNode(subtitle) && (
             <Caption
-              vkuiClass="ContentCard__text ContentCard__subtitle"
+              className={classNamesString(
+                styles["ContentCard__text"],
+                styles["ContentCard__subtitle"]
+              )}
               weight="1"
               level="3"
               caps
@@ -133,17 +123,26 @@ export const ContentCard = ({
             </Caption>
           )}
           {hasReactNode(header) && (
-            <Headline vkuiClass="ContentCard__text" weight="2" level="1">
+            <Headline
+              className={styles["ContentCard__text"]}
+              weight="2"
+              level="1"
+            >
               {header}
             </Headline>
           )}
           {hasReactNode(text) && (
-            <Text vkuiClass="ContentCard__text">{text}</Text>
+            <Text className={styles["ContentCard__text"]}>{text}</Text>
           )}
           {hasReactNode(caption) && (
-            <Caption vkuiClass="ContentCard__text ContentCard__caption">
+            <Footnote
+              className={classNamesString(
+                styles["ContentCard__text"],
+                styles["ContentCard__caption"]
+              )}
+            >
               {caption}
-            </Caption>
+            </Footnote>
           )}
         </div>
       </Tappable>

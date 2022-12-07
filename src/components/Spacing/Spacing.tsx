@@ -1,22 +1,12 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
-import "./Spacing.css";
+import { classNamesString } from "../../lib/classNames";
+import styles from "./Spacing.module.css";
 
 export interface SpacingProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Высота спэйсинга
    */
   size?: number;
-  /**
-   * @deprecated Это свойство устарело и будет удалено в 5.0.0. Используйте [`Separator`](https://vkcom.github.io/VKUI/#/Separator) вместе с Spacing.
-   * Настройка положения сепаратора:
-   *
-   * - separator=false (default) - без сепаратора
-   * - separator=true | separator='center' - сепаратор располагается по середине
-   * - separator='top'
-   * - separator='bottom'
-   */
-  separator?: boolean | "top" | "bottom" | "center";
   children?: React.ReactNode;
 }
 
@@ -25,28 +15,21 @@ export interface SpacingProps extends React.HTMLAttributes<HTMLDivElement> {
  */
 export const Spacing = ({
   size = 8,
-  separator,
-  style,
+  style: styleProp,
+  className,
   ...restProps
 }: SpacingProps) => {
-  const styles = {
+  const style = {
     height: size,
-    ...style,
+    ...styleProp,
   };
 
   return (
     <div
       {...restProps}
       aria-hidden="true"
-      vkuiClass={classNames(
-        "Spacing",
-        !!separator && "Spacing--separator",
-        (separator === true || separator === "center") &&
-          "Spacing--separator-center",
-        separator === "top" && "Spacing--separator-top",
-        separator === "bottom" && "Spacing--separator-bottom"
-      )}
-      style={styles}
+      className={classNamesString(className, styles["Spacing"])}
+      style={style}
     />
   );
 };

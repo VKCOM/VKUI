@@ -1,0 +1,5 @@
+@media (--sizeX-compact) {
+  .StyleGuideDesktop {
+    display: none;
+  }
+}

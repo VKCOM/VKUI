@@ -53,4 +53,4 @@ body:
     id: reproduce-example
     attributes:
       label: Пример с воспроизведением
-      description: Сделайте форк отсюда https://codesandbox.io/s/vkui-boilerplate-oj149 и приложите ссылку. Сильно ускоряет поиск причин проблемы.
+      description: Сделайте форк отсюда https://codesandbox.io/s/vkui-javascript-o1bvg2 и приложите ссылку. Сильно ускоряет поиск причин проблемы.

@@ -1,31 +1,28 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
 import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasAlign, HasRef, HasRootRef } from "../../types";
-import { withAdaptivity } from "../../hoc/withAdaptivity";
-import { getClassName } from "../../helpers/getClassName";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { useEnsuredControl } from "../../hooks/useEnsuredControl";
 import { useExternRef } from "../../hooks/useExternRef";
 import { usePlatform } from "../../hooks/usePlatform";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
 import { SelectType, SelectTypography } from "../Select/Select";
-import {
-  AdaptivityContextInterface,
-  AdaptivityProps,
-} from "../AdaptivityProvider/AdaptivityContext";
-import "../Select/Select.css";
+import styles from "../Select/Select.module.css";
 
 export interface NativeSelectProps
   extends React.SelectHTMLAttributes<HTMLSelectElement>,
     HasRef<HTMLSelectElement>,
     HasRootRef<HTMLLabelElement>,
     HasAlign,
-    AdaptivityProps,
     Pick<FormFieldProps, "status"> {
   placeholder?: string;
   multiline?: boolean;
-  selectType?: keyof typeof SelectType;
+  selectType?: SelectType;
 }
 
 export interface SelectState {
@@ -34,7 +31,10 @@ export interface SelectState {
   notSelected?: boolean;
 }
 
-const NativeSelectComponent = ({
+/**
+ * @see https://vkcom.github.io/VKUI/#/NativeSelect
+ */
+const NativeSelect = ({
   style,
   defaultValue = "",
   align,
@@ -44,18 +44,18 @@ const NativeSelectComponent = ({
   getRef,
   getRootRef,
   disabled,
-  sizeX,
-  sizeY,
   multiline,
-  selectType = SelectType.default,
+  selectType = "default",
   status,
   ...restProps
-}: NativeSelectProps & AdaptivityContextInterface) => {
+}: NativeSelectProps) => {
   const platform = usePlatform();
   const [title, setTitle] = React.useState("");
   const [empty, setEmpty] = React.useState(false);
   const [value, onChange] = useEnsuredControl(restProps, { defaultValue });
   const selectRef = useExternRef(getRef);
+  const { sizeX, sizeY } = useAdaptivity();
+
   useIsomorphicLayoutEffect(() => {
     const selectedOption =
       selectRef.current?.options[selectRef.current.selectedIndex];
@@ -68,16 +68,16 @@ const NativeSelectComponent = ({
   return (
     <FormField
       Component="label"
-      vkuiClass={classNames(
-        getClassName("Select", platform),
-        `Select--${selectType}`,
-        empty && "Select--empty",
-        multiline && "Select--multiline",
-        align && `Select--align-${align}`,
-        `Select--sizeX-${sizeX}`,
-        `Select--sizeY-${sizeY}`
+      className={classNamesString(
+        styles["Select"],
+        getPlatformClassName(styles["Select"], platform),
+        empty && styles["Select--empty"],
+        multiline && styles["Select--multiline"],
+        align && styles[`Select--align-${align}`],
+        getSizeXClassName(styles["Select"], sizeX),
+        getSizeYClassName(styles["Select"], sizeY),
+        className
       )}
-      className={className}
       style={style}
       getRootRef={getRootRef}
       disabled={disabled}
@@ -87,7 +87,7 @@ const NativeSelectComponent = ({
       <select
         {...restProps}
         disabled={disabled}
-        vkuiClass="Select__el"
+        className={styles["Select__el"]}
         onChange={onChange}
         value={value}
         ref={selectRef}
@@ -95,20 +95,16 @@ const NativeSelectComponent = ({
         {placeholder && <option value="">{placeholder}</option>}
         {children}
       </select>
-      <div vkuiClass="Select__container">
-        {/* TODO v5.0.0 поправить под новую адаптивность */}
-        <SelectTypography vkuiClass="Select__title">{title}</SelectTypography>
+      <div className={styles["Select__container"]}>
+        <SelectTypography
+          className={styles["Select__title"]}
+          selectType={selectType}
+        >
+          {title}
+        </SelectTypography>
       </div>
     </FormField>
   );
 };
 
-/**
- * @see https://vkcom.github.io/VKUI/#/NativeSelect
- */
-export const NativeSelect = withAdaptivity(NativeSelectComponent, {
-  sizeX: true,
-  sizeY: true,
-});
-
-NativeSelect.displayName = "NativeSelect";
+export { NativeSelect };

@@ -1,9 +1,10 @@
+import * as React from "react";
 import {
   Icon20ArticleOutline,
   Icon20PlaceOutline,
   Icon20WorkOutline,
 } from "@vkontakte/icons";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
+import { describeScreenshotFuzz } from "../../testing/e2e";
 import { Avatar } from "../Avatar/Avatar";
 import { Link } from "../Link/Link";
 import { MiniInfoCell } from "./MiniInfoCell";
@@ -12,7 +13,7 @@ describe("MiniInfoCell", () => {
   describeScreenshotFuzz(MiniInfoCell, [
     {
       before: [<Icon20PlaceOutline key="icon" />],
-      textLevel: ["primary", "secondary"],
+      mode: ["accent", undefined],
       children: ["Санкт-Петербург, Россия"],
     },
     {
@@ -22,6 +23,7 @@ describe("MiniInfoCell", () => {
           vk.com/team
         </Link>,
       ],
+      expandable: [true],
     },
     {
       before: [<Icon20ArticleOutline key="icon" />],
@@ -54,6 +56,13 @@ describe("MiniInfoCell", () => {
         },
       ],
       children: ["Подробная информация"],
+    },
+    {
+      before: [<Icon20WorkOutline key="icon" />],
+      mode: ["more"],
+      textWrap: ["short"],
+      children: ["Подробная информация"],
+      expandable: [true],
     },
   ]);
 });

@@ -21,12 +21,12 @@ const [selectedSex, changeSelectedSex] = React.useState();
         <SegmentedControl
           options={[
             {
-              label: <Icon24List aria-hidden="true" />,
+              label: <Icon24List />,
               value: "list",
               "aria-label": "Список",
             },
             {
-              label: <Icon16GridOfFour aria-hidden="true" />,
+              label: <Icon16GridOfFour />,
               value: "grid",
               "aria-label": "Плитки",
             },

@@ -1,11 +1,13 @@
+import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 import { baselineComponent } from "../../testing/utils";
 import { TappableProps, Tappable } from "./Tappable";
-import { ANDROID } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { act } from "react-dom/test-utils";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
+import styles from "./Tappable.module.css";
 
 const TappableTest = (props: TappableProps) => (
   <Tappable data-testid="tappable" {...props} />
@@ -191,10 +193,10 @@ describe("Tappable", () => {
     afterEach(() => jest.clearAllMocks());
     it("shows waves on android", () => {
       const waveCount = () =>
-        document.querySelectorAll(".Tappable__wave").length;
+        document.querySelectorAll(`.${styles.Tappable__wave}`).length;
       render(
-        <AdaptivityProvider hasMouse={false}>
-          <ConfigProvider platform={ANDROID}>
+        <AdaptivityProvider hasPointer={false}>
+          <ConfigProvider platform={Platform.ANDROID}>
             <Tappable data-testid="x" />
           </ConfigProvider>
         </AdaptivityProvider>
@@ -210,7 +212,7 @@ describe("Tappable", () => {
       expect(waveCount()).toBe(0);
     });
     const isActive = (e = tappable()) =>
-      e.classList.contains("Tappable--active");
+      e.classList.contains(styles["Tappable--active"]);
     it("activates on click", () => {
       render(<TappableTest />);
       userEvent.click(tappable());
@@ -306,7 +308,7 @@ describe("Tappable", () => {
     const isHovered = (testId = "x") =>
       screen
         .getByTestId(testId)
-        .classList.contains("Tappable--hover-background");
+        .classList.contains(styles["Tappable--hover-background"]);
 
     it("is not hovered by default", () => {
       render(<Tappable data-testid="x" />);

@@ -1,0 +1,127 @@
+.Select {
+  position: relative;
+  cursor: pointer;
+  box-sizing: border-box;
+  font-family: var(--vkui--font_family_base);
+}
+
+.Select__el {
+  display: block;
+  position: absolute;
+  appearance: none;
+  border: none;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 7;
+  font-size: 16px;
+  font-family: inherit;
+}
+
+.Select__container {
+  flex-grow: 1;
+  flex-shrink: 1;
+  padding-right: 12px;
+  padding-left: 12px;
+  color: var(--vkui--color_text_primary);
+  box-sizing: border-box;
+  position: relative;
+  z-index: 6;
+  overflow: hidden;
+}
+
+.Select--hasBefore .Select__container {
+  padding-left: 0;
+}
+
+.Select--hasAfter .Select__container {
+  padding-right: 0;
+}
+
+.Select--multiline .Select__container {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.Select--sizeY-compact.Select--multiline .Select__container {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+@media (--sizeY-compact) {
+  .Select--sizeY-none.Select--multiline .Select__container {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
+.Select__title {
+  display: block;
+}
+
+.Select:not(.Select--multiline) .Select__title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.Select--empty .Select__title {
+  color: var(--vkui--color_text_secondary);
+}
+
+.Select--align-right .Select__title {
+  text-align: right;
+}
+
+.Select--align-center .Select__title {
+  text-align: center;
+}
+
+/**
+ * CMP:
+ * CalendarHeader
+ */
+.CalendarHeader__picker .Select__container {
+  padding-right: 4px;
+}
+
+.SelectTypography--selectType-accent {
+  font-size: var(--vkui--font_paragraph--font_size--regular);
+  line-height: var(--vkui--font_paragraph--line_height--regular);
+  font-weight: var(--vkui--font_weight_accent1);
+}
+
+:not(.SelectTypography--selectType-accent).SelectTypography {
+  font-size: var(--vkui--font_headline1--font_size--regular);
+  line-height: var(--vkui--font_headline1--line_height--regular);
+  font-weight: var(--vkui--font_weight_accent3);
+}
+
+.SelectTypography--selectType-accent.SelectTypography--android {
+  font-weight: var(--vkui--font_weight_accent2);
+}
+
+.SelectTypography--vkcom:not(.SelectTypography--selectType-accent),
+.SelectTypography--sizeY-compact:not(.SelectTypography--selectType-accent) {
+  font-size: var(--vkui--font_text--font_size--compact);
+  line-height: var(--vkui--font_text--line_height--compact);
+  font-weight: var(--vkui--font_weight_accent3);
+}
+
+@media (--sizeY-compact) {
+  .SelectTypography--sizeY-none:not(.SelectTypography--selectType-accent) {
+    font-size: var(--vkui--font_text--font_size--compact);
+    line-height: var(--vkui--font_text--line_height--compact);
+    font-weight: var(--vkui--font_weight_accent3);
+  }
+}
+
+.SelectTypography--selectType-default,
+.SelectTypography--selectType-plain,
+.Select--align-left,
+.Select__custom,
+.Select__native {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
+}

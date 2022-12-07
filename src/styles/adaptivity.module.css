@@ -1,0 +1,87 @@
+/*
+Утилитарные классы, реализующие адаптив через CSS путём показа/скрытия элемента.
+
+Глоссарий по модификаторам:
+
+- `forced` – означает, что мы зашили конкретное представление в `AdaptiveProvider` (ex, `<AdaptiveProvider sizeX="regular">`).
+- `mq` – означает, что для смены представления используется CSS Media Query.
+
+---
+
+Note: В начале классов разделить (`-`), чтобы красиво добавлялся префикс библиотеки после сборки.
+
+*/
+
+.-sizeX--compact-forced,
+.-sizeX--regular-forced {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
+}
+
+@media (--sizeX-regular) {
+  .-sizeX--compact-mq {
+    display: none !important;
+  }
+}
+
+@media (--sizeX-compact) {
+  .-sizeX--regular-mq {
+    display: none !important;
+  }
+}
+
+/* ================================================================================================================== */
+
+.-sizeY--compact-forced,
+.-sizeY--regular-forced {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
+}
+
+@media (--sizeY-regular) {
+  .-sizeY--compact-mq {
+    display: none !important;
+  }
+}
+
+@media (--sizeY-compact) {
+  .-sizeY--regular-mq {
+    display: none !important;
+  }
+}
+
+/* ================================================================================================================== */
+
+.-viewWidth--tabletPlus-forced,
+.-viewWidth--tabletMinus-forced {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
+}
+
+@media (--viewWidth-tabletPlus) {
+  .-viewWidth--tabletMinus-mq {
+    display: none !important;
+  }
+}
+
+@media (--viewWidth-tabletMinus) {
+  .-viewWidth--tabletPlus-mq {
+    display: none !important;
+  }
+}
+
+/* ================================================================================================================== */
+
+.-deviceType--mobile-forced,
+.-deviceType--desktop-forced {
+  display: none !important;
+}
+
+@media (--desktop) {
+  .-deviceType--mobile-mq {
+    display: none !important;
+  }
+}
+
+@media (--mobile) {
+  .-deviceType--desktop-mq {
+    display: none !important;
+  }
+}

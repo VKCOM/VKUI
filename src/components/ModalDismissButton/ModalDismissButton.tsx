@@ -1,7 +1,8 @@
 import * as React from "react";
+import { classNamesString } from "../../lib/classNames";
 import { Icon20Cancel } from "@vkontakte/icons";
 import { Tappable } from "../Tappable/Tappable";
-import "./ModalDismissButton.css";
+import styles from "./ModalDismissButton.module.css";
 
 export type ModalDismissButtonProps = React.HTMLAttributes<HTMLButtonElement>;
 
@@ -10,15 +11,16 @@ export type ModalDismissButtonProps = React.HTMLAttributes<HTMLButtonElement>;
  */
 export const ModalDismissButton = ({
   "aria-label": ariaLabel = "Закрыть",
+  className,
   ...restProps
 }: ModalDismissButtonProps) => {
   return (
     <Tappable
-      vkuiClass="ModalDismissButton"
+      className={classNamesString(styles["ModalDismissButton"], className)}
       {...restProps}
       aria-label={ariaLabel}
-      activeMode="ModalDismissButton--active"
-      hoverMode="ModalDismissButton--hover"
+      activeMode={styles["ModalDismissButton--active"]}
+      hoverMode={styles["ModalDismissButton--hover"]}
     >
       <Icon20Cancel />
     </Tappable>

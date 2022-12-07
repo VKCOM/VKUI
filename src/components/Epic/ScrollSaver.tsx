@@ -4,7 +4,7 @@ import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 
 export interface ScrollSaverProps {
   initialScroll?: number;
-  saveScroll: (scroll: number) => any;
+  saveScroll: (this: void, scroll: number) => any;
   children?: React.ReactNode;
 }
 

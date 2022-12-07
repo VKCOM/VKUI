@@ -75,6 +75,19 @@ export type { ModalDismissButtonProps } from "./components/ModalDismissButton/Mo
 /**
  * Blocks
  */
+export {
+  ImageBaseContext,
+  ImageBase,
+  getBadgeIconSizeByImageBaseSize,
+  getFallbackIconSizeByImageBaseSize,
+  getOverlayIconSizeByImageBaseSize,
+} from "./components/ImageBase/ImageBase";
+export type {
+  ImageBaseSize,
+  ImageBaseExpectedIconProps,
+  ImageBaseBadgeProps,
+  ImageBaseOverlayProps,
+} from "./components/ImageBase/ImageBase";
 export { Badge } from "./components/Badge/Badge";
 export type { BadgeProps } from "./components/Badge/Badge";
 export { ButtonGroup } from "./components/ButtonGroup/ButtonGroup";
@@ -116,11 +129,23 @@ export type { InfoRowProps } from "./components/InfoRow/InfoRow";
 export { Gallery } from "./components/Gallery/Gallery";
 export type { GalleryProps } from "./components/Gallery/Gallery";
 export { Avatar } from "./components/Avatar/Avatar";
-export type { AvatarProps } from "./components/Avatar/Avatar";
+export type {
+  AvatarProps,
+  AvatarBadgeProps,
+  AvatarBadgeWithPresetProps,
+  AvatarOverlayProps,
+} from "./components/Avatar/Avatar";
 export { GridAvatar } from "./components/GridAvatar/GridAvatar";
-export type { GridAvatarProps } from "./components/GridAvatar/GridAvatar";
-export { InitialsAvatar } from "./components/InitialsAvatar/InitialsAvatar";
-export type { InitialsAvatarProps } from "./components/InitialsAvatar/InitialsAvatar";
+export type {
+  GridAvatarProps,
+  GridAvatarBadgeProps,
+} from "./components/GridAvatar/GridAvatar";
+export { Image } from "./components/Image/Image";
+export type {
+  ImageProps,
+  ImageBadgeProps,
+  ImageOverlayProps,
+} from "./components/Image/Image";
 export { Progress } from "./components/Progress/Progress";
 export type { ProgressProps } from "./components/Progress/Progress";
 export { Search } from "./components/Search/Search";
@@ -199,14 +224,13 @@ export type { RadioGroupProps } from "./components/RadioGroup/RadioGroup";
 export { Checkbox } from "./components/Checkbox/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox/Checkbox";
 export { Select } from "./components/Select/Select";
-export type { SelectProps } from "./components/Select/Select";
 export { SelectMimicry } from "./components/SelectMimicry/SelectMimicry";
 export type { SelectMimicryProps } from "./components/SelectMimicry/SelectMimicry";
 export { NativeSelect } from "./components/NativeSelect/NativeSelect";
 export type { NativeSelectProps } from "./components/NativeSelect/NativeSelect";
 export { CustomSelect } from "./components/CustomSelect/CustomSelect";
 export type {
-  CustomSelectProps,
+  SelectProps,
   CustomSelectOptionInterface,
 } from "./components/CustomSelect/CustomSelect";
 export { CustomSelectOption } from "./components/CustomSelectOption/CustomSelectOption";
@@ -216,11 +240,6 @@ export type {
   DatePickerProps,
   DatePickerDateFormat,
 } from "./components/DatePicker/DatePicker";
-export { SliderSwitch } from "./components/SliderSwitch/SliderSwitch";
-export type {
-  SliderSwitchProps,
-  SliderSwitchOptionInterface,
-} from "./components/SliderSwitch/SliderSwitch";
 export { SegmentedControl } from "./components/SegmentedControl/SegmentedControl";
 export type {
   SegmentedControlProps,
@@ -268,13 +287,15 @@ export type { AdaptivityProviderProps } from "./components/AdaptivityProvider/Ad
 export { ConfigProvider } from "./components/ConfigProvider/ConfigProvider";
 export type { ConfigProviderProps } from "./components/ConfigProvider/ConfigProvider";
 export {
+  useConfigProvider,
   ConfigProviderContext,
   WebviewType,
 } from "./components/ConfigProvider/ConfigProviderContext";
 export { AppearanceProvider } from "./components/AppearanceProvider/AppearanceProvider";
 export type { AppearanceProviderProps } from "./components/AppearanceProvider/AppearanceProvider";
-export { Scheme, Appearance } from "./helpers/scheme";
-export { LocaleProviderContext } from "./components/LocaleProviderContext/LocaleProviderContext";
+export { Appearance } from "./helpers/appearance";
+export { LocaleProvider } from "./components/LocaleProvider/LocaleProvider";
+export type { LocaleProviderProps } from "./components/LocaleProvider/LocaleProvider";
 
 /**
  * Advertisement
@@ -305,7 +326,6 @@ export type { CaptionProps } from "./components/Typography/Caption/Caption";
  */
 export { withInsets } from "./hoc/withInsets";
 export { withPlatform } from "./hoc/withPlatform";
-export { withAdaptivity } from "./hoc/withAdaptivity";
 
 /**
  * Hooks
@@ -313,11 +333,20 @@ export { withAdaptivity } from "./hoc/withAdaptivity";
 export { useInsets } from "./hooks/useInsets";
 export { usePlatform } from "./hooks/usePlatform";
 export { useAdaptivity } from "./hooks/useAdaptivity";
+export {
+  type UseAdaptivityConditionalRender,
+  useAdaptivityConditionalRender,
+} from "./hooks/useAdaptivityConditionalRender";
+export {
+  type UseAdaptivityWithJSMediaQueries,
+  useAdaptivityWithJSMediaQueries,
+} from "./hooks/useAdaptivityWithJSMediaQueries";
 export { useAppearance } from "./hooks/useAppearance";
 export { usePagination } from "./hooks/usePagination";
 export { useTodayDate } from "./hooks/useTodayDate";
 export { useScrollLock } from "./components/AppRoot/ScrollContext";
 export { useNavTransition } from "./components/NavTransitionContext/NavTransitionContext";
+export { useModalRootContext } from "./components/ModalRoot/useModalRootContext";
 
 /**
  * Utils
@@ -327,24 +356,11 @@ export { animate } from "./lib/animate";
 export { removeObjectKeys } from "./lib/removeObjectKeys";
 export { SSRWrapper } from "./lib/SSR";
 export type { SSRWrapperProps } from "./lib/SSR";
-export {
-  platform,
-  ANDROID,
-  IOS,
-  VKCOM,
-  Platform,
-  IS_PLATFORM_ANDROID,
-  IS_PLATFORM_IOS,
-} from "./lib/platform";
-export { getClassName } from "./helpers/getClassName";
-export {
-  ViewWidth,
-  ViewHeight,
-  SizeType,
-} from "./components/AdaptivityProvider/AdaptivityContext";
+export { platform, Platform } from "./lib/platform";
+export { ViewWidth, ViewHeight, SizeType } from "./lib/adaptivity";
+export { getPlatformClassName } from "./helpers/getPlatformClassName";
+export type { AdaptivityProps } from "./components/AdaptivityProvider/AdaptivityContext";
 export { calcInitialsAvatarColor } from "./helpers/avatar";
-export { Popper } from "./components/Popper/Popper";
-export type { PopperProps } from "./components/Popper/Popper";
 export { CustomScrollView } from "./components/CustomScrollView/CustomScrollView";
 
 /**
@@ -353,5 +369,25 @@ export { CustomScrollView } from "./components/CustomScrollView/CustomScrollView
 export type { AlignType, HasPlatform, HasInsets } from "./types";
 export type { NavIdProps } from "./lib/getNavId";
 export type { PlatformType } from "./lib/platform";
-export type { AdaptivityProps } from "./hoc/withAdaptivity";
 export type { TransitionContextProps } from "./components/NavTransitionContext/NavTransitionContext";
+
+/**
+ * Unstable
+ */
+export { ChipsSelect as unstable_ChipsSelect } from "./components/ChipsSelect/ChipsSelect";
+export type { ChipsSelectProps as unstable_ChipsSelectProps } from "./components/ChipsSelect/ChipsSelect";
+
+export { Popover as unstable_Popover } from "./components/Popover/Popover";
+export type { PopoverProps as unstable_PopoverProps } from "./components/Popover/Popover";
+
+export { TextTooltip as unstable_TextTooltip } from "./components/TextTooltip/TextTooltip";
+export type { TextTooltipProps as unstable_TextTooltipProps } from "./components/TextTooltip/TextTooltip";
+
+export { RichTooltip as unstable_RichTooltip } from "./components/RichTooltip/RichTooltip";
+export type { RichTooltipProps as unstable_RichTooltipProps } from "./components/RichTooltip/RichTooltip";
+
+export { Popper as unstable_Popper } from "./components/Popper/Popper";
+export type { PopperProps as unstable_PopperProps } from "./components/Popper/Popper";
+
+export { ViewInfinite as unstable_ViewInfinite } from "./components/View/ViewInfinite";
+export type { ViewInfiniteProps as unstable_ViewInfiniteProps } from "./components/View/ViewInfinite";

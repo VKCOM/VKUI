@@ -1,39 +1,20 @@
-.vkui > body {
+:global(.vkui) > body {
   overflow-x: hidden;
 }
 
-.vkui,
-.vkui > body,
-.vkui__root {
+:global(.vkui),
+:global(.vkui) > body {
   margin: 0;
   padding: 0;
   height: 100%;
 }
 
-.vkui,
-.vkui > body,
-.vkui__root,
-.vkui__portal-root {
+:global(.vkui),
+:global(.vkui) > body {
   -webkit-font-smoothing: subpixel-antialiased;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
-  font-family: var(--font-common);
-  color: var(--text_primary);
-}
-
-.vkui__root input,
-.vkui__root textarea,
-.vkui__root select,
-.vkui__root button,
-.vkui__portal-root input,
-.vkui__portal-root textarea,
-.vkui__portal-root select,
-.vkui__portal-root button {
-  font-family: inherit;
-}
-
-.vkui__root *:focus,
-.vkui__portal-root *:focus {
-  outline: none;
+  font-family: var(--vkui--font_family_base);
+  color: var(--vkui--color_text_primary);
+  color-scheme: var(--vkui--colors_scheme);
 }

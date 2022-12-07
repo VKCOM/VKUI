@@ -1,36 +1,30 @@
 import * as React from "react";
 import { ACTIVE_EFFECT_DELAY, Tappable } from "../Tappable/Tappable";
-import { classNames } from "../../lib/classNames";
-import { IOS, VKCOM } from "../../lib/platform";
-
+import { classNamesString } from "../../lib/classNames";
+import { Platform } from "../../lib/platform";
 import {
   Icon20CheckBoxOn,
-  Icon20CheckBoxOff,
   Icon24CheckBoxOn,
+  Icon20CheckBoxOff,
   Icon24CheckBoxOff,
   Icon20CheckBoxIndetermanate,
 } from "@vkontakte/icons";
-
 import { HasRef, HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
-import {
-  withAdaptivity,
-  AdaptivityProps,
-  SizeType,
-} from "../../hoc/withAdaptivity";
-import { Text } from "../Typography/Text/Text";
 import { hasReactNode } from "../../lib/utils";
-import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { useExternRef } from "../../hooks/useExternRef";
+import { useAdaptivityConditionalRender } from "../../hooks/useAdaptivityConditionalRender";
 import { VisuallyHiddenInput } from "../VisuallyHiddenInput/VisuallyHiddenInput";
 import { warnOnce } from "../../lib/warnOnce";
-import "./Checkbox.css";
+import styles from "./Checkbox.module.css";
 
 export interface CheckboxProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     HasRootRef<HTMLLabelElement>,
-    HasRef<HTMLInputElement>,
-    AdaptivityProps {
+    HasRef<HTMLInputElement> {
   description?: React.ReactNode;
   indeterminate?: boolean;
   defaultIndeterminate?: boolean;
@@ -50,12 +44,13 @@ export const Checkbox = ({
   description,
   indeterminate,
   defaultIndeterminate,
-  sizeY,
   onChange,
   ...restProps
 }: CheckboxProps) => {
   const inputRef = useExternRef(getRef);
   const platform = usePlatform();
+  const { sizeY } = useAdaptivity();
+  const { sizeY: adaptiveSizeY } = useAdaptivityConditionalRender();
 
   React.useEffect(() => {
     const indeterminateValue =
@@ -104,57 +99,99 @@ export const Checkbox = ({
   return (
     <Tappable
       Component="label"
-      vkuiClass={classNames(
-        "Checkbox",
-        `Checkbox--sizeY-${sizeY}`,
+      className={classNamesString(
+        styles["Checkbox"],
+        platform === Platform.VKCOM && styles["Checkbox--vkcom"],
+        getSizeYClassName(styles["Checkbox"], sizeY),
         !(hasReactNode(children) || hasReactNode(description)) &&
-          `Checkbox--simple`
+          styles["Checkbox--simple"],
+        className
       )}
-      className={className}
       style={style}
       disabled={restProps.disabled}
-      activeEffectDelay={platform === IOS ? 100 : ACTIVE_EFFECT_DELAY}
+      activeEffectDelay={platform === Platform.IOS ? 100 : ACTIVE_EFFECT_DELAY}
       getRootRef={getRootRef}
     >
       <VisuallyHiddenInput
         {...restProps}
         onChange={handleChange}
         type="checkbox"
-        vkuiClass="Checkbox__input"
+        className={styles["Checkbox__input"]}
         getRef={inputRef}
       />
-      <div vkuiClass="Checkbox__icon Checkbox__icon--on">
-        {sizeY === SizeType.COMPACT || platform === VKCOM ? (
-          <Icon20CheckBoxOn aria-hidden />
+      <div
+        className={classNamesString(
+          styles["Checkbox__icon"],
+          styles["Checkbox__icon--on"]
+        )}
+      >
+        {platform === Platform.VKCOM ? (
+          <Icon20CheckBoxOn />
         ) : (
-          <Icon24CheckBoxOn aria-hidden />
+          <React.Fragment>
+            {adaptiveSizeY.compact && (
+              <Icon20CheckBoxOn className={adaptiveSizeY.compact.className} />
+            )}
+            {adaptiveSizeY.regular && (
+              <Icon24CheckBoxOn className={adaptiveSizeY.regular.className} />
+            )}
+          </React.Fragment>
         )}
       </div>
-      <div vkuiClass="Checkbox__icon Checkbox__icon--off">
-        {sizeY === SizeType.COMPACT || platform === VKCOM ? (
-          <Icon20CheckBoxOff aria-hidden />
+      <div
+        className={classNamesString(
+          styles["Checkbox__icon"],
+          styles["Checkbox__icon--off"]
+        )}
+      >
+        {platform === Platform.VKCOM ? (
+          <Icon20CheckBoxOff />
         ) : (
-          <Icon24CheckBoxOff aria-hidden />
+          <React.Fragment>
+            {adaptiveSizeY.compact && (
+              <Icon20CheckBoxOff className={adaptiveSizeY.compact.className} />
+            )}
+            {adaptiveSizeY.regular && (
+              <Icon24CheckBoxOff className={adaptiveSizeY.regular.className} />
+            )}
+          </React.Fragment>
         )}
       </div>
-      <div vkuiClass="Checkbox__icon Checkbox__icon--indeterminate">
-        <Icon20CheckBoxIndetermanate
-          aria-hidden
-          width={sizeY === SizeType.COMPACT || platform === VKCOM ? 20 : 24}
-          height={sizeY === SizeType.COMPACT || platform === VKCOM ? 20 : 24}
-        />
+      <div
+        className={classNamesString(
+          styles["Checkbox__icon"],
+          styles["Checkbox__icon--indeterminate"]
+        )}
+      >
+        {platform === Platform.VKCOM ? (
+          <Icon20CheckBoxIndetermanate width={20} height={20} />
+        ) : (
+          <React.Fragment>
+            {adaptiveSizeY.compact && (
+              <Icon20CheckBoxIndetermanate
+                className={adaptiveSizeY.compact.className}
+                width={20}
+                height={20}
+              />
+            )}
+            {adaptiveSizeY.regular && (
+              <Icon20CheckBoxIndetermanate
+                className={adaptiveSizeY.regular.className}
+                width={24}
+                height={24}
+              />
+            )}
+          </React.Fragment>
+        )}
       </div>
-      <Text vkuiClass="Checkbox__content" Component="div">
-        <div vkuiClass="Checkbox__children">{children}</div>
+      <div className={styles["Checkbox__content"]}>
+        <div className={styles["Checkbox__children"]}>{children}</div>
         {hasReactNode(description) && (
-          <Caption vkuiClass="Checkbox__description">{description}</Caption>
+          <Footnote className={styles["Checkbox__description"]}>
+            {description}
+          </Footnote>
         )}
-      </Text>
+      </div>
     </Tappable>
   );
 };
-
-// eslint-disable-next-line import/no-default-export
-export default withAdaptivity(Checkbox, {
-  sizeY: true,
-});

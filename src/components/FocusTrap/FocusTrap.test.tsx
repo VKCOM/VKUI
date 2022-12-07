@@ -9,6 +9,7 @@ import {
 import { FocusTrap, FocusTrapProps } from "./FocusTrap";
 import { AppRoot } from "../AppRoot/AppRoot";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
+import { ViewWidth } from "../../lib/adaptivity";
 import { ActionSheet, ActionSheetProps } from "../ActionSheet/ActionSheet";
 import { ActionSheetItem } from "../ActionSheetItem/ActionSheetItem";
 import { View } from "../View/View";
@@ -18,7 +19,7 @@ import { SplitCol } from "../SplitCol/SplitCol";
 import { CellButton } from "../CellButton/CellButton";
 
 const _children = ["first", "middle", "last"].map((item) => (
-  <ActionSheetItem key={item} autoclose data-testid={item}>
+  <ActionSheetItem key={item} autoClose data-testid={item}>
     {item} Item
   </ActionSheetItem>
 ));
@@ -41,6 +42,7 @@ const ActionSheetTest = ({
       data-testid="sheet"
       toggleRef={toggleRef}
       onClose={_onClose}
+      iosCloseItem={null}
       {...props}
     >
       {children}
@@ -49,7 +51,7 @@ const ActionSheetTest = ({
 
   return (
     <AppRoot>
-      <AdaptivityProvider hasMouse>
+      <AdaptivityProvider hasPointer viewWidth={ViewWidth.MOBILE}>
         <SplitLayout popout={actionSheet}>
           <SplitCol>
             <View activePanel="panel">

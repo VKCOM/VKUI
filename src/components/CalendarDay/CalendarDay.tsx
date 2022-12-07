@@ -1,9 +1,9 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Tappable, TappableElementProps } from "../Tappable/Tappable";
 import { ENABLE_KEYBOARD_INPUT_EVENT_NAME } from "../../hooks/useKeyboardInputTracker";
-import { LocaleProviderContext } from "../LocaleProviderContext/LocaleProviderContext";
-import "./CalendarDay.css";
+import { useConfigProvider } from "../ConfigProvider/ConfigProviderContext";
+import styles from "./CalendarDay.module.css";
 
 export type CalendarDayElementProps = Omit<
   TappableElementProps,
@@ -49,9 +49,10 @@ export const CalendarDay = React.memo(
     hintedSelectionEnd,
     sameMonth,
     size,
+    className,
     ...props
   }: CalendarDayProps) => {
-    const locale = React.useContext(LocaleProviderContext);
+    const { locale } = useConfigProvider();
     const ref = React.useRef<HTMLElement>(null);
     const onClick = React.useCallback(() => onChange(day), [day, onChange]);
     const handleEnter = React.useCallback(() => onEnter?.(day), [day, onEnter]);
@@ -67,23 +68,28 @@ export const CalendarDay = React.memo(
     }, [focused]);
 
     if (hidden) {
-      return <div vkuiClass="CalendarDay__hidden"></div>;
+      return <div className={styles["CalendarDay__hidden"]}></div>;
     }
 
     return (
       <Tappable
-        vkuiClass={classNames(
-          "CalendarDay",
-          `CalendarDay--size-${size}`,
-          today && "CalendarDay--today",
-          selected && !disabled && "CalendarDay--selected",
-          active && !disabled && "CalendarDay--active",
-          selectionStart && "CalendarDay--selection-start",
-          selectionEnd && "CalendarDay--selection-end",
-          disabled && "CalendarDay--disabled",
-          !sameMonth && "CalendarDay--not-same-month"
+        className={classNamesString(
+          styles["CalendarDay"],
+          size && styles[`CalendarDay--size-${size}`],
+          today && styles["CalendarDay--today"],
+          selected && !disabled && styles["CalendarDay--selected"],
+          active && !disabled && styles["CalendarDay--active"],
+          selectionStart && styles["CalendarDay--selection-start"],
+          selectionEnd && styles["CalendarDay--selection-end"],
+          disabled && styles["CalendarDay--disabled"],
+          !sameMonth && styles["CalendarDay--not-same-month"],
+          className
         )}
-        hoverMode={active ? "CalendarDay--active-hover" : "CalendarDay--hover"}
+        hoverMode={
+          active
+            ? styles["CalendarDay--active-hover"]
+            : styles["CalendarDay--hover"]
+        }
         hasActive={false}
         onClick={onClick}
         disabled={disabled}
@@ -101,20 +107,23 @@ export const CalendarDay = React.memo(
         {...props}
       >
         <div
-          vkuiClass={classNames(
-            "CalendarDay__hinted",
-            hinted && "CalendarDay__hinted--active",
-            hintedSelectionStart && "CalendarDay__hinted--selection-start",
-            hintedSelectionEnd && "CalendarDay__hinted--selection-end"
+          className={classNamesString(
+            styles["CalendarDay__hinted"],
+            hinted && styles["CalendarDay__hinted--active"],
+            hintedSelectionStart &&
+              styles["CalendarDay__hinted--selection-start"],
+            hintedSelectionEnd && styles["CalendarDay__hinted--selection-end"]
           )}
         >
           <div
-            vkuiClass={classNames(
-              "CalendarDay__inner",
-              active && !disabled && "CalendarDay__inner--active"
+            className={classNamesString(
+              styles["CalendarDay__inner"],
+              active && !disabled && styles["CalendarDay__inner--active"]
             )}
           >
-            <div vkuiClass="CalendarDay__day-number">{day.getDate()}</div>
+            <div className={styles["CalendarDay__day-number"]}>
+              {day.getDate()}
+            </div>
           </div>
         </div>
       </Tappable>

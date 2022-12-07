@@ -1,3 +1,4 @@
+import * as React from "react";
 import { ReactNode } from "react";
 import { renderHook, act } from "@testing-library/react-hooks";
 import { AppRootContext } from "../components/AppRoot/AppRootContext";

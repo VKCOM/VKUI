@@ -1,34 +1,26 @@
-```jsx
+```jsx { "props": { "layout": false, "adaptivity": true } }
 const Example = () => {
   const [contextOpened, setContextOpened] = React.useState(true);
   const [mode, setMode] = React.useState("all");
   const platform = usePlatform();
-  const { viewWidth } = useAdaptivity();
 
   const toggleContext = () => {
     setContextOpened((prev) => !prev);
   };
-
   const select = (e) => {
     const mode = e.currentTarget.dataset.mode;
     setMode(mode);
     requestAnimationFrame(toggleContext);
   };
 
-  const hasHeader = platform !== VKCOM;
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
+  const hasHeader = platform !== Platform.VKCOM;
 
   return (
     <SplitLayout
       style={{ justifyContent: "center" }}
       header={hasHeader && <PanelHeader separator={false} />}
     >
-      <SplitCol
-        animate={!isDesktop}
-        spaced={isDesktop}
-        width={isDesktop ? "560px" : "100%"}
-        maxWidth={isDesktop ? "560px" : "100%"}
-      >
+      <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
         <View activePanel="context2">
           <Panel id="context2">
             <PanelHeader

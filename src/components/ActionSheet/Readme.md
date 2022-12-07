@@ -31,11 +31,11 @@ const openBase = () =>
       iosCloseItem={<ActionSheetDefaultIosCloseItem />}
       toggleRef={baseTargetRef}
     >
-      <ActionSheetItem autoclose>Сохранить в закладках</ActionSheetItem>
-      <ActionSheetItem autoclose>Закрепить запись</ActionSheetItem>
-      <ActionSheetItem autoclose>Выключить комментирование</ActionSheetItem>
-      <ActionSheetItem autoclose>Закрепить запись</ActionSheetItem>
-      <ActionSheetItem autoclose mode="destructive">
+      <ActionSheetItem autoClose>Сохранить в закладках</ActionSheetItem>
+      <ActionSheetItem autoClose>Закрепить запись</ActionSheetItem>
+      <ActionSheetItem autoClose>Выключить комментирование</ActionSheetItem>
+      <ActionSheetItem autoClose>Закрепить запись</ActionSheetItem>
+      <ActionSheetItem autoClose mode="destructive">
         Удалить запись
       </ActionSheetItem>
     </ActionSheet>
@@ -48,22 +48,22 @@ const openIcons = () =>
       iosCloseItem={<ActionSheetDefaultIosCloseItem />}
       toggleRef={iconsTargetRef}
     >
-      <ActionSheetItem autoclose before={<Icon28EditOutline />}>
+      <ActionSheetItem autoClose before={<Icon28EditOutline />}>
         Редактировать профиль
       </ActionSheetItem>
-      <ActionSheetItem autoclose before={<Icon28ListPlayOutline />}>
+      <ActionSheetItem autoClose before={<Icon28ListPlayOutline />}>
         Слушать далее
       </ActionSheetItem>
-      <ActionSheetItem autoclose before={<Icon28ShareOutline />}>
+      <ActionSheetItem autoClose before={<Icon28ShareOutline />}>
         Поделиться
       </ActionSheetItem>
-      <ActionSheetItem autoclose before={<Icon28CopyOutline />}>
+      <ActionSheetItem autoClose before={<Icon28CopyOutline />}>
         Скопировать ссылку
       </ActionSheetItem>
       <ActionSheetItem
-        autoclose
+        autoClose
         before={
-          platform === IOS ? (
+          platform === Platform.IOS ? (
             <Icon28DeleteOutline />
           ) : (
             <Icon28DeleteOutlineAndroid />
@@ -85,14 +85,14 @@ const openSubtitle = () =>
     >
       <ActionSheetItem
         before={<Icon28SettingsOutline />}
-        autoclose
+        autoClose
         subtitle="Авто"
       >
         Качество
       </ActionSheetItem>
       <ActionSheetItem
         before={<Icon28SubtitlesOutline />}
-        autoclose
+        autoClose
         subtitle="Отсутствуют"
         disabled
       >
@@ -100,7 +100,7 @@ const openSubtitle = () =>
       </ActionSheetItem>
       <ActionSheetItem
         before={<Icon28PlaySpeedOutline />}
-        autoclose
+        autoClose
         subtitle="Обычная"
       >
         Скорость воспроизведения
@@ -120,7 +120,7 @@ const openSelectable = () =>
         checked={filter === "best"}
         name="filter"
         value="best"
-        autoclose
+        autoClose
         selectable
       >
         Лучшие друзья
@@ -130,7 +130,7 @@ const openSelectable = () =>
         checked={filter === "relatives"}
         name="filter"
         value="relatives"
-        autoclose
+        autoClose
         selectable
       >
         Родственники
@@ -140,7 +140,7 @@ const openSelectable = () =>
         checked={filter === "collegues"}
         name="filter"
         value="collegues"
-        autoclose
+        autoClose
         selectable
       >
         Коллеги
@@ -150,7 +150,7 @@ const openSelectable = () =>
         checked={filter === "school"}
         name="filter"
         value="school"
-        autoclose
+        autoClose
         selectable
       >
         Друзья по школе
@@ -160,7 +160,7 @@ const openSelectable = () =>
         checked={filter === "university"}
         name="filter"
         value="university"
-        autoclose
+        autoClose
         selectable
       >
         Друзья по вузу
@@ -176,7 +176,7 @@ const openTitle = () =>
       header="Вы действительно хотите удалить это видео из Ваших видео?"
       toggleRef={titleTargetRef}
     >
-      <ActionSheetItem autoclose mode="destructive">
+      <ActionSheetItem autoClose mode="destructive">
         Удалить видео
       </ActionSheetItem>
     </ActionSheet>
@@ -189,11 +189,11 @@ const openBaseTop = () =>
       iosCloseItem={<ActionSheetDefaultIosCloseItem />}
       toggleRef={baseTopTargetRef}
     >
-      <ActionSheetItem autoclose>Сохранить в закладках</ActionSheetItem>
-      <ActionSheetItem autoclose>Закрепить запись</ActionSheetItem>
-      <ActionSheetItem autoclose>Выключить комментирование</ActionSheetItem>
-      <ActionSheetItem autoclose>Закрепить запись</ActionSheetItem>
-      <ActionSheetItem autoclose mode="destructive">
+      <ActionSheetItem autoClose>Сохранить в закладках</ActionSheetItem>
+      <ActionSheetItem autoClose>Закрепить запись</ActionSheetItem>
+      <ActionSheetItem autoClose>Выключить комментирование</ActionSheetItem>
+      <ActionSheetItem autoClose>Закрепить запись</ActionSheetItem>
+      <ActionSheetItem autoClose mode="destructive">
         Удалить запись
       </ActionSheetItem>
     </ActionSheet>

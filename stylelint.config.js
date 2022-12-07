@@ -1,12 +1,13 @@
 const path = require("path");
-const { cssPropSources } = require("./postcss.config");
+const { cssCustomPropertiesPaths, getCustomMedias } = require("./shared");
 
 module.exports = {
   extends: ["stylelint-config-standard", "stylelint-config-prettier"],
   plugins: [
     "stylelint-value-no-unknown-custom-properties",
-    "./tasks/stylelint-atomic",
-    "./tasks/stylelint-bad-multiplication",
+    "stylelint-media-use-custom-media",
+    "./packages/stylelint-atomic",
+    "./packages/stylelint-bad-multiplication",
   ],
   rules: {
     indentation: null,
@@ -30,6 +31,12 @@ module.exports = {
      * // In Selectors Level 3, only a single simple selector was allowed as the argument to :not(), whereas Selectors Level 4 allows a selector list.
      */
     "selector-not-notation": "simple",
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        ignorePseudoClasses: ["global"],
+      },
+    ],
     "function-no-unknown": [
       true,
       {
@@ -47,12 +54,18 @@ module.exports = {
       true,
       {
         importFrom: [
-          ...cssPropSources,
+          ...cssCustomPropertiesPaths,
           path.join(
             __dirname,
             "node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css"
           ),
         ],
+      },
+    ],
+    "csstools/media-use-custom-media": [
+      "known",
+      {
+        importFrom: getCustomMedias,
       },
     ],
     // Skip reporting in pprecommit run, highlight in editor

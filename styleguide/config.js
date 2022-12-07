@@ -82,6 +82,7 @@ const baseConfig = {
       codePunctuation: "var(--vkui--color_text_secondary)",
       codeKeyword: "var(--vkui--color_accent_blue)",
       codeFunction: "var(--vkui--color_accent_red)",
+      codeDeleted: "var(--vkui--color_text_negative)",
     },
   },
   styles: {
@@ -195,7 +196,7 @@ const baseConfig = {
         {
           name: "Poppers",
           components: () => [
-            "../src/components/Dropdown/Dropdown.tsx",
+            "../src/components/Popover/Popover.tsx",
             "../src/components/TextTooltip/TextTooltip.tsx",
             "../src/components/RichTooltip/RichTooltip.tsx",
             "../src/components/Tooltip/Tooltip.tsx",
@@ -242,7 +243,7 @@ const baseConfig = {
             "../src/components/InfoRow/InfoRow.tsx",
             "../src/components/Avatar/Avatar.tsx",
             "../src/components/GridAvatar/GridAvatar.tsx",
-            "../src/components/InitialsAvatar/InitialsAvatar.tsx",
+            "../src/components/Image/Image.tsx",
             "../src/components/Gallery/Gallery.tsx",
             "../src/components/Progress/Progress.tsx",
             "../src/components/Search/Search.tsx",
@@ -277,7 +278,6 @@ const baseConfig = {
             "../src/components/Radio/Radio.tsx",
             "../src/components/RadioGroup/RadioGroup.tsx",
             "../src/components/Checkbox/Checkbox.tsx",
-            "../src/components/SimpleCheckbox/SimpleCheckbox.tsx",
             "../src/components/Input/Input.tsx",
             "../src/components/ChipsInput/ChipsInput.tsx",
             "../src/components/Select/Select.tsx",
@@ -290,7 +290,6 @@ const baseConfig = {
             "../src/components/Textarea/Textarea.tsx",
             "../src/components/File/File.tsx",
             "../src/components/DatePicker/DatePicker.tsx",
-            "../src/components/SliderSwitch/SliderSwitch.tsx",
             "../src/components/SegmentedControl/SegmentedControl.tsx",
             "../src/components/Calendar/Calendar.tsx",
             "../src/components/CalendarRange/CalendarRange.tsx",
@@ -320,6 +319,7 @@ const baseConfig = {
             "../src/components/AppRoot/AppRoot.tsx",
             "../src/components/AdaptivityProvider/AdaptivityProvider.tsx",
             "../src/components/ConfigProvider/ConfigProvider.tsx",
+            "../src/components/LocaleProvider/LocaleProvider.tsx",
             "../src/components/Touch/Touch.tsx",
           ],
         },
@@ -331,12 +331,13 @@ const baseConfig = {
       sectionDepth: 1,
       sections: [
         {
-          name: "Unstable",
-          content: "./pages/unstable.md",
+          title: "Миграция с v4 на v5",
+          name: "Migration",
+          content: "./pages/migration_v5.md",
         },
         {
-          name: "Helpers",
-          content: "./pages/helpers.md",
+          name: "Unstable",
+          content: "./pages/unstable.md",
         },
         {
           title: "Серверный рендеринг",
@@ -347,11 +348,6 @@ const baseConfig = {
           title: "Иконки",
           name: "Icons",
           content: "./pages/icons.md",
-        },
-        {
-          title: "Шрифты",
-          name: "Fonts",
-          content: "./pages/fonts.md",
         },
         {
           title: "Утилиты",

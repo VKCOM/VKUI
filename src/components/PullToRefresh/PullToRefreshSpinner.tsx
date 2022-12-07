@@ -1,6 +1,6 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
-import "./PullToRefresh.css";
+import { classNamesString } from "../../lib/classNames";
+import styles from "./PullToRefresh.module.css";
 
 function calcStrokeDashOffset(value: number, radius: number) {
   const progress = value / 100;
@@ -32,16 +32,16 @@ export const PullToRefreshSpinner = ({
 
   return (
     <div
-      vkuiClass={classNames(
-        "PullToRefresh__spinner",
-        on && "PullToRefresh__spinner--on"
+      className={classNamesString(
+        styles["PullToRefresh__spinner"],
+        on && styles["PullToRefresh__spinner--on"]
       )}
       style={style}
       aria-label={on ? ariaLabel : undefined}
     >
       <svg
         role="presentation"
-        vkuiClass="PullToRefresh__spinner-self"
+        className={styles["PullToRefresh__spinner-self"]}
         style={{
           width: size,
           height: size,
@@ -57,7 +57,7 @@ export const PullToRefreshSpinner = ({
           }}
         >
           <circle
-            vkuiClass="PullToRefresh__spinner-path"
+            className={styles["PullToRefresh__spinner-path"]}
             fill="none"
             strokeDasharray={dasharray}
             strokeDashoffset={dashoffset}

@@ -1,15 +1,16 @@
-import { Fragment } from "react";
+import * as React from "react";
 import { ModalCard, ModalCardProps } from "./ModalCard";
+import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
 import { Button } from "../Button/Button";
 import { ModalRoot } from "../ModalRoot/ModalRootAdaptive";
-import { Avatar } from "../Avatar/Avatar";
+import { Image } from "../Image/Image";
 import { UsersStack } from "../UsersStack/UsersStack";
 import { Textarea } from "../Textarea/Textarea";
 import { describeScreenshotFuzz } from "../../testing/e2e";
 import { AppRoot } from "../AppRoot/AppRoot";
 import { Icon56MoneyTransferOutline } from "@vkontakte/icons";
 import { Platform } from "../../lib/platform";
-import { ViewWidth } from "../AdaptivityProvider/AdaptivityContext";
+import { ViewWidth, SizeType } from "../../lib/adaptivity";
 import { HasChildren } from "../../types";
 
 const AppWrapper = (props: HasChildren) => (
@@ -35,33 +36,32 @@ const propSets = [
       "Номер карты получателя не нужен — он сам решит, куда зачислить средства.",
     ],
     actions: [
-      <Button size="l" mode="primary" key="button">
+      <Button size="l" mode="primary" stretched key="button">
         Попробовать
       </Button>,
     ],
   },
   {
     nav: ["2"],
-    icon: [<Avatar key="avatar" mode="app" size={72} />],
+    icon: [<Image key="image" size={72} borderRadius="l" />],
     header: ["Добавить игру «Загадки детства» в меню?"],
     subheader: [
       "Игра появится под списком разделов на экране меню и будет всегда под рукой.",
     ],
-    actionsLayout: ["vertical" as ModalCardProps["actionsLayout"]],
     actions: [
-      <Fragment key="buttons">
-        <Button size="l" mode="primary">
+      <ButtonGroup mode="vertical" gap="m" stretched key="buttons">
+        <Button size="l" mode="primary" stretched>
           Присоединиться
         </Button>
-        <Button size="l" mode="secondary">
+        <Button size="l" mode="secondary" stretched>
           Скопировать приглашение
         </Button>
-      </Fragment>,
+      </ButtonGroup>,
     ],
     children: [
       <UsersStack
         photos={["", "", "", ""]}
-        size="m"
+        size="l"
         visibleCount={3}
         key="usersstack"
         layout="vertical"
@@ -75,7 +75,7 @@ const propSets = [
     nav: ["3"],
     header: ["Расскажите о себе"],
     actions: [
-      <Button size="l" mode="primary" key="button">
+      <Button size="l" mode="primary" stretched key="button">
         Сохранить
       </Button>,
     ],
@@ -88,14 +88,14 @@ const propSets = [
       "Гиппопотомомонстросесквиппедалиофобия — боязнь длинных слов, таких как метоксихлордиэтиламинометилбутиламиноакридин",
     ],
     actions: [
-      <Fragment key="buttons">
-        <Button size="l" mode="primary" key="button">
+      <ButtonGroup mode="horizontal" gap="s" stretched key="buttons">
+        <Button size="l" mode="primary" stretched>
           Гиппопотомомонстросесквиппедалиофобия
         </Button>
-        <Button size="l" mode="primary" key="button">
+        <Button size="l" mode="primary" stretched>
           Метоксихлордиэтиламинометилбутиламиноакридин
         </Button>
-      </Fragment>,
+      </ButtonGroup>,
     ],
   },
 ];
@@ -105,6 +105,7 @@ describe("ModalCard mobile", () => {
     Wrapper: AppWrapper,
     adaptivity: {
       viewWidth: ViewWidth.MOBILE,
+      sizeY: SizeType.REGULAR,
     },
     platforms: [Platform.IOS, Platform.ANDROID],
   });
@@ -115,6 +116,7 @@ describe("ModalCard tablet", () => {
     Wrapper: AppWrapper,
     adaptivity: {
       viewWidth: ViewWidth.SMALL_TABLET,
+      sizeY: SizeType.COMPACT,
     },
     platforms: [Platform.IOS, Platform.ANDROID],
   });

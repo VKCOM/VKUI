@@ -1,4 +1,6 @@
 import * as React from "react";
+import { clamp } from "../helpers/math";
+import { rangeIncrement } from "../helpers/range";
 
 interface UsePaginationProps {
   /**
@@ -42,29 +44,18 @@ export const usePagination = ({
   totalPages: endPage = 1,
 }: UsePaginationProps = {}): UsePaginationResult =>
   React.useMemo(() => {
-    const range = (from: number, to: number, step = 1) => {
-      const range = [];
-      let i = from;
-
-      while (i <= to) {
-        range.push(i);
-        i += step;
-      }
-
-      return range;
-    };
-
-    const startPages = range(1, Math.min(boundaryCount, endPage));
-    const endPages = range(
+    const startPages = rangeIncrement(1, Math.min(boundaryCount, endPage));
+    const endPages = rangeIncrement(
       Math.max(endPage - boundaryCount + 1, boundaryCount + 1),
       endPage
     );
 
     const lowerBoundaryWhenCurrentPageHigh =
       endPage - boundaryCount - 1 - 2 * siblingCount;
-    const siblingsStart = Math.max(
-      Math.min(currentPage - siblingCount, lowerBoundaryWhenCurrentPageHigh),
-      boundaryCount + 2
+    const siblingsStart = clamp(
+      currentPage - siblingCount,
+      boundaryCount + 2,
+      lowerBoundaryWhenCurrentPageHigh
     );
 
     const upperBoundaryWhenCurrentPageLow =
@@ -82,7 +73,7 @@ export const usePagination = ({
       pages.push(boundaryCount + 1);
     }
 
-    pages.push(...range(siblingsStart, siblingsEnd));
+    pages.push(...rangeIncrement(siblingsStart, siblingsEnd));
 
     if (siblingsEnd < endPage - boundaryCount - 1) {
       pages.push("end-ellipsis");

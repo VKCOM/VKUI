@@ -1,12 +1,13 @@
 import * as React from "react";
 import { usePlatform } from "../../hooks/usePlatform";
-import { useAdaptivityIsDesktop } from "../../hooks/useAdaptivity";
+import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
 import { HasRef } from "../../types";
-import { VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { Separator } from "../Separator/Separator";
 import { PanelHeader, PanelHeaderProps } from "../PanelHeader/PanelHeader";
-import { classNames } from "../../lib/classNames";
-import "./ModalPageHeader.css";
+import { classNamesString } from "../../lib/classNames";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
+import styles from "./ModalPageHeader.module.css";
 
 export interface ModalPageHeaderProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -20,24 +21,25 @@ export const ModalPageHeader = ({
   children,
   separator = true,
   getRef,
+  className,
   ...restProps
 }: ModalPageHeaderProps) => {
   const platform = usePlatform();
-  const hasSeparator = separator && platform === VKCOM;
-  // TODO v5.0.0 поправить под новую адаптивность
-  const isDesktop = useAdaptivityIsDesktop();
+  const hasSeparator = separator && platform === Platform.VKCOM;
+  const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
   return (
     <div
-      vkuiClass={classNames(
-        "ModalPageHeader",
-        platform !== VKCOM && "ModalPageHeader--withGaps",
-        isDesktop && "ModalPageHeader--desktop"
+      className={classNamesString(
+        styles["ModalPageHeader"],
+        getPlatformClassName(styles["ModalPageHeader"], platform),
+        platform !== Platform.VKCOM && styles["ModalPageHeader--withGaps"],
+        isDesktop && styles["ModalPageHeader--desktop"]
       )}
       ref={getRef}
     >
       <PanelHeader
-        vkuiClass="ModalPageHeader__in"
+        className={classNamesString(styles["ModalPageHeader__in"], className)}
         {...restProps}
         fixed={false}
         separator={false}

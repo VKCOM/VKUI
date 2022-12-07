@@ -1,3 +1,4 @@
+import * as React from "react";
 import { usePlatform } from "./usePlatform";
 import { ConfigProvider } from "../components/ConfigProvider/ConfigProvider";
 import { renderHook } from "@testing-library/react-hooks";
@@ -14,9 +15,9 @@ describe(usePlatform, () => {
     expect(result.current).toEqual("ios");
   });
 
-  it("handles ConfigProvider's undefined platform", () => {
+  it("handles ConfigProvider's without platform", () => {
     const wrapper = ({ children }: HasChildren) => (
-      <ConfigProvider platform={undefined}>{children}</ConfigProvider>
+      <ConfigProvider>{children}</ConfigProvider>
     );
 
     const { result } = renderHook(() => usePlatform(), { wrapper });

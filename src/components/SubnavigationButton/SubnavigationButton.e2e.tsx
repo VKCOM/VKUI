@@ -1,3 +1,4 @@
+import * as React from "react";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import {
   SubnavigationButton,
@@ -21,7 +22,7 @@ describe("SubnavigationButton", () => {
         before: [undefined, <Icon24Filter key="icon" />],
         after: [
           undefined,
-          <Counter key="counter" mode="primary" size="s">
+          <Counter key="counter" size="s">
             3
           </Counter>,
         ],
@@ -36,7 +37,8 @@ describe("SubnavigationButton", () => {
         children: ["Новинки"],
       },
       {
-        textLevel: [1, 2, 3],
+        size: ["l"],
+        textLevel: ["1", "2", "3"],
         children: ["Сканировать QR"],
       },
       {
@@ -50,7 +52,7 @@ describe("SubnavigationButton", () => {
         before: [<Icon24Filter key="icon" />],
         mode: ["primary", "outline", "tertiary"],
         after: [
-          <Counter key="counter" mode="primary" size="s">
+          <Counter key="counter" size="s">
             3
           </Counter>,
         ],

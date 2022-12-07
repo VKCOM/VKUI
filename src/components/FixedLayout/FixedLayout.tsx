@@ -1,13 +1,13 @@
 import * as React from "react";
-import { IOS } from "../../lib/platform";
-import { classNames } from "../../lib/classNames";
+import { Platform } from "../../lib/platform";
+import { classNamesString } from "../../lib/classNames";
 import { HasRef, HasRootRef } from "../../types";
 import { SplitColContext } from "../SplitCol/SplitCol";
 import { TooltipContainer } from "../Tooltip/TooltipContainer";
 import { useDOM } from "../../lib/dom";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { usePlatform } from "../../hooks/usePlatform";
-import "./FixedLayout.css";
+import styles from "./FixedLayout.module.css";
 
 export interface FixedLayoutProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -38,14 +38,28 @@ export const FixedLayout = ({
   getRootRef,
   getRef,
   filled,
+  className,
   ...restProps
 }: FixedLayoutProps) => {
   const platform = usePlatform();
   const [width, setWidth] = React.useState<string | undefined>(undefined);
   const { window } = useDOM();
   const { colRef } = React.useContext(SplitColContext);
-  const doResize = () =>
-    setWidth(colRef?.current ? `${colRef.current.offsetWidth}px` : undefined);
+  const doResize = () => {
+    if (colRef?.current) {
+      const computedStyle = getComputedStyle(colRef.current);
+
+      setWidth(
+        `${
+          colRef.current.clientWidth -
+          parseFloat(computedStyle.paddingLeft) -
+          parseFloat(computedStyle.paddingRight)
+        }px`
+      );
+    } else {
+      setWidth(undefined);
+    }
+  };
   React.useEffect(doResize, [colRef, platform]);
   useGlobalEventListener(window, "resize", doResize);
 
@@ -54,15 +68,16 @@ export const FixedLayout = ({
       {...restProps}
       fixed
       ref={getRootRef}
-      vkuiClass={classNames(
-        "FixedLayout",
-        platform === IOS && "FixedLayout--ios",
-        filled && "FixedLayout--filled",
-        `FixedLayout--${vertical}`
+      className={classNamesString(
+        styles["FixedLayout"],
+        platform === Platform.IOS && styles["FixedLayout--ios"],
+        filled && styles["FixedLayout--filled"],
+        vertical && styles[`FixedLayout--vertical-${vertical}`],
+        className
       )}
       style={{ ...style, width }}
     >
-      <div vkuiClass="FixedLayout__in" ref={getRef}>
+      <div className={styles["FixedLayout__in"]} ref={getRef}>
         {children}
       </div>
     </TooltipContainer>

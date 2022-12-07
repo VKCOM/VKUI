@@ -2,13 +2,13 @@ import * as React from "react";
 import { Modifier } from "react-popper";
 import { CustomScrollView } from "../CustomScrollView/CustomScrollView";
 import { TrackerOptionsProps } from "../CustomScrollView/useTrackerVisibility";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Popper, Placement } from "../Popper/Popper";
 import { Spinner } from "../Spinner/Spinner";
 import { HasRef } from "../../types";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
 import { noop } from "../../lib/utils";
-import "./CustomSelectDropdown.css";
+import styles from "./CustomSelectDropdown.module.css";
 
 export interface CustomSelectDropdownProps
   extends React.HTMLAttributes<HTMLElement>,
@@ -16,7 +16,7 @@ export interface CustomSelectDropdownProps
     TrackerOptionsProps {
   targetRef: React.RefObject<HTMLElement>;
   placement?: Placement;
-  scrollBoxRef?: React.RefObject<HTMLDivElement>;
+  scrollBoxRef?: React.Ref<HTMLDivElement>;
   observableRefs?:
     | Array<React.RefObject<HTMLElement>>
     | React.RefObject<HTMLElement>;
@@ -65,6 +65,7 @@ export const CustomSelectDropdown = ({
   autoHideScrollbar,
   autoHideScrollbarDelay,
   observableRefs,
+  className,
   ...restProps
 }: CustomSelectDropdownProps) => {
   const [isTop, setIsTop] = React.useState(() => calcIsTop(placement));
@@ -106,13 +107,14 @@ export const CustomSelectDropdown = ({
       sameWidth={sameWidth}
       onPlacementChange={onPlacementChange}
       placement={placement}
-      vkuiClass={classNames(
-        "CustomSelectDropdown",
+      className={classNamesString(
+        styles["CustomSelectDropdown"],
         offsetDistance === 0 &&
           (isTop
-            ? "CustomSelectDropdown--top"
-            : "CustomSelectDropdown--bottom"),
-        sameWidth && "CustomSelectDropdown--wide"
+            ? styles["CustomSelectDropdown--top"]
+            : styles["CustomSelectDropdown--bottom"]),
+        sameWidth && styles["CustomSelectDropdown--wide"],
+        className
       )}
       forcePortal={forcePortal}
       customModifiers={customModifiers}
@@ -120,12 +122,12 @@ export const CustomSelectDropdown = ({
     >
       <CustomScrollView
         boxRef={scrollBoxRef}
-        vkuiClass="CustomSelectDropdown__in"
+        className={styles["CustomSelectDropdown__in"]}
         autoHideScrollbar={autoHideScrollbar}
         autoHideScrollbarDelay={autoHideScrollbarDelay}
       >
         {fetching ? (
-          <div vkuiClass="CustomSelectDropdown__fetching">
+          <div className={styles["CustomSelectDropdown__fetching"]}>
             <Spinner size="small" />
           </div>
         ) : (

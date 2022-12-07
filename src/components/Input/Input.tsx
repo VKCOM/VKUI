@@ -1,58 +1,58 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasAlign, HasRef, HasRootRef } from "../../types";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
-import "./Input.css";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import styles from "./Input.module.css";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLDivElement>,
     HasAlign,
-    AdaptivityProps,
     FormFieldProps {}
 
-const InputComponent = ({
+/**
+ * @see https://vkcom.github.io/VKUI/#/Input
+ */
+export const Input = ({
   type = "text",
   align,
   getRef,
   className,
   getRootRef,
-  sizeY,
   style,
   before,
   after,
   status,
   ...restProps
 }: InputProps) => {
+  const { sizeY } = useAdaptivity();
+
   return (
     <FormField
-      vkuiClass={classNames(
-        "Input",
-        !!align && `Input--${align}`,
-        `Input--sizeY-${sizeY}`, // TODO v5.0.0 поправить под новую адаптивность
-        before && "Input--hasBefore",
-        after && "Input--hasAfter"
-      )}
       style={style}
-      className={className}
+      className={classNamesString(
+        styles["Input"],
+        align && styles[`Input--align-${align}`],
+        getSizeYClassName(styles["Input"], sizeY),
+        before && styles["Input--hasBefore"],
+        after && styles["Input--hasAfter"],
+        className
+      )}
       getRootRef={getRootRef}
       before={before}
       after={after}
       disabled={restProps.disabled}
       status={status}
     >
-      <input {...restProps} type={type} vkuiClass="Input__el" ref={getRef} />
+      <input
+        {...restProps}
+        type={type}
+        className={styles["Input__el"]}
+        ref={getRef}
+      />
     </FormField>
   );
 };
-
-/**
- * @see https://vkcom.github.io/VKUI/#/Input
- */
-export const Input = withAdaptivity(InputComponent, {
-  sizeY: true,
-});
-
-Input.displayName = "Input";

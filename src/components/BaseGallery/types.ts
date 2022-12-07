@@ -1,6 +1,6 @@
 import * as React from "react";
 import { HasAlign, HasRef, HasRootRef } from "../../types";
-import { TouchEventHandler } from "../Touch/Touch";
+import { TouchEvent, TouchEventHandler } from "../Touch/Touch";
 import { HorizontalScrollArrowProps } from "../HorizontalScroll/HorizontalScrollArrow";
 
 export interface GallerySlidesState {
@@ -36,9 +36,8 @@ export interface BaseGalleryProps
   slideWidth?: string | number;
   slideIndex?: number;
   onDragStart?: TouchEventHandler;
-  onDragEnd?: TouchEventHandler;
+  onDragEnd?(e: TouchEvent, targetIndex: number): void;
   onChange?(current: number): void;
-  onEnd?({ targetIndex }: { targetIndex: number }): void;
   /**
    * Будет вызвано при клике на кнопку-стрелку влево
    */
@@ -50,5 +49,6 @@ export interface BaseGalleryProps
   bullets?: "dark" | "light" | false;
   isDraggable?: boolean;
   showArrows?: boolean;
+  hasPointer?: boolean;
   arrowSize?: HorizontalScrollArrowProps["size"];
 }

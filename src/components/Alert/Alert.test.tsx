@@ -1,10 +1,11 @@
+import * as React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import { ViewWidth } from "../../hoc/withAdaptivity";
+import { ViewWidth } from "../../lib/adaptivity";
 import { baselineComponent, runAllTimers } from "../../testing/utils";
 import { Alert } from "./Alert";
-import { ANDROID, IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 
 describe("Alert", () => {
@@ -21,8 +22,8 @@ describe("Alert", () => {
       );
       const target =
         trigger === "overlay"
-          ? ".PopoutWrapper__overlay"
-          : ".ModalDismissButton";
+          ? ".vkuiPopoutWrapper__overlay"
+          : ".vkuiModalDismissButton";
 
       userEvent.click(document.querySelector(target) as Element);
       expect(onClose).not.toBeCalled();
@@ -31,12 +32,14 @@ describe("Alert", () => {
     });
   });
   describe("calls actions", () => {
-    describe.each([ANDROID, IOS])("on %s", (platform) => {
+    describe.each([Platform.ANDROID, Platform.IOS])("on %s", (platform) => {
       it("calls action", () => {
         const action = jest.fn();
+        const onClose = jest.fn();
         render(
           <ConfigProvider platform={platform}>
             <Alert
+              onClose={onClose}
               actions={[{ action, title: "__action__", mode: "default" }]}
             />
           </ConfigProvider>
@@ -44,7 +47,7 @@ describe("Alert", () => {
         userEvent.click(screen.getByText("__action__"));
         expect(action).toBeCalledTimes(1);
       });
-      it("calls action after close when autoclose=true", () => {
+      it("calls action after close when autoClose=true", () => {
         const action = jest.fn();
         const onClose = jest.fn();
         render(
@@ -56,7 +59,7 @@ describe("Alert", () => {
                   action,
                   title: "__action__",
                   mode: "default",
-                  autoclose: true,
+                  autoClose: true,
                 },
               ]}
             />

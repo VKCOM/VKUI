@@ -1,3 +1,4 @@
+import * as React from "react";
 import { InfoRow, InfoRowProps } from "./InfoRow";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 

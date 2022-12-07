@@ -1,3 +1,4 @@
+import * as React from "react";
 import { baselineComponent } from "../../testing/utils";
 import { TabbarItem } from "./TabbarItem";
 import { render, screen } from "@testing-library/react";

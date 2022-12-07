@@ -1,0 +1,108 @@
+.Tabs__in {
+  display: flex;
+  align-items: stretch;
+}
+
+.Tabs--withGaps {
+  justify-content: flex-start;
+}
+
+/**
+ * CMP:
+ * PanelHeader
+ */
+.PanelHeader .Tabs {
+  overflow: hidden;
+  font-family: var(--vkui--font_family_base);
+}
+
+.PanelHeader .Tabs::after {
+  display: block;
+  width: 1000px;
+  content: "";
+}
+
+/**
+ * CMP:
+ * Group
+ */
+.Group--mode-plain .Group__inner > .Tabs--mode-default:first-child {
+  margin-top: -8px;
+}
+
+.Group--mode-card > .Group__inner > .Tabs--mode-default:first-child {
+  margin-top: -4px;
+}
+
+.Tabs--mode-default,
+.Tabs--mode-default .HorizontalScroll__in-wrapper {
+  justify-content: center;
+}
+
+.Tabs--buttons,
+.Tabs--mode-default .HorizontalScroll__in-wrapper {
+  justify-content: flex-start;
+}
+
+.Tabs--sizeX-compact.Tabs--buttons .HorizontalScroll__in-wrapper::after,
+.Tabs--sizeX-compact.Tabs--buttons .HorizontalScroll__in-wrapper::before {
+  display: block;
+  width: 8px;
+  flex-shrink: 0;
+  height: 1px;
+  content: "";
+}
+
+@media (--sizeX-compact) {
+  .Tabs--sizeX-none.Tabs--buttons .HorizontalScroll__in-wrapper::after,
+  .Tabs--sizeX-none.Tabs--buttons .HorizontalScroll__in-wrapper::before {
+    display: block;
+    width: 8px;
+    flex-shrink: 0;
+    height: 1px;
+    content: "";
+  }
+}
+
+/* Нужно для закрашивания прозрачной области нижнего инсета на iphone x */
+.FixedLayout--ios.FixedLayout--vertical-bottom .Tabs::after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  content: "";
+  background: var(--vkui--color_background_content);
+}
+
+.FixedLayout--ios.FixedLayout--vertical-bottom .Tabs__in,
+.FixedLayout--ios.FixedLayout--vertical-bottom .Separator {
+  position: relative;
+  z-index: 2;
+}
+
+/**
+ * Counter inside TabsItem
+ */
+
+.TabsItem .Counter {
+  margin-left: 8px;
+}
+
+/*
+ * CMP:
+ * Group
+ */
+.Group--mode-plain .Group__inner > .Tabs--mode-default:first-child {
+  margin-top: -8px;
+}
+
+.Group--mode-card > .Group__inner > .Tabs--mode-default:first-child {
+  margin-top: -4px;
+}
+
+.Tabs--mode-accent,
+.Tabs--mode-secondary,
+.Tabs--vkcom {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
+}

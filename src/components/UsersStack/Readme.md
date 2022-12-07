@@ -19,7 +19,7 @@
       <Div>
         <UsersStack
           photos={[getAvatarUrl("user_manzuk"), getAvatarUrl("user_ji")]}
-          size="m"
+          size="l"
         >
           Настя и Jean пойдут на это мероприятие
         </UsersStack>
@@ -34,7 +34,7 @@
             getAvatarUrl("user_vitalyavolyn"),
             getAvatarUrl("user_eee"),
           ]}
-          size="xs"
+          size="s"
         >
           Иван и ещё 2 ваших друга подписаны
         </UsersStack>
@@ -52,7 +52,7 @@
             getAvatarUrl("user_arthurstam"),
             getAvatarUrl("user_xyz"),
           ]}
-          size="m"
+          size="l"
           layout="vertical"
         >
           Алексей, Илья, Михаил

@@ -11,5 +11,5 @@ e2e-results.json
 __diff_output__
 .cache
 styleguide-build/
-src/styles/generated
+src/styles/customMedias.generated.css
 .github/**/*.md

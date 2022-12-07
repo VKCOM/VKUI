@@ -1,14 +1,13 @@
 import * as React from "react";
 import { AppearanceType } from "@vkontakte/vk-bridge";
-import { AppearanceProviderContext } from "./AppearanceProviderContext";
-import { getScheme } from "../../helpers/getScheme";
 import { classNamesString } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { Platform } from "../../lib/platform";
+import { ConfigProviderOverride } from "../ConfigProvider/ConfigProviderOverride";
 
 export interface AppearanceProviderProps {
-  appearance?: AppearanceType;
-  children?: React.ReactNode;
+  appearance: AppearanceType;
+  children: React.ReactNode;
 }
 
 export const generateVKUITokensClassName = (
@@ -37,29 +36,24 @@ export const generateVKUITokensClassName = (
  * @see https://vkcom.github.io/VKUI/#/AppearanceProvider
  */
 export const AppearanceProvider = ({
+  appearance,
   children,
-  appearance = "light",
 }: AppearanceProviderProps) => {
   const platform = usePlatform();
-  const scheme = getScheme({
-    platform,
-    appearance,
-  });
 
   return (
-    <AppearanceProviderContext.Provider value={appearance}>
+    <ConfigProviderOverride appearance={appearance}>
       {React.Children.map(children, (child) => {
-        if (React.isValidElement(child)) {
+        if (React.isValidElement<{ className?: string }>(child)) {
           return React.cloneElement(child, {
             className: classNamesString(
               child.props.className,
-              `vkui${scheme}`,
               generateVKUITokensClassName(platform, appearance)
             ),
           });
         }
         return child;
       })}
-    </AppearanceProviderContext.Provider>
+    </ConfigProviderOverride>
   );
 };

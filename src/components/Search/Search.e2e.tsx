@@ -1,4 +1,6 @@
+import * as React from "react";
 import { Search } from "./Search";
+import { Platform } from "../../lib/platform";
 import {
   screenshot,
   mount,
@@ -6,12 +8,11 @@ import {
   customSnapshotIdentifier,
   APPEARANCE,
 } from "../../testing/e2e";
-import { IOS } from "../../lib/platform";
 import { Icon16Add } from "@vkontakte/icons";
 import { AppRoot } from "../AppRoot/AppRoot";
 import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import { SizeType } from "../../hoc/withAdaptivity";
+import { BREAKPOINTS, SizeType } from "../../lib/adaptivity";
 
 describe("Search", () => {
   describeScreenshotFuzz(
@@ -30,12 +31,20 @@ describe("Search", () => {
   );
   it("shows after when focused on iOS", async () => {
     await mount(
-      <ConfigProvider platform={IOS} appearance={APPEARANCE}>
-        <AppRoot embedded>
-          <AdaptivityProvider sizeY={SizeType.REGULAR}>
-            <Search after="after" style={{ maxWidth: "320px" }} />
-          </AdaptivityProvider>
-        </AppRoot>
+      <ConfigProvider platform={Platform.IOS} appearance={APPEARANCE}>
+        <div
+          style={{
+            height: "auto",
+            position: "absolute",
+            width: BREAKPOINTS.MOBILE,
+          }}
+        >
+          <AppRoot mode="embedded" className="vkuiTestWrapper">
+            <AdaptivityProvider sizeY={SizeType.REGULAR}>
+              <Search after="after" />
+            </AdaptivityProvider>
+          </AppRoot>
+        </div>
       </ConfigProvider>
     );
     await page.focus("input");

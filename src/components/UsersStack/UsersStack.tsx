@@ -1,10 +1,10 @@
 import * as React from "react";
 import { hasReactNode } from "../../lib/utils";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Footnote } from "../Typography/Footnote/Footnote";
 import { Caption } from "../Typography/Caption/Caption";
 import { useId } from "../../hooks/useId";
-import "./UsersStack.css";
+import styles from "./UsersStack.module.css";
 
 export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -14,7 +14,7 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Размер аватарок
    */
-  size?: "xs" | "s" | "m"; // TODO: "s" | "m" | "l"
+  size?: "s" | "m" | "l";
   /**
    * Вертикальный режим рекомендуется использовать с размером `m`
    */
@@ -36,6 +36,8 @@ interface PathElementProps extends React.SVGAttributes<SVGElement> {
   photoSize: number;
   direction: "circle" | "right" | "left";
 }
+
+type PhotoSizeType = 16 | 24 | 32;
 
 function PathElement({ photoSize, direction, ...props }: PathElementProps) {
   switch (direction) {
@@ -91,6 +93,15 @@ function PathElement({ photoSize, direction, ...props }: PathElementProps) {
   }
 }
 
+const photoSizes: Record<
+  NonNullable<UsersStackProps["size"]>,
+  PhotoSizeType
+> = {
+  s: 16,
+  m: 24,
+  l: 32,
+};
+
 /**
  * @see https://vkcom.github.io/VKUI/#/UsersStack
  */
@@ -98,21 +109,18 @@ export const UsersStack = ({
   photos = [],
   visibleCount = 3,
   count = Math.max(0, photos.length - visibleCount),
-  size = "s",
+  size = "m",
   layout = "horizontal",
   children,
+  className,
   ...restProps
 }: UsersStackProps) => {
   const cmpId = useId();
 
-  const canShowOthers = count > 0 && size !== "xs";
+  const canShowOthers = count > 0 && size !== "s";
   const CounterTypography = size === "m" ? Footnote : Caption;
 
-  const photoSize = {
-    xs: 16,
-    s: 24,
-    m: 32,
-  }[size];
+  const photoSize = photoSizes[size];
   const directionClip = canShowOthers ? "right" : "left";
 
   const photosElements = photos.slice(0, visibleCount).map((photo, i) => {
@@ -125,7 +133,7 @@ export const UsersStack = ({
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        vkuiClass="UsersStack__photo"
+        className={styles["UsersStack__photo"]}
         key={i}
         aria-hidden
       >
@@ -136,7 +144,7 @@ export const UsersStack = ({
           <use href={hrefID} />
         </clipPath>
         <g clipPath={`url(#${maskID})`}>
-          <use href={hrefID} vkuiClass="UsersStack__fill" />
+          <use href={hrefID} className={styles["UsersStack__fill"]} />
           <image href={photo} width={photoSize} height={photoSize} />
           <use href={hrefID} fill="none" stroke="rgba(0, 0, 0, 0.08)" />
         </g>
@@ -147,9 +155,10 @@ export const UsersStack = ({
     <CounterTypography
       caps
       weight="1"
-      level="2" // TODO: remove only level in #2343
-      vkuiClass="UsersStack__photo UsersStack__photo--others"
-      aria-hidden
+      className={classNamesString(
+        styles["UsersStack__photo"],
+        styles["UsersStack__photo--others"]
+      )}
     >
       <span>+{count}</span>
     </CounterTypography>
@@ -158,21 +167,22 @@ export const UsersStack = ({
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(
-        "UsersStack",
-        `UsersStack--size-${size}`,
-        `UsersStack--l-${layout}`,
-        canShowOthers && "UsersStack--others"
+      className={classNamesString(
+        styles["UsersStack"],
+        styles[`UsersStack--size-${size}`],
+        styles[`UsersStack--layout-${layout}`],
+        canShowOthers && styles["UsersStack--others"],
+        className
       )}
     >
       {(photosElements.length > 0 || othersElement) && (
-        <div vkuiClass="UsersStack__photos" role="presentation">
+        <div className={styles["UsersStack__photos"]} role="presentation">
           {photosElements}
           {othersElement}
         </div>
       )}
       {hasReactNode(children) && (
-        <Footnote vkuiClass="UsersStack__text">{children}</Footnote>
+        <Footnote className={styles["UsersStack__text"]}>{children}</Footnote>
       )}
     </div>
   );

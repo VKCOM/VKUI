@@ -17,14 +17,15 @@ function MiniInfoCellExample() {
         header={
           <ModalPageHeader
             before={
-              (platform === ANDROID || platform === VKCOM) && (
+              (platform === Platform.ANDROID ||
+                platform === Platform.VKCOM) && (
                 <PanelHeaderButton onClick={closeModal}>
                   <Icon24Cancel />
                 </PanelHeaderButton>
               )
             }
             after={
-              platform === IOS && (
+              platform === Platform.IOS && (
                 <PanelHeaderButton onClick={closeModal}>
                   <Icon24Dismiss />
                 </PanelHeaderButton>
@@ -112,6 +113,7 @@ function MiniInfoCellExample() {
               </MiniInfoCell>
 
               <MiniInfoCell
+                mode="accent"
                 before={<Icon20WorkOutline />}
                 after={
                   <Avatar
@@ -127,6 +129,8 @@ function MiniInfoCellExample() {
                 before={<Icon20WorkOutline />}
                 mode="add"
                 onClick={() => console.log("Указать место учёбы")}
+                textWrap="short"
+                expandable
               >
                 Укажите место учёбы
               </MiniInfoCell>
@@ -135,6 +139,7 @@ function MiniInfoCellExample() {
                 before={<Icon20Info />}
                 mode="more"
                 onClick={handleExtendedInfoClick}
+                expandable
               >
                 Подробная информация
               </MiniInfoCell>

@@ -1,16 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  MOBILE_SIZE,
-  TABLET_SIZE,
-} from "@vkui/components/AdaptivityProvider/AdaptivityProvider";
+import { BREAKPOINTS } from "@vkui/lib/adaptivity";
 import { SMALL_HEIGHT } from "../Settings/ViewHeightSelect";
 import {
-  VKCOM,
   AppRoot,
-  AdaptivityProvider,
-  withAdaptivity,
   ConfigProvider,
-  ViewWidth,
   WebviewType,
   Platform,
   Appearance,
@@ -18,12 +11,13 @@ import {
 import "./StyleGuideRenderer.css";
 import { StyleGuideMobile } from "./StyleGuideMobile";
 import { StyleGuideDesktop } from "./StyleGuideDesktop";
+import { useViewPortSize } from "../../utils";
 
 let initialState = {
   platform: Platform.ANDROID,
-  width: MOBILE_SIZE,
+  width: BREAKPOINTS.MOBILE,
   height: SMALL_HEIGHT,
-  hasMouse: true,
+  hasPointer: true,
   appearance: Appearance.LIGHT,
   styleguideAppearance: Appearance.LIGHT,
   webviewType: WebviewType.VKAPPS,
@@ -44,11 +38,19 @@ try {
 
 export const StyleGuideContext = React.createContext(initialState);
 
-let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
+let StyleGuideRenderer = ({ children, toc }) => {
   const [state, setState] = useState(initialState);
   const [popout, setPopout] = useState(null);
-  const { width, height, platform, scheme, hasMouse, styleguideAppearance } =
-    state;
+  const {
+    width,
+    height,
+    platform,
+    appearance,
+    hasPointer,
+    styleguideAppearance,
+  } = state;
+
+  const { viewWidth } = useViewPortSize();
 
   const setContext = useCallback(
     (data) => {
@@ -60,8 +62,8 @@ let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
   );
 
   useEffect(() => {
-    if (platform === VKCOM) {
-      setContext({ hasMouse: true, width: TABLET_SIZE });
+    if (platform === Platform.VKCOM) {
+      setContext({ hasPointer: true, width: BREAKPOINTS.TABLET });
     }
   }, [platform]);
 
@@ -78,11 +80,13 @@ let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
 
   const providerValue = useMemo(
     () => ({ ...state, setContext, setPopout }),
-    [width, height, platform, scheme, hasMouse, setContext, setPopout]
+    [width, height, platform, appearance, hasPointer, setContext, setPopout]
   );
 
   const Component =
-    viewWidth > ViewWidth.MOBILE ? StyleGuideDesktop : StyleGuideMobile;
+    viewWidth >= BREAKPOINTS.SMALL_TABLET
+      ? StyleGuideDesktop
+      : StyleGuideMobile;
 
   return (
     <StyleGuideContext.Provider value={providerValue}>
@@ -92,7 +96,7 @@ let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
         transitionMotionEnabled={false}
         webviewType="internal"
       >
-        <AppRoot noLegacyClasses>
+        <AppRoot>
           <Component
             toc={toc}
             popout={popout}
@@ -106,17 +110,4 @@ let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
   );
 };
 
-StyleGuideRenderer = withAdaptivity(StyleGuideRenderer, {
-  sizeX: true,
-  viewWidth: true,
-});
-
-const StyleGuideWrapper = (props) => {
-  return (
-    <AdaptivityProvider>
-      <StyleGuideRenderer {...props} />
-    </AdaptivityProvider>
-  );
-};
-
-export default StyleGuideWrapper;
+export default StyleGuideRenderer;

@@ -1,5 +1,6 @@
-import { Fragment } from "react";
-import { Avatar } from "../Avatar/Avatar";
+import * as React from "react";
+import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
+import { Image } from "../Image/Image";
 import { Banner, BannerProps } from "./Banner";
 import { Button } from "../Button/Button";
 import { describeScreenshotFuzz } from "../../testing/e2e";
@@ -8,7 +9,7 @@ describe("Banner", () => {
   describeScreenshotFuzz(
     (props: BannerProps) => (
       <Banner
-        before={<Avatar size={96} mode="image" src="" />}
+        before={<Image size={96} src="" />}
         header="Баста в Ледовом"
         subheader="Большой концерт"
         asideMode="dismiss"
@@ -27,12 +28,10 @@ describe("Banner", () => {
         before: [undefined],
         actions: [
           undefined,
-          <Fragment key="fragment">
-            <Button mode="primary">Подробнее</Button>
-            <Button mode="tertiary" hasHover={false}>
-              Напомнить позже
-            </Button>
-          </Fragment>,
+          <ButtonGroup mode="vertical" gap="m" key="fragment">
+            <Button mode="primary">Попробовать сейчас</Button>
+            <Button mode="secondary">Напомнить позже</Button>
+          </ButtonGroup>,
         ],
       },
       {
@@ -46,7 +45,7 @@ describe("Banner", () => {
         before: [undefined],
         asideMode: [undefined],
         actions: [
-          <Button key="btn" mode="overlay_primary">
+          <Button key="btn" appearance="overlay">
             Подробнее
           </Button>,
         ],

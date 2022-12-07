@@ -1,6 +1,6 @@
 import * as React from "react";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { ChipOption, ChipValue, RenderChip } from "../Chip/Chip";
 import { ChipsInputProps } from "../ChipsInput/ChipsInput";
 import {
@@ -14,8 +14,7 @@ import {
 import { useChipsSelect } from "../../hooks/useChipsSelect";
 import { noop } from "../../lib/utils";
 import { useDOM } from "../../lib/dom";
-import { Caption } from "../Typography/Caption/Caption";
-import { prefixClass } from "../../lib/prefixClass";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { defaultFilterFn } from "../../lib/select";
@@ -23,7 +22,7 @@ import { Placement } from "../Popper/Popper";
 import { CustomSelectDropdown } from "../CustomSelectDropdown/CustomSelectDropdown";
 import { FormField } from "../FormField/FormField";
 import { IconButton } from "../IconButton/IconButton";
-import "./ChipsSelect.css";
+import styles from "./ChipsSelect.module.css";
 
 export interface ChipsSelectProps<Option extends ChipOption>
   extends Omit<ChipsInputProps<Option>, "after"> {
@@ -91,8 +90,8 @@ const chipsSelectDefaultProps: ChipsSelectProps<any> = {
   closeAfterSelect: true,
   options: [],
   filterFn: defaultFilterFn,
-  renderOption({ option, ...restProps }) {
-    return <CustomSelectOption {...restProps} />;
+  renderOption(props) {
+    return <CustomSelectOption {...props} />;
   },
 };
 
@@ -363,28 +362,33 @@ export const ChipsSelect = <Option extends ChipOption>(
 
   return (
     <FormField
-      vkuiClass={classNames(
-        "ChipsSelect",
-        opened && "Select--open",
-        opened && (isPopperDirectionTop ? "Select--pop-up" : "Select--pop-down")
-      )}
       getRootRef={rootRef}
       style={style}
-      className={className}
+      className={classNamesString(
+        styles["ChipsSelect"],
+        opened &&
+          (isPopperDirectionTop
+            ? styles["ChipsSelect--pop-up"]
+            : styles["ChipsSelect--pop-down"]),
+        className
+      )}
       disabled={disabled}
       role="application"
       aria-disabled={disabled}
       aria-readonly={restProps.readOnly}
       after={
         <IconButton
-          vkuiClass="ChipsSelect__dropdown"
+          className={styles["ChipsSelect__dropdown"]}
           activeMode=""
           hoverMode=""
           // TODO: add label customization
           aria-label={opened ? "Скрыть" : "Развернуть"}
           onClick={toggleOpened}
         >
-          <DropdownIcon vkuiClass="ChipsSelect__icon" opened={opened} />
+          <DropdownIcon
+            className={styles["ChipsSelect__icon"]}
+            opened={opened}
+          />
         </IconButton>
       }
       before={before}
@@ -414,7 +418,7 @@ export const ChipsSelect = <Option extends ChipOption>(
           onPlacementChange={onPlacementChange}
           onMouseLeave={onDropdownMouseLeave}
           fetching={fetching}
-          vkuiClass="ChipsSelect__options"
+          className={styles["ChipsSelect__options"]}
           sameWidth={fixDropdownWidth}
           forcePortal={forceDropdownPortal}
         >
@@ -428,7 +432,9 @@ export const ChipsSelect = <Option extends ChipOption>(
             </CustomSelectOption>
           )}
           {!filteredOptions?.length && !showCreatable && emptyText ? (
-            <Caption vkuiClass="ChipsSelect__empty">{emptyText}</Caption>
+            <Footnote className={styles["ChipsSelect__empty"]}>
+              {emptyText}
+            </Footnote>
           ) : (
             filteredOptions.map((option: Option, index: number) => {
               const label = getOptionLabel!(option);
@@ -447,7 +453,7 @@ export const ChipsSelect = <Option extends ChipOption>(
               return (
                 <React.Fragment key={`${typeof value}-${value}`}>
                   {renderOption!({
-                    className: prefixClass("ChipsSelect__option"),
+                    className: styles["ChipsSelect__option"],
                     option,
                     hovered: Boolean(hovered),
                     children: label,

@@ -18,22 +18,29 @@ const Example = () => {
   const [addAfter, setAddAfter] = useState(false);
   const [addText, setAddText] = useState(true);
   const [hasLink, setHasLink] = useState(false);
+  const platform = usePlatform();
+
+  React.useEffect(() => {
+    if (platform === Platform.VKCOM) {
+      setSizeY("compact");
+    }
+  }, [platform]);
 
   const buttonBefore =
     addBefore &&
     (size === "s" ? (
-      <Icon12Add aria-hidden />
+      <Icon12Add />
     ) : size === "m" ? (
-      <Icon16Add aria-hidden />
+      <Icon16Add />
     ) : (
-      <Icon24Add aria-hidden />
+      <Icon24Add />
     ));
   const buttonAfter =
     addAfter &&
     (size === "s" ? (
-      <Icon12Tag aria-hidden />
+      <Icon12Tag />
     ) : size === "m" ? (
-      <Icon24ChevronCompactRight aria-hidden />
+      <Icon24ChevronCompactRight />
     ) : (
       <Counter>16</Counter>
     ));
@@ -49,24 +56,26 @@ const Example = () => {
             ...containerStyles,
           }}
         >
-          {["primary", "secondary", "tertiary", "outline"].map((mode) => (
-            <Div>
-              <Button
-                align={align}
-                href={buttonLink}
-                before={buttonBefore}
-                after={buttonAfter}
-                appearance={appearance}
-                stretched={stretched}
-                mode={mode}
-                disabled={disabled}
-                size={size}
-                loading={loading}
-              >
-                {buttonText}
-              </Button>
-            </Div>
-          ))}
+          {["primary", "secondary", "tertiary", "outline", "link"].map(
+            (mode) => (
+              <Div>
+                <Button
+                  align={align}
+                  href={buttonLink}
+                  before={buttonBefore}
+                  after={buttonAfter}
+                  appearance={appearance}
+                  stretched={stretched}
+                  mode={mode}
+                  disabled={disabled}
+                  size={size}
+                  loading={loading}
+                >
+                  {buttonText}
+                </Button>
+              </Div>
+            )
+          )}
         </div>
       </AdaptivityProvider>
       <div style={{ minWidth: 200 }}>
@@ -80,6 +89,7 @@ const Example = () => {
               { label: "negative", value: "negative" },
               { label: "neutral", value: "neutral" },
               { label: "overlay", value: "overlay" },
+              { label: "accent-invariable", value: "accent-invariable" },
             ]}
           />
         </FormItem>
@@ -111,7 +121,11 @@ const Example = () => {
             onChange={(e) => setSizeY(e.target.value)}
             options={[
               { label: "compact", value: "compact" },
-              { label: "regular", value: "regular" },
+              {
+                label: "regular",
+                value: "regular",
+                disabled: platform === Platform.VKCOM,
+              },
             ]}
           />
         </FormItem>

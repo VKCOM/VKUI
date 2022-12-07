@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
+    // см. `./src/shared/breakpoints.js`
+    "allowJs": true,
     "jsx": "react",
-    "jsxFactory": "createScopedElement",
     "target": "esnext",
     "lib": ["es6", "dom", "dom.Iterable"],
     "outDir": "dist",
@@ -16,6 +17,15 @@
     "strict": true,
     "skipLibCheck": true,
     "baseUrl": "src",
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+        "options": {
+          "classnameTransform": "asIs",
+          "customMatcher": "\\.module\\.css$"
+        }
+      }
+    ],
     "paths": {
       "@react-playwright": ["../e2e"]
     }
@@ -26,17 +36,10 @@
     "e2e/**/*.ts",
     "e2e/**/*.tsx",
     "e2e/**/*.js",
-    "tasks/**/*.js",
     ".github/**/*.js",
-    "eslint-plugin-vkui/*.js",
-    "postcss-plugin-vk-sans/*.js",
-    "postcss-custom-properties-fallback/*.js",
+    "packages/**/*.js",
     "*.js"
   ],
-  "files": [
-    "node_modules/jest-playwright-preset/types/global.d.ts",
-    "node_modules/expect-playwright/global.d.ts",
-    "src/lib/jsxRuntime.d.ts",
-    "types/global.d.ts"
-  ]
+  "exclude": ["packages/token-translator/**/*"],
+  "files": ["types/global.d.ts", "types/env.d.ts"]
 }

@@ -1,7 +1,7 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import type { HasRootRef, AlignType } from "../../types";
-import "./ButtonGroup.css";
+import styles from "./ButtonGroup.module.css";
 
 export interface ButtonGroupProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -35,17 +35,19 @@ export const ButtonGroup = ({
   stretched = false,
   align = "left" /* NOTE: Чтобы блоки по-умолчанию не растягивались на всю ширину контейнера */,
   getRootRef,
+  className,
   children,
   ...restProps
 }: ButtonGroupProps) => {
   return (
     <div
-      vkuiClass={classNames(
-        "ButtonGroup",
-        `ButtonGroup--mode-${mode}`,
-        gap !== "none" && `ButtonGroup--gap-${gap}`,
-        stretched && "ButtonGroup--stretched",
-        `ButtonGroup--align-${align}`
+      className={classNamesString(
+        className,
+        styles.ButtonGroup,
+        styles[`ButtonGroup--mode-${mode}`],
+        gap !== "none" && styles[`ButtonGroup--gap-${gap}`],
+        stretched && styles["ButtonGroup--stretched"],
+        align && styles[`ButtonGroup--align-${align}`]
       )}
       role="group"
       ref={getRootRef}

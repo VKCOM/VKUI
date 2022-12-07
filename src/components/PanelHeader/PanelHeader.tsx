@@ -1,42 +1,30 @@
 import * as React from "react";
 import { usePlatform } from "../../hooks/usePlatform";
-import { getClassName } from "../../helpers/getClassName";
-import { classNames } from "../../lib/classNames";
-import { warnOnce } from "../../lib/warnOnce";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import { classNamesString } from "../../lib/classNames";
 import { FixedLayout } from "../FixedLayout/FixedLayout";
 import { Separator } from "../Separator/Separator";
-import { Platform, VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { HasRef, HasRootRef } from "../../types";
 import {
-  ConfigProviderContext,
+  useConfigProvider,
   WebviewType,
 } from "../ConfigProvider/ConfigProviderContext";
-import {
-  AdaptivityProps,
-  SizeType,
-  withAdaptivity,
-} from "../../hoc/withAdaptivity";
 import { Text } from "../Typography/Text/Text";
 import { TooltipContainer } from "../Tooltip/TooltipContainer";
 import { ModalRootContext } from "../ModalRoot/ModalRootContext";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { useAdaptivityConditionalRender } from "../../hooks/useAdaptivityConditionalRender";
 import { Spacing } from "../Spacing/Spacing";
-import "./PanelHeader.css";
+import styles from "./PanelHeader.module.css";
 
 export interface PanelHeaderProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRef<HTMLDivElement>,
-    HasRootRef<HTMLDivElement>,
-    AdaptivityProps {
+    HasRootRef<HTMLDivElement> {
   before?: React.ReactNode;
-  /**
-   * @deprecated Будет удалено в 5.0.0. Используйте `before`
-   */
-  left?: React.ReactNode;
   after?: React.ReactNode;
-  /**
-   * @deprecated Будет удалено в 5.0.0. Используйте `after`
-   */
-  right?: React.ReactNode;
   separator?: boolean;
   transparent?: boolean;
   shadow?: boolean;
@@ -56,119 +44,102 @@ const PanelHeaderIn = ({
   separator,
   children,
 }: PanelHeaderProps) => {
-  const { webviewType } = React.useContext(ConfigProviderContext);
+  const { webviewType } = useConfigProvider();
   const { isInsideModal } = React.useContext(ModalRootContext);
   const platform = usePlatform();
 
   return (
     <React.Fragment>
-      <TooltipContainer fixed vkuiClass="PanelHeader__in">
-        <div vkuiClass="PanelHeader__before">{before}</div>
-        <div vkuiClass="PanelHeader__content">
-          {platform === VKCOM ? (
+      <TooltipContainer fixed className={styles["PanelHeader__in"]}>
+        <div className={styles["PanelHeader__before"]}>{before}</div>
+        <div className={styles["PanelHeader__content"]}>
+          {platform === Platform.VKCOM ? (
             <Text weight="2">{children}</Text>
           ) : (
-            <span vkuiClass="PanelHeader__content-in">{children}</span>
+            <span className={styles["PanelHeader__content-in"]}>
+              {children}
+            </span>
           )}
         </div>
-        <div vkuiClass="PanelHeader__after">
+        <div className={styles["PanelHeader__after"]}>
           {(webviewType === WebviewType.INTERNAL || isInsideModal) && after}
         </div>
       </TooltipContainer>
-      {separator && platform === VKCOM && <Separator wide />}
+      {separator && platform === Platform.VKCOM && <Separator wide />}
     </React.Fragment>
-  );
-};
-
-const warn = warnOnce("PanelHeader");
-const PanelHeaderComponent = ({
-  // TODO: поправить перед 5.0.0
-  before: propsBefore,
-  left,
-  after: propsAfter,
-  right,
-  // /end TODO
-  children,
-  separator = true,
-  visor = true,
-  transparent = false,
-  shadow,
-  getRef,
-  getRootRef,
-  sizeX,
-  sizeY,
-  fixed,
-  ...restProps
-}: PanelHeaderProps) => {
-  const platform = usePlatform();
-  const { webviewType } = React.useContext(ConfigProviderContext);
-  const { isInsideModal } = React.useContext(ModalRootContext);
-  const needShadow = shadow && sizeX === SizeType.REGULAR;
-  let isFixed = fixed !== undefined ? fixed : platform !== Platform.VKCOM;
-
-  // TODO: удалить перед 5.0.0
-  const before = propsBefore ?? left;
-  const after = propsAfter ?? right;
-
-  if (process.env.NODE_ENV === "development") {
-    right &&
-      warn(
-        "Свойство right устарелo и будет удалено в 5.0.0. Используйте after."
-      );
-    left &&
-      warn(
-        "Свойство left устарелo и будет удалено в 5.0.0. Используйте before."
-      );
-  }
-  // /end TODO
-
-  const innerProps = { before, after, separator, children };
-
-  return (
-    <div
-      {...restProps}
-      vkuiClass={classNames(
-        getClassName("PanelHeader", platform),
-        transparent && "PanelHeader--trnsp",
-        needShadow && "PanelHeader--shadow",
-        visor && "PanelHeader--vis",
-        separator && visor && "PanelHeader--sep",
-        webviewType === WebviewType.VKAPPS &&
-          !isInsideModal &&
-          "PanelHeader--vkapps",
-        !before && "PanelHeader--no-before",
-        !after && "PanelHeader--no-after",
-        isFixed && "PanelHeader--fixed",
-        // TODO v5.0.0 поправить под новую адаптивность
-        `PanelHeader--sizeX-${sizeX}`
-      )}
-      ref={isFixed ? getRootRef : getRef}
-    >
-      {isFixed ? (
-        <FixedLayout
-          vkuiClass="PanelHeader__fixed"
-          vertical="top"
-          getRootRef={getRef}
-        >
-          <PanelHeaderIn {...innerProps} />
-        </FixedLayout>
-      ) : (
-        <PanelHeaderIn {...innerProps} />
-      )}
-      {separator &&
-        visor &&
-        platform !== VKCOM &&
-        (sizeX === SizeType.REGULAR ? <Spacing size={16} /> : <Separator />)}
-    </div>
   );
 };
 
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeader
  */
-export const PanelHeader = withAdaptivity(PanelHeaderComponent, {
-  sizeX: true,
-  sizeY: true,
-});
+export const PanelHeader = ({
+  before,
+  children,
+  after,
+  separator = true,
+  visor = true,
+  transparent = false,
+  shadow,
+  getRef,
+  getRootRef,
+  fixed,
+  className,
+  ...restProps
+}: PanelHeaderProps) => {
+  const platform = usePlatform();
+  const { webviewType } = useConfigProvider();
+  const { isInsideModal } = React.useContext(ModalRootContext);
+  const { sizeX } = useAdaptivity();
+  const { sizeX: adaptiveSizeX } = useAdaptivityConditionalRender();
+  let isFixed = fixed !== undefined ? fixed : platform !== Platform.VKCOM;
 
-PanelHeader.displayName = "PanelHeader";
+  return (
+    <div
+      {...restProps}
+      className={classNamesString(
+        styles["PanelHeader"],
+        getPlatformClassName(styles["PanelHeader"], platform),
+        transparent && styles["PanelHeader--trnsp"],
+        shadow && styles["PanelHeader--shadow"],
+        visor && styles["PanelHeader--vis"],
+        separator && visor && styles["PanelHeader--sep"],
+        webviewType === WebviewType.VKAPPS &&
+          !isInsideModal &&
+          styles["PanelHeader--vkapps"],
+        !before && styles["PanelHeader--no-before"],
+        !after && styles["PanelHeader--no-after"],
+        isFixed && styles["PanelHeader--fixed"],
+        getSizeXClassName(styles["PanelHeader"], sizeX),
+        className
+      )}
+      ref={isFixed ? getRootRef : getRef}
+    >
+      {isFixed ? (
+        <FixedLayout
+          className={styles["PanelHeader__fixed"]}
+          vertical="top"
+          getRootRef={getRef}
+        >
+          <PanelHeaderIn before={before} after={after} separator={separator}>
+            {children}
+          </PanelHeaderIn>
+        </FixedLayout>
+      ) : (
+        <PanelHeaderIn before={before} after={after} separator={separator}>
+          {children}
+        </PanelHeaderIn>
+      )}
+      {separator && visor && platform !== Platform.VKCOM && (
+        <React.Fragment>
+          {adaptiveSizeX.compact && (
+            <Separator className={adaptiveSizeX.compact.className} />
+          )}
+          {adaptiveSizeX.regular && (
+            <Spacing className={adaptiveSizeX.regular.className} size={16} />
+          )}
+        </React.Fragment>
+      )}
+    </div>
+  );
+};

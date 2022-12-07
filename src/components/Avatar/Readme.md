@@ -1,577 +1,279 @@
-Надстройка над `<img />`. Компонент принимает все валидные для этого элемента свойства.
+> Надстройка над `<img />`. Компонент принимает все валидные для этого элемента свойства.
+
+## Инициалы и градиенты
+
+- Для лучшего отображения, используйте длину текста <b>не более 2 символов</b>.
+- Для динамического определения градиента под пользователя используйте функцию
+  [`calcInitialsAvatarColor`](https://vkcom.github.io/VKUI/#/Utils). Генерирует по формуле `user_id % 6 + 1`. Например,
+  у пользователя с `user_id` 106 будет 5-й (`l-blue`) цвет градиента.
 
 ```jsx
-<View activePanel="avatar">
-  <Panel id="avatar">
-    <PanelHeader>Avatar</PanelHeader>
+const Default = () => {
+  return (
     <Group>
-      <Header mode="secondary">Дефолтный размер</Header>
-      <SimpleCell
-        subtitle="VKontakte"
-        before={<Avatar src={getAvatarUrl("user_arthurstam")} />}
-      >
-        Артур Стамбульцян
+      <Header mode="secondary">По умолчанию</Header>
+      <SimpleCell before={<Avatar src={getAvatarUrl("user_id34")} />}>
+        Татьяна Плуталова
       </SimpleCell>
     </Group>
-    <Group>
-      <Header mode="secondary">RichCell</Header>
-      <RichCell
-        disabled
-        before={<Avatar size={72} src={getAvatarUrl("user_ilyagrshn")} />}
-        caption="Команда ВКонтакте, Санкт-Петербург"
-        bottom={
-          <UsersStack
-            photos={[
-              getAvatarUrl("user_ox"),
-              getAvatarUrl("user_vitalyavolyn"),
-              getAvatarUrl("user_eee"),
-            ]}
-          >
-            73 общих друга
-          </UsersStack>
-        }
-        actions={
-          <React.Fragment>
-            <Button>Добавить</Button>
-            <Button mode="secondary">Скрыть</Button>
-          </React.Fragment>
-        }
-      >
-        Илья Гришин
-      </RichCell>
-    </Group>
-    <Group>
-      <Header mode="secondary">Placeholder</Header>
+  );
+};
+
+const Fallbacks = () => {
+  return (
+    <Group description="На случаи если аватарка не загрузилась или она отсутсвует">
+      <Header mode="secondary">Фолбеки</Header>
       <SimpleCell
-        before={
-          <Avatar size={48}>
-            <Icon28Users />
-          </Avatar>
-        }
+        before={<Avatar size={48} fallbackIcon={<Icon28Users />} src="#" />}
+        subtitle="Только от друзей друзей"
+      >
+        Заявки в друзья
+      </SimpleCell>
+      <SimpleCell
+        before={<Avatar size={48} src="#" initials="ИБ" gradientColor="blue" />}
         subtitle="Только от друзей друзей"
       >
         Заявки в друзья
       </SimpleCell>
     </Group>
-    <Group description="Дефолтный стиль аватарки. Используется для юзеров, групп.">
-      <Header mode="secondary">Дефолтный тип</Header>
-      <SimpleCell before={<Avatar size={32} src={getAvatarUrl("user_evg")} />}>
-        Евгений Авсиевич
-      </SimpleCell>
-      <SimpleCell before={<Avatar src={getAvatarUrl("user_id34")} />}>
-        Татьяна Плуталова
-      </SimpleCell>
-      <SimpleCell before={<Avatar src={getAvatarUrl("user_illarionov")} />}>
-        Олег Илларианов
-      </SimpleCell>
-    </Group>
-    <Group description="Значок аватарки. Используется для юзеров, групп.">
-      <Header mode="secondary">Значок</Header>
-      <div
-        style={{ display: "flex", padding: 12, gap: 8, flexFlow: "row wrap" }}
-      >
-        <Avatar
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={12} height={12} />}
-          size={24}
-        />
-        <Avatar
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={12} height={12} />}
-          size={28}
-        />
-        <Avatar
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={12} height={12} />}
-          size={32}
-        />
-        <Avatar
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={16} height={16} />}
-          size={36}
-        />
-        <Avatar
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={16} height={16} />}
-          size={40}
-        />
-        <Avatar
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={16} height={16} />}
-          size={44}
-        />
-        <Avatar
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={16} height={16} />}
-          size={48}
-        />
-        <Avatar
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed />}
-          size={56}
-        />
-        <Avatar
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed />}
-          size={64}
-        />
-        <Avatar
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={24} height={24} />}
-          size={72}
-        />
-        <Avatar
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={24} height={24} />}
-          size={80}
-        />
-        <Avatar
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={24} height={24} />}
-          size={88}
-        />
-        <Avatar
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={24} height={24} />}
-          size={96}
-        />
-      </div>
-      <div
-        style={{ display: "flex", padding: 12, gap: 8, flexFlow: "row wrap" }}
-      >
-        <Avatar src={getAvatarUrl("user_id34")} badge="online" size={24} />
-        <Avatar src={getAvatarUrl("user_id34")} badge="online" size={28} />
-        <Avatar src={getAvatarUrl("user_id34")} badge="online" size={32} />
-        <Avatar src={getAvatarUrl("user_id34")} badge="online" size={36} />
-        <Avatar src={getAvatarUrl("user_id34")} badge="online" size={40} />
-        <Avatar src={getAvatarUrl("user_id34")} badge="online" size={44} />
-        <Avatar src={getAvatarUrl("user_id34")} badge="online" size={48} />
-        <Avatar src={getAvatarUrl("user_id34")} badge="online" size={56} />
-        <Avatar src={getAvatarUrl("user_id34")} badge="online" size={64} />
-        <Avatar src={getAvatarUrl("user_id34")} badge="online" size={72} />
-        <Avatar src={getAvatarUrl("user_id34")} badge="online" size={80} />
-        <Avatar src={getAvatarUrl("user_id34")} badge="online" size={88} />
-        <Avatar src={getAvatarUrl("user_id34")} badge="online" size={96} />
-      </div>
-      <div
-        style={{ display: "flex", padding: 12, gap: 8, flexFlow: "row wrap" }}
-      >
-        <Avatar
-          src={getAvatarUrl("user_illarionov")}
-          badge="online-mobile"
-          size={24}
-        />
-        <Avatar
-          src={getAvatarUrl("user_illarionov")}
-          badge="online-mobile"
-          size={28}
-        />
-        <Avatar
-          src={getAvatarUrl("user_illarionov")}
-          badge="online-mobile"
-          size={32}
-        />
-        <Avatar
-          src={getAvatarUrl("user_illarionov")}
-          badge="online-mobile"
-          size={36}
-        />
-        <Avatar
-          src={getAvatarUrl("user_illarionov")}
-          badge="online-mobile"
-          size={40}
-        />
-        <Avatar
-          src={getAvatarUrl("user_illarionov")}
-          badge="online-mobile"
-          size={44}
-        />
-        <Avatar
-          src={getAvatarUrl("user_illarionov")}
-          badge="online-mobile"
-          size={48}
-        />
-        <Avatar
-          src={getAvatarUrl("user_illarionov")}
-          badge="online-mobile"
-          size={56}
-        />
-        <Avatar
-          src={getAvatarUrl("user_illarionov")}
-          badge="online-mobile"
-          size={64}
-        />
-        <Avatar
-          src={getAvatarUrl("user_illarionov")}
-          badge="online-mobile"
-          size={72}
-        />
-        <Avatar
-          src={getAvatarUrl("user_illarionov")}
-          badge="online-mobile"
-          size={80}
-        />
-        <Avatar
-          src={getAvatarUrl("user_illarionov")}
-          badge="online-mobile"
-          size={88}
-        />
-        <Avatar
-          src={getAvatarUrl("user_illarionov")}
-          badge="online-mobile"
-          size={96}
-        />
-      </div>
-    </Group>
+  );
+};
+
+/**
+ * Какие значения принимают параметры смотрите в разделе "Свойства и методы".
+ */
+const OthersFeatures = () => {
+  const [useInitials, setUseInisitals] = React.useState();
+  const [gradientColor, setGradientColorChange] = React.useState();
+  const [badge, setBadge] = React.useState();
+  const [overlay, setOverlay] = React.useState();
+
+  return (
     <Group>
-      <Header mode="secondary">
-        Overlay, поведение по умолчанию: если hasMouse показывается при
-        наведении, если нет показывается всегда
-      </Header>
+      <Header mode="secondary">Другие возможности</Header>
+      <AvatarPropsForm
+        onUseInisitals={setUseInisitals}
+        onGradientColorChange={setGradientColorChange}
+        onBadgeChange={setBadge}
+        onOverlayChange={setOverlay}
+      />
       <div
-        style={{ display: "flex", padding: 12, gap: 8, flexFlow: "row wrap" }}
+        style={{
+          display: "flex",
+          padding: 12,
+          gap: 8,
+          flexFlow: "row wrap",
+        }}
       >
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={16} height={16} />}
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={12} height={12} />}
-          size={24}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={18} height={18} />}
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={12} height={12} />}
-          size={28}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={20} height={20} />}
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={12} height={12} />}
-          size={32}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={20} height={20} />}
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={16} height={16} />}
-          size={36}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={20} height={20} />}
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={16} height={16} />}
-          size={40}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={24} height={24} />}
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={16} height={16} />}
-          size={44}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={24} height={24} />}
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={16} height={16} />}
-          size={48}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={28} height={28} />}
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed />}
-          size={56}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={28} height={28} />}
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed />}
-          size={64}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={28} height={28} />}
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={24} height={24} />}
-          size={72}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={28} height={28} />}
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={24} height={24} />}
-          size={80}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={28} height={28} />}
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={24} height={24} />}
-          size={88}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={32} height={32} />}
-          src={getAvatarUrl("user_evg")}
-          badge={<Icon20GiftCircleFillRed width={24} height={24} />}
-          size={96}
-        />
-      </div>
-      <Header mode="secondary">Overlay, показывается всегда</Header>
-      <div
-        style={{ display: "flex", padding: 12, gap: 8, flexFlow: "row wrap" }}
-      >
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={16} height={16} />}
-          overlayAction="always"
-          src={getAvatarUrl("user_id34")}
-          badge={<Icon20GiftCircleFillRed width={12} height={12} />}
-          size={24}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={18} height={18} />}
-          overlayAction="always"
-          src={getAvatarUrl("user_id34")}
-          badge={<Icon20GiftCircleFillRed width={12} height={12} />}
-          size={28}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={20} height={20} />}
-          overlayAction="always"
-          src={getAvatarUrl("user_id34")}
-          badge={<Icon20GiftCircleFillRed width={12} height={12} />}
-          size={32}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={20} height={20} />}
-          overlayAction="always"
-          src={getAvatarUrl("user_id34")}
-          badge={<Icon20GiftCircleFillRed width={16} height={16} />}
-          size={36}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={20} height={20} />}
-          overlayAction="always"
-          src={getAvatarUrl("user_id34")}
-          badge={<Icon20GiftCircleFillRed width={16} height={16} />}
-          size={40}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={24} height={24} />}
-          overlayAction="always"
-          src={getAvatarUrl("user_id34")}
-          badge={<Icon20GiftCircleFillRed width={16} height={16} />}
-          size={44}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={24} height={24} />}
-          overlayAction="always"
-          src={getAvatarUrl("user_id34")}
-          badge={<Icon20GiftCircleFillRed width={16} height={16} />}
-          size={48}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={28} height={28} />}
-          overlayMode="dark"
-          overlayAction="always"
-          src={getAvatarUrl("user_id34")}
-          badge={<Icon20GiftCircleFillRed />}
-          size={56}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={28} height={28} />}
-          overlayMode="dark"
-          overlayAction="always"
-          src={getAvatarUrl("user_id34")}
-          badge={<Icon20GiftCircleFillRed />}
-          size={64}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={28} height={28} />}
-          overlayMode="dark"
-          overlayAction="always"
-          src={getAvatarUrl("user_id34")}
-          badge={<Icon20GiftCircleFillRed width={24} height={24} />}
-          size={72}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={28} height={28} />}
-          overlayMode="dark"
-          overlayAction="always"
-          src={getAvatarUrl("user_id34")}
-          badge={<Icon20GiftCircleFillRed width={24} height={24} />}
-          size={80}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={28} height={28} />}
-          overlayMode="dark"
-          overlayAction="always"
-          src={getAvatarUrl("user_id34")}
-          badge={<Icon20GiftCircleFillRed width={24} height={24} />}
-          size={88}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={32} height={32} />}
-          overlayMode="dark"
-          overlayAction="always"
-          src={getAvatarUrl("user_id34")}
-          badge={<Icon20GiftCircleFillRed width={24} height={24} />}
-          size={96}
-        />
-      </div>
-      <Header mode="secondary">Overlay, показывается при наведении</Header>
-      <div
-        style={{ display: "flex", padding: 12, gap: 8, flexFlow: "row wrap" }}
-      >
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={16} height={16} />}
-          overlayMode="dark"
-          overlayAction="hover"
-          src={getAvatarUrl("user_illarionov")}
-          badge={<Icon20GiftCircleFillRed width={12} height={12} />}
-          size={24}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={18} height={18} />}
-          overlayMode="dark"
-          overlayAction="hover"
-          src={getAvatarUrl("user_illarionov")}
-          badge={<Icon20GiftCircleFillRed width={12} height={12} />}
-          size={28}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={20} height={20} />}
-          overlayMode="dark"
-          overlayAction="hover"
-          src={getAvatarUrl("user_illarionov")}
-          badge={<Icon20GiftCircleFillRed width={12} height={12} />}
-          size={32}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={20} height={20} />}
-          overlayMode="dark"
-          overlayAction="hover"
-          src={getAvatarUrl("user_illarionov")}
-          badge={<Icon20GiftCircleFillRed width={16} height={16} />}
-          size={36}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={20} height={20} />}
-          overlayMode="dark"
-          overlayAction="hover"
-          src={getAvatarUrl("user_illarionov")}
-          badge={<Icon20GiftCircleFillRed width={16} height={16} />}
-          size={40}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={24} height={24} />}
-          overlayMode="dark"
-          overlayAction="hover"
-          src={getAvatarUrl("user_illarionov")}
-          badge={<Icon20GiftCircleFillRed width={16} height={16} />}
-          size={44}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={24} height={24} />}
-          overlayMode="dark"
-          overlayAction="hover"
-          src={getAvatarUrl("user_illarionov")}
-          badge={<Icon20GiftCircleFillRed width={16} height={16} />}
-          size={48}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={28} height={28} />}
-          overlayMode="dark"
-          overlayAction="hover"
-          src={getAvatarUrl("user_illarionov")}
-          badge={<Icon20GiftCircleFillRed />}
-          size={56}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={28} height={28} />}
-          overlayMode="dark"
-          overlayAction="hover"
-          src={getAvatarUrl("user_illarionov")}
-          badge={<Icon20GiftCircleFillRed />}
-          size={64}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={28} height={28} />}
-          overlayMode="dark"
-          overlayAction="hover"
-          src={getAvatarUrl("user_illarionov")}
-          badge={<Icon20GiftCircleFillRed width={24} height={24} />}
-          size={72}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={28} height={28} />}
-          overlayMode="dark"
-          overlayAction="hover"
-          src={getAvatarUrl("user_illarionov")}
-          badge={<Icon20GiftCircleFillRed width={24} height={24} />}
-          size={80}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={28} height={28} />}
-          overlayMode="dark"
-          overlayAction="hover"
-          src={getAvatarUrl("user_illarionov")}
-          badge={<Icon20GiftCircleFillRed width={24} height={24} />}
-          size={88}
-        />
-        <Avatar
-          overlayIcon={<Icon28AddOutline width={32} height={32} />}
-          overlayMode="dark"
-          overlayAction="hover"
-          src={getAvatarUrl("user_illarionov")}
-          badge={<Icon20GiftCircleFillRed width={24} height={24} />}
-          size={96}
-        />
+        {[16, 20, 24, 28, 32, 36, 40, 44, 48, 56, 64, 72, 80, 88, 96].map(
+          (size) => (
+            <Avatar
+              key={size}
+              size={size}
+              src={useInitials ? undefined : getAvatarUrl("user_id34")}
+              gradientColor={gradientColor}
+              initials={useInitials ? "ТП" : null}
+            >
+              {size >= 24 &&
+              (badge === "online" || badge === "online-mobile") ? (
+                <Avatar.BadgeWithPreset preset={badge} />
+              ) : (
+                size >= 24 &&
+                badge && (
+                  <Avatar.Badge background={badge.background}>
+                    <IconExampleForBadgeBasedOnImageBaseSize />
+                  </Avatar.Badge>
+                )
+              )}
+              {overlay && (
+                <Avatar.Overlay {...overlay}>
+                  <IconExampleForOverlayBasedOnImageBaseSize />
+                </Avatar.Overlay>
+              )}
+            </Avatar>
+          )
+        )}
       </div>
     </Group>
-    <Group description="Аватарки для приложений. Радиус скургления зависит от значения свойства size.">
-      <Header mode="secondary">Приложения</Header>
-      <SimpleCell
-        before={<Avatar mode="app" src={getAvatarUrl("app_shorm_online")} />}
-        subtitle="Ролевая"
+  );
+};
+
+const Example = () => {
+  return (
+    <View activePanel="avatar">
+      <Panel id="avatar">
+        <PanelHeader>Avatar</PanelHeader>
+
+        <Default />
+
+        <Fallbacks />
+
+        <OthersFeatures />
+      </Panel>
+    </View>
+  );
+};
+
+const AvatarPropsForm = ({
+  onUseInisitals,
+  onGradientColorChange,
+  onBadgeChange,
+  onOverlayChange,
+}) => {
+  const DEFAULT_VALUE = "Не задано";
+
+  const [initials, setInitials] = React.useState(false);
+
+  const [gradientColor, setGradientColor] = React.useState(DEFAULT_VALUE);
+
+  const [badge, setBadge] = React.useState(DEFAULT_VALUE);
+  const [badgeBackground, setBadgeBackground] = React.useState(DEFAULT_VALUE);
+
+  const [overlay, setOverlay] = React.useState(false);
+  const [overlayTheme, setOverlayTheme] = React.useState(DEFAULT_VALUE);
+  const [overlayVisibility, setOverlayVisibility] =
+    React.useState(DEFAULT_VALUE);
+
+  React.useEffect(() => onUseInisitals(initials), [initials]);
+
+  React.useEffect(
+    () =>
+      onGradientColorChange(
+        gradientColor === DEFAULT_VALUE ? undefined : gradientColor
+      ),
+    [gradientColor]
+  );
+
+  React.useEffect(() => {
+    if (badge === DEFAULT_VALUE) {
+      onBadgeChange();
+    } else if (badge === "children") {
+      onBadgeChange({
+        background:
+          badgeBackground === DEFAULT_VALUE ? undefined : badgeBackground,
+      });
+    } else {
+      onBadgeChange(badge);
+    }
+  }, [badge, badgeBackground, onBadgeChange]);
+
+  React.useEffect(() => {
+    if (!overlay) {
+      onOverlayChange();
+    } else if (overlay) {
+      onOverlayChange({
+        theme: overlayTheme === DEFAULT_VALUE ? undefined : overlayTheme,
+        visibility:
+          overlayVisibility === DEFAULT_VALUE ? undefined : overlayVisibility,
+      });
+    }
+  }, [overlay, overlayTheme, overlayVisibility, onOverlayChange]);
+
+  return (
+    <React.Fragment>
+      <Checkbox
+        checked={initials}
+        onChange={(e) => setInitials(e.target.checked)}
       >
-        Шторм онлайн
-      </SimpleCell>
-      <SimpleCell
-        before={<Avatar mode="app" src={getAvatarUrl("app_shashki")} />}
-        subtitle="Настольная"
-        multiline={false}
+        Использовать инициалы вместо изображения
+      </Checkbox>
+
+      <FormItem
+        top="gradientColor"
+        bottom="Используйте инициалы вместо изображения, чтобы увидеть градиент"
       >
-        Шашки - 3 вида: шашки, уголки, поддавки
-      </SimpleCell>
-      <SimpleCell
-        before={<Avatar mode="app" src={getAvatarUrl("app_vega_mix")} />}
-        subtitle="Головоломка"
-      >
-        Вега Микс на даче
-      </SimpleCell>
-    </Group>
-    <Group description="Используется для остальных случаев. Например, для музыки и плейлистов.">
-      <Header mode="secondary">Обложки</Header>
-      <SimpleCell
-        before={
-          <Avatar mode="image" src={getAvatarUrl("audio_arctic_monkeys")} />
-        }
-        subtitle="Arctic Monkeys"
-        after={<Icon24MoreHorizontal fill="var(--vkui--color_icon_accent)" />}
-      >
-        I Wanna Be Yours
-      </SimpleCell>
-      <SimpleCell
-        before={<Avatar mode="image" src={getAvatarUrl("audio_leto_zveri")} />}
-        subtitle="Лето (звери)"
-        after={<Icon24MoreHorizontal fill="var(--vkui--color_icon_accent)" />}
-      >
-        6 утра
-      </SimpleCell>
-      <SimpleCell
-        before={
-          <Avatar mode="image" src={getAvatarUrl("audio_depeche_mode")} />
-        }
-        subtitle="Depeche Mode"
-        after={<Icon24MoreHorizontal fill="var(--vkui--color_icon_accent)" />}
-      >
-        Enjoy the Silence
-      </SimpleCell>
-    </Group>
-  </Panel>
-</View>
+        <Select
+          options={[
+            { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
+            { label: "1. red", value: "red" },
+            { label: "2. orange", value: "orange" },
+            { label: "3. yellow", value: "yellow" },
+            { label: "4. green", value: "green" },
+            { label: "5. l-blue", value: "l-blue" },
+            { label: "6. violet", value: "violet" },
+            { label: "blue", value: "blue" },
+          ]}
+          value={gradientColor}
+          onChange={(e) => setGradientColor(e.target.value)}
+        />
+      </FormItem>
+
+      <FormLayoutGroup mode="horizontal">
+        <FormItem top="Avatar.Badge or Avatar.BadgeWithPreset">
+          <Select
+            options={[
+              { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
+              { label: "📝 Avatar.Badge", value: "header-1", disabled: true },
+              {
+                label: "children={<Icon20GiftCircleFillRed />}",
+                value: "children",
+              },
+              {
+                label: "📝 Avatar.BadgeWithPreset",
+                value: "header-2",
+                disabled: true,
+              },
+              { label: 'preset="online"', value: "online", hierarchy: 1 },
+              { label: 'preset="online-mobile"', value: "online-mobile" },
+            ]}
+            value={badge}
+            onChange={(e) => setBadge(e.target.value)}
+          />
+        </FormItem>
+        <FormItem top="Avatar.Badge[background]">
+          <Select
+            options={[
+              { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
+              { label: "stroke", value: "stroke" },
+              { label: "shadow", value: "shadow" },
+            ]}
+            value={badgeBackground}
+            disabled={badge !== "children"}
+            onChange={(e) => setBadgeBackground(e.target.value)}
+          />
+        </FormItem>
+      </FormLayoutGroup>
+
+      <FormLayoutGroup mode="horizontal">
+        <FormItem top="Avatar.Overlay">
+          <Checkbox
+            checked={overlay}
+            onChange={(e) => setOverlay(e.target.checked)}
+          >
+            overlay (example, Icon24AddOutline, Icon28AddOutline)
+          </Checkbox>
+        </FormItem>
+      </FormLayoutGroup>
+
+      <FormLayoutGroup mode="horizontal">
+        <FormItem top="Avatar.Overlay[theme]">
+          <Select
+            options={[
+              { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
+              { label: "light", value: "light" },
+              { label: "dark", value: "dark" },
+            ]}
+            value={overlayTheme}
+            disabled={!overlay}
+            onChange={(e) => setOverlayTheme(e.target.value)}
+          />
+        </FormItem>
+        <FormItem top="Avatar.Overlay[visibility]">
+          <Select
+            options={[
+              { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
+              { label: "on-hover", value: "on-hover" },
+              { label: "always", value: "always" },
+            ]}
+            value={overlayVisibility}
+            disabled={!overlay}
+            onChange={(e) => setOverlayVisibility(e.target.value)}
+          />
+        </FormItem>
+      </FormLayoutGroup>
+    </React.Fragment>
+  );
+};
+
+<Example />;
 ```

@@ -1,12 +1,11 @@
 ```jsx
 import { Icon16Done, Icon16Down, Icon16Up } from "@vkontakte/icons";
 
-const ExampleWithAdaptivity = () => {
-  const { sizeX } = useAdaptivity();
+const Example = () => {
   const [direction, setDirection] = React.useState("top");
 
   const styles = {
-    margin: sizeX === SizeType.REGULAR ? "-7px -7px 0 -7px" : 0,
+    margin: 0,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -89,5 +88,5 @@ const ExampleWithAdaptivity = () => {
   );
 };
 
-<ExampleWithAdaptivity />;
+<Example />;
 ```

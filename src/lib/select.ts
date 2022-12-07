@@ -1,6 +1,5 @@
 import * as React from "react";
 import { getTitleFromChildren } from "./utils";
-import { FormFieldMode } from "../components/FormField/FormField";
 import { SelectType } from "../components/Select/Select";
 
 type Option = {
@@ -62,9 +61,7 @@ export const defaultFilterFn = (
 };
 
 export const getFormFieldModeFromSelectType = (
-  selectType: keyof typeof SelectType = SelectType.default
+  selectType: SelectType = "default"
 ) => {
-  return selectType === SelectType.default
-    ? FormFieldMode.default
-    : FormFieldMode.plain;
+  return selectType === "default" ? "default" : "plain";
 };

@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Calendar, CalendarProps } from "./Calendar";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 
@@ -28,8 +29,18 @@ describe("Calendar", () => {
       },
       {
         value: [new Date("1970-05-05")],
-        nextMonthIcon: [undefined, <span key="next">&gt;</span>],
-        prevMonthIcon: [undefined, <span key="prev">&lt;</span>],
+        nextMonthIcon: [
+          undefined,
+          <span key="next" className="vkuiProps">
+            &gt;
+          </span>,
+        ],
+        prevMonthIcon: [
+          undefined,
+          <span key="prev" className="vkuiProps">
+            &lt;
+          </span>,
+        ],
       },
     ]
   );

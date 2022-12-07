@@ -1,30 +1,20 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
-import { IOS, VKCOM } from "../../lib/platform";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
-import { warnOnce } from "../../lib/warnOnce";
+import { Platform } from "../../lib/platform";
 import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
 import { useDOM } from "../../lib/dom";
 import { pressedKey } from "../../lib/accessibility";
-import "./Tabs.css";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import styles from "./Tabs.module.css";
 
 export interface TabsProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    HasRootRef<HTMLDivElement>,
-    AdaptivityProps {
-  /**
-   * Задаёт вид кнопок.
-   *
-   * > ⚠️ Значения `"buttons"`, `"segmented"` устарели и будут удалены в 5.0.0. Вместо `"buttons"` используйте `"secondary"`.
-   * > Режим `"segmented"` переехал в отдельный компонент [`SegmentedControl`](https://vkcom.github.io/VKUI#/SegmentedControl),
-   * > поэтому используйте его вместо `Tabs`.
-   */
-  mode?: "buttons" | "segmented" | "default" | "accent" | "secondary";
+    HasRootRef<HTMLDivElement> {
+  mode?: "default" | "accent" | "secondary";
 }
-
-const warn = warnOnce("Tabs");
 
 export interface TabsContextProps {
   mode: TabsProps["mode"];
@@ -36,41 +26,24 @@ export const TabsModeContext = React.createContext<TabsContextProps>({
   withGaps: false,
 });
 
-const TabsComponent = ({
+/**
+ * @see https://vkcom.github.io/VKUI/#/Tabs
+ */
+export const Tabs = ({
   children,
   mode = "default",
   getRootRef,
-  sizeX,
+  className,
   role = "tablist",
   ...restProps
 }: TabsProps) => {
   const platform = usePlatform();
+  const { sizeX } = useAdaptivity();
   const { document } = useDOM();
 
   const isTabFlow = role === "tablist";
 
   const tabsRef = React.useRef<HTMLDivElement>(null);
-
-  if (
-    (mode === "buttons" || mode === "segmented") &&
-    process.env.NODE_ENV === "development"
-  ) {
-    const expectedValueText =
-      mode === "buttons"
-        ? `значения "secondary"`
-        : "компонент SegmentedControl";
-    warn(
-      `mode="${mode}" устарело и будет удалено в 5.0.0. Используйте ${expectedValueText}`
-    );
-  }
-
-  if (platform !== IOS && mode === "segmented") {
-    mode = "default";
-  }
-
-  if (mode === "buttons") {
-    mode = "secondary";
-  }
 
   const withGaps = mode === "accent" || mode === "secondary";
 
@@ -182,17 +155,17 @@ const TabsComponent = ({
     <div
       {...restProps}
       ref={getRootRef}
-      vkuiClass={classNames(
-        "Tabs",
-        (platform === IOS || platform === VKCOM) && `Tabs--${platform}`,
-        `Tabs--${mode}`,
-        withGaps && "Tabs--withGaps",
-        // TODO v5.0.0 новая адаптивность
-        `Tabs--sizeX-${sizeX}`
+      className={classNamesString(
+        styles["Tabs"],
+        platform === Platform.VKCOM && styles[`Tabs--${platform}`],
+        getSizeXClassName(styles["Tabs"], sizeX),
+        withGaps && styles["Tabs--withGaps"],
+        styles[`Tabs--mode-${mode}`],
+        className
       )}
       role={role}
     >
-      <div vkuiClass="Tabs__in" ref={tabsRef}>
+      <div className={styles["Tabs__in"]} ref={tabsRef}>
         <TabsModeContext.Provider value={{ mode, withGaps }}>
           {children}
         </TabsModeContext.Provider>
@@ -200,10 +173,3 @@ const TabsComponent = ({
     </div>
   );
 };
-
-/**
- * @see https://vkcom.github.io/VKUI/#/Tabs
- */
-export const Tabs = withAdaptivity(TabsComponent, { sizeX: true });
-
-Tabs.displayName = "Tabs";

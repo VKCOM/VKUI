@@ -5,7 +5,7 @@ import { Calendar, CalendarProps } from "../Calendar/Calendar";
 import { Popper, Placement } from "../Popper/Popper";
 import { multiRef } from "../../lib/utils";
 import { IconButton } from "../IconButton/IconButton";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { FormField, FormFieldProps } from "../FormField/FormField";
 import { HasRootRef } from "../../types";
 import { useDateInput } from "../../hooks/useDateInput";
@@ -13,7 +13,8 @@ import { InputLike } from "../InputLike/InputLike";
 import { InputLikeDivider } from "../InputLike/InputLikeDivider";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { callMultiple } from "../../lib/callMultiple";
-import "./DateInput.css";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import styles from "./DateInput.module.css";
 
 export interface DateInputProps
   extends Omit<
@@ -211,9 +212,12 @@ export const DateInput = ({
 
   return (
     <FormField
-      vkuiClass={classNames("DateInput", `DateInput--sizeY-${sizeY}`)}
       style={style}
-      className={className}
+      className={classNamesString(
+        styles["DateInput"],
+        getSizeYClassName(styles["DateInput"], sizeY),
+        className
+      )}
       getRootRef={multiRef(rootRef, getRootRef)}
       after={
         value ? (
@@ -248,7 +252,7 @@ export const DateInput = ({
             : ""
         }
       />
-      <span vkuiClass="DateInput__input" onKeyDown={handleKeyDown}>
+      <span className={styles["DateInput__input"]} onKeyDown={handleKeyDown}>
         <InputLike
           tabIndex={1}
           length={2}
@@ -278,7 +282,9 @@ export const DateInput = ({
         />
         {enableTime && (
           <React.Fragment>
-            <InputLikeDivider vkuiClass="DateInput__input-time-divider">
+            <InputLikeDivider
+              className={styles["DateInput__input--time-divider"]}
+            >
               {" "}
             </InputLikeDivider>
             <InputLike

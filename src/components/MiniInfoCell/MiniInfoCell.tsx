@@ -1,9 +1,10 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
 import { Tappable } from "../Tappable/Tappable";
 import { hasReactNode } from "../../lib/utils";
-import "./MiniInfoCell.css";
+import { Icon16Chevron } from "@vkontakte/icons";
+import styles from "./MiniInfoCell.module.css";
 
 export interface MiniInfoCellProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -27,7 +28,7 @@ export interface MiniInfoCellProps
    * - `add` – тип ячейки, который показывает, что взаимодействие с ней должно вызывать действие добавления чего-то.
    * - `more` – взаимодействие с такой ячейкой должно открывать какую-то подробную информацию.
    */
-  mode?: "base" | "add" | "more";
+  mode?: "base" | "accent" | "add" | "more";
 
   /**
    * Тип отображения текста:
@@ -39,12 +40,9 @@ export interface MiniInfoCellProps
   textWrap?: "nowrap" | "short" | "full";
 
   /**
-   * Стиль текста:
-   *
-   * - `primary` – используйте этот стиль, если хотите выделить информацию в общем списке.<br />Пример использования: подробная информация на странице сообщества
-   * - `secondary` – стиль по-умолчанию.
+   * Передавать `true`, если предполагается переход при клике по ячейке.
    */
-  textLevel?: "primary" | "secondary";
+  expandable?: boolean;
 }
 
 /**
@@ -53,30 +51,34 @@ export interface MiniInfoCellProps
 export const MiniInfoCell = ({
   before,
   after,
+  children,
   mode = "base",
   textWrap = "nowrap",
-  textLevel = "secondary",
-  children,
+  expandable = false,
+  className,
   ...restProps
 }: MiniInfoCellProps) => {
-  const cellClasses = classNames(
-    "MiniInfoCell",
-    mode !== "base" && `MiniInfoCell--md-${mode}`,
-    textWrap !== "nowrap" && `MiniInfoCell--wr-${textWrap}`,
-    `MiniInfoCell--lvl-${textLevel}`
+  const cellClasses = classNamesString(
+    styles["MiniInfoCell"],
+    styles[`MiniInfoCell--textWrap-${textWrap}`],
+    mode !== "base" && styles[`MiniInfoCell--mode-${mode}`],
+    className
   );
 
   const cellContent = (
     <React.Fragment>
-      <span vkuiClass="MiniInfoCell__icon">{before}</span>
-      <Paragraph
-        vkuiClass="MiniInfoCell__content"
-        weight={mode === "more" ? "2" : undefined}
-      >
-        {children}
-      </Paragraph>
+      <span className={styles["MiniInfoCell__before"]}>{before}</span>
+      <div className={styles["MiniInfoCell__middle"]}>
+        <Paragraph
+          className={styles["MiniInfoCell__content"]}
+          weight={mode === "more" ? "2" : undefined}
+        >
+          {children}
+        </Paragraph>
+        {expandable && <Icon16Chevron />}
+      </div>
       {hasReactNode(after) && (
-        <span vkuiClass="MiniInfoCell__after">{after}</span>
+        <span className={styles["MiniInfoCell__after"]}>{after}</span>
       )}
     </React.Fragment>
   );
@@ -86,12 +88,12 @@ export const MiniInfoCell = ({
       Component="div"
       role="button"
       {...restProps}
-      vkuiClass={cellClasses}
+      className={cellClasses}
     >
       {cellContent}
     </Tappable>
   ) : (
-    <div {...restProps} vkuiClass={cellClasses}>
+    <div {...restProps} className={cellClasses}>
       {cellContent}
     </div>
   );

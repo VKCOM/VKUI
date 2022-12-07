@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   ActionSheetItem,
   ActionSheetItemProps,
@@ -5,7 +6,7 @@ import {
 
 export const ActionSheetDefaultIosCloseItem = (props: ActionSheetItemProps) => {
   return (
-    <ActionSheetItem autoclose mode="cancel" {...props}>
+    <ActionSheetItem autoClose mode="cancel" {...props}>
       Отменить
     </ActionSheetItem>
   );

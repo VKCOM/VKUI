@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "strict": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.json"],
+  "exclude": ["**/*.test.ts", "node_modules"]
+}

@@ -4,10 +4,11 @@ import { AppRootPortal } from "../AppRoot/AppRootPortal";
 import { PopperArrow } from "../PopperArrow/PopperArrow";
 import { HasRef } from "../../types";
 import { usePlatform } from "../../hooks/usePlatform";
-import { getClassName } from "../../helpers/getClassName";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { useExternRef } from "../../hooks/useExternRef";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import "./Popper.css";
+import { classNamesString } from "../../lib/classNames";
+import styles from "./Popper.module.css";
 
 export type Placement =
   | "auto"
@@ -132,6 +133,7 @@ export const Popper = ({
   style: compStyles,
   customModifiers,
   renderContent,
+  className,
   ...restProps
 }: PopperProps) => {
   const [popperNode, setPopperNode] = React.useState<HTMLDivElement | null>(
@@ -179,14 +181,14 @@ export const Popper = ({
     customModifiers,
   ]);
 
-  const { styles, state, attributes } = usePopper(
-    targetRef.current,
-    popperNode,
-    {
-      placement,
-      modifiers,
-    }
-  );
+  const {
+    styles: popperStyles,
+    state,
+    attributes,
+  } = usePopper(targetRef.current, popperNode, {
+    placement,
+    modifiers,
+  });
 
   const resolvedPlacement = state?.placement;
   const isEdgePlacement =
@@ -227,31 +229,35 @@ export const Popper = ({
     <div
       {...restProps}
       {...attributes.popper}
-      vkuiClass={getClassName("Popper", platform)}
+      className={classNamesString(
+        styles["Popper"],
+        getPlatformClassName(styles["Popper"], platform),
+        className
+      )}
       ref={setExternalRef}
       style={{
         ...compStyles,
-        ...styles.popper,
+        ...popperStyles.popper,
         minWidth: sameWidth ? targetRef.current?.scrollWidth : undefined,
       }}
     >
       {arrow && (
         <PopperArrow
           attributes={attributes.arrow}
-          style={styles.arrow}
+          style={popperStyles.arrow}
           arrowClassName={arrowClassName}
         />
       )}
       {renderContent ? (
-        renderContent({ className: "Popper__content" })
+        renderContent({ className: styles["Popper__content"] })
       ) : (
-        <div vkuiClass="Popper__content">{children}</div>
+        <div className={styles["Popper__content"]}>{children}</div>
       )}
     </div>
   );
 
   return (
-    <AppRootPortal forcePortal={forcePortal} vkuiClass="PopperPortal">
+    <AppRootPortal forcePortal={forcePortal} className={styles["PopperPortal"]}>
       {dropdown}
     </AppRootPortal>
   );

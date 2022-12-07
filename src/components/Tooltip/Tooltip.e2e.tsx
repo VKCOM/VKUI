@@ -1,3 +1,4 @@
+import * as React from "react";
 import { describeScreenshotFuzz } from "../../testing/e2e";
 import { Tooltip, TooltipProps } from "./Tooltip";
 import { TooltipContainer } from "./TooltipContainer";
@@ -17,17 +18,15 @@ describe("Tooltip", () => {
         }}
       >
         <Tooltip text="text" {...props}>
-          <div style={{ display: "flex" }}>Tooltip target</div>
+          <div className="vkuiProps" style={{ display: "flex" }}>
+            Tooltip target
+          </div>
         </Tooltip>
       </TooltipContainer>
     ),
     [
       {
         header: [undefined, "header"],
-      },
-      {
-        header: ["header"],
-        mode: ["light"],
       },
       {
         alignX: ["left", "right"],

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { classNamesString } from "../../lib/classNames";
 import {
   addMonths,
   isSameMonth,
@@ -22,7 +23,7 @@ import {
 } from "../../lib/calendar";
 import { useCalendar } from "../../hooks/useCalendar";
 import { HasRootRef } from "../../types";
-import "./CalendarRange.css";
+import styles from "./CalendarRange.module.css";
 
 export interface CalendarRangeProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange">,
@@ -78,6 +79,7 @@ export const CalendarRange = ({
   changeDayAriaLabel = "Изменить день",
   prevMonthIcon,
   nextMonthIcon,
+  className,
   listenDayChangesForUpdate,
   ...props
 }: CalendarRangeProps) => {
@@ -210,15 +212,19 @@ export const CalendarRange = ({
   );
 
   return (
-    <div {...props} ref={getRootRef} vkuiClass="CalendarRange">
-      <div vkuiClass="CalendarRange__inner">
+    <div
+      {...props}
+      ref={getRootRef}
+      className={classNamesString(styles["CalendarRange"], className)}
+    >
+      <div className={styles["CalendarRange__inner"]}>
         <CalendarHeader
           viewDate={viewDate}
           onChange={setViewDate}
           nextMonth={false}
           onPrevMonth={setPrevMonth}
           disablePickers={disablePickers}
-          vkuiClass="CalendarRange__header"
+          className={styles["CalendarRange__header"]}
           prevMonthAriaLabel={prevMonthAriaLabel}
           nextMonthAriaLabel={nextMonthAriaLabel}
           changeMonthAriaLabel={changeMonthAriaLabel}
@@ -246,14 +252,14 @@ export const CalendarRange = ({
           aria-label={changeDayAriaLabel}
         />
       </div>
-      <div vkuiClass="CalendarRange__inner">
+      <div className={styles["CalendarRange__inner"]}>
         <CalendarHeader
           viewDate={secondViewDate}
           onChange={setViewDate}
           prevMonth={false}
           onNextMonth={setNextMonth}
           disablePickers={disablePickers}
-          vkuiClass="CalendarRange__header"
+          className={styles["CalendarRange__header"]}
           prevMonthAriaLabel={prevMonthAriaLabel}
           nextMonthAriaLabel={nextMonthAriaLabel}
           changeMonthAriaLabel={changeMonthAriaLabel}

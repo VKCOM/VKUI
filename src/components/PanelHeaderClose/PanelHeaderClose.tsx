@@ -1,9 +1,10 @@
+import * as React from "react";
 import { Icon28CancelOutline } from "@vkontakte/icons";
 import {
   PanelHeaderButton,
   PanelHeaderButtonProps,
 } from "../PanelHeaderButton/PanelHeaderButton";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { getTitleFromChildren } from "../../lib/utils";
 import { usePlatform } from "../../hooks/usePlatform";
 
@@ -20,7 +21,7 @@ export const PanelHeaderClose = ({
       aria-label={getTitleFromChildren(children)}
       {...restProps}
     >
-      {platform === IOS ? children : <Icon28CancelOutline />}
+      {platform === Platform.IOS ? children : <Icon28CancelOutline />}
     </PanelHeaderButton>
   );
 };

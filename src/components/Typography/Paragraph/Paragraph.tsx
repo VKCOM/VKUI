@@ -1,8 +1,8 @@
 import * as React from "react";
-import { classNames } from "../../../lib/classNames";
+import { classNamesString } from "../../../lib/classNames";
 import { warnOnce } from "../../../lib/warnOnce";
 import { HasComponent, HasRootRef } from "../../../types";
-import "./Paragraph.css";
+import styles from "./Paragraph.module.css";
 
 export interface ParagraphProps
   extends React.AllHTMLAttributes<HTMLElement>,
@@ -20,6 +20,7 @@ const warn = warnOnce("Paragraph");
  * @see https://vkcom.github.io/VKUI/#/Paragraph
  */
 export const Paragraph = ({
+  className,
   Component = "span",
   getRootRef,
   weight,
@@ -38,7 +39,11 @@ export const Paragraph = ({
     <Component
       {...restProps}
       ref={getRootRef}
-      vkuiClass={classNames("Paragraph", weight && `Paragraph--w-${weight}`)}
+      className={classNamesString(
+        className,
+        styles["Paragraph"],
+        weight && styles[`Paragraph--weight-${weight}`]
+      )}
     >
       {children}
     </Component>

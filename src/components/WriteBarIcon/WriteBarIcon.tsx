@@ -8,13 +8,13 @@ import {
   Icon48WritebarSend,
 } from "@vkontakte/icons";
 import { usePlatform } from "../../hooks/usePlatform";
-import { classNames } from "../../lib/classNames";
-import { IOS, Platform } from "../../lib/platform";
+import { classNamesString } from "../../lib/classNames";
+import { Platform } from "../../lib/platform";
 import { Counter } from "../Counter/Counter";
 import { Tappable } from "../Tappable/Tappable";
 import { warnOnce } from "../../lib/warnOnce";
 import { hasReactNode } from "../../lib/utils";
-import "./WriteBarIcon.css";
+import styles from "./WriteBarIcon.module.css";
 
 export interface WriteBarIconProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -43,6 +43,7 @@ export const WriteBarIcon = ({
   mode,
   children,
   count,
+  className,
   ...restProps
 }: WriteBarIconProps) => {
   const platform = usePlatform();
@@ -53,30 +54,26 @@ export const WriteBarIcon = ({
   switch (mode) {
     case "attach":
       icon =
-        platform === IOS ? (
-          <Icon28AddCircleOutline aria-hidden />
+        platform === Platform.IOS ? (
+          <Icon28AddCircleOutline />
         ) : (
-          <Icon28AttachOutline aria-hidden />
+          <Icon28AttachOutline />
         );
       ariaLabel = "Прикрепить файл";
       break;
 
     case "send":
       icon =
-        platform === IOS ? (
-          <Icon48WritebarSend aria-hidden />
-        ) : (
-          <Icon24Send aria-hidden />
-        );
+        platform === Platform.IOS ? <Icon48WritebarSend /> : <Icon24Send />;
       ariaLabel = "Отправить";
       break;
 
     case "done":
       icon =
-        platform === IOS ? (
-          <Icon48WritebarDone aria-hidden />
+        platform === Platform.IOS ? (
+          <Icon48WritebarDone />
         ) : (
-          <Icon28CheckCircleOutline aria-hidden />
+          <Icon28CheckCircleOutline />
         );
       ariaLabel = "Готово";
       break;
@@ -98,21 +95,20 @@ export const WriteBarIcon = ({
       {...restProps}
       Component="button"
       hasHover={false}
-      activeMode="WriteBarIcon__active"
-      vkuiClass={classNames(
-        "WriteBarIcon",
-        platform === Platform.IOS && "WriteBarIcon--ios",
-        !!mode && `WriteBarIcon--${mode}`
+      activeMode={styles["WriteBarIcon__active"]}
+      className={classNamesString(
+        styles["WriteBarIcon"],
+        platform === Platform.IOS && styles["WriteBarIcon--ios"],
+        mode && styles[`WriteBarIcon--mode-${mode}`],
+        className
       )}
     >
-      <span vkuiClass="WriteBarIcon__in">
-        {icon || children}
-        {hasReactNode(count) && (
-          <Counter vkuiClass="WriteBarIcon__counter" size="s">
-            {count}
-          </Counter>
-        )}
-      </span>
+      <span className={styles["WriteBarIcon__in"]}>{icon || children}</span>
+      {hasReactNode(count) && (
+        <Counter className={styles["WriteBarIcon__counter"]} size="s">
+          {count}
+        </Counter>
+      )}
     </Tappable>
   );
 };

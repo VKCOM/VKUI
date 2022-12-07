@@ -1,7 +1,7 @@
 import * as React from "react";
 import { HasComponent } from "../../../types";
-import { classNames } from "../../../lib/classNames";
-import "./Footnote.css";
+import { classNamesString } from "../../../lib/classNames";
+import styles from "./Footnote.module.css";
 
 export interface FootnoteProps
   extends React.AllHTMLAttributes<HTMLElement>,
@@ -17,6 +17,7 @@ export interface FootnoteProps
  * @see https://vkcom.github.io/VKUI/#/Footnote
  */
 export const Footnote = ({
+  className,
   children,
   weight,
   caps,
@@ -26,10 +27,11 @@ export const Footnote = ({
   return (
     <Component
       {...restProps}
-      vkuiClass={classNames(
-        "Footnote",
-        caps && "Footnote--caps",
-        weight && `Footnote--w-${weight}`
+      className={classNamesString(
+        className,
+        styles["Footnote"],
+        caps && styles["Footnote--caps"],
+        weight && styles[`Footnote--weight-${weight}`]
       )}
     >
       {children}

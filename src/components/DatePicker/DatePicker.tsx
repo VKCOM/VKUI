@@ -1,10 +1,11 @@
 import * as React from "react";
+import { classNamesString } from "../../lib/classNames";
 import { Input } from "../Input/Input";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
-import { HasPlatform } from "../../types";
+import { useAdaptivityHasPointer } from "../../hooks/useAdaptivityHasPointer";
 import { leadingZero } from "../../lib/utils";
 import { CustomSelect } from "../CustomSelect/CustomSelect";
-import "./DatePicker.css";
+import { range } from "../../helpers/range";
+import styles from "./DatePicker.module.css";
 
 const DefaultMonths: string[] = [
   "Января",
@@ -29,11 +30,9 @@ export type DatePickerDateFormat = {
 
 export interface DatePickerProps
   extends Omit<
-      React.HTMLAttributes<HTMLDivElement>,
-      "defaultValue" | "min" | "max"
-    >,
-    HasPlatform,
-    AdaptivityProps {
+    React.HTMLAttributes<HTMLDivElement>,
+    "defaultValue" | "min" | "max"
+  > {
   min?: DatePickerDateFormat;
   max?: DatePickerDateFormat;
   name?: string;
@@ -71,15 +70,6 @@ function getMonthMaxDay(month?: number, year?: number) {
   return month ? new Date(year || 2016, month, 0).getDate() : 31;
 }
 
-const range = (start: number, end: number) => {
-  const swap = start > end;
-  const arr = [];
-  for (let i = Math.min(start, end); i <= Math.max(start, end); i++) {
-    arr.push(i);
-  }
-  return swap ? arr.reverse() : arr;
-};
-
 const DatePickerCustom = ({
   name,
   min = { day: 0, month: 0, year: 0 },
@@ -89,13 +79,13 @@ const DatePickerCustom = ({
   yearPlaceholder,
   popupDirection,
   defaultValue,
-  hasMouse,
   monthNames,
   day = 0,
   month = 0,
   year = 0,
   onDateChange,
   disabled,
+  className,
   ...restProps
 }: DatePickerProps & Partial<DatePickerDateFormat>) => {
   const onSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
@@ -119,9 +109,12 @@ const DatePickerCustom = ({
     value: value,
   }));
   return (
-    <div vkuiClass="DatePicker" {...restProps}>
-      <div vkuiClass="DatePicker__container">
-        <div vkuiClass="DatePicker__day">
+    <div
+      className={classNamesString(styles["DatePicker"], className)}
+      {...restProps}
+    >
+      <div className={styles["DatePicker__container"]}>
+        <div className={styles["DatePicker__day"]}>
           <CustomSelect
             name="day"
             value={day}
@@ -132,9 +125,9 @@ const DatePickerCustom = ({
             disabled={disabled}
           />
         </div>
-        <div vkuiClass="DatePicker__month">
+        <div className={styles["DatePicker__month"]}>
           <CustomSelect
-            vkuiClass="DatePicker__monthSelect"
+            className={styles["DatePicker__monthSelect"]}
             name="month"
             value={month}
             options={monthOptions}
@@ -144,7 +137,7 @@ const DatePickerCustom = ({
             disabled={disabled}
           />
         </div>
-        <div vkuiClass="DatePicker__year">
+        <div className={styles["DatePicker__year"]}>
           <CustomSelect
             name="year"
             value={year}
@@ -173,7 +166,6 @@ const DatePickerNative = ({
   yearPlaceholder,
   popupDirection,
   defaultValue,
-  hasMouse,
   day,
   month,
   year,
@@ -206,11 +198,8 @@ const DatePickerNative = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/DatePicker
  */
-const DatePickerComponent = ({
-  hasMouse,
-  defaultValue,
-  ...props
-}: DatePickerProps) => {
+export const DatePicker = ({ defaultValue, ...props }: DatePickerProps) => {
+  const hasPointer = useAdaptivityHasPointer();
   const [value, setValue] = React.useState<Partial<DatePickerDateFormat>>(
     () => ({
       day: defaultValue?.day || 0,
@@ -227,12 +216,6 @@ const DatePickerComponent = ({
     [props]
   );
 
-  const Cmp = hasMouse ? DatePickerCustom : DatePickerNative;
+  const Cmp = hasPointer ? DatePickerCustom : DatePickerNative;
   return <Cmp {...props} {...value} onDateChange={onDateChange} />;
 };
-
-export const DatePicker = withAdaptivity(DatePickerComponent, {
-  hasMouse: true,
-});
-
-DatePicker.displayName = "DatePicker";

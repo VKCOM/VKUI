@@ -1,7 +1,8 @@
+import * as React from "react";
 import { AppRoot } from "../AppRoot/AppRoot";
 import { Alert, AlertProps, AlertAction } from "./Alert";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import { VKCOM, ANDROID, IOS } from "../../lib/platform";
+import { describeScreenshotFuzz } from "../../testing/e2e";
+import { Platform } from "../../lib/platform";
 import { HasChildren } from "../../types";
 
 const AppWrapper = (props: HasChildren) => (
@@ -21,7 +22,7 @@ describe("Alert", () => {
   );
   const cancel: AlertAction = { mode: "cancel", title: "Cancel" };
   const action: AlertAction = { mode: "default", title: "Action" };
-  const destroy: AlertAction = { mode: "destructive", title: "Destory" };
+  const destroy: AlertAction = { mode: "destructive", title: "Destroy" };
   describeScreenshotFuzz(
     BaseAlert,
     [
@@ -43,7 +44,7 @@ describe("Alert", () => {
     ],
     {
       Wrapper: AppWrapper,
-      platforms: [IOS, ANDROID],
+      platforms: [Platform.IOS, Platform.ANDROID],
     }
   );
 
@@ -61,7 +62,7 @@ describe("Alert", () => {
     ],
     {
       Wrapper: AppWrapper,
-      platforms: [VKCOM],
+      platforms: [Platform.VKCOM],
     }
   );
 });

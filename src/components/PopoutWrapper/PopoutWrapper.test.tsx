@@ -1,3 +1,4 @@
+import * as React from "react";
 import { fireEvent, render } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import { baselineComponent } from "../../testing/utils";
@@ -25,7 +26,8 @@ describe("PopoutWrapper", () => {
   });
 
   describe("gets opened", () => {
-    const isOpened = () => !!document.querySelector(".PopoutWrapper--opened");
+    const isOpened = () =>
+      !!document.querySelector(".vkuiPopoutWrapper--opened");
     beforeEach(() => jest.useFakeTimers("modern"));
     afterEach(() => jest.useRealTimers());
     it("immediately if no mask", () => {

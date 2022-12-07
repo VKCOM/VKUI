@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import { FormLayoutGroup } from "./FormLayoutGroup";
 import { Input } from "../Input/Input";
 import { FormItem } from "../FormItem/FormItem";
@@ -181,7 +181,7 @@ describe("FormLayoutGroup", () => {
             <ChipsSelect value={[]} placeholder="Год" />
           </FormItem>
         </Fragment>,
-        <AdaptivityProvider hasMouse={false} key="kids">
+        <AdaptivityProvider hasPointer={false} key="kids">
           <FormItem>
             <Input defaultValue="Текст" />
           </FormItem>

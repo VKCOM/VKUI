@@ -1,3 +1,4 @@
+import * as React from "react";
 import { NativeSelect, NativeSelectProps } from "../NativeSelect/NativeSelect";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 

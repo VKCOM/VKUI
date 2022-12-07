@@ -1,3 +1,4 @@
+import * as React from "react";
 import { ComponentType, Fragment, isValidElement } from "react";
 import { MatchImageSnapshotOptions } from "jest-image-snapshot";
 import { screenshot } from "@react-playwright";
@@ -5,24 +6,16 @@ import { screenshot } from "@react-playwright";
 import { ConfigProvider } from "../../components/ConfigProvider/ConfigProvider";
 import { Panel } from "../../components/Panel/Panel";
 import { Platform } from "../../lib/platform";
-import { Appearance } from "../../helpers/scheme";
-import {
-  AdaptivityProvider,
-  DESKTOP_SIZE,
-  MOBILE_SIZE,
-  SMALL_TABLET_SIZE,
-  TABLET_SIZE,
-} from "../../components/AdaptivityProvider/AdaptivityProvider";
-import {
-  SizeType,
-  ViewWidth,
-} from "../../components/AdaptivityProvider/AdaptivityContext";
-import { AdaptivityProps, withAdaptivity } from "../../hoc/withAdaptivity";
+import { BREAKPOINTS, SizeType, ViewWidth } from "../../lib/adaptivity";
+import { AdaptivityProvider } from "../../components/AdaptivityProvider/AdaptivityProvider";
+import { type AdaptivityProps } from "../../components/AdaptivityProvider/AdaptivityContext";
 import { View } from "../../components/View/View";
 import { AppRoot } from "../../components/AppRoot/AppRoot";
 import { Group } from "../../components/Group/Group";
+import { AppearanceType } from "@vkontakte/vk-bridge";
 import { HasChildren } from "../../types";
 import { BrowserType } from "jest-playwright-preset";
+import { Appearance } from "../../helpers/appearance";
 
 type AdaptivityFlag = boolean | "x" | "y";
 type PropDesc<Props> = { [K in keyof Props]?: Array<Props[K]> } & {
@@ -114,6 +107,7 @@ function prettyProps(props: any) {
 type ScreenshotOptions = {
   matchScreenshot?: MatchImageSnapshotOptions;
   platforms?: Platform[];
+  appearance?: AppearanceType;
   adaptivity?: Partial<AdaptivityProps>;
   Wrapper?: ComponentType;
 };
@@ -121,15 +115,15 @@ type ScreenshotOptions = {
 function getAdaptivePxWidth(viewWidth: ViewWidth) {
   switch (viewWidth) {
     case ViewWidth.SMALL_MOBILE:
-      return MOBILE_SIZE - 10;
+      return BREAKPOINTS.MOBILE - 10;
     case ViewWidth.MOBILE:
-      return MOBILE_SIZE;
+      return BREAKPOINTS.MOBILE;
     case ViewWidth.SMALL_TABLET:
-      return SMALL_TABLET_SIZE;
+      return BREAKPOINTS.SMALL_TABLET;
     case ViewWidth.TABLET:
-      return TABLET_SIZE;
+      return BREAKPOINTS.TABLET;
     case ViewWidth.DESKTOP:
-      return DESKTOP_SIZE;
+      return BREAKPOINTS.DESKTOP;
   }
 }
 
@@ -163,7 +157,7 @@ export function describeScreenshotFuzz<Props>(
 
     const isVKCOM = PLATFORM === Platform.VKCOM;
 
-    let width: ViewWidth | "auto" = isVKCOM ? "auto" : MOBILE_SIZE;
+    let width: number | "auto" = isVKCOM ? "auto" : BREAKPOINTS.MOBILE;
     if (adaptivity.viewWidth) {
       width = getAdaptivePxWidth(adaptivity.viewWidth);
     }
@@ -177,34 +171,44 @@ export function describeScreenshotFuzz<Props>(
       ? ` w_${adaptivityProps.viewWidth}`
       : "";
 
-    const AdaptiveComponent = withAdaptivity(Component, {
-      sizeX: true,
-      sizeY: true,
-    });
-
     it(`${BROWSER}-${APPEARANCE}${viewWidth}`, async () => {
       expect(
         await screenshot(
           <ConfigProvider appearance={APPEARANCE} platform={PLATFORM}>
             <AdaptivityProvider {...adaptivityProps}>
               <div
+                className="vkuiTestWrapper"
                 style={{
                   width,
-                  maxWidth: DESKTOP_SIZE,
+                  maxWidth: BREAKPOINTS.DESKTOP,
                   position: "absolute",
                   height: "auto",
                 }}
               >
                 <Wrapper>
                   {multiCartesian(propSets, { adaptive: !isVKCOM }).map(
-                    (props, i) => (
-                      <Fragment key={i}>
-                        <div>{prettyProps(props)}</div>
-                        <div>
-                          <AdaptiveComponent {...props} />
-                        </div>
-                      </Fragment>
-                    )
+                    (props, i) => {
+                      const adaptivityProviderProps = {
+                        ...adaptivityProps,
+                      };
+                      if (props.sizeX) {
+                        adaptivityProviderProps.sizeX = props.sizeX;
+                      }
+                      if (props.sizeY) {
+                        adaptivityProviderProps.sizeY = props.sizeY;
+                      }
+
+                      return (
+                        <Fragment key={i}>
+                          <div className="vkuiProps">{prettyProps(props)}</div>
+                          <div>
+                            <AdaptivityProvider {...adaptivityProviderProps}>
+                              <Component {...props} />
+                            </AdaptivityProvider>
+                          </div>
+                        </Fragment>
+                      );
+                    }
                   )}
                 </Wrapper>
               </div>

@@ -1,145 +1,267 @@
-Компонент, используемый в качестве кнопок в [SubnavigationBar](#/SubnavigationBar).
+В режиме `fixed` может потребоваться уменьшить размер шрифта у `SubnavigationButton`, чтобы текст показывался полностью.
+За это отвечает свойство `textLevel` у `SubnavigationButton`.
 
-Этот компонент может использоваться:
+```jsx { "props": { "layout": false, "adaptivity": true } }
+import { useState } from "react";
 
-- В качестве ссылки для создания быстрой и заметной точки входа в важный подраздел.
-- В качестве кнопки, для управления контентом на странице. Например, показать модальную страницу с фильтрами или сразу активировать какой-то фильтр.
+const MODAL_NAME = "filters";
 
-```jsx
-const filters = ["Мой размер", "В наличии", "Высокий рейтинг", "Избранное"];
+const FILTERS_SIZE = [
+  { value: 36, label: 36 },
+  { value: 37, label: 37 },
+  { value: 38, label: 38 },
+  { value: 39, label: 39 },
+];
 
-const SubnavigationFilter = (props) => {
-  const [state, setState] = useState(() => new Set());
+const FILTERS_STYLE = [
+  { value: "Вечерний", label: "Вечерний" },
+  { value: "Деловой", label: "Деловой" },
+  { value: "Повседневный", label: "Повседневный" },
+  { value: "Спортивный", label: "Спортивный" },
+];
 
-  const addItem = (item) => {
-    setState((prev) => new Set(prev).add(item));
+const SubnavigationBarExample = () => {
+  const platform = usePlatform();
+
+  const [activePanel, setActivePanel] = useState("example");
+  const [filtersModalOpened, setFiltersModalOpened] = useState(false);
+  const [filtersCount, setFiltersCount] = useState(2);
+
+  const [filterSizes, setFilterSizes] = useState([36]);
+  const [filterStyles, setFilterStyles] = useState(["Вечерний"]);
+
+  const [sizeSelected, setSizeSelected] = useState(false);
+  const [inStockSelected, setInStockSelected] = useState(false);
+  const [highRatingSelected, setHighRatingSelected] = useState(false);
+  const [faveSelected, setFaveSelected] = useState(false);
+
+  const isVKCOM = platform === Platform.VKCOM;
+
+  const openModal = () => {
+    setFiltersModalOpened(true);
   };
 
-  const removeItem = (item) => {
-    setState((prev) => {
-      const next = new Set(prev);
-
-      next.delete(item);
-
-      return next;
-    });
+  const closeModal = () => {
+    setFiltersModalOpened(false);
   };
 
-  const toggleItem = (item) => {
-    if (state.has(item)) {
-      removeItem(item);
+  const onChangeFilterSize = (e) => {
+    const { value, checked } = e.currentTarget;
+    if (checked) {
+      setFilterSizes([...filterSizes, +value]);
     } else {
-      addItem(item);
+      setFilterSizes(filterSizes.filter((v) => v !== +value));
     }
   };
 
-  const propsDescription = Object.keys(props)
-    .map((keys) => `${keys}="${props[keys]}"`)
-    .join(" ");
+  const onChangeFilterStyle = (e) => {
+    const { value, checked } = e.currentTarget;
+    if (checked) {
+      setFilterStyles([...filterStyles, value]);
+    } else {
+      setFilterStyles(filterStyles.filter((v) => v !== value));
+    }
+  };
+
+  const applyFilters = () => {
+    let count = 0;
+
+    filterSizes.length && count++;
+    filterStyles.length && count++;
+
+    closeModal();
+    setFiltersCount(count);
+  };
+
+  const modal = (
+    <ModalRoot
+      activeModal={filtersModalOpened ? MODAL_NAME : null}
+      onClose={closeModal}
+    >
+      <ModalPage
+        id={MODAL_NAME}
+        header={
+          <ModalPageHeader
+            before={
+              platform !== Platform.IOS && (
+                <PanelHeaderClose onClick={closeModal} />
+              )
+            }
+            after={
+              platform === Platform.IOS && (
+                <PanelHeaderButton onClick={closeModal}>
+                  <Icon24Dismiss />
+                </PanelHeaderButton>
+              )
+            }
+          >
+            Фильтры
+          </ModalPageHeader>
+        }
+      >
+        <FormLayout>
+          <FormItem top="Размер">
+            {FILTERS_SIZE.map(({ value, label }) => {
+              return (
+                <Checkbox
+                  value={value}
+                  checked={filterSizes.includes(value)}
+                  onChange={onChangeFilterSize}
+                >
+                  {label}
+                </Checkbox>
+              );
+            })}
+          </FormItem>
+
+          <FormItem top="Стиль">
+            {FILTERS_STYLE.map(({ value, label }) => {
+              return (
+                <Checkbox
+                  value={value}
+                  checked={filterStyles.includes(value)}
+                  onChange={onChangeFilterStyle}
+                >
+                  {label}
+                </Checkbox>
+              );
+            })}
+          </FormItem>
+
+          <FormItem>
+            <Button size="l" stretched onClick={applyFilters}>
+              Показать результаты
+            </Button>
+          </FormItem>
+        </FormLayout>
+      </ModalPage>
+    </ModalRoot>
+  );
 
   return (
-    <Group>
-      <Header mode="secondary">{propsDescription}</Header>
-      <SubnavigationBar>
-        {filters.map((item) => (
-          <SubnavigationButton
-            key={item}
-            selected={state.has(item)}
-            onClick={() => toggleItem(item)}
-            {...props}
-          >
-            {item}
-          </SubnavigationButton>
-        ))}
-      </SubnavigationBar>
-    </Group>
+    <SplitLayout modal={modal}>
+      <SplitCol>
+        <View activePanel={activePanel}>
+          <Panel id="example">
+            <PanelHeader>SubnavigationBar</PanelHeader>
+            <Group>
+              <SubnavigationBar>
+                <SubnavigationButton
+                  before={<Icon24Filter />}
+                  selected={filtersCount > 0}
+                  expandable
+                  after={
+                    filtersCount > 0 && (
+                      <Counter size="s">{filtersCount}</Counter>
+                    )
+                  }
+                  onClick={openModal}
+                >
+                  Фильтры
+                </SubnavigationButton>
+
+                <SubnavigationButton
+                  selected={sizeSelected}
+                  onClick={() => setSizeSelected(!sizeSelected)}
+                >
+                  Мой размер
+                </SubnavigationButton>
+
+                <SubnavigationButton
+                  selected={inStockSelected}
+                  onClick={() => setInStockSelected(!inStockSelected)}
+                >
+                  В наличии
+                </SubnavigationButton>
+
+                <SubnavigationButton
+                  selected={highRatingSelected}
+                  onClick={() => setHighRatingSelected(!highRatingSelected)}
+                >
+                  Высокий рейтинг
+                </SubnavigationButton>
+
+                <SubnavigationButton
+                  before={<Icon24FavoriteOutline />}
+                  selected={faveSelected}
+                  onClick={() => setFaveSelected(!faveSelected)}
+                >
+                  Избранное
+                </SubnavigationButton>
+              </SubnavigationBar>
+            </Group>
+
+            <Group>
+              <SubnavigationBar mode="fixed">
+                <SubnavigationButton
+                  before={<Icon24ScanViewfinderOutline />}
+                  size="l"
+                  textLevel={isVKCOM ? "1" : "3"}
+                  onClick={() => setActivePanel("add_friend")}
+                >
+                  Сканировать QR
+                </SubnavigationButton>
+
+                <SubnavigationButton
+                  before={<Icon24UserAddOutline />}
+                  size="l"
+                  textLevel={isVKCOM ? "1" : "3"}
+                  onClick={() => setActivePanel("add_friend")}
+                >
+                  Добавить друга
+                </SubnavigationButton>
+              </SubnavigationBar>
+
+              <Header>Важные</Header>
+              <SimpleCell
+                before={<Avatar src={getAvatarUrl("user_wayshev")} />}
+              >
+                Иван Барышев
+              </SimpleCell>
+              <SimpleCell
+                before={<Avatar src={getAvatarUrl("user_lihachyov")} />}
+              >
+                Михаил Лихачёв
+              </SimpleCell>
+              <SimpleCell
+                before={<Avatar src={getAvatarUrl("user_arthurstam")} />}
+              >
+                Artur Stambultsian
+              </SimpleCell>
+            </Group>
+          </Panel>
+          <Panel id="add_friend">
+            <PanelHeader
+              before={
+                <PanelHeaderBack onClick={() => setActivePanel("example")} />
+              }
+            >
+              Добавить друга
+            </PanelHeader>
+
+            <Group>
+              <SimpleCell
+                before={<Avatar src={getAvatarUrl("user_wayshev")} />}
+              >
+                Иван Барышев
+              </SimpleCell>
+              <SimpleCell
+                before={<Avatar src={getAvatarUrl("user_lihachyov")} />}
+              >
+                Михаил Лихачёв
+              </SimpleCell>
+              <SimpleCell
+                before={<Avatar src={getAvatarUrl("user_arthurstam")} />}
+              >
+                Artur Stambultsian
+              </SimpleCell>
+            </Group>
+          </Panel>
+        </View>
+      </SplitCol>
+    </SplitLayout>
   );
 };
 
-<View activePanel="example">
-  <Panel id="example">
-    <PanelHeader>SubnavigationButton</PanelHeader>
-    <Group>
-      <SubnavigationBar>
-        <SubnavigationButton before={<Icon24Filter />} expandable>
-          Фильтры
-        </SubnavigationButton>
-
-        <SubnavigationButton
-          before={<Icon24Filter />}
-          selected
-          expandable
-          after={
-            <Counter mode="primary" size="s">
-              3
-            </Counter>
-          }
-        >
-          Фильтры
-        </SubnavigationButton>
-      </SubnavigationBar>
-
-      <SubnavigationBar>
-        <SubnavigationButton before={<Icon24ScanViewfinderOutline />} size="l">
-          Сканировать QR
-        </SubnavigationButton>
-
-        <SubnavigationButton before={<Icon24UserAddOutline />} size="l">
-          Добавить друга
-        </SubnavigationButton>
-      </SubnavigationBar>
-
-      <SubnavigationBar>
-        <SubnavigationButton>Мой размер</SubnavigationButton>
-
-        <SubnavigationButton selected>Мой размер</SubnavigationButton>
-      </SubnavigationBar>
-
-      <SubnavigationBar>
-        <SubnavigationButton
-          after={
-            <Counter mode="prominent" size="s">
-              3
-            </Counter>
-          }
-        >
-          Новинки
-        </SubnavigationButton>
-      </SubnavigationBar>
-
-      <SubnavigationBar>
-        <SubnavigationButton
-          before={<Icon24Filter />}
-          selected
-          expandable
-          after={
-            <Counter mode="primary" size="s">
-              3
-            </Counter>
-          }
-        >
-          Фильтры
-        </SubnavigationButton>
-
-        <SubnavigationButton selected>Мой размер</SubnavigationButton>
-
-        <SubnavigationButton>В наличии</SubnavigationButton>
-
-        <SubnavigationButton before={<Icon24FavoriteOutline />}>
-          Избранное
-        </SubnavigationButton>
-      </SubnavigationBar>
-    </Group>
-
-    <SubnavigationFilter mode="primary" />
-    <SubnavigationFilter mode="outline" />
-    <SubnavigationFilter mode="tertiary" />
-    <SubnavigationFilter size="s" />
-    <SubnavigationFilter size="m" />
-    <SubnavigationFilter size="l" />
-    <SubnavigationFilter textLevel={1} />
-    <SubnavigationFilter textLevel={2} />
-    <SubnavigationFilter textLevel={3} />
-  </Panel>
-</View>;
+<SubnavigationBarExample />;
 ```

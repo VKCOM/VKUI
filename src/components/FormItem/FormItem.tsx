@@ -1,15 +1,14 @@
 import * as React from "react";
 import { HasComponent, HasRootRef } from "../../types";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { useExternRef } from "../../hooks/useExternRef";
-import { usePlatform } from "../../hooks/usePlatform";
-import { getClassName } from "../../helpers/getClassName";
 import { hasReactNode, noop } from "../../lib/utils";
 import { Subhead } from "../Typography/Subhead/Subhead";
-import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { Removable, RemovableProps } from "../Removable/Removable";
-import "./FormItem.css";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import styles from "./FormItem.module.css";
 
 export interface FormItemProps
   extends React.AllHTMLAttributes<HTMLElement>,
@@ -38,18 +37,20 @@ export const FormItem = ({
   onRemove = noop,
   removePlaceholder = "Удалить",
   getRootRef,
+  className,
   ...restProps
 }: FormItemProps) => {
-  const platform = usePlatform();
   const rootEl = useExternRef(getRootRef);
   const { sizeY } = useAdaptivity();
 
   const wrappedChildren = (
     <React.Fragment>
-      {hasReactNode(top) && <Subhead vkuiClass="FormItem__top">{top}</Subhead>}
+      {hasReactNode(top) && (
+        <Subhead className={styles["FormItem__top"]}>{top}</Subhead>
+      )}
       {children}
       {hasReactNode(bottom) && (
-        <Caption vkuiClass="FormItem__bottom">{bottom}</Caption>
+        <Footnote className={styles["FormItem__bottom"]}>{bottom}</Footnote>
       )}
     </React.Fragment>
   );
@@ -58,12 +59,13 @@ export const FormItem = ({
     <Component
       {...restProps}
       ref={rootEl}
-      vkuiClass={classNames(
-        getClassName("FormItem", platform), // TODO: v5 remove
-        `FormItem--${status}`,
-        `FormItem--sizeY-${sizeY}`,
-        hasReactNode(top) && "FormItem--withTop",
-        removable && "FormItem--removable"
+      className={classNamesString(
+        styles["FormItem"],
+        status !== "default" && styles[`FormItem--status-${status}`],
+        getSizeYClassName(styles["FormItem"], sizeY),
+        hasReactNode(top) && styles["FormItem--withTop"],
+        removable && styles["FormItem--removable"],
+        className
       )}
     >
       {removable ? (
@@ -76,7 +78,7 @@ export const FormItem = ({
           }}
           removePlaceholder={removePlaceholder}
         >
-          <div vkuiClass="FormItem__removable">{wrappedChildren}</div>
+          <div className={styles["FormItem__removable"]}>{wrappedChildren}</div>
         </Removable>
       ) : (
         wrappedChildren

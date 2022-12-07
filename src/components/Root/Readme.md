@@ -20,7 +20,7 @@ const [activeView, setActiveView] = useState("view1");
       </Group>
     </Panel>
   </View>
-  <View header activePanel="panel2.1" id="view2">
+  <View activePanel="panel2.1" id="view2">
     <Panel id="panel2.1">
       <PanelHeader>View 2</PanelHeader>
       <Group>

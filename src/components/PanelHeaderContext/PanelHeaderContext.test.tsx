@@ -1,10 +1,11 @@
+import * as React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 import { baselineComponent } from "../../testing/utils";
 import { noop } from "../../lib/utils";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import { ViewWidth } from "../../hoc/withAdaptivity";
+import { ViewWidth } from "../../lib/adaptivity";
 import { PanelHeaderContext } from "./PanelHeaderContext";
 
 describe("PanelHeaderContext", () => {
@@ -37,7 +38,7 @@ describe("PanelHeaderContext", () => {
       const onClose = jest.fn();
       render(<PanelHeaderContext opened onClose={onClose} />);
       userEvent.click(
-        document.querySelector(".PanelHeaderContext__fade") as Element
+        document.querySelector(".vkuiPanelHeaderContext__fade") as Element
       );
       expect(onClose).toBeCalledTimes(1);
     });

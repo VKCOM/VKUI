@@ -45,10 +45,10 @@
       >73 общих друга</UsersStack>
     }
     actions={
-      <React.Fragment>
+      <ButtonGroup mode="horizontal" gap="s" stretched>
         <Button>Добавить</Button>
         <Button mode="secondary">Скрыть</Button>
-      </React.Fragment>
+      </ButtonGroup>
     }
   >
     Илья Гришин

@@ -1,6 +1,6 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
-import "./Gradient.css";
+import { classNamesString } from "../../lib/classNames";
+import styles from "./Gradient.module.css";
 
 export interface GradientProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -20,16 +20,18 @@ export const Gradient = ({
   mode = "tint",
   children,
   to = "top",
+  className,
   ...restProps
 }: GradientProps) => {
   return (
     <div
       role="presentation"
       {...restProps}
-      vkuiClass={classNames(
-        "Gradient",
-        `Gradient--md-${mode}`,
-        `Gradient--to-${to}`
+      className={classNamesString(
+        styles["Gradient"],
+        styles[`Gradient--mode-${mode}`],
+        styles[`Gradient--to-${to}`],
+        className
       )}
     >
       {children}

@@ -1,3 +1,4 @@
+import * as React from "react";
 import { describeScreenshotFuzz } from "../../testing/e2e/utils";
 import { FormItem } from "./FormItem";
 import { CellButton } from "../CellButton/CellButton";

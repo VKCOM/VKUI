@@ -1,3 +1,4 @@
+import * as React from "react";
 import { screen, render } from "@testing-library/react";
 import { baselineComponent, imgOnlyAttributes } from "../../testing/utils";
 import { ContentCard, ContentCardProps } from "./ContentCard";
@@ -37,7 +38,7 @@ describe("ContentCard", () => {
   });
 
   it("[img] passes all img attributes to img", () => {
-    render(<ContentCardTest src="/image.png" {...imgOnlyAttributes} />);
+    render(<ContentCardTest {...imgOnlyAttributes} />);
 
     Object.keys(imgOnlyAttributes).forEach((attr) => {
       expect(img()).toHaveAttribute(attr);

@@ -35,9 +35,9 @@
       </CellButton>
       <CellButton
         before={
-          <Avatar shadow={false} size={72} mode="image">
+          <Image shadow={false} size={72}>
             <Icon28AddOutline />
-          </Avatar>
+          </Image>
         }
       >
         Создать плейлист

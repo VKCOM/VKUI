@@ -22,7 +22,6 @@ const FILTERS_STYLE = [
 
 const SubnavigationBarExample = () => {
   const platform = usePlatform();
-  const { viewWidth } = useAdaptivity();
 
   const [activePanel, setActivePanel] = useState("example");
   const [filtersModalOpened, setFiltersModalOpened] = useState(false);
@@ -72,6 +71,8 @@ const SubnavigationBarExample = () => {
     setFiltersCount(count);
   };
 
+  const isVKCOM = platform === Platform.VKCOM;
+
   const modal = (
     <ModalRoot
       activeModal={filtersModalOpened ? MODAL_NAME : null}
@@ -82,10 +83,12 @@ const SubnavigationBarExample = () => {
         header={
           <ModalPageHeader
             before={
-              platform !== IOS && <PanelHeaderClose onClick={closeModal} />
+              platform !== Platform.IOS && (
+                <PanelHeaderClose onClick={closeModal} />
+              )
             }
             after={
-              platform === IOS && (
+              platform === Platform.IOS && (
                 <PanelHeaderButton onClick={closeModal}>
                   <Icon24Dismiss />
                 </PanelHeaderButton>
@@ -149,9 +152,7 @@ const SubnavigationBarExample = () => {
                   expandable
                   after={
                     filtersCount > 0 && (
-                      <Counter mode="primary" size="s">
-                        {filtersCount}
-                      </Counter>
+                      <Counter size="s">{filtersCount}</Counter>
                     )
                   }
                   onClick={openModal}
@@ -195,7 +196,7 @@ const SubnavigationBarExample = () => {
                 <SubnavigationButton
                   before={<Icon24ScanViewfinderOutline />}
                   size="l"
-                  textLevel={viewWidth <= ViewWidth.MOBILE ? 3 : 1}
+                  textLevel={isVKCOM ? "1" : "3"}
                   onClick={() => setActivePanel("add_friend")}
                 >
                   Сканировать QR
@@ -204,7 +205,7 @@ const SubnavigationBarExample = () => {
                 <SubnavigationButton
                   before={<Icon24UserAddOutline />}
                   size="l"
-                  textLevel={viewWidth <= ViewWidth.MOBILE ? 3 : 1}
+                  textLevel={isVKCOM ? "1" : "3"}
                   onClick={() => setActivePanel("add_friend")}
                 >
                   Добавить друга

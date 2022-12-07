@@ -12,15 +12,15 @@ const getUsers = (usersArray) =>
 const Example = () => {
   const selectTypes = [
     {
-      label: "SelectType.default",
+      label: "default",
       value: "default",
     },
     {
-      label: "SelectType.plain",
+      label: "plain",
       value: "plain",
     },
     {
-      label: "SelectType.accent",
+      label: "accent",
       value: "accent",
     },
   ];

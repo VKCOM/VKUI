@@ -1,11 +1,12 @@
 import * as React from "react";
 import { Touch, TouchEvent, TouchEventHandler } from "../Touch/Touch";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { HasRootRef } from "../../types";
 import { rescale } from "../../helpers/math";
-import { withAdaptivity, AdaptivityProps } from "../../hoc/withAdaptivity";
 import { useExternRef } from "../../hooks/useExternRef";
-import "../Slider/Slider.css";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import styles from "../Slider/Slider.module.css";
 
 export type UniversalValue = [number | null, number];
 
@@ -14,8 +15,7 @@ export interface UniversalSliderProps<Value>
     Omit<
       React.HTMLAttributes<HTMLDivElement>,
       "value" | "defaultValue" | "onChange"
-    >,
-    AdaptivityProps {
+    > {
   min?: number;
   max?: number;
   step?: number;
@@ -25,7 +25,7 @@ export interface UniversalSliderProps<Value>
   onChange?(value: Value, e: TouchEvent): void;
 }
 
-const UniversalSliderDumb = ({
+export const UniversalSlider = ({
   min = 0,
   max = 100,
   step,
@@ -33,8 +33,8 @@ const UniversalSliderDumb = ({
   defaultValue,
   onChange,
   getRootRef,
-  sizeY,
   disabled,
+  className,
   ...restProps
 }: UniversalSliderProps<UniversalValue>) => {
   const [start, end] = value;
@@ -47,6 +47,7 @@ const UniversalSliderDumb = ({
   const container = useExternRef(getRootRef);
   const thumbStart = React.useRef<HTMLDivElement>(null);
   const thumbEnd = React.useRef<HTMLDivElement>(null);
+  const { sizeY } = useAdaptivity();
 
   const offsetToValue = (absolute: number) => {
     return rescale(absolute, [0, gesture.containerWidth], [min, max], { step });
@@ -130,22 +131,29 @@ const UniversalSliderDumb = ({
       data-value={isRange ? value.join(",") : value}
       {...restProps}
       {...(disabled ? {} : { onStart, onMove, onEnd })}
-      vkuiClass={classNames(
-        "Slider",
-        `Slider--sizeY-${sizeY}`,
-        disabled && "Slider--disabled"
+      className={classNamesString(
+        styles["Slider"],
+        getSizeYClassName(styles["Slider"], sizeY),
+        disabled && styles["Slider--disabled"],
+        className
       )}
     >
-      <div ref={container} vkuiClass="Slider__in">
-        <div vkuiClass="Slider__dragger" style={draggerStyle}>
+      <div ref={container} className={styles["Slider__in"]}>
+        <div className={styles["Slider__dragger"]} style={draggerStyle}>
           {isRange && (
             <span
-              vkuiClass={classNames("Slider__thumb", "Slider__thumb--start")}
+              className={classNamesString(
+                styles["Slider__thumb"],
+                styles["Slider__thumb--start"]
+              )}
               ref={thumbStart}
             />
           )}
           <span
-            vkuiClass={classNames("Slider__thumb", "Slider__thumb--end")}
+            className={classNamesString(
+              styles["Slider__thumb"],
+              styles["Slider__thumb--end"]
+            )}
             ref={thumbEnd}
           />
         </div>
@@ -153,9 +161,3 @@ const UniversalSliderDumb = ({
     </Touch>
   );
 };
-
-export const UniversalSlider = withAdaptivity(UniversalSliderDumb, {
-  sizeY: true,
-});
-
-UniversalSlider.displayName = "UniversalSlider";

@@ -1,5 +1,5 @@
 import React from "react";
-import { IOS, VKCOM, ANDROID, Link } from "@vkui";
+import { Platform, Link } from "@vkui";
 import { Setting } from "../Setting/Setting";
 
 export const PlatformSelect = ({ onChange, value }) => (
@@ -12,6 +12,6 @@ export const PlatformSelect = ({ onChange, value }) => (
     label="platform"
     onChange={onChange}
     value={value}
-    options={[IOS, ANDROID, VKCOM]}
+    options={[Platform.IOS, Platform.ANDROID, Platform.VKCOM]}
   />
 );

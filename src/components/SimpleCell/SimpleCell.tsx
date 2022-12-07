@@ -1,30 +1,23 @@
 import * as React from "react";
 import { HasComponent } from "../../types";
-import { classNames } from "../../lib/classNames";
-import { getClassName } from "../../helpers/getClassName";
+import { classNamesString } from "../../lib/classNames";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { Icon24Chevron } from "@vkontakte/icons";
-import { IOS } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { withAdaptivity, SizeType } from "../../hoc/withAdaptivity";
-import { Subhead } from "../Typography/Subhead/Subhead";
 import { Headline } from "../Typography/Headline/Headline";
-import { Footnote } from "../Typography/Footnote/Footnote";
-import { Caption } from "../Typography/Caption/Caption";
-import "./SimpleCell.css";
+import { Subhead } from "../Typography/Subhead/Subhead";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import styles from "./SimpleCell.module.css";
 
 export interface SimpleCellOwnProps extends HasComponent {
   /**
    * Иконка 28 или `<Avatar size={28|32|40|48|72} />`
    */
   before?: React.ReactNode;
-  /**
-   * @deprecated будет удалено в v5.0.0, используйте свойство rightBadge
-   * Иконка 12 или `<Badge />`. Добавится справа от текста `children`.
-   */
-  badge?: React.ReactNode;
   /**
    * Иконка 12 или `<Badge />`. Добавится слева от текста `children`.
    */
@@ -62,11 +55,6 @@ export interface SimpleCellOwnProps extends HasComponent {
    */
   after?: React.ReactNode;
   /**
-   * @deprecated будет удалено в v5.0.0, используйте свойство subtitle
-   * Контейнер для текста под `children`.
-   */
-  description?: React.ReactNode;
-  /**
    * Убирает анимацию нажатия
    */
   disabled?: boolean;
@@ -82,113 +70,125 @@ export interface SimpleCellOwnProps extends HasComponent {
 
 export interface SimpleCellProps extends SimpleCellOwnProps, TappableProps {}
 
-type SubtitleTypographyProps = React.HTMLAttributes<HTMLDivElement> &
-  HasComponent;
-
-const SubtitleTypography = (props: SubtitleTypographyProps) => {
-  const { sizeY } = useAdaptivity();
-
-  if (sizeY === SizeType.COMPACT) {
-    return <Caption level="2" {...props} />;
-  }
-
-  return <Footnote {...props} />;
-};
-
-const SimpleCellComponent = ({
-  badge,
+/**
+ * @see https://vkcom.github.io/VKUI/#/SimpleCell
+ */
+export const SimpleCell = ({
   badgeBeforeTitle,
-  badgeAfterTitle = badge,
+  badgeAfterTitle,
   badgeBeforeSubtitle,
   badgeAfterSubtitle,
   before,
   indicator,
   children,
   after,
-  description,
   expandable,
   multiline,
-  sizeY,
   subhead,
-  subtitle = description,
+  subtitle,
   extraSubtitle,
+  className,
   ...restProps
 }: SimpleCellProps) => {
   const platform = usePlatform();
-  const hasAfter = hasReactNode(after) || (expandable && platform === IOS);
+  const hasAfter =
+    hasReactNode(after) || (expandable && platform === Platform.IOS);
+  const { sizeY } = useAdaptivity();
 
   return (
     <Tappable
       {...restProps}
-      vkuiClass={classNames(
-        getClassName("SimpleCell", platform),
-        expandable && "SimpleCell--exp",
-        multiline && "SimpleCell--mult",
-        `SimpleCell--sizeY-${sizeY}`
+      className={classNamesString(
+        styles["SimpleCell"],
+        getPlatformClassName(styles["SimpleCell"], platform),
+        getSizeYClassName(styles["SimpleCell"], sizeY),
+        expandable && styles["SimpleCell--exp"],
+        multiline && styles["SimpleCell--mult"],
+        className
       )}
     >
       {before}
-      <div vkuiClass="SimpleCell__main">
+      <div className={styles["SimpleCell__main"]}>
         {subhead && (
           <Subhead
             Component="span"
-            vkuiClass="SimpleCell__text SimpleCell__subhead"
+            className={classNamesString(
+              styles["SimpleCell__text"],
+              styles["SimpleCell__subhead"]
+            )}
           >
             {subhead}
           </Subhead>
         )}
-        <div vkuiClass="SimpleCell__content">
+        <div className={styles["SimpleCell__content"]}>
           {badgeBeforeTitle && (
-            <span vkuiClass="SimpleCell__badge">{badgeBeforeTitle}</span>
+            <span className={styles["SimpleCell__badge"]}>
+              {badgeBeforeTitle}
+            </span>
           )}
           <Headline
             Component="span"
-            vkuiClass="SimpleCell__children"
+            className={styles["SimpleCell__children"]}
             weight="3"
           >
             {children}
           </Headline>
           {hasReactNode(badgeAfterTitle) && (
-            <span vkuiClass="SimpleCell__badge">{badgeAfterTitle}</span>
+            <span className={styles["SimpleCell__badge"]}>
+              {badgeAfterTitle}
+            </span>
           )}
         </div>
         {subtitle && (
-          <div vkuiClass="SimpleCell__content">
+          <div className={styles["SimpleCell__content"]}>
             {badgeBeforeSubtitle && (
-              <span vkuiClass="SimpleCell__badge">{badgeBeforeSubtitle}</span>
+              <span className={styles["SimpleCell__badge"]}>
+                {badgeBeforeSubtitle}
+              </span>
             )}
-            <SubtitleTypography vkuiClass="SimpleCell__text SimpleCell__subtitle">
+            <span
+              className={classNamesString(
+                styles["SimpleCell__typography"],
+                styles["SimpleCell__text"],
+                styles["SimpleCell__subtitle"]
+              )}
+            >
               {subtitle}
-            </SubtitleTypography>
+            </span>
             {badgeAfterSubtitle && (
-              <span vkuiClass="SimpleCell__badge">{badgeAfterSubtitle}</span>
+              <span className={styles["SimpleCell__badge"]}>
+                {badgeAfterSubtitle}
+              </span>
             )}
           </div>
         )}
         {extraSubtitle && (
-          <SubtitleTypography vkuiClass="SimpleCell__text SimpleCell__extraSubtitle">
+          <span
+            className={classNamesString(
+              styles["SimpleCell__typography"],
+              styles["SimpleCell__text"],
+              styles["SimpleCell__extraSubtitle"]
+            )}
+          >
             {extraSubtitle}
-          </SubtitleTypography>
+          </span>
         )}
       </div>
       {hasReactNode(indicator) && (
-        <Headline Component="span" weight="3" vkuiClass="SimpleCell__indicator">
+        <Headline
+          Component="span"
+          weight="3"
+          className={styles["SimpleCell__indicator"]}
+        >
           {indicator}
         </Headline>
       )}
       {hasAfter && (
-        <div vkuiClass="SimpleCell__after">
+        <div className={styles["SimpleCell__after"]}>
           {after}
-          {expandable && platform === IOS && <Icon24Chevron />}
+          {expandable && platform === Platform.IOS && <Icon24Chevron />}
         </div>
       )}
     </Tappable>
   );
 };
-
-/**
- * @see https://vkcom.github.io/VKUI/#/SimpleCell
- */
-export const SimpleCell = withAdaptivity(SimpleCellComponent, { sizeY: true });
-
-SimpleCell.displayName = "SimpleCell";

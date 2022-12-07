@@ -77,7 +77,7 @@ export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
           <div className="StyleGuideHeader__aside">
             <IconButton
               aria-label="Сменить тему"
-              className="StyleGuideHeader__scheme"
+              className="StyleGuideHeader__appearance"
               onClick={switchStyleGuideAppearance}
             >
               {appearance === "dark" ? (

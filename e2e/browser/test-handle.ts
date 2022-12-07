@@ -22,7 +22,7 @@ class ComponentHandle {
         )}`
       );
     }
-    return new Promise((ok) =>
+    return new Promise<void>((ok) =>
       render(this.components[name].node, this.mountNode, () => ok())
     );
   }

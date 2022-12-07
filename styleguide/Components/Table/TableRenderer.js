@@ -8,13 +8,7 @@ import React, {
 } from "react";
 import { Icon16Up, Icon16MoreHorizontal } from "@vkontakte/icons";
 import { noop, throttle } from "@vkontakte/vkjs";
-import {
-  Text,
-  classNames,
-  useAdaptivity,
-  ViewWidth,
-  useAppearance,
-} from "@vkui";
+import { Text, classNames, useAppearance } from "@vkui";
 import TogglePropsButton from "../TogglePropsButton";
 import NameRenderer from "../Name/NameRenderer";
 import "./Table.css";
@@ -48,9 +42,8 @@ const TableRows = ({ rows }) => {
 };
 
 export const TableRenderer = ({ columns, rows, getRowKey }) => {
-  const { viewWidth } = useAdaptivity();
-  const [hasLeft, setHasLeft] = useState(viewWidth <= ViewWidth.MOBILE);
-  const [hasRight, setHasRight] = useState(viewWidth <= ViewWidth.MOBILE);
+  const [hasLeft, setHasLeft] = useState(false);
+  const [hasRight, setHasRight] = useState(false);
   const appearance = useAppearance();
   const tableRef = useRef();
   const tableWidth = useRef(0);
@@ -67,7 +60,7 @@ export const TableRenderer = ({ columns, rows, getRowKey }) => {
       tableWidth.current - tableInRef.current.scrollLeft > tableInWidth.current
     );
   }
-  useEffect(updateBorders, [viewWidth, expanded]);
+  useEffect(updateBorders, [expanded]);
 
   // react-docgen-typescript сортирует пропсы:
   // - по обязательности

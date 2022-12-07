@@ -1,22 +1,18 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { getSizeXClassName } from "../../helpers/getSizeXClassName";
+import { classNamesString } from "../../lib/classNames";
 import { Touch } from "../Touch/Touch";
 import { TooltipContainer } from "../Tooltip/TooltipContainer";
 import { HasRootRef } from "../../types";
-import { withAdaptivity } from "../../hoc/withAdaptivity";
-import { IOS, VKCOM } from "../../lib/platform";
+import { Platform } from "../../lib/platform";
 import { usePlatform } from "../../hooks/usePlatform";
 import { NavIdProps } from "../../lib/getNavId";
-import {
-  AdaptivityContextInterface,
-  AdaptivityProps,
-} from "../AdaptivityProvider/AdaptivityContext";
-import "./Panel.css";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import styles from "./Panel.module.css";
 
 export interface PanelProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement>,
-    AdaptivityProps,
     NavIdProps {
   centered?: boolean;
 }
@@ -24,39 +20,38 @@ export interface PanelProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Panel
  */
-export const Panel = withAdaptivity<PanelProps & AdaptivityContextInterface>(
-  ({ centered = false, children, getRootRef, sizeX, nav, ...restProps }) => {
-    const platform = usePlatform();
+export const Panel = ({
+  centered = false,
+  children,
+  getRootRef,
+  nav,
+  className,
+  ...restProps
+}: PanelProps) => {
+  const platform = usePlatform();
+  const { sizeX } = useAdaptivity();
 
-    return (
-      <div
-        {...restProps}
-        ref={getRootRef}
-        vkuiClass={classNames(
-          "Panel",
-          platform === IOS && "Panel--ios",
-          platform === VKCOM && "Panel--vkcom",
-          // TODO v5.0.0 поправить под новую адаптивность
-          `Panel--sizeX-${sizeX}`,
-          centered && "Panel--centered"
+  return (
+    <div
+      {...restProps}
+      ref={getRootRef}
+      className={classNamesString(
+        styles["Panel"],
+        getSizeXClassName(styles["Panel"], sizeX),
+        centered && styles["Panel--centered"],
+        className
+      )}
+    >
+      <Touch Component={TooltipContainer} className={styles["Panel__in"]}>
+        {platform === Platform.IOS && <div className={styles["Panel__fade"]} />}
+        <div className={styles["Panel__in-before"]} />
+        {centered ? (
+          <div className={styles["Panel__centered"]}>{children}</div>
+        ) : (
+          children
         )}
-      >
-        <Touch Component={TooltipContainer} vkuiClass="Panel__in">
-          {platform === IOS && <div vkuiClass="Panel__fade" />}
-          <div vkuiClass="Panel__in-before" />
-          {centered ? (
-            <div vkuiClass="Panel__centered">{children}</div>
-          ) : (
-            children
-          )}
-          <div vkuiClass="Panel__in-after" />
-        </Touch>
-      </div>
-    );
-  },
-  {
-    sizeX: true,
-  }
-);
-
-Panel.displayName = "Panel";
+        <div className={styles["Panel__in-after"]} />
+      </Touch>
+    </div>
+  );
+};

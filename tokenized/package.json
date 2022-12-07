@@ -1,4 +1,0 @@
-{
-  "main": "../dist/cjs/tokenized/index.js",
-  "module": "../dist/tokenized/index.js"
-}

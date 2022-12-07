@@ -2,16 +2,15 @@ import React, { Fragment } from "react";
 import { PlatformSelect } from "./PlatformSelect";
 import { AppearanceSelect } from "./AppearanceSelect";
 import { WebviewTypeSelect } from "./WebviewTypeSelect";
-import { HasMouseCheckbox } from "./HasMouseCheckbox";
+import { HasPointerCheckbox } from "./HasPointerCheckbox";
 import { ViewHeightSelect } from "./ViewHeightSelect";
 import { ViewWidthSelect } from "./ViewWidthSelect";
-import "./Settings.css";
-import { Platform, useAdaptivity, ViewWidth } from "@vkui";
+import { Platform, useAdaptivityConditionalRender } from "@vkui";
 import { StyleGuideContext } from "../StyleGuide/StyleGuideRenderer";
+import "./Settings.css";
 
 export const Settings = ({ adaptivity, webviewType }) => {
-  const { viewWidth } = useAdaptivity();
-  const isMobile = viewWidth <= ViewWidth.MOBILE;
+  const { sizeX } = useAdaptivityConditionalRender();
   return (
     <StyleGuideContext.Consumer>
       {(context) => {
@@ -32,22 +31,33 @@ export const Settings = ({ adaptivity, webviewType }) => {
                   value={context.webviewType}
                 />
               )}
-              {adaptivity && !isMobile && (
+              {adaptivity && (
                 <Fragment>
-                  <ViewHeightSelect
-                    onChange={(height) => context.setContext({ height })}
-                    value={context.height}
-                  />
-                  <ViewWidthSelect
-                    onChange={(width) => context.setContext({ width })}
-                    value={context.width}
-                    disabled={context.platform === Platform.VKCOM}
-                  />
-                  <HasMouseCheckbox
-                    onChange={(hasMouse) => context.setContext({ hasMouse })}
-                    value={context.hasMouse}
-                    disabled={context.platform === Platform.VKCOM}
-                  />
+                  {sizeX.regular && (
+                    <ViewHeightSelect
+                      className={sizeX.regular.className}
+                      onChange={(height) => context.setContext({ height })}
+                      value={context.height}
+                    />
+                  )}
+                  {sizeX.regular && (
+                    <ViewWidthSelect
+                      className={sizeX.regular.className}
+                      onChange={(width) => context.setContext({ width })}
+                      value={context.width}
+                      disabled={context.platform === Platform.VKCOM}
+                    />
+                  )}
+                  {sizeX.regular && (
+                    <HasPointerCheckbox
+                      className={sizeX.regular.className}
+                      onChange={(hasPointer) =>
+                        context.setContext({ hasPointer })
+                      }
+                      value={context.hasPointer}
+                      disabled={context.platform === Platform.VKCOM}
+                    />
+                  )}
                 </Fragment>
               )}
             </div>

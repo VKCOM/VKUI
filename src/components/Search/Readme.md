@@ -1,6 +1,6 @@
 Надстройка над `<input type="text" />`. Компонент принимает все валидные для этого элемента свойства.
 
-```jsx
+```jsx { "props": { "layout": false, "adaptivity": true, "webviewType": true } }
 const thematics = [
   { id: 3201, name: "Аренда автомобилей" },
   { id: 3273, name: "Автотовары" },
@@ -29,207 +29,165 @@ const thematics = [
 
 const users = getRandomUsers(18);
 
-class SimpleSearch extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      search: "",
-    };
-    this.onChange = this.onChange.bind(this);
-  }
+const SimpleSearch = ({ goHeaderSearch }) => {
+  const platform = usePlatform();
 
-  onChange(e) {
-    this.setState({ search: e.target.value });
-  }
+  const [search, setSearch] = React.useState("");
 
-  get thematics() {
-    const search = this.state.search.toLowerCase();
-    return thematics.filter(
-      ({ name }) => name.toLowerCase().indexOf(search) > -1
-    );
-  }
+  const onChange = (e) => {
+    setSearch(e.target.value);
+  };
 
-  render() {
-    return (
-      <React.Fragment>
-        <PanelHeader
-          after={
-            <PanelHeaderButton onClick={this.props.goHeaderSearch}>
-              <Icon28AddOutline />
-            </PanelHeaderButton>
-          }
-          separator={this.props.sizeX === SizeType.REGULAR}
-        >
-          Выбор тематики
-        </PanelHeader>
-        <Group>
-          <Search
-            value={this.state.search}
-            onChange={this.onChange}
-            after={null}
-          />
-          {this.thematics.length > 0 &&
-            this.thematics.map((thematic) => (
-              <Cell key={thematic.id}>{thematic.name}</Cell>
-            ))}
-          {this.thematics.length === 0 && <Footer>Ничего не найдено</Footer>}
-        </Group>
-      </React.Fragment>
-    );
-  }
-}
+  const thematicsFiltered = thematics.filter(
+    ({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1
+  );
 
-class HeaderSearch extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      search: "",
-    };
-
-    this.onChange = this.onChange.bind(this);
-  }
-
-  onChange(e) {
-    this.setState({ search: e.target.value });
-  }
-
-  get users() {
-    const search = this.state.search.toLowerCase();
-    return users.filter(({ name }) => name.toLowerCase().indexOf(search) > -1);
-  }
-
-  render() {
-    const { platform, sizeX, goSearch, onFiltersClick } = this.props;
-    return (
-      <React.Fragment>
-        <PanelHeader
-          before={platform !== VKCOM && <PanelHeaderBack onClick={goSearch} />}
-          separator={sizeX === SizeType.REGULAR}
-        >
-          <Search
-            value={this.state.search}
-            onChange={this.onChange}
-            icon={<Icon24Filter />}
-            onIconClick={onFiltersClick}
-          />
-        </PanelHeader>
-        <Group>
-          {this.users.length > 0 &&
-            this.users.map((user) => (
-              <SimpleCell
-                before={<Avatar size={40} src={user.photo_100} />}
-                key={user.id}
-                onClick={goSearch}
-              >
-                {user.name}
-              </SimpleCell>
-            ))}
-          {this.users.length === 0 && <Footer>Ничего не найдено</Footer>}
-        </Group>
-      </React.Fragment>
-    );
-  }
-}
-
-class SearchExample extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      activePanel: "search",
-      activeModal: null,
-    };
-
-    this.goSearch = this.goSearch.bind(this);
-    this.goHeaderSearch = this.goHeaderSearch.bind(this);
-    this.hideModal = this.hideModal.bind(this);
-  }
-
-  goHeaderSearch() {
-    this.setState({ activePanel: "header-search" });
-  }
-  goSearch() {
-    this.setState({ activePanel: "search" });
-  }
-  hideModal() {
-    this.setState({ activeModal: null });
-  }
-
-  render() {
-    const { platform } = this.props;
-    return (
-      <View
-        activePanel={this.state.activePanel}
-        modal={
-          <ModalRoot activeModal={this.state.activeModal}>
-            <ModalPage
-              id="filters"
-              onClose={this.hideModal}
-              header={
-                <ModalPageHeader
-                  before={
-                    platform === ANDROID && (
-                      <PanelHeaderButton onClick={this.hideModal}>
-                        <Icon24Cancel />
-                      </PanelHeaderButton>
-                    )
-                  }
-                  after={
-                    <PanelHeaderButton onClick={this.hideModal}>
-                      {platform === IOS ? "Готово" : <Icon24Done />}
-                    </PanelHeaderButton>
-                  }
-                >
-                  Фильтры
-                </ModalPageHeader>
-              }
-            >
-              <Group>
-                <FormItem top="Страна">
-                  <SelectMimicry placeholder="Не выбрана" />
-                </FormItem>
-                <FormItem top="Город">
-                  <SelectMimicry placeholder="Не выбран" />
-                </FormItem>
-                <FormItem top="Пол">
-                  <Radio name="sex" value="male" defaultChecked>
-                    Любой
-                  </Radio>
-                  <Radio name="sex" value="male">
-                    Мужской
-                  </Radio>
-                  <Radio name="sex" value="female">
-                    Женский
-                  </Radio>
-                </FormItem>
-              </Group>
-            </ModalPage>
-          </ModalRoot>
+  return (
+    <React.Fragment>
+      <PanelHeader
+        after={
+          <PanelHeaderButton aria-label="Добавить" onClick={goHeaderSearch}>
+            <Icon28AddOutline />
+          </PanelHeaderButton>
         }
       >
-        <Panel id="search">
-          <SimpleSearch
-            sizeX={this.props.sizeX}
-            goHeaderSearch={this.goHeaderSearch}
-            platform={platform}
-          />
-        </Panel>
-        <Panel id="header-search">
-          <HeaderSearch
-            sizeX={this.props.sizeX}
-            onFiltersClick={() => this.setState({ activeModal: "filters" })}
-            goSearch={this.goSearch}
-            platform={platform}
-          />
-        </Panel>
-      </View>
-    );
-  }
-}
+        Выбор тематики
+      </PanelHeader>
+      <Group>
+        <Search value={search} onChange={onChange} after={null} />
+        {thematicsFiltered.length > 0 &&
+          thematicsFiltered.map((thematic) => (
+            <Cell key={thematic.id}>{thematic.name}</Cell>
+          ))}
+        {thematicsFiltered.length === 0 && <Footer>Ничего не найдено</Footer>}
+      </Group>
+    </React.Fragment>
+  );
+};
 
-const AdaptivitySearch = withPlatform(
-  withAdaptivity(SearchExample, { sizeX: true })
-);
+const HeaderSearch = ({ goSearch, onFiltersClick }) => {
+  const platform = usePlatform();
 
-<AdaptivitySearch />;
+  const [search, setSearch] = React.useState("");
+
+  const onChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const usersFiltered = users.filter(
+    ({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1
+  );
+
+  return (
+    <React.Fragment>
+      <PanelHeader
+        before={
+          platform !== Platform.VKCOM && <PanelHeaderBack onClick={goSearch} />
+        }
+      >
+        <Search
+          value={search}
+          onChange={onChange}
+          icon={<Icon24Filter />}
+          onIconClick={onFiltersClick}
+        />
+      </PanelHeader>
+      <Group>
+        {usersFiltered.length > 0 &&
+          usersFiltered.map((user) => (
+            <SimpleCell
+              before={<Avatar size={40} src={user.photo_100} />}
+              key={user.id}
+              onClick={goSearch}
+            >
+              {user.name}
+            </SimpleCell>
+          ))}
+        {usersFiltered.length === 0 && <Footer>Ничего не найдено</Footer>}
+      </Group>
+    </React.Fragment>
+  );
+};
+
+const SearchExample = () => {
+  const platform = usePlatform();
+
+  const [activePanel, setActivePanel] = React.useState("search");
+  const [activeModal, setActiveModal] = React.useState(null);
+
+  const goHeaderSearch = () => setActivePanel("header-search");
+
+  const goSearch = () => setActivePanel("search");
+
+  const openFilters = () => setActiveModal("filters");
+
+  const hideModal = () => setActiveModal(null);
+
+  const isVKCOM = platform === Platform.VKCOM;
+
+  return (
+    <SplitLayout
+      header={!isVKCOM && <PanelHeader separator={false} />}
+      modal={
+        <ModalRoot activeModal={activeModal}>
+          <ModalPage
+            id="filters"
+            onClose={hideModal}
+            header={
+              <ModalPageHeader
+                before={
+                  platform === Platform.ANDROID && (
+                    <PanelHeaderButton aria-label="Отмена" onClick={hideModal}>
+                      <Icon24Cancel />
+                    </PanelHeaderButton>
+                  )
+                }
+                after={
+                  <PanelHeaderButton aria-label="Готово" onClick={hideModal}>
+                    {platform === Platform.IOS ? "Готово" : <Icon24Done />}
+                  </PanelHeaderButton>
+                }
+              >
+                Фильтры
+              </ModalPageHeader>
+            }
+          >
+            <Group>
+              <FormItem top="Страна">
+                <SelectMimicry placeholder="Не выбрана" />
+              </FormItem>
+              <FormItem top="Город">
+                <SelectMimicry placeholder="Не выбран" />
+              </FormItem>
+              <FormItem top="Пол">
+                <Radio name="sex" value="male" defaultChecked>
+                  Любой
+                </Radio>
+                <Radio name="sex" value="male">
+                  Мужской
+                </Radio>
+                <Radio name="sex" value="female">
+                  Женский
+                </Radio>
+              </FormItem>
+            </Group>
+          </ModalPage>
+        </ModalRoot>
+      }
+    >
+      <SplitCol autoSpaced={!isVKCOM}>
+        <View activePanel={activePanel}>
+          <Panel id="search">
+            <SimpleSearch goHeaderSearch={goHeaderSearch} />
+          </Panel>
+          <Panel id="header-search">
+            <HeaderSearch onFiltersClick={openFilters} goSearch={goSearch} />
+          </Panel>
+        </View>
+      </SplitCol>
+    </SplitLayout>
+  );
+};
+
+<SearchExample />;
 ```

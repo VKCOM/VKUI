@@ -4,7 +4,7 @@ import Slot from "@rsg-components/Slot";
 import Markdown from "@rsg-components/Markdown";
 import Examples from "@rsg-components/Examples";
 import { SectionSubheading } from "../SectionSubheading/SectionSubheading";
-import { Caption, Link, classNames } from "@vkui";
+import { Link, classNames } from "@vkui";
 import { deprecated } from "../../deprecated";
 import pkg from "../../../package.json";
 import "./ReactComponent.css";

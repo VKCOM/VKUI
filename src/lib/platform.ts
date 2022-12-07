@@ -42,10 +42,6 @@ const platformByQueryString = canUseDOM
   ? getPlatformByQueryString(location.search)
   : undefined;
 
-export const ANDROID = Platform.ANDROID;
-export const IOS = Platform.IOS;
-export const VKCOM = Platform.VKCOM;
-
 export type PlatformType =
   | Platform.ANDROID
   | Platform.IOS
@@ -61,16 +57,5 @@ export function platform(browserInfo?: BrowserInfo): PlatformType {
     browserInfo = computeBrowserInfo();
   }
 
-  return browserInfo.system === "ios" ? IOS : ANDROID;
+  return browserInfo.system === "ios" ? Platform.IOS : Platform.ANDROID;
 }
-
-const platformName = platform();
-
-/**
- * @deprecated для определения платформы используйте withPlatform или usePlatform
- */
-export const IS_PLATFORM_IOS: boolean = platformName === IOS;
-/**
- * @deprecated для определения платформы используйте withPlatform или usePlatform
- */
-export const IS_PLATFORM_ANDROID: boolean = platformName === ANDROID;

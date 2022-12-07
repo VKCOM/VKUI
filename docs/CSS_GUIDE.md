@@ -4,7 +4,7 @@
 
 - Используем БЭМ-нотацию
 - Блок начинается с заглавной буквы: `.Checkbox`
-- Многословный блок разделяется через camelCase: `.SimpleCheckbox`
+- Многословный блок разделяется через camelCase: `.ButtonGroup`
 - Элемент от блока отделяется двумя подчеркиваниями: `.Checkbox__in`
 - Многословные элементы разделяются через kebab-case: `.Banner__before-title`
 - Модификатор отделяется двумя дефисами: `.Input--plain`
@@ -16,8 +16,8 @@
 
 ```tsx
 // Button.tsx
-<button vkuiClass="Button">
-  <Text vkuiClass="Button__text">{children}</Text>
+<button className={styles.Button}>
+  <Text className={styles.Button__text}>{children}</Text>
 </button>
 ```
 
@@ -32,7 +32,7 @@
 
 ```tsx
 // Cell.tsx
-<div vkuiClass="Cell">
+<div className={styles.Cell}>
   {before} {/* В before может быть <Icon /> или <Avatar /> */}
 </div>
 ```
@@ -50,6 +50,14 @@
 
 Таких ситуаций стоит избегать, так как подобное связывание лишает нас возможности в будущем хешировать имена классов с
 помощью css-modules.
+
+## Классы с префиксом `vkui`
+
+Класс, который начинается с `vkui`, обозначает, что он глобальный. Например
+`vkuiIcon` – классы иконок из `@vkontakte/icons`.
+
+В файлах `*.module.css` они должны быть обёрнуты в [`:global(.xxx)`](https://github.com/css-modules/css-modules#exceptions),
+чтобы CSS Modules не трогал их.
 
 ## Проблемы
 

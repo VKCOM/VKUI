@@ -1,18 +1,16 @@
 import * as React from "react";
 import { SelectMimicry } from "../SelectMimicry/SelectMimicry";
 import { debounce, multiRef, getTitleFromChildren } from "../../lib/utils";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { NativeSelectProps } from "../NativeSelect/NativeSelect";
-import { withAdaptivity } from "../../hoc/withAdaptivity";
 import {
   CustomSelectOption,
   CustomSelectOptionProps,
 } from "../CustomSelectOption/CustomSelectOption";
 import { FormFieldProps } from "../FormField/FormField";
-import { HasPlatform } from "../../types";
 import { Input } from "../Input/Input";
 import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
-import { Caption } from "../Typography/Caption/Caption";
+import { Footnote } from "../Typography/Footnote/Footnote";
 import { warnOnce } from "../../lib/warnOnce";
 import {
   defaultFilterFn,
@@ -23,7 +21,7 @@ import { CustomSelectDropdown } from "../CustomSelectDropdown/CustomSelectDropdo
 import { TrackerOptionsProps } from "../CustomScrollView/useTrackerVisibility";
 import { SelectType } from "../Select/Select";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import "./CustomSelect.css";
+import styles from "./CustomSelect.module.css";
 
 const findIndexAfter = (
   options: CustomSelectOptionInterface[] = [],
@@ -91,9 +89,9 @@ function findSelectedIndex(
 }
 
 const filter = (
-  options: CustomSelectProps["options"],
+  options: SelectProps["options"],
   inputValue: string,
-  filterFn: CustomSelectProps["filterFn"]
+  filterFn: SelectProps["filterFn"]
 ) => {
   return typeof filterFn === "function"
     ? options.filter((option) => filterFn(inputValue, option))
@@ -111,9 +109,8 @@ export interface CustomSelectOptionInterface {
   [index: string]: any;
 }
 
-export interface CustomSelectProps
+export interface SelectProps
   extends NativeSelectProps,
-    HasPlatform,
     FormFieldProps,
     TrackerOptionsProps {
   /**
@@ -168,12 +165,15 @@ export interface CustomSelectProps
   dropdownOffsetDistance?: number;
   fixDropdownWidth?: boolean;
   forceDropdownPortal?: boolean;
-  selectType?: keyof typeof SelectType;
+  selectType?: SelectType;
 }
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
-function CustomSelectComponent(props: CustomSelectProps) {
+/**
+ * @see https://vkcom.github.io/VKUI/#/CustomSelect
+ */
+export function CustomSelect(props: SelectProps) {
   const [opened, setOpened] = React.useState(false);
   const {
     before,
@@ -182,8 +182,6 @@ function CustomSelectComponent(props: CustomSelectProps) {
     getRef,
     getRootRef,
     popupDirection,
-    sizeY,
-    platform,
     style,
     onChange,
     children,
@@ -193,7 +191,7 @@ function CustomSelectComponent(props: CustomSelectProps) {
     onClose,
     fetching,
     forceDropdownPortal,
-    selectType = SelectType.default,
+    selectType = "default",
     autoHideScrollbar,
     autoHideScrollbarDelay,
     searchable = false,
@@ -212,7 +210,7 @@ function CustomSelectComponent(props: CustomSelectProps) {
   }
 
   const containerRef = React.useRef<HTMLLabelElement>(null);
-  const scrollBoxRef = React.useRef<HTMLDivElement>(null);
+  const scrollBoxRef = React.useRef<HTMLDivElement | null>(null);
   const selectElRef = React.useRef<HTMLSelectElement>(null);
 
   const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<
@@ -261,13 +259,12 @@ function CustomSelectComponent(props: CustomSelectProps) {
 
   const openedClassNames = React.useMemo(
     () =>
-      classNames(
-        opened && "Select--open",
+      classNamesString(
         opened &&
           dropdownOffsetDistance === 0 &&
           (popperPlacement?.includes("top")
-            ? "Select--pop-up"
-            : "Select--pop-down")
+            ? styles["CustomSelect--pop-up"]
+            : styles["CustomSelect--pop-down"])
       ),
     [dropdownOffsetDistance, opened, popperPlacement]
   );
@@ -337,6 +334,23 @@ function CustomSelectComponent(props: CustomSelectProps) {
     return scrollBoxRef.current !== null;
   }, []);
 
+  const setScrollBoxRef = React.useCallback(
+    (ref: HTMLDivElement | null) => {
+      scrollBoxRef.current = ref;
+
+      if (
+        ref &&
+        selectedOptionIndex !== undefined &&
+        isValidIndex(selectedOptionIndex)
+      ) {
+        {
+          scrollToElement(selectedOptionIndex, true);
+        }
+      }
+    },
+    [isValidIndex, scrollToElement, selectedOptionIndex]
+  );
+
   const onKeyboardInput = React.useCallback(
     (key: string) => {
       const fullInput = keyboardInput + key;
@@ -383,16 +397,6 @@ function CustomSelectComponent(props: CustomSelectProps) {
       onOpen();
     }
   }, [onOpen, selectedOptionIndex]);
-
-  React.useEffect(() => {
-    if (
-      opened &&
-      selectedOptionIndex !== undefined &&
-      isValidIndex(selectedOptionIndex)
-    ) {
-      scrollToElement(selectedOptionIndex, true);
-    }
-  }, [isValidIndex, opened, scrollToElement, selectedOptionIndex]);
 
   const onBlur = React.useCallback(() => {
     close();
@@ -663,7 +667,9 @@ function CustomSelectComponent(props: CustomSelectProps) {
       options?.length > 0 ? (
         options.map(renderOption)
       ) : (
-        <Caption vkuiClass="CustomSelect__empty">{emptyText}</Caption>
+        <Footnote className={styles["CustomSelect__empty"]}>
+          {emptyText}
+        </Footnote>
       );
 
     if (typeof renderDropdown === "function") {
@@ -675,8 +681,7 @@ function CustomSelectComponent(props: CustomSelectProps) {
 
   return (
     <label
-      vkuiClass="CustomSelect"
-      className={className}
+      className={classNamesString(styles["CustomSelect"], className)}
       style={style}
       ref={multiRef(containerRef, getRootRef)}
       onClick={onLabelClick}
@@ -686,13 +691,13 @@ function CustomSelectComponent(props: CustomSelectProps) {
           {...restProps}
           autoFocus
           onBlur={onBlur}
-          vkuiClass={openedClassNames}
+          className={openedClassNames}
           value={inputValue}
           onKeyDown={onInputKeyDown}
           onChange={onInputChange}
           // TODO Ожидается, что клик поймает нативный select, но его перехватывает Input. К сожалению, это приводит к конфликтам типизации.
           // TODO Нужно перестать пытаться превратить CustomSelect в select. Тогда эта проблема уйдёт.
-          // @ts-ignore
+          // @ts-expect-error: TS2322 MouseEventHandler<HTMLSelectElement> !== MouseEventHandler<HTMLInputElement>
           onClick={props.onClick}
           before={before}
           after={icon}
@@ -708,7 +713,7 @@ function CustomSelectComponent(props: CustomSelectProps) {
           onKeyUp={handleKeyUp}
           onFocus={onFocus}
           onBlur={onBlur}
-          vkuiClass={openedClassNames}
+          className={openedClassNames}
           after={icon}
           selectType={selectType}
         >
@@ -724,7 +729,7 @@ function CustomSelectComponent(props: CustomSelectProps) {
         onClick={props.onClick}
         value={nativeSelectValue}
         aria-hidden={true}
-        vkuiClass="CustomSelect__control"
+        className={styles["CustomSelect__control"]}
       >
         {optionsProp.map((item) => (
           <option key={`${item.value}`} value={item.value} />
@@ -734,7 +739,7 @@ function CustomSelectComponent(props: CustomSelectProps) {
         <CustomSelectDropdown
           targetRef={containerRef}
           placement={popupDirection}
-          scrollBoxRef={scrollBoxRef}
+          scrollBoxRef={setScrollBoxRef}
           onPlacementChange={setPopperPlacement}
           onMouseLeave={resetFocusedOption}
           fetching={fetching}
@@ -751,10 +756,3 @@ function CustomSelectComponent(props: CustomSelectProps) {
     </label>
   );
 }
-
-/**
- * @see https://vkcom.github.io/VKUI/#/CustomSelect
- */
-export const CustomSelect = withAdaptivity(CustomSelectComponent, {
-  sizeY: true,
-});

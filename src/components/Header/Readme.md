@@ -1,5 +1,7 @@
 ```jsx
-const Example = withPlatform(({ platform }) => {
+const Example = () => {
+  const platform = usePlatform();
+
   return (
     <View activePanel="header">
       <Panel id="header">
@@ -9,7 +11,8 @@ const Example = withPlatform(({ platform }) => {
             mode="primary"
             aside={
               <Link>
-                Показать все{platform === VKCOM && <Icon12ChevronOutline />}
+                Показать все
+                {platform === Platform.VKCOM && <Icon12ChevronOutline />}
               </Link>
             }
           >
@@ -19,7 +22,8 @@ const Example = withPlatform(({ platform }) => {
             mode="primary"
             aside={
               <Link>
-                Показать все{platform === VKCOM && <Icon12ChevronOutline />}
+                Показать все
+                {platform === Platform.VKCOM && <Icon12ChevronOutline />}
               </Link>
             }
             subtitle="SOHN — Conrad"
@@ -30,7 +34,8 @@ const Example = withPlatform(({ platform }) => {
             mode="primary"
             aside={
               <Link>
-                Показать все{platform === VKCOM && <Icon12ChevronOutline />}
+                Показать все
+                {platform === Platform.VKCOM && <Icon12ChevronOutline />}
               </Link>
             }
             indicator="12"
@@ -41,7 +46,8 @@ const Example = withPlatform(({ platform }) => {
             mode="primary"
             aside={
               <Link>
-                Показать все{platform === VKCOM && <Icon12ChevronOutline />}
+                Показать все
+                {platform === Platform.VKCOM && <Icon12ChevronOutline />}
               </Link>
             }
             indicator={
@@ -58,7 +64,8 @@ const Example = withPlatform(({ platform }) => {
             mode="secondary"
             aside={
               <Link>
-                Показать все{platform === VKCOM && <Icon12ChevronOutline />}
+                Показать все
+                {platform === Platform.VKCOM && <Icon12ChevronOutline />}
               </Link>
             }
           >
@@ -68,7 +75,8 @@ const Example = withPlatform(({ platform }) => {
             mode="secondary"
             aside={
               <Link>
-                Показать все{platform === VKCOM && <Icon12ChevronOutline />}
+                Показать все
+                {platform === Platform.VKCOM && <Icon12ChevronOutline />}
               </Link>
             }
             indicator="667"
@@ -79,7 +87,8 @@ const Example = withPlatform(({ platform }) => {
             mode="secondary"
             aside={
               <Link>
-                Показать все{platform === VKCOM && <Icon12ChevronOutline />}
+                Показать все
+                {platform === Platform.VKCOM && <Icon12ChevronOutline />}
               </Link>
             }
             indicator={
@@ -108,7 +117,7 @@ const Example = withPlatform(({ platform }) => {
       </Panel>
     </View>
   );
-});
+};
 
 <Example />;
 ```

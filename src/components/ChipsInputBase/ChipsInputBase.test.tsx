@@ -1,3 +1,4 @@
+import * as React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { baselineComponent } from "../../testing/utils";
@@ -91,7 +92,7 @@ describe("ChipsInputBase", () => {
   it("focuses ChipsInputBase on surrounding container click", () => {
     render(<ChipsInputBaseTest value={chipsInputValue} />);
 
-    userEvent.click(document.querySelector(".ChipsInputBase") as Element);
+    userEvent.click(document.querySelector(".vkuiChipsInputBase") as Element);
     expect(getChipsInputBase()).toHaveFocus();
   });
 

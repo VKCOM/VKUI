@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  DESKTOP_SIZE,
-  MOBILE_SIZE,
-  SMALL_TABLET_SIZE,
-  TABLET_SIZE,
-} from "@vkui/components/AdaptivityProvider/AdaptivityProvider";
+import { BREAKPOINTS } from "@vkui/lib/adaptivity";
 import { Setting } from "../Setting/Setting";
 
 export const ViewWidthSelect = ({ onChange, value, ...restProps }) => (
@@ -13,6 +8,11 @@ export const ViewWidthSelect = ({ onChange, value, ...restProps }) => (
     label="Ширина окна"
     onChange={onChange}
     value={value}
-    options={[MOBILE_SIZE, SMALL_TABLET_SIZE, TABLET_SIZE, DESKTOP_SIZE]}
+    options={[
+      BREAKPOINTS.MOBILE,
+      BREAKPOINTS.SMALL_TABLET,
+      BREAKPOINTS.TABLET,
+      BREAKPOINTS.DESKTOP,
+    ]}
   />
 );

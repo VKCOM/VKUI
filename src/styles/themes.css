@@ -1,7 +1,3 @@
-@import "./bright_light.css";
-@import "./space_gray.css";
-@import "./vkcom_light.css";
-@import "./vkcom_dark.css";
 @import "../../node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css";
 @import "../../node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css";
 @import "../../node_modules/@vkontakte/vkui-tokens/themes/vkBaseDark/cssVars/declarations/onlyVariablesLocal.css";

@@ -1,9 +1,10 @@
 import * as React from "react";
-import { classNames } from "../../lib/classNames";
+import { classNamesString } from "../../lib/classNames";
 import { TappableProps, Tappable } from "../Tappable/Tappable";
 import { Subhead } from "../Typography/Subhead/Subhead";
-import { withAdaptivity } from "../../hoc/withAdaptivity";
-import "./RichCell.css";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import styles from "./RichCell.module.css";
 
 export interface RichCellProps extends TappableProps {
   /**
@@ -19,7 +20,7 @@ export interface RichCellProps extends TappableProps {
    */
   caption?: React.ReactNode;
   /**
-   * Контейнер для контента под `caption`. Например `<UsersStack size="s" />`.
+   * Контейнер для контента под `caption`. Например `<UsersStack size="m" />`.
    */
   bottom?: React.ReactNode;
   /**
@@ -55,7 +56,10 @@ export interface RichCellProps extends TappableProps {
   multiline?: boolean;
 }
 
-const RichCellComponent = ({
+/**
+ * @see https://vkcom.github.io/VKUI/#/RichCell
+ */
+export const RichCell = ({
   subhead,
   children,
   text,
@@ -66,54 +70,58 @@ const RichCellComponent = ({
   bottom,
   actions,
   multiline,
-  sizeY,
+  className,
   ...restProps
 }: RichCellProps) => {
+  const { sizeY } = useAdaptivity();
+
   return (
     <Tappable
       {...restProps}
-      vkuiClass={classNames(
-        "RichCell",
-        !multiline && "RichCell--text-ellipsis",
-        `RichCell--sizeY-${sizeY}`
+      className={classNamesString(
+        styles["RichCell"],
+        !multiline && styles["RichCell--text-ellipsis"],
+        getSizeYClassName(styles["RichCell"], sizeY),
+        className
       )}
     >
-      {before && <div vkuiClass="RichCell__before">{before}</div>}
-      <div vkuiClass="RichCell__in">
-        <div vkuiClass="RichCell__content">
-          <div vkuiClass="RichCell__content-before">
+      {before && <div className={styles["RichCell__before"]}>{before}</div>}
+      <div className={styles["RichCell__in"]}>
+        <div className={styles["RichCell__content"]}>
+          <div className={styles["RichCell__content-before"]}>
             {subhead && (
-              <Subhead Component="div" vkuiClass="RichCell__subhead">
+              <Subhead Component="div" className={styles["RichCell__subhead"]}>
                 {subhead}
               </Subhead>
             )}
-            <div vkuiClass="RichCell__children">{children}</div>
-            {text && <div vkuiClass="RichCell__text">{text}</div>}
+            <div className={styles["RichCell__children"]}>{children}</div>
+            {text && <div className={styles["RichCell__text"]}>{text}</div>}
             {caption && (
-              <Subhead Component="div" vkuiClass="RichCell__caption">
+              <Subhead Component="div" className={styles["RichCell__caption"]}>
                 {caption}
               </Subhead>
             )}
           </div>
           {(after || afterCaption) && (
-            <div vkuiClass="RichCell__content-after">
-              {after && <div vkuiClass="RichCell__after-children">{after}</div>}
+            <div className={styles["RichCell__content-after"]}>
+              {after && (
+                <div className={styles["RichCell__after-children"]}>
+                  {after}
+                </div>
+              )}
               {afterCaption && (
-                <div vkuiClass="RichCell__after-caption">{afterCaption}</div>
+                <div className={styles["RichCell__after-caption"]}>
+                  {afterCaption}
+                </div>
               )}
             </div>
           )}
         </div>
-        {bottom && <div vkuiClass="RichCell__bottom">{bottom}</div>}
-        {actions && <div vkuiClass="RichCell__actions">{actions}</div>}
+        {bottom && <div className={styles["RichCell__bottom"]}>{bottom}</div>}
+        {actions && (
+          <div className={styles["RichCell__actions"]}>{actions}</div>
+        )}
       </div>
     </Tappable>
   );
 };
-
-/**
- * @see https://vkcom.github.io/VKUI/#/RichCell
- */
-export const RichCell = withAdaptivity(RichCellComponent, { sizeY: true });
-
-RichCell.displayName = "RichCell";

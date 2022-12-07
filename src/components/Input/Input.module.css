@@ -1,0 +1,76 @@
+.Input {
+  position: relative;
+  line-height: 20px;
+  font-size: 16px;
+}
+
+.Input--align-center .Input__el {
+  text-align: center;
+}
+
+.Input--align-right .Input__el {
+  text-align: right;
+}
+
+.Input__el {
+  margin: 0;
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  box-shadow: none;
+  border: none;
+  appearance: none;
+  text-overflow: ellipsis;
+  font-family: inherit;
+  font-weight: var(--vkui--font_text--font_weight--regular);
+  font-size: var(--vkui--font_text--font_size--regular);
+  line-height: var(--vkui--font_text--line_height--regular);
+  color: var(--vkui--color_text_primary);
+  padding-right: 12px;
+  padding-left: 12px;
+  position: relative;
+  z-index: 6;
+  background: transparent;
+}
+
+.Input--sizeY-compact .Input__el {
+  font-size: var(--vkui--font_text--font_size--compact);
+  line-height: var(--vkui--font_text--line_height--compact);
+}
+
+.Input--hasBefore .Input__el {
+  padding-left: 0;
+}
+
+.Input--hasAfter .Input__el {
+  padding-right: 0;
+}
+
+@media (--sizeY-compact) {
+  .Input--sizeY-none .Input__el {
+    font-size: var(--vkui--font_text--font_size--compact);
+    line-height: var(--vkui--font_text--line_height--compact);
+  }
+}
+
+.Input__el:disabled {
+  opacity: var(--vkui--opacity_disable_accessibility);
+}
+
+.Input__el::placeholder {
+  color: var(--vkui--color_text_secondary);
+  /* Для Firefox */
+  opacity: 1;
+}
+
+.Input__el:disabled::placeholder {
+  color: var(--vkui--color_text_secondary);
+}
+
+.Input__el:focus {
+  outline: none;
+}
+
+.Input--align-left {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
+}

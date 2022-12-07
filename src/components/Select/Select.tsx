@@ -1,89 +1,80 @@
 import * as React from "react";
 import { NativeSelect } from "../NativeSelect/NativeSelect";
-import { CustomSelect, CustomSelectProps } from "../CustomSelect/CustomSelect";
-import { withAdaptivity } from "../../hoc/withAdaptivity";
+import { CustomSelect, SelectProps } from "../CustomSelect/CustomSelect";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { useAdaptivityHasPointer } from "../../hooks/useAdaptivityHasPointer";
 import { usePlatform } from "../../hooks/usePlatform";
-import { Platform, VKCOM } from "../../lib/platform";
-import {
-  AdaptivityContextInterface,
-  AdaptivityProps,
-  SizeType,
-} from "../AdaptivityProvider/AdaptivityContext";
-import { Paragraph } from "../Typography/Paragraph/Paragraph";
-import { Text } from "../Typography/Text/Text";
-import { Headline } from "../Typography/Headline/Headline";
+import { classNamesString } from "../../lib/classNames";
+import { getPlatformClassName } from "../../helpers/getPlatformClassName";
+import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import styles from "./Select.module.css";
 
-export const SelectType = {
-  default: "default",
-  plain: "plain",
-  accent: "accent",
-} as const;
+export type SelectType = "default" | "plain" | "accent";
 
-// TODO v5.0.0 поправить под новую адаптивность
 /**
  * @see https://vkcom.github.io/VKUI/#/SelectTypography
  */
 export const SelectTypography = ({
-  selectType = SelectType.default,
+  selectType = "default",
   children,
+  className,
   ...restProps
-}: React.PropsWithChildren<Pick<CustomSelectProps, "selectType">>) => {
+}: React.PropsWithChildren<Pick<SelectProps, "selectType" | "className">>) => {
   const platform = usePlatform();
   const { sizeY } = useAdaptivity();
 
-  if (selectType === SelectType.accent) {
-    return (
-      <Paragraph
-        weight={platform === Platform.ANDROID ? "2" : "1"}
-        {...restProps}
-      >
-        {children}
-      </Paragraph>
-    );
-  }
-
-  const Component =
-    platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
-
   return (
-    <Component Component="span" {...restProps}>
+    <span
+      className={classNamesString(
+        styles["SelectTypography"],
+        getPlatformClassName(styles["SelectTypography"], platform),
+        getSizeYClassName(styles["SelectTypography"], sizeY),
+        styles[`SelectTypography--selectType-${selectType}`],
+        className
+      )}
+      {...restProps}
+    >
       {children}
-    </Component>
-  );
-};
-
-export interface SelectProps extends CustomSelectProps, AdaptivityProps {}
-
-const SelectComponent = ({
-  hasMouse,
-  ...props
-}: SelectProps & AdaptivityContextInterface) => {
-  // Use custom select if device has connected a mouse
-  if (hasMouse) {
-    const { children, ...restProps } = props;
-
-    return <CustomSelect {...restProps} />;
-  }
-
-  const { options = [], popupDirection, renderOption, ...restProps } = props;
-
-  return (
-    <NativeSelect {...restProps}>
-      {options.map(({ label, value }) => (
-        <option value={value} key={`${value}`}>
-          {label}
-        </option>
-      ))}
-    </NativeSelect>
+    </span>
   );
 };
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Select
  */
-export const Select = withAdaptivity(SelectComponent, {
-  hasMouse: true,
-});
+export const Select = ({
+  children,
+  options = [],
+  popupDirection,
+  renderOption,
+  className,
+  ...props
+}: SelectProps) => {
+  const hasPointer = useAdaptivityHasPointer();
 
-Select.displayName = "Select";
+  return (
+    <React.Fragment>
+      {(hasPointer === undefined || hasPointer) && (
+        <CustomSelect
+          className={classNamesString(styles["Select__custom"], className)}
+          options={options}
+          popupDirection={popupDirection}
+          renderOption={renderOption}
+          {...props}
+        />
+      )}
+      {(hasPointer === undefined || !hasPointer) && (
+        <NativeSelect
+          className={classNamesString(styles["Select__native"], className)}
+          {...props}
+        >
+          {options.map(({ label, value }) => (
+            <option value={value} key={`${value}`}>
+              {label}
+            </option>
+          ))}
+        </NativeSelect>
+      )}
+    </React.Fragment>
+  );
+};

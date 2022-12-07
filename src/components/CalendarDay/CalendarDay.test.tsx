@@ -1,24 +1,27 @@
-import { render } from "@testing-library/react";
+import * as React from "react";
+import { screen, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { CalendarDay, CalendarDayProps } from "./CalendarDay";
 
-const props: CalendarDayProps = {
-  day: new Date("1970-01-01"),
-  onChange: jest.fn(),
-};
+const day = new Date("1970-01-01");
+const onChange = jest.fn();
+
+const CalendarDayTest = (
+  testProps: Omit<CalendarDayProps, "day" | "onChange">
+) => <CalendarDay day={day} onChange={onChange} {...testProps} />;
 
 describe("CalendarDay", () => {
   it("calls callback with day on click", () => {
-    const day = new Date("1970-01-01");
-    const onChange = jest.fn();
-    const { container } = render(<CalendarDay day={day} onChange={onChange} />);
-    userEvent.click(container.getElementsByClassName("CalendarDay")[0]);
+    render(<CalendarDayTest />);
+    userEvent.click(screen.getByText("1"));
 
     expect(onChange).toHaveBeenCalledWith(day);
   });
   it("renders hidden div", () => {
-    const { container } = render(<CalendarDay {...props} hidden />);
+    render(<CalendarDayTest hidden />);
 
-    expect(container.firstChild).toHaveClass("CalendarDay__hidden");
+    expect(
+      document.querySelector(".vkuiCalendarDay__hidden")
+    ).toBeInTheDocument();
   });
 });

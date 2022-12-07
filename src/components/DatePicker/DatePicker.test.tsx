@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import { render } from "@testing-library/react";
 import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
 import { baselineComponent } from "../../testing/utils";
@@ -12,7 +12,7 @@ describe("DatePicker", () => {
 
   describe("custom", () => {
     const forceCustom = (jsx: ReactNode) => (
-      <AdaptivityProvider hasMouse>{jsx}</AdaptivityProvider>
+      <AdaptivityProvider hasPointer>{jsx}</AdaptivityProvider>
     );
     const getByName = (name: string) =>
       document.getElementsByName(name)[0] as HTMLInputElement;
@@ -160,7 +160,7 @@ describe("DatePicker", () => {
 
   describe("native", () => {
     const forceNative = (jsx: ReactNode) => (
-      <AdaptivityProvider hasMouse={false}>{jsx}</AdaptivityProvider>
+      <AdaptivityProvider hasPointer={false}>{jsx}</AdaptivityProvider>
     );
     const getInput = () => document.querySelector("input") as Element;
 
