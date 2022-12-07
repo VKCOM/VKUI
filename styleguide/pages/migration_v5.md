@@ -107,18 +107,72 @@ npx @vkontakte/vkui-token-translator
 ## Типографика
 
 - Для компонентов типографики применяются токены `font-family` из [`vkui-tokens`](https://github.com/VKCOM/vkui-tokens)
-- Начертания `"heavy"`, `"bold"`, `"semibold"`, `medium` и `"regular"` были удалены. Используйте значения `"1"`, `"2"` и `"3"`.
+- Начертания `"heavy"`, `"bold"`, `"semibold"`, `medium` и `"regular"` были удалены. Используйте значения `"1"`, `"2"` и `"3"`. <br /><br />
 
-```diff
-- <Headline weight="semibold">Text</Headline>
-+ <Headline weight="1">Text</Headline>
+  [Headline](#/Headline)
 
-- <Headline weight="medium">Text</Headline>
-+ <Headline weight="2">Text</Headline>
+  ```diff
+  - <Headline weight="semibold">Text</Headline>
+  + <Headline weight="1">Text</Headline>
 
-- <Headline weight="regular">Text</Headline>
-+ <Headline weight="3">Text</Headline>
-```
+  - <Headline weight="medium">Text</Headline>
+  + <Headline weight="2">Text</Headline>
+
+  - <Headline weight="regular">Text</Headline>
+  + <Headline weight="3">Text</Headline>
+  ```
+
+  [Subhead](#/Subhead)
+
+  ```diff
+  - <Subhead weight="semibold">Text</Subhead>
+  + <Subhead weight="1">Text</Subhead>
+
+  - <Subhead weight="medium">Text</Subhead>
+  + <Subhead weight="2">Text</Subhead>
+
+  - <Subhead weight="regular">Text</Subhead>
+  + <Subhead weight="3">Text</Subhead>
+  ```
+
+  [Title](#/Title)
+
+  ```diff
+  - <Title weight="semibold">Text</Title>
+  + <Title weight="1">Text</Title>
+
+  - <Title weight="medium">Text</Title>
+  + <Title weight="2">Text</Title>
+
+  - <Title weight="regular">Text</Title>
+  + <Title weight="3">Text</Title>
+  ```
+
+  [Text](#/Text)
+
+  ```diff
+  - <Text weight="semibold">Text</Text>
+  + <Text weight="1">Text</Text>
+
+  - <Text weight="medium">Text</Text>
+  + <Text weight="2">Text</Text>
+
+  - <Text weight="regular">Text</Text>
+  + <Text weight="3">Text</Text>
+  ```
+
+  [Caption](#/Caption)
+
+  ```diff
+  - <Caption weight="semibold">Text</Caption>
+  + <Caption weight="1">Text</Caption>
+
+  - <Caption weight="medium">Text</Caption>
+  + <Caption weight="2">Text</Caption>
+
+  - <Caption weight="regular">Text</Caption>
+  + <Caption weight="3">Text</Caption>
+  ```
 
 <br/><br/>
 
