@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui-token-translator",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Tools for translate Appearance to vkui-tokens",
   "repository": "https://github.com/VKCOM/VKUI",
   "homepage": "https://vkcom.github.io/VKUI/",
