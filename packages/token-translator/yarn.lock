@@ -2156,9 +2156,9 @@ to-regex-range@^5.0.1:
     is-number "^7.0.0"
 
 ts-jest@^29.0.0-next.1:
-  version "29.0.0-next.1"
-  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-29.0.0-next.1.tgz#bfd6c190f1eb30ce2e9408f6c3309784ccf96349"
-  integrity sha512-bVo2GDuJiV+cWEYB72tdz2Ips4JDKa04bcKikPULxxUHT4fsoY1zB2zvsrJym18qrFpXyVrIdgJFLfEx2YTkbg==
+  version "29.0.3"
+  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-29.0.3.tgz#63ea93c5401ab73595440733cefdba31fcf9cb77"
+  integrity sha512-Ibygvmuyq1qp/z3yTh9QTwVVAbFdDy/+4BtIQR2sp6baF2SJU/8CKK/hhnGIDY2L90Az2jIqTwZPnN2p+BweiQ==
   dependencies:
     bs-logger "0.x"
     fast-json-stable-stringify "2.x"
