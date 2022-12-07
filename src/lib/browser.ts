@@ -52,7 +52,7 @@ export function computeBrowserInfo(userAgent = ""): BrowserInfo {
 export function mediaQueryNull(query: string): MediaQueryList {
   console.error(`[mediaQueryNull] Похоже вы пытаетесь использовать \`Window.matchMedia()\` API вне браузера.
 
-Во избежание ошибок при гидрации, рекомендуется избегать этого, т.к. при SSR нет информации о размерах экрана.
+Во избежание ошибок при гидратации, рекомендуется избегать этого, т.к. при SSR нет информации о размерах экрана.
 
 Используйте CSS Media Query или библиотеку по типу https://github.com/artsy/fresnel.`);
   return {
