@@ -40,9 +40,9 @@ export interface UseAdaptivityWithJSMediaQueries
 export const useAdaptivityWithJSMediaQueries =
   (): UseAdaptivityWithJSMediaQueries => {
     if (!canUseDOM) {
-      console.error(`[useAdaptivityWithJSMediaQueries] Похоже вы пытаетесь использовать хук вне браузера.
+      console.error(`[useAdaptivityWithJSMediaQueries] Похоже, вы пытаетесь использовать хук вне браузера.
 
-Во избежание ошибок при гидратации, рекомендуется избегать этого, т.к. при SSR нет информации о размерах экрана.
+Постарайтесь этого избегать, чтобы не было ошибок при гидратации: при SSR нет информации о размерах экрана.
 
 Используйте CSS Media Query или библиотеку по типу https://github.com/artsy/fresnel.`);
     }
