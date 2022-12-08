@@ -87,7 +87,7 @@ const Example = () => {
         </FormItem>
         <FormItem>
           <div style={{ display: "flex" }}>
-            <LocaleProviderContext.Provider value={locale}>
+            <LocaleProvider value={locale}>
               <DateRangeInput
                 value={value}
                 onChange={setValue}
@@ -97,7 +97,7 @@ const Example = () => {
                 disablePickers={disablePickers}
                 disableCalendar={disableCalendar}
               />
-            </LocaleProviderContext.Provider>
+            </LocaleProvider>
           </div>
         </FormItem>
       </FormLayoutGroup>

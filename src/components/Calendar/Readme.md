@@ -115,7 +115,7 @@ const Example = () => {
           />
         </FormItem>
         <FormItem>
-          <LocaleProviderContext.Provider value={locale}>
+          <LocaleProvider value={locale}>
             <Calendar
               value={value}
               onChange={setValue}
@@ -127,7 +127,7 @@ const Example = () => {
               size={size}
               listenDayChangesForUpdate={listenDayChangesForUpdate}
             />
-          </LocaleProviderContext.Provider>
+          </LocaleProvider>
         </FormItem>
       </FormLayoutGroup>
     </FormLayout>
