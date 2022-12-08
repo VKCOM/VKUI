@@ -30,7 +30,7 @@ jobs:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
       - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 18
       - name: Set Git credentials
         run: |
           git config --local user.email "actions@github.com"

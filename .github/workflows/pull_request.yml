@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 18
           cache: "yarn"
       - run: yarn install --frozen-lockfile --ignore-scripts
       - name: Run tests
@@ -54,7 +54,7 @@ jobs:
         run: git fetch --no-tags --depth=1 origin $GITHUB_BASE_REF && git checkout origin/$GITHUB_BASE_REF src/**/__image_snapshots__/*.png
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
           cache: "yarn"
       - run: yarn install --frozen-lockfile --ignore-scripts
       - name: Install deps for playwright
@@ -81,7 +81,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 18
           cache: "yarn"
       - run: yarn install --frozen-lockfile --ignore-scripts
       - run: yarn styleguide:build
@@ -98,7 +98,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
           cache: "yarn"
       - run: yarn install --frozen-lockfile --ignore-scripts
       - uses: andresz1/size-limit-action@v1
@@ -155,7 +155,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 18
           cache: "yarn"
       - name: Download test artifact
         uses: actions/download-artifact@v3
