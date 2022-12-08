@@ -105,7 +105,7 @@ const Example = () => {
         </FormItem>
         <FormItem>
           <div style={{ display: "flex" }}>
-            <LocaleProviderContext.Provider value={locale}>
+            <LocaleProvider value={locale}>
               <DateInput
                 value={value}
                 onChange={setValue}
@@ -117,7 +117,7 @@ const Example = () => {
                 showNeighboringMonth={showNeighboringMonth}
                 disableCalendar={disableCalendar}
               />
-            </LocaleProviderContext.Provider>
+            </LocaleProvider>
           </div>
         </FormItem>
       </FormLayoutGroup>
