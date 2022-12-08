@@ -49,6 +49,8 @@
 .WriteBarIcon--ios.WriteBarIcon--send,
 .WriteBarIcon--ios.WriteBarIcon--done {
   width: 48px;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .WriteBarIcon--ios.WriteBarIcon--send:first-child,
