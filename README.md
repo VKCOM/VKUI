@@ -26,6 +26,12 @@ npm i @vkontakte/vkui @vkontakte/icons @vkontakte/vk-bridge
 yarn add @vkontakte/vkui @vkontakte/icons @vkontakte/vk-bridge
 ```
 
+**pnpm:**
+
+```sh
+pnpm add @vkontakte/vkui @vkontakte/icons @vkontakte/vk-bridge
+```
+
 > _Обратите внимание_: мы поддерживаем [react](https://www.npmjs.com/package/react) и [react-dom](https://www.npmjs.com/package/react-dom) `^17.0.0` и `^18.1.0`
 
 ## Hello World
