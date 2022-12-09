@@ -3,7 +3,7 @@ src/styles/customMedias.generated.css
 PUBLISHING.md
 
 # Builds
-dist/*
+dist/
 !e2e/dist/index.html
 styleguide-build/
 

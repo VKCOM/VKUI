@@ -10,15 +10,7 @@ updates:
       - 'VKCOM/vk-sec'
       - 'VKCOM/vkui-core'
 
-  - package-ecosystem: 'npm'
-    directory: '/.github/danger'
-    schedule:
-      interval: 'daily'
-    allow:
-      - dependency-type: 'direct'
-    reviewers:
-      - 'VKCOM/vk-sec'
-      - 'VKCOM/vkui-core'
+      # PACKAGES
 
   - package-ecosystem: 'npm'
     directory: '/packages/token-translator'
@@ -42,6 +34,48 @@ updates:
 
   - package-ecosystem: 'npm'
     directory: '/packages/babel-plugin-transform-css-modules'
+    schedule:
+      interval: 'daily'
+    allow:
+      - dependency-type: 'direct'
+    reviewers:
+      - 'VKCOM/vk-sec'
+      - 'VKCOM/vkui-core'
+
+  # LOCAL ACTIONS
+
+  - package-ecosystem: 'npm'
+    directory: '/.github/actions/reporter'
+    schedule:
+      interval: 'daily'
+    allow:
+      - dependency-type: 'direct'
+    reviewers:
+      - 'VKCOM/vk-sec'
+      - 'VKCOM/vkui-core'
+
+  - package-ecosystem: 'npm'
+    directory: '/.github/actions/patch'
+    schedule:
+      interval: 'daily'
+    allow:
+      - dependency-type: 'direct'
+    reviewers:
+      - 'VKCOM/vk-sec'
+      - 'VKCOM/vkui-core'
+
+  - package-ecosystem: 'npm'
+    directory: '/.github/actions/push-screenshots'
+    schedule:
+      interval: 'daily'
+    allow:
+      - dependency-type: 'direct'
+    reviewers:
+      - 'VKCOM/vk-sec'
+      - 'VKCOM/vkui-core'
+
+  - package-ecosystem: 'npm'
+    directory: '/.github/actions/stable-branch'
     schedule:
       interval: 'daily'
     allow:
