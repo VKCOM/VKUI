@@ -1,11 +1,10 @@
-/**
- * @param {string} header
- * @param {string} description
- * @param {{ stableBranchRef: string, patchRefs: string, pullNumber: string  }} patch
- * @returns string
- */
-module.exports.getPatchInstructions = (header, description, patch) => {
+export function getPatchInstructions(
+  header: string,
+  description: string,
+  patch: { stableBranchRef: string; patchRefs: string; pullNumber: number },
+) {
   const { stableBranchRef, patchRefs, pullNumber } = patch;
+
   return `
 ## ${header}
 
@@ -31,4 +30,4 @@ git push --set-upstream origin patch/pr${pullNumber}
 gh pr create --base ${stableBranchRef}
 \`\`\`
 `;
-};
+}

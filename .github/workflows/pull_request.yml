@@ -181,14 +181,15 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: e2e-output
-      - name: Install reporting deps
-        run: yarn --cwd .github/danger --frozen-lockfile --ignore-scripts
       - name: Combine e2e & unit coverage
         run: npx nyc report --reporter=json-summary
-      - name: Create test report
-        run: yarn --cwd .github/danger danger ci
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
-          AWS_ENDPOINT: hb.bizmrg.com
+
+      - run: yarn install --frozen-lockfile --ignore-scripts && yarn build
+        working-directory: ./.github/actions/reporter
+      - name: Reporter
+        uses: ./.github/actions/reporter
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsEndpoint: hb.bizmrg.com
+          token: ${{ secrets.GITHUB_TOKEN }}
