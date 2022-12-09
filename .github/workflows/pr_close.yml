@@ -1,7 +1,7 @@
 name: "Close PR"
 
 on:
-  pull_request:
+  pull_request_target:
     types: [closed]
 
 jobs:
@@ -25,7 +25,12 @@ jobs:
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'patch')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: actions/checkout@v3 for forked
+        uses: actions/checkout@v3
+        if: github.event.pull_request.base.repo.id != github.event.pull_request.head.repo.id
+      - name: actions/checkout@v3 for base
+        uses: actions/checkout@v3
+        if: github.event.pull_request.base.repo.id == github.event.pull_request.head.repo.id
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
       - uses: actions/setup-node@v3
@@ -37,6 +42,7 @@ jobs:
           git config --local user.name "GitHub Action"
       - run: node ./.github/gitflow/patch.js
         env:
+          FORKED: github.event.pull_request.base.repo.id != github.event.pull_request.head.repo.id
           INPUT_GITHUB_PULL_NUMBER: ${{ github.event.number }}
           INPUT_GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
