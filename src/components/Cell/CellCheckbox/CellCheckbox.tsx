@@ -34,8 +34,12 @@ export const CellCheckbox = ({
       style={style}
     >
       <input vkuiClass="CellCheckbox__input" type="checkbox" {...restProps} />
-      <IconOff vkuiClass="CellCheckbox__icon CellCheckbox__icon--off" />
-      <IconOn vkuiClass="CellCheckbox__icon CellCheckbox__icon--on" />
+      <span vkuiClass="CellCheckbox__icon CellCheckbox__icon--off">
+        <IconOff />
+      </span>
+      <span vkuiClass="CellCheckbox__icon CellCheckbox__icon--on">
+        <IconOn />
+      </span>
     </div>
   );
 };
