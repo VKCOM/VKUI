@@ -5,12 +5,13 @@ import {
   Icon24ChevronUp,
   Icon20ChevronUp,
 } from "@vkontakte/icons";
+import { VKontakteIconsBackwardsCompatibleElement } from "../../types";
 import { classNames } from "../../lib/classNames";
 import { SizeType } from "../AdaptivityProvider/AdaptivityContext";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 
 export interface DropdownIconProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+  extends React.HTMLAttributes<VKontakteIconsBackwardsCompatibleElement> {
   opened?: boolean;
 }
 
