@@ -1,5 +1,6 @@
 const process = require("process");
 const { execSync } = require("child_process");
+const { getPatchInstructions } = require("./messages");
 const {
   stableBranchName,
   remoteRepository,
@@ -25,6 +26,23 @@ const patchRefs = patchCommits
   .map((commit) => commit.sha)
   .join(" ");
 
+const forked = process.env.FORKED;
+
+if (forked) {
+  const message = getPatchInstructions(
+    "⚠️ Patch (forked repo)",
+    "Необходимо вручную перенести исправление в стабильную ветку.",
+    {
+      stableBranchRef,
+      pullNumber,
+      patchRefs,
+    }
+  );
+
+  gh.prComment(pullNumber, message);
+  process.exit(0);
+}
+
 execSync(`git fetch origin ${stableBranchRef} ${patchRefs}`);
 execSync(`git checkout ${stableBranchRef}`);
 try {
@@ -32,29 +50,15 @@ try {
 } catch (e) {
   console.error(e);
 
-  const message = `
-## ❌ Patch
-
-Не удалось автоматически применить исправление на стабильной ветке.
-
-Чтобы исправление попало в стабильную ветку, выполните следующие действия:
-
-1. Создайте новую ветку от стабильной и примените исправления используя cherry-pick
-
-\`\`\`bash
-git fetch origin ${stableBranchRef}
-git checkout -b patch/pr${pullNumber} origin/${stableBranchRef}
-git cherry-pick ${patchRefs}
-\`\`\`
-
-2. Исправьте конфликты, следуя инструкциям из терминала
-3. Отправьте ветку на GitHub и создайте новый PR с последней стабильной веткой (метка patch не нужна)
-
-\`\`\`bash
-git push --set-upstream origin patch/pr${pullNumber}
-gh pr create --base ${stableBranchRef}
-\`\`\`  
-`;
+  const message = getPatchInstructions(
+    "❌ Patch",
+    "Не удалось автоматически применить исправление на стабильной ветке.",
+    {
+      stableBranchRef,
+      pullNumber,
+      patchRefs,
+    }
+  );
 
   gh.prComment(pullNumber, message);
   process.exit(1);
