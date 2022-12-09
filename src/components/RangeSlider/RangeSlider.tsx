@@ -11,17 +11,15 @@ export type RangeSliderProps = UniversalSliderProps<Value>;
  */
 export const RangeSlider = ({
   onChange,
-  defaultValue,
   min = 0,
   max = 100,
+  defaultValue = [min, max],
   step = 0,
   ...props
 }: RangeSliderProps) => {
-  const isControlled = Boolean(props.value);
+  const isControlled = props.value !== undefined;
 
-  const [localValue, setValue] = React.useState(
-    defaultValue || ([min, max] as Value)
-  );
+  const [localValue, setValue] = React.useState(defaultValue);
   const [start, end] = props.value || localValue;
   const value = React.useMemo(
     () => [clamp(start, min, max), clamp(end, min, max)] as Value,

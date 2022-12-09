@@ -2,10 +2,11 @@ import * as React from "react";
 import { Headline } from "../Typography/Headline/Headline";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useExternRef } from "../../hooks/useExternRef";
-import { hasReactNode, isFunction } from "../../lib/utils";
+import { hasReactNode } from "../../lib/utils";
 import { classNamesString } from "../../lib/classNames";
 import { Platform } from "../../lib/platform";
 import { HasRef, HasRootRef } from "../../types";
+import { useEnsuredControl } from "../../hooks/useEnsuredControl";
 import styles from "./WriteBar.module.css";
 
 export interface WriteBarProps
@@ -45,17 +46,19 @@ export const WriteBar = ({
   before,
   inlineAfter,
   after,
-  value,
-  onChange,
   getRootRef,
   getRef,
   onHeightChange,
   shadow = false,
+  defaultValue,
   ...restProps
 }: WriteBarProps) => {
   const platform = usePlatform();
 
-  const isControlledOutside = value != null;
+  const [value, onChange] = useEnsuredControl({
+    defaultValue,
+    ...restProps,
+  });
 
   const textareaRef = useExternRef(getRef);
   const currentScrollHeight = React.useRef<number>();
@@ -80,21 +83,7 @@ export const WriteBar = ({
     }
   }, [onHeightChange, textareaRef]);
 
-  const onTextareaChange: React.ChangeEventHandler<HTMLTextAreaElement> = (
-    event
-  ) => {
-    if (isFunction(onChange)) {
-      onChange(event);
-    }
-
-    if (!isControlledOutside) {
-      resize();
-    }
-  };
-
-  React.useEffect(() => {
-    resize();
-  }, [resize, value]);
+  React.useEffect(resize, [resize, value]);
 
   return (
     <div
@@ -117,7 +106,7 @@ export const WriteBar = ({
             {...restProps}
             Component="textarea"
             className={styles["WriteBar__textarea"]}
-            onChange={onTextareaChange}
+            onChange={onChange}
             getRootRef={textareaRef}
             value={value}
           />

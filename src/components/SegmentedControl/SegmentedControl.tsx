@@ -1,12 +1,13 @@
 import * as React from "react";
 import { classNamesString } from "../../lib/classNames";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import { generateRandomId, noop } from "../../lib/utils";
+import { generateRandomId } from "../../lib/utils";
 import { warnOnce } from "../../lib/warnOnce";
 import { SegmentedControlOption } from "./SegmentedControlOption/SegmentedControlOption";
 import { HasRootRef } from "../../types";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
 import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import { useCustomEnsuredControl } from "../../hooks/useEnsuredControl";
 import styles from "./SegmentedControl.module.css";
 
 export type SegmentedControlValue = string | number | undefined;
@@ -38,31 +39,22 @@ export const SegmentedControl = ({
   name,
   options,
   getRootRef,
-  onChange = noop,
-  value: valueProp,
-  defaultValue,
+  defaultValue = options[0]?.value,
   children,
   className,
+  onChange: onChangeProp,
+  value: valueProp,
   ...restProps
 }: SegmentedControlProps) => {
-  const { sizeY } = useAdaptivity();
-  const initialValue = defaultValue ?? options[0]?.value;
+  const [value, onChange] = useCustomEnsuredControl({
+    onChange: onChangeProp,
+    value: valueProp,
+    defaultValue,
+  });
 
-  if (process.env.NODE_ENV === "development") {
-    if (valueProp !== undefined && defaultValue !== undefined) {
-      warn(
-        "SegmentedControl должен быть либо управляемым, либо неуправляемым" +
-          "(укажите либо свойство value, либо свойство defaultValue, но не оба).",
-        "error"
-      );
-    }
-  }
+  const { sizeY } = useAdaptivity();
 
   const [activeOptionIdx, updateActiveOptionIdx] = React.useState<number>(0);
-  const [valueLocal, updateValueLocal] =
-    React.useState<SegmentedControlValue>(initialValue);
-
-  const value = valueProp ?? valueLocal;
 
   const nameRef = React.useRef<string>(name ?? generateRandomId());
 
@@ -79,13 +71,6 @@ export const SegmentedControl = ({
   }, [value, options]);
 
   const translateX = `translateX(${100 * activeOptionIdx}%)`;
-
-  const handleOnChange = (value: SegmentedControlValue) => {
-    if (valueProp === undefined) {
-      updateValueLocal(value);
-    }
-    onChange(value);
-  };
 
   return (
     <div
@@ -121,7 +106,7 @@ export const SegmentedControl = ({
               )}
               name={nameRef.current}
               checked={value === optionProps.value}
-              onChange={() => handleOnChange(optionProps.value)}
+              onChange={() => onChange(optionProps.value)}
             >
               {label}
             </SegmentedControlOption>

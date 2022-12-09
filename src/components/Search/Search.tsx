@@ -68,11 +68,17 @@ export const Search = ({
   onIconClick = noop,
   style,
   autoComplete = "off",
+  onChange: onChangeProp,
+  value: valueProp,
   ...inputProps
 }: SearchProps) => {
   const inputRef = useExternRef(getRef);
   const [isFocused, setFocused] = React.useState(false);
-  const [value, onChange] = useEnsuredControl(inputProps, { defaultValue });
+  const [value, onChange] = useEnsuredControl({
+    defaultValue,
+    onChange: onChangeProp,
+    value: valueProp,
+  });
   const { sizeY } = useAdaptivity();
   const platform = usePlatform();
 
