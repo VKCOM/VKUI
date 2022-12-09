@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useExternRef } from "./useExternRef";
 import { warnOnce } from "../lib/warnOnce";
+import { useEffectDev } from "./useEffectDev";
 
 type ChildrenElement<T> = React.ReactElement<{ getRootRef?: React.Ref<T> }>;
 
@@ -11,6 +12,7 @@ const isDOMTypeElement = (
 };
 
 const warn = warnOnce("usePatchChildrenRef");
+
 export const usePatchChildrenRef = <T = HTMLElement>(
   children?: ChildrenElement<T>
 ): [React.MutableRefObject<T | null>, ChildrenElement<T> | undefined] => {
@@ -20,14 +22,16 @@ export const usePatchChildrenRef = <T = HTMLElement>(
       ? (children.ref as React.Ref<T>)
       : children.props.getRootRef);
   const patchedRef = useExternRef<T>(childRef);
-  React.useEffect(() => {
-    if (!patchedRef.current && process.env.NODE_ENV === "development") {
+
+  useEffectDev(() => {
+    if (!patchedRef.current) {
       warn(
         "Кажется, в children передан компонент, который не поддерживает свойство getRootRef. Мы не можем получить ссылку на корневой dom-элемент этого компонента",
         "error"
       );
     }
   }, [children?.type, patchedRef]);
+
   return [
     patchedRef,
     React.isValidElement(children)
