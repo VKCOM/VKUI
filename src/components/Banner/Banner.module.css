@@ -1,4 +1,5 @@
 .Banner {
+  isolation: isolate;
   margin: 12px 0;
   padding: 0 var(--vkui--size_base_padding_horizontal--regular);
   color: var(--vkui--color_text_primary);
