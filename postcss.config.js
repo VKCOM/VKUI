@@ -11,8 +11,6 @@ const {
   cssCustomPropertiesPaths,
   getCustomMedias,
 } = require("./shared");
-// TODO: включить после добавления поддержки VK-Sans-Text
-// const VkSansMandatoryDeclarations = require("./packages/postcss-plugin-vk-sans");
 const postcssCustomMedia = require("postcss-custom-media");
 
 module.exports = (ctx) => {
@@ -44,27 +42,6 @@ module.exports = (ctx) => {
         : generateScopedName,
       getJSON: () => void 0,
     }),
-    // TODO: включить после добавления поддержки VK-Sans-Text
-    // VkSansMandatoryDeclarations({
-    //   platform: "vkui",
-    //   debug: false,
-    //   ignoreFiles: [],
-    //   ignoreSelectors: [],
-    //   explicitNormalLetterSpacing: false,
-    //   respectImportant: true,
-    //   features: {
-    //     injectLetterSpacing: true,
-    //     injectVkSansDisplay: true,
-    //     overrideToVkSansDisplay: true,
-    //     overrideCustomFonts: true,
-    //   },
-    //   varName: "--vkui_internal--font_display",
-    //   customPropertiesFiles: [
-    //     path.resolve(
-    //       "./node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css"
-    //     ),
-    //   ],
-    // }),
     postcssCustomMedia({
       importFrom: getCustomMedias,
       // см. CONTRIBUTING.md
