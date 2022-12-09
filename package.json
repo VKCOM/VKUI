@@ -31,7 +31,9 @@
     "@babel/preset-env": "^7.16.8",
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
-    "@size-limit/preset-small-lib": "^5.0.5",
+    "@size-limit/file": "^8.1.0",
+    "@size-limit/webpack": "^8.1.0",
+    "@size-limit/webpack-css": "^8.1.0",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
@@ -39,7 +41,7 @@
     "@types/css-font-loading-module": "^0.0.7",
     "@types/jest": "^26.0.15",
     "@types/jest-image-snapshot": "^4.1.3",
-    "@types/node": "^14.14.31",
+    "@types/node": "^18.11.11",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/webpack": "^5.28.0",
@@ -102,7 +104,7 @@
     "react-styleguidist": "13.0.0",
     "semver": "^7.3.5",
     "shx": "^0.3.2",
-    "size-limit": "^5.0.5",
+    "size-limit": "^8.1.0",
     "source-map-loader": "^4.0.0",
     "style-loader": "^3.3.1",
     "stylelint": "^14.14.0",
@@ -133,16 +135,19 @@
     {
       "name": "JS",
       "path": "dist/index.js",
-      "gzip": false
+      "gzip": false,
+      "import": "*"
     },
     {
       "name": "JS (gzip)",
-      "path": "dist/index.js"
+      "path": "dist/index.js",
+      "import": "*"
     },
     {
       "name": "JS (brotli)",
       "path": "dist/index.js",
-      "brotli": true
+      "brotli": true,
+      "import": "*"
     },
     {
       "name": "CSS",

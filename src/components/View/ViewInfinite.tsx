@@ -133,8 +133,10 @@ class ViewInfiniteComponent extends React.Component<
   };
 
   private scrolls = scrollsCache[getNavId(this.props, warn) as string] || {};
-  private transitionFinishTimeout: number | undefined = undefined;
-  private animationFinishTimeout: number | undefined = undefined;
+  private transitionFinishTimeout: ReturnType<typeof setTimeout> | undefined =
+    undefined;
+  private animationFinishTimeout: ReturnType<typeof setTimeout> | undefined =
+    undefined;
 
   get document() {
     return this.props.document;
