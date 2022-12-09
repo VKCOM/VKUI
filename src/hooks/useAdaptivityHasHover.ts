@@ -1,6 +1,7 @@
 import * as React from "react";
 import { hasHover as hasHoverLib } from "@vkontakte/vkjs";
 import { AdaptivityContext } from "../components/AdaptivityProvider/AdaptivityContext";
+import { useIsClient } from "./useIsClient";
 
 /**
  * Определение происходит с помощью `window.matchMedia`. Для того, чтобы не было ошибок при гидратации, по умолчанию
@@ -12,19 +13,13 @@ export function useAdaptivityHasHover(deferDetect?: true): undefined | boolean;
 export function useAdaptivityHasHover(deferDetect?: false): boolean;
 export function useAdaptivityHasHover(deferDetect = true): undefined | boolean {
   const { hasHover: hasHoverContext } = React.useContext(AdaptivityContext);
-  const [hasHover, setHasHover] = React.useState(() =>
-    !deferDetect && hasHoverContext === undefined
-      ? hasHoverLib
-      : hasHoverContext
-  );
+  const hasHover =
+    hasHoverContext === undefined ? hasHoverLib : hasHoverContext;
 
-  React.useEffect(() => {
-    setHasHover((prevHasHover) => {
-      const newHasHover =
-        hasHoverContext === undefined ? hasHoverLib : hasHoverContext;
-      return prevHasHover === newHasHover ? prevHasHover : newHasHover;
-    });
-  }, [hasHoverContext]);
+  const isClient = useIsClient(!deferDetect);
+  if (!isClient) {
+    return undefined;
+  }
 
   return hasHover;
 }

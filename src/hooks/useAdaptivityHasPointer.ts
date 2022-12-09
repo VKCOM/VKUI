@@ -1,6 +1,7 @@
 import * as React from "react";
 import { hasMouse as hasPointerLib } from "@vkontakte/vkjs";
 import { AdaptivityContext } from "../components/AdaptivityProvider/AdaptivityContext";
+import { useIsClient } from "./useIsClient";
 
 /**
  * Определение происходит с помощью `window.matchMedia`. Для того, чтобы не было ошибок при гидратации, по умолчанию
@@ -14,19 +15,13 @@ export function useAdaptivityHasPointer(
   deferDetect = true
 ): undefined | boolean {
   const { hasPointer: hasPointerContext } = React.useContext(AdaptivityContext);
-  const [hasPointer, setHasPointer] = React.useState(() =>
-    !deferDetect && hasPointerContext === undefined
-      ? hasPointerLib
-      : hasPointerContext
-  );
+  const hasPointer =
+    hasPointerContext === undefined ? hasPointerLib : hasPointerContext;
 
-  React.useEffect(() => {
-    setHasPointer((prevHasPointer) => {
-      const newHasHover =
-        hasPointerContext === undefined ? hasPointerLib : hasPointerContext;
-      return prevHasPointer === newHasHover ? prevHasPointer : newHasHover;
-    });
-  }, [hasPointerContext]);
+  const isClient = useIsClient(!deferDetect);
+  if (!isClient) {
+    return undefined;
+  }
 
   return hasPointer;
 }

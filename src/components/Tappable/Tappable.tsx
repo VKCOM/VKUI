@@ -211,7 +211,7 @@ export const Tappable = ({
 
   const hovered = _hovered && !props.disabled;
   const hasActive = _hasActive && !childHover && !props.disabled;
-  const hasHover = hasHoverContext === true && _hasHover && !childHover;
+  const hasHover = hasHoverContext && _hasHover && !childHover;
   const isCustomElement =
     Component !== "a" &&
     Component !== "button" &&
