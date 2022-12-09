@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { AppRootContext } from "./AppRootContext";
 import { AppearanceProvider } from "../AppearanceProvider/AppearanceProvider";
 import { useAppearance } from "../../hooks/useAppearance";
+import { useIsClient } from "../../hooks/useIsClient";
 
 export interface AppRootPortalProps {
   className?: string;
@@ -15,15 +16,11 @@ export const AppRootPortal = ({
   className,
   forcePortal: forcePortalProp,
 }: AppRootPortalProps) => {
-  const [mounted, setMounted] = React.useState(false);
   const { portalRoot, mode, disablePortal } = React.useContext(AppRootContext);
   const appearance = useAppearance();
 
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
+  const isClient = useIsClient();
+  if (!isClient) {
     return null;
   }
 
