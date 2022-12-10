@@ -1,15 +1,15 @@
-import * as React from "react";
-import { getPlatformClassName } from "../../helpers/getPlatformClassName";
-import { Button, VKUIButtonProps } from "../Button/Button";
-import { HasRef, HasRootRef } from "../../types";
-import { usePlatform } from "../../hooks/usePlatform";
-import { VisuallyHiddenInput } from "../VisuallyHiddenInput/VisuallyHiddenInput";
-import { classNamesString } from "../../lib/classNames";
-import styles from "./File.module.css";
+import * as React from 'react';
+import { getPlatformClassName } from '../../helpers/getPlatformClassName';
+import { Button, VKUIButtonProps } from '../Button/Button';
+import { HasRef, HasRootRef } from '../../types';
+import { usePlatform } from '../../hooks/usePlatform';
+import { VisuallyHiddenInput } from '../VisuallyHiddenInput/VisuallyHiddenInput';
+import { classNamesString } from '../../lib/classNames';
+import styles from './File.module.css';
 
 export interface FileProps
-  extends Omit<VKUIButtonProps, "type">,
-    Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size">,
+  extends Omit<VKUIButtonProps, 'type'>,
+    Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'>,
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLElement> {}
 
@@ -17,8 +17,8 @@ export interface FileProps
  * @see https://vkcom.github.io/VKUI/#/File
  */
 export const File = ({
-  children = "Выберите файл",
-  align = "left",
+  children = 'Выберите файл',
+  align = 'left',
   size,
   mode,
   stretched,
@@ -39,9 +39,9 @@ export const File = ({
       Component="label"
       align={align}
       className={classNamesString(
-        styles["File"],
-        getPlatformClassName(styles["File"], platform),
-        className
+        styles['File'],
+        getPlatformClassName(styles['File'], platform),
+        className,
       )}
       stretched={stretched}
       mode={mode}
@@ -56,7 +56,7 @@ export const File = ({
     >
       <VisuallyHiddenInput
         {...restProps}
-        className={styles["File__input"]}
+        className={styles['File__input']}
         type="file"
         getRef={getRef}
       />

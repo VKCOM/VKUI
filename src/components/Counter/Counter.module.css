@@ -128,8 +128,7 @@
   color: var(--vkui--color_text_contrast);
 }
 
-.SubnavigationButton--selected:not(.SubnavigationButton--mode-tertiary)
-  .Counter--mode-inherit {
+.SubnavigationButton--selected:not(.SubnavigationButton--mode-tertiary) .Counter--mode-inherit {
   background-color: var(--vkui--color_background_content);
   color: var(--vkui--color_text_accent_themed);
 }

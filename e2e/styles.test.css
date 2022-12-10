@@ -1,63 +1,63 @@
 /* import all global styles that are not imported by the components */
-@import "../src/styles/themes.css";
-@import "../src/styles/components.css";
+@import '../src/styles/themes.css';
+@import '../src/styles/components.css';
 
 @font-face {
   /* stylelint-disable-next-line */
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-style: italic;
   font-weight: 400;
   /* stylelint-disable-next-line */
-  src: url(/font/Roboto-Italic.ttf) format("truetype");
+  src: url(/font/Roboto-Italic.ttf) format('truetype');
 }
 /* cyrillic */
 @font-face {
   /* stylelint-disable-next-line */
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
   /* stylelint-disable-next-line */
-  src: url(/font/Roboto-Regular.ttf) format("truetype");
+  src: url(/font/Roboto-Regular.ttf) format('truetype');
 }
 /* cyrillic */
 @font-face {
   /* stylelint-disable-next-line */
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;
   /* stylelint-disable-next-line */
-  src: url(/font/Roboto-Medium.ttf) format("truetype");
+  src: url(/font/Roboto-Medium.ttf) format('truetype');
 }
 /* cyrillic */
 @font-face {
   /* stylelint-disable-next-line */
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 600;
   /* stylelint-disable-next-line */
-  src: url(/font/Roboto-Bold.ttf) format("truetype");
+  src: url(/font/Roboto-Bold.ttf) format('truetype');
 }
 
 .vkuiTestWrapper {
   /* Force use embedded Roboto font for cross-platformity */
-  --vkui--font_family_base: "Roboto";
-  --vkui--font_family_accent: "Roboto";
-  --vkui--font_caption1--font_family--regular: "Roboto";
-  --vkui--font_caption1_caps--font_family--regular: "Roboto";
-  --vkui--font_caption2--font_family--regular: "Roboto";
-  --vkui--font_caption2_caps--font_family--regular: "Roboto";
-  --vkui--font_caption3--font_family--regular: "Roboto";
-  --vkui--font_caption3_caps--font_family--regular: "Roboto";
-  --vkui--font_footnote--font_family--regular: "Roboto";
-  --vkui--font_footnote_caps--font_family--regular: "Roboto";
-  --vkui--font_headline1--font_family--regular: "Roboto";
-  --vkui--font_headline2--font_family--regular: "Roboto";
-  --vkui--font_paragraph--font_family--regular: "Roboto";
-  --vkui--font_subhead--font_family--regular: "Roboto";
-  --vkui--font_text--font_family--regular: "Roboto";
-  --vkui--font_title1--font_family--regular: "Roboto";
-  --vkui--font_title2--font_family--regular: "Roboto";
-  --vkui--font_title3--font_family--regular: "Roboto";
+  --vkui--font_family_base: 'Roboto';
+  --vkui--font_family_accent: 'Roboto';
+  --vkui--font_caption1--font_family--regular: 'Roboto';
+  --vkui--font_caption1_caps--font_family--regular: 'Roboto';
+  --vkui--font_caption2--font_family--regular: 'Roboto';
+  --vkui--font_caption2_caps--font_family--regular: 'Roboto';
+  --vkui--font_caption3--font_family--regular: 'Roboto';
+  --vkui--font_caption3_caps--font_family--regular: 'Roboto';
+  --vkui--font_footnote--font_family--regular: 'Roboto';
+  --vkui--font_footnote_caps--font_family--regular: 'Roboto';
+  --vkui--font_headline1--font_family--regular: 'Roboto';
+  --vkui--font_headline2--font_family--regular: 'Roboto';
+  --vkui--font_paragraph--font_family--regular: 'Roboto';
+  --vkui--font_subhead--font_family--regular: 'Roboto';
+  --vkui--font_text--font_family--regular: 'Roboto';
+  --vkui--font_title1--font_family--regular: 'Roboto';
+  --vkui--font_title2--font_family--regular: 'Roboto';
+  --vkui--font_title3--font_family--regular: 'Roboto';
 
   color-scheme: var(--vkui--colors_scheme);
   caret-color: transparent;
@@ -65,7 +65,7 @@
 
 .vkuiProps {
   /* stylelint-disable-next-line */
-  font-family: "Roboto";
+  font-family: 'Roboto';
   color: var(--vkui--color_text_primary);
 }
 

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 
 export function objectEquals(o1: any, o2: any) {
   return (

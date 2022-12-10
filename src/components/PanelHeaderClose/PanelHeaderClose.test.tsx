@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { PanelHeaderClose } from "./PanelHeaderClose";
+import { baselineComponent } from '../../testing/utils';
+import { PanelHeaderClose } from './PanelHeaderClose';
 
-describe("PanelHeaderClose", () => {
+describe('PanelHeaderClose', () => {
   baselineComponent(PanelHeaderClose);
 });

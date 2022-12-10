@@ -1,7 +1,7 @@
 Компонент для отрисовки "длинного" содержимого, которое можно скроллить по горизонтали.
 
 ```jsx
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, useState, Fragment } from 'react';
 
 const HorizontalScrollExample = () => {
   const [recentFriends] = useState(getRandomUsers(20));
@@ -24,7 +24,7 @@ const HorizontalScrollExample = () => {
             getScrollToLeft={(i) => i - 120}
             getScrollToRight={(i) => i + 120}
           >
-            <div style={{ display: "flex" }}>
+            <div style={{ display: 'flex' }}>
               {recentFriends.map((item) => {
                 return (
                   <HorizontalCell key={item.id} header={item.first_name}>
@@ -43,7 +43,7 @@ const HorizontalScrollExample = () => {
             getScrollToLeft={(i) => i - 120}
             getScrollToRight={(i) => i + 120}
           >
-            <div style={{ display: "flex" }}>
+            <div style={{ display: 'flex' }}>
               {commonFriends.length === 0 && <PanelSpinner />}
               {commonFriends.length > 0 && (
                 <Fragment>

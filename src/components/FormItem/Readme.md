@@ -4,14 +4,14 @@
 
 ```jsx
 const addressItems = [
-  { label: "Почтовый индекс", name: "zip" },
-  { label: "Страна", name: "country" },
-  { label: "Город", name: "city" },
+  { label: 'Почтовый индекс', name: 'zip' },
+  { label: 'Страна', name: 'country' },
+  { label: 'Город', name: 'city' },
 ];
 
 const Example = () => {
-  const [email, setEmail] = React.useState("");
-  const [purpose, setPurpose] = React.useState("");
+  const [email, setEmail] = React.useState('');
+  const [purpose, setPurpose] = React.useState('');
   const [showPatronymic, setShowPatronymic] = React.useState(true);
 
   const onChange = (e) => {
@@ -37,19 +37,12 @@ const Example = () => {
           <FormLayout>
             <FormItem
               top="E-mail"
-              status={email ? "valid" : "error"}
+              status={email ? 'valid' : 'error'}
               bottom={
-                email
-                  ? "Электронная почта введена верно!"
-                  : "Пожалуйста, введите электронную почту"
+                email ? 'Электронная почта введена верно!' : 'Пожалуйста, введите электронную почту'
               }
             >
-              <Input
-                type="email"
-                name="email"
-                value={email}
-                onChange={onChange}
-              />
+              <Input type="email" name="email" value={email} onChange={onChange} />
             </FormItem>
 
             <FormItem top="Пароль">
@@ -70,9 +63,7 @@ const Example = () => {
             </FormLayoutGroup>
 
             {!showPatronymic ? (
-              <CellButton onClick={onShowPatronymic}>
-                Указать отчество
-              </CellButton>
+              <CellButton onClick={onShowPatronymic}>Указать отчество</CellButton>
             ) : (
               <FormItem
                 removable
@@ -89,12 +80,12 @@ const Example = () => {
                 placeholder="Выберите пол"
                 options={[
                   {
-                    value: "0",
-                    label: "Мужской",
+                    value: '0',
+                    label: 'Мужской',
                   },
                   {
-                    value: "1",
-                    label: "Женский",
+                    value: '1',
+                    label: 'Женский',
                   },
                 ]}
               />
@@ -106,12 +97,12 @@ const Example = () => {
                 name="type"
                 options={[
                   {
-                    label: "Паспорт РФ",
-                    value: "russian",
+                    label: 'Паспорт РФ',
+                    value: 'russian',
                   },
                   {
-                    label: "Заграничный",
-                    value: "international",
+                    label: 'Заграничный',
+                    value: 'international',
                   },
                 ]}
               />
@@ -124,8 +115,8 @@ const Example = () => {
             ))}
             <FormItem
               top="Цель поездки"
-              bottom={purpose ? "" : "Пожалуйста, укажите цель поездки"}
-              status={purpose ? "valid" : "error"}
+              bottom={purpose ? '' : 'Пожалуйста, укажите цель поездки'}
+              status={purpose ? 'valid' : 'error'}
             >
               <Select
                 placeholder="Выберите цель поездки"
@@ -134,16 +125,16 @@ const Example = () => {
                 name="purpose"
                 options={[
                   {
-                    value: "0",
-                    label: "Бизнес или работа",
+                    value: '0',
+                    label: 'Бизнес или работа',
                   },
                   {
-                    value: "1",
-                    label: "Индивидуальный туризм",
+                    value: '1',
+                    label: 'Индивидуальный туризм',
                   },
                   {
-                    value: "2",
-                    label: "Посещение близких родственников",
+                    value: '2',
+                    label: 'Посещение близких родственников',
                   },
                 ]}
               />

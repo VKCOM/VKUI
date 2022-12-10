@@ -1,11 +1,11 @@
-import * as React from "react";
-import { Icon28UserCircleOutline } from "@vkontakte/icons";
-import { Tabbar } from "./Tabbar";
-import { TabbarItem } from "../TabbarItem/TabbarItem";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import { Platform } from "../../lib/platform";
+import * as React from 'react';
+import { Icon28UserCircleOutline } from '@vkontakte/icons';
+import { Tabbar } from './Tabbar';
+import { TabbarItem } from '../TabbarItem/TabbarItem';
+import { describeScreenshotFuzz } from '../../testing/e2e/utils';
+import { Platform } from '../../lib/platform';
 
-describe("Tabbar", () => {
+describe('Tabbar', () => {
   const tabs2 = [
     <TabbarItem key="0" text="Новости">
       <Icon28UserCircleOutline />
@@ -32,7 +32,7 @@ describe("Tabbar", () => {
     </TabbarItem>,
   ];
   const RelTabbar: typeof Tabbar = (props) => (
-    <Tabbar {...props} style={{ position: "relative" }} />
+    <Tabbar {...props} style={{ position: 'relative' }} />
   );
   describeScreenshotFuzz(
     RelTabbar,
@@ -46,11 +46,11 @@ describe("Tabbar", () => {
       },
       {
         children: [longTabs],
-        mode: ["horizontal", "vertical", "auto"],
+        mode: ['horizontal', 'vertical', 'auto'],
       },
     ],
     {
       platforms: [Platform.ANDROID, Platform.IOS],
-    }
+    },
   );
 });

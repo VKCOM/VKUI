@@ -1,19 +1,16 @@
-import * as React from "react";
-import { DOMProps, useDOM } from "../../lib/dom";
-import { classNamesString } from "../../lib/classNames";
-import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import { useExternRef } from "../../hooks/useExternRef";
-import { useEventListener } from "../../hooks/useEventListener";
-import {
-  TrackerOptionsProps,
-  useTrackerVisibility,
-} from "./useTrackerVisibility";
-import styles from "./CustomScrollView.module.css";
+import * as React from 'react';
+import { DOMProps, useDOM } from '../../lib/dom';
+import { classNamesString } from '../../lib/classNames';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useEventListener } from '../../hooks/useEventListener';
+import { TrackerOptionsProps, useTrackerVisibility } from './useTrackerVisibility';
+import styles from './CustomScrollView.module.css';
 
 export interface CustomScrollViewProps extends DOMProps, TrackerOptionsProps {
   windowResize?: boolean;
   boxRef?: React.Ref<HTMLDivElement>;
-  className?: HTMLDivElement["className"];
+  className?: HTMLDivElement['className'];
   children: React.ReactNode;
 }
 
@@ -32,7 +29,7 @@ export const CustomScrollView = ({
   const clientHeight = React.useRef(0);
   const trackerHeight = React.useRef(0);
   const scrollHeight = React.useRef(0);
-  const transformProp = React.useRef("");
+  const transformProp = React.useRef('');
   const startY = React.useRef(0);
   const trackerTop = React.useRef(0);
 
@@ -44,17 +41,13 @@ export const CustomScrollView = ({
   const setTrackerPosition = (scrollTop: number) => {
     lastTrackerTop.current = scrollTop;
     if (trackerY.current !== null) {
-      (trackerY.current.style as any)[
-        transformProp.current
-      ] = `translate(0, ${scrollTop}px)`;
+      (trackerY.current.style as any)[transformProp.current] = `translate(0, ${scrollTop}px)`;
     }
   };
 
   const setTrackerPositionFromScroll = (scrollTop: number) => {
     const progress = scrollTop / (scrollHeight.current - clientHeight.current);
-    setTrackerPosition(
-      (clientHeight.current - trackerHeight.current) * progress
-    );
+    setTrackerPosition((clientHeight.current - trackerHeight.current) * progress);
   };
 
   const resize = () => {
@@ -72,15 +65,15 @@ export const CustomScrollView = ({
     trackerHeight.current = localTrackerHeight;
 
     if (localRatio >= 1) {
-      barY.current.style.display = "none";
+      barY.current.style.display = 'none';
     } else {
-      barY.current.style.display = "";
+      barY.current.style.display = '';
       trackerY.current.style.height = `${localTrackerHeight}px`;
       setTrackerPositionFromScroll(boxRef.current.scrollTop);
     }
   };
 
-  const resizeHandler = useEventListener("resize", resize);
+  const resizeHandler = useEventListener('resize', resize);
 
   useIsomorphicLayoutEffect(() => {
     if (windowResize && window) {
@@ -90,12 +83,12 @@ export const CustomScrollView = ({
 
   useIsomorphicLayoutEffect(() => {
     let style = trackerY.current?.style;
-    let prop = "";
+    let prop = '';
     if (style !== undefined) {
-      if ("transform" in style) {
-        prop = "transform";
-      } else if ("webkitTransform" in style) {
-        prop = "webkitTransform";
+      if ('transform' in style) {
+        prop = 'transform';
+      } else if ('webkitTransform' in style) {
+        prop = 'webkitTransform';
       }
     }
     transformProp.current = prop;
@@ -104,11 +97,9 @@ export const CustomScrollView = ({
   useIsomorphicLayoutEffect(resize);
 
   const setScrollPositionFromTracker = (trackerTop: number) => {
-    const progress =
-      trackerTop / (clientHeight.current - trackerHeight.current);
+    const progress = trackerTop / (clientHeight.current - trackerHeight.current);
     if (boxRef.current !== null) {
-      boxRef.current.scrollTop =
-        (scrollHeight.current - clientHeight.current) * progress;
+      boxRef.current.scrollTop = (scrollHeight.current - clientHeight.current) * progress;
     }
   };
 
@@ -117,7 +108,7 @@ export const CustomScrollView = ({
     const diff = e.clientY - startY.current;
     const position = Math.min(
       Math.max(trackerTop.current + diff, 0),
-      clientHeight.current - trackerHeight.current
+      clientHeight.current - trackerHeight.current,
     );
 
     setScrollPositionFromTracker(position);
@@ -154,10 +145,7 @@ export const CustomScrollView = ({
     setTrackerPositionFromScroll(boxRef.current.scrollTop);
   };
 
-  const listeners = [
-    useEventListener("mousemove", onMove),
-    useEventListener("mouseup", onUp),
-  ];
+  const listeners = [useEventListener('mousemove', onMove), useEventListener('mouseup', onUp)];
 
   function subscribe(el: Document | undefined) {
     if (el) {
@@ -182,12 +170,12 @@ export const CustomScrollView = ({
   };
 
   return (
-    <div className={classNamesString(styles["CustomScrollView"], className)}>
-      <div className={styles["CustomScrollView__barY"]} ref={barY}>
+    <div className={classNamesString(styles['CustomScrollView'], className)}>
+      <div className={styles['CustomScrollView__barY']} ref={barY}>
         <div
           className={classNamesString(
-            styles["CustomScrollView__trackerY"],
-            !trackerVisible && styles[`CustomScrollView__trackerY--hidden`]
+            styles['CustomScrollView__trackerY'],
+            !trackerVisible && styles[`CustomScrollView__trackerY--hidden`],
           )}
           onMouseEnter={autoHideScrollbar ? onTrackerMouseEnter : undefined}
           onMouseLeave={autoHideScrollbar ? onTrackerMouseLeave : undefined}
@@ -196,12 +184,7 @@ export const CustomScrollView = ({
         />
       </div>
 
-      <div
-        className={styles["CustomScrollView__box"]}
-        tabIndex={-1}
-        ref={boxRef}
-        onScroll={scroll}
-      >
+      <div className={styles['CustomScrollView__box']} tabIndex={-1} ref={boxRef} onScroll={scroll}>
         {children}
       </div>
     </div>

@@ -1,7 +1,7 @@
-import * as VKUI from "../src";
+import * as VKUI from '../src';
 
-const unstablePrefix = "unstable_";
+const unstablePrefix = 'unstable_';
 
 export const unstable = Object.keys(VKUI)
   .filter((name) => name.startsWith(unstablePrefix))
-  .map((name) => name.replace(unstablePrefix, ""));
+  .map((name) => name.replace(unstablePrefix, ''));

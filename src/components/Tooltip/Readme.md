@@ -21,7 +21,7 @@
 Если хочется снабдить какой-то элемент интерфейса подсказкой, достаточно просто «обернуть» его тултипом:
 
 ```jsx static
-import { Tooltip, Button } from "@vkontakte/vkui";
+import { Tooltip, Button } from '@vkontakte/vkui';
 
 <Tooltip text="Обновлённый раздел поможет найти друзей">
   <Button>Друзья</Button>
@@ -35,7 +35,7 @@ const Example = () => {
   const [tooltip, setTooltip] = React.useState(true);
   const [tooltip2, setTooltip2] = React.useState(true);
   const [tooltip3, setTooltip3] = React.useState(false);
-  const [activePanel, setActivePanel] = React.useState("tooltip");
+  const [activePanel, setActivePanel] = React.useState('tooltip');
 
   return (
     <View activePanel={activePanel}>
@@ -58,9 +58,7 @@ const Example = () => {
             onClose={() => setTooltip(false)}
             offsetX={10}
           >
-            <SimpleCell onClick={() => setActivePanel("tooltip2")}>
-              VK Pay
-            </SimpleCell>
+            <SimpleCell onClick={() => setActivePanel('tooltip2')}>VK Pay</SimpleCell>
           </Tooltip>
         </Group>
       </Panel>
@@ -77,7 +75,7 @@ const Example = () => {
               text="Нажмите на кнопку, если хотите вернуться"
               header="Назад"
             >
-              <PanelHeaderBack onClick={() => setActivePanel("tooltip")} />
+              <PanelHeaderBack onClick={() => setActivePanel('tooltip')} />
             </Tooltip>
           }
         >
@@ -137,14 +135,14 @@ const Example = () => {
 
 ```jsx { "props": { "layout": false } }
 <>
-  <TooltipContainer style={{ minHeight: "120vh" }}>
+  <TooltipContainer style={{ minHeight: '120vh' }}>
     <Tooltip text="Я скроллюсь">
-      <div style={{ display: "inline-block" }}>
+      <div style={{ display: 'inline-block' }}>
         <Avatar />
       </div>
     </Tooltip>
     <Tooltip text="Двигаем стрелочку" cornerOffset={20}>
-      <div style={{ display: "inline-block", marginLeft: 100 }}>
+      <div style={{ display: 'inline-block', marginLeft: 100 }}>
         <Avatar />
       </div>
     </Tooltip>
@@ -152,45 +150,45 @@ const Example = () => {
   <TooltipContainer
     fixed
     style={{
-      minHeight: "30px",
-      border: "1px solid",
-      margin: "100px 100px 0",
-      position: "relative",
-      background: "var(--vkui--color_background_content)",
+      minHeight: '30px',
+      border: '1px solid',
+      margin: '100px 100px 0',
+      position: 'relative',
+      background: 'var(--vkui--color_background_content)',
       zIndex: 1,
     }}
   >
     <Tooltip text="Я вылезаю (fixed)">
-      <div style={{ display: "inline-block" }}>
+      <div style={{ display: 'inline-block' }}>
         <Avatar />
       </div>
     </Tooltip>
   </TooltipContainer>
   <TooltipContainer
     style={{
-      minHeight: "100vh",
-      border: "1px solid",
-      margin: "64px 100px 100px",
-      position: "relative",
-      background: "var(--vkui--color_background_content)",
+      minHeight: '100vh',
+      border: '1px solid',
+      margin: '64px 100px 100px',
+      position: 'relative',
+      background: 'var(--vkui--color_background_content)',
       zIndex: 1,
     }}
   >
     <Tooltip text="Я прилип слева">
-      <div style={{ display: "inline-block", position: "absolute", right: 0 }}>
+      <div style={{ display: 'inline-block', position: 'absolute', right: 0 }}>
         <Avatar />
       </div>
     </Tooltip>
     <Tooltip text="Я прилип справа">
-      <div style={{ display: "inline-block" }}>
+      <div style={{ display: 'inline-block' }}>
         <Avatar />
       </div>
     </Tooltip>
     <Tooltip text="Я прилип слева">
       <div
         style={{
-          display: "inline-block",
-          position: "absolute",
+          display: 'inline-block',
+          position: 'absolute',
           left: 0,
           bottom: 0,
         }}
@@ -201,8 +199,8 @@ const Example = () => {
     <Tooltip text="Я прилип справа">
       <div
         style={{
-          display: "inline-block",
-          position: "absolute",
+          display: 'inline-block',
+          position: 'absolute',
           right: 0,
           bottom: 0,
         }}
@@ -213,24 +211,21 @@ const Example = () => {
     <Tooltip text="Я по центру 😎">
       <div
         style={{
-          display: "inline-block",
-          position: "absolute",
-          left: "50%",
-          top: "50%",
-          transform: "translate(50%, 50%)",
+          display: 'inline-block',
+          position: 'absolute',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(50%, 50%)',
         }}
       >
         <Avatar />
       </div>
     </Tooltip>
   </TooltipContainer>
-  <div style={{ height: "100vh" }}></div>
-  <TooltipContainer
-    fixed
-    style={{ position: "fixed", bottom: 0, width: "100%" }}
-  >
+  <div style={{ height: '100vh' }}></div>
+  <TooltipContainer fixed style={{ position: 'fixed', bottom: 0, width: '100%' }}>
     <Tooltip text="Я прибит к низу">
-      <div style={{ display: "inline-block" }}>
+      <div style={{ display: 'inline-block' }}>
         <Avatar />
       </div>
     </Tooltip>
@@ -262,11 +257,7 @@ const Example = () => {
       <Avatar />
     </div>
   </Tooltip>
-  <Tooltip
-    placement="right"
-    text={`appearance="inversion"`}
-    appearance="inversion"
-  >
+  <Tooltip placement="right" text={`appearance="inversion"`} appearance="inversion">
     <div style={{ width: 50, margin: 10 }}>
       <Avatar />
     </div>

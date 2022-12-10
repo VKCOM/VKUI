@@ -1,52 +1,49 @@
-import * as React from "react";
-import { format, isMatch, parse } from "../../lib/date";
-import { Icon16Clear, Icon20CalendarOutline } from "@vkontakte/icons";
-import { Calendar, CalendarProps } from "../Calendar/Calendar";
-import { Popper, Placement } from "../Popper/Popper";
-import { multiRef } from "../../lib/utils";
-import { IconButton } from "../IconButton/IconButton";
-import { classNamesString } from "../../lib/classNames";
-import { FormField, FormFieldProps } from "../FormField/FormField";
-import { HasRootRef } from "../../types";
-import { useDateInput } from "../../hooks/useDateInput";
-import { InputLike } from "../InputLike/InputLike";
-import { InputLikeDivider } from "../InputLike/InputLikeDivider";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { callMultiple } from "../../lib/callMultiple";
-import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import styles from "./DateInput.module.css";
+import * as React from 'react';
+import { format, isMatch, parse } from '../../lib/date';
+import { Icon16Clear, Icon20CalendarOutline } from '@vkontakte/icons';
+import { Calendar, CalendarProps } from '../Calendar/Calendar';
+import { Popper, Placement } from '../Popper/Popper';
+import { multiRef } from '../../lib/utils';
+import { IconButton } from '../IconButton/IconButton';
+import { classNamesString } from '../../lib/classNames';
+import { FormField, FormFieldProps } from '../FormField/FormField';
+import { HasRootRef } from '../../types';
+import { useDateInput } from '../../hooks/useDateInput';
+import { InputLike } from '../InputLike/InputLike';
+import { InputLikeDivider } from '../InputLike/InputLikeDivider';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { callMultiple } from '../../lib/callMultiple';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import styles from './DateInput.module.css';
 
 export interface DateInputProps
-  extends Omit<
-      React.InputHTMLAttributes<HTMLDivElement>,
-      "value" | "onChange" | "size"
-    >,
+  extends Omit<React.InputHTMLAttributes<HTMLDivElement>, 'value' | 'onChange' | 'size'>,
     Pick<
       CalendarProps,
-      | "disablePast"
-      | "disableFuture"
-      | "enableTime"
-      | "shouldDisableDate"
-      | "onChange"
-      | "value"
-      | "doneButtonText"
-      | "weekStartsOn"
-      | "disablePickers"
-      | "changeHoursAriaLabel"
-      | "changeMinutesAriaLabel"
-      | "prevMonthAriaLabel"
-      | "nextMonthAriaLabel"
-      | "changeMonthAriaLabel"
-      | "changeYearAriaLabel"
-      | "changeDayAriaLabel"
-      | "showNeighboringMonth"
-      | "size"
-      | "viewDate"
-      | "onHeaderChange"
-      | "onNextMonth"
-      | "onPrevMonth"
-      | "prevMonthIcon"
-      | "nextMonthIcon"
+      | 'disablePast'
+      | 'disableFuture'
+      | 'enableTime'
+      | 'shouldDisableDate'
+      | 'onChange'
+      | 'value'
+      | 'doneButtonText'
+      | 'weekStartsOn'
+      | 'disablePickers'
+      | 'changeHoursAriaLabel'
+      | 'changeMinutesAriaLabel'
+      | 'prevMonthAriaLabel'
+      | 'nextMonthAriaLabel'
+      | 'changeMonthAriaLabel'
+      | 'changeYearAriaLabel'
+      | 'changeDayAriaLabel'
+      | 'showNeighboringMonth'
+      | 'size'
+      | 'viewDate'
+      | 'onHeaderChange'
+      | 'onNextMonth'
+      | 'onPrevMonth'
+      | 'prevMonthIcon'
+      | 'nextMonthIcon'
     >,
     HasRootRef<HTMLDivElement>,
     FormFieldProps {
@@ -85,14 +82,14 @@ const elementsConfig = (index: number) => {
   return { length, min, max };
 };
 
-const getInternalValue = (value: CalendarProps["value"]) => {
-  const newValue = ["", "", "", "", ""];
+const getInternalValue = (value: CalendarProps['value']) => {
+  const newValue = ['', '', '', '', ''];
   if (value) {
-    newValue[0] = String(value.getDate()).padStart(2, "0");
-    newValue[1] = String(value.getMonth() + 1).padStart(2, "0");
-    newValue[2] = String(value.getFullYear()).padStart(4, "0");
-    newValue[3] = String(value.getHours()).padStart(2, "0");
-    newValue[4] = String(value.getMinutes()).padStart(2, "0");
+    newValue[0] = String(value.getDate()).padStart(2, '0');
+    newValue[1] = String(value.getMonth() + 1).padStart(2, '0');
+    newValue[2] = String(value.getFullYear()).padStart(4, '0');
+    newValue[3] = String(value.getHours()).padStart(2, '0');
+    newValue[4] = String(value.getMinutes()).padStart(2, '0');
   }
   return newValue;
 };
@@ -107,7 +104,7 @@ export const DateInput = ({
   disablePast,
   value,
   onChange,
-  calendarPlacement = "bottom-start",
+  calendarPlacement = 'bottom-start',
   style,
   className,
   doneButtonText,
@@ -123,13 +120,13 @@ export const DateInput = ({
   nextMonthAriaLabel,
   showNeighboringMonth,
   size,
-  changeMonthAriaLabel = "Изменить месяц",
-  changeYearAriaLabel = "Изменить год",
-  changeDayAriaLabel = "Изменить день",
-  changeHoursAriaLabel = "Изменить час",
-  changeMinutesAriaLabel = "Изменить минуту",
-  clearFieldAriaLabel = "Очистить поле",
-  showCalendarAriaLabel = "Показать календарь",
+  changeMonthAriaLabel = 'Изменить месяц',
+  changeYearAriaLabel = 'Изменить год',
+  changeDayAriaLabel = 'Изменить день',
+  changeHoursAriaLabel = 'Изменить час',
+  changeMinutesAriaLabel = 'Изменить минуту',
+  clearFieldAriaLabel = 'Очистить поле',
+  showCalendarAriaLabel = 'Показать календарь',
   viewDate,
   onHeaderChange,
   onNextMonth,
@@ -156,22 +153,22 @@ export const DateInput = ({
       }
 
       let formattedValue = `${internalValue[0]}.${internalValue[1]}.${internalValue[2]}`;
-      let mask = "DD.MM.YYYY";
+      let mask = 'DD.MM.YYYY';
       if (enableTime) {
         formattedValue += ` ${internalValue[3]}:${internalValue[4]}`;
-        mask += " HH:mm";
+        mask += ' HH:mm';
       }
 
       if (isMatch(formattedValue, mask)) {
         onChange?.(parse(formattedValue, mask, value ?? new Date()));
       }
     },
-    [enableTime, maxElement, onChange, value]
+    [enableTime, maxElement, onChange, value],
   );
 
   const refs = React.useMemo(
     () => [daysRef, monthsRef, yearsRef, hoursRef, minutesRef],
-    [daysRef, monthsRef, yearsRef, hoursRef, minutesRef]
+    [daysRef, monthsRef, yearsRef, hoursRef, minutesRef],
   );
 
   const {
@@ -207,33 +204,25 @@ export const DateInput = ({
         removeFocusFromField();
       }
     },
-    [onChange, removeFocusFromField, closeOnChange, enableTime]
+    [onChange, removeFocusFromField, closeOnChange, enableTime],
   );
 
   return (
     <FormField
       style={style}
       className={classNamesString(
-        styles["DateInput"],
-        getSizeYClassName(styles["DateInput"], sizeY),
-        className
+        styles['DateInput'],
+        getSizeYClassName(styles['DateInput'], sizeY),
+        className,
       )}
       getRootRef={multiRef(rootRef, getRootRef)}
       after={
         value ? (
-          <IconButton
-            hoverMode="opacity"
-            aria-label={clearFieldAriaLabel}
-            onClick={clear}
-          >
+          <IconButton hoverMode="opacity" aria-label={clearFieldAriaLabel} onClick={clear}>
             <Icon16Clear />
           </IconButton>
         ) : (
-          <IconButton
-            hoverMode="opacity"
-            aria-label={showCalendarAriaLabel}
-            onClick={openCalendar}
-          >
+          <IconButton hoverMode="opacity" aria-label={showCalendarAriaLabel} onClick={openCalendar}>
             <Icon20CalendarOutline />
           </IconButton>
         )
@@ -246,13 +235,9 @@ export const DateInput = ({
       <input
         type="hidden"
         name={name}
-        value={
-          value
-            ? format(value, enableTime ? "DD.MM.YYYYTHH:mm" : "DD.MM.YYYY")
-            : ""
-        }
+        value={value ? format(value, enableTime ? 'DD.MM.YYYYTHH:mm' : 'DD.MM.YYYY') : ''}
       />
-      <span className={styles["DateInput__input"]} onKeyDown={handleKeyDown}>
+      <span className={styles['DateInput__input']} onKeyDown={handleKeyDown}>
         <InputLike
           tabIndex={1}
           length={2}
@@ -282,10 +267,8 @@ export const DateInput = ({
         />
         {enableTime && (
           <React.Fragment>
-            <InputLikeDivider
-              className={styles["DateInput__input--time-divider"]}
-            >
-              {" "}
+            <InputLikeDivider className={styles['DateInput__input--time-divider']}>
+              {' '}
             </InputLikeDivider>
             <InputLike
               length={2}
@@ -308,11 +291,7 @@ export const DateInput = ({
         )}
       </span>
       {open && !disableCalendar && (
-        <Popper
-          targetRef={rootRef}
-          offsetDistance={8}
-          placement={calendarPlacement}
-        >
+        <Popper targetRef={rootRef} offsetDistance={8} placement={calendarPlacement}>
           <Calendar
             value={value}
             onChange={onCalendarChange}

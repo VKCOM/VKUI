@@ -1,7 +1,7 @@
-import * as React from "react";
-import { useBooleanState } from "./useBooleanState";
-import { useGlobalEventListener } from "./useGlobalEventListener";
-import { useDOM } from "../lib/dom";
+import * as React from 'react';
+import { useBooleanState } from './useBooleanState';
+import { useGlobalEventListener } from './useGlobalEventListener';
+import { useDOM } from '../lib/dom';
 
 export interface UseDateInputDependencies<T, D> {
   maxElement: number;
@@ -31,17 +31,11 @@ export function useDateInput<T extends HTMLElement, D>({
   value,
 }: UseDateInputDependencies<T, D>) {
   const { document } = useDOM();
-  const {
-    value: open,
-    setTrue: openCalendar,
-    setFalse: closeCalendar,
-  } = useBooleanState(false);
+  const { value: open, setTrue: openCalendar, setFalse: closeCalendar } = useBooleanState(false);
   const rootRef = React.useRef<HTMLDivElement>(null);
   const calendarRef = React.useRef<HTMLDivElement>(null);
   const [internalValue, setInternalValue] = React.useState<string[]>([]);
-  const [focusedElement, setFocusedElement] = React.useState<number | null>(
-    null
-  );
+  const [focusedElement, setFocusedElement] = React.useState<number | null>(null);
   const { window } = useDOM();
 
   const removeFocusFromField = React.useCallback(() => {
@@ -62,14 +56,14 @@ export function useDateInput<T extends HTMLElement, D>({
         removeFocusFromField();
       }
     },
-    [removeFocusFromField]
+    [removeFocusFromField],
   );
 
   const selectFirst = React.useCallback(() => {
     setFocusedElement(0);
   }, []);
 
-  useGlobalEventListener(document, "click", handleClickOutside, {
+  useGlobalEventListener(document, 'click', handleClickOutside, {
     capture: true,
   });
 
@@ -128,56 +122,39 @@ export function useDateInput<T extends HTMLElement, D>({
           _value[focusedElement] = e.key;
         } else {
           _value[focusedElement] += e.key;
-          if (
-            _value[focusedElement].length >= config.length &&
-            focusedElement < maxElement
-          ) {
+          if (_value[focusedElement].length >= config.length && focusedElement < maxElement) {
             setFocusedElement(focusedElement + 1);
           }
         }
-      } else if (e.key === "Backspace") {
+      } else if (e.key === 'Backspace') {
         if (!_value[focusedElement]) {
-          setFocusedElement(
-            focusedElement <= 0 ? maxElement : focusedElement - 1
-          );
+          setFocusedElement(focusedElement <= 0 ? maxElement : focusedElement - 1);
         } else {
           _value[focusedElement] = _value[focusedElement].slice(0, -1);
         }
-      } else if (e.key === "ArrowDown" || e.key === "Down") {
+      } else if (e.key === 'ArrowDown' || e.key === 'Down') {
         let currentValue = Number(_value[focusedElement]);
         _value[focusedElement] = String(
-          currentValue <= config.min ? config.max : currentValue - 1
-        ).padStart(config.length, "0");
-      } else if (e.key === "ArrowUp" || e.key === "Up") {
+          currentValue <= config.min ? config.max : currentValue - 1,
+        ).padStart(config.length, '0');
+      } else if (e.key === 'ArrowUp' || e.key === 'Up') {
         let currentValue = Number(_value[focusedElement]);
         _value[focusedElement] = String(
-          currentValue >= config.max ? config.min : currentValue + 1
-        ).padStart(config.length, "0");
+          currentValue >= config.max ? config.min : currentValue + 1,
+        ).padStart(config.length, '0');
       } else if (
-        e.key === "Enter" ||
-        (e.key === "Tab" && focusedElement === maxElement) ||
-        (e.key === "Tab" && e.shiftKey && focusedElement === 0)
+        e.key === 'Enter' ||
+        (e.key === 'Tab' && focusedElement === maxElement) ||
+        (e.key === 'Tab' && e.shiftKey && focusedElement === 0)
       ) {
         removeFocusFromField();
         return;
-      } else if (
-        e.key === "ArrowLeft" ||
-        e.key === "Left" ||
-        (e.key === "Tab" && e.shiftKey)
-      ) {
-        setFocusedElement(
-          focusedElement <= 0 ? maxElement : focusedElement - 1
-        );
-      } else if (
-        e.key === "ArrowRight" ||
-        e.key === "Right" ||
-        e.key === "Tab"
-      ) {
-        setFocusedElement(
-          focusedElement >= maxElement ? 0 : focusedElement + 1
-        );
-      } else if (e.key === "Delete" || e.key === "Del") {
-        _value[focusedElement] = "";
+      } else if (e.key === 'ArrowLeft' || e.key === 'Left' || (e.key === 'Tab' && e.shiftKey)) {
+        setFocusedElement(focusedElement <= 0 ? maxElement : focusedElement - 1);
+      } else if (e.key === 'ArrowRight' || e.key === 'Right' || e.key === 'Tab') {
+        setFocusedElement(focusedElement >= maxElement ? 0 : focusedElement + 1);
+      } else if (e.key === 'Delete' || e.key === 'Del') {
+        _value[focusedElement] = '';
       } else {
         return;
       }
@@ -193,7 +170,7 @@ export function useDateInput<T extends HTMLElement, D>({
       maxElement,
       onInternalValueChange,
       removeFocusFromField,
-    ]
+    ],
   );
 
   return {

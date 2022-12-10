@@ -1,17 +1,16 @@
-import * as React from "react";
-import { useDOM } from "../../lib/dom";
-import { classNamesString } from "../../lib/classNames";
-import { PopperCommonProps, Popper } from "../Popper/Popper";
-import { FocusTrap } from "../FocusTrap/FocusTrap";
-import { useTimeout } from "../../hooks/useTimeout";
-import { useExternRef } from "../../hooks/useExternRef";
-import { useEventListener } from "../../hooks/useEventListener";
-import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
-import { usePatchChildrenRef } from "../../hooks/usePatchChildrenRef";
-import styles from "./Popover.module.css";
+import * as React from 'react';
+import { useDOM } from '../../lib/dom';
+import { classNamesString } from '../../lib/classNames';
+import { PopperCommonProps, Popper } from '../Popper/Popper';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
+import { useTimeout } from '../../hooks/useTimeout';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useEventListener } from '../../hooks/useEventListener';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { usePatchChildrenRef } from '../../hooks/usePatchChildrenRef';
+import styles from './Popover.module.css';
 
-export interface PopoverProps
-  extends Omit<PopperCommonProps, "arrow" | "arrowClassName"> {
+export interface PopoverProps extends Omit<PopperCommonProps, 'arrow' | 'arrowClassName'> {
   /**
    * Механика вызова всплывающего окна.
    *
@@ -22,7 +21,7 @@ export interface PopoverProps
    * > при повторном нажатии на целевой элемент. Для закрытия необходимо нажать на область вне целевого элемента
    * > и выпадающего окна.
    */
-  action?: "click" | "hover";
+  action?: 'click' | 'hover';
   /**
    * Если передан, то всплывающее окно будет показан/скрыт в зависимости от значения свойства.
    */
@@ -59,7 +58,7 @@ export interface PopoverProps
  * @see https://vkcom.github.io/VKUI/#/Popover
  */
 export const Popover = ({
-  action = "click",
+  action = 'click',
   shown: shownProp,
   showDelay = 150,
   hideDelay = 150,
@@ -74,24 +73,22 @@ export const Popover = ({
 }: PopoverProps) => {
   const { document } = useDOM();
 
-  const hoverable = action === "hover";
+  const hoverable = action === 'hover';
   const hovered = React.useRef(false);
   const [computedShown, setComputedShown] = React.useState(shownProp || false);
-  const [dropdownNode, setPopperNode] = React.useState<HTMLElement | null>(
-    null
-  );
+  const [dropdownNode, setPopperNode] = React.useState<HTMLElement | null>(null);
 
-  const shown = typeof shownProp === "boolean" ? shownProp : computedShown;
+  const shown = typeof shownProp === 'boolean' ? shownProp : computedShown;
 
   const patchedPopperRef = useExternRef<HTMLDivElement>(setPopperNode, getRef);
 
   const [childRef, child] = usePatchChildrenRef(children);
 
   const setShown = (value: boolean) => {
-    if (typeof shownProp !== "boolean") {
+    if (typeof shownProp !== 'boolean') {
       setComputedShown(value);
     }
-    typeof onShownChange === "function" && onShownChange(value);
+    typeof onShownChange === 'function' && onShownChange(value);
   };
 
   const showTimeout = useTimeout(() => setShown(true), showDelay);
@@ -131,10 +128,10 @@ export const Popover = ({
     }
   };
 
-  useGlobalEventListener(document, "click", handleOutsideClick);
-  const targetEnterListener = useEventListener("mouseenter", handleTargetEnter);
-  const targetClickEvent = useEventListener("click", handleTargetClick);
-  const targetLeaveListener = useEventListener("mouseleave", handleTargetLeave);
+  useGlobalEventListener(document, 'click', handleOutsideClick);
+  const targetEnterListener = useEventListener('mouseenter', handleTargetEnter);
+  const targetClickEvent = useEventListener('click', handleTargetClick);
+  const targetLeaveListener = useEventListener('mouseleave', handleTargetLeave);
 
   React.useEffect(() => {
     if (!childRef.current) {
@@ -147,13 +144,7 @@ export const Popover = ({
       targetEnterListener.add(childRef.current);
       targetLeaveListener.add(childRef.current);
     }
-  }, [
-    childRef,
-    hoverable,
-    targetClickEvent,
-    targetEnterListener,
-    targetLeaveListener,
-  ]);
+  }, [childRef, hoverable, targetClickEvent, targetEnterListener, targetLeaveListener]);
 
   return (
     <React.Fragment>
@@ -161,7 +152,7 @@ export const Popover = ({
       {shown && (
         <Popper
           {...restProps}
-          className={classNamesString(styles["Popover"], className)}
+          className={classNamesString(styles['Popover'], className)}
           targetRef={childRef}
           getRef={patchedPopperRef}
           offsetDistance={offsetDistance}
@@ -170,14 +161,11 @@ export const Popover = ({
             // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
             {
               ...styleProp,
-              "--vkui_internal--popover_safe_zone_padding": `${offsetDistance}px`,
+              '--vkui_internal--popover_safe_zone_padding': `${offsetDistance}px`,
             } as React.CSSProperties
           }
           renderContent={({ className: wrapperClassName }) => (
-            <FocusTrap
-              className={wrapperClassName}
-              onClose={handleContentKeyDownEscape}
-            >
+            <FocusTrap className={wrapperClassName} onClose={handleContentKeyDownEscape}>
               {content}
             </FocusTrap>
           )}

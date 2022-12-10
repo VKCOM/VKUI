@@ -138,7 +138,7 @@
   height: 100%;
   background-color: var(--vkui--color_background_modal);
   z-index: -1;
-  content: "";
+  content: '';
   transition: opacity 0.15s ease-out, background-color 0.15s ease-out;
 }
 
@@ -148,7 +148,7 @@
   left: 0;
   z-index: -1;
   height: 1px;
-  content: "";
+  content: '';
   top: 0;
   background: var(--vkui--color_separator_primary);
   transform-origin: center bottom;

@@ -1,5 +1,5 @@
-import React from "react";
-import { SimpleCell } from "@vkui";
+import React from 'react';
+import { SimpleCell } from '@vkui';
 
 export default ({ items }) => {
   return (

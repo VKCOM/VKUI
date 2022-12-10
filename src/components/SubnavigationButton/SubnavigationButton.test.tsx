@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { SubnavigationButton } from "./SubnavigationButton";
+import { baselineComponent } from '../../testing/utils';
+import { SubnavigationButton } from './SubnavigationButton';
 
-describe("SubnavigationButton", () => {
+describe('SubnavigationButton', () => {
   baselineComponent(SubnavigationButton);
 });

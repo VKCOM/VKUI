@@ -1,19 +1,18 @@
-import * as React from "react";
-import { ChipOption } from "../components/Chip/Chip";
-import { ChipsInputBaseProps } from "../components/ChipsInputBase/ChipsInputBase";
+import * as React from 'react';
+import { ChipOption } from '../components/Chip/Chip';
+import { ChipsInputBaseProps } from '../components/ChipsInputBase/ChipsInputBase';
 
 export const useChipsInput = <Option extends ChipOption>(
-  props: Partial<ChipsInputBaseProps<Option>>
+  props: Partial<ChipsInputBaseProps<Option>>,
 ) => {
-  const { value, getOptionValue, onChange, onInputChange, getNewOptionData } =
-    props;
+  const { value, getOptionValue, onChange, onInputChange, getNewOptionData } = props;
 
   const [fieldValue, setFieldValue] = React.useState(props.inputValue);
   const [selectedOptions, setSelectedOptions] = React.useState(value ?? []);
 
   const clearInput = React.useCallback(() => {
-    setFieldValue("");
-    onInputChange!({ target: { value: "" } } as any);
+    setFieldValue('');
+    onInputChange!({ target: { value: '' } } as any);
   }, [onInputChange]);
 
   const handleInputChange = React.useCallback(
@@ -21,14 +20,13 @@ export const useChipsInput = <Option extends ChipOption>(
       setFieldValue(e.target.value);
       onInputChange!(e);
     },
-    [onInputChange]
+    [onInputChange],
   );
 
   const toggleOption = React.useCallback(
     (newOption: Option, value?: boolean) => {
       const newSelectedOptions = selectedOptions.filter(
-        (option: Option) =>
-          getOptionValue!(newOption) !== getOptionValue!(option)
+        (option: Option) => getOptionValue!(newOption) !== getOptionValue!(option),
       );
 
       if (value === true) {
@@ -38,12 +36,12 @@ export const useChipsInput = <Option extends ChipOption>(
       setSelectedOptions(newSelectedOptions);
       onChange!(newSelectedOptions);
     },
-    [selectedOptions, getOptionValue, onChange]
+    [selectedOptions, getOptionValue, onChange],
   );
 
   const addOption = React.useCallback(
     (newOption: Option) => toggleOption(newOption, true),
-    [toggleOption]
+    [toggleOption],
   );
   const addOptionFromInput = React.useCallback(() => {
     const trimmedValue = fieldValue?.trim();
@@ -57,7 +55,7 @@ export const useChipsInput = <Option extends ChipOption>(
     (value) => {
       toggleOption(getNewOptionData!(undefined, value as string), false);
     },
-    [toggleOption, getNewOptionData]
+    [toggleOption, getNewOptionData],
   );
 
   React.useEffect(() => {
@@ -69,7 +67,7 @@ export const useChipsInput = <Option extends ChipOption>(
   React.useEffect(() => {
     setFieldValue(props.inputValue);
 
-    return () => setFieldValue("");
+    return () => setFieldValue('');
   }, [props.inputValue]);
 
   return {

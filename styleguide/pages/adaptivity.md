@@ -10,10 +10,10 @@
 > Учтите порядок подключения компонентов для конфигурации. `ConfigProvider` -> `AdaptivityProvider` -> `AppRoot`
 
 ```jsx static
-import React from "react";
-import ReactDOM from "react-dom";
-import { ConfigProvider, AdaptivityProvider, AppRoot } from "@vkontakte/vkui";
-import "@vkontakte/vkui/dist/vkui.css";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { ConfigProvider, AdaptivityProvider, AppRoot } from '@vkontakte/vkui';
+import '@vkontakte/vkui/dist/vkui.css';
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
 Далее, нужно добавить [`SplitLayout`](https://vkcom.github.io/VKUI/#/SplitLayout) и хотя бы один [`SplitCol`](https://vkcom.github.io/VKUI/#/SplitCol).

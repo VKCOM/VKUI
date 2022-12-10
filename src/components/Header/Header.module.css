@@ -149,16 +149,12 @@
   }
 }
 
-.Group--mode-card
-  > .Group__inner
-  > .Header:not(.Header--mode-tertiary):first-child {
+.Group--mode-card > .Group__inner > .Header:not(.Header--mode-tertiary):first-child {
   margin-top: -4px;
 }
 
 @media (--sizeX-regular) {
-  .Group--mode-none
-    > .Group__inner
-    > .Header:not(.Header--mode-tertiary):first-child {
+  .Group--mode-none > .Group__inner > .Header:not(.Header--mode-tertiary):first-child {
     margin-top: -4px;
   }
 }

@@ -1,8 +1,8 @@
-import * as React from "react";
-import { Counter, CounterProps } from "./Counter";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
+import * as React from 'react';
+import { Counter, CounterProps } from './Counter';
+import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
-describe("Counter", () => {
+describe('Counter', () => {
   describeScreenshotFuzz(
     (props: CounterProps) => (
       <div>
@@ -11,11 +11,11 @@ describe("Counter", () => {
     ),
     [
       {
-        children: ["3"],
-        mode: ["secondary", "primary", "prominent", "contrast"],
-        size: ["m", "s"],
-        $adaptivity: "y",
+        children: ['3'],
+        mode: ['secondary', 'primary', 'prominent', 'contrast'],
+        size: ['m', 's'],
+        $adaptivity: 'y',
       },
-    ]
+    ],
   );
 });

@@ -1,9 +1,9 @@
-import * as React from "react";
-import { Radio, RadioProps } from "./Radio";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import { SizeType } from "../../lib/adaptivity";
+import * as React from 'react';
+import { Radio, RadioProps } from './Radio';
+import { describeScreenshotFuzz } from '../../testing/e2e/utils';
+import { SizeType } from '../../lib/adaptivity';
 
-describe("Radio", () => {
+describe('Radio', () => {
   describeScreenshotFuzz(
     (props: RadioProps) => <Radio {...props}>label</Radio>,
     [
@@ -12,18 +12,18 @@ describe("Radio", () => {
         disabled: [undefined, true],
       },
     ],
-    { adaptivity: { sizeY: SizeType.REGULAR } }
+    { adaptivity: { sizeY: SizeType.REGULAR } },
   );
 });
 
-describe("Radio sizes and description", () => {
+describe('Radio sizes and description', () => {
   describeScreenshotFuzz(
     (props: RadioProps) => <Radio {...props}>label</Radio>,
     [
       {
-        description: [undefined, "Description"],
-        $adaptivity: "y",
+        description: [undefined, 'Description'],
+        $adaptivity: 'y',
       },
-    ]
+    ],
   );
 });

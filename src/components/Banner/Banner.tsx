@@ -1,35 +1,35 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { usePlatform } from "../../hooks/usePlatform";
-import { Platform } from "../../lib/platform";
-import { hasReactNode } from "../../lib/utils";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
+import { hasReactNode } from '../../lib/utils';
 import {
   Icon24Chevron,
   Icon24DismissSubstract,
   Icon24DismissDark,
   Icon24Cancel,
-} from "@vkontakte/icons";
-import { Tappable } from "../Tappable/Tappable";
-import { IconButton } from "../IconButton/IconButton";
-import { Headline } from "../Typography/Headline/Headline";
-import { Subhead } from "../Typography/Subhead/Subhead";
-import { Text } from "../Typography/Text/Text";
-import { Title } from "../Typography/Title/Title";
-import styles from "./Banner.module.css";
+} from '@vkontakte/icons';
+import { Tappable } from '../Tappable/Tappable';
+import { IconButton } from '../IconButton/IconButton';
+import { Headline } from '../Typography/Headline/Headline';
+import { Subhead } from '../Typography/Subhead/Subhead';
+import { Text } from '../Typography/Text/Text';
+import { Title } from '../Typography/Title/Title';
+import styles from './Banner.module.css';
 
 export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Тип баннера.
    */
-  mode?: "tint" | "image";
-  size?: "s" | "m";
+  mode?: 'tint' | 'image';
+  size?: 's' | 'm';
   /**
    * Тип действия в правой части баннера.
    *
    * - `dismiss` – отображается иконка крестика, при клике на неё сработает свойство `onDismiss`.
    * - `expand` – отображается иконка шеврона, которая подразумевает, что при клике на баннер можно куда-то перейти.
    */
-  asideMode?: "dismiss" | "expand";
+  asideMode?: 'dismiss' | 'expand';
   /**
    * Срабатывает при клике на иконку крестика при `asideMode="dismiss"`.
    */
@@ -63,7 +63,7 @@ export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
    * - `light` – в качестве фона используется светлое изображение, цвет текста в баннере будет тёмным.
    * - `dark` – в качестве фона используется тёмное изображение, цвет текста будет светлым.
    */
-  imageTheme?: "light" | "dark";
+  imageTheme?: 'light' | 'dark';
   /**
    * При использовании `mode="image"`.
    *
@@ -91,9 +91,9 @@ export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
  * @see https://vkcom.github.io/VKUI/#/Banner
  */
 export const Banner = ({
-  mode = "tint",
-  imageTheme = "dark",
-  size = "s",
+  mode = 'tint',
+  imageTheme = 'dark',
+  size = 's',
   before,
   asideMode,
   header,
@@ -103,52 +103,46 @@ export const Banner = ({
   background,
   actions,
   onDismiss,
-  dismissLabel = "Скрыть",
+  dismissLabel = 'Скрыть',
   className,
   ...restProps
 }: BannerProps) => {
   const platform = usePlatform();
 
-  const HeaderTypography = size === "m" ? Title : Headline;
-  const SubheaderTypography = size === "m" ? Text : Subhead;
+  const HeaderTypography = size === 'm' ? Title : Headline;
+  const SubheaderTypography = size === 'm' ? Text : Subhead;
 
-  const IconDismissIOS =
-    mode === "image" ? Icon24DismissDark : Icon24DismissSubstract;
+  const IconDismissIOS = mode === 'image' ? Icon24DismissDark : Icon24DismissSubstract;
 
   const content = (
     <React.Fragment>
-      {mode === "image" && background && (
-        <div aria-hidden="true" className={styles["Banner__bg"]}>
+      {mode === 'image' && background && (
+        <div aria-hidden="true" className={styles['Banner__bg']}>
           {background}
         </div>
       )}
 
-      {before && <div className={styles["Banner__before"]}>{before}</div>}
+      {before && <div className={styles['Banner__before']}>{before}</div>}
 
-      <div className={styles["Banner__content"]}>
+      <div className={styles['Banner__content']}>
         {hasReactNode(header) && (
           <HeaderTypography
             Component="span"
-            className={styles["Banner__header"]}
+            className={styles['Banner__header']}
             weight="2"
-            level={size === "m" ? "2" : "1"}
+            level={size === 'm' ? '2' : '1'}
           >
             {header}
           </HeaderTypography>
         )}
         {hasReactNode(subheader) && (
-          <SubheaderTypography
-            Component="span"
-            className={styles["Banner__subheader"]}
-          >
+          <SubheaderTypography Component="span" className={styles['Banner__subheader']}>
             {subheader}
           </SubheaderTypography>
         )}
-        {hasReactNode(text) && (
-          <Text className={styles["Banner__text"]}>{text}</Text>
-        )}
+        {hasReactNode(text) && <Text className={styles['Banner__text']}>{text}</Text>}
         {hasReactNode(actions) && React.Children.count(actions) > 0 && (
-          <div className={styles["Banner__actions"]}>{actions}</div>
+          <div className={styles['Banner__actions']}>{actions}</div>
         )}
       </div>
     </React.Fragment>
@@ -158,44 +152,40 @@ export const Banner = ({
     <section
       {...restProps}
       className={classNamesString(
-        styles["Banner"],
-        platform === Platform.IOS && styles["Banner--ios"],
+        styles['Banner'],
+        platform === Platform.IOS && styles['Banner--ios'],
         styles[`Banner--mode-${mode}`],
         styles[`Banner--size-${size}`],
-        mode === "image" && imageTheme === "dark" && styles["Banner--inverted"],
-        className
+        mode === 'image' && imageTheme === 'dark' && styles['Banner--inverted'],
+        className,
       )}
     >
-      {asideMode === "expand" ? (
+      {asideMode === 'expand' ? (
         <Tappable
-          className={styles["Banner__in"]}
-          activeMode={platform === Platform.IOS ? "opacity" : "background"}
+          className={styles['Banner__in']}
+          activeMode={platform === Platform.IOS ? 'opacity' : 'background'}
           role="button"
         >
           {content}
 
-          <div className={styles["Banner__aside"]}>
+          <div className={styles['Banner__aside']}>
             <Icon24Chevron />
           </div>
         </Tappable>
       ) : (
-        <div className={styles["Banner__in"]}>
+        <div className={styles['Banner__in']}>
           {content}
 
-          {asideMode === "dismiss" && (
-            <div className={styles["Banner__aside"]}>
+          {asideMode === 'dismiss' && (
+            <div className={styles['Banner__aside']}>
               <IconButton
                 aria-label={dismissLabel}
-                className={styles["Banner__dismiss"]}
+                className={styles['Banner__dismiss']}
                 onClick={onDismiss}
                 hoverMode="opacity"
                 hasActive={false}
               >
-                {platform === Platform.IOS ? (
-                  <IconDismissIOS />
-                ) : (
-                  <Icon24Cancel />
-                )}
+                {platform === Platform.IOS ? <IconDismissIOS /> : <Icon24Cancel />}
               </IconButton>
             </div>
           )}

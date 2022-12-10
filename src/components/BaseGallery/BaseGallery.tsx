@@ -1,20 +1,15 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { Touch, TouchEvent } from "../Touch/Touch";
-import { HorizontalScrollArrow } from "../HorizontalScroll/HorizontalScrollArrow";
-import { useExternRef } from "../../hooks/useExternRef";
-import { useDOM } from "../../lib/dom";
-import { useAdaptivityHasPointer } from "../../hooks/useAdaptivityHasPointer";
-import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
-import { calcMax, calcMin } from "./helpers";
-import {
-  BaseGalleryProps,
-  GallerySlidesState,
-  LayoutState,
-  ShiftingState,
-} from "./types";
-import styles from "./BaseGallery.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { Touch, TouchEvent } from '../Touch/Touch';
+import { HorizontalScrollArrow } from '../HorizontalScroll/HorizontalScrollArrow';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useDOM } from '../../lib/dom';
+import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { calcMax, calcMin } from './helpers';
+import { BaseGalleryProps, GallerySlidesState, LayoutState, ShiftingState } from './types';
+import styles from './BaseGallery.module.css';
 
 const ANIMATION_DURATION = 0.24;
 
@@ -40,7 +35,7 @@ export const BaseGallery = ({
   bullets = false,
   getRootRef,
   children,
-  slideWidth = "100%",
+  slideWidth = '100%',
   slideIndex = 0,
   isDraggable: isDraggableProp = true,
   onDragStart,
@@ -48,17 +43,16 @@ export const BaseGallery = ({
   onChange,
   onPrevClick,
   onNextClick,
-  align = "left",
+  align = 'left',
   showArrows,
   getRef,
   className,
-  arrowSize = "l",
+  arrowSize = 'l',
   ...restProps
 }: BaseGalleryProps) => {
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
   const layoutState = React.useRef<LayoutState>(LAYOUT_DEFAULT_STATE);
-  const [shiftState, setShiftState] =
-    React.useState<ShiftingState>(SHIFT_DEFAULT_STATE);
+  const [shiftState, setShiftState] = React.useState<ShiftingState>(SHIFT_DEFAULT_STATE);
 
   const rootRef = useExternRef(getRootRef);
   const viewportRef = useExternRef(getRef);
@@ -66,7 +60,7 @@ export const BaseGallery = ({
   const { window } = useDOM();
   const hasPointer = useAdaptivityHasPointer();
 
-  const isCenterWithCustomWidth = slideWidth === "custom" && align === "center";
+  const isCenterWithCustomWidth = slideWidth === 'custom' && align === 'center';
 
   const validateIndent = (value: number) => {
     const localMax = layoutState.current.max ?? 0;
@@ -126,27 +120,23 @@ export const BaseGallery = ({
 
   const initializeSlides = (options: { animation?: boolean } = {}) => {
     const localSlides =
-      React.Children.map(
-        children,
-        (_item: React.ReactNode, i: number): GallerySlidesState => {
-          const elem = slidesStore.current[`slide-${i}`];
-          return {
-            coordX: elem?.offsetLeft ?? 0,
-            width: elem?.offsetWidth ?? 0,
-          };
-        }
-      ) ?? [];
+      React.Children.map(children, (_item: React.ReactNode, i: number): GallerySlidesState => {
+        const elem = slidesStore.current[`slide-${i}`];
+        return {
+          coordX: elem?.offsetLeft ?? 0,
+          width: elem?.offsetWidth ?? 0,
+        };
+      }) ?? [];
 
     const localContainerWidth = rootRef.current?.offsetWidth ?? 0;
     const localViewportOffsetWidth = viewportRef.current?.offsetWidth ?? 0;
     const localLayerWidth = localSlides.reduce(
       (val: number, slide: GallerySlidesState) => slide.width + val,
-      0
+      0,
     );
     const adjustShiftX =
       localSlides.length <= layoutState.current.slides.length ||
-      layoutState.current.slides[slideIndex]?.coordX !==
-        localSlides[slideIndex]?.coordX;
+      layoutState.current.slides[slideIndex]?.coordX !== localSlides[slideIndex]?.coordX;
 
     layoutState.current = {
       containerWidth: localContainerWidth,
@@ -172,9 +162,7 @@ export const BaseGallery = ({
     setShiftState((prevState) => ({
       ...prevState,
       shiftX: adjustShiftX ? calculateIndent(slideIndex) : prevState.shiftX,
-      animation:
-        options.animation ??
-        prevState.shiftX === validateIndent(prevState.shiftX),
+      animation: options.animation ?? prevState.shiftX === validateIndent(prevState.shiftX),
     }));
   };
 
@@ -184,7 +172,7 @@ export const BaseGallery = ({
     }
   };
 
-  useGlobalEventListener(window, "resize", onResize);
+  useGlobalEventListener(window, 'resize', onResize);
 
   useIsomorphicLayoutEffect(() => {
     initializeSlides({ animation: false });
@@ -217,33 +205,25 @@ export const BaseGallery = ({
   const getTarget = (e: TouchEvent) => {
     const expectDeltaX = (shiftState.deltaX / e.duration) * 240 * 0.6;
     const shift =
-      shiftState.shiftX +
-      shiftState.deltaX +
-      expectDeltaX -
-      (layoutState.current.max ?? 0);
+      shiftState.shiftX + shiftState.deltaX + expectDeltaX - (layoutState.current.max ?? 0);
     const direction = shiftState.deltaX < 0 ? 1 : -1;
 
     // Находим ближайшую границу слайда к текущему отступу
     let targetIndex = layoutState.current.slides.reduce(
       (val: number, item: GallerySlidesState, index: number) => {
-        const previousValue = Math.abs(
-          layoutState.current.slides[val].coordX + shift
-        );
+        const previousValue = Math.abs(layoutState.current.slides[val].coordX + shift);
         const currentValue = Math.abs(item.coordX + shift);
 
         return previousValue < currentValue ? val : index;
       },
-      slideIndex
+      slideIndex,
     );
 
     if (targetIndex === slideIndex) {
       let targetSlide = slideIndex + direction;
 
       if (targetSlide >= 0 && targetSlide < layoutState.current.slides.length) {
-        if (
-          Math.abs(shiftState.deltaX) >
-          layoutState.current.slides[targetSlide].width * 0.05
-        ) {
+        if (Math.abs(shiftState.deltaX) > layoutState.current.slides[targetSlide].width * 0.05) {
           targetIndex = targetSlide;
         }
       }
@@ -295,19 +275,17 @@ export const BaseGallery = ({
     }
   };
 
-  const indent = shiftState.dragging
-    ? calculateDragIndent()
-    : shiftState.shiftX;
+  const indent = shiftState.dragging ? calculateDragIndent() : shiftState.shiftX;
 
   const layerStyle = {
     WebkitTransform: `translateX(${indent}px)`,
     transform: `translateX(${indent}px)`,
     WebkitTransition: shiftState.animation
       ? `-webkit-transform ${ANIMATION_DURATION}s cubic-bezier(.1, 0, .25, 1)`
-      : "none",
+      : 'none',
     transition: shiftState.animation
       ? `transform ${ANIMATION_DURATION}s cubic-bezier(.1, 0, .25, 1)`
-      : "none",
+      : 'none',
   };
 
   const setSlideRef = (slideRef: HTMLDivElement | null, slideIndex: number) => {
@@ -315,17 +293,16 @@ export const BaseGallery = ({
   };
 
   // shiftX is negative number <= 0, we can swipe back only if it is < 0
-  const canSlideLeft =
-    !layoutState.current.isFullyVisible && shiftState.shiftX < 0;
+  const canSlideLeft = !layoutState.current.isFullyVisible && shiftState.shiftX < 0;
 
   const canSlideRight =
     !layoutState.current.isFullyVisible &&
     // we can't move right when gallery layer fully scrolled right, if gallery aligned by left side
-    ((align === "left" &&
+    ((align === 'left' &&
       layoutState.current.containerWidth - shiftState.shiftX <
         (layoutState.current.layerWidth ?? 0)) ||
       // otherwise we need to check current slide index (align = right or align = center)
-      (align !== "left" && slideIndex < layoutState.current.slides.length - 1));
+      (align !== 'left' && slideIndex < layoutState.current.slides.length - 1));
 
   const isDraggable = isDraggableProp && !layoutState.current.isFullyVisible;
 
@@ -333,28 +310,28 @@ export const BaseGallery = ({
     <div
       {...restProps}
       className={classNamesString(
-        styles["BaseGallery"],
+        styles['BaseGallery'],
         styles[`BaseGallery--align-${align}`],
-        shiftState.dragging && styles["BaseGallery--dragging"],
-        slideWidth === "custom" && styles["BaseGallery--custom-width"],
-        isDraggable && styles["BaseGallery--draggable"],
-        className
+        shiftState.dragging && styles['BaseGallery--dragging'],
+        slideWidth === 'custom' && styles['BaseGallery--custom-width'],
+        isDraggable && styles['BaseGallery--draggable'],
+        className,
       )}
       ref={rootRef}
     >
       <Touch
-        className={styles["BaseGallery__viewport"]}
+        className={styles['BaseGallery__viewport']}
         onStartX={onStart}
         onMoveX={onMoveX}
         onEnd={onEnd}
-        style={{ width: slideWidth === "custom" ? "100%" : slideWidth }}
+        style={{ width: slideWidth === 'custom' ? '100%' : slideWidth }}
         getRootRef={viewportRef}
         noSlideClick
       >
-        <div className={styles["BaseGallery__layer"]} style={layerStyle}>
+        <div className={styles['BaseGallery__layer']} style={layerStyle}>
           {React.Children.map(children, (item: React.ReactNode, i: number) => (
             <div
-              className={styles["BaseGallery__slide"]}
+              className={styles['BaseGallery__slide']}
               key={`slide-${i}`}
               ref={(el) => setSlideRef(el, i)}
             >
@@ -368,38 +345,27 @@ export const BaseGallery = ({
         <div
           aria-hidden="true"
           className={classNamesString(
-            styles["BaseGallery__bullets"],
-            styles[`BaseGallery__bullets--${bullets}`]
+            styles['BaseGallery__bullets'],
+            styles[`BaseGallery__bullets--${bullets}`],
           )}
         >
-          {React.Children.map(
-            children,
-            (_item: React.ReactNode, index: number) => (
-              <div
-                className={classNamesString(
-                  styles["BaseGallery__bullet"],
-                  index === slideIndex && styles["BaseGallery__bullet--active"]
-                )}
-                key={index}
-              />
-            )
-          )}
+          {React.Children.map(children, (_item: React.ReactNode, index: number) => (
+            <div
+              className={classNamesString(
+                styles['BaseGallery__bullet'],
+                index === slideIndex && styles['BaseGallery__bullet--active'],
+              )}
+              key={index}
+            />
+          ))}
         </div>
       )}
 
       {showArrows && hasPointer && canSlideLeft && (
-        <HorizontalScrollArrow
-          direction="left"
-          onClick={slideLeft}
-          size={arrowSize}
-        />
+        <HorizontalScrollArrow direction="left" onClick={slideLeft} size={arrowSize} />
       )}
       {showArrows && hasPointer && canSlideRight && (
-        <HorizontalScrollArrow
-          direction="right"
-          onClick={slideRight}
-          size={arrowSize}
-        />
+        <HorizontalScrollArrow direction="right" onClick={slideRight} size={arrowSize} />
       )}
     </div>
   );

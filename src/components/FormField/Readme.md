@@ -13,18 +13,18 @@ const Example = () => {
 
 const CustomInput = () => {
   const style = {
-    position: "relative",
-    display: "block",
-    width: "100%",
+    position: 'relative',
+    display: 'block',
+    width: '100%',
     margin: 0,
     paddingRight: 12,
     paddingLeft: 12,
     fontSize: 16,
-    lineHeight: "20px",
-    textOverflow: "ellipsis",
-    color: "#000",
-    border: "none",
-    background: "transparent",
+    lineHeight: '20px',
+    textOverflow: 'ellipsis',
+    color: '#000',
+    border: 'none',
+    background: 'transparent',
   };
 
   return <input type="text" style={style} placeholder="Кастомный инпут" />;

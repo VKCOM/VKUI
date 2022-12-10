@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { RichCell } from "./RichCell";
+import { baselineComponent } from '../../testing/utils';
+import { RichCell } from './RichCell';
 
-describe("RichCell", () => {
+describe('RichCell', () => {
   baselineComponent(RichCell);
 });

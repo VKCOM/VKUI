@@ -1,7 +1,7 @@
 ```jsx { "props": { "layout": false, "adaptivity": true } }
 const Example = () => {
   const [contextOpened, setContextOpened] = React.useState(true);
-  const [mode, setMode] = React.useState("all");
+  const [mode, setMode] = React.useState('all');
   const platform = usePlatform();
 
   const toggleContext = () => {
@@ -17,7 +17,7 @@ const Example = () => {
 
   return (
     <SplitLayout
-      style={{ justifyContent: "center" }}
+      style={{ justifyContent: 'center' }}
       header={hasHeader && <PanelHeader separator={false} />}
     >
       <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
@@ -35,7 +35,7 @@ const Example = () => {
                 aside={
                   <Icon16Dropdown
                     style={{
-                      transform: `rotate(${contextOpened ? "180deg" : "0"})`,
+                      transform: `rotate(${contextOpened ? '180deg' : '0'})`,
                     }}
                   />
                 }
@@ -49,9 +49,7 @@ const Example = () => {
                 <Cell
                   before={<Icon28UsersOutline />}
                   after={
-                    mode === "all" ? (
-                      <Icon24Done fill="var(--vkui--color_icon_accent)" />
-                    ) : null
+                    mode === 'all' ? <Icon24Done fill="var(--vkui--color_icon_accent)" /> : null
                   }
                   onClick={select}
                   data-mode="all"
@@ -61,9 +59,7 @@ const Example = () => {
                 <Cell
                   before={<Icon28SettingsOutline />}
                   after={
-                    mode === "managed" ? (
-                      <Icon24Done fill="var(--vkui--color_icon_accent)" />
-                    ) : null
+                    mode === 'managed' ? <Icon24Done fill="var(--vkui--color_icon_accent)" /> : null
                   }
                   onClick={select}
                   data-mode="managed"

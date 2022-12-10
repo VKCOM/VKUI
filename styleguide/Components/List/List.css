@@ -7,7 +7,7 @@
 ol.List li::before {
   display: inline-block;
   width: 8px;
-  content: "";
+  content: '';
 }
 
 .List li:not(:last-child) {

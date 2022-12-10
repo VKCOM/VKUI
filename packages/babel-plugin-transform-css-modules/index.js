@@ -1,10 +1,10 @@
-const { resolveResourceRelativePathBySourcePath } = require("./lib/route");
+const { resolveResourceRelativePathBySourcePath } = require('./lib/route');
 const {
   createVariable,
   createObjectExpression,
   resolveMemberExpressionPropertyName,
-} = require("./lib/babel-helpers");
-const { getCSSModulesTokens } = require("./lib/css-modules-tokens");
+} = require('./lib/babel-helpers');
+const { getCSSModulesTokens } = require('./lib/css-modules-tokens');
 
 // function generate
 
@@ -48,30 +48,24 @@ module.exports = function babelPluginTransformCssModules(babelAPI) {
 
           if (foundCssModulesBySourcePath) {
             for (const styleImportName in foundCssModulesBySourcePath) {
-              if (
-                !foundCssModulesBySourcePath.hasOwnProperty(styleImportName)
-              ) {
+              if (!foundCssModulesBySourcePath.hasOwnProperty(styleImportName)) {
                 continue;
               }
 
-              const { computedTokens } =
-                foundCssModulesBySourcePath[styleImportName];
+              const { computedTokens } = foundCssModulesBySourcePath[styleImportName];
 
-              if (
-                computedTokens === null ||
-                Object.keys(computedTokens).length === 0
-              ) {
+              if (computedTokens === null || Object.keys(computedTokens).length === 0) {
                 continue;
               }
 
               path.pushContainer(
-                "body",
+                'body',
                 createVariable(
                   t,
-                  "const",
+                  'const',
                   styleImportName,
-                  createObjectExpression(t, computedTokens)
-                )
+                  createObjectExpression(t, computedTokens),
+                ),
               );
             }
           }
@@ -101,22 +95,17 @@ module.exports = function babelPluginTransformCssModules(babelAPI) {
         cssModulesMap[sourcePath][styleImportName] = {
           tokens: getCSSModulesTokens(
             {
-              from: resolveResourceRelativePathBySourcePath(
-                resourceRelativePath,
-                sourcePath
-              ),
+              from: resolveResourceRelativePathBySourcePath(resourceRelativePath, sourcePath),
             },
             {
               generateScopedName: state.opts.generateScopedName,
-            }
+            },
           ),
           computedTokens: null,
         };
 
         if (state.opts.keep) {
-          path.replaceWith(
-            t.importDeclaration([], t.stringLiteral(resourceRelativePath))
-          );
+          path.replaceWith(t.importDeclaration([], t.stringLiteral(resourceRelativePath)));
         } else {
           path.remove();
         }
@@ -146,34 +135,28 @@ module.exports = function babelPluginTransformCssModules(babelAPI) {
           return;
         }
 
-        const resolvedTokenKey = resolveMemberExpressionPropertyName(
-          t,
-          path.node.property
-        );
+        const resolvedTokenKey = resolveMemberExpressionPropertyName(t, path.node.property);
 
         switch (resolvedTokenKey) {
-          case "NOT_FOUND":
+          case 'NOT_FOUND':
             break;
-          case "COMPLEX_LITERAL_TEMPLATE": {
+          case 'COMPLEX_LITERAL_TEMPLATE': {
             // NOTE:
             //  ❌ `${somePrefix}-Component--${mode}`
             //  ✅ `Component--${mode}`
-            const firstPartOfClassName =
-              path.node.property.quasis[0].value.cooked;
+            const firstPartOfClassName = path.node.property.quasis[0].value.cooked;
 
             for (const tokenKey in foundCssModules.tokens) {
               if (
                 !tokenKey.startsWith(firstPartOfClassName) ||
-                (foundCssModules.computedTokens &&
-                  tokenKey in foundCssModules.computedTokens)
+                (foundCssModules.computedTokens && tokenKey in foundCssModules.computedTokens)
               ) {
                 continue;
               }
               if (foundCssModules.computedTokens === null) {
                 foundCssModules.computedTokens = {};
               }
-              foundCssModules.computedTokens[tokenKey] =
-                foundCssModules.tokens[tokenKey];
+              foundCssModules.computedTokens[tokenKey] = foundCssModules.tokens[tokenKey];
             }
             break;
           }
@@ -184,7 +167,7 @@ module.exports = function babelPluginTransformCssModules(babelAPI) {
               path.replaceWith(t.stringLiteral(className));
             } else {
               console.warn(
-                `[babel-plugin-transform-css-modules]: token key not found. See '${resolvedTokenKey}' of ${sourcePath}.`
+                `[babel-plugin-transform-css-modules]: token key not found. See '${resolvedTokenKey}' of ${sourcePath}.`,
               );
             }
           }

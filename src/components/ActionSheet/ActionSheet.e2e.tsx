@@ -1,14 +1,14 @@
-import * as React from "react";
-import { Icon28SettingsOutline } from "@vkontakte/icons";
-import { ActionSheet, ActionSheetProps } from "./ActionSheet";
-import { ActionSheetItem } from "../ActionSheetItem/ActionSheetItem";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import { SizeType, ViewWidth } from "../../lib/adaptivity";
-import { noop } from "../../lib/utils";
-import { HasChildren } from "../../types";
-import { AppRoot } from "../AppRoot/AppRoot";
-import { usePlatform } from "../../hooks/usePlatform";
-import { Platform } from "../../lib/platform";
+import * as React from 'react';
+import { Icon28SettingsOutline } from '@vkontakte/icons';
+import { ActionSheet, ActionSheetProps } from './ActionSheet';
+import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
+import { describeScreenshotFuzz } from '../../testing/e2e/utils';
+import { SizeType, ViewWidth } from '../../lib/adaptivity';
+import { noop } from '../../lib/utils';
+import { HasChildren } from '../../types';
+import { AppRoot } from '../AppRoot/AppRoot';
+import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
 
 const AppWrapper = (props: HasChildren) => (
   <AppRoot mode="embedded" scroll="contain">
@@ -30,7 +30,7 @@ const ActionSheetWrapper = (props: ActionSheetProps) => {
         iosCloseItem={<ActionSheetItem mode="cancel">Отменить</ActionSheetItem>}
         style={{
           // Перебиваем "absolute", чтобы не задавать фиксированную высоту для тестов под iOS и Android
-          position: "relative",
+          position: 'relative',
         }}
         toggleRef={toggleRef}
         onClose={noop}
@@ -48,11 +48,7 @@ const propSets = [
         <ActionSheetItem key="3" before={<Icon28SettingsOutline />}>
           Третий элемент
         </ActionSheetItem>,
-        <ActionSheetItem
-          key="4"
-          before={<Icon28SettingsOutline />}
-          subtitle="Есть подзаголовок"
-        >
+        <ActionSheetItem key="4" before={<Icon28SettingsOutline />} subtitle="Есть подзаголовок">
           Четвертый элемент
         </ActionSheetItem>,
         <ActionSheetItem key="5" selectable checked>
@@ -71,27 +67,21 @@ const propSets = [
           subtitle="Есть подзаголовок, который не обрезается (multiline)"
           multiline
         >
-          Седьмой элемент с очень длинным заголовком, который не должен
-          обрезаться (multiline)
+          Седьмой элемент с очень длинным заголовком, который не должен обрезаться (multiline)
         </ActionSheetItem>,
         <ActionSheetItem key="8" subtitle="Есть подзаголовок" meta="Meta">
           Восьмой элемент
         </ActionSheetItem>,
-        <ActionSheetItem
-          key="9"
-          subtitle="Meta прижата справа"
-          meta="Meta"
-          multiline
-        >
+        <ActionSheetItem key="9" subtitle="Meta прижата справа" meta="Meta" multiline>
           Девятый элемент
         </ActionSheetItem>,
       ],
     ],
-    header: ["Заголовок"],
+    header: ['Заголовок'],
   },
 ];
 
-describe("ActionSheet", () => {
+describe('ActionSheet', () => {
   describeScreenshotFuzz(ActionSheetWrapper, propSets, {
     Wrapper: AppWrapper,
     adaptivity: {

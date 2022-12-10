@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { CardGrid } from "./CardGrid";
+import { baselineComponent } from '../../testing/utils';
+import { CardGrid } from './CardGrid';
 
-describe("CardGrid", () => {
+describe('CardGrid', () => {
   baselineComponent(CardGrid);
 });

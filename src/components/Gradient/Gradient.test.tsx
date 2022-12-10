@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { Gradient } from "./Gradient";
+import { baselineComponent } from '../../testing/utils';
+import { Gradient } from './Gradient';
 
-describe("Gradient", () => {
+describe('Gradient', () => {
   baselineComponent(Gradient);
 });

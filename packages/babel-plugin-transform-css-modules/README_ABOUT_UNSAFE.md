@@ -43,17 +43,17 @@ styles[`Component--mode-${mode}`];
   **input.jsx**
 
   ```jsx
-  import * as React from "react";
-  import { classNames } from "@vkontakte/vkjs";
-  import styles from "./Component.module.css";
+  import * as React from 'react';
+  import { classNames } from '@vkontakte/vkjs';
+  import styles from './Component.module.css';
 
   const Component = ({ appearance, gradientColor, disabled }) => {
     return (
       <div
         className={classNames(
           styles.Component,
-          disabled && styles["Component--disabled"],
-          styles[`Component--${appearance}-${gradientColor}`]
+          disabled && styles['Component--disabled'],
+          styles[`Component--${appearance}-${gradientColor}`],
         )}
       />
     );
@@ -63,24 +63,24 @@ styles[`Component--mode-${mode}`];
   **output.js**
 
   ```js
-  import * as React from "react";
-  import { classNames } from "@vkontakte/vkjs";
-  import "./Component.module.css";
+  import * as React from 'react';
+  import { classNames } from '@vkontakte/vkjs';
+  import './Component.module.css';
 
   var Component = ({ appearance, gradientColor, disabled }) => {
-    return /*#__PURE__*/ React.createElement("div", {
+    return /*#__PURE__*/ React.createElement('div', {
       className: classNames(
-        "_Component_526t4_1",
-        disabled && "_Component--disabled_526t4_3",
-        styles[`Component--${appearance}-${gradientColor}`]
+        '_Component_526t4_1',
+        disabled && '_Component--disabled_526t4_3',
+        styles[`Component--${appearance}-${gradientColor}`],
       ),
     });
   };
 
   var styles = {
-    "Component--disabled": "_Component--disabled_526t4_3", // (*) потому что искалось по `Component--`
-    "Component--light-blue": "_Component--light-blue_526t4_9",
-    "Component--dark-blue": "_Component--dark-blue_526t4_13",
+    'Component--disabled': '_Component--disabled_526t4_3', // (*) потому что искалось по `Component--`
+    'Component--light-blue': '_Component--light-blue_526t4_9',
+    'Component--dark-blue': '_Component--dark-blue_526t4_13',
   };
   ```
 
@@ -106,7 +106,7 @@ styles[`Component--mode-${mode}`];
 В конечном итоге в сборке заменится строкой, а на проде функция конкатенирует `sizeY`:
 
 ```js
-getSizeYClassName("vkuiButton", sizeY); // => ex, "vkuiButton--sizeY-regular"
+getSizeYClassName('vkuiButton', sizeY); // => ex, "vkuiButton--sizeY-regular"
 ```
 
 ## ROADMAP
@@ -115,9 +115,9 @@ getSizeYClassName("vkuiButton", sizeY); // => ex, "vkuiButton--sizeY-regular"
 
 ```js
 const sizeYClasses = {
-  none: styles["Component--sizeY-none"],
-  regular: styles["Component--sizeY-regular"],
-  compact: styles["Component--sizeY-compact"],
+  none: styles['Component--sizeY-none'],
+  regular: styles['Component--sizeY-regular'],
+  compact: styles['Component--sizeY-compact'],
 };
 
 sizeYClasses[sizeY];

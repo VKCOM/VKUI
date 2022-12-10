@@ -1,7 +1,7 @@
 Группа – базовый компонент для группировки контента по смыслу.
 
 ```jsx { "props": { "layout": false, "adaptivity": true } }
-const MODAL_NAME = "modal";
+const MODAL_NAME = 'modal';
 
 const Example = () => {
   const [isModalOpened, setModalOpened] = React.useState(false);
@@ -47,9 +47,7 @@ const Example = () => {
 
             <SharedContent />
 
-            <Group
-              header={<Header mode="secondary">Модальное окно с Group</Header>}
-            >
+            <Group header={<Header mode="secondary">Модальное окно с Group</Header>}>
               <SimpleCell onClick={() => setModalOpened(true)}>
                 Открыть Group в модальном окне
               </SimpleCell>
@@ -68,10 +66,7 @@ const SharedContent = () => {
     <>
       <Group>
         <Group mode="plain">
-          <SimpleCell
-            indicator="+7 ••• •• •• 96"
-            before={<Icon28PhoneOutline />}
-          >
+          <SimpleCell indicator="+7 ••• •• •• 96" before={<Icon28PhoneOutline />}>
             Номер телефона
           </SimpleCell>
           <SimpleCell indicator="g•••@gmail.com" before={<Icon28MailOutline />}>
@@ -79,16 +74,10 @@ const SharedContent = () => {
           </SimpleCell>
         </Group>
         <Group mode="plain">
-          <SimpleCell
-            indicator="Обновлён 3 года назад"
-            before={<Icon28KeyOutline />}
-          >
+          <SimpleCell indicator="Обновлён 3 года назад" before={<Icon28KeyOutline />}>
             Пароль
           </SimpleCell>
-          <SimpleCell
-            indicator="Вкл."
-            before={<Icon28CheckShieldDeviceOutline />}
-          >
+          <SimpleCell indicator="Вкл." before={<Icon28CheckShieldDeviceOutline />}>
             Подтверждение входа
           </SimpleCell>
           <SimpleCell indicator="2" before={<Icon28DevicesOutline />}>

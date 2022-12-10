@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { VisuallyHiddenInput } from "./VisuallyHiddenInput";
+import { baselineComponent } from '../../testing/utils';
+import { VisuallyHiddenInput } from './VisuallyHiddenInput';
 
-describe("VisuallyHiddenInput", () => {
+describe('VisuallyHiddenInput', () => {
   baselineComponent(VisuallyHiddenInput);
 });

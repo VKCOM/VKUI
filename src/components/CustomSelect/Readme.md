@@ -12,16 +12,16 @@ const getUsers = (usersArray) =>
 const Example = () => {
   const selectTypes = [
     {
-      label: "default",
-      value: "default",
+      label: 'default',
+      value: 'default',
     },
     {
-      label: "plain",
-      value: "plain",
+      label: 'plain',
+      value: 'plain',
     },
     {
-      label: "accent",
-      value: "accent",
+      label: 'accent',
+      value: 'accent',
     },
   ];
 
@@ -35,24 +35,17 @@ const Example = () => {
 
       <FormLayoutGroup mode="horizontal">
         <FormItem style={{ flexGrow: 1, flexShrink: 1 }} top="Администратор">
-          <CustomSelect
-            placeholder="Не выбран"
-            options={users}
-            selectType={selectType}
-          />
+          <CustomSelect placeholder="Не выбран" options={users} selectType={selectType} />
         </FormItem>
 
-        <FormItem top="Вид селекта" style={{ flexBasis: "200px", flexGrow: 0 }}>
+        <FormItem top="Вид селекта" style={{ flexBasis: '200px', flexGrow: 0 }}>
           <CustomSelect
             value={selectType}
             placeholder="Не задан"
             options={selectTypes}
             onChange={(e) => setSelectType(e.target.value)}
             renderOption={({ option, ...restProps }) => (
-              <CustomSelectOption
-                {...restProps}
-                description={`"${option.value}"`}
-              />
+              <CustomSelectOption {...restProps} description={`"${option.value}"`} />
             )}
           />
         </FormItem>
@@ -72,10 +65,7 @@ const Example = () => {
         />
       </FormItem>
 
-      <FormItem
-        top="Администратор"
-        bottom="Ползунок скроллбара по умолчанию скрыт"
-      >
+      <FormItem top="Администратор" bottom="Ползунок скроллбара по умолчанию скрыт">
         <CustomSelect
           placeholder="Не выбран"
           options={users}
@@ -86,11 +76,7 @@ const Example = () => {
 
       <Header>Поиск</Header>
       <FormItem top="Администратор" bottom="Поиск по списку">
-        <CustomSelect
-          placeholder="Введите имя пользователя"
-          searchable
-          options={users}
-        />
+        <CustomSelect placeholder="Введите имя пользователя" searchable options={users} />
       </FormItem>
 
       <FormItem top="Администратор" bottom="Кастомное поведение при поиске">
@@ -111,34 +97,29 @@ const Example = () => {
 // * Кастомное поведение при поиске
 // **
 const CustomSearchLogicSelect = () => {
-  const [value, setValue] = React.useState("");
-  const [query, setQuery] = React.useState("");
-  const [newUsers, setNewUsers] = React.useState([
-    ...getUsers(getRandomUsers(10)),
-  ]);
+  const [value, setValue] = React.useState('');
+  const [query, setQuery] = React.useState('');
+  const [newUsers, setNewUsers] = React.useState([...getUsers(getRandomUsers(10))]);
 
   const customSearchOptions = () => {
     const options = [...newUsers];
-    if (
-      query.length > 0 &&
-      !options.find((user) => user.value === query || user.label === query)
-    ) {
+    if (query.length > 0 && !options.find((user) => user.value === query || user.label === query)) {
       options.unshift({
         label: `Добавить пользователя ${query}`,
-        value: "0",
+        value: '0',
       });
     }
     return options;
   };
 
   const onCustomSearchChange = (e) => {
-    if (e.target.value === "0") {
+    if (e.target.value === '0') {
       setNewUsers([...newUsers, { label: query, value: query }]);
       setValue(query);
     } else {
       setValue(e.target.value);
     }
-    setQuery("");
+    setQuery('');
   };
 
   const onCustomSearchInputChange = (e) => {
@@ -154,11 +135,7 @@ const CustomSearchLogicSelect = () => {
       onInputChange={onCustomSearchInputChange}
       renderOption={({ option, ...restProps }) => (
         <CustomSelectOption
-          style={
-            option.value === "0"
-              ? { color: "var(--vkui--color_background_accent)" }
-              : {}
-          }
+          style={option.value === '0' ? { color: 'var(--vkui--color_background_accent)' } : {}}
           {...restProps}
         >
           {option.label}
@@ -175,30 +152,30 @@ const CustomSearchLogicSelect = () => {
 const CustomSearchAlgoSelect = () => {
   const cities = [
     {
-      label: "Санкт-Петербург",
-      description: "Россия",
-      value: "0",
+      label: 'Санкт-Петербург',
+      description: 'Россия',
+      value: '0',
     },
     {
-      label: "Москва",
-      description: "Россия",
-      value: "1",
+      label: 'Москва',
+      description: 'Россия',
+      value: '1',
     },
     {
-      label: "Новосибирск",
-      description: "Россия",
+      label: 'Новосибирск',
+      description: 'Россия',
       disabled: true,
-      value: "2",
+      value: '2',
     },
     {
-      label: "Нью-Йорк",
-      description: "США",
-      value: "3",
+      label: 'Нью-Йорк',
+      description: 'США',
+      value: '3',
     },
     {
-      label: "Чикаго",
-      description: "США",
-      value: "4",
+      label: 'Чикаго',
+      description: 'США',
+      value: '4',
     },
   ];
 
@@ -224,7 +201,7 @@ const CustomSearchAlgoSelect = () => {
 // **
 const AsyncCustomSelect = () => {
   const [searchable, setSearchable] = React.useState(false);
-  const [remoteQuery, setRemoteQuery] = React.useState("");
+  const [remoteQuery, setRemoteQuery] = React.useState('');
   const [fetching, setFetching] = React.useState(false);
   const [remoteUsers, setRemoteUsers] = React.useState([]);
 
@@ -260,16 +237,14 @@ const AsyncCustomSelect = () => {
 
   const clearRemoteUsers = () => {
     setRemoteUsers([]);
-    setRemoteQuery("");
+    setRemoteQuery('');
     cleanFetchingTimeout();
   };
 
   const renderDropdown = ({ defaultDropdownContent }) => {
     if (remoteQuery.length < 3) {
       return (
-        <Text
-          style={{ padding: 12, color: "var(--vkui--color_text_secondary)" }}
-        >
+        <Text style={{ padding: 12, color: 'var(--vkui--color_text_secondary)' }}>
           Нужно ввести хотя бы три символа
         </Text>
       );
@@ -287,23 +262,19 @@ const AsyncCustomSelect = () => {
         <CustomSelect
           options={remoteUsers}
           searchable={searchable}
-          placeholder={searchable ? "Введите имя пользователя" : "Не выбран"}
+          placeholder={searchable ? 'Введите имя пользователя' : 'Не выбран'}
           disabled={searchable && fetching}
           onInputChange={searchable ? searchRemoteUsers : undefined}
-          onOpen={
-            searchable
-              ? undefined
-              : remoteUsers.length === 0 && fetchRemoteUsers
-          }
+          onOpen={searchable ? undefined : remoteUsers.length === 0 && fetchRemoteUsers}
           onClose={() => {
-            console.log("CLOSED [async CustomSelect]");
+            console.log('CLOSED [async CustomSelect]');
           }}
           fetching={fetching}
           renderDropdown={searchable && !fetching && renderDropdown}
         />
       </FormItem>
 
-      <FormItem style={{ flexBasis: "200px", flexGrow: 0 }}>
+      <FormItem style={{ flexBasis: '200px', flexGrow: 0 }}>
         <Checkbox
           onChange={(e) => {
             setSearchable(e.target.checked);

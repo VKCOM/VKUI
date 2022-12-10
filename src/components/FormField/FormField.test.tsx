@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { FormField } from "./FormField";
+import { baselineComponent } from '../../testing/utils';
+import { FormField } from './FormField';
 
-describe("FormField", () => {
+describe('FormField', () => {
   baselineComponent(FormField);
 });

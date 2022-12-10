@@ -7,8 +7,7 @@
   margin: auto 24px;
   box-shadow: var(--vkui--elevation4);
   border-radius: var(--vkui--size_border_radius_paper--regular);
-  animation: vkui-animation-android-alert-intro 0.2s
-    var(--vkui--animation_easing_platform);
+  animation: vkui-animation-android-alert-intro 0.2s var(--vkui--animation_easing_platform);
 }
 
 .Alert--desktop {
@@ -30,7 +29,7 @@
   height: 100%;
   background-color: var(--vkui--color_background_modal);
   z-index: 1;
-  content: "";
+  content: '';
   border-radius: inherit;
 }
 
@@ -94,8 +93,7 @@
   width: 270px;
   min-width: 270px;
   overflow: hidden;
-  animation: vkui-animation-ios-alert-intro 0.3s
-    var(--vkui--animation_easing_platform);
+  animation: vkui-animation-ios-alert-intro 0.3s var(--vkui--animation_easing_platform);
   box-shadow: none;
 }
 
@@ -119,7 +117,7 @@
 }
 
 .Alert--ios .Alert__content::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0;
   height: 1px;
@@ -161,7 +159,7 @@
 }
 
 .Alert--ios .Alert__action::after {
-  content: "";
+  content: '';
   position: absolute;
   background: var(--vkui--color_separator_primary_alpha);
 }

@@ -4,7 +4,7 @@ function MiniInfoCellExample() {
   const [activeModal, setActiveModal] = React.useState(null);
 
   const handleExtendedInfoClick = () => {
-    setActiveModal("extended_info");
+    setActiveModal('extended_info');
   };
 
   const closeModal = () => {
@@ -17,8 +17,7 @@ function MiniInfoCellExample() {
         header={
           <ModalPageHeader
             before={
-              (platform === Platform.ANDROID ||
-                platform === Platform.VKCOM) && (
+              (platform === Platform.ANDROID || platform === Platform.VKCOM) && (
                 <PanelHeaderButton onClick={closeModal}>
                   <Icon24Cancel />
                 </PanelHeaderButton>
@@ -40,37 +39,22 @@ function MiniInfoCellExample() {
       >
         <Separator style={{ marginBottom: 12 }} />
 
-        <MiniInfoCell
-          before={<Icon20CommunityName />}
-          textWrap="full"
-          textLevel="primary"
-        >
+        <MiniInfoCell before={<Icon20CommunityName />} textWrap="full" textLevel="primary">
           Команда вконтакте
         </MiniInfoCell>
 
-        <MiniInfoCell
-          before={<Icon20MessageOutline />}
-          textWrap="full"
-          textLevel="primary"
-        >
+        <MiniInfoCell before={<Icon20MessageOutline />} textWrap="full" textLevel="primary">
           Официальная страница Команды ВКонтакте.
         </MiniInfoCell>
 
-        <MiniInfoCell
-          before={<Icon20ArticleOutline />}
-          textWrap="full"
-          textLevel="primary"
-        >
-          ВКонтакте начинался как сайт для выпускников вузов, а сейчас это
-          огромная экосистема с безграничными возможностями и миллионами
-          пользователей.
+        <MiniInfoCell before={<Icon20ArticleOutline />} textWrap="full" textLevel="primary">
+          ВКонтакте начинался как сайт для выпускников вузов, а сейчас это огромная экосистема с
+          безграничными возможностями и миллионами пользователей.
         </MiniInfoCell>
 
         <Separator style={{ marginTop: 12, marginBottom: 12 }} />
 
-        <MiniInfoCell before={<Icon20PlaceOutline />}>
-          Санкт-Петербург, Россия
-        </MiniInfoCell>
+        <MiniInfoCell before={<Icon20PlaceOutline />}>Санкт-Петербург, Россия</MiniInfoCell>
 
         <MiniInfoCell before={<Icon20MentionOutline />}>team</MiniInfoCell>
 
@@ -88,9 +72,8 @@ function MiniInfoCellExample() {
 
             <Group>
               <MiniInfoCell before={<Icon20ArticleOutline />} textWrap="short">
-                ВКонтакте начинался как сайт для выпускников вузов, а сейчас это
-                огромная экосистема с безграничными возможностями и миллионами
-                пользователей.
+                ВКонтакте начинался как сайт для выпускников вузов, а сейчас это огромная экосистема
+                с безграничными возможностями и миллионами пользователей.
               </MiniInfoCell>
 
               <MiniInfoCell
@@ -98,9 +81,9 @@ function MiniInfoCellExample() {
                 after={
                   <UsersStack
                     photos={[
-                      getAvatarUrl("user_mm"),
-                      getAvatarUrl("user_arthurstam"),
-                      getAvatarUrl("user_xyz"),
+                      getAvatarUrl('user_mm'),
+                      getAvatarUrl('user_arthurstam'),
+                      getAvatarUrl('user_xyz'),
                     ]}
                   />
                 }
@@ -128,7 +111,7 @@ function MiniInfoCellExample() {
               <MiniInfoCell
                 before={<Icon20WorkOutline />}
                 mode="add"
-                onClick={() => console.log("Указать место учёбы")}
+                onClick={() => console.log('Указать место учёбы')}
                 textWrap="short"
                 expandable
               >

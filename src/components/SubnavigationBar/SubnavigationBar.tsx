@@ -1,22 +1,19 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
 import {
   HorizontalScroll,
   HorizontalScrollProps,
   ScrollPositionHandler,
-} from "../HorizontalScroll/HorizontalScroll";
-import styles from "./SubnavigationBar.module.css";
+} from '../HorizontalScroll/HorizontalScroll';
+import styles from './SubnavigationBar.module.css';
 
 export interface SubnavigationBarProps
   extends React.HTMLAttributes<HTMLDivElement>,
     Pick<
       HorizontalScrollProps,
-      | "showArrows"
-      | "getScrollToLeft"
-      | "getScrollToRight"
-      | "scrollAnimationDuration"
+      'showArrows' | 'getScrollToLeft' | 'getScrollToRight' | 'scrollAnimationDuration'
     > {
-  mode?: "fixed" | "overflow";
+  mode?: 'fixed' | 'overflow';
 }
 
 const defaultScrollToLeft: ScrollPositionHandler = (x) => x - 240;
@@ -27,7 +24,7 @@ const defaultScrollToRight: ScrollPositionHandler = (x) => x + 240;
  * @see https://vkcom.github.io/VKUI/#/SubnavigationBar
  */
 export const SubnavigationBar = ({
-  mode = "overflow",
+  mode = 'overflow',
   children,
   showArrows = true,
   getScrollToLeft = defaultScrollToLeft,
@@ -39,8 +36,8 @@ export const SubnavigationBar = ({
   let ScrollWrapper: React.ElementType;
   let scrollWrapperProps = {};
 
-  if (mode === "fixed") {
-    ScrollWrapper = "div";
+  if (mode === 'fixed') {
+    ScrollWrapper = 'div';
   } else {
     ScrollWrapper = HorizontalScroll;
     scrollWrapperProps = {
@@ -55,16 +52,13 @@ export const SubnavigationBar = ({
     <div
       {...restProps}
       className={classNamesString(
-        styles["SubnavigationBar"],
+        styles['SubnavigationBar'],
         styles[`SubnavigationBar--mode-${mode}`],
-        className
+        className,
       )}
     >
-      <ScrollWrapper
-        className={styles["SubnavigationBar__in"]}
-        {...scrollWrapperProps}
-      >
-        <div className={styles["SubnavigationBar__scrollIn"]}>{children}</div>
+      <ScrollWrapper className={styles['SubnavigationBar__in']} {...scrollWrapperProps}>
+        <div className={styles['SubnavigationBar__scrollIn']}>{children}</div>
       </ScrollWrapper>
     </div>
   );

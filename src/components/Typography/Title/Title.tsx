@@ -1,16 +1,14 @@
-import * as React from "react";
-import { HasComponent } from "../../../types";
-import { classNamesString } from "../../../lib/classNames";
-import styles from "./Title.module.css";
+import * as React from 'react';
+import { HasComponent } from '../../../types';
+import { classNamesString } from '../../../lib/classNames';
+import styles from './Title.module.css';
 
-export interface TitleProps
-  extends React.AllHTMLAttributes<HTMLElement>,
-    HasComponent {
+export interface TitleProps extends React.AllHTMLAttributes<HTMLElement>, HasComponent {
   /**
    * Задаёт начертание шрифта отличное от стандартного.
    */
-  weight?: "1" | "2" | "3";
-  level?: "1" | "2" | "3";
+  weight?: '1' | '2' | '3';
+  level?: '1' | '2' | '3';
 }
 
 /**
@@ -20,12 +18,12 @@ export const Title = ({
   className,
   children,
   weight,
-  level = "1",
+  level = '1',
   Component,
   ...restProps
 }: TitleProps) => {
   if (!Component) {
-    Component = ("h" + level) as React.ElementType;
+    Component = ('h' + level) as React.ElementType;
   }
 
   return (
@@ -33,9 +31,9 @@ export const Title = ({
       {...restProps}
       className={classNamesString(
         className,
-        styles["Title"],
+        styles['Title'],
         styles[`Title--level-${level}`],
-        weight && styles[`Title--weight-${weight}`]
+        weight && styles[`Title--weight-${weight}`],
       )}
     >
       {children}

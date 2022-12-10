@@ -1,20 +1,15 @@
-import * as React from "react";
-import { Icon24Attach, Icon24Add } from "@vkontakte/icons";
-import { Button } from "../Button/Button";
-import { ButtonGroup, ButtonGroupProps } from "./ButtonGroup";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
+import * as React from 'react';
+import { Icon24Attach, Icon24Add } from '@vkontakte/icons';
+import { Button } from '../Button/Button';
+import { ButtonGroup, ButtonGroupProps } from './ButtonGroup';
+import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
-describe("ButtonGroup", () => {
+describe('ButtonGroup', () => {
   describeScreenshotFuzz(
     ({ mode, gap, stretched, style, children }: ButtonGroupProps) => (
-      <ButtonGroup
-        mode="vertical"
-        gap={gap}
-        stretched={stretched}
-        style={style}
-      >
+      <ButtonGroup mode="vertical" gap={gap} stretched={stretched} style={style}>
         <Button size="l" appearance="accent" stretched>
-          {children || "Разрешить"}
+          {children || 'Разрешить'}
         </Button>
         <Button size="l" appearance="accent" stretched>
           Завершить
@@ -22,7 +17,7 @@ describe("ButtonGroup", () => {
         <ButtonGroup mode="vertical" gap={gap} stretched>
           <ButtonGroup mode={mode} gap={gap} stretched>
             <Button size="l" appearance="negative" stretched>
-              {children || "Не сейчас"}
+              {children || 'Не сейчас'}
             </Button>
             <Button size="l" appearance="positive" stretched>
               Продолжить
@@ -45,21 +40,21 @@ describe("ButtonGroup", () => {
     ),
     [
       {
-        gap: ["none", "space", "s", "m"],
+        gap: ['none', 'space', 's', 'm'],
         style: [{ minWidth: 300 }],
       },
       {
         stretched: [undefined, true],
-        children: [undefined, "Этот оооооочень длинный-длинный текст"],
+        children: [undefined, 'Этот оооооочень длинный-длинный текст'],
       },
-    ]
+    ],
   );
 });
 
-describe("ButtonGroup align", () => {
+describe('ButtonGroup align', () => {
   describeScreenshotFuzz(
     ({ align }: ButtonGroupProps) => (
-      <ButtonGroup mode="vertical" align={align} style={{ width: "100%" }}>
+      <ButtonGroup mode="vertical" align={align} style={{ width: '100%' }}>
         <Button size="l" appearance="accent">
           Разрешить
         </Button>
@@ -78,8 +73,8 @@ describe("ButtonGroup align", () => {
     ),
     [
       {
-        align: ["left", "center", "right"],
+        align: ['left', 'center', 'right'],
       },
-    ]
+    ],
   );
 });

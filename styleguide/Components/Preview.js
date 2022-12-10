@@ -1,8 +1,8 @@
-import React, { Profiler } from "react";
-import PreviewParent from "@rsg-components/Preview/Preview";
-import ReactExample from "@rsg-components/ReactExample/ReactExample";
-import PlaygroundError from "@rsg-components/PlaygroundError";
-import { StyleGuideContext } from "./StyleGuide/StyleGuideRenderer";
+import React, { Profiler } from 'react';
+import PreviewParent from '@rsg-components/Preview/Preview';
+import ReactExample from '@rsg-components/ReactExample/ReactExample';
+import PlaygroundError from '@rsg-components/PlaygroundError';
+import { StyleGuideContext } from './StyleGuide/StyleGuideRenderer';
 import {
   Platform,
   SplitCol,
@@ -14,11 +14,11 @@ import {
   AdaptivityProvider,
   classNames,
   AppearanceProvider,
-} from "@vkui";
-import { Frame } from "./Frame/Frame";
-import { perfLogger, useViewPortSize } from "../utils";
-import "./Preview.css";
-import { BREAKPOINTS } from "@vkui/shared/breakpoints";
+} from '@vkui';
+import { Frame } from './Frame/Frame';
+import { perfLogger, useViewPortSize } from '../utils';
+import './Preview.css';
+import { BREAKPOINTS } from '@vkui/shared/breakpoints';
 
 const logPerf = (id, phase, time) => perfLogger.log(`${id}.${phase}`, time);
 
@@ -28,9 +28,7 @@ const Layout = ({ children }) => {
   return (
     <SplitLayout
       header={
-        platform !== Platform.VKCOM && (
-          <PanelHeader className="Layout__header" separator={false} />
-        )
+        platform !== Platform.VKCOM && <PanelHeader className="Layout__header" separator={false} />
       }
     >
       <SplitCol autoSpaced={platform !== Platform.VKCOM}>{children}</SplitCol>
@@ -102,17 +100,12 @@ class Preview extends PreviewParent {
 
           return (
             <Profiler id={exampleId} onRender={logPerf}>
-              <ConfigProvider
-                appearance="light"
-                platform={styleGuideContext.platform}
-              >
+              <ConfigProvider appearance="light" platform={styleGuideContext.platform}>
                 <AppearanceProvider appearance={styleGuideContext.appearance}>
                   <div
-                    className={classNames(
-                      "Preview",
-                      `Preview--${styleGuideContext.platform}`,
-                      { "Preview--layout": layout }
-                    )}
+                    className={classNames('Preview', `Preview--${styleGuideContext.platform}`, {
+                      'Preview--layout': layout,
+                    })}
                   >
                     <div
                       className="Preview__shadow"
@@ -127,20 +120,14 @@ class Preview extends PreviewParent {
                     />
                     <div
                       className="Preview__in"
-                      style={
-                        adaptivity
-                          ? { height: styleGuideContext.height, width }
-                          : null
-                      }
+                      style={adaptivity ? { height: styleGuideContext.height, width } : null}
                     >
                       {error ? (
                         <PlaygroundError message={error} />
                       ) : iframe ? (
                         <Frame
                           style={
-                            adaptivity
-                              ? { width, height: styleGuideContext.height }
-                              : undefined
+                            adaptivity ? { width, height: styleGuideContext.height } : undefined
                           }
                           appearance={styleGuideContext.appearance}
                         >

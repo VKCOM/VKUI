@@ -1,10 +1,10 @@
-const { ruleName } = require(".");
+const { ruleName } = require('.');
 
 testRule({
-  plugins: ["./packages/stylelint-atomic"],
+  plugins: ['./packages/stylelint-atomic'],
   ruleName,
   config: true,
-  codeFilename: "src/Cmp.css",
+  codeFilename: 'src/Cmp.css',
 
   accept: [
     {

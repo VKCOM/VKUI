@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
-import * as React from "react";
+import * as React from 'react';
 import {
   Icon12Users,
   Icon16Users,
@@ -10,19 +10,19 @@ import {
   Icon24AddOutline,
   Icon28AddOutline,
   Icon20GiftCircleFillRed,
-} from "@vkontakte/icons";
+} from '@vkontakte/icons';
 import {
   ImageBaseContext,
   getBadgeIconSizeByImageBaseSize,
   getOverlayIconSizeByImageBaseSize,
   getFallbackIconSizeByImageBaseSize,
-} from "../components/ImageBase/ImageBase";
+} from '../components/ImageBase/ImageBase';
 
 export const IconExampleForBadgeBasedOnImageBaseSize = () => {
   const { size } = React.useContext(ImageBaseContext);
   const iconSize = getBadgeIconSizeByImageBaseSize(size);
   const props = {
-    "data-testid": IconExampleForBadgeBasedOnImageBaseSize.DATA_TEST_ID,
+    'data-testid': IconExampleForBadgeBasedOnImageBaseSize.DATA_TEST_ID,
   };
   return React.createElement(Icon20GiftCircleFillRed, {
     width: iconSize,
@@ -31,13 +31,13 @@ export const IconExampleForBadgeBasedOnImageBaseSize = () => {
   });
 };
 
-IconExampleForBadgeBasedOnImageBaseSize.DATA_TEST_ID = "icon-example-for-badge";
+IconExampleForBadgeBasedOnImageBaseSize.DATA_TEST_ID = 'icon-example-for-badge';
 
 export const IconExampleForFallbackBasedOnImageBaseSize = () => {
   const { size } = React.useContext(ImageBaseContext);
   const iconSize = getFallbackIconSizeByImageBaseSize(size);
   const props = {
-    "data-testid": IconExampleForFallbackBasedOnImageBaseSize.DATA_TEST_ID,
+    'data-testid': IconExampleForFallbackBasedOnImageBaseSize.DATA_TEST_ID,
   };
   switch (iconSize) {
     case 12:
@@ -61,14 +61,13 @@ export const IconExampleForFallbackBasedOnImageBaseSize = () => {
   }
 };
 
-IconExampleForFallbackBasedOnImageBaseSize.DATA_TEST_ID =
-  "icon-example-for-fallback";
+IconExampleForFallbackBasedOnImageBaseSize.DATA_TEST_ID = 'icon-example-for-fallback';
 
 export const IconExampleForOverlayBasedOnImageBaseSize = () => {
   const { size } = React.useContext(ImageBaseContext);
   const iconSize = getOverlayIconSizeByImageBaseSize(size);
   const props = {
-    "data-testid": IconExampleForOverlayBasedOnImageBaseSize.DATA_TEST_ID,
+    'data-testid': IconExampleForOverlayBasedOnImageBaseSize.DATA_TEST_ID,
   };
   switch (iconSize) {
     case 12:
@@ -96,5 +95,4 @@ export const IconExampleForOverlayBasedOnImageBaseSize = () => {
   }
 };
 
-IconExampleForOverlayBasedOnImageBaseSize.DATA_TEST_ID =
-  "icon-example-for-overlay";
+IconExampleForOverlayBasedOnImageBaseSize.DATA_TEST_ID = 'icon-example-for-overlay';

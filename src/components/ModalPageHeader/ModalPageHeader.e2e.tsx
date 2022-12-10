@@ -1,12 +1,12 @@
-import * as React from "react";
-import { ModalPageHeader, ModalPageHeaderProps } from "./ModalPageHeader";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import { PanelHeaderButton } from "../PanelHeaderButton/PanelHeaderButton";
-import { Icon24Cancel, Icon24Dismiss, Icon24Done } from "@vkontakte/icons";
-import { Platform } from "../../lib/platform";
-import { ViewWidth } from "../../lib/adaptivity";
-import { ModalRootContext } from "../ModalRoot/ModalRootContext";
-import { noop } from "../../lib/utils";
+import * as React from 'react';
+import { ModalPageHeader, ModalPageHeaderProps } from './ModalPageHeader';
+import { describeScreenshotFuzz } from '../../testing/e2e/utils';
+import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
+import { Icon24Cancel, Icon24Dismiss, Icon24Done } from '@vkontakte/icons';
+import { Platform } from '../../lib/platform';
+import { ViewWidth } from '../../lib/adaptivity';
+import { ModalRootContext } from '../ModalRoot/ModalRootContext';
+import { noop } from '../../lib/utils';
 
 const BaseModalPageHeader = (props: ModalPageHeaderProps) => (
   <ModalRootContext.Provider
@@ -20,7 +20,7 @@ const BaseModalPageHeader = (props: ModalPageHeaderProps) => (
   </ModalRootContext.Provider>
 );
 
-describe("ModalPageHeader", () => {
+describe('ModalPageHeader', () => {
   const cancel = (
     <PanelHeaderButton>
       <Icon24Cancel />
@@ -37,10 +37,7 @@ describe("ModalPageHeader", () => {
     </PanelHeaderButton>
   );
   const dismissText = <PanelHeaderButton>Готово</PanelHeaderButton>;
-  const children = [
-    "Заголовок",
-    "Невероятно длинный заголовок выезжает за шапку даже на десктопе",
-  ];
+  const children = ['Заголовок', 'Невероятно длинный заголовок выезжает за шапку даже на десктопе'];
   describeScreenshotFuzz(
     BaseModalPageHeader,
     [
@@ -55,7 +52,7 @@ describe("ModalPageHeader", () => {
       adaptivity: {
         viewWidth: ViewWidth.MOBILE,
       },
-    }
+    },
   );
   describeScreenshotFuzz(
     BaseModalPageHeader,
@@ -71,7 +68,7 @@ describe("ModalPageHeader", () => {
       adaptivity: {
         viewWidth: ViewWidth.DESKTOP,
       },
-    }
+    },
   );
   describeScreenshotFuzz(
     BaseModalPageHeader,
@@ -87,7 +84,7 @@ describe("ModalPageHeader", () => {
       adaptivity: {
         viewWidth: ViewWidth.MOBILE,
       },
-    }
+    },
   );
   describeScreenshotFuzz(
     BaseModalPageHeader,
@@ -103,6 +100,6 @@ describe("ModalPageHeader", () => {
       adaptivity: {
         viewWidth: ViewWidth.DESKTOP,
       },
-    }
+    },
   );
 });

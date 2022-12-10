@@ -29,31 +29,21 @@ const Example = () => {
               </FormItem>
               <FormItem>
                 <Select
-                  options={[
-                    "@mail.ru",
-                    "@internet.ru",
-                    "@bk.ru",
-                    "@inbox.ru",
-                    "@list.ru",
-                  ].map((i) => ({
-                    label: i,
-                    value: i,
-                  }))}
-                  defaultValue={"@mail.ru"}
+                  options={['@mail.ru', '@internet.ru', '@bk.ru', '@inbox.ru', '@list.ru'].map(
+                    (i) => ({
+                      label: i,
+                      value: i,
+                    }),
+                  )}
+                  defaultValue={'@mail.ru'}
                 />
               </FormItem>
             </FormLayoutGroup>
 
             {!showDates ? (
-              <CellButton onClick={() => toggleDates(true)}>
-                Указать даты поездки
-              </CellButton>
+              <CellButton onClick={() => toggleDates(true)}>Указать даты поездки</CellButton>
             ) : (
-              <FormLayoutGroup
-                mode="horizontal"
-                removable
-                onRemove={() => toggleDates(false)}
-              >
+              <FormLayoutGroup mode="horizontal" removable onRemove={() => toggleDates(false)}>
                 <FormItem bottom="Дата начала поездки">
                   <Input />
                 </FormItem>

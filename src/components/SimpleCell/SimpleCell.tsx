@@ -1,17 +1,17 @@
-import * as React from "react";
-import { HasComponent } from "../../types";
-import { classNamesString } from "../../lib/classNames";
-import { getPlatformClassName } from "../../helpers/getPlatformClassName";
-import { TappableProps, Tappable } from "../Tappable/Tappable";
-import { Icon24Chevron } from "@vkontakte/icons";
-import { Platform } from "../../lib/platform";
-import { usePlatform } from "../../hooks/usePlatform";
-import { hasReactNode } from "../../lib/utils";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { Headline } from "../Typography/Headline/Headline";
-import { Subhead } from "../Typography/Subhead/Subhead";
-import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import styles from "./SimpleCell.module.css";
+import * as React from 'react';
+import { HasComponent } from '../../types';
+import { classNamesString } from '../../lib/classNames';
+import { getPlatformClassName } from '../../helpers/getPlatformClassName';
+import { TappableProps, Tappable } from '../Tappable/Tappable';
+import { Icon24Chevron } from '@vkontakte/icons';
+import { Platform } from '../../lib/platform';
+import { usePlatform } from '../../hooks/usePlatform';
+import { hasReactNode } from '../../lib/utils';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { Headline } from '../Typography/Headline/Headline';
+import { Subhead } from '../Typography/Subhead/Subhead';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import styles from './SimpleCell.module.css';
 
 export interface SimpleCellOwnProps extends HasComponent {
   /**
@@ -91,83 +91,67 @@ export const SimpleCell = ({
   ...restProps
 }: SimpleCellProps) => {
   const platform = usePlatform();
-  const hasAfter =
-    hasReactNode(after) || (expandable && platform === Platform.IOS);
+  const hasAfter = hasReactNode(after) || (expandable && platform === Platform.IOS);
   const { sizeY } = useAdaptivity();
 
   return (
     <Tappable
       {...restProps}
       className={classNamesString(
-        styles["SimpleCell"],
-        getPlatformClassName(styles["SimpleCell"], platform),
-        getSizeYClassName(styles["SimpleCell"], sizeY),
-        expandable && styles["SimpleCell--exp"],
-        multiline && styles["SimpleCell--mult"],
-        className
+        styles['SimpleCell'],
+        getPlatformClassName(styles['SimpleCell'], platform),
+        getSizeYClassName(styles['SimpleCell'], sizeY),
+        expandable && styles['SimpleCell--exp'],
+        multiline && styles['SimpleCell--mult'],
+        className,
       )}
     >
       {before}
-      <div className={styles["SimpleCell__main"]}>
+      <div className={styles['SimpleCell__main']}>
         {subhead && (
           <Subhead
             Component="span"
-            className={classNamesString(
-              styles["SimpleCell__text"],
-              styles["SimpleCell__subhead"]
-            )}
+            className={classNamesString(styles['SimpleCell__text'], styles['SimpleCell__subhead'])}
           >
             {subhead}
           </Subhead>
         )}
-        <div className={styles["SimpleCell__content"]}>
+        <div className={styles['SimpleCell__content']}>
           {badgeBeforeTitle && (
-            <span className={styles["SimpleCell__badge"]}>
-              {badgeBeforeTitle}
-            </span>
+            <span className={styles['SimpleCell__badge']}>{badgeBeforeTitle}</span>
           )}
-          <Headline
-            Component="span"
-            className={styles["SimpleCell__children"]}
-            weight="3"
-          >
+          <Headline Component="span" className={styles['SimpleCell__children']} weight="3">
             {children}
           </Headline>
           {hasReactNode(badgeAfterTitle) && (
-            <span className={styles["SimpleCell__badge"]}>
-              {badgeAfterTitle}
-            </span>
+            <span className={styles['SimpleCell__badge']}>{badgeAfterTitle}</span>
           )}
         </div>
         {subtitle && (
-          <div className={styles["SimpleCell__content"]}>
+          <div className={styles['SimpleCell__content']}>
             {badgeBeforeSubtitle && (
-              <span className={styles["SimpleCell__badge"]}>
-                {badgeBeforeSubtitle}
-              </span>
+              <span className={styles['SimpleCell__badge']}>{badgeBeforeSubtitle}</span>
             )}
             <span
               className={classNamesString(
-                styles["SimpleCell__typography"],
-                styles["SimpleCell__text"],
-                styles["SimpleCell__subtitle"]
+                styles['SimpleCell__typography'],
+                styles['SimpleCell__text'],
+                styles['SimpleCell__subtitle'],
               )}
             >
               {subtitle}
             </span>
             {badgeAfterSubtitle && (
-              <span className={styles["SimpleCell__badge"]}>
-                {badgeAfterSubtitle}
-              </span>
+              <span className={styles['SimpleCell__badge']}>{badgeAfterSubtitle}</span>
             )}
           </div>
         )}
         {extraSubtitle && (
           <span
             className={classNamesString(
-              styles["SimpleCell__typography"],
-              styles["SimpleCell__text"],
-              styles["SimpleCell__extraSubtitle"]
+              styles['SimpleCell__typography'],
+              styles['SimpleCell__text'],
+              styles['SimpleCell__extraSubtitle'],
             )}
           >
             {extraSubtitle}
@@ -175,16 +159,12 @@ export const SimpleCell = ({
         )}
       </div>
       {hasReactNode(indicator) && (
-        <Headline
-          Component="span"
-          weight="3"
-          className={styles["SimpleCell__indicator"]}
-        >
+        <Headline Component="span" weight="3" className={styles['SimpleCell__indicator']}>
           {indicator}
         </Headline>
       )}
       {hasAfter && (
-        <div className={styles["SimpleCell__after"]}>
+        <div className={styles['SimpleCell__after']}>
           {after}
           {expandable && platform === Platform.IOS && <Icon24Chevron />}
         </div>

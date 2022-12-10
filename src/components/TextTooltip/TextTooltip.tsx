@@ -1,12 +1,12 @@
-import * as React from "react";
-import { HoverPopper, HoverPopperProps } from "../HoverPopper/HoverPopper";
-import { hasReactNode } from "../../lib/utils";
-import { Subhead } from "../Typography/Subhead/Subhead";
-import { classNamesString } from "../../lib/classNames";
-import styles from "./TextTooltip.module.css";
+import * as React from 'react';
+import { HoverPopper, HoverPopperProps } from '../HoverPopper/HoverPopper';
+import { hasReactNode } from '../../lib/utils';
+import { Subhead } from '../Typography/Subhead/Subhead';
+import { classNamesString } from '../../lib/classNames';
+import styles from './TextTooltip.module.css';
 
 export interface TextTooltipProps
-  extends Omit<HoverPopperProps, "arrow" | "arrowClassName" | "content"> {
+  extends Omit<HoverPopperProps, 'arrow' | 'arrowClassName' | 'content'> {
   /**
    * Текст тултипа
    */
@@ -18,7 +18,7 @@ export interface TextTooltipProps
   /**
    * Стиль отображения подсказки
    */
-  appearance?: "accent" | "neutral" | "white" | "black" | "inversion";
+  appearance?: 'accent' | 'neutral' | 'white' | 'black' | 'inversion';
 }
 
 /**
@@ -28,29 +28,27 @@ export const TextTooltip = ({
   children,
   text,
   header,
-  appearance = "neutral",
+  appearance = 'neutral',
   className,
   ...popperProps
 }: TextTooltipProps) => {
   return (
     <HoverPopper
       className={classNamesString(
-        styles["TextTooltip"],
+        styles['TextTooltip'],
         styles[`TextTooltip--appearance-${appearance}`],
-        className
+        className,
       )}
       arrow
-      arrowClassName={styles["TextTooltip__arrow"]}
+      arrowClassName={styles['TextTooltip__arrow']}
       content={
         <React.Fragment>
           {hasReactNode(header) && (
-            <Subhead weight="2" className={styles["TextTooltip__header"]}>
+            <Subhead weight="2" className={styles['TextTooltip__header']}>
               {header}
             </Subhead>
           )}
-          {hasReactNode(text) && (
-            <Subhead className={styles["TextTooltip__text"]}>{text}</Subhead>
-          )}
+          {hasReactNode(text) && <Subhead className={styles['TextTooltip__text']}>{text}</Subhead>}
         </React.Fragment>
       }
       {...popperProps}

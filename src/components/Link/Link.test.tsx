@@ -1,30 +1,30 @@
-import * as React from "react";
-import { baselineComponent } from "../../testing/utils";
-import { Link, LinkProps } from "./Link";
-import { render, screen } from "@testing-library/react";
+import * as React from 'react';
+import { baselineComponent } from '../../testing/utils';
+import { Link, LinkProps } from './Link';
+import { render, screen } from '@testing-library/react';
 
 const LinkTest = (props: LinkProps) => (
   <Link data-testid="link" {...props}>
     Link
   </Link>
 );
-const link = () => screen.getByTestId("link");
+const link = () => screen.getByTestId('link');
 
-describe("Link", () => {
+describe('Link', () => {
   baselineComponent(Link);
 
-  it("Component: default Link is a button", () => {
+  it('Component: default Link is a button', () => {
     render(<LinkTest />);
-    expect(link().tagName.toLowerCase()).toMatch("button");
+    expect(link().tagName.toLowerCase()).toMatch('button');
   });
 
-  it("Component: Link w/ href is a link", () => {
+  it('Component: Link w/ href is a link', () => {
     render(<LinkTest href="https://vk.com" />);
-    expect(link().tagName.toLowerCase()).toMatch("a");
+    expect(link().tagName.toLowerCase()).toMatch('a');
   });
 
-  it("Component: Link w/ Component and href is [Component]", () => {
+  it('Component: Link w/ Component and href is [Component]', () => {
     render(<LinkTest href="https://vk.com" Component="div" />);
-    expect(link().tagName.toLowerCase()).toMatch("div");
+    expect(link().tagName.toLowerCase()).toMatch('div');
   });
 });

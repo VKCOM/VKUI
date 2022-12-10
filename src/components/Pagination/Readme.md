@@ -12,7 +12,7 @@
 
 ```jsx { "props": { "layout": false, "adaptivity": true, "iframe": false } }
 const Example = () => {
-  const [sizeY, setSizeY] = useState("compact");
+  const [sizeY, setSizeY] = useState('compact');
   const [currentPage, setCurrentPage] = useState(1);
   const [siblingCount, setSiblingCount] = useState(0);
   const [boundaryCount, setBoundaryCount] = useState(1);
@@ -43,8 +43,8 @@ const Example = () => {
             value={sizeY}
             onChange={(e) => setSizeY(e.target.value)}
             options={[
-              { label: "compact", value: "compact" },
-              { label: "regular", value: "regular" },
+              { label: 'compact', value: 'compact' },
+              { label: 'regular', value: 'regular' },
             ]}
           />
         </FormItem>
@@ -66,9 +66,7 @@ const Example = () => {
           <Input
             type="number"
             value={boundaryCount}
-            onChange={({ target: { value } }) =>
-              setBoundaryCount(Number(value))
-            }
+            onChange={({ target: { value } }) => setBoundaryCount(Number(value))}
           />
         </FormItem>
         <FormItem top="prop[totalPages]">
@@ -79,10 +77,7 @@ const Example = () => {
           />
         </FormItem>
         <FormItem top="prop[disabled]">
-          <Checkbox
-            value={disabled}
-            onChange={({ target: { checked } }) => setDisabled(checked)}
-          >
+          <Checkbox value={disabled} onChange={({ target: { checked } }) => setDisabled(checked)}>
             disabled
           </Checkbox>
         </FormItem>
@@ -92,10 +87,10 @@ const Example = () => {
 };
 
 const rootContainerStyles = {
-  display: "flex",
-  flexDirection: "row-reverse",
-  flexWrap: "wrap",
-  justifyContent: "center",
+  display: 'flex',
+  flexDirection: 'row-reverse',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
 };
 
 const demoContainerStyles = {

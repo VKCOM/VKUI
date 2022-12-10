@@ -19,12 +19,7 @@ const Example = () => {
         <PanelHeader>Slider</PanelHeader>
         <Group>
           <FormItem top="Simple [10, 30]">
-            <Slider
-              min={10}
-              max={30}
-              value={Number(value1)}
-              onChange={setValue1}
-            />
+            <Slider min={10} max={30} value={Number(value1)} onChange={setValue1} />
           </FormItem>
           <FormItem>
             <Input
@@ -34,13 +29,7 @@ const Example = () => {
             />
           </FormItem>
           <FormItem top="Step [0, 1]">
-            <Slider
-              step={0.2}
-              min={0}
-              max={1}
-              value={Number(value2)}
-              onChange={setValue2}
-            />
+            <Slider step={0.2} min={0} max={1} value={Number(value2)} onChange={setValue2} />
           </FormItem>
           <FormItem>
             <Select
@@ -50,20 +39,10 @@ const Example = () => {
             />
           </FormItem>
           <FormItem top="Uncontrolled">
-            <Slider
-              onChange={setValue3}
-              defaultValue={value3}
-              bottom={String(value3)}
-            />
+            <Slider onChange={setValue3} defaultValue={value3} bottom={String(value3)} />
           </FormItem>
           <FormItem top="Disabled">
-            <Slider
-              min={10}
-              max={30}
-              defaultValue={value4}
-              onChange={setValue4}
-              disabled
-            />
+            <Slider min={10} max={30} defaultValue={value4} onChange={setValue4} disabled />
           </FormItem>
         </Group>
       </Panel>

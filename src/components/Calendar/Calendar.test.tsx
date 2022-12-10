@@ -1,6 +1,6 @@
-import { Calendar } from "./Calendar";
-import { baselineComponent } from "../../testing/utils";
+import { Calendar } from './Calendar';
+import { baselineComponent } from '../../testing/utils';
 
-describe("Calendar", () => {
+describe('Calendar', () => {
   baselineComponent(Calendar);
 });

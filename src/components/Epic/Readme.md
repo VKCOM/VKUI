@@ -19,32 +19,26 @@ Android. Внизу располагается панель с иконками,
 const Example = () => {
   const platform = usePlatform();
   const { viewWidth } = useAdaptivityConditionalRender();
-  const [activeStory, setActiveStory] = React.useState("profile");
+  const [activeStory, setActiveStory] = React.useState('profile');
   const onStoryChange = (e) => setActiveStory(e.currentTarget.dataset.story);
   const isVKCOM = platform !== Platform.VKCOM;
 
   return (
     <SplitLayout
       header={isVKCOM && <PanelHeader separator={false} />}
-      style={{ justifyContent: "center" }}
+      style={{ justifyContent: 'center' }}
     >
       {viewWidth.tabletPlus && (
-        <SplitCol
-          className={viewWidth.tabletPlus.className}
-          fixed
-          width={280}
-          maxWidth={280}
-        >
+        <SplitCol className={viewWidth.tabletPlus.className} fixed width={280} maxWidth={280}>
           <Panel>
             {isVKCOM && <PanelHeader />}
             <Group>
               <Cell
-                disabled={activeStory === "feed"}
+                disabled={activeStory === 'feed'}
                 style={
-                  activeStory === "feed"
+                  activeStory === 'feed'
                     ? {
-                        backgroundColor:
-                          "var(--vkui--color_background_secondary)",
+                        backgroundColor: 'var(--vkui--color_background_secondary)',
                         borderRadius: 8,
                       }
                     : {}
@@ -56,12 +50,11 @@ const Example = () => {
                 feed
               </Cell>
               <Cell
-                disabled={activeStory === "services"}
+                disabled={activeStory === 'services'}
                 style={
-                  activeStory === "services"
+                  activeStory === 'services'
                     ? {
-                        backgroundColor:
-                          "var(--vkui--color_background_secondary)",
+                        backgroundColor: 'var(--vkui--color_background_secondary)',
                         borderRadius: 8,
                       }
                     : {}
@@ -73,12 +66,11 @@ const Example = () => {
                 services
               </Cell>
               <Cell
-                disabled={activeStory === "messages"}
+                disabled={activeStory === 'messages'}
                 style={
-                  activeStory === "messages"
+                  activeStory === 'messages'
                     ? {
-                        backgroundColor:
-                          "var(--vkui--color_background_secondary)",
+                        backgroundColor: 'var(--vkui--color_background_secondary)',
                         borderRadius: 8,
                       }
                     : {}
@@ -90,12 +82,11 @@ const Example = () => {
                 messages
               </Cell>
               <Cell
-                disabled={activeStory === "clips"}
+                disabled={activeStory === 'clips'}
                 style={
-                  activeStory === "clips"
+                  activeStory === 'clips'
                     ? {
-                        backgroundColor:
-                          "var(--vkui--color_background_secondary)",
+                        backgroundColor: 'var(--vkui--color_background_secondary)',
                         borderRadius: 8,
                       }
                     : {}
@@ -107,12 +98,11 @@ const Example = () => {
                 clips
               </Cell>
               <Cell
-                disabled={activeStory === "profile"}
+                disabled={activeStory === 'profile'}
                 style={
-                  activeStory === "profile"
+                  activeStory === 'profile'
                     ? {
-                        backgroundColor:
-                          "var(--vkui--color_background_secondary)",
+                        backgroundColor: 'var(--vkui--color_background_secondary)',
                         borderRadius: 8,
                       }
                     : {}
@@ -136,7 +126,7 @@ const Example = () => {
               <Tabbar className={viewWidth.tabletMinus.className}>
                 <TabbarItem
                   onClick={onStoryChange}
-                  selected={activeStory === "feed"}
+                  selected={activeStory === 'feed'}
                   data-story="feed"
                   text="Новости"
                 >
@@ -144,7 +134,7 @@ const Example = () => {
                 </TabbarItem>
                 <TabbarItem
                   onClick={onStoryChange}
-                  selected={activeStory === "services"}
+                  selected={activeStory === 'services'}
                   data-story="services"
                   text="Сервисы"
                 >
@@ -152,7 +142,7 @@ const Example = () => {
                 </TabbarItem>
                 <TabbarItem
                   onClick={onStoryChange}
-                  selected={activeStory === "messages"}
+                  selected={activeStory === 'messages'}
                   data-story="messages"
                   indicator={
                     <Counter size="s" mode="prominent">
@@ -165,7 +155,7 @@ const Example = () => {
                 </TabbarItem>
                 <TabbarItem
                   onClick={onStoryChange}
-                  selected={activeStory === "clips"}
+                  selected={activeStory === 'clips'}
                   data-story="clips"
                   text="Клипы"
                 >
@@ -173,7 +163,7 @@ const Example = () => {
                 </TabbarItem>
                 <TabbarItem
                   onClick={onStoryChange}
-                  selected={activeStory === "profile"}
+                  selected={activeStory === 'profile'}
                   data-story="profile"
                   indicator={<Badge mode="prominent" />}
                   text="Профиль"
@@ -187,47 +177,39 @@ const Example = () => {
           <View id="feed" activePanel="feed">
             <Panel id="feed">
               <PanelHeader before={<PanelHeaderBack />}>Новости</PanelHeader>
-              <Group style={{ height: "1000px" }}>
-                <Placeholder
-                  icon={<Icon56NewsfeedOutline width={56} height={56} />}
-                />
+              <Group style={{ height: '1000px' }}>
+                <Placeholder icon={<Icon56NewsfeedOutline width={56} height={56} />} />
               </Group>
             </Panel>
           </View>
           <View id="services" activePanel="services">
             <Panel id="services">
               <PanelHeader before={<PanelHeaderBack />}>Сервисы</PanelHeader>
-              <Group style={{ height: "1000px" }}>
-                <Placeholder
-                  icon={<Icon28ServicesOutline width={56} height={56} />}
-                ></Placeholder>
+              <Group style={{ height: '1000px' }}>
+                <Placeholder icon={<Icon28ServicesOutline width={56} height={56} />}></Placeholder>
               </Group>
             </Panel>
           </View>
           <View id="messages" activePanel="messages">
             <Panel id="messages">
               <PanelHeader before={<PanelHeaderBack />}>Сообщения</PanelHeader>
-              <Group style={{ height: "1000px" }}>
-                <Placeholder
-                  icon={<Icon28MessageOutline width={56} height={56} />}
-                ></Placeholder>
+              <Group style={{ height: '1000px' }}>
+                <Placeholder icon={<Icon28MessageOutline width={56} height={56} />}></Placeholder>
               </Group>
             </Panel>
           </View>
           <View id="clips" activePanel="clips">
             <Panel id="clips">
               <PanelHeader before={<PanelHeaderBack />}>Клипы</PanelHeader>
-              <Group style={{ height: "1000px" }}>
-                <Placeholder
-                  icon={<Icon28ClipOutline width={56} height={56} />}
-                ></Placeholder>
+              <Group style={{ height: '1000px' }}>
+                <Placeholder icon={<Icon28ClipOutline width={56} height={56} />}></Placeholder>
               </Group>
             </Panel>
           </View>
           <View id="profile" activePanel="profile">
             <Panel id="profile">
               <PanelHeader before={<PanelHeaderBack />}>Профиль</PanelHeader>
-              <Group style={{ height: "1000px" }}>
+              <Group style={{ height: '1000px' }}>
                 <Placeholder
                   icon={<Icon28UserCircleOutline width={56} height={56} />}
                 ></Placeholder>

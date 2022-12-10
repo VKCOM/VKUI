@@ -1,16 +1,10 @@
-import * as React from "react";
-import {
-  getSupportedEvents,
-  coordX,
-  coordY,
-  touchEnabled,
-  VKUITouchEvent,
-} from "../../lib/touch";
-import { HasComponent, HasRootRef } from "../../types";
-import { useDOM } from "../../lib/dom";
-import { useExternRef } from "../../hooks/useExternRef";
-import { useEventListener } from "../../hooks/useEventListener";
-import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
+import * as React from 'react';
+import { getSupportedEvents, coordX, coordY, touchEnabled, VKUITouchEvent } from '../../lib/touch';
+import { HasComponent, HasRootRef } from '../../types';
+import { useDOM } from '../../lib/dom';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useEventListener } from '../../hooks/useEventListener';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 
 export interface TouchProps
   extends React.AllHTMLAttributes<HTMLElement>,
@@ -82,7 +76,7 @@ export const Touch = ({
   usePointerHover,
   slideThreshold = 5,
   useCapture = false,
-  Component = "div",
+  Component = 'div',
   getRootRef,
   noSlideClick = false,
   stopPropagation = false,
@@ -92,10 +86,7 @@ export const Touch = ({
   const events = React.useMemo(getSupportedEvents, []);
   const didSlide = React.useRef(false);
   const gesture = React.useRef<Partial<Gesture> | null>(null);
-  const handle = (
-    e: VKUITouchEvent,
-    handlers: Array<TouchEventHandler | undefined | false>
-  ) => {
+  const handle = (e: VKUITouchEvent, handlers: Array<TouchEventHandler | undefined | false>) => {
     stopPropagation && e.stopPropagation();
     handlers.forEach((cb) => {
       const duration = Date.now() - (gesture.current?.startT?.getTime() ?? 0);
@@ -103,14 +94,8 @@ export const Touch = ({
     });
   };
 
-  const enterHandler = useEventListener(
-    usePointerHover ? "pointerenter" : "mouseenter",
-    onEnter
-  );
-  const leaveHandler = useEventListener(
-    usePointerHover ? "pointerleave" : "mouseleave",
-    onLeave
-  );
+  const enterHandler = useEventListener(usePointerHover ? 'pointerenter' : 'mouseenter', onEnter);
+  const leaveHandler = useEventListener(usePointerHover ? 'pointerleave' : 'mouseleave', onLeave);
   const startHandler = useEventListener(
     events[0],
     (e: VKUITouchEvent) => {
@@ -126,10 +111,10 @@ export const Touch = ({
           : // Mouse events fire on the element under pointer, so we lose move / end
             // if pointer goes outside container.
             // Can be fixed by PointerEvents' setPointerCapture later
-            document
+            document,
       );
     },
-    { capture: useCapture, passive: false }
+    { capture: useCapture, passive: false },
   );
   const containerRef = useExternRef(getRootRef);
 
@@ -143,13 +128,7 @@ export const Touch = ({
   }, [Component]);
 
   function onMove(e: VKUITouchEvent) {
-    const {
-      isPressed,
-      isX,
-      isY,
-      startX = 0,
-      startY = 0,
-    } = gesture.current ?? {};
+    const { isPressed, isX, isY, startX = 0, startY = 0 } = gesture.current ?? {};
 
     if (isPressed) {
       // смещения
@@ -238,7 +217,7 @@ export const Touch = ({
    */
   const onDragStart = (e: React.DragEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
-    if (target.tagName === "A" || target.tagName === "IMG") {
+    if (target.tagName === 'A' || target.tagName === 'IMG') {
       e.preventDefault();
     }
   };
@@ -252,7 +231,7 @@ export const Touch = ({
       return onClickCapture && onClickCapture(e);
     }
     // eslint-disable-next-line no-restricted-properties
-    if ((e.target as HTMLElement).closest("a")) {
+    if ((e.target as HTMLElement).closest('a')) {
       e.preventDefault();
     }
     if (noSlideClick) {

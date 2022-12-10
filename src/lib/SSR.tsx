@@ -1,9 +1,9 @@
-import * as React from "react";
-import { platform as getPlatform } from "./platform";
-import { BrowserInfo, computeBrowserInfo } from "./browser";
-import { DOMContext, getDOM } from "../lib/dom";
-import { useObjectMemo } from "../hooks/useObjectMemo";
-import { ConfigProviderOverride } from "../components/ConfigProvider/ConfigProviderOverride";
+import * as React from 'react';
+import { platform as getPlatform } from './platform';
+import { BrowserInfo, computeBrowserInfo } from './browser';
+import { DOMContext, getDOM } from '../lib/dom';
+import { useObjectMemo } from '../hooks/useObjectMemo';
+import { ConfigProviderOverride } from '../components/ConfigProvider/ConfigProviderOverride';
 
 export interface SSRWrapperProps {
   userAgent?: string;
@@ -14,11 +14,7 @@ export interface SSRWrapperProps {
 /**
  * @see https://vkcom.github.io/VKUI/#/SSR
  */
-export const SSRWrapper = ({
-  userAgent,
-  browserInfo,
-  children,
-}: SSRWrapperProps) => {
+export const SSRWrapper = ({ userAgent, browserInfo, children }: SSRWrapperProps) => {
   if (!browserInfo && userAgent) {
     browserInfo = computeBrowserInfo(userAgent);
   }

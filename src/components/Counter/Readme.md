@@ -10,22 +10,13 @@
         <Cell before={<Icon28UserOutline />} indicator={<Counter>4</Counter>}>
           Друзья
         </Cell>
-        <Cell
-          before={<Icon28UsersOutline />}
-          indicator={<Counter mode="primary">2</Counter>}
-        >
+        <Cell before={<Icon28UsersOutline />} indicator={<Counter mode="primary">2</Counter>}>
           Группы
         </Cell>
-        <Cell
-          before={<Icon28MessageOutline />}
-          indicator={<Counter>224</Counter>}
-        >
+        <Cell before={<Icon28MessageOutline />} indicator={<Counter>224</Counter>}>
           Сообщения
         </Cell>
-        <Cell
-          before={<Icon28FavoriteOutline />}
-          indicator={<Counter mode="primary">1</Counter>}
-        >
+        <Cell before={<Icon28FavoriteOutline />} indicator={<Counter mode="primary">1</Counter>}>
           Закладки
         </Cell>
       </List>
@@ -47,12 +38,7 @@
         </Button>
       </FormItem>
       <FormItem>
-        <Button
-          mode="primary"
-          appearance="positive"
-          size="m"
-          after={<Counter>4</Counter>}
-        >
+        <Button mode="primary" appearance="positive" size="m" after={<Counter>4</Counter>}>
           Commerce medium
         </Button>
       </FormItem>

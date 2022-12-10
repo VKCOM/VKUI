@@ -1,8 +1,8 @@
-import * as React from "react";
-import { ModalRootTouch } from "./ModalRoot";
-import { ModalRootDesktop } from "./ModalRootDesktop";
-import { useScrollLock } from "../AppRoot/ScrollContext";
-import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
+import * as React from 'react';
+import { ModalRootTouch } from './ModalRoot';
+import { ModalRootDesktop } from './ModalRootDesktop';
+import { useScrollLock } from '../AppRoot/ScrollContext';
+import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 
 export interface ModalRootProps {
   activeModal?: string | null;

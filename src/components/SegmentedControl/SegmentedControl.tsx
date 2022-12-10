@@ -1,41 +1,41 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import { generateRandomId } from "../../lib/utils";
-import { warnOnce } from "../../lib/warnOnce";
-import { SegmentedControlOption } from "./SegmentedControlOption/SegmentedControlOption";
-import { HasRootRef } from "../../types";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import { useCustomEnsuredControl } from "../../hooks/useEnsuredControl";
-import styles from "./SegmentedControl.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { generateRandomId } from '../../lib/utils';
+import { warnOnce } from '../../lib/warnOnce';
+import { SegmentedControlOption } from './SegmentedControlOption/SegmentedControlOption';
+import { HasRootRef } from '../../types';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
+import styles from './SegmentedControl.module.css';
 
 export type SegmentedControlValue = string | number | undefined;
 
 export interface SegmentedControlOptionInterface
-  extends Omit<React.HTMLAttributes<HTMLElement>, "label"> {
+  extends Omit<React.HTMLAttributes<HTMLElement>, 'label'> {
   label: React.ReactChild;
   value: SegmentedControlValue;
 }
 
 export interface SegmentedControlProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange">,
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>,
     HasRootRef<HTMLDivElement> {
   options: SegmentedControlOptionInterface[];
-  size?: "m" | "l";
+  size?: 'm' | 'l';
   name?: string;
   onChange?: (value: SegmentedControlValue) => void;
   value?: SegmentedControlValue;
   defaultValue?: SegmentedControlValue;
 }
 
-const warn = warnOnce("SegmentedControl");
+const warn = warnOnce('SegmentedControl');
 
 /**
  * @see https://vkcom.github.io/VKUI/#/SegmentedControl
  */
 export const SegmentedControl = ({
-  size = "l",
+  size = 'l',
   name,
   options,
   getRootRef,
@@ -59,12 +59,10 @@ export const SegmentedControl = ({
   const nameRef = React.useRef<string>(name ?? generateRandomId());
 
   useIsomorphicLayoutEffect(() => {
-    const _activeOptionIdx = options.findIndex(
-      (option) => option.value === value
-    );
+    const _activeOptionIdx = options.findIndex((option) => option.value === value);
 
-    if (_activeOptionIdx === -1 && process.env.NODE_ENV === "development") {
-      warn("defaultValue: такого значения нет среди опций!", "error");
+    if (_activeOptionIdx === -1 && process.env.NODE_ENV === 'development') {
+      warn('defaultValue: такого значения нет среди опций!', 'error');
     }
 
     updateActiveOptionIdx(_activeOptionIdx);
@@ -76,18 +74,18 @@ export const SegmentedControl = ({
     <div
       {...restProps}
       className={classNamesString(
-        styles["SegmentedControl"],
-        getSizeYClassName(styles["SegmentedControl"], sizeY),
+        styles['SegmentedControl'],
+        getSizeYClassName(styles['SegmentedControl'], sizeY),
         styles[`SegmentedControl--size-${size}`],
-        className
+        className,
       )}
       ref={getRootRef}
     >
-      <div role="radiogroup" className={styles["SegmentedControl__in"]}>
+      <div role="radiogroup" className={styles['SegmentedControl__in']}>
         {activeOptionIdx > -1 && (
           <div
             aria-hidden="true"
-            className={styles["SegmentedControl__slider"]}
+            className={styles['SegmentedControl__slider']}
             style={{
               width: `${100 / options.length}%`,
               transform: translateX,
@@ -95,23 +93,18 @@ export const SegmentedControl = ({
             }}
           />
         )}
-        {options.map(
-          ({ label, className: optionClassName, ...optionProps }) => (
-            <SegmentedControlOption
-              key={`${optionProps.value}`}
-              {...optionProps}
-              className={classNamesString(
-                styles["SegmentedControl__option"],
-                optionClassName
-              )}
-              name={nameRef.current}
-              checked={value === optionProps.value}
-              onChange={() => onChange(optionProps.value)}
-            >
-              {label}
-            </SegmentedControlOption>
-          )
-        )}
+        {options.map(({ label, className: optionClassName, ...optionProps }) => (
+          <SegmentedControlOption
+            key={`${optionProps.value}`}
+            {...optionProps}
+            className={classNamesString(styles['SegmentedControl__option'], optionClassName)}
+            name={nameRef.current}
+            checked={value === optionProps.value}
+            onChange={() => onChange(optionProps.value)}
+          >
+            {label}
+          </SegmentedControlOption>
+        ))}
       </div>
     </div>
   );

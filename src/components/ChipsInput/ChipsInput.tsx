@@ -1,12 +1,9 @@
-import * as React from "react";
-import { FormField, FormFieldProps } from "../FormField/FormField";
-import { classNamesString } from "../../lib/classNames";
-import { ChipOption } from "../Chip/Chip";
-import {
-  ChipsInputBase,
-  ChipsInputBaseProps,
-} from "../ChipsInputBase/ChipsInputBase";
-import styles from "./ChipsInput.module.css";
+import * as React from 'react';
+import { FormField, FormFieldProps } from '../FormField/FormField';
+import { classNamesString } from '../../lib/classNames';
+import { ChipOption } from '../Chip/Chip';
+import { ChipsInputBase, ChipsInputBaseProps } from '../ChipsInputBase/ChipsInputBase';
+import styles from './ChipsInput.module.css';
 
 export interface ChipsInputProps<Option extends ChipOption>
   extends ChipsInputBaseProps<Option>,
@@ -27,7 +24,7 @@ export const ChipsInput = <Option extends ChipOption>({
   return (
     <FormField
       getRootRef={getRootRef}
-      className={classNamesString(styles["ChipsInput"], className)}
+      className={classNamesString(styles['ChipsInput'], className)}
       style={style}
       disabled={restProps.disabled}
       before={before}

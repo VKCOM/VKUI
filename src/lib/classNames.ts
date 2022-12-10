@@ -2,13 +2,7 @@ export interface ObjectClassNames {
   [index: string]: boolean | undefined | null;
 }
 
-export type ClassName =
-  | number
-  | string
-  | ObjectClassNames
-  | false
-  | null
-  | undefined;
+export type ClassName = number | string | ObjectClassNames | false | null | undefined;
 
 export function classNames(...classnames: ClassName[]): string | string[];
 export function classNames() {
@@ -20,10 +14,10 @@ export function classNames() {
       continue;
     }
     switch (typeof item) {
-      case "string":
+      case 'string':
         result.push(item);
         break;
-      case "object":
+      case 'object':
         for (let key in item) {
           if (item[key]) {
             result.push(key);
@@ -35,10 +29,10 @@ export function classNames() {
     }
   }
 
-  return result.length > 1 ? result : result[0] || "";
+  return result.length > 1 ? result : result[0] || '';
 }
 
 export function classNamesString(...args: ClassName[]) {
   const res = classNames(...args);
-  return typeof res === "string" ? res : res.join(" ");
+  return typeof res === 'string' ? res : res.join(' ');
 }

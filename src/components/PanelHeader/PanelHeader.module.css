@@ -4,7 +4,7 @@
 
 .PanelHeader--vis.PanelHeader--fixed::before {
   display: block;
-  content: "";
+  content: '';
 }
 
 .PanelHeader:not(.PanelHeader--vis):not(.PanelHeader--fixed) {
@@ -90,10 +90,7 @@
   padding: 4px 0 4px 4px;
 }
 
-.PanelHeader--ios
-  .PanelHeader__before
-  .PanelHeaderButton
-  + .PanelHeaderButton--primitive {
+.PanelHeader--ios .PanelHeader__before .PanelHeaderButton + .PanelHeaderButton--primitive {
   margin-left: -6px;
   padding-left: 0;
 }
@@ -232,47 +229,41 @@
 }
 
 .PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.ModalPageHeader__in)::after,
-.PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.PanelHeader--sep)
-  .PanelHeader__in::after {
+.PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.PanelHeader--sep) .PanelHeader__in::after {
   position: absolute;
   left: var(--vkui_internal--thin_border);
   right: var(--vkui_internal--thin_border);
   bottom: 0;
   height: var(--vkui_internal--thin_border);
   background-color: var(--vkui--color_background_content);
-  content: "";
+  content: '';
 }
 
 @media (--sizeX-regular) {
   .PanelHeader--vkcom.PanelHeader--sizeX-none:not(.ModalPageHeader__in)::after,
-  .PanelHeader--vkcom.PanelHeader--sizeX-none:not(.PanelHeader--sep)
-    .PanelHeader__in::after {
+  .PanelHeader--vkcom.PanelHeader--sizeX-none:not(.PanelHeader--sep) .PanelHeader__in::after {
     position: absolute;
     left: var(--vkui_internal--thin_border);
     right: var(--vkui_internal--thin_border);
     bottom: 0;
     height: var(--vkui_internal--thin_border);
     background-color: var(--vkui--color_background_content);
-    content: "";
+    content: '';
   }
 }
 
-.PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.ModalPageHeader__in)
-  .PanelHeader__in {
+.PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.ModalPageHeader__in) .PanelHeader__in {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  box-shadow: 0 0 0 var(--vkui_internal--thin_border)
-    var(--vkui--color_field_border_alpha) inset;
+  box-shadow: 0 0 0 var(--vkui_internal--thin_border) var(--vkui--color_field_border_alpha) inset;
   border-bottom: none;
 }
 
 @media (--sizeX-regular) {
-  .PanelHeader--vkcom.PanelHeader--sizeX-none:not(.ModalPageHeader__in)
-    .PanelHeader__in {
+  .PanelHeader--vkcom.PanelHeader--sizeX-none:not(.ModalPageHeader__in) .PanelHeader__in {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    box-shadow: 0 0 0 var(--vkui_internal--thin_border)
-      var(--vkui--color_field_border_alpha) inset;
+    box-shadow: 0 0 0 var(--vkui_internal--thin_border) var(--vkui--color_field_border_alpha) inset;
     border-bottom: none;
   }
 }

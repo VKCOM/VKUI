@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { SplitCol } from "./SplitCol";
+import { baselineComponent } from '../../testing/utils';
+import { SplitCol } from './SplitCol';
 
-describe("SplitCol", () => {
+describe('SplitCol', () => {
   baselineComponent(SplitCol);
 });

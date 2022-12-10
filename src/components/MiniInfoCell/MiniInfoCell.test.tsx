@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { MiniInfoCell } from "./MiniInfoCell";
+import { baselineComponent } from '../../testing/utils';
+import { MiniInfoCell } from './MiniInfoCell';
 
-describe("MiniInfoCell", () => {
+describe('MiniInfoCell', () => {
   baselineComponent(MiniInfoCell);
 });

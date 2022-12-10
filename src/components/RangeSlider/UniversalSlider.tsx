@@ -1,21 +1,18 @@
-import * as React from "react";
-import { Touch, TouchEvent, TouchEventHandler } from "../Touch/Touch";
-import { classNamesString } from "../../lib/classNames";
-import { HasRootRef } from "../../types";
-import { rescale } from "../../helpers/math";
-import { useExternRef } from "../../hooks/useExternRef";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import styles from "../Slider/Slider.module.css";
+import * as React from 'react';
+import { Touch, TouchEvent, TouchEventHandler } from '../Touch/Touch';
+import { classNamesString } from '../../lib/classNames';
+import { HasRootRef } from '../../types';
+import { rescale } from '../../helpers/math';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import styles from '../Slider/Slider.module.css';
 
 export type UniversalValue = [number | null, number];
 
 export interface UniversalSliderProps<Value>
   extends HasRootRef<HTMLDivElement>,
-    Omit<
-      React.HTMLAttributes<HTMLDivElement>,
-      "value" | "defaultValue" | "onChange"
-    > {
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'value' | 'defaultValue' | 'onChange'> {
   min?: number;
   max?: number;
   step?: number;
@@ -40,7 +37,7 @@ export const UniversalSlider = ({
   const [start, end] = value;
   const isRange = start != null;
   const gesture = React.useRef({
-    dragging: false as false | "start" | "end",
+    dragging: false as false | 'start' | 'end',
     startX: 0,
     containerWidth: 0,
   }).current;
@@ -59,18 +56,18 @@ export const UniversalSlider = ({
     }
 
     const { dragging } = gesture;
-    if (dragging === "start") {
+    if (dragging === 'start') {
       if (nextValue > end) {
         // "перехватиться", если перетянули за конец
-        gesture.dragging = "end";
+        gesture.dragging = 'end';
         return [end, nextValue];
       }
       return [nextValue, end];
     }
-    if (dragging === "end") {
+    if (dragging === 'end') {
       if (nextValue < start) {
         // "перехватиться", если перетянули за начало
-        gesture.dragging = "start";
+        gesture.dragging = 'start';
         return [nextValue, start];
       }
       return [start, nextValue];
@@ -81,14 +78,12 @@ export const UniversalSlider = ({
 
   const snapDirection = (pos: number, target: EventTarget | null) => {
     if (target === thumbStart.current) {
-      return "start";
+      return 'start';
     }
     if (target === thumbEnd.current) {
-      return "end";
+      return 'end';
     }
-    return Math.abs((start ?? 0) - pos) <= Math.abs(end - pos)
-      ? "start"
-      : "end";
+    return Math.abs((start ?? 0) - pos) <= Math.abs(end - pos) ? 'start' : 'end';
   };
 
   const onStart: TouchEventHandler = (e: TouchEvent) => {
@@ -128,32 +123,26 @@ export const UniversalSlider = ({
 
   return (
     <Touch
-      data-value={isRange ? value.join(",") : value}
+      data-value={isRange ? value.join(',') : value}
       {...restProps}
       {...(disabled ? {} : { onStart, onMove, onEnd })}
       className={classNamesString(
-        styles["Slider"],
-        getSizeYClassName(styles["Slider"], sizeY),
-        disabled && styles["Slider--disabled"],
-        className
+        styles['Slider'],
+        getSizeYClassName(styles['Slider'], sizeY),
+        disabled && styles['Slider--disabled'],
+        className,
       )}
     >
-      <div ref={container} className={styles["Slider__in"]}>
-        <div className={styles["Slider__dragger"]} style={draggerStyle}>
+      <div ref={container} className={styles['Slider__in']}>
+        <div className={styles['Slider__dragger']} style={draggerStyle}>
           {isRange && (
             <span
-              className={classNamesString(
-                styles["Slider__thumb"],
-                styles["Slider__thumb--start"]
-              )}
+              className={classNamesString(styles['Slider__thumb'], styles['Slider__thumb--start'])}
               ref={thumbStart}
             />
           )}
           <span
-            className={classNamesString(
-              styles["Slider__thumb"],
-              styles["Slider__thumb--end"]
-            )}
+            className={classNamesString(styles['Slider__thumb'], styles['Slider__thumb--end'])}
             ref={thumbEnd}
           />
         </div>

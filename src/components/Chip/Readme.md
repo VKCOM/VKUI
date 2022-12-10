@@ -3,23 +3,21 @@
 
 ```jsx
 const colors = [
-  { value: "1", label: "Красный" },
-  { value: "2", label: "Синий" },
+  { value: '1', label: 'Красный' },
+  { value: '2', label: 'Синий' },
 ];
 
 const Example = () => {
-  const [selectedColors, setSelectedColors] = React.useState([
-    { value: "1", label: "Красный" },
-  ]);
+  const [selectedColors, setSelectedColors] = React.useState([{ value: '1', label: 'Красный' }]);
 
   const colorsChipsProps = {
     value: selectedColors,
     onChange: setSelectedColors,
     options: colors,
-    top: "Выберите или добавьте цвета",
-    placeholder: "Не выбраны",
+    top: 'Выберите или добавьте цвета',
+    placeholder: 'Не выбраны',
     creatable: true,
-    creatableText: "Создать значение",
+    creatableText: 'Создать значение',
   };
 
   return (
@@ -31,25 +29,25 @@ const Example = () => {
             <ChipsInput
               value={[
                 {
-                  value: "1",
-                  label: "Arctic Monkeys",
-                  src: getAvatarUrl("audio_arctic_monkeys"),
+                  value: '1',
+                  label: 'Arctic Monkeys',
+                  src: getAvatarUrl('audio_arctic_monkeys'),
                 },
                 {
-                  value: "2",
-                  label: "Звери",
-                  src: getAvatarUrl("audio_leto_zveri"),
+                  value: '2',
+                  label: 'Звери',
+                  src: getAvatarUrl('audio_leto_zveri'),
                 },
-                { value: "4", label: "FACE", src: getAvatarUrl("audio_face") },
+                { value: '4', label: 'FACE', src: getAvatarUrl('audio_face') },
                 {
-                  value: "3",
-                  label: "Depeche Mode",
-                  src: getAvatarUrl("audio_depeche_mode"),
+                  value: '3',
+                  label: 'Depeche Mode',
+                  src: getAvatarUrl('audio_depeche_mode'),
                 },
                 {
-                  value: "5",
-                  label: "Linkin Park",
-                  src: getAvatarUrl("audio_linkin_park"),
+                  value: '5',
+                  label: 'Linkin Park',
+                  src: getAvatarUrl('audio_linkin_park'),
                 },
               ]}
               renderChip={({ value, label, option: { src }, ...rest }) => (
@@ -66,10 +64,7 @@ const Example = () => {
             />
           </FormItem>
           <FormItem top="Выберите или добавьте цвета">
-            <ChipsSelect
-              {...colorsChipsProps}
-              onClick={() => setActiveView("colors")}
-            />
+            <ChipsSelect {...colorsChipsProps} onClick={() => setActiveView('colors')} />
           </FormItem>
         </Group>
       </Panel>

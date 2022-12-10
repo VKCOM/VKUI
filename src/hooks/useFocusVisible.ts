@@ -1,5 +1,5 @@
-import { useContext, useState, useCallback, FocusEvent } from "react";
-import { AppRootContext } from "../components/AppRoot/AppRootContext";
+import { useContext, useState, useCallback, FocusEvent } from 'react';
+import { AppRootContext } from '../components/AppRoot/AppRootContext';
 
 export function useFocusVisible() {
   const [isFocused, setIsFocused] = useState(false);
@@ -10,7 +10,7 @@ export function useFocusVisible() {
       event.stopPropagation();
       setIsFocused(true);
     },
-    [setIsFocused]
+    [setIsFocused],
   );
 
   const onBlur = useCallback(
@@ -18,7 +18,7 @@ export function useFocusVisible() {
       event.stopPropagation();
       setIsFocused(false);
     },
-    [setIsFocused]
+    [setIsFocused],
   );
 
   const focusVisible = keyboardInput && isFocused;

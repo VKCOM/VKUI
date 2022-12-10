@@ -24,8 +24,8 @@
 Пример использования:
 
 ```jsx static
-import { AppRoot, ConfigProvider, Button } from "@vkontakte/vkui";
-import "@vkontakte/vkui/dist/vkui.css";
+import { AppRoot, ConfigProvider, Button } from '@vkontakte/vkui';
+import '@vkontakte/vkui/dist/vkui.css';
 
 ReactDOM.render(
   <ConfigProvider platform="vkcom" appearance="light">
@@ -33,7 +33,7 @@ ReactDOM.render(
       <Button />
     </AppRoot>
   </ConfigProvider>,
-  root
+  root,
 );
 ```
 
@@ -45,15 +45,15 @@ ReactDOM.render(
 Пример использования:
 
 ```jsx static
-import { AppRoot, ConfigProvider, Button } from "@vkontakte/vkui";
+import { AppRoot, ConfigProvider, Button } from '@vkontakte/vkui';
 /*
  * В components.css уже нет значений токенов из Appearance. Предполагается, что
  * если разработчик использует vkui-tokens, то файлы со значениями он подключает
  * самостоятельно.
  */
-import "@vkontakte/vkui/dist/components.css";
-import "@vkontakte/vkui-tokens/themes/vkCom/cssVars/declarations/onlyVariables.css";
-import "@vkontakte/vkui-tokens/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css";
+import '@vkontakte/vkui/dist/components.css';
+import '@vkontakte/vkui-tokens/themes/vkCom/cssVars/declarations/onlyVariables.css';
+import '@vkontakte/vkui-tokens/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css';
 
 ReactDOM.render(
   <ConfigProvider platform="vkcom" appearance="light">
@@ -61,6 +61,6 @@ ReactDOM.render(
       <Button />
     </AppRoot>
   </ConfigProvider>,
-  root
+  root,
 );
 ```

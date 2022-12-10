@@ -1,74 +1,67 @@
-import * as React from "react";
-import { Icon16Add, Icon24Camera } from "@vkontakte/icons";
-import { Button, ButtonProps } from "./Button";
-import { Counter } from "../Counter/Counter";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
+import * as React from 'react';
+import { Icon16Add, Icon24Camera } from '@vkontakte/icons';
+import { Button, ButtonProps } from './Button';
+import { Counter } from '../Counter/Counter';
+import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
-describe("Button", () => {
+describe('Button', () => {
   describeScreenshotFuzz(
     (props: ButtonProps) => <Button {...props}>Кнопка</Button>,
     [
       {
-        mode: ["primary", "secondary", "tertiary", "outline", "link"],
+        mode: ['primary', 'secondary', 'tertiary', 'outline', 'link'],
         disabled: [undefined, true],
       },
       {
-        size: ["s", "m", "l"],
+        size: ['s', 'm', 'l'],
         stretched: [undefined, true],
-        href: [undefined, "#"],
-        $adaptivity: "y",
+        href: [undefined, '#'],
+        $adaptivity: 'y',
       },
       {
-        mode: ["primary"],
+        mode: ['primary'],
         before: [<Icon16Add key="icon-16" />],
-        $adaptivity: "y",
+        $adaptivity: 'y',
       },
       {
-        mode: ["outline"],
+        mode: ['outline'],
         before: [<Icon16Add key="icon-16" />],
       },
       {
-        mode: ["primary"],
+        mode: ['primary'],
         before: [undefined, <Icon24Camera key="icon-24" />],
         after: [<Counter key="counter">16</Counter>],
-        size: ["l"],
-        $adaptivity: "y",
+        size: ['l'],
+        $adaptivity: 'y',
       },
       {
-        mode: ["outline"],
+        mode: ['outline'],
         before: [undefined, <Icon24Camera key="icon-24" />],
         after: [<Counter key="counter">16</Counter>],
-        size: ["l"],
+        size: ['l'],
       },
       {
-        mode: ["primary", "secondary"],
+        mode: ['primary', 'secondary'],
         before: [<Icon24Camera key="icon-24" />],
         after: [<Counter key="counter">16</Counter>],
-        size: ["s", "m", "l"],
+        size: ['s', 'm', 'l'],
         loading: [true],
       },
       {
-        mode: ["primary", "secondary", "tertiary", "outline", "link"],
-        appearance: [
-          "accent",
-          "positive",
-          "negative",
-          "neutral",
-          "overlay",
-          "accent-invariable",
-        ],
+        mode: ['primary', 'secondary', 'tertiary', 'outline', 'link'],
+        appearance: ['accent', 'positive', 'negative', 'neutral', 'overlay', 'accent-invariable'],
       },
       {
-        mode: ["primary"],
-        appearance: ["accent"],
-        size: ["s", "m", "l"],
-        $adaptivity: "y",
+        mode: ['primary'],
+        appearance: ['accent'],
+        size: ['s', 'm', 'l'],
+        $adaptivity: 'y',
       },
       {
-        size: ["s", "m", "l"],
+        size: ['s', 'm', 'l'],
         stretched: [true],
-        align: ["left", "center", "right"],
+        align: ['left', 'center', 'right'],
       },
-    ]
+    ],
   );
 });

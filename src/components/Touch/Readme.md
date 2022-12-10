@@ -8,19 +8,19 @@ Touch – это компонент для удобной работы с pointe
 const circleStyle = {
   width: 40,
   height: 40,
-  borderRadius: "50%",
-  background: "var(--vkui--color_background_accent)",
-  position: "absolute",
-  left: "50%",
-  top: "50%",
+  borderRadius: '50%',
+  background: 'var(--vkui--color_background_accent)',
+  position: 'absolute',
+  left: '50%',
+  top: '50%',
   marginLeft: -20,
   marginTop: -20,
 };
 
 const containerStyle = {
   height: 200,
-  border: "8px solid var(--vkui--color_icon_secondary)",
-  position: "relative",
+  border: '8px solid var(--vkui--color_icon_secondary)',
+  position: 'relative',
 };
 
 const Example = () => {
@@ -51,8 +51,7 @@ const Example = () => {
     startY.current += e.shiftY;
   };
 
-  const limitExceeded =
-    Math.abs(shiftX) >= limitX || Math.abs(shiftY) >= limitY;
+  const limitExceeded = Math.abs(shiftX) >= limitX || Math.abs(shiftY) >= limitY;
 
   return (
     <View activePanel="gallery">
@@ -63,8 +62,8 @@ const Example = () => {
             style={{
               ...containerStyle,
               borderColor: limitExceeded
-                ? "var(--vkui--color_icon_negative)"
-                : "var(--vkui--color_icon_secondary)",
+                ? 'var(--vkui--color_icon_negative)'
+                : 'var(--vkui--color_icon_secondary)',
             }}
           >
             <Touch

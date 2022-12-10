@@ -1,6 +1,6 @@
-import { DateInput } from "./DateInput";
-import { baselineComponent } from "../../testing/utils";
+import { DateInput } from './DateInput';
+import { baselineComponent } from '../../testing/utils';
 
-describe("DateInput", () => {
+describe('DateInput', () => {
   baselineComponent(DateInput);
 });

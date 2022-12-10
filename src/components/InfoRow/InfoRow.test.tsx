@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { InfoRow } from "./InfoRow";
+import { baselineComponent } from '../../testing/utils';
+import { InfoRow } from './InfoRow';
 
-describe("InfoRow", () => {
+describe('InfoRow', () => {
   baselineComponent(InfoRow);
 });

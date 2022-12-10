@@ -1,21 +1,21 @@
-import * as React from "react";
-import { AnyFunction } from "../../types";
-import { DOMProps, useDOM } from "../../lib/dom";
-import { classNamesString } from "../../lib/classNames";
-import { Platform } from "../../lib/platform";
-import { runTapticImpactOccurred } from "../../lib/taptic";
-import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import { usePlatform } from "../../hooks/usePlatform";
-import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
-import { ScrollContextInterface, useScroll } from "../AppRoot/ScrollContext";
-import { Touch, TouchEvent, TouchProps } from "../Touch/Touch";
-import { FixedLayout } from "../FixedLayout/FixedLayout";
-import { PullToRefreshSpinner } from "./PullToRefreshSpinner";
-import TouchRootContext from "../Touch/TouchContext";
-import { usePrevious } from "../../hooks/usePrevious";
-import { useTimeout } from "../../hooks/useTimeout";
-import { clamp } from "../../helpers/math";
-import styles from "./PullToRefresh.module.css";
+import * as React from 'react';
+import { AnyFunction } from '../../types';
+import { DOMProps, useDOM } from '../../lib/dom';
+import { classNamesString } from '../../lib/classNames';
+import { Platform } from '../../lib/platform';
+import { runTapticImpactOccurred } from '../../lib/taptic';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { usePlatform } from '../../hooks/usePlatform';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { ScrollContextInterface, useScroll } from '../AppRoot/ScrollContext';
+import { Touch, TouchEvent, TouchProps } from '../Touch/Touch';
+import { FixedLayout } from '../FixedLayout/FixedLayout';
+import { PullToRefreshSpinner } from './PullToRefreshSpinner';
+import TouchRootContext from '../Touch/TouchContext';
+import { usePrevious } from '../../hooks/usePrevious';
+import { useTimeout } from '../../hooks/useTimeout';
+import { clamp } from '../../helpers/math';
+import styles from './PullToRefresh.module.css';
 
 function cancelEvent(event: any) {
   if (!event) {
@@ -75,7 +75,7 @@ export const PullToRefresh = ({
       refreshing: platform === Platform.IOS ? 36 : 50,
       positionMultiplier: platform === Platform.IOS ? 0.21 : 1,
     }),
-    [platform]
+    [platform],
   );
 
   const [spinnerY, setSpinnerY] = React.useState(initParams.start);
@@ -96,12 +96,7 @@ export const PullToRefresh = ({
     }
   };
 
-  useGlobalEventListener(
-    document,
-    "touchmove",
-    onWindowTouchMove,
-    TOUCH_MOVE_EVENT_PARAMS
-  );
+  useGlobalEventListener(document, 'touchmove', onWindowTouchMove, TOUCH_MOVE_EVENT_PARAMS);
 
   const resetRefreshingState = React.useCallback(() => {
     setWatching(false);
@@ -118,8 +113,10 @@ export const PullToRefresh = ({
     }
   }, [touchDown, resetRefreshingState]);
 
-  const { set: setWaitFetchingTimeout, clear: clearWaitFetchingTimeout } =
-    useTimeout(onRefreshingFinish, 1000);
+  const { set: setWaitFetchingTimeout, clear: clearWaitFetchingTimeout } = useTimeout(
+    onRefreshingFinish,
+    1000,
+  );
 
   useIsomorphicLayoutEffect(() => {
     if (prevIsFetching !== undefined && prevIsFetching && !isFetching) {
@@ -140,19 +137,13 @@ export const PullToRefresh = ({
 
       setRefreshing(true);
       setSpinnerY((prevSpinnerY) =>
-        platform === Platform.IOS ? prevSpinnerY : initParams.refreshing
+        platform === Platform.IOS ? prevSpinnerY : initParams.refreshing,
       );
 
       onRefresh();
-      runTapticImpactOccurred("light");
+      runTapticImpactOccurred('light');
     }
-  }, [
-    refreshing,
-    onRefresh,
-    setWaitFetchingTimeout,
-    platform,
-    initParams.refreshing,
-  ]);
+  }, [refreshing, onRefresh, setWaitFetchingTimeout, platform, initParams.refreshing]);
 
   useIsomorphicLayoutEffect(() => {
     if (prevTouchDown !== undefined && prevTouchDown && !touchDown) {
@@ -201,8 +192,7 @@ export const PullToRefresh = ({
       const shift = Math.max(0, shiftY - touchY.current);
 
       const currentY = clamp(start + shift * positionMultiplier, start, maxY);
-      const progress =
-        currentY > -10 ? Math.abs((currentY + 10) / max) * 80 : 0;
+      const progress = currentY > -10 ? Math.abs((currentY + 10) / max) * 80 : 0;
 
       setSpinnerY(currentY);
       setSpinnerProgress(clamp(progress, 0, 80));
@@ -212,13 +202,7 @@ export const PullToRefresh = ({
       if (progress > 85 && !refreshing && platform === Platform.IOS) {
         runRefreshing();
       }
-    } else if (
-      isY &&
-      pageYOffset === 0 &&
-      shiftY > 0 &&
-      !refreshing &&
-      touchDown
-    ) {
+    } else if (isY && pageYOffset === 0 && shiftY > 0 && !refreshing && touchDown) {
       cancelEvent(e);
 
       touchY.current = shiftY;
@@ -234,10 +218,10 @@ export const PullToRefresh = ({
   };
 
   const spinnerTransform = `translate3d(0, ${spinnerY}px, 0)`;
-  let contentTransform = "";
+  let contentTransform = '';
 
   if (platform === Platform.IOS && refreshing && !touchDown) {
-    contentTransform = "translate3d(0, 100px, 0)";
+    contentTransform = 'translate3d(0, 100px, 0)';
   } else if (platform === Platform.IOS && (contentShift || refreshing)) {
     contentTransform = `translate3d(0, ${contentShift}px, 0)`;
   }
@@ -250,14 +234,14 @@ export const PullToRefresh = ({
         onMove={onTouchMove}
         onEnd={onTouchEnd}
         className={classNamesString(
-          styles["PullToRefresh"],
-          platform === Platform.IOS && styles["PullToRefresh--ios"],
-          watching && styles["PullToRefresh--watching"],
-          refreshing && styles["PullToRefresh--refreshing"],
-          className
+          styles['PullToRefresh'],
+          platform === Platform.IOS && styles['PullToRefresh--ios'],
+          watching && styles['PullToRefresh--watching'],
+          refreshing && styles['PullToRefresh--refreshing'],
+          className,
         )}
       >
-        <FixedLayout className={styles["PullToRefresh__controls"]}>
+        <FixedLayout className={styles['PullToRefresh__controls']}>
           <PullToRefreshSpinner
             style={{
               transform: spinnerTransform,
@@ -270,7 +254,7 @@ export const PullToRefresh = ({
         </FixedLayout>
 
         <div
-          className={styles["PullToRefresh__content"]}
+          className={styles['PullToRefresh__content']}
           style={{
             transform: contentTransform,
             WebkitTransform: contentTransform,

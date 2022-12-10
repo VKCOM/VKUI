@@ -13,7 +13,7 @@
 
 .ModalDismissButton::before {
   display: block;
-  content: "";
+  content: '';
   top: 14px;
   right: 14px;
   bottom: 14px;

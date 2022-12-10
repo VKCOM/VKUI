@@ -1,14 +1,14 @@
-import * as React from "react";
-import { Modifier } from "react-popper";
-import { CustomScrollView } from "../CustomScrollView/CustomScrollView";
-import { TrackerOptionsProps } from "../CustomScrollView/useTrackerVisibility";
-import { classNamesString } from "../../lib/classNames";
-import { Popper, Placement } from "../Popper/Popper";
-import { Spinner } from "../Spinner/Spinner";
-import { HasRef } from "../../types";
-import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import { noop } from "../../lib/utils";
-import styles from "./CustomSelectDropdown.module.css";
+import * as React from 'react';
+import { Modifier } from 'react-popper';
+import { CustomScrollView } from '../CustomScrollView/CustomScrollView';
+import { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
+import { classNamesString } from '../../lib/classNames';
+import { Popper, Placement } from '../Popper/Popper';
+import { Spinner } from '../Spinner/Spinner';
+import { HasRef } from '../../types';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { noop } from '../../lib/utils';
+import styles from './CustomSelectDropdown.module.css';
 
 export interface CustomSelectDropdownProps
   extends React.HTMLAttributes<HTMLElement>,
@@ -17,9 +17,7 @@ export interface CustomSelectDropdownProps
   targetRef: React.RefObject<HTMLElement>;
   placement?: Placement;
   scrollBoxRef?: React.Ref<HTMLDivElement>;
-  observableRefs?:
-    | Array<React.RefObject<HTMLElement>>
-    | React.RefObject<HTMLElement>;
+  observableRefs?: Array<React.RefObject<HTMLElement>> | React.RefObject<HTMLElement>;
   fetching?: boolean;
   offsetDistance?: number;
   sameWidth?: boolean;
@@ -27,15 +25,13 @@ export interface CustomSelectDropdownProps
   onPlacementChange?: (placement?: Placement) => void;
 }
 
-const calcIsTop = (placement?: Placement) => placement?.includes("top");
+const calcIsTop = (placement?: Placement) => placement?.includes('top');
 
-function getObserverModifier<T extends HTMLElement>(
-  element: T
-): Modifier<string> {
+function getObserverModifier<T extends HTMLElement>(element: T): Modifier<string> {
   return {
-    name: "customSelectChildrenChange",
+    name: 'customSelectChildrenChange',
     enabled: true,
-    phase: "main",
+    phase: 'main',
     fn: noop,
     effect: ({ instance }) => {
       const observer = new MutationObserver(instance.forceUpdate);
@@ -69,9 +65,7 @@ export const CustomSelectDropdown = ({
   ...restProps
 }: CustomSelectDropdownProps) => {
   const [isTop, setIsTop] = React.useState(() => calcIsTop(placement));
-  const [customModifiers, setCustomModifiers] = React.useState<
-    Array<Modifier<string>>
-  >([]);
+  const [customModifiers, setCustomModifiers] = React.useState<Array<Modifier<string>>>([]);
 
   useIsomorphicLayoutEffect(() => {
     if (!observableRefs) {
@@ -97,7 +91,7 @@ export const CustomSelectDropdown = ({
       setIsTop(calcIsTop(placement));
       parentOnPlacementChange?.(placement);
     },
-    [parentOnPlacementChange, setIsTop]
+    [parentOnPlacementChange, setIsTop],
   );
 
   return (
@@ -108,13 +102,11 @@ export const CustomSelectDropdown = ({
       onPlacementChange={onPlacementChange}
       placement={placement}
       className={classNamesString(
-        styles["CustomSelectDropdown"],
+        styles['CustomSelectDropdown'],
         offsetDistance === 0 &&
-          (isTop
-            ? styles["CustomSelectDropdown--top"]
-            : styles["CustomSelectDropdown--bottom"]),
-        sameWidth && styles["CustomSelectDropdown--wide"],
-        className
+          (isTop ? styles['CustomSelectDropdown--top'] : styles['CustomSelectDropdown--bottom']),
+        sameWidth && styles['CustomSelectDropdown--wide'],
+        className,
       )}
       forcePortal={forcePortal}
       customModifiers={customModifiers}
@@ -122,12 +114,12 @@ export const CustomSelectDropdown = ({
     >
       <CustomScrollView
         boxRef={scrollBoxRef}
-        className={styles["CustomSelectDropdown__in"]}
+        className={styles['CustomSelectDropdown__in']}
         autoHideScrollbar={autoHideScrollbar}
         autoHideScrollbarDelay={autoHideScrollbarDelay}
       >
         {fetching ? (
-          <div className={styles["CustomSelectDropdown__fetching"]}>
+          <div className={styles['CustomSelectDropdown__fetching']}>
             <Spinner size="small" />
           </div>
         ) : (

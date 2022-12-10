@@ -1,7 +1,7 @@
-import * as React from "react";
-import { useDOM } from "../lib/dom";
-import { noop } from "../lib/utils";
-import { transitionEvent } from "../lib/supportEvents";
+import * as React from 'react';
+import { useDOM } from '../lib/dom';
+import { noop } from '../lib/utils';
+import { transitionEvent } from '../lib/supportEvents';
 
 export const useWaitTransitionFinish = () => {
   const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -14,17 +14,9 @@ export const useWaitTransitionFinish = () => {
   }, []);
 
   const waitTransitionFinish = React.useCallback(
-    (
-      element: HTMLElement | null,
-      eventHandler: VoidFunction,
-      durationFallback: number
-    ) => {
+    (element: HTMLElement | null, eventHandler: VoidFunction, durationFallback: number) => {
       if (element) {
-        if (
-          !document?.hidden &&
-          transitionEvent.supported &&
-          transitionEvent.name
-        ) {
+        if (!document?.hidden && transitionEvent.supported && transitionEvent.name) {
           remove();
           element.addEventListener(transitionEvent.name, eventHandler);
           detach.current = () => {
@@ -40,7 +32,7 @@ export const useWaitTransitionFinish = () => {
         }
       }
     },
-    [document, remove, timeoutRef]
+    [document, remove, timeoutRef],
   );
 
   return {

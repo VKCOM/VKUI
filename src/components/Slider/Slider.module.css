@@ -10,7 +10,7 @@
   left: 0;
   width: 100%;
   background-color: var(--vkui--color_track_background);
-  content: "";
+  content: '';
   z-index: -1;
   top: 13px;
   height: 2px;
@@ -35,7 +35,7 @@
   top: 0;
   width: calc(100% + 28px);
   background: var(--vkui--color_background_accent);
-  content: "";
+  content: '';
   left: -14px;
   height: 2px;
   border-radius: 1px;

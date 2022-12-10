@@ -1,10 +1,10 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { FormField, FormFieldProps } from "../FormField/FormField";
-import { HasAlign, HasRef, HasRootRef } from "../../types";
-import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import styles from "./Input.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { FormField, FormFieldProps } from '../FormField/FormField';
+import { HasAlign, HasRef, HasRootRef } from '../../types';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import styles from './Input.module.css';
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
@@ -17,7 +17,7 @@ export interface InputProps
  * @see https://vkcom.github.io/VKUI/#/Input
  */
 export const Input = ({
-  type = "text",
+  type = 'text',
   align,
   getRef,
   className,
@@ -34,12 +34,12 @@ export const Input = ({
     <FormField
       style={style}
       className={classNamesString(
-        styles["Input"],
+        styles['Input'],
         align && styles[`Input--align-${align}`],
-        getSizeYClassName(styles["Input"], sizeY),
-        before && styles["Input--hasBefore"],
-        after && styles["Input--hasAfter"],
-        className
+        getSizeYClassName(styles['Input'], sizeY),
+        before && styles['Input--hasBefore'],
+        after && styles['Input--hasAfter'],
+        className,
       )}
       getRootRef={getRootRef}
       before={before}
@@ -47,12 +47,7 @@ export const Input = ({
       disabled={restProps.disabled}
       status={status}
     >
-      <input
-        {...restProps}
-        type={type}
-        className={styles["Input__el"]}
-        ref={getRef}
-      />
+      <input {...restProps} type={type} className={styles['Input__el']} ref={getRef} />
     </FormField>
   );
 };

@@ -1,13 +1,13 @@
-import * as React from "react";
-import { classNamesString } from "../../../lib/classNames";
-import { ImageBaseContext } from "../context";
-import type { ImageBaseExpectedIconProps } from "../types";
-import { validateBadgeIcon } from "../validators";
-import styles from "./ImageBaseBadge.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../../lib/classNames';
+import { ImageBaseContext } from '../context';
+import type { ImageBaseExpectedIconProps } from '../types';
+import { validateBadgeIcon } from '../validators';
+import styles from './ImageBaseBadge.module.css';
 
 const backgroundStyles = {
-  stroke: styles["ImageBaseBadge--background-stroke"],
-  shadow: styles["ImageBaseBadge--background-shadow"],
+  stroke: styles['ImageBaseBadge--background-stroke'],
+  shadow: styles['ImageBaseBadge--background-shadow'],
 };
 
 export interface ImageBaseBadgeProps extends React.AriaAttributes {
@@ -17,7 +17,7 @@ export interface ImageBaseBadgeProps extends React.AriaAttributes {
    * - `"stroke"` – имитирует вырез (⚠️ если фон под компонентом динамический, то ожидайте баг).
    * - `"shadow"` – добавляет небольшую тень.
    */
-  background?: "stroke" | "shadow";
+  background?: 'stroke' | 'shadow';
   /**
    * Принимает иконку.
    *
@@ -39,16 +39,16 @@ export interface ImageBaseBadgeProps extends React.AriaAttributes {
  * > Не используйте при `size < 24`
  */
 export const ImageBaseBadge = ({
-  background = "shadow",
+  background = 'shadow',
   children,
   className,
   ...restProps
 }: ImageBaseBadgeProps) => {
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV === 'development') {
     if (children) {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const { size } = React.useContext(ImageBaseContext);
-      validateBadgeIcon(size, { name: "children", value: children });
+      validateBadgeIcon(size, { name: 'children', value: children });
     }
   }
 
@@ -56,9 +56,9 @@ export const ImageBaseBadge = ({
     <div
       {...restProps}
       className={classNamesString(
-        styles["ImageBaseBadge"],
+        styles['ImageBaseBadge'],
         backgroundStyles[background],
-        className
+        className,
       )}
     >
       {children}

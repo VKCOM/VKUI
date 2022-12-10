@@ -38,8 +38,7 @@
  */
 .Epic .FixedLayout--vertical-bottom {
   padding-bottom: calc(
-    var(--vkui_internal--tabbar_height) +
-      var(--vkui_internal--safe_area_inset_bottom)
+    var(--vkui_internal--tabbar_height) + var(--vkui_internal--safe_area_inset_bottom)
   );
 }
 
@@ -50,8 +49,7 @@
 .PanelHeader ~ .FixedLayout--vertical-top,
 .PanelHeader ~ * .FixedLayout--vertical-top:not(.PanelHeader__fixed) {
   top: calc(
-    var(--vkui--size_panel_header_height--regular) +
-      var(--vkui_internal--safe_area_inset_top)
+    var(--vkui--size_panel_header_height--regular) + var(--vkui_internal--safe_area_inset_top)
   );
 }
 

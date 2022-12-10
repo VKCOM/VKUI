@@ -1,6 +1,6 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import styles from "./PopperArrow.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import styles from './PopperArrow.module.css';
 
 export interface PopperArrowProps {
   style?: React.CSSProperties;
@@ -8,22 +8,17 @@ export interface PopperArrowProps {
   arrowClassName?: string;
 }
 
-export const PopperArrow = ({
-  style,
-  attributes,
-  arrowClassName,
-}: PopperArrowProps) => {
-  const { className: arrowWrapperClassName, ...restAttributes } =
-    attributes ?? {};
+export const PopperArrow = ({ style, attributes, arrowClassName }: PopperArrowProps) => {
+  const { className: arrowWrapperClassName, ...restAttributes } = attributes ?? {};
   return (
     <div
       style={style}
       {...restAttributes}
-      className={classNamesString(styles["PopperArrow"], arrowWrapperClassName)}
+      className={classNamesString(styles['PopperArrow'], arrowWrapperClassName)}
       data-popper-arrow={true}
     >
       <svg
-        className={classNamesString(styles["PopperArrow__in"], arrowClassName)}
+        className={classNamesString(styles['PopperArrow__in'], arrowClassName)}
         width="20"
         height="8"
         viewBox="0 0 20 8"

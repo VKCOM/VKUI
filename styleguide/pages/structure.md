@@ -67,7 +67,7 @@ import { Root, View } from '@vkontakte/vkui';
 Структура любого VKUI-приложения должна выглядеть так:
 
 ```jsx static
-import { Root, View, Panel } from "@vkontakte/vkui";
+import { Root, View, Panel } from '@vkontakte/vkui';
 
 <Root activeView="view">
   <View id="view" activePanel="panel">
@@ -79,7 +79,7 @@ import { Root, View, Panel } from "@vkontakte/vkui";
 Или так:
 
 ```jsx static
-import { View, Panel } from "@vkontakte/vkui";
+import { View, Panel } from '@vkontakte/vkui';
 
 <View id="view" activePanel="panel">
   <Panel id="panel" />

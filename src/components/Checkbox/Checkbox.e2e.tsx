@@ -1,9 +1,9 @@
-import * as React from "react";
-import { Checkbox, CheckboxProps } from "./Checkbox";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import { SizeType } from "../../lib/adaptivity";
+import * as React from 'react';
+import { Checkbox, CheckboxProps } from './Checkbox';
+import { describeScreenshotFuzz } from '../../testing/e2e/utils';
+import { SizeType } from '../../lib/adaptivity';
 
-describe("Checkbox", () => {
+describe('Checkbox', () => {
   describeScreenshotFuzz(
     (props: CheckboxProps) => <Checkbox {...props}>label</Checkbox>,
     [
@@ -16,36 +16,36 @@ describe("Checkbox", () => {
         disabled: [undefined, true],
       },
     ],
-    { adaptivity: { sizeY: SizeType.REGULAR } }
+    { adaptivity: { sizeY: SizeType.REGULAR } },
   );
 });
 
-describe("Checkbox sizes and description", () => {
+describe('Checkbox sizes and description', () => {
   describeScreenshotFuzz(
     (props: CheckboxProps) => <Checkbox {...props}>label</Checkbox>,
     [
       {
-        description: [undefined, "Description"],
-        $adaptivity: "y",
+        description: [undefined, 'Description'],
+        $adaptivity: 'y',
       },
-    ]
+    ],
   );
 });
 
-describe("Checkbox simple", () => {
+describe('Checkbox simple', () => {
   describeScreenshotFuzz(
     (props: CheckboxProps) => <Checkbox {...props} />,
     [
       {
         checked: [undefined, true],
         disabled: [undefined, true],
-        $adaptivity: "y",
+        $adaptivity: 'y',
       },
       {
         indeterminate: [true],
         disabled: [undefined, true],
-        $adaptivity: "y",
+        $adaptivity: 'y',
       },
-    ]
+    ],
   );
 });

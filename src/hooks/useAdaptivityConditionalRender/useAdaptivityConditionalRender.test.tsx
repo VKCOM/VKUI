@@ -1,8 +1,8 @@
-import * as React from "react";
-import { renderHook } from "@testing-library/react-hooks";
-import { SizeType, ViewHeight, ViewWidth } from "../../lib/adaptivity";
-import { AdaptivityProvider } from "../../components/AdaptivityProvider/AdaptivityProvider";
-import { useAdaptivityConditionalRender } from "./useAdaptivityConditionalRender";
+import * as React from 'react';
+import { renderHook } from '@testing-library/react-hooks';
+import { SizeType, ViewHeight, ViewWidth } from '../../lib/adaptivity';
+import { AdaptivityProvider } from '../../components/AdaptivityProvider/AdaptivityProvider';
+import { useAdaptivityConditionalRender } from './useAdaptivityConditionalRender';
 import {
   deviceTypeClassNames,
   sizeXCompactClassNames,
@@ -10,12 +10,12 @@ import {
   sizeYCompactClassNames,
   sizeYRegularClassNames,
   viewWidthClassNames,
-} from "./constants";
-import { AdaptivityProps } from "../../components/AdaptivityProvider/AdaptivityContext";
+} from './constants';
+import { AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
 
 describe(useAdaptivityConditionalRender, () => {
-  describe("without AdaptivityProvider", () => {
-    it("sizeX", () => {
+  describe('without AdaptivityProvider', () => {
+    it('sizeX', () => {
       const { result } = renderHook(useAdaptivityConditionalRender);
       expect(result.current.sizeX).toMatchObject({
         compact: sizeXCompactClassNames.mq,
@@ -23,7 +23,7 @@ describe(useAdaptivityConditionalRender, () => {
       });
     });
 
-    it("sizeY", () => {
+    it('sizeY', () => {
       const { result } = renderHook(useAdaptivityConditionalRender);
       expect(result.current.sizeY).toMatchObject({
         compact: sizeYCompactClassNames.mq,
@@ -31,7 +31,7 @@ describe(useAdaptivityConditionalRender, () => {
       });
     });
 
-    it("viewWidth", () => {
+    it('viewWidth', () => {
       const { result } = renderHook(useAdaptivityConditionalRender);
       expect(result.current.viewWidth).toMatchObject({
         tabletPlus: viewWidthClassNames.tabletPlus.mq,
@@ -39,7 +39,7 @@ describe(useAdaptivityConditionalRender, () => {
       });
     });
 
-    it("deviceType", () => {
+    it('deviceType', () => {
       const { result } = renderHook(useAdaptivityConditionalRender);
       expect(result.current.deviceType).toMatchObject({
         mobile: deviceTypeClassNames.mobile.mq,
@@ -48,17 +48,13 @@ describe(useAdaptivityConditionalRender, () => {
     });
   });
 
-  describe("with AdaptivityProvider", () => {
-    const renderHookWithAdaptivityProvider = (
-      adaptivityProps: AdaptivityProps
-    ) =>
+  describe('with AdaptivityProvider', () => {
+    const renderHookWithAdaptivityProvider = (adaptivityProps: AdaptivityProps) =>
       renderHook(useAdaptivityConditionalRender, {
-        wrapper: (props) => (
-          <AdaptivityProvider {...adaptivityProps} {...props} />
-        ),
+        wrapper: (props) => <AdaptivityProvider {...adaptivityProps} {...props} />,
       });
 
-    describe("sizeX", () => {
+    describe('sizeX', () => {
       it(SizeType.COMPACT, () => {
         const { result } = renderHookWithAdaptivityProvider({
           sizeX: SizeType.COMPACT,
@@ -80,7 +76,7 @@ describe(useAdaptivityConditionalRender, () => {
       });
     });
 
-    describe("sizeY", () => {
+    describe('sizeY', () => {
       it(SizeType.COMPACT, () => {
         const { result } = renderHookWithAdaptivityProvider({
           sizeY: SizeType.COMPACT,
@@ -102,8 +98,8 @@ describe(useAdaptivityConditionalRender, () => {
       });
     });
 
-    describe("viewWidth", () => {
-      it("tablet", () => {
+    describe('viewWidth', () => {
+      it('tablet', () => {
         const { result } = renderHookWithAdaptivityProvider({
           viewWidth: ViewWidth.TABLET,
         });
@@ -113,7 +109,7 @@ describe(useAdaptivityConditionalRender, () => {
         });
       });
 
-      it("small tablet", () => {
+      it('small tablet', () => {
         const { result } = renderHookWithAdaptivityProvider({
           viewWidth: ViewWidth.SMALL_TABLET,
         });
@@ -124,8 +120,8 @@ describe(useAdaptivityConditionalRender, () => {
       });
     });
 
-    describe("deviceType", () => {
-      it("should ignore context if viewWidth provided only", () => {
+    describe('deviceType', () => {
+      it('should ignore context if viewWidth provided only', () => {
         const { result } = renderHookWithAdaptivityProvider({
           viewWidth: ViewWidth.SMALL_MOBILE,
         });
@@ -135,7 +131,7 @@ describe(useAdaptivityConditionalRender, () => {
         });
       });
 
-      it("should ignore context if viewHeight provided only", () => {
+      it('should ignore context if viewHeight provided only', () => {
         const { result } = renderHookWithAdaptivityProvider({
           viewHeight: ViewHeight.MEDIUM,
         });
@@ -145,7 +141,7 @@ describe(useAdaptivityConditionalRender, () => {
         });
       });
 
-      it("should be mobile forced", () => {
+      it('should be mobile forced', () => {
         const { result } = renderHookWithAdaptivityProvider({
           viewWidth: ViewWidth.MOBILE,
           viewHeight: ViewHeight.MEDIUM,
@@ -156,7 +152,7 @@ describe(useAdaptivityConditionalRender, () => {
         });
       });
 
-      it("should be desktop forced", () => {
+      it('should be desktop forced', () => {
         const { result } = renderHookWithAdaptivityProvider({
           viewWidth: ViewWidth.DESKTOP,
           viewHeight: ViewHeight.MEDIUM,

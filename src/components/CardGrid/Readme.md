@@ -12,32 +12,32 @@
     <Group description="Внутри Group">
       <CardGrid size="s">
         <Card>
-          <div style={{ paddingBottom: "92%" }} />
+          <div style={{ paddingBottom: '92%' }} />
         </Card>
         <Card>
-          <div style={{ paddingBottom: "92%" }} />
+          <div style={{ paddingBottom: '92%' }} />
         </Card>
         <Card>
-          <div style={{ paddingBottom: "92%" }} />
+          <div style={{ paddingBottom: '92%' }} />
         </Card>
       </CardGrid>
     </Group>
     <CardGrid size="m">
       <Card>
-        <div style={{ paddingBottom: "62%" }} />
+        <div style={{ paddingBottom: '62%' }} />
       </Card>
       <Card>
-        <div style={{ paddingBottom: "62%" }} />
+        <div style={{ paddingBottom: '62%' }} />
       </Card>
     </CardGrid>
     <CardGrid size="l">
       <Card>
-        <div style={{ paddingBottom: "30%" }} />
+        <div style={{ paddingBottom: '30%' }} />
       </Card>
     </CardGrid>
     <CardGrid size="l" spaced>
       <Card>
-        <div style={{ paddingBottom: "30%" }} />
+        <div style={{ paddingBottom: '30%' }} />
       </Card>
     </CardGrid>
     <Spacing size={16} />

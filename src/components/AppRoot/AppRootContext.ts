@@ -1,10 +1,10 @@
-import * as React from "react";
+import * as React from 'react';
 
 export interface AppRootContextInterface {
   appRoot?: React.RefObject<HTMLDivElement>;
   portalRoot?: HTMLElement | null;
   embedded?: boolean;
-  mode?: "partial" | "embedded" | "full";
+  mode?: 'partial' | 'embedded' | 'full';
   keyboardInput?: boolean;
   disablePortal?: boolean;
 }

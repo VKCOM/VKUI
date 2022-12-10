@@ -3,18 +3,18 @@ const noObjectExpressionInArguments = {
   meta: {
     schema: [
       {
-        type: "object",
+        type: 'object',
         properties: {
           onlyForFunctionsWithNames: {
             oneOf: [
               {
-                type: "array",
+                type: 'array',
                 items: {
-                  type: "string",
+                  type: 'string',
                 },
               },
               {
-                type: "string",
+                type: 'string',
               },
             ],
           },
@@ -27,7 +27,7 @@ const noObjectExpressionInArguments = {
     let onlyForFunctionsWithNames = null;
 
     options.forEach((option) => {
-      if ("onlyForFunctionsWithNames" in option) {
+      if ('onlyForFunctionsWithNames' in option) {
         onlyForFunctionsWithNames = option.onlyForFunctionsWithNames;
       }
     });
@@ -35,19 +35,16 @@ const noObjectExpressionInArguments = {
     return {
       /** @param node {import('estree').CallExpression} */
       CallExpression(node) {
-        if (
-          onlyForFunctionsWithNames &&
-          !onlyForFunctionsWithNames.includes(node.callee.name)
-        ) {
+        if (onlyForFunctionsWithNames && !onlyForFunctionsWithNames.includes(node.callee.name)) {
           return;
         }
         const args = node.arguments;
         for (let i = 0; i < args.length; i += 1) {
           const arg = args[i];
-          if (arg.type === "ObjectExpression") {
+          if (arg.type === 'ObjectExpression') {
             context.report({
               node,
-              message: "Do not use object expression in arguments.",
+              message: 'Do not use object expression in arguments.',
             });
             break;
           }
@@ -59,6 +56,6 @@ const noObjectExpressionInArguments = {
 
 module.exports = {
   rules: {
-    "no-object-expression-in-arguments": noObjectExpressionInArguments,
+    'no-object-expression-in-arguments': noObjectExpressionInArguments,
   },
 };

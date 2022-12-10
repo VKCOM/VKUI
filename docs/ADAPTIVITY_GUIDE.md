@@ -41,11 +41,11 @@
 _Component.tsx_
 
 ```tsx
-import * as React from "react";
-import { classNames } from "../../lib/classNames";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import styles from "./Component.module.css";
+import * as React from 'react';
+import { classNames } from '../../lib/classNames';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { getSizeXClassName } from '../../helpers/getSizeXClassName';
+import styles from './Component.module.css';
 
 const Component = () => {
   const { sizeX } = useAdaptivity();
@@ -58,10 +58,7 @@ const Component = () => {
    */
   return (
     <div
-      className={classNamesString(
-        styles.Component,
-        getSizeXClassName("Component", sizeX, styles)
-      )}
+      className={classNamesString(styles.Component, getSizeXClassName('Component', sizeX, styles))}
     />
   );
 };

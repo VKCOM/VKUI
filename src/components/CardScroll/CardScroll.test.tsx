@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { CardScroll } from "./CardScroll";
+import { baselineComponent } from '../../testing/utils';
+import { CardScroll } from './CardScroll';
 
-describe("CardScroll", () => {
+describe('CardScroll', () => {
   baselineComponent(CardScroll);
 });

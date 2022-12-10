@@ -1,10 +1,10 @@
-import { warnOnce } from "../../lib/warnOnce";
-import type { ImageBaseSize } from "./types";
+import { warnOnce } from '../../lib/warnOnce';
+import type { ImageBaseSize } from './types';
 import {
   getBadgeIconSizeByImageBaseSize,
   getFallbackIconSizeByImageBaseSize,
   getOverlayIconSizeByImageBaseSize,
-} from "./helpers";
+} from './helpers';
 
 /**
  * Пример,
@@ -14,18 +14,18 @@ import {
  * Icon12Circle2 -> 12
  */
 function parseIconSizeByDisplayName(displayName: unknown): number | null {
-  if (typeof displayName !== "string") {
+  if (typeof displayName !== 'string') {
     return null;
   }
   const rawSize = displayName
-    .replace(/\d+$/g, "") // удаляем цифры в конце
-    .replace(/\D/g, ""); // удаляем всё, что не является числом
+    .replace(/\d+$/g, '') // удаляем цифры в конце
+    .replace(/\D/g, ''); // удаляем всё, что не является числом
   const size = Number(rawSize);
   return size > 0 ? size : null;
 }
 
 function parseIconSizeByWidthProp(width: unknown): number | null {
-  if (typeof width !== "string" && typeof width !== "number") {
+  if (typeof width !== 'string' && typeof width !== 'number') {
     return null;
   }
   const size = Number(width);
@@ -41,9 +41,7 @@ function getElementWidthProp(element: JSX.Element): number | string | null {
 }
 
 function getIconSizeByElement(element: JSX.Element): number | null {
-  const sizeByDisplayName = parseIconSizeByDisplayName(
-    getElementDisplayName(element)
-  );
+  const sizeByDisplayName = parseIconSizeByDisplayName(getElementDisplayName(element));
   const sizeByWidth = parseIconSizeByWidthProp(getElementWidthProp(element));
   return sizeByWidth ? sizeByWidth : sizeByDisplayName;
 }
@@ -62,7 +60,7 @@ function validateIconComponentSizeByImageSize(
   imageSize: number,
   iconProp: IconProp,
   selectorFn: SelectorFn,
-  logger: ReturnType<typeof warnOnce>
+  logger: ReturnType<typeof warnOnce>,
 ) {
   const iconSize = getIconSizeByElement(iconProp.value);
 
@@ -72,32 +70,27 @@ function validateIconComponentSizeByImageSize(
 
   const result = selectorFn(imageSize);
 
-  if (
-    result === iconSize ||
-    (result === selectorFn.MAX_SIZE && iconSize >= result)
-  ) {
+  if (result === iconSize || (result === selectorFn.MAX_SIZE && iconSize >= result)) {
     return;
   }
 
   const iconName = getElementDisplayName(iconProp.value);
-  const propMessage = iconName
-    ? `${iconProp.name}={<${iconName} />}`
-    : iconProp.name;
+  const propMessage = iconName ? `${iconProp.name}={<${iconName} />}` : iconProp.name;
 
   logger(
     `Размер \`${propMessage}\` не соответствует дизайн-системе. Для \`size={${imageSize}}\` размер иконки для \`${iconProp.name}\` должен соответствовать <Icon${result}<name> />. Если такого размера нет, то используйте <${iconName} width={${result}} height={${result}} />`,
-    "log"
+    'log',
   );
 }
 
-const warnImageBase = warnOnce("ImageBase");
+const warnImageBase = warnOnce('ImageBase');
 
 export function validateFallbackIcon(imageSize: number, iconProp: IconProp) {
   return validateIconComponentSizeByImageSize(
     imageSize,
     iconProp,
     getFallbackIconSizeByImageBaseSize,
-    warnImageBase
+    warnImageBase,
   );
 }
 
@@ -119,10 +112,7 @@ const mapOfExpectedSize: { [K in ImageBaseSize]: boolean } = {
   96: true,
 };
 const arrayOfSizes = Object.keys(mapOfExpectedSize).map((str) => Number(str));
-const maxSize = arrayOfSizes.reduce(
-  (maxSize, size) => (size > maxSize ? size : maxSize),
-  0
-);
+const maxSize = arrayOfSizes.reduce((maxSize, size) => (size > maxSize ? size : maxSize), 0);
 
 export function validateSize(imageSize: number): void {
   if (imageSize > maxSize || imageSize in mapOfExpectedSize) {
@@ -130,36 +120,33 @@ export function validateSize(imageSize: number): void {
   }
   warnImageBase(
     `\`size={${imageSize}}\` не соответствует дизайн-системе. Пожалуйста, используйте один из следующих вариантов: ${arrayOfSizes.join(
-      " | "
+      ' | ',
     )}`,
-    "log"
+    'log',
   );
 }
 
-const warnImageBaseBadge = warnOnce("ImageBase.Badge");
+const warnImageBaseBadge = warnOnce('ImageBase.Badge');
 
 export function validateBadgeIcon(imageSize: number, iconProp: IconProp): void {
   if (imageSize < 24 && iconProp) {
-    return warnImageBaseBadge("Не используйте бейдж при `size < 24`.", "log");
+    return warnImageBaseBadge('Не используйте бейдж при `size < 24`.', 'log');
   }
   validateIconComponentSizeByImageSize(
     imageSize,
     iconProp,
     getBadgeIconSizeByImageBaseSize,
-    warnImageBaseBadge
+    warnImageBaseBadge,
   );
 }
 
-const warnImageBaseOverlay = warnOnce("ImageBase.Overlay");
+const warnImageBaseOverlay = warnOnce('ImageBase.Overlay');
 
-export function validateOverlayIcon(
-  imageSize: number,
-  iconProp: IconProp
-): void {
+export function validateOverlayIcon(imageSize: number, iconProp: IconProp): void {
   validateIconComponentSizeByImageSize(
     imageSize,
     iconProp,
     getOverlayIconSizeByImageBaseSize,
-    warnImageBaseOverlay
+    warnImageBaseOverlay,
   );
 }

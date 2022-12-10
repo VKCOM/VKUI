@@ -1,7 +1,7 @@
-const { ruleName } = require(".");
+const { ruleName } = require('.');
 
 testRule({
-  plugins: ["./packages/stylelint-bad-multiplication"],
+  plugins: ['./packages/stylelint-bad-multiplication'],
   ruleName,
   config: true,
 

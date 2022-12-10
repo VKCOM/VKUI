@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { Separator } from "./Separator";
+import { baselineComponent } from '../../testing/utils';
+import { Separator } from './Separator';
 
-describe("Separator", () => {
+describe('Separator', () => {
   baselineComponent(Separator);
 });

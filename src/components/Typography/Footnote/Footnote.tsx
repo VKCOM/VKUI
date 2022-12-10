@@ -1,15 +1,13 @@
-import * as React from "react";
-import { HasComponent } from "../../../types";
-import { classNamesString } from "../../../lib/classNames";
-import styles from "./Footnote.module.css";
+import * as React from 'react';
+import { HasComponent } from '../../../types';
+import { classNamesString } from '../../../lib/classNames';
+import styles from './Footnote.module.css';
 
-export interface FootnoteProps
-  extends React.AllHTMLAttributes<HTMLElement>,
-    HasComponent {
+export interface FootnoteProps extends React.AllHTMLAttributes<HTMLElement>, HasComponent {
   /**
    * Задаёт начертание шрифта отличное от стандартного.
    */
-  weight?: "1" | "2" | "3";
+  weight?: '1' | '2' | '3';
   caps?: boolean;
 }
 
@@ -21,7 +19,7 @@ export const Footnote = ({
   children,
   weight,
   caps,
-  Component = "span",
+  Component = 'span',
   ...restProps
 }: FootnoteProps) => {
   return (
@@ -29,9 +27,9 @@ export const Footnote = ({
       {...restProps}
       className={classNamesString(
         className,
-        styles["Footnote"],
-        caps && styles["Footnote--caps"],
-        weight && styles[`Footnote--weight-${weight}`]
+        styles['Footnote'],
+        caps && styles['Footnote--caps'],
+        weight && styles[`Footnote--weight-${weight}`],
       )}
     >
       {children}

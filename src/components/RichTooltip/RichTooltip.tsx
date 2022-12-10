@@ -1,14 +1,13 @@
-import * as React from "react";
-import { HoverPopper, HoverPopperProps } from "../HoverPopper/HoverPopper";
-import { classNamesString } from "../../lib/classNames";
-import styles from "./RichTooltip.module.css";
+import * as React from 'react';
+import { HoverPopper, HoverPopperProps } from '../HoverPopper/HoverPopper';
+import { classNamesString } from '../../lib/classNames';
+import styles from './RichTooltip.module.css';
 
-export interface RichTooltipProps
-  extends Omit<HoverPopperProps, "arrowClassName"> {
+export interface RichTooltipProps extends Omit<HoverPopperProps, 'arrowClassName'> {
   /**
    * Стиль отображения подсказки
    */
-  appearance?: "accent" | "neutral" | "white" | "black" | "inversion";
+  appearance?: 'accent' | 'neutral' | 'white' | 'black' | 'inversion';
 }
 
 /**
@@ -17,19 +16,19 @@ export interface RichTooltipProps
 export const RichTooltip = ({
   children,
   arrow = true,
-  appearance = "neutral",
+  appearance = 'neutral',
   className,
   ...popperProps
 }: RichTooltipProps) => {
   return (
     <HoverPopper
       className={classNamesString(
-        styles["RichTooltip"],
+        styles['RichTooltip'],
         styles[`RichTooltip--appearance-${appearance}`],
-        className
+        className,
       )}
       arrow={arrow}
-      arrowClassName={styles["RichTooltip__arrow"]}
+      arrowClassName={styles['RichTooltip__arrow']}
       {...popperProps}
     >
       {children}

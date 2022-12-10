@@ -12,19 +12,11 @@ const buttonRef = React.useRef();
 
 return (
   <React.Fragment>
-    <Button
-      getRootRef={buttonRef}
-      onClick={() => setShown(!shown)}
-      style={{ margin: 50 }}
-    >
-      {shown ? "Закрыть" : "Открыть"}
+    <Button getRootRef={buttonRef} onClick={() => setShown(!shown)} style={{ margin: 50 }}>
+      {shown ? 'Закрыть' : 'Открыть'}
     </Button>
     {shown && (
-      <Popper
-        offsetDistance={8}
-        style={{ padding: "9px 12px" }}
-        targetRef={buttonRef}
-      >
+      <Popper offsetDistance={8} style={{ padding: '9px 12px' }} targetRef={buttonRef}>
         Привет
       </Popper>
     )}

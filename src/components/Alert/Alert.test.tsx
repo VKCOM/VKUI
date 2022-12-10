@@ -1,29 +1,27 @@
-import * as React from "react";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import { ViewWidth } from "../../lib/adaptivity";
-import { baselineComponent, runAllTimers } from "../../testing/utils";
-import { Alert } from "./Alert";
-import { Platform } from "../../lib/platform";
-import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
+import * as React from 'react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import { ViewWidth } from '../../lib/adaptivity';
+import { baselineComponent, runAllTimers } from '../../testing/utils';
+import { Alert } from './Alert';
+import { Platform } from '../../lib/platform';
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 
-describe("Alert", () => {
-  beforeAll(() => jest.useFakeTimers("modern"));
+describe('Alert', () => {
+  beforeAll(() => jest.useFakeTimers('modern'));
   afterAll(() => jest.useRealTimers());
   baselineComponent(Alert);
-  describe("closes", () => {
-    it.each(["overlay", "close"])("with %s click", (trigger) => {
+  describe('closes', () => {
+    it.each(['overlay', 'close'])('with %s click', (trigger) => {
       const onClose = jest.fn();
       render(
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
           <Alert onClose={onClose} />
-        </AdaptivityProvider>
+        </AdaptivityProvider>,
       );
       const target =
-        trigger === "overlay"
-          ? ".vkuiPopoutWrapper__overlay"
-          : ".vkuiModalDismissButton";
+        trigger === 'overlay' ? '.vkuiPopoutWrapper__overlay' : '.vkuiModalDismissButton';
 
       userEvent.click(document.querySelector(target) as Element);
       expect(onClose).not.toBeCalled();
@@ -31,23 +29,20 @@ describe("Alert", () => {
       expect(onClose).toBeCalledTimes(1);
     });
   });
-  describe("calls actions", () => {
-    describe.each([Platform.ANDROID, Platform.IOS])("on %s", (platform) => {
-      it("calls action", () => {
+  describe('calls actions', () => {
+    describe.each([Platform.ANDROID, Platform.IOS])('on %s', (platform) => {
+      it('calls action', () => {
         const action = jest.fn();
         const onClose = jest.fn();
         render(
           <ConfigProvider platform={platform}>
-            <Alert
-              onClose={onClose}
-              actions={[{ action, title: "__action__", mode: "default" }]}
-            />
-          </ConfigProvider>
+            <Alert onClose={onClose} actions={[{ action, title: '__action__', mode: 'default' }]} />
+          </ConfigProvider>,
         );
-        userEvent.click(screen.getByText("__action__"));
+        userEvent.click(screen.getByText('__action__'));
         expect(action).toBeCalledTimes(1);
       });
-      it("calls action after close when autoClose=true", () => {
+      it('calls action after close when autoClose=true', () => {
         const action = jest.fn();
         const onClose = jest.fn();
         render(
@@ -57,15 +52,15 @@ describe("Alert", () => {
               actions={[
                 {
                   action,
-                  title: "__action__",
-                  mode: "default",
+                  title: '__action__',
+                  mode: 'default',
                   autoClose: true,
                 },
               ]}
             />
-          </ConfigProvider>
+          </ConfigProvider>,
         );
-        userEvent.click(screen.getByText("__action__"));
+        userEvent.click(screen.getByText('__action__'));
         expect(action).not.toBeCalled();
         expect(onClose).not.toBeCalled();
         runAllTimers();

@@ -1,23 +1,19 @@
-import { getCustomVariables, getVKUIToken } from "./styleProperty";
-import type { PluginCreator } from "postcss";
+import { getCustomVariables, getVKUIToken } from './styleProperty';
+import type { PluginCreator } from 'postcss';
 
 const pluginCreator: PluginCreator<{}> = () => {
   return {
-    postcssPlugin: "postcss-token-translator",
+    postcssPlugin: 'postcss-token-translator',
     Root(root) {
       root.walkRules((node) => {
         node.each((decl) => {
-          if (decl.type !== "decl") {
+          if (decl.type !== 'decl') {
             return;
           }
 
           const customVariables = getCustomVariables(decl.value);
           customVariables.forEach((customVariable) => {
-            const vkuiToken = getVKUIToken(
-              node.selector,
-              decl.prop,
-              customVariable
-            );
+            const vkuiToken = getVKUIToken(node.selector, decl.prop, customVariable);
             if (!vkuiToken) {
               return;
             }

@@ -8,5 +8,5 @@
 Подключаются нестабильные компоненты путем подобного импорта:
 
 ```jsx static
-import { unstable_ChipsSelect as ChipsSelect } from "@vkontakte/vkui";
+import { unstable_ChipsSelect as ChipsSelect } from '@vkontakte/vkui';
 ```

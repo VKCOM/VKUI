@@ -1,6 +1,6 @@
-import { DateRangeInput } from "./DateRangeInput";
-import { baselineComponent } from "../../testing/utils";
+import { DateRangeInput } from './DateRangeInput';
+import { baselineComponent } from '../../testing/utils';
 
-describe("DateRangeInput", () => {
+describe('DateRangeInput', () => {
   baselineComponent(DateRangeInput);
 });

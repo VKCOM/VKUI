@@ -1,4 +1,4 @@
-export { BREAKPOINTS, MEDIA_QUERIES } from "../../shared/breakpoints";
+export { BREAKPOINTS, MEDIA_QUERIES } from '../../shared/breakpoints';
 
 /**
  * Public API.
@@ -35,6 +35,6 @@ export enum ViewHeight {
  * - {@link https://developer.apple.com/design/human-interface-guidelines/foundations/layout/ | Layout - Foundations - Human Interface Guidelines - Design}
  */
 export enum SizeType {
-  COMPACT = "compact",
-  REGULAR = "regular",
+  COMPACT = 'compact',
+  REGULAR = 'regular',
 }

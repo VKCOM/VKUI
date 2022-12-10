@@ -1,10 +1,10 @@
-import * as React from "react";
-import { hasReactNode } from "../../lib/utils";
-import { classNamesString } from "../../lib/classNames";
-import { Footnote } from "../Typography/Footnote/Footnote";
-import { Caption } from "../Typography/Caption/Caption";
-import { useId } from "../../hooks/useId";
-import styles from "./UsersStack.module.css";
+import * as React from 'react';
+import { hasReactNode } from '../../lib/utils';
+import { classNamesString } from '../../lib/classNames';
+import { Footnote } from '../Typography/Footnote/Footnote';
+import { Caption } from '../Typography/Caption/Caption';
+import { useId } from '../../hooks/useId';
+import styles from './UsersStack.module.css';
 
 export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -14,11 +14,11 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Размер аватарок
    */
-  size?: "s" | "m" | "l";
+  size?: 's' | 'm' | 'l';
   /**
    * Вертикальный режим рекомендуется использовать с размером `m`
    */
-  layout?: "vertical" | "horizontal";
+  layout?: 'vertical' | 'horizontal';
   /**
    * Количество аватарок, которые будут показаны.
    * Если в массиве `photos` больше элементов и используется размер `m`, то будет показано количество остальных элементов
@@ -34,19 +34,19 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
 
 interface PathElementProps extends React.SVGAttributes<SVGElement> {
   photoSize: number;
-  direction: "circle" | "right" | "left";
+  direction: 'circle' | 'right' | 'left';
 }
 
 type PhotoSizeType = 16 | 24 | 32;
 
 function PathElement({ photoSize, direction, ...props }: PathElementProps) {
   switch (direction) {
-    case "circle":
+    case 'circle':
       const radius = photoSize / 2;
 
       return <circle cx={radius} cy={radius} r={radius} {...props} />;
 
-    case "right":
+    case 'right':
       switch (photoSize) {
         case 24:
           return (
@@ -93,10 +93,7 @@ function PathElement({ photoSize, direction, ...props }: PathElementProps) {
   }
 }
 
-const photoSizes: Record<
-  NonNullable<UsersStackProps["size"]>,
-  PhotoSizeType
-> = {
+const photoSizes: Record<NonNullable<UsersStackProps['size']>, PhotoSizeType> = {
   s: 16,
   m: 24,
   l: 32,
@@ -109,22 +106,22 @@ export const UsersStack = ({
   photos = [],
   visibleCount = 3,
   count = Math.max(0, photos.length - visibleCount),
-  size = "m",
-  layout = "horizontal",
+  size = 'm',
+  layout = 'horizontal',
   children,
   className,
   ...restProps
 }: UsersStackProps) => {
   const cmpId = useId();
 
-  const canShowOthers = count > 0 && size !== "s";
-  const CounterTypography = size === "m" ? Footnote : Caption;
+  const canShowOthers = count > 0 && size !== 's';
+  const CounterTypography = size === 'm' ? Footnote : Caption;
 
   const photoSize = photoSizes[size];
-  const directionClip = canShowOthers ? "right" : "left";
+  const directionClip = canShowOthers ? 'right' : 'left';
 
   const photosElements = photos.slice(0, visibleCount).map((photo, i) => {
-    const direction = i === 0 && !canShowOthers ? "circle" : directionClip;
+    const direction = i === 0 && !canShowOthers ? 'circle' : directionClip;
 
     const id = `UsersStackDefs${cmpId}${i}`;
     const hrefID = `#${id}`;
@@ -133,7 +130,7 @@ export const UsersStack = ({
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className={styles["UsersStack__photo"]}
+        className={styles['UsersStack__photo']}
         key={i}
         aria-hidden
       >
@@ -144,7 +141,7 @@ export const UsersStack = ({
           <use href={hrefID} />
         </clipPath>
         <g clipPath={`url(#${maskID})`}>
-          <use href={hrefID} className={styles["UsersStack__fill"]} />
+          <use href={hrefID} className={styles['UsersStack__fill']} />
           <image href={photo} width={photoSize} height={photoSize} />
           <use href={hrefID} fill="none" stroke="rgba(0, 0, 0, 0.08)" />
         </g>
@@ -155,10 +152,7 @@ export const UsersStack = ({
     <CounterTypography
       caps
       weight="1"
-      className={classNamesString(
-        styles["UsersStack__photo"],
-        styles["UsersStack__photo--others"]
-      )}
+      className={classNamesString(styles['UsersStack__photo'], styles['UsersStack__photo--others'])}
     >
       <span>+{count}</span>
     </CounterTypography>
@@ -168,21 +162,21 @@ export const UsersStack = ({
     <div
       {...restProps}
       className={classNamesString(
-        styles["UsersStack"],
+        styles['UsersStack'],
         styles[`UsersStack--size-${size}`],
         styles[`UsersStack--layout-${layout}`],
-        canShowOthers && styles["UsersStack--others"],
-        className
+        canShowOthers && styles['UsersStack--others'],
+        className,
       )}
     >
       {(photosElements.length > 0 || othersElement) && (
-        <div className={styles["UsersStack__photos"]} role="presentation">
+        <div className={styles['UsersStack__photos']} role="presentation">
           {photosElements}
           {othersElement}
         </div>
       )}
       {hasReactNode(children) && (
-        <Footnote className={styles["UsersStack__text"]}>{children}</Footnote>
+        <Footnote className={styles['UsersStack__text']}>{children}</Footnote>
       )}
     </div>
   );

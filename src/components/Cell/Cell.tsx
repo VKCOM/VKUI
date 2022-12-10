@@ -1,23 +1,23 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { noop } from "../../lib/utils";
-import { Platform } from "../../lib/platform";
-import { SimpleCell, SimpleCellProps } from "../SimpleCell/SimpleCell";
-import { HasRootRef } from "../../types";
-import { Removable, RemovableProps } from "../Removable/Removable";
-import { usePlatform } from "../../hooks/usePlatform";
-import { useExternRef } from "../../hooks/useExternRef";
-import { useDraggable } from "./useDraggable";
-import { ListContext } from "../List/ListContext";
-import { CellDragger } from "./CellDragger/CellDragger";
-import { CellCheckbox, CellCheckboxProps } from "./CellCheckbox/CellCheckbox";
-import styles from "./Cell.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { noop } from '../../lib/utils';
+import { Platform } from '../../lib/platform';
+import { SimpleCell, SimpleCellProps } from '../SimpleCell/SimpleCell';
+import { HasRootRef } from '../../types';
+import { Removable, RemovableProps } from '../Removable/Removable';
+import { usePlatform } from '../../hooks/usePlatform';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useDraggable } from './useDraggable';
+import { ListContext } from '../List/ListContext';
+import { CellDragger } from './CellDragger/CellDragger';
+import { CellCheckbox, CellCheckboxProps } from './CellCheckbox/CellCheckbox';
+import styles from './Cell.module.css';
 
 export interface CellProps
-  extends Omit<SimpleCellProps, "getRootRef">,
+  extends Omit<SimpleCellProps, 'getRootRef'>,
     RemovableProps,
     HasRootRef<HTMLDivElement> {
-  mode?: "removable" | "selectable";
+  mode?: 'removable' | 'selectable';
   /**
    * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
    */
@@ -53,7 +53,7 @@ export interface CellProps
 export const Cell = ({
   mode,
   onRemove = noop,
-  removePlaceholder = "Удалить",
+  removePlaceholder = 'Удалить',
   onDragFinish,
   before,
   after,
@@ -66,13 +66,13 @@ export const Cell = ({
   checked,
   defaultChecked,
   getRootRef,
-  draggerLabel = "Перенести ячейку",
+  draggerLabel = 'Перенести ячейку',
   className,
   style,
   ...restProps
 }: CellProps) => {
-  const selectable = mode === "selectable";
-  const removable = mode === "removable";
+  const selectable = mode === 'selectable';
+  const removable = mode === 'removable';
 
   const platform = usePlatform();
 
@@ -96,7 +96,7 @@ export const Cell = ({
   if (draggable) {
     dragger = (
       <CellDragger
-        className={styles["Cell__dragger"]}
+        className={styles['Cell__dragger']}
         aria-label={draggerLabel}
         {...draggableProps}
       />
@@ -113,22 +113,19 @@ export const Cell = ({
       checked,
       disabled,
     };
-    checkbox = (
-      <CellCheckbox className={styles["Cell__checkbox"]} {...checkboxProps} />
-    );
+    checkbox = <CellCheckbox className={styles['Cell__checkbox']} {...checkboxProps} />;
   }
 
-  const simpleCellDisabled =
-    (draggable && !selectable) || removable || disabled;
+  const simpleCellDisabled = (draggable && !selectable) || removable || disabled;
   const hasActive = !simpleCellDisabled && !dragging;
 
   const cellClasses = classNamesString(
-    styles["Cell"],
-    platform === Platform.IOS && styles["Cell--ios"],
-    dragging && styles["Cell--dragging"],
-    removable && styles["Cell--removable"],
-    selectable && styles["Cell--selectable"],
-    disabled && styles["Cell--disabled"]
+    styles['Cell'],
+    platform === Platform.IOS && styles['Cell--ios'],
+    dragging && styles['Cell--dragging'],
+    removable && styles['Cell--removable'],
+    selectable && styles['Cell--selectable'],
+    disabled && styles['Cell--disabled'],
   );
 
   const simpleCell = (
@@ -136,9 +133,9 @@ export const Cell = ({
       hasActive={hasActive}
       hasHover={hasActive}
       {...restProps}
-      className={styles["Cell__content"]}
+      className={styles['Cell__content']}
       disabled={simpleCellDisabled}
-      Component={selectable ? "label" : Component}
+      Component={selectable ? 'label' : Component}
       before={
         <React.Fragment>
           {draggable && platform !== Platform.IOS && dragger}
@@ -170,11 +167,7 @@ export const Cell = ({
   }
 
   return (
-    <div
-      className={classNamesString(cellClasses, className)}
-      style={style}
-      ref={rootElRef}
-    >
+    <div className={classNamesString(cellClasses, className)} style={style} ref={rootElRef}>
       {simpleCell}
     </div>
   );

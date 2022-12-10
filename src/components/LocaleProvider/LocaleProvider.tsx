@@ -1,12 +1,12 @@
-import React from "react";
-import { ConfigProviderOverride } from "../ConfigProvider/ConfigProviderOverride";
-import { ConfigProviderContextInterface } from "../ConfigProvider/ConfigProviderContext";
+import React from 'react';
+import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
+import { ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 
 export interface LocaleProviderProps {
   /**
    * Строка с языковой меткой BCP 47
    */
-  value: ConfigProviderContextInterface["locale"];
+  value: ConfigProviderContextInterface['locale'];
   children: React.ReactNode;
 }
 
@@ -18,7 +18,5 @@ export interface LocaleProviderProps {
  * @see https://vkcom.github.io/VKUI/#/LocaleProvider
  */
 export function LocaleProvider({ value, children }: LocaleProviderProps) {
-  return (
-    <ConfigProviderOverride locale={value}>{children}</ConfigProviderOverride>
-  );
+  return <ConfigProviderOverride locale={value}>{children}</ConfigProviderOverride>;
 }

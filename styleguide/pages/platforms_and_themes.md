@@ -16,9 +16,7 @@
 <ConfigProvider platform="ios">
   <AdaptivityProvider>
     <AppRoot>
-      <SimpleCell>
-        Эта ячейка будет выглядеть точь в точь как в iOS клиенте ВКонтакте
-      </SimpleCell>
+      <SimpleCell>Эта ячейка будет выглядеть точь в точь как в iOS клиенте ВКонтакте</SimpleCell>
     </AppRoot>
   </AdaptivityProvider>
 </ConfigProvider>
@@ -75,7 +73,7 @@
 
 ```jsx static
 const appearance = useAppearance();
-<Div>{appearance === "light" ? "Out of the blue" : "And into the black"}</Div>;
+<Div>{appearance === 'light' ? 'Out of the blue' : 'And into the black'}</Div>;
 ```
 
 Appearance можно пригодиться для замены изображений на инвертированную версию в темных темах.

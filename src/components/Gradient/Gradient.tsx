@@ -1,25 +1,25 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import styles from "./Gradient.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import styles from './Gradient.module.css';
 
 export interface GradientProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Тип градиента
    */
-  mode?: "tint" | "white" | "black";
+  mode?: 'tint' | 'white' | 'black';
   /**
    * Направление градиента
    */
-  to?: "top" | "bottom";
+  to?: 'top' | 'bottom';
 }
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Gradient
  */
 export const Gradient = ({
-  mode = "tint",
+  mode = 'tint',
   children,
-  to = "top",
+  to = 'top',
   className,
   ...restProps
 }: GradientProps) => {
@@ -28,10 +28,10 @@ export const Gradient = ({
       role="presentation"
       {...restProps}
       className={classNamesString(
-        styles["Gradient"],
+        styles['Gradient'],
         styles[`Gradient--mode-${mode}`],
         styles[`Gradient--to-${to}`],
-        className
+        className,
       )}
     >
       {children}

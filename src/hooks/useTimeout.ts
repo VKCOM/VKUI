@@ -1,6 +1,6 @@
-import * as React from "react";
-import { useIsomorphicLayoutEffect } from "../lib/useIsomorphicLayoutEffect";
-import { canUseDOM } from "../lib/dom";
+import * as React from 'react';
+import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
+import { canUseDOM } from '../lib/dom';
 
 export function useTimeout(cb: () => any, duration: number) {
   const options = React.useRef({ cb, duration });
@@ -21,11 +21,11 @@ export function useTimeout(cb: () => any, duration: number) {
       if (canUseDOM) {
         timeout.current = setTimeout(() => {
           const { cb } = options.current;
-          typeof cb === "function" && cb();
+          typeof cb === 'function' && cb();
         }, duration);
       }
     },
-    [clear]
+    [clear],
   );
   useIsomorphicLayoutEffect(() => clear, []);
 

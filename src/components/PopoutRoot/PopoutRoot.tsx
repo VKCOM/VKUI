@@ -1,10 +1,10 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { HasRootRef } from "../../types";
-import { AppRootPortal } from "../AppRoot/AppRootPortal";
-import { blurActiveElement, useDOM } from "../../lib/dom";
-import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
-import styles from "./PopoutRoot.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { HasRootRef } from '../../types';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
+import { blurActiveElement, useDOM } from '../../lib/dom';
+import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import styles from './PopoutRoot.module.css';
 
 interface PopoutRootPopoutProps {
   children: React.ReactNode;
@@ -16,8 +16,8 @@ const PopoutRootPopout = ({ children }: PopoutRootPopoutProps) => {
   return (
     <div
       className={classNamesString(
-        styles["PopoutRoot__popout"],
-        isDesktop && styles["PopoutRoot__popout--absolute"]
+        styles['PopoutRoot__popout'],
+        isDesktop && styles['PopoutRoot__popout--absolute'],
       )}
     >
       {children}
@@ -30,7 +30,7 @@ interface PopoutRootModalProps {
 }
 
 const PopoutRootModal = ({ children }: PopoutRootModalProps) => {
-  return <div className={styles["PopoutRoot__modal"]}>{children}</div>;
+  return <div className={styles['PopoutRoot__modal']}>{children}</div>;
 };
 
 export interface PopoutRootProps
@@ -57,7 +57,7 @@ export const PopoutRoot = ({
   return (
     <div
       {...restProps}
-      className={classNamesString(styles["PopoutRoot"], className)}
+      className={classNamesString(styles['PopoutRoot'], className)}
       ref={getRootRef}
     >
       {children}

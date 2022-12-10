@@ -1,9 +1,9 @@
-const path = require("path");
+const path = require('path');
 
 const resolveResourceRelativePathBySourcePath = (source, filename) => {
   const targetFileDirectoryPath = path.dirname(filename);
 
-  if (source.startsWith(".")) {
+  if (source.startsWith('.')) {
     return path.resolve(targetFileDirectoryPath, source);
   }
 

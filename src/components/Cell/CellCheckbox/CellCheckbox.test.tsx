@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../../testing/utils";
-import { CellCheckbox } from "./CellCheckbox";
+import { baselineComponent } from '../../../testing/utils';
+import { CellCheckbox } from './CellCheckbox';
 
-describe("CellCheckbox", () => {
+describe('CellCheckbox', () => {
   baselineComponent(CellCheckbox);
 });

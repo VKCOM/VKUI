@@ -1,13 +1,10 @@
-import { ViewWidth } from "../lib/adaptivity";
+import { ViewWidth } from '../lib/adaptivity';
 
-export function getViewWidthClassName(
-  base: string,
-  viewWidth?: ViewWidth
-): string;
+export function getViewWidthClassName(base: string, viewWidth?: ViewWidth): string;
 export function getViewWidthClassName<Styles extends Record<string, string>>(
   base: keyof Styles,
   viewWidth?: ViewWidth,
-  styles?: Styles
+  styles?: Styles,
 ): string | undefined;
 export function getViewWidthClassName<Styles extends Record<string, string>>(
   base: keyof Styles,
@@ -16,29 +13,29 @@ export function getViewWidthClassName<Styles extends Record<string, string>>(
    * Note: ввиду того, что Typescript не поддерживает `typescript-plugin-css-modules` во время компиляции,
    *  не удалось покрыть дженерик типом параметр `styles`. Поэтому может вернуться undefined.
    */
-  styles?: Styles
+  styles?: Styles,
 ): string | undefined {
   let className = `${String(base)}--viewWidth-`;
 
   switch (viewWidth) {
     case ViewWidth.SMALL_MOBILE:
-      className += "smallMobile";
+      className += 'smallMobile';
       break;
     case ViewWidth.MOBILE:
-      className += "mobile";
+      className += 'mobile';
       break;
     case ViewWidth.SMALL_TABLET:
-      className += "smallTablet";
+      className += 'smallTablet';
       break;
     case ViewWidth.TABLET:
-      className += "tablet";
+      className += 'tablet';
       break;
     case ViewWidth.DESKTOP:
-      className += "desktop";
+      className += 'desktop';
       break;
 
     default:
-      className += "none";
+      className += 'none';
       break;
   }
 
@@ -46,7 +43,7 @@ export function getViewWidthClassName<Styles extends Record<string, string>>(
 
   if (viewWidth && viewWidth >= ViewWidth.SMALL_TABLET) {
     if (styles) {
-      className += " " + styles[`${String(base)}--viewWidth-smallTabletPlus`];
+      className += ' ' + styles[`${String(base)}--viewWidth-smallTabletPlus`];
     } else {
       className += ` ${String(base)}--viewWidth-smallTabletPlus`;
     }
@@ -54,7 +51,7 @@ export function getViewWidthClassName<Styles extends Record<string, string>>(
 
   if (viewWidth && viewWidth >= ViewWidth.TABLET) {
     if (styles) {
-      className += " " + styles[`${String(base)}--viewWidth-tabletPlus`];
+      className += ' ' + styles[`${String(base)}--viewWidth-tabletPlus`];
     } else {
       className += ` ${String(base)}--viewWidth-tabletPlus`;
     }

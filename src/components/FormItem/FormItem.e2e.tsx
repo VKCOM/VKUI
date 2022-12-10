@@ -1,19 +1,19 @@
-import * as React from "react";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import { FormItem } from "./FormItem";
-import { CellButton } from "../CellButton/CellButton";
-import { Checkbox } from "../Checkbox/Checkbox";
-import { Input } from "../Input/Input";
-import { Radio } from "../Radio/Radio";
-import { RichCell } from "../RichCell/RichCell";
-import { SimpleCell } from "../SimpleCell/SimpleCell";
-import { Cell } from "../Cell/Cell";
+import * as React from 'react';
+import { describeScreenshotFuzz } from '../../testing/e2e/utils';
+import { FormItem } from './FormItem';
+import { CellButton } from '../CellButton/CellButton';
+import { Checkbox } from '../Checkbox/Checkbox';
+import { Input } from '../Input/Input';
+import { Radio } from '../Radio/Radio';
+import { RichCell } from '../RichCell/RichCell';
+import { SimpleCell } from '../SimpleCell/SimpleCell';
+import { Cell } from '../Cell/Cell';
 
-describe("FormItem", () => {
+describe('FormItem', () => {
   describeScreenshotFuzz(FormItem, [
     {
-      top: [undefined, "Сверху"],
-      bottom: [undefined, "Снизу"],
+      top: [undefined, 'Сверху'],
+      bottom: [undefined, 'Снизу'],
       removable: [undefined, true],
       children: [<Input key={0} placeholder="Введите ваше значение" />],
     },

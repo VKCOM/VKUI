@@ -1,28 +1,25 @@
-import * as React from "react";
-import { Icon20GiftCircleFillRed } from "@vkontakte/icons";
+import * as React from 'react';
+import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
 import {
   IconExampleForFallbackBasedOnImageBaseSize,
   IconExampleForBadgeBasedOnImageBaseSize,
   IconExampleForOverlayBasedOnImageBaseSize,
-} from "../../testing/icons";
-import { describeScreenshotFuzz } from "../../testing/e2e";
-import { Image } from "./Image";
+} from '../../testing/icons';
+import { describeScreenshotFuzz } from '../../testing/e2e';
+import { Image } from './Image';
 
 const base64Image =
-  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAACXBIWXMAAC4jAAAuIwF4pT92AAAA+" +
-  "0lEQVR4nO3cwQmAMBQFQSP2Ze1WFltwURFhpoBHWP45Y865cM369QP+RKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxge2" +
-  "xpHI9NvWHu9zdcViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFY" +
-  "gViBWIFYgViBWIFYgViBWIFYgViBWIFYgVjB8RH2dywrECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxApOni4IwwZ+iSIAAAAA" +
-  "SUVORK5CYII=";
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAACXBIWXMAAC4jAAAuIwF4pT92AAAA+' +
+  '0lEQVR4nO3cwQmAMBQFQSP2Ze1WFltwURFhpoBHWP45Y865cM369QP+RKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxge2' +
+  'xpHI9NvWHu9zdcViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFY' +
+  'gViBWIFYgViBWIFYgViBWIFYgViBWIFYgVjB8RH2dywrECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxApOni4IwwZ+iSIAAAAA' +
+  'SUVORK5CYII=';
 
-describe("Image", () => {
+describe('Image', () => {
   describeScreenshotFuzz(Image, [
     {
       src: [undefined, base64Image],
-      fallbackIcon: [
-        undefined,
-        <IconExampleForFallbackBasedOnImageBaseSize key="fallback-icon" />,
-      ],
+      fallbackIcon: [undefined, <IconExampleForFallbackBasedOnImageBaseSize key="fallback-icon" />],
     },
     {
       withBorder: [undefined, false],

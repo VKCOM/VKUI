@@ -181,9 +181,7 @@
   z-index: auto;
 }
 
-.FormLayoutGroup--segmented
-  > .FormItem:not(:first-of-type):not(:last-of-type)
-  .FormField__border,
+.FormLayoutGroup--segmented > .FormItem:not(:first-of-type):not(:last-of-type) .FormField__border,
 .FormLayoutGroup--segmented
   .Removable__content
   > .FormItem:not(:first-of-type):not(:last-of-type)
@@ -191,9 +189,7 @@
   border-radius: 0;
 }
 
-.FormLayoutGroup--segmented
-  > *:first-of-type:not(:last-of-type)
-  .FormField__border,
+.FormLayoutGroup--segmented > *:first-of-type:not(:last-of-type) .FormField__border,
 .FormLayoutGroup--segmented
   .Removable__content
   > *:first-of-type:not(:last-of-type)
@@ -202,9 +198,7 @@
   border-bottom-right-radius: 0;
 }
 
-.FormLayoutGroup--segmented
-  > .FormItem:not(:first-of-type):last-of-type
-  .FormField__border,
+.FormLayoutGroup--segmented > .FormItem:not(:first-of-type):last-of-type .FormField__border,
 .FormLayoutGroup--segmented
   .Removable__content
   > .FormItem:not(:first-of-type):last-of-type

@@ -1,7 +1,7 @@
-import { useConfigProvider } from "../components/ConfigProvider/ConfigProviderContext";
+import { useConfigProvider } from '../components/ConfigProvider/ConfigProviderContext';
 
 export function useAppearance() {
   const { appearance } = useConfigProvider();
 
-  return appearance ?? "light";
+  return appearance ?? 'light';
 }

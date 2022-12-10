@@ -11,11 +11,7 @@
         </File>
       </FormItem>
       <FormItem top="Загрузите документы">
-        <File
-          before={<Icon24Document role="presentation" />}
-          size="l"
-          mode="secondary"
-        />
+        <File before={<Icon24Document role="presentation" />} size="l" mode="secondary" />
       </FormItem>
     </Group>
   </Panel>

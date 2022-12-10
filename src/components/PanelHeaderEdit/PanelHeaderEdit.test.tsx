@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { PanelHeaderEdit } from "./PanelHeaderEdit";
+import { baselineComponent } from '../../testing/utils';
+import { PanelHeaderEdit } from './PanelHeaderEdit';
 
-describe("PanelHeaderEdit", () => {
+describe('PanelHeaderEdit', () => {
   baselineComponent(PanelHeaderEdit);
 });

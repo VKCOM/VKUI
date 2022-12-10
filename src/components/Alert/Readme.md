@@ -40,23 +40,22 @@ const Example = () => {
       <Alert
         actions={[
           {
-            title: "Лишить права",
-            mode: "destructive",
+            title: 'Лишить права',
+            mode: 'destructive',
             autoClose: true,
-            action: () =>
-              addActionLogItem("Право на модерацию контента убрано."),
+            action: () => addActionLogItem('Право на модерацию контента убрано.'),
           },
           {
-            title: "Отмена",
+            title: 'Отмена',
             autoClose: true,
-            mode: "cancel",
+            mode: 'cancel',
           },
         ]}
         actionsLayout="vertical"
         onClose={closePopout}
         header="Подтвердите действие"
         text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
-      />
+      />,
     );
   };
 
@@ -65,22 +64,22 @@ const Example = () => {
       <Alert
         actions={[
           {
-            title: "Отмена",
+            title: 'Отмена',
             autoClose: true,
-            mode: "cancel",
+            mode: 'cancel',
           },
           {
-            title: "Удалить",
+            title: 'Удалить',
             autoClose: true,
-            mode: "destructive",
-            action: () => addActionLogItem("Документ удален."),
+            mode: 'destructive',
+            action: () => addActionLogItem('Документ удален.'),
           },
         ]}
         actionsLayout="horizontal"
         onClose={closePopout}
         header="Удаление документа"
         text="Вы уверены, что хотите удалить этот документ?"
-      />
+      />,
     );
   };
 

@@ -1,21 +1,20 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   AppearanceProvider,
   generateVKUITokensClassName,
-} from "../AppearanceProvider/AppearanceProvider";
+} from '../AppearanceProvider/AppearanceProvider';
 import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
   useConfigProvider,
-} from "./ConfigProviderContext";
-import { useObjectMemo } from "../../hooks/useObjectMemo";
-import { useAutoDetectAppearance } from "../../hooks/useAutoDetectAppearance";
-import { noop } from "../../lib/utils";
-import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import { useDOM } from "../../lib/dom";
+} from './ConfigProviderContext';
+import { useObjectMemo } from '../../hooks/useObjectMemo';
+import { useAutoDetectAppearance } from '../../hooks/useAutoDetectAppearance';
+import { noop } from '../../lib/utils';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { useDOM } from '../../lib/dom';
 
-export interface ConfigProviderProps
-  extends Partial<ConfigProviderContextInterface> {
+export interface ConfigProviderProps extends Partial<ConfigProviderContextInterface> {
   onDetectAppearanceByBridge?: () => void;
   children: React.ReactNode;
 }
@@ -40,18 +39,12 @@ export const ConfigProvider = (props: ConfigProviderProps) => {
     ...props,
   };
 
-  const appearance = useAutoDetectAppearance(
-    appearanceProp,
-    onDetectAppearanceByBridge
-  );
+  const appearance = useAutoDetectAppearance(appearanceProp, onDetectAppearanceByBridge);
 
   const { document } = useDOM();
 
   useIsomorphicLayoutEffect(() => {
-    const VKUITokensClassName = generateVKUITokensClassName(
-      platform,
-      appearance
-    );
+    const VKUITokensClassName = generateVKUITokensClassName(platform, appearance);
 
     // eslint-disable-next-line no-restricted-properties
     document!.body.classList.add(VKUITokensClassName);
@@ -73,9 +66,7 @@ export const ConfigProvider = (props: ConfigProviderProps) => {
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
-      <AppearanceProvider appearance={appearance}>
-        {children}
-      </AppearanceProvider>
+      <AppearanceProvider appearance={appearance}>{children}</AppearanceProvider>
     </ConfigProviderContext.Provider>
   );
 };

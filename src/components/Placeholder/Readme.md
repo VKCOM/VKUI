@@ -6,7 +6,7 @@
 Если плейсхолдер используется со свойством `stretched` (показывается во всю высоту панели), то на экране не должно быть ничего другого.
 
 ```jsx
-const [activePanel, setActivePanel] = React.useState("example-1");
+const [activePanel, setActivePanel] = React.useState('example-1');
 
 const onNavClick = (e) => {
   const activePanel = e.currentTarget.dataset.to;
@@ -37,9 +37,7 @@ const onNavClick = (e) => {
   </Panel>
 
   <Panel id="example-2">
-    <PanelHeader
-      before={<PanelHeaderBack onClick={onNavClick} data-to="example-1" />}
-    >
+    <PanelHeader before={<PanelHeaderBack onClick={onNavClick} data-to="example-1" />}>
       Плейсхолдеры
     </PanelHeader>
     <Group>
@@ -67,9 +65,7 @@ const onNavClick = (e) => {
   </Panel>
 
   <Panel id="example-3">
-    <PanelHeader
-      before={<PanelHeaderBack onClick={onNavClick} data-to="example-1" />}
-    >
+    <PanelHeader before={<PanelHeaderBack onClick={onNavClick} data-to="example-1" />}>
       Плейсхолдеры
     </PanelHeader>
 

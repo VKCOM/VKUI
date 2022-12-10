@@ -2,7 +2,7 @@
 и `ScreenSpinner`. Свойства `alignY` и `alignX` служат для удобного позиционирования контента. Пример:
 
 ```jsx static
-import { PopoutWrapper } from "@vkontakte/vkui";
+import { PopoutWrapper } from '@vkontakte/vkui';
 
 <PopoutWrapper alignY="center" alignX="center">
   Some content

@@ -1,10 +1,10 @@
-import * as React from "react";
-import { CustomSelectOption } from "./CustomSelectOption";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import { Avatar } from "../Avatar/Avatar";
-import { SizeType } from "../../lib/adaptivity";
+import * as React from 'react';
+import { CustomSelectOption } from './CustomSelectOption';
+import { describeScreenshotFuzz } from '../../testing/e2e/utils';
+import { Avatar } from '../Avatar/Avatar';
+import { SizeType } from '../../lib/adaptivity';
 
-describe("CustomSelectOption", () => {
+describe('CustomSelectOption', () => {
   describeScreenshotFuzz(
     CustomSelectOption,
     [
@@ -12,31 +12,31 @@ describe("CustomSelectOption", () => {
         selected: [true],
         before: [<Avatar size={20} key="avatar" />],
         children: [
-          "Мария Саломея Склодовская-Кюри Мария Саломея Склодовская-Кюри",
-          "Мария Саломея",
+          'Мария Саломея Склодовская-Кюри Мария Саломея Склодовская-Кюри',
+          'Мария Саломея',
         ],
-        after: [undefined, "Hello"],
+        after: [undefined, 'Hello'],
       },
       {
-        children: ["Мария Саломея"],
+        children: ['Мария Саломея'],
         hovered: [true],
       },
       {
-        children: ["Мария Саломея"],
-        description: ["город Санкт-Петербург, Ленинградская область, Россия"],
+        children: ['Мария Саломея'],
+        description: ['город Санкт-Петербург, Ленинградская область, Россия'],
       },
       {
-        children: ["Мария Саломея"],
+        children: ['Мария Саломея'],
         disabled: [true],
         hovered: [true, false],
       },
       {
-        children: ["Иерархия"],
+        children: ['Иерархия'],
         hierarchy: [undefined, 1, 2],
       },
     ],
     {
       adaptivity: { sizeY: SizeType.REGULAR },
-    }
+    },
   );
 });

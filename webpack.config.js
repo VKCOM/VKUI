@@ -1,37 +1,37 @@
-const path = require("path");
-const webpack = require("webpack");
-const { merge } = require("webpack-merge");
-const { generateScopedName } = require("./shared");
+const path = require('path');
+const webpack = require('webpack');
+const { merge } = require('webpack-merge');
+const { generateScopedName } = require('./shared');
 
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = process.env.NODE_ENV === 'production';
 
 process.env.BABEL_USED_BY_WEBPACK = JSON.stringify(true);
 process.env.BABEL_KEEP_CSS = JSON.stringify(true);
 
 const styleLoader = {
-  loader: "style-loader",
+  loader: 'style-loader',
   options: {
     // singleton is faster, but does not support sourcemaps
-    injectType: isProduction ? "singletonStyleTag" : "styleTag",
+    injectType: isProduction ? 'singletonStyleTag' : 'styleTag',
     attributes: {
-      class: "vkui-style",
+      class: 'vkui-style',
     },
   },
 };
 
 const config = {
   entry: {
-    vkui: "./src/vkui.js",
+    vkui: './src/vkui.js',
   },
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "[name].js",
-    libraryTarget: "umd",
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js',
+    libraryTarget: 'umd',
     globalObject: `typeof self !== 'undefined' ? self : this`,
   },
   plugins: [
     new webpack.ProvidePlugin({
-      process: "process/browser",
+      process: 'process/browser',
     }),
   ],
   module: {
@@ -39,19 +39,19 @@ const config = {
       {
         test: /\.[jt]sx?$/,
         exclude: /node_modules/,
-        loader: "babel-loader",
+        loader: 'babel-loader',
       },
       {
         test: /\.(jpeg|jpg|png|woff|woff2|svg|otf)$/,
-        type: "asset/resource",
+        type: 'asset/resource',
         generator: {
-          filename: "static/[name].[hash:8].[ext]",
+          filename: 'static/[name].[hash:8].[ext]',
         },
       },
       {
         test: /\.css$/,
         exclude: /styleguide|\.module\.css$/,
-        use: [styleLoader, "css-loader", "postcss-loader"],
+        use: [styleLoader, 'css-loader', 'postcss-loader'],
       },
       {
         test: /\.css$/,
@@ -59,20 +59,20 @@ const config = {
         use: [
           styleLoader,
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               importLoaders: 1,
               modules: {
-                mode: "pure",
+                mode: 'pure',
                 getLocalIdent(context, localIdentName, localName) {
                   return generateScopedName(localName);
                 },
-                exportLocalsConvention: "asIs",
+                exportLocalsConvention: 'asIs',
               },
             },
           },
           {
-            loader: "postcss-loader",
+            loader: 'postcss-loader',
             options: {
               postcssOptions: {
                 isSandbox: true,
@@ -87,13 +87,13 @@ const config = {
         use: [
           styleLoader,
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               importLoaders: 1,
             },
           },
           {
-            loader: "postcss-loader",
+            loader: 'postcss-loader',
             options: {
               postcssOptions: {
                 isSandbox: true,
@@ -105,30 +105,28 @@ const config = {
     ],
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js"],
+    extensions: ['.ts', '.tsx', '.js'],
   },
-  devtool: "source-map",
+  devtool: 'source-map',
   stats: {
     children: false,
   },
   externals: [
     {
-      react: "react",
-      "prop-types": "prop-types",
-      "react-dom": "react-dom",
+      'react': 'react',
+      'prop-types': 'prop-types',
+      'react-dom': 'react-dom',
     },
     /@vkontakte\/icons/i,
   ],
 };
 
 const devConfig = {
-  mode: "development",
+  mode: 'development',
 };
 
 const prodConfig = {
-  mode: "production",
+  mode: 'production',
 };
 
-module.exports = isProduction
-  ? merge(config, prodConfig)
-  : merge(config, devConfig);
+module.exports = isProduction ? merge(config, prodConfig) : merge(config, devConfig);

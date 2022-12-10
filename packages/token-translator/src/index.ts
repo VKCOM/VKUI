@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
-import path from "path";
-import { execSync } from "child_process";
-import fs from "fs";
-import fsPromises from "fs/promises";
+import path from 'path';
+import { execSync } from 'child_process';
+import fs from 'fs';
+import fsPromises from 'fs/promises';
 
-import postcss from "postcss";
+import postcss from 'postcss';
 
-import postcssPlugin from "./postcss-token-translator";
-import { fileReplacer } from "./file-replacer";
+import postcssPlugin from './postcss-token-translator';
+import { fileReplacer } from './file-replacer';
 
 const cwd = process.cwd();
 
@@ -17,7 +17,7 @@ const cwd = process.cwd();
  */
 function searchFiles(startPath: string, extNames: string[]): string[] {
   // Всегда игнорируем node_modules
-  if (["node_modules"].includes(path.basename(startPath))) {
+  if (['node_modules'].includes(path.basename(startPath))) {
     return [];
   }
 
@@ -29,10 +29,7 @@ function searchFiles(startPath: string, extNames: string[]): string[] {
     const stat = fs.lstatSync(pathToFile);
     if (stat.isDirectory()) {
       findFiles.push(...searchFiles(pathToFile, extNames));
-    } else if (
-      extNames.includes(path.extname(pathToFile).substring(1)) &&
-      !stat.isSymbolicLink()
-    ) {
+    } else if (extNames.includes(path.extname(pathToFile).substring(1)) && !stat.isSymbolicLink()) {
       findFiles.push(pathToFile);
     }
   });
@@ -55,14 +52,13 @@ function gitignore(files: string[]): string[] {
   // иначе нельзя будет вызвать большую команду.
   const maxLength = 1000;
   for (let index = 0; index < files.length; index += maxLength) {
-    const command =
-      `git check-ignore ` + files.slice(index, index + maxLength).join(" ");
+    const command = `git check-ignore ` + files.slice(index, index + maxLength).join(' ');
 
     try {
       needIgnore.push(
         ...execSync(command, {
-          encoding: "utf8",
-        }).split("\n")
+          encoding: 'utf8',
+        }).split('\n'),
       );
     } catch (e) {
       // @ts-ignore
@@ -92,13 +88,10 @@ function postcssTransform(pathToFile: string) {
         postcss([postcssPlugin(undefined)])
           .process(css, { from: pathToFile, to: pathToFile })
           .then((result) => {
-            fsPromises
-              .writeFile(pathToFile, result.css)
-              .then(resolve)
-              .catch(reject);
+            fsPromises.writeFile(pathToFile, result.css).then(resolve).catch(reject);
           })
           .catch((e) => {
-            if (e.name === "CssSyntaxError") {
+            if (e.name === 'CssSyntaxError') {
               console.error(`${e.message}\n\n`);
               resolve(null);
               return;
@@ -125,24 +118,21 @@ const extTransformers: {
 };
 
 function main() {
-  console.info("Start token translator");
-  console.time("Done");
+  console.info('Start token translator');
+  console.time('Done');
 
   const promiseValues: Promise<unknown>[] = [];
 
-  gitignore(searchFiles(cwd, Object.keys(extTransformers))).forEach(
-    (pathToFile) => {
-      const transformer =
-        extTransformers[path.extname(pathToFile).substring(1)];
+  gitignore(searchFiles(cwd, Object.keys(extTransformers))).forEach((pathToFile) => {
+    const transformer = extTransformers[path.extname(pathToFile).substring(1)];
 
-      promiseValues.push(transformer(pathToFile));
-    }
-  );
+    promiseValues.push(transformer(pathToFile));
+  });
 
   Promise.all(promiseValues)
     .catch(console.error)
     .finally(() => {
-      console.timeEnd("Done");
+      console.timeEnd('Done');
     });
 }
 

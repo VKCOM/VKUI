@@ -1,10 +1,10 @@
-import * as React from "react";
-import vkBridge, { AppearanceType } from "@vkontakte/vk-bridge";
-import { platform, PlatformType } from "../../lib/platform";
+import * as React from 'react';
+import vkBridge, { AppearanceType } from '@vkontakte/vk-bridge';
+import { platform, PlatformType } from '../../lib/platform';
 
 export enum WebviewType {
-  VKAPPS = "vkapps",
-  INTERNAL = "internal",
+  VKAPPS = 'vkapps',
+  INTERNAL = 'internal',
 }
 
 export interface ConfigProviderContextInterface {
@@ -35,14 +35,13 @@ export interface ConfigProviderContextInterface {
   locale: string;
 }
 
-export const ConfigProviderContext =
-  React.createContext<ConfigProviderContextInterface>({
-    webviewType: WebviewType.VKAPPS,
-    isWebView: vkBridge.isWebView(),
-    transitionMotionEnabled: true,
-    platform: platform(),
-    appearance: undefined, // undefined обозначает что тема должна определиться автоматически
-    locale: "ru",
-  });
+export const ConfigProviderContext = React.createContext<ConfigProviderContextInterface>({
+  webviewType: WebviewType.VKAPPS,
+  isWebView: vkBridge.isWebView(),
+  transitionMotionEnabled: true,
+  platform: platform(),
+  appearance: undefined, // undefined обозначает что тема должна определиться автоматически
+  locale: 'ru',
+});
 
 export const useConfigProvider = () => React.useContext(ConfigProviderContext);

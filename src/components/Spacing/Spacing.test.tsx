@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { Spacing } from "./Spacing";
+import { baselineComponent } from '../../testing/utils';
+import { Spacing } from './Spacing';
 
-describe("Spacing", () => {
+describe('Spacing', () => {
   baselineComponent(Spacing);
 });

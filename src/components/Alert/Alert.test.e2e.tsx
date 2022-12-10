@@ -1,9 +1,9 @@
-import * as React from "react";
-import { AppRoot } from "../AppRoot/AppRoot";
-import { Alert, AlertProps, AlertAction } from "./Alert";
-import { describeScreenshotFuzz } from "../../testing/e2e";
-import { Platform } from "../../lib/platform";
-import { HasChildren } from "../../types";
+import * as React from 'react';
+import { AppRoot } from '../AppRoot/AppRoot';
+import { Alert, AlertProps, AlertAction } from './Alert';
+import { describeScreenshotFuzz } from '../../testing/e2e';
+import { Platform } from '../../lib/platform';
+import { HasChildren } from '../../types';
 
 const AppWrapper = (props: HasChildren) => (
   <AppRoot mode="embedded" scroll="contain">
@@ -11,18 +11,18 @@ const AppWrapper = (props: HasChildren) => (
   </AppRoot>
 );
 
-describe("Alert", () => {
+describe('Alert', () => {
   const BaseAlert = (p: AlertProps) => (
     <Alert
       header="Подтвердите действие"
       text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
-      style={{ position: "relative" }}
+      style={{ position: 'relative' }}
       {...p}
     />
   );
-  const cancel: AlertAction = { mode: "cancel", title: "Cancel" };
-  const action: AlertAction = { mode: "default", title: "Action" };
-  const destroy: AlertAction = { mode: "destructive", title: "Destroy" };
+  const cancel: AlertAction = { mode: 'cancel', title: 'Cancel' };
+  const action: AlertAction = { mode: 'default', title: 'Action' };
+  const destroy: AlertAction = { mode: 'destructive', title: 'Destroy' };
   describeScreenshotFuzz(
     BaseAlert,
     [
@@ -31,7 +31,7 @@ describe("Alert", () => {
           [cancel, action],
           [cancel, destroy],
         ],
-        actionsLayout: ["horizontal"],
+        actionsLayout: ['horizontal'],
       },
       {
         // Кнопку со стилем `cancel` нужно располагать либо слева, либо снизу, в зависимости от выбранного `actionsLayout`.
@@ -39,13 +39,13 @@ describe("Alert", () => {
           [action, cancel],
           [destroy, cancel],
         ],
-        actionsLayout: ["vertical"],
+        actionsLayout: ['vertical'],
       },
     ],
     {
       Wrapper: AppWrapper,
       platforms: [Platform.IOS, Platform.ANDROID],
-    }
+    },
   );
 
   // В VKCOM версии возможно только горизонтальное расположение кнопок.
@@ -57,12 +57,12 @@ describe("Alert", () => {
           [cancel, action],
           [cancel, destroy],
         ],
-        actionsLayout: ["horizontal"],
+        actionsLayout: ['horizontal'],
       },
     ],
     {
       Wrapper: AppWrapper,
       platforms: [Platform.VKCOM],
-    }
+    },
   );
 });

@@ -1,17 +1,13 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import {
-  type ImageBaseProps,
-  type ImageBaseOverlayProps,
-  ImageBase,
-} from "../ImageBase/ImageBase";
-import { getInitialsFontSize } from "./helpers";
-import { type AvatarBadgeProps, AvatarBadge } from "./AvatarBadge/AvatarBadge";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { type ImageBaseProps, type ImageBaseOverlayProps, ImageBase } from '../ImageBase/ImageBase';
+import { getInitialsFontSize } from './helpers';
+import { type AvatarBadgeProps, AvatarBadge } from './AvatarBadge/AvatarBadge';
 import {
   type AvatarBadgeWithPresetProps,
   AvatarBadgeWithPreset,
-} from "./AvatarBadge/AvatarBadgeWithPreset";
-import styles from "./Avatar.module.css";
+} from './AvatarBadge/AvatarBadgeWithPreset';
+import styles from './Avatar.module.css';
 
 export type {
   AvatarBadgeProps,
@@ -22,33 +18,32 @@ export type {
 export const AVATAR_DEFAULT_SIZE = 48;
 
 const COLORS_NUMBER_TO_TEXT_MAP = {
-  1: "red",
-  2: "orange",
-  3: "yellow",
-  4: "green",
-  5: "l-blue",
-  6: "violet",
+  1: 'red',
+  2: 'orange',
+  3: 'yellow',
+  4: 'green',
+  5: 'l-blue',
+  6: 'violet',
 } as const;
 
 /**
  * Градиенты, которые можно использовать в алгоритме поиска градиентов по числовому идентификатору пользователя.
  * @example user.id % 6 + 1
  */
-export type InitialsAvatarNumberGradients =
-  keyof typeof COLORS_NUMBER_TO_TEXT_MAP;
+export type InitialsAvatarNumberGradients = keyof typeof COLORS_NUMBER_TO_TEXT_MAP;
 
 export type InitialsAvatarTextGradients =
   | typeof COLORS_NUMBER_TO_TEXT_MAP[InitialsAvatarNumberGradients]
-  | "blue";
+  | 'blue';
 
 const gradientStyles = {
-  red: styles["Avatar--gradient-red"],
-  orange: styles["Avatar--gradient-orange"],
-  yellow: styles["Avatar--gradient-yellow"],
-  green: styles["Avatar--gradient-green"],
-  blue: styles["Avatar--gradient-blue"],
-  "l-blue": styles["Avatar--gradient-l-blue"],
-  violet: styles["Avatar--gradient-violet"],
+  'red': styles['Avatar--gradient-red'],
+  'orange': styles['Avatar--gradient-orange'],
+  'yellow': styles['Avatar--gradient-yellow'],
+  'green': styles['Avatar--gradient-green'],
+  'blue': styles['Avatar--gradient-blue'],
+  'l-blue': styles['Avatar--gradient-l-blue'],
+  'violet': styles['Avatar--gradient-violet'],
 };
 
 export interface AvatarProps extends ImageBaseProps {
@@ -75,10 +70,7 @@ export interface AvatarProps extends ImageBaseProps {
    * > Если необходимо задать свой градиент, то используйте значение `"custom"` и определите цвет градиента либо через
    * > свой класс в `className`, либо через `style={{ backgroundImage: "..." }}`.
    */
-  gradientColor?:
-    | InitialsAvatarNumberGradients
-    | InitialsAvatarTextGradients
-    | "custom";
+  gradientColor?: InitialsAvatarNumberGradients | InitialsAvatarTextGradients | 'custom';
 }
 
 /**
@@ -94,10 +86,8 @@ export const Avatar = ({
   ...restProps
 }: AvatarProps) => {
   const gradientName =
-    typeof gradientColor === "number"
-      ? COLORS_NUMBER_TO_TEXT_MAP[gradientColor]
-      : gradientColor;
-  const isGradientNotCustom = gradientName && gradientName !== "custom";
+    typeof gradientColor === 'number' ? COLORS_NUMBER_TO_TEXT_MAP[gradientColor] : gradientColor;
+  const isGradientNotCustom = gradientName && gradientName !== 'custom';
   const rewrittenFallbackIcon = initials ? undefined : fallbackIcon;
 
   return (
@@ -106,15 +96,15 @@ export const Avatar = ({
       size={size}
       fallbackIcon={rewrittenFallbackIcon}
       className={classNamesString(
-        styles["Avatar"],
+        styles['Avatar'],
         gradientName && styles[`Avatar--has-gradient`],
         isGradientNotCustom && gradientStyles[gradientName],
-        className
+        className,
       )}
     >
       {initials && (
         <div
-          className={styles["Avatar__initials"]}
+          className={styles['Avatar__initials']}
           style={{
             fontSize: getInitialsFontSize(size),
           }}

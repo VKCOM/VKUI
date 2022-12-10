@@ -1,12 +1,12 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { HasComponent, HasRootRef } from "../../types";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import styles from "./FormField.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { HasComponent, HasRootRef } from '../../types';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import styles from './FormField.module.css';
 
 export interface FormFieldProps {
-  status?: "default" | "error" | "valid";
+  status?: 'default' | 'error' | 'valid';
   /**
    * Добавляет иконку слева.
    *
@@ -25,7 +25,7 @@ export interface FormFieldProps {
    * - Используйте [IconButton](https://vkcom.github.io/VKUI/#/IconButton), если вам нужна кликабельная иконка.
    */
   after?: React.ReactNode;
-  mode?: "default" | "plain";
+  mode?: 'default' | 'plain';
 }
 
 interface FormFieldOwnProps
@@ -40,14 +40,14 @@ interface FormFieldOwnProps
  * @see https://vkcom.github.io/VKUI/#/FormField
  */
 export const FormField = ({
-  Component = "div",
-  status = "default",
+  Component = 'div',
+  status = 'default',
   children,
   getRootRef,
   before,
   after,
   disabled,
-  mode = "default",
+  mode = 'default',
   className,
   ...restProps
 }: FormFieldOwnProps) => {
@@ -72,27 +72,27 @@ export const FormField = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={classNamesString(
-        styles["FormField"],
+        styles['FormField'],
         styles[`FormField--mode-${mode}`],
         styles[`FormField--status-${status}`],
-        getSizeYClassName(styles["FormField"], sizeY),
-        disabled && styles["FormField--disabled"],
-        !disabled && hover && styles["FormField--hover"],
-        className
+        getSizeYClassName(styles['FormField'], sizeY),
+        disabled && styles['FormField--disabled'],
+        !disabled && hover && styles['FormField--hover'],
+        className,
       )}
     >
       {before && (
-        <div role="presentation" className={styles["FormField__before"]}>
+        <div role="presentation" className={styles['FormField__before']}>
           {before}
         </div>
       )}
       {children}
       {after && (
-        <div role="presentation" className={styles["FormField__after"]}>
+        <div role="presentation" className={styles['FormField__after']}>
           {after}
         </div>
       )}
-      <div role="presentation" className={styles["FormField__border"]} />
+      <div role="presentation" className={styles['FormField__border']} />
     </Component>
   );
 };

@@ -1,10 +1,10 @@
-import * as React from "react";
-import { PlatformType } from "./lib/platform";
-import { Insets } from "@vkontakte/vk-bridge";
+import * as React from 'react';
+import { PlatformType } from './lib/platform';
+import { Insets } from '@vkontakte/vk-bridge';
 
 export type AnyFunction = (...args: any[]) => any;
 
-export type AlignType = "left" | "center" | "right";
+export type AlignType = 'left' | 'center' | 'right';
 
 export interface HasChildren {
   children?: React.ReactNode;

@@ -1,7 +1,7 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { TappableProps, Tappable } from "../Tappable/Tappable";
-import styles from "./Link.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { TappableProps, Tappable } from '../Tappable/Tappable';
+import styles from './Link.module.css';
 
 export interface LinkProps extends TappableProps {
   /**
@@ -13,24 +13,19 @@ export interface LinkProps extends TappableProps {
 /**
  * @see https://vkcom.github.io/VKUI/#/Link
  */
-export const Link = ({
-  hasVisited,
-  children,
-  className,
-  ...restProps
-}: LinkProps) => {
+export const Link = ({ hasVisited, children, className, ...restProps }: LinkProps) => {
   return (
     <Tappable
-      Component={restProps.href ? "a" : "button"}
+      Component={restProps.href ? 'a' : 'button'}
       {...restProps}
       className={classNamesString(
-        styles["Link"],
-        hasVisited && styles["Link--has-visited"],
-        className
+        styles['Link'],
+        hasVisited && styles['Link--has-visited'],
+        className,
       )}
       hasHover={false}
       activeMode="opacity"
-      focusVisibleMode={styles["Link--focus-visible"]}
+      focusVisibleMode={styles['Link--focus-visible']}
     >
       {children}
     </Tappable>

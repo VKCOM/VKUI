@@ -1,21 +1,17 @@
-import * as React from "react";
-import "@testing-library/jest-dom/extend-expect";
-import { fireEvent, render, screen } from "@testing-library/react";
+import * as React from 'react';
+import '@testing-library/jest-dom/extend-expect';
+import { fireEvent, render, screen } from '@testing-library/react';
 import {
   IconExampleForBadgeBasedOnImageBaseSize,
   IconExampleForFallbackBasedOnImageBaseSize,
-} from "../../testing/icons";
-import {
-  baselineComponent,
-  tryToGetByTestId,
-  imgOnlyAttributes,
-} from "../../testing/utils";
-import { ImageBase, ImageBaseProps } from "./ImageBase";
+} from '../../testing/icons';
+import { baselineComponent, tryToGetByTestId, imgOnlyAttributes } from '../../testing/utils';
+import { ImageBase, ImageBaseProps } from './ImageBase';
 
 const TEST_LOCATORS = {
-  ROOT: "image-base",
-  BADGE: "image-base-badge",
-  OVERLAY: "image-base-overlay",
+  ROOT: 'image-base',
+  BADGE: 'image-base-badge',
+  OVERLAY: 'image-base-overlay',
 };
 
 const ImageBaseTest = (props: ImageBaseProps) => (
@@ -24,8 +20,7 @@ const ImageBaseTest = (props: ImageBaseProps) => (
 
 const getImageBaseRootEl = () => screen.getByTestId(TEST_LOCATORS.ROOT);
 
-const getImageBaseImgEl = (elParent = getImageBaseRootEl()) =>
-  elParent.querySelector("img");
+const getImageBaseImgEl = (elParent = getImageBaseRootEl()) => elParent.querySelector('img');
 
 describe(ImageBase, () => {
   baselineComponent(ImageBase);
@@ -40,28 +35,24 @@ describe(ImageBase, () => {
     expect(getImageBaseImgEl()).not.toBeInTheDocument();
   });
 
-  it("should show fallback icon if `src` is not passed", () => {
-    render(
-      <ImageBaseTest
-        fallbackIcon={<IconExampleForFallbackBasedOnImageBaseSize />}
-      />
-    );
+  it('should show fallback icon if `src` is not passed', () => {
+    render(<ImageBaseTest fallbackIcon={<IconExampleForFallbackBasedOnImageBaseSize />} />);
 
     const elImageBase = getImageBaseRootEl();
     const elImageBaseIcon = tryToGetByTestId(
       IconExampleForFallbackBasedOnImageBaseSize.DATA_TEST_ID,
-      elImageBase
+      elImageBase,
     );
 
     expect(elImageBase).toContainElement(elImageBaseIcon);
   });
 
-  it("should show fallback icon if `src` is bad", (doneCallback) => {
+  it('should show fallback icon if `src` is bad', (doneCallback) => {
     render(
       <ImageBaseTest
         src="https://404.please"
         fallbackIcon={<IconExampleForFallbackBasedOnImageBaseSize />}
-      />
+      />,
     );
 
     const elImageBase = getImageBaseRootEl();
@@ -72,7 +63,7 @@ describe(ImageBase, () => {
       setTimeout(() => {
         const elFallbackIcon = tryToGetByTestId(
           IconExampleForFallbackBasedOnImageBaseSize.DATA_TEST_ID,
-          elImageBase
+          elImageBase,
         );
         expect(elImageBase).toContainElement(elFallbackIcon);
         doneCallback();
@@ -82,21 +73,19 @@ describe(ImageBase, () => {
     fireEvent.error(elImg);
   });
 
-  it("[unwanted case] should show children and fallbackIcon", () => {
-    const CHILDREN = "42";
+  it('[unwanted case] should show children and fallbackIcon', () => {
+    const CHILDREN = '42';
 
     render(
-      <ImageBaseTest
-        fallbackIcon={<IconExampleForFallbackBasedOnImageBaseSize />}
-      >
+      <ImageBaseTest fallbackIcon={<IconExampleForFallbackBasedOnImageBaseSize />}>
         {CHILDREN}
-      </ImageBaseTest>
+      </ImageBaseTest>,
     );
 
     const elImageBase = getImageBaseRootEl();
     const elFallbackIcon = tryToGetByTestId(
       IconExampleForFallbackBasedOnImageBaseSize.DATA_TEST_ID,
-      elImageBase
+      elImageBase,
     );
 
     expect(elImageBase).toHaveTextContent(CHILDREN);
@@ -119,13 +108,13 @@ describe(ImageBase, () => {
 });
 
 describe(ImageBase.Badge, () => {
-  it("should renders badge if is passed to children", () => {
+  it('should renders badge if is passed to children', () => {
     render(
       <ImageBaseTest>
         <ImageBase.Badge data-testid={TEST_LOCATORS.BADGE}>
           <IconExampleForBadgeBasedOnImageBaseSize />
         </ImageBase.Badge>
-      </ImageBaseTest>
+      </ImageBaseTest>,
     );
 
     const elImageBase = getImageBaseRootEl();
@@ -136,20 +125,17 @@ describe(ImageBase.Badge, () => {
 });
 
 describe(ImageBase.Overlay, () => {
-  it("should renders overlay if passed", () => {
+  it('should renders overlay if passed', () => {
     render(
       <ImageBaseTest>
         <ImageBase.Overlay data-testid={TEST_LOCATORS.OVERLAY}>
           <IconExampleForBadgeBasedOnImageBaseSize />
         </ImageBase.Overlay>
-      </ImageBaseTest>
+      </ImageBaseTest>,
     );
 
     const elImageBase = getImageBaseRootEl();
-    const elImageBaseOverlay = tryToGetByTestId(
-      TEST_LOCATORS.OVERLAY,
-      elImageBase
-    );
+    const elImageBaseOverlay = tryToGetByTestId(TEST_LOCATORS.OVERLAY, elImageBase);
 
     expect(elImageBase).toContainElement(elImageBaseOverlay);
   });

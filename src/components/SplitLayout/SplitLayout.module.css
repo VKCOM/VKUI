@@ -16,15 +16,13 @@
   position: relative;
   z-index: 11;
   margin-top: calc(
-    -1 * (var(--vkui--size_panel_header_height--regular) +
-          var(--vkui_internal--safe_area_inset_top))
+    -1 * (var(--vkui--size_panel_header_height--regular) + var(--vkui_internal--safe_area_inset_top))
   );
 }
 
 .SplitLayout--ios .SplitLayout__inner--header {
   margin-top: calc(
-    -1 * (var(--vkui--size_panel_header_height--regular) +
-          var(--vkui_internal--safe_area_inset_top))
+    -1 * (var(--vkui--size_panel_header_height--regular) + var(--vkui_internal--safe_area_inset_top))
   );
 }
 

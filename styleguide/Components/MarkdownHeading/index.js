@@ -1,4 +1,4 @@
-import Heading from "../Heading/index";
+import Heading from '../Heading/index';
 
 export const MarkdownHeading = Heading;
 

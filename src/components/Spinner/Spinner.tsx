@@ -1,15 +1,10 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import {
-  Icon24Spinner,
-  Icon32Spinner,
-  Icon44Spinner,
-  Icon16Spinner,
-} from "@vkontakte/icons";
-import styles from "./Spinner.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { Icon24Spinner, Icon32Spinner, Icon44Spinner, Icon16Spinner } from '@vkontakte/icons';
+import styles from './Spinner.module.css';
 
 export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
-  size?: "small" | "regular" | "medium" | "large";
+  size?: 'small' | 'regular' | 'medium' | 'large';
 }
 
 /**
@@ -17,8 +12,8 @@ export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
  */
 export const Spinner = React.memo(
   ({
-    size = "regular",
-    "aria-label": ariaLabel = "Загружается...",
+    size = 'regular',
+    'aria-label': ariaLabel = 'Загружается...',
     className,
     ...restProps
   }: SpinnerProps) => {
@@ -34,12 +29,12 @@ export const Spinner = React.memo(
         role="status"
         aria-label={ariaLabel}
         {...restProps}
-        className={classNamesString(styles["Spinner"], className)}
+        className={classNamesString(styles['Spinner'], className)}
       >
-        <SpinnerIcon className={styles["Spinner__self"]} />
+        <SpinnerIcon className={styles['Spinner__self']} />
       </span>
     );
-  }
+  },
 );
 
-Spinner.displayName = "Spinner";
+Spinner.displayName = 'Spinner';

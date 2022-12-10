@@ -17,32 +17,27 @@
 const Example = () => {
   const platform = usePlatform();
 
-  const [mainPanel, setMainPanel] = useState("panel1");
-  const [modalPanel, setModalPanel] = useState("modal-panel1");
-  const [activeView, setActiveView] = useState("main");
+  const [mainPanel, setMainPanel] = useState('panel1');
+  const [modalPanel, setModalPanel] = useState('modal-panel1');
+  const [activeView, setActiveView] = useState('main');
 
   return (
     <Root activeView={activeView}>
       <View id="main" activePanel={mainPanel}>
         <Panel id="panel1">
-          <PanelHeader
-            before={<PanelHeaderClose />}
-            after={<Avatar size={36} />}
-          >
+          <PanelHeader before={<PanelHeaderClose />} after={<Avatar size={36} />}>
             Стартовый экран
           </PanelHeader>
           <Group>
-            <CellButton onClick={() => setMainPanel("panel2")}>
-              Вторая панель
-            </CellButton>
+            <CellButton onClick={() => setMainPanel('panel2')}>Вторая панель</CellButton>
           </Group>
         </Panel>
         <Panel id="panel2">
           <PanelHeader
             before={
               <PanelHeaderBack
-                onClick={() => setMainPanel("panel1")}
-                label={platform === Platform.VKCOM ? "Назад" : undefined}
+                onClick={() => setMainPanel('panel1')}
+                label={platform === Platform.VKCOM ? 'Назад' : undefined}
               />
             }
             after={
@@ -61,24 +56,18 @@ const Example = () => {
             Вторая панель
           </PanelHeader>
           <Group>
-            <CellButton onClick={() => setMainPanel("panel3")}>
-              Несколько иконок
-            </CellButton>
+            <CellButton onClick={() => setMainPanel('panel3')}>Несколько иконок</CellButton>
           </Group>
         </Panel>
         <Panel id="panel3">
           <PanelHeader
-            before={<PanelHeaderBack onClick={() => setMainPanel("panel2")} />}
+            before={<PanelHeaderBack onClick={() => setMainPanel('panel2')} />}
             after={
               <React.Fragment>
                 <PanelHeaderButton
                   aria-label="Настройки"
                   label={
-                    <Counter
-                      size="s"
-                      mode="prominent"
-                      aria-label="Новые настройки: "
-                    >
+                    <Counter size="s" mode="prominent" aria-label="Новые настройки: ">
                       3
                     </Counter>
                   }
@@ -88,11 +77,7 @@ const Example = () => {
                 <PanelHeaderButton
                   aria-label="Уведомления"
                   label={
-                    <Counter
-                      size="s"
-                      mode="prominent"
-                      aria-label="Уведомлений: "
-                    >
+                    <Counter size="s" mode="prominent" aria-label="Уведомлений: ">
                       2
                     </Counter>
                   }
@@ -105,9 +90,7 @@ const Example = () => {
             Две иконки
           </PanelHeader>
           <Group>
-            <CellButton onClick={() => setActiveView("modal")}>
-              Модальное окно
-            </CellButton>
+            <CellButton onClick={() => setActiveView('modal')}>Модальное окно</CellButton>
           </Group>
         </Panel>
       </View>
@@ -115,16 +98,10 @@ const Example = () => {
         <Panel id="modal-panel1">
           <PanelHeader
             before={
-              <PanelHeaderButton onClick={() => setActiveView("main")}>
-                Отмена
-              </PanelHeaderButton>
+              <PanelHeaderButton onClick={() => setActiveView('main')}>Отмена</PanelHeaderButton>
             }
             after={
-              <PanelHeaderButton
-                disabled
-                primary
-                onClick={() => setActiveView("main")}
-              >
+              <PanelHeaderButton disabled primary onClick={() => setActiveView('main')}>
                 Готово
               </PanelHeaderButton>
             }
@@ -132,62 +109,45 @@ const Example = () => {
             Модальное окно
           </PanelHeader>
           <Group>
-            <CellButton onClick={() => setModalPanel("modal-panel2")}>
-              Сложный контент
-            </CellButton>
+            <CellButton onClick={() => setModalPanel('modal-panel2')}>Сложный контент</CellButton>
           </Group>
         </Panel>
         <Panel id="modal-panel2">
           <PanelHeader
             before={
               <PanelHeaderBack
-                onClick={() => setModalPanel("modal-panel1")}
-                label={platform === Platform.VKCOM ? "Назад" : undefined}
+                onClick={() => setModalPanel('modal-panel1')}
+                label={platform === Platform.VKCOM ? 'Назад' : undefined}
               />
             }
           >
-            <PanelHeaderContent
-              before={<Avatar size={36} />}
-              status="Был в сети вчера"
-            >
+            <PanelHeaderContent before={<Avatar size={36} />} status="Был в сети вчера">
               Влад Анесов
             </PanelHeaderContent>
           </PanelHeader>
           <Group>
-            <CellButton onClick={() => setModalPanel("modal-panel3")}>
-              Поиск
-            </CellButton>
+            <CellButton onClick={() => setModalPanel('modal-panel3')}>Поиск</CellButton>
           </Group>
         </Panel>
         <Panel id="modal-panel3">
           <PanelHeader
             before={
               platform !== Platform.VKCOM && (
-                <PanelHeaderBack
-                  onClick={() => setModalPanel("modal-panel2")}
-                />
+                <PanelHeaderBack onClick={() => setModalPanel('modal-panel2')} />
               )
             }
           >
             <Search />
           </PanelHeader>
           <Group>
-            <CellButton onClick={() => setModalPanel("modal-panel4")}>
-              Табы
-            </CellButton>
+            <CellButton onClick={() => setModalPanel('modal-panel4')}>Табы</CellButton>
             {platform === Platform.VKCOM && (
-              <CellButton onClick={() => setModalPanel("modal-panel2")}>
-                Сложный контент
-              </CellButton>
+              <CellButton onClick={() => setModalPanel('modal-panel2')}>Сложный контент</CellButton>
             )}
           </Group>
         </Panel>
         <Panel id="modal-panel4">
-          <PanelHeader
-            before={
-              <PanelHeaderBack onClick={() => setModalPanel("modal-panel3")} />
-            }
-          >
+          <PanelHeader before={<PanelHeaderBack onClick={() => setModalPanel('modal-panel3')} />}>
             <Tabs>
               <TabsItem selected>Новости</TabsItem>
               <TabsItem>Интересное</TabsItem>

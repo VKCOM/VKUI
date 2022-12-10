@@ -1,6 +1,6 @@
-import React from "react";
-import { WebviewType, Link } from "@vkui";
-import { Setting } from "../Setting/Setting";
+import React from 'react';
+import { WebviewType, Link } from '@vkui';
+import { Setting } from '../Setting/Setting';
 
 export const WebviewTypeSelect = ({ onChange, value }) => {
   React.useEffect(() => () => onChange(WebviewType.VKAPPS), []);

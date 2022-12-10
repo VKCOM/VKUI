@@ -1,6 +1,6 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import styles from "./Spacing.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import styles from './Spacing.module.css';
 
 export interface SpacingProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -13,12 +13,7 @@ export interface SpacingProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * @see https://vkcom.github.io/VKUI/#/Spacing
  */
-export const Spacing = ({
-  size = 8,
-  style: styleProp,
-  className,
-  ...restProps
-}: SpacingProps) => {
+export const Spacing = ({ size = 8, style: styleProp, className, ...restProps }: SpacingProps) => {
   const style = {
     height: size,
     ...styleProp,
@@ -28,7 +23,7 @@ export const Spacing = ({
     <div
       {...restProps}
       aria-hidden="true"
-      className={classNamesString(className, styles["Spacing"])}
+      className={classNamesString(className, styles['Spacing'])}
       style={style}
     />
   );

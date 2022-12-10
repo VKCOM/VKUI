@@ -2,27 +2,27 @@
 
 ```jsx
 const [removeList, updateRemoveList] = React.useState([
-  "Михаил Андриевский",
-  "Вадим Дорохов",
-  "Саша Колобов",
+  'Михаил Андриевский',
+  'Вадим Дорохов',
+  'Саша Колобов',
 ]);
 const [draggingList, updateDraggingList] = React.useState([
-  "Say",
-  "Hello",
-  "To",
-  "My",
-  "Little",
-  "Friend",
+  'Say',
+  'Hello',
+  'To',
+  'My',
+  'Little',
+  'Friend',
 ]);
 const [dragAndSelectList, updateDragAndSelectList] = React.useState([
-  { label: "Фотографии", defaultChecked: true },
-  { label: "Музыка" },
-  { label: "Видео" },
+  { label: 'Фотографии', defaultChecked: true },
+  { label: 'Музыка' },
+  { label: 'Видео' },
 ]);
 const [dragAndRemoveList, updateDragAndRemoveList] = React.useState([
-  "Евгения Полозова",
-  "Артур Стамбульцян",
-  "Владимир Клепов",
+  'Евгения Полозова',
+  'Артур Стамбульцян',
+  'Владимир Клепов',
 ]);
 
 const removeFromList = (idx, list, updateListFn) => {
@@ -42,11 +42,7 @@ const reorderList = ({ from, to }, list, updateListFn) => {
   <Panel id="list">
     <PanelHeader>Cell</PanelHeader>
 
-    <Group
-      header={
-        <Header subtitle={<code>mode="selectable"</code>}>Выделение</Header>
-      }
-    >
+    <Group header={<Header subtitle={<code>mode="selectable"</code>}>Выделение</Header>}>
       <Cell mode="selectable" before={<Avatar />}>
         Артур Стамбульцян
       </Cell>
@@ -59,11 +55,7 @@ const reorderList = ({ from, to }, list, updateListFn) => {
     </Group>
 
     {removeList.length > 0 && (
-      <Group
-        header={
-          <Header subtitle={<code>mode="removable"</code>}>Удаление</Header>
-        }
-      >
+      <Group header={<Header subtitle={<code>mode="removable"</code>}>Удаление</Header>}>
         <List>
           {removeList.map((item, idx) => (
             <Cell
@@ -78,9 +70,7 @@ const reorderList = ({ from, to }, list, updateListFn) => {
       </Group>
     )}
 
-    <Group
-      header={<Header subtitle={<code>draggable</code>}>Перетаскивание</Header>}
-    >
+    <Group header={<Header subtitle={<code>draggable</code>}>Перетаскивание</Header>}>
       <List>
         {draggingList.map((item) => (
           <Cell
@@ -112,11 +102,7 @@ const reorderList = ({ from, to }, list, updateListFn) => {
             draggable
             before={<Image borderRadius="l" size={32} />}
             onDragFinish={({ from, to }) =>
-              reorderList(
-                { from, to },
-                dragAndSelectList,
-                updateDragAndSelectList
-              )
+              reorderList({ from, to }, dragAndSelectList, updateDragAndSelectList)
             }
             {...restItem}
           >
@@ -141,15 +127,9 @@ const reorderList = ({ from, to }, list, updateListFn) => {
               mode="removable"
               draggable
               before={<Avatar />}
-              onRemove={() =>
-                removeFromList(idx, dragAndRemoveList, updateDragAndRemoveList)
-              }
+              onRemove={() => removeFromList(idx, dragAndRemoveList, updateDragAndRemoveList)}
               onDragFinish={({ from, to }) =>
-                reorderList(
-                  { from, to },
-                  dragAndRemoveList,
-                  updateDragAndRemoveList
-                )
+                reorderList({ from, to }, dragAndRemoveList, updateDragAndRemoveList)
               }
             >
               {item}

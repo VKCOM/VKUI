@@ -1,13 +1,13 @@
-import * as React from "react";
-import { Headline } from "../Typography/Headline/Headline";
-import { usePlatform } from "../../hooks/usePlatform";
-import { useExternRef } from "../../hooks/useExternRef";
-import { hasReactNode } from "../../lib/utils";
-import { classNamesString } from "../../lib/classNames";
-import { Platform } from "../../lib/platform";
-import { HasRef, HasRootRef } from "../../types";
-import { useEnsuredControl } from "../../hooks/useEnsuredControl";
-import styles from "./WriteBar.module.css";
+import * as React from 'react';
+import { Headline } from '../Typography/Headline/Headline';
+import { usePlatform } from '../../hooks/usePlatform';
+import { useExternRef } from '../../hooks/useExternRef';
+import { hasReactNode } from '../../lib/utils';
+import { classNamesString } from '../../lib/classNames';
+import { Platform } from '../../lib/platform';
+import { HasRef, HasRootRef } from '../../types';
+import { useEnsuredControl } from '../../hooks/useEnsuredControl';
+import styles from './WriteBar.module.css';
 
 export interface WriteBarProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
@@ -70,13 +70,10 @@ export const WriteBar = ({
     }
 
     if (textareaEl.offsetParent) {
-      textareaEl.style.height = "";
+      textareaEl.style.height = '';
       textareaEl.style.height = `${textareaEl.scrollHeight}px`;
 
-      if (
-        textareaEl.scrollHeight !== currentScrollHeight.current &&
-        onHeightChange
-      ) {
+      if (textareaEl.scrollHeight !== currentScrollHeight.current && onHeightChange) {
         onHeightChange();
         currentScrollHeight.current = textareaEl.scrollHeight;
       }
@@ -89,35 +86,31 @@ export const WriteBar = ({
     <div
       ref={getRootRef}
       className={classNamesString(
-        styles["WriteBar"],
-        platform === Platform.IOS && styles["WriteBar--ios"],
-        shadow && styles["WriteBar--shadow"],
-        className
+        styles['WriteBar'],
+        platform === Platform.IOS && styles['WriteBar--ios'],
+        shadow && styles['WriteBar--shadow'],
+        className,
       )}
       style={style}
     >
-      <div className={styles["WriteBar__form"]}>
-        {hasReactNode(before) && (
-          <div className={styles["WriteBar__before"]}>{before}</div>
-        )}
+      <div className={styles['WriteBar__form']}>
+        {hasReactNode(before) && <div className={styles['WriteBar__before']}>{before}</div>}
 
-        <div className={styles["WriteBar__formIn"]}>
+        <div className={styles['WriteBar__formIn']}>
           <Headline
             {...restProps}
             Component="textarea"
-            className={styles["WriteBar__textarea"]}
+            className={styles['WriteBar__textarea']}
             onChange={onChange}
             getRootRef={textareaRef}
             value={value}
           />
           {hasReactNode(inlineAfter) && (
-            <div className={styles["WriteBar__inlineAfter"]}>{inlineAfter}</div>
+            <div className={styles['WriteBar__inlineAfter']}>{inlineAfter}</div>
           )}
         </div>
 
-        {hasReactNode(after) && (
-          <div className={styles["WriteBar__after"]}>{after}</div>
-        )}
+        {hasReactNode(after) && <div className={styles['WriteBar__after']}>{after}</div>}
       </div>
     </div>
   );

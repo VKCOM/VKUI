@@ -1,6 +1,6 @@
-import * as React from "react";
-import { canUseDOM } from "@vkontakte/vkjs";
-export { canUseDOM, canUseEventListeners, onDOMLoaded } from "@vkontakte/vkjs";
+import * as React from 'react';
+import { canUseDOM } from '@vkontakte/vkjs';
+export { canUseDOM, canUseEventListeners, onDOMLoaded } from '@vkontakte/vkjs';
 
 export interface DOMContextInterface {
   /**
@@ -29,7 +29,7 @@ export const useDOM = () => {
 };
 
 export function withDOM<Props>(
-  Component: React.ComponentType<Props & DOMProps>
+  Component: React.ComponentType<Props & DOMProps>,
 ): React.ComponentType<Props> {
   const WithDOM = (props: Props) => {
     const dom = useDOM();

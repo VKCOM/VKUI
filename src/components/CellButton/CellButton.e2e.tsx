@@ -1,24 +1,24 @@
-import * as React from "react";
-import { Icon24Add, Icon28AddOutline } from "@vkontakte/icons";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import { CellButton } from "./CellButton";
-import { Avatar } from "../Avatar/Avatar";
-import { Image } from "../Image/Image";
+import * as React from 'react';
+import { Icon24Add, Icon28AddOutline } from '@vkontakte/icons';
+import { describeScreenshotFuzz } from '../../testing/e2e/utils';
+import { CellButton } from './CellButton';
+import { Avatar } from '../Avatar/Avatar';
+import { Image } from '../Image/Image';
 
-describe("CellButton", () => {
+describe('CellButton', () => {
   describeScreenshotFuzz(CellButton, [
     {
       centered: [true],
-      children: ["Создать что-нибудь"],
+      children: ['Создать что-нибудь'],
     },
     {
-      mode: [undefined, "danger"],
-      children: ["Создать что-нибудь"],
+      mode: [undefined, 'danger'],
+      children: ['Создать что-нибудь'],
     },
     {
-      mode: [undefined, "danger"],
+      mode: [undefined, 'danger'],
       before: [<Icon28AddOutline key="icon" />],
-      children: ["Создать что-нибудь"],
+      children: ['Создать что-нибудь'],
     },
     {
       before: [
@@ -32,7 +32,7 @@ describe("CellButton", () => {
           <Icon28AddOutline />
         </Image>,
       ],
-      children: ["Создать что-нибудь"],
+      children: ['Создать что-нибудь'],
     },
   ]);
 });

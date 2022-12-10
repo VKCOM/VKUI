@@ -1,12 +1,12 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { usePlatform } from "../../hooks/usePlatform";
-import { hasReactNode } from "../../lib/utils";
-import { Tappable } from "../Tappable/Tappable";
-import { Footnote } from "../Typography/Footnote/Footnote";
-import { Platform } from "../../lib/platform";
-import { HasComponent, HasRootRef } from "../../types";
-import styles from "./TabbarItem.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { usePlatform } from '../../hooks/usePlatform';
+import { hasReactNode } from '../../lib/utils';
+import { Tappable } from '../Tappable/Tappable';
+import { Footnote } from '../Typography/Footnote/Footnote';
+import { Platform } from '../../lib/platform';
+import { HasComponent, HasRootRef } from '../../types';
+import styles from './TabbarItem.module.css';
 
 export interface TabbarItemProps
   extends React.AllHTMLAttributes<HTMLElement>,
@@ -32,7 +32,7 @@ export const TabbarItem = ({
   indicator,
   text,
   href,
-  Component = href ? "a" : "button",
+  Component = href ? 'a' : 'button',
   disabled,
   className,
   ...restProps
@@ -45,12 +45,12 @@ export const TabbarItem = ({
       disabled={disabled}
       href={href}
       className={classNamesString(
-        styles["TabbarItem"],
-        platform === Platform.IOS && styles["TabbarItem--ios"],
-        platform === Platform.ANDROID && styles["TabbarItem--android"],
-        selected && styles["TabbarItem--selected"],
-        !!text && styles["TabbarItem--text"],
-        className
+        styles['TabbarItem'],
+        platform === Platform.IOS && styles['TabbarItem--ios'],
+        platform === Platform.ANDROID && styles['TabbarItem--android'],
+        selected && styles['TabbarItem--selected'],
+        !!text && styles['TabbarItem--text'],
+        className,
       )}
     >
       <Tappable
@@ -58,27 +58,19 @@ export const TabbarItem = ({
         Component="div"
         disabled={disabled}
         activeMode={
-          platform === Platform.IOS
-            ? styles["TabbarItem__tappable--active"]
-            : "background"
+          platform === Platform.IOS ? styles['TabbarItem__tappable--active'] : 'background'
         }
         activeEffectDelay={platform === Platform.IOS ? 0 : 300}
         hasHover={false}
-        className={styles["TabbarItem__tappable"]}
+        className={styles['TabbarItem__tappable']}
       />
-      <div className={styles["TabbarItem__in"]}>
-        <div className={styles["TabbarItem__icon"]}>
+      <div className={styles['TabbarItem__in']}>
+        <div className={styles['TabbarItem__icon']}>
           {children}
-          <div className={styles["TabbarItem__label"]}>
-            {hasReactNode(indicator) && indicator}
-          </div>
+          <div className={styles['TabbarItem__label']}>{hasReactNode(indicator) && indicator}</div>
         </div>
         {text && (
-          <Footnote
-            Component="div"
-            className={styles["TabbarItem__text"]}
-            weight="2"
-          >
+          <Footnote Component="div" className={styles['TabbarItem__text']} weight="2">
             {text}
           </Footnote>
         )}

@@ -1,6 +1,6 @@
-import { CalendarRange } from "./CalendarRange";
-import { baselineComponent } from "../../testing/utils";
+import { CalendarRange } from './CalendarRange';
+import { baselineComponent } from '../../testing/utils';
 
-describe("CalendarRange", () => {
+describe('CalendarRange', () => {
   baselineComponent(CalendarRange);
 });

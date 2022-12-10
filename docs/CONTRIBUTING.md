@@ -47,15 +47,10 @@
   > ```
   >
   > ```tsx
-  > import styles from "./Tappable.module.css";
+  > import styles from './Tappable.module.css';
   >
   > const Tappable = ({ active }) => (
-  >   <div
-  >     className={classNameString(
-  >       styles.Tappable,
-  >       active && styles["Tappable--active"]
-  >     )}
-  >   />
+  >   <div className={classNameString(styles.Tappable, active && styles['Tappable--active'])} />
   > );
   > ```
   >
@@ -72,16 +67,12 @@
   Бывают случаи, например, поле ввода, когда главным является именно `input`, а не обёртка:
 
   ```jsx
-  import styles from "./Input.module.css";
+  import styles from './Input.module.css';
 
   const Input = ({ mode, style, className, ...restProps }) => {
     return (
       <div
-        className={classNamesString(
-          className,
-          styles.Input,
-          styles[`Input--mode-${mode}`]
-        )}
+        className={classNamesString(className, styles.Input, styles[`Input--mode-${mode}`])}
         style={style}
       >
         <input {...restProps} />
@@ -93,15 +84,11 @@
 - Компонент корректно отрисовывается, если не передавать никаких свойств. Вместо `defaultProps`, [deprecated для функциональных компонентов](https://github.com/facebook/react/pull/16210), используем спред:
 
   ```jsx
-  import styles from "./Component.module.css";
+  import styles from './Component.module.css';
 
-  const Component = ({ mode = "default", className, ...restProps }) => (
+  const Component = ({ mode = 'default', className, ...restProps }) => (
     <div
-      className={classNamesString(
-        className,
-        styles.Component,
-        styles[`Component--mode-${mode}`]
-      )}
+      className={classNamesString(className, styles.Component, styles[`Component--mode-${mode}`])}
       {...restProps}
     />
   );

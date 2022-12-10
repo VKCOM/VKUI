@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { RadioGroup } from "./RadioGroup";
+import { baselineComponent } from '../../testing/utils';
+import { RadioGroup } from './RadioGroup';
 
-describe("RadioGroup", () => {
+describe('RadioGroup', () => {
   baselineComponent(RadioGroup);
 });

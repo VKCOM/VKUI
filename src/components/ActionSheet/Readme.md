@@ -15,7 +15,7 @@ ActionSheet – имитация [нативного компонента](https
 ```jsx { "props": { "layout": false, "adaptivity": true } }
 const [popout, setPopout] = useState(null);
 const onClose = () => setPopout(null);
-const [filter, setFilter] = useState("best");
+const [filter, setFilter] = useState('best');
 const onChange = (e) => setFilter(e.target.value);
 const baseTargetRef = React.useRef();
 const iconsTargetRef = React.useRef();
@@ -38,7 +38,7 @@ const openBase = () =>
       <ActionSheetItem autoClose mode="destructive">
         Удалить запись
       </ActionSheetItem>
-    </ActionSheet>
+    </ActionSheet>,
   );
 
 const openIcons = () =>
@@ -63,17 +63,13 @@ const openIcons = () =>
       <ActionSheetItem
         autoClose
         before={
-          platform === Platform.IOS ? (
-            <Icon28DeleteOutline />
-          ) : (
-            <Icon28DeleteOutlineAndroid />
-          )
+          platform === Platform.IOS ? <Icon28DeleteOutline /> : <Icon28DeleteOutlineAndroid />
         }
         mode="destructive"
       >
         Удалить плейлист
       </ActionSheetItem>
-    </ActionSheet>
+    </ActionSheet>,
   );
 
 const openSubtitle = () =>
@@ -83,11 +79,7 @@ const openSubtitle = () =>
       iosCloseItem={<ActionSheetDefaultIosCloseItem />}
       toggleRef={subtitleTargetRef}
     >
-      <ActionSheetItem
-        before={<Icon28SettingsOutline />}
-        autoClose
-        subtitle="Авто"
-      >
+      <ActionSheetItem before={<Icon28SettingsOutline />} autoClose subtitle="Авто">
         Качество
       </ActionSheetItem>
       <ActionSheetItem
@@ -98,14 +90,10 @@ const openSubtitle = () =>
       >
         Субтитры
       </ActionSheetItem>
-      <ActionSheetItem
-        before={<Icon28PlaySpeedOutline />}
-        autoClose
-        subtitle="Обычная"
-      >
+      <ActionSheetItem before={<Icon28PlaySpeedOutline />} autoClose subtitle="Обычная">
         Скорость воспроизведения
       </ActionSheetItem>
-    </ActionSheet>
+    </ActionSheet>,
   );
 
 const openSelectable = () =>
@@ -117,7 +105,7 @@ const openSelectable = () =>
     >
       <ActionSheetItem
         onChange={onChange}
-        checked={filter === "best"}
+        checked={filter === 'best'}
         name="filter"
         value="best"
         autoClose
@@ -127,7 +115,7 @@ const openSelectable = () =>
       </ActionSheetItem>
       <ActionSheetItem
         onChange={onChange}
-        checked={filter === "relatives"}
+        checked={filter === 'relatives'}
         name="filter"
         value="relatives"
         autoClose
@@ -137,7 +125,7 @@ const openSelectable = () =>
       </ActionSheetItem>
       <ActionSheetItem
         onChange={onChange}
-        checked={filter === "collegues"}
+        checked={filter === 'collegues'}
         name="filter"
         value="collegues"
         autoClose
@@ -147,7 +135,7 @@ const openSelectable = () =>
       </ActionSheetItem>
       <ActionSheetItem
         onChange={onChange}
-        checked={filter === "school"}
+        checked={filter === 'school'}
         name="filter"
         value="school"
         autoClose
@@ -157,7 +145,7 @@ const openSelectable = () =>
       </ActionSheetItem>
       <ActionSheetItem
         onChange={onChange}
-        checked={filter === "university"}
+        checked={filter === 'university'}
         name="filter"
         value="university"
         autoClose
@@ -165,7 +153,7 @@ const openSelectable = () =>
       >
         Друзья по вузу
       </ActionSheetItem>
-    </ActionSheet>
+    </ActionSheet>,
   );
 
 const openTitle = () =>
@@ -179,7 +167,7 @@ const openTitle = () =>
       <ActionSheetItem autoClose mode="destructive">
         Удалить видео
       </ActionSheetItem>
-    </ActionSheet>
+    </ActionSheet>,
   );
 
 const openBaseTop = () =>
@@ -196,7 +184,7 @@ const openBaseTop = () =>
       <ActionSheetItem autoClose mode="destructive">
         Удалить запись
       </ActionSheetItem>
-    </ActionSheet>
+    </ActionSheet>,
   );
 
 React.useEffect(openBase, []);

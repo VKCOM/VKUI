@@ -8,7 +8,7 @@
 
 ```jsx
 const SnackBarExample = () => {
-  const [text, setText] = React.useState("");
+  const [text, setText] = React.useState('');
   const [snackbar, setSnackbar] = React.useState(null);
 
   const openBaseWithAction = () => {
@@ -17,18 +17,15 @@ const SnackBarExample = () => {
       <Snackbar
         onClose={() => setSnackbar(null)}
         action="Поделиться"
-        onActionClick={() => setText("Добавляем метку.")}
+        onActionClick={() => setText('Добавляем метку.')}
         before={
-          <Avatar
-            size={24}
-            style={{ background: "var(--vkui--color_background_accent)" }}
-          >
+          <Avatar size={24} style={{ background: 'var(--vkui--color_background_accent)' }}>
             <Icon16Done fill="#fff" width={14} height={14} />
           </Avatar>
         }
       >
         Ссылка скопирована
-      </Snackbar>
+      </Snackbar>,
     );
   };
 
@@ -39,18 +36,15 @@ const SnackBarExample = () => {
         layout="vertical"
         onClose={() => setSnackbar(null)}
         action="Перейти в раздел «Понравилось»"
-        onActionClick={() => setText("Открыта подробная информация.")}
+        onActionClick={() => setText('Открыта подробная информация.')}
         before={
-          <Avatar
-            size={24}
-            style={{ background: "var(--vkui--color_background_accent)" }}
-          >
+          <Avatar size={24} style={{ background: 'var(--vkui--color_background_accent)' }}>
             <Icon16Done fill="#fff" width={14} height={14} />
           </Avatar>
         }
       >
         Ссылка сохранена в закладки
-      </Snackbar>
+      </Snackbar>,
     );
   };
 
@@ -59,11 +53,11 @@ const SnackBarExample = () => {
     setSnackbar(
       <Snackbar
         onClose={() => setSnackbar(null)}
-        onActionClick={() => setText("Сообщение Ивану было отменено.")}
-        after={<Avatar src={getAvatarUrl("user_wayshev")} size={32} />}
+        onActionClick={() => setText('Сообщение Ивану было отменено.')}
+        after={<Avatar src={getAvatarUrl('user_wayshev')} size={32} />}
       >
         Отправлено Ивану Барышеву
-      </Snackbar>
+      </Snackbar>,
     );
   };
 
@@ -76,7 +70,7 @@ const SnackBarExample = () => {
         before={<Icon24ThumbsUpOutline fill="var(--vkui--color_icon_accent)" />}
       >
         Этот сервис рекомендует один друг
-      </Snackbar>
+      </Snackbar>,
     );
   };
 
@@ -87,18 +81,15 @@ const SnackBarExample = () => {
         mode="dark"
         onClose={() => setSnackbar(null)}
         action="Поделиться"
-        onActionClick={() => setText("Добавляем метку.")}
+        onActionClick={() => setText('Добавляем метку.')}
         before={
-          <Avatar
-            size={24}
-            style={{ background: "var(--vkui--color_background_accent)" }}
-          >
+          <Avatar size={24} style={{ background: 'var(--vkui--color_background_accent)' }}>
             <Icon16Done fill="#fff" width={14} height={14} />
           </Avatar>
         }
       >
         Ссылка скопирована
-      </Snackbar>
+      </Snackbar>,
     );
   };
 
@@ -111,18 +102,10 @@ const SnackBarExample = () => {
       <Panel id="example">
         <PanelHeader>Snackbar</PanelHeader>
         <Group>
-          <CellButton onClick={openBaseWithAction}>
-            Уведомление с иконкой и кнопкой
-          </CellButton>
-          <CellButton onClick={openVertical}>
-            Вертикальное расположение
-          </CellButton>
-          <CellButton onClick={openWithAvatar}>
-            Уведомление с аватаркой
-          </CellButton>
-          <CellButton onClick={openWithSibtitle}>
-            Уведомление с дополнительным текстом
-          </CellButton>
+          <CellButton onClick={openBaseWithAction}>Уведомление с иконкой и кнопкой</CellButton>
+          <CellButton onClick={openVertical}>Вертикальное расположение</CellButton>
+          <CellButton onClick={openWithAvatar}>Уведомление с аватаркой</CellButton>
+          <CellButton onClick={openWithSibtitle}>Уведомление с дополнительным текстом</CellButton>
           <CellButton onClick={openDark}>Уведомление с темной темой</CellButton>
         </Group>
 

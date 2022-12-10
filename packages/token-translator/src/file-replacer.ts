@@ -1,8 +1,8 @@
 /* eslint-disable compat/compat */
 
-import fsPromises from "fs/promises";
+import fsPromises from 'fs/promises';
 
-import { getVKUIToken } from "./styleProperty";
+import { getVKUIToken } from './styleProperty';
 
 const regex = /(?<![\w])(--[a-z_]+)/gm;
 
@@ -13,7 +13,7 @@ function replacer(code: string) {
   let edited = false;
   return {
     code: code.replace(regex, (match, p1) => {
-      const vkuiToken = getVKUIToken("", "", p1);
+      const vkuiToken = getVKUIToken('', '', p1);
 
       if (vkuiToken) {
         edited = true;

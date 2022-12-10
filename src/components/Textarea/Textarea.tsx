@@ -1,19 +1,19 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { FormField, FormFieldProps } from "../FormField/FormField";
-import { HasRef, HasRootRef } from "../../types";
-import { useEnsuredControl } from "../../hooks/useEnsuredControl";
-import { useExternRef } from "../../hooks/useExternRef";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import styles from "./Textarea.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { FormField, FormFieldProps } from '../FormField/FormField';
+import { HasRef, HasRootRef } from '../../types';
+import { useEnsuredControl } from '../../hooks/useEnsuredControl';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import styles from './Textarea.module.css';
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
     HasRef<HTMLTextAreaElement>,
     HasRootRef<HTMLElement>,
-    Pick<React.CSSProperties, "maxHeight">,
-    Pick<FormFieldProps, "status"> {
+    Pick<React.CSSProperties, 'maxHeight'>,
+    Pick<FormFieldProps, 'status'> {
   grow?: boolean;
   onResize?(el: HTMLTextAreaElement): void;
   defaultValue?: string;
@@ -23,7 +23,7 @@ export interface TextareaProps
  * @see https://vkcom.github.io/VKUI/#/Textarea
  */
 export const Textarea = ({
-  defaultValue = "",
+  defaultValue = '',
   grow = true,
   style,
   onResize,
@@ -51,7 +51,7 @@ export const Textarea = ({
     const el = elementRef.current;
 
     if (grow && el?.offsetParent) {
-      el.style.height = "";
+      el.style.height = '';
       el.style.height = `${el.scrollHeight}px`;
 
       if (el.scrollHeight !== currentScrollHeight.current && onResize) {
@@ -64,9 +64,9 @@ export const Textarea = ({
   return (
     <FormField
       className={classNamesString(
-        styles["Textarea"],
-        getSizeYClassName(styles["Textarea"], sizeY),
-        className
+        styles['Textarea'],
+        getSizeYClassName(styles['Textarea'], sizeY),
+        className,
       )}
       style={style}
       getRootRef={getRootRef}
@@ -77,7 +77,7 @@ export const Textarea = ({
         {...restProps}
         style={{ maxHeight }}
         rows={rows}
-        className={styles["Textarea__el"]}
+        className={styles['Textarea__el']}
         value={value}
         onChange={onChange}
         ref={elementRef}

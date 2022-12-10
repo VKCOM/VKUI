@@ -1,4 +1,4 @@
-import { type CSSBreakpoints, SizeType } from "../../lib/adaptivity";
+import { type CSSBreakpoints, SizeType } from '../../lib/adaptivity';
 
 export type ForcedHiddenByAdaptivityProviderType = false; // имеется ввиду, что зашили значение, например, <AdaptivityProvider sizeY="regular" />
 
@@ -13,10 +13,7 @@ export type AdaptiveSizeType = Record<
 
 /* ================================================================================================================== */
 
-export type ViewWidthCSSBreakpoints = Extract<
-  CSSBreakpoints,
-  "tabletMinus" | "tabletPlus"
->;
+export type ViewWidthCSSBreakpoints = Extract<CSSBreakpoints, 'tabletMinus' | 'tabletPlus'>;
 
 export type AdaptiveViewWidth = Record<
   ViewWidthCSSBreakpoints,
@@ -25,7 +22,7 @@ export type AdaptiveViewWidth = Record<
 
 /* ================================================================================================================== */
 
-export type DeviceTypeCSSBreakpoints = "mobile" | "desktop";
+export type DeviceTypeCSSBreakpoints = 'mobile' | 'desktop';
 
 export type AdaptiveDeviceType = Record<
   DeviceTypeCSSBreakpoints,

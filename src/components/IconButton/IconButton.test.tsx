@@ -1,31 +1,31 @@
-import * as React from "react";
-import { baselineComponent } from "../../testing/utils";
-import { IconButtonProps, IconButton } from "./IconButton";
-import { render, screen } from "@testing-library/react";
-import { Icon28VoiceOutline } from "@vkontakte/icons";
+import * as React from 'react';
+import { baselineComponent } from '../../testing/utils';
+import { IconButtonProps, IconButton } from './IconButton';
+import { render, screen } from '@testing-library/react';
+import { Icon28VoiceOutline } from '@vkontakte/icons';
 
 const IconButtonTest = (props: IconButtonProps) => (
   <IconButton data-testid="button" aria-label="Тестовая кнопка" {...props}>
     <Icon28VoiceOutline />
   </IconButton>
 );
-const button = () => screen.getByTestId("button");
+const button = () => screen.getByTestId('button');
 
-describe("IconButton", () => {
+describe('IconButton', () => {
   baselineComponent(IconButton);
 
-  it("Component: default IconButton is a button", () => {
+  it('Component: default IconButton is a button', () => {
     render(<IconButtonTest />);
-    expect(button().tagName.toLowerCase()).toMatch("button");
+    expect(button().tagName.toLowerCase()).toMatch('button');
   });
 
-  it("Component: IconButton w/ href is a link", () => {
+  it('Component: IconButton w/ href is a link', () => {
     render(<IconButtonTest href="https://vk.com" />);
-    expect(button().tagName.toLowerCase()).toMatch("a");
+    expect(button().tagName.toLowerCase()).toMatch('a');
   });
 
-  it("Component: IconButton w/ href overrides explicit Component", () => {
+  it('Component: IconButton w/ href overrides explicit Component', () => {
     render(<IconButtonTest href="https://vk.com" Component="div" />);
-    expect(button().tagName.toLowerCase()).toMatch("a");
+    expect(button().tagName.toLowerCase()).toMatch('a');
   });
 });

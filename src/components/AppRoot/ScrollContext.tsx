@@ -1,17 +1,17 @@
-import * as React from "react";
-import { noop } from "../../lib/utils";
-import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import { clamp } from "../../helpers/math";
-import { useDOM } from "../../lib/dom";
+import * as React from 'react';
+import { noop } from '../../lib/utils';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { clamp } from '../../helpers/math';
+import { useDOM } from '../../lib/dom';
 
 const clearDisableScrollStyle = (node: HTMLElement) => {
   Object.assign(node.style, {
-    position: "",
-    top: "",
-    left: "",
-    right: "",
-    overflowY: "",
-    overflowX: "",
+    position: '',
+    top: '',
+    left: '',
+    right: '',
+    overflowY: '',
+    overflowX: '',
   });
 };
 
@@ -53,61 +53,51 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps) => {
   const [isScrollLock, setScrollLock] = React.useState(false);
   const beforeScrollLockFnSetRef = React.useRef<Set<() => void>>(new Set());
 
-  const getScroll = React.useCallback<ScrollContextInterface["getScroll"]>(
+  const getScroll = React.useCallback<ScrollContextInterface['getScroll']>(
     () => ({
       x: window!.pageXOffset,
       y: getPageYOffsetWithoutKeyboardHeight(window!),
     }),
-    [window]
+    [window],
   );
-  const scrollTo = React.useCallback<ScrollContextInterface["scrollTo"]>(
+  const scrollTo = React.useCallback<ScrollContextInterface['scrollTo']>(
     (x = 0, y = 0) => {
       // Some iOS versions do not normalize scroll — do it manually.
       window!.scrollTo(
         x ? clamp(x, 0, document!.body.scrollWidth - window!.innerWidth) : 0,
-        y ? clamp(y, 0, document!.body.scrollHeight - window!.innerHeight) : 0
+        y ? clamp(y, 0, document!.body.scrollHeight - window!.innerHeight) : 0,
       );
     },
-    [document, window]
+    [document, window],
   );
 
-  const enableScrollLock = React.useCallback<
-    ScrollContextInterface["enableScrollLock"]
-  >(() => {
+  const enableScrollLock = React.useCallback<ScrollContextInterface['enableScrollLock']>(() => {
     beforeScrollLockFnSetRef.current.forEach((fn) => {
       fn();
     });
 
     const scrollY = window!.pageYOffset;
     const scrollX = window!.pageXOffset;
-    const overflowY =
-      window!.innerWidth > document!.documentElement.clientWidth
-        ? "scroll"
-        : "";
-    const overflowX =
-      window!.innerHeight > document!.documentElement.clientHeight
-        ? "scroll"
-        : "";
+    const overflowY = window!.innerWidth > document!.documentElement.clientWidth ? 'scroll' : '';
+    const overflowX = window!.innerHeight > document!.documentElement.clientHeight ? 'scroll' : '';
 
     Object.assign(document!.body.style, {
-      position: "fixed",
+      position: 'fixed',
       top: `-${scrollY}px`,
       left: `-${scrollX}px`,
-      right: "0",
+      right: '0',
       overflowY,
       overflowX,
     });
     setScrollLock(true);
   }, [document, window]);
 
-  const disableScrollLock = React.useCallback<
-    ScrollContextInterface["disableScrollLock"]
-  >(() => {
+  const disableScrollLock = React.useCallback<ScrollContextInterface['disableScrollLock']>(() => {
     const scrollY = document!.body.style.top;
     const scrollX = document!.body.style.left;
 
     clearDisableScrollStyle(document!.body);
-    window!.scrollTo(-parseInt(scrollX || "0"), -parseInt(scrollY || "0"));
+    window!.scrollTo(-parseInt(scrollX || '0'), -parseInt(scrollY || '0'));
     setScrollLock(false);
   }, [document, window]);
 
@@ -121,45 +111,36 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps) => {
 
       beforeScrollLockFnSetRef: beforeScrollLockFnSetRef,
     }),
-    [getScroll, scrollTo, isScrollLock, disableScrollLock, enableScrollLock]
+    [getScroll, scrollTo, isScrollLock, disableScrollLock, enableScrollLock],
   );
 
-  return (
-    <ScrollContext.Provider value={scrollController}>
-      {children}
-    </ScrollContext.Provider>
-  );
+  return <ScrollContext.Provider value={scrollController}>{children}</ScrollContext.Provider>;
 };
 
-export const ElementScrollController = ({
-  elRef,
-  children,
-}: ScrollControllerProps) => {
+export const ElementScrollController = ({ elRef, children }: ScrollControllerProps) => {
   const [isScrollLock, setScrollLock] = React.useState(false);
   const beforeScrollLockFnSetRef = React.useRef<Set<() => void>>(new Set());
 
-  const getScroll = React.useCallback<ScrollContextInterface["getScroll"]>(
+  const getScroll = React.useCallback<ScrollContextInterface['getScroll']>(
     () => ({
       x: elRef.current?.scrollLeft ?? 0,
       y: elRef.current?.scrollTop ?? 0,
     }),
-    [elRef]
+    [elRef],
   );
-  const scrollTo = React.useCallback<ScrollContextInterface["scrollTo"]>(
+  const scrollTo = React.useCallback<ScrollContextInterface['scrollTo']>(
     (x = 0, y = 0) => {
       const el = elRef.current;
       // Some iOS versions do not normalize scroll — do it manually.
       el?.scrollTo(
         x ? clamp(x, 0, el.scrollWidth - el.clientWidth) : 0,
-        y ? clamp(y, 0, el.scrollHeight - el.clientHeight) : 0
+        y ? clamp(y, 0, el.scrollHeight - el.clientHeight) : 0,
       );
     },
-    [elRef]
+    [elRef],
   );
 
-  const enableScrollLock = React.useCallback<
-    ScrollContextInterface["enableScrollLock"]
-  >(() => {
+  const enableScrollLock = React.useCallback<ScrollContextInterface['enableScrollLock']>(() => {
     const el = elRef.current;
     if (!el) {
       return;
@@ -170,23 +151,21 @@ export const ElementScrollController = ({
 
     const scrollY = el.scrollTop;
     const scrollX = el.scrollLeft;
-    const overflowY = el.scrollWidth > el.clientWidth ? "scroll" : "";
-    const overflowX = el.scrollHeight > el.clientHeight ? "scroll" : "";
+    const overflowY = el.scrollWidth > el.clientWidth ? 'scroll' : '';
+    const overflowX = el.scrollHeight > el.clientHeight ? 'scroll' : '';
 
     Object.assign(el.style, {
-      position: "absolute",
+      position: 'absolute',
       top: `-${scrollY}px`,
       left: `-${scrollX}px`,
-      right: "0",
+      right: '0',
       overflowY,
       overflowX,
     });
     setScrollLock(true);
   }, [elRef]);
 
-  const disableScrollLock = React.useCallback<
-    ScrollContextInterface["disableScrollLock"]
-  >(() => {
+  const disableScrollLock = React.useCallback<ScrollContextInterface['disableScrollLock']>(() => {
     const el = elRef.current;
     if (!el) {
       return;
@@ -196,7 +175,7 @@ export const ElementScrollController = ({
     const scrollX = el.style.left;
 
     clearDisableScrollStyle(el);
-    el.scrollTo(-parseInt(scrollX || "0"), -parseInt(scrollY || "0"));
+    el.scrollTo(-parseInt(scrollX || '0'), -parseInt(scrollY || '0'));
     setScrollLock(false);
   }, [elRef]);
 
@@ -209,14 +188,10 @@ export const ElementScrollController = ({
       enableScrollLock,
       beforeScrollLockFnSetRef,
     }),
-    [getScroll, scrollTo, isScrollLock, disableScrollLock, enableScrollLock]
+    [getScroll, scrollTo, isScrollLock, disableScrollLock, enableScrollLock],
   );
 
-  return (
-    <ScrollContext.Provider value={scrollController}>
-      {children}
-    </ScrollContext.Provider>
-  );
+  return <ScrollContext.Provider value={scrollController}>{children}</ScrollContext.Provider>;
 };
 
 /**
@@ -224,10 +199,7 @@ export const ElementScrollController = ({
  * @param effect функция, которая может возвращать функцию очистки
  * @param deps effect обновится только при изменении значений в списке.
  */
-export const useScrollLockEffect = (
-  effect: React.EffectCallback,
-  deps: React.DependencyList
-) => {
+export const useScrollLockEffect = (effect: React.EffectCallback, deps: React.DependencyList) => {
   const destructorRef = React.useRef<ReturnType<React.EffectCallback>>(noop);
   const { isScrollLock, beforeScrollLockFnSetRef } = useScroll();
 

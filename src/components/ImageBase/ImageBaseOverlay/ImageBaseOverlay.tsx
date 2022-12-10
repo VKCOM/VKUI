@@ -1,12 +1,12 @@
-import * as React from "react";
-import { classNamesString } from "../../../lib/classNames";
-import { useAppearance } from "../../../hooks/useAppearance";
-import { useAdaptivityHasPointer } from "../../../hooks/useAdaptivityHasPointer";
-import { Tappable } from "../../Tappable/Tappable";
-import { ImageBaseContext } from "../context";
-import type { ImageBaseExpectedIconProps } from "../types";
-import { validateOverlayIcon } from "../validators";
-import styles from "./ImageBaseOverlay.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../../lib/classNames';
+import { useAppearance } from '../../../hooks/useAppearance';
+import { useAdaptivityHasPointer } from '../../../hooks/useAdaptivityHasPointer';
+import { Tappable } from '../../Tappable/Tappable';
+import { ImageBaseContext } from '../context';
+import type { ImageBaseExpectedIconProps } from '../types';
+import { validateOverlayIcon } from '../validators';
+import styles from './ImageBaseOverlay.module.css';
 
 export interface ImageBaseOverlayProps extends React.AriaAttributes {
   /**
@@ -14,7 +14,7 @@ export interface ImageBaseOverlayProps extends React.AriaAttributes {
    *
    * > По умолчанию берётся из параметра `appearance` в `ConfigProvider`.
    */
-  theme?: "dark" | "light";
+  theme?: 'dark' | 'light';
   /**
    * Определяет каким образом должен показываться оверлей.
    *
@@ -23,7 +23,7 @@ export interface ImageBaseOverlayProps extends React.AriaAttributes {
    *
    * > По умолчанию определяется в зависимости от того, есть ли у пользователя мышь или нет.
    */
-  visibility?: "on-hover" | "always";
+  visibility?: 'on-hover' | 'always';
   /**
    * Принимает иконку.
    *
@@ -55,13 +55,13 @@ export const ImageBaseOverlay = ({
   const appearance = useAppearance();
   const hasPointer = useAdaptivityHasPointer();
   const theme = themeProp ?? appearance;
-  const visibility = visibilityProp ?? (hasPointer ? "on-hover" : "always");
+  const visibility = visibilityProp ?? (hasPointer ? 'on-hover' : 'always');
 
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV === 'development') {
     if (children) {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const { size } = React.useContext(ImageBaseContext);
-      validateOverlayIcon(size, { name: "children", value: children });
+      validateOverlayIcon(size, { name: 'children', value: children });
     }
   }
 
@@ -71,19 +71,15 @@ export const ImageBaseOverlay = ({
       type="button"
       Component="button"
       className={classNamesString(
-        styles["ImageBaseOverlay"],
-        visibility === "always" && styles["ImageBaseOverlay--visible"],
-        theme === "light" && styles["ImageBaseOverlay--theme-light"],
-        theme === "dark" && styles["ImageBaseOverlay--theme-dark"],
-        className
+        styles['ImageBaseOverlay'],
+        visibility === 'always' && styles['ImageBaseOverlay--visible'],
+        theme === 'light' && styles['ImageBaseOverlay--theme-light'],
+        theme === 'dark' && styles['ImageBaseOverlay--theme-dark'],
+        className,
       )}
-      hasHover={visibility === "on-hover"}
-      hoverMode={
-        visibility === "on-hover"
-          ? styles["ImageBaseOverlay--visible"]
-          : undefined
-      }
-      focusVisibleMode={styles["ImageBaseOverlay--focus-visible"]}
+      hasHover={visibility === 'on-hover'}
+      hoverMode={visibility === 'on-hover' ? styles['ImageBaseOverlay--visible'] : undefined}
+      focusVisibleMode={styles['ImageBaseOverlay--focus-visible']}
       hasActive={false}
       onClick={onClick}
     >

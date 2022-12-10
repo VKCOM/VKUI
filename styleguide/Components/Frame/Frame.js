@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { DOMContext } from "@vkui/lib/dom";
-import ReactFrame, { useFrame } from "react-frame-component";
-import "./Frame.css";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { DOMContext } from '@vkui/lib/dom';
+import ReactFrame, { useFrame } from 'react-frame-component';
+import './Frame.css';
 
 const FrameDomProvider = ({ children }) => {
   const [ready, setReady] = React.useState(false);
@@ -10,8 +10,8 @@ const FrameDomProvider = ({ children }) => {
 
   React.useEffect(() => {
     // Пихаем в iFrame с примером спрайты для иконок
-    const sprite = document.getElementById("__SVG_SPRITE_NODE__");
-    const masks = document.getElementById("__SVG_MASKS_NODE__");
+    const sprite = document.getElementById('__SVG_SPRITE_NODE__');
+    const masks = document.getElementById('__SVG_MASKS_NODE__');
 
     if (sprite) {
       frame.document.body.appendChild(sprite.cloneNode(true));
@@ -21,16 +21,16 @@ const FrameDomProvider = ({ children }) => {
       frame.document.body.appendChild(masks.cloneNode(true));
     }
 
-    frame.document.querySelector(".frame-content").setAttribute("id", "root");
+    frame.document.querySelector('.frame-content').setAttribute('id', 'root');
 
     // Пихаем в iFrame vkui стили
     const frameAssets = document.createDocumentFragment();
     const hotObservers = [];
-    Array.from(document.getElementsByClassName("vkui-style")).map((style) => {
+    Array.from(document.getElementsByClassName('vkui-style')).map((style) => {
       const frameStyle = style.cloneNode(true);
       frameAssets.appendChild(frameStyle);
 
-      if (process.env.NODE_ENV === "development") {
+      if (process.env.NODE_ENV === 'development') {
         const hotStyleChange = new MutationObserver(() => {
           frameStyle.firstChild.nodeValue = style.firstChild.nodeValue;
         });
@@ -46,9 +46,7 @@ const FrameDomProvider = ({ children }) => {
     };
   }, []);
 
-  return ready ? (
-    <DOMContext.Provider value={frame}>{children}</DOMContext.Provider>
-  ) : null;
+  return ready ? <DOMContext.Provider value={frame}>{children}</DOMContext.Provider> : null;
 };
 
 const initialFrameContent = `

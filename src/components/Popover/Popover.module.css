@@ -8,7 +8,7 @@
 
 /* Создаём "Safe Zone" */
 .Popover::before {
-  content: "";
+  content: '';
   position: absolute;
   z-index: -1;
   top: calc(-1 * var(--vkui_internal--popover_safe_zone_padding));

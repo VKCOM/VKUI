@@ -37,13 +37,12 @@
 }
 
 .Root__view--show-forward {
-  animation: vkui-root-android-animation-show-forward 0.3s
-    var(--vkui--animation_easing_platform);
+  animation: vkui-root-android-animation-show-forward 0.3s var(--vkui--animation_easing_platform);
 }
 
 .Root__view--hide-back {
-  animation: vkui-root-android-animation-hide-back 0.3s
-    var(--vkui--animation_easing_platform) forwards;
+  animation: vkui-root-android-animation-hide-back 0.3s var(--vkui--animation_easing_platform)
+    forwards;
 }
 
 /**
@@ -61,29 +60,25 @@
   left: 0;
   top: 0;
   display: block;
-  content: "";
+  content: '';
   background-color: #000;
   z-index: 6;
 }
 
 .Root--ios .Root__view--show-back::after {
-  animation: vkui-root-ios-animation-show-back 0.6s
-    var(--vkui--animation_easing_platform) forwards;
+  animation: vkui-root-ios-animation-show-back 0.6s var(--vkui--animation_easing_platform) forwards;
 }
 
 .Root--ios .Root__view--hide-forward::after {
-  animation: vkui-root-ios-animation-hide-forward 0.6s
-    var(--vkui--animation_easing_platform);
+  animation: vkui-root-ios-animation-hide-forward 0.6s var(--vkui--animation_easing_platform);
 }
 
 .Root--ios .Root__view--show-forward {
-  animation: vkui-root-ios-animation-show-forward 0.6s
-    var(--vkui--animation_easing_platform);
+  animation: vkui-root-ios-animation-show-forward 0.6s var(--vkui--animation_easing_platform);
 }
 
 .Root--ios .Root__view--hide-back {
-  animation: vkui-root-ios-animation-hide-back 0.6s
-    var(--vkui--animation_easing_platform) forwards;
+  animation: vkui-root-ios-animation-hide-back 0.6s var(--vkui--animation_easing_platform) forwards;
 }
 
 @keyframes vkui-root-ios-animation-show-back {

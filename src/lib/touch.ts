@@ -1,4 +1,4 @@
-import { canUseDOM } from "./dom";
+import { canUseDOM } from './dom';
 
 export interface VKUITouchEvent extends MouseEvent, TouchEvent {}
 export type VKUITouchEventHandler = (e: VKUITouchEvent) => void;
@@ -24,7 +24,7 @@ const coordY = (e: VKUITouchEvent): number => {
 };
 
 // eslint-disable-next-line no-restricted-globals
-const touchEnabled = () => canUseDOM && "ontouchstart" in window;
+const touchEnabled = () => canUseDOM && 'ontouchstart' in window;
 
 /*
  * Возвращает массив поддерживаемых событий
@@ -33,10 +33,10 @@ const touchEnabled = () => canUseDOM && "ontouchstart" in window;
  */
 function getSupportedEvents(): string[] {
   if (touchEnabled()) {
-    return ["touchstart", "touchmove", "touchend", "touchcancel"];
+    return ['touchstart', 'touchmove', 'touchend', 'touchcancel'];
   }
 
-  return ["mousedown", "mousemove", "mouseup", "mouseleave"];
+  return ['mousedown', 'mousemove', 'mouseup', 'mouseleave'];
 }
 
 /*
@@ -46,7 +46,7 @@ function rubber(
   offset: number,
   dimension: number,
   resistanceRate: number,
-  isAndroid: boolean
+  isAndroid: boolean,
 ): number {
   if (isAndroid || offset < 0) {
     return offset;

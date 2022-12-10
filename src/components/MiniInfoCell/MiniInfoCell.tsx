@@ -1,13 +1,12 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { Paragraph } from "../Typography/Paragraph/Paragraph";
-import { Tappable } from "../Tappable/Tappable";
-import { hasReactNode } from "../../lib/utils";
-import { Icon16Chevron } from "@vkontakte/icons";
-import styles from "./MiniInfoCell.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { Paragraph } from '../Typography/Paragraph/Paragraph';
+import { Tappable } from '../Tappable/Tappable';
+import { hasReactNode } from '../../lib/utils';
+import { Icon16Chevron } from '@vkontakte/icons';
+import styles from './MiniInfoCell.module.css';
 
-export interface MiniInfoCellProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface MiniInfoCellProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Иконка слева.<br />
    * Рекомендуется использовать иконки размера 20.
@@ -28,7 +27,7 @@ export interface MiniInfoCellProps
    * - `add` – тип ячейки, который показывает, что взаимодействие с ней должно вызывать действие добавления чего-то.
    * - `more` – взаимодействие с такой ячейкой должно открывать какую-то подробную информацию.
    */
-  mode?: "base" | "accent" | "add" | "more";
+  mode?: 'base' | 'accent' | 'add' | 'more';
 
   /**
    * Тип отображения текста:
@@ -37,7 +36,7 @@ export interface MiniInfoCellProps
    * - `short` – максимально отображается 3 строки, остальное обрезается.
    * - `full` – текст отображается полностью.
    */
-  textWrap?: "nowrap" | "short" | "full";
+  textWrap?: 'nowrap' | 'short' | 'full';
 
   /**
    * Передавать `true`, если предполагается переход при клике по ячейке.
@@ -52,44 +51,37 @@ export const MiniInfoCell = ({
   before,
   after,
   children,
-  mode = "base",
-  textWrap = "nowrap",
+  mode = 'base',
+  textWrap = 'nowrap',
   expandable = false,
   className,
   ...restProps
 }: MiniInfoCellProps) => {
   const cellClasses = classNamesString(
-    styles["MiniInfoCell"],
+    styles['MiniInfoCell'],
     styles[`MiniInfoCell--textWrap-${textWrap}`],
-    mode !== "base" && styles[`MiniInfoCell--mode-${mode}`],
-    className
+    mode !== 'base' && styles[`MiniInfoCell--mode-${mode}`],
+    className,
   );
 
   const cellContent = (
     <React.Fragment>
-      <span className={styles["MiniInfoCell__before"]}>{before}</span>
-      <div className={styles["MiniInfoCell__middle"]}>
+      <span className={styles['MiniInfoCell__before']}>{before}</span>
+      <div className={styles['MiniInfoCell__middle']}>
         <Paragraph
-          className={styles["MiniInfoCell__content"]}
-          weight={mode === "more" ? "2" : undefined}
+          className={styles['MiniInfoCell__content']}
+          weight={mode === 'more' ? '2' : undefined}
         >
           {children}
         </Paragraph>
         {expandable && <Icon16Chevron />}
       </div>
-      {hasReactNode(after) && (
-        <span className={styles["MiniInfoCell__after"]}>{after}</span>
-      )}
+      {hasReactNode(after) && <span className={styles['MiniInfoCell__after']}>{after}</span>}
     </React.Fragment>
   );
 
   return restProps.onClick ? (
-    <Tappable
-      Component="div"
-      role="button"
-      {...restProps}
-      className={cellClasses}
-    >
+    <Tappable Component="div" role="button" {...restProps} className={cellClasses}>
       {cellContent}
     </Tappable>
   ) : (

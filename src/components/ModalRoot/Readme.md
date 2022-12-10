@@ -38,18 +38,18 @@ const App = () => {
 Каждой конкретной `ModalPage` или `ModalCard` можно передать свой обработчик `onClose`, если нужно переопределить поведение.
 
 ```jsx { "props": { "layout": false, "adaptivity": true, "webviewType": true } }
-const MODAL_PAGE_FILTERS = "filters";
-const MODAL_PAGE_COUNTRIES = "countries";
-const MODAL_PAGE_STORY_FEEDBACK = "story-feedback";
-const MODAL_PAGE_USER_INFO = "user-info";
-const MODAL_PAGE_FULLSCREEN = "fullscreen";
-const MODAL_PAGE_DYNAMIC = "dynamic";
+const MODAL_PAGE_FILTERS = 'filters';
+const MODAL_PAGE_COUNTRIES = 'countries';
+const MODAL_PAGE_STORY_FEEDBACK = 'story-feedback';
+const MODAL_PAGE_USER_INFO = 'user-info';
+const MODAL_PAGE_FULLSCREEN = 'fullscreen';
+const MODAL_PAGE_DYNAMIC = 'dynamic';
 
-const MODAL_CARD_MONEY_SEND = "money-send";
-const MODAL_CARD_APP_TO_MENU = "app-to-menu";
-const MODAL_CARD_ABOUT = "say-about";
-const MODAL_CARD_NOTIFICATIONS = "notifications";
-const MODAL_CARD_CHAT_INVITE = "chat-invite";
+const MODAL_CARD_MONEY_SEND = 'money-send';
+const MODAL_CARD_APP_TO_MENU = 'app-to-menu';
+const MODAL_CARD_ABOUT = 'say-about';
+const MODAL_CARD_NOTIFICATIONS = 'notifications';
+const MODAL_CARD_CHAT_INVITE = 'chat-invite';
 
 const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
   const platform = usePlatform();
@@ -65,19 +65,13 @@ const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
           before={
             sizeX.compact &&
             platform === Platform.ANDROID && (
-              <PanelHeaderClose
-                className={sizeX.compact.className}
-                onClick={onClose}
-              />
+              <PanelHeaderClose className={sizeX.compact.className} onClick={onClose} />
             )
           }
           after={
             sizeX.compact &&
             platform === Platform.IOS && (
-              <PanelHeaderButton
-                className={sizeX.compact.className}
-                onClick={onClose}
-              >
+              <PanelHeaderButton className={sizeX.compact.className} onClick={onClose}>
                 <Icon24Dismiss />
               </PanelHeaderButton>
             )
@@ -88,9 +82,7 @@ const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
       }
     >
       <Group>
-        <CellButton onClick={toggle}>
-          {expanded ? "collapse" : "expand"}
-        </CellButton>
+        <CellButton onClick={toggle}>{expanded ? 'collapse' : 'expand'}</CellButton>
         {expanded && <Placeholder icon={<Icon56MoneyTransferOutline />} />}
       </Group>
     </ModalPage>
@@ -103,12 +95,12 @@ const App = () => {
   const [modalHistory, setModalHistory] = useState([]);
   const [randomUser] = useState(() => getRandomUser());
   const [users] = useState(() =>
-    "k"
+    'k'
       .repeat(25)
-      .split("")
+      .split('')
       .map(() => {
         return getRandomUser();
-      })
+      }),
   );
   const platform = usePlatform();
 
@@ -119,10 +111,7 @@ const App = () => {
     if (activeModal === null) {
       localModalHistory = [];
     } else if (modalHistory.indexOf(activeModal) !== -1) {
-      localModalHistory = localModalHistory.splice(
-        0,
-        localModalHistory.indexOf(activeModal) + 1
-      );
+      localModalHistory = localModalHistory.splice(0, localModalHistory.indexOf(activeModal) + 1);
     } else {
       localModalHistory.push(activeModal);
     }
@@ -147,10 +136,7 @@ const App = () => {
             before={
               sizeX.compact &&
               platform === Platform.ANDROID && (
-                <PanelHeaderClose
-                  className={sizeX.compact.className}
-                  onClick={modalBack}
-                />
+                <PanelHeaderClose className={sizeX.compact.className} onClick={modalBack} />
               )
             }
             after={
@@ -167,21 +153,17 @@ const App = () => {
       >
         <Gradient
           style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            textAlign: "center",
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
             padding: 32,
           }}
         >
           <Avatar size={96} src={randomUser.photo_100} />
-          <Title
-            style={{ marginBottom: 8, marginTop: 20 }}
-            level="2"
-            weight="2"
-          >
-            {randomUser.first_name + " " + randomUser.last_name}
+          <Title style={{ marginBottom: 8, marginTop: 20 }} level="2" weight="2">
+            {randomUser.first_name + ' ' + randomUser.last_name}
           </Title>
         </Gradient>
         <Group
@@ -193,10 +175,7 @@ const App = () => {
         >
           {users.map((user) => {
             return (
-              <SimpleCell
-                before={<Avatar src={user.photo_100} />}
-                key={user.id}
-              >
+              <SimpleCell before={<Avatar src={user.photo_100} />} key={user.id}>
                 {user.name}
               </SimpleCell>
             );
@@ -204,11 +183,7 @@ const App = () => {
         </Group>
       </ModalPage>
 
-      <DynamicModalPage
-        id={MODAL_PAGE_DYNAMIC}
-        onClose={modalBack}
-        dynamicContentHeight
-      />
+      <DynamicModalPage id={MODAL_PAGE_DYNAMIC} onClose={modalBack} dynamicContentHeight />
 
       <ModalPage
         id={MODAL_PAGE_FILTERS}
@@ -217,10 +192,7 @@ const App = () => {
           <ModalPageHeader
             before={
               sizeX.compact && (
-                <PanelHeaderClose
-                  className={sizeX.compact.className}
-                  onClick={modalBack}
-                />
+                <PanelHeaderClose className={sizeX.compact.className} onClick={modalBack} />
               )
             }
             after={<PanelHeaderSubmit onClick={modalBack} />}
@@ -233,9 +205,7 @@ const App = () => {
           <CellButton onClick={() => changeActiveModal(MODAL_PAGE_COUNTRIES)}>
             Выбор страны
           </CellButton>
-          <CellButton
-            onClick={() => changeActiveModal(MODAL_PAGE_STORY_FEEDBACK)}
-          >
+          <CellButton onClick={() => changeActiveModal(MODAL_PAGE_STORY_FEEDBACK)}>
             Просмотры истории
           </CellButton>
           <CellButton onClick={() => changeActiveModal(MODAL_PAGE_USER_INFO)}>
@@ -299,9 +269,7 @@ const App = () => {
         id={MODAL_PAGE_COUNTRIES}
         onClose={modalBack}
         header={
-          <ModalPageHeader
-            before={<PanelHeaderBack label="Назад" onClick={modalBack} />}
-          >
+          <ModalPageHeader before={<PanelHeaderBack label="Назад" onClick={modalBack} />}>
             Выберите страну
           </ModalPageHeader>
         }
@@ -328,9 +296,7 @@ const App = () => {
         id={MODAL_PAGE_STORY_FEEDBACK}
         onClose={modalBack}
         header={
-          <ModalPageHeader
-            before={<PanelHeaderBack label="Назад" onClick={modalBack} />}
-          >
+          <ModalPageHeader before={<PanelHeaderBack label="Назад" onClick={modalBack} />}>
             Просмотры истории
           </ModalPageHeader>
         }
@@ -339,10 +305,7 @@ const App = () => {
         <Group>
           {users.map((user) => {
             return (
-              <SimpleCell
-                before={<Avatar src={user.photo_100} />}
-                key={user.id}
-              >
+              <SimpleCell before={<Avatar src={user.photo_100} />} key={user.id}>
                 {user.name}
               </SimpleCell>
             );
@@ -354,9 +317,7 @@ const App = () => {
         id={MODAL_PAGE_USER_INFO}
         onClose={modalBack}
         header={
-          <ModalPageHeader
-            before={<PanelHeaderBack label="Назад" onClick={modalBack} />}
-          >
+          <ModalPageHeader before={<PanelHeaderBack label="Назад" onClick={modalBack} />}>
             Информация о пользователе
           </ModalPageHeader>
         }
@@ -395,13 +356,7 @@ const App = () => {
       <ModalCard
         id={MODAL_CARD_APP_TO_MENU}
         onClose={() => changeActiveModal(null)}
-        icon={
-          <Image
-            borderRadius="l"
-            src={getAvatarUrl("app_zagadki", 200)}
-            size={72}
-          />
-        }
+        icon={<Image borderRadius="l" src={getAvatarUrl('app_zagadki', 200)} size={72} />}
         header="Добавить игру «Загадки детства» в меню?"
         subheader="Игра появится под списком разделов на экране меню и будет всегда под рукой."
         actions={
@@ -466,7 +421,7 @@ const App = () => {
       <ModalCard
         id={MODAL_CARD_CHAT_INVITE}
         onClose={() => changeActiveModal(null)}
-        icon={<Avatar src={getAvatarUrl("chat_basketball", 200)} size={72} />}
+        icon={<Avatar src={getAvatarUrl('chat_basketball', 200)} size={72} />}
         header="Баскетбол на выходных"
         subheader="Приглашение в беседу"
         actions={
@@ -494,12 +449,12 @@ const App = () => {
       >
         <UsersStack
           photos={[
-            getAvatarUrl("user_mm"),
-            getAvatarUrl("user_ilyagrshn"),
-            getAvatarUrl("user_lihachyov"),
-            getAvatarUrl("user_wayshev"),
-            getAvatarUrl("user_arthurstam"),
-            getAvatarUrl("user_xyz"),
+            getAvatarUrl('user_mm'),
+            getAvatarUrl('user_ilyagrshn'),
+            getAvatarUrl('user_lihachyov'),
+            getAvatarUrl('user_wayshev'),
+            getAvatarUrl('user_arthurstam'),
+            getAvatarUrl('user_xyz'),
           ]}
           size="l"
           visibleCount={3}
@@ -522,21 +477,13 @@ const App = () => {
               <CellButton onClick={() => changeActiveModal(MODAL_PAGE_FILTERS)}>
                 Открыть модальную страницу
               </CellButton>
-              <CellButton
-                multiline
-                onClick={() => changeActiveModal(MODAL_PAGE_FULLSCREEN)}
-              >
+              <CellButton multiline onClick={() => changeActiveModal(MODAL_PAGE_FULLSCREEN)}>
                 Открыть полноэкранную модальную страницу
               </CellButton>
-              <CellButton
-                multiline
-                onClick={() => changeActiveModal(MODAL_PAGE_DYNAMIC)}
-              >
+              <CellButton multiline onClick={() => changeActiveModal(MODAL_PAGE_DYNAMIC)}>
                 Открыть модальную страницу с динамической высотой
               </CellButton>
-              <CellButton
-                onClick={() => changeActiveModal(MODAL_CARD_MONEY_SEND)}
-              >
+              <CellButton onClick={() => changeActiveModal(MODAL_CARD_MONEY_SEND)}>
                 Открыть модальные карточки
               </CellButton>
             </Group>
@@ -563,10 +510,10 @@ const App = () => {
 `src/App.js`
 
 ```jsx static
-import SelectModal from "./SelectModal";
+import SelectModal from './SelectModal';
 
 const App = () => {
-  const [activeModal, setActiveModal] = React.useState("select");
+  const [activeModal, setActiveModal] = React.useState('select');
 
   const modal = (
     <ModalRoot activeModal={activeModal}>
@@ -591,7 +538,7 @@ const App = () => {
 `src/SelectModal.js`
 
 ```jsx static
-import { useModalRootContext } from "@vkontakte/vkui";
+import { useModalRootContext } from '@vkontakte/vkui';
 
 export const SelectModal = () => {
   const [items, setItems] = React.useState([]);
@@ -599,7 +546,7 @@ export const SelectModal = () => {
   const { updateModalHeight } = useModalRootContext();
 
   const fetchItems = () => {
-    fetch("")
+    fetch('')
       .then((r) => r.json())
       .then((items) => {
         setItems(items);
@@ -641,7 +588,7 @@ const App = () => {
   const inputRef = useRef(null);
 
   const handleOpen = React.useCallback((id) => {
-    if (id === "modal-with-auto-focus" && inputRef.current) {
+    if (id === 'modal-with-auto-focus' && inputRef.current) {
       inputRef.current.focus();
     }
   }, []);
@@ -690,7 +637,7 @@ const Example = () => {
   const [activeModal, setActiveModal] = React.useState(false);
 
   const handleOpenOfModalRoot = React.useCallback((id) => {
-    if (id === "modal-1") {
+    if (id === 'modal-1') {
       firstInputRef.current.focus();
     }
   }, []);
@@ -706,11 +653,7 @@ const Example = () => {
           <input type="text" ref={firstInputRef} />
         </Div>
       </ModalPage>
-      <ModalPage
-        id="modal-2"
-        onOpened={handleOpenOfModalPage}
-        onClose={() => setActiveModal(null)}
-      >
+      <ModalPage id="modal-2" onOpened={handleOpenOfModalPage} onClose={() => setActiveModal(null)}>
         <Div>
           <input type="text" ref={secondInputRef} />
         </Div>
@@ -723,10 +666,10 @@ const Example = () => {
       <SplitCol>
         <View activePanel="main">
           <Panel id="main">
-            <CellButton multiline onClick={() => setActiveModal("modal-1")}>
+            <CellButton multiline onClick={() => setActiveModal('modal-1')}>
               Пример с onOpened() на ModalRoot
             </CellButton>
-            <CellButton multiline onClick={() => setActiveModal("modal-2")}>
+            <CellButton multiline onClick={() => setActiveModal('modal-2')}>
               Пример с onOpened() на ModalPage
             </CellButton>
           </Panel>

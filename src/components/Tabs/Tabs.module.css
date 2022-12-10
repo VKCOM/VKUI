@@ -19,7 +19,7 @@
 .PanelHeader .Tabs::after {
   display: block;
   width: 1000px;
-  content: "";
+  content: '';
 }
 
 /**
@@ -50,7 +50,7 @@
   width: 8px;
   flex-shrink: 0;
   height: 1px;
-  content: "";
+  content: '';
 }
 
 @media (--sizeX-compact) {
@@ -60,7 +60,7 @@
     width: 8px;
     flex-shrink: 0;
     height: 1px;
-    content: "";
+    content: '';
   }
 }
 
@@ -71,7 +71,7 @@
   top: 0;
   width: 100%;
   height: 100%;
-  content: "";
+  content: '';
   background: var(--vkui--color_background_content);
 }
 

@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { WriteBar } from "./WriteBar";
+import { baselineComponent } from '../../testing/utils';
+import { WriteBar } from './WriteBar';
 
-describe("WriteBar", () => {
+describe('WriteBar', () => {
   baselineComponent(WriteBar);
 });

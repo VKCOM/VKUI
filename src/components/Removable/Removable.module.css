@@ -76,7 +76,7 @@
 }
 
 .Removable__toggle-in::after {
-  content: "";
+  content: '';
   width: 22px;
   height: 22px;
   background-color: var(--vkui--color_background_negative);
@@ -84,7 +84,7 @@
 }
 
 .Removable__toggle-in::before {
-  content: "";
+  content: '';
   position: absolute;
   display: block;
   width: 12px;
@@ -115,22 +115,14 @@
   height: calc(2px + var(--vkui--font_subhead--line_height--regular) + 8px);
 }
 
-.FormItem--sizeY-compact.FormItem--withTop
-  .FormItem__removable
-  ~ .Removable__offset,
-.FormLayoutGroup--sizeY-compact.FormLayoutGroup--removable
-  .FormItem--withTop
-  ~ .Removable__offset {
+.FormItem--sizeY-compact.FormItem--withTop .FormItem__removable ~ .Removable__offset,
+.FormLayoutGroup--sizeY-compact.FormLayoutGroup--removable .FormItem--withTop ~ .Removable__offset {
   height: calc(2px + var(--vkui--font_subhead--line_height--compact) + 6px);
 }
 
 @media (--sizeY-compact) {
-  .FormItem--sizeY-none.FormItem--withTop
-    .FormItem__removable
-    ~ .Removable__offset,
-  .FormLayoutGroup--sizeY-none.FormLayoutGroup--removable
-    .FormItem--withTop
-    ~ .Removable__offset {
+  .FormItem--sizeY-none.FormItem--withTop .FormItem__removable ~ .Removable__offset,
+  .FormLayoutGroup--sizeY-none.FormLayoutGroup--removable .FormItem--withTop ~ .Removable__offset {
     height: calc(2px + var(--vkui--font_subhead--line_height--compact) + 6px);
   }
 }

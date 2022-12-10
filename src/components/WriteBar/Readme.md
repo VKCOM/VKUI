@@ -5,19 +5,19 @@
 Все остальные свойства кроме `className` прокидываются элементу `<textarea />`.
 
 ```jsx
-import { useState, useEffect, useRef, Fragment } from "react";
+import { useState, useEffect, useRef, Fragment } from 'react';
 
 const WriteBarExample = (props) => {
-  const [text1, setText1] = useState("");
-  const [text2, setText2] = useState("");
-  const [text3, setText3] = useState("Завтра в 7?");
-  const [text4, setText4] = useState("Да.");
+  const [text1, setText1] = useState('');
+  const [text2, setText2] = useState('');
+  const [text3, setText3] = useState('Завтра в 7?');
+  const [text4, setText4] = useState('Да.');
 
   const attachmentsCount = 5;
   const fixedLayoutInnerElRef = useRef();
   const [bottomPadding, setBottomPadding] = useState(0);
   const [isAttachmentsShown, setIsAttachmentsShown] = useState(false);
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
 
   const updateBottomPadding = () => {
     const el = fixedLayoutInnerElRef.current;

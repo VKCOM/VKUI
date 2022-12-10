@@ -1,12 +1,9 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { warnOnce } from "../../lib/warnOnce";
-import { type ImageBaseProps, ImageBase } from "../ImageBase/ImageBase";
-import {
-  type GridAvatarBadgeProps,
-  GridAvatarBadge,
-} from "./GridAvatarBadge/GridAvatarBadge";
-import styles from "./GridAvatar.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { warnOnce } from '../../lib/warnOnce';
+import { type ImageBaseProps, ImageBase } from '../ImageBase/ImageBase';
+import { type GridAvatarBadgeProps, GridAvatarBadge } from './GridAvatarBadge/GridAvatarBadge';
+import styles from './GridAvatar.module.css';
 
 export { GridAvatarBadgeProps };
 
@@ -14,15 +11,14 @@ export const GRID_AVATAR_DEFAULT_SIZE = 48;
 
 export const MAX_GRID_LENGTH = 4;
 
-export interface GridAvatarProps
-  extends Omit<ImageBaseProps, "src" | "fallbackIcon"> {
+export interface GridAvatarProps extends Omit<ImageBaseProps, 'src' | 'fallbackIcon'> {
   /**
    * Массив со ссылками. От 1 до 4 элементов.
    */
   src?: string[];
 }
 
-const warn = warnOnce("GridAvatar");
+const warn = warnOnce('GridAvatar');
 
 /**
  * @see https://vkcom.github.io/VKUI/#/GridAvatar
@@ -34,12 +30,9 @@ export const GridAvatar = ({
   children,
   ...restProps
 }: GridAvatarProps) => {
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV === 'development') {
     if (src.length > MAX_GRID_LENGTH) {
-      warn(
-        `Длина массива src (${src.length}) больше максимальной (${MAX_GRID_LENGTH})`,
-        "error"
-      );
+      warn(`Длина массива src (${src.length}) больше максимальной (${MAX_GRID_LENGTH})`, 'error');
     }
   }
 
@@ -47,17 +40,17 @@ export const GridAvatar = ({
     <ImageBase
       {...restProps}
       size={size}
-      className={classNamesString(styles["GridAvatar"], className)}
+      className={classNamesString(styles['GridAvatar'], className)}
     >
-      <div className={styles["GridAvatar__in"]} aria-hidden="true">
+      <div className={styles['GridAvatar__in']} aria-hidden="true">
         {src.map((url, index) =>
           index < MAX_GRID_LENGTH ? (
             <div
               key={url}
-              className={styles["GridAvatar__item"]}
+              className={styles['GridAvatar__item']}
               style={{ backgroundImage: `url(${url})` }}
             />
-          ) : null
+          ) : null,
         )}
       </div>
       {children}

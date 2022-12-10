@@ -13,48 +13,48 @@
     <Group description="Внутри Group">
       <CardScroll size="s">
         <Card>
-          <div style={{ paddingBottom: "66%" }} />
+          <div style={{ paddingBottom: '66%' }} />
         </Card>
         <Card>
-          <div style={{ paddingBottom: "66%" }} />
+          <div style={{ paddingBottom: '66%' }} />
         </Card>
         <Card>
-          <div style={{ paddingBottom: "66%" }} />
+          <div style={{ paddingBottom: '66%' }} />
         </Card>
         <Card>
-          <div style={{ paddingBottom: "66%" }} />
+          <div style={{ paddingBottom: '66%' }} />
         </Card>
         <Card>
-          <div style={{ paddingBottom: "66%" }} />
+          <div style={{ paddingBottom: '66%' }} />
         </Card>
         <Card>
-          <div style={{ paddingBottom: "66%" }} />
+          <div style={{ paddingBottom: '66%' }} />
         </Card>
       </CardScroll>
     </Group>
     <CardScroll size="m">
       <Card>
-        <div style={{ paddingBottom: "42%" }} />
+        <div style={{ paddingBottom: '42%' }} />
       </Card>
       <Card>
-        <div style={{ paddingBottom: "42%" }} />
+        <div style={{ paddingBottom: '42%' }} />
       </Card>
       <Card>
-        <div style={{ paddingBottom: "42%" }} />
+        <div style={{ paddingBottom: '42%' }} />
       </Card>
       <Card>
-        <div style={{ paddingBottom: "42%" }} />
+        <div style={{ paddingBottom: '42%' }} />
       </Card>
     </CardScroll>
     <CardScroll size="l">
       <Card>
-        <div style={{ paddingBottom: "29%" }} />
+        <div style={{ paddingBottom: '29%' }} />
       </Card>
       <Card>
-        <div style={{ paddingBottom: "29%" }} />
+        <div style={{ paddingBottom: '29%' }} />
       </Card>
       <Card>
-        <div style={{ paddingBottom: "29%" }} />
+        <div style={{ paddingBottom: '29%' }} />
       </Card>
     </CardScroll>
   </Panel>

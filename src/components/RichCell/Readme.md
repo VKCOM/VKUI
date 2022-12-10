@@ -4,16 +4,14 @@
     <PanelHeader>RichCell</PanelHeader>
     <Group>
       <RichCell
-        before={<Avatar size={72} src={getAvatarUrl("")} />}
+        before={<Avatar size={72} src={getAvatarUrl('')} />}
         subhead="Subhead"
         text="Text"
         caption="Caption"
         after="After"
         afterCaption="After Caption"
         bottom={
-          <UsersStack
-            photos={[getAvatarUrl(""), getAvatarUrl(""), getAvatarUrl("")]}
-          >
+          <UsersStack photos={[getAvatarUrl(''), getAvatarUrl(''), getAvatarUrl('')]}>
             N общих друга
           </UsersStack>
         }
@@ -34,14 +32,14 @@
     </Group>
     <Group header={<Header>Рекомендации друзей</Header>}>
       <RichCell
-        before={<Avatar size={72} src={getAvatarUrl("user_ilyagrshn")} />}
+        before={<Avatar size={72} src={getAvatarUrl('user_ilyagrshn')} />}
         caption="Команда ВКонтакте, Санкт-Петербург"
         bottom={
           <UsersStack
             photos={[
-              getAvatarUrl("user_ox"),
-              getAvatarUrl("user_vitalyavolyn"),
-              getAvatarUrl("user_eee"),
+              getAvatarUrl('user_ox'),
+              getAvatarUrl('user_vitalyavolyn'),
+              getAvatarUrl('user_eee'),
             ]}
           >
             73 общих друга
@@ -62,14 +60,14 @@
         Илья Гришин
       </RichCell>
       <RichCell
-        before={<Avatar size={72} src={getAvatarUrl("user_rom")} />}
+        before={<Avatar size={72} src={getAvatarUrl('user_rom')} />}
         after={<Icon24UserAddOutline />}
         bottom={
           <UsersStack
             photos={[
-              getAvatarUrl("user_casper6479"),
-              getAvatarUrl("user_me"),
-              getAvatarUrl("user_evg"),
+              getAvatarUrl('user_casper6479'),
+              getAvatarUrl('user_me'),
+              getAvatarUrl('user_evg'),
             ]}
           >
             12 общих друзей
@@ -92,7 +90,7 @@
     </Group>
     <Group header={<Header>История переводов</Header>}>
       <RichCell
-        before={<Avatar size={48} src={getAvatarUrl("user_ti")} />}
+        before={<Avatar size={48} src={getAvatarUrl('user_ti')} />}
         text="Держи за обед в EZO"
         caption="сегодня в 18:00"
         after="+ 1 232 ₽"
@@ -110,17 +108,17 @@
         multiline
         disabled
       >
-        Тарас Иванов{" "}
+        Тарас Иванов{' '}
         <Icon16Verified
           style={{
-            display: "inline-block",
-            color: "var(--vkui--color_icon_accent)",
-            verticalAlign: "text-top",
+            display: 'inline-block',
+            color: 'var(--vkui--color_icon_accent)',
+            verticalAlign: 'text-top',
           }}
         />
       </RichCell>
       <RichCell
-        before={<Avatar size={48} src={getAvatarUrl("user_lihachyov")} />}
+        before={<Avatar size={48} src={getAvatarUrl('user_lihachyov')} />}
         caption="Вчера в 20:30"
         after="- 1 800 ₽"
       >

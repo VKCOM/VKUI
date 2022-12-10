@@ -1,18 +1,18 @@
 ```jsx { "props": { "layout": false, "iframe": false } }
 const containerStyles = {
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  width: "100%",
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  width: '100%',
 };
 
 const Example = () => {
-  const [align, setAlign] = useState("center");
-  const [appearance, setAppearance] = useState("accent");
-  const [sizeY, setSizeY] = useState("compact");
+  const [align, setAlign] = useState('center');
+  const [appearance, setAppearance] = useState('accent');
+  const [sizeY, setSizeY] = useState('compact');
   const [stretched, setStretched] = useState(false);
   const [disabled, setDisabled] = useState(false);
-  const [size, setSize] = useState("s");
+  const [size, setSize] = useState('s');
   const [loading, setLoading] = useState(false);
   const [addBefore, setAddBefore] = useState(false);
   const [addAfter, setAddAfter] = useState(false);
@@ -22,60 +22,51 @@ const Example = () => {
 
   React.useEffect(() => {
     if (platform === Platform.VKCOM) {
-      setSizeY("compact");
+      setSizeY('compact');
     }
   }, [platform]);
 
   const buttonBefore =
-    addBefore &&
-    (size === "s" ? (
-      <Icon12Add />
-    ) : size === "m" ? (
-      <Icon16Add />
-    ) : (
-      <Icon24Add />
-    ));
+    addBefore && (size === 's' ? <Icon12Add /> : size === 'm' ? <Icon16Add /> : <Icon24Add />);
   const buttonAfter =
     addAfter &&
-    (size === "s" ? (
+    (size === 's' ? (
       <Icon12Tag />
-    ) : size === "m" ? (
+    ) : size === 'm' ? (
       <Icon24ChevronCompactRight />
     ) : (
       <Counter>16</Counter>
     ));
-  const buttonLink = hasLink ? "#" : undefined;
-  const buttonText = addText ? "Button" : undefined;
+  const buttonLink = hasLink ? '#' : undefined;
+  const buttonText = addText ? 'Button' : undefined;
 
   return (
-    <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+    <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
       <AdaptivityProvider sizeY={sizeY}>
         <div
           style={{
-            background: appearance === "overlay" ? "#232323" : "unset",
+            background: appearance === 'overlay' ? '#232323' : 'unset',
             ...containerStyles,
           }}
         >
-          {["primary", "secondary", "tertiary", "outline", "link"].map(
-            (mode) => (
-              <Div>
-                <Button
-                  align={align}
-                  href={buttonLink}
-                  before={buttonBefore}
-                  after={buttonAfter}
-                  appearance={appearance}
-                  stretched={stretched}
-                  mode={mode}
-                  disabled={disabled}
-                  size={size}
-                  loading={loading}
-                >
-                  {buttonText}
-                </Button>
-              </Div>
-            )
-          )}
+          {['primary', 'secondary', 'tertiary', 'outline', 'link'].map((mode) => (
+            <Div>
+              <Button
+                align={align}
+                href={buttonLink}
+                before={buttonBefore}
+                after={buttonAfter}
+                appearance={appearance}
+                stretched={stretched}
+                mode={mode}
+                disabled={disabled}
+                size={size}
+                loading={loading}
+              >
+                {buttonText}
+              </Button>
+            </Div>
+          ))}
         </div>
       </AdaptivityProvider>
       <div style={{ minWidth: 200 }}>
@@ -84,12 +75,12 @@ const Example = () => {
             value={appearance}
             onChange={(e) => setAppearance(e.target.value)}
             options={[
-              { label: "accent", value: "accent" },
-              { label: "positive", value: "positive" },
-              { label: "negative", value: "negative" },
-              { label: "neutral", value: "neutral" },
-              { label: "overlay", value: "overlay" },
-              { label: "accent-invariable", value: "accent-invariable" },
+              { label: 'accent', value: 'accent' },
+              { label: 'positive', value: 'positive' },
+              { label: 'negative', value: 'negative' },
+              { label: 'neutral', value: 'neutral' },
+              { label: 'overlay', value: 'overlay' },
+              { label: 'accent-invariable', value: 'accent-invariable' },
             ]}
           />
         </FormItem>
@@ -98,9 +89,9 @@ const Example = () => {
             value={size}
             onChange={(e) => setSize(e.target.value)}
             options={[
-              { label: "s", value: "s" },
-              { label: "m", value: "m" },
-              { label: "l", value: "l" },
+              { label: 's', value: 's' },
+              { label: 'm', value: 'm' },
+              { label: 'l', value: 'l' },
             ]}
           />
         </FormItem>
@@ -109,9 +100,9 @@ const Example = () => {
             value={align}
             onChange={(e) => setAlign(e.target.value)}
             options={[
-              { label: "left", value: "left" },
-              { label: "center", value: "center" },
-              { label: "right", value: "right" },
+              { label: 'left', value: 'left' },
+              { label: 'center', value: 'center' },
+              { label: 'right', value: 'right' },
             ]}
           />
         </FormItem>
@@ -120,25 +111,19 @@ const Example = () => {
             value={sizeY}
             onChange={(e) => setSizeY(e.target.value)}
             options={[
-              { label: "compact", value: "compact" },
+              { label: 'compact', value: 'compact' },
               {
-                label: "regular",
-                value: "regular",
+                label: 'regular',
+                value: 'regular',
                 disabled: platform === Platform.VKCOM,
               },
             ]}
           />
         </FormItem>
         <FormItem top="props">
-          <Checkbox onChange={(e) => setStretched(e.target.checked)}>
-            stretched
-          </Checkbox>
-          <Checkbox onChange={(e) => setLoading(e.target.checked)}>
-            loading
-          </Checkbox>
-          <Checkbox onChange={(e) => setDisabled(e.target.checked)}>
-            disabled
-          </Checkbox>
+          <Checkbox onChange={(e) => setStretched(e.target.checked)}>stretched</Checkbox>
+          <Checkbox onChange={(e) => setLoading(e.target.checked)}>loading</Checkbox>
+          <Checkbox onChange={(e) => setDisabled(e.target.checked)}>disabled</Checkbox>
           <Checkbox
             disabled={!(addBefore || addAfter)}
             onChange={(e) => setAddText(e.target.checked)}
@@ -158,9 +143,7 @@ const Example = () => {
           >
             add after
           </Checkbox>
-          <Checkbox onChange={(e) => setHasLink(e.target.checked)}>
-            add href
-          </Checkbox>
+          <Checkbox onChange={(e) => setHasLink(e.target.checked)}>add href</Checkbox>
         </FormItem>
       </div>
     </div>

@@ -7,9 +7,7 @@
       <CellButton mode="danger">Удалить беседу</CellButton>
     </Group>
     <Group header={<Header mode="secondary">Иконки</Header>}>
-      <CellButton before={<Icon28AddOutline />}>
-        Добавить родственника
-      </CellButton>
+      <CellButton before={<Icon28AddOutline />}>Добавить родственника</CellButton>
       <CellButton before={<Icon28DeleteOutline />} mode="danger">
         Удалить беседу
       </CellButton>

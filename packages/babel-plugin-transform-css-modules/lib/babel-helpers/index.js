@@ -19,13 +19,13 @@ const createObjectExpression = (t, object) => {
 
     if (t.isAnyTypeAnnotation(value)) {
       void 0;
-    } else if (typeof value === "string") {
+    } else if (typeof value === 'string') {
       newValue = t.stringLiteral(value);
-    } else if (typeof value === "object") {
+    } else if (typeof value === 'object') {
       newValue = createObjectExpression(t, value);
-    } else if (typeof value === "boolean") {
+    } else if (typeof value === 'boolean') {
       newValue = t.booleanLiteral(value);
-    } else if (typeof value === "undefined") {
+    } else if (typeof value === 'undefined') {
       // eslint-disable-next-line no-continue
       continue;
     } else {
@@ -48,9 +48,7 @@ const createObjectExpression = (t, object) => {
  * @return {import('@babel/types').VariableDeclaration}
  */
 const createVariable = (t, kind, identifierName, init) => {
-  return t.variableDeclaration(kind, [
-    t.variableDeclarator(t.identifier(identifierName), init),
-  ]);
+  return t.variableDeclaration(kind, [t.variableDeclarator(t.identifier(identifierName), init)]);
 };
 
 /**
@@ -69,9 +67,9 @@ function resolveMemberExpressionPropertyName(t, property) {
     if (property.expressions.length === 0) {
       return property.quasis[0].value.cooked;
     }
-    return "COMPLEX_LITERAL_TEMPLATE";
+    return 'COMPLEX_LITERAL_TEMPLATE';
   }
-  return "NOT_FOUND";
+  return 'NOT_FOUND';
 }
 
 module.exports = {

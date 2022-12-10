@@ -1,10 +1,10 @@
-type HoverType = "none" | "has" | "has-not";
+type HoverType = 'none' | 'has' | 'has-not';
 
 export function getHoverClassName(base: string, hover?: boolean): string;
 export function getHoverClassName<Styles extends Record<string, string>>(
   base: string,
   hover?: boolean,
-  styles?: Styles
+  styles?: Styles,
 ): string | undefined;
 export function getHoverClassName<Styles extends Record<string, string>>(
   base: keyof Styles,
@@ -13,13 +13,13 @@ export function getHoverClassName<Styles extends Record<string, string>>(
    * Note: ввиду того, что Typescript не поддерживает `typescript-plugin-css-modules` во время компиляции,
    *  не удалось покрыть дженерик типом параметр `styles`. Поэтому может вернуться undefined.
    */
-  styles?: Styles
+  styles?: Styles,
 ): string | undefined {
-  let hoverState: HoverType = "none";
+  let hoverState: HoverType = 'none';
   if (hover === true) {
-    hoverState = "has";
+    hoverState = 'has';
   } else if (hover === false) {
-    hoverState = "has-not";
+    hoverState = 'has-not';
   }
 
   const hoverClassName = `${String(base)}--hover-${hoverState}`;

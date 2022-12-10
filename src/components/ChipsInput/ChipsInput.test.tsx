@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { ChipsInput } from "./ChipsInput";
+import { baselineComponent } from '../../testing/utils';
+import { ChipsInput } from './ChipsInput';
 
-describe("ChipsInput", () => {
+describe('ChipsInput', () => {
   baselineComponent(ChipsInput);
 });

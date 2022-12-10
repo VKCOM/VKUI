@@ -1,18 +1,18 @@
-import * as React from "react";
-import { Touch, TouchEvent } from "../Touch/Touch";
-import { classNamesString } from "../../lib/classNames";
-import { Platform } from "../../lib/platform";
-import { rubber } from "../../lib/touch";
-import { ViewWidth } from "../../lib/adaptivity";
-import { Paragraph } from "../Typography/Paragraph/Paragraph";
-import { Subhead } from "../Typography/Subhead/Subhead";
-import { Button } from "../Button/Button";
-import { AppRootPortal } from "../AppRoot/AppRootPortal";
-import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
-import { usePlatform } from "../../hooks/usePlatform";
-import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
-import { useTimeout } from "../../hooks/useTimeout";
-import styles from "./Snackbar.module.css";
+import * as React from 'react';
+import { Touch, TouchEvent } from '../Touch/Touch';
+import { classNamesString } from '../../lib/classNames';
+import { Platform } from '../../lib/platform';
+import { rubber } from '../../lib/touch';
+import { ViewWidth } from '../../lib/adaptivity';
+import { Paragraph } from '../Typography/Paragraph/Paragraph';
+import { Subhead } from '../Typography/Subhead/Subhead';
+import { Button } from '../Button/Button';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
+import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
+import { usePlatform } from '../../hooks/usePlatform';
+import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { useTimeout } from '../../hooks/useTimeout';
+import styles from './Snackbar.module.css';
 
 export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
   /**
@@ -38,7 +38,7 @@ export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
    * Варианты расположения кнопки действия
    * Игнорируется на десктопах и при наличии элементов `after` или `subtitle`
    */
-  layout?: "vertical" | "horizontal";
+  layout?: 'vertical' | 'horizontal';
   /**
    * Время в миллисекундах, через которое плашка скроется
    */
@@ -50,7 +50,7 @@ export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * Задает стиль снекбара
    */
-  mode?: "default" | "dark";
+  mode?: 'default' | 'dark';
   /**
    * Дополнительная строка текста под `children`.
    * Не может использоваться одновременно с `action`
@@ -63,14 +63,14 @@ export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
  */
 export const Snackbar = ({
   children,
-  layout: layoutProps = "horizontal",
+  layout: layoutProps = 'horizontal',
   action,
   before,
   after,
   duration = 4000,
   onActionClick,
   onClose,
-  mode = "default",
+  mode = 'default',
   className,
   subtitle,
   ...restProps
@@ -89,12 +89,9 @@ export const Snackbar = ({
   const bodyElRef = React.useRef<HTMLDivElement | null>(null);
   const innerElRef = React.useRef<HTMLDivElement | null>(null);
 
-  const animationFrameRef = React.useRef<ReturnType<
-    typeof requestAnimationFrame
-  > | null>(null);
+  const animationFrameRef = React.useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
 
-  const transitionFinishDurationFallback =
-    platform === Platform.IOS ? 320 : 400;
+  const transitionFinishDurationFallback = platform === Platform.IOS ? 320 : 400;
 
   const close = () => {
     setClosing(true);
@@ -103,14 +100,14 @@ export const Snackbar = ({
       () => {
         onClose();
       },
-      transitionFinishDurationFallback
+      transitionFinishDurationFallback,
     );
   };
 
   const handleActionClick: React.MouseEventHandler<HTMLElement> = (e) => {
     close();
 
-    if (action && typeof onActionClick === "function") {
+    if (action && typeof onActionClick === 'function') {
       onActionClick(e);
     }
   };
@@ -138,14 +135,8 @@ export const Snackbar = ({
       setTouched(true);
     }
 
-    shiftXPercentRef.current =
-      (shiftX / (bodyElRef.current?.offsetWidth ?? 0)) * 100;
-    shiftXCurrentRef.current = rubber(
-      shiftXPercentRef.current,
-      72,
-      1.2,
-      platform !== Platform.IOS
-    );
+    shiftXPercentRef.current = (shiftX / (bodyElRef.current?.offsetWidth ?? 0)) * 100;
+    shiftXCurrentRef.current = rubber(shiftXPercentRef.current, 72, 1.2, platform !== Platform.IOS);
 
     setBodyTransform(shiftXCurrentRef.current);
   };
@@ -165,7 +156,7 @@ export const Snackbar = ({
           () => {
             onClose();
           },
-          transitionFinishDurationFallback
+          transitionFinishDurationFallback,
         );
         setBodyTransform(-120);
       } else if (!isDesktop && shiftXCurrent >= 50) {
@@ -175,7 +166,7 @@ export const Snackbar = ({
           () => {
             onClose();
           },
-          transitionFinishDurationFallback
+          transitionFinishDurationFallback,
         );
         setBodyTransform(120);
       } else {
@@ -194,52 +185,46 @@ export const Snackbar = ({
 
   React.useEffect(() => closeTimeout.set(), [closeTimeout]);
 
-  const layout = after || isDesktop || subtitle ? "vertical" : layoutProps;
+  const layout = after || isDesktop || subtitle ? 'vertical' : layoutProps;
 
   return (
     <AppRootPortal>
       <div
         {...restProps}
         className={classNamesString(
-          styles["Snackbar"],
-          platform === Platform.IOS && styles["Snackbar--ios"],
+          styles['Snackbar'],
+          platform === Platform.IOS && styles['Snackbar--ios'],
           styles[`Snackbar--layout-${layout}`],
           styles[`Snackbar--mode-${mode}`],
-          closing && styles["Snackbar--closing"],
-          touched && styles["Snackbar--touched"],
-          isDesktop && styles["Snackbar--desktop"],
-          className
+          closing && styles['Snackbar--closing'],
+          touched && styles['Snackbar--touched'],
+          isDesktop && styles['Snackbar--desktop'],
+          className,
         )}
       >
         <Touch
-          className={styles["Snackbar__in"]}
+          className={styles['Snackbar__in']}
           getRootRef={innerElRef}
           onStart={onTouchStart}
           onMoveX={onTouchMoveX}
           onEnd={onTouchEnd}
         >
-          <div className={styles["Snackbar__body"]} ref={bodyElRef}>
-            {before && (
-              <div className={styles["Snackbar__before"]}>{before}</div>
-            )}
+          <div className={styles['Snackbar__body']} ref={bodyElRef}>
+            {before && <div className={styles['Snackbar__before']}>{before}</div>}
 
-            <div className={styles["Snackbar__content"]}>
-              <Paragraph className={styles["Snackbar__content-text"]}>
-                {children}
-              </Paragraph>
+            <div className={styles['Snackbar__content']}>
+              <Paragraph className={styles['Snackbar__content-text']}>{children}</Paragraph>
               {subtitle && !action && (
-                <Subhead className={styles["Snackbar__content-subtitle"]}>
-                  {subtitle}
-                </Subhead>
+                <Subhead className={styles['Snackbar__content-subtitle']}>{subtitle}</Subhead>
               )}
 
               {action && !subtitle && (
                 <Button
                   align="left"
                   mode="link"
-                  appearance={mode === "dark" ? "overlay" : "accent"}
+                  appearance={mode === 'dark' ? 'overlay' : 'accent'}
                   size="s"
-                  className={styles["Snackbar__action"]}
+                  className={styles['Snackbar__action']}
                   onClick={handleActionClick}
                 >
                   {action}
@@ -247,7 +232,7 @@ export const Snackbar = ({
               )}
             </div>
 
-            {after && <div className={styles["Snackbar__after"]}>{after}</div>}
+            {after && <div className={styles['Snackbar__after']}>{after}</div>}
           </div>
         </Touch>
       </div>
