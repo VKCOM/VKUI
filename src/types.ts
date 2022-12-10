@@ -45,3 +45,13 @@ export interface Version {
   minor?: number;
   patch?: number;
 }
+
+/**
+ * Тип содержит атрибуты, которые применяются только для `<a>`
+ *
+ * @see {@link https://developer.mozilla.org/ru/docs/Web/HTML/Element/A &lt;a&gt; - HTML | MDN}
+ */
+export type AnchorHTMLAttributesOnly = Omit<
+  React.AnchorHTMLAttributes<HTMLAnchorElement>,
+  keyof React.HTMLAttributes<HTMLAnchorElement>
+>;
