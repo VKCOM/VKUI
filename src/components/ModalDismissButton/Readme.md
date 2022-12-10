@@ -8,19 +8,16 @@ const CustomPopout = ({ onClose }) => {
     <PopoutWrapper onClick={onClose}>
       <div
         style={{
-          backgroundColor: "var(--vkui--color_background_content)",
+          backgroundColor: 'var(--vkui--color_background_content)',
           borderRadius: 8,
-          position: "relative",
-          padding: "12px",
+          position: 'relative',
+          padding: '12px',
         }}
       >
         <h4>Кастомное модальное окно</h4>
 
         {sizeX.regular && (
-          <ModalDismissButton
-            className={sizeX.regular.className}
-            onClick={onClose}
-          />
+          <ModalDismissButton className={sizeX.regular.className} onClick={onClose} />
         )}
       </div>
     </PopoutWrapper>
@@ -30,8 +27,7 @@ const CustomPopout = ({ onClose }) => {
 const Example = () => {
   const [popout, setPopout] = React.useState(null);
 
-  const onClick = () =>
-    setPopout(<CustomPopout onClose={() => setPopout(null)} />);
+  const onClick = () => setPopout(<CustomPopout onClose={() => setPopout(null)} />);
 
   return (
     <SplitLayout popout={popout}>

@@ -7,12 +7,7 @@
     <Group>
       <FormLayout>
         <FormItem top="Откуда списать">
-          <Radio
-            name="radio"
-            value="1"
-            description="Баланс 7 320 ₽"
-            defaultChecked
-          >
+          <Radio name="radio" value="1" description="Баланс 7 320 ₽" defaultChecked>
             VK Pay
           </Radio>
           <Radio name="radio" value="2">

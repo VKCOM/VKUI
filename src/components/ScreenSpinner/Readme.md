@@ -44,18 +44,10 @@ const setCancelableScreenSpinner = () => {
       <Panel id="spinner">
         <PanelHeader>ScreenSpinner</PanelHeader>
         <Group>
-          <CellButton onClick={setLoadingScreenSpinner}>
-            Запустить долгий процесс
-          </CellButton>
-          <CellButton onClick={setDoneScreenSpinner}>
-            Запустить успешный процесс
-          </CellButton>
-          <CellButton onClick={setErrorScreenSpinner}>
-            Запустить процесс с ошибкой
-          </CellButton>
-          <CellButton onClick={setCancelableScreenSpinner}>
-            Запустить отменяемый процесс
-          </CellButton>
+          <CellButton onClick={setLoadingScreenSpinner}>Запустить долгий процесс</CellButton>
+          <CellButton onClick={setDoneScreenSpinner}>Запустить успешный процесс</CellButton>
+          <CellButton onClick={setErrorScreenSpinner}>Запустить процесс с ошибкой</CellButton>
+          <CellButton onClick={setCancelableScreenSpinner}>Запустить отменяемый процесс</CellButton>
         </Group>
       </Panel>
     </View>

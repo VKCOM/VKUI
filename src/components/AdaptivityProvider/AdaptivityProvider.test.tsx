@@ -1,15 +1,15 @@
-import * as React from "react";
-import { render } from "@testing-library/react";
-import { baselineComponent } from "../../testing/utils";
-import { AdaptivityProvider } from "./AdaptivityProvider";
-import { SizeType, ViewHeight, ViewWidth } from "../../lib/adaptivity";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { useBridgeAdaptivity } from "../../hooks/useBridgeAdaptivity";
+import * as React from 'react';
+import { render } from '@testing-library/react';
+import { baselineComponent } from '../../testing/utils';
+import { AdaptivityProvider } from './AdaptivityProvider';
+import { SizeType, ViewHeight, ViewWidth } from '../../lib/adaptivity';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useBridgeAdaptivity } from '../../hooks/useBridgeAdaptivity';
 
-jest.mock("../../hooks/useBridgeAdaptivity", () => {
+jest.mock('../../hooks/useBridgeAdaptivity', () => {
   const bridgeMock = jest.fn(() => {
     return {
-      type: "",
+      type: '',
       viewportWidth: 0,
       viewportHeight: 0,
     };
@@ -42,7 +42,7 @@ function renderExtractAdaptive(hasPointer?: boolean): {
   const renderResult = render(
     <AdaptivityProvider hasPointer={hasPointer}>
       <Adaptive />
-    </AdaptivityProvider>
+    </AdaptivityProvider>,
   );
   const renderee = renderResult.container.firstElementChild as HTMLElement;
 
@@ -56,13 +56,9 @@ function renderExtractAdaptive(hasPointer?: boolean): {
   return result;
 }
 
-function renderBridgeAdaptive(
-  viewWidth = 0,
-  viewHeight = 0,
-  hasPointer?: boolean
-) {
+function renderBridgeAdaptive(viewWidth = 0, viewHeight = 0, hasPointer?: boolean) {
   (useBridgeAdaptivity as jest.Mock).mockReturnValue({
-    type: "adaptive",
+    type: 'adaptive',
     viewportWidth: viewWidth,
     viewportHeight: viewHeight,
   });
@@ -72,17 +68,17 @@ function renderBridgeAdaptive(
 
 // TODO: More tests for these variations
 
-describe("AdaptivityProvider", () => {
+describe('AdaptivityProvider', () => {
   beforeEach(() => {
     (useBridgeAdaptivity as jest.Mock).mockReturnValue({
-      type: "",
+      type: '',
       viewportWidth: 0,
       viewportHeight: 0,
     });
   });
   baselineComponent(AdaptivityProvider, { forward: false });
-  describe("bridge adaptivity", () => {
-    it("should apply bridge adaptivity [viewWidth] SMALL_MOBILE", () => {
+  describe('bridge adaptivity', () => {
+    it('should apply bridge adaptivity [viewWidth] SMALL_MOBILE', () => {
       const result = renderBridgeAdaptive(300, 420);
       expect(result).toEqual({
         sizeX: SizeType.COMPACT,
@@ -91,7 +87,7 @@ describe("AdaptivityProvider", () => {
         viewHeight: ViewHeight.SMALL,
       });
     });
-    it("should apply bridge adaptivity [viewWidth] MOBILE", () => {
+    it('should apply bridge adaptivity [viewWidth] MOBILE', () => {
       const result = renderBridgeAdaptive(320, 420);
       expect(result).toEqual({
         sizeX: SizeType.COMPACT,
@@ -100,7 +96,7 @@ describe("AdaptivityProvider", () => {
         viewHeight: ViewHeight.SMALL,
       });
     });
-    it("should apply bridge adaptivity [viewWidth] SMALL_TABLET", () => {
+    it('should apply bridge adaptivity [viewWidth] SMALL_TABLET', () => {
       const result = renderBridgeAdaptive(768, 420);
       expect(result).toEqual({
         sizeX: SizeType.REGULAR,
@@ -109,7 +105,7 @@ describe("AdaptivityProvider", () => {
         viewHeight: ViewHeight.SMALL,
       });
     });
-    it("should apply bridge adaptivity [viewWidth] TABLET", () => {
+    it('should apply bridge adaptivity [viewWidth] TABLET', () => {
       const result = renderBridgeAdaptive(1024, 420);
       expect(result).toEqual({
         sizeX: SizeType.REGULAR,
@@ -118,7 +114,7 @@ describe("AdaptivityProvider", () => {
         viewHeight: ViewHeight.SMALL,
       });
     });
-    it("should apply bridge adaptivity [viewWidth] DESKTOP", () => {
+    it('should apply bridge adaptivity [viewWidth] DESKTOP', () => {
       const result = renderBridgeAdaptive(1280, 420);
       expect(result).toEqual({
         sizeX: SizeType.REGULAR,
@@ -127,7 +123,7 @@ describe("AdaptivityProvider", () => {
         viewHeight: ViewHeight.SMALL,
       });
     });
-    it("should apply bridge adaptivity [viewHeight] EXTRA_SMALL", () => {
+    it('should apply bridge adaptivity [viewHeight] EXTRA_SMALL', () => {
       const result = renderBridgeAdaptive(320, 340);
       expect(result).toEqual({
         sizeX: SizeType.COMPACT,
@@ -136,7 +132,7 @@ describe("AdaptivityProvider", () => {
         viewHeight: ViewHeight.EXTRA_SMALL,
       });
     });
-    it("should apply bridge adaptivity [viewHeight] SMALL", () => {
+    it('should apply bridge adaptivity [viewHeight] SMALL', () => {
       const result = renderBridgeAdaptive(320, 415);
       expect(result).toEqual({
         sizeX: SizeType.COMPACT,
@@ -145,7 +141,7 @@ describe("AdaptivityProvider", () => {
         viewHeight: ViewHeight.SMALL,
       });
     });
-    it("should apply bridge adaptivity [viewHeight] MEDIUM", () => {
+    it('should apply bridge adaptivity [viewHeight] MEDIUM', () => {
       const result = renderBridgeAdaptive(320, 720);
       expect(result).toEqual({
         sizeX: SizeType.COMPACT,
@@ -154,7 +150,7 @@ describe("AdaptivityProvider", () => {
         viewHeight: ViewHeight.MEDIUM,
       });
     });
-    it("should apply bridge adaptivity [both] SMALL_MOBILE / EXTRA_SMALL", () => {
+    it('should apply bridge adaptivity [both] SMALL_MOBILE / EXTRA_SMALL', () => {
       const result = renderBridgeAdaptive(300, 340);
       expect(result).toEqual({
         sizeX: SizeType.COMPACT,
@@ -163,7 +159,7 @@ describe("AdaptivityProvider", () => {
         viewHeight: ViewHeight.EXTRA_SMALL,
       });
     });
-    it("should apply bridge adaptivity [both] SMALL_TABLET / SMALL", () => {
+    it('should apply bridge adaptivity [both] SMALL_TABLET / SMALL', () => {
       const result = renderBridgeAdaptive(768, 415);
       expect(result).toEqual({
         sizeX: SizeType.REGULAR,
@@ -172,7 +168,7 @@ describe("AdaptivityProvider", () => {
         viewHeight: ViewHeight.SMALL,
       });
     });
-    it("should apply bridge adaptivity [both] TABLET / MEDIUM", () => {
+    it('should apply bridge adaptivity [both] TABLET / MEDIUM', () => {
       const result = renderBridgeAdaptive(1024, 720);
       expect(result).toEqual({
         sizeX: SizeType.REGULAR,
@@ -181,7 +177,7 @@ describe("AdaptivityProvider", () => {
         viewHeight: ViewHeight.MEDIUM,
       });
     });
-    it("should apply bridge adaptivity [both] DESKTOP / MEDIUM", () => {
+    it('should apply bridge adaptivity [both] DESKTOP / MEDIUM', () => {
       const result = renderBridgeAdaptive(1280, 720);
       expect(result).toEqual({
         sizeX: SizeType.REGULAR,
@@ -191,8 +187,8 @@ describe("AdaptivityProvider", () => {
       });
     });
   });
-  describe("custom props", () => {
-    it("should ignore custom mouse with bridge [viewWidth] SMALL_TABLET", () => {
+  describe('custom props', () => {
+    it('should ignore custom mouse with bridge [viewWidth] SMALL_TABLET', () => {
       const result = renderBridgeAdaptive(768, 420, false);
       expect(result).toEqual({
         sizeX: SizeType.REGULAR,

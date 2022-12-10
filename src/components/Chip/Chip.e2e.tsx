@@ -1,8 +1,8 @@
-import * as React from "react";
-import { Chip, ChipProps } from "./Chip";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
+import * as React from 'react';
+import { Chip, ChipProps } from './Chip';
+import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
-describe("Chip", () => {
+describe('Chip', () => {
   describeScreenshotFuzz(
     (props: ChipProps) => (
       <Chip {...props} value="arctic_monkeys">
@@ -12,8 +12,8 @@ describe("Chip", () => {
     [
       {
         removable: [false, true],
-        $adaptivity: "y",
+        $adaptivity: 'y',
       },
-    ]
+    ],
   );
 });

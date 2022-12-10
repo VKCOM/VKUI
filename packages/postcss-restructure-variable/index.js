@@ -1,4 +1,4 @@
-const postcss = require("postcss");
+const postcss = require('postcss');
 
 function setEquals(a, b) {
   return a.size === b.size && [...a].every((value) => b.has(value));
@@ -130,7 +130,7 @@ class Graph {
  */
 module.exports = (importFrom = []) => {
   return {
-    postcssPlugin: "postcss-restructure-variable",
+    postcssPlugin: 'postcss-restructure-variable',
     Root(root) {
       /**
        * @type {string[]}
@@ -146,14 +146,14 @@ module.exports = (importFrom = []) => {
       const atRuleFind = (node) => {
         node.each((atRuleNode) => {
           switch (atRuleNode.type) {
-            case "rule":
+            case 'rule':
               atRuleNode.each((decl) => {
-                if (decl.type === "decl" && decl.variable) {
+                if (decl.type === 'decl' && decl.variable) {
                   ignoreValue.push(decl.prop);
                 }
               });
               break;
-            case "atrule":
+            case 'atrule':
               atRuleFind(atRuleNode);
               break;
           }
@@ -163,18 +163,17 @@ module.exports = (importFrom = []) => {
       root.each((node) => {
         if (
           !node.source ||
-          (node.source !== undefined &&
-            !importFrom.includes(node.source.input.file))
+          (node.source !== undefined && !importFrom.includes(node.source.input.file))
         ) {
           return;
         }
 
         switch (node.type) {
-          case "rule":
+          case 'rule':
             const beforeLength = node.nodes.length;
 
             node.each((decl) => {
-              if (decl.type === "decl" && decl.variable) {
+              if (decl.type === 'decl' && decl.variable) {
                 if (ignoreValue.includes(decl.prop)) {
                   return;
                 }
@@ -188,7 +187,7 @@ module.exports = (importFrom = []) => {
               node.remove();
             }
             break;
-          case "atrule":
+          case 'atrule':
             atRuleFind(node);
             break;
         }

@@ -2,19 +2,14 @@
 Используется внутри [CustomSelect](#!/CustomSelect), [ChipsSelect](#!/ChipsSelect).
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-const frameStyles = { outline: "1px dashed tomato" };
+const frameStyles = { outline: '1px dashed tomato' };
 
 const Example = () => {
   return (
     <div style={{ margin: 50, width: 320 }}>
-      <CustomSelectOption style={frameStyles}>
-        Дмитрий Безуглый
-      </CustomSelectOption>
+      <CustomSelectOption style={frameStyles}>Дмитрий Безуглый</CustomSelectOption>
       <Header>description</Header>
-      <CustomSelectOption
-        style={frameStyles}
-        description="Россия, Санкт-Петербург"
-      >
+      <CustomSelectOption style={frameStyles} description="Россия, Санкт-Петербург">
         Вадим Дорохов
       </CustomSelectOption>
       <Header>before</Header>

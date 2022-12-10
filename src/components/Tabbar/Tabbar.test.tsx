@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { Tabbar } from "./Tabbar";
+import { baselineComponent } from '../../testing/utils';
+import { Tabbar } from './Tabbar';
 
-describe("Tabbar", () => {
+describe('Tabbar', () => {
   baselineComponent(Tabbar);
 });

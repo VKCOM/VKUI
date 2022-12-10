@@ -7,8 +7,7 @@
 
 .View--ios .Panel__in {
   padding: 0 var(--vkui_internal--safe_area_inset_right)
-    var(--vkui_internal--safe_area_inset_bottom)
-    var(--vkui_internal--safe_area_inset_left);
+    var(--vkui_internal--safe_area_inset_bottom) var(--vkui_internal--safe_area_inset_left);
 }
 
 /**
@@ -43,23 +42,19 @@
  * Panel transition
  */
 .View--ios .View__panel--prev {
-  animation: vkui-animation-ios-prev-forward 0.6s
-    var(--vkui--animation_easing_platform);
+  animation: vkui-animation-ios-prev-forward 0.6s var(--vkui--animation_easing_platform);
 }
 
 .View--ios .View__panel--next {
-  animation: vkui-animation-ios-next-back 0.6s
-    var(--vkui--animation_easing_platform);
+  animation: vkui-animation-ios-next-back 0.6s var(--vkui--animation_easing_platform);
 }
 
 .View--ios .View__panel--prev ~ .View__panel--next {
-  animation: vkui-animation-ios-next-forward 0.6s
-    var(--vkui--animation_easing_platform);
+  animation: vkui-animation-ios-next-forward 0.6s var(--vkui--animation_easing_platform);
 }
 
 .View--ios .View__panel--next ~ .View__panel--prev {
-  animation: vkui-animation-ios-prev-back 0.6s
-    var(--vkui--animation_easing_platform) forwards;
+  animation: vkui-animation-ios-prev-back 0.6s var(--vkui--animation_easing_platform) forwards;
 }
 
 .View--ios .View__panel--prev .Panel__fade,
@@ -75,13 +70,11 @@
 }
 
 .View--ios .View__panel--prev .Panel__fade {
-  animation: vkui-animation-ios-fade-in 0.6s
-    var(--vkui--animation_easing_platform);
+  animation: vkui-animation-ios-fade-in 0.6s var(--vkui--animation_easing_platform);
 }
 
 .View--ios .View__panel--next .Panel__fade {
-  animation: vkui-animation-ios-fade-out 0.6s
-    var(--vkui--animation_easing_platform) forwards;
+  animation: vkui-animation-ios-fade-out 0.6s var(--vkui--animation_easing_platform) forwards;
 }
 
 .View--ios .View__panel--prev ~ .View__panel--next .Panel__fade,

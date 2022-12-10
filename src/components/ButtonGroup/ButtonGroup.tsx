@@ -1,7 +1,7 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import type { HasRootRef, AlignType } from "../../types";
-import styles from "./ButtonGroup.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import type { HasRootRef, AlignType } from '../../types';
+import styles from './ButtonGroup.module.css';
 
 export interface ButtonGroupProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -9,11 +9,11 @@ export interface ButtonGroupProps
   /**
    * Задает расположение элементов внутри группы, вертикальное или горизонтальное.
    */
-  mode?: "vertical" | "horizontal";
+  mode?: 'vertical' | 'horizontal';
   /**
    * Выставляет в зависимости от `mode` отступ по вертикали или горизонтали.
    */
-  gap?: "none" | "space" | "s" | "m";
+  gap?: 'none' | 'space' | 's' | 'm';
   /**
    * Растягивает компонент на всю ширину контейнера.
    *
@@ -30,10 +30,10 @@ export interface ButtonGroupProps
  * @see https://vkcom.github.io/VKUI/#/ButtonGroup
  */
 export const ButtonGroup = ({
-  mode = "horizontal",
-  gap = "m",
+  mode = 'horizontal',
+  gap = 'm',
   stretched = false,
-  align = "left" /* NOTE: Чтобы блоки по-умолчанию не растягивались на всю ширину контейнера */,
+  align = 'left' /* NOTE: Чтобы блоки по-умолчанию не растягивались на всю ширину контейнера */,
   getRootRef,
   className,
   children,
@@ -45,9 +45,9 @@ export const ButtonGroup = ({
         className,
         styles.ButtonGroup,
         styles[`ButtonGroup--mode-${mode}`],
-        gap !== "none" && styles[`ButtonGroup--gap-${gap}`],
-        stretched && styles["ButtonGroup--stretched"],
-        align && styles[`ButtonGroup--align-${align}`]
+        gap !== 'none' && styles[`ButtonGroup--gap-${gap}`],
+        stretched && styles['ButtonGroup--stretched'],
+        align && styles[`ButtonGroup--align-${align}`],
       )}
       role="group"
       ref={getRootRef}

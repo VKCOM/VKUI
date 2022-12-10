@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment } from 'react';
 import {
   Header,
   IconButton,
@@ -8,44 +8,44 @@ import {
   Separator,
   Footer,
   useAdaptivityWithJSMediaQueries,
-} from "@vkui";
+} from '@vkui';
 import {
   Icon28ChevronDownOutline,
   Icon28ChevronUpOutline,
   Icon28WarningTriangleOutline,
-} from "@vkontakte/icons";
-import { deprecated } from "../../deprecated";
-import getInfoFromHash from "react-styleguidist/lib/client/utils/getInfoFromHash";
-import { unstable } from "../../unstable";
-import "./TableOfContents.css";
+} from '@vkontakte/icons';
+import { deprecated } from '../../deprecated';
+import getInfoFromHash from 'react-styleguidist/lib/client/utils/getInfoFromHash';
+import { unstable } from '../../unstable';
+import './TableOfContents.css';
 
-function capitalize(string = "") {
+function capitalize(string = '') {
   return `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
 }
 
 const redirects = {
-  "section-начало-работы": "About",
-  "Начало работы": "About",
-  "section-установка": "QuickStart",
-  Установка: "QuickStart",
-  "section-подготовка-html": "QuickStart",
-  "Подготовка html": "QuickStart",
-  "section-hello-world": "QuickStart",
-  "Hello World": "QuickStart",
-  "section-концепция": "Concept",
-  Концепция: "Concept",
-  "section-структура-экранов": "Structure",
-  "Структура экранов": "Structure",
-  "section-режимы-подключения": "Modes",
-  "Режимы подключения": "Modes",
-  "section-helpers": "Helpers",
-  "section-server-side-rendering": "SSR",
-  "Server Side Rendering": "SSR",
-  "section-icons": "Icons",
-  "section-colors": "PlatformsAndThemes",
-  "section-themes": "PlatformsAndThemes",
-  "section-utils": "Utils",
-  "section-design": "Design",
+  'section-начало-работы': 'About',
+  'Начало работы': 'About',
+  'section-установка': 'QuickStart',
+  'Установка': 'QuickStart',
+  'section-подготовка-html': 'QuickStart',
+  'Подготовка html': 'QuickStart',
+  'section-hello-world': 'QuickStart',
+  'Hello World': 'QuickStart',
+  'section-концепция': 'Concept',
+  'Концепция': 'Concept',
+  'section-структура-экранов': 'Structure',
+  'Структура экранов': 'Structure',
+  'section-режимы-подключения': 'Modes',
+  'Режимы подключения': 'Modes',
+  'section-helpers': 'Helpers',
+  'section-server-side-rendering': 'SSR',
+  'Server Side Rendering': 'SSR',
+  'section-icons': 'Icons',
+  'section-colors': 'PlatformsAndThemes',
+  'section-themes': 'PlatformsAndThemes',
+  'section-utils': 'Utils',
+  'section-design': 'Design',
 };
 
 const normalizer = (sections) => {
@@ -80,7 +80,7 @@ const normalizer = (sections) => {
         search,
         sections: children,
       };
-    }
+    },
   );
 };
 
@@ -98,7 +98,7 @@ class TableOfContents extends React.PureComponent {
     }
 
     this.state = {
-      search: "",
+      search: '',
       expand: this.search(this.sections, this.currentSection?.name, {
         exactMatch: true,
       }),
@@ -108,11 +108,11 @@ class TableOfContents extends React.PureComponent {
   }
 
   componentDidMount() {
-    window.addEventListener("hashchange", this.hashChangeListener);
+    window.addEventListener('hashchange', this.hashChangeListener);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("hashchange", this.hashChangeListener);
+    window.removeEventListener('hashchange', this.hashChangeListener);
   }
 
   hashChangeListener = () => {
@@ -130,7 +130,7 @@ class TableOfContents extends React.PureComponent {
     let { targetName } = getInfoFromHash(window.location.hash);
 
     if (!targetName) {
-      targetName = window.location.hash.replace("#", "");
+      targetName = window.location.hash.replace('#', '');
     }
 
     targetName = decodeURIComponent(targetName);
@@ -163,7 +163,7 @@ class TableOfContents extends React.PureComponent {
     });
   }
 
-  pickSection = (sectionName = "", sections = this.sections) => {
+  pickSection = (sectionName = '', sections = this.sections) => {
     for (let i = 0; i < sections.length; i++) {
       const section = sections[i];
       if (section.name === sectionName) {
@@ -192,7 +192,7 @@ class TableOfContents extends React.PureComponent {
     this.setState({ search: e.currentTarget.value });
   };
 
-  search(sections, query = "", { exactMatch = false } = {}) {
+  search(sections, query = '', { exactMatch = false } = {}) {
     let result = {};
     sections.forEach((section) => {
       let found = exactMatch
@@ -222,9 +222,7 @@ class TableOfContents extends React.PureComponent {
       }
 
       const expanded =
-        section.expand ||
-        this.state.expand[section.name] ||
-        this.searchResults[section.name];
+        section.expand || this.state.expand[section.name] || this.searchResults[section.name];
 
       return (
         <Fragment key={section.name}>
@@ -238,10 +236,7 @@ class TableOfContents extends React.PureComponent {
               href={section.href}
               after={
                 (section.sections.length > 0 && (
-                  <IconButton
-                    onClick={this.onExpandIconClick}
-                    data-section-name={section.name}
-                  >
+                  <IconButton onClick={this.onExpandIconClick} data-section-name={section.name}>
                     {expanded ? (
                       <Icon28ChevronUpOutline fill="var(--vkui--color_text_tertiary)" />
                     ) : (
@@ -249,24 +244,21 @@ class TableOfContents extends React.PureComponent {
                     )}
                   </IconButton>
                 )) ||
-                (unstable.includes(section.name) &&
-                  !deprecated.includes(section.name) && (
-                    <Icon28WarningTriangleOutline
-                      fill="var(--vkui--color_accent_orange)"
-                      title="Компонент является нестабильным"
-                    />
-                  ))
+                (unstable.includes(section.name) && !deprecated.includes(section.name) && (
+                  <Icon28WarningTriangleOutline
+                    fill="var(--vkui--color_accent_orange)"
+                    title="Компонент является нестабильным"
+                  />
+                ))
               }
               onClick={!section.href ? this.onExpandCellClick : undefined}
               data-section-name={section.name}
-              className={classNames("TableOfContents__section", {
-                "TableOfContents__section--selected":
+              className={classNames('TableOfContents__section', {
+                'TableOfContents__section--selected':
                   section.name === this.state.currentSectionName,
               })}
               indicator={
-                deprecated.includes(section.name) && (
-                  <Caption level="2">deprecated</Caption>
-                )
+                deprecated.includes(section.name) && <Caption level="2">deprecated</Caption>
               }
             >
               {section.title || section.name}
@@ -281,14 +273,12 @@ class TableOfContents extends React.PureComponent {
           )}
           {section.sections.length > 0 && (
             <div
-              className={classNames("TableOfContents__list", {
-                "TableOfContents__list--expanded": expanded,
+              className={classNames('TableOfContents__list', {
+                'TableOfContents__list--expanded': expanded,
               })}
             >
               {this.renderSections(section.sections)}
-              <Footer className="TableOfContents__nothingFound">
-                Ничего не найдено
-              </Footer>
+              <Footer className="TableOfContents__nothingFound">Ничего не найдено</Footer>
             </div>
           )}
         </Fragment>
@@ -301,10 +291,8 @@ class TableOfContents extends React.PureComponent {
     return (
       <div
         className={classNames(
-          "TableOfContents",
-          sizeX === "none"
-            ? "TableOfContents--sizeX-none"
-            : `TableOfContents--sizeX-${sizeX}`
+          'TableOfContents',
+          sizeX === 'none' ? 'TableOfContents--sizeX-none' : `TableOfContents--sizeX-${sizeX}`,
         )}
       >
         {this.renderSections(this.sections)}

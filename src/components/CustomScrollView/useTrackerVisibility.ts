@@ -1,5 +1,5 @@
-import * as React from "react";
-import { useTimeout } from "../../hooks/useTimeout";
+import * as React from 'react';
+import { useTimeout } from '../../hooks/useTimeout';
 
 /**
  * Хук, который позволяет управлять видимостью ползунка скроллбара.
@@ -9,16 +9,16 @@ import { useTimeout } from "../../hooks/useTimeout";
  */
 export const useTrackerVisibility = (
   autoHideScrollbar = false,
-  autoHideScrollbarDelay = 500
+  autoHideScrollbarDelay = 500,
 ): TrackerVisibilityProps => {
-  const [trackerVisible, setTrackerVisible] = React.useState(
-    !autoHideScrollbar
-  );
+  const [trackerVisible, setTrackerVisible] = React.useState(!autoHideScrollbar);
   const isMouseOver = React.useRef(false);
   const isTrackerDragging = React.useRef(false);
 
-  const { set: setVisibilityTimeout, clear: clearVisibilityTimeout } =
-    useTimeout(() => setTrackerVisible(false), autoHideScrollbarDelay);
+  const { set: setVisibilityTimeout, clear: clearVisibilityTimeout } = useTimeout(
+    () => setTrackerVisible(false),
+    autoHideScrollbarDelay,
+  );
 
   const onTrackerDragStart = React.useCallback(() => {
     clearVisibilityTimeout();

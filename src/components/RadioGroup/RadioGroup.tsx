@@ -1,25 +1,25 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import styles from "./RadioGroup.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import styles from './RadioGroup.module.css';
 
 export interface RadioGroupProps extends React.HTMLAttributes<HTMLDivElement> {
-  mode?: "vertical" | "horizontal";
+  mode?: 'vertical' | 'horizontal';
 }
 
 /**
  * @see https://vkcom.github.io/VKUI/#/RadioGroup
  */
 export const RadioGroup = ({
-  mode = "vertical",
+  mode = 'vertical',
   children,
   className,
   ...restProps
 }: RadioGroupProps) => (
   <div
     className={classNamesString(
-      styles["RadioGroup"],
+      styles['RadioGroup'],
       styles[`RadioGroup--mode-${mode}`],
-      className
+      className,
     )}
     {...restProps}
   >

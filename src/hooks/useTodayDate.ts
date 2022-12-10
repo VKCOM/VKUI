@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { getMillisecondsToTomorrow } from "../lib/date";
+import { getMillisecondsToTomorrow } from '../lib/date';
 
 /**
  * Опционально обновляемая дата сегодняшнего дня

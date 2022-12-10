@@ -1,12 +1,12 @@
-import * as React from "react";
-import { useAdaptivityHasPointer } from "../../hooks/useAdaptivityHasPointer";
-import { HorizontalScrollArrow } from "./HorizontalScrollArrow";
-import { easeInOutSine } from "../../lib/fx";
-import { useEventListener } from "../../hooks/useEventListener";
-import { useExternRef } from "../../hooks/useExternRef";
-import { HasRef } from "../../types";
-import { classNamesString } from "../../lib/classNames";
-import styles from "./HorizontalScroll.module.css";
+import * as React from 'react';
+import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
+import { HorizontalScrollArrow } from './HorizontalScrollArrow';
+import { easeInOutSine } from '../../lib/fx';
+import { useEventListener } from '../../hooks/useEventListener';
+import { useExternRef } from '../../hooks/useExternRef';
+import { HasRef } from '../../types';
+import { classNamesString } from '../../lib/classNames';
+import styles from './HorizontalScroll.module.css';
 
 interface ScrollContext {
   scrollElement: HTMLElement | null;
@@ -36,8 +36,8 @@ export interface HorizontalScrollProps
    * Функция для расчета величины прокрутки при клике на правую стрелку.
    */
   getScrollToRight?: ScrollPositionHandler;
-  arrowSize?: "m" | "l";
-  showArrows?: boolean | "always";
+  arrowSize?: 'm' | 'l';
+  showArrows?: boolean | 'always';
   scrollAnimationDuration?: number;
 }
 
@@ -106,10 +106,7 @@ function doScroll({
     const currentLeft = startLeft + (endLeft - startLeft) * value;
     scrollElement.scrollLeft = Math.ceil(currentLeft);
 
-    if (
-      roundUpElementScrollLeft(scrollElement) !== Math.max(0, endLeft) &&
-      elapsed !== 1
-    ) {
+    if (roundUpElementScrollLeft(scrollElement) !== Math.max(0, endLeft) && elapsed !== 1) {
       requestAnimationFrame(scroll);
       return;
     }
@@ -130,7 +127,7 @@ export const HorizontalScroll = ({
   getScrollToLeft,
   getScrollToRight,
   showArrows = true,
-  arrowSize = "l",
+  arrowSize = 'l',
   scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
   getRef,
   className,
@@ -159,16 +156,15 @@ export const HorizontalScroll = ({
           onScrollToRightBorder: () => setCanScrollRight(false),
           onScrollEnd: () => (isCustomScrollingRef.current = false),
           onScrollStart: () => (isCustomScrollingRef.current = true),
-          initialScrollWidth:
-            scrollElement?.firstElementChild?.scrollWidth || 0,
+          initialScrollWidth: scrollElement?.firstElementChild?.scrollWidth || 0,
           scrollAnimationDuration,
-        })
+        }),
       );
       if (animationQueue.current.length === 1) {
         animationQueue.current[0]();
       }
     },
-    [scrollAnimationDuration, scrollerRef]
+    [scrollAnimationDuration, scrollerRef],
   );
 
   const scrollToLeft = React.useCallback(() => {
@@ -184,23 +180,18 @@ export const HorizontalScroll = ({
   }, [getScrollToRight, scrollTo, scrollerRef]);
 
   const onscroll = React.useCallback(() => {
-    if (
-      showArrows &&
-      hasPointer &&
-      scrollerRef.current &&
-      !isCustomScrollingRef.current
-    ) {
+    if (showArrows && hasPointer && scrollerRef.current && !isCustomScrollingRef.current) {
       const scrollElement = scrollerRef.current;
 
       setCanScrollLeft(scrollElement.scrollLeft > 0);
       setCanScrollRight(
         roundUpElementScrollLeft(scrollElement) + scrollElement.offsetWidth <
-          scrollElement.scrollWidth
+          scrollElement.scrollWidth,
       );
     }
   }, [hasPointer, scrollerRef, showArrows]);
 
-  const scrollEvent = useEventListener("scroll", onscroll);
+  const scrollEvent = useEventListener('scroll', onscroll);
   React.useEffect(() => {
     if (scrollerRef.current) {
       scrollEvent.add(scrollerRef.current);
@@ -212,33 +203,29 @@ export const HorizontalScroll = ({
     <div
       {...restProps}
       className={classNamesString(
-        styles["HorizontalScroll"],
-        showArrows === "always" && styles["HorizontalScroll--withConstArrows"],
-        className
+        styles['HorizontalScroll'],
+        showArrows === 'always' && styles['HorizontalScroll--withConstArrows'],
+        className,
       )}
     >
-      {showArrows &&
-        (hasPointer || hasPointer === undefined) &&
-        canScrollLeft && (
-          <HorizontalScrollArrow
-            size={arrowSize}
-            direction="left"
-            className={styles["HorizontalScroll__arrowLeft"]}
-            onClick={scrollToLeft}
-          />
-        )}
-      {showArrows &&
-        (hasPointer || hasPointer === undefined) &&
-        canScrollRight && (
-          <HorizontalScrollArrow
-            size={arrowSize}
-            direction="right"
-            className={styles["HorizontalScroll__arrowRight"]}
-            onClick={scrollToRight}
-          />
-        )}
-      <div className={styles["HorizontalScroll__in"]} ref={scrollerRef}>
-        <div className={styles["HorizontalScroll__in-wrapper"]}>{children}</div>
+      {showArrows && (hasPointer || hasPointer === undefined) && canScrollLeft && (
+        <HorizontalScrollArrow
+          size={arrowSize}
+          direction="left"
+          className={styles['HorizontalScroll__arrowLeft']}
+          onClick={scrollToLeft}
+        />
+      )}
+      {showArrows && (hasPointer || hasPointer === undefined) && canScrollRight && (
+        <HorizontalScrollArrow
+          size={arrowSize}
+          direction="right"
+          className={styles['HorizontalScroll__arrowRight']}
+          onClick={scrollToRight}
+        />
+      )}
+      <div className={styles['HorizontalScroll__in']} ref={scrollerRef}>
+        <div className={styles['HorizontalScroll__in-wrapper']}>{children}</div>
       </div>
     </div>
   );

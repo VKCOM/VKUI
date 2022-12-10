@@ -34,17 +34,17 @@
 Функция `describeScreenshotFuzz` из [`/testing/utils`](./src/testing/e2e/utils.tsx) помогает быстро заскриншотить все состояния компонента в разных темах и на разных платформах:
 
 ```ts
-describe("Button", () => {
+describe('Button', () => {
   describeScreenshotFuzz(
     // Можем передать компонент или вот так добавить дефолтные пропы для скриншотов
     (props: ButtonProps) => <Button {...props}>Кнопка</Button>,
     // Описание комбинаций пропов — по элементу массива на независимый набор
     [
       // mode и disabled влияют на цвет, но не на размер
-      { mode: ["primary", "secondary"], disabled: [undefined, true] },
+      { mode: ['primary', 'secondary'], disabled: [undefined, true] },
       // size влияет на размер, но не на цвет
-      { size: ["s", "m", "l"] },
-    ]
+      { size: ['s', 'm', 'l'] },
+    ],
   );
   // всего 2 * 2 + 3 = 7 состояний:
   // mode="primary"

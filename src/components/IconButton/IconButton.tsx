@@ -1,11 +1,11 @@
-import * as React from "react";
-import { TappableProps, Tappable } from "../Tappable/Tappable";
-import { classNamesString } from "../../lib/classNames";
-import { usePlatform } from "../../hooks/usePlatform";
-import { Platform } from "../../lib/platform";
-import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import styles from "./IconButton.module.css";
+import * as React from 'react';
+import { TappableProps, Tappable } from '../Tappable/Tappable';
+import { classNamesString } from '../../lib/classNames';
+import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import styles from './IconButton.module.css';
 
 export interface IconButtonProps extends TappableProps {
   children?: React.ReactNode;
@@ -16,7 +16,7 @@ export interface IconButtonProps extends TappableProps {
  */
 export const IconButton = ({
   children,
-  Component = "button",
+  Component = 'button',
   className,
   ...restProps
 }: IconButtonProps) => {
@@ -28,12 +28,12 @@ export const IconButton = ({
       activeEffectDelay={200}
       activeMode="background"
       {...restProps}
-      Component={restProps.href ? "a" : Component}
+      Component={restProps.href ? 'a' : Component}
       className={classNamesString(
-        styles["IconButton"],
-        getSizeYClassName(styles["IconButton"], sizeY),
-        platform === Platform.IOS && styles["IconButton--ios"],
-        className
+        styles['IconButton'],
+        getSizeYClassName(styles['IconButton'], sizeY),
+        platform === Platform.IOS && styles['IconButton--ios'],
+        className,
       )}
     >
       {children}

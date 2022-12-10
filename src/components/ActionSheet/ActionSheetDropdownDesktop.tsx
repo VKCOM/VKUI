@@ -1,24 +1,22 @@
-import * as React from "react";
-import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import { classNamesString } from "../../lib/classNames";
-import { useDOM } from "../../lib/dom";
-import { usePlatform } from "../../hooks/usePlatform";
-import { useEffectDev } from "../../hooks/useEffectDev";
-import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
-import { isRefObject } from "../../lib/isRefObject";
-import { warnOnce } from "../../lib/warnOnce";
-import { Platform } from "../../lib/platform";
-import { useEventListener } from "../../hooks/useEventListener";
-import { SharedDropdownProps } from "./types";
-import { FocusTrap } from "../FocusTrap/FocusTrap";
-import { Popper } from "../Popper/Popper";
-import styles from "./ActionSheet.module.css";
+import * as React from 'react';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { classNamesString } from '../../lib/classNames';
+import { useDOM } from '../../lib/dom';
+import { usePlatform } from '../../hooks/usePlatform';
+import { useEffectDev } from '../../hooks/useEffectDev';
+import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { isRefObject } from '../../lib/isRefObject';
+import { warnOnce } from '../../lib/warnOnce';
+import { Platform } from '../../lib/platform';
+import { useEventListener } from '../../hooks/useEventListener';
+import { SharedDropdownProps } from './types';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
+import { Popper } from '../Popper/Popper';
+import styles from './ActionSheet.module.css';
 
-const warn = warnOnce("ActionSheet");
-function getEl(
-  ref: SharedDropdownProps["toggleRef"]
-): Element | null | undefined {
-  return ref && "current" in ref ? ref.current : ref;
+const warn = warnOnce('ActionSheet');
+function getEl(ref: SharedDropdownProps['toggleRef']): Element | null | undefined {
+  return ref && 'current' in ref ? ref.current : ref;
 }
 
 export const ActionSheetDropdownDesktop = ({
@@ -40,19 +38,18 @@ export const ActionSheetDropdownDesktop = ({
   useEffectDev(() => {
     const toggleEl = getEl(toggleRef);
     if (!toggleEl) {
-      warn(`Свойство "toggleRef" не передано`, "error");
+      warn(`Свойство "toggleRef" не передано`, 'error');
     }
   }, [toggleRef]);
 
   const isPopupDirectionTop = React.useMemo(
     () =>
-      popupDirection === "top" ||
-      (typeof popupDirection === "function" &&
-        popupDirection(elementRef) === "top"),
-    [popupDirection, elementRef]
+      popupDirection === 'top' ||
+      (typeof popupDirection === 'function' && popupDirection(elementRef) === 'top'),
+    [popupDirection, elementRef],
   );
 
-  const bodyClickListener = useEventListener("click", (e: MouseEvent) => {
+  const bodyClickListener = useEventListener('click', (e: MouseEvent) => {
     const dropdownElement = elementRef?.current;
     if (dropdownElement && !dropdownElement.contains(e.target as Node)) {
       onClose?.();
@@ -65,13 +62,10 @@ export const ActionSheetDropdownDesktop = ({
     });
   }, [bodyClickListener, document]);
 
-  const onClick = React.useCallback(
-    (e: React.MouseEvent<HTMLElement>) => e.stopPropagation(),
-    []
-  );
+  const onClick = React.useCallback((e: React.MouseEvent<HTMLElement>) => e.stopPropagation(), []);
 
   const targetRef = React.useMemo(() => {
-    if (isRefObject<SharedDropdownProps["toggleRef"], HTMLElement>(toggleRef)) {
+    if (isRefObject<SharedDropdownProps['toggleRef'], HTMLElement>(toggleRef)) {
       return toggleRef;
     }
 
@@ -82,13 +76,13 @@ export const ActionSheetDropdownDesktop = ({
     <Popper
       targetRef={targetRef}
       offsetDistance={popupOffsetDistance}
-      placement={isPopupDirectionTop ? "top-end" : "bottom-end"}
+      placement={isPopupDirectionTop ? 'top-end' : 'bottom-end'}
       className={classNamesString(
-        styles["ActionSheet"],
-        platform === Platform.IOS && styles["ActionSheet--ios"],
-        styles["ActionSheet--desktop"],
-        getSizeYClassName(styles["ActionSheet"], sizeY),
-        className
+        styles['ActionSheet'],
+        platform === Platform.IOS && styles['ActionSheet--ios'],
+        styles['ActionSheet--desktop'],
+        getSizeYClassName(styles['ActionSheet'], sizeY),
+        className,
       )}
       style={style}
       getRef={elementRef}

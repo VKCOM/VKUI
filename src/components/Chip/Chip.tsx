@@ -1,12 +1,12 @@
-import * as React from "react";
-import { Icon16Cancel } from "@vkontakte/icons";
-import { getTitleFromChildren, hasReactNode, noop } from "../../lib/utils";
-import { classNamesString } from "../../lib/classNames";
-import { Footnote } from "../Typography/Footnote/Footnote";
-import { Tappable } from "../Tappable/Tappable";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import styles from "./Chip.module.css";
+import * as React from 'react';
+import { Icon16Cancel } from '@vkontakte/icons';
+import { getTitleFromChildren, hasReactNode, noop } from '../../lib/utils';
+import { classNamesString } from '../../lib/classNames';
+import { Footnote } from '../Typography/Footnote/Footnote';
+import { Tappable } from '../Tappable/Tappable';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import styles from './Chip.module.css';
 
 export type ChipValue = string | number;
 
@@ -36,11 +36,11 @@ export interface RenderChip<T extends ChipOption> extends ChipProps {
  * @see https://vkcom.github.io/VKUI/#/Chip
  */
 export const Chip = ({
-  value = "",
+  value = '',
   option,
   removable = true,
   onRemove = noop,
-  removeAriaLabel = "Удалить",
+  removeAriaLabel = 'Удалить',
   before = null,
   after,
   children,
@@ -52,41 +52,33 @@ export const Chip = ({
     (event: React.MouseEvent) => {
       onRemove(event, value);
     },
-    [onRemove, value]
+    [onRemove, value],
   );
   const title = getTitleFromChildren(children);
 
   return (
     <div
       className={classNamesString(
-        styles["Chip"],
-        getSizeYClassName(styles["Chip"], sizeY),
-        removable && styles["Chip--removable"],
-        className
+        styles['Chip'],
+        getSizeYClassName(styles['Chip'], sizeY),
+        removable && styles['Chip--removable'],
+        className,
       )}
       role="option"
       aria-label={title}
       {...restProps}
     >
-      <div className={styles["Chip__in"]} role="presentation">
-        {hasReactNode(before) && (
-          <div className={styles["Chip__before"]}>{before}</div>
-        )}
-        <Footnote
-          className={styles["Chip__content"]}
-          title={title}
-          aria-hidden="true"
-        >
+      <div className={styles['Chip__in']} role="presentation">
+        {hasReactNode(before) && <div className={styles['Chip__before']}>{before}</div>}
+        <Footnote className={styles['Chip__content']} title={title} aria-hidden="true">
           {children}
         </Footnote>
-        {hasReactNode(after) && (
-          <div className={styles["Chip__after"]}>{after}</div>
-        )}
+        {hasReactNode(after) && <div className={styles['Chip__after']}>{after}</div>}
 
         {removable && (
           <Tappable
             Component="button"
-            className={styles["Chip__remove"]}
+            className={styles['Chip__remove']}
             onClick={onRemoveWrapper}
             hasHover={false}
             hasActive={false}

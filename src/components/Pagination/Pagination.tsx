@@ -1,28 +1,25 @@
-import * as React from "react";
-import {
-  Icon24ChevronCompactLeft,
-  Icon24ChevronCompactRight,
-} from "@vkontakte/icons";
+import * as React from 'react';
+import { Icon24ChevronCompactLeft, Icon24ChevronCompactRight } from '@vkontakte/icons';
 
-import type { HasRootRef } from "../../types";
+import type { HasRootRef } from '../../types';
 
-import { classNamesString } from "../../lib/classNames";
+import { classNamesString } from '../../lib/classNames';
 
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { PaginationPageType, usePagination } from "../../hooks/usePagination";
-import { getSizeYClassName } from "../../helpers/getSizeYClassName";
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { PaginationPageType, usePagination } from '../../hooks/usePagination';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 
-import { Tappable } from "../Tappable/Tappable";
-import { Button } from "../Button/Button";
+import { Tappable } from '../Tappable/Tappable';
+import { Button } from '../Button/Button';
 
-import styles from "./Pagination.module.css";
+import styles from './Pagination.module.css';
 
 function getPageAriaLabelDefault(page: number, isCurrent: boolean): string {
   return isCurrent ? `${page} страница` : `Перейти на ${page} страницу`;
 }
 
 export interface PaginationProps
-  extends Omit<React.HTMLAttributes<HTMLElement>, "onChange">,
+  extends Omit<React.HTMLAttributes<HTMLElement>, 'onChange'>,
     HasRootRef<HTMLElement> {
   /**
    * Текущая страница.
@@ -72,8 +69,8 @@ export const Pagination = ({
   totalPages = 1,
   disabled,
   getPageAriaLabel = getPageAriaLabelDefault,
-  prevButtonAriaLabel = "Перейти на предыдущую страницу",
-  nextButtonAriaLabel = "Перейти на следующую страницу",
+  prevButtonAriaLabel = 'Перейти на предыдущую страницу',
+  nextButtonAriaLabel = 'Перейти на следующую страницу',
   getRootRef,
   onChange,
   className,
@@ -98,10 +95,10 @@ export const Pagination = ({
 
   const handleClick = React.useCallback(
     (event: React.MouseEvent<HTMLElement>) => {
-      const page: string = event.currentTarget.dataset.page || "1";
+      const page: string = event.currentTarget.dataset.page || '1';
       onChange?.(Number(page));
     },
-    [onChange]
+    [onChange],
   );
 
   const handleNextClick = React.useCallback(() => {
@@ -113,16 +110,16 @@ export const Pagination = ({
   const renderPages = React.useCallback(
     (page: PaginationPageType) => {
       switch (page) {
-        case "start-ellipsis":
-        case "end-ellipsis":
+        case 'start-ellipsis':
+        case 'end-ellipsis':
           return (
             <li key={page}>
               <div
                 className={classNamesString(
-                  styles["Pagination__page"],
-                  styles["Pagination__page--type-ellipsis"],
-                  getSizeYClassName(styles["Pagination__page"], sizeY),
-                  disabled && styles["Pagination__page--disabled"]
+                  styles['Pagination__page'],
+                  styles['Pagination__page--type-ellipsis'],
+                  getSizeYClassName(styles['Pagination__page'], sizeY),
+                  disabled && styles['Pagination__page--disabled'],
                 )}
               >
                 ...
@@ -135,13 +132,13 @@ export const Pagination = ({
             <li key={page}>
               <Tappable
                 className={classNamesString(
-                  styles["Pagination__page"],
-                  getSizeYClassName(styles["Pagination__page"], sizeY),
-                  isCurrent && styles["Pagination__page--current"],
-                  disabled && styles["Pagination__page--disabled"]
+                  styles['Pagination__page'],
+                  getSizeYClassName(styles['Pagination__page'], sizeY),
+                  isCurrent && styles['Pagination__page--current'],
+                  disabled && styles['Pagination__page--disabled'],
                 )}
-                activeMode={styles["Pagination__page--state-active"]}
-                hoverMode={styles["Pagination__page--state-hover"]}
+                activeMode={styles['Pagination__page--state-active']}
+                hoverMode={styles['Pagination__page--state-hover']}
                 hasActive={!isCurrent}
                 hasHover={!isCurrent}
                 focusVisibleMode="outside"
@@ -158,19 +155,19 @@ export const Pagination = ({
         }
       }
     },
-    [sizeY, currentPage, disabled, getPageAriaLabel, handleClick]
+    [sizeY, currentPage, disabled, getPageAriaLabel, handleClick],
   );
 
   return (
     <nav
-      className={classNamesString(styles["Pagination"], className)}
+      className={classNamesString(styles['Pagination'], className)}
       role="navigation"
       aria-label="Навигация по страницам"
       ref={getRootRef}
       {...resetProps}
     >
-      <ul className={styles["Pagination__list"]}>
-        <li className={styles["Pagination__prevButtonContainer"]}>
+      <ul className={styles['Pagination__list']}>
+        <li className={styles['Pagination__prevButtonContainer']}>
           <Button
             size="l"
             before={<Icon24ChevronCompactLeft width={24} />}
@@ -183,7 +180,7 @@ export const Pagination = ({
           />
         </li>
         {pages.map(renderPages)}
-        <li className={styles["Pagination__nextButtonContainer"]}>
+        <li className={styles['Pagination__nextButtonContainer']}>
           <Button
             size="l"
             after={<Icon24ChevronCompactRight width={24} />}

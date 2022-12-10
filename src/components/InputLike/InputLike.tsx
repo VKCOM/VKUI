@@ -1,9 +1,9 @@
-import * as React from "react";
-import { callMultiple } from "../../lib/callMultiple";
-import { stopPropagation } from "../../lib/utils";
-import { classNamesString } from "../../lib/classNames";
-import { HasRootRef } from "../../types";
-import styles from "./InputLike.module.css";
+import * as React from 'react';
+import { callMultiple } from '../../lib/callMultiple';
+import { stopPropagation } from '../../lib/utils';
+import { classNamesString } from '../../lib/classNames';
+import { HasRootRef } from '../../types';
+import styles from './InputLike.module.css';
 
 export interface InputLikeProps
   extends React.HTMLAttributes<HTMLSpanElement>,
@@ -20,9 +20,9 @@ function getMaskElements(length: number) {
   const result = [];
   for (let index = 0; index < length; index += 1) {
     result.push(
-      <span key={index} className={styles["InputLike__mask"]}>
+      <span key={index} className={styles['InputLike__mask']}>
         {MASK_SYMBOL}
-      </span>
+      </span>,
     );
   }
   return result;
@@ -44,15 +44,15 @@ export const InputLike = ({
       stopPropagation(event);
       onElementSelect?.(index);
     },
-    [index, onElementSelect]
+    [index, onElementSelect],
   );
 
   return (
     <span
       className={classNamesString(
-        styles["InputLike"],
+        styles['InputLike'],
         value?.length === length && styles[`InputLike--full`],
-        className
+        className,
       )}
       tabIndex={0}
       ref={getRootRef}
@@ -62,7 +62,7 @@ export const InputLike = ({
     >
       {value?.slice(0, length - 1)}
       {value?.slice(length - 1) && (
-        <span key={index} className={styles["InputLike__last_character"]}>
+        <span key={index} className={styles['InputLike__last_character']}>
           {value.slice(length - 1)}
         </span>
       )}
@@ -71,4 +71,4 @@ export const InputLike = ({
   );
 };
 
-InputLike.displayName = "InputLike";
+InputLike.displayName = 'InputLike';

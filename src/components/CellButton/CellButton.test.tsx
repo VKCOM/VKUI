@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { CellButton } from "./CellButton";
+import { baselineComponent } from '../../testing/utils';
+import { CellButton } from './CellButton';
 
-describe("CellButton", () => {
+describe('CellButton', () => {
   baselineComponent(CellButton);
 });

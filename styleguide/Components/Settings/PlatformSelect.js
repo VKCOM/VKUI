@@ -1,6 +1,6 @@
-import React from "react";
-import { Platform, Link } from "@vkui";
-import { Setting } from "../Setting/Setting";
+import React from 'react';
+import { Platform, Link } from '@vkui';
+import { Setting } from '../Setting/Setting';
 
 export const PlatformSelect = ({ onChange, value }) => (
   <Setting

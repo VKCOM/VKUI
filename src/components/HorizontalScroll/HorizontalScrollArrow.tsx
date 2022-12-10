@@ -1,23 +1,23 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   Icon24Chevron,
   Icon24ChevronCompactLeft,
   Icon16Chevron,
   Icon16ChevronLeft,
-} from "@vkontakte/icons";
-import { classNamesString } from "../../lib/classNames";
-import { Tappable } from "../Tappable/Tappable";
-import styles from "./HorizontalScrollArrow.module.css";
+} from '@vkontakte/icons';
+import { classNamesString } from '../../lib/classNames';
+import { Tappable } from '../Tappable/Tappable';
+import styles from './HorizontalScrollArrow.module.css';
 
 export interface HorizontalScrollArrowProps {
-  direction: "left" | "right";
-  size?: "m" | "l";
+  direction: 'left' | 'right';
+  size?: 'm' | 'l';
   onClick(event: React.MouseEvent): void;
   className?: string;
 }
 
 export const HorizontalScrollArrow = ({
-  size = "l",
+  size = 'l',
   direction,
   onClick,
   className,
@@ -25,10 +25,10 @@ export const HorizontalScrollArrow = ({
 }: HorizontalScrollArrowProps) => {
   let ArrowIcon: React.ComponentType<unknown>;
 
-  if (size === "m") {
-    ArrowIcon = direction === "left" ? Icon16ChevronLeft : Icon16Chevron;
+  if (size === 'm') {
+    ArrowIcon = direction === 'left' ? Icon16ChevronLeft : Icon16Chevron;
   } else {
-    ArrowIcon = direction === "left" ? Icon24ChevronCompactLeft : Icon24Chevron;
+    ArrowIcon = direction === 'left' ? Icon24ChevronCompactLeft : Icon24Chevron;
   }
 
   return (
@@ -38,14 +38,14 @@ export const HorizontalScrollArrow = ({
       hasHover={false}
       hasActive={false}
       className={classNamesString(
-        styles["HorizontalScrollArrow"],
+        styles['HorizontalScrollArrow'],
         styles[`HorizontalScrollArrow--size-${size}`],
         styles[`HorizontalScrollArrow--direction-${direction}`],
-        className
+        className,
       )}
       onClick={onClick}
     >
-      <span className={styles["HorizontalScrollArrow__icon"]}>
+      <span className={styles['HorizontalScrollArrow__icon']}>
         <ArrowIcon />
       </span>
     </Tappable>

@@ -1,3 +1,3 @@
-import HeadingRenderer from "./HeadingRenderer";
+import HeadingRenderer from './HeadingRenderer';
 
 export default HeadingRenderer;

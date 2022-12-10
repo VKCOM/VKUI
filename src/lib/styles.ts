@@ -3,7 +3,7 @@
  */
 export function setTransformStyle(
   element: HTMLElement | undefined | null,
-  transform: string
+  transform: string,
 ): void {
   if (element) {
     element.style.transform = transform;

@@ -1,5 +1,5 @@
 if (!window.Proxy) {
-  throw new Error("The environment needs to support window.Proxy!");
+  throw new Error('The environment needs to support window.Proxy!');
 }
 
 function makeAny(): any {
@@ -11,22 +11,20 @@ function makeAny(): any {
 }
 
 window.jest = makeAny();
-(window as any)["page"] = makeAny();
-(window as any)["expect"] = makeAny();
+(window as any)['page'] = makeAny();
+(window as any)['expect'] = makeAny();
 
 const notImplemented = (name: string) => () => {
-  throw new Error(
-    `${name} is not supported in react / playwright browser runtime`
-  );
+  throw new Error(`${name} is not supported in react / playwright browser runtime`);
 };
 const noop = () => {
   /* do nothing */
 };
 
-window.beforeAll = notImplemented("beforeAll");
-window.afterAll = notImplemented("afterAll");
-window.beforeEach = notImplemented("beforeEach");
-window.afterEach = notImplemented("afterEach");
+window.beforeAll = notImplemented('beforeAll');
+window.afterAll = notImplemented('afterAll');
+window.beforeEach = notImplemented('beforeEach');
+window.afterEach = notImplemented('afterEach');
 
 const path: string[] = [];
 const withPath = (name: string, fun: jest.ProvidesCallback) => {
@@ -35,7 +33,7 @@ const withPath = (name: string, fun: jest.ProvidesCallback) => {
   path.pop();
 };
 const fakeTest = Object.assign(withPath, {
-  each: notImplemented("describe.each"),
+  each: notImplemented('describe.each'),
   only: withPath,
   skip: noop as any,
 }) as any as typeof test;
@@ -44,4 +42,4 @@ const fakeTest = Object.assign(withPath, {
 window.test = fakeTest;
 window.it = fakeTest;
 
-export const currentPath = () => path.join(" ");
+export const currentPath = () => path.join(' ');

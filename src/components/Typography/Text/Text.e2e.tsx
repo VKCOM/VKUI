@@ -1,8 +1,8 @@
-import * as React from "react";
-import { describeScreenshotFuzz } from "../../../testing/e2e/utils";
-import { Text, TextProps } from "./Text";
+import * as React from 'react';
+import { describeScreenshotFuzz } from '../../../testing/e2e/utils';
+import { Text, TextProps } from './Text';
 
-describe("Text", () => {
+describe('Text', () => {
   describeScreenshotFuzz(
     (props: TextProps) => (
       <Text {...props} style={{ marginBottom: 16 }}>
@@ -11,12 +11,12 @@ describe("Text", () => {
     ),
     [
       {
-        weight: ["3"],
-        $adaptivity: "y",
+        weight: ['3'],
+        $adaptivity: 'y',
       },
       {
-        weight: ["2", "1"],
+        weight: ['2', '1'],
       },
-    ]
+    ],
   );
 });

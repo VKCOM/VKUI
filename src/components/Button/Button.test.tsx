@@ -1,41 +1,39 @@
-import * as React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
-import { baselineComponent } from "../../testing/utils";
-import { Button, ButtonProps } from "./Button";
+import * as React from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { baselineComponent } from '../../testing/utils';
+import { Button, ButtonProps } from './Button';
 
-const ButtonTest = (props: ButtonProps) => (
-  <Button data-testid="custom-btn" {...props} />
-);
-const button = () => screen.getByTestId("custom-btn");
+const ButtonTest = (props: ButtonProps) => <Button data-testid="custom-btn" {...props} />;
+const button = () => screen.getByTestId('custom-btn');
 
-describe("Button", () => {
+describe('Button', () => {
   baselineComponent(Button);
 
-  it("Component: Button is handled as a native button", () => {
+  it('Component: Button is handled as a native button', () => {
     render(<ButtonTest>Native Button</ButtonTest>);
-    expect(button().tagName.toLowerCase()).toMatch("button");
+    expect(button().tagName.toLowerCase()).toMatch('button');
   });
 
-  it("Component: Button with valid href is handled as a native link", () => {
+  it('Component: Button with valid href is handled as a native link', () => {
     render(<ButtonTest href="#">Native Link</ButtonTest>);
-    expect(button().tagName.toLowerCase()).toMatch("a");
+    expect(button().tagName.toLowerCase()).toMatch('a');
   });
 
-  it("Component: Button with valid href overrides passed Component", () => {
+  it('Component: Button with valid href overrides passed Component', () => {
     render(
       <ButtonTest href="#" Component="div">
         Native Link
-      </ButtonTest>
+      </ButtonTest>,
     );
-    expect(button().tagName.toLowerCase()).toMatch("a");
+    expect(button().tagName.toLowerCase()).toMatch('a');
   });
 
-  it("Component: Button with loading is not clickable", () => {
+  it('Component: Button with loading is not clickable', () => {
     const handleClick = jest.fn();
     render(
       <ButtonTest onClick={handleClick} loading>
         Button
-      </ButtonTest>
+      </ButtonTest>,
     );
 
     fireEvent.click(button());

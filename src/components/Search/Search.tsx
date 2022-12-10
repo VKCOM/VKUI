@@ -1,23 +1,19 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { usePlatform } from "../../hooks/usePlatform";
-import {
-  Icon16SearchOutline,
-  Icon16Clear,
-  Icon24Cancel,
-} from "@vkontakte/icons";
-import { Platform } from "../../lib/platform";
-import { HasRef } from "../../types";
-import { Touch, TouchEvent } from "../Touch/Touch";
-import { VKUITouchEvent } from "../../lib/touch";
-import { noop } from "../../lib/utils";
-import { Title } from "../Typography/Title/Title";
-import { Headline } from "../Typography/Headline/Headline";
-import { useExternRef } from "../../hooks/useExternRef";
-import { useEnsuredControl } from "../../hooks/useEnsuredControl";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import styles from "./Search.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { usePlatform } from '../../hooks/usePlatform';
+import { Icon16SearchOutline, Icon16Clear, Icon24Cancel } from '@vkontakte/icons';
+import { Platform } from '../../lib/platform';
+import { HasRef } from '../../types';
+import { Touch, TouchEvent } from '../Touch/Touch';
+import { VKUITouchEvent } from '../../lib/touch';
+import { noop } from '../../lib/utils';
+import { Title } from '../Typography/Title/Title';
+import { Headline } from '../Typography/Headline/Headline';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useEnsuredControl } from '../../hooks/useEnsuredControl';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import styles from './Search.module.css';
 
 const SearchPlaceholderTypography = ({
   children,
@@ -60,14 +56,14 @@ export interface SearchProps
 export const Search = ({
   before = <Icon16SearchOutline />,
   className,
-  defaultValue = "",
-  placeholder = "Поиск",
-  after = "Отмена",
+  defaultValue = '',
+  placeholder = 'Поиск',
+  after = 'Отмена',
   getRef,
   icon,
   onIconClick = noop,
   style,
-  autoComplete = "off",
+  autoComplete = 'off',
   onChange: onChangeProp,
   value: valueProp,
   ...inputProps
@@ -96,17 +92,17 @@ export const Search = ({
     // eslint-disable-next-line @typescript-eslint/unbound-method
     const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
       HTMLInputElement.prototype,
-      "value"
+      'value',
     )?.set;
-    nativeInputValueSetter?.call(inputRef.current, "");
+    nativeInputValueSetter?.call(inputRef.current, '');
 
-    const ev2 = new Event("input", { bubbles: true });
+    const ev2 = new Event('input', { bubbles: true });
     inputRef.current?.dispatchEvent(ev2);
   }, [inputRef]);
 
   const onIconClickStart = React.useCallback(
     (e: TouchEvent) => onIconClick(e.originalEvent),
-    [onIconClick]
+    [onIconClick],
   );
 
   const onIconCancelClickStart = React.useCallback(
@@ -115,75 +111,67 @@ export const Search = ({
       inputRef.current?.focus();
       onCancel();
     },
-    [inputRef, onCancel]
+    [inputRef, onCancel],
   );
 
   return (
     <div
       className={classNamesString(
-        styles["Search"],
-        platform === Platform.IOS && styles["Search--ios"],
-        getSizeYClassName(styles["Search"], sizeY),
-        isFocused && styles["Search--focused"],
-        value && styles["Search--has-value"],
-        after && styles["Search--has-after"],
-        icon && styles["Search--has-icon"],
-        className
+        styles['Search'],
+        platform === Platform.IOS && styles['Search--ios'],
+        getSizeYClassName(styles['Search'], sizeY),
+        isFocused && styles['Search--focused'],
+        value && styles['Search--has-value'],
+        after && styles['Search--has-after'],
+        icon && styles['Search--has-icon'],
+        className,
       )}
       style={style}
     >
-      <div className={styles["Search__in"]}>
-        <div className={styles["Search__width"]} />
-        <label className={styles["Search__control"]}>
+      <div className={styles['Search__in']}>
+        <div className={styles['Search__width']} />
+        <label className={styles['Search__control']}>
           <input
             type="search"
             {...inputProps}
             autoComplete={autoComplete}
             ref={inputRef}
-            className={styles["Search__input"]}
+            className={styles['Search__input']}
             onFocus={onFocus}
             onBlur={onBlur}
             onChange={onChange}
             value={value}
           />
           {platform === Platform.IOS && after && (
-            <div className={styles["Search__after-width"]}>{after}</div>
+            <div className={styles['Search__after-width']}>{after}</div>
           )}
-          <div className={styles["Search__placeholder"]}>
-            <div className={styles["Search__placeholder-in"]}>
+          <div className={styles['Search__placeholder']}>
+            <div className={styles['Search__placeholder-in']}>
               {before}
-              <SearchPlaceholderTypography
-                className={styles["Search__placeholder-text"]}
-              >
+              <SearchPlaceholderTypography className={styles['Search__placeholder-text']}>
                 {placeholder}
               </SearchPlaceholderTypography>
             </div>
             {isFocused && platform === Platform.IOS && after && (
-              <div className={styles["Search__after-width"]}>{after}</div>
+              <div className={styles['Search__after-width']}>{after}</div>
             )}
           </div>
         </label>
-        <div className={styles["Search__after"]} onClick={onCancel}>
-          <div className={styles["Search__icons"]}>
+        <div className={styles['Search__after']} onClick={onCancel}>
+          <div className={styles['Search__icons']}>
             {icon && (
-              <Touch
-                onStart={onIconClickStart}
-                className={styles["Search__icon"]}
-              >
+              <Touch onStart={onIconClickStart} className={styles['Search__icon']}>
                 {icon}
               </Touch>
             )}
             {!!value && (
-              <Touch
-                onStart={onIconCancelClickStart}
-                className={styles["Search__icon"]}
-              >
+              <Touch onStart={onIconCancelClickStart} className={styles['Search__icon']}>
                 {platform === Platform.IOS ? <Icon16Clear /> : <Icon24Cancel />}
               </Touch>
             )}
           </div>
           {platform === Platform.IOS && after && (
-            <div className={styles["Search__after-in"]}>{after}</div>
+            <div className={styles['Search__after-in']}>{after}</div>
           )}
         </div>
       </div>

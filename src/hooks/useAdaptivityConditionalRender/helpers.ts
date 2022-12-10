@@ -1,10 +1,5 @@
-import {
-  SizeType,
-  ViewWidth,
-  ViewHeight,
-  tryToCheckIsDesktop,
-} from "../../lib/adaptivity";
-import type { PlatformType } from "../../lib/platform";
+import { SizeType, ViewWidth, ViewHeight, tryToCheckIsDesktop } from '../../lib/adaptivity';
+import type { PlatformType } from '../../lib/platform';
 import type {
   ElementProps,
   AdaptiveSizeType,
@@ -12,12 +7,12 @@ import type {
   AdaptiveViewWidth,
   DeviceTypeCSSBreakpoints,
   AdaptiveDeviceType,
-} from "./types";
+} from './types';
 
 export const getAdaptiveSizeType = (
   type: undefined | SizeType,
-  compactClassNames: Record<"mq" | SizeType.COMPACT, ElementProps>,
-  regularClassNames: Record<"mq" | SizeType.REGULAR, ElementProps>
+  compactClassNames: Record<'mq' | SizeType.COMPACT, ElementProps>,
+  regularClassNames: Record<'mq' | SizeType.REGULAR, ElementProps>,
 ): AdaptiveSizeType => {
   return {
     compact:
@@ -37,10 +32,7 @@ export const getAdaptiveSizeType = (
 
 export const getAdaptiveViewWidth = (
   viewWidth: undefined | ViewWidth,
-  viewWidthClassNames: Record<
-    ViewWidthCSSBreakpoints,
-    Record<"mq" | "forced", ElementProps>
-  >
+  viewWidthClassNames: Record<ViewWidthCSSBreakpoints, Record<'mq' | 'forced', ElementProps>>,
 ): AdaptiveViewWidth => {
   return {
     tabletMinus:
@@ -63,17 +55,9 @@ export const getAdaptiveDeviceType = (
   viewHeight: undefined | ViewHeight,
   hasPointer: undefined | boolean,
   platform: PlatformType,
-  deviceTypeClassNames: Record<
-    DeviceTypeCSSBreakpoints,
-    Record<"mq" | "forced", ElementProps>
-  >
+  deviceTypeClassNames: Record<DeviceTypeCSSBreakpoints, Record<'mq' | 'forced', ElementProps>>,
 ): AdaptiveDeviceType => {
-  const isDesktop = tryToCheckIsDesktop(
-    viewWidth,
-    viewHeight,
-    hasPointer,
-    platform
-  );
+  const isDesktop = tryToCheckIsDesktop(viewWidth, viewHeight, hasPointer, platform);
 
   if (isDesktop === null) {
     return {

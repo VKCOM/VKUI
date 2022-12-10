@@ -5,15 +5,11 @@ import {
   PanelHeaderClose,
   PanelHeaderButton,
   useAppearance,
-} from "@vkui";
-import React, { useCallback, useEffect, useState } from "react";
-import {
-  Icon28MenuOutline,
-  Icon28MoonOutline,
-  Icon28SunOutline,
-} from "@vkontakte/icons";
-import { Logo } from "../Logo/Logo";
-import "./StyleGuideMobile.css";
+} from '@vkui';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Icon28MenuOutline, Icon28MoonOutline, Icon28SunOutline } from '@vkontakte/icons';
+import { Logo } from '../Logo/Logo';
+import './StyleGuideMobile.css';
 
 const StyleGuideMobileHeader = ({ before, switchStyleGuideAppearance }) => {
   const appearance = useAppearance();
@@ -22,11 +18,8 @@ const StyleGuideMobileHeader = ({ before, switchStyleGuideAppearance }) => {
     <PanelHeader
       before={before}
       after={
-        <PanelHeaderButton
-          onClick={switchStyleGuideAppearance}
-          aria-label="Сменить тему"
-        >
-          {appearance === "dark" ? <Icon28SunOutline /> : <Icon28MoonOutline />}
+        <PanelHeaderButton onClick={switchStyleGuideAppearance} aria-label="Сменить тему">
+          {appearance === 'dark' ? <Icon28SunOutline /> : <Icon28MoonOutline />}
         </PanelHeaderButton>
       }
     >
@@ -38,17 +31,17 @@ const StyleGuideMobileHeader = ({ before, switchStyleGuideAppearance }) => {
 };
 
 export const StyleGuideMobile = (props) => {
-  const [activePanel, setActivePanel] = useState("content");
+  const [activePanel, setActivePanel] = useState('content');
 
   const hashChangeListener = useCallback(() => {
-    setActivePanel("content");
+    setActivePanel('content');
   }, []);
 
   useEffect(() => {
-    window.addEventListener("hashchange", hashChangeListener);
+    window.addEventListener('hashchange', hashChangeListener);
 
     return () => {
-      window.removeEventListener("hashchange", hashChangeListener);
+      window.removeEventListener('hashchange', hashChangeListener);
     };
   }, []);
 
@@ -63,7 +56,7 @@ export const StyleGuideMobile = (props) => {
                 before={
                   <PanelHeaderButton
                     aria-label="Показать меню"
-                    onClick={() => setActivePanel("menu")}
+                    onClick={() => setActivePanel('menu')}
                   >
                     <Icon28MenuOutline />
                   </PanelHeaderButton>
@@ -77,7 +70,7 @@ export const StyleGuideMobile = (props) => {
                 before={
                   <PanelHeaderClose
                     aria-label="Скрыть меню"
-                    onClick={() => setActivePanel("content")}
+                    onClick={() => setActivePanel('content')}
                   />
                 }
               />

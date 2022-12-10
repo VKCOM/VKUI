@@ -1,20 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import SectionHeading from "@rsg-components/SectionHeading";
-import Markdown from "@rsg-components/Markdown";
+import React from 'react';
+import PropTypes from 'prop-types';
+import SectionHeading from '@rsg-components/SectionHeading';
+import Markdown from '@rsg-components/Markdown';
 
 export const SectionRenderer = (allProps) => {
-  const {
-    title,
-    name,
-    slug,
-    content,
-    components,
-    sections,
-    depth,
-    description,
-    pagePerSection,
-  } = allProps;
+  const { title, name, slug, content, components, sections, depth, description, pagePerSection } =
+    allProps;
 
   return (
     <section data-testid={`section-${slug}`}>

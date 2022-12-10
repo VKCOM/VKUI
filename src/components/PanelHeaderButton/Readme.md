@@ -4,8 +4,8 @@
 Кнопки могут быть переданы в `before` или `after` компонента `PanelHeader`:
 
 ```jsx static
-import { PanelHeader, PanelHeaderButton } from "@vkontakte/vkui";
-import { Icon28Notifications, Icon28SettingsOutline } from "@vkontakte/icons";
+import { PanelHeader, PanelHeaderButton } from '@vkontakte/vkui';
+import { Icon28Notifications, Icon28SettingsOutline } from '@vkontakte/icons';
 
 <PanelHeader
   before={
@@ -24,8 +24,8 @@ import { Icon28Notifications, Icon28SettingsOutline } from "@vkontakte/icons";
 Если нужно несколько кнопок справа или слева, то используем `React.Fragment`:
 
 ```jsx static
-import { PanelHeader, PanelHeaderButton } from "@vkontakte/vkui";
-import { Icon28SettingsOutline, Icon28Notifications } from "@vkontakte/icons";
+import { PanelHeader, PanelHeaderButton } from '@vkontakte/vkui';
+import { Icon28SettingsOutline, Icon28Notifications } from '@vkontakte/icons';
 
 <PanelHeader
   after={

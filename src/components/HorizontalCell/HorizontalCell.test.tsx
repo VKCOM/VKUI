@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { HorizontalCell } from "./HorizontalCell";
+import { baselineComponent } from '../../testing/utils';
+import { HorizontalCell } from './HorizontalCell';
 
-describe("HorizontalCell", () => {
+describe('HorizontalCell', () => {
   baselineComponent(HorizontalCell);
 });

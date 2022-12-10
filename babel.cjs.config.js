@@ -1,13 +1,13 @@
 module.exports = {
-  extends: "./babel.config.js",
+  extends: './babel.config.js',
   presets: [
     [
-      "@babel/preset-env",
+      '@babel/preset-env',
       {
-        modules: "commonjs",
+        modules: 'commonjs',
         exclude: [
-          "@babel/plugin-proposal-unicode-property-regex",
-          "@babel/plugin-transform-unicode-regex",
+          '@babel/plugin-proposal-unicode-property-regex',
+          '@babel/plugin-transform-unicode-regex',
         ],
       },
     ],

@@ -1,15 +1,15 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { Icon24Dismiss } from "@vkontakte/icons";
-import { Button } from "../Button/Button";
-import { SimpleCell } from "../SimpleCell/SimpleCell";
-import { Image } from "../Image/Image";
-import { Footnote } from "../Typography/Footnote/Footnote";
-import styles from "./PromoBanner.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { Icon24Dismiss } from '@vkontakte/icons';
+import { Button } from '../Button/Button';
+import { SimpleCell } from '../SimpleCell/SimpleCell';
+import { Image } from '../Image/Image';
+import { Footnote } from '../Typography/Footnote/Footnote';
+import styles from './PromoBanner.module.css';
 
 type StatsType =
-  | "playbackStarted" // Начало показа
-  | "click"; // Клик по баннеру
+  | 'playbackStarted' // Начало показа
+  | 'click'; // Клик по баннеру
 
 type BannerData = {
   title?: string;
@@ -53,22 +53,19 @@ export const PromoBanner = ({
   className,
   ...restProps
 }: PromoBannerProps) => {
-  const [currentPixel, setCurrentPixel] = React.useState("");
+  const [currentPixel, setCurrentPixel] = React.useState('');
 
   const statsPixels = React.useMemo(
     () =>
       (bannerData.statistics
-        ? bannerData.statistics.reduce(
-            (acc, item) => ({ ...acc, [item.type]: item.url }),
-            {}
-          )
+        ? bannerData.statistics.reduce((acc, item) => ({ ...acc, [item.type]: item.url }), {})
         : {}) as Record<StatsType, string | void>,
-    [bannerData.statistics]
+    [bannerData.statistics],
   );
 
   const onClick = React.useCallback(
-    () => setCurrentPixel(statsPixels.click || ""),
-    [statsPixels.click]
+    () => setCurrentPixel(statsPixels.click || ''),
+    [statsPixels.click],
   );
 
   React.useEffect(() => {
@@ -78,22 +75,17 @@ export const PromoBanner = ({
   }, [statsPixels.playbackStarted]);
 
   return (
-    <div
-      className={classNamesString(styles["PromoBanner"], className)}
-      {...restProps}
-    >
-      <div className={styles["PromoBanner__head"]}>
-        <Footnote className={styles["PromoBanner__label"]}>
-          {bannerData.advertisingLabel || "Advertisement"}
+    <div className={classNamesString(styles['PromoBanner'], className)} {...restProps}>
+      <div className={styles['PromoBanner__head']}>
+        <Footnote className={styles['PromoBanner__label']}>
+          {bannerData.advertisingLabel || 'Advertisement'}
         </Footnote>
         {bannerData.ageRestrictions && (
-          <Footnote className={styles["PromoBanner__age"]}>
-            {bannerData.ageRestrictions}
-          </Footnote>
+          <Footnote className={styles['PromoBanner__age']}>{bannerData.ageRestrictions}</Footnote>
         )}
 
         {!isCloseButtonHidden && (
-          <div className={styles["PromoBanner__close"]} onClick={onClose}>
+          <div className={styles['PromoBanner__close']} onClick={onClose}>
             <Icon24Dismiss />
           </div>
         )}
@@ -109,9 +101,7 @@ export const PromoBanner = ({
               size={48}
               src={bannerData.iconLink}
               alt={bannerData.title}
-              data-testid={
-                process.env.NODE_ENV === "test" ? "avatar" : undefined
-              }
+              data-testid={process.env.NODE_ENV === 'test' ? 'avatar' : undefined}
             />
           )
         }
@@ -119,9 +109,7 @@ export const PromoBanner = ({
           bannerData.ctaText && (
             <Button
               mode="outline"
-              data-testid={
-                process.env.NODE_ENV === "test" ? "button-ctaText" : undefined
-              }
+              data-testid={process.env.NODE_ENV === 'test' ? 'button-ctaText' : undefined}
             >
               {bannerData.ctaText}
             </Button>
@@ -133,7 +121,7 @@ export const PromoBanner = ({
       </SimpleCell>
 
       {currentPixel.length > 0 && (
-        <div className={styles["PromoBanner__pixels"]}>
+        <div className={styles['PromoBanner__pixels']}>
           <img src={currentPixel} alt="" />
         </div>
       )}

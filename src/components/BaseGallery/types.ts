@@ -1,7 +1,7 @@
-import * as React from "react";
-import { HasAlign, HasRef, HasRootRef } from "../../types";
-import { TouchEvent, TouchEventHandler } from "../Touch/Touch";
-import { HorizontalScrollArrowProps } from "../HorizontalScroll/HorizontalScrollArrow";
+import * as React from 'react';
+import { HasAlign, HasRef, HasRootRef } from '../../types';
+import { TouchEvent, TouchEventHandler } from '../Touch/Touch';
+import { HorizontalScrollArrowProps } from '../HorizontalScroll/HorizontalScrollArrow';
 
 export interface GallerySlidesState {
   coordX: number;
@@ -26,10 +26,7 @@ export interface LayoutState {
 }
 
 export interface BaseGalleryProps
-  extends Omit<
-      React.HTMLAttributes<HTMLDivElement>,
-      "onChange" | "onDragStart" | "onDragEnd"
-    >,
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,
     HasAlign,
     HasRootRef<HTMLDivElement>,
     HasRef<HTMLElement> {
@@ -46,9 +43,9 @@ export interface BaseGalleryProps
    * Будет вызвано при клике на кнопку-стрелку вправо
    */
   onNextClick?(event: React.MouseEvent): void;
-  bullets?: "dark" | "light" | false;
+  bullets?: 'dark' | 'light' | false;
   isDraggable?: boolean;
   showArrows?: boolean;
   hasPointer?: boolean;
-  arrowSize?: HorizontalScrollArrowProps["size"];
+  arrowSize?: HorizontalScrollArrowProps['size'];
 }

@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { PopoutRoot } from "./PopoutRoot";
+import { baselineComponent } from '../../testing/utils';
+import { PopoutRoot } from './PopoutRoot';
 
-describe("PopoutRoot", () => {
+describe('PopoutRoot', () => {
   baselineComponent(PopoutRoot);
 });

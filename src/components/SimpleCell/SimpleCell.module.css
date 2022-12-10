@@ -160,9 +160,7 @@
     > .Avatar:not(.Avatar--size-32)
     ~ .SimpleCell__main
     .SimpleCell__children,
-  .SimpleCell--sizeY-none.SimpleCell--ios
-    > .Avatar:not(.Avatar--size-32)
-    ~ .SimpleCell__indicator {
+  .SimpleCell--sizeY-none.SimpleCell--ios > .Avatar:not(.Avatar--size-32) ~ .SimpleCell__indicator {
     font-size: 16px;
     line-height: 20px;
   }
@@ -195,14 +193,8 @@
 }
 
 .SimpleCell--sizeY-compact .SimpleCell__description,
-.SimpleCell--sizeY-compact
-  > .Avatar--size-32
-  ~ .SimpleCell__main
-  .SimpleCell__description,
-.SimpleCell--sizeY-compact
-  > .Avatar--size-28
-  ~ .SimpleCell__main
-  .SimpleCell__description {
+.SimpleCell--sizeY-compact > .Avatar--size-32 ~ .SimpleCell__main .SimpleCell__description,
+.SimpleCell--sizeY-compact > .Avatar--size-28 ~ .SimpleCell__main .SimpleCell__description {
   margin-top: 1px;
 }
 
@@ -222,14 +214,8 @@
   }
 
   .SimpleCell--sizeY-none .SimpleCell__description,
-  .SimpleCell--sizeY-none
-    > .Avatar--size-32
-    ~ .SimpleCell__main
-    .SimpleCell__description,
-  .SimpleCell--sizeY-none
-    > .Avatar--size-28
-    ~ .SimpleCell__main
-    .SimpleCell__description {
+  .SimpleCell--sizeY-none > .Avatar--size-32 ~ .SimpleCell__main .SimpleCell__description,
+  .SimpleCell--sizeY-none > .Avatar--size-28 ~ .SimpleCell__main .SimpleCell__description {
     margin-top: 1px;
   }
 

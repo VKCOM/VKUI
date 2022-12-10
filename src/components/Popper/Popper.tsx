@@ -1,31 +1,31 @@
-import * as React from "react";
-import { usePopper, Modifier } from "react-popper";
-import { AppRootPortal } from "../AppRoot/AppRootPortal";
-import { PopperArrow } from "../PopperArrow/PopperArrow";
-import { HasRef } from "../../types";
-import { usePlatform } from "../../hooks/usePlatform";
-import { getPlatformClassName } from "../../helpers/getPlatformClassName";
-import { useExternRef } from "../../hooks/useExternRef";
-import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import { classNamesString } from "../../lib/classNames";
-import styles from "./Popper.module.css";
+import * as React from 'react';
+import { usePopper, Modifier } from 'react-popper';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
+import { PopperArrow } from '../PopperArrow/PopperArrow';
+import { HasRef } from '../../types';
+import { usePlatform } from '../../hooks/usePlatform';
+import { getPlatformClassName } from '../../helpers/getPlatformClassName';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { classNamesString } from '../../lib/classNames';
+import styles from './Popper.module.css';
 
 export type Placement =
-  | "auto"
-  | "auto-start"
-  | "auto-end"
-  | "top-start"
-  | "top-end"
-  | "bottom-start"
-  | "bottom-end"
-  | "right-start"
-  | "right-end"
-  | "left-start"
-  | "left-end"
-  | "top"
-  | "bottom"
-  | "left"
-  | "right";
+  | 'auto'
+  | 'auto-start'
+  | 'auto-end'
+  | 'top-start'
+  | 'top-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'right-start'
+  | 'right-end'
+  | 'left-start'
+  | 'left-end'
+  | 'top'
+  | 'bottom'
+  | 'left'
+  | 'right';
 
 export interface PopperRenderContentProps {
   className: string;
@@ -83,28 +83,28 @@ const ARROW_WIDTH = 20;
 const ARROW_HEIGHT = 8;
 
 const preventOverflowModifier: Modifier<string> = {
-  name: "preventOverflow",
+  name: 'preventOverflow',
   options: {
     mainAxis: false,
   },
 };
 
 const flipModifier: Modifier<string> = {
-  name: "flip",
+  name: 'flip',
 };
 
 const arrowModifier: Modifier<string> = {
-  name: "arrow",
+  name: 'arrow',
   options: {
     padding: ARROW_PADDING,
   },
 };
 
 const sameWidthModifier: Modifier<string> = {
-  name: "sameWidth",
+  name: 'sameWidth',
   enabled: true,
-  phase: "beforeWrite",
-  requires: ["computeStyles"],
+  phase: 'beforeWrite',
+  requires: ['computeStyles'],
   fn: ({ state }) => {
     state.styles.popper.width = `${state.rects.reference.width}px`;
   },
@@ -122,7 +122,7 @@ export const Popper = ({
   targetRef,
   children,
   getRef,
-  placement = "bottom-start",
+  placement = 'bottom-start',
   onPlacementChange,
   arrow,
   arrowClassName,
@@ -136,11 +136,8 @@ export const Popper = ({
   className,
   ...restProps
 }: PopperProps) => {
-  const [popperNode, setPopperNode] = React.useState<HTMLDivElement | null>(
-    null
-  );
-  const [smallTargetOffsetSkidding, setSmallTargetOffsetSkidding] =
-    React.useState(0);
+  const [popperNode, setPopperNode] = React.useState<HTMLDivElement | null>(null);
+  const [smallTargetOffsetSkidding, setSmallTargetOffsetSkidding] = React.useState(0);
   const platform = usePlatform();
 
   const setExternalRef = useExternRef<HTMLDivElement>(getRef, setPopperNode);
@@ -149,7 +146,7 @@ export const Popper = ({
     const modifiers: Array<Modifier<string>> = [
       preventOverflowModifier,
       {
-        name: "offset",
+        name: 'offset',
         options: {
           offset: [
             arrow ? offsetSkidding - smallTargetOffsetSkidding : offsetSkidding,
@@ -191,23 +188,20 @@ export const Popper = ({
   });
 
   const resolvedPlacement = state?.placement;
-  const isEdgePlacement =
-    !!resolvedPlacement && resolvedPlacement.includes("-"); // true, если поппер отрисован с краю
+  const isEdgePlacement = !!resolvedPlacement && resolvedPlacement.includes('-'); // true, если поппер отрисован с краю
 
   // Если поппер рисуется с краю, то нужно опционально сместить его в тех случаях, когда стрелка не дотягивается до
   // таргета из-за маленьких размеров последнего
   useIsomorphicLayoutEffect(() => {
     if (arrow && isEdgePlacement) {
       const placementDirection =
-        resolvedPlacement?.startsWith("bottom") ||
-        resolvedPlacement?.startsWith("top")
-          ? "vertical"
-          : "horizontal";
+        resolvedPlacement?.startsWith('bottom') || resolvedPlacement?.startsWith('top')
+          ? 'vertical'
+          : 'horizontal';
 
-      const arrowSize =
-        placementDirection === "vertical" ? ARROW_WIDTH : ARROW_HEIGHT;
+      const arrowSize = placementDirection === 'vertical' ? ARROW_WIDTH : ARROW_HEIGHT;
       const targetSize =
-        (placementDirection === "vertical"
+        (placementDirection === 'vertical'
           ? targetRef.current?.offsetWidth
           : targetRef.current?.offsetHeight) ?? 0;
 
@@ -230,9 +224,9 @@ export const Popper = ({
       {...restProps}
       {...attributes.popper}
       className={classNamesString(
-        styles["Popper"],
-        getPlatformClassName(styles["Popper"], platform),
-        className
+        styles['Popper'],
+        getPlatformClassName(styles['Popper'], platform),
+        className,
       )}
       ref={setExternalRef}
       style={{
@@ -249,15 +243,15 @@ export const Popper = ({
         />
       )}
       {renderContent ? (
-        renderContent({ className: styles["Popper__content"] })
+        renderContent({ className: styles['Popper__content'] })
       ) : (
-        <div className={styles["Popper__content"]}>{children}</div>
+        <div className={styles['Popper__content']}>{children}</div>
       )}
     </div>
   );
 
   return (
-    <AppRootPortal forcePortal={forcePortal} className={styles["PopperPortal"]}>
+    <AppRootPortal forcePortal={forcePortal} className={styles['PopperPortal']}>
       {dropdown}
     </AppRootPortal>
   );

@@ -43,7 +43,7 @@ return (
         </FormLayout>
       }
     >
-      <Button style={{ margin: "20px 0 0 0" }}>Кликни</Button>
+      <Button style={{ margin: '20px 0 0 0' }}>Кликни</Button>
     </Popover>
   </React.Fragment>
 );

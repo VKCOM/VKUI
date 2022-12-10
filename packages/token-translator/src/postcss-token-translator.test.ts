@@ -1,6 +1,6 @@
-import postcss from "postcss";
+import postcss from 'postcss';
 
-import plugin from "./postcss-token-translator";
+import plugin from './postcss-token-translator';
 
 async function run(input: string, output: string, opts = {}) {
   let result = await postcss([plugin(opts)]).process(input, {
@@ -10,7 +10,7 @@ async function run(input: string, output: string, opts = {}) {
   expect(result.warnings()).toHaveLength(0);
 }
 
-it("default", async () => {
+it('default', async () => {
   const input = `.a {
     color: var(--accent);
 }
@@ -24,7 +24,7 @@ it("default", async () => {
   await run(input, output);
 });
 
-it("stroke", async () => {
+it('stroke', async () => {
   const input = `.a {
     box-shadow: 0 0 2px var(--accent);
     border-color: var(--accent);
@@ -42,7 +42,7 @@ it("stroke", async () => {
   await run(input, output);
 });
 
-it("background", async () => {
+it('background', async () => {
   const input = `.a {
     background: var(--accent);
     background-color: var(--accent);
@@ -58,7 +58,7 @@ it("background", async () => {
   await run(input, output);
 });
 
-it("icon", async () => {
+it('icon', async () => {
   const input = `.a .Icon {
     color: var(--accent);
     background: var(--accent);
@@ -74,7 +74,7 @@ it("icon", async () => {
   await run(input, output);
 });
 
-it("at rule", async () => {
+it('at rule', async () => {
   const input = `
 @supports (display: flex) {
   @media screen and (min-width: 900px) {

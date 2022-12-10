@@ -5,29 +5,20 @@
 
   /* Добавляем отступы, если пин больше трека */
   padding: calc(
-    (
-        var(--vkui--size_switch_pin--regular) -
-          var(--vkui--size_switch_height--regular)
-      ) / 2
+    (var(--vkui--size_switch_pin--regular) - var(--vkui--size_switch_height--regular)) / 2
   );
 }
 
 .Switch--sizeY-compact {
   padding: calc(
-    (
-        var(--vkui--size_switch_pin--compact) -
-          var(--vkui--size_switch_height--compact)
-      ) / 2
+    (var(--vkui--size_switch_pin--compact) - var(--vkui--size_switch_height--compact)) / 2
   );
 }
 
 @media (--sizeY-compact) {
   .Switch--sizeY-none {
     padding: calc(
-      (
-          var(--vkui--size_switch_pin--compact) -
-            var(--vkui--size_switch_height--compact)
-        ) / 2
+      (var(--vkui--size_switch_pin--compact) - var(--vkui--size_switch_height--compact)) / 2
     );
   }
 }
@@ -49,41 +40,25 @@
  */
 .Switch__pseudo::before {
   position: absolute;
-  content: "";
+  content: '';
   border-radius: 50%;
   box-sizing: border-box;
   background: var(--vkui--color_icon_contrast_secondary);
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
 
   /* Делаем пин по центру */
-  top: calc(
-    (
-        var(--vkui--size_switch_height--regular) -
-          var(--vkui--size_switch_pin--regular)
-      ) / 2
-  );
+  top: calc((var(--vkui--size_switch_height--regular) - var(--vkui--size_switch_pin--regular)) / 2);
   left: calc(
-    (
-        var(--vkui--size_switch_height--regular) -
-          var(--vkui--size_switch_pin--regular)
-      ) / 2
+    (var(--vkui--size_switch_height--regular) - var(--vkui--size_switch_pin--regular)) / 2
   );
   width: var(--vkui--size_switch_pin--regular);
   height: var(--vkui--size_switch_pin--regular);
 }
 
 .Switch--sizeY-compact .Switch__pseudo::before {
-  top: calc(
-    (
-        var(--vkui--size_switch_height--compact) -
-          var(--vkui--size_switch_pin--compact)
-      ) / 2
-  );
+  top: calc((var(--vkui--size_switch_height--compact) - var(--vkui--size_switch_pin--compact)) / 2);
   left: calc(
-    (
-        var(--vkui--size_switch_height--compact) -
-          var(--vkui--size_switch_pin--compact)
-      ) / 2
+    (var(--vkui--size_switch_height--compact) - var(--vkui--size_switch_pin--compact)) / 2
   );
   width: var(--vkui--size_switch_pin--compact);
   height: var(--vkui--size_switch_pin--compact);
@@ -92,16 +67,10 @@
 @media (--sizeY-compact) {
   .Switch--sizeY-none .Switch__pseudo::before {
     top: calc(
-      (
-          var(--vkui--size_switch_height--compact) -
-            var(--vkui--size_switch_pin--compact)
-        ) / 2
+      (var(--vkui--size_switch_height--compact) - var(--vkui--size_switch_pin--compact)) / 2
     );
     left: calc(
-      (
-          var(--vkui--size_switch_height--compact) -
-            var(--vkui--size_switch_pin--compact)
-        ) / 2
+      (var(--vkui--size_switch_height--compact) - var(--vkui--size_switch_pin--compact)) / 2
     );
     width: var(--vkui--size_switch_pin--compact);
     height: var(--vkui--size_switch_pin--compact);
@@ -111,10 +80,7 @@
 .Switch__self:checked + .Switch__pseudo::before {
   background: var(--vkui--color_icon_accent);
   transform: translateX(
-    calc(
-      var(--vkui--size_switch_width--regular) -
-        var(--vkui--size_switch_height--regular)
-    )
+    calc(var(--vkui--size_switch_width--regular) - var(--vkui--size_switch_height--regular))
   );
 }
 
@@ -122,7 +88,7 @@
  * Трек
  */
 .Switch__pseudo::after {
-  content: "";
+  content: '';
   display: block;
   background: var(--vkui--color_icon_tertiary_alpha);
   border-radius: calc(var(--vkui--size_switch_width--regular) / 2);
@@ -151,20 +117,14 @@
 
 .Switch--sizeY-compact .Switch__self:checked + .Switch__pseudo::before {
   transform: translateX(
-    calc(
-      var(--vkui--size_switch_width--compact) -
-        var(--vkui--size_switch_height--compact)
-    )
+    calc(var(--vkui--size_switch_width--compact) - var(--vkui--size_switch_height--compact))
   );
 }
 
 @media (--sizeY-compact) {
   .Switch--sizeY-none .Switch__self:checked + .Switch__pseudo::before {
     transform: translateX(
-      calc(
-        var(--vkui--size_switch_width--compact) -
-          var(--vkui--size_switch_height--compact)
-      )
+      calc(var(--vkui--size_switch_width--compact) - var(--vkui--size_switch_height--compact))
     );
   }
 }

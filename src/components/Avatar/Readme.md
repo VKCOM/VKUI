@@ -12,9 +12,7 @@ const Default = () => {
   return (
     <Group>
       <Header mode="secondary">По умолчанию</Header>
-      <SimpleCell before={<Avatar src={getAvatarUrl("user_id34")} />}>
-        Татьяна Плуталова
-      </SimpleCell>
+      <SimpleCell before={<Avatar src={getAvatarUrl('user_id34')} />}>Татьяна Плуталова</SimpleCell>
     </Group>
   );
 };
@@ -59,40 +57,37 @@ const OthersFeatures = () => {
       />
       <div
         style={{
-          display: "flex",
+          display: 'flex',
           padding: 12,
           gap: 8,
-          flexFlow: "row wrap",
+          flexFlow: 'row wrap',
         }}
       >
-        {[16, 20, 24, 28, 32, 36, 40, 44, 48, 56, 64, 72, 80, 88, 96].map(
-          (size) => (
-            <Avatar
-              key={size}
-              size={size}
-              src={useInitials ? undefined : getAvatarUrl("user_id34")}
-              gradientColor={gradientColor}
-              initials={useInitials ? "ТП" : null}
-            >
-              {size >= 24 &&
-              (badge === "online" || badge === "online-mobile") ? (
-                <Avatar.BadgeWithPreset preset={badge} />
-              ) : (
-                size >= 24 &&
-                badge && (
-                  <Avatar.Badge background={badge.background}>
-                    <IconExampleForBadgeBasedOnImageBaseSize />
-                  </Avatar.Badge>
-                )
-              )}
-              {overlay && (
-                <Avatar.Overlay {...overlay}>
-                  <IconExampleForOverlayBasedOnImageBaseSize />
-                </Avatar.Overlay>
-              )}
-            </Avatar>
-          )
-        )}
+        {[16, 20, 24, 28, 32, 36, 40, 44, 48, 56, 64, 72, 80, 88, 96].map((size) => (
+          <Avatar
+            key={size}
+            size={size}
+            src={useInitials ? undefined : getAvatarUrl('user_id34')}
+            gradientColor={gradientColor}
+            initials={useInitials ? 'ТП' : null}
+          >
+            {size >= 24 && (badge === 'online' || badge === 'online-mobile') ? (
+              <Avatar.BadgeWithPreset preset={badge} />
+            ) : (
+              size >= 24 &&
+              badge && (
+                <Avatar.Badge background={badge.background}>
+                  <IconExampleForBadgeBasedOnImageBaseSize />
+                </Avatar.Badge>
+              )
+            )}
+            {overlay && (
+              <Avatar.Overlay {...overlay}>
+                <IconExampleForOverlayBasedOnImageBaseSize />
+              </Avatar.Overlay>
+            )}
+          </Avatar>
+        ))}
       </div>
     </Group>
   );
@@ -120,7 +115,7 @@ const AvatarPropsForm = ({
   onBadgeChange,
   onOverlayChange,
 }) => {
-  const DEFAULT_VALUE = "Не задано";
+  const DEFAULT_VALUE = 'Не задано';
 
   const [initials, setInitials] = React.useState(false);
 
@@ -131,26 +126,21 @@ const AvatarPropsForm = ({
 
   const [overlay, setOverlay] = React.useState(false);
   const [overlayTheme, setOverlayTheme] = React.useState(DEFAULT_VALUE);
-  const [overlayVisibility, setOverlayVisibility] =
-    React.useState(DEFAULT_VALUE);
+  const [overlayVisibility, setOverlayVisibility] = React.useState(DEFAULT_VALUE);
 
   React.useEffect(() => onUseInisitals(initials), [initials]);
 
   React.useEffect(
-    () =>
-      onGradientColorChange(
-        gradientColor === DEFAULT_VALUE ? undefined : gradientColor
-      ),
-    [gradientColor]
+    () => onGradientColorChange(gradientColor === DEFAULT_VALUE ? undefined : gradientColor),
+    [gradientColor],
   );
 
   React.useEffect(() => {
     if (badge === DEFAULT_VALUE) {
       onBadgeChange();
-    } else if (badge === "children") {
+    } else if (badge === 'children') {
       onBadgeChange({
-        background:
-          badgeBackground === DEFAULT_VALUE ? undefined : badgeBackground,
+        background: badgeBackground === DEFAULT_VALUE ? undefined : badgeBackground,
       });
     } else {
       onBadgeChange(badge);
@@ -163,18 +153,14 @@ const AvatarPropsForm = ({
     } else if (overlay) {
       onOverlayChange({
         theme: overlayTheme === DEFAULT_VALUE ? undefined : overlayTheme,
-        visibility:
-          overlayVisibility === DEFAULT_VALUE ? undefined : overlayVisibility,
+        visibility: overlayVisibility === DEFAULT_VALUE ? undefined : overlayVisibility,
       });
     }
   }, [overlay, overlayTheme, overlayVisibility, onOverlayChange]);
 
   return (
     <React.Fragment>
-      <Checkbox
-        checked={initials}
-        onChange={(e) => setInitials(e.target.checked)}
-      >
+      <Checkbox checked={initials} onChange={(e) => setInitials(e.target.checked)}>
         Использовать инициалы вместо изображения
       </Checkbox>
 
@@ -185,13 +171,13 @@ const AvatarPropsForm = ({
         <Select
           options={[
             { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
-            { label: "1. red", value: "red" },
-            { label: "2. orange", value: "orange" },
-            { label: "3. yellow", value: "yellow" },
-            { label: "4. green", value: "green" },
-            { label: "5. l-blue", value: "l-blue" },
-            { label: "6. violet", value: "violet" },
-            { label: "blue", value: "blue" },
+            { label: '1. red', value: 'red' },
+            { label: '2. orange', value: 'orange' },
+            { label: '3. yellow', value: 'yellow' },
+            { label: '4. green', value: 'green' },
+            { label: '5. l-blue', value: 'l-blue' },
+            { label: '6. violet', value: 'violet' },
+            { label: 'blue', value: 'blue' },
           ]}
           value={gradientColor}
           onChange={(e) => setGradientColor(e.target.value)}
@@ -203,18 +189,18 @@ const AvatarPropsForm = ({
           <Select
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
-              { label: "📝 Avatar.Badge", value: "header-1", disabled: true },
+              { label: '📝 Avatar.Badge', value: 'header-1', disabled: true },
               {
-                label: "children={<Icon20GiftCircleFillRed />}",
-                value: "children",
+                label: 'children={<Icon20GiftCircleFillRed />}',
+                value: 'children',
               },
               {
-                label: "📝 Avatar.BadgeWithPreset",
-                value: "header-2",
+                label: '📝 Avatar.BadgeWithPreset',
+                value: 'header-2',
                 disabled: true,
               },
-              { label: 'preset="online"', value: "online", hierarchy: 1 },
-              { label: 'preset="online-mobile"', value: "online-mobile" },
+              { label: 'preset="online"', value: 'online', hierarchy: 1 },
+              { label: 'preset="online-mobile"', value: 'online-mobile' },
             ]}
             value={badge}
             onChange={(e) => setBadge(e.target.value)}
@@ -224,11 +210,11 @@ const AvatarPropsForm = ({
           <Select
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
-              { label: "stroke", value: "stroke" },
-              { label: "shadow", value: "shadow" },
+              { label: 'stroke', value: 'stroke' },
+              { label: 'shadow', value: 'shadow' },
             ]}
             value={badgeBackground}
-            disabled={badge !== "children"}
+            disabled={badge !== 'children'}
             onChange={(e) => setBadgeBackground(e.target.value)}
           />
         </FormItem>
@@ -236,10 +222,7 @@ const AvatarPropsForm = ({
 
       <FormLayoutGroup mode="horizontal">
         <FormItem top="Avatar.Overlay">
-          <Checkbox
-            checked={overlay}
-            onChange={(e) => setOverlay(e.target.checked)}
-          >
+          <Checkbox checked={overlay} onChange={(e) => setOverlay(e.target.checked)}>
             overlay (example, Icon24AddOutline, Icon28AddOutline)
           </Checkbox>
         </FormItem>
@@ -250,8 +233,8 @@ const AvatarPropsForm = ({
           <Select
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
-              { label: "light", value: "light" },
-              { label: "dark", value: "dark" },
+              { label: 'light', value: 'light' },
+              { label: 'dark', value: 'dark' },
             ]}
             value={overlayTheme}
             disabled={!overlay}
@@ -262,8 +245,8 @@ const AvatarPropsForm = ({
           <Select
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
-              { label: "on-hover", value: "on-hover" },
-              { label: "always", value: "always" },
+              { label: 'on-hover', value: 'on-hover' },
+              { label: 'always', value: 'always' },
             ]}
             value={overlayVisibility}
             disabled={!overlay}

@@ -1,10 +1,10 @@
-import * as React from "react";
-import { Icon56UserAddOutline } from "@vkontakte/icons";
-import { Button } from "../Button/Button";
-import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
-import { Placeholder, PlaceholderProps } from "./Placeholder";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
-import { SizeType } from "../../lib/adaptivity";
+import * as React from 'react';
+import { Icon56UserAddOutline } from '@vkontakte/icons';
+import { Button } from '../Button/Button';
+import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
+import { Placeholder, PlaceholderProps } from './Placeholder';
+import { describeScreenshotFuzz } from '../../testing/e2e/utils';
+import { SizeType } from '../../lib/adaptivity';
 
 const propsPlaceholder = {
   icon: [<Icon56UserAddOutline key="icon-56" />, undefined],
@@ -25,24 +25,24 @@ const propsPlaceholder = {
   ],
 };
 
-describe("Placeholder", () => {
+describe('Placeholder', () => {
   describeScreenshotFuzz(
     (props: PlaceholderProps) => <Placeholder {...props} />,
     [
       // All = On
       {
-        header: ["Find friends"],
-        children: ["The people you add as your friends will be displayed here"],
+        header: ['Find friends'],
+        children: ['The people you add as your friends will be displayed here'],
         ...propsPlaceholder,
       },
       // Subtitle = Off
       {
-        header: ["Find friends"],
+        header: ['Find friends'],
         ...propsPlaceholder,
       },
       // Title = Off
       {
-        children: ["The people you add as your friends will be displayed here"],
+        children: ['The people you add as your friends will be displayed here'],
         ...propsPlaceholder,
       },
       // Title, Subtitle = Off
@@ -64,6 +64,6 @@ describe("Placeholder", () => {
         ],
       },
     ],
-    { adaptivity: { sizeY: SizeType.REGULAR } }
+    { adaptivity: { sizeY: SizeType.REGULAR } },
   );
 });

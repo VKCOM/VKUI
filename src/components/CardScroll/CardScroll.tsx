@@ -1,20 +1,17 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import {
-  HorizontalScroll,
-  HorizontalScrollProps,
-} from "../HorizontalScroll/HorizontalScroll";
-import { useDOM } from "../../lib/dom";
-import styles from "./CardScroll.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { getSizeXClassName } from '../../helpers/getSizeXClassName';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { HorizontalScroll, HorizontalScrollProps } from '../HorizontalScroll/HorizontalScroll';
+import { useDOM } from '../../lib/dom';
+import styles from './CardScroll.module.css';
 
 export interface CardScrollProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * При `size=false` ширина `Card` будет регулироваться контентом внутри. В остальных случаях — будет явно задана в процентах.
    */
-  size?: "s" | "m" | "l" | false;
-  showArrows?: HorizontalScrollProps["showArrows"];
+  size?: 's' | 'm' | 'l' | false;
+  showArrows?: HorizontalScrollProps['showArrows'];
   withSpaces?: boolean;
 }
 
@@ -23,7 +20,7 @@ export interface CardScrollProps extends React.HTMLAttributes<HTMLDivElement> {
  */
 export const CardScroll = ({
   children,
-  size = "s",
+  size = 's',
   showArrows = true,
   withSpaces = true,
   className,
@@ -41,15 +38,13 @@ export const CardScroll = ({
       return offset;
     }
     const containerWidth = refContainer.current.offsetWidth;
-    const slideIndex = (
-      [...refContainer.current.children] as HTMLElement[]
-    ).findIndex(
+    const slideIndex = ([...refContainer.current.children] as HTMLElement[]).findIndex(
       (el: HTMLElement) =>
         el.offsetLeft +
           el.offsetWidth +
           parseInt(window!.getComputedStyle(el).marginRight) -
           offset >=
-        0
+        0,
     );
 
     if (slideIndex === -1) {
@@ -63,9 +58,7 @@ export const CardScroll = ({
     const slide = refContainer.current.children[slideIndex] as HTMLElement;
 
     const scrollTo =
-      slide.offsetLeft -
-      (containerWidth - slide.offsetWidth) +
-      gapRef.current.offsetWidth;
+      slide.offsetLeft - (containerWidth - slide.offsetWidth) + gapRef.current.offsetWidth;
 
     if (scrollTo <= 2 * gapRef.current.offsetWidth) {
       return 0;
@@ -82,8 +75,7 @@ export const CardScroll = ({
     const containerWidth = refContainer.current.offsetWidth;
     const slide = Array.prototype.find.call(
       refContainer.current.children,
-      (el: HTMLElement) =>
-        el.offsetLeft + el.offsetWidth - offset > containerWidth
+      (el: HTMLElement) => el.offsetLeft + el.offsetWidth - offset > containerWidth,
     ) as HTMLElement;
 
     if (!slide) {
@@ -97,11 +89,11 @@ export const CardScroll = ({
     <div
       {...restProps}
       className={classNamesString(
-        styles["CardScroll"],
-        getSizeXClassName(styles["CardScroll"], sizeX),
+        styles['CardScroll'],
+        getSizeXClassName(styles['CardScroll'], sizeX),
         styles[`CardScroll--size-${size}`],
-        withSpaces && styles["CardScroll--withSpaces"],
-        className
+        withSpaces && styles['CardScroll--withSpaces'],
+        className,
       )}
     >
       <HorizontalScroll
@@ -109,10 +101,10 @@ export const CardScroll = ({
         getScrollToRight={getScrollToRight}
         showArrows={showArrows}
       >
-        <div className={styles["CardScroll__in"]} ref={refContainer}>
-          <span className={styles["CardScroll__gap"]} ref={gapRef} />
+        <div className={styles['CardScroll__in']} ref={refContainer}>
+          <span className={styles['CardScroll__gap']} ref={gapRef} />
           {children}
-          <span className={styles["CardScroll__gap"]} />
+          <span className={styles['CardScroll__gap']} />
         </div>
       </HorizontalScroll>
     </div>

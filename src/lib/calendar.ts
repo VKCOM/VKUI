@@ -11,7 +11,7 @@ import {
   isBefore,
   isFirstDayOfMonth,
   isLastDayOfMonth,
-} from "./date";
+} from './date';
 
 export const getYears = (currentYear: number, range: number) => {
   const years: Array<{
@@ -20,7 +20,7 @@ export const getYears = (currentYear: number, range: number) => {
   }> = [];
 
   for (let i = currentYear - range; i <= currentYear + range; i++) {
-    years.push({ label: String(i).padStart(4, "0"), value: i });
+    years.push({ label: String(i).padStart(4, '0'), value: i });
   }
 
   return years;
@@ -32,12 +32,12 @@ export const getMonths = (locale?: string) => {
     label: string;
   }> = [];
   const formatter = new Intl.DateTimeFormat(locale, {
-    month: "long",
+    month: 'long',
   });
 
   for (let i = 0; i < 12; i++) {
     months.push({
-      label: formatter.format(new Date("1970-01-01").setMonth(i)),
+      label: formatter.format(new Date('1970-01-01').setMonth(i)),
       value: i,
     });
   }
@@ -48,31 +48,30 @@ export const getMonths = (locale?: string) => {
 export const getDaysNames = (
   now: Date,
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6,
-  locale?: string
+  locale?: string,
 ) => {
   const formatter = new Intl.DateTimeFormat(locale, {
-    weekday: "short",
+    weekday: 'short',
   });
-  return eachDayOfInterval(
-    startOfWeek(now, weekStartsOn),
-    endOfWeek(now, weekStartsOn)
-  ).map((day) => formatter.format(day));
+  return eachDayOfInterval(startOfWeek(now, weekStartsOn), endOfWeek(now, weekStartsOn)).map(
+    (day) => formatter.format(day),
+  );
 };
 
 export const navigateDate = (date?: Date | null, key?: string) => {
   let newDate = date ?? new Date();
 
   switch (key) {
-    case "ArrowRight":
+    case 'ArrowRight':
       newDate = addDays(newDate, 1);
       break;
-    case "ArrowLeft":
+    case 'ArrowLeft':
       newDate = subDays(newDate, 1);
       break;
-    case "ArrowUp":
+    case 'ArrowUp':
       newDate = subWeeks(newDate, 1);
       break;
-    case "ArrowDown":
+    case 'ArrowDown':
       newDate = addWeeks(newDate, 1);
       break;
   }
@@ -80,10 +79,7 @@ export const navigateDate = (date?: Date | null, key?: string) => {
   return newDate;
 };
 
-export const getWeeks = (
-  viewDate: Date,
-  weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6
-) => {
+export const getWeeks = (viewDate: Date, weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6) => {
   const start = startOfWeek(startOfMonth(viewDate), weekStartsOn);
   const end = endOfWeek(endOfMonth(viewDate), weekStartsOn);
 
@@ -119,5 +115,4 @@ export const setTimeEqual = (to: Date, from?: Date | null) => {
 export const isFirstDay = (day: Date, dayOfWeek: number) =>
   dayOfWeek === 0 || isFirstDayOfMonth(day);
 
-export const isLastDay = (day: Date, dayOfWeek: number) =>
-  dayOfWeek === 6 || isLastDayOfMonth(day);
+export const isLastDay = (day: Date, dayOfWeek: number) => dayOfWeek === 6 || isLastDayOfMonth(day);

@@ -1,13 +1,13 @@
-import * as React from "react";
-import { getTitleFromChildren } from "./utils";
-import { SelectType } from "../components/Select/Select";
+import * as React from 'react';
+import { getTitleFromChildren } from './utils';
+import { SelectType } from '../components/Select/Select';
 
 type Option = {
   label?: React.ReactElement | string;
   [index: string]: any;
 };
 
-const findAllIncludes = (target = "", search = "") => {
+const findAllIncludes = (target = '', search = '') => {
   const includes = [];
 
   let i = target.indexOf(search);
@@ -23,18 +23,17 @@ let letterRegexp: RegExp;
 
 // На момент написания флаг u не поддерживался рядом браузеров, поэтому добавили фоллбэк.
 try {
-  letterRegexp = new RegExp("\\p{L}", "u");
+  letterRegexp = new RegExp('\\p{L}', 'u');
 } catch (e) {}
 
 type GetOptionLabel = (option: Option) => string | undefined;
 
-const _getOptionLabel: GetOptionLabel = (option) =>
-  getTitleFromChildren(option.label);
+const _getOptionLabel: GetOptionLabel = (option) => getTitleFromChildren(option.label);
 
 export const defaultFilterFn = (
-  query = "",
+  query = '',
   option: Option,
-  getOptionLabel: GetOptionLabel = _getOptionLabel
+  getOptionLabel: GetOptionLabel = _getOptionLabel,
 ) => {
   query = query.toLocaleLowerCase();
   let label = getOptionLabel(option)?.toLocaleLowerCase();
@@ -60,8 +59,6 @@ export const defaultFilterFn = (
   return false;
 };
 
-export const getFormFieldModeFromSelectType = (
-  selectType: SelectType = "default"
-) => {
-  return selectType === "default" ? "default" : "plain";
+export const getFormFieldModeFromSelectType = (selectType: SelectType = 'default') => {
+  return selectType === 'default' ? 'default' : 'plain';
 };

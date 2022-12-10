@@ -1,8 +1,8 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { usePlatform } from "../../hooks/usePlatform";
-import { Platform } from "../../lib/platform";
-import styles from "./Tabbar.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
+import styles from './Tabbar.module.css';
 
 export interface TabbarProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -12,49 +12,43 @@ export interface TabbarProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Задает расположение элементов (вертикальное/горизонтальное)
    */
-  mode?: "vertical" | "horizontal" | "auto";
+  mode?: 'vertical' | 'horizontal' | 'auto';
 }
 
 const getItemsLayoutClassName = (
-  itemsLayout: TabbarProps["mode"],
-  children: TabbarProps["children"]
+  itemsLayout: TabbarProps['mode'],
+  children: TabbarProps['children'],
 ): string => {
   switch (itemsLayout) {
-    case "horizontal":
-      return styles["Tabbar--layout-horizontal"];
-    case "vertical":
-      return styles["Tabbar--layout-vertical"];
+    case 'horizontal':
+      return styles['Tabbar--layout-horizontal'];
+    case 'vertical':
+      return styles['Tabbar--layout-vertical'];
     default:
       return React.Children.count(children) > 2
-        ? getItemsLayoutClassName("vertical", [])
-        : getItemsLayoutClassName("horizontal", []);
+        ? getItemsLayoutClassName('vertical', [])
+        : getItemsLayoutClassName('horizontal', []);
   }
 };
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Tabbar
  */
-export const Tabbar = ({
-  children,
-  shadow = true,
-  mode,
-  className,
-  ...restProps
-}: TabbarProps) => {
+export const Tabbar = ({ children, shadow = true, mode, className, ...restProps }: TabbarProps) => {
   const platform = usePlatform();
 
   return (
     <div
       className={classNamesString(
-        styles["Tabbar"],
-        platform === Platform.IOS && styles["Tabbar--ios"],
+        styles['Tabbar'],
+        platform === Platform.IOS && styles['Tabbar--ios'],
         getItemsLayoutClassName(mode, children),
-        shadow && styles["Tabbar--shadow"],
-        className
+        shadow && styles['Tabbar--shadow'],
+        className,
       )}
       {...restProps}
     >
-      <div className={styles["Tabbar__in"]}>{children}</div>
+      <div className={styles['Tabbar__in']}>{children}</div>
     </div>
   );
 };

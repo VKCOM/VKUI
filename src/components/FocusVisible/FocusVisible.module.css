@@ -1,4 +1,4 @@
-[class$="--focus-visible"] > .FocusVisible {
+[class$='--focus-visible'] > .FocusVisible {
   position: absolute;
   top: 2px;
   left: 2px;
@@ -12,7 +12,7 @@
   z-index: 0;
 }
 
-[class$="--focus-visible"] > .FocusVisible--mode-outside {
+[class$='--focus-visible'] > .FocusVisible--mode-outside {
   top: -2px;
   left: -2px;
   right: -2px;
@@ -26,7 +26,7 @@
  * navigating accessible vkui apps via keyboard
  */
 @media (prefers-reduced-motion: no-preference) {
-  [class$="--focus-visible"] > .FocusVisible {
+  [class$='--focus-visible'] > .FocusVisible {
     top: 4px;
     left: 4px;
     right: 4px;
@@ -36,7 +36,7 @@
     will-change: top, left, bottom, right;
   }
 
-  [class$="--focus-visible"] > .FocusVisible--mode-outside {
+  [class$='--focus-visible'] > .FocusVisible--mode-outside {
     top: 0;
     left: 0;
     bottom: 0;

@@ -1,16 +1,8 @@
-import * as React from "react";
-import { hasMouse as _hasPointer } from "@vkontakte/vkjs";
-import {
-  SizeType,
-  ViewWidth,
-  ViewHeight,
-  BREAKPOINTS,
-} from "../../lib/adaptivity";
-import {
-  useBridgeAdaptivity,
-  BridgeAdaptivity,
-} from "../../hooks/useBridgeAdaptivity";
-import { type AdaptivityProps, AdaptivityContext } from "./AdaptivityContext";
+import * as React from 'react';
+import { hasMouse as _hasPointer } from '@vkontakte/vkjs';
+import { SizeType, ViewWidth, ViewHeight, BREAKPOINTS } from '../../lib/adaptivity';
+import { useBridgeAdaptivity, BridgeAdaptivity } from '../../hooks/useBridgeAdaptivity';
+import { type AdaptivityProps, AdaptivityContext } from './AdaptivityContext';
 
 export interface AdaptivityProviderProps extends AdaptivityProps {
   children?: React.ReactNode;
@@ -49,30 +41,19 @@ export const AdaptivityProvider = ({
           hasPointer,
           hasHover,
         },
-        bridge
-      )
+        bridge,
+      ),
     );
   }, [viewWidth, viewHeight, sizeX, sizeY, hasPointer, hasHover, bridge]);
 
-  return (
-    <AdaptivityContext.Provider value={adaptivity}>
-      {children}
-    </AdaptivityContext.Provider>
-  );
+  return <AdaptivityContext.Provider value={adaptivity}>{children}</AdaptivityContext.Provider>;
 };
 
 function calculateAdaptivity(
-  {
-    viewWidth,
-    viewHeight,
-    sizeX,
-    sizeY,
-    hasPointer,
-    hasHover,
-  }: AdaptivityProps,
-  bridge: BridgeAdaptivity
+  { viewWidth, viewHeight, sizeX, sizeY, hasPointer, hasHover }: AdaptivityProps,
+  bridge: BridgeAdaptivity,
 ) {
-  if (bridge.type === "adaptive") {
+  if (bridge.type === 'adaptive') {
     const { viewportWidth, viewportHeight } = bridge;
 
     if (viewportWidth >= BREAKPOINTS.DESKTOP) {
@@ -109,14 +90,11 @@ function calculateAdaptivity(
     } else {
       sizeY = SizeType.REGULAR;
     }
-  } else if (
-    bridge.type === "force_mobile" ||
-    bridge.type === "force_mobile_compact"
-  ) {
+  } else if (bridge.type === 'force_mobile' || bridge.type === 'force_mobile_compact') {
     viewWidth = ViewWidth.MOBILE;
     sizeX = SizeType.COMPACT;
 
-    if (bridge.type === "force_mobile_compact") {
+    if (bridge.type === 'force_mobile_compact') {
       sizeY = SizeType.COMPACT;
     } else {
       sizeY = SizeType.REGULAR;
@@ -129,11 +107,7 @@ function calculateAdaptivity(
         sizeX = SizeType.REGULAR;
       }
     }
-    if (
-      sizeY === undefined &&
-      viewWidth !== undefined &&
-      viewHeight !== undefined
-    ) {
+    if (sizeY === undefined && viewWidth !== undefined && viewHeight !== undefined) {
       if (
         (viewWidth >= ViewWidth.SMALL_TABLET && _hasPointer) ||
         viewHeight <= ViewHeight.EXTRA_SMALL

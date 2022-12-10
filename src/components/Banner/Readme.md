@@ -2,8 +2,8 @@ Banner
 
 ```jsx
 const musicGradient =
-  "linear-gradient(135deg, #ADE6FF 0%, #ABE3FF 1%, #A7DCFF 3%, #A0CFFF 7%, #97BCFF 12%, #8DA4FF 19%, #8285FF 26%, #8B76FF 34%, #9C6AFF 43%, #B05FFF 52%, #C655FF 62%, #DB4CFF 71%, #EE45FF 81%, #FA41FF 91%, #FF3FFF 100%)";
-const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
+  'linear-gradient(135deg, #ADE6FF 0%, #ABE3FF 1%, #A7DCFF 3%, #A0CFFF 7%, #97BCFF 12%, #8DA4FF 19%, #8285FF 26%, #8B76FF 34%, #9C6AFF 43%, #B05FFF 52%, #C655FF 62%, #DB4CFF 71%, #EE45FF 81%, #FA41FF 91%, #FF3FFF 100%)';
+const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
 
 <View activePanel="banner">
   <Panel id="banner">
@@ -52,7 +52,7 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
       />
 
       <Banner
-        before={<Avatar size={48} src={getAvatarUrl("user_lihachyov")} />}
+        before={<Avatar size={48} src={getAvatarUrl('user_lihachyov')} />}
         header="Сегодня день рождения Михаила Лихачёва"
         subheader="Подарите подарок"
         asideMode="dismiss"
@@ -62,7 +62,7 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
       <Banner
         before={
           <Avatar size={28} style={{ backgroundImage: warningGradient }}>
-            <span style={{ color: "#fff" }}>!</span>
+            <span style={{ color: '#fff' }}>!</span>
           </Avatar>
         }
         header="Телефон ожидает подтверждения"
@@ -95,7 +95,7 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
         header="Больше интересных подкастов в каталоге"
         subheader="Найдите интересующие именно Вас подкасты!"
         asideMode="expand"
-        onClick={() => console.log("[Podcast banner] onClick")}
+        onClick={() => console.log('[Podcast banner] onClick')}
       />
     </Group>
 
@@ -107,12 +107,12 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
         background={
           <div
             style={{
-              backgroundColor: "#65c063",
+              backgroundColor: '#65c063',
               backgroundImage:
-                "url(https://sun9-59.userapi.com/7J6qHkTa_P8VKRTO5gkh6MizcCEefz04Y0gDmA/y6dSjdtPU4U.jpg)",
-              backgroundPosition: "right bottom",
+                'url(https://sun9-59.userapi.com/7J6qHkTa_P8VKRTO5gkh6MizcCEefz04Y0gDmA/y6dSjdtPU4U.jpg)',
+              backgroundPosition: 'right bottom',
               backgroundSize: 320,
-              backgroundRepeat: "no-repeat",
+              backgroundRepeat: 'no-repeat',
             }}
           />
         }
@@ -152,12 +152,12 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
         background={
           <div
             style={{
-              backgroundColor: "#5b9be6",
+              backgroundColor: '#5b9be6',
               backgroundImage:
-                "url(https://sun9-31.userapi.com/PQ4UCzqE_jue9hAINefBMorYCdfGXvcuV5nSjA/eYugcFYzdW8.jpg)",
-              backgroundPosition: "right bottom",
-              backgroundSize: "102%",
-              backgroundRepeat: "no-repeat",
+                'url(https://sun9-31.userapi.com/PQ4UCzqE_jue9hAINefBMorYCdfGXvcuV5nSjA/eYugcFYzdW8.jpg)',
+              backgroundPosition: 'right bottom',
+              backgroundSize: '102%',
+              backgroundRepeat: 'no-repeat',
             }}
           />
         }
@@ -183,12 +183,12 @@ const warningGradient = "linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)";
         background={
           <div
             style={{
-              backgroundColor: "#000",
+              backgroundColor: '#000',
               backgroundImage:
-                "url(https://sun9-53.userapi.com/m-ygfKiLKLkEMAQVTToO2l9LyC6GgqWoGXpw8A/-zm6_XLECTU.jpg)",
-              backgroundPosition: "right bottom",
+                'url(https://sun9-53.userapi.com/m-ygfKiLKLkEMAQVTToO2l9LyC6GgqWoGXpw8A/-zm6_XLECTU.jpg)',
+              backgroundPosition: 'right bottom',
               backgroundSize: 340,
-              backgroundRepeat: "no-repeat",
+              backgroundRepeat: 'no-repeat',
             }}
           />
         }

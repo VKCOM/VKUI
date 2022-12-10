@@ -1,22 +1,19 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   Icon28ChevronBack,
   Icon28ChevronLeftOutline,
   Icon28ArrowLeftOutline,
-} from "@vkontakte/icons";
-import {
-  PanelHeaderButton,
-  PanelHeaderButtonProps,
-} from "../PanelHeaderButton/PanelHeaderButton";
-import { Platform } from "../../lib/platform";
-import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import { usePlatform } from "../../hooks/usePlatform";
-import { classNamesString } from "../../lib/classNames";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import styles from "./PanelHeaderBack.module.css";
+} from '@vkontakte/icons';
+import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
+import { Platform } from '../../lib/platform';
+import { getSizeXClassName } from '../../helpers/getSizeXClassName';
+import { usePlatform } from '../../hooks/usePlatform';
+import { classNamesString } from '../../lib/classNames';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import styles from './PanelHeaderBack.module.css';
 
 export type PanelHeaderBackProps = PanelHeaderButtonProps & {
-  "aria-label"?: string;
+  'aria-label'?: string;
 };
 
 /**
@@ -24,7 +21,7 @@ export type PanelHeaderBackProps = PanelHeaderButtonProps & {
  */
 export const PanelHeaderBack = ({
   label,
-  "aria-label": ariaLabel = "Назад",
+  'aria-label': ariaLabel = 'Назад',
   className,
   ...restProps
 }: PanelHeaderButtonProps) => {
@@ -48,12 +45,12 @@ export const PanelHeaderBack = ({
     <PanelHeaderButton
       {...restProps}
       className={classNamesString(
-        styles["PanelHeaderBack"],
-        getSizeXClassName(styles["PanelHeaderBack"], sizeX),
-        platform === Platform.IOS && styles["PanelHeaderBack--ios"],
-        platform === Platform.VKCOM && styles["PanelHeaderBack--vkcom"],
-        showLabel && !!label && styles["PanelHeaderBack--has-label"],
-        className
+        styles['PanelHeaderBack'],
+        getSizeXClassName(styles['PanelHeaderBack'], sizeX),
+        platform === Platform.IOS && styles['PanelHeaderBack--ios'],
+        platform === Platform.VKCOM && styles['PanelHeaderBack--vkcom'],
+        showLabel && !!label && styles['PanelHeaderBack--has-label'],
+        className,
       )}
       label={showLabel && label}
       aria-label={ariaLabel}

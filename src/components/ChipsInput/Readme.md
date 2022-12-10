@@ -6,16 +6,16 @@
 const Example = () => {
   const [colors, setColors] = React.useState([
     {
-      value: "navarin",
-      label: "Наваринского пламени с дымом",
+      value: 'navarin',
+      label: 'Наваринского пламени с дымом',
     },
     {
-      value: "red",
-      label: "Красный",
+      value: 'red',
+      label: 'Красный',
     },
     {
-      value: "blue",
-      label: "Синий",
+      value: 'blue',
+      label: 'Синий',
     },
   ]);
 
@@ -33,11 +33,7 @@ const Example = () => {
             <ChipsInput
               value={colors}
               after={
-                <IconButton
-                  hoverMode="opacity"
-                  aria-label="Очистить поле"
-                  onClick={onClick}
-                >
+                <IconButton hoverMode="opacity" aria-label="Очистить поле" onClick={onClick}>
                   <Icon16Clear />
                 </IconButton>
               }
@@ -51,25 +47,25 @@ const Example = () => {
               readOnly
               value={[
                 {
-                  value: "1",
-                  label: "Arctic Monkeys",
-                  src: getAvatarUrl("audio_arctic_monkeys"),
+                  value: '1',
+                  label: 'Arctic Monkeys',
+                  src: getAvatarUrl('audio_arctic_monkeys'),
                 },
                 {
-                  value: "2",
-                  label: "Звери",
-                  src: getAvatarUrl("audio_leto_zveri"),
+                  value: '2',
+                  label: 'Звери',
+                  src: getAvatarUrl('audio_leto_zveri'),
                 },
-                { value: "4", label: "FACE", src: getAvatarUrl("audio_face") },
+                { value: '4', label: 'FACE', src: getAvatarUrl('audio_face') },
                 {
-                  value: "3",
-                  label: "Depeche Mode",
-                  src: getAvatarUrl("audio_depeche_mode"),
+                  value: '3',
+                  label: 'Depeche Mode',
+                  src: getAvatarUrl('audio_depeche_mode'),
                 },
                 {
-                  value: "5",
-                  label: "Linkin Park",
-                  src: getAvatarUrl("audio_linkin_park"),
+                  value: '5',
+                  label: 'Linkin Park',
+                  src: getAvatarUrl('audio_linkin_park'),
                 },
               ]}
               renderChip={({ value, label, option: { src }, ...rest }) => (

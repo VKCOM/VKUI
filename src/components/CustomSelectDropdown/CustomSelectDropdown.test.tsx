@@ -1,32 +1,23 @@
-import * as React from "react";
-import { screen, render } from "@testing-library/react";
-import { CustomSelectDropdown } from "./CustomSelectDropdown";
+import * as React from 'react';
+import { screen, render } from '@testing-library/react';
+import { CustomSelectDropdown } from './CustomSelectDropdown';
 
-describe("CustomSelectDropdown", () => {
-  it("Displays only spinner if fetching: true", () => {
+describe('CustomSelectDropdown', () => {
+  it('Displays only spinner if fetching: true', () => {
     render(
-      <CustomSelectDropdown
-        targetRef={React.createRef()}
-        scrollBoxRef={React.createRef()}
-        fetching
-      >
+      <CustomSelectDropdown targetRef={React.createRef()} scrollBoxRef={React.createRef()} fetching>
         <div data-testid="test-content">test</div>
-      </CustomSelectDropdown>
+      </CustomSelectDropdown>,
     );
-    expect(
-      document.querySelector(".vkuiCustomSelectDropdown__fetching")
-    ).not.toBeNull();
+    expect(document.querySelector('.vkuiCustomSelectDropdown__fetching')).not.toBeNull();
   });
 
-  it("Displays children if fetching: false", () => {
+  it('Displays children if fetching: false', () => {
     render(
-      <CustomSelectDropdown
-        targetRef={React.createRef()}
-        scrollBoxRef={React.createRef()}
-      >
+      <CustomSelectDropdown targetRef={React.createRef()} scrollBoxRef={React.createRef()}>
         <div data-testid="test-content">test</div>
-      </CustomSelectDropdown>
+      </CustomSelectDropdown>,
     );
-    expect(screen.getByTestId("test-content")).not.toBeNull();
+    expect(screen.getByTestId('test-content')).not.toBeNull();
   });
 });

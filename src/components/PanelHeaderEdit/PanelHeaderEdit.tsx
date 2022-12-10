@@ -1,11 +1,8 @@
-import * as React from "react";
-import {
-  PanelHeaderButton,
-  PanelHeaderButtonProps,
-} from "../PanelHeaderButton/PanelHeaderButton";
-import { Platform } from "../../lib/platform";
-import { Icon28EditOutline, Icon28DoneOutline } from "@vkontakte/icons";
-import { usePlatform } from "../../hooks/usePlatform";
+import * as React from 'react';
+import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
+import { Platform } from '../../lib/platform';
+import { Icon28EditOutline, Icon28DoneOutline } from '@vkontakte/icons';
+import { usePlatform } from '../../hooks/usePlatform';
 
 export interface PanelHeaderEditProps extends PanelHeaderButtonProps {
   /**
@@ -27,8 +24,8 @@ export interface PanelHeaderEditProps extends PanelHeaderButtonProps {
  */
 export const PanelHeaderEdit = ({
   isActive = false,
-  editLabel = "Редактировать",
-  doneLabel = "Готово",
+  editLabel = 'Редактировать',
+  doneLabel = 'Готово',
   ...restProps
 }: PanelHeaderEditProps) => {
   const iOSText = isActive ? doneLabel : editLabel;

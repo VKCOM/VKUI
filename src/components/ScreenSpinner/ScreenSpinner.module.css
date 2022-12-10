@@ -42,8 +42,7 @@
 .ScreenSpinner--state-done .ScreenSpinner__icon :global(.vkuiIcon) path {
   stroke-dasharray: 50;
   stroke-dashoffset: 50;
-  animation: vkui-screen-spinner-iconDone 0.6s 0.3s
-    var(--vkui--animation_easing_platform) forwards;
+  animation: vkui-screen-spinner-iconDone 0.6s 0.3s var(--vkui--animation_easing_platform) forwards;
 }
 
 @keyframes vkui-screen-spinner-iconDone {

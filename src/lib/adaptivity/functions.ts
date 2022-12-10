@@ -1,10 +1,8 @@
-import { type PlatformType, Platform } from "../platform";
-import type { MediaQueries } from "./types";
-import { SizeType, ViewHeight, ViewWidth } from "./constants";
+import { type PlatformType, Platform } from '../platform';
+import type { MediaQueries } from './types';
+import { SizeType, ViewHeight, ViewWidth } from './constants';
 
-export function getViewWidthByMediaQueries(
-  mediaQueries: MediaQueries
-): ViewWidth {
+export function getViewWidthByMediaQueries(mediaQueries: MediaQueries): ViewWidth {
   /* eslint-disable no-restricted-properties */
   if (mediaQueries.desktopPlus.matches) {
     return ViewWidth.DESKTOP;
@@ -22,9 +20,7 @@ export function getViewWidthByMediaQueries(
   return ViewWidth.SMALL_MOBILE;
 }
 
-export function getViewHeightByMediaQueries(
-  mediaQueries: MediaQueries
-): ViewHeight {
+export function getViewHeightByMediaQueries(mediaQueries: MediaQueries): ViewHeight {
   /* eslint-disable no-restricted-properties */
   if (mediaQueries.mediumHeight.matches) {
     return ViewHeight.MEDIUM;
@@ -43,12 +39,9 @@ export function getSizeX(viewWidth: ViewWidth): SizeType {
 export function getSizeY(
   viewWidth: ViewWidth,
   viewHeight: ViewHeight,
-  hasPointer: boolean
+  hasPointer: boolean,
 ): SizeType {
-  if (
-    (viewWidth >= ViewWidth.SMALL_TABLET && hasPointer) ||
-    viewHeight <= ViewHeight.EXTRA_SMALL
-  ) {
+  if ((viewWidth >= ViewWidth.SMALL_TABLET && hasPointer) || viewHeight <= ViewHeight.EXTRA_SMALL) {
     return SizeType.COMPACT;
   }
   return SizeType.REGULAR;
@@ -73,7 +66,7 @@ export function tryToCheckIsDesktop(
   viewWidth: undefined | ViewWidth,
   viewHeight: undefined | ViewHeight,
   hasPointer: undefined | boolean,
-  platform?: PlatformType
+  platform?: PlatformType,
 ): null | boolean {
   // см. https://github.com/VKCOM/VKUI/pull/2473
   const IS_VKCOM_CRUTCH = platform === Platform.VKCOM;
@@ -88,10 +81,7 @@ export function tryToCheckIsDesktop(
 
   const widthIsLikeDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
   const otherParametersIsLikeDesktop =
-    hasPointer ||
-    (viewHeight !== undefined ? viewHeight >= ViewHeight.MEDIUM : false);
+    hasPointer || (viewHeight !== undefined ? viewHeight >= ViewHeight.MEDIUM : false);
 
-  return (
-    (widthIsLikeDesktop && otherParametersIsLikeDesktop) || IS_VKCOM_CRUTCH
-  );
+  return (widthIsLikeDesktop && otherParametersIsLikeDesktop) || IS_VKCOM_CRUTCH;
 }

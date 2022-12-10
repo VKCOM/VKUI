@@ -1,29 +1,26 @@
-import * as React from "react";
-import { AppearanceType } from "@vkontakte/vk-bridge";
-import { classNamesString } from "../../lib/classNames";
-import { usePlatform } from "../../hooks/usePlatform";
-import { Platform } from "../../lib/platform";
-import { ConfigProviderOverride } from "../ConfigProvider/ConfigProviderOverride";
+import * as React from 'react';
+import { AppearanceType } from '@vkontakte/vk-bridge';
+import { classNamesString } from '../../lib/classNames';
+import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
+import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 
 export interface AppearanceProviderProps {
   appearance: AppearanceType;
   children: React.ReactNode;
 }
 
-export const generateVKUITokensClassName = (
-  platform: string,
-  appearance: string
-): string => {
+export const generateVKUITokensClassName = (platform: string, appearance: string): string => {
   let tokensPlatform;
   switch (platform) {
     case Platform.ANDROID:
-      tokensPlatform = "vkBase";
+      tokensPlatform = 'vkBase';
       break;
     case Platform.IOS:
-      tokensPlatform = "vkIOS";
+      tokensPlatform = 'vkIOS';
       break;
     case Platform.VKCOM:
-      tokensPlatform = "vkCom";
+      tokensPlatform = 'vkCom';
       break;
     default:
       tokensPlatform = platform;
@@ -35,10 +32,7 @@ export const generateVKUITokensClassName = (
 /**
  * @see https://vkcom.github.io/VKUI/#/AppearanceProvider
  */
-export const AppearanceProvider = ({
-  appearance,
-  children,
-}: AppearanceProviderProps) => {
+export const AppearanceProvider = ({ appearance, children }: AppearanceProviderProps) => {
   const platform = usePlatform();
 
   return (
@@ -48,7 +42,7 @@ export const AppearanceProvider = ({
           return React.cloneElement(child, {
             className: classNamesString(
               child.props.className,
-              generateVKUITokensClassName(platform, appearance)
+              generateVKUITokensClassName(platform, appearance),
             ),
           });
         }

@@ -1,14 +1,14 @@
-import * as React from "react";
-import { HasComponent, HasRootRef } from "../../types";
-import { classNamesString } from "../../lib/classNames";
-import { useExternRef } from "../../hooks/useExternRef";
-import { hasReactNode, noop } from "../../lib/utils";
-import { Subhead } from "../Typography/Subhead/Subhead";
-import { Footnote } from "../Typography/Footnote/Footnote";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { Removable, RemovableProps } from "../Removable/Removable";
-import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import styles from "./FormItem.module.css";
+import * as React from 'react';
+import { HasComponent, HasRootRef } from '../../types';
+import { classNamesString } from '../../lib/classNames';
+import { useExternRef } from '../../hooks/useExternRef';
+import { hasReactNode, noop } from '../../lib/utils';
+import { Subhead } from '../Typography/Subhead/Subhead';
+import { Footnote } from '../Typography/Footnote/Footnote';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { Removable, RemovableProps } from '../Removable/Removable';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import styles from './FormItem.module.css';
 
 export interface FormItemProps
   extends React.AllHTMLAttributes<HTMLElement>,
@@ -17,7 +17,7 @@ export interface FormItemProps
     RemovableProps {
   top?: React.ReactNode;
   bottom?: React.ReactNode;
-  status?: "default" | "error" | "valid";
+  status?: 'default' | 'error' | 'valid';
   /**
    * Дает возможность удалить `FormItem`. Рекомендуется использовать только для `Input` или `Select`.
    */
@@ -31,11 +31,11 @@ export const FormItem = ({
   children,
   top,
   bottom,
-  status = "default",
-  Component = "div",
+  status = 'default',
+  Component = 'div',
   removable,
   onRemove = noop,
-  removePlaceholder = "Удалить",
+  removePlaceholder = 'Удалить',
   getRootRef,
   className,
   ...restProps
@@ -45,13 +45,9 @@ export const FormItem = ({
 
   const wrappedChildren = (
     <React.Fragment>
-      {hasReactNode(top) && (
-        <Subhead className={styles["FormItem__top"]}>{top}</Subhead>
-      )}
+      {hasReactNode(top) && <Subhead className={styles['FormItem__top']}>{top}</Subhead>}
       {children}
-      {hasReactNode(bottom) && (
-        <Footnote className={styles["FormItem__bottom"]}>{bottom}</Footnote>
-      )}
+      {hasReactNode(bottom) && <Footnote className={styles['FormItem__bottom']}>{bottom}</Footnote>}
     </React.Fragment>
   );
 
@@ -60,12 +56,12 @@ export const FormItem = ({
       {...restProps}
       ref={rootEl}
       className={classNamesString(
-        styles["FormItem"],
-        status !== "default" && styles[`FormItem--status-${status}`],
-        getSizeYClassName(styles["FormItem"], sizeY),
-        hasReactNode(top) && styles["FormItem--withTop"],
-        removable && styles["FormItem--removable"],
-        className
+        styles['FormItem'],
+        status !== 'default' && styles[`FormItem--status-${status}`],
+        getSizeYClassName(styles['FormItem'], sizeY),
+        hasReactNode(top) && styles['FormItem--withTop'],
+        removable && styles['FormItem--removable'],
+        className,
       )}
     >
       {removable ? (
@@ -78,7 +74,7 @@ export const FormItem = ({
           }}
           removePlaceholder={removePlaceholder}
         >
-          <div className={styles["FormItem__removable"]}>{wrappedChildren}</div>
+          <div className={styles['FormItem__removable']}>{wrappedChildren}</div>
         </Removable>
       ) : (
         wrappedChildren

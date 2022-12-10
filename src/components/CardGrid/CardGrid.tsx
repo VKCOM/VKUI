@@ -1,11 +1,11 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import styles from "./CardGrid.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { getSizeXClassName } from '../../helpers/getSizeXClassName';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import styles from './CardGrid.module.css';
 
 export interface CardGridProps extends React.HTMLAttributes<HTMLDivElement> {
-  size?: "s" | "m" | "l";
+  size?: 's' | 'm' | 'l';
   /**
    * Если true, то вокруг компонента присутствуют стандартные отсупы сверху/снизу и слева/справа
    */
@@ -17,7 +17,7 @@ export interface CardGridProps extends React.HTMLAttributes<HTMLDivElement> {
  */
 export const CardGrid = ({
   children,
-  size = "s",
+  size = 's',
   spaced = false,
   className,
   ...restProps
@@ -28,11 +28,11 @@ export const CardGrid = ({
     <div
       {...restProps}
       className={classNamesString(
-        styles["CardGrid"],
-        spaced && styles["CardGrid--spaced"],
+        styles['CardGrid'],
+        spaced && styles['CardGrid--spaced'],
         styles[`CardGrid--size-${size}`],
-        getSizeXClassName(styles["CardGrid"], sizeX),
-        className
+        getSizeXClassName(styles['CardGrid'], sizeX),
+        className,
       )}
     >
       {children}

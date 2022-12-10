@@ -1,9 +1,9 @@
-import ts from "typescript";
+import ts from 'typescript';
 
-import { getCustomVariables, getVKUIToken } from "./styleProperty";
+import { getCustomVariables, getVKUIToken } from './styleProperty';
 
 const transformer: ts.TransformerFactory<ts.SourceFile> = (context) => {
-  let tagName = "";
+  let tagName = '';
 
   /**
    * Перебираем свойства style
@@ -20,19 +20,12 @@ const transformer: ts.TransformerFactory<ts.SourceFile> = (context) => {
           return;
         }
 
-        const vkuiToken = getVKUIToken(
-          tagName,
-          node.name.escapedText as string,
-          customVariable
-        );
+        const vkuiToken = getVKUIToken(tagName, node.name.escapedText as string, customVariable);
         if (!vkuiToken || !ts.isStringLiteral(node.initializer)) {
           return;
         }
 
-        node.initializer.text = node.initializer.text.replace(
-          customVariable,
-          vkuiToken
-        );
+        node.initializer.text = node.initializer.text.replace(customVariable, vkuiToken);
       });
 
       return node;
@@ -48,7 +41,7 @@ const transformer: ts.TransformerFactory<ts.SourceFile> = (context) => {
     if (
       ts.isJsxAttribute(node) &&
       ts.isIdentifier(node.name) &&
-      node.name.escapedText === "style"
+      node.name.escapedText === 'style'
     ) {
       return ts.visitEachChild(node, searchPropertyAssignment, context);
     }

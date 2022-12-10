@@ -77,31 +77,23 @@
   min-width: 1px;
 }
 
-.FormLayoutGroup--mode-horizontal:not(.FormLayoutGroup--segmented)
-  .FormItem
-  + .FormItem {
+.FormLayoutGroup--mode-horizontal:not(.FormLayoutGroup--segmented) .FormItem + .FormItem {
   margin-left: 24px;
 }
 
 .FormItem--withTop .FormItem__removable,
 .FormLayoutGroup--mode-horizontal .FormItem--withTop {
-  margin-top: calc(
-    -2px - var(--vkui--font_subhead--line_height--regular) - 8px
-  );
+  margin-top: calc(-2px - var(--vkui--font_subhead--line_height--regular) - 8px);
 }
 
 .FormItem--sizeY-compact.FormItem--withTop .FormItem__removable,
 .FormLayoutGroup--mode-horizontal .FormItem--sizeY-compact.FormItem--withTop {
-  margin-top: calc(
-    -2px - var(--vkui--font_subhead--line_height--compact) - 6px
-  );
+  margin-top: calc(-2px - var(--vkui--font_subhead--line_height--compact) - 6px);
 }
 
 @media (--sizeY-compact) {
   .FormItem--sizeY-none.FormItem--withTop .FormItem__removable,
   .FormLayoutGroup--mode-horizontal .FormItem--sizeY-none.FormItem--withTop {
-    margin-top: calc(
-      -2px - var(--vkui--font_subhead--line_height--compact) - 6px
-    );
+    margin-top: calc(-2px - var(--vkui--font_subhead--line_height--compact) - 6px);
   }
 }

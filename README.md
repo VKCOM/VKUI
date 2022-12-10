@@ -37,8 +37,8 @@ pnpm add @vkontakte/vkui @vkontakte/icons @vkontakte/vk-bridge
 ## Hello World
 
 ```jsx static
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 import {
   AdaptivityProvider,
   ConfigProvider,
@@ -51,8 +51,8 @@ import {
   Header,
   Group,
   SimpleCell,
-} from "@vkontakte/vkui";
-import "@vkontakte/vkui/dist/vkui.css";
+} from '@vkontakte/vkui';
+import '@vkontakte/vkui/dist/vkui.css';
 
 const Example = () => {
   return (
@@ -80,7 +80,7 @@ ReactDOM.render(
       <Example />
     </AdaptivityProvider>
   </ConfigProvider>,
-  document.getElementById("root")
+  document.getElementById('root'),
 );
 ```
 

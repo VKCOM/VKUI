@@ -1,25 +1,20 @@
-import * as React from "react";
-import { useChipsInput } from "./useChipsInput";
-import { ChipsSelectProps } from "../components/ChipsSelect/ChipsSelect";
-import { ChipOption } from "../components/Chip/Chip";
+import * as React from 'react';
+import { useChipsInput } from './useChipsInput';
+import { ChipsSelectProps } from '../components/ChipsSelect/ChipsSelect';
+import { ChipOption } from '../components/Chip/Chip';
 
 export const useChipsSelect = <Option extends ChipOption>(
-  props: Partial<ChipsSelectProps<Option>>
+  props: Partial<ChipsSelectProps<Option>>,
 ) => {
   const { options, filterFn, getOptionLabel, getOptionValue } = props;
 
   const [opened, setOpened] = React.useState(false);
-  const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<
-    number | null
-  >(0);
+  const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number | null>(0);
   const [focusedOption, setFocusedOption] = React.useState<Option | null>(null);
 
-  const { fieldValue, selectedOptions, ...chipsInputState } =
-    useChipsInput(props);
+  const { fieldValue, selectedOptions, ...chipsInputState } = useChipsInput(props);
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement> | undefined
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | undefined) => {
     if (!e) {
       return;
     }
@@ -33,9 +28,7 @@ export const useChipsSelect = <Option extends ChipOption>(
 
   let filteredOptions = React.useMemo(() => {
     return filterFn
-      ? options!.filter((option) =>
-          filterFn(fieldValue, option, getOptionLabel)
-        )
+      ? options!.filter((option) => filterFn(fieldValue, option, getOptionLabel))
       : (options as Option[]);
   }, [options, filterFn, fieldValue, getOptionLabel]);
 

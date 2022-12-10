@@ -23,7 +23,7 @@ const Example = () => {
         >
           <PanelHeaderContent
             status="был в сети сегодня, в 18:46"
-            before={<Avatar size={36} src={getAvatarUrl("user_va")} />}
+            before={<Avatar size={36} src={getAvatarUrl('user_va')} />}
           >
             Влад Анесов
           </PanelHeaderContent>

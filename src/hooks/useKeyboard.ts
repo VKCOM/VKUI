@@ -1,6 +1,6 @@
-import * as React from "react";
-import { useDOM } from "../lib/dom";
-import { useGlobalEventListener } from "./useGlobalEventListener";
+import * as React from 'react';
+import { useDOM } from '../lib/dom';
+import { useGlobalEventListener } from './useGlobalEventListener';
 
 interface SoftwareKeyboardState {
   isOpened: boolean;
@@ -16,9 +16,7 @@ export function getPreciseKeyboardState(window: any): boolean {
     screen: { availHeight },
   } = window;
 
-  const coveredViewportPercentage = Math.round(
-    (1 - innerHeight / availHeight) * 100
-  );
+  const coveredViewportPercentage = Math.round((1 - innerHeight / availHeight) * 100);
   return coveredViewportPercentage > 24;
 }
 
@@ -35,12 +33,12 @@ export function useKeyboard(): SoftwareKeyboardState {
   const onFocus = React.useCallback(
     (event: FocusEvent | true) => {
       const isOpened =
-        (event === true || event.type === "focusin") &&
-        (document?.activeElement?.tagName === "INPUT" ||
-          document?.activeElement?.tagName === "TEXTAREA");
+        (event === true || event.type === 'focusin') &&
+        (document?.activeElement?.tagName === 'INPUT' ||
+          document?.activeElement?.tagName === 'TEXTAREA');
       setIsOpened(isOpened);
     },
-    [document?.activeElement?.tagName]
+    [document?.activeElement?.tagName],
   );
 
   /**
@@ -51,8 +49,8 @@ export function useKeyboard(): SoftwareKeyboardState {
     onFocus(true);
   }, [onFocus]);
 
-  useGlobalEventListener(document, "focusout", onFocus, eventOptions);
-  useGlobalEventListener(document, "focusin", onFocus, eventOptions);
+  useGlobalEventListener(document, 'focusout', onFocus, eventOptions);
+  useGlobalEventListener(document, 'focusin', onFocus, eventOptions);
 
   return { isOpened };
 }

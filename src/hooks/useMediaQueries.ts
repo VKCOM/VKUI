@@ -1,7 +1,7 @@
-import * as React from "react";
-import { type MediaQueries, MEDIA_QUERIES } from "../lib/adaptivity";
-import { mediaQueryNull } from "../lib/browser";
-import { useDOM } from "../lib/dom";
+import * as React from 'react';
+import { type MediaQueries, MEDIA_QUERIES } from '../lib/adaptivity';
+import { mediaQueryNull } from '../lib/browser';
+import { useDOM } from '../lib/dom';
 
 interface StoredMediaQueries {
   /**
@@ -37,16 +37,11 @@ export const useMediaQueries = () => {
 
   return React.useMemo(
     function initializeStoreOrUpdateStoreIfWindowChanges() {
-      if (
-        storedMediaQueries.window === window &&
-        storedMediaQueries.mediaQueries !== null
-      ) {
+      if (storedMediaQueries.window === window && storedMediaQueries.mediaQueries !== null) {
         return storedMediaQueries.mediaQueries;
       }
 
-      const matchMedia = window
-        ? window.matchMedia.bind(window)
-        : mediaQueryNull;
+      const matchMedia = window ? window.matchMedia.bind(window) : mediaQueryNull;
 
       storedMediaQueries.window = window;
       storedMediaQueries.mediaQueries = {
@@ -55,13 +50,11 @@ export const useMediaQueries = () => {
         smallTablet: matchMedia(MEDIA_QUERIES.SMALL_TABLET),
         mobile: matchMedia(MEDIA_QUERIES.MOBILE),
         mediumHeight: matchMedia(MEDIA_QUERIES.MEDIUM_HEIGHT),
-        mobileLandscapeHeight: matchMedia(
-          MEDIA_QUERIES.MOBILE_LANDSCAPE_HEIGHT
-        ),
+        mobileLandscapeHeight: matchMedia(MEDIA_QUERIES.MOBILE_LANDSCAPE_HEIGHT),
       };
 
       return storedMediaQueries.mediaQueries;
     },
-    [window]
+    [window],
   );
 };

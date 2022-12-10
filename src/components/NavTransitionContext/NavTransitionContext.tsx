@@ -1,5 +1,5 @@
-import * as React from "react";
-import { useObjectMemo } from "../../hooks/useObjectMemo";
+import * as React from 'react';
+import { useObjectMemo } from '../../hooks/useObjectMemo';
 
 export interface TransitionContextProps {
   entering: boolean;
@@ -17,9 +17,5 @@ export const NavTransitionProvider = ({
   const contextValue = useObjectMemo({
     entering: parentContext.entering || entering,
   });
-  return (
-    <TransitionContext.Provider value={contextValue}>
-      {children}
-    </TransitionContext.Provider>
-  );
+  return <TransitionContext.Provider value={contextValue}>{children}</TransitionContext.Provider>;
 };

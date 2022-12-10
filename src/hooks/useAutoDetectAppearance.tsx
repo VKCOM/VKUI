@@ -1,17 +1,17 @@
-import * as React from "react";
+import * as React from 'react';
 import vkBridge, {
   AnyReceiveMethodName,
   AppearanceType,
   VKBridgeEvent,
-} from "@vkontakte/vk-bridge";
-import { useDOM } from "../lib/dom";
-import { noop } from "../lib/utils";
-import { resolveAppearance, VKBridgeConfigData } from "../helpers/appearance";
+} from '@vkontakte/vk-bridge';
+import { useDOM } from '../lib/dom';
+import { noop } from '../lib/utils';
+import { resolveAppearance, VKBridgeConfigData } from '../helpers/appearance';
 
 let initialAppearance: AppearanceType | null = null;
 
 vkBridge
-  .send("VKWebAppGetConfig")
+  .send('VKWebAppGetConfig')
   .then((data) => {
     initialAppearance = resolveAppearance(data);
   })
@@ -19,12 +19,12 @@ vkBridge
 
 function autoDetectAppearanceByBridge(
   setAppearance: (value: AppearanceType) => void,
-  onDetectAppearanceByBridge: () => void
+  onDetectAppearanceByBridge: () => void,
 ) {
   function bridgeListener(e: VKBridgeEvent<AnyReceiveMethodName>) {
     const { type, data } = e.detail;
 
-    if (type !== "VKWebAppUpdateConfig") {
+    if (type !== 'VKWebAppUpdateConfig') {
       return;
     }
 
@@ -43,12 +43,10 @@ function autoDetectAppearanceByBridge(
 
 function autoDetectAppearance(
   window: Window | undefined,
-  setAppearance: (value: AppearanceType) => void
+  setAppearance: (value: AppearanceType) => void,
 ): () => void {
   const mediaQuery =
-    window &&
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)");
+    window && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
 
   if (mediaQuery === undefined) {
     return noop;
@@ -56,18 +54,18 @@ function autoDetectAppearance(
 
   const check = (event: MediaQueryList | MediaQueryListEvent) => {
     // eslint-disable-next-line no-restricted-properties
-    setAppearance(event.matches ? "dark" : "light");
+    setAppearance(event.matches ? 'dark' : 'light');
   };
 
   check(mediaQuery);
-  mediaQuery.addEventListener("change", check);
+  mediaQuery.addEventListener('change', check);
 
-  return () => mediaQuery.removeEventListener("change", check);
+  return () => mediaQuery.removeEventListener('change', check);
 }
 
 export const useAutoDetectAppearance = (
   appearanceProp?: AppearanceType,
-  onDetectAppearanceByBridge?: () => void
+  onDetectAppearanceByBridge?: () => void,
 ): AppearanceType => {
   const { window } = useDOM();
   const onceDetectAppearanceByBridge = React.useRef(() => {
@@ -86,12 +84,10 @@ export const useAutoDetectAppearance = (
     }
 
     const mediaQuery =
-      window &&
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)");
+      window && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
 
     // eslint-disable-next-line no-restricted-properties
-    return mediaQuery?.matches ? "dark" : "light";
+    return mediaQuery?.matches ? 'dark' : 'light';
   });
 
   React.useEffect(() => {
@@ -101,10 +97,7 @@ export const useAutoDetectAppearance = (
     }
 
     if (vkBridge.isEmbedded()) {
-      return autoDetectAppearanceByBridge(
-        setAppearance,
-        onceDetectAppearanceByBridge.current
-      );
+      return autoDetectAppearanceByBridge(setAppearance, onceDetectAppearanceByBridge.current);
     }
 
     return autoDetectAppearance(window, setAppearance);

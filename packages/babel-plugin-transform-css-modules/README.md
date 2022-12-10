@@ -9,26 +9,23 @@
 **input.jsx**
 
 ```jsx
-import * as React from "react";
-import { classNames } from "@vkontakte/vkjs";
-import styles from "./Component.module.css";
+import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
+import styles from './Component.module.css';
 
 const headerLevelClassName = {
-  1: styles["Component__header--level-1"],
-  2: styles["Component__header--level-2"],
+  1: styles['Component__header--level-1'],
+  2: styles['Component__header--level-2'],
 };
 
 const Component = ({ mode, level = 1, disabled, children }) => {
-  const headerClassName = classNames(
-    styles.Component__header,
-    headerLevelClassName[level]
-  );
+  const headerClassName = classNames(styles.Component__header, headerLevelClassName[level]);
   return (
     <div
       className={classNames(
         styles.Component,
-        disabled && styles["Component--disabled"],
-        mode && styles[`Component--mode-${mode}`]
+        disabled && styles['Component--disabled'],
+        mode && styles[`Component--mode-${mode}`],
       )}
     >
       <h2 className={headerClassName}>{children}</h2>
@@ -40,42 +37,39 @@ const Component = ({ mode, level = 1, disabled, children }) => {
 **output.js**
 
 ```js
-import * as React from "react";
-import { classNames } from "@vkontakte/vkjs";
-import "./Component.module.css";
+import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
+import './Component.module.css';
 
 var headerLevelClassName = {
-  1: "_Component__header--level-1_526t4_19",
-  2: "_Component__header--level-2_526t4_21",
+  1: '_Component__header--level-1_526t4_19',
+  2: '_Component__header--level-2_526t4_21',
 };
 
 var Component = ({ mode, level = 1, disabled, children }) => {
-  const headerClassName = classNames(
-    "_Component__header_526t4_17",
-    headerLevelClassName[level]
-  );
+  const headerClassName = classNames('_Component__header_526t4_17', headerLevelClassName[level]);
   return /*#__PURE__*/ React.createElement(
-    "div",
+    'div',
     {
       className: classNames(
-        "_Component_526t4_1",
-        disabled && "_Component--disabled_526t4_3",
-        mode && styles[`Component--mode-${mode}`]
+        '_Component_526t4_1',
+        disabled && '_Component--disabled_526t4_3',
+        mode && styles[`Component--mode-${mode}`],
       ),
     },
     /*#__PURE__*/ React.createElement(
-      "h2",
+      'h2',
       {
         className: headerClassName,
       },
-      children
-    )
+      children,
+    ),
   );
 };
 
 var styles = {
-  "Component--mode-secondary": "_Component--mode-secondary_526t4_5",
-  "Component--mode-tertiary": "_Component--mode-tertiary_526t4_7",
+  'Component--mode-secondary': '_Component--mode-secondary_526t4_5',
+  'Component--mode-tertiary': '_Component--mode-tertiary_526t4_7',
 };
 ```
 
@@ -103,7 +97,7 @@ var styles = {
   - Требует обращаться к свойствам внутри атрибутов, указанных в параметре `attributeNames`.
     ```jsx
     // ❌ вот так не сработает
-    import styles from "./Component.css";
+    import styles from './Component.css';
     const className = styles.Component;
     <div styleName={className} />;
     ```

@@ -1,6 +1,6 @@
 export enum ModalType {
-  PAGE = "page",
-  CARD = "card",
+  PAGE = 'page',
+  CARD = 'card',
 }
 
 export type TranslateRange = [number, number];

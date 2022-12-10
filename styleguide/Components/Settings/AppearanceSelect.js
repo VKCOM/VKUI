@@ -1,6 +1,6 @@
-import React from "react";
-import { Appearance, Link } from "@vkui";
-import { Setting } from "../Setting/Setting";
+import React from 'react';
+import { Appearance, Link } from '@vkui';
+import { Setting } from '../Setting/Setting';
 
 export const AppearanceSelect = ({ onChange, value, ...restProps }) => {
   return (

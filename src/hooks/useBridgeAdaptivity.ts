@@ -1,9 +1,9 @@
-import * as React from "react";
-import vkBridge from "@vkontakte/vk-bridge";
-import { useIsomorphicLayoutEffect } from "../lib/useIsomorphicLayoutEffect";
+import * as React from 'react';
+import vkBridge from '@vkontakte/vk-bridge';
+import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
 export interface BridgeAdaptivity {
-  type: "" | "force_mobile" | "force_mobile_compact" | "adaptive";
+  type: '' | 'force_mobile' | 'force_mobile_compact' | 'adaptive';
   viewportWidth: number;
   viewportHeight: number;
 }
@@ -18,7 +18,7 @@ interface BridgeEvent {
 }
 
 let initialState: BridgeAdaptivity = {
-  type: "",
+  type: '',
   viewportWidth: 0,
   viewportHeight: 0,
 };
@@ -26,26 +26,22 @@ let initialState: BridgeAdaptivity = {
 function resolveAdaptivity(e: BridgeEvent): BridgeAdaptivity | null {
   const { type, data } = e.detail;
 
-  if (type !== "VKWebAppUpdateConfig" || !data) {
+  if (type !== 'VKWebAppUpdateConfig' || !data) {
     return null;
   }
 
-  const {
-    adaptivity,
-    viewport_width: viewportWidth,
-    viewport_height: viewportHeight,
-  } = data;
+  const { adaptivity, viewport_width: viewportWidth, viewport_height: viewportHeight } = data;
 
   const bridgeAdaptivity: BridgeAdaptivity = {
-    type: "",
+    type: '',
     viewportWidth: isFinite(viewportWidth) ? +viewportWidth : 0,
     viewportHeight: isFinite(viewportHeight) ? +viewportHeight : 0,
   };
 
   switch (adaptivity) {
-    case "force_mobile":
-    case "force_mobile_compact":
-    case "adaptive":
+    case 'force_mobile':
+    case 'force_mobile_compact':
+    case 'adaptive':
       bridgeAdaptivity.type = adaptivity;
   }
 
@@ -61,8 +57,7 @@ vkBridge.subscribe((e: BridgeEvent) => {
 });
 
 export function useBridgeAdaptivity(): BridgeAdaptivity {
-  const [bridgeAdaptivity, setBridgeAdaptivity] =
-    React.useState<BridgeAdaptivity>(initialState);
+  const [bridgeAdaptivity, setBridgeAdaptivity] = React.useState<BridgeAdaptivity>(initialState);
 
   useIsomorphicLayoutEffect(() => {
     function bridgeListener(e: BridgeEvent) {

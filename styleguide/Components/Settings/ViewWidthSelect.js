@@ -1,6 +1,6 @@
-import React from "react";
-import { BREAKPOINTS } from "@vkui/lib/adaptivity";
-import { Setting } from "../Setting/Setting";
+import React from 'react';
+import { BREAKPOINTS } from '@vkui/lib/adaptivity';
+import { Setting } from '../Setting/Setting';
 
 export const ViewWidthSelect = ({ onChange, value, ...restProps }) => (
   <Setting

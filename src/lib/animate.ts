@@ -1,4 +1,4 @@
-import { canUseDOM } from "./dom";
+import { canUseDOM } from './dom';
 
 /**
  * Функция для js анимации
@@ -17,11 +17,7 @@ export interface AnimateArgumentsInterface {
   draw: DrawInterface;
 }
 
-export function animate({
-  duration,
-  timing,
-  draw,
-}: AnimateArgumentsInterface): void {
+export function animate({ duration, timing, draw }: AnimateArgumentsInterface): void {
   if (!canUseDOM) {
     return;
   }

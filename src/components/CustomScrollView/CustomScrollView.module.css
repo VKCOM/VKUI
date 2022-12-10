@@ -55,7 +55,7 @@
 }
 
 .CustomScrollView__trackerY::before {
-  content: "";
+  content: '';
   opacity: 0.48;
   display: block;
   width: 100%;

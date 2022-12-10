@@ -1,14 +1,14 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 // Using date-fns-like type for migration
 type DirtyDate = Date | number;
 
 export function startOfDay(date: DirtyDate) {
-  return dayjs(date).startOf("day").toDate();
+  return dayjs(date).startOf('day').toDate();
 }
 
 export function endOfDay(date: DirtyDate) {
-  return dayjs(date).endOf("day").toDate();
+  return dayjs(date).endOf('day').toDate();
 }
 
 export function startOfWeek(date: DirtyDate, weekStart = 0) {
@@ -28,11 +28,11 @@ export function endOfWeek(date: DirtyDate, weekStart = 0) {
 }
 
 export function startOfMonth(date: DirtyDate) {
-  return dayjs(date).startOf("month").toDate();
+  return dayjs(date).startOf('month').toDate();
 }
 
 export function endOfMonth(date: DirtyDate) {
-  return dayjs(date).endOf("month").toDate();
+  return dayjs(date).endOf('month').toDate();
 }
 
 export function isFirstDayOfMonth(date: DirtyDate) {
@@ -42,7 +42,7 @@ export function isFirstDayOfMonth(date: DirtyDate) {
 export function isLastDayOfMonth(date: DirtyDate) {
   // isSameDay -- shorter, but not exact with date-fns behavior
   // return isSameDay(date, dayjs(date).endOf("month"));
-  return dayjs(date).endOf("day").isSame(dayjs(date).endOf("month"));
+  return dayjs(date).endOf('day').isSame(dayjs(date).endOf('month'));
 }
 
 export function format(date: DirtyDate, format: string) {
@@ -60,60 +60,56 @@ export function isAfter(date1: DirtyDate, date2: DirtyDate) {
 }
 
 export function isSameDay(date1: DirtyDate, date2: DirtyDate) {
-  return dayjs(date1).isSame(date2, "day");
+  return dayjs(date1).isSame(date2, 'day');
 }
 
 export function isSameMonth(date1: DirtyDate, date2: DirtyDate) {
-  return dayjs(date1).isSame(date2, "month");
+  return dayjs(date1).isSame(date2, 'month');
 }
 
-export function isWithinInterval(
-  date: DirtyDate,
-  start: DirtyDate,
-  end: DirtyDate
-) {
+export function isWithinInterval(date: DirtyDate, start: DirtyDate, end: DirtyDate) {
   const day = dayjs(date);
   return day >= dayjs(start) && day <= dayjs(end);
 }
 
 export function setMinutes(date: DirtyDate, minute: number) {
-  return dayjs(date).set("minute", minute).toDate();
+  return dayjs(date).set('minute', minute).toDate();
 }
 
 export function setHours(date: DirtyDate, hour: number) {
-  return dayjs(date).set("hour", hour).toDate();
+  return dayjs(date).set('hour', hour).toDate();
 }
 
 export function setMonth(date: DirtyDate, month: number) {
-  return dayjs(date).set("month", month).toDate();
+  return dayjs(date).set('month', month).toDate();
 }
 
 export function setYear(date: DirtyDate, year: number) {
-  return dayjs(date).set("year", year).toDate();
+  return dayjs(date).set('year', year).toDate();
 }
 
 export function addDays(date: DirtyDate, day: number) {
-  return dayjs(date).add(day, "day").toDate();
+  return dayjs(date).add(day, 'day').toDate();
 }
 
 export function subDays(date: DirtyDate, day: number) {
-  return dayjs(date).subtract(day, "day").toDate();
+  return dayjs(date).subtract(day, 'day').toDate();
 }
 
 export function addWeeks(date: DirtyDate, week: number) {
-  return dayjs(date).add(week, "week").toDate();
+  return dayjs(date).add(week, 'week').toDate();
 }
 
 export function subWeeks(date: DirtyDate, week: number) {
-  return dayjs(date).subtract(week, "week").toDate();
+  return dayjs(date).subtract(week, 'week').toDate();
 }
 
 export function addMonths(date: DirtyDate, month: number) {
-  return dayjs(date).add(month, "month").toDate();
+  return dayjs(date).add(month, 'month').toDate();
 }
 
 export function subMonths(date: DirtyDate, month: number) {
-  return dayjs(date).subtract(month, "month").toDate();
+  return dayjs(date).subtract(month, 'month').toDate();
 }
 
 // Rip off date-fns
@@ -135,52 +131,46 @@ export function eachDayOfInterval(start: DirtyDate, end: DirtyDate) {
   return dates;
 }
 
-export function parse(
-  input: string,
-  format: string,
-  referenceDate: Date = new Date()
-) {
+export function parse(input: string, format: string, referenceDate: Date = new Date()) {
   const match2 = /^\d\d/; // 00 - 99
   const match4 = /^\d{4}/; // 0000 - 9999
 
-  const entries: Array<
-    [string, RegExp, (val: string) => [string, number, boolean]]
-  > = [
-    ["YYYY", match4, (val) => ["Y", +val, true]],
+  const entries: Array<[string, RegExp, (val: string) => [string, number, boolean]]> = [
+    ['YYYY', match4, (val) => ['Y', +val, true]],
     [
-      "MM",
+      'MM',
       match2,
       (val) => {
         const numVal = +val;
         const okay = numVal > 0 && numVal <= 12;
 
-        return ["M", numVal - 1, okay];
+        return ['M', numVal - 1, okay];
       },
     ],
-    ["DD", match2, (val) => ["D", +val, true]],
+    ['DD', match2, (val) => ['D', +val, true]],
     [
-      "HH",
+      'HH',
       match2,
       (val) => {
         const numVal = parseInt(val, 10);
         const okay = numVal >= 0 && numVal < 24;
 
-        return ["h", numVal, okay];
+        return ['h', numVal, okay];
       },
     ],
     [
-      "mm",
+      'mm',
       match2,
       (val) => {
         const numVal = parseInt(val, 10);
         const okay = numVal >= 0 && numVal < 60;
 
-        return ["m", numVal, okay];
+        return ['m', numVal, okay];
       },
     ],
   ];
 
-  const superRegExp = new RegExp(entries.map((item) => item[0]).join("|"), "g");
+  const superRegExp = new RegExp(entries.map((item) => item[0]).join('|'), 'g');
 
   const store: {
     [key: string]: number;
@@ -195,7 +185,7 @@ export function parse(
   };
 
   let prevInputIndex = 0;
-  let lastNonFormatting = "";
+  let lastNonFormatting = '';
   let lastFormatIndex = 0;
   let found = false;
 
@@ -212,34 +202,30 @@ export function parse(
     const item = entries.find((item) => item[0] === match[0]);
 
     if (!item) {
-      return new Date("");
+      return new Date('');
     }
 
     lastNonFormatting = format.slice(lastFormatIndex, atIndex);
     lastFormatIndex = superRegExp.lastIndex;
 
     if (
-      input.slice(prevInputIndex, prevInputIndex + lastNonFormatting.length) !==
-      lastNonFormatting
+      input.slice(prevInputIndex, prevInputIndex + lastNonFormatting.length) !== lastNonFormatting
     ) {
-      return new Date("");
+      return new Date('');
     }
 
-    const value = input
-      .slice(prevInputIndex + lastNonFormatting.length)
-      .match(item[1]);
+    const value = input.slice(prevInputIndex + lastNonFormatting.length).match(item[1]);
 
     if (!value) {
-      return new Date("");
+      return new Date('');
     }
 
-    prevInputIndex =
-      prevInputIndex + lastNonFormatting.length + value[0].length;
+    prevInputIndex = prevInputIndex + lastNonFormatting.length + value[0].length;
 
     const [key, newValue, okay] = item[2](value[0]);
 
     if (!okay) {
-      return new Date("");
+      return new Date('');
     }
 
     store[key] = newValue;
@@ -247,23 +233,15 @@ export function parse(
   }
 
   if (!found) {
-    return new Date("");
+    return new Date('');
   }
 
-  const date = new Date(
-    store.Y,
-    store.M,
-    store.D,
-    store.h,
-    store.m,
-    store.s,
-    store.ms
-  );
+  const date = new Date(store.Y, store.M, store.D, store.h, store.m, store.s, store.ms);
 
   // Since days of months are dynamic, they can't be validated in entries,
   // so we check it here, in the finalized date
   if (date.getMonth() !== store.M || date.getDate() !== store.D) {
-    return new Date("");
+    return new Date('');
   }
 
   return date;
@@ -274,5 +252,5 @@ export function isMatch(input: string, format: string) {
 }
 
 export function getMillisecondsToTomorrow(date: DirtyDate) {
-  return dayjs(endOfDay(date)).diff(dayjs(date), "ms");
+  return dayjs(endOfDay(date)).diff(dayjs(date), 'ms');
 }

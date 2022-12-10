@@ -40,8 +40,7 @@
 
 :not(.ModalRoot--desktop).ModalRoot--vkapps .ModalRoot__viewport {
   top: calc(
-    var(--vkui_internal--safe_area_inset_top) +
-      var(--vkui--size_panel_header_height--regular)
+    var(--vkui_internal--safe_area_inset_top) + var(--vkui--size_panel_header_height--regular)
   );
 }
 

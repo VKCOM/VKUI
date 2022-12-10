@@ -12,8 +12,7 @@
 
 .Epic .Snackbar {
   padding-bottom: calc(
-    var(--vkui_internal--tabbar_height) +
-      var(--vkui_internal--safe_area_inset_bottom)
+    var(--vkui_internal--tabbar_height) + var(--vkui_internal--safe_area_inset_bottom)
   );
 }
 
@@ -24,8 +23,7 @@
 
 .Snackbar__in {
   padding: 8px;
-  animation: vkui-animation-snackbar-intro-vertical 340ms
-    var(--vkui--animation_easing_platform);
+  animation: vkui-animation-snackbar-intro-vertical 340ms var(--vkui--animation_easing_platform);
 }
 
 .Snackbar--closing .Snackbar__in {

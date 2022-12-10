@@ -4,7 +4,7 @@
 - Если нужен выбор диапазона дат, используйте [CalendarRange](#!/CalendarRange).
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-import { format } from "../../lib/date";
+import { format } from '../../lib/date';
 
 const Example = () => {
   const [value, setValue] = useState(new Date());
@@ -13,46 +13,31 @@ const Example = () => {
   const [disableFuture, setDisableFuture] = useState(false);
   const [disablePickers, setDisablePickers] = useState(false);
   const [showNeighboringMonth, setShowNeighboringMonth] = useState(false);
-  const [locale, setLocale] = useState("ru");
-  const [size, setSize] = useState("m");
-  const [listenDayChangesForUpdate, setListenDayChangesForUpdate] =
-    useState(false);
+  const [locale, setLocale] = useState('ru');
+  const [size, setSize] = useState('m');
+  const [listenDayChangesForUpdate, setListenDayChangesForUpdate] = useState(false);
 
   return (
     <FormLayout>
       <FormLayoutGroup mode="vertical">
-        <FormItem top="Выбранная дата">
-          {format(value, "YYYY-MM-DD HH:mm:ss")}
-        </FormItem>
+        <FormItem top="Выбранная дата">{format(value, 'YYYY-MM-DD HH:mm:ss')}</FormItem>
         <FormItem top="Выбор времени">
-          <Checkbox
-            checked={enableTime}
-            onChange={(e) => setEnableTime(e.target.checked)}
-          >
+          <Checkbox checked={enableTime} onChange={(e) => setEnableTime(e.target.checked)}>
             Включено
           </Checkbox>
         </FormItem>
         <FormItem top="Запрет выбора прошлых дат">
-          <Checkbox
-            checked={disablePast}
-            onChange={(e) => setDisablePast(e.target.checked)}
-          >
+          <Checkbox checked={disablePast} onChange={(e) => setDisablePast(e.target.checked)}>
             Включено
           </Checkbox>
         </FormItem>
         <FormItem top="Запрет выбора будущих дат">
-          <Checkbox
-            checked={disableFuture}
-            onChange={(e) => setDisableFuture(e.target.checked)}
-          >
+          <Checkbox checked={disableFuture} onChange={(e) => setDisableFuture(e.target.checked)}>
             Включено
           </Checkbox>
         </FormItem>
         <FormItem top="Отключить селекты выбора месяца/года">
-          <Checkbox
-            checked={disablePickers}
-            onChange={(e) => setDisablePickers(e.target.checked)}
-          >
+          <Checkbox checked={disablePickers} onChange={(e) => setDisablePickers(e.target.checked)}>
             Включено
           </Checkbox>
         </FormItem>
@@ -79,20 +64,20 @@ const Example = () => {
             onChange={(e) => setLocale(e.target.value)}
             options={[
               {
-                label: "ru",
-                value: "ru",
+                label: 'ru',
+                value: 'ru',
               },
               {
-                label: "en",
-                value: "en",
+                label: 'en',
+                value: 'en',
               },
               {
-                label: "ar",
-                value: "ar",
+                label: 'ar',
+                value: 'ar',
               },
               {
-                label: "fr",
-                value: "fr",
+                label: 'fr',
+                value: 'fr',
               },
             ]}
           />
@@ -104,12 +89,12 @@ const Example = () => {
             onChange={(e) => setSize(e.target.value)}
             options={[
               {
-                label: "s",
-                value: "s",
+                label: 's',
+                value: 's',
               },
               {
-                label: "m",
-                value: "m",
+                label: 'm',
+                value: 'm',
               },
             ]}
           />

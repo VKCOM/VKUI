@@ -9,7 +9,7 @@
 
     <Group>
       <Div>
-        <UsersStack photos={[getAvatarUrl("user_lihachyov")]}>
+        <UsersStack photos={[getAvatarUrl('user_lihachyov')]}>
           Понравилось Муртолу Левзачеву
         </UsersStack>
       </Div>
@@ -17,10 +17,7 @@
 
     <Group>
       <Div>
-        <UsersStack
-          photos={[getAvatarUrl("user_manzuk"), getAvatarUrl("user_ji")]}
-          size="l"
-        >
+        <UsersStack photos={[getAvatarUrl('user_manzuk'), getAvatarUrl('user_ji')]} size="l">
           Настя и Jean пойдут на это мероприятие
         </UsersStack>
       </Div>
@@ -30,9 +27,9 @@
       <Div>
         <UsersStack
           photos={[
-            getAvatarUrl("user_ox"),
-            getAvatarUrl("user_vitalyavolyn"),
-            getAvatarUrl("user_eee"),
+            getAvatarUrl('user_ox'),
+            getAvatarUrl('user_vitalyavolyn'),
+            getAvatarUrl('user_eee'),
           ]}
           size="s"
         >
@@ -45,12 +42,12 @@
       <Div>
         <UsersStack
           photos={[
-            getAvatarUrl("user_mm"),
-            getAvatarUrl("user_ilyagrshn"),
-            getAvatarUrl("user_lihachyov"),
-            getAvatarUrl("user_wayshev"),
-            getAvatarUrl("user_arthurstam"),
-            getAvatarUrl("user_xyz"),
+            getAvatarUrl('user_mm'),
+            getAvatarUrl('user_ilyagrshn'),
+            getAvatarUrl('user_lihachyov'),
+            getAvatarUrl('user_wayshev'),
+            getAvatarUrl('user_arthurstam'),
+            getAvatarUrl('user_xyz'),
           ]}
           size="l"
           layout="vertical"
@@ -65,23 +62,18 @@
       <Div>
         <div
           style={{
-            backgroundImage:
-              "linear-gradient(135deg, #f24973 0%, #3948e6 100%)",
+            backgroundImage: 'linear-gradient(135deg, #f24973 0%, #3948e6 100%)',
             height: 200,
-            display: "flex",
-            alignItems: "flex-end",
-            justifyContent: "center",
-            paddingBottom: "6px",
+            display: 'flex',
+            alignItems: 'flex-end',
+            justifyContent: 'center',
+            paddingBottom: '6px',
             borderRadius: 12,
           }}
         >
           <UsersStack
-            photos={[
-              getAvatarUrl("user_xyz"),
-              getAvatarUrl("user_va"),
-              getAvatarUrl("user_tc"),
-            ]}
-            style={{ color: "#fff", padding: "8px 16px" }}
+            photos={[getAvatarUrl('user_xyz'), getAvatarUrl('user_va'), getAvatarUrl('user_tc')]}
+            style={{ color: '#fff', padding: '8px 16px' }}
           >
             Проголосовали 2 176 человек
           </UsersStack>

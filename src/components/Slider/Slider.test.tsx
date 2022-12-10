@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { Slider } from "./Slider";
+import { baselineComponent } from '../../testing/utils';
+import { Slider } from './Slider';
 
-describe("Slider", () => {
+describe('Slider', () => {
   baselineComponent(Slider);
 });

@@ -1,22 +1,22 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { DropdownIcon } from "../DropdownIcon/DropdownIcon";
-import { FormField, FormFieldProps } from "../FormField/FormField";
-import { HasAlign, HasRootRef } from "../../types";
-import { usePlatform } from "../../hooks/usePlatform";
-import { getPlatformClassName } from "../../helpers/getPlatformClassName";
-import { getFormFieldModeFromSelectType } from "../../lib/select";
-import { SelectType, SelectTypography } from "../Select/Select";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import styles from "../Select/Select.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
+import { FormField, FormFieldProps } from '../FormField/FormField';
+import { HasAlign, HasRootRef } from '../../types';
+import { usePlatform } from '../../hooks/usePlatform';
+import { getPlatformClassName } from '../../helpers/getPlatformClassName';
+import { getFormFieldModeFromSelectType } from '../../lib/select';
+import { SelectType, SelectTypography } from '../Select/Select';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { getSizeXClassName } from '../../helpers/getSizeXClassName';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import styles from '../Select/Select.module.css';
 
 export interface SelectMimicryProps
   extends React.HTMLAttributes<HTMLElement>,
     HasAlign,
     HasRootRef<HTMLElement>,
-    Pick<FormFieldProps, "before" | "after" | "status"> {
+    Pick<FormFieldProps, 'before' | 'after' | 'status'> {
   multiline?: boolean;
   disabled?: boolean;
   selectType?: SelectType;
@@ -36,7 +36,7 @@ export const SelectMimicry = ({
   onClick,
   before,
   after = <DropdownIcon />,
-  selectType = "default",
+  selectType = 'default',
   status,
   className,
   ...restProps
@@ -50,15 +50,15 @@ export const SelectMimicry = ({
       {...restProps}
       tabIndex={disabled ? undefined : tabIndex}
       className={classNamesString(
-        styles["Select"],
-        getPlatformClassName(styles["Select"], platform),
-        getSizeXClassName(styles["Select"], sizeX),
-        getSizeYClassName(styles["Select"], sizeY),
-        multiline && styles["Select--multiline"],
+        styles['Select'],
+        getPlatformClassName(styles['Select'], platform),
+        getSizeXClassName(styles['Select'], sizeX),
+        getSizeYClassName(styles['Select'], sizeY),
+        multiline && styles['Select--multiline'],
         align && styles[`Select--align-${align}`],
-        before && styles["Select--hasBefore"],
-        after && styles["Select--hasAfter"],
-        className
+        before && styles['Select--hasBefore'],
+        after && styles['Select--hasAfter'],
+        className,
       )}
       getRootRef={getRootRef}
       onClick={disabled ? undefined : onClick}
@@ -68,11 +68,8 @@ export const SelectMimicry = ({
       mode={getFormFieldModeFromSelectType(selectType)}
       status={status}
     >
-      <div className={styles["Select__container"]}>
-        <SelectTypography
-          selectType={selectType}
-          className={styles["Select__title"]}
-        >
+      <div className={styles['Select__container']}>
+        <SelectTypography selectType={selectType} className={styles['Select__title']}>
           {title}
         </SelectTypography>
       </div>

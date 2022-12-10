@@ -17,7 +17,7 @@ const ButtonGroupPropsForm = ({ caption, defaultProps, onChange }) => {
         return newState;
       });
     },
-    [onChange]
+    [onChange],
   );
 
   return (
@@ -25,41 +25,39 @@ const ButtonGroupPropsForm = ({ caption, defaultProps, onChange }) => {
       <FormItem top="mode">
         <Select
           value={mode}
-          onChange={(e) => handleChange("mode", e.target.value)}
+          onChange={(e) => handleChange('mode', e.target.value)}
           options={[
-            { label: "vertical", value: "vertical" },
-            { label: "horizontal", value: "horizontal" },
+            { label: 'vertical', value: 'vertical' },
+            { label: 'horizontal', value: 'horizontal' },
           ]}
         />
       </FormItem>
       <FormItem top="gap">
         <Select
           value={gap}
-          onChange={(e) => handleChange("gap", e.target.value)}
+          onChange={(e) => handleChange('gap', e.target.value)}
           options={[
-            { label: "none", value: "none" },
-            { label: "space", value: "space" },
-            { label: "s", value: "s" },
-            { label: "m", value: "m" },
+            { label: 'none', value: 'none' },
+            { label: 'space', value: 'space' },
+            { label: 's', value: 's' },
+            { label: 'm', value: 'm' },
           ]}
         />
       </FormItem>
-      {mode === "vertical" && (
+      {mode === 'vertical' && (
         <FormItem top="align">
           <Select
             value={align}
-            onChange={(e) => handleChange("align", e.target.value)}
+            onChange={(e) => handleChange('align', e.target.value)}
             options={[
-              { label: "left", value: "left" },
-              { label: "center", value: "center" },
-              { label: "right", value: "right" },
+              { label: 'left', value: 'left' },
+              { label: 'center', value: 'center' },
+              { label: 'right', value: 'right' },
             ]}
           />
         </FormItem>
       )}
-      <Checkbox onChange={(e) => handleChange("stretched", e.target.checked)}>
-        stretched
-      </Checkbox>
+      <Checkbox onChange={(e) => handleChange('stretched', e.target.checked)}>stretched</Checkbox>
       {caption && (
         <FormItem>
           <Footnote>({caption})</Footnote>
@@ -110,12 +108,7 @@ const ExampleUseCases = () => {
       <br />
       <Div>
         <ButtonGroup mode="horizontal" gap="space" stretched>
-          <Button
-            size="l"
-            appearance="accent"
-            mode="tertiary"
-            before={<Icon24Attach />}
-          >
+          <Button size="l" appearance="accent" mode="tertiary" before={<Icon24Attach />}>
             Прикрепить файл
           </Button>
           <Button
@@ -127,12 +120,7 @@ const ExampleUseCases = () => {
           >
             Создать
           </Button>
-          <Button
-            size="l"
-            appearance="accent"
-            mode="tertiary"
-            before={<Icon24Send />}
-          >
+          <Button size="l" appearance="accent" mode="tertiary" before={<Icon24Send />}>
             Отправить
           </Button>
         </ButtonGroup>
@@ -141,14 +129,14 @@ const ExampleUseCases = () => {
   );
 };
 
-const buttonText = "Button";
-const stretchedButtonText = "Button (stretched)";
+const buttonText = 'Button';
+const stretchedButtonText = 'Button (stretched)';
 
 const ExampleBase = () => {
   const [props, setProps] = useState({
-    mode: "horizontal",
-    gap: "s",
-    align: "left",
+    mode: 'horizontal',
+    gap: 's',
+    align: 'left',
     stretched: false,
   });
 
@@ -167,12 +155,7 @@ const ExampleBase = () => {
             {stretchedButtonText}
           </Button>
           <Button size="l" appearance="accent" before={<Icon24Add />} />
-          <Button
-            size="l"
-            appearance="accent"
-            before={<Icon24Add />}
-            stretched
-          />
+          <Button size="l" appearance="accent" before={<Icon24Add />} stretched />
         </ButtonGroup>
       </Div>
     </React.Fragment>
@@ -180,15 +163,15 @@ const ExampleBase = () => {
 };
 
 const buttonGroupHighlightStyles = {
-  border: "2px dotted tomato",
-  boxSizing: "border-box",
+  border: '2px dotted tomato',
+  boxSizing: 'border-box',
 };
 
 const ExampleNested = () => {
   const [props, setProps] = useState({
-    mode: "vertical",
-    gap: "s",
-    align: "left",
+    mode: 'vertical',
+    gap: 's',
+    align: 'left',
     stretched: false,
   });
 
@@ -204,24 +187,14 @@ const ExampleNested = () => {
       />
       <Div>
         <ButtonGroup {...props}>
-          <ButtonGroup
-            mode="horizontal"
-            gap="m"
-            stretched
-            style={buttonGroupHighlightStyles}
-          >
+          <ButtonGroup mode="horizontal" gap="m" stretched style={buttonGroupHighlightStyles}>
             <Button size="l" appearance="accent" stretched>
               {stretchedButtonText}
             </Button>
             <Button size="l" appearance="accent" before={<Icon24Add />} />
           </ButtonGroup>
 
-          <ButtonGroup
-            mode="horizontal"
-            gap="m"
-            stretched
-            style={buttonGroupHighlightStyles}
-          >
+          <ButtonGroup mode="horizontal" gap="m" stretched style={buttonGroupHighlightStyles}>
             <Button size="l" appearance="accent">
               {buttonText}
             </Button>
@@ -240,12 +213,7 @@ const ExampleNested = () => {
             <Button size="l" appearance="accent" before={<Icon24Add />} />
           </ButtonGroup>
 
-          <ButtonGroup
-            mode="horizontal"
-            gap="m"
-            stretched
-            style={buttonGroupHighlightStyles}
-          >
+          <ButtonGroup mode="horizontal" gap="m" stretched style={buttonGroupHighlightStyles}>
             <Button size="l" appearance="accent">
               {buttonText}
             </Button>
@@ -256,26 +224,12 @@ const ExampleNested = () => {
               {buttonText}
             </Button>
           </ButtonGroup>
-          <ButtonGroup
-            mode="vertical"
-            gap="m"
-            stretched={false}
-            style={buttonGroupHighlightStyles}
-          >
+          <ButtonGroup mode="vertical" gap="m" stretched={false} style={buttonGroupHighlightStyles}>
             <Button size="l" appearance="accent" stretched>
               {stretchedButtonText}
             </Button>
-            <Button
-              size="l"
-              appearance="accent"
-              before={<Icon24Add />}
-              stretched
-            />
-            <ButtonGroup
-              mode="horizontal"
-              stretched
-              style={buttonGroupHighlightStyles}
-            >
+            <Button size="l" appearance="accent" before={<Icon24Add />} stretched />
+            <ButtonGroup mode="horizontal" stretched style={buttonGroupHighlightStyles}>
               <Button size="l" appearance="accent" before={<Icon24Add />} />
               <Button size="l" appearance="accent" stretched>
                 {stretchedButtonText}
@@ -289,17 +243,17 @@ const ExampleNested = () => {
 };
 
 const containerStyles = {
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  width: "100%",
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  width: '100%',
 };
 
 const Example = () => {
-  const [sizeY, setSizeY] = useState("compact");
+  const [sizeY, setSizeY] = useState('compact');
 
   return (
-    <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+    <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
       <AdaptivityProvider sizeY={sizeY}>
         <div style={containerStyles}>
           <ExampleUseCases />
@@ -313,8 +267,8 @@ const Example = () => {
             value={sizeY}
             onChange={(e) => setSizeY(e.target.value)}
             options={[
-              { label: "compact", value: "compact" },
-              { label: "regular", value: "regular" },
+              { label: 'compact', value: 'compact' },
+              { label: 'regular', value: 'regular' },
             ]}
           />
         </FormItem>

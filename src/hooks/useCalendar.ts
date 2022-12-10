@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   subMonths,
   addMonths,
@@ -7,14 +7,11 @@ import {
   endOfDay,
   isAfter,
   startOfDay,
-} from "../lib/date";
-import { CalendarProps } from "../components/Calendar/Calendar";
+} from '../lib/date';
+import { CalendarProps } from '../components/Calendar/Calendar';
 
 export interface UseCalendarDependencies
-  extends Pick<
-    CalendarProps,
-    "onHeaderChange" | "onNextMonth" | "onPrevMonth"
-  > {
+  extends Pick<CalendarProps, 'onHeaderChange' | 'onNextMonth' | 'onPrevMonth'> {
   value?: Array<Date | null> | Date;
   disablePast?: boolean;
   disableFuture?: boolean;
@@ -31,7 +28,7 @@ export function useCalendar({
   onPrevMonth,
 }: UseCalendarDependencies) {
   const [viewDate, setViewDate] = React.useState(
-    (Array.isArray(value) ? value[0] : value) ?? new Date()
+    (Array.isArray(value) ? value[0] : value) ?? new Date(),
   );
   const [focusedDay, setFocusedDay] = React.useState<Date>();
 
@@ -49,12 +46,12 @@ export function useCalendar({
       onHeaderChange?.(value);
       setViewDate(value);
     },
-    [onHeaderChange]
+    [onHeaderChange],
   );
 
   const isDayFocused = React.useCallback(
     (day: Date) => Boolean(focusedDay && isSameDay(day, focusedDay)),
-    [focusedDay]
+    [focusedDay],
   );
 
   const isDayDisabled = React.useCallback(
@@ -73,7 +70,7 @@ export function useCalendar({
 
       return disabled;
     },
-    [disableFuture, disablePast, shouldDisableDate]
+    [disableFuture, disablePast, shouldDisableDate],
   );
 
   const resetSelectedDay = React.useCallback(() => {

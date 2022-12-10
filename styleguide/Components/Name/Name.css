@@ -8,5 +8,5 @@
 }
 
 .Name--optional::after {
-  content: "?";
+  content: '?';
 }

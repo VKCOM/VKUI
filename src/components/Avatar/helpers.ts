@@ -1,4 +1,4 @@
-import type { ImageBaseSize } from "../ImageBase/ImageBase";
+import type { ImageBaseSize } from '../ImageBase/ImageBase';
 
 const MAX_FONT_SIZE = 30;
 const MAX_IMAGE_BASE_SIZE: ImageBaseSize = 96;

@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { Footer } from "./Footer";
+import { baselineComponent } from '../../testing/utils';
+import { Footer } from './Footer';
 
-describe("Footer", () => {
+describe('Footer', () => {
   baselineComponent(Footer);
 });

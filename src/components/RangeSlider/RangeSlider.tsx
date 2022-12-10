@@ -1,7 +1,7 @@
-import * as React from "react";
-import { clamp } from "../../helpers/math";
-import { UniversalSlider, UniversalSliderProps } from "./UniversalSlider";
-import { TouchEvent } from "../Touch/Touch";
+import * as React from 'react';
+import { clamp } from '../../helpers/math';
+import { UniversalSlider, UniversalSliderProps } from './UniversalSlider';
+import { TouchEvent } from '../Touch/Touch';
 
 export type Value = [number, number];
 export type RangeSliderProps = UniversalSliderProps<Value>;
@@ -23,21 +23,18 @@ export const RangeSlider = ({
   const [start, end] = props.value || localValue;
   const value = React.useMemo(
     () => [clamp(start, min, max), clamp(end, min, max)] as Value,
-    [end, max, min, start]
+    [end, max, min, start],
   );
 
-  const handleChange: RangeSliderProps["onChange"] = React.useCallback(
+  const handleChange: RangeSliderProps['onChange'] = React.useCallback(
     (nextValue: Value, event: TouchEvent) => {
-      if (
-        props.disabled ||
-        (value[0] === nextValue[0] && value[1] === nextValue[1])
-      ) {
+      if (props.disabled || (value[0] === nextValue[0] && value[1] === nextValue[1])) {
         return;
       }
       !isControlled && setValue(nextValue);
       onChange && onChange(nextValue, event);
     },
-    [props.disabled, value, isControlled, onChange]
+    [props.disabled, value, isControlled, onChange],
   );
 
   return (

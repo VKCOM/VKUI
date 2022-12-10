@@ -1,21 +1,21 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { Caption } from "../Typography/Caption/Caption";
-import { Headline } from "../Typography/Headline/Headline";
-import { hasReactNode } from "../../lib/utils";
-import styles from "./Counter.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { Caption } from '../Typography/Caption/Caption';
+import { Headline } from '../Typography/Headline/Headline';
+import { hasReactNode } from '../../lib/utils';
+import styles from './Counter.module.css';
 
 const modeClassNames = {
-  secondary: styles["Counter--mode-secondary"],
-  primary: styles["Counter--mode-primary"],
-  prominent: styles["Counter--mode-prominent"],
-  contrast: styles["Counter--mode-contrast"],
-  inherit: styles["Counter--mode-inherit"],
+  secondary: styles['Counter--mode-secondary'],
+  primary: styles['Counter--mode-primary'],
+  prominent: styles['Counter--mode-prominent'],
+  contrast: styles['Counter--mode-contrast'],
+  inherit: styles['Counter--mode-inherit'],
 };
 
 const sizeClassNames = {
-  s: styles["Counter--size-s"],
-  m: styles["Counter--size-m"],
+  s: styles['Counter--size-s'],
+  m: styles['Counter--size-m'],
 };
 
 export interface CounterProps extends React.HTMLAttributes<HTMLSpanElement> {
@@ -24,16 +24,16 @@ export interface CounterProps extends React.HTMLAttributes<HTMLSpanElement> {
    * цвета зависят от кнопки. Если компонент находится вне кнопки, применяется
    * режим `secondary`
    */
-  mode?: "secondary" | "primary" | "prominent" | "contrast" | "inherit";
-  size?: "s" | "m";
+  mode?: 'secondary' | 'primary' | 'prominent' | 'contrast' | 'inherit';
+  size?: 's' | 'm';
 }
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Counter
  */
 export const Counter = ({
-  mode = "inherit",
-  size = "m",
+  mode = 'inherit',
+  size = 'm',
   children,
   className,
   ...restProps
@@ -42,24 +42,20 @@ export const Counter = ({
     return null;
   }
 
-  const CounterTypography = size === "s" ? Caption : Headline;
+  const CounterTypography = size === 's' ? Caption : Headline;
 
   return (
     <span
       {...restProps}
       className={classNamesString(
-        styles["Counter"],
+        styles['Counter'],
         modeClassNames[mode],
         sizeClassNames[size],
-        className
+        className,
       )}
     >
       {hasReactNode(children) && (
-        <CounterTypography
-          Component="span"
-          className={styles["Counter__in"]}
-          level="2"
-        >
+        <CounterTypography Component="span" className={styles['Counter__in']} level="2">
           {children}
         </CounterTypography>
       )}

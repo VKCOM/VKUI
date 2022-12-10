@@ -1,24 +1,21 @@
-import * as React from "react";
-import { PopoutWrapper } from "../PopoutWrapper/PopoutWrapper";
-import { Platform } from "../../lib/platform";
-import { ActionSheetDropdownDesktop } from "./ActionSheetDropdownDesktop";
-import { ActionSheetDropdown } from "./ActionSheetDropdown";
-import { noop } from "../../lib/utils";
-import { ActionSheetContext, ItemClickHandler } from "./ActionSheetContext";
-import { Footnote } from "../Typography/Footnote/Footnote";
-import { usePlatform } from "../../hooks/usePlatform";
-import { useTimeout } from "../../hooks/useTimeout";
-import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
-import { useObjectMemo } from "../../hooks/useObjectMemo";
-import { SharedDropdownProps } from "./types";
-import { useScrollLock } from "../AppRoot/ScrollContext";
-import styles from "./ActionSheet.module.css";
+import * as React from 'react';
+import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
+import { Platform } from '../../lib/platform';
+import { ActionSheetDropdownDesktop } from './ActionSheetDropdownDesktop';
+import { ActionSheetDropdown } from './ActionSheetDropdown';
+import { noop } from '../../lib/utils';
+import { ActionSheetContext, ItemClickHandler } from './ActionSheetContext';
+import { Footnote } from '../Typography/Footnote/Footnote';
+import { usePlatform } from '../../hooks/usePlatform';
+import { useTimeout } from '../../hooks/useTimeout';
+import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { useObjectMemo } from '../../hooks/useObjectMemo';
+import { SharedDropdownProps } from './types';
+import { useScrollLock } from '../AppRoot/ScrollContext';
+import styles from './ActionSheet.module.css';
 
 export interface ActionSheetProps
-  extends Pick<
-      SharedDropdownProps,
-      "toggleRef" | "popupDirection" | "popupOffsetDistance"
-    >,
+  extends Pick<SharedDropdownProps, 'toggleRef' | 'popupDirection' | 'popupOffsetDistance'>,
     React.HTMLAttributes<HTMLDivElement> {
   header?: React.ReactNode;
   text?: React.ReactNode;
@@ -42,7 +39,7 @@ export const ActionSheet = ({
   text,
   style,
   iosCloseItem,
-  popupDirection = "bottom",
+  popupDirection = 'bottom',
   popupOffsetDistance,
   ...restProps
 }: ActionSheetProps) => {
@@ -87,13 +84,11 @@ export const ActionSheet = ({
         action && action(event);
       }
     },
-    []
+    [],
   );
   const contextValue = useObjectMemo({ onItemClick, isDesktop });
 
-  const DropdownComponent = isDesktop
-    ? ActionSheetDropdownDesktop
-    : ActionSheetDropdown;
+  const DropdownComponent = isDesktop ? ActionSheetDropdownDesktop : ActionSheetDropdown;
 
   const dropdownProps = isDesktop
     ? Object.assign(restProps, { popupOffsetDistance, popupDirection })
@@ -110,17 +105,13 @@ export const ActionSheet = ({
         style={isDesktop ? style : undefined}
       >
         {(header || text) && (
-          <header className={styles["ActionSheet__header"]}>
+          <header className={styles['ActionSheet__header']}>
             {header && (
-              <Footnote weight="2" className={styles["ActionSheet__title"]}>
+              <Footnote weight="2" className={styles['ActionSheet__title']}>
                 {header}
               </Footnote>
             )}
-            {text && (
-              <Footnote className={styles["ActionSheet__text"]}>
-                {text}
-              </Footnote>
-            )}
+            {text && <Footnote className={styles['ActionSheet__text']}>{text}</Footnote>}
           </header>
         )}
         {children}

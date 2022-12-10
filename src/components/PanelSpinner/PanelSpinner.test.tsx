@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { PanelSpinner } from "./PanelSpinner";
+import { baselineComponent } from '../../testing/utils';
+import { PanelSpinner } from './PanelSpinner';
 
-describe("PanelSpinner", () => {
+describe('PanelSpinner', () => {
   baselineComponent(PanelSpinner);
 });

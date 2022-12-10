@@ -1,17 +1,17 @@
-import * as React from "react";
-import { ModalCard, ModalCardProps } from "./ModalCard";
-import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
-import { Button } from "../Button/Button";
-import { ModalRoot } from "../ModalRoot/ModalRootAdaptive";
-import { Image } from "../Image/Image";
-import { UsersStack } from "../UsersStack/UsersStack";
-import { Textarea } from "../Textarea/Textarea";
-import { describeScreenshotFuzz } from "../../testing/e2e";
-import { AppRoot } from "../AppRoot/AppRoot";
-import { Icon56MoneyTransferOutline } from "@vkontakte/icons";
-import { Platform } from "../../lib/platform";
-import { ViewWidth, SizeType } from "../../lib/adaptivity";
-import { HasChildren } from "../../types";
+import * as React from 'react';
+import { ModalCard, ModalCardProps } from './ModalCard';
+import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
+import { Button } from '../Button/Button';
+import { ModalRoot } from '../ModalRoot/ModalRootAdaptive';
+import { Image } from '../Image/Image';
+import { UsersStack } from '../UsersStack/UsersStack';
+import { Textarea } from '../Textarea/Textarea';
+import { describeScreenshotFuzz } from '../../testing/e2e';
+import { AppRoot } from '../AppRoot/AppRoot';
+import { Icon56MoneyTransferOutline } from '@vkontakte/icons';
+import { Platform } from '../../lib/platform';
+import { ViewWidth, SizeType } from '../../lib/adaptivity';
+import { HasChildren } from '../../types';
 
 const AppWrapper = (props: HasChildren) => (
   <AppRoot mode="embedded" scroll="contain">
@@ -20,7 +20,7 @@ const AppWrapper = (props: HasChildren) => (
 );
 
 const Component = (props: ModalCardProps) => (
-  <div style={{ height: 500, transform: "translateZ(0)" }}>
+  <div style={{ height: 500, transform: 'translateZ(0)' }}>
     <ModalRoot activeModal={props.nav}>
       <ModalCard {...props} />
     </ModalRoot>
@@ -29,12 +29,10 @@ const Component = (props: ModalCardProps) => (
 
 const propSets = [
   {
-    nav: ["1"],
+    nav: ['1'],
     icon: [<Icon56MoneyTransferOutline key="icon" />],
-    header: ["Отправляйте деньги друзьям, используя банковскую карту"],
-    subheader: [
-      "Номер карты получателя не нужен — он сам решит, куда зачислить средства.",
-    ],
+    header: ['Отправляйте деньги друзьям, используя банковскую карту'],
+    subheader: ['Номер карты получателя не нужен — он сам решит, куда зачислить средства.'],
     actions: [
       <Button size="l" mode="primary" stretched key="button">
         Попробовать
@@ -42,12 +40,10 @@ const propSets = [
     ],
   },
   {
-    nav: ["2"],
+    nav: ['2'],
     icon: [<Image key="image" size={72} borderRadius="l" />],
-    header: ["Добавить игру «Загадки детства» в меню?"],
-    subheader: [
-      "Игра появится под списком разделов на экране меню и будет всегда под рукой.",
-    ],
+    header: ['Добавить игру «Загадки детства» в меню?'],
+    subheader: ['Игра появится под списком разделов на экране меню и будет всегда под рукой.'],
     actions: [
       <ButtonGroup mode="vertical" gap="m" stretched key="buttons">
         <Button size="l" mode="primary" stretched>
@@ -60,7 +56,7 @@ const propSets = [
     ],
     children: [
       <UsersStack
-        photos={["", "", "", ""]}
+        photos={['', '', '', '']}
         size="l"
         visibleCount={3}
         key="usersstack"
@@ -72,8 +68,8 @@ const propSets = [
     ],
   },
   {
-    nav: ["3"],
-    header: ["Расскажите о себе"],
+    nav: ['3'],
+    header: ['Расскажите о себе'],
     actions: [
       <Button size="l" mode="primary" stretched key="button">
         Сохранить
@@ -82,10 +78,10 @@ const propSets = [
     children: [<Textarea key="textarea" defaultValue="В Грузии" />],
   },
   {
-    nav: ["4"],
-    header: ["Гиппопотомомонстросесквиппедалиофобия"],
+    nav: ['4'],
+    header: ['Гиппопотомомонстросесквиппедалиофобия'],
     subheader: [
-      "Гиппопотомомонстросесквиппедалиофобия — боязнь длинных слов, таких как метоксихлордиэтиламинометилбутиламиноакридин",
+      'Гиппопотомомонстросесквиппедалиофобия — боязнь длинных слов, таких как метоксихлордиэтиламинометилбутиламиноакридин',
     ],
     actions: [
       <ButtonGroup mode="horizontal" gap="s" stretched key="buttons">
@@ -100,7 +96,7 @@ const propSets = [
   },
 ];
 
-describe("ModalCard mobile", () => {
+describe('ModalCard mobile', () => {
   describeScreenshotFuzz<ModalCardProps>(Component, propSets, {
     Wrapper: AppWrapper,
     adaptivity: {
@@ -111,7 +107,7 @@ describe("ModalCard mobile", () => {
   });
 });
 
-describe("ModalCard tablet", () => {
+describe('ModalCard tablet', () => {
   describeScreenshotFuzz<ModalCardProps>(Component, propSets, {
     Wrapper: AppWrapper,
     adaptivity: {
@@ -122,7 +118,7 @@ describe("ModalCard tablet", () => {
   });
 });
 
-describe("ModalCard", () => {
+describe('ModalCard', () => {
   describeScreenshotFuzz<ModalCardProps>(Component, propSets, {
     Wrapper: AppWrapper,
     platforms: [Platform.VKCOM],

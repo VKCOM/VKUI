@@ -1,18 +1,18 @@
-import * as React from "react";
-import { HasRootRef } from "../../types";
-import { classNamesString } from "../../lib/classNames";
-import { getTitleFromChildren, noop } from "../../lib/utils";
-import { useExternRef } from "../../hooks/useExternRef";
-import { usePlatform } from "../../hooks/usePlatform";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { useDOM } from "../../lib/dom";
-import { Platform } from "../../lib/platform";
-import { Icon24Cancel } from "@vkontakte/icons";
-import { IconButton } from "../IconButton/IconButton";
-import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
-import { Tappable } from "../Tappable/Tappable";
-import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import styles from "./Removable.module.css";
+import * as React from 'react';
+import { HasRootRef } from '../../types';
+import { classNamesString } from '../../lib/classNames';
+import { getTitleFromChildren, noop } from '../../lib/utils';
+import { useExternRef } from '../../hooks/useExternRef';
+import { usePlatform } from '../../hooks/usePlatform';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useDOM } from '../../lib/dom';
+import { Platform } from '../../lib/platform';
+import { Icon24Cancel } from '@vkontakte/icons';
+import { IconButton } from '../IconButton/IconButton';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { Tappable } from '../Tappable/Tappable';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import styles from './Removable.module.css';
 
 export interface RemovableProps {
   /**
@@ -47,13 +47,13 @@ const RemovableIos = ({
 
   useGlobalEventListener(
     window,
-    "click",
+    'click',
     () => {
       if (removeOffset > 0) {
         updateRemoveOffset(0);
       }
     },
-    { capture: true }
+    { capture: true },
   );
 
   const onRemoveTransitionEnd = () => {
@@ -76,7 +76,7 @@ const RemovableIos = ({
 
   return (
     <div
-      className={styles["Removable__content"]}
+      className={styles['Removable__content']}
       style={{ transform: `translateX(-${removeOffset ?? 0}px)` }}
       onTransitionEnd={onRemoveTransitionEnd}
     >
@@ -84,18 +84,15 @@ const RemovableIos = ({
         hasActive={false}
         hasHover={false}
         aria-label={removePlaceholderString}
-        className={classNamesString(
-          styles["Removable__action"],
-          styles["Removable__toggle"]
-        )}
+        className={classNamesString(styles['Removable__action'], styles['Removable__toggle'])}
         onClick={onRemoveActivateClick}
         disabled={removeOffset > 0}
       >
-        <i className={styles["Removable__toggle-in"]} role="presentation" />
+        <i className={styles['Removable__toggle-in']} role="presentation" />
       </IconButton>
       {children}
 
-      <span className={styles["Removable__offset"]} aria-hidden />
+      <span className={styles['Removable__offset']} aria-hidden />
 
       <Tappable
         Component="button"
@@ -103,12 +100,10 @@ const RemovableIos = ({
         hasHover={false}
         disabled={disabledRef.current}
         getRootRef={removeButtonRef}
-        className={styles["Removable__remove"]}
+        className={styles['Removable__remove']}
         onClick={onRemove}
       >
-        <span className={styles["Removable__remove-in"]}>
-          {removePlaceholder}
-        </span>
+        <span className={styles['Removable__remove-in']}>{removePlaceholder}</span>
       </Tappable>
     </div>
   );
@@ -121,7 +116,7 @@ interface RemovableOwnProps
   /**
    * Расположение кнопки удаления.
    */
-  align?: "start" | "center";
+  align?: 'start' | 'center';
 }
 
 /**
@@ -131,8 +126,8 @@ export const Removable = ({
   getRootRef,
   children,
   onRemove = noop,
-  removePlaceholder = "Удалить",
-  align = "center",
+  removePlaceholder = 'Удалить',
+  align = 'center',
   className,
   ...restProps
 }: RemovableOwnProps) => {
@@ -146,36 +141,35 @@ export const Removable = ({
     onRemove(e);
   };
 
-  const removePlaceholderString: string =
-    getTitleFromChildren(removePlaceholder);
+  const removePlaceholderString: string = getTitleFromChildren(removePlaceholder);
 
   return (
     <div
       {...restProps}
       ref={ref}
       className={classNamesString(
-        styles["Removable"],
-        platform === Platform.IOS && styles["Removable--ios"],
+        styles['Removable'],
+        platform === Platform.IOS && styles['Removable--ios'],
         styles[`Removable--align-${align}`],
-        getSizeYClassName(styles["Removable"], sizeY),
-        className
+        getSizeYClassName(styles['Removable'], sizeY),
+        className,
       )}
     >
       {platform !== Platform.IOS && (
-        <div className={styles["Removable__content"]}>
+        <div className={styles['Removable__content']}>
           {children}
 
           <IconButton
             activeMode="opacity"
             hoverMode="opacity"
-            className={styles["Removable__action"]}
+            className={styles['Removable__action']}
             onClick={onRemoveClick}
             aria-label={removePlaceholderString}
           >
             <Icon24Cancel role="presentation" />
           </IconButton>
 
-          <span className={styles["Removable__offset"]} aria-hidden />
+          <span className={styles['Removable__offset']} aria-hidden />
         </div>
       )}
 

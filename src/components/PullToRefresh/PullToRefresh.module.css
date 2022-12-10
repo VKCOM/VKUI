@@ -26,8 +26,7 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  transition: transform 300ms cubic-bezier(0.1, 0, 0.25, 1),
-    opacity 220ms ease-out;
+  transition: transform 300ms cubic-bezier(0.1, 0, 0.25, 1), opacity 220ms ease-out;
   opacity: 0;
   background: var(--vkui--color_background_modal);
   border-radius: 50%;

@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { canUseDOM } from "./dom";
+import { canUseDOM } from './dom';
 
 export type MatchesMethod = (css: string) => boolean;
 
@@ -39,7 +39,7 @@ if (canUseDOM) {
 
 // Array.prototype.includes
 if (!Array.prototype.includes) {
-  Object.defineProperty(Array.prototype, "includes", {
+  Object.defineProperty(Array.prototype, 'includes', {
     value: function (searchElement: any, fromIndex: number) {
       if (this == null) {
         throw new TypeError('"this" is null or not defined');
@@ -52,13 +52,7 @@ if (!Array.prototype.includes) {
       const n = fromIndex | 0;
       let k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
       function sameValueZero(x: any, y: any) {
-        return (
-          x === y ||
-          (typeof x === "number" &&
-            typeof y === "number" &&
-            isNaN(x) &&
-            isNaN(y))
-        );
+        return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
       }
       while (k < len) {
         if (sameValueZero(o[k], searchElement)) {
@@ -73,12 +67,12 @@ if (!Array.prototype.includes) {
 
 // Array.prototype.find
 if (!Array.prototype.find) {
-  Object.defineProperty(Array.prototype, "find", {
-    value: function (callback: Parameters<Array<any>["find"]>[0]) {
+  Object.defineProperty(Array.prototype, 'find', {
+    value: function (callback: Parameters<Array<any>['find']>[0]) {
       if (this === null) {
-        throw new TypeError("Array.prototype.find called on null or undefined");
-      } else if (typeof callback !== "function") {
-        throw new TypeError("callback must be a function");
+        throw new TypeError('Array.prototype.find called on null or undefined');
+      } else if (typeof callback !== 'function') {
+        throw new TypeError('callback must be a function');
       }
 
       let list = Object(this);
@@ -99,7 +93,7 @@ if (!Array.prototype.find) {
 if (!String.prototype.padStart) {
   String.prototype.padStart = function padStart(targetLength, padString) {
     targetLength = targetLength >> 0;
-    padString = String(padString || " ");
+    padString = String(padString || ' ');
     if (this.length > targetLength) {
       return String(this);
     } else {

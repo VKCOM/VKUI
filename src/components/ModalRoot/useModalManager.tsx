@@ -1,9 +1,9 @@
-import * as React from "react";
-import { ModalsState, ModalsStateEntry, ModalType } from "./types";
-import { warnOnce } from "../../lib/warnOnce";
-import { getNavId } from "../../lib/getNavId";
-import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import { noop, isFunction } from "../../lib/utils";
+import * as React from 'react';
+import { ModalsState, ModalsStateEntry, ModalType } from './types';
+import { warnOnce } from '../../lib/warnOnce';
+import { getNavId } from '../../lib/getNavId';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { noop, isFunction } from '../../lib/utils';
 
 interface ModalTransitionState {
   activeModal?: string | null;
@@ -27,16 +27,16 @@ function getModals(children: React.ReactNode | React.ReactNode[]) {
   return React.Children.toArray(children) as React.ReactElement[];
 }
 
-const warn = warnOnce("ModalRoot");
+const warn = warnOnce('ModalRoot');
 
 export function modalTransitionReducer(
   state: ModalTransitionState,
   action: {
-    type: "setActive" | "entered" | "exited" | "inited";
+    type: 'setActive' | 'entered' | 'exited' | 'inited';
     id: string | null;
-  }
+  },
 ): ModalTransitionState {
-  if (action.type === "setActive" && action.id !== state.activeModal) {
+  if (action.type === 'setActive' && action.id !== state.activeModal) {
     const nextModal = action.id;
     // preserve exiting modal if switching mid-transition
     const prevModal = state.exitingModal || state.activeModal;
@@ -60,13 +60,13 @@ export function modalTransitionReducer(
       isBack,
     };
   }
-  if (action.type === "entered" && action.id === state.enteringModal) {
+  if (action.type === 'entered' && action.id === state.enteringModal) {
     return { ...state, enteringModal: null };
   }
-  if (action.type === "exited" && action.id === state.exitingModal) {
+  if (action.type === 'exited' && action.id === state.exitingModal) {
     return { ...state, exitingModal: null };
   }
-  if (action.type === "inited" && action.id === state.activeModal) {
+  if (action.type === 'inited' && action.id === state.activeModal) {
     return { ...state, enteringModal: action.id };
   }
   return state;
@@ -91,7 +91,7 @@ export function useModalManager(
   onOpened: (id: string) => void = noop,
   onClose: (id: string) => void = noop,
   onClosed: (id: string) => void = noop,
-  initModal: (state: ModalsStateEntry) => void = noop
+  initModal: (state: ModalsStateEntry) => void = noop,
 ): ModalTransitionProps {
   const modalsState = React.useRef<ModalsState>({}).current;
   getModals(children).forEach((Modal) => {
@@ -107,7 +107,7 @@ export function useModalManager(
     state.onClosed = Modal.props.onClosed;
     state.dynamicContentHeight = !!modalProps.dynamicContentHeight;
     // ModalPage props
-    if (typeof modalProps.settlingHeight === "number") {
+    if (typeof modalProps.settlingHeight === 'number') {
       state.settlingHeight = modalProps.settlingHeight;
     }
 
@@ -118,34 +118,28 @@ export function useModalManager(
 
   const isMissing = activeModal && !modalsState[activeModal];
   const safeActiveModal = isMissing ? null : activeModal;
-  const [transitionState, dispatchTransition] = React.useReducer(
-    modalTransitionReducer,
-    {
-      activeModal: safeActiveModal,
-      enteringModal: null,
-      exitingModal: null,
-      history: safeActiveModal ? [safeActiveModal] : [],
-      isBack: false,
-    }
-  );
+  const [transitionState, dispatchTransition] = React.useReducer(modalTransitionReducer, {
+    activeModal: safeActiveModal,
+    enteringModal: null,
+    exitingModal: null,
+    history: safeActiveModal ? [safeActiveModal] : [],
+    isBack: false,
+  });
 
   // Map props to state, render activeModal for init
   useIsomorphicLayoutEffect(() => {
     // ignore non-existent activeModal
-    if (process.env.NODE_ENV === "development" && isMissing) {
-      warn(
-        `Переход невозможен - модальное окно (страница) ${activeModal} не существует`,
-        "error"
-      );
+    if (process.env.NODE_ENV === 'development' && isMissing) {
+      warn(`Переход невозможен - модальное окно (страница) ${activeModal} не существует`, 'error');
     }
-    dispatchTransition({ type: "setActive", id: safeActiveModal ?? null });
+    dispatchTransition({ type: 'setActive', id: safeActiveModal ?? null });
   }, [activeModal]);
 
   // Init activeModal & set enteringModal
   useIsomorphicLayoutEffect(() => {
     if (transitionState.activeModal) {
       initModal(modalsState[transitionState.activeModal]);
-      dispatchTransition({ type: "inited", id: transitionState.activeModal });
+      dispatchTransition({ type: 'inited', id: transitionState.activeModal });
     }
   }, [transitionState.activeModal]);
 
@@ -163,9 +157,9 @@ export function useModalManager(
         }
       }
 
-      dispatchTransition({ type: "entered", id });
+      dispatchTransition({ type: 'entered', id });
     },
-    [modalsState, onOpened]
+    [modalsState, onOpened],
   );
   const onExited = React.useCallback(
     (id: string | null) => {
@@ -179,22 +173,17 @@ export function useModalManager(
         }
       }
 
-      dispatchTransition({ type: "exited", id });
+      dispatchTransition({ type: 'exited', id });
     },
-    [modalsState, onClosed]
+    [modalsState, onClosed],
   );
   const delayEnter = Boolean(
-    transitionState.exitingModal &&
-      (isCard(activeModal) || isCard(transitionState.exitingModal))
+    transitionState.exitingModal && (isCard(activeModal) || isCard(transitionState.exitingModal)),
   );
-  const getModalState = React.useCallback(
-    (id: string) => modalsState[id],
-    [modalsState]
-  );
+  const getModalState = React.useCallback((id: string) => modalsState[id], [modalsState]);
 
   function onEnter() {
-    const modalState =
-      transitionState.activeModal && modalsState[transitionState.activeModal];
+    const modalState = transitionState.activeModal && modalsState[transitionState.activeModal];
     if (modalState) {
       if (isFunction(modalState.onOpen)) {
         modalState.onOpen();
@@ -205,8 +194,7 @@ export function useModalManager(
   }
 
   function onExit() {
-    const modalState =
-      transitionState.activeModal && modalsState[transitionState.activeModal];
+    const modalState = transitionState.activeModal && modalsState[transitionState.activeModal];
     if (modalState) {
       if (isFunction(modalState.onClose)) {
         modalState.onClose();
@@ -227,11 +215,9 @@ export function useModalManager(
   };
 }
 
-export function withModalManager(
-  initModal: (a: ModalsStateEntry) => void = noop
-) {
+export function withModalManager(initModal: (a: ModalsStateEntry) => void = noop) {
   return function <Props extends ModalTransitionProps>(
-    Wrapped: React.ComponentType<Props>
+    Wrapped: React.ComponentType<Props>,
   ): React.ComponentType<
     Omit<Props, keyof ModalTransitionProps> & {
       activeModal?: string | null;
@@ -246,7 +232,7 @@ export function withModalManager(
         (props as any).onOpened,
         (props as any).onClose,
         (props as any).onClosed,
-        initModal
+        initModal,
       );
       return <Wrapped {...(props as any)} {...transitionManager} />;
     };

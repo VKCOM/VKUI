@@ -1,18 +1,18 @@
-import * as React from "react";
-import { hasReactNode } from "../../lib/utils";
-import { Title } from "../Typography/Title/Title";
-import { Subhead } from "../Typography/Subhead/Subhead";
-import { classNamesString } from "../../lib/classNames";
-import { getPlatformClassName } from "../../helpers/getPlatformClassName";
-import { usePlatform } from "../../hooks/usePlatform";
-import { HasRootRef } from "../../types";
-import { PanelHeaderButton } from "../PanelHeaderButton/PanelHeaderButton";
-import { Platform } from "../../lib/platform";
-import { ModalDismissButton } from "../ModalDismissButton/ModalDismissButton";
-import { Icon24Dismiss } from "@vkontakte/icons";
-import { useKeyboard } from "../../hooks/useKeyboard";
-import { useAdaptivityWithJSMediaQueries } from "../../hooks/useAdaptivityWithJSMediaQueries";
-import styles from "./ModalCardBase.module.css";
+import * as React from 'react';
+import { hasReactNode } from '../../lib/utils';
+import { Title } from '../Typography/Title/Title';
+import { Subhead } from '../Typography/Subhead/Subhead';
+import { classNamesString } from '../../lib/classNames';
+import { getPlatformClassName } from '../../helpers/getPlatformClassName';
+import { usePlatform } from '../../hooks/usePlatform';
+import { HasRootRef } from '../../types';
+import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
+import { Platform } from '../../lib/platform';
+import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
+import { Icon24Dismiss } from '@vkontakte/icons';
+import { useKeyboard } from '../../hooks/useKeyboard';
+import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import styles from './ModalCardBase.module.css';
 
 export interface ModalCardBaseProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -66,7 +66,7 @@ export const ModalCardBase = ({
   children,
   actions,
   onClose,
-  dismissLabel = "Скрыть",
+  dismissLabel = 'Скрыть',
   className,
   ...restProps
 }: ModalCardBaseProps) => {
@@ -80,49 +80,38 @@ export const ModalCardBase = ({
     <div
       {...restProps}
       className={classNamesString(
-        styles["ModalCardBase"],
-        getPlatformClassName(styles["ModalCardBase"], platform),
-        isDesktop && styles["ModalCardBase--desktop"],
-        className
+        styles['ModalCardBase'],
+        getPlatformClassName(styles['ModalCardBase'], platform),
+        isDesktop && styles['ModalCardBase--desktop'],
+        className,
       )}
       ref={getRootRef}
     >
       <div
         className={classNamesString(
-          styles["ModalCardBase__container"],
-          isSoftwareKeyboardOpened &&
-            styles["ModalCardBase__container--softwareKeyboardOpened"]
+          styles['ModalCardBase__container'],
+          isSoftwareKeyboardOpened && styles['ModalCardBase__container--softwareKeyboardOpened'],
         )}
       >
-        {hasReactNode(icon) && (
-          <div className={styles["ModalCardBase__icon"]}>{icon}</div>
-        )}
+        {hasReactNode(icon) && <div className={styles['ModalCardBase__icon']}>{icon}</div>}
         {hasReactNode(header) && (
-          <Title
-            level="2"
-            weight="2"
-            className={styles["ModalCardBase__header"]}
-          >
+          <Title level="2" weight="2" className={styles['ModalCardBase__header']}>
             {header}
           </Title>
         )}
         {hasReactNode(subheader) && (
-          <Subhead className={styles["ModalCardBase__subheader"]}>
-            {subheader}
-          </Subhead>
+          <Subhead className={styles['ModalCardBase__subheader']}>{subheader}</Subhead>
         )}
 
         {children}
 
-        {hasReactNode(actions) && (
-          <div className={styles["ModalCardBase__actions"]}>{actions}</div>
-        )}
+        {hasReactNode(actions) && <div className={styles['ModalCardBase__actions']}>{actions}</div>}
 
         {isDesktop && <ModalDismissButton onClick={onClose} />}
         {canShowCloseButtonIOS && (
           <PanelHeaderButton
             aria-label={dismissLabel}
-            className={styles["ModalCardBase__dismiss"]}
+            className={styles['ModalCardBase__dismiss']}
             onClick={onClose}
           >
             <Icon24Dismiss />

@@ -1,13 +1,13 @@
-import React, { Fragment } from "react";
-import { PlatformSelect } from "./PlatformSelect";
-import { AppearanceSelect } from "./AppearanceSelect";
-import { WebviewTypeSelect } from "./WebviewTypeSelect";
-import { HasPointerCheckbox } from "./HasPointerCheckbox";
-import { ViewHeightSelect } from "./ViewHeightSelect";
-import { ViewWidthSelect } from "./ViewWidthSelect";
-import { Platform, useAdaptivityConditionalRender } from "@vkui";
-import { StyleGuideContext } from "../StyleGuide/StyleGuideRenderer";
-import "./Settings.css";
+import React, { Fragment } from 'react';
+import { PlatformSelect } from './PlatformSelect';
+import { AppearanceSelect } from './AppearanceSelect';
+import { WebviewTypeSelect } from './WebviewTypeSelect';
+import { HasPointerCheckbox } from './HasPointerCheckbox';
+import { ViewHeightSelect } from './ViewHeightSelect';
+import { ViewWidthSelect } from './ViewWidthSelect';
+import { Platform, useAdaptivityConditionalRender } from '@vkui';
+import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
+import './Settings.css';
 
 export const Settings = ({ adaptivity, webviewType }) => {
   const { sizeX } = useAdaptivityConditionalRender();
@@ -51,9 +51,7 @@ export const Settings = ({ adaptivity, webviewType }) => {
                   {sizeX.regular && (
                     <HasPointerCheckbox
                       className={sizeX.regular.className}
-                      onChange={(hasPointer) =>
-                        context.setContext({ hasPointer })
-                      }
+                      onChange={(hasPointer) => context.setContext({ hasPointer })}
                       value={context.hasPointer}
                       disabled={context.platform === Platform.VKCOM}
                     />

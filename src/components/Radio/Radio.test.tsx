@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { Radio } from "./Radio";
+import { baselineComponent } from '../../testing/utils';
+import { Radio } from './Radio';
 
-describe("Radio", () => {
+describe('Radio', () => {
   baselineComponent(Radio);
 });

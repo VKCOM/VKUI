@@ -1,23 +1,20 @@
-import * as React from "react";
-import { usePlatform } from "../../hooks/usePlatform";
-import { getPlatformClassName } from "../../helpers/getPlatformClassName";
-import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import { classNamesString } from "../../lib/classNames";
-import { FixedLayout } from "../FixedLayout/FixedLayout";
-import { Separator } from "../Separator/Separator";
-import { Platform } from "../../lib/platform";
-import { HasRef, HasRootRef } from "../../types";
-import {
-  useConfigProvider,
-  WebviewType,
-} from "../ConfigProvider/ConfigProviderContext";
-import { Text } from "../Typography/Text/Text";
-import { TooltipContainer } from "../Tooltip/TooltipContainer";
-import { ModalRootContext } from "../ModalRoot/ModalRootContext";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { useAdaptivityConditionalRender } from "../../hooks/useAdaptivityConditionalRender";
-import { Spacing } from "../Spacing/Spacing";
-import styles from "./PanelHeader.module.css";
+import * as React from 'react';
+import { usePlatform } from '../../hooks/usePlatform';
+import { getPlatformClassName } from '../../helpers/getPlatformClassName';
+import { getSizeXClassName } from '../../helpers/getSizeXClassName';
+import { classNamesString } from '../../lib/classNames';
+import { FixedLayout } from '../FixedLayout/FixedLayout';
+import { Separator } from '../Separator/Separator';
+import { Platform } from '../../lib/platform';
+import { HasRef, HasRootRef } from '../../types';
+import { useConfigProvider, WebviewType } from '../ConfigProvider/ConfigProviderContext';
+import { Text } from '../Typography/Text/Text';
+import { TooltipContainer } from '../Tooltip/TooltipContainer';
+import { ModalRootContext } from '../ModalRoot/ModalRootContext';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
+import { Spacing } from '../Spacing/Spacing';
+import styles from './PanelHeader.module.css';
 
 export interface PanelHeaderProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -38,30 +35,23 @@ export interface PanelHeaderProps
   fixed?: boolean;
 }
 
-const PanelHeaderIn = ({
-  before,
-  after,
-  separator,
-  children,
-}: PanelHeaderProps) => {
+const PanelHeaderIn = ({ before, after, separator, children }: PanelHeaderProps) => {
   const { webviewType } = useConfigProvider();
   const { isInsideModal } = React.useContext(ModalRootContext);
   const platform = usePlatform();
 
   return (
     <React.Fragment>
-      <TooltipContainer fixed className={styles["PanelHeader__in"]}>
-        <div className={styles["PanelHeader__before"]}>{before}</div>
-        <div className={styles["PanelHeader__content"]}>
+      <TooltipContainer fixed className={styles['PanelHeader__in']}>
+        <div className={styles['PanelHeader__before']}>{before}</div>
+        <div className={styles['PanelHeader__content']}>
           {platform === Platform.VKCOM ? (
             <Text weight="2">{children}</Text>
           ) : (
-            <span className={styles["PanelHeader__content-in"]}>
-              {children}
-            </span>
+            <span className={styles['PanelHeader__content-in']}>{children}</span>
           )}
         </div>
-        <div className={styles["PanelHeader__after"]}>
+        <div className={styles['PanelHeader__after']}>
           {(webviewType === WebviewType.INTERNAL || isInsideModal) && after}
         </div>
       </TooltipContainer>
@@ -98,29 +88,23 @@ export const PanelHeader = ({
     <div
       {...restProps}
       className={classNamesString(
-        styles["PanelHeader"],
-        getPlatformClassName(styles["PanelHeader"], platform),
-        transparent && styles["PanelHeader--trnsp"],
-        shadow && styles["PanelHeader--shadow"],
-        visor && styles["PanelHeader--vis"],
-        separator && visor && styles["PanelHeader--sep"],
-        webviewType === WebviewType.VKAPPS &&
-          !isInsideModal &&
-          styles["PanelHeader--vkapps"],
-        !before && styles["PanelHeader--no-before"],
-        !after && styles["PanelHeader--no-after"],
-        isFixed && styles["PanelHeader--fixed"],
-        getSizeXClassName(styles["PanelHeader"], sizeX),
-        className
+        styles['PanelHeader'],
+        getPlatformClassName(styles['PanelHeader'], platform),
+        transparent && styles['PanelHeader--trnsp'],
+        shadow && styles['PanelHeader--shadow'],
+        visor && styles['PanelHeader--vis'],
+        separator && visor && styles['PanelHeader--sep'],
+        webviewType === WebviewType.VKAPPS && !isInsideModal && styles['PanelHeader--vkapps'],
+        !before && styles['PanelHeader--no-before'],
+        !after && styles['PanelHeader--no-after'],
+        isFixed && styles['PanelHeader--fixed'],
+        getSizeXClassName(styles['PanelHeader'], sizeX),
+        className,
       )}
       ref={isFixed ? getRootRef : getRef}
     >
       {isFixed ? (
-        <FixedLayout
-          className={styles["PanelHeader__fixed"]}
-          vertical="top"
-          getRootRef={getRef}
-        >
+        <FixedLayout className={styles['PanelHeader__fixed']} vertical="top" getRootRef={getRef}>
           <PanelHeaderIn before={before} after={after} separator={separator}>
             {children}
           </PanelHeaderIn>
@@ -132,9 +116,7 @@ export const PanelHeader = ({
       )}
       {separator && visor && platform !== Platform.VKCOM && (
         <React.Fragment>
-          {adaptiveSizeX.compact && (
-            <Separator className={adaptiveSizeX.compact.className} />
-          )}
+          {adaptiveSizeX.compact && <Separator className={adaptiveSizeX.compact.className} />}
           {adaptiveSizeX.regular && (
             <Spacing className={adaptiveSizeX.regular.className} size={16} />
           )}

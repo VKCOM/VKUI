@@ -4,7 +4,7 @@
 }
 
 .InputLike__mask::after {
-  content: "";
+  content: '';
   position: absolute;
   width: calc(100% - 0.1em);
   height: 1px;

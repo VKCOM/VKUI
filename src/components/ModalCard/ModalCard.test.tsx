@@ -1,7 +1,7 @@
-import * as React from "react";
-import { baselineComponent } from "../../testing/utils";
-import { ModalCard } from "./ModalCard";
+import * as React from 'react';
+import { baselineComponent } from '../../testing/utils';
+import { ModalCard } from './ModalCard';
 
-describe("ModalCard", () => {
+describe('ModalCard', () => {
   baselineComponent((p) => <ModalCard nav="id" {...p} />);
 });

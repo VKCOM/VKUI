@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../../testing/utils";
-import { CellDragger } from "./CellDragger";
+import { baselineComponent } from '../../../testing/utils';
+import { CellDragger } from './CellDragger';
 
-describe("CellDragger", () => {
+describe('CellDragger', () => {
   baselineComponent(CellDragger);
 });

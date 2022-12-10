@@ -1,9 +1,9 @@
-const path = require("path");
-const childProcess = require("child_process");
-const JSONfn = require("./JSONfn");
+const path = require('path');
+const childProcess = require('child_process');
+const JSONfn = require('./JSONfn');
 
 const nodeExecutable = process.argv[0];
-const postcssExecutable = path.resolve(__dirname, "./postcss-executable.js");
+const postcssExecutable = path.resolve(__dirname, './postcss-executable.js');
 
 /**
  * Возвращает CSS селекторы в виде объекта.
@@ -25,7 +25,7 @@ function getCSSModulesTokens(postcssOptions, cssModulesPluginOptions = {}) {
     ],
     {
       env: process.env,
-    }
+    },
   );
   return JSON.parse(resultRaw.toString());
 }

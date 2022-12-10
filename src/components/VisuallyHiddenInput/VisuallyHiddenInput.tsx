@@ -1,7 +1,7 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { HasRef } from "../../types";
-import styles from "./VisuallyHiddenInput.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { HasRef } from '../../types';
+import styles from './VisuallyHiddenInput.module.css';
 
 export interface VisuallyHiddenInputProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
@@ -21,7 +21,7 @@ export const VisuallyHiddenInput = ({
   return (
     <input
       {...restProps}
-      className={classNamesString(styles["VisuallyHiddenInput"], className)}
+      className={classNamesString(styles['VisuallyHiddenInput'], className)}
       ref={getRef}
     />
   );

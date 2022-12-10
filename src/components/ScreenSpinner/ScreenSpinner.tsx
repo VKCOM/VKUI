@@ -1,15 +1,15 @@
-import * as React from "react";
-import { Spinner, SpinnerProps } from "../Spinner/Spinner";
-import { Icon24Cancel } from "@vkontakte/icons";
-import { Icon48DoneOutline } from "./Icon48DoneOutline";
-import { Icon48CancelCircle } from "./Icon48CancelCircle";
-import { PopoutWrapper } from "../PopoutWrapper/PopoutWrapper";
-import { useScrollLock } from "../AppRoot/ScrollContext";
-import { classNamesString } from "../../lib/classNames";
-import styles from "./ScreenSpinner.module.css";
+import * as React from 'react';
+import { Spinner, SpinnerProps } from '../Spinner/Spinner';
+import { Icon24Cancel } from '@vkontakte/icons';
+import { Icon48DoneOutline } from './Icon48DoneOutline';
+import { Icon48CancelCircle } from './Icon48CancelCircle';
+import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
+import { useScrollLock } from '../AppRoot/ScrollContext';
+import { classNamesString } from '../../lib/classNames';
+import styles from './ScreenSpinner.module.css';
 
 export interface ScreenSpinnerProps extends SpinnerProps {
-  state?: "loading" | "cancelable" | "done" | "error";
+  state?: 'loading' | 'cancelable' | 'done' | 'error';
 }
 
 /**
@@ -18,13 +18,13 @@ export interface ScreenSpinnerProps extends SpinnerProps {
 export const ScreenSpinner = ({
   style,
   className,
-  state = "loading",
-  size = "large",
-  "aria-label": ariaLabel = "Пожалуйста, подождите...",
+  state = 'loading',
+  size = 'large',
+  'aria-label': ariaLabel = 'Пожалуйста, подождите...',
   onClick,
   ...restProps
 }: ScreenSpinnerProps) => {
-  const hideSpinner = state === "done" || state === "error";
+  const hideSpinner = state === 'done' || state === 'error';
 
   const Icon = {
     loading: () => null,
@@ -39,21 +39,21 @@ export const ScreenSpinner = ({
     <PopoutWrapper
       hasMask={false}
       className={classNamesString(
-        styles["ScreenSpinner"],
-        hideSpinner && styles["ScreenSpinner--hideSpinner"],
+        styles['ScreenSpinner'],
+        hideSpinner && styles['ScreenSpinner--hideSpinner'],
         styles[`ScreenSpinner--state-${state}`],
-        className
+        className,
       )}
       style={style}
     >
-      <div className={styles["ScreenSpinner__container"]} onClick={onClick}>
+      <div className={styles['ScreenSpinner__container']} onClick={onClick}>
         <Spinner
-          className={styles["ScreenSpinner__spinner"]}
+          className={styles['ScreenSpinner__spinner']}
           size={size}
           aria-label={ariaLabel}
           {...restProps}
         />
-        <div className={styles["ScreenSpinner__icon"]}>
+        <div className={styles['ScreenSpinner__icon']}>
           <Icon />
         </div>
       </div>

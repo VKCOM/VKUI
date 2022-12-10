@@ -1,7 +1,7 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { ListContext } from "./ListContext";
-import styles from "./List.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { ListContext } from './ListContext';
+import styles from './List.module.css';
 
 export type ListProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -16,9 +16,9 @@ export const List = ({ children, className, ...restProps }: ListProps) => {
       role="list"
       {...restProps}
       className={classNamesString(
-        styles["List"],
-        isDragging && styles["List--dragging"],
-        className
+        styles['List'],
+        isDragging && styles['List--dragging'],
+        className,
       )}
     >
       <ListContext.Provider value={React.useMemo(() => ({ toggleDrag }), [])}>

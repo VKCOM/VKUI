@@ -1,9 +1,9 @@
-import * as React from "react";
-import { createPortal } from "react-dom";
-import { AppRootContext } from "./AppRootContext";
-import { AppearanceProvider } from "../AppearanceProvider/AppearanceProvider";
-import { useAppearance } from "../../hooks/useAppearance";
-import { useIsClient } from "../../hooks/useIsClient";
+import * as React from 'react';
+import { createPortal } from 'react-dom';
+import { AppRootContext } from './AppRootContext';
+import { AppearanceProvider } from '../AppearanceProvider/AppearanceProvider';
+import { useAppearance } from '../../hooks/useAppearance';
+import { useIsClient } from '../../hooks/useIsClient';
 
 export interface AppRootPortalProps {
   className?: string;
@@ -24,14 +24,14 @@ export const AppRootPortal = ({
     return null;
   }
 
-  const forcePortal = forcePortalProp ?? mode !== "full";
+  const forcePortal = forcePortalProp ?? mode !== 'full';
 
   return !disablePortal && portalRoot && forcePortal ? (
     createPortal(
       <AppearanceProvider appearance={appearance}>
         <div className={className}>{children}</div>
       </AppearanceProvider>,
-      portalRoot
+      portalRoot,
     )
   ) : (
     <React.Fragment>{children}</React.Fragment>

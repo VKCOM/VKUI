@@ -1,22 +1,19 @@
-import * as React from "react";
-import { useDOM } from "../../lib/dom";
-import { classNamesString } from "../../lib/classNames";
-import { AppRootContext } from "./AppRootContext";
-import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import { IconSettingsProvider } from "@vkontakte/icons";
-import {
-  ElementScrollController,
-  GlobalScrollController,
-} from "./ScrollContext";
-import { noop } from "../../lib/utils";
-import { useKeyboardInputTracker } from "../../hooks/useKeyboardInputTracker";
-import { useInsets } from "../../hooks/useInsets";
-import { Insets } from "@vkontakte/vk-bridge";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { useAppearance } from "../../hooks/useAppearance";
-import { isRefObject } from "../../lib/isRefObject";
-import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import styles from "./AppRoot.module.css";
+import * as React from 'react';
+import { useDOM } from '../../lib/dom';
+import { classNamesString } from '../../lib/classNames';
+import { AppRootContext } from './AppRootContext';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { IconSettingsProvider } from '@vkontakte/icons';
+import { ElementScrollController, GlobalScrollController } from './ScrollContext';
+import { noop } from '../../lib/utils';
+import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
+import { useInsets } from '../../hooks/useInsets';
+import { Insets } from '@vkontakte/vk-bridge';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useAppearance } from '../../hooks/useAppearance';
+import { isRefObject } from '../../lib/isRefObject';
+import { getSizeXClassName } from '../../helpers/getSizeXClassName';
+import styles from './AppRoot.module.css';
 
 const INSET_CUSTOM_PROPERTY_PREFIX = `--vkui_internal--safe_area_inset_`;
 
@@ -25,9 +22,9 @@ const INSET_CUSTOM_PROPERTY_PREFIX = `--vkui_internal--safe_area_inset_`;
 
 export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Режим встраивания */
-  mode?: "partial" | "embedded" | "full";
+  mode?: 'partial' | 'embedded' | 'full';
   window?: Window;
-  scroll?: "global" | "contain";
+  scroll?: 'global' | 'contain';
   /**
    * Кастомный root-элемент портала
    */
@@ -41,8 +38,8 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
  */
 export const AppRoot = ({
   children,
-  mode = "full",
-  scroll = "global",
+  mode = 'full',
+  scroll = 'global',
   portalRoot: portalRootProp = null,
   disablePortal,
   className,
@@ -68,7 +65,7 @@ export const AppRoot = ({
       }
     }
     if (!portal) {
-      portal = document!.createElement("div");
+      portal = document!.createElement('div');
       document!.body.appendChild(portal);
     }
     setPortalRoot(portal);
@@ -79,24 +76,24 @@ export const AppRoot = ({
 
   // setup root classes
   useIsomorphicLayoutEffect(() => {
-    if (mode !== "embedded") {
+    if (mode !== 'embedded') {
       return noop;
     }
 
     const parent = rootRef.current?.parentElement;
-    parent?.classList.add("vkui__root--embedded");
+    parent?.classList.add('vkui__root--embedded');
 
     return () => {
-      parent?.classList.remove("vkui__root--embedded");
+      parent?.classList.remove('vkui__root--embedded');
     };
   }, []);
 
   useIsomorphicLayoutEffect(() => {
-    if (mode === "full") {
-      document!.documentElement.classList.add("vkui");
+    if (mode === 'full') {
+      document!.documentElement.classList.add('vkui');
 
       return () => {
-        document!.documentElement.classList.remove("vkui");
+        document!.documentElement.classList.remove('vkui');
       };
     }
 
@@ -105,7 +102,7 @@ export const AppRoot = ({
 
   // setup insets
   useIsomorphicLayoutEffect(() => {
-    if (mode === "partial" || !rootRef.current?.parentElement) {
+    if (mode === 'partial' || !rootRef.current?.parentElement) {
       return noop;
     }
 
@@ -113,17 +110,11 @@ export const AppRoot = ({
 
     let key: keyof Insets;
     for (key in insets) {
-      if (insets.hasOwnProperty(key) && typeof insets[key] === "number") {
+      if (insets.hasOwnProperty(key) && typeof insets[key] === 'number') {
         const inset = insets[key];
-        parent.style.setProperty(
-          INSET_CUSTOM_PROPERTY_PREFIX + key,
-          `${inset}px`
-        );
+        parent.style.setProperty(INSET_CUSTOM_PROPERTY_PREFIX + key, `${inset}px`);
         portalRoot &&
-          portalRoot.style.setProperty(
-            INSET_CUSTOM_PROPERTY_PREFIX + key,
-            `${inset}px`
-          );
+          portalRoot.style.setProperty(INSET_CUSTOM_PROPERTY_PREFIX + key, `${inset}px`);
       }
     }
 
@@ -132,8 +123,7 @@ export const AppRoot = ({
       for (key in insets) {
         if (insets.hasOwnProperty(key)) {
           parent.style.removeProperty(INSET_CUSTOM_PROPERTY_PREFIX + key);
-          portalRoot &&
-            portalRoot.style.removeProperty(INSET_CUSTOM_PROPERTY_PREFIX + key);
+          portalRoot && portalRoot.style.removeProperty(INSET_CUSTOM_PROPERTY_PREFIX + key);
         }
       }
     };
@@ -141,29 +131,27 @@ export const AppRoot = ({
 
   // adaptivity handler
   useIsomorphicLayoutEffect(() => {
-    if (mode === "partial") {
+    if (mode === 'partial') {
       return noop;
     }
-    const className = getSizeXClassName("vkui", sizeX);
-    const container =
-      mode === "embedded" ? rootRef.current?.parentElement : document!.body;
+    const className = getSizeXClassName('vkui', sizeX);
+    const container = mode === 'embedded' ? rootRef.current?.parentElement : document!.body;
     container?.classList.add(className);
     return () => container?.classList.remove(className);
   }, [sizeX]);
 
   useIsomorphicLayoutEffect(() => {
-    if (mode !== "full" || appearance === undefined) {
+    if (mode !== 'full' || appearance === undefined) {
       return noop;
     }
-    document!.documentElement.style.setProperty("color-scheme", appearance);
+    document!.documentElement.style.setProperty('color-scheme', appearance);
 
-    return () => document!.documentElement.style.removeProperty("color-scheme");
+    return () => document!.documentElement.style.removeProperty('color-scheme');
   }, [appearance]);
 
   const ScrollController = React.useMemo(
-    () =>
-      scroll === "contain" ? ElementScrollController : GlobalScrollController,
-    [scroll]
+    () => (scroll === 'contain' ? ElementScrollController : GlobalScrollController),
+    [scroll],
   );
 
   const content = (
@@ -171,31 +159,29 @@ export const AppRoot = ({
       value={{
         appRoot: rootRef,
         portalRoot,
-        embedded: mode === "embedded",
+        embedded: mode === 'embedded',
         keyboardInput: isKeyboardInputActive,
         mode,
         disablePortal,
       }}
     >
       <ScrollController elRef={rootRef}>
-        <IconSettingsProvider classPrefix="vkui">
-          {children}
-        </IconSettingsProvider>
+        <IconSettingsProvider classPrefix="vkui">{children}</IconSettingsProvider>
       </ScrollController>
     </AppRootContext.Provider>
   );
 
-  return mode === "partial" ? (
+  return mode === 'partial' ? (
     content
   ) : (
     <div
       ref={rootRef}
       className={classNamesString(
-        styles["AppRoot"],
+        styles['AppRoot'],
         hasPointer === undefined
-          ? styles["AppRoot--pointer-none"]
-          : !hasPointer && styles["AppRoot--pointer-has-not"],
-        className
+          ? styles['AppRoot--pointer-none']
+          : !hasPointer && styles['AppRoot--pointer-has-not'],
+        className,
       )}
       {...props}
     >

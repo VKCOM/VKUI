@@ -28,7 +28,7 @@ https://github.com/VKCOM/VKUI/pull/3641
 }
 
 .Tappable[disabled],
-.Tappable[aria-disabled="true"] {
+.Tappable[aria-disabled='true'] {
   cursor: default;
 }
 
@@ -101,7 +101,7 @@ https://github.com/VKCOM/VKUI/pull/3641
   height: 24px;
   margin: -12px 0 0 -12px;
   opacity: 0;
-  content: "";
+  content: '';
   border-radius: 50%;
   background: var(--vkui--color_transparent--active);
   animation: vkui-animation-wave 0.3s var(--vkui--animation_easing_platform);

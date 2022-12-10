@@ -1,9 +1,8 @@
-import * as React from "react";
-import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import { ModalElements, ModalsStateEntry, ModalType } from "./types";
+import * as React from 'react';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { ModalElements, ModalsStateEntry, ModalType } from './types';
 
-export type ModalRegistryEntry = ModalElements &
-  Required<Pick<ModalsStateEntry, "type" | "id">>;
+export type ModalRegistryEntry = ModalElements & Required<Pick<ModalsStateEntry, 'type' | 'id'>>;
 type ModalRefs = { [k in keyof ModalElements]: (e: ModalElements[k]) => void };
 
 export interface ModalRootContextInterface {
@@ -31,7 +30,7 @@ export function useModalRegistry(id: string | undefined, type: ModalType) {
       // unset refs on  unmount to prevent leak
       const reset = Object.keys(elements).reduce<ModalRegistryEntry>(
         (acc, k) => ({ ...acc, [k]: null }),
-        { type, id }
+        { type, id },
       );
       return () => modalContext.registerModal(reset);
     }

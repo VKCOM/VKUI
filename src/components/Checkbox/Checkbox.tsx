@@ -1,25 +1,25 @@
-import * as React from "react";
-import { ACTIVE_EFFECT_DELAY, Tappable } from "../Tappable/Tappable";
-import { classNamesString } from "../../lib/classNames";
-import { Platform } from "../../lib/platform";
+import * as React from 'react';
+import { ACTIVE_EFFECT_DELAY, Tappable } from '../Tappable/Tappable';
+import { classNamesString } from '../../lib/classNames';
+import { Platform } from '../../lib/platform';
 import {
   Icon20CheckBoxOn,
   Icon24CheckBoxOn,
   Icon20CheckBoxOff,
   Icon24CheckBoxOff,
   Icon20CheckBoxIndetermanate,
-} from "@vkontakte/icons";
-import { HasRef, HasRootRef } from "../../types";
-import { usePlatform } from "../../hooks/usePlatform";
-import { hasReactNode } from "../../lib/utils";
-import { Footnote } from "../Typography/Footnote/Footnote";
-import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { useExternRef } from "../../hooks/useExternRef";
-import { useAdaptivityConditionalRender } from "../../hooks/useAdaptivityConditionalRender";
-import { VisuallyHiddenInput } from "../VisuallyHiddenInput/VisuallyHiddenInput";
-import { warnOnce } from "../../lib/warnOnce";
-import styles from "./Checkbox.module.css";
+} from '@vkontakte/icons';
+import { HasRef, HasRootRef } from '../../types';
+import { usePlatform } from '../../hooks/usePlatform';
+import { hasReactNode } from '../../lib/utils';
+import { Footnote } from '../Typography/Footnote/Footnote';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
+import { VisuallyHiddenInput } from '../VisuallyHiddenInput/VisuallyHiddenInput';
+import { warnOnce } from '../../lib/warnOnce';
+import styles from './Checkbox.module.css';
 
 export interface CheckboxProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
@@ -30,7 +30,7 @@ export interface CheckboxProps
   defaultIndeterminate?: boolean;
 }
 
-const warn = warnOnce("Checkbox");
+const warn = warnOnce('Checkbox');
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Checkbox
@@ -53,15 +53,14 @@ export const Checkbox = ({
   const { sizeY: adaptiveSizeY } = useAdaptivityConditionalRender();
 
   React.useEffect(() => {
-    const indeterminateValue =
-      indeterminate === undefined ? defaultIndeterminate : indeterminate;
+    const indeterminateValue = indeterminate === undefined ? defaultIndeterminate : indeterminate;
 
     if (inputRef.current) {
       inputRef.current.indeterminate = Boolean(indeterminateValue);
     }
   }, [defaultIndeterminate, indeterminate, inputRef]);
 
-  const handleChange: CheckboxProps["onChange"] = React.useCallback(
+  const handleChange: CheckboxProps['onChange'] = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       if (
         defaultIndeterminate !== undefined &&
@@ -76,23 +75,20 @@ export const Checkbox = ({
       }
       onChange && onChange(event);
     },
-    [defaultIndeterminate, indeterminate, restProps.checked, onChange, inputRef]
+    [defaultIndeterminate, indeterminate, restProps.checked, onChange, inputRef],
   );
 
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV === 'development') {
     if (defaultIndeterminate && restProps.defaultChecked) {
-      warn(
-        "defaultIndeterminate и defaultChecked не могут быть true одновременно",
-        "error"
-      );
+      warn('defaultIndeterminate и defaultChecked не могут быть true одновременно', 'error');
     }
 
     if (indeterminate && restProps.checked) {
-      warn("indeterminate и checked не могут быть true одновременно", "error");
+      warn('indeterminate и checked не могут быть true одновременно', 'error');
     }
 
     if (restProps.defaultChecked && restProps.checked) {
-      warn("defaultChecked и checked не могут быть true одновременно", "error");
+      warn('defaultChecked и checked не могут быть true одновременно', 'error');
     }
   }
 
@@ -100,12 +96,11 @@ export const Checkbox = ({
     <Tappable
       Component="label"
       className={classNamesString(
-        styles["Checkbox"],
-        platform === Platform.VKCOM && styles["Checkbox--vkcom"],
-        getSizeYClassName(styles["Checkbox"], sizeY),
-        !(hasReactNode(children) || hasReactNode(description)) &&
-          styles["Checkbox--simple"],
-        className
+        styles['Checkbox'],
+        platform === Platform.VKCOM && styles['Checkbox--vkcom'],
+        getSizeYClassName(styles['Checkbox'], sizeY),
+        !(hasReactNode(children) || hasReactNode(description)) && styles['Checkbox--simple'],
+        className,
       )}
       style={style}
       disabled={restProps.disabled}
@@ -116,15 +111,10 @@ export const Checkbox = ({
         {...restProps}
         onChange={handleChange}
         type="checkbox"
-        className={styles["Checkbox__input"]}
+        className={styles['Checkbox__input']}
         getRef={inputRef}
       />
-      <div
-        className={classNamesString(
-          styles["Checkbox__icon"],
-          styles["Checkbox__icon--on"]
-        )}
-      >
+      <div className={classNamesString(styles['Checkbox__icon'], styles['Checkbox__icon--on'])}>
         {platform === Platform.VKCOM ? (
           <Icon20CheckBoxOn />
         ) : (
@@ -138,12 +128,7 @@ export const Checkbox = ({
           </React.Fragment>
         )}
       </div>
-      <div
-        className={classNamesString(
-          styles["Checkbox__icon"],
-          styles["Checkbox__icon--off"]
-        )}
-      >
+      <div className={classNamesString(styles['Checkbox__icon'], styles['Checkbox__icon--off'])}>
         {platform === Platform.VKCOM ? (
           <Icon20CheckBoxOff />
         ) : (
@@ -159,8 +144,8 @@ export const Checkbox = ({
       </div>
       <div
         className={classNamesString(
-          styles["Checkbox__icon"],
-          styles["Checkbox__icon--indeterminate"]
+          styles['Checkbox__icon'],
+          styles['Checkbox__icon--indeterminate'],
         )}
       >
         {platform === Platform.VKCOM ? (
@@ -184,12 +169,10 @@ export const Checkbox = ({
           </React.Fragment>
         )}
       </div>
-      <div className={styles["Checkbox__content"]}>
-        <div className={styles["Checkbox__children"]}>{children}</div>
+      <div className={styles['Checkbox__content']}>
+        <div className={styles['Checkbox__children']}>{children}</div>
         {hasReactNode(description) && (
-          <Footnote className={styles["Checkbox__description"]}>
-            {description}
-          </Footnote>
+          <Footnote className={styles['Checkbox__description']}>{description}</Footnote>
         )}
       </div>
     </Tappable>

@@ -36,15 +36,15 @@ const Example = () => {
 };
 
 const rowStyles = {
-  display: "flex",
-  justifyContent: "center",
+  display: 'flex',
+  justifyContent: 'center',
   gap: 16,
   padding: 16,
 };
 
 const captionStyles = {
   marginTop: 8,
-  textAlign: "center",
+  textAlign: 'center',
 };
 
 <Example />;

@@ -1,19 +1,18 @@
-import * as React from "react";
-import { FixedLayout } from "../FixedLayout/FixedLayout";
-import { classNamesString } from "../../lib/classNames";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { useDOM } from "../../lib/dom";
-import { Platform } from "../../lib/platform";
-import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
-import { useTimeout } from "../../hooks/useTimeout";
-import { usePlatform } from "../../hooks/usePlatform";
-import { useScrollLock } from "../AppRoot/ScrollContext";
-import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import styles from "./PanelHeaderContext.module.css";
+import * as React from 'react';
+import { FixedLayout } from '../FixedLayout/FixedLayout';
+import { classNamesString } from '../../lib/classNames';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useDOM } from '../../lib/dom';
+import { Platform } from '../../lib/platform';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { useTimeout } from '../../hooks/useTimeout';
+import { usePlatform } from '../../hooks/usePlatform';
+import { useScrollLock } from '../AppRoot/ScrollContext';
+import { getSizeXClassName } from '../../helpers/getSizeXClassName';
+import styles from './PanelHeaderContext.module.css';
 
-export interface PanelHeaderContextProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface PanelHeaderContextProps extends React.HTMLAttributes<HTMLDivElement> {
   opened: boolean;
   onClose: VoidFunction;
 }
@@ -44,19 +43,16 @@ export const PanelHeaderContext = ({
   // start closing on outer click
   useGlobalEventListener(
     document,
-    "click",
+    'click',
     opened &&
       !closing &&
       ((event) => {
-        if (
-          elementRef.current &&
-          !elementRef.current.contains(event.target as Node)
-        ) {
+        if (elementRef.current && !elementRef.current.contains(event.target as Node)) {
           event.stopPropagation();
           onClose();
         }
       }),
-    { capture: true }
+    { capture: true },
   );
 
   // fallback onAnimationEnd when animationend not supported
@@ -64,31 +60,29 @@ export const PanelHeaderContext = ({
   const animationFallback = useTimeout(onAnimationEnd, 200);
   React.useEffect(
     () => (closing ? animationFallback.set() : animationFallback.clear()),
-    [animationFallback, closing]
+    [animationFallback, closing],
   );
 
   return (
     <FixedLayout
       {...restProps}
       className={classNamesString(
-        styles["PanelHeaderContext"],
-        platform === Platform.IOS && styles["PanelHeaderContext--ios"],
-        opened && styles["PanelHeaderContext--opened"],
-        closing && styles["PanelHeaderContext--closing"],
-        getSizeXClassName(styles["PanelHeaderContext"], sizeX),
-        styles["PanelHeaderContext--rounded"],
-        className
+        styles['PanelHeaderContext'],
+        platform === Platform.IOS && styles['PanelHeaderContext--ios'],
+        opened && styles['PanelHeaderContext--opened'],
+        closing && styles['PanelHeaderContext--closing'],
+        getSizeXClassName(styles['PanelHeaderContext'], sizeX),
+        styles['PanelHeaderContext--rounded'],
+        className,
       )}
       vertical="top"
     >
       <div
-        className={styles["PanelHeaderContext__in"]}
+        className={styles['PanelHeaderContext__in']}
         ref={elementRef}
         onAnimationEnd={closing ? onAnimationEnd : undefined}
       >
-        <div className={styles["PanelHeaderContext__content"]}>
-          {visible && children}
-        </div>
+        <div className={styles['PanelHeaderContext__content']}>{visible && children}</div>
       </div>
       {visible && (
         <div
@@ -96,7 +90,7 @@ export const PanelHeaderContext = ({
             event.stopPropagation();
             onClose();
           }}
-          className={styles["PanelHeaderContext__fade"]}
+          className={styles['PanelHeaderContext__fade']}
         />
       )}
     </FixedLayout>

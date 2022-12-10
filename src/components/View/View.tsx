@@ -1,24 +1,24 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { animationEvent } from "../../lib/supportEvents";
-import { Platform } from "../../lib/platform";
-import { Touch, TouchEvent } from "../Touch/Touch";
-import { useConfigProvider } from "../ConfigProvider/ConfigProviderContext";
-import { useSplitCol } from "../SplitCol/SplitCol";
-import { canUseDOM, useDOM, blurActiveElement } from "../../lib/dom";
-import { useScroll } from "../AppRoot/ScrollContext";
-import { NavTransitionProvider } from "../NavTransitionContext/NavTransitionContext";
-import { getNavId, NavIdProps } from "../../lib/getNavId";
-import { warnOnce } from "../../lib/warnOnce";
-import { usePlatform } from "../../hooks/usePlatform";
-import { swipeBackExcluded } from "./utils";
-import { useWaitTransitionFinish } from "../../hooks/useWaitTransitionFinish";
-import { useTimeout } from "../../hooks/useTimeout";
-import { usePrevious } from "../../hooks/usePrevious";
-import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import { noop } from "../../lib/utils";
-import styles from "./View.module.css";
-import iosStyles from "./ViewIOS.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { animationEvent } from '../../lib/supportEvents';
+import { Platform } from '../../lib/platform';
+import { Touch, TouchEvent } from '../Touch/Touch';
+import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
+import { useSplitCol } from '../SplitCol/SplitCol';
+import { canUseDOM, useDOM, blurActiveElement } from '../../lib/dom';
+import { useScroll } from '../AppRoot/ScrollContext';
+import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
+import { getNavId, NavIdProps } from '../../lib/getNavId';
+import { warnOnce } from '../../lib/warnOnce';
+import { usePlatform } from '../../hooks/usePlatform';
+import { swipeBackExcluded } from './utils';
+import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
+import { useTimeout } from '../../hooks/useTimeout';
+import { usePrevious } from '../../hooks/usePrevious';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { noop } from '../../lib/utils';
+import styles from './View.module.css';
+import iosStyles from './ViewIOS.module.css';
 
 enum SwipeBackResults {
   fail = 1,
@@ -35,9 +35,7 @@ interface ViewsScrolls {
 
 export let scrollsCache: ViewsScrolls = {};
 
-export interface ViewProps
-  extends React.HTMLAttributes<HTMLElement>,
-    NavIdProps {
+export interface ViewProps extends React.HTMLAttributes<HTMLElement>, NavIdProps {
   activePanel: string;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   /**
@@ -74,7 +72,7 @@ export interface ViewState {
   browserSwipe: boolean;
 }
 
-const warn = warnOnce("View");
+const warn = warnOnce('View');
 
 /**
  * @see https://vkcom.github.io/VKUI/#/View
@@ -91,9 +89,7 @@ export const View = ({
   className,
   ...restProps
 }: ViewProps) => {
-  const scrolls = React.useRef(
-    scrollsCache[getNavId({ nav, id: restProps.id }) as string] || {}
-  );
+  const scrolls = React.useRef(scrollsCache[getNavId({ nav, id: restProps.id }) as string] || {});
   const afterTransition = React.useRef(noop);
 
   React.useEffect(() => () => {
@@ -114,9 +110,7 @@ export const View = ({
   const [animated, setAnimated] = React.useState(false);
 
   const [visiblePanels, setVisiblePanels] = React.useState([activePanelProp]);
-  const [activePanel, setActivePanel] = React.useState<string | null>(
-    activePanelProp
-  );
+  const [activePanel, setActivePanel] = React.useState<string | null>(activePanelProp);
   const [isBack, setIsBack] = React.useState<boolean | undefined>(undefined);
   const [prevPanel, setPrevPanel] = React.useState<string | null>(null);
   const [nextPanel, setNextPanel] = React.useState<string | null>(null);
@@ -124,14 +118,9 @@ export const View = ({
   const [swipingBack, setSwipingBack] = React.useState<boolean>(false);
   const [swipeBackStartX, setSwipeBackStartX] = React.useState<number>(0);
   const [swipeBackShift, setSwipeBackShift] = React.useState<number>(0);
-  const [swipeBackNextPanel, setSwipeBackNextPanel] = React.useState<
-    string | null
-  >(null);
-  const [swipeBackPrevPanel, setSwipeBackPrevPanel] = React.useState<
-    string | null
-  >(null);
-  const [swipeBackResult, setSwipeBackResult] =
-    React.useState<SwipeBackResults | null>(null);
+  const [swipeBackNextPanel, setSwipeBackNextPanel] = React.useState<string | null>(null);
+  const [swipeBackPrevPanel, setSwipeBackPrevPanel] = React.useState<string | null>(null);
+  const [swipeBackResult, setSwipeBackResult] = React.useState<SwipeBackResults | null>(null);
 
   const [browserSwipe, setBrowserSwipe] = React.useState(false);
 
@@ -142,20 +131,19 @@ export const View = ({
   const prevSwipeBackPrevPanel = usePrevious(swipeBackPrevPanel);
   const prevOnTransition = usePrevious(onTransition);
 
-  const panels = (
-    React.Children.toArray(children) as React.ReactElement[]
-  ).filter((panel: React.ReactElement) => {
-    const panelId = getNavId(panel.props, warn);
+  const panels = (React.Children.toArray(children) as React.ReactElement[]).filter(
+    (panel: React.ReactElement) => {
+      const panelId = getNavId(panel.props, warn);
 
-    return (
-      (panelId !== undefined && visiblePanels.includes(panelId)) ||
-      panelId === swipeBackPrevPanel ||
-      panelId === swipeBackNextPanel
-    );
-  });
+      return (
+        (panelId !== undefined && visiblePanels.includes(panelId)) ||
+        panelId === swipeBackPrevPanel ||
+        panelId === swipeBackNextPanel
+      );
+    },
+  );
 
-  const disableAnimation =
-    configProvider?.transitionMotionEnabled === false || !splitCol?.animate;
+  const disableAnimation = configProvider?.transitionMotionEnabled === false || !splitCol?.animate;
 
   const pickPanel = (id: string | null) => {
     if (id === null) {
@@ -177,10 +165,7 @@ export const View = ({
       setIsBack(undefined);
 
       afterTransition.current = () => {
-        scroll?.scrollTo(
-          0,
-          isBackTransition ? scrolls.current[activePanelProp] : 0
-        );
+        scroll?.scrollTo(0, isBackTransition ? scrolls.current[activePanelProp] : 0);
         onTransition &&
           onTransition({
             isBack: isBackTransition,
@@ -189,7 +174,7 @@ export const View = ({
           });
       };
     },
-    [activePanelProp, onTransition, scroll]
+    [activePanelProp, onTransition, scroll],
   );
 
   useIsomorphicLayoutEffect(() => {
@@ -202,23 +187,23 @@ export const View = ({
       if (
         (!e ||
           [
-            "vkui-animation-ios-next-forward",
-            "vkui-animation-ios-prev-back",
-            "vkui-animation-view-next-forward",
-            "vkui-animation-view-prev-back",
+            'vkui-animation-ios-next-forward',
+            'vkui-animation-ios-prev-back',
+            'vkui-animation-view-next-forward',
+            'vkui-animation-view-prev-back',
           ].includes(e.animationName)) &&
         prevPanel !== null
       ) {
         flushTransition(prevPanel, Boolean(isBack));
       }
     },
-    [flushTransition, isBack, prevPanel]
+    [flushTransition, isBack, prevPanel],
   );
 
   const { waitTransitionFinish } = useWaitTransitionFinish();
   const animationFinishTimeout = useTimeout(
     transitionEndHandler,
-    platform === Platform.IOS ? 600 : 300
+    platform === Platform.IOS ? 600 : 300,
   );
 
   const onSwipeBackSuccess = React.useCallback(() => {
@@ -240,8 +225,7 @@ export const View = ({
       // indexOf because of vendor prefixes in old browsers
       if (
         !e ||
-        (e?.propertyName.includes("transform") &&
-          e?.target === pickPanel(swipeBackNextPanel))
+        (e?.propertyName.includes('transform') && e?.target === pickPanel(swipeBackNextPanel))
       ) {
         switch (swipeBackResult) {
           case SwipeBackResults.fail:
@@ -252,7 +236,7 @@ export const View = ({
         }
       }
     },
-    [onSwipeBackCancel, onSwipeBackSuccess, swipeBackNextPanel, swipeBackResult]
+    [onSwipeBackCancel, onSwipeBackSuccess, swipeBackNextPanel, swipeBackResult],
   );
 
   const onMoveX = (e: TouchEvent): void => {
@@ -308,29 +292,17 @@ export const View = ({
           onSwipeBackCancel();
         } else if (swipeBackShift >= (window?.innerWidth ?? 0)) {
           onSwipeBackSuccess();
-        } else if (
-          speed > 250 ||
-          swipeBackStartX + swipeBackShift > window.innerWidth / 2
-        ) {
+        } else if (speed > 250 || swipeBackStartX + swipeBackShift > window.innerWidth / 2) {
           setSwipeBackResult(SwipeBackResults.success);
         } else {
           setSwipeBackResult(SwipeBackResults.fail);
         }
       }
     },
-    [
-      onSwipeBackCancel,
-      onSwipeBackSuccess,
-      swipeBackShift,
-      swipeBackStartX,
-      swipingBack,
-      window,
-    ]
+    [onSwipeBackCancel, onSwipeBackSuccess, swipeBackShift, swipeBackStartX, swipingBack, window],
   );
 
-  const calcPanelSwipeStyles = (
-    panelId: string | undefined
-  ): React.CSSProperties => {
+  const calcPanelSwipeStyles = (panelId: string | undefined): React.CSSProperties => {
     if (!canUseDOM || !window) {
       return {};
     }
@@ -343,16 +315,11 @@ export const View = ({
     }
 
     let prevPanelTranslate = `${swipeBackShift}px`;
-    let nextPanelTranslate = `${
-      -50 + (swipeBackShift * 100) / window.innerWidth / 2
-    }%`;
-    let prevPanelShadow =
-      (0.3 * (window.innerWidth - swipeBackShift)) / window.innerWidth;
+    let nextPanelTranslate = `${-50 + (swipeBackShift * 100) / window.innerWidth / 2}%`;
+    let prevPanelShadow = (0.3 * (window.innerWidth - swipeBackShift)) / window.innerWidth;
 
     if (swipeBackResult) {
-      return isPrev
-        ? { boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})` }
-        : {};
+      return isPrev ? { boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})` } : {};
     }
 
     if (isNext) {
@@ -380,9 +347,7 @@ export const View = ({
       !prevSwipingBack &&
       !prevBrowserSwipe
     ) {
-      const firstLayerId = (
-        React.Children.toArray(children) as React.ReactElement[]
-      )
+      const firstLayerId = (React.Children.toArray(children) as React.ReactElement[])
         .map((panel) => getNavId(panel.props, warn))
         .find((id) => id === prevActivePanel || id === activePanelProp);
 
@@ -409,11 +374,7 @@ export const View = ({
     }
 
     // Закончилась анимация свайпа назад
-    if (
-      prevActivePanel &&
-      prevActivePanel !== activePanelProp &&
-      prevSwipingBack
-    ) {
+    if (prevActivePanel && prevActivePanel !== activePanelProp && prevSwipingBack) {
       const nextPanel = activePanelProp;
       const prevPanel = prevActivePanel;
       if (prevSwipeBackPrevPanel) {
@@ -452,16 +413,12 @@ export const View = ({
       waitTransitionFinish(
         pickPanel(swipeBackNextPanel),
         swipingBackTransitionEndHandler,
-        platform === Platform.IOS ? 600 : 300
+        platform === Platform.IOS ? 600 : 300,
       );
     }
 
     // Если свайп назад отменился (когда пользователь недостаточно сильно свайпнул)
-    if (
-      prevSwipeBackResult === SwipeBackResults.fail &&
-      !swipeBackResult &&
-      activePanel !== null
-    ) {
+    if (prevSwipeBackResult === SwipeBackResults.fail && !swipeBackResult && activePanel !== null) {
       scroll?.scrollTo(0, scrolls.current[activePanel]);
     }
 
@@ -505,65 +462,51 @@ export const View = ({
       Component="section"
       {...restProps}
       className={classNamesString(
-        styles["View"],
-        platform === Platform.IOS && iosStyles["View--ios"],
-        !disableAnimation && animated && styles["View--animated"],
-        !disableAnimation && swipingBack && styles["View--swiping-back"],
-        disableAnimation && styles["View--no-motion"],
-        className
+        styles['View'],
+        platform === Platform.IOS && iosStyles['View--ios'],
+        !disableAnimation && animated && styles['View--animated'],
+        !disableAnimation && swipingBack && styles['View--swiping-back'],
+        disableAnimation && styles['View--no-motion'],
+        className,
       )}
       onMoveX={onMoveX}
       onEnd={onEnd}
     >
-      <div className={styles["View__panels"]}>
+      <div className={styles['View__panels']}>
         {panels.map((panel: React.ReactElement) => {
           const panelId = getNavId(panel.props, warn);
-          const isPrev =
-            panelId === prevPanel || panelId === swipeBackPrevPanel;
-          const isTransitionTarget =
-            animated && panelId === (isBack ? prevPanel : nextPanel);
+          const isPrev = panelId === prevPanel || panelId === swipeBackPrevPanel;
+          const isTransitionTarget = animated && panelId === (isBack ? prevPanel : nextPanel);
           const compensateScroll =
-            isPrev ||
-            panelId === swipeBackNextPanel ||
-            (panelId === nextPanel && isBack);
+            isPrev || panelId === swipeBackNextPanel || (panelId === nextPanel && isBack);
 
           return (
             <div
               className={classNamesString(
-                styles["View__panel"],
-                panelId === activePanel && iosStyles["View__panel--active"],
-                panelId === prevPanel && styles["View__panel--prev"],
-                panelId === nextPanel && styles["View__panel--next"],
-                panelId === swipeBackPrevPanel &&
-                  iosStyles["View__panel--swipe-back-prev"],
-                panelId === swipeBackNextPanel &&
-                  iosStyles["View__panel--swipe-back-next"],
+                styles['View__panel'],
+                panelId === activePanel && iosStyles['View__panel--active'],
+                panelId === prevPanel && styles['View__panel--prev'],
+                panelId === nextPanel && styles['View__panel--next'],
+                panelId === swipeBackPrevPanel && iosStyles['View__panel--swipe-back-prev'],
+                panelId === swipeBackNextPanel && iosStyles['View__panel--swipe-back-next'],
                 swipeBackResult === SwipeBackResults.success &&
-                  iosStyles["View__panel--swipe-back-success"],
+                  iosStyles['View__panel--swipe-back-success'],
                 swipeBackResult === SwipeBackResults.fail &&
-                  iosStyles["View__panel--swipe-back-failed"]
+                  iosStyles['View__panel--swipe-back-failed'],
               )}
-              onAnimationEnd={
-                isTransitionTarget ? transitionEndHandler : undefined
-              }
-              ref={(el) =>
-                panelId !== undefined && (panelNodes.current[panelId] = el)
-              }
+              onAnimationEnd={isTransitionTarget ? transitionEndHandler : undefined}
+              ref={(el) => panelId !== undefined && (panelNodes.current[panelId] = el)}
               style={calcPanelSwipeStyles(panelId)}
               key={panelId}
             >
               <div
-                className={styles["View__panel-in"]}
+                className={styles['View__panel-in']}
                 style={{
-                  marginTop: compensateScroll
-                    ? -(scrolls.current[panelId] ?? 0)
-                    : undefined,
+                  marginTop: compensateScroll ? -(scrolls.current[panelId] ?? 0) : undefined,
                 }}
               >
                 <NavTransitionProvider
-                  entering={
-                    panelId === nextPanel || panelId === swipeBackNextPanel
-                  }
+                  entering={panelId === nextPanel || panelId === swipeBackNextPanel}
                 >
                   {panel}
                 </NavTransitionProvider>

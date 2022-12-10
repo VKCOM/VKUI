@@ -1,16 +1,12 @@
-import * as React from "react";
-import { useExternRef } from "../../hooks/useExternRef";
-import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
-import { useTimeout } from "../../hooks/useTimeout";
-import {
-  FOCUSABLE_ELEMENTS_LIST,
-  Keys,
-  pressedKey,
-} from "../../lib/accessibility";
-import { useDOM } from "../../lib/dom";
-import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import { HasComponent, HasRootRef } from "../../types";
-import { AppRootContext } from "../AppRoot/AppRootContext";
+import * as React from 'react';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { useTimeout } from '../../hooks/useTimeout';
+import { FOCUSABLE_ELEMENTS_LIST, Keys, pressedKey } from '../../lib/accessibility';
+import { useDOM } from '../../lib/dom';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { HasComponent, HasRootRef } from '../../types';
+import { AppRootContext } from '../AppRoot/AppRootContext';
 
 const FOCUSABLE_ELEMENTS: string = FOCUSABLE_ELEMENTS_LIST.join();
 export interface FocusTrapProps
@@ -26,7 +22,7 @@ export interface FocusTrapProps
  * @see https://vkcom.github.io/VKUI/#/FocusTrap
  */
 export const FocusTrap = ({
-  Component = "div",
+  Component = 'div',
   onClose,
   restoreFocus = true,
   timeout = 0,
@@ -38,11 +34,8 @@ export const FocusTrap = ({
 
   const { document, window } = useDOM();
 
-  const [focusableNodes, setFocusableNodes] = React.useState<
-    HTMLElement[] | null
-  >(null);
-  const [restoreFocusTo, setRestoreFocusTo] =
-    React.useState<HTMLElement | null>(null);
+  const [focusableNodes, setFocusableNodes] = React.useState<HTMLElement[] | null>(null);
+  const [restoreFocusTo, setRestoreFocusTo] = React.useState<HTMLElement | null>(null);
 
   // HANDLE TRAP MOUNT
 
@@ -74,10 +67,10 @@ export const FocusTrap = ({
       (focusableEl: Element) => {
         const { display, visibility } = window!.getComputedStyle(focusableEl);
 
-        if (display !== "none" && visibility !== "hidden") {
+        if (display !== 'none' && visibility !== 'hidden') {
           nodes.push(focusableEl as HTMLElement);
         }
-      }
+      },
     );
 
     if (nodes.length === 0) {
@@ -112,8 +105,7 @@ export const FocusTrap = ({
       const lastIdx = focusableNodes.length - 1;
       const targetIdx = focusableNodes.findIndex((node) => node === e.target);
 
-      const shouldFocusFirstNode =
-        targetIdx === -1 || (targetIdx === lastIdx && !e.shiftKey);
+      const shouldFocusFirstNode = targetIdx === -1 || (targetIdx === lastIdx && !e.shiftKey);
 
       if (shouldFocusFirstNode || (targetIdx === 0 && e.shiftKey)) {
         e.preventDefault();
@@ -134,7 +126,7 @@ export const FocusTrap = ({
 
     return true;
   };
-  useGlobalEventListener(document, "keydown", onDocumentKeydown, {
+  useGlobalEventListener(document, 'keydown', onDocumentKeydown, {
     capture: true,
   });
 

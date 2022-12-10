@@ -1,20 +1,20 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   describeScreenshotFuzz,
   customSnapshotIdentifier,
   APPEARANCE,
-} from "../../testing/e2e/utils";
-import { HorizontalScroll } from "./HorizontalScroll";
-import { HorizontalCell } from "../HorizontalCell/HorizontalCell";
-import { Avatar } from "../Avatar/Avatar";
-import { Platform } from "../../lib/platform";
-import { ViewWidth } from "../../lib/adaptivity";
-import { mount, screenshot } from "../../testing/e2e";
-import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import { AppRoot } from "../AppRoot/AppRoot";
-import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
+} from '../../testing/e2e/utils';
+import { HorizontalScroll } from './HorizontalScroll';
+import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
+import { Avatar } from '../Avatar/Avatar';
+import { Platform } from '../../lib/platform';
+import { ViewWidth } from '../../lib/adaptivity';
+import { mount, screenshot } from '../../testing/e2e';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import { AppRoot } from '../AppRoot/AppRoot';
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 
-describe("HorizontalScroll", () => {
+describe('HorizontalScroll', () => {
   const items = new Array(20).fill(0).map((_, i) => (
     <HorizontalCell key={i} header={`item ${i}`}>
       <Avatar size={56} />
@@ -25,10 +25,10 @@ describe("HorizontalScroll", () => {
     HorizontalScroll,
     [
       {
-        showArrows: ["always"],
-        arrowSize: ["m", "l"],
+        showArrows: ['always'],
+        arrowSize: ['m', 'l'],
         children: [
-          <div key="0" style={{ display: "flex" }}>
+          <div key="0" style={{ display: 'flex' }}>
             {items}
           </div>,
         ],
@@ -40,16 +40,16 @@ describe("HorizontalScroll", () => {
         viewWidth: ViewWidth.MOBILE,
         hasPointer: false,
       },
-    }
+    },
   );
 
   describeScreenshotFuzz(
     HorizontalScroll,
     [
       {
-        arrowSize: ["m", "l"],
+        arrowSize: ['m', 'l'],
         children: [
-          <div key="0" style={{ display: "flex" }}>
+          <div key="0" style={{ display: 'flex' }}>
             {items}
           </div>,
         ],
@@ -61,10 +61,10 @@ describe("HorizontalScroll", () => {
         viewWidth: ViewWidth.SMALL_TABLET,
         hasPointer: true,
       },
-    }
+    },
   );
 
-  it("has arrows on mouse hover", async () => {
+  it('has arrows on mouse hover', async () => {
     jest.setTimeout(5000);
     await mount(
       <ConfigProvider appearance={APPEARANCE}>
@@ -78,51 +78,48 @@ describe("HorizontalScroll", () => {
                 element.scrollLeft = 32;
               }}
             >
-              <div key="0" style={{ display: "flex" }}>
+              <div key="0" style={{ display: 'flex' }}>
                 {items}
               </div>
             </HorizontalScroll>
           </AppRoot>
         </AdaptivityProvider>
-      </ConfigProvider>
+      </ConfigProvider>,
     );
 
-    await page.hover(".vkuiHorizontalScroll");
+    await page.hover('.vkuiHorizontalScroll');
 
     expect(
       await screenshot(undefined, {
-        selector: ".vkuiHorizontalScroll",
-      })
+        selector: '.vkuiHorizontalScroll',
+      }),
     ).toMatchImageSnapshot({
       customSnapshotIdentifier,
     });
   });
 
-  it("does not have arrows without mouse", async () => {
+  it('does not have arrows without mouse', async () => {
     jest.setTimeout(5000);
     await mount(
       <ConfigProvider appearance={APPEARANCE}>
-        <AdaptivityProvider
-          viewWidth={ViewWidth.SMALL_TABLET}
-          hasPointer={false}
-        >
+        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer={false}>
           <AppRoot className="vkuiTestWrapper">
             <HorizontalScroll>
-              <div key="0" style={{ display: "flex" }}>
+              <div key="0" style={{ display: 'flex' }}>
                 {items}
               </div>
             </HorizontalScroll>
           </AppRoot>
         </AdaptivityProvider>
-      </ConfigProvider>
+      </ConfigProvider>,
     );
 
-    await page.hover(".vkuiHorizontalScroll");
+    await page.hover('.vkuiHorizontalScroll');
 
     expect(
       await screenshot(undefined, {
-        selector: ".vkuiHorizontalScroll",
-      })
+        selector: '.vkuiHorizontalScroll',
+      }),
     ).toMatchImageSnapshot({
       customSnapshotIdentifier,
     });

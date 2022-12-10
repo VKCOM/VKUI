@@ -5,16 +5,14 @@
 Как только он заканчивается, вызывается свойство-функция `onTransition`.
 
 ```jsx
-const [activePanel, setActivePanel] = useState("panel1");
+const [activePanel, setActivePanel] = useState('panel1');
 
 <View activePanel={activePanel}>
   <Panel id="panel1">
     <PanelHeader>Panel 1</PanelHeader>
     <Group>
       <div style={{ height: 200 }} />
-      <CellButton onClick={() => setActivePanel("panel2")}>
-        Go to panel 2
-      </CellButton>
+      <CellButton onClick={() => setActivePanel('panel2')}>Go to panel 2</CellButton>
       <div style={{ height: 600 }} />
     </Group>
   </Panel>
@@ -22,9 +20,7 @@ const [activePanel, setActivePanel] = useState("panel1");
     <PanelHeader>Panel 2</PanelHeader>
     <Group>
       <div style={{ height: 200 }} />
-      <CellButton onClick={() => setActivePanel("panel3")}>
-        Go to panel 3
-      </CellButton>
+      <CellButton onClick={() => setActivePanel('panel3')}>Go to panel 3</CellButton>
       <div style={{ height: 600 }} />
     </Group>
   </Panel>
@@ -32,9 +28,7 @@ const [activePanel, setActivePanel] = useState("panel1");
     <PanelHeader>Panel 3</PanelHeader>
     <Group>
       <div style={{ height: 200 }} />
-      <CellButton onClick={() => setActivePanel("panel1")}>
-        Back to panel 1
-      </CellButton>
+      <CellButton onClick={() => setActivePanel('panel1')}>Back to panel 1</CellButton>
       <div style={{ height: 600 }} />
     </Group>
   </Panel>
@@ -53,19 +47,17 @@ const [activePanel, setActivePanel] = useState("panel1");
 - Компоненты, которые сами обрабатывают жесты (например, карта), могут конфликтовать со свайпбеком — повесьте на них свойство `data-vkui-swipe-back={false}`
 
 ```jsx
-import vkBridge from "@vkontakte/vk-bridge";
+import vkBridge from '@vkontakte/vk-bridge';
 
-const [history, setHistory] = useState(["main"]);
+const [history, setHistory] = useState(['main']);
 const activePanel = history[history.length - 1];
 const isFirst = history.length === 1;
 
 React.useEffect(() => {
   // В стандартных мини-приложениях делайте так:
-  vkBridge.send("VKWebAppSetSwipeSettings", { history: isFirst });
+  vkBridge.send('VKWebAppSetSwipeSettings', { history: isFirst });
   // В мини-приложениях `WebviewType.INTERNAL` делайте так:
-  vkBridge.send(
-    isFirst ? "VKWebAppEnableSwipeBack" : "VKWebAppDisableSwipeBack"
-  );
+  vkBridge.send(isFirst ? 'VKWebAppEnableSwipeBack' : 'VKWebAppDisableSwipeBack');
 }, [isFirst]);
 
 const goBack = () => setHistory(history.slice(0, -1));
@@ -77,20 +69,15 @@ const go = (panel) => setHistory([...history, panel]);
       <PanelHeader>Main</PanelHeader>
       <Group>
         <div style={{ height: 200 }} />
-        <CellButton onClick={() => go("profile")}>profile</CellButton>
+        <CellButton onClick={() => go('profile')}>profile</CellButton>
         <div style={{ height: 600 }} />
       </Group>
     </Panel>
     <Panel id="profile">
       <PanelHeader>Профиль</PanelHeader>
       <Group>
-        <Placeholder>
-          Теперь свайпните от левого края направо, чтобы вернуться
-        </Placeholder>
-        <Div
-          style={{ height: 50, background: "#eee" }}
-          data-vkui-swipe-back={false}
-        >
+        <Placeholder>Теперь свайпните от левого края направо, чтобы вернуться</Placeholder>
+        <Div style={{ height: 50, background: '#eee' }} data-vkui-swipe-back={false}>
           Здесь свайпбек отключен
         </Div>
       </Group>

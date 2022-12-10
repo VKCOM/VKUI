@@ -1,11 +1,11 @@
-import { renderHook, act } from "@testing-library/react-hooks";
-import { noop } from "../lib/utils";
-import { useTimeout } from "./useTimeout";
+import { renderHook, act } from '@testing-library/react-hooks';
+import { noop } from '../lib/utils';
+import { useTimeout } from './useTimeout';
 
 describe(useTimeout, () => {
-  beforeAll(() => jest.useFakeTimers("modern"));
+  beforeAll(() => jest.useFakeTimers('modern'));
   afterAll(() => jest.useRealTimers());
-  it("sets timeout", () => {
+  it('sets timeout', () => {
     const cb = jest.fn();
     const { result } = renderHook(() => useTimeout(cb, 100));
     act(() => {
@@ -16,7 +16,7 @@ describe(useTimeout, () => {
     });
     expect(cb).toBeCalledTimes(1);
   });
-  it("clears timeout on unmount", () => {
+  it('clears timeout on unmount', () => {
     const { result, unmount } = renderHook(() => useTimeout(noop, 100));
     // run useEffect
     act(() => {
@@ -28,10 +28,8 @@ describe(useTimeout, () => {
     unmount();
     expect(jest.getTimerCount()).toBe(0);
   });
-  it("calls current callback", () => {
-    const { result, rerender } = renderHook((cb: VoidFunction = noop) =>
-      useTimeout(cb, 100)
-    );
+  it('calls current callback', () => {
+    const { result, rerender } = renderHook((cb: VoidFunction = noop) => useTimeout(cb, 100));
     act(() => {
       result.current.set();
     });
@@ -42,7 +40,7 @@ describe(useTimeout, () => {
     });
     expect(cb).toBeCalledTimes(1);
   });
-  it("set() replaces old timeout", () => {
+  it('set() replaces old timeout', () => {
     const cb = jest.fn();
     const { result } = renderHook(() => useTimeout(cb, 100));
     act(() => {

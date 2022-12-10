@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../../testing/utils";
-import { SegmentedControlOption } from "./SegmentedControlOption";
+import { baselineComponent } from '../../../testing/utils';
+import { SegmentedControlOption } from './SegmentedControlOption';
 
-describe("SegmentedControlOption", () => {
+describe('SegmentedControlOption', () => {
   baselineComponent(SegmentedControlOption);
 });

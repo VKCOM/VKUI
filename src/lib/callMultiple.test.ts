@@ -1,7 +1,7 @@
-import { callMultiple } from "./callMultiple";
+import { callMultiple } from './callMultiple';
 
-describe("callMultiple", () => {
-  it("Runs functions with same args call", () => {
+describe('callMultiple', () => {
+  it('Runs functions with same args call', () => {
     const fn1 = jest.fn();
     const fn2 = jest.fn();
 

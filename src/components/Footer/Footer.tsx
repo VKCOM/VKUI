@@ -1,8 +1,8 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { HasComponent } from "../../types";
-import { Footnote } from "../Typography/Footnote/Footnote";
-import styles from "./Footer.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { HasComponent } from '../../types';
+import { Footnote } from '../Typography/Footnote/Footnote';
+import styles from './Footer.module.css';
 
 export type FooterProps = React.AllHTMLAttributes<HTMLElement> & HasComponent;
 
@@ -14,7 +14,7 @@ export const Footer = ({ children, className, ...restProps }: FooterProps) => {
     <Footnote
       Component="footer"
       {...restProps}
-      className={classNamesString(styles["Footer"], className)}
+      className={classNamesString(styles['Footer'], className)}
     >
       {children}
     </Footnote>

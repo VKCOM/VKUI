@@ -1,43 +1,40 @@
-import * as React from "react";
-import { format, isMatch, parse, isAfter } from "../../lib/date";
-import { Icon16Clear, Icon20CalendarOutline } from "@vkontakte/icons";
-import {
-  CalendarRange,
-  CalendarRangeProps,
-} from "../CalendarRange/CalendarRange";
-import { Popper, Placement } from "../Popper/Popper";
-import { IconButton } from "../IconButton/IconButton";
-import { HasRootRef } from "../../types";
-import { useDateInput } from "../../hooks/useDateInput";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { classNamesString } from "../../lib/classNames";
-import { multiRef } from "../../lib/utils";
-import { FormField, FormFieldProps } from "../FormField/FormField";
-import { InputLike } from "../InputLike/InputLike";
-import { InputLikeDivider } from "../InputLike/InputLikeDivider";
-import { callMultiple } from "../../lib/callMultiple";
-import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import styles from "./DateRangeInput.module.css";
-import dateInputStyles from "../DateInput/DateInput.module.css";
+import * as React from 'react';
+import { format, isMatch, parse, isAfter } from '../../lib/date';
+import { Icon16Clear, Icon20CalendarOutline } from '@vkontakte/icons';
+import { CalendarRange, CalendarRangeProps } from '../CalendarRange/CalendarRange';
+import { Popper, Placement } from '../Popper/Popper';
+import { IconButton } from '../IconButton/IconButton';
+import { HasRootRef } from '../../types';
+import { useDateInput } from '../../hooks/useDateInput';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { classNamesString } from '../../lib/classNames';
+import { multiRef } from '../../lib/utils';
+import { FormField, FormFieldProps } from '../FormField/FormField';
+import { InputLike } from '../InputLike/InputLike';
+import { InputLikeDivider } from '../InputLike/InputLikeDivider';
+import { callMultiple } from '../../lib/callMultiple';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import styles from './DateRangeInput.module.css';
+import dateInputStyles from '../DateInput/DateInput.module.css';
 
 export interface DateRangeInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLDivElement>, "value" | "onChange">,
+  extends Omit<React.InputHTMLAttributes<HTMLDivElement>, 'value' | 'onChange'>,
     Pick<
       CalendarRangeProps,
-      | "disablePast"
-      | "disableFuture"
-      | "shouldDisableDate"
-      | "onChange"
-      | "value"
-      | "weekStartsOn"
-      | "disablePickers"
-      | "prevMonthAriaLabel"
-      | "nextMonthAriaLabel"
-      | "changeMonthAriaLabel"
-      | "changeYearAriaLabel"
-      | "changeDayAriaLabel"
-      | "prevMonthIcon"
-      | "nextMonthIcon"
+      | 'disablePast'
+      | 'disableFuture'
+      | 'shouldDisableDate'
+      | 'onChange'
+      | 'value'
+      | 'weekStartsOn'
+      | 'disablePickers'
+      | 'prevMonthAriaLabel'
+      | 'nextMonthAriaLabel'
+      | 'changeMonthAriaLabel'
+      | 'changeYearAriaLabel'
+      | 'changeDayAriaLabel'
+      | 'prevMonthIcon'
+      | 'nextMonthIcon'
     >,
     HasRootRef<HTMLDivElement>,
     FormFieldProps {
@@ -79,17 +76,17 @@ const elementsConfig = (index: number) => {
   return { length, min, max };
 };
 
-const getInternalValue = (value: CalendarRangeProps["value"]) => {
-  const newValue = ["", "", "", "", "", ""];
+const getInternalValue = (value: CalendarRangeProps['value']) => {
+  const newValue = ['', '', '', '', '', ''];
   if (value?.[0]) {
-    newValue[0] = String(value[0].getDate()).padStart(2, "0");
-    newValue[1] = String(value[0].getMonth() + 1).padStart(2, "0");
-    newValue[2] = String(value[0].getFullYear()).padStart(4, "0");
+    newValue[0] = String(value[0].getDate()).padStart(2, '0');
+    newValue[1] = String(value[0].getMonth() + 1).padStart(2, '0');
+    newValue[2] = String(value[0].getFullYear()).padStart(4, '0');
   }
   if (value?.[1]) {
-    newValue[3] = String(value[1].getDate()).padStart(2, "0");
-    newValue[4] = String(value[1].getMonth() + 1).padStart(2, "0");
-    newValue[5] = String(value[1].getFullYear()).padStart(4, "0");
+    newValue[3] = String(value[1].getDate()).padStart(2, '0');
+    newValue[4] = String(value[1].getMonth() + 1).padStart(2, '0');
+    newValue[5] = String(value[1].getFullYear()).padStart(4, '0');
   }
   return newValue;
 };
@@ -103,7 +100,7 @@ export const DateRangeInput = ({
   disablePast,
   value,
   onChange,
-  calendarPlacement = "bottom-start",
+  calendarPlacement = 'bottom-start',
   style,
   className,
   closeOnChange = true,
@@ -119,14 +116,14 @@ export const DateRangeInput = ({
   changeDayAriaLabel,
   changeMonthAriaLabel,
   changeYearAriaLabel,
-  changeStartDayAriaLabel = "Изменить день начала",
-  changeStartMonthAriaLabel = "Изменить месяц начала",
-  changeStartYearAriaLabel = "Изменить год начала",
-  changeEndDayAriaLabel = "Изменить день окончания",
-  changeEndMonthAriaLabel = "Изменить месяц окончания",
-  changeEndYearAriaLabel = "Изменить год окончания",
-  clearFieldAriaLabel = "Очистить поле",
-  showCalendarAriaLabel = "Показать календарь",
+  changeStartDayAriaLabel = 'Изменить день начала',
+  changeStartMonthAriaLabel = 'Изменить месяц начала',
+  changeStartYearAriaLabel = 'Изменить год начала',
+  changeEndDayAriaLabel = 'Изменить день окончания',
+  changeEndMonthAriaLabel = 'Изменить месяц окончания',
+  changeEndYearAriaLabel = 'Изменить год окончания',
+  clearFieldAriaLabel = 'Очистить поле',
+  showCalendarAriaLabel = 'Показать календарь',
   prevMonthIcon,
   nextMonthIcon,
   disableCalendar = false,
@@ -155,7 +152,7 @@ export const DateRangeInput = ({
       }
       const formattedStartValue = `${internalValue[0]}.${internalValue[1]}.${internalValue[2]}`;
       const formattedEndValue = `${internalValue[3]}.${internalValue[4]}.${internalValue[5]}`;
-      const mask = "dd.MM.yyyy";
+      const mask = 'dd.MM.yyyy';
 
       if (!isMatch(formattedStartValue, mask)) {
         isStartValid = false;
@@ -180,26 +177,12 @@ export const DateRangeInput = ({
         onChange?.([start, end]);
       }
     },
-    [onChange, value]
+    [onChange, value],
   );
 
   const refs = React.useMemo(
-    () => [
-      daysStartRef,
-      monthsStartRef,
-      yearsStartRef,
-      daysEndRef,
-      monthsEndRef,
-      yearsEndRef,
-    ],
-    [
-      daysStartRef,
-      monthsStartRef,
-      yearsStartRef,
-      daysEndRef,
-      monthsEndRef,
-      yearsEndRef,
-    ]
+    () => [daysStartRef, monthsStartRef, yearsStartRef, daysEndRef, monthsEndRef, yearsEndRef],
+    [daysStartRef, monthsStartRef, yearsStartRef, daysEndRef, monthsEndRef, yearsEndRef],
   );
 
   const {
@@ -235,33 +218,25 @@ export const DateRangeInput = ({
         removeFocusFromField();
       }
     },
-    [onChange, closeOnChange, value, removeFocusFromField]
+    [onChange, closeOnChange, value, removeFocusFromField],
   );
 
   return (
     <FormField
       style={style}
       className={classNamesString(
-        styles["DateRangeInput"],
-        getSizeYClassName(styles["DateRangeInput"], sizeY),
-        className
+        styles['DateRangeInput'],
+        getSizeYClassName(styles['DateRangeInput'], sizeY),
+        className,
       )}
       getRootRef={multiRef(rootRef, getRootRef)}
       after={
         value ? (
-          <IconButton
-            hoverMode="opacity"
-            aria-label={clearFieldAriaLabel}
-            onClick={clear}
-          >
+          <IconButton hoverMode="opacity" aria-label={clearFieldAriaLabel} onClick={clear}>
             <Icon16Clear />
           </IconButton>
         ) : (
-          <IconButton
-            hoverMode="opacity"
-            aria-label={showCalendarAriaLabel}
-            onClick={openCalendar}
-          >
+          <IconButton hoverMode="opacity" aria-label={showCalendarAriaLabel} onClick={openCalendar}>
             <Icon20CalendarOutline />
           </IconButton>
         )
@@ -276,16 +251,13 @@ export const DateRangeInput = ({
         name={name}
         value={
           value
-            ? `${value[0] ? format(value[0], "DD.MM.YYYY") : ""} - ${
-                value[1] ? format(value[1], "DD.MM.YYYY") : ""
+            ? `${value[0] ? format(value[0], 'DD.MM.YYYY') : ''} - ${
+                value[1] ? format(value[1], 'DD.MM.YYYY') : ''
               }`
-            : ""
+            : ''
         }
       />
-      <span
-        className={dateInputStyles["DateInput__input"]}
-        onKeyDown={handleKeyDown}
-      >
+      <span className={dateInputStyles['DateInput__input']} onKeyDown={handleKeyDown}>
         <InputLike
           length={2}
           getRootRef={daysStartRef}
@@ -312,7 +284,7 @@ export const DateRangeInput = ({
           value={internalValue[2]}
           aria-label={changeStartYearAriaLabel}
         />
-        <InputLikeDivider>{" — "}</InputLikeDivider>
+        <InputLikeDivider>{' — '}</InputLikeDivider>
         <InputLike
           length={2}
           getRootRef={daysEndRef}
@@ -341,11 +313,7 @@ export const DateRangeInput = ({
         />
       </span>
       {open && !disableCalendar && (
-        <Popper
-          targetRef={rootRef}
-          offsetDistance={8}
-          placement={calendarPlacement}
-        >
+        <Popper targetRef={rootRef} offsetDistance={8} placement={calendarPlacement}>
           <CalendarRange
             value={value}
             onChange={onCalendarChange}

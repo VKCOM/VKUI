@@ -5,10 +5,7 @@ const Default = () => {
   return (
     <Group>
       <Header mode="secondary">По умолчанию</Header>
-      <SimpleCell
-        before={<Image src={getAvatarUrl("app_shorm_online")} />}
-        description="Ролевая"
-      >
+      <SimpleCell before={<Image src={getAvatarUrl('app_shorm_online')} />} description="Ролевая">
         Шторм онлайн
       </SimpleCell>
     </Group>
@@ -33,33 +30,31 @@ const OthersFeatures = () => {
       />
       <div
         style={{
-          display: "flex",
+          display: 'flex',
           padding: 12,
           gap: 8,
-          flexFlow: "row wrap",
+          flexFlow: 'row wrap',
         }}
       >
-        {[16, 20, 24, 28, 32, 36, 40, 44, 48, 56, 64, 72, 80, 88, 96].map(
-          (size) => (
-            <Image
-              key={size}
-              size={size}
-              src={getAvatarUrl("app_shorm_online")}
-              borderRadius={borderRadius}
-            >
-              {size >= 24 && badge && (
-                <Image.Badge {...badge}>
-                  <IconExampleForBadgeBasedOnImageBaseSize />
-                </Image.Badge>
-              )}
-              {overlay && (
-                <Image.Overlay {...overlay}>
-                  <IconExampleForOverlayBasedOnImageBaseSize />
-                </Image.Overlay>
-              )}
-            </Image>
-          )
-        )}
+        {[16, 20, 24, 28, 32, 36, 40, 44, 48, 56, 64, 72, 80, 88, 96].map((size) => (
+          <Image
+            key={size}
+            size={size}
+            src={getAvatarUrl('app_shorm_online')}
+            borderRadius={borderRadius}
+          >
+            {size >= 24 && badge && (
+              <Image.Badge {...badge}>
+                <IconExampleForBadgeBasedOnImageBaseSize />
+              </Image.Badge>
+            )}
+            {overlay && (
+              <Image.Overlay {...overlay}>
+                <IconExampleForOverlayBasedOnImageBaseSize />
+              </Image.Overlay>
+            )}
+          </Image>
+        ))}
       </div>
     </Group>
   );
@@ -79,12 +74,8 @@ const Example = () => {
   );
 };
 
-const ImagePropsForm = ({
-  onBorderRadiusChange,
-  onBadgeChange,
-  onOverlayChange,
-}) => {
-  const DEFAULT_VALUE = "Не задано";
+const ImagePropsForm = ({ onBorderRadiusChange, onBadgeChange, onOverlayChange }) => {
+  const DEFAULT_VALUE = 'Не задано';
 
   const [borderRadius, setBorderRadius] = React.useState(DEFAULT_VALUE);
 
@@ -93,15 +84,11 @@ const ImagePropsForm = ({
 
   const [overlay, setOverlay] = React.useState(false);
   const [overlayTheme, setOverlayTheme] = React.useState(DEFAULT_VALUE);
-  const [overlayVisibility, setOverlayVisibility] =
-    React.useState(DEFAULT_VALUE);
+  const [overlayVisibility, setOverlayVisibility] = React.useState(DEFAULT_VALUE);
 
   React.useEffect(
-    () =>
-      onBorderRadiusChange(
-        borderRadius === DEFAULT_VALUE ? undefined : borderRadius
-      ),
-    [borderRadius]
+    () => onBorderRadiusChange(borderRadius === DEFAULT_VALUE ? undefined : borderRadius),
+    [borderRadius],
   );
 
   React.useEffect(() => onBadgeChange(badge), [badge]);
@@ -111,8 +98,7 @@ const ImagePropsForm = ({
       onBadgeChange();
     } else if (badge) {
       onBadgeChange({
-        background:
-          badgeBackground === DEFAULT_VALUE ? undefined : badgeBackground,
+        background: badgeBackground === DEFAULT_VALUE ? undefined : badgeBackground,
       });
     }
   }, [badge, badgeBackground, onBadgeChange]);
@@ -123,8 +109,7 @@ const ImagePropsForm = ({
     } else if (overlay) {
       onOverlayChange({
         theme: overlayTheme === DEFAULT_VALUE ? undefined : overlayTheme,
-        visibility:
-          overlayVisibility === DEFAULT_VALUE ? undefined : overlayVisibility,
+        visibility: overlayVisibility === DEFAULT_VALUE ? undefined : overlayVisibility,
       });
     }
   }, [overlay, overlayTheme, overlayVisibility, onOverlayChange]);
@@ -135,9 +120,9 @@ const ImagePropsForm = ({
         <Select
           options={[
             { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
-            { label: "s", value: "s" },
-            { label: "m", value: "m" },
-            { label: "l", value: "l" },
+            { label: 's', value: 's' },
+            { label: 'm', value: 'm' },
+            { label: 'l', value: 'l' },
           ]}
           value={borderRadius}
           onChange={(e) => setBorderRadius(e.target.value)}
@@ -146,10 +131,7 @@ const ImagePropsForm = ({
 
       <FormLayoutGroup mode="horizontal">
         <FormItem top="Image.Badge">
-          <Checkbox
-            checked={badge}
-            onChange={(e) => setBadge(e.target.checked)}
-          >
+          <Checkbox checked={badge} onChange={(e) => setBadge(e.target.checked)}>
             badge (example, Icon20GiftCircleFillRed)
           </Checkbox>
         </FormItem>
@@ -157,8 +139,8 @@ const ImagePropsForm = ({
           <Select
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
-              { label: "stroke", value: "stroke" },
-              { label: "shadow", value: "shadow" },
+              { label: 'stroke', value: 'stroke' },
+              { label: 'shadow', value: 'shadow' },
             ]}
             value={badgeBackground}
             disabled={!badge}
@@ -169,10 +151,7 @@ const ImagePropsForm = ({
 
       <FormLayoutGroup mode="horizontal">
         <FormItem top="Image.Overlay">
-          <Checkbox
-            checked={overlay}
-            onChange={(e) => setOverlay(e.target.checked)}
-          >
+          <Checkbox checked={overlay} onChange={(e) => setOverlay(e.target.checked)}>
             overlay (example, Icon24AddOutline, Icon28AddOutline)
           </Checkbox>
         </FormItem>
@@ -183,8 +162,8 @@ const ImagePropsForm = ({
           <Select
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
-              { label: "light", value: "light" },
-              { label: "dark", value: "dark" },
+              { label: 'light', value: 'light' },
+              { label: 'dark', value: 'dark' },
             ]}
             value={overlayTheme}
             disabled={!overlay}
@@ -195,8 +174,8 @@ const ImagePropsForm = ({
           <Select
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
-              { label: "on-hover", value: "on-hover" },
-              { label: "always", value: "always" },
+              { label: 'on-hover', value: 'on-hover' },
+              { label: 'always', value: 'always' },
             ]}
             value={overlayVisibility}
             disabled={!overlay}

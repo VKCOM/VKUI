@@ -47,11 +47,11 @@ function checkStringIsObjectPropertyFn(value) {
 }
 
 function transformFnToString(key, value) {
-  return typeof value === "function" ? value.toString() : value;
+  return typeof value === 'function' ? value.toString() : value;
 }
 
 function transformStringToFn(key, value) {
-  if (typeof value === "string") {
+  if (typeof value === 'string') {
     if (checkStringIsRegularFn(value) || checkStringIsArrowFn(value)) {
       // eslint-disable-next-line no-eval
       return eval(`(${value})`);

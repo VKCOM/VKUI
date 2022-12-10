@@ -1,22 +1,18 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import {
-  type ImageBaseProps,
-  type ImageBaseOverlayProps,
-  ImageBase,
-} from "../ImageBase/ImageBase";
-import { type ImageBadgeProps, ImageBadge } from "./ImageBadge/ImageBadge";
-import styles from "./Image.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { type ImageBaseProps, type ImageBaseOverlayProps, ImageBase } from '../ImageBase/ImageBase';
+import { type ImageBadgeProps, ImageBadge } from './ImageBadge/ImageBadge';
+import styles from './Image.module.css';
 
 export type { ImageBadgeProps, ImageBaseOverlayProps as ImageOverlayProps };
 
 export const IMAGE_DEFAULT_SIZE = 48;
 
-export interface ImageProps extends Omit<ImageBaseProps, "badge"> {
+export interface ImageProps extends Omit<ImageBaseProps, 'badge'> {
   /**
    * Размер закругления.
    */
-  borderRadius?: "s" | "l" | "m";
+  borderRadius?: 's' | 'l' | 'm';
 }
 
 /**
@@ -24,7 +20,7 @@ export interface ImageProps extends Omit<ImageBaseProps, "badge"> {
  */
 export const Image = ({
   size = IMAGE_DEFAULT_SIZE,
-  borderRadius: borderRadiusProp = "m",
+  borderRadius: borderRadiusProp = 'm',
   style,
   className,
   ...restProps
@@ -32,7 +28,7 @@ export const Image = ({
   let borderRadius: number;
 
   switch (borderRadiusProp) {
-    case "s": {
+    case 's': {
       if (size <= 32) {
         borderRadius = 2;
       } else if (size <= 56) {
@@ -41,7 +37,7 @@ export const Image = ({
       borderRadius = 4;
       break;
     }
-    case "m": {
+    case 'm': {
       if (size <= 32) {
         borderRadius = 3;
       } else if (size <= 48) {
@@ -54,7 +50,7 @@ export const Image = ({
       borderRadius = 10;
       break;
     }
-    case "l": {
+    case 'l': {
       if (size <= 16) {
         borderRadius = 4;
       } else if (size <= 20) {
@@ -79,7 +75,7 @@ export const Image = ({
       {...restProps}
       size={size}
       style={{ ...style, borderRadius }}
-      className={classNamesString(styles["Image"], className)}
+      className={classNamesString(styles['Image'], className)}
     />
   );
 };

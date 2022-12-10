@@ -1,8 +1,8 @@
 Компонент-контейнер для реализации интерфейса с [многоколоночной структурой](#!/Adaptivity). Тесно связан со [SplitCol](#!/SplitCol).
 
 ```jsx { "props": { "layout": false, "webviewType": true, "adaptivity": true } }
-const panels = ["panel 1", "panel 2", "panel 3"];
-const modals = ["modal 1", "modal 2"];
+const panels = ['panel 1', 'panel 2', 'panel 3'];
+const modals = ['modal 1', 'modal 2'];
 
 const Example = () => {
   const platform = usePlatform();
@@ -38,18 +38,13 @@ const Example = () => {
 
   return (
     <SplitLayout
-      style={{ justifyContent: "center" }}
+      style={{ justifyContent: 'center' }}
       header={!isVKCOM && <PanelHeader separator={false} />}
       popout={popout}
       modal={modalRoot}
     >
       {viewWidth.tabletPlus && (
-        <SplitCol
-          className={viewWidth.tabletPlus.className}
-          fixed
-          width={280}
-          maxWidth={280}
-        >
+        <SplitCol className={viewWidth.tabletPlus.className} fixed width={280} maxWidth={280}>
           <Panel>
             {!isVKCOM && <PanelHeader />}
             <Group>
@@ -60,8 +55,7 @@ const Example = () => {
                   style={
                     i === panel
                       ? {
-                          backgroundColor:
-                            "var(--vkui--color_background_secondary)",
+                          backgroundColor: 'var(--vkui--color_background_secondary)',
                           borderRadius: 8,
                         }
                       : {}
@@ -75,11 +69,7 @@ const Example = () => {
               <Cell onClick={() => setModal(modals[0])}>modal 1</Cell>
               <Cell onClick={() => setModal(modals[1])}>modal 2</Cell>
               <Cell
-                onClick={() =>
-                  setPopout(
-                    <Alert header="Alert!" onClose={() => setPopout(null)} />
-                  )
-                }
+                onClick={() => setPopout(<Alert header="Alert!" onClose={() => setPopout(null)} />)}
               >
                 alert
               </Cell>
@@ -112,10 +102,7 @@ const Example = () => {
             <Group>
               <Placeholder>Доступ запрещён</Placeholder>
               <Separator />
-              <Placeholder
-                header="Находите друзей"
-                action={<Button size="m">Найти друзей</Button>}
-              >
+              <Placeholder header="Находите друзей" action={<Button size="m">Найти друзей</Button>}>
                 Здесь будут отображаться люди, которых вы добавите в друзья
               </Placeholder>
             </Group>

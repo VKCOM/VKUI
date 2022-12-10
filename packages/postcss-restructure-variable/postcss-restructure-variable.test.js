@@ -1,6 +1,6 @@
-const postcss = require("postcss");
+const postcss = require('postcss');
 
-const plugin = require(".");
+const plugin = require('.');
 
 async function run(input, opts = [undefined]) {
   let result = await postcss([plugin(opts)]).process(input, {
@@ -11,7 +11,7 @@ async function run(input, opts = [undefined]) {
   return result.css;
 }
 
-it("rewrite custom property", async () => {
+it('rewrite custom property', async () => {
   const input = `.a {
     --color: #fff;
 }
@@ -29,7 +29,7 @@ it("rewrite custom property", async () => {
   expect(await run(input)).toMatchSnapshot();
 });
 
-it("merge one", async () => {
+it('merge one', async () => {
   const input = `:root {
     --color: #fff;
 }
@@ -44,7 +44,7 @@ it("merge one", async () => {
   expect(await run(input)).toMatchSnapshot();
 });
 
-it("merge three", async () => {
+it('merge three', async () => {
   const input = `:root {
     --color: #fff;
     --size: 1px;
@@ -62,7 +62,7 @@ it("merge three", async () => {
 });
 
 // PS: по идеи @media в итоге не должно быть, но чтобы ничего не сломать оставлю так
-it("check cascading", async () => {
+it('check cascading', async () => {
   const input = `
 @media (min-resolution: 2dppx) {
     :root {
@@ -82,7 +82,7 @@ it("check cascading", async () => {
   expect(await run(input)).toMatchSnapshot();
 });
 
-it("check deep cascading", async () => {
+it('check deep cascading', async () => {
   const input = `
 @supports (display: flex) {
     @media screen and (min-width: 900px) {
@@ -98,7 +98,7 @@ it("check deep cascading", async () => {
   expect(await run(input)).toMatchSnapshot();
 });
 
-it("no custom properties", async () => {
+it('no custom properties', async () => {
   const input = `
 .b {
   color: var(--color);
@@ -107,7 +107,7 @@ it("no custom properties", async () => {
   expect(await run(input)).toMatchSnapshot();
 });
 
-it("example", async () => {
+it('example', async () => {
   const input = `
 .a {
     --color1: #ff0000;

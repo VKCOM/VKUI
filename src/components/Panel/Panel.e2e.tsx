@@ -1,27 +1,27 @@
-import React, { Fragment } from "react";
-import { Panel, PanelProps } from "./Panel";
-import { describeScreenshotFuzz } from "../../testing/e2e";
-import { PanelHeader } from "../PanelHeader/PanelHeader";
-import { Group } from "../Group/Group";
-import { AppRoot } from "../AppRoot/AppRoot";
-import { SizeType } from "../../lib/adaptivity";
+import React, { Fragment } from 'react';
+import { Panel, PanelProps } from './Panel';
+import { describeScreenshotFuzz } from '../../testing/e2e';
+import { PanelHeader } from '../PanelHeader/PanelHeader';
+import { Group } from '../Group/Group';
+import { AppRoot } from '../AppRoot/AppRoot';
+import { SizeType } from '../../lib/adaptivity';
 
-describe("Panel", () => {
+describe('Panel', () => {
   const content = (h: number) => (
     <Group>
-      <div style={{ minHeight: `${h}px`, width: "100px" }}>top text</div>
+      <div style={{ minHeight: `${h}px`, width: '100px' }}>top text</div>
     </Group>
   );
   describeScreenshotFuzz<PanelProps>(
     (props) => (
       <div
         style={{
-          height: "200px",
-          overflow: "auto",
-          transform: "translateZ(0)",
+          height: '200px',
+          overflow: 'auto',
+          transform: 'translateZ(0)',
           // чтобы было проще видеть разницу скриншотов
-          border: "1px solid blue",
-          marginBottom: "10px",
+          border: '1px solid blue',
+          marginBottom: '10px',
         }}
       >
         <Panel {...props} />
@@ -40,7 +40,7 @@ describe("Panel", () => {
             {content(30)}
           </Fragment>,
         ],
-        $adaptivity: "x",
+        $adaptivity: 'x',
       },
     ],
     {
@@ -48,6 +48,6 @@ describe("Panel", () => {
       adaptivity: {
         sizeX: SizeType.REGULAR,
       },
-    }
+    },
   );
 });

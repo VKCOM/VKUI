@@ -159,7 +159,7 @@
   display: block;
   height: 100%;
   width: 10px;
-  content: "";
+  content: '';
   pointer-events: none;
 }
 
@@ -178,10 +178,10 @@
   display: block;
   height: 100%;
   width: 10px;
-  content: "";
+  content: '';
   top: 0;
-  border-radius: 0 var(--vkui--size_border_radius--regular)
-    var(--vkui--size_border_radius--regular) 0;
+  border-radius: 0 var(--vkui--size_border_radius--regular) var(--vkui--size_border_radius--regular)
+    0;
   cursor: text;
   pointer-events: none;
 }

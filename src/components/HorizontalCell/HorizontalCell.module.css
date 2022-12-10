@@ -59,7 +59,7 @@
 
 .HorizontalCell:first-child::before,
 .HorizontalCell:last-child::after {
-  content: "";
+  content: '';
   min-width: 10px;
 }
 

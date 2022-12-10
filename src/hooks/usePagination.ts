@@ -1,6 +1,6 @@
-import * as React from "react";
-import { clamp } from "../helpers/math";
-import { rangeIncrement } from "../helpers/range";
+import * as React from 'react';
+import { clamp } from '../helpers/math';
+import { rangeIncrement } from '../helpers/range';
 
 interface UsePaginationProps {
   /**
@@ -21,7 +21,7 @@ interface UsePaginationProps {
   totalPages?: number;
 }
 
-export type PaginationPageType = "start-ellipsis" | "end-ellipsis" | number;
+export type PaginationPageType = 'start-ellipsis' | 'end-ellipsis' | number;
 
 export type UsePaginationResult = PaginationPageType[];
 
@@ -47,28 +47,26 @@ export const usePagination = ({
     const startPages = rangeIncrement(1, Math.min(boundaryCount, endPage));
     const endPages = rangeIncrement(
       Math.max(endPage - boundaryCount + 1, boundaryCount + 1),
-      endPage
+      endPage,
     );
 
-    const lowerBoundaryWhenCurrentPageHigh =
-      endPage - boundaryCount - 1 - 2 * siblingCount;
+    const lowerBoundaryWhenCurrentPageHigh = endPage - boundaryCount - 1 - 2 * siblingCount;
     const siblingsStart = clamp(
       currentPage - siblingCount,
       boundaryCount + 2,
-      lowerBoundaryWhenCurrentPageHigh
+      lowerBoundaryWhenCurrentPageHigh,
     );
 
-    const upperBoundaryWhenCurrentPageLow =
-      boundaryCount + 2 + 2 * siblingCount;
+    const upperBoundaryWhenCurrentPageLow = boundaryCount + 2 + 2 * siblingCount;
     const siblingsEnd = Math.min(
       Math.max(currentPage + siblingCount, upperBoundaryWhenCurrentPageLow),
-      endPages.length > 0 ? endPages[0] - 2 : endPage - 1
+      endPages.length > 0 ? endPages[0] - 2 : endPage - 1,
     );
 
     const pages: UsePaginationResult = startPages;
 
     if (siblingsStart > boundaryCount + 2) {
-      pages.push("start-ellipsis");
+      pages.push('start-ellipsis');
     } else if (boundaryCount + 1 < endPage - boundaryCount) {
       pages.push(boundaryCount + 1);
     }
@@ -76,7 +74,7 @@ export const usePagination = ({
     pages.push(...rangeIncrement(siblingsStart, siblingsEnd));
 
     if (siblingsEnd < endPage - boundaryCount - 1) {
-      pages.push("end-ellipsis");
+      pages.push('end-ellipsis');
     } else if (endPage - boundaryCount > boundaryCount) {
       pages.push(endPage - boundaryCount);
     }

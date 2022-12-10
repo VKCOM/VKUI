@@ -1,17 +1,15 @@
-import * as React from "react";
-import { HasComponent } from "../../../types";
-import { classNamesString } from "../../../lib/classNames";
-import { useAdaptivity } from "../../../hooks/useAdaptivity";
-import { getSizeYClassName } from "../../../helpers/getSizeYClassName";
-import styles from "./Subhead.module.css";
+import * as React from 'react';
+import { HasComponent } from '../../../types';
+import { classNamesString } from '../../../lib/classNames';
+import { useAdaptivity } from '../../../hooks/useAdaptivity';
+import { getSizeYClassName } from '../../../helpers/getSizeYClassName';
+import styles from './Subhead.module.css';
 
-export interface SubheadProps
-  extends React.AllHTMLAttributes<HTMLElement>,
-    HasComponent {
+export interface SubheadProps extends React.AllHTMLAttributes<HTMLElement>, HasComponent {
   /**
    * Задаёт начертание шрифта отличное от стандартного.
    */
-  weight?: "1" | "2" | "3";
+  weight?: '1' | '2' | '3';
 }
 
 /**
@@ -21,7 +19,7 @@ export const Subhead = ({
   className,
   children,
   weight,
-  Component = "h5",
+  Component = 'h5',
   ...restProps
 }: SubheadProps) => {
   const { sizeY } = useAdaptivity();
@@ -31,9 +29,9 @@ export const Subhead = ({
       {...restProps}
       className={classNamesString(
         className,
-        styles["Subhead"],
-        getSizeYClassName(styles["Subhead"], sizeY),
-        weight && styles[`Subhead--weight-${weight}`]
+        styles['Subhead'],
+        getSizeYClassName(styles['Subhead'], sizeY),
+        weight && styles[`Subhead--weight-${weight}`],
       )}
     >
       {children}

@@ -1,4 +1,4 @@
-@import "./ViewIOS.module.css";
+@import './ViewIOS.module.css';
 
 .View {
   position: relative;
@@ -76,13 +76,11 @@
  * Panel transition
  */
 .View__panel--next ~ .View__panel--prev {
-  animation: vkui-animation-view-prev-back 0.3s
-    var(--vkui--animation_easing_platform) forwards;
+  animation: vkui-animation-view-prev-back 0.3s var(--vkui--animation_easing_platform) forwards;
 }
 
 .View__panel--prev ~ .View__panel--next {
-  animation: vkui-animation-view-next-forward 0.3s
-    var(--vkui--animation_easing_platform);
+  animation: vkui-animation-view-next-forward 0.3s var(--vkui--animation_easing_platform);
 }
 
 .View--no-motion .View__panel {

@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { HorizontalScroll } from "./HorizontalScroll";
+import { baselineComponent } from '../../testing/utils';
+import { HorizontalScroll } from './HorizontalScroll';
 
-describe("HorizontalScroll", () => {
+describe('HorizontalScroll', () => {
   baselineComponent(HorizontalScroll);
 });

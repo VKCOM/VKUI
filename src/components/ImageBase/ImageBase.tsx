@@ -1,22 +1,12 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import type { HasRef, HasRootRef } from "../../types";
-import {
-  type ImageBaseBadgeProps,
-  ImageBaseBadge,
-} from "./ImageBaseBadge/ImageBaseBadge";
-import {
-  type ImageBaseOverlayProps,
-  ImageBaseOverlay,
-} from "./ImageBaseOverlay/ImageBaseOverlay";
-import type {
-  ImageBaseExpectedIconProps,
-  ImageBaseSize,
-  ImageBaseContextProps,
-} from "./types";
-import { ImageBaseContext } from "./context";
-import { validateSize, validateFallbackIcon } from "./validators";
-import styles from "./ImageBase.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import type { HasRef, HasRootRef } from '../../types';
+import { type ImageBaseBadgeProps, ImageBaseBadge } from './ImageBaseBadge/ImageBaseBadge';
+import { type ImageBaseOverlayProps, ImageBaseOverlay } from './ImageBaseOverlay/ImageBaseOverlay';
+import type { ImageBaseExpectedIconProps, ImageBaseSize, ImageBaseContextProps } from './types';
+import { ImageBaseContext } from './context';
+import { validateSize, validateFallbackIcon } from './validators';
+import styles from './ImageBase.module.css';
 
 export type {
   ImageBaseSize,
@@ -30,7 +20,7 @@ export {
   getBadgeIconSizeByImageBaseSize,
   getFallbackIconSizeByImageBaseSize,
   getOverlayIconSizeByImageBaseSize,
-} from "./helpers";
+} from './helpers';
 
 export { ImageBaseContext };
 
@@ -87,9 +77,9 @@ export const ImageBase = ({
   className,
   getRootRef,
   withBorder = true,
-  fallbackIcon: fallbackIconProp,
+  'fallbackIcon': fallbackIconProp,
   children,
-  "aria-label": ariaLabel,
+  'aria-label': ariaLabel,
   onClick,
   onLoad,
   onError,
@@ -99,15 +89,14 @@ export const ImageBase = ({
   const [failed, setFailed] = React.useState(false);
 
   const hasSrc = src || srcSet;
-  const needShowFallbackIcon =
-    (failed || !hasSrc) && React.isValidElement(fallbackIconProp);
+  const needShowFallbackIcon = (failed || !hasSrc) && React.isValidElement(fallbackIconProp);
 
   const fallbackIcon = needShowFallbackIcon ? fallbackIconProp : null;
 
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV === 'development') {
     validateSize(size);
     if (fallbackIcon) {
-      validateFallbackIcon(size, { name: "fallbackIcon", value: fallbackIcon });
+      validateFallbackIcon(size, { name: 'fallbackIcon', value: fallbackIcon });
     }
   }
 
@@ -131,12 +120,12 @@ export const ImageBase = ({
         style={{ ...style, width: size, height: size }}
         className={classNamesString(
           className,
-          styles["ImageBase"],
+          styles['ImageBase'],
           styles[`ImageBase--size-${size as ImageBaseSize}`],
-          withBorder && styles["ImageBase--withBorder"],
-          loaded && styles["ImageBase--loaded"]
+          withBorder && styles['ImageBase--withBorder'],
+          loaded && styles['ImageBase--loaded'],
         )}
-        role={hasSrc ? "img" : "presentation"}
+        role={hasSrc ? 'img' : 'presentation'}
         aria-label={ariaLabel}
         onClick={onClick}
       >
@@ -144,7 +133,7 @@ export const ImageBase = ({
           <img
             ref={getRef}
             alt={alt}
-            className={styles["ImageBase__img"]}
+            className={styles['ImageBase__img']}
             crossOrigin={crossOrigin}
             decoding={decoding}
             loading={loading}
@@ -160,9 +149,7 @@ export const ImageBase = ({
           />
         )}
         {fallbackIcon && (
-          <div className={classNamesString(styles["ImageBase__fallback"])}>
-            {fallbackIcon}
-          </div>
+          <div className={classNamesString(styles['ImageBase__fallback'])}>{fallbackIcon}</div>
         )}
         {children}
       </div>

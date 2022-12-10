@@ -78,7 +78,7 @@
 }
 
 .TabsItem--mode-accent::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   right: 0;
@@ -183,7 +183,7 @@
   }
 }
 
-.TabsItem__underline[data-selected="true"] {
+.TabsItem__underline[data-selected='true'] {
   opacity: 1;
 }
 

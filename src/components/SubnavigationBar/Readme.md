@@ -2,9 +2,9 @@
 За это отвечает свойство `textLevel` у `SubnavigationButton`.
 
 ```jsx { "props": { "layout": false, "adaptivity": true } }
-import { useState } from "react";
+import { useState } from 'react';
 
-const MODAL_NAME = "filters";
+const MODAL_NAME = 'filters';
 
 const FILTERS_SIZE = [
   { value: 36, label: 36 },
@@ -14,21 +14,21 @@ const FILTERS_SIZE = [
 ];
 
 const FILTERS_STYLE = [
-  { value: "Вечерний", label: "Вечерний" },
-  { value: "Деловой", label: "Деловой" },
-  { value: "Повседневный", label: "Повседневный" },
-  { value: "Спортивный", label: "Спортивный" },
+  { value: 'Вечерний', label: 'Вечерний' },
+  { value: 'Деловой', label: 'Деловой' },
+  { value: 'Повседневный', label: 'Повседневный' },
+  { value: 'Спортивный', label: 'Спортивный' },
 ];
 
 const SubnavigationBarExample = () => {
   const platform = usePlatform();
 
-  const [activePanel, setActivePanel] = useState("example");
+  const [activePanel, setActivePanel] = useState('example');
   const [filtersModalOpened, setFiltersModalOpened] = useState(false);
   const [filtersCount, setFiltersCount] = useState(2);
 
   const [filterSizes, setFilterSizes] = useState([36]);
-  const [filterStyles, setFilterStyles] = useState(["Вечерний"]);
+  const [filterStyles, setFilterStyles] = useState(['Вечерний']);
 
   const [sizeSelected, setSizeSelected] = useState(false);
   const [inStockSelected, setInStockSelected] = useState(false);
@@ -74,19 +74,12 @@ const SubnavigationBarExample = () => {
   const isVKCOM = platform === Platform.VKCOM;
 
   const modal = (
-    <ModalRoot
-      activeModal={filtersModalOpened ? MODAL_NAME : null}
-      onClose={closeModal}
-    >
+    <ModalRoot activeModal={filtersModalOpened ? MODAL_NAME : null} onClose={closeModal}>
       <ModalPage
         id={MODAL_NAME}
         header={
           <ModalPageHeader
-            before={
-              platform !== Platform.IOS && (
-                <PanelHeaderClose onClick={closeModal} />
-              )
-            }
+            before={platform !== Platform.IOS && <PanelHeaderClose onClick={closeModal} />}
             after={
               platform === Platform.IOS && (
                 <PanelHeaderButton onClick={closeModal}>
@@ -150,11 +143,7 @@ const SubnavigationBarExample = () => {
                   before={<Icon24Filter />}
                   selected={filtersCount > 0}
                   expandable
-                  after={
-                    filtersCount > 0 && (
-                      <Counter size="s">{filtersCount}</Counter>
-                    )
-                  }
+                  after={filtersCount > 0 && <Counter size="s">{filtersCount}</Counter>}
                   onClick={openModal}
                 >
                   Фильтры
@@ -196,8 +185,8 @@ const SubnavigationBarExample = () => {
                 <SubnavigationButton
                   before={<Icon24ScanViewfinderOutline />}
                   size="l"
-                  textLevel={isVKCOM ? "1" : "3"}
-                  onClick={() => setActivePanel("add_friend")}
+                  textLevel={isVKCOM ? '1' : '3'}
+                  onClick={() => setActivePanel('add_friend')}
                 >
                   Сканировать QR
                 </SubnavigationButton>
@@ -205,54 +194,38 @@ const SubnavigationBarExample = () => {
                 <SubnavigationButton
                   before={<Icon24UserAddOutline />}
                   size="l"
-                  textLevel={isVKCOM ? "1" : "3"}
-                  onClick={() => setActivePanel("add_friend")}
+                  textLevel={isVKCOM ? '1' : '3'}
+                  onClick={() => setActivePanel('add_friend')}
                 >
                   Добавить друга
                 </SubnavigationButton>
               </SubnavigationBar>
 
               <Header>Важные</Header>
-              <SimpleCell
-                before={<Avatar src={getAvatarUrl("user_wayshev")} />}
-              >
+              <SimpleCell before={<Avatar src={getAvatarUrl('user_wayshev')} />}>
                 Иван Барышев
               </SimpleCell>
-              <SimpleCell
-                before={<Avatar src={getAvatarUrl("user_lihachyov")} />}
-              >
+              <SimpleCell before={<Avatar src={getAvatarUrl('user_lihachyov')} />}>
                 Михаил Лихачёв
               </SimpleCell>
-              <SimpleCell
-                before={<Avatar src={getAvatarUrl("user_arthurstam")} />}
-              >
+              <SimpleCell before={<Avatar src={getAvatarUrl('user_arthurstam')} />}>
                 Artur Stambultsian
               </SimpleCell>
             </Group>
           </Panel>
           <Panel id="add_friend">
-            <PanelHeader
-              before={
-                <PanelHeaderBack onClick={() => setActivePanel("example")} />
-              }
-            >
+            <PanelHeader before={<PanelHeaderBack onClick={() => setActivePanel('example')} />}>
               Добавить друга
             </PanelHeader>
 
             <Group>
-              <SimpleCell
-                before={<Avatar src={getAvatarUrl("user_wayshev")} />}
-              >
+              <SimpleCell before={<Avatar src={getAvatarUrl('user_wayshev')} />}>
                 Иван Барышев
               </SimpleCell>
-              <SimpleCell
-                before={<Avatar src={getAvatarUrl("user_lihachyov")} />}
-              >
+              <SimpleCell before={<Avatar src={getAvatarUrl('user_lihachyov')} />}>
                 Михаил Лихачёв
               </SimpleCell>
-              <SimpleCell
-                before={<Avatar src={getAvatarUrl("user_arthurstam")} />}
-              >
+              <SimpleCell before={<Avatar src={getAvatarUrl('user_arthurstam')} />}>
                 Artur Stambultsian
               </SimpleCell>
             </Group>

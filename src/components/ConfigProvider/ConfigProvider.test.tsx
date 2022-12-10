@@ -1,18 +1,18 @@
-import { render } from "@testing-library/react";
-import React, { useContext } from "react";
-import { Platform } from "../../lib/platform";
-import { baselineComponent } from "../../testing/utils";
-import { Appearance } from "../../helpers/appearance";
-import { ConfigProvider } from "./ConfigProvider";
+import { render } from '@testing-library/react';
+import React, { useContext } from 'react';
+import { Platform } from '../../lib/platform';
+import { baselineComponent } from '../../testing/utils';
+import { Appearance } from '../../helpers/appearance';
+import { ConfigProvider } from './ConfigProvider';
 import {
   ConfigProviderContext,
   WebviewType,
   ConfigProviderContextInterface,
-} from "./ConfigProviderContext";
+} from './ConfigProviderContext';
 
-describe("ConfigProvider", () => {
+describe('ConfigProvider', () => {
   baselineComponent<any>(ConfigProvider, { forward: false });
-  it("provides config context", () => {
+  it('provides config context', () => {
     const config = {
       appearance: Appearance.LIGHT,
       webviewType: WebviewType.INTERNAL,
@@ -22,7 +22,7 @@ describe("ConfigProvider", () => {
       expect(useContext(ConfigProviderContext)).toEqual({
         platform: Platform.ANDROID,
         isWebView: false,
-        locale: "ru",
+        locale: 'ru',
         appearance: Appearance.LIGHT,
         webviewType: WebviewType.INTERNAL,
         transitionMotionEnabled: false,
@@ -32,10 +32,10 @@ describe("ConfigProvider", () => {
     render(
       <ConfigProvider {...config}>
         <ConfigUser />
-      </ConfigProvider>
+      </ConfigProvider>,
     );
   });
-  describe("inherits properties from parent ConfigProvider context", () => {
+  describe('inherits properties from parent ConfigProvider context', () => {
     let config: ConfigProviderContextInterface | undefined;
     const ReadConfig = () => {
       config = useContext(ConfigProviderContext);
@@ -48,28 +48,26 @@ describe("ConfigProvider", () => {
       webviewType: WebviewType.INTERNAL,
       transitionMotionEnabled: false,
       isWebView: true,
-      locale: "en",
+      locale: 'en',
     };
     it.each([
-      ["platform", Platform.ANDROID],
-      ["webviewType", WebviewType.VKAPPS],
-      ["transitionMotionEnabled", true],
-      ["isWebView", false],
-      ["platform", Appearance.LIGHT],
-      ["locale", "ru"],
-    ])("%s => %s", (prop, value) => {
+      ['platform', Platform.ANDROID],
+      ['webviewType', WebviewType.VKAPPS],
+      ['transitionMotionEnabled', true],
+      ['isWebView', false],
+      ['platform', Appearance.LIGHT],
+      ['locale', 'ru'],
+    ])('%s => %s', (prop, value) => {
       const newConfig = { [prop]: value };
       render(
         <ConfigProvider {...defaultConfig}>
           <ConfigProvider {...newConfig}>
             <ReadConfig />
           </ConfigProvider>
-        </ConfigProvider>
+        </ConfigProvider>,
       );
 
-      expect(config).toEqual(
-        expect.objectContaining({ ...defaultConfig, [prop]: value })
-      );
+      expect(config).toEqual(expect.objectContaining({ ...defaultConfig, [prop]: value }));
     });
   });
 });

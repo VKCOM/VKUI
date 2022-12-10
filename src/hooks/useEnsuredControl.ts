@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 
 interface UseEnsuredControlProps<V, E extends React.ChangeEvent<any>> {
   value?: V;
@@ -23,7 +23,7 @@ export function useEnsuredControl<V, E extends React.ChangeEvent<any>>({
       onChangeValue(e.target.value);
       onChangeProp && onChangeProp(e);
     },
-    [onChangeValue, onChangeProp, disabled]
+    [onChangeValue, onChangeProp, disabled],
   );
 
   return [value, onChange];
@@ -54,7 +54,7 @@ export function useCustomEnsuredControl<V>({
       !isControlled && setLocalValue(v);
       onChangeProp && onChangeProp(v);
     },
-    [disabled, isControlled, onChangeProp]
+    [disabled, isControlled, onChangeProp],
   );
 
   return [isControlled ? value : localValue, onChange];

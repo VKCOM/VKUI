@@ -7,9 +7,7 @@
     <Group>
       <FormItem>
         <Checkbox defaultChecked>Я участвую в сборе</Checkbox>
-        <Checkbox description="Все пользователи получат уведомление">
-          Закрепить сообщение
-        </Checkbox>
+        <Checkbox description="Все пользователи получат уведомление">Закрепить сообщение</Checkbox>
         <Checkbox checked disabled>
           Автоматически зачислять на карту
         </Checkbox>
@@ -22,11 +20,11 @@
 ```jsx { "props": { "layout": false, "iframe": false } }
 <div
   style={{
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "row",
-    padding: "24px 16px",
-    background: "white",
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'row',
+    padding: '24px 16px',
+    background: 'white',
     gap: 20,
   }}
 >

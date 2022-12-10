@@ -1,11 +1,11 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { getSizeXClassName } from "../../helpers/getSizeXClassName";
-import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { BREAKPOINTS, ViewWidth } from "../../lib/adaptivity";
-import { useDOM } from "../../lib/dom";
-import styles from "./SplitCol.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { getSizeXClassName } from '../../helpers/getSizeXClassName';
+import { getViewWidthClassName } from '../../helpers/getViewWidthClassName';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { BREAKPOINTS, ViewWidth } from '../../lib/adaptivity';
+import { useDOM } from '../../lib/dom';
+import styles from './SplitCol.module.css';
 
 export interface SplitColContextProps {
   colRef: React.RefObject<HTMLDivElement> | null;
@@ -70,7 +70,7 @@ export const SplitCol = (props: SplitColProps) => {
       setAnimate(
         viewWidth !== undefined
           ? viewWidth < ViewWidth.TABLET
-          : window!.innerWidth < BREAKPOINTS.SMALL_TABLET
+          : window!.innerWidth < BREAKPOINTS.SMALL_TABLET,
       );
     } else {
       setAnimate(_animate);
@@ -95,23 +95,19 @@ export const SplitCol = (props: SplitColProps) => {
       }}
       ref={baseRef}
       className={classNamesString(
-        styles["SplitCol"],
-        getSizeXClassName(styles["SplitCol"], sizeX),
-        getViewWidthClassName(styles["SplitCol"], viewWidth),
-        spaced && styles["SplitCol--spaced"],
-        spaced === undefined && styles["SplitCol--spaced-none"],
-        autoSpaced && styles["SplitCol--spaced-auto"],
-        fixed && styles["SplitCol--fixed"],
-        stretchedOnMobile && styles["SplitCol--stretched-on-mobile"],
-        className
+        styles['SplitCol'],
+        getSizeXClassName(styles['SplitCol'], sizeX),
+        getViewWidthClassName(styles['SplitCol'], viewWidth),
+        spaced && styles['SplitCol--spaced'],
+        spaced === undefined && styles['SplitCol--spaced-none'],
+        autoSpaced && styles['SplitCol--spaced-auto'],
+        fixed && styles['SplitCol--fixed'],
+        stretchedOnMobile && styles['SplitCol--stretched-on-mobile'],
+        className,
       )}
     >
       <SplitColContext.Provider value={contextValue}>
-        {fixed ? (
-          <div className={styles["SplitCol__fixedInner"]}>{children}</div>
-        ) : (
-          children
-        )}
+        {fixed ? <div className={styles['SplitCol__fixedInner']}>{children}</div> : children}
       </SplitColContext.Provider>
     </div>
   );

@@ -1,27 +1,27 @@
-import React, { Fragment } from "react";
-import { FormLayoutGroup } from "./FormLayoutGroup";
-import { Input } from "../Input/Input";
-import { FormItem } from "../FormItem/FormItem";
-import { Select } from "../Select/Select";
-import { DatePicker } from "../DatePicker/DatePicker";
-import { ChipsSelect } from "../ChipsSelect/ChipsSelect";
-import { CustomSelect } from "../CustomSelect/CustomSelect";
-import { NativeSelect } from "../NativeSelect/NativeSelect";
-import { ChipsInput } from "../ChipsInput/ChipsInput";
-import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import { describeScreenshotFuzz } from "../../testing/e2e/utils";
+import React, { Fragment } from 'react';
+import { FormLayoutGroup } from './FormLayoutGroup';
+import { Input } from '../Input/Input';
+import { FormItem } from '../FormItem/FormItem';
+import { Select } from '../Select/Select';
+import { DatePicker } from '../DatePicker/DatePicker';
+import { ChipsSelect } from '../ChipsSelect/ChipsSelect';
+import { CustomSelect } from '../CustomSelect/CustomSelect';
+import { NativeSelect } from '../NativeSelect/NativeSelect';
+import { ChipsInput } from '../ChipsInput/ChipsInput';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
 const chips = [
   {
-    value: "chip",
-    label: "chip",
+    value: 'chip',
+    label: 'chip',
   },
 ];
 
-describe("FormLayoutGroup", () => {
+describe('FormLayoutGroup', () => {
   describeScreenshotFuzz(FormLayoutGroup, [
     {
-      mode: ["horizontal", "vertical"],
+      mode: ['horizontal', 'vertical'],
       children: [
         <Fragment key="">
           <FormItem>
@@ -34,7 +34,7 @@ describe("FormLayoutGroup", () => {
       ],
     },
     {
-      mode: ["vertical"],
+      mode: ['vertical'],
       children: [
         <Fragment key="">
           <FormItem>
@@ -52,7 +52,7 @@ describe("FormLayoutGroup", () => {
       ],
     },
     {
-      mode: ["horizontal"],
+      mode: ['horizontal'],
       removable: [true],
       children: [
         <Fragment key="">
@@ -90,7 +90,7 @@ describe("FormLayoutGroup", () => {
       ],
     },
     {
-      mode: ["horizontal"],
+      mode: ['horizontal'],
       segmented: [true],
       children: [
         <Fragment key="kids">

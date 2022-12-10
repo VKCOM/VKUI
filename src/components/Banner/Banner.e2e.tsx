@@ -1,11 +1,11 @@
-import * as React from "react";
-import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
-import { Image } from "../Image/Image";
-import { Banner, BannerProps } from "./Banner";
-import { Button } from "../Button/Button";
-import { describeScreenshotFuzz } from "../../testing/e2e";
+import * as React from 'react';
+import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
+import { Image } from '../Image/Image';
+import { Banner, BannerProps } from './Banner';
+import { Button } from '../Button/Button';
+import { describeScreenshotFuzz } from '../../testing/e2e';
 
-describe("Banner", () => {
+describe('Banner', () => {
   describeScreenshotFuzz(
     (props: BannerProps) => (
       <Banner
@@ -19,12 +19,12 @@ describe("Banner", () => {
     ),
     [
       {
-        asideMode: [undefined, "dismiss", "expand"],
-        size: ["s", "m"],
+        asideMode: [undefined, 'dismiss', 'expand'],
+        size: ['s', 'm'],
         actions: [undefined],
       },
       {
-        size: ["s", "m"],
+        size: ['s', 'm'],
         before: [undefined],
         actions: [
           undefined,
@@ -35,13 +35,11 @@ describe("Banner", () => {
         ],
       },
       {
-        mode: ["image"],
-        imageTheme: ["dark"],
-        header: ["Мои достижения"],
-        subheader: ["Разблокировано 9 из 36"],
-        background: [
-          <div key="img-bg" style={{ backgroundColor: "#222222" }} />,
-        ],
+        mode: ['image'],
+        imageTheme: ['dark'],
+        header: ['Мои достижения'],
+        subheader: ['Разблокировано 9 из 36'],
+        background: [<div key="img-bg" style={{ backgroundColor: '#222222' }} />],
         before: [undefined],
         asideMode: [undefined],
         actions: [
@@ -50,6 +48,6 @@ describe("Banner", () => {
           </Button>,
         ],
       },
-    ]
+    ],
   );
 });

@@ -1,21 +1,17 @@
-import ts from "typescript";
+import ts from 'typescript';
 
-import transformer from "./jsx-transformer";
+import transformer from './jsx-transformer';
 
 const printer = ts.createPrinter({});
 
 async function run(input: string, output: string, opts = undefined) {
-  const sourceFile = ts.createSourceFile(
-    "input.jsx",
-    input,
-    ts.ScriptTarget.Latest
-  );
+  const sourceFile = ts.createSourceFile('input.jsx', input, ts.ScriptTarget.Latest);
   const result = ts.transform(sourceFile, [transformer]);
 
   expect(printer.printFile(result.transformed[0])).toEqual(output);
 }
 
-it("default", async () => {
+it('default', async () => {
   const input = `const App = ({ children }) => {
     return <div style={{ 
             color: 'var(--accent)',
@@ -39,7 +35,7 @@ it("default", async () => {
   await run(input, output);
 });
 
-it("icon", async () => {
+it('icon', async () => {
   const input = `<Icon style={{ 
         color: "var(--accent)",
     }}/>;

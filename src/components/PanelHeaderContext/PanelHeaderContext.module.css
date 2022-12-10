@@ -78,18 +78,14 @@
  * (platform === Platform.IOS && isDesktop)
  */
 .PanelHeaderContext--rounded:not(.PanelHeaderContext--ios) .List,
-.PanelHeaderContext--sizeX-regular.PanelHeaderContext--ios
-  .PanelHeaderContext--rounded
-  .List {
+.PanelHeaderContext--sizeX-regular.PanelHeaderContext--ios .PanelHeaderContext--rounded .List {
   overflow: hidden;
   border-radius: 12px;
   padding: 8px 0;
 }
 
 @media (--sizeX-regular) {
-  .PanelHeaderContext--sizeX-none.PanelHeaderContext--ios
-    .PanelHeaderContext--rounded
-    .List {
+  .PanelHeaderContext--sizeX-none.PanelHeaderContext--ios .PanelHeaderContext--rounded .List {
     overflow: hidden;
     border-radius: 12px;
     padding: 8px 0;

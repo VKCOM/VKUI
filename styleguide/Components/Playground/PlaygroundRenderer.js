@@ -1,15 +1,9 @@
-import React, { cloneElement } from "react";
-import { Settings } from "../Settings/Settings";
-import { SectionSubheading } from "../SectionSubheading/SectionSubheading";
-import { useAdaptivityConditionalRender } from "@vkui";
+import React, { cloneElement } from 'react';
+import { Settings } from '../Settings/Settings';
+import { SectionSubheading } from '../SectionSubheading/SectionSubheading';
+import { useAdaptivityConditionalRender } from '@vkui';
 
-const PlaygroundRenderer = ({
-  name,
-  preview,
-  previewProps,
-  tabBody,
-  exampleIndex,
-}) => {
+const PlaygroundRenderer = ({ name, preview, previewProps, tabBody, exampleIndex }) => {
   const {
     layout = true, // Обвесы в виде SplitLayout, SplitCol, etc
     iframe = true, // Рендерить пример в айфреме
@@ -32,11 +26,7 @@ const PlaygroundRenderer = ({
         Пример реализации
       </SectionSubheading>
       <Settings adaptivity={adaptivity} webviewType={webviewType} />
-      <div
-        className="Playground__preview"
-        {...wrapperProps}
-        data-preview={name}
-      >
+      <div className="Playground__preview" {...wrapperProps} data-preview={name}>
         {cloneElement(preview, {
           ...preview.props,
           layout,

@@ -27,7 +27,7 @@
     var(--vkui--color_background_content),
     var(--transparent_color)
   );
-  content: "";
+  content: '';
   opacity: 0;
   pointer-events: none;
 }
@@ -47,7 +47,7 @@
     var(--vkui--color_background_content),
     var(--transparent_color)
   );
-  content: "";
+  content: '';
   opacity: 0;
   pointer-events: none;
 }

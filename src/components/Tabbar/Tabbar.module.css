@@ -36,7 +36,7 @@
   height: 1px;
   background: var(--vkui--color_separator_primary_alpha);
   transform-origin: center bottom;
-  content: "";
+  content: '';
 }
 
 @media (min-resolution: 2dppx) {

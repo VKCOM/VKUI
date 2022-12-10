@@ -1,10 +1,10 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import { Platform } from "../../lib/platform";
-import { HasRef, HasRootRef } from "../../types";
-import { PopoutRoot } from "../PopoutRoot/PopoutRoot";
-import { usePlatform } from "../../hooks/usePlatform";
-import styles from "./SplitLayout.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import { Platform } from '../../lib/platform';
+import { HasRef, HasRootRef } from '../../types';
+import { PopoutRoot } from '../PopoutRoot/PopoutRoot';
+import { usePlatform } from '../../hooks/usePlatform';
+import styles from './SplitLayout.module.css';
 
 export interface SplitLayoutProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -39,8 +39,8 @@ export const SplitLayout = ({
   return (
     <PopoutRoot
       className={classNamesString(
-        styles["SplitLayout"],
-        platform === Platform.IOS && styles["SplitLayout--ios"]
+        styles['SplitLayout'],
+        platform === Platform.IOS && styles['SplitLayout--ios'],
       )}
       popout={popout}
       modal={modal}
@@ -51,9 +51,9 @@ export const SplitLayout = ({
         {...restProps}
         ref={getRef}
         className={classNamesString(
-          styles["SplitLayout__inner"],
-          !!header && styles["SplitLayout__inner--header"],
-          className
+          styles['SplitLayout__inner'],
+          !!header && styles['SplitLayout__inner--header'],
+          className,
         )}
       >
         {children}

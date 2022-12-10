@@ -1,8 +1,8 @@
-import * as React from "react";
-import { useDOM } from "../lib/dom";
-import { useGlobalEventListener } from "./useGlobalEventListener";
+import * as React from 'react';
+import { useDOM } from '../lib/dom';
+import { useGlobalEventListener } from './useGlobalEventListener';
 
-type Orientation = "portrait" | "landscape";
+type Orientation = 'portrait' | 'landscape';
 
 /**
  * Возвращает текущую ориентация экрана на человеческом языке.
@@ -10,15 +10,15 @@ type Orientation = "portrait" | "landscape";
  */
 function getOrientation(window: Window | undefined): Orientation {
   if (!window) {
-    return "portrait";
+    return 'portrait';
   }
 
   const angle = Math.abs(
     // eslint-disable-next-line compat/compat
-    window.screen?.orientation?.angle ?? Number(window.orientation)
+    window.screen?.orientation?.angle ?? Number(window.orientation),
   );
 
-  return angle === 90 ? "landscape" : "portrait";
+  return angle === 90 ? 'landscape' : 'portrait';
 }
 
 /**
@@ -28,13 +28,9 @@ function getOrientation(window: Window | undefined): Orientation {
 export function useOrientationChange(): Orientation {
   const { window } = useDOM();
 
-  const [orientation, setOrientation] = React.useState(() =>
-    getOrientation(window)
-  );
+  const [orientation, setOrientation] = React.useState(() => getOrientation(window));
 
-  useGlobalEventListener(window, "orientationchange", () =>
-    setOrientation(getOrientation(window))
-  );
+  useGlobalEventListener(window, 'orientationchange', () => setOrientation(getOrientation(window)));
 
   return orientation;
 }

@@ -1,10 +1,10 @@
-import * as React from "react";
-import { setHours, setMinutes } from "../../lib/date";
-import { CustomSelect } from "../CustomSelect/CustomSelect";
-import { Button } from "../Button/Button";
-import { SizeType } from "../../lib/adaptivity";
-import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import styles from "./CalendarTime.module.css";
+import * as React from 'react';
+import { setHours, setMinutes } from '../../lib/date';
+import { CustomSelect } from '../CustomSelect/CustomSelect';
+import { Button } from '../Button/Button';
+import { SizeType } from '../../lib/adaptivity';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import styles from './CalendarTime.module.css';
 
 export interface CalendarTimeProps {
   value: Date;
@@ -20,7 +20,7 @@ const hours: Array<{
   label: string;
 }> = [];
 for (let i = 0; i < 24; i += 1) {
-  hours.push({ value: i, label: String(i).padStart(2, "0") });
+  hours.push({ value: i, label: String(i).padStart(2, '0') });
 }
 
 const minutes: Array<{
@@ -28,31 +28,31 @@ const minutes: Array<{
   label: string;
 }> = [];
 for (let i = 0; i < 60; i += 1) {
-  minutes.push({ value: i, label: String(i).padStart(2, "0") });
+  minutes.push({ value: i, label: String(i).padStart(2, '0') });
 }
 
 export const CalendarTime = ({
   value,
-  doneButtonText = "Готово",
+  doneButtonText = 'Готово',
   onChange,
   onClose,
-  changeHoursAriaLabel = "Изменить час",
-  changeMinutesAriaLabel = "Изменить минуту",
+  changeHoursAriaLabel = 'Изменить час',
+  changeMinutesAriaLabel = 'Изменить минуту',
 }: CalendarTimeProps) => {
   const onHoursChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>
       onChange?.(setHours(value, Number(event.target.value))),
-    [onChange, value]
+    [onChange, value],
   );
   const onMinutesChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>
       onChange?.(setMinutes(value, Number(event.target.value))),
-    [onChange, value]
+    [onChange, value],
   );
 
   return (
-    <div className={styles["CalendarTime"]}>
-      <div className={styles["CalendarTime__picker"]}>
+    <div className={styles['CalendarTime']}>
+      <div className={styles['CalendarTime__picker']}>
         <AdaptivityProvider sizeY={SizeType.COMPACT}>
           <CustomSelect
             value={value.getHours()}
@@ -63,8 +63,8 @@ export const CalendarTime = ({
           />
         </AdaptivityProvider>
       </div>
-      <div className={styles["CalendarTime__divider"]}>:</div>
-      <div className={styles["CalendarTime__picker"]}>
+      <div className={styles['CalendarTime__divider']}>:</div>
+      <div className={styles['CalendarTime__picker']}>
         <AdaptivityProvider sizeY={SizeType.COMPACT}>
           <CustomSelect
             value={value.getMinutes()}
@@ -75,14 +75,9 @@ export const CalendarTime = ({
           />
         </AdaptivityProvider>
       </div>
-      <div className={styles["CalendarTime__button"]}>
+      <div className={styles['CalendarTime__button']}>
         <AdaptivityProvider sizeY={SizeType.COMPACT}>
-          <Button
-            mode="secondary"
-            onClick={onClose}
-            size="l"
-            aria-label={doneButtonText}
-          >
+          <Button mode="secondary" onClick={onClose} size="l" aria-label={doneButtonText}>
             {doneButtonText}
           </Button>
         </AdaptivityProvider>

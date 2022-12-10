@@ -4,8 +4,8 @@
 
 ```jsx
 const Example = () => {
-  const [country, setCountry] = React.useState("");
-  const [activeView, setActiveView] = React.useState("profile");
+  const [country, setCountry] = React.useState('');
+  const [activeView, setActiveView] = React.useState('profile');
 
   return (
     <Root activeView={activeView}>
@@ -14,10 +14,7 @@ const Example = () => {
           <PanelHeader>Профиль</PanelHeader>
           <Group>
             <FormItem top="Выберите страну">
-              <SelectMimicry
-                placeholder="Не выбрана"
-                onClick={() => setActiveView("countries")}
-              >
+              <SelectMimicry placeholder="Не выбрана" onClick={() => setActiveView('countries')}>
                 {country}
               </SelectMimicry>
             </FormItem>
@@ -34,39 +31,33 @@ const Example = () => {
             <List>
               <Cell
                 onClick={() => {
-                  setCountry("Россия");
-                  setActiveView("profile");
+                  setCountry('Россия');
+                  setActiveView('profile');
                 }}
                 after={
-                  country === "Россия" ? (
-                    <Icon24Done fill="var(--vkui--color_icon_accent)" />
-                  ) : null
+                  country === 'Россия' ? <Icon24Done fill="var(--vkui--color_icon_accent)" /> : null
                 }
               >
                 Россия
               </Cell>
               <Cell
                 onClick={() => {
-                  setCountry("Италия");
-                  setActiveView("profile");
+                  setCountry('Италия');
+                  setActiveView('profile');
                 }}
                 after={
-                  country === "Италия" ? (
-                    <Icon24Done fill="var(--vkui--color_icon_accent)" />
-                  ) : null
+                  country === 'Италия' ? <Icon24Done fill="var(--vkui--color_icon_accent)" /> : null
                 }
               >
                 Италия
               </Cell>
               <Cell
                 onClick={() => {
-                  setCountry("Англия");
-                  setActiveView("profile");
+                  setCountry('Англия');
+                  setActiveView('profile');
                 }}
                 after={
-                  country === "Англия" ? (
-                    <Icon24Done fill="var(--vkui--color_icon_accent)" />
-                  ) : null
+                  country === 'Англия' ? <Icon24Done fill="var(--vkui--color_icon_accent)" /> : null
                 }
               >
                 Англия

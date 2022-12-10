@@ -8,16 +8,9 @@ const [showArrows, setShowArrows] = useState(true);
     <PanelHeader>Gallery</PanelHeader>
     <Group header={<Header mode="secondary">Sticks right</Header>}>
       <Gallery slideWidth="90%" bullets="dark">
-        <div
-          style={{ backgroundColor: "var(--vkui--color_background_negative)" }}
-        />
-        <img
-          src="https://picsum.photos/1024/640"
-          style={{ display: "block" }}
-        />
-        <div
-          style={{ backgroundColor: "var(--vkui--color_background_accent)" }}
-        />
+        <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+        <img src="https://picsum.photos/1024/640" style={{ display: 'block' }} />
+        <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
       </Gallery>
     </Group>
     <Group header={<Header mode="secondary">Sticks left</Header>}>
@@ -25,28 +18,18 @@ const [showArrows, setShowArrows] = useState(true);
         <div
           style={{
             height: 150,
-            backgroundColor: "var(--vkui--color_background_negative)",
+            backgroundColor: 'var(--vkui--color_background_negative)',
           }}
         />
-        <div
-          style={{ backgroundColor: "var(--vkui--color_background_positive)" }}
-        />
-        <div
-          style={{ backgroundColor: "var(--vkui--color_background_accent)" }}
-        />
+        <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
+        <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
       </Gallery>
     </Group>
     <Group header={<Header mode="secondary">Centered</Header>}>
       <Gallery slideWidth="90%" align="center">
-        <div
-          style={{ backgroundColor: "var(--vkui--color_background_negative)" }}
-        />
-        <div
-          style={{ backgroundColor: "var(--vkui--color_background_positive)" }}
-        />
-        <div
-          style={{ backgroundColor: "var(--vkui--color_background_accent)" }}
-        />
+        <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+        <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
+        <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
       </Gallery>
     </Group>
     <Group header={<Header mode="secondary">Custom width</Header>}>
@@ -54,45 +37,34 @@ const [showArrows, setShowArrows] = useState(true);
         <div
           style={{
             width: 200,
-            backgroundColor: "var(--vkui--color_background_negative)",
+            backgroundColor: 'var(--vkui--color_background_negative)',
           }}
         />
         <div
           style={{
             width: 120,
-            backgroundColor: "var(--vkui--color_background_positive)",
+            backgroundColor: 'var(--vkui--color_background_positive)',
           }}
         />
         <div
           style={{
             width: 70,
-            backgroundColor: "var(--vkui--color_background_accent)",
+            backgroundColor: 'var(--vkui--color_background_accent)',
           }}
         />
         <div
           style={{
             width: 220,
-            backgroundColor: "var(--vkui--color_icon_secondary)",
+            backgroundColor: 'var(--vkui--color_icon_secondary)',
           }}
         />
       </Gallery>
     </Group>
     <Group header={<Header mode="secondary">Arrows</Header>}>
-      <Gallery
-        slideWidth="90%"
-        style={{ height: 150 }}
-        bullets="dark"
-        showArrows
-      >
-        <div
-          style={{ backgroundColor: "var(--vkui--color_background_negative)" }}
-        />
-        <div
-          style={{ backgroundColor: "var(--vkui--color_background_positive)" }}
-        />
-        <div
-          style={{ backgroundColor: "var(--vkui--color_background_accent)" }}
-        />
+      <Gallery slideWidth="90%" style={{ height: 150 }} bullets="dark" showArrows>
+        <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+        <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
+        <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
       </Gallery>
     </Group>
     <Group header={<Header mode="secondary">Controlled</Header>}>
@@ -105,37 +77,21 @@ const [showArrows, setShowArrows] = useState(true);
         isDraggable={isDraggable}
         showArrows={showArrows}
       >
-        <div
-          style={{ backgroundColor: "var(--vkui--color_background_negative)" }}
-        />
-        <div
-          style={{ backgroundColor: "var(--vkui--color_background_positive)" }}
-        />
-        <div
-          style={{ backgroundColor: "var(--vkui--color_background_accent)" }}
-        />
+        <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+        <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
+        <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
       </Gallery>
 
       <FormItem>
-        <Checkbox
-          checked={isDraggable}
-          onChange={(e) => setIsDraggable(e.target.checked)}
-        >
+        <Checkbox checked={isDraggable} onChange={(e) => setIsDraggable(e.target.checked)}>
           isDraggable
         </Checkbox>
-        <Checkbox
-          checked={showArrows}
-          onChange={(e) => setShowArrows(e.target.checked)}
-        >
+        <Checkbox checked={showArrows} onChange={(e) => setShowArrows(e.target.checked)}>
           showArrows
         </Checkbox>
       </FormItem>
       <FormItem>
-        <Button
-          size="l"
-          stretched
-          onClick={() => setSlideIndex((slideIndex + 1) % 3)}
-        >
+        <Button size="l" stretched onClick={() => setSlideIndex((slideIndex + 1) % 3)}>
           Next slide
         </Button>
       </FormItem>

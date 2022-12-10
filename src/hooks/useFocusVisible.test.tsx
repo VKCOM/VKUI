@@ -1,8 +1,8 @@
-import * as React from "react";
-import { ReactNode } from "react";
-import { renderHook, act } from "@testing-library/react-hooks";
-import { AppRootContext } from "../components/AppRoot/AppRootContext";
-import { useFocusVisible } from "./useFocusVisible";
+import * as React from 'react';
+import { ReactNode } from 'react';
+import { renderHook, act } from '@testing-library/react-hooks';
+import { AppRootContext } from '../components/AppRoot/AppRootContext';
+import { useFocusVisible } from './useFocusVisible';
 
 const wrapper =
   (keyboardInput: boolean) =>
@@ -17,8 +17,8 @@ const wrapper =
       </AppRootContext.Provider>
     );
 
-describe("useFocusVisible", () => {
-  it("Sets focusVisible: true onFocus", () => {
+describe('useFocusVisible', () => {
+  it('Sets focusVisible: true onFocus', () => {
     const { result } = renderHook(() => useFocusVisible(), {
       wrapper: wrapper(true),
     });
@@ -40,7 +40,7 @@ describe("useFocusVisible", () => {
 
     expect(result.current.focusVisible).toEqual(false);
   });
-  it("Sets focusVisible: false onBlur", () => {
+  it('Sets focusVisible: false onBlur', () => {
     const { result } = renderHook(() => useFocusVisible(), {
       wrapper: wrapper(true),
     });

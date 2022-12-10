@@ -1,5 +1,5 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
 import {
   addMonths,
   isSameMonth,
@@ -9,34 +9,26 @@ import {
   startOfDay,
   endOfDay,
   isWithinInterval,
-} from "../../lib/date";
-import {
-  CalendarHeader,
-  CalendarHeaderProps,
-} from "../CalendarHeader/CalendarHeader";
-import { CalendarDays, CalendarDaysProps } from "../CalendarDays/CalendarDays";
-import {
-  navigateDate,
-  setTimeEqual,
-  isLastDay,
-  isFirstDay,
-} from "../../lib/calendar";
-import { useCalendar } from "../../hooks/useCalendar";
-import { HasRootRef } from "../../types";
-import styles from "./CalendarRange.module.css";
+} from '../../lib/date';
+import { CalendarHeader, CalendarHeaderProps } from '../CalendarHeader/CalendarHeader';
+import { CalendarDays, CalendarDaysProps } from '../CalendarDays/CalendarDays';
+import { navigateDate, setTimeEqual, isLastDay, isFirstDay } from '../../lib/calendar';
+import { useCalendar } from '../../hooks/useCalendar';
+import { HasRootRef } from '../../types';
+import styles from './CalendarRange.module.css';
 
 export interface CalendarRangeProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange">,
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>,
     Pick<
       CalendarHeaderProps,
-      | "prevMonthAriaLabel"
-      | "nextMonthAriaLabel"
-      | "changeMonthAriaLabel"
-      | "changeYearAriaLabel"
-      | "prevMonthIcon"
-      | "nextMonthIcon"
+      | 'prevMonthAriaLabel'
+      | 'nextMonthAriaLabel'
+      | 'changeMonthAriaLabel'
+      | 'changeYearAriaLabel'
+      | 'prevMonthIcon'
+      | 'nextMonthIcon'
     >,
-    Pick<CalendarDaysProps, "listenDayChangesForUpdate">,
+    Pick<CalendarDaysProps, 'listenDayChangesForUpdate'>,
     HasRootRef<HTMLDivElement> {
   value?: Array<Date | null>;
   disablePast?: boolean;
@@ -54,9 +46,7 @@ const getIsDaySelected = (day: Date, value?: Array<Date | null>) => {
     return false;
   }
 
-  return Boolean(
-    isWithinInterval(day, startOfDay(value[0]), endOfDay(value[1]))
-  );
+  return Boolean(isWithinInterval(day, startOfDay(value[0]), endOfDay(value[1])));
 };
 
 /**
@@ -76,7 +66,7 @@ export const CalendarRange = ({
   nextMonthAriaLabel,
   changeMonthAriaLabel,
   changeYearAriaLabel,
-  changeDayAriaLabel = "Изменить день",
+  changeDayAriaLabel = 'Изменить день',
   prevMonthIcon,
   nextMonthIcon,
   className,
@@ -99,9 +89,7 @@ export const CalendarRange = ({
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent) => {
-      if (
-        ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)
-      ) {
+      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
         event.preventDefault();
       }
 
@@ -116,7 +104,7 @@ export const CalendarRange = ({
       }
       setFocusedDay(newFocusedDay);
     },
-    [focusedDay, setFocusedDay, setViewDate, value, viewDate]
+    [focusedDay, setFocusedDay, setViewDate, value, viewDate],
   );
 
   const getNewValue = React.useCallback(
@@ -137,7 +125,7 @@ export const CalendarRange = ({
 
       return value;
     },
-    [value]
+    [value],
   );
 
   const onDayChange = React.useCallback(
@@ -145,86 +133,67 @@ export const CalendarRange = ({
       onChange?.(getNewValue(date));
       setHintedDate(undefined);
     },
-    [onChange, getNewValue]
+    [onChange, getNewValue],
   );
 
-  const isDaySelected = React.useCallback(
-    (day: Date) => getIsDaySelected(day, value),
-    [value]
-  );
+  const isDaySelected = React.useCallback((day: Date) => getIsDaySelected(day, value), [value]);
 
   const isDayActive = React.useCallback(
     (day: Date) =>
-      Boolean(
-        (value?.[0] && isSameDay(day, value[0])) ||
-          (value?.[1] && isSameDay(day, value[1]))
-      ),
-    [value]
+      Boolean((value?.[0] && isSameDay(day, value[0])) || (value?.[1] && isSameDay(day, value[1]))),
+    [value],
   );
 
   const isDaySelectionEnd = React.useCallback(
     (day: Date, dayOfWeek: number) =>
-      Boolean(
-        isLastDay(day, dayOfWeek) || (value?.[1] && isSameDay(day, value[1]))
-      ),
-    [value]
+      Boolean(isLastDay(day, dayOfWeek) || (value?.[1] && isSameDay(day, value[1]))),
+    [value],
   );
 
   const isHintedDaySelectionEnd = React.useCallback(
     (day: Date, dayOfWeek: number) =>
-      Boolean(
-        isLastDay(day, dayOfWeek) ||
-          (hintedDate?.[1] && isSameDay(day, hintedDate[1]))
-      ),
-    [hintedDate]
+      Boolean(isLastDay(day, dayOfWeek) || (hintedDate?.[1] && isSameDay(day, hintedDate[1]))),
+    [hintedDate],
   );
 
   const isDaySelectionStart = React.useCallback(
     (day: Date, dayOfWeek: number) =>
-      Boolean(
-        isFirstDay(day, dayOfWeek) || (value?.[0] && isSameDay(day, value[0]))
-      ),
-    [value]
+      Boolean(isFirstDay(day, dayOfWeek) || (value?.[0] && isSameDay(day, value[0]))),
+    [value],
   );
 
   const isHintedDaySelectionStart = React.useCallback(
     (day: Date, dayOfWeek: number) =>
-      Boolean(
-        isFirstDay(day, dayOfWeek) ||
-          (hintedDate?.[0] && isSameDay(day, hintedDate[0]))
-      ),
-    [hintedDate]
+      Boolean(isFirstDay(day, dayOfWeek) || (hintedDate?.[0] && isSameDay(day, hintedDate[0]))),
+    [hintedDate],
   );
 
   const onDayEnter = React.useCallback(
     (date: Date) => setHintedDate(getNewValue(date)),
-    [setHintedDate, getNewValue]
+    [setHintedDate, getNewValue],
   );
 
-  const onDayLeave = React.useCallback(
-    () => setHintedDate(undefined),
-    [setHintedDate]
-  );
+  const onDayLeave = React.useCallback(() => setHintedDate(undefined), [setHintedDate]);
 
   const isDayHinted = React.useCallback(
     (day: Date) => getIsDaySelected(day, hintedDate),
-    [hintedDate]
+    [hintedDate],
   );
 
   return (
     <div
       {...props}
       ref={getRootRef}
-      className={classNamesString(styles["CalendarRange"], className)}
+      className={classNamesString(styles['CalendarRange'], className)}
     >
-      <div className={styles["CalendarRange__inner"]}>
+      <div className={styles['CalendarRange__inner']}>
         <CalendarHeader
           viewDate={viewDate}
           onChange={setViewDate}
           nextMonth={false}
           onPrevMonth={setPrevMonth}
           disablePickers={disablePickers}
-          className={styles["CalendarRange__header"]}
+          className={styles['CalendarRange__header']}
           prevMonthAriaLabel={prevMonthAriaLabel}
           nextMonthAriaLabel={nextMonthAriaLabel}
           changeMonthAriaLabel={changeMonthAriaLabel}
@@ -252,14 +221,14 @@ export const CalendarRange = ({
           aria-label={changeDayAriaLabel}
         />
       </div>
-      <div className={styles["CalendarRange__inner"]}>
+      <div className={styles['CalendarRange__inner']}>
         <CalendarHeader
           viewDate={secondViewDate}
           onChange={setViewDate}
           prevMonth={false}
           onNextMonth={setNextMonth}
           disablePickers={disablePickers}
-          className={styles["CalendarRange__header"]}
+          className={styles['CalendarRange__header']}
           prevMonthAriaLabel={prevMonthAriaLabel}
           nextMonthAriaLabel={nextMonthAriaLabel}
           changeMonthAriaLabel={changeMonthAriaLabel}

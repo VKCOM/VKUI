@@ -1,19 +1,18 @@
-import * as React from "react";
-import { classNamesString } from "../../lib/classNames";
-import styles from "./PullToRefresh.module.css";
+import * as React from 'react';
+import { classNamesString } from '../../lib/classNames';
+import styles from './PullToRefresh.module.css';
 
 function calcStrokeDashOffset(value: number, radius: number) {
   const progress = value / 100;
   return 2 * Math.PI * radius * (1 - progress);
 }
 
-export interface PullToRefreshSpinnerProps
-  extends React.HTMLAttributes<HTMLDivElement> {
-  size?: number;
-  strokeWidth?: number;
-  on?: boolean;
-  progress?: number;
-  "aria-label"?: string;
+export interface PullToRefreshSpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
+  'size'?: number;
+  'strokeWidth'?: number;
+  'on'?: boolean;
+  'progress'?: number;
+  'aria-label'?: string;
 }
 
 export const PullToRefreshSpinner = ({
@@ -22,7 +21,7 @@ export const PullToRefreshSpinner = ({
   strokeWidth = 2.5,
   style,
   progress = 0,
-  "aria-label": ariaLabel = "Пожалуйста, подождите...",
+  'aria-label': ariaLabel = 'Пожалуйста, подождите...',
 }: PullToRefreshSpinnerProps) => {
   const radius = 0.5 * size - 0.5 * strokeWidth;
   const dasharray = 2 * Math.PI * radius;
@@ -33,15 +32,15 @@ export const PullToRefreshSpinner = ({
   return (
     <div
       className={classNamesString(
-        styles["PullToRefresh__spinner"],
-        on && styles["PullToRefresh__spinner--on"]
+        styles['PullToRefresh__spinner'],
+        on && styles['PullToRefresh__spinner--on'],
       )}
       style={style}
       aria-label={on ? ariaLabel : undefined}
     >
       <svg
         role="presentation"
-        className={styles["PullToRefresh__spinner-self"]}
+        className={styles['PullToRefresh__spinner-self']}
         style={{
           width: size,
           height: size,
@@ -57,7 +56,7 @@ export const PullToRefreshSpinner = ({
           }}
         >
           <circle
-            className={styles["PullToRefresh__spinner-path"]}
+            className={styles['PullToRefresh__spinner-path']}
             fill="none"
             strokeDasharray={dasharray}
             strokeDashoffset={dashoffset}

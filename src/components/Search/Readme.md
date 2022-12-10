@@ -2,29 +2,29 @@
 
 ```jsx { "props": { "layout": false, "adaptivity": true, "webviewType": true } }
 const thematics = [
-  { id: 3201, name: "Аренда автомобилей" },
-  { id: 3273, name: "Автотовары" },
-  { id: 3205, name: "Автосалон" },
-  { id: 3282, name: "Автосервис" },
-  { id: 3283, name: "Услуги для автовладельцев" },
-  { id: 3284, name: "Велосипеды" },
-  { id: 3285, name: "Мотоциклы и другая мототехника" },
-  { id: 3286, name: "Водный транспорт" },
-  { id: 3287, name: "Автопроизводитель" },
-  { id: 3288, name: "Автомойка" },
-  { id: 3117, name: "Автошкола" },
-  { id: 3118, name: "Детский сад" },
-  { id: 3119, name: "Гимназия" },
-  { id: 3120, name: "Колледж" },
-  { id: 3121, name: "Лицей" },
-  { id: 3122, name: "Техникум" },
-  { id: 3123, name: "Университет" },
-  { id: 3124, name: "Школа" },
-  { id: 3125, name: "Институт" },
-  { id: 3126, name: "Обучающие курсы" },
-  { id: 3276, name: "Дополнительное образование" },
-  { id: 3275, name: "Тренинг, семинар" },
-  { id: 3127, name: "Танцевальная школа" },
+  { id: 3201, name: 'Аренда автомобилей' },
+  { id: 3273, name: 'Автотовары' },
+  { id: 3205, name: 'Автосалон' },
+  { id: 3282, name: 'Автосервис' },
+  { id: 3283, name: 'Услуги для автовладельцев' },
+  { id: 3284, name: 'Велосипеды' },
+  { id: 3285, name: 'Мотоциклы и другая мототехника' },
+  { id: 3286, name: 'Водный транспорт' },
+  { id: 3287, name: 'Автопроизводитель' },
+  { id: 3288, name: 'Автомойка' },
+  { id: 3117, name: 'Автошкола' },
+  { id: 3118, name: 'Детский сад' },
+  { id: 3119, name: 'Гимназия' },
+  { id: 3120, name: 'Колледж' },
+  { id: 3121, name: 'Лицей' },
+  { id: 3122, name: 'Техникум' },
+  { id: 3123, name: 'Университет' },
+  { id: 3124, name: 'Школа' },
+  { id: 3125, name: 'Институт' },
+  { id: 3126, name: 'Обучающие курсы' },
+  { id: 3276, name: 'Дополнительное образование' },
+  { id: 3275, name: 'Тренинг, семинар' },
+  { id: 3127, name: 'Танцевальная школа' },
 ];
 
 const users = getRandomUsers(18);
@@ -32,14 +32,14 @@ const users = getRandomUsers(18);
 const SimpleSearch = ({ goHeaderSearch }) => {
   const platform = usePlatform();
 
-  const [search, setSearch] = React.useState("");
+  const [search, setSearch] = React.useState('');
 
   const onChange = (e) => {
     setSearch(e.target.value);
   };
 
   const thematicsFiltered = thematics.filter(
-    ({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1
+    ({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1,
   );
 
   return (
@@ -56,9 +56,7 @@ const SimpleSearch = ({ goHeaderSearch }) => {
       <Group>
         <Search value={search} onChange={onChange} after={null} />
         {thematicsFiltered.length > 0 &&
-          thematicsFiltered.map((thematic) => (
-            <Cell key={thematic.id}>{thematic.name}</Cell>
-          ))}
+          thematicsFiltered.map((thematic) => <Cell key={thematic.id}>{thematic.name}</Cell>)}
         {thematicsFiltered.length === 0 && <Footer>Ничего не найдено</Footer>}
       </Group>
     </React.Fragment>
@@ -68,23 +66,19 @@ const SimpleSearch = ({ goHeaderSearch }) => {
 const HeaderSearch = ({ goSearch, onFiltersClick }) => {
   const platform = usePlatform();
 
-  const [search, setSearch] = React.useState("");
+  const [search, setSearch] = React.useState('');
 
   const onChange = (e) => {
     setSearch(e.target.value);
   };
 
   const usersFiltered = users.filter(
-    ({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1
+    ({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1,
   );
 
   return (
     <React.Fragment>
-      <PanelHeader
-        before={
-          platform !== Platform.VKCOM && <PanelHeaderBack onClick={goSearch} />
-        }
-      >
+      <PanelHeader before={platform !== Platform.VKCOM && <PanelHeaderBack onClick={goSearch} />}>
         <Search
           value={search}
           onChange={onChange}
@@ -112,14 +106,14 @@ const HeaderSearch = ({ goSearch, onFiltersClick }) => {
 const SearchExample = () => {
   const platform = usePlatform();
 
-  const [activePanel, setActivePanel] = React.useState("search");
+  const [activePanel, setActivePanel] = React.useState('search');
   const [activeModal, setActiveModal] = React.useState(null);
 
-  const goHeaderSearch = () => setActivePanel("header-search");
+  const goHeaderSearch = () => setActivePanel('header-search');
 
-  const goSearch = () => setActivePanel("search");
+  const goSearch = () => setActivePanel('search');
 
-  const openFilters = () => setActiveModal("filters");
+  const openFilters = () => setActiveModal('filters');
 
   const hideModal = () => setActiveModal(null);
 
@@ -144,7 +138,7 @@ const SearchExample = () => {
                 }
                 after={
                   <PanelHeaderButton aria-label="Готово" onClick={hideModal}>
-                    {platform === Platform.IOS ? "Готово" : <Icon24Done />}
+                    {platform === Platform.IOS ? 'Готово' : <Icon24Done />}
                   </PanelHeaderButton>
                 }
               >

@@ -1,49 +1,32 @@
-import * as React from "react";
-import {
-  Icon16Dropdown,
-  Icon20PictureOutline,
-  Icon24PictureOutline,
-} from "@vkontakte/icons";
-import { describeScreenshotFuzz } from "../../testing/e2e";
-import { Badge } from "../Badge/Badge";
-import { HorizontalScroll } from "../HorizontalScroll/HorizontalScroll";
-import { Counter } from "../Counter/Counter";
-import { TabsItemProps, TabsItem } from "../TabsItem/TabsItem";
-import { Tabs, TabsModeContext } from "./Tabs";
+import * as React from 'react';
+import { Icon16Dropdown, Icon20PictureOutline, Icon24PictureOutline } from '@vkontakte/icons';
+import { describeScreenshotFuzz } from '../../testing/e2e';
+import { Badge } from '../Badge/Badge';
+import { HorizontalScroll } from '../HorizontalScroll/HorizontalScroll';
+import { Counter } from '../Counter/Counter';
+import { TabsItemProps, TabsItem } from '../TabsItem/TabsItem';
+import { Tabs, TabsModeContext } from './Tabs';
 
 function useIconByMode() {
   const { mode } = React.useContext(TabsModeContext);
-  return mode === "default" ? (
-    <Icon24PictureOutline />
-  ) : (
-    <Icon20PictureOutline />
-  );
+  return mode === 'default' ? <Icon24PictureOutline /> : <Icon20PictureOutline />;
 }
 
 const Unscrollable = ({
   status,
   children,
 }: {
-  status?: TabsItemProps["status"];
+  status?: TabsItemProps['status'];
   children?: React.ReactNode;
 }) => {
   const beforeIconByMode = useIconByMode();
 
   return (
     <React.Fragment>
-      <TabsItem
-        before={beforeIconByMode}
-        status={status}
-        after={<Icon16Dropdown />}
-        selected
-      >
+      <TabsItem before={beforeIconByMode} status={status} after={<Icon16Dropdown />} selected>
         Новости
       </TabsItem>
-      <TabsItem
-        before={beforeIconByMode}
-        status={status}
-        after={<Icon16Dropdown />}
-      >
+      <TabsItem before={beforeIconByMode} status={status} after={<Icon16Dropdown />}>
         Интересное
       </TabsItem>
       {children}
@@ -58,12 +41,7 @@ const Scrollable = ({ disabled }: { disabled?: boolean }) => {
     <React.Fragment>
       <HorizontalScroll arrowSize="m">
         <TabsItem disabled={disabled}>Сообщества</TabsItem>
-        <TabsItem
-          before={beforeIconByMode}
-          after={<Icon16Dropdown />}
-          selected
-          disabled={disabled}
-        >
+        <TabsItem before={beforeIconByMode} after={<Icon16Dropdown />} selected disabled={disabled}>
           Лента
         </TabsItem>
         <TabsItem
@@ -99,10 +77,10 @@ const Scrollable = ({ disabled }: { disabled?: boolean }) => {
   );
 };
 
-describe("Tabs", () => {
+describe('Tabs', () => {
   describeScreenshotFuzz(Tabs, [
     {
-      mode: ["default", "accent", "secondary"],
+      mode: ['default', 'accent', 'secondary'],
       children: [
         <Unscrollable key="tabs" />,
         <Unscrollable key="tabs">

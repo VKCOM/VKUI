@@ -1,24 +1,24 @@
-import * as React from "react";
-import { setMonth, setYear, subMonths, addMonths } from "../../lib/date";
+import * as React from 'react';
+import { setMonth, setYear, subMonths, addMonths } from '../../lib/date';
 import {
   Icon20ChevronLeftOutline,
   Icon20ChevronRightOutline,
   Icon12Dropdown,
-} from "@vkontakte/icons";
-import { Tappable, TappableElementProps } from "../Tappable/Tappable";
-import { classNamesString } from "../../lib/classNames";
-import { CustomSelect } from "../CustomSelect/CustomSelect";
-import { SizeType } from "../../lib/adaptivity";
-import { getMonths, getYears } from "../../lib/calendar";
-import { useConfigProvider } from "../ConfigProvider/ConfigProviderContext";
-import { Paragraph } from "../Typography/Paragraph/Paragraph";
-import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import styles from "./CalendarHeader.module.css";
+} from '@vkontakte/icons';
+import { Tappable, TappableElementProps } from '../Tappable/Tappable';
+import { classNamesString } from '../../lib/classNames';
+import { CustomSelect } from '../CustomSelect/CustomSelect';
+import { SizeType } from '../../lib/adaptivity';
+import { getMonths, getYears } from '../../lib/calendar';
+import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
+import { Paragraph } from '../Typography/Paragraph/Paragraph';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import styles from './CalendarHeader.module.css';
 
-type ArrowMonthProps = Omit<TappableElementProps, "onClick" | "aria-label">;
+type ArrowMonthProps = Omit<TappableElementProps, 'onClick' | 'aria-label'>;
 
 export interface CalendarHeaderProps
-  extends Pick<React.HTMLAttributes<HTMLDivElement>, "className"> {
+  extends Pick<React.HTMLAttributes<HTMLDivElement>, 'className'> {
   viewDate: Date;
   prevMonth?: boolean;
   nextMonth?: boolean;
@@ -53,20 +53,20 @@ export const CalendarHeader = ({
   className,
   prevMonthProps = {},
   nextMonthProps = {},
-  prevMonthAriaLabel = "Предыдущий месяц",
-  nextMonthAriaLabel = "Следующий месяц",
-  changeMonthAriaLabel = "Изменить месяц",
-  changeYearAriaLabel = "Изменить год",
+  prevMonthAriaLabel = 'Предыдущий месяц',
+  nextMonthAriaLabel = 'Следующий месяц',
+  changeMonthAriaLabel = 'Изменить месяц',
+  changeYearAriaLabel = 'Изменить год',
   prevMonthIcon = (
     <Icon20ChevronLeftOutline
-      className={styles["CalendarHeader__nav-icon--accent"]}
+      className={styles['CalendarHeader__nav-icon--accent']}
       width={30}
       height={30}
     />
   ),
   nextMonthIcon = (
     <Icon20ChevronRightOutline
-      className={styles["CalendarHeader__nav-icon--accent"]}
+      className={styles['CalendarHeader__nav-icon--accent']}
       width={30}
       height={30}
     />
@@ -76,21 +76,21 @@ export const CalendarHeader = ({
   const onMonthsChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>
       onChange(setMonth(viewDate, Number(event.target.value))),
-    [onChange, viewDate]
+    [onChange, viewDate],
   );
   const onYearChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>
       onChange(setYear(viewDate, Number(event.target.value))),
-    [onChange, viewDate]
+    [onChange, viewDate],
   );
 
   const months = React.useMemo(
     () =>
       getMonths(locale).map(({ value, label }) => ({
         value,
-        label: <span className={styles["CalendarHeader__month"]}>{label}</span>,
+        label: <span className={styles['CalendarHeader__month']}>{label}</span>,
       })),
-    [locale]
+    [locale],
   );
 
   const currentYear = viewDate.getFullYear();
@@ -98,29 +98,25 @@ export const CalendarHeader = ({
   const years = React.useMemo(() => getYears(currentYear, 100), [currentYear]);
 
   const formatter = new Intl.DateTimeFormat(locale, {
-    year: "numeric",
-    month: "long",
+    year: 'numeric',
+    month: 'long',
   });
 
-  const { className: prevMonthClassName, ...restPrevMonthProps } =
-    prevMonthProps;
-  const { className: nextMonthClassName, ...restNextMonthProps } =
-    nextMonthProps;
+  const { className: prevMonthClassName, ...restPrevMonthProps } = prevMonthProps;
+  const { className: nextMonthClassName, ...restNextMonthProps } = nextMonthProps;
 
   return (
-    <div className={classNamesString(styles["CalendarHeader"], className)}>
+    <div className={classNamesString(styles['CalendarHeader'], className)}>
       {prevMonth && (
         <AdaptivityProvider sizeX={SizeType.REGULAR}>
           <Tappable
             className={classNamesString(
-              styles["CalendarHeader__nav-icon"],
-              styles["CalendarHeader__nav-icon-prev"],
-              prevMonthClassName
+              styles['CalendarHeader__nav-icon'],
+              styles['CalendarHeader__nav-icon-prev'],
+              prevMonthClassName,
             )}
             onClick={onPrevMonth}
-            aria-label={`${prevMonthAriaLabel}, ${formatter.format(
-              subMonths(viewDate, 1)
-            )}`}
+            aria-label={`${prevMonthAriaLabel}, ${formatter.format(subMonths(viewDate, 1))}`}
             {...restPrevMonthProps}
           >
             {prevMonthIcon}
@@ -128,22 +124,22 @@ export const CalendarHeader = ({
         </AdaptivityProvider>
       )}
       {disablePickers ? (
-        <Paragraph className={styles["CalendarHeader__pickers"]} weight="2">
-          <span className={styles["CalendarHeader__month"]}>
+        <Paragraph className={styles['CalendarHeader__pickers']} weight="2">
+          <span className={styles['CalendarHeader__month']}>
             {new Intl.DateTimeFormat(locale, {
-              month: "long",
+              month: 'long',
             }).format(viewDate)}
           </span>
           &nbsp;
           {new Intl.DateTimeFormat(locale, {
-            year: "numeric",
+            year: 'numeric',
           }).format(viewDate)}
         </Paragraph>
       ) : (
         <AdaptivityProvider sizeY={SizeType.COMPACT}>
-          <div className={styles["CalendarHeader__pickers"]}>
+          <div className={styles['CalendarHeader__pickers']}>
             <CustomSelect
-              className={styles["CalendarHeader__picker"]}
+              className={styles['CalendarHeader__picker']}
               value={viewDate.getMonth()}
               options={months}
               dropdownOffsetDistance={4}
@@ -155,7 +151,7 @@ export const CalendarHeader = ({
               aria-label={changeMonthAriaLabel}
             />
             <CustomSelect
-              className={styles["CalendarHeader__picker"]}
+              className={styles['CalendarHeader__picker']}
               value={viewDate.getFullYear()}
               options={years}
               dropdownOffsetDistance={4}
@@ -173,14 +169,12 @@ export const CalendarHeader = ({
         <AdaptivityProvider sizeX={SizeType.REGULAR}>
           <Tappable
             className={classNamesString(
-              styles["CalendarHeader__nav-icon"],
-              styles["CalendarHeader__nav-icon-next"],
-              nextMonthClassName
+              styles['CalendarHeader__nav-icon'],
+              styles['CalendarHeader__nav-icon-next'],
+              nextMonthClassName,
             )}
             onClick={onNextMonth}
-            aria-label={`${nextMonthAriaLabel}, ${formatter.format(
-              addMonths(viewDate, 1)
-            )}`}
+            aria-label={`${nextMonthAriaLabel}, ${formatter.format(addMonths(viewDate, 1))}`}
             {...restNextMonthProps}
           >
             {nextMonthIcon}

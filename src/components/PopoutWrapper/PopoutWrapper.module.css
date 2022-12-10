@@ -31,8 +31,7 @@
 
 .PopoutWrapper--closing .PopoutWrapper__overlay {
   opacity: 0;
-  transition: opacity var(--vkui--animation_duration_m)
-    var(--vkui--animation_easing_default);
+  transition: opacity var(--vkui--animation_duration_m) var(--vkui--animation_easing_default);
 }
 
 .PopoutWrapper--masked .PopoutWrapper__overlay {

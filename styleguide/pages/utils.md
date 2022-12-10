@@ -5,21 +5,21 @@
 либо HOC `withPlatform`.
 
 ```jsx static
-import { usePlatform, Platform } from "@vkontakte/vkui";
+import { usePlatform, Platform } from '@vkontakte/vkui';
 
 const MyComponent = () => {
   const platform = usePlatform(); // android или ios
-  return "...";
+  return '...';
 };
 ```
 
 ```jsx static
-import { withPlatform, Platform } from "@vkontakte/vkui";
+import { withPlatform, Platform } from '@vkontakte/vkui';
 
 class MyComponent extends React.Component {
   render() {
     const { platform } = this.props; // android или ios
-    return "...";
+    return '...';
   }
 }
 
@@ -35,11 +35,11 @@ withPlatform(MyComponent);
 вернет вам CSS-класс с модификатором платформы:
 
 ```jsx static
-import { usePlatform, getPlatformClassName } from "@vkontakte/vkui";
+import { usePlatform, getPlatformClassName } from '@vkontakte/vkui';
 
 const MyButton = ({ children }) => {
   const platform = usePlatform();
-  const platformClassName = getPlatformClassName("MyButton", platform); // MyButton--ios'
+  const platformClassName = getPlatformClassName('MyButton', platform); // MyButton--ios'
   return <button className={platformClassName}>{children}</button>;
 };
 ```
@@ -49,9 +49,9 @@ const MyButton = ({ children }) => {
 Используется для определения цвета в [Avatar](#!/Avatar) по переданному идентификатору объекта.
 
 ```jsx static
-import { calcInitialsAvatarColor } from "@vkontakte/vkui";
+import { calcInitialsAvatarColor } from '@vkontakte/vkui';
 
-const conversation = { peer: { id: 480 }, name: "Библиотека компонентов VKUI" };
+const conversation = { peer: { id: 480 }, name: 'Библиотека компонентов VKUI' };
 
 <Avatar size={48} gradientColor={calcInitialsAvatarColor(conversation.peer.id)}>
   {conversation.name[0]}

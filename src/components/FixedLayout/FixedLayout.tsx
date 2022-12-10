@@ -1,19 +1,19 @@
-import * as React from "react";
-import { Platform } from "../../lib/platform";
-import { classNamesString } from "../../lib/classNames";
-import { HasRef, HasRootRef } from "../../types";
-import { SplitColContext } from "../SplitCol/SplitCol";
-import { TooltipContainer } from "../Tooltip/TooltipContainer";
-import { useDOM } from "../../lib/dom";
-import { useGlobalEventListener } from "../../hooks/useGlobalEventListener";
-import { usePlatform } from "../../hooks/usePlatform";
-import styles from "./FixedLayout.module.css";
+import * as React from 'react';
+import { Platform } from '../../lib/platform';
+import { classNamesString } from '../../lib/classNames';
+import { HasRef, HasRootRef } from '../../types';
+import { SplitColContext } from '../SplitCol/SplitCol';
+import { TooltipContainer } from '../Tooltip/TooltipContainer';
+import { useDOM } from '../../lib/dom';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { usePlatform } from '../../hooks/usePlatform';
+import styles from './FixedLayout.module.css';
 
 export interface FixedLayoutProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement>,
     HasRef<HTMLDivElement> {
-  vertical?: "top" | "bottom";
+  vertical?: 'top' | 'bottom';
   /**
    * Это свойство определяет, будет ли фон компонента окрашен в цвет фона контента.
    * Это часто необходимо для фиксированных кнопок в нижней части экрана.
@@ -22,7 +22,7 @@ export interface FixedLayoutProps
 }
 
 export interface FixedLayoutState {
-  position: "absolute" | null;
+  position: 'absolute' | null;
   top: number;
   bottom: number;
   width: string;
@@ -54,14 +54,14 @@ export const FixedLayout = ({
           colRef.current.clientWidth -
           parseFloat(computedStyle.paddingLeft) -
           parseFloat(computedStyle.paddingRight)
-        }px`
+        }px`,
       );
     } else {
       setWidth(undefined);
     }
   };
   React.useEffect(doResize, [colRef, platform]);
-  useGlobalEventListener(window, "resize", doResize);
+  useGlobalEventListener(window, 'resize', doResize);
 
   return (
     <TooltipContainer
@@ -69,15 +69,15 @@ export const FixedLayout = ({
       fixed
       ref={getRootRef}
       className={classNamesString(
-        styles["FixedLayout"],
-        platform === Platform.IOS && styles["FixedLayout--ios"],
-        filled && styles["FixedLayout--filled"],
+        styles['FixedLayout'],
+        platform === Platform.IOS && styles['FixedLayout--ios'],
+        filled && styles['FixedLayout--filled'],
         vertical && styles[`FixedLayout--vertical-${vertical}`],
-        className
+        className,
       )}
       style={{ ...style, width }}
     >
-      <div className={styles["FixedLayout__in"]} ref={getRef}>
+      <div className={styles['FixedLayout__in']} ref={getRef}>
         {children}
       </div>
     </TooltipContainer>

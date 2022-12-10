@@ -4,7 +4,7 @@
 const ExampleBase = ({ formItemStatus }) => {
   const [before, setBefore] = useState(undefined);
   const [after, setAfter] = useState(undefined);
-  const [align, setAlign] = useState("left");
+  const [align, setAlign] = useState('left');
   const [disabled, setDisabled] = useState(false);
 
   return (
@@ -14,9 +14,9 @@ const ExampleBase = ({ formItemStatus }) => {
           value={align}
           onChange={(e) => setAlign(e.target.value)}
           options={[
-            { label: "left", value: "left" },
-            { label: "center", value: "center" },
-            { label: "right", value: "right" },
+            { label: 'left', value: 'left' },
+            { label: 'center', value: 'center' },
+            { label: 'right', value: 'right' },
           ]}
         />
       </FormItem>
@@ -24,9 +24,7 @@ const ExampleBase = ({ formItemStatus }) => {
         description="Icon24WalletOutline for example"
         checked={!!before}
         onChange={(e) =>
-          e.target.checked
-            ? setBefore(<Icon24WalletOutline />)
-            : setBefore(undefined)
+          e.target.checked ? setBefore(<Icon24WalletOutline />) : setBefore(undefined)
         }
       >
         before
@@ -34,16 +32,11 @@ const ExampleBase = ({ formItemStatus }) => {
       <Checkbox
         description="Icon20User for example"
         checked={!!after}
-        onChange={(e) =>
-          e.target.checked ? setAfter(<Icon20User />) : setAfter(undefined)
-        }
+        onChange={(e) => (e.target.checked ? setAfter(<Icon20User />) : setAfter(undefined))}
       >
         after
       </Checkbox>
-      <Checkbox
-        checked={disabled}
-        onChange={(e) => setDisabled(e.target.checked)}
-      >
+      <Checkbox checked={disabled} onChange={(e) => setDisabled(e.target.checked)}>
         disabled
       </Checkbox>
       <FormItem top="📝 Пример" status={formItemStatus}>
@@ -62,7 +55,7 @@ const ExampleBase = ({ formItemStatus }) => {
 
 const ExampleWithIcon = ({ formItemStatus }) => {
   const textInput = React.createRef();
-  const clear = () => (textInput.current.value = "");
+  const clear = () => (textInput.current.value = '');
 
   return (
     <FormLayout>
@@ -73,11 +66,7 @@ const ExampleWithIcon = ({ formItemStatus }) => {
           placeholder="Ну ведь брокколи это вкусно и полезно 😢"
           defaultValue="Брокколи 🥦"
           after={
-            <IconButton
-              hoverMode="opacity"
-              aria-label="Очистить поле"
-              onClick={clear}
-            >
+            <IconButton hoverMode="opacity" aria-label="Очистить поле" onClick={clear}>
               <Icon16Clear />
             </IconButton>
           }
@@ -88,8 +77,8 @@ const ExampleWithIcon = ({ formItemStatus }) => {
 };
 
 const Example = () => {
-  const [sizeY, setSizeY] = useState("regular");
-  const [formItemStatus, setFormItemStatus] = useState("default");
+  const [sizeY, setSizeY] = useState('regular');
+  const [formItemStatus, setFormItemStatus] = useState('default');
 
   return (
     <AdaptivityProvider sizeY={sizeY}>
@@ -108,8 +97,8 @@ const Example = () => {
               value={sizeY}
               onChange={(e) => setSizeY(e.target.value)}
               options={[
-                { label: "compact", value: "compact" },
-                { label: "regular", value: "regular" },
+                { label: 'compact', value: 'compact' },
+                { label: 'regular', value: 'regular' },
               ]}
             />
           </FormItem>
@@ -118,9 +107,9 @@ const Example = () => {
               value={formItemStatus}
               onChange={(e) => setFormItemStatus(e.target.value)}
               options={[
-                { label: "default", value: "default" },
-                { label: "error", value: "error" },
-                { label: "valid", value: "valid" },
+                { label: 'default', value: 'default' },
+                { label: 'error', value: 'error' },
+                { label: 'valid', value: 'valid' },
               ]}
             />
           </FormItem>
@@ -131,9 +120,9 @@ const Example = () => {
 };
 
 const rootContainerStyles = {
-  display: "flex",
-  flexDirection: "row-reverse",
-  flexWrap: "wrap",
+  display: 'flex',
+  flexDirection: 'row-reverse',
+  flexWrap: 'wrap',
 };
 
 const demoContainerStyles = {
@@ -143,7 +132,7 @@ const demoContainerStyles = {
 
 const propsContainerStyles = {
   minWidth: 200,
-  marginRight: "auto",
+  marginRight: 'auto',
 };
 
 <Example />;

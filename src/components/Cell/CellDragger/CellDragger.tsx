@@ -1,12 +1,12 @@
-import * as React from "react";
-import { Icon24Reorder, Icon24ReorderIos } from "@vkontakte/icons";
-import { getPlatformClassName } from "../../../helpers/getPlatformClassName";
-import { usePlatform } from "../../../hooks/usePlatform";
-import { classNamesString } from "../../../lib/classNames";
-import { Platform } from "../../../lib/platform";
-import { Touch } from "../../Touch/Touch";
-import { DraggableProps } from "../useDraggable";
-import styles from "./CellDragger.module.css";
+import * as React from 'react';
+import { Icon24Reorder, Icon24ReorderIos } from '@vkontakte/icons';
+import { getPlatformClassName } from '../../../helpers/getPlatformClassName';
+import { usePlatform } from '../../../hooks/usePlatform';
+import { classNamesString } from '../../../lib/classNames';
+import { Platform } from '../../../lib/platform';
+import { Touch } from '../../Touch/Touch';
+import { DraggableProps } from '../useDraggable';
+import styles from './CellDragger.module.css';
 
 type CellDraggerProps = DraggableProps & React.HTMLAttributes<HTMLElement>;
 
@@ -26,9 +26,9 @@ export const CellDragger = ({
   return (
     <Touch
       className={classNamesString(
-        styles["CellDragger"],
-        getPlatformClassName(styles["CellDragger"], platform),
-        className
+        styles['CellDragger'],
+        getPlatformClassName(styles['CellDragger'], platform),
+        className,
       )}
       onStart={onDragStart}
       onMoveY={onDragMove}

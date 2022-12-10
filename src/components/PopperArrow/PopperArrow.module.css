@@ -1,34 +1,34 @@
 .PopperArrow__in {
-  content: "";
+  content: '';
   display: block;
   width: 20px;
   height: 8px;
 }
 
-[data-popper-placement^="bottom"] .PopperArrow {
+[data-popper-placement^='bottom'] .PopperArrow {
   bottom: 100%;
 }
 
-[data-popper-placement^="top"] .PopperArrow {
+[data-popper-placement^='top'] .PopperArrow {
   top: 100%;
 }
 
-[data-popper-placement^="top"] .PopperArrow__in {
+[data-popper-placement^='top'] .PopperArrow__in {
   transform: rotate(180deg);
 }
 
-[data-popper-placement^="left"] .PopperArrow {
+[data-popper-placement^='left'] .PopperArrow {
   left: calc(100% - 6px);
 }
 
-[data-popper-placement^="left"] .PopperArrow__in {
+[data-popper-placement^='left'] .PopperArrow__in {
   transform: rotate(90deg);
 }
 
-[data-popper-placement^="right"] .PopperArrow {
+[data-popper-placement^='right'] .PopperArrow {
   right: calc(100% - 6px);
 }
 
-[data-popper-placement^="right"] .PopperArrow__in {
+[data-popper-placement^='right'] .PopperArrow__in {
   transform: rotate(270deg);
 }

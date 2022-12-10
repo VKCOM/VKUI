@@ -1,41 +1,41 @@
-import * as React from "react";
-import { Search } from "./Search";
-import { Platform } from "../../lib/platform";
+import * as React from 'react';
+import { Search } from './Search';
+import { Platform } from '../../lib/platform';
 import {
   screenshot,
   mount,
   describeScreenshotFuzz,
   customSnapshotIdentifier,
   APPEARANCE,
-} from "../../testing/e2e";
-import { Icon16Add } from "@vkontakte/icons";
-import { AppRoot } from "../AppRoot/AppRoot";
-import { ConfigProvider } from "../ConfigProvider/ConfigProvider";
-import { AdaptivityProvider } from "../AdaptivityProvider/AdaptivityProvider";
-import { BREAKPOINTS, SizeType } from "../../lib/adaptivity";
+} from '../../testing/e2e';
+import { Icon16Add } from '@vkontakte/icons';
+import { AppRoot } from '../AppRoot/AppRoot';
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import { BREAKPOINTS, SizeType } from '../../lib/adaptivity';
 
-describe("Search", () => {
+describe('Search', () => {
   describeScreenshotFuzz(
-    (p) => <Search style={{ maxWidth: "320px" }} {...p} />,
+    (p) => <Search style={{ maxWidth: '320px' }} {...p} />,
     [
       {
-        value: [undefined, "value"],
+        value: [undefined, 'value'],
         icon: [undefined, <Icon16Add key="" />],
       },
       {
-        value: ["value"],
+        value: ['value'],
         icon: [<Icon16Add key="" />],
-        $adaptivity: "y",
+        $adaptivity: 'y',
       },
-    ]
+    ],
   );
-  it("shows after when focused on iOS", async () => {
+  it('shows after when focused on iOS', async () => {
     await mount(
       <ConfigProvider platform={Platform.IOS} appearance={APPEARANCE}>
         <div
           style={{
-            height: "auto",
-            position: "absolute",
+            height: 'auto',
+            position: 'absolute',
             width: BREAKPOINTS.MOBILE,
           }}
         >
@@ -45,9 +45,9 @@ describe("Search", () => {
             </AdaptivityProvider>
           </AppRoot>
         </div>
-      </ConfigProvider>
+      </ConfigProvider>,
     );
-    await page.focus("input");
+    await page.focus('input');
     expect(await screenshot()).toMatchImageSnapshot({
       customSnapshotIdentifier,
     });

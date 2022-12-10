@@ -1,6 +1,6 @@
-version: "3.8"
+version: '3.8'
 services:
   vkui-chrome:
     image: browserless/chrome:latest
     ports:
-      - "9001:3000"
+      - '9001:3000'

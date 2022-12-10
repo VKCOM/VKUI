@@ -1,5 +1,5 @@
-import * as React from "react";
-import { setRef } from "../lib/utils";
+import * as React from 'react';
+import { setRef } from '../lib/utils';
 
 export function useExternRef<T>(
   ...externRefs: Array<React.Ref<T> | undefined | false>
@@ -21,6 +21,6 @@ export function useExternRef<T>(
       },
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    externRefs
+    externRefs,
   );
 }

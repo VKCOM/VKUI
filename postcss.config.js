@@ -1,23 +1,19 @@
-const path = require("path");
-const cssCustomProperties = require("postcss-custom-properties");
-const restructureVariable = require("./packages/postcss-restructure-variable");
-const cssImport = require("postcss-import");
-const autoprefixer = require("autoprefixer");
-const cssModules = require("postcss-modules");
-const cssnano = require("cssnano");
-const checkKeyframes = require("./packages/postcss-check-keyframes");
-const {
-  generateScopedName,
-  cssCustomPropertiesPaths,
-  getCustomMedias,
-} = require("./shared");
-const postcssCustomMedia = require("postcss-custom-media");
+const path = require('path');
+const cssCustomProperties = require('postcss-custom-properties');
+const restructureVariable = require('./packages/postcss-restructure-variable');
+const cssImport = require('postcss-import');
+const autoprefixer = require('autoprefixer');
+const cssModules = require('postcss-modules');
+const cssnano = require('cssnano');
+const checkKeyframes = require('./packages/postcss-check-keyframes');
+const { generateScopedName, cssCustomPropertiesPaths, getCustomMedias } = require('./shared');
+const postcssCustomMedia = require('postcss-custom-media');
 
 module.exports = (ctx) => {
   const plugins = [
     cssImport(),
     checkKeyframes({
-      importFrom: path.join(__dirname, "src/styles/animations.css"),
+      importFrom: path.join(__dirname, 'src/styles/animations.css'),
     }),
     cssCustomProperties({
       importFrom: cssCustomPropertiesPaths,
@@ -26,34 +22,32 @@ module.exports = (ctx) => {
     }),
     restructureVariable(
       [
-        "./node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css",
-        "./node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css",
-        "./node_modules/@vkontakte/vkui-tokens/themes/vkBaseDark/cssVars/declarations/onlyVariablesLocal.css",
-        "./node_modules/@vkontakte/vkui-tokens/themes/vkIOS/cssVars/declarations/onlyVariablesLocal.css",
-        "./node_modules/@vkontakte/vkui-tokens/themes/vkIOSDark/cssVars/declarations/onlyVariablesLocal.css",
-        "./node_modules/@vkontakte/vkui-tokens/themes/vkCom/cssVars/declarations/onlyVariablesLocal.css",
-        "./node_modules/@vkontakte/vkui-tokens/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css",
-      ].map((pathSegment) => path.resolve(pathSegment))
+        './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css',
+        './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css',
+        './node_modules/@vkontakte/vkui-tokens/themes/vkBaseDark/cssVars/declarations/onlyVariablesLocal.css',
+        './node_modules/@vkontakte/vkui-tokens/themes/vkIOS/cssVars/declarations/onlyVariablesLocal.css',
+        './node_modules/@vkontakte/vkui-tokens/themes/vkIOSDark/cssVars/declarations/onlyVariablesLocal.css',
+        './node_modules/@vkontakte/vkui-tokens/themes/vkCom/cssVars/declarations/onlyVariablesLocal.css',
+        './node_modules/@vkontakte/vkui-tokens/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css',
+      ].map((pathSegment) => path.resolve(pathSegment)),
     ),
     autoprefixer(),
     cssModules({
-      generateScopedName: ctx.options.isSandbox
-        ? (name) => name
-        : generateScopedName,
+      generateScopedName: ctx.options.isSandbox ? (name) => name : generateScopedName,
       getJSON: () => void 0,
     }),
     postcssCustomMedia({
       importFrom: getCustomMedias,
       // см. CONTRIBUTING.md
-      exportTo: path.resolve("./src/styles/customMedias.generated.css"),
+      exportTo: path.resolve('./src/styles/customMedias.generated.css'),
     }),
   ];
 
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === 'production') {
     plugins.push(
       cssnano({
         preset: [
-          "default",
+          'default',
           {
             // Отключаем из-за того, что `postcss-calc` меняет порядок операндов при умножении -1 на переменную
             // Подробности здесь https://github.com/VKCOM/VKUI/issues/2963
@@ -64,7 +58,7 @@ module.exports = (ctx) => {
             discardEmpty: !ctx.options.isSandbox,
           },
         ],
-      })
+      }),
     );
   }
 

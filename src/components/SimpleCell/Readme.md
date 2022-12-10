@@ -1,6 +1,6 @@
 ```jsx
 const Example = () => {
-  const [activePanel, setActivePanel] = React.useState("list");
+  const [activePanel, setActivePanel] = React.useState('list');
 
   return (
     <View activePanel={activePanel}>
@@ -9,21 +9,21 @@ const Example = () => {
         <Group>
           <Header mode="secondary">Меню</Header>
           <SimpleCell
-            onClick={() => setActivePanel("nothing")}
+            onClick={() => setActivePanel('nothing')}
             expandable
             before={<Icon28UserOutline />}
           >
             Аккаунт
           </SimpleCell>
           <SimpleCell
-            onClick={() => setActivePanel("nothing")}
+            onClick={() => setActivePanel('nothing')}
             expandable
             before={<Icon28PaletteOutline />}
           >
             Внешний вид
           </SimpleCell>
           <SimpleCell
-            onClick={() => setActivePanel("nothing")}
+            onClick={() => setActivePanel('nothing')}
             expandable
             before={<Icon28SettingsOutline />}
           >
@@ -41,15 +41,11 @@ const Example = () => {
         </Group>
         <Group>
           <Header mode="secondary">Настройки системы</Header>
-          <SimpleCell
-            onClick={() => setActivePanel("nothing")}
-            expandable
-            indicator="Русский"
-          >
+          <SimpleCell onClick={() => setActivePanel('nothing')} expandable indicator="Русский">
             Язык
           </SimpleCell>
           <SimpleCell
-            onClick={() => setActivePanel("nothing")}
+            onClick={() => setActivePanel('nothing')}
             expandable
             indicator="При использовании"
           >
@@ -59,7 +55,7 @@ const Example = () => {
         <Group>
           <Header mode="secondary">Список диалогов</Header>
           <SimpleCell
-            before={<Avatar size={40} src={getAvatarUrl("user_xyz")} />}
+            before={<Avatar size={40} src={getAvatarUrl('user_xyz')} />}
             after={
               <IconButton>
                 <Icon28MessageOutline />
@@ -69,7 +65,7 @@ const Example = () => {
             Игорь Фёдоров
           </SimpleCell>
           <SimpleCell
-            before={<Avatar size={40} src={getAvatarUrl("user_arthurstam")} />}
+            before={<Avatar size={40} src={getAvatarUrl('user_arthurstam')} />}
             after={
               <IconButton>
                 <Icon28MessageOutline />
@@ -82,7 +78,7 @@ const Example = () => {
         <Group>
           <Header mode="secondary">Список друзей</Header>
           <SimpleCell
-            before={<Avatar size={48} src={getAvatarUrl("user_xyz")} />}
+            before={<Avatar size={48} src={getAvatarUrl('user_xyz')} />}
             badgeAfterTitle={<Icon12Verified />}
             after={
               <IconButton>
@@ -94,7 +90,7 @@ const Example = () => {
             Игорь Фёдоров
           </SimpleCell>
           <SimpleCell
-            before={<Avatar size={48} src={getAvatarUrl("user_arthurstam")} />}
+            before={<Avatar size={48} src={getAvatarUrl('user_arthurstam')} />}
             after={
               <IconButton>
                 <Icon28MessageOutline />
@@ -107,9 +103,7 @@ const Example = () => {
         </Group>
       </Panel>
       <Panel id="nothing">
-        <PanelHeader
-          before={<PanelHeaderBack onClick={() => setActivePanel("list")} />}
-        >
+        <PanelHeader before={<PanelHeaderBack onClick={() => setActivePanel('list')} />}>
           Ничего
         </PanelHeader>
         <Placeholder>Тут ничего нет</Placeholder>

@@ -1,6 +1,6 @@
-import { baselineComponent } from "../../testing/utils";
-import { Spinner } from "./Spinner";
+import { baselineComponent } from '../../testing/utils';
+import { Spinner } from './Spinner';
 
-describe("Spinner", () => {
+describe('Spinner', () => {
   baselineComponent(Spinner);
 });

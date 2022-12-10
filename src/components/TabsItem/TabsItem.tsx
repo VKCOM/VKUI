@@ -1,13 +1,13 @@
-import * as React from "react";
-import { Tappable } from "../Tappable/Tappable";
-import { classNamesString } from "../../lib/classNames";
-import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { TabsModeContext, TabsContextProps } from "../Tabs/Tabs";
-import { Headline } from "../Typography/Headline/Headline";
-import { Subhead } from "../Typography/Subhead/Subhead";
-import { getSizeYClassName } from "../../helpers/getSizeYClassName";
-import { warnOnce } from "../../lib/warnOnce";
-import styles from "./TabsItem.module.css";
+import * as React from 'react';
+import { Tappable } from '../Tappable/Tappable';
+import { classNamesString } from '../../lib/classNames';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { TabsModeContext, TabsContextProps } from '../Tabs/Tabs';
+import { Headline } from '../Typography/Headline/Headline';
+import { Subhead } from '../Typography/Subhead/Subhead';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { warnOnce } from '../../lib/warnOnce';
+import styles from './TabsItem.module.css';
 
 export interface TabsItemProps extends React.HTMLAttributes<HTMLElement> {
   /**
@@ -35,7 +35,7 @@ export interface TabsItemProps extends React.HTMLAttributes<HTMLElement> {
   disabled?: boolean;
 }
 
-const warn = warnOnce("TabsItem");
+const warn = warnOnce('TabsItem');
 
 /**
  * @see https://vkcom.github.io/VKUI/#/TabsItem
@@ -47,42 +47,41 @@ export const TabsItem = ({
   after,
   selected = false,
   className,
-  role = "tab",
+  role = 'tab',
   tabIndex: tabIndexProp,
   ...restProps
 }: TabsItemProps) => {
   const { sizeY } = useAdaptivity();
-  const { mode, withGaps }: TabsContextProps =
-    React.useContext(TabsModeContext);
+  const { mode, withGaps }: TabsContextProps = React.useContext(TabsModeContext);
   let statusComponent = null;
 
-  const isTabFlow = role === "tab";
+  const isTabFlow = role === 'tab';
 
   if (status) {
     statusComponent =
-      typeof status === "number" ? (
+      typeof status === 'number' ? (
         <Subhead
           Component="span"
           className={classNamesString(
-            styles["TabsItem__status"],
-            styles["TabsItem__status--count"]
+            styles['TabsItem__status'],
+            styles['TabsItem__status--count'],
           )}
           weight="2"
         >
           {status}
         </Subhead>
       ) : (
-        <span className={styles["TabsItem__status"]}>{status}</span>
+        <span className={styles['TabsItem__status']}>{status}</span>
       );
   }
 
-  if (process.env.NODE_ENV === "development" && isTabFlow) {
-    if (!restProps["aria-controls"]) {
-      warn(`Передайте в "aria-controls" id контролируемого блока`, "warn");
-    } else if (!restProps["id"]) {
+  if (process.env.NODE_ENV === 'development' && isTabFlow) {
+    if (!restProps['aria-controls']) {
+      warn(`Передайте в "aria-controls" id контролируемого блока`, 'warn');
+    } else if (!restProps['id']) {
       warn(
         `Передайте "id" компоненту для использования в "aria-labelledby" контролируемого блока`,
-        "warn"
+        'warn',
       );
     }
   }
@@ -96,38 +95,34 @@ export const TabsItem = ({
     <Tappable
       {...restProps}
       className={classNamesString(
-        styles["TabsItem"],
+        styles['TabsItem'],
         mode && styles[`TabsItem--mode-${mode}`],
-        selected && styles["TabsItem--selected"],
-        getSizeYClassName(styles["TabsItem"], sizeY),
-        withGaps && styles["TabsItem--withGaps"],
-        className
+        selected && styles['TabsItem--selected'],
+        getSizeYClassName(styles['TabsItem'], sizeY),
+        withGaps && styles['TabsItem--withGaps'],
+        className,
       )}
-      hoverMode={styles["TabsItem--hover"]}
-      activeMode={styles["TabsItem--active"]}
+      hoverMode={styles['TabsItem--hover']}
+      activeMode={styles['TabsItem--active']}
       focusVisibleMode="inside"
       hasActive={false}
       role={role}
       aria-selected={selected}
       tabIndex={tabIndex}
     >
-      {before && <div className={styles["TabsItem__before"]}>{before}</div>}
+      {before && <div className={styles['TabsItem__before']}>{before}</div>}
       <Headline
         Component="span"
-        className={styles["TabsItem__label"]}
-        level={mode === "default" ? "1" : "2"}
+        className={styles['TabsItem__label']}
+        level={mode === 'default' ? '1' : '2'}
         weight="2"
       >
         {children}
       </Headline>
       {statusComponent}
-      {after && <div className={styles["TabsItem__after"]}>{after}</div>}
-      {mode === "default" && (
-        <div
-          className={styles["TabsItem__underline"]}
-          aria-hidden
-          data-selected={selected}
-        />
+      {after && <div className={styles['TabsItem__after']}>{after}</div>}
+      {mode === 'default' && (
+        <div className={styles['TabsItem__underline']} aria-hidden data-selected={selected} />
       )}
     </Tappable>
   );
