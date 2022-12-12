@@ -42,7 +42,7 @@ jobs:
           git config --local user.name "GitHub Action"
       - run: node ./.github/gitflow/patch.js
         env:
-          FORKED: github.event.pull_request.base.repo.id != github.event.pull_request.head.repo.id
+          FORKED: ${{ github.event.pull_request.base.repo.id != github.event.pull_request.head.repo.id }}
           INPUT_GITHUB_PULL_NUMBER: ${{ github.event.number }}
           INPUT_GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
