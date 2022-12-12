@@ -1,4 +1,4 @@
-const { execSync } = require("child_process");
+const { execSync } = require('child_process');
 
 module.exports.stableBranchName = (semVer) => {
   return `${semVer.major}.${semVer.minor}-stable`;
@@ -15,14 +15,14 @@ module.exports.GhApi = class GhApi {
   /**
    * @param  {string} endpoint
    */
-  request(endpoint, headers = { Accept: "application/vnd.github.v3+json" }) {
+  request(endpoint, headers = { Accept: 'application/vnd.github.v3+json' }) {
     const headerFlags = Object.keys(headers)
-      .map((header) => "-H " + JSON.stringify(`${header}: ${headers[header]}`))
-      .join(" ");
+      .map((header) => '-H ' + JSON.stringify(`${header}: ${headers[header]}`))
+      .join(' ');
 
     const command = `gh api ${headerFlags} ${endpoint}`;
 
-    return JSON.parse(execSync(command, { encoding: "utf-8" }));
+    return JSON.parse(execSync(command, { encoding: 'utf-8' }));
   }
 
   /**

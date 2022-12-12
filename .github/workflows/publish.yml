@@ -1,13 +1,13 @@
-name: "Publish"
+name: 'Publish'
 
 on:
   workflow_dispatch:
     inputs:
       type:
-        description: "version type:"
+        description: 'version type:'
         required: true
         type: choice
-        default: "minor"
+        default: 'minor'
         options:
           - patch
           - minor
@@ -30,9 +30,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "yarn"
+          cache: 'yarn'
           always-auth: true
-          registry-url: "https://registry.npmjs.org"
+          registry-url: 'https://registry.npmjs.org'
 
       - run: yarn install --frozen-lockfile --ignore-scripts
 

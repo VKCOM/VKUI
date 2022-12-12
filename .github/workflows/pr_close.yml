@@ -1,4 +1,4 @@
-name: "Close PR"
+name: 'Close PR'
 
 on:
   pull_request_target:
@@ -17,7 +17,7 @@ jobs:
       - name: Unpublish styleguide
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Remove PR ${{ github.event.pull_request.number }}"
+          commit_message: 'Remove PR ${{ github.event.pull_request.number }}'
           branch: gh-pages
 
   patch:

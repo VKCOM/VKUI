@@ -1,10 +1,10 @@
-name: "Publish token-translator"
+name: 'Publish token-translator'
 
 on:
   workflow_dispatch:
     inputs:
       version:
-        description: "token-translator version (without v)"
+        description: 'token-translator version (without v)'
         required: true
 
 run-name: Publish token-translator@${{ inputs.version }}
@@ -24,9 +24,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "yarn"
+          cache: 'yarn'
           always-auth: true
-          registry-url: "https://registry.npmjs.org"
+          registry-url: 'https://registry.npmjs.org'
 
       - run: yarn install --frozen-lockfile
 

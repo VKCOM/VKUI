@@ -147,11 +147,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "src/**/*.{test,spec,e2e}.{ts,tsx}",
-        "e2e/**/*",
-        "src/testing/**/*"
-      ],
+      "files": ["src/**/*.{test,spec,e2e}.{ts,tsx}", "e2e/**/*", "src/testing/**/*"],
       "env": {
         "jest": true
       },

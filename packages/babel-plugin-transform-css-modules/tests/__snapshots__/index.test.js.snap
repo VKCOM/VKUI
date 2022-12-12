@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`babel-plugin-transform-css-modules default 1`] = `
-"import * as React from \\"react\\";
-import { classNames } from \\"@vkontakte/vkjs\\";
+"import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
 var headerLevelClassName = {
   1: \\"libComponent__header--level-1\\",
   2: \\"libComponent__header--level-2\\"
@@ -10,16 +10,16 @@ var headerLevelClassName = {
 export var Component = _ref => {
   var {
     headerLevel = 1,
-    mode = \\"plain\\",
-    appearance = \\"light\\",
-    gradientColor = \\"blue\\",
+    mode = 'plain',
+    appearance = 'light',
+    gradientColor = 'blue',
     platform,
     disabled,
     children
   } = _ref;
   var headerClassName = classNames(\\"libComponent__header\\", headerLevelClassName[headerLevel]);
   return /*#__PURE__*/React.createElement(\\"div\\", {
-    className: classNames(\\"libComponent\\", disabled && \\"libComponent--disabled\\", platform === \\"ios\\" && \\"libComponent--ios\\", styles[\\"Component--mode-\\".concat(mode)], styles[\\"Component--gradient-\\".concat(appearance, \\"-\\").concat(gradientColor)])
+    className: classNames(\\"libComponent\\", disabled && \\"libComponent--disabled\\", platform === 'ios' && \\"libComponent--ios\\", styles[\\"Component--mode-\\".concat(mode)], styles[\\"Component--gradient-\\".concat(appearance, \\"-\\").concat(gradientColor)])
   }, /*#__PURE__*/React.createElement(\\"h2\\", {
     className: headerClassName
   }, children));
@@ -37,8 +37,8 @@ var styles = {
 `;
 
 exports[`babel-plugin-transform-css-modules with \`keep\` option 1`] = `
-"import * as React from \\"react\\";
-import { classNames } from \\"@vkontakte/vkjs\\";
+"import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
 import \\"./Component.module.css\\";
 import \\"./ComponentIOS.module.css\\";
 var headerLevelClassName = {
@@ -48,16 +48,16 @@ var headerLevelClassName = {
 export var Component = _ref => {
   var {
     headerLevel = 1,
-    mode = \\"plain\\",
-    appearance = \\"light\\",
-    gradientColor = \\"blue\\",
+    mode = 'plain',
+    appearance = 'light',
+    gradientColor = 'blue',
     platform,
     disabled,
     children
   } = _ref;
   var headerClassName = classNames(\\"libComponent__header\\", headerLevelClassName[headerLevel]);
   return /*#__PURE__*/React.createElement(\\"div\\", {
-    className: classNames(\\"libComponent\\", disabled && \\"libComponent--disabled\\", platform === \\"ios\\" && \\"libComponent--ios\\", styles[\\"Component--mode-\\".concat(mode)], styles[\\"Component--gradient-\\".concat(appearance, \\"-\\").concat(gradientColor)])
+    className: classNames(\\"libComponent\\", disabled && \\"libComponent--disabled\\", platform === 'ios' && \\"libComponent--ios\\", styles[\\"Component--mode-\\".concat(mode)], styles[\\"Component--gradient-\\".concat(appearance, \\"-\\").concat(gradientColor)])
   }, /*#__PURE__*/React.createElement(\\"h2\\", {
     className: headerClassName
   }, children));
