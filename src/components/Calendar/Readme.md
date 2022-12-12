@@ -7,7 +7,7 @@
 import { format } from "../../lib/date";
 
 const Example = () => {
-  const [value, setValue] = useState(new Date());
+  const [value, setValue] = useState(() => new Date());
   const [enableTime, setEnableTime] = useState(false);
   const [disablePast, setDisablePast] = useState(false);
   const [disableFuture, setDisableFuture] = useState(false);

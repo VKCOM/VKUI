@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AppRoot } from "../AppRoot/AppRoot";
-import { Alert, AlertProps, AlertAction } from "./Alert";
+import { Alert, AlertProps, AlertActionInterface } from "./Alert";
 import { describeScreenshotFuzz } from "../../testing/e2e";
 import { Platform } from "../../lib/platform";
 import { HasChildren } from "../../types";
@@ -20,9 +20,12 @@ describe("Alert", () => {
       {...p}
     />
   );
-  const cancel: AlertAction = { mode: "cancel", title: "Cancel" };
-  const action: AlertAction = { mode: "default", title: "Action" };
-  const destroy: AlertAction = { mode: "destructive", title: "Destroy" };
+  const cancel: AlertActionInterface = { mode: "cancel", title: "Cancel" };
+  const action: AlertActionInterface = { mode: "default", title: "Action" };
+  const destroy: AlertActionInterface = {
+    mode: "destructive",
+    title: "Destroy",
+  };
   describeScreenshotFuzz(
     BaseAlert,
     [
