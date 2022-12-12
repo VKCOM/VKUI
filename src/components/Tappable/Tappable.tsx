@@ -7,7 +7,7 @@ import { classNamesString } from '../../lib/classNames';
 import { Platform } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY } from '../../lib/touch';
-import { HasComponent, HasRootRef } from '../../types';
+import { AnchorHTMLAttributesOnly, HasComponent, HasRootRef } from '../../types';
 import { shouldTriggerClickOnEnterOrSpace } from '../../lib/accessibility';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { FocusVisible, FocusVisibleMode } from '../FocusVisible/FocusVisible';
@@ -42,7 +42,8 @@ export type TappableElementProps = Omit<
   | 'onMouseMove'
   | 'onMouseUp'
   | 'onMouseLeave'
->;
+> &
+  AnchorHTMLAttributesOnly; // В AllHTMLAttributes не хватает типов для ссылок
 
 export interface TappableProps
   extends TappableElementProps,

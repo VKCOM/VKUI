@@ -15,11 +15,12 @@ import { useScrollLock } from '../AppRoot/ScrollContext';
 import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { AnchorHTMLAttributesOnly } from '../../types';
 import styles from './Alert.module.css';
 
-export type AlertActionInterface = AlertAction & React.AnchorHTMLAttributes<HTMLElement>;
-
-export interface AlertAction extends Pick<ButtonProps, 'Component' | 'href'> {
+export interface AlertActionInterface
+  extends Pick<ButtonProps, 'Component'>,
+    AnchorHTMLAttributesOnly {
   title: string;
   action?: VoidFunction;
   autoClose?: boolean;
@@ -28,7 +29,7 @@ export interface AlertAction extends Pick<ButtonProps, 'Component' | 'href'> {
 
 export interface AlertProps extends React.HTMLAttributes<HTMLElement> {
   actionsLayout?: 'vertical' | 'horizontal';
-  actions?: AlertAction[];
+  actions?: AlertActionInterface[];
   header?: React.ReactNode;
   text?: React.ReactNode;
   onClose: VoidFunction;
@@ -80,20 +81,24 @@ const AlertAction = ({ action, onItemClick, ...restProps }: AlertActionProps) =>
   const handleItemClick = React.useCallback(() => onItemClick(action), [onItemClick, action]);
 
   if (platform === Platform.IOS) {
-    const { Component = 'button' } = action;
+    const {
+      Component = 'button',
+      title,
+      action: actionProp,
+      autoClose,
+      mode,
+      ...restActionProps
+    } = action;
+
     return (
       <Tappable
-        Component={action.href ? 'a' : Component}
-        className={classNamesString(
-          styles['Alert__action'],
-          styles[`Alert__action--mode-${action.mode}`],
-        )}
+        Component={restActionProps.href ? 'a' : Component}
+        className={classNamesString(styles['Alert__action'], styles[`Alert__action--mode-${mode}`])}
         onClick={handleItemClick}
-        href={action.href}
-        target={action.target}
+        {...restActionProps}
         {...restProps}
       >
-        {action.title}
+        {title}
       </Tappable>
     );
   }
