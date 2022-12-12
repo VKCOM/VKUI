@@ -1,7 +1,7 @@
-name: "Close inactive issues"
+name: 'Close inactive issues'
 on:
   schedule:
-    - cron: "0 10 * * *"
+    - cron: '0 10 * * *'
 
 jobs:
   close-issues:
@@ -14,8 +14,8 @@ jobs:
         with:
           days-before-issue-stale: -1
           days-before-issue-close: 14
-          stale-issue-label: "needs-more-info"
-          close-issue-message: "Задача закрыта из-за отсутствия активности в течение последних 14 дней. Если это произошло по ошибке или проблема все ещё актуальна, откройте задачу повторно."
+          stale-issue-label: 'needs-more-info'
+          close-issue-message: 'Задача закрыта из-за отсутствия активности в течение последних 14 дней. Если это произошло по ошибке или проблема все ещё актуальна, откройте задачу повторно.'
           days-before-pr-stale: -1
           days-before-pr-close: -1
           repo-token: ${{ secrets.GITHUB_TOKEN }}

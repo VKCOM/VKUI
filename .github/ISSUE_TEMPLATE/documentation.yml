@@ -1,7 +1,7 @@
 name: Documentation
 description: Нашли ошибку в документации или есть идеи по её улучшению? Пишите! Нам очень важен фидбэк
-title: "[Doc]: "
-labels: ["docs"]
+title: '[Doc]: '
+labels: ['docs']
 body:
   - type: markdown
     attributes:

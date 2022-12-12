@@ -1,4 +1,4 @@
-const { execSync } = require("child_process");
+const { execSync } = require('child_process');
 
 // dangerfile depends on this message
 execSync('git config --global user.name "GitHub Action"');
@@ -25,25 +25,23 @@ function retry(cb, onError) {
   }
 }
 
-execSync("git pull");
+execSync('git pull');
 
 retry(
   function () {
-    execSync("git add ./**/*.png");
-    execSync(
-      `git diff-index --quiet HEAD || git commit -m "CHORE: Update screenshots"`
-    );
+    execSync('git add ./**/*.png');
+    execSync(`git diff-index --quiet HEAD || git commit -m "CHORE: Update screenshots"`);
   },
   function () {
-    execSync("git pull --rebase --autostash");
-  }
+    execSync('git pull --rebase --autostash');
+  },
 );
 
 retry(
   function () {
-    execSync("git push --verbose");
+    execSync('git push --verbose');
   },
   function () {
-    execSync("git pull --rebase");
-  }
+    execSync('git pull --rebase');
+  },
 );

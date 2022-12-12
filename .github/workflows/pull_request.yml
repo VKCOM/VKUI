@@ -1,6 +1,6 @@
-name: "Pull Request"
+name: 'Pull Request'
 
-on: ["pull_request_target"]
+on: ['pull_request_target']
 
 concurrency:
   group: pr-${{ github.ref }}
@@ -11,10 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "yarn"
+          cache: 'yarn'
       - run: yarn install --frozen-lockfile --ignore-scripts
       - name: Run tests
         run: yarn test:ci
@@ -48,6 +50,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           lfs: true
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
       - name: Checkout LFS objects
         run: git lfs checkout
       - name: Checkout base snapshots
@@ -55,7 +58,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "yarn"
+          cache: 'yarn'
       - run: yarn install --frozen-lockfile --ignore-scripts
       - name: Install deps for playwright
         run: yarn playwright:install ${{ matrix.browser }}
@@ -79,10 +82,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "yarn"
+          cache: 'yarn'
       - run: yarn install --frozen-lockfile --ignore-scripts
       - run: yarn styleguide:build
       - name: Uploading styleguide artifact
@@ -99,14 +104,14 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: "yarn"
+          cache: 'yarn'
       - run: yarn install --frozen-lockfile --ignore-scripts
       - uses: andresz1/size-limit-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # only affects current branch
           skip_step: install
-          build_script: "size:ci"
+          build_script: 'size:ci'
   deploy_styleguide:
     concurrency: ci-gh-pages
     runs-on: ubuntu-latest
@@ -114,7 +119,6 @@ jobs:
     # Skip deploy from dependabot
     if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
-      - uses: actions/checkout@v3
       - name: Download styleguide artifact
         uses: actions/download-artifact@v3
         with:
@@ -124,7 +128,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
-          COMMIT_MESSAGE: "Publish PR ${{ github.event.pull_request.number }}"
+          COMMIT_MESSAGE: 'Publish PR ${{ github.event.pull_request.number }}'
           BRANCH: gh-pages
           FOLDER: tmp
           TARGET_FOLDER: pull/${{ github.event.pull_request.number }}
@@ -134,7 +138,7 @@ jobs:
         id: find_url_comment
         with:
           issue-number: ${{ github.event.pull_request.number }}
-          comment-author: "github-actions[bot]"
+          comment-author: 'github-actions[bot]'
           body-includes: <!-- styleguide_url -->
       - name: Post styleguide URL to PR
         if: steps.find_url_comment.outputs.comment-id == 0
@@ -156,7 +160,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "yarn"
+          cache: 'yarn'
       - name: Download test artifact
         uses: actions/download-artifact@v3
         with:

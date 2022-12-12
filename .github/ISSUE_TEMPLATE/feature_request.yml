@@ -1,7 +1,7 @@
 name: Feature request
 description: Есть идея, как улучшить библиотеку? Напишите нам!
-title: "[Feature]: "
-labels: ["type:feature"]
+title: '[Feature]: '
+labels: ['type:feature']
 body:
   - type: markdown
     attributes:

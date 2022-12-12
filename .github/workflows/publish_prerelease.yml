@@ -1,13 +1,13 @@
-name: "Publish pre-release"
+name: 'Publish pre-release'
 
 on:
   workflow_dispatch:
     inputs:
       type:
-        description: "version type (prerelease for bumping pre-release version):"
+        description: 'version type (prerelease for bumping pre-release version):'
         required: true
         type: choice
-        default: "prerelease"
+        default: 'prerelease'
         options:
           - prepatch
           - preminor
@@ -17,7 +17,7 @@ on:
         required: true
         description: 'tag ("beta" or "alpha"):'
         type: choice
-        default: "beta"
+        default: 'beta'
         options:
           - beta
           - alpha
@@ -39,9 +39,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "yarn"
+          cache: 'yarn'
           always-auth: true
-          registry-url: "https://registry.npmjs.org"
+          registry-url: 'https://registry.npmjs.org'
 
       - run: yarn install --frozen-lockfile --ignore-scripts
 

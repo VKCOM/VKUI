@@ -1,4 +1,4 @@
-name: "Close PR"
+name: 'Close PR'
 
 on:
   pull_request_target:
@@ -17,7 +17,7 @@ jobs:
       - name: Unpublish styleguide
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Remove PR ${{ github.event.pull_request.number }}"
+          commit_message: 'Remove PR ${{ github.event.pull_request.number }}'
           branch: gh-pages
 
   patch:
@@ -42,7 +42,7 @@ jobs:
           git config --local user.name "GitHub Action"
       - run: node ./.github/gitflow/patch.js
         env:
-          FORKED: github.event.pull_request.base.repo.id != github.event.pull_request.head.repo.id
+          FORKED: ${{ github.event.pull_request.base.repo.id != github.event.pull_request.head.repo.id }}
           INPUT_GITHUB_PULL_NUMBER: ${{ github.event.number }}
           INPUT_GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
