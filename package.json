@@ -171,7 +171,7 @@
   "scripts": {
     "prepublishOnly": "yarn build",
     "size": "yarn clear && concurrently 'yarn:babel' 'yarn:postcss' && size-limit",
-    "size:ci": "yarn install --frozen-lockfile --ignore-scripts && yarn build:no-types",
+    "size:ci": "yarn install --frozen-lockfile --ignore-scripts && concurrently 'yarn:babel' 'yarn:postcss'",
     "styleguide": "cross-env NODE_ENV=development styleguidist server --config=styleguide/config.js",
     "styleguide:props": "VKUI_STYLEGUIDE_PROPSPARSER=1 yarn styleguide",
     "styleguide:build": "cross-env NODE_ENV=production styleguidist build --config=styleguide/config.js",
