@@ -374,15 +374,18 @@ export function CustomSelect(props: SelectProps) {
     [focusOptionByIndex, keyboardInput, options]
   );
 
+  /**
+   * Note: сбрасывать `options` через `setOptions(optionsProp)` не нужно.
+   *  Сброс происходит в одном из эффекте `updateOptionsAndSelectedOptionIndex()`.
+   */
   const close = React.useCallback(() => {
     resetKeyboardInput();
 
     setInputValue("");
     setOpened(false);
     setFocusedOptionIndex(-1);
-    setOptions(optionsProp);
     onClose?.();
-  }, [onClose, optionsProp, resetKeyboardInput]);
+  }, [onClose, resetKeyboardInput]);
 
   const selectFocused = React.useCallback(() => {
     if (focusedOptionIndex !== undefined && isValidIndex(focusedOptionIndex)) {
@@ -447,25 +450,28 @@ export function CustomSelect(props: SelectProps) {
     [focusOptionByIndex, focusedOptionIndex, options]
   );
 
-  React.useEffect(() => {
-    const value = props.value ?? nativeSelectValue ?? props.defaultValue;
+  React.useEffect(
+    function updateOptionsAndSelectedOptionIndex() {
+      const value = props.value ?? nativeSelectValue ?? props.defaultValue;
 
-    const options =
-      searchable && inputValue !== undefined
-        ? filter(optionsProp, inputValue, filterFn)
-        : optionsProp;
+      const options =
+        searchable && inputValue !== undefined
+          ? filter(optionsProp, inputValue, filterFn)
+          : optionsProp;
 
-    setOptions(options);
-    setSelectedOptionIndex(findSelectedIndex(options, value));
-  }, [
-    filterFn,
-    inputValue,
-    nativeSelectValue,
-    optionsProp,
-    props.defaultValue,
-    props.value,
-    searchable,
-  ]);
+      setOptions(options);
+      setSelectedOptionIndex(findSelectedIndex(options, value));
+    },
+    [
+      filterFn,
+      inputValue,
+      nativeSelectValue,
+      optionsProp,
+      props.defaultValue,
+      props.value,
+      searchable,
+    ]
+  );
 
   /**
    * Нужен для правильного поведения обработчика onClick на select. Фильтрует клики, которые были сделаны по
@@ -480,23 +486,21 @@ export function CustomSelect(props: SelectProps) {
     []
   );
 
-  const onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> =
-    React.useCallback(
-      (e) => {
-        const newSelectedOptionIndex = findSelectedIndex(
-          options,
-          e.currentTarget.value
-        );
-
-        if (selectedOptionIndex !== newSelectedOptionIndex) {
-          if (!isControlledOutside) {
-            setSelectedOptionIndex(newSelectedOptionIndex);
-          }
-          onChange?.(e);
-        }
-      },
-      [isControlledOutside, onChange, options, selectedOptionIndex]
+  const onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (
+    e
+  ) => {
+    const newSelectedOptionIndex = findSelectedIndex(
+      options,
+      e.currentTarget.value
     );
+
+    if (selectedOptionIndex !== newSelectedOptionIndex) {
+      if (!isControlledOutside) {
+        setSelectedOptionIndex(newSelectedOptionIndex);
+      }
+      onChange?.(e);
+    }
+  };
 
   const onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> =
     React.useCallback(
