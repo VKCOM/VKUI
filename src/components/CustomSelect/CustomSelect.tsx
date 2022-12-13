@@ -105,6 +105,10 @@ export interface SelectProps extends NativeSelectProps, FormFieldProps, TrackerO
    * Текст, который будет отображен, если приходит пустой `options`.
    */
   emptyText?: string;
+  /**
+   * > ⚠️ В v6 из возвращаемых типов будет удалён `CustomSelectOptionInterface[]`. Для кастомной фильтрации используйте
+   * > `filterFn`.
+   */
   onInputChange?: (
     e: React.ChangeEvent,
     options: CustomSelectOptionInterface[],
@@ -471,13 +475,14 @@ export function CustomSelect(props: SelectProps) {
 
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
     (e) => {
+      // TODO v6 удалить `onInputChangeProp`.
       if (onInputChangeProp) {
         const options = onInputChangeProp(e, optionsProp);
         if (options) {
           if (process.env.NODE_ENV === 'development') {
             warn(
               'Этот метод фильтрации устарел. Возвращаемое значение onInputChange будет ' +
-                'проигнорировано в v5.0.0. Для фильтрации обновляйте props.options самостоятельно или используйте свойство filterFn.',
+                'проигнорировано в v6.0.0. Для фильтрации обновляйте props.options самостоятельно или используйте свойство filterFn.',
             );
           }
           setOptions(options);
