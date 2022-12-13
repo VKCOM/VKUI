@@ -9,6 +9,7 @@ import {
 import React, { useCallback, useEffect, useState } from 'react';
 import { Icon28MenuOutline, Icon28MoonOutline, Icon28SunOutline } from '@vkontakte/icons';
 import { Logo } from '../Logo/Logo';
+import { StyleGuideModal } from './StyleGuideModal';
 import './StyleGuideMobile.css';
 
 const StyleGuideMobileHeader = ({ before, switchStyleGuideAppearance }) => {
@@ -47,7 +48,10 @@ export const StyleGuideMobile = (props) => {
 
   return (
     <div className="StyleGuideMobile">
-      <SplitLayout popout={props.popout}>
+      <SplitLayout
+        popout={props.popout}
+        modal={<StyleGuideModal activeModal={props.activeModal} />}
+      >
         <SplitCol>
           <View activePanel={activePanel}>
             <Panel id="content">

@@ -1,7 +1,8 @@
 import { SplitCol, SplitLayout, Link, IconButton, Tappable, useAppearance } from '@vkui';
-import { Icon28MoonOutline, Icon28SunOutline } from '@vkontakte/icons';
+import { Icon28MoonOutline, Icon28SunOutline, Icon16Dropdown } from '@vkontakte/icons';
 import { Logo } from '../Logo/Logo';
 import React from 'react';
+import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
 import pkg from '../../../package.json';
 import './StyleGuideHeader.css';
 
@@ -9,11 +10,20 @@ const prRegExp = /https:\/\/([\w]+)\.github.io\/([\w]+)\/pull\/([\d]+)/;
 const prData = prRegExp.exec(location.href);
 
 export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
+  const { setActiveModal } = React.useContext(StyleGuideContext);
   const appearance = useAppearance();
 
   const links = [
     {
-      title: 'v' + pkg.version,
+      title: (
+        <>
+          {'v' + pkg.version} <Icon16Dropdown />
+        </>
+      ),
+      onClick: () => setActiveModal('versions'),
+    },
+    {
+      title: 'NPM',
       href: 'https://www.npmjs.com/package/@vkontakte/vkui',
     },
     {
@@ -51,9 +61,9 @@ export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
         </SplitCol>
         <SplitCol width="100%" className="StyleGuideHeader__main">
           <div className="StyleGuideHeader__links">
-            {links.map((item, i) => (
-              <Link key={i} target="_blank" className="StyleGuideHeader__link" href={item.href}>
-                <Text>{item.title}</Text>
+            {links.map(({ title, ...props }, i) => (
+              <Link key={i} target="_blank" className="StyleGuideHeader__link" {...props}>
+                <Text>{title}</Text>
               </Link>
             ))}
           </div>
