@@ -1,12 +1,23 @@
 import React from 'react';
+import { StyleGuideModal } from './StyleGuideModal';
 import { StyleGuideHeader } from './StyleGuideHeader';
 import './StyleGuideDesktop.css';
 
-export const StyleGuideDesktop = ({ popout, switchStyleGuideAppearance, toc, children }) => {
+export const StyleGuideDesktop = ({
+  activeModal,
+  popout,
+  switchStyleGuideAppearance,
+  toc,
+  children,
+}) => {
   return (
     <div className="StyleGuideDesktop">
       <StyleGuideHeader switchStyleGuideAppearance={switchStyleGuideAppearance} />
-      <SplitLayout className="StyleGuide" popout={popout}>
+      <SplitLayout
+        className="StyleGuide"
+        popout={popout}
+        modal={<StyleGuideModal activeModal={activeModal} />}
+      >
         <SplitCol minWidth={340} width="30%" maxWidth={480} className="StyleGuide__sidebar">
           <div className="StyleGuide__sidebarIn">{toc}</div>
         </SplitCol>
