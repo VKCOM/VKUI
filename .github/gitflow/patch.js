@@ -21,7 +21,7 @@ const patchRefs = patchCommits
   .map((commit) => commit.sha)
   .join(' ');
 
-const forked = process.env.FORKED === "true";
+const forked = process.env.FORKED === 'true';
 
 if (forked) {
   const message = getPatchInstructions(
