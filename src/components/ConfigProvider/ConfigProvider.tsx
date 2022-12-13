@@ -46,7 +46,6 @@ export const ConfigProvider = (props: ConfigProviderProps) => {
   useIsomorphicLayoutEffect(() => {
     const VKUITokensClassName = generateVKUITokensClassName(platform, appearance);
 
-    // eslint-disable-next-line no-restricted-properties
     document!.body.classList.add(VKUITokensClassName);
 
     return () => {

@@ -6,7 +6,7 @@ describe('Card', () => {
   describeScreenshotFuzz(
     (props: CardProps) => (
       <Card {...props} className="vkuiProps">
-        Карточка
+        Карточка?
       </Card>
     ),
     [
