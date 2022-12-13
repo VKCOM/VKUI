@@ -1,8 +1,10 @@
 import React from "react";
+import { StyleGuideModal } from "./StyleGuideModal";
 import { StyleGuideHeader } from "./StyleGuideHeader";
 import "./StyleGuideDesktop.css";
 
 export const StyleGuideDesktop = ({
+  activeModal,
   popout,
   switchStyleGuideAppearance,
   toc,
@@ -13,7 +15,11 @@ export const StyleGuideDesktop = ({
       <StyleGuideHeader
         switchStyleGuideAppearance={switchStyleGuideAppearance}
       />
-      <SplitLayout className="StyleGuide" popout={popout}>
+      <SplitLayout
+        className="StyleGuide"
+        popout={popout}
+        modal={<StyleGuideModal activeModal={activeModal} />}
+      >
         <SplitCol
           minWidth={340}
           width="30%"

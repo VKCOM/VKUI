@@ -41,6 +41,7 @@ export const StyleGuideContext = React.createContext(initialState);
 let StyleGuideRenderer = ({ children, toc }) => {
   const [state, setState] = useState(initialState);
   const [popout, setPopout] = useState(null);
+  const [activeModal, setActiveModal] = useState(null);
   const {
     width,
     height,
@@ -79,8 +80,8 @@ let StyleGuideRenderer = ({ children, toc }) => {
   }, [platform, styleguideAppearance, setContext]);
 
   const providerValue = useMemo(
-    () => ({ ...state, setContext, setPopout }),
-    [width, height, platform, appearance, hasPointer, setContext, setPopout]
+    () => ({ ...state, setContext, setPopout, setActiveModal }),
+    [width, height, platform, appearance, hasPointer, setContext]
   );
 
   const Component =
@@ -100,6 +101,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
           <Component
             toc={toc}
             popout={popout}
+            activeModal={activeModal}
             switchStyleGuideAppearance={switchStyleGuideAppearance}
           >
             {children}
