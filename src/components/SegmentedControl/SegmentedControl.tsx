@@ -1,7 +1,8 @@
 import * as React from "react";
 import { classNamesString } from "../../lib/classNames";
 import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
-import { generateRandomId, noop } from "../../lib/utils";
+import { noop } from "../../lib/utils";
+import { useId } from "../../hooks/useId";
 import { warnOnce } from "../../lib/warnOnce";
 import { SegmentedControlOption } from "./SegmentedControlOption/SegmentedControlOption";
 import { HasRootRef } from "../../types";
@@ -45,6 +46,8 @@ export const SegmentedControl = ({
   className,
   ...restProps
 }: SegmentedControlProps) => {
+  const id = useId();
+
   const { sizeY } = useAdaptivity();
   const initialValue = defaultValue ?? options[0]?.value;
 
@@ -63,8 +66,6 @@ export const SegmentedControl = ({
     React.useState<SegmentedControlValue>(initialValue);
 
   const value = valueProp ?? valueLocal;
-
-  const nameRef = React.useRef<string>(name ?? generateRandomId());
 
   useIsomorphicLayoutEffect(() => {
     const _activeOptionIdx = options.findIndex(
@@ -119,7 +120,7 @@ export const SegmentedControl = ({
                 styles["SegmentedControl__option"],
                 optionClassName
               )}
-              name={nameRef.current}
+              name={name ?? id}
               checked={value === optionProps.value}
               onChange={() => handleOnChange(optionProps.value)}
             >
