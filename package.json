@@ -151,6 +151,12 @@
       "import": "*"
     },
     {
+      "name": "JS import Div (tree shaking)",
+      "path": "dist/index.js",
+      "gzip": false,
+      "import": "{ Div }"
+    },
+    {
       "name": "CSS",
       "path": "dist/vkui.css",
       "webpack": false,
