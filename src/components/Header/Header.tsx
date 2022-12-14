@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasComponent, HasRootRef } from '../../types';
-import { hasReactNode, isPrimitiveReactNode } from '../../lib/utils';
+import { hasReactNode } from '../../lib/utils';
 import { Platform } from '../../lib/platform';
 import { Headline } from '../Typography/Headline/Headline';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -83,7 +83,7 @@ export const Header = ({
     <header
       {...restProps}
       ref={getRootRef}
-      className={classNamesString(
+      className={classNames(
         styles['Header'],
         platform === Platform.VKCOM && styles['Header--vkcom'],
         platform === Platform.ANDROID && styles['Header--android'],
@@ -96,7 +96,7 @@ export const Header = ({
       <div className={styles['Header__main']}>
         <HeaderContent className={styles['Header__content']} Component="span" mode={mode}>
           <span
-            className={classNamesString(
+            className={classNames(
               styles['Header__content-in'],
               multiline && styles['Header__content-in--multiline'],
             )}

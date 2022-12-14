@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import styles from './PopperArrow.module.css';
 
 export interface PopperArrowProps {
@@ -14,11 +14,11 @@ export const PopperArrow = ({ style, attributes, arrowClassName }: PopperArrowPr
     <div
       style={style}
       {...restAttributes}
-      className={classNamesString(styles['PopperArrow'], arrowWrapperClassName)}
+      className={classNames(styles['PopperArrow'], arrowWrapperClassName)}
       data-popper-arrow={true}
     >
       <svg
-        className={classNamesString(styles['PopperArrow__in'], arrowClassName)}
+        className={classNames(styles['PopperArrow__in'], arrowClassName)}
         width="20"
         height="8"
         viewBox="0 0 20 8"

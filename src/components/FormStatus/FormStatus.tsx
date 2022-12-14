@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Banner } from '../Banner/Banner';
 import styles from './FormStatus.module.css';
 
@@ -16,7 +16,7 @@ export const FormStatus = ({ mode, children, className, ...restProps }: FormStat
     <Banner
       {...restProps}
       subheader={children}
-      className={classNamesString(
+      className={classNames(
         styles['FormStatus'],
         mode === 'error' && styles['FormStatus--mode-error'],
         className,

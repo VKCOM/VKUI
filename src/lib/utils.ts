@@ -7,16 +7,6 @@ export type ImgOnlyAttributes = {
   >]: React.ImgHTMLAttributes<HTMLImageElement>[index];
 };
 
-// Является ли переданное значение числовым
-export function isNumeric(value: any): boolean {
-  return !isNaN(parseFloat(value)) && isFinite(value);
-}
-
-// Является ли переданное значение функцией
-export function isFunction(value: any): value is (...args: any[]) => any {
-  return typeof value === 'function';
-}
-
 export function debounce<A extends any[]>(fn: (...args: A) => void, delay: number) {
   let timeout: any;
 
@@ -26,22 +16,8 @@ export function debounce<A extends any[]>(fn: (...args: A) => void, delay: numbe
   };
 }
 
-export function leadingZero(val: number) {
-  let strVal = val.toFixed();
-
-  if (strVal.length === 1) {
-    return '0' + strVal;
-  }
-
-  return strVal;
-}
-
 export function hasReactNode(value: React.ReactNode): boolean {
   return value !== undefined && value !== false && value !== null && value !== '';
-}
-
-export function isPrimitiveReactNode(node: React.ReactNode): boolean {
-  return typeof node === 'string' || typeof node === 'number';
 }
 
 export function setRef<T>(element: T, ref?: React.Ref<T>): void {
@@ -66,9 +42,6 @@ export function multiRef<T>(...refs: Array<React.Ref<T> | undefined>): React.Ref
     },
   };
 }
-
-// eslint-disable-next-line
-export const noop = () => {};
 
 export function getTitleFromChildren(children: React.ReactNode): string {
   let label = '';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Tappable } from '../Tappable/Tappable';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { TabsModeContext, TabsContextProps } from '../Tabs/Tabs';
 import { Headline } from '../Typography/Headline/Headline';
@@ -62,10 +62,7 @@ export const TabsItem = ({
       typeof status === 'number' ? (
         <Subhead
           Component="span"
-          className={classNamesString(
-            styles['TabsItem__status'],
-            styles['TabsItem__status--count'],
-          )}
+          className={classNames(styles['TabsItem__status'], styles['TabsItem__status--count'])}
           weight="2"
         >
           {status}
@@ -94,7 +91,7 @@ export const TabsItem = ({
   return (
     <Tappable
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['TabsItem'],
         mode && styles[`TabsItem--mode-${mode}`],
         selected && styles['TabsItem--selected'],

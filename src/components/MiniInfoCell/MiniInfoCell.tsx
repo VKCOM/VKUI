@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import { Tappable } from '../Tappable/Tappable';
 import { hasReactNode } from '../../lib/utils';
@@ -57,7 +57,7 @@ export const MiniInfoCell = ({
   className,
   ...restProps
 }: MiniInfoCellProps) => {
-  const cellClasses = classNamesString(
+  const cellClasses = classNames(
     styles['MiniInfoCell'],
     styles[`MiniInfoCell--textWrap-${textWrap}`],
     mode !== 'base' && styles[`MiniInfoCell--mode-${mode}`],

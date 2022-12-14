@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Icon16Cancel } from '@vkontakte/icons';
-import { getTitleFromChildren, hasReactNode, noop } from '../../lib/utils';
-import { classNamesString } from '../../lib/classNames';
+import { getTitleFromChildren, hasReactNode } from '../../lib/utils';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Tappable } from '../Tappable/Tappable';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -58,7 +58,7 @@ export const Chip = ({
 
   return (
     <div
-      className={classNamesString(
+      className={classNames(
         styles['Chip'],
         getSizeYClassName(styles['Chip'], sizeY),
         removable && styles['Chip--removable'],

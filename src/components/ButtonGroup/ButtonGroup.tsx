@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import type { HasRootRef, AlignType } from '../../types';
 import styles from './ButtonGroup.module.css';
 
@@ -41,7 +41,7 @@ export const ButtonGroup = ({
 }: ButtonGroupProps) => {
   return (
     <div
-      className={classNamesString(
+      className={classNames(
         className,
         styles.ButtonGroup,
         styles[`ButtonGroup--mode-${mode}`],

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import styles from './Separator.module.css';
 
 export interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -16,11 +16,7 @@ export const Separator = ({ wide, className, ...restProps }: SeparatorProps) => 
   <div
     {...restProps}
     aria-hidden="true"
-    className={classNamesString(
-      styles['Separator'],
-      !wide && styles['Separator--padded'],
-      className,
-    )}
+    className={classNames(styles['Separator'], !wide && styles['Separator--padded'], className)}
     role="separator"
   >
     <div className={styles['Separator__in']} />

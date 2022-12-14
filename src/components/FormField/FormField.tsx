@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { HasComponent, HasRootRef } from '../../types';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
@@ -71,7 +71,7 @@ export const FormField = ({
       ref={getRootRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={classNamesString(
+      className={classNames(
         styles['FormField'],
         styles[`FormField--mode-${mode}`],
         styles[`FormField--status-${status}`],

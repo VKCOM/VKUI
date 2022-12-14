@@ -1,6 +1,5 @@
-import { detectIOS } from '@vkontakte/vkjs';
+import { detectIOS, noop } from '@vkontakte/vkjs';
 import type { Version } from '../types';
-import { noop } from './utils';
 
 export enum System {
   IOS = 'ios',

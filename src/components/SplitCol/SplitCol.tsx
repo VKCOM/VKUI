@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { getViewWidthClassName } from '../../helpers/getViewWidthClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -94,7 +94,7 @@ export const SplitCol = (props: SplitColProps) => {
         minWidth: minWidth,
       }}
       ref={baseRef}
-      className={classNamesString(
+      className={classNames(
         styles['SplitCol'],
         getSizeXClassName(styles['SplitCol'], sizeX),
         getViewWidthClassName(styles['SplitCol'], viewWidth),

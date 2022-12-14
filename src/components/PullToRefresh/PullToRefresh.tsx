@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AnyFunction } from '../../types';
 import { DOMProps, useDOM } from '../../lib/dom';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { runTapticImpactOccurred } from '../../lib/taptic';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -233,7 +233,7 @@ export const PullToRefresh = ({
         onStart={onTouchStart}
         onMove={onTouchMove}
         onEnd={onTouchEnd}
-        className={classNamesString(
+        className={classNames(
           styles['PullToRefresh'],
           platform === Platform.IOS && styles['PullToRefresh--ios'],
           watching && styles['PullToRefresh--watching'],

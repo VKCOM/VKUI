@@ -3,7 +3,7 @@ import { Headline } from '../Typography/Headline/Headline';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useExternRef } from '../../hooks/useExternRef';
 import { hasReactNode } from '../../lib/utils';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
@@ -85,7 +85,7 @@ export const WriteBar = ({
   return (
     <div
       ref={getRootRef}
-      className={classNamesString(
+      className={classNames(
         styles['WriteBar'],
         platform === Platform.IOS && styles['WriteBar--ios'],
         shadow && styles['WriteBar--shadow'],

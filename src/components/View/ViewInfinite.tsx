@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { transitionEvent, animationEvent } from '../../lib/supportEvents';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { Platform } from '../../lib/platform';
@@ -605,7 +605,7 @@ class ViewInfiniteComponent extends React.Component<
       <Touch
         Component="section"
         {...restProps}
-        className={classNamesString(
+        className={classNames(
           styles['View'],
           getPlatformClassName(styles['View'], platform),
           !disableAnimation && this.state.animated && styles['View--animated'],
@@ -628,7 +628,7 @@ class ViewInfiniteComponent extends React.Component<
 
             return (
               <div
-                className={classNamesString(
+                className={classNames(
                   styles['View__panel'],
                   panelId === activePanel && iosStyles['View__panel--active'],
                   panelId === prevPanel && styles['View__panel--prev'],

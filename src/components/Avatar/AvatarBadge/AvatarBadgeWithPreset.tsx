@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import {
   type ImageBaseBadgeProps,
   ImageBase,
@@ -35,7 +35,7 @@ export const AvatarBadgeWithPreset = ({
     <ImageBase.Badge
       {...restProps}
       background="stroke"
-      className={classNamesString(styles['AvatarBadge'], presetClassName)}
+      className={classNames(styles['AvatarBadge'], presetClassName)}
     >
       <Icon width={badgeSize} height={badgeSize} />
     </ImageBase.Badge>

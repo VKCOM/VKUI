@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import styles from './CardGrid.module.css';
@@ -27,7 +27,7 @@ export const CardGrid = ({
   return (
     <div
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['CardGrid'],
         spaced && styles['CardGrid--spaced'],
         styles[`CardGrid--size-${size}`],

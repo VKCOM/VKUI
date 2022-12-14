@@ -7,7 +7,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { navigateDate, setTimeEqual, isFirstDay, isLastDay } from '../../lib/calendar';
 import { useCalendar } from '../../hooks/useCalendar';
 import { HasRootRef } from '../../types';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { warnOnce } from '../../lib/warnOnce';
 import styles from './Calendar.module.css';
 
@@ -158,7 +158,7 @@ export const Calendar = ({
     <div
       {...props}
       ref={getRootRef}
-      className={classNamesString(styles['Calendar'], styles[`Calendar--size-${size}`], className)}
+      className={classNames(styles['Calendar'], styles[`Calendar--size-${size}`], className)}
     >
       <CalendarHeader
         viewDate={externalViewDate || viewDate}

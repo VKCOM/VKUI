@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { HasComponent, HasRef } from '../../types';
 import styles from './FormLayout.module.css';
 
@@ -23,7 +23,7 @@ export const FormLayout = ({
   return (
     <Component
       {...restProps}
-      className={classNamesString(styles['FormLayout'], className)}
+      className={classNames(styles['FormLayout'], className)}
       onSubmit={onSubmit}
       ref={getRef}
     >

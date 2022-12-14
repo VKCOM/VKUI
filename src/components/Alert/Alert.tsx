@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Tappable } from '../Tappable/Tappable';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { Button, ButtonProps } from '../Button/Button';
 import { hasReactNode, stopPropagation } from '../../lib/utils';
@@ -93,7 +93,7 @@ const AlertAction = ({ action, onItemClick, ...restProps }: AlertActionProps) =>
     return (
       <Tappable
         Component={restActionProps.href ? 'a' : Component}
-        className={classNamesString(styles['Alert__action'], styles[`Alert__action--mode-${mode}`])}
+        className={classNames(styles['Alert__action'], styles[`Alert__action--mode-${mode}`])}
         onClick={handleItemClick}
         {...restActionProps}
         {...restProps}
@@ -111,10 +111,7 @@ const AlertAction = ({ action, onItemClick, ...restProps }: AlertActionProps) =>
 
   return (
     <Button
-      className={classNamesString(
-        styles['Alert__button'],
-        styles[`Alert__button--mode-${action.mode}`],
-      )}
+      className={classNames(styles['Alert__button'], styles[`Alert__button--mode-${action.mode}`])}
       mode={mode}
       size="m"
       onClick={handleItemClick}
@@ -201,7 +198,7 @@ export const Alert = ({
         onClick={stopPropagation}
         onClose={close}
         timeout={timeout}
-        className={classNamesString(
+        className={classNames(
           styles['Alert'],
           platform === Platform.IOS && styles['Alert--ios'],
           platform === Platform.VKCOM && styles['Alert--vkcom'],

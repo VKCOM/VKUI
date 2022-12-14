@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { HasComponent } from '../../../types';
-import { classNamesString } from '../../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { getSizeYClassName } from '../../../helpers/getSizeYClassName';
 import styles from './Subhead.module.css';
@@ -27,7 +27,7 @@ export const Subhead = ({
   return (
     <Component
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         className,
         styles['Subhead'],
         getSizeYClassName(styles['Subhead'], sizeY),

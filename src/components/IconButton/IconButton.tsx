@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { TappableProps, Tappable } from '../Tappable/Tappable';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
@@ -29,7 +29,7 @@ export const IconButton = ({
       activeMode="background"
       {...restProps}
       Component={restProps.href ? 'a' : Component}
-      className={classNamesString(
+      className={classNames(
         styles['IconButton'],
         getSizeYClassName(styles['IconButton'], sizeY),
         platform === Platform.IOS && styles['IconButton--ios'],

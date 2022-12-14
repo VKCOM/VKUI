@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ACTIVE_EFFECT_DELAY, Tappable } from '../Tappable/Tappable';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -45,11 +45,7 @@ export const Radio = ({
     <Tappable
       Component="label"
       style={style}
-      className={classNamesString(
-        styles['Radio'],
-        getSizeYClassName(styles['Radio'], sizeY),
-        className,
-      )}
+      className={classNames(styles['Radio'], getSizeYClassName(styles['Radio'], sizeY), className)}
       activeEffectDelay={platform === Platform.IOS ? 100 : ACTIVE_EFFECT_DELAY}
       disabled={restProps.disabled}
       getRootRef={getRootRef}

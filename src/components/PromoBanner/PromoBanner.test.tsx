@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { noop } from '../../lib/utils';
+import { noop } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
 import { PromoBanner } from './PromoBanner';
 

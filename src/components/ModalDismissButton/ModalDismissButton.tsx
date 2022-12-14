@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Icon20Cancel } from '@vkontakte/icons';
 import { Tappable } from '../Tappable/Tappable';
 import styles from './ModalDismissButton.module.css';
@@ -16,7 +16,7 @@ export const ModalDismissButton = ({
 }: ModalDismissButtonProps) => {
   return (
     <Tappable
-      className={classNamesString(styles['ModalDismissButton'], className)}
+      className={classNames(styles['ModalDismissButton'], className)}
       {...restProps}
       aria-label={ariaLabel}
       activeMode={styles['ModalDismissButton--active']}

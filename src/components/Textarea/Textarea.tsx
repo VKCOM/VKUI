@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { FormField, FormFieldProps } from '../FormField/FormField';
 import { HasRef, HasRootRef } from '../../types';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
@@ -63,7 +63,7 @@ export const Textarea = ({
 
   return (
     <FormField
-      className={classNamesString(
+      className={classNames(
         styles['Textarea'],
         getSizeYClassName(styles['Textarea'], sizeY),
         className,

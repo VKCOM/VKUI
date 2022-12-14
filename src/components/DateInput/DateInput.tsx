@@ -5,7 +5,7 @@ import { Calendar, CalendarProps } from '../Calendar/Calendar';
 import { Popper, Placement } from '../Popper/Popper';
 import { multiRef } from '../../lib/utils';
 import { IconButton } from '../IconButton/IconButton';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { FormField, FormFieldProps } from '../FormField/FormField';
 import { HasRootRef } from '../../types';
 import { useDateInput } from '../../hooks/useDateInput';
@@ -210,7 +210,7 @@ export const DateInput = ({
   return (
     <FormField
       style={style}
-      className={classNamesString(
+      className={classNames(
         styles['DateInput'],
         getSizeYClassName(styles['DateInput'], sizeY),
         className,

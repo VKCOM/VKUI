@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { HasRef } from '../../types';
 import styles from './VisuallyHiddenInput.module.css';
 
@@ -21,7 +21,7 @@ export const VisuallyHiddenInput = ({
   return (
     <input
       {...restProps}
-      className={classNamesString(styles['VisuallyHiddenInput'], className)}
+      className={classNames(styles['VisuallyHiddenInput'], className)}
       ref={getRef}
     />
   );

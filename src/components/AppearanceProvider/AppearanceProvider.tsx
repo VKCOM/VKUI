@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AppearanceType } from '@vkontakte/vk-bridge';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
@@ -40,7 +40,7 @@ export const AppearanceProvider = ({ appearance, children }: AppearanceProviderP
       {React.Children.map(children, (child) => {
         if (React.isValidElement<{ className?: string }>(child)) {
           return React.cloneElement(child, {
-            className: classNamesString(
+            className: classNames(
               child.props.className,
               generateVKUITokensClassName(platform, appearance),
             ),

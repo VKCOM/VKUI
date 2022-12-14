@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { hasReactNode } from '../../lib/utils';
 import { Caption } from '../Typography/Caption/Caption';
 import { Tappable } from '../Tappable/Tappable';
@@ -50,7 +50,7 @@ export const HorizontalCell = ({
     <div
       ref={getRootRef}
       style={style}
-      className={classNamesString(
+      className={classNames(
         styles['HorizontalCell'],
         styles[`HorizontalCell--size-${size}`],
         className,

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DOMProps, useDOM } from '../../lib/dom';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useEventListener } from '../../hooks/useEventListener';
@@ -170,10 +170,10 @@ export const CustomScrollView = ({
   };
 
   return (
-    <div className={classNamesString(styles['CustomScrollView'], className)}>
+    <div className={classNames(styles['CustomScrollView'], className)}>
       <div className={styles['CustomScrollView__barY']} ref={barY}>
         <div
-          className={classNamesString(
+          className={classNames(
             styles['CustomScrollView__trackerY'],
             !trackerVisible && styles[`CustomScrollView__trackerY--hidden`],
           )}

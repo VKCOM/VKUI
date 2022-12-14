@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { HasRootRef } from '../../types';
-import { classNamesString } from '../../lib/classNames';
-import { noop } from '../../lib/utils';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -46,7 +45,7 @@ export const FormLayoutGroup = ({
   return (
     <div
       ref={rootEl}
-      className={classNamesString(
+      className={classNames(
         styles['FormLayoutGroup'],
         getSizeYClassName(styles['FormLayoutGroup'], sizeY),
         styles[`FormLayoutGroup--mode-${mode}`],

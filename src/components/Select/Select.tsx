@@ -4,7 +4,7 @@ import { CustomSelect, SelectProps } from '../CustomSelect/CustomSelect';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { usePlatform } from '../../hooks/usePlatform';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import styles from './Select.module.css';
@@ -25,7 +25,7 @@ export const SelectTypography = ({
 
   return (
     <span
-      className={classNamesString(
+      className={classNames(
         styles['SelectTypography'],
         getPlatformClassName(styles['SelectTypography'], platform),
         getSizeYClassName(styles['SelectTypography'], sizeY),
@@ -56,7 +56,7 @@ export const Select = ({
     <React.Fragment>
       {(hasPointer === undefined || hasPointer) && (
         <CustomSelect
-          className={classNamesString(styles['Select__custom'], className)}
+          className={classNames(styles['Select__custom'], className)}
           options={options}
           popupDirection={popupDirection}
           renderOption={renderOption}
@@ -64,7 +64,7 @@ export const Select = ({
         />
       )}
       {(hasPointer === undefined || !hasPointer) && (
-        <NativeSelect className={classNamesString(styles['Select__native'], className)} {...props}>
+        <NativeSelect className={classNames(styles['Select__native'], className)} {...props}>
           {options.map(({ label, value }) => (
             <option value={value} key={`${value}`}>
               {label}

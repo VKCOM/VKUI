@@ -2,7 +2,7 @@ import * as React from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { getSizeXClassName } from '../../helpers/getSizeXClassName';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
 import { Separator } from '../Separator/Separator';
 import { Platform } from '../../lib/platform';
@@ -87,7 +87,7 @@ export const PanelHeader = ({
   return (
     <div
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['PanelHeader'],
         getPlatformClassName(styles['PanelHeader'], platform),
         transparent && styles['PanelHeader--trnsp'],

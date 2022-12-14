@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { SimpleCell, SimpleCellProps } from '../SimpleCell/SimpleCell';
 import styles from './CellButton.module.css';
 
@@ -21,7 +21,7 @@ export const CellButton = ({
     <SimpleCell
       stopPropagation={true}
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['CellButton'],
         styles[`CellButton--mode-${mode}`],
         centered && styles['CellButton--centered'],

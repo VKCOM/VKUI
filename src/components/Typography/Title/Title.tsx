@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { HasComponent } from '../../../types';
-import { classNamesString } from '../../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import styles from './Title.module.css';
 
 export interface TitleProps extends React.AllHTMLAttributes<HTMLElement>, HasComponent {
@@ -29,7 +29,7 @@ export const Title = ({
   return (
     <Component
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         className,
         styles['Title'],
         styles[`Title--level-${level}`],

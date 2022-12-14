@@ -1,4 +1,4 @@
-import { noop } from '../../lib/utils';
+import { noop } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
 import { Epic } from './Epic';
 

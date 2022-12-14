@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { useDOM } from '../../lib/dom';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useEffectDev } from '../../hooks/useEffectDev';
@@ -77,7 +77,7 @@ export const ActionSheetDropdownDesktop = ({
       targetRef={targetRef}
       offsetDistance={popupOffsetDistance}
       placement={isPopupDirectionTop ? 'top-end' : 'bottom-end'}
-      className={classNamesString(
+      className={classNames(
         styles['ActionSheet'],
         platform === Platform.IOS && styles['ActionSheet--ios'],
         styles['ActionSheet--desktop'],

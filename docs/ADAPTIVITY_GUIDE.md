@@ -42,7 +42,7 @@ _Component.tsx_
 
 ```tsx
 import * as React from 'react';
-import { classNames } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import styles from './Component.module.css';
@@ -57,9 +57,7 @@ const Component = () => {
    * - `Component--sizeX-compact` при `<AdaptivityProvider sizeX="compact" />`
    */
   return (
-    <div
-      className={classNamesString(styles.Component, getSizeXClassName('Component', sizeX, styles))}
-    />
+    <div className={classNames(styles.Component, getSizeXClassName('Component', sizeX, styles))} />
   );
 };
 ```

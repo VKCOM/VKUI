@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { HasComponent } from '../../../types';
-import { classNamesString } from '../../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import styles from './Caption.module.css';
 
 export interface CaptionProps extends React.AllHTMLAttributes<HTMLElement>, HasComponent {
@@ -27,7 +27,7 @@ export const Caption = ({
   return (
     <Component
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         className,
         styles['Caption'],
         styles[`Caption--level-${level}`],

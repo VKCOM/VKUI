@@ -5,7 +5,7 @@ import vkBridge, {
   VKBridgeEvent,
 } from '@vkontakte/vk-bridge';
 import { useDOM } from '../lib/dom';
-import { noop } from '../lib/utils';
+import { noop } from '@vkontakte/vkjs';
 import { resolveAppearance, VKBridgeConfigData } from '../helpers/appearance';
 
 let initialAppearance: AppearanceType | null = null;

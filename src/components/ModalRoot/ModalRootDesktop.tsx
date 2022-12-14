@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { transitionEvent } from '../../lib/supportEvents';
 import { HasPlatform } from '../../types';
 import { withPlatform } from '../../hoc/withPlatform';
@@ -185,7 +185,7 @@ class ModalRootDesktopComponent extends React.Component<
     return (
       <ModalRootContext.Provider value={this.modalRootContext}>
         <div
-          className={classNamesString(
+          className={classNames(
             styles['ModalRoot'],
             this.props.configProvider?.webviewType === WebviewType.VKAPPS &&
               styles['ModalRoot--vkapps'],
@@ -212,7 +212,7 @@ class ModalRootDesktopComponent extends React.Component<
                   onClose={this.props.onExit}
                   timeout={this.timeout}
                   key={key}
-                  className={classNamesString(
+                  className={classNames(
                     styles['ModalRoot__modal'],
                     !exitingModal &&
                       !enteringModal &&

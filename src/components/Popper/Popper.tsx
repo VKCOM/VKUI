@@ -7,7 +7,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import styles from './Popper.module.css';
 
 export type Placement =
@@ -223,7 +223,7 @@ export const Popper = ({
     <div
       {...restProps}
       {...attributes.popper}
-      className={classNamesString(
+      className={classNames(
         styles['Popper'],
         getPlatformClassName(styles['Popper'], platform),
         className,

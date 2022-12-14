@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import styles from './RadioGroup.module.css';
 
 export interface RadioGroupProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -16,11 +16,7 @@ export const RadioGroup = ({
   ...restProps
 }: RadioGroupProps) => (
   <div
-    className={classNamesString(
-      styles['RadioGroup'],
-      styles[`RadioGroup--mode-${mode}`],
-      className,
-    )}
+    className={classNames(styles['RadioGroup'], styles[`RadioGroup--mode-${mode}`], className)}
     {...restProps}
   >
     {children}

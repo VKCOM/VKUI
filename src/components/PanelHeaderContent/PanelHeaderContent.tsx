@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Tappable } from '../Tappable/Tappable';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
@@ -71,7 +71,7 @@ export const PanelHeaderContent = ({
     <div
       {...rootProps}
       style={style}
-      className={classNamesString(
+      className={classNames(
         styles['PanelHeaderContent'],
         getPlatformClassName(styles['PanelHeaderContent'], platform),
         className,
@@ -80,7 +80,7 @@ export const PanelHeaderContent = ({
       {hasReactNode(before) && <div className={styles['PanelHeaderContent__before']}>{before}</div>}
       <InComponent
         {...inProps}
-        className={classNamesString(
+        className={classNames(
           styles['PanelHeaderContent__in'],
           !before && platform !== Platform.ANDROID && styles['PanelHeaderContent__in--centered'],
         )}

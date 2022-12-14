@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { useAppearance } from '../../../hooks/useAppearance';
 import { useAdaptivityHasPointer } from '../../../hooks/useAdaptivityHasPointer';
 import { Tappable } from '../../Tappable/Tappable';
@@ -70,7 +70,7 @@ export const ImageBaseOverlay = ({
       {...restProps}
       type="button"
       Component="button"
-      className={classNamesString(
+      className={classNames(
         styles['ImageBaseOverlay'],
         visibility === 'always' && styles['ImageBaseOverlay--visible'],
         theme === 'light' && styles['ImageBaseOverlay--theme-light'],

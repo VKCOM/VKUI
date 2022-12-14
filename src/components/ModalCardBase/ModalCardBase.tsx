@@ -2,7 +2,7 @@ import * as React from 'react';
 import { hasReactNode } from '../../lib/utils';
 import { Title } from '../Typography/Title/Title';
 import { Subhead } from '../Typography/Subhead/Subhead';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
@@ -79,7 +79,7 @@ export const ModalCardBase = ({
   return (
     <div
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['ModalCardBase'],
         getPlatformClassName(styles['ModalCardBase'], platform),
         isDesktop && styles['ModalCardBase--desktop'],
@@ -88,7 +88,7 @@ export const ModalCardBase = ({
       ref={getRootRef}
     >
       <div
-        className={classNamesString(
+        className={classNames(
           styles['ModalCardBase__container'],
           isSoftwareKeyboardOpened && styles['ModalCardBase__container--softwareKeyboardOpened'],
         )}

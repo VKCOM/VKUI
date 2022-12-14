@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import styles from './FocusVisible.module.css';
 
 export type FocusVisibleMode = 'inside' | 'outside';
@@ -14,6 +14,6 @@ export interface FocusVisibleProps {
 export const FocusVisible = ({ mode }: FocusVisibleProps) => (
   <span
     aria-hidden="true"
-    className={classNamesString(styles['FocusVisible'], styles[`FocusVisible--mode-${mode}`])}
+    className={classNames(styles['FocusVisible'], styles[`FocusVisible--mode-${mode}`])}
   />
 );

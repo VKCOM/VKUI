@@ -1,9 +1,8 @@
 import * as React from 'react';
 import mitt from 'mitt';
-import { noop } from '../../lib/utils';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { Touch, TouchEvent, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
-import { classNamesString } from '../../lib/classNames';
 import { Platform } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY } from '../../lib/touch';
@@ -294,7 +293,7 @@ export const Tappable = ({
     stop(activeDuration >= 100 ? 0 : activeEffectDelay - activeDuration);
   }
 
-  const classes = classNamesString(
+  const classes = classNames(
     className,
     styles['Tappable'],
     platform === Platform.IOS && styles['Tappable--ios'],

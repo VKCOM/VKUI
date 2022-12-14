@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { hasReactNode } from '../../lib/utils';
@@ -151,7 +151,7 @@ export const Banner = ({
   return (
     <section
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['Banner'],
         platform === Platform.IOS && styles['Banner--ios'],
         styles[`Banner--mode-${mode}`],

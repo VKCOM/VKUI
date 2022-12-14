@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { type ImageBaseBadgeProps, ImageBase, ImageBaseContext } from '../../ImageBase/ImageBase';
 import styles from './AvatarBadge.module.css';
 
@@ -10,7 +10,7 @@ export const AvatarBadge = ({ className, ...restProps }: AvatarBadgeProps) => {
   return (
     <ImageBase.Badge
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['AvatarBadge'],
         size < 96 && styles['AvatarBadge--shifted'],
         className,

@@ -6,7 +6,7 @@ import {
   Icon12Dropdown,
 } from '@vkontakte/icons';
 import { Tappable, TappableElementProps } from '../Tappable/Tappable';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { CustomSelect } from '../CustomSelect/CustomSelect';
 import { SizeType } from '../../lib/adaptivity';
 import { getMonths, getYears } from '../../lib/calendar';
@@ -106,11 +106,11 @@ export const CalendarHeader = ({
   const { className: nextMonthClassName, ...restNextMonthProps } = nextMonthProps;
 
   return (
-    <div className={classNamesString(styles['CalendarHeader'], className)}>
+    <div className={classNames(styles['CalendarHeader'], className)}>
       {prevMonth && (
         <AdaptivityProvider sizeX={SizeType.REGULAR}>
           <Tappable
-            className={classNamesString(
+            className={classNames(
               styles['CalendarHeader__nav-icon'],
               styles['CalendarHeader__nav-icon-prev'],
               prevMonthClassName,
@@ -168,7 +168,7 @@ export const CalendarHeader = ({
       {nextMonth && (
         <AdaptivityProvider sizeX={SizeType.REGULAR}>
           <Tappable
-            className={classNamesString(
+            className={classNames(
               styles['CalendarHeader__nav-icon'],
               styles['CalendarHeader__nav-icon-next'],
               nextMonthClassName,

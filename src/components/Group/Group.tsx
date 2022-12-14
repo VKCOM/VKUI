@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Platform } from '../../lib/platform';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Spacing } from '../Spacing/Spacing';
@@ -75,7 +75,7 @@ export const Group = ({
 
   const tabIndex = isTabPanel && tabIndexProp === undefined ? 0 : tabIndexProp;
 
-  const separatorClassName = classNamesString(
+  const separatorClassName = classNames(
     styles['Group__separator'],
     separator === 'show' && styles['Group__separator--force'],
   );
@@ -85,7 +85,7 @@ export const Group = ({
       {...restProps}
       tabIndex={tabIndex}
       ref={getRootRef}
-      className={classNamesString(
+      className={classNames(
         styles['Group'],
         platform === Platform.IOS && styles['Group--ios'],
         getSizeXClassName(styles['Group'], sizeX),
@@ -104,11 +104,11 @@ export const Group = ({
       {separator !== 'hide' && (
         <React.Fragment>
           <Spacing
-            className={classNamesString(separatorClassName, styles['Group__separator--spacing'])}
+            className={classNames(separatorClassName, styles['Group__separator--spacing'])}
             size={16}
           />
           <Separator
-            className={classNamesString(separatorClassName, styles['Group__separator--separator'])}
+            className={classNames(separatorClassName, styles['Group__separator--separator'])}
           />
         </React.Fragment>
       )}

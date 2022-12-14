@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormField, FormFieldProps } from '../FormField/FormField';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
@@ -74,7 +74,7 @@ const NativeSelect = ({
   return (
     <FormField
       Component="label"
-      className={classNamesString(
+      className={classNames(
         styles['Select'],
         getPlatformClassName(styles['Select'], platform),
         empty && styles['Select--empty'],

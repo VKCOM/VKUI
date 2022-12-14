@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { type ImageBaseProps, type ImageBaseOverlayProps, ImageBase } from '../ImageBase/ImageBase';
 import { type ImageBadgeProps, ImageBadge } from './ImageBadge/ImageBadge';
 import styles from './Image.module.css';
@@ -75,7 +75,7 @@ export const Image = ({
       {...restProps}
       size={size}
       style={{ ...style, borderRadius }}
-      className={classNamesString(styles['Image'], className)}
+      className={classNames(styles['Image'], className)}
     />
   );
 };

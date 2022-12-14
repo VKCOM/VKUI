@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
-import { classNamesString } from '../../lib/classNames';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { ChipOption, ChipValue, RenderChip } from '../Chip/Chip';
 import { ChipsInputProps } from '../ChipsInput/ChipsInput';
 import { ChipsInputBase, chipsInputDefaultProps } from '../ChipsInputBase/ChipsInputBase';
@@ -9,7 +9,6 @@ import {
   CustomSelectOptionProps,
 } from '../CustomSelectOption/CustomSelectOption';
 import { useChipsSelect } from '../../hooks/useChipsSelect';
-import { noop } from '../../lib/utils';
 import { useDOM } from '../../lib/dom';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -324,7 +323,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
     <FormField
       getRootRef={rootRef}
       style={style}
-      className={classNamesString(
+      className={classNames(
         styles['ChipsSelect'],
         opened &&
           (isPopperDirectionTop ? styles['ChipsSelect--pop-up'] : styles['ChipsSelect--pop-down']),

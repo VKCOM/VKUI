@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { SplitColContext } from '../SplitCol/SplitCol';
@@ -116,7 +116,7 @@ export const Root = ({
   return (
     <div
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['Root'],
         platform === Platform.IOS && styles['Root--ios'],
         transition && styles['Root--transition'],
@@ -136,7 +136,7 @@ export const Root = ({
             key={viewId}
             ref={(e) => viewId && (viewNodes[viewId] = e)}
             onAnimationEnd={isTransitionTarget ? onAnimationEnd : undefined}
-            className={classNamesString(
+            className={classNames(
               styles['Root__view'],
               transition && viewId === prevView && isBack && styles['Root__view--hide-back'],
               transition && viewId === prevView && !isBack && styles['Root__view--hide-forward'],

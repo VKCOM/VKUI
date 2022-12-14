@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
@@ -30,7 +30,7 @@ export const ActionSheetDropdown = ({
     <FocusTrap
       {...restProps}
       onClick={stopPropagation}
-      className={classNamesString(
+      className={classNames(
         styles['ActionSheet'],
         platform === Platform.IOS && styles['ActionSheet--ios'],
         closing && styles['ActionSheet--closing'],

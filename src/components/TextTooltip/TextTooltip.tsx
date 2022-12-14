@@ -2,7 +2,7 @@ import * as React from 'react';
 import { HoverPopper, HoverPopperProps } from '../HoverPopper/HoverPopper';
 import { hasReactNode } from '../../lib/utils';
 import { Subhead } from '../Typography/Subhead/Subhead';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import styles from './TextTooltip.module.css';
 
 export interface TextTooltipProps
@@ -34,7 +34,7 @@ export const TextTooltip = ({
 }: TextTooltipProps) => {
   return (
     <HoverPopper
-      className={classNamesString(
+      className={classNames(
         styles['TextTooltip'],
         styles[`TextTooltip--appearance-${appearance}`],
         className,

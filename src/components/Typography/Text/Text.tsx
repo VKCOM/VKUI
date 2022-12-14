@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
-import { classNamesString } from '../../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { HasComponent, HasRootRef } from '../../../types';
 import { warnOnce } from '../../../lib/warnOnce';
 import { getSizeYClassName } from '../../../helpers/getSizeYClassName';
@@ -38,7 +38,7 @@ export const Text = ({
     <Component
       {...restProps}
       ref={getRootRef}
-      className={classNamesString(
+      className={classNames(
         className,
         styles['Text'],
         getSizeYClassName(styles['Text'], sizeY),

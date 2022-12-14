@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getSizeXClassName } from '../../helpers/getSizeXClassName';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -97,7 +97,7 @@ export const ModalPage = ({
     <div
       {...restProps}
       id={id}
-      className={classNamesString(
+      className={classNames(
         styles['ModalPage'],
         platform === Platform.IOS && styles['ModalPage--ios'],
         platform === Platform.VKCOM && styles['ModalPage--vkcom'],

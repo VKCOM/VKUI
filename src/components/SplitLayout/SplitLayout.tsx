@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { PopoutRoot } from '../PopoutRoot/PopoutRoot';
@@ -38,7 +38,7 @@ export const SplitLayout = ({
 
   return (
     <PopoutRoot
-      className={classNamesString(
+      className={classNames(
         styles['SplitLayout'],
         platform === Platform.IOS && styles['SplitLayout--ios'],
       )}
@@ -50,7 +50,7 @@ export const SplitLayout = ({
       <div
         {...restProps}
         ref={getRef}
-        className={classNamesString(
+        className={classNames(
           styles['SplitLayout__inner'],
           !!header && styles['SplitLayout__inner--header'],
           className,

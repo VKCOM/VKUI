@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
-import { noop } from '../../lib/utils';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { SimpleCell, SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { HasRootRef } from '../../types';
@@ -119,7 +118,7 @@ export const Cell = ({
   const simpleCellDisabled = (draggable && !selectable) || removable || disabled;
   const hasActive = !simpleCellDisabled && !dragging;
 
-  const cellClasses = classNamesString(
+  const cellClasses = classNames(
     styles['Cell'],
     platform === Platform.IOS && styles['Cell--ios'],
     dragging && styles['Cell--dragging'],
@@ -155,7 +154,7 @@ export const Cell = ({
   if (removable) {
     return (
       <Removable
-        className={classNamesString(cellClasses, className)}
+        className={classNames(cellClasses, className)}
         style={style}
         getRootRef={rootElRef}
         removePlaceholder={removePlaceholder}
@@ -167,7 +166,7 @@ export const Cell = ({
   }
 
   return (
-    <div className={classNamesString(cellClasses, className)} style={style} ref={rootElRef}>
+    <div className={classNames(cellClasses, className)} style={style} ref={rootElRef}>
       {simpleCell}
     </div>
   );

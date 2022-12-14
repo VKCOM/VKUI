@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { ListContext } from './ListContext';
 import styles from './List.module.css';
 
@@ -15,11 +15,7 @@ export const List = ({ children, className, ...restProps }: ListProps) => {
     <div
       role="list"
       {...restProps}
-      className={classNamesString(
-        styles['List'],
-        isDragging && styles['List--dragging'],
-        className,
-      )}
+      className={classNames(styles['List'], isDragging && styles['List--dragging'], className)}
     >
       <ListContext.Provider value={React.useMemo(() => ({ toggleDrag }), [])}>
         {children}

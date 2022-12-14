@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { callMultiple } from '../../lib/callMultiple';
 import { stopPropagation } from '../../lib/utils';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';
 import styles from './InputLike.module.css';
 
@@ -49,7 +49,7 @@ export const InputLike = ({
 
   return (
     <span
-      className={classNamesString(
+      className={classNames(
         styles['InputLike'],
         value?.length === length && styles[`InputLike--full`],
         className,

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { hasReactNode } from '../../lib/utils';
 import { Title } from '../Typography/Title/Title';
 import { Headline } from '../Typography/Headline/Headline';
@@ -43,7 +43,7 @@ export const Placeholder = ({
   <div
     {...restProps}
     ref={getRootRef}
-    className={classNamesString(
+    className={classNames(
       styles['Placeholder'],
       stretched && styles['Placeholder--stretched'],
       className,

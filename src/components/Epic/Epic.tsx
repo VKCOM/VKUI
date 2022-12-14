@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { ScrollSaver } from './ScrollSaver';
 import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
@@ -25,7 +25,7 @@ export const Epic = (props: EpicProps) => {
     ) as React.ReactElement | undefined) ?? null;
 
   return (
-    <div {...restProps} className={classNamesString(styles['Epic'], className)}>
+    <div {...restProps} className={classNames(styles['Epic'], className)}>
       <ScrollSaver
         key={activeStory}
         initialScroll={scroll[activeStory] || 0}

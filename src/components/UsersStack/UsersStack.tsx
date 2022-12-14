@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { hasReactNode } from '../../lib/utils';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Caption } from '../Typography/Caption/Caption';
 import { useId } from '../../hooks/useId';
@@ -152,7 +152,7 @@ export const UsersStack = ({
     <CounterTypography
       caps
       weight="1"
-      className={classNamesString(styles['UsersStack__photo'], styles['UsersStack__photo--others'])}
+      className={classNames(styles['UsersStack__photo'], styles['UsersStack__photo--others'])}
     >
       <span>+{count}</span>
     </CounterTypography>
@@ -161,7 +161,7 @@ export const UsersStack = ({
   return (
     <div
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['UsersStack'],
         styles[`UsersStack--size-${size}`],
         styles[`UsersStack--layout-${layout}`],

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import type { HasRef, HasRootRef } from '../../types';
 import { type ImageBaseBadgeProps, ImageBaseBadge } from './ImageBaseBadge/ImageBaseBadge';
 import { type ImageBaseOverlayProps, ImageBaseOverlay } from './ImageBaseOverlay/ImageBaseOverlay';
@@ -118,7 +118,7 @@ export const ImageBase = ({
         {...restProps}
         ref={getRootRef}
         style={{ ...style, width: size, height: size }}
-        className={classNamesString(
+        className={classNames(
           className,
           styles['ImageBase'],
           styles[`ImageBase--size-${size as ImageBaseSize}`],
@@ -149,7 +149,7 @@ export const ImageBase = ({
           />
         )}
         {fallbackIcon && (
-          <div className={classNamesString(styles['ImageBase__fallback'])}>{fallbackIcon}</div>
+          <div className={classNames(styles['ImageBase__fallback'])}>{fallbackIcon}</div>
         )}
         {children}
       </div>

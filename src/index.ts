@@ -338,7 +338,7 @@ export { useModalRootContext } from './components/ModalRoot/useModalRootContext'
 /**
  * Utils
  */
-export { classNamesString as classNames } from './lib/classNames';
+export { classNames } from '@vkontakte/vkjs';
 export { animate } from './lib/animate';
 export { removeObjectKeys } from './lib/removeObjectKeys';
 export { SSRWrapper } from './lib/SSR';

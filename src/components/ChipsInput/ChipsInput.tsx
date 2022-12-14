@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FormField, FormFieldProps } from '../FormField/FormField';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { ChipOption } from '../Chip/Chip';
 import { ChipsInputBase, ChipsInputBaseProps } from '../ChipsInputBase/ChipsInputBase';
 import styles from './ChipsInput.module.css';
@@ -24,7 +24,7 @@ export const ChipsInput = <Option extends ChipOption>({
   return (
     <FormField
       getRootRef={getRootRef}
-      className={classNamesString(styles['ChipsInput'], className)}
+      className={classNames(styles['ChipsInput'], className)}
       style={style}
       disabled={restProps.disabled}
       before={before}

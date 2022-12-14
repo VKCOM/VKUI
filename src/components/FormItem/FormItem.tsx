@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { HasComponent, HasRootRef } from '../../types';
-import { classNamesString } from '../../lib/classNames';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
-import { hasReactNode, noop } from '../../lib/utils';
+import { hasReactNode } from '../../lib/utils';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -55,7 +55,7 @@ export const FormItem = ({
     <Component
       {...restProps}
       ref={rootEl}
-      className={classNamesString(
+      className={classNames(
         styles['FormItem'],
         status !== 'default' && styles[`FormItem--status-${status}`],
         getSizeYClassName(styles['FormItem'], sizeY),

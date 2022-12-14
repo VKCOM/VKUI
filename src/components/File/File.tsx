@@ -4,7 +4,7 @@ import { Button, VKUIButtonProps } from '../Button/Button';
 import { HasRef, HasRootRef } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 import { VisuallyHiddenInput } from '../VisuallyHiddenInput/VisuallyHiddenInput';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import styles from './File.module.css';
 
 export interface FileProps
@@ -38,7 +38,7 @@ export const File = ({
     <Button
       Component="label"
       align={align}
-      className={classNamesString(
+      className={classNames(
         styles['File'],
         getPlatformClassName(styles['File'], platform),
         className,

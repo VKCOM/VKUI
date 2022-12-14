@@ -2,7 +2,7 @@ import * as React from 'react';
 import { baselineComponent } from '../../testing/utils';
 import { render, fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { noop } from '../../lib/utils';
+import { noop } from '@vkontakte/vkjs';
 import { Touch } from './Touch';
 import { createElement } from 'react';
 
