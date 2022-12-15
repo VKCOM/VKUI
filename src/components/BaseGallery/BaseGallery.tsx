@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import { HorizontalScrollArrow } from '../HorizontalScroll/HorizontalScrollArrow';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -309,7 +309,7 @@ export const BaseGallery = ({
   return (
     <div
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['BaseGallery'],
         styles[`BaseGallery--align-${align}`],
         shiftState.dragging && styles['BaseGallery--dragging'],
@@ -344,14 +344,14 @@ export const BaseGallery = ({
       {bullets && (
         <div
           aria-hidden="true"
-          className={classNamesString(
+          className={classNames(
             styles['BaseGallery__bullets'],
             styles[`BaseGallery__bullets--${bullets}`],
           )}
         >
           {React.Children.map(children, (_item: React.ReactNode, index: number) => (
             <div
-              className={classNamesString(
+              className={classNames(
                 styles['BaseGallery__bullet'],
                 index === slideIndex && styles['BaseGallery__bullet--active'],
               )}

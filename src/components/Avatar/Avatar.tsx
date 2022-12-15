@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { type ImageBaseProps, type ImageBaseOverlayProps, ImageBase } from '../ImageBase/ImageBase';
 import { getInitialsFontSize } from './helpers';
 import { type AvatarBadgeProps, AvatarBadge } from './AvatarBadge/AvatarBadge';
@@ -95,7 +95,7 @@ export const Avatar = ({
       {...restProps}
       size={size}
       fallbackIcon={rewrittenFallbackIcon}
-      className={classNamesString(
+      className={classNames(
         styles['Avatar'],
         gradientName && styles[`Avatar--has-gradient`],
         isGradientNotCustom && gradientStyles[gradientName],

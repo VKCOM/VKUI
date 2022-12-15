@@ -7,7 +7,7 @@ import { Text } from '../Typography/Text/Text';
 import { TappableProps, Tappable } from '../Tappable/Tappable';
 import { hasReactNode } from '../../lib/utils';
 import { HasRef, HasRootRef } from '../../types';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import styles from './ContentCard.module.css';
 
 export interface ContentCardProps
@@ -74,7 +74,7 @@ export const ContentCard = ({
       mode={mode}
       getRootRef={getRootRef}
       style={style}
-      className={classNamesString(
+      className={classNames(
         styles['ContentCard'],
         restProps.disabled && styles['ContentCard--disabled'],
         className,
@@ -108,10 +108,7 @@ export const ContentCard = ({
         <div className={styles['ContentCard__body']}>
           {hasReactNode(subtitle) && (
             <Caption
-              className={classNamesString(
-                styles['ContentCard__text'],
-                styles['ContentCard__subtitle'],
-              )}
+              className={classNames(styles['ContentCard__text'], styles['ContentCard__subtitle'])}
               weight="1"
               level="3"
               caps
@@ -127,10 +124,7 @@ export const ContentCard = ({
           {hasReactNode(text) && <Text className={styles['ContentCard__text']}>{text}</Text>}
           {hasReactNode(caption) && (
             <Footnote
-              className={classNamesString(
-                styles['ContentCard__text'],
-                styles['ContentCard__caption'],
-              )}
+              className={classNames(styles['ContentCard__text'], styles['ContentCard__caption'])}
             >
               {caption}
             </Footnote>

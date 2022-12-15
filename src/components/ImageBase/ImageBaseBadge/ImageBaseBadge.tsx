@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { ImageBaseContext } from '../context';
 import type { ImageBaseExpectedIconProps } from '../types';
 import { validateBadgeIcon } from '../validators';
@@ -55,11 +55,7 @@ export const ImageBaseBadge = ({
   return (
     <div
       {...restProps}
-      className={classNamesString(
-        styles['ImageBaseBadge'],
-        backgroundStyles[background],
-        className,
-      )}
+      className={classNames(styles['ImageBaseBadge'], backgroundStyles[background], className)}
     >
       {children}
     </div>

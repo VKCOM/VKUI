@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import styles from './PullToRefresh.module.css';
 
 function calcStrokeDashOffset(value: number, radius: number) {
@@ -31,7 +31,7 @@ export const PullToRefreshSpinner = ({
 
   return (
     <div
-      className={classNamesString(
+      className={classNames(
         styles['PullToRefresh__spinner'],
         on && styles['PullToRefresh__spinner--on'],
       )}

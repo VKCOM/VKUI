@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { setTransformStyle } from '../../lib/styles';
 import { rubber } from '../../lib/touch';
 import { Platform } from '../../lib/platform';
@@ -591,7 +591,7 @@ class ModalRootTouchComponent extends React.Component<
       <TouchRootContext.Provider value={true}>
         <ModalRootContext.Provider value={this.modalRootContext}>
           <Touch
-            className={classNamesString(
+            className={classNames(
               styles['ModalRoot'],
               this.props.configProvider?.webviewType === WebviewType.VKAPPS &&
                 styles['ModalRoot--vkapps'],
@@ -630,7 +630,7 @@ class ModalRootTouchComponent extends React.Component<
                     }}
                     onClose={this.props.onExit}
                     timeout={this.timeout}
-                    className={classNamesString(
+                    className={classNames(
                       styles['ModalRoot__modal'],
                       modalId === activeModal && styles['ModalRoot__modal--active'],
                       modalId === exitingModal && styles['ModalRoot__modal--prev'],

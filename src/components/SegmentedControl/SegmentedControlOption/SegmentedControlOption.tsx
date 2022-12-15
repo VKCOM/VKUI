@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import { callMultiple } from '../../../lib/callMultiple';
-import { classNamesString } from '../../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { FocusVisible } from '../../FocusVisible/FocusVisible';
 import {
   VisuallyHiddenInput,
@@ -25,7 +25,7 @@ export const SegmentedControlOption = ({
 
   return (
     <label
-      className={classNamesString(
+      className={classNames(
         styles['SegmentedControlOption'],
         restProps.checked && styles['SegmentedControlOption--checked'],
         focusVisible && styles['SegmentedControlOption--focus-visible'],
@@ -40,7 +40,7 @@ export const SegmentedControlOption = ({
         onFocus={callMultiple(onFocus, restProps.onFocus)}
       />
       <span
-        className={classNamesString(
+        className={classNames(
           styles['SegmentedControlOption__content'],
           getSizeYClassName(styles['SegmentedControlOption__content'], sizeY),
         )}

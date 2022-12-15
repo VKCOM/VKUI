@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Touch, TouchEvent, TouchEventHandler } from '../Touch/Touch';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';
 import { rescale } from '../../helpers/math';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -126,7 +126,7 @@ export const UniversalSlider = ({
       data-value={isRange ? value.join(',') : value}
       {...restProps}
       {...(disabled ? {} : { onStart, onMove, onEnd })}
-      className={classNamesString(
+      className={classNames(
         styles['Slider'],
         getSizeYClassName(styles['Slider'], sizeY),
         disabled && styles['Slider--disabled'],
@@ -137,12 +137,12 @@ export const UniversalSlider = ({
         <div className={styles['Slider__dragger']} style={draggerStyle}>
           {isRange && (
             <span
-              className={classNamesString(styles['Slider__thumb'], styles['Slider__thumb--start'])}
+              className={classNames(styles['Slider__thumb'], styles['Slider__thumb--start'])}
               ref={thumbStart}
             />
           )}
           <span
-            className={classNamesString(styles['Slider__thumb'], styles['Slider__thumb--end'])}
+            className={classNames(styles['Slider__thumb'], styles['Slider__thumb--end'])}
             ref={thumbEnd}
           />
         </div>

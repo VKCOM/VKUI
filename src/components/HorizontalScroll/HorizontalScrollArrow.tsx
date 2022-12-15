@@ -5,7 +5,7 @@ import {
   Icon16Chevron,
   Icon16ChevronLeft,
 } from '@vkontakte/icons';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Tappable } from '../Tappable/Tappable';
 import styles from './HorizontalScrollArrow.module.css';
 
@@ -37,7 +37,7 @@ export const HorizontalScrollArrow = ({
       Component="button"
       hasHover={false}
       hasActive={false}
-      className={classNamesString(
+      className={classNames(
         styles['HorizontalScrollArrow'],
         styles[`HorizontalScrollArrow--size-${size}`],
         styles[`HorizontalScrollArrow--direction-${direction}`],

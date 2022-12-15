@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import {
   HorizontalScroll,
   HorizontalScrollProps,
@@ -51,7 +51,7 @@ export const SubnavigationBar = ({
   return (
     <div
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['SubnavigationBar'],
         styles[`SubnavigationBar--mode-${mode}`],
         className,

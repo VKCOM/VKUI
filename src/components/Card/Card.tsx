@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';
 import styles from './Card.module.css';
 
@@ -23,7 +23,7 @@ export const Card = ({
     <div
       {...restProps}
       ref={getRootRef}
-      className={classNamesString(styles['Card'], styles[`Card--mode-${mode}`], className)}
+      className={classNames(styles['Card'], styles[`Card--mode-${mode}`], className)}
     >
       <div className={styles['Card__in']}>{children}</div>
     </div>

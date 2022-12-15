@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Caption } from '../Typography/Caption/Caption';
 import { Headline } from '../Typography/Headline/Headline';
 import { hasReactNode } from '../../lib/utils';
@@ -47,7 +47,7 @@ export const Counter = ({
   return (
     <span
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['Counter'],
         modeClassNames[mode],
         sizeClassNames[size],

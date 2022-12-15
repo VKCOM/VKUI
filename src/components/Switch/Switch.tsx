@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { callMultiple } from '../../lib/callMultiple';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
@@ -26,7 +26,7 @@ export const Switch = ({ style, className, getRootRef, ...restProps }: SwitchPro
 
   return (
     <label
-      className={classNamesString(
+      className={classNames(
         styles['Switch'],
         getPlatformClassName(styles['Switch'], platform),
         getSizeYClassName(styles['Switch'], sizeY),

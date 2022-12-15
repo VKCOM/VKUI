@@ -80,7 +80,7 @@
   const Input = ({ mode, style, className, ...restProps }) => {
     return (
       <div
-        className={classNamesString(className, styles.Input, styles[`Input--mode-${mode}`])}
+        className={classNames(className, styles.Input, styles[`Input--mode-${mode}`])}
         style={style}
       >
         <input {...restProps} />
@@ -96,7 +96,7 @@
 
   const Component = ({ mode = 'default', className, ...restProps }) => (
     <div
-      className={classNamesString(className, styles.Component, styles[`Component--mode-${mode}`])}
+      className={classNames(className, styles.Component, styles[`Component--mode-${mode}`])}
       {...restProps}
     />
   );

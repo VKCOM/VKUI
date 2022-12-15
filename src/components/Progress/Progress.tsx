@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { clamp } from '../../helpers/math';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';
 import styles from './Progress.module.css';
 
@@ -27,7 +27,7 @@ export const Progress = ({ value = 0, getRootRef, className, ...restProps }: Pro
       aria-valuemin={PROGRESS_MIN_VALUE}
       aria-valuemax={PROGRESS_MAX_VALUE}
       ref={getRootRef}
-      className={classNamesString(styles['Progress'], className)}
+      className={classNames(styles['Progress'], className)}
     >
       <div className={styles['Progress__in']} style={{ width: `${progress}%` }} />
     </div>

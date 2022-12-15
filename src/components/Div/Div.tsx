@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';
 import styles from './Div.module.css';
 
@@ -12,7 +12,7 @@ export interface DivProps
  */
 export const Div = ({ children, getRootRef, className, ...restProps }: DivProps) => {
   return (
-    <div {...restProps} ref={getRootRef} className={classNamesString(styles['Div'], className)}>
+    <div {...restProps} ref={getRootRef} className={classNames(styles['Div'], className)}>
       {children}
     </div>
   );

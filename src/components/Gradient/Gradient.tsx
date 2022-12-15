@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import styles from './Gradient.module.css';
 
 export interface GradientProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -27,7 +27,7 @@ export const Gradient = ({
     <div
       role="presentation"
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['Gradient'],
         styles[`Gradient--mode-${mode}`],
         styles[`Gradient--to-${to}`],

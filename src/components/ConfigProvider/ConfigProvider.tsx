@@ -10,7 +10,7 @@ import {
 } from './ConfigProviderContext';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { useAutoDetectAppearance } from '../../hooks/useAutoDetectAppearance';
-import { noop } from '../../lib/utils';
+import { noop } from '@vkontakte/vkjs';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { useDOM } from '../../lib/dom';
 

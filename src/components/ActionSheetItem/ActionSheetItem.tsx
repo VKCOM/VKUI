@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
-import { classNamesString } from '../../lib/classNames';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { Tappable } from '../Tappable/Tappable';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
-import { noop } from '../../lib/utils';
 import { Platform } from '../../lib/platform';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Text } from '../Typography/Text/Text';
@@ -87,7 +86,7 @@ const ActionSheetItem = ({
       {...restProps}
       onClick={selectable ? onClick : onItemClick(onClick, onImmediateClick, Boolean(autoClose))}
       activeMode={platform === Platform.IOS ? styles['ActionSheetItem--active'] : undefined}
-      className={classNamesString(
+      className={classNames(
         styles['ActionSheetItem'],
         platform === Platform.IOS && styles['ActionSheetItem--ios'],
         styles[`ActionSheetItem--mode-${mode}`],
@@ -100,13 +99,13 @@ const ActionSheetItem = ({
     >
       {before && <div className={styles['ActionSheetItem__before']}>{before}</div>}
       <div
-        className={classNamesString(
+        className={classNames(
           styles['ActionSheetItem__container'],
           !multiline && styles['ActionSheetItem--ellipsis'],
         )}
       >
         <div
-          className={classNamesString(
+          className={classNames(
             styles['ActionSheetItem__content'],
             isCentered && styles['ActionSheetItem--centered'],
           )}

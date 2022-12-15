@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import { noop } from '../lib/utils';
+import { noop } from '@vkontakte/vkjs';
 import { useTimeout } from './useTimeout';
 
 describe(useTimeout, () => {

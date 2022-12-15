@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
 import { PopperArrow } from '../PopperArrow/PopperArrow';
@@ -57,11 +57,9 @@ const SimpleTooltip = React.forwardRef<HTMLDivElement, SimpleTooltipProps>(funct
   const { className: containerClassName, ...restContainerAttributes } = attributes?.container ?? {};
 
   return (
-    <div
-      className={classNamesString(styles['Tooltip'], styles[`Tooltip--appearance-${appearance}`])}
-    >
+    <div className={classNames(styles['Tooltip'], styles[`Tooltip--appearance-${appearance}`])}>
       <div
-        className={classNamesString(styles['Tooltip__container'], containerClassName)}
+        className={classNames(styles['Tooltip__container'], containerClassName)}
         ref={ref}
         style={popperStyles.container}
         {...restContainerAttributes}

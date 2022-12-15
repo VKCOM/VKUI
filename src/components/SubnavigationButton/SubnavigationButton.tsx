@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { HasComponent, HasChildren } from '../../types';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { getTitleFromChildren } from '../../lib/utils';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { TappableProps, Tappable } from '../Tappable/Tappable';
@@ -69,7 +69,7 @@ export const SubnavigationButton = ({
       {...restProps}
       hasActive={false}
       focusVisibleMode="outside"
-      className={classNamesString(
+      className={classNames(
         styles['SubnavigationButton'],
         styles[`SubnavigationButton--size-${size}`],
         styles[`SubnavigationButton--mode-${mode}`],

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
 import { ModalType } from '../ModalRoot/types';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
@@ -39,7 +39,7 @@ export const ModalCard = ({
     <div
       {...restProps}
       id={id}
-      className={classNamesString(
+      className={classNames(
         styles['ModalCard'],
         getPlatformClassName(styles['ModalCard'], platform),
         isDesktop && styles['ModalCard--desktop'],

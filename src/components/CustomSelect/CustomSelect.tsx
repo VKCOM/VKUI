@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { SelectMimicry } from '../SelectMimicry/SelectMimicry';
 import { debounce, multiRef, getTitleFromChildren } from '../../lib/utils';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import {
   CustomSelectOption,
@@ -234,7 +234,7 @@ export function CustomSelect(props: SelectProps) {
 
   const openedClassNames = React.useMemo(
     () =>
-      classNamesString(
+      classNames(
         opened &&
           dropdownOffsetDistance === 0 &&
           (popperPlacement?.includes('top')
@@ -623,7 +623,7 @@ export function CustomSelect(props: SelectProps) {
 
   return (
     <label
-      className={classNamesString(styles['CustomSelect'], className)}
+      className={classNames(styles['CustomSelect'], className)}
       style={style}
       ref={multiRef(containerRef, getRootRef)}
       onClick={onLabelClick}

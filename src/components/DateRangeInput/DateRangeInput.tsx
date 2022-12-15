@@ -7,7 +7,7 @@ import { IconButton } from '../IconButton/IconButton';
 import { HasRootRef } from '../../types';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { multiRef } from '../../lib/utils';
 import { FormField, FormFieldProps } from '../FormField/FormField';
 import { InputLike } from '../InputLike/InputLike';
@@ -224,7 +224,7 @@ export const DateRangeInput = ({
   return (
     <FormField
       style={style}
-      className={classNamesString(
+      className={classNames(
         styles['DateRangeInput'],
         getSizeYClassName(styles['DateRangeInput'], sizeY),
         className,

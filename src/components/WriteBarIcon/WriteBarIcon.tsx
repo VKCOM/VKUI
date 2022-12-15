@@ -8,7 +8,7 @@ import {
   Icon48WritebarSend,
 } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { Counter } from '../Counter/Counter';
 import { Tappable } from '../Tappable/Tappable';
@@ -84,7 +84,7 @@ export const WriteBarIcon = ({
       Component="button"
       hasHover={false}
       activeMode={styles['WriteBarIcon__active']}
-      className={classNamesString(
+      className={classNames(
         styles['WriteBarIcon'],
         platform === Platform.IOS && styles['WriteBarIcon--ios'],
         mode && styles[`WriteBarIcon--mode-${mode}`],

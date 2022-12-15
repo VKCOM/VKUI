@@ -3,7 +3,7 @@ import { Icon24ChevronCompactLeft, Icon24ChevronCompactRight } from '@vkontakte/
 
 import type { HasRootRef } from '../../types';
 
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { PaginationPageType, usePagination } from '../../hooks/usePagination';
@@ -115,7 +115,7 @@ export const Pagination = ({
           return (
             <li key={page}>
               <div
-                className={classNamesString(
+                className={classNames(
                   styles['Pagination__page'],
                   styles['Pagination__page--type-ellipsis'],
                   getSizeYClassName(styles['Pagination__page'], sizeY),
@@ -131,7 +131,7 @@ export const Pagination = ({
           return (
             <li key={page}>
               <Tappable
-                className={classNamesString(
+                className={classNames(
                   styles['Pagination__page'],
                   getSizeYClassName(styles['Pagination__page'], sizeY),
                   isCurrent && styles['Pagination__page--current'],
@@ -160,7 +160,7 @@ export const Pagination = ({
 
   return (
     <nav
-      className={classNamesString(styles['Pagination'], className)}
+      className={classNames(styles['Pagination'], className)}
       role="navigation"
       aria-label="Навигация по страницам"
       ref={getRootRef}

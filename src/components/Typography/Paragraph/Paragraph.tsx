@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { warnOnce } from '../../../lib/warnOnce';
 import { HasComponent, HasRootRef } from '../../../types';
 import styles from './Paragraph.module.css';
@@ -35,7 +35,7 @@ export const Paragraph = ({
     <Component
       {...restProps}
       ref={getRootRef}
-      className={classNamesString(
+      className={classNames(
         className,
         styles['Paragraph'],
         weight && styles[`Paragraph--weight-${weight}`],

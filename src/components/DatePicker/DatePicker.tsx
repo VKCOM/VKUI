@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames, leadingZero } from '@vkontakte/vkjs';
 import { Input } from '../Input/Input';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
-import { leadingZero } from '../../lib/utils';
 import { CustomSelect } from '../CustomSelect/CustomSelect';
 import { range } from '../../helpers/range';
 import styles from './DatePicker.module.css';
@@ -102,7 +101,7 @@ const DatePickerCustom = ({
     value: value,
   }));
   return (
-    <div className={classNamesString(styles['DatePicker'], className)} {...restProps}>
+    <div className={classNames(styles['DatePicker'], className)} {...restProps}>
       <div className={styles['DatePicker__container']}>
         <div className={styles['DatePicker__day']}>
           <CustomSelect

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { TappableProps, Tappable } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
@@ -78,7 +78,7 @@ export const RichCell = ({
   return (
     <Tappable
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['RichCell'],
         !multiline && styles['RichCell--text-ellipsis'],
         getSizeYClassName(styles['RichCell'], sizeY),

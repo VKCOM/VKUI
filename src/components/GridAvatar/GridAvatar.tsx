@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { warnOnce } from '../../lib/warnOnce';
 import { type ImageBaseProps, ImageBase } from '../ImageBase/ImageBase';
 import { type GridAvatarBadgeProps, GridAvatarBadge } from './GridAvatarBadge/GridAvatarBadge';
@@ -37,11 +37,7 @@ export const GridAvatar = ({
   }
 
   return (
-    <ImageBase
-      {...restProps}
-      size={size}
-      className={classNamesString(styles['GridAvatar'], className)}
-    >
+    <ImageBase {...restProps} size={size} className={classNames(styles['GridAvatar'], className)}>
       <div className={styles['GridAvatar__in']} aria-hidden="true">
         {src.map((url, index) =>
           index < MAX_GRID_LENGTH ? (

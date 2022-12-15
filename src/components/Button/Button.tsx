@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { TappableProps, Tappable } from '../Tappable/Tappable';
 import { HasAlign } from '../../types';
@@ -55,7 +55,7 @@ export const Button = ({
       onClick={loading ? undefined : onClick}
       focusVisibleMode="outside"
       stopPropagation={stopPropagation}
-      className={classNamesString(
+      className={classNames(
         className,
         styles.Button,
         styles[`Button--size-${size}`],

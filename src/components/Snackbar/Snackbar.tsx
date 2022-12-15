@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Touch, TouchEvent } from '../Touch/Touch';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
 import { ViewWidth } from '../../lib/adaptivity';
@@ -191,7 +191,7 @@ export const Snackbar = ({
     <AppRootPortal>
       <div
         {...restProps}
-        className={classNamesString(
+        className={classNames(
           styles['Snackbar'],
           platform === Platform.IOS && styles['Snackbar--ios'],
           styles[`Snackbar--layout-${layout}`],

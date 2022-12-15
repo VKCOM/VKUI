@@ -5,7 +5,7 @@ import { HasRef } from '../../types';
 import { Platform } from '../../lib/platform';
 import { Separator } from '../Separator/Separator';
 import { PanelHeader, PanelHeaderProps } from '../PanelHeader/PanelHeader';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import styles from './ModalPageHeader.module.css';
 
@@ -30,7 +30,7 @@ export const ModalPageHeader = ({
 
   return (
     <div
-      className={classNamesString(
+      className={classNames(
         styles['ModalPageHeader'],
         getPlatformClassName(styles['ModalPageHeader'], platform),
         platform !== Platform.VKCOM && styles['ModalPageHeader--withGaps'],
@@ -39,7 +39,7 @@ export const ModalPageHeader = ({
       ref={getRef}
     >
       <PanelHeader
-        className={classNamesString(styles['ModalPageHeader__in'], className)}
+        className={classNames(styles['ModalPageHeader__in'], className)}
         {...restProps}
         fixed={false}
         separator={false}

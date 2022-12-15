@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { TappableProps, Tappable } from '../Tappable/Tappable';
 import styles from './Link.module.css';
 
@@ -18,11 +18,7 @@ export const Link = ({ hasVisited, children, className, ...restProps }: LinkProp
     <Tappable
       Component={restProps.href ? 'a' : 'button'}
       {...restProps}
-      className={classNamesString(
-        styles['Link'],
-        hasVisited && styles['Link--has-visited'],
-        className,
-      )}
+      className={classNames(styles['Link'], hasVisited && styles['Link--has-visited'], className)}
       hasHover={false}
       activeMode="opacity"
       focusVisibleMode={styles['Link--focus-visible']}

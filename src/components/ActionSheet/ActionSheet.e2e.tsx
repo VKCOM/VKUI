@@ -4,7 +4,7 @@ import { ActionSheet, ActionSheetProps } from './ActionSheet';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 import { SizeType, ViewWidth } from '../../lib/adaptivity';
-import { noop } from '../../lib/utils';
+import { noop } from '@vkontakte/vkjs';
 import { HasChildren } from '../../types';
 import { AppRoot } from '../AppRoot/AppRoot';
 import { usePlatform } from '../../hooks/usePlatform';

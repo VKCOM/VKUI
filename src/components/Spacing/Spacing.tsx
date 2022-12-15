@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import styles from './Spacing.module.css';
 
 export interface SpacingProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -23,7 +23,7 @@ export const Spacing = ({ size = 8, style: styleProp, className, ...restProps }:
     <div
       {...restProps}
       aria-hidden="true"
-      className={classNamesString(className, styles['Spacing'])}
+      className={classNames(className, styles['Spacing'])}
       style={style}
     />
   );

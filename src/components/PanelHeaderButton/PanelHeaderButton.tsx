@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { TappableProps, Tappable } from '../Tappable/Tappable';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
-import { classNamesString } from '../../lib/classNames';
+import { classNames, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { warnOnce } from '../../lib/warnOnce';
 import { usePlatform } from '../../hooks/usePlatform';
-import { getTitleFromChildren, isPrimitiveReactNode } from '../../lib/utils';
+import { getTitleFromChildren } from '../../lib/utils';
 import { Platform } from '../../lib/platform';
 import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
@@ -89,7 +89,7 @@ export const PanelHeaderButton = ({
       Component={restProps.href ? 'a' : 'button'}
       activeEffectDelay={200}
       activeMode={activeMode}
-      className={classNamesString(
+      className={classNames(
         styles['PanelHeaderButton'],
         getPlatformClassName(styles['PanelHeaderButton'], platform),
         isPrimitive && styles['PanelHeaderButton--primitive'],

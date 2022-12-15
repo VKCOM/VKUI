@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Icon16Done } from '@vkontakte/icons';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { hasReactNode } from '../../lib/utils';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -97,7 +97,7 @@ export const CustomSelectOption = ({
       title={title}
       aria-disabled={disabled}
       aria-selected={selected}
-      className={classNamesString(
+      className={classNames(
         styles['CustomSelectOption'],
         getSizeYClassName(styles['CustomSelectOption'], sizeY),
         hovered && !disabled && styles['CustomSelectOption--hover'],

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { noop } from '../../lib/utils';
+import { noop } from '@vkontakte/vkjs';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { clamp } from '../../helpers/math';
 import { useDOM } from '../../lib/dom';

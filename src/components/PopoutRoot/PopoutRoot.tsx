@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { blurActiveElement, useDOM } from '../../lib/dom';
@@ -15,7 +15,7 @@ const PopoutRootPopout = ({ children }: PopoutRootPopoutProps) => {
 
   return (
     <div
-      className={classNamesString(
+      className={classNames(
         styles['PopoutRoot__popout'],
         isDesktop && styles['PopoutRoot__popout--absolute'],
       )}
@@ -55,11 +55,7 @@ export const PopoutRoot = ({
   }, [document, popout]);
 
   return (
-    <div
-      {...restProps}
-      className={classNamesString(styles['PopoutRoot'], className)}
-      ref={getRootRef}
-    >
+    <div {...restProps} className={classNames(styles['PopoutRoot'], className)} ref={getRootRef}>
       {children}
       <AppRootPortal>
         {!!popout && <PopoutRootPopout>{popout}</PopoutRootPopout>}

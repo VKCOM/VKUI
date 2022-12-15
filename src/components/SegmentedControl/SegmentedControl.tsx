@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { generateRandomId } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
@@ -73,7 +73,7 @@ export const SegmentedControl = ({
   return (
     <div
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['SegmentedControl'],
         getSizeYClassName(styles['SegmentedControl'], sizeY),
         styles[`SegmentedControl--size-${size}`],
@@ -97,7 +97,7 @@ export const SegmentedControl = ({
           <SegmentedControlOption
             key={`${optionProps.value}`}
             {...optionProps}
-            className={classNamesString(styles['SegmentedControl__option'], optionClassName)}
+            className={classNames(styles['SegmentedControl__option'], optionClassName)}
             name={nameRef.current}
             checked={value === optionProps.value}
             onChange={() => onChange(optionProps.value)}

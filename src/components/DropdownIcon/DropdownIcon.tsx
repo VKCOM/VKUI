@@ -5,7 +5,7 @@ import {
   Icon24ChevronUp,
   Icon20ChevronUp,
 } from '@vkontakte/icons';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import styles from './DropdownIcon.module.css';
 
@@ -22,13 +22,13 @@ export const DropdownIcon = ({ opened = false, className, ...restProps }: Dropdo
     <React.Fragment>
       {sizeY.compact && (
         <IconCompact
-          className={classNamesString(styles['DropdownIcon'], sizeY.compact.className, className)}
+          className={classNames(styles['DropdownIcon'], sizeY.compact.className, className)}
           {...restProps}
         />
       )}
       {sizeY.regular && (
         <IconRegular
-          className={classNamesString(styles['DropdownIcon'], sizeY.regular.className, className)}
+          className={classNames(styles['DropdownIcon'], sizeY.regular.className, className)}
           {...restProps}
         />
       )}

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { baselineComponent, runAllTimers } from '../../testing/utils';
-import { noop } from '../../lib/utils';
+import { noop } from '@vkontakte/vkjs';
 import { PullToRefresh } from './PullToRefresh';
 import { act } from 'react-dom/test-utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';

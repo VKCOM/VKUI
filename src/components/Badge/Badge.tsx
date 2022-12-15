@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import styles from './Badge.module.css';
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLElement> {
@@ -11,7 +11,7 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLElement> {
  */
 export const Badge = ({ mode = 'new', className, ...restProps }: BadgeProps) => (
   <span
-    className={classNamesString(styles['Badge'], styles[`Badge--mode-${mode}`], className)}
+    className={classNames(styles['Badge'], styles[`Badge--mode-${mode}`], className)}
     {...restProps}
   />
 );

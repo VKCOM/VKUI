@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Platform } from '../../lib/platform';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { HasRef, HasRootRef } from '../../types';
 import { SplitColContext } from '../SplitCol/SplitCol';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
@@ -68,7 +68,7 @@ export const FixedLayout = ({
       {...restProps}
       fixed
       ref={getRootRef}
-      className={classNamesString(
+      className={classNames(
         styles['FixedLayout'],
         platform === Platform.IOS && styles['FixedLayout--ios'],
         filled && styles['FixedLayout--filled'],

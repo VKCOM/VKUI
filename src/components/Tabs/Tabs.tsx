@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
@@ -143,7 +143,7 @@ export const Tabs = ({
     <div
       {...restProps}
       ref={getRootRef}
-      className={classNamesString(
+      className={classNames(
         styles['Tabs'],
         platform === Platform.VKCOM && styles[`Tabs--${platform}`],
         getSizeXClassName(styles['Tabs'], sizeX),

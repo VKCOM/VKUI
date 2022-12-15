@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { useTimeout } from '../../hooks/useTimeout';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -51,7 +51,7 @@ export const PopoutWrapper = ({
   return (
     <div
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['PopoutWrapper'],
         styles[`PopoutWrapper--alignY-${alignY}`],
         styles[`PopoutWrapper--alignX-${alignX}`],

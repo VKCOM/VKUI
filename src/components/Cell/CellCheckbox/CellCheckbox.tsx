@@ -7,7 +7,7 @@ import {
 } from '@vkontakte/icons';
 import { getPlatformClassName } from '../../../helpers/getPlatformClassName';
 import { usePlatform } from '../../../hooks/usePlatform';
-import { classNamesString } from '../../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Platform } from '../../../lib/platform';
 import { CellProps } from '../Cell';
 import styles from './CellCheckbox.module.css';
@@ -30,7 +30,7 @@ export const CellCheckbox = ({ className, style, ...restProps }: CellCheckboxPro
 
   return (
     <div
-      className={classNamesString(
+      className={classNames(
         styles['CellCheckbox'],
         getPlatformClassName(styles['CellCheckbox'], platform),
         className,
@@ -38,17 +38,10 @@ export const CellCheckbox = ({ className, style, ...restProps }: CellCheckboxPro
       style={style}
     >
       <input className={styles['CellCheckbox__input']} type="checkbox" {...restProps} />
-      <span
-        className={classNamesString(
-          styles['CellCheckbox__icon'],
-          styles['CellCheckbox__icon--off'],
-        )}
-      >
+      <span className={classNames(styles['CellCheckbox__icon'], styles['CellCheckbox__icon--off'])}>
         <IconOff />
       </span>
-      <span
-        className={classNamesString(styles['CellCheckbox__icon'], styles['CellCheckbox__icon--on'])}
-      >
+      <span className={classNames(styles['CellCheckbox__icon'], styles['CellCheckbox__icon--on'])}>
         <IconOn />
       </span>
     </div>

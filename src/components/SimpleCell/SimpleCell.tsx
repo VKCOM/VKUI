@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { HasComponent } from '../../types';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { TappableProps, Tappable } from '../Tappable/Tappable';
 import { Icon24Chevron } from '@vkontakte/icons';
@@ -97,7 +97,7 @@ export const SimpleCell = ({
   return (
     <Tappable
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['SimpleCell'],
         getPlatformClassName(styles['SimpleCell'], platform),
         getSizeYClassName(styles['SimpleCell'], sizeY),
@@ -111,7 +111,7 @@ export const SimpleCell = ({
         {subhead && (
           <Subhead
             Component="span"
-            className={classNamesString(styles['SimpleCell__text'], styles['SimpleCell__subhead'])}
+            className={classNames(styles['SimpleCell__text'], styles['SimpleCell__subhead'])}
           >
             {subhead}
           </Subhead>
@@ -133,7 +133,7 @@ export const SimpleCell = ({
               <span className={styles['SimpleCell__badge']}>{badgeBeforeSubtitle}</span>
             )}
             <span
-              className={classNamesString(
+              className={classNames(
                 styles['SimpleCell__typography'],
                 styles['SimpleCell__text'],
                 styles['SimpleCell__subtitle'],
@@ -148,7 +148,7 @@ export const SimpleCell = ({
         )}
         {extraSubtitle && (
           <span
-            className={classNamesString(
+            className={classNames(
               styles['SimpleCell__typography'],
               styles['SimpleCell__text'],
               styles['SimpleCell__extraSubtitle'],

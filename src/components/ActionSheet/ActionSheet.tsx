@@ -3,7 +3,7 @@ import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { Platform } from '../../lib/platform';
 import { ActionSheetDropdownDesktop } from './ActionSheetDropdownDesktop';
 import { ActionSheetDropdown } from './ActionSheetDropdown';
-import { noop } from '../../lib/utils';
+import { noop } from '@vkontakte/vkjs';
 import { ActionSheetContext, ItemClickHandler } from './ActionSheetContext';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { usePlatform } from '../../hooks/usePlatform';

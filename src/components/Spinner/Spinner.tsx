@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Icon24Spinner, Icon32Spinner, Icon44Spinner, Icon16Spinner } from '@vkontakte/icons';
 import styles from './Spinner.module.css';
 
@@ -29,7 +29,7 @@ export const Spinner = React.memo(
         role="status"
         aria-label={ariaLabel}
         {...restProps}
-        className={classNamesString(styles['Spinner'], className)}
+        className={classNames(styles['Spinner'], className)}
       >
         <SpinnerIcon className={styles['Spinner__self']} />
       </span>

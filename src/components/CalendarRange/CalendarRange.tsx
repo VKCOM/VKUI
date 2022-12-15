@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import {
   addMonths,
   isSameMonth,
@@ -181,11 +181,7 @@ export const CalendarRange = ({
   );
 
   return (
-    <div
-      {...props}
-      ref={getRootRef}
-      className={classNamesString(styles['CalendarRange'], className)}
-    >
+    <div {...props} ref={getRootRef} className={classNames(styles['CalendarRange'], className)}>
       <div className={styles['CalendarRange__inner']}>
         <CalendarHeader
           viewDate={viewDate}

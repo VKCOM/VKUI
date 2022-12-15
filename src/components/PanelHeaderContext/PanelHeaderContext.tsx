@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDOM } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
@@ -66,7 +66,7 @@ export const PanelHeaderContext = ({
   return (
     <FixedLayout
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['PanelHeaderContext'],
         platform === Platform.IOS && styles['PanelHeaderContext--ios'],
         opened && styles['PanelHeaderContext--opened'],

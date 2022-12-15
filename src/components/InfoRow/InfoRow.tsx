@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Headline } from '../Typography/Headline/Headline';
 import { hasReactNode } from '../../lib/utils';
@@ -16,7 +16,7 @@ export const InfoRow = ({ header, children, className, ...restProps }: InfoRowPr
   <Headline
     {...restProps}
     Component="span"
-    className={classNamesString(styles['InfoRow'], className)}
+    className={classNames(styles['InfoRow'], className)}
     weight="3"
   >
     {hasReactNode(header) && (

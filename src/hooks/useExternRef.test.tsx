@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { noop } from '../lib/utils';
+import { noop } from '@vkontakte/vkjs';
 import * as React from 'react';
 import { HasRef } from '../types';
 import { useExternRef } from './useExternRef';

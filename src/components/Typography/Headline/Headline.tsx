@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { HasComponent, HasRootRef } from '../../../types';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
-import { classNamesString } from '../../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { warnOnce } from '../../../lib/warnOnce';
 import { getSizeYClassName } from '../../../helpers/getSizeYClassName';
 import styles from './Headline.module.css';
@@ -41,7 +41,7 @@ export const Headline = ({
     <Component
       {...restProps}
       ref={getRootRef}
-      className={classNamesString(
+      className={classNames(
         className,
         styles['Headline'],
         getSizeYClassName(styles['Headline'], sizeY),

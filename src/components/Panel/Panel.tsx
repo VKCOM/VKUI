@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getSizeXClassName } from '../../helpers/getSizeXClassName';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Touch } from '../Touch/Touch';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { HasRootRef } from '../../types';
@@ -35,7 +35,7 @@ export const Panel = ({
     <div
       {...restProps}
       ref={getRootRef}
-      className={classNamesString(
+      className={classNames(
         styles['Panel'],
         getSizeXClassName(styles['Panel'], sizeX),
         centered && styles['Panel--centered'],

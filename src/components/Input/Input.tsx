@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { FormField, FormFieldProps } from '../FormField/FormField';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
@@ -33,7 +33,7 @@ export const Input = ({
   return (
     <FormField
       style={style}
-      className={classNamesString(
+      className={classNames(
         styles['Input'],
         align && styles[`Input--align-${align}`],
         getSizeYClassName(styles['Input'], sizeY),

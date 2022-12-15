@@ -2,12 +2,11 @@ import * as React from 'react';
 import { Modifier } from 'react-popper';
 import { CustomScrollView } from '../CustomScrollView/CustomScrollView';
 import { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
-import { classNamesString } from '../../lib/classNames';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { Popper, Placement } from '../Popper/Popper';
 import { Spinner } from '../Spinner/Spinner';
 import { HasRef } from '../../types';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { noop } from '../../lib/utils';
 import styles from './CustomSelectDropdown.module.css';
 
 export interface CustomSelectDropdownProps
@@ -101,7 +100,7 @@ export const CustomSelectDropdown = ({
       sameWidth={sameWidth}
       onPlacementChange={onPlacementChange}
       placement={placement}
-      className={classNamesString(
+      className={classNames(
         styles['CustomSelectDropdown'],
         offsetDistance === 0 &&
           (isTop ? styles['CustomSelectDropdown--top'] : styles['CustomSelectDropdown--bottom']),

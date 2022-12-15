@@ -8,7 +8,7 @@ import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/
 import { Platform } from '../../lib/platform';
 import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { usePlatform } from '../../hooks/usePlatform';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import styles from './PanelHeaderBack.module.css';
 
@@ -44,7 +44,7 @@ export const PanelHeaderBack = ({
   return (
     <PanelHeaderButton
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['PanelHeaderBack'],
         getSizeXClassName(styles['PanelHeaderBack'], sizeX),
         platform === Platform.IOS && styles['PanelHeaderBack--ios'],

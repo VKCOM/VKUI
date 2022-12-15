@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Icon24Dismiss } from '@vkontakte/icons';
 import { Button } from '../Button/Button';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
@@ -75,7 +75,7 @@ export const PromoBanner = ({
   }, [statsPixels.playbackStarted]);
 
   return (
-    <div className={classNamesString(styles['PromoBanner'], className)} {...restProps}>
+    <div className={classNames(styles['PromoBanner'], className)} {...restProps}>
       <div className={styles['PromoBanner__head']}>
         <Footnote className={styles['PromoBanner__label']}>
           {bannerData.advertisingLabel || 'Advertisement'}

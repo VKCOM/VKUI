@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useDOM } from '../../lib/dom';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { PopperCommonProps, Popper } from '../Popper/Popper';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { useTimeout } from '../../hooks/useTimeout';
@@ -152,7 +152,7 @@ export const Popover = ({
       {shown && (
         <Popper
           {...restProps}
-          className={classNamesString(styles['Popover'], className)}
+          className={classNames(styles['Popover'], className)}
           targetRef={childRef}
           getRef={patchedPopperRef}
           offsetDistance={offsetDistance}

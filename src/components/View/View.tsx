@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { animationEvent } from '../../lib/supportEvents';
 import { Platform } from '../../lib/platform';
 import { Touch, TouchEvent } from '../Touch/Touch';
@@ -16,7 +16,6 @@ import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { useTimeout } from '../../hooks/useTimeout';
 import { usePrevious } from '../../hooks/usePrevious';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { noop } from '../../lib/utils';
 import styles from './View.module.css';
 import iosStyles from './ViewIOS.module.css';
 
@@ -461,7 +460,7 @@ export const View = ({
     <Touch
       Component="section"
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['View'],
         platform === Platform.IOS && iosStyles['View--ios'],
         !disableAnimation && animated && styles['View--animated'],
@@ -482,7 +481,7 @@ export const View = ({
 
           return (
             <div
-              className={classNamesString(
+              className={classNames(
                 styles['View__panel'],
                 panelId === activePanel && iosStyles['View__panel--active'],
                 panelId === prevPanel && styles['View__panel--prev'],

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import styles from './Tabbar.module.css';
@@ -39,7 +39,7 @@ export const Tabbar = ({ children, shadow = true, mode, className, ...restProps 
 
   return (
     <div
-      className={classNamesString(
+      className={classNames(
         styles['Tabbar'],
         platform === Platform.IOS && styles['Tabbar--ios'],
         getItemsLayoutClassName(mode, children),

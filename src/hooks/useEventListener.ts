@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { noop } from '../lib/utils';
+import { noop } from '@vkontakte/vkjs';
 import { canUseDOM } from '../lib/dom';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 

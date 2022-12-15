@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { useDOM } from '../../lib/dom';
-import { classNamesString } from '../../lib/classNames';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { AppRootContext } from './AppRootContext';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { IconSettingsProvider } from '@vkontakte/icons';
 import { ElementScrollController, GlobalScrollController } from './ScrollContext';
-import { noop } from '../../lib/utils';
 import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
 import { useInsets } from '../../hooks/useInsets';
 import { Insets } from '@vkontakte/vk-bridge';
@@ -176,7 +175,7 @@ export const AppRoot = ({
   ) : (
     <div
       ref={rootRef}
-      className={classNamesString(
+      className={classNames(
         styles['AppRoot'],
         hasPointer === undefined
           ? styles['AppRoot--pointer-none']

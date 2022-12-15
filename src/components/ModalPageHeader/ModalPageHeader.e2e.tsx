@@ -6,7 +6,7 @@ import { Icon24Cancel, Icon24Dismiss, Icon24Done } from '@vkontakte/icons';
 import { Platform } from '../../lib/platform';
 import { ViewWidth } from '../../lib/adaptivity';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
-import { noop } from '../../lib/utils';
+import { noop } from '@vkontakte/vkjs';
 
 const BaseModalPageHeader = (props: ModalPageHeaderProps) => (
   <ModalRootContext.Provider

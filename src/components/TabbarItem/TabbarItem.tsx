@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import { Tappable } from '../Tappable/Tappable';
@@ -44,7 +44,7 @@ export const TabbarItem = ({
       {...restProps}
       disabled={disabled}
       href={href}
-      className={classNamesString(
+      className={classNames(
         styles['TabbarItem'],
         platform === Platform.IOS && styles['TabbarItem--ios'],
         platform === Platform.ANDROID && styles['TabbarItem--android'],

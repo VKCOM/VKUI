@@ -139,7 +139,7 @@
     "vkui/no-object-expression-in-arguments": [
       "error",
       {
-        "onlyForFunctionsWithNames": ["classNames", "classNamesString"]
+        "onlyForFunctionsWithNames": ["classNames"]
       }
     ],
     "compat/compat": "error",

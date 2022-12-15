@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ACTIVE_EFFECT_DELAY, Tappable } from '../Tappable/Tappable';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import {
   Icon20CheckBoxOn,
@@ -95,7 +95,7 @@ export const Checkbox = ({
   return (
     <Tappable
       Component="label"
-      className={classNamesString(
+      className={classNames(
         styles['Checkbox'],
         platform === Platform.VKCOM && styles['Checkbox--vkcom'],
         getSizeYClassName(styles['Checkbox'], sizeY),
@@ -114,7 +114,7 @@ export const Checkbox = ({
         className={styles['Checkbox__input']}
         getRef={inputRef}
       />
-      <div className={classNamesString(styles['Checkbox__icon'], styles['Checkbox__icon--on'])}>
+      <div className={classNames(styles['Checkbox__icon'], styles['Checkbox__icon--on'])}>
         {platform === Platform.VKCOM ? (
           <Icon20CheckBoxOn />
         ) : (
@@ -128,7 +128,7 @@ export const Checkbox = ({
           </React.Fragment>
         )}
       </div>
-      <div className={classNamesString(styles['Checkbox__icon'], styles['Checkbox__icon--off'])}>
+      <div className={classNames(styles['Checkbox__icon'], styles['Checkbox__icon--off'])}>
         {platform === Platform.VKCOM ? (
           <Icon20CheckBoxOff />
         ) : (
@@ -143,10 +143,7 @@ export const Checkbox = ({
         )}
       </div>
       <div
-        className={classNamesString(
-          styles['Checkbox__icon'],
-          styles['Checkbox__icon--indeterminate'],
-        )}
+        className={classNames(styles['Checkbox__icon'], styles['Checkbox__icon--indeterminate'])}
       >
         {platform === Platform.VKCOM ? (
           <Icon20CheckBoxIndetermanate width={20} height={20} />

@@ -5,7 +5,7 @@ import { easeInOutSine } from '../../lib/fx';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
 import { HasRef } from '../../types';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import styles from './HorizontalScroll.module.css';
 
 interface ScrollContext {
@@ -202,7 +202,7 @@ export const HorizontalScroll = ({
   return (
     <div
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['HorizontalScroll'],
         showArrows === 'always' && styles['HorizontalScroll--withConstArrows'],
         className,

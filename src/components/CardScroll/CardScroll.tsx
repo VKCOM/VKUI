@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { HorizontalScroll, HorizontalScrollProps } from '../HorizontalScroll/HorizontalScroll';
@@ -88,7 +88,7 @@ export const CardScroll = ({
   return (
     <div
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         styles['CardScroll'],
         getSizeXClassName(styles['CardScroll'], sizeX),
         styles[`CardScroll--size-${size}`],

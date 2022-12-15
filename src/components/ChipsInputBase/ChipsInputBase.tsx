@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
-import { classNamesString } from '../../lib/classNames';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { Chip, ChipOption, ChipValue, RenderChip } from '../Chip/Chip';
-import { noop } from '../../lib/utils';
 import { useChipsInput } from '../../hooks/useChipsInput';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -141,7 +140,7 @@ export const ChipsInputBase = <Option extends ChipOption>(props: ChipsInputBaseP
       onClick={handleClick}
       role="presentation"
       style={style}
-      className={classNamesString(
+      className={classNames(
         styles['ChipsInputBase'],
         getSizeYClassName(styles['ChipsInputBase'], sizeY),
         className,

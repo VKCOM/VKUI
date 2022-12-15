@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { classNamesString } from '../../lib/classNames';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Icon16SearchOutline, Icon16Clear, Icon24Cancel } from '@vkontakte/icons';
 import { Platform } from '../../lib/platform';
 import { HasRef } from '../../types';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import { VKUITouchEvent } from '../../lib/touch';
-import { noop } from '../../lib/utils';
 import { Title } from '../Typography/Title/Title';
 import { Headline } from '../Typography/Headline/Headline';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -116,7 +115,7 @@ export const Search = ({
 
   return (
     <div
-      className={classNamesString(
+      className={classNames(
         styles['Search'],
         platform === Platform.IOS && styles['Search--ios'],
         getSizeYClassName(styles['Search'], sizeY),

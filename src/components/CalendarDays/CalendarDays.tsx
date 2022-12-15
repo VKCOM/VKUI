@@ -3,7 +3,7 @@ import { isSameDay, isSameMonth } from '../../lib/date';
 import { CalendarDay, CalendarDayElementProps } from '../CalendarDay/CalendarDay';
 import { getDaysNames, getWeeks } from '../../lib/calendar';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { classNamesString } from '../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { useTodayDate } from '../../hooks/useTodayDate';
 import styles from './CalendarDays.module.css';
@@ -74,9 +74,9 @@ export const CalendarDays = ({
   );
 
   return (
-    <div {...props} className={classNamesString(styles['CalendarDays'], className)} ref={ref}>
+    <div {...props} className={classNames(styles['CalendarDays'], className)} ref={ref}>
       <div
-        className={classNamesString(
+        className={classNames(
           styles['CalendarDays__row'],
           size && styles[`CalendarDays__row--size-${size}`],
         )}
@@ -90,7 +90,7 @@ export const CalendarDays = ({
 
       {weeks.map((week, i) => (
         <div
-          className={classNamesString(
+          className={classNames(
             styles['CalendarDays__row'],
             size && styles[`CalendarDays__row--size-${size}`],
           )}

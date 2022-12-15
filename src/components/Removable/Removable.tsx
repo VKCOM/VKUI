@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { HasRootRef } from '../../types';
-import { classNamesString } from '../../lib/classNames';
-import { getTitleFromChildren, noop } from '../../lib/utils';
+import { classNames, noop } from '@vkontakte/vkjs';
+import { getTitleFromChildren } from '../../lib/utils';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -84,7 +84,7 @@ const RemovableIos = ({
         hasActive={false}
         hasHover={false}
         aria-label={removePlaceholderString}
-        className={classNamesString(styles['Removable__action'], styles['Removable__toggle'])}
+        className={classNames(styles['Removable__action'], styles['Removable__toggle'])}
         onClick={onRemoveActivateClick}
         disabled={removeOffset > 0}
       >
@@ -147,7 +147,7 @@ export const Removable = ({
     <div
       {...restProps}
       ref={ref}
-      className={classNamesString(
+      className={classNames(
         styles['Removable'],
         platform === Platform.IOS && styles['Removable--ios'],
         styles[`Removable--align-${align}`],

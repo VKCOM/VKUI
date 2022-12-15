@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { HasComponent } from '../../../types';
-import { classNamesString } from '../../../lib/classNames';
+import { classNames } from '@vkontakte/vkjs';
 import styles from './Footnote.module.css';
 
 export interface FootnoteProps extends React.AllHTMLAttributes<HTMLElement>, HasComponent {
@@ -25,7 +25,7 @@ export const Footnote = ({
   return (
     <Component
       {...restProps}
-      className={classNamesString(
+      className={classNames(
         className,
         styles['Footnote'],
         caps && styles['Footnote--caps'],
