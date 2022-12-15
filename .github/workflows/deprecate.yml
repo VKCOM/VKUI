@@ -1,4 +1,4 @@
-name: 'Deprecate package'
+name: "Deprecate package"
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ on:
         description: 'type version: x.y.z (without "v")'
         required: true
       reason:
-        description: 'reason for deprecation (only latin supported)'
+        description: "reason for deprecation (only latin supported)"
         required: true
 
 run-name: Deprecate version ${{ inputs.version }}
@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: "https://registry.npmjs.org"
 
       - name: Deprecate version
         run: npm deprecate "@vkontakte/vkui@${{ github.event.inputs.version }}" "${{ github.event.inputs.reason }}"
