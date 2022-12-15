@@ -1,5 +1,5 @@
 import { warnOnce } from '../../lib/warnOnce';
-import type { ImageBaseSize } from './types';
+import { imageBaseSizes } from './types';
 import {
   getBadgeIconSizeByImageBaseSize,
   getFallbackIconSizeByImageBaseSize,
@@ -94,28 +94,13 @@ export function validateFallbackIcon(imageSize: number, iconProp: IconProp) {
   );
 }
 
-const mapOfExpectedSize: { [K in ImageBaseSize]: boolean } = {
-  16: true,
-  20: true,
-  24: true,
-  28: true,
-  32: true,
-  36: true,
-  40: true,
-  44: true,
-  48: true,
-  56: true,
-  64: true,
-  72: true,
-  80: true,
-  88: true,
-  96: true,
-};
+const mapOfExpectedSize = new Set<number>(imageBaseSizes);
+
 const arrayOfSizes = Object.keys(mapOfExpectedSize).map((str) => Number(str));
 const maxSize = arrayOfSizes.reduce((maxSize, size) => (size > maxSize ? size : maxSize), 0);
 
 export function validateSize(imageSize: number): void {
-  if (imageSize > maxSize || imageSize in mapOfExpectedSize) {
+  if (imageSize > maxSize || mapOfExpectedSize.has(imageSize)) {
     return;
   }
   warnImageBase(
