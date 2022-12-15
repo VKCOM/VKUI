@@ -1,0 +1,9 @@
+name: 'Patch'
+description: 'GitLab Flow create patch'
+inputs:
+  token:
+    required: true
+    description: 'token with access to your repository'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

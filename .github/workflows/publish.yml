@@ -57,10 +57,12 @@ jobs:
           github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           branch: ${{ github.ref }}
 
+      - run: yarn install --frozen-lockfile --ignore-scripts && yarn build
+        working-directory: ./.github/actions/stable-branch
       - name: Create stable branch
-        run: node ./.github/gitflow/stable_branch.js
-        env:
-          INPUT_GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+        uses: ./.github/actions/stable-branch
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
       - name: Publishing release
         run: yarn publish --non-interactive

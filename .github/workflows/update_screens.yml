@@ -41,5 +41,13 @@ jobs:
           APPEARANCE: ${{ matrix.appearance }}
           BROWSER: ${{ matrix.browser }}
           PLATFORM: ${{ matrix.platform }}
+
+      - name: Set Git credentials
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Action"
+
+      - run: yarn install --frozen-lockfile --ignore-scripts && yarn build
+        working-directory: ./.github/actions/push-screenshots
       - name: Push updated screenshots
-        run: node ./.github/gitflow/push_with_retry.js
+        uses: ./.github/actions/push-screenshots

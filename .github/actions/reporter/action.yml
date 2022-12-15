@@ -1,0 +1,18 @@
+name: 'Reporter'
+description: 'Reporter'
+inputs:
+  awsEndpoint:
+    required: true
+    description: 'awsEndpoint'
+  awsAccessKeyId:
+    required: true
+    description: 'awsAccessKeyId'
+  awsSecretKey:
+    required: true
+    description: 'awsSecretKey'
+  token:
+    required: true
+    description: 'token with access to your repository'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
