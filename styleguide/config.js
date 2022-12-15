@@ -304,6 +304,8 @@ const baseConfig = {
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ConfigProvider/ConfigProvider.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/LocaleProvider/LocaleProvider.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Touch/Touch.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/PlatformProvider/PlatformProvider.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/AppearanceProvider/AppearanceProvider.tsx`,
           ],
         },
       ],

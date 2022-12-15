@@ -1,14 +1,12 @@
 import * as React from 'react';
 import {
-  AppearanceProvider,
-  generateVKUITokensClassName,
-} from '../AppearanceProvider/AppearanceProvider';
-import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
   useConfigProvider,
 } from './ConfigProviderContext';
+import { TokensClassProvider } from '../../lib/tokensClassProvider';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
+import { generateVKUITokensClassName } from '../../helpers/generateVKUITokensClassName';
 import { useAutoDetectAppearance } from '../../hooks/useAutoDetectAppearance';
 import { noop } from '@vkontakte/vkjs';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -66,7 +64,9 @@ export const ConfigProvider = (props: ConfigProviderProps) => {
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
-      <AppearanceProvider appearance={appearance}>{children}</AppearanceProvider>
+      <TokensClassProvider platform={platform} appearance={appearance}>
+        {children}
+      </TokensClassProvider>
     </ConfigProviderContext.Provider>
   );
 };
