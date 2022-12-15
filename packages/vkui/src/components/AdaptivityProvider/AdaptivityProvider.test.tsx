@@ -76,7 +76,7 @@ describe('AdaptivityProvider', () => {
       viewportHeight: 0,
     });
   });
-  baselineComponent(AdaptivityProvider, { forward: false });
+  baselineComponent(AdaptivityProvider, { forward: false, a11y: false });
   describe('bridge adaptivity', () => {
     it('should apply bridge adaptivity [viewWidth] SMALL_MOBILE', () => {
       const result = renderBridgeAdaptive(300, 420);

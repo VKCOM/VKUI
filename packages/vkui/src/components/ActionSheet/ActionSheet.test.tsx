@@ -30,7 +30,7 @@ describe('ActionSheet', () => {
     ['desktop', ActionSheetDesktop],
     ['mobile', ActionSheetMobile],
   ])('%s', (_name, ActionSheet) => {
-    baselineComponent((p) => <ActionSheet {...p} />);
+    baselineComponent((p) => <ActionSheet {...p} />, { a11y: false });
 
     describe('calls handlers', () => {
       it.each([

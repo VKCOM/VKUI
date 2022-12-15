@@ -71,7 +71,7 @@ const ActionSheetTest = ({
 describe('FocusTrap', () => {
   beforeAll(() => jest.useFakeTimers('modern'));
   afterAll(() => jest.useRealTimers());
-  baselineComponent(FocusTrap);
+  baselineComponent(FocusTrap, { a11y: false });
 
   const mountActionSheetViaClick = async () => {
     userEvent.click(screen.getByTestId('toggle')); // mount ActionSheet

@@ -15,7 +15,7 @@ const views = [
 describe('Root', () => {
   beforeAll(() => jest.useFakeTimers('modern'));
   afterAll(() => jest.useRealTimers());
-  baselineComponent(Root);
+  baselineComponent(Root, { a11y: false });
   describe('With View', () =>
     mountTest(() => (
       <Root activeView="view">

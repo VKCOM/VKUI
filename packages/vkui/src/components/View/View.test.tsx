@@ -17,7 +17,7 @@ describe.each([
 ])('%s', (name, View) => {
   beforeAll(() => jest.useFakeTimers('modern'));
   afterAll(() => jest.useRealTimers());
-  baselineComponent(View);
+  baselineComponent(View, { a11y: false });
   describe('With Panel', () =>
     mountTest(() => (
       <View activePanel="panel">

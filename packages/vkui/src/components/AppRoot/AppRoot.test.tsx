@@ -7,7 +7,7 @@ import { SizeType } from '../../lib/adaptivity';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 
 describe('AppRoot', () => {
-  baselineComponent(AppRoot);
+  baselineComponent(AppRoot, { a11y: false });
   describe('Manages portal root in embedded mode', () => {
     describe('Creates & injects portal root', () => {
       it.each(['embedded', 'partial'] as const)('in %s mode', (mode) => {

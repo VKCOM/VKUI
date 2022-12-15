@@ -9,5 +9,5 @@ describe('Epic', () => {
   afterAll(() => {
     (window.scrollTo as any).mockRestore();
   });
-  baselineComponent(Epic);
+  baselineComponent(Epic, { a11y: false });
 });

@@ -11,7 +11,7 @@ import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 describe('Alert', () => {
   beforeAll(() => jest.useFakeTimers('modern'));
   afterAll(() => jest.useRealTimers());
-  baselineComponent(Alert);
+  baselineComponent(Alert, { a11y: false });
   describe('closes', () => {
     it.each(['overlay', 'close'])('with %s click', (trigger) => {
       const onClose = jest.fn();

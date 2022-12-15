@@ -1,11 +1,15 @@
 import * as React from 'react';
 import { render, RenderResult, screen } from '@testing-library/react';
+import { axe, toHaveNoViolations } from 'jest-axe';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
 import { ImgOnlyAttributes } from '../lib/utils';
 import { ScrollContext } from '../components/AppRoot/ScrollContext';
 import { act } from 'react-dom/test-utils';
 import { HasChildren } from '../types';
+
+// axe-core rules: https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md
+expect.extend(toHaveNoViolations);
 
 export function fakeTimers() {
   beforeEach(() => jest.useFakeTimers('modern'));
@@ -39,6 +43,7 @@ export type ComponentTestOptions = {
   forward?: boolean;
   domAttr?: boolean;
   className?: boolean;
+  a11y?: boolean;
   style?: boolean;
   adaptivity?: AdaptivityProps;
 };
@@ -57,6 +62,15 @@ export function mountTest(Component: React.ComponentType<any>) {
   });
 }
 
+export function a11yTest(Component: React.ComponentType<any>) {
+  it('a11y: has no violations', async () => {
+    const { container } = render(<Component />);
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+}
+
 export function baselineComponent<Props extends BasicProps>(
   RawComponent: React.ComponentType<Props>,
   {
@@ -64,6 +78,7 @@ export function baselineComponent<Props extends BasicProps>(
     style = true,
     className = true,
     domAttr = true,
+    a11y = true,
     adaptivity,
   }: ComponentTestOptions = {},
 ) {
@@ -74,7 +89,11 @@ export function baselineComponent<Props extends BasicProps>(
         </AdaptivityProvider>
       )
     : RawComponent;
+
   mountTest(Component);
+
+  a11y && a11yTest(Component);
+
   forward &&
     it('forwards attributes', async () => {
       const cls = 'Custom';

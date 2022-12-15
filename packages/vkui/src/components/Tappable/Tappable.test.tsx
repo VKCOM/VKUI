@@ -16,7 +16,7 @@ describe('Tappable', () => {
   beforeAll(() => jest.useFakeTimers('modern'));
   afterAll(() => jest.useRealTimers());
   afterEach(() => delete window['ontouchstart']);
-  baselineComponent(TappableTest);
+  baselineComponent(TappableTest, { a11y: false });
 
   it('Component: if no Component is passed Tappable becomes a div', () => {
     render(<TappableTest>Look, ma, no Component!</TappableTest>);
