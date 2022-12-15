@@ -9,7 +9,7 @@
 }
 
 .Preview--vkcom {
-  border-radius: 8px;
+  border-radius: var(--vkui--size_border_radius_paper--regular);
 }
 
 .Preview__shadow {
