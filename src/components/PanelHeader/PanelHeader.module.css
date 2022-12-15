@@ -253,16 +253,16 @@
 }
 
 .PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.ModalPageHeader__in) .PanelHeader__in {
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: var(--vkui--size_border_radius_paper--regular);
+  border-top-right-radius: var(--vkui--size_border_radius_paper--regular);
   box-shadow: 0 0 0 var(--vkui_internal--thin_border) var(--vkui--color_field_border_alpha) inset;
   border-bottom: none;
 }
 
 @media (--sizeX-regular) {
   .PanelHeader--vkcom.PanelHeader--sizeX-none:not(.ModalPageHeader__in) .PanelHeader__in {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    border-top-left-radius: var(--vkui--size_border_radius_paper--regular);
+    border-top-right-radius: var(--vkui--size_border_radius_paper--regular);
     box-shadow: 0 0 0 var(--vkui_internal--thin_border) var(--vkui--color_field_border_alpha) inset;
     border-bottom: none;
   }
