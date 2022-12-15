@@ -105,6 +105,10 @@ export interface SelectProps extends NativeSelectProps, FormFieldProps, TrackerO
    * Текст, который будет отображен, если приходит пустой `options`.
    */
   emptyText?: string;
+  /**
+   * > ⚠️ В v6 из возвращаемых типов будет удалён `CustomSelectOptionInterface[]`. Для кастомной фильтрации используйте
+   * > `filterFn`.
+   */
   onInputChange?: (
     e: React.ChangeEvent,
     options: CustomSelectOptionInterface[],
@@ -331,15 +335,18 @@ export function CustomSelect(props: SelectProps) {
     [focusOptionByIndex, keyboardInput, options],
   );
 
+  /**
+   * Note: сбрасывать `options` через `setOptions(optionsProp)` не нужно.
+   *  Сброс происходит в одном из эффекте `updateOptionsAndSelectedOptionIndex()`.
+   */
   const close = React.useCallback(() => {
     resetKeyboardInput();
 
     setInputValue('');
     setOpened(false);
     setFocusedOptionIndex(-1);
-    setOptions(optionsProp);
     onClose?.();
-  }, [onClose, optionsProp, resetKeyboardInput]);
+  }, [onClose, resetKeyboardInput]);
 
   const selectFocused = React.useCallback(() => {
     if (focusedOptionIndex !== undefined && isValidIndex(focusedOptionIndex)) {
@@ -401,25 +408,28 @@ export function CustomSelect(props: SelectProps) {
     [focusOptionByIndex, focusedOptionIndex, options],
   );
 
-  React.useEffect(() => {
-    const value = props.value ?? nativeSelectValue ?? props.defaultValue;
+  React.useEffect(
+    function updateOptionsAndSelectedOptionIndex() {
+      const value = props.value ?? nativeSelectValue ?? props.defaultValue;
 
-    const options =
-      searchable && inputValue !== undefined
-        ? filter(optionsProp, inputValue, filterFn)
-        : optionsProp;
+      const options =
+        searchable && inputValue !== undefined
+          ? filter(optionsProp, inputValue, filterFn)
+          : optionsProp;
 
-    setOptions(options);
-    setSelectedOptionIndex(findSelectedIndex(options, value));
-  }, [
-    filterFn,
-    inputValue,
-    nativeSelectValue,
-    optionsProp,
-    props.defaultValue,
-    props.value,
-    searchable,
-  ]);
+      setOptions(options);
+      setSelectedOptionIndex(findSelectedIndex(options, value));
+    },
+    [
+      filterFn,
+      inputValue,
+      nativeSelectValue,
+      optionsProp,
+      props.defaultValue,
+      props.value,
+      searchable,
+    ],
+  );
 
   /**
    * Нужен для правильного поведения обработчика onClick на select. Фильтрует клики, которые были сделаны по
@@ -431,19 +441,16 @@ export function CustomSelect(props: SelectProps) {
     }
   }, []);
 
-  const onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> = React.useCallback(
-    (e) => {
-      const newSelectedOptionIndex = findSelectedIndex(options, e.currentTarget.value);
+  const onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
+    const newSelectedOptionIndex = findSelectedIndex(options, e.currentTarget.value);
 
-      if (selectedOptionIndex !== newSelectedOptionIndex) {
-        if (!isControlledOutside) {
-          setSelectedOptionIndex(newSelectedOptionIndex);
-        }
-        onChange?.(e);
+    if (selectedOptionIndex !== newSelectedOptionIndex) {
+      if (!isControlledOutside) {
+        setSelectedOptionIndex(newSelectedOptionIndex);
       }
-    },
-    [isControlledOutside, onChange, options, selectedOptionIndex],
-  );
+      onChange?.(e);
+    }
+  };
 
   const onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = React.useCallback(
     (event) => {
@@ -471,13 +478,14 @@ export function CustomSelect(props: SelectProps) {
 
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
     (e) => {
+      // TODO v6 удалить `onInputChangeProp`.
       if (onInputChangeProp) {
         const options = onInputChangeProp(e, optionsProp);
         if (options) {
           if (process.env.NODE_ENV === 'development') {
             warn(
               'Этот метод фильтрации устарел. Возвращаемое значение onInputChange будет ' +
-                'проигнорировано в v5.0.0. Для фильтрации обновляйте props.options самостоятельно или используйте свойство filterFn.',
+                'проигнорировано в v6.0.0. Для фильтрации обновляйте props.options самостоятельно или используйте свойство filterFn.',
             );
           }
           setOptions(options);
