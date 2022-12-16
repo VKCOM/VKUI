@@ -14,6 +14,8 @@ export interface DropdownIconProps extends React.HTMLAttributes<SVGSVGElement> {
 }
 
 export const DropdownIcon = ({ opened = false, className, ...restProps }: DropdownIconProps) => {
+  const ariaLabel = opened ? 'Закрыть' : 'Открыть';
+
   const { sizeY } = useAdaptivityConditionalRender();
   const IconCompact = opened ? Icon20ChevronUp : Icon20Dropdown;
   const IconRegular = opened ? Icon24ChevronUp : Icon24ChevronDown;
@@ -23,12 +25,14 @@ export const DropdownIcon = ({ opened = false, className, ...restProps }: Dropdo
       {sizeY.compact && (
         <IconCompact
           className={classNames(styles['DropdownIcon'], sizeY.compact.className, className)}
+          aria-label={ariaLabel}
           {...restProps}
         />
       )}
       {sizeY.regular && (
         <IconRegular
           className={classNames(styles['DropdownIcon'], sizeY.regular.className, className)}
+          aria-label={ariaLabel}
           {...restProps}
         />
       )}
