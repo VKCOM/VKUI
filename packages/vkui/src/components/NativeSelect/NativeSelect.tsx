@@ -91,6 +91,7 @@ const NativeSelect = ({
       status={status}
     >
       <select
+        aria-label={placeholder ?? 'Выберите опцию'}
         {...restProps}
         disabled={disabled}
         className={styles['Select__el']}
