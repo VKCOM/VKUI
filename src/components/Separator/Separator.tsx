@@ -15,7 +15,7 @@ export interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
 export const Separator = ({ wide, className, ...restProps }: SeparatorProps) => (
   <div
     {...restProps}
-    aria-hidden="true"
+    aria-hidden
     className={classNames(styles['Separator'], !wide && styles['Separator--padded'], className)}
     role="separator"
   >

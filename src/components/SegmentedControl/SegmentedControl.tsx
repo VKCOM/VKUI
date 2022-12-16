@@ -84,7 +84,7 @@ export const SegmentedControl = ({
       <div role="radiogroup" className={styles['SegmentedControl__in']}>
         {activeOptionIdx > -1 && (
           <div
-            aria-hidden="true"
+            aria-hidden
             className={styles['SegmentedControl__slider']}
             style={{
               width: `${100 / options.length}%`,

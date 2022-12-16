@@ -649,7 +649,7 @@ export function CustomSelect(props: SelectProps) {
       ) : (
         <SelectMimicry
           {...restProps}
-          aria-hidden={true}
+          aria-hidden
           onClick={onClick}
           onKeyDown={handleKeyDownSelect}
           onKeyUp={handleKeyUp}
@@ -670,7 +670,7 @@ export function CustomSelect(props: SelectProps) {
         onFocus={props.onFocus}
         onClick={props.onClick}
         value={nativeSelectValue}
-        aria-hidden={true}
+        aria-hidden
         className={styles['CustomSelect__control']}
       >
         {optionsProp.map((item) => (
