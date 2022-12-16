@@ -1,10 +1,10 @@
 .CellCheckbox__icon {
+  display: none;
   color: var(--vkui--color_icon_tertiary);
 }
 
-.CellCheckbox__input,
-.CellCheckbox__icon {
-  display: none;
+.CellCheckbox__input {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }
 
 .CellCheckbox__icon--on {
