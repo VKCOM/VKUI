@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render, RenderResult, screen } from '@testing-library/react';
-import { axe, toHaveNoViolations } from 'jest-axe';
+import { configureAxe, toHaveNoViolations } from 'jest-axe';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
 import { ImgOnlyAttributes } from '../lib/utils';
@@ -8,7 +8,21 @@ import { ScrollContext } from '../components/AppRoot/ScrollContext';
 import { act } from 'react-dom/test-utils';
 import { HasChildren } from '../types';
 
-// axe-core rules: https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md
+const axe = configureAxe({
+  /**
+   * @see https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md
+   */
+  rules: {
+    'aria-required-parent': {
+      /*
+       * a11y: Certain ARIA roles must be contained by particular parents (aria-required-parent)
+       *       мы тестируем компоненты атомарно, поэтому это конкретное правило в нашем случае
+       *       не подходит
+       */
+      enabled: false,
+    },
+  },
+});
 expect.extend(toHaveNoViolations);
 
 export function fakeTimers() {
@@ -62,8 +76,11 @@ export function mountTest(Component: React.ComponentType<any>) {
   });
 }
 
-export function a11yTest(Component: React.ComponentType<any>) {
-  it('a11y: has no violations', async () => {
+export function a11yTest(
+  testName = 'a11y: has no violations',
+  Component: React.ComponentType<any>,
+) {
+  it(testName, async () => {
     const { container } = render(<Component />);
 
     const results = await axe(container);
@@ -92,7 +109,7 @@ export function baselineComponent<Props extends BasicProps>(
 
   mountTest(Component);
 
-  a11y && a11yTest(Component);
+  a11y && a11yTest(undefined, Component);
 
   forward &&
     it('forwards attributes', async () => {
