@@ -21,6 +21,14 @@ const axe = configureAxe({
        */
       enabled: false,
     },
+    'label': {
+      /*
+       * a11y: Form elements must have labels (label)
+       *       мы тестируем компоненты атомарно, поэтому это конкретное правило в нашем случае
+       *       не подходит: мы не можем задать дефолтные лейблы компонентам форм
+       */
+      enabled: false,
+    },
   },
 });
 expect.extend(toHaveNoViolations);
