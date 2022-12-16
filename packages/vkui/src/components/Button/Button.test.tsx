@@ -7,7 +7,12 @@ const ButtonTest = (props: ButtonProps) => <Button data-testid="custom-btn" {...
 const button = () => screen.getByTestId('custom-btn');
 
 describe('Button', () => {
-  baselineComponent(Button);
+  /*
+   * a11y: Buttons must have discernible text (button-name)
+   *       тест ругается на отсутствие текста, доступного скринридерам.
+   *       в реальной жизни мы вряд ли будем так использовать компонент
+   */
+  baselineComponent((p) => <Button {...p}>Button</Button>);
 
   it('Component: Button is handled as a native button', () => {
     render(<ButtonTest>Native Button</ButtonTest>);

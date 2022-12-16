@@ -10,7 +10,12 @@ const label = 'Перенести ячейку';
 const dragger = () => screen.getByLabelText(label);
 
 describe('Cell', () => {
-  baselineComponent(Cell);
+  /*
+   * a11y: ARIA commands must have an accessible name (aria-command-name)
+   *       тест ругается на отсутствие текста, доступного скринридерам.
+   *       в реальной жизни мы вряд ли будем так использовать компонент
+   */
+  baselineComponent((p) => <Cell {...p}>Cell</Cell>);
 
   describe('Controls dragging', () => {
     it('on mouse up/down', () => {

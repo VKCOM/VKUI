@@ -9,7 +9,12 @@ const PanelHeaderButtonTest = (props: PanelHeaderButtonProps) => (
 const button = () => screen.getByTestId('button');
 
 describe('PanelHeaderButton', () => {
-  baselineComponent(PanelHeaderButton);
+  /*
+   * a11y: Buttons must have discernible text (button-name)
+   *       мы не можем задать компоненту дефолтный aria-label,
+   *       поэтому фиксим тест тем, что передаем его сами
+   */
+  baselineComponent((p) => <PanelHeaderButton {...p}>Кнопка</PanelHeaderButton>);
 
   it('Component: default PanelHeaderButton is a button', () => {
     render(<PanelHeaderButtonTest />);

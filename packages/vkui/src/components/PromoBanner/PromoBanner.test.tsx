@@ -5,7 +5,14 @@ import { baselineComponent } from '../../testing/utils';
 import { PromoBanner } from './PromoBanner';
 
 describe('PromoBanner', () => {
-  baselineComponent(PromoBanner);
+  baselineComponent((p) => (
+    /*
+     * a11y: ARIA commands must have an accessible name (aria-command-name)
+     *       тест ругается на отсутствие текста, доступного скринридерам.
+     *       в реальной жизни мы вряд ли будем так использовать компонент
+     */
+    <PromoBanner onClose={noop} bannerData={{ title: 'PromoBanner' }} {...p}></PromoBanner>
+  ));
 
   it('renders by default', () => {
     render(<PromoBanner data-testid="test" bannerData={{}} onClose={noop} />);

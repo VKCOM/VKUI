@@ -16,7 +16,12 @@ const card = () => screen.getByTestId('card');
 const img = () => card().querySelector('img');
 
 describe('ContentCard', () => {
-  baselineComponent((props) => <ContentCard src="/image.png" {...props} />);
+  /*
+   * a11y: ARIA commands must have an accessible name (aria-command-name)
+   *       тест ругается на отсутствие текста, доступного скринридерам.
+   *       в реальной жизни мы вряд ли будем так использовать компонент
+   */
+  baselineComponent((p) => <ContentCard src="/image.png" header="ContentCard" {...p} />);
 
   it('[img] renders img if src is passed', () => {
     render(<ContentCardTest src="/image.png" />);

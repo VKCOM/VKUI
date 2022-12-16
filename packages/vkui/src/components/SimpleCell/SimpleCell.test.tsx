@@ -6,7 +6,12 @@ import { SizeType } from '../../lib/adaptivity';
 import { SimpleCell } from './SimpleCell';
 
 describe('SimpleCell', () => {
-  baselineComponent(SimpleCell);
+  /*
+   * a11y: ARIA commands must have an accessible name (aria-command-name)
+   *       тест ругается на отсутствие текста, доступного скринридерам.
+   *       в реальной жизни мы вряд ли будем так использовать компонент
+   */
+  baselineComponent((p) => <SimpleCell {...p}>SimpleCell</SimpleCell>);
 
   it('[typography] indicator is a span regardless of sizeY', () => {
     const { rerender } = render(

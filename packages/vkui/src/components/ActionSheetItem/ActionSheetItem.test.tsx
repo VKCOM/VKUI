@@ -9,7 +9,12 @@ const ActionSheetItemTest = (props: ActionSheetItemProps) => (
 const item = () => screen.getByTestId('item');
 
 describe('ActionSheetItem', () => {
-  baselineComponent(ActionSheetItem);
+  /*
+   * a11y: ARIA commands must have an accessible name (aria-command-name)
+   *       тест ругается на отсутствие текста, доступного скринридерам.
+   *       в реальной жизни мы вряд ли будем так использовать компонент
+   */
+  baselineComponent((p) => <ActionSheetItem {...p}>ActionSheetItem</ActionSheetItem>);
 
   it('Component: ActionSheetItem is a custom button by default', () => {
     render(<ActionSheetItemTest>ActionSheetItem</ActionSheetItemTest>);
