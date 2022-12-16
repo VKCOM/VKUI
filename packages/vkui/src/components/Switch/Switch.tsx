@@ -44,7 +44,7 @@ export const Switch = ({ style, className, getRootRef, ...restProps }: SwitchPro
         onBlur={callMultiple(onBlur, restProps.onBlur)}
         onFocus={callMultiple(onFocus, restProps.onFocus)}
       />
-      <span role="presentation" className={styles['Switch__pseudo']} />
+      <span aria-hidden className={styles['Switch__pseudo']} />
       <FocusVisible mode="outside" />
     </label>
   );
