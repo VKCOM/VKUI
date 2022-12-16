@@ -239,7 +239,6 @@ export const DateInput = ({
       />
       <span className={styles['DateInput__input']} onKeyDown={handleKeyDown}>
         <InputLike
-          tabIndex={1}
           length={2}
           getRootRef={daysRef}
           index={0}
