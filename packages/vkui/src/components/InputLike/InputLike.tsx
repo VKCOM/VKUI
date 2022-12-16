@@ -54,10 +54,12 @@ export const InputLike = ({
         value?.length === length && styles[`InputLike--full`],
         className,
       )}
+      role="textbox"
       tabIndex={0}
       ref={getRootRef}
       onClick={callMultiple(onClick, handleElementSelect)}
       onFocus={callMultiple(stopPropagation, onFocus)}
+      aria-label="Введите текст"
       {...props}
     >
       {value?.slice(0, length - 1)}
