@@ -237,7 +237,7 @@
   "dependencies": {
     "@babel/runtime": "^7.14.6",
     "@popperjs/core": "^2.9.2",
-    "@vkontakte/vkjs": "^0.29.0",
+    "@vkontakte/vkjs": "^0.30.0",
     "dayjs": "^1.11.0",
     "mitt": "^3.0.0",
     "react-popper": "^2.2.5"
