@@ -4,7 +4,6 @@ import { render } from '@testing-library/react';
 import { Counter } from './Counter';
 
 describe('Counter', () => {
-  baselineComponent(Counter, { forward: false });
   baselineComponent((p) => <Counter {...p}>10</Counter>);
   it('Does not render empty', () => {
     expect(render(<Counter />).container).toBeEmptyDOMElement();
