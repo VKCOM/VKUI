@@ -36,10 +36,7 @@
 
 /**
  * SizeY = compact
- *
- * TODO v5.0.0 поправить под новую адаптивность
  */
-
 .SubnavigationButton--sizeY-compact.SubnavigationButton--size-s
   .SubnavigationButton__in {
   height: var(--vkui--size_button_small_height--compact);
@@ -53,6 +50,23 @@
 .SubnavigationButton--sizeY-compact.SubnavigationButton--size-l
   .SubnavigationButton__in {
   height: var(--vkui--size_button_large_height--compact);
+}
+
+@media (--sizeY-compact) {
+  .SubnavigationButton--sizeY-none.SubnavigationButton--size-s
+    .SubnavigationButton__in {
+    height: var(--vkui--size_button_small_height--compact);
+  }
+
+  .SubnavigationButton--sizeY-none.SubnavigationButton--size-m
+    .SubnavigationButton__in {
+    height: var(--vkui--size_button_medium_height--compact);
+  }
+
+  .SubnavigationButton--sizeY-none.SubnavigationButton--size-l
+    .SubnavigationButton__in {
+    height: var(--vkui--size_button_large_height--compact);
+  }
 }
 
 .SubnavigationButton__before {
