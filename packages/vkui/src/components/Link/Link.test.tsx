@@ -11,7 +11,13 @@ const LinkTest = (props: LinkProps) => (
 const link = () => screen.getByTestId('link');
 
 describe('Link', () => {
-  baselineComponent(Link);
+  /*
+   * a11y: Buttons must have discernible text (button-name)
+   * a11y: Links must have discernible text (link-name)
+   *       мы не можем задать компоненту дефолтный текст,
+   *       поэтому фиксим тест тем, что передаем его сами
+   */
+  baselineComponent((p) => <Link {...p}>Link</Link>);
 
   it('Component: default Link is a button', () => {
     render(<LinkTest />);
