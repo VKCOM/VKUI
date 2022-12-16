@@ -10,8 +10,10 @@ import { useInsets } from '../../hooks/useInsets';
 import { Insets } from '@vkontakte/vk-bridge';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAppearance } from '../../hooks/useAppearance';
+import { usePlatform } from '../../hooks/usePlatform';
 import { isRefObject } from '../../lib/isRefObject';
 import { getSizeXClassName } from '../../helpers/getSizeXClassName';
+import { generateVKUITokensClassName } from '../AppearanceProvider/AppearanceProvider';
 import styles from './AppRoot.module.css';
 
 const INSET_CUSTOM_PROPERTY_PREFIX = `--vkui_internal--safe_area_inset_`;
@@ -50,6 +52,7 @@ export const AppRoot = ({
   const { document } = useDOM();
   const insets = useInsets();
   const appearance = useAppearance();
+  const platform = usePlatform();
 
   const { hasPointer, sizeX } = useAdaptivity();
 
@@ -140,13 +143,26 @@ export const AppRoot = ({
   }, [sizeX]);
 
   useIsomorphicLayoutEffect(() => {
-    if (mode !== 'full' || appearance === undefined) {
+    if (mode !== 'full') {
       return noop;
     }
     document!.documentElement.style.setProperty('color-scheme', appearance);
 
     return () => document!.documentElement.style.removeProperty('color-scheme');
   }, [appearance]);
+
+  useIsomorphicLayoutEffect(() => {
+    if (mode !== 'full') {
+      return noop;
+    }
+
+    const VKUITokensClassName = generateVKUITokensClassName(platform, appearance);
+    document!.body.classList.add(VKUITokensClassName);
+
+    return () => {
+      document!.body.classList.remove(VKUITokensClassName);
+    };
+  }, [platform, appearance]);
 
   const ScrollController = React.useMemo(
     () => (scroll === 'contain' ? ElementScrollController : GlobalScrollController),
