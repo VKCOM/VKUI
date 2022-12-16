@@ -47,7 +47,13 @@ export const Input = ({
       disabled={restProps.disabled}
       status={status}
     >
-      <input {...restProps} type={type} className={styles['Input__el']} ref={getRef} />
+      <input
+        placeholder="Введите текст"
+        {...restProps}
+        type={type}
+        className={styles['Input__el']}
+        ref={getRef}
+      />
     </FormField>
   );
 };
