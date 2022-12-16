@@ -70,7 +70,7 @@ export const Chip = ({
     >
       <div className={styles['Chip__in']} role="presentation">
         {hasReactNode(before) && <div className={styles['Chip__before']}>{before}</div>}
-        <Footnote className={styles['Chip__content']} title={title} aria-hidden="true">
+        <Footnote className={styles['Chip__content']} title={title} aria-hidden>
           {children}
         </Footnote>
         {hasReactNode(after) && <div className={styles['Chip__after']}>{after}</div>}

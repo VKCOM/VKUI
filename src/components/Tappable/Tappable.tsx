@@ -339,7 +339,7 @@ export const Tappable = ({
     >
       <TappableContext.Provider value={childContext}>{children}</TappableContext.Provider>
       {needWaves && (
-        <span aria-hidden="true" className={styles.Tappable__waves}>
+        <span aria-hidden className={styles.Tappable__waves}>
           {clicks.map((wave) => (
             <span
               key={wave.id}
@@ -350,7 +350,7 @@ export const Tappable = ({
         </span>
       )}
       {((hasHover && hoverMode === 'background') || (hasActive && activeMode === 'background')) && (
-        <span aria-hidden="true" className={styles.Tappable__stateLayer} />
+        <span aria-hidden className={styles.Tappable__stateLayer} />
       )}
       {!props.disabled && isPresetFocusVisibleMode && (
         <FocusVisible mode={focusVisibleMode as FocusVisibleMode} />

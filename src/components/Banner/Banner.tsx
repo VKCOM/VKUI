@@ -117,7 +117,7 @@ export const Banner = ({
   const content = (
     <React.Fragment>
       {mode === 'image' && background && (
-        <div aria-hidden="true" className={styles['Banner__bg']}>
+        <div aria-hidden className={styles['Banner__bg']}>
           {background}
         </div>
       )}

@@ -343,7 +343,7 @@ export const BaseGallery = ({
 
       {bullets && (
         <div
-          aria-hidden="true"
+          aria-hidden
           className={classNames(
             styles['BaseGallery__bullets'],
             styles[`BaseGallery__bullets--${bullets}`],
