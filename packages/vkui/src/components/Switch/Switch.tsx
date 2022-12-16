@@ -36,7 +36,6 @@ export const Switch = ({ style, className, getRootRef, ...restProps }: SwitchPro
       )}
       style={style}
       ref={getRootRef}
-      role="presentation"
     >
       <VisuallyHiddenInput
         {...restProps}
