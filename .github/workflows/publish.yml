@@ -71,7 +71,7 @@ jobs:
 
       - name: Save updated package version to env
         id: updated_version
-        run: echo "::set-output name=version::$(node -p "require('./package.json').version")"
+        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
       - name: Creating doc for stable release
         run: |
