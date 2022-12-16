@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { VisuallyHiddenInput } from '../VisuallyHiddenInput/VisuallyHiddenInput';
 import { classNames } from '@vkontakte/vkjs';
 import { HasComponent, HasRef } from '../../types';
 import styles from './FormLayout.module.css';
@@ -27,10 +28,8 @@ export const FormLayout = ({
       onSubmit={onSubmit}
       ref={getRef}
     >
-      <div className={styles['FormLayout__container']}>{children}</div>
-      {Component === 'form' && (
-        <input type="submit" className={styles['FormLayout__submit']} value="" />
-      )}
+      <div>{children}</div>
+      {Component === 'form' && <VisuallyHiddenInput type="submit" value="Отправить" />}
     </Component>
   );
 };
