@@ -1,10 +1,30 @@
 import * as React from "react";
+import "@testing-library/jest-dom/extend-expect";
 import { baselineComponent, waitForPopper } from "../../testing/utils";
-import { CustomSelect } from "./CustomSelect";
+import { type SelectProps, CustomSelect } from "./CustomSelect";
 import { useState } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 
 const getCustomSelectValue = () => screen.getByTestId("target").textContent;
+
+const CustomSelectControlled = ({
+  options,
+  initialValue,
+  ...restProps
+}: Omit<SelectProps, "value" | "onChange"> & { initialValue?: string }) => {
+  const [value, setValue] = React.useState(initialValue);
+  const handleChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+    setValue(event.target.value);
+  };
+  return (
+    <CustomSelect
+      {...restProps}
+      options={options}
+      value={value}
+      onChange={handleChange}
+    />
+  );
+};
 
 describe("CustomSelect", () => {
   baselineComponent(CustomSelect);
@@ -322,6 +342,44 @@ describe("CustomSelect", () => {
     expect(screen.getByTitle("Joe").getAttribute("aria-selected")).toEqual(
       "true"
     );
+  });
+
+  // см. https://github.com/VKCOM/VKUI/issues/3600
+  it("is searchable – should correct re-calculate index of the options when them will be filtered", async () => {
+    render(
+      <CustomSelectControlled
+        searchable
+        data-testid="target"
+        initialValue="3"
+        options={[
+          { value: "0", label: "Не выбрано" },
+          { value: "1", label: "Категория 1" },
+          { value: "2", label: "Категория 2" },
+          { value: "3", label: "Категория 3" },
+        ]}
+      />
+    );
+
+    fireEvent.click(screen.getByTestId("target"));
+
+    expect(screen.getByTitle("Категория 3")).toHaveAttribute(
+      "aria-selected",
+      "true"
+    );
+
+    fireEvent.change(screen.getByTestId("target"), {
+      target: { value: "Кат" },
+    });
+
+    expect(screen.getByTitle("Категория 3")).toHaveAttribute(
+      "aria-selected",
+      "true"
+    );
+
+    fireEvent.mouseEnter(screen.getByTitle("Категория 2"));
+    fireEvent.click(screen.getByTitle("Категория 2"));
+
+    expect(getCustomSelectValue()).toEqual("Категория 2");
   });
 
   it("fires onOpen and onClose correctly", async () => {
