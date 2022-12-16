@@ -64,16 +64,22 @@ export const Chip = ({
         removable && styles['Chip--removable'],
         className,
       )}
-      role="option"
-      aria-label={title}
       {...restProps}
     >
       <div className={styles['Chip__in']} role="presentation">
-        {hasReactNode(before) && <div className={styles['Chip__before']}>{before}</div>}
-        <Footnote className={styles['Chip__content']} title={title} aria-hidden>
+        {hasReactNode(before) && (
+          <div className={styles['Chip__before']} aria-hidden>
+            {before}
+          </div>
+        )}
+        <Footnote className={styles['Chip__content']} role="option">
           {children}
         </Footnote>
-        {hasReactNode(after) && <div className={styles['Chip__after']}>{after}</div>}
+        {hasReactNode(after) && (
+          <div className={styles['Chip__after']} aria-hidden>
+            {after}
+          </div>
+        )}
 
         {removable && (
           <Tappable
