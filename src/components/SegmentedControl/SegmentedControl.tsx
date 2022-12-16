@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { generateRandomId } from '../../lib/utils';
+import { useId } from '../../hooks/useId';
 import { warnOnce } from '../../lib/warnOnce';
 import { SegmentedControlOption } from './SegmentedControlOption/SegmentedControlOption';
 import { HasRootRef } from '../../types';
@@ -46,6 +46,8 @@ export const SegmentedControl = ({
   value: valueProp,
   ...restProps
 }: SegmentedControlProps) => {
+  const id = useId();
+
   const [value, onChange] = useCustomEnsuredControl({
     onChange: onChangeProp,
     value: valueProp,
@@ -55,8 +57,6 @@ export const SegmentedControl = ({
   const { sizeY } = useAdaptivity();
 
   const [activeOptionIdx, updateActiveOptionIdx] = React.useState<number>(0);
-
-  const nameRef = React.useRef<string>(name ?? generateRandomId());
 
   useIsomorphicLayoutEffect(() => {
     const _activeOptionIdx = options.findIndex((option) => option.value === value);
@@ -98,7 +98,7 @@ export const SegmentedControl = ({
             key={`${optionProps.value}`}
             {...optionProps}
             className={classNames(styles['SegmentedControl__option'], optionClassName)}
-            name={nameRef.current}
+            name={name ?? id}
             checked={value === optionProps.value}
             onChange={() => onChange(optionProps.value)}
           >

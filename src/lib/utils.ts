@@ -55,11 +55,5 @@ export function getTitleFromChildren(children: React.ReactNode): string {
   return label;
 }
 
-export const generateRandomId = () => {
-  return Math.random()
-    .toString(36)
-    .replace(/[^a-z]+/g, '');
-};
-
 export const stopPropagation = <T extends React.SyntheticEvent>(event: T) =>
   event.stopPropagation();
