@@ -7,6 +7,7 @@ import { Text } from '../Typography/Text/Text';
 import { TappableProps, Tappable } from '../Tappable/Tappable';
 import { HasRef, HasRootRef } from '../../types';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
 import styles from './ContentCard.module.css';
 
 export interface ContentCardProps
@@ -36,6 +37,9 @@ export interface ContentCardProps
   maxHeight?: number;
   mode?: CardProps['mode'];
 }
+
+const warn = warnOnce('ContentCard');
+const IS_DEV = process.env.NODE_ENV === 'development';
 
 /**
  * @see https://vkcom.github.io/VKUI/#/ContentCard
@@ -68,6 +72,10 @@ export const ContentCard = ({
   hasActive = false,
   ...restProps
 }: ContentCardProps) => {
+  if (IS_DEV && (src || srcSet) && !alt) {
+    warn(COMMON_WARNINGS.a11y['image-alt'], 'error');
+  }
+
   return (
     <Card
       mode={mode}

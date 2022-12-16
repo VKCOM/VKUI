@@ -20,11 +20,13 @@ describe('ContentCard', () => {
    * a11y: ARIA commands must have an accessible name (aria-command-name)
    *       тест ругается на отсутствие текста, доступного скринридерам.
    *       в реальной жизни мы вряд ли будем так использовать компонент
+   *
+   * a11y: Images must have alternate text (image-alt)
    */
-  baselineComponent((p) => <ContentCard src="/image.png" header="ContentCard" {...p} />);
+  baselineComponent((p) => <ContentCard src="/image.png" alt="test" header="ContentCard" {...p} />);
 
   it('[img] renders img if src is passed', () => {
-    render(<ContentCardTest src="/image.png" />);
+    render(<ContentCardTest src="/image.png" alt="test" />);
 
     expect(img()).toBeInTheDocument();
   });
@@ -37,7 +39,7 @@ describe('ContentCard', () => {
 
   it('[img] passes ref to img', () => {
     const refCallback = jest.fn();
-    render(<ContentCardTest src="/image.png" getRef={refCallback} />);
+    render(<ContentCardTest src="/image.png" alt="test" getRef={refCallback} />);
 
     expect(refCallback).toBeCalled();
   });
