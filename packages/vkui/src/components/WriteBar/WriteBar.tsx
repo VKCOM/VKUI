@@ -97,6 +97,7 @@ export const WriteBar = ({
 
         <div className={styles['WriteBar__formIn']}>
           <Headline
+            placeholder="Сообщение"
             {...restProps}
             Component="textarea"
             className={styles['WriteBar__textarea']}
