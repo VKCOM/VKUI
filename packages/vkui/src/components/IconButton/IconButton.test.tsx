@@ -12,7 +12,13 @@ const IconButtonTest = (props: IconButtonProps) => (
 const button = () => screen.getByTestId('button');
 
 describe('IconButton', () => {
-  baselineComponent(IconButton);
+  /*
+   * a11y: Buttons must have discernible text (button-name)
+   * a11y: Links must have discernible text (link-name)
+   *       мы не можем задать компоненту дефолтный aria-label,
+   *       поэтому фиксим тест тем, что передаем его сами
+   */
+  baselineComponent((p) => <IconButton aria-label="IconButton" {...p} />);
 
   it('Component: default IconButton is a button', () => {
     render(<IconButtonTest />);

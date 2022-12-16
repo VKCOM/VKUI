@@ -5,6 +5,7 @@ import { Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Platform } from '../../lib/platform';
 import { HasComponent, HasRootRef } from '../../types';
+import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
 import styles from './TabbarItem.module.css';
 
 export interface TabbarItemProps
@@ -22,6 +23,9 @@ export interface TabbarItemProps
   indicator?: React.ReactNode;
 }
 
+const warn = warnOnce('TabbarItem');
+const IS_DEV = process.env.NODE_ENV === 'development';
+
 /**
  * @see https://vkcom.github.io/VKUI/#/TabbarItem
  */
@@ -37,6 +41,10 @@ export const TabbarItem = ({
   ...restProps
 }: TabbarItemProps) => {
   const platform = usePlatform();
+
+  if (IS_DEV && !restProps['aria-label'] && !text) {
+    warn(COMMON_WARNINGS.a11y['button-name'], 'error');
+  }
 
   return (
     <Component

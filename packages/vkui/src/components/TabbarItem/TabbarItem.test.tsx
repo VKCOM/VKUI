@@ -5,7 +5,12 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 describe('TabbarItem', () => {
-  baselineComponent(TabbarItem);
+  /*
+   * a11y: Buttons must have discernible text (button-name)
+   *       мы не можем задать компоненту дефолтный aria-label,
+   *       поэтому фиксим тест тем, что передаем его сами
+   */
+  baselineComponent((p) => <TabbarItem aria-label="TabbarItem" {...p} />);
 
   it('renders button by default', () => {
     render(<TabbarItem data-testid="test" />);

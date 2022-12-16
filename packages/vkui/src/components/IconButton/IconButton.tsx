@@ -5,11 +5,15 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
 import styles from './IconButton.module.css';
 
 export interface IconButtonProps extends TappableProps {
   children?: React.ReactNode;
 }
+
+const warn = warnOnce('IconButton');
+const IS_DEV = process.env.NODE_ENV === 'development';
 
 /**
  * @see https://vkcom.github.io/VKUI/#/IconButton
@@ -22,6 +26,10 @@ export const IconButton = ({
 }: IconButtonProps) => {
   const platform = usePlatform();
   const { sizeY } = useAdaptivity();
+
+  if (IS_DEV && !restProps['aria-label']) {
+    warn(COMMON_WARNINGS.a11y['button-name'], 'error');
+  }
 
   return (
     <Tappable

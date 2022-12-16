@@ -1,28 +1,26 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import { baselineComponent } from '../../testing/utils';
-import { WriteBarIcon, WriteBarIconProps } from './WriteBarIcon';
-
-const WriteBarIconTest = (props: WriteBarIconProps) => (
-  <WriteBarIcon data-testid="button" {...props} />
-);
-const button = () => screen.getByTestId('button');
+import { a11yTest, baselineComponent } from '../../testing/utils';
+import { WriteBarIcon } from './WriteBarIcon';
 
 describe('WriteBarIcon', () => {
-  baselineComponent(WriteBarIcon);
+  /*
+   * a11y: Buttons must have discernible text (button-name)
+   *       мы не можем задать компоненту дефолтный aria-label,
+   *       поэтому фиксим тест тем, что передаем его сами
+   */
+  baselineComponent((p) => <WriteBarIcon aria-label="WriteBarIcon" {...p} />);
 
   it('shows counter when count={0} is provided', () => {
     const count = 0;
 
-    render(<WriteBarIconTest mode="attach" count={0} />);
+    render(<WriteBarIcon mode="attach" count={0} />);
     const counter = screen.getByText(count.toString());
 
     expect(counter).toBeInTheDocument();
   });
 
-  it('a11y: adds default aria-label for assigned mode', () => {
-    render(<WriteBarIconTest mode="send" />);
-
-    expect(button()).toHaveAttribute('aria-label', 'Отправить');
-  });
+  a11yTest('a11y: has no violations when mode is assigned', (p) => (
+    <WriteBarIcon mode="attach" {...p} />
+  ));
 });
