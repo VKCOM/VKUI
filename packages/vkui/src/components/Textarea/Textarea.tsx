@@ -74,6 +74,7 @@ export const Textarea = ({
       status={status}
     >
       <textarea
+        placeholder="Сообщение"
         {...restProps}
         style={{ maxHeight }}
         rows={rows}
