@@ -61,7 +61,7 @@ export class GitHubCommentBuilder {
       return;
     }
 
-    this.gh.rest.issues.createComment({
+    return this.gh.rest.issues.createComment({
       ...params,
       issue_number,
     });

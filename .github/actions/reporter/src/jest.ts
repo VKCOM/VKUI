@@ -11,8 +11,8 @@ interface Callsite {
 }
 
 interface FormattedAssertionResult {
-  ancestorTitles: Array<string>;
-  failureMessages: Array<string> | null;
+  ancestorTitles: string[];
+  failureMessages: string[] | null;
   fullName: string;
   location?: Callsite | null;
   status: Status;
@@ -32,7 +32,7 @@ interface FormattedTestResults {
   // snapshot: SnapshotSummary;
   startTime: number;
   success: boolean;
-  testResults: Array<FormattedTestResult>;
+  testResults: FormattedTestResult[];
   wasInterrupted: boolean;
 }
 
@@ -44,7 +44,7 @@ interface FormattedTestResult {
   startTime: number;
   endTime: number;
   coverage: unknown;
-  assertionResults: Array<FormattedAssertionResult>;
+  assertionResults: FormattedAssertionResult[];
 }
 
 function getMessage({ failureMessages }: FormattedAssertionResult) {

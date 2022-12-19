@@ -11,7 +11,9 @@ export async function checkUpdatedScreenshots(gh: ReturnType<typeof github.getOc
 
   const files = await gh.rest.pulls.listFiles(params);
 
-  const hasModifiedScreens = files.data.some((file) => /__image_snapshots__/.test(file.filename));
+  const hasModifiedScreens = files.data.some((file) =>
+    file.filename.includes('__image_snapshots__'),
+  );
   const hasUpdatedViaAction = await updatedViaAction(gh);
 
   if (hasModifiedScreens && !hasUpdatedViaAction) {
