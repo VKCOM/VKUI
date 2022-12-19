@@ -8945,9 +8945,9 @@ react-fast-compare@^3.0.1:
   integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
 
 react-frame-component@^5.2.3:
-  version "5.2.3"
-  resolved "https://registry.yarnpkg.com/react-frame-component/-/react-frame-component-5.2.3.tgz#2d5d1e29b23d5b915c839b44980d03bb9cafc453"
-  integrity sha512-r+h0o3r/uqOLNT724z4CRVkxQouKJvoi3OPfjqWACD30Y87rtEmeJrNZf1WYPGknn1Y8200HAjx7hY/dPUGgmA==
+  version "5.2.4"
+  resolved "https://registry.yarnpkg.com/react-frame-component/-/react-frame-component-5.2.4.tgz#8282849fe0eb315fb30b00c67e5e979f8f63c01a"
+  integrity sha512-4xpZFcLNS6LCEYSlWgsUy81v7LjdgbvB0VHIq7sNSD25PK+e5YYCrdy5557ebGwNLKNLEpYVfAkT3pVzFLPb1g==
 
 react-group@^3.0.2:
   version "3.0.2"
