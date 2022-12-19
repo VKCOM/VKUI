@@ -8165,12 +8165,12 @@ playwright-firefox@1.29.0:
   dependencies:
     playwright-core "1.29.0"
 
-playwright-webkit@1.28.1:
-  version "1.28.1"
-  resolved "https://registry.yarnpkg.com/playwright-webkit/-/playwright-webkit-1.28.1.tgz#045715a36c7559d3d016282b724836b40bab05b4"
-  integrity sha512-YXykabEC0Wgj9amZTKE0pAcf+2PqrYpOrk+ceod/QMMiSfmW/74wKyjcpoFbM3ROAVJI7b/bD4QmPx+DOoSvAw==
+playwright-webkit@1.29.0:
+  version "1.29.0"
+  resolved "https://registry.yarnpkg.com/playwright-webkit/-/playwright-webkit-1.29.0.tgz#92f7017d4467878c076e82568f88936d0c919bb4"
+  integrity sha512-8x+sh9olc/ldctDBFv9txXiUx7Zt1dAc1zWPksrGh7gdoQ4Wfa0mOL5iGG+VHweUNqwY/kNwzEHXYI4nyN74Qw==
   dependencies:
-    playwright-core "1.28.1"
+    playwright-core "1.29.0"
 
 playwright@1.28.1:
   version "1.28.1"
