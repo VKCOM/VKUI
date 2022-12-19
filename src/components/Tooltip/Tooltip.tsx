@@ -25,6 +25,7 @@ interface SimpleTooltipProps extends Partial<TooltipProps> {
     arrow: React.HTMLAttributes<HTMLDivElement> | null;
     container: React.HTMLAttributes<HTMLDivElement> | null;
   };
+  className?: string;
 }
 
 /**
@@ -61,6 +62,7 @@ const SimpleTooltip = React.forwardRef<HTMLDivElement, SimpleTooltipProps>(
       arrow,
       style: popperStyles = {},
       attributes,
+      className,
     },
     ref
   ) {
@@ -71,7 +73,8 @@ const SimpleTooltip = React.forwardRef<HTMLDivElement, SimpleTooltipProps>(
       <div
         className={classNamesString(
           styles["Tooltip"],
-          styles[`Tooltip--appearance-${appearance}`]
+          styles[`Tooltip--appearance-${appearance}`],
+          className
         )}
       >
         <div
@@ -167,6 +170,10 @@ export interface TooltipProps {
    * По умолчанию компонент выберет наилучшее расположение сам. Но его можно задать извне с помощью этого свойства
    */
   placement?: Placement;
+  /**
+   * Пользовательские css-классы, будут добавлены на root-элемент
+   */
+  className?: string;
 }
 
 function mapAlignX(x: TooltipProps["alignX"]) {
