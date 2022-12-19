@@ -30,16 +30,12 @@ async function run(): Promise<void> {
     await retry(
       async () => {
         await exec.exec('git', ['add', './**/*.png']);
-        await exec.exec('git', [
-          'diff-index',
-          '--quiet',
-          'HEAD',
-          '||',
-          'git',
-          'commit',
-          '-m',
-          `"CHORE: Update screenshots"`,
-        ]);
+
+        try {
+          await exec.exec('git', ['diff-index', '--quiet', 'HEAD']);
+        } catch (e) {
+          await exec.exec('git', ['commit', '-m', `"CHORE: Update screenshots"`]);
+        }
       },
       async () => {
         await exec.exec('git', ['pull', '--rebase', '--autostash']);
