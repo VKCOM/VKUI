@@ -1,5 +1,3 @@
-/* eslint-disable compat/compat */
-
 import fsPromises from 'fs/promises';
 
 import { getVKUIToken } from './styleProperty';

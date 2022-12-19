@@ -1,14 +1,9 @@
 {
-  "extends": ["@vkontakte/eslint-config/react", "prettier"],
-  "rules": {
-    "react/prop-types": [0],
-    "no-shadow": "off"
-  },
+  "root": true,
   "env": {
     "node": true,
     "browser": true
   },
-  "root": true,
   "parserOptions": {
     "ecmaVersion": 2020, // Allows for the parsing of modern ECMAScript features
     "sourceType": "module", // Allows for the use of imports
@@ -17,5 +12,10 @@
       "restParams": true,
       "spread": true
     }
+  },
+  "extends": ["@vkontakte/eslint-config/react", "prettier"],
+  "rules": {
+    "react/prop-types": [0],
+    "no-shadow": "off"
   }
 }

@@ -4,7 +4,7 @@ import transformer from './jsx-transformer';
 
 const printer = ts.createPrinter({});
 
-async function run(input: string, output: string, opts = undefined) {
+async function run(input: string, output: string) {
   const sourceFile = ts.createSourceFile('input.jsx', input, ts.ScriptTarget.Latest);
   const result = ts.transform(sourceFile, [transformer]);
 
@@ -13,7 +13,7 @@ async function run(input: string, output: string, opts = undefined) {
 
 it('default', async () => {
   const input = `const App = ({ children }) => {
-    return <div style={{ 
+    return <div style={{
             color: 'var(--accent)',
             backgroundColor: "var(--accent)",
         }}>
@@ -36,7 +36,7 @@ it('default', async () => {
 });
 
 it('icon', async () => {
-  const input = `<Icon style={{ 
+  const input = `<Icon style={{
         color: "var(--accent)",
     }}/>;
 `;

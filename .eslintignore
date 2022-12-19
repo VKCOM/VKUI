@@ -5,3 +5,6 @@ styleguide-build/
 *.test.js
 src/vkui.js
 stylelint.config.js
+
+# ignore self
+.eslintrc.js
