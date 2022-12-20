@@ -17,6 +17,7 @@ ${description}
 1. Создайте новую ветку от стабильной и примените исправления используя cherry-pick
 
 \`\`\`bash
+git stash # опционально
 git fetch origin ${stableBranchRef}
 git checkout -b patch/pr${pullNumber} origin/${stableBranchRef}
 git cherry-pick ${patchRefs}
@@ -27,7 +28,7 @@ git cherry-pick ${patchRefs}
 
 \`\`\`bash
 git push --set-upstream origin patch/pr${pullNumber}
-gh pr create --base ${stableBranchRef}
+gh pr create --base ${stableBranchRef} --title "patch: pr${pullNumber}" --body "- patch #${pullNumber}"
 \`\`\`
 `;
 }
