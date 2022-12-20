@@ -15,7 +15,7 @@ describe.each([
   ['ModalRootDesktop', ModalRootDesktop],
 ] as const)('%s', (name, ModalRoot: any) => {
   beforeEach(() => {
-    jest.useFakeTimers('modern');
+    jest.useFakeTimers();
     rafSpies = [
       jest
         .spyOn(window, 'requestAnimationFrame')

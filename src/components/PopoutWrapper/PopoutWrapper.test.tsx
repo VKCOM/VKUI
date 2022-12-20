@@ -27,7 +27,7 @@ describe('PopoutWrapper', () => {
 
   describe('gets opened', () => {
     const isOpened = () => !!document.querySelector('.vkuiPopoutWrapper--opened');
-    beforeEach(() => jest.useFakeTimers('modern'));
+    beforeEach(() => jest.useFakeTimers());
     afterEach(() => jest.useRealTimers());
     it('immediately if no mask', () => {
       render(<PopoutWrapper hasMask={false} />);

@@ -45,6 +45,7 @@ const config = {
     ...(base.testEnvironmentOptions || {}),
     'jest-playwright': jestPlaywrightOptions,
   },
+  testEnvironment: 'jest-playwright-preset',
   moduleNameMapper: {
     '@react-playwright': path.join(__dirname, 'index.ts'),
     '\\.css$': require.resolve('identity-obj-proxy'),

@@ -3,7 +3,7 @@ import { noop } from '@vkontakte/vkjs';
 import { useTimeout } from './useTimeout';
 
 describe(useTimeout, () => {
-  beforeAll(() => jest.useFakeTimers('modern'));
+  beforeAll(() => jest.useFakeTimers());
   afterAll(() => jest.useRealTimers());
   it('sets timeout', () => {
     const cb = jest.fn();

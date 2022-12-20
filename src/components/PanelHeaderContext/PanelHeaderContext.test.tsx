@@ -11,7 +11,7 @@ import { PanelHeaderContext } from './PanelHeaderContext';
 describe('PanelHeaderContext', () => {
   baselineComponent(PanelHeaderContext);
   describe('Closes', () => {
-    beforeEach(() => jest.useFakeTimers('modern'));
+    beforeEach(() => jest.useFakeTimers());
     afterEach(() => jest.useRealTimers());
 
     it('does not close on mount', () => {

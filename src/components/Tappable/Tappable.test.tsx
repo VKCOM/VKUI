@@ -13,7 +13,7 @@ const TappableTest = (props: TappableProps) => <Tappable data-testid="tappable" 
 const tappable = () => screen.getByTestId('tappable');
 
 describe('Tappable', () => {
-  beforeAll(() => jest.useFakeTimers('modern'));
+  beforeAll(() => jest.useFakeTimers());
   afterAll(() => jest.useRealTimers());
   afterEach(() => delete window['ontouchstart']);
   baselineComponent(TappableTest);

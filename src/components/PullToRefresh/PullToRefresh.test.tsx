@@ -40,7 +40,7 @@ function renderRefresher({ platform = Platform.ANDROID } = {}) {
 }
 
 describe('PullToRefresh', () => {
-  beforeAll(() => jest.useFakeTimers('modern'));
+  beforeAll(() => jest.useFakeTimers());
   afterAll(() => jest.useRealTimers());
   baselineComponent(PullToRefresh);
 
