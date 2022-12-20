@@ -108,13 +108,16 @@ export const PanelHeaderButton = ({
       ) : (
         children
       )}
-      <div className={styles["PanelHeaderButton__label"]}>
-        {isPrimitiveLabel ? (
-          <ButtonTypography primary={primary}>{label}</ButtonTypography>
-        ) : (
-          label
-        )}
-      </div>
+      {isPrimitiveLabel ? (
+        <ButtonTypography
+          primary={primary}
+          className={styles["PanelHeaderButton__label"]}
+        >
+          {label}
+        </ButtonTypography>
+      ) : (
+        label
+      )}
     </Tappable>
   );
 };
