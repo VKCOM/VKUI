@@ -1,4 +1,5 @@
 {
+  // TODO #3846 перенести в `src/`
   "extends": "./tsconfig.json",
   // only include source, not testing
   "include": ["src/**/*.ts", "src/**/*.tsx"],

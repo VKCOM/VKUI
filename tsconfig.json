@@ -30,16 +30,6 @@
       "@react-playwright": ["../e2e"]
     }
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "e2e/**/*.ts",
-    "e2e/**/*.tsx",
-    "e2e/**/*.js",
-    ".github/**/*.js",
-    "packages/**/*.js",
-    "*.js"
-  ],
-  "exclude": ["packages/token-translator/**/*"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "packages/**/*.js", "*.js"],
   "files": ["types/global.d.ts", "types/env.d.ts"]
 }

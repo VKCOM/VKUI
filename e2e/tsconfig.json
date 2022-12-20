@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.json",
+  "include": ["**/*.ts", "**/*.js"],
+  "files": [
+    "./global.d.ts",
+    "../node_modules/jest-playwright-preset/types/global.d.ts",
+    "../node_modules/expect-playwright/global.d.ts"
+  ]
+}

@@ -207,7 +207,7 @@
     "test:e2e": "jest --config e2e/jest.e2e.config.js",
     "test:e2e:ci": "yarn test:e2e --ci --outputFile e2e-results.json --json",
     "test:combine-coverage": "npx nyc report --reporter=lcov",
-    "lint:es": "eslint --ext .jsx,.js,.ts,.tsx src/ e2e/ styleguide/ --cache --cache-location .cache/.eslintcache",
+    "lint:es": "eslint --ext .jsx,.js,.ts,.tsx src/ e2e/ styleguide/ .github/actions/ --cache --cache-location .cache/.eslintcache",
     "lint:es:ci": "yarn lint:es -o lint-results.json -f json",
     "lint:style": "cross-env LINT_PRECOMMIT_RUN=1 stylelint \"./src/**/*.css\" --cache --cache-location .cache/.stylelintcache",
     "lint:prettier": "prettier --check --ignore-unknown .",
