@@ -1,4 +1,5 @@
 .Tappable {
+  isolation: isolate;
   position: relative;
   cursor: default;
   border-radius: var(--vkui--size_border_radius--regular);
