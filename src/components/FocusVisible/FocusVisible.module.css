@@ -1,15 +1,21 @@
 [class$="--focus-visible"] > .FocusVisible {
   position: absolute;
-  top: 2px;
-  left: 2px;
-  right: 2px;
-  bottom: 2px;
   border-radius: inherit;
-  box-shadow: 0 0 0 2px var(--vkui--color_stroke_accent);
   user-select: none;
   pointer-events: none;
   overflow: hidden;
   z-index: 0;
+}
+
+[class$="--focus-visible"] > .FocusVisible--mode-inside {
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  border-color: var(--vkui--color_stroke_accent);
+  border-width: 2px;
+  border-style: solid;
+  box-sizing: border-box;
 }
 
 [class$="--focus-visible"] > .FocusVisible--mode-outside {
@@ -17,6 +23,7 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
+  box-shadow: 0 0 0 2px var(--vkui--color_stroke_accent);
 }
 
 /**
@@ -49,10 +56,10 @@
     }
 
     100% {
-      top: 2px;
-      left: 2px;
-      bottom: 2px;
-      right: 2px;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
       will-change: auto;
     }
   }
@@ -69,8 +76,4 @@
       will-change: auto;
     }
   }
-}
-
-.FocusVisible--mode-inside {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }
