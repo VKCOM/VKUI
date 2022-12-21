@@ -34,7 +34,7 @@ async function run(): Promise<void> {
         try {
           await exec.exec('git', ['diff-index', '--quiet', 'HEAD']);
         } catch (e) {
-          await exec.exec('git', ['commit', '-m', `"CHORE: Update screenshots"`]);
+          await exec.exec('git', ['commit', '-m', `CHORE: Update screenshots`]);
         }
       },
       async () => {
