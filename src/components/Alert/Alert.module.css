@@ -183,11 +183,11 @@
 }
 
 .Alert--ios.Alert--h .Alert__action:first-child {
-  border-bottom-left-radius: 12px;
+  border-bottom-left-radius: var(--vkui--size_border_radius_paper--regular);
 }
 
 .Alert--ios.Alert--h .Alert__action:last-child {
-  border-bottom-right-radius: 12px;
+  border-bottom-right-radius: var(--vkui--size_border_radius_paper--regular);
 }
 
 .Alert--ios.Alert--v .Alert__action::after {
