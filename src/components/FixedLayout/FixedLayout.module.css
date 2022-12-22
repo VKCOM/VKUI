@@ -61,7 +61,6 @@
   z-index: 4;
 }
 
-.FixedLayout--ios,
-.FixedLayout__in {
+.FixedLayout--ios {
   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }
