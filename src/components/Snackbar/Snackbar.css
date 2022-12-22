@@ -1,6 +1,6 @@
 .Snackbar {
   user-select: none;
-  z-index: 101;
+  z-index: calc(var(--vkui--z_index_popout) + 1);
   position: fixed;
   bottom: 0;
   left: auto;
