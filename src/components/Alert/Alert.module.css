@@ -28,14 +28,12 @@
   width: 100%;
   height: 100%;
   background-color: var(--vkui--color_background_modal);
-  z-index: 1;
   content: '';
   border-radius: inherit;
 }
 
 .Alert__content {
   position: relative;
-  z-index: 2;
   padding: 24px 24px 20px;
 }
 
@@ -48,7 +46,6 @@
   display: flex;
   max-width: 100%;
   position: relative;
-  z-index: 2;
   padding: 0 16px 16px;
 }
 
@@ -152,10 +149,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   border-radius: 0;
-}
-
-.Alert--ios .Alert__action:active {
-  z-index: 1;
 }
 
 .Alert--ios .Alert__action::after {

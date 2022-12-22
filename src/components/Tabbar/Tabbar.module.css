@@ -1,6 +1,6 @@
 .Tabbar {
   position: fixed;
-  z-index: 2;
+  z-index: var(--vkui_internal--z_index_tabs);
   bottom: 0;
   left: 0;
   width: 100%;

@@ -10,12 +10,7 @@
 .PullToRefresh__controls {
   width: 100%;
   pointer-events: none;
-  /* Прямо под шапкой, см https://github.com/VKCOM/VKUI/issues/1207 */
-  z-index: 9;
-}
-
-.PullToRefresh--ios .PullToRefresh__controls {
-  z-index: 0;
+  z-index: var(--vkui_internal--z_index_pull_to_refresh);
 }
 
 .PullToRefresh__spinner {

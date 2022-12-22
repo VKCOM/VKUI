@@ -20,7 +20,7 @@ https://github.com/VKCOM/VKUI/pull/3641
 /* stylelint-disable-next-line vkui/atomic */
 .Tappable > * {
   position: relative;
-  z-index: 1;
+  z-index: var(--vkui_internal--z_index_tappable_element);
 }
 
 .Tappable--hover-has,
@@ -45,7 +45,7 @@ https://github.com/VKCOM/VKUI/pull/3641
  * hover & active state
  */
 .Tappable__stateLayer {
-  z-index: 0;
+  z-index: var(--vkui_internal--z_index_tappable_state);
   position: absolute;
   top: 0;
   right: 0;
@@ -81,7 +81,7 @@ https://github.com/VKCOM/VKUI/pull/3641
 }
 
 .Tappable .Tappable__waves {
-  z-index: 0;
+  z-index: var(--vkui_internal--z_index_tappable_state);
   position: absolute;
   top: 0;
   right: 0;

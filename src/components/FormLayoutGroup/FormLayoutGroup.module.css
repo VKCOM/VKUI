@@ -4,6 +4,7 @@
     var(--vkui--size_base_padding_horizontal--regular);
   flex-wrap: wrap;
   align-items: flex-start;
+  isolation: isolate;
 }
 
 .FormLayoutGroup__removable {
@@ -44,7 +45,6 @@
 
 .FormLayoutGroup--segmented {
   position: relative;
-  z-index: 1;
 }
 
 /* stylelint-disable vkui/atomic */

@@ -44,7 +44,6 @@
   flex-grow: 1;
   min-width: 0;
   background-color: transparent;
-  z-index: 2;
   color: var(--vkui--color_text_primary);
 }
 
@@ -90,7 +89,6 @@
   left: 0;
   width: 100%;
   cursor: text;
-  z-index: 1;
   text-align: left;
   font-size: 0;
   padding-left: 12px;
@@ -142,7 +140,6 @@
   position: absolute;
   left: 100%;
   top: 0;
-  z-index: 2;
   transform: translate(0);
   transition: transform 0.3s var(--vkui--animation_easing_platform);
   cursor: default;
@@ -165,7 +162,6 @@
 
 .Search__after-in {
   position: relative;
-  z-index: 2;
   cursor: pointer;
   font-size: 17px;
   padding-left: 12px;

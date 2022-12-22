@@ -1,6 +1,5 @@
 .Slider {
   position: relative;
-  z-index: 0;
   height: 28px;
   padding: 0 14px;
 }
@@ -11,7 +10,6 @@
   width: 100%;
   background-color: var(--vkui--color_track_background);
   content: '';
-  z-index: -1;
   top: 13px;
   height: 2px;
   border-radius: 1px;

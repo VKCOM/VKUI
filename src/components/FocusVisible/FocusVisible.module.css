@@ -9,7 +9,6 @@
   user-select: none;
   pointer-events: none;
   overflow: hidden;
-  z-index: 0;
 }
 
 [class$='--focus-visible'] > .FocusVisible--mode-outside {

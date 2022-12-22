@@ -20,7 +20,6 @@
   position: absolute;
   left: 0;
   width: 100%;
-  z-index: 2;
   padding: 8px;
   box-sizing: border-box;
   pointer-events: none;
@@ -33,7 +32,6 @@
   height: 100%;
   left: 0;
   top: 0;
-  z-index: 1;
   background: rgba(0, 0, 0, 0.4);
 }
 

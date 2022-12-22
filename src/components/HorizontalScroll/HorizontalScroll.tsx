@@ -208,6 +208,9 @@ export const HorizontalScroll = ({
         className,
       )}
     >
+      <div className={styles['HorizontalScroll__in']} ref={scrollerRef}>
+        <div className={styles['HorizontalScroll__in-wrapper']}>{children}</div>
+      </div>
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollLeft && (
         <HorizontalScrollArrow
           size={arrowSize}
@@ -224,9 +227,6 @@ export const HorizontalScroll = ({
           onClick={scrollToRight}
         />
       )}
-      <div className={styles['HorizontalScroll__in']} ref={scrollerRef}>
-        <div className={styles['HorizontalScroll__in-wrapper']}>{children}</div>
-      </div>
     </div>
   );
 };

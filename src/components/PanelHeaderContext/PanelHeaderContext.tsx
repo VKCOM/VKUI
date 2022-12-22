@@ -77,13 +77,6 @@ export const PanelHeaderContext = ({
       )}
       vertical="top"
     >
-      <div
-        className={styles['PanelHeaderContext__in']}
-        ref={elementRef}
-        onAnimationEnd={closing ? onAnimationEnd : undefined}
-      >
-        <div className={styles['PanelHeaderContext__content']}>{visible && children}</div>
-      </div>
       {visible && (
         <div
           onClick={(event) => {
@@ -93,6 +86,13 @@ export const PanelHeaderContext = ({
           className={styles['PanelHeaderContext__fade']}
         />
       )}
+      <div
+        className={styles['PanelHeaderContext__in']}
+        ref={elementRef}
+        onAnimationEnd={closing ? onAnimationEnd : undefined}
+      >
+        <div className={styles['PanelHeaderContext__content']}>{visible && children}</div>
+      </div>
     </FixedLayout>
   );
 };

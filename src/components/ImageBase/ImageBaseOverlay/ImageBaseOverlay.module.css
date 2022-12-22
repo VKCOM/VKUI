@@ -1,6 +1,6 @@
 .ImageBaseOverlay {
   position: absolute;
-  z-index: 0;
+  z-index: var(--vkui_internal--z_index_image_base_overlay);
   top: 0;
   left: 0;
   display: flex;

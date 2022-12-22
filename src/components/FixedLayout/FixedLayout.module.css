@@ -12,7 +12,7 @@
    * Единственное, есть проблема при срабатывании insets в landscape ориентации экрана (https://github.com/VKCOM/VKUI/issues/2422).
    */
   left: auto;
-  z-index: 3;
+  z-index: var(--vkui_internal--z_index_fixed_layout);
   padding-left: var(--vkui_internal--safe_area_inset_left);
   padding-right: var(--vkui_internal--safe_area_inset_right);
 }
@@ -58,7 +58,7 @@
  * PanelHeaderContext
  */
 .FixedLayout.PanelHeaderContext {
-  z-index: 4;
+  z-index: var(--vkui_internal--z_index_panel_header_context);
 }
 
 .FixedLayout--ios {

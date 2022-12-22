@@ -1,12 +1,12 @@
 .FormField {
   position: relative;
-  z-index: 1;
   display: flex;
   align-items: center;
   box-sizing: border-box;
   min-height: var(--vkui--size_field_height--regular);
   font-family: var(--vkui--font_family_base);
   -webkit-tap-highlight-color: transparent;
+  isolation: isolate;
 }
 
 .FormField:focus {
@@ -26,13 +26,13 @@
 /* stylelint-disable-next-line vkui/atomic */
 .FormField > * {
   border-radius: inherit;
-  z-index: 6;
+  z-index: var(--vkui_internal--z_index_form_field_element);
 }
 
 .FormField__before,
 .FormField__after {
   position: relative;
-  z-index: 7;
+  z-index: var(--vkui_internal--z_index_form_field_side);
   display: flex;
   align-items: center;
   align-content: center;
@@ -67,7 +67,7 @@
 
 .FormField__border {
   position: absolute;
-  z-index: 1;
+  z-index: var(--vkui_internal--z_index_form_field_border);
   left: 0;
   top: 0;
   width: 100%;
@@ -92,13 +92,13 @@
 .FormField--status-error .FormField__border {
   background-color: var(--vkui--color_background_negative_tint);
   border-color: var(--vkui--color_stroke_negative);
-  z-index: 3;
+  z-index: var(--vkui_internal--z_index_form_field_status);
 }
 
 .FormItem--status-valid .FormField__border,
 .FormField--status-valid .FormField__border {
   border-color: var(--vkui--color_stroke_positive);
-  z-index: 3;
+  z-index: var(--vkui_internal--z_index_form_field_status);
 }
 /* [end] */
 
@@ -114,7 +114,7 @@
 
 .FormField--mode-default.FormField--hover .FormField__border {
   border-color: var(--vkui--color_field_border_alpha--hover);
-  z-index: 4;
+  z-index: var(--vkui_internal--z_index_form_field_border_hover);
 }
 
 /**
@@ -123,7 +123,7 @@
 .FormField:focus-within .FormField__border,
 .FormField *:focus ~ .FormField__border {
   border-color: var(--vkui--color_stroke_accent);
-  z-index: 5;
+  z-index: var(--vkui_internal--z_index_form_field_focus);
 }
 
 /**
@@ -170,7 +170,7 @@
  * ChipsInput
  */
 .ChipsInput .FormField__after {
-  z-index: 7;
+  z-index: var(--vkui_internal--z_index_form_field_side);
 }
 
 /**
@@ -179,6 +179,7 @@
  */
 .FormLayoutGroup--segmented .FormField {
   z-index: auto;
+  isolation: auto;
 }
 
 .FormLayoutGroup--segmented > .FormItem:not(:first-of-type):not(:last-of-type) .FormField__border,

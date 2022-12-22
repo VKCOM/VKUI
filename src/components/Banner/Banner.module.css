@@ -28,13 +28,13 @@
   border-radius: inherit;
   pointer-events: none;
   box-sizing: border-box;
-  z-index: 2;
+  z-index: var(--vkui_internal--z_index_banner_content);
 }
 
 .Banner__before {
   position: relative;
   margin-right: 12px;
-  z-index: 2;
+  z-index: var(--vkui_internal--z_index_banner_content);
 }
 
 .Banner__content {
@@ -44,7 +44,7 @@
   justify-content: center;
   flex-direction: column;
   min-width: 0;
-  z-index: 2;
+  z-index: var(--vkui_internal--z_index_banner_content);
 }
 
 .Banner__header {
@@ -64,7 +64,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 1;
+  z-index: var(--vkui_internal--z_index_banner_background);
 }
 
 .Banner__bg,
@@ -93,7 +93,7 @@
   align-items: center;
   justify-content: center;
   color: var(--vkui--color_icon_secondary);
-  z-index: 3;
+  z-index: var(--vkui_internal--z_index_banner_hover);
 }
 
 .Banner__actions {

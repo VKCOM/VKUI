@@ -78,7 +78,7 @@
 .FixedLayout--ios.FixedLayout--vertical-bottom .Tabs__in,
 .FixedLayout--ios.FixedLayout--vertical-bottom .Separator {
   position: relative;
-  z-index: 2;
+  z-index: var(--vkui_internal--z_index_tabs);
 }
 
 /**

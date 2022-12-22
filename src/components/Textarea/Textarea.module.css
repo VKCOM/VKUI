@@ -17,7 +17,7 @@
   padding: 12px;
   max-height: 204px;
   border: none;
-  z-index: 6;
+  z-index: var(--vkui_internal--z_index_form_field_element);
   position: relative;
   background: transparent;
 }

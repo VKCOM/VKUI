@@ -12,7 +12,7 @@
  * Второй и последующие вызовы исправляют ситуацию.
  */
 .Popper {
-  z-index: 100;
+  z-index: var(--vkui--z_index_popout);
 }
 
 .Popper__content,
