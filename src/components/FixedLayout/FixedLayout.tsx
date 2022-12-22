@@ -7,6 +7,7 @@ import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { useDOM } from '../../lib/dom';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
+import { useExternRef } from '../../hooks/useExternRef';
 import styles from './FixedLayout.module.css';
 
 export interface FixedLayoutProps
@@ -42,6 +43,7 @@ export const FixedLayout = ({
   ...restProps
 }: FixedLayoutProps) => {
   const platform = usePlatform();
+  const ref = useExternRef(getRootRef, getRef); // TODO: v6 удалить getRef
   const [width, setWidth] = React.useState<string | undefined>(undefined);
   const { window } = useDOM();
   const { colRef } = React.useContext(SplitColContext);
@@ -67,7 +69,7 @@ export const FixedLayout = ({
     <TooltipContainer
       {...restProps}
       fixed
-      ref={getRootRef}
+      ref={ref}
       className={classNames(
         styles['FixedLayout'],
         platform === Platform.IOS && styles['FixedLayout--ios'],
@@ -77,9 +79,7 @@ export const FixedLayout = ({
       )}
       style={{ ...style, width }}
     >
-      <div className={styles['FixedLayout__in']} ref={getRef}>
-        {children}
-      </div>
+      {children}
     </TooltipContainer>
   );
 };
