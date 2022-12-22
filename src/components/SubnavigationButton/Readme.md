@@ -97,6 +97,7 @@ const SubnavigationBarExample = () => {
             {FILTERS_SIZE.map(({ value, label }) => {
               return (
                 <Checkbox
+                  key={value}
                   value={value}
                   checked={filterSizes.includes(value)}
                   onChange={onChangeFilterSize}
@@ -111,6 +112,7 @@ const SubnavigationBarExample = () => {
             {FILTERS_STYLE.map(({ value, label }) => {
               return (
                 <Checkbox
+                  key={value}
                   value={value}
                   checked={filterStyles.includes(value)}
                   onChange={onChangeFilterStyle}

@@ -17,7 +17,7 @@ const UserItems = () => {
   const platform = usePlatform();
 
   return getRandomUsers(15).map((user) => (
-    <HorizontalCell size="s" header={user.first_name}>
+    <HorizontalCell key={user.id} size="s" header={user.first_name}>
       <Avatar size={platform === 'ios' ? 64 : 56} src={user.photo_100} />
     </HorizontalCell>
   ));
@@ -25,18 +25,22 @@ const UserItems = () => {
 
 const miniApps = [
   {
+    id: 1,
     title: 'Промокот',
     icon_139: 'https://sun9-54.userapi.com/c850536/v850536134/15096d/6806J7q6YwM.jpg',
   },
   {
+    id: 2,
     title: 'Разделите счёт',
     icon_139: 'https://sun9-20.userapi.com/c857416/v857416681/fc6d0/06XQvs4SyiE.jpg',
   },
   {
+    id: 3,
     title: 'Рассылки',
     icon_139: 'https://sun9-50.userapi.com/c850536/v850536397/129313/qdVJ7A7xd70.jpg',
   },
   {
+    id: 4,
     title: 'Тексты песен',
     icon_139: 'https://sun9-41.userapi.com/Zf2HluZJZDYjTbxhnSfeYnHtttBYsYbdjJ3QJQ/aDcJQrVVnbQ.jpg',
   },
@@ -45,8 +49,8 @@ const miniApps = [
 const MiniAppItems = () => {
   const platform = usePlatform();
 
-  return miniApps.map(({ title, icon_139 }) => (
-    <HorizontalCell size="s" header={title}>
+  return miniApps.map(({ id, title, icon_139 }) => (
+    <HorizontalCell key={id} size="s" header={title}>
       <Image size={platform === 'ios' ? 64 : 56} borderRadius="l" src={icon_139} />
     </HorizontalCell>
   ));
@@ -54,22 +58,25 @@ const MiniAppItems = () => {
 
 const gamesItems = [
   {
+    id: 1,
     title: 'Контра Сити',
     icon_139: 'https://sun9-24.userapi.com/c639120/v639120173/3fe6f/tgPr7lecAY4.jpg',
   },
   {
+    id: 2,
     title: 'Golden Valley',
     icon_139: 'https://sun9-71.userapi.com/c849220/v849220453/147ade/0MtQXKEVsiQ.jpg',
   },
   {
+    id: 3,
     title: 'Warma-geddon',
     icon_139: 'https://sun9-45.userapi.com/c846418/v846418215/5cf20/Gd9mQ6dVXTw.jpg',
   },
 ];
 
 const GamesItems = () => {
-  return gamesItems.map(({ title, icon_139 }) => (
-    <HorizontalCell size="m" header={title}>
+  return gamesItems.map(({ id, title, icon_139 }) => (
+    <HorizontalCell key={id} size="m" header={title}>
       <Image size={88} borderRadius="l" src={icon_139} />
     </HorizontalCell>
   ));
@@ -77,16 +84,19 @@ const GamesItems = () => {
 
 const playlistItems = [
   {
+    id: 1,
     title: 'Awesome Mix Vol.2',
     description: 'New Tribute Kings',
     photo_300: 'https://sun9-53.userapi.com/c637816/v637816450/4a6d9/lvCvft600Zc.jpg',
   },
   {
+    id: 2,
     title: 'Сегодня в плеере',
     description: 'Музыка ВКонтакте',
     photo_300: 'https://sun9-4.userapi.com/22uxwvZiO4JhrkSz6j6FEzoJDfZzBjEBVY4ABA/wHAweL65dNI.jpg',
   },
   {
+    id: 3,
     title: 'Hakuna Matata',
     description: 'Музыка ВКонтакте\n2019',
     photo_300: 'https://sun9-51.userapi.com/c857024/v857024436/f927/rG9fac2cuac.jpg',
@@ -94,8 +104,8 @@ const playlistItems = [
 ];
 
 const PlaylistItems = () => {
-  return playlistItems.map(({ title, description, photo_300 }) => (
-    <HorizontalCell size="l" header={title} subtitle={description}>
+  return playlistItems.map(({ id, title, description, photo_300 }) => (
+    <HorizontalCell key={id} size="l" header={title} subtitle={description}>
       <Image size={128} src={photo_300} />
     </HorizontalCell>
   ));
@@ -103,16 +113,19 @@ const PlaylistItems = () => {
 
 const albumItems = [
   {
+    id: 1,
     title: 'Команда <3',
     size: 4,
     thumb_src: 'https://sun9-33.userapi.com/ODk8khvW97c6aSx_MxHXhok5byDCsHEoU-3BwA/sO-lGf_NjN4.jpg',
   },
   {
+    id: 2,
     title: 'Зингер',
     size: 22,
     thumb_src: 'https://sun9-60.userapi.com/bjwt581hETPAp4oY92bDcRvMymyfCaEsnojaUA/_KWQfS-MAd4.jpg',
   },
   {
+    id: 3,
     title: 'Медиагалерея ВКонтакте',
     size: 64,
     thumb_src: 'https://sun9-26.userapi.com/YZ5-1A6cVgL7g1opJGQIWg1Bl5ynfPi8p41SkQ/IYIUDqGkkBE.jpg',
@@ -120,8 +133,8 @@ const albumItems = [
 ];
 
 const AlbumItems = () => {
-  return albumItems.map(({ title, size, thumb_src }) => (
-    <HorizontalCell size="l" header={title} subtitle={`${size} фотографии`}>
+  return albumItems.map(({ id, title, size, thumb_src }) => (
+    <HorizontalCell key={id} size="l" header={title} subtitle={`${size} фотографии`}>
       <img style={largeImageStyles} src={thumb_src} />
     </HorizontalCell>
   ));
