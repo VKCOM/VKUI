@@ -8,6 +8,7 @@ import {
   TrackerOptionsProps,
   useTrackerVisibility,
 } from "./useTrackerVisibility";
+import { stopPropagation } from "../../lib/utils";
 import styles from "./CustomScrollView.module.css";
 
 export interface CustomScrollViewProps extends DOMProps, TrackerOptionsProps {
@@ -183,7 +184,11 @@ export const CustomScrollView = ({
 
   return (
     <div className={classNamesString(styles["CustomScrollView"], className)}>
-      <div className={styles["CustomScrollView__barY"]} ref={barY}>
+      <div
+        className={styles["CustomScrollView__barY"]}
+        ref={barY}
+        onClick={stopPropagation}
+      >
         <div
           className={classNamesString(
             styles["CustomScrollView__trackerY"],
