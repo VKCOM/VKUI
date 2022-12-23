@@ -101,7 +101,7 @@ async function run(): Promise<void> {
 
     await exec.exec('git', [
       'push',
-      `"${remote}"`,
+      `${remote}`,
       `HEAD:refs/heads/${stableBranchRef}`,
       '--verbose',
     ]);

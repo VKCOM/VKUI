@@ -34,7 +34,7 @@ async function run(): Promise<void> {
     await exec.exec('git', ['branch', stableBranchRef]);
 
     // Push branch
-    await exec.exec('git', ['push', `"${remote}"`, `HEAD:${stableBranchRef}`, '--verbose']);
+    await exec.exec('git', ['push', `${remote}`, `HEAD:${stableBranchRef}`, '--verbose']);
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message);
   }
