@@ -9,7 +9,7 @@
       <Cell
         expandable
         before={<Icon28Notifications />}
-        badge={<Badge aria-label="Есть новые" />}
+        badgeAfterTitle={<Badge aria-label="Есть новые" />}
       >
         Уведомления
       </Cell>

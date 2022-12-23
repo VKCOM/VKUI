@@ -15,6 +15,7 @@ export interface CustomSelectOptionProps
     HasRootRef<HTMLDivElement> {
   /**
    * Вставляет основной контент.
+   * @deprecated since v6.0.0
    */
   option?: any;
   /**
@@ -86,7 +87,8 @@ export const CustomSelectOption = ({
   );
 
   if (!!option && process.env.NODE_ENV === "development") {
-    warn("Свойство option было добавлено по ошибке и будет удалено в 5.0.0.");
+    // TODO v6.0.0. Удалить св-во `option`
+    warn("Свойство option было добавлено по ошибке и будет удалено в v6.0.0.");
   }
 
   return (
