@@ -17,7 +17,7 @@
     <Group header={<Header mode="secondary">Аватарки</Header>}>
       <CellButton
         before={
-          <Avatar shadow={false} size={40}>
+          <Avatar withBorder={false} size={40}>
             <Icon24Add />
           </Avatar>
         }
@@ -26,7 +26,7 @@
       </CellButton>
       <CellButton
         before={
-          <Avatar shadow={false} size={48}>
+          <Avatar withBorder={false} size={48}>
             <Icon28AddOutline />
           </Avatar>
         }
@@ -35,7 +35,7 @@
       </CellButton>
       <CellButton
         before={
-          <Image shadow={false} size={72}>
+          <Image withBorder={false} size={72}>
             <Icon28AddOutline />
           </Image>
         }
