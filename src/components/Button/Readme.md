@@ -50,7 +50,7 @@ const Example = () => {
           }}
         >
           {['primary', 'secondary', 'tertiary', 'outline', 'link'].map((mode) => (
-            <Div>
+            <Div key={mode}>
               <Button
                 align={align}
                 href={buttonLink}

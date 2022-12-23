@@ -14,7 +14,11 @@
             avatar: user.photo_100,
           }))}
           renderOption={({ option, ...restProps }) => (
-            <CustomSelectOption {...restProps} before={<Avatar size={24} src={option.avatar} />} />
+            <CustomSelectOption
+              {...restProps}
+              key={option.value}
+              before={<Avatar size={24} src={option.avatar} />}
+            />
           )}
         />
       </FormItem>
