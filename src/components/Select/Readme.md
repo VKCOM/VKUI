@@ -16,6 +16,7 @@
           renderOption={({ option, ...restProps }) => (
             <CustomSelectOption
               {...restProps}
+              key={option.value}
               before={<Avatar size={24} src={option.avatar} />}
             />
           )}
