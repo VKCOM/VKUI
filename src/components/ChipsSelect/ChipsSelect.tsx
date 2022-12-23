@@ -320,49 +320,53 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
   };
 
   return (
-    <FormField
-      getRootRef={rootRef}
-      style={style}
-      className={classNames(
-        styles['ChipsSelect'],
-        opened &&
-          (isPopperDirectionTop ? styles['ChipsSelect--pop-up'] : styles['ChipsSelect--pop-down']),
-        className,
-      )}
-      disabled={disabled}
-      role="application"
-      aria-disabled={disabled}
-      aria-readonly={restProps.readOnly}
-      after={
-        <IconButton
-          className={styles['ChipsSelect__dropdown']}
-          activeMode=""
-          hoverMode=""
-          // TODO: add label customization
-          aria-label={opened ? 'Скрыть' : 'Развернуть'}
-          onClick={toggleOpened}
-        >
-          <DropdownIcon className={styles['ChipsSelect__icon']} opened={opened} />
-        </IconButton>
-      }
-      before={before}
-    >
-      <ChipsInputBase
-        {...restProps}
-        tabIndex={tabIndex}
-        value={selectedOptions}
-        inputValue={fieldValue}
-        getNewOptionData={getNewOptionData}
-        getOptionLabel={getOptionLabel}
-        getOptionValue={getOptionValue}
-        renderChip={renderChipWrapper}
-        onFocus={handleFocus}
-        onKeyDown={handleKeyDown}
-        placeholder={placeholder}
-        getRef={getRef}
+    <>
+      <FormField
+        getRootRef={rootRef}
+        style={style}
+        className={classNames(
+          styles['ChipsSelect'],
+          opened &&
+            (isPopperDirectionTop
+              ? styles['ChipsSelect--pop-up']
+              : styles['ChipsSelect--pop-down']),
+          className,
+        )}
         disabled={disabled}
-        onInputChange={handleInputChange}
-      />
+        role="application"
+        aria-disabled={disabled}
+        aria-readonly={restProps.readOnly}
+        after={
+          <IconButton
+            className={styles['ChipsSelect__dropdown']}
+            activeMode=""
+            hoverMode=""
+            // TODO: add label customization
+            aria-label={opened ? 'Скрыть' : 'Развернуть'}
+            onClick={toggleOpened}
+          >
+            <DropdownIcon className={styles['ChipsSelect__icon']} opened={opened} />
+          </IconButton>
+        }
+        before={before}
+      >
+        <ChipsInputBase
+          {...restProps}
+          tabIndex={tabIndex}
+          value={selectedOptions}
+          inputValue={fieldValue}
+          getNewOptionData={getNewOptionData}
+          getOptionLabel={getOptionLabel}
+          getOptionValue={getOptionValue}
+          renderChip={renderChipWrapper}
+          onFocus={handleFocus}
+          onKeyDown={handleKeyDown}
+          placeholder={placeholder}
+          getRef={getRef}
+          disabled={disabled}
+          onInputChange={handleInputChange}
+        />
+      </FormField>
       {opened && (
         <CustomSelectDropdown
           targetRef={rootRef}
@@ -428,6 +432,6 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
           )}
         </CustomSelectDropdown>
       )}
-    </FormField>
+    </>
   );
 };
