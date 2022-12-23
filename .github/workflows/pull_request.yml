@@ -38,8 +38,8 @@ jobs:
         with:
           name: test-output
           path: |
-            .nyc_output/
             lint-results.json
+            .nyc_output/
             test-results.json
   test_e2e:
     runs-on: ubuntu-latest

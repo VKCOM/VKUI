@@ -1,5 +1,5 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 process.env.BABEL_KEEP_CSS = '1';
 
