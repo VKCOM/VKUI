@@ -1,21 +1,25 @@
-const { NODE_ENV, BABEL_KEEP_CSS, BABEL_USED_BY_WEBPACK } = process.env;
-const isProduction = NODE_ENV === 'production';
-const isDevelopment = NODE_ENV === 'development';
-const useESModules = isProduction || isDevelopment;
-const isUsedByWebpack = Boolean(BABEL_USED_BY_WEBPACK);
-const keepCss = Boolean(BABEL_KEEP_CSS);
-const runtimeVersion = require('./package.json').dependencies['@babel/runtime'];
+const runtimeVersion = require('./node_modules/@babel/runtime/package.json').version;
 const { generateScopedName } = require('./shared');
 
+const { NODE_ENV, BABEL_KEEP_CSS, BABEL_USED_BY_WEBPACK } = process.env;
+
+const isProduction = NODE_ENV === 'production';
+const isDevelopment = NODE_ENV === 'development';
+
+const useESModules = isProduction || isDevelopment;
+
+const isUsedByWebpack = Boolean(BABEL_USED_BY_WEBPACK);
+
+const keepCss = Boolean(BABEL_KEEP_CSS);
+
 const testFiles = [
-  './src/**/*.test.ts',
-  './src/**/*.test.tsx',
-  './src/**/*.spec.ts',
-  './src/**/*.spec.tsx',
-  './src/**/*.e2e.ts',
-  './src/**/*.e2e.tsx',
-  './e2e/',
-  './src/testing/',
+  '**/*.test.ts',
+  '**/*.test.tsx',
+  '**/*.spec.ts',
+  '**/*.spec.tsx',
+  '**/*.e2e.ts',
+  '**/*.e2e.tsx',
+  '**/testing/',
 ];
 
 const plugins = [
@@ -26,7 +30,7 @@ const plugins = [
 
 if (!isUsedByWebpack) {
   plugins.push([
-    'babel-plugin-transform-css-modules',
+    '@project-tools/babel-plugin-transform-css-modules',
     {
       generateScopedName: generateScopedName,
       keep: keepCss,
@@ -54,5 +58,5 @@ module.exports = {
     '@babel/preset-typescript',
   ],
   plugins: plugins,
-  ignore: ['./src/vkui.js', ...(isProduction ? testFiles : [])],
+  ignore: isProduction ? testFiles : [],
 };

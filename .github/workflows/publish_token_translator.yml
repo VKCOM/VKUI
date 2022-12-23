@@ -30,8 +30,8 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
-      - run: yarn test
-      - run: yarn build
+      - run: yarn run test
+      - run: yarn run build
 
       - name: Set Git credentials
         run: |

@@ -1,6 +1,6 @@
 /* import all global styles that are not imported by the components */
-@import '../src/styles/themes.css';
-@import '../src/styles/components.css';
+@import '../packages/vkui/src/styles/themes.css';
+@import '../packages/vkui/src/styles/components.css';
 
 @font-face {
   /* stylelint-disable-next-line */

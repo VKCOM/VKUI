@@ -23,7 +23,7 @@ updates:
       - 'VKCOM/vkui-core'
 
   - package-ecosystem: 'npm'
-    directory: '/packages/eslint-plugin-vkui'
+    directory: '/tools/eslint-plugin-vkui'
     schedule:
       interval: 'daily'
     allow:
@@ -33,7 +33,7 @@ updates:
       - 'VKCOM/vkui-core'
 
   - package-ecosystem: 'npm'
-    directory: '/packages/babel-plugin-transform-css-modules'
+    directory: '/tools/babel-plugin-transform-css-modules'
     schedule:
       interval: 'daily'
     allow:

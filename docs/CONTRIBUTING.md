@@ -1,8 +1,18 @@
 ## Разработка
 
+В проекте используется `yarn workspaces`.
+
+Ознакомиться можно по следующим ссылкам:
+
+- [Документация по "Workspaces"](https://classic.yarnpkg.com/lang/en/docs/workspaces/)
+- [Статья "Workspaces in Yarn"](https://classic.yarnpkg.com/blog/2017/08/02/introducing-workspaces/)
+- [GitHub issue #3846 с описанием нюансов](https://github.com/VKCOM/VKUI/issues/3846#issuecomment-1362796617)
+
+### Быстрый старт
+
 1. Склонировать репозиторий и перейти в созданную директорию.
 2. Установить зависимости: `yarn install`.
-3. Поднять локально документацию с лайврелоадом: `yarn styleguide`. Свойства и методы компонента в режиме разработки по умолчанию не генерируются; если они вам нужны, используйте команду `yarn styleguide:props`.
+3. Поднять локально документацию с лайврелоадом: `yarn docs:styleguide`. Свойства и методы компонента в режиме разработки по умолчанию не генерируются; если они вам нужны, используйте команду `yarn docs:styleguide:props`.
 
 Документация будет доступна на `http://localhost:6060`. В ней ведётся вся разработка. Для удобства можно сразу перейти на страницу разрабатываемого компонента (`http://localhost:6060/#/UsersStack`)
 
@@ -13,11 +23,14 @@
    git config blame.ignoreRevsFile .git-blame-ignore-revs`
    ```
    Это поможет игнорировать коммиты, связанные с изменениями стиля кода. `git blame` будет чище.
-2. Запустить сборку: `yarn build`.
-   > **PostCSS** сгенерирует файл `src/styles/customMedias.generated.css`, основанный на
+2. Запустить сборку пакета `@vkontakte/vkui`: `yarn build:vkui` или `yarn workspace @vkontakte/vkui build`.
+   > **PostCSS** сгенерирует файл `tmp/customMedias.generated.css`, основанный на
    > [getCustomMedias()](https://github.com/VKCOM/VKUI/blob/master/shared.js)
    >
    > Это поможет IDE подсказать доступные `@custom-media`.
+   >
+   > **Tip.** Если у вас **WebStorm**, то вызовите контекстное меню на папке `tmp/` и выполните
+   > _"Mark directory as" | "Cancel Exclusion"_.
 
 ## Чеклист для компонента
 
@@ -104,7 +117,7 @@
 
 - Для цветов, скруглений, размеров, отступов и теней используются css-переменные из [vkui-tokens](https://github.com/VKCOM/vkui-tokens)
 - Для типографии используются компоненты [Typography](https://vkcom.github.io/VKUI/#!/Typography) там, где это возможно
-- Добавлен `export` компонента и его свойств в `src/index.ts`
+- Добавлен `export` компонента и его свойств в `packages/vkui/src/index.ts`
 - Компонент покрыт юнит- и скриншотными тестами. [Гайд по тестированию](https://github.com/VKCOM/VKUI/blob/master/docs/TESTING.md)
 - Компонент корректно отображается на всех платформах, размерах и цветовых схемах. В styleguide для всех этих параметров есть переключатели
 - Код корректно работает на [поддерживаемых нами браузерах](https://github.com/VKCOM/VKUI#%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D1%8B)

@@ -1,3 +1,7 @@
-node_modules
-dist
-src/styles/customMedias.generated.css
+node_modules/
+dist/
+e2e/
+styleguide/
+coverage/
+!packages/vkui
+tmp/

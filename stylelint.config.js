@@ -1,13 +1,13 @@
 const path = require('path');
-const { cssCustomPropertiesPaths, getCustomMedias } = require('./shared');
+const { VKUI_PACKAGE, getCustomMedias } = require('./shared');
 
 module.exports = {
   extends: ['stylelint-config-standard', 'stylelint-config-prettier'],
   plugins: [
     'stylelint-value-no-unknown-custom-properties',
     'stylelint-media-use-custom-media',
-    './packages/stylelint-atomic',
-    './packages/stylelint-bad-multiplication',
+    '@project-tools/stylelint-atomic',
+    '@project-tools/stylelint-bad-multiplication',
   ],
   rules: {
     'indentation': null,
@@ -54,7 +54,7 @@ module.exports = {
       true,
       {
         importFrom: [
-          ...cssCustomPropertiesPaths,
+          path.join(__dirname, VKUI_PACKAGE.PATHS.CSS_CONSTANTS),
           path.join(
             __dirname,
             'node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css',
@@ -69,13 +69,13 @@ module.exports = {
       },
     ],
     // Skip reporting in pprecommit run, highlight in editor
-    'vkui/atomic': [
+    '@project-tools/stylelint-atomic': [
       process.env.LINT_PRECOMMIT_RUN ? null : true,
       {
         severity: 'warning',
       },
     ],
-    'vkui/bad-multiplication': true,
+    '@project-tools/stylelint-bad-multiplication': true,
     'import-notation': null,
   },
 };

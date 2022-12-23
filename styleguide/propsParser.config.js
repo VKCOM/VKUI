@@ -10,8 +10,12 @@ let languageService = null;
 // eslint-disable-next-line no-undef
 const filesCache = new Map();
 const { withCustomConfig } = require('react-docgen-typescript');
-const parser = withCustomConfig('./tsconfig.dist.json');
-const tsConfigFile = getTSConfigFile('./tsconfig.dist.json');
+
+const { VKUI_PACKAGE } = require('../shared');
+const vkuiTSConfigDistFile = path.resolve(__dirname, `../${VKUI_PACKAGE.PATHS.TS_CONFIG_FOR_DIST}`);
+
+const parser = withCustomConfig(vkuiTSConfigDistFile);
+const tsConfigFile = getTSConfigFile(vkuiTSConfigDistFile);
 
 function getTSConfigFile(tsconfigPath) {
   const basePath = path.dirname(tsconfigPath);

@@ -1,1 +1,1 @@
-src/**/__image_snapshots__/*.png filter=lfs diff=lfs merge=lfs -text
+**/src/**/__image_snapshots__/*.png filter=lfs diff=lfs merge=lfs -text

@@ -1,10 +1,5 @@
 node_modules/
 dist/
 docs/
-styleguide-build/
-*.test.js
-src/vkui.js
+coverage/
 stylelint.config.js
-
-# ignore self
-.eslintrc.js

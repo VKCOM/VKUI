@@ -1,11 +1,9 @@
 # Project
-src/styles/customMedias.generated.css
 PUBLISHING.md
 
 # Builds
 dist/
 !e2e/dist/index.html
-styleguide-build/
 
 # Dependency directory
 node_modules/
@@ -19,6 +17,7 @@ e2e-results.json
 
 # Caches
 .cache
+tmp/
 
 # Coverage directory used by tools like istanbul
 coverage

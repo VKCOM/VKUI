@@ -28,13 +28,13 @@
 
 Для удобного получения `className` в зависимости от адаптивности есть такие функции как:
 
-- [`getHoverClassName()`](../src/helpers/getHoverClassName.ts)
-- [`getPointerClassName()`](../src/helpers/getPointerClassName.ts)
-- [`getPlatformClassName()`](../src/helpers/getPlatformClassName.ts)
-- [`getSizeXClassName()`](../src/helpers/getSizeXClassName.ts)
-- [`getSizeYClassName()`](../src/helpers/getSizeYClassName.ts)
-- [`getViewHeightClassName()`](../src/helpers/getViewHeightClassName.ts)
-- [`getViewWidthClassName()`](../src/helpers/getViewWidthClassName.ts)
+- [`getHoverClassName()`](../packages/vkui/src/helpers/getHoverClassName.ts)
+- [`getPointerClassName()`](../packages/vkui/src/helpers/getPointerClassName.ts)
+- [`getPlatformClassName()`](../packages/vkui/src/helpers/getPlatformClassName.ts)
+- [`getSizeXClassName()`](../packages/vkui/src/helpers/getSizeXClassName.ts)
+- [`getSizeYClassName()`](../packages/vkui/src/helpers/getSizeYClassName.ts)
+- [`getViewHeightClassName()`](../packages/vkui/src/helpers/getViewHeightClassName.ts)
+- [`getViewWidthClassName()`](../packages/vkui/src/helpers/getViewWidthClassName.ts)
 
 Пример:
 
@@ -89,7 +89,7 @@ _Component.module.css_
 В данном случае мы задаём `padding: 10px;` для размера `sizeX-compact` и `padding: 20px;` для размера `sizeX-regular`.
 В `@media (--sizeX-compact)` мы задаём `padding: 10px;` для компонента только если `sizeX` не переопределен.
 
-Помимо утилитарных функций, есть хук [`useAdaptivityConditionalRender`](../src/hooks/useAdaptivityConditionalRender/useAdaptivityConditionalRender.tsx).
+Помимо утилитарных функций, есть хук [`useAdaptivityConditionalRender`](../packages/vkui/src/hooks/useAdaptivityConditionalRender/useAdaptivityConditionalRender.tsx).
 
 ### Подводные камни
 
@@ -98,7 +98,7 @@ _Component.module.css_
 
 - `.Group--mode-none`
 
-  В компоненте [Group](../src/components/Group/Group.tsx) появился класс `.Group--mode-none`. Он означает, что у `Group`
+  В компоненте [Group](../packages/vkui/src/components/Group/Group.tsx) появился класс `.Group--mode-none`. Он означает, что у `Group`
   не передан `mode` и не удалось вычислить его автоматически. `.Group--mode-none` должен вести себя как
   `.Group--mode-card` при `sizeX=regular` и как `.Group--mode-plain` при `sizeX=compact`. Пример использования:
 
@@ -131,7 +131,7 @@ _Component.module.css_
 создать несколько разметок (для мобильного и десктопа, например) и показывать только одну из них. Для _всплывающих окон_
 такой подход обозначает дублирование атрибута `id`. При этом с точки зрения UX такие окна появляются либо после вызова
 их программно, либо после вызова их пользователем, то есть рендериться на сервере они не будут. Поэтому для _всплывающих
-окон_ мы используем адаптивность через JS. Для этого создан хук [`useAdaptivityWithJSMediaQueries()`](../src/hooks/useAdaptivityWithJSMediaQueries.ts).
+окон_ мы используем адаптивность через JS. Для этого создан хук [`useAdaptivityWithJSMediaQueries()`](../packages/vkui/src/hooks/useAdaptivityWithJSMediaQueries.ts).
 
 При этом мы помним про показ компонента только после **первого** рендера. Пример:
 
@@ -164,4 +164,4 @@ const App = () => {
 В нашем примере внутри `<ModalRoot />` и `<ModalPage />` используется `useAdaptivityWithJSMediaQueries()` для
 переключения компонентов на мобильный или десктопный виды.
 
-В библиотеке логику с состоянием `mounted` инкапсулирует в себе компонент [AppRootPortal](../src/components/AppRoot/AppRootPortal.tsx).
+В библиотеке логику с состоянием `mounted` инкапсулирует в себе компонент [AppRootPortal](../packages/vkui/src/components/AppRoot/AppRootPortal.tsx).

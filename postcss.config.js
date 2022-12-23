@@ -1,22 +1,33 @@
+const fs = require('fs');
 const path = require('path');
 const cssCustomProperties = require('postcss-custom-properties');
-const restructureVariable = require('./packages/postcss-restructure-variable');
+const restructureVariable = require('@project-tools/postcss-restructure-variable');
 const cssImport = require('postcss-import');
 const autoprefixer = require('autoprefixer');
 const cssModules = require('postcss-modules');
 const cssnano = require('cssnano');
-const checkKeyframes = require('./packages/postcss-check-keyframes');
-const { generateScopedName, cssCustomPropertiesPaths, getCustomMedias } = require('./shared');
+const checkKeyframes = require('@project-tools/postcss-check-keyframes');
+const { VKUI_PACKAGE, generateScopedName, getCustomMedias } = require('./shared');
 const postcssCustomMedia = require('postcss-custom-media');
+
+function getSafelyTmpDirPath(rootPath = __dirname) {
+  const tmpDir = path.join(rootPath, 'tmp');
+
+  if (!fs.existsSync(tmpDir)) {
+    fs.mkdirSync(tmpDir);
+  }
+
+  return tmpDir;
+}
 
 module.exports = (ctx) => {
   const plugins = [
     cssImport(),
     checkKeyframes({
-      importFrom: path.join(__dirname, 'src/styles/animations.css'),
+      importFrom: path.join(__dirname, VKUI_PACKAGE.PATHS.CSS_ANIMATIONS),
     }),
     cssCustomProperties({
-      importFrom: cssCustomPropertiesPaths,
+      importFrom: [path.join(__dirname, VKUI_PACKAGE.PATHS.CSS_CONSTANTS)],
       preserve: true,
       disableDeprecationNotice: true,
     }),
@@ -29,7 +40,7 @@ module.exports = (ctx) => {
         './node_modules/@vkontakte/vkui-tokens/themes/vkIOSDark/cssVars/declarations/onlyVariablesLocal.css',
         './node_modules/@vkontakte/vkui-tokens/themes/vkCom/cssVars/declarations/onlyVariablesLocal.css',
         './node_modules/@vkontakte/vkui-tokens/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css',
-      ].map((pathSegment) => path.resolve(pathSegment)),
+      ].map((pathSegment) => path.join(__dirname, pathSegment)),
     ),
     autoprefixer(),
     cssModules({
@@ -39,7 +50,7 @@ module.exports = (ctx) => {
     postcssCustomMedia({
       importFrom: getCustomMedias,
       // см. CONTRIBUTING.md
-      exportTo: path.resolve('./src/styles/customMedias.generated.css'),
+      exportTo: path.join(getSafelyTmpDirPath(), 'customMedias.generated.css'),
     }),
   ];
 
