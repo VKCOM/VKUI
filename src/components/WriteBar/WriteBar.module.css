@@ -44,6 +44,10 @@
   opacity: 1;
 }
 
+.WriteBar__textarea:focus {
+  outline: none;
+}
+
 .WriteBar__inlineAfter {
   display: flex;
   align-items: flex-end;

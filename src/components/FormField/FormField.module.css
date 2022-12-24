@@ -9,10 +9,6 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.FormField:focus {
-  outline: none;
-}
-
 .FormField--sizeY-compact {
   min-height: var(--vkui--size_field_height--compact);
 }
@@ -115,6 +111,11 @@
 .FormField--mode-default.FormField--hover .FormField__border {
   border-color: var(--vkui--color_field_border_alpha--hover);
   z-index: 4;
+}
+
+/* stylelint-disable-next-line vkui/atomic */
+.FormField *:focus {
+  outline: none;
 }
 
 /**
