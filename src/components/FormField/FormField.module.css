@@ -7,6 +7,7 @@
   font-family: var(--vkui--font_family_base);
   -webkit-tap-highlight-color: transparent;
   isolation: isolate;
+  border-radius: var(--vkui--size_border_radius--regular);
 }
 
 .FormField--sizeY-compact {
@@ -62,6 +63,7 @@
 }
 
 .FormField__border {
+  pointer-events: none;
   position: absolute;
   z-index: var(--vkui_internal--z_index_form_field_border);
   left: 0;
@@ -71,11 +73,14 @@
   box-sizing: border-box;
   transform-origin: left top;
   border: var(--vkui_internal--thin_border) solid transparent;
-  border-radius: var(--vkui--size_border_radius--regular);
+  border-radius: inherit;
 }
 
 .FormField--mode-default .FormField__border {
   border-color: var(--vkui--color_field_border_alpha);
+}
+
+.FormField--mode-default {
   background-color: var(--vkui--color_field_background);
 }
 
@@ -86,9 +91,13 @@
  */
 .FormItem--status-error .FormField__border,
 .FormField--status-error .FormField__border {
-  background-color: var(--vkui--color_background_negative_tint);
   border-color: var(--vkui--color_stroke_negative);
   z-index: var(--vkui_internal--z_index_form_field_status);
+}
+
+.FormItem--status-error .FormField,
+.FormField--status-error {
+  background-color: var(--vkui--color_background_negative_tint);
 }
 
 .FormItem--status-valid .FormField__border,
@@ -104,7 +113,7 @@
   pointer-events: none;
 }
 
-.FormField--hover .FormField__border {
+.FormField--hover {
   background-color: var(--vkui--color_field_background);
 }
 
@@ -183,28 +192,25 @@
   isolation: auto;
 }
 
-.FormLayoutGroup--segmented > .FormItem:not(:first-of-type):not(:last-of-type) .FormField__border,
+.FormLayoutGroup--segmented > .FormItem:not(:first-of-type):not(:last-of-type) .FormField,
 .FormLayoutGroup--segmented
   .Removable__content
   > .FormItem:not(:first-of-type):not(:last-of-type)
-  .FormField__border {
+  .FormField {
   border-radius: 0;
 }
 
-.FormLayoutGroup--segmented > *:first-of-type:not(:last-of-type) .FormField__border,
-.FormLayoutGroup--segmented
-  .Removable__content
-  > *:first-of-type:not(:last-of-type)
-  .FormField__border {
+.FormLayoutGroup--segmented > *:first-of-type:not(:last-of-type) .FormField,
+.FormLayoutGroup--segmented .Removable__content > *:first-of-type:not(:last-of-type) .FormField {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.FormLayoutGroup--segmented > .FormItem:not(:first-of-type):last-of-type .FormField__border,
+.FormLayoutGroup--segmented > .FormItem:not(:first-of-type):last-of-type .FormField,
 .FormLayoutGroup--segmented
   .Removable__content
   > .FormItem:not(:first-of-type):last-of-type
-  .FormField__border {
+  .FormField {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
