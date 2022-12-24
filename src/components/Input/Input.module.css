@@ -67,10 +67,6 @@
   color: var(--vkui--color_text_secondary);
 }
 
-.Input__el:focus {
-  outline: none;
-}
-
 .Input--align-left {
   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }
