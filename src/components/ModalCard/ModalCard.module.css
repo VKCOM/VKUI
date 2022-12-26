@@ -8,7 +8,6 @@
   height: 100%;
   display: flex;
   align-items: flex-end;
-  z-index: 1;
 }
 
 .ModalCard__in {

@@ -142,7 +142,6 @@ export const Root = ({
               transition && viewId === prevView && !isBack && styles['Root__view--hide-forward'],
               transition && viewId === activeView && isBack && styles['Root__view--show-back'],
               transition && viewId === activeView && !isBack && styles['Root__view--show-forward'],
-              !transition && viewId === activeView && styles['Root__view--active'],
             )}
           >
             <NavTransitionProvider entering={transition && viewId === activeView}>

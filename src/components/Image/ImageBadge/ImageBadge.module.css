@@ -1,6 +1,5 @@
 .ImageBadge {
   position: absolute;
-  z-index: 1;
   bottom: -4px;
   right: -4px;
 }

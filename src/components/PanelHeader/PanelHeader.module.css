@@ -12,7 +12,7 @@
 }
 
 .PanelHeader__fixed {
-  z-index: 10;
+  z-index: var(--vkui_internal--z_index_panel_header_fixed);
 }
 
 .PanelHeader__in {
@@ -225,7 +225,7 @@
  */
 .PanelHeader--vkcom {
   position: relative;
-  z-index: 10;
+  z-index: var(--vkui_internal--z_index_panel_header_fixed);
 }
 
 .PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.ModalPageHeader__in)::after,

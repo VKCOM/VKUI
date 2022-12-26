@@ -23,6 +23,36 @@
 
   /* animations */
   --vkui_internal--duration: 0.7s;
+
+  /* z_index */
+  --vkui_internal--z_index_cell_dragging: 1;
+  --vkui_internal--z_index_pull_to_refresh: 1;
+  --vkui_internal--z_index_tabs: 2;
+  --vkui_internal--z_index_fixed_layout: 3;
+  --vkui_internal--z_index_panel_header_context: 4;
+  --vkui_internal--z_index_panel_header_fixed: 10;
+  --vkui_internal--z_index_split_layout_panel_header: 11;
+
+  /* z_index Tappable isolate */
+  --vkui_internal--z_index_tappable_state: 0;
+  --vkui_internal--z_index_tappable_element: 1;
+
+  /* z_index Banner isolate */
+  --vkui_internal--z_index_banner_background: 0;
+  --vkui_internal--z_index_banner_content: 1;
+  --vkui_internal--z_index_banner_hover: 2;
+
+  /* z_index FormField isolate */
+  --vkui_internal--z_index_form_field_border: 1;
+  --vkui_internal--z_index_form_field_status: 3;
+  --vkui_internal--z_index_form_field_border_hover: 4;
+  --vkui_internal--z_index_form_field_focus: 5;
+  --vkui_internal--z_index_form_field_element: 6;
+  --vkui_internal--z_index_form_field_side: 7;
+
+  /* z_index ImageBase isolate */
+  --vkui_internal--z_index_image_base_overlay: 0;
+  --vkui_internal--z_index_image_base_badge: 1;
 }
 
 @media (min-resolution: 2dppx) {

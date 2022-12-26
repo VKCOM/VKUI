@@ -26,16 +26,6 @@
   height: 100%;
 }
 
-.Root__view--show-back,
-.Root__view--hide-forward {
-  z-index: 1;
-}
-
-.Root__view--show-forward,
-.Root__view--hide-back {
-  z-index: 2;
-}
-
 .Root__view--show-forward {
   animation: vkui-root-android-animation-show-forward 0.3s var(--vkui--animation_easing_platform);
 }
@@ -49,9 +39,6 @@
  * iOS
  */
 
-.Root--ios {
-}
-
 .Root--ios .Root__view--show-back::after,
 .Root--ios .Root__view--hide-forward::after {
   position: absolute;
@@ -62,7 +49,6 @@
   display: block;
   content: '';
   background-color: #000;
-  z-index: 6;
 }
 
 .Root--ios .Root__view--show-back::after {
@@ -147,8 +133,4 @@
     transform: scale(1);
     opacity: 1;
   }
-}
-
-.Root__view--active {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

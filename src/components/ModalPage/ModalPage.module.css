@@ -4,7 +4,6 @@
   overflow: hidden;
   position: absolute;
   box-sizing: border-box;
-  z-index: 1;
   pointer-events: none;
 }
 
@@ -119,12 +118,6 @@
   padding-bottom: var(--vkui_internal--safe_area_inset_bottom);
 }
 
-.ModalPage__footer {
-  background-color: var(--vkui--color_background_modal);
-  position: relative;
-  z-index: 10;
-}
-
 /**
  * CMP:
  * ModalRoot
@@ -143,8 +136,4 @@
 .ModalRoot__modal--dragging .ModalPage__content {
   overflow: hidden;
   touch-action: pan-y;
-}
-
-.ModalRoot--touched .ModalPage__footer {
-  transition: none;
 }

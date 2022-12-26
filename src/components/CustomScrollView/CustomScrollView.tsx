@@ -172,6 +172,10 @@ export const CustomScrollView = ({
 
   return (
     <div className={classNames(styles['CustomScrollView'], className)}>
+      <div className={styles['CustomScrollView__box']} tabIndex={-1} ref={boxRef} onScroll={scroll}>
+        {children}
+      </div>
+
       <div className={styles['CustomScrollView__barY']} ref={barY} onClick={stopPropagation}>
         <div
           className={classNames(
@@ -183,10 +187,6 @@ export const CustomScrollView = ({
           ref={trackerY}
           onMouseDown={onDragStart}
         />
-      </div>
-
-      <div className={styles['CustomScrollView__box']} tabIndex={-1} ref={boxRef} onScroll={scroll}>
-        {children}
       </div>
     </div>
   );
