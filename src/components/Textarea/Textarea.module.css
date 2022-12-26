@@ -22,10 +22,6 @@
   background: transparent;
 }
 
-.Textarea__el:focus {
-  outline: none;
-}
-
 .Textarea__el[cols] {
   width: initial;
 }
