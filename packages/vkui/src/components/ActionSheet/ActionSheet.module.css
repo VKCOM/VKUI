@@ -1,7 +1,7 @@
 .ActionSheet {
   position: relative;
   overflow: hidden;
-  box-shadow: var(--vkui--elevation3);
+  box-shadow: var(--vkui--elevation2); /* изменение для теста */
   width: calc(100% - 20px);
   align-items: stretch;
   display: flex;
