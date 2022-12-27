@@ -13,12 +13,14 @@
 }
 
 .Input__el {
+  align-self: stretch;
   margin: 0;
   width: 100%;
   display: block;
   box-sizing: border-box;
   box-shadow: none;
   border: none;
+  border-radius: inherit;
   appearance: none;
   text-overflow: ellipsis;
   font-family: inherit;
@@ -26,8 +28,7 @@
   font-size: var(--vkui--font_text--font_size--regular);
   line-height: var(--vkui--font_text--line_height--regular);
   color: var(--vkui--color_text_primary);
-  padding-right: 12px;
-  padding-left: 12px;
+  padding: 0 12px;
   position: relative;
   z-index: var(--vkui_internal--z_index_form_field_element);
   background: transparent;
