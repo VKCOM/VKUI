@@ -51,5 +51,5 @@ export function useEventListener<E extends Event, K extends keyof GlobalEventHan
   );
   React.useEffect(() => remove, [remove]);
 
-  return { add, remove };
+  return React.useMemo(() => ({ add, remove }), [add, remove]);
 }
