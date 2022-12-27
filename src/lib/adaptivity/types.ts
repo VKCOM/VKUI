@@ -22,6 +22,7 @@ export type CSSBreakpoints =
 export type JSBreakpoints =
   | "desktopPlus"
   | "tablet"
+  | "smallTabletPlus"
   | "smallTablet"
   | "mobile"
   | "mediumHeight"

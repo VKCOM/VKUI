@@ -51,6 +51,7 @@ export const useMediaQueries = () => {
       storedMediaQueries.window = window;
       storedMediaQueries.mediaQueries = {
         desktopPlus: matchMedia(MEDIA_QUERIES.DESKTOP_PLUS),
+        smallTabletPlus: matchMedia(MEDIA_QUERIES.SMALL_TABLET_PLUS),
         tablet: matchMedia(MEDIA_QUERIES.TABLET),
         smallTablet: matchMedia(MEDIA_QUERIES.SMALL_TABLET),
         mobile: matchMedia(MEDIA_QUERIES.MOBILE),
