@@ -16,8 +16,16 @@
   color: var(--vkui--color_text_secondary);
 }
 
-.ChipsSelect--pop-up,
-.ChipsSelect--pop-down,
+.ChipsSelect--pop-down {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.ChipsSelect--pop-up {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
 .ChipsSelect__option,
 .ChipsSelect__options {
   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
