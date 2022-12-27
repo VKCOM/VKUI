@@ -138,21 +138,8 @@
 
 /**
  * CMP:
- * CustomSelect
- * ChipSelect
+ * Select
  */
-.CustomSelect--pop-down .FormField__border,
-.ChipsSelect--pop-down .FormField__border {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.CustomSelect--pop-up .FormField__border,
-.ChipsSelect--pop-up .FormField__border {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
 .Select .FormField__after {
   pointer-events: none;
 }

@@ -5,9 +5,14 @@
   cursor: pointer;
 }
 
-.CustomSelect--pop-up,
 .CustomSelect--pop-down {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.CustomSelect--pop-up {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 .CustomSelect__control {
