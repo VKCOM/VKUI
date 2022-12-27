@@ -142,18 +142,23 @@ export const Popover = ({
     }
 
     targetClickEvent.add(childRef.current);
+  }, [childRef, targetClickEvent]);
+
+  React.useEffect(() => {
+    if (!childRef.current) {
+      return;
+    }
 
     if (hoverable) {
       targetEnterListener.add(childRef.current);
       targetLeaveListener.add(childRef.current);
     }
-  }, [
-    childRef,
-    hoverable,
-    targetClickEvent,
-    targetEnterListener,
-    targetLeaveListener,
-  ]);
+
+    return () => {
+      targetEnterListener.remove();
+      targetLeaveListener.remove();
+    };
+  }, [childRef, hoverable, targetEnterListener, targetLeaveListener]);
 
   return (
     <React.Fragment>

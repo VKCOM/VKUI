@@ -61,5 +61,5 @@ export function useEventListener<
   );
   React.useEffect(() => remove, [remove]);
 
-  return { add, remove };
+  return React.useMemo(() => ({ add, remove }), [add, remove]);
 }
