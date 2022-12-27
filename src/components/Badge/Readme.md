@@ -6,7 +6,11 @@
     <PanelHeader>Бейдж</PanelHeader>
 
     <Group header={<Header mode="secondary">В пунктах меню</Header>}>
-      <Cell expandable before={<Icon28Notifications />} badge={<Badge aria-label="Есть новые" />}>
+      <Cell
+        expandable
+        before={<Icon28Notifications />}
+        badgeAfterTitle={<Badge aria-label="Есть новые" />}
+      >
         Уведомления
       </Cell>
     </Group>
