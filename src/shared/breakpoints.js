@@ -24,6 +24,7 @@ const MEDIA_QUERIES = {
 
   TABLET: `(min-width: ${BREAKPOINTS.TABLET}px) and (max-width: ${BREAKPOINTS.DESKTOP - 1}px)`, // prettier-ignore
 
+  SMALL_TABLET_PLUS: `(min-width: ${BREAKPOINTS.TABLET}px)`,
   SMALL_TABLET: `(min-width: ${BREAKPOINTS.SMALL_TABLET}px) and (max-width: ${BREAKPOINTS.TABLET - 1}px)`, // prettier-ignore
 
   MOBILE: `(min-width: ${BREAKPOINTS.MOBILE}px) and (max-width: ${BREAKPOINTS.SMALL_TABLET - 1}px)`, // prettier-ignore
