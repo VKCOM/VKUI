@@ -3,9 +3,39 @@ import { classNamesString } from "../../lib/classNames";
 import { getSizeXClassName } from "../../helpers/getSizeXClassName";
 import { getViewWidthClassName } from "../../helpers/getViewWidthClassName";
 import { useAdaptivity } from "../../hooks/useAdaptivity";
-import { BREAKPOINTS, ViewWidth } from "../../lib/adaptivity";
-import { useDOM } from "../../lib/dom";
+import { ViewWidth } from "../../lib/adaptivity";
+import { useObjectMemo } from "../../hooks/useObjectMemo";
+import { useMediaQueries } from "../../hooks/useMediaQueries";
 import styles from "./SplitCol.module.css";
+
+function useTransitionAnimate(animateProp?: boolean) {
+  const { viewWidth } = useAdaptivity();
+  const [animate, setAnimate] = React.useState(Boolean(animateProp));
+  const mediaQueries = useMediaQueries();
+
+  React.useEffect(() => {
+    if (animateProp !== undefined) {
+      setAnimate(animateProp);
+      return;
+    }
+
+    if (viewWidth !== undefined) {
+      setAnimate(viewWidth < ViewWidth.TABLET);
+      return;
+    }
+
+    // eslint-disable-next-line no-restricted-properties
+    const listener = () => setAnimate(!mediaQueries.smallTabletPlus.matches);
+    listener();
+
+    mediaQueries.smallTabletPlus.addEventListener("change", listener);
+    return () => {
+      mediaQueries.smallTabletPlus.removeEventListener("change", listener);
+    };
+  }, [animateProp, viewWidth, mediaQueries]);
+
+  return animate;
+}
 
 export interface SplitColContextProps {
   colRef: React.RefObject<HTMLDivElement> | null;
@@ -52,7 +82,7 @@ export const SplitCol = (props: SplitColProps) => {
     maxWidth,
     minWidth,
     spaced,
-    animate: _animate,
+    animate: animateProp,
     fixed,
     style,
     autoSpaced,
@@ -62,27 +92,12 @@ export const SplitCol = (props: SplitColProps) => {
   } = props;
   const baseRef = React.useRef<HTMLDivElement>(null);
   const { viewWidth, sizeX } = useAdaptivity();
-  const [animate, setAnimate] = React.useState(Boolean(_animate));
-  const { window } = useDOM();
+  const animate = useTransitionAnimate(animateProp);
 
-  React.useEffect(() => {
-    if (_animate === undefined) {
-      setAnimate(
-        viewWidth !== undefined
-          ? viewWidth < ViewWidth.TABLET
-          : window!.innerWidth < BREAKPOINTS.SMALL_TABLET
-      );
-    } else {
-      setAnimate(_animate);
-    }
-  }, [_animate, viewWidth, window]);
-
-  const contextValue = React.useMemo(() => {
-    return {
-      colRef: baseRef,
-      animate,
-    };
-  }, [baseRef, animate]);
+  const contextValue = useObjectMemo({
+    colRef: baseRef,
+    animate,
+  });
 
   return (
     <div

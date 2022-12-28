@@ -32,7 +32,7 @@ module.exports = {
 
       "--viewWidth-desktopPlus": MEDIA_QUERIES.DESKTOP_PLUS,
 
-      "--viewWidth-tabletPlus": `(min-width: ${BREAKPOINTS.TABLET}px)`,
+      "--viewWidth-tabletPlus": MEDIA_QUERIES.SMALL_TABLET_PLUS,
       "--viewWidth-tablet": MEDIA_QUERIES.TABLET,
       "--viewWidth-tabletMinus": `(max-width: ${BREAKPOINTS.TABLET - 1}px)`,
 
