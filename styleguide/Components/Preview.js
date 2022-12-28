@@ -17,8 +17,9 @@ import {
 } from "@vkui";
 import { Frame } from "./Frame/Frame";
 import { perfLogger, useViewPortSize } from "../utils";
-import "./Preview.css";
 import { BREAKPOINTS } from "@vkui/shared/breakpoints";
+import { usePlatformStyle } from "./Frame/usePlatformStyle";
+import "./Preview.css";
 
 const logPerf = (id, phase, time) => perfLogger.log(`${id}.${phase}`, time);
 
@@ -46,6 +47,12 @@ const Config = ({ hasPointer, children, ...config }) => {
       </AdaptivityProvider>
     </ConfigProvider>
   );
+};
+
+const WithoutFrame = ({ platform, children }) => {
+  const loaded = usePlatformStyle(platform);
+
+  return loaded ? children : <PanelSpinner />;
 };
 
 class Preview extends PreviewParent {
@@ -143,13 +150,16 @@ class Preview extends PreviewParent {
                               : undefined
                           }
                           appearance={styleGuideContext.appearance}
+                          platform={styleGuideContext.platform}
                         >
                           <Config {...styleGuideContext} exampleId={exampleId}>
                             {layout ? <Layout>{example}</Layout> : example}
                           </Config>
                         </Frame>
                       ) : (
-                        example
+                        <WithoutFrame platform={styleGuideContext.platform}>
+                          {example}
+                        </WithoutFrame>
                       )}
                     </div>
                   </div>
