@@ -48,14 +48,14 @@
 }
 
 /**
- * CMP: Gallery, HorizontalScroll
+ * CMP: BaseGallery, HorizontalScroll
  */
-.Gallery:hover .HorizontalScrollArrow,
+.BaseGallery:hover .HorizontalScrollArrow,
 .HorizontalScroll:hover .HorizontalScrollArrow {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.Gallery:hover .HorizontalScrollArrow:hover,
+.BaseGallery:hover .HorizontalScrollArrow:hover,
 .HorizontalScroll:hover .HorizontalScrollArrow:hover,
 .HorizontalScroll--withConstArrows .HorizontalScrollArrow,
 .HorizontalScroll--withConstArrows:hover .HorizontalScrollArrow {
