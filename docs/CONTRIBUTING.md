@@ -10,7 +10,7 @@
 
 1. Добавить файл `.git-blame-ignore-revs` в свой git-конфиг:
    ```sh
-   git config blame.ignoreRevsFile .git-blame-ignore-revs`
+   git config blame.ignoreRevsFile .git-blame-ignore-revs
    ```
    Это поможет игнорировать коммиты, связанные с изменениями стиля кода. `git blame` будет чище.
 2. Запустить сборку: `yarn build`.
