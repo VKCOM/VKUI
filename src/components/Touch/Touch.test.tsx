@@ -307,48 +307,6 @@ describe('Touch', () => {
       ]);
       expect(hasDefault).toBe(true);
     });
-    describe('prevents link click after slide', () => {
-      it('with simple link', () => {
-        render(
-          <Touch onMove={noop}>
-            <a href="/hello" />
-          </Touch>,
-        );
-        const hasDefault = slideRight(screen.getByRole('link'));
-        expect(hasDefault).toBe(false);
-      });
-      it('on link child', () => {
-        render(
-          <Touch onMove={noop}>
-            <a href="/hello">
-              <div data-testid="xxx" />
-            </a>
-          </Touch>,
-        );
-        const hasDefault = slideRight(screen.getByTestId('xxx'));
-        expect(hasDefault).toBe(false);
-      });
-      it('inside link', () => {
-        render(
-          <a href="/hello">
-            <Touch onMove={noop}>
-              <div data-testid="xxx" />
-            </Touch>
-          </a>,
-        );
-        const hasDefault = slideRight(screen.getByTestId('xxx'));
-        expect(hasDefault).toBe(false);
-      });
-      it('when Touch is link', () => {
-        render(
-          <Touch Component="a" onMove={noop}>
-            <div data-testid="xxx" />
-          </Touch>,
-        );
-        const hasDefault = slideRight(screen.getByTestId('xxx'));
-        expect(hasDefault).toBe(false);
-      });
-    });
     it('handles onClickCapture', () => {
       const cb = jest.fn(() => null);
       render(<Touch onClickCapture={cb} onMove={noop} data-testid="touch" />);
