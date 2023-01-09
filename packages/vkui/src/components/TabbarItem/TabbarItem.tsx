@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { hasReactNode } from '../../lib/utils';
 import { Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Platform } from '../../lib/platform';

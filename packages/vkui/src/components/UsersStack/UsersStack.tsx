@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { hasReactNode } from '../../lib/utils';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Caption } from '../Typography/Caption/Caption';
 import { useId } from '../../hooks/useId';

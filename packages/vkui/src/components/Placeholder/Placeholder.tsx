@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
-import { hasReactNode } from '../../lib/utils';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { Title } from '../Typography/Title/Title';
 import { Headline } from '../Typography/Headline/Headline';
 import { HasRootRef } from '../../types';

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Tappable } from '../Tappable/Tappable';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { Button, ButtonProps } from '../Button/Button';
-import { hasReactNode, stopPropagation } from '../../lib/utils';
+import { stopPropagation } from '../../lib/utils';
 import { Title } from '../Typography/Title/Title';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';

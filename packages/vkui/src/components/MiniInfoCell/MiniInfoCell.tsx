@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import { Tappable } from '../Tappable/Tappable';
-import { hasReactNode } from '../../lib/utils';
 import { Icon16Chevron } from '@vkontakte/icons';
 import styles from './MiniInfoCell.module.css';
 

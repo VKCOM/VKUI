@@ -16,10 +16,6 @@ export function debounce<A extends any[]>(fn: (...args: A) => void, delay: numbe
   };
 }
 
-export function hasReactNode(value: React.ReactNode): boolean {
-  return value !== undefined && value !== false && value !== null && value !== '';
-}
-
 export function setRef<T>(element: T, ref?: React.Ref<T>): void {
   if (ref) {
     if (typeof ref === 'function') {

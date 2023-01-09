@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { Platform } from '../../lib/platform';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Spacing } from '../Spacing/Spacing';
 import { Separator } from '../Separator/Separator';
-import { hasReactNode } from '../../lib/utils';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { warnOnce } from '../../lib/warnOnce';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';

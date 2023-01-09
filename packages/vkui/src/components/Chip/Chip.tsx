@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Icon16Cancel } from '@vkontakte/icons';
-import { getTitleFromChildren, hasReactNode } from '../../lib/utils';
-import { classNames, noop } from '@vkontakte/vkjs';
+import { getTitleFromChildren } from '../../lib/utils';
+import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Tappable } from '../Tappable/Tappable';
 import { useAdaptivity } from '../../hooks/useAdaptivity';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
 import { PopperArrow } from '../PopperArrow/PopperArrow';
@@ -10,7 +10,6 @@ import { tooltipContainerAttr } from './TooltipContainer';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
-import { hasReactNode } from '../../lib/utils';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { HasRootRef } from '../../types';
 import styles from './Tooltip.module.css';

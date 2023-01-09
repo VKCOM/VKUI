@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { Caption } from '../Typography/Caption/Caption';
 import { Headline } from '../Typography/Headline/Headline';
-import { hasReactNode } from '../../lib/utils';
 import styles from './Counter.module.css';
 
 const modeClassNames = {
