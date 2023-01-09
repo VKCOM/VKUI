@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Headline } from '../Typography/Headline/Headline';
-import { hasReactNode } from '../../lib/utils';
 import styles from './InfoRow.module.css';
 
 export interface InfoRowProps extends React.HTMLAttributes<HTMLDivElement> {

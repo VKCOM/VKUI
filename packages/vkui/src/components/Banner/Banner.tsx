@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
-import { hasReactNode } from '../../lib/utils';
 import {
   Icon24Chevron,
   Icon24DismissSubstract,

@@ -8,12 +8,11 @@ import {
   Icon48WritebarSend,
 } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { Counter } from '../Counter/Counter';
 import { Tappable } from '../Tappable/Tappable';
 import { warnOnce } from '../../lib/warnOnce';
-import { hasReactNode } from '../../lib/utils';
 import styles from './WriteBarIcon.module.css';
 
 export interface WriteBarIconProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

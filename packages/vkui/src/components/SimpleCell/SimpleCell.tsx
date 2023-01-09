@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { HasComponent } from '../../types';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { TappableProps, Tappable } from '../Tappable/Tappable';
 import { Icon24Chevron } from '@vkontakte/icons';
 import { Platform } from '../../lib/platform';
 import { usePlatform } from '../../hooks/usePlatform';
-import { hasReactNode } from '../../lib/utils';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';

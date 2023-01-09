@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { hasReactNode } from '../../lib/utils';
 import { Title } from '../Typography/Title/Title';
 import { Subhead } from '../Typography/Subhead/Subhead';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';

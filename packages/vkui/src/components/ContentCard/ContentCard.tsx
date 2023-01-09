@@ -5,9 +5,8 @@ import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
 import { Text } from '../Typography/Text/Text';
 import { TappableProps, Tappable } from '../Tappable/Tappable';
-import { hasReactNode } from '../../lib/utils';
 import { HasRef, HasRootRef } from '../../types';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import styles from './ContentCard.module.css';
 
 export interface ContentCardProps

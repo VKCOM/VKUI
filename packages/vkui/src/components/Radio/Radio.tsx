@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { ACTIVE_EFFECT_DELAY, Tappable } from '../Tappable/Tappable';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
-import { hasReactNode } from '../../lib/utils';
 import { VisuallyHiddenInput } from '../VisuallyHiddenInput/VisuallyHiddenInput';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';

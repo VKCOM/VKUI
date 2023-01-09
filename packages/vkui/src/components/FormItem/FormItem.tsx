@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { HasComponent, HasRootRef } from '../../types';
-import { classNames, noop } from '@vkontakte/vkjs';
+import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
-import { hasReactNode } from '../../lib/utils';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { useAdaptivity } from '../../hooks/useAdaptivity';

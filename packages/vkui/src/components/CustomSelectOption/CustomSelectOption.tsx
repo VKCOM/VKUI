@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Icon16Done } from '@vkontakte/icons';
-import { classNames } from '@vkontakte/vkjs';
-import { hasReactNode } from '../../lib/utils';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { HasRootRef } from '../../types';

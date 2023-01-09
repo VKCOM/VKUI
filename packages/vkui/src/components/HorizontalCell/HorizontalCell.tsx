@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
-import { hasReactNode } from '../../lib/utils';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { Caption } from '../Typography/Caption/Caption';
 import { Tappable } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';

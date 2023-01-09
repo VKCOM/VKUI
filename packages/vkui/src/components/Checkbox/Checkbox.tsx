@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ACTIVE_EFFECT_DELAY, Tappable } from '../Tappable/Tappable';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import {
   Icon20CheckBoxOn,
@@ -11,7 +11,6 @@ import {
 } from '@vkontakte/icons';
 import { HasRef, HasRootRef } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
-import { hasReactNode } from '../../lib/utils';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
