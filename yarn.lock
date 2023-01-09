@@ -2537,10 +2537,10 @@
   resolved "https://registry.yarnpkg.com/@vkontakte/vk-bridge/-/vk-bridge-2.7.0.tgz#6a3c422b75d2ddd20dfad66d9418ab3921974a15"
   integrity sha512-Y3w3PivRaa/QkwKvwDdk+hWYdLRwqnFuxNJN3Z59PcEjLlCqgGbQ1x8vSZiEoLRmqjmV7NOqN+5fWnCCvGVNoQ==
 
-"@vkontakte/vkjs@0.29.0":
-  version "0.29.0"
-  resolved "https://registry.yarnpkg.com/@vkontakte/vkjs/-/vkjs-0.29.0.tgz#b5fe58798217f1da8ff8b2926c46f42232a679d0"
-  integrity sha512-JuiLR9bGtpwpVSkKdTNFwPQLKVfL3EgfvuLCjIOC2DkIZsbUESysLPvbC8n1s+vuhBGYWaRsJfZ/33ltGDUBOQ==
+"@vkontakte/vkjs@0.31.0":
+  version "0.31.0"
+  resolved "https://registry.yarnpkg.com/@vkontakte/vkjs/-/vkjs-0.31.0.tgz#7fe6ac779fc231a5207f3914ab4141e962e6425c"
+  integrity sha512-LPfB++/mpywsAYUvNUUfKFWRFgCV8ORtDBphs7WTb1MH0Rq9iaLpStLUMmH5Hl2MMQUxGUIQ2J/grbWVv5BIfA==
 
 "@vkontakte/vkui-tokens@4.26.0":
   version "4.26.0"
