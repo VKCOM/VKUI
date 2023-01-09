@@ -121,7 +121,7 @@
     "build:vkui": "yarn workspace @vkontakte/vkui run build",
     "test": "concurrently 'yarn workspaces run test' 'yarn test:static'",
     "test:ci": "concurrently 'yarn workspaces run test:ci' 'yarn test:static:ci'",
-    "//": "Note ('test:e2e'|'test:e2e:ci'): не вызываем через 'yarn workspace', т.к. 'jest-playwright-preset' создаёт .nyc_output/ в папке e2e/, а нам надо, чтобы в корне проекта лежало. Настройки для изменения повдения нет (справедливо для '<= 3.0.1').",
+    "//": "Note ('test:e2e'|'test:e2e:ci'): не вызываем через 'yarn workspace', т.к. 'jest-playwright-preset' создаёт .nyc_output/ в папке e2e/, а нам надо, чтобы в корне проекта лежало. Настройки для изменения поведения нет (справедливо для '<= 3.0.1').",
     "test:e2e": "jest --config e2e/jest.e2e.config.js",
     "test:e2e:ci": "yarn test:e2e --ci --outputFile e2e-results.json --json",
     "test:coverage": "npx nyc report --reporter=lcov",
