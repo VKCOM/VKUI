@@ -1,4 +1,5 @@
 {
+  "private": false,
   "name": "@vkontakte/vkui-token-translator",
   "version": "0.0.3",
   "description": "Tools for translate Appearance to vkui-tokens",
@@ -27,6 +28,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "test:ci": "yarn test"
   }
 }

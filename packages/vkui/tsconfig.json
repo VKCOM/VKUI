@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+        "options": {
+          "classnameTransform": "asIs",
+          "customMatcher": "\\.module\\.css$"
+        }
+      }
+    ]
+  },
+  "include": ["src/**/*.ts*", "src/**/*.js", "*.config.js", "*.setup.js", ".eslintrc.js"],
+  "files": ["types/env.d.ts"]
+}

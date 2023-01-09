@@ -1,5 +1,5 @@
 {
-  "name": "push-screenshots",
+  "name": "@actions-internal/push-screenshots",
   "version": "0.0.0",
   "main": "dist/main.js",
   "license": "MIT",
@@ -14,6 +14,8 @@
     "@actions/exec": "^1.1.1"
   },
   "scripts": {
-    "build": "tsc && ncc build"
+    "build": "tsc && ncc build",
+    "test": "echo no test",
+    "test:ci": "echo no test:ci"
   }
 }

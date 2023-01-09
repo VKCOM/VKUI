@@ -1,6 +1,6 @@
-const base = require('../jest.unit.config');
 const path = require('path');
 const chalk = require('chalk');
+const { VKUI_PACKAGE } = require('../shared');
 const { canRunTests, useDocker } = require('./detectEnv');
 
 const BROWSER = process.env.BROWSER ?? 'chromium';
@@ -33,22 +33,27 @@ const jestPlaywrightOptions = Object.assign(
     : {},
 );
 const config = {
-  ...base,
   displayName: 'e2e',
+  rootDir: path.join(__dirname, `../${VKUI_PACKAGE.PATHS.SRC_DIR}`),
   testMatch: ['**/*.e2e.{ts,tsx}'],
-  preset: 'jest-playwright-preset',
-  collectCoverage: false,
-  setupFilesAfterEnv: [path.join(__dirname, 'jest/matchers.ts')],
-  globalSetup: path.join(__dirname, 'jest/globalSetup.ts'),
-  globalTeardown: path.join(__dirname, 'jest/globalTeardown.ts'),
   testEnvironmentOptions: {
-    ...(base.testEnvironmentOptions || {}),
     'jest-playwright': jestPlaywrightOptions,
   },
   moduleNameMapper: {
-    '@react-playwright': path.join(__dirname, 'index.ts'),
+    '@project-e2e/helpers': path.join(__dirname, 'index.ts'),
     '\\.css$': require.resolve('identity-obj-proxy'),
   },
+  collectCoverage: false,
+
+  preset: 'jest-playwright-preset',
+  // Перебиваем некоторые параметры 'jest-playwright-preset'
+  globalSetup: path.join(__dirname, 'jest/globalSetup.ts'),
+  globalTeardown: path.join(__dirname, 'jest/globalTeardown.ts'),
+  setupFilesAfterEnv: [
+    'expect-playwright',
+    'jest-playwright-preset/lib/extends.js',
+    path.join(__dirname, 'jest/matchers.ts'),
+  ],
 };
 
 if (!canRunTests) {

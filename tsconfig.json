@@ -1,11 +1,9 @@
 {
   "compilerOptions": {
-    // см. `./src/shared/breakpoints.js`
     "allowJs": true,
     "jsx": "react",
     "target": "esnext",
     "lib": ["es6", "dom", "dom.Iterable"],
-    "outDir": "dist",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true,
@@ -13,23 +11,15 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "isolatedModules": true,
     "strict": true,
     "skipLibCheck": true,
-    "baseUrl": "src",
-    "plugins": [
-      {
-        "name": "typescript-plugin-css-modules",
-        "options": {
-          "classnameTransform": "asIs",
-          "customMatcher": "\\.module\\.css$"
-        }
-      }
-    ],
+    "baseUrl": "./",
     "paths": {
-      "@react-playwright": ["../e2e"]
+      "@project-e2e/helpers": ["./e2e"],
+      "@vkontakte/vkui": ["./packages/vkui"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "packages/**/*.js", "*.js"],
-  "files": ["types/global.d.ts", "types/env.d.ts"]
+  "exclude": ["**/node_modules", "**/dist"]
 }

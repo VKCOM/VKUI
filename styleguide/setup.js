@@ -1,13 +1,13 @@
-import '../src/styles/themes.css';
-import '../src/styles/common.css';
+import '../packages/vkui/src/styles/themes.css';
+import '../packages/vkui/src/styles/common.css';
 
 import { useState, useRef } from 'react';
-import * as VKUI from '../src';
+import * as VKUI from '../packages/vkui/src';
 import {
   IconExampleForOverlayBasedOnImageBaseSize,
   IconExampleForFallbackBasedOnImageBaseSize,
   IconExampleForBadgeBasedOnImageBaseSize,
-} from '../src/testing/icons';
+} from '../packages/vkui/src/testing/icons';
 import * as Icons from '@vkontakte/icons';
 import {
   getRandomInt,

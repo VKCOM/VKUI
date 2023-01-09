@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "name": "@project-tools/stylelint-bad-multiplication",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo no build",
+    "test": "jest",
+    "test:ci": "yarn test"
+  }
+}

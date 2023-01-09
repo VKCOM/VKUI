@@ -1,0 +1,13 @@
+# ⚠️ FAKE yarn.lock
+#
+# Для лечения GitHub Actions `andresz1/size-limit-action` <= 1.7.0 с параметром `directory`.
+#
+# В чём заключается проблема?
+#
+# 1. При параметре `directory: /packages/vkui` экшен переходит в текущую директорию.
+# 2. Чере пакет `has-yarn` проверяет есть ли `yarn.lock` (https://www.npmjs.com/package/has-yarn).
+# 3. ❌ `yarn.lock` не оказывается и поэтому используется `npm install` вместо `yarn install` – джоба падает.
+#
+# See https://github.com/andresz1/size-limit-action/issues/77
+#
+# TODO Удалить файл, после того, как выпустится версия `andresz1/size-limit-action` с параметром `package_manager`.

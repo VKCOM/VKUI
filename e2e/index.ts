@@ -1,9 +1,5 @@
 import { ReactElement } from 'react';
 
-/**
- * Хелперы для тестов jest + playwright. В браузерной сборке подменяются на browser/mount.
- */
-
 export function mount(jsx: ReactElement): Promise<void>;
 export async function mount() {
   const testName = expect.getState().currentTestName;

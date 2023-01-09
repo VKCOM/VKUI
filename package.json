@@ -1,26 +1,17 @@
 {
-  "name": "@vkontakte/vkui",
-  "version": "5.0.1",
-  "main": "dist/cjs/index.js",
-  "module": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "sideEffects": [
-    "./dist/lib/polyfills.js",
-    "./dist/index.js",
-    "./dist/cjs/lib/polyfills.js",
-    "./dist/cjs/index.js",
-    "./dist/cssm/lib/polyfills.js",
-    "./dist/cssm/index.js",
-    "*.css"
-  ],
-  "license": "MIT",
-  "description": "VKUI library",
-  "repository": "https://github.com/VKCOM/VKUI",
-  "homepage": "https://vkcom.github.io/VKUI/",
-  "bugs": "https://github.com/VKCOM/VKUI/issues",
+  "private": true,
+  "version": "0.0.0",
+  "name": "@vkontakte/vkui-monorepo",
+  "dependencies": {
+    "@project-docs/styleguide": "1.0.0",
+    "@project-e2e/helpers": "1.0.0",
+    "@project-tools/babel-plugin-transform-css-modules": "1.0.0",
+    "@project-tools/postcss-check-keyframes": "1.0.0",
+    "@project-tools/postcss-restructure-variable": "1.0.0",
+    "@project-tools/stylelint-atomic": "1.0.0",
+    "@project-tools/stylelint-bad-multiplication": "1.0.0",
+    "eslint-plugin-vkui": "1.0.0"
+  },
   "devDependencies": {
     "@babel/cli": "^7.16.8",
     "@babel/core": "^7.16.7",
@@ -56,7 +47,6 @@
     "babel-jest": "^26.6.3",
     "babel-loader": "^9.0.0",
     "babel-plugin-istanbul": "^6.1.1",
-    "babel-plugin-transform-css-modules": "file:./packages/babel-plugin-transform-css-modules",
     "babel-plugin-transform-remove-imports": "^1.7.0",
     "chalk": "^4.1.0",
     "concurrently": "^7.3.0",
@@ -72,10 +62,11 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "7.31.11",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "eslint-plugin-vkui": "file:./packages/eslint-plugin-vkui",
     "husky": "^8.0.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.6.3",
+    "jest-environment-jsdom": "26.6.2",
+    "jest-environment-node": "26.6.2",
     "jest-image-snapshot": "^4.2.0",
     "jest-playwright-preset": "^1.7.2",
     "jest-preset-stylelint": "^5.0.4",
@@ -97,12 +88,8 @@
     "postcss-values-parser": "^6.0.2",
     "prettier": "^2.5.1",
     "process": "^0.11.10",
-    "prop-types": "^15.6.2",
     "react": "^17.0.0",
-    "react-docgen-typescript": "^2.1.1",
     "react-dom": "^17.0.0",
-    "react-frame-component": "^5.2.3",
-    "react-styleguidist": "13.0.0",
     "semver": "^7.3.5",
     "shx": "^0.3.2",
     "size-limit": "^8.1.0",
@@ -126,100 +113,29 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0"
   },
-  "peerDependencies": {
-    "@vkontakte/icons": "^2.1.1",
-    "@vkontakte/vk-bridge": "^2.4.9",
-    "react": "^17.0.0 || ^18.1.0",
-    "react-dom": "^17.0.0 || ^18.1.0"
-  },
-  "size-limit": [
-    {
-      "name": "JS",
-      "path": "dist/index.js",
-      "gzip": false,
-      "import": "*"
-    },
-    {
-      "name": "JS (gzip)",
-      "path": "dist/index.js",
-      "import": "*"
-    },
-    {
-      "name": "JS (brotli)",
-      "path": "dist/index.js",
-      "brotli": true,
-      "import": "*"
-    },
-    {
-      "name": "JS import Div (tree shaking)",
-      "path": "dist/index.js",
-      "gzip": false,
-      "import": "{ Div }"
-    },
-    {
-      "name": "CSS",
-      "path": "dist/vkui.css",
-      "webpack": false,
-      "gzip": false
-    },
-    {
-      "name": "CSS (gzip)",
-      "path": "dist/vkui.css",
-      "webpack": false
-    },
-    {
-      "name": "CSS (brotli)",
-      "path": "dist/vkui.css",
-      "webpack": false,
-      "brotli": true
-    }
-  ],
   "scripts": {
-    "prepublishOnly": "yarn build",
-    "size": "yarn clear && concurrently 'yarn:babel' 'yarn:postcss' && size-limit",
-    "size:ci": "yarn install --frozen-lockfile --ignore-scripts && concurrently 'yarn:babel' 'yarn:postcss'",
-    "styleguide": "cross-env NODE_ENV=development styleguidist server --config=styleguide/config.js",
-    "styleguide:props": "VKUI_STYLEGUIDE_PROPSPARSER=1 yarn styleguide",
-    "styleguide:build": "cross-env NODE_ENV=production styleguidist build --config=styleguide/config.js",
-    "dev": "yarn clear && concurrently \"yarn:tsc-dev\" \"yarn:babel-dev\" \"yarn:postcss-dev\"",
-    "dev-cjs": "yarn clear && concurrently \"yarn:babel-cjs-dev\" \"yarn:postcss-dev\"",
-    "dev-all": "yarn clear && concurrently \"yarn:tsc-dev\" \"yarn:babel-dev\" \"yarn:babel-cjs-dev\" \"yarn:postcss-dev\"",
-    "postcss-bundle": "webpack --config webpack.styles.config.js",
-    "postcss-modules": "postcss './src/**/*.css' --base ./src --dir ./dist/cssm",
-    "postcss-dev": "concurrently 'yarn:postcss-bundle --watch' 'yarn:postcss-modules --watch'",
-    "babel-base": "babel src/ --extensions .tsx,.jsx,.ts,.js",
-    "babel-dev": "yarn babel-base --out-dir dist/ --watch",
-    "babel-cjs-dev": "yarn babel-base --config-file ./babel.cjs.config.js --out-dir dist/cjs/ --watch",
-    "tsc-dev": "tsc --emitDeclarationOnly --declaration --outDir dist/ --watch --preserveWatchOutput",
-    "build:types": "yarn tsc && yarn tsc-cjs && yarn tsc-cssm",
-    "build:no-types": "concurrently 'yarn:babel' 'yarn:babel-cssm' 'yarn:babel-cjs' 'yarn:postcss'",
-    "build": "yarn build:types && yarn build:no-types",
-    "postcss": "cross-env NODE_ENV=production concurrently 'yarn:postcss-bundle' 'yarn:postcss-modules'",
-    "babel": "cross-env NODE_ENV=production yarn babel-base --out-dir dist/ --source-maps",
-    "babel-cssm": "cross-env BABEL_KEEP_CSS=1 NODE_ENV=production yarn babel-base --out-dir dist/cssm --source-maps",
-    "babel-cjs": "cross-env NODE_ENV=production yarn babel-base --config-file ./babel.cjs.config.js --out-dir dist/cjs/ --source-maps",
-    "tsc": "cross-env NODE_ENV=production tsc --emitDeclarationOnly --declaration -p tsconfig.dist.json",
-    "tsc-cjs": "cross-env NODE_ENV=production tsc --emitDeclarationOnly --declaration --outDir dist/cjs/ -p tsconfig.dist.json",
-    "tsc-cssm": "cross-env NODE_ENV=production tsc --emitDeclarationOnly --declaration --outDir dist/cssm/ -p tsconfig.dist.json",
-    "clear": "shx rm -rf dist/*",
-    "test:unit": "jest --config jest.unit.config.js",
-    "test:unit:ci": "yarn test:unit --ci --silent --outputFile test-results.json --json --coverage --coverageReporters='json' --coverageDirectory='.nyc_output'",
+    "docs:styleguide": "yarn workspace @project-docs/styleguide run start",
+    "docs:styleguide:props": "yarn workspace @project-docs/styleguide run start:props",
+    "docs:styleguide:build": "yarn workspace @project-docs/styleguide run build",
+    "build": "yarn workspaces run build",
+    "build:vkui": "yarn workspace @vkontakte/vkui run build",
+    "test": "concurrently 'yarn workspaces run test' 'yarn test:static'",
+    "test:ci": "concurrently 'yarn workspaces run test:ci' 'yarn test:static:ci'",
+    "//": "Note ('test:e2e'|'test:e2e:ci'): не вызываем через 'yarn workspace', т.к. 'jest-playwright-preset' создаёт .nyc_output/ в папке e2e/, а нам надо, чтобы в корне проекта лежало. Настройки для изменения поведения нет (справедливо для '<= 3.0.1').",
     "test:e2e": "jest --config e2e/jest.e2e.config.js",
     "test:e2e:ci": "yarn test:e2e --ci --outputFile e2e-results.json --json",
-    "test:combine-coverage": "npx nyc report --reporter=lcov",
-    "lint:es": "eslint --ext .jsx,.js,.ts,.tsx src/ e2e/ styleguide/ .github/actions/ --cache --cache-location .cache/.eslintcache",
+    "test:coverage": "npx nyc report --reporter=lcov",
+    "test:static": "concurrently 'yarn:lint:types' 'yarn:lint:es' 'yarn:lint:style' 'yarn:lint:prettier'",
+    "test:static:ci": "concurrently 'yarn:lint:types' 'yarn:lint:es:ci' 'yarn:lint:style' 'yarn:lint:prettier'",
+    "lint:es": "eslint . --ext .jsx,.js,.ts,.tsx --cache --cache-location .cache/.eslintcache",
     "lint:es:ci": "yarn lint:es -o lint-results.json -f json",
-    "lint:style": "cross-env LINT_PRECOMMIT_RUN=1 stylelint \"./src/**/*.css\" --cache --cache-location .cache/.stylelintcache",
+    "lint:style": "cross-env LINT_PRECOMMIT_RUN=1 stylelint '**/*.css' --cache --cache-location .cache/.stylelintcache",
     "lint:prettier": "prettier --check --ignore-unknown .",
-    "typecheck": "tsc --incremental --emitDeclarationOnly --declaration --tsBuildInfoFile .cache/.tsbuildinfo --outDir .cache/ts",
-    "test:static": "concurrently 'yarn:typecheck' 'yarn:lint:es' 'yarn:lint:style' 'yarn:lint:prettier'",
-    "test:static:ci": "concurrently 'yarn:typecheck' 'yarn:lint:es:ci' 'yarn:lint:style' 'yarn:lint:prettier'",
-    "test": "concurrently 'yarn test:unit' 'yarn test:static'",
-    "test:ci": "concurrently 'yarn test:unit:ci' 'yarn test:static:ci'",
-    "codesandbox:install": "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 yarn install",
+    "lint:types": "tsc --incremental --emitDeclarationOnly --declaration --tsBuildInfoFile .cache/.tsbuildinfo --outDir .cache/ts",
     "prepare": "husky install",
     "pre-commit": "lint-staged",
-    "playwright:install": "playwright install --with-deps"
+    "playwright:install": "playwright install --with-deps",
+    "codesandbox:install": "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 yarn install"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
@@ -234,15 +150,16 @@
       "prettier --check"
     ]
   },
-  "dependencies": {
-    "@babel/runtime": "^7.14.6",
-    "@popperjs/core": "^2.9.2",
-    "@vkontakte/vkjs": "^0.29.0",
-    "dayjs": "^1.11.0",
-    "mitt": "^3.0.0",
-    "react-popper": "^2.2.5"
-  },
   "engines": {
     "yarn": "^1.21.1"
+  },
+  "workspaces": {
+    "packages": [
+      ".github/actions/*",
+      "e2e",
+      "styleguide",
+      "packages/*",
+      "tools/*"
+    ]
   }
 }

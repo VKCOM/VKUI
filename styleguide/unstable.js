@@ -1,4 +1,4 @@
-import * as VKUI from '../src';
+import * as VKUI from '../packages/vkui/src';
 
 const unstablePrefix = 'unstable_';
 

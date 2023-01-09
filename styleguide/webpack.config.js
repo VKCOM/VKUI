@@ -1,9 +1,10 @@
 const path = require('path');
-const webpackConfig = require('../webpack.config');
+const webpackCommonConfig = require('../webpack.common.config');
+const { VKUI_PACKAGE } = require('../shared');
 const { DefinePlugin } = require('webpack');
 const { merge } = require('webpack-merge');
 
-module.exports = merge(webpackConfig, {
+module.exports = merge(webpackCommonConfig, {
   plugins: [
     new DefinePlugin({
       'process.env.VKUI_STYLEGUIDE_PROPSPARSER': process.env.VKUI_STYLEGUIDE_PROPSPARSER,
@@ -15,9 +16,14 @@ module.exports = merge(webpackConfig, {
         __dirname,
         '../node_modules/react-styleguidist/lib/client/rsg-components/',
       ),
-      '@vkui': path.resolve(__dirname, '../src'),
+      '@vkui': path.resolve(__dirname, `../${VKUI_PACKAGE.PATHS.SRC_DIR}`),
       'react-dom$': 'react-dom/profiling',
       'scheduler/tracing': 'scheduler/tracing-profiling',
     },
   },
+  externals: [
+    {
+      'prop-types': 'prop-types',
+    },
+  ],
 });

@@ -36,7 +36,7 @@ jobs:
 
       - run: yarn install --frozen-lockfile --ignore-scripts
 
-      - run: yarn test
+      - run: yarn run test
 
       - name: Set Git credentials
         run: |
@@ -45,11 +45,11 @@ jobs:
 
       - name: Bump by version type
         if: ${{ !github.event.inputs.custom_version }}
-        run: yarn version --${{ github.event.inputs.type }} --no-commit-hooks
+        run: yarn workspace @vkontakte/vkui version --${{ github.event.inputs.type }} --no-commit-hooks
 
       - name: Bump by custom version
         if: ${{ github.event.inputs.custom_version }}
-        run: yarn version --new-version ${{ github.event.inputs.custom_version }} --no-commit-hooks
+        run: yarn workspace @vkontakte/vkui version --new-version ${{ github.event.inputs.custom_version }} --no-commit-hooks
 
       - name: Pushing changes
         uses: ad-m/github-push-action@master
@@ -57,7 +57,7 @@ jobs:
           github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           branch: ${{ github.ref }}
 
-      - run: yarn install --frozen-lockfile --ignore-scripts && yarn build
+      - run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
         working-directory: ./.github/actions/stable-branch
       - name: Create stable branch
         uses: ./.github/actions/stable-branch
@@ -65,25 +65,26 @@ jobs:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
       - name: Publishing release
-        run: yarn publish --non-interactive
+        run: yarn workspace @vkontakte/vkui publish --non-interactive
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
 
       - name: Save updated package version to env
         id: updated_version
-        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+        run: echo "version=$(yarn workspace @vkontakte/vkui --silent run --silent package:version)" >> $GITHUB_OUTPUT
 
       - name: Creating doc for stable release
         run: |
-          yarn styleguide:build
+          yarn run docs:styleguide:build
+          cd styleguide
           mkdir ${{ steps.updated_version.outputs.version }}
-          cp -R styleguide-build/* ${{ steps.updated_version.outputs.version }}
-          mv ${{ steps.updated_version.outputs.version }} styleguide-build/${{ steps.updated_version.outputs.version }}
+          cp -R dist/* ${{ steps.updated_version.outputs.version }}
+          mv ${{ steps.updated_version.outputs.version }} dist/${{ steps.updated_version.outputs.version }}
 
       - name: Publishing doc
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: styleguide-build
+          FOLDER: styleguide/dist
           CLEAN: false

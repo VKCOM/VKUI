@@ -31,7 +31,7 @@ jobs:
           cache: 'yarn'
       - run: yarn install --frozen-lockfile --ignore-scripts
       - name: Run tests
-        run: yarn test:ci
+        run: yarn run test:ci
       - name: Upload test artifact
         uses: actions/upload-artifact@v3
         if: always()
@@ -66,16 +66,16 @@ jobs:
       - name: Checkout LFS objects
         run: git lfs checkout
       - name: Checkout base snapshots
-        run: git fetch --no-tags --depth=1 origin $GITHUB_BASE_REF && git checkout origin/$GITHUB_BASE_REF src/**/__image_snapshots__/*.png
+        run: git fetch --no-tags --depth=1 origin $GITHUB_BASE_REF && git checkout origin/$GITHUB_BASE_REF packages/vkui/src/**/__image_snapshots__/*.png
       - uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'yarn'
       - run: yarn install --frozen-lockfile --ignore-scripts
       - name: Install deps for playwright
-        run: yarn playwright:install ${{ matrix.browser }}
+        run: yarn run playwright:install ${{ matrix.browser }}
       - name: FYI visual tests
-        run: yarn test:e2e:ci
+        run: yarn run test:e2e:ci
         env:
           APPEARANCE: ${{ matrix.appearance }}
           BROWSER: ${{ matrix.browser }}
@@ -101,12 +101,12 @@ jobs:
           node-version: 18
           cache: 'yarn'
       - run: yarn install --frozen-lockfile --ignore-scripts
-      - run: yarn styleguide:build
+      - run: yarn run docs:styleguide:build
       - name: Uploading styleguide artifact
         uses: actions/upload-artifact@v3
         with:
-          name: styleguide
-          path: styleguide-build/
+          name: styleguide-dist
+          path: styleguide/dist/
   size:
     runs-on: ubuntu-latest
     env:
@@ -120,11 +120,14 @@ jobs:
           node-version: 16
           cache: 'yarn'
       - run: yarn install --frozen-lockfile --ignore-scripts
-      - uses: andresz1/size-limit-action@v1
+      - uses: andresz1/size-limit-action@v1.7.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # only affects current branch
           skip_step: install
+          directory: packages/vkui/
+          # В 1.7.0 пока нет этого свойства. См. packages/vkui/yarn.lock
+          # package_manager: yarn
           build_script: 'size:ci'
   deploy_styleguide:
     concurrency: ci-gh-pages
@@ -136,7 +139,7 @@ jobs:
       - name: Download styleguide artifact
         uses: actions/download-artifact@v3
         with:
-          name: styleguide
+          name: styleguide-dist
           path: tmp
       - name: Publishing styleguide to GitHub pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
@@ -186,7 +189,7 @@ jobs:
       - name: Combine e2e & unit coverage
         run: npx nyc report --reporter=json-summary
 
-      - run: yarn install --frozen-lockfile --ignore-scripts && yarn build
+      - run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
         working-directory: ./.github/actions/reporter
       - name: Reporter
         uses: ./.github/actions/reporter
