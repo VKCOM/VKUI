@@ -33,6 +33,7 @@ jobs:
       - name: Checkout LFS objects
         run: git lfs checkout
       - name: Checkout base snapshots
+        if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
         run: git fetch --no-tags --depth=1 origin $GITHUB_BASE_REF && git checkout origin/$GITHUB_BASE_REF packages/vkui/src/**/__image_snapshots__/*.png
       - uses: actions/setup-node@v3
         with:
