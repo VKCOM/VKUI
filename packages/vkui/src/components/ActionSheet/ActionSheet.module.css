@@ -34,9 +34,9 @@
 .ActionSheet--ios {
   width: 100%;
   animation: vkui-animation-actionsheet-intro 0.3s var(--vkui--animation_easing_platform);
-  padding: 10px;
-  margin: unset;
-  background: transparent;
+  padding: unset;
+  margin: 10px;
+  background: var(--vkui--color_background_modal);
 }
 
 .ActionSheet--ios.ActionSheet--closing {
