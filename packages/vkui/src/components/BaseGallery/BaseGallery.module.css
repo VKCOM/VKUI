@@ -10,7 +10,7 @@
   position: relative;
 }
 
-.BaseGallery--mode-center .BaseGallery__viewport {
+.BaseGallery--align-center .BaseGallery__viewport {
   margin: 0 auto;
 }
 
@@ -79,7 +79,6 @@
 
 .BaseGallery--align-left,
 .BaseGallery--align-right,
-.BaseGallery--align-center,
 .BaseGallery--dragging {
   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }
