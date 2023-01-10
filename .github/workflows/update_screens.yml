@@ -32,11 +32,11 @@ jobs:
         with:
           node-version: 18
           cache: 'yarn'
-      - run: yarn --frozen-lockfile --ignore-scripts
+      - run: yarn install --frozen-lockfile --ignore-scripts
       - name: Install deps for playwright
-        run: yarn playwright:install ${{ matrix.browser }}
+        run: yarn run playwright:install ${{ matrix.browser }}
       - name: Update screenshots
-        run: yarn test:e2e -u
+        run: yarn run test:e2e -u
         env:
           APPEARANCE: ${{ matrix.appearance }}
           BROWSER: ${{ matrix.browser }}
@@ -47,7 +47,7 @@ jobs:
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Action"
 
-      - run: yarn install --frozen-lockfile --ignore-scripts && yarn build
+      - run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
         working-directory: ./.github/actions/push-screenshots
       - name: Push updated screenshots
         uses: ./.github/actions/push-screenshots

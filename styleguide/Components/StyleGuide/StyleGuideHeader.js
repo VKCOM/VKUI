@@ -3,7 +3,7 @@ import { Icon28MoonOutline, Icon28SunOutline, Icon16Dropdown } from '@vkontakte/
 import { Logo } from '../Logo/Logo';
 import React from 'react';
 import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
-import pkg from '../../../package.json';
+import { VKUI_PACKAGE } from '../../../shared';
 import './StyleGuideHeader.css';
 
 const prRegExp = /https:\/\/([\w]+)\.github.io\/([\w]+)\/pull\/([\d]+)/;
@@ -17,7 +17,7 @@ export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
     {
       title: (
         <>
-          {'v' + pkg.version} <Icon16Dropdown />
+          {'v' + VKUI_PACKAGE.VERSION} <Icon16Dropdown />
         </>
       ),
       onClick: () => setActiveModal('versions'),

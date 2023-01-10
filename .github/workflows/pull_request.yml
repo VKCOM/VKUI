@@ -20,76 +20,15 @@ concurrency:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: refs/pull/${{ github.event.pull_request.number }}/merge
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile --ignore-scripts
-      - name: Run tests
-        run: yarn test:ci
-      - name: Upload test artifact
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: test-output
-          path: |
-            .nyc_output/
-            lint-results.json
-            test-results.json
+    uses: ./.github/workflows/workflow_test.yml
+    with:
+      ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
   test_e2e:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        appearance: [dark, light]
-        browser: [chromium, firefox, webkit]
-        platform: [android, ios, vkcom]
-        exclude:
-          - platform: android
-            browser: firefox
-          - platform: android
-            browser: webkit
-          - platform: ios
-            browser: firefox
-          - platform: ios
-            browser: chromium
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          lfs: true
-          ref: refs/pull/${{ github.event.pull_request.number }}/merge
-      - name: Checkout LFS objects
-        run: git lfs checkout
-      - name: Checkout base snapshots
-        run: git fetch --no-tags --depth=1 origin $GITHUB_BASE_REF && git checkout origin/$GITHUB_BASE_REF src/**/__image_snapshots__/*.png
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile --ignore-scripts
-      - name: Install deps for playwright
-        run: yarn playwright:install ${{ matrix.browser }}
-      - name: FYI visual tests
-        run: yarn test:e2e:ci
-        env:
-          APPEARANCE: ${{ matrix.appearance }}
-          BROWSER: ${{ matrix.browser }}
-          PLATFORM: ${{ matrix.platform }}
-        continue-on-error: true
-      - name: Upload test artifact
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: e2e-output
-          path: |
-            .nyc_output/
-            __diff_output__/
-            e2e-results.json
+    uses: ./.github/workflows/workflow_test_e2e.yml
+    with:
+      ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
   styleguide:
     runs-on: ubuntu-latest
     steps:
@@ -101,12 +40,12 @@ jobs:
           node-version: 18
           cache: 'yarn'
       - run: yarn install --frozen-lockfile --ignore-scripts
-      - run: yarn styleguide:build
+      - run: yarn run docs:styleguide:build
       - name: Uploading styleguide artifact
         uses: actions/upload-artifact@v3
         with:
-          name: styleguide
-          path: styleguide-build/
+          name: styleguide-dist
+          path: styleguide/dist/
   size:
     runs-on: ubuntu-latest
     env:
@@ -120,11 +59,14 @@ jobs:
           node-version: 16
           cache: 'yarn'
       - run: yarn install --frozen-lockfile --ignore-scripts
-      - uses: andresz1/size-limit-action@v1
+      - uses: andresz1/size-limit-action@v1.7.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # only affects current branch
           skip_step: install
+          directory: packages/vkui/
+          # В 1.7.0 пока нет этого свойства. См. packages/vkui/yarn.lock
+          # package_manager: yarn
           build_script: 'size:ci'
   deploy_styleguide:
     concurrency: ci-gh-pages
@@ -136,7 +78,7 @@ jobs:
       - name: Download styleguide artifact
         uses: actions/download-artifact@v3
         with:
-          name: styleguide
+          name: styleguide-dist
           path: tmp
       - name: Publishing styleguide to GitHub pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
@@ -183,10 +125,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: e2e-output
-      - name: Combine e2e & unit coverage
-        run: npx nyc report --reporter=json-summary
 
-      - run: yarn install --frozen-lockfile --ignore-scripts && yarn build
+      - run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
         working-directory: ./.github/actions/reporter
       - name: Reporter
         uses: ./.github/actions/reporter

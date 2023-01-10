@@ -1,10 +1,10 @@
 Мы используем три вида тестов:
 
-**Юнит-тесты** на jest в файлах `moduleName.test.ts` [пример](./src/helpers/getPlatformClassName.test.ts)
+**Юнит-тесты** на jest в файлах `moduleName.test.ts` [пример](../packages/vkui/src/helpers/getPlatformClassName.test.ts)
 
-**Компонентные тесты** на jest + [react-testing-library](https://testing-library.com/docs/react-testing-library/example-intro) + [jest-dom](https://github.com/testing-library/jest-dom#table-of-contents) в `ComponentName.test.tsx` [пример](./src/components/Checkbox/Checkbox.test.tsx)
+**Компонентные тесты** на jest + [react-testing-library](https://testing-library.com/docs/react-testing-library/example-intro) + [jest-dom](https://github.com/testing-library/jest-dom#table-of-contents) в `ComponentName.test.tsx` [пример](../packages/vkui/src/components/Checkbox/Checkbox.test.tsx)
 
-**Скриншотные тесты** на jest + [playwright](https://playwright.dev/#?path=docs/api.md) + [jest-playwright](https://github.com/playwright-community/jest-playwright) в `ComponentName.e2e.tsx` [пример](./src/components/Checkbox/Checkbox.e2e.tsx).
+**Скриншотные тесты** на jest + [playwright](https://playwright.dev/#?path=docs/api.md) + [jest-playwright](https://github.com/playwright-community/jest-playwright) в `ComponentName.e2e.tsx` [пример](../packages/vkui/src/components/Checkbox/Checkbox.e2e.tsx).
 
 Чтобы запускать скриншотные тесты локально, нужно установить:
 
@@ -13,25 +13,24 @@
 
 ## Команды
 
-- `yarn test:unit` — только быстрые юниты + компонентные;
-- `yarn test:unit:quick` — только юниты + компонентные тесты на незакоммиченные изменения;
+- `yarn test` — только быстрые юниты + компонентные;
 - `yarn test:e2e` — только браузерные тесты;
-
-Все команды работают в интерактивном режиме с опцией `--watch` (`yarn test:unit --watch`).
 
 Чтобы обновить скриншоты, установите докер и git-lfs и запустите `yarn test:e2e -u`.
 
 ## Покрытие
 
-Чтобы сгенерировать карту покрытия в `coverage/lcov/index.html`:
+Чтобы сгенерировать карту покрытия для `coverage/lcov/index.html`:
 
-- Только юнитами — просто `yarn test:unit`
-- Только E2E — `yarn test:e2e && yarn test:combine-coverage`
-- Совмещенного — `&& yarn test:e2e && yarn test:unit:ci && yarn test:combine-coverage`
+> Note: карта покрытия будет создана только для пакета `@vkontakte/vkui`
+
+```sh
+yarn test:ci && yarn test:coverage
+```
 
 ## `describeScreenshotFuzz`
 
-Функция `describeScreenshotFuzz` из [`/testing/utils`](./src/testing/e2e/utils.tsx) помогает быстро заскриншотить все состояния компонента в разных темах и на разных платформах:
+Функция `describeScreenshotFuzz` из [`/testing/utils`](../packages/vkui/src/testing/e2e/utils.tsx) помогает быстро заскриншотить все состояния компонента в разных темах и на разных платформах:
 
 ```ts
 describe('Button', () => {

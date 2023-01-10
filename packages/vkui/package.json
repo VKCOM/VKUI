@@ -1,0 +1,115 @@
+{
+  "private": false,
+  "version": "5.0.1",
+  "name": "@vkontakte/vkui",
+  "description": "VKUI library",
+  "main": "dist/cjs/index.js",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "./dist"
+  ],
+  "sideEffects": [
+    "./dist/lib/polyfills.js",
+    "./dist/index.js",
+    "./dist/cjs/lib/polyfills.js",
+    "./dist/cjs/index.js",
+    "./dist/cssm/lib/polyfills.js",
+    "./dist/cssm/index.js",
+    "*.css"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VKCOM/VKUI.git",
+    "directory": "packages/vkui"
+  },
+  "bugs": "https://github.com/VKCOM/VKUI/issues",
+  "homepage": "https://vkcom.github.io/VKUI/",
+  "scripts": {
+    "prepublishOnly": "yarn build",
+    "package:version": "echo $npm_package_version",
+    "size": "yarn clear && concurrently 'yarn:babel' 'yarn:postcss' && size-limit",
+    "size:ci": "yarn install --frozen-lockfile --ignore-scripts && concurrently 'yarn:babel' 'yarn:postcss'",
+    "dev": "yarn clear && concurrently 'yarn:tsc-dev' 'yarn:babel-dev' 'yarn:postcss-dev'",
+    "dev-all": "yarn clear && concurrently 'yarn:tsc-dev' 'yarn:babel-dev' 'yarn:babel-cjs-dev' 'yarn:postcss-dev'",
+    "dev-cjs": "yarn clear && concurrently 'yarn:babel-cjs-dev' 'yarn:postcss-dev'",
+    "build": "yarn build:types && yarn build:no-types",
+    "build:types": "yarn tsc && yarn tsc-cjs && yarn tsc-cssm",
+    "build:no-types": "concurrently 'yarn:babel' 'yarn:babel-cssm' 'yarn:babel-cjs' 'yarn:postcss'",
+    "clear": "shx rm -rf dist/*",
+    "postcss": "cross-env NODE_ENV=production concurrently 'yarn:postcss-bundle' 'yarn:postcss-modules'",
+    "postcss-dev": "concurrently 'yarn:postcss-bundle --watch' 'yarn:postcss-modules --watch'",
+    "postcss-bundle": "webpack --config webpack.styles.config.js",
+    "postcss-modules": "postcss './src/**/*.css' --base ./src --dir ./dist/cssm",
+    "babel": "cross-env NODE_ENV=production yarn babel-base --out-dir dist/ --source-maps",
+    "babel-dev": "yarn babel-base --out-dir dist/ --watch",
+    "babel-base": "babel src/ --extensions .tsx,.jsx,.ts,.js",
+    "babel-cssm": "cross-env BABEL_KEEP_CSS=1 NODE_ENV=production yarn babel-base --out-dir dist/cssm --source-maps",
+    "babel-cjs-dev": "yarn babel-base --config-file ./babel.cjs.config.js --out-dir dist/cjs/ --watch",
+    "babel-cjs": "cross-env NODE_ENV=production yarn babel-base --config-file ./babel.cjs.config.js --out-dir dist/cjs/ --source-maps",
+    "tsc": "cross-env NODE_ENV=production tsc --emitDeclarationOnly --declaration -p tsconfig.dist.json",
+    "tsc-dev": "tsc --emitDeclarationOnly --declaration --outDir dist/ --watch --preserveWatchOutput",
+    "tsc-cssm": "cross-env NODE_ENV=production tsc --emitDeclarationOnly --declaration --outDir dist/cssm/ -p tsconfig.dist.json",
+    "tsc-cjs": "cross-env NODE_ENV=production tsc --emitDeclarationOnly --declaration --outDir dist/cjs/ -p tsconfig.dist.json",
+    "test": "jest",
+    "test:ci": "yarn test --ci --silent --outputFile ../../test-results.json --json --coverage --coverageReporters='json' --coverageDirectory='../../.nyc_output'"
+  },
+  "peerDependencies": {
+    "@vkontakte/icons": "^2.1.1",
+    "@vkontakte/vk-bridge": "^2.4.9",
+    "react": "^17.0.0 || ^18.1.0",
+    "react-dom": "^17.0.0 || ^18.1.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "7.20.6",
+    "@popperjs/core": "2.11.6",
+    "@vkontakte/vkjs": "0.31.0",
+    "dayjs": "1.11.7",
+    "mitt": "3.0.0",
+    "react-popper": "2.3.0"
+  },
+  "devDependencies": {},
+  "size-limit": [
+    {
+      "name": "JS",
+      "path": "dist/index.js",
+      "gzip": false,
+      "import": "*"
+    },
+    {
+      "name": "JS (gzip)",
+      "path": "dist/index.js",
+      "import": "*"
+    },
+    {
+      "name": "JS (brotli)",
+      "path": "dist/index.js",
+      "brotli": true,
+      "import": "*"
+    },
+    {
+      "name": "JS import Div (tree shaking)",
+      "path": "dist/index.js",
+      "gzip": false,
+      "import": "{ Div }"
+    },
+    {
+      "name": "CSS",
+      "path": "dist/vkui.css",
+      "webpack": false,
+      "gzip": false
+    },
+    {
+      "name": "CSS (gzip)",
+      "path": "dist/vkui.css",
+      "webpack": false
+    },
+    {
+      "name": "CSS (brotli)",
+      "path": "dist/vkui.css",
+      "webpack": false,
+      "brotli": true
+    }
+  ]
+}

@@ -6,7 +6,7 @@ import Examples from '@rsg-components/Examples';
 import { SectionSubheading } from '../SectionSubheading/SectionSubheading';
 import { Link, classNames } from '@vkui';
 import { deprecated } from '../../deprecated';
-import pkg from '../../../package.json';
+import { VKUI_PACKAGE } from '../../../shared';
 import './ReactComponent.css';
 
 const toKebabCase = (str) =>
@@ -28,7 +28,10 @@ const ReactComponent = ({ component, exampleMode }) => {
       <Link
         target="_blank"
         className="ReactComponent__src"
-        href={`${pkg.repository}/tree/v${pkg.version}/${pathLine.replace('../', '')}`}
+        href={`${VKUI_PACKAGE.URLS.REPOSITORY}/tree/v${VKUI_PACKAGE.VERSION}/${pathLine.replace(
+          '../',
+          '',
+        )}`}
       >
         <Caption>Source</Caption>
       </Link>
@@ -36,7 +39,7 @@ const ReactComponent = ({ component, exampleMode }) => {
       <Link
         target="_blank"
         className="ReactComponent__src"
-        href={`${pkg.bugs}?q=${encodeURIComponent(issuesQuery)}`}
+        href={`${VKUI_PACKAGE.URLS.ISSUES}?q=${encodeURIComponent(issuesQuery)}`}
       >
         <Caption>Issues</Caption>
       </Link>

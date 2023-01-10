@@ -1,0 +1,23 @@
+name: 'Close inactive issues and PRs'
+on:
+  schedule:
+    - cron: '0 10 * * *' # every day at 10:00
+
+jobs:
+  close-issues:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/stale@v7
+        with:
+          days-before-issue-stale: -1
+          days-before-issue-close: 14
+          stale-issue-label: 'issue-needs-more-info'
+          close-issue-message: 'Задача закрыта из-за отсутствия активности в течение последних 14 дней. Если это произошло по ошибке или проблема все ещё актуальна, откройте задачу повторно.'
+          days-before-pr-stale: 7
+          days-before-pr-close: 7
+          stale-pr-label: 'pr-needs-work'
+          close-pr-message: 'PR закрыт из-за отсутствия активности в течение последних 14 дней. Если это произошло по ошибке или изменения все ещё актуальны, откройте PR повторно.'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}

@@ -3,7 +3,7 @@ import { render, unmountComponentAtNode } from 'react-dom';
 
 class ComponentHandle {
   constructor(private readonly mountNode: Element) {}
-  private components: { [name: string]: { node: ReactElement } } = {};
+  private components: Record<string, { node: ReactElement }> = {};
 
   register(name: string, node: ReactElement) {
     if (name in this.components) {
@@ -31,4 +31,4 @@ class ComponentHandle {
 }
 
 export const testHandle = new ComponentHandle(document.getElementById('mount') as Element);
-(window as any)['testHandle'] = testHandle;
+window.testHandle = testHandle;

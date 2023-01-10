@@ -48,22 +48,32 @@ export class GitHubCommentBuilder {
     const comment_id = await this.getCommentId();
     const issue_number = getPullRequestNumber();
 
-    const params = {
-      ...github.context.repo,
-      body: this.message,
-    };
+    // Если сообщение пустое, то удаляем старый комментарий
+    if (this.message === commentPrefix) {
+      if (comment_id) {
+        await this.gh.rest.issues.deleteComment({
+          ...github.context.repo,
+          comment_id,
+        });
+      }
 
+      return;
+    }
+
+    // Если в PR-е есть комментарий, редактируем его
     if (comment_id) {
       await this.gh.rest.issues.updateComment({
-        ...params,
+        ...github.context.repo,
         comment_id,
+        body: this.message,
       });
       return;
     }
 
-    return this.gh.rest.issues.createComment({
-      ...params,
+    await this.gh.rest.issues.createComment({
+      ...github.context.repo,
       issue_number,
+      body: this.message,
     });
   }
 }

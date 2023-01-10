@@ -2,22 +2,28 @@ import * as path from 'path';
 import { promisify } from 'util';
 import cbGlob from 'glob';
 import webpack from 'webpack';
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const webpackConfig = require('../webpack.config.js');
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import webpackCommonConfig from '../webpack.common.config';
+import { VKUI_PACKAGE } from '../shared';
+
 const glob = promisify(cbGlob);
 
+// TODO Использовать webpack-merge и удалить @ts-expect-error
 const {
   externals,
   plugins = [],
+  // @ts-expect-error: TS2339 В webpackCommonConfig нет этого поля
   devServer,
   resolve = {},
   output = {},
   ...baseWebpackConfig
-} = webpackConfig;
+} = webpackCommonConfig;
 
 export async function generateWebpackConfig() {
   process.env.BABEL_KEEP_CSS = '1';
-  const testFiles = await glob(path.join(__dirname, '../src/**/*.e2e.{ts,tsx}'));
+  const testFiles = await glob(
+    path.join(__dirname, `../${VKUI_PACKAGE.PATHS.SRC_DIR}/**/*.e2e.{ts,tsx}`),
+  );
   return {
     ...baseWebpackConfig,
     entry: {
@@ -34,8 +40,9 @@ export async function generateWebpackConfig() {
     resolve: {
       ...resolve,
       alias: {
+        // @ts-expect-error: TS239 В webpackCommonConfig нет этого поля
         ...resolve.alias,
-        '@react-playwright': path.resolve(__dirname, 'browser/mount.ts'),
+        '@project-e2e/helpers': path.resolve(__dirname, 'browser/mount.ts'),
       },
     },
     devServer: {
@@ -45,7 +52,7 @@ export async function generateWebpackConfig() {
       },
     },
     module: {
-      ...webpackConfig.module,
+      ...webpackCommonConfig.module,
       rules: [
         {
           test: /\.[jt]sx?$/,
@@ -57,7 +64,13 @@ export async function generateWebpackConfig() {
                 [
                   require.resolve('babel-plugin-istanbul'),
                   {
-                    exclude: ['**/*.d.ts', '**/*.e2e.tsx', 'e2e/', 'src/types', 'src/testing'],
+                    exclude: [
+                      '**/*.d.ts',
+                      '**/*.e2e.tsx',
+                      'e2e/',
+                      `${VKUI_PACKAGE.PATHS.TYPES_DIR}`,
+                      `${VKUI_PACKAGE.PATHS.TEST_UTILS_DIR}`,
+                    ],
                   },
                 ],
               ],

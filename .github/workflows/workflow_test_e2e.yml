@@ -1,0 +1,66 @@
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: 'The branch, tag or SHA to checkout'
+        default: ${{ github.ref }}
+        required: false
+        type: string
+
+jobs:
+  test_e2e:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        appearance: [dark, light]
+        browser: [chromium, firefox, webkit]
+        platform: [android, ios, vkcom]
+        exclude:
+          - platform: android
+            browser: firefox
+          - platform: android
+            browser: webkit
+          - platform: ios
+            browser: firefox
+          - platform: ios
+            browser: chromium
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          lfs: true
+          ref: ${{ inputs.ref }}
+      - name: Checkout LFS objects
+        run: git lfs checkout
+      - name: Checkout base snapshots
+        if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+        run: git fetch --no-tags --depth=1 origin $GITHUB_BASE_REF && git checkout origin/$GITHUB_BASE_REF packages/vkui/src/**/__image_snapshots__/*.png
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile --ignore-scripts
+      - name: Install deps for playwright
+        run: yarn run playwright:install ${{ matrix.browser }}
+      - name: FYI visual tests
+        run: yarn run test:e2e:ci
+        env:
+          APPEARANCE: ${{ matrix.appearance }}
+          BROWSER: ${{ matrix.browser }}
+          PLATFORM: ${{ matrix.platform }}
+        continue-on-error: true
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          flags: e2e-${{ matrix.browser }}-${{ matrix.platform }}-${{ matrix.appearance }}
+          files: .nyc_output/coverage.json
+
+      - name: Upload test artifact
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: e2e-output
+          path: |
+            __diff_output__/
+            e2e-results.json

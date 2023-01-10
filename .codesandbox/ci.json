@@ -1,5 +1,7 @@
 {
-  "node": "14",
+  "node": "16",
   "installCommand": "codesandbox:install",
+  "buildCommand": "build:vkui",
+  "packages": ["packages/vkui"],
   "sandboxes": ["vkui-typescript-uwozmt"]
 }
