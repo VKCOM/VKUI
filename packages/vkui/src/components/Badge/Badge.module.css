@@ -12,5 +12,5 @@
 }
 
 .Badge--mode-prominent {
-  background-color: var(--vkui--color_icon_negative);
+  background-color: var(--vkui--color_accent_red);
 }
