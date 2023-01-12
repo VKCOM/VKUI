@@ -13,7 +13,6 @@ export interface IconButtonProps extends TappableProps {
 }
 
 const warn = warnOnce('IconButton');
-const IS_DEV = process.env.NODE_ENV === 'development';
 
 /**
  * @see https://vkcom.github.io/VKUI/#/IconButton
@@ -27,7 +26,7 @@ export const IconButton = ({
   const platform = usePlatform();
   const { sizeY } = useAdaptivity();
 
-  if (IS_DEV && !restProps['aria-label']) {
+  if (process.env.NODE_ENV === 'development' && !restProps['aria-label']) {
     warn(COMMON_WARNINGS.a11y['button-name'], 'error');
   }
 
