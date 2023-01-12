@@ -24,7 +24,6 @@ export interface TabbarItemProps
 }
 
 const warn = warnOnce('TabbarItem');
-const IS_DEV = process.env.NODE_ENV === 'development';
 
 /**
  * @see https://vkcom.github.io/VKUI/#/TabbarItem
@@ -42,7 +41,7 @@ export const TabbarItem = ({
 }: TabbarItemProps) => {
   const platform = usePlatform();
 
-  if (IS_DEV && !restProps['aria-label'] && !text) {
+  if (process.env.NODE_ENV === 'development' && !restProps['aria-label'] && !text) {
     warn(COMMON_WARNINGS.a11y['button-name'], 'error');
   }
 
