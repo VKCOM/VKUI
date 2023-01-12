@@ -26,7 +26,6 @@ import { clamp } from '../../helpers/math';
 import styles from './ModalRoot.module.css';
 
 const warn = warnOnce('ModalRoot');
-const IS_DEV = process.env.NODE_ENV === 'development';
 
 function numberInRange(number: number, range: TranslateRange | undefined) {
   if (!range) {
@@ -674,7 +673,7 @@ function initModal(modalState: ModalsStateEntry) {
     case ModalType.CARD:
       return initCardModal(modalState);
     default:
-      IS_DEV &&
+      process.env.NODE_ENV === 'development' &&
         warn(`initActiveModal: modalState.type="${modalState.type}" не поддерживается`, 'error');
   }
 }
