@@ -45,7 +45,7 @@
     "@vkontakte/vkui-tokens": "4.27.0",
     "autoprefixer": "^10.4.2",
     "babel-jest": "^26.6.3",
-    "babel-loader": "^9.0.0",
+    "babel-loader": "^9.1.2",
     "babel-plugin-istanbul": "^6.1.1",
     "babel-plugin-transform-remove-imports": "^1.7.0",
     "chalk": "^4.1.0",
