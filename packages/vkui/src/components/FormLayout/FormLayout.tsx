@@ -35,7 +35,9 @@ export const FormLayout = ({
       ref={getRef}
     >
       <div>{children}</div>
-      {Component === 'form' && <VisuallyHiddenInput type="submit" value={submitLabel} />}
+      {Component === 'form' && onSubmit !== preventDefault && (
+        <VisuallyHiddenInput type="submit" value={submitLabel} />
+      )}
     </Component>
   );
 };
