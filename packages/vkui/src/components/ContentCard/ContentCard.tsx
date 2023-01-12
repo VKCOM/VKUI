@@ -39,7 +39,6 @@ export interface ContentCardProps
 }
 
 const warn = warnOnce('ContentCard');
-const IS_DEV = process.env.NODE_ENV === 'development';
 
 /**
  * @see https://vkcom.github.io/VKUI/#/ContentCard
@@ -72,7 +71,7 @@ export const ContentCard = ({
   hasActive = false,
   ...restProps
 }: ContentCardProps) => {
-  if (IS_DEV && (src || srcSet) && !alt) {
+  if (process.env.NODE_ENV === 'development' && (src || srcSet) && !alt) {
     warn(COMMON_WARNINGS.a11y['image-alt'], 'error');
   }
 
