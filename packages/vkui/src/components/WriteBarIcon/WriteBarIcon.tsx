@@ -32,7 +32,6 @@ export interface WriteBarIconProps extends React.ButtonHTMLAttributes<HTMLButton
 }
 
 const warn = warnOnce('WriteBarIcon');
-const IS_DEV = process.env.NODE_ENV === 'development';
 
 /**
  * @see https://vkcom.github.io/VKUI/#/WriteBarIcon
@@ -69,7 +68,7 @@ export const WriteBarIcon = ({
       break;
   }
 
-  if (IS_DEV && !restProps['aria-label'] && !ariaLabel) {
+  if (process.env.NODE_ENV === 'development' && !restProps['aria-label'] && !ariaLabel) {
     warn(COMMON_WARNINGS.a11y['button-name'], 'error');
   }
 
