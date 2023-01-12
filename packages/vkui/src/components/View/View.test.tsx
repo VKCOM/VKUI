@@ -4,9 +4,9 @@ import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Platform } from '../../lib/platform';
 import { baselineComponent, mockScrollContext, mountTest } from '../../testing/utils';
 import { Panel } from '../Panel/Panel';
-import { View, scrollsCache, ViewProps } from './View';
+import { type ViewProps, View, scrollsCache } from './View';
 import { ViewInfinite } from './ViewInfinite';
-import { ComponentType, Fragment } from 'react';
+import { type ComponentType, type ReactNode, Fragment } from 'react';
 import { HasChildren } from '../../types';
 
 // Basically the same as Root.test.tsx
@@ -102,6 +102,7 @@ describe.each([
     const setupSwipeBack = (
       Wrapper: ComponentType<HasChildren> = Fragment,
       children: any = null,
+      initialProps: Partial<ViewProps> = {},
     ) => {
       const events = {
         onSwipeBack: jest.fn(),
@@ -112,7 +113,14 @@ describe.each([
       const SwipeBack = (p: Partial<ViewProps>) => (
         <Wrapper>
           <ConfigProvider platform={Platform.IOS} isWebView>
-            <View id="scroll" activePanel="p2" history={['p1', 'p2']} {...events} {...p}>
+            <View
+              id="scroll"
+              activePanel="p2"
+              history={['p1', 'p2']}
+              {...events}
+              {...p}
+              {...initialProps}
+            >
               <Panel id="p1" />
               <Panel id="p2">{children}</Panel>
             </View>
@@ -149,15 +157,21 @@ describe.each([
       expect(events.onSwipeBackCancel).not.toBeCalled();
     });
     describe('does not swipeback on', () => {
-      it.each([
-        ['input', <input data-testid="ex" key="" />],
-        ['textarea', <textarea data-testid="ex" key="" />],
+      it.each<[string, ReactNode, Partial<ViewProps>]>([
+        ['input', <input data-testid="ex" key="" />, {}],
+        ['textarea', <textarea data-testid="ex" key="" />, {}],
         [
           '[data-vkui-swipe-back=false]',
           <div data-vkui-swipe-back={false} data-testid="ex" key="" />,
+          {},
         ],
-      ])('%s', (_name, cmp) => {
-        const { view, ...events } = setupSwipeBack(Fragment, cmp);
+        [
+          'onSwipeBackStart() === "prevent"',
+          <div data-testid="ex" key="" />,
+          { onSwipeBackStart: () => 'prevent' },
+        ],
+      ])('%s', (_name, cmp, props) => {
+        const { view, ...events } = setupSwipeBack(Fragment, cmp, props);
         fireEvent.mouseMove(screen.getByTestId('ex'), {
           clientX: window.innerWidth + 1,
           clientY: 100,

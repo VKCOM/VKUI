@@ -44,36 +44,118 @@ const [activePanel, setActivePanel] = useState('panel1');
 - Передать во `View` проп `history` — массив из id панелей в порядке открытия. Например, если пользователь из `main` перешел в `profile`, а оттуда попал в `education`, то `history=['main', 'profile', 'education']`.
 - Обернуть ваше приложение в `ConfigProvider` — он определит, открыто приложение в webview клиента VK или в браузере (там есть свой swipe back, который будет конфликтовать с нашим). Для проверки в браузере форсируйте определение webview: `<ConfigProvider isWebView>`.
 - На первой панели должен включаться свайпбек нативного клиента, чтобы пользователь смог выйти из приложения — для этого используют `vk-bridge`. **Если вы делаете стандартное мини-приложение ВКонтакте,** при переходах отправляйте [событие `VKWebAppSetSwipeSettings`](https://dev.vk.com/bridge/VKWebAppSetSwipeSettings) с `history: true` на первой панели или `history: false` на других. **Если тип вашего мини-приложения — `WebviewType.INTERNAL`,** отправляйте событие `VKWebAppEnableSwipeBack` при переходе на первую панель и событие `VKWebAppDisableSwipeBack` при переходе на любую другух.
-- Компоненты, которые сами обрабатывают жесты (например, карта), могут конфликтовать со свайпбеком — повесьте на них свойство `data-vkui-swipe-back={false}`
+
+**Блокировка свайпа (вариант #1)**
+
+Компоненты, которые сами обрабатывают жесты (например, карта), могут конфликтовать со свайпбеком — повесьте на них свойство `data-vkui-swipe-back={false}`
+
+<br />
+
+**Блокировка свайпа (вариант #2)**
+
+Для блокирования свайпа по вашему условию есть коллбек `onSwipeBackStart()` (см. **Свойства и методы**)
+
+```tsx static
+import * as React from 'react';
+import { type ViewProps, View } from '@vkontakte/vkui';
+
+type ViewOnSwipeBackStartProp = Required<ViewProps>['onSwipeBackStart'];
+
+const App = () => {
+  const handleSwipeBackStart = React.useCallback<ViewOnSwipeBackStartProp>((activePanel) => {}, []);
+  return <View onSwipeBackStart={handleSwipeBackStart} />;
+};
+```
 
 ```jsx
 import vkBridge from '@vkontakte/vk-bridge';
 
-const [history, setHistory] = useState(['main']);
-const activePanel = history[history.length - 1];
-const isFirst = history.length === 1;
+const App = () => {
+  const [history, setHistory] = useState(['main']);
+  const activePanel = history[history.length - 1];
+  const isFirst = history.length === 1;
 
-React.useEffect(() => {
-  // В стандартных мини-приложениях делайте так:
-  vkBridge.send('VKWebAppSetSwipeSettings', { history: isFirst });
-  // В мини-приложениях `WebviewType.INTERNAL` делайте так:
-  vkBridge.send(isFirst ? 'VKWebAppEnableSwipeBack' : 'VKWebAppDisableSwipeBack');
-}, [isFirst]);
+  const go = React.useCallback((panel) => {
+    setHistory((prevHistory) => [...prevHistory, panel]);
+  }, []);
+  const goBack = React.useCallback(() => {
+    setHistory((prevHistory) => prevHistory.slice(0, -1));
+  }, []);
 
-const goBack = () => setHistory(history.slice(0, -1));
-const go = (panel) => setHistory([...history, panel]);
+  const handleProfileClick = React.useCallback(() => go('profile'), [go]);
+  const handleSettingsClick = React.useCallback(() => go('settings'), [go]);
 
-<ConfigProvider platform={Platform.IOS} isWebView>
-  <View onSwipeBack={goBack} history={history} activePanel={activePanel}>
-    <Panel id="main">
+  React.useEffect(() => {
+    // В стандартных мини-приложениях делайте так:
+    vkBridge.send('VKWebAppSetSwipeSettings', { history: isFirst });
+    // В мини-приложениях `WebviewType.INTERNAL` делайте так:
+    vkBridge.send(isFirst ? 'VKWebAppEnableSwipeBack' : 'VKWebAppDisableSwipeBack');
+  }, [isFirst]);
+
+  const [userName, setUserName] = React.useState('');
+  const [popoutWithRestriction, setPopoutWithRestriction] = React.useState(null);
+
+  const handleSwipeBackStartForPreventIfNeeded = React.useCallback(
+    (activePanel) => {
+      if (activePanel === 'settings') {
+        if (userName !== '') {
+          return;
+        }
+
+        setPopoutWithRestriction(
+          <Alert
+            header="Поле Имя не заполнено"
+            text="Пожалуйста, заполните его."
+            onClose={() => setPopoutWithRestriction(null)}
+          />,
+        );
+
+        return 'prevent';
+      }
+    },
+    [userName],
+  );
+
+  return (
+    <SplitLayout popout={popoutWithRestriction}>
+      <SplitCol>
+        <View
+          history={history}
+          activePanel={activePanel}
+          onSwipeBackStart={handleSwipeBackStartForPreventIfNeeded}
+          onSwipeBack={goBack}
+        >
+          <Panel id="main">
+            <MainPanelContent onProfileClick={handleProfileClick} />
+          </Panel>
+          <Panel id="profile">
+            <ProfilePanelContent onSettingsClick={handleSettingsClick} />
+          </Panel>
+          <Panel id="settings">
+            <SettingsPanelContent name={userName} onChangeName={setUserName} />
+          </Panel>
+        </View>
+      </SplitCol>
+    </SplitLayout>
+  );
+};
+
+const MainPanelContent = ({ onProfileClick }) => {
+  return (
+    <React.Fragment>
       <PanelHeader>Main</PanelHeader>
       <Group>
         <div style={{ height: 200 }} />
-        <CellButton onClick={() => go('profile')}>profile</CellButton>
+        <CellButton onClick={onProfileClick}>Профиль</CellButton>
         <div style={{ height: 600 }} />
       </Group>
-    </Panel>
-    <Panel id="profile">
+    </React.Fragment>
+  );
+};
+
+const ProfilePanelContent = ({ onSettingsClick }) => {
+  return (
+    <React.Fragment>
       <PanelHeader>Профиль</PanelHeader>
       <Group>
         <Placeholder>Теперь свайпните от левого края направо, чтобы вернуться</Placeholder>
@@ -81,7 +163,35 @@ const go = (panel) => setHistory([...history, panel]);
           Здесь свайпбек отключен
         </Div>
       </Group>
-    </Panel>
-  </View>
+      <Group>
+        <CellButton onClick={onSettingsClick}>Настройки</CellButton>
+      </Group>
+    </React.Fragment>
+  );
+};
+
+const SettingsPanelContent = ({ name, onChangeName }) => {
+  const handleNameChange = React.useCallback(
+    (event) => {
+      onChangeName(event.target.value.trim());
+    },
+    [onChangeName],
+  );
+
+  return (
+    <React.Fragment>
+      <PanelHeader>Настройки</PanelHeader>
+      <Group>
+        <Placeholder>Пример с блокированием свайпбека пока не будет выполнено условие</Placeholder>
+        <FormItem top="Имя">
+          <Input value={name} onChange={handleNameChange} />
+        </FormItem>
+      </Group>
+    </React.Fragment>
+  );
+};
+
+<ConfigProvider platform={Platform.IOS} isWebView>
+  <App />
 </ConfigProvider>;
 ```
