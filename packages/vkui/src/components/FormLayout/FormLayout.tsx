@@ -8,7 +8,12 @@ const preventDefault = (e: React.FormEvent) => e.preventDefault();
 
 export type FormLayoutProps = React.AllHTMLAttributes<HTMLElement> &
   HasRef<HTMLElement> &
-  HasComponent;
+  HasComponent & {
+    /**
+     * Лейбл для скрытой кнопки отправки формы. Необходим, чтобы кнопка была доступной.
+     */
+    submitLabel?: string;
+  };
 
 /**
  * @see https://vkcom.github.io/VKUI/#/FormLayout
@@ -18,6 +23,7 @@ export const FormLayout = ({
   Component = 'form',
   getRef,
   onSubmit = preventDefault,
+  submitLabel = 'Отправить',
   className,
   ...restProps
 }: FormLayoutProps) => {
@@ -29,7 +35,7 @@ export const FormLayout = ({
       ref={getRef}
     >
       <div>{children}</div>
-      {Component === 'form' && <VisuallyHiddenInput type="submit" value="Отправить" />}
+      {Component === 'form' && <VisuallyHiddenInput type="submit" value={submitLabel} />}
     </Component>
   );
 };
