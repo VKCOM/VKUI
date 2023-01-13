@@ -199,11 +199,7 @@ export function parse(input: string, format: string, referenceDate: Date = new D
     const length = match[0].length;
     const atIndex = superRegExp.lastIndex - length;
 
-    const item = entries.find((item) => item[0] === match[0]);
-
-    if (!item) {
-      return new Date('');
-    }
+    const item = entries.find((item) => item[0] === match[0])!;
 
     lastNonFormatting = format.slice(lastFormatIndex, atIndex);
     lastFormatIndex = superRegExp.lastIndex;
