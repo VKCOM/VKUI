@@ -40,8 +40,13 @@ jobs:
           node-version: 18
           cache: 'yarn'
       - run: yarn install --frozen-lockfile --ignore-scripts
+
+      - name: '[Troubleshooting for Azure VM] Install APT Repositories'
+        # Связанная проблема https://github.com/actions/runner-images/issues/675
+        run: curl --connect-timeout 1 azure.archive.ubuntu.com || (sudo sed -i 's/azure\.//' /etc/apt/sources.list && sudo apt-get update)
       - name: Install deps for playwright
         run: yarn run playwright:install ${{ matrix.browser }}
+
       - name: FYI visual tests
         run: yarn run test:e2e:ci
         env:
