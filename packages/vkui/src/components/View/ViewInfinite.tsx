@@ -58,7 +58,7 @@ export interface ViewInfiniteProps
   /**
    * callback начала анимации свайпа назад.
    */
-  onSwipeBackStart?(): void;
+  onSwipeBackStart?(activePanel: string | null): void | 'prevent';
   /**
    * callback завершения анимации отмененного пользователем свайпа
    */
@@ -89,7 +89,8 @@ export interface ViewInfiniteState {
   nextPanel: string | null;
 
   swipingBack: boolean;
-  swipebackStartX: number;
+  swipeBackPrevented: boolean;
+  swipeBackStartX: number;
   swipeBackShift: number;
   swipeBackNextPanel: string | null;
   swipeBackPrevPanel: string | null;
@@ -102,6 +103,8 @@ class ViewInfiniteComponent extends React.Component<
   ViewInfiniteProps & DOMProps,
   ViewInfiniteState
 > {
+  private static readonly SWIPE_BACK_AREA = 70;
+
   constructor(props: ViewInfiniteProps) {
     super(props);
 
@@ -115,7 +118,8 @@ class ViewInfiniteComponent extends React.Component<
       nextPanel: null,
 
       swipingBack: false,
-      swipebackStartX: 0,
+      swipeBackPrevented: false,
+      swipeBackStartX: 0,
       swipeBackShift: 0,
       swipeBackNextPanel: null,
       swipeBackPrevPanel: null,
@@ -243,7 +247,7 @@ class ViewInfiniteComponent extends React.Component<
           swipeBackNextPanel: null,
           swipingBack: false,
           swipeBackResult: null,
-          swipebackStartX: 0,
+          swipeBackStartX: 0,
           swipeBackShift: 0,
           activePanel: nextPanel,
           visiblePanels: [nextPanel],
@@ -258,11 +262,6 @@ class ViewInfiniteComponent extends React.Component<
             });
         },
       );
-    }
-
-    // Начался свайп назад
-    if (!prevState.swipingBack && this.state.swipingBack) {
-      this.props.onSwipeBackStart && this.props.onSwipeBackStart();
     }
 
     // Началась анимация завершения свайпа назад.
@@ -422,77 +421,103 @@ class ViewInfiniteComponent extends React.Component<
       swipeBackNextPanel: null,
       swipingBack: false,
       swipeBackResult: null,
-      swipebackStartX: 0,
+      swipeBackStartX: 0,
       swipeBackShift: 0,
     });
   }
 
-  onMoveX = (e: TouchEvent): void => {
-    if (swipeBackExcluded(e) || !this.window) {
+  onMoveX = (event: TouchEvent): void => {
+    if (
+      !this.window ||
+      this.props.platform !== Platform.IOS ||
+      this.state.swipeBackPrevented ||
+      swipeBackExcluded(event)
+    ) {
       return;
     }
 
-    const { platform, configProvider } = this.props;
+    if (!this.props.configProvider?.isWebView) {
+      if (
+        (event.startX <= ViewInfiniteComponent.SWIPE_BACK_AREA ||
+          event.startX >= this.window.innerWidth - ViewInfiniteComponent.SWIPE_BACK_AREA) &&
+        !this.state.browserSwipe
+      ) {
+        this.setState({ browserSwipe: true });
+      }
 
-    if (
-      platform === Platform.IOS &&
-      !configProvider?.isWebView &&
-      (e.startX <= 70 || e.startX >= this.window.innerWidth - 70) &&
-      !this.state.browserSwipe
-    ) {
-      this.setState({ browserSwipe: true });
+      return;
     }
 
-    if (platform === Platform.IOS && configProvider?.isWebView && this.props.onSwipeBack) {
-      if (this.state.animated && e.startX <= 70) {
-        return;
+    if (
+      !this.props.onSwipeBack ||
+      (this.state.animated && event.startX <= ViewInfiniteComponent.SWIPE_BACK_AREA)
+    ) {
+      return;
+    }
+
+    if (
+      !this.state.swipingBack &&
+      event.startX <= ViewInfiniteComponent.SWIPE_BACK_AREA &&
+      this.props.history &&
+      this.props.history.length > 1
+    ) {
+      if (this.props.onSwipeBackStart) {
+        const payload = this.props.onSwipeBackStart(this.state.activePanel);
+        if (payload === 'prevent') {
+          this.setState({ swipeBackPrevented: true });
+          return;
+        }
       }
 
-      if (e.startX <= 70 && !this.state.swipingBack && (this.props.history?.length ?? 0) > 1) {
-        if (this.state.activePanel !== null) {
-          const prevScrolls = this.scrolls[this.state.activePanel] || [];
-          this.scrolls = {
-            ...this.scrolls,
-            [this.state.activePanel]: [...prevScrolls, this.props.scroll?.getScroll().y],
-          };
-        }
+      if (this.state.activePanel !== null) {
+        // Note: вызываем закрытие клавиатуры. В iOS это нативное поведение при свайпе.
+        this.blurActiveElement();
+        const prevScrolls = this.scrolls[this.state.activePanel] || [];
+        this.scrolls = {
+          ...this.scrolls,
+          [this.state.activePanel]: [...prevScrolls, this.props.scroll?.getScroll().y],
+        };
+      }
 
-        this.setState({
-          swipingBack: true,
-          swipebackStartX: e.startX,
-          swipeBackPrevPanel: this.state.activePanel,
-          swipeBackNextPanel: this.props.history!.slice(-2)[0],
-        });
+      this.setState({
+        swipingBack: true,
+        swipeBackStartX: event.startX,
+        swipeBackPrevPanel: this.state.activePanel,
+        swipeBackNextPanel: this.props.history.slice(-2)[0],
+      });
+    }
+
+    if (this.state.swipingBack) {
+      let swipeBackShift;
+      if (event.shiftX < 0) {
+        swipeBackShift = 0;
+      } else if (event.shiftX > this.window.innerWidth - this.state.swipeBackStartX) {
+        swipeBackShift = this.window.innerWidth;
+      } else {
+        swipeBackShift = event.shiftX;
       }
-      if (this.state.swipingBack) {
-        let swipeBackShift;
-        if (e.shiftX < 0) {
-          swipeBackShift = 0;
-        } else if (e.shiftX > this.window.innerWidth - this.state.swipebackStartX) {
-          swipeBackShift = this.window.innerWidth;
-        } else {
-          swipeBackShift = e.shiftX;
-        }
-        this.setState({ swipeBackShift });
-      }
+      this.setState({ swipeBackShift });
     }
   };
 
-  onEnd = (e: TouchEvent): void => {
+  onEnd = (event: TouchEvent): void => {
     if (this.state.swipingBack && this.window) {
-      const speed = (this.state.swipeBackShift / e.duration) * 1000;
+      const speed = (this.state.swipeBackShift / event.duration) * 1000;
       if (this.state.swipeBackShift === 0) {
         this.onSwipeBackCancel();
       } else if (this.state.swipeBackShift >= this.window.innerWidth) {
         this.onSwipeBackSuccess();
       } else if (
         speed > 250 ||
-        this.state.swipebackStartX + this.state.swipeBackShift > this.window.innerWidth / 2
+        this.state.swipeBackStartX + this.state.swipeBackShift > this.window.innerWidth / 2
       ) {
         this.setState({ swipeBackResult: SwipeBackResults.success });
       } else {
         this.setState({ swipeBackResult: SwipeBackResults.fail });
       }
+    }
+    if (this.state.swipeBackPrevented) {
+      this.setState({ swipeBackPrevented: false });
     }
   };
 

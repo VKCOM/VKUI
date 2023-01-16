@@ -67,7 +67,7 @@ export const Button = ({
         platform === Platform.IOS && styles[`Button--ios`],
         stretched && styles['Button--stretched'],
         hasIcons && styles['Button--with-icon'],
-        hasIconOnly && styles['Button--singleIcon'],
+        hasIconOnly && !stretched && styles['Button--singleIcon'],
         loading && styles['Button--loading'],
       )}
       getRootRef={getRootRef}

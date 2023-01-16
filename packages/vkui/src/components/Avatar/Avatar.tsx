@@ -33,7 +33,7 @@ const COLORS_NUMBER_TO_TEXT_MAP = {
 export type InitialsAvatarNumberGradients = keyof typeof COLORS_NUMBER_TO_TEXT_MAP;
 
 export type InitialsAvatarTextGradients =
-  | typeof COLORS_NUMBER_TO_TEXT_MAP[InitialsAvatarNumberGradients]
+  | (typeof COLORS_NUMBER_TO_TEXT_MAP)[InitialsAvatarNumberGradients]
   | 'blue';
 
 const gradientStyles = {

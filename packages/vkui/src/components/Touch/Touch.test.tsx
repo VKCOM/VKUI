@@ -121,7 +121,7 @@ describe('Touch', () => {
       'onEndX',
       'onEndY',
     ] as const;
-    const makeHandlers = (): { [k in typeof keys[number]]: jest.Mock } => {
+    const makeHandlers = (): { [k in (typeof keys)[number]]: jest.Mock } => {
       return keys.reduce<any>((acc, k) => ({ ...acc, [k]: jest.fn() }), {});
     };
     describe.each(['touch', 'mouse'])('using %s', (input) => {

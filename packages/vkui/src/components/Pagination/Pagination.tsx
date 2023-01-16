@@ -173,7 +173,6 @@ export const Pagination = ({
             before={<Icon24ChevronCompactLeft width={24} />}
             appearance="accent"
             mode="tertiary"
-            stretched
             disabled={isFirstPage || disabled}
             aria-label={prevButtonAriaLabel}
             onClick={handlePrevClick}
@@ -186,7 +185,6 @@ export const Pagination = ({
             after={<Icon24ChevronCompactRight width={24} />}
             appearance="accent"
             mode="tertiary"
-            stretched
             disabled={isLastPage || disabled}
             aria-label={nextButtonAriaLabel}
             onClick={handleNextClick}
