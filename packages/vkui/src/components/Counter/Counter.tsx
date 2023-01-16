@@ -42,6 +42,7 @@ export const Counter = ({
   }
 
   const CounterTypography = size === 's' ? Caption : Headline;
+  const counterLevel = size === 's' ? '1' : '2';
 
   return (
     <span
@@ -54,7 +55,7 @@ export const Counter = ({
       )}
     >
       {hasReactNode(children) && (
-        <CounterTypography Component="span" className={styles['Counter__in']} level="2">
+        <CounterTypography Component="span" className={styles['Counter__in']} level={counterLevel}>
           {children}
         </CounterTypography>
       )}
