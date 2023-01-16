@@ -230,9 +230,14 @@ export const Touch = ({
     if (!didSlide.current) {
       return onClickCapture && onClickCapture(e);
     }
-    
+
     if (noSlideClick) {
       e.stopPropagation();
+
+      // eslint-disable-next-line no-restricted-properties
+      if ((e.target as HTMLElement).closest('a')) {
+        e.preventDefault();
+      }
     } else {
       onClickCapture && onClickCapture(e);
     }

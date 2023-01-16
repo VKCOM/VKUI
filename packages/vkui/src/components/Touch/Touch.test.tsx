@@ -5,6 +5,13 @@ import userEvent from '@testing-library/user-event';
 import { noop } from '@vkontakte/vkjs';
 import { Touch } from './Touch';
 import { createElement } from 'react';
+import { View } from '../View/View';
+import { Panel } from '../Panel/Panel';
+import { PanelHeader } from '../PanelHeader/PanelHeader';
+import { Group } from '../Group/Group';
+import { CardScroll } from '../CardScroll/CardScroll';
+import { Card } from '../Card/Card';
+import { Button } from '../Button/Button';
 
 // Настоящего Touch нет в jsdom: https://github.com/jsdom/jsdom/issues/1508
 const asClientPos = ([clientX = 0, clientY = 0] = []): Touch & MouseEvent =>
@@ -339,6 +346,42 @@ describe('Touch', () => {
       slideRight(screen.getByTestId('touch'));
       userEvent.click(screen.getByTestId('touch'));
       expect(cb).toBeCalled();
+    });
+    it('does not prevent click of a button after slide of a parent on mobile', () => {
+      render(
+        <View activePanel="card">
+          <Panel id="card">
+            <PanelHeader>CardScroll</PanelHeader>
+            <Group description="Внутри Group">
+              <CardScroll size="s">
+                <Card>
+                  <div style={{ paddingBottom: '66%' }} />
+                </Card>
+                <Card data-testid="card">
+                  <div style={{ paddingBottom: '66%' }}>
+                    <Button data-testid="button" href="vk.com" />
+                  </div>
+                </Card>
+                <Card>
+                  <div style={{ paddingBottom: '66%' }} />
+                </Card>
+                <Card>
+                  <div style={{ paddingBottom: '66%' }} />
+                </Card>
+                <Card>
+                  <div style={{ paddingBottom: '66%' }} />
+                </Card>
+                <Card>
+                  <div style={{ paddingBottom: '66%' }} />
+                </Card>
+              </CardScroll>
+            </Group>
+          </Panel>
+        </View>,
+      );
+      slideRight(screen.getByTestId('card'));
+      const hasDefault = fireEvent.click(screen.getByTestId('button'));
+      expect(hasDefault).toBe(true);
     });
   });
 });
