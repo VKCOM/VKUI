@@ -2,19 +2,6 @@
   position: relative;
 }
 
-.FormLayout__submit {
-  position: absolute;
-  visibility: hidden;
-  pointer-events: none;
-  left: 0;
-  top: 0;
-  padding: 0;
-  width: 0;
-  height: 0;
-  appearance: none;
-  border: none;
-}
-
 .FormLayout__container {
   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }
