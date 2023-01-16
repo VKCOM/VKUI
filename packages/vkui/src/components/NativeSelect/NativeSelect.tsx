@@ -38,7 +38,7 @@ const NativeSelect = ({
   style,
   defaultValue = '',
   align,
-  placeholder,
+  placeholder = 'Выберите опцию',
   children,
   className,
   getRef,
@@ -91,7 +91,6 @@ const NativeSelect = ({
       status={status}
     >
       <select
-        aria-label={placeholder ?? 'Выберите опцию'}
         {...restProps}
         disabled={disabled}
         className={styles['Select__el']}
