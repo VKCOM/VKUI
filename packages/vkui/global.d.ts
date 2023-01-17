@@ -1,4 +1,4 @@
-// addEventListener и removeEventListener имеют плохую поддержку в Safari.
+// addEventListener и removeEventListener имеют плохую поддержку в Safari < 14.
 //
 // https://caniuse.com/mdn-api_mediaquerylistevent
 interface MediaQueryList {
