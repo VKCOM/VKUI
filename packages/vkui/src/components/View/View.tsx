@@ -244,7 +244,12 @@ export const View = ({
   );
 
   const onMoveX = (event: TouchEvent): void => {
-    if (platform !== Platform.IOS || swipeBackPrevented || swipeBackExcluded(event)) {
+    if (
+      platform !== Platform.IOS ||
+      swipeBackPrevented ||
+      swipeBackExcluded(event) ||
+      disableAnimation
+    ) {
       return;
     }
 
