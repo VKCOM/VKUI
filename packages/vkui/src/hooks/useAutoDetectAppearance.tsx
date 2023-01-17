@@ -7,6 +7,7 @@ import vkBridge, {
 import { useDOM } from '../lib/dom';
 import { noop } from '@vkontakte/vkjs';
 import { resolveAppearance, VKBridgeConfigData } from '../helpers/appearance';
+import { matchMediaListAddListener, matchMediaListRemoveListener } from '../lib/matchMedia';
 
 let initialAppearance: AppearanceType | null = null;
 
@@ -58,9 +59,9 @@ function autoDetectAppearance(
   };
 
   check(mediaQuery);
-  mediaQuery.addEventListener('change', check);
+  matchMediaListAddListener(mediaQuery, check);
 
-  return () => mediaQuery.removeEventListener('change', check);
+  return () => matchMediaListRemoveListener(mediaQuery, check);
 }
 
 export const useAutoDetectAppearance = (
