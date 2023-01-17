@@ -1,21 +1,63 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import type { HasRootRef } from '../../types';
+import type { Placement } from '../../lib/floating';
 import styles from './PopperArrow.module.css';
 
-export interface PopperArrowProps {
-  style?: React.CSSProperties;
-  attributes?: React.HTMLAttributes<HTMLDivElement> | null;
+export const ARROW_PADDING = 10;
+export const ARROW_WIDTH = 20;
+export const ARROW_HEIGHT = 8;
+
+type Coords = {
+  x?: number;
+  y?: number;
+};
+
+function getPositionsStylesByCoords(
+  placement: Placement,
+  coords: Coords = { x: 0, y: 0 },
+): React.CSSProperties {
+  if (placement.startsWith('top')) {
+    return {
+      top: '100%',
+      left: coords.x,
+    };
+  } else if (placement.startsWith('right')) {
+    return {
+      top: coords.y,
+      right: 'calc(100% - 6px)',
+    };
+  } else if (placement.startsWith('bottom')) {
+    return {
+      bottom: '100%',
+      left: coords.x,
+    };
+  } else {
+    return {
+      top: coords.y,
+      left: 'calc(100% - 6px)',
+    };
+  }
+}
+
+export interface PopperArrowProps extends HasRootRef<HTMLDivElement> {
+  coords?: Coords;
+  placement: Placement;
   arrowClassName?: string;
 }
 
-export const PopperArrow = ({ style, attributes, arrowClassName }: PopperArrowProps) => {
-  const { className: arrowWrapperClassName, ...restAttributes } = attributes ?? {};
+export const PopperArrow = ({
+  coords,
+  arrowClassName,
+  placement,
+  getRootRef,
+}: PopperArrowProps) => {
   return (
     <div
-      style={style}
-      {...restAttributes}
-      className={classNames(styles['PopperArrow'], arrowWrapperClassName)}
-      data-popper-arrow={true}
+      ref={getRootRef}
+      style={getPositionsStylesByCoords(placement, coords)}
+      className={styles['PopperArrow']}
+      data-placement={placement}
     >
       <svg
         className={classNames(styles['PopperArrow__in'], arrowClassName)}

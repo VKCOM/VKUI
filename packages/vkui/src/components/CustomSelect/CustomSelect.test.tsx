@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { baselineComponent, waitForPopper } from '../../testing/utils';
+import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
 import { type SelectProps, CustomSelect } from './CustomSelect';
 import { useState } from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
@@ -250,7 +250,7 @@ describe('CustomSelect', () => {
     fireEvent.click(screen.getByTestId('target'));
     fireEvent.change(screen.getByTestId('target'), { target: { value: 'Mi' } });
 
-    await waitForPopper();
+    await waitForFloatingPosition();
 
     expect(screen.getAllByRole('option').length).toEqual(1);
 
@@ -284,7 +284,7 @@ describe('CustomSelect', () => {
 
     fireEvent.click(screen.getByTestId('target'));
 
-    await waitForPopper();
+    await waitForFloatingPosition();
 
     expect(screen.getByTitle('Josh').getAttribute('aria-selected')).toEqual('true');
 
@@ -371,7 +371,7 @@ describe('CustomSelect', () => {
 
     fireEvent.click(screen.getByTestId('target'));
 
-    await waitForPopper();
+    await waitForFloatingPosition();
 
     expect(openCb).toBeCalledTimes(1);
 
@@ -391,6 +391,7 @@ describe('CustomSelect', () => {
       key: 'ArrowDown',
       code: 'ArrowDown',
     });
+    await waitForFloatingPosition();
     fireEvent.keyDown(screen.getByTestId('target'), {
       key: 'Enter',
       code: 'Enter',
@@ -433,7 +434,7 @@ describe('CustomSelect', () => {
       code: 'Enter',
     });
 
-    await waitForPopper();
+    await waitForFloatingPosition();
 
     expect(getCustomSelectValue()).toEqual('Bob');
 
@@ -445,6 +446,7 @@ describe('CustomSelect', () => {
       key: 'ArrowUp',
       code: 'ArrowUp',
     });
+    await waitForFloatingPosition();
     fireEvent.keyDown(screen.getByTestId('target'), {
       key: 'Enter',
       code: 'Enter',
@@ -471,6 +473,7 @@ describe('CustomSelect', () => {
       key: 'ArrowUp',
       code: 'ArrowUp',
     });
+    await waitForFloatingPosition();
     fireEvent.keyDown(screen.getByTestId('target'), {
       key: 'Enter',
       code: 'Enter',

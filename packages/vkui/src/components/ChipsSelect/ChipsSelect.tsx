@@ -14,7 +14,7 @@ import { Footnote } from '../Typography/Footnote/Footnote';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { defaultFilterFn } from '../../lib/select';
-import { Placement } from '../Popper/Popper';
+import type { Placement } from '../../lib/floating';
 import { CustomSelectDropdown } from '../CustomSelectDropdown/CustomSelectDropdown';
 import { FormField } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
@@ -313,8 +313,6 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
     setFocusedOptionIndex(null);
   }, [setFocusedOptionIndex]);
 
-  const observableRefs = React.useMemo(() => [scrollBoxRef, rootRef], [rootRef, scrollBoxRef]);
-
   const toggleOpened = () => {
     setOpened((prevOpened) => !prevOpened);
   };
@@ -372,7 +370,6 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
           targetRef={rootRef}
           placement={popupDirection}
           scrollBoxRef={scrollBoxRef}
-          observableRefs={observableRefs}
           onPlacementChange={onPlacementChange}
           onMouseLeave={onDropdownMouseLeave}
           fetching={fetching}

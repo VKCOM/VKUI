@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { SelectMimicry } from '../SelectMimicry/SelectMimicry';
-import { debounce, multiRef, getTitleFromChildren } from '../../lib/utils';
+import { debounce, getTitleFromChildren } from '../../lib/utils';
+import { useExternRef } from '../../hooks/useExternRef';
 import { classNames } from '@vkontakte/vkjs';
 import { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import {
@@ -13,7 +14,7 @@ import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { warnOnce } from '../../lib/warnOnce';
 import { defaultFilterFn, getFormFieldModeFromSelectType } from '../../lib/select';
-import { Placement } from '../Popper/Popper';
+import type { PlacementWithAuto } from '../../lib/floating';
 import { CustomSelectDropdown } from '../CustomSelectDropdown/CustomSelectDropdown';
 import { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
 import { SelectType } from '../Select/Select';
@@ -195,6 +196,7 @@ export function CustomSelect(props: SelectProps) {
   }
 
   const containerRef = React.useRef<HTMLLabelElement>(null);
+  const handleRootRef = useExternRef(containerRef, getRootRef);
   const scrollBoxRef = React.useRef<HTMLDivElement | null>(null);
   const selectElRef = React.useRef<HTMLSelectElement>(null);
 
@@ -205,7 +207,9 @@ export function CustomSelect(props: SelectProps) {
     props.value ?? props.defaultValue,
   );
   const [keyboardInput, setKeyboardInput] = React.useState('');
-  const [popperPlacement, setPopperPlacement] = React.useState<Placement | undefined>(undefined);
+  const [popperPlacement, setPopperPlacement] = React.useState<PlacementWithAuto | undefined>(
+    undefined,
+  );
   const [options, setOptions] = React.useState(optionsProp);
   const [selectedOptionIndex, setSelectedOptionIndex] = React.useState<number | undefined>(
     findSelectedIndex(optionsProp, props.value ?? props.defaultValue),
@@ -625,7 +629,7 @@ export function CustomSelect(props: SelectProps) {
     <label
       className={classNames(styles['CustomSelect'], className)}
       style={style}
-      ref={multiRef(containerRef, getRootRef)}
+      ref={handleRootRef}
       onClick={onLabelClick}
     >
       {opened && searchable ? (
@@ -690,7 +694,6 @@ export function CustomSelect(props: SelectProps) {
           forcePortal={forceDropdownPortal}
           autoHideScrollbar={autoHideScrollbar}
           autoHideScrollbarDelay={autoHideScrollbarDelay}
-          observableRefs={scrollBoxRef}
         >
           {resolvedContent}
         </CustomSelectDropdown>

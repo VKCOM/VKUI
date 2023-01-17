@@ -4,8 +4,21 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
 import { PopperArrow } from '../PopperArrow/PopperArrow';
-import { Modifier, usePopper } from 'react-popper';
-import { Placement } from '@popperjs/core';
+import {
+  type Placement,
+  type PlacementWithAuto,
+  type UseFloatingMiddleware,
+  useFloating,
+  checkIsNotAutoPlacement,
+  convertFloatingDataToReactCSSProperties,
+  offsetMiddleware,
+  shiftMiddleware,
+  flipMiddleware,
+  arrowMiddleware,
+  autoUpdateFloatingElement,
+  getAutoPlacementAlign,
+  autoPlacementMiddleware,
+} from '../../lib/floating';
 import { tooltipContainerAttr } from './TooltipContainer';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useDOM } from '../../lib/dom';
@@ -13,19 +26,6 @@ import { warnOnce } from '../../lib/warnOnce';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { HasRootRef } from '../../types';
 import styles from './Tooltip.module.css';
-
-interface SimpleTooltipProps extends Partial<TooltipProps> {
-  target?: HTMLDivElement;
-  style?: {
-    arrow: React.CSSProperties;
-    container: React.CSSProperties;
-  };
-  attributes?: {
-    arrow: React.HTMLAttributes<HTMLDivElement> | null;
-    container: React.HTMLAttributes<HTMLDivElement> | null;
-  };
-  className?: string;
-}
 
 /**
  * Перебиваем `ref`.
@@ -49,45 +49,13 @@ const isDOMTypeElement = <
 
 const warn = warnOnce('Tooltip');
 
-const SimpleTooltip = React.forwardRef<HTMLDivElement, SimpleTooltipProps>(function SimpleTooltip(
-  { appearance = 'accent', header, text, arrow, style: popperStyles = {}, attributes, className },
-  ref,
-) {
-  const { className: containerClassName, ...restContainerAttributes } = attributes?.container ?? {};
-
-  return (
-    <div
-      className={classNames(
-        styles['Tooltip'],
-        styles[`Tooltip--appearance-${appearance}`],
-        className,
-      )}
-    >
-      <div
-        className={classNames(styles['Tooltip__container'], containerClassName)}
-        ref={ref}
-        style={popperStyles.container}
-        {...restContainerAttributes}
-      >
-        {arrow && (
-          <PopperArrow
-            style={popperStyles.arrow}
-            attributes={attributes?.arrow}
-            arrowClassName={styles['Tooltip__arrow']}
-          />
-        )}
-        <div className={styles['Tooltip__content']}>
-          {header && (
-            <Subhead weight="2" className={styles['Tooltip__title']}>
-              {header}
-            </Subhead>
-          )}
-          {text && <Subhead className={styles['Tooltip__text']}>{text}</Subhead>}
-        </div>
-      </div>
-    </div>
-  );
-});
+const stylesAppearance = {
+  accent: styles['Tooltip--appearance-accent'],
+  neutral: styles['Tooltip--appearance-neutral'],
+  white: styles['Tooltip--appearance-white'],
+  black: styles['Tooltip--appearance-black'],
+  inversion: styles['Tooltip--appearance-inversion'],
+};
 
 export interface TooltipProps {
   /**
@@ -149,7 +117,7 @@ export interface TooltipProps {
   /**
    * По умолчанию компонент выберет наилучшее расположение сам. Но его можно задать извне с помощью этого свойства
    */
-  placement?: Placement;
+  placement?: PlacementWithAuto;
   /**
    * Пользовательские css-классы, будут добавлены на root-элемент
    */
@@ -166,12 +134,15 @@ function mapAlignX(x: TooltipProps['alignX']) {
       return '';
   }
 }
-function getPlacement(alignX: TooltipProps['alignX'], alignY: TooltipProps['alignY']): Placement {
+function getDefaultPlacement(
+  alignX: TooltipProps['alignX'],
+  alignY: TooltipProps['alignY'],
+): Placement {
   return [alignY || 'bottom', mapAlignX(alignX || 'left')]
     .filter((p) => !!p)
     .join('-') as Placement;
 }
-function isVerticalPlacement(placement: Placement) {
+function isVerticalPlacement(placement: PlacementWithAuto) {
   return placement.startsWith('top') || placement.startsWith('bottom');
 }
 
@@ -180,7 +151,7 @@ function isVerticalPlacement(placement: Placement) {
  */
 export const Tooltip = ({
   children,
-  isShown: _isShown = true,
+  isShown: isShownProp = true,
   offsetX = 0,
   offsetY = 15,
   alignX,
@@ -188,15 +159,26 @@ export const Tooltip = ({
   onClose,
   cornerOffset = 0,
   cornerAbsoluteOffset,
-  appearance,
+  appearance = 'accent',
   arrow = true,
-  placement,
+  placement: placementProp,
+  text,
+  header,
+  className,
   ...restProps
 }: TooltipProps) => {
+  const arrowRef = React.useRef<HTMLDivElement>(null);
+  const [target, setTarget] = React.useState<HTMLElement | null>(null);
+  /* eslint-disable no-restricted-properties */
+  const tooltipContainer = React.useMemo(
+    () => target?.closest<HTMLDivElement>(`[${tooltipContainerAttr}]`),
+    [target],
+  );
   const { entering } = useNavTransition();
-  const isShown = _isShown && !entering;
-  const [tooltipRef, setTooltipRef] = React.useState<HTMLElement | null>(null);
-  const [target, setTarget] = React.useState<HTMLElement>();
+  const isShown = isShownProp && tooltipContainer && !entering;
+
+  const placement = placementProp || getDefaultPlacement(alignX, alignY);
+  const isNotAutoPlacement = checkIsNotAutoPlacement(placement);
 
   if (process.env.NODE_ENV === 'development') {
     const multiChildren = React.Children.count(children) > 1;
@@ -215,83 +197,82 @@ export const Tooltip = ({
       );
   }
 
-  /* eslint-disable no-restricted-properties */
-  /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion*/
-  const tooltipContainer = React.useMemo(
-    () => target?.closest(`[${tooltipContainerAttr}]`) as HTMLDivElement,
-    [target],
-  );
-  const strategy = React.useMemo(
+  const floatingPositionStrategy = React.useMemo(
     () => (target?.style.position === 'fixed' ? 'fixed' : 'absolute'),
     [target],
   );
-  /* eslint-enable @typescript-eslint/no-unnecessary-type-assertion*/
-  /* eslint-enable no-restricted-properties */
 
   if (process.env.NODE_ENV === 'development' && target && !tooltipContainer) {
     throw new Error('Use TooltipContainer for Tooltip outside Panel (see docs)');
   }
 
-  const modifiers = React.useMemo(() => {
-    const modifiers: Array<Modifier<string>> = [
-      {
-        name: 'offset',
-        options: {
-          offset: [offsetX, offsetY],
-        },
-      },
-      {
-        name: 'preventOverflow',
-      },
-      {
-        name: 'flip',
-      },
+  const memoizedMiddlewares = React.useMemo(() => {
+    const middlewares: UseFloatingMiddleware[] = [
+      offsetMiddleware({
+        crossAxis: offsetX,
+        mainAxis: offsetY,
+      }),
     ];
 
+    // см. https://floating-ui.com/docs/flip#conflict-with-autoplacement
+    if (isNotAutoPlacement) {
+      middlewares.push(flipMiddleware());
+    } else {
+      middlewares.push(
+        autoPlacementMiddleware({
+          alignment: placement ? getAutoPlacementAlign(placement) : null,
+        }),
+      );
+    }
+
+    middlewares.push(shiftMiddleware());
+
+    // см. https://floating-ui.com/docs/arrow#order
     if (arrow) {
-      modifiers.push({
-        name: 'arrow',
-        options: {
+      middlewares.push(
+        arrowMiddleware({
+          element: arrowRef,
           padding: 14,
-        },
-      });
-      modifiers.push({
+        }),
+      );
+      middlewares.push({
         name: 'arrowOffset',
-        enabled: true,
-        phase: 'main',
-        fn({ state }) {
-          if (!state.modifiersData.arrow) {
-            return;
+        fn({ placement, middlewareData }) {
+          if (!middlewareData.arrow) {
+            return Promise.resolve({});
           }
-          if (isVerticalPlacement(state.placement)) {
+          if (isVerticalPlacement(placement)) {
             if (cornerAbsoluteOffset !== undefined) {
-              state.modifiersData.arrow.x = cornerAbsoluteOffset;
-            } else {
-              if (state.modifiersData.arrow?.x !== undefined) {
-                state.modifiersData.arrow.x += cornerOffset;
-              }
+              middlewareData.arrow.x = cornerAbsoluteOffset;
+            } else if (middlewareData.arrow.x !== undefined) {
+              middlewareData.arrow.x += cornerOffset;
             }
           } else {
             if (cornerAbsoluteOffset !== undefined) {
-              state.modifiersData.arrow.y = cornerAbsoluteOffset;
-            } else {
-              if (state.modifiersData.arrow?.y !== undefined) {
-                state.modifiersData.arrow.y += cornerOffset;
-              }
+              middlewareData.arrow.y = cornerAbsoluteOffset;
+            } else if (middlewareData.arrow.y !== undefined) {
+              middlewareData.arrow.y += cornerOffset;
             }
           }
+          return Promise.resolve({});
         },
       });
     }
 
-    return modifiers;
-  }, [arrow, cornerAbsoluteOffset, cornerOffset, offsetX, offsetY]);
+    return middlewares;
+  }, [arrow, cornerAbsoluteOffset, cornerOffset, offsetX, offsetY, placement, isNotAutoPlacement]);
 
-  const _placement = placement ?? getPlacement(alignX, alignY);
-  const { styles: popperStyles, attributes } = usePopper(target, tooltipRef, {
-    strategy,
-    placement: _placement,
-    modifiers,
+  const {
+    x: floatingDataX,
+    y: floatingDataY,
+    placement: resolvedPlacement,
+    refs,
+    middlewareData: { arrow: arrowCoords },
+  } = useFloating({
+    strategy: floatingPositionStrategy,
+    placement: isNotAutoPlacement ? placement : undefined,
+    middleware: memoizedMiddlewares,
+    whileElementsMounted: autoUpdateFloatingElement,
   });
 
   const { document } = useDOM();
@@ -299,14 +280,13 @@ export const Tooltip = ({
     capture: true,
     passive: true,
   });
-  // NOTE: setting isShown to true used to trigger usePopper().forceUpdate()
 
   const childRef = isDOMTypeElement<React.HTMLAttributes<HTMLElement>, HTMLElement>(children)
     ? children.ref
     : React.isValidElement<HasRootRef<HTMLElement>>(children)
     ? children.props.getRootRef
     : null;
-  const patchedRef = useExternRef(setTarget, childRef);
+  const patchedRef = useExternRef<HTMLElement>(setTarget, refs.setReference, childRef);
   const child = React.isValidElement(children)
     ? React.cloneElement(children, {
         [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: patchedRef,
@@ -319,20 +299,36 @@ export const Tooltip = ({
       {isShown &&
         target != null &&
         ReactDOM.createPortal(
-          <SimpleTooltip
+          <div
             {...restProps}
-            appearance={appearance}
-            arrow={arrow}
-            ref={(el) => setTooltipRef(el)}
-            style={{
-              arrow: popperStyles.arrow,
-              container: popperStyles.popper,
-            }}
-            attributes={{
-              arrow: attributes.arrow ?? null,
-              container: attributes.popper ?? null,
-            }}
-          />,
+            className={classNames(styles['Tooltip'], stylesAppearance[appearance], className)}
+          >
+            <div
+              ref={refs.setFloating}
+              style={convertFloatingDataToReactCSSProperties(
+                floatingPositionStrategy,
+                floatingDataX,
+                floatingDataY,
+              )}
+            >
+              {arrow && (
+                <PopperArrow
+                  coords={arrowCoords}
+                  placement={resolvedPlacement}
+                  arrowClassName={styles['Tooltip__arrow']}
+                  getRootRef={arrowRef}
+                />
+              )}
+              <div className={styles['Tooltip__content']}>
+                {header && (
+                  <Subhead weight="2" className={styles['Tooltip__title']}>
+                    {header}
+                  </Subhead>
+                )}
+                {text && <Subhead className={styles['Tooltip__text']}>{text}</Subhead>}
+              </div>
+            </div>
+          </div>,
           tooltipContainer,
         )}
     </React.Fragment>

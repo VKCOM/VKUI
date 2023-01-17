@@ -1,31 +1,26 @@
 import * as React from 'react';
-import { usePopper, Modifier } from 'react-popper';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { PopperArrow } from '../PopperArrow/PopperArrow';
-import { HasRef } from '../../types';
-import { usePlatform } from '../../hooks/usePlatform';
-import { getPlatformClassName } from '../../helpers/getPlatformClassName';
+import { ARROW_PADDING, ARROW_HEIGHT, PopperArrow } from '../PopperArrow/PopperArrow';
+import type { HasRef } from '../../types';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import {
+  type Placement,
+  type PlacementWithAuto,
+  checkIsNotAutoPlacement,
+  getAutoPlacementAlign,
+  convertFloatingDataToReactCSSProperties,
+  useFloating,
+  autoUpdateFloatingElement,
+  type UseFloatingMiddleware,
+  offsetMiddleware,
+  flipMiddleware,
+  shiftMiddleware,
+  autoPlacementMiddleware,
+  arrowMiddleware,
+  sizeMiddleware,
+} from '../../lib/floating';
 import { classNames } from '@vkontakte/vkjs';
 import styles from './Popper.module.css';
-
-export type Placement =
-  | 'auto'
-  | 'auto-start'
-  | 'auto-end'
-  | 'top-start'
-  | 'top-end'
-  | 'bottom-start'
-  | 'bottom-end'
-  | 'right-start'
-  | 'right-end'
-  | 'left-start'
-  | 'left-end'
-  | 'top'
-  | 'bottom'
-  | 'left'
-  | 'right';
 
 export interface PopperRenderContentProps {
   className: string;
@@ -37,7 +32,7 @@ export interface PopperCommonProps
   /**
    * По умолчанию компонент выберет наилучшее расположение сам. Но его можно задать извне с помощью этого свойства
    */
-  placement?: Placement;
+  placement?: PlacementWithAuto;
   /**
    * Отступ по вспомогательной оси
    */
@@ -59,11 +54,14 @@ export interface PopperCommonProps
    */
   sameWidth?: boolean;
   forcePortal?: boolean;
-  onPlacementChange?: (data: { placement?: Placement }) => void;
+  /**
+   * Подписывается на изменение геометрии `targetRef`, чтобы пересчитать свою позицию.
+   */
+  autoUpdateOnTargetResize?: boolean;
   /**
    * Массив кастомных модификаторов для Popper (необходимо мемоизировать)
    */
-  customModifiers?: Array<Modifier<string>>;
+  customMiddlewares?: UseFloatingMiddleware[];
   /**
    * При передаче содержимого в `children`, он будет обёрнут во внутренний контейнер.
    *
@@ -72,48 +70,12 @@ export interface PopperCommonProps
    * > ⚠️ Параметр `children` будет проигнорирован.
    */
   renderContent?(props: PopperRenderContentProps): React.ReactNode;
+  onPlacementChange?(data: { placement?: Placement }): void;
 }
 
 export interface PopperProps extends PopperCommonProps {
   targetRef: React.RefObject<HTMLElement>;
 }
-
-const ARROW_PADDING = 8;
-const ARROW_WIDTH = 20;
-const ARROW_HEIGHT = 8;
-
-const preventOverflowModifier: Modifier<string> = {
-  name: 'preventOverflow',
-  options: {
-    mainAxis: false,
-  },
-};
-
-const flipModifier: Modifier<string> = {
-  name: 'flip',
-};
-
-const arrowModifier: Modifier<string> = {
-  name: 'arrow',
-  options: {
-    padding: ARROW_PADDING,
-  },
-};
-
-const sameWidthModifier: Modifier<string> = {
-  name: 'sameWidth',
-  enabled: true,
-  phase: 'beforeWrite',
-  requires: ['computeStyles'],
-  fn: ({ state }) => {
-    state.styles.popper.width = `${state.rects.reference.width}px`;
-  },
-  effect: ({ state }) => {
-    state.elements.popper.style.width = `${
-      (state.elements.reference as HTMLElement).offsetWidth
-    }px`;
-  },
-};
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Popper
@@ -122,7 +84,7 @@ export const Popper = ({
   targetRef,
   children,
   getRef,
-  placement = 'bottom-start',
+  placement: placementProp = 'bottom-start',
   onPlacementChange,
   arrow,
   arrowClassName,
@@ -130,116 +92,123 @@ export const Popper = ({
   offsetDistance = 8,
   offsetSkidding = 0,
   forcePortal = true,
-  style: compStyles,
-  customModifiers,
+  autoUpdateOnTargetResize = false,
+  style: styleProp,
+  customMiddlewares,
   renderContent,
   className,
   ...restProps
 }: PopperProps) => {
-  const [popperNode, setPopperNode] = React.useState<HTMLDivElement | null>(null);
-  const [smallTargetOffsetSkidding, setSmallTargetOffsetSkidding] = React.useState(0);
-  const platform = usePlatform();
+  const arrowRef = React.useRef<HTMLDivElement>(null);
 
-  const setExternalRef = useExternRef<HTMLDivElement>(getRef, setPopperNode);
+  const isNotAutoPlacement = checkIsNotAutoPlacement(placementProp);
 
-  const modifiers = React.useMemo(() => {
-    const modifiers: Array<Modifier<string>> = [
-      preventOverflowModifier,
-      {
-        name: 'offset',
-        options: {
-          offset: [
-            arrow ? offsetSkidding - smallTargetOffsetSkidding : offsetSkidding,
-            arrow ? offsetDistance + ARROW_HEIGHT : offsetDistance,
-          ],
-        },
-      },
-      flipModifier,
+  const memoizedMiddlewares = React.useMemo(() => {
+    const middlewares: UseFloatingMiddleware[] = [
+      offsetMiddleware({
+        crossAxis: offsetSkidding,
+        mainAxis: arrow ? offsetDistance + ARROW_HEIGHT : offsetDistance,
+      }),
     ];
 
-    if (arrow) {
-      modifiers.push(arrowModifier);
+    // см. https://floating-ui.com/docs/flip#conflict-with-autoplacement
+    if (isNotAutoPlacement) {
+      middlewares.push(flipMiddleware());
+    } else {
+      middlewares.push(
+        autoPlacementMiddleware({ alignment: getAutoPlacementAlign(placementProp) }),
+      );
     }
+
+    middlewares.push(shiftMiddleware());
 
     if (sameWidth) {
-      modifiers.push(sameWidthModifier);
+      middlewares.push(
+        sizeMiddleware({
+          apply({ rects, elements }) {
+            Object.assign(elements.floating.style, {
+              width: `${rects.reference.width}px`,
+            });
+          },
+        }),
+      );
     }
 
-    if (customModifiers) {
-      modifiers.push(...customModifiers);
+    if (customMiddlewares) {
+      middlewares.push(...customMiddlewares);
     }
-    return modifiers;
+
+    // см. https://floating-ui.com/docs/arrow#order
+    if (arrow) {
+      middlewares.push(
+        arrowMiddleware({
+          element: arrowRef,
+          padding: ARROW_PADDING,
+        }),
+      );
+    }
+
+    return middlewares;
   }, [
     arrow,
     sameWidth,
-    smallTargetOffsetSkidding,
     offsetSkidding,
     offsetDistance,
-    customModifiers,
+    customMiddlewares,
+    placementProp,
+    isNotAutoPlacement,
   ]);
 
   const {
-    styles: popperStyles,
-    state,
-    attributes,
-  } = usePopper(targetRef.current, popperNode, {
-    placement,
-    modifiers,
+    x: floatingDataX,
+    y: floatingDataY,
+    strategy: floatingPositionStrategy,
+    placement: resolvedPlacement,
+    refs,
+    middlewareData: { arrow: arrowCoords },
+  } = useFloating({
+    placement: isNotAutoPlacement ? placementProp : undefined,
+    middleware: memoizedMiddlewares,
+    whileElementsMounted(...args) {
+      return autoUpdateFloatingElement(...args, {
+        elementResize: autoUpdateOnTargetResize,
+      });
+    },
   });
 
-  const resolvedPlacement = state?.placement;
-  const isEdgePlacement = !!resolvedPlacement && resolvedPlacement.includes('-'); // true, если поппер отрисован с краю
-
-  // Если поппер рисуется с краю, то нужно опционально сместить его в тех случаях, когда стрелка не дотягивается до
-  // таргета из-за маленьких размеров последнего
-  useIsomorphicLayoutEffect(() => {
-    if (arrow && isEdgePlacement) {
-      const placementDirection =
-        resolvedPlacement?.startsWith('bottom') || resolvedPlacement?.startsWith('top')
-          ? 'vertical'
-          : 'horizontal';
-
-      const arrowSize = placementDirection === 'vertical' ? ARROW_WIDTH : ARROW_HEIGHT;
-      const targetSize =
-        (placementDirection === 'vertical'
-          ? targetRef.current?.offsetWidth
-          : targetRef.current?.offsetHeight) ?? 0;
-
-      if (targetSize < arrowSize + 2 * ARROW_PADDING) {
-        setSmallTargetOffsetSkidding(ARROW_PADDING + arrowSize / 2);
-      }
-    } else {
-      setSmallTargetOffsetSkidding(0);
-    }
-  }, [arrow, isEdgePlacement]);
+  const handleRootRef = useExternRef<HTMLDivElement>(refs.setFloating, getRef);
 
   React.useEffect(() => {
-    if (resolvedPlacement) {
-      onPlacementChange && onPlacementChange({ placement: resolvedPlacement });
+    refs.setReference(targetRef.current);
+  }, [refs, targetRef]);
+
+  React.useEffect(() => {
+    if (resolvedPlacement && onPlacementChange) {
+      onPlacementChange({ placement: resolvedPlacement });
     }
   }, [onPlacementChange, resolvedPlacement]);
 
   const dropdown = (
     <div
       {...restProps}
-      {...attributes.popper}
-      className={classNames(
-        styles['Popper'],
-        getPlatformClassName(styles['Popper'], platform),
-        className,
-      )}
-      ref={setExternalRef}
+      className={classNames(styles['Popper'], className)}
+      ref={handleRootRef}
       style={{
-        ...compStyles,
-        ...popperStyles.popper,
-        minWidth: sameWidth ? targetRef.current?.scrollWidth : undefined,
+        ...styleProp,
+        ...convertFloatingDataToReactCSSProperties(
+          floatingPositionStrategy,
+          floatingDataX,
+          floatingDataY,
+          sameWidth ? null : undefined,
+        ),
       }}
     >
       {arrow && (
         <PopperArrow
-          attributes={attributes.arrow}
-          style={popperStyles.arrow}
+          coords={arrowCoords}
+          placement={resolvedPlacement}
           arrowClassName={arrowClassName}
+          getRootRef={arrowRef}
         />
       )}
       {renderContent ? (

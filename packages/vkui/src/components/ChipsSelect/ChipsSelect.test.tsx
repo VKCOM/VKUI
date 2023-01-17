@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { fireEvent, render, screen, queryByText } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { baselineComponent, waitForPopper } from '../../testing/utils';
+import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
 import { ChipsSelect, ChipsSelectProps } from './ChipsSelect';
 import { ChipOption } from '../Chip/Chip';
 
@@ -18,7 +18,7 @@ const colors: ChipOption[] = [
 ];
 const toggleDropdown = async () => {
   userEvent.click(screen.getByRole('textbox'));
-  await waitForPopper();
+  await waitForFloatingPosition();
 };
 // получить опцию из дропдауна (не чип)
 const queryListOption = (o: ChipOption | null | undefined) => {

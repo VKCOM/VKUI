@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { HtmlHTMLAttributes, ReactElement, Fragment } from 'react';
-import { baselineComponent, waitForPopper } from '../../testing/utils';
+import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
 import { render, screen } from '@testing-library/react';
 import { Tooltip } from './Tooltip';
 import { HasRootRef } from '../../types';
@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event';
 
 const renderTooltip = async (jsx: ReactElement) => {
   render(<TooltipContainer>{jsx}</TooltipContainer>);
-  await waitForPopper();
+  await waitForFloatingPosition();
 };
 const RootRef = ({
   getRootRef,
