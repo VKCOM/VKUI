@@ -303,7 +303,9 @@ class ViewInfiniteComponent extends React.Component<
 
   shouldDisableTransitionMotion(): boolean {
     return (
-      this.props.configProvider?.transitionMotionEnabled === false || !this.props.splitCol?.animate
+      this.props.configProvider?.transitionMotionEnabled === false ||
+      !this.props.splitCol?.animate ||
+      this.props.platform === Platform.VKCOM
     );
   }
 

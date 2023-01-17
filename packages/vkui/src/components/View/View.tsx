@@ -147,7 +147,10 @@ export const View = ({
     },
   );
 
-  const disableAnimation = configProvider?.transitionMotionEnabled === false || !splitCol?.animate;
+  const disableAnimation =
+    configProvider?.transitionMotionEnabled === false ||
+    !splitCol?.animate ||
+    platform === Platform.VKCOM;
 
   const pickPanel = (id: string | null) => {
     if (id === null) {
