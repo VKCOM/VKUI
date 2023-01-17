@@ -61,12 +61,8 @@
   }
 }
 
-.ModalRoot__modal--active,
-.ModalRoot__modal--prev,
-.ModalRoot__modal--next,
 .ModalRoot__modal--dragging,
 .ModalRoot__modal--expandable,
-.ModalRoot__modal--expanded,
 .ModalRoot__modal--collapsed {
   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }
