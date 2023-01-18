@@ -1,7 +1,6 @@
 .ActionSheet {
   position: relative;
   overflow: hidden;
-  box-shadow: var(--vkui--elevation3);
   width: calc(100% - 20px);
   max-width: var(--vkui--size_popup_small--regular);
   align-items: stretch;
@@ -9,7 +8,7 @@
   flex-direction: column;
   box-sizing: border-box;
   animation: vkui-animation-actionsheet-intro 0.2s var(--vkui--animation_easing_platform);
-  padding: 8px 0;
+  padding:unset;
   margin: 10px;
   border-radius: 12px;
   background: var(--vkui--color_background_modal);
@@ -35,9 +34,9 @@
 .ActionSheet--ios {
   width: 100%;
   animation: vkui-animation-actionsheet-intro 0.3s var(--vkui--animation_easing_platform);
-  padding: 10px;
-  margin: unset;
-  background: transparent;
+  padding: unset;
+  margin: 10px;
+  background: var(--vkui--color_background_modal);
 }
 
 .ActionSheet--ios.ActionSheet--closing {
@@ -70,7 +69,7 @@
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--vkui--color_background_modal);
+  background-color: transparent;
   content: '';
 }
 
