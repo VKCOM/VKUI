@@ -234,6 +234,8 @@ export const Touch = ({
     if (noSlideClick) {
       e.stopPropagation();
 
+      // https://github.com/VKCOM/VKUI/issues/1977
+      // https://github.com/VKCOM/VKUI/issues/3892
       // eslint-disable-next-line no-restricted-properties
       if ((e.target as HTMLElement).closest('a')) {
         e.preventDefault();
