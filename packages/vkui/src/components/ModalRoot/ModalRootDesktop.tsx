@@ -95,15 +95,7 @@ class ModalRootDesktopComponent extends React.Component<
 
     // transition phase 3: animate entering modal
     if (this.props.enteringModal && this.props.enteringModal !== prevProps.enteringModal) {
-      const { enteringModal } = this.props;
-      const enteringState = this.getModalState(enteringModal);
-      this.props.onEnter();
-      requestAnimationFrame(() => {
-        if (this.props.enteringModal === enteringModal) {
-          this.waitTransitionFinish(enteringState, () => this.props.onEntered(enteringModal));
-          this.animateModalOpacity(enteringState, true);
-        }
-      });
+      this.openModal(prevProps);
     }
 
     // focus restoration
@@ -118,17 +110,55 @@ class ModalRootDesktopComponent extends React.Component<
     }
   }
 
+  openModal(prevProps: ModalRootProps & ModalTransitionProps) {
+    const { enteringModal } = this.props;
+    if (!enteringModal) {
+      return;
+    }
+
+    const enteringState = this.getModalState(enteringModal);
+    this.props.onEnter();
+
+    // Анимация открытия модального окна
+    if (!prevProps.exitingModal) {
+      requestAnimationFrame(() => {
+        if (this.props.enteringModal === enteringModal) {
+          this.waitTransitionFinish(enteringState, () => this.props.onEntered(enteringModal));
+          this.animateModalOpacity(enteringState, true);
+        }
+      });
+
+      return;
+    }
+
+    // Переход между модальными окнами без анимации
+    if (enteringState?.innerElement) {
+      enteringState.innerElement.style.transition = 'none';
+      enteringState.innerElement.style.opacity = '1';
+    }
+
+    this.props.onEntered(enteringModal);
+  }
+
   closeModal(id: string) {
     const prevModalState = this.getModalState(id);
     if (!prevModalState) {
       return;
     }
 
-    this.waitTransitionFinish(prevModalState, () => this.props.onExited(id));
-    this.animateModalOpacity(prevModalState, false);
+    // Анимация закрытия модального окна
     if (!this.props.activeModal) {
-      this.setMaskOpacity(prevModalState, 0);
+      requestAnimationFrame(() => {
+        this.waitTransitionFinish(prevModalState, () => this.props.onExited(id));
+        this.animateModalOpacity(prevModalState, false);
+        this.setMaskOpacity(prevModalState, 0);
+      });
+
+      return;
     }
+
+    // Переход между модальными окнами без анимации
+    this.props.onExited(id);
   }
 
   waitTransitionFinish(modalState: ModalsStateEntry | undefined, eventHandler: () => void) {
@@ -147,6 +177,7 @@ class ModalRootDesktopComponent extends React.Component<
   /* Анимирует сдвиг модалки */
   animateModalOpacity(modalState: ModalsStateEntry | undefined, display: boolean) {
     if (modalState?.innerElement) {
+      modalState.innerElement.style.transition = '';
       modalState.innerElement.style.transitionDelay =
         display && this.props.delayEnter ? `${this.timeout}ms` : '';
       modalState.innerElement.style.opacity = display ? '1' : '0';
@@ -176,7 +207,7 @@ class ModalRootDesktopComponent extends React.Component<
   }
 
   render() {
-    const { exitingModal, activeModal, enteringModal } = this.props;
+    const { exitingModal, activeModal } = this.props;
 
     if (!activeModal && !exitingModal) {
       return null;
@@ -212,17 +243,7 @@ class ModalRootDesktopComponent extends React.Component<
                   onClose={this.props.onExit}
                   timeout={this.timeout}
                   key={key}
-                  className={classNames(
-                    styles['ModalRoot__modal'],
-                    !exitingModal &&
-                      !enteringModal &&
-                      modalId === activeModal &&
-                      styles['ModalRoot__modal--active'],
-                    modalId === exitingModal && styles['ModalRoot__modal--prev'],
-                    Boolean(exitingModal) &&
-                      modalId === activeModal &&
-                      styles['ModalRoot__modal--next'],
-                  )}
+                  className={styles['ModalRoot__modal']}
                 >
                   {Modal}
                 </FocusTrap>

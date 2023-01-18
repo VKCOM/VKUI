@@ -14,6 +14,7 @@ import {
   AdaptivityProvider,
   classNames,
   AppearanceProvider,
+  PlatformProvider,
 } from '@vkui';
 import { Frame } from './Frame/Frame';
 import { perfLogger, useViewPortSize } from '../utils';
@@ -50,7 +51,13 @@ const Config = ({ hasPointer, children, ...config }) => {
 const WithoutFrame = ({ platform, children }) => {
   const loaded = usePlatformStyle(platform);
 
-  return loaded ? children : <PanelSpinner />;
+  return loaded ? (
+    children
+  ) : (
+    <PlatformProvider value={platform}>
+      <PanelSpinner />
+    </PlatformProvider>
+  );
 };
 
 class Preview extends PreviewParent {
@@ -107,49 +114,45 @@ class Preview extends PreviewParent {
 
           return (
             <Profiler id={exampleId} onRender={logPerf}>
-              <ConfigProvider appearance="light" platform={styleGuideContext.platform}>
-                <AppearanceProvider appearance={styleGuideContext.appearance}>
+              <AppearanceProvider appearance={styleGuideContext.appearance}>
+                <div
+                  className={classNames('Preview', `Preview--${styleGuideContext.platform}`, {
+                    'Preview--layout': layout,
+                  })}
+                >
                   <div
-                    className={classNames('Preview', `Preview--${styleGuideContext.platform}`, {
-                      'Preview--layout': layout,
-                    })}
-                  >
-                    <div
-                      className="Preview__shadow"
-                      style={
-                        adaptivity
-                          ? {
-                              maxWidth: width,
-                              maxHeight: styleGuideContext.height,
-                            }
-                          : null
-                      }
-                    />
-                    <div
-                      className="Preview__in"
-                      style={adaptivity ? { height: styleGuideContext.height, width } : null}
-                    >
-                      {error ? (
-                        <PlaygroundError message={error} />
-                      ) : iframe ? (
-                        <Frame
-                          style={
-                            adaptivity ? { width, height: styleGuideContext.height } : undefined
+                    className="Preview__shadow"
+                    style={
+                      adaptivity
+                        ? {
+                            maxWidth: width,
+                            maxHeight: styleGuideContext.height,
                           }
-                          appearance={styleGuideContext.appearance}
-                          platform={styleGuideContext.platform}
-                        >
-                          <Config {...styleGuideContext} exampleId={exampleId}>
-                            {layout ? <Layout>{example}</Layout> : example}
-                          </Config>
-                        </Frame>
-                      ) : (
-                        <WithoutFrame platform={styleGuideContext.platform}>{example}</WithoutFrame>
-                      )}
-                    </div>
+                        : null
+                    }
+                  />
+                  <div
+                    className="Preview__in"
+                    style={adaptivity ? { height: styleGuideContext.height, width } : null}
+                  >
+                    {error ? (
+                      <PlaygroundError message={error} />
+                    ) : iframe ? (
+                      <Frame
+                        style={adaptivity ? { width, height: styleGuideContext.height } : undefined}
+                        appearance={styleGuideContext.appearance}
+                        platform={styleGuideContext.platform}
+                      >
+                        <Config {...styleGuideContext} exampleId={exampleId}>
+                          {layout ? <Layout>{example}</Layout> : example}
+                        </Config>
+                      </Frame>
+                    ) : (
+                      <WithoutFrame platform={styleGuideContext.platform}>{example}</WithoutFrame>
+                    )}
                   </div>
-                </AppearanceProvider>
-              </ConfigProvider>
+                </div>
+              </AppearanceProvider>
             </Profiler>
           );
         }}

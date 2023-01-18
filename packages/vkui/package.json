@@ -1,6 +1,6 @@
 {
   "private": false,
-  "version": "5.0.1",
+  "version": "5.1.0",
   "name": "@vkontakte/vkui",
   "description": "VKUI library",
   "main": "dist/cjs/index.js",
@@ -27,7 +27,8 @@
   "bugs": "https://github.com/VKCOM/VKUI/issues",
   "homepage": "https://vkcom.github.io/VKUI/",
   "scripts": {
-    "prepublishOnly": "yarn build",
+    "prepublishOnly": "yarn copy-essensial-files && yarn build",
+    "copy-essensial-files": "cp ../../LICENSE . && cp ../../README.md .",
     "package:version": "echo $npm_package_version",
     "size": "yarn clear && concurrently 'yarn:babel' 'yarn:postcss' && size-limit",
     "size:ci": "yarn install --frozen-lockfile --ignore-scripts && concurrently 'yarn:babel' 'yarn:postcss'",

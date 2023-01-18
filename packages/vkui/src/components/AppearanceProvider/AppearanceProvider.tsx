@@ -1,33 +1,13 @@
 import * as React from 'react';
 import { AppearanceType } from '@vkontakte/vk-bridge';
-import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
+import { TokensClassProvider } from '../../lib/tokensClassProvider';
 import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 
 export interface AppearanceProviderProps {
   appearance: AppearanceType;
   children: React.ReactNode;
 }
-
-export const generateVKUITokensClassName = (platform: string, appearance: string): string => {
-  let tokensPlatform;
-  switch (platform) {
-    case Platform.ANDROID:
-      tokensPlatform = 'vkBase';
-      break;
-    case Platform.IOS:
-      tokensPlatform = 'vkIOS';
-      break;
-    case Platform.VKCOM:
-      tokensPlatform = 'vkCom';
-      break;
-    default:
-      tokensPlatform = platform;
-  }
-
-  return `vkui--${tokensPlatform}--${appearance}`;
-};
 
 /**
  * @see https://vkcom.github.io/VKUI/#/AppearanceProvider
@@ -37,17 +17,9 @@ export const AppearanceProvider = ({ appearance, children }: AppearanceProviderP
 
   return (
     <ConfigProviderOverride appearance={appearance}>
-      {React.Children.map(children, (child) => {
-        if (React.isValidElement<{ className?: string }>(child)) {
-          return React.cloneElement(child, {
-            className: classNames(
-              child.props.className,
-              generateVKUITokensClassName(platform, appearance),
-            ),
-          });
-        }
-        return child;
-      })}
+      <TokensClassProvider platform={platform} appearance={appearance}>
+        {children}
+      </TokensClassProvider>
     </ConfigProviderOverride>
   );
 };

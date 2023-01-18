@@ -34,13 +34,13 @@ const gaps = {
 const Example = () => {
   return (
     <div style={gaps}>
-      <ConfigProvider platform="android">
+      <PlatformProvider value="android">
         <AdaptivityProvider hasPointer={false}>
           <Tappable activeMode="background" hasActive>
             <Text style={gaps}>Нажми на меня</Text>
           </Tappable>
         </AdaptivityProvider>
-      </ConfigProvider>
+      </PlatformProvider>
     </div>
   );
 };

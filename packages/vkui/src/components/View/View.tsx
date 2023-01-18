@@ -147,7 +147,10 @@ export const View = ({
     },
   );
 
-  const disableAnimation = configProvider?.transitionMotionEnabled === false || !splitCol?.animate;
+  const disableAnimation =
+    configProvider?.transitionMotionEnabled === false ||
+    !splitCol?.animate ||
+    platform === Platform.VKCOM;
 
   const pickPanel = (id: string | null) => {
     if (id === null) {
@@ -244,7 +247,12 @@ export const View = ({
   );
 
   const onMoveX = (event: TouchEvent): void => {
-    if (platform !== Platform.IOS || swipeBackPrevented || swipeBackExcluded(event)) {
+    if (
+      platform !== Platform.IOS ||
+      swipeBackPrevented ||
+      swipeBackExcluded(event) ||
+      disableAnimation
+    ) {
       return;
     }
 
