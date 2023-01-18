@@ -5,6 +5,6 @@ module.exports = {
   roots: [path.join(__dirname, 'src')],
   setupFilesAfterEnv: [path.join(__dirname, 'jest.setup.js')],
   collectCoverage: true,
-  collectCoverageFrom: ['src/*/**/*.{ts,tsx}'],
+  collectCoverageFrom: ['src/*/**/{!(*.e2e),}.{ts,tsx}'],
   coveragePathIgnorePatterns: ['\\.d\\.ts$', 'src/types', 'src/testing'],
 };

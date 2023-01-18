@@ -25,7 +25,7 @@
 }
 
 .Counter--mode-prominent {
-  background: var(--vkui--color_background_negative);
+  background: var(--vkui--color_accent_red);
   color: var(--vkui--color_text_contrast);
 }
 

@@ -3,6 +3,7 @@
   overflow: hidden;
   box-shadow: var(--vkui--elevation3);
   width: calc(100% - 20px);
+  max-width: var(--vkui--size_popup_small--regular);
   align-items: stretch;
   display: flex;
   flex-direction: column;

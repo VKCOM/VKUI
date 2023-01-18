@@ -20,76 +20,15 @@ concurrency:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: refs/pull/${{ github.event.pull_request.number }}/merge
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile --ignore-scripts
-      - name: Run tests
-        run: yarn run test:ci
-      - name: Upload test artifact
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: test-output
-          path: |
-            .nyc_output/
-            lint-results.json
-            test-results.json
+    uses: ./.github/workflows/workflow_test.yml
+    with:
+      ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
   test_e2e:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        appearance: [dark, light]
-        browser: [chromium, firefox, webkit]
-        platform: [android, ios, vkcom]
-        exclude:
-          - platform: android
-            browser: firefox
-          - platform: android
-            browser: webkit
-          - platform: ios
-            browser: firefox
-          - platform: ios
-            browser: chromium
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          lfs: true
-          ref: refs/pull/${{ github.event.pull_request.number }}/merge
-      - name: Checkout LFS objects
-        run: git lfs checkout
-      - name: Checkout base snapshots
-        run: git fetch --no-tags --depth=1 origin $GITHUB_BASE_REF && git checkout origin/$GITHUB_BASE_REF packages/vkui/src/**/__image_snapshots__/*.png
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile --ignore-scripts
-      - name: Install deps for playwright
-        run: yarn run playwright:install ${{ matrix.browser }}
-      - name: FYI visual tests
-        run: yarn run test:e2e:ci
-        env:
-          APPEARANCE: ${{ matrix.appearance }}
-          BROWSER: ${{ matrix.browser }}
-          PLATFORM: ${{ matrix.platform }}
-        continue-on-error: true
-      - name: Upload test artifact
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: e2e-output
-          path: |
-            .nyc_output/
-            __diff_output__/
-            e2e-results.json
+    uses: ./.github/workflows/workflow_test_e2e.yml
+    with:
+      ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
   styleguide:
     runs-on: ubuntu-latest
     steps:
@@ -186,8 +125,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: e2e-output
-      - name: Combine e2e & unit coverage
-        run: npx nyc report --reporter=json-summary
 
       - run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
         working-directory: ./.github/actions/reporter

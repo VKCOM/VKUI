@@ -113,7 +113,7 @@ function isPresetStateMode(stateMode: StateMode | string): stateMode is StateMod
 function useActivity(hasActive: boolean, stopDelay: number) {
   const id = React.useMemo(() => Math.round(Math.random() * 1e8).toString(16), []);
 
-  const [activity, setActivity] = React.useState<typeof TapState[keyof typeof TapState]>(
+  const [activity, setActivity] = React.useState<(typeof TapState)[keyof typeof TapState]>(
     TapState.none,
   );
   const _stop = () => setActivity(TapState.none);

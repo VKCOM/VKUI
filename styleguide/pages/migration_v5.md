@@ -223,12 +223,18 @@ import "@vkontakte/vkui/dist/vkui.css";
 
 <br/><br/>
 
-## `vkui__root` и `vkui__portal-root`
+## Отказ от CSS селекторов `vkui__root` и `vkui__portal-root`
 
-Теперь для [Partial](https://vkcom.github.io/VKUI/#/Modes) режима подключения
-не требуется добавлять класс `vkui__root`.
+Раньше [`AppRoot`](#/AppRoot) автоматически устанавливал в **root-элемент** классы `vkui__root` и `vkui__portal-root`,
+а в случае `<AppRoot mode="partial">` надо было добавить `vkui__root` вручную. В CSS этим классам задавались правила для
+`font-family` и `color`. Глобальное перебивание этих свойств создавало проблемы (cм. [#3593](https://github.com/VKCOM/VKUI/issues/3593)),
+поэтому мы избавились от необходимости в этих классах.
 
-Также для `portalRoot` портала не требуется добавлять класс `vkui__portal-root`.
+### Нюанс с `vkui__root`
+
+`vkui__root` также устанавливал `height: 100%`, чтобы растягивать приложение на всю высоту вьюпорта.
+
+Теперь нужно самостоятельно устанавливать `height: 100%` для **root-элемента**.
 
 <br/><br/>
 

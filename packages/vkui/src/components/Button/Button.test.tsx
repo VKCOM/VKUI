@@ -39,4 +39,15 @@ describe('Button', () => {
     fireEvent.click(button());
     expect(handleClick).toHaveBeenCalledTimes(0);
   });
+
+  it('should handle zero in props', () => {
+    render(
+      <ButtonTest before={0} after={0}>
+        0
+      </ButtonTest>,
+    );
+    screen.getByTestId('before');
+    screen.getByTestId('children');
+    screen.getByTestId('after');
+  });
 });

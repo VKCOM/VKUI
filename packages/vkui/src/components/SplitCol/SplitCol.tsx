@@ -6,6 +6,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { ViewWidth } from '../../lib/adaptivity';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { useMediaQueries } from '../../hooks/useMediaQueries';
+import { matchMediaListAddListener, matchMediaListRemoveListener } from '../../lib/matchMedia';
 import styles from './SplitCol.module.css';
 
 function useTransitionAnimate(animateProp?: boolean) {
@@ -28,9 +29,9 @@ function useTransitionAnimate(animateProp?: boolean) {
     const listener = () => setAnimate(!mediaQueries.smallTabletPlus.matches);
     listener();
 
-    mediaQueries.smallTabletPlus.addEventListener('change', listener);
+    matchMediaListAddListener(mediaQueries.smallTabletPlus, listener);
     return () => {
-      mediaQueries.smallTabletPlus.removeEventListener('change', listener);
+      matchMediaListRemoveListener(mediaQueries.smallTabletPlus, listener);
     };
   }, [animateProp, viewWidth, mediaQueries]);
 

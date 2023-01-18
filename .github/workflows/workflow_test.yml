@@ -1,0 +1,39 @@
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: 'The branch, tag or SHA to checkout'
+        default: ${{ github.ref }}
+        required: false
+        type: string
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.ref }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile --ignore-scripts
+
+      - name: Run tests
+        run: yarn run test:ci
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          flags: unittests
+          files: .nyc_output/coverage-final.json
+
+      - name: Upload test artifact
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-output
+          path: |
+            lint-results.json
+            test-results.json

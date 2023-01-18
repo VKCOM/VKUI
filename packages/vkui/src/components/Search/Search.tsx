@@ -156,7 +156,7 @@ export const Search = ({
             )}
           </div>
         </label>
-        <div className={styles['Search__after']} onClick={onCancel}>
+        <div className={styles['Search__after']}>
           <div className={styles['Search__icons']}>
             {icon && (
               <Touch onStart={onIconClickStart} className={styles['Search__icon']}>
@@ -164,13 +164,19 @@ export const Search = ({
               </Touch>
             )}
             {!!value && (
-              <Touch onStart={onIconCancelClickStart} className={styles['Search__icon']}>
+              <Touch
+                onStart={onIconCancelClickStart}
+                onClick={onCancel}
+                className={styles['Search__icon']}
+              >
                 {platform === Platform.IOS ? <Icon16Clear /> : <Icon24Cancel />}
               </Touch>
             )}
           </div>
           {platform === Platform.IOS && after && (
-            <div className={styles['Search__after-in']}>{after}</div>
+            <div className={styles['Search__after-in']} onClick={onCancel}>
+              {after}
+            </div>
           )}
         </div>
       </div>

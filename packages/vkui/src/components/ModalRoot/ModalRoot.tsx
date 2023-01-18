@@ -632,15 +632,10 @@ class ModalRootTouchComponent extends React.Component<
                     timeout={this.timeout}
                     className={classNames(
                       styles['ModalRoot__modal'],
-                      modalId === activeModal && styles['ModalRoot__modal--active'],
-                      modalId === exitingModal && styles['ModalRoot__modal--prev'],
-                      ((exitingModal && modalId === activeModal) || modalId === enteringModal) &&
-                        styles['ModalRoot__modal--next'],
 
                       dragging && styles['ModalRoot__modal--dragging'],
 
                       isPage && modalState.expandable && styles['ModalRoot__modal--expandable'],
-                      isPage && modalState.expanded && styles['ModalRoot__modal--expanded'],
                       isPage && modalState.collapsed && styles['ModalRoot__modal--collapsed'],
                     )}
                     restoreFocus={false}

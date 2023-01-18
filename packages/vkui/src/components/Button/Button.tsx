@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { TappableProps, Tappable } from '../Tappable/Tappable';
 import { HasAlign } from '../../types';
@@ -67,21 +67,36 @@ export const Button = ({
         platform === Platform.IOS && styles[`Button--ios`],
         stretched && styles['Button--stretched'],
         hasIcons && styles['Button--with-icon'],
-        hasIconOnly && styles['Button--singleIcon'],
+        hasIconOnly && !stretched && styles['Button--singleIcon'],
         loading && styles['Button--loading'],
       )}
       getRootRef={getRootRef}
     >
       {loading && <Spinner size="small" className={styles.Button__spinner} />}
       <span className={styles.Button__in}>
-        {before && (
-          <span className={styles.Button__before} role="presentation">
+        {hasReactNode(before) && (
+          <span
+            className={styles.Button__before}
+            role="presentation"
+            data-testid={process.env.NODE_ENV === 'test' ? 'before' : undefined}
+          >
             {before}
           </span>
         )}
-        {children && <span className={styles.Button__content}>{children}</span>}
-        {after && (
-          <span className={styles.Button__after} role="presentation">
+        {hasReactNode(children) && (
+          <span
+            className={styles.Button__content}
+            data-testid={process.env.NODE_ENV === 'test' ? 'children' : undefined}
+          >
+            {children}
+          </span>
+        )}
+        {hasReactNode(after) && (
+          <span
+            className={styles.Button__after}
+            role="presentation"
+            data-testid={process.env.NODE_ENV === 'test' ? 'after' : undefined}
+          >
             {after}
           </span>
         )}

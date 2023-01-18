@@ -14,6 +14,7 @@ import {
 } from '../lib/adaptivity';
 import { useMediaQueries } from './useMediaQueries';
 import { usePlatform } from './usePlatform';
+import { matchMediaListAddListener, matchMediaListRemoveListener } from '../lib/matchMedia';
 
 export interface UseAdaptivityWithJSMediaQueries extends Required<BaseAdaptivityProps> {
   isDesktop: boolean;
@@ -114,24 +115,33 @@ export const useAdaptivityWithJSMediaQueries = (): UseAdaptivityWithJSMediaQueri
     };
 
     if (!viewWidthContext) {
-      mediaQueries.desktopPlus.addEventListener('change', handleMediaQuery);
-      mediaQueries.tablet.addEventListener('change', handleMediaQuery);
-      mediaQueries.smallTablet.addEventListener('change', handleMediaQuery);
-      mediaQueries.mobile.addEventListener('change', handleMediaQuery);
+      [
+        mediaQueries.desktopPlus,
+        mediaQueries.tablet,
+        mediaQueries.smallTablet,
+        mediaQueries.mobile,
+      ].forEach((matchMediaListener) =>
+        matchMediaListAddListener(matchMediaListener, handleMediaQuery),
+      );
     }
 
     if (!viewHeightContext) {
-      mediaQueries.mediumHeight.addEventListener('change', handleMediaQuery);
-      mediaQueries.mobileLandscapeHeight.addEventListener('change', handleMediaQuery);
+      [mediaQueries.mediumHeight, mediaQueries.mobileLandscapeHeight].forEach(
+        (matchMediaListener) => matchMediaListAddListener(matchMediaListener, handleMediaQuery),
+      );
     }
 
     return () => {
-      mediaQueries.desktopPlus.removeEventListener('change', handleMediaQuery);
-      mediaQueries.tablet.removeEventListener('change', handleMediaQuery);
-      mediaQueries.smallTablet.removeEventListener('change', handleMediaQuery);
-      mediaQueries.mobile.removeEventListener('change', handleMediaQuery);
-      mediaQueries.mediumHeight.removeEventListener('change', handleMediaQuery);
-      mediaQueries.mobileLandscapeHeight.removeEventListener('change', handleMediaQuery);
+      [
+        mediaQueries.desktopPlus,
+        mediaQueries.tablet,
+        mediaQueries.smallTablet,
+        mediaQueries.mobile,
+        mediaQueries.mediumHeight,
+        mediaQueries.mobileLandscapeHeight,
+      ].forEach((matchMediaListener) =>
+        matchMediaListRemoveListener(matchMediaListener, handleMediaQuery),
+      );
     };
   }, [mediaQueries, viewWidthContext, viewHeightContext]);
 

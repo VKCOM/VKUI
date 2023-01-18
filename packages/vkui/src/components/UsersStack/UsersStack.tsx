@@ -114,7 +114,7 @@ export const UsersStack = ({
   const cmpId = useId();
 
   const canShowOthers = count > 0 && size !== 's';
-  const CounterTypography = size === 'm' ? Footnote : Caption;
+  const CounterTypography = size === 'l' ? Footnote : Caption;
 
   const photoSize = photoSizes[size];
   const directionClip = canShowOthers ? 'right' : 'left';
@@ -153,7 +153,7 @@ export const UsersStack = ({
       weight="1"
       className={classNames(styles['UsersStack__photo'], styles['UsersStack__photo--others'])}
     >
-      <span>+{count}</span>
+      +{count}
     </CounterTypography>
   ) : null;
 
