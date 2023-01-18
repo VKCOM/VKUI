@@ -9,6 +9,7 @@
   min-height: 48px;
   border-radius: 0;
   box-sizing: border-box;
+  box-shadow: var(--vkui--elevation2);
 }
 
 .ActionSheetItem__container,
