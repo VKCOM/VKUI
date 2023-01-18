@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as path from 'path';
 import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import * as github from '@actions/github';
@@ -20,8 +21,9 @@ function remoteRepository(token: string) {
 async function run(): Promise<void> {
   try {
     const token = core.getInput('token', { required: true });
+    const directory = core.getInput('directory');
 
-    const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
+    const pkg = JSON.parse(fs.readFileSync(path.join(directory, 'package.json'), 'utf-8'));
     const semVer = new SemVer(pkg.version);
     if (semVer.patch !== 0) {
       return;
