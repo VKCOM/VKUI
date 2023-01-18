@@ -63,6 +63,7 @@ jobs:
         uses: ./.github/actions/stable-branch
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          directory: packages/vkui/
 
       - name: Publishing release
         run: yarn workspace @vkontakte/vkui publish --non-interactive
