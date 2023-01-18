@@ -11,7 +11,7 @@
   padding: unset;
   margin: 10px;
   border-radius: 12px;
-  background: transparent;
+  background: var(--vkui--color_background_modal);
 }
 
 .ActionSheet__header {
