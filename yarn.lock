@@ -1800,26 +1800,26 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@size-limit/file@^8.1.1":
-  version "8.1.1"
-  resolved "https://registry.yarnpkg.com/@size-limit/file/-/file-8.1.1.tgz#3e65c17b6e35bd694f29f68ef88a040ac3c41a58"
-  integrity sha512-4VW3r5TuKXGyycrWdhKhYaBSpWQq2sxuz0UOMoKYiTGcYBM6Sqpk4342RbnoIjVDmj7kyD4PS4eBstUnvF3TSA==
+"@size-limit/file@^8.1.2":
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/@size-limit/file/-/file-8.1.2.tgz#f733b05acd168ee1ddd467f059d62b30c1667607"
+  integrity sha512-cjtGk1GejrmT+ik3LjXpRe+zrS/U15h+Py3L8sYN0XGat0+Y6pPbli1VuRRRcdXZNegpiW+UcxDxPN1AuZC5qA==
   dependencies:
     semver "7.3.8"
 
-"@size-limit/webpack-css@^8.1.1":
-  version "8.1.1"
-  resolved "https://registry.yarnpkg.com/@size-limit/webpack-css/-/webpack-css-8.1.1.tgz#b2430c319a5d273954461ba2b73770851982ce3f"
-  integrity sha512-27CVUMf+7a0wCbd0qzyUPVPcVeVYM4U47gvh5CApKgpZUEFv5W5oE7Kb5zJ5U3v193hpEEJc8l0rCrgVAViTkg==
+"@size-limit/webpack-css@^8.1.2":
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/@size-limit/webpack-css/-/webpack-css-8.1.2.tgz#9721771fb550af7b91e5056148247e022c5ba15c"
+  integrity sha512-AkMaw/ss2Sz5bzw1DkuUM1V/FZpPG8QBrKX/9P2D8mg4GgwqhLHjt/2oGmASqOjx9H0NaDMLPY6f/NQlwzlGvw==
   dependencies:
     css-loader "^6.7.3"
     css-minimizer-webpack-plugin "^4.2.2"
     style-loader "^3.3.1"
 
-"@size-limit/webpack@^8.1.1":
-  version "8.1.1"
-  resolved "https://registry.yarnpkg.com/@size-limit/webpack/-/webpack-8.1.1.tgz#1cc41bc64368031d9ff99808b88cca14c348d45a"
-  integrity sha512-dBwL68be6G3h2XTl+NrRH5PVBtA6Ocvd54W/mjpD9JX/ZYtKbKExYYgAlvqNmI1WFs29FV5AT4MIfCsCn2nTTQ==
+"@size-limit/webpack@^8.1.2":
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/@size-limit/webpack/-/webpack-8.1.2.tgz#d0a25cb6eaa5f8c33bfd51857d90c74dab66d90b"
+  integrity sha512-rgKIqhPP73QiWHaH8Ef4nre9w2UZLiYsaHi0ZP6jGwr2Lxw5pE5aG6Sl9ahlVHhY/nWUnTwJHA5KmgRcZRg3Bg==
   dependencies:
     nanoid "^3.3.4"
     webpack "^5.75.0"
@@ -3041,10 +3041,10 @@ available-typed-arrays@^1.0.5:
   resolved "https://registry.yarnpkg.com/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz#92f95616501069d07d10edb2fc37d3e1c65123b7"
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
 
-aws-sdk@^2.1296.0:
-  version "2.1296.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1296.0.tgz#5194b3856874938bc6c682dfdb7aa276e7a8e6e9"
-  integrity sha512-6Nm6zQexyne8lVy+BW8jklGpS36mXJjq67zlsn5XuyB3+qAMlolzar9nxgtuabvb/tSQTP4RSwlhkVzOct+MvA==
+aws-sdk@^2.1297.0:
+  version "2.1297.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1297.0.tgz#ee9c2d1841a86521c98e8d9899b8f9c50d7e625d"
+  integrity sha512-hZbG8tfluU2ijCCBQnQzCiPbArFtaWqAUFAWAGZ0+Df7OzTm7ya9fLYV3j3L6p2PacAyAuxXaeMbgMHlHi/D3w==
   dependencies:
     buffer "4.9.2"
     events "1.1.1"
@@ -3589,11 +3589,6 @@ ci-info@^3.2.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-3.4.0.tgz#b28484fd436cbc267900364f096c9dc185efb251"
   integrity sha512-t5QdPT5jq3o262DOQ8zA6E1tlH2upmUc4Hlvrbx1pGYJuiiHl7O7rvVNI+l8HTVhd/q3Qc9vqimkNk5yiXsAug==
-
-ci-job-number@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/ci-job-number/-/ci-job-number-1.2.2.tgz#f4e5918fcaeeda95b604f214be7d7d4a961fe0c0"
-  integrity sha512-CLOGsVDrVamzv8sXJGaILUVI6dsuAkouJP/n6t+OxLPeeA4DDby7zn9SB6EUpa1H7oIKoE+rMmkW80zYsFfUjA==
 
 cjs-module-lexer@^0.6.0:
   version "0.6.0"
@@ -8355,11 +8350,6 @@ mkdirp@^0.5.1:
   dependencies:
     minimist "^1.2.6"
 
-mkdirp@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
-  integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
-
 mri@^1.1.4:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/mri/-/mri-1.2.0.tgz#6721480fec2a11a4889861115a48b6cbe7cc8f0b"
@@ -10664,17 +10654,15 @@ sisteransi@^1.0.5:
   resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-1.0.5.tgz#134d681297756437cc05ca01370d3a7a571075ed"
   integrity sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==
 
-size-limit@^8.1.1:
-  version "8.1.1"
-  resolved "https://registry.yarnpkg.com/size-limit/-/size-limit-8.1.1.tgz#509cb6f37ae9e15592917a25c59c9575b3d52dd1"
-  integrity sha512-8Zx+SJVxwcsDBYEl3Xt+FilpuxshVcgq446L8e1k8xD+Qa4LuUmFeesb+oiaRpoJnWCrOd7QUaiU9kFVocIeHQ==
+size-limit@^8.1.2:
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/size-limit/-/size-limit-8.1.2.tgz#dee99a39442e96092ab143d620d679215901abe2"
+  integrity sha512-/EfKz9I/K2ouBN+BcrTX2WiaPTOX5yiCXtM07jYpuVtyzX9r4FDUsuCq13nNmoWqRFYbtH/7wqgRLvF40AGKoQ==
   dependencies:
     bytes-iec "^3.1.1"
     chokidar "^3.5.3"
-    ci-job-number "^1.2.2"
     globby "^11.1.0"
     lilconfig "^2.0.6"
-    mkdirp "^1.0.4"
     nanospinner "^1.1.0"
     picocolors "^1.0.0"
 

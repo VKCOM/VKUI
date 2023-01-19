@@ -49,3 +49,4 @@ jobs:
         uses: ./.github/actions/patch
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          directory: packages/vkui/

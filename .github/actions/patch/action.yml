@@ -4,6 +4,9 @@ inputs:
   token:
     required: true
     description: 'token with access to your repository'
+  directory:
+    required: false
+    description: 'main directory of your project (default is your root directory)'
 runs:
   using: 'node16'
   main: 'dist/index.js'
