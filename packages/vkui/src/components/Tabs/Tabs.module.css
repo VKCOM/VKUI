@@ -81,14 +81,6 @@
   z-index: var(--vkui_internal--z_index_tabs);
 }
 
-/**
- * Counter inside TabsItem
- */
-
-.TabsItem .Counter {
-  margin-left: 8px;
-}
-
 /*
  * CMP:
  * Group
