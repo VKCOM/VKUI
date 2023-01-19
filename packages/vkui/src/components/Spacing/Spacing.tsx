@@ -14,8 +14,9 @@ export interface SpacingProps extends React.HTMLAttributes<HTMLDivElement> {
  * @see https://vkcom.github.io/VKUI/#/Spacing
  */
 export const Spacing = ({ size = 8, style: styleProp, className, ...restProps }: SpacingProps) => {
-  const style = {
+  const style: React.CSSProperties = {
     height: size,
+    padding: `${size / 2}px 0`,
     ...styleProp,
   };
 
