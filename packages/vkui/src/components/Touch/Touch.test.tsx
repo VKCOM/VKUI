@@ -121,7 +121,7 @@ describe('Touch', () => {
       'onEndX',
       'onEndY',
     ] as const;
-    const makeHandlers = (): { [k in (typeof keys)[number]]: jest.Mock } => {
+    const makeHandlers = (): { [k in typeof keys[number]]: jest.Mock } => {
       return keys.reduce<any>((acc, k) => ({ ...acc, [k]: jest.fn() }), {});
     };
     describe.each(['touch', 'mouse'])('using %s', (input) => {
@@ -301,6 +301,49 @@ describe('Touch', () => {
     });
   });
 
+  describe('prevents link click after slide', () => {
+    it('with simple link', () => {
+      render(
+        <Touch noSlideClick onMove={noop}>
+          <a href="/hello" />
+        </Touch>,
+      );
+      const hasDefault = slideRight(screen.getByRole('link'));
+      expect(hasDefault).toBe(false);
+    });
+    it('on link child', () => {
+      render(
+        <Touch noSlideClick onMove={noop}>
+          <a href="/hello">
+            <div data-testid="xxx" />
+          </a>
+        </Touch>,
+      );
+      const hasDefault = slideRight(screen.getByTestId('xxx'));
+      expect(hasDefault).toBe(false);
+    });
+    it('inside link', () => {
+      render(
+        <a href="/hello">
+          <Touch noSlideClick onMove={noop}>
+            <div data-testid="xxx" />
+          </Touch>
+        </a>,
+      );
+      const hasDefault = slideRight(screen.getByTestId('xxx'));
+      expect(hasDefault).toBe(false);
+    });
+    it('when Touch is link', () => {
+      render(
+        <Touch noSlideClick Component="a" onMove={noop}>
+          <div data-testid="xxx" />
+        </Touch>,
+      );
+      const hasDefault = slideRight(screen.getByTestId('xxx'));
+      expect(hasDefault).toBe(false);
+    });
+  });
+
   describe('prevents click after slide', () => {
     it('does not prevent link click', () => {
       render(
@@ -348,6 +391,7 @@ describe('Touch', () => {
       expect(cb).toBeCalled();
     });
     it('does not prevent click of a button after slide of a parent on mobile', () => {
+      window['ontouchstart'] = null;
       render(
         <View activePanel="card">
           <Panel id="card">
@@ -379,7 +423,10 @@ describe('Touch', () => {
           </Panel>
         </View>,
       );
-      slideRight(screen.getByTestId('card'));
+      fireTouchSwipe(screen.getByTestId('card'), [
+        [0, 0],
+        [6, 0],
+      ]);
       const hasDefault = fireEvent.click(screen.getByTestId('button'));
       expect(hasDefault).toBe(true);
     });
