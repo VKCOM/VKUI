@@ -153,6 +153,7 @@
   "engines": {
     "yarn": "^1.21.1"
   },
+  "packageManager": "yarn@1.22.19",
   "workspaces": {
     "packages": [
       ".github/actions/*",
