@@ -5,7 +5,9 @@ import { execSync } from 'child_process';
 import fs from 'fs';
 import fsPromises from 'fs/promises';
 
-import postcss from 'postcss';
+import postcss, { Parser, Syntax } from 'postcss';
+import postcssLESS from 'postcss-less';
+import postcssSCSS from 'postcss-scss';
 
 import postcssPlugin from './postcss-token-translator';
 import { fileReplacer } from './file-replacer';
@@ -81,12 +83,14 @@ function gitignore(files: string[]): string[] {
  * @param {string} pathToFile
  */
 function postcssTransform(pathToFile: string) {
+  const parser = extPostcssParser[path.extname(pathToFile).substring(1)];
+
   return new Promise((resolve, reject) => {
     fsPromises
       .readFile(pathToFile)
       .then((css) => {
         postcss([postcssPlugin(undefined)])
-          .process(css, { from: pathToFile, to: pathToFile })
+          .process(css, { from: pathToFile, to: pathToFile, parser })
           .then((result) => {
             fsPromises.writeFile(pathToFile, result.css).then(resolve).catch(reject);
           })
@@ -104,11 +108,19 @@ function postcssTransform(pathToFile: string) {
   });
 }
 
+const extPostcssParser: {
+  [key: string]: Syntax | Parser;
+} = {
+  less: postcssLESS,
+  scss: postcssSCSS,
+};
+
 const extTransformers: {
   [key: string]: (pathToFile: string) => Promise<unknown>;
 } = {
   css: postcssTransform,
   less: postcssTransform,
+  scss: postcssTransform,
   ts: fileReplacer,
   tsx: fileReplacer,
   js: fileReplacer,

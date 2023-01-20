@@ -5,20 +5,30 @@ const pluginCreator: PluginCreator<{}> = () => {
   return {
     postcssPlugin: 'postcss-token-translator',
     Root(root) {
-      root.walkRules((node) => {
-        node.each((decl) => {
-          if (decl.type !== 'decl') {
+      root.walkAtRules((node) => {
+        const customVariables = getCustomVariables(node.params);
+        customVariables.forEach((customVariable) => {
+          const vkuiToken = getVKUIToken('', node.name, customVariable);
+          if (!vkuiToken) {
             return;
           }
 
-          const customVariables = getCustomVariables(decl.value);
-          customVariables.forEach((customVariable) => {
-            const vkuiToken = getVKUIToken(node.selector, decl.prop, customVariable);
-            if (!vkuiToken) {
-              return;
-            }
-            decl.value = decl.value.replace(customVariable, vkuiToken);
-          });
+          node.params = node.params.replace(customVariable, vkuiToken);
+        });
+      });
+
+      root.walkDecls((decl) => {
+        // @ts-expect-error TS7053 У Rule может быть selector
+        const selector: string = decl.parent?.['selector'] || '';
+
+        const customVariables = getCustomVariables(decl.value);
+        customVariables.forEach((customVariable) => {
+          const vkuiToken = getVKUIToken(selector, decl.prop, customVariable);
+          if (!vkuiToken) {
+            return;
+          }
+
+          decl.value = decl.value.replace(customVariable, vkuiToken);
         });
       });
     },
