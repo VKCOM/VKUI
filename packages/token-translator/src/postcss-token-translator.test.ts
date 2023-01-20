@@ -1,10 +1,13 @@
-import postcss from 'postcss';
+import postcss, { ProcessOptions } from 'postcss';
+import postcssLESS from 'postcss-less';
+import postcssSCSS from 'postcss-scss';
 
 import plugin from './postcss-token-translator';
 
-async function run(input: string, output: string, opts = {}) {
-  let result = await postcss([plugin(opts)]).process(input, {
+async function run(input: string, output: string, processOption: ProcessOptions = {}) {
+  let result = await postcss([plugin({})]).process(input, {
     from: undefined,
+    ...processOption,
   });
   expect(result.css).toEqual(output);
   expect(result.warnings()).toHaveLength(0);
@@ -96,4 +99,187 @@ it('at rule', async () => {
 `;
 
   await run(input, output);
+});
+
+describe('less', () => {
+  it('default', async () => {
+    const input = `.a {
+    color: var(--accent);
+}
+`;
+
+    const output = `.a {
+    color: var(--vkui--color_text_accent);
+}
+`;
+
+    await run(input, output, { parser: postcssLESS });
+  });
+
+  // https://lesscss.org/#variables
+  it('variables', async () => {
+    const input = `@color: var(--accent);
+
+.a {
+    color: @color;
+}
+`;
+
+    const output = `@color: var(--vkui--color_text_accent);
+
+.a {
+    color: @color;
+}
+`;
+
+    await run(input, output, { parser: postcssLESS });
+  });
+
+  // https://lesscss.org/#nesting
+  it('nesting', async () => {
+    const input = `.a {
+    font-size: 12px;
+    .blue {
+        color: var(--accent);
+    }
+}
+`;
+
+    const output = `.a {
+    font-size: 12px;
+    .blue {
+        color: var(--vkui--color_text_accent);
+    }
+}
+`;
+
+    await run(input, output, { parser: postcssLESS });
+  });
+
+  // https://lesscss.org/#nesting-nested-at-rules-and-bubbling
+  it('nested At-Rules and Bubbling', async () => {
+    const input = `.a {
+    font-size: 12px;
+    @media (min-width: 768px) {
+        color: var(--accent);
+        @media  (min-resolution: 192dpi) {
+            color: var(--accent);
+        }
+    }
+}
+`;
+
+    const output = `.a {
+    font-size: 12px;
+    @media (min-width: 768px) {
+        color: var(--vkui--color_text_accent);
+        @media  (min-resolution: 192dpi) {
+            color: var(--vkui--color_text_accent);
+        }
+    }
+}
+`;
+
+    await run(input, output, { parser: postcssLESS });
+  });
+});
+
+describe('scss', () => {
+  it('default', async () => {
+    const input = `.a {
+    color: var(--accent);
+}
+`;
+
+    const output = `.a {
+    color: var(--vkui--color_text_accent);
+}
+`;
+
+    await run(input, output, { parser: postcssSCSS });
+  });
+
+  // https://sass-lang.com/documentation/variables
+  it('variables', async () => {
+    const input = `$color: var(--accent);
+
+.a {
+    color: #{color};
+}
+`;
+
+    const output = `$color: var(--vkui--color_text_accent);
+
+.a {
+    color: #{color};
+}
+`;
+
+    await run(input, output, { parser: postcssSCSS });
+  });
+
+  it('nesting', async () => {
+    const input = `.a {
+    font-size: 12px;
+    .blue {
+        color: var(--accent);
+    }
+}
+`;
+
+    const output = `.a {
+    font-size: 12px;
+    .blue {
+        color: var(--vkui--color_text_accent);
+    }
+}
+`;
+
+    await run(input, output, { parser: postcssSCSS });
+  });
+
+  // https://sass-lang.com/documentation/style-rules#interpolation
+  it('interpolation', async () => {
+    const input = `@mixin define-emoji($name, $glyph) {
+  span.emoji-#{$name} {
+    color: var(--accent);
+  }
+}
+`;
+
+    const output = `@mixin define-emoji($name, $glyph) {
+  span.emoji-#{$name} {
+    color: var(--vkui--color_text_accent);
+  }
+}
+`;
+
+    await run(input, output, { parser: postcssSCSS });
+  });
+
+  it('nested At-Rules and Bubbling', async () => {
+    const input = `.a {
+    font-size: 12px;
+    @media (min-width: 768px) {
+        color: var(--accent);
+        @media  (min-resolution: 192dpi) {
+            color: var(--accent);
+        }
+    }
+}
+`;
+
+    const output = `.a {
+    font-size: 12px;
+    @media (min-width: 768px) {
+        color: var(--vkui--color_text_accent);
+        @media  (min-resolution: 192dpi) {
+            color: var(--vkui--color_text_accent);
+        }
+    }
+}
+`;
+
+    await run(input, output, { parser: postcssSCSS });
+  });
 });
