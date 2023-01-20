@@ -21,6 +21,7 @@ export interface AvatarBadgeWithPresetProps
 
 export const AvatarBadgeWithPreset = ({
   preset = 'online',
+  className,
   ...restProps
 }: AvatarBadgeWithPresetProps) => {
   const { size } = React.useContext(ImageBaseContext);
@@ -33,9 +34,9 @@ export const AvatarBadgeWithPreset = ({
 
   return (
     <ImageBase.Badge
-      {...restProps}
       background="stroke"
-      className={classNames(styles['AvatarBadge'], presetClassName)}
+      className={classNames(styles['AvatarBadge'], presetClassName, className)}
+      {...restProps}
     >
       <Icon width={badgeSize} height={badgeSize} />
     </ImageBase.Badge>
