@@ -74,23 +74,27 @@ jobs:
     concurrency: ci-gh-pages
     runs-on: ubuntu-latest
     needs: styleguide
-    # Skip deploy from dependabot
+    # Skip deploy if it is dependabot's PR
     if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
       - name: Download styleguide artifact
         uses: actions/download-artifact@v3
         with:
           name: styleguide-dist
           path: tmp
       - name: Publishing styleguide to GitHub pages
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
-          COMMIT_MESSAGE: 'Publish PR ${{ github.event.pull_request.number }}'
-          BRANCH: gh-pages
-          FOLDER: tmp
-          TARGET_FOLDER: pull/${{ github.event.pull_request.number }}
-          CLEAN: true
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          commit-message: 'Publish PR ${{ github.event.pull_request.number }}'
+          branch: gh-pages
+          folder: tmp
+          target-folder: pull/${{ github.event.pull_request.number }}
+          clean: true
+          force: false
       - name: Find styleguide URL comment
         uses: peter-evans/find-comment@v2
         id: find_url_comment
