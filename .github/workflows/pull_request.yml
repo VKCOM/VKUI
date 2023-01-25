@@ -42,6 +42,8 @@ jobs:
       - run: yarn install --frozen-lockfile --ignore-scripts
       - run: yarn run docs:styleguide:build
       - name: Uploading styleguide artifact
+        # Skip upload if it is dependabot's PR
+        if: ${{ github.actor != 'dependabot[bot]' }}
         uses: actions/upload-artifact@v3
         with:
           name: styleguide-dist
