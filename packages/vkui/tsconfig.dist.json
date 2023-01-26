@@ -10,6 +10,8 @@
     "src/**/*.test.ts*",
     "src/**/*.spec.ts*",
     "src/**/*.e2e.ts*",
-    "src/testing/"
+    "src/**/*.stories.ts*",
+    "src/testing/",
+    "src/storybook"
   ]
 }

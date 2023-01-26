@@ -23,6 +23,7 @@ module.exports = {
           'styles',
           'testing',
           'types',
+          'storybook',
         ],
         patterns: [
           '@vkontakte/icons/dist/*',
@@ -35,6 +36,7 @@ module.exports = {
           'styles/*',
           'testing/*',
           'types/*',
+          'storybook/*',
         ],
       },
     ],
@@ -133,6 +135,13 @@ module.exports = {
     {
       files: ['src/**/*.e2e.{ts,tsx}', 'src/testing/**/*.{ts,tsx}'],
       extends: ['plugin:jest-playwright/recommended'],
+    },
+    {
+      files: 'src/components/**/*.stories.tsx',
+      rules: {
+        'import/no-default-export': 'off',
+        '@typescript-eslint/consistent-type-assertions': 'off',
+      },
     },
   ],
 };

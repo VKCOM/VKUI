@@ -67,6 +67,7 @@ export async function generateWebpackConfig() {
                     exclude: [
                       '**/*.d.ts',
                       '**/*.e2e.tsx',
+                      '**/*.stories.tsx',
                       'e2e/',
                       `${VKUI_PACKAGE.PATHS.TYPES_DIR}`,
                       `${VKUI_PACKAGE.PATHS.TEST_UTILS_DIR}`,

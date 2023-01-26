@@ -4,6 +4,7 @@ PUBLISHING.md
 # Builds
 dist/
 !e2e/dist/index.html
+storybook-static/
 
 # Dependency directory
 node_modules/
@@ -15,6 +16,7 @@ test-results.json
 a11y-results.json
 lint-results.json
 e2e-results.json
+yarn-error.log
 
 # Caches
 .cache

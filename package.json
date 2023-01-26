@@ -8,6 +8,7 @@
     "@project-tools/babel-plugin-transform-css-modules": "1.0.0",
     "@project-tools/postcss-check-keyframes": "1.0.0",
     "@project-tools/postcss-restructure-variable": "1.0.0",
+    "@project-tools/storybook-addon-cartesian": "1.0.0",
     "@project-tools/stylelint-atomic": "1.0.0",
     "@project-tools/stylelint-bad-multiplication": "1.0.0",
     "eslint-plugin-vkui": "1.0.0"
@@ -120,6 +121,7 @@
     "docs:styleguide": "yarn workspace @project-docs/styleguide run start",
     "docs:styleguide:props": "yarn workspace @project-docs/styleguide run start:props",
     "docs:styleguide:build": "yarn workspace @project-docs/styleguide run build",
+    "docs:storybook": "yarn workspace @vkontakte/vkui storybook",
     "build": "yarn workspaces run build",
     "build:vkui": "yarn workspace @vkontakte/vkui run build",
     "test": "yarn workspaces run test",
