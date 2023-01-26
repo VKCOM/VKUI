@@ -42,7 +42,7 @@ export const Button = ({
   ...restProps
 }: ButtonProps) => {
   const hasIcons = Boolean(before || after);
-  const hasIconOnly = !children && Boolean(after) !== Boolean(before);
+  const testHasIconOnly = !children && Boolean(after) !== Boolean(before);
   const { sizeY } = useAdaptivity();
   const platform = usePlatform();
 
@@ -67,7 +67,7 @@ export const Button = ({
         platform === Platform.IOS && styles[`Button--ios`],
         stretched && styles['Button--stretched'],
         hasIcons && styles['Button--with-icon'],
-        hasIconOnly && !stretched && styles['Button--singleIcon'],
+        testHasIconOnly && !stretched && styles['Button--singleIcon'],
         loading && styles['Button--loading'],
       )}
       getRootRef={getRootRef}
