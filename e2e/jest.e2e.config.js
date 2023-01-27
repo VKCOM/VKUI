@@ -6,9 +6,6 @@ const { canRunTests, useDocker } = require('./detectEnv');
 const BROWSER = process.env.BROWSER ?? 'chromium';
 const PLATFORM = process.env.PLATFORM ?? 'vkcom';
 
-process.env.BABEL_KEEP_CSS = '1';
-process.env.BABEL_USED_BY_WEBPACK = '1';
-
 const vkcomBrowserMap = {
   firefox: 'Desktop Firefox',
   chromium: 'Desktop Chrome',
@@ -40,6 +37,9 @@ if (useDocker) {
 }
 
 const config = {
+  transform: {
+    '^.+\\.(t|j)sx?$': '@swc/jest',
+  },
   displayName: 'e2e',
   rootDir: path.join(__dirname, `../${VKUI_PACKAGE.PATHS.SRC_DIR}`),
   testMatch: ['**/*.e2e.{ts,tsx}'],

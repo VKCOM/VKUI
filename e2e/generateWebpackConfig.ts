@@ -58,23 +58,13 @@ export async function generateWebpackConfig() {
           test: /\.[jt]sx?$/,
           exclude: /node_modules/,
           use: {
-            loader: 'babel-loader',
+            loader: 'swc-loader',
             options: {
-              plugins: [
-                [
-                  require.resolve('babel-plugin-istanbul'),
-                  {
-                    exclude: [
-                      '**/*.d.ts',
-                      '**/*.e2e.tsx',
-                      '**/*.stories.tsx',
-                      'e2e/',
-                      `${VKUI_PACKAGE.PATHS.TYPES_DIR}`,
-                      `${VKUI_PACKAGE.PATHS.TEST_UTILS_DIR}`,
-                    ],
-                  },
-                ],
-              ],
+              jsc: {
+                experimental: {
+                  plugins: [['swc-plugin-coverage-instrument', {}]],
+                },
+              },
             },
           },
         },

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json.schemastore.org/swcrc",
+  "exclude": ["\\.(test|spec|e2e)\\.[jt]sx?$", "testing/"],
+
+  "module": {
+    "type": "es6"
+  },
+
+  "jsc": {
+    "externalHelpers": true,
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true
+    },
+    "transform": {
+      "react": {
+        "runtime": "classic"
+      }
+    },
+
+    "experimental": {
+      "plugins": [
+        ["@project-tools/swc-transform-css-modules", {}],
+        [
+          "swc-plugin-transform-remove-imports",
+          {
+            "test": "\\.css$"
+          }
+        ]
+      ]
+    }
+  }
+}
