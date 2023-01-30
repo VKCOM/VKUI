@@ -12,3 +12,5 @@ __diff_output__
 .cache
 tmp/
 .github/**/*.md
+target/
+fixture/

@@ -1,0 +1,57 @@
+name: 'Pull Request swc-transform-css-modules'
+
+on:
+  pull_request:
+    paths:
+      - 'tools/swc-transform-css-modules/**/*'
+
+# Make sure CI fails on all warnings, including Clippy lints
+env:
+  RUSTFLAGS: '-Dwarnings'
+
+concurrency:
+  group: pr-swc-transform-css-modules-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    defaults:
+      run:
+        working-directory: tools/swc-transform-css-modules
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: swc-transform-css-modules-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Run test
+        run: cargo test --verbose
+
+  lint:
+    defaults:
+      run:
+        working-directory: tools/swc-transform-css-modules
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: swc-transform-css-modules-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Run Clippy
+        run: cargo clippy --all-targets --all-features
