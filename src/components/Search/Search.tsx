@@ -170,7 +170,7 @@ const SearchComponent = ({
             )}
           </div>
         </label>
-        <div vkuiClass="Search__after" onClick={onCancel}>
+        <div vkuiClass="Search__after">
           <div vkuiClass="Search__icons">
             {icon && (
               <Touch onStart={onIconClickStart} vkuiClass="Search__icon">
@@ -178,13 +178,19 @@ const SearchComponent = ({
               </Touch>
             )}
             {!!value && (
-              <Touch onStart={onIconCancelClickStart} vkuiClass="Search__icon">
+              <Touch
+                onStart={onIconCancelClickStart}
+                onClick={onCancel}
+                vkuiClass="Search__icon"
+              >
                 {platform === IOS ? <Icon16Clear /> : <Icon24Cancel />}
               </Touch>
             )}
           </div>
           {platform === IOS && after && (
-            <div vkuiClass="Search__after-in">{after}</div>
+            <div vkuiClass="Search__after-in" onClick={onCancel}>
+              {after}
+            </div>
           )}
         </div>
       </div>
