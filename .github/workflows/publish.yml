@@ -63,7 +63,8 @@ jobs:
           INPUT_GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
       - name: Publishing release
-        run: yarn publish --non-interactive
+        # Зашиваем тег v4, чтобы не перекрывать тегом latest мажорные версии выше
+        run: yarn publish --non-interactive --tag v4
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
 
