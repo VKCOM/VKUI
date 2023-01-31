@@ -24,19 +24,10 @@ jobs:
             browser: chromium
     steps:
       - uses: actions/checkout@v3
-
-      - name: Create LFS file list
-        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
-
-      - name: Restore LFS cache
-        uses: actions/cache@v3
         with:
-          path: .git/lfs
-          key: lfs-${{ hashFiles('.lfs-assets-id') }}
-
+          lfs: true
       - name: Checkout LFS objects
-        run: git lfs pull
-
+        run: git lfs checkout
       - uses: actions/setup-node@v3
         with:
           node-version: 18
