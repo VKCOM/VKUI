@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
-import { getPlatformClassName } from '../../helpers/getPlatformClassName';
-import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { classNames } from '@vkontakte/vkjs';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
 import { Separator } from '../Separator/Separator';
@@ -15,6 +13,23 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { Spacing } from '../Spacing/Spacing';
 import styles from './PanelHeader.module.css';
+
+function getPlatformClassName(platform: string): string {
+  switch (platform) {
+    case 'ios':
+      return styles['PanelHeader--ios'];
+    case 'vkcom':
+      return styles['PanelHeader--vkcom'];
+    default:
+      return styles['PanelHeader--android'];
+  }
+}
+
+const sizeXClassNames = {
+  compact: '',
+  regular: styles['PanelHeader--sizeX-regular'],
+  none: styles['PanelHeader--sizeX-none'],
+};
 
 export interface PanelHeaderProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -80,7 +95,7 @@ export const PanelHeader = ({
   const platform = usePlatform();
   const { webviewType } = useConfigProvider();
   const { isInsideModal } = React.useContext(ModalRootContext);
-  const { sizeX } = useAdaptivity();
+  const { sizeX = 'none' } = useAdaptivity();
   const { sizeX: adaptiveSizeX } = useAdaptivityConditionalRender();
   let isFixed = fixed !== undefined ? fixed : platform !== Platform.VKCOM;
 
@@ -89,7 +104,7 @@ export const PanelHeader = ({
       {...restProps}
       className={classNames(
         styles['PanelHeader'],
-        getPlatformClassName(styles['PanelHeader'], platform),
+        getPlatformClassName(platform),
         transparent && styles['PanelHeader--trnsp'],
         shadow && styles['PanelHeader--shadow'],
         visor && styles['PanelHeader--vis'],
@@ -98,7 +113,7 @@ export const PanelHeader = ({
         !before && styles['PanelHeader--no-before'],
         !after && styles['PanelHeader--no-after'],
         isFixed && styles['PanelHeader--fixed'],
-        getSizeXClassName(styles['PanelHeader'], sizeX),
+        sizeXClassNames[sizeX],
         className,
       )}
       ref={isFixed ? getRootRef : getRef}
