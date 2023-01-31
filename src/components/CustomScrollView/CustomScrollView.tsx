@@ -8,6 +8,7 @@ import {
   TrackerOptionsProps,
   useTrackerVisibility,
 } from "./useTrackerVisibility";
+import { stopPropagation } from "../../lib/utils";
 import "./CustomScrollView.css";
 
 export interface CustomScrollViewProps extends DOMProps, TrackerOptionsProps {
@@ -183,7 +184,11 @@ export const CustomScrollView = ({
 
   return (
     <div vkuiClass="CustomScrollView" className={className}>
-      <div vkuiClass="CustomScrollView__barY" ref={barY}>
+      <div
+        vkuiClass="CustomScrollView__barY"
+        ref={barY}
+        onClick={stopPropagation}
+      >
         <div
           vkuiClass={classNames(
             "CustomScrollView__trackerY",
