@@ -709,6 +709,7 @@ function CustomSelectComponent(props: CustomSelectProps) {
           onFocus={onFocus}
           onBlur={onBlur}
           vkuiClass={openedClassNames}
+          before={before}
           after={icon}
           selectType={selectType}
         >
