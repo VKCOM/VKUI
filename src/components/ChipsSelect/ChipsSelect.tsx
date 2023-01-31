@@ -362,49 +362,52 @@ export const ChipsSelect = <Option extends ChipOption>(
   };
 
   return (
-    <FormField
-      vkuiClass={classNames(
-        "ChipsSelect",
-        opened && "Select--open",
-        opened && (isPopperDirectionTop ? "Select--pop-up" : "Select--pop-down")
-      )}
-      getRootRef={rootRef}
-      style={style}
-      className={className}
-      disabled={disabled}
-      role="application"
-      aria-disabled={disabled}
-      aria-readonly={restProps.readOnly}
-      after={
-        <IconButton
-          vkuiClass="ChipsSelect__dropdown"
-          activeMode=""
-          hoverMode=""
-          // TODO: add label customization
-          aria-label={opened ? "Скрыть" : "Развернуть"}
-          onClick={toggleOpened}
-        >
-          <DropdownIcon vkuiClass="ChipsSelect__icon" opened={opened} />
-        </IconButton>
-      }
-      before={before}
-    >
-      <ChipsInputBase
-        {...restProps}
-        tabIndex={tabIndex}
-        value={selectedOptions}
-        inputValue={fieldValue}
-        getNewOptionData={getNewOptionData}
-        getOptionLabel={getOptionLabel}
-        getOptionValue={getOptionValue}
-        renderChip={renderChipWrapper}
-        onFocus={handleFocus}
-        onKeyDown={handleKeyDown}
-        placeholder={placeholder}
-        getRef={getRef}
+    <React.Fragment>
+      <FormField
+        vkuiClass={classNames(
+          "ChipsSelect",
+          opened && "Select--open",
+          opened &&
+            (isPopperDirectionTop ? "Select--pop-up" : "Select--pop-down")
+        )}
+        getRootRef={rootRef}
+        style={style}
+        className={className}
         disabled={disabled}
-        onInputChange={handleInputChange}
-      />
+        role="application"
+        aria-disabled={disabled}
+        aria-readonly={restProps.readOnly}
+        after={
+          <IconButton
+            vkuiClass="ChipsSelect__dropdown"
+            activeMode=""
+            hoverMode=""
+            // TODO: add label customization
+            aria-label={opened ? "Скрыть" : "Развернуть"}
+            onClick={toggleOpened}
+          >
+            <DropdownIcon vkuiClass="ChipsSelect__icon" opened={opened} />
+          </IconButton>
+        }
+        before={before}
+      >
+        <ChipsInputBase
+          {...restProps}
+          tabIndex={tabIndex}
+          value={selectedOptions}
+          inputValue={fieldValue}
+          getNewOptionData={getNewOptionData}
+          getOptionLabel={getOptionLabel}
+          getOptionValue={getOptionValue}
+          renderChip={renderChipWrapper}
+          onFocus={handleFocus}
+          onKeyDown={handleKeyDown}
+          placeholder={placeholder}
+          getRef={getRef}
+          disabled={disabled}
+          onInputChange={handleInputChange}
+        />
+      </FormField>
       {opened && (
         <CustomSelectDropdown
           targetRef={rootRef}
@@ -475,6 +478,6 @@ export const ChipsSelect = <Option extends ChipOption>(
           )}
         </CustomSelectDropdown>
       )}
-    </FormField>
+    </React.Fragment>
   );
 };
