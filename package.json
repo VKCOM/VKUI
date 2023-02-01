@@ -73,7 +73,7 @@
     "lint-staged": "^13.0.3",
     "mini-css-extract-plugin": "^2.5.2",
     "playwright": "1.28.1",
-    "playwright-chromium": "1.28.1",
+    "playwright-chromium": "1.30.0",
     "playwright-firefox": "1.28.1",
     "playwright-webkit": "1.28.1",
     "postcss": "^8.4.21",
