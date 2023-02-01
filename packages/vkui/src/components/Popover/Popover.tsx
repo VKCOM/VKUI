@@ -128,7 +128,10 @@ export const Popover = ({
     }
   };
 
-  useGlobalEventListener(document, 'click', handleOutsideClick);
+  useGlobalEventListener(document, 'click', handleOutsideClick, {
+    capture: true,
+    passive: true,
+  });
   const targetEnterListener = useEventListener('mouseenter', handleTargetEnter);
   const targetClickEvent = useEventListener('click', handleTargetClick);
   const targetLeaveListener = useEventListener('mouseleave', handleTargetLeave);
