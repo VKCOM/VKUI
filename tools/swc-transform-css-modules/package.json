@@ -1,0 +1,22 @@
+{
+  "private": "true",
+  "name": "@project-tools/swc-transform-css-modules",
+  "version": "0.1.0",
+  "author": {
+    "name": "Daniil Suvorov",
+    "email": "severecloud@gmail.com",
+    "url": "https://github.com/severecloud"
+  },
+  "main": "swc_transform_css_modules.wasm",
+  "scripts": {
+    "prepack": "yarn run build-wasi",
+    "build-wasi": "cargo build-wasi --release",
+    "postbuild-wasi": "cp target/wasm32-wasi/release/swc_transform_css_modules.wasm .",
+    "build": "echo use cargo build-wasi",
+    "test": "echo use cargo test",
+    "test:ci": "echo no test:ci"
+  },
+  "files": [
+    "swc_transform_css_modules.wasm"
+  ]
+}
