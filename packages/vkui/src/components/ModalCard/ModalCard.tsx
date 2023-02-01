@@ -27,6 +27,7 @@ export const ModalCard = ({
   nav,
   id,
   className,
+  size,
   ...restProps
 }: ModalCardProps) => {
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
@@ -54,6 +55,7 @@ export const ModalCard = ({
         subheader={subheader}
         actions={actions}
         onClose={onClose || modalContext.onClose}
+        size={size}
       >
         {children}
       </ModalCardBase>
