@@ -25,7 +25,10 @@ export const Epic = (props: EpicProps) => {
     ) as React.ReactElement | undefined) ?? null;
 
   return (
-    <div {...restProps} className={classNames(styles['Epic'], className)}>
+    <div
+      {...restProps}
+      className={classNames(styles['Epic'], tabbar && styles['Epic--hasTabbar'], className)}
+    >
       <ScrollSaver
         key={activeStory}
         initialScroll={scroll[activeStory] || 0}

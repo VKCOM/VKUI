@@ -36,7 +36,7 @@
  * CMP:
  * Epic
  */
-.Epic .FixedLayout--vertical-bottom {
+.Epic--hasTabbar .FixedLayout--vertical-bottom {
   padding-bottom: calc(
     var(--vkui_internal--tabbar_height) + var(--vkui_internal--safe_area_inset_bottom)
   );
