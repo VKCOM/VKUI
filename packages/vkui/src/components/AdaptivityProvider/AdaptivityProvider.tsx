@@ -70,7 +70,7 @@ function calculateAdaptivity(
 
     if (viewportHeight >= BREAKPOINTS.MEDIUM_HEIGHT) {
       viewHeight = ViewHeight.MEDIUM;
-    } else if (viewportHeight > BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT) {
+    } else if (viewportHeight >= BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT) {
       viewHeight = ViewHeight.SMALL;
     } else {
       viewHeight = ViewHeight.EXTRA_SMALL;

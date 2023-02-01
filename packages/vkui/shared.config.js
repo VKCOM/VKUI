@@ -14,12 +14,17 @@ module.exports.URLS = {
  * {@link https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-custom-media}
  */
 const getCustomMedias = () => {
+  // WARNING: Не используйте различия между медиа выражениями
+  // `max-width: 767px` - `min-width: 768px`, так как размеры могут быть
+  // дробными `767.333px`.
+  //
+  // Вместо этого используйте `not (min-width: 768px)` - `min-width: 768px`!
   const customMedia = {
     '--sizeX-regular': `(min-width: ${BREAKPOINTS.SMALL_TABLET}px)`,
-    '--sizeX-compact': `(max-width: ${BREAKPOINTS.SMALL_TABLET - 1}px)`,
+    '--sizeX-compact': `not (min-width: ${BREAKPOINTS.SMALL_TABLET}px)`,
 
-    "--sizeY-compact": `(pointer: fine) and (min-width: ${BREAKPOINTS.SMALL_TABLET}px), (max-height: ${BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT}px)`, // prettier-ignore
-    "--sizeY-regular": `(pointer: coarse) and (min-height: ${415}px), (pointer: none) and (min-height: ${415}px), (max-width: ${BREAKPOINTS.SMALL_TABLET - 1}px) and (min-height: ${415}px)`, // prettier-ignore
+    '--sizeY-compact': `(pointer: fine) and (min-width: ${BREAKPOINTS.SMALL_TABLET}px), not (min-height: ${BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT}px)`, // prettier-ignore
+    '--sizeY-regular': `(pointer: coarse) and (min-height: ${BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT}px), (pointer: none) and (min-height: ${BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT}px), (not (min-width: ${BREAKPOINTS.SMALL_TABLET}px)) and (min-height: ${BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT}px)`, // prettier-ignore
 
     '--hover-has': '(hover: hover)',
     '--hover-has-not': '(hover: none)',
@@ -27,23 +32,23 @@ const getCustomMedias = () => {
     '--pointer-has': '(pointer: fine)',
     '--pointer-has-not': '(pointer: coarse), (pointer: none)',
 
-    "--desktop": `(min-width: ${BREAKPOINTS.SMALL_TABLET}px) and (pointer: fine), (min-width: ${BREAKPOINTS.SMALL_TABLET}px) and (min-height: ${BREAKPOINTS.MEDIUM_HEIGHT}px)`, // prettier-ignore
-    "--mobile": `(max-width: ${BREAKPOINTS.SMALL_TABLET - 1}px), (pointer: none) and (max-height: ${BREAKPOINTS.MEDIUM_HEIGHT - 1}px), (pointer: coarse) and (max-height: ${BREAKPOINTS.MEDIUM_HEIGHT - 1}px)`, // prettier-ignore
+    '--desktop': `(min-width: ${BREAKPOINTS.SMALL_TABLET}px) and (pointer: fine), (min-width: ${BREAKPOINTS.SMALL_TABLET}px) and (min-height: ${BREAKPOINTS.MEDIUM_HEIGHT}px)`, // prettier-ignore
+    '--mobile': `not (min-width: ${BREAKPOINTS.SMALL_TABLET}px), (pointer: none) and (not (min-height: ${BREAKPOINTS.MEDIUM_HEIGHT}px)), (pointer: coarse) and (not (min-height: ${BREAKPOINTS.MEDIUM_HEIGHT}px))`, // prettier-ignore
 
     '--viewWidth-desktopPlus': MEDIA_QUERIES.DESKTOP_PLUS,
 
     '--viewWidth-tabletPlus': `(min-width: ${BREAKPOINTS.TABLET}px)`,
     '--viewWidth-tablet': MEDIA_QUERIES.TABLET,
-    '--viewWidth-tabletMinus': `(max-width: ${BREAKPOINTS.TABLET - 1}px)`,
+    '--viewWidth-tabletMinus': `not (min-width: ${BREAKPOINTS.TABLET}px)`,
 
     '--viewWidth-smallTabletPlus': MEDIA_QUERIES.SMALL_TABLET_PLUS,
     '--viewWidth-smallTablet': MEDIA_QUERIES.SMALL_TABLET,
-    "--viewWidth-smallTabletMinus": `(max-width: ${BREAKPOINTS.SMALL_TABLET - 1}px)`, // prettier-ignore
+    '--viewWidth-smallTabletMinus': `not (min-width: ${BREAKPOINTS.SMALL_TABLET}px)`,
 
     '--viewWidth-mobilePlus': `(min-width: ${BREAKPOINTS.MOBILE}px)`,
     '--viewWidth-mobile': MEDIA_QUERIES.MOBILE,
 
-    "--viewWidth-smallMobileMinus": `(max-width: ${BREAKPOINTS.MOBILE - 1}px)`, // prettier-ignore
+    '--viewWidth-smallMobileMinus': `not (min-width: ${BREAKPOINTS.MOBILE}px)`,
   };
 
   return { customMedia };
