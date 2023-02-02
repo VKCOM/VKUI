@@ -3,10 +3,6 @@
   color: var(--vkui--color_icon_tertiary);
 }
 
-.CellCheckbox__input {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}
-
 .CellCheckbox__icon--on {
   color: var(--vkui--color_icon_accent);
 }
