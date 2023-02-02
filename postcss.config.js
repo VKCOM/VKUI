@@ -27,7 +27,10 @@ module.exports = (ctx) => {
       importFrom: path.join(__dirname, VKUI_PACKAGE.PATHS.CSS_ANIMATIONS),
     }),
     cssCustomProperties({
-      importFrom: [path.join(__dirname, VKUI_PACKAGE.PATHS.CSS_CONSTANTS)],
+      importFrom: [
+        './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css',
+        VKUI_PACKAGE.PATHS.CSS_CONSTANTS,
+      ].map((pathSegment) => path.join(__dirname, pathSegment)),
       preserve: true,
       disableDeprecationNotice: true,
     }),
