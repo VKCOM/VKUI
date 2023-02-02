@@ -2,7 +2,55 @@ import './lib/polyfills';
 
 import './styles/constants.css';
 import './styles/animations.css';
-import './styles/common.css';
+import './styles/adaptivity.module.css';
+
+export { AppRoot } from './components/AppRoot/AppRoot';
+export type { AppRootProps } from './components/AppRoot/AppRoot';
+
+/**
+ * Typography
+ */
+export { Title } from './components/Typography/Title/Title';
+export type { TitleProps } from './components/Typography/Title/Title';
+export { Headline } from './components/Typography/Headline/Headline';
+export type { HeadlineProps } from './components/Typography/Headline/Headline';
+export { Text } from './components/Typography/Text/Text';
+export type { TextProps } from './components/Typography/Text/Text';
+export { Paragraph } from './components/Typography/Paragraph/Paragraph';
+export type { ParagraphProps } from './components/Typography/Paragraph/Paragraph';
+export { Subhead } from './components/Typography/Subhead/Subhead';
+export type { SubheadProps } from './components/Typography/Subhead/Subhead';
+export { Footnote } from './components/Typography/Footnote/Footnote';
+export type { FootnoteProps } from './components/Typography/Footnote/Footnote';
+export { Caption } from './components/Typography/Caption/Caption';
+export type { CaptionProps } from './components/Typography/Caption/Caption';
+
+/**
+ * Service
+ */
+export { Tappable } from './components/Tappable/Tappable';
+export type { TappableProps } from './components/Tappable/Tappable';
+export { FixedLayout } from './components/FixedLayout/FixedLayout';
+export type { FixedLayoutProps } from './components/FixedLayout/FixedLayout';
+export {
+  ImageBaseContext,
+  ImageBase,
+  getBadgeIconSizeByImageBaseSize,
+  getFallbackIconSizeByImageBaseSize,
+  getOverlayIconSizeByImageBaseSize,
+} from './components/ImageBase/ImageBase';
+export type {
+  ImageBaseSize,
+  ImageBaseExpectedIconProps,
+  ImageBaseBadgeProps,
+  ImageBaseOverlayProps,
+} from './components/ImageBase/ImageBase';
+
+/**
+ * Primitives
+ */
+export { Button } from './components/Button/Button';
+export type { ButtonProps } from './components/Button/Button';
 
 /**
  * Layout
@@ -33,8 +81,6 @@ export { TabbarItem } from './components/TabbarItem/TabbarItem';
 export type { TabbarItemProps } from './components/TabbarItem/TabbarItem';
 export { HorizontalScroll } from './components/HorizontalScroll/HorizontalScroll';
 export type { HorizontalScrollProps } from './components/HorizontalScroll/HorizontalScroll';
-export { FixedLayout } from './components/FixedLayout/FixedLayout';
-export type { FixedLayoutProps } from './components/FixedLayout/FixedLayout';
 
 /**
  * Popouts
@@ -72,25 +118,10 @@ export type { ModalDismissButtonProps } from './components/ModalDismissButton/Mo
 /**
  * Blocks
  */
-export {
-  ImageBaseContext,
-  ImageBase,
-  getBadgeIconSizeByImageBaseSize,
-  getFallbackIconSizeByImageBaseSize,
-  getOverlayIconSizeByImageBaseSize,
-} from './components/ImageBase/ImageBase';
-export type {
-  ImageBaseSize,
-  ImageBaseExpectedIconProps,
-  ImageBaseBadgeProps,
-  ImageBaseOverlayProps,
-} from './components/ImageBase/ImageBase';
 export { Badge } from './components/Badge/Badge';
 export type { BadgeProps } from './components/Badge/Badge';
 export { ButtonGroup } from './components/ButtonGroup/ButtonGroup';
 export type { ButtonGroupProps } from './components/ButtonGroup/ButtonGroup';
-export { Button } from './components/Button/Button';
-export type { ButtonProps } from './components/Button/Button';
 export { IconButton } from './components/IconButton/IconButton';
 export type { IconButtonProps } from './components/IconButton/IconButton';
 export { Card } from './components/Card/Card';
@@ -247,8 +278,6 @@ export type { DateRangeInputProps } from './components/DateRangeInput/DateRangeI
  */
 export { Div } from './components/Div/Div';
 export type { DivProps } from './components/Div/Div';
-export { Tappable } from './components/Tappable/Tappable';
-export type { TappableProps } from './components/Tappable/Tappable';
 export { Touch } from './components/Touch/Touch';
 export type { TouchProps } from './components/Touch/Touch';
 export { PanelSpinner } from './components/PanelSpinner/PanelSpinner';
@@ -267,8 +296,6 @@ export type { VisuallyHiddenInputProps } from './components/VisuallyHiddenInput/
 /**
  * Wrappers
  */
-export { AppRoot } from './components/AppRoot/AppRoot';
-export type { AppRootProps } from './components/AppRoot/AppRoot';
 export { AdaptivityProvider } from './components/AdaptivityProvider/AdaptivityProvider';
 export type { AdaptivityProviderProps } from './components/AdaptivityProvider/AdaptivityProvider';
 export { ConfigProvider } from './components/ConfigProvider/ConfigProvider';
@@ -291,24 +318,6 @@ export type { PlatformProviderProps } from './components/PlatformProvider/Platfo
  */
 export { PromoBanner } from './components/PromoBanner/PromoBanner';
 export type { PromoBannerProps } from './components/PromoBanner/PromoBanner';
-
-/**
- * Typography
- */
-export { Title } from './components/Typography/Title/Title';
-export type { TitleProps } from './components/Typography/Title/Title';
-export { Headline } from './components/Typography/Headline/Headline';
-export type { HeadlineProps } from './components/Typography/Headline/Headline';
-export { Text } from './components/Typography/Text/Text';
-export type { TextProps } from './components/Typography/Text/Text';
-export { Paragraph } from './components/Typography/Paragraph/Paragraph';
-export type { ParagraphProps } from './components/Typography/Paragraph/Paragraph';
-export { Subhead } from './components/Typography/Subhead/Subhead';
-export type { SubheadProps } from './components/Typography/Subhead/Subhead';
-export { Footnote } from './components/Typography/Footnote/Footnote';
-export type { FootnoteProps } from './components/Typography/Footnote/Footnote';
-export { Caption } from './components/Typography/Caption/Caption';
-export type { CaptionProps } from './components/Typography/Caption/Caption';
 
 /**
  * HOCs
@@ -380,3 +389,5 @@ export type { PopperProps as unstable_PopperProps } from './components/Popper/Po
 
 export { ViewInfinite as unstable_ViewInfinite } from './components/View/ViewInfinite';
 export type { ViewInfiniteProps as unstable_ViewInfiniteProps } from './components/View/ViewInfinite';
+
+import './styles/common.css';

@@ -6,11 +6,9 @@ process.env.BABEL_KEEP_CSS = '1';
 module.exports = {
   // CSS is optimized via postcss, we dont care about JS
   mode: 'none',
-  // TODO: Once CSS is modular, replace
-  // './src/styles/components.css' -> './src/index.ts'
   entry: {
-    stable: ['./src/styles/themes.css', './src/styles/components.css'],
-    components: './src/styles/components.css',
+    stable: ['./src/styles/themes.css', './src/index.ts'],
+    components: './src/index.ts',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -25,7 +23,16 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              modules: false,
+            },
+          },
+          'postcss-loader',
+        ],
       },
       {
         test: /\.woff|woff2$/,

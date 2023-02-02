@@ -4,7 +4,7 @@ import cbGlob from 'glob';
 import webpack from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import webpackCommonConfig from '../webpack.common.config';
-import { VKUI_PACKAGE } from '../shared';
+import { generateScopedName, VKUI_PACKAGE } from '../shared';
 
 const glob = promisify(cbGlob);
 
@@ -20,7 +20,6 @@ const {
 } = webpackCommonConfig;
 
 export async function generateWebpackConfig() {
-  process.env.BABEL_KEEP_CSS = '1';
   const testFiles = await glob(
     path.join(__dirname, `../${VKUI_PACKAGE.PATHS.SRC_DIR}/**/*.e2e.{ts,tsx}`),
   );
@@ -30,6 +29,7 @@ export async function generateWebpackConfig() {
       main: [
         path.resolve(__dirname, 'browser/runtime.ts'),
         path.resolve(__dirname, 'styles.test.css'),
+        `./${VKUI_PACKAGE.PATHS.JS_MAIN_EXPORT}`,
         ...testFiles,
       ],
     },
@@ -79,10 +79,39 @@ export async function generateWebpackConfig() {
         },
         {
           test: /\.css$/i,
+          exclude: /\.module\.css$/,
           use: [
             { loader: MiniCssExtractPlugin.loader },
-            { loader: 'css-loader', options: { url: false, modules: false } },
+            { loader: 'css-loader', options: { url: false } },
             'postcss-loader',
+          ],
+        },
+        {
+          test: /\.css$/,
+          include: /\.module\.css$/,
+          use: [
+            { loader: MiniCssExtractPlugin.loader },
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1,
+                modules: {
+                  mode: 'pure',
+                  getLocalIdent(_context: string, _localIdentName: string, localName: string) {
+                    return generateScopedName(localName);
+                  },
+                  exportLocalsConvention: 'asIs',
+                },
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                postcssOptions: {
+                  isSandbox: true,
+                },
+              },
+            },
           ],
         },
       ],
