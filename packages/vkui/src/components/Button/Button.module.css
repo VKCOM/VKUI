@@ -19,7 +19,8 @@
 }
 
 .Button--singleIcon {
-  min-width: var(--vkui--size_button_small_height--compact);
+  width: var(--vkui--size_button_small_height--compact);
+  min-width: initial;
 }
 
 .Button--sizeY-regular.Button--singleIcon {
