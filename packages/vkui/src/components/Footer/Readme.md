@@ -6,13 +6,13 @@
     <PanelHeader>Footer</PanelHeader>
     <Group>
       <List>
-        <Cell before={<Avatar />} description="Веб-сайт">
+        <Cell before={<Avatar />} subtitle="Веб-сайт">
           Команда ВКонтакте
         </Cell>
-        <Cell before={<Avatar />} description="Музыкант">
+        <Cell before={<Avatar />} subtitle="Музыкант">
           Robbie Williams
         </Cell>
-        <Cell before={<Avatar />} description="Издательский дом">
+        <Cell before={<Avatar />} subtitle="Издательский дом">
           ПостНаука
         </Cell>
       </List>

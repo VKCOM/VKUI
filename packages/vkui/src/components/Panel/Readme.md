@@ -29,17 +29,17 @@ const Example = () => {
         </PanelHeader>
         <Group>
           <Search />
-          <Cell description="Humor" before={<Avatar />} onClick={() => setActivePanel('panel3')}>
+          <Cell subtitle="Humor" before={<Avatar />} onClick={() => setActivePanel('panel3')}>
             Swipe Right
           </Cell>
           <Cell
-            description="Cultural Center"
+            subtitle="Cultural Center"
             before={<Avatar />}
             onClick={() => setActivePanel('panel3')}
           >
             Out Cinema
           </Cell>
-          <Cell description="Movies" before={<Avatar />} onClick={() => setActivePanel('panel3')}>
+          <Cell subtitle="Movies" before={<Avatar />} onClick={() => setActivePanel('panel3')}>
             #ARTPOKAZ
           </Cell>
         </Group>
