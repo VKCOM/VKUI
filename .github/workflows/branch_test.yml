@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   test:
-    uses: ./.github/workflows/workflow_test.yml
+    uses: ./.github/workflows/reusable_workflow_test.yml
 
   test_e2e:
-    uses: ./.github/workflows/workflow_test_e2e.yml
+    uses: ./.github/workflows/reusable_workflow_test_e2e.yml

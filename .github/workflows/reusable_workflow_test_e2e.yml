@@ -1,3 +1,5 @@
+name: 'Reusable workflow / Visual (aka e2e) tests'
+
 on:
   workflow_call:
     inputs:
@@ -55,10 +57,11 @@ jobs:
       - name: '[Troubleshooting for Azure VM] Install APT Repositories'
         # Связанная проблема https://github.com/actions/runner-images/issues/675
         run: curl --connect-timeout 1 azure.archive.ubuntu.com || (sudo sed -i 's/azure\.//' /etc/apt/sources.list && sudo apt-get update)
+
       - name: Install deps for playwright
         run: yarn run playwright:install ${{ matrix.browser }}
 
-      - name: FYI visual tests
+      - name: Run e2e tests for @vkontakte/vkui workspace
         run: yarn run test:e2e:ci
         env:
           APPEARANCE: ${{ matrix.appearance }}
