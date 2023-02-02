@@ -242,7 +242,7 @@ function CustomSelectComponent(props: CustomSelectProps) {
   }, [props.value]);
 
   useIsomorphicLayoutEffect(() => {
-    if (nativeSelectValue !== undefined) {
+    if (options.some(({ value }) => nativeSelectValue === value)) {
       const event = new Event("change", { bubbles: true });
 
       selectElRef.current?.dispatchEvent(event);

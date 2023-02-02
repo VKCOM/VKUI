@@ -431,4 +431,23 @@ describe("CustomSelect", () => {
       document.querySelector(".CustomSelectOption--hover")?.textContent
     ).toEqual("Bob");
   });
+
+  // https://github.com/VKCOM/VKUI/issues/4066
+  it("invalid value does not call onChange", () => {
+    const onChange = jest.fn();
+
+    render(
+      <CustomSelect
+        data-testid="target"
+        value="invalid"
+        onChange={onChange}
+        options={[
+          { value: "0", label: "Mike" },
+          { value: "1", label: "Josh" },
+        ]}
+      />
+    );
+
+    expect(onChange).toBeCalledTimes(0);
+  });
 });
