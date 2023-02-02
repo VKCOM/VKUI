@@ -38,17 +38,24 @@ const Example = () => {
     setLimitY(circleRef.current.offsetTop);
   });
 
+  const getValueWithLimit = (value, limit) => {
+    return value > limit ? limit : value < -limit ? -limit : value;
+  };
+
   const onMove = (e) => {
     const shiftX = startX.current + e.shiftX;
     const shiftY = startY.current + e.shiftY;
 
-    setShiftX(shiftX > limitX ? limitX : shiftX < -limitX ? -limitX : shiftX);
-    setShiftY(shiftY > limitY ? limitY : shiftY < -limitY ? -limitY : shiftY);
+    setShiftX(getValueWithLimit(shiftX, limitX));
+    setShiftY(getValueWithLimit(shiftY, limitY));
   };
 
   const onEnd = (e) => {
-    startX.current += e.shiftX;
-    startY.current += e.shiftY;
+    const shiftX = startX.current + e.shiftX;
+    const shiftY = startY.current + e.shiftY;
+
+    startX.current = getValueWithLimit(shiftX, limitX);
+    startY.current = getValueWithLimit(shiftY, limitY);
   };
 
   const limitExceeded = Math.abs(shiftX) >= limitX || Math.abs(shiftY) >= limitY;
