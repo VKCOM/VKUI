@@ -72,6 +72,10 @@
   color: var(--vkui--color_icon_accent);
 }
 
+.ActionSheetItem--ios .ActionSheetItem__before {
+  color: var(--vkui--color_icon_accent_themed);
+}
+
 .ActionSheetItem--mode-destructive .ActionSheetItem__container:first-child {
   color: var(--vkui--color_text_negative);
 }
@@ -105,7 +109,7 @@
   padding: 14px 20px 14px 19px;
   min-height: 56px;
   border-radius: 0;
-  color: var(--vkui--color_text_accent);
+  color: var(--vkui--color_text_accent_themed);
   background: var(--vkui--color_background_modal);
 }
 
@@ -146,7 +150,7 @@
   height: 1px;
   content: '';
   top: 0;
-  background: var(--vkui--color_separator_primary);
+  background: var(--vkui--color_separator_primary_alpha);
   transform-origin: center bottom;
 }
 
