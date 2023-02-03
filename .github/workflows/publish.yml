@@ -77,7 +77,8 @@ jobs:
           yarn styleguide:build
           mkdir ${{ steps.updated_version.outputs.version }}
           cp -R styleguide-build/* ${{ steps.updated_version.outputs.version }}
-          rm -rf styleguide-build && mkdir styleguide-build
+          rm -rf styleguide-build 
+          mkdir styleguide-build
           mv ${{ steps.updated_version.outputs.version }} styleguide-build/${{ steps.updated_version.outputs.version }}
 
       - name: Publishing doc
