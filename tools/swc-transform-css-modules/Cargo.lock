@@ -1283,9 +1283,9 @@ dependencies = [
 
 [[package]]
 name = "swc_common"
-version = "0.29.28"
+version = "0.29.29"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4627e86f60ca7b81dbd2cfa571870236ffaae5c79920639b42935e94826c9b2c"
+checksum = "a97e491d31418cd33fea58e9f893316fc04b30e2b5d0e750c066e2ba4907ae54"
 dependencies = [
  "ahash",
  "anyhow",
@@ -1579,9 +1579,9 @@ dependencies = [
 
 [[package]]
 name = "swc_visit"
-version = "0.5.3"
+version = "0.5.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "82f2bcb7223e185c4c7cbf5e0c1207dec6d2bfd5e72e3fb7b3e8d179747e9130"
+checksum = "470a1963cf182fdcbbac46e3a7fd2caf7329da0e568d3668202da9501c880e16"
 dependencies = [
  "either",
  "swc_visit_macros",
@@ -1589,9 +1589,9 @@ dependencies = [
 
 [[package]]
 name = "swc_visit_macros"
-version = "0.5.4"
+version = "0.5.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8fb1f3561674d84947694d41fb6d5737d19539222779baeac1b3a071a2b29428"
+checksum = "6098b717cfd4c85f5cddec734af191dbce461c39975ed567c32ac6d0c6d61a6d"
 dependencies = [
  "Inflector",
  "pmutil",
