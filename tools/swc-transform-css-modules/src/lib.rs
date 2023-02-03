@@ -13,7 +13,7 @@ fn generate_scoped_name(name: String) -> String {
         return name;
     }
 
-    format!("vkui{}", name)
+    format!("vkui{name}")
 }
 
 pub struct TransformVisitor {
