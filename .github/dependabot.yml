@@ -43,7 +43,7 @@ updates:
       - 'VKCOM/vkui-core'
 
   - package-ecosystem: 'npm'
-    directory: '/tools/swc-plugin-transform-css-modules'
+    directory: '/tools/swc-transform-css-modules'
     schedule:
       interval: 'daily'
     allow:
@@ -54,7 +54,7 @@ updates:
 
   # Maintain dependencies for Cargo
   - package-ecosystem: 'cargo'
-    directory: '/tools/swc-plugin-transform-css-modules'
+    directory: '/tools/swc-transform-css-modules'
     schedule:
       interval: 'daily'
     allow:
