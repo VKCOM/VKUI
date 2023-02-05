@@ -3,3 +3,5 @@ dist/
 docs/
 coverage/
 stylelint.config.js
+target/
+fixture/

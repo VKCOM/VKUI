@@ -42,6 +42,27 @@ updates:
       - 'VKCOM/vk-sec'
       - 'VKCOM/vkui-core'
 
+  - package-ecosystem: 'npm'
+    directory: '/tools/swc-transform-css-modules'
+    schedule:
+      interval: 'daily'
+    allow:
+      - dependency-type: 'direct'
+    reviewers:
+      - 'VKCOM/vk-sec'
+      - 'VKCOM/vkui-core'
+
+  # Maintain dependencies for Cargo
+  - package-ecosystem: 'cargo'
+    directory: '/tools/swc-transform-css-modules'
+    schedule:
+      interval: 'daily'
+    allow:
+      - dependency-type: 'indirect'
+    reviewers:
+      - 'VKCOM/vk-sec'
+      - 'VKCOM/vkui-core'
+
   # LOCAL ACTIONS
 
   - package-ecosystem: 'npm'

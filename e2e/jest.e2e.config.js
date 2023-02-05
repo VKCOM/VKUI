@@ -18,20 +18,24 @@ const devicesMap = {
   vkcom: vkcomBrowserMap[BROWSER],
 };
 
-const jestPlaywrightOptions = Object.assign(
-  {
-    browsers: [BROWSER],
-    devices: [devicesMap[PLATFORM]],
-    collectCoverage: true,
+/**
+ * @type {import('jest-playwright-preset').JestPlaywrightConfig}
+ */
+const jestPlaywrightOptions = {
+  browsers: [BROWSER],
+  devices: [devicesMap[PLATFORM]],
+  collectCoverage: true,
+  contextOptions: {
+    deviceScaleFactor: 1,
   },
-  useDocker
-    ? {
-        connectOptions: {
-          wsEndpoint: 'ws://localhost:9001/playwright',
-        },
-      }
-    : {},
-);
+};
+
+if (useDocker) {
+  jestPlaywrightOptions.connectOptions = {
+    wsEndpoint: 'ws://localhost:9001/playwright',
+  };
+}
+
 const config = {
   displayName: 'e2e',
   rootDir: path.join(__dirname, `../${VKUI_PACKAGE.PATHS.SRC_DIR}`),

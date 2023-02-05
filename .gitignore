@@ -30,6 +30,7 @@ __diff_output__
 
 # CI
 .env
+.lfs-assets-id
 
 # IDE
 .idea/

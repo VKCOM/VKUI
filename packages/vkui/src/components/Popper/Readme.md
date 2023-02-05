@@ -16,7 +16,12 @@ return (
       {shown ? 'Закрыть' : 'Открыть'}
     </Button>
     {shown && (
-      <Popper offsetDistance={8} style={{ padding: '9px 12px' }} targetRef={buttonRef}>
+      <Popper
+        forcePortal={false}
+        offsetDistance={8}
+        style={{ padding: '9px 12px' }}
+        targetRef={buttonRef}
+      >
         Привет
       </Popper>
     )}

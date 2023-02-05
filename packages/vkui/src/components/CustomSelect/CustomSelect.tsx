@@ -217,7 +217,7 @@ export function CustomSelect(props: SelectProps) {
   }, [props.value]);
 
   useIsomorphicLayoutEffect(() => {
-    if (nativeSelectValue !== undefined) {
+    if (options.some(({ value }) => nativeSelectValue === value)) {
       const event = new Event('change', { bubbles: true });
 
       selectElRef.current?.dispatchEvent(event);
@@ -643,7 +643,6 @@ export function CustomSelect(props: SelectProps) {
           onClick={props.onClick}
           before={before}
           after={icon}
-          placeholder={restProps.placeholder}
           mode={getFormFieldModeFromSelectType(selectType)}
         />
       ) : (
@@ -656,6 +655,7 @@ export function CustomSelect(props: SelectProps) {
           onFocus={onFocus}
           onBlur={onBlur}
           className={openedClassNames}
+          before={before}
           after={icon}
           selectType={selectType}
         >

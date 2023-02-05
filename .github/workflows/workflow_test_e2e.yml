@@ -28,13 +28,24 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          lfs: true
           ref: ${{ inputs.ref }}
+
+      - name: Create LFS file list
+        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+
+      - name: Restore LFS cache
+        uses: actions/cache@v3
+        with:
+          path: .git/lfs
+          key: lfs-${{ hashFiles('.lfs-assets-id') }}
+
       - name: Checkout LFS objects
-        run: git lfs checkout
+        run: git lfs pull
+
       - name: Checkout base snapshots
         if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
         run: git fetch --no-tags --depth=1 origin $GITHUB_BASE_REF && git checkout origin/$GITHUB_BASE_REF packages/vkui/src/**/__image_snapshots__/*.png
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18

@@ -129,6 +129,7 @@
 @import '../components/ChipsInput/ChipsInput.module.css';
 @import '../components/ChipsInputBase/ChipsInputBase.module.css';
 @import '../components/Chip/Chip.module.css';
+@import '../components/SelectTypography/SelectTypography.module.css';
 @import '../components/Select/Select.module.css';
 @import '../components/Textarea/Textarea.module.css';
 @import '../components/CustomScrollView/CustomScrollView.module.css';

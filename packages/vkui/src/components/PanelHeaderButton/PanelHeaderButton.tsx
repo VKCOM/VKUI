@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { TappableProps, Tappable } from '../Tappable/Tappable';
-import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { classNames, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { warnOnce } from '../../lib/warnOnce';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -9,6 +8,17 @@ import { Platform } from '../../lib/platform';
 import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
 import styles from './PanelHeaderButton.module.css';
+
+function getPlatformClassName(platform: string): string {
+  switch (platform) {
+    case 'ios':
+      return styles['PanelHeaderButton--ios'];
+    case 'vkcom':
+      return styles['PanelHeaderButton--vkcom'];
+    default:
+      return styles['PanelHeaderButton--android'];
+  }
+}
 
 export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
   primary?: boolean;
@@ -91,7 +101,7 @@ export const PanelHeaderButton = ({
       activeMode={activeMode}
       className={classNames(
         styles['PanelHeaderButton'],
-        getPlatformClassName(styles['PanelHeaderButton'], platform),
+        getPlatformClassName(platform),
         isPrimitive && styles['PanelHeaderButton--primitive'],
         !isPrimitive && !isPrimitiveLabel && styles['PanelHeaderButton--notPrimitive'],
         className,

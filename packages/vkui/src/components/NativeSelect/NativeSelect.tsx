@@ -11,7 +11,8 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
-import { SelectType, SelectTypography } from '../Select/Select';
+import type { SelectType } from '../Select/Select';
+import { SelectTypography } from '../SelectTypography/SelectTypography';
 import styles from '../Select/Select.module.css';
 
 export interface NativeSelectProps
