@@ -1,10 +1,6 @@
 .CellCheckbox__icon {
-  color: var(--vkui--color_icon_tertiary);
-}
-
-.CellCheckbox__input,
-.CellCheckbox__icon {
   display: none;
+  color: var(--vkui--color_icon_tertiary);
 }
 
 .CellCheckbox__icon--on {
