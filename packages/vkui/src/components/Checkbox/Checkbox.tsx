@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ACTIVE_EFFECT_DELAY, Tappable } from '../Tappable/Tappable';
+import { type TappableProps, ACTIVE_EFFECT_DELAY, Tappable } from '../Tappable/Tappable';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import {
@@ -23,7 +23,11 @@ import styles from './Checkbox.module.css';
 export interface CheckboxProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     HasRootRef<HTMLLabelElement>,
-    HasRef<HTMLInputElement> {
+    HasRef<HTMLInputElement>,
+    Pick<
+      TappableProps,
+      'hoverMode' | 'activeMode' | 'hasHover' | 'hasActive' | 'focusVisibleMode'
+    > {
   description?: React.ReactNode;
   indeterminate?: boolean;
   defaultIndeterminate?: boolean;
@@ -43,6 +47,11 @@ export const Checkbox = ({
   description,
   indeterminate,
   defaultIndeterminate,
+  hoverMode,
+  activeMode,
+  hasHover,
+  hasActive,
+  focusVisibleMode,
   onChange,
   ...restProps
 }: CheckboxProps) => {
@@ -105,6 +114,11 @@ export const Checkbox = ({
       disabled={restProps.disabled}
       activeEffectDelay={platform === Platform.IOS ? 100 : ACTIVE_EFFECT_DELAY}
       getRootRef={getRootRef}
+      hoverMode={hoverMode}
+      activeMode={activeMode}
+      hasHover={hasHover}
+      hasActive={hasActive}
+      focusVisibleMode={focusVisibleMode}
     >
       <VisuallyHiddenInput
         {...restProps}
