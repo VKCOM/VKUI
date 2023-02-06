@@ -48,7 +48,6 @@ const isDOMTypeElement = <
 };
 
 const warn = warnOnce('Tooltip');
-const IS_DEV = process.env.NODE_ENV === 'development';
 
 const SimpleTooltip = React.forwardRef<HTMLDivElement, SimpleTooltipProps>(function SimpleTooltip(
   { appearance = 'accent', header, text, arrow, style: popperStyles = {}, attributes, className },
@@ -199,7 +198,7 @@ export const Tooltip = ({
   const [tooltipRef, setTooltipRef] = React.useState<HTMLElement | null>(null);
   const [target, setTarget] = React.useState<HTMLElement>();
 
-  if (IS_DEV) {
+  if (process.env.NODE_ENV === 'development') {
     const multiChildren = React.Children.count(children) > 1;
     // Empty children is a noop
     const primitiveChild = hasReactNode(children) && typeof children !== 'object';
@@ -229,7 +228,7 @@ export const Tooltip = ({
   /* eslint-enable @typescript-eslint/no-unnecessary-type-assertion*/
   /* eslint-enable no-restricted-properties */
 
-  if (IS_DEV && target && !tooltipContainer) {
+  if (process.env.NODE_ENV === 'development' && target && !tooltipContainer) {
     throw new Error('Use TooltipContainer for Tooltip outside Panel (see docs)');
   }
 
