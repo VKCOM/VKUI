@@ -18,10 +18,12 @@ const PROGRESS_MAX_VALUE = 100;
  */
 export const Progress = ({ value = 0, getRootRef, className, ...restProps }: ProgressProps) => {
   const progress = clamp(value, PROGRESS_MIN_VALUE, PROGRESS_MAX_VALUE);
+  const title = `${progress} / ${PROGRESS_MAX_VALUE}`;
 
   return (
     <div
       aria-valuenow={value}
+      title={title}
       {...restProps}
       role="progressbar"
       aria-valuemin={PROGRESS_MIN_VALUE}
