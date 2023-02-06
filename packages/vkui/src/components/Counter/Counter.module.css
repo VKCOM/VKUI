@@ -115,7 +115,7 @@
  * WriteBarIcon
  */
 .WriteBarIcon .Counter--mode-inherit {
-  color: var(--vkui--color_text_contrast);
+  color: var(--vkui--color_text_contrast_themed);
   background: var(--vkui--color_background_positive);
 }
 
