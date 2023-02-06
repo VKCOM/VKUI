@@ -1,9 +1,12 @@
 import * as React from 'react';
 import {
+  Icon24Attach,
+  Icon24CheckCircleOutline,
   Icon24Send,
   Icon28AddCircleOutline,
   Icon28AttachOutline,
   Icon28CheckCircleOutline,
+  Icon28Send,
   Icon48WritebarDone,
   Icon48WritebarSend,
 } from '@vkontakte/icons';
@@ -13,6 +16,7 @@ import { Platform } from '../../lib/platform';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
 import { Counter } from '../Counter/Counter';
 import { Tappable } from '../Tappable/Tappable';
+import { WriteBarIconRenderer } from './WriteBarIconRenderer';
 import styles from './WriteBarIcon.module.css';
 
 export interface WriteBarIconProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -44,23 +48,31 @@ export const WriteBarIcon = ({
   ...restProps
 }: WriteBarIconProps) => {
   const platform = usePlatform();
-
-  let icon: React.ReactNode;
   let modeLabel: string | undefined = undefined;
 
+  let predefinedIcons;
   switch (mode) {
     case 'attach':
-      icon = platform === Platform.IOS ? <Icon28AddCircleOutline /> : <Icon28AttachOutline />;
+      predefinedIcons = {
+        IconCompact: platform === Platform.IOS ? Icon28AddCircleOutline : Icon24Attach,
+        IconRegular: platform === Platform.IOS ? Icon28AddCircleOutline : Icon28AttachOutline,
+      };
       modeLabel = 'Прикрепить файл';
       break;
 
     case 'send':
-      icon = platform === Platform.IOS ? <Icon48WritebarSend /> : <Icon24Send />;
+      predefinedIcons = {
+        IconCompact: platform === Platform.IOS ? Icon48WritebarSend : Icon24Send,
+        IconRegular: platform === Platform.IOS ? Icon48WritebarSend : Icon28Send,
+      };
       modeLabel = 'Отправить';
       break;
 
     case 'done':
-      icon = platform === Platform.IOS ? <Icon48WritebarDone /> : <Icon28CheckCircleOutline />;
+      predefinedIcons = {
+        IconCompact: platform === Platform.IOS ? Icon48WritebarDone : Icon24CheckCircleOutline,
+        IconRegular: platform === Platform.IOS ? Icon48WritebarDone : Icon28CheckCircleOutline,
+      };
       modeLabel = 'Готово';
       break;
 
@@ -90,7 +102,9 @@ export const WriteBarIcon = ({
         className,
       )}
     >
-      <span className={styles['WriteBarIcon__in']}>{icon || children}</span>
+      <span className={styles['WriteBarIcon__in']}>
+        {predefinedIcons ? <WriteBarIconRenderer {...predefinedIcons} /> : children}
+      </span>
       {hasReactNode(count) && (
         <Counter className={styles['WriteBarIcon__counter']} size="s">
           {count}

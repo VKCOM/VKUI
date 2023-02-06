@@ -52,16 +52,6 @@
   padding-right: 0;
 }
 
-.WriteBarIcon--ios.WriteBarIcon--mode-send:first-child,
-.WriteBarIcon--ios.WriteBarIcon--mode-done:first-child {
-  margin-left: -4px;
-}
-
-.WriteBarIcon--ios.WriteBarIcon--mode-send:last-child,
-.WriteBarIcon--ios.WriteBarIcon--mode-done:last-child {
-  margin-right: -4px;
-}
-
 .WriteBarIcon--mode-attach {
   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }
