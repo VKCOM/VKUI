@@ -4,7 +4,7 @@
   font-family: var(--font-common);
   transform: translate3d(0, 0, 0);
   line-height: normal;
-  padding: 8px 16px;
+  padding: 8px var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .Search__in {
@@ -439,11 +439,4 @@
 
 .Group--card .Search--vkcom .Search__input {
   padding-left: 44px;
-}
-
-/**
-  IOS
-*/
-.Search--ios {
-  padding: 8px 12px;
 }
