@@ -4,7 +4,7 @@
   font-family: var(--vkui--font_family_base);
   transform: translate3d(0, 0, 0);
   line-height: normal;
-  padding: 8px 16px;
+  padding: 8px var(--vkui--size_base_padding_horizontal--regular);
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -332,9 +332,6 @@
   background-color: var(--vkui--color_header_background);
 }
 
-/**
-  IOS
-*/
 .Search--ios {
-  padding: 8px 12px;
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }
