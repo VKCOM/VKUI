@@ -53,10 +53,10 @@
 }
 
 /* TODO v5.0.0 новая адаптивность */
-.Tabs--sizeX-compact.Tabs--withGaps .HorizontalScroll__in-wrapper::after,
-.Tabs--sizeX-compact.Tabs--withGaps .HorizontalScroll__in-wrapper::before {
+.Tabs--withGaps .HorizontalScroll__in-wrapper::after,
+.Tabs--withGaps .HorizontalScroll__in-wrapper::before {
   display: block;
-  width: 8px;
+  width: var(--vkui--size_base_padding_horizontal--regular);
   flex-shrink: 0;
   height: 1px;
   content: "";

@@ -13,8 +13,11 @@
 
 .TabsItem--withGaps {
   margin-top: 8px;
-  margin-left: 6px;
   margin-bottom: 8px;
+}
+
+.TabsItem--withGaps:not(:first-of-type) {
+  margin-left: 6px;
 }
 
 /* TODO v5.0.0 новая адаптивность */
