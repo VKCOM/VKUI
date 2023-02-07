@@ -1,9 +1,15 @@
+name: 'Reusable workflow / Unit tests'
+
 on:
   workflow_call:
     inputs:
       ref:
         description: 'The branch, tag or SHA to checkout'
         default: ${{ github.ref }}
+        required: false
+        type: string
+      workspace:
+        description: 'Workspace to run tests in (if empty, runs tests for all workspaces)'
         required: false
         type: string
 
@@ -20,8 +26,13 @@ jobs:
           cache: 'yarn'
       - run: yarn install --frozen-lockfile --ignore-scripts
 
-      - name: Run tests
-        run: yarn run test:ci
+      - name: Run tests for all workspaces
+        if: ${{ !inputs.workspace }}
+        run: yarn workspaces run test:ci
+
+      - name: Run tests for the specified workspace
+        if: ${{ inputs.workspace }}
+        run: yarn workspace ${{ inputs.workspace }} run test:ci
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
