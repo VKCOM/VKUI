@@ -22,9 +22,10 @@ export enum Keys {
   HOME = 'Home',
   END = 'End',
   ARROW_LEFT = 'ArrowLeft',
-  ARROW_RIGHT = 'ArrowRight',
   ARROW_UP = 'ArrowUp',
+  ARROW_RIGHT = 'ArrowRight',
   ARROW_DOWN = 'ArrowDown',
+  BACKSPACE = 'Backspace',
   PAGE_UP = 'PageUp',
   PAGE_DOWN = 'PageDown',
 }
@@ -72,14 +73,14 @@ const ACCESSIBLE_KEYS: AccessibleKey[] = [
     keyCode: 37,
   },
   {
+    code: Keys.ARROW_UP,
+    key: ['ArrowUp'],
+    keyCode: 38,
+  },
+  {
     code: Keys.ARROW_RIGHT,
     key: ['ArrowRight'],
     keyCode: 39,
-  },
-  {
-    code: Keys.ARROW_UP,
-    key: ['ArrowUp'],
-    keyCode: 40,
   },
   {
     code: Keys.ARROW_DOWN,
@@ -87,14 +88,19 @@ const ACCESSIBLE_KEYS: AccessibleKey[] = [
     keyCode: 40,
   },
   {
+    code: Keys.BACKSPACE,
+    key: ['Backspace'],
+    keyCode: 8,
+  },
+  {
     code: Keys.PAGE_UP,
     key: ['PageUp'],
-    keyCode: 40,
+    keyCode: 33,
   },
   {
     code: Keys.PAGE_DOWN,
     key: ['PageDown'],
-    keyCode: 40,
+    keyCode: 34,
   },
 ];
 
