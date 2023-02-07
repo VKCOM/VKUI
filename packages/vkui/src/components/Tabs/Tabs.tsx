@@ -6,9 +6,13 @@ import { Platform } from '../../lib/platform';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { useDOM } from '../../lib/dom';
 import { pressedKey } from '../../lib/accessibility';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import styles from './Tabs.module.css';
+
+const modeClassNames = {
+  default: styles['Tabs--mode-default'],
+  accent: styles['Tabs--mode-accent'],
+  secondary: styles['Tabs--mode-secondary'],
+};
 
 export interface TabsProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -38,7 +42,6 @@ export const Tabs = ({
   ...restProps
 }: TabsProps) => {
   const platform = usePlatform();
-  const { sizeX } = useAdaptivity();
   const { document } = useDOM();
 
   const isTabFlow = role === 'tablist';
@@ -145,10 +148,9 @@ export const Tabs = ({
       ref={getRootRef}
       className={classNames(
         styles['Tabs'],
-        platform === Platform.VKCOM && styles[`Tabs--${platform}`],
-        getSizeXClassName(styles['Tabs'], sizeX),
+        platform === Platform.VKCOM && styles['Tabs--vkcom'],
         withGaps && styles['Tabs--withGaps'],
-        styles[`Tabs--mode-${mode}`],
+        modeClassNames[mode],
         className,
       )}
       role={role}
