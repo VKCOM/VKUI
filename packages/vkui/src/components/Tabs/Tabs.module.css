@@ -34,36 +34,6 @@
   margin-top: -4px;
 }
 
-.Tabs--mode-default,
-.Tabs--mode-default .HorizontalScroll__in-wrapper {
-  justify-content: center;
-}
-
-.Tabs--buttons,
-.Tabs--mode-default .HorizontalScroll__in-wrapper {
-  justify-content: flex-start;
-}
-
-.Tabs--sizeX-compact.Tabs--buttons .HorizontalScroll__in-wrapper::after,
-.Tabs--sizeX-compact.Tabs--buttons .HorizontalScroll__in-wrapper::before {
-  display: block;
-  width: 8px;
-  flex-shrink: 0;
-  height: 1px;
-  content: '';
-}
-
-@media (--sizeX-compact) {
-  .Tabs--sizeX-none.Tabs--buttons .HorizontalScroll__in-wrapper::after,
-  .Tabs--sizeX-none.Tabs--buttons .HorizontalScroll__in-wrapper::before {
-    display: block;
-    width: 8px;
-    flex-shrink: 0;
-    height: 1px;
-    content: '';
-  }
-}
-
 /* Нужно для закрашивания прозрачной области нижнего инсета на iphone x */
 .FixedLayout--ios.FixedLayout--vertical-bottom .Tabs::after {
   position: absolute;
