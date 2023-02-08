@@ -80,7 +80,7 @@
     "postcss-cli": "^10.0.0",
     "postcss-csso": "^6.0.0",
     "postcss-custom-media": "^8.0.0",
-    "postcss-custom-properties": "^12.1.7",
+    "postcss-custom-properties": "^13.1.2",
     "postcss-import": "^15.0.0",
     "postcss-loader": "^7.0.1",
     "postcss-modules": "^6.0.0",
