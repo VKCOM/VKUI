@@ -230,15 +230,17 @@ export const Touch = ({
     if (!didSlide.current) {
       return onClickCapture && onClickCapture(e);
     }
-    // eslint-disable-next-line no-restricted-properties
-    if ((e.target as HTMLElement).closest('a')) {
-      e.preventDefault();
-    }
+
     if (noSlideClick) {
       e.stopPropagation();
+
+      // https://github.com/VKCOM/VKUI/issues/1977
+      // https://github.com/VKCOM/VKUI/issues/3892
+      e.preventDefault();
     } else {
       onClickCapture && onClickCapture(e);
     }
+
     didSlide.current = false;
   };
 

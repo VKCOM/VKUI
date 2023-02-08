@@ -5,6 +5,13 @@ import userEvent from '@testing-library/user-event';
 import { noop } from '@vkontakte/vkjs';
 import { Touch } from './Touch';
 import { createElement } from 'react';
+import { View } from '../View/View';
+import { Panel } from '../Panel/Panel';
+import { PanelHeader } from '../PanelHeader/PanelHeader';
+import { Group } from '../Group/Group';
+import { CardScroll } from '../CardScroll/CardScroll';
+import { Card } from '../Card/Card';
+import { Button } from '../Button/Button';
 
 // Настоящего Touch нет в jsdom: https://github.com/jsdom/jsdom/issues/1508
 const asClientPos = ([clientX = 0, clientY = 0] = []): Touch & MouseEvent =>
@@ -294,6 +301,49 @@ describe('Touch', () => {
     });
   });
 
+  describe('prevents link click after slide', () => {
+    it('with simple link', () => {
+      render(
+        <Touch noSlideClick onMove={noop}>
+          <a href="/hello" />
+        </Touch>,
+      );
+      const hasDefault = slideRight(screen.getByRole('link'));
+      expect(hasDefault).toBe(false);
+    });
+    it('on link child', () => {
+      render(
+        <Touch noSlideClick onMove={noop}>
+          <a href="/hello">
+            <div data-testid="xxx" />
+          </a>
+        </Touch>,
+      );
+      const hasDefault = slideRight(screen.getByTestId('xxx'));
+      expect(hasDefault).toBe(false);
+    });
+    it('inside link', () => {
+      render(
+        <a href="/hello">
+          <Touch noSlideClick onMove={noop}>
+            <div data-testid="xxx" />
+          </Touch>
+        </a>,
+      );
+      const hasDefault = slideRight(screen.getByTestId('xxx'));
+      expect(hasDefault).toBe(false);
+    });
+    it('when Touch is link', () => {
+      render(
+        <Touch noSlideClick Component="a" onMove={noop}>
+          <div data-testid="xxx" />
+        </Touch>,
+      );
+      const hasDefault = slideRight(screen.getByTestId('xxx'));
+      expect(hasDefault).toBe(false);
+    });
+  });
+
   describe('prevents click after slide', () => {
     it('does not prevent link click', () => {
       render(
@@ -306,48 +356,6 @@ describe('Touch', () => {
         [10, 10],
       ]);
       expect(hasDefault).toBe(true);
-    });
-    describe('prevents link click after slide', () => {
-      it('with simple link', () => {
-        render(
-          <Touch onMove={noop}>
-            <a href="/hello" />
-          </Touch>,
-        );
-        const hasDefault = slideRight(screen.getByRole('link'));
-        expect(hasDefault).toBe(false);
-      });
-      it('on link child', () => {
-        render(
-          <Touch onMove={noop}>
-            <a href="/hello">
-              <div data-testid="xxx" />
-            </a>
-          </Touch>,
-        );
-        const hasDefault = slideRight(screen.getByTestId('xxx'));
-        expect(hasDefault).toBe(false);
-      });
-      it('inside link', () => {
-        render(
-          <a href="/hello">
-            <Touch onMove={noop}>
-              <div data-testid="xxx" />
-            </Touch>
-          </a>,
-        );
-        const hasDefault = slideRight(screen.getByTestId('xxx'));
-        expect(hasDefault).toBe(false);
-      });
-      it('when Touch is link', () => {
-        render(
-          <Touch Component="a" onMove={noop}>
-            <div data-testid="xxx" />
-          </Touch>,
-        );
-        const hasDefault = slideRight(screen.getByTestId('xxx'));
-        expect(hasDefault).toBe(false);
-      });
     });
     it('handles onClickCapture', () => {
       const cb = jest.fn(() => null);
@@ -381,6 +389,46 @@ describe('Touch', () => {
       slideRight(screen.getByTestId('touch'));
       userEvent.click(screen.getByTestId('touch'));
       expect(cb).toBeCalled();
+    });
+    it('does not prevent click of a button after slide of a parent on mobile', () => {
+      window['ontouchstart'] = null;
+      render(
+        <View activePanel="card">
+          <Panel id="card">
+            <PanelHeader>CardScroll</PanelHeader>
+            <Group description="Внутри Group">
+              <CardScroll size="s">
+                <Card>
+                  <div style={{ paddingBottom: '66%' }} />
+                </Card>
+                <Card data-testid="card">
+                  <div style={{ paddingBottom: '66%' }}>
+                    <Button data-testid="button" href="vk.com" />
+                  </div>
+                </Card>
+                <Card>
+                  <div style={{ paddingBottom: '66%' }} />
+                </Card>
+                <Card>
+                  <div style={{ paddingBottom: '66%' }} />
+                </Card>
+                <Card>
+                  <div style={{ paddingBottom: '66%' }} />
+                </Card>
+                <Card>
+                  <div style={{ paddingBottom: '66%' }} />
+                </Card>
+              </CardScroll>
+            </Group>
+          </Panel>
+        </View>,
+      );
+      fireTouchSwipe(screen.getByTestId('card'), [
+        [0, 0],
+        [6, 0],
+      ]);
+      const hasDefault = fireEvent.click(screen.getByTestId('button'));
+      expect(hasDefault).toBe(true);
     });
   });
 });
