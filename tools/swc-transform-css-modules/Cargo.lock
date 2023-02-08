@@ -881,6 +881,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "psm"
+version = "0.1.21"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5787f7cda34e3033a72192c018bc5883100330f362ef279a8cbccfce8bb4e874"
+dependencies = [
+ "cc",
+]
+
+[[package]]
 name = "ptr_meta"
 version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1180,6 +1189,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a8f112729512f8e442d81f95a8a7ddf2b7c6b8a1a6f509a95864142b30cab2d3"
 
 [[package]]
+name = "stacker"
+version = "0.1.15"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c886bd4480155fd3ef527d45e9ac8dd7118a898a46530b7b94c3e21866259fce"
+dependencies = [
+ "cc",
+ "cfg-if",
+ "libc",
+ "psm",
+ "winapi",
+]
+
+[[package]]
 name = "static_assertions"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1386,9 +1408,9 @@ dependencies = [
 
 [[package]]
 name = "swc_ecma_parser"
-version = "0.124.5"
+version = "0.124.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9e75888eabf1ad8a8968e3befc7cd20c10e4721254d3344285bd5c3a42f58dc1"
+checksum = "cf4285f28eb4c0c817347155a442ad5bed519147960b22bf428f34487ba39219"
 dependencies = [
  "either",
  "enum_kind",
@@ -1396,6 +1418,7 @@ dependencies = [
  "num-bigint",
  "serde",
  "smallvec",
+ "stacker",
  "swc_atoms",
  "swc_common",
  "swc_ecma_ast",
