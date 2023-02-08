@@ -79,9 +79,10 @@ jobs:
         run: yarn run docs:styleguide:build --dist dist/${{ steps.updated_version.outputs.version }}
 
       - name: Publishing doc
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: styleguide/dist
-          CLEAN: false
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: styleguide/dist
+          clean: false
+          force: false
