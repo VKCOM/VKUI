@@ -1354,9 +1354,9 @@ dependencies = [
 
 [[package]]
 name = "swc_ecma_codegen"
-version = "0.129.8"
+version = "0.129.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "45f8f20522626a737753381bdf64ee53d568730f9f7e720d35960de97e5ff965"
+checksum = "244f2a7108c4ad4f7308f57ec0c0844fc18b7578141a87f158e1bb28b861efda"
 dependencies = [
  "memchr",
  "num-bigint",
