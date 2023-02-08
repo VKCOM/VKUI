@@ -81,7 +81,7 @@ export function baselineComponent<Props extends BasicProps>(
       const { rerender } = render(
         <Component data-testid="__cmp__" className={cls} style={{ background: 'red' }} />,
       );
-      await waitForPopper();
+      await waitForFloatingPosition();
       // forward DOM attributes
       domAttr && expect(screen.queryByTestId('__cmp__')).toBeTruthy();
 
@@ -191,12 +191,9 @@ Object.defineProperty(HTMLElement.prototype, 'offsetParent', {
   },
 });
 
-// Popper update() - https://github.com/popperjs/react-popper/issues/350
-export async function waitForPopper() {
-  await act(async () => {
-    // eslint-disable-next-line @typescript-eslint/await-thenable
-    await null;
-  });
+// https://floating-ui.com/docs/react#testing
+export async function waitForFloatingPosition() {
+  await act(async () => void 0);
 }
 
 // Не реализован в JSDOM.

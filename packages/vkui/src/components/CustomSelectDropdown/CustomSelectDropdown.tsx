@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { Modifier } from 'react-popper';
 import { CustomScrollView } from '../CustomScrollView/CustomScrollView';
 import { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
-import { classNames, noop } from '@vkontakte/vkjs';
-import { Popper, Placement } from '../Popper/Popper';
+import { classNames } from '@vkontakte/vkjs';
+import { Popper } from '../Popper/Popper';
 import { Spinner } from '../Spinner/Spinner';
 import { HasRef } from '../../types';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import type { Placement } from '../../lib/floating';
 import styles from './CustomSelectDropdown.module.css';
 
 export interface CustomSelectDropdownProps
@@ -16,7 +15,6 @@ export interface CustomSelectDropdownProps
   targetRef: React.RefObject<HTMLElement>;
   placement?: Placement;
   scrollBoxRef?: React.Ref<HTMLDivElement>;
-  observableRefs?: Array<React.RefObject<HTMLElement>> | React.RefObject<HTMLElement>;
   fetching?: boolean;
   offsetDistance?: number;
   sameWidth?: boolean;
@@ -25,27 +23,6 @@ export interface CustomSelectDropdownProps
 }
 
 const calcIsTop = (placement?: Placement) => placement?.includes('top');
-
-function getObserverModifier<T extends HTMLElement>(element: T): Modifier<string> {
-  return {
-    name: 'customSelectChildrenChange',
-    enabled: true,
-    phase: 'main',
-    fn: noop,
-    effect: ({ instance }) => {
-      const observer = new MutationObserver(instance.forceUpdate);
-
-      observer.observe(element, {
-        childList: true,
-        subtree: true,
-      });
-
-      return () => {
-        observer.disconnect();
-      };
-    },
-  };
-}
 
 export const CustomSelectDropdown = ({
   children,
@@ -59,31 +36,10 @@ export const CustomSelectDropdown = ({
   forcePortal = true,
   autoHideScrollbar,
   autoHideScrollbarDelay,
-  observableRefs,
   className,
   ...restProps
 }: CustomSelectDropdownProps) => {
   const [isTop, setIsTop] = React.useState(() => calcIsTop(placement));
-  const [customModifiers, setCustomModifiers] = React.useState<Array<Modifier<string>>>([]);
-
-  useIsomorphicLayoutEffect(() => {
-    if (!observableRefs) {
-      return;
-    }
-    const customModifiers: Array<Modifier<string>> = [];
-
-    if (Array.isArray(observableRefs)) {
-      for (const ref of observableRefs) {
-        if (ref?.current) {
-          customModifiers.push(getObserverModifier(ref.current));
-        }
-      }
-    } else if (observableRefs.current) {
-      customModifiers.push(getObserverModifier(observableRefs.current));
-    }
-
-    setCustomModifiers(customModifiers);
-  }, [observableRefs]);
 
   const onPlacementChange = React.useCallback(
     ({ placement }: { placement?: Placement }) => {
@@ -108,7 +64,7 @@ export const CustomSelectDropdown = ({
         className,
       )}
       forcePortal={forcePortal}
-      customModifiers={customModifiers}
+      autoUpdateOnTargetResize
       {...restProps}
     >
       <CustomScrollView

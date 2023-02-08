@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { baselineComponent, waitForPopper, runAllTimers } from '../../testing/utils';
+import { baselineComponent, waitForFloatingPosition, runAllTimers } from '../../testing/utils';
 import { FocusTrap, FocusTrapProps } from './FocusTrap';
 import { AppRoot } from '../AppRoot/AppRoot';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
@@ -75,7 +75,7 @@ describe('FocusTrap', () => {
 
   const mountActionSheetViaClick = async () => {
     userEvent.click(screen.getByTestId('toggle')); // mount ActionSheet
-    await waitForPopper();
+    await waitForFloatingPosition();
     runAllTimers();
   };
 
@@ -132,7 +132,7 @@ describe('FocusTrap', () => {
     const mountViaKeyboard = async () => {
       userEvent.tab(); // focus toggle via keyboard
       userEvent.keyboard('{enter}'); // mount ActionSheet via keyboard
-      await waitForPopper();
+      await waitForFloatingPosition();
       runAllTimers();
     };
 

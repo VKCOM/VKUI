@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
-import { baselineComponent, waitForPopper, runAllTimers } from '../../testing/utils';
+import { baselineComponent, waitForFloatingPosition, runAllTimers } from '../../testing/utils';
 import { ActionSheet, ActionSheetProps } from './ActionSheet';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import userEvent from '@testing-library/user-event';
@@ -45,7 +45,7 @@ describe('ActionSheet', () => {
             <ActionSheetItem {...props} {...handlers} {...props} data-testid="item" />
           </ActionSheet>,
         );
-        await waitForPopper();
+        await waitForFloatingPosition();
         userEvent.click(screen.getByTestId('item'));
 
         runAllTimers();
@@ -64,7 +64,7 @@ describe('ActionSheet', () => {
           <div data-testid="xxx" />
         </ActionSheet>,
       );
-      await waitForPopper();
+      await waitForFloatingPosition();
       runAllTimers();
       userEvent.click(getNode());
       expect(onClose).not.toBeCalled();
@@ -75,7 +75,7 @@ describe('ActionSheet', () => {
     it('closes on click outside', async () => {
       const onClose = jest.fn();
       render(<ActionSheetDesktop onClose={onClose} />);
-      await waitForPopper();
+      await waitForFloatingPosition();
       runAllTimers();
       userEvent.click(document.body);
       runAllTimers();
@@ -84,7 +84,7 @@ describe('ActionSheet', () => {
     it('calls popupDirection with element', async () => {
       const popupDirection = jest.fn();
       render(<ActionSheetDesktop popupDirection={popupDirection} />);
-      await waitForPopper();
+      await waitForFloatingPosition();
       expect(popupDirection).toBeCalledWith({
         current: document.querySelector('.vkuiActionSheet'),
       });
@@ -95,7 +95,7 @@ describe('ActionSheet', () => {
     it('closes on overlay click', async () => {
       const onClose = jest.fn();
       render(<ActionSheetMobile onClose={onClose} />);
-      await waitForPopper();
+      await waitForFloatingPosition();
       runAllTimers();
       userEvent.click(document.querySelector('.vkuiPopoutWrapper__overlay') as Element);
       runAllTimers();

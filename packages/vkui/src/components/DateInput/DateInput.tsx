@@ -2,16 +2,17 @@ import * as React from 'react';
 import { format, isMatch, parse } from '../../lib/date';
 import { Icon16Clear, Icon20CalendarOutline } from '@vkontakte/icons';
 import { Calendar, CalendarProps } from '../Calendar/Calendar';
-import { Popper, Placement } from '../Popper/Popper';
-import { multiRef } from '../../lib/utils';
+import { Popper } from '../Popper/Popper';
 import { IconButton } from '../IconButton/IconButton';
 import { classNames } from '@vkontakte/vkjs';
 import { FormField, FormFieldProps } from '../FormField/FormField';
 import { HasRootRef } from '../../types';
 import { useDateInput } from '../../hooks/useDateInput';
+import { useExternRef } from '../../hooks/useExternRef';
 import { InputLike } from '../InputLike/InputLike';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import type { PlacementWithAuto } from '../../lib/floating';
 import { callMultiple } from '../../lib/callMultiple';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import styles from './DateInput.module.css';
@@ -47,7 +48,7 @@ export interface DateInputProps
     >,
     HasRootRef<HTMLDivElement>,
     FormFieldProps {
-  calendarPlacement?: Placement;
+  calendarPlacement?: PlacementWithAuto;
   closeOnChange?: boolean;
   clearFieldAriaLabel?: string;
   showCalendarAriaLabel?: string;
@@ -197,6 +198,8 @@ export const DateInput = ({
 
   const { sizeY } = useAdaptivity();
 
+  const handleRootRef = useExternRef(rootRef, getRootRef);
+
   const onCalendarChange = React.useCallback(
     (value?: Date | undefined) => {
       onChange?.(value);
@@ -215,7 +218,7 @@ export const DateInput = ({
         getSizeYClassName(styles['DateInput'], sizeY),
         className,
       )}
-      getRootRef={multiRef(rootRef, getRootRef)}
+      getRootRef={handleRootRef}
       after={
         value ? (
           <IconButton hoverMode="opacity" aria-label={clearFieldAriaLabel} onClick={clear}>
