@@ -46,29 +46,29 @@ export const WriteBarIcon = ({
   const platform = usePlatform();
 
   let icon: React.ReactNode;
-  let ariaLabel: string | undefined = undefined;
+  let modeLabel: string | undefined = undefined;
 
   switch (mode) {
     case 'attach':
       icon = platform === Platform.IOS ? <Icon28AddCircleOutline /> : <Icon28AttachOutline />;
-      ariaLabel = 'Прикрепить файл';
+      modeLabel = 'Прикрепить файл';
       break;
 
     case 'send':
       icon = platform === Platform.IOS ? <Icon48WritebarSend /> : <Icon24Send />;
-      ariaLabel = 'Отправить';
+      modeLabel = 'Отправить';
       break;
 
     case 'done':
       icon = platform === Platform.IOS ? <Icon48WritebarDone /> : <Icon28CheckCircleOutline />;
-      ariaLabel = 'Готово';
+      modeLabel = 'Готово';
       break;
 
     default:
       break;
   }
 
-  if (process.env.NODE_ENV === 'development' && !restProps['aria-label'] && !ariaLabel) {
+  if (process.env.NODE_ENV === 'development' && !restProps['aria-label'] && !modeLabel) {
     warn(
       'a11y: У WriteBarIcon нет aria-label. Кнопка будет недоступной для части пользователей.',
       'error',
@@ -77,7 +77,7 @@ export const WriteBarIcon = ({
 
   return (
     <Tappable
-      aria-label={ariaLabel}
+      aria-label={modeLabel}
       {...restProps}
       Component="button"
       hasHover={false}
