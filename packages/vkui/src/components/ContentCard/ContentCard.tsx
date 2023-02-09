@@ -55,7 +55,7 @@ export const ContentCard = ({
   maxHeight,
   src,
   srcSet,
-  alt,
+  alt = '',
   width,
   height,
   crossOrigin,
