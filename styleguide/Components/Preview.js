@@ -9,6 +9,7 @@ import {
   classNames,
   ConfigProvider,
   PanelHeader,
+  PanelSpinner,
   Platform,
   PlatformProvider,
   SplitCol,

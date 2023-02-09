@@ -1,5 +1,5 @@
 import React from 'react';
-import { Div, PanelSpinner, Platform, SimpleCell } from '@vkui';
+import { Div, ModalPage, ModalPageHeader, PanelSpinner, Platform, SimpleCell } from '@vkui';
 import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
 import { useFetch } from './useFetch';
 
