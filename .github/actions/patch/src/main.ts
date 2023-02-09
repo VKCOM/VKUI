@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-
+import * as path from 'path';
 import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import * as github from '@actions/github';
@@ -35,6 +35,7 @@ async function run(): Promise<void> {
       github.context.payload.pull_request?.base.repo.id !==
       github.context.payload.pull_request?.head.repo.id;
     const token = core.getInput('token', { required: true });
+    const directory = core.getInput('directory');
     const pullNumber = getPrNumber();
 
     const gh = github.getOctokit(token);
@@ -46,7 +47,7 @@ async function run(): Promise<void> {
       });
     };
 
-    const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
+    const pkg = JSON.parse(fs.readFileSync(path.join(directory, 'package.json'), 'utf-8'));
     const semVer = new SemVer(pkg.version);
 
     const stableBranchRef = stableBranchName(semVer);
