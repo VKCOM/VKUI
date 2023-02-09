@@ -75,15 +75,16 @@ export const AppRoot = ({
 
   // setup root classes
   useIsomorphicLayoutEffect(() => {
-    if (mode !== 'embedded') {
+    if (mode === 'partial') {
       return noop;
     }
 
     const parent = rootRef.current?.parentElement;
-    parent?.classList.add('vkui__root--embedded');
+    const classes = ['vkui__root'].concat(mode === 'embedded' ? 'vkui__root--embedded' : []);
+    parent?.classList.add(...classes);
 
     return () => {
-      parent?.classList.remove('vkui__root--embedded');
+      parent?.classList.remove(...classes);
     };
   }, []);
 
