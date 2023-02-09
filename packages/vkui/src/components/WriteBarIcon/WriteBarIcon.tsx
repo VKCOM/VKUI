@@ -12,7 +12,7 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { Counter } from '../Counter/Counter';
 import { Tappable } from '../Tappable/Tappable';
-import { warnOnce } from '../../lib/warnOnce';
+import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
 import styles from './WriteBarIcon.module.css';
 
 export interface WriteBarIconProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -68,11 +68,12 @@ export const WriteBarIcon = ({
       break;
   }
 
-  if (process.env.NODE_ENV === 'development' && !restProps['aria-label'] && !modeLabel) {
-    warn(
-      'a11y: У WriteBarIcon нет aria-label. Кнопка будет недоступной для части пользователей.',
-      'error',
-    );
+  if (process.env.NODE_ENV === 'development') {
+    const isAccessible = !modeLabel && (!restProps['aria-label'] || restProps['aria-labelledby']);
+
+    if (!isAccessible) {
+      warn(COMMON_WARNINGS.a11y['button-name'], 'error');
+    }
   }
 
   return (
