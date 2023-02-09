@@ -97,7 +97,6 @@ const baseConfig = {
   },
   propsParser: () => ({}),
   exampleMode: 'expand',
-  assetsDir: path.join(__dirname, `assets`),
   sections: [
     {
       title: 'О VKUI',
