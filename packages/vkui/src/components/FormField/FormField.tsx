@@ -40,7 +40,7 @@ interface FormFieldOwnProps
  * @see https://vkcom.github.io/VKUI/#/FormField
  */
 export const FormField = ({
-  Component = 'div',
+  Component = 'span',
   status = 'default',
   children,
   getRootRef,
@@ -66,7 +66,6 @@ export const FormField = ({
 
   return (
     <Component
-      role="presentation"
       {...restProps}
       ref={getRootRef}
       onMouseEnter={handleMouseEnter}
@@ -81,18 +80,10 @@ export const FormField = ({
         className,
       )}
     >
-      {before && (
-        <div role="presentation" className={styles['FormField__before']}>
-          {before}
-        </div>
-      )}
+      {before && <span className={styles['FormField__before']}>{before}</span>}
       {children}
-      {after && (
-        <div role="presentation" className={styles['FormField__after']}>
-          {after}
-        </div>
-      )}
-      <div role="presentation" className={styles['FormField__border']} />
+      {after && <span className={styles['FormField__after']}>{after}</span>}
+      <span aria-hidden className={styles['FormField__border']} />
     </Component>
   );
 };
