@@ -3,7 +3,8 @@
 }
 
 :global(.vkui),
-:global(.vkui) > body {
+:global(.vkui) > body,
+.vkui__root {
   margin: 0;
   padding: 0;
   height: 100%;
