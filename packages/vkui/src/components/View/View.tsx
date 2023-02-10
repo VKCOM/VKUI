@@ -4,7 +4,7 @@ import { animationEvent } from '../../lib/supportEvents';
 import { Platform } from '../../lib/platform';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { useSplitCol } from '../SplitCol/SplitCol';
+import { useSplitCol } from '../SplitCol/SplitColContext';
 import { canUseDOM, useDOM, blurActiveElement } from '../../lib/dom';
 import { useScroll } from '../AppRoot/ScrollContext';
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';

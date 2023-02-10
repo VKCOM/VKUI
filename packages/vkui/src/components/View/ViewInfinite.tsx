@@ -11,7 +11,7 @@ import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
 } from '../ConfigProvider/ConfigProviderContext';
-import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
+import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitColContext';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';

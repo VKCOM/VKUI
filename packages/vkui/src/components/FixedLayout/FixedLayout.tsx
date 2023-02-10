@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Platform } from '../../lib/platform';
 import { classNames } from '@vkontakte/vkjs';
 import { HasRef, HasRootRef } from '../../types';
-import { SplitColContext } from '../SplitCol/SplitCol';
+import { SplitColContext } from '../SplitCol/SplitColContext';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { useDOM } from '../../lib/dom';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
