@@ -13,6 +13,11 @@
   font-family: inherit;
 }
 
+/* Перебиваем селектор в Tappable--sizeX-(compact|none) */
+.HorizontalCell .HorizontalCell__body {
+  border-radius: var(--vkui--size_border_radius--regular);
+}
+
 .HorizontalCell__content {
   color: var(--vkui--color_text_primary);
   word-break: break-all;
@@ -60,12 +65,12 @@
 .HorizontalCell:first-child::before,
 .HorizontalCell:last-child::after {
   content: '';
-  min-width: 10px;
+  min-width: calc(var(--vkui--size_base_padding_horizontal--regular) - 6px);
 }
 
 .HorizontalCell--size-s:first-child::before,
 .HorizontalCell--size-s:last-child::after {
-  min-width: 8px;
+  min-width: calc(var(--vkui--size_base_padding_horizontal--regular) - 8px);
 }
 
 .HorizontalCell--size-s:first-child,

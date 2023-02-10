@@ -8,10 +8,21 @@
   color: var(--vkui--color_icon_secondary);
   background-color: var(--vkui--color_background_secondary);
   background-size: cover;
+  isolation: isolate;
 }
 
-.ImageBase--withBorder {
-  box-shadow: inset 0 0 0 var(--vkui_internal--thin_border) var(--vkui--color_image_border_alpha);
+.ImageBase__border {
+  pointer-events: none;
+  position: absolute;
+  z-index: var(--vkui_internal--z_index_image_base_border);
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  transform-origin: left top;
+  border: var(--vkui_internal--thin_border) solid var(--vkui--color_image_border_alpha);
+  border-radius: inherit;
 }
 
 .ImageBase__img {
