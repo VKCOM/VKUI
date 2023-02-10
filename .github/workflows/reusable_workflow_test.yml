@@ -16,6 +16,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    name: Unit tests
     steps:
       - uses: actions/checkout@v3
         with:
@@ -45,6 +46,4 @@ jobs:
         if: always()
         with:
           name: test-output
-          path: |
-            lint-results.json
-            test-results.json
+          path: test-results.json

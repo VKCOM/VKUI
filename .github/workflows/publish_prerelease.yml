@@ -32,20 +32,27 @@ jobs:
     concurrency: ci-gh-pages
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
-      - uses: actions/setup-node@v3
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'yarn'
           always-auth: true
           registry-url: 'https://registry.npmjs.org'
 
-      - run: yarn install --frozen-lockfile --ignore-scripts
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts
 
-      - run: yarn run test
+      - name: Run lints
+        run: yarn run lint
+
+      - name: Run @vkontakte/vkui unit tests
+        run: yarn workspace @vkontakte/vkui run test
 
       - name: Set Git credentials
         run: |
