@@ -12,7 +12,7 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { Counter } from '../Counter/Counter';
 import { Tappable } from '../Tappable/Tappable';
-import { warnOnce } from '../../lib/warnOnce';
+import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
 import styles from './WriteBarIcon.module.css';
 
 export interface WriteBarIconProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -46,38 +46,39 @@ export const WriteBarIcon = ({
   const platform = usePlatform();
 
   let icon: React.ReactNode;
-  let ariaLabel: string | undefined = undefined;
+  let modeLabel: string | undefined = undefined;
 
   switch (mode) {
     case 'attach':
       icon = platform === Platform.IOS ? <Icon28AddCircleOutline /> : <Icon28AttachOutline />;
-      ariaLabel = 'Прикрепить файл';
+      modeLabel = 'Прикрепить файл';
       break;
 
     case 'send':
       icon = platform === Platform.IOS ? <Icon48WritebarSend /> : <Icon24Send />;
-      ariaLabel = 'Отправить';
+      modeLabel = 'Отправить';
       break;
 
     case 'done':
       icon = platform === Platform.IOS ? <Icon48WritebarDone /> : <Icon28CheckCircleOutline />;
-      ariaLabel = 'Готово';
+      modeLabel = 'Готово';
       break;
 
     default:
       break;
   }
 
-  if (process.env.NODE_ENV === 'development' && !restProps['aria-label'] && !ariaLabel) {
-    warn(
-      'a11y: У WriteBarIcon нет aria-label. Кнопка будет недоступной для части пользователей.',
-      'error',
-    );
+  if (process.env.NODE_ENV === 'development') {
+    const isAccessible = !modeLabel && (!restProps['aria-label'] || restProps['aria-labelledby']);
+
+    if (!isAccessible) {
+      warn(COMMON_WARNINGS.a11y['button-name'], 'error');
+    }
   }
 
   return (
     <Tappable
-      aria-label={ariaLabel}
+      aria-label={modeLabel}
       {...restProps}
       Component="button"
       hasHover={false}

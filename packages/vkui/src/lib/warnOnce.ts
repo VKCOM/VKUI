@@ -15,3 +15,21 @@ export function warnOnce(zone: string): WarnOnceHandler {
     }
   };
 }
+
+function getA11yRuleUrl(ruleName: string): string {
+  // see jest-axe's axe-core dependency
+  const AXE_CORE_MINOR_VERSION = '4.5';
+
+  return `https://dequeuniversity.com/rules/axe/${AXE_CORE_MINOR_VERSION}/${ruleName}`;
+}
+
+export const COMMON_WARNINGS = {
+  a11y: {
+    'button-name': `a11y: Кнопка должна содержать текст, доступный для скринридеров. Чтобы исправить эту ошибку, передайте компоненту текст или свойство aria-label.
+${getA11yRuleUrl('link-name')}`,
+    'link-name': `a11y: Ссыдка должна содержать текст, доступный для скринридеров. Чтобы исправить эту ошибку, передайте компоненту текст или свойство aria-label.
+${getA11yRuleUrl('link-name')}`,
+    'image-alt': `a11y: Изображение должно содержать альтернативный текст, который его описывает. Чтобы исправить эту ошибку, передайте компоненту свойство alt.
+${getA11yRuleUrl('image-alt')}`,
+  },
+};
