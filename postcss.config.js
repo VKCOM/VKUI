@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const postcssGlobalData = require('@csstools/postcss-global-data');
 const cssCustomProperties = require('postcss-custom-properties');
 const restructureVariable = require('@project-tools/postcss-restructure-variable');
 const cssImport = require('postcss-import');
@@ -20,17 +21,38 @@ function getSafelyTmpDirPath(rootPath = __dirname) {
   return tmpDir;
 }
 
+const customMediasPath = './tmp/customMedias.generated.css';
+
+function generateCustomMedias() {
+  const { customMedia } = getCustomMedias();
+
+  getSafelyTmpDirPath();
+
+  const data = Object.entries(customMedia)
+    .map(([key, value]) => {
+      return `@custom-media ${key} ${value};`;
+    })
+    .join('\n');
+
+  fs.writeFileSync(path.join(__dirname, customMediasPath), data, { flag: 'w' });
+}
+
+generateCustomMedias();
+
 module.exports = (ctx) => {
   const plugins = [
+    postcssGlobalData({
+      files: [
+        './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css',
+        VKUI_PACKAGE.PATHS.CSS_CONSTANTS,
+        customMediasPath,
+      ].map((pathSegment) => path.join(__dirname, pathSegment)),
+    }),
     cssImport(),
     checkKeyframes({
       importFrom: path.join(__dirname, VKUI_PACKAGE.PATHS.CSS_ANIMATIONS),
     }),
     cssCustomProperties({
-      importFrom: [
-        './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css',
-        VKUI_PACKAGE.PATHS.CSS_CONSTANTS,
-      ].map((pathSegment) => path.join(__dirname, pathSegment)),
       preserve: true,
       disableDeprecationNotice: true,
     }),
@@ -50,11 +72,7 @@ module.exports = (ctx) => {
       generateScopedName: ctx.options.isSandbox ? (name) => name : generateScopedName,
       getJSON: () => void 0,
     }),
-    postcssCustomMedia({
-      importFrom: getCustomMedias,
-      // см. CONTRIBUTING.md
-      exportTo: path.join(getSafelyTmpDirPath(), 'customMedias.generated.css'),
-    }),
+    postcssCustomMedia(),
   ];
 
   if (process.env.NODE_ENV === 'production') {
