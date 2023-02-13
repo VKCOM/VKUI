@@ -62,11 +62,6 @@
   max-width: var(--vkui--size_popup_large--regular);
 }
 
-/* Для VKCOM `size` работать не будет */
-.ModalPage--vkcom .ModalPage__in-wrap {
-  max-width: 448px;
-}
-
 .ModalPage__in {
   background-color: var(--vkui--color_background_modal);
   overflow: visible;
@@ -136,4 +131,8 @@
 .ModalRoot__modal--dragging .ModalPage__content {
   overflow: hidden;
   touch-action: pan-y;
+}
+
+.ModalPage--sizeX-regular {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

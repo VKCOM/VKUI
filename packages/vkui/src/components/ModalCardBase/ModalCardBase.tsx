@@ -52,6 +52,11 @@ export interface ModalCardBaseProps
    * `aria-label` для кнопки закрытия. Необходим, чтобы кнопка была доступной.
    */
   dismissLabel?: string;
+
+  /**
+   * Задаёт контенту максимальную ширину для десктопной версии.
+   */
+  size?: number;
 }
 
 /**
@@ -67,6 +72,8 @@ export const ModalCardBase = ({
   onClose,
   dismissLabel = 'Скрыть',
   className,
+  style,
+  size: sizeProp,
   ...restProps
 }: ModalCardBaseProps) => {
   const platform = usePlatform();
@@ -74,6 +81,8 @@ export const ModalCardBase = ({
   const isSoftwareKeyboardOpened = useKeyboard().isOpened;
 
   const canShowCloseButtonIOS = platform === Platform.IOS && !isDesktop;
+
+  const size = isDesktop ? sizeProp : undefined;
 
   return (
     <div
@@ -85,6 +94,10 @@ export const ModalCardBase = ({
         className,
       )}
       ref={getRootRef}
+      style={{
+        ...style,
+        maxWidth: size,
+      }}
     >
       <div
         className={classNames(

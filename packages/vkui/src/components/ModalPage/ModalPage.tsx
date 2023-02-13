@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { classNames } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
@@ -13,19 +12,26 @@ import { warnOnce } from '../../lib/warnOnce';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import styles from './ModalPage.module.css';
 
+const sizeXClassNames = {
+  regular: styles['ModalPage--sizeX-regular'],
+  compact: '',
+};
+
+const sizeClassName = {
+  s: styles[`ModalPage--size-s`],
+  m: styles[`ModalPage--size-m`],
+  l: styles[`ModalPage--size-l`],
+};
+
 export interface ModalPageProps extends React.HTMLAttributes<HTMLDivElement>, NavIdProps {
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`
    */
   header?: React.ReactNode;
   /**
-   * Задаёт контенту максимальную ширину.
-   *
-   * > ⚠️ **Заметки:**
-   * > - Для `viewWidth < SMALL_TABLET_SIZE` будет всегда `"s"`
-   * > - Для `platform === VKCOM` максимальная ширина зашита, её не изменить.
+   * Задаёт контенту максимальную ширину для десктопной версии.
    */
-  size?: 's' | 'm' | 'l';
+  size?: 's' | 'm' | 'l' | number;
   /**
    * Будет вызвано при начале открытия модалки.
    */
@@ -100,14 +106,19 @@ export const ModalPage = ({
       className={classNames(
         styles['ModalPage'],
         platform === Platform.IOS && styles['ModalPage--ios'],
-        platform === Platform.VKCOM && styles['ModalPage--vkcom'],
-        getSizeXClassName(styles['ModalPage'], sizeX),
         isDesktop && styles['ModalPage--desktop'],
-        styles[`ModalPage--size-${size}`],
+        sizeXClassNames[sizeX],
+        typeof size === 'string' && sizeClassName[size],
         className,
       )}
     >
-      <div className={styles['ModalPage__in-wrap']} ref={refs.innerElement}>
+      <div
+        className={styles['ModalPage__in-wrap']}
+        style={{
+          maxWidth: typeof size === 'number' ? size : undefined,
+        }}
+        ref={refs.innerElement}
+      >
         <div className={styles['ModalPage__in']}>
           <div className={styles['ModalPage__header']} ref={refs.headerElement}>
             {header}
