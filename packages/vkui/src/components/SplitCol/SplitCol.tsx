@@ -7,6 +7,7 @@ import { ViewWidth } from '../../lib/adaptivity';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { useMediaQueries } from '../../hooks/useMediaQueries';
 import { matchMediaListAddListener, matchMediaListRemoveListener } from '../../lib/matchMedia';
+import { SplitColContext } from './SplitColContext';
 import styles from './SplitCol.module.css';
 
 function useTransitionAnimate(animateProp?: boolean) {
@@ -37,18 +38,6 @@ function useTransitionAnimate(animateProp?: boolean) {
 
   return animate;
 }
-
-export interface SplitColContextProps {
-  colRef: React.RefObject<HTMLDivElement> | null;
-  animate: boolean;
-}
-
-export const SplitColContext = React.createContext<SplitColContextProps>({
-  colRef: null,
-  animate: true,
-});
-
-export const useSplitCol = () => React.useContext(SplitColContext);
 
 export interface SplitColProps extends React.HTMLAttributes<HTMLDivElement> {
   width?: number | string;

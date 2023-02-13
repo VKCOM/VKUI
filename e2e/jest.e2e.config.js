@@ -6,6 +6,9 @@ const { canRunTests, useDocker } = require('./detectEnv');
 const BROWSER = process.env.BROWSER ?? 'chromium';
 const PLATFORM = process.env.PLATFORM ?? 'vkcom';
 
+process.env.BABEL_KEEP_CSS = '1';
+process.env.BABEL_USED_BY_WEBPACK = '1';
+
 const vkcomBrowserMap = {
   firefox: 'Desktop Firefox',
   chromium: 'Desktop Chrome',

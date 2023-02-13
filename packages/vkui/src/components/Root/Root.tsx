@@ -2,7 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { SplitColContext } from '../SplitCol/SplitCol';
+import { SplitColContext } from '../SplitCol/SplitColContext';
 import { ScrollContext } from '../AppRoot/ScrollContext';
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
