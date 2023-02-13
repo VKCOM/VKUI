@@ -124,8 +124,8 @@
  * SubnavigationButton
  */
 .SubnavigationButton .Counter--mode-inherit {
-  background: var(--vkui--color_background_accent);
-  color: var(--vkui--color_text_contrast);
+  background: var(--vkui--color_background_accent_themed);
+  color: var(--vkui--color_text_contrast_themed);
 }
 
 .SubnavigationButton--selected:not(.SubnavigationButton--mode-tertiary) .Counter--mode-inherit {
