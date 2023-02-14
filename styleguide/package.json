@@ -13,6 +13,6 @@
     "prop-types": "15.8.1",
     "react-docgen-typescript": "2.2.2",
     "react-frame-component": "5.2.6",
-    "react-styleguidist": "13.0.0"
+    "react-styleguidist": "13.1.1"
   }
 }

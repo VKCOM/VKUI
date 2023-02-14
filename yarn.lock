@@ -2264,7 +2264,14 @@
   dependencies:
     "@types/react" "^17"
 
-"@types/react@^17", "@types/react@^17.0.0":
+"@types/react-test-renderer@^18.0.0":
+  version "18.0.0"
+  resolved "https://registry.yarnpkg.com/@types/react-test-renderer/-/react-test-renderer-18.0.0.tgz#7b7f69ca98821ea5501b21ba24ea7b6139da2243"
+  integrity sha512-C7/5FBJ3g3sqUahguGi03O79b8afNeSD6T8/GU50oQrJCU0bVCCGQHaGKUbg2Ce8VQEEqTw8/HiS6lXHHdgkdQ==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*", "@types/react@^17", "@types/react@^17.0.0":
   version "17.0.50"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.50.tgz#39abb4f7098f546cfcd6b51207c90c4295ee81fc"
   integrity sha512-ZCBHzpDb5skMnc1zFXAXnL3l1FAdi+xZvwxK+PkglMmBrwjpp9nKaWuEvrGnSifCJmBFGxZOOFuwC6KH/s0NuA==
@@ -2750,12 +2757,7 @@ acorn@^7.1.1, acorn@^7.4.0:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.4.1.tgz#feaed255973d2e77555b83dbc08851a6c63520fa"
   integrity sha512-nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A==
 
-acorn@^8.2.4, acorn@^8.5.0, acorn@^8.7.1:
-  version "8.8.0"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.0.tgz#88c0187620435c7f6015803f5539dae05a9dbea8"
-  integrity sha512-QOxyigPVrpZ2GXT+PFyZTl6TtOFc5egxHIP9IlQ+RbupQuX4RkT/Bee4/kQuC02Xkzg84JcT7oLYtDIQxp+v7w==
-
-acorn@^8.4.1:
+acorn@^8.2.4, acorn@^8.4.1, acorn@^8.5.0, acorn@^8.7.1:
   version "8.8.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.1.tgz#0a3f9cbecc4ec3bea6f0a80b66ae8dd2da250b73"
   integrity sha512-7zFpHzhnqYKrkYdUjF1HI1bzd0VygEGX8lFk4k5zVMqHEoES+P+7TKI+EvLO9WVMJ8eekdO0aDEK044xTXwPPA==
@@ -9958,12 +9960,13 @@ react-simple-code-editor@^0.13.1:
   resolved "https://registry.yarnpkg.com/react-simple-code-editor/-/react-simple-code-editor-0.13.1.tgz#4514553fa132dcaffec33a6612c58f1613c52416"
   integrity sha512-XYeVwRZwgyKtjNIYcAEgg2FaQcCZwhbarnkJIV20U2wkCU9q/CPFBo8nRXrK4GXUz3AvbqZFsZRrpUTkqqEYyQ==
 
-react-styleguidist@13.0.0:
-  version "13.0.0"
-  resolved "https://registry.yarnpkg.com/react-styleguidist/-/react-styleguidist-13.0.0.tgz#e5057a11cb06e907c22fe5db43af95bb8dd954fc"
-  integrity sha512-F8e9aeB9kx5nMRdjAGble8m6GkgO0GPLVKT+EzoedxnnQfenKZB07agnn5klW2Uo4uyu1Ezl1iZbKFISxSbH3g==
+react-styleguidist@13.1.1:
+  version "13.1.1"
+  resolved "https://registry.yarnpkg.com/react-styleguidist/-/react-styleguidist-13.1.1.tgz#cc5c6a3d0575616236aa48576e26e44707b09468"
+  integrity sha512-TUCBTB6+/eLrTKYCJ+7moW8nVKUNhE1Q+C8gJLDgb+z1Vuf3PydHR5uaIzVOnqItygNOI3NLGLgSuPT7MKLfsA==
   dependencies:
     "@tippyjs/react" "4.1.0"
+    "@types/react-test-renderer" "^18.0.0"
     "@vxna/mini-html-webpack-template" "^2.0.0"
     acorn "^6.4.1"
     acorn-jsx "^5.1.0"
@@ -9979,6 +9982,7 @@ react-styleguidist@13.0.0:
     doctrine "^3.0.0"
     es6-object-assign "~1.1.0"
     es6-promise "^4.2.8"
+    escape-string-regexp "^1.0.5"
     escodegen "^1.12.0"
     estree-walker "~0.9.0"
     fastest-levenshtein "^1.0.9"
@@ -9988,6 +9992,7 @@ react-styleguidist@13.0.0:
     glob "^7.1.5"
     glogg "^1.0.2"
     hash-sum "^2.0.0"
+    is-plain-obj "^1.1.0"
     javascript-stringify "^2.0.0"
     jss "^10.9.0"
     jss-plugin-camel-case "^10.9.0"
