@@ -1,51 +1,62 @@
-name: 'Close PR'
+name: 'Close Pull Request'
 
 on:
   pull_request_target:
     types: [closed]
 
 jobs:
-  clear_styleguide:
-    concurrency: ci-gh-pages
-    # skip clear for dependabot
+  undeploy_styleguide:
+    # [Примечание 1] Пропускаем очищение, т.к. для PR от dependabot песочница не создаётся
     if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' }}
+    concurrency: ci-gh-pages
     runs-on: ubuntu-latest
+    name: Undeploy docs (styleguide)
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           ref: gh-pages
+
       - name: Remove styleguide
         run: rm -rf pull/${{ github.event.pull_request.number }}
-      - name: Unpublish styleguide
+
+      - name: Commit it
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'Remove PR ${{ github.event.pull_request.number }}'
           branch: gh-pages
 
   patch:
-    concurrency: ci-stable
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'patch')
+    concurrency: ci-stable
     runs-on: ubuntu-latest
+    name: Patch
     steps:
-      - name: actions/checkout@v3 for forked
-        uses: actions/checkout@v3
+      - name: Checkout (for forked PR)
         if: github.event.pull_request.base.repo.id != github.event.pull_request.head.repo.id
-      - name: actions/checkout@v3 for base
         uses: actions/checkout@v3
+
+      - name: Checkout (for maintainer's PR)
         if: github.event.pull_request.base.repo.id == github.event.pull_request.head.repo.id
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
-      - uses: actions/setup-node@v3
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
         with:
           node-version: 18
+
       - name: Set Git credentials
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Action"
 
-      - run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
         working-directory: ./.github/actions/patch
-      - name: Create patch
+
+      - name: Make patch
         uses: ./.github/actions/patch
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}

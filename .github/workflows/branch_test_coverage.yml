@@ -21,10 +21,12 @@ concurrency:
 
 jobs:
   test:
+    name: Call reusable unit tests workflow
     uses: ./.github/workflows/reusable_workflow_test.yml
     with:
       workspace: '@vkontakte/vkui'
 
   test_e2e:
+    name: Call reusable e2e tests workflow
     # На текущий момент e2e так и так запускается только для @vkontakte/vkui
     uses: ./.github/workflows/reusable_workflow_test_e2e.yml

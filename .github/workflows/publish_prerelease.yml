@@ -1,4 +1,4 @@
-name: 'Publish pre-release'
+name: 'Publish @vkontakte/vkui (pre-release)'
 
 on:
   workflow_dispatch:
@@ -48,7 +48,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile --ignore-scripts
 
-      - name: Run lints
+      - name: Run linters
         run: yarn run lint
 
       - name: Run @vkontakte/vkui unit tests
