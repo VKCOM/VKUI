@@ -131,7 +131,7 @@ class Graph {
 module.exports = (importFrom = []) => {
   return {
     postcssPlugin: 'postcss-restructure-variable',
-    Root(root) {
+    prepare() {
       /**
        * @type {string[]}
        */
@@ -139,92 +139,96 @@ module.exports = (importFrom = []) => {
 
       const graph = new Graph();
 
-      /**
-       *
-       * @param {import('postcss').AtRule} node
-       */
-      const atRuleFind = (node) => {
-        node.each((atRuleNode) => {
-          switch (atRuleNode.type) {
-            case 'rule':
-              atRuleNode.each((decl) => {
-                if (decl.type === 'decl' && decl.variable) {
-                  ignoreValue.push(decl.prop);
-                }
-              });
-              break;
-            case 'atrule':
-              atRuleFind(atRuleNode);
-              break;
-          }
-        });
-      };
-
-      root.each((node) => {
-        if (
-          !node.source ||
-          (node.source !== undefined && !importFrom.includes(node.source.input.file))
-        ) {
-          return;
-        }
-
-        switch (node.type) {
-          case 'rule':
-            const beforeLength = node.nodes.length;
-
-            node.each((decl) => {
-              if (decl.type === 'decl' && decl.variable) {
-                if (ignoreValue.includes(decl.prop)) {
-                  return;
-                }
-                graph.add(node.selectors, decl.prop, decl.value);
-                decl.remove();
+      return {
+        Once: (root) => {
+          /**
+           *
+           * @param {import('postcss').AtRule} node
+           */
+          const atRuleFind = (node) => {
+            node.each((atRuleNode) => {
+              switch (atRuleNode.type) {
+                case 'rule':
+                  atRuleNode.each((decl) => {
+                    if (decl.type === 'decl' && decl.variable) {
+                      ignoreValue.push(decl.prop);
+                    }
+                  });
+                  break;
+                case 'atrule':
+                  atRuleFind(atRuleNode);
+                  break;
               }
             });
+          };
 
-            // Удаляем если селектор оказался пустой, после наших действий
-            if (node.nodes.length === 0 && node.nodes.length !== beforeLength) {
-              node.remove();
+          root.each((node) => {
+            if (
+              !node.source ||
+              (node.source !== undefined && !importFrom.includes(node.source.input.file))
+            ) {
+              return;
             }
-            break;
-          case 'atrule':
-            atRuleFind(node);
-            break;
-        }
-      });
 
-      const source = root.source;
-      if (source.end === undefined) {
-        source.end = source.start;
-      }
+            switch (node.type) {
+              case 'rule':
+                const beforeLength = node.nodes.length;
 
-      const rules = graph.restructure();
+                node.each((decl) => {
+                  if (decl.type === 'decl' && decl.variable) {
+                    if (ignoreValue.includes(decl.prop)) {
+                      return;
+                    }
+                    graph.add(node.selectors, decl.prop, decl.value);
+                    decl.remove();
+                  }
+                });
 
-      let lastRule = undefined;
+                // Удаляем если селектор оказался пустой, после наших действий
+                if (node.nodes.length === 0 && node.nodes.length !== beforeLength) {
+                  node.remove();
+                }
+                break;
+              case 'atrule':
+                atRuleFind(node);
+                break;
+            }
+          });
 
-      rules.forEach(({ decls, selectors }) => {
-        const rule = postcss.rule({
-          selectors: Array.from(selectors),
-          source: source,
-        });
-
-        decls.forEach((value, prop) => {
-          rule.append({ prop, value, source });
-        });
-
-        if (lastRule) {
-          root.insertAfter(lastRule, rule);
-        } else {
-          // Вставляем первым
-          if (root.first) {
-            root.insertBefore(root.first, rule);
-          } else {
-            root.append(rule);
+          const source = root.source;
+          if (source.end === undefined) {
+            source.end = source.start;
           }
-        }
 
-        lastRule = rule;
-      });
+          const rules = graph.restructure();
+
+          let lastRule = undefined;
+
+          rules.forEach(({ decls, selectors }) => {
+            const rule = postcss.rule({
+              selectors: Array.from(selectors),
+              source: source,
+            });
+
+            decls.forEach((value, prop) => {
+              rule.append({ prop, value, source });
+            });
+
+            if (lastRule) {
+              root.insertAfter(lastRule, rule);
+            } else {
+              // Вставляем первым
+              if (root.first) {
+                root.insertBefore(root.first, rule);
+              } else {
+                root.append(rule);
+              }
+            }
+
+            lastRule = rule;
+          });
+        },
+      };
     },
   };
 };
