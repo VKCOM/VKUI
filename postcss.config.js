@@ -41,20 +41,9 @@ generateCustomMedias();
 
 module.exports = (ctx) => {
   const plugins = [
-    postcssGlobalData({
-      files: [
-        './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css',
-        VKUI_PACKAGE.PATHS.CSS_CONSTANTS,
-        customMediasPath,
-      ].map((pathSegment) => path.join(__dirname, pathSegment)),
-    }),
     cssImport(),
     checkKeyframes({
       importFrom: path.join(__dirname, VKUI_PACKAGE.PATHS.CSS_ANIMATIONS),
-    }),
-    cssCustomProperties({
-      preserve: true,
-      disableDeprecationNotice: true,
     }),
     restructureVariable(
       [
@@ -67,6 +56,17 @@ module.exports = (ctx) => {
         './node_modules/@vkontakte/vkui-tokens/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css',
       ].map((pathSegment) => path.join(__dirname, pathSegment)),
     ),
+    postcssGlobalData({
+      files: [
+        './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css',
+        VKUI_PACKAGE.PATHS.CSS_CONSTANTS,
+        customMediasPath,
+      ].map((pathSegment) => path.join(__dirname, pathSegment)),
+    }),
+    cssCustomProperties({
+      preserve: true,
+      disableDeprecationNotice: true,
+    }),
     autoprefixer(),
     cssModules({
       generateScopedName: ctx.options.isSandbox ? (name) => name : generateScopedName,
