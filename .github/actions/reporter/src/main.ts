@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 
 import * as core from '@actions/core';
@@ -14,17 +15,30 @@ async function run(): Promise<void> {
   try {
     const token = core.getInput('token', { required: true });
     const gh = github.getOctokit(token);
-
     const comment = new GitHubCommentBuilder(gh);
 
-    await Promise.all([
-      jest(path.join(process.cwd(), 'test-results.json')),
-      lint(path.join(process.cwd(), 'lint-results.json')),
-      uploadFailedScreenshots(comment, gh),
-      checkFailedScreenTests(path.join(process.cwd(), 'e2e-results.json')),
-      checkUpdatedScreenshots(gh),
-    ]);
+    const jobs = [];
+    const lintResults = path.join(process.cwd(), 'lint-results.json');
+    const testResults = path.join(process.cwd(), 'test-results.json');
+    const e2eResults = path.join(process.cwd(), 'e2e-results.json');
 
+    if (fs.existsSync(lintResults)) {
+      jobs.push(lint(lintResults));
+    }
+
+    if (fs.existsSync(testResults)) {
+      jobs.push(jest(testResults));
+    }
+
+    if (fs.existsSync(e2eResults)) {
+      jobs.push(
+        uploadFailedScreenshots(comment, gh),
+        checkFailedScreenTests(e2eResults),
+        checkUpdatedScreenshots,
+      );
+    }
+
+    await Promise.all(jobs);
     await comment.write();
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message);

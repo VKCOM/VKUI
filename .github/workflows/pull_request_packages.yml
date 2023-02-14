@@ -1,0 +1,314 @@
+name: 'Pull Request / Packages'
+
+# > Про 'pull_request_target' и про риски его использования можно ознакомиться в статье по ссылке ниже
+# > https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
+#
+# При 'pull_request_target' свойство `github.ref` будет соответствовать `refs/head/master`, поэтому необходимо
+# вручную перебивать его на `github.event.pull_request.number` там, где это необходимо.
+#
+# Пример:
+# ```
+# - uses: actions/checkout@v3
+#   with:
+#     ref: refs/pull/${{ github.event.pull_request.number }}/merge
+# ```
+on:
+  pull_request_target:
+    paths-ignore:
+      - 'tools/swc-transform-css-modules/**'
+      - '.husky/**'
+      - '.codesandbox/**'
+      - '.github/**'
+      - '!.github/actions/**'
+      - '.github/actions/**/*.yml'
+      - '**/*.md'
+      - '!packages/vkui/src/*.md'
+      - '!styleguide/pages/*.md'
+      - '**/__image_snapshots__/*.png'
+
+concurrency:
+  group: pr-packages-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  changed_files:
+    runs-on: ubuntu-latest
+    name: Detect what files changed
+    outputs:
+      package_vkui: ${{ steps.changes.outputs.package_vkui }}
+      docs_styleguide: ${{ steps.changes.outputs.docs_styleguide }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+      - name: Find changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          filters: .github/file-filters.yml
+
+  lint_styles:
+    runs-on: ubuntu-latest
+    name: Lint styles
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts
+
+      - name: Run Stylelint
+        run: yarn run lint:style
+
+  lint_scripts:
+    runs-on: ubuntu-latest
+    name: Lint scripts
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts
+
+      - name: Run ESLint
+        run: yarn run lint:es:ci
+
+      - name: Upload lint scripts artifact
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: lint-scripts-output
+          path: lint-results.json
+
+  lint_typescripts:
+    runs-on: ubuntu-latest
+    name: Lint typescripts
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts
+
+      - name: Run types checking
+        run: yarn run lint:types
+
+  test:
+    name: Call reusable unit tests workflow
+    uses: ./.github/workflows/reusable_workflow_test.yml
+    with:
+      ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
+  test_e2e:
+    if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
+    needs: changed_files
+    name: Call reusable e2e tests workflow
+    uses: ./.github/workflows/reusable_workflow_test_e2e.yml
+    with:
+      ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
+  #
+  # У `actions/download-artifact@v3` нет параметра `if-no-files-found`, поэтому джоба `reporter_ci` падает на скачивании
+  # `e2e-output` (см. https://github.com/actions/download-artifact/issues/158)
+  #
+  # TODO Удалить джобу после того, как добавят этот параметр и мы не начнём им пользоваться
+  test_e2e_fallback:
+    if: ${{ needs.changed_files.outputs.package_vkui == 'false' }}
+    needs: changed_files
+    runs-on: ubuntu-latest
+    name: Call reusable e2e tests workflow (fallback for reporter)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
+      - name: Create fake e2e-results.json (do not use it)
+        run: touch fake-e2e-results.json
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: e2e-output
+          path: fake-e2e-results.json
+
+  analyze_bundle_size:
+    if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
+    needs: changed_files
+    runs-on: ubuntu-latest
+    name: Analyze bundle size
+    env:
+      CI_JOB_NUMBER: 1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts
+      - uses: andresz1/size-limit-action@v1.7.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # only affects current branch
+          skip_step: install
+          directory: packages/vkui/
+          # В 1.7.0 пока нет этого свойства. См. packages/vkui/yarn.lock
+          # package_manager: yarn
+          build_script: 'size:ci'
+
+  report_ci:
+    if: ${{ always() }}
+    needs:
+      - lint_scripts
+      - test
+      - test_e2e
+    runs-on: ubuntu-latest
+    name: Report CI results
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Download lint scripts artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: lint-scripts-output
+
+      - name: Download test artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: test-output
+
+      - name: Download e2e artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: e2e-output
+
+      - name: Build reporter action
+        run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
+        working-directory: ./.github/actions/reporter
+
+      - name: Reporter
+        uses: ./.github/actions/reporter
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsEndpoint: hb.bizmrg.com
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  styleguide:
+    if: ${{ needs.changed_files.outputs.docs_styleguide == 'true' }}
+    needs: changed_files
+    runs-on: ubuntu-latest
+    name: Build docs (styleguide)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts
+
+      - name: Build styleguide
+        run: yarn run docs:styleguide:build
+
+      - name: Uploading styleguide artifact
+        # [1] Не сохраняем в артефакт если это PR от dependabot
+        #  PS: но собираем, чтобы убедиться, что сборка песочницы не падает
+        if: ${{ github.actor != 'dependabot[bot]' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: styleguide-dist
+          path: styleguide/dist/
+
+  deploy_styleguide:
+    # [1] Не заливаем песочницу если это PR от dependabot
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    needs: styleguide
+    concurrency: ci-gh-pages
+    runs-on: ubuntu-latest
+    name: Deploy docs (styleguide)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
+      - name: Download styleguide artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: styleguide-dist
+          path: tmp
+
+      - name: Publishing styleguide to GitHub pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          commit-message: 'Publish PR ${{ github.event.pull_request.number }}'
+          branch: gh-pages
+          folder: tmp
+          target-folder: pull/${{ github.event.pull_request.number }}
+          clean: true
+          force: false
+
+      - name: Find styleguide URL comment
+        uses: peter-evans/find-comment@v2
+        id: find_url_comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: <!-- styleguide_url -->
+
+      - name: Post styleguide URL to PR
+        if: steps.find_url_comment.outputs.comment-id == 0
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            <!-- styleguide_url -->
+            ## 👀 Styleguide deployed
+            See the styleguide for this PR at https://vkcom.github.io/VKUI/pull/${{ github.event.pull_request.number }}/

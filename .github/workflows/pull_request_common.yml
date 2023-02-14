@@ -1,0 +1,41 @@
+name: 'Pull Request / Common'
+
+# > Про 'pull_request_target' и про риски его использования можно ознакомиться в статье по ссылке ниже
+# > https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
+#
+# При 'pull_request_target' свойство `github.ref` будет соответствовать `refs/head/master`, поэтому необходимо
+# вручную перебивать его на `github.event.pull_request.number` там, где это необходимо.
+#
+# Пример:
+# ```
+# - uses: actions/checkout@v3
+#   with:
+#     ref: refs/pull/${{ github.event.pull_request.number }}/merge
+# ```
+on: ['pull_request_target']
+
+concurrency:
+  group: pr-common-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  lint_codes_format:
+    runs-on: ubuntu-latest
+    name: Lint codes format
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts
+
+      - name: Run Prettier
+        run: yarn run lint:prettier

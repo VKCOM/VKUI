@@ -1,0 +1,27 @@
+# Используется экшеном https://github.com/dorny/paths-filter
+#
+# > WARNING:
+# > Для запуска линтов, не стоит завязываться на проверку расширения файлов, т.к. они не гарант успешной валидации.
+# > Помимо расширений, могут быть зависимости, конфигурации, скрипты, которые могут влиять на ход работы линта.
+#
+# https://github.com/VKCOM/VKUI/issues/4114
+
+# Изменение лок-файла гарантирует, что были обновлены зависимости
+dependencies: &dependencies
+  - 'yarn.lock'
+
+# Отмечаем всё, что хоть как-то может повлиять на конечную сборку пакета vkui
+package_vkui: &package_vkui
+  - *dependencies
+  - 'packages/vkui/**'
+  - 'tools/!(eslint-*|stylelint-*)/**'
+  - 'e2e/**'
+  - '.browserslistrc'
+  - '(.|)babel*'
+  - 'webpack.*'
+  - 'tsconfig.*'
+  - 'package.json'
+
+docs_styleguide:
+  - *package_vkui
+  - 'styleguide/**'

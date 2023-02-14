@@ -1,9 +1,9 @@
-name: 'Pull Request swc-transform-css-modules'
+name: 'Pull Request / SWC Plugin / Transform CSS Modules'
 
 on:
   pull_request:
     paths:
-      - 'tools/swc-transform-css-modules/**/*'
+      - 'tools/swc-transform-css-modules/**'
 
 # Make sure CI fails on all warnings, including Clippy lints
 env:

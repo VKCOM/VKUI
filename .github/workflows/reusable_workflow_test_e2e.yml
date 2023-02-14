@@ -12,6 +12,7 @@ on:
 jobs:
   test_e2e:
     runs-on: ubuntu-latest
+    name: Visual (aka e2e) tests
     strategy:
       fail-fast: false
       matrix:
