@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { getViewWidthClassName } from '../../helpers/getViewWidthClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useMediaQueries } from '../../hooks/useMediaQueries';
@@ -81,7 +80,7 @@ export const SplitCol = (props: SplitColProps) => {
     ...restProps
   } = props;
   const baseRef = React.useRef<HTMLDivElement>(null);
-  const { viewWidth, sizeX } = useAdaptivity();
+  const { viewWidth } = useAdaptivity();
   const animate = useTransitionAnimate(animateProp);
 
   const contextValue = useObjectMemo({
@@ -101,7 +100,6 @@ export const SplitCol = (props: SplitColProps) => {
       ref={baseRef}
       className={classNames(
         styles['SplitCol'],
-        getSizeXClassName(styles['SplitCol'], sizeX),
         getViewWidthClassName(styles['SplitCol'], viewWidth),
         spaced && styles['SplitCol--spaced'],
         spaced === undefined && styles['SplitCol--spaced-none'],

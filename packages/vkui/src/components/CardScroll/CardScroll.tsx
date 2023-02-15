@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeXClassName } from '../../helpers/getSizeXClassName';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDOM } from '../../lib/dom';
 import { HorizontalScroll, HorizontalScrollProps } from '../HorizontalScroll/HorizontalScroll';
 import styles from './CardScroll.module.css';
@@ -26,8 +24,6 @@ export const CardScroll = ({
   className,
   ...restProps
 }: CardScrollProps) => {
-  const { sizeX } = useAdaptivity();
-
   const refContainer = React.useRef<HTMLDivElement>(null);
   const gapRef = React.useRef<HTMLDivElement>(null);
 
@@ -90,7 +86,6 @@ export const CardScroll = ({
       {...restProps}
       className={classNames(
         styles['CardScroll'],
-        getSizeXClassName(styles['CardScroll'], sizeX),
         styles[`CardScroll--size-${size}`],
         withSpaces && styles['CardScroll--withSpaces'],
         className,
