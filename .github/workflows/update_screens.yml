@@ -23,7 +23,8 @@ jobs:
           - platform: ios
             browser: chromium
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Create LFS file list
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
@@ -37,15 +38,19 @@ jobs:
       - name: Checkout LFS objects
         run: git lfs pull
 
-      - uses: actions/setup-node@v3
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'yarn'
-      - run: yarn install --frozen-lockfile --ignore-scripts
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts
 
       - name: '[Troubleshooting for Azure VM] Install APT Repositories'
         # Связанная проблема https://github.com/actions/runner-images/issues/675
         run: curl --connect-timeout 1 azure.archive.ubuntu.com || (sudo sed -i 's/azure\.//' /etc/apt/sources.list && sudo apt-get update)
+
       - name: Install deps for playwright
         run: yarn run playwright:install ${{ matrix.browser }}
 
@@ -61,7 +66,9 @@ jobs:
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Action"
 
-      - run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
+      - name: Build push-screenshots action
+        run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
         working-directory: ./.github/actions/push-screenshots
+
       - name: Push updated screenshots
         uses: ./.github/actions/push-screenshots

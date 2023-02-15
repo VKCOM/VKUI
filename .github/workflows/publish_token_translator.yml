@@ -1,4 +1,4 @@
-name: 'Publish token-translator'
+name: 'Publish @vkontakte/vkui-token-translator'
 
 on:
   workflow_dispatch:
@@ -17,28 +17,38 @@ jobs:
         working-directory: ./packages/token-translator
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
-      - uses: actions/setup-node@v3
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'yarn'
           always-auth: true
           registry-url: 'https://registry.npmjs.org'
 
-      - run: yarn install --frozen-lockfile
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
 
-      - run: yarn run test
-      - run: yarn run build
+      - name: Run tests
+        run: yarn run test
+
+      - name: Build package
+        run: yarn run build
 
       - name: Set Git credentials
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Action"
-      - run: yarn version --new-version ${{ github.event.inputs.version }} --no-commit-hooks --no-git-tag-version
-      - run: git add -A && git commit -m '[token-translator] v${{ github.event.inputs.version }}'
+
+      - name: Bump version
+        run: yarn version --new-version ${{ github.event.inputs.version }} --no-commit-hooks --no-git-tag-version
+
+      - name: Commit bumped version
+        run: git add -A && git commit -m '[token-translator] v${{ github.event.inputs.version }}'
 
       - name: Pushing changes
         uses: ad-m/github-push-action@master

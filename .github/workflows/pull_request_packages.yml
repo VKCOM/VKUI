@@ -51,7 +51,7 @@ jobs:
 
   lint_styles:
     runs-on: ubuntu-latest
-    name: Lint styles
+    name: Lint / Check styles
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -72,7 +72,7 @@ jobs:
 
   lint_scripts:
     runs-on: ubuntu-latest
-    name: Lint scripts
+    name: Lint / Check scripts
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -100,7 +100,7 @@ jobs:
 
   lint_typescripts:
     runs-on: ubuntu-latest
-    name: Lint typescripts
+    name: Lint / Check typescripts
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -178,6 +178,7 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --ignore-scripts
+
       - uses: andresz1/size-limit-action@v1.7.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -225,7 +226,7 @@ jobs:
         run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
         working-directory: ./.github/actions/reporter
 
-      - name: Reporter
+      - name: Push reports
         uses: ./.github/actions/reporter
         with:
           awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -257,7 +258,7 @@ jobs:
         run: yarn run docs:styleguide:build
 
       - name: Uploading styleguide artifact
-        # [1] Не сохраняем в артефакт если это PR от dependabot
+        # [Примечание 1] Не сохраняем в артефакт если это PR от dependabot
         #  PS: но собираем, чтобы убедиться, что сборка песочницы не падает
         if: ${{ github.actor != 'dependabot[bot]' }}
         uses: actions/upload-artifact@v3
@@ -266,7 +267,7 @@ jobs:
           path: styleguide/dist/
 
   deploy_styleguide:
-    # [1] Не заливаем песочницу если это PR от dependabot
+    # [Примечание 1] Не заливаем песочницу если это PR от dependabot
     if: ${{ github.actor != 'dependabot[bot]' }}
     needs: styleguide
     concurrency: ci-gh-pages
