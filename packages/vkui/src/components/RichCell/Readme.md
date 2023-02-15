@@ -1,3 +1,5 @@
+Если вы хотите прокинуть в `after` иконку, то воспользуйтесь вспомогательным компонентом `RichCell.Icon`.
+
 ```jsx
 <View activePanel="list">
   <Panel id="list">
@@ -61,7 +63,11 @@
       </RichCell>
       <RichCell
         before={<Avatar size={72} src={getAvatarUrl('user_rom')} />}
-        after={<Icon24UserAddOutline />}
+        after={
+          <RichCell.Icon aria-hidden>
+            <Icon28ViewOutline />
+          </RichCell.Icon>
+        }
         bottom={
           <UsersStack
             photos={[

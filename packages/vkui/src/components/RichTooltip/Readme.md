@@ -29,11 +29,13 @@
   <RichCell
     disabled
     after={
-      <TextTooltip text="Добавить">
-        <Icon28UserAddOutline/>
-      </TextTooltip>
+      <RichCell.Icon aria-hidden>
+        <TextTooltip text="Добавить">
+          <Icon28UserAddOutline />
+        </TextTooltip>
+      </RichCell.Icon>
     }
-    before={<Avatar size={72} src={getAvatarUrl('user_ilyagrshn')}/>}
+    before={<Avatar size={48} src={getAvatarUrl('user_ilyagrshn')}/>}
     caption="Команда ВКонтакте, Санкт-Петербург"
     bottom={
       <UsersStack
