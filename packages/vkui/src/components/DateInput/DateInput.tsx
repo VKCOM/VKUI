@@ -15,6 +15,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { callMultiple } from '../../lib/callMultiple';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import '../InputLike/InputLikeDivider.module.css'; // Reorder css
 import styles from './DateInput.module.css';
 
 export interface DateInputProps
