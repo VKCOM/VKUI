@@ -1,3 +1,8 @@
+/**
+ * jest-runners-groups
+ * @group unit
+ */
+
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { baselineComponent, imgOnlyAttributes } from '../../testing/utils';

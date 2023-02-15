@@ -1,3 +1,8 @@
+/**
+ * jest-runners-groups
+ * @group unit
+ */
+
 import * as React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import { AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';

@@ -1,3 +1,8 @@
+/**
+ * jest-runners-groups
+ * @group unit
+ */
+
 import * as React from 'react';
 import { act, renderHook } from '@testing-library/react-hooks';
 import { noop } from '@vkontakte/vkjs';

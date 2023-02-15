@@ -1,3 +1,8 @@
+/**
+ * jest-runners-groups
+ * @group unit
+ */
+
 import * as React from 'react';
 import { act } from 'react-dom/test-utils';
 import { fireEvent, render } from '@testing-library/react';

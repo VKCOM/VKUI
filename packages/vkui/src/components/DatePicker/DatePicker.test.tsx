@@ -1,3 +1,8 @@
+/**
+ * jest-runners-groups
+ * @group unit
+ */
+
 import React, { type ReactNode } from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';

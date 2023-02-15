@@ -1,3 +1,8 @@
+/**
+ * jest-runners-groups
+ * @group unit
+ */
+
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';

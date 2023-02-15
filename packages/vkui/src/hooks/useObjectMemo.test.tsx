@@ -1,3 +1,8 @@
+/**
+ * jest-runners-groups
+ * @group unit
+ */
+
 import { renderHook } from '@testing-library/react-hooks';
 import { useObjectMemo } from './useObjectMemo';
 

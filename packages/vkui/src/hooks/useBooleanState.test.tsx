@@ -1,3 +1,8 @@
+/**
+ * jest-runners-groups
+ * @group unit
+ */
+
 import { act, renderHook } from '@testing-library/react-hooks';
 import { useBooleanState } from './useBooleanState';
 

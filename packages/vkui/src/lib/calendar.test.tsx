@@ -1,3 +1,8 @@
+/**
+ * jest-runners-groups
+ * @group unit
+ */
+
 import { getYears, setTimeEqual } from './calendar';
 
 describe('calendar utils', () => {
