@@ -45,7 +45,7 @@
   flex-direction: column;
   align-items: flex-end;
   flex-shrink: 0;
-  padding-left: 4px;
+  padding-left: 12px;
   box-sizing: border-box;
 }
 
