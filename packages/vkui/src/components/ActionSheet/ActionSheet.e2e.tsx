@@ -1,3 +1,8 @@
+/**
+ * jest-runners-groups
+ * @group e2e
+ */
+
 import * as React from 'react';
 import { Icon28SettingsOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';

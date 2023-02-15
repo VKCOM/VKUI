@@ -1,3 +1,8 @@
+/**
+ * jest-runners-groups
+ * @group e2e
+ */
+
 import * as React from 'react';
 import { ViewWidth } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';

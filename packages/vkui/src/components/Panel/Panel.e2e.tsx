@@ -1,3 +1,8 @@
+/**
+ * jest-runners-groups
+ * @group e2e
+ */
+
 import React, { Fragment } from 'react';
 import { SizeType } from '../../lib/adaptivity';
 import { describeScreenshotFuzz } from '../../testing/e2e';

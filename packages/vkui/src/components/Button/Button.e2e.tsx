@@ -1,3 +1,8 @@
+/**
+ * jest-runners-groups
+ * @group e2e
+ */
+
 import * as React from 'react';
 import { Icon16Add, Icon24Camera } from '@vkontakte/icons';
 import { describeScreenshotFuzz } from '../../testing/e2e';

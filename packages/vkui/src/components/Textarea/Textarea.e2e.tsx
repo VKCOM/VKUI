@@ -1,3 +1,8 @@
+/**
+ * jest-runners-groups
+ * @group e2e
+ */
+
 import * as React from 'react';
 import { BREAKPOINTS, SizeType } from '../../lib/adaptivity';
 import {

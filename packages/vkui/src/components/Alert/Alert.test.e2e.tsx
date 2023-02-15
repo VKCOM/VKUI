@@ -1,3 +1,8 @@
+/**
+ * jest-runners-groups
+ * @group e2e
+ */
+
 import * as React from 'react';
 import { Platform } from '../../lib/platform';
 import { describeScreenshotFuzz } from '../../testing/e2e';

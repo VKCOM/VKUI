@@ -1,3 +1,8 @@
+/**
+ * jest-runners-groups
+ * @group e2e
+ */
+
 import * as React from 'react';
 import { Icon56UserAddOutline } from '@vkontakte/icons';
 import { SizeType } from '../../lib/adaptivity';

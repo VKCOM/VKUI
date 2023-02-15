@@ -1,4 +1,9 @@
-import { describeScreenshotFuzz } from '../../testing/e2e';
+/**
+ * jest-runners-groups
+ * @group e2e
+ */
+
+import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 import { UsersStack } from './UsersStack';
 
 const base64Image =

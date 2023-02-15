@@ -1,3 +1,8 @@
+/**
+ * jest-runners-groups
+ * @group e2e
+ */
+
 import * as React from 'react';
 import { Icon56MoneyTransferOutline } from '@vkontakte/icons';
 import { SizeType, ViewWidth } from '../../lib/adaptivity';

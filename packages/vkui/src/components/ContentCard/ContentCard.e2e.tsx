@@ -1,3 +1,8 @@
+/**
+ * jest-runners-groups
+ * @group e2e
+ */
+
 import { describeScreenshotFuzz } from '../../testing/e2e';
 import { ContentCard } from './ContentCard';
 
