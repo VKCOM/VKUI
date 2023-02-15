@@ -49,9 +49,9 @@ jobs:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           filters: .github/file-filters.yml
 
-  lint_styles:
+  linters:
     runs-on: ubuntu-latest
-    name: Lint / Check styles
+    name: Run linters
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -70,23 +70,8 @@ jobs:
       - name: Run Stylelint
         run: yarn run lint:style
 
-  lint_scripts:
-    runs-on: ubuntu-latest
-    name: Lint / Check scripts
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: refs/pull/${{ github.event.pull_request.number }}/merge
-
-      - name: Setup NodeJS
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'yarn'
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile --ignore-scripts
+      - name: Run types checking
+        run: yarn run lint:types
 
       - name: Run ESLint
         run: yarn run lint:es:ci
@@ -97,27 +82,6 @@ jobs:
         with:
           name: lint-scripts-output
           path: lint-results.json
-
-  lint_typescripts:
-    runs-on: ubuntu-latest
-    name: Lint / Check typescripts
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: refs/pull/${{ github.event.pull_request.number }}/merge
-
-      - name: Setup NodeJS
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'yarn'
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile --ignore-scripts
-
-      - name: Run types checking
-        run: yarn run lint:types
 
   test:
     name: Call reusable unit tests workflow
@@ -192,7 +156,7 @@ jobs:
   report_ci:
     if: ${{ always() }}
     needs:
-      - lint_scripts
+      - linters
       - test
       - test_e2e
     runs-on: ubuntu-latest
