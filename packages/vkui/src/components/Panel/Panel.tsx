@@ -1,14 +1,20 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SizeType } from '../../lib/adaptivity';
 import { NavIdProps } from '../../lib/getNavId';
 import { Platform } from '../../lib/platform';
 import { HasRootRef } from '../../types';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { Touch } from '../Touch/Touch';
 import styles from './Panel.module.css';
+
+const sizeXClassNames = {
+  none: styles['Panel--sizeX-none'],
+  [SizeType.COMPACT]: styles['Panel--sizeX-compact'],
+  [SizeType.REGULAR]: styles['Panel--sizeX-regular'],
+};
 
 export interface PanelProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -29,7 +35,7 @@ export const Panel = ({
   ...restProps
 }: PanelProps) => {
   const platform = usePlatform();
-  const { sizeX } = useAdaptivity();
+  const { sizeX = 'none' } = useAdaptivity();
 
   return (
     <div
@@ -37,7 +43,7 @@ export const Panel = ({
       ref={getRootRef}
       className={classNames(
         styles['Panel'],
-        getSizeXClassName(styles['Panel'], sizeX),
+        sizeXClassNames[sizeX],
         centered && styles['Panel--centered'],
         className,
       )}

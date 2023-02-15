@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
-import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -43,7 +42,7 @@ export const SelectMimicry = ({
   ...restProps
 }: SelectMimicryProps) => {
   const platform = usePlatform();
-  const { sizeX, sizeY } = useAdaptivity();
+  const { sizeY } = useAdaptivity();
   const title = children || placeholder;
 
   return (
@@ -53,7 +52,6 @@ export const SelectMimicry = ({
       className={classNames(
         styles['Select'],
         getPlatformClassName(styles['Select'], platform),
-        getSizeXClassName(styles['Select'], sizeX),
         getSizeYClassName(styles['Select'], sizeY),
         multiline && styles['Select--multiline'],
         align && styles[`Select--align-${align}`],

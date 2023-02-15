@@ -1,8 +1,14 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { SizeType } from '../../lib/adaptivity';
 import styles from './CardGrid.module.css';
+
+const sizeXClassNames = {
+  none: styles['CardGrid--sizeX-none'],
+  [SizeType.COMPACT]: styles['CardGrid--sizeX-compact'],
+  [SizeType.REGULAR]: null,
+};
 
 export interface CardGridProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: 's' | 'm' | 'l';
@@ -22,7 +28,7 @@ export const CardGrid = ({
   className,
   ...restProps
 }: CardGridProps) => {
-  const { sizeX } = useAdaptivity();
+  const { sizeX = 'none' } = useAdaptivity();
 
   return (
     <div
@@ -31,7 +37,7 @@ export const CardGrid = ({
         styles['CardGrid'],
         spaced && styles['CardGrid--spaced'],
         styles[`CardGrid--size-${size}`],
-        getSizeXClassName(styles['CardGrid'], sizeX),
+        sizeXClassNames[sizeX],
         className,
       )}
     >

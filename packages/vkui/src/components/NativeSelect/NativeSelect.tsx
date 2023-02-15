@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
-import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
@@ -62,7 +61,7 @@ const NativeSelect = ({
     value: valueProp,
   });
   const selectRef = useExternRef(getRef);
-  const { sizeX, sizeY } = useAdaptivity();
+  const { sizeY } = useAdaptivity();
 
   useIsomorphicLayoutEffect(() => {
     const selectedOption = selectRef.current?.options[selectRef.current.selectedIndex];
@@ -81,7 +80,6 @@ const NativeSelect = ({
         empty && styles['Select--empty'],
         multiline && styles['Select--multiline'],
         align && styles[`Select--align-${align}`],
-        getSizeXClassName(styles['Select'], sizeX),
         getSizeYClassName(styles['Select'], sizeY),
         className,
       )}

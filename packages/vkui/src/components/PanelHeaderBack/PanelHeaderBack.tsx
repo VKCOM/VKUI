@@ -5,12 +5,18 @@ import {
   Icon28ChevronLeftOutline,
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import styles from './PanelHeaderBack.module.css';
+
+const sizeXClassNames = {
+  none: null,
+  [SizeType.COMPACT]: styles['PanelHeaderBack--sizeX-compact'],
+  [SizeType.REGULAR]: null,
+};
 
 export type PanelHeaderBackProps = PanelHeaderButtonProps & {
   'aria-label'?: string;
@@ -26,7 +32,7 @@ export const PanelHeaderBack = ({
   ...restProps
 }: PanelHeaderButtonProps) => {
   const platform = usePlatform();
-  const { sizeX } = useAdaptivity();
+  const { sizeX = 'none' } = useAdaptivity();
   // так-же label нужно скрывать при platform === Platform.IOS && sizeX === regular
   // https://github.com/VKCOM/VKUI/blob/master/src/components/PanelHeaderButton/PanelHeaderButton.css#L104
   const showLabel = platform === Platform.VKCOM || platform === Platform.IOS;
@@ -46,7 +52,7 @@ export const PanelHeaderBack = ({
       {...restProps}
       className={classNames(
         styles['PanelHeaderBack'],
-        getSizeXClassName(styles['PanelHeaderBack'], sizeX),
+        sizeXClassNames[sizeX],
         platform === Platform.IOS && styles['PanelHeaderBack--ios'],
         platform === Platform.VKCOM && styles['PanelHeaderBack--vkcom'],
         showLabel && !!label && styles['PanelHeaderBack--has-label'],

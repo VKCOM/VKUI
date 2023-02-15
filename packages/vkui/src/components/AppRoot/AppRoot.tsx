@@ -2,17 +2,23 @@ import * as React from 'react';
 import { IconSettingsProvider } from '@vkontakte/icons';
 import { Insets } from '@vkontakte/vk-bridge';
 import { classNames, noop } from '@vkontakte/vkjs';
-import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAppearance } from '../../hooks/useAppearance';
 import { useInsets } from '../../hooks/useInsets';
 import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
+import { SizeType } from '../../lib/adaptivity';
 import { useDOM } from '../../lib/dom';
 import { isRefObject } from '../../lib/isRefObject';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { AppRootContext } from './AppRootContext';
 import { ElementScrollController, GlobalScrollController } from './ScrollContext';
 import styles from './AppRoot.module.css';
+
+const vkuiSizeXClassNames = {
+  none: 'vkui--sizeX-none',
+  [SizeType.COMPACT]: null,
+  [SizeType.REGULAR]: 'vkui--sizeX-regular',
+};
 
 const INSET_CUSTOM_PROPERTY_PREFIX = `--vkui_internal--safe_area_inset_`;
 
@@ -51,7 +57,7 @@ export const AppRoot = ({
   const insets = useInsets();
   const appearance = useAppearance();
 
-  const { hasPointer, sizeX } = useAdaptivity();
+  const { hasPointer, sizeX = 'none' } = useAdaptivity();
 
   // setup portal
   useIsomorphicLayoutEffect(() => {
@@ -134,10 +140,17 @@ export const AppRoot = ({
     if (mode === 'partial') {
       return noop;
     }
-    const className = getSizeXClassName('vkui', sizeX);
+    const className = vkuiSizeXClassNames[sizeX];
     const container = mode === 'embedded' ? rootRef.current?.parentElement : document!.body;
-    container?.classList.add(className);
-    return () => container?.classList.remove(className);
+
+    if (className === null || !container) {
+      return noop;
+    }
+
+    container.classList.add(className);
+    return () => {
+      container.classList.remove(className);
+    };
   }, [sizeX]);
 
   useIsomorphicLayoutEffect(() => {
