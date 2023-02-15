@@ -7,4 +7,5 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: ['src/*/**/{!(*.e2e),}.{ts,tsx}'],
   coveragePathIgnorePatterns: ['\\.d\\.ts$', 'src/types', 'src/testing'],
+  runner: 'groups',
 };
