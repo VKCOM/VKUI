@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
-import { type SelectProps, CustomSelect } from './CustomSelect';
 import { useState } from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
+import { CustomSelect, type SelectProps } from './CustomSelect';
 
 const getCustomSelectValue = () => screen.getByTestId('target').textContent;
 

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { act } from 'react-dom/test-utils';
-import { baselineComponent, mockScrollContext, mountTest } from '../../testing/utils';
 import { render } from '@testing-library/react';
-import { View } from '../View/View';
+import { baselineComponent, mockScrollContext, mountTest } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
+import { View } from '../View/View';
 import { Root } from './Root';
 
 const views = [

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { render } from '@testing-library/react';
-import { baselineComponent } from '../../testing/utils';
-import { AdaptivityProvider } from './AdaptivityProvider';
-import { SizeType, ViewHeight, ViewWidth } from '../../lib/adaptivity';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useBridgeAdaptivity } from '../../hooks/useBridgeAdaptivity';
+import { SizeType, ViewHeight, ViewWidth } from '../../lib/adaptivity';
+import { baselineComponent } from '../../testing/utils';
+import { AdaptivityProvider } from './AdaptivityProvider';
 
 jest.mock('../../hooks/useBridgeAdaptivity', () => {
   const bridgeMock = jest.fn(() => {

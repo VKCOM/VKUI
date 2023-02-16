@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { classNames } from '@vkontakte/vkjs';
-import { Touch } from '../Touch/Touch';
-import { TooltipContainer } from '../Tooltip/TooltipContainer';
-import { HasRootRef } from '../../types';
-import { Platform } from '../../lib/platform';
+import { getSizeXClassName } from '../../helpers/getSizeXClassName';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import { NavIdProps } from '../../lib/getNavId';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { Platform } from '../../lib/platform';
+import { HasRootRef } from '../../types';
+import { TooltipContainer } from '../Tooltip/TooltipContainer';
+import { Touch } from '../Touch/Touch';
 import styles from './Panel.module.css';
 
 export interface PanelProps

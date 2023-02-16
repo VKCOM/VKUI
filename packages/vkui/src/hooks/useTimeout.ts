@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 import { canUseDOM } from '../lib/dom';
+import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
 export function useTimeout(cb: () => any, duration: number) {
   const options = React.useRef({ cb, duration });

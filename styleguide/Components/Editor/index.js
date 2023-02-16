@@ -5,9 +5,9 @@ import 'prismjs/components/prism-markup';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-jsx';
 import Editor from '@rsg-components/Editor/Editor';
-import './Editor.css';
-import { Tappable } from '@vkui';
 import { Icon28CopyOutline } from '@vkontakte/icons';
+import { Tappable } from '@vkui';
+import './Editor.css';
 
 export class EditorWrapper extends Component {
   onCopyClick = () => {

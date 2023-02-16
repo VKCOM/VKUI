@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
-import { SizeType, ViewHeight, ViewWidth } from '../../lib/adaptivity';
+import { AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../../components/AdaptivityProvider/AdaptivityProvider';
-import { useAdaptivityConditionalRender } from './useAdaptivityConditionalRender';
+import { SizeType, ViewHeight, ViewWidth } from '../../lib/adaptivity';
 import {
   deviceTypeClassNames,
   sizeXCompactClassNames,
@@ -11,7 +11,7 @@ import {
   sizeYRegularClassNames,
   viewWidthClassNames,
 } from './constants';
-import { AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
+import { useAdaptivityConditionalRender } from './useAdaptivityConditionalRender';
 
 describe(useAdaptivityConditionalRender, () => {
   describe('without AdaptivityProvider', () => {

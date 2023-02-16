@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
-import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { classNames, noop } from '@vkontakte/vkjs';
-import { Chip, ChipOption, ChipValue, RenderChip } from '../Chip/Chip';
-import { useChipsInput } from '../../hooks/useChipsInput';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useChipsInput } from '../../hooks/useChipsInput';
 import { useExternRef } from '../../hooks/useExternRef';
+import { HasAlign, HasRef, HasRootRef } from '../../types';
+import { Chip, ChipOption, ChipValue, RenderChip } from '../Chip/Chip';
 import styles from './ChipsInputBase.module.css';
 
 export interface ChipsInputBaseProps<Option extends ChipOption>

@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { PanelHeaderButton, PanelHeaderButtonProps } from './PanelHeaderButton';
-import { render, screen } from '@testing-library/react';
 
 const PanelHeaderButtonTest = (props: PanelHeaderButtonProps) => (
   <PanelHeaderButton data-testid="button" {...props} />

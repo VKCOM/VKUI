@@ -1,5 +1,5 @@
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import { Pagination } from './Pagination';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
 describe('Pagination', () => {
   describeScreenshotFuzz(Pagination, [

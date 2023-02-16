@@ -1,8 +1,8 @@
 import React from 'react';
-import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
-import { TokensClassProvider } from '../../lib/tokensClassProvider';
-import { PlatformType } from '../../lib/platform';
 import { useAppearance } from '../../hooks/useAppearance';
+import { PlatformType } from '../../lib/platform';
+import { TokensClassProvider } from '../../lib/tokensClassProvider';
+import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 
 export interface PlatformProviderProps {
   /**

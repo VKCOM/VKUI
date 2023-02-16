@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { ScrollSaver } from './ScrollSaver';
 import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import { ScrollSaver } from './ScrollSaver';
 import styles from './Epic.module.css';
 
 export interface EpicProps extends React.HTMLAttributes<HTMLDivElement> {

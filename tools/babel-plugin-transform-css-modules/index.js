@@ -1,10 +1,10 @@
-const { resolveResourceRelativePathBySourcePath } = require('./lib/route');
 const {
   createVariable,
   createObjectExpression,
   resolveMemberExpressionPropertyName,
 } = require('./lib/babel-helpers');
 const { getCSSModulesTokens } = require('./lib/css-modules-tokens');
+const { resolveResourceRelativePathBySourcePath } = require('./lib/route');
 
 // function generate
 

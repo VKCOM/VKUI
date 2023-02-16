@@ -1,15 +1,15 @@
 import * as React from 'react';
 import {
+  Icon28ArrowLeftOutline,
   Icon28ChevronBack,
   Icon28ChevronLeftOutline,
-  Icon28ArrowLeftOutline,
 } from '@vkontakte/icons';
-import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
-import { Platform } from '../../lib/platform';
-import { getSizeXClassName } from '../../helpers/getSizeXClassName';
-import { usePlatform } from '../../hooks/usePlatform';
 import { classNames } from '@vkontakte/vkjs';
+import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
+import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import styles from './PanelHeaderBack.module.css';
 
 export type PanelHeaderBackProps = PanelHeaderButtonProps & {

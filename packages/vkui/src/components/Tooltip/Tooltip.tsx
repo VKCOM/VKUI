@@ -1,30 +1,30 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { Subhead } from '../Typography/Subhead/Subhead';
-import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
-import { PopperArrow } from '../PopperArrow/PopperArrow';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { useDOM } from '../../lib/dom';
 import {
-  type Placement,
-  type PlacementWithAuto,
-  type UseFloatingMiddleware,
-  useFloating,
+  arrowMiddleware,
+  autoPlacementMiddleware,
+  autoUpdateFloatingElement,
   checkIsNotAutoPlacement,
   convertFloatingDataToReactCSSProperties,
-  offsetMiddleware,
-  shiftMiddleware,
   flipMiddleware,
-  arrowMiddleware,
-  autoUpdateFloatingElement,
   getAutoPlacementAlign,
-  autoPlacementMiddleware,
+  offsetMiddleware,
+  type Placement,
+  type PlacementWithAuto,
+  shiftMiddleware,
+  useFloating,
+  type UseFloatingMiddleware,
 } from '../../lib/floating';
-import { tooltipContainerAttr } from './TooltipContainer';
-import { useExternRef } from '../../hooks/useExternRef';
-import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { HasRootRef } from '../../types';
+import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
+import { PopperArrow } from '../PopperArrow/PopperArrow';
+import { Subhead } from '../Typography/Subhead/Subhead';
+import { tooltipContainerAttr } from './TooltipContainer';
 import styles from './Tooltip.module.css';
 
 /**

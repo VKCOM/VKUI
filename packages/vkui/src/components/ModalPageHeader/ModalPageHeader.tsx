@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { usePlatform } from '../../hooks/usePlatform';
-import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
-import { HasRef } from '../../types';
-import { Platform } from '../../lib/platform';
-import { Separator } from '../Separator/Separator';
-import { PanelHeader, PanelHeaderProps } from '../PanelHeader/PanelHeader';
 import { classNames } from '@vkontakte/vkjs';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
+import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
+import { HasRef } from '../../types';
+import { PanelHeader, PanelHeaderProps } from '../PanelHeader/PanelHeader';
+import { Separator } from '../Separator/Separator';
 import styles from './ModalPageHeader.module.css';
 
 export interface ModalPageHeaderProps

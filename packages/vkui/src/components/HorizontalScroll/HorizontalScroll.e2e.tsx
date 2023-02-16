@@ -1,18 +1,19 @@
 import * as React from 'react';
-import {
-  describeScreenshotFuzz,
-  customSnapshotIdentifier,
-  APPEARANCE,
-} from '../../testing/e2e/utils';
-import { HorizontalScroll } from './HorizontalScroll';
-import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
-import { Avatar } from '../Avatar/Avatar';
-import { Platform } from '../../lib/platform';
 import { ViewWidth } from '../../lib/adaptivity';
-import { mount, screenshot } from '../../testing/e2e';
+import { Platform } from '../../lib/platform';
+import {
+  APPEARANCE,
+  customSnapshotIdentifier,
+  describeScreenshotFuzz,
+  mount,
+  screenshot,
+} from '../../testing/e2e';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { AppRoot } from '../AppRoot/AppRoot';
+import { Avatar } from '../Avatar/Avatar';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
+import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
+import { HorizontalScroll } from './HorizontalScroll';
 
 describe('HorizontalScroll', () => {
   const items = new Array(20).fill(0).map((_, i) => (

@@ -1,10 +1,10 @@
 import React from 'react';
+import { useObjectMemo } from '../../hooks/useObjectMemo';
 import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
   useConfigProvider,
 } from './ConfigProviderContext';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
 
 export interface ConfigProviderOverrideProps extends Partial<ConfigProviderContextInterface> {
   children: React.ReactNode;

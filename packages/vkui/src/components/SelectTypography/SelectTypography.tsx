@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import type { SelectType } from '../Select/Select';
-import { usePlatform } from '../../hooks/usePlatform';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { usePlatform } from '../../hooks/usePlatform';
+import type { SelectType } from '../Select/Select';
 import styles from './SelectTypography.module.css';
 
 const sizeYClassNames = {

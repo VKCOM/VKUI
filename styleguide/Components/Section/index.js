@@ -1,10 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Examples from '@rsg-components/Examples';
 import Components from '@rsg-components/Components';
-import Sections from '@rsg-components/Sections';
-import SectionRenderer from '@rsg-components/Section/SectionRenderer';
 import { useStyleGuideContext } from '@rsg-components/Context';
+import Examples from '@rsg-components/Examples';
+import SectionRenderer from '@rsg-components/Section/SectionRenderer';
+import Sections from '@rsg-components/Sections';
+import PropTypes from 'prop-types';
 
 const Section = ({ section, depth }) => {
   const {

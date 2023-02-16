@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
-import { SubnavigationButton, SubnavigationButtonProps } from './SubnavigationButton';
-import { SubnavigationBar } from '../SubnavigationBar/SubnavigationBar';
-import { Counter } from '../Counter/Counter';
 import { Icon24Filter } from '@vkontakte/icons';
+import { describeScreenshotFuzz } from '../../testing/e2e';
+import { Counter } from '../Counter/Counter';
+import { SubnavigationBar } from '../SubnavigationBar/SubnavigationBar';
+import { SubnavigationButton, SubnavigationButtonProps } from './SubnavigationButton';
 
 describe('SubnavigationButton', () => {
   describeScreenshotFuzz(

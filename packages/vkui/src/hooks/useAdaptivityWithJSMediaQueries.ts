@@ -1,20 +1,20 @@
 import * as React from 'react';
-import { canUseDOM, hasMouse as hasPointerLib, hasHover as hasHoverLib } from '@vkontakte/vkjs';
+import { canUseDOM, hasHover as hasHoverLib, hasMouse as hasPointerLib } from '@vkontakte/vkjs';
 import {
   AdaptivityContext,
   type AdaptivityProps as BaseAdaptivityProps,
 } from '../components/AdaptivityProvider/AdaptivityContext';
 import { getOrDefault } from '../helpers/getOrDefault';
 import {
-  getViewWidthByMediaQueries,
-  getViewHeightByMediaQueries,
   getSizeX,
   getSizeY,
+  getViewHeightByMediaQueries,
+  getViewWidthByMediaQueries,
   tryToCheckIsDesktop,
 } from '../lib/adaptivity';
+import { matchMediaListAddListener, matchMediaListRemoveListener } from '../lib/matchMedia';
 import { useMediaQueries } from './useMediaQueries';
 import { usePlatform } from './usePlatform';
-import { matchMediaListAddListener, matchMediaListRemoveListener } from '../lib/matchMedia';
 
 export interface UseAdaptivityWithJSMediaQueries extends Required<BaseAdaptivityProps> {
   isDesktop: boolean;

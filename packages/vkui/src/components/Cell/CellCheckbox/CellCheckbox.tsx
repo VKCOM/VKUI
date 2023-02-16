@@ -5,12 +5,12 @@ import {
   Icon24CheckCircleOff,
   Icon24CheckCircleOn,
 } from '@vkontakte/icons';
+import { classNames } from '@vkontakte/vkjs';
 import { getPlatformClassName } from '../../../helpers/getPlatformClassName';
 import { usePlatform } from '../../../hooks/usePlatform';
-import { classNames } from '@vkontakte/vkjs';
 import { Platform } from '../../../lib/platform';
-import { CellProps } from '../Cell';
 import { VisuallyHiddenInput } from '../../VisuallyHiddenInput/VisuallyHiddenInput';
+import { CellProps } from '../Cell';
 import styles from './CellCheckbox.module.css';
 
 export type CellCheckboxProps = Pick<CellProps, 'defaultChecked' | 'checked'> &

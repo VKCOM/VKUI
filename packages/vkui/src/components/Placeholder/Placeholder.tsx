@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { Title } from '../Typography/Title/Title';
-import { Headline } from '../Typography/Headline/Headline';
 import { HasRootRef } from '../../types';
+import { Headline } from '../Typography/Headline/Headline';
+import { Title } from '../Typography/Title/Title';
 import styles from './Placeholder.module.css';
 
 export interface PlaceholderProps

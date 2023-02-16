@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { screen, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { baselineComponent, imgOnlyAttributes } from '../../testing/utils';
 import { ContentCard, ContentCardProps } from './ContentCard';
 

@@ -1,18 +1,18 @@
 import * as React from 'react';
-import { Search } from './Search';
+import { Icon16Add } from '@vkontakte/icons';
+import { BREAKPOINTS, SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import {
-  screenshot,
-  mount,
-  describeScreenshotFuzz,
-  customSnapshotIdentifier,
   APPEARANCE,
+  customSnapshotIdentifier,
+  describeScreenshotFuzz,
+  mount,
+  screenshot,
 } from '../../testing/e2e';
-import { Icon16Add } from '@vkontakte/icons';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { AppRoot } from '../AppRoot/AppRoot';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
-import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
-import { BREAKPOINTS, SizeType } from '../../lib/adaptivity';
+import { Search } from './Search';
 
 describe('Search', () => {
   describeScreenshotFuzz(

@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { ModalPageHeader, ModalPageHeaderProps } from './ModalPageHeader';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
-import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import { Icon24Cancel, Icon24Dismiss, Icon24Done } from '@vkontakte/icons';
-import { Platform } from '../../lib/platform';
-import { ViewWidth } from '../../lib/adaptivity';
-import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { noop } from '@vkontakte/vkjs';
+import { ViewWidth } from '../../lib/adaptivity';
+import { Platform } from '../../lib/platform';
+import { describeScreenshotFuzz } from '../../testing/e2e';
+import { ModalRootContext } from '../ModalRoot/ModalRootContext';
+import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
+import { ModalPageHeader, ModalPageHeaderProps } from './ModalPageHeader';
 
 const BaseModalPageHeader = (props: ModalPageHeaderProps) => (
   <ModalRootContext.Provider

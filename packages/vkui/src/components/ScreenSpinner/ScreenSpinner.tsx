@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Spinner, SpinnerProps } from '../Spinner/Spinner';
 import { Icon24Cancel } from '@vkontakte/icons';
-import { Icon48DoneOutline } from './Icon48DoneOutline';
-import { Icon48CancelCircle } from './Icon48CancelCircle';
-import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
-import { useScrollLock } from '../AppRoot/ScrollContext';
 import { classNames } from '@vkontakte/vkjs';
+import { useScrollLock } from '../AppRoot/ScrollContext';
+import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
+import { Spinner, SpinnerProps } from '../Spinner/Spinner';
+import { Icon48CancelCircle } from './Icon48CancelCircle';
+import { Icon48DoneOutline } from './Icon48DoneOutline';
 import styles from './ScreenSpinner.module.css';
 
 export interface ScreenSpinnerProps extends SpinnerProps {

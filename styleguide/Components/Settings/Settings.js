@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
-import { PlatformSelect } from './PlatformSelect';
-import { AppearanceSelect } from './AppearanceSelect';
-import { WebviewTypeSelect } from './WebviewTypeSelect';
-import { HasPointerCheckbox } from './HasPointerCheckbox';
-import { ViewHeightSelect } from './ViewHeightSelect';
-import { ViewWidthSelect } from './ViewWidthSelect';
 import { Platform, useAdaptivityConditionalRender } from '@vkui';
 import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
+import { AppearanceSelect } from './AppearanceSelect';
+import { HasPointerCheckbox } from './HasPointerCheckbox';
+import { PlatformSelect } from './PlatformSelect';
+import { ViewHeightSelect } from './ViewHeightSelect';
+import { ViewWidthSelect } from './ViewWidthSelect';
+import { WebviewTypeSelect } from './WebviewTypeSelect';
 import './Settings.css';
 
 export const Settings = ({ adaptivity, webviewType }) => {

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { clamp } from '../../helpers/math';
 import { classNames } from '@vkontakte/vkjs';
+import { clamp } from '../../helpers/math';
 import { HasRootRef } from '../../types';
 import styles from './Progress.module.css';
 

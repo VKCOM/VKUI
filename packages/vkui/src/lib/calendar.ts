@@ -1,16 +1,16 @@
 import {
-  eachDayOfInterval,
-  startOfWeek,
-  endOfWeek,
   addDays,
-  subDays,
-  subWeeks,
   addWeeks,
-  startOfMonth,
+  eachDayOfInterval,
   endOfMonth,
+  endOfWeek,
   isBefore,
   isFirstDayOfMonth,
   isLastDayOfMonth,
+  startOfMonth,
+  startOfWeek,
+  subDays,
+  subWeeks,
 } from './date';
 
 export const getYears = (currentYear: number, range: number) => {

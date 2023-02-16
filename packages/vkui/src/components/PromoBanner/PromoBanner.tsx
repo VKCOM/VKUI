@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { Icon24Dismiss } from '@vkontakte/icons';
+import { classNames } from '@vkontakte/vkjs';
 import { Button } from '../Button/Button';
-import { SimpleCell } from '../SimpleCell/SimpleCell';
 import { Image } from '../Image/Image';
+import { SimpleCell } from '../SimpleCell/SimpleCell';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './PromoBanner.module.css';
 

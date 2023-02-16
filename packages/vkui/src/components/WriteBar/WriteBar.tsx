@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Headline } from '../Typography/Headline/Headline';
-import { usePlatform } from '../../hooks/usePlatform';
-import { useExternRef } from '../../hooks/useExternRef';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { useEnsuredControl } from '../../hooks/useEnsuredControl';
+import { useExternRef } from '../../hooks/useExternRef';
+import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
-import { useEnsuredControl } from '../../hooks/useEnsuredControl';
+import { Headline } from '../Typography/Headline/Headline';
 import styles from './WriteBar.module.css';
 
 export interface WriteBarProps

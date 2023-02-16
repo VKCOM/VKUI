@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import { Slider, SliderProps } from './Slider';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
 describe('Slider', () => {
   describeScreenshotFuzz(

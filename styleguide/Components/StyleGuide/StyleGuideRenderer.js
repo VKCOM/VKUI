@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Appearance, AppRoot, ConfigProvider, Platform, WebviewType } from '@vkui';
 import { BREAKPOINTS } from '@vkui/lib/adaptivity';
-import { SMALL_HEIGHT } from '../Settings/ViewHeightSelect';
-import { AppRoot, ConfigProvider, WebviewType, Platform, Appearance } from '@vkui';
-import './StyleGuideRenderer.css';
-import { StyleGuideMobile } from './StyleGuideMobile';
-import { StyleGuideDesktop } from './StyleGuideDesktop';
 import { useViewPortSize } from '../../utils';
+import { SMALL_HEIGHT } from '../Settings/ViewHeightSelect';
+import { StyleGuideDesktop } from './StyleGuideDesktop';
+import { StyleGuideMobile } from './StyleGuideMobile';
+import './StyleGuideRenderer.css';
 
 let initialState = {
   platform: Platform.ANDROID,

@@ -1,9 +1,9 @@
 import React, { createContext, Fragment, useContext, useEffect, useRef, useState } from 'react';
-import { Icon16Up, Icon16MoreHorizontal } from '@vkontakte/icons';
+import { Icon16MoreHorizontal, Icon16Up } from '@vkontakte/icons';
 import { noop, throttle } from '@vkontakte/vkjs';
-import { Text, classNames, useAppearance } from '@vkui';
-import TogglePropsButton from '../TogglePropsButton';
+import { classNames, Text, useAppearance } from '@vkui';
 import NameRenderer from '../Name/NameRenderer';
+import TogglePropsButton from '../TogglePropsButton';
 import './Table.css';
 
 const TableContext = createContext({ getRowKey: noop, columns: [] });

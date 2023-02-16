@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { Icon20Cancel } from '@vkontakte/icons';
+import { classNames } from '@vkontakte/vkjs';
 import { Tappable } from '../Tappable/Tappable';
 import styles from './ModalDismissButton.module.css';
 

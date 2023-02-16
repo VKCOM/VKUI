@@ -1,13 +1,13 @@
-import { render } from '@testing-library/react';
 import React, { useContext } from 'react';
+import { render } from '@testing-library/react';
+import { Appearance } from '../../helpers/appearance';
 import { Platform } from '../../lib/platform';
 import { baselineComponent } from '../../testing/utils';
-import { Appearance } from '../../helpers/appearance';
 import { ConfigProvider } from './ConfigProvider';
 import {
   ConfigProviderContext,
-  WebviewType,
   ConfigProviderContextInterface,
+  WebviewType,
 } from './ConfigProviderContext';
 
 describe('ConfigProvider', () => {

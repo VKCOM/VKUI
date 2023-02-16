@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { ScrollContext } from '../AppRoot/ScrollContext';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { ScrollContext } from '../AppRoot/ScrollContext';
 
 export interface ScrollSaverProps {
   initialScroll?: number;

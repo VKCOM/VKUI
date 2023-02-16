@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useAppearance } from '../../../hooks/useAppearance';
 import { useAdaptivityHasPointer } from '../../../hooks/useAdaptivityHasPointer';
+import { useAppearance } from '../../../hooks/useAppearance';
 import { Tappable } from '../../Tappable/Tappable';
 import { ImageBaseContext } from '../context';
 import type { ImageBaseExpectedIconProps } from '../types';

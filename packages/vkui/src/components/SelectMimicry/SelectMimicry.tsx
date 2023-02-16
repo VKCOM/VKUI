@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
-import { FormField, FormFieldProps } from '../FormField/FormField';
-import { HasAlign, HasRootRef } from '../../types';
-import { usePlatform } from '../../hooks/usePlatform';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
-import { getFormFieldModeFromSelectType } from '../../lib/select';
-import type { SelectType } from '../Select/Select';
-import { SelectTypography } from '../SelectTypography/SelectTypography';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { usePlatform } from '../../hooks/usePlatform';
+import { getFormFieldModeFromSelectType } from '../../lib/select';
+import { HasAlign, HasRootRef } from '../../types';
+import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
+import { FormField, FormFieldProps } from '../FormField/FormField';
+import type { SelectType } from '../Select/Select';
+import { SelectTypography } from '../SelectTypography/SelectTypography';
 import styles from '../Select/Select.module.css';
 
 export interface SelectMimicryProps

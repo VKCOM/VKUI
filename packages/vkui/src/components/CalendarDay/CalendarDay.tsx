@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { Tappable, TappableElementProps } from '../Tappable/Tappable';
 import { ENABLE_KEYBOARD_INPUT_EVENT_NAME } from '../../hooks/useKeyboardInputTracker';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
+import { Tappable, TappableElementProps } from '../Tappable/Tappable';
 import styles from './CalendarDay.module.css';
 
 export type CalendarDayElementProps = Omit<

@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { classNames, hasReactNode, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { HasComponent, HasRootRef } from '../../types';
 import { Platform } from '../../lib/platform';
-import { Headline } from '../Typography/Headline/Headline';
+import { HasComponent, HasRootRef } from '../../types';
 import { Footnote } from '../Typography/Footnote/Footnote';
-import { Title } from '../Typography/Title/Title';
-import { Text } from '../Typography/Text/Text';
+import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
+import { Text } from '../Typography/Text/Text';
+import { Title } from '../Typography/Title/Title';
 import styles from './Header.module.css';
 
 export interface HeaderProps extends React.HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {

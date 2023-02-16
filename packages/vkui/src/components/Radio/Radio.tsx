@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { ACTIVE_EFFECT_DELAY, Tappable } from '../Tappable/Tappable';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { Platform } from '../../lib/platform';
-import { HasRef, HasRootRef } from '../../types';
-import { usePlatform } from '../../hooks/usePlatform';
-import { VisuallyHiddenInput } from '../VisuallyHiddenInput/VisuallyHiddenInput';
-import { Footnote } from '../Typography/Footnote/Footnote';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
+import { HasRef, HasRootRef } from '../../types';
+import { ACTIVE_EFFECT_DELAY, Tappable } from '../Tappable/Tappable';
+import { Footnote } from '../Typography/Footnote/Footnote';
+import { VisuallyHiddenInput } from '../VisuallyHiddenInput/VisuallyHiddenInput';
 import styles from './Radio.module.css';
 
 const RadioIcon = (props: React.SVGProps<SVGSVGElement>) => {

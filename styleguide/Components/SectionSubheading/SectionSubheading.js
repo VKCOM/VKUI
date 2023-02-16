@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
-import Heading from '../Heading/index';
-import { classNames } from '@vkui';
 import { Icon16Linked } from '@vkontakte/icons';
+import { classNames } from '@vkui';
+import Heading from '../Heading/index';
 import './SectionSubheading.css';
 
 export const SectionSubheading = ({ children, className, level = 2, href, ...restProps }) => {

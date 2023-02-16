@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { ElementType, Fragment } from 'react';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
-import { RadioGroup, RadioGroupProps } from './RadioGroup';
-import { Radio } from '../Radio/Radio';
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import { FormItem } from '../FormItem/FormItem';
 import { FormLayout } from '../FormLayout/FormLayout';
+import { Radio } from '../Radio/Radio';
+import { RadioGroup, RadioGroupProps } from './RadioGroup';
 
 type RadioGroupTestProps = RadioGroupProps & {
   RadioGroupWrapper: string | ElementType;

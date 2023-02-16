@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { CustomSelectOption } from './CustomSelectOption';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
-import { Avatar } from '../Avatar/Avatar';
 import { SizeType } from '../../lib/adaptivity';
+import { describeScreenshotFuzz } from '../../testing/e2e';
+import { Avatar } from '../Avatar/Avatar';
+import { CustomSelectOption } from './CustomSelectOption';
 
 describe('CustomSelectOption', () => {
   describeScreenshotFuzz(

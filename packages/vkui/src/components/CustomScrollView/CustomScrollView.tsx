@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { DOMProps, useDOM } from '../../lib/dom';
 import { classNames } from '@vkontakte/vkjs';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { useExternRef } from '../../hooks/useExternRef';
 import { useEventListener } from '../../hooks/useEventListener';
-import { TrackerOptionsProps, useTrackerVisibility } from './useTrackerVisibility';
+import { useExternRef } from '../../hooks/useExternRef';
+import { DOMProps, useDOM } from '../../lib/dom';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { stopPropagation } from '../../lib/utils';
+import { TrackerOptionsProps, useTrackerVisibility } from './useTrackerVisibility';
 import styles from './CustomScrollView.module.css';
 
 export interface CustomScrollViewProps extends DOMProps, TrackerOptionsProps {

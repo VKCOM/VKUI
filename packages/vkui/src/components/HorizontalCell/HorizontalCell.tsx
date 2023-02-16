@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { Caption } from '../Typography/Caption/Caption';
-import { Tappable } from '../Tappable/Tappable';
-import { Subhead } from '../Typography/Subhead/Subhead';
-import { Footnote } from '../Typography/Footnote/Footnote';
-import { Avatar } from '../Avatar/Avatar';
 import { HasComponent, HasRef, HasRootRef } from '../../types';
+import { Avatar } from '../Avatar/Avatar';
+import { Tappable } from '../Tappable/Tappable';
+import { Caption } from '../Typography/Caption/Caption';
+import { Footnote } from '../Typography/Footnote/Footnote';
+import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './HorizontalCell.module.css';
 
 interface CellTypographyProps extends React.HTMLAttributes<HTMLDivElement> {

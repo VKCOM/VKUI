@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { createPortal } from 'react-dom';
-import { AppRootContext } from './AppRootContext';
-import { AppearanceProvider } from '../AppearanceProvider/AppearanceProvider';
 import { useAppearance } from '../../hooks/useAppearance';
 import { useIsClient } from '../../hooks/useIsClient';
+import { AppearanceProvider } from '../AppearanceProvider/AppearanceProvider';
+import { AppRootContext } from './AppRootContext';
 
 export interface AppRootPortalProps {
   className?: string;

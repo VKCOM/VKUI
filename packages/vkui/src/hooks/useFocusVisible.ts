@@ -1,4 +1,4 @@
-import { useContext, useState, useCallback, FocusEvent } from 'react';
+import { FocusEvent, useCallback, useContext, useState } from 'react';
 import { AppRootContext } from '../components/AppRoot/AppRootContext';
 
 export function useFocusVisible() {

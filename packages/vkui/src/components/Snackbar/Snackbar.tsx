@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { Touch, TouchEvent } from '../Touch/Touch';
 import { classNames } from '@vkontakte/vkjs';
+import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { usePlatform } from '../../hooks/usePlatform';
+import { useTimeout } from '../../hooks/useTimeout';
+import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
+import { ViewWidth } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
-import { ViewWidth } from '../../lib/adaptivity';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
+import { Button } from '../Button/Button';
+import { Touch, TouchEvent } from '../Touch/Touch';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import { Subhead } from '../Typography/Subhead/Subhead';
-import { Button } from '../Button/Button';
-import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
-import { usePlatform } from '../../hooks/usePlatform';
-import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
-import { useTimeout } from '../../hooks/useTimeout';
 import styles from './Snackbar.module.css';
 
 export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {

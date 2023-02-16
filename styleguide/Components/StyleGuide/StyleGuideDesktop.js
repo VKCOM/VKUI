@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleGuideModal } from './StyleGuideModal';
 import { StyleGuideHeader } from './StyleGuideHeader';
+import { StyleGuideModal } from './StyleGuideModal';
 import './StyleGuideDesktop.css';
 
 export const StyleGuideDesktop = ({

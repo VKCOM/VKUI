@@ -1,23 +1,23 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { transitionEvent } from '../../lib/supportEvents';
-import { HasPlatform } from '../../types';
-import { withPlatform } from '../../hoc/withPlatform';
+import { clamp } from '../../helpers/math';
 import { withContext } from '../../hoc/withContext';
-import { ModalRootContext, ModalRootContextInterface } from './ModalRootContext';
+import { withPlatform } from '../../hoc/withPlatform';
+import { DOMProps, withDOM } from '../../lib/dom';
+import { getNavId } from '../../lib/getNavId';
+import { Platform } from '../../lib/platform';
+import { transitionEvent } from '../../lib/supportEvents';
+import { warnOnce } from '../../lib/warnOnce';
+import { HasPlatform } from '../../types';
 import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
   WebviewType,
 } from '../ConfigProvider/ConfigProviderContext';
-import { ModalsStateEntry } from './types';
-import { Platform } from '../../lib/platform';
-import { DOMProps, withDOM } from '../../lib/dom';
-import { getNavId } from '../../lib/getNavId';
-import { warnOnce } from '../../lib/warnOnce';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
+import { ModalRootContext, ModalRootContextInterface } from './ModalRootContext';
+import { ModalsStateEntry } from './types';
 import { ModalTransitionProps, withModalManager } from './useModalManager';
-import { clamp } from '../../helpers/math';
 import styles from './ModalRoot.module.css';
 
 const warn = warnOnce('ModalRoot');

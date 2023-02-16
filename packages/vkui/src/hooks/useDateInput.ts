@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { useDOM } from '../lib/dom';
 import { useBooleanState } from './useBooleanState';
 import { useGlobalEventListener } from './useGlobalEventListener';
-import { useDOM } from '../lib/dom';
 
 export interface UseDateInputDependencies<T, D> {
   maxElement: number;

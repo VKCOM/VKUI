@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { classNames } from '@vkontakte/vkjs';
-import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
-import { ModalType } from '../ModalRoot/types';
+import { getPlatformClassName } from '../../helpers/getPlatformClassName';
+import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { usePlatform } from '../../hooks/usePlatform';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
 import { ModalCardBase, ModalCardBaseProps } from '../ModalCardBase/ModalCardBase';
-import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
-import { usePlatform } from '../../hooks/usePlatform';
+import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
+import { ModalType } from '../ModalRoot/types';
 import styles from './ModalCard.module.css';
 
 export interface ModalCardProps extends NavIdProps, ModalCardBaseProps {}

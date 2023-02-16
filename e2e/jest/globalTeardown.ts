@@ -1,5 +1,5 @@
-import baseTeardown from 'jest-playwright-preset/teardown';
 import type { Config as JestConfig } from '@jest/types';
+import baseTeardown from 'jest-playwright-preset/teardown';
 import { useDocker } from '../detectEnv';
 import { stopDocker } from '../docker';
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import { NativeSelect, NativeSelectProps } from './NativeSelect';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
 describe('NativeSelect', () => {
   describeScreenshotFuzz(

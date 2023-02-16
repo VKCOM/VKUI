@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { FormField, FormFieldProps } from '../FormField/FormField';
-import { HasRef, HasRootRef } from '../../types';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { HasRef, HasRootRef } from '../../types';
+import { FormField, FormFieldProps } from '../FormField/FormField';
 import styles from './Textarea.module.css';
 
 export interface TextareaProps

@@ -1,23 +1,23 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { transitionEvent, animationEvent } from '../../lib/supportEvents';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
-import { Platform } from '../../lib/platform';
-import { Touch, TouchEvent } from '../Touch/Touch';
-import { HasPlatform } from '../../types';
-import { withPlatform } from '../../hoc/withPlatform';
 import { withContext } from '../../hoc/withContext';
+import { withPlatform } from '../../hoc/withPlatform';
+import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
+import { getNavId, NavIdProps } from '../../lib/getNavId';
+import { Platform } from '../../lib/platform';
+import { animationEvent, transitionEvent } from '../../lib/supportEvents';
+import { warnOnce } from '../../lib/warnOnce';
+import { HasPlatform } from '../../types';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
+import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
 import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
 } from '../ConfigProvider/ConfigProviderContext';
-import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitColContext';
-import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
-import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
-import { getNavId, NavIdProps } from '../../lib/getNavId';
-import { warnOnce } from '../../lib/warnOnce';
+import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitColContext';
+import { Touch, TouchEvent } from '../Touch/Touch';
 import { swipeBackExcluded } from './utils';
 import styles from './View.module.css';
 import iosStyles from './ViewIOS.module.css';

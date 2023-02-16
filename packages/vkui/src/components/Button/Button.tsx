@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { Platform } from '../../lib/platform';
-import { TappableProps, Tappable } from '../Tappable/Tappable';
-import { HasAlign } from '../../types';
-import { Spinner } from '../Spinner/Spinner';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
+import { HasAlign } from '../../types';
+import { Spinner } from '../Spinner/Spinner';
+import { Tappable, TappableProps } from '../Tappable/Tappable';
 import styles from './Button.module.css';
 
 export interface VKUIButtonProps extends HasAlign {

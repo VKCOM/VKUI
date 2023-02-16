@@ -1,20 +1,20 @@
 import * as React from 'react';
-import { AnyFunction } from '../../types';
-import { DOMProps, useDOM } from '../../lib/dom';
 import { classNames } from '@vkontakte/vkjs';
+import { clamp } from '../../helpers/math';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { usePlatform } from '../../hooks/usePlatform';
+import { usePrevious } from '../../hooks/usePrevious';
+import { useTimeout } from '../../hooks/useTimeout';
+import { DOMProps, useDOM } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
 import { runTapticImpactOccurred } from '../../lib/taptic';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { usePlatform } from '../../hooks/usePlatform';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { AnyFunction } from '../../types';
 import { ScrollContextInterface, useScroll } from '../AppRoot/ScrollContext';
-import { Touch, TouchEvent, TouchProps } from '../Touch/Touch';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
-import { PullToRefreshSpinner } from './PullToRefreshSpinner';
+import { Touch, TouchEvent, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
-import { usePrevious } from '../../hooks/usePrevious';
-import { useTimeout } from '../../hooks/useTimeout';
-import { clamp } from '../../helpers/math';
+import { PullToRefreshSpinner } from './PullToRefreshSpinner';
 import styles from './PullToRefresh.module.css';
 
 function cancelEvent(event: any) {

@@ -1,6 +1,6 @@
-import { type PlatformType, Platform } from '../platform';
-import type { MediaQueries } from './types';
+import { Platform, type PlatformType } from '../platform';
 import { SizeType, ViewHeight, ViewWidth } from './constants';
+import type { MediaQueries } from './types';
 
 export function getViewWidthByMediaQueries(mediaQueries: MediaQueries): ViewWidth {
   /* eslint-disable no-restricted-properties */

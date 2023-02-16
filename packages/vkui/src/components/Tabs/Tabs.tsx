@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { HasRootRef } from '../../types';
-import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
-import { useDOM } from '../../lib/dom';
+import { usePlatform } from '../../hooks/usePlatform';
 import { pressedKey } from '../../lib/accessibility';
+import { useDOM } from '../../lib/dom';
+import { Platform } from '../../lib/platform';
+import { HasRootRef } from '../../types';
 import styles from './Tabs.module.css';
 
 const modeClassNames = {

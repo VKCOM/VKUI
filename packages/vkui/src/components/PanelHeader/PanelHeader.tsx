@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { usePlatform } from '../../hooks/usePlatform';
 import { classNames } from '@vkontakte/vkjs';
-import { FixedLayout } from '../FixedLayout/FixedLayout';
-import { Separator } from '../Separator/Separator';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
+import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { useConfigProvider, WebviewType } from '../ConfigProvider/ConfigProviderContext';
-import { Text } from '../Typography/Text/Text';
-import { TooltipContainer } from '../Tooltip/TooltipContainer';
+import { FixedLayout } from '../FixedLayout/FixedLayout';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
+import { Separator } from '../Separator/Separator';
 import { Spacing } from '../Spacing/Spacing';
+import { TooltipContainer } from '../Tooltip/TooltipContainer';
+import { Text } from '../Typography/Text/Text';
 import styles from './PanelHeader.module.css';
 
 function getPlatformClassName(platform: string): string {

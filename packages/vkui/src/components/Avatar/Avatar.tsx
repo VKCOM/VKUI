@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { type ImageBaseProps, type ImageBaseOverlayProps, ImageBase } from '../ImageBase/ImageBase';
-import { getInitialsFontSize } from './helpers';
-import { type AvatarBadgeProps, AvatarBadge } from './AvatarBadge/AvatarBadge';
+import { ImageBase, type ImageBaseOverlayProps, type ImageBaseProps } from '../ImageBase/ImageBase';
+import { AvatarBadge, type AvatarBadgeProps } from './AvatarBadge/AvatarBadge';
 import {
-  type AvatarBadgeWithPresetProps,
   AvatarBadgeWithPreset,
+  type AvatarBadgeWithPresetProps,
 } from './AvatarBadge/AvatarBadgeWithPreset';
+import { getInitialsFontSize } from './helpers';
 import styles from './Avatar.module.css';
 
 export type {

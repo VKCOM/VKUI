@@ -1,8 +1,8 @@
 import {
-  type ReferenceType,
-  type FloatingElement,
-  type AutoUpdateOptions,
   autoUpdate as autoUpdateLib,
+  type AutoUpdateOptions,
+  type FloatingElement,
+  type ReferenceType,
 } from '@floating-ui/react-dom';
 
 const defaultOptions = {

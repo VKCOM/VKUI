@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { setHours, setMinutes } from '../../lib/date';
-import { CustomSelect } from '../CustomSelect/CustomSelect';
-import { Button } from '../Button/Button';
 import { SizeType } from '../../lib/adaptivity';
+import { setHours, setMinutes } from '../../lib/date';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import { Button } from '../Button/Button';
+import { CustomSelect } from '../CustomSelect/CustomSelect';
 import styles from './CalendarTime.module.css';
 
 export interface CalendarTimeProps {

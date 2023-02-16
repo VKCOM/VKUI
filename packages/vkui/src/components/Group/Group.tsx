@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { Platform } from '../../lib/platform';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { HasRootRef } from '../../types';
-import { usePlatform } from '../../hooks/usePlatform';
-import { Spacing } from '../Spacing/Spacing';
-import { Separator } from '../Separator/Separator';
-import { Footnote } from '../Typography/Footnote/Footnote';
-import { warnOnce } from '../../lib/warnOnce';
-import { ModalRootContext } from '../ModalRoot/ModalRootContext';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { getSizeXClassName } from '../../helpers/getSizeXClassName';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
+import { warnOnce } from '../../lib/warnOnce';
+import { HasRootRef } from '../../types';
+import { ModalRootContext } from '../ModalRoot/ModalRootContext';
+import { Separator } from '../Separator/Separator';
+import { Spacing } from '../Spacing/Spacing';
+import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './Group.module.css';
 
 export interface GroupProps extends HasRootRef<HTMLElement>, React.HTMLAttributes<HTMLElement> {

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { warnOnce } from '../../lib/warnOnce';
-import { type ImageBaseProps, ImageBase } from '../ImageBase/ImageBase';
-import { type GridAvatarBadgeProps, GridAvatarBadge } from './GridAvatarBadge/GridAvatarBadge';
+import { ImageBase, type ImageBaseProps } from '../ImageBase/ImageBase';
+import { GridAvatarBadge, type GridAvatarBadgeProps } from './GridAvatarBadge/GridAvatarBadge';
 import styles from './GridAvatar.module.css';
 
 export { GridAvatarBadgeProps };

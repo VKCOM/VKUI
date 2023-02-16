@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Icon28UserCircleOutline } from '@vkontakte/icons';
-import { Tabbar } from './Tabbar';
-import { TabbarItem } from '../TabbarItem/TabbarItem';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 import { Platform } from '../../lib/platform';
+import { describeScreenshotFuzz } from '../../testing/e2e';
+import { TabbarItem } from '../TabbarItem/TabbarItem';
+import { Tabbar } from './Tabbar';
 
 describe('Tabbar', () => {
   const tabs2 = [

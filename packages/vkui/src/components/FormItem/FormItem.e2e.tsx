@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
-import { FormItem } from './FormItem';
+import { describeScreenshotFuzz } from '../../testing/e2e';
+import { Cell } from '../Cell/Cell';
 import { CellButton } from '../CellButton/CellButton';
 import { Checkbox } from '../Checkbox/Checkbox';
 import { Input } from '../Input/Input';
 import { Radio } from '../Radio/Radio';
 import { RichCell } from '../RichCell/RichCell';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
-import { Cell } from '../Cell/Cell';
+import { FormItem } from './FormItem';
 
 describe('FormItem', () => {
   describeScreenshotFuzz(FormItem, [

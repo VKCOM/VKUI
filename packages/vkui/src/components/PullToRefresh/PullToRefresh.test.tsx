@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { baselineComponent, runAllTimers } from '../../testing/utils';
-import { noop } from '@vkontakte/vkjs';
-import { PullToRefresh } from './PullToRefresh';
 import { act } from 'react-dom/test-utils';
-import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { noop } from '@vkontakte/vkjs';
 import { Platform } from '../../lib/platform';
+import { baselineComponent, runAllTimers } from '../../testing/utils';
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
+import { PullToRefresh } from './PullToRefresh';
 
 const hasSpinner = () => !!document.querySelector('.vkuiPullToRefresh__spinner--on');
 
