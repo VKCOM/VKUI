@@ -1,7 +1,7 @@
 import {
   checkIsNotAutoPlacement,
-  getAutoPlacementAlign,
   convertFloatingDataToReactCSSProperties,
+  getAutoPlacementAlign,
 } from './functions';
 
 describe('floating/functions', () => {

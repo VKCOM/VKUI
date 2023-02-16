@@ -1,4 +1,4 @@
-import { setTimeEqual, getYears } from './calendar';
+import { getYears, setTimeEqual } from './calendar';
 
 describe('calendar utils', () => {
   describe('setTimeEqual', () => {

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {
-  Icon16MoreVertical,
   Icon16MessageHeart,
+  Icon16MoreVertical,
   Icon24MessageOutline,
   Icon28MessageOutline,
 } from '@vkontakte/icons';
-import { IconButtonProps, IconButton } from './IconButton';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
+import { describeScreenshotFuzz } from '../../testing/e2e';
+import { IconButton, IconButtonProps } from './IconButton';
 
 describe('IconButton', () => {
   describeScreenshotFuzz(

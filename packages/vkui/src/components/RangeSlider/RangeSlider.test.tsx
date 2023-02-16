@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { setRef } from '../../lib/utils';
+import { baselineComponent, mockRect } from '../../testing/utils';
 import { RangeSlider as RangeSliderBase, RangeSliderProps } from './RangeSlider';
-import { mockRect, baselineComponent } from '../../testing/utils';
 
 const RangeSlider = (props: RangeSliderProps) => {
   const getRootRef: RangeSliderProps['getRootRef'] = (el) => {

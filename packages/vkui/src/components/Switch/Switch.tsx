@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { classNames } from '@vkontakte/vkjs';
-import { callMultiple } from '../../lib/callMultiple';
-import { usePlatform } from '../../hooks/usePlatform';
-import { HasRootRef } from '../../types';
+import { getPlatformClassName } from '../../helpers/getPlatformClassName';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useFocusVisible } from '../../hooks/useFocusVisible';
+import { usePlatform } from '../../hooks/usePlatform';
+import { callMultiple } from '../../lib/callMultiple';
+import { HasRootRef } from '../../types';
+import { FocusVisible } from '../FocusVisible/FocusVisible';
 import {
   VisuallyHiddenInput,
   VisuallyHiddenInputProps,
 } from '../VisuallyHiddenInput/VisuallyHiddenInput';
-import { useFocusVisible } from '../../hooks/useFocusVisible';
-import { FocusVisible } from '../FocusVisible/FocusVisible';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import styles from './Switch.module.css';
 
 export interface SwitchProps extends VisuallyHiddenInputProps, HasRootRef<HTMLLabelElement> {}

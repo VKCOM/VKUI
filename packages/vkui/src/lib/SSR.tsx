@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { platform as getPlatform } from './platform';
+import { ConfigProviderOverride } from '../components/ConfigProvider/ConfigProviderOverride';
+import { useObjectMemo } from '../hooks/useObjectMemo';
 import { BrowserInfo, computeBrowserInfo } from './browser';
 import { DOMContext, getDOM } from './dom';
-import { useObjectMemo } from '../hooks/useObjectMemo';
-import { ConfigProviderOverride } from '../components/ConfigProvider/ConfigProviderOverride';
+import { platform as getPlatform } from './platform';
 
 export interface SSRWrapperProps {
   userAgent?: string;

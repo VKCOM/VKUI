@@ -1,11 +1,11 @@
 import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
+import type { Placement } from '../../lib/floating';
+import { HasRef } from '../../types';
 import { CustomScrollView } from '../CustomScrollView/CustomScrollView';
 import { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
-import { classNames } from '@vkontakte/vkjs';
 import { Popper } from '../Popper/Popper';
 import { Spinner } from '../Spinner/Spinner';
-import { HasRef } from '../../types';
-import type { Placement } from '../../lib/floating';
 import styles from './CustomSelectDropdown.module.css';
 
 export interface CustomSelectDropdownProps

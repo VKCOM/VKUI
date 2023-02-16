@@ -1,10 +1,10 @@
 import * as React from 'react';
 import type {
   AutoPlacementType,
+  FloatingPositionStrategy,
   Placement,
   PlacementWithAuto,
   UseFloatingData,
-  FloatingPositionStrategy,
 } from './types';
 
 export function checkIsNotAutoPlacement(placement: PlacementWithAuto): placement is Placement {

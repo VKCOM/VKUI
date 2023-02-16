@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Checkbox, CheckboxProps } from './Checkbox';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 import { SizeType } from '../../lib/adaptivity';
+import { describeScreenshotFuzz } from '../../testing/e2e';
+import { Checkbox, CheckboxProps } from './Checkbox';
 
 describe('Checkbox', () => {
   describeScreenshotFuzz(

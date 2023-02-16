@@ -1,10 +1,10 @@
-import webpack from 'webpack';
-import WebpackDevServer from 'webpack-dev-server';
 import type { Config as JestConfig } from '@jest/types';
 import baseSetup from 'jest-playwright-preset/setup';
-import { generateWebpackConfig } from '../generateWebpackConfig';
+import webpack from 'webpack';
+import WebpackDevServer from 'webpack-dev-server';
 import { useDocker } from '../detectEnv';
 import { startDocker } from '../docker';
+import { generateWebpackConfig } from '../generateWebpackConfig';
 
 let devServer: WebpackDevServer;
 async function setupWebpack() {

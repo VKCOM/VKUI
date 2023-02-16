@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, classNames } from '@vkui';
+import { classNames, Text } from '@vkui';
 import './Type.css';
 
 export const TypeRenderer = ({ children, className }) => {

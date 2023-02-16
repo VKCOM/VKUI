@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { Textarea } from './Textarea';
-import {
-  screenshot,
-  mount,
-  describeScreenshotFuzz,
-  customSnapshotIdentifier,
-  APPEARANCE,
-} from '../../testing/e2e';
-import { AppRoot } from '../AppRoot/AppRoot';
-import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { BREAKPOINTS, SizeType } from '../../lib/adaptivity';
+import {
+  APPEARANCE,
+  customSnapshotIdentifier,
+  describeScreenshotFuzz,
+  mount,
+  screenshot,
+} from '../../testing/e2e';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import { AppRoot } from '../AppRoot/AppRoot';
 import { AppearanceProvider } from '../AppearanceProvider/AppearanceProvider';
+import { Textarea } from './Textarea';
 
 describe('Textarea', () => {
   describeScreenshotFuzz(Textarea, [

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { classNames, leadingZero } from '@vkontakte/vkjs';
-import { Input } from '../Input/Input';
+import { range } from '../../helpers/range';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { CustomSelect } from '../CustomSelect/CustomSelect';
-import { range } from '../../helpers/range';
+import { Input } from '../Input/Input';
 import styles from './DatePicker.module.css';
 
 const DefaultMonths: string[] = [

@@ -1,5 +1,5 @@
-import { BrowserInfo, computeBrowserInfo } from './browser';
 import { querystring } from '@vkontakte/vkjs';
+import { BrowserInfo, computeBrowserInfo } from './browser';
 import { canUseDOM } from './dom';
 
 export enum Platform {

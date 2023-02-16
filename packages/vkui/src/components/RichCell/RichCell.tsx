@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { TappableProps, Tappable } from '../Tappable/Tappable';
-import { Subhead } from '../Typography/Subhead/Subhead';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { Tappable, TappableProps } from '../Tappable/Tappable';
+import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './RichCell.module.css';
 
 export interface RichCellProps extends TappableProps {

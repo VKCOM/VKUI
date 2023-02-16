@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { useChipsInput } from './useChipsInput';
-import { ChipsSelectProps } from '../components/ChipsSelect/ChipsSelect';
 import { ChipOption } from '../components/Chip/Chip';
+import { ChipsSelectProps } from '../components/ChipsSelect/ChipsSelect';
+import { useChipsInput } from './useChipsInput';
 
 export const useChipsSelect = <Option extends ChipOption>(
   props: Partial<ChipsSelectProps<Option>>,

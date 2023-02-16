@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { fireEvent, render, screen, act } from '@testing-library/react';
-import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
+import { type ComponentType, Fragment, type ReactNode } from 'react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { Platform } from '../../lib/platform';
 import { baselineComponent, mockScrollContext, mountTest } from '../../testing/utils';
-import { Panel } from '../Panel/Panel';
-import { type ViewProps, View, scrollsCache } from './View';
-import { ViewInfinite } from './ViewInfinite';
-import { type ComponentType, type ReactNode, Fragment } from 'react';
 import { HasChildren } from '../../types';
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
+import { Panel } from '../Panel/Panel';
+import { scrollsCache, View, type ViewProps } from './View';
+import { ViewInfinite } from './ViewInfinite';
 
 // Basically the same as Root.test.tsx
 

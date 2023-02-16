@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { baselineComponent } from '../../testing/utils';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { createElement } from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { noop } from '@vkontakte/vkjs';
-import { Touch } from './Touch';
-import { createElement } from 'react';
-import { View } from '../View/View';
+import { baselineComponent } from '../../testing/utils';
+import { Button } from '../Button/Button';
+import { Card } from '../Card/Card';
+import { CardScroll } from '../CardScroll/CardScroll';
+import { Group } from '../Group/Group';
 import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
-import { Group } from '../Group/Group';
-import { CardScroll } from '../CardScroll/CardScroll';
-import { Card } from '../Card/Card';
-import { Button } from '../Button/Button';
+import { View } from '../View/View';
+import { Touch } from './Touch';
 
 // Настоящего Touch нет в jsdom: https://github.com/jsdom/jsdom/issues/1508
 const asClientPos = ([clientX = 0, clientY = 0] = []): Touch & MouseEvent =>

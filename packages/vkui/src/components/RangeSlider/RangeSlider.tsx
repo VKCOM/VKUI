@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { clamp } from '../../helpers/math';
-import { UniversalSlider, UniversalSliderProps } from './UniversalSlider';
 import { TouchEvent } from '../Touch/Touch';
+import { UniversalSlider, UniversalSliderProps } from './UniversalSlider';
 
 export type Value = [number, number];
 export type RangeSliderProps = UniversalSliderProps<Value>;

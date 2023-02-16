@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { HasComponent, HasRootRef } from '../../types';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
-import { useExternRef } from '../../hooks/useExternRef';
-import { Subhead } from '../Typography/Subhead/Subhead';
-import { Footnote } from '../Typography/Footnote/Footnote';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { Removable, RemovableProps } from '../Removable/Removable';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useExternRef } from '../../hooks/useExternRef';
+import { HasComponent, HasRootRef } from '../../types';
+import { Removable, RemovableProps } from '../Removable/Removable';
+import { Footnote } from '../Typography/Footnote/Footnote';
+import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './FormItem.module.css';
 
 export interface FormItemProps

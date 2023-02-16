@@ -3,15 +3,15 @@
  * gist: https://gist.github.com/wkillerud/36b119b98f9b9009cd50a733391941a4
  * issue: https://github.com/styleguidist/react-docgen-typescript/issues/112#issuecomment-479772520
  */
-const path = require('path');
 const fs = require('fs');
+const path = require('path');
+const { withCustomConfig } = require('react-docgen-typescript');
 const ts = require('typescript');
+const { VKUI_PACKAGE } = require('../shared');
+
 let languageService = null;
 // eslint-disable-next-line no-undef
 const filesCache = new Map();
-const { withCustomConfig } = require('react-docgen-typescript');
-
-const { VKUI_PACKAGE } = require('../shared');
 const vkuiTSConfigDistFile = path.resolve(__dirname, `../${VKUI_PACKAGE.PATHS.TS_CONFIG_FOR_DIST}`);
 
 const parser = withCustomConfig(vkuiTSConfigDistFile);

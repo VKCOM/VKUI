@@ -1,11 +1,11 @@
 import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
-import { HorizontalScrollArrow } from './HorizontalScrollArrow';
-import { easeInOutSine } from '../../lib/fx';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
+import { easeInOutSine } from '../../lib/fx';
 import { HasRef } from '../../types';
-import { classNames } from '@vkontakte/vkjs';
+import { HorizontalScrollArrow } from './HorizontalScrollArrow';
 import styles from './HorizontalScroll.module.css';
 
 interface ScrollContext {

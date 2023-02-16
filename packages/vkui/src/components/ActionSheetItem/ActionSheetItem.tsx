@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { Icon20CheckCircleOn, Icon24CheckCircleOn } from '@vkontakte/icons';
 import { classNames, noop } from '@vkontakte/vkjs';
-import { Tappable } from '../Tappable/Tappable';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
+import { ActionSheetContext, type ActionSheetContextType } from '../ActionSheet/ActionSheetContext';
+import { Tappable } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Text } from '../Typography/Text/Text';
-import { Icon20CheckCircleOn, Icon24CheckCircleOn } from '@vkontakte/icons';
-import { ActionSheetContext, type ActionSheetContextType } from '../ActionSheet/ActionSheetContext';
-import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import styles from './ActionSheetItem.module.css';
 
 export interface ActionSheetItemProps

@@ -1,11 +1,11 @@
 import {
-  parse,
-  startOfWeek,
+  eachDayOfInterval,
   endOfWeek,
+  format,
   isLastDayOfMonth,
   isWithinInterval,
-  eachDayOfInterval,
-  format,
+  parse,
+  startOfWeek,
 } from './date';
 
 describe(parse, () => {

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { NativeSelect } from '../NativeSelect/NativeSelect';
-import { CustomSelect, SelectProps } from '../CustomSelect/CustomSelect';
-import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { classNames } from '@vkontakte/vkjs';
+import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
+import { CustomSelect, SelectProps } from '../CustomSelect/CustomSelect';
+import { NativeSelect } from '../NativeSelect/NativeSelect';
 import styles from './Select.module.css';
 
 export type SelectType = 'default' | 'plain' | 'accent';

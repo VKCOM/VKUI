@@ -1,8 +1,8 @@
 const path = require('path');
-const webpackCommonConfig = require('../webpack.common.config');
-const { VKUI_PACKAGE } = require('../shared');
 const { DefinePlugin } = require('webpack');
 const { merge } = require('webpack-merge');
+const { VKUI_PACKAGE } = require('../shared');
+const webpackCommonConfig = require('../webpack.common.config');
 
 module.exports = merge(webpackCommonConfig, {
   plugins: [

@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import { Chip, ChipProps } from './Chip';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
 describe('Chip', () => {
   describeScreenshotFuzz(

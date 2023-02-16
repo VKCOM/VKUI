@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { blurActiveElement, useDOM } from '../../lib/dom';
 import { HasRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { blurActiveElement, useDOM } from '../../lib/dom';
-import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import styles from './PopoutRoot.module.css';
 
 interface PopoutRootPopoutProps {

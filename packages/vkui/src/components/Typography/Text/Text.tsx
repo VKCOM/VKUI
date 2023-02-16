@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { classNames } from '@vkontakte/vkjs';
-import { HasComponent, HasRootRef } from '../../../types';
-import { warnOnce } from '../../../lib/warnOnce';
 import { getSizeYClassName } from '../../../helpers/getSizeYClassName';
+import { useAdaptivity } from '../../../hooks/useAdaptivity';
+import { warnOnce } from '../../../lib/warnOnce';
+import { HasComponent, HasRootRef } from '../../../types';
 import styles from './Text.module.css';
 
 export interface TextProps

@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
-import { HasComponent, HasChildren } from '../../types';
-import { classNames } from '@vkontakte/vkjs';
-import { getTitleFromChildren } from '../../lib/utils';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { TappableProps, Tappable } from '../Tappable/Tappable';
 import { Icon16Dropdown } from '@vkontakte/icons';
+import { classNames } from '@vkontakte/vkjs';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { getTitleFromChildren } from '../../lib/utils';
+import { HasChildren, HasComponent } from '../../types';
+import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './SubnavigationButton.module.css';

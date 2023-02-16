@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Icon24User } from '@vkontakte/icons';
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import { Input, InputProps } from './Input';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
 describe('Input', () => {
   describeScreenshotFuzz(

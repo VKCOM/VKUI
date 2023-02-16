@@ -1,7 +1,7 @@
 import React, { cloneElement } from 'react';
-import { Settings } from '../Settings/Settings';
-import { SectionSubheading } from '../SectionSubheading/SectionSubheading';
 import { useAdaptivityConditionalRender } from '@vkui';
+import { SectionSubheading } from '../SectionSubheading/SectionSubheading';
+import { Settings } from '../Settings/Settings';
 
 const PlaygroundRenderer = ({ name, preview, previewProps, tabBody, exampleIndex }) => {
   const {

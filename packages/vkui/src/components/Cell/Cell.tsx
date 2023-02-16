@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
-import { Platform } from '../../lib/platform';
-import { SimpleCell, SimpleCellProps } from '../SimpleCell/SimpleCell';
-import { HasRootRef } from '../../types';
-import { Removable, RemovableProps } from '../Removable/Removable';
-import { usePlatform } from '../../hooks/usePlatform';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useDraggable } from './useDraggable';
+import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
+import { HasRootRef } from '../../types';
 import { ListContext } from '../List/ListContext';
-import { CellDragger } from './CellDragger/CellDragger';
+import { Removable, RemovableProps } from '../Removable/Removable';
+import { SimpleCell, SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { CellCheckbox, CellCheckboxProps } from './CellCheckbox/CellCheckbox';
+import { CellDragger } from './CellDragger/CellDragger';
+import { useDraggable } from './useDraggable';
 import styles from './Cell.module.css';
 
 export interface CellProps

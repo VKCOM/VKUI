@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { Touch, TouchEvent } from '../Touch/Touch';
-import { HorizontalScrollArrow } from '../HorizontalScroll/HorizontalScrollArrow';
-import { useExternRef } from '../../hooks/useExternRef';
-import { useDOM } from '../../lib/dom';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { useDOM } from '../../lib/dom';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { HorizontalScrollArrow } from '../HorizontalScroll/HorizontalScrollArrow';
+import { Touch, TouchEvent } from '../Touch/Touch';
 import { calcMax, calcMin } from './helpers';
 import { BaseGalleryProps, GallerySlidesState, LayoutState, ShiftingState } from './types';
 import styles from './BaseGallery.module.css';

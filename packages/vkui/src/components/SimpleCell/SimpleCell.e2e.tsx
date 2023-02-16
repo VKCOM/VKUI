@@ -1,20 +1,20 @@
 import * as React from 'react';
 import {
-  Icon16MoreVertical,
-  Icon16MoreHorizontal,
-  Icon16MessageHeart,
-  Icon24MessageOutline,
-  Icon28MessageOutline,
   Icon12Fire,
   Icon12Tag,
-  Icon20AddCircleFillBlue,
   Icon12Verified,
+  Icon16MessageHeart,
+  Icon16MoreHorizontal,
+  Icon16MoreVertical,
+  Icon20AddCircleFillBlue,
+  Icon24MessageOutline,
+  Icon28MessageOutline,
 } from '@vkontakte/icons';
-import { SimpleCell, SimpleCellProps } from './SimpleCell';
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import { Avatar } from '../Avatar/Avatar';
 import { IconButton } from '../IconButton/IconButton';
 import { Switch } from '../Switch/Switch';
-import { describeScreenshotFuzz } from '../../testing/e2e';
+import { SimpleCell, SimpleCellProps } from './SimpleCell';
 
 describe('SimpleCell', () => {
   describeScreenshotFuzz(

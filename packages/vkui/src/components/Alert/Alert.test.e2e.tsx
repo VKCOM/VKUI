@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { AppRoot } from '../AppRoot/AppRoot';
-import { Alert, AlertProps, AlertActionInterface } from './Alert';
-import { describeScreenshotFuzz } from '../../testing/e2e';
 import { Platform } from '../../lib/platform';
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import { HasChildren } from '../../types';
+import { AppRoot } from '../AppRoot/AppRoot';
+import { Alert, AlertActionInterface, AlertProps } from './Alert';
 
 const AppWrapper = (props: HasChildren) => (
   <AppRoot mode="embedded" scroll="contain">

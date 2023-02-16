@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { baselineComponent, mountTest, runAllTimers } from '../../testing/utils';
 import { render } from '@testing-library/react';
-import { ModalPage } from '../ModalPage/ModalPage';
+import userEvent from '@testing-library/user-event';
+import { baselineComponent, mountTest, runAllTimers } from '../../testing/utils';
 import { ModalCard } from '../ModalCard/ModalCard';
+import { ModalPage } from '../ModalPage/ModalPage';
 import { ModalRootTouch } from './ModalRoot';
 import { ModalRootDesktop } from './ModalRootDesktop';
-import userEvent from '@testing-library/user-event';
 
 const clickFade = () => userEvent.click(document.querySelector('.vkuiModalRoot__mask') as Element);
 let rafSpies: jest.SpyInstance[];

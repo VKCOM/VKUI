@@ -2,8 +2,8 @@ import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { baselineComponent } from '../../testing/utils';
-import { ChipsInputBase, ChipsInputBaseProps } from './ChipsInputBase';
 import { ChipOption } from '../Chip/Chip';
+import { ChipsInputBase, ChipsInputBaseProps } from './ChipsInputBase';
 
 const ChipsInputBaseTest = (props: ChipsInputBaseProps<ChipOption>) => (
   <ChipsInputBase data-testid="chips-input" {...props} />

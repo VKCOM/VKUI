@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Icon16Done } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { Paragraph } from '../Typography/Paragraph/Paragraph';
-import { Footnote } from '../Typography/Footnote/Footnote';
-import { HasRootRef } from '../../types';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { warnOnce } from '../../lib/warnOnce';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { HasRootRef } from '../../types';
+import { Footnote } from '../Typography/Footnote/Footnote';
+import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import styles from './CustomSelectOption.module.css';
 
 export interface CustomSelectOptionProps

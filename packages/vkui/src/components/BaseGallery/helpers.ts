@@ -1,5 +1,5 @@
-import { LayoutState } from './types';
 import { HasAlign } from '../../types';
+import { LayoutState } from './types';
 
 interface CalcMin extends Partial<LayoutState> {
   isCenterWithCustomWidth: boolean;

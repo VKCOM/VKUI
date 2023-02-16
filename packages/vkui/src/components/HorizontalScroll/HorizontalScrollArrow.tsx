@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {
-  Icon24Chevron,
-  Icon24ChevronCompactLeft,
   Icon16Chevron,
   Icon16ChevronLeft,
+  Icon24Chevron,
+  Icon24ChevronCompactLeft,
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { Tappable } from '../Tappable/Tappable';

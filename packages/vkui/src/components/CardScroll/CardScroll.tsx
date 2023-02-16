@@ -2,8 +2,8 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { HorizontalScroll, HorizontalScrollProps } from '../HorizontalScroll/HorizontalScroll';
 import { useDOM } from '../../lib/dom';
+import { HorizontalScroll, HorizontalScrollProps } from '../HorizontalScroll/HorizontalScroll';
 import styles from './CardScroll.module.css';
 
 export interface CardScrollProps extends React.HTMLAttributes<HTMLDivElement> {

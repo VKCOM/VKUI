@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { type MediaQueries, MEDIA_QUERIES } from '../lib/adaptivity';
+import { MEDIA_QUERIES, type MediaQueries } from '../lib/adaptivity';
 import { mediaQueryNull } from '../lib/browser';
 import { useDOM } from '../lib/dom';
 

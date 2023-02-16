@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ViewWidth } from '../../lib/adaptivity';
-import { baselineComponent, runAllTimers } from '../../testing/utils';
-import { Alert } from './Alert';
 import { Platform } from '../../lib/platform';
+import { baselineComponent, runAllTimers } from '../../testing/utils';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
+import { Alert } from './Alert';
 
 describe('Alert', () => {
   beforeAll(() => jest.useFakeTimers('modern'));

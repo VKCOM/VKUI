@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react';
 import { IconExampleForBadgeBasedOnImageBaseSize } from '../../testing/icons';
 import { baselineComponent } from '../../testing/utils';
 import { GridAvatar, GridAvatarProps, MAX_GRID_LENGTH } from './GridAvatar';
-import gridAvatarBadgeStyles from './GridAvatarBadge/GridAvatarBadge.module.css';
 import styles from './GridAvatar.module.css';
+import gridAvatarBadgeStyles from './GridAvatarBadge/GridAvatarBadge.module.css';
 
 const TEST_LOCATORS = {
   HOST: 'grid-avatar',

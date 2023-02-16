@@ -1,9 +1,9 @@
 import * as React from 'react';
+import { describeScreenshotFuzz } from '../../testing/e2e';
+import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { Image } from '../Image/Image';
 import { Banner, BannerProps } from './Banner';
-import { Button } from '../Button/Button';
-import { describeScreenshotFuzz } from '../../testing/e2e';
 
 describe('Banner', () => {
   describeScreenshotFuzz(

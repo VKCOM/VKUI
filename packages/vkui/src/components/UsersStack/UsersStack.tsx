@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { Footnote } from '../Typography/Footnote/Footnote';
-import { Caption } from '../Typography/Caption/Caption';
 import { useId } from '../../hooks/useId';
+import { Caption } from '../Typography/Caption/Caption';
+import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './UsersStack.module.css';
 
 export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {

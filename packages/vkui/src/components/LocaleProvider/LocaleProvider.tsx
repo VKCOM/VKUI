@@ -1,6 +1,6 @@
 import React from 'react';
-import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 import { ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
+import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 
 export interface LocaleProviderProps {
   /**

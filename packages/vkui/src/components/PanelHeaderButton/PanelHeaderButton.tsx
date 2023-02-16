@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { TappableProps, Tappable } from '../Tappable/Tappable';
 import { classNames, isPrimitiveReactNode } from '@vkontakte/vkjs';
-import { warnOnce } from '../../lib/warnOnce';
 import { usePlatform } from '../../hooks/usePlatform';
-import { getTitleFromChildren } from '../../lib/utils';
 import { Platform } from '../../lib/platform';
+import { getTitleFromChildren } from '../../lib/utils';
+import { warnOnce } from '../../lib/warnOnce';
+import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
 import styles from './PanelHeaderButton.module.css';

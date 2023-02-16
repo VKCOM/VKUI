@@ -1,4 +1,4 @@
-import { rescale, clamp, precisionRound } from './math';
+import { clamp, precisionRound, rescale } from './math';
 
 describe(clamp, () => {
   it('clamps min', () => expect(clamp(10, 20, 30)).toBe(20));

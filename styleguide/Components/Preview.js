@@ -1,25 +1,25 @@
 import React, { Profiler } from 'react';
+import PlaygroundError from '@rsg-components/PlaygroundError';
 import PreviewParent from '@rsg-components/Preview/Preview';
 import ReactExample from '@rsg-components/ReactExample/ReactExample';
-import PlaygroundError from '@rsg-components/PlaygroundError';
-import { StyleGuideContext } from './StyleGuide/StyleGuideRenderer';
 import {
+  AdaptivityProvider,
+  AppearanceProvider,
+  AppRoot,
+  classNames,
+  ConfigProvider,
+  PanelHeader,
   Platform,
+  PlatformProvider,
   SplitCol,
   SplitLayout,
-  PanelHeader,
   usePlatform,
-  AppRoot,
-  ConfigProvider,
-  AdaptivityProvider,
-  classNames,
-  AppearanceProvider,
-  PlatformProvider,
 } from '@vkui';
-import { Frame } from './Frame/Frame';
-import { perfLogger, useViewPortSize } from '../utils';
 import { BREAKPOINTS } from '@vkui/shared/breakpoints';
+import { perfLogger, useViewPortSize } from '../utils';
+import { Frame } from './Frame/Frame';
 import { usePlatformStyle } from './Frame/usePlatformStyle';
+import { StyleGuideContext } from './StyleGuide/StyleGuideRenderer';
 import './Preview.css';
 
 const logPerf = (id, phase, time) => perfLogger.log(`${id}.${phase}`, time);

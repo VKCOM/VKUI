@@ -1,9 +1,9 @@
+import * as React from 'react';
 import { render } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import * as React from 'react';
+import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 import { HasRef } from '../types';
 import { useExternRef } from './useExternRef';
-import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
 const RefForwarder = (props: HasRef<HTMLDivElement>) => <div ref={useExternRef(props.getRef)} />;
 describe(useExternRef, () => {

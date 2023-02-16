@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { getMillisecondsToTomorrow } from '../lib/date';
 
 /**

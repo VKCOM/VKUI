@@ -1,21 +1,21 @@
 import * as React from 'react';
 import { ComponentType, Fragment, isValidElement } from 'react';
-import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
 import { screenshot } from '@project-e2e/helpers';
-// Импорты из отдельных модулей помогают jest отслеживать зависимости
-import { ConfigProvider } from '../../components/ConfigProvider/ConfigProvider';
-import { Panel } from '../../components/Panel/Panel';
-import { Platform } from '../../lib/platform';
-import { BREAKPOINTS, SizeType, ViewWidth } from '../../lib/adaptivity';
-import { AdaptivityProvider } from '../../components/AdaptivityProvider/AdaptivityProvider';
-import { type AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
-import { View } from '../../components/View/View';
-import { AppRoot } from '../../components/AppRoot/AppRoot';
-import { Group } from '../../components/Group/Group';
 import { AppearanceType } from '@vkontakte/vk-bridge';
-import { HasChildren } from '../../types';
+import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
 import { BrowserType } from 'jest-playwright-preset';
+// Импорты из отдельных модулей помогают jest отслеживать зависимости
+import { type AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
+import { AdaptivityProvider } from '../../components/AdaptivityProvider/AdaptivityProvider';
+import { AppRoot } from '../../components/AppRoot/AppRoot';
+import { ConfigProvider } from '../../components/ConfigProvider/ConfigProvider';
+import { Group } from '../../components/Group/Group';
+import { Panel } from '../../components/Panel/Panel';
+import { View } from '../../components/View/View';
 import { Appearance } from '../../helpers/appearance';
+import { BREAKPOINTS, SizeType, ViewWidth } from '../../lib/adaptivity';
+import { Platform } from '../../lib/platform';
+import { HasChildren } from '../../types';
 
 type AdaptivityFlag = boolean | 'x' | 'y';
 type PropDesc<Props> = { [K in keyof Props]?: Array<Props[K]> } & {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import type { HasRootRef } from '../../types';
 import type { Placement } from '../../lib/floating';
+import type { HasRootRef } from '../../types';
 import styles from './PopperArrow.module.css';
 
 export const ARROW_PADDING = 10;

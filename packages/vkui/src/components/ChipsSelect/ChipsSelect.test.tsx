@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { fireEvent, render, screen, queryByText } from '@testing-library/react';
+import { fireEvent, queryByText, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
-import { ChipsSelect, ChipsSelectProps } from './ChipsSelect';
 import { ChipOption } from '../Chip/Chip';
+import { ChipsSelect, ChipsSelectProps } from './ChipsSelect';
 
 const ChipsSelectTest = (props: ChipsSelectProps<ChipOption>) => (
   <ChipsSelect data-testid="chips-select" {...props} />

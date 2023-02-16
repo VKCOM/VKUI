@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Popper, PopperCommonProps } from '../Popper/Popper';
 import { useEventListener } from '../../hooks/useEventListener';
-import { useTimeout } from '../../hooks/useTimeout';
 import { usePatchChildrenRef } from '../../hooks/usePatchChildrenRef';
+import { useTimeout } from '../../hooks/useTimeout';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { Popper, PopperCommonProps } from '../Popper/Popper';
 
 export interface HoverPopperProps extends PopperCommonProps {
   /**

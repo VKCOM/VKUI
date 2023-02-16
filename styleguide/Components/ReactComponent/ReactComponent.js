@@ -1,12 +1,12 @@
 import React from 'react';
-import Heading from '../Heading/index';
-import Slot from '@rsg-components/Slot';
-import Markdown from '@rsg-components/Markdown';
 import Examples from '@rsg-components/Examples';
-import { SectionSubheading } from '../SectionSubheading/SectionSubheading';
-import { Link, classNames } from '@vkui';
-import { deprecated } from '../../deprecated';
+import Markdown from '@rsg-components/Markdown';
+import Slot from '@rsg-components/Slot';
+import { classNames, Link } from '@vkui';
 import { VKUI_PACKAGE } from '../../../shared';
+import { deprecated } from '../../deprecated';
+import Heading from '../Heading/index';
+import { SectionSubheading } from '../SectionSubheading/SectionSubheading';
 import './ReactComponent.css';
 
 const toKebabCase = (str) =>

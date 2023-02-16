@@ -1,10 +1,10 @@
 import * as path from 'path';
 import { promisify } from 'util';
 import cbGlob from 'glob';
-import webpack from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import webpackCommonConfig from '../webpack.common.config';
+import webpack from 'webpack';
 import { generateScopedName, VKUI_PACKAGE } from '../shared';
+import webpackCommonConfig from '../webpack.common.config';
 
 const glob = promisify(cbGlob);
 

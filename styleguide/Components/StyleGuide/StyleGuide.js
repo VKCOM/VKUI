@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import TableOfContents from '../TableOfContents/TableOfContents';
-import StyleGuideRenderer from './StyleGuideRenderer';
-import Sections from '@rsg-components/Sections';
+import Context from '@rsg-components/Context';
 import Error from '@rsg-components/Error';
 import NotFound from '@rsg-components/NotFound';
-import Context from '@rsg-components/Context';
+import Sections from '@rsg-components/Sections';
+import TableOfContents from '../TableOfContents/TableOfContents';
+import StyleGuideRenderer from './StyleGuideRenderer';
 
 export default class StyleGuide extends Component {
   state = {

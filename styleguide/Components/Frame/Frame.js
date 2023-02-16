@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DOMContext } from '@vkui/lib/dom';
-import { PanelSpinner } from '@vkui';
 import ReactFrame, { useFrame } from 'react-frame-component';
+import { PanelSpinner } from '@vkui';
+import { DOMContext } from '@vkui/lib/dom';
 import { usePlatformStyle } from './usePlatformStyle';
 import './Frame.css';
 

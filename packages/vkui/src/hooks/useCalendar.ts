@@ -1,14 +1,14 @@
 import * as React from 'react';
+import { CalendarProps } from '../components/Calendar/Calendar';
 import {
-  subMonths,
   addMonths,
-  isSameDay,
-  isBefore,
   endOfDay,
   isAfter,
+  isBefore,
+  isSameDay,
   startOfDay,
+  subMonths,
 } from '../lib/date';
-import { CalendarProps } from '../components/Calendar/Calendar';
 
 export interface UseCalendarDependencies
   extends Pick<CalendarProps, 'onHeaderChange' | 'onNextMonth' | 'onPrevMonth'> {

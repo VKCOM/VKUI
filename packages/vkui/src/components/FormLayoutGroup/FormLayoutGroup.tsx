@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { HasRootRef } from '../../types';
 import { classNames, noop } from '@vkontakte/vkjs';
-import { useExternRef } from '../../hooks/useExternRef';
-import { Removable, RemovableProps } from '../Removable/Removable';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useExternRef } from '../../hooks/useExternRef';
+import { HasRootRef } from '../../types';
+import { Removable, RemovableProps } from '../Removable/Removable';
 import styles from './FormLayoutGroup.module.css';
 
 export interface FormLayoutGroupProps

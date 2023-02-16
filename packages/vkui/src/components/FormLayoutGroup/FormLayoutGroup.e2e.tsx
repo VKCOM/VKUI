@@ -1,15 +1,15 @@
 import React, { Fragment } from 'react';
-import { FormLayoutGroup } from './FormLayoutGroup';
-import { Input } from '../Input/Input';
-import { FormItem } from '../FormItem/FormItem';
-import { Select } from '../Select/Select';
-import { DatePicker } from '../DatePicker/DatePicker';
+import { describeScreenshotFuzz } from '../../testing/e2e';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import { ChipsInput } from '../ChipsInput/ChipsInput';
 import { ChipsSelect } from '../ChipsSelect/ChipsSelect';
 import { CustomSelect } from '../CustomSelect/CustomSelect';
+import { DatePicker } from '../DatePicker/DatePicker';
+import { FormItem } from '../FormItem/FormItem';
+import { Input } from '../Input/Input';
 import { NativeSelect } from '../NativeSelect/NativeSelect';
-import { ChipsInput } from '../ChipsInput/ChipsInput';
-import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
+import { Select } from '../Select/Select';
+import { FormLayoutGroup } from './FormLayoutGroup';
 
 const chips = [
   {
