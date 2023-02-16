@@ -15,6 +15,8 @@ const keepCss = Boolean(BABEL_KEEP_CSS);
 const testFiles = [
   '**/*.test.ts',
   '**/*.test.tsx',
+  '**/*.test.a11y.ts',
+  '**/*.test.a11y.tsx',
   '**/*.spec.ts',
   '**/*.spec.tsx',
   '**/*.e2e.ts',

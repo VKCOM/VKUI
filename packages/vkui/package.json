@@ -53,8 +53,10 @@
     "tsc-dev": "tsc --emitDeclarationOnly --declaration --outDir dist/ --watch --preserveWatchOutput",
     "tsc-cssm": "cross-env NODE_ENV=production tsc --emitDeclarationOnly --declaration --outDir dist/cssm/ -p tsconfig.dist.json",
     "tsc-cjs": "cross-env NODE_ENV=production tsc --emitDeclarationOnly --declaration --outDir dist/cjs/ -p tsconfig.dist.json",
-    "test": "jest",
-    "test:ci": "yarn test --ci --silent --outputFile ../../test-results.json --json --coverage --coverageReporters='json' --coverageDirectory='../../.nyc_output'"
+    "test": "jest --group=unit",
+    "test:ci": "yarn test --ci --silent --outputFile ../../test-results.json --json --coverage --coverageReporters='json' --coverageDirectory='../../.nyc_output'",
+    "test:a11y": "jest --group=a11y -c jest.config.a11y.js",
+    "test:a11y:ci": "yarn test:a11y --ci --silent --outputFile ../../test-results.json --json --coverage --coverageReporters='json' --coverageDirectory='../../.nyc_output'"
   },
   "peerDependencies": {
     "@vkontakte/icons": "^2.1.1",
