@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import { ViewWidth } from '../../lib/adaptivity';
-import { baselineComponent, waitForFloatingPosition, runAllTimers } from '../../testing/utils';
-import { ActionSheet, ActionSheetProps } from './ActionSheet';
-import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import userEvent from '@testing-library/user-event';
-import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import { ViewWidth } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
+import { baselineComponent, runAllTimers, waitForFloatingPosition } from '../../testing/utils';
+import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
+import { ActionSheet, ActionSheetProps } from './ActionSheet';
 
 describe('ActionSheet', () => {
   beforeAll(() => jest.useFakeTimers('modern'));

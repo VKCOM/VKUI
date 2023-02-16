@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import { Counter, CounterProps } from './Counter';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
 describe('Counter', () => {
   describeScreenshotFuzz(

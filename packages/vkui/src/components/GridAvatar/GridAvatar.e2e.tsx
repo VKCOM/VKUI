@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { IconExampleForBadgeBasedOnImageBaseSize } from '../../testing/icons';
 import { describeScreenshotFuzz } from '../../testing/e2e';
+import { IconExampleForBadgeBasedOnImageBaseSize } from '../../testing/icons';
 import { GridAvatar } from './GridAvatar';
 
 const base64Image =

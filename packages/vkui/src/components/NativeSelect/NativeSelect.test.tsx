@@ -1,8 +1,8 @@
-import { baselineComponent } from '../../testing/utils';
-import { NativeSelect } from './NativeSelect';
 import React, { useState } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { baselineComponent } from '../../testing/utils';
+import { NativeSelect } from './NativeSelect';
 
 describe('NativeSelect', () => {
   baselineComponent(NativeSelect);

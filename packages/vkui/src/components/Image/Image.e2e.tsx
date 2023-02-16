@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import {
-  IconExampleForFallbackBasedOnImageBaseSize,
   IconExampleForBadgeBasedOnImageBaseSize,
+  IconExampleForFallbackBasedOnImageBaseSize,
   IconExampleForOverlayBasedOnImageBaseSize,
 } from '../../testing/icons';
-import { describeScreenshotFuzz } from '../../testing/e2e';
 import { Image } from './Image';
 
 const base64Image =

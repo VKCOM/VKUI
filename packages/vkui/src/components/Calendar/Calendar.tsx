@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { isSameMonth, isSameDay } from '../../lib/date';
-import { CalendarHeader, CalendarHeaderProps } from '../CalendarHeader/CalendarHeader';
-import { CalendarDays, CalendarDaysProps } from '../CalendarDays/CalendarDays';
-import { CalendarTime, CalendarTimeProps } from '../CalendarTime/CalendarTime';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { navigateDate, setTimeEqual, isFirstDay, isLastDay } from '../../lib/calendar';
-import { useCalendar } from '../../hooks/useCalendar';
-import { HasRootRef } from '../../types';
 import { classNames } from '@vkontakte/vkjs';
+import { useCalendar } from '../../hooks/useCalendar';
+import { isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
+import { isSameDay, isSameMonth } from '../../lib/date';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
+import { HasRootRef } from '../../types';
+import { CalendarDays, CalendarDaysProps } from '../CalendarDays/CalendarDays';
+import { CalendarHeader, CalendarHeaderProps } from '../CalendarHeader/CalendarHeader';
+import { CalendarTime, CalendarTimeProps } from '../CalendarTime/CalendarTime';
 import styles from './Calendar.module.css';
 
 export interface CalendarProps

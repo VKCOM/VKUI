@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { HasComponent } from '../../../types';
 import { classNames } from '@vkontakte/vkjs';
+import { HasComponent } from '../../../types';
 import styles from './Footnote.module.css';
 
 export interface FootnoteProps extends React.AllHTMLAttributes<HTMLElement>, HasComponent {

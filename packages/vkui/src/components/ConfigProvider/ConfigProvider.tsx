@@ -1,16 +1,16 @@
 import * as React from 'react';
+import { noop } from '@vkontakte/vkjs';
+import { generateVKUITokensClassName } from '../../helpers/generateVKUITokensClassName';
+import { useAutoDetectAppearance } from '../../hooks/useAutoDetectAppearance';
+import { useObjectMemo } from '../../hooks/useObjectMemo';
+import { useDOM } from '../../lib/dom';
+import { TokensClassProvider } from '../../lib/tokensClassProvider';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
   useConfigProvider,
 } from './ConfigProviderContext';
-import { TokensClassProvider } from '../../lib/tokensClassProvider';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
-import { generateVKUITokensClassName } from '../../helpers/generateVKUITokensClassName';
-import { useAutoDetectAppearance } from '../../hooks/useAutoDetectAppearance';
-import { noop } from '@vkontakte/vkjs';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { useDOM } from '../../lib/dom';
 
 export interface ConfigProviderProps extends Partial<ConfigProviderContextInterface> {
   onDetectAppearanceByBridge?: () => void;

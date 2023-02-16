@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { classNames } from '@vkontakte/vkjs';
-import { Platform } from '../../lib/platform';
-import { usePlatform } from '../../hooks/usePlatform';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
-import { SharedDropdownProps } from './types';
+import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
+import { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
 const stopPropagation: React.MouseEventHandler = (e) => e.stopPropagation();

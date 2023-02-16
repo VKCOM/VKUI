@@ -1,6 +1,6 @@
 import React from 'react';
-import { Setting } from '../Setting/Setting';
 import { Link, Switch } from '@vkui';
+import { Setting } from '../Setting/Setting';
 
 export const HasPointerCheckbox = ({ onChange, value, ...restProps }) => (
   <Setting

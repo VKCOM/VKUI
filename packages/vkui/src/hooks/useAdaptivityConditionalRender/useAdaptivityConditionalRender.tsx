@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { AdaptivityContext } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { usePlatform } from '../usePlatform';
-import type { UseAdaptivityConditionalRender } from './types';
 import {
+  deviceTypeClassNames,
   sizeXCompactClassNames,
   sizeXRegularClassNames,
   sizeYCompactClassNames,
   sizeYRegularClassNames,
   viewWidthClassNames,
-  deviceTypeClassNames,
 } from './constants';
-import { getAdaptiveSizeType, getAdaptiveViewWidth, getAdaptiveDeviceType } from './helpers';
+import { getAdaptiveDeviceType, getAdaptiveSizeType, getAdaptiveViewWidth } from './helpers';
+import type { UseAdaptivityConditionalRender } from './types';
 
 export const useAdaptivityConditionalRender = (): UseAdaptivityConditionalRender => {
   const {

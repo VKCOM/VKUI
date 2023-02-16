@@ -1,13 +1,13 @@
-import {
-  View,
-  Panel,
-  PanelHeader,
-  PanelHeaderClose,
-  PanelHeaderButton,
-  useAppearance,
-} from '@vkui';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Icon28MenuOutline, Icon28MoonOutline, Icon28SunOutline } from '@vkontakte/icons';
+import {
+  Panel,
+  PanelHeader,
+  PanelHeaderButton,
+  PanelHeaderClose,
+  useAppearance,
+  View,
+} from '@vkui';
 import { Logo } from '../Logo/Logo';
 import { StyleGuideModal } from './StyleGuideModal';
 import './StyleGuideMobile.css';

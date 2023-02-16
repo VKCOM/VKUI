@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { useDOM } from '../../lib/dom';
 import { classNames } from '@vkontakte/vkjs';
-import { PopperCommonProps, Popper } from '../Popper/Popper';
-import { FocusTrap } from '../FocusTrap/FocusTrap';
-import { useTimeout } from '../../hooks/useTimeout';
-import { useExternRef } from '../../hooks/useExternRef';
 import { useEventListener } from '../../hooks/useEventListener';
+import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePatchChildrenRef } from '../../hooks/usePatchChildrenRef';
+import { useTimeout } from '../../hooks/useTimeout';
+import { useDOM } from '../../lib/dom';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
+import { Popper, PopperCommonProps } from '../Popper/Popper';
 import styles from './Popover.module.css';
 
 export interface PopoverProps extends Omit<PopperCommonProps, 'arrow' | 'arrowClassName'> {

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import {
-  type ImageBaseBadgeProps,
-  ImageBase,
-  ImageBaseContext,
   getBadgeIconSizeByImageBaseSize,
+  ImageBase,
+  type ImageBaseBadgeProps,
+  ImageBaseContext,
 } from '../../ImageBase/ImageBase';
 import { Icon12Circle, Icon12OnlineMobile } from './icons';
 import styles from './AvatarBadge.module.css';

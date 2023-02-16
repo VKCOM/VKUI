@@ -1,18 +1,18 @@
 import * as React from 'react';
-import { setMonth, setYear, subMonths, addMonths } from '../../lib/date';
 import {
+  Icon12Dropdown,
   Icon20ChevronLeftOutline,
   Icon20ChevronRightOutline,
-  Icon12Dropdown,
 } from '@vkontakte/icons';
-import { Tappable, TappableElementProps } from '../Tappable/Tappable';
 import { classNames } from '@vkontakte/vkjs';
-import { CustomSelect } from '../CustomSelect/CustomSelect';
 import { SizeType } from '../../lib/adaptivity';
 import { getMonths, getYears } from '../../lib/calendar';
-import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { Paragraph } from '../Typography/Paragraph/Paragraph';
+import { addMonths, setMonth, setYear, subMonths } from '../../lib/date';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
+import { CustomSelect } from '../CustomSelect/CustomSelect';
+import { Tappable, TappableElementProps } from '../Tappable/Tappable';
+import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import styles from './CalendarHeader.module.css';
 
 type ArrowMonthProps = Omit<TappableElementProps, 'onClick' | 'aria-label'>;

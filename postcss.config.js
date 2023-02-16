@@ -1,15 +1,15 @@
 const fs = require('fs');
 const path = require('path');
 const postcssGlobalData = require('@csstools/postcss-global-data');
-const cssCustomProperties = require('postcss-custom-properties');
-const restructureVariable = require('@project-tools/postcss-restructure-variable');
-const cssImport = require('postcss-import');
-const autoprefixer = require('autoprefixer');
-const cssModules = require('postcss-modules');
-const cssnano = require('cssnano');
 const checkKeyframes = require('@project-tools/postcss-check-keyframes');
-const { VKUI_PACKAGE, generateScopedName, getCustomMedias } = require('./shared');
+const restructureVariable = require('@project-tools/postcss-restructure-variable');
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
 const postcssCustomMedia = require('postcss-custom-media');
+const cssCustomProperties = require('postcss-custom-properties');
+const cssImport = require('postcss-import');
+const cssModules = require('postcss-modules');
+const { VKUI_PACKAGE, generateScopedName, getCustomMedias } = require('./shared');
 
 function getSafelyTmpDirPath(rootPath = __dirname) {
   const tmpDir = path.join(rootPath, 'tmp');

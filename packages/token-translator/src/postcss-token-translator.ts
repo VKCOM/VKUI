@@ -1,5 +1,5 @@
-import { getCustomVariables, getVKUIToken } from './styleProperty';
 import type { PluginCreator } from 'postcss';
+import { getCustomVariables, getVKUIToken } from './styleProperty';
 
 const pluginCreator: PluginCreator<{}> = () => {
   return {

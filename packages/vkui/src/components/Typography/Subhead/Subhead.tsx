@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { HasComponent } from '../../../types';
 import { classNames } from '@vkontakte/vkjs';
-import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { getSizeYClassName } from '../../../helpers/getSizeYClassName';
+import { useAdaptivity } from '../../../hooks/useAdaptivity';
+import { HasComponent } from '../../../types';
 import styles from './Subhead.module.css';
 
 export interface SubheadProps extends React.AllHTMLAttributes<HTMLElement>, HasComponent {

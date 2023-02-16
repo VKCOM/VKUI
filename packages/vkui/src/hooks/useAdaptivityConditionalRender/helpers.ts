@@ -1,12 +1,12 @@
-import { SizeType, ViewWidth, ViewHeight, tryToCheckIsDesktop } from '../../lib/adaptivity';
+import { SizeType, tryToCheckIsDesktop, ViewHeight, ViewWidth } from '../../lib/adaptivity';
 import type { PlatformType } from '../../lib/platform';
 import type {
-  ElementProps,
+  AdaptiveDeviceType,
   AdaptiveSizeType,
-  ViewWidthCSSBreakpoints,
   AdaptiveViewWidth,
   DeviceTypeCSSBreakpoints,
-  AdaptiveDeviceType,
+  ElementProps,
+  ViewWidthCSSBreakpoints,
 } from './types';
 
 export const getAdaptiveSizeType = (

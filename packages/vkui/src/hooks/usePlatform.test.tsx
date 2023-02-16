@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { usePlatform } from './usePlatform';
-import { ConfigProvider } from '../components/ConfigProvider/ConfigProvider';
 import { renderHook } from '@testing-library/react-hooks';
+import { ConfigProvider } from '../components/ConfigProvider/ConfigProvider';
 import { HasChildren } from '../types';
+import { usePlatform } from './usePlatform';
 
 describe(usePlatform, () => {
   it("returns ConfigProvider's platform", () => {

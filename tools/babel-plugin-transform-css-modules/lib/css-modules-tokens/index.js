@@ -1,5 +1,5 @@
-const path = require('path');
 const childProcess = require('child_process');
+const path = require('path');
 const JSONfn = require('./JSONfn');
 
 const nodeExecutable = process.argv[0];

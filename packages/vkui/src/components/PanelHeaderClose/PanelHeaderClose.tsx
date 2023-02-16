@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Icon28CancelOutline } from '@vkontakte/icons';
-import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
+import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { getTitleFromChildren } from '../../lib/utils';
-import { usePlatform } from '../../hooks/usePlatform';
+import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderClose

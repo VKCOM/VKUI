@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Icon16Cancel } from '@vkontakte/icons';
-import { getTitleFromChildren } from '../../lib/utils';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
-import { Footnote } from '../Typography/Footnote/Footnote';
-import { Tappable } from '../Tappable/Tappable';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { getTitleFromChildren } from '../../lib/utils';
+import { Tappable } from '../Tappable/Tappable';
+import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './Chip.module.css';
 
 export type ChipValue = string | number;

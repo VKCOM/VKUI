@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
+import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
+import { HasComponent, HasRootRef } from '../../types';
 import { Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
-import { Platform } from '../../lib/platform';
-import { HasComponent, HasRootRef } from '../../types';
-import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
 import styles from './TabbarItem.module.css';
 
 export interface TabbarItemProps

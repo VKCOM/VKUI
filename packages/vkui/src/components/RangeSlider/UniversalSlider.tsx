@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Touch, TouchEvent, TouchEventHandler } from '../Touch/Touch';
 import { classNames } from '@vkontakte/vkjs';
-import { HasRootRef } from '../../types';
-import { rescale } from '../../helpers/math';
-import { useExternRef } from '../../hooks/useExternRef';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { rescale } from '../../helpers/math';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useExternRef } from '../../hooks/useExternRef';
+import { HasRootRef } from '../../types';
+import { Touch, TouchEvent, TouchEventHandler } from '../Touch/Touch';
 import styles from '../Slider/Slider.module.css';
 
 export type UniversalValue = [number | null, number];

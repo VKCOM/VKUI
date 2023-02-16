@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { Platform } from '../../lib/platform';
-import { useTimeout } from '../../hooks/useTimeout';
-import { usePlatform } from '../../hooks/usePlatform';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { usePlatform } from '../../hooks/usePlatform';
+import { useTimeout } from '../../hooks/useTimeout';
 import { useDOM } from '../../lib/dom';
+import { Platform } from '../../lib/platform';
 import styles from './PopoutWrapper.module.css';
 
 export interface PopoutWrapperProps extends React.HTMLAttributes<HTMLDivElement> {

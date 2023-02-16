@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { getTitleFromChildren } from './utils';
 import { SelectType } from '../components/Select/Select';
+import { getTitleFromChildren } from './utils';
 
 type Option = {
   label?: React.ReactElement | string;

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { FormField, FormFieldProps } from '../FormField/FormField';
 import { classNames } from '@vkontakte/vkjs';
 import { ChipOption } from '../Chip/Chip';
 import { ChipsInputBase, ChipsInputBaseProps } from '../ChipsInputBase/ChipsInputBase';
+import { FormField, FormFieldProps } from '../FormField/FormField';
 import styles from './ChipsInput.module.css';
 
 export interface ChipsInputProps<Option extends ChipOption>

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
-import { TouchEvent, TouchEventHandler } from '../Touch/Touch';
 import { HorizontalScrollArrowProps } from '../HorizontalScroll/HorizontalScrollArrow';
+import { TouchEvent, TouchEventHandler } from '../Touch/Touch';
 
 export interface GallerySlidesState {
   coordX: number;

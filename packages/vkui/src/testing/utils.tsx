@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { render, RenderResult, screen } from '@testing-library/react';
-import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
-import { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
-import { ImgOnlyAttributes } from '../lib/utils';
-import { ScrollContext } from '../components/AppRoot/ScrollContext';
 import { act } from 'react-dom/test-utils';
+import { render, RenderResult, screen } from '@testing-library/react';
+import { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
+import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
+import { ScrollContext } from '../components/AppRoot/ScrollContext';
+import { ImgOnlyAttributes } from '../lib/utils';
 import { HasChildren } from '../types';
 
 export function fakeTimers() {

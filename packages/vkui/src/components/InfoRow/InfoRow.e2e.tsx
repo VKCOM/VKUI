@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import { InfoRow, InfoRowProps } from './InfoRow';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
 describe('InfoRow', () => {
   describeScreenshotFuzz(

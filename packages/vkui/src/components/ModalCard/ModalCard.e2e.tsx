@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { ModalCard, ModalCardProps } from './ModalCard';
-import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
-import { Button } from '../Button/Button';
-import { ModalRoot } from '../ModalRoot/ModalRootAdaptive';
-import { Image } from '../Image/Image';
-import { UsersStack } from '../UsersStack/UsersStack';
-import { Textarea } from '../Textarea/Textarea';
-import { describeScreenshotFuzz } from '../../testing/e2e';
-import { AppRoot } from '../AppRoot/AppRoot';
 import { Icon56MoneyTransferOutline } from '@vkontakte/icons';
+import { SizeType, ViewWidth } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
-import { ViewWidth, SizeType } from '../../lib/adaptivity';
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import { HasChildren } from '../../types';
+import { AppRoot } from '../AppRoot/AppRoot';
+import { Button } from '../Button/Button';
+import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
+import { Image } from '../Image/Image';
+import { ModalRoot } from '../ModalRoot/ModalRootAdaptive';
+import { Textarea } from '../Textarea/Textarea';
+import { UsersStack } from '../UsersStack/UsersStack';
+import { ModalCard, ModalCardProps } from './ModalCard';
 
 const AppWrapper = (props: HasChildren) => (
   <AppRoot mode="embedded" scroll="contain">

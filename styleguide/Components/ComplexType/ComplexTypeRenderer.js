@@ -1,11 +1,11 @@
 import React from 'react';
-import {
-  Text,
-  useAdaptivityConditionalRender,
-  classNames,
-  unstable_TextTooltip as TextTooltip,
-} from '@vkui';
 import { Icon16ErrorCircleOutline } from '@vkontakte/icons';
+import {
+  classNames,
+  Text,
+  unstable_TextTooltip as TextTooltip,
+  useAdaptivityConditionalRender,
+} from '@vkui';
 import TypeRenderer from '../Type/TypeRenderer';
 import './ComplexType.css';
 

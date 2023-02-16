@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 import { noop } from '@vkontakte/vkjs';
 import { ModalType } from './types';
-import { useModalManager, modalTransitionReducer } from './useModalManager';
+import { modalTransitionReducer, useModalManager } from './useModalManager';
 
 const MockModal = (p: any) => <div {...p} />;
 

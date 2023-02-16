@@ -1,17 +1,17 @@
 import * as React from 'react';
+import { Icon16Clear, Icon16SearchOutline, Icon24Cancel } from '@vkontakte/icons';
 import { classNames, noop } from '@vkontakte/vkjs';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useEnsuredControl } from '../../hooks/useEnsuredControl';
+import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Icon16SearchOutline, Icon16Clear, Icon24Cancel } from '@vkontakte/icons';
 import { Platform } from '../../lib/platform';
+import { VKUITouchEvent } from '../../lib/touch';
 import { HasRef } from '../../types';
 import { Touch, TouchEvent } from '../Touch/Touch';
-import { VKUITouchEvent } from '../../lib/touch';
-import { Title } from '../Typography/Title/Title';
 import { Headline } from '../Typography/Headline/Headline';
-import { useExternRef } from '../../hooks/useExternRef';
-import { useEnsuredControl } from '../../hooks/useEnsuredControl';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { Title } from '../Typography/Title/Title';
 import styles from './Search.module.css';
 
 const SearchPlaceholderTypography = ({

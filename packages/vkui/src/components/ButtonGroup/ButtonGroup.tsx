@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import type { HasRootRef, AlignType } from '../../types';
+import type { AlignType, HasRootRef } from '../../types';
 import styles from './ButtonGroup.module.css';
 
 export interface ButtonGroupProps

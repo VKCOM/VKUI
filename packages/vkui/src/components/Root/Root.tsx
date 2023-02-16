@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { Platform } from '../../lib/platform';
-import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { SplitColContext } from '../SplitCol/SplitColContext';
-import { ScrollContext } from '../AppRoot/ScrollContext';
-import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
-import { getNavId, NavIdProps } from '../../lib/getNavId';
-import { warnOnce } from '../../lib/warnOnce';
-import { useDOM } from '../../lib/dom';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { useTimeout } from '../../hooks/useTimeout';
 import { usePlatform } from '../../hooks/usePlatform';
+import { useTimeout } from '../../hooks/useTimeout';
+import { useDOM } from '../../lib/dom';
+import { getNavId, NavIdProps } from '../../lib/getNavId';
+import { Platform } from '../../lib/platform';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { warnOnce } from '../../lib/warnOnce';
+import { ScrollContext } from '../AppRoot/ScrollContext';
+import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
+import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
+import { SplitColContext } from '../SplitCol/SplitColContext';
 import styles from './Root.module.css';
 
 export interface RootProps extends React.HTMLAttributes<HTMLDivElement>, NavIdProps {

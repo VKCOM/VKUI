@@ -1,5 +1,4 @@
 import ts from 'typescript';
-
 import { getCustomVariables, getVKUIToken } from './styleProperty';
 
 const transformer: ts.TransformerFactory<ts.SourceFile> = (context) => {

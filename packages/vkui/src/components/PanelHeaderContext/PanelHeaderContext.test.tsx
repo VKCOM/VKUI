@@ -1,11 +1,11 @@
 import * as React from 'react';
+import { act } from 'react-dom/test-utils';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { act } from 'react-dom/test-utils';
-import { baselineComponent } from '../../testing/utils';
 import { noop } from '@vkontakte/vkjs';
-import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ViewWidth } from '../../lib/adaptivity';
+import { baselineComponent } from '../../testing/utils';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { PanelHeaderContext } from './PanelHeaderContext';
 
 describe('PanelHeaderContext', () => {

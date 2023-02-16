@@ -1,9 +1,9 @@
-import { SplitCol, SplitLayout, Link, IconButton, Tappable, useAppearance } from '@vkui';
-import { Icon28MoonOutline, Icon28SunOutline, Icon16Dropdown } from '@vkontakte/icons';
-import { Logo } from '../Logo/Logo';
 import React from 'react';
-import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
+import { Icon16Dropdown, Icon28MoonOutline, Icon28SunOutline } from '@vkontakte/icons';
+import { IconButton, Link, SplitCol, SplitLayout, Tappable, useAppearance } from '@vkui';
 import { VKUI_PACKAGE } from '../../../shared';
+import { Logo } from '../Logo/Logo';
+import { StyleGuideContext } from './StyleGuideRenderer';
 import './StyleGuideHeader.css';
 
 const prRegExp = /https:\/\/([\w]+)\.github.io\/([\w]+)\/pull\/([\d]+)/;

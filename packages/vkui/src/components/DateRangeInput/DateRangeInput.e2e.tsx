@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import { DateRangeInput, DateRangeInputProps } from './DateRangeInput';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
 describe('DateRangeInput', () => {
   describeScreenshotFuzz(

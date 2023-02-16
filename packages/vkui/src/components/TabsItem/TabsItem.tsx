@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { Tappable } from '../Tappable/Tappable';
 import { classNames } from '@vkontakte/vkjs';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { TabsModeContext, TabsContextProps } from '../Tabs/Tabs';
+import { warnOnce } from '../../lib/warnOnce';
+import { TabsContextProps, TabsModeContext } from '../Tabs/Tabs';
+import { Tappable } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
-import { warnOnce } from '../../lib/warnOnce';
 import styles from './TabsItem.module.css';
 
 export interface TabsItemProps extends React.HTMLAttributes<HTMLElement> {

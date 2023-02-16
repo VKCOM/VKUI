@@ -1,23 +1,23 @@
 import * as React from 'react';
-import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { classNames, noop } from '@vkontakte/vkjs';
+import { useChipsSelect } from '../../hooks/useChipsSelect';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { useDOM } from '../../lib/dom';
+import type { Placement } from '../../lib/floating';
+import { defaultFilterFn } from '../../lib/select';
 import { ChipOption, ChipValue, RenderChip } from '../Chip/Chip';
 import { ChipsInputProps } from '../ChipsInput/ChipsInput';
 import { ChipsInputBase, chipsInputDefaultProps } from '../ChipsInputBase/ChipsInputBase';
+import { CustomSelectDropdown } from '../CustomSelectDropdown/CustomSelectDropdown';
 import {
   CustomSelectOption,
   CustomSelectOptionProps,
 } from '../CustomSelectOption/CustomSelectOption';
-import { useChipsSelect } from '../../hooks/useChipsSelect';
-import { useDOM } from '../../lib/dom';
-import { Footnote } from '../Typography/Footnote/Footnote';
-import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
-import { defaultFilterFn } from '../../lib/select';
-import type { Placement } from '../../lib/floating';
-import { CustomSelectDropdown } from '../CustomSelectDropdown/CustomSelectDropdown';
+import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormField } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
+import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './ChipsSelect.module.css';
 
 export interface ChipsSelectProps<Option extends ChipOption>

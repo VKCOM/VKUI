@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { HoverPopper, HoverPopperProps } from '../HoverPopper/HoverPopper';
 import { classNames } from '@vkontakte/vkjs';
+import { HoverPopper, HoverPopperProps } from '../HoverPopper/HoverPopper';
 import styles from './RichTooltip.module.css';
 
 export interface RichTooltipProps extends Omit<HoverPopperProps, 'arrowClassName'> {

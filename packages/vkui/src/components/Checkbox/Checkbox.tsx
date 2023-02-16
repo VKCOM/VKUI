@@ -1,23 +1,23 @@
 import * as React from 'react';
-import { type TappableProps, ACTIVE_EFFECT_DELAY, Tappable } from '../Tappable/Tappable';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { Platform } from '../../lib/platform';
 import {
-  Icon20CheckBoxOn,
-  Icon24CheckBoxOn,
-  Icon20CheckBoxOff,
-  Icon24CheckBoxOff,
   Icon20CheckBoxIndetermanate,
+  Icon20CheckBoxOff,
+  Icon20CheckBoxOn,
+  Icon24CheckBoxOff,
+  Icon24CheckBoxOn,
 } from '@vkontakte/icons';
-import { HasRef, HasRootRef } from '../../types';
-import { usePlatform } from '../../hooks/usePlatform';
-import { Footnote } from '../Typography/Footnote/Footnote';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useExternRef } from '../../hooks/useExternRef';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
-import { VisuallyHiddenInput } from '../VisuallyHiddenInput/VisuallyHiddenInput';
+import { useExternRef } from '../../hooks/useExternRef';
+import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
 import { warnOnce } from '../../lib/warnOnce';
+import { HasRef, HasRootRef } from '../../types';
+import { ACTIVE_EFFECT_DELAY, Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Footnote } from '../Typography/Footnote/Footnote';
+import { VisuallyHiddenInput } from '../VisuallyHiddenInput/VisuallyHiddenInput';
 import styles from './Checkbox.module.css';
 
 export interface CheckboxProps

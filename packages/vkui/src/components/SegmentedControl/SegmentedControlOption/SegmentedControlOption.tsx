@@ -1,14 +1,14 @@
 import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
+import { getSizeYClassName } from '../../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import { callMultiple } from '../../../lib/callMultiple';
-import { classNames } from '@vkontakte/vkjs';
 import { FocusVisible } from '../../FocusVisible/FocusVisible';
 import {
   VisuallyHiddenInput,
   VisuallyHiddenInputProps,
 } from '../../VisuallyHiddenInput/VisuallyHiddenInput';
-import { getSizeYClassName } from '../../../helpers/getSizeYClassName';
 import styles from './SegmentedControlOption.module.css';
 
 /**

@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { baselineComponent, waitForFloatingPosition, runAllTimers } from '../../testing/utils';
-import { FocusTrap, FocusTrapProps } from './FocusTrap';
-import { AppRoot } from '../AppRoot/AppRoot';
-import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ViewWidth } from '../../lib/adaptivity';
+import { baselineComponent, runAllTimers, waitForFloatingPosition } from '../../testing/utils';
 import { ActionSheet, ActionSheetProps } from '../ActionSheet/ActionSheet';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
-import { View } from '../View/View';
-import { Panel } from '../Panel/Panel';
-import { SplitLayout } from '../SplitLayout/SplitLayout';
-import { SplitCol } from '../SplitCol/SplitCol';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import { AppRoot } from '../AppRoot/AppRoot';
 import { CellButton } from '../CellButton/CellButton';
+import { Panel } from '../Panel/Panel';
+import { SplitCol } from '../SplitCol/SplitCol';
+import { SplitLayout } from '../SplitLayout/SplitLayout';
+import { View } from '../View/View';
+import { FocusTrap, FocusTrapProps } from './FocusTrap';
 
 const _children = ['first', 'middle', 'last'].map((item) => (
   <ActionSheetItem key={item} autoClose data-testid={item}>

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { getPlatformClassName } from '../../helpers/getPlatformClassName';
-import { Button, VKUIButtonProps } from '../Button/Button';
-import { HasRef, HasRootRef } from '../../types';
-import { usePlatform } from '../../hooks/usePlatform';
-import { VisuallyHiddenInput } from '../VisuallyHiddenInput/VisuallyHiddenInput';
 import { classNames } from '@vkontakte/vkjs';
+import { getPlatformClassName } from '../../helpers/getPlatformClassName';
+import { usePlatform } from '../../hooks/usePlatform';
+import { HasRef, HasRootRef } from '../../types';
+import { Button, VKUIButtonProps } from '../Button/Button';
+import { VisuallyHiddenInput } from '../VisuallyHiddenInput/VisuallyHiddenInput';
 import styles from './File.module.css';
 
 export interface FileProps

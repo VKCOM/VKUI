@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { FixedLayout } from '../FixedLayout/FixedLayout';
 import { classNames } from '@vkontakte/vkjs';
+import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { usePlatform } from '../../hooks/usePlatform';
+import { useTimeout } from '../../hooks/useTimeout';
 import { useDOM } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
-import { useTimeout } from '../../hooks/useTimeout';
-import { usePlatform } from '../../hooks/usePlatform';
 import { useScrollLock } from '../AppRoot/ScrollContext';
-import { getSizeXClassName } from '../../helpers/getSizeXClassName';
+import { FixedLayout } from '../FixedLayout/FixedLayout';
 import styles from './PanelHeaderContext.module.css';
 
 export interface PanelHeaderContextProps extends React.HTMLAttributes<HTMLDivElement> {

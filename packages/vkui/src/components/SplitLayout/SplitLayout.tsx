@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { PopoutRoot } from '../PopoutRoot/PopoutRoot';
-import { usePlatform } from '../../hooks/usePlatform';
 import styles from './SplitLayout.module.css';
 
 export interface SplitLayoutProps

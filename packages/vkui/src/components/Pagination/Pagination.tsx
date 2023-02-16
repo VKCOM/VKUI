@@ -1,17 +1,12 @@
 import * as React from 'react';
 import { Icon24ChevronCompactLeft, Icon24ChevronCompactRight } from '@vkontakte/icons';
-
-import type { HasRootRef } from '../../types';
-
 import { classNames } from '@vkontakte/vkjs';
-
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { PaginationPageType, usePagination } from '../../hooks/usePagination';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
-
-import { Tappable } from '../Tappable/Tappable';
+import type { HasRootRef } from '../../types';
 import { Button } from '../Button/Button';
-
+import { Tappable } from '../Tappable/Tappable';
 import styles from './Pagination.module.css';
 
 function getPageAriaLabelDefault(page: number, isCurrent: boolean): string {

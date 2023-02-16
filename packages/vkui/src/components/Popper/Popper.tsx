@@ -1,25 +1,25 @@
 import * as React from 'react';
-import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { ARROW_PADDING, ARROW_HEIGHT, PopperArrow } from '../PopperArrow/PopperArrow';
-import type { HasRef } from '../../types';
+import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import {
+  arrowMiddleware,
+  autoPlacementMiddleware,
+  autoUpdateFloatingElement,
+  checkIsNotAutoPlacement,
+  convertFloatingDataToReactCSSProperties,
+  flipMiddleware,
+  getAutoPlacementAlign,
+  offsetMiddleware,
   type Placement,
   type PlacementWithAuto,
-  checkIsNotAutoPlacement,
-  getAutoPlacementAlign,
-  convertFloatingDataToReactCSSProperties,
-  useFloating,
-  autoUpdateFloatingElement,
-  type UseFloatingMiddleware,
-  offsetMiddleware,
-  flipMiddleware,
   shiftMiddleware,
-  autoPlacementMiddleware,
-  arrowMiddleware,
   sizeMiddleware,
+  useFloating,
+  type UseFloatingMiddleware,
 } from '../../lib/floating';
-import { classNames } from '@vkontakte/vkjs';
+import type { HasRef } from '../../types';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
+import { ARROW_HEIGHT, ARROW_PADDING, PopperArrow } from '../PopperArrow/PopperArrow';
 import styles from './Popper.module.css';
 
 export interface PopperRenderContentProps {

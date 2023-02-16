@@ -1,5 +1,5 @@
-const stylelint = require('stylelint');
 const valueParser = require('postcss-value-parser');
+const stylelint = require('stylelint');
 const pkg = require('./package.json');
 
 const MATCH_CALC = /((?:-(moz|webkit)-)?calc)/i;

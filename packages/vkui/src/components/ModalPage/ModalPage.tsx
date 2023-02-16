@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { Platform } from '../../lib/platform';
-import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
-import { usePlatform } from '../../hooks/usePlatform';
-import { useOrientationChange } from '../../hooks/useOrientationChange';
-import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
-import { multiRef } from '../../lib/utils';
-import { ModalType } from '../ModalRoot/types';
-import { getNavId, NavIdProps } from '../../lib/getNavId';
-import { warnOnce } from '../../lib/warnOnce';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { useOrientationChange } from '../../hooks/useOrientationChange';
+import { usePlatform } from '../../hooks/usePlatform';
+import { getNavId, NavIdProps } from '../../lib/getNavId';
+import { Platform } from '../../lib/platform';
+import { multiRef } from '../../lib/utils';
+import { warnOnce } from '../../lib/warnOnce';
+import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
+import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
+import { ModalType } from '../ModalRoot/types';
 import styles from './ModalPage.module.css';
 
 const sizeXClassNames = {

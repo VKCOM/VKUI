@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import { CalendarRange, CalendarRangeProps } from './CalendarRange';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
 describe('CalendarRange', () => {
   describeScreenshotFuzz(
