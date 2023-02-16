@@ -6,6 +6,7 @@
     "node": true
   },
   "parser": "@typescript-eslint/parser",
+  "plugins": ["import"],
   "parserOptions": {
     "project": "./tsconfig.json",
     "ecmaVersion": 2018, // Allows for the parsing of modern ECMAScript features
@@ -35,6 +36,35 @@
     ],
 
     "no-shadow": "off", // [Reason] need using @typescript-eslint/no-shadow
-    "no-restricted-globals": ["error", "window", "document"]
+    "no-restricted-globals": ["error", "window", "document"],
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "newlines-between": "never",
+        "alphabetize": {
+          "order": "asc"
+        },
+        "pathGroupsExcludedImportTypes": ["**/*.css", "react", "react-dom", "react-dom/**"],
+        "pathGroups": [
+          {
+            "pattern": "{react,react-dom,react-dom/**}",
+            "group": "external",
+            "position": "before"
+          },
+          { "pattern": "{.,..}/**/*.css", "group": "index", "position": "after" }
+        ]
+      }
+    ],
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true,
+        "ignoreMemberSort": false,
+        "allowSeparatedGroups": true,
+        "memberSyntaxSortOrder": ["none", "single", "all", "multiple"]
+      }
+    ]
   }
 }
