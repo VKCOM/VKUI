@@ -19,24 +19,94 @@ const BREAKPOINTS = {
   MEDIUM_HEIGHT: 720,
 };
 
-// WARNING: Не используйте различия между медиа выражениями
-// `(max-width: 767px)` - `(min-width: 768px)`, так как размеры могут быть
-// дробными `767.333px`.
-//
-// Вместо этого используйте `(not (min-width: 768px))` - `(min-width: 768px)`!
+/**
+ * Луч [a;+∞)
+ *
+ * @param {number} a
+ * @returns {string}
+ */
+function widthPlus(a) {
+  return `(min-width: ${a}px)`;
+}
+
+/**
+ * Открытый луч (-∞;b)
+ *
+ * @param {number} b
+ * @returns {string}
+ */
+function widthMinus(b) {
+  // NOTE: `not` плохо поддерживается, поэтому используем max-width и вычитаем
+  // от числа 0.1
+  return `(max-width: ${b - 0.1}px)`;
+}
+
+/**
+ * Полуинтервал [a;b)
+ *
+ * @param {number} a
+ * @param {number} b
+ * @returns {string}
+ */
+function widthHalfInterval(a, b) {
+  return `${widthPlus(a)} and ${widthMinus(b)}`;
+}
+
+/**
+ * Луч [a;+∞)
+ *
+ * @param {number} a
+ * @returns {string}
+ */
+function heightPlus(a) {
+  return `(min-height: ${a}px)`;
+}
+
+/**
+ * Открытый луч (-∞;b)
+ *
+ * @param {number} b
+ * @returns {string}
+ */
+function heightMinus(b) {
+  // NOTE: `not` плохо поддерживается, поэтому используем max-width и вычитаем
+  // от числа 0.1
+  return `(max-height: ${b - 0.1}px)`;
+}
+
+/**
+ * Полуинтервал [a;b)
+ *
+ * @param {number} a
+ * @param {number} b
+ * @returns {string}
+ */
+function heightHalfInterval(a, b) {
+  return `${heightPlus(a)} and ${heightMinus(b)}`;
+}
+
 const MEDIA_QUERIES = {
-  DESKTOP_PLUS: `(min-width: ${BREAKPOINTS.DESKTOP}px)`,
+  DESKTOP_PLUS: widthPlus(BREAKPOINTS.DESKTOP),
 
-  TABLET: `(min-width: ${BREAKPOINTS.TABLET}px) and (not (min-width: ${BREAKPOINTS.DESKTOP}px))`,
+  TABLET: widthHalfInterval(BREAKPOINTS.TABLET, BREAKPOINTS.DESKTOP),
 
-  SMALL_TABLET_PLUS: `(min-width: ${BREAKPOINTS.SMALL_TABLET}px)`,
-  SMALL_TABLET: `(min-width: ${BREAKPOINTS.SMALL_TABLET}px) and (not (min-width: ${BREAKPOINTS.TABLET}px))`,
+  SMALL_TABLET_PLUS: widthPlus(BREAKPOINTS.SMALL_TABLET),
+  SMALL_TABLET: widthHalfInterval(BREAKPOINTS.SMALL_TABLET, BREAKPOINTS.TABLET),
 
-  MOBILE: `(min-width: ${BREAKPOINTS.MOBILE}px) and (not (min-width: ${BREAKPOINTS.SMALL_TABLET}px))`,
+  MOBILE: widthHalfInterval(BREAKPOINTS.MOBILE, BREAKPOINTS.SMALL_TABLET),
 
-  MEDIUM_HEIGHT: `(min-height: ${BREAKPOINTS.MEDIUM_HEIGHT}px)`,
+  MEDIUM_HEIGHT: heightPlus(BREAKPOINTS.MEDIUM_HEIGHT),
 
-  MOBILE_LANDSCAPE_HEIGHT: `(min-height: ${BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT}px)`,
+  MOBILE_LANDSCAPE_HEIGHT: heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT),
 };
 
-module.exports = { BREAKPOINTS, MEDIA_QUERIES };
+module.exports = {
+  BREAKPOINTS,
+  MEDIA_QUERIES,
+  widthHalfInterval,
+  widthPlus,
+  widthMinus,
+  heightHalfInterval,
+  heightPlus,
+  heightMinus,
+};
