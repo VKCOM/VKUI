@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { useExternRef } from './useExternRef';
 import { warnOnce } from '../lib/warnOnce';
 import { useEffectDev } from './useEffectDev';
+import { useExternRef } from './useExternRef';
 
 type ChildrenElement<T> = React.ReactElement<{ getRootRef?: React.Ref<T> }>;
 

@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { HasComponent } from '../../types';
+import { Icon24Chevron } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
-import { TappableProps, Tappable } from '../Tappable/Tappable';
-import { Icon24Chevron } from '@vkontakte/icons';
-import { Platform } from '../../lib/platform';
-import { usePlatform } from '../../hooks/usePlatform';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
+import { HasComponent } from '../../types';
+import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import styles from './SimpleCell.module.css';
 
 export interface SimpleCellOwnProps extends HasComponent {

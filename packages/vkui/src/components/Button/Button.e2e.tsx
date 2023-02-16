@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Icon16Add, Icon24Camera } from '@vkontakte/icons';
-import { Button, ButtonProps } from './Button';
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import { Counter } from '../Counter/Counter';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
+import { Button, ButtonProps } from './Button';
 
 describe('Button', () => {
   describeScreenshotFuzz(

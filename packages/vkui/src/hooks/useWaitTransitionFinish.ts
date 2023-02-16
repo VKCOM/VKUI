@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useDOM } from '../lib/dom';
 import { noop } from '@vkontakte/vkjs';
+import { useDOM } from '../lib/dom';
 import { transitionEvent } from '../lib/supportEvents';
 
 export const useWaitTransitionFinish = () => {

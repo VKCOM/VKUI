@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { FormField, FormFieldProps } from '../FormField/FormField';
-import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { HasAlign, HasRef, HasRootRef } from '../../types';
+import { FormField, FormFieldProps } from '../FormField/FormField';
 import styles from './Input.module.css';
 
 export interface InputProps

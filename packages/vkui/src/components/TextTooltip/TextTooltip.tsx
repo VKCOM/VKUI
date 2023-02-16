@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { HoverPopper, HoverPopperProps } from '../HoverPopper/HoverPopper';
 import { Subhead } from '../Typography/Subhead/Subhead';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import styles from './TextTooltip.module.css';
 
 export interface TextTooltipProps

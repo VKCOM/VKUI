@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { baselineComponent } from '../../testing/utils';
-import { IconButtonProps, IconButton } from './IconButton';
 import { render, screen } from '@testing-library/react';
 import { Icon28VoiceOutline } from '@vkontakte/icons';
+import { baselineComponent } from '../../testing/utils';
+import { IconButton, IconButtonProps } from './IconButton';
 
 const IconButtonTest = (props: IconButtonProps) => (
   <IconButton data-testid="button" aria-label="Тестовая кнопка" {...props}>

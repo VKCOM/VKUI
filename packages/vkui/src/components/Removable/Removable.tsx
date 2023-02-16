@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { HasRootRef } from '../../types';
+import { Icon24Cancel } from '@vkontakte/icons';
 import { classNames, noop } from '@vkontakte/vkjs';
-import { getTitleFromChildren } from '../../lib/utils';
-import { useExternRef } from '../../hooks/useExternRef';
-import { usePlatform } from '../../hooks/usePlatform';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { usePlatform } from '../../hooks/usePlatform';
 import { useDOM } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
-import { Icon24Cancel } from '@vkontakte/icons';
+import { getTitleFromChildren } from '../../lib/utils';
+import { HasRootRef } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { Tappable } from '../Tappable/Tappable';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import styles from './Removable.module.css';
 
 export interface RemovableProps {

@@ -2,9 +2,9 @@ import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { baselineComponent } from '../../testing/utils';
-import { Cell } from './Cell';
-import { ListContext } from '../List/ListContext';
 import { List } from '../List/List';
+import { ListContext } from '../List/ListContext';
+import { Cell } from './Cell';
 
 const label = 'Перенести ячейку';
 const dragger = () => screen.getByLabelText(label);

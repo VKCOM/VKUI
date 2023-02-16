@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDOM } from '@vkui/lib/dom';
 
 export function useViewPortSize() {

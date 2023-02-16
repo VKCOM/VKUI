@@ -1,21 +1,20 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import * as React from 'react';
 import {
   Icon12Users,
   Icon16Users,
+  Icon20GiftCircleFillRed,
   Icon20Users,
+  Icon24AddOutline,
   Icon24Users,
+  Icon28AddOutline,
   Icon28Users,
   Icon36Users,
-  Icon24AddOutline,
-  Icon28AddOutline,
-  Icon20GiftCircleFillRed,
 } from '@vkontakte/icons';
 import {
-  ImageBaseContext,
   getBadgeIconSizeByImageBaseSize,
-  getOverlayIconSizeByImageBaseSize,
   getFallbackIconSizeByImageBaseSize,
+  getOverlayIconSizeByImageBaseSize,
+  ImageBaseContext,
 } from '../components/ImageBase/ImageBase';
 
 export const IconExampleForBadgeBasedOnImageBaseSize = () => {

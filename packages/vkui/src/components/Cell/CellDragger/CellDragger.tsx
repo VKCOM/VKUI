@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Icon24Reorder, Icon24ReorderIos } from '@vkontakte/icons';
+import { classNames } from '@vkontakte/vkjs';
 import { getPlatformClassName } from '../../../helpers/getPlatformClassName';
 import { usePlatform } from '../../../hooks/usePlatform';
-import { classNames } from '@vkontakte/vkjs';
 import { Platform } from '../../../lib/platform';
 import { Touch } from '../../Touch/Touch';
 import { DraggableProps } from '../useDraggable';

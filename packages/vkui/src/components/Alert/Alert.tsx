@@ -1,21 +1,21 @@
 import * as React from 'react';
-import { Tappable } from '../Tappable/Tappable';
-import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { usePlatform } from '../../hooks/usePlatform';
+import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { Platform } from '../../lib/platform';
-import { Button, ButtonProps } from '../Button/Button';
 import { stopPropagation } from '../../lib/utils';
-import { Title } from '../Typography/Title/Title';
+import { AnchorHTMLAttributesOnly } from '../../types';
+import { useScrollLock } from '../AppRoot/ScrollContext';
+import { Button, ButtonProps } from '../Button/Button';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
+import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
+import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
+import { Tappable } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Text } from '../Typography/Text/Text';
-import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
-import { FocusTrap } from '../FocusTrap/FocusTrap';
-import { useScrollLock } from '../AppRoot/ScrollContext';
-import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
-import { usePlatform } from '../../hooks/usePlatform';
-import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
-import { AnchorHTMLAttributesOnly } from '../../types';
+import { Title } from '../Typography/Title/Title';
 import styles from './Alert.module.css';
 
 export interface AlertActionInterface

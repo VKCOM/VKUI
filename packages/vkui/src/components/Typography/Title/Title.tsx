@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { HasComponent } from '../../../types';
 import { classNames } from '@vkontakte/vkjs';
+import { HasComponent } from '../../../types';
 import styles from './Title.module.css';
 
 export interface TitleProps extends React.AllHTMLAttributes<HTMLElement>, HasComponent {

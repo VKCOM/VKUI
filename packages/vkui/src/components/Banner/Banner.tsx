@@ -1,15 +1,15 @@
 import * as React from 'react';
+import {
+  Icon24Cancel,
+  Icon24Chevron,
+  Icon24DismissDark,
+  Icon24DismissSubstract,
+} from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
-import {
-  Icon24Chevron,
-  Icon24DismissSubstract,
-  Icon24DismissDark,
-  Icon24Cancel,
-} from '@vkontakte/icons';
-import { Tappable } from '../Tappable/Tappable';
 import { IconButton } from '../IconButton/IconButton';
+import { Tappable } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Text } from '../Typography/Text/Text';

@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { Platform } from '../../lib/platform';
 import { classNames } from '@vkontakte/vkjs';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { usePlatform } from '../../hooks/usePlatform';
+import { useDOM } from '../../lib/dom';
+import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { SplitColContext } from '../SplitCol/SplitColContext';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
-import { useDOM } from '../../lib/dom';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
-import { usePlatform } from '../../hooks/usePlatform';
-import { useExternRef } from '../../hooks/useExternRef';
 import styles from './FixedLayout.module.css';
 
 export interface FixedLayoutProps

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
-import { Platform } from '../../lib/platform';
-import { Icon28EditOutline, Icon28DoneOutline } from '@vkontakte/icons';
+import { Icon28DoneOutline, Icon28EditOutline } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
+import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 
 export interface PanelHeaderEditProps extends PanelHeaderButtonProps {
   /**

@@ -1,7 +1,6 @@
 import postcss, { ProcessOptions } from 'postcss';
 import postcssLESS from 'postcss-less';
 import postcssSCSS from 'postcss-scss';
-
 import plugin from './postcss-token-translator';
 
 async function run(input: string, output: string, processOption: ProcessOptions = {}) {

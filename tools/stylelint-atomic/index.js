@@ -1,6 +1,6 @@
 const path = require('path');
-const stylelint = require('stylelint');
 const selectorParser = require('postcss-selector-parser');
+const stylelint = require('stylelint');
 const pkg = require('./package.json');
 
 const ruleName = pkg.name;

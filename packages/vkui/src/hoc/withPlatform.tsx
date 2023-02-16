@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { HasPlatform } from '../types';
 import { useConfigProvider } from '../components/ConfigProvider/ConfigProviderContext';
+import { HasPlatform } from '../types';
 
 export function withPlatform<T extends HasPlatform>(
   Component: React.ComponentType<T>,

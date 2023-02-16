@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Icon28SettingsOutline } from '@vkontakte/icons';
-import { ActionSheet, ActionSheetProps } from './ActionSheet';
-import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
-import { SizeType, ViewWidth } from '../../lib/adaptivity';
 import { noop } from '@vkontakte/vkjs';
-import { HasChildren } from '../../types';
-import { AppRoot } from '../AppRoot/AppRoot';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SizeType, ViewWidth } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
+import { describeScreenshotFuzz } from '../../testing/e2e';
+import { HasChildren } from '../../types';
+import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
+import { AppRoot } from '../AppRoot/AppRoot';
+import { ActionSheet, ActionSheetProps } from './ActionSheet';
 
 const AppWrapper = (props: HasChildren) => (
   <AppRoot mode="embedded" scroll="contain">

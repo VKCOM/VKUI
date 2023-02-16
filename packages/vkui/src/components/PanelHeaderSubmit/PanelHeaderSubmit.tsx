@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import { Icon28DoneOutline } from '@vkontakte/icons';
-import { Platform } from '../../lib/platform';
 import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
 import { getTitleFromChildren } from '../../lib/utils';
+import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderSubmit

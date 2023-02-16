@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { render } from '@testing-library/react';
-import { baselineComponent } from '../../testing/utils';
-import { AppRootContext } from './AppRootContext';
-import { AppRoot } from './AppRoot';
 import { SizeType } from '../../lib/adaptivity';
+import { baselineComponent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import { AppRoot } from './AppRoot';
+import { AppRootContext } from './AppRootContext';
 
 describe('AppRoot', () => {
   baselineComponent(AppRoot);

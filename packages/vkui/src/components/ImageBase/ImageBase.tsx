@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { HasRef, HasRootRef } from '../../types';
-import { type ImageBaseBadgeProps, ImageBaseBadge } from './ImageBaseBadge/ImageBaseBadge';
-import { type ImageBaseOverlayProps, ImageBaseOverlay } from './ImageBaseOverlay/ImageBaseOverlay';
-import type { ImageBaseExpectedIconProps, ImageBaseSize, ImageBaseContextProps } from './types';
+import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge/ImageBaseBadge';
+import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay/ImageBaseOverlay';
 import { ImageBaseContext } from './context';
-import { validateSize, validateFallbackIcon } from './validators';
+import type { ImageBaseContextProps, ImageBaseExpectedIconProps, ImageBaseSize } from './types';
+import { validateFallbackIcon, validateSize } from './validators';
 import styles from './ImageBase.module.css';
 
 export type {

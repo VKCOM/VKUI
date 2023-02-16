@@ -1,28 +1,28 @@
 import * as React from 'react';
-import { Touch, TouchEvent } from '../Touch/Touch';
-import TouchRootContext from '../Touch/TouchContext';
 import { classNames } from '@vkontakte/vkjs';
-import { setTransformStyle } from '../../lib/styles';
-import { rubber } from '../../lib/touch';
-import { Platform } from '../../lib/platform';
-import { transitionEvent } from '../../lib/supportEvents';
-import { HasPlatform } from '../../types';
-import { withPlatform } from '../../hoc/withPlatform';
+import { clamp } from '../../helpers/math';
 import { withContext } from '../../hoc/withContext';
-import { ModalRootContext, ModalRootContextInterface } from './ModalRootContext';
+import { withPlatform } from '../../hoc/withPlatform';
+import { DOMProps, withDOM } from '../../lib/dom';
+import { getNavId } from '../../lib/getNavId';
+import { Platform } from '../../lib/platform';
+import { setTransformStyle } from '../../lib/styles';
+import { transitionEvent } from '../../lib/supportEvents';
+import { rubber } from '../../lib/touch';
+import { warnOnce } from '../../lib/warnOnce';
+import { HasPlatform } from '../../types';
 import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
   WebviewType,
 } from '../ConfigProvider/ConfigProviderContext';
-import { ModalsStateEntry, ModalType, TranslateRange } from './types';
-import { MODAL_PAGE_DEFAULT_PERCENT_HEIGHT } from './constants';
-import { DOMProps, withDOM } from '../../lib/dom';
-import { getNavId } from '../../lib/getNavId';
-import { warnOnce } from '../../lib/warnOnce';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
+import { Touch, TouchEvent } from '../Touch/Touch';
+import TouchRootContext from '../Touch/TouchContext';
+import { ModalRootContext, ModalRootContextInterface } from './ModalRootContext';
+import { MODAL_PAGE_DEFAULT_PERCENT_HEIGHT } from './constants';
+import { ModalsStateEntry, ModalType, TranslateRange } from './types';
 import { ModalTransitionProps, withModalManager } from './useModalManager';
-import { clamp } from '../../helpers/math';
 import styles from './ModalRoot.module.css';
 
 const warn = warnOnce('ModalRoot');

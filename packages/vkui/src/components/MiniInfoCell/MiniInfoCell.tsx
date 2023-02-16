@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { Paragraph } from '../Typography/Paragraph/Paragraph';
-import { Tappable } from '../Tappable/Tappable';
 import { Icon16Chevron } from '@vkontakte/icons';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { Tappable } from '../Tappable/Tappable';
+import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import styles from './MiniInfoCell.module.css';
 
 export interface MiniInfoCellProps extends React.HTMLAttributes<HTMLDivElement> {

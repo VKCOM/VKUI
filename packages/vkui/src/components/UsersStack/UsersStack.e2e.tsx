@@ -1,5 +1,5 @@
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import { UsersStack } from './UsersStack';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
 const base64Image =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAACXBIWXMAAC4jAAAuIwF4pT92AAAA+' +

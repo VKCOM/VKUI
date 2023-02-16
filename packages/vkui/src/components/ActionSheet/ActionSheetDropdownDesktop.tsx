@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { classNames } from '@vkontakte/vkjs';
-import { useDOM } from '../../lib/dom';
-import { usePlatform } from '../../hooks/usePlatform';
-import { useEffectDev } from '../../hooks/useEffectDev';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
-import { isRefObject } from '../../lib/isRefObject';
-import { warnOnce } from '../../lib/warnOnce';
-import { Platform } from '../../lib/platform';
+import { useEffectDev } from '../../hooks/useEffectDev';
 import { useEventListener } from '../../hooks/useEventListener';
-import { SharedDropdownProps } from './types';
+import { usePlatform } from '../../hooks/usePlatform';
+import { useDOM } from '../../lib/dom';
+import { isRefObject } from '../../lib/isRefObject';
+import { Platform } from '../../lib/platform';
+import { warnOnce } from '../../lib/warnOnce';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { Popper } from '../Popper/Popper';
+import { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
 const warn = warnOnce('ActionSheet');

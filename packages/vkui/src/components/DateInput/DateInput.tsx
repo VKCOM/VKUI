@@ -1,20 +1,20 @@
 import * as React from 'react';
-import { format, isMatch, parse } from '../../lib/date';
 import { Icon16Clear, Icon20CalendarOutline } from '@vkontakte/icons';
-import { Calendar, CalendarProps } from '../Calendar/Calendar';
-import { Popper } from '../Popper/Popper';
-import { IconButton } from '../IconButton/IconButton';
 import { classNames } from '@vkontakte/vkjs';
-import { FormField, FormFieldProps } from '../FormField/FormField';
-import { HasRootRef } from '../../types';
+import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
+import { callMultiple } from '../../lib/callMultiple';
+import { format, isMatch, parse } from '../../lib/date';
+import type { PlacementWithAuto } from '../../lib/floating';
+import { HasRootRef } from '../../types';
+import { Calendar, CalendarProps } from '../Calendar/Calendar';
+import { FormField, FormFieldProps } from '../FormField/FormField';
+import { IconButton } from '../IconButton/IconButton';
 import { InputLike } from '../InputLike/InputLike';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
-import type { PlacementWithAuto } from '../../lib/floating';
-import { callMultiple } from '../../lib/callMultiple';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { Popper } from '../Popper/Popper';
 import '../InputLike/InputLikeDivider.module.css'; // Reorder css
 import styles from './DateInput.module.css';
 

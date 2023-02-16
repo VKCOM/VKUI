@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
-import { Platform } from '../../lib/platform';
-import { ActionSheetDropdownDesktop } from './ActionSheetDropdownDesktop';
-import { ActionSheetDropdown } from './ActionSheetDropdown';
 import { noop } from '@vkontakte/vkjs';
-import { ActionSheetContext, ItemClickHandler } from './ActionSheetContext';
-import { Footnote } from '../Typography/Footnote/Footnote';
-import { usePlatform } from '../../hooks/usePlatform';
-import { useTimeout } from '../../hooks/useTimeout';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
-import { SharedDropdownProps } from './types';
+import { usePlatform } from '../../hooks/usePlatform';
+import { useTimeout } from '../../hooks/useTimeout';
+import { Platform } from '../../lib/platform';
 import { useScrollLock } from '../AppRoot/ScrollContext';
+import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
+import { Footnote } from '../Typography/Footnote/Footnote';
+import { ActionSheetContext, ItemClickHandler } from './ActionSheetContext';
+import { ActionSheetDropdown } from './ActionSheetDropdown';
+import { ActionSheetDropdownDesktop } from './ActionSheetDropdownDesktop';
+import { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
 export interface ActionSheetProps

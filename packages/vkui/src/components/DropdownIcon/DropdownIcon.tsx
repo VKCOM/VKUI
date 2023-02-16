@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {
+  Icon20ChevronUp,
   Icon20Dropdown,
   Icon24ChevronDown,
   Icon24ChevronUp,
-  Icon20ChevronUp,
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';

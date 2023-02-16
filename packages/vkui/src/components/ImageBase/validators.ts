@@ -1,10 +1,10 @@
 import { warnOnce } from '../../lib/warnOnce';
-import { imageBaseSizes } from './types';
 import {
   getBadgeIconSizeByImageBaseSize,
   getFallbackIconSizeByImageBaseSize,
   getOverlayIconSizeByImageBaseSize,
 } from './helpers';
+import { imageBaseSizes } from './types';
 
 /**
  * Пример,

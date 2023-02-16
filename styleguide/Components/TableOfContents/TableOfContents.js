@@ -1,21 +1,21 @@
 import React, { Fragment } from 'react';
 import {
-  Header,
-  IconButton,
-  SimpleCell,
-  Search,
-  classNames,
-  Separator,
-  Footer,
-  useAdaptivityWithJSMediaQueries,
-} from '@vkui';
-import {
   Icon28ChevronDownOutline,
   Icon28ChevronUpOutline,
   Icon28WarningTriangleOutline,
 } from '@vkontakte/icons';
-import { deprecated } from '../../deprecated';
 import getInfoFromHash from 'react-styleguidist/lib/client/utils/getInfoFromHash';
+import {
+  classNames,
+  Footer,
+  Header,
+  IconButton,
+  Search,
+  Separator,
+  SimpleCell,
+  useAdaptivityWithJSMediaQueries,
+} from '@vkui';
+import { deprecated } from '../../deprecated';
 import { unstable } from '../../unstable';
 import './TableOfContents.css';
 

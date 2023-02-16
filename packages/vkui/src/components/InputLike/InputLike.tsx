@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
 import { callMultiple } from '../../lib/callMultiple';
 import { stopPropagation } from '../../lib/utils';
-import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';
 import styles from './InputLike.module.css';
 

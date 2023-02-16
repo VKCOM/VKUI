@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { clamp } from '../../helpers/math';
 import { useDOM } from '../../lib/dom';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 
 const clearDisableScrollStyle = (node: HTMLElement) => {
   Object.assign(node.style, {

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
-import { TabsItem } from '../TabsItem/TabsItem';
-import { baselineComponent } from '../../testing/utils';
-import { Tabs } from './Tabs';
-import { Group } from '../Group/Group';
 import { ComponentProps, useState } from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { baselineComponent } from '../../testing/utils';
+import { Group } from '../Group/Group';
+import { TabsItem } from '../TabsItem/TabsItem';
+import { Tabs } from './Tabs';
 
 function TestTabs(props: { disabledKeys?: string[] }) {
   const [currentTab, setCurrentTab] = useState('first');

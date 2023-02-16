@@ -4,7 +4,7 @@ import {
   IconExampleForBadgeBasedOnImageBaseSize,
   IconExampleForFallbackBasedOnImageBaseSize,
 } from '../../testing/icons';
-import { baselineComponent, tryToGetByTestId, imgOnlyAttributes } from '../../testing/utils';
+import { baselineComponent, imgOnlyAttributes, tryToGetByTestId } from '../../testing/utils';
 import { ImageBase, ImageBaseProps } from './ImageBase';
 
 const TEST_LOCATORS = {

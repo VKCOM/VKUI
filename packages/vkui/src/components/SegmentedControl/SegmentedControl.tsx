@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { useId } from '../../hooks/useId';
-import { warnOnce } from '../../lib/warnOnce';
-import { SegmentedControlOption } from './SegmentedControlOption/SegmentedControlOption';
-import { HasRootRef } from '../../types';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
+import { useId } from '../../hooks/useId';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { warnOnce } from '../../lib/warnOnce';
+import { HasRootRef } from '../../types';
+import { SegmentedControlOption } from './SegmentedControlOption/SegmentedControlOption';
 import styles from './SegmentedControl.module.css';
 
 export type SegmentedControlValue = string | number | undefined;

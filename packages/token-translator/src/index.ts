@@ -1,16 +1,14 @@
 #!/usr/bin/env node
 
-import path from 'path';
 import { execSync } from 'child_process';
 import fs from 'fs';
 import fsPromises from 'fs/promises';
-
+import path from 'path';
 import postcss, { Parser, Syntax } from 'postcss';
 import postcssLESS from 'postcss-less';
 import postcssSCSS from 'postcss-scss';
-
-import postcssPlugin from './postcss-token-translator';
 import { fileReplacer } from './file-replacer';
+import postcssPlugin from './postcss-token-translator';
 
 const cwd = process.cwd();
 

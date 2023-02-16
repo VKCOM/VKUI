@@ -1,9 +1,9 @@
-import React, { useContext, useRef, useEffect } from 'react';
-import { Headline, Link, classNames, ActionSheet, ActionSheetItem } from '@vkui';
+import React, { useContext, useEffect, useRef } from 'react';
 import { Icon16Dropdown } from '@vkontakte/icons';
+import { ActionSheet, ActionSheetItem, classNames, Headline, Link } from '@vkui';
 import './Setting.css';
-import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
 import { RichTooltip } from '@vkui/components/RichTooltip/RichTooltip';
+import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
 
 export const Setting = ({
   label,

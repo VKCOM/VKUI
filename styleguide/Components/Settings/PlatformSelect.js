@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, Link } from '@vkui';
+import { Link, Platform } from '@vkui';
 import { Setting } from '../Setting/Setting';
 import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
 

@@ -1,11 +1,11 @@
 import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
+import { useTodayDate } from '../../hooks/useTodayDate';
+import { getDaysNames, getWeeks } from '../../lib/calendar';
 import { isSameDay, isSameMonth } from '../../lib/date';
 import { CalendarDay, CalendarDayElementProps } from '../CalendarDay/CalendarDay';
-import { getDaysNames, getWeeks } from '../../lib/calendar';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { classNames } from '@vkontakte/vkjs';
 import { Footnote } from '../Typography/Footnote/Footnote';
-import { useTodayDate } from '../../hooks/useTodayDate';
 import styles from './CalendarDays.module.css';
 
 export interface CalendarDaysProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {

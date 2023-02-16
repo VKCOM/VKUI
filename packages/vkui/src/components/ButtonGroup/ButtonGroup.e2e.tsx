@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Icon24Attach, Icon24Add } from '@vkontakte/icons';
+import { Icon24Add, Icon24Attach } from '@vkontakte/icons';
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import { Button } from '../Button/Button';
 import { ButtonGroup, ButtonGroupProps } from './ButtonGroup';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
 describe('ButtonGroup', () => {
   describeScreenshotFuzz(

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Header, HeaderProps } from './Header';
-import { Link } from '../Link/Link';
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import { Counter } from '../Counter/Counter';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
+import { Link } from '../Link/Link';
+import { Header, HeaderProps } from './Header';
 
 describe('Header', () => {
   describeScreenshotFuzz(

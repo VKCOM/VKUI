@@ -1,5 +1,4 @@
 import fsPromises from 'fs/promises';
-
 import { getVKUIToken } from './styleProperty';
 
 const regex = /(?<![\w])(--[a-z_]+)/gm;

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Cell } from './Cell';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import { Avatar } from '../Avatar/Avatar';
+import { Cell } from './Cell';
 
 describe('Cell', () => {
   describeScreenshotFuzz(Cell, [

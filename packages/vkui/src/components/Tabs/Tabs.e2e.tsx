@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Icon16Dropdown, Icon20PictureOutline, Icon24PictureOutline } from '@vkontakte/icons';
 import { describeScreenshotFuzz } from '../../testing/e2e';
 import { Badge } from '../Badge/Badge';
-import { HorizontalScroll } from '../HorizontalScroll/HorizontalScroll';
 import { Counter } from '../Counter/Counter';
-import { TabsItemProps, TabsItem } from '../TabsItem/TabsItem';
+import { HorizontalScroll } from '../HorizontalScroll/HorizontalScroll';
+import { TabsItem, TabsItemProps } from '../TabsItem/TabsItem';
 import { Tabs, TabsModeContext } from './Tabs';
 
 function useIconByMode() {

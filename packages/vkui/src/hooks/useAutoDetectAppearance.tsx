@@ -4,9 +4,9 @@ import vkBridge, {
   AppearanceType,
   VKBridgeEvent,
 } from '@vkontakte/vk-bridge';
-import { useDOM } from '../lib/dom';
 import { noop } from '@vkontakte/vkjs';
 import { resolveAppearance, VKBridgeConfigData } from '../helpers/appearance';
+import { useDOM } from '../lib/dom';
 import { matchMediaListAddListener, matchMediaListRemoveListener } from '../lib/matchMedia';
 
 let initialAppearance: AppearanceType | null = null;

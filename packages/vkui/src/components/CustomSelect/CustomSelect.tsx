@@ -1,24 +1,24 @@
 import * as React from 'react';
-import { SelectMimicry } from '../SelectMimicry/SelectMimicry';
-import { debounce, getTitleFromChildren } from '../../lib/utils';
-import { useExternRef } from '../../hooks/useExternRef';
 import { classNames } from '@vkontakte/vkjs';
-import { NativeSelectProps } from '../NativeSelect/NativeSelect';
+import { useExternRef } from '../../hooks/useExternRef';
+import type { PlacementWithAuto } from '../../lib/floating';
+import { defaultFilterFn, getFormFieldModeFromSelectType } from '../../lib/select';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { debounce, getTitleFromChildren } from '../../lib/utils';
+import { warnOnce } from '../../lib/warnOnce';
+import { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
+import { CustomSelectDropdown } from '../CustomSelectDropdown/CustomSelectDropdown';
 import {
   CustomSelectOption,
   CustomSelectOptionProps,
 } from '../CustomSelectOption/CustomSelectOption';
+import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormFieldProps } from '../FormField/FormField';
 import { Input } from '../Input/Input';
-import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
-import { Footnote } from '../Typography/Footnote/Footnote';
-import { warnOnce } from '../../lib/warnOnce';
-import { defaultFilterFn, getFormFieldModeFromSelectType } from '../../lib/select';
-import type { PlacementWithAuto } from '../../lib/floating';
-import { CustomSelectDropdown } from '../CustomSelectDropdown/CustomSelectDropdown';
-import { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
+import { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import { SelectType } from '../Select/Select';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { SelectMimicry } from '../SelectMimicry/SelectMimicry';
+import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './CustomSelect.module.css';
 
 const findIndexAfter = (options: CustomSelectOptionInterface[] = [], startIndex = -1) => {

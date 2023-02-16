@@ -1,4 +1,4 @@
-import { PlatformType, platform } from '../lib/platform';
+import { platform, PlatformType } from '../lib/platform';
 
 export function getPlatformClassName(base: string, osname?: PlatformType): string;
 export function getPlatformClassName<Styles extends Record<string, string>>(

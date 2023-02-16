@@ -1,12 +1,12 @@
 import * as React from 'react';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { HasRef, HasRootRef } from '../../types';
 import { Card, CardProps } from '../Card/Card';
+import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
 import { Text } from '../Typography/Text/Text';
-import { TappableProps, Tappable } from '../Tappable/Tappable';
-import { HasRef, HasRootRef } from '../../types';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import styles from './ContentCard.module.css';
 
 export interface ContentCardProps

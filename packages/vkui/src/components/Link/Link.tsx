@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { TappableProps, Tappable } from '../Tappable/Tappable';
+import { Tappable, TappableProps } from '../Tappable/Tappable';
 import styles from './Link.module.css';
 
 export interface LinkProps extends TappableProps {

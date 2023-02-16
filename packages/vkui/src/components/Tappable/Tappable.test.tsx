@@ -1,12 +1,12 @@
 import * as React from 'react';
+import { act } from 'react-dom/test-utils';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
-import { baselineComponent } from '../../testing/utils';
-import { TappableProps, Tappable } from './Tappable';
 import { Platform } from '../../lib/platform';
-import { act } from 'react-dom/test-utils';
+import { baselineComponent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
+import { Tappable, TappableProps } from './Tappable';
 import styles from './Tappable.module.css';
 
 const TappableTest = (props: TappableProps) => <Tappable data-testid="tappable" {...props} />;

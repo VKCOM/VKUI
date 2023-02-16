@@ -1,5 +1,4 @@
 import ts from 'typescript';
-
 import transformer from './jsx-transformer';
 
 const printer = ts.createPrinter({});

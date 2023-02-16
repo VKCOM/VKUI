@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { baselineComponent } from '../../testing/utils';
-import { Removable } from './Removable';
-import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Platform } from '../../lib/platform';
+import { baselineComponent } from '../../testing/utils';
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
+import { Removable } from './Removable';
 
 describe('Removable', () => {
   baselineComponent(Removable);

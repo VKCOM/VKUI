@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { hasMouse as _hasPointer } from '@vkontakte/vkjs';
-import { SizeType, ViewWidth, ViewHeight, BREAKPOINTS } from '../../lib/adaptivity';
-import { useBridgeAdaptivity, BridgeAdaptivity } from '../../hooks/useBridgeAdaptivity';
-import { type AdaptivityProps, AdaptivityContext } from './AdaptivityContext';
+import { BridgeAdaptivity, useBridgeAdaptivity } from '../../hooks/useBridgeAdaptivity';
+import { BREAKPOINTS, SizeType, ViewHeight, ViewWidth } from '../../lib/adaptivity';
+import { AdaptivityContext, type AdaptivityProps } from './AdaptivityContext';
 
 export interface AdaptivityProviderProps extends AdaptivityProps {
   children?: React.ReactNode;

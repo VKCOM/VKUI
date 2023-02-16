@@ -1,21 +1,21 @@
 import '../packages/vkui/src/styles/themes.css';
 import '../packages/vkui/src/styles/common.css';
 
-import { useState, useRef } from 'react';
+import { useRef, useState } from 'react';
+import * as Icons from '@vkontakte/icons';
 import * as VKUI from '../packages/vkui/src';
 import {
-  IconExampleForOverlayBasedOnImageBaseSize,
-  IconExampleForFallbackBasedOnImageBaseSize,
   IconExampleForBadgeBasedOnImageBaseSize,
+  IconExampleForFallbackBasedOnImageBaseSize,
+  IconExampleForOverlayBasedOnImageBaseSize,
 } from '../packages/vkui/src/testing/icons';
-import * as Icons from '@vkontakte/icons';
 import {
+  getAllUsers,
+  getAvatarUrl,
   getRandomInt,
   getRandomUser,
   getRandomUsers,
-  getAllUsers,
   importantCountries,
-  getAvatarUrl,
   perfLogger,
 } from './utils';
 

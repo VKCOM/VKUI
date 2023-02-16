@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useCalendar } from '../../hooks/useCalendar';
+import { isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
 import {
   addMonths,
-  isSameMonth,
-  isSameDay,
-  isBefore,
-  isAfter,
-  startOfDay,
   endOfDay,
+  isAfter,
+  isBefore,
+  isSameDay,
+  isSameMonth,
   isWithinInterval,
+  startOfDay,
 } from '../../lib/date';
-import { CalendarHeader, CalendarHeaderProps } from '../CalendarHeader/CalendarHeader';
-import { CalendarDays, CalendarDaysProps } from '../CalendarDays/CalendarDays';
-import { navigateDate, setTimeEqual, isLastDay, isFirstDay } from '../../lib/calendar';
-import { useCalendar } from '../../hooks/useCalendar';
 import { HasRootRef } from '../../types';
+import { CalendarDays, CalendarDaysProps } from '../CalendarDays/CalendarDays';
+import { CalendarHeader, CalendarHeaderProps } from '../CalendarHeader/CalendarHeader';
 import styles from './CalendarRange.module.css';
 
 export interface CalendarRangeProps

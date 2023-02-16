@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { TappableProps, Tappable } from '../Tappable/Tappable';
 import { classNames } from '@vkontakte/vkjs';
-import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
+import { Tappable, TappableProps } from '../Tappable/Tappable';
 import styles from './IconButton.module.css';
 
 export interface IconButtonProps extends TappableProps {

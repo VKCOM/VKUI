@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { ModalsState, ModalsStateEntry, ModalType } from './types';
-import { warnOnce } from '../../lib/warnOnce';
+import { isFunction, noop } from '@vkontakte/vkjs';
 import { getNavId } from '../../lib/getNavId';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { noop, isFunction } from '@vkontakte/vkjs';
+import { warnOnce } from '../../lib/warnOnce';
+import { ModalsState, ModalsStateEntry, ModalType } from './types';
 
 interface ModalTransitionState {
   activeModal?: string | null;

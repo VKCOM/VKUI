@@ -1,5 +1,5 @@
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import { Switch } from './Switch';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
 describe('Switch', () => {
   describeScreenshotFuzz(Switch, [

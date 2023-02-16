@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { ReactNode } from 'react';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 import { AppRootContext } from '../components/AppRoot/AppRootContext';
 import { useFocusVisible } from './useFocusVisible';
 
 const wrapper =
   (keyboardInput: boolean) =>
-  ({ children }: { children?: ReactNode }) =>
+  ({ children }: { children?: React.ReactNode }) =>
     (
       <AppRootContext.Provider
         value={{

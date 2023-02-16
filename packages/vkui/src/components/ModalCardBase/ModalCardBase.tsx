@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { Title } from '../Typography/Title/Title';
-import { Subhead } from '../Typography/Subhead/Subhead';
+import { Icon24Dismiss } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
-import { usePlatform } from '../../hooks/usePlatform';
-import { HasRootRef } from '../../types';
-import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
-import { Platform } from '../../lib/platform';
-import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
-import { Icon24Dismiss } from '@vkontakte/icons';
-import { useKeyboard } from '../../hooks/useKeyboard';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { useKeyboard } from '../../hooks/useKeyboard';
+import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
+import { HasRootRef } from '../../types';
+import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
+import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
+import { Subhead } from '../Typography/Subhead/Subhead';
+import { Title } from '../Typography/Title/Title';
 import styles from './ModalCardBase.module.css';
 
 export interface ModalCardBaseProps

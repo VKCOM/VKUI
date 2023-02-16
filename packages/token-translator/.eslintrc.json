@@ -3,5 +3,28 @@
   "env": {
     "node": true
   },
-  "parser": "@typescript-eslint/parser"
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["import"],
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal"],
+        "newlines-between": "never",
+        "alphabetize": {
+          "order": "asc"
+        }
+      }
+    ],
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true,
+        "ignoreMemberSort": false,
+        "allowSeparatedGroups": true,
+        "memberSyntaxSortOrder": ["none", "single", "all", "multiple"]
+      }
+    ]
+  }
 }
