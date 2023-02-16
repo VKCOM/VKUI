@@ -1,5 +1,12 @@
 const pkg = require('./package.json');
-const { BREAKPOINTS, MEDIA_QUERIES } = require('./src/shared/breakpoints');
+const {
+  BREAKPOINTS,
+  MEDIA_QUERIES,
+  widthPlus,
+  widthMinus,
+  heightMinus,
+  heightPlus,
+} = require('./src/shared/breakpoints');
 
 module.exports.VERSION = pkg.version;
 
@@ -14,17 +21,12 @@ module.exports.URLS = {
  * {@link https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-custom-media}
  */
 const getCustomMedias = () => {
-  // WARNING: Не используйте различия между медиа выражениями
-  // `max-width: 767px` - `min-width: 768px`, так как размеры могут быть
-  // дробными `767.333px`.
-  //
-  // Вместо этого используйте `not (min-width: 768px)` - `min-width: 768px`!
   const customMedia = {
-    '--sizeX-regular': `(min-width: ${BREAKPOINTS.SMALL_TABLET}px)`,
-    '--sizeX-compact': `not (min-width: ${BREAKPOINTS.SMALL_TABLET}px)`,
+    '--sizeX-regular': widthPlus(BREAKPOINTS.SMALL_TABLET),
+    '--sizeX-compact': widthMinus(BREAKPOINTS.SMALL_TABLET),
 
-    '--sizeY-compact': `(pointer: fine) and (min-width: ${BREAKPOINTS.SMALL_TABLET}px), not (min-height: ${BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT}px)`, // prettier-ignore
-    '--sizeY-regular': `(pointer: coarse) and (min-height: ${BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT}px), (pointer: none) and (min-height: ${BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT}px), (not (min-width: ${BREAKPOINTS.SMALL_TABLET}px)) and (min-height: ${BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT}px)`, // prettier-ignore
+    '--sizeY-compact': `(pointer: fine) and ${widthPlus(BREAKPOINTS.SMALL_TABLET)}, ${heightMinus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}`, // prettier-ignore
+    '--sizeY-regular': `(pointer: coarse) and ${heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}, (pointer: none) and ${heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}, ${widthMinus(BREAKPOINTS.SMALL_TABLET)} and ${heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}`, // prettier-ignore
 
     '--hover-has': '(hover: hover)',
     '--hover-has-not': '(hover: none)',
@@ -32,23 +34,23 @@ const getCustomMedias = () => {
     '--pointer-has': '(pointer: fine)',
     '--pointer-has-not': '(pointer: coarse), (pointer: none)',
 
-    '--desktop': `(min-width: ${BREAKPOINTS.SMALL_TABLET}px) and (pointer: fine), (min-width: ${BREAKPOINTS.SMALL_TABLET}px) and (min-height: ${BREAKPOINTS.MEDIUM_HEIGHT}px)`, // prettier-ignore
-    '--mobile': `not (min-width: ${BREAKPOINTS.SMALL_TABLET}px), (pointer: none) and (not (min-height: ${BREAKPOINTS.MEDIUM_HEIGHT}px)), (pointer: coarse) and (not (min-height: ${BREAKPOINTS.MEDIUM_HEIGHT}px))`, // prettier-ignore
+    '--desktop': `${widthPlus(BREAKPOINTS.SMALL_TABLET)} and (pointer: fine), ${widthPlus(BREAKPOINTS.SMALL_TABLET)} and ${heightPlus(BREAKPOINTS.MEDIUM_HEIGHT)}`, // prettier-ignore
+    '--mobile': `${widthMinus(BREAKPOINTS.SMALL_TABLET)}, (pointer: none) and ${heightMinus(BREAKPOINTS.MEDIUM_HEIGHT)}, (pointer: coarse) and ${heightMinus(BREAKPOINTS.MEDIUM_HEIGHT)}`, // prettier-ignore
 
     '--viewWidth-desktopPlus': MEDIA_QUERIES.DESKTOP_PLUS,
 
-    '--viewWidth-tabletPlus': `(min-width: ${BREAKPOINTS.TABLET}px)`,
+    '--viewWidth-tabletPlus': widthPlus(BREAKPOINTS.TABLET),
     '--viewWidth-tablet': MEDIA_QUERIES.TABLET,
-    '--viewWidth-tabletMinus': `not (min-width: ${BREAKPOINTS.TABLET}px)`,
+    '--viewWidth-tabletMinus': widthMinus(BREAKPOINTS.TABLET),
 
     '--viewWidth-smallTabletPlus': MEDIA_QUERIES.SMALL_TABLET_PLUS,
     '--viewWidth-smallTablet': MEDIA_QUERIES.SMALL_TABLET,
-    '--viewWidth-smallTabletMinus': `not (min-width: ${BREAKPOINTS.SMALL_TABLET}px)`,
+    '--viewWidth-smallTabletMinus': widthMinus(BREAKPOINTS.SMALL_TABLET),
 
-    '--viewWidth-mobilePlus': `(min-width: ${BREAKPOINTS.MOBILE}px)`,
+    '--viewWidth-mobilePlus': widthPlus(BREAKPOINTS.MOBILE),
     '--viewWidth-mobile': MEDIA_QUERIES.MOBILE,
 
-    '--viewWidth-smallMobileMinus': `not (min-width: ${BREAKPOINTS.MOBILE}px)`,
+    '--viewWidth-smallMobileMinus': widthMinus(BREAKPOINTS.MOBILE),
   };
 
   return { customMedia };
