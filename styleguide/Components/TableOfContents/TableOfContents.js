@@ -6,6 +6,7 @@ import {
 } from '@vkontakte/icons';
 import getInfoFromHash from 'react-styleguidist/lib/client/utils/getInfoFromHash';
 import {
+  Caption,
   classNames,
   Footer,
   Header,

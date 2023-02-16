@@ -5,6 +5,8 @@ import {
   PanelHeader,
   PanelHeaderButton,
   PanelHeaderClose,
+  SplitCol,
+  SplitLayout,
   useAppearance,
   View,
 } from '@vkui';

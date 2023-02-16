@@ -2,7 +2,7 @@ import React from 'react';
 import Examples from '@rsg-components/Examples';
 import Markdown from '@rsg-components/Markdown';
 import Slot from '@rsg-components/Slot';
-import { classNames, Link } from '@vkui';
+import { Caption, classNames, Link } from '@vkui';
 import { VKUI_PACKAGE } from '../../../shared';
 import { deprecated } from '../../deprecated';
 import Heading from '../Heading/index';
