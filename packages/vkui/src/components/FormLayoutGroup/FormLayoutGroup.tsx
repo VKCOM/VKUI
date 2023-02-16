@@ -10,7 +10,6 @@ import styles from './FormLayoutGroup.module.css';
 const sizeYClassNames = {
   none: styles['FormLayoutGroup--sizeY-none'],
   [SizeType.COMPACT]: styles['FormLayoutGroup--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 export interface FormLayoutGroupProps
@@ -53,7 +52,7 @@ export const FormLayoutGroup = ({
       ref={rootEl}
       className={classNames(
         styles['FormLayoutGroup'],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         styles[`FormLayoutGroup--mode-${mode}`],
         isRemovable && styles['FormLayoutGroup--removable'],
         isSegmented && styles['FormLayoutGroup--segmented'],

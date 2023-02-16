@@ -13,7 +13,6 @@ import styles from './Radio.module.css';
 const sizeYClassNames = {
   none: styles['Radio--sizeY-none'],
   [SizeType.COMPACT]: styles['Radio--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 const RadioIcon = (props: React.SVGProps<SVGSVGElement>) => {
@@ -50,7 +49,11 @@ export const Radio = ({
     <Tappable
       Component="label"
       style={style}
-      className={classNames(styles['Radio'], sizeYClassNames[sizeY], className)}
+      className={classNames(
+        styles['Radio'],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        className,
+      )}
       activeEffectDelay={platform === Platform.IOS ? 100 : ACTIVE_EFFECT_DELAY}
       disabled={restProps.disabled}
       getRootRef={getRootRef}

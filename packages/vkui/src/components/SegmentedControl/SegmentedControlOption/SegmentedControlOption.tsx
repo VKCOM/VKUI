@@ -14,7 +14,6 @@ import styles from './SegmentedControlOption.module.css';
 const sizeYClassNames = {
   none: styles['SegmentedControlOption__content--sizeY-none'],
   [SizeType.COMPACT]: styles['SegmentedControlOption__content--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 /**
@@ -46,7 +45,10 @@ export const SegmentedControlOption = ({
         onFocus={callMultiple(onFocus, restProps.onFocus)}
       />
       <span
-        className={classNames(styles['SegmentedControlOption__content'], sizeYClassNames[sizeY])}
+        className={classNames(
+          styles['SegmentedControlOption__content'],
+          sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        )}
       >
         {children}
       </span>

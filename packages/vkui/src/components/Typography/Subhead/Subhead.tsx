@@ -8,7 +8,6 @@ import styles from './Subhead.module.css';
 const sizeYClassNames = {
   none: styles['Subhead--sizeY-none'],
   [SizeType.COMPACT]: styles['Subhead--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 export interface SubheadProps extends React.AllHTMLAttributes<HTMLElement>, HasComponent {
@@ -36,7 +35,7 @@ export const Subhead = ({
       className={classNames(
         className,
         styles['Subhead'],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         weight && styles[`Subhead--weight-${weight}`],
       )}
     >

@@ -12,12 +12,6 @@ import { Platform } from '../../lib/platform';
 import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import styles from './PanelHeaderBack.module.css';
 
-const sizeXClassNames = {
-  none: null,
-  [SizeType.COMPACT]: styles['PanelHeaderBack--sizeX-compact'],
-  [SizeType.REGULAR]: null,
-};
-
 export type PanelHeaderBackProps = PanelHeaderButtonProps & {
   'aria-label'?: string;
 };
@@ -52,7 +46,7 @@ export const PanelHeaderBack = ({
       {...restProps}
       className={classNames(
         styles['PanelHeaderBack'],
-        sizeXClassNames[sizeX],
+        sizeX === SizeType.COMPACT && styles['PanelHeaderBack--sizeX-compact'],
         platform === Platform.IOS && styles['PanelHeaderBack--ios'],
         platform === Platform.VKCOM && styles['PanelHeaderBack--vkcom'],
         showLabel && !!label && styles['PanelHeaderBack--has-label'],

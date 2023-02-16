@@ -9,7 +9,6 @@ import styles from './RichCell.module.css';
 const sizeYClassNames = {
   none: styles['RichCell--sizeY-none'],
   [SizeType.COMPACT]: styles['RichCell--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 export interface RichCellProps extends TappableProps {
@@ -87,7 +86,7 @@ export const RichCell = ({
       className={classNames(
         styles['RichCell'],
         !multiline && styles['RichCell--text-ellipsis'],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         className,
       )}
     >

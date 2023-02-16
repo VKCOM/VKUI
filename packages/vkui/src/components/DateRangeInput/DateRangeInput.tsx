@@ -21,7 +21,6 @@ import dateInputStyles from '../DateInput/DateInput.module.css';
 const sizeYClassNames = {
   none: styles['DateRangeInput--sizeY-none'],
   [SizeType.COMPACT]: styles['DateRangeInput--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 export interface DateRangeInputProps
@@ -233,7 +232,11 @@ export const DateRangeInput = ({
   return (
     <FormField
       style={style}
-      className={classNames(styles['DateRangeInput'], sizeYClassNames[sizeY], className)}
+      className={classNames(
+        styles['DateRangeInput'],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        className,
+      )}
       getRootRef={handleRootRef}
       after={
         value ? (

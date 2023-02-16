@@ -13,7 +13,6 @@ import styles from './SubnavigationButton.module.css';
 const sizeYClassNames = {
   none: styles['SubnavigationButton--sizeY-none'],
   [SizeType.COMPACT]: styles['SubnavigationButton--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
@@ -80,7 +79,7 @@ export const SubnavigationButton = ({
         styles[`SubnavigationButton--size-${size}`],
         styles[`SubnavigationButton--mode-${mode}`],
         selected && styles['SubnavigationButton--selected'],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         className,
       )}
       aria-label={getTitleFromChildren(children)}

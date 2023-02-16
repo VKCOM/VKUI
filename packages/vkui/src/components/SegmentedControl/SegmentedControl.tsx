@@ -12,7 +12,6 @@ import styles from './SegmentedControl.module.css';
 
 const sizeYClassNames = {
   none: styles['SegmentedControl--sizeY-none'],
-  [SizeType.COMPACT]: null,
   [SizeType.REGULAR]: styles['SegmentedControl--sizeY-regular'],
 };
 
@@ -81,7 +80,7 @@ export const SegmentedControl = ({
       {...restProps}
       className={classNames(
         styles['SegmentedControl'],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.COMPACT && sizeYClassNames[sizeY],
         styles[`SegmentedControl--size-${size}`],
         className,
       )}

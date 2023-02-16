@@ -16,7 +16,6 @@ import styles from './AppRoot.module.css';
 
 const vkuiSizeXClassNames = {
   none: 'vkui--sizeX-none',
-  [SizeType.COMPACT]: null,
   [SizeType.REGULAR]: 'vkui--sizeX-regular',
 };
 
@@ -140,7 +139,7 @@ export const AppRoot = ({
     if (mode === 'partial') {
       return noop;
     }
-    const className = vkuiSizeXClassNames[sizeX];
+    const className = sizeX !== SizeType.COMPACT ? vkuiSizeXClassNames[sizeX] : null;
     const container = mode === 'embedded' ? rootRef.current?.parentElement : document!.body;
 
     if (className === null || !container) {
