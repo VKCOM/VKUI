@@ -20,6 +20,7 @@ async function run(): Promise<void> {
     const jobs = [];
     const lintResults = path.join(process.cwd(), 'lint-results.json');
     const testResults = path.join(process.cwd(), 'test-results.json');
+    const a11yResults = path.join(process.cwd(), 'a11y-results.json');
     const e2eResults = path.join(process.cwd(), 'e2e-results.json');
 
     if (fs.existsSync(lintResults)) {
@@ -28,6 +29,10 @@ async function run(): Promise<void> {
 
     if (fs.existsSync(testResults)) {
       jobs.push(jest(testResults));
+    }
+
+    if (fs.existsSync(a11yResults)) {
+      jobs.push(jest(a11yResults));
     }
 
     if (fs.existsSync(e2eResults)) {
