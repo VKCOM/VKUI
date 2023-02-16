@@ -14,10 +14,6 @@ const baseConfig = {
           href: 'https://fonts.googleapis.com',
         },
         {
-          rel: 'shortcut icon',
-          href: 'https://vk.com/images/icons/favicons/fav_logo_2x.ico?6',
-        },
-        {
           rel: 'preconnect',
           href: 'https://fonts.gstatic.com',
           crossorigin: 'anonymous',
@@ -25,6 +21,10 @@ const baseConfig = {
         {
           rel: 'stylesheet',
           href: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap',
+        },
+        {
+          rel: 'shortcut icon',
+          href: 'https://vk.com/images/icons/favicons/fav_logo_2x.ico?6',
         },
       ],
     },
