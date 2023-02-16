@@ -1,9 +1,15 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { SizeType } from '../../lib/adaptivity';
 import { HasComponent, HasRootRef } from '../../types';
 import styles from './FormField.module.css';
+
+const sizeYClassNames = {
+  none: styles['FormField--sizeY-none'],
+  [SizeType.COMPACT]: styles['FormField--sizeY-compact'],
+  [SizeType.REGULAR]: null,
+};
 
 export interface FormFieldProps {
   status?: 'default' | 'error' | 'valid';
@@ -51,7 +57,7 @@ export const FormField = ({
   className,
   ...restProps
 }: FormFieldOwnProps) => {
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
   const [hover, setHover] = React.useState(false);
 
   const handleMouseEnter = (e: MouseEvent) => {
@@ -74,7 +80,7 @@ export const FormField = ({
         styles['FormField'],
         styles[`FormField--mode-${mode}`],
         styles[`FormField--status-${status}`],
-        getSizeYClassName(styles['FormField'], sizeY),
+        sizeYClassNames[sizeY],
         disabled && styles['FormField--disabled'],
         !disabled && hover && styles['FormField--hover'],
         className,

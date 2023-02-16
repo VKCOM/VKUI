@@ -1,14 +1,20 @@
 import * as React from 'react';
 import { Icon16Dropdown } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { SizeType } from '../../lib/adaptivity';
 import { getTitleFromChildren } from '../../lib/utils';
 import { HasChildren, HasComponent } from '../../types';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './SubnavigationButton.module.css';
+
+const sizeYClassNames = {
+  none: styles['SubnavigationButton--sizeY-none'],
+  [SizeType.COMPACT]: styles['SubnavigationButton--sizeY-compact'],
+  [SizeType.REGULAR]: null,
+};
 
 export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
   mode?: 'primary' | 'outline' | 'tertiary';
@@ -62,7 +68,7 @@ export const SubnavigationButton = ({
   className,
   ...restProps
 }: SubnavigationButtonProps) => {
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
 
   return (
     <Tappable
@@ -74,7 +80,7 @@ export const SubnavigationButton = ({
         styles[`SubnavigationButton--size-${size}`],
         styles[`SubnavigationButton--mode-${mode}`],
         selected && styles['SubnavigationButton--selected'],
-        getSizeYClassName(styles['SubnavigationButton'], sizeY),
+        sizeYClassNames[sizeY],
         className,
       )}
       aria-label={getTitleFromChildren(children)}

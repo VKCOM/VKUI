@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useEffectDev } from '../../hooks/useEffectDev';
 import { useEventListener } from '../../hooks/useEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SizeType } from '../../lib/adaptivity';
 import { useDOM } from '../../lib/dom';
 import { isRefObject } from '../../lib/isRefObject';
 import { Platform } from '../../lib/platform';
@@ -81,7 +81,7 @@ export const ActionSheetDropdownDesktop = ({
         styles['ActionSheet'],
         platform === Platform.IOS && styles['ActionSheet--ios'],
         styles['ActionSheet--desktop'],
-        getSizeYClassName(styles['ActionSheet'], sizeY),
+        sizeY === SizeType.COMPACT && styles['ActionSheet--sizeY-compact'],
         className,
       )}
       style={style}

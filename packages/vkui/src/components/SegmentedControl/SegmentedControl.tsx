@@ -1,14 +1,20 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useId } from '../../hooks/useId';
+import { SizeType } from '../../lib/adaptivity';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasRootRef } from '../../types';
 import { SegmentedControlOption } from './SegmentedControlOption/SegmentedControlOption';
 import styles from './SegmentedControl.module.css';
+
+const sizeYClassNames = {
+  none: styles['SegmentedControl--sizeY-none'],
+  [SizeType.COMPACT]: null,
+  [SizeType.REGULAR]: styles['SegmentedControl--sizeY-regular'],
+};
 
 export type SegmentedControlValue = string | number | undefined;
 
@@ -54,7 +60,7 @@ export const SegmentedControl = ({
     defaultValue,
   });
 
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
 
   const [activeOptionIdx, updateActiveOptionIdx] = React.useState<number>(0);
 
@@ -75,7 +81,7 @@ export const SegmentedControl = ({
       {...restProps}
       className={classNames(
         styles['SegmentedControl'],
-        getSizeYClassName(styles['SegmentedControl'], sizeY),
+        sizeYClassNames[sizeY],
         styles[`SegmentedControl--size-${size}`],
         className,
       )}

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Icon20CheckCircleOn, Icon24CheckCircleOn } from '@vkontakte/icons';
 import { classNames, noop } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
@@ -90,7 +89,7 @@ const ActionSheetItem = ({
         styles['ActionSheetItem'],
         platform === Platform.IOS && styles['ActionSheetItem--ios'],
         styles[`ActionSheetItem--mode-${mode}`],
-        getSizeYClassName(styles['ActionSheetItem'], sizeY),
+        sizeY === SizeType.COMPACT && styles['ActionSheetItem--sizeY-compact'],
         isRich && styles['ActionSheetItem--rich'],
         isDesktop && styles['ActionSheetItem--desktop'],
         className,

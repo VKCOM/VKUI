@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { SharedDropdownProps } from './types';
@@ -34,7 +34,7 @@ export const ActionSheetDropdown = ({
         styles['ActionSheet'],
         platform === Platform.IOS && styles['ActionSheet--ios'],
         closing && styles['ActionSheet--closing'],
-        getSizeYClassName(styles['ActionSheet'], sizeY),
+        sizeY === SizeType.COMPACT && styles['ActionSheet--sizeY-compact'],
         className,
       )}
     >

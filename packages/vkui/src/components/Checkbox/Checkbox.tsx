@@ -7,11 +7,11 @@ import {
   Icon24CheckBoxOn,
 } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasRef, HasRootRef } from '../../types';
@@ -19,6 +19,12 @@ import { ACTIVE_EFFECT_DELAY, Tappable, type TappableProps } from '../Tappable/T
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { VisuallyHiddenInput } from '../VisuallyHiddenInput/VisuallyHiddenInput';
 import styles from './Checkbox.module.css';
+
+const sizeYClassNames = {
+  none: styles['Checkbox--sizeY-none'],
+  [SizeType.COMPACT]: styles['Checkbox--sizeY-compact'],
+  [SizeType.REGULAR]: styles['Checkbox--sizeY-regular'],
+};
 
 export interface CheckboxProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
@@ -57,7 +63,7 @@ export const Checkbox = ({
 }: CheckboxProps) => {
   const inputRef = useExternRef(getRef);
   const platform = usePlatform();
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
   const { sizeY: adaptiveSizeY } = useAdaptivityConditionalRender();
 
   React.useEffect(() => {
@@ -106,7 +112,7 @@ export const Checkbox = ({
       className={classNames(
         styles['Checkbox'],
         platform === Platform.VKCOM && styles['Checkbox--vkcom'],
-        getSizeYClassName(styles['Checkbox'], sizeY),
+        sizeYClassNames[sizeY],
         !(hasReactNode(children) || hasReactNode(description)) && styles['Checkbox--simple'],
         className,
       )}

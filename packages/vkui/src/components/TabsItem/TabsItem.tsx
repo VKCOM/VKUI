@@ -1,13 +1,19 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { SizeType } from '../../lib/adaptivity';
 import { warnOnce } from '../../lib/warnOnce';
 import { TabsContextProps, TabsModeContext } from '../Tabs/Tabs';
 import { Tappable } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './TabsItem.module.css';
+
+const sizeYClassNames = {
+  none: styles['TabsItem--sizeY-none'],
+  [SizeType.COMPACT]: styles['TabsItem--sizeY-compact'],
+  [SizeType.REGULAR]: null,
+};
 
 export interface TabsItemProps extends React.HTMLAttributes<HTMLElement> {
   /**
@@ -51,7 +57,7 @@ export const TabsItem = ({
   tabIndex: tabIndexProp,
   ...restProps
 }: TabsItemProps) => {
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
   const { mode, withGaps }: TabsContextProps = React.useContext(TabsModeContext);
   let statusComponent = null;
 
@@ -95,7 +101,7 @@ export const TabsItem = ({
         styles['TabsItem'],
         mode && styles[`TabsItem--mode-${mode}`],
         selected && styles['TabsItem--selected'],
-        getSizeYClassName(styles['TabsItem'], sizeY),
+        sizeYClassNames[sizeY],
         withGaps && styles['TabsItem--withGaps'],
         className,
       )}

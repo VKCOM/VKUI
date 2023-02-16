@@ -1,11 +1,17 @@
 import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { SizeType } from '../../lib/adaptivity';
 import { HasRootRef } from '../../types';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import styles from './FormLayoutGroup.module.css';
+
+const sizeYClassNames = {
+  none: styles['FormLayoutGroup--sizeY-none'],
+  [SizeType.COMPACT]: styles['FormLayoutGroup--sizeY-compact'],
+  [SizeType.REGULAR]: null,
+};
 
 export interface FormLayoutGroupProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -37,7 +43,7 @@ export const FormLayoutGroup = ({
   className,
   ...restProps
 }: FormLayoutGroupProps) => {
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
   const isRemovable = removable && mode === 'horizontal';
   const isSegmented = segmented && mode === 'horizontal';
   const rootEl = useExternRef(getRootRef);
@@ -47,7 +53,7 @@ export const FormLayoutGroup = ({
       ref={rootEl}
       className={classNames(
         styles['FormLayoutGroup'],
-        getSizeYClassName(styles['FormLayoutGroup'], sizeY),
+        sizeYClassNames[sizeY],
         styles[`FormLayoutGroup--mode-${mode}`],
         isRemovable && styles['FormLayoutGroup--removable'],
         isSegmented && styles['FormLayoutGroup--segmented'],
