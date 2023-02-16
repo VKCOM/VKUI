@@ -14,6 +14,10 @@ const baseConfig = {
           href: 'https://fonts.googleapis.com',
         },
         {
+          rel: 'shortcut icon',
+          href: 'https://vk.com/images/icons/favicons/fav_logo_2x.ico?6',
+        },
+        {
           rel: 'preconnect',
           href: 'https://fonts.gstatic.com',
           crossorigin: 'anonymous',
