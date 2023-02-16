@@ -1,16 +1,22 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeXClassName } from '../../helpers/getSizeXClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
+import { SizeType } from '../../lib/adaptivity';
 import { useDOM } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
 import styles from './PanelHeaderContext.module.css';
+
+const sizeXClassNames = {
+  none: styles['PanelHeaderContext--sizeX-none'],
+  [SizeType.COMPACT]: styles['PanelHeaderContext--sizeX-compact'],
+  [SizeType.REGULAR]: styles['PanelHeaderContext--sizeX-regular'],
+};
 
 export interface PanelHeaderContextProps extends React.HTMLAttributes<HTMLDivElement> {
   opened: boolean;
@@ -31,7 +37,7 @@ export const PanelHeaderContext = ({
   const platform = usePlatform();
   const [visible, setVisible] = React.useState(opened);
   const closing = visible && !opened;
-  const { sizeX } = useAdaptivity();
+  const { sizeX = 'none' } = useAdaptivity();
   const elementRef = React.useRef<HTMLDivElement>(null);
 
   useIsomorphicLayoutEffect(() => {
@@ -71,7 +77,7 @@ export const PanelHeaderContext = ({
         platform === Platform.IOS && styles['PanelHeaderContext--ios'],
         opened && styles['PanelHeaderContext--opened'],
         closing && styles['PanelHeaderContext--closing'],
-        getSizeXClassName(styles['PanelHeaderContext'], sizeX),
+        sizeXClassNames[sizeX],
         styles['PanelHeaderContext--rounded'],
         className,
       )}
