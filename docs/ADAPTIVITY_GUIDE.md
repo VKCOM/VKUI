@@ -31,7 +31,6 @@
 - [`getHoverClassName()`](../packages/vkui/src/helpers/getHoverClassName.ts)
 - [`getPointerClassName()`](../packages/vkui/src/helpers/getPointerClassName.ts)
 - [`getPlatformClassName()`](../packages/vkui/src/helpers/getPlatformClassName.ts)
-- [`getSizeXClassName()`](../packages/vkui/src/helpers/getSizeXClassName.ts)
 - [`getSizeYClassName()`](../packages/vkui/src/helpers/getSizeYClassName.ts)
 - [`getViewHeightClassName()`](../packages/vkui/src/helpers/getViewHeightClassName.ts)
 - [`getViewWidthClassName()`](../packages/vkui/src/helpers/getViewWidthClassName.ts)
@@ -44,21 +43,19 @@ _Component.tsx_
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { getSizeXClassName } from '../../helpers/getSizeXClassName';
+import { SizeType } from '../../../lib/adaptivity';
 import styles from './Component.module.css';
 
-const Component = () => {
-  const { sizeX } = useAdaptivity();
+const sizeXClassNames = {
+  none: styles['Component--sizeX-none'],
+  [SizeType.COMPACT]: styles['Component--sizeX-compact'],
+  [SizeType.REGULAR]: null, // в данном компоненте не используется
+};
 
-  /**
-   * `getSizeXClassName()` возвращает один из следующих селекторов:
-   * - `Component--sizeX-none` при `<AdaptivityProvider />`
-  `* - `Component--sizeX-regular` при `<AdaptivityProvider sizeX="regular" />`
-   * - `Component--sizeX-compact` при `<AdaptivityProvider sizeX="compact" />`
-   */
-  return (
-    <div className={classNames(styles.Component, getSizeXClassName('Component', sizeX, styles))} />
-  );
+const Component = () => {
+  const { sizeX = 'none' } = useAdaptivity();
+
+  return <div className={classNames(styles.Component, sizeXClassNames[sizeX])} />;
 };
 ```
 
@@ -69,10 +66,6 @@ _Component.module.css_
 .Component {
   color: red;
   padding: 20px;
-}
-
-.Component--sizeX-regular {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }
 
 .Component--sizeX-compact {
