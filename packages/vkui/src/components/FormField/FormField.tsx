@@ -8,7 +8,6 @@ import styles from './FormField.module.css';
 const sizeYClassNames = {
   none: styles['FormField--sizeY-none'],
   [SizeType.COMPACT]: styles['FormField--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 export interface FormFieldProps {
@@ -80,7 +79,7 @@ export const FormField = ({
         styles['FormField'],
         styles[`FormField--mode-${mode}`],
         styles[`FormField--status-${status}`],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         disabled && styles['FormField--disabled'],
         !disabled && hover && styles['FormField--hover'],
         className,

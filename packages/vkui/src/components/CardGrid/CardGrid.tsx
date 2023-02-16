@@ -7,7 +7,6 @@ import styles from './CardGrid.module.css';
 const sizeXClassNames = {
   none: styles['CardGrid--sizeX-none'],
   [SizeType.COMPACT]: styles['CardGrid--sizeX-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 export interface CardGridProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -37,7 +36,7 @@ export const CardGrid = ({
         styles['CardGrid'],
         spaced && styles['CardGrid--spaced'],
         styles[`CardGrid--size-${size}`],
-        sizeXClassNames[sizeX],
+        sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
         className,
       )}
     >

@@ -17,7 +17,6 @@ import styles from './Switch.module.css';
 const sizeYClassNames = {
   none: styles['Switch--sizeY-none'],
   [SizeType.COMPACT]: styles['Switch--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 export interface SwitchProps extends VisuallyHiddenInputProps, HasRootRef<HTMLLabelElement> {}
@@ -35,7 +34,7 @@ export const Switch = ({ style, className, getRootRef, ...restProps }: SwitchPro
       className={classNames(
         styles['Switch'],
         getPlatformClassName(styles['Switch'], platform),
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         restProps.disabled && styles['Switch--disabled'],
         focusVisible && styles['Switch--focus-visible'],
         className,

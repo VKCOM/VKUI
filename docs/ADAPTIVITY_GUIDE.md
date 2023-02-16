@@ -48,13 +48,20 @@ import styles from './Component.module.css';
 const sizeXClassNames = {
   none: styles['Component--sizeX-none'],
   [SizeType.COMPACT]: styles['Component--sizeX-compact'],
-  [SizeType.REGULAR]: null, // в данном компоненте не используется
 };
 
 const Component = () => {
   const { sizeX = 'none' } = useAdaptivity();
 
-  return <div className={classNames(styles.Component, sizeXClassNames[sizeX])} />;
+  return (
+    <div
+      className={classNames(
+        styles.Component,
+        // компонент слушает только compact
+        sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
+      )}
+    />
+  );
 };
 ```
 

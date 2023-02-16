@@ -11,7 +11,6 @@ import styles from './CustomSelectOption.module.css';
 
 const sizeYClassNames = {
   none: styles['CustomSelectOption--sizeY-none'],
-  [SizeType.COMPACT]: null,
   [SizeType.REGULAR]: styles['CustomSelectOption--sizeY-regular'],
 };
 
@@ -106,7 +105,7 @@ export const CustomSelectOption = ({
       aria-selected={selected}
       className={classNames(
         styles['CustomSelectOption'],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.COMPACT && sizeYClassNames[sizeY],
         hovered && !disabled && styles['CustomSelectOption--hover'],
         // Note: пустой класс
         selected && styles['CustomSelectOption--selected'],

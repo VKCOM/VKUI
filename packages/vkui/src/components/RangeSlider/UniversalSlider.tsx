@@ -11,7 +11,6 @@ import styles from '../Slider/Slider.module.css';
 const sizeYClassNames = {
   none: styles['Slider--sizeY-none'],
   [SizeType.COMPACT]: styles['Slider--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 export type UniversalValue = [number | null, number];
@@ -134,7 +133,7 @@ export const UniversalSlider = ({
       {...(disabled ? {} : { onStart, onMove, onEnd })}
       className={classNames(
         styles['Slider'],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         disabled && styles['Slider--disabled'],
         className,
       )}

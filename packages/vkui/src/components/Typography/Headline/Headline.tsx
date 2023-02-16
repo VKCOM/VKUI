@@ -9,7 +9,6 @@ import styles from './Headline.module.css';
 const sizeYClassNames = {
   none: styles['Headline--sizeY-none'],
   [SizeType.COMPACT]: styles['Headline--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 export interface HeadlineProps
@@ -50,7 +49,7 @@ export const Headline = ({
       className={classNames(
         className,
         styles['Headline'],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         styles[`Headline--level-${level}`],
         styles[`Headline--weight-${weight}`],
       )}

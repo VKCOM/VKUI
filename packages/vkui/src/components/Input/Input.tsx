@@ -9,7 +9,6 @@ import styles from './Input.module.css';
 const sizeYClassNames = {
   none: styles['Input--sizeY-none'],
   [SizeType.COMPACT]: styles['Input--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 export interface InputProps
@@ -42,7 +41,7 @@ export const Input = ({
       className={classNames(
         styles['Input'],
         align && styles[`Input--align-${align}`],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         before && styles['Input--hasBefore'],
         after && styles['Input--hasAfter'],
         className,

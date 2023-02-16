@@ -12,7 +12,6 @@ import styles from './TabsItem.module.css';
 const sizeYClassNames = {
   none: styles['TabsItem--sizeY-none'],
   [SizeType.COMPACT]: styles['TabsItem--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 export interface TabsItemProps extends React.HTMLAttributes<HTMLElement> {
@@ -101,7 +100,7 @@ export const TabsItem = ({
         styles['TabsItem'],
         mode && styles[`TabsItem--mode-${mode}`],
         selected && styles['TabsItem--selected'],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         withGaps && styles['TabsItem--withGaps'],
         className,
       )}

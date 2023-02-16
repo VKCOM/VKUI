@@ -11,7 +11,6 @@ import styles from './Chip.module.css';
 const sizeYClassNames = {
   none: styles['Chip--sizeY-none'],
   [SizeType.COMPACT]: styles['Chip--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 export type ChipValue = string | number;
@@ -66,7 +65,7 @@ export const Chip = ({
     <div
       className={classNames(
         styles['Chip'],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         removable && styles['Chip--removable'],
         className,
       )}
