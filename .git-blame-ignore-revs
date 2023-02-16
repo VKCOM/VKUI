@@ -13,3 +13,7 @@
 # style: prettier-2.8.2
 # https://github.com/VKCOM/VKUI/pull/3986/commits/8699767c5c0c20157476777c5e2d4e1f77dae0fa
 8699767c5c0c20157476777c5e2d4e1f77dae0fa
+
+# eslint: fix imports order #4238
+# https://github.com/VKCOM/VKUI/pull/4242/commits/4d9b40ac9970932637f643d4b8fe1c32a5680821
+4d9b40ac9970932637f643d4b8fe1c32a5680821
