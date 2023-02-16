@@ -1,5 +1,10 @@
 <h1 align="center">
-  <a href="https://vkcom.github.io/VKUI/"><img src="styleguide/assets/static/vkui_logo.png?raw=true" width="300" alt="VKUI logo"></a>
+  <a href="https://vkcom.github.io/VKUI/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/vkui-logo-light.svg">
+      <img src="docs/assets/vkui-logo-dark.svg" width="150" alt="VKUI logo" />
+    </picture>
+  </a>
 </h1>
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/npm/l/@vkontakte/vkui?maxAge=3600" alt="license mit"></a>
