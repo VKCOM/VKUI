@@ -5,9 +5,11 @@ coverage
 .vscode
 e2e/dist
 test-results.json
+a11y-results.json
 lint-results.json
 e2e-results.json
 .nyc_output
+.nyc_a11y_output
 __diff_output__
 .cache
 tmp/

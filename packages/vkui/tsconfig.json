@@ -11,6 +11,13 @@
       }
     ]
   },
-  "include": ["src/**/*.ts*", "src/**/*.js", "*.config.js", "*.setup.js", ".eslintrc.js"],
+  "include": [
+    "src/**/*.ts*",
+    "src/**/*.js",
+    "*.config.js",
+    "*.config.*.js",
+    "*.setup.js",
+    ".eslintrc.js"
+  ],
   "files": ["./global.d.ts", "types/env.d.ts"]
 }
