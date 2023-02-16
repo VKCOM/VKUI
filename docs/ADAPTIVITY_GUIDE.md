@@ -31,7 +31,6 @@
 - [`getHoverClassName()`](../packages/vkui/src/helpers/getHoverClassName.ts)
 - [`getPointerClassName()`](../packages/vkui/src/helpers/getPointerClassName.ts)
 - [`getPlatformClassName()`](../packages/vkui/src/helpers/getPlatformClassName.ts)
-- [`getSizeYClassName()`](../packages/vkui/src/helpers/getSizeYClassName.ts)
 - [`getViewHeightClassName()`](../packages/vkui/src/helpers/getViewHeightClassName.ts)
 - [`getViewWidthClassName()`](../packages/vkui/src/helpers/getViewWidthClassName.ts)
 

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Icon16Clear, Icon16SearchOutline, Icon24Cancel } from '@vkontakte/icons';
 import { classNames, noop } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { VKUITouchEvent } from '../../lib/touch';
 import { HasRef } from '../../types';
@@ -13,6 +13,12 @@ import { Touch, TouchEvent } from '../Touch/Touch';
 import { Headline } from '../Typography/Headline/Headline';
 import { Title } from '../Typography/Title/Title';
 import styles from './Search.module.css';
+
+const sizeYClassNames = {
+  none: styles['Search--sizeY-none'],
+  [SizeType.COMPACT]: null,
+  [SizeType.REGULAR]: styles['Search--sizeY-regular'],
+};
 
 const SearchPlaceholderTypography = ({
   children,
@@ -74,7 +80,7 @@ export const Search = ({
     onChange: onChangeProp,
     value: valueProp,
   });
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
   const platform = usePlatform();
 
   const onFocus = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -118,7 +124,7 @@ export const Search = ({
       className={classNames(
         styles['Search'],
         platform === Platform.IOS && styles['Search--ios'],
-        getSizeYClassName(styles['Search'], sizeY),
+        sizeYClassNames[sizeY],
         isFocused && styles['Search--focused'],
         value && styles['Search--has-value'],
         after && styles['Search--has-after'],

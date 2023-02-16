@@ -2,15 +2,21 @@ import * as React from 'react';
 import { Icon24Chevron } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { HasComponent } from '../../types';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './SimpleCell.module.css';
+
+const sizeYClassNames = {
+  none: styles['SimpleCell--sizeY-none'],
+  [SizeType.COMPACT]: styles['SimpleCell--sizeY-compact'],
+  [SizeType.REGULAR]: styles['SimpleCell--sizeY-regular'],
+};
 
 export interface SimpleCellOwnProps extends HasComponent {
   /**
@@ -91,7 +97,7 @@ export const SimpleCell = ({
 }: SimpleCellProps) => {
   const platform = usePlatform();
   const hasAfter = hasReactNode(after) || (expandable && platform === Platform.IOS);
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
 
   return (
     <Tappable
@@ -99,7 +105,7 @@ export const SimpleCell = ({
       className={classNames(
         styles['SimpleCell'],
         getPlatformClassName(styles['SimpleCell'], platform),
-        getSizeYClassName(styles['SimpleCell'], sizeY),
+        sizeYClassNames[sizeY],
         expandable && styles['SimpleCell--exp'],
         multiline && styles['SimpleCell--mult'],
         className,

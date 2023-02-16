@@ -1,14 +1,20 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { ACTIVE_EFFECT_DELAY, Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { VisuallyHiddenInput } from '../VisuallyHiddenInput/VisuallyHiddenInput';
 import styles from './Radio.module.css';
+
+const sizeYClassNames = {
+  none: styles['Radio--sizeY-none'],
+  [SizeType.COMPACT]: styles['Radio--sizeY-compact'],
+  [SizeType.REGULAR]: null,
+};
 
 const RadioIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
@@ -38,13 +44,13 @@ export const Radio = ({
   ...restProps
 }: RadioProps) => {
   const platform = usePlatform();
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
 
   return (
     <Tappable
       Component="label"
       style={style}
-      className={classNames(styles['Radio'], getSizeYClassName(styles['Radio'], sizeY), className)}
+      className={classNames(styles['Radio'], sizeYClassNames[sizeY], className)}
       activeEffectDelay={platform === Platform.IOS ? 100 : ACTIVE_EFFECT_DELAY}
       disabled={restProps.disabled}
       getRootRef={getRootRef}

@@ -1,13 +1,19 @@
 import * as React from 'react';
 import { Icon16Done } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { SizeType } from '../../lib/adaptivity';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasRootRef } from '../../types';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import styles from './CustomSelectOption.module.css';
+
+const sizeYClassNames = {
+  none: styles['CustomSelectOption--sizeY-none'],
+  [SizeType.COMPACT]: null,
+  [SizeType.REGULAR]: styles['CustomSelectOption--sizeY-regular'],
+};
 
 export interface CustomSelectOptionProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -73,7 +79,7 @@ export const CustomSelectOption = ({
   ...restProps
 }: CustomSelectOptionProps) => {
   const title = typeof children === 'string' ? children : undefined;
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
   const style = React.useMemo(
     () =>
       hierarchy > 0
@@ -100,7 +106,7 @@ export const CustomSelectOption = ({
       aria-selected={selected}
       className={classNames(
         styles['CustomSelectOption'],
-        getSizeYClassName(styles['CustomSelectOption'], sizeY),
+        sizeYClassNames[sizeY],
         hovered && !disabled && styles['CustomSelectOption--hover'],
         // Note: пустой класс
         selected && styles['CustomSelectOption--selected'],
