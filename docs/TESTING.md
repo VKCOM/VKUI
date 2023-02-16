@@ -1,10 +1,10 @@
 Мы используем три вида тестов:
 
-**Юнит-тесты** на jest в файлах `moduleName.test.ts` [пример](../packages/vkui/src/helpers/getPlatformClassName.test.ts)
+**Юнит-тесты** на jest в файлах `moduleName.test.ts` ([например, `getPlatformClassName.test.ts`](../packages/vkui/src/helpers/getPlatformClassName.test.ts))
 
-**Компонентные тесты** на jest + [react-testing-library](https://testing-library.com/docs/react-testing-library/example-intro) + [jest-dom](https://github.com/testing-library/jest-dom#table-of-contents) в `ComponentName.test.tsx` [пример](../packages/vkui/src/components/Checkbox/Checkbox.test.tsx)
+**Компонентные тесты** на jest + [react-testing-library](https://testing-library.com/docs/react-testing-library/example-intro) + [jest-dom](https://github.com/testing-library/jest-dom#table-of-contents) в `ComponentName.test.tsx` ([например, `Checkbox.test.tsx` ](../packages/vkui/src/components/Checkbox/Checkbox.test.tsx))
 
-**Скриншотные тесты** на jest + [playwright](https://playwright.dev/#?path=docs/api.md) + [jest-playwright](https://github.com/playwright-community/jest-playwright) в `ComponentName.e2e.tsx` [пример](../packages/vkui/src/components/Checkbox/Checkbox.e2e.tsx).
+**Скриншотные тесты** на jest + [playwright](https://playwright.dev/#?path=docs/api.md) + [jest-playwright](https://github.com/playwright-community/jest-playwright) в `ComponentName.e2e.tsx` [например, Checkbox.e2e.tsx](../packages/vkui/src/components/Checkbox/Checkbox.e2e.tsx).
 
 Чтобы запускать скриншотные тесты локально, нужно установить:
 
@@ -14,7 +14,7 @@
 ## Команды
 
 - `yarn test` — только быстрые юниты + компонентные;
-- `yarn test:e2e` — только браузерные тесты;
+- `yarn test:e2e` — только скриншотные тесты;
 
 Чтобы обновить скриншоты, установите докер и git-lfs и запустите `yarn test:e2e -u`.
 
