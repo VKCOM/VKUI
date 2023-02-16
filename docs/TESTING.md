@@ -4,6 +4,8 @@
 
 **Компонентные тесты** на jest + [react-testing-library](https://testing-library.com/docs/react-testing-library/example-intro) + [jest-dom](https://github.com/testing-library/jest-dom#table-of-contents) в `ComponentName.test.tsx` ([например, `Checkbox.test.tsx` ](../packages/vkui/src/components/Checkbox/Checkbox.test.tsx))
 
+Дополнительные **тесты доступности компонентов** на jest + [react-testing-library](https://testing-library.com/docs/react-testing-library/example-intro) + [jest-dom](https://github.com/testing-library/jest-dom#table-of-contents) + [jest-axe](https://github.com/nickcolley/jest-axe) в `ComponentName.a11y.test.tsx` ([например, `Button.a11y.test.tsx` ](../packages/vkui/src/components/Button/Button.a11y.test.tsx))
+
 **Скриншотные тесты** на jest + [playwright](https://playwright.dev/#?path=docs/api.md) + [jest-playwright](https://github.com/playwright-community/jest-playwright) в `ComponentName.e2e.tsx` [например, Checkbox.e2e.tsx](../packages/vkui/src/components/Checkbox/Checkbox.e2e.tsx).
 
 Чтобы запускать скриншотные тесты локально, нужно установить:
@@ -14,6 +16,7 @@
 ## Команды
 
 - `yarn test` — только быстрые юниты + компонентные;
+- `yarn test:a11y` — только тесты доступности компонентов;
 - `yarn test:e2e` — только скриншотные тесты;
 
 Чтобы обновить скриншоты, установите докер и git-lfs и запустите `yarn test:e2e -u`.
@@ -53,5 +56,19 @@ describe('Button', () => {
   // size="s"
   // size="m"
   // size="l"
+});
+```
+
+## `a11yBasicTest`
+
+Функция `a11yBasicTest` из [`/testing/a11y.tsx`](../packages/vkui/src/testing/a11y.tsx) помогает базово протестировать компонент на доступность для скринридеров. Такие тесты — не панацея, они не гарантируют, что компонент будет на 100% доступен, но они способны поймать самые распространенные ошибки и показать, как именно должен использоваться компонент.
+
+```tsx
+describe('Button', () => {
+  a11yBasicTest((props) => (
+    <Button mode="primary" {...props}>
+      Кнопка
+    </Button>
+  ));
 });
 ```
