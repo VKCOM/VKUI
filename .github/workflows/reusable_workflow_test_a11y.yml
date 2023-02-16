@@ -1,0 +1,40 @@
+name: 'Reusable workflow / Accessibility tests'
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: 'The branch, tag or SHA to checkout'
+        default: ${{ github.ref }}
+        required: false
+        type: string
+
+jobs:
+  test_a11y:
+    runs-on: ubuntu-latest
+    name: Run a11y tests
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.ref }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile --ignore-scripts
+
+      - name: Run a11y tests for @vkontakte/vkui
+        run: yarn workspace @vkontakte/vkui run test:a11y:ci
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          flags: a11ytests
+          files: .nyc_output/coverage-final.json
+
+      - name: Upload test artifact
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: a11y-output
+          path: test-results.json
