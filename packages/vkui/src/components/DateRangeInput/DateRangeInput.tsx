@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Icon16Clear, Icon20CalendarOutline } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
+import { SizeType } from '../../lib/adaptivity';
 import { callMultiple } from '../../lib/callMultiple';
 import { format, isAfter, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
@@ -17,6 +17,12 @@ import { InputLikeDivider } from '../InputLike/InputLikeDivider';
 import { Popper } from '../Popper/Popper';
 import styles from './DateRangeInput.module.css';
 import dateInputStyles from '../DateInput/DateInput.module.css';
+
+const sizeYClassNames = {
+  none: styles['DateRangeInput--sizeY-none'],
+  [SizeType.COMPACT]: styles['DateRangeInput--sizeY-compact'],
+  [SizeType.REGULAR]: null,
+};
 
 export interface DateRangeInputProps
   extends Omit<React.InputHTMLAttributes<HTMLDivElement>, 'value' | 'onChange'>,
@@ -210,7 +216,7 @@ export const DateRangeInput = ({
     value,
   });
 
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
 
   const handleRootRef = useExternRef(rootRef, getRootRef);
 
@@ -227,11 +233,7 @@ export const DateRangeInput = ({
   return (
     <FormField
       style={style}
-      className={classNames(
-        styles['DateRangeInput'],
-        getSizeYClassName(styles['DateRangeInput'], sizeY),
-        className,
-      )}
+      className={classNames(styles['DateRangeInput'], sizeYClassNames[sizeY], className)}
       getRootRef={handleRootRef}
       after={
         value ? (

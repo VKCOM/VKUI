@@ -1,10 +1,16 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
+import { SizeType } from '../../../lib/adaptivity';
 import { warnOnce } from '../../../lib/warnOnce';
 import { HasComponent, HasRootRef } from '../../../types';
 import styles from './Text.module.css';
+
+const sizeYClassNames = {
+  none: styles['Text--sizeY-none'],
+  [SizeType.COMPACT]: styles['Text--sizeY-compact'],
+  [SizeType.REGULAR]: null,
+};
 
 export interface TextProps
   extends React.AllHTMLAttributes<HTMLElement>,
@@ -32,7 +38,7 @@ export const Text = ({
     warn(`Свойство "getRootRef" может использоваться только с компонентами DOM`, 'error');
   }
 
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
 
   return (
     <Component
@@ -41,7 +47,7 @@ export const Text = ({
       className={classNames(
         className,
         styles['Text'],
-        getSizeYClassName(styles['Text'], sizeY),
+        sizeYClassNames[sizeY],
         weight && styles[`Text--weight-${weight}`],
       )}
     >

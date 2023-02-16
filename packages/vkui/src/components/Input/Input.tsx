@@ -1,10 +1,16 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { SizeType } from '../../lib/adaptivity';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { FormField, FormFieldProps } from '../FormField/FormField';
 import styles from './Input.module.css';
+
+const sizeYClassNames = {
+  none: styles['Input--sizeY-none'],
+  [SizeType.COMPACT]: styles['Input--sizeY-compact'],
+  [SizeType.REGULAR]: null,
+};
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
@@ -28,7 +34,7 @@ export const Input = ({
   status,
   ...restProps
 }: InputProps) => {
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
 
   return (
     <FormField
@@ -36,7 +42,7 @@ export const Input = ({
       className={classNames(
         styles['Input'],
         align && styles[`Input--align-${align}`],
-        getSizeYClassName(styles['Input'], sizeY),
+        sizeYClassNames[sizeY],
         before && styles['Input--hasBefore'],
         after && styles['Input--hasAfter'],
         className,

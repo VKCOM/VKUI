@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { Icon24Cancel } from '@vkontakte/icons';
 import { classNames, noop } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -132,7 +130,6 @@ export const Removable = ({
   ...restProps
 }: RemovableOwnProps) => {
   const platform = usePlatform();
-  const { sizeY } = useAdaptivity();
 
   const ref = useExternRef(getRootRef);
 
@@ -151,7 +148,6 @@ export const Removable = ({
         styles['Removable'],
         platform === Platform.IOS && styles['Removable--ios'],
         styles[`Removable--align-${align}`],
-        getSizeYClassName(styles['Removable'], sizeY),
         className,
       )}
     >

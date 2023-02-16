@@ -1,13 +1,19 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { HasAlign } from '../../types';
 import { Spinner } from '../Spinner/Spinner';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import styles from './Button.module.css';
+
+const sizeYClassNames = {
+  none: styles['Button--sizeY-none'],
+  [SizeType.COMPACT]: styles['Button--sizeY-compact'],
+  [SizeType.REGULAR]: styles['Button--sizeY-regular'],
+};
 
 export interface VKUIButtonProps extends HasAlign {
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'link';
@@ -43,7 +49,7 @@ export const Button = ({
 }: ButtonProps) => {
   const hasIcons = Boolean(before || after);
   const hasIconOnly = !children && Boolean(after) !== Boolean(before);
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
   const platform = usePlatform();
 
   return (
@@ -62,7 +68,7 @@ export const Button = ({
         styles[`Button--mode-${mode}`],
         styles[`Button--appearance-${appearance}`],
         styles[`Button--align-${align}`],
-        getSizeYClassName(styles['Button'], sizeY),
+        sizeYClassNames[sizeY],
         platform === Platform.ANDROID && styles[`Button--android`],
         platform === Platform.IOS && styles[`Button--ios`],
         stretched && styles['Button--stretched'],

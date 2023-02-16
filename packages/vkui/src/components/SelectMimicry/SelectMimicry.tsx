@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { getPlatformClassName } from '../../helpers/getPlatformClassName';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SizeType } from '../../lib/adaptivity';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { HasAlign, HasRootRef } from '../../types';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
@@ -11,6 +11,12 @@ import { FormField, FormFieldProps } from '../FormField/FormField';
 import type { SelectType } from '../Select/Select';
 import { SelectTypography } from '../SelectTypography/SelectTypography';
 import styles from '../Select/Select.module.css';
+
+const sizeYClassNames = {
+  none: styles['Select--sizeY-none'],
+  [SizeType.COMPACT]: styles['Select--sizeY-compact'],
+  [SizeType.REGULAR]: null,
+};
 
 export interface SelectMimicryProps
   extends React.HTMLAttributes<HTMLElement>,
@@ -42,7 +48,7 @@ export const SelectMimicry = ({
   ...restProps
 }: SelectMimicryProps) => {
   const platform = usePlatform();
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
   const title = children || placeholder;
 
   return (
@@ -52,7 +58,7 @@ export const SelectMimicry = ({
       className={classNames(
         styles['Select'],
         getPlatformClassName(styles['Select'], platform),
-        getSizeYClassName(styles['Select'], sizeY),
+        sizeYClassNames[sizeY],
         multiline && styles['Select--multiline'],
         align && styles[`Select--align-${align}`],
         before && styles['Select--hasBefore'],

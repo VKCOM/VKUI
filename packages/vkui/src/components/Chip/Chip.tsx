@@ -1,12 +1,18 @@
 import * as React from 'react';
 import { Icon16Cancel } from '@vkontakte/icons';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { SizeType } from '../../lib/adaptivity';
 import { getTitleFromChildren } from '../../lib/utils';
 import { Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './Chip.module.css';
+
+const sizeYClassNames = {
+  none: styles['Chip--sizeY-none'],
+  [SizeType.COMPACT]: styles['Chip--sizeY-compact'],
+  [SizeType.REGULAR]: null,
+};
 
 export type ChipValue = string | number;
 
@@ -47,7 +53,7 @@ export const Chip = ({
   className,
   ...restProps
 }: ChipProps) => {
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
   const onRemoveWrapper = React.useCallback(
     (event: React.MouseEvent) => {
       onRemove(event, value);
@@ -60,7 +66,7 @@ export const Chip = ({
     <div
       className={classNames(
         styles['Chip'],
-        getSizeYClassName(styles['Chip'], sizeY),
+        sizeYClassNames[sizeY],
         removable && styles['Chip--removable'],
         className,
       )}

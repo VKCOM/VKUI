@@ -1,12 +1,18 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { rescale } from '../../helpers/math';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { SizeType } from '../../lib/adaptivity';
 import { HasRootRef } from '../../types';
 import { Touch, TouchEvent, TouchEventHandler } from '../Touch/Touch';
 import styles from '../Slider/Slider.module.css';
+
+const sizeYClassNames = {
+  none: styles['Slider--sizeY-none'],
+  [SizeType.COMPACT]: styles['Slider--sizeY-compact'],
+  [SizeType.REGULAR]: null,
+};
 
 export type UniversalValue = [number | null, number];
 
@@ -44,7 +50,7 @@ export const UniversalSlider = ({
   const container = useExternRef(getRootRef);
   const thumbStart = React.useRef<HTMLDivElement>(null);
   const thumbEnd = React.useRef<HTMLDivElement>(null);
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
 
   const offsetToValue = (absolute: number) => {
     return rescale(absolute, [0, gesture.containerWidth], [min, max], { step });
@@ -128,7 +134,7 @@ export const UniversalSlider = ({
       {...(disabled ? {} : { onStart, onMove, onEnd })}
       className={classNames(
         styles['Slider'],
-        getSizeYClassName(styles['Slider'], sizeY),
+        sizeYClassNames[sizeY],
         disabled && styles['Slider--disabled'],
         className,
       )}

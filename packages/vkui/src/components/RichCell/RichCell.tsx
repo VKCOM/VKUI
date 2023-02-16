@@ -1,10 +1,16 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { SizeType } from '../../lib/adaptivity';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './RichCell.module.css';
+
+const sizeYClassNames = {
+  none: styles['RichCell--sizeY-none'],
+  [SizeType.COMPACT]: styles['RichCell--sizeY-compact'],
+  [SizeType.REGULAR]: null,
+};
 
 export interface RichCellProps extends TappableProps {
   /**
@@ -73,7 +79,7 @@ export const RichCell = ({
   className,
   ...restProps
 }: RichCellProps) => {
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
 
   return (
     <Tappable
@@ -81,7 +87,7 @@ export const RichCell = ({
       className={classNames(
         styles['RichCell'],
         !multiline && styles['RichCell--text-ellipsis'],
-        getSizeYClassName(styles['RichCell'], sizeY),
+        sizeYClassNames[sizeY],
         className,
       )}
     >
