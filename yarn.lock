@@ -1125,10 +1125,10 @@
   resolved "https://registry.yarnpkg.com/@csstools/media-query-list-parser/-/media-query-list-parser-2.0.1.tgz#d85a366811563a5d002755ed10e5212a1613c91d"
   integrity sha512-X2/OuzEbjaxhzm97UJ+95GrMeT29d1Ib+Pu+paGLuRWZnWRK9sI9r3ikmKXPWGA1C4y4JEdBEFpp9jEqCvLeRA==
 
-"@csstools/postcss-global-data@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@csstools/postcss-global-data/-/postcss-global-data-1.0.1.tgz#a5564588ed695e329f889aae852650c3645554b7"
-  integrity sha512-0StaHO7xWGnUJhhiQH0ZlJRW3izRqESuI/lhNZL0weOcWcu3quuyGKp/xB6Y78U0NfVw3FDl91W6Vrsi255jBg==
+"@csstools/postcss-global-data@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@csstools/postcss-global-data/-/postcss-global-data-1.0.2.tgz#4f93447ec882a1cfe703adbc3389d3098983edfe"
+  integrity sha512-r5ARAnFKirucM7rYRt0RSSy4G6d3KyS41nRBE3sDdkv39R4YiDzvxOrOXDw5YsLAFw8BlMQDXOc5zaMnZgQ45g==
 
 "@csstools/selector-specificity@^2.0.2":
   version "2.0.2"
