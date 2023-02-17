@@ -7,7 +7,9 @@ import { Playground as BasicCard } from '../Card/Card.stories';
 import { Group } from '../Group/Group';
 import { CardGrid, CardGridProps } from './CardGrid';
 
-const story: Meta<CardGridProps> = {
+type StoryCardGridProps = CardGridProps & { count: number };
+
+const story: Meta<StoryCardGridProps> = {
   title: 'Blocks/CardGrid',
   component: CardGrid,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Card'), ...DisableCartesianParam },
@@ -20,7 +22,7 @@ const story: Meta<CardGridProps> = {
 
 export default story;
 
-const Template: Story<CardGridProps & { count: number }> = ({ count, ...args }) => (
+const Template: Story<StoryCardGridProps> = ({ count, ...args }) => (
   <CardGrid {...args}>
     {Array(count)
       .fill(null)

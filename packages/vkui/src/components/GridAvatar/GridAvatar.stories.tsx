@@ -8,7 +8,9 @@ import { getAvatarUrl } from '../../testing/mock';
 import { imageBaseSizes } from '../ImageBase/types';
 import { GridAvatar, GridAvatarProps } from './GridAvatar';
 
-const story: Meta<GridAvatarProps> = {
+type StoryGridAvatarProps = GridAvatarProps & { badged: boolean };
+
+const story: Meta<StoryGridAvatarProps> = {
   title: 'Blocks/GridAvatar',
   component: GridAvatar,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('GridAvatar') },
@@ -28,7 +30,7 @@ const story: Meta<GridAvatarProps> = {
 
 export default story;
 
-const Template: Story<GridAvatarProps & { badged: boolean }> = ({ badged, ...args }) => {
+const Template: Story<StoryGridAvatarProps> = ({ badged, ...args }) => {
   const badge = badged ? (
     <GridAvatar.Badge>
       <Icon20GiftCircleFillRed width={16} height={16} />

@@ -4,7 +4,9 @@ import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constan
 import { getFigmaPage } from '../../storybook/helpers';
 import { CalendarRange, CalendarRangeProps } from './CalendarRange';
 
-const story: Meta<CalendarRangeProps> = {
+type StoryCalendarRangeProps = CalendarRangeProps & { startDate: number; endDate: number };
+
+const story: Meta<StoryCalendarRangeProps> = {
   title: 'Forms/CalendarRange',
   component: CalendarRange,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Calendar'), ...DisableCartesianParam },
@@ -36,12 +38,7 @@ const story: Meta<CalendarRangeProps> = {
 
 export default story;
 
-const Template: Story<CalendarRangeProps & { startDate: number; endDate: number }> = ({
-  value,
-  startDate,
-  endDate,
-  ...args
-}) => {
+const Template: Story<StoryCalendarRangeProps> = ({ value, startDate, endDate, ...args }) => {
   const parsedStartDate = startDate ? new Date(startDate) : null;
   const parsedEndDate = endDate ? new Date(endDate) : null;
 

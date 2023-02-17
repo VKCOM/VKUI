@@ -4,7 +4,9 @@ import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constan
 import { getFigmaPage } from '../../storybook/helpers';
 import { SelectMimicry, SelectMimicryProps } from './SelectMimicry';
 
-const story: Meta<SelectMimicryProps> = {
+type StorySelectMimicryProps = SelectMimicryProps & { selectValue: string };
+
+const story: Meta<StorySelectMimicryProps> = {
   title: 'Forms/SelectMimicry',
   component: SelectMimicry,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
@@ -25,10 +27,9 @@ const story: Meta<SelectMimicryProps> = {
 
 export default story;
 
-const Template: Story<SelectMimicryProps & { selectValue: string }> = ({
-  selectValue,
-  ...args
-}) => <SelectMimicry {...args}>{selectValue}</SelectMimicry>;
+const Template: Story<StorySelectMimicryProps> = ({ selectValue, ...args }) => (
+  <SelectMimicry {...args}>{selectValue}</SelectMimicry>
+);
 
 export const Playground = Template.bind({});
 Playground.args = {};

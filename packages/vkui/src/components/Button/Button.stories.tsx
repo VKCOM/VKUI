@@ -13,7 +13,9 @@ import { getFigmaPage } from '../../storybook/helpers';
 import { Counter } from '../Counter/Counter';
 import { Button, ButtonProps } from './Button';
 
-const story: Meta<ButtonProps> = {
+type StoryButtonProps = ButtonProps & { addBefore: boolean; addAfter: boolean };
+
+const story: Meta<StoryButtonProps> = {
   title: 'Blocks/Button',
   component: Button,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Button') },
@@ -32,9 +34,11 @@ const story: Meta<ButtonProps> = {
 
 export default story;
 
-const Template: Story<
-  Omit<ButtonProps, 'before' | 'after'> & { addBefore: boolean; addAfter: boolean }
-> = ({ addBefore, addAfter, ...args }) => {
+const Template: Story<Omit<StoryButtonProps, 'before' | 'after'>> = ({
+  addBefore,
+  addAfter,
+  ...args
+}) => {
   const buttonBefore =
     addBefore &&
     (args.size === 's' ? <Icon12Add /> : args.size === 'm' ? <Icon16Add /> : <Icon24Add />);

@@ -7,7 +7,9 @@ import { Playground as BasicCard } from '../Card/Card.stories';
 import { Group } from '../Group/Group';
 import { CardScroll, CardScrollProps } from './CardScroll';
 
-const story: Meta<CardScrollProps> = {
+type StoryCardScrollProps = CardScrollProps & { count: number };
+
+const story: Meta<StoryCardScrollProps> = {
   title: 'Blocks/CardScroll',
   component: CardScroll,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Card'), ...DisableCartesianParam },
@@ -20,7 +22,7 @@ const story: Meta<CardScrollProps> = {
 
 export default story;
 
-const Template: Story<CardScrollProps & { count: number }> = ({ count, ...args }) => (
+const Template: Story<StoryCardScrollProps> = ({ count, ...args }) => (
   <CardScroll {...args}>
     {Array(count)
       .fill(null)

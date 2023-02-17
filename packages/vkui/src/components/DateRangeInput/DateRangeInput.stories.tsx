@@ -4,7 +4,9 @@ import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constan
 import { getFigmaPage } from '../../storybook/helpers';
 import { DateRangeInput, DateRangeInputProps } from './DateRangeInput';
 
-const story: Meta<DateRangeInputProps> = {
+type StoryDateRangeInputProps = DateRangeInputProps & { startDate: number; endDate: number };
+
+const story: Meta<StoryDateRangeInputProps> = {
   title: 'Forms/DateRangeInput',
   component: DateRangeInput,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
@@ -36,12 +38,7 @@ const story: Meta<DateRangeInputProps> = {
 
 export default story;
 
-const Template: Story<DateRangeInputProps & { startDate: number; endDate: number }> = ({
-  value,
-  startDate,
-  endDate,
-  ...args
-}) => {
+const Template: Story<StoryDateRangeInputProps> = ({ value, startDate, endDate, ...args }) => {
   const parsedStartDate = startDate ? new Date(startDate) : null;
   const parsedEndDate = endDate ? new Date(endDate) : null;
 

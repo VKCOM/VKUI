@@ -12,7 +12,9 @@ import {
 } from '../SubnavigationButton/SubnavigationButton.stories';
 import { SubnavigationBar, SubnavigationBarProps } from './SubnavigationBar';
 
-const story: Meta<SubnavigationBarProps> = {
+type StorySubnavigationBarProps = SubnavigationBarProps & { selected: string };
+
+const story: Meta<StorySubnavigationBarProps> = {
   title: 'Blocks/SubnavigationBar',
   component: SubnavigationBar,
   parameters: {
@@ -30,7 +32,7 @@ const story: Meta<SubnavigationBarProps> = {
 
 export default story;
 
-const Template: Story<SubnavigationBarProps & { selected: string }> = ({ selected, ...args }) => {
+const Template: Story<StorySubnavigationBarProps> = ({ selected, ...args }) => {
   const [, updateArg] = useArgs();
 
   return (

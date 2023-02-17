@@ -13,7 +13,9 @@ import {
 } from '../TabsItem/TabsItem.stories';
 import { Tabs, TabsProps } from './Tabs';
 
-const story: Meta<TabsProps> = {
+type StoryTabsProps = TabsProps & { selected: string };
+
+const story: Meta<StoryTabsProps> = {
   title: 'Blocks/Tabs',
   component: Tabs,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Tabs'), ...DisableCartesianParam },
@@ -29,7 +31,7 @@ const story: Meta<TabsProps> = {
 
 export default story;
 
-const Template: Story<TabsProps & { selected: string }> = ({ selected = 'groups', ...args }) => {
+const Template: Story<StoryTabsProps> = ({ selected = 'groups', ...args }) => {
   const [, updateArg] = useArgs();
 
   return (
