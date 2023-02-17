@@ -79,9 +79,9 @@ async function run(): Promise<void> {
       return;
     }
 
-    await exec.exec('git', ['fetch', 'origin', stableBranchRef, patchRefs]);
-    await exec.exec('git', ['checkout', stableBranchRef]);
     try {
+      await exec.exec('git', ['fetch', 'origin', stableBranchRef, patchRefs]);
+      await exec.exec('git', ['checkout', stableBranchRef]);
       await exec.exec('git', ['cherry-pick', patchRefs]);
     } catch (e) {
       console.error(e);
