@@ -12,6 +12,7 @@ node_modules/
 npm-debug.log
 stats.json
 test-results.json
+a11y-results.json
 lint-results.json
 e2e-results.json
 
@@ -24,6 +25,7 @@ coverage
 
 # nyc test coverage
 .nyc_output
+.nyc_a11y_output
 
 # Snapshot directory of Cypress Image Diff
 __diff_output__
