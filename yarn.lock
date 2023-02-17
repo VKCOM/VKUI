@@ -3539,10 +3539,10 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001426, caniuse-lite@^1.0.30001449, caniuse-lite@^1.0.30001450:
-  version "1.0.30001450"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001450.tgz#022225b91200589196b814b51b1bbe45144cf74f"
-  integrity sha512-qMBmvmQmFXaSxexkjjfMvD5rnDL0+m+dUMZKoDYsGG8iZN29RuYh9eRoMvKsT6uMAWlyUUGDEQGJJYjzCIO9ew==
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001426, caniuse-lite@^1.0.30001449, caniuse-lite@^1.0.30001451:
+  version "1.0.30001455"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001455.tgz#3a2c24bcbbb5ff73e3f347e11d71a22d023798cc"
+  integrity sha512-h5n7WkDmyHlvHhVFDMC1OFUuWKoht7xuom/kL8b8uJzfMmB068adJgj3B0/n5PtnrK6rEqY8FE/D9m38aRdWhw==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -3994,7 +3994,7 @@ core-js-compat@^3.25.1:
   dependencies:
     browserslist "^4.21.4"
 
-core-js@^3.27.2, core-js@^3.6.4:
+core-js@^3.6.4:
   version "3.27.2"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.27.2.tgz#85b35453a424abdcacb97474797815f4d62ebbf7"
   integrity sha512-9ashVQskuh5AZEZ1JdQWp1GqSoC1e1G87MzRqg2gIfVAQ7Qn9K+uFj8EcniUFA4P2NLZfV+TOlX1SzoKfo+s7w==
@@ -4822,16 +4822,15 @@ eslint-module-utils@^2.7.4:
   dependencies:
     debug "^3.2.7"
 
-eslint-plugin-compat@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-compat/-/eslint-plugin-compat-4.1.1.tgz#353547a3ea7cd970107800ca5304af946c0e15aa"
-  integrity sha512-vUAaqKcDwXpVASyCAfKzkfaw3NxZ6FqeCNSGp7yqHpUMzkAiWRO0B6pR5zqh8RUhvybwXhPXvwVKDLr9GqGFUQ==
+eslint-plugin-compat@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-compat/-/eslint-plugin-compat-4.1.2.tgz#cf8fea60e1e474812aa58ac5f7f7355d1f448b92"
+  integrity sha512-DNrQgDi5L4mAL4FdFboKBlSRg6MWfd75eA7K91lMjtP5ryN+O11qT2FDn7Z6zqy6sZ4sJawUR5V75qzB6l0CBg==
   dependencies:
     "@mdn/browser-compat-data" "^5.2.34"
     ast-metadata-inferer "^0.7.0"
     browserslist "^4.21.5"
-    caniuse-lite "^1.0.30001450"
-    core-js "^3.27.2"
+    caniuse-lite "^1.0.30001451"
     find-up "^5.0.0"
     lodash.memoize "4.1.2"
     semver "7.3.8"
