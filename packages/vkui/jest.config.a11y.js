@@ -6,12 +6,9 @@ module.exports = {
   testRegex: '\\.a11y\\.test\\.tsx?$',
   collectCoverageFrom: ['src/components/**/**.{ts,tsx}'],
   coveragePathIgnorePatterns: [
-    '\\.d\\.ts$',
-    'types\\.ts$',
+    ...config.coveragePathIgnorePatterns,
     'use*.+\\.tsx?$',
     'helpers\\.tsx?$',
     'icons\\.tsx?$',
-    '\\.test\\.tsx?$',
-    '\\.e2e\\.tsx?$',
   ],
 };
