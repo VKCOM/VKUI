@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useChipsInput } from '../../hooks/useChipsInput';
 import { useExternRef } from '../../hooks/useExternRef';
+import { SizeType } from '../../lib/adaptivity';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { Chip, ChipOption, ChipValue, RenderChip } from '../Chip/Chip';
 import styles from './ChipsInputBase.module.css';
@@ -142,7 +142,7 @@ export const ChipsInputBase = <Option extends ChipOption>(props: ChipsInputBaseP
       style={style}
       className={classNames(
         styles['ChipsInputBase'],
-        getSizeYClassName(styles['ChipsInputBase'], sizeY),
+        sizeY === SizeType.COMPACT && styles['ChipsInputBase--sizeY-compact'],
         className,
       )}
       ref={getRootRef}

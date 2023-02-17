@@ -1,13 +1,19 @@
 import * as React from 'react';
 import { Icon24ChevronCompactLeft, Icon24ChevronCompactRight } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { PaginationPageType, usePagination } from '../../hooks/usePagination';
+import { SizeType } from '../../lib/adaptivity';
 import type { HasRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { Tappable } from '../Tappable/Tappable';
 import styles from './Pagination.module.css';
+
+const pageSizeYClassNames = {
+  none: styles['Pagination__page--sizeY-none'],
+  [SizeType.COMPACT]: styles['Pagination__page--sizeY-compact'],
+  [SizeType.REGULAR]: styles['Pagination__page--sizeY-regular'],
+};
 
 function getPageAriaLabelDefault(page: number, isCurrent: boolean): string {
   return isCurrent ? `${page} страница` : `Перейти на ${page} страницу`;
@@ -71,7 +77,7 @@ export const Pagination = ({
   className,
   ...resetProps
 }: PaginationProps) => {
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
 
   const pages = usePagination({
     currentPage,
@@ -113,7 +119,7 @@ export const Pagination = ({
                 className={classNames(
                   styles['Pagination__page'],
                   styles['Pagination__page--type-ellipsis'],
-                  getSizeYClassName(styles['Pagination__page'], sizeY),
+                  pageSizeYClassNames[sizeY],
                   disabled && styles['Pagination__page--disabled'],
                 )}
               >
@@ -128,7 +134,7 @@ export const Pagination = ({
               <Tappable
                 className={classNames(
                   styles['Pagination__page'],
-                  getSizeYClassName(styles['Pagination__page'], sizeY),
+                  pageSizeYClassNames[sizeY],
                   isCurrent && styles['Pagination__page--current'],
                   disabled && styles['Pagination__page--disabled'],
                 )}

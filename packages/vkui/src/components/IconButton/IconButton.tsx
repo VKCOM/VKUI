@@ -1,12 +1,18 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import styles from './IconButton.module.css';
+
+const sizeYClassNames = {
+  none: styles['IconButton--sizeY-none'],
+  [SizeType.COMPACT]: styles['IconButton--sizeY-compact'],
+  [SizeType.REGULAR]: null,
+};
 
 export interface IconButtonProps extends TappableProps {
   children?: React.ReactNode;
@@ -24,7 +30,7 @@ export const IconButton = ({
   ...restProps
 }: IconButtonProps) => {
   const platform = usePlatform();
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
 
   if (process.env.NODE_ENV === 'development') {
     const isAccessible = restProps['aria-label'] || restProps['aria-labelledby'];
@@ -42,7 +48,7 @@ export const IconButton = ({
       Component={restProps.href ? 'a' : Component}
       className={classNames(
         styles['IconButton'],
-        getSizeYClassName(styles['IconButton'], sizeY),
+        sizeYClassNames[sizeY],
         platform === Platform.IOS && styles['IconButton--ios'],
         className,
       )}

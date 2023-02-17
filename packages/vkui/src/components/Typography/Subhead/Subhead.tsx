@@ -1,9 +1,15 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
+import { SizeType } from '../../../lib/adaptivity';
 import { HasComponent } from '../../../types';
 import styles from './Subhead.module.css';
+
+const sizeYClassNames = {
+  none: styles['Subhead--sizeY-none'],
+  [SizeType.COMPACT]: styles['Subhead--sizeY-compact'],
+  [SizeType.REGULAR]: null,
+};
 
 export interface SubheadProps extends React.AllHTMLAttributes<HTMLElement>, HasComponent {
   /**
@@ -22,7 +28,7 @@ export const Subhead = ({
   Component = 'h5',
   ...restProps
 }: SubheadProps) => {
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
 
   return (
     <Component
@@ -30,7 +36,7 @@ export const Subhead = ({
       className={classNames(
         className,
         styles['Subhead'],
-        getSizeYClassName(styles['Subhead'], sizeY),
+        sizeYClassNames[sizeY],
         weight && styles[`Subhead--weight-${weight}`],
       )}
     >

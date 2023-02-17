@@ -1,13 +1,19 @@
 import * as React from 'react';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
-import { getSizeYClassName } from '../../helpers/getSizeYClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { SizeType } from '../../lib/adaptivity';
 import { HasComponent, HasRootRef } from '../../types';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './FormItem.module.css';
+
+const sizeYClassNames = {
+  none: styles['FormItem--sizeY-none'],
+  [SizeType.COMPACT]: styles['FormItem--sizeY-compact'],
+  [SizeType.REGULAR]: null,
+};
 
 export interface FormItemProps
   extends React.AllHTMLAttributes<HTMLElement>,
@@ -40,7 +46,7 @@ export const FormItem = ({
   ...restProps
 }: FormItemProps) => {
   const rootEl = useExternRef(getRootRef);
-  const { sizeY } = useAdaptivity();
+  const { sizeY = 'none' } = useAdaptivity();
 
   const wrappedChildren = (
     <React.Fragment>
@@ -57,7 +63,7 @@ export const FormItem = ({
       className={classNames(
         styles['FormItem'],
         status !== 'default' && styles[`FormItem--status-${status}`],
-        getSizeYClassName(styles['FormItem'], sizeY),
+        sizeYClassNames[sizeY],
         hasReactNode(top) && styles['FormItem--withTop'],
         removable && styles['FormItem--removable'],
         className,
