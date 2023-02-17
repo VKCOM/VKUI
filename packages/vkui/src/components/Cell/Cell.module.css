@@ -3,14 +3,14 @@
 }
 
 .List--dragging .Cell:not(.Cell--dragging) {
-  transition: transform 0.3s ease;
   pointer-events: none;
+  transition: transform 0.3s ease;
 }
 
 .Cell--dragging {
+  z-index: var(--vkui_internal--z_index_cell_dragging);
   background-color: var(--vkui--color_background_secondary);
   box-shadow: var(--vkui--elevation3);
-  z-index: var(--vkui_internal--z_index_cell_dragging);
 }
 
 .Cell--selectable.Cell--disabled {
@@ -25,8 +25,8 @@
 }
 
 .Cell__content {
-  max-width: 100%;
   min-width: 0;
+  max-width: 100%;
 }
 
 .Cell--removable .Cell__content {

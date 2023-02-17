@@ -1,27 +1,27 @@
 [class$='--focus-visible'] > .FocusVisible {
   position: absolute;
-  border-radius: inherit;
-  user-select: none;
-  pointer-events: none;
   overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  border-radius: inherit;
 }
 
 [class$='--focus-visible'] > .FocusVisible--mode-inside {
   top: 2px;
-  left: 2px;
   right: 2px;
   bottom: 2px;
-  border-color: var(--vkui--color_stroke_accent);
-  border-width: 2px;
-  border-style: solid;
+  left: 2px;
   box-sizing: border-box;
+  border-color: var(--vkui--color_stroke_accent);
+  border-style: solid;
+  border-width: 2px;
 }
 
 [class$='--focus-visible'] > .FocusVisible--mode-outside {
   top: -2px;
-  left: -2px;
   right: -2px;
   bottom: -2px;
+  left: -2px;
   box-shadow: 0 0 0 2px var(--vkui--color_stroke_accent);
 }
 
@@ -34,9 +34,9 @@
 @media (prefers-reduced-motion: no-preference) {
   [class$='--focus-visible'] > .FocusVisible {
     top: 4px;
-    left: 4px;
     right: 4px;
     bottom: 4px;
+    left: 4px;
     animation: vkui-animation-focus-visible 0.15s ease-in-out forwards;
     animation-delay: 0.01ms;
     will-change: top, left, bottom, right;
@@ -44,9 +44,9 @@
 
   [class$='--focus-visible'] > .FocusVisible--mode-outside {
     top: 0;
-    left: 0;
-    bottom: 0;
     right: 0;
+    bottom: 0;
+    left: 0;
     animation-name: vkui-animation-focus-visible-outside;
   }
 
@@ -56,9 +56,9 @@
 
     100% {
       top: 0;
-      left: 0;
-      bottom: 0;
       right: 0;
+      bottom: 0;
+      left: 0;
       will-change: auto;
     }
   }
@@ -69,9 +69,9 @@
 
     100% {
       top: -2px;
-      left: -2px;
-      bottom: -2px;
       right: -2px;
+      bottom: -2px;
+      left: -2px;
       will-change: auto;
     }
   }

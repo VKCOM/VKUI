@@ -30,8 +30,8 @@
 
 .Removable__remove {
   position: absolute;
-  left: 100%;
   top: 0;
+  left: 100%;
   height: 100%;
   padding: 0 10px;
   font-size: 15px;
@@ -67,8 +67,8 @@
 .Removable__toggle-in {
   position: relative;
   display: flex;
-  align-items: center;
   align-content: center;
+  align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
@@ -76,25 +76,25 @@
 }
 
 .Removable__toggle-in::after {
-  content: '';
   width: 22px;
   height: 22px;
+  content: '';
   background-color: var(--vkui--color_background_negative);
   border-radius: 50%;
 }
 
 .Removable__toggle-in::before {
-  content: '';
   position: absolute;
   display: block;
   width: 12px;
   height: 2px;
+  content: '';
   background-color: var(--vkui_internal--white);
 }
 
 .Removable--ios .Removable__content {
-  padding-left: 0;
   padding-right: var(--vkui--size_base_padding_horizontal--regular);
+  padding-left: 0;
 }
 
 .FormItem--removable .Removable__content,
@@ -109,8 +109,8 @@
 
 .FormItem--withTop .FormItem__removable ~ .Removable__offset,
 .FormLayoutGroup--removable .FormItem--withTop ~ .Removable__offset {
-  order: -1;
   display: block;
+  order: -1;
   width: 100%;
   height: calc(2px + var(--vkui--font_subhead--line_height--regular) + 8px);
 }

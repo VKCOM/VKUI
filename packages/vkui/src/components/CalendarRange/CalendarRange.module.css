@@ -1,14 +1,14 @@
 .CalendarRange {
+  box-sizing: border-box;
   display: flex;
-  justify-content: space-around;
   flex-wrap: wrap;
+  justify-content: space-around;
   width: 610px;
+  padding: 12px;
   background: var(--vkui--color_background_modal);
   border: 0.5px solid var(--vkui--color_separator_primary);
-  box-sizing: border-box;
-  box-shadow: var(--vkui--elevation1);
   border-radius: 8px;
-  padding: 12px;
+  box-shadow: var(--vkui--elevation1);
 }
 
 .CalendarRange__inner {

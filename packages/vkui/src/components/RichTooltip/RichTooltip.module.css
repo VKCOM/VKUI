@@ -1,9 +1,9 @@
 .RichTooltip {
-  box-shadow: var(--vkui--elevation3);
-  border-radius: var(--vkui--size_border_radius--regular);
-  background-color: var(--vkui--color_background_modal);
-  animation: vkui-popper-fadein 0.2s ease;
   color: var(--vkui--color_text_primary);
+  background-color: var(--vkui--color_background_modal);
+  border-radius: var(--vkui--size_border_radius--regular);
+  box-shadow: var(--vkui--elevation3);
+  animation: vkui-popper-fadein 0.2s ease;
 }
 
 .RichTooltip__arrow {
@@ -11,8 +11,8 @@
 }
 
 .RichTooltip--appearance-accent {
-  background-color: var(--vkui--color_background_accent_tint);
   color: var(--vkui--color_text_contrast);
+  background-color: var(--vkui--color_background_accent_tint);
 }
 
 .RichTooltip--appearance-accent .RichTooltip__arrow {
@@ -20,8 +20,8 @@
 }
 
 .RichTooltip--appearance-white {
-  background-color: var(--vkui--color_background_contrast);
   color: var(--vkui--color_text_primary_invariably);
+  background-color: var(--vkui--color_background_contrast);
 }
 
 .RichTooltip--appearance-white .RichTooltip__arrow {
@@ -29,8 +29,8 @@
 }
 
 .RichTooltip--appearance-black {
-  background-color: var(--vkui--color_background_contrast_inverse);
   color: var(--vkui--color_text_contrast);
+  background-color: var(--vkui--color_background_contrast_inverse);
 }
 
 .RichTooltip--appearance-black .RichTooltip__arrow {
@@ -38,8 +38,8 @@
 }
 
 .RichTooltip--appearance-inversion {
-  background-color: var(--vkui--color_background_modal_inverse);
   color: var(--vkui--color_text_contrast_themed);
+  background-color: var(--vkui--color_background_modal_inverse);
 }
 
 .RichTooltip--appearance-inversion .RichTooltip__arrow {

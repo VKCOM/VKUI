@@ -1,9 +1,9 @@
 .FormLayoutGroup--mode-horizontal {
   display: flex;
-  padding: var(--vkui--size_form_item_padding_vertical--regular)
-    var(--vkui--size_base_padding_horizontal--regular);
   flex-wrap: wrap;
   align-items: flex-start;
+  padding: var(--vkui--size_form_item_padding_vertical--regular)
+    var(--vkui--size_base_padding_horizontal--regular);
   isolation: isolate;
 }
 
@@ -18,8 +18,8 @@
 }
 
 .FormLayoutGroup--mode-horizontal .FormItem--withTop ~ .FormLayoutGroup__offset {
-  order: -1;
   display: block;
+  order: -1;
   min-width: 100%;
   height: calc(2px + var(--vkui--font_subhead--line_height--regular) + 8px);
 }
@@ -39,8 +39,8 @@
 }
 
 .FormLayoutGroup--removable {
-  padding-left: 0;
   padding-right: 0;
+  padding-left: 0;
 }
 
 .FormLayoutGroup--segmented {
@@ -49,8 +49,8 @@
 
 /* stylelint-disable vkui/atomic */
 .FormLayoutGroup--segmented > * {
-  min-width: 0;
   flex: 1;
+  min-width: 0;
 }
 
 .FormLayoutGroup--segmented > *:not(:first-child):not(.FormLayoutGroup__offset) {

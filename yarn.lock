@@ -9509,6 +9509,11 @@ postcss-selector-parser@^6.0.11, postcss-selector-parser@^6.0.2, postcss-selecto
     cssesc "^3.0.0"
     util-deprecate "^1.0.2"
 
+postcss-sorting@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/postcss-sorting/-/postcss-sorting-8.0.1.tgz#d03852914979ac0a1ef3ca6e517bf4b53c045f35"
+  integrity sha512-go9Zoxx7KQH+uLrJ9xa5wRErFeXu01ydA6O8m7koPXkmAN7Ts//eRcIqjo0stBR4+Nir2gMYDOWAOx7O5EPUZA==
+
 postcss-svgo@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/postcss-svgo/-/postcss-svgo-5.1.0.tgz#0a317400ced789f233a28826e77523f15857d80d"
@@ -11200,6 +11205,14 @@ stylelint-media-use-custom-media@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/stylelint-media-use-custom-media/-/stylelint-media-use-custom-media-2.0.1.tgz#41a835cc00c1779310fdde29cc8b33906e6bff44"
   integrity sha512-DWxw48xIRNJ8SoJkNU8GPMv7ZEMjqww1NiQP13TvQ5m1UfAkTeJFJzENCGkKnp6LJipJhhLeiUiVE5yQ6rbYPw==
+
+stylelint-order@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/stylelint-order/-/stylelint-order-6.0.2.tgz#df54d3ed9aa5a45d4563ada0375e670140a798c2"
+  integrity sha512-yuac0BE6toHd27wUPvYVVQicAJthKFIv1HPQFH3Q0dExiO3Z6Uam7geoO0tUd5Z9ddsATYK++1qWNDX4RxMH5Q==
+  dependencies:
+    postcss "^8.4.21"
+    postcss-sorting "^8.0.1"
 
 stylelint-value-no-unknown-custom-properties@^4.0.0:
   version "4.0.0"

@@ -1,15 +1,15 @@
 .CalendarDay {
-  border-radius: 0;
+  font-family: var(--vkui--font_family_base);
   font-size: 14px;
   color: var(--vkui--color_text_primary);
-  font-family: var(--vkui--font_family_base);
+  border-radius: 0;
 }
 
 .CalendarDay__hidden,
 .CalendarDay {
-  height: 36px;
   flex-basis: calc(100% / 7);
   flex-grow: 0;
+  height: 36px;
 }
 
 .CalendarDay__hidden--size-s,
@@ -47,12 +47,12 @@
 }
 
 .CalendarDay--today .CalendarDay__day-number::after {
-  content: '';
-  border-bottom: 2px solid var(--vkui--color_stroke_accent);
-  width: 16px;
-  display: block;
   position: relative;
   left: 50%;
+  display: block;
+  width: 16px;
+  content: '';
+  border-bottom: 2px solid var(--vkui--color_stroke_accent);
   transform: translateX(-50%);
 }
 
@@ -65,8 +65,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
   width: 100%;
+  height: 100%;
 }
 
 .CalendarDay__inner {
@@ -79,8 +79,8 @@
 }
 
 .CalendarDay__inner--active {
-  background-color: var(--vkui--color_background_accent);
   color: var(--vkui--color_text_contrast);
+  background-color: var(--vkui--color_background_accent);
 }
 
 .CalendarDay--active,

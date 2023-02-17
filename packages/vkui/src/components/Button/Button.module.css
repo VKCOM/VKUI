@@ -1,17 +1,17 @@
 .Button {
   position: relative;
-  display: inline-block;
   box-sizing: border-box;
-  text-decoration: none;
-  border: none;
-  min-height: var(--vkui--size_button_small_height--compact);
-  margin: 0;
-  padding: 0;
-  user-select: none;
-  border-radius: var(--vkui--size_border_radius--regular);
-  max-width: 100%;
+  display: inline-block;
   min-width: var(--vkui--size_button_minimum_width--regular);
+  max-width: 100%;
+  min-height: var(--vkui--size_button_small_height--compact);
+  padding: 0;
+  margin: 0;
   font-family: var(--vkui--font_family_base);
+  text-decoration: none;
+  user-select: none;
+  border: none;
+  border-radius: var(--vkui--size_border_radius--regular);
 }
 
 .Button--loading {
@@ -35,20 +35,20 @@
 
 .Button--stretched {
   display: block;
-  width: 100%;
-  flex-grow: 1;
   flex-basis: 0;
+  flex-grow: 1;
+  width: 100%;
 }
 
 .Button__in {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   min-height: inherit;
-  text-align: center;
-  box-sizing: border-box;
   font-family: var(--vkui--font_family_base);
+  text-align: center;
 }
 
 .Button--align-left .Button__in {
@@ -81,10 +81,10 @@
 }
 
 .Button__content {
-  white-space: nowrap;
-  text-overflow: ellipsis;
   overflow: hidden;
   font-weight: var(--vkui--font_weight_accent2);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .Button--size-s .Button__content:first-child {
@@ -169,31 +169,31 @@
 .Button--singleIcon .Button__before,
 .Button--mode-tertiary.Button--singleIcon .Button__after,
 .Button--mode-tertiary.Button--singleIcon .Button__before {
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 0;
   padding-right: 0;
+  padding-left: 0;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .Button--mode-link {
-  background: none;
   min-width: initial;
+  background: none;
 }
 
 .Button--mode-link .Button__after,
 .Button--mode-link .Button__before,
 .Button--mode-link .Button__content:first-child,
 .Button--mode-link .Button__content:last-child {
-  padding-left: 0;
   padding-right: 0;
+  padding-left: 0;
 }
 
 .Button__spinner {
   position: absolute;
-  left: 0;
   top: 0;
   right: 0;
   bottom: 0;
+  left: 0;
 }
 
 .Button__spinner + .Button__in {

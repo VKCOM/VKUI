@@ -3,10 +3,10 @@
 }
 
 .PopperArrow__in {
-  content: '';
   display: block;
   width: 20px;
   height: 8px;
+  content: '';
 }
 
 .PopperArrow[data-placement^='top'] .PopperArrow__in {

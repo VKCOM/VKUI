@@ -1,12 +1,12 @@
 .Progress {
-  border-radius: 1px;
-  background: var(--vkui--color_track_background);
   height: 2px;
+  background: var(--vkui--color_track_background);
+  border-radius: 1px;
 }
 
 .Progress__in {
   height: 100%;
+  background: var(--vkui--color_stroke_accent);
   border-radius: inherit;
   transition: width 0.2s ease;
-  background: var(--vkui--color_stroke_accent);
 }

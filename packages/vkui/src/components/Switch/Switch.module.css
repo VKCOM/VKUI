@@ -1,12 +1,12 @@
 .Switch {
   position: relative;
   display: block;
-  cursor: pointer;
 
   /* Добавляем отступы, если пин больше трека */
   padding: calc(
     (var(--vkui--size_switch_pin--regular) - var(--vkui--size_switch_height--regular)) / 2
   );
+  cursor: pointer;
 }
 
 .Switch--sizeY-compact {
@@ -29,8 +29,8 @@
 
 .Switch__pseudo {
   position: relative;
-  display: block;
   box-sizing: border-box;
+  display: block;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
 }
@@ -40,19 +40,19 @@
  */
 .Switch__pseudo::before {
   position: absolute;
-  content: '';
-  border-radius: 50%;
-  box-sizing: border-box;
-  background: var(--vkui--color_icon_contrast_secondary);
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
 
   /* Делаем пин по центру */
   top: calc((var(--vkui--size_switch_height--regular) - var(--vkui--size_switch_pin--regular)) / 2);
   left: calc(
     (var(--vkui--size_switch_height--regular) - var(--vkui--size_switch_pin--regular)) / 2
   );
+  box-sizing: border-box;
   width: var(--vkui--size_switch_pin--regular);
   height: var(--vkui--size_switch_pin--regular);
+  content: '';
+  background: var(--vkui--color_icon_contrast_secondary);
+  border-radius: 50%;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
 }
 
 .Switch--sizeY-compact .Switch__pseudo::before {
@@ -88,31 +88,31 @@
  * Трек
  */
 .Switch__pseudo::after {
-  content: '';
   display: block;
-  background: var(--vkui--color_icon_tertiary_alpha);
-  border-radius: calc(var(--vkui--size_switch_width--regular) / 2);
   width: var(--vkui--size_switch_width--regular);
   height: var(--vkui--size_switch_height--regular);
+  content: '';
+  background: var(--vkui--color_icon_tertiary_alpha);
+  border-radius: calc(var(--vkui--size_switch_width--regular) / 2);
 }
 
 .Switch--sizeY-compact .Switch__pseudo::after {
-  border-radius: calc(var(--vkui--size_switch_width--compact) / 2);
   width: var(--vkui--size_switch_width--compact);
   height: var(--vkui--size_switch_height--compact);
+  border-radius: calc(var(--vkui--size_switch_width--compact) / 2);
 }
 
 @media (--sizeY-compact) {
   .Switch--sizeY-none .Switch__pseudo::after {
-    border-radius: calc(var(--vkui--size_switch_width--compact) / 2);
     width: var(--vkui--size_switch_width--compact);
     height: var(--vkui--size_switch_height--compact);
+    border-radius: calc(var(--vkui--size_switch_width--compact) / 2);
   }
 }
 
 .Switch__self:checked + .Switch__pseudo::after {
-  opacity: 0.48;
   background: var(--vkui--color_icon_accent);
+  opacity: 0.48;
 }
 
 .Switch--sizeY-compact .Switch__self:checked + .Switch__pseudo::before {

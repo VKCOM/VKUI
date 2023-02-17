@@ -1,20 +1,20 @@
 .IconButton {
-  appearance: none;
-  background: none;
-  border: none;
-  box-shadow: none;
+  position: relative;
   display: block;
-  color: currentColor;
+  height: 48px;
   padding: 0;
   margin: 0;
-  position: relative;
-  height: 48px;
+  color: currentColor;
+  background: none;
+  border: none;
 
   /**
    * Чтобы закргуление было равно половине высоты.
    * см. https://stackoverflow.com/questions/27233295/possible-to-make-border-radius-equal-to-half-the-total-height-without-javascript
    */
   border-radius: 9999px;
+  box-shadow: none;
+  appearance: none;
 }
 
 .IconButton--sizeY-compact {
@@ -87,8 +87,8 @@
 .FormLayoutGroup--removable .Removable__content > .IconButton,
 .FormField__after .IconButton {
   display: flex;
-  align-items: center;
   align-content: center;
+  align-items: center;
   justify-content: center;
   width: var(--vkui--size_field_height--regular);
   height: var(--vkui--size_field_height--regular);

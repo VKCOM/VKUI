@@ -1,7 +1,7 @@
 .Root {
+  position: relative;
   width: 100%;
   height: 100%;
-  position: relative;
 }
 
 .Root--transition {
@@ -9,15 +9,15 @@
 }
 
 .Root__view {
+  position: relative;
   width: 100%;
   height: 100%;
-  position: relative;
 }
 
 .Root--transition .Root__view {
   position: fixed;
-  left: 0;
   top: 0;
+  left: 0;
   overflow: hidden;
 }
 
@@ -42,11 +42,11 @@
 .Root--ios .Root__view--show-back::after,
 .Root--ios .Root__view--hide-forward::after {
   position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
   width: 100%;
   height: 100%;
-  left: 0;
-  top: 0;
-  display: block;
   content: '';
   background-color: #000;
 }
@@ -113,24 +113,24 @@
 
 @keyframes vkui-root-android-animation-hide-back {
   from {
-    transform: scale(1);
     opacity: 1;
+    transform: scale(1);
   }
 
   to {
-    transform: scale(1.05);
     opacity: 0;
+    transform: scale(1.05);
   }
 }
 
 @keyframes vkui-root-android-animation-show-forward {
   from {
-    transform: scale(1.05);
     opacity: 0;
+    transform: scale(1.05);
   }
 
   to {
-    transform: scale(1);
     opacity: 1;
+    transform: scale(1);
   }
 }

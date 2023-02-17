@@ -21,8 +21,8 @@
  * SplitCol
  */
 .SplitCol--spaced .CardScroll--withSpaces .CardScroll {
-  margin-left: -16px;
   margin-right: -16px;
+  margin-left: -16px;
 }
 
 .SplitCol--spaced .CardScroll--withSpaces .CardScroll__gap {
@@ -34,8 +34,8 @@
  * Group
  */
 .Group--mode-card .CardScroll--withSpaces {
-  margin-left: -8px;
   margin-right: -8px;
+  margin-left: -8px;
 }
 
 .Group--mode-card .CardScroll--withSpaces:first-child {
@@ -48,8 +48,8 @@
 
 @media (--sizeX-regular) {
   .Group--mode-none .CardScroll--withSpaces {
-    margin-left: -8px;
     margin-right: -8px;
+    margin-left: -8px;
   }
 
   .Group--mode-none .CardScroll--withSpaces:first-child {

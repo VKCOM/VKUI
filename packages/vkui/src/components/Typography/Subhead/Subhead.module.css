@@ -1,9 +1,9 @@
 .Subhead {
   margin: 0;
-  font-size: var(--vkui--font_subhead--font_size--regular);
-  line-height: var(--vkui--font_subhead--line_height--regular);
-  font-weight: var(--vkui--font_subhead--font_weight--regular);
   font-family: var(--vkui--font_subhead--font_family--regular);
+  font-size: var(--vkui--font_subhead--font_size--regular);
+  font-weight: var(--vkui--font_subhead--font_weight--regular);
+  line-height: var(--vkui--font_subhead--line_height--regular);
 }
 
 .Subhead--sizeY-compact {

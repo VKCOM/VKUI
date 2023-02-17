@@ -3,37 +3,37 @@
 }
 
 .PullToRefresh--refreshing {
-  touch-action: none;
   pointer-events: none;
+  touch-action: none;
 }
 
 .PullToRefresh__controls {
+  z-index: var(--vkui_internal--z_index_pull_to_refresh);
   width: 100%;
   pointer-events: none;
-  z-index: var(--vkui_internal--z_index_pull_to_refresh);
 }
 
 .PullToRefresh__spinner {
+  box-sizing: border-box;
   display: flex;
-  margin: auto;
-  width: 40px;
-  height: 40px;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
-  transition: transform 300ms cubic-bezier(0.1, 0, 0.25, 1), opacity 220ms ease-out;
-  opacity: 0;
+  width: 40px;
+  height: 40px;
+  margin: auto;
+  color: var(--vkui--color_icon_accent);
   background: var(--vkui--color_background_modal);
   border-radius: 50%;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  color: var(--vkui--color_icon_accent);
+  opacity: 0;
+  transition: transform 300ms cubic-bezier(0.1, 0, 0.25, 1), opacity 220ms ease-out;
 }
 
 .PullToRefresh--ios .PullToRefresh__spinner {
+  color: var(--vkui--color_icon_medium);
+  background: none;
   border-radius: 0;
   box-shadow: none;
-  background: none;
-  color: var(--vkui--color_icon_medium);
 }
 
 .PullToRefresh--watching .PullToRefresh__spinner {
@@ -49,9 +49,9 @@
 }
 
 .PullToRefresh__spinner-path {
+  transition: stroke-dashoffset 167ms ease-out;
   transform: rotate(-90deg);
   transform-origin: center center;
-  transition: stroke-dashoffset 167ms ease-out;
 }
 
 .PullToRefresh--watching .PullToRefresh__spinner-path,

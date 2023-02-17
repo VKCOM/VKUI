@@ -3,16 +3,16 @@
 }
 
 .ModalCardBase__container {
-  box-sizing: border-box;
   position: relative;
-  background: var(--vkui--color_background_modal);
-  border-radius: 18px;
-  padding: 16px;
-  margin-bottom: var(--vkui_internal--safe_area_inset_bottom);
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 16px;
+  margin-bottom: var(--vkui_internal--safe_area_inset_bottom);
   pointer-events: initial;
+  background: var(--vkui--color_background_modal);
+  border-radius: 18px;
   box-shadow: var(--vkui--elevation3);
 }
 
@@ -22,9 +22,9 @@
 
 .ModalCardBase__header,
 .ModalCardBase__subheader {
-  text-align: center;
-  margin: 0;
   padding: 0 8px;
+  margin: 0;
+  text-align: center;
   word-break: break-word;
 }
 
@@ -67,10 +67,10 @@
   position: absolute;
   top: 4px;
   right: 4px;
+  justify-content: center;
   width: 48px;
   height: 48px;
   color: var(--vkui--color_icon_secondary);
-  justify-content: center;
 }
 
 /**
@@ -80,8 +80,8 @@
  * TODO v5.0.0: зачем этот стиль? Удалить?
 */
 .ModalCardBase--ios .ModalCardBase__header:first-child {
-  padding-left: 36px;
   padding-right: 36px;
+  padding-left: 36px;
 }
 
 /**

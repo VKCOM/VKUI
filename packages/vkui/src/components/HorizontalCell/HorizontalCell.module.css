@@ -9,14 +9,14 @@
 }
 
 .HorizontalCell__body {
-  text-decoration: none;
   font-family: inherit;
+  text-decoration: none;
 }
 
 .HorizontalCell__content {
   color: var(--vkui--color_text_primary);
-  word-break: break-all;
   text-overflow: ellipsis;
+  word-break: break-all;
 }
 
 .HorizontalCell__subtitle {
@@ -59,8 +59,8 @@
 
 .HorizontalCell:first-child::before,
 .HorizontalCell:last-child::after {
-  content: '';
   min-width: 10px;
+  content: '';
 }
 
 .HorizontalCell--size-s:first-child::before,

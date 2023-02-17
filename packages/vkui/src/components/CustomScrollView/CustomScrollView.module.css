@@ -1,18 +1,18 @@
 .CustomScrollView {
+  position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  position: relative;
 }
 
 .CustomScrollView__box {
-  max-height: inherit;
+  position: relative;
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  max-height: inherit;
   padding-right: 100px;
-  position: relative;
+  overflow-x: hidden;
+  overflow-y: scroll;
 
   /**
    * Для удаление скролла в Firefox.
@@ -33,17 +33,17 @@
   position: absolute;
   top: 0;
   right: 0;
-  height: 100%;
   width: 10px;
+  height: 100%;
 }
 
 .CustomScrollView__trackerY {
-  width: 10px;
-  box-sizing: border-box;
-  padding: 4px 4px 4px 0;
   position: absolute;
   top: 0;
   left: 0;
+  box-sizing: border-box;
+  width: 10px;
+  padding: 4px 4px 4px 0;
   user-select: none;
 }
 
@@ -53,13 +53,13 @@
 }
 
 .CustomScrollView__trackerY::before {
-  content: '';
-  opacity: 0.48;
   display: block;
   width: 100%;
   height: 100%;
+  content: '';
   background-color: var(--vkui--color_icon_medium);
   border-radius: 12px;
+  opacity: 0.48;
   transition: transform 200ms, opacity 200ms;
 }
 

@@ -1,26 +1,26 @@
 .ModalDismissButton {
   position: absolute;
-  justify-content: center;
   top: 0;
   right: -56px;
+  box-sizing: border-box;
+  justify-content: center;
   width: 56px;
   height: 56px;
   padding: 18px;
-  box-sizing: border-box;
   color: var(--vkui--color_icon_contrast);
   transition: opacity 0.15s ease-out;
 }
 
 .ModalDismissButton::before {
-  display: block;
-  content: '';
+  position: absolute;
   top: 14px;
   right: 14px;
   bottom: 14px;
   left: 14px;
+  display: block;
+  content: '';
   background: var(--vkui--color_overlay_primary);
   border-radius: 50%;
-  position: absolute;
 }
 
 /* fixes icon misplacement on Safari in some cases */

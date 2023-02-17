@@ -1,13 +1,13 @@
 .Snackbar {
-  user-select: none;
-  z-index: var(--vkui--z_index_popout);
   position: fixed;
   bottom: 0;
   left: auto;
+  z-index: var(--vkui--z_index_popout);
   width: 100%;
-  padding-left: var(--vkui_internal--safe_area_inset_left);
   padding-right: var(--vkui_internal--safe_area_inset_right);
   padding-bottom: var(--vkui_internal--safe_area_inset_bottom);
+  padding-left: var(--vkui_internal--safe_area_inset_left);
+  user-select: none;
 }
 
 .Epic--hasTabbar .Snackbar {
@@ -32,13 +32,13 @@
 
 .Snackbar__body {
   box-sizing: border-box;
-  padding: 12px 16px;
-  min-height: 56px;
   display: flex;
   align-items: center;
+  min-height: 56px;
+  padding: 12px 16px;
   background: var(--vkui--color_background_modal);
-  box-shadow: var(--vkui--elevation4);
   border-radius: var(--vkui--size_border_radius--regular);
+  box-shadow: var(--vkui--elevation4);
 }
 
 .Snackbar--mode-dark .Snackbar__body {
@@ -46,8 +46,8 @@
 }
 
 .Snackbar__before {
-  margin-left: -4px;
   margin-right: 12px;
+  margin-left: -4px;
 }
 
 .Snackbar__after {
@@ -56,8 +56,8 @@
 }
 
 .Snackbar__content {
-  flex: 1;
   display: flex;
+  flex: 1;
   align-items: center;
   overflow: hidden;
 }
@@ -68,18 +68,18 @@
 }
 
 .Snackbar__content-text {
-  flex: 1;
-  color: var(--vkui--color_text_primary);
-  width: 100%;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+  flex: 1;
+  width: 100%;
   overflow: hidden;
+  color: var(--vkui--color_text_primary);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 .Snackbar__content-subtitle {
-  color: var(--vkui--color_text_subhead);
   margin-top: 2px;
+  color: var(--vkui--color_text_subhead);
 }
 
 .Snackbar--mode-dark .Snackbar__content-text {
@@ -87,13 +87,13 @@
 }
 
 .Snackbar--layout-horizontal .Snackbar__action {
-  margin-left: 12px;
   position: relative;
+  margin-left: 12px;
 }
 
 .Snackbar--layout-vertical .Snackbar__action {
-  margin-top: 2px;
   min-height: initial;
+  margin-top: 2px;
 }
 
 .ModalRoot .Snackbar {
@@ -111,9 +111,9 @@
  */
 
 .Snackbar--desktop {
-  max-width: 351px;
-  left: 0;
   bottom: 0;
+  left: 0;
+  max-width: 351px;
 }
 
 .Snackbar--desktop .Snackbar__in {

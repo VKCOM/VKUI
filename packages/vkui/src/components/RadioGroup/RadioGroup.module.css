@@ -7,8 +7,8 @@
  * FormItem
  */
 .FormItem .RadioGroup {
-  margin: 0 calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
   box-sizing: content-box;
+  margin: 0 calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 
 .RadioGroup--mode-vertical {

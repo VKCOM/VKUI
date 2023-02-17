@@ -54,8 +54,8 @@
 }
 
 .UsersStack__text {
-  min-width: 0;
   flex: 1;
+  min-width: 0;
 }
 
 .UsersStack--layout-vertical .UsersStack__text {

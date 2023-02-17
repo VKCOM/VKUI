@@ -1,11 +1,11 @@
 .RichCell {
-  display: flex;
-  padding: 8px var(--vkui--size_base_padding_horizontal--regular);
-  min-height: 64px;
   box-sizing: border-box;
+  display: flex;
+  min-height: 64px;
+  padding: 8px var(--vkui--size_base_padding_horizontal--regular);
+  font-family: var(--vkui--font_family_base);
   color: var(--vkui--color_text_primary);
   text-decoration: none; /* в случае если Component="a" */
-  font-family: var(--vkui--font_family_base);
 }
 
 .RichCell--sizeY-compact {
@@ -25,10 +25,10 @@
 .RichCell__in {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   flex-grow: 1;
-  max-width: 100%;
+  justify-content: center;
   min-width: 0;
+  max-width: 100%;
 }
 
 .RichCell__content {
@@ -41,12 +41,12 @@
 }
 
 .RichCell__content-after {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
   flex-shrink: 0;
+  align-items: flex-end;
   padding-left: 4px;
-  box-sizing: border-box;
 }
 
 .RichCell__after-children {
@@ -89,10 +89,10 @@
 .RichCell--text-ellipsis .RichCell__children,
 .RichCell--text-ellipsis .RichCell__text,
 .RichCell--text-ellipsis .RichCell__caption {
-  white-space: nowrap;
-  text-overflow: ellipsis;
   max-width: 100%;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .RichCell__bottom {

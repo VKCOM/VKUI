@@ -1,6 +1,5 @@
 .HorizontalScroll {
   position: relative;
-
   /**
    * ⚠️ WARNING ⚠️
    * `overflow-y` мы не трогаем, т.к. из-за `hidden` могут обрезаться тени у потомков.
@@ -9,8 +8,8 @@
 }
 
 .HorizontalScroll__in {
-  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  overflow-x: auto;
 
   /**
    * Для удаление скролла в Firefox.
@@ -51,8 +50,8 @@
 .Tabs--withGaps .HorizontalScroll__in-wrapper::after,
 .Tabs--withGaps .HorizontalScroll__in-wrapper::before {
   display: block;
-  width: var(--vkui--size_base_padding_horizontal--regular);
   flex-shrink: 0;
+  width: var(--vkui--size_base_padding_horizontal--regular);
   height: 1px;
   content: '';
 }

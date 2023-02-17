@@ -1,6 +1,5 @@
 .FixedLayout {
   position: fixed;
-  box-sizing: border-box;
   /**
    * ⚠️ WARNING ⚠️
    * `left: auto` решает следующие задачи:
@@ -13,8 +12,9 @@
    */
   left: auto;
   z-index: var(--vkui_internal--z_index_fixed_layout);
-  padding-left: var(--vkui_internal--safe_area_inset_left);
+  box-sizing: border-box;
   padding-right: var(--vkui_internal--safe_area_inset_right);
+  padding-left: var(--vkui_internal--safe_area_inset_left);
 }
 
 .FixedLayout--filled {
@@ -22,13 +22,13 @@
 }
 
 .FixedLayout--vertical-top {
-  width: 100%;
   top: 0;
+  width: 100%;
 }
 
 .FixedLayout--vertical-bottom {
-  width: 100%;
   bottom: 0;
+  width: 100%;
   padding-bottom: var(--vkui_internal--safe_area_inset_bottom);
 }
 

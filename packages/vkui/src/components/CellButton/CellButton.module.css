@@ -1,19 +1,19 @@
 .CellButton {
   box-sizing: border-box;
-  text-decoration: none;
-  margin: 0;
-  border: none;
-  cursor: pointer;
   width: 100%;
-  background: transparent;
-  text-align: left;
   padding-top: 0;
   padding-bottom: 0;
+  margin: 0;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  border: none;
 }
 
 .FormItem .CellButton {
-  width: 100%;
   box-sizing: content-box;
+  width: 100%;
   margin: 0 calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 

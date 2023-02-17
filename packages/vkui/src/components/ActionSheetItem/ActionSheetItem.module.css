@@ -1,14 +1,14 @@
 .ActionSheetItem {
   position: relative;
-  overflow: hidden;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
-  text-decoration: none;
-  color: var(--vkui--color_text_primary);
-  padding: 0 20px;
   min-height: 48px;
+  padding: 0 20px;
+  overflow: hidden;
+  color: var(--vkui--color_text_primary);
+  text-decoration: none;
   border-radius: 0;
-  box-sizing: border-box;
 }
 
 .ActionSheetItem__container,
@@ -28,8 +28,8 @@
 }
 
 .ActionSheetItem__container {
-  max-width: 100%;
   flex-grow: 1;
+  max-width: 100%;
   padding: 10px 0;
 }
 
@@ -41,8 +41,8 @@
 .ActionSheetItem__content {
   display: flex;
   align-items: baseline;
-  overflow: hidden;
   justify-content: space-between;
+  overflow: hidden;
 }
 
 .ActionSheetItem--ellipsis .ActionSheetItem__content {
@@ -56,16 +56,16 @@
 }
 
 .ActionSheetItem__subtitle {
-  color: var(--vkui--color_text_secondary);
-  overflow: hidden;
-  text-overflow: ellipsis;
   margin-top: 2px;
+  overflow: hidden;
+  color: var(--vkui--color_text_secondary);
+  text-overflow: ellipsis;
 }
 
 .ActionSheetItem__meta {
-  color: var(--vkui--color_text_secondary);
-  margin-left: 6px;
   flex-shrink: 0;
+  margin-left: 6px;
+  color: var(--vkui--color_text_secondary);
 }
 
 .ActionSheetItem__before {
@@ -92,9 +92,9 @@
   display: none;
   align-items: center;
   justify-content: center;
-  background-color: transparent;
-  color: var(--vkui--color_icon_accent);
   margin-left: 16px;
+  color: var(--vkui--color_icon_accent);
+  background-color: transparent;
 }
 
 .ActionSheetItem__radio:checked ~ .ActionSheetItem__marker {
@@ -106,11 +106,11 @@
  */
 
 .ActionSheetItem--ios {
-  padding: 14px 20px 14px 19px;
   min-height: 56px;
-  border-radius: 0;
+  padding: 14px 20px 14px 19px;
   color: var(--vkui--color_text_accent_themed);
   background: var(--vkui--color_background_modal);
+  border-radius: 0;
 }
 
 .ActionSheetItem--rich {
@@ -128,28 +128,28 @@
 
 .ActionSheetItem--ios:not(.ActionSheetItem--desktop):nth-last-child(2),
 .ActionSheetItem--ios:last-child {
-  border-bottom-left-radius: 14px;
   border-bottom-right-radius: 14px;
+  border-bottom-left-radius: 14px;
 }
 
 .ActionSheetItem--ios::before {
   position: absolute;
-  left: 0;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--vkui--color_background_modal);
   content: '';
+  background-color: var(--vkui--color_background_modal);
   transition: opacity 0.15s ease-out, background-color 0.15s ease-out;
 }
 
 .ActionSheetItem--ios::after {
   position: absolute;
+  top: 0;
   right: 0;
   left: 0;
   height: 1px;
   content: '';
-  top: 0;
   background: var(--vkui--color_separator_primary_alpha);
   transform-origin: center bottom;
 }
@@ -188,10 +188,10 @@
 }
 
 .ActionSheetItem--mode-cancel {
+  min-height: 52px;
   margin-top: 8px;
   margin-bottom: var(--vkui_internal--safe_area_inset_bottom);
   border-radius: 14px;
-  min-height: 52px;
 }
 
 /**

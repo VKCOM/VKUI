@@ -70,9 +70,9 @@
 
 .SubnavigationButton__label {
   flex-grow: 0;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .SubnavigationButton__after {
@@ -80,8 +80,8 @@
 }
 
 .SubnavigationButton__expandableIcon {
-  margin-left: 8px;
   margin-top: 1px; /* Смещает иконку относительно текста */
+  margin-left: 8px;
   color: var(--vkui--color_icon_secondary);
 }
 
@@ -114,15 +114,15 @@
  */
 
 .SubnavigationButton--selected {
-  background-color: var(--vkui--color_background_accent_themed);
   color: var(--vkui--color_text_contrast_themed);
-  box-shadow: none;
+  background-color: var(--vkui--color_background_accent_themed);
   border: none;
+  box-shadow: none;
 }
 
 .SubnavigationButton--selected.SubnavigationButton--mode-tertiary {
-  background-color: var(--vkui--color_transparent--active);
   color: var(--vkui--color_text_primary);
+  background-color: var(--vkui--color_transparent--active);
 }
 
 .SubnavigationButton--selected:not(.SubnavigationButton--mode-tertiary)

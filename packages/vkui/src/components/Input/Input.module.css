@@ -1,7 +1,7 @@
 .Input {
   position: relative;
-  line-height: 20px;
   font-size: 16px;
+  line-height: 20px;
 }
 
 .Input--align-center .Input__el {
@@ -13,25 +13,25 @@
 }
 
 .Input__el {
-  align-self: stretch;
-  margin: 0;
-  width: 100%;
-  display: block;
-  box-sizing: border-box;
-  box-shadow: none;
-  border: none;
-  border-radius: inherit;
-  appearance: none;
-  text-overflow: ellipsis;
-  font-family: inherit;
-  font-weight: var(--vkui--font_text--font_weight--regular);
-  font-size: var(--vkui--font_text--font_size--regular);
-  line-height: var(--vkui--font_text--line_height--regular);
-  color: var(--vkui--color_text_primary);
-  padding: 0 12px;
   position: relative;
   z-index: var(--vkui_internal--z_index_form_field_element);
+  box-sizing: border-box;
+  display: block;
+  align-self: stretch;
+  width: 100%;
+  padding: 0 12px;
+  margin: 0;
+  font-family: inherit;
+  font-size: var(--vkui--font_text--font_size--regular);
+  font-weight: var(--vkui--font_text--font_weight--regular);
+  line-height: var(--vkui--font_text--line_height--regular);
+  color: var(--vkui--color_text_primary);
+  text-overflow: ellipsis;
   background: transparent;
+  border: none;
+  border-radius: inherit;
+  box-shadow: none;
+  appearance: none;
 }
 
 .Input--sizeY-compact .Input__el {

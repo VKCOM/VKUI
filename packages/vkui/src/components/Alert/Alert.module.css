@@ -1,12 +1,12 @@
 .Alert {
-  user-select: none;
-  color: var(--vkui--color_text_primary);
   position: relative;
   min-width: 280px;
   max-width: 416px;
   margin: auto 24px;
-  box-shadow: var(--vkui--elevation4);
+  color: var(--vkui--color_text_primary);
+  user-select: none;
   border-radius: var(--vkui--size_border_radius_paper--regular);
+  box-shadow: var(--vkui--elevation4);
   animation: vkui-animation-android-alert-intro 0.2s var(--vkui--animation_easing_platform);
 }
 
@@ -15,20 +15,20 @@
 }
 
 .Alert--closing {
-  transform: scale(0.95);
   opacity: 0;
   transition: transform 0.2s var(--vkui--animation_easing_platform),
     opacity 0.2s var(--vkui--animation_easing_platform);
+  transform: scale(0.95);
 }
 
 .Alert::before {
   position: absolute;
-  left: 0;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--vkui--color_background_modal);
   content: '';
+  background-color: var(--vkui--color_background_modal);
   border-radius: inherit;
 }
 
@@ -43,9 +43,9 @@
 }
 
 .Alert__actions {
+  position: relative;
   display: flex;
   max-width: 100%;
-  position: relative;
   padding: 0 16px 16px;
 }
 
@@ -90,14 +90,14 @@
   width: 270px;
   min-width: 270px;
   overflow: hidden;
-  animation: vkui-animation-ios-alert-intro 0.3s var(--vkui--animation_easing_platform);
   box-shadow: none;
+  animation: vkui-animation-ios-alert-intro 0.3s var(--vkui--animation_easing_platform);
 }
 
 .Alert--ios.Alert--closing {
-  transform: none;
   opacity: 0;
   transition: opacity 0.3s var(--vkui--animation_easing_platform);
+  transform: none;
 }
 
 .Alert--ios .Alert__content {
@@ -114,12 +114,12 @@
 }
 
 .Alert--ios .Alert__content::after {
-  content: '';
   position: absolute;
-  bottom: 0;
-  height: 1px;
   right: 0;
+  bottom: 0;
   left: 0;
+  height: 1px;
+  content: '';
   background: var(--vkui--color_separator_primary_alpha);
   transform-origin: center bottom;
 }
@@ -134,26 +134,26 @@
 }
 
 .Alert--ios .Alert__action {
-  font-family: var(--vkui--font_family_base);
   position: relative;
+  display: block;
+  height: 44px;
+  padding: 0 6px;
+  margin: 0;
+  overflow: hidden;
+  font-family: var(--vkui--font_family_base);
   font-size: 17px;
   line-height: 44px;
   color: var(--vkui--color_text_accent);
-  border: 0;
-  padding: 0 6px;
-  margin: 0;
-  height: 44px;
-  display: block;
   text-align: center;
   text-decoration: none;
-  overflow: hidden;
   text-overflow: ellipsis;
+  border: 0;
   border-radius: 0;
 }
 
 .Alert--ios .Alert__action::after {
-  content: '';
   position: absolute;
+  content: '';
   background: var(--vkui--color_separator_primary_alpha);
 }
 
@@ -170,9 +170,9 @@
 }
 
 .Alert--ios.Alert--h .Alert__action {
+  flex-basis: 0;
   flex-grow: 1;
   flex-shrink: 1;
-  flex-basis: 0;
 }
 
 .Alert--ios.Alert--h .Alert__action:first-child {
@@ -184,8 +184,8 @@
 }
 
 .Alert--ios.Alert--v .Alert__action::after {
-  left: 0;
   bottom: 0;
+  left: 0;
   width: 100%;
   height: 1px;
   transform-origin: center bottom;
@@ -234,8 +234,8 @@
  */
 
 .Alert--vkcom {
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 0 96px rgba(0, 0, 0, 0.16);
   width: 400px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 0 96px rgba(0, 0, 0, 0.16);
 }
 
 .Alert--vkcom .Alert__content {

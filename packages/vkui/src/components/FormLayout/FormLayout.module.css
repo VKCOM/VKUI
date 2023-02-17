@@ -4,15 +4,15 @@
 
 .FormLayout__submit {
   position: absolute;
-  visibility: hidden;
-  pointer-events: none;
-  left: 0;
   top: 0;
-  padding: 0;
+  left: 0;
   width: 0;
   height: 0;
-  appearance: none;
+  padding: 0;
+  pointer-events: none;
+  visibility: hidden;
   border: none;
+  appearance: none;
 }
 
 .FormLayout__container {

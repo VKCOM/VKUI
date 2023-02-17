@@ -1,8 +1,8 @@
 .CardGrid {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: flex-start;
-  flex-wrap: wrap;
 }
 
 .CardGrid--spaced {
@@ -48,14 +48,14 @@
 }
 
 .CardGrid--sizeX-compact {
-  padding-left: var(--vkui--size_base_padding_horizontal--regular);
   padding-right: var(--vkui--size_base_padding_horizontal--regular);
+  padding-left: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 @media (--sizeX-compact) {
   .CardGrid--sizeX-none {
-    padding-left: var(--vkui--size_base_padding_horizontal--regular);
     padding-right: var(--vkui--size_base_padding_horizontal--regular);
+    padding-left: var(--vkui--size_base_padding_horizontal--regular);
   }
 }
 
@@ -65,8 +65,8 @@
 
 @media (--sizeX-compact) {
   .CardGrid--sizeX-none.CardGrid--android {
-    padding-left: 16px;
     padding-right: 16px;
+    padding-left: 16px;
   }
 }
 
@@ -75,14 +75,14 @@
  */
 
 .Group--mode-card .CardGrid {
-  padding-left: var(--vkui--size_base_padding_horizontal--regular);
   padding-right: var(--vkui--size_base_padding_horizontal--regular);
+  padding-left: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 @media (--sizeX-regular) {
   .Group--mode-none .CardGrid {
-    padding-left: 8px;
     padding-right: 8px;
+    padding-left: 8px;
   }
 }
 

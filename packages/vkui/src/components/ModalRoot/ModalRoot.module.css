@@ -4,14 +4,14 @@
 }
 
 .ModalRoot__mask {
-  opacity: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  background: rgba(0, 0, 0, 0.4);
   user-select: none;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 1;
   transition: opacity 167ms ease-out;
   animation: vkui-animation-fadeIn 0.32s ease;
 }
@@ -46,9 +46,9 @@
 
 .ModalRoot__modal {
   position: absolute;
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
-  box-sizing: border-box;
 }
 
 @keyframes vkui-animation-fadeIn {

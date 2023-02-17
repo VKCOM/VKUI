@@ -1,12 +1,12 @@
 .ChipsInputBase {
+  position: relative;
+  z-index: var(--vkui_internal--z_index_form_field_element);
+  display: flex;
   flex-grow: 1;
   flex-shrink: 1;
-  position: relative;
-  display: flex;
   flex-wrap: wrap;
   max-width: 100%;
   padding: 3px;
-  z-index: var(--vkui_internal--z_index_form_field_element);
   overflow: hidden;
 }
 
@@ -17,16 +17,17 @@
 
 .ChipsInputBase__label {
   display: flex;
-  flex-direction: column;
   flex: 1;
+  flex-direction: column;
   margin: 2px 2px 2px 10px;
 }
 
 .ChipsInputBase__el {
   position: relative;
   width: 100%;
-  margin-bottom: 2px;
   padding: 0;
+  margin-bottom: 2px;
+  font-family: inherit;
   /* Визуальная компенсация - центрируем строчные буквы */
   font-size: 15px;
   line-height: 26px;
@@ -35,7 +36,6 @@
   border: none;
   box-shadow: none;
   appearance: none;
-  font-family: inherit;
 }
 
 .ChipsInputBase__el:focus {

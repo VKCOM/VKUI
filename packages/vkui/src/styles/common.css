@@ -5,17 +5,17 @@
 :global(.vkui),
 :global(.vkui) > body,
 .vkui__root {
-  margin: 0;
-  padding: 0;
   height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 :global(.vkui),
 :global(.vkui) > body {
-  -webkit-font-smoothing: subpixel-antialiased;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-text-size-adjust: 100%;
   font-family: var(--vkui--font_family_base);
   color: var(--vkui--color_text_primary);
   color-scheme: var(--vkui--colors_scheme);
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
 }

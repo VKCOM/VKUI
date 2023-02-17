@@ -1,17 +1,17 @@
 .PromoBanner {
-  width: 100%;
+  position: relative;
   box-sizing: border-box;
-  outline: var(--vkui_internal--thin_border) solid var(--vkui--color_separator_primary_alpha);
+  width: 100%;
+  padding-bottom: 10px;
   color: var(--vkui--color_text_primary);
   background: var(--vkui--color_background_content);
-  padding-bottom: 10px;
-  position: relative;
+  outline: var(--vkui_internal--thin_border) solid var(--vkui--color_separator_primary_alpha);
 }
 
 .PromoBanner__head {
   display: flex;
-  color: var(--vkui--color_text_secondary);
   padding: 14px var(--vkui--size_base_padding_horizontal--regular) 10px;
+  color: var(--vkui--color_text_secondary);
 }
 
 .PromoBanner__age {
@@ -22,12 +22,12 @@
   position: absolute;
   top: 0;
   right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 48px;
   height: 48px;
   color: var(--vkui--color_icon_secondary);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .PromoBanner__close:active {

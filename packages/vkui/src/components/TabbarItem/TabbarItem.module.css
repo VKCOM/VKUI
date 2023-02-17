@@ -1,23 +1,23 @@
 .TabbarItem {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  height: var(--vkui_internal--tabbar_height);
+  padding: 0;
   color: var(--vkui--color_text_tertiary);
   text-decoration: none;
+  background: transparent;
   border: none;
   outline: none;
-  padding: 0;
-  background: transparent;
-  height: var(--vkui_internal--tabbar_height);
-  position: relative;
 }
 
 .Tabbar .TabbarItem {
-  flex-shrink: 0;
-  max-width: 100%;
-  min-width: 0;
-  flex-grow: 1;
   flex-basis: 0;
+  flex-grow: 1;
+  flex-shrink: 0;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .TabbarItem--selected {
@@ -30,13 +30,13 @@
 
 .TabbarItem__in {
   display: flex;
-  padding: 0 2px;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
-  height: 100%;
   width: 100%;
+  height: 100%;
+  padding: 0 2px;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .Tabbar--layout-vertical .TabbarItem--text .TabbarItem__in {
@@ -53,8 +53,8 @@
 }
 
 .TabbarItem__icon {
-  color: var(--vkui--color_icon_secondary);
   position: relative;
+  color: var(--vkui--color_icon_secondary);
 }
 
 .TabbarItem--selected .TabbarItem__icon {
@@ -74,16 +74,16 @@
 }
 
 .TabbarItem__text {
-  white-space: nowrap;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .Tabbar--layout-vertical .TabbarItem__text {
+  margin-top: 2px;
   font-size: 10px;
   line-height: 12px;
-  margin-top: 2px;
 }
 
 .Tabbar--layout-horizontal .TabbarItem__text {
@@ -115,10 +115,10 @@
  */
 
 .TabbarItem--ios .TabbarItem__tappable {
-  width: 100%;
-  height: 100%;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .TabbarItem--ios .TabbarItem__in {

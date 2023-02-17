@@ -50,6 +50,6 @@
   font-family: var(--vkui--font_family_accent);
   font-weight: 600;
   line-height: 1;
-  text-transform: uppercase;
   text-align: center;
+  text-transform: uppercase;
 }

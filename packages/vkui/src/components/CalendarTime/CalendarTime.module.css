@@ -8,10 +8,10 @@
 }
 
 .CalendarTime__divider {
-  margin-left: 6px;
   margin-right: 6px;
-  color: var(--vkui--color_text_primary);
+  margin-left: 6px;
   font-family: var(--vkui--font_family_base);
+  color: var(--vkui--color_text_primary);
 }
 
 .CalendarTime__button {

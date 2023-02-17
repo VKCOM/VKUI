@@ -8,17 +8,17 @@
 }
 
 .ContentCard__tappable {
-  border-radius: var(--vkui--size_card_border_radius--regular);
-  text-decoration: none;
-  color: var(--vkui--color_text_primary);
   display: block;
+  color: var(--vkui--color_text_primary);
+  text-decoration: none;
+  border-radius: var(--vkui--size_card_border_radius--regular);
 }
 
 .ContentCard__img {
-  object-fit: cover;
   display: block;
   border-radius: var(--vkui--size_card_border_radius--regular)
     var(--vkui--size_card_border_radius--regular) 0 0;
+  object-fit: cover;
 }
 
 .ContentCard__text:not(:last-child) {

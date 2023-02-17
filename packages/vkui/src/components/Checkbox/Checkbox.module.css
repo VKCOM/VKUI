@@ -2,15 +2,15 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 0 var(--vkui--size_base_padding_horizontal--regular);
   min-width: var(--vkui--size_field_height--regular);
   min-height: var(--vkui--size_field_height--regular);
+  padding: 0 var(--vkui--size_base_padding_horizontal--regular);
   font-family: var(--vkui--font_family_base);
 }
 
 .FormItem .Checkbox {
-  width: 100%;
   box-sizing: content-box;
+  width: 100%;
   margin: 0 calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 
@@ -20,13 +20,13 @@
 }
 
 .Checkbox__icon--on {
-  color: var(--vkui--color_icon_accent);
   display: none;
+  color: var(--vkui--color_icon_accent);
 }
 
 .Checkbox__icon--indeterminate {
-  color: var(--vkui--color_icon_accent);
   display: none;
+  color: var(--vkui--color_icon_accent);
 }
 
 .Checkbox__icon--off {
@@ -35,9 +35,9 @@
 
 .Checkbox__content {
   flex-grow: 1;
+  font-weight: var(--vkui--font_weight_accent3);
   color: var(--vkui--color_text_primary);
   word-break: break-word;
-  font-weight: var(--vkui--font_weight_accent3);
 }
 
 .Checkbox--sizeY-regular:not(.Checkbox--vkcom) .Checkbox__content {
@@ -66,10 +66,10 @@
 }
 
 .Checkbox__description {
-  color: var(--vkui--color_text_secondary);
   display: block;
-  margin-bottom: 12px;
   margin-top: 2px;
+  margin-bottom: 12px;
+  color: var(--vkui--color_text_secondary);
 }
 
 .Checkbox__children {
@@ -144,8 +144,8 @@
 
 .Checkbox--simple {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   padding: 0;
   border-radius: 50%;
 }

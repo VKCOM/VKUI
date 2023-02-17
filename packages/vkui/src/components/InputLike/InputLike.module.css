@@ -4,12 +4,12 @@
 }
 
 .InputLike__mask::after {
-  content: '';
   position: absolute;
-  width: calc(100% - 0.1em);
-  height: 1px;
   bottom: 0;
   left: 0;
+  width: calc(100% - 0.1em);
+  height: 1px;
+  content: '';
   border-bottom: solid 1px var(--vkui--color_text_secondary);
 }
 

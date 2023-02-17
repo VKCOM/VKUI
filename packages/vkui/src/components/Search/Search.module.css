@@ -1,10 +1,10 @@
 .Search {
-  overflow: hidden;
-  font-weight: normal;
-  font-family: var(--vkui--font_family_base);
-  transform: translate3d(0, 0, 0);
-  line-height: normal;
   padding: 8px var(--vkui--size_base_padding_horizontal--regular);
+  overflow: hidden;
+  font-family: var(--vkui--font_family_base);
+  font-weight: normal;
+  line-height: normal;
+  transform: translate3d(0, 0, 0);
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -13,38 +13,38 @@
 }
 
 .Search__width {
-  white-space: nowrap;
-  color: transparent;
   width: 10000px;
+  color: transparent;
+  white-space: nowrap;
 }
 
 .Search__control {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
   position: absolute;
-  left: 0;
   top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   width: calc(100% - 1px);
   height: 100%;
   border-radius: var(--vkui--size_border_radius--regular);
 }
 
 .Search__input {
-  -webkit-appearance: none; /* не используем textfield из-за бага в iOS 15.1 http://www.openradar.me/FB9744107 */
-  border: none;
-  margin: 0;
   position: relative;
-  padding: 0 22px 0 36px;
   box-sizing: border-box;
-  font-size: 17px;
-  border-radius: var(--vkui--size_border_radius--regular);
-  font-family: inherit;
-  max-width: 100%;
   flex-grow: 1;
   min-width: 0;
-  background-color: transparent;
+  max-width: 100%;
+  padding: 0 22px 0 36px;
+  margin: 0;
+  font-family: inherit;
+  font-size: 17px;
   color: var(--vkui--color_text_primary);
+  background-color: transparent;
+  border: none;
+  border-radius: var(--vkui--size_border_radius--regular);
+  -webkit-appearance: none; /* не используем textfield из-за бага в iOS 15.1 http://www.openradar.me/FB9744107 */
 }
 
 .Search__input::-webkit-search-decoration,
@@ -76,10 +76,10 @@
 }
 
 .Search__after-width {
-  font-size: 17px;
-  padding-left: 12px;
-  padding-right: 4px;
   flex-shrink: 0;
+  padding-right: 4px;
+  padding-left: 12px;
+  font-size: 17px;
   pointer-events: none;
   cursor: text;
 }
@@ -87,31 +87,31 @@
 .Search__placeholder {
   position: absolute;
   left: 0;
-  width: 100%;
-  cursor: text;
-  text-align: left;
-  font-size: 0;
-  padding-left: 12px;
-  padding-right: 22px;
-  pointer-events: none;
   box-sizing: border-box;
   display: flex;
+  width: 100%;
+  padding-right: 22px;
+  padding-left: 12px;
+  font-size: 0;
+  text-align: left;
+  pointer-events: none;
+  cursor: text;
 }
 
 .Search__placeholder-in {
   display: flex;
-  align-items: center;
-  overflow: hidden;
   flex-grow: 1;
+  align-items: center;
   max-width: 100%;
+  overflow: hidden;
 }
 
 .Search__placeholder-text {
   margin-left: 8px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   overflow: hidden;
   color: var(--vkui--color_text_secondary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .Search--has-value .Search__placeholder-text {
@@ -120,8 +120,8 @@
 
 .Search__icons {
   position: absolute;
-  right: 100%;
   top: 0;
+  right: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -129,20 +129,20 @@
 }
 
 .Search__icon {
-  width: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 40px;
   cursor: pointer;
 }
 
 .Search__after {
   position: absolute;
-  left: 100%;
   top: 0;
-  transform: translate(0);
-  transition: transform 0.3s var(--vkui--animation_easing_platform);
+  left: 100%;
   cursor: default;
+  transition: transform 0.3s var(--vkui--animation_easing_platform);
+  transform: translate(0);
 }
 
 .Search--focused .Search__after,
@@ -154,32 +154,32 @@
   position: absolute;
   right: calc(100% - 1px);
   display: block;
-  height: 100%;
   width: 10px;
-  content: '';
+  height: 100%;
   pointer-events: none;
+  content: '';
 }
 
 .Search__after-in {
   position: relative;
-  cursor: pointer;
-  font-size: 17px;
-  padding-left: 12px;
   padding-right: 4px;
+  padding-left: 12px;
+  font-size: 17px;
+  cursor: pointer;
 }
 
 .Search__after::after {
   position: absolute;
+  top: 0;
   right: 100%;
   display: block;
-  height: 100%;
   width: 10px;
+  height: 100%;
+  pointer-events: none;
+  cursor: text;
   content: '';
-  top: 0;
   border-radius: 0 var(--vkui--size_border_radius--regular) var(--vkui--size_border_radius--regular)
     0;
-  cursor: text;
-  pointer-events: none;
 }
 
 .Group--mode-plain .Search {
@@ -278,13 +278,13 @@
 }
 
 .Search__after-width {
-  background: var(--vkui--color_search_field_background);
   color: var(--vkui--color_search_field_background);
+  background: var(--vkui--color_search_field_background);
 }
 
 .Search__after {
-  background: var(--vkui--color_background_content);
   color: var(--vkui--color_icon_accent_themed);
+  background: var(--vkui--color_background_content);
 }
 
 .Search__after::after {
@@ -315,13 +315,13 @@
 }
 
 .PanelHeader .Search__after-width {
-  background: var(--vkui--color_search_field_background);
   color: var(--vkui--color_search_field_background);
+  background: var(--vkui--color_search_field_background);
 }
 
 .PanelHeader .Search__after {
-  background: var(--vkui--color_header_background);
   color: var(--vkui--color_icon_accent_themed);
+  background: var(--vkui--color_header_background);
 }
 
 .PanelHeader .Search__after::after {

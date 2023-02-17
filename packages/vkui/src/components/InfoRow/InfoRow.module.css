@@ -1,14 +1,14 @@
 .InfoRow {
-  user-select: text;
-  text-overflow: ellipsis;
   overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: text;
 }
 
 .InfoRow__header {
   display: block;
   margin-bottom: 2px;
-  color: var(--vkui--color_text_subhead);
   overflow: hidden;
+  color: var(--vkui--color_text_subhead);
   text-overflow: ellipsis;
   white-space: nowrap;
 }

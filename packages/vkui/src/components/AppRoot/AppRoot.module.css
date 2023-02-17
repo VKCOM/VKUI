@@ -14,8 +14,8 @@
 
 /* stylelint-disable vkui/atomic */
 :global(.vkui__root--embedded) {
-  transform: translate3d(0, 0, 0);
   overflow-x: hidden;
+  transform: translate3d(0, 0, 0);
 }
 
 :global(.vkui__root--embedded) .AppRoot {

@@ -18,24 +18,24 @@
 }
 
 .WriteBar__formIn {
+  position: relative;
+  display: flex;
   flex: 1;
   min-width: 0;
-  display: flex;
-  position: relative;
 }
 
 .WriteBar__textarea {
   box-sizing: border-box;
-  width: 100%;
   flex: 1;
+  width: 100%;
   min-width: 0;
+  max-height: 120px;
   margin: 0;
+  color: var(--vkui--color_text_primary);
+  resize: none;
   background: transparent;
   border: none;
-  resize: none;
-  color: var(--vkui--color_text_primary);
   -webkit-appearance: none;
-  max-height: 120px;
 }
 
 .WriteBar__textarea::placeholder {
@@ -77,10 +77,10 @@
 
 .WriteBar--ios .WriteBar__formIn {
   box-sizing: border-box;
+  margin: 8px 0;
   background-color: var(--vkui--color_write_bar_input_background);
   border: var(--vkui_internal--thin_border) solid var(--vkui--color_write_bar_input_border_alpha);
   border-radius: 18px;
-  margin: 8px 0;
 }
 
 .WriteBar--ios .WriteBar__formIn:first-child {
@@ -88,8 +88,8 @@
 }
 
 .WriteBar--ios .WriteBar__inlineAfter {
-  margin-right: -1px;
   margin-top: -9px;
+  margin-right: -1px;
   margin-bottom: -9px;
 }
 

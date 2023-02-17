@@ -1,13 +1,13 @@
 .PanelHeaderButton {
-  appearance: none;
+  position: relative;
+  display: block;
+  padding: 0;
+  margin: 0;
+  color: currentColor;
   background: none;
   border: none;
   box-shadow: none;
-  display: block;
-  color: currentColor;
-  padding: 0;
-  margin: 0;
-  position: relative;
+  appearance: none;
 }
 
 .PanelHeaderButton[disabled] {
@@ -16,15 +16,15 @@
 
 .PanelHeaderButton .Counter {
   position: absolute;
-  padding: 0;
   top: 8px;
   right: 2px;
+  padding: 0;
 }
 
 .PanelHeaderButton--primitive {
   height: 48px;
-  line-height: 48px;
   padding: 0 12px;
+  line-height: 48px;
 }
 
 /*
@@ -75,8 +75,8 @@
 }
 
 .PanelHeaderButton--vkcom > :not(.Counter) {
-  transition: opacity 0.3s;
   opacity: 0.7;
+  transition: opacity 0.3s;
 }
 
 .PanelHeaderButton--vkcom.PanelHeaderButton--hover > :not(.Counter),

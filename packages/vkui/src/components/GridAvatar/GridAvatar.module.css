@@ -5,8 +5,8 @@
 .GridAvatar__in {
   display: flex;
   flex-flow: column wrap;
-  height: 100%;
   width: 100%;
+  height: 100%;
   overflow: hidden;
   border-radius: inherit;
 }
@@ -15,8 +15,8 @@
   width: calc(50% - var(--vkui_internal--grid_avatar_image_offset) / 2);
   height: calc(50% - var(--vkui_internal--grid_avatar_image_offset) / 2);
   margin-right: var(--vkui_internal--grid_avatar_image_offset);
-  background-size: cover;
   background-position: center;
+  background-size: cover;
 }
 
 .GridAvatar__item:only-child {

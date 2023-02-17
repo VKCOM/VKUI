@@ -6,36 +6,36 @@
 
 .Panel::before {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  left: 0;
-  top: 0;
   content: '';
 }
 
 .Panel--centered .PanelHeader {
   position: absolute;
-  left: 0;
   top: 0;
+  left: 0;
   width: 100%;
 }
 
 .Panel__in {
   position: relative;
   box-sizing: border-box;
-  width: 100%;
-  min-height: 100%;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  min-height: 100%;
 }
 
 .Panel__centered {
+  box-sizing: border-box;
   display: flex;
   flex: 1 0;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
 }
 
 .Panel__centered .PanelHeader--vis + * {

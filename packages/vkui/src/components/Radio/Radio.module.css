@@ -5,8 +5,8 @@
 }
 
 .FormItem .Radio {
-  width: 100%;
   box-sizing: content-box;
+  width: 100%;
   margin: 0 calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 
@@ -34,9 +34,9 @@
 }
 
 .Radio__icon .Radio__pin {
-  transform-origin: 12px 12px;
-  transform: scale(0);
   transition: transform 0.15s var(--vkui--animation_easing_platform);
+  transform: scale(0);
+  transform-origin: 12px 12px;
 }
 
 .Radio__input:checked ~ .Radio__container .Radio__icon .Radio__pin {
@@ -52,9 +52,9 @@
 
 .Radio__description {
   display: block;
-  color: var(--vkui--color_text_secondary);
-  margin-bottom: 12px;
   margin-top: 2px;
+  margin-bottom: 12px;
+  color: var(--vkui--color_text_secondary);
 }
 
 .Radio__children {
@@ -120,7 +120,7 @@
  * RadioGroup
  */
 .RadioGroup .Radio {
+  box-sizing: border-box;
   flex: 1;
   margin: 0;
-  box-sizing: border-box;
 }

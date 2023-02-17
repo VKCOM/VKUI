@@ -4,10 +4,10 @@
 }
 
 .Headline--level-1 {
-  font-size: var(--vkui--font_headline1--font_size--regular);
-  line-height: var(--vkui--font_headline1--line_height--regular);
-  font-weight: var(--vkui--font_headline1--font_weight--regular);
   font-family: var(--vkui--font_headline1--font_family--regular);
+  font-size: var(--vkui--font_headline1--font_size--regular);
+  font-weight: var(--vkui--font_headline1--font_weight--regular);
+  line-height: var(--vkui--font_headline1--line_height--regular);
 }
 
 .Headline--sizeY-compact.Headline--level-1 {
@@ -23,10 +23,10 @@
 }
 
 .Headline--level-2 {
-  font-size: var(--vkui--font_headline2--font_size--regular);
-  line-height: var(--vkui--font_headline2--line_height--regular);
-  font-weight: var(--vkui--font_headline2--font_weight--regular);
   font-family: var(--vkui--font_headline2--font_family--regular);
+  font-size: var(--vkui--font_headline2--font_size--regular);
+  font-weight: var(--vkui--font_headline2--font_weight--regular);
+  line-height: var(--vkui--font_headline2--line_height--regular);
 }
 
 .Headline--sizeY-compact.Headline--level-2 {
@@ -59,6 +59,6 @@
  */
 .PanelHeaderContent__children .Headline {
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }

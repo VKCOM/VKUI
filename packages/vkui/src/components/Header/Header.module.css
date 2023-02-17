@@ -3,17 +3,17 @@
   align-items: baseline;
   justify-content: space-between;
   padding: 0;
-  padding-left: var(--vkui--size_base_padding_horizontal--regular);
   padding-right: var(--vkui--size_base_padding_horizontal--regular);
-  user-select: text;
+  padding-left: var(--vkui--size_base_padding_horizontal--regular);
   font-family: var(--vkui--font_family_base);
+  user-select: text;
 }
 
 .Header__main {
   min-width: 0;
   overflow: hidden;
-  text-overflow: ellipsis;
   color: var(--vkui--color_text_primary);
+  text-overflow: ellipsis;
 }
 
 .Header__content {
@@ -22,14 +22,14 @@
 }
 
 .Header__content-in {
+  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
 }
 
 .Header__content-in--multiline {
-  white-space: initial;
   word-break: break-word;
+  white-space: initial;
 }
 
 .Header--multiline {
@@ -50,9 +50,9 @@
 }
 
 .Header__indicator {
-  color: var(--vkui--color_text_secondary);
-  margin-left: 6px;
   flex-shrink: 0;
+  margin-left: 6px;
+  color: var(--vkui--color_text_secondary);
 }
 
 .Header--mode-primary .Header__indicator {
@@ -68,8 +68,8 @@
 }
 
 .Header__aside {
-  white-space: nowrap;
   margin-left: 12px;
+  white-space: nowrap;
 }
 
 .Header__aside > :global(.vkuiIcon) {
@@ -116,8 +116,8 @@
  * VKCOM
  */
 .Header--vkcom {
-  height: 64px;
   align-items: center;
+  height: 64px;
 }
 
 .Header--vkcom .Header__main {

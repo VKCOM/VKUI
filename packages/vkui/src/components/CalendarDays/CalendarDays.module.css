@@ -1,14 +1,14 @@
 .CalendarDays {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   flex-grow: 1;
+  justify-content: space-around;
 }
 
 .CalendarDays__row {
   display: flex;
-  justify-content: center;
   flex-grow: 1;
+  justify-content: center;
 }
 
 .CalendarDays__row:not(:last-child) {
@@ -20,14 +20,14 @@
 }
 
 .CalendarDays__weekday {
-  text-transform: capitalize;
-  color: var(--vkui--color_text_subhead);
-  height: 32px;
+  display: flex;
   flex-basis: calc(100% / 7);
   flex-grow: 0;
-  display: flex;
   align-items: center;
   justify-content: center;
+  height: 32px;
+  color: var(--vkui--color_text_subhead);
+  text-transform: capitalize;
 }
 
 .CalendarDays__row--size-m {

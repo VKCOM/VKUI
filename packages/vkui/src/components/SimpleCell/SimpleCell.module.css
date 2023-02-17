@@ -2,11 +2,11 @@
   display: flex;
   align-items: center;
   min-height: 48px;
-  white-space: nowrap;
-  text-decoration: none;
-  color: var(--vkui--color_text_primary);
-  padding-left: var(--vkui--size_base_padding_horizontal--regular);
   padding-right: var(--vkui--size_base_padding_horizontal--regular);
+  padding-left: var(--vkui--size_base_padding_horizontal--regular);
+  color: var(--vkui--color_text_primary);
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 .SimpleCell--mult {
@@ -18,17 +18,17 @@
 }
 
 .SimpleCell__main {
-  max-width: 100%;
   flex-grow: 1;
   min-width: 0;
+  max-width: 100%;
   overflow: hidden;
 }
 
 .SimpleCell > :global(.vkuiIcon) {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-right: 12px;
   flex-shrink: 0;
+  padding-top: 10px;
+  padding-right: 12px;
+  padding-bottom: 10px;
   color: var(--vkui--color_icon_accent);
 }
 
@@ -41,8 +41,8 @@
 }
 
 .SimpleCell__text {
-  text-overflow: ellipsis;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .SimpleCell__subtitle,
@@ -63,10 +63,10 @@
 }
 
 .SimpleCell__children {
+  display: block;
+  overflow: hidden;
   color: inherit;
   text-overflow: ellipsis;
-  overflow: hidden;
-  display: block;
 }
 
 .SimpleCell--mult .SimpleCell__children,
@@ -86,17 +86,17 @@
 }
 
 .SimpleCell__indicator {
-  color: var(--vkui--color_text_secondary);
   min-width: 0;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
   padding-left: 4px;
+  overflow: hidden;
+  color: var(--vkui--color_text_secondary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .SimpleCell__after {
-  flex-shrink: 0;
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   color: var(--vkui--color_icon_accent);
 }
@@ -114,10 +114,10 @@
 }
 
 .SimpleCell__typography {
-  font-size: var(--vkui--font_footnote--font_size--regular);
-  line-height: var(--vkui--font_footnote--line_height--regular);
-  font-weight: var(--vkui--font_footnote--font_weight--regular);
   font-family: var(--vkui--font_footnote--font_family--regular);
+  font-size: var(--vkui--font_footnote--font_size--regular);
+  font-weight: var(--vkui--font_footnote--font_weight--regular);
+  line-height: var(--vkui--font_footnote--line_height--regular);
 }
 
 /**
@@ -135,9 +135,9 @@
 }
 
 .SimpleCell--ios .SimpleCell__after :global(.vkuiIcon--chevron_24) {
-  color: var(--vkui--color_icon_tertiary);
   padding-right: 4px;
   padding-left: 12px;
+  color: var(--vkui--color_icon_tertiary);
 }
 
 .SimpleCell--ios .SimpleCell__after .IconButton:last-child {

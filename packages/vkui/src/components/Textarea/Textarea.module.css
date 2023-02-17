@@ -3,23 +3,23 @@
 }
 
 .Textarea__el {
-  margin: 0;
-  width: 100%;
-  display: block;
+  position: relative;
+  z-index: var(--vkui_internal--z_index_form_field_element);
   box-sizing: border-box;
-  resize: none;
-  appearance: none;
+  display: block;
+  width: 100%;
+  max-height: 204px;
+  padding: 12px;
+  margin: 0;
   font-family: inherit;
-  font-weight: var(--vkui--font_text--font_weight--regular);
   font-size: var(--vkui--font_text--font_size--regular);
+  font-weight: var(--vkui--font_text--font_weight--regular);
   line-height: var(--vkui--font_text--line_height--regular);
   color: var(--vkui--color_text_primary);
-  padding: 12px;
-  max-height: 204px;
-  border: none;
-  z-index: var(--vkui_internal--z_index_form_field_element);
-  position: relative;
+  resize: none;
   background: transparent;
+  border: none;
+  appearance: none;
 }
 
 .Textarea__el[cols] {
@@ -27,9 +27,9 @@
 }
 
 .Textarea--sizeY-compact .Textarea__el {
+  max-height: 196px;
   font-size: var(--vkui--font_text--font_size--compact);
   line-height: var(--vkui--font_text--line_height--compact);
-  max-height: 196px;
 }
 
 @media (--sizeY-compact) {

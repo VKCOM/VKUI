@@ -16,11 +16,11 @@
 }
 
 .PanelHeader__in {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  white-space: nowrap;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  white-space: nowrap;
   background: var(--vkui--color_background_content);
 }
 
@@ -40,9 +40,9 @@
 
 .PanelHeader__before {
   box-sizing: border-box;
-  color: var(--vkui--color_icon_accent_themed);
   display: flex;
   flex-shrink: 0;
+  color: var(--vkui--color_icon_accent_themed);
 }
 
 .PanelHeader__content {
@@ -56,9 +56,9 @@
 }
 
 .PanelHeader__content-in {
-  color: var(--vkui--color_text_primary);
-  font-weight: 500;
   font-family: var(--vkui--font_family_accent);
+  font-weight: 500;
+  color: var(--vkui--color_text_primary);
 }
 
 .PanelHeader::before,
@@ -68,9 +68,9 @@
 }
 
 .PanelHeader__after {
+  box-sizing: border-box;
   display: flex;
   justify-content: flex-end;
-  box-sizing: border-box;
   color: var(--vkui--color_icon_accent_themed);
 }
 
@@ -83,16 +83,16 @@
  */
 .PanelHeader--ios .PanelHeader__before {
   flex-basis: 0;
-  flex-shrink: 0;
   flex-grow: 1;
+  flex-shrink: 0;
+  padding: 4px 0 4px 4px;
   opacity: 1;
   transition: opacity 0.3s var(--vkui--animation_easing_platform);
-  padding: 4px 0 4px 4px;
 }
 
 .PanelHeader--ios .PanelHeader__before .PanelHeaderButton + .PanelHeaderButton--primitive {
-  margin-left: -6px;
   padding-left: 0;
+  margin-left: -6px;
 }
 
 .PanelHeader--ios .PanelHeader__content {
@@ -123,11 +123,11 @@
 
 .PanelHeader--ios .PanelHeader__after {
   flex-basis: 0;
-  flex-shrink: 0;
   flex-grow: 1;
+  flex-shrink: 0;
+  padding: 4px 4px 4px 0;
   opacity: 1;
   transition: opacity 0.3s var(--vkui--animation_easing_platform);
-  padding: 4px 4px 4px 0;
 }
 
 .View--ios .View__panel--prev .PanelHeader__before,
@@ -144,8 +144,8 @@
 }
 
 .PanelHeader--android .PanelHeader__content {
-  align-items: center;
   flex-grow: 1;
+  align-items: center;
   max-width: 100%;
 }
 
@@ -231,40 +231,40 @@
 .PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.ModalPageHeader__in)::after,
 .PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.PanelHeader--sep) .PanelHeader__in::after {
   position: absolute;
-  left: var(--vkui_internal--thin_border);
   right: var(--vkui_internal--thin_border);
   bottom: 0;
+  left: var(--vkui_internal--thin_border);
   height: var(--vkui_internal--thin_border);
-  background-color: var(--vkui--color_background_content);
   content: '';
+  background-color: var(--vkui--color_background_content);
 }
 
 @media (--sizeX-regular) {
   .PanelHeader--vkcom.PanelHeader--sizeX-none:not(.ModalPageHeader__in)::after,
   .PanelHeader--vkcom.PanelHeader--sizeX-none:not(.PanelHeader--sep) .PanelHeader__in::after {
     position: absolute;
-    left: var(--vkui_internal--thin_border);
     right: var(--vkui_internal--thin_border);
     bottom: 0;
+    left: var(--vkui_internal--thin_border);
     height: var(--vkui_internal--thin_border);
-    background-color: var(--vkui--color_background_content);
     content: '';
+    background-color: var(--vkui--color_background_content);
   }
 }
 
 .PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.ModalPageHeader__in) .PanelHeader__in {
+  border-bottom: none;
   border-top-left-radius: var(--vkui--size_border_radius_paper--regular);
   border-top-right-radius: var(--vkui--size_border_radius_paper--regular);
   box-shadow: 0 0 0 var(--vkui_internal--thin_border) var(--vkui--color_field_border_alpha) inset;
-  border-bottom: none;
 }
 
 @media (--sizeX-regular) {
   .PanelHeader--vkcom.PanelHeader--sizeX-none:not(.ModalPageHeader__in) .PanelHeader__in {
+    border-bottom: none;
     border-top-left-radius: var(--vkui--size_border_radius_paper--regular);
     border-top-right-radius: var(--vkui--size_border_radius_paper--regular);
     box-shadow: 0 0 0 var(--vkui_internal--thin_border) var(--vkui--color_field_border_alpha) inset;
-    border-bottom: none;
   }
 }
 
@@ -279,8 +279,8 @@
 .PanelHeader--vkcom .PanelHeader__before,
 .PanelHeader--vkcom .PanelHeader__after {
   flex-basis: 0;
-  flex-shrink: 0;
   flex-grow: 1;
+  flex-shrink: 0;
 }
 
 .PanelHeader--no-before .PanelHeader__content > * {

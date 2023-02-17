@@ -3,10 +3,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px 8px;
   min-width: 0;
   max-width: 100%;
   min-height: 32px;
+  padding: 4px 8px;
   border-radius: var(--vkui--size_border_radius--regular);
   transition: background-color 150ms ease-out;
 }
@@ -21,16 +21,16 @@
 }
 
 .TabsItem--sizeY-compact {
+  min-height: 28px;
   padding-top: 2px;
   padding-bottom: 2px;
-  min-height: 28px;
 }
 
 @media (--sizeY-compact) {
   .TabsItem--sizeY-none {
+    min-height: 28px;
     padding-top: 2px;
     padding-bottom: 2px;
-    min-height: 28px;
   }
 }
 
@@ -44,21 +44,21 @@
   flex-basis: 0;
   flex-grow: 1;
   flex-shrink: 0;
-  padding: 12px 16px;
   min-height: 48px;
+  padding: 12px 16px;
 }
 
 .TabsItem--sizeY-compact.TabsItem--mode-default {
+  min-height: 44px;
   padding-top: 10px;
   padding-bottom: 10px;
-  min-height: 44px;
 }
 
 @media (--sizeY-compact) {
   .TabsItem--sizeY-none.TabsItem--mode-default {
+    min-height: 44px;
     padding-top: 10px;
     padding-bottom: 10px;
-    min-height: 44px;
   }
 }
 
@@ -81,15 +81,15 @@
 }
 
 .TabsItem--mode-accent::before {
-  content: '';
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  pointer-events: none;
+  content: '';
   border: var(--vkui_internal--thin_border) solid transparent;
   border-radius: inherit;
-  pointer-events: none;
 }
 
 .TabsItem--selected.TabsItem--mode-accent::before {
@@ -126,13 +126,13 @@
 
 /* Элемент */
 .TabsItem__label {
+  min-width: 0;
   max-width: 100%;
   overflow: hidden;
   color: var(--vkui--color_text_secondary);
   text-overflow: ellipsis;
   white-space: nowrap;
   transition: color 150ms ease-out;
-  min-width: 0;
 }
 
 .TabsItem--selected .TabsItem__label {
@@ -165,15 +165,15 @@
 /* Элемент */
 .TabsItem__underline {
   position: absolute;
-  left: 16px;
   right: 16px;
   bottom: 5px;
+  left: 16px;
   height: 2px;
-  border-radius: 2px;
+  pointer-events: none;
   background-color: var(--vkui--color_background_accent);
+  border-radius: 2px;
   opacity: 0;
   transition: opacity 150ms ease-out;
-  pointer-events: none;
 }
 
 .TabsItem--sizeY-compact .TabsItem__underline {
@@ -197,8 +197,8 @@
 .Tabs--vkcom .TabsItem {
   flex-grow: 0;
   min-width: auto;
-  padding-left: 10px;
   padding-right: 10px;
+  padding-left: 10px;
 }
 
 .Tabs--vkcom .TabsItem__underline {
@@ -212,10 +212,10 @@
  * HorizontalScroll
  */
 .HorizontalScroll .TabsItem {
-  min-width: 64px;
   flex-basis: auto;
   flex-grow: 1;
   flex-shrink: 0;
+  min-width: 64px;
 }
 
 .TabsItem--active {

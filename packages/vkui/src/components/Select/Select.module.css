@@ -1,35 +1,35 @@
 .Select {
   position: relative;
-  cursor: pointer;
   box-sizing: border-box;
   font-family: var(--vkui--font_family_base);
+  cursor: pointer;
 }
 
 .Select__el {
-  display: block;
   position: absolute;
-  appearance: none;
-  border: none;
-  left: 0;
   top: 0;
+  left: 0;
+  z-index: var(--vkui_internal--z_index_form_field_side);
+  display: block;
   width: 100%;
   height: 100%;
-  opacity: 0;
-  z-index: var(--vkui_internal--z_index_form_field_side);
-  font-size: 16px;
   font-family: inherit;
+  font-size: 16px;
+  border: none;
+  opacity: 0;
+  appearance: none;
 }
 
 .Select__container {
+  position: relative;
+  z-index: var(--vkui_internal--z_index_form_field_element);
+  box-sizing: border-box;
   flex-grow: 1;
   flex-shrink: 1;
   padding-right: 12px;
   padding-left: 12px;
-  color: var(--vkui--color_text_primary);
-  box-sizing: border-box;
-  position: relative;
-  z-index: var(--vkui_internal--z_index_form_field_element);
   overflow: hidden;
+  color: var(--vkui--color_text_primary);
 }
 
 .Select--hasBefore .Select__container {
@@ -63,8 +63,8 @@
 
 .Select:not(.Select--multiline) .Select__title {
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .Select--empty .Select__title {

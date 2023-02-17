@@ -1,24 +1,24 @@
 .DateRangeInput__input {
-  flex-grow: 1;
-  margin-left: 10px;
-  margin-right: 14px;
-  font-size: 16px;
   z-index: var(--vkui_internal--z_index_form_field_element);
-  cursor: text;
-  white-space: nowrap;
-  user-select: text;
+  flex-grow: 1;
+  margin-right: 14px;
+  margin-left: 10px;
+  font-size: 16px;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  cursor: text;
+  user-select: text;
 }
 
 .DateRangeInput--sizeY-compact .DateRangeInput__input {
-  font-size: 15px;
   margin-right: 22px;
+  font-size: 15px;
 }
 
 @media (--sizeY-compact) {
   .DateRangeInput--sizeY-none .DateRangeInput__input {
-    font-size: 15px;
     margin-right: 22px;
+    font-size: 15px;
   }
 }
 

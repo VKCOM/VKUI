@@ -1,11 +1,11 @@
 .WriteBarIcon {
+  position: relative;
+  width: 44px;
+  height: 52px;
+  color: var(--vkui--color_icon_secondary);
+  cursor: pointer;
   background: none;
   border: 0;
-  position: relative;
-  color: var(--vkui--color_icon_secondary);
-  height: 52px;
-  width: 44px;
-  cursor: pointer;
   border-radius: var(--vkui--size_border_radius--regular);
 }
 
@@ -18,8 +18,8 @@
 }
 
 .WriteBarIcon:disabled {
-  opacity: 0.4;
   pointer-events: none;
+  opacity: 0.4;
 }
 
 .WriteBarIcon__active {
@@ -48,8 +48,8 @@
 .WriteBarIcon--ios.WriteBarIcon--mode-send,
 .WriteBarIcon--ios.WriteBarIcon--mode-done {
   width: 48px;
-  padding-left: 0;
   padding-right: 0;
+  padding-left: 0;
 }
 
 .WriteBarIcon--ios.WriteBarIcon--mode-send:first-child,

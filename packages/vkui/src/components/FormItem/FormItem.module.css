@@ -5,17 +5,17 @@
 }
 
 .FormItem--removable {
-  padding-left: 0;
   padding-right: 0;
+  padding-left: 0;
 }
 
 .FormItem__removable {
-  max-width: 100%;
+  flex-basis: 0;
   flex-grow: 1;
   flex-shrink: 0;
-  flex-basis: 0;
-  padding: 0;
   min-width: 1px;
+  max-width: 100%;
+  padding: 0;
   overflow: hidden;
 }
 
@@ -23,14 +23,14 @@
   padding-top: 2px;
   padding-bottom: 8px;
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   color: var(--vkui--color_text_subhead);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .FormItem__bottom {
-  color: var(--vkui--color_text_secondary);
   padding-top: 8px;
+  color: var(--vkui--color_text_secondary);
 }
 
 .FormItem--status-error .FormItem__bottom {
@@ -69,12 +69,12 @@
  * FormLayoutGroup
  */
 .FormLayoutGroup--mode-horizontal .FormItem {
-  max-width: 100%;
+  flex-basis: 0;
   flex-grow: 1;
   flex-shrink: 0;
-  flex-basis: 0;
-  padding: 0;
   min-width: 1px;
+  max-width: 100%;
+  padding: 0;
 }
 
 .FormLayoutGroup--mode-horizontal:not(.FormLayoutGroup--segmented) .FormItem + .FormItem {

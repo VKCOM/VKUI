@@ -1,8 +1,8 @@
 .TextTooltip {
-  border-radius: var(--vkui--size_border_radius--regular);
-  background-color: var(--vkui--color_background_modal);
   padding: 8px 12px 9px;
   color: var(--vkui--color_text_primary);
+  background-color: var(--vkui--color_background_modal);
+  border-radius: var(--vkui--size_border_radius--regular);
   box-shadow: var(--vkui--elevation3);
   animation: vkui-popper-fadein 0.2s ease;
 }
@@ -12,8 +12,8 @@
 }
 
 .TextTooltip--appearance-accent {
-  background-color: var(--vkui--color_background_accent_tint);
   color: var(--vkui--color_text_contrast);
+  background-color: var(--vkui--color_background_accent_tint);
 }
 
 .TextTooltip--appearance-accent .TextTooltip__arrow {
@@ -21,8 +21,8 @@
 }
 
 .TextTooltip--appearance-white {
-  background-color: var(--vkui--color_background_contrast);
   color: var(--vkui--color_text_primary_invariably);
+  background-color: var(--vkui--color_background_contrast);
 }
 
 .TextTooltip--appearance-white .TextTooltip__arrow {
@@ -30,8 +30,8 @@
 }
 
 .TextTooltip--appearance-black {
-  background-color: var(--vkui--color_background_contrast_inverse);
   color: var(--vkui--color_text_contrast);
+  background-color: var(--vkui--color_background_contrast_inverse);
 }
 
 .TextTooltip--appearance-black .TextTooltip__arrow {
@@ -39,8 +39,8 @@
 }
 
 .TextTooltip--appearance-inversion {
-  background-color: var(--vkui--color_background_modal_inverse);
   color: var(--vkui--color_text_contrast_themed);
+  background-color: var(--vkui--color_background_modal_inverse);
 }
 
 .TextTooltip--appearance-inversion .TextTooltip__arrow {

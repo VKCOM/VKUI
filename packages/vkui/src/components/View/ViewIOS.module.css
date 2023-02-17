@@ -60,12 +60,12 @@
 .View--ios .View__panel--prev .Panel__fade,
 .View--ios .View__panel--next .Panel__fade {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  left: 0;
-  top: 0;
-  background: #000;
   pointer-events: none;
+  background: #000;
 }
 
 .View--ios .View__panel--prev .Panel__fade {
