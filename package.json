@@ -108,7 +108,7 @@
     "webpack-cli": "^5.0.0",
     "webpack-dev-server": "^4.9.2",
     "webpack-merge": "^5.8.0",
-    "yargs": "^17.5.1"
+    "yargs": "^17.7.0"
   },
   "resolutions": {
     "@types/react": "^17.0.0",
