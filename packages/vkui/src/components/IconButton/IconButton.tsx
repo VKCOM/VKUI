@@ -11,7 +11,6 @@ import styles from './IconButton.module.css';
 const sizeYClassNames = {
   none: styles['IconButton--sizeY-none'],
   [SizeType.COMPACT]: styles['IconButton--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 export interface IconButtonProps extends TappableProps {
@@ -48,7 +47,7 @@ export const IconButton = ({
       Component={restProps.href ? 'a' : Component}
       className={classNames(
         styles['IconButton'],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         platform === Platform.IOS && styles['IconButton--ios'],
         className,
       )}

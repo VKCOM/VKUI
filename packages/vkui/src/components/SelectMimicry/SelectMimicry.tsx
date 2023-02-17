@@ -15,7 +15,6 @@ import styles from '../Select/Select.module.css';
 const sizeYClassNames = {
   none: styles['Select--sizeY-none'],
   [SizeType.COMPACT]: styles['Select--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 export interface SelectMimicryProps
@@ -58,7 +57,7 @@ export const SelectMimicry = ({
       className={classNames(
         styles['Select'],
         getPlatformClassName(styles['Select'], platform),
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         multiline && styles['Select--multiline'],
         align && styles[`Select--align-${align}`],
         before && styles['Select--hasBefore'],

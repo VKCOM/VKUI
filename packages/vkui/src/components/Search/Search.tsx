@@ -16,7 +16,6 @@ import styles from './Search.module.css';
 
 const sizeYClassNames = {
   none: styles['Search--sizeY-none'],
-  [SizeType.COMPACT]: null,
   [SizeType.REGULAR]: styles['Search--sizeY-regular'],
 };
 
@@ -124,7 +123,7 @@ export const Search = ({
       className={classNames(
         styles['Search'],
         platform === Platform.IOS && styles['Search--ios'],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.COMPACT && sizeYClassNames[sizeY],
         isFocused && styles['Search--focused'],
         value && styles['Search--has-value'],
         after && styles['Search--has-after'],

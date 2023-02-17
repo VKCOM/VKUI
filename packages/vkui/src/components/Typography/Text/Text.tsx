@@ -9,7 +9,6 @@ import styles from './Text.module.css';
 const sizeYClassNames = {
   none: styles['Text--sizeY-none'],
   [SizeType.COMPACT]: styles['Text--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 export interface TextProps
@@ -47,7 +46,7 @@ export const Text = ({
       className={classNames(
         className,
         styles['Text'],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         weight && styles[`Text--weight-${weight}`],
       )}
     >

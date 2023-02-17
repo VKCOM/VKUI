@@ -12,7 +12,6 @@ import styles from './FormItem.module.css';
 const sizeYClassNames = {
   none: styles['FormItem--sizeY-none'],
   [SizeType.COMPACT]: styles['FormItem--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 export interface FormItemProps
@@ -63,7 +62,7 @@ export const FormItem = ({
       className={classNames(
         styles['FormItem'],
         status !== 'default' && styles[`FormItem--status-${status}`],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         hasReactNode(top) && styles['FormItem--withTop'],
         removable && styles['FormItem--removable'],
         className,

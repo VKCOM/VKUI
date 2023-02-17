@@ -11,7 +11,6 @@ import styles from './Textarea.module.css';
 const sizeYClassNames = {
   none: styles['Textarea--sizeY-none'],
   [SizeType.COMPACT]: styles['Textarea--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 export interface TextareaProps
@@ -69,7 +68,11 @@ export const Textarea = ({
 
   return (
     <FormField
-      className={classNames(styles['Textarea'], sizeYClassNames[sizeY], className)}
+      className={classNames(
+        styles['Textarea'],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        className,
+      )}
       style={style}
       getRootRef={getRootRef}
       disabled={restProps.disabled}

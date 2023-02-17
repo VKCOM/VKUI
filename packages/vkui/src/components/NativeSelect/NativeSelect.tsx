@@ -17,7 +17,6 @@ import styles from '../Select/Select.module.css';
 const sizeYClassNames = {
   none: styles['Select--sizeY-none'],
   [SizeType.COMPACT]: styles['Select--sizeY-compact'],
-  [SizeType.REGULAR]: null,
 };
 
 export interface NativeSelectProps
@@ -86,7 +85,7 @@ const NativeSelect = ({
         empty && styles['Select--empty'],
         multiline && styles['Select--multiline'],
         align && styles[`Select--align-${align}`],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         className,
       )}
       style={style}
