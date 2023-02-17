@@ -29,7 +29,6 @@
 Для удобного получения `className` в зависимости от адаптивности есть такие функции как:
 
 - [`getPlatformClassName()`](../packages/vkui/src/helpers/getPlatformClassName.ts)
-- [`getViewWidthClassName()`](../packages/vkui/src/helpers/getViewWidthClassName.ts)
 
 Пример:
 
