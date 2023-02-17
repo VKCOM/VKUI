@@ -1,16 +1,18 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { RangeSlider, RangeSliderProps } from './RangeSlider';
+import { Meta, Story } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Group } from '../Group/Group';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Group } from '../Group/Group';
+import { RangeSlider, RangeSliderProps } from './RangeSlider';
 
-export default {
+const story: Meta<RangeSliderProps> = {
   title: 'Forms/RangeSlider',
   component: RangeSlider,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
-} as Meta<RangeSliderProps>;
+};
+
+export default story;
 
 const Template: Story<RangeSliderProps> = (args) => <RangeSlider {...args} />;
 

@@ -1,12 +1,5 @@
 import * as React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { ActionSheet, ActionSheetProps } from './ActionSheet';
-import { ActionSheetItem, ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';
-import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
-import { ActionSheetDefaultIosCloseItem } from './ActionSheetDefaultIosCloseItem';
-import { SplitLayout } from '../SplitLayout/SplitLayout';
-import { SplitCol } from '../SplitCol/SplitCol';
+import { Meta, Story } from '@storybook/react';
 import {
   Icon28CopyOutline,
   Icon28DeleteOutline,
@@ -17,10 +10,17 @@ import {
   Icon28ShareOutline,
   Icon28SubtitlesOutline,
 } from '@vkontakte/icons';
+import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
+import { getFigmaPage } from '../../storybook/helpers';
+import { ActionSheetItem, ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';
 import { Button } from '../Button/Button';
 import { Placeholder } from '../Placeholder/Placeholder';
+import { SplitCol } from '../SplitCol/SplitCol';
+import { SplitLayout } from '../SplitLayout/SplitLayout';
+import { ActionSheet, ActionSheetProps } from './ActionSheet';
+import { ActionSheetDefaultIosCloseItem } from './ActionSheetDefaultIosCloseItem';
 
-export default {
+const story: Meta<ActionSheetProps> = {
   title: 'Popouts/ActionSheet',
   component: ActionSheet,
   parameters: {
@@ -32,7 +32,9 @@ export default {
     header: StringArg,
     text: StringArg,
   },
-} as Meta<ActionSheetProps>;
+};
+
+export default story;
 
 const Template: Story<ActionSheetProps & { items: ActionSheetItemProps[] }> = ({
   items = [],

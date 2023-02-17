@@ -1,17 +1,5 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-import { PanelHeader, PanelHeaderProps } from './PanelHeader';
-import { withVKUILayout } from '../../storybook/VKUIDecorators';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { usePlatform } from '../../hooks/usePlatform';
-import { View } from '../View/View';
-import { Panel } from '../Panel/Panel';
-import { PanelHeaderClose } from '../PanelHeaderClose/PanelHeaderClose';
-import { Avatar } from '../Avatar/Avatar';
-import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
-import { Platform } from '../../lib/platform';
-import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
-import { Counter } from '../Counter/Counter';
 import {
   Icon16Dropdown,
   Icon24Done,
@@ -21,22 +9,36 @@ import {
   Icon28SettingsOutline,
   Icon28UsersOutline,
 } from '@vkontakte/icons';
+import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
+import { withVKUILayout } from '../../storybook/VKUIDecorators';
+import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { getFigmaPage } from '../../storybook/helpers';
+import { Avatar } from '../Avatar/Avatar';
+import { Cell } from '../Cell/Cell';
+import { Counter } from '../Counter/Counter';
+import { Div } from '../Div/Div';
+import { List } from '../List/List';
+import { Panel } from '../Panel/Panel';
+import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
+import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
+import { PanelHeaderClose } from '../PanelHeaderClose/PanelHeaderClose';
 import { PanelHeaderContent } from '../PanelHeaderContent/PanelHeaderContent';
+import { PanelHeaderContext } from '../PanelHeaderContext/PanelHeaderContext';
 import { Search } from '../Search/Search';
 import { Tabs } from '../Tabs/Tabs';
 import { TabsItem } from '../TabsItem/TabsItem';
-import { Div } from '../Div/Div';
-import { PanelHeaderContext } from '../PanelHeaderContext/PanelHeaderContext';
-import { List } from '../List/List';
-import { Cell } from '../Cell/Cell';
-import { getFigmaPage } from '../../storybook/helpers';
+import { View } from '../View/View';
+import { PanelHeader, PanelHeaderProps } from './PanelHeader';
 
-export default {
+const story: Meta<PanelHeaderProps> = {
   title: 'Layout/PanelHeader',
   component: PanelHeader,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('PanelHeader'), ...DisableCartesianParam },
   decorators: [withVKUILayout],
-} as Meta<PanelHeaderProps>;
+};
+
+export default story;
 
 export const SimplePanelHeader = () => (
   <View id="main" activePanel="panel1">

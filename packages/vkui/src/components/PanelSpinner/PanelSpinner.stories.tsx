@@ -1,16 +1,18 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { PanelSpinner, PanelSpinnerProps } from './PanelSpinner';
+import { withCartesian } from '@project-tools/storybook-addon-cartesian';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
-import { withCartesian } from '@project-tools/storybook-addon-cartesian';
+import { PanelSpinner, PanelSpinnerProps } from './PanelSpinner';
 
-export default {
+const story: Meta<PanelSpinnerProps> = {
   title: 'Blocks/PanelSpinner',
   component: PanelSpinner,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('ScreenSpinner') },
   decorators: [withCartesian],
-} as Meta<PanelSpinnerProps>;
+};
+
+export default story;
 
 const Template: Story<PanelSpinnerProps> = (args) => <PanelSpinner {...args} />;
 

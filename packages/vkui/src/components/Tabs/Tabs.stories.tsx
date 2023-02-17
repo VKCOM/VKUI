@@ -1,19 +1,19 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
 import { useArgs } from '@storybook/addons';
-import { Tabs, TabsProps } from './Tabs';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { getFigmaPage } from '../../storybook/helpers';
+import { Group } from '../Group/Group';
 import {
+  WithBadge as BadgeTabsItem,
   Playground as BasicTabsItem,
   WithBeforeAfter as BeforeAfterTabsItem,
-  WithBadge as BadgeTabsItem,
   WithCounter as CounterTabsItem,
   WithNumberStatus as NumberStatusTabsItem,
 } from '../TabsItem/TabsItem.stories';
-import { Group } from '../Group/Group';
-import { getFigmaPage } from '../../storybook/helpers';
+import { Tabs, TabsProps } from './Tabs';
 
-export default {
+const story: Meta<TabsProps> = {
   title: 'Blocks/Tabs',
   component: Tabs,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Tabs'), ...DisableCartesianParam },
@@ -25,7 +25,9 @@ export default {
       options: ['groups', 'news', 'recommendations', 'friends', 'photos'],
     },
   },
-} as Meta<TabsProps>;
+};
+
+export default story;
 
 const Template: Story<TabsProps & { selected: string }> = ({ selected = 'groups', ...args }) => {
   const [, updateArg] = useArgs();

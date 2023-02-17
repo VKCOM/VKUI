@@ -1,16 +1,18 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { RichCell, RichCellProps } from './RichCell';
+import { Meta, Story } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Avatar } from '../Avatar/Avatar';
 import { Group } from '../Group/Group';
+import { RichCell, RichCellProps } from './RichCell';
 
-export default {
+const story: Meta<RichCellProps> = {
   title: 'Blocks/RichCell',
   component: RichCell,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
-} as Meta<RichCellProps>;
+};
+
+export default story;
 
 const Template: Story<RichCellProps> = (args) => <RichCell {...args} />;
 

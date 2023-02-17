@@ -1,7 +1,5 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { TabsItem, TabsItemProps } from './TabsItem';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { Meta, Story } from '@storybook/react';
 import {
   Icon16Dropdown,
   Icon20NewsfeedOutline,
@@ -9,15 +7,19 @@ import {
   Icon20ThumbsUpOutline,
   Icon20UsersOutline,
 } from '@vkontakte/icons';
+import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { getFigmaPage } from '../../storybook/helpers';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
-import { getFigmaPage } from '../../storybook/helpers';
+import { TabsItem, TabsItemProps } from './TabsItem';
 
-export default {
+const story: Meta<TabsItemProps> = {
   title: 'Blocks/TabsItem',
   component: TabsItem,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Tabs'), ...DisableCartesianParam },
-} as Meta<TabsItemProps>;
+};
+
+export default story;
 
 const Template: Story<TabsItemProps> = (args) => <TabsItem {...args} />;
 

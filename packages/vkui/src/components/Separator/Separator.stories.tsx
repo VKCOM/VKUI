@@ -1,18 +1,20 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Separator, SeparatorProps } from './Separator';
+import { Meta, Story } from '@storybook/react';
+import { Icon28Notifications, Icon28SlidersOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { getFigmaPage } from '../../storybook/helpers';
 import { Group } from '../Group/Group';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
-import { Icon28Notifications, Icon28SlidersOutline } from '@vkontakte/icons';
 import { Spacing } from '../Spacing/Spacing';
-import { getFigmaPage } from '../../storybook/helpers';
+import { Separator, SeparatorProps } from './Separator';
 
-export default {
+const story: Meta<SeparatorProps> = {
   title: 'Blocks/Separator',
   component: Separator,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Separator'), ...DisableCartesianParam },
-} as Meta<SeparatorProps>;
+};
+
+export default story;
 
 const Template: Story<SeparatorProps> = (args) => <Separator {...args} />;
 

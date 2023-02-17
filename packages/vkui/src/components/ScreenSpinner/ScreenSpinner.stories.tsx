@@ -1,10 +1,10 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { ScreenSpinner, ScreenSpinnerProps } from './ScreenSpinner';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { ScreenSpinner, ScreenSpinnerProps } from './ScreenSpinner';
 
-export default {
+const story: Meta<ScreenSpinnerProps> = {
   title: 'Popouts/ScreenSpinner',
   component: ScreenSpinner,
   parameters: {
@@ -12,7 +12,9 @@ export default {
     ...getFigmaPage('ScreenSpinner'),
     ...DisableCartesianParam,
   },
-} as Meta<ScreenSpinnerProps>;
+};
+
+export default story;
 
 const Template: Story<ScreenSpinnerProps> = (args) => <ScreenSpinner {...args} />;
 

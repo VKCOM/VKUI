@@ -1,16 +1,5 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-import { Epic, EpicProps } from './Epic';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { usePlatform } from '../../hooks/usePlatform';
-import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
-import { Platform } from '../../lib/platform';
-import { SplitLayout } from '../SplitLayout/SplitLayout';
-import { PanelHeader } from '../PanelHeader/PanelHeader';
-import { SplitCol } from '../SplitCol/SplitCol';
-import { Panel } from '../Panel/Panel';
-import { Group } from '../Group/Group';
-import { Cell } from '../Cell/Cell';
 import {
   Icon28ClipOutline,
   Icon28MessageOutline,
@@ -19,16 +8,27 @@ import {
   Icon28UserCircleOutline,
   Icon56NewsfeedOutline,
 } from '@vkontakte/icons';
-import { Tabbar } from '../Tabbar/Tabbar';
-import { TabbarItem } from '../TabbarItem/TabbarItem';
-import { Counter } from '../Counter/Counter';
+import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
+import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
+import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { getFigmaPage } from '../../storybook/helpers';
 import { Badge } from '../Badge/Badge';
-import { View } from '../View/View';
+import { Cell } from '../Cell/Cell';
+import { Counter } from '../Counter/Counter';
+import { Group } from '../Group/Group';
+import { Panel } from '../Panel/Panel';
+import { PanelHeader } from '../PanelHeader/PanelHeader';
 import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
 import { Placeholder } from '../Placeholder/Placeholder';
-import { getFigmaPage } from '../../storybook/helpers';
+import { SplitCol } from '../SplitCol/SplitCol';
+import { SplitLayout } from '../SplitLayout/SplitLayout';
+import { Tabbar } from '../Tabbar/Tabbar';
+import { TabbarItem } from '../TabbarItem/TabbarItem';
+import { View } from '../View/View';
+import { Epic, EpicProps } from './Epic';
 
-export default {
+const story: Meta<EpicProps> = {
   title: 'Layout/Epic',
   component: Epic,
   parameters: {
@@ -36,7 +36,9 @@ export default {
     ...getFigmaPage('Epic'),
     ...DisableCartesianParam,
   },
-} as Meta<EpicProps>;
+};
+
+export default story;
 
 const ActiveStoryStyle: React.CSSProperties = {
   backgroundColor: 'var(--vkui--color_background_secondary)',

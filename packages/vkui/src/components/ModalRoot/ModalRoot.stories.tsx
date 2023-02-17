@@ -1,20 +1,20 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-import { ModalRoot, ModalRootProps } from './ModalRootAdaptive';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { ModalWrapper } from '../../storybook/ModalWrapper';
-import { ModalPage } from '../ModalPage/ModalPage';
-import { useModalRootContext } from './useModalRootContext';
-import { Spinner } from '../Spinner/Spinner';
-import { Placeholder } from '../Placeholder/Placeholder';
+import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { getFigmaPage } from '../../storybook/helpers';
+import { Button } from '../Button/Button';
+import { Group } from '../Group/Group';
 import { Input } from '../Input/Input';
+import { ModalPage } from '../ModalPage/ModalPage';
+import { Placeholder } from '../Placeholder/Placeholder';
+import { Spinner } from '../Spinner/Spinner';
 import { SplitCol } from '../SplitCol/SplitCol';
 import { SplitLayout } from '../SplitLayout/SplitLayout';
-import { Group } from '../Group/Group';
-import { Button } from '../Button/Button';
-import { getFigmaPage } from '../../storybook/helpers';
+import { ModalRoot, ModalRootProps } from './ModalRootAdaptive';
+import { useModalRootContext } from './useModalRootContext';
 
-export default {
+const story: Meta<ModalRootProps> = {
   title: 'Modals/ModalRoot',
   component: ModalRoot,
   parameters: {
@@ -22,7 +22,9 @@ export default {
     ...getFigmaPage('ModalPage'),
     ...DisableCartesianParam,
   },
-} as Meta<ModalRootProps>;
+};
+
+export default story;
 
 const MODAL_PAGE_DYNAMIC = 'modal-page-dynamic';
 const MODAL_ROOT_WITH_AUTO_FOCUS = 'modal-root-with-auto-focus';
@@ -31,14 +33,17 @@ const MODAL_PAGE_WITH_AUTO_FOCUS = 'modal-page-with-auto-focus';
 export const ModalDynamicHeight = () => {
   const [isLoading, setIsLoading] = React.useState(true);
   const { updateModalHeight } = useModalRootContext();
+  const timer = React.useRef<ReturnType<typeof setTimeout>>();
 
-  const fetchItems = () => {
-    setTimeout(() => {
+  React.useEffect(() => {
+    timer.current = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
-  };
 
-  React.useEffect(fetchItems, []);
+    return () => {
+      clearTimeout(timer.current);
+    };
+  }, []);
 
   // После установки стейта и перерисовки компонента SelectModal сообщим ModalRoot об изменениях
   React.useEffect(() => {
@@ -69,8 +74,12 @@ export const ModalRootAutoFocus = () => {
     }
   }, []);
 
+  const onClose = React.useCallback(() => {
+    setActiveModal(null);
+  }, []);
+
   const modal = (
-    <ModalRoot activeModal={activeModal} onClose={() => setActiveModal(null)} onOpened={handleOpen}>
+    <ModalRoot activeModal={activeModal} onClose={onClose} onOpened={handleOpen}>
       <ModalPage id={MODAL_ROOT_WITH_AUTO_FOCUS}>
         <Group>
           <Input getRef={inputRef} />

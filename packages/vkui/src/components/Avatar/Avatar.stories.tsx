@@ -1,19 +1,19 @@
 import React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Story, Meta } from '@storybook/react';
-import { Avatar, AvatarProps } from './Avatar';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
-import {
-  IconExampleForOverlayBasedOnImageBaseSize,
-  IconExampleForBadgeBasedOnImageBaseSize,
-} from '../../testing/icons';
-import { Playground as ImageBaseOverlay } from '../ImageBase/ImageBaseOverlay/ImageBaseOverlay.stories';
-import { Playground as ImageBaseBadge } from '../ImageBase/ImageBaseBadge/ImageBaseBadge.stories';
 import { getFigmaPage } from '../../storybook/helpers';
+import {
+  IconExampleForBadgeBasedOnImageBaseSize,
+  IconExampleForOverlayBasedOnImageBaseSize,
+} from '../../testing/icons';
 import { getAvatarUrl } from '../../testing/mock';
 import { imageBaseSizes } from '../ImageBase/types';
+import { Avatar, AvatarProps } from './Avatar';
 
-export default {
+type AvatarStoryProps = AvatarProps & { badge: React.ReactNode; overlay: React.ReactNode };
+
+const story: Meta<AvatarStoryProps> = {
   title: 'Blocks/Avatar',
   component: Avatar,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Avatar') },
@@ -69,14 +69,11 @@ export default {
     },
   },
   decorators: [withCartesian],
-} as Meta<AvatarProps>;
+};
 
-const Template: Story<AvatarProps & { badge: React.ReactNode; overlay: React.ReactNode }> = ({
-  badge,
-  overlay,
-  children,
-  ...args
-}) => (
+export default story;
+
+const Template: Story<AvatarStoryProps> = ({ badge, overlay, children, ...args }) => (
   <Avatar src={args.initials ? undefined : getAvatarUrl('user_id34')} {...args}>
     {badge}
     {overlay}
@@ -90,17 +87,17 @@ Playground.args = {};
 export const WithBadge = Template.bind({});
 WithBadge.args = {
   children: (
-    <ImageBaseBadge {...ImageBaseBadge.args}>
+    <Avatar.Badge>
       <IconExampleForBadgeBasedOnImageBaseSize />
-    </ImageBaseBadge>
+    </Avatar.Badge>
   ),
 };
 
 export const WithOverlay = Template.bind({});
 WithOverlay.args = {
   children: (
-    <ImageBaseOverlay {...ImageBaseOverlay.args}>
+    <Avatar.Overlay>
       <IconExampleForOverlayBasedOnImageBaseSize />
-    </ImageBaseOverlay>
+    </Avatar.Overlay>
   ),
 };

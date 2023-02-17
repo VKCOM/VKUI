@@ -1,9 +1,9 @@
 import React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Story, Meta } from '@storybook/react';
-import { Caption, CaptionProps } from './Caption';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout } from '../../../storybook/constants';
 import { getFigmaPage } from '../../../storybook/helpers';
+import { Caption, CaptionProps } from './Caption';
 
 export default {
   title: 'Typography/Caption',

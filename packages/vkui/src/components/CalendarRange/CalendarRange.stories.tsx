@@ -1,10 +1,10 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { CalendarRange, CalendarRangeProps } from './CalendarRange';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { CalendarRange, CalendarRangeProps } from './CalendarRange';
 
-export default {
+const story: Meta<CalendarRangeProps> = {
   title: 'Forms/CalendarRange',
   component: CalendarRange,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Calendar'), ...DisableCartesianParam },
@@ -32,7 +32,9 @@ export default {
       control: { type: 'date' },
     },
   },
-} as Meta<CalendarRangeProps>;
+};
+
+export default story;
 
 const Template: Story<CalendarRangeProps & { startDate: number; endDate: number }> = ({
   value,

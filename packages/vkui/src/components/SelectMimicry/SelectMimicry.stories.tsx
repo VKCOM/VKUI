@@ -1,10 +1,10 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { SelectMimicry, SelectMimicryProps } from './SelectMimicry';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { SelectMimicry, SelectMimicryProps } from './SelectMimicry';
 
-export default {
+const story: Meta<SelectMimicryProps> = {
   title: 'Forms/SelectMimicry',
   component: SelectMimicry,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
@@ -21,7 +21,9 @@ export default {
       options: ['Россия', 'Италия', 'Англия'],
     },
   },
-} as Meta<SelectMimicryProps>;
+};
+
+export default story;
 
 const Template: Story<SelectMimicryProps & { selectValue: string }> = ({
   selectValue,

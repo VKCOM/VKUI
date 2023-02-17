@@ -1,18 +1,20 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { ButtonGroup, ButtonGroupProps } from './ButtonGroup';
-import { CanvasFullLayout } from '../../storybook/constants';
+import { Meta, Story } from '@storybook/react';
 import { Icon16Add, Icon24Add } from '@vkontakte/icons';
+import { CanvasFullLayout } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
 import { Button } from '../Button/Button';
+import { ButtonGroup, ButtonGroupProps } from './ButtonGroup';
 
-export default {
+const story: Meta<ButtonGroupProps> = {
   title: 'Blocks/ButtonGroup',
   component: ButtonGroup,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Button') },
   decorators: [withCartesian],
-} as Meta<ButtonGroupProps>;
+};
+
+export default story;
 
 const Template: Story<ButtonGroupProps> = (args) => {
   return <ButtonGroup {...args} />;

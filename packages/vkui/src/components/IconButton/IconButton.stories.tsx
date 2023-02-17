@@ -1,14 +1,16 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { IconButton, IconButtonProps } from './IconButton';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { Meta, Story } from '@storybook/react';
 import { Icon16Delete } from '@vkontakte/icons';
+import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { IconButton, IconButtonProps } from './IconButton';
 
-export default {
+const story: Meta<IconButtonProps> = {
   title: 'Blocks/IconButton',
   component: IconButton,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
-} as Meta<IconButtonProps>;
+};
+
+export default story;
 
 const Template: Story<IconButtonProps> = (args) => <IconButton {...args} />;
 

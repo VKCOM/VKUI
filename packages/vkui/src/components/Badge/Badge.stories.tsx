@@ -1,16 +1,18 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Badge, BadgeProps } from './Badge';
+import { withCartesian } from '@project-tools/storybook-addon-cartesian';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
-import { withCartesian } from '@project-tools/storybook-addon-cartesian';
+import { Badge, BadgeProps } from './Badge';
 
-export default {
+const story: Meta<BadgeProps> = {
   title: 'Blocks/Badge',
   component: Badge,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Badge') },
   decorators: [withCartesian],
-} as Meta<BadgeProps>;
+};
+
+export default story;
 
 const Template: Story<BadgeProps> = (args) => <Badge {...args} />;
 

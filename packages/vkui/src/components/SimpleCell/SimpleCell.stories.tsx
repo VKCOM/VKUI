@@ -1,19 +1,21 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { SimpleCell, SimpleCellProps } from './SimpleCell';
+import { Meta, Story } from '@storybook/react';
+import { Icon12Verified, Icon28MessageOutline } from '@vkontakte/icons';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Avatar } from '../Avatar/Avatar';
-import { Icon12Verified, Icon28MessageOutline } from '@vkontakte/icons';
-import { IconButton } from '../IconButton/IconButton';
-import { Group } from '../Group/Group';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Avatar } from '../Avatar/Avatar';
+import { Group } from '../Group/Group';
+import { IconButton } from '../IconButton/IconButton';
+import { SimpleCell, SimpleCellProps } from './SimpleCell';
 
-export default {
+const story: Meta<SimpleCellProps> = {
   title: 'Blocks/SimpleCell',
   component: SimpleCell,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Cell'), ...DisableCartesianParam },
-} as Meta<SimpleCellProps>;
+};
+
+export default story;
 
 const Template: Story<SimpleCellProps> = (args) => <SimpleCell {...args} />;
 

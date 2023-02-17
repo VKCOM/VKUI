@@ -1,18 +1,18 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { SubnavigationBar, SubnavigationBarProps } from './SubnavigationBar';
+import { useArgs } from '@storybook/addons';
+import { Meta, Story } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { getFigmaPage } from '../../storybook/helpers';
+import { Group } from '../Group/Group';
 import {
   Playground as BasicSubnavigationButton,
-  WithIcon as IconSubnavigationButton,
   WithCounter as CounterSubnavigationButton,
+  WithIcon as IconSubnavigationButton,
 } from '../SubnavigationButton/SubnavigationButton.stories';
-import { Group } from '../Group/Group';
-import { useArgs } from '@storybook/addons';
-import { getFigmaPage } from '../../storybook/helpers';
+import { SubnavigationBar, SubnavigationBarProps } from './SubnavigationBar';
 
-export default {
+const story: Meta<SubnavigationBarProps> = {
   title: 'Blocks/SubnavigationBar',
   component: SubnavigationBar,
   parameters: {
@@ -26,7 +26,9 @@ export default {
       options: ['size', 'favorite', 'filters'],
     },
   },
-} as Meta<SubnavigationBarProps>;
+};
+
+export default story;
 
 const Template: Story<SubnavigationBarProps & { selected: string }> = ({ selected, ...args }) => {
   const [, updateArg] = useArgs();

@@ -1,21 +1,21 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Playground as Title } from './Title/Title.stories';
-import { Playground as Headline } from './Headline/Headline.stories';
-import { Playground as Text } from './Text/Text.stories';
-import { Playground as Paragraph } from './Paragraph/Paragraph.stories';
-import { Playground as Subhead } from './Subhead/Subhead.stories';
-import { Playground as Footnote, WithCaps as FootnoteWithCaps } from './Footnote/Footnote.stories';
-import { Playground as Caption, WithCaps as CaptionWithCaps } from './Caption/Caption.stories';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Playground as Caption, WithCaps as CaptionWithCaps } from './Caption/Caption.stories';
+import { Playground as Footnote, WithCaps as FootnoteWithCaps } from './Footnote/Footnote.stories';
+import { Playground as Headline } from './Headline/Headline.stories';
+import { Playground as Paragraph } from './Paragraph/Paragraph.stories';
+import { Playground as Subhead } from './Subhead/Subhead.stories';
+import { Playground as Text } from './Text/Text.stories';
+import { Playground as Title } from './Title/Title.stories';
 
 interface TypographyOverview {
   weight: '1' | '2' | '3';
 }
 
-export default {
+const story: Meta<TypographyOverview> = {
   title: 'Typography',
   parameters: {
     ...CanvasFullLayout,
@@ -28,7 +28,9 @@ export default {
     },
   },
   decorators: [withCartesian],
-} as Meta<TypographyOverview>;
+};
+
+export default story;
 
 const TypographyWrapper = ({ children }: { children?: React.ReactNode }) => {
   return <div style={{ margin: 5 }}>{children}</div>;

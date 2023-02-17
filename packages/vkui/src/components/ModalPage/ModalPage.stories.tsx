@@ -1,35 +1,35 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-import { ModalPage, ModalPageProps } from './ModalPage';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { ModalWrapper } from '../../storybook/ModalWrapper';
 import { Icon24Dismiss, Icon56MoneyTransferOutline } from '@vkontakte/icons';
-import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
-import { PanelHeaderClose } from '../PanelHeaderClose/PanelHeaderClose';
-import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
-import { Platform } from '../../lib/platform';
-import { Group } from '../Group/Group';
-import { CellButton } from '../CellButton/CellButton';
-import { Placeholder } from '../Placeholder/Placeholder';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { usePlatform } from '../../hooks/usePlatform';
-import { ModalRootContext } from '../ModalRoot/ModalRootContext';
-import { PanelHeaderSubmit } from '../PanelHeaderSubmit/PanelHeaderSubmit';
-import { FormItem } from '../FormItem/FormItem';
-import { SelectMimicry } from '../SelectMimicry/SelectMimicry';
-import { Radio } from '../Radio/Radio';
-import { Checkbox } from '../Checkbox/Checkbox';
-import { Input } from '../Input/Input';
-import { DatePicker } from '../DatePicker/DatePicker';
-import { Gradient } from '../Gradient/Gradient';
-import { Avatar } from '../Avatar/Avatar';
-import { Title } from '../Typography/Title/Title';
-import { getRandomUser, getRandomUsers } from '../../testing/mock';
-import { Header } from '../Header/Header';
-import { SimpleCell } from '../SimpleCell/SimpleCell';
+import { Platform } from '../../lib/platform';
+import { ModalWrapper } from '../../storybook/ModalWrapper';
+import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { getRandomUser, getRandomUsers } from '../../testing/mock';
+import { Avatar } from '../Avatar/Avatar';
+import { CellButton } from '../CellButton/CellButton';
+import { Checkbox } from '../Checkbox/Checkbox';
+import { DatePicker } from '../DatePicker/DatePicker';
+import { FormItem } from '../FormItem/FormItem';
+import { Gradient } from '../Gradient/Gradient';
+import { Group } from '../Group/Group';
+import { Header } from '../Header/Header';
+import { Input } from '../Input/Input';
+import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
+import { ModalRootContext } from '../ModalRoot/ModalRootContext';
+import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
+import { PanelHeaderClose } from '../PanelHeaderClose/PanelHeaderClose';
+import { PanelHeaderSubmit } from '../PanelHeaderSubmit/PanelHeaderSubmit';
+import { Placeholder } from '../Placeholder/Placeholder';
+import { Radio } from '../Radio/Radio';
+import { SelectMimicry } from '../SelectMimicry/SelectMimicry';
+import { SimpleCell } from '../SimpleCell/SimpleCell';
+import { Title } from '../Typography/Title/Title';
+import { ModalPage, ModalPageProps } from './ModalPage';
 
-export default {
+const story: Meta<ModalPageProps> = {
   title: 'Modals/ModalPage',
   component: ModalPage,
   parameters: {
@@ -37,7 +37,9 @@ export default {
     ...getFigmaPage('ModalPage'),
     ...DisableCartesianParam,
   },
-} as Meta<ModalPageProps>;
+};
+
+export default story;
 
 const MODAL_PAGE_FILTERS = 'filters';
 const MODAL_PAGE_FULLSCREEN = 'fullscreen';

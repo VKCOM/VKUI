@@ -1,13 +1,15 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Gallery, GalleryProps } from './Gallery';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { Gallery, GalleryProps } from './Gallery';
 
-export default {
+const story: Meta<GalleryProps> = {
   title: 'Blocks/Gallery',
   component: Gallery,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
-} as Meta<GalleryProps>;
+};
+
+export default story;
 
 const Template: Story<GalleryProps> = (args) => (
   <Gallery {...args}>

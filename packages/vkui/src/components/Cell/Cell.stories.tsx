@@ -1,19 +1,21 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Cell, CellProps } from './Cell';
+import { Meta, Story } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Avatar } from '../Avatar/Avatar';
-import { Group } from '../Group/Group';
 import { getFigmaPage } from '../../storybook/helpers';
 import { getAvatarUrl } from '../../testing/mock';
+import { Avatar } from '../Avatar/Avatar';
+import { Group } from '../Group/Group';
+import { Cell, CellProps } from './Cell';
 
-export default {
+const story: Meta<CellProps> = {
   title: 'Blocks/Cell',
   component: Cell,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Cell'), ...DisableCartesianParam },
   decorators: [withSinglePanel, withVKUILayout],
-} as Meta<CellProps>;
+};
+
+export default story;
 
 const Template: Story<CellProps> = (args) => <Cell {...args} />;
 

@@ -1,15 +1,15 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Chip, ChipProps } from './Chip';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { Meta, Story } from '@storybook/react';
 import { getIconArgBySize, getIconComponent, IconName } from '../../storybook/Icons';
-import { Avatar } from '../Avatar/Avatar';
-import { getAvatarUrl } from '../../testing/mock';
+import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { getAvatarUrl } from '../../testing/mock';
+import { Avatar } from '../Avatar/Avatar';
+import { Chip, ChipProps } from './Chip';
 
 const IconArg = getIconArgBySize(/^Icon16/);
 
-export default {
+const story: Meta<ChipProps> = {
   title: 'Forms/Chip',
   component: Chip,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
@@ -23,7 +23,9 @@ export default {
     },
     after: IconArg,
   },
-} as Meta<ChipProps>;
+};
+
+export default story;
 
 const Template: Story<Omit<ChipProps, 'after'> & { after?: IconName }> = ({ after, ...args }) => {
   const Icon = getIconComponent(after);

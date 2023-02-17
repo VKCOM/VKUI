@@ -1,15 +1,17 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { ChipsInput, ChipsInputProps } from './ChipsInput';
-import { ChipOption } from '../Chip/Chip';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { ChipOption } from '../Chip/Chip';
+import { ChipsInput, ChipsInputProps } from './ChipsInput';
 
-export default {
+const story: Meta<ChipsInputProps<ChipOption>> = {
   title: 'Forms/ChipsInput',
   component: ChipsInput,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
-} as Meta<ChipsInputProps<ChipOption>>;
+};
+
+export default story;
 
 const Template: Story<ChipsInputProps<ChipOption>> = (args) => <ChipsInput {...args} />;
 

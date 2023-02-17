@@ -1,17 +1,19 @@
 import React from 'react';
+import { Meta, Story } from '@storybook/react';
 import { Icon28PrivacyOutline, Icon28SettingsOutline, Icon28UserOutline } from '@vkontakte/icons';
-import { Story, Meta } from '@storybook/react';
-import { List, ListProps } from './List';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Group } from '../Group/Group';
 import { Cell } from '../Cell/Cell';
+import { Group } from '../Group/Group';
+import { List, ListProps } from './List';
 
-export default {
+const story: Meta<ListProps> = {
   title: 'Blocks/List',
   component: List,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
-} as Meta<ListProps>;
+};
+
+export default story;
 
 const Template: Story<ListProps> = ({ children, ...args }) => <List {...args}>{children}</List>;
 

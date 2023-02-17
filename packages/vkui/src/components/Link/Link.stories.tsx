@@ -1,14 +1,16 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Link, LinkProps } from './Link';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { Meta, Story } from '@storybook/react';
 import { Icon24ExternalLinkOutline } from '@vkontakte/icons';
+import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { Link, LinkProps } from './Link';
 
-export default {
+const story: Meta<LinkProps> = {
   title: 'Blocks/Link',
   component: Link,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
-} as Meta<LinkProps>;
+};
+
+export default story;
 
 const Template: Story<LinkProps> = (args) => <Link {...args} />;
 

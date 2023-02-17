@@ -1,16 +1,18 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { ChipsSelect, ChipsSelectProps } from './ChipsSelect';
-import { ChipOption } from '../Chip/Chip';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { Meta, Story } from '@storybook/react';
 import { Icon12Download } from '@vkontakte/icons';
+import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { ChipOption } from '../Chip/Chip';
+import { ChipsSelect, ChipsSelectProps } from './ChipsSelect';
 
-export default {
+const story: Meta<ChipsSelectProps<ChipOption>> = {
   title: 'Forms/ChipsSelect',
   component: ChipsSelect,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
-} as Meta<ChipsSelectProps<ChipOption>>;
+};
+
+export default story;
 
 const Template: Story<ChipsSelectProps<ChipOption>> = (args) => <ChipsSelect {...args} />;
 

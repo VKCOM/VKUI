@@ -1,14 +1,16 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Radio, RadioProps } from './Radio';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Radio, RadioProps } from './Radio';
 
-export default {
+const story: Meta<RadioProps> = {
   title: 'Forms/Radio',
   component: Radio,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
-} as Meta<RadioProps>;
+};
+
+export default story;
 
 const Template: Story<RadioProps> = (args) => <Radio {...args} />;
 

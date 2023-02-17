@@ -1,17 +1,19 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { FormLayoutGroup, FormLayoutGroupProps } from './FormLayoutGroup';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { getFigmaPage } from '../../storybook/helpers';
 import { FormItem } from '../FormItem/FormItem';
 import { Input } from '../Input/Input';
 import { Select } from '../Select/Select';
-import { getFigmaPage } from '../../storybook/helpers';
+import { FormLayoutGroup, FormLayoutGroupProps } from './FormLayoutGroup';
 
-export default {
+const story: Meta<FormLayoutGroupProps> = {
   title: 'Forms/FormLayoutGroup',
   component: FormLayoutGroup,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
-} as Meta<FormLayoutGroupProps>;
+};
+
+export default story;
 
 const Template: Story<FormLayoutGroupProps> = (args) => (
   <FormLayoutGroup {...args}>

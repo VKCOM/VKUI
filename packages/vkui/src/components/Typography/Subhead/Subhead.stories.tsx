@@ -1,9 +1,9 @@
 import React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Story, Meta } from '@storybook/react';
-import { Subhead, SubheadProps } from './Subhead';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout } from '../../../storybook/constants';
 import { getFigmaPage } from '../../../storybook/helpers';
+import { Subhead, SubheadProps } from './Subhead';
 
 export default {
   title: 'Typography/Subhead',

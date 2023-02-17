@@ -1,16 +1,18 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Counter, CounterProps } from './Counter';
+import { withCartesian } from '@project-tools/storybook-addon-cartesian';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
-import { withCartesian } from '@project-tools/storybook-addon-cartesian';
+import { Counter, CounterProps } from './Counter';
 
-export default {
+const story: Meta<CounterProps> = {
   title: 'Blocks/Counter',
   component: Counter,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Counter') },
   decorators: [withCartesian],
-} as Meta<CounterProps>;
+};
+
+export default story;
 
 const Template: Story<CounterProps> = (args) => <Counter {...args} />;
 

@@ -1,27 +1,29 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
 import vkBridge from '@vkontakte/vk-bridge';
-import { View, ViewProps } from './View';
+import { Platform } from '../../lib/platform';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { PanelHeader } from '../PanelHeader/PanelHeader';
-import { Group } from '../Group/Group';
+import { Alert } from '../Alert/Alert';
 import { CellButton } from '../CellButton/CellButton';
-import { Placeholder } from '../Placeholder/Placeholder';
+import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 import { Div } from '../Div/Div';
 import { FormItem } from '../FormItem/FormItem';
+import { Group } from '../Group/Group';
 import { Input } from '../Input/Input';
-import { SplitLayout } from '../SplitLayout/SplitLayout';
-import { SplitCol } from '../SplitCol/SplitCol';
 import { Panel } from '../Panel/Panel';
-import { Alert } from '../Alert/Alert';
-import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
-import { Platform } from '../../lib/platform';
+import { PanelHeader } from '../PanelHeader/PanelHeader';
+import { Placeholder } from '../Placeholder/Placeholder';
+import { SplitCol } from '../SplitCol/SplitCol';
+import { SplitLayout } from '../SplitLayout/SplitLayout';
+import { View, ViewProps } from './View';
 
-export default {
+const story: Meta<ViewProps> = {
   title: 'Layout/View',
   component: View,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
-} as Meta<ViewProps>;
+};
+
+export default story;
 
 const MainPanelContent = ({ onProfileClick }: { onProfileClick: () => void }) => {
   return (

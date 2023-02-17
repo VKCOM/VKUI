@@ -1,14 +1,14 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Snackbar, SnackbarProps } from './Snackbar';
+import { Meta, Story } from '@storybook/react';
+import { Icon24ThumbsUpOutline, Icon28ErrorCircleOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
-import { Avatar } from '../Avatar/Avatar';
 import { getAvatarUrl } from '../../testing/mock';
-import { Icon24ThumbsUpOutline, Icon28ErrorCircleOutline } from '@vkontakte/icons';
+import { Avatar } from '../Avatar/Avatar';
 import { Image } from '../Image/Image';
+import { Snackbar, SnackbarProps } from './Snackbar';
 
-export default {
+const story: Meta<SnackbarProps> = {
   title: 'Popouts/Snackbar',
   component: Snackbar,
   parameters: {
@@ -32,7 +32,9 @@ export default {
     },
     subtitle: StringArg,
   },
-} as Meta<SnackbarProps>;
+};
+
+export default story;
 
 const Template: Story<Omit<SnackbarProps, 'after'> & { after?: boolean }> = ({
   after,

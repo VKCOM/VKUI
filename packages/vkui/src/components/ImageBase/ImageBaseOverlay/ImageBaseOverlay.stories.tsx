@@ -1,14 +1,16 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { ImageBaseOverlay, ImageBaseOverlayProps } from './ImageBaseOverlay';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/constants';
 import { getFigmaPage } from '../../../storybook/helpers';
+import { ImageBaseOverlay, ImageBaseOverlayProps } from './ImageBaseOverlay';
 
-export default {
+const story: Meta<ImageBaseOverlayProps> = {
   title: 'Blocks/ImageBaseOverlay',
   component: ImageBaseOverlay,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Avatar'), ...DisableCartesianParam },
-} as Meta<ImageBaseOverlayProps>;
+};
+
+export default story;
 
 const Template: Story<ImageBaseOverlayProps> = ({ children, ...args }) => (
   <ImageBaseOverlay {...args}>{children}</ImageBaseOverlay>

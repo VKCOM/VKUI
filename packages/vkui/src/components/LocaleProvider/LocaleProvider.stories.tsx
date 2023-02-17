@@ -1,14 +1,24 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { LocaleProvider, LocaleProviderProps } from './LocaleProvider';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
+import { LocaleProvider, LocaleProviderProps } from './LocaleProvider';
 
-export default {
+const story: Meta<LocaleProviderProps> = {
   title: 'Service/LocaleProvider',
   component: LocaleProvider,
+  argTypes: {
+    value: {
+      control: {
+        type: 'select',
+      },
+      options: ['ru', 'en', 'fr', 'ua'],
+    },
+  },
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
-} as Meta<LocaleProviderProps>;
+};
+
+export default story;
 
 const DisplayLocaleProvider = () => {
   const { locale } = useConfigProvider();
@@ -16,11 +26,11 @@ const DisplayLocaleProvider = () => {
   return <div style={{ padding: 5 }}>Inner LocaleProvider: {locale}</div>;
 };
 
-const Template: Story<LocaleProviderProps> = (args) => {
+const Template: Story<LocaleProviderProps> = ({ value }) => {
   const { locale } = useConfigProvider();
 
   return (
-    <LocaleProvider {...args}>
+    <LocaleProvider value={value ?? locale}>
       <div style={{ padding: 5 }}>Outer LocaleProvider: {locale}</div>
       <DisplayLocaleProvider />
     </LocaleProvider>

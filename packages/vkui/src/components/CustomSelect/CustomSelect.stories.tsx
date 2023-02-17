@@ -1,15 +1,17 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { CustomSelect, SelectProps } from './CustomSelect';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
 import { cities } from '../../testing/mock';
+import { CustomSelect, SelectProps } from './CustomSelect';
 
-export default {
+const story: Meta<SelectProps> = {
   title: 'Forms/CustomSelect',
   component: CustomSelect,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
-} as Meta<SelectProps>;
+};
+
+export default story;
 
 const Template: Story<SelectProps> = (args) => <CustomSelect {...args} />;
 

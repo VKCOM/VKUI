@@ -1,14 +1,16 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Div, DivProps } from './Div';
-import { Group } from '../Group/Group';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { Group } from '../Group/Group';
+import { Div, DivProps } from './Div';
 
-export default {
+const story: Meta<DivProps> = {
   title: 'Blocks/Div',
   component: Div,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
-} as Meta<DivProps>;
+};
+
+export default story;
 
 const Template: Story<DivProps> = (args) => <Div {...args}>Content with paddings</Div>;
 

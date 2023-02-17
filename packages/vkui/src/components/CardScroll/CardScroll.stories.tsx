@@ -1,13 +1,13 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { CardScroll, CardScrollProps } from './CardScroll';
+import { Meta, Story } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { getFigmaPage } from '../../storybook/helpers';
 import { Playground as BasicCard } from '../Card/Card.stories';
 import { Group } from '../Group/Group';
-import { getFigmaPage } from '../../storybook/helpers';
+import { CardScroll, CardScrollProps } from './CardScroll';
 
-export default {
+const story: Meta<CardScrollProps> = {
   title: 'Blocks/CardScroll',
   component: CardScroll,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Card'), ...DisableCartesianParam },
@@ -16,7 +16,9 @@ export default {
       control: { type: 'number' },
     },
   },
-} as Meta<CardScrollProps>;
+};
+
+export default story;
 
 const Template: Story<CardScrollProps & { count: number }> = ({ count, ...args }) => (
   <CardScroll {...args}>

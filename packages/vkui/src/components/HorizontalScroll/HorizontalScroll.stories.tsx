@@ -1,18 +1,18 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { HorizontalScroll, HorizontalScrollProps } from './HorizontalScroll';
+import { withCartesian } from '@project-tools/storybook-addon-cartesian';
+import { Meta, Story } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { PanelSpinner } from '../PanelSpinner/PanelSpinner';
-import { Avatar } from '../Avatar/Avatar';
-import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
+import { getFigmaPage } from '../../storybook/helpers';
 import { getRandomUsers, UserExtendedInterface } from '../../testing/mock';
+import { Avatar } from '../Avatar/Avatar';
 import { Group } from '../Group/Group';
 import { Header } from '../Header/Header';
-import { getFigmaPage } from '../../storybook/helpers';
-import { withCartesian } from '@project-tools/storybook-addon-cartesian';
+import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
+import { PanelSpinner } from '../PanelSpinner/PanelSpinner';
+import { HorizontalScroll, HorizontalScrollProps } from './HorizontalScroll';
 
-export default {
+const story: Meta<HorizontalScrollProps> = {
   title: 'Layout/HorizontalScroll',
   component: HorizontalScroll,
   parameters: {
@@ -33,27 +33,24 @@ export default {
     },
   },
   decorators: [withCartesian, withSinglePanel, withVKUILayout],
-} as Meta<HorizontalScrollProps>;
+};
+
+export default story;
 
 const Template: Story<HorizontalScrollProps> = (args) => {
   const [commonFriends, setCommonFriends] = React.useState<UserExtendedInterface[]>([]);
   const timer = React.useRef<ReturnType<typeof setTimeout>>();
 
   React.useEffect(() => {
-    let abort = false;
     // Эмуляция загрузки
     timer.current = setTimeout(() => {
-      if (!abort) {
-        setCommonFriends(getRandomUsers(30));
-      }
+      setCommonFriends(getRandomUsers(30));
     }, 2000);
 
     return () => {
-      abort = true;
+      clearTimeout(timer.current);
     };
   }, []);
-
-  React.useEffect(() => () => clearTimeout(timer.current));
 
   return (
     <HorizontalScroll {...args}>

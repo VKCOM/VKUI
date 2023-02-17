@@ -1,10 +1,10 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { DateRangeInput, DateRangeInputProps } from './DateRangeInput';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { DateRangeInput, DateRangeInputProps } from './DateRangeInput';
 
-export default {
+const story: Meta<DateRangeInputProps> = {
   title: 'Forms/DateRangeInput',
   component: DateRangeInput,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
@@ -32,7 +32,9 @@ export default {
       control: { type: 'date' },
     },
   },
-} as Meta<DateRangeInputProps>;
+};
+
+export default story;
 
 const Template: Story<DateRangeInputProps & { startDate: number; endDate: number }> = ({
   value,

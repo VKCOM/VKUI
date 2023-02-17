@@ -1,14 +1,16 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { AdaptivityProvider, AdaptivityProviderProps } from './AdaptivityProvider';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { Meta, Story } from '@storybook/react';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
+import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { AdaptivityProvider, AdaptivityProviderProps } from './AdaptivityProvider';
 
-export default {
+const story: Meta<AdaptivityProviderProps> = {
   title: 'Service/AdaptivityProvider',
   component: AdaptivityProvider,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
-} as Meta<AdaptivityProviderProps>;
+};
+
+export default story;
 
 const DisplayAdaptivityProvider = () => {
   const { sizeX, sizeY } = useAdaptivityConditionalRender();

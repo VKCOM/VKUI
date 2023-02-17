@@ -1,16 +1,16 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { FixedLayout, FixedLayoutProps } from './FixedLayout';
+import { Meta, Story } from '@storybook/react';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Tabs } from '../Tabs/Tabs';
-import { TabsItem } from '../TabsItem/TabsItem';
-import { Separator } from '../Separator/Separator';
-import { View } from '../View/View';
 import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
+import { Separator } from '../Separator/Separator';
+import { Tabs } from '../Tabs/Tabs';
+import { TabsItem } from '../TabsItem/TabsItem';
+import { View } from '../View/View';
+import { FixedLayout, FixedLayoutProps } from './FixedLayout';
 
-export default {
+const story: Meta<FixedLayoutProps> = {
   title: 'Layout/FixedLayout',
   component: FixedLayout,
   parameters: {
@@ -18,7 +18,9 @@ export default {
     ...DisableCartesianParam,
   },
   decorators: [withVKUILayout],
-} as Meta<FixedLayoutProps>;
+};
+
+export default story;
 
 const Template: Story<FixedLayoutProps> = (args) => (
   <View activePanel="fixedLayout">

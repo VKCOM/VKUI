@@ -1,13 +1,15 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { AppearanceProvider, AppearanceProviderProps } from './AppearanceProvider';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { AppearanceProvider, AppearanceProviderProps } from './AppearanceProvider';
 
-export default {
+const story: Meta<AppearanceProviderProps> = {
   title: 'Service/AppearanceProvider',
   component: AppearanceProvider,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
-} as Meta<AppearanceProviderProps>;
+};
+
+export default story;
 
 const Template: Story<AppearanceProviderProps> = (args) => {
   return (

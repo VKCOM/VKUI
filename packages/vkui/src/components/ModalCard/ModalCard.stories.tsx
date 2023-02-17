@@ -1,19 +1,19 @@
 import React from 'react';
-import { Icon56MoneyTransferOutline, Icon56NotificationOutline } from '@vkontakte/icons';
 import { Meta } from '@storybook/react';
-import { ModalCard, ModalCardProps } from './ModalCard';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { Icon56MoneyTransferOutline, Icon56NotificationOutline } from '@vkontakte/icons';
 import { ModalWrapper } from '../../storybook/ModalWrapper';
-import { Button } from '../Button/Button';
-import { Image } from '../Image/Image';
-import { getAvatarUrl } from '../../testing/mock';
-import { Textarea } from '../Textarea/Textarea';
-import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
-import { Avatar } from '../Avatar/Avatar';
-import { UsersStack } from '../UsersStack/UsersStack';
+import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { getAvatarUrl } from '../../testing/mock';
+import { Avatar } from '../Avatar/Avatar';
+import { Button } from '../Button/Button';
+import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
+import { Image } from '../Image/Image';
+import { Textarea } from '../Textarea/Textarea';
+import { UsersStack } from '../UsersStack/UsersStack';
+import { ModalCard, ModalCardProps } from './ModalCard';
 
-export default {
+const story: Meta<ModalCardProps> = {
   title: 'Modals/ModalCard',
   component: ModalCard,
   parameters: {
@@ -21,7 +21,9 @@ export default {
     ...getFigmaPage('ModalCard'),
     ...DisableCartesianParam,
   },
-} as Meta<ModalCardProps>;
+};
+
+export default story;
 
 const MODAL_CARD_MONEY_SEND = 'money-send';
 const MODAL_CARD_APP_TO_MENU = 'app-to-menu';

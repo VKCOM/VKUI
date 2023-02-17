@@ -1,15 +1,17 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
 import { useArgs } from '@storybook/addons';
-import { Pagination, PaginationProps } from './Pagination';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Pagination, PaginationProps } from './Pagination';
 
-export default {
+const story: Meta<PaginationProps> = {
   title: 'Blocks/Pagination',
   component: Pagination,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Pagination'), ...DisableCartesianParam },
-} as Meta<PaginationProps>;
+};
+
+export default story;
 
 const Template: Story<PaginationProps> = (args) => {
   const [, updateArg] = useArgs();

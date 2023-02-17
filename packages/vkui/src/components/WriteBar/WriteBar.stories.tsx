@@ -1,16 +1,18 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { WriteBar, WriteBarProps } from './WriteBar';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { WriteBarIcon } from '../WriteBarIcon/WriteBarIcon';
+import { Meta, Story } from '@storybook/react';
 import { Icon28SmileOutline } from '@vkontakte/icons';
+import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { WriteBarIcon } from '../WriteBarIcon/WriteBarIcon';
+import { WriteBar, WriteBarProps } from './WriteBar';
 
-export default {
+const story: Meta<WriteBarProps> = {
   title: 'Blocks/WriteBar',
   component: WriteBar,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('UsersStack'), ...DisableCartesianParam },
-} as Meta<WriteBarProps>;
+};
+
+export default story;
 
 const Template: Story<WriteBarProps> = (args) => <WriteBar {...args} />;
 

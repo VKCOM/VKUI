@@ -9,8 +9,10 @@ module.exports = {
   collectCoverageFrom: ['src/*/**/**.{ts,tsx}'],
   coveragePathIgnorePatterns: [
     '\\.d\\.ts$',
+    '\\.storybook',
     'types\\.ts$',
     'src/testing',
+    'src/storybook',
     '\\.test\\.tsx?$',
     '\\.e2e\\.tsx?$',
   ],

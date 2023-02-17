@@ -1,10 +1,10 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { DateInput, DateInputProps } from './DateInput';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { DateInput, DateInputProps } from './DateInput';
 
-export default {
+const story: Meta<DateInputProps> = {
   title: 'Forms/DateInput',
   component: DateInput,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
@@ -13,7 +13,9 @@ export default {
       control: { type: 'date' },
     },
   },
-} as Meta<DateInputProps>;
+};
+
+export default story;
 
 const Template: Story<DateInputProps> = ({ value, ...args }) => {
   const parsedValue = value ? new Date(value) : value;

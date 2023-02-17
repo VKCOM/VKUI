@@ -1,14 +1,16 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { SegmentedControl, SegmentedControlProps } from './SegmentedControl';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { SegmentedControl, SegmentedControlProps } from './SegmentedControl';
 
-export default {
+const story: Meta<SegmentedControlProps> = {
   title: 'Forms/SegmentedControl',
   component: SegmentedControl,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
-} as Meta<SegmentedControlProps>;
+};
+
+export default story;
 
 const Template: Story<SegmentedControlProps> = (args) => <SegmentedControl {...args} />;
 

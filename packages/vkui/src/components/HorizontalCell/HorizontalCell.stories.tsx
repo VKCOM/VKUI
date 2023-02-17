@@ -1,23 +1,26 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { HorizontalCell, HorizontalCellProps } from './HorizontalCell';
+import { Meta, Story } from '@storybook/react';
+import { usePlatform } from '../../hooks/usePlatform';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { getFigmaPage } from '../../storybook/helpers';
+import { getAvatarUrl } from '../../testing/mock';
 import { Group } from '../Group/Group';
 import { Image } from '../Image/Image';
-import { usePlatform } from '../../hooks/usePlatform';
-import { getFigmaPage } from '../../storybook/helpers';
+import { HorizontalCell, HorizontalCellProps } from './HorizontalCell';
 
-export default {
+const story: Meta<HorizontalCellProps> = {
   title: 'Blocks/HorizontalCell',
   component: HorizontalCell,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('HorizontalCell'), ...DisableCartesianParam },
-} as Meta<HorizontalCellProps>;
+};
+
+export default story;
 
 interface HorizontalCellItemProps {
   id: number;
   title: string;
-  icon_139: string;
+  icon: string;
 }
 
 const Template: Story<HorizontalCellProps & { values: HorizontalCellItemProps[] }> = ({
@@ -31,7 +34,7 @@ const Template: Story<HorizontalCellProps & { values: HorizontalCellItemProps[] 
       {values.map((value) => {
         return (
           <HorizontalCell key={value.id} header={value.title} {...args}>
-            <Image size={platform === 'ios' ? 64 : 56} borderRadius="l" src={value.icon_139} />
+            <Image size={platform === 'ios' ? 64 : 56} borderRadius="l" src={value.icon} />
           </HorizontalCell>
         );
       })}
@@ -45,23 +48,22 @@ Playground.args = {
     {
       id: 1,
       title: 'Промокот',
-      icon_139: 'https://sun9-54.userapi.com/c850536/v850536134/15096d/6806J7q6YwM.jpg',
+      icon: getAvatarUrl('app_promokot'),
     },
     {
       id: 2,
       title: 'Разделите счёт',
-      icon_139: 'https://sun9-20.userapi.com/c857416/v857416681/fc6d0/06XQvs4SyiE.jpg',
+      icon: getAvatarUrl('app_split_bill'),
     },
     {
       id: 3,
       title: 'Рассылки',
-      icon_139: 'https://sun9-50.userapi.com/c850536/v850536397/129313/qdVJ7A7xd70.jpg',
+      icon: getAvatarUrl('app_emails'),
     },
     {
       id: 4,
       title: 'Тексты песен',
-      icon_139:
-        'https://sun9-41.userapi.com/Zf2HluZJZDYjTbxhnSfeYnHtttBYsYbdjJ3QJQ/aDcJQrVVnbQ.jpg',
+      icon: getAvatarUrl('app_lyrics'),
     },
   ],
 };

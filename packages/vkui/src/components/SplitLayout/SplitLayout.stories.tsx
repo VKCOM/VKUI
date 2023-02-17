@@ -1,36 +1,38 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-import { SplitLayout, SplitLayoutProps } from './SplitLayout';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { usePlatform } from '../../hooks/usePlatform';
-import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
-import { ModalRoot } from '../ModalRoot/ModalRootAdaptive';
-import { ModalPage } from '../ModalPage/ModalPage';
-import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
-import { Group } from '../Group/Group';
-import { CellButton } from '../CellButton/CellButton';
-import { PanelHeader } from '../PanelHeader/PanelHeader';
-import { SplitCol } from '../SplitCol/SplitCol';
-import { Panel } from '../Panel/Panel';
-import { Cell } from '../Cell/Cell';
-import { Separator } from '../Separator/Separator';
-import { Alert } from '../Alert/Alert';
-import { View } from '../View/View';
-import { Avatar } from '../Avatar/Avatar';
-import { Placeholder } from '../Placeholder/Placeholder';
 import {
   Icon56MentionOutline,
   Icon56MessageReadOutline,
   Icon56UsersOutline,
 } from '@vkontakte/icons';
-import { Button } from '../Button/Button';
+import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
+import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
+import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { Alert } from '../Alert/Alert';
+import { Avatar } from '../Avatar/Avatar';
+import { Button } from '../Button/Button';
+import { Cell } from '../Cell/Cell';
+import { CellButton } from '../CellButton/CellButton';
+import { Group } from '../Group/Group';
+import { ModalPage } from '../ModalPage/ModalPage';
+import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
+import { ModalRoot } from '../ModalRoot/ModalRootAdaptive';
+import { Panel } from '../Panel/Panel';
+import { PanelHeader } from '../PanelHeader/PanelHeader';
+import { Placeholder } from '../Placeholder/Placeholder';
+import { Separator } from '../Separator/Separator';
+import { SplitCol } from '../SplitCol/SplitCol';
+import { View } from '../View/View';
+import { SplitLayout, SplitLayoutProps } from './SplitLayout';
 
-export default {
+const story: Meta<SplitLayoutProps> = {
   title: 'Layout/SplitLayout',
   component: SplitLayout,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
-} as Meta<SplitLayoutProps>;
+};
+
+export default story;
 
 const panels = ['panel 1', 'panel 2', 'panel 3'];
 const modals = ['modal 1', 'modal 2'];

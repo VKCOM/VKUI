@@ -4,13 +4,13 @@ import { ReactFramework } from '@storybook/react';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { AppRoot } from '../components/AppRoot/AppRoot';
 import { ConfigProvider } from '../components/ConfigProvider/ConfigProvider';
-import { SplitLayout } from '../components/SplitLayout/SplitLayout';
-import { SplitCol } from '../components/SplitCol/SplitCol';
+import { Panel } from '../components/Panel/Panel';
 import { PanelHeader } from '../components/PanelHeader/PanelHeader';
+import { SplitCol } from '../components/SplitCol/SplitCol';
+import { SplitLayout } from '../components/SplitLayout/SplitLayout';
+import { View } from '../components/View/View';
 import { usePlatform } from '../hooks/usePlatform';
 import { Platform } from '../lib/platform';
-import { View } from '../components/View/View';
-import { Panel } from '../components/Panel/Panel';
 
 const CenteredStyle: React.CSSProperties = {
   display: 'flex',

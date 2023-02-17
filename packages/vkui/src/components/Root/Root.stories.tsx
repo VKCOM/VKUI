@@ -1,20 +1,22 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-import { Root, RootProps } from './Root';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { View } from '../View/View';
+import { CellButton } from '../CellButton/CellButton';
+import { Group } from '../Group/Group';
 import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
-import { Group } from '../Group/Group';
-import { CellButton } from '../CellButton/CellButton';
+import { View } from '../View/View';
+import { Root, RootProps } from './Root';
 
-export default {
+const story: Meta<RootProps> = {
   title: 'Layout/Root',
   component: Root,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   decorators: [withVKUILayout],
-} as Meta<RootProps>;
+};
+
+export default story;
 
 export const Example = () => {
   const [activeView, setActiveView] = React.useState('view1');

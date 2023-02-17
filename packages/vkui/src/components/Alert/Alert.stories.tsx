@@ -1,14 +1,14 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Alert, AlertProps } from './Alert';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { SplitLayout } from '../SplitLayout/SplitLayout';
-import { SplitCol } from '../SplitCol/SplitCol';
-import { Placeholder } from '../Placeholder/Placeholder';
-import { Button } from '../Button/Button';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Button } from '../Button/Button';
+import { Placeholder } from '../Placeholder/Placeholder';
+import { SplitCol } from '../SplitCol/SplitCol';
+import { SplitLayout } from '../SplitLayout/SplitLayout';
+import { Alert, AlertProps } from './Alert';
 
-export default {
+const story: Meta<AlertProps> = {
   title: 'Popouts/Alert',
   component: Alert,
   parameters: {
@@ -16,7 +16,9 @@ export default {
     ...getFigmaPage('Alert'),
     ...DisableCartesianParam,
   },
-} as Meta<AlertProps>;
+};
+
+export default story;
 
 const Template: Story<AlertProps> = (args) => {
   const [visible, setVisible] = React.useState(true);

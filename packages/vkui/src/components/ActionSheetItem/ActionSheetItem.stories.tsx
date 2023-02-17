@@ -1,14 +1,13 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-
-import { ActionSheetItem, ActionSheetItemProps } from './ActionSheetItem';
-import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
+import { Meta, Story } from '@storybook/react';
 import { getIconArgBySize, getIconComponent, IconArgType, IconName } from '../../storybook/Icons';
+import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { ActionSheetItem, ActionSheetItemProps } from './ActionSheetItem';
 
 const CheckIconArg = getIconArgBySize(/^Icon2[04]Check/);
 
-export default {
+const story: Meta<ActionSheetItemProps> = {
   title: 'Popouts/ActionSheetItem',
   component: ActionSheetItem,
   parameters: {
@@ -22,7 +21,9 @@ export default {
     meta: StringArg,
     subtitle: StringArg,
   },
-} as Meta<ActionSheetItemProps>;
+};
+
+export default story;
 
 const Template: Story<
   Omit<ActionSheetItemProps, 'before' | 'iconChecked'> & {

@@ -1,9 +1,6 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Button, ButtonProps } from './Button';
-import { CanvasFullLayout } from '../../storybook/constants';
-import { Counter } from '../Counter/Counter';
+import { Meta, Story } from '@storybook/react';
 import {
   Icon12Add,
   Icon12Tag,
@@ -11,9 +8,12 @@ import {
   Icon24Add,
   Icon24ChevronCompactRight,
 } from '@vkontakte/icons';
+import { CanvasFullLayout } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Counter } from '../Counter/Counter';
+import { Button, ButtonProps } from './Button';
 
-export default {
+const story: Meta<ButtonProps> = {
   title: 'Blocks/Button',
   component: Button,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Button') },
@@ -28,7 +28,9 @@ export default {
     },
   },
   decorators: [withCartesian],
-} as Meta<ButtonProps>;
+};
+
+export default story;
 
 const Template: Story<
   Omit<ButtonProps, 'before' | 'after'> & { addBefore: boolean; addAfter: boolean }

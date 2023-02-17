@@ -1,14 +1,16 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { ConfigProvider, ConfigProviderProps } from './ConfigProvider';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { ConfigProvider, ConfigProviderProps } from './ConfigProvider';
 import { useConfigProvider } from './ConfigProviderContext';
 
-export default {
+const story: Meta<ConfigProviderProps> = {
   title: 'Service/ConfigProvider',
   component: ConfigProvider,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
-} as Meta<ConfigProviderProps>;
+};
+
+export default story;
 
 const DisplayConfigProvider = () => {
   const values = useConfigProvider();

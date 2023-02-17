@@ -1,9 +1,9 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { PromoBanner, PromoBannerProps } from './PromoBanner';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { PromoBanner, PromoBannerProps } from './PromoBanner';
 
-export default {
+const story: Meta<PromoBannerProps> = {
   title: 'Advertisement/PromoBanner',
   component: PromoBanner,
   parameters: {
@@ -11,7 +11,9 @@ export default {
     centered: false,
     ...DisableCartesianParam,
   },
-} as Meta<PromoBannerProps>;
+};
+
+export default story;
 
 const Template: Story<PromoBannerProps> = (args) => <PromoBanner {...args} />;
 

@@ -1,18 +1,20 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { PopoutWrapper, PopoutWrapperProps } from './PopoutWrapper';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { SplitLayout } from '../SplitLayout/SplitLayout';
 import { SplitCol } from '../SplitCol/SplitCol';
+import { SplitLayout } from '../SplitLayout/SplitLayout';
+import { PopoutWrapper, PopoutWrapperProps } from './PopoutWrapper';
 
-export default {
+const story: Meta<PopoutWrapperProps> = {
   title: 'Popouts/PopoutWrapper',
   component: PopoutWrapper,
   parameters: {
     ...CanvasFullLayout,
     ...DisableCartesianParam,
   },
-} as Meta<PopoutWrapperProps>;
+};
+
+export default story;
 
 const Template: Story<PopoutWrapperProps> = (args) => (
   <SplitLayout popout={<PopoutWrapper {...args} />}>

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Calendar, CalendarProps } from './Calendar';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Calendar, CalendarProps } from './Calendar';
 
-export default {
+const story: Meta<CalendarProps> = {
   title: 'Forms/Calendar',
   component: Calendar,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Calendar'), ...DisableCartesianParam },
@@ -13,7 +13,9 @@ export default {
       control: { type: 'date' },
     },
   },
-} as Meta<CalendarProps>;
+};
+
+export default story;
 
 const Template: Story<CalendarProps> = ({ value, ...args }) => {
   const parsedValue = value ? new Date(value) : value;

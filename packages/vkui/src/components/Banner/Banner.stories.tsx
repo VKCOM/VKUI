@@ -1,19 +1,21 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Banner, BannerProps } from './Banner';
+import { withCartesian } from '@project-tools/storybook-addon-cartesian';
+import { Meta, Story } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout } from '../../storybook/constants';
+import { getFigmaPage } from '../../storybook/helpers';
 import { Button } from '../Button/Button';
 import { Group } from '../Group/Group';
 import { Image } from '../Image/Image';
-import { getFigmaPage } from '../../storybook/helpers';
-import { withCartesian } from '@project-tools/storybook-addon-cartesian';
+import { Banner, BannerProps } from './Banner';
 
-export default {
+const story: Meta<BannerProps> = {
   title: 'Blocks/Banner',
   component: Banner,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Banner') },
-} as Meta<BannerProps>;
+};
+
+export default story;
 
 const Template: Story<BannerProps> = (args) => <Banner {...args} />;
 

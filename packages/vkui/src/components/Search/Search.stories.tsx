@@ -1,16 +1,18 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Search, SearchProps } from './Search';
+import { Meta, Story } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Group } from '../Group/Group';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Group } from '../Group/Group';
+import { Search, SearchProps } from './Search';
 
-export default {
+const story: Meta<SearchProps> = {
   title: 'Blocks/Search',
   component: Search,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Search'), ...DisableCartesianParam },
-} as Meta<SearchProps>;
+};
+
+export default story;
 
 const Template: Story<SearchProps> = (args) => <Search {...args} after={null} />;
 

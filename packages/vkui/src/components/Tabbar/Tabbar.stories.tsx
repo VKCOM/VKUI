@@ -1,8 +1,5 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Tabbar, TabbarProps } from './Tabbar';
-import { withVKUILayout } from '../../storybook/VKUIDecorators';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { Meta, Story } from '@storybook/react';
 import {
   Icon28ClipOutline,
   Icon28MessageOutline,
@@ -10,17 +7,22 @@ import {
   Icon28ServicesOutline,
   Icon28UserCircleOutline,
 } from '@vkontakte/icons';
-import { TabbarItem } from '../TabbarItem/TabbarItem';
-import { Counter } from '../Counter/Counter';
-import { Badge } from '../Badge/Badge';
+import { withVKUILayout } from '../../storybook/VKUIDecorators';
+import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Badge } from '../Badge/Badge';
+import { Counter } from '../Counter/Counter';
+import { TabbarItem } from '../TabbarItem/TabbarItem';
+import { Tabbar, TabbarProps } from './Tabbar';
 
-export default {
+const story: Meta<TabbarProps> = {
   title: 'Layout/Tabbar',
   component: Tabbar,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Tabbar'), ...DisableCartesianParam },
   decorators: [withVKUILayout],
-} as Meta<TabbarProps>;
+};
+
+export default story;
 
 const Template: Story<TabbarProps> = (args) => {
   const [activeStory, setActiveStory] = React.useState<string>('profile');

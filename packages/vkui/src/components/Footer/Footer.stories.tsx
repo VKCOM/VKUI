@@ -1,20 +1,22 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Footer, FooterProps } from './Footer';
+import { Meta, Story } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { PanelHeader } from '../PanelHeader/PanelHeader';
+import { getFigmaPage } from '../../storybook/helpers';
+import { Avatar } from '../Avatar/Avatar';
+import { Cell } from '../Cell/Cell';
 import { Group } from '../Group/Group';
 import { List } from '../List/List';
-import { Cell } from '../Cell/Cell';
-import { Avatar } from '../Avatar/Avatar';
-import { getFigmaPage } from '../../storybook/helpers';
+import { PanelHeader } from '../PanelHeader/PanelHeader';
+import { Footer, FooterProps } from './Footer';
 
-export default {
+const story: Meta<FooterProps> = {
   title: 'Blocks/Footer',
   component: Footer,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Footer'), ...DisableCartesianParam },
-} as Meta<FooterProps>;
+};
+
+export default story;
 
 const Template: Story<FooterProps> = (args) => <Footer {...args} />;
 

@@ -1,17 +1,19 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { InfoRow, InfoRowProps } from './InfoRow';
+import { Meta, Story } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Group } from '../Group/Group';
 import { Header } from '../Header/Header';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
+import { InfoRow, InfoRowProps } from './InfoRow';
 
-export default {
+const story: Meta<InfoRowProps> = {
   title: 'Blocks/InfoRow',
   component: InfoRow,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
-} as Meta<InfoRowProps>;
+};
+
+export default story;
 
 const Template: Story<InfoRowProps> = (args) => <InfoRow {...args} />;
 

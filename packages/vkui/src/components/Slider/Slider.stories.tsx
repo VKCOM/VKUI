@@ -1,16 +1,18 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Slider, SliderProps } from './Slider';
+import { Meta, Story } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Group } from '../Group/Group';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Group } from '../Group/Group';
+import { Slider, SliderProps } from './Slider';
 
-export default {
+const story: Meta<SliderProps> = {
   title: 'Forms/Slider',
   component: Slider,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
-} as Meta<SliderProps>;
+};
+
+export default story;
 
 const Template: Story<SliderProps> = (args) => <Slider {...args} />;
 

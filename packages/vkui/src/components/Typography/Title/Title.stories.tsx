@@ -1,9 +1,9 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Title, TitleProps } from './Title';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout } from '../../../storybook/constants';
 import { getFigmaPage } from '../../../storybook/helpers';
+import { Title, TitleProps } from './Title';
 
 export default {
   title: 'Typography/Title',

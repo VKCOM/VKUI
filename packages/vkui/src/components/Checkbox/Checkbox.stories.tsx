@@ -1,17 +1,19 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Checkbox, CheckboxProps } from './Checkbox';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Checkbox, CheckboxProps } from './Checkbox';
 
-export default {
+const story: Meta<CheckboxProps> = {
   title: 'Forms/Checkbox',
   component: Checkbox,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
   argTypes: {
     description: StringArg,
   },
-} as Meta<CheckboxProps>;
+};
+
+export default story;
 
 const Template: Story<CheckboxProps> = (args) => <Checkbox {...args} />;
 

@@ -1,18 +1,20 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Header, HeaderProps } from './Header';
+import { Meta, Story } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Link } from '../Link/Link';
+import { getFigmaPage } from '../../storybook/helpers';
 import { Counter } from '../Counter/Counter';
 import { Group } from '../Group/Group';
-import { getFigmaPage } from '../../storybook/helpers';
+import { Link } from '../Link/Link';
+import { Header, HeaderProps } from './Header';
 
-export default {
+const story: Meta<HeaderProps> = {
   title: 'Blocks/Header',
   component: Header,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Header'), ...DisableCartesianParam },
-} as Meta<HeaderProps>;
+};
+
+export default story;
 
 const Template: Story<HeaderProps> = (args) => <Header {...args} />;
 

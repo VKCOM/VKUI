@@ -1,14 +1,16 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Textarea, TextareaProps } from './Textarea';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Textarea, TextareaProps } from './Textarea';
 
-export default {
+const story: Meta<TextareaProps> = {
   title: 'Forms/Textarea',
   component: Textarea,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
-} as Meta<TextareaProps>;
+};
+
+export default story;
 
 const Template: Story<TextareaProps> = (args) => <Textarea {...args} />;
 

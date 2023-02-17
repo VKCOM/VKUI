@@ -1,20 +1,22 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { RadioGroup, RadioGroupProps } from './RadioGroup';
+import { Meta, Story } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { getFigmaPage } from '../../storybook/helpers';
+import { Group } from '../Group/Group';
 import {
   Playground as BasicRadio,
   WithDescription as RadioWithDescription,
 } from '../Radio/Radio.stories';
-import { Group } from '../Group/Group';
-import { getFigmaPage } from '../../storybook/helpers';
+import { RadioGroup, RadioGroupProps } from './RadioGroup';
 
-export default {
+const story: Meta<RadioGroupProps> = {
   title: 'Forms/RadioGroup',
   component: RadioGroup,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
-} as Meta<RadioGroupProps>;
+};
+
+export default story;
 
 const Template: Story<RadioGroupProps> = (args) => (
   <RadioGroup {...args}>

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Progress, ProgressProps } from './Progress';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Progress, ProgressProps } from './Progress';
 
-export default {
+const story: Meta<ProgressProps> = {
   title: 'Blocks/Progress',
   component: Progress,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Progress'), ...DisableCartesianParam },
@@ -13,7 +13,9 @@ export default {
       control: { type: 'range', min: 0, max: 100, step: 1 },
     },
   },
-} as Meta<ProgressProps>;
+};
+
+export default story;
 
 const Template: Story<ProgressProps> = (args) => <Progress {...args} />;
 

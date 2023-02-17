@@ -1,15 +1,17 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { FormItem, FormItemProps } from './FormItem';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Input } from '../Input/Input';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Input } from '../Input/Input';
+import { FormItem, FormItemProps } from './FormItem';
 
-export default {
+const story: Meta<FormItemProps> = {
   title: 'Forms/FormItem',
   component: FormItem,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
-} as Meta<FormItemProps>;
+};
+
+export default story;
 
 const Template: Story<FormItemProps> = (args) => <FormItem {...args} />;
 

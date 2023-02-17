@@ -1,9 +1,9 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Touch, TouchEvent, TouchProps } from './Touch';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { Touch, TouchEvent, TouchProps } from './Touch';
 
-export default {
+const story: Meta<TouchProps> = {
   title: 'Service/Touch',
   component: Touch,
   parameters: {
@@ -11,7 +11,9 @@ export default {
     cantered: false,
     ...DisableCartesianParam,
   },
-} as Meta<TouchProps>;
+};
+
+export default story;
 
 const circleStyle = {
   width: 40,
@@ -50,17 +52,24 @@ const Template: Story<TouchProps> = (args) => {
     }
   });
 
+  const getValueWithLimit = (value: number, limit: number) => {
+    return value > limit ? limit : value < -limit ? -limit : value;
+  };
+
   const onMove = (e: TouchEvent) => {
     const shiftX = startX.current + e.shiftX;
     const shiftY = startY.current + e.shiftY;
 
-    setShiftX(shiftX > limitX ? limitX : shiftX < -limitX ? -limitX : shiftX);
-    setShiftY(shiftY > limitY ? limitY : shiftY < -limitY ? -limitY : shiftY);
+    setShiftX(getValueWithLimit(shiftX, limitX));
+    setShiftY(getValueWithLimit(shiftY, limitY));
   };
 
   const onEnd = (e: TouchEvent) => {
-    startX.current += e.shiftX;
-    startY.current += e.shiftY;
+    const shiftX = startX.current + e.shiftX;
+    const shiftY = startY.current + e.shiftY;
+
+    startX.current = getValueWithLimit(shiftX, limitX);
+    startY.current = getValueWithLimit(shiftY, limitY);
   };
 
   const limitExceeded = Math.abs(shiftX) >= limitX || Math.abs(shiftY) >= limitY;

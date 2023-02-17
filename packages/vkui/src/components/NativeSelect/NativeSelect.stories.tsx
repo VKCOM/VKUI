@@ -1,14 +1,16 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { NativeSelect, NativeSelectProps } from './NativeSelect';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { NativeSelect, NativeSelectProps } from './NativeSelect';
 
-export default {
+const story: Meta<NativeSelectProps> = {
   title: 'Forms/NativeSelect',
   component: NativeSelect,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
-} as Meta<NativeSelectProps>;
+};
+
+export default story;
 
 const Template: Story<NativeSelectProps> = (args) => (
   <NativeSelect {...args}>

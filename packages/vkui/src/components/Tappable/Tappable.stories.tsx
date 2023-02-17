@@ -1,13 +1,15 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Tappable, TappableProps } from './Tappable';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { Tappable, TappableProps } from './Tappable';
 
-export default {
+const story: Meta<TappableProps> = {
   title: 'Blocks/Tappable',
   component: Tappable,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
-} as Meta<TappableProps>;
+};
+
+export default story;
 
 const Template: Story<TappableProps> = (args) => (
   <Tappable {...args}>

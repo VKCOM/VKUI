@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { useArgs, useParameter, useArgTypes, ArgTypes } from '@storybook/api';
-import { Icons, WithTooltipPure, IconButton } from '@storybook/components';
-import { BooleanOpts } from './constants';
+import { ArgTypes, useArgs, useArgTypes, useParameter } from '@storybook/api';
+import { IconButton, Icons, WithTooltipPure } from '@storybook/components';
 import { OptionsContainer } from './OptionsContainer';
+import { BooleanOpts } from './constants';
 import { CartesianConfigParameter, OptionNamesProp, OptionsProp } from './types';
 
 const getOptionsFromArgTypes = (argTypes: ArgTypes) =>

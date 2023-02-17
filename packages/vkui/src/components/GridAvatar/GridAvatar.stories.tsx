@@ -1,14 +1,14 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { GridAvatar, GridAvatarProps } from './GridAvatar';
-import { CanvasFullLayout } from '../../storybook/constants';
-import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
-import { getFigmaPage } from '../../storybook/helpers';
-import { imageBaseSizes } from '../ImageBase/types';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
+import { Meta, Story } from '@storybook/react';
+import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
+import { CanvasFullLayout } from '../../storybook/constants';
+import { getFigmaPage } from '../../storybook/helpers';
 import { getAvatarUrl } from '../../testing/mock';
+import { imageBaseSizes } from '../ImageBase/types';
+import { GridAvatar, GridAvatarProps } from './GridAvatar';
 
-export default {
+const story: Meta<GridAvatarProps> = {
   title: 'Blocks/GridAvatar',
   component: GridAvatar,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('GridAvatar') },
@@ -24,7 +24,9 @@ export default {
     },
   },
   decorators: [withCartesian],
-} as Meta<GridAvatarProps>;
+};
+
+export default story;
 
 const Template: Story<GridAvatarProps & { badged: boolean }> = ({ badged, ...args }) => {
   const badge = badged ? (

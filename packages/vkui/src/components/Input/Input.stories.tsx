@@ -1,14 +1,16 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Input, InputProps } from './Input';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Input, InputProps } from './Input';
 
-export default {
+const story: Meta<InputProps> = {
   title: 'Forms/Input',
   component: Input,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
-} as Meta<InputProps>;
+};
+
+export default story;
 
 const Template: Story<InputProps> = (args) => <Input {...args} />;
 

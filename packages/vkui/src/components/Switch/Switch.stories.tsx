@@ -1,10 +1,10 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Switch, SwitchProps } from './Switch';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Switch, SwitchProps } from './Switch';
 
-export default {
+const story: Meta<SwitchProps> = {
   title: 'Blocks/Switch',
   component: Switch,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Switch'), ...DisableCartesianParam },
@@ -13,7 +13,9 @@ export default {
       control: 'boolean',
     },
   },
-} as Meta<SwitchProps>;
+};
+
+export default story;
 
 const Template: Story<SwitchProps> = (args) => <Switch {...args} />;
 

@@ -1,11 +1,5 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Group, GroupProps } from './Group';
-import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Header } from '../Header/Header';
-import { Playground as BasicCellButton } from '../CellButton/CellButton.stories';
-import { SimpleCell } from '../SimpleCell/SimpleCell';
+import { Meta, Story } from '@storybook/react';
 import {
   Icon28CheckShieldDeviceOutline,
   Icon28DevicesOutline,
@@ -13,14 +7,22 @@ import {
   Icon28MailOutline,
   Icon28PhoneOutline,
 } from '@vkontakte/icons';
-import { CellButton } from '../CellButton/CellButton';
+import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
+import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { CellButton } from '../CellButton/CellButton';
+import { Playground as BasicCellButton } from '../CellButton/CellButton.stories';
+import { Header } from '../Header/Header';
+import { SimpleCell } from '../SimpleCell/SimpleCell';
+import { Group, GroupProps } from './Group';
 
-export default {
+const story: Meta<GroupProps> = {
   title: 'Blocks/Group',
   component: Group,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Group'), ...DisableCartesianParam },
-} as Meta<GroupProps>;
+};
+
+export default story;
 
 const Template: Story<GroupProps> = (args) => <Group {...args} />;
 

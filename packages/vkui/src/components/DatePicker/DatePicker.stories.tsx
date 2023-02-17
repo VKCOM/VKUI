@@ -1,14 +1,16 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { DatePicker, DatePickerProps } from './DatePicker';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { DatePicker, DatePickerProps } from './DatePicker';
 
-export default {
+const story: Meta<DatePickerProps> = {
   title: 'Forms/DatePicker',
   component: DatePicker,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
-} as Meta<DatePickerProps>;
+};
+
+export default story;
 
 const Template: Story<DatePickerProps> = (args) => <DatePicker {...args} />;
 

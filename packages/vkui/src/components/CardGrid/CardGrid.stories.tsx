@@ -1,13 +1,13 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { CardGrid, CardGridProps } from './CardGrid';
+import { Meta, Story } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Group } from '../Group/Group';
-import { Playground as BasicCard } from '../Card/Card.stories';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Playground as BasicCard } from '../Card/Card.stories';
+import { Group } from '../Group/Group';
+import { CardGrid, CardGridProps } from './CardGrid';
 
-export default {
+const story: Meta<CardGridProps> = {
   title: 'Blocks/CardGrid',
   component: CardGrid,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Card'), ...DisableCartesianParam },
@@ -16,7 +16,9 @@ export default {
       control: { type: 'number' },
     },
   },
-} as Meta<CardGridProps>;
+};
+
+export default story;
 
 const Template: Story<CardGridProps & { count: number }> = ({ count, ...args }) => (
   <CardGrid {...args}>

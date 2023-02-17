@@ -1,18 +1,20 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { FormField, FormFieldProps } from './FormField';
+import { Meta, Story } from '@storybook/react';
+import { Icon16Clear, Icon28MessageOutline } from '@vkontakte/icons';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { IconButton } from '../IconButton/IconButton';
-import { Icon16Clear, Icon28MessageOutline } from '@vkontakte/icons';
-import { Group } from '../Group/Group';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Group } from '../Group/Group';
+import { IconButton } from '../IconButton/IconButton';
+import { FormField, FormFieldProps } from './FormField';
 
-export default {
+const story: Meta<FormFieldProps> = {
   title: 'Forms/FormField',
   component: FormField,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
-} as Meta<FormFieldProps>;
+};
+
+export default story;
 
 const Template: Story<FormFieldProps> = (args) => (
   <FormField {...args}>

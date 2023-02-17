@@ -1,22 +1,22 @@
 import '../packages/vkui/src/styles/themes.css';
 import '../packages/vkui/src/styles/common.css';
 
-import { useState, useRef } from 'react';
-import * as VKUI from '../packages/vkui/src';
+import { useRef, useState } from 'react';
+import * as Icons from '@vkontakte/icons';
 import {
-  IconExampleForOverlayBasedOnImageBaseSize,
-  IconExampleForFallbackBasedOnImageBaseSize,
   IconExampleForBadgeBasedOnImageBaseSize,
+  IconExampleForFallbackBasedOnImageBaseSize,
+  IconExampleForOverlayBasedOnImageBaseSize,
 } from '@vkui/testing/icons';
 import {
+  getAllUsers,
+  getAvatarUrl,
   getRandomInt,
   getRandomUser,
   getRandomUsers,
-  getAllUsers,
   importantCountries,
-  getAvatarUrl,
 } from '@vkui/testing/mock';
-import * as Icons from '@vkontakte/icons';
+import * as VKUI from '../packages/vkui/src';
 import { perfLogger } from './utils';
 
 const unstablePrefix = 'unstable_';

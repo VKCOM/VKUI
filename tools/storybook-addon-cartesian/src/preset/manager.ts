@@ -1,6 +1,6 @@
 import { addons, types } from '@storybook/addons';
-import { ADDON_ID, TOOL_ID } from '../constants';
 import { Tool } from '../Tool';
+import { ADDON_ID, TOOL_ID } from '../constants';
 
 addons.register(ADDON_ID, () => {
   addons.add(TOOL_ID, {

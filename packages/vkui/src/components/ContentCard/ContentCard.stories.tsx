@@ -1,10 +1,10 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { ContentCard, ContentCardProps } from './ContentCard';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { ContentCard, ContentCardProps } from './ContentCard';
 
-export default {
+const story: Meta<ContentCardProps> = {
   title: 'Blocks/ContentCard',
   component: ContentCard,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('ContentCard'), ...DisableCartesianParam },
@@ -13,7 +13,9 @@ export default {
       control: { type: 'boolean' },
     },
   },
-} as Meta<ContentCardProps>;
+};
+
+export default story;
 
 const Template: Story<ContentCardProps> = (args) => <ContentCard {...args} />;
 

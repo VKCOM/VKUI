@@ -1,23 +1,23 @@
 import * as React from 'react';
 import {
+  Icon16Cancel,
+  Icon20CheckCircleOn,
+  Icon20CopyOutline,
+  Icon20DeleteOutline,
+  Icon20GearOutline,
+  Icon20ListPlayOutline,
+  Icon20ShareOutline,
+  Icon24CheckCircleOn,
+  Icon24ThumbsUpOutline,
   Icon28CopyOutline,
   Icon28DeleteOutline,
   Icon28EditOutline,
   Icon28ListPlayOutline,
+  Icon28MessageOutline,
   Icon28PlaySpeedOutline,
   Icon28SettingsOutline,
   Icon28ShareOutline,
   Icon28SubtitlesOutline,
-  Icon20CopyOutline,
-  Icon20DeleteOutline,
-  Icon20ListPlayOutline,
-  Icon20GearOutline,
-  Icon20ShareOutline,
-  Icon20CheckCircleOn,
-  Icon24CheckCircleOn,
-  Icon24ThumbsUpOutline,
-  Icon16Cancel,
-  Icon28MessageOutline,
 } from '@vkontakte/icons';
 
 const IconsMap = {

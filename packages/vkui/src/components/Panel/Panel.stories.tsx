@@ -1,24 +1,26 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Panel, PanelProps } from './Panel';
+import { Meta, Story } from '@storybook/react';
+import { Icon28MusicOutline, Icon28UserOutline, Icon28UsersOutline } from '@vkontakte/icons';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { View } from '../View/View';
-import { PanelHeader } from '../PanelHeader/PanelHeader';
-import { Group } from '../Group/Group';
-import { Cell } from '../Cell/Cell';
-import { Icon28MusicOutline, Icon28UserOutline, Icon28UsersOutline } from '@vkontakte/icons';
 import { Avatar } from '../Avatar/Avatar';
+import { Cell } from '../Cell/Cell';
+import { Group } from '../Group/Group';
+import { PanelHeader } from '../PanelHeader/PanelHeader';
+import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
 import { Search } from '../Search/Search';
 import { Spinner } from '../Spinner/Spinner';
-import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
+import { View } from '../View/View';
+import { Panel, PanelProps } from './Panel';
 
-export default {
+const story: Meta<PanelProps> = {
   title: 'Layout/Panel',
   component: Panel,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   decorators: [withVKUILayout],
-} as Meta<PanelProps>;
+};
+
+export default story;
 
 export const Example: Story<PanelProps> = () => {
   const [activePanel, setActivePanel] = React.useState('panel1');

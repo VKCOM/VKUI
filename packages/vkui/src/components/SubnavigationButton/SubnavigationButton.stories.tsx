@@ -1,12 +1,12 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { SubnavigationButton, SubnavigationButtonProps } from './SubnavigationButton';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { Meta, Story } from '@storybook/react';
 import { Icon24FavoriteOutline } from '@vkontakte/icons';
-import { Counter } from '../Counter/Counter';
+import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
+import { Counter } from '../Counter/Counter';
+import { SubnavigationButton, SubnavigationButtonProps } from './SubnavigationButton';
 
-export default {
+const story: Meta<SubnavigationButtonProps> = {
   title: 'Blocks/SubnavigationButton',
   component: SubnavigationButton,
   parameters: {
@@ -14,7 +14,9 @@ export default {
     ...getFigmaPage('SubnavigationBar'),
     ...DisableCartesianParam,
   },
-} as Meta<SubnavigationButtonProps>;
+};
+
+export default story;
 
 const Template: Story<SubnavigationButtonProps> = (args) => <SubnavigationButton {...args} />;
 

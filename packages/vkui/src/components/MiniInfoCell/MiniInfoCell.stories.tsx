@@ -1,17 +1,19 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { MiniInfoCell, MiniInfoCellProps } from './MiniInfoCell';
-import { CanvasFullLayout } from '../../storybook/constants';
-import { Icon20ArticleOutline } from '@vkontakte/icons';
-import { getFigmaPage } from '../../storybook/helpers';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
+import { Meta, Story } from '@storybook/react';
+import { Icon20ArticleOutline } from '@vkontakte/icons';
+import { CanvasFullLayout } from '../../storybook/constants';
+import { getFigmaPage } from '../../storybook/helpers';
+import { MiniInfoCell, MiniInfoCellProps } from './MiniInfoCell';
 
-export default {
+const story: Meta<MiniInfoCellProps> = {
   title: 'Blocks/MiniInfoCell',
   component: MiniInfoCell,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('MiniInfoCell') },
   decorators: [withCartesian],
-} as Meta<MiniInfoCellProps>;
+};
+
+export default story;
 
 const Template: Story<MiniInfoCellProps> = (args) => <MiniInfoCell {...args} />;
 

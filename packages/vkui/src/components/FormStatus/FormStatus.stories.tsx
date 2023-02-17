@@ -1,16 +1,18 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { FormStatus, FormStatusProps } from './FormStatus';
+import { withCartesian } from '@project-tools/storybook-addon-cartesian';
+import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { getFigmaPage } from '../../storybook/helpers';
-import { withCartesian } from '@project-tools/storybook-addon-cartesian';
+import { FormStatus, FormStatusProps } from './FormStatus';
 
-export default {
+const story: Meta<FormStatusProps> = {
   title: 'Forms/FormStatus',
   component: FormStatus,
   parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms') },
   decorators: [withCartesian],
-} as Meta<FormStatusProps>;
+};
+
+export default story;
 
 const Template: Story<FormStatusProps> = (args) => <FormStatus {...args} />;
 
