@@ -1,7 +1,6 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { SelectMimicry, SelectMimicryProps } from './SelectMimicry';
 
 type StorySelectMimicryProps = SelectMimicryProps & { selectValue: string };
@@ -9,7 +8,7 @@ type StorySelectMimicryProps = SelectMimicryProps & { selectValue: string };
 const story: Meta<StorySelectMimicryProps> = {
   title: 'Forms/SelectMimicry',
   component: SelectMimicry,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
     selectValue: {
       description: 'Для отображения выбранного значения',

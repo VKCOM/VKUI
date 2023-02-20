@@ -9,7 +9,6 @@ import {
 } from '@vkontakte/icons';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { CellButton } from '../CellButton/CellButton';
 import { Playground as BasicCellButton } from '../CellButton/CellButton.stories';
 import { Header } from '../Header/Header';
@@ -19,7 +18,7 @@ import { Group, GroupProps } from './Group';
 const story: Meta<GroupProps> = {
   title: 'Blocks/Group',
   component: Group,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Group'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;

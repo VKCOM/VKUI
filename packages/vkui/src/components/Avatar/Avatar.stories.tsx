@@ -2,7 +2,6 @@ import React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import {
   IconExampleForBadgeBasedOnImageBaseSize,
   IconExampleForOverlayBasedOnImageBaseSize,
@@ -16,7 +15,7 @@ type AvatarStoryProps = AvatarProps & { badge: React.ReactNode; overlay: React.R
 const story: Meta<AvatarStoryProps> = {
   title: 'Blocks/Avatar',
   component: Avatar,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Avatar') },
+  parameters: CanvasFullLayout,
   argTypes: {
     size: {
       control: {

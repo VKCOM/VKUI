@@ -2,7 +2,6 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { getIconArgBySize, getIconComponent, IconName } from '../../storybook/Icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { getAvatarUrl } from '../../testing/mock';
 import { Avatar } from '../Avatar/Avatar';
 import { Chip, ChipProps } from './Chip';
@@ -12,7 +11,7 @@ const IconArg = getIconArgBySize(/^Icon16/);
 const story: Meta<ChipProps> = {
   title: 'Forms/Chip',
   component: Chip,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
     before: {
       options: ['Avatar', 'None'],

@@ -3,7 +3,6 @@ import { Meta, Story } from '@storybook/react';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { getAvatarUrl } from '../../testing/mock';
 import { Group } from '../Group/Group';
 import { Image } from '../Image/Image';
@@ -12,7 +11,7 @@ import { HorizontalCell, HorizontalCellProps } from './HorizontalCell';
 const story: Meta<HorizontalCellProps> = {
   title: 'Blocks/HorizontalCell',
   component: HorizontalCell,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('HorizontalCell'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;

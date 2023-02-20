@@ -1,13 +1,12 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Switch, SwitchProps } from './Switch';
 
 const story: Meta<SwitchProps> = {
   title: 'Blocks/Switch',
   component: Switch,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Switch'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
     disabled: {
       control: 'boolean',

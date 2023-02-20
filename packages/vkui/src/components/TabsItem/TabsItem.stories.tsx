@@ -8,7 +8,6 @@ import {
   Icon20UsersOutline,
 } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
 import { TabsItem, TabsItemProps } from './TabsItem';
@@ -16,7 +15,7 @@ import { TabsItem, TabsItemProps } from './TabsItem';
 const story: Meta<TabsItemProps> = {
   title: 'Blocks/TabsItem',
   component: TabsItem,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Tabs'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;

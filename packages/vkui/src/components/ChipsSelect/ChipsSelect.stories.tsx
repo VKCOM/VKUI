@@ -2,14 +2,13 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { Icon12Download } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { ChipOption } from '../Chip/Chip';
 import { ChipsSelect, ChipsSelectProps } from './ChipsSelect';
 
 const story: Meta<ChipsSelectProps<ChipOption>> = {
   title: 'Forms/ChipsSelect',
   component: ChipsSelect,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;

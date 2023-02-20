@@ -1,13 +1,12 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { DateInput, DateInputProps } from './DateInput';
 
 const story: Meta<DateInputProps> = {
   title: 'Forms/DateInput',
   component: DateInput,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
     value: {
       control: { type: 'date' },

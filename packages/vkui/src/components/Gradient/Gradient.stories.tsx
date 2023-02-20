@@ -1,13 +1,12 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Gradient, GradientProps } from './Gradient';
 
 const story: Meta<GradientProps> = {
   title: 'Blocks/Gradient',
   component: Gradient,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Gradient'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;

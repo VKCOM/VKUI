@@ -2,7 +2,6 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { Icon24ThumbsUpOutline, Icon28ErrorCircleOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { getAvatarUrl } from '../../testing/mock';
 import { Avatar } from '../Avatar/Avatar';
 import { Image } from '../Image/Image';
@@ -11,11 +10,7 @@ import { Snackbar, SnackbarProps } from './Snackbar';
 const story: Meta<SnackbarProps> = {
   title: 'Popouts/Snackbar',
   component: Snackbar,
-  parameters: {
-    ...CanvasFullLayout,
-    ...getFigmaPage('Snackbar'),
-    ...DisableCartesianParam,
-  },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
     before: {
       options: ['None', 'Icon24', 'Icon28', 'Avatar', 'Image'],

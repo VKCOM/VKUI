@@ -2,13 +2,12 @@ import React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Counter, CounterProps } from './Counter';
 
 const story: Meta<CounterProps> = {
   title: 'Blocks/Counter',
   component: Counter,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Counter') },
+  parameters: CanvasFullLayout,
   decorators: [withCartesian],
 };
 

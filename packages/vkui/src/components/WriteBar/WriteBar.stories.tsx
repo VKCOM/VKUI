@@ -2,14 +2,13 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { Icon28SmileOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { WriteBarIcon } from '../WriteBarIcon/WriteBarIcon';
 import { WriteBar, WriteBarProps } from './WriteBar';
 
 const story: Meta<WriteBarProps> = {
   title: 'Blocks/WriteBar',
   component: WriteBar,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('UsersStack'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;

@@ -3,7 +3,6 @@ import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import { Meta, Story } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Button } from '../Button/Button';
 import { Group } from '../Group/Group';
 import { Image } from '../Image/Image';
@@ -12,7 +11,7 @@ import { Banner, BannerProps } from './Banner';
 const story: Meta<BannerProps> = {
   title: 'Blocks/Banner',
   component: Banner,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Banner') },
+  parameters: CanvasFullLayout,
 };
 
 export default story;

@@ -12,7 +12,6 @@ import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditi
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Badge } from '../Badge/Badge';
 import { Cell } from '../Cell/Cell';
 import { Counter } from '../Counter/Counter';
@@ -31,11 +30,7 @@ import { Epic, EpicProps } from './Epic';
 const story: Meta<EpicProps> = {
   title: 'Layout/Epic',
   component: Epic,
-  parameters: {
-    ...CanvasFullLayout,
-    ...getFigmaPage('Epic'),
-    ...DisableCartesianParam,
-  },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;

@@ -2,7 +2,6 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { getIconArgBySize, getIconComponent, IconArgType, IconName } from '../../storybook/Icons';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { ActionSheetItem, ActionSheetItemProps } from './ActionSheetItem';
 
 const CheckIconArg = getIconArgBySize(/^Icon2[04]Check/);
@@ -10,11 +9,7 @@ const CheckIconArg = getIconArgBySize(/^Icon2[04]Check/);
 const story: Meta<ActionSheetItemProps> = {
   title: 'Popouts/ActionSheetItem',
   component: ActionSheetItem,
-  parameters: {
-    ...CanvasFullLayout,
-    ...getFigmaPage('ActionSheetItem'),
-    ...DisableCartesianParam,
-  },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
     before: IconArgType,
     iconChecked: CheckIconArg,

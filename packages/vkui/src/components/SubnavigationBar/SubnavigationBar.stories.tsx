@@ -3,7 +3,6 @@ import { useArgs } from '@storybook/addons';
 import { Meta, Story } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Group } from '../Group/Group';
 import {
   Playground as BasicSubnavigationButton,
@@ -17,11 +16,7 @@ type StorySubnavigationBarProps = SubnavigationBarProps & { selected: string };
 const story: Meta<StorySubnavigationBarProps> = {
   title: 'Blocks/SubnavigationBar',
   component: SubnavigationBar,
-  parameters: {
-    ...CanvasFullLayout,
-    ...getFigmaPage('SubnavigationBar'),
-    ...DisableCartesianParam,
-  },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
     selected: {
       control: 'select',

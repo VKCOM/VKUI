@@ -2,7 +2,6 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { getAvatarUrl } from '../../testing/mock';
 import { Avatar } from '../Avatar/Avatar';
 import { Group } from '../Group/Group';
@@ -11,7 +10,7 @@ import { Cell, CellProps } from './Cell';
 const story: Meta<CellProps> = {
   title: 'Blocks/Cell',
   component: Cell,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Cell'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   decorators: [withSinglePanel, withVKUILayout],
 };
 

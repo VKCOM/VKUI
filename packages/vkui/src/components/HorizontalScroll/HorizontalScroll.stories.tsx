@@ -3,7 +3,6 @@ import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import { Meta, Story } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { getRandomUsers, UserExtendedInterface } from '../../testing/mock';
 import { Avatar } from '../Avatar/Avatar';
 import { Group } from '../Group/Group';
@@ -15,11 +14,7 @@ import { HorizontalScroll, HorizontalScrollProps } from './HorizontalScroll';
 const story: Meta<HorizontalScrollProps> = {
   title: 'Layout/HorizontalScroll',
   component: HorizontalScroll,
-  parameters: {
-    ...CanvasFullLayout,
-    ...getFigmaPage('HorizontalCell'),
-    ...DisableCartesianParam,
-  },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
     showArrows: {
       options: ['None', 'Always', 'False', 'True'],

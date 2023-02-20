@@ -2,14 +2,13 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { Icon56MoneyTransferOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Button } from '../Button/Button';
 import { ModalCardBase, ModalCardBaseProps } from './ModalCardBase';
 
 const story: Meta<ModalCardBaseProps> = {
   title: 'Blocks/ModalCardBase',
   component: ModalCardBase,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('ModalCard'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;

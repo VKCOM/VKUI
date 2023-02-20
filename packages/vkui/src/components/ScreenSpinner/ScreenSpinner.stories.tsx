@@ -1,17 +1,12 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { ScreenSpinner, ScreenSpinnerProps } from './ScreenSpinner';
 
 const story: Meta<ScreenSpinnerProps> = {
   title: 'Popouts/ScreenSpinner',
   component: ScreenSpinner,
-  parameters: {
-    ...CanvasFullLayout,
-    ...getFigmaPage('ScreenSpinner'),
-    ...DisableCartesianParam,
-  },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;

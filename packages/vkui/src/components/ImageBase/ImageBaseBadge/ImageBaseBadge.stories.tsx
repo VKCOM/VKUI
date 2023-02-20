@@ -1,13 +1,12 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/constants';
-import { getFigmaPage } from '../../../storybook/helpers';
 import { ImageBaseBadge, ImageBaseBadgeProps } from './ImageBaseBadge';
 
 const story: Meta<ImageBaseBadgeProps> = {
   title: 'Blocks/ImageBaseBadge',
   component: ImageBaseBadge,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Avatar'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;

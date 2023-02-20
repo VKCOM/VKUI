@@ -3,7 +3,6 @@ import { Meta, Story } from '@storybook/react';
 import { Icon16Clear, Icon28MessageOutline } from '@vkontakte/icons';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Group } from '../Group/Group';
 import { IconButton } from '../IconButton/IconButton';
 import { FormField, FormFieldProps } from './FormField';
@@ -11,7 +10,7 @@ import { FormField, FormFieldProps } from './FormField';
 const story: Meta<FormFieldProps> = {
   title: 'Forms/FormField',
   component: FormField,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;

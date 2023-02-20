@@ -1,13 +1,12 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Checkbox, CheckboxProps } from './Checkbox';
 
 const story: Meta<CheckboxProps> = {
   title: 'Forms/Checkbox',
   component: Checkbox,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
     description: StringArg,
   },

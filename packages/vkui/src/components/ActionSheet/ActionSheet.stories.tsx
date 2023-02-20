@@ -11,7 +11,6 @@ import {
   Icon28SubtitlesOutline,
 } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { ActionSheetItem, ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';
 import { Button } from '../Button/Button';
 import { Placeholder } from '../Placeholder/Placeholder';
@@ -23,11 +22,7 @@ import { ActionSheetDefaultIosCloseItem } from './ActionSheetDefaultIosCloseItem
 const story: Meta<ActionSheetProps> = {
   title: 'Popouts/ActionSheet',
   component: ActionSheet,
-  parameters: {
-    ...CanvasFullLayout,
-    ...getFigmaPage('ActionSheet'),
-    ...DisableCartesianParam,
-  },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
     header: StringArg,
     text: StringArg,

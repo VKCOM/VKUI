@@ -1,7 +1,6 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { FormItem } from '../FormItem/FormItem';
 import { Input } from '../Input/Input';
 import { Select } from '../Select/Select';
@@ -10,7 +9,7 @@ import { FormLayoutGroup, FormLayoutGroupProps } from './FormLayoutGroup';
 const story: Meta<FormLayoutGroupProps> = {
   title: 'Forms/FormLayoutGroup',
   component: FormLayoutGroup,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;

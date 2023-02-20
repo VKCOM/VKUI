@@ -13,13 +13,6 @@ function getRandomObjectKey(object: Record<string, unknown>) {
   return keys[(keys.length * Math.random()) << 0];
 }
 
-export const miniAppImages = {
-  app_promokot: 'https://sun9-54.userapi.com/c850536/v850536134/15096d/6806J7q6YwM.jpg',
-  app_split_bill: 'https://sun9-20.userapi.com/c857416/v857416681/fc6d0/06XQvs4SyiE.jpg',
-  app_emails: 'https://sun9-50.userapi.com/c850536/v850536397/129313/qdVJ7A7xd70.jpg',
-  app_lyrics: 'https://sun9-41.userapi.com/Zf2HluZJZDYjTbxhnSfeYnHtttBYsYbdjJ3QJQ/aDcJQrVVnbQ.jpg',
-};
-
 interface PhotoUrls {
   photo_100: string;
   photo_200?: string;

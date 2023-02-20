@@ -1,7 +1,6 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { DateRangeInput, DateRangeInputProps } from './DateRangeInput';
 
 type StoryDateRangeInputProps = DateRangeInputProps & { startDate: number; endDate: number };
@@ -9,7 +8,7 @@ type StoryDateRangeInputProps = DateRangeInputProps & { startDate: number; endDa
 const story: Meta<StoryDateRangeInputProps> = {
   title: 'Forms/DateRangeInput',
   component: DateRangeInput,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Forms'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
     value: {
       description: 'Используйте startDate и endDate для задания периода',

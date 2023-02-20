@@ -2,13 +2,12 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { Icon56UsersOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Placeholder, PlaceholderProps } from './Placeholder';
 
 const story: Meta<PlaceholderProps> = {
   title: 'Blocks/Placeholder',
   component: Placeholder,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Placeholder'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;

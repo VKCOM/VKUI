@@ -2,7 +2,6 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { Icon28BlockOutline, Icon28UserOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Group } from '../Group/Group';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
 import { Spacing, SpacingProps } from './Spacing';
@@ -10,7 +9,7 @@ import { Spacing, SpacingProps } from './Spacing';
 const story: Meta<SpacingProps> = {
   title: 'Blocks/Spacing',
   component: Spacing,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Spacing'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;

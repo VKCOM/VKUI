@@ -1,13 +1,12 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { ContentCard, ContentCardProps } from './ContentCard';
 
 const story: Meta<ContentCardProps> = {
   title: 'Blocks/ContentCard',
   component: ContentCard,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('ContentCard'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
     disabled: {
       control: { type: 'boolean' },

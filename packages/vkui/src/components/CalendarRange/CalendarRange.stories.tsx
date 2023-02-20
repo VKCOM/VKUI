@@ -1,7 +1,6 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { CalendarRange, CalendarRangeProps } from './CalendarRange';
 
 type StoryCalendarRangeProps = CalendarRangeProps & { startDate: number; endDate: number };
@@ -9,7 +8,7 @@ type StoryCalendarRangeProps = CalendarRangeProps & { startDate: number; endDate
 const story: Meta<StoryCalendarRangeProps> = {
   title: 'Forms/CalendarRange',
   component: CalendarRange,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Calendar'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
     value: {
       description: 'Используйте startDate и endDate для задания периода',

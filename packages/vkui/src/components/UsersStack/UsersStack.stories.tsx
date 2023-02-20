@@ -2,14 +2,13 @@ import React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { getAvatarUrl } from '../../testing/mock';
 import { UsersStack, UsersStackProps } from './UsersStack';
 
 const story: Meta<UsersStackProps> = {
   title: 'Blocks/UsersStack',
   component: UsersStack,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('UsersStack') },
+  parameters: CanvasFullLayout,
   decorators: [withCartesian],
 };
 

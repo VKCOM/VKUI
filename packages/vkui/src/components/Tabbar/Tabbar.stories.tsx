@@ -9,7 +9,6 @@ import {
 } from '@vkontakte/icons';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
 import { TabbarItem } from '../TabbarItem/TabbarItem';
@@ -18,7 +17,7 @@ import { Tabbar, TabbarProps } from './Tabbar';
 const story: Meta<TabbarProps> = {
   title: 'Layout/Tabbar',
   component: Tabbar,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Tabbar'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   decorators: [withVKUILayout],
 };
 

@@ -2,7 +2,6 @@ import React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Playground as Caption, WithCaps as CaptionWithCaps } from './Caption/Caption.stories';
 import { Playground as Footnote, WithCaps as FootnoteWithCaps } from './Footnote/Footnote.stories';
 import { Playground as Headline } from './Headline/Headline.stories';
@@ -17,10 +16,7 @@ interface TypographyOverview {
 
 const story: Meta<TypographyOverview> = {
   title: 'Typography',
-  parameters: {
-    ...CanvasFullLayout,
-    ...getFigmaPage('Typography'),
-  },
+  parameters: CanvasFullLayout,
   argTypes: {
     weight: {
       control: 'inline-radio',

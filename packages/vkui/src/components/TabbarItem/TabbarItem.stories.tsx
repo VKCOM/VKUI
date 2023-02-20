@@ -3,7 +3,6 @@ import { Meta, Story } from '@storybook/react';
 import { getIconArgBySize, getIconComponent, IconName } from '../../storybook/Icons';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
 import { Tabbar } from '../Tabbar/Tabbar';
@@ -12,7 +11,7 @@ import { TabbarItem, TabbarItemProps } from './TabbarItem';
 const story: Meta<TabbarItemProps> = {
   title: 'Layout/TabbarItem',
   component: TabbarItem,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Tabbar'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
     children: getIconArgBySize(/^Icon28/),
     indicator: {

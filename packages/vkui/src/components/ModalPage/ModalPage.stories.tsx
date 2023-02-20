@@ -6,7 +6,6 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { ModalWrapper } from '../../storybook/ModalWrapper';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { getRandomUser, getRandomUsers } from '../../testing/mock';
 import { Avatar } from '../Avatar/Avatar';
 import { CellButton } from '../CellButton/CellButton';
@@ -32,11 +31,7 @@ import { ModalPage, ModalPageProps } from './ModalPage';
 const story: Meta<ModalPageProps> = {
   title: 'Modals/ModalPage',
   component: ModalPage,
-  parameters: {
-    ...CanvasFullLayout,
-    ...getFigmaPage('ModalPage'),
-    ...DisableCartesianParam,
-  },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;

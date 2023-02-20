@@ -2,7 +2,6 @@ import React from 'react';
 import { useArgs } from '@storybook/addons';
 import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Group } from '../Group/Group';
 import {
   WithBadge as BadgeTabsItem,
@@ -18,7 +17,7 @@ type StoryTabsProps = TabsProps & { selected: string };
 const story: Meta<StoryTabsProps> = {
   title: 'Blocks/Tabs',
   component: Tabs,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Tabs'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
     selected: {
       control: {

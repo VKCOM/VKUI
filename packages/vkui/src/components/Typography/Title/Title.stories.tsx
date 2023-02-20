@@ -2,16 +2,12 @@ import React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import { Meta, Story } from '@storybook/react';
 import { CanvasFullLayout } from '../../../storybook/constants';
-import { getFigmaPage } from '../../../storybook/helpers';
 import { Title, TitleProps } from './Title';
 
 export default {
   title: 'Typography/Title',
   component: Title,
-  parameters: {
-    ...CanvasFullLayout,
-    ...getFigmaPage('Typography'),
-  },
+  parameters: CanvasFullLayout,
   decorators: [withCartesian],
 } as Meta<TitleProps>;
 

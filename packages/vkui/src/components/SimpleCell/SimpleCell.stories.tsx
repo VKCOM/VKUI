@@ -3,7 +3,6 @@ import { Meta, Story } from '@storybook/react';
 import { Icon12Verified, Icon28MessageOutline } from '@vkontakte/icons';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Avatar } from '../Avatar/Avatar';
 import { Group } from '../Group/Group';
 import { IconButton } from '../IconButton/IconButton';
@@ -12,7 +11,7 @@ import { SimpleCell, SimpleCellProps } from './SimpleCell';
 const story: Meta<SimpleCellProps> = {
   title: 'Blocks/SimpleCell',
   component: SimpleCell,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Cell'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;

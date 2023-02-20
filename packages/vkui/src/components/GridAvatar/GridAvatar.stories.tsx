@@ -3,7 +3,6 @@ import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import { Meta, Story } from '@storybook/react';
 import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
 import { CanvasFullLayout } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { getAvatarUrl } from '../../testing/mock';
 import { imageBaseSizes } from '../ImageBase/types';
 import { GridAvatar, GridAvatarProps } from './GridAvatar';
@@ -13,7 +12,7 @@ type StoryGridAvatarProps = GridAvatarProps & { badged: boolean };
 const story: Meta<StoryGridAvatarProps> = {
   title: 'Blocks/GridAvatar',
   component: GridAvatar,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('GridAvatar') },
+  parameters: CanvasFullLayout,
   argTypes: {
     badged: {
       control: 'boolean',

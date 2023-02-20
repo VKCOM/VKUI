@@ -3,13 +3,12 @@ import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import { Meta, Story } from '@storybook/react';
 import { Icon20ArticleOutline } from '@vkontakte/icons';
 import { CanvasFullLayout } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { MiniInfoCell, MiniInfoCellProps } from './MiniInfoCell';
 
 const story: Meta<MiniInfoCellProps> = {
   title: 'Blocks/MiniInfoCell',
   component: MiniInfoCell,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('MiniInfoCell') },
+  parameters: CanvasFullLayout,
   decorators: [withCartesian],
 };
 

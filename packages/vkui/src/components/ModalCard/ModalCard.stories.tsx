@@ -3,7 +3,6 @@ import { Meta } from '@storybook/react';
 import { Icon56MoneyTransferOutline, Icon56NotificationOutline } from '@vkontakte/icons';
 import { ModalWrapper } from '../../storybook/ModalWrapper';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { getAvatarUrl } from '../../testing/mock';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
@@ -16,11 +15,7 @@ import { ModalCard, ModalCardProps } from './ModalCard';
 const story: Meta<ModalCardProps> = {
   title: 'Modals/ModalCard',
   component: ModalCard,
-  parameters: {
-    ...CanvasFullLayout,
-    ...getFigmaPage('ModalCard'),
-    ...DisableCartesianParam,
-  },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;

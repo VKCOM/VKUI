@@ -9,7 +9,6 @@ import {
   Icon24ChevronCompactRight,
 } from '@vkontakte/icons';
 import { CanvasFullLayout } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Counter } from '../Counter/Counter';
 import { Button, ButtonProps } from './Button';
 
@@ -18,7 +17,7 @@ type StoryButtonProps = ButtonProps & { addBefore: boolean; addAfter: boolean };
 const story: Meta<StoryButtonProps> = {
   title: 'Blocks/Button',
   component: Button,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('Button') },
+  parameters: CanvasFullLayout,
   argTypes: {
     before: { control: false },
     after: { control: false },

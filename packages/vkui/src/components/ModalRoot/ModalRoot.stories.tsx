@@ -2,7 +2,6 @@ import React from 'react';
 import { Meta } from '@storybook/react';
 import { ModalWrapper } from '../../storybook/ModalWrapper';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Button } from '../Button/Button';
 import { Group } from '../Group/Group';
 import { Input } from '../Input/Input';
@@ -19,7 +18,7 @@ const story: Meta<ModalRootProps> = {
   component: ModalRoot,
   parameters: {
     ...CanvasFullLayout,
-    ...getFigmaPage('ModalPage'),
+
     ...DisableCartesianParam,
   },
 };

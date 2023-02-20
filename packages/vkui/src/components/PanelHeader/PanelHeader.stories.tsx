@@ -13,7 +13,6 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getFigmaPage } from '../../storybook/helpers';
 import { Avatar } from '../Avatar/Avatar';
 import { Cell } from '../Cell/Cell';
 import { Counter } from '../Counter/Counter';
@@ -34,7 +33,7 @@ import { PanelHeader, PanelHeaderProps } from './PanelHeader';
 const story: Meta<PanelHeaderProps> = {
   title: 'Layout/PanelHeader',
   component: PanelHeader,
-  parameters: { ...CanvasFullLayout, ...getFigmaPage('PanelHeader'), ...DisableCartesianParam },
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   decorators: [withVKUILayout],
 };
 

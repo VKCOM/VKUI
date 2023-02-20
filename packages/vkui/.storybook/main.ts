@@ -22,7 +22,6 @@ const config: StorybookConfig = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    'storybook-addon-designs',
     '@storybook/addon-a11y',
     '@project-tools/storybook-addon-cartesian',
     './addons/appearance/register',
