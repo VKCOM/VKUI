@@ -12,25 +12,17 @@
 Изначально писать адаптивность стоит через **CSS Media Queries**.
 
 Для медиа запросов мы используем [custom-media-queries](https://preset-env.cssdb.org/features/#custom-media-queries).
-Значения определяются в функции `getCustomMedias()` в [./shared.js](../shared.js).
+Значения определяются в функции `getCustomMedias()` в [./packages/vkui/shared.config.js](../packages/vkui/shared.config.js).
 
-При разработке следует предусмотреть возможность переопределения параметров адаптивности через `AdaptivityProvider`,
-вот пример:
+При разработке следует предусмотреть возможность переопределения параметров адаптивности через `AdaptivityProvider`.
+
+**Пример 1.**
 
 ```tsx
-<AdaptivityProvider sizeX="regular">
-  <Button>button</Button>
+<AdaptivityProvider sizeX={SizeType.COMPACT}>
+  <Component>lorem ipsum</Component>
 </AdaptivityProvider>
 ```
-
-Поэтому в `@media` следует применять стили только если компонент имеет CSS класс с модификатором `--sizeX-none`
-(адаптивность не переопределена), а также написать стили для `--sizeX-regular` и `--sizeX-compact`.
-
-Для удобного получения `className` в зависимости от адаптивности есть такие функции как:
-
-- [`getPlatformClassName()`](../packages/vkui/src/helpers/getPlatformClassName.ts)
-
-Пример:
 
 _Component.tsx_
 
@@ -42,7 +34,7 @@ import { SizeType } from '../../../lib/adaptivity';
 import styles from './Component.module.css';
 
 const sizeXClassNames = {
-  none: styles['Component--sizeX-none'],
+  none: styles['Component--sizeX-none'], // означает, что sizeX не определён в AdaptivityProvider – используем `@media`
   [SizeType.COMPACT]: styles['Component--sizeX-compact'],
 };
 
@@ -81,10 +73,78 @@ _Component.module.css_
 }
 ```
 
-В данном случае мы задаём `padding: 10px;` для размера `sizeX-compact` и `padding: 20px;` для размера `sizeX-regular`.
+Мы задаём `padding: 10px;` для размера `sizeX-compact` и `padding: 20px;` для размера `sizeX-regular`.
 В `@media (--sizeX-compact)` мы задаём `padding: 10px;` для компонента только если `sizeX` не переопределен.
 
-Помимо утилитарных функций, есть хук [`useAdaptivityConditionalRender`](../packages/vkui/src/hooks/useAdaptivityConditionalRender/useAdaptivityConditionalRender.tsx).
+**Пример 2.**
+
+```tsx
+<AdaptivityProvider viewWidth={ViewWidth.TABLET}>
+  <Component>lorem ipsum</Component>
+</AdaptivityProvider>
+```
+
+_Component.tsx_
+
+```tsx
+import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { ViewWidth, viewWidthToClassName } from '../../../lib/adaptivity';
+import styles from './Component.module.css';
+
+const viewWidthClassNames = {
+  none: styles['Component--viewWidth-none'], // означает, что viewWidth не определён в AdaptivityProvider – используем `@media`
+  smallTabletMinus: styles['Component--viewWidth-smallTabletMinus'],
+  smallTabletPlus: styles['Component--viewWidth-smallTabletPlus'],
+};
+
+const Component = () => {
+  const { viewWidth } = useAdaptivity();
+
+  return (
+    <div
+      className={classNames(styles.Component, viewWidthToClassName(viewWidthClassNames, viewWidth))}
+    />
+  );
+};
+```
+
+_Component.module.css_
+
+```css
+.Component {
+  color: red;
+}
+
+.Component--viewWidth-smallTabletPlus {
+  color: blue;
+}
+
+@media (--viewWidth-smallTabletPlus) {
+  .Component--viewWidth-none {
+    color: blue;
+  }
+}
+
+.Component--viewWidth-smallTabletMinus {
+  color: green;
+}
+
+@media (--viewWidth-smallTabletMinus) {
+  .Component--viewWidth-none {
+    color: green;
+  }
+}
+```
+
+По историческим причинам, в JS (см. [AdaptivityProvider](../packages/vkui/src/components/AdaptivityProvider/AdaptivityProvider.tsx))
+и в CSS (см. [getCustomMedias().js](../packages/vkui/shared.config.js)) по-разному определяются брейкпоинты. В CSS они
+выходят более расширенными, а в JS ограничиваются точечными значениями. Для конвертации этой разницы создана функция [viewWidthToClassName](../packages/vkui/src/lib/adaptivity/functions.ts).
+
+### Хук [useAdaptivityConditionalRender](../packages/vkui/src/hooks/useAdaptivityConditionalRender/useAdaptivityConditionalRender.tsx)
+
+Помогает скрывать/показать блок в зависимости от `@media` или `AdaptivityProvider`.
 
 ### Подводные камни
 

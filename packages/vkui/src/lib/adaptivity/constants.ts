@@ -38,3 +38,11 @@ export enum SizeType {
   COMPACT = 'compact',
   REGULAR = 'regular',
 }
+
+export const VIEW_WIDTH_TO_CSS_BREAKPOINT_MAP = {
+  [ViewWidth.SMALL_MOBILE]: 'smallMobileMinus',
+  [ViewWidth.MOBILE]: 'mobile',
+  [ViewWidth.SMALL_TABLET]: 'smallTablet',
+  [ViewWidth.TABLET]: 'tablet',
+  [ViewWidth.DESKTOP]: 'desktopPlus',
+} as const;

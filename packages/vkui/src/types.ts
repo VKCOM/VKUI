@@ -55,3 +55,12 @@ export type AnchorHTMLAttributesOnly = Omit<
   React.AnchorHTMLAttributes<HTMLAnchorElement>,
   keyof React.HTMLAttributes<HTMLAnchorElement>
 >;
+
+/**
+ * Проверяет, является ли тип подтипом другого.
+ *
+ * В TS не реализовано.
+ *
+ * @see {@link https://github.com/microsoft/TypeScript/issues/12936}
+ */
+export type Exact<A, B> = A extends B ? B : never;
