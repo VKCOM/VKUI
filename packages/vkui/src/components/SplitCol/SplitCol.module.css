@@ -10,7 +10,7 @@
   margin: 0 var(--vkui--size_split_col_padding_horizontal--regular);
 }
 
-.SplitCol--viewWidth-tabletPlus.SplitCol--spaced-none.SplitCol--spaced-auto {
+.SplitCol--viewWidth-smallTabletPlus.SplitCol--spaced-none.SplitCol--spaced-auto {
   margin: 0 var(--vkui--size_split_col_padding_horizontal--regular);
 }
 
@@ -20,9 +20,7 @@
   }
 }
 
-.SplitCol--viewWidth-smallTablet.SplitCol--stretched-on-mobile,
-.SplitCol--viewWidth-mobile.SplitCol--stretched-on-mobile,
-.SplitCol--viewWidth-smallMobile.SplitCol--stretched-on-mobile {
+.SplitCol--viewWidth-tabletMinus.SplitCol--stretched-on-mobile {
   width: 100% !important;
   max-width: 100% !important;
 }

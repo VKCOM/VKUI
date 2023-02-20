@@ -3,17 +3,15 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useMediaQueries } from '../../hooks/useMediaQueries';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
-import { ViewWidth } from '../../lib/adaptivity';
+import { ViewWidth, viewWidthToClassName } from '../../lib/adaptivity';
 import { matchMediaListAddListener, matchMediaListRemoveListener } from '../../lib/matchMedia';
 import { SplitColContext } from './SplitColContext';
 import styles from './SplitCol.module.css';
 
-const viewWidthClassNames = {
+const breakpointClassNames = {
   none: styles['SplitCol--viewWidth-none'],
-  [ViewWidth.SMALL_MOBILE]: styles['SplitCol--viewWidth-smallMobile'],
-  [ViewWidth.MOBILE]: styles['SplitCol--viewWidth-mobile'],
-  [ViewWidth.SMALL_TABLET]: styles['SplitCol--viewWidth-smallTablet'],
-  [ViewWidth.TABLET]: styles['SplitCol--viewWidth-tabletPlus'],
+  tabletMinus: styles['SplitCol--viewWidth-tabletMinus'],
+  smallTabletPlus: styles['SplitCol--viewWidth-smallTabletPlus'],
 };
 
 function useTransitionAnimate(animateProp?: boolean) {
@@ -87,7 +85,7 @@ export const SplitCol = (props: SplitColProps) => {
     ...restProps
   } = props;
   const baseRef = React.useRef<HTMLDivElement>(null);
-  const { viewWidth = 'none' } = useAdaptivity();
+  const { viewWidth } = useAdaptivity();
   const animate = useTransitionAnimate(animateProp);
 
   const contextValue = useObjectMemo({
@@ -107,7 +105,7 @@ export const SplitCol = (props: SplitColProps) => {
       ref={baseRef}
       className={classNames(
         styles['SplitCol'],
-        viewWidthClassNames.hasOwnProperty(viewWidth) && viewWidthClassNames[viewWidth],
+        viewWidthToClassName(breakpointClassNames, viewWidth),
         spaced && styles['SplitCol--spaced'],
         spaced === undefined && styles['SplitCol--spaced-none'],
         autoSpaced && styles['SplitCol--spaced-auto'],

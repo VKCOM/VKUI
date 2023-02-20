@@ -1,6 +1,6 @@
 import { Platform } from '../platform';
 import { ViewHeight, ViewWidth } from './constants';
-import { tryToCheckIsDesktop } from './functions';
+import { tryToCheckIsDesktop, viewWidthToClassName } from './functions';
 
 describe('adaptivity/functions', () => {
   describe(tryToCheckIsDesktop, () => {
@@ -65,6 +65,111 @@ describe('adaptivity/functions', () => {
         expect(tryToCheckIsDesktop(ViewWidth.MOBILE, ViewHeight.EXTRA_SMALL, undefined, Platform.VKCOM)).toBeTruthy(); // prettier-ignore
         expect(tryToCheckIsDesktop(ViewWidth.MOBILE, ViewHeight.EXTRA_SMALL, true, Platform.VKCOM)).toBeTruthy(); // prettier-ignore
         expect(tryToCheckIsDesktop(ViewWidth.SMALL_TABLET, undefined, false, Platform.VKCOM)).toBeTruthy(); // prettier-ignore
+      });
+    });
+  });
+
+  describe(viewWidthToClassName, () => {
+    describe('with full classNames', () => {
+      const classNames = {
+        none: 'some-hash-none',
+        smallMobileMinus: 'some-hash-smallMobileMinus',
+        mobile: 'some-hash-mobile',
+        mobilePlus: 'some-hash-mobilePlus',
+        smallTabletMinus: 'some-hash-smallTabletMinus',
+        smallTablet: 'some-hash-smallTablet',
+        smallTabletPlus: 'some-hash-smallTabletPlus',
+        tabletMinus: 'some-hash-tabletMinus',
+        tablet: 'some-hash-tablet',
+        tabletPlus: 'some-hash-tabletPlus',
+        desktopPlus: 'some-hash-desktopPlus',
+      };
+
+      it('should return "none" class name if viewWidth is "none"', () => {
+        expect(viewWidthToClassName(classNames)).toBe(classNames['none']);
+      });
+
+      it('should return "smallMobile" class names', () => {
+        expect(viewWidthToClassName(classNames, ViewWidth.SMALL_MOBILE)).toBe(
+          [classNames.smallMobileMinus, classNames.smallTabletMinus, classNames.tabletMinus].join(
+            ' ',
+          ),
+        );
+      });
+
+      it('should return "mobile" class names', () => {
+        expect(viewWidthToClassName(classNames, ViewWidth.MOBILE)).toBe(
+          [
+            classNames.mobile,
+            classNames.mobilePlus,
+            classNames.smallTabletMinus,
+            classNames.tabletMinus,
+          ].join(' '),
+        );
+      });
+
+      it('should return "smallTablet" class names', () => {
+        expect(viewWidthToClassName(classNames, ViewWidth.SMALL_TABLET)).toBe(
+          [
+            classNames.smallTablet,
+            classNames.mobilePlus,
+            classNames.smallTabletPlus,
+            classNames.tabletMinus,
+          ].join(' '),
+        );
+      });
+
+      it('should return "tablet" class names', () => {
+        expect(viewWidthToClassName(classNames, ViewWidth.TABLET)).toBe(
+          [
+            classNames.tablet,
+            classNames.mobilePlus,
+            classNames.smallTabletPlus,
+            classNames.tabletPlus,
+          ].join(' '),
+        );
+      });
+
+      it('should return "desktop" class names', () => {
+        expect(viewWidthToClassName(classNames, ViewWidth.DESKTOP)).toBe(
+          [
+            classNames.desktopPlus,
+            classNames.mobilePlus,
+            classNames.smallTabletPlus,
+            classNames.tabletPlus,
+          ].join(' '),
+        );
+      });
+    });
+
+    describe('with partially classNames', () => {
+      it('should return null', () => {
+        const classNames = {};
+        expect(viewWidthToClassName(classNames)).toBe(null);
+        expect(viewWidthToClassName(classNames, ViewWidth.SMALL_MOBILE)).toBe(null);
+        expect(viewWidthToClassName(classNames, ViewWidth.MOBILE)).toBe(null);
+        expect(viewWidthToClassName(classNames, ViewWidth.SMALL_TABLET)).toBe(null);
+        expect(viewWidthToClassName(classNames, ViewWidth.TABLET)).toBe(null);
+        expect(viewWidthToClassName(classNames, ViewWidth.DESKTOP)).toBe(null);
+      });
+
+      it('should return null when viewWidth is "smallTabletPlus"', () => {
+        const classNames = {
+          mobile: 'some-hash-mobile',
+          desktopPlus: 'some-hash-desktopPlus',
+        };
+        expect(viewWidthToClassName(classNames, ViewWidth.MOBILE)).toBe(classNames['mobile']);
+      });
+
+      it('should return null when viewWidth is "smallTabletMinus"', () => {
+        const classNames = {
+          mobile: 'some-hash-mobile',
+          mobilePlus: 'some-hash-mobilePlus',
+          desktopPlus: 'some-hash-desktopPlus',
+        };
+        expect(viewWidthToClassName(classNames, ViewWidth.MOBILE)).toBe(
+          [classNames['mobile'], classNames['mobilePlus']].join(' '),
+        );
       });
     });
   });
