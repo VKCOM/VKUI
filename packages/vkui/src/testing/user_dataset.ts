@@ -1,4 +1,13 @@
-export const users = [
+export interface UserInterface {
+  id: number;
+  first_name: string;
+  last_name: string;
+  screen_name: string;
+  photo_100: string;
+  photo_200: string;
+}
+
+export const users: UserInterface[] = [
   {
     id: 3520,
     first_name: 'Вадим',
@@ -296,7 +305,3 @@ export const users = [
     photo_200: 'https://sun9-56.userapi.com/c848416/v848416376/1b82aa/IhAknTNCFjE.jpg?ava=1',
   },
 ];
-
-users.forEach((user) => {
-  user.name = user.first_name + ' ' + user.last_name;
-});

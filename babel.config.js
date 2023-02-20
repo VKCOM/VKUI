@@ -1,7 +1,7 @@
 const runtimeVersion = require('./node_modules/@babel/runtime/package.json').version;
 const { generateScopedName } = require('./shared');
 
-const { NODE_ENV, BABEL_KEEP_CSS, BABEL_USED_BY_WEBPACK } = process.env;
+const { NODE_ENV, BABEL_KEEP_CSS, BABEL_USED_BY_WEBPACK, SANDBOX } = process.env;
 
 const isProduction = NODE_ENV === 'production';
 const isDevelopment = NODE_ENV === 'development';
@@ -12,6 +12,8 @@ const isUsedByWebpack = Boolean(BABEL_USED_BY_WEBPACK);
 
 const keepCss = Boolean(BABEL_KEEP_CSS);
 
+const fromStorybook = SANDBOX === '.storybook';
+
 const testFiles = [
   '**/*.test.ts',
   '**/*.test.tsx',
@@ -19,8 +21,11 @@ const testFiles = [
   '**/*.spec.tsx',
   '**/*.e2e.ts',
   '**/*.e2e.tsx',
-  '**/testing/',
 ];
+
+if (isProduction && !fromStorybook) {
+  testFiles.push('**/testing/', '**/*.stories.tsx', '**/storybook/');
+}
 
 const plugins = [
   '@babel/plugin-proposal-class-properties',

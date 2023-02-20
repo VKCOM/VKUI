@@ -3,12 +3,11 @@ import '../packages/vkui/src/styles/common.css';
 
 import { useRef, useState } from 'react';
 import * as Icons from '@vkontakte/icons';
-import * as VKUI from '../packages/vkui/src';
 import {
   IconExampleForBadgeBasedOnImageBaseSize,
   IconExampleForFallbackBasedOnImageBaseSize,
   IconExampleForOverlayBasedOnImageBaseSize,
-} from '../packages/vkui/src/testing/icons';
+} from '@vkui/testing/icons';
 import {
   getAllUsers,
   getAvatarUrl,
@@ -16,8 +15,9 @@ import {
   getRandomUser,
   getRandomUsers,
   importantCountries,
-  perfLogger,
-} from './utils';
+} from '@vkui/testing/mock';
+import * as VKUI from '../packages/vkui/src';
+import { perfLogger } from './utils';
 
 const unstablePrefix = 'unstable_';
 const ui = { ...VKUI };

@@ -63,6 +63,16 @@ updates:
       - 'VKCOM/vk-sec'
       - 'VKCOM/vkui-core'
 
+  - package-ecosystem: 'npm'
+    directory: '/tools/storybook-addon-cartesian'
+    schedule:
+      interval: 'daily'
+    allow:
+      - dependency-type: 'direct'
+    reviewers:
+      - 'VKCOM/vk-sec'
+      - 'VKCOM/vkui-core'
+
   # LOCAL ACTIONS
 
   - package-ecosystem: 'npm'
