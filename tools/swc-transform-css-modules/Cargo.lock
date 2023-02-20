@@ -1358,9 +1358,9 @@ dependencies = [
 
 [[package]]
 name = "swc_ecma_ast"
-version = "0.96.5"
+version = "0.96.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "84192270c26fc125494ee8895baabf480a95ef8ef83fefb79a94d9fe90c5eb1b"
+checksum = "2c354ec65214943235a52cf410a43a6bebc908da7b8cbeb401fede64f93e129f"
 dependencies = [
  "bitflags",
  "is-macro",
