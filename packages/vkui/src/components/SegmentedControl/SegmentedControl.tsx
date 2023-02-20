@@ -61,19 +61,15 @@ export const SegmentedControl = ({
 
   const { sizeY = 'none' } = useAdaptivity();
 
-  const [activeOptionIdx, updateActiveOptionIdx] = React.useState<number>(0);
+  const actualIndex = options.findIndex((option) => option.value === value);
 
   useIsomorphicLayoutEffect(() => {
-    const _activeOptionIdx = options.findIndex((option) => option.value === value);
-
-    if (_activeOptionIdx === -1 && process.env.NODE_ENV === 'development') {
+    if (actualIndex === -1 && process.env.NODE_ENV === 'development') {
       warn('defaultValue: такого значения нет среди опций!', 'error');
     }
+  }, [actualIndex]);
 
-    updateActiveOptionIdx(_activeOptionIdx);
-  }, [value, options]);
-
-  const translateX = `translateX(${100 * activeOptionIdx}%)`;
+  const translateX = `translateX(${100 * actualIndex}%)`;
 
   return (
     <div
@@ -87,7 +83,7 @@ export const SegmentedControl = ({
       ref={getRootRef}
     >
       <div role="radiogroup" className={styles['SegmentedControl__in']}>
-        {activeOptionIdx > -1 && (
+        {actualIndex > -1 && (
           <div
             aria-hidden
             className={styles['SegmentedControl__slider']}
