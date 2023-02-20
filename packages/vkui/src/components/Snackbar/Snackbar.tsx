@@ -27,11 +27,14 @@ export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
   onActionClick?: (e: React.MouseEvent) => void;
 
   /**
-   * Цветная иконка 24x24 пикселя
+   * Может быть следующими компонентами:
+   *  - цветная иконка 24x24 или 28x28 пикселя
+   *  - `<Avatar size={32} />`
+   *  - `<Image size={40} />`
    */
   before?: React.ReactNode;
   /**
-   * Контент в правой части, может быть `<Avatar size={32} />`
+   * Контент в правой части, может быть иконкой 24x24
    */
   after?: React.ReactNode;
   /**
