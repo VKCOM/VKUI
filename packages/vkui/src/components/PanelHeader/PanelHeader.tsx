@@ -3,6 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { useConfigProvider, WebviewType } from '../ConfigProvider/ConfigProviderContext';
@@ -26,9 +27,8 @@ function getPlatformClassName(platform: string): string {
 }
 
 const sizeXClassNames = {
-  compact: '',
-  regular: styles['PanelHeader--sizeX-regular'],
   none: styles['PanelHeader--sizeX-none'],
+  regular: styles['PanelHeader--sizeX-regular'],
 };
 
 export interface PanelHeaderProps
@@ -113,7 +113,7 @@ export const PanelHeader = ({
         !before && styles['PanelHeader--no-before'],
         !after && styles['PanelHeader--no-after'],
         isFixed && styles['PanelHeader--fixed'],
-        sizeXClassNames[sizeX],
+        sizeX !== SizeType.COMPACT && sizeXClassNames[sizeX],
         className,
       )}
       ref={isFixed ? getRootRef : getRef}

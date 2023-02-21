@@ -3,6 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useOrientationChange } from '../../hooks/useOrientationChange';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SizeType } from '../../lib/adaptivity';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { Platform } from '../../lib/platform';
 import { multiRef } from '../../lib/utils';
@@ -11,11 +12,6 @@ import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
 import { ModalType } from '../ModalRoot/types';
 import styles from './ModalPage.module.css';
-
-const sizeXClassNames = {
-  regular: styles['ModalPage--sizeX-regular'],
-  compact: '',
-};
 
 const sizeClassName = {
   s: styles[`ModalPage--size-s`],
@@ -107,7 +103,7 @@ export const ModalPage = ({
         styles['ModalPage'],
         platform === Platform.IOS && styles['ModalPage--ios'],
         isDesktop && styles['ModalPage--desktop'],
-        sizeXClassNames[sizeX],
+        sizeX === SizeType.REGULAR && styles['ModalPage--sizeX-regular'],
         typeof size === 'string' && sizeClassName[size],
         className,
       )}

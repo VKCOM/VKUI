@@ -2,13 +2,13 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SizeType } from '../../lib/adaptivity';
 import type { SelectType } from '../Select/Select';
 import styles from './SelectTypography.module.css';
 
 const sizeYClassNames = {
   none: styles['SelectTypography--sizeY-none'],
   compact: styles['SelectTypography--sizeY-compact'],
-  regular: '',
 };
 
 const platformClassNames: Record<string, string> = {
@@ -45,7 +45,7 @@ export const SelectTypography = ({
       className={classNames(
         styles['SelectTypography'],
         platformClassNames[platform],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         selectTypeClassNames[selectType],
         className,
       )}
