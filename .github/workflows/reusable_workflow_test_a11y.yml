@@ -31,6 +31,7 @@ jobs:
         with:
           flags: a11ytests
           files: .nyc_a11y_output/coverage-final.json
+          fail_ci_if_error: true
 
       - name: Upload test artifact
         uses: actions/upload-artifact@v3
