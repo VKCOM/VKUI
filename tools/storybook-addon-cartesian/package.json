@@ -9,6 +9,7 @@
     "test:ci": "echo no test:ci"
   },
   "dependencies": {
+    "@babel/core": "^7.21.0",
     "@storybook/addon-a11y": "^6.5.16",
     "@storybook/addon-actions": "^6.5.16",
     "@storybook/addon-essentials": "^6.5.16",
@@ -20,6 +21,7 @@
     "@storybook/components": "^6.5.16",
     "@storybook/manager-webpack5": "^6.5.16",
     "@storybook/react": "^6.5.16",
-    "@storybook/theming": "^6.5.16"
+    "@storybook/theming": "^6.5.16",
+    "storybook-addon-swc": "^1.1.9"
   }
 }

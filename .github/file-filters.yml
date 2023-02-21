@@ -17,7 +17,6 @@ package_vkui: &package_vkui
   - 'tools/!(eslint-*|stylelint-*)/**'
   - 'e2e/**'
   - '.browserslistrc'
-  - '(.|)babel*'
   - 'webpack.*'
   - 'tsconfig.*'
   - 'package.json'
