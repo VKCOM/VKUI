@@ -1,7 +1,7 @@
 /**
  * Соответствуют тому, что генерирует функция `getCustomMedias()`.
  *
- * {@link import('../../shared.js') ../../shared.js}
+ * {@link import('../../../shared.config.js') ../../../shared.config.js}
  */
 export type CSSBreakpoints =
   | 'desktopPlus'
@@ -14,6 +14,8 @@ export type CSSBreakpoints =
   | 'mobilePlus'
   | 'mobile'
   | 'smallMobileMinus';
+
+export type CSSBreakpointsClassNames = Record<CSSBreakpoints | 'none', string>;
 
 /**
  * JS брейкпоинты выделены в отдельный тип, т.к. на данный момент нужны не все брейкпоинты, что используются в

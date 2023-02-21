@@ -1,6 +1,7 @@
+import type { Exact } from '../../types';
 import { Platform, type PlatformType } from '../platform';
-import { SizeType, ViewHeight, ViewWidth } from './constants';
-import type { MediaQueries } from './types';
+import { SizeType, VIEW_WIDTH_TO_CSS_BREAKPOINT_MAP, ViewHeight, ViewWidth } from './constants';
+import type { CSSBreakpointsClassNames, MediaQueries } from './types';
 
 export function getViewWidthByMediaQueries(mediaQueries: MediaQueries): ViewWidth {
   /* eslint-disable no-restricted-properties */
@@ -84,4 +85,54 @@ export function tryToCheckIsDesktop(
     hasPointer || (viewHeight !== undefined ? viewHeight >= ViewHeight.MEDIUM : false);
 
   return (widthIsLikeDesktop && otherParametersIsLikeDesktop) || IS_VKCOM_CRUTCH;
+}
+
+/**
+ * Конвертирует `viewWidth` в CSS брейкпоинты (см. тесты для наглядности).
+ *
+ * > Note: используется восклицательный знак (!), чтобы принудить TS поверить, что св-во точно не может быть
+ * > `undefined`. Это всё из-за применения `Partial<...>` для объекта.
+ */
+export function viewWidthToClassName<T extends Partial<CSSBreakpointsClassNames>>(
+  breakpointClassNames: Exact<CSSBreakpointsClassNames, T>,
+  viewWidth: ViewWidth | 'none' = 'none',
+): string | null {
+  if (viewWidth === 'none') {
+    return breakpointClassNames.hasOwnProperty('none') ? breakpointClassNames['none']! : null;
+  }
+
+  const breakpoints: string[] = [];
+  const breakpointName = VIEW_WIDTH_TO_CSS_BREAKPOINT_MAP[viewWidth];
+
+  if (breakpointClassNames.hasOwnProperty(breakpointName)) {
+    breakpoints.push(breakpointClassNames[breakpointName]!);
+  }
+
+  if (viewWidth >= ViewWidth.MOBILE) {
+    if (breakpointClassNames.hasOwnProperty('mobilePlus')) {
+      breakpoints.push(breakpointClassNames['mobilePlus']!);
+    }
+  }
+
+  if (viewWidth >= ViewWidth.SMALL_TABLET) {
+    if (breakpointClassNames.hasOwnProperty('smallTabletPlus')) {
+      breakpoints.push(breakpointClassNames['smallTabletPlus']!);
+    }
+  } else {
+    if (breakpointClassNames.hasOwnProperty('smallTabletMinus')) {
+      breakpoints.push(breakpointClassNames['smallTabletMinus']!);
+    }
+  }
+
+  if (viewWidth >= ViewWidth.TABLET) {
+    if (breakpointClassNames.hasOwnProperty('tabletPlus')) {
+      breakpoints.push(breakpointClassNames['tabletPlus']!);
+    }
+  } else {
+    if (breakpointClassNames.hasOwnProperty('tabletMinus')) {
+      breakpoints.push(breakpointClassNames['tabletMinus']!);
+    }
+  }
+
+  return breakpoints.length > 0 ? breakpoints.join(' ') : null;
 }
