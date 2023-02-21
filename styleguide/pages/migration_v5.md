@@ -124,6 +124,9 @@ npx @vkontakte/vkui-token-translator
 ## Типографика
 
 - Для компонентов типографики применяются токены `font-family` из [`vkui-tokens`](https://github.com/VKCOM/vkui-tokens)
+
+  > ⚠️ **VK Sans Display** больше недоступен начиная с v5 (подробнее ответили здесь https://github.com/VKCOM/VKUI/discussions/4201)
+
 - Начертания `"heavy"`, `"bold"`, `"semibold"`, `medium` и `"regular"` были удалены. Используйте значения `"1"`, `"2"` и `"3"`. <br /><br />
 
   [Headline](#/Headline)
