@@ -40,6 +40,7 @@ jobs:
         with:
           flags: unittests
           files: .nyc_output/coverage-final.json
+          fail_ci_if_error: true
 
       - name: Upload test artifact
         uses: actions/upload-artifact@v3
