@@ -22,7 +22,7 @@
     "@babel/plugin-transform-runtime": "^7.21.0",
     "@babel/preset-env": "^7.16.8",
     "@babel/preset-react": "^7.16.7",
-    "@babel/preset-typescript": "^7.16.7",
+    "@babel/preset-typescript": "^7.21.0",
     "@csstools/postcss-global-data": "^1.0.1",
     "@size-limit/file": "^8.2.4",
     "@size-limit/webpack": "^8.2.4",
