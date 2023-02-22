@@ -1,20 +1,22 @@
-const WebpackCommonConfig = require('../../../webpack.common.config');
+import WebpackCommonConfig from '../../../webpack.common.config';
+import type { StorybookConfig } from '@storybook/core-common';
+import { Configuration } from 'webpack';
 
 const cssRegExpString = /\.css$/.toString();
 
-function getCssRulesFromConfig(config) {
-  return config.module.rules?.filter((rule) =>
+function getCssRulesFromConfig(config: Configuration) {
+  return config.module!.rules?.filter((rule) =>
     rule === '...' ? false : rule.test?.toString() === cssRegExpString,
   );
 }
 
-function excludeCssRulesFromConfig(config) {
-  return config.module.rules?.filter((rule) =>
+function excludeCssRulesFromConfig(config: Configuration) {
+  return config.module!.rules?.filter((rule) =>
     rule === '...' ? false : rule.test?.toString() !== cssRegExpString,
   );
 }
 
-const config = {
+const config: StorybookConfig = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
     '@storybook/addon-links',
@@ -44,7 +46,7 @@ const config = {
     const commonCssRules = getCssRulesFromConfig(WebpackCommonConfig) ?? [];
     const rulesWithoutCss = excludeCssRulesFromConfig(config) ?? [];
 
-    config.module.rules = [...rulesWithoutCss, ...commonCssRules];
+    config.module!.rules = [...rulesWithoutCss, ...commonCssRules];
 
     return config;
   },
