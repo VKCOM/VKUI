@@ -138,23 +138,29 @@
 
 /**
  * .Group
+ *
+ * TODO: Переделать отрицательные отступы https://github.com/VKCOM/VKUI/issues/3508
  */
-.Group--mode-plain:not(:first-of-type) .Group__inner > .Header:first-child {
+.Group--mode-plain:not(:first-of-type) .Group__inner > .Header:first-child,
+.Group--mode-plain:not(:first-of-type) .Group__inner > .Tappable:first-child > .Header {
   margin-top: -16px;
 }
 
 @media (--sizeX-compact) {
-  .Group--mode-none:not(:first-of-type) .Group__inner > .Header:first-child {
+  .Group--mode-none:not(:first-of-type) .Group__inner > .Header:first-child,
+  .Group--mode-none:not(:first-of-type) .Group__inner > .Tappable:first-child > .Header {
     margin-top: -16px;
   }
 }
 
-.Group--mode-card > .Group__inner > .Header:not(.Header--mode-tertiary):first-child {
+.Group--mode-card > .Group__inner > .Header:not(.Header--mode-tertiary):first-child,
+.Group--mode-card > .Group__inner > .Tappable:first-child > .Header:not(.Header--mode-tertiary) {
   margin-top: -4px;
 }
 
 @media (--sizeX-regular) {
-  .Group--mode-none > .Group__inner > .Header:not(.Header--mode-tertiary):first-child {
+  .Group--mode-none > .Group__inner > .Header:not(.Header--mode-tertiary):first-child,
+  .Group--mode-none > .Group__inner > .Tappable:first-child > .Header:not(.Header--mode-tertiary) {
     margin-top: -4px;
   }
 }
