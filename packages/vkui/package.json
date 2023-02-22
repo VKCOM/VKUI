@@ -42,7 +42,7 @@
     "swc-base": "cross-env NODE_ENV=production swc src/ --config-file package.swcrc --extensions .tsx,.jsx,.ts,.js",
     "swc-es6": "yarn swc-base -d dist -s",
     "swc-cjs": "yarn swc-base -d dist/cjs -s -C module.type=commonjs",
-    "swc-cssm": "yarn swc-base -d dist/cssm -s -C jsc.experimental.plugins=[]",
+    "swc-cssm": "yarn swc-base -d dist/cssm -s --config-file cssm.swcrc",
     "tsc": "cross-env NODE_ENV=production tsc --emitDeclarationOnly --declaration -p tsconfig.dist.json",
     "tsc-cssm": "cross-env NODE_ENV=production tsc --emitDeclarationOnly --declaration --outDir dist/cssm/ -p tsconfig.dist.json",
     "tsc-cjs": "cross-env NODE_ENV=production tsc --emitDeclarationOnly --declaration --outDir dist/cjs/ -p tsconfig.dist.json",

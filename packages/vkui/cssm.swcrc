@@ -1,6 +1,11 @@
 {
   "$schema": "https://json.schemastore.org/swcrc",
-  "exclude": ["\\.(test|spec|e2e|stories)\\.[jt]sx?$", "testing/", "storybook/"],
+  "exclude": [
+    "\\.(test|spec|e2e|stories)\\.[jt]sx?$",
+    "testing/",
+    "storybook/",
+    "lib/polyfills.ts"
+  ],
 
   "module": {
     "type": "es6"
@@ -17,15 +22,14 @@
         "runtime": "classic"
       }
     },
-    "target": "es5",
+    "target": "es2022",
 
     "experimental": {
       "plugins": [
-        ["@project-tools/swc-transform-css-modules", {}],
         [
           "swc-plugin-transform-remove-imports",
           {
-            "test": "\\.css$"
+            "test": "^./lib/polyfills$"
           }
         ]
       ]
