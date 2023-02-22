@@ -1,6 +1,6 @@
 Мы используем три вида тестов:
 
-**Юнит-тесты** на jest в файлах `moduleName.test.ts` ([например, `getPlatformClassName.test.ts`](../packages/vkui/src/helpers/getPlatformClassName.test.ts))
+**Юнит-тесты** на jest в файлах `moduleName.test.ts` ([например, `packages/vkui/src/lib/adaptivity/functions.test.ts`](../packages/vkui/src/lib/adaptivity/functions.test.ts))
 
 **Компонентные тесты** на jest + [react-testing-library](https://testing-library.com/docs/react-testing-library/example-intro) + [jest-dom](https://github.com/testing-library/jest-dom#table-of-contents) в `ComponentName.test.tsx` ([например, `Checkbox.test.tsx` ](../packages/vkui/src/components/Checkbox/Checkbox.test.tsx))
 

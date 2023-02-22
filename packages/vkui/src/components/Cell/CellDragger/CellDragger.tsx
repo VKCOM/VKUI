@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Icon24Reorder, Icon24ReorderIos } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { getPlatformClassName } from '../../../helpers/getPlatformClassName';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { Platform } from '../../../lib/platform';
 import { Touch } from '../../Touch/Touch';
@@ -25,11 +24,7 @@ export const CellDragger = ({
 
   return (
     <Touch
-      className={classNames(
-        styles['CellDragger'],
-        getPlatformClassName(styles['CellDragger'], platform),
-        className,
-      )}
+      className={classNames(styles['CellDragger'], className)}
       onStart={onDragStart}
       onMoveY={onDragMove}
       onEnd={onDragEnd}

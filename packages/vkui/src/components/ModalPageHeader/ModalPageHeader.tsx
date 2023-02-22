@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
@@ -32,7 +31,6 @@ export const ModalPageHeader = ({
     <div
       className={classNames(
         styles['ModalPageHeader'],
-        getPlatformClassName(styles['ModalPageHeader'], platform),
         platform !== Platform.VKCOM && styles['ModalPageHeader--withGaps'],
         isDesktop && styles['ModalPageHeader--desktop'],
       )}

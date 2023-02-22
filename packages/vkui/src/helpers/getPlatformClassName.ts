@@ -1,6 +1,18 @@
+// TODO v6 удалить этот хеллпер
 import { platform, PlatformType } from '../lib/platform';
 
+/**
+ * Подставляйте соответствующий селектор самостоятельно.
+ *
+ * @deprecated
+ *
+ */
 export function getPlatformClassName(base: string, osname?: PlatformType): string;
+/**
+ * Подставляйте соответствующий селектор самостоятельно.
+ *
+ * @deprecated
+ */
 export function getPlatformClassName<Styles extends Record<string, string>>(
   base: keyof Styles,
   osname?: PlatformType,

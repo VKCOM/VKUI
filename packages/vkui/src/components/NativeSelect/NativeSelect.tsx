@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
-import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
@@ -56,7 +54,6 @@ const NativeSelect = ({
   value: valueProp,
   ...restProps
 }: NativeSelectProps) => {
-  const platform = usePlatform();
   const [title, setTitle] = React.useState('');
   const [empty, setEmpty] = React.useState(false);
   const [value, onChange] = useEnsuredControl({
@@ -81,7 +78,6 @@ const NativeSelect = ({
       Component="label"
       className={classNames(
         styles['Select'],
-        getPlatformClassName(styles['Select'], platform),
         empty && styles['Select--empty'],
         multiline && styles['Select--multiline'],
         align && styles[`Select--align-${align}`],

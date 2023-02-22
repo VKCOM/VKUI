@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { withContext } from '../../hoc/withContext';
 import { withPlatform } from '../../hoc/withPlatform';
 import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
@@ -635,7 +634,7 @@ class ViewInfiniteComponent extends React.Component<
         {...restProps}
         className={classNames(
           styles['View'],
-          getPlatformClassName(styles['View'], platform),
+          platform === Platform.IOS && iosStyles['View--ios'],
           !disableAnimation && this.state.animated && styles['View--animated'],
           !disableAnimation && this.state.swipingBack && styles['View--swiping-back'],
           disableAnimation && styles['View--no-motion'],
