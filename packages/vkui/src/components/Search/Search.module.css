@@ -242,7 +242,7 @@
   default
  */
 .Search {
-  background: var(--vkui--color_background_content);
+  background: transparent;
 }
 
 .Search__control {
