@@ -138,10 +138,18 @@
 /**
  * .Group
  */
-.Group--plain:not(:first-of-type) .Group__inner > .Header:first-child {
+.Group--plain:not(:first-of-type) .Group__inner > .Header:first-child,
+.Group--mode-plain:not(:first-of-type)
+  .Group__inner
+  > .Tappable:first-child
+  > .Header {
   margin-top: -16px;
 }
 
-.Group--card > .Group__inner > .Header:not(.Header--mode-tertiary):first-child {
+.Group--card > .Group__inner > .Header:not(.Header--mode-tertiary):first-child,
+.Group--mode-card
+  > .Group__inner
+  > .Tappable:first-child
+  > .Header:not(.Header--mode-tertiary) {
   margin-top: -4px;
 }
