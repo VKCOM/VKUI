@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getPlatformClassName } from '../../helpers/getPlatformClassName';
-import { usePlatform } from '../../hooks/usePlatform';
 import { HasRef, HasRootRef } from '../../types';
 import { Button, VKUIButtonProps } from '../Button/Button';
 import { VisuallyHiddenInput } from '../VisuallyHiddenInput/VisuallyHiddenInput';
@@ -32,17 +30,11 @@ export const File = ({
   appearance,
   ...restProps
 }: FileProps) => {
-  const platform = usePlatform();
-
   return (
     <Button
       Component="label"
       align={align}
-      className={classNames(
-        styles['File'],
-        getPlatformClassName(styles['File'], platform),
-        className,
-      )}
+      className={classNames(styles['File'], className)}
       stretched={stretched}
       mode={mode}
       appearance={appearance}

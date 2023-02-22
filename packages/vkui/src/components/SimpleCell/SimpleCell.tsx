@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Icon24Chevron } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
@@ -11,6 +10,12 @@ import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './SimpleCell.module.css';
+
+const platformClassNames = {
+  ios: styles['SimpleCell--ios'],
+  android: styles['SimpleCell--android'],
+  vkcom: styles['SimpleCell--vkcom'],
+};
 
 const sizeYClassNames = {
   none: styles['SimpleCell--sizeY-none'],
@@ -104,7 +109,9 @@ export const SimpleCell = ({
       {...restProps}
       className={classNames(
         styles['SimpleCell'],
-        getPlatformClassName(styles['SimpleCell'], platform),
+        platformClassNames.hasOwnProperty(platform)
+          ? platformClassNames[platform]
+          : platformClassNames.android,
         sizeYClassNames[sizeY],
         expandable && styles['SimpleCell--exp'],
         multiline && styles['SimpleCell--mult'],

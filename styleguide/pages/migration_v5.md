@@ -820,7 +820,7 @@ import "@vkontakte/vkui/dist/vkui.css";
 
 ## `getClassName`
 
-- `getClassName` был удален. Используйте `getPlatformClassName`
+- `getClassName` был удален. Устанавливайте соответствующий селектор для платформы самостоятельно, используя `usePlatform()`.
 
 <br/><br/>
 

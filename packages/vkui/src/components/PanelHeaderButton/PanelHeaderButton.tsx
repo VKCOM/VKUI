@@ -9,16 +9,11 @@ import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
 import styles from './PanelHeaderButton.module.css';
 
-function getPlatformClassName(platform: string): string {
-  switch (platform) {
-    case 'ios':
-      return styles['PanelHeaderButton--ios'];
-    case 'vkcom':
-      return styles['PanelHeaderButton--vkcom'];
-    default:
-      return styles['PanelHeaderButton--android'];
-  }
-}
+const platformClassNames = {
+  ios: styles['PanelHeaderButton--ios'],
+  android: styles['PanelHeaderButton--android'],
+  vkcom: styles['PanelHeaderButton--vkcom'],
+};
 
 export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
   primary?: boolean;
@@ -101,7 +96,9 @@ export const PanelHeaderButton = ({
       activeMode={activeMode}
       className={classNames(
         styles['PanelHeaderButton'],
-        getPlatformClassName(platform),
+        platformClassNames.hasOwnProperty(platform)
+          ? platformClassNames[platform]
+          : platformClassNames.android,
         isPrimitive && styles['PanelHeaderButton--primitive'],
         !isPrimitive && !isPrimitiveLabel && styles['PanelHeaderButton--notPrimitive'],
         className,
