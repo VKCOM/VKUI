@@ -65,7 +65,7 @@
 
 .HorizontalCell--size-s:first-child::before,
 .HorizontalCell--size-s:last-child::after {
-  min-width: 8px;
+  min-width: calc(var(--vkui--size_base_padding_horizontal--regular) / 2);
 }
 
 .HorizontalCell--size-s:first-child,
