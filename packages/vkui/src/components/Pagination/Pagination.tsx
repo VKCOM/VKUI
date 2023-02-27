@@ -123,7 +123,7 @@ export const Pagination = ({
                   disabled && styles['Pagination__page--disabled'],
                 )}
               >
-                ...
+                &#8230;
               </div>
             </li>
           );
