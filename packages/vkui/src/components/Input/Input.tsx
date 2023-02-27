@@ -50,6 +50,7 @@ export const Input = ({
       before={before}
       after={after}
       disabled={restProps.disabled}
+      mode={restProps.mode}
       status={status}
     >
       <input {...restProps} type={type} className={styles['Input__el']} ref={getRef} />
