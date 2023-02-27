@@ -129,7 +129,7 @@
   .SubnavigationButton__before,
 .SubnavigationButton--selected:not(.SubnavigationButton--mode-tertiary)
   .SubnavigationButton__expandableIcon {
-  color: inherit;
+  color: var(--vkui--color_icon_contrast_themed);
 }
 
 /**
