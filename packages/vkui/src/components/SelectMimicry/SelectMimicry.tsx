@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { HasAlign, HasRootRef } from '../../types';
@@ -46,7 +44,6 @@ export const SelectMimicry = ({
   className,
   ...restProps
 }: SelectMimicryProps) => {
-  const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();
   const title = children || placeholder;
 
@@ -56,7 +53,6 @@ export const SelectMimicry = ({
       tabIndex={disabled ? undefined : tabIndex}
       className={classNames(
         styles['Select'],
-        getPlatformClassName(styles['Select'], platform),
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         multiline && styles['Select--multiline'],
         align && styles[`Select--align-${align}`],

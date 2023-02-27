@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Icon24Dismiss } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useKeyboard } from '../../hooks/useKeyboard';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -12,6 +11,12 @@ import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Title } from '../Typography/Title/Title';
 import styles from './ModalCardBase.module.css';
+
+const platformClassNames = {
+  ios: styles['ModalCardBase--ios'],
+  android: styles['ModalCardBase--android'],
+  vkcom: styles['ModalCardBase--vkcom'],
+};
 
 export interface ModalCardBaseProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -89,7 +94,9 @@ export const ModalCardBase = ({
       {...restProps}
       className={classNames(
         styles['ModalCardBase'],
-        getPlatformClassName(styles['ModalCardBase'], platform),
+        platformClassNames.hasOwnProperty(platform)
+          ? platformClassNames[platform]
+          : platformClassNames.android,
         isDesktop && styles['ModalCardBase--desktop'],
         className,
       )}

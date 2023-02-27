@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { Tappable } from '../Tappable/Tappable';
@@ -8,6 +7,12 @@ import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
 import { Text } from '../Typography/Text/Text';
 import styles from './PanelHeaderContent.module.css';
+
+const platformClassNames = {
+  ios: styles['PanelHeaderContent--ios'],
+  android: styles['PanelHeaderContent--android'],
+  vkcom: styles['PanelHeaderContent--vkcom'],
+};
 
 export interface PanelHeaderContentProps extends React.HTMLAttributes<HTMLDivElement> {
   aside?: React.ReactNode;
@@ -72,7 +77,9 @@ export const PanelHeaderContent = ({
       style={style}
       className={classNames(
         styles['PanelHeaderContent'],
-        getPlatformClassName(styles['PanelHeaderContent'], platform),
+        platformClassNames.hasOwnProperty(platform)
+          ? platformClassNames[platform]
+          : platformClassNames.android,
         className,
       )}
     >
