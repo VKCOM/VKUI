@@ -54,7 +54,7 @@ const SnackBarExample = () => {
       <Snackbar
         onClose={() => setSnackbar(null)}
         onActionClick={() => setText('Сообщение Ивану было отменено.')}
-        after={<Avatar src={getAvatarUrl('user_wayshev')} size={32} />}
+        before={<Avatar src={getAvatarUrl('user_wayshev')} size={32} />}
       >
         Отправлено Ивану Барышеву
       </Snackbar>,
@@ -93,6 +93,30 @@ const SnackBarExample = () => {
     );
   };
 
+  const openSuccess = () => {
+    if (snackbar) return;
+    setSnackbar(
+      <Snackbar
+        onClose={() => setSnackbar(null)}
+        before={<Icon28CheckCircleOutline fill="var(--vkui--color_icon_positive)" />}
+      >
+        Аватар успешно изменен
+      </Snackbar>,
+    );
+  };
+
+  const openError = () => {
+    if (snackbar) return;
+    setSnackbar(
+      <Snackbar
+        onClose={() => setSnackbar(null)}
+        before={<Icon28ErrorCircleOutline fill="var(--vkui--color_icon_negative)" />}
+      >
+        Не удалось применить изменения
+      </Snackbar>,
+    );
+  };
+
   React.useEffect(() => {
     openBaseWithAction();
   }, []);
@@ -107,6 +131,8 @@ const SnackBarExample = () => {
           <CellButton onClick={openWithAvatar}>Уведомление с аватаркой</CellButton>
           <CellButton onClick={openWithSibtitle}>Уведомление с дополнительным текстом</CellButton>
           <CellButton onClick={openDark}>Уведомление с темной темой</CellButton>
+          <CellButton onClick={openSuccess}>Успешное уведомление</CellButton>
+          <CellButton onClick={openError}>Уведомление с ошибкой</CellButton>
         </Group>
 
         {text && (
