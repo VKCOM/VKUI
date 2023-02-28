@@ -70,7 +70,9 @@ const PanelHeaderIn = ({ before, after, separator, children }: PanelHeaderProps)
           {(webviewType === WebviewType.INTERNAL || isInsideModal) && after}
         </div>
       </TooltipContainer>
-      {separator && platform === Platform.VKCOM && <Separator wide />}
+      {separator && platform === Platform.VKCOM && (
+        <Separator className={styles['PanelHeader__separator']} wide />
+      )}
     </React.Fragment>
   );
 };

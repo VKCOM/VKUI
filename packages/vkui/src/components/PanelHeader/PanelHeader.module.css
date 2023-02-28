@@ -283,6 +283,10 @@
   flex-grow: 1;
 }
 
+.PanelHeader__separator {
+  margin-top: calc(-1 * var(--vkui_internal--thin_border));
+}
+
 .PanelHeader--no-before .PanelHeader__content > * {
   padding-left: 0;
 }
