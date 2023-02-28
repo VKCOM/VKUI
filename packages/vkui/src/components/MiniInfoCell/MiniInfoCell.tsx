@@ -58,8 +58,17 @@ export const MiniInfoCell = ({
 }: MiniInfoCellProps) => {
   const cellClasses = classNames(
     styles['MiniInfoCell'],
-    styles[`MiniInfoCell--textWrap-${textWrap}`],
-    mode !== 'base' && styles[`MiniInfoCell--mode-${mode}`],
+    {
+      nowrap: styles['MiniInfoCell--textWrap-nowrap'],
+      full: styles['MiniInfoCell--textWrap-full'],
+      short: styles['MiniInfoCell--textWrap-short'],
+    }[textWrap],
+    mode !== 'base' &&
+      {
+        add: styles['MiniInfoCell--mode-add'],
+        accent: styles['MiniInfoCell--mode-accent'],
+        more: styles['MiniInfoCell--mode-more'],
+      }[mode],
     className,
   );
 

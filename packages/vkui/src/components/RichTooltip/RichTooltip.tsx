@@ -24,7 +24,13 @@ export const RichTooltip = ({
     <HoverPopper
       className={classNames(
         styles['RichTooltip'],
-        styles[`RichTooltip--appearance-${appearance}`],
+        appearance !== 'neutral' &&
+          {
+            accent: styles['RichTooltip--appearance-accent'],
+            white: styles['RichTooltip--appearance-white'],
+            black: styles['RichTooltip--appearance-black'],
+            inversion: styles['RichTooltip--appearance-inversion'],
+          }[appearance],
         className,
       )}
       arrow={arrow}

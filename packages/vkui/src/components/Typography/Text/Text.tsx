@@ -47,7 +47,12 @@ export const Text = ({
         className,
         styles['Text'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
-        weight && styles[`Text--weight-${weight}`],
+        weight &&
+          {
+            '1': styles['Text--weight-1'],
+            '2': styles['Text--weight-2'],
+            '3': styles['Text--weight-3'],
+          }[weight],
       )}
     >
       {children}

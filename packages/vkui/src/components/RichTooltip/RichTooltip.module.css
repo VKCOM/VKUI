@@ -45,7 +45,3 @@
 .RichTooltip--appearance-inversion .RichTooltip__arrow {
   color: var(--vkui--color_background_modal_inverse);
 }
-
-.RichTooltip--appearance-neutral {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

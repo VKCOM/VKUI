@@ -77,7 +77,7 @@ export const SegmentedControl = ({
       className={classNames(
         styles['SegmentedControl'],
         sizeY !== SizeType.COMPACT && sizeYClassNames[sizeY],
-        styles[`SegmentedControl--size-${size}`],
+        size === 'l' && styles['SegmentedControl--size-l'],
         className,
       )}
       ref={getRootRef}

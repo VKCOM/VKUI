@@ -53,7 +53,7 @@ export const SubnavigationBar = ({
       {...restProps}
       className={classNames(
         styles['SubnavigationBar'],
-        styles[`SubnavigationBar--mode-${mode}`],
+        mode === 'fixed' && styles['SubnavigationBar--mode-fixed'],
         className,
       )}
     >

@@ -53,7 +53,7 @@ export const FormLayoutGroup = ({
       className={classNames(
         styles['FormLayoutGroup'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
-        styles[`FormLayoutGroup--mode-${mode}`],
+        mode === 'horizontal' && styles['FormLayoutGroup--mode-horizontal'],
         isRemovable && styles['FormLayoutGroup--removable'],
         isSegmented && styles['FormLayoutGroup--segmented'],
         className,

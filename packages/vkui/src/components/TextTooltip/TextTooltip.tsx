@@ -35,7 +35,13 @@ export const TextTooltip = ({
     <HoverPopper
       className={classNames(
         styles['TextTooltip'],
-        styles[`TextTooltip--appearance-${appearance}`],
+        {
+          accent: styles['TextTooltip--appearance-accent'],
+          neutral: styles['TextTooltip--appearance-neutral'],
+          white: styles['TextTooltip--appearance-white'],
+          black: styles['TextTooltip--appearance-black'],
+          inversion: styles['TextTooltip--appearance-inversion'],
+        }[appearance],
         className,
       )}
       arrow

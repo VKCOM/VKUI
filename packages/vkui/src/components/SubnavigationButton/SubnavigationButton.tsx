@@ -76,8 +76,16 @@ export const SubnavigationButton = ({
       focusVisibleMode="outside"
       className={classNames(
         styles['SubnavigationButton'],
-        styles[`SubnavigationButton--size-${size}`],
-        styles[`SubnavigationButton--mode-${mode}`],
+        {
+          s: styles['SubnavigationButton--size-s'],
+          m: styles['SubnavigationButton--size-m'],
+          l: styles['SubnavigationButton--size-l'],
+        }[size],
+        {
+          primary: styles['SubnavigationButton--mode-primary'],
+          outline: styles['SubnavigationButton--mode-outline'],
+          tertiary: styles['SubnavigationButton--mode-tertiary'],
+        }[mode],
         selected && styles['SubnavigationButton--selected'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         className,

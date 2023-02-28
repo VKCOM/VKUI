@@ -69,8 +69,3 @@
 .ModalCardBase .UsersStack {
   margin-top: 20px;
 }
-
-.UsersStack--layout-horizontal,
-.UsersStack--others {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

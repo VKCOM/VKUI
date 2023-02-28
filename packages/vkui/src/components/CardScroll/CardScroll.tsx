@@ -86,7 +86,12 @@ export const CardScroll = ({
       {...restProps}
       className={classNames(
         styles['CardScroll'],
-        styles[`CardScroll--size-${size}`],
+        size !== false &&
+          {
+            s: styles['CardScroll--size-s'],
+            m: styles['CardScroll--size-m'],
+            l: styles['CardScroll--size-l'],
+          }[size],
         withSpaces && styles['CardScroll--withSpaces'],
         className,
       )}

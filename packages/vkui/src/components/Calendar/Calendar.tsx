@@ -158,7 +158,11 @@ export const Calendar = ({
     <div
       {...props}
       ref={getRootRef}
-      className={classNames(styles['Calendar'], styles[`Calendar--size-${size}`], className)}
+      className={classNames(
+        styles['Calendar'],
+        size === 's' && styles['Calendar--size-s'],
+        className,
+      )}
     >
       <CalendarHeader
         viewDate={externalViewDate || viewDate}

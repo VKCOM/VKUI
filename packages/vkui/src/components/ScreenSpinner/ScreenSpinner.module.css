@@ -64,8 +64,3 @@
     opacity: 1;
   }
 }
-
-.ScreenSpinner--state-loading,
-.ScreenSpinner--state-error {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

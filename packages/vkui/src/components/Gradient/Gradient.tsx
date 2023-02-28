@@ -29,8 +29,15 @@ export const Gradient = ({
       {...restProps}
       className={classNames(
         styles['Gradient'],
-        styles[`Gradient--mode-${mode}`],
-        styles[`Gradient--to-${to}`],
+        {
+          tint: styles['Gradient--mode-tint'],
+          black: styles['Gradient--mode-black'],
+          white: styles['Gradient--mode-white'],
+        }[mode],
+        {
+          top: styles['Gradient--to-top'],
+          bottom: styles['Gradient--to-bottom'],
+        }[to],
         className,
       )}
     >

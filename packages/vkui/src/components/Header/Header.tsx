@@ -87,7 +87,11 @@ export const Header = ({
         platform === Platform.VKCOM && styles['Header--vkcom'],
         platform === Platform.ANDROID && styles['Header--android'],
         platform === Platform.IOS && styles['Header--ios'],
-        styles[`Header--mode-${mode}`],
+        {
+          primary: styles['Header--mode-primary'],
+          secondary: styles['Header--mode-secondary'],
+          tertiary: styles['Header--mode-tertiary'],
+        }[mode],
         isPrimitiveReactNode(indicator) && styles['Header--pi'],
         className,
       )}

@@ -180,7 +180,7 @@ export const CustomScrollView = ({
         <div
           className={classNames(
             styles['CustomScrollView__trackerY'],
-            !trackerVisible && styles[`CustomScrollView__trackerY--hidden`],
+            !trackerVisible && styles['CustomScrollView__trackerY--hidden'],
           )}
           onMouseEnter={autoHideScrollbar ? onTrackerMouseEnter : undefined}
           onMouseLeave={autoHideScrollbar ? onTrackerMouseLeave : undefined}

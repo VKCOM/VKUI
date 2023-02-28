@@ -16,7 +16,11 @@ export const RadioGroup = ({
   ...restProps
 }: RadioGroupProps) => (
   <div
-    className={classNames(styles['RadioGroup'], styles[`RadioGroup--mode-${mode}`], className)}
+    className={classNames(
+      styles['RadioGroup'],
+      mode === 'horizontal' && styles['RadioGroup--mode-horizontal'],
+      className,
+    )}
     {...restProps}
   >
     {children}

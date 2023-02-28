@@ -39,8 +39,14 @@ export const HorizontalScrollArrow = ({
       hasActive={false}
       className={classNames(
         styles['HorizontalScrollArrow'],
-        styles[`HorizontalScrollArrow--size-${size}`],
-        styles[`HorizontalScrollArrow--direction-${direction}`],
+        {
+          m: styles['HorizontalScrollArrow--size-m'],
+          l: styles['HorizontalScrollArrow--size-l'],
+        }[size],
+        {
+          left: styles['HorizontalScrollArrow--direction-left'],
+          right: styles['HorizontalScrollArrow--direction-right'],
+        }[direction],
         className,
       )}
       onClick={onClick}

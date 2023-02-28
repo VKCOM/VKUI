@@ -74,7 +74,11 @@ export const FixedLayout = ({
         styles['FixedLayout'],
         platform === Platform.IOS && styles['FixedLayout--ios'],
         filled && styles['FixedLayout--filled'],
-        vertical && styles[`FixedLayout--vertical-${vertical}`],
+        vertical &&
+          {
+            top: styles['FixedLayout--vertical-top'],
+            bottom: styles['FixedLayout--vertical-bottom'],
+          }[vertical],
         className,
       )}
       style={{ ...style, width }}

@@ -153,8 +153,11 @@ export const Banner = ({
       className={classNames(
         styles['Banner'],
         platform === Platform.IOS && styles['Banner--ios'],
-        styles[`Banner--mode-${mode}`],
-        styles[`Banner--size-${size}`],
+        mode === 'image' && styles['Banner--mode-image'],
+        {
+          s: styles['Banner--size-s'],
+          m: styles['Banner--size-m'],
+        }[size],
         mode === 'image' && imageTheme === 'dark' && styles['Banner--inverted'],
         className,
       )}

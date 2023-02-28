@@ -147,7 +147,10 @@ export const Removable = ({
       className={classNames(
         styles['Removable'],
         platform === Platform.IOS && styles['Removable--ios'],
-        styles[`Removable--align-${align}`],
+        {
+          start: styles['Removable--align-start'],
+          center: styles['Removable--align-center'],
+        }[align],
         className,
       )}
     >

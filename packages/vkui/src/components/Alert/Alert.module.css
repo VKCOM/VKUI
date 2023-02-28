@@ -280,9 +280,3 @@
     transform: scale(1);
   }
 }
-
-.Alert__action--mode-default,
-.Alert__button--mode-default,
-.Alert__button--mode-destructive {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

@@ -28,8 +28,8 @@ export const AvatarBadgeWithPreset = ({
   const badgeSize = getBadgeIconSizeByImageBaseSize(size);
   const isOnlinePreset = preset === 'online';
   const presetClassName = isOnlinePreset
-    ? styles[`AvatarBadge--preset-online`]
-    : styles[`AvatarBadge--preset-onlineMobile`];
+    ? styles['AvatarBadge--preset-online']
+    : styles['AvatarBadge--preset-onlineMobile'];
   const Icon = isOnlinePreset ? Icon12Circle : Icon12OnlineMobile;
 
   return (

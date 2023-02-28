@@ -39,24 +39,6 @@
   left: auto;
 }
 
-.ImageBase--size-16,
-.ImageBase--size-20,
-.ImageBase--size-24,
-.ImageBase--size-28,
-.ImageBase--size-32,
-.ImageBase--size-36,
-.ImageBase--size-40,
-.ImageBase--size-44,
-.ImageBase--size-48,
-.ImageBase--size-56,
-.ImageBase--size-64,
-.ImageBase--size-72,
-.ImageBase--size-80,
-.ImageBase--size-88,
-.ImageBase--size-96 {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md) */
-}
-
 /**
  * CMP:
  * CellButton

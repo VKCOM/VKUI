@@ -98,7 +98,8 @@ export const WriteBarIcon = ({
       className={classNames(
         styles['WriteBarIcon'],
         platform === Platform.IOS && styles['WriteBarIcon--ios'],
-        mode && styles[`WriteBarIcon--mode-${mode}`],
+        mode === 'send' && styles['WriteBarIcon--mode-send'],
+        mode === 'done' && styles['WriteBarIcon--mode-done'],
         className,
       )}
     >

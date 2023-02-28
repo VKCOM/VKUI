@@ -201,8 +201,3 @@
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
-
-.FormField--mode-plain,
-.FormField--status-default {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

@@ -23,7 +23,12 @@ export const Card = ({
     <div
       {...restProps}
       ref={getRootRef}
-      className={classNames(styles['Card'], styles[`Card--mode-${mode}`], className)}
+      className={classNames(
+        styles['Card'],
+        mode === 'outline' && styles['Card--mode-outline'],
+        mode === 'shadow' && styles['Card--mode-shadow'],
+        className,
+      )}
     >
       <div className={styles['Card__in']}>{children}</div>
     </div>

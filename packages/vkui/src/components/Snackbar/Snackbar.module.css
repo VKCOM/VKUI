@@ -152,7 +152,3 @@
     transform: translate3d(0, 0, 0);
   }
 }
-
-.Snackbar--mode-default {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

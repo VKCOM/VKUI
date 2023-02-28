@@ -78,7 +78,7 @@ export const CalendarDays = ({
       <div
         className={classNames(
           styles['CalendarDays__row'],
-          size && styles[`CalendarDays__row--size-${size}`],
+          size === 's' && styles['CalendarDays__row--size-s'],
         )}
       >
         {daysNames.map((dayName) => (
@@ -92,7 +92,7 @@ export const CalendarDays = ({
         <div
           className={classNames(
             styles['CalendarDays__row'],
-            size && styles[`CalendarDays__row--size-${size}`],
+            size === 's' && styles['CalendarDays__row--size-s'],
           )}
           key={i}
         >

@@ -93,7 +93,11 @@ const AlertAction = ({ action, onItemClick, ...restProps }: AlertActionProps) =>
     return (
       <Tappable
         Component={restActionProps.href ? 'a' : Component}
-        className={classNames(styles['Alert__action'], styles[`Alert__action--mode-${mode}`])}
+        className={classNames(
+          styles['Alert__action'],
+          mode === 'destructive' && styles['Alert__action--mode-destructive'],
+          mode === 'cancel' && styles['Alert__action--mode-cancel'],
+        )}
         onClick={handleItemClick}
         {...restActionProps}
         {...restProps}
@@ -111,7 +115,10 @@ const AlertAction = ({ action, onItemClick, ...restProps }: AlertActionProps) =>
 
   return (
     <Button
-      className={classNames(styles['Alert__button'], styles[`Alert__button--mode-${action.mode}`])}
+      className={classNames(
+        styles['Alert__button'],
+        action.mode === 'cancel' && styles['Alert__button--mode-cancel'],
+      )}
       mode={mode}
       size="m"
       onClick={handleItemClick}

@@ -29,7 +29,3 @@
   align-items: center;
   justify-content: center;
 }
-
-.CalendarDays__row--size-m {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

@@ -51,7 +51,7 @@ export const InputLike = ({
     <span
       className={classNames(
         styles['InputLike'],
-        value?.length === length && styles[`InputLike--full`],
+        value?.length === length && styles['InputLike--full'],
         className,
       )}
       tabIndex={0}

@@ -44,10 +44,22 @@ export const ButtonGroup = ({
       className={classNames(
         className,
         styles.ButtonGroup,
-        styles[`ButtonGroup--mode-${mode}`],
-        gap !== 'none' && styles[`ButtonGroup--gap-${gap}`],
+        {
+          vertical: styles['ButtonGroup--mode-vertical'],
+          horizontal: styles['ButtonGroup--mode-horizontal'],
+        }[mode],
+        gap !== 'none' &&
+          {
+            space: styles['ButtonGroup--gap-space'],
+            s: styles['ButtonGroup--gap-s'],
+            m: styles['ButtonGroup--gap-m'],
+          }[gap],
         stretched && styles['ButtonGroup--stretched'],
-        align && styles[`ButtonGroup--align-${align}`],
+        {
+          left: styles['ButtonGroup--align-left'],
+          center: styles['ButtonGroup--align-center'],
+          right: styles['ButtonGroup--align-right'],
+        }[align],
       )}
       role="group"
       ref={getRootRef}

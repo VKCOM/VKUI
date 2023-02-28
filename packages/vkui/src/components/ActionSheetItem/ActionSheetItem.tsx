@@ -88,7 +88,11 @@ const ActionSheetItem = ({
       className={classNames(
         styles['ActionSheetItem'],
         platform === Platform.IOS && styles['ActionSheetItem--ios'],
-        styles[`ActionSheetItem--mode-${mode}`],
+        {
+          default: styles['ActionSheetItem--mode-default'],
+          destructive: styles['ActionSheetItem--mode-destructive'],
+          cancel: styles['ActionSheetItem--mode-cancel'],
+        }[mode],
         sizeY === SizeType.COMPACT && styles['ActionSheetItem--sizeY-compact'],
         isRich && styles['ActionSheetItem--rich'],
         isDesktop && styles['ActionSheetItem--desktop'],
