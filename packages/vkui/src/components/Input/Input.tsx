@@ -31,6 +31,7 @@ export const Input = ({
   before,
   after,
   status,
+  mode = 'default',
   ...restProps
 }: InputProps) => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -50,7 +51,7 @@ export const Input = ({
       before={before}
       after={after}
       disabled={restProps.disabled}
-      mode={restProps.mode}
+      mode={mode}
       status={status}
     >
       <input {...restProps} type={type} className={styles['Input__el']} ref={getRef} />
