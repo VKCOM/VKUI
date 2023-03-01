@@ -32,10 +32,11 @@ const Example = () => {
           <FormItem htmlFor="color" top="Цвет">
             <ChipsInput
               id="color"
+              inputAriaLabel="Введите цвета"
               value={colors}
               after={
-                <IconButton hoverMode="opacity" aria-label="Очистить поле" onClick={onClick}>
-                  <Icon16Clear />
+                <IconButton hoverMode="opacity" aria-label="Очистить цвета" onClick={onClick}>
+                  <Icon16Clear aria-hidden />
                 </IconButton>
               }
             />
@@ -74,7 +75,7 @@ const Example = () => {
                 <Chip
                   value={value}
                   removable={false}
-                  before={<Avatar size={20} src={src} role="presentation" />}
+                  before={<Avatar size={20} src={src} aria-hidden />}
                   {...rest}
                 >
                   {label}

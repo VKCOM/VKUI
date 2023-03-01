@@ -76,14 +76,18 @@ const Example = () => {
             }
           }}
           renderChip={({ value, label, option: { src, icon }, ...rest }) => (
-            <Chip value={value} before={<Avatar size={20} src={src} />} {...rest}>
+            <Chip value={value} before={<Avatar size={20} src={src} aria-hidden />} {...rest}>
               {label}
             </Chip>
           )}
           renderOption={({ option: { src, value, icon }, ...otherProps }) => {
             return (
               <CustomSelectOption
-                before={icon ? <Avatar size={20}>{icon}</Avatar> : <Avatar size={20} src={src} />}
+                before={
+                  <Avatar size={20} aria-hidden src={src}>
+                    {icon}
+                  </Avatar>
+                }
                 {...otherProps}
               />
             );
