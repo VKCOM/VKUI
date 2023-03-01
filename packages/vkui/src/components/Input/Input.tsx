@@ -31,7 +31,7 @@ export const Input = ({
   before,
   after,
   status,
-  mode = 'default',
+  mode,
   ...restProps
 }: InputProps) => {
   const { sizeY = 'none' } = useAdaptivity();
