@@ -8,7 +8,6 @@ import { Platform } from '../../lib/platform';
 import { animationEvent, transitionEvent } from '../../lib/supportEvents';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasPlatform } from '../../types';
-import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
 import {
   ConfigProviderContext,
@@ -47,8 +46,6 @@ export interface ViewInfiniteProps
     HasPlatform,
     NavIdProps {
   activePanel: string;
-  popout?: React.ReactNode;
-  modal?: React.ReactNode;
   onTransition?(params: TransitionParams & { isBack: boolean }): void;
   /**
    * callback свайпа назад
@@ -161,9 +158,6 @@ class ViewInfiniteComponent extends React.Component<
   }
 
   componentDidUpdate(prevProps: ViewInfiniteProps, prevState: ViewInfiniteState) {
-    this.props.popout && !prevProps.popout && this.blurActiveElement();
-    this.props.modal && !prevProps.modal && this.blurActiveElement();
-
     // Нужен переход
     if (
       prevProps.activePanel !== this.props.activePanel &&
@@ -565,8 +559,6 @@ class ViewInfiniteComponent extends React.Component<
 
   render() {
     const {
-      popout,
-      modal,
       platform,
       activePanel: _1,
       splitCol,
@@ -596,9 +588,6 @@ class ViewInfiniteComponent extends React.Component<
       swipeBackResult,
       swipingBack,
     } = this.state;
-
-    const hasPopout = !!popout;
-    const hasModal = !!modal;
 
     const panels = this.panels
       .filter((panel) => {
@@ -686,10 +675,6 @@ class ViewInfiniteComponent extends React.Component<
             );
           })}
         </div>
-        <AppRootPortal>
-          {hasPopout && <div className={styles['View__popout']}>{popout}</div>}
-          {hasModal && <div className={styles['View__modal']}>{modal}</div>}
-        </AppRootPortal>
       </Touch>
     );
   }
