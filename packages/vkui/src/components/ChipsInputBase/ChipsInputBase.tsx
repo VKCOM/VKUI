@@ -3,8 +3,13 @@ import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useChipsInput } from '../../hooks/useChipsInput';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { Keys, pressedKey } from '../../lib/accessibility';
 import { SizeType } from '../../lib/adaptivity';
+import { useDOM } from '../../lib/dom';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
+import { AppRootContext } from '../AppRoot/AppRootContext';
 import { Chip, ChipOption, ChipValue, RenderChip } from '../Chip/Chip';
 import styles from './ChipsInputBase.module.css';
 
@@ -68,8 +73,6 @@ export const ChipsInputBase = <Option extends ChipOption>(props: ChipsInputBaseP
     onChange,
     onInputChange,
     onKeyDown,
-    onBlur,
-    onFocus,
     children,
     inputValue,
     getRef,
@@ -82,14 +85,43 @@ export const ChipsInputBase = <Option extends ChipOption>(props: ChipsInputBaseP
     addOnBlur,
     ...restProps
   } = propsWithDefault;
+  const { document } = useDOM();
   const { sizeY } = useAdaptivity();
 
-  const [focused, setFocused] = React.useState(false);
+  const [focusableChipNodes, setFocusableChipNodes] = React.useState<HTMLElement[] | null>(null);
+
+  const { keyboardInput } = React.useContext(AppRootContext);
+
   const { fieldValue, addOptionFromInput, removeOption, selectedOptions, handleInputChange } =
     useChipsInput(propsWithDefault);
+  const rootRef = useExternRef(getRootRef);
   const inputRef = useExternRef(getRef);
 
   const isDisabled = restProps.disabled || restProps.readOnly;
+
+  // - [x] use rowing tabIndex technique
+  const rowTabIndex = (idx: number, focusByIdx = false) => {
+    if (focusableChipNodes?.length) {
+      focusableChipNodes.map((node, currentIdx) => {
+        node.tabIndex = currentIdx !== idx ? -1 : 0;
+        return node;
+      });
+
+      if (focusByIdx) {
+        focusableChipNodes[idx].focus();
+      }
+    }
+  };
+
+  const focusInput = () => {
+    if (inputRef?.current && document?.activeElement !== inputRef?.current) {
+      inputRef.current.focus();
+    }
+  };
+
+  useIsomorphicLayoutEffect(() => {
+    rowTabIndex(0);
+  }, [keyboardInput]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (isDisabled) {
@@ -99,40 +131,107 @@ export const ChipsInputBase = <Option extends ChipOption>(props: ChipsInputBaseP
 
     onKeyDown!(e);
 
-    if (e.key === 'Backspace' && !e.defaultPrevented && !fieldValue && selectedOptions.length) {
-      removeOption(getOptionValue!(selectedOptions[selectedOptions.length - 1]));
-      e.preventDefault();
-    }
+    if (!e.defaultPrevented) {
+      const PRESSED_KEY = pressedKey(e);
 
-    if (e.key === 'Enter' && !e.defaultPrevented && fieldValue) {
-      addOptionFromInput();
-      e.preventDefault();
-    }
-  };
+      if (PRESSED_KEY === Keys.BACKSPACE && !fieldValue && selectedOptions.length) {
+        removeOption(getOptionValue!(selectedOptions[selectedOptions.length - 1]));
+        e.preventDefault();
+      }
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (focused) {
-      setFocused(false);
-    }
-    onBlur!(e);
-
-    if (addOnBlur && !e.defaultPrevented) {
-      addOptionFromInput();
+      if (PRESSED_KEY === Keys.ENTER && fieldValue) {
+        addOptionFromInput();
+        e.preventDefault();
+      }
     }
   };
 
-  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (!focused) {
-      setFocused(true);
-    }
-    onFocus!(e);
-  };
+  // HANDLE CHIP REMOVAL
 
-  const handleChipRemove = (_: React.MouseEvent | undefined, value: ChipValue | undefined) => {
+  const handleChipRemove = (
+    _: React.MouseEvent | React.KeyboardEvent | undefined,
+    value: ChipValue | undefined,
+  ) => {
     if (value !== undefined) {
       removeOption(value);
     }
   };
+
+  // TRAP FOCUS ON CHIPS
+
+  useIsomorphicLayoutEffect(() => {
+    if (!rootRef.current) {
+      return;
+    }
+
+    const nodes: HTMLElement[] = [];
+    Array.prototype.forEach.call(
+      // eslint-disable-next-line no-restricted-properties
+      rootRef.current.querySelectorAll('[data-focusable]'),
+      (node: HTMLElement) => {
+        nodes.push(node);
+      },
+    );
+
+    setFocusableChipNodes(nodes);
+  }, [selectedOptions, rootRef.current]);
+
+  useIsomorphicLayoutEffect(() => {
+    if (keyboardInput) {
+      if (focusableChipNodes?.length) {
+        rowTabIndex(0, true);
+      } else {
+        focusInput();
+      }
+    }
+  }, [focusableChipNodes]);
+
+  const handleDocumentKeydown = (e: KeyboardEvent) => {
+    const target = e.target as HTMLElement;
+
+    if (focusableChipNodes?.includes(target)) {
+      const lastIdx = focusableChipNodes.length - 1;
+      const currentIdx = focusableChipNodes.findIndex((node) => node === target);
+
+      const rowTabIndexOnPressingAccessibleKey = (idx: number) => {
+        e.preventDefault();
+        rowTabIndex(idx, true);
+        return false;
+      };
+
+      switch (pressedKey(e)) {
+        case Keys.TAB:
+          rowTabIndex(0, true);
+          return false;
+
+        case Keys.HOME:
+        case Keys.PAGE_UP:
+          return rowTabIndexOnPressingAccessibleKey(0);
+
+        case Keys.END:
+        case Keys.PAGE_DOWN:
+          return rowTabIndexOnPressingAccessibleKey(lastIdx);
+
+        case Keys.ARROW_RIGHT:
+        case Keys.ARROW_UP:
+          const nextIdx = currentIdx < lastIdx ? currentIdx + 1 : 0;
+          return rowTabIndexOnPressingAccessibleKey(nextIdx);
+
+        case Keys.ARROW_LEFT:
+        case Keys.ARROW_DOWN:
+          const prevIdx = currentIdx > 0 ? currentIdx - 1 : lastIdx;
+          return rowTabIndexOnPressingAccessibleKey(prevIdx);
+
+        default:
+          break;
+      }
+    }
+
+    return true;
+  };
+  useGlobalEventListener(document, 'keydown', handleDocumentKeydown, {
+    capture: true,
+  });
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isDisabled) {
@@ -140,15 +239,17 @@ export const ChipsInputBase = <Option extends ChipOption>(props: ChipsInputBaseP
       return;
     }
 
-    if (inputRef?.current !== null && !focused) {
-      inputRef.current.focus();
-    }
+    focusInput();
   };
 
   return (
     <div
       onClick={handleClick}
-      role="presentation"
+      role="grid"
+      aria-disabled={restProps.disabled}
+      aria-readonly={restProps.readOnly}
+      aria-busy="true"
+      aria-live="polite"
       style={style}
       className={classNames(
         styles['ChipsInputBase'],
@@ -156,7 +257,7 @@ export const ChipsInputBase = <Option extends ChipOption>(props: ChipsInputBaseP
         !selectedOptions.length && styles['ChipsInputBase--hasPlaceholder'],
         className,
       )}
-      ref={getRootRef}
+      ref={rootRef}
     >
       {selectedOptions.map((option: Option) => {
         const value = getOptionValue!(option);
@@ -189,8 +290,6 @@ export const ChipsInputBase = <Option extends ChipOption>(props: ChipsInputBaseP
           value={fieldValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
           placeholder={selectedOptions.length ? undefined : placeholder}
         />
       </label>

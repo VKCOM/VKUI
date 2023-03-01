@@ -73,6 +73,7 @@ export const Chip = ({
       Component="div"
       hasHover={false}
       hasActive={false}
+      data-focusable
     >
       <div className={styles['Chip__in']} role="gridcell">
         {hasReactNode(before) && <div className={styles['Chip__before']}>{before}</div>}
@@ -89,6 +90,7 @@ export const Chip = ({
             hasHover={false}
             hasActive={false}
             aria-label={removeLabel}
+            data-focusable
           >
             <Icon16Cancel aria-hidden />
           </Tappable>
