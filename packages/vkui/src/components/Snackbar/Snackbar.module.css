@@ -32,7 +32,7 @@
 
 .Snackbar__body {
   box-sizing: border-box;
-  padding: 12px 16px;
+  padding: 12px;
   min-height: 56px;
   display: flex;
   align-items: center;
@@ -46,12 +46,10 @@
 }
 
 .Snackbar__before {
-  margin-left: -4px;
   margin-right: 12px;
 }
 
 .Snackbar__after {
-  margin-right: -4px;
   margin-left: 12px;
 }
 
