@@ -15,5 +15,6 @@ module.exports = {
     'src/storybook',
     '\\.test\\.tsx?$',
     '\\.e2e\\.tsx?$',
+    '\\.stories\\.tsx?$',
   ],
 };
