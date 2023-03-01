@@ -23,7 +23,10 @@ export const CellButton = ({
       {...restProps}
       className={classNames(
         styles['CellButton'],
-        styles[`CellButton--mode-${mode}`],
+        {
+          primary: styles['CellButton--mode-primary'],
+          danger: styles['CellButton--mode-danger'],
+        }[mode],
         centered && styles['CellButton--centered'],
         className,
       )}

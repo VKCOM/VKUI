@@ -28,7 +28,3 @@
 .Calendar--size-s .Calendar__header {
   margin-bottom: 0;
 }
-
-.Calendar--size-m {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

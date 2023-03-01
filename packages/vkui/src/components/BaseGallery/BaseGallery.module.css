@@ -77,8 +77,6 @@
   opacity: 1;
 }
 
-.BaseGallery--align-left,
-.BaseGallery--align-right,
 .BaseGallery--dragging {
   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

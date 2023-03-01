@@ -51,7 +51,11 @@ export const HorizontalCell = ({
       style={style}
       className={classNames(
         styles['HorizontalCell'],
-        styles[`HorizontalCell--size-${size}`],
+        {
+          s: styles['HorizontalCell--size-s'],
+          m: styles['HorizontalCell--size-m'],
+          l: styles['HorizontalCell--size-l'],
+        }[size],
         className,
       )}
     >

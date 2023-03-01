@@ -77,8 +77,12 @@ export const FormField = ({
       onMouseLeave={handleMouseLeave}
       className={classNames(
         styles['FormField'],
-        styles[`FormField--mode-${mode}`],
-        styles[`FormField--status-${status}`],
+        mode === 'default' && styles['FormField--mode-default'],
+        status !== 'default' &&
+          {
+            error: styles['FormField--status-error'],
+            valid: styles['FormField--status-valid'],
+          }[status],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         disabled && styles['FormField--disabled'],
         !disabled && hover && styles['FormField--hover'],

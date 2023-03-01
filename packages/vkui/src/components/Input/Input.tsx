@@ -41,7 +41,12 @@ export const Input = ({
       style={style}
       className={classNames(
         styles['Input'],
-        align && styles[`Input--align-${align}`],
+        align &&
+          {
+            left: styles['Input--align-left'],
+            center: styles['Input--align-center'],
+            right: styles['Input--align-right'],
+          }[align],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         before && styles['Input--hasBefore'],
         after && styles['Input--hasAfter'],

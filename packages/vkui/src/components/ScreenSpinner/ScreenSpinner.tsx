@@ -41,7 +41,8 @@ export const ScreenSpinner = ({
       className={classNames(
         styles['ScreenSpinner'],
         hideSpinner && styles['ScreenSpinner--hideSpinner'],
-        styles[`ScreenSpinner--state-${state}`],
+        state === 'cancelable' && styles['ScreenSpinner--state-cancelable'],
+        state === 'done' && styles['ScreenSpinner--state-done'],
         className,
       )}
       style={style}

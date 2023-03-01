@@ -14,6 +14,12 @@ export interface FocusVisibleProps {
 export const FocusVisible = ({ mode }: FocusVisibleProps) => (
   <span
     aria-hidden
-    className={classNames(styles['FocusVisible'], styles[`FocusVisible--mode-${mode}`])}
+    className={classNames(
+      styles['FocusVisible'],
+      {
+        inside: styles['FocusVisible--mode-inside'],
+        outside: styles['FocusVisible--mode-outside'],
+      }[mode],
+    )}
   />
 );

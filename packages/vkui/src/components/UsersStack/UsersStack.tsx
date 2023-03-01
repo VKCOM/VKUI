@@ -162,9 +162,15 @@ export const UsersStack = ({
       {...restProps}
       className={classNames(
         styles['UsersStack'],
-        styles[`UsersStack--size-${size}`],
-        styles[`UsersStack--layout-${layout}`],
-        canShowOthers && styles['UsersStack--others'],
+        {
+          s: styles['UsersStack--size-s'],
+          m: styles['UsersStack--size-m'],
+          l: styles['UsersStack--size-l'],
+        }[size],
+        {
+          vertical: styles['UsersStack--layout-vertical'],
+          horizontal: styles['UsersStack--layout-horizontal'],
+        }[layout],
         className,
       )}
     >

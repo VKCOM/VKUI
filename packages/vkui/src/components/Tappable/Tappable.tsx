@@ -304,8 +304,20 @@ export const Tappable = ({
     hasActive && active && !isPresetActiveMode && activeMode,
     focusVisible && !isPresetFocusVisibleMode && focusVisibleMode,
     hasActive && active && styles['Tappable--active'],
-    hasHover && hovered && isPresetHoverMode && styles[`Tappable--hover-${hoverMode}`],
-    hasActive && active && isPresetActiveMode && styles[`Tappable--active-${activeMode}`],
+    hasHover &&
+      hovered &&
+      isPresetHoverMode &&
+      {
+        background: styles['Tappable--hover-background'],
+        opacity: styles['Tappable--hover-opacity'],
+      }[hoverMode],
+    hasActive &&
+      active &&
+      isPresetActiveMode &&
+      {
+        background: styles['Tappable--active-background'],
+        opacity: styles['Tappable--active-opacity'],
+      }[activeMode],
     focusVisible && styles['Tappable--focus-visible'],
   );
 

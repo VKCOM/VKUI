@@ -14,9 +14,9 @@ import { ModalType } from '../ModalRoot/types';
 import styles from './ModalPage.module.css';
 
 const sizeClassName = {
-  s: styles[`ModalPage--size-s`],
-  m: styles[`ModalPage--size-m`],
-  l: styles[`ModalPage--size-l`],
+  s: styles['ModalPage--size-s'],
+  m: styles['ModalPage--size-m'],
+  l: styles['ModalPage--size-l'],
 };
 
 export interface ModalPageProps extends React.HTMLAttributes<HTMLDivElement>, NavIdProps {

@@ -32,8 +32,17 @@ export const Title = ({
       className={classNames(
         className,
         styles['Title'],
-        styles[`Title--level-${level}`],
-        weight && styles[`Title--weight-${weight}`],
+        {
+          '1': styles['Title--level-1'],
+          '2': styles['Title--level-2'],
+          '3': styles['Title--level-3'],
+        }[level],
+        weight &&
+          {
+            '1': styles['Title--weight-1'],
+            '2': styles['Title--weight-2'],
+            '3': styles['Title--weight-3'],
+          }[weight],
       )}
     >
       {children}

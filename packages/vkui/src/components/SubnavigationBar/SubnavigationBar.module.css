@@ -16,7 +16,6 @@
 }
 
 .SubnavigationBar,
-.SubnavigationBar--mode-fixed,
-.SubnavigationBar--mode-overflow {
+.SubnavigationBar--mode-fixed {
   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

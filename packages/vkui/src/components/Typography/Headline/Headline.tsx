@@ -50,8 +50,15 @@ export const Headline = ({
         className,
         styles['Headline'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
-        styles[`Headline--level-${level}`],
-        styles[`Headline--weight-${weight}`],
+        {
+          '1': styles['Headline--level-1'],
+          '2': styles['Headline--level-2'],
+        }[level],
+        {
+          '1': styles['Headline--weight-1'],
+          '2': styles['Headline--weight-2'],
+          '3': styles['Headline--weight-3'],
+        }[weight],
       )}
     >
       {children}

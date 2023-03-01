@@ -98,7 +98,12 @@ export const TabsItem = ({
       {...restProps}
       className={classNames(
         styles['TabsItem'],
-        mode && styles[`TabsItem--mode-${mode}`],
+        mode &&
+          {
+            default: styles['TabsItem--mode-default'],
+            accent: styles['TabsItem--mode-accent'],
+            secondary: styles['TabsItem--mode-secondary'],
+          }[mode],
         selected && styles['TabsItem--selected'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         withGaps && styles['TabsItem--withGaps'],

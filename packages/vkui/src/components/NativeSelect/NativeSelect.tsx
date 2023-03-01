@@ -80,7 +80,12 @@ const NativeSelect = ({
         styles['Select'],
         empty && styles['Select--empty'],
         multiline && styles['Select--multiline'],
-        align && styles[`Select--align-${align}`],
+        align &&
+          {
+            left: styles['Select--align-left'],
+            center: styles['Select--align-center'],
+            right: styles['Select--align-right'],
+          }[align],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         className,
       )}

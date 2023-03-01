@@ -57,7 +57,6 @@
   margin-left: calc(-1 * var(--vkui_internal--thin_border));
 }
 
-.FormLayoutGroup,
-.FormLayoutGroup--mode-vertical {
+.FormLayoutGroup {
   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

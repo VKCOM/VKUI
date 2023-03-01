@@ -53,8 +53,16 @@ export const PopoutWrapper = ({
       {...restProps}
       className={classNames(
         styles['PopoutWrapper'],
-        styles[`PopoutWrapper--alignY-${alignY}`],
-        styles[`PopoutWrapper--alignX-${alignX}`],
+        {
+          center: styles['PopoutWrapper--alignY-center'],
+          top: styles['PopoutWrapper--alignY-top'],
+          bottom: styles['PopoutWrapper--alignY-bottom'],
+        }[alignY],
+        {
+          center: styles['PopoutWrapper--alignX-center'],
+          left: styles['PopoutWrapper--alignX-left'],
+          right: styles['PopoutWrapper--alignX-right'],
+        }[alignX],
         closing && styles['PopoutWrapper--closing'],
         opened && styles['PopoutWrapper--opened'],
         fixed && styles['PopoutWrapper--fixed'],

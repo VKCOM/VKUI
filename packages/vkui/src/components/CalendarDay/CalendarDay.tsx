@@ -73,7 +73,7 @@ export const CalendarDay = React.memo(
       <Tappable
         className={classNames(
           styles['CalendarDay'],
-          size && styles[`CalendarDay--size-${size}`],
+          size === 's' && styles['CalendarDay--size-s'],
           today && styles['CalendarDay--today'],
           selected && !disabled && styles['CalendarDay--selected'],
           active && !disabled && styles['CalendarDay--active'],

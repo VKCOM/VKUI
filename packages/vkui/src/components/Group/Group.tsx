@@ -94,8 +94,16 @@ export const Group = ({
         styles['Group'],
         platform === Platform.IOS && styles['Group--ios'],
         sizeXClassNames[sizeX],
-        mode && styles[`Group--mode-${mode}`],
-        styles[`Group--padding-${padding}`],
+        mode &&
+          {
+            none: styles['Group--mode-none'],
+            plain: styles['Group--mode-plain'],
+            card: styles['Group--mode-card'],
+          }[mode],
+        {
+          s: styles['Group--padding-s'],
+          m: styles['Group--padding-m'],
+        }[padding],
         className,
       )}
     >

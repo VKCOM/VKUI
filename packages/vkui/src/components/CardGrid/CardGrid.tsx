@@ -35,7 +35,11 @@ export const CardGrid = ({
       className={classNames(
         styles['CardGrid'],
         spaced && styles['CardGrid--spaced'],
-        styles[`CardGrid--size-${size}`],
+        {
+          s: styles['CardGrid--size-s'],
+          m: styles['CardGrid--size-m'],
+          l: styles['CardGrid--size-l'],
+        }[size],
         sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
         className,
       )}

@@ -311,7 +311,7 @@ export const BaseGallery = ({
       {...restProps}
       className={classNames(
         styles['BaseGallery'],
-        styles[`BaseGallery--align-${align}`],
+        align === 'center' && styles['BaseGallery--align-center'],
         shiftState.dragging && styles['BaseGallery--dragging'],
         slideWidth === 'custom' && styles['BaseGallery--custom-width'],
         isDraggable && styles['BaseGallery--draggable'],
@@ -346,7 +346,10 @@ export const BaseGallery = ({
           aria-hidden
           className={classNames(
             styles['BaseGallery__bullets'],
-            styles[`BaseGallery__bullets--${bullets}`],
+            {
+              dark: styles['BaseGallery__bullets--dark'],
+              light: styles['BaseGallery__bullets--light'],
+            }[bullets],
           )}
         >
           {React.Children.map(children, (_item: React.ReactNode, index: number) => (

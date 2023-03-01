@@ -29,7 +29,12 @@ export const Footnote = ({
         className,
         styles['Footnote'],
         caps && styles['Footnote--caps'],
-        weight && styles[`Footnote--weight-${weight}`],
+        weight &&
+          {
+            '1': styles['Footnote--weight-1'],
+            '2': styles['Footnote--weight-2'],
+            '3': styles['Footnote--weight-3'],
+          }[weight],
       )}
     >
       {children}

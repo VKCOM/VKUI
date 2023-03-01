@@ -146,10 +146,6 @@
   color: var(--vkui--color_icon_tertiary);
 }
 
-.Banner--mode-tint {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}
-
 /**
  * CMP:
  * FormStatus

@@ -30,9 +30,18 @@ export const Caption = ({
       className={classNames(
         className,
         styles['Caption'],
-        styles[`Caption--level-${level}`],
         caps && styles['Caption--caps'],
-        weight && styles[`Caption--weight-${weight}`],
+        {
+          '1': styles['Caption--level-1'],
+          '2': styles['Caption--level-2'],
+          '3': styles['Caption--level-3'],
+        }[level],
+        weight &&
+          {
+            '1': styles['Caption--weight-1'],
+            '2': styles['Caption--weight-2'],
+            '3': styles['Caption--weight-3'],
+          }[weight],
       )}
     >
       {children}

@@ -112,6 +112,23 @@ export const ImageBase = ({
     onError?.(event);
   };
 
+  const sizeClassName = (() => {
+    switch (size) {
+      case 28:
+        return styles['ImageBase--size-28'];
+      case 32:
+        return styles['ImageBase--size-32'];
+      case 40:
+        return styles['ImageBase--size-40'];
+      case 48:
+        return styles['ImageBase--size-48'];
+      case 72:
+        return styles['ImageBase--size-72'];
+    }
+
+    return null;
+  })();
+
   return (
     <ImageBaseContext.Provider value={{ size }}>
       <div
@@ -121,7 +138,7 @@ export const ImageBase = ({
         className={classNames(
           className,
           styles['ImageBase'],
-          styles[`ImageBase--size-${size as ImageBaseSize}`],
+          sizeClassName,
           withBorder && styles['ImageBase--withBorder'],
           loaded && styles['ImageBase--loaded'],
         )}

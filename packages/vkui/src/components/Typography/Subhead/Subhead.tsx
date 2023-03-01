@@ -36,7 +36,12 @@ export const Subhead = ({
         className,
         styles['Subhead'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
-        weight && styles[`Subhead--weight-${weight}`],
+        weight &&
+          {
+            '1': styles['Subhead--weight-1'],
+            '2': styles['Subhead--weight-2'],
+            '3': styles['Subhead--weight-3'],
+          }[weight],
       )}
     >
       {children}

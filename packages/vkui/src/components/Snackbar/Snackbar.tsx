@@ -197,8 +197,11 @@ export const Snackbar = ({
         className={classNames(
           styles['Snackbar'],
           platform === Platform.IOS && styles['Snackbar--ios'],
-          styles[`Snackbar--layout-${layout}`],
-          styles[`Snackbar--mode-${mode}`],
+          {
+            vertical: styles['Snackbar--layout-vertical'],
+            horizontal: styles['Snackbar--layout-horizontal'],
+          }[layout],
+          mode === 'dark' && styles['Snackbar--mode-dark'],
           closing && styles['Snackbar--closing'],
           touched && styles['Snackbar--touched'],
           isDesktop && styles['Snackbar--desktop'],

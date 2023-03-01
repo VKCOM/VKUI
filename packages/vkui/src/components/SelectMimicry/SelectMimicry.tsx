@@ -56,7 +56,12 @@ export const SelectMimicry = ({
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         !children && styles['Select--empty'],
         multiline && styles['Select--multiline'],
-        align && styles[`Select--align-${align}`],
+        align &&
+          {
+            left: styles['Select--align-left'],
+            center: styles['Select--align-center'],
+            right: styles['Select--align-right'],
+          }[align],
         before && styles['Select--hasBefore'],
         after && styles['Select--hasAfter'],
         className,

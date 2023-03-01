@@ -61,7 +61,11 @@ export const FormItem = ({
       ref={rootEl}
       className={classNames(
         styles['FormItem'],
-        status !== 'default' && styles[`FormItem--status-${status}`],
+        status !== 'default' &&
+          {
+            error: styles['FormItem--status-error'],
+            valid: styles['FormItem--status-valid'],
+          }[status],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         hasReactNode(top) && styles['FormItem--withTop'],
         removable && styles['FormItem--removable'],

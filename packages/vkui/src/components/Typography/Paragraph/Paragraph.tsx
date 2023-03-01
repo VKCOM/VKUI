@@ -38,7 +38,12 @@ export const Paragraph = ({
       className={classNames(
         className,
         styles['Paragraph'],
-        weight && styles[`Paragraph--weight-${weight}`],
+        weight &&
+          {
+            '1': styles['Paragraph--weight-1'],
+            '2': styles['Paragraph--weight-2'],
+            '3': styles['Paragraph--weight-3'],
+          }[weight],
       )}
     >
       {children}

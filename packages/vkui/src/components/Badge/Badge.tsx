@@ -11,7 +11,14 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLElement> {
  */
 export const Badge = ({ mode = 'new', className, ...restProps }: BadgeProps) => (
   <span
-    className={classNames(styles['Badge'], styles[`Badge--mode-${mode}`], className)}
+    className={classNames(
+      styles['Badge'],
+      {
+        new: styles['Badge--mode-new'],
+        prominent: styles['Badge--mode-prominent'],
+      }[mode],
+      className,
+    )}
     {...restProps}
   />
 );

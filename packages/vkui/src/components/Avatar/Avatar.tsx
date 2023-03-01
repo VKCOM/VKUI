@@ -97,7 +97,7 @@ export const Avatar = ({
       fallbackIcon={rewrittenFallbackIcon}
       className={classNames(
         styles['Avatar'],
-        gradientName && styles[`Avatar--has-gradient`],
+        gradientName && styles['Avatar--has-gradient'],
         isGradientNotCustom && gradientStyles[gradientName],
         className,
       )}

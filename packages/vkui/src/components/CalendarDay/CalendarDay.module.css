@@ -84,7 +84,6 @@
 }
 
 .CalendarDay--active,
-.CalendarDay--size-m,
 .CalendarDay--active-hover {
   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }
