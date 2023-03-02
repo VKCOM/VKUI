@@ -26,6 +26,7 @@
   height: 100%;
 }
 
+.PopoutRoot__popout:empty,
 .PopoutRoot__modal:empty {
   display: none;
 }
