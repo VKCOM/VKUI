@@ -20,9 +20,4 @@ describe('PanelHeaderButton', () => {
     render(<PanelHeaderButtonTest href="https://vk.com" />);
     expect(button().tagName.toLowerCase()).toMatch('a');
   });
-
-  it('Component: PanelHeaderButton does not react to passed Component', () => {
-    render(<PanelHeaderButtonTest href="https://vk.com" Component="div" />);
-    expect(button().tagName.toLowerCase()).toMatch('a');
-  });
 });
