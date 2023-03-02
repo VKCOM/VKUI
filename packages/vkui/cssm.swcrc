@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json.schemastore.org/swcrc",
+  "exclude": [
+    "\\.(test|spec|e2e|stories)\\.[jt]sx?$",
+    "testing/",
+    "storybook/",
+    "lib/polyfills.ts"
+  ],
+
+  "module": {
+    "type": "es6"
+  },
+
+  "jsc": {
+    "externalHelpers": true,
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true
+    },
+    "transform": {
+      "react": {
+        "runtime": "classic"
+      }
+    },
+    "target": "es2022",
+
+    "experimental": {
+      "plugins": [
+        [
+          "swc-plugin-transform-remove-imports",
+          {
+            "test": "^./lib/polyfills$"
+          }
+        ]
+      ]
+    }
+  }
+}

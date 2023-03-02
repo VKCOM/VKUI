@@ -33,16 +33,6 @@ updates:
       - 'VKCOM/vkui-core'
 
   - package-ecosystem: 'npm'
-    directory: '/tools/babel-plugin-transform-css-modules'
-    schedule:
-      interval: 'daily'
-    allow:
-      - dependency-type: 'direct'
-    reviewers:
-      - 'VKCOM/vk-sec'
-      - 'VKCOM/vkui-core'
-
-  - package-ecosystem: 'npm'
     directory: '/tools/swc-transform-css-modules'
     schedule:
       interval: 'daily'

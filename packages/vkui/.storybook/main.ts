@@ -24,8 +24,9 @@ const config: StorybookConfig = {
     '@storybook/addon-interactions',
     '@storybook/addon-a11y',
     '@project-tools/storybook-addon-cartesian',
-    './addons/appearance/register',
-    './addons/pointer/register',
+    './addons/appearance',
+    './addons/pointer',
+    'storybook-addon-swc',
   ],
   framework: '@storybook/react',
   core: {

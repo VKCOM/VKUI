@@ -5,9 +5,6 @@ const { VKUI_PACKAGE, generateScopedName } = require('./shared');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-process.env.BABEL_USED_BY_WEBPACK = JSON.stringify(true);
-process.env.BABEL_KEEP_CSS = JSON.stringify(true);
-
 const sandbox = process.env.SANDBOX;
 
 const styleLoader = {
@@ -25,7 +22,7 @@ const rules = [
   {
     test: /\.[jt]sx?$/,
     exclude: /node_modules/,
-    loader: 'babel-loader',
+    loader: 'swc-loader',
   },
   {
     test: /\.(jpeg|jpg|png|woff|woff2|svg|otf)$/,

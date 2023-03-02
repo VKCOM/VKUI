@@ -1,8 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-process.env.BABEL_KEEP_CSS = '1';
-
 module.exports = {
   // CSS is optimized via postcss, we dont care about JS
   mode: 'none',
@@ -19,7 +17,7 @@ module.exports = {
       {
         test: /\.[jt]sx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: 'swc-loader',
       },
       {
         test: /\.css$/,
@@ -33,10 +31,6 @@ module.exports = {
           },
           'postcss-loader',
         ],
-      },
-      {
-        test: /\.woff|woff2$/,
-        type: 'asset/resource',
       },
     ],
   },
