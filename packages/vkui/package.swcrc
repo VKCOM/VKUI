@@ -17,6 +17,7 @@
         "runtime": "classic"
       }
     },
+    "target": "es5",
 
     "experimental": {
       "plugins": [
@@ -29,5 +30,19 @@
         ]
       ]
     }
+  },
+
+  "env": {
+    "targets": {
+      "android": "5",
+      "ios": "9",
+      "chrome": "48",
+      "firefox": "50",
+      "edge": "18",
+      "opera": "35",
+      "safari": "9"
+    },
+    "mode": "usage",
+    "coreJs": "3.27"
   }
 }

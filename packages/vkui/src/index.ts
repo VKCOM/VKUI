@@ -1,5 +1,3 @@
-import './lib/polyfills';
-
 import './styles/constants.css';
 import './styles/animations.css';
 import './styles/adaptivity.module.css';

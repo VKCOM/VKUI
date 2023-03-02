@@ -3,8 +3,7 @@
   "exclude": [
     "\\.(test|spec|e2e|stories)\\.[jt]sx?$",
     "testing/",
-    "storybook/",
-    "lib/polyfills.ts"
+    "storybook/"
   ],
 
   "module": {
@@ -22,17 +21,7 @@
         "runtime": "classic"
       }
     },
-    "target": "es2022",
 
-    "experimental": {
-      "plugins": [
-        [
-          "swc-plugin-transform-remove-imports",
-          {
-            "test": "^./lib/polyfills$"
-          }
-        ]
-      ]
-    }
+    "target": "esnext"
   }
 }
