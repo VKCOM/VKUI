@@ -68,7 +68,7 @@
     "mini-css-extract-plugin": "^2.5.2",
     "playwright": "1.28.1",
     "playwright-chromium": "1.28.1",
-    "playwright-firefox": "1.28.1",
+    "playwright-firefox": "1.31.2",
     "playwright-webkit": "1.28.1",
     "postcss": "^8.4.21",
     "postcss-cli": "^10.0.0",
