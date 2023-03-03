@@ -23,9 +23,4 @@ describe('IconButton', () => {
     render(<IconButtonTest href="https://vk.com" />);
     expect(button().tagName.toLowerCase()).toMatch('a');
   });
-
-  it('Component: IconButton w/ href overrides explicit Component', () => {
-    render(<IconButtonTest href="https://vk.com" Component="div" />);
-    expect(button().tagName.toLowerCase()).toMatch('a');
-  });
 });

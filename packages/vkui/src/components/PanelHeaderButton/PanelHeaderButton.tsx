@@ -89,9 +89,9 @@ export const PanelHeaderButton = ({
 
   return (
     <Tappable
+      Component={restProps.href ? 'a' : 'button'}
       {...restProps}
       hoverMode={hoverMode}
-      Component={restProps.href ? 'a' : 'button'}
       activeEffectDelay={200}
       activeMode={activeMode}
       className={classNames(
