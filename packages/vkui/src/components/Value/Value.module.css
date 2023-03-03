@@ -1,0 +1,68 @@
+.Value__root {
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
+}
+
+.Value__head {
+  display: inline-block;
+}
+
+.Value {
+  position: relative;
+  display: inline-block;
+}
+
+.Value__prev {
+  display: block;
+  position: absolute;
+  right: 0;
+}
+
+.Value__next {
+  display: block;
+  transform: translateY(var(--transform-value));
+}
+
+/**
+ * [a11y]
+ * add animation for browsers that support prefers-reduced-motion
+ * so that users with vestibular motion disorders have no problem
+ * navigating accessible vkui apps via keyboard
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .Value__head {
+    transition: left 250ms ease;
+  }
+
+  .Value {
+    --rotating-duration: 250ms;
+    --animation-name: vkui-rotating-counter-tick-up;
+    --transform-value: 100%;
+
+    animation: var(--animation-name) var(--rotating-duration) ease forwards;
+  }
+
+  .Value--transition-down {
+    --animation-name: vkui-rotating-counter-tick-down;
+    --transform-value: -100%;
+  }
+
+  @keyframes vkui-rotating-counter-tick-down {
+    from {
+      transform: translateY(0%);
+    }
+
+    to {
+      transform: translateY(100%);
+    }
+  }
+
+  @keyframes vkui-rotating-counter-tick-up {
+    from {
+      transform: translateY(0%);
+    }
+
+    to {
+      transform: translateY(-100%);
+    }
+  }
+}

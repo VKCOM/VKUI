@@ -238,6 +238,7 @@ const baseConfig = {
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/TabsItem/TabsItem.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/PullToRefresh/PullToRefresh.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Counter/Counter.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Value/Value.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/UsersStack/UsersStack.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Spacing/Spacing.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Separator/Separator.tsx`,

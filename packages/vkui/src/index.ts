@@ -186,6 +186,8 @@ export type { TooltipProps } from './components/Tooltip/Tooltip';
 export { TooltipContainer } from './components/Tooltip/TooltipContainer';
 export { Counter } from './components/Counter/Counter';
 export type { CounterProps } from './components/Counter/Counter';
+export { Value } from './components/Value/Value';
+export type { ValueProps } from './components/Value/Value';
 export { UsersStack } from './components/UsersStack/UsersStack';
 export type { UsersStackProps } from './components/UsersStack/UsersStack';
 export { Separator } from './components/Separator/Separator';
