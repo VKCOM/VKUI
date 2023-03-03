@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -39,6 +39,11 @@ export interface HorizontalScrollProps
   arrowSize?: 'm' | 'l';
   showArrows?: boolean | 'always';
   scrollAnimationDuration?: number;
+  /**
+   * Добавляет возможность прокручивать контент на любое колесо мыши.
+   * По умолчанию прокручивается как любой горизонтальный контент через shift.
+   */
+  scrollOnAnyWheel?: boolean;
 }
 
 /**
@@ -131,6 +136,7 @@ export const HorizontalScroll = ({
   scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
   getRef,
   className,
+  scrollOnAnyWheel = false,
   ...restProps
 }: HorizontalScrollProps) => {
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
@@ -198,6 +204,28 @@ export const HorizontalScroll = ({
     }
   }, [scrollEvent, scrollerRef]);
   React.useEffect(onscroll, [scrollerRef, children, onscroll]);
+
+  /**
+   * Прокрутка с помощью любого колеса мыши
+   */
+  const onwheel = React.useCallback(
+    (e: WheelEvent) => {
+      scrollerRef.current!.scrollBy({ left: e.deltaX + e.deltaY, behavior: 'auto' });
+      e.preventDefault();
+    },
+    [scrollerRef],
+  );
+
+  const wheelEvent = useEventListener('wheel', onwheel);
+  React.useEffect(() => {
+    if (!scrollerRef.current || !scrollOnAnyWheel) {
+      return noop;
+    }
+
+    wheelEvent.add(scrollerRef.current);
+
+    return wheelEvent.remove;
+  }, [wheelEvent, scrollerRef, scrollOnAnyWheel]);
 
   return (
     <div
