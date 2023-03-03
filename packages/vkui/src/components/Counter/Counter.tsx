@@ -18,11 +18,6 @@ const modeClassNames = {
   inherit: styles['Counter--mode-inherit'],
 };
 
-const sizeClassNames = {
-  s: styles['Counter--size-s'],
-  m: styles['Counter--size-m'],
-};
-
 export interface CounterProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * Тип счетчика.
@@ -111,7 +106,7 @@ export const Counter = ({
       className={classNames(
         styles['Counter'],
         modeClassNames[mode],
-        sizeClassNames[size],
+        size === 's' && 'Counter--size-s',
         className,
       )}
     >
