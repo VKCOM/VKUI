@@ -15,7 +15,7 @@
     "src/**/*.ts*",
     "src/**/*.js",
     ".storybook/**/*.ts*",
-    "*.config.js",
+    "**/*.config.js",
     "*.config.*.js",
     "*.setup.js",
     ".eslintrc.js"
