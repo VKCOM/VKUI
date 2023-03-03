@@ -82,6 +82,7 @@ const ActionSheetItem = ({
 
   return (
     <Tappable
+      Component={Component}
       {...restProps}
       onClick={selectable ? onClick : onItemClick(onClick, onImmediateClick, Boolean(autoClose))}
       activeMode={platform === Platform.IOS ? styles['ActionSheetItem--active'] : undefined}
@@ -94,7 +95,6 @@ const ActionSheetItem = ({
         isDesktop && styles['ActionSheetItem--desktop'],
         className,
       )}
-      Component={Component}
     >
       {before && <div className={styles['ActionSheetItem__before']}>{before}</div>}
       <div
