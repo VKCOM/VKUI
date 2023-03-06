@@ -55,7 +55,11 @@ describe('RichCell', () => {
       before: [<Avatar size={48} key="48" />],
       children: ['Михаил Лихачев'],
       caption: ['Команда ВКонтакте, Санкт-Петербург'],
-      after: [<Icon24UserAddOutline key="icon" />],
+      after: [
+        <RichCell.Icon key="icon">
+          <Icon24UserAddOutline />
+        </RichCell.Icon>,
+      ],
     },
   ]);
 });

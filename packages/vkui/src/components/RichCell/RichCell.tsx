@@ -4,6 +4,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { SizeType } from '../../lib/adaptivity';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
+import { RichCellIcon } from './RichCellIcon/RichCellIcon';
 import styles from './RichCell.module.css';
 
 const sizeYClassNames = {
@@ -44,7 +45,7 @@ export interface RichCellProps extends TappableProps {
    */
   before?: React.ReactNode;
   /**
-   * Иконка 24 или текст.
+   * Иконка 28 или текст.
    */
   after?: React.ReactNode;
   /**
@@ -122,3 +123,5 @@ export const RichCell = ({
     </Tappable>
   );
 };
+
+RichCell.Icon = RichCellIcon;
