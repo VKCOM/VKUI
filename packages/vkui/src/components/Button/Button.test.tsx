@@ -19,15 +19,6 @@ describe('Button', () => {
     expect(button().tagName.toLowerCase()).toMatch('a');
   });
 
-  it('Component: Button with valid href overrides passed Component', () => {
-    render(
-      <ButtonTest href="#" Component="div">
-        Native Link
-      </ButtonTest>,
-    );
-    expect(button().tagName.toLowerCase()).toMatch('a');
-  });
-
   it('Component: Button with loading is not clickable', () => {
     const handleClick = jest.fn();
     render(

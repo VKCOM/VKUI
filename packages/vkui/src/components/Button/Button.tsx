@@ -40,7 +40,6 @@ export const Button = ({
   before,
   after,
   getRootRef,
-  Component = 'button',
   loading,
   onClick,
   stopPropagation = true,
@@ -56,8 +55,8 @@ export const Button = ({
     <Tappable
       hoverMode={styles['Button--hover']}
       activeMode={styles['Button--active']}
+      Component={restProps.href ? 'a' : 'button'}
       {...restProps}
-      Component={restProps.href ? 'a' : Component}
       onClick={loading ? undefined : onClick}
       focusVisibleMode="outside"
       stopPropagation={stopPropagation}

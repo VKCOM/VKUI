@@ -81,18 +81,11 @@ const AlertAction = ({ action, onItemClick, ...restProps }: AlertActionProps) =>
   const handleItemClick = React.useCallback(() => onItemClick(action), [onItemClick, action]);
 
   if (platform === Platform.IOS) {
-    const {
-      Component = 'button',
-      title,
-      action: actionProp,
-      autoClose,
-      mode,
-      ...restActionProps
-    } = action;
+    const { title, action: actionProp, autoClose, mode, ...restActionProps } = action;
 
     return (
       <Tappable
-        Component={restActionProps.href ? 'a' : Component}
+        Component={restActionProps.href ? 'a' : 'button'}
         className={classNames(styles['Alert__action'], styles[`Alert__action--mode-${mode}`])}
         onClick={handleItemClick}
         {...restActionProps}

@@ -22,12 +22,7 @@ const warn = warnOnce('IconButton');
 /**
  * @see https://vkcom.github.io/VKUI/#/IconButton
  */
-export const IconButton = ({
-  children,
-  Component = 'button',
-  className,
-  ...restProps
-}: IconButtonProps) => {
+export const IconButton = ({ children, className, ...restProps }: IconButtonProps) => {
   const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();
 
@@ -43,8 +38,8 @@ export const IconButton = ({
     <Tappable
       activeEffectDelay={200}
       activeMode="background"
+      Component={restProps.href ? 'a' : 'button'}
       {...restProps}
-      Component={restProps.href ? 'a' : Component}
       className={classNames(
         styles['IconButton'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
