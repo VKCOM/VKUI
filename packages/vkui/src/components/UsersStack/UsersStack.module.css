@@ -13,14 +13,6 @@
   display: flex;
 }
 
-.UsersStack--layout-horizontal .UsersStack__photos {
-  margin-right: 8px;
-}
-
-.UsersStack--layout-vertical .UsersStack__photos {
-  margin-bottom: 8px;
-}
-
 .UsersStack__fill {
   fill: var(--vkui--color_image_placeholder_alpha);
 }
@@ -60,6 +52,11 @@
 
 .UsersStack--layout-vertical .UsersStack__text {
   text-align: center;
+  margin-top: 8px;
+}
+
+.UsersStack--layout-horizontal .UsersStack__text {
+  margin-left: 8px;
 }
 
 /**

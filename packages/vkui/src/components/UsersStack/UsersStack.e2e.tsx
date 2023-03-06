@@ -15,12 +15,17 @@ describe('UsersStack', () => {
       size: ['s', 'm', 'l'],
       layout: ['horizontal', 'vertical'],
       photos: [
-        [],
         [base64Image],
         [base64Image, base64Image],
         [base64Image, base64Image, base64Image],
         [base64Image, base64Image, base64Image, base64Image],
       ],
+    },
+    // при пустом children отсутствуют отступы
+    {
+      children: [undefined],
+      layout: ['horizontal', 'vertical'],
+      photos: [[base64Image, base64Image, base64Image]],
     },
   ]);
 });
