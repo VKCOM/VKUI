@@ -96,28 +96,28 @@ const GroupComponent = ({
   }
 
   return (
-    <section
-      {...restProps}
-      tabIndex={tabIndex}
-      ref={getRootRef}
-      vkuiClass={classNames(
-        "Group",
-        platform === IOS && "Group--ios",
-        // TODO v5.0.0 Новая адаптивность
-        `Group--sizeX-${sizeX}`,
-        `Group--${computedMode}`,
-        `Group--padding-${padding}`
-      )}
-    >
-      <div vkuiClass="Group__inner">
+    <React.Fragment>
+      <section
+        {...restProps}
+        tabIndex={tabIndex}
+        ref={getRootRef}
+        vkuiClass={classNames(
+          "Group",
+          platform === IOS && "Group--ios",
+          // TODO v5.0.0 Новая адаптивность
+          `Group--sizeX-${sizeX}`,
+          `Group--${computedMode}`,
+          `Group--padding-${padding}`
+        )}
+      >
         {header}
         {children}
         {hasReactNode(description) && (
           <Caption vkuiClass="Group__description">{description}</Caption>
         )}
-      </div>
+      </section>
       {separatorElement}
-    </section>
+    </React.Fragment>
   );
 };
 
