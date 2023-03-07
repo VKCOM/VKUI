@@ -26,11 +26,11 @@
  * CMP:
  * Group
  */
-.Group--mode-plain .Group__inner > .Tabs--mode-default:first-child {
+.Group--mode-plain > .Tabs--mode-default:first-child {
   margin-top: -8px;
 }
 
-.Group--mode-card > .Group__inner > .Tabs--mode-default:first-child {
+.Group--mode-card > .Tabs--mode-default:first-child {
   margin-top: -4px;
 }
 
@@ -55,11 +55,11 @@
  * CMP:
  * Group
  */
-.Group--mode-plain .Group__inner > .Tabs--mode-default:first-child {
+.Group--mode-plain > .Tabs--mode-default:first-child {
   margin-top: -8px;
 }
 
-.Group--mode-card > .Group__inner > .Tabs--mode-default:first-child {
+.Group--mode-card > .Tabs--mode-default:first-child {
   margin-top: -4px;
 }
 

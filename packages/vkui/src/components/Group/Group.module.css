@@ -1,5 +1,7 @@
 .Group {
   color: var(--vkui--color_text_primary);
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .Group__separator--spacing,
@@ -7,70 +9,65 @@
   display: none;
 }
 
-.Group--sizeX-compact > .Group__separator--separator,
-.Group--mode-plain > .Group__separator--separator {
+.Group--sizeX-compact + .Group__separator--spacing + .Group__separator--separator,
+.Group--mode-plain + .Group__separator--spacing + .Group__separator--separator {
   display: block;
 }
 
 @media (--sizeX-compact) {
-  .Group--sizeX-none > .Group__separator--separator {
+  .Group--sizeX-none + .Group__separator--spacing + .Group__separator--separator {
     display: block;
   }
 }
 
-.Group--sizeX-regular.Group--mode-none > .Group__separator--spacing {
+.Group--sizeX-regular.Group--mode-none + .Group__separator--spacing {
   display: block;
 }
 
 @media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none > .Group__separator--spacing {
+  .Group--sizeX-none.Group--mode-none + .Group__separator--spacing {
     display: block;
   }
 }
 
-.Group__inner {
-  padding-top: 8px;
-  padding-bottom: 8px;
-}
-
-.Group--mode-card.Group--padding-s > .Group__inner {
+.Group--mode-card.Group--padding-s {
   padding: 4px;
 }
 
-.Group--mode-card.Group--padding-m > .Group__inner {
+.Group--mode-card.Group--padding-m {
   padding: 8px;
 }
 
-.Group--sizeX-compact > .Group__inner {
+.Group--sizeX-compact {
   padding-left: 0;
   padding-right: 0;
 }
 
 @media (--sizeX-regular) {
-  .Group--sizeX-none.Group--padding-s > .Group__inner {
+  .Group--sizeX-none.Group--padding-s {
     padding: 4px;
   }
 
-  .Group--sizeX-none.Group--padding-m > .Group__inner {
+  .Group--sizeX-none.Group--padding-m {
     padding: 8px;
   }
 }
 
-.Group--mode-card > .Group__inner {
+.Group--mode-card {
   background: var(--vkui--color_background_content);
   border-radius: var(--vkui--size_border_radius_paper--regular);
   position: relative;
 }
 
 @media (--sizeX-regular) {
-  .Group--mode-none.Group--sizeX-none > .Group__inner {
+  .Group--mode-none.Group--sizeX-none {
     background: var(--vkui--color_background_content);
     border-radius: var(--vkui--size_border_radius_paper--regular);
     position: relative;
   }
 }
 
-.Group--mode-card > .Group__inner::after {
+.Group--mode-card::after {
   content: '';
   left: 0;
   top: 0;
@@ -83,7 +80,7 @@
 }
 
 @media (--sizeX-regular) {
-  .Group--mode-none > .Group__inner::after {
+  .Group--mode-none::after {
     content: '';
     left: 0;
     top: 0;
@@ -96,31 +93,33 @@
   }
 }
 
-.Group--mode-plain > .Group__separator {
+.Group--mode-plain + .Group__separator,
+.Group--mode-plain + .Group__separator + .Group__separator {
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
 @media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-none > .Group__separator {
+  .Group--sizeX-none.Group--mode-none + .Group__separator,
+  .Group--sizeX-none.Group--mode-none + .Group__separator + .Group__separator {
     padding-top: 8px;
     padding-bottom: 8px;
   }
 }
 
-.Group:last-of-type > .Group__separator {
+.Group:last-of-type ~ .Group__separator {
   display: none;
 }
 
-.Group:last-of-type > .Group__separator--force,
-.Group--sizeX-regular.Group--mode-none:last-of-type > .Group__separator--spacing,
-.Group--sizeX-regular.Group--mode-card:last-of-type > .Group__separator--spacing {
+.Group:last-of-type ~ .Group__separator--force,
+.Group--sizeX-regular.Group--mode-none:last-of-type + .Group__separator--spacing,
+.Group--sizeX-regular.Group--mode-card:last-of-type + .Group__separator--spacing {
   display: block;
 }
 
 @media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-card:last-of-type > .Group__separator--spacing,
-  .Group--sizeX-none.Group--mode-none:last-of-type > .Group__separator--spacing {
+  .Group--sizeX-none.Group--mode-card:last-of-type + .Group__separator--spacing,
+  .Group--sizeX-none.Group--mode-none:last-of-type + .Group__separator--spacing {
     display: block;
   }
 }
@@ -131,17 +130,17 @@
   color: var(--vkui--color_text_secondary);
 }
 
-.Group .Group > .Group__inner,
-.Group .Group > .Group__separator {
+.Group .Group,
+.Group .Group + .Group__separator {
   padding-left: 0;
   padding-right: 0;
 }
 
-.Group .Group:first-of-type > .Group__inner {
+.Group .Group:first-of-type {
   padding-top: 0;
 }
 
-.Group .Group:last-of-type > .Group__inner {
+.Group .Group:last-of-type {
   padding-bottom: 0;
 }
 
@@ -160,10 +159,6 @@
 .PanelHeader--vkcom + * .Group:first-of-type {
   position: relative;
   top: -1px;
-}
-
-.PanelHeader--vkcom ~ .Group:first-of-type .Group__inner,
-.PanelHeader--vkcom + * .Group:first-of-type .Group__inner {
   border-top-right-radius: 0;
   border-top-left-radius: 0;
 }
