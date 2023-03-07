@@ -16,6 +16,7 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: 's' | 'm' | 'l';
   /**
    * Вертикальный режим рекомендуется использовать с размером `m`
+   * TODO v6: удалить layout, заменить на align со значениями right | left | top
    */
   layout?: 'vertical' | 'horizontal';
   /**
@@ -29,6 +30,10 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
    * Если число больше 99, то счетчик скроется.
    */
   count?: number;
+  /**
+   * Определяет сторону выравнивания аватарок для `layout=horizontal`
+   */
+  align?: 'left' | 'right';
 }
 
 interface PathElementProps extends React.SVGAttributes<SVGElement> {
@@ -109,6 +114,7 @@ export const UsersStack = ({
   layout = 'horizontal',
   children,
   className,
+  align = 'left',
   ...restProps
 }: UsersStackProps) => {
   const cmpId = useId();
@@ -171,6 +177,10 @@ export const UsersStack = ({
           vertical: styles['UsersStack--layout-vertical'],
           horizontal: styles['UsersStack--layout-horizontal'],
         }[layout],
+        {
+          right: styles['UsersStack--align-right'],
+          left: styles['UsersStack--align-left'],
+        }[align],
         className,
       )}
     >

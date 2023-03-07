@@ -4,6 +4,10 @@
   color: var(--vkui--color_text_secondary);
 }
 
+.UsersStack--align-right {
+  flex-direction: row-reverse;
+}
+
 .UsersStack--layout-vertical {
   flex-direction: column;
   justify-content: center;
@@ -21,7 +25,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--vkui--color_text_contrast);
+  color: var(--vkui--color_text_contrast_themed);
   background: var(--vkui--color_icon_secondary);
   border-radius: 50%;
 }
@@ -55,8 +59,12 @@
   margin-top: 8px;
 }
 
-.UsersStack--layout-horizontal .UsersStack__text {
+.UsersStack--layout-horizontal.UsersStack--align-left .UsersStack__text {
   margin-left: 8px;
+}
+
+.UsersStack--layout-horizontal.UsersStack--align-right .UsersStack__text {
+  margin-right: 8px;
 }
 
 /**

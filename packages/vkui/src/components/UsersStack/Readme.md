@@ -13,6 +13,11 @@
           Понравилось Муртолу Левзачеву
         </UsersStack>
       </Div>
+      <Div>
+        <UsersStack align="right" photos={[getAvatarUrl('user_lihachyov')]}>
+          Понравилось Муртолу Левзачеву
+        </UsersStack>
+      </Div>
     </Group>
 
     <Group>
