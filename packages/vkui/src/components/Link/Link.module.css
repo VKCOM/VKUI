@@ -12,6 +12,10 @@
   border-radius: 0;
 }
 
+.Header__aside > .Link {
+  color: var(--vkui--color_text_accent);
+}
+
 /* See https://www.ctrl.blog/entry/css-media-hover-samsung.html */
 @media (hover: hover) and (pointer: fine) {
   .Link:hover {
