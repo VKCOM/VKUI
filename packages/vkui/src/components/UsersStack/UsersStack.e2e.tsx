@@ -27,5 +27,11 @@ describe('UsersStack', () => {
       layout: ['horizontal', 'vertical'],
       photos: [[base64Image, base64Image, base64Image]],
     },
+    {
+      children: ['Понравилось Анне и ещё XX людям', undefined],
+      layout: ['horizontal'],
+      align: ['right'],
+      photos: [[base64Image, base64Image, base64Image]],
+    },
   ]);
 });
