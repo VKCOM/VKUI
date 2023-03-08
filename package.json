@@ -65,7 +65,7 @@
     "jest-playwright-preset": "^1.7.2",
     "jest-preset-stylelint": "^5.0.4",
     "lint-staged": "^13.1.2",
-    "mini-css-extract-plugin": "^2.5.2",
+    "mini-css-extract-plugin": "^2.7.3",
     "playwright": "1.28.1",
     "playwright-chromium": "1.28.1",
     "playwright-firefox": "1.28.1",
