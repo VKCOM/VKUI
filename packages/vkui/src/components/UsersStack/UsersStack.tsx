@@ -113,7 +113,7 @@ export const UsersStack = ({
 }: UsersStackProps) => {
   const cmpId = useId();
 
-  const canShowOthers = count > 0 && size !== 's';
+  const canShowOthers = count > 0 && count < 100 && size !== 's';
   const CounterTypography = size === 'l' ? Footnote : Caption;
 
   const photoSize = photoSizes[size];
