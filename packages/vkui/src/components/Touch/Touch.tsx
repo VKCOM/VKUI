@@ -186,11 +186,20 @@ export const Touch = ({
       handle(e, [_onEnd, isSlideY && onEndY, isSlideX && onEndX]);
     }
 
-    didSlide.current = Boolean(isSlide);
+    const isTouchEnabled = touchEnabled();
+
+    if (isTouchEnabled && isSlide) {
+      // https://github.com/VKCOM/VKUI/issues/4414
+      // если тач-устройство и был зафиксирован touchmove,
+      // то событие клика не вызывается
+      didSlide.current = false;
+    } else {
+      didSlide.current = Boolean(isSlide);
+    }
     gesture.current = {};
 
     // Если это был тач-евент, симулируем отмену hover
-    if (touchEnabled()) {
+    if (isTouchEnabled) {
       onLeave && onLeave(e);
     }
     unsubscribe();
