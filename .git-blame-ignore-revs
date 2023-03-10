@@ -17,3 +17,7 @@
 # eslint: fix imports order #4238
 # https://github.com/VKCOM/VKUI/pull/4242/commits/4d9b40ac9970932637f643d4b8fe1c32a5680821
 4d9b40ac9970932637f643d4b8fe1c32a5680821
+
+# eslint: add curly & eqeqeq rules
+# https://github.com/VKCOM/VKUI/pull/4450/commits/d097bd0981e57982c5aac2ed823b4f0f3397cfaf
+d097bd0981e57982c5aac2ed823b4f0f3397cfaf
