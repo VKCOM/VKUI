@@ -107,14 +107,14 @@ jobs:
 
   #
   # У `actions/download-artifact@v3` нет параметра `if-no-files-found`, поэтому джоба `reporter_ci` падает на скачивании
-  # `e2e-output` (см. https://github.com/actions/download-artifact/issues/158)
+  # `e2e-output` & `a11y-output` (см. https://github.com/actions/download-artifact/issues/158)
   #
   # TODO Удалить джобу после того, как добавят этот параметр и мы не начнём им пользоваться
   test_e2e_fallback:
     if: ${{ needs.changed_files.outputs.package_vkui == 'false' }}
     needs: changed_files
     runs-on: ubuntu-latest
-    name: Call reusable e2e tests workflow (fallback for reporter)
+    name: Call reusable e2e/a11y tests workflow (fallback for reporter)
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -128,6 +128,14 @@ jobs:
         with:
           name: e2e-output
           path: fake-e2e-results.json
+
+      - name: Create fake a11y-results.json (do not use it)
+        run: touch fake-a11y-results.json
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: a11y-output
+          path: fake-a11y-results.json
 
   analyze_bundle_size:
     if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
