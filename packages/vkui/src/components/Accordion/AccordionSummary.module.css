@@ -1,0 +1,16 @@
+.AccordionSummary::-webkit-details-marker {
+  display: none;
+}
+
+.AccordionSummary__collapseIcon,
+.AccordionSummary__expandIcon {
+  color: var(--vkui--color_icon_secondary);
+}
+
+details:not([open]) > summary .AccordionSummary__collapseIcon {
+  display: none;
+}
+
+details[open] > summary .AccordionSummary__expandIcon {
+  display: none;
+}
