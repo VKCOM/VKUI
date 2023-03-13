@@ -32,7 +32,9 @@ export function useFetch(url, options) {
   const [state, dispatch] = useReducer(fetchReducer, initialState);
 
   useEffect(() => {
-    if (!url) return;
+    if (!url) {
+      return;
+    }
 
     cancelRequest.current = false;
 
@@ -52,11 +54,15 @@ export function useFetch(url, options) {
 
         const data = await response.json();
         cache.current[url] = data;
-        if (cancelRequest.current) return;
+        if (cancelRequest.current) {
+          return;
+        }
 
         dispatch({ type: 'fetched', payload: data });
       } catch (error) {
-        if (cancelRequest.current) return;
+        if (cancelRequest.current) {
+          return;
+        }
 
         dispatch({ type: 'error', payload: error });
       }
