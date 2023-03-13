@@ -5,3 +5,4 @@ styleguide/
 coverage/
 !packages/vkui
 tmp/
+storybook-static/
