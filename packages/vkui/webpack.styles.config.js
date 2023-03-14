@@ -18,6 +18,13 @@ module.exports = {
         test: /\.[jt]sx?$/,
         exclude: /node_modules/,
         loader: 'swc-loader',
+        options: {
+          jsc: {
+            experimental: {
+              plugins: [['@project-tools/swc-transform-css-modules', {}]],
+            },
+          },
+        },
       },
       {
         test: /\.css$/,
