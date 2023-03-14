@@ -15,12 +15,14 @@ export const CellButton = ({
   centered = false,
   mode = 'primary',
   className,
+  Component = 'button',
   ...restProps
 }: CellButtonProps) => {
   return (
     <SimpleCell
       stopPropagation={true}
       {...restProps}
+      Component={Component}
       className={classNames(
         styles['CellButton'],
         {
