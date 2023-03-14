@@ -22,8 +22,8 @@ on:
       - '!.github/actions/**'
       - '.github/actions/**/*.yml'
       - '**/*.md'
-      - '!packages/vkui/src/*.md'
-      - '!styleguide/pages/*.md'
+      - '!packages/vkui/src/**/*.md'
+      - '!styleguide/pages/**/*.md'
       - '**/__image_snapshots__/*.png'
 
 concurrency:
