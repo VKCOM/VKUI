@@ -4042,10 +4042,10 @@
   dependencies:
     "@swc/helpers" "^0.4.14"
 
-"@vkontakte/vkui-tokens@4.29.2":
-  version "4.29.2"
-  resolved "https://registry.yarnpkg.com/@vkontakte/vkui-tokens/-/vkui-tokens-4.29.2.tgz#0b9102fa74d104787ae502487dd53936d494b8af"
-  integrity sha512-hgNKc8PgppfpxSBHAI0+qrv/1m2y+531Z0Je1kB/dqgmfSe+yXhj0EO/rJ74cDUCcPWYrZbzN5ue11wo0PND0w==
+"@vkontakte/vkui-tokens@4.29.4":
+  version "4.29.4"
+  resolved "https://registry.yarnpkg.com/@vkontakte/vkui-tokens/-/vkui-tokens-4.29.4.tgz#840e90001d6611240e39a698799eeec5982312af"
+  integrity sha512-lUyZoMzGIPowt9xtL64DjdlCooROePPb2JF7PHR+j+LECku5pcx/XK5Bot8AwmxhqZFKOSBy1oYUhd6uPdyNIg==
   dependencies:
     csstype "^3.1.1"
 
