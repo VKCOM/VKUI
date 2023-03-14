@@ -86,34 +86,35 @@ export const Group = ({
   );
 
   return (
-    <section
-      {...restProps}
-      tabIndex={tabIndex}
-      ref={getRootRef}
-      className={classNames(
-        styles['Group'],
-        platform === Platform.IOS && styles['Group--ios'],
-        sizeXClassNames[sizeX],
-        mode &&
+    <>
+      <section
+        {...restProps}
+        tabIndex={tabIndex}
+        ref={getRootRef}
+        className={classNames(
+          styles['Group'],
+          platform === Platform.IOS && styles['Group--ios'],
+          sizeXClassNames[sizeX],
+          mode &&
+            {
+              none: styles['Group--mode-none'],
+              plain: styles['Group--mode-plain'],
+              card: styles['Group--mode-card'],
+            }[mode],
           {
-            none: styles['Group--mode-none'],
-            plain: styles['Group--mode-plain'],
-            card: styles['Group--mode-card'],
-          }[mode],
-        {
-          s: styles['Group--padding-s'],
-          m: styles['Group--padding-m'],
-        }[padding],
-        className,
-      )}
-    >
-      <div className={styles['Group__inner']}>
+            s: styles['Group--padding-s'],
+            m: styles['Group--padding-m'],
+          }[padding],
+          className,
+        )}
+      >
         {header}
         {children}
         {hasReactNode(description) && (
           <Footnote className={styles['Group__description']}>{description}</Footnote>
         )}
-      </div>
+      </section>
+
       {separator !== 'hide' && (
         <React.Fragment>
           <Spacing
@@ -125,6 +126,6 @@ export const Group = ({
           />
         </React.Fragment>
       )}
-    </section>
+    </>
   );
 };
