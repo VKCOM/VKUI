@@ -13,11 +13,8 @@
   white-space: normal;
 }
 
-.SimpleCell--mult .SimpleCell__children {
-  text-overflow: initial;
-}
-
 .SimpleCell__main {
+  display: block;
   max-width: 100%;
   flex-grow: 1;
   min-width: 0;
@@ -50,16 +47,16 @@
   color: var(--vkui--color_text_secondary);
 }
 
-.SimpleCell .SimpleCell__content {
+.SimpleCell__content {
   display: flex;
   align-content: flex-start;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   max-width: 100%;
 }
 
-.SimpleCell:not(.SimpleCell--mult) .SimpleCell__content {
-  justify-content: flex-start;
+.SimpleCell--mult .SimpleCell__content {
+  justify-content: space-between;
 }
 
 .SimpleCell__children {
@@ -69,7 +66,11 @@
   display: block;
 }
 
-.SimpleCell--mult .SimpleCell__children,
+.SimpleCell--mult .SimpleCell__children {
+  flex: 1 1 auto;
+  text-overflow: initial;
+}
+
 .SimpleCell--mult .SimpleCell__subtitle {
   flex: 1 1 auto;
 }

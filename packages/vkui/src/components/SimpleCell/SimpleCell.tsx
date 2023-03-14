@@ -143,7 +143,7 @@ export const SimpleCell = ({
       )}
     >
       {before}
-      <div className={classNames(styles['SimpleCell__main'], 'vkuiInternalSimpleCell__main')}>
+      <span className={classNames(styles['SimpleCell__main'], 'vkuiInternalSimpleCell__main')}>
         {subhead && (
           <Subhead
             Component="span"
@@ -152,7 +152,7 @@ export const SimpleCell = ({
             {subhead}
           </Subhead>
         )}
-        <div className={styles['SimpleCell__content']}>
+        <span className={styles['SimpleCell__content']}>
           {badgeBeforeTitle && (
             <span className={styles['SimpleCell__badge']}>{badgeBeforeTitle}</span>
           )}
@@ -162,9 +162,9 @@ export const SimpleCell = ({
           {hasReactNode(badgeAfterTitle) && (
             <span className={styles['SimpleCell__badge']}>{badgeAfterTitle}</span>
           )}
-        </div>
+        </span>
         {subtitle && (
-          <div className={styles['SimpleCell__content']}>
+          <span className={styles['SimpleCell__content']}>
             {badgeBeforeSubtitle && (
               <span className={styles['SimpleCell__badge']}>{badgeBeforeSubtitle}</span>
             )}
@@ -177,7 +177,7 @@ export const SimpleCell = ({
             {badgeAfterSubtitle && (
               <span className={styles['SimpleCell__badge']}>{badgeAfterSubtitle}</span>
             )}
-          </div>
+          </span>
         )}
         {extraSubtitle && (
           <Footnote
@@ -187,19 +187,19 @@ export const SimpleCell = ({
             {extraSubtitle}
           </Footnote>
         )}
-      </div>
+      </span>
       {hasReactNode(indicator) && (
         <Headline Component="span" weight="3" className={styles['SimpleCell__indicator']}>
           {indicator}
         </Headline>
       )}
       {hasAfter && (
-        <div className={classNames(styles['SimpleCell__after'], 'vkuiInternalSimpleCell__after')}>
+        <span className={classNames(styles['SimpleCell__after'], 'vkuiInternalSimpleCell__after')}>
           {after}
           {hasChevron && (
             <Chevron size={chevronSize} className={styles['SimpleCell__chevronIcon']} />
           )}
-        </div>
+        </span>
       )}
     </Tappable>
   );
