@@ -11,7 +11,7 @@ const sizeYClassNames = {
   compact: styles['SelectTypography--sizeY-compact'],
 };
 
-const platformClassNames: Record<string, string> = {
+const platformClassNames = {
   vkcom: styles['SelectTypography--vkcom'],
   android: styles['SelectTypography--android'],
 };
@@ -44,7 +44,7 @@ export const SelectTypography = ({
     <span
       className={classNames(
         styles['SelectTypography'],
-        platformClassNames[platform],
+        platformClassNames.hasOwnProperty(platform) && platformClassNames[platform],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         selectTypeClassNames[selectType],
         className,

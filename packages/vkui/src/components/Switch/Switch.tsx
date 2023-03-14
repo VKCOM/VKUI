@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { callMultiple } from '../../lib/callMultiple';
+import { Platform } from '../../lib/platform';
 import { HasRootRef } from '../../types';
 import { FocusVisible } from '../FocusVisible/FocusVisible';
 import {
@@ -33,7 +33,7 @@ export const Switch = ({ style, className, getRootRef, ...restProps }: SwitchPro
     <label
       className={classNames(
         styles['Switch'],
-        getPlatformClassName(styles['Switch'], platform),
+        platform === Platform.IOS && styles['Switch--ios'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         restProps.disabled && styles['Switch--disabled'],
         focusVisible && styles['Switch--focus-visible'],

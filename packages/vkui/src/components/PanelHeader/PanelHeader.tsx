@@ -15,16 +15,11 @@ import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { Text } from '../Typography/Text/Text';
 import styles from './PanelHeader.module.css';
 
-function getPlatformClassName(platform: string): string {
-  switch (platform) {
-    case 'ios':
-      return styles['PanelHeader--ios'];
-    case 'vkcom':
-      return styles['PanelHeader--vkcom'];
-    default:
-      return styles['PanelHeader--android'];
-  }
-}
+const platformClassNames = {
+  ios: styles['PanelHeader--ios'],
+  android: styles['PanelHeader--android'],
+  vkcom: styles['PanelHeader--vkcom'],
+};
 
 const sizeXClassNames = {
   none: styles['PanelHeader--sizeX-none'],
@@ -106,7 +101,9 @@ export const PanelHeader = ({
       {...restProps}
       className={classNames(
         styles['PanelHeader'],
-        getPlatformClassName(platform),
+        platformClassNames.hasOwnProperty(platform)
+          ? platformClassNames[platform]
+          : platformClassNames.android,
         transparent && styles['PanelHeader--trnsp'],
         shadow && styles['PanelHeader--shadow'],
         visor && styles['PanelHeader--vis'],

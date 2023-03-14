@@ -29,21 +29,6 @@ withPlatform(MyComponent);
 Способ определения платформы вне компонента устарел, так как мы начинаем поддерживать
 [SSR](https://reactjs.org/docs/react-dom-server.html).
 
-## getPlatformClassName
-
-Допустим, вы решили создать собственный компонент, внешний вид которого зависит от платформы. Функция `getPlatformClassName`
-вернет вам CSS-класс с модификатором платформы:
-
-```jsx static
-import { usePlatform, getPlatformClassName } from '@vkontakte/vkui';
-
-const MyButton = ({ children }) => {
-  const platform = usePlatform();
-  const platformClassName = getPlatformClassName('MyButton', platform); // MyButton--ios'
-  return <button className={platformClassName}>{children}</button>;
-};
-```
-
 ## calcInitialsAvatarColor
 
 Используется для определения цвета в [Avatar](#!/Avatar) по переданному идентификатору объекта.

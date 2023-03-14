@@ -6,7 +6,6 @@ import {
   Icon24CheckCircleOn,
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { getPlatformClassName } from '../../../helpers/getPlatformClassName';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { Platform } from '../../../lib/platform';
 import { VisuallyHiddenInput } from '../../VisuallyHiddenInput/VisuallyHiddenInput';
@@ -30,14 +29,7 @@ export const CellCheckbox = ({ className, style, ...restProps }: CellCheckboxPro
       : Icon24CheckBoxOn;
 
   return (
-    <span
-      className={classNames(
-        styles['CellCheckbox'],
-        getPlatformClassName(styles['CellCheckbox'], platform),
-        className,
-      )}
-      style={style}
-    >
+    <span className={classNames(styles['CellCheckbox'], className)} style={style}>
       <VisuallyHiddenInput
         className={styles['CellCheckbox__input']}
         type="checkbox"

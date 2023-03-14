@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getPlatformClassName } from '../../helpers/getPlatformClassName';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
@@ -9,6 +8,12 @@ import { ModalCardBase, ModalCardBaseProps } from '../ModalCardBase/ModalCardBas
 import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
 import { ModalType } from '../ModalRoot/types';
 import styles from './ModalCard.module.css';
+
+const platformClassNames = {
+  ios: styles['ModalCard--ios'],
+  android: styles['ModalCard--android'],
+  vkcom: styles['ModalCard--vkcom'],
+};
 
 export interface ModalCardProps extends NavIdProps, ModalCardBaseProps {}
 
@@ -42,7 +47,9 @@ export const ModalCard = ({
       id={id}
       className={classNames(
         styles['ModalCard'],
-        getPlatformClassName(styles['ModalCard'], platform),
+        platformClassNames.hasOwnProperty(platform)
+          ? platformClassNames[platform]
+          : platformClassNames.android,
         isDesktop && styles['ModalCard--desktop'],
         className,
       )}
