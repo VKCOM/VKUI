@@ -35,4 +35,6 @@ const Example = () => {
     </View>
   );
 };
+
+<Example />;
 ```
