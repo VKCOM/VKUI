@@ -11,6 +11,13 @@ const Example = () => {
     'Friend',
   ]);
 
+  const onDragFinish = ({ from, to }) => {
+    const _list = [...draggingList];
+    _list.splice(from, 1);
+    _list.splice(to, 0, draggingList[from]);
+    updateDraggingList(_list);
+  };
+
   return (
     <View activePanel="list">
       <Panel id="list">
@@ -18,14 +25,7 @@ const Example = () => {
         <Group>
           <List>
             {draggingList.map((item) => (
-              <Cell
-                key={item}
-                before={<Avatar />}
-                draggable
-                onDragFinish={({ from, to }) =>
-                  reorderList({ from, to }, draggingList, updateDraggingList)
-                }
-              >
+              <Cell key={item} before={<Avatar />} draggable onDragFinish={onDragFinish}>
                 {item}
               </Cell>
             ))}
