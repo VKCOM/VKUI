@@ -119,7 +119,7 @@ export const SimpleCell = ({
       )}
     >
       {before}
-      <div className={styles['SimpleCell__main']}>
+      <span className={styles['SimpleCell__main']}>
         {subhead && (
           <Subhead
             Component="span"
@@ -128,7 +128,7 @@ export const SimpleCell = ({
             {subhead}
           </Subhead>
         )}
-        <div className={styles['SimpleCell__content']}>
+        <span className={styles['SimpleCell__content']}>
           {badgeBeforeTitle && (
             <span className={styles['SimpleCell__badge']}>{badgeBeforeTitle}</span>
           )}
@@ -138,9 +138,9 @@ export const SimpleCell = ({
           {hasReactNode(badgeAfterTitle) && (
             <span className={styles['SimpleCell__badge']}>{badgeAfterTitle}</span>
           )}
-        </div>
+        </span>
         {subtitle && (
-          <div className={styles['SimpleCell__content']}>
+          <span className={styles['SimpleCell__content']}>
             {badgeBeforeSubtitle && (
               <span className={styles['SimpleCell__badge']}>{badgeBeforeSubtitle}</span>
             )}
@@ -156,7 +156,7 @@ export const SimpleCell = ({
             {badgeAfterSubtitle && (
               <span className={styles['SimpleCell__badge']}>{badgeAfterSubtitle}</span>
             )}
-          </div>
+          </span>
         )}
         {extraSubtitle && (
           <span
@@ -169,17 +169,17 @@ export const SimpleCell = ({
             {extraSubtitle}
           </span>
         )}
-      </div>
+      </span>
       {hasReactNode(indicator) && (
         <Headline Component="span" weight="3" className={styles['SimpleCell__indicator']}>
           {indicator}
         </Headline>
       )}
       {hasAfter && (
-        <div className={styles['SimpleCell__after']}>
+        <span className={styles['SimpleCell__after']}>
           {after}
           {expandable && platform === Platform.IOS && <Icon24Chevron />}
-        </div>
+        </span>
       )}
     </Tappable>
   );
