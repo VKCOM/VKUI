@@ -5,18 +5,19 @@
 .PopperArrow__in {
   content: '';
   display: block;
-  width: 20px;
-  height: 8px;
+
+  /* См. Примечание 1 в PopperArrow.tsx. Для кейса с `.PopperArrow[data-placement^='bottom']`. */
+  transform: translateY(1px);
 }
 
 .PopperArrow[data-placement^='top'] .PopperArrow__in {
-  transform: rotate(180deg);
+  transform: rotate(180deg) translateY(1px); /* см. Примечание 1 в PopperArrow.tsx */
 }
 
 .PopperArrow[data-placement^='left'] .PopperArrow__in {
-  transform: rotate(90deg);
+  transform: rotate(90deg) translateY(1px); /* см. Примечание 1 в PopperArrow.tsx */
 }
 
 .PopperArrow[data-placement^='right'] .PopperArrow__in {
-  transform: rotate(270deg);
+  transform: rotate(270deg) translateY(1px); /* см. Примечание 1 в PopperArrow.tsx */
 }
