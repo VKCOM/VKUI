@@ -99,7 +99,7 @@ export const SplitCol = (props: SplitColProps) => {
   });
 
   if (process.env.NODE_ENV === 'development' && spaced !== undefined) {
-    warn('Свойство spaced устарело и будет удалено в v6. Используйте autoSpaced', 'error');
+    warn('Свойство spaced устарело и будет удалено в v6. Используйте autoSpaced');
   }
 
   return (
