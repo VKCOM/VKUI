@@ -13,8 +13,8 @@ dependencies: &dependencies
 # Отмечаем всё, что хоть как-то может повлиять на конечную сборку пакета vkui
 package_vkui: &package_vkui
   - *dependencies
-  - 'packages/vkui/**/!(*.md)'
-  - 'tools/!(eslint-*|stylelint-*)/**'
+  - 'packages/vkui/**/!(storybook)/!(*.md|*.stories.*)'
+  - 'tools/!(eslint-*|stylelint-*|storybook-*)/**'
   - 'e2e/**'
   - '.browserslistrc'
   - 'webpack.*'
