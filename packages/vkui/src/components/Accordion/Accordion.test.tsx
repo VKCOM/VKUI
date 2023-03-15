@@ -6,7 +6,7 @@ import { Accordion } from './Accordion';
 describe(Accordion, () => {
   baselineComponent(Accordion);
 
-  it('open on click', () => {
+  it('toggles on click', () => {
     render(
       <Accordion data-testid="details">
         <Accordion.Summary data-testid="summary">Title</Accordion.Summary>
