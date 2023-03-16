@@ -62,6 +62,10 @@ export interface ChipsSelectProps<Option extends ChipOption>
   closeAfterSelect?: boolean;
   fixDropdownWidth?: boolean;
   forceDropdownPortal?: boolean;
+  /**
+   * Иконка раскрывающегося списка
+   */
+  icon?: React.ReactNode;
 }
 
 type FocusActionType = 'next' | 'prev';
@@ -116,6 +120,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
     closeAfterSelect,
     onChangeStart,
     before,
+    icon,
     options,
     fixDropdownWidth,
     forceDropdownPortal,
@@ -343,7 +348,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
             aria-label={opened ? 'Скрыть' : 'Развернуть'}
             onClick={toggleOpened}
           >
-            <DropdownIcon className={styles['ChipsSelect__icon']} opened={opened} />
+            {icon ?? <DropdownIcon className={styles['ChipsSelect__icon']} opened={opened} />}
           </IconButton>
         }
         before={before}

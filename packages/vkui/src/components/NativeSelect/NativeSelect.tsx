@@ -22,10 +22,14 @@ export interface NativeSelectProps
     HasRef<HTMLSelectElement>,
     HasRootRef<HTMLLabelElement>,
     HasAlign,
-    Pick<FormFieldProps, 'status'> {
+    Pick<FormFieldProps, 'before' | 'status'> {
   placeholder?: string;
   multiline?: boolean;
   selectType?: SelectType;
+  /**
+   * Иконка раскрывающегося списка
+   */
+  icon?: React.ReactNode;
 }
 
 export interface SelectState {
@@ -50,6 +54,8 @@ const NativeSelect = ({
   multiline,
   selectType = 'default',
   status,
+  icon = <DropdownIcon />,
+  before,
   onChange: onChangeProp,
   value: valueProp,
   ...restProps
@@ -79,9 +85,9 @@ const NativeSelect = ({
       className={classNames(
         styles['Select'],
         'vkuiInternalNativeSelect',
+        before && styles['Select--hasBefore'],
         empty && styles['Select--empty'],
         multiline && styles['Select--multiline'],
-        placeholder?.length && styles['Select--hasPlaceholder'],
         align === 'center' && styles['Select--align-center'],
         align === 'right' && styles['Select--align-right'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
@@ -90,7 +96,8 @@ const NativeSelect = ({
       style={style}
       getRootRef={getRootRef}
       disabled={disabled}
-      after={<DropdownIcon />}
+      before={before}
+      after={icon}
       status={status}
     >
       <select
