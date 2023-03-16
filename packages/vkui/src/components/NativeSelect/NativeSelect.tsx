@@ -80,6 +80,7 @@ const NativeSelect = ({
         styles['Select'],
         empty && styles['Select--empty'],
         multiline && styles['Select--multiline'],
+        placeholder?.length && styles['Select--hasPlaceholder'],
         align &&
           {
             left: styles['Select--align-left'],
