@@ -5,6 +5,7 @@ import { useMediaQueries } from '../../hooks/useMediaQueries';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { ViewWidth, viewWidthToClassName } from '../../lib/adaptivity';
 import { matchMediaListAddListener, matchMediaListRemoveListener } from '../../lib/matchMedia';
+import { warnOnce } from '../../lib/warnOnce';
 import { SplitColContext } from './SplitColContext';
 import styles from './SplitCol.module.css';
 
@@ -53,6 +54,8 @@ export interface SplitColProps extends React.HTMLAttributes<HTMLDivElement> {
   animate?: boolean;
   /**
    * Если true, то добавляются боковые отступы фиксированной величины
+   *
+   * @deprecated используйте autoSpaced
    */
   spaced?: boolean;
   /**
@@ -65,6 +68,8 @@ export interface SplitColProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   stretchedOnMobile?: boolean;
 }
+
+const warn = warnOnce('SplitCol');
 
 /**
  * @see https://vkcom.github.io/VKUI/#/SplitCol
@@ -92,6 +97,10 @@ export const SplitCol = (props: SplitColProps) => {
     colRef: baseRef,
     animate,
   });
+
+  if (process.env.NODE_ENV === 'development' && spaced !== undefined) {
+    warn('Свойство spaced устарело и будет удалено в v6. Используйте autoSpaced');
+  }
 
   return (
     <div
