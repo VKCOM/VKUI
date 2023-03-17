@@ -12,12 +12,14 @@ import styles from './HorizontalScrollArrow.module.css';
 export interface HorizontalScrollArrowProps {
   direction: 'left' | 'right';
   size?: 'm' | 'l';
+  offsetY?: number | string;
   onClick(event: React.MouseEvent): void;
   className?: string;
 }
 
 export const HorizontalScrollArrow = ({
   size = 'l',
+  offsetY,
   direction,
   onClick,
   className,
@@ -51,7 +53,10 @@ export const HorizontalScrollArrow = ({
       )}
       onClick={onClick}
     >
-      <span className={styles['HorizontalScrollArrow__icon']}>
+      <span
+        className={styles['HorizontalScrollArrow__icon']}
+        style={offsetY ? { top: offsetY } : undefined}
+      >
         <ArrowIcon />
       </span>
     </Tappable>
