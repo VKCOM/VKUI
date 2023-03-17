@@ -66,7 +66,3 @@
 .Input__el:disabled::placeholder {
   color: var(--vkui--color_text_secondary);
 }
-
-.Input--align-left {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}
