@@ -36,9 +36,21 @@ export const AccordionSummary = ({
   ...restProps
 }: AccordionSummaryProps) => {
   const accordionIcon = (
+    // Обертка нужна для правильной работы с отступами в SimpleCell
+    // Без обертки на AccordionSummary__expandIcon не будет действовать правило `last-child`
     <span className="vkuiIcon">
-      <ExpandIcon className={styles['AccordionSummary__expandIcon']} />
-      <CollapseIcon className={styles['AccordionSummary__collapseIcon']} />
+      <ExpandIcon
+        className={classNames(
+          styles['AccordionSummary__icon'],
+          styles['AccordionSummary__icon--expand'],
+        )}
+      />
+      <CollapseIcon
+        className={classNames(
+          styles['AccordionSummary__icon'],
+          styles['AccordionSummary__icon--collapse'],
+        )}
+      />
     </span>
   );
 
