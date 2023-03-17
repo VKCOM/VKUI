@@ -22,7 +22,6 @@
   border: none;
   border-radius: inherit;
   appearance: none;
-  text-overflow: ellipsis;
   font-family: inherit;
   font-weight: var(--vkui--font_text--font_weight--regular);
   font-size: var(--vkui--font_text--font_size--regular);
