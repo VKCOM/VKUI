@@ -23,7 +23,7 @@ export interface InputProps
  */
 export const Input = ({
   type = 'text',
-  align,
+  align = 'left',
   getRef,
   className,
   getRootRef,
@@ -41,12 +41,8 @@ export const Input = ({
       style={style}
       className={classNames(
         styles['Input'],
-        align &&
-          {
-            left: styles['Input--align-left'],
-            center: styles['Input--align-center'],
-            right: styles['Input--align-right'],
-          }[align],
+        align === 'right' && styles['Input--align-right'],
+        align === 'center' && styles['Input--align-center'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         before && styles['Input--hasBefore'],
         after && styles['Input--hasAfter'],
