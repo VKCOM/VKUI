@@ -114,6 +114,11 @@ const Example = () => {
             Кто может оставлять записи на моей странице
           </Header>
         </Group>
+        <Group>
+          <Header mode="primary" size="large">
+            Большой заголовок
+          </Header>
+        </Group>
       </Panel>
     </View>
   );
