@@ -53,14 +53,20 @@ async function run(): Promise<void> {
     const stableBranchRef = stableBranchName(semVer);
     const remote = remoteRepository(token);
 
-    const patchCommits = await gh.rest.pulls.listCommits({
+    const pr = await gh.rest.pulls.get({
       ...github.context.repo,
       pull_number: pullNumber,
     });
-    const patchRefs = patchCommits.data
-      .filter((commit) => commit.commit.message !== 'CHORE: Update screenshots')
-      .map((commit) => commit.sha)
-      .join(' ');
+    const patchRefs = pr.data.merge_commit_sha!;
+
+    // const patchCommits = await gh.rest.pulls.listCommits({
+    //   ...github.context.repo,
+    //   pull_number: pullNumber,
+    // });
+    // const patchRefs = patchCommits.data
+    //   .filter((commit) => commit.commit.message !== 'CHORE: Update screenshots')
+    //   .map((commit) => commit.sha)
+    //   .join(' ');
 
     if (forked) {
       const message = getPatchInstructions(
