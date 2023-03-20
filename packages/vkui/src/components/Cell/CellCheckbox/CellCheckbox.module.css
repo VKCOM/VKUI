@@ -11,7 +11,3 @@
 .CellCheckbox__input:checked ~ .CellCheckbox__icon--on {
   display: block;
 }
-
-.CellCheckbox {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

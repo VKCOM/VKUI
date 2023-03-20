@@ -93,7 +93,7 @@ export const ModalCardBase = ({
     <div
       {...restProps}
       className={classNames(
-        styles['ModalCardBase'],
+        'vkuiInternalModalCardBase',
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
@@ -114,12 +114,26 @@ export const ModalCardBase = ({
       >
         {hasReactNode(icon) && <div className={styles['ModalCardBase__icon']}>{icon}</div>}
         {hasReactNode(header) && (
-          <Title level="2" weight="2" className={styles['ModalCardBase__header']}>
+          <Title
+            level="2"
+            weight="2"
+            className={classNames(
+              styles['ModalCardBase__header'],
+              'vkuiInternalModalCardBase__header',
+            )}
+          >
             {header}
           </Title>
         )}
         {hasReactNode(subheader) && (
-          <Subhead className={styles['ModalCardBase__subheader']}>{subheader}</Subhead>
+          <Subhead
+            className={classNames(
+              styles['ModalCardBase__subheader'],
+              'vkuiInternalModalCardBase__subheader',
+            )}
+          >
+            {subheader}
+          </Subhead>
         )}
 
         {children}

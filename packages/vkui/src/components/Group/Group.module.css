@@ -155,8 +155,8 @@
  * CMP:
  * PanelHeader
  */
-.PanelHeader--vkcom ~ .Group:first-of-type,
-.PanelHeader--vkcom + * .Group:first-of-type {
+:global(.vkuiInternalPanelHeader--vkcom) ~ .Group:first-of-type,
+:global(.vkuiInternalPanelHeader--vkcom) + * .Group:first-of-type {
   position: relative;
   top: -1px;
   border-top-right-radius: 0;

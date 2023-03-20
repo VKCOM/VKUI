@@ -87,12 +87,6 @@
  * CMP:
  * CalendarHeader
  */
-.CalendarHeader__picker .Select__container {
+:global(.vkuiInternalCalendarHeader__picker) .Select__container {
   padding-right: 4px;
-}
-
-.Select--align-left,
-.Select__custom,
-.Select__native {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

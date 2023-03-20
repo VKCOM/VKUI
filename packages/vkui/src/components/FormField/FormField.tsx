@@ -91,7 +91,11 @@ export const FormField = ({
     >
       {before && <span className={styles['FormField__before']}>{before}</span>}
       {children}
-      {after && <span className={styles['FormField__after']}>{after}</span>}
+      {after && (
+        <span className={classNames(styles['FormField__after'], 'vkuiInternalFormField__after')}>
+          {after}
+        </span>
+      )}
       <span aria-hidden className={styles['FormField__border']} />
     </Component>
   );

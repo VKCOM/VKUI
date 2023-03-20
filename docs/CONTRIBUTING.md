@@ -51,31 +51,6 @@
   > Не используем композицию, т.к. в ней нет необходимости,
   > а также в будущем она может усложнить переход на другое решение.
 
-  > ⚠️ `/* Пустой класс для CSS Modules (см. CONTRIBUTING.md) */`
-  >
-  > Если мы хотим повесить на элемент класс без стилей, то нам в любом случае надо его указать в CSS, иначе
-  > он не подхватиться после сборки проекта, а также `typescript-plugin-css-modules` будет ругаться, что нет такого класса.
-  >
-  > ```css
-  > .Tappable {
-  >   cursor: pointer;
-  > }
-  >
-  > .Tappable--active {
-  >   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md) */
-  > }
-  > ```
-  >
-  > ```tsx
-  > import styles from './Tappable.module.css';
-  >
-  > const Tappable = ({ active }) => (
-  >   <div className={classNameString(styles.Tappable, active && styles['Tappable--active'])} />
-  > );
-  > ```
-  >
-  > Если в CSS не указать, то `styles["Tappable--active"]` вернёт `undefined`.
-
 - CSS-классы названы по БЭМ: `.Component__element-name--modificator`. [Гайд по написанию стилей](https://github.com/VKCOM/VKUI/blob/master/docs/CSS_GUIDE.md)
 - Свойства `className` и `style` навешиваются на корневой элемент компонента
 - Свойства, не используемые в коде компонента, навешиваются на **главный** элемент компонента. По умолчанию главным является корневой элемент:

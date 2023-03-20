@@ -38,75 +38,103 @@
   box-sizing: border-box;
 }
 
-.Panel__centered .PanelHeader--vis + * {
+.Panel__centered :global(.vkuiInternalPanelHeader--vis) + * {
   margin-top: var(--vkui--size_panel_header_height--regular);
 }
 
-.Panel__centered .PanelHeader--ios.PanelHeader--vis + * {
+.Panel__centered :global(.vkuiInternalPanelHeader--ios.vkuiInternalPanelHeader--vis) + * {
   margin-top: var(--vkui--size_panel_header_height--regular);
 }
 
-.Panel--sizeX-compact .Panel__centered .PanelHeader--sep + * {
+.Panel--sizeX-compact .Panel__centered :global(.vkuiInternalPanelHeader--sep) + * {
   margin-top: calc(var(--vkui--size_panel_header_height--regular) + 5px);
 }
 
 @media (--sizeX-compact) {
-  .Panel--sizeX-none .Panel__centered .PanelHeader--sep + * {
+  .Panel--sizeX-none .Panel__centered :global(.vkuiInternalPanelHeader--sep) + * {
     margin-top: calc(var(--vkui--size_panel_header_height--regular) + 5px);
   }
 }
 
-.Panel--sizeX-compact .Panel__centered .PanelHeader--ios.PanelHeader--sep + * {
+.Panel--sizeX-compact
+  .Panel__centered
+  :global(.vkuiInternalPanelHeader--ios.vkuiInternalPanelHeader--sep)
+  + * {
   margin-top: calc(var(--vkui--size_panel_header_height--regular) + 5px);
 }
 
 @media (--sizeX-compact) {
-  .Panel--sizeX-none .Panel__centered .PanelHeader--ios.PanelHeader--sep + * {
+  .Panel--sizeX-none
+    .Panel__centered
+    :global(.vkuiInternalPanelHeader--ios.vkuiInternalPanelHeader--sep)
+    + * {
     margin-top: calc(var(--vkui--size_panel_header_height--regular) + 5px);
   }
 }
 
-.Panel--sizeX-compact .Panel__centered .PanelHeader--vkcom.PanelHeader--sep + * {
+.Panel--sizeX-compact
+  .Panel__centered
+  :global(.vkuiInternalPanelHeader--vkcom.vkuiInternalPanelHeader--sep)
+  + * {
   margin-top: calc(var(--vkui--size_panel_header_height--regular) + 5px);
 }
 
 @media (--sizeX-compact) {
-  .Panel--sizeX-none .Panel__centered .PanelHeader--vkcom.PanelHeader--sep + * {
+  .Panel--sizeX-none
+    .Panel__centered
+    :global(.vkuiInternalPanelHeader--vkcom.vkuiInternalPanelHeader--sep)
+    + * {
     margin-top: calc(var(--vkui--size_panel_header_height--regular) + 5px);
   }
 }
 
-.Panel--sizeX-regular .Panel__centered .PanelHeader--sep + * {
+.Panel--sizeX-regular .Panel__centered :global(.vkuiInternalPanelHeader--sep) + * {
   margin-top: calc(var(--vkui--size_panel_header_height--regular) + 16px);
 }
 
 @media (--sizeX-regular) {
-  .Panel--sizeX-none .Panel__centered .PanelHeader--sep + * {
+  .Panel--sizeX-none .Panel__centered :global(.vkuiInternalPanelHeader--sep) + * {
     margin-top: calc(var(--vkui--size_panel_header_height--regular) + 16px);
   }
 }
 
-.Panel--sizeX-regular .Panel__centered .PanelHeader--ios.PanelHeader--sep + * {
+.Panel--sizeX-regular
+  .Panel__centered
+  :global(.vkuiInternalPanelHeader--ios.vkuiInternalPanelHeader--sep)
+  + * {
   margin-top: calc(var(--vkui--size_panel_header_height--regular) + 16px);
 }
 
 @media (--sizeX-regular) {
-  .Panel--sizeX-none .Panel__centered .PanelHeader--ios.PanelHeader--sep + * {
+  .Panel--sizeX-none
+    .Panel__centered
+    :global(.vkuiInternalPanelHeader--ios.vkuiInternalPanelHeader--sep)
+    + * {
     margin-top: calc(var(--vkui--size_panel_header_height--regular) + 16px);
   }
 }
 
-.Panel--sizeX-regular .Panel__centered .PanelHeader--vkcom.PanelHeader--sep + * {
+.Panel--sizeX-regular
+  .Panel__centered
+  :global(.vkuiInternalPanelHeader--vkcom.vkuiInternalPanelHeader--sep)
+  + * {
   margin-top: calc(var(--vkui--size_panel_header_height--regular) + 16px);
 }
 
 @media (--sizeX-regular) {
-  .Panel--sizeX-none .Panel__centered .PanelHeader--vkcom.PanelHeader--sep + * {
+  .Panel--sizeX-none
+    .Panel__centered
+    :global(.vkuiInternalPanelHeader--vkcom.vkuiInternalPanelHeader--sep)
+    + * {
     margin-top: calc(var(--vkui--size_panel_header_height--regular) + 16px);
   }
 }
 
-.Epic--hasTabbar .Panel__in {
+/**
+ * CMP:
+ * Epic
+ */
+:global(.vkuiInternalEpic--hasTabbar) .Panel__in {
   padding-bottom: var(--vkui_internal--tabbar_height);
   padding-bottom: calc(
     var(--vkui_internal--safe_area_inset_bottom) + var(--vkui_internal--tabbar_height)
@@ -138,8 +166,4 @@
   .Panel--sizeX-none::before {
     background-color: transparent;
   }
-}
-
-.Panel__fade {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

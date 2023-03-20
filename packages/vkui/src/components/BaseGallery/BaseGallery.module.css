@@ -76,7 +76,3 @@
 .BaseGallery__bullet--active {
   opacity: 1;
 }
-
-.BaseGallery--dragging {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

@@ -78,15 +78,12 @@ const NativeSelect = ({
       Component="label"
       className={classNames(
         styles['Select'],
+        'vkuiInternalSelect',
         empty && styles['Select--empty'],
         multiline && styles['Select--multiline'],
         placeholder?.length && styles['Select--hasPlaceholder'],
-        align &&
-          {
-            left: styles['Select--align-left'],
-            center: styles['Select--align-center'],
-            right: styles['Select--align-right'],
-          }[align],
+        align === 'center' && styles['Select--align-center'],
+        align === 'right' && styles['Select--align-right'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         className,
       )}

@@ -28,7 +28,6 @@ export const Gradient = ({
       role="presentation"
       {...restProps}
       className={classNames(
-        styles['Gradient'],
         {
           tint: styles['Gradient--mode-tint'],
           black: styles['Gradient--mode-black'],

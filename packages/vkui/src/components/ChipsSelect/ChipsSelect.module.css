@@ -25,8 +25,3 @@
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
-
-.ChipsSelect__option,
-.ChipsSelect__options {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

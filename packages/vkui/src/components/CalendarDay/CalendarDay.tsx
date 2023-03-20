@@ -76,14 +76,13 @@ export const CalendarDay = React.memo(
           size === 's' && styles['CalendarDay--size-s'],
           today && styles['CalendarDay--today'],
           selected && !disabled && styles['CalendarDay--selected'],
-          active && !disabled && styles['CalendarDay--active'],
           selectionStart && styles['CalendarDay--selection-start'],
           selectionEnd && styles['CalendarDay--selection-end'],
           disabled && styles['CalendarDay--disabled'],
           !sameMonth && styles['CalendarDay--not-same-month'],
           className,
         )}
-        hoverMode={active ? styles['CalendarDay--active-hover'] : styles['CalendarDay--hover']}
+        hoverMode={active ? '' : styles['CalendarDay--hover']}
         hasActive={false}
         onClick={onClick}
         disabled={disabled}

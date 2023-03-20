@@ -2,7 +2,11 @@
   position: relative;
 }
 
-.List--dragging .Cell:not(.Cell--dragging) {
+/**
+ * CMP:
+ * List
+ */
+:global(.vkuiInternalList--dragging) .Cell:not(.Cell--dragging) {
   transition: transform 0.3s ease;
   pointer-events: none;
 }
@@ -51,6 +55,6 @@
  * CMP:
  * FormItem
  */
-.FormItem > .Cell {
+:global(.vkuiInternalFormItem) > .Cell {
   margin: 0 calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }

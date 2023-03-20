@@ -185,14 +185,10 @@
  * CMP:
  * SimpleCell
  */
-.SimpleCell__after > .Switch {
+:global(.vkuiInternalSimpleCell__after) > .Switch {
   margin-left: 12px;
 }
 
-.SimpleCell > .Switch:first-child {
+:global(.vkuiInternalSimpleCell) > .Switch:first-child {
   margin-right: 12px;
-}
-
-.Switch--focus-visible {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

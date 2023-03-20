@@ -94,7 +94,12 @@ export const PanelHeaderContent = ({
         {hasReactNode(status) && (
           <Footnote className={styles['PanelHeaderContent__status']}>{status}</Footnote>
         )}
-        <div className={styles['PanelHeaderContent__children']}>
+        <div
+          className={classNames(
+            'vkuiInternalPanelHeaderContent__children',
+            styles['PanelHeaderContent__children'],
+          )}
+        >
           <PanelHeaderChildren hasStatus={hasReactNode(status)} hasBefore={hasReactNode(before)}>
             {children}
           </PanelHeaderChildren>

@@ -16,7 +16,3 @@
 .ModalPageHeader :global(.vkuiIcon--cancel_24) {
   color: var(--vkui--color_icon_secondary);
 }
-
-.ModalPageHeader__in {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

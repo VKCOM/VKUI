@@ -58,9 +58,14 @@ export const CustomSelectDropdown = ({
       placement={placement}
       className={classNames(
         styles['CustomSelectDropdown'],
+        'vkuiInternalCustomSelectDropdown',
         offsetDistance === 0 &&
           (isTop ? styles['CustomSelectDropdown--top'] : styles['CustomSelectDropdown--bottom']),
-        sameWidth && styles['CustomSelectDropdown--wide'],
+        sameWidth &&
+          classNames(
+            styles['CustomSelectDropdown--wide'],
+            'vkuiInternalCustomSelectDropdown--wide',
+          ),
         className,
       )}
       forcePortal={forcePortal}

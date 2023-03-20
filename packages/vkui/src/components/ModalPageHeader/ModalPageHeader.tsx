@@ -37,7 +37,7 @@ export const ModalPageHeader = ({
       ref={getRef}
     >
       <PanelHeader
-        className={classNames(styles['ModalPageHeader__in'], className)}
+        className={classNames('vkuiInternalModalPageHeader__in', className)}
         {...restProps}
         fixed={false}
         separator={false}

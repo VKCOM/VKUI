@@ -73,10 +73,10 @@
  * CMP:
  * CustomSelectDropdown
  */
-.CustomSelectDropdown .CustomScrollView__box {
+:global(.vkuiInternalCustomSelectDropdown) .CustomScrollView__box {
   padding-right: 8px;
 }
 
-.CustomSelectDropdown--wide .CustomScrollView__box {
+:global(.vkuiInternalCustomSelectDropdown--wide) .CustomScrollView__box {
   padding-right: 0;
 }

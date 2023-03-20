@@ -94,6 +94,16 @@
   border-radius: 50%;
 }
 
+.PanelHeaderBack--vkcom.PanelHeaderBack--has-label {
+  padding-right: 11px;
+}
+
+@media (--sizeX-regular) {
+  .PanelHeaderBack--ios.PanelHeaderBack--has-label:not(.PanelHeaderBack--sizeX-compact) {
+    padding-right: 8px;
+  }
+}
+
 .PanelHeaderBack--sizeX-compact.PanelHeaderBack--ios .PanelHeaderButton__label {
   display: none;
 }

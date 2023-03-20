@@ -373,7 +373,6 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
           onPlacementChange={onPlacementChange}
           onMouseLeave={onDropdownMouseLeave}
           fetching={fetching}
-          className={styles['ChipsSelect__options']}
           sameWidth={fixDropdownWidth}
           forcePortal={forceDropdownPortal}
         >
@@ -401,7 +400,6 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
               return (
                 <React.Fragment key={`${typeof value}-${value}`}>
                   {renderOption!({
-                    className: styles['ChipsSelect__option'],
                     option,
                     hovered: Boolean(hovered),
                     children: label,

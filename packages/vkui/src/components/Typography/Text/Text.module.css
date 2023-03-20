@@ -35,7 +35,7 @@
  * CMP:
  * PanelHeaderContent
  */
-.PanelHeaderContent__children .Text {
+:global(.vkuiInternalPanelHeaderContent__children) .Text {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

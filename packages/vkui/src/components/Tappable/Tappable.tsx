@@ -10,6 +10,7 @@ import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
 import { shouldTriggerClickOnEnterOrSpace } from '../../lib/accessibility';
+import { SizeType } from '../../lib/adaptivity';
 import { callMultiple } from '../../lib/callMultiple';
 import { getOffsetRect } from '../../lib/offset';
 import { Platform } from '../../lib/platform';
@@ -24,7 +25,6 @@ import styles from './Tappable.module.css';
 const sizeXClassNames = {
   none: styles['Tappable--sizeX-none'],
   compact: styles['Tappable--sizeX-compact'],
-  regular: styles['Tappable--sizeX-regular'],
 };
 
 type StateMode = 'opacity' | 'background';
@@ -296,14 +296,14 @@ export const Tappable = ({
   const classes = classNames(
     className,
     styles['Tappable'],
+    'vkuiInternalTappable',
     platform === Platform.IOS && styles['Tappable--ios'],
-    sizeXClassNames[sizeX],
+    sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
     hasHoverContext && styles['Tappable--hover-has'],
     hasActive && styles['Tappable--hasActive'],
     hasHover && hovered && !isPresetHoverMode && hoverMode,
     hasActive && active && !isPresetActiveMode && activeMode,
     focusVisible && !isPresetFocusVisibleMode && focusVisibleMode,
-    hasActive && active && styles['Tappable--active'],
     hasHover &&
       hovered &&
       isPresetHoverMode &&

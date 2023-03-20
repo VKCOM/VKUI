@@ -97,8 +97,13 @@
   padding-right: var(--vkui--size_base_padding_horizontal--regular);
 }
 
-.FormItem--removable .Removable__content,
-.FormLayoutGroup--removable .Removable__content {
+/**
+ * CMP:
+ * FormLayoutGroup
+ * FormItem
+ */
+:global(.vkuiInternalFormItem--removable) .Removable__content,
+:global(.vkuiInternalFormLayoutGroup--removable) .Removable__content {
   flex-wrap: wrap;
   align-items: flex-start;
 }
@@ -107,27 +112,39 @@
   display: none;
 }
 
-.FormItem--withTop .FormItem__removable ~ .Removable__offset,
-.FormLayoutGroup--removable .FormItem--withTop ~ .Removable__offset {
+:global(.vkuiInternalFormItem--withTop .vkuiInternalFormItem__removable) ~ .Removable__offset,
+:global(.vkuiInternalFormLayoutGroup--removable .vkuiInternalFormItem--withTop)
+  ~ .Removable__offset {
   order: -1;
   display: block;
   width: 100%;
   height: calc(2px + var(--vkui--font_subhead--line_height--regular) + 8px);
 }
 
-.FormItem--sizeY-compact.FormItem--withTop .FormItem__removable ~ .Removable__offset,
-.FormLayoutGroup--sizeY-compact.FormLayoutGroup--removable .FormItem--withTop ~ .Removable__offset {
+:global(
+    .vkuiInternalFormItem--sizeY-compact.vkuiInternalFormItem--withTop
+      .vkuiInternalFormItem__removable
+  )
+  ~ .Removable__offset,
+:global(
+    .vkuiInternalFormLayoutGroup--sizeY-compact.vkuiInternalFormLayoutGroup--removable
+      .vkuiInternalFormItem--withTop
+  )
+  ~ .Removable__offset {
   height: calc(2px + var(--vkui--font_subhead--line_height--compact) + 6px);
 }
 
 @media (--sizeY-compact) {
-  .FormItem--sizeY-none.FormItem--withTop .FormItem__removable ~ .Removable__offset,
-  .FormLayoutGroup--sizeY-none.FormLayoutGroup--removable .FormItem--withTop ~ .Removable__offset {
+  :global(
+      .vkuiInternalFormItem--sizeY-none.vkuiInternalFormItem--withTop
+        .vkuiInternalFormItem__removable
+    )
+    ~ .Removable__offset,
+  :global(
+      .vkuiInternalFormLayoutGroup--sizeY-none.vkuiInternalFormLayoutGroup--removable
+        .vkuiInternalFormItem--withTop
+    )
+    ~ .Removable__offset {
     height: calc(2px + var(--vkui--font_subhead--line_height--compact) + 6px);
   }
-}
-
-.Removable,
-.Removable--align-center {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

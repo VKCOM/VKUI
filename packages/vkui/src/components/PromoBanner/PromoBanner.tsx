@@ -77,9 +77,7 @@ export const PromoBanner = ({
   return (
     <div className={classNames(styles['PromoBanner'], className)} {...restProps}>
       <div className={styles['PromoBanner__head']}>
-        <Footnote className={styles['PromoBanner__label']}>
-          {bannerData.advertisingLabel || 'Advertisement'}
-        </Footnote>
+        <Footnote>{bannerData.advertisingLabel || 'Advertisement'}</Footnote>
         {bannerData.ageRestrictions && (
           <Footnote className={styles['PromoBanner__age']}>{bannerData.ageRestrictions}</Footnote>
         )}

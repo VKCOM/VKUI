@@ -15,7 +15,7 @@ export const List = ({ children, className, ...restProps }: ListProps) => {
     <div
       role="list"
       {...restProps}
-      className={classNames(styles['List'], isDragging && styles['List--dragging'], className)}
+      className={classNames(styles['List'], isDragging && 'vkuiInternalList--dragging', className)}
     >
       <ListContext.Provider value={React.useMemo(() => ({ toggleDrag }), [])}>
         {children}

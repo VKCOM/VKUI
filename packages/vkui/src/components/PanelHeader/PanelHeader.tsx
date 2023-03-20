@@ -16,9 +16,9 @@ import { Text } from '../Typography/Text/Text';
 import styles from './PanelHeader.module.css';
 
 const platformClassNames = {
-  ios: styles['PanelHeader--ios'],
+  ios: classNames(styles['PanelHeader--ios'], 'vkuiInternalPanelHeader--ios'),
   android: styles['PanelHeader--android'],
-  vkcom: styles['PanelHeader--vkcom'],
+  vkcom: classNames(styles['PanelHeader--vkcom'], 'vkuiInternalPanelHeader--vkcom'),
 };
 
 const sizeXClassNames = {
@@ -53,7 +53,11 @@ const PanelHeaderIn = ({ before, after, separator, children }: PanelHeaderProps)
   return (
     <React.Fragment>
       <TooltipContainer fixed className={styles['PanelHeader__in']}>
-        <div className={styles['PanelHeader__before']}>{before}</div>
+        <div
+          className={classNames(styles['PanelHeader__before'], 'vkuiInternalPanelHeader__before')}
+        >
+          {before}
+        </div>
         <div className={styles['PanelHeader__content']}>
           {platform === Platform.VKCOM ? (
             <Text weight="2">{children}</Text>
@@ -61,7 +65,7 @@ const PanelHeaderIn = ({ before, after, separator, children }: PanelHeaderProps)
             <span className={styles['PanelHeader__content-in']}>{children}</span>
           )}
         </div>
-        <div className={styles['PanelHeader__after']}>
+        <div className={classNames(styles['PanelHeader__after'], 'vkuiInternalPanelHeader__after')}>
           {(webviewType === WebviewType.INTERNAL || isInsideModal) && after}
         </div>
       </TooltipContainer>
@@ -101,13 +105,16 @@ export const PanelHeader = ({
       {...restProps}
       className={classNames(
         styles['PanelHeader'],
+        'vkuiInternalPanelHeader',
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
         transparent && styles['PanelHeader--trnsp'],
         shadow && styles['PanelHeader--shadow'],
-        visor && styles['PanelHeader--vis'],
-        separator && visor && styles['PanelHeader--sep'],
+        visor && classNames(styles['PanelHeader--vis'], 'vkuiInternalPanelHeader--vis'),
+        separator &&
+          visor &&
+          classNames(styles['PanelHeader--sep'], 'vkuiInternalPanelHeader--sep'),
         webviewType === WebviewType.VKAPPS && !isInsideModal && styles['PanelHeader--vkapps'],
         !before && styles['PanelHeader--no-before'],
         !after && styles['PanelHeader--no-after'],

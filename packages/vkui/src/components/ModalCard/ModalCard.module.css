@@ -53,9 +53,9 @@
 }
 
 /**
- * Common
+ * CMP:
+ * ModalRoot
  */
-
-.ModalRoot--touched .ModalCard__in {
+:global(.vkuiInternalModalRoot--touched) .ModalCard__in {
   transition: none;
 }

@@ -39,16 +39,16 @@
   overflow: hidden;
 }
 
-.Tabbar--layout-vertical .TabbarItem--text .TabbarItem__in {
+:global(.vkuiInternalTabbar--layout-vertical) .TabbarItem--text .TabbarItem__in {
   position: relative;
   top: 2px;
 }
 
-.Tabbar--layout-vertical .TabbarItem__in {
+:global(.vkuiInternalTabbar--layout-vertical) .TabbarItem__in {
   flex-direction: column;
 }
 
-.Tabbar--layout-horizontal .TabbarItem__in {
+:global(.vkuiInternalTabbar--layout-horizontal) .TabbarItem__in {
   flex-direction: row;
 }
 
@@ -80,13 +80,13 @@
   text-overflow: ellipsis;
 }
 
-.Tabbar--layout-vertical .TabbarItem__text {
+:global(.vkuiInternalTabbar--layout-vertical) .TabbarItem__text {
   font-size: 10px;
   line-height: 12px;
   margin-top: 2px;
 }
 
-.Tabbar--layout-horizontal .TabbarItem__text {
+:global(.vkuiInternalTabbar--layout-horizontal) .TabbarItem__text {
   margin-left: 8px;
 }
 

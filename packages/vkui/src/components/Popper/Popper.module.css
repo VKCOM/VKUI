@@ -14,8 +14,3 @@
 .Popper {
   z-index: var(--vkui--z_index_popout);
 }
-
-.Popper__content,
-.PopperPortal {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

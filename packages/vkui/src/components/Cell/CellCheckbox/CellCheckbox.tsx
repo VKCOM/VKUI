@@ -29,7 +29,7 @@ export const CellCheckbox = ({ className, style, ...restProps }: CellCheckboxPro
       : Icon24CheckBoxOn;
 
   return (
-    <span className={classNames(styles['CellCheckbox'], className)} style={style}>
+    <span className={className} style={style}>
       <VisuallyHiddenInput
         className={styles['CellCheckbox__input']}
         type="checkbox"

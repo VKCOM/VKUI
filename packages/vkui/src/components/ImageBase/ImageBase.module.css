@@ -43,11 +43,11 @@
  * CMP:
  * CellButton
  */
-.CellButton > .ImageBase :global(.vkuiIcon) {
+:global(.vkuiInternalCellButton) > .ImageBase :global(.vkuiIcon) {
   color: var(--vkui--color_icon_accent);
 }
 
-.CellButton--mode-danger > .ImageBase :global(.vkuiIcon) {
+:global(.vkuiInternalCellButton--mode-danger) > .ImageBase :global(.vkuiIcon) {
   color: var(--vkui--color_icon_negative);
 }
 
@@ -55,11 +55,11 @@
  * CMP:
  * PanelHeader
  */
-.PanelHeader__before .ImageBase {
+:global(.vkuiInternalPanelHeader__before) .ImageBase {
   margin-left: 8px;
 }
 
-.PanelHeader__after .ImageBase {
+:global(.vkuiInternalPanelHeader__after) .ImageBase {
   margin-right: 8px;
 }
 
@@ -67,61 +67,61 @@
  * CMP:
  * SimpleCell
  */
-.SimpleCell > .ImageBase {
+:global(.vkuiInternalSimpleCell) > .ImageBase {
   margin-right: 12px;
 }
 
-.SimpleCell > .ImageBase--size-28,
-.SimpleCell > .ImageBase--size-32 {
+:global(.vkuiInternalSimpleCell) > .ImageBase--size-28,
+:global(.vkuiInternalSimpleCell) > .ImageBase--size-32 {
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.SimpleCell > .ImageBase--size-40 {
+:global(.vkuiInternalSimpleCell) > .ImageBase--size-40 {
   margin-top: 4px;
   margin-bottom: 4px;
 }
 
-.SimpleCell > .ImageBase--size-48,
-.SimpleCell > .ImageBase--size-72 {
+:global(.vkuiInternalSimpleCell) > .ImageBase--size-48,
+:global(.vkuiInternalSimpleCell) > .ImageBase--size-72 {
   margin-top: 6px;
   margin-bottom: 6px;
 }
 
-.SimpleCell--ios > .ImageBase--size-28,
-.SimpleCell--ios > .ImageBase--size-32 {
+:global(.vkuiInternalSimpleCell--ios) > .ImageBase--size-28,
+:global(.vkuiInternalSimpleCell--ios) > .ImageBase--size-32 {
   margin-left: 4px;
 }
 
-.SimpleCell--sizeY-compact > .ImageBase--size-28,
-.SimpleCell--sizeY-compact > .ImageBase--size-32 {
+:global(.vkuiInternalSimpleCell--sizeY-compact) > .ImageBase--size-28,
+:global(.vkuiInternalSimpleCell--sizeY-compact) > .ImageBase--size-32 {
   margin-top: 8px;
   margin-bottom: 8px;
 }
 
-.SimpleCell--sizeY-compact > .ImageBase--size-40 {
+:global(.vkuiInternalSimpleCell--sizeY-compact) > .ImageBase--size-40 {
   margin-top: 2px;
   margin-bottom: 2px;
 }
 
-.SimpleCell--sizeY-compact > .ImageBase--size-48 {
+:global(.vkuiInternalSimpleCell--sizeY-compact) > .ImageBase--size-48 {
   margin-top: 4px;
   margin-bottom: 4px;
 }
 
 @media (--sizeY-compact) {
-  .SimpleCell--sizeY-none > .ImageBase--size-28,
-  .SimpleCell--sizeY-none > .ImageBase--size-32 {
+  :global(.vkuiInternalSimpleCell--sizeY-none) > .ImageBase--size-28,
+  :global(.vkuiInternalSimpleCell--sizeY-none) > .ImageBase--size-32 {
     margin-top: 8px;
     margin-bottom: 8px;
   }
 
-  .SimpleCell--sizeY-none > .ImageBase--size-40 {
+  :global(.vkuiInternalSimpleCell--sizeY-none) > .ImageBase--size-40 {
     margin-top: 2px;
     margin-bottom: 2px;
   }
 
-  .SimpleCell--sizeY-none > .ImageBase--size-48 {
+  :global(.vkuiInternalSimpleCell--sizeY-none) > .ImageBase--size-48 {
     margin-top: 4px;
     margin-bottom: 4px;
   }

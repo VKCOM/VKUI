@@ -26,16 +26,21 @@
  * CMP:
  * Group
  */
-.Group--mode-plain > .Tabs--mode-default:first-child {
+:global(.vkuiInternalGroup--mode-plain) > .Tabs--mode-default:first-child {
   margin-top: -8px;
 }
 
-.Group--mode-card > .Tabs--mode-default:first-child {
+:global(.vkuiInternalGroup--mode-card) > .Tabs--mode-default:first-child {
   margin-top: -4px;
 }
 
+/*
+ * CMP:
+ * FixedLayout
+ */
+
 /* Нужно для закрашивания прозрачной области нижнего инсета на iphone x */
-.FixedLayout--ios.FixedLayout--vertical-bottom .Tabs::after {
+:global(.vkuiInternalFixedLayout--ios.vkuiInternalFixedLayout--vertical-bottom) .Tabs::after {
   position: absolute;
   left: 0;
   top: 0;
@@ -45,26 +50,8 @@
   background: var(--vkui--color_background_content);
 }
 
-.FixedLayout--ios.FixedLayout--vertical-bottom .Tabs__in,
-.FixedLayout--ios.FixedLayout--vertical-bottom .Separator {
+:global(.vkuiInternalFixedLayout--ios.vkuiInternalFixedLayout--vertical-bottom) .Tabs__in,
+:global(.vkuiInternalFixedLayout--ios.vkuiInternalFixedLayout--vertical-bottom) .Separator {
   position: relative;
   z-index: var(--vkui_internal--z_index_tabs);
-}
-
-/*
- * CMP:
- * Group
- */
-.Group--mode-plain > .Tabs--mode-default:first-child {
-  margin-top: -8px;
-}
-
-.Group--mode-card > .Tabs--mode-default:first-child {
-  margin-top: -4px;
-}
-
-.Tabs--mode-accent,
-.Tabs--mode-secondary,
-.Tabs--vkcom {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

@@ -110,7 +110,7 @@ export const TabsItem = ({
         className,
       )}
       hoverMode={styles['TabsItem--hover']}
-      activeMode={styles['TabsItem--active']}
+      activeMode=""
       focusVisibleMode="inside"
       hasActive={false}
       role={role}

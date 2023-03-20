@@ -45,7 +45,3 @@
     font-weight: var(--vkui--font_weight_accent3);
   }
 }
-
-.SegmentedControlOption--focus-visible {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

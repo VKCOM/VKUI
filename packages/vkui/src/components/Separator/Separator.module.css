@@ -29,13 +29,14 @@
  * CMP:
  * ModalPage
  */
-.ModalPage--sizeX-regular .Separator--padded {
+:global(.vkuiInternalModalPage--sizeX-regular) .Separator--padded {
   padding-left: 8px;
   padding-right: 8px;
 }
 
+/* FIXME: Мертвый код */
 @media (--sizeX-regular) {
-  .ModalPage--sizeX-none .Separator--padded {
+  :global(.vkuiInternalModalPage--sizeX-none) .Separator--padded {
     padding-left: 8px;
     padding-right: 8px;
   }

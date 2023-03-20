@@ -83,9 +83,9 @@
  * - FormLayoutGroup
  * - FormField
  */
-.FormItem--removable .Removable__content > .IconButton,
-.FormLayoutGroup--removable .Removable__content > .IconButton,
-.FormField__after .IconButton {
+:global(.vkuiInternalFormItem--removable .vkuiInternalRemovable__content) > .IconButton,
+:global(.vkuiInternalFormLayoutGroup--removable .vkuiInternalRemovable__content) > .IconButton,
+:global(.vkuiInternalFormField__after) .IconButton {
   display: flex;
   align-items: center;
   align-content: center;
@@ -95,28 +95,32 @@
   border-radius: var(--vkui--size_border_radius--regular);
 }
 
-.FormField__after .IconButton :global(.vkuiIcon.vkuiIcon.vkuiIcon) {
+:global(.vkuiInternalFormField__after) .IconButton :global(.vkuiIcon.vkuiIcon.vkuiIcon) {
   padding: 0;
 }
 
-.FormField__after .IconButton--sizeY-compact {
+:global(.vkuiInternalFormField__after) .IconButton--sizeY-compact {
   width: var(--vkui--size_field_height--compact);
   height: var(--vkui--size_field_height--compact);
 }
 
-.FormItem--removable .Removable__content > .IconButton--sizeY-compact,
-.FormLayoutGroup--removable .Removable__content > .IconButton--sizeY-compact {
+:global(.vkuiInternalFormItem--removable .vkuiInternalRemovable__content)
+  > .IconButton--sizeY-compact,
+:global(.vkuiInternalFormLayoutGroup--removable .vkuiInternalRemovable__content)
+  > .IconButton--sizeY-compact {
   height: var(--vkui--size_field_height--compact);
 }
 
 @media (--sizeY-compact) {
-  .FormField__after .IconButton--sizeY-none {
+  :global(.vkuiInternalFormField__after) .IconButton--sizeY-none {
     width: var(--vkui--size_field_height--compact);
     height: var(--vkui--size_field_height--compact);
   }
 
-  .FormItem--removable .Removable__content > .IconButton--sizeY-none,
-  .FormLayoutGroup--removable .Removable__content > .IconButton--sizeY-none {
+  :global(.vkuiInternalFormItem--removable .vkuiInternalRemovable__content)
+    > .IconButton--sizeY-none,
+  :global(.vkuiInternalFormLayoutGroup--removable .vkuiInternalRemovable__content)
+    > .IconButton--sizeY-none {
     height: var(--vkui--size_field_height--compact);
   }
 }

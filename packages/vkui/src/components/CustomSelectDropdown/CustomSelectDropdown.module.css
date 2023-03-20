@@ -37,6 +37,6 @@
  * CMP:
  * CalendarHeader
  */
-.CalendarHeader__pickers .CustomSelectDropdown__in {
+:global(.vkuiInternalCalendarHeader__pickers) .CustomSelectDropdown__in {
   max-height: 184px;
 }

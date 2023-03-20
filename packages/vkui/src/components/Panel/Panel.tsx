@@ -49,7 +49,7 @@ export const Panel = ({
       )}
     >
       <Touch Component={TooltipContainer} className={styles['Panel__in']}>
-        {platform === Platform.IOS && <div className={styles['Panel__fade']} />}
+        {platform === Platform.IOS && <div className="vkuiInternalPanel__fade" />}
         <div className={styles['Panel__in-before']} />
         {centered ? <div className={styles['Panel__centered']}>{children}</div> : children}
         <div className={styles['Panel__in-after']} />

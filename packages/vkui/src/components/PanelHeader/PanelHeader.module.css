@@ -162,21 +162,25 @@
   padding: 0 4px;
 }
 
-.SplitCol--spaced
-  .PanelHeader--android.PanelHeader--no-before:not(.ModalPageHeader__in)
+/**
+ * CMP:
+ * SplitCol
+ */
+:global(.vkuiInternalSplitCol--spaced)
+  .PanelHeader--android.PanelHeader--no-before:not(:global(.vkuiInternalModalPageHeader__in))
   .PanelHeader__content {
   padding-left: 0;
 }
 
-.SplitCol--viewWidth-tabletPlus.SplitCol--spaced-none.SplitCol--spaced-auto
-  .PanelHeader--android.PanelHeader--no-before:not(.ModalPageHeader__in)
+.SplitCol--viewWidth-tabletPlus:global(.vkuiInternal.SplitCol--spaced-none.SplitCol--spaced-auto)
+  .PanelHeader--android.PanelHeader--no-before:not(:global(.vkuiInternalModalPageHeader__in))
   .PanelHeader__content {
   padding-left: 0;
 }
 
 @media (--viewWidth-smallTabletPlus) {
-  .SplitCol--viewWidth-none.SplitCol--spaced-none.SplitCol--spaced-auto
-    .PanelHeader--android.PanelHeader--no-before:not(.ModalPageHeader__in)
+  .SplitCol--viewWidth-none:global(.vkuiInternal.SplitCol--spaced-none.SplitCol--spaced-auto)
+    .PanelHeader--android.PanelHeader--no-before:not(:global(.vkuiInternalModalPageHeader__in))
     .PanelHeader__content {
     padding-left: 0;
   }
@@ -195,21 +199,25 @@
   padding-left: 16px;
 }
 
-.SplitCol--spaced
-  .PanelHeader--android.PanelHeader--no-after:not(.ModalPageHeader__in)
+:global(.vkuiInternalSplitCol--spaced)
+  .PanelHeader--android.PanelHeader--no-after:not(:global(.vkuiInternalModalPageHeader__in))
   .PanelHeader__content {
   padding-right: 0;
 }
 
-.SplitCol--viewWidth-tabletPlus.SplitCol--spaced-none.SplitCol--spaced-auto
-  .PanelHeader--android.PanelHeader--no-after:not(.ModalPageHeader__in)
+:global(
+    .vkuiInternalSplitCol--viewWidth-tabletPlus.vkuiInternalSplitCol--spaced-none.vkuiInternalSplitCol--spaced-auto
+  )
+  .PanelHeader--android.PanelHeader--no-after:not(:global(.vkuiInternalModalPageHeader__in))
   .PanelHeader__content {
   padding-right: 0;
 }
 
 @media (--viewWidth-smallTabletPlus) {
-  .SplitCol--viewWidth-none.SplitCol--spaced-none.SplitCol--spaced-auto
-    .PanelHeader--android.PanelHeader--no-after:not(.ModalPageHeader__in)
+  :global(
+      .vkuiInternalSplitCol--viewWidth-none.vkuiInternalSplitCol--spaced-none.vkuiInternalSplitCol--spaced-auto
+    )
+    .PanelHeader--android.PanelHeader--no-after:not(:global(.vkuiInternalModalPageHeader__in))
     .PanelHeader__content {
     padding-right: 0;
   }
@@ -228,7 +236,9 @@
   z-index: var(--vkui_internal--z_index_panel_header_fixed);
 }
 
-.PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.ModalPageHeader__in):not(.PanelHeader--sep)
+.PanelHeader--vkcom.PanelHeader--sizeX-regular:not(:global(.vkuiInternalModalPageHeader__in)):not(
+    .PanelHeader--sep
+  )
   .PanelHeader__in::after {
   position: absolute;
   left: var(--vkui_internal--thin_border);
@@ -240,7 +250,9 @@
 }
 
 @media (--sizeX-regular) {
-  .PanelHeader--vkcom.PanelHeader--sizeX-none:not(.ModalPageHeader__in):not(.PanelHeader--sep)
+  .PanelHeader--vkcom.PanelHeader--sizeX-none:not(:global(.vkuiInternalModalPageHeader__in)):not(
+      .PanelHeader--sep
+    )
     .PanelHeader__in::after {
     position: absolute;
     left: var(--vkui_internal--thin_border);
@@ -252,7 +264,8 @@
   }
 }
 
-.PanelHeader--vkcom.PanelHeader--sizeX-regular:not(.ModalPageHeader__in) .PanelHeader__in {
+.PanelHeader--vkcom.PanelHeader--sizeX-regular:not(:global(.vkuiInternalModalPageHeader__in))
+  .PanelHeader__in {
   border-top-left-radius: var(--vkui--size_border_radius_paper--regular);
   border-top-right-radius: var(--vkui--size_border_radius_paper--regular);
   box-shadow: 0 0 0 var(--vkui_internal--thin_border) var(--vkui--color_field_border_alpha) inset;
@@ -260,7 +273,8 @@
 }
 
 @media (--sizeX-regular) {
-  .PanelHeader--vkcom.PanelHeader--sizeX-none:not(.ModalPageHeader__in) .PanelHeader__in {
+  .PanelHeader--vkcom.PanelHeader--sizeX-none:not(:global(.vkuiInternalModalPageHeader__in))
+    .PanelHeader__in {
     border-top-left-radius: var(--vkui--size_border_radius_paper--regular);
     border-top-right-radius: var(--vkui--size_border_radius_paper--regular);
     box-shadow: 0 0 0 var(--vkui_internal--thin_border) var(--vkui--color_field_border_alpha) inset;
@@ -289,8 +303,4 @@
 
 .PanelHeader--no-before .PanelHeader__content > * {
   padding-left: 0;
-}
-
-.PanelHeader--sep {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

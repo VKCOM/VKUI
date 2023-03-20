@@ -72,12 +72,15 @@ export const FixedLayout = ({
       ref={ref}
       className={classNames(
         styles['FixedLayout'],
-        platform === Platform.IOS && styles['FixedLayout--ios'],
+        platform === Platform.IOS && 'vkuiInternalFixedLayout--ios',
         filled && styles['FixedLayout--filled'],
         vertical &&
           {
             top: styles['FixedLayout--vertical-top'],
-            bottom: styles['FixedLayout--vertical-bottom'],
+            bottom: classNames(
+              styles['FixedLayout--vertical-bottom'],
+              'vkuiInternalFixedLayout--vertical-bottom',
+            ),
           }[vertical],
         className,
       )}

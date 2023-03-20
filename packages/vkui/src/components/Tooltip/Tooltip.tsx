@@ -51,7 +51,6 @@ const warn = warnOnce('Tooltip');
 
 const stylesAppearance = {
   accent: styles['Tooltip--appearance-accent'],
-  neutral: styles['Tooltip--appearance-neutral'],
   white: styles['Tooltip--appearance-white'],
   black: styles['Tooltip--appearance-black'],
   inversion: styles['Tooltip--appearance-inversion'],
@@ -301,7 +300,11 @@ export const Tooltip = ({
         ReactDOM.createPortal(
           <div
             {...restProps}
-            className={classNames(styles['Tooltip'], stylesAppearance[appearance], className)}
+            className={classNames(
+              styles['Tooltip'],
+              appearance !== 'neutral' && stylesAppearance[appearance],
+              className,
+            )}
           >
             <div
               ref={refs.setFloating}
@@ -320,12 +323,8 @@ export const Tooltip = ({
                 />
               )}
               <div className={styles['Tooltip__content']}>
-                {header && (
-                  <Subhead weight="2" className={styles['Tooltip__title']}>
-                    {header}
-                  </Subhead>
-                )}
-                {text && <Subhead className={styles['Tooltip__text']}>{text}</Subhead>}
+                {header && <Subhead weight="2">{header}</Subhead>}
+                {text && <Subhead>{text}</Subhead>}
               </div>
             </div>
           </div>,

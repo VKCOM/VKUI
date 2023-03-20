@@ -82,8 +82,3 @@
   background-color: var(--vkui--color_background_accent);
   color: var(--vkui--color_text_contrast);
 }
-
-.CalendarDay--active,
-.CalendarDay--active-hover {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

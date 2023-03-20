@@ -16,12 +16,6 @@ const platformClassNames = {
   android: styles['SelectTypography--android'],
 };
 
-const selectTypeClassNames = {
-  default: styles['SelectTypography--selectType-default'],
-  plain: styles['SelectTypography--selectType-plain'],
-  accent: styles['SelectTypography--selectType-accent'],
-};
-
 export interface SelectTypographyProps {
   selectType?: SelectType;
   className?: string;
@@ -46,7 +40,7 @@ export const SelectTypography = ({
         styles['SelectTypography'],
         platformClassNames.hasOwnProperty(platform) && platformClassNames[platform],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
-        selectTypeClassNames[selectType],
+        selectType === 'accent' && styles['SelectTypography--selectType-accent'],
         className,
       )}
       {...restProps}

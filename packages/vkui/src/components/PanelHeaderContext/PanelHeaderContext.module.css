@@ -1,3 +1,7 @@
+.PanelHeaderContext {
+  z-index: var(--vkui_internal--z_index_panel_header_context);
+}
+
 .PanelHeaderContext--opened,
 .PanelHeaderContext--closing {
   width: 100%;

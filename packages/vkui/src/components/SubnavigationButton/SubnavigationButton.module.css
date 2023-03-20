@@ -150,11 +150,11 @@
  * CMP:
  * SubnavigationBar
  */
-.SubnavigationBar .SubnavigationButton + .SubnavigationButton {
+:global(.vkuiInternalSubnavigationBar) .SubnavigationButton + .SubnavigationButton {
   margin-left: var(--vkui--size_subnavigation_bar_gap--regular);
 }
 
-.SubnavigationBar--mode-fixed .SubnavigationButton {
+:global(.vkuiInternalSubnavigationBar--mode-fixed) .SubnavigationButton {
   flex: 1;
   min-width: 0;
 }

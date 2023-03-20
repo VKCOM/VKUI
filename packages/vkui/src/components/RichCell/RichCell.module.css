@@ -130,7 +130,7 @@
  * CMP:
  * FormItem
  **/
-.FormItem .RichCell {
+:global(.vkuiInternalFormItem) .RichCell {
   margin-right: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
   margin-left: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }

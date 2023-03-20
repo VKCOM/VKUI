@@ -10,7 +10,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
-import styles from './PanelHeaderBack.module.css';
+import styles from '../PanelHeaderButton/PanelHeaderButton.module.css';
 
 export type PanelHeaderBackProps = PanelHeaderButtonProps & {
   'aria-label'?: string;
@@ -45,7 +45,6 @@ export const PanelHeaderBack = ({
     <PanelHeaderButton
       {...restProps}
       className={classNames(
-        styles['PanelHeaderBack'],
         sizeX === SizeType.COMPACT && styles['PanelHeaderBack--sizeX-compact'],
         platform === Platform.IOS && styles['PanelHeaderBack--ios'],
         platform === Platform.VKCOM && styles['PanelHeaderBack--vkcom'],

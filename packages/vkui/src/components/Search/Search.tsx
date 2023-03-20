@@ -122,7 +122,6 @@ export const Search = ({
     <div
       className={classNames(
         styles['Search'],
-        platform === Platform.IOS && styles['Search--ios'],
         sizeY !== SizeType.COMPACT && sizeYClassNames[sizeY],
         isFocused && styles['Search--focused'],
         value && styles['Search--has-value'],

@@ -63,6 +63,6 @@
  * CMP:
  * ModalCardBase
  */
-.ModalCardBase .UsersStack {
+:global(.vkuiInternalModalCardBase) .UsersStack {
   margin-top: 20px;
 }
