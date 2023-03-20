@@ -1,0 +1,15 @@
+.AccordionSummary::-webkit-details-marker {
+  display: none;
+}
+
+.AccordionSummary__icon {
+  color: var(--vkui--color_icon_secondary);
+}
+
+details:not([open]) > summary .AccordionSummary__icon--collapse {
+  display: none;
+}
+
+details[open] > summary .AccordionSummary__icon--expand {
+  display: none;
+}
