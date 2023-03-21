@@ -12,6 +12,7 @@ import styles from './Header.module.css';
 
 export interface HeaderProps extends React.HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
   mode?: 'primary' | 'secondary' | 'tertiary';
+  size?: 'regular' | 'large';
   subtitle?: React.ReactNode;
   /**
    * Допускаются иконки, текст, Link
@@ -24,13 +25,21 @@ export interface HeaderProps extends React.HTMLAttributes<HTMLElement>, HasRootR
   multiline?: boolean;
 }
 
-type HeaderContentProps = Pick<HeaderProps, 'children' | 'mode' | 'className'> & HasComponent;
+type HeaderContentProps = Pick<HeaderProps, 'children' | 'mode' | 'size' | 'className'> &
+  HasComponent;
 
-const HeaderContent = ({ mode, ...restProps }: HeaderContentProps) => {
+const HeaderContent = ({ mode, size, ...restProps }: HeaderContentProps) => {
+  const isLarge = size === 'large';
+
   const platform = usePlatform();
   if (platform === Platform.IOS) {
     switch (mode) {
       case 'primary':
+        return isLarge ? (
+          <Title level="2" weight="2" {...restProps} />
+        ) : (
+          <Title weight="1" level="3" {...restProps} />
+        );
       case 'tertiary':
         return <Title weight="1" level="3" {...restProps} />;
       case 'secondary':
@@ -41,7 +50,11 @@ const HeaderContent = ({ mode, ...restProps }: HeaderContentProps) => {
   if (platform === Platform.VKCOM) {
     switch (mode) {
       case 'primary':
-        return <Headline weight="3" {...restProps} />;
+        return isLarge ? (
+          <Title level="2" weight="1" {...restProps} />
+        ) : (
+          <Headline weight="3" {...restProps} />
+        );
       case 'secondary':
       case 'tertiary':
         return <Footnote {...restProps} />;
@@ -50,6 +63,11 @@ const HeaderContent = ({ mode, ...restProps }: HeaderContentProps) => {
 
   switch (mode) {
     case 'primary':
+      return isLarge ? (
+        <Title level="2" weight="2" {...restProps} />
+      ) : (
+        <Headline weight="2" {...restProps} />
+      );
     case 'tertiary':
       return <Headline weight="2" {...restProps} />;
     case 'secondary':
@@ -64,6 +82,7 @@ const HeaderContent = ({ mode, ...restProps }: HeaderContentProps) => {
  */
 export const Header = ({
   mode = 'primary',
+  size = 'regular',
   children,
   subtitle,
   indicator,
@@ -97,7 +116,12 @@ export const Header = ({
       )}
     >
       <div className={styles['Header__main']}>
-        <HeaderContent className={styles['Header__content']} Component="span" mode={mode}>
+        <HeaderContent
+          className={styles['Header__content']}
+          Component="span"
+          mode={mode}
+          size={size}
+        >
           <span
             className={classNames(
               styles['Header__content-in'],

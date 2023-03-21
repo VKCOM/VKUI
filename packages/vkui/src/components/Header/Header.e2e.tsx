@@ -47,6 +47,10 @@ describe('Header', () => {
           </Counter>,
         ],
       },
+      {
+        mode: ['primary'],
+        size: ['regular', 'large'],
+      },
     ],
   );
 });
