@@ -59,8 +59,7 @@ async function run(): Promise<void> {
     });
     const patchRefs = patchCommits.data
       .filter((commit) => commit.commit.message !== 'CHORE: Update screenshots')
-      .map((commit) => commit.sha)
-      .join(' ');
+      .map((commit) => commit.sha);
 
     if (forked) {
       const message = getPatchInstructions(
@@ -80,9 +79,9 @@ async function run(): Promise<void> {
     }
 
     try {
-      await exec.exec('git', ['fetch', 'origin', stableBranchRef, patchRefs]);
+      await exec.exec('git', ['fetch', 'origin', stableBranchRef, ...patchRefs]);
       await exec.exec('git', ['checkout', stableBranchRef]);
-      await exec.exec('git', ['cherry-pick', patchRefs]);
+      await exec.exec('git', ['cherry-pick', ...patchRefs]);
     } catch (e) {
       console.error(e);
 

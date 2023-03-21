@@ -1,7 +1,7 @@
 export function getPatchInstructions(
   header: string,
   description: string,
-  patch: { stableBranchRef: string; patchRefs: string; pullNumber: number },
+  patch: { stableBranchRef: string; patchRefs: string[]; pullNumber: number },
 ) {
   const { stableBranchRef, patchRefs, pullNumber } = patch;
 
@@ -20,7 +20,7 @@ ${description}
 git stash # опционально
 git fetch origin ${stableBranchRef}
 git checkout -b patch/pr${pullNumber} origin/${stableBranchRef}
-git cherry-pick ${patchRefs}
+git cherry-pick ${patchRefs.join(' ')}
 \`\`\`
 
 2. Исправьте конфликты, следуя инструкциям из терминала
