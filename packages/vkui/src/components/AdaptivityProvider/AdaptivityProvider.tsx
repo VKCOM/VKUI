@@ -21,17 +21,8 @@ export const AdaptivityProvider = ({
   children,
 }: React.PropsWithChildren<AdaptivityProps>) => {
   const bridge = useBridgeAdaptivity();
-  const [adaptivity, setAdaptivity] = React.useState({
-    viewWidth,
-    viewHeight,
-    sizeX,
-    sizeY,
-    hasPointer,
-    hasHover,
-  });
-
-  React.useEffect(() => {
-    setAdaptivity(
+  const adaptivity = React.useMemo(
+    () =>
       calculateAdaptivity(
         {
           viewWidth,
@@ -43,8 +34,8 @@ export const AdaptivityProvider = ({
         },
         bridge,
       ),
-    );
-  }, [viewWidth, viewHeight, sizeX, sizeY, hasPointer, hasHover, bridge]);
+    [viewWidth, viewHeight, sizeX, sizeY, hasPointer, hasHover, bridge],
+  );
 
   return <AdaptivityContext.Provider value={adaptivity}>{children}</AdaptivityContext.Provider>;
 };
