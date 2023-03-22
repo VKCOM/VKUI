@@ -595,6 +595,70 @@
   }
 }
 
+/**
+ * Impact:
+ * Counter
+ */
+.Button--mode-primary.Button--appearance-accent {
+  --vkui_internal--counter_inherit_background: var(--vkui--color_background_content);
+  --vkui_internal--counter_inherit_color: var(--vkui--color_text_accent_themed);
+}
+
+.Button--mode-secondary.Button--appearance-accent,
+.Button--mode-tertiary.Button--appearance-accent,
+.Button--mode-outline.Button--appearance-accent {
+  --vkui_internal--counter_inherit_background: var(--vkui--color_background_accent_themed);
+  --vkui_internal--counter_inherit_color: var(--vkui--color_text_contrast_themed);
+}
+
+.Button--mode-primary.Button--appearance-positive {
+  --vkui_internal--counter_inherit_background: var(--vkui--color_background_contrast);
+  --vkui_internal--counter_inherit_color: var(--vkui--color_text_positive);
+}
+
+.Button--mode-secondary.Button--appearance-positive,
+.Button--mode-tertiary.Button--appearance-positive,
+.Button--mode-outline.Button--appearance-positive {
+  --vkui_internal--counter_inherit_background: var(--vkui--color_background_positive);
+  --vkui_internal--counter_inherit_color: var(--vkui--color_text_contrast);
+}
+
+.Button--mode-primary.Button--appearance-negative {
+  --vkui_internal--counter_inherit_background: var(--vkui--color_background_contrast);
+  --vkui_internal--counter_inherit_color: var(--vkui--color_text_negative);
+}
+
+.Button--mode-secondary.Button--appearance-negative,
+.Button--mode-tertiary.Button--appearance-negative,
+.Button--mode-outline.Button--appearance-negative {
+  --vkui_internal--counter_inherit_background: var(--vkui--color_background_negative);
+  --vkui_internal--counter_inherit_color: var(--vkui--color_text_contrast);
+}
+
+.Button--mode-primary.Button--appearance-neutral {
+  --vkui_internal--counter_inherit_background: var(--vkui--color_background_content);
+  --vkui_internal--counter_inherit_color: var(--vkui--color_text_primary_invariably);
+}
+
+.Button--mode-secondary.Button--appearance-neutral,
+.Button--mode-tertiary.Button--appearance-neutral,
+.Button--mode-outline.Button--appearance-neutral {
+  --vkui_internal--counter_inherit_background: var(--vkui--color_background_accent);
+  --vkui_internal--counter_inherit_color: var(--vkui--color_text_contrast);
+}
+
+.Button--mode-primary.Button--appearance-overlay {
+  --vkui_internal--counter_inherit_background: var(--vkui--color_icon_primary_invariably);
+  --vkui_internal--counter_inherit_color: var(--vkui--color_text_contrast);
+}
+
+.Button--mode-secondary.Button--appearance-overlay,
+.Button--mode-tertiary.Button--appearance-overlay,
+.Button--mode-outline.Button--appearance-overlay {
+  --vkui_internal--counter_inherit_background: var(--vkui--color_background_contrast);
+  --vkui_internal--counter_inherit_color: var(--vkui--color_text_primary_invariably);
+}
+
 .Button--sizeY-compact {
   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }
