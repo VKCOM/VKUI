@@ -9,7 +9,7 @@ import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Alert } from './Alert';
 
 describe('Alert', () => {
-  beforeAll(() => jest.useFakeTimers('modern'));
+  beforeAll(() => jest.useFakeTimers());
   afterAll(() => jest.useRealTimers());
   baselineComponent(Alert);
   describe('closes', () => {

@@ -4,7 +4,7 @@ import { useDocker } from '../detectEnv';
 
 const toMatchImageSnapshot = configureToMatchImageSnapshot({
   customSnapshotIdentifier: ({ currentTestName, counter }) => {
-    return `${currentTestName.toLowerCase().replace(/ /g, '-')}-${counter}`;
+    return `${currentTestName.toLowerCase().replace(/ /g, '-')}-${counter}-snap`;
   },
   customDiffDir: path.join(__dirname, '../..', '__diff_output__'),
 });
