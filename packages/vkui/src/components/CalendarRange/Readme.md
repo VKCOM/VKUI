@@ -13,8 +13,12 @@ const Example = () => {
   const [disablePickers, setDisablePickers] = useState(false);
   const [locale, setLocale] = useState('ru');
 
+  const onSubmit = () => {
+    console.log('Значение CalendarRange сохранено!');
+  };
+
   return (
-    <FormLayout>
+    <Form onSubmit={onSubmit}>
       <FormLayoutGroup mode="vertical">
         <FormItem top="Выбранная дата">
           {format(value[0], 'YYYY-MM-DD')} - {format(value[1], 'YYYY-MM-DD')}
@@ -71,7 +75,10 @@ const Example = () => {
           </LocaleProvider>
         </FormItem>
       </FormLayoutGroup>
-    </FormLayout>
+      <FormItem>
+        <Button type="submit">Сохранить</Button>
+      </FormItem>
+    </Form>
   );
 };
 
