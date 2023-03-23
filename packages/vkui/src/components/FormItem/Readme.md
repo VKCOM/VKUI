@@ -29,12 +29,16 @@ const Example = () => {
 
   const onRemove = () => setShowPatronymic(false);
 
+  const onSubmit = () => {
+    console.log('Форма отправлена!');
+  };
+
   return (
     <View activePanel="new-user">
       <Panel id="new-user">
         <PanelHeader>Регистрация</PanelHeader>
         <Group>
-          <FormLayout>
+          <Form onSubmit={onSubmit}>
             <FormItem
               top="E-mail"
               status={email ? 'valid' : 'error'}
@@ -146,11 +150,11 @@ const Example = () => {
               Согласен со всем <Link>этим</Link>
             </Checkbox>
             <FormItem>
-              <Button size="l" stretched>
+              <Button type="submit" size="l" stretched>
                 Зарегистрироваться
               </Button>
             </FormItem>
-          </FormLayout>
+          </Form>
         </Group>
       </Panel>
     </View>
