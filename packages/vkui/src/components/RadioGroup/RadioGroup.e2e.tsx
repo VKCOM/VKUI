@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { ElementType, Fragment } from 'react';
 import { describeScreenshotFuzz } from '../../testing/e2e';
+import { Form } from '../Form/Form';
 import { FormItem } from '../FormItem/FormItem';
-import { FormLayout } from '../FormLayout/FormLayout';
 import { Radio } from '../Radio/Radio';
 import { RadioGroup, RadioGroupProps } from './RadioGroup';
 
@@ -17,11 +17,11 @@ const RadioGroupTest = ({ RadioGroupWrapper = 'div', ...restProps }: RadioGroupT
   }
 
   return (
-    <FormLayout>
+    <Form>
       <RadioGroupWrapper>
         <RadioGroup {...restProps} />
       </RadioGroupWrapper>
-    </FormLayout>
+    </Form>
   );
 };
 
