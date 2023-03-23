@@ -24,6 +24,11 @@ import { Footnote } from '../Typography/Footnote/Footnote';
 import { CustomSelectClearButton } from './CustomSelectClearButton';
 import styles from './CustomSelect.module.css';
 
+const sizeYClassNames = {
+  none: styles['CustomSelect--sizeY-none'],
+  [SizeType.COMPACT]: styles['CustomSelect--sizeY-compact'],
+};
+
 const findIndexAfter = (options: CustomSelectOptionInterface[] = [], startIndex = -1) => {
   if (startIndex >= options.length - 1) {
     return -1;
@@ -165,7 +170,7 @@ export interface SelectProps extends NativeSelectProps, FormFieldProps, TrackerO
   /**
    * Если `true`, то справа будет отображаться кнопка для очистки значения
    */
-  allowClear?: boolean;
+  allowClearButton?: boolean;
   dropdownOffsetDistance?: number;
   fixDropdownWidth?: boolean;
   forceDropdownPortal?: boolean;
@@ -205,7 +210,7 @@ export function CustomSelect(props: SelectProps) {
     filterFn = defaultFilterFn,
     icon: iconProp,
     clearButton: clearButtonProp,
-    allowClear = false,
+    allowClearButton = false,
     dropdownOffsetDistance = 0,
     fixDropdownWidth = true,
     ...restProps
@@ -234,7 +239,7 @@ export function CustomSelect(props: SelectProps) {
   );
   const [options, setOptions] = React.useState(optionsProp);
   const [selectedOptionIndex, setSelectedOptionIndex] = React.useState<number | undefined>(
-    findSelectedIndex(optionsProp, props.value ?? props.defaultValue, allowClear),
+    findSelectedIndex(optionsProp, props.value ?? props.defaultValue, allowClearButton),
   );
 
   React.useEffect(() => {
@@ -245,7 +250,7 @@ export function CustomSelect(props: SelectProps) {
   useIsomorphicLayoutEffect(() => {
     if (
       options.some(({ value }) => nativeSelectValue === value) ||
-      (allowClear && nativeSelectValue === '')
+      (allowClearButton && nativeSelectValue === '')
     ) {
       const event = new Event('change', { bubbles: true });
 
@@ -447,7 +452,7 @@ export function CustomSelect(props: SelectProps) {
           : optionsProp;
 
       setOptions(options);
-      setSelectedOptionIndex(findSelectedIndex(options, value, allowClear));
+      setSelectedOptionIndex(findSelectedIndex(options, value, allowClearButton));
     },
     [
       filterFn,
@@ -457,7 +462,7 @@ export function CustomSelect(props: SelectProps) {
       props.defaultValue,
       props.value,
       searchable,
-      allowClear,
+      allowClearButton,
     ],
   );
 
@@ -472,7 +477,11 @@ export function CustomSelect(props: SelectProps) {
   }, []);
 
   const onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const newSelectedOptionIndex = findSelectedIndex(options, e.currentTarget.value, allowClear);
+    const newSelectedOptionIndex = findSelectedIndex(
+      options,
+      e.currentTarget.value,
+      allowClearButton,
+    );
 
     if (selectedOptionIndex !== newSelectedOptionIndex) {
       if (!isControlledOutside) {
@@ -519,16 +528,16 @@ export function CustomSelect(props: SelectProps) {
             );
           }
           setOptions(options);
-          setSelectedOptionIndex(findSelectedIndex(options, nativeSelectValue, allowClear));
+          setSelectedOptionIndex(findSelectedIndex(options, nativeSelectValue, allowClearButton));
         }
       } else {
         const options = filter(optionsProp, e.target.value, filterFn);
         setOptions(options);
-        setSelectedOptionIndex(findSelectedIndex(options, nativeSelectValue, allowClear));
+        setSelectedOptionIndex(findSelectedIndex(options, nativeSelectValue, allowClearButton));
       }
       setInputValue(e.target.value);
     },
-    [filterFn, nativeSelectValue, onInputChangeProp, optionsProp, allowClear],
+    [filterFn, nativeSelectValue, onInputChangeProp, optionsProp, allowClearButton],
   );
 
   const handleKeyDownSelect = React.useCallback(
@@ -652,11 +661,14 @@ export function CustomSelect(props: SelectProps) {
   }, [emptyText, options, renderDropdown, renderOption]);
 
   const clearButton = React.useMemo(() => {
-    if (allowClear && clearButtonProp !== undefined) {
+    if (!allowClearButton) {
+      return null;
+    }
+    if (clearButtonProp !== undefined) {
       return clearButtonProp;
     }
 
-    if (allowClear && selected?.label) {
+    if (selected?.label) {
       return (
         <CustomSelectClearButton
           className={iconProp === undefined ? styles['CustomSelect--clear-icon'] : undefined}
@@ -666,7 +678,7 @@ export function CustomSelect(props: SelectProps) {
     }
 
     return null;
-  }, [clearButtonProp, iconProp, selected, allowClear]);
+  }, [clearButtonProp, iconProp, selected, allowClearButton]);
 
   const icon = React.useMemo(() => {
     if (iconProp !== undefined) {
@@ -692,11 +704,7 @@ export function CustomSelect(props: SelectProps) {
     <label
       className={classNames(
         styles['CustomSelect'],
-        sizeY !== SizeType.REGULAR &&
-          {
-            none: styles['CustomSelect--sizeY-none'],
-            [SizeType.COMPACT]: styles['CustomSelect--sizeY-compact'],
-          }[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         className,
       )}
       style={style}
@@ -748,7 +756,7 @@ export function CustomSelect(props: SelectProps) {
         aria-hidden
         className={styles['CustomSelect__control']}
       >
-        {allowClear && <option key="" value="" />}
+        {allowClearButton && <option key="" value="" />}
         {optionsProp.map((item) => (
           <option key={`${item.value}`} value={item.value} />
         ))}

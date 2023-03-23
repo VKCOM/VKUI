@@ -506,7 +506,7 @@ describe('CustomSelect', () => {
 
     const { rerender } = render(
       <CustomSelect
-        allowClear
+        allowClearButton
         data-testid="target"
         options={[
           { value: 0, label: 'Mike' },
@@ -519,7 +519,7 @@ describe('CustomSelect', () => {
 
     rerender(
       <CustomSelect
-        allowClear
+        allowClearButton
         data-testid="target"
         options={[
           { value: 0, label: 'Mike' },
@@ -544,12 +544,13 @@ describe('CustomSelect', () => {
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
-        allowClear
+        allowClearButton
         onChange={onChange}
         defaultValue={0}
       />,
     );
 
+    expect(getCustomSelectValue()).toEqual('Mike');
     fireEvent.click(screen.getByRole('button', { hidden: true }));
     expect(getCustomSelectValue()).toEqual('');
   });
