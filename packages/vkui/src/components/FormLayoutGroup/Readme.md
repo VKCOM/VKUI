@@ -8,12 +8,16 @@ const Example = () => {
     setShowDates(value);
   };
 
+  const onSubmit = () => {
+    console.log('Данные формы сохранены!');
+  };
+
   return (
     <View activePanel="FormLayoutGroup">
       <Panel id="FormLayoutGroup">
         <PanelHeader>FormLayoutGroup</PanelHeader>
         <Group>
-          <FormLayout>
+          <Form onSubmit={onSubmit}>
             <FormLayoutGroup mode="vertical">
               <FormItem top="Имя">
                 <Input />
@@ -52,7 +56,10 @@ const Example = () => {
                 </FormItem>
               </FormLayoutGroup>
             )}
-          </FormLayout>
+            <FormItem>
+              <Button type="submit">Сохранить</Button>
+            </FormItem>
+          </Form>
         </Group>
       </Panel>
     </View>
