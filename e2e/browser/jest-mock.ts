@@ -29,7 +29,7 @@ window.afterEach = notImplemented('afterEach');
 const path: string[] = [];
 const withPath = (name: string, fun: jest.ProvidesCallback) => {
   path.push(name);
-  fun(Object.assign(noop, { fail: noop }));
+  void fun(Object.assign(noop, { fail: noop }));
   path.pop();
 };
 const fakeTest = Object.assign(withPath, {

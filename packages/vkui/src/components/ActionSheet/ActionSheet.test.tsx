@@ -10,7 +10,7 @@ import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { ActionSheet, ActionSheetProps } from './ActionSheet';
 
 describe('ActionSheet', () => {
-  beforeAll(() => jest.useFakeTimers('modern'));
+  beforeAll(() => jest.useFakeTimers());
   afterAll(() => jest.useRealTimers());
   const toggle = document.createElement('div');
   const ActionSheetDesktop = (props: Partial<ActionSheetProps>) => (

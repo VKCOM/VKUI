@@ -8,7 +8,7 @@ import { ImgOnlyAttributes } from '../lib/utils';
 import { HasChildren } from '../types';
 
 export function fakeTimers() {
-  beforeEach(() => jest.useFakeTimers('modern'));
+  beforeEach(() => jest.useFakeTimers());
   afterEach(() => jest.useRealTimers());
 }
 

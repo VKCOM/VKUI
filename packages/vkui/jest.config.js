@@ -1,12 +1,15 @@
 const fs = require('fs');
 const path = require('path');
 
-const config = JSON.parse(fs.readFileSync(`${__dirname}/package.swcrc`, 'utf-8'));
-config.exclude = [];
+const swcConfig = JSON.parse(fs.readFileSync(`${__dirname}/package.swcrc`, 'utf-8'));
+swcConfig.exclude = [];
 
-module.exports = {
+/**
+ * @type {import('jest').Config}
+ */
+const config = {
   transform: {
-    '^.+\\.(t|j)sx?$': ['@swc/jest', { ...config }],
+    '^.+\\.(t|j)sx?$': ['@swc/jest', { ...swcConfig }],
   },
   displayName: 'unit',
   roots: [path.join(__dirname, 'src')],
@@ -24,4 +27,7 @@ module.exports = {
     '\\.e2e\\.tsx?$',
     '\\.stories\\.tsx?$',
   ],
+  testEnvironment: 'jsdom',
 };
+
+module.exports = config;

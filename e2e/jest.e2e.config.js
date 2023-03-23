@@ -36,6 +36,9 @@ if (useDocker) {
   };
 }
 
+/**
+ * @type {import('jest').Config}
+ */
 const config = {
   transform: {
     '^.+\\.(t|j)sx?$': '@swc/jest',
@@ -46,6 +49,7 @@ const config = {
   testEnvironmentOptions: {
     'jest-playwright': jestPlaywrightOptions,
   },
+  testEnvironment: 'jest-playwright-preset',
   moduleNameMapper: {
     '@project-e2e/helpers': path.join(__dirname, 'index.ts'),
     '\\.css$': require.resolve('identity-obj-proxy'),
