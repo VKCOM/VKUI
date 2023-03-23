@@ -8,8 +8,13 @@
 ```jsx { "props": { "layout": false, "iframe": true } }
 const [shown, setShown] = React.useState(true);
 
+const onSubmit = () => {
+  console.log('Значение Popover сохранено!');
+  setShown(false);
+};
+
 return (
-  <React.Fragment>
+  <Div>
     <Popover
       action="hover"
       placement="right"
@@ -19,15 +24,17 @@ return (
         </Div>
       }
     >
-      <Button style={{ margin: 20 }}>Наведи</Button>
+      <Button>Наведи, чтобы увидеть приветствие</Button>
     </Popover>
+
+    <Spacing size={20} />
 
     <Popover
       action="click"
       shown={shown}
       onShownChange={setShown}
       content={
-        <FormLayout>
+        <Form onSubmit={onSubmit}>
           <FormItem top="Имя">
             <Input />
           </FormItem>
@@ -35,16 +42,16 @@ return (
             <Input />
           </FormItem>
           <FormItem top="Соглашение">
-            <Checkbox name="agreement">Согласен</Checkbox>
+            <Checkbox name="agreement">Соглашаюсь</Checkbox>
           </FormItem>
           <FormItem>
-            <Button onClick={() => setShown(false)}>Отправить</Button>
+            <Button type="submit">Отправить</Button>
           </FormItem>
-        </FormLayout>
+        </Form>
       }
     >
-      <Button style={{ margin: '20px 0 0 0' }}>Кликни</Button>
+      <Button>Кликни, чтобы открыть форму</Button>
     </Popover>
-  </React.Fragment>
+  </Div>
 );
 ```
