@@ -13,10 +13,9 @@
 }
 
 .Input__el {
-  align-self: stretch;
+  height: var(--vkui--size_field_height--regular);
   margin: 0;
   width: 100%;
-  display: block;
   box-sizing: border-box;
   box-shadow: none;
   border: none;
@@ -34,6 +33,7 @@
 }
 
 .Input--sizeY-compact .Input__el {
+  height: var(--vkui--size_field_height--compact);
   font-size: var(--vkui--font_text--font_size--compact);
   line-height: var(--vkui--font_text--line_height--compact);
 }
@@ -48,6 +48,7 @@
 
 @media (--sizeY-compact) {
   .Input--sizeY-none .Input__el {
+    height: var(--vkui--size_field_height--compact);
     font-size: var(--vkui--font_text--font_size--compact);
     line-height: var(--vkui--font_text--line_height--compact);
   }
