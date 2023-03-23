@@ -30,3 +30,29 @@
   align-items: center;
   justify-content: center;
 }
+
+.CustomSelect__dropdown-icon {
+  margin-right: 10px;
+}
+
+.CustomSelect--clear-icon {
+  margin-right: -6px;
+}
+
+.CustomSelect--sizeY-compact .CustomSelect__dropdown-icon {
+  margin-right: 8px;
+}
+
+.CustomSelect--sizeY-compact .CustomSelect--clear-icon {
+  margin-right: -2px;
+}
+
+@media (--sizeY-compact) {
+  .CustomSelect--sizeY-none .CustomSelect__dropdown-icon {
+    margin-right: 8px;
+  }
+
+  .CustomSelect--sizeY-none .CustomSelect--clear-icon {
+    margin-right: -2px;
+  }
+}
