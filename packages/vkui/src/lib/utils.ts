@@ -44,11 +44,11 @@ export function getTitleFromChildren(children: React.ReactNode): string {
 
   React.Children.map(children, (child) => {
     if (typeof child === 'string') {
-      label += child;
+      label += ' ' + child;
     }
   });
 
-  return label;
+  return label.trim();
 }
 
 export const stopPropagation = <T extends React.SyntheticEvent>(event: T) =>
