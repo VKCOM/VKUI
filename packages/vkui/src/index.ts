@@ -214,6 +214,8 @@ export type { AccordionSummaryProps } from './components/Accordion/AccordionSumm
 /**
  * Forms
  */
+export { Form } from './components/Form/Form';
+export type { FormProps } from './components/Form/Form';
 export { FormLayout } from './components/FormLayout/FormLayout';
 export type { FormLayoutProps } from './components/FormLayout/FormLayout';
 export { FormItem } from './components/FormItem/FormItem';
