@@ -92,7 +92,7 @@ const SubnavigationBarExample = () => {
           </ModalPageHeader>
         }
       >
-        <FormLayout>
+        <Form onSubmit={applyFilters}>
           <FormItem top="Размер">
             {FILTERS_SIZE.map(({ value, label }) => {
               return (
@@ -124,11 +124,11 @@ const SubnavigationBarExample = () => {
           </FormItem>
 
           <FormItem>
-            <Button size="l" stretched onClick={applyFilters}>
+            <Button size="l" stretched type="submit">
               Показать результаты
             </Button>
           </FormItem>
-        </FormLayout>
+        </Form>
       </ModalPage>
     </ModalRoot>
   );
