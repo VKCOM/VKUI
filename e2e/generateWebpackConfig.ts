@@ -57,7 +57,7 @@ export async function generateWebpackConfig() {
         {
           test: /\.[jt]sx?$/,
           include: /packages\/vkui/,
-          exclude: /node_modules/,
+          exclude: [/node_modules/, /packages\/vkui\/src\/testing/],
           use: {
             loader: 'swc-loader',
             options: {
@@ -71,7 +71,7 @@ export async function generateWebpackConfig() {
         },
         {
           test: /\.[jt]sx?$/,
-          exclude: /(packages\/vkui|node_modules)/,
+          exclude: /(packages\/vkui(?!\/src\/testing)|node_modules)/,
           use: {
             loader: 'swc-loader',
             options: {},
