@@ -17,8 +17,12 @@ const Example = () => {
   const [disableCalendar, setDisableCalendar] = useState(false);
   const [locale, setLocale] = useState('ru');
 
+  const onSubmit = () => {
+    console.log('Выбранная дата сохранена!');
+  };
+
   return (
-    <FormLayout>
+    <Form onSubmit={onSubmit}>
       <FormLayoutGroup mode="vertical">
         <FormItem top="Запрет выбора прошлых дат">
           <Checkbox checked={disablePast} onChange={(e) => setDisablePast(e.target.checked)}>
@@ -89,7 +93,10 @@ const Example = () => {
           </div>
         </FormItem>
       </FormLayoutGroup>
-    </FormLayout>
+      <FormItem>
+        <Button type="submit">Сохранить</Button>
+      </FormItem>
+    </Form>
   );
 };
 
