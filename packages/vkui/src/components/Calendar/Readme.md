@@ -17,8 +17,12 @@ const Example = () => {
   const [size, setSize] = useState('m');
   const [listenDayChangesForUpdate, setListenDayChangesForUpdate] = useState(false);
 
+  const onSubmit = () => {
+    console.log('Выбранная дата сохранена!');
+  };
+
   return (
-    <FormLayout>
+    <Form onSubmit={onSubmit}>
       <FormLayoutGroup mode="vertical">
         <FormItem top="Выбранная дата">{format(value, 'YYYY-MM-DD HH:mm:ss')}</FormItem>
         <FormItem top="Выбор времени">
@@ -115,7 +119,10 @@ const Example = () => {
           </LocaleProvider>
         </FormItem>
       </FormLayoutGroup>
-    </FormLayout>
+      <FormItem>
+        <Button type="submit">Сохранить</Button>
+      </FormItem>
+    </Form>
   );
 };
 
