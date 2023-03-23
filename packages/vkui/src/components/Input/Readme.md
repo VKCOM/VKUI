@@ -7,8 +7,12 @@ const ExampleBase = ({ formItemStatus }) => {
   const [align, setAlign] = useState('left');
   const [disabled, setDisabled] = useState(false);
 
+  const onSubmit = () => {
+    console.log('Значения Input сохранено!');
+  };
+
   return (
-    <FormLayout>
+    <Form onSubmit={onSubmit}>
       <FormItem top="align">
         <Select
           value={align}
@@ -49,7 +53,10 @@ const ExampleBase = ({ formItemStatus }) => {
           disabled={disabled}
         />
       </FormItem>
-    </FormLayout>
+      <FormItem>
+        <Button type="submit">Сохранить</Button>
+      </FormItem>
+    </Form>
   );
 };
 
@@ -57,8 +64,12 @@ const ExampleWithIcon = ({ formItemStatus }) => {
   const textInput = React.createRef();
   const clear = () => (textInput.current.value = '');
 
+  const onVeggieSubmit = () => {
+    console.log('Значение 🥦 сохранено!');
+  };
+
   return (
-    <FormLayout>
+    <Form onSubmit={onVeggieSubmit}>
       <FormItem top="📝 Пример с кликабельной иконкой" status={formItemStatus}>
         <Input
           getRef={textInput}
@@ -72,7 +83,10 @@ const ExampleWithIcon = ({ formItemStatus }) => {
           }
         />
       </FormItem>
-    </FormLayout>
+      <FormItem>
+        <Button type="submit">Сохранить</Button>
+      </FormItem>
+    </Form>
   );
 };
 
