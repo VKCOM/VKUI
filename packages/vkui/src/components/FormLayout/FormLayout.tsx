@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { warnOnce } from '../../lib/warnOnce';
 import { HasComponent, HasRef } from '../../types';
 import styles from './FormLayout.module.css';
 
@@ -9,7 +10,9 @@ export type FormLayoutProps = React.AllHTMLAttributes<HTMLElement> &
   HasRef<HTMLElement> &
   HasComponent;
 
+const warn = warnOnce('FormLayout');
 /**
+ * @deprecated since v5.3.0
  * @see https://vkcom.github.io/VKUI/#/FormLayout
  */
 export const FormLayout = ({
@@ -20,6 +23,10 @@ export const FormLayout = ({
   className,
   ...restProps
 }: FormLayoutProps) => {
+  if (process.env.NODE_ENV === 'development') {
+    warn('Компонент устарел и будет удален в v6. Используйте https://vkcom.github.io/VKUI/#/Form');
+  }
+
   return (
     <Component
       {...restProps}
