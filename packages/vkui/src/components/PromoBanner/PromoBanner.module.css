@@ -15,7 +15,16 @@
 }
 
 .PromoBanner__age {
-  margin-left: 6px;
+  margin-right: 6px;
+  padding: 0 4px;
+  font-size: 11px;
+  line-height: 14px;
+  border: var(--vkui_internal--thin_border) solid var(--vkui--color_separator_primary);
+  border-radius: var(--vkui--size_check_border_radius--regular);
+}
+
+.PromoBanner__dot {
+  margin: 0 6px;
 }
 
 .PromoBanner__close {

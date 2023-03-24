@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Icon24Dismiss } from '@vkontakte/icons';
+import { Icon16Cancel, Icon16WarningTriangleOutline } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { Button } from '../Button/Button';
 import { Image } from '../Image/Image';
@@ -77,14 +77,20 @@ export const PromoBanner = ({
   return (
     <div className={classNames(styles['PromoBanner'], className)} {...restProps}>
       <div className={styles['PromoBanner__head']}>
-        <Footnote>{bannerData.advertisingLabel || 'Advertisement'}</Footnote>
         {bannerData.ageRestrictions && (
           <Footnote className={styles['PromoBanner__age']}>{bannerData.ageRestrictions}</Footnote>
         )}
+        <Footnote>{bannerData.advertisingLabel || 'Advertisement'}</Footnote>
+
+        <Footnote className={styles['PromoBanner__dot']}>&middot;</Footnote>
+
+        <div>
+          <Icon16WarningTriangleOutline />
+        </div>
 
         {!isCloseButtonHidden && (
           <div className={styles['PromoBanner__close']} onClick={onClose}>
-            <Icon24Dismiss />
+            <Icon16Cancel />
           </div>
         )}
       </div>
