@@ -40,6 +40,10 @@
   padding-right: 0;
 }
 
+.Select--hasPlaceholder .Select__container {
+  padding-right: 0;
+}
+
 .Select--multiline .Select__container {
   padding-top: 12px;
   padding-bottom: 12px;

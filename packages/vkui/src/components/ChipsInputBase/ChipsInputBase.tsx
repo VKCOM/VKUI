@@ -143,6 +143,7 @@ export const ChipsInputBase = <Option extends ChipOption>(props: ChipsInputBaseP
       className={classNames(
         styles['ChipsInputBase'],
         sizeY === SizeType.COMPACT && styles['ChipsInputBase--sizeY-compact'],
+        !selectedOptions.length && styles['ChipsInputBase--hasPlaceholder'],
         className,
       )}
       ref={getRootRef}

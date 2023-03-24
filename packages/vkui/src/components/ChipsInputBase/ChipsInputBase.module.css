@@ -64,6 +64,16 @@
   cursor: default;
 }
 
+.ChipsInputBase--hasPlaceholder .ChipsInputBase__label {
+  margin-left: 9px;
+  margin-right: 0;
+}
+
+.ChipsInputBase--hasPlaceholder .ChipsInputBase__el {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 /**
  * sizeY COMPACT
  */
