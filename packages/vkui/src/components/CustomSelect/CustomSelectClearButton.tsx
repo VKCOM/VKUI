@@ -3,19 +3,19 @@ import { Icon16Cancel } from '@vkontakte/icons';
 import { stopPropagation } from '../../lib/utils';
 import { IconButton } from '../IconButton/IconButton';
 
-interface CustomSelectClearButtonProps {
+export interface CustomSelectClearButtonProps {
   className?: string;
-  onClear?(): void;
+  onClick(): void;
 }
 
-export const CustomSelectClearButton = ({ className, onClear }: CustomSelectClearButtonProps) => {
+export const CustomSelectClearButton = ({ className, onClick }: CustomSelectClearButtonProps) => {
   return (
     <IconButton
       className={className}
       Component="div"
       onClick={(e) => {
         stopPropagation(e);
-        onClear?.();
+        onClick();
       }}
       aria-label="Очистить поле"
       onKeyDown={stopPropagation}

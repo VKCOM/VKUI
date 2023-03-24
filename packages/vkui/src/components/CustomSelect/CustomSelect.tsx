@@ -21,7 +21,7 @@ import { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import { SelectType } from '../Select/Select';
 import { SelectMimicry } from '../SelectMimicry/SelectMimicry';
 import { Footnote } from '../Typography/Footnote/Footnote';
-import { CustomSelectClearButton } from './CustomSelectClearButton';
+import { CustomSelectClearButton, CustomSelectClearButtonProps } from './CustomSelectClearButton';
 import styles from './CustomSelect.module.css';
 
 const sizeYClassNames = {
@@ -164,9 +164,10 @@ export interface SelectProps extends NativeSelectProps, FormFieldProps, TrackerO
   onOpen?: VoidFunction;
   icon?: React.ReactNode;
   /**
-   * Кастомная кнопка для очистки значения
+   * Кастомная кнопка для очистки значения.
+   * Должна принимать обязательное свойство `onClick`
    */
-  clearButton?: React.ReactNode;
+  clearButton?: React.ComponentType<CustomSelectClearButtonProps>;
   /**
    * Если `true`, то справа будет отображаться кнопка для очистки значения
    */
@@ -231,7 +232,7 @@ export function CustomSelect(props: SelectProps) {
   const [isControlledOutside, setIsControlledOutside] = React.useState(props.value !== undefined);
   const [inputValue, setInputValue] = React.useState('');
   const [nativeSelectValue, setNativeSelectValue] = React.useState(
-    props.value ?? props.defaultValue,
+    props.value ?? props.defaultValue ?? (allowClearButton ? '' : undefined),
   );
   const [keyboardInput, setKeyboardInput] = React.useState('');
   const [popperPlacement, setPopperPlacement] = React.useState<PlacementWithAuto | undefined>(
@@ -664,21 +665,25 @@ export function CustomSelect(props: SelectProps) {
     if (!allowClearButton) {
       return null;
     }
-    if (clearButtonProp !== undefined) {
-      return clearButtonProp;
-    }
 
-    if (selected?.label) {
+    if (nativeSelectValue !== '') {
+      const ClearButtonCmp =
+        clearButtonProp === undefined ? CustomSelectClearButton : clearButtonProp;
+
       return (
-        <CustomSelectClearButton
-          className={iconProp === undefined ? styles['CustomSelect--clear-icon'] : undefined}
-          onClear={() => setNativeSelectValue('')}
+        <ClearButtonCmp
+          className={
+            iconProp === undefined && clearButtonProp === undefined
+              ? styles['CustomSelect--clear-icon']
+              : undefined
+          }
+          onClick={() => setNativeSelectValue('')}
         />
       );
     }
 
     return null;
-  }, [clearButtonProp, iconProp, selected, allowClearButton]);
+  }, [clearButtonProp, iconProp, nativeSelectValue, allowClearButton]);
 
   const icon = React.useMemo(() => {
     if (iconProp !== undefined) {
@@ -687,11 +692,11 @@ export function CustomSelect(props: SelectProps) {
 
     return (
       <DropdownIcon
-        className={clearButton ? styles['CustomSelect__dropdown-icon'] : undefined}
+        className={allowClearButton ? styles['CustomSelect__dropdown-icon'] : undefined}
         opened={opened}
       />
     );
-  }, [clearButton, iconProp, opened]);
+  }, [allowClearButton, iconProp, opened]);
 
   const afterIcons = (icon || clearButton) && (
     <React.Fragment>
