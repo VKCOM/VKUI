@@ -692,11 +692,11 @@ export function CustomSelect(props: SelectProps) {
 
     return (
       <DropdownIcon
-        className={allowClearButton ? styles['CustomSelect__dropdown-icon'] : undefined}
+        className={clearButton ? styles['CustomSelect__dropdown-icon'] : undefined}
         opened={opened}
       />
     );
-  }, [allowClearButton, iconProp, opened]);
+  }, [clearButton, iconProp, opened]);
 
   const afterIcons = (icon || clearButton) && (
     <React.Fragment>
