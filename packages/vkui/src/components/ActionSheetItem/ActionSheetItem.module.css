@@ -239,7 +239,3 @@
 .ActionSheetItem--sizeY-compact .ActionSheetItem__container {
   padding: 5px 0;
 }
-
-.ActionSheetItem--mode-default {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

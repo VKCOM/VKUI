@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import styles from './InputLikeDivider.module.css';
+import styles from './InputLike.module.css';
 
 export const InputLikeDivider = ({
   children,
@@ -8,7 +8,7 @@ export const InputLikeDivider = ({
   ...props
 }: React.InputHTMLAttributes<HTMLSpanElement>) => {
   return (
-    <span className={classNames(styles['InputLikeDivider'], className)} {...props}>
+    <span className={classNames(styles['InputLike__divider'], className)} {...props}>
       {children}
     </span>
   );

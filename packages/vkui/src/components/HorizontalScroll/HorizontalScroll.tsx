@@ -232,7 +232,8 @@ export const HorizontalScroll = ({
       {...restProps}
       className={classNames(
         styles['HorizontalScroll'],
-        showArrows === 'always' && styles['HorizontalScroll--withConstArrows'],
+        'vkuiInternalHorizontalScroll',
+        showArrows === 'always' && 'vkuiInternalHorizontalScroll--withConstArrows',
         className,
       )}
     >

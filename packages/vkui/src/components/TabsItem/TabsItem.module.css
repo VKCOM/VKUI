@@ -194,14 +194,14 @@
  * CMP:
  * Tabs
  */
-.Tabs--vkcom .TabsItem {
+:global(.vkuiInternalTabs--vkcom) .TabsItem {
   flex-grow: 0;
   min-width: auto;
   padding-left: 10px;
   padding-right: 10px;
 }
 
-.Tabs--vkcom .TabsItem__underline {
+:global(.vkuiInternalTabs--vkcom) .TabsItem__underline {
   right: 2px;
   bottom: 0;
   left: 2px;
@@ -211,13 +211,9 @@
  * CMP:
  * HorizontalScroll
  */
-.HorizontalScroll .TabsItem {
+:global(.vkuiInternalHorizontalScroll) .TabsItem {
   min-width: 64px;
   flex-basis: auto;
   flex-grow: 1;
   flex-shrink: 0;
-}
-
-.TabsItem--active {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

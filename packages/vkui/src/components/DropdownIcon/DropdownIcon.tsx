@@ -7,7 +7,6 @@ import {
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
-import styles from './DropdownIcon.module.css';
 
 export interface DropdownIconProps extends React.HTMLAttributes<SVGSVGElement> {
   opened?: boolean;
@@ -21,16 +20,10 @@ export const DropdownIcon = ({ opened = false, className, ...restProps }: Dropdo
   return (
     <React.Fragment>
       {sizeY.compact && (
-        <IconCompact
-          className={classNames(styles['DropdownIcon'], sizeY.compact.className, className)}
-          {...restProps}
-        />
+        <IconCompact className={classNames(sizeY.compact.className, className)} {...restProps} />
       )}
       {sizeY.regular && (
-        <IconRegular
-          className={classNames(styles['DropdownIcon'], sizeY.regular.className, className)}
-          {...restProps}
-        />
+        <IconRegular className={classNames(sizeY.regular.className, className)} {...restProps} />
       )}
     </React.Fragment>
   );

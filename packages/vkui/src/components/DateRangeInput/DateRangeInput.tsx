@@ -232,11 +232,7 @@ export const DateRangeInput = ({
   return (
     <FormField
       style={style}
-      className={classNames(
-        styles['DateRangeInput'],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
-        className,
-      )}
+      className={classNames(sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY], className)}
       getRootRef={handleRootRef}
       after={
         value ? (

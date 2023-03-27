@@ -21,9 +21,9 @@ const getItemsLayoutClassName = (
 ): string => {
   switch (itemsLayout) {
     case 'horizontal':
-      return styles['Tabbar--layout-horizontal'];
+      return 'vkuiInternalTabbar--layout-horizontal';
     case 'vertical':
-      return styles['Tabbar--layout-vertical'];
+      return 'vkuiInternalTabbar--layout-vertical';
     default:
       return React.Children.count(children) > 2
         ? getItemsLayoutClassName('vertical', [])

@@ -39,24 +39,20 @@
  * CMP:
  * Tabs
  */
-.Tabs .HorizontalScroll {
+:global(.vkuiInternalTabs) .HorizontalScroll {
   min-width: 100%;
 }
 
-.Tabs__in .HorizontalScroll__in-wrapper {
+:global(.vkuiInternalTabs) .HorizontalScroll__in-wrapper {
   display: flex;
   align-items: stretch;
 }
 
-.Tabs--withGaps .HorizontalScroll__in-wrapper::after,
-.Tabs--withGaps .HorizontalScroll__in-wrapper::before {
+:global(.vkuiInternalTabs--withGaps) .HorizontalScroll__in-wrapper::after,
+:global(.vkuiInternalTabs--withGaps) .HorizontalScroll__in-wrapper::before {
   display: block;
   width: var(--vkui--size_base_padding_horizontal--regular);
   flex-shrink: 0;
   height: 1px;
   content: '';
-}
-
-.HorizontalScroll--withConstArrows {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

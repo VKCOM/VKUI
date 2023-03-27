@@ -29,7 +29,3 @@
 .ContentCard__subtitle {
   color: var(--vkui--color_text_secondary);
 }
-
-.ContentCard {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

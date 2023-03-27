@@ -15,7 +15,7 @@ import { IconButton } from '../IconButton/IconButton';
 import { InputLike } from '../InputLike/InputLike';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
 import { Popper } from '../Popper/Popper';
-import '../InputLike/InputLikeDivider.module.css'; // Reorder css
+import '../InputLike/InputLike.module.css'; // Reorder css
 import styles from './DateInput.module.css';
 
 const sizeYClassNames = {
@@ -219,11 +219,7 @@ export const DateInput = ({
   return (
     <FormField
       style={style}
-      className={classNames(
-        styles['DateInput'],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
-        className,
-      )}
+      className={classNames(sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY], className)}
       getRootRef={handleRootRef}
       after={
         value ? (

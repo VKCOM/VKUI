@@ -77,7 +77,3 @@
 .HorizontalCell--size-m:last-child {
   width: 110px;
 }
-
-.HorizontalCell__title {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

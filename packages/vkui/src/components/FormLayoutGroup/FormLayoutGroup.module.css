@@ -17,7 +17,9 @@
   display: none;
 }
 
-.FormLayoutGroup--mode-horizontal .FormItem--withTop ~ .FormLayoutGroup__offset {
+.FormLayoutGroup--mode-horizontal
+  :global(.vkuiInternalFormItem--withTop)
+  ~ .FormLayoutGroup__offset {
   order: -1;
   display: block;
   min-width: 100%;
@@ -25,14 +27,14 @@
 }
 
 .FormLayoutGroup--sizeY-compact.FormLayoutGroup--mode-horizontal
-  .FormItem--withTop
+  :global(.vkuiInternalFormItem--withTop)
   ~ .FormLayoutGroup__offset {
   height: calc(2px + var(--vkui--font_subhead--line_height--compact) + 6px);
 }
 
 @media (--sizeY-compact) {
   .FormLayoutGroup--sizeY-none.FormLayoutGroup--mode-horizontal
-    .FormItem--withTop
+    :global(.vkuiInternalFormItem--withTop)
     ~ .FormLayoutGroup__offset {
     height: calc(2px + var(--vkui--font_subhead--line_height--compact) + 6px);
   }
@@ -55,8 +57,4 @@
 
 .FormLayoutGroup--segmented > *:not(:first-child):not(.FormLayoutGroup__offset) {
   margin-left: calc(-1 * var(--vkui_internal--thin_border));
-}
-
-.FormLayoutGroup {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

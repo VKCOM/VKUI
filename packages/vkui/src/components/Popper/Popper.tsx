@@ -211,17 +211,9 @@ export const Popper = ({
           getRootRef={arrowRef}
         />
       )}
-      {renderContent ? (
-        renderContent({ className: styles['Popper__content'] })
-      ) : (
-        <div className={styles['Popper__content']}>{children}</div>
-      )}
+      {renderContent ? renderContent({ className: '' }) : children}
     </div>
   );
 
-  return (
-    <AppRootPortal forcePortal={forcePortal} className={styles['PopperPortal']}>
-      {dropdown}
-    </AppRootPortal>
-  );
+  return <AppRootPortal forcePortal={forcePortal}>{dropdown}</AppRootPortal>;
 };

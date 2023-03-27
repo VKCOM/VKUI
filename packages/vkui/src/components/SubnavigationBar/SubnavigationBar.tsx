@@ -52,8 +52,8 @@ export const SubnavigationBar = ({
     <div
       {...restProps}
       className={classNames(
-        styles['SubnavigationBar'],
-        mode === 'fixed' && styles['SubnavigationBar--mode-fixed'],
+        'vkuiInternalSubnavigationBar',
+        mode === 'fixed' && classNames('vkuiInternalSubnavigationBar--mode-fixed'),
         className,
       )}
     >

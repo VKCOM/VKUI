@@ -27,7 +27,7 @@ export const FormLayout = ({
       onSubmit={onSubmit}
       ref={getRef}
     >
-      <div className={styles['FormLayout__container']}>{children}</div>
+      {children}
       {Component === 'form' && (
         <input type="submit" className={styles['FormLayout__submit']} value="" />
       )}

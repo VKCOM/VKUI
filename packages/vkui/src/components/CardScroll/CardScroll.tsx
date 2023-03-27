@@ -86,11 +86,12 @@ export const CardScroll = ({
       {...restProps}
       className={classNames(
         styles['CardScroll'],
+        'vkuiInternalCardScroll',
         size !== false &&
           {
-            s: styles['CardScroll--size-s'],
-            m: styles['CardScroll--size-m'],
-            l: styles['CardScroll--size-l'],
+            s: 'vkuiInternalCardScroll--size-s',
+            m: 'vkuiInternalCardScroll--size-m',
+            l: 'vkuiInternalCardScroll--size-l',
           }[size],
         withSpaces && styles['CardScroll--withSpaces'],
         className,

@@ -331,7 +331,3 @@
 .PanelHeader .Search__after::before {
   background-color: var(--vkui--color_header_background);
 }
-
-.Search--ios {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

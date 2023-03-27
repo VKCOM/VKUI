@@ -311,8 +311,8 @@ export const BaseGallery = ({
       {...restProps}
       className={classNames(
         styles['BaseGallery'],
+        'vkuiInternalBaseGallery',
         align === 'center' && styles['BaseGallery--align-center'],
-        shiftState.dragging && styles['BaseGallery--dragging'],
         slideWidth === 'custom' && styles['BaseGallery--custom-width'],
         isDraggable && styles['BaseGallery--draggable'],
         className,

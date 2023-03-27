@@ -11,7 +11,6 @@ import styles from './Button.module.css';
 
 const sizeYClassNames = {
   none: styles['Button--sizeY-none'],
-  [SizeType.COMPACT]: styles['Button--sizeY-compact'],
   [SizeType.REGULAR]: styles['Button--sizeY-regular'],
 };
 
@@ -88,7 +87,7 @@ export const Button = ({
           center: styles['Button--align-center'],
           right: styles['Button--align-right'],
         }[align],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.COMPACT && sizeYClassNames[sizeY],
         platform === Platform.ANDROID && styles['Button--android'],
         platform === Platform.IOS && styles['Button--ios'],
         stretched && styles['Button--stretched'],

@@ -18,6 +18,7 @@ export const RadioGroup = ({
   <div
     className={classNames(
       styles['RadioGroup'],
+      'vkuiInternalRadioGroup',
       mode === 'horizontal' && styles['RadioGroup--mode-horizontal'],
       className,
     )}

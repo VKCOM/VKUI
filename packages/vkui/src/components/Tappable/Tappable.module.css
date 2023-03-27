@@ -33,10 +33,6 @@ https://github.com/VKCOM/VKUI/pull/3641
   cursor: default;
 }
 
-.Tappable--active {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}
-
 .Tappable--focus-visible {
   outline: none;
 }
@@ -111,10 +107,6 @@ https://github.com/VKCOM/VKUI/pull/3641
 /**
  * overrides
  */
-.Tappable--sizeX-regular {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}
-
 .Tappable--sizeX-compact {
   border-radius: 0;
 }

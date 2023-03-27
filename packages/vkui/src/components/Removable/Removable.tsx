@@ -74,7 +74,7 @@ const RemovableIos = ({
 
   return (
     <div
-      className={styles['Removable__content']}
+      className={classNames(styles['Removable__content'], 'vkuiInternalRemovable__content')}
       style={{ transform: `translateX(-${removeOffset ?? 0}px)` }}
       onTransitionEnd={onRemoveTransitionEnd}
     >
@@ -145,17 +145,13 @@ export const Removable = ({
       {...restProps}
       ref={ref}
       className={classNames(
-        styles['Removable'],
         platform === Platform.IOS && styles['Removable--ios'],
-        {
-          start: styles['Removable--align-start'],
-          center: styles['Removable--align-center'],
-        }[align],
+        align === 'start' && styles['Removable--align-start'],
         className,
       )}
     >
       {platform !== Platform.IOS && (
-        <div className={styles['Removable__content']}>
+        <div className={classNames(styles['Removable__content'], 'vkuiInternalRemovable__content')}>
           {children}
 
           <IconButton

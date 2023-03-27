@@ -150,14 +150,14 @@
  * CMP:
  * FormStatus
  */
-.FormStatus .Banner__in::before {
+:global(.vkuiInternalFormStatus) .Banner__in::before {
   border: none;
 }
 
-.FormStatus--mode-error .Banner__in {
+:global(.vkuiInternalFormStatus--mode-error) .Banner__in {
   background-color: var(--vkui--color_background_negative_tint);
 }
 
-.FormStatus--mode-error .Banner__subheader {
+:global(.vkuiInternalFormStatus--mode-error) .Banner__subheader {
   color: var(--vkui--color_background_negative);
 }

@@ -89,11 +89,8 @@ const ActionSheetItem = ({
       className={classNames(
         styles['ActionSheetItem'],
         platform === Platform.IOS && styles['ActionSheetItem--ios'],
-        {
-          default: styles['ActionSheetItem--mode-default'],
-          destructive: styles['ActionSheetItem--mode-destructive'],
-          cancel: styles['ActionSheetItem--mode-cancel'],
-        }[mode],
+        mode === 'cancel' && styles['ActionSheetItem--mode-cancel'],
+        mode === 'destructive' && styles['ActionSheetItem--mode-destructive'],
         sizeY === SizeType.COMPACT && styles['ActionSheetItem--sizeY-compact'],
         isRich && styles['ActionSheetItem--rich'],
         isDesktop && styles['ActionSheetItem--desktop'],

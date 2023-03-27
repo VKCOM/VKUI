@@ -12,14 +12,17 @@ import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './SimpleCell.module.css';
 
 const platformClassNames = {
-  ios: styles['SimpleCell--ios'],
+  ios: classNames(styles['SimpleCell--ios'], 'vkuiInternalSimpleCell--ios'),
   android: styles['SimpleCell--android'],
   vkcom: styles['SimpleCell--vkcom'],
 };
 
 const sizeYClassNames = {
-  none: styles['SimpleCell--sizeY-none'],
-  [SizeType.COMPACT]: styles['SimpleCell--sizeY-compact'],
+  none: classNames(styles['SimpleCell--sizeY-none'], 'vkuiInternalSimpleCell--sizeY-none'),
+  [SizeType.COMPACT]: classNames(
+    styles['SimpleCell--sizeY-compact'],
+    'vkuiInternalSimpleCell--sizeY-compact',
+  ),
   [SizeType.REGULAR]: styles['SimpleCell--sizeY-regular'],
 };
 
@@ -109,11 +112,11 @@ export const SimpleCell = ({
       {...restProps}
       className={classNames(
         styles['SimpleCell'],
+        'vkuiInternalSimpleCell',
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
         sizeYClassNames[sizeY],
-        expandable && styles['SimpleCell--exp'],
         multiline && styles['SimpleCell--mult'],
         className,
       )}
@@ -176,7 +179,7 @@ export const SimpleCell = ({
         </Headline>
       )}
       {hasAfter && (
-        <div className={styles['SimpleCell__after']}>
+        <div className={classNames(styles['SimpleCell__after'], 'vkuiInternalSimpleCell__after')}>
           {after}
           {expandable && platform === Platform.IOS && <Icon24Chevron />}
         </div>

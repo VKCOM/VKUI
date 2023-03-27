@@ -1,7 +1,3 @@
-.ModalCardBase {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}
-
 .ModalCardBase__container {
   box-sizing: border-box;
   position: relative;
@@ -50,7 +46,7 @@
   margin-top: 16px;
 }
 
-.ModalCardBase .UsersStack + .ModalCardBase__actions {
+.UsersStack + .ModalCardBase__actions {
   margin-top: 24px;
 }
 

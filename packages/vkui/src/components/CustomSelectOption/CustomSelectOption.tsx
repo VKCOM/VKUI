@@ -107,8 +107,6 @@ export const CustomSelectOption = ({
         styles['CustomSelectOption'],
         sizeY !== SizeType.COMPACT && sizeYClassNames[sizeY],
         hovered && !disabled && styles['CustomSelectOption--hover'],
-        // Note: пустой класс
-        selected && styles['CustomSelectOption--selected'],
         disabled && styles['CustomSelectOption--disabled'],
         hierarchy > 0 && styles['CustomSelectOption--hierarchy'],
         className,
@@ -123,9 +121,7 @@ export const CustomSelectOption = ({
         )}
       </div>
       <div className={styles['CustomSelectOption__after']}>
-        {hasReactNode(after) && (
-          <div className={styles['CustomSelectOption__afterIn']}>{after}</div>
-        )}
+        {hasReactNode(after) && <div>{after}</div>}
         {selected && <Icon16Done className={styles['CustomSelectOption__selectedIcon']} />}
       </div>
     </Paragraph>

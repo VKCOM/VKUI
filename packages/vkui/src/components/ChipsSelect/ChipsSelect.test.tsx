@@ -22,7 +22,7 @@ const toggleDropdown = async () => {
 };
 // получить опцию из дропдауна (не чип)
 const queryListOption = (o: ChipOption | null | undefined) => {
-  const list = document.querySelector('.vkuiChipsSelect__options') as HTMLElement;
+  const list = document.querySelector<HTMLElement>('.vkuiInternalCustomSelectDropdown');
   return list ? queryByText(list, o?.label as string) : null;
 };
 

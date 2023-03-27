@@ -103,7 +103,7 @@
 }
 
 .ModalPage--desktop .ModalPage__content,
-.ModalRoot__modal--expandable .ModalPage__content {
+:global(.vkuiInternalModalRoot__modal--expandable) .ModalPage__content {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -119,20 +119,16 @@
  *
  * [дополнительно] также ищи в файле `ModalRoot__modal--expandable`
  */
-.ModalRoot--touched .ModalPage__in-wrap {
+:global(.vkuiInternalModalRoot--touched) .ModalPage__in-wrap {
   transition: none;
 }
 
-.ModalRoot--switching .ModalPage__in-wrap {
+:global(.vkuiInternalModalRoot--switching) .ModalPage__in-wrap {
   pointer-events: none;
 }
 
-.ModalRoot__modal--collapsed .ModalPage__content,
-.ModalRoot__modal--dragging .ModalPage__content {
+:global(.vkuiInternalModalRoot__modal--collapsed) .ModalPage__content,
+:global(.vkuiInternalModalRoot__modal--dragging) .ModalPage__content {
   overflow: hidden;
   touch-action: pan-y;
-}
-
-.ModalPage--sizeX-regular {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

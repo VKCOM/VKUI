@@ -10,7 +10,11 @@
   padding-bottom: var(--vkui_internal--safe_area_inset_bottom);
 }
 
-.Epic--hasTabbar .Snackbar {
+/**
+ * CMP:
+ * Epic
+ */
+:global(.vkuiInternalEpic--hasTabbar) .Snackbar {
   padding-bottom: calc(
     var(--vkui_internal--tabbar_height) + var(--vkui_internal--safe_area_inset_bottom)
   );

@@ -35,25 +35,21 @@ export const TextTooltip = ({
     <HoverPopper
       className={classNames(
         styles['TextTooltip'],
-        {
-          accent: styles['TextTooltip--appearance-accent'],
-          neutral: styles['TextTooltip--appearance-neutral'],
-          white: styles['TextTooltip--appearance-white'],
-          black: styles['TextTooltip--appearance-black'],
-          inversion: styles['TextTooltip--appearance-inversion'],
-        }[appearance],
+        appearance !== 'neutral' &&
+          {
+            accent: styles['TextTooltip--appearance-accent'],
+            white: styles['TextTooltip--appearance-white'],
+            black: styles['TextTooltip--appearance-black'],
+            inversion: styles['TextTooltip--appearance-inversion'],
+          }[appearance],
         className,
       )}
       arrow
       arrowClassName={styles['TextTooltip__arrow']}
       content={
         <React.Fragment>
-          {hasReactNode(header) && (
-            <Subhead weight="2" className={styles['TextTooltip__header']}>
-              {header}
-            </Subhead>
-          )}
-          {hasReactNode(text) && <Subhead className={styles['TextTooltip__text']}>{text}</Subhead>}
+          {hasReactNode(header) && <Subhead weight="2">{header}</Subhead>}
+          {hasReactNode(text) && <Subhead>{text}</Subhead>}
         </React.Fragment>
       }
       {...popperProps}

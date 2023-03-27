@@ -89,18 +89,18 @@
  * CMP:
  * FormItem
  */
-.FormItem--status-error .FormField__border,
+:global(.vkuiInternalFormItem--status-error) .FormField__border,
 .FormField--status-error .FormField__border {
   border-color: var(--vkui--color_stroke_negative);
   z-index: var(--vkui_internal--z_index_form_field_status);
 }
 
-.FormItem--status-error .FormField,
+:global(.vkuiInternalFormItem--status-error) .FormField,
 .FormField--status-error {
   background-color: var(--vkui--color_background_negative_tint);
 }
 
-.FormItem--status-valid .FormField__border,
+:global(.vkuiInternalFormItem--status-valid) .FormField__border,
 .FormField--status-valid .FormField__border {
   border-color: var(--vkui--color_stroke_positive);
   z-index: var(--vkui_internal--z_index_form_field_status);
@@ -140,8 +140,8 @@
  * CMP:
  * ModalCardBase
  */
-.ModalCardBase__header + .FormField,
-.ModalCardBase__subheader + .FormField {
+:global(.vkuiInternalModalCardBase__header) + .FormField,
+:global(.vkuiInternalModalCardBase__subheader) + .FormField {
   margin-top: 16px;
 }
 
@@ -149,7 +149,7 @@
  * CMP:
  * Select
  */
-.Select .FormField__after {
+:global(.vkuiInternalSelect) .FormField__after {
   pointer-events: none;
 }
 
@@ -157,7 +157,7 @@
  * CMP:
  * CalendarHeader
  */
-.CalendarHeader__picker .FormField__after {
+:global(.vkuiInternalCalendarHeader__picker) .FormField__after {
   min-width: 12px;
   padding-right: 8px;
 }
@@ -166,7 +166,7 @@
  * CMP:
  * ChipsInput
  */
-.ChipsInput .FormField__after {
+:global(.vkuiInternalChipsInput) .FormField__after {
   z-index: var(--vkui_internal--z_index_form_field_side);
 }
 
@@ -174,28 +174,32 @@
  * CMP:
  * FormLayoutGroup
  */
-.FormLayoutGroup--segmented .FormField {
+:global(.vkuiInternalFormLayoutGroup--segmented) .FormField {
   z-index: auto;
   isolation: auto;
 }
 
-.FormLayoutGroup--segmented > .FormItem:not(:first-of-type):not(:last-of-type) .FormField,
-.FormLayoutGroup--segmented
-  .Removable__content
+:global(.vkuiInternalFormLayoutGroup--segmented)
+  > .FormItem:not(:first-of-type):not(:last-of-type)
+  .FormField,
+:global(.vkuiInternalFormLayoutGroup--segmented .vkuiInternalRemovable__content)
   > .FormItem:not(:first-of-type):not(:last-of-type)
   .FormField {
   border-radius: 0;
 }
 
-.FormLayoutGroup--segmented > *:first-of-type:not(:last-of-type) .FormField,
-.FormLayoutGroup--segmented .Removable__content > *:first-of-type:not(:last-of-type) .FormField {
+:global(.vkuiInternalFormLayoutGroup--segmented) > *:first-of-type:not(:last-of-type) .FormField,
+:global(.vkuiInternalFormLayoutGroup--segmented .vkuiInternalRemovable__content)
+  > *:first-of-type:not(:last-of-type)
+  .FormField {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.FormLayoutGroup--segmented > .FormItem:not(:first-of-type):last-of-type .FormField,
-.FormLayoutGroup--segmented
-  .Removable__content
+:global(.vkuiInternalFormLayoutGroup--segmented)
+  > .FormItem:not(:first-of-type):last-of-type
+  .FormField,
+:global(.vkuiInternalFormLayoutGroup--segmented .vkuiInternalRemovable__content)
   > .FormItem:not(:first-of-type):last-of-type
   .FormField {
   border-top-left-radius: 0;

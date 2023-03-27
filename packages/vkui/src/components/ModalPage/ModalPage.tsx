@@ -103,7 +103,7 @@ export const ModalPage = ({
         styles['ModalPage'],
         platform === Platform.IOS && styles['ModalPage--ios'],
         isDesktop && styles['ModalPage--desktop'],
-        sizeX === SizeType.REGULAR && styles['ModalPage--sizeX-regular'],
+        sizeX === SizeType.REGULAR && 'vkuiInternalModalPage--sizeX-regular',
         typeof size === 'string' && sizeClassName[size],
         className,
       )}

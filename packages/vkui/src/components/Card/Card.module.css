@@ -40,24 +40,24 @@
  * CMP:
  * CardScroll
  */
-.CardScroll .Card {
+:global(.vkuiInternalCardScroll) .Card {
   margin-right: var(--vkui--size_cardgrid_padding--regular);
   flex-shrink: 0;
 }
 
-.CardScroll .Card:last-of-type {
+:global(.vkuiInternalCardScroll) .Card:last-of-type {
   margin-right: 0;
 }
 
-.CardScroll--size-s .Card {
+:global(.vkuiInternalCardScroll--size-s) .Card {
   width: 40%;
 }
 
-.CardScroll--size-m .Card {
+:global(.vkuiInternalCardScroll--size-m) .Card {
   width: 62%;
 }
 
-.CardScroll--size-l .Card {
+:global(.vkuiInternalCardScroll--size-l) .Card {
   width: calc(100% - var(--vkui--size_base_padding_horizontal--regular) * 2);
   margin-right: var(--vkui--size_base_padding_horizontal--regular);
 }
@@ -67,28 +67,24 @@
  * Group
  * SplitCol
  */
-.Group--mode-card .CardScroll--size-l .Card,
-.SplitCol--spaced .CardScroll--size-l .Card {
+:global(.vkuiInternalGroup--mode-card .vkuiInternalCardScroll--size-l) .Card,
+:global(.vkuiInternalSplitCol--spaced .vkuiInternalCardScroll--size-l) .Card {
   width: calc(100% - 32px);
   margin-right: 16px;
 }
 
-.Group--mode-card .CardScroll--size-l .Card:last-of-type,
-.SplitCol--spaced .CardScroll--size-l .Card:last-of-type {
+:global(.vkuiInternalGroup--mode-card .vkuiInternalCardScroll--size-l) .Card:last-of-type,
+:global(.vkuiInternalSplitCol--spaced .vkuiInternalCardScroll--size-l) .Card:last-of-type {
   margin-right: 0;
 }
 
 @media (--sizeX-regular) {
-  .Group--mode-none .CardScroll--size-l .Card:last-of-type {
+  :global(.vkuiInternalGroup--mode-none .vkuiInternalCardScroll--size-l) .Card:last-of-type {
     margin-right: 0;
   }
 
-  .Group--mode-none .CardScroll--size-l .Card {
+  :global(.vkuiInternalGroup--mode-none .vkuiInternalCardScroll--size-l) .Card {
     width: calc(100% - 32px);
     margin-right: 16px;
   }
-}
-
-.Card--mode-tint {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

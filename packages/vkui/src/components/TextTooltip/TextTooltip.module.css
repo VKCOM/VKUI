@@ -46,9 +46,3 @@
 .TextTooltip--appearance-inversion .TextTooltip__arrow {
   color: var(--vkui--color_background_modal_inverse);
 }
-
-.TextTooltip__header,
-.TextTooltip__text,
-.TextTooltip--appearance-neutral {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

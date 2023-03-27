@@ -21,7 +21,3 @@
 .Gradient--mode-black.Gradient--to-bottom {
   background: linear-gradient(to top, var(--vkui--gradient_black));
 }
-
-.Gradient {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

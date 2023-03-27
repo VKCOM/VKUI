@@ -20,12 +20,12 @@
  * CMP:
  * SplitCol
  */
-.SplitCol--spaced .CardScroll--withSpaces .CardScroll {
+:global(.vkuiInternalSplitCol--spaced) .CardScroll--withSpaces .CardScroll {
   margin-left: -16px;
   margin-right: -16px;
 }
 
-.SplitCol--spaced .CardScroll--withSpaces .CardScroll__gap {
+:global(.vkuiInternalSplitCol--spaced) .CardScroll--withSpaces .CardScroll__gap {
   width: 16px;
 }
 
@@ -33,36 +33,30 @@
  * CMP:
  * Group
  */
-.Group--mode-card .CardScroll--withSpaces {
+:global(.vkuiInternalGroup--mode-card) .CardScroll--withSpaces {
   margin-left: -8px;
   margin-right: -8px;
 }
 
-.Group--mode-card .CardScroll--withSpaces:first-child {
+:global(.vkuiInternalGroup--mode-card) .CardScroll--withSpaces:first-child {
   padding-top: var(--vkui--size_cardgrid_padding_vertical--regular);
 }
 
-.Group--mode-card .CardScroll--withSpaces:last-child {
+:global(.vkuiInternalGroup--mode-card) .CardScroll--withSpaces:last-child {
   padding-bottom: var(--vkui--size_cardgrid_padding_vertical--regular);
 }
 
 @media (--sizeX-regular) {
-  .Group--mode-none .CardScroll--withSpaces {
+  :global(.vkuiInternalGroup--mode-none) .CardScroll--withSpaces {
     margin-left: -8px;
     margin-right: -8px;
   }
 
-  .Group--mode-none .CardScroll--withSpaces:first-child {
+  :global(.vkuiInternalGroup--mode-none) .CardScroll--withSpaces:first-child {
     padding-top: var(--vkui--size_cardgrid_padding_vertical--regular);
   }
 
-  .Group--mode-none .CardScroll--withSpaces:last-child {
+  :global(.vkuiInternalGroup--mode-none) .CardScroll--withSpaces:last-child {
     padding-bottom: var(--vkui--size_cardgrid_padding_vertical--regular);
   }
-}
-
-.CardScroll--size-m,
-.CardScroll--size-l,
-.CardScroll--size-s {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

@@ -97,9 +97,9 @@ export const Group = ({
           sizeXClassNames[sizeX],
           mode &&
             {
-              none: styles['Group--mode-none'],
-              plain: styles['Group--mode-plain'],
-              card: styles['Group--mode-card'],
+              none: classNames(styles['Group--mode-none'], 'vkuiInternalGroup--mode-none'),
+              plain: classNames(styles['Group--mode-plain'], 'vkuiInternalGroup--mode-plain'),
+              card: classNames(styles['Group--mode-card'], 'vkuiInternalGroup--mode-card'),
             }[mode],
           {
             s: styles['Group--padding-s'],

@@ -25,7 +25,7 @@ export const SegmentedControlOption = ({
   children,
   ...restProps
 }: VisuallyHiddenInputProps) => {
-  const { focusVisible, onBlur, onFocus } = useFocusVisible();
+  const { onBlur, onFocus } = useFocusVisible();
   const { sizeY = 'none' } = useAdaptivity();
 
   return (
@@ -33,7 +33,6 @@ export const SegmentedControlOption = ({
       className={classNames(
         styles['SegmentedControlOption'],
         restProps.checked && styles['SegmentedControlOption--checked'],
-        focusVisible && styles['SegmentedControlOption--focus-visible'],
         className,
       )}
       style={style}

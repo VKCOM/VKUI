@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { ImageBase, type ImageBaseOverlayProps, type ImageBaseProps } from '../ImageBase/ImageBase';
 import { ImageBadge, type ImageBadgeProps } from './ImageBadge/ImageBadge';
-import styles from './Image.module.css';
 
 export type { ImageBadgeProps, ImageBaseOverlayProps as ImageOverlayProps };
 
@@ -75,7 +73,7 @@ export const Image = ({
       {...restProps}
       size={size}
       style={{ ...style, borderRadius }}
-      className={classNames(styles['Image'], className)}
+      className={className}
     />
   );
 };

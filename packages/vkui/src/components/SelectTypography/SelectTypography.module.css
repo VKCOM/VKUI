@@ -28,8 +28,3 @@
     font-weight: var(--vkui--font_weight_accent3);
   }
 }
-
-.SelectTypography--selectType-default,
-.SelectTypography--selectType-plain {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

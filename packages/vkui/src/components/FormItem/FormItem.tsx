@@ -10,8 +10,11 @@ import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './FormItem.module.css';
 
 const sizeYClassNames = {
-  none: styles['FormItem--sizeY-none'],
-  [SizeType.COMPACT]: styles['FormItem--sizeY-compact'],
+  none: classNames(styles['FormItem--sizeY-none'], 'vkuiInternalFormItem--sizeY-none'),
+  [SizeType.COMPACT]: classNames(
+    styles['FormItem--sizeY-compact'],
+    'vkuiInternalFormItem--sizeY-compact',
+  ),
 };
 
 export interface FormItemProps
@@ -61,14 +64,22 @@ export const FormItem = ({
       ref={rootEl}
       className={classNames(
         styles['FormItem'],
+        'vkuiInternalFormItem',
         status !== 'default' &&
           {
-            error: styles['FormItem--status-error'],
-            valid: styles['FormItem--status-valid'],
+            error: classNames(
+              styles['FormItem--status-error'],
+              'vkuiInternalFormItem--status-error',
+            ),
+            valid: classNames(
+              styles['FormItem--status-valid'],
+              'vkuiInternalFormItem--status-valid',
+            ),
           }[status],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
-        hasReactNode(top) && styles['FormItem--withTop'],
-        removable && styles['FormItem--removable'],
+        hasReactNode(top) &&
+          classNames(styles['FormItem--withTop'], 'vkuiInternalFormItem--withTop'),
+        removable && classNames(styles['FormItem--removable'], 'vkuiInternalFormItem--removable'),
         className,
       )}
     >
@@ -82,7 +93,11 @@ export const FormItem = ({
           }}
           removePlaceholder={removePlaceholder}
         >
-          <div className={styles['FormItem__removable']}>{wrappedChildren}</div>
+          <div
+            className={classNames(styles['FormItem__removable'], 'vkuiInternalFormItem__removable')}
+          >
+            {wrappedChildren}
+          </div>
         </Removable>
       ) : (
         wrappedChildren

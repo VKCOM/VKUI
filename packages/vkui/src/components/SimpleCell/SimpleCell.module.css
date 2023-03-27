@@ -228,14 +228,10 @@
  * CMP:
  * FormItem
  */
-.FormItem > .SimpleCell {
+:global(.vkuiInternalFormItem) > .SimpleCell {
   margin: 0 calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 
 .SimpleCell__main > *:not(:first-child) {
   margin-top: 2px;
-}
-
-.SimpleCell--exp {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }

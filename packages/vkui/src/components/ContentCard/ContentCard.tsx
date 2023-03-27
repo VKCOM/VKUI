@@ -73,11 +73,7 @@ export const ContentCard = ({
       mode={mode}
       getRootRef={getRootRef}
       style={style}
-      className={classNames(
-        styles['ContentCard'],
-        restProps.disabled && styles['ContentCard--disabled'],
-        className,
-      )}
+      className={classNames(restProps.disabled && styles['ContentCard--disabled'], className)}
     >
       <Tappable
         {...restProps}

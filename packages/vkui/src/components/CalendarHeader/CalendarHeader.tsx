@@ -124,7 +124,13 @@ export const CalendarHeader = ({
         </AdaptivityProvider>
       )}
       {disablePickers ? (
-        <Paragraph className={styles['CalendarHeader__pickers']} weight="2">
+        <Paragraph
+          className={classNames(
+            styles['CalendarHeader__pickers'],
+            'vkuiInternalCalendarHeader__pickers',
+          )}
+          weight="2"
+        >
           <span className={styles['CalendarHeader__month']}>
             {new Intl.DateTimeFormat(locale, {
               month: 'long',
@@ -137,9 +143,17 @@ export const CalendarHeader = ({
         </Paragraph>
       ) : (
         <AdaptivityProvider sizeY={SizeType.COMPACT}>
-          <div className={styles['CalendarHeader__pickers']}>
+          <div
+            className={classNames(
+              styles['CalendarHeader__pickers'],
+              'vkuiInternalCalendarHeader__pickers',
+            )}
+          >
             <CustomSelect
-              className={styles['CalendarHeader__picker']}
+              className={classNames(
+                styles['CalendarHeader__picker'],
+                'vkuiInternalCalendarHeader__picker',
+              )}
               value={viewDate.getMonth()}
               options={months}
               dropdownOffsetDistance={4}
@@ -151,7 +165,10 @@ export const CalendarHeader = ({
               aria-label={changeMonthAriaLabel}
             />
             <CustomSelect
-              className={styles['CalendarHeader__picker']}
+              className={classNames(
+                styles['CalendarHeader__picker'],
+                'vkuiInternalCalendarHeader__picker',
+              )}
               value={viewDate.getFullYear()}
               options={years}
               dropdownOffsetDistance={4}

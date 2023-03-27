@@ -64,11 +64,7 @@ export const HorizontalCell = ({
           <div className={styles['HorizontalCell__image']}>{children}</div>
         )}
         <div className={styles['HorizontalCell__content']}>
-          {hasReactNode(header) && (
-            <CellTypography size={size} className={styles['HorizontalCell__title']}>
-              {header}
-            </CellTypography>
-          )}
+          {hasReactNode(header) && <CellTypography size={size}>{header}</CellTypography>}
           {hasReactNode(subtitle) && (
             <Footnote className={styles['HorizontalCell__subtitle']}>{subtitle}</Footnote>
           )}

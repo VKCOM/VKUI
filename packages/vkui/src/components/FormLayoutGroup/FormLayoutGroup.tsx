@@ -8,8 +8,14 @@ import { Removable, RemovableProps } from '../Removable/Removable';
 import styles from './FormLayoutGroup.module.css';
 
 const sizeYClassNames = {
-  none: styles['FormLayoutGroup--sizeY-none'],
-  [SizeType.COMPACT]: styles['FormLayoutGroup--sizeY-compact'],
+  none: classNames(
+    styles['FormLayoutGroup--sizeY-none'],
+    'vkuiInternalFormLayoutGroup--sizeY-none',
+  ),
+  [SizeType.COMPACT]: classNames(
+    styles['FormLayoutGroup--sizeY-compact'],
+    'vkuiInternalFormLayoutGroup--sizeY-compact',
+  ),
 };
 
 export interface FormLayoutGroupProps
@@ -51,11 +57,22 @@ export const FormLayoutGroup = ({
     <div
       ref={rootEl}
       className={classNames(
-        styles['FormLayoutGroup'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
-        mode === 'horizontal' && styles['FormLayoutGroup--mode-horizontal'],
-        isRemovable && styles['FormLayoutGroup--removable'],
-        isSegmented && styles['FormLayoutGroup--segmented'],
+        mode === 'horizontal' &&
+          classNames(
+            styles['FormLayoutGroup--mode-horizontal'],
+            'vkuiInternalFormLayoutGroup--mode-horizontal',
+          ),
+        isRemovable &&
+          classNames(
+            styles['FormLayoutGroup--removable'],
+            'vkuiInternalFormLayoutGroup--removable',
+          ),
+        isSegmented &&
+          classNames(
+            styles['FormLayoutGroup--segmented'],
+            'vkuiInternalFormLayoutGroup--segmented',
+          ),
         className,
       )}
       {...restProps}

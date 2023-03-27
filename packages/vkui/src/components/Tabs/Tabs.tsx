@@ -8,12 +8,6 @@ import { Platform } from '../../lib/platform';
 import { HasRootRef } from '../../types';
 import styles from './Tabs.module.css';
 
-const modeClassNames = {
-  default: styles['Tabs--mode-default'],
-  accent: styles['Tabs--mode-accent'],
-  secondary: styles['Tabs--mode-secondary'],
-};
-
 export interface TabsProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement> {
@@ -148,9 +142,10 @@ export const Tabs = ({
       ref={getRootRef}
       className={classNames(
         styles['Tabs'],
-        platform === Platform.VKCOM && styles['Tabs--vkcom'],
-        withGaps && styles['Tabs--withGaps'],
-        modeClassNames[mode],
+        'vkuiInternalTabs',
+        platform === Platform.VKCOM && 'vkuiInternalTabs--vkcom',
+        withGaps && classNames(styles['Tabs--withGaps'], 'vkuiInternalTabs--withGaps'),
+        mode === 'default' && styles['Tabs--mode-default'],
         className,
       )}
       role={role}

@@ -50,7 +50,3 @@
 .CellButton--mode-danger > :global(.vkuiIcon) {
   color: var(--vkui--color_icon_negative);
 }
-
-.CellButton--mode-primary {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

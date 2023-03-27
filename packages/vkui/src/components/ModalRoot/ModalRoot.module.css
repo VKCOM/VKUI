@@ -60,9 +60,3 @@
     opacity: 1;
   }
 }
-
-.ModalRoot__modal--dragging,
-.ModalRoot__modal--expandable,
-.ModalRoot__modal--collapsed {
-  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
-}

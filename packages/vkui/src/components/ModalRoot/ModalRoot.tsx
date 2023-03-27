@@ -594,8 +594,10 @@ class ModalRootTouchComponent extends React.Component<
               styles['ModalRoot'],
               this.props.configProvider?.webviewType === WebviewType.VKAPPS &&
                 styles['ModalRoot--vkapps'],
-              touchDown && styles['ModalRoot--touched'],
-              !!(enteringModal || exitingModal) && styles['ModalRoot--switching'],
+              touchDown &&
+                classNames(styles['ModalRoot--touched'], 'vkuiInternalModalRoot--touched'),
+              !!(enteringModal || exitingModal) &&
+                classNames(styles['ModalRoot--switching'], 'vkuiInternalModalRoot--switching'),
             )}
             onMove={this.onTouchMove}
             onEnd={this.onTouchEnd}
@@ -632,10 +634,10 @@ class ModalRootTouchComponent extends React.Component<
                     className={classNames(
                       styles['ModalRoot__modal'],
 
-                      dragging && styles['ModalRoot__modal--dragging'],
+                      dragging && 'vkuiInternalModalRoot__modal--dragging',
 
-                      isPage && modalState.expandable && styles['ModalRoot__modal--expandable'],
-                      isPage && modalState.collapsed && styles['ModalRoot__modal--collapsed'],
+                      isPage && modalState.expandable && 'vkuiInternalModalRoot__modal--expandable',
+                      isPage && modalState.collapsed && 'vkuiInternalModalRoot__modal--collapsed',
                     )}
                     restoreFocus={false}
                   >

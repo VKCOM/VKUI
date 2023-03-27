@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { HasRef, HasRootRef } from '../../types';
 import { Button, VKUIButtonProps } from '../Button/Button';
 import { VisuallyHiddenInput } from '../VisuallyHiddenInput/VisuallyHiddenInput';
-import styles from './File.module.css';
 
 export interface FileProps
   extends Omit<VKUIButtonProps, 'type'>,
@@ -34,7 +32,7 @@ export const File = ({
     <Button
       Component="label"
       align={align}
-      className={classNames(styles['File'], className)}
+      className={className}
       stretched={stretched}
       mode={mode}
       appearance={appearance}
@@ -46,12 +44,7 @@ export const File = ({
       getRootRef={getRootRef}
       disabled={restProps.disabled}
     >
-      <VisuallyHiddenInput
-        {...restProps}
-        className={styles['File__input']}
-        type="file"
-        getRef={getRef}
-      />
+      <VisuallyHiddenInput {...restProps} type="file" getRef={getRef} />
       {children}
     </Button>
   );
