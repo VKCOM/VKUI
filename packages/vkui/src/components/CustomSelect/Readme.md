@@ -1,8 +1,6 @@
 Делает из [SelectMimicry](#!/SelectMimicry) селект с выпадающим списком. Используется внутри [Select](#!/Select).
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-import { Icon16Add } from '@vkontakte/icons';
-
 const getUsers = (usersArray) =>
   usersArray.map((user) => ({
     label: user.name,
