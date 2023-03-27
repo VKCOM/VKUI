@@ -32,5 +32,41 @@ Playground.args = {
       { url: '', type: 'playbackStarted' },
       { url: '', type: 'click' },
     ],
+    adChoices: {
+      options: [
+        {
+          name: 'О рекламодателе',
+          onClick: () => {
+            // eslint-disable-next-line no-restricted-globals
+            window.open('https://vk.com', '_blank')?.focus();
+          },
+          shouldCloseAd: false,
+        },
+        {
+          name: 'Скопировать ID (2VtzqxC9CNb)',
+          onClick: () => {
+            // eslint-disable-next-line compat/compat
+            void navigator.clipboard.writeText('2VtzqxC9CNb');
+          },
+          shouldCloseAd: false,
+        },
+        {
+          name: 'Не интересно',
+          onClick: () => {
+            // eslint-disable-next-line no-restricted-globals
+            window.open('https://vk.com', '_blank')?.focus();
+          },
+          shouldCloseAd: true,
+        },
+        {
+          name: 'Уже приобретено',
+          onClick: () => {
+            // eslint-disable-next-line no-restricted-globals
+            window.open('https://vk.com', '_blank')?.focus();
+          },
+          shouldCloseAd: true,
+        },
+      ],
+    },
   },
 };

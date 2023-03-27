@@ -1,15 +1,26 @@
 import * as React from 'react';
 import { Icon16Cancel, Icon16WarningTriangleOutline } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
+import { ActionSheet } from '../ActionSheet/ActionSheet';
+import { ActionSheetDefaultIosCloseItem } from '../ActionSheet/ActionSheetDefaultIosCloseItem';
+import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { Button } from '../Button/Button';
 import { Image } from '../Image/Image';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
+import { SplitCol } from '../SplitCol/SplitCol';
+import { SplitLayout } from '../SplitLayout/SplitLayout';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './PromoBanner.module.css';
 
 type StatsType =
   | 'playbackStarted' // Начало показа
   | 'click'; // Клик по баннеру
+
+type AdChoicesOption = {
+  name: string;
+  onClick: () => void;
+  shouldCloseAd?: boolean;
+};
 
 type BannerData = {
   title?: string;
@@ -32,6 +43,10 @@ type BannerData = {
   navigationType?: string;
   description?: string;
   ageRestrictions?: string;
+  adChoices?: {
+    icon?: string;
+    options?: AdChoicesOption[];
+  };
 };
 
 export interface PromoBannerProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -54,6 +69,8 @@ export const PromoBanner = ({
   ...restProps
 }: PromoBannerProps) => {
   const [currentPixel, setCurrentPixel] = React.useState('');
+  const [popout, setPopout] = React.useState<React.ReactElement | null>(null);
+  const adChoicesIcon = React.useRef<HTMLDivElement>(null);
 
   const statsPixels = React.useMemo(
     () =>
@@ -68,6 +85,42 @@ export const PromoBanner = ({
     [statsPixels.click],
   );
 
+  const closeList = ({ target, relatedTarget }: any) => {
+    if (
+      (target === adChoicesIcon.current && relatedTarget?.className?.includes('vkuiActionSheet')) ||
+      relatedTarget === adChoicesIcon.current
+    ) {
+      return;
+    }
+    setPopout(null);
+  };
+
+  const openList = () => {
+    setPopout(
+      <div className="ShortVideoNavigation__dropdownWrapper">
+        <ActionSheet
+          onClose={() => setPopout(null)}
+          iosCloseItem={<ActionSheetDefaultIosCloseItem />}
+          toggleRef={adChoicesIcon}
+          className="ShortVideoNavigation__dropdown"
+          onMouseLeave={closeList}
+        >
+          {bannerData.adChoices?.options?.map((option) => {
+            return (
+              <ActionSheetItem
+                key={option.name}
+                autoClose={option.shouldCloseAd}
+                onClick={option.onClick}
+              >
+                {option.name}
+              </ActionSheetItem>
+            );
+          })}
+        </ActionSheet>
+      </div>,
+    );
+  };
+
   React.useEffect(() => {
     if (statsPixels.playbackStarted) {
       setCurrentPixel(statsPixels.playbackStarted);
@@ -75,60 +128,76 @@ export const PromoBanner = ({
   }, [statsPixels.playbackStarted]);
 
   return (
-    <div className={classNames(styles['PromoBanner'], className)} {...restProps}>
-      <div className={styles['PromoBanner__head']}>
-        {bannerData.ageRestrictions && (
-          <Footnote className={styles['PromoBanner__age']}>{bannerData.ageRestrictions}</Footnote>
-        )}
-        <Footnote>{bannerData.advertisingLabel || 'Advertisement'}</Footnote>
+    <SplitLayout
+      className={classNames(styles['PromoBanner'], className)}
+      popout={popout}
+      {...restProps}
+    >
+      <SplitCol>
+        <div className={styles['PromoBanner__head']}>
+          {bannerData.ageRestrictions && (
+            <Footnote className={styles['PromoBanner__age']}>{bannerData.ageRestrictions}</Footnote>
+          )}
+          <Footnote>{bannerData.advertisingLabel || 'Advertisement'}</Footnote>
 
-        <Footnote className={styles['PromoBanner__dot']}>&middot;</Footnote>
+          {bannerData.adChoices?.options?.length ? (
+            <>
+              <Footnote className={styles['PromoBanner__dot']}>&middot;</Footnote>
 
-        <div>
-          <Icon16WarningTriangleOutline />
+              <div
+                className={styles['PromoBanner__adChoices']}
+                onClick={openList}
+                ref={adChoicesIcon}
+              >
+                {bannerData.adChoices?.icon ?? <Icon16WarningTriangleOutline />}
+              </div>
+            </>
+          ) : (
+            ''
+          )}
+
+          {!isCloseButtonHidden && (
+            <div className={styles['PromoBanner__close']} onClick={onClose}>
+              <Icon16Cancel />
+            </div>
+          )}
         </div>
+        <SimpleCell
+          href={bannerData.trackingLink}
+          onClick={onClick}
+          rel="nofollow noopener noreferrer"
+          target="_blank"
+          before={
+            bannerData.iconLink && (
+              <Image
+                size={48}
+                src={bannerData.iconLink}
+                alt={bannerData.title}
+                data-testid={process.env.NODE_ENV === 'test' ? 'avatar' : undefined}
+              />
+            )
+          }
+          after={
+            bannerData.ctaText && (
+              <Button
+                mode="outline"
+                data-testid={process.env.NODE_ENV === 'test' ? 'button-ctaText' : undefined}
+              >
+                {bannerData.ctaText}
+              </Button>
+            )
+          }
+          subtitle={bannerData.domain}
+        >
+          {bannerData.title}
+        </SimpleCell>
 
-        {!isCloseButtonHidden && (
-          <div className={styles['PromoBanner__close']} onClick={onClose}>
-            <Icon16Cancel />
+        {currentPixel.length > 0 && (
+          <div className={styles['PromoBanner__pixels']}>
+            <img src={currentPixel} alt="" />
           </div>
         )}
-      </div>
-      <SimpleCell
-        href={bannerData.trackingLink}
-        onClick={onClick}
-        rel="nofollow noopener noreferrer"
-        target="_blank"
-        before={
-          bannerData.iconLink && (
-            <Image
-              size={48}
-              src={bannerData.iconLink}
-              alt={bannerData.title}
-              data-testid={process.env.NODE_ENV === 'test' ? 'avatar' : undefined}
-            />
-          )
-        }
-        after={
-          bannerData.ctaText && (
-            <Button
-              mode="outline"
-              data-testid={process.env.NODE_ENV === 'test' ? 'button-ctaText' : undefined}
-            >
-              {bannerData.ctaText}
-            </Button>
-          )
-        }
-        subtitle={bannerData.domain}
-      >
-        {bannerData.title}
-      </SimpleCell>
-
-      {currentPixel.length > 0 && (
-        <div className={styles['PromoBanner__pixels']}>
-          <img src={currentPixel} alt="" />
-        </div>
-      )}
-    </div>
+      </SplitCol>
+    </SplitLayout>
   );
 };
