@@ -16,7 +16,8 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: 's' | 'm' | 'l';
   /**
    * Вертикальный режим рекомендуется использовать с размером `m`
-   * TODO v6: удалить layout, заменить на align со значениями right | left | top
+   * TODO v6: удалить
+   * @deprecated
    */
   layout?: 'vertical' | 'horizontal';
   /**
@@ -31,9 +32,11 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   count?: number;
   /**
-   * Определяет сторону выравнивания аватарок для `layout=horizontal`
+   * Определяет положение элементов
+   * Режим `column` рекомендуется использовать с размером `m`
+   * @version 5.3.0
    */
-  align?: 'left' | 'right';
+  direction?: 'row' | 'row-reverse' | 'column';
 }
 
 interface PathElementProps extends React.SVGAttributes<SVGElement> {
@@ -111,10 +114,10 @@ export const UsersStack = ({
   visibleCount = 3,
   count = Math.max(0, photos.length - visibleCount),
   size = 'm',
-  layout = 'horizontal',
+  layout,
   children,
   className,
-  align = 'left',
+  direction: directionProp = 'row',
   ...restProps
 }: UsersStackProps) => {
   const cmpId = useId();
@@ -153,6 +156,7 @@ export const UsersStack = ({
       </svg>
     );
   });
+
   const othersElement = canShowOthers ? (
     <CounterTypography
       caps
@@ -162,6 +166,8 @@ export const UsersStack = ({
       +{count}
     </CounterTypography>
   ) : null;
+
+  const direction = (layout && (layout === 'vertical' ? 'column' : 'row')) || directionProp;
 
   return (
     <div
@@ -174,13 +180,10 @@ export const UsersStack = ({
           l: styles['UsersStack--size-l'],
         }[size],
         {
-          vertical: styles['UsersStack--layout-vertical'],
-          horizontal: styles['UsersStack--layout-horizontal'],
-        }[layout],
-        {
-          right: styles['UsersStack--align-right'],
-          left: styles['UsersStack--align-left'],
-        }[align],
+          'row': styles['UsersStack--direction-row'],
+          'row-reverse': styles['UsersStack--direction-row-reverse'],
+          'column': styles['UsersStack--direction-column'],
+        }[direction],
         className,
       )}
     >

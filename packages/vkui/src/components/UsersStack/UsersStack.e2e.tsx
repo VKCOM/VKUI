@@ -13,7 +13,7 @@ describe('UsersStack', () => {
     {
       children: ['Понравилось Анне и ещё XX людям'],
       size: ['s', 'm', 'l'],
-      layout: ['horizontal', 'vertical'],
+      direction: ['row', 'column', 'row-reverse'],
       photos: [
         [base64Image],
         [base64Image, base64Image],
@@ -24,13 +24,7 @@ describe('UsersStack', () => {
     // при пустом children отсутствуют отступы
     {
       children: [undefined],
-      layout: ['horizontal', 'vertical'],
-      photos: [[base64Image, base64Image, base64Image]],
-    },
-    {
-      children: ['Понравилось Анне и ещё XX людям', undefined],
-      layout: ['horizontal'],
-      align: ['right'],
+      direction: ['row', 'column', 'row-reverse'],
       photos: [[base64Image, base64Image, base64Image]],
     },
   ]);
