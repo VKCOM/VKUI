@@ -19,7 +19,7 @@
 }
 
 .Counter--mode-secondary {
-  background: var(--vkui--color_icon_tertiary);
+  background: var(--vkui--color_icon_secondary);
   color: var(--vkui--color_text_contrast_themed);
 }
 
@@ -48,7 +48,7 @@
 .Counter--mode-inherit {
   background-color: var(
     --vkui_internal--counter_inherit_background,
-    var(--vkui--color_icon_tertiary)
+    var(--vkui--color_icon_secondary)
   );
   color: var(--vkui_internal--counter_inherit_color, var(--vkui--color_text_contrast_themed));
 }
