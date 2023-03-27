@@ -661,29 +661,27 @@ export function CustomSelect(props: SelectProps) {
     }
   }, [emptyText, options, renderDropdown, renderOption]);
 
+  const clearButtonShown = allowClearButton && nativeSelectValue !== '';
+
   const clearButton = React.useMemo(() => {
-    if (!allowClearButton) {
+    if (!clearButtonShown) {
       return null;
     }
 
-    if (nativeSelectValue !== '') {
-      const ClearButtonCmp =
-        clearButtonProp === undefined ? CustomSelectClearButton : clearButtonProp;
+    const ClearButtonCmp =
+      clearButtonProp === undefined ? CustomSelectClearButton : clearButtonProp;
 
-      return (
-        <ClearButtonCmp
-          className={
-            iconProp === undefined && clearButtonProp === undefined
-              ? styles['CustomSelect--clear-icon']
-              : undefined
-          }
-          onClick={() => setNativeSelectValue('')}
-        />
-      );
-    }
-
-    return null;
-  }, [clearButtonProp, iconProp, nativeSelectValue, allowClearButton]);
+    return (
+      <ClearButtonCmp
+        className={
+          iconProp === undefined && clearButtonProp === undefined
+            ? styles['CustomSelect--clear-icon']
+            : undefined
+        }
+        onClick={() => setNativeSelectValue('')}
+      />
+    );
+  }, [clearButtonShown, clearButtonProp, iconProp]);
 
   const icon = React.useMemo(() => {
     if (iconProp !== undefined) {
@@ -692,13 +690,13 @@ export function CustomSelect(props: SelectProps) {
 
     return (
       <DropdownIcon
-        className={clearButton ? styles['CustomSelect__dropdown-icon'] : undefined}
+        className={clearButtonShown ? styles['CustomSelect__dropdown-icon'] : undefined}
         opened={opened}
       />
     );
-  }, [clearButton, iconProp, opened]);
+  }, [clearButtonShown, iconProp, opened]);
 
-  const afterIcons = (icon || clearButton) && (
+  const afterIcons = (icon || clearButtonShown) && (
     <React.Fragment>
       {clearButton}
       {icon}
