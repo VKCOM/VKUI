@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useId } from '../../hooks/useId';
+import { warnOnce } from '../../lib/warnOnce';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './UsersStack.module.css';
@@ -106,6 +107,8 @@ const photoSizes: Record<NonNullable<UsersStackProps['size']>, PhotoSizeType> = 
   l: 32,
 };
 
+const warn = warnOnce('UsersStack');
+
 /**
  * @see https://vkcom.github.io/VKUI/#/UsersStack
  */
@@ -166,6 +169,10 @@ export const UsersStack = ({
       +{count}
     </CounterTypography>
   ) : null;
+
+  if (process.env.NODE_ENV === 'development' && layout) {
+    warn('Свойство "layout" будет удалено в v6. Используйте свойство "direction"');
+  }
 
   const direction = (layout && (layout === 'vertical' ? 'column' : 'row')) || directionProp;
 
