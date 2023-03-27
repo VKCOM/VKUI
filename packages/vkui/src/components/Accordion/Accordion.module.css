@@ -1,0 +1,44 @@
+/* stylelint-disable @project-tools/stylelint-atomic */
+.AccordionSummary::-webkit-details-marker {
+  display: none;
+}
+
+.AccordionSummary__icon {
+  color: var(--vkui--color_icon_secondary);
+}
+
+.Accordion:not([open]) > .AccordionSummary .AccordionSummary__icon--collapse {
+  display: none;
+}
+
+.Accordion[open] > .AccordionSummary .AccordionSummary__icon--expand {
+  display: none;
+}
+
+.Accordion--open .AccordionSummary {
+  animation: vkui-accordion-open 150ms ease-out;
+}
+
+.Accordion--close .AccordionSummary {
+  animation: vkui-accordion-closed 150ms ease-out;
+}
+
+@keyframes vkui-accordion-open {
+  0% {
+    margin-bottom: -10px;
+  }
+
+  100% {
+    margin-bottom: 0;
+  }
+}
+
+@keyframes vkui-accordion-closed {
+  0% {
+    margin-bottom: 10px;
+  }
+
+  100% {
+    margin-bottom: 0;
+  }
+}
