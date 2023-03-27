@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon24ChevronDown, Icon24ChevronUp } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { SimpleCell, SimpleCellProps } from '../SimpleCell/SimpleCell';
-import styles from './AccordionSummary.module.css';
+import styles from './Accordion.module.css';
 
 export interface AccordionSummaryProps extends Omit<SimpleCellProps, 'expandable'> {
   /**
