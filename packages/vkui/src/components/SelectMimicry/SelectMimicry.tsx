@@ -53,7 +53,6 @@ export const SelectMimicry = ({
       tabIndex={disabled ? undefined : tabIndex}
       className={classNames(
         styles['Select'],
-        'vkuiInternalSelect',
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         !children && styles['Select--empty'],
         multiline && styles['Select--multiline'],

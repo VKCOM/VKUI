@@ -147,9 +147,9 @@
 
 /**
  * CMP:
- * Select
+ * NativeSelect
  */
-:global(.vkuiInternalSelect) .FormField__after {
+:global(.vkuiInternalNativeSelect) .FormField__after {
   pointer-events: none;
 }
 

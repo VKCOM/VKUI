@@ -78,7 +78,7 @@ const NativeSelect = ({
       Component="label"
       className={classNames(
         styles['Select'],
-        'vkuiInternalSelect',
+        'vkuiInternalNativeSelect',
         empty && styles['Select--empty'],
         multiline && styles['Select--multiline'],
         placeholder?.length && styles['Select--hasPlaceholder'],

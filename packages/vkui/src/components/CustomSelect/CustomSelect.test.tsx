@@ -500,4 +500,58 @@ describe('CustomSelect', () => {
 
     expect(onChange).toBeCalledTimes(0);
   });
+
+  it('clear value externally with empty string', () => {
+    const onChange = jest.fn();
+
+    const { rerender } = render(
+      <CustomSelect
+        allowClearButton
+        data-testid="target"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        onChange={onChange}
+        value={1}
+      />,
+    );
+
+    rerender(
+      <CustomSelect
+        allowClearButton
+        data-testid="target"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        onChange={onChange}
+        value=""
+      />,
+    );
+
+    expect(onChange).toBeCalledTimes(0);
+    expect(getCustomSelectValue()).toEqual('');
+  });
+
+  it('clear value with default clear button', async () => {
+    const onChange = jest.fn();
+
+    render(
+      <CustomSelect
+        data-testid="target"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        allowClearButton
+        onChange={onChange}
+        defaultValue={0}
+      />,
+    );
+
+    expect(getCustomSelectValue()).toEqual('Mike');
+    fireEvent.click(screen.getByRole('button', { hidden: true }));
+    expect(getCustomSelectValue()).toEqual('');
+  });
 });

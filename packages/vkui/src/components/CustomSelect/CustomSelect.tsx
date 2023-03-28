@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { SizeType } from '../../lib/adaptivity';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { defaultFilterFn, getFormFieldModeFromSelectType } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -19,7 +21,13 @@ import { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import { SelectType } from '../Select/Select';
 import { SelectMimicry } from '../SelectMimicry/SelectMimicry';
 import { Footnote } from '../Typography/Footnote/Footnote';
+import { CustomSelectClearButton, CustomSelectClearButtonProps } from './CustomSelectClearButton';
 import styles from './CustomSelect.module.css';
+
+const sizeYClassNames = {
+  none: styles['CustomSelect--sizeY-none'],
+  [SizeType.COMPACT]: styles['CustomSelect--sizeY-compact'],
+};
 
 const findIndexAfter = (options: CustomSelectOptionInterface[] = [], startIndex = -1) => {
   if (startIndex >= options.length - 1) {
@@ -66,7 +74,14 @@ const handleOptionDown: MouseEventHandler = (e: React.MouseEvent<HTMLElement>) =
   e.preventDefault();
 };
 
-function findSelectedIndex(options: CustomSelectOptionInterface[], value: SelectValue) {
+function findSelectedIndex(
+  options: CustomSelectOptionInterface[],
+  value: SelectValue,
+  withClear: boolean,
+) {
+  if (withClear && value === '') {
+    return -1;
+  }
   return (
     options.findIndex((item) => {
       value = typeof item.value === 'number' ? Number(value) : value;
@@ -148,6 +163,15 @@ export interface SelectProps extends NativeSelectProps, FormFieldProps, TrackerO
   onClose?: VoidFunction;
   onOpen?: VoidFunction;
   icon?: React.ReactNode;
+  /**
+   * Кастомная кнопка для очистки значения.
+   * Должна принимать обязательное свойство `onClick`
+   */
+  ClearButton?: React.ComponentType<CustomSelectClearButtonProps>;
+  /**
+   * Если `true`, то справа будет отображаться кнопка для очистки значения
+   */
+  allowClearButton?: boolean;
   dropdownOffsetDistance?: number;
   fixDropdownWidth?: boolean;
   forceDropdownPortal?: boolean;
@@ -185,7 +209,9 @@ export function CustomSelect(props: SelectProps) {
     options: optionsProp = defaultOptions,
     emptyText = 'Ничего не найдено',
     filterFn = defaultFilterFn,
-    icon = <DropdownIcon opened={opened} />,
+    icon: iconProp,
+    ClearButton = CustomSelectClearButton,
+    allowClearButton = false,
     dropdownOffsetDistance = 0,
     fixDropdownWidth = true,
     ...restProps
@@ -194,6 +220,8 @@ export function CustomSelect(props: SelectProps) {
   if (process.env.NODE_ENV === 'development') {
     checkOptionsValueType(optionsProp);
   }
+
+  const { sizeY = 'none' } = useAdaptivity();
 
   const containerRef = React.useRef<HTMLLabelElement>(null);
   const handleRootRef = useExternRef(containerRef, getRootRef);
@@ -204,7 +232,7 @@ export function CustomSelect(props: SelectProps) {
   const [isControlledOutside, setIsControlledOutside] = React.useState(props.value !== undefined);
   const [inputValue, setInputValue] = React.useState('');
   const [nativeSelectValue, setNativeSelectValue] = React.useState(
-    props.value ?? props.defaultValue,
+    () => props.value ?? props.defaultValue ?? (allowClearButton ? '' : undefined),
   );
   const [keyboardInput, setKeyboardInput] = React.useState('');
   const [popperPlacement, setPopperPlacement] = React.useState<PlacementWithAuto | undefined>(
@@ -212,7 +240,7 @@ export function CustomSelect(props: SelectProps) {
   );
   const [options, setOptions] = React.useState(optionsProp);
   const [selectedOptionIndex, setSelectedOptionIndex] = React.useState<number | undefined>(
-    findSelectedIndex(optionsProp, props.value ?? props.defaultValue),
+    findSelectedIndex(optionsProp, props.value ?? props.defaultValue, allowClearButton),
   );
 
   React.useEffect(() => {
@@ -221,7 +249,10 @@ export function CustomSelect(props: SelectProps) {
   }, [props.value]);
 
   useIsomorphicLayoutEffect(() => {
-    if (options.some(({ value }) => nativeSelectValue === value)) {
+    if (
+      options.some(({ value }) => nativeSelectValue === value) ||
+      (allowClearButton && nativeSelectValue === '')
+    ) {
       const event = new Event('change', { bubbles: true });
 
       selectElRef.current?.dispatchEvent(event);
@@ -422,7 +453,7 @@ export function CustomSelect(props: SelectProps) {
           : optionsProp;
 
       setOptions(options);
-      setSelectedOptionIndex(findSelectedIndex(options, value));
+      setSelectedOptionIndex(findSelectedIndex(options, value, allowClearButton));
     },
     [
       filterFn,
@@ -432,6 +463,7 @@ export function CustomSelect(props: SelectProps) {
       props.defaultValue,
       props.value,
       searchable,
+      allowClearButton,
     ],
   );
 
@@ -446,7 +478,11 @@ export function CustomSelect(props: SelectProps) {
   }, []);
 
   const onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const newSelectedOptionIndex = findSelectedIndex(options, e.currentTarget.value);
+    const newSelectedOptionIndex = findSelectedIndex(
+      options,
+      e.currentTarget.value,
+      allowClearButton,
+    );
 
     if (selectedOptionIndex !== newSelectedOptionIndex) {
       if (!isControlledOutside) {
@@ -493,16 +529,16 @@ export function CustomSelect(props: SelectProps) {
             );
           }
           setOptions(options);
-          setSelectedOptionIndex(findSelectedIndex(options, nativeSelectValue));
+          setSelectedOptionIndex(findSelectedIndex(options, nativeSelectValue, allowClearButton));
         }
       } else {
         const options = filter(optionsProp, e.target.value, filterFn);
         setOptions(options);
-        setSelectedOptionIndex(findSelectedIndex(options, nativeSelectValue));
+        setSelectedOptionIndex(findSelectedIndex(options, nativeSelectValue, allowClearButton));
       }
       setInputValue(e.target.value);
     },
-    [filterFn, nativeSelectValue, onInputChangeProp, optionsProp],
+    [filterFn, nativeSelectValue, onInputChangeProp, optionsProp, allowClearButton],
   );
 
   const handleKeyDownSelect = React.useCallback(
@@ -625,9 +661,48 @@ export function CustomSelect(props: SelectProps) {
     }
   }, [emptyText, options, renderDropdown, renderOption]);
 
+  const clearButtonShown = allowClearButton && !opened && nativeSelectValue !== '';
+
+  const clearButton = React.useMemo(() => {
+    if (!clearButtonShown) {
+      return null;
+    }
+
+    return (
+      <ClearButton
+        className={iconProp === undefined ? styles['CustomSelect--clear-icon'] : undefined}
+        onClick={() => setNativeSelectValue('')}
+      />
+    );
+  }, [clearButtonShown, ClearButton, iconProp]);
+
+  const icon = React.useMemo(() => {
+    if (iconProp !== undefined) {
+      return iconProp;
+    }
+
+    return (
+      <DropdownIcon
+        className={clearButtonShown ? styles['CustomSelect__dropdown-icon'] : undefined}
+        opened={opened}
+      />
+    );
+  }, [clearButtonShown, iconProp, opened]);
+
+  const afterIcons = (icon || clearButtonShown) && (
+    <React.Fragment>
+      {clearButton}
+      {icon}
+    </React.Fragment>
+  );
+
   return (
     <label
-      className={classNames(styles['CustomSelect'], className)}
+      className={classNames(
+        styles['CustomSelect'],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        className,
+      )}
       style={style}
       ref={handleRootRef}
       onClick={onLabelClick}
@@ -646,7 +721,7 @@ export function CustomSelect(props: SelectProps) {
           // @ts-expect-error: TS2322 MouseEventHandler<HTMLSelectElement> !== MouseEventHandler<HTMLInputElement>
           onClick={props.onClick}
           before={before}
-          after={icon}
+          after={afterIcons}
           mode={getFormFieldModeFromSelectType(selectType)}
         />
       ) : (
@@ -660,7 +735,7 @@ export function CustomSelect(props: SelectProps) {
           onBlur={onBlur}
           className={openedClassNames}
           before={before}
-          after={icon}
+          after={afterIcons}
           selectType={selectType}
         >
           {selected?.label}
@@ -677,6 +752,7 @@ export function CustomSelect(props: SelectProps) {
         aria-hidden
         className={styles['CustomSelect__control']}
       >
+        {allowClearButton && <option key="" value="" />}
         {optionsProp.map((item) => (
           <option key={`${item.value}`} value={item.value} />
         ))}

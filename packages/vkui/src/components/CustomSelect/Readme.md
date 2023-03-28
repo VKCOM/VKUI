@@ -35,7 +35,12 @@ const Example = () => {
 
       <FormLayoutGroup mode="horizontal">
         <FormItem style={{ flexGrow: 1, flexShrink: 1 }} top="Администратор">
-          <CustomSelect placeholder="Не выбран" options={users} selectType={selectType} />
+          <CustomSelect
+            placeholder="Не выбран"
+            options={users}
+            selectType={selectType}
+            allowClearButton
+          />
         </FormItem>
 
         <FormItem top="Вид селекта" style={{ flexBasis: '200px', flexGrow: 0 }}>
