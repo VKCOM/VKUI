@@ -55,7 +55,7 @@ const Example = () => {
                   key={value}
                   value={value}
                   removable={false}
-                  before={<Avatar size={20} src={src} />}
+                  before={<Avatar size={20} src={src} aria-hidden />}
                   {...rest}
                 >
                   {label}

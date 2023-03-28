@@ -49,6 +49,7 @@ export const Chip = ({
   before = null,
   after,
   children,
+  title = getTitleFromChildren(children),
   className,
   ...restProps
 }: ChipProps) => {
@@ -59,7 +60,6 @@ export const Chip = ({
     },
     [onRemove, value],
   );
-  const title = getTitleFromChildren(children);
 
   return (
     <div
@@ -70,12 +70,12 @@ export const Chip = ({
         className,
       )}
       role="option"
-      aria-label={title}
+      title={title}
       {...restProps}
     >
       <div className={styles['Chip__in']} role="presentation">
         {hasReactNode(before) && <div className={styles['Chip__before']}>{before}</div>}
-        <Footnote className={styles['Chip__content']} title={title} aria-hidden>
+        <Footnote className={styles['Chip__content']} aria-hidden>
           {children}
         </Footnote>
         {hasReactNode(after) && <div className={styles['Chip__after']}>{after}</div>}
