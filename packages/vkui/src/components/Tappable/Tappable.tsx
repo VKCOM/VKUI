@@ -299,7 +299,7 @@ export const Tappable = ({
     'vkuiInternalTappable',
     platform === Platform.IOS && styles['Tappable--ios'],
     sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
-    hasHoverContext && styles['Tappable--hover-has'],
+    hasHover && styles['Tappable--hasHover'],
     hasActive && styles['Tappable--hasActive'],
     hasHover && hovered && !isPresetHoverMode && hoverMode,
     hasActive && active && !isPresetActiveMode && activeMode,
