@@ -1,15 +1,13 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasRootRef } from '../../types';
+import { Footer } from '../Footer/Footer';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { Separator } from '../Separator/Separator';
 import { Spacing } from '../Spacing/Spacing';
-import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './Group.module.css';
 
 const sizeXClassNames = {
@@ -56,7 +54,6 @@ export const Group = ({
   ...restProps
 }: GroupProps) => {
   const { isInsideModal } = React.useContext(ModalRootContext);
-  const platform = usePlatform();
   const { sizeX = 'none' } = useAdaptivity();
 
   let mode: GroupProps['mode'] | 'none' = modeProps;
@@ -93,7 +90,6 @@ export const Group = ({
         ref={getRootRef}
         className={classNames(
           styles['Group'],
-          platform === Platform.IOS && styles['Group--ios'],
           sizeXClassNames[sizeX],
           mode &&
             {
@@ -111,7 +107,9 @@ export const Group = ({
         {header}
         {children}
         {hasReactNode(description) && (
-          <Footnote className={styles['Group__description']}>{description}</Footnote>
+          <Footer Component="span" mode="group">
+            {description}
+          </Footer>
         )}
       </section>
 

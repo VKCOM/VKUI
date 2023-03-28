@@ -1,9 +1,22 @@
 .Footer {
   display: block;
-  /* TODO v5: переделать на padding */
-  margin: 24px var(--vkui--size_base_padding_horizontal--regular);
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: var(--vkui_internal--footer_vertical_padding, 24px)
+    var(--vkui--size_base_padding_horizontal--regular);
   text-align: center;
   color: var(--vkui--color_text_secondary);
+}
+
+.Footer--mode-group {
+  padding-top: 4px;
+  text-align: left;
+}
+
+.Footer--mode-list {
+  /* TODO v6: переделать на padding */
+  padding: 0;
+  margin: 24px var(--vkui--size_base_padding_horizontal--regular);
+}
+
+.Footer--mode-loader {
+  --vkui_internal--footer_vertical_padding: 20px;
 }

@@ -4,14 +4,27 @@ import { HasComponent } from '../../types';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './Footer.module.css';
 
-export type FooterProps = React.AllHTMLAttributes<HTMLElement> & HasComponent;
+export type FooterProps = React.AllHTMLAttributes<HTMLElement> &
+  HasComponent & {
+    mode?: 'group' | 'list' | 'loader';
+  };
+
+const modeStyles = {
+  group: styles['Footer--mode-group'],
+  list: styles['Footer--mode-list'],
+  loader: styles['Footer--mode-loader'],
+};
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Footer
  */
-export const Footer = ({ children, className, ...restProps }: FooterProps) => {
+export const Footer = ({ children, className, mode = 'list', ...restProps }: FooterProps) => {
   return (
-    <Footnote Component="footer" {...restProps} className={classNames(styles['Footer'], className)}>
+    <Footnote
+      Component="footer"
+      className={classNames(styles['Footer'], modeStyles[mode], className)}
+      {...restProps}
+    >
       {children}
     </Footnote>
   );
