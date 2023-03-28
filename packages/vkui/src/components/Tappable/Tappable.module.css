@@ -23,7 +23,7 @@ https://github.com/VKCOM/VKUI/pull/3641
   z-index: var(--vkui_internal--z_index_tappable_element);
 }
 
-.Tappable--hover-has,
+.Tappable--hasHover,
 .Tappable--hasActive {
   cursor: pointer;
 }
