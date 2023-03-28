@@ -1,8 +1,11 @@
-import React, { HTMLProps } from 'react';
-import { HasRef } from '../../types';
+import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
+import { HasRootRef } from '../../types';
 import { AccordionSummary } from './AccordionSummary';
+import styles from './Accordion.module.css';
 
-export type AccordionProps = HTMLProps<HTMLDetailsElement> & HasRef<HTMLDetailsElement>;
+export type AccordionProps = React.DetailsHTMLAttributes<HTMLDetailsElement> &
+  HasRootRef<HTMLDetailsElement>;
 
 /**
  * Компонент, позволяет отображать несколько разделов контента в ограниченном
@@ -13,8 +16,8 @@ export type AccordionProps = HTMLProps<HTMLDetailsElement> & HasRef<HTMLDetailsE
  * @version 5.3.0
  * @see  https://vkcom.github.io/VKUI/#/Accordion
  */
-export const Accordion = ({ getRef, ...restProps }: AccordionProps) => (
-  <details ref={getRef} {...restProps} />
+export const Accordion = ({ getRootRef, className, ...restProps }: AccordionProps) => (
+  <details className={classNames(styles['Accordion'], className)} ref={getRootRef} {...restProps} />
 );
 
 Accordion.Summary = AccordionSummary;
