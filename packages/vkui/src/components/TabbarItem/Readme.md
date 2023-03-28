@@ -14,10 +14,10 @@ const [indicator, setIndicator] = useState('one');
 >
   <div style={{ maxWidth: 768, margin: 'auto' }}>
     <Tabbar style={{ position: 'static', margin: '0 0 10px' }}>
-      <TabbarItem selected={simple === 'one'} onClick={() => setSimple('one')}>
+      <TabbarItem selected={simple === 'one'} onClick={() => setSimple('one')} aria-label="Новости">
         <Icon28NewsfeedOutline />
       </TabbarItem>
-      <TabbarItem selected={simple === 'two'} onClick={() => setSimple('two')}>
+      <TabbarItem selected={simple === 'two'} onClick={() => setSimple('two')} aria-label="Профиль">
         <Icon28UserCircleOutline />
       </TabbarItem>
     </Tabbar>
