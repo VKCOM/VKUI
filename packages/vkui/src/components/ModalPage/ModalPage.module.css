@@ -114,6 +114,7 @@
 
 .ModalPage__content-in {
   position: relative;
+  height: 100%;
   padding-bottom: var(--vkui_internal--safe_area_inset_bottom);
 }
 
