@@ -13,6 +13,11 @@
           Понравилось Муртолу Левзачеву
         </UsersStack>
       </Div>
+      <Div>
+        <UsersStack direction="row-reverse" photos={[getAvatarUrl('user_lihachyov')]}>
+          Понравилось Муртолу Левзачеву
+        </UsersStack>
+      </Div>
     </Group>
 
     <Group>
@@ -50,7 +55,7 @@
             getAvatarUrl('user_xyz'),
           ]}
           size="l"
-          layout="vertical"
+          direction="column"
         >
           Алексей, Илья, Михаил
           <br />и ещё 3 человека

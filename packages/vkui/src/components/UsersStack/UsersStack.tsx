@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useId } from '../../hooks/useId';
+import { warnOnce } from '../../lib/warnOnce';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './UsersStack.module.css';
@@ -16,6 +17,8 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: 's' | 'm' | 'l';
   /**
    * Вертикальный режим рекомендуется использовать с размером `m`
+   * TODO v6: удалить
+   * @deprecated
    */
   layout?: 'vertical' | 'horizontal';
   /**
@@ -29,6 +32,12 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
    * Если число больше 99, то счетчик скроется.
    */
   count?: number;
+  /**
+   * Определяет положение элементов
+   * Режим `column` рекомендуется использовать с размером `m`
+   * @version 5.3.0
+   */
+  direction?: 'row' | 'row-reverse' | 'column';
 }
 
 interface PathElementProps extends React.SVGAttributes<SVGElement> {
@@ -98,6 +107,8 @@ const photoSizes: Record<NonNullable<UsersStackProps['size']>, PhotoSizeType> = 
   l: 32,
 };
 
+const warn = warnOnce('UsersStack');
+
 /**
  * @see https://vkcom.github.io/VKUI/#/UsersStack
  */
@@ -106,9 +117,10 @@ export const UsersStack = ({
   visibleCount = 3,
   count = Math.max(0, photos.length - visibleCount),
   size = 'm',
-  layout = 'horizontal',
+  layout,
   children,
   className,
+  direction: directionProp = 'row',
   ...restProps
 }: UsersStackProps) => {
   const cmpId = useId();
@@ -147,6 +159,7 @@ export const UsersStack = ({
       </svg>
     );
   });
+
   const othersElement = canShowOthers ? (
     <CounterTypography
       caps
@@ -156,6 +169,12 @@ export const UsersStack = ({
       +{count}
     </CounterTypography>
   ) : null;
+
+  if (process.env.NODE_ENV === 'development' && layout) {
+    warn('Свойство "layout" будет удалено в v6. Используйте свойство "direction"');
+  }
+
+  const direction = (layout && (layout === 'vertical' ? 'column' : 'row')) || directionProp;
 
   return (
     <div
@@ -168,9 +187,10 @@ export const UsersStack = ({
           l: styles['UsersStack--size-l'],
         }[size],
         {
-          vertical: styles['UsersStack--layout-vertical'],
-          horizontal: styles['UsersStack--layout-horizontal'],
-        }[layout],
+          'row': styles['UsersStack--direction-row'],
+          'row-reverse': styles['UsersStack--direction-row-reverse'],
+          'column': styles['UsersStack--direction-column'],
+        }[direction],
         className,
       )}
     >
