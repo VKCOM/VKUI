@@ -11,7 +11,7 @@ export interface FormProps
 }
 
 /**
- * @since v5.3.0
+ * @since v5.4.0
  * @see https://vkcom.github.io/VKUI/#/Form
  */
 export const Form = ({

@@ -12,7 +12,7 @@ export type FormLayoutProps = React.AllHTMLAttributes<HTMLElement> &
 
 const warn = warnOnce('FormLayout');
 /**
- * @deprecated since v5.3.0
+ * @deprecated since v5.4.0
  * @see https://vkcom.github.io/VKUI/#/FormLayout
  */
 export const FormLayout = ({
