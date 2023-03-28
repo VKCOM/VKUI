@@ -95,6 +95,10 @@
   border-bottom-right-radius: inherit;
 }
 
+.ModalPage__header:empty + .ModalPage__content-wrap {
+  border-radius: inherit;
+}
+
 .ModalPage__content {
   height: 100%;
   overflow-y: hidden;
