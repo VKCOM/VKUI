@@ -66,7 +66,8 @@
   animation: vkui-animation-panelheadercontext-translate-out 0.2s ease;
 }
 
-.PanelHeaderContext .List {
+.PanelHeaderContext__content {
+  overflow: hidden;
   background: var(--vkui--color_background_content);
 }
 
@@ -79,16 +80,14 @@
  * platform !== Platform.IOS ||
  * (platform === Platform.IOS && isDesktop)
  */
-.PanelHeaderContext--rounded:not(.PanelHeaderContext--ios) .List,
-.PanelHeaderContext--sizeX-regular.PanelHeaderContext--ios .PanelHeaderContext--rounded .List {
-  overflow: hidden;
+.PanelHeaderContext:not(.PanelHeaderContext--ios) .PanelHeaderContext__content,
+.PanelHeaderContext--sizeX-regular.PanelHeaderContext--ios .PanelHeaderContext__content {
   border-radius: 12px;
   padding: 8px 0;
 }
 
 @media (--sizeX-regular) {
-  .PanelHeaderContext--sizeX-none.PanelHeaderContext--ios .PanelHeaderContext--rounded .List {
-    overflow: hidden;
+  .PanelHeaderContext--sizeX-none.PanelHeaderContext--ios .PanelHeaderContext__content {
     border-radius: 12px;
     padding: 8px 0;
   }
@@ -104,8 +103,6 @@
 
 .PanelHeaderContext--sizeX-regular .PanelHeaderContext__content {
   border-radius: 12px;
-  overflow: hidden;
-  background: var(--vkui--color_background_content);
 }
 
 .PanelHeaderContext--sizeX-regular .PanelHeaderContext__content {
@@ -119,8 +116,6 @@
 
   .PanelHeaderContext--sizeX-none .PanelHeaderContext__content {
     border-radius: 12px;
-    overflow: hidden;
-    background: var(--vkui--color_background_content);
   }
 
   .PanelHeaderContext--sizeX-none .PanelHeaderContext__content {

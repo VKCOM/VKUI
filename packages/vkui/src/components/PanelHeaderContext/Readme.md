@@ -45,28 +45,24 @@ const Example = () => {
               </PanelHeaderContent>
             </PanelHeader>
             <PanelHeaderContext opened={contextOpened} onClose={toggleContext}>
-              <List>
-                <Cell
-                  before={<Icon28UsersOutline />}
-                  after={
-                    mode === 'all' ? <Icon24Done fill="var(--vkui--color_icon_accent)" /> : null
-                  }
-                  onClick={select}
-                  data-mode="all"
-                >
-                  Communities
-                </Cell>
-                <Cell
-                  before={<Icon28SettingsOutline />}
-                  after={
-                    mode === 'managed' ? <Icon24Done fill="var(--vkui--color_icon_accent)" /> : null
-                  }
-                  onClick={select}
-                  data-mode="managed"
-                >
-                  Managed Communities
-                </Cell>
-              </List>
+              <SimpleCell
+                before={<Icon28UsersOutline />}
+                after={mode === 'all' ? <Icon24Done fill="var(--vkui--color_icon_accent)" /> : null}
+                onClick={select}
+                data-mode="all"
+              >
+                Communities
+              </SimpleCell>
+              <SimpleCell
+                before={<Icon28SettingsOutline />}
+                after={
+                  mode === 'managed' ? <Icon24Done fill="var(--vkui--color_icon_accent)" /> : null
+                }
+                onClick={select}
+                data-mode="managed"
+              >
+                Managed Communities
+              </SimpleCell>
             </PanelHeaderContext>
             <Group>
               <div style={{ height: 300 }} />
