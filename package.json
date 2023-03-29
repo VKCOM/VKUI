@@ -42,7 +42,7 @@
     "@vkontakte/vkui-tokens": "4.30.1",
     "autoprefixer": "^10.4.14",
     "chalk": "^4.1.0",
-    "concurrently": "^7.3.0",
+    "concurrently": "^8.0.1",
     "cross-env": "^7.0.2",
     "css-loader": "^6.5.1",
     "cssnano": "^6.0.0",
