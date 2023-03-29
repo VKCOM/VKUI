@@ -310,6 +310,7 @@ const baseConfig = {
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Touch/Touch.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/PlatformProvider/PlatformProvider.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/AppearanceProvider/AppearanceProvider.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/VisuallyHidden/VisuallyHidden.tsx`,
           ],
         },
       ],

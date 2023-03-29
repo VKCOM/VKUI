@@ -294,6 +294,7 @@ export { ModalCardBase } from './components/ModalCardBase/ModalCardBase';
 export type { ModalCardBaseProps } from './components/ModalCardBase/ModalCardBase';
 export { VisuallyHiddenInput } from './components/VisuallyHiddenInput/VisuallyHiddenInput';
 export type { VisuallyHiddenInputProps } from './components/VisuallyHiddenInput/VisuallyHiddenInput';
+export { VisuallyHidden } from './components/VisuallyHidden/VisuallyHidden';
 export { AdaptiveIconRenderer } from './components/AdaptiveIconRenderer/AdaptiveIconRenderer';
 export type { AdaptiveIconRendererProps } from './components/AdaptiveIconRenderer/AdaptiveIconRenderer';
 
