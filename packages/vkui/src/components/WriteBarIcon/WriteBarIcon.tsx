@@ -14,9 +14,9 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
+import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { Counter } from '../Counter/Counter';
 import { Tappable } from '../Tappable/Tappable';
-import { WriteBarIconRenderer } from './WriteBarIconRenderer';
 import styles from './WriteBarIcon.module.css';
 
 export interface WriteBarIconProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -104,7 +104,7 @@ export const WriteBarIcon = ({
       )}
     >
       <span className={styles['WriteBarIcon__in']}>
-        {predefinedIcons ? <WriteBarIconRenderer {...predefinedIcons} /> : children}
+        {predefinedIcons ? <AdaptiveIconRenderer {...predefinedIcons} /> : children}
       </span>
       {hasReactNode(count) && (
         <Counter className={styles['WriteBarIcon__counter']} size="s">

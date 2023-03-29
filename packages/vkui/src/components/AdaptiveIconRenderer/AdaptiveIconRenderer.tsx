@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 
-export interface WriteBarIconRendererProps {
+export interface AdaptiveIconRendererProps {
   IconCompact: React.ComponentType<{ className?: string }>;
   IconRegular: React.ComponentType<{ className?: string }>;
 }
 
-export const WriteBarIconRenderer = ({ IconCompact, IconRegular }: WriteBarIconRendererProps) => {
+export const AdaptiveIconRenderer = ({ IconCompact, IconRegular }: AdaptiveIconRendererProps) => {
   const { sizeY } = useAdaptivityConditionalRender();
 
   return (
