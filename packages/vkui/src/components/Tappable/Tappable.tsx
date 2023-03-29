@@ -59,6 +59,10 @@ export interface TappableProps
    */
   hasHover?: boolean;
   /**
+   * Позволяет управлять hovered-состоянием извне
+   */
+  hovered?: boolean;
+  /**
    * Указывает, должен ли компонент реагировать на active-состояние
    */
   hasActive?: boolean;
@@ -184,6 +188,7 @@ export const Tappable = ({
   onEnter,
   onLeave,
   className,
+  hovered: hoveredProp,
   ...props
 }: TappableProps) => {
   Component = Component || ((props.href ? 'a' : 'div') as React.ElementType);
@@ -204,7 +209,7 @@ export const Tappable = ({
     setFalse: setHoveredFalse,
   } = useBooleanState(false);
 
-  const hovered = _hovered && !props.disabled;
+  const hovered = (_hovered || hoveredProp) && !props.disabled;
   const hasActive = _hasActive && !childHover && !props.disabled;
   const hasHover = hasHoverContext && _hasHover && !childHover;
   const isCustomElement =
