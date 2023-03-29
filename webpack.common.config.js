@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
-const { VKUI_PACKAGE, generateScopedName } = require('./shared');
+const { VKUI_PACKAGE } = require('./shared');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -44,13 +44,8 @@ const rules = [
       {
         loader: 'css-loader',
         options: {
-          importLoaders: 1,
           modules: {
-            mode: 'pure',
-            getLocalIdent(context, localIdentName, localName) {
-              return generateScopedName(localName);
-            },
-            exportLocalsConvention: 'asIs',
+            localIdentName: '[local]--[hash:base64:5]',
           },
         },
       },

@@ -12,7 +12,7 @@
   position: relative;
 }
 
-.Tabbar .TabbarItem {
+:global(.vkuiInternalTabbar) .TabbarItem {
   flex-shrink: 0;
   max-width: 100%;
   min-width: 0;

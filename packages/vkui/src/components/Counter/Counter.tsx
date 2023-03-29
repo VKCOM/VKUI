@@ -48,6 +48,7 @@ export const Counter = ({
     <span
       {...restProps}
       className={classNames(
+        'vkuiInternalCounter',
         styles['Counter'],
         modeClassNames[mode],
         sizeClassNames[size],

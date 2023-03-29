@@ -44,7 +44,7 @@ export const Panel = ({
       className={classNames(
         styles['Panel'],
         sizeXClassNames[sizeX],
-        centered && styles['Panel--centered'],
+        centered && 'vkuiInternalPanel--centered',
         className,
       )}
     >

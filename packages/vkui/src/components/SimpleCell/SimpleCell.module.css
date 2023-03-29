@@ -105,12 +105,8 @@
   padding-left: 8px;
 }
 
-.SimpleCell__after > :global(.vkuiIcon:last-child) {
+.SimpleCell__after > :global(.vkuiIcon):last-child {
   padding-right: 2px;
-}
-
-.SimpleCell__after .IconButton:last-child {
-  margin-right: -12px;
 }
 
 .SimpleCell__typography {
@@ -138,10 +134,6 @@
   color: var(--vkui--color_icon_tertiary);
   padding-right: 4px;
   padding-left: 12px;
-}
-
-.SimpleCell--ios .SimpleCell__after .IconButton:last-child {
-  margin-right: -9px;
 }
 
 .SimpleCell--sizeY-regular.SimpleCell--ios

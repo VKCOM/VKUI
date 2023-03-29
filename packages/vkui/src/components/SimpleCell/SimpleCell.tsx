@@ -122,7 +122,7 @@ export const SimpleCell = ({
       )}
     >
       {before}
-      <div className={styles['SimpleCell__main']}>
+      <div className={classNames(styles['SimpleCell__main'], 'vkuiInternalSimpleCell__main')}>
         {subhead && (
           <Subhead
             Component="span"

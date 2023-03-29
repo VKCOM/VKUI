@@ -17,7 +17,7 @@ import styles from './PanelHeader.module.css';
 
 const platformClassNames = {
   ios: classNames(styles['PanelHeader--ios'], 'vkuiInternalPanelHeader--ios'),
-  android: styles['PanelHeader--android'],
+  android: classNames(styles['PanelHeader--android'], 'vkuiInternalPanelHeader--android'),
   vkcom: classNames(styles['PanelHeader--vkcom'], 'vkuiInternalPanelHeader--vkcom'),
 };
 
@@ -125,7 +125,11 @@ export const PanelHeader = ({
       ref={isFixed ? getRootRef : getRef}
     >
       {isFixed ? (
-        <FixedLayout className={styles['PanelHeader__fixed']} vertical="top" getRootRef={getRef}>
+        <FixedLayout
+          className={classNames(styles['PanelHeader__fixed'], 'vkuiInternalPanelHeader__fixed')}
+          vertical="top"
+          getRootRef={getRef}
+        >
           <PanelHeaderIn before={before} after={after} separator={separator}>
             {children}
           </PanelHeaderIn>

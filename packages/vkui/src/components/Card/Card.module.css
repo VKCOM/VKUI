@@ -67,23 +67,25 @@
  * Group
  * SplitCol
  */
-:global(.vkuiInternalGroup--mode-card .vkuiInternalCardScroll--size-l) .Card,
-:global(.vkuiInternalSplitCol--spaced .vkuiInternalCardScroll--size-l) .Card {
+:global(.vkuiInternalGroup--mode-card) :global(.vkuiInternalCardScroll--size-l) .Card,
+:global(.vkuiInternalSplitCol--spaced) :global(.vkuiInternalCardScroll--size-l) .Card {
   width: calc(100% - 32px);
   margin-right: 16px;
 }
 
-:global(.vkuiInternalGroup--mode-card .vkuiInternalCardScroll--size-l) .Card:last-of-type,
-:global(.vkuiInternalSplitCol--spaced .vkuiInternalCardScroll--size-l) .Card:last-of-type {
+:global(.vkuiInternalGroup--mode-card) :global(.vkuiInternalCardScroll--size-l) .Card:last-of-type,
+:global(.vkuiInternalSplitCol--spaced) :global(.vkuiInternalCardScroll--size-l) .Card:last-of-type {
   margin-right: 0;
 }
 
 @media (--sizeX-regular) {
-  :global(.vkuiInternalGroup--mode-none .vkuiInternalCardScroll--size-l) .Card:last-of-type {
+  :global(.vkuiInternalGroup--mode-none)
+    :global(.vkuiInternalCardScroll--size-l)
+    .Card:last-of-type {
     margin-right: 0;
   }
 
-  :global(.vkuiInternalGroup--mode-none .vkuiInternalCardScroll--size-l) .Card {
+  :global(.vkuiInternalGroup--mode-none) :global(.vkuiInternalCardScroll--size-l) .Card {
     width: calc(100% - 32px);
     margin-right: 16px;
   }

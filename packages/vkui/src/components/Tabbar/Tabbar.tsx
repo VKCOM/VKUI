@@ -40,6 +40,7 @@ export const Tabbar = ({ children, shadow = true, mode, className, ...restProps 
   return (
     <div
       className={classNames(
+        'vkuiInternalTabbar',
         styles['Tabbar'],
         platform === Platform.IOS && styles['Tabbar--ios'],
         getItemsLayoutClassName(mode, children),

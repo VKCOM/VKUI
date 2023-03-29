@@ -3,7 +3,7 @@ import { promisify } from 'util';
 import cbGlob from 'glob';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import webpack from 'webpack';
-import { generateScopedName, VKUI_PACKAGE } from '../shared';
+import { VKUI_PACKAGE } from '../shared';
 import webpackCommonConfig from '../webpack.common.config';
 
 const glob = promisify(cbGlob);
@@ -97,9 +97,6 @@ export async function generateWebpackConfig() {
                 importLoaders: 1,
                 modules: {
                   mode: 'pure',
-                  getLocalIdent(_context: string, _localIdentName: string, localName: string) {
-                    return generateScopedName(localName);
-                  },
                   exportLocalsConvention: 'asIs',
                 },
               },

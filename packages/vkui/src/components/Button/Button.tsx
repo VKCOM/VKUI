@@ -7,6 +7,7 @@ import { Platform } from '../../lib/platform';
 import { HasAlign } from '../../types';
 import { Spinner } from '../Spinner/Spinner';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
+import '../Spinner/Spinner.module.css';
 import styles from './Button.module.css';
 
 const sizeYClassNames = {

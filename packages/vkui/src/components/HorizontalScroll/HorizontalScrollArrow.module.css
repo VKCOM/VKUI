@@ -49,14 +49,14 @@
 /**
  * CMP: BaseGallery, HorizontalScroll
  */
-:global(.vkuiInternalBaseGallery:hover) .HorizontalScrollArrow,
-:global(.vkuiInternalHorizontalScroll:hover) .HorizontalScrollArrow {
+:global(.vkuiInternalBaseGallery):hover .HorizontalScrollArrow,
+:global(.vkuiInternalHorizontalScroll):hover .HorizontalScrollArrow {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-:global(.vkuiInternalBaseGallery:hover) .HorizontalScrollArrow:hover,
-:global(.vkuiInternalHorizontalScroll:hover) .HorizontalScrollArrow:hover,
+:global(.vkuiInternalBaseGallery):hover .HorizontalScrollArrow:hover,
+:global(.vkuiInternalHorizontalScroll):hover .HorizontalScrollArrow:hover,
 :global(.vkuiInternalHorizontalScroll--withConstArrows) .HorizontalScrollArrow,
-:global(.vkuiInternalHorizontalScroll--withConstArrows:hover) .HorizontalScrollArrow {
+:global(.vkuiInternalHorizontalScroll--withConstArrows):hover .HorizontalScrollArrow {
   opacity: 1;
 }

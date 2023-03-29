@@ -95,6 +95,7 @@ export const PanelHeaderButton = ({
       activeEffectDelay={200}
       activeMode={activeMode}
       className={classNames(
+        'vkuiInternalPanelHeaderButton',
         styles['PanelHeaderButton'],
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]

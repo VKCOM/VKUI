@@ -11,12 +11,12 @@
  * CMP:
  * PanelHeader
  */
-.PanelHeader .Tabs {
+:global(.vkuiInternalPanelHeader) .Tabs {
   overflow: hidden;
   font-family: var(--vkui--font_family_base);
 }
 
-.PanelHeader .Tabs::after {
+:global(.vkuiInternalPanelHeader) .Tabs::after {
   display: block;
   width: 1000px;
   content: '';
@@ -40,7 +40,8 @@
  */
 
 /* Нужно для закрашивания прозрачной области нижнего инсета на iphone x */
-:global(.vkuiInternalFixedLayout--ios.vkuiInternalFixedLayout--vertical-bottom) .Tabs::after {
+:global(.vkuiInternalFixedLayout--ios):global(.vkuiInternalFixedLayout--vertical-bottom)
+  .Tabs::after {
   position: absolute;
   left: 0;
   top: 0;
@@ -50,8 +51,9 @@
   background: var(--vkui--color_background_content);
 }
 
-:global(.vkuiInternalFixedLayout--ios.vkuiInternalFixedLayout--vertical-bottom) .Tabs__in,
-:global(.vkuiInternalFixedLayout--ios.vkuiInternalFixedLayout--vertical-bottom) .Separator {
+:global(.vkuiInternalFixedLayout--ios):global(.vkuiInternalFixedLayout--vertical-bottom) .Tabs__in,
+:global(.vkuiInternalFixedLayout--ios):global(.vkuiInternalFixedLayout--vertical-bottom)
+  .Separator {
   position: relative;
   z-index: var(--vkui_internal--z_index_tabs);
 }

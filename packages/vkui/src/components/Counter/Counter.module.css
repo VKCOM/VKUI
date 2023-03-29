@@ -52,3 +52,14 @@
   );
   color: var(--vkui_internal--counter_inherit_color, var(--vkui--color_text_contrast_themed));
 }
+
+/**
+ * CMP:
+ * PanelHeaderButton
+ */
+:global(.vkuiInternalPanelHeaderButton) .Counter {
+  position: absolute;
+  padding: 0;
+  top: 8px;
+  right: 2px;
+}

@@ -60,7 +60,7 @@
 }
 
 .PullToRefresh__spinner--on .PullToRefresh__spinner-path {
-  animation: vkui-rotator var(--vkui_internal--duration) linear infinite;
+  animation: vkui-ptr-rotator var(--vkui_internal--duration) linear infinite;
 }
 
 .PullToRefresh__content {
@@ -87,5 +87,15 @@
 
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes vkui-ptr-rotator {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }

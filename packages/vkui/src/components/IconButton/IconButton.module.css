@@ -83,8 +83,10 @@
  * - FormLayoutGroup
  * - FormField
  */
-:global(.vkuiInternalFormItem--removable .vkuiInternalRemovable__content) > .IconButton,
-:global(.vkuiInternalFormLayoutGroup--removable .vkuiInternalRemovable__content) > .IconButton,
+:global(.vkuiInternalFormItem--removable) :global(.vkuiInternalRemovable__content) > .IconButton,
+:global(.vkuiInternalFormLayoutGroup--removable)
+  :global(.vkuiInternalRemovable__content)
+  > .IconButton,
 :global(.vkuiInternalFormField__after) .IconButton {
   display: flex;
   align-items: center;
@@ -95,7 +97,9 @@
   border-radius: var(--vkui--size_border_radius--regular);
 }
 
-:global(.vkuiInternalFormField__after) .IconButton :global(.vkuiIcon.vkuiIcon.vkuiIcon) {
+:global(.vkuiInternalFormField__after)
+  .IconButton
+  :global(.vkuiIcon):global(.vkuiIcon):global(.vkuiIcon) {
   padding: 0;
 }
 
@@ -104,9 +108,11 @@
   height: var(--vkui--size_field_height--compact);
 }
 
-:global(.vkuiInternalFormItem--removable .vkuiInternalRemovable__content)
+:global(.vkuiInternalFormItem--removable)
+  :global(.vkuiInternalRemovable__content)
   > .IconButton--sizeY-compact,
-:global(.vkuiInternalFormLayoutGroup--removable .vkuiInternalRemovable__content)
+:global(.vkuiInternalFormLayoutGroup--removable)
+  :global(.vkuiInternalRemovable__content)
   > .IconButton--sizeY-compact {
   height: var(--vkui--size_field_height--compact);
 }
@@ -117,10 +123,26 @@
     height: var(--vkui--size_field_height--compact);
   }
 
-  :global(.vkuiInternalFormItem--removable .vkuiInternalRemovable__content)
+  :global(.vkuiInternalFormItem--removable)
+    :global(.vkuiInternalRemovable__content)
     > .IconButton--sizeY-none,
-  :global(.vkuiInternalFormLayoutGroup--removable .vkuiInternalRemovable__content)
+  :global(.vkuiInternalFormLayoutGroup--removable)
+    :global(.vkuiInternalRemovable__content)
     > .IconButton--sizeY-none {
     height: var(--vkui--size_field_height--compact);
   }
+}
+
+/**
+ * CMP:
+ * SimpleCell
+ */
+:global(.vkuiInternalSimpleCell__after) .IconButton:last-child {
+  margin-right: -12px;
+}
+
+:global(.vkuiInternalSimpleCell--ios)
+  :global(.vkuiInternalSimpleCell__after)
+  .IconButton:last-child {
+  margin-right: -9px;
 }
