@@ -250,6 +250,7 @@ const baseConfig = {
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ModalCardBase/ModalCardBase.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Pagination/Pagination.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/AdaptiveIconRenderer/AdaptiveIconRenderer.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ScrollArrow/ScrollArrow.tsx`,
           ],
         },
         {

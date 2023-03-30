@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
-import { HorizontalScrollArrowProps } from '../HorizontalScroll/HorizontalScrollArrow';
+import { ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
 import { TouchEvent, TouchEventHandler } from '../Touch/Touch';
 
 export interface GallerySlidesState {
@@ -47,5 +47,5 @@ export interface BaseGalleryProps
   isDraggable?: boolean;
   showArrows?: boolean;
   hasPointer?: boolean;
-  arrowSize?: HorizontalScrollArrowProps['size'];
+  arrowSize?: ScrollArrowProps['size'];
 }

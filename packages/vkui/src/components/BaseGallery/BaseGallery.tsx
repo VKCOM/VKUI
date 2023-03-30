@@ -5,7 +5,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { HorizontalScrollArrow } from '../HorizontalScroll/HorizontalScrollArrow';
+import { ScrollArrow } from '../ScrollArrow/ScrollArrow';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import { calcMax, calcMin } from './helpers';
 import { BaseGalleryProps, GallerySlidesState, LayoutState, ShiftingState } from './types';
@@ -311,7 +311,6 @@ export const BaseGallery = ({
       {...restProps}
       className={classNames(
         styles['BaseGallery'],
-        'vkuiInternalBaseGallery',
         align === 'center' && styles['BaseGallery--align-center'],
         slideWidth === 'custom' && styles['BaseGallery--custom-width'],
         isDraggable && styles['BaseGallery--draggable'],
@@ -365,10 +364,20 @@ export const BaseGallery = ({
       )}
 
       {showArrows && hasPointer && canSlideLeft && (
-        <HorizontalScrollArrow direction="left" onClick={slideLeft} size={arrowSize} />
+        <ScrollArrow
+          className={styles['BaseGallery__arrow']}
+          direction="left"
+          onClick={slideLeft}
+          size={arrowSize}
+        />
       )}
       {showArrows && hasPointer && canSlideRight && (
-        <HorizontalScrollArrow direction="right" onClick={slideRight} size={arrowSize} />
+        <ScrollArrow
+          className={styles['BaseGallery__arrow']}
+          direction="right"
+          onClick={slideRight}
+          size={arrowSize}
+        />
       )}
     </div>
   );
