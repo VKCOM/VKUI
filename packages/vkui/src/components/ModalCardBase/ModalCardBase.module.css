@@ -10,6 +10,8 @@
   justify-content: center;
   pointer-events: initial;
   box-shadow: var(--vkui--elevation3);
+
+  --vkui_internal--background: var(--vkui--color_background_modal);
 }
 
 .ModalCardBase__container--softwareKeyboardOpened {
