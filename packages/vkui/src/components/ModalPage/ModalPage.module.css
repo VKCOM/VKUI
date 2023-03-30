@@ -73,6 +73,8 @@
   flex-direction: column;
   border-top-right-radius: var(--vkui--size_border_radius_paper--regular);
   border-top-left-radius: var(--vkui--size_border_radius_paper--regular);
+
+  --vkui_internal--background: var(--vkui--color_background_modal);
 }
 
 .ModalPage--desktop .ModalPage__in {
