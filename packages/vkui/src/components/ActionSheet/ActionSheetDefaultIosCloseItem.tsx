@@ -4,7 +4,7 @@ import { ActionSheetItem, ActionSheetItemProps } from '../ActionSheetItem/Action
 export const ActionSheetDefaultIosCloseItem = (props: ActionSheetItemProps) => {
   return (
     <ActionSheetItem autoClose mode="cancel" {...props}>
-      Отменить
+      Отмена
     </ActionSheetItem>
   );
 };
