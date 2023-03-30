@@ -6,11 +6,13 @@ import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePatchChildrenRef } from '../../hooks/usePatchChildrenRef';
 import { useTimeout } from '../../hooks/useTimeout';
 import { useDOM } from '../../lib/dom';
-import { FocusTrap } from '../FocusTrap/FocusTrap';
+import { FocusTrap, FocusTrapProps } from '../FocusTrap/FocusTrap';
 import { Popper, PopperCommonProps } from '../Popper/Popper';
 import styles from './Popover.module.css';
 
-export interface PopoverProps extends Omit<PopperCommonProps, 'arrow' | 'arrowClassName'> {
+export interface PopoverProps
+  extends Omit<PopperCommonProps, 'arrow' | 'arrowClassName'>,
+    Pick<FocusTrapProps, 'restoreFocus'> {
   /**
    * Механика вызова всплывающего окна.
    *
@@ -69,6 +71,7 @@ export const Popover = ({
   className,
   getRef,
   onShownChange,
+  restoreFocus = true,
   ...restProps
 }: PopoverProps) => {
   const { document } = useDOM();
@@ -179,7 +182,11 @@ export const Popover = ({
             } as React.CSSProperties
           }
           renderContent={({ className: wrapperClassName }) => (
-            <FocusTrap className={wrapperClassName} onClose={handleContentKeyDownEscape}>
+            <FocusTrap
+              className={wrapperClassName}
+              onClose={handleContentKeyDownEscape}
+              restoreFocus={restoreFocus}
+            >
               {content}
             </FocusTrap>
           )}
