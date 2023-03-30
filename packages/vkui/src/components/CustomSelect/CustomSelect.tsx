@@ -226,7 +226,7 @@ export function CustomSelect(props: SelectProps) {
   const containerRef = React.useRef<HTMLLabelElement>(null);
   const handleRootRef = useExternRef(containerRef, getRootRef);
   const scrollBoxRef = React.useRef<HTMLDivElement | null>(null);
-  const selectElRef = React.useRef<HTMLSelectElement>(null);
+  const selectElRef = useExternRef(getRef);
 
   const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number | undefined>(-1);
   const [isControlledOutside, setIsControlledOutside] = React.useState(props.value !== undefined);
