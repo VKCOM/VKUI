@@ -13,6 +13,8 @@ export const Select = ({
   options = [],
   popupDirection,
   renderOption,
+  allowClearButton,
+  ClearButton,
   ...props
 }: SelectProps) => {
   const hasPointer = useAdaptivityHasPointer();
@@ -24,6 +26,8 @@ export const Select = ({
           options={options}
           popupDirection={popupDirection}
           renderOption={renderOption}
+          allowClearButton={allowClearButton}
+          ClearButton={ClearButton}
           {...props}
         />
       )}
