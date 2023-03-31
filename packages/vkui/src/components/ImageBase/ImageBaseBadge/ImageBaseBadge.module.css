@@ -11,7 +11,8 @@
 }
 
 .ImageBaseBadge--background-stroke {
-  background-color: var(--vkui--color_background_content);
+  /* цвет фона для скрывания элементов */
+  background-color: var(--vkui_internal--background, var(--vkui--color_background_content));
 }
 
 .ImageBaseBadge--background-shadow::before {
