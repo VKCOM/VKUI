@@ -8,7 +8,7 @@
     "@types/node": "^18.11.18",
     "@types/semver": "^7.3.13",
     "@vercel/ncc": "^0.36.1",
-    "typescript": "^4.9.4"
+    "typescript": "^5.0.3"
   },
   "dependencies": {
     "@actions/core": "^1.10.0",
