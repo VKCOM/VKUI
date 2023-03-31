@@ -25,8 +25,10 @@ export interface FormLayoutGroupProps
   mode?: 'vertical' | 'horizontal';
   /**
    * Только для режима horizontal. Дает возможность удалить всю группу `FormItem`.
+   *
+   * Режим `indent` предназначен для визуального отступа.
    */
-  removable?: boolean;
+  removable?: boolean | 'indent';
 
   /**
    * Только для режима horizontal. Дает возможность склеить несколько `FormItem`.
@@ -87,6 +89,7 @@ export const FormLayoutGroup = ({
               onRemove(e, rootEl.current);
             }
           }}
+          indent={removable === 'indent'}
         >
           {children}
         </Removable>

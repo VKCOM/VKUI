@@ -97,6 +97,11 @@
   padding-right: var(--vkui--size_base_padding_horizontal--regular);
 }
 
+.Removable--indent .Removable__action {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 /**
  * CMP:
  * FormLayoutGroup

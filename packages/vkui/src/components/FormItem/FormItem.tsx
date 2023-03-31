@@ -27,8 +27,10 @@ export interface FormItemProps
   status?: 'default' | 'error' | 'valid';
   /**
    * Дает возможность удалить `FormItem`. Рекомендуется использовать только для `Input` или `Select`.
+   *
+   * Режим `indent` предназначен для визуального отступа
    */
-  removable?: boolean;
+  removable?: boolean | 'indent';
 }
 
 /**
@@ -92,6 +94,7 @@ export const FormItem = ({
             }
           }}
           removePlaceholder={removePlaceholder}
+          indent={removable === 'indent'}
         >
           <div
             className={classNames(styles['FormItem__removable'], 'vkuiInternalFormItem__removable')}

@@ -115,6 +115,11 @@ interface RemovableOwnProps
    * Расположение кнопки удаления.
    */
   align?: 'start' | 'center';
+  /**
+   * Скрывает кнопку, но оставляет отступ.
+   * @since 5.4.0
+   */
+  indent?: boolean;
 }
 
 /**
@@ -127,6 +132,7 @@ export const Removable = ({
   removePlaceholder = 'Удалить',
   align = 'center',
   className,
+  indent = false,
   ...restProps
 }: RemovableOwnProps) => {
   const platform = usePlatform();
@@ -147,6 +153,7 @@ export const Removable = ({
       className={classNames(
         platform === Platform.IOS && styles['Removable--ios'],
         align === 'start' && styles['Removable--align-start'],
+        indent && styles['Removable--indent'],
         className,
       )}
     >

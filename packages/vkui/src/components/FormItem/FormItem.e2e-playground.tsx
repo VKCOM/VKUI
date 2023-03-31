@@ -44,6 +44,12 @@ export const FormItemPlayground = (props: ComponentPlaygroundProps) => {
             </Cell>,
           ],
         },
+        {
+          top: ['Сверху'],
+          bottom: ['Снизу'],
+          removable: ['indent'],
+          children: [<Input key={0} placeholder="Введите ваше значение" />],
+        },
       ]}
     >
       {(props: FormItemProps) => <FormItem {...props} />}
