@@ -19,7 +19,7 @@
     "@size-limit/webpack": "^8.2.4",
     "@size-limit/webpack-css": "^8.2.4",
     "@swc/cli": "^0.1.59",
-    "@swc/core": "^1.3.42",
+    "@swc/core": "^1.3.44",
     "@swc/jest": "^0.2.24",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^12.1.5",
