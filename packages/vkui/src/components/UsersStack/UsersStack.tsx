@@ -195,7 +195,7 @@ export const UsersStack = ({
       )}
     >
       {(photosElements.length > 0 || othersElement) && (
-        <div className={styles['UsersStack__photos']} role="presentation">
+        <div className={styles['UsersStack__photos']} aria-hidden>
           {photosElements}
           {othersElement}
         </div>
