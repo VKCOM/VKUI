@@ -139,6 +139,7 @@ export { Header } from './components/Header/Header';
 export type { HeaderProps } from './components/Header/Header';
 export { Group } from './components/Group/Group';
 export type { GroupProps } from './components/Group/Group';
+export type { GroupExcludedHorizontalPaddingContentProps } from './components/Group/ExcludedHorizontalPaddingContent/ExcludedHorizontalPaddingContent';
 export { Gradient } from './components/Gradient/Gradient';
 export type { GradientProps } from './components/Gradient/Gradient';
 export { List } from './components/List/List';

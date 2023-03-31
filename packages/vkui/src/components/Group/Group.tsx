@@ -10,6 +10,7 @@ import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { Separator } from '../Separator/Separator';
 import { Spacing } from '../Spacing/Spacing';
 import { Footnote } from '../Typography/Footnote/Footnote';
+import { ExcludedHorizontalPaddingContent } from './ExcludedHorizontalPaddingContent/ExcludedHorizontalPaddingContent';
 import styles from './Group.module.css';
 
 const sizeXClassNames = {
@@ -134,3 +135,5 @@ export const Group = ({
     </>
   );
 };
+
+Group.ExcludedHorizontalPaddingContent = ExcludedHorizontalPaddingContent;

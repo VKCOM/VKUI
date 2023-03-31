@@ -138,3 +138,28 @@ const SharedContent = () => {
 
 <Example />;
 ```
+
+## Group.ExcludedHorizontalPaddingContent
+
+Компонент для растягивание контента на всю ширину, игнорируя боковые отступы.
+
+```jsx
+<PanelHeader>ExcludedHorizontalPaddingContent</PanelHeader>
+
+<Group description="50 пользователей">
+  <Header>Пользователи</Header>
+  <Group.ExcludedHorizontalPaddingContent>
+    <HorizontalScroll>
+      <div style={{ display: 'flex' }}>
+        {Array(25)
+          .fill()
+          .map((_, id) => (
+            <HorizontalCell key={id} header="USER">
+              <Avatar size={56} src="https://vk.com/images/camera_200.png" />
+            </HorizontalCell>
+          ))}
+      </div>
+    </HorizontalScroll>
+  </Group.ExcludedHorizontalPaddingContent>
+</Group>
+```
