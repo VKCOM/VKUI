@@ -78,7 +78,6 @@ export const PanelHeaderContext = ({
         opened && styles['PanelHeaderContext--opened'],
         closing && styles['PanelHeaderContext--closing'],
         sizeXClassNames[sizeX],
-        styles['PanelHeaderContext--rounded'],
         className,
       )}
       vertical="top"
@@ -97,7 +96,7 @@ export const PanelHeaderContext = ({
         ref={elementRef}
         onAnimationEnd={closing ? onAnimationEnd : undefined}
       >
-        <div className={styles['PanelHeaderContext__content']}>{visible && children}</div>
+        {visible && <div className={styles['PanelHeaderContext__content']}>{children}</div>}
       </div>
     </FixedLayout>
   );
