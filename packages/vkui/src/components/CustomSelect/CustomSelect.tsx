@@ -405,7 +405,7 @@ export function CustomSelect(props: SelectProps) {
     close();
     const event = new Event('blur');
     selectElRef.current?.dispatchEvent(event);
-  }, [close]);
+  }, [close, selectElRef]);
 
   const resetFocusedOption = React.useCallback(() => {
     setFocusedOptionIndex(-1);
@@ -414,7 +414,7 @@ export function CustomSelect(props: SelectProps) {
   const onFocus = React.useCallback(() => {
     const event = new Event('focus');
     selectElRef.current?.dispatchEvent(event);
-  }, []);
+  }, [selectElRef]);
 
   const onClick = React.useCallback(() => {
     if (opened) {
