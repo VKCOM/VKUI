@@ -11,34 +11,12 @@ import { VKUITouchEvent } from '../../lib/touch';
 import { HasRef } from '../../types';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import { Headline } from '../Typography/Headline/Headline';
-import { Title } from '../Typography/Title/Title';
 import styles from './Search.module.css';
 
 const sizeYClassNames = {
   none: styles['Search--sizeY-none'],
   [SizeType.REGULAR]: styles['Search--sizeY-regular'],
-};
-
-const SearchPlaceholderTypography = ({
-  children,
-  ...restProps
-}: React.HTMLAttributes<HTMLElement>) => {
-  const platform = usePlatform();
-
-  switch (platform) {
-    case Platform.IOS:
-      return (
-        <Title {...restProps} level="3" weight="3">
-          {children}
-        </Title>
-      );
-    default:
-      return (
-        <Headline {...restProps} weight="3">
-          {children}
-        </Headline>
-      );
-  }
+  [SizeType.COMPACT]: styles['Search--sizeY-compact'],
 };
 
 export interface SearchProps
@@ -122,7 +100,7 @@ export const Search = ({
     <div
       className={classNames(
         styles['Search'],
-        sizeY !== SizeType.COMPACT && sizeYClassNames[sizeY],
+        sizeYClassNames[sizeY],
         isFocused && styles['Search--focused'],
         value && styles['Search--has-value'],
         after && styles['Search--has-after'],
@@ -146,14 +124,21 @@ export const Search = ({
             value={value}
           />
           {platform === Platform.IOS && after && (
-            <div className={styles['Search__after-width']}>{after}</div>
+            <Headline
+              Component="div"
+              level="2"
+              weight="2"
+              className={styles['Search__after-width']}
+            >
+              {after}
+            </Headline>
           )}
           <div className={styles['Search__placeholder']}>
             <div className={styles['Search__placeholder-in']}>
               {before}
-              <SearchPlaceholderTypography className={styles['Search__placeholder-text']}>
+              <Headline Component="span" className={styles['Search__placeholder-text']} weight="3">
                 {placeholder}
-              </SearchPlaceholderTypography>
+              </Headline>
             </div>
             {isFocused && platform === Platform.IOS && after && (
               <div className={styles['Search__after-width']}>{after}</div>
@@ -178,9 +163,15 @@ export const Search = ({
             )}
           </div>
           {platform === Platform.IOS && after && (
-            <div className={styles['Search__after-in']} onClick={onCancel}>
+            <Headline
+              Component="div"
+              level="2"
+              weight="2"
+              className={styles['Search__after-in']}
+              onClick={onCancel}
+            >
               {after}
-            </div>
+            </Headline>
           )}
         </div>
       </div>
