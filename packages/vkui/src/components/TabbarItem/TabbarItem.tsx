@@ -42,9 +42,9 @@ export const TabbarItem = ({
   const platform = usePlatform();
 
   if (process.env.NODE_ENV === 'development') {
-    const isAccessible = !text && (!restProps['aria-label'] || !restProps['aria-labelledby']);
+    const hasAccessibleName = text || restProps['aria-label'] || restProps['aria-labelledby'];
 
-    if (!isAccessible) {
+    if (!hasAccessibleName) {
       warn(COMMON_WARNINGS.a11y[Component === 'a' ? 'link-name' : 'button-name'], 'error');
     }
   }
