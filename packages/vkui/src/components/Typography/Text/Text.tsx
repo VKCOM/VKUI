@@ -2,7 +2,6 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { SizeType } from '../../../lib/adaptivity';
-import { warnOnce } from '../../../lib/warnOnce';
 import { HasRootRef } from '../../../types';
 import { TypographyProps } from '../types';
 import styles from './Text.module.css';
@@ -14,7 +13,6 @@ const sizeYClassNames = {
 
 export interface TextProps extends TypographyProps, HasRootRef<HTMLElement> {}
 
-const warn = warnOnce('Text');
 /**
  * @see https://vkcom.github.io/VKUI/#/Text
  */
@@ -26,10 +24,6 @@ export const Text = ({
   getRootRef,
   ...restProps
 }: TextProps) => {
-  if (process.env.NODE_ENV === 'development' && typeof Component !== 'string' && getRootRef) {
-    warn(`Свойство "getRootRef" может использоваться только с компонентами DOM`, 'error');
-  }
-
   const { sizeY = 'none' } = useAdaptivity();
 
   return (
