@@ -7,7 +7,7 @@ export type PopupDirection =
   | ((elRef: React.RefObject<HTMLDivElement>) => 'top' | 'bottom');
 export type ToggleRef = Element | null | undefined | React.RefObject<Element>;
 
-export interface SharedDropdownProps extends React.AllHTMLAttributes<HTMLElement>, FocusTrapProps {
+export interface SharedDropdownProps extends FocusTrapProps {
   closing: boolean;
   /**
    * Элемент, рядом с которым вылезает попап на десктопе.
