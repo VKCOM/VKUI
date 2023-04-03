@@ -106,11 +106,7 @@ export const Group = ({
       >
         {header}
         {children}
-        {hasReactNode(description) && (
-          <Footer Component="span" mode="group">
-            {description}
-          </Footer>
-        )}
+        {hasReactNode(description) && <Footer mode="group">{description}</Footer>}
       </section>
 
       {separator !== 'hide' && (

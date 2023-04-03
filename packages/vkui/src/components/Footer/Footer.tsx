@@ -19,9 +19,12 @@ const modeStyles = {
  * @see https://vkcom.github.io/VKUI/#/Footer
  */
 export const Footer = ({ children, className, mode = 'list', ...restProps }: FooterProps) => {
+  const isSemanticFooter = restProps.Component === undefined || restProps.Component === 'footer';
+
   return (
     <Footnote
       Component="footer"
+      role={isSemanticFooter ? undefined : 'contentinfo'}
       className={classNames(styles['Footer'], modeStyles[mode], className)}
       {...restProps}
     >
