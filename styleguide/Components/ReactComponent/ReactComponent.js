@@ -4,7 +4,7 @@ import Markdown from '@rsg-components/Markdown';
 import Slot from '@rsg-components/Slot';
 import { Caption, classNames, Link } from '@vkui';
 import { VKUI_PACKAGE } from '../../../shared';
-import { deprecated } from '../../deprecated';
+import { getDeprecatedFromComponentTags } from '../../utils';
 import Heading from '../Heading/index';
 import { SectionSubheading } from '../SectionSubheading/SectionSubheading';
 import './ReactComponent.css';
@@ -15,7 +15,7 @@ const toKebabCase = (str) =>
 const ReactComponent = ({ component, exampleMode }) => {
   const { name, visibleName, pathLine } = component;
   const { description = '', examples = [] } = component.props || {};
-  const isDeprecated = deprecated.includes(name);
+  const deprecated = getDeprecatedFromComponentTags(component);
 
   const showPropsPlaceholder =
     process.env.NODE_ENV === 'development' && process.env.VKUI_STYLEGUIDE_PROPSPARSER !== 1;
@@ -46,11 +46,16 @@ const ReactComponent = ({ component, exampleMode }) => {
       <Heading
         level={1}
         className={classNames('ReactComponent__name', {
-          'ReactComponent__name--deprecated': isDeprecated,
+          'ReactComponent__name--deprecated': deprecated.isDeprecated,
         })}
       >
         {visibleName}
       </Heading>
+      {deprecated.description && (
+        <Text Component="blockquote" className="Blockquote">
+          <Markdown text={`**@deprecated**: ${deprecated.description}`} />
+        </Text>
+      )}
       {description && <Markdown text={description} />}
       {examples.length > 0 && (
         <Examples examples={examples} name={name} exampleMode={exampleMode} />
