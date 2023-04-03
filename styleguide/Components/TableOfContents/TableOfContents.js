@@ -16,8 +16,8 @@ import {
   SimpleCell,
   useAdaptivityWithJSMediaQueries,
 } from '@vkui';
-import { deprecated } from '../../deprecated';
 import { unstable } from '../../unstable';
+import { getDeprecatedFromComponentTags } from '../../utils';
 import './TableOfContents.css';
 
 function capitalize(string = '') {
@@ -53,33 +53,37 @@ const normalizer = (sections) => {
   return sections.map(
     ({
       name,
-      title,
       content,
       sections: childrenSections = [],
+      href,
       components = [],
       expand = false,
-      search,
+      deprecated = false,
+      ...restProps
     }) => {
       const children = normalizer([
         ...childrenSections,
         ...components.map((component) => {
+          const { isDeprecated } = getDeprecatedFromComponentTags(component);
+
           return {
             name: component.name,
             title: component.title,
             href: component.href,
             content: component.filepath,
+            deprecated: isDeprecated,
           };
         }),
       ]);
 
       return {
-        title,
         name,
         content,
+        sections: children,
         href: content && `#/${name}`,
         expand,
-        search,
-        sections: children,
+        deprecated,
+        ...restProps,
       };
     },
   );
@@ -245,7 +249,7 @@ class TableOfContents extends React.PureComponent {
                     )}
                   </IconButton>
                 )) ||
-                (unstable.includes(section.name) && !deprecated.includes(section.name) && (
+                (unstable.includes(section.name) && (
                   <Icon28WarningTriangleOutline
                     fill="var(--vkui--color_accent_orange)"
                     title="Компонент является нестабильным"
@@ -258,9 +262,7 @@ class TableOfContents extends React.PureComponent {
                 'TableOfContents__section--selected':
                   section.name === this.state.currentSectionName,
               })}
-              indicator={
-                deprecated.includes(section.name) && <Caption level="2">deprecated</Caption>
-              }
+              indicator={section.deprecated && <Caption level="2">deprecated</Caption>}
             >
               {section.title || section.name}
             </SimpleCell>
