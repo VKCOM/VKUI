@@ -17,9 +17,6 @@ const ReactComponent = ({ component, exampleMode }) => {
   const { description = '', examples = [] } = component.props || {};
   const deprecated = getDeprecatedFromComponentTags(component);
 
-  const showPropsPlaceholder =
-    process.env.NODE_ENV === 'development' && process.env.VKUI_STYLEGUIDE_PROPSPARSER !== 1;
-
   const githubTag = `cmp:${toKebabCase(visibleName)}`;
   const issuesQuery = `is:open is:issue label:${githubTag}`;
 
@@ -61,13 +58,11 @@ const ReactComponent = ({ component, exampleMode }) => {
         <Examples examples={examples} name={name} exampleMode={exampleMode} />
       )}
       <SectionSubheading href={`#/${name}?id=props`}>Свойства и методы</SectionSubheading>
-      {showPropsPlaceholder ? (
-        <blockquote className="Blockquote">
-          <Text>
-            В режиме разработки свойства и методы не генерируются по умолчанию. Если они вам
-            необходимы, воспользуйтесь командой <span className="Code">yarn styleguide:props</span>.
-          </Text>
-        </blockquote>
+      {process.env.NODE_ENV === 'development' && process.env.VKUI_STYLEGUIDE_PROPSPARSER !== 1 ? (
+        <Text Component="blockquote" className="Blockquote">
+          В режиме разработки свойства и методы не генерируются по умолчанию. Если они вам нужны,
+          воспользуйтесь командой <code className="Code">yarn docs:styleguide:props</code>.
+        </Text>
       ) : (
         <Slot name="docsTabs" props={component} />
       )}
