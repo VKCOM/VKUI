@@ -1,5 +1,5 @@
 import React, { createContext, Fragment, useContext, useEffect, useRef, useState } from 'react';
-import { Icon16MoreHorizontal, Icon16Up } from '@vkontakte/icons';
+import { Icon20HideOutline, Icon20ViewOutline } from '@vkontakte/icons';
 import { noop, throttle } from '@vkontakte/vkjs';
 import { classNames, Text, useAppearance } from '@vkui';
 import NameRenderer from '../Name/NameRenderer';
@@ -95,7 +95,7 @@ export const TableRenderer = ({ columns, rows, getRowKey }) => {
                 <tr className="Table__tr">
                   <td className="Table__td" colSpan={columns.length}>
                     <TogglePropsButton
-                      before={expanded ? <Icon16Up /> : <Icon16MoreHorizontal />}
+                      before={expanded ? <Icon20HideOutline /> : <Icon20ViewOutline />}
                       onClick={() => toggleExpanded(!expanded)}
                     >
                       {expanded ? (
