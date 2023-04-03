@@ -3,7 +3,8 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { SizeType } from '../../../lib/adaptivity';
 import { warnOnce } from '../../../lib/warnOnce';
-import { HasComponent, HasRootRef } from '../../../types';
+import { HasRootRef } from '../../../types';
+import { TypographyProps } from '../types';
 import styles from './Text.module.css';
 
 const sizeYClassNames = {
@@ -11,15 +12,7 @@ const sizeYClassNames = {
   [SizeType.COMPACT]: styles['Text--sizeY-compact'],
 };
 
-export interface TextProps
-  extends React.AllHTMLAttributes<HTMLElement>,
-    HasRootRef<HTMLElement>,
-    HasComponent {
-  /**
-   * Задаёт начертание шрифта, отличное от стандартного.
-   */
-  weight?: '1' | '2' | '3';
-}
+export interface TextProps extends TypographyProps, HasRootRef<HTMLElement> {}
 
 const warn = warnOnce('Text');
 /**
