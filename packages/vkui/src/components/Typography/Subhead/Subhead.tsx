@@ -2,7 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { SizeType } from '../../../lib/adaptivity';
-import { HasComponent } from '../../../types';
+import { TypographyProps } from '../types';
 import styles from './Subhead.module.css';
 
 const sizeYClassNames = {
@@ -10,12 +10,7 @@ const sizeYClassNames = {
   [SizeType.COMPACT]: styles['Subhead--sizeY-compact'],
 };
 
-export interface SubheadProps extends React.AllHTMLAttributes<HTMLElement>, HasComponent {
-  /**
-   * Задаёт начертание шрифта отличное от стандартного.
-   */
-  weight?: '1' | '2' | '3';
-}
+export type SubheadProps = TypographyProps;
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Subhead
