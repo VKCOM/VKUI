@@ -53,3 +53,14 @@ export function getTitleFromChildren(children: React.ReactNode): string {
 
 export const stopPropagation = <T extends React.SyntheticEvent>(event: T) =>
   event.stopPropagation();
+
+export function executeWithReflow(element: HTMLElement, actions: VoidFunction[]) {
+  actions.forEach((action, index) => {
+    action();
+
+    if (index !== actions.length - 1) {
+      // triggers browser reflow
+      void element.clientWidth;
+    }
+  });
+}
