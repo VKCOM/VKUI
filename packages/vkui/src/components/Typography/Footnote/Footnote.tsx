@@ -1,15 +1,9 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { HasComponent } from '../../../types';
+import { HasCaps, TypographyProps } from '../types';
 import styles from './Footnote.module.css';
 
-export interface FootnoteProps extends React.AllHTMLAttributes<HTMLElement>, HasComponent {
-  /**
-   * Задаёт начертание шрифта отличное от стандартного.
-   */
-  weight?: '1' | '2' | '3';
-  caps?: boolean;
-}
+export interface FootnoteProps extends TypographyProps, HasCaps {}
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Footnote

@@ -1,15 +1,10 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { HasComponent } from '../../../types';
+import { HasCaps, TypographyProps } from '../types';
 import styles from './Caption.module.css';
 
-export interface CaptionProps extends React.AllHTMLAttributes<HTMLElement>, HasComponent {
-  /**
-   * Задаёт начертание шрифта отличное от стандартного.
-   */
-  weight?: '1' | '2' | '3';
+export interface CaptionProps extends TypographyProps, HasCaps {
   level?: '1' | '2' | '3';
-  caps?: boolean;
 }
 
 /**

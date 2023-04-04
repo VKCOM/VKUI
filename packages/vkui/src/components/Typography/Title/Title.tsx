@@ -1,13 +1,9 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { HasComponent } from '../../../types';
+import { TypographyProps } from '../types';
 import styles from './Title.module.css';
 
-export interface TitleProps extends React.AllHTMLAttributes<HTMLElement>, HasComponent {
-  /**
-   * Задаёт начертание шрифта отличное от стандартного.
-   */
-  weight?: '1' | '2' | '3';
+export interface TitleProps extends TypographyProps {
   level?: '1' | '2' | '3';
 }
 
