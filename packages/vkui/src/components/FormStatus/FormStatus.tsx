@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { HasRootRef } from '../../types';
 import { Banner } from '../Banner/Banner';
 import styles from './FormStatus.module.css';
 
-export interface FormStatusProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface FormStatusProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    HasRootRef<HTMLElement> {
   mode?: 'default' | 'error';
   header?: React.ReactNode;
 }
