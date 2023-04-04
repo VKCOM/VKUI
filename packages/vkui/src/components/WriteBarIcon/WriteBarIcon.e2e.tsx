@@ -1,24 +1,12 @@
 import * as React from 'react';
-import { Icon28VoiceOutline } from '@vkontakte/icons';
-import { describeScreenshotFuzz } from '../../testing/e2e';
-import { WriteBarIcon } from './WriteBarIcon';
+import { test } from '@vkui-e2e/test';
+import { WriteBarIconPlayground } from './WriteBarIcon.e2e-playground';
 
-describe('WriteBarIcon', () => {
-  describeScreenshotFuzz(WriteBarIcon, [
-    {
-      mode: ['done'],
-    },
-    {
-      mode: ['attach'],
-      count: [undefined, 3],
-    },
-    {
-      mode: ['send'],
-      disabled: [undefined, true],
-    },
-    {
-      mode: [undefined],
-      children: [<Icon28VoiceOutline key="icon" />],
-    },
-  ]);
+test('WriteBarIcon', async ({
+  mount,
+  expectScreenshotClippedToContent,
+  componentPlaygroundProps,
+}) => {
+  await mount(<WriteBarIconPlayground {...componentPlaygroundProps} />);
+  await expectScreenshotClippedToContent();
 });

@@ -28,3 +28,7 @@ interface MediaQueryList {
 interface Object {
   hasOwnProperty<T>(this: T, v: PropertyKey): v is keyof T;
 }
+
+interface Window {
+  __isVkuiTesting: boolean;
+}

@@ -17,9 +17,8 @@
     "skipLibCheck": true,
     "baseUrl": "./",
     "paths": {
-      "@project-e2e/helpers": ["./e2e"],
       "@vkontakte/vkui": ["./packages/vkui"]
     }
   },
-  "exclude": ["**/node_modules", "**/dist"]
+  "exclude": ["**/node_modules", "**/dist", "**/coverage/**"]
 }

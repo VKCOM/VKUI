@@ -38,9 +38,10 @@
     "build:types": "yarn tsc && yarn tsc-cjs && yarn tsc-cssm",
     "build:no-types": "concurrently 'yarn:swc-es6' 'yarn:swc-cjs' 'yarn:swc-cssm' 'yarn:postcss'",
     "clear": "shx rm -rf dist/*",
+    "docker:clear-playwright-cache": "docker compose rm -f && docker volume rm vkui_package_vkui_playwright_cache",
     "postcss": "cross-env NODE_ENV=production concurrently 'yarn:postcss-bundle' 'yarn:postcss-modules'",
-    "postcss-bundle": "webpack --config webpack.styles.config.js",
-    "postcss-modules": "postcss './src/**/*.css' --base ./src --dir ./dist/cssm",
+    "postcss-bundle": "IS_VKUI_PACKAGE_BUILD=1 webpack --config webpack.styles.config.js",
+    "postcss-modules": "IS_VKUI_PACKAGE_BUILD=1 postcss './src/**/*.css' --base ./src --dir ./dist/cssm",
     "swc-base": "cross-env NODE_ENV=production swc src/ --config-file package.swcrc --extensions .tsx,.jsx,.ts,.js",
     "swc-es6": "yarn swc-base -d dist -s",
     "swc-cjs": "yarn swc-base -d dist/cjs -s -C module.type=commonjs",
@@ -50,6 +51,10 @@
     "tsc-cjs": "cross-env NODE_ENV=production tsc --emitDeclarationOnly --declaration --outDir dist/cjs/ -p tsconfig.dist.json",
     "test": "jest",
     "test:ci": "yarn test --ci --silent --outputFile ../../test-results.json --json --coverage --coverageReporters='json' --coverageDirectory='../../.nyc_output'",
+    "test:e2e": "docker compose up --abort-on-container-exit",
+    "test:e2e-update": "docker compose --env-file=./.env.docker up --abort-on-container-exit",
+    "test:e2e:ci": "playwright test --config playwright-ct.config.ts",
+    "test:e2e-update:ci": "playwright test --config playwright-ct.config.ts --update-snapshots",
     "test:a11y": "jest -c jest.config.a11y.js",
     "test:a11y:ci": "yarn test:a11y --ci --silent --outputFile ../../a11y-results.json --json --coverage --coverageReporters='json' --coverageDirectory='../../.nyc_a11y_output'",
     "storybook": "cross-env SANDBOX=\\.storybook storybook dev -p 6006",
@@ -68,7 +73,9 @@
     "dayjs": "1.11.7",
     "mitt": "3.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.1"
+  },
   "size-limit": [
     {
       "name": "JS",

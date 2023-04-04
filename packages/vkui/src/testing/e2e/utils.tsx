@@ -1,33 +1,29 @@
 import * as React from 'react';
-import { ComponentType, Fragment, isValidElement } from 'react';
-import { screenshot } from '@project-e2e/helpers';
-import { AppearanceType } from '@vkontakte/vk-bridge';
-import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
-import { BrowserType } from 'jest-playwright-preset';
-// Импорты из отдельных модулей помогают jest отслеживать зависимости
-import { type AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
-import { AdaptivityProvider } from '../../components/AdaptivityProvider/AdaptivityProvider';
-import { AppRoot } from '../../components/AppRoot/AppRoot';
-import { ConfigProvider } from '../../components/ConfigProvider/ConfigProvider';
-import { Group } from '../../components/Group/Group';
-import { Panel } from '../../components/Panel/Panel';
-import { View } from '../../components/View/View';
-import { Appearance } from '../../helpers/appearance';
+import type {
+  AdaptivityProps,
+  SizeProps,
+} from '../../components/AdaptivityProvider/AdaptivityContext';
 import { BREAKPOINTS, SizeType, ViewWidth } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
-import { HasChildren } from '../../types';
+
+export function getAdaptivePxWidth(viewWidth: ViewWidth) {
+  switch (viewWidth) {
+    case ViewWidth.SMALL_MOBILE:
+      return BREAKPOINTS.MOBILE - 10;
+    case ViewWidth.MOBILE:
+      return BREAKPOINTS.MOBILE;
+    case ViewWidth.SMALL_TABLET:
+      return BREAKPOINTS.SMALL_TABLET;
+    case ViewWidth.TABLET:
+      return BREAKPOINTS.TABLET;
+    case ViewWidth.DESKTOP:
+      return BREAKPOINTS.DESKTOP;
+  }
+}
 
 type AdaptivityFlag = boolean | 'x' | 'y';
 type PropDesc<Props> = { [K in keyof Props]?: Array<Props[K]> } & {
   $adaptivity?: AdaptivityFlag;
 };
-type SizeProps = Pick<AdaptivityProps, 'sizeX' | 'sizeY'>;
-type TestProps<Props> = Array<Props & SizeProps>;
-type CartesianOptions = { adaptive: boolean };
-
-export const APPEARANCE = (process.env.APPEARANCE ?? Appearance.LIGHT) as Appearance;
-export const BROWSER = (process.env.BROWSER ?? 'chromium') as BrowserType;
-export const PLATFORM = (process.env.PLATFORM ?? 'vkcom') as Platform;
 
 function getAdaptivity(adaptivity?: AdaptivityFlag) {
   const extra: PropDesc<SizeProps> = {};
@@ -39,6 +35,9 @@ function getAdaptivity(adaptivity?: AdaptivityFlag) {
   }
   return extra;
 }
+
+type TestProps<Props> = Array<Props & SizeProps>;
+type CartesianOptions = { adaptive: boolean };
 
 function cartesian<Props>(
   { $adaptivity, ...propDesc }: PropDesc<Props>,
@@ -63,7 +62,7 @@ function cartesian<Props>(
   );
 }
 
-function multiCartesian<Props>(
+export function multiCartesian<Props>(
   propSets: Array<PropDesc<Props>>,
   ops: CartesianOptions,
 ): TestProps<Props> {
@@ -73,7 +72,7 @@ function multiCartesian<Props>(
   return propSets.reduce((acc, ortho) => acc.concat(cartesian(ortho, ops) as any), []);
 }
 
-function prettyProps(props: any) {
+export function prettyProps(props: any) {
   return Object.entries(props)
     .sort(([key1], [key2]) => Number(key1 > key2))
     .map(([prop, value]: [string, any]) => {
@@ -84,8 +83,8 @@ function prettyProps(props: any) {
         return prop;
       }
       if (
-        isValidElement(value) ||
-        (Array.isArray(value) && value.every((node: any) => isValidElement(node)))
+        React.isValidElement(value) ||
+        (Array.isArray(value) && value.every((node: any) => React.isValidElement(node)))
       ) {
         return `${prop}=<jsx>`;
       }
@@ -99,116 +98,37 @@ function prettyProps(props: any) {
     .join(' ');
 }
 
-type ScreenshotOptions = {
-  matchScreenshot?: MatchImageSnapshotOptions;
-  platforms?: Platform[];
-  appearance?: AppearanceType;
-  adaptivity?: Partial<AdaptivityProps>;
-  Wrapper?: ComponentType;
+type GenerateCustomScreenshotNameOptions = {
+  platform: string;
+  browserName: string;
+  appearance: string;
+  adaptivityProviderProps?: Partial<AdaptivityProps>;
 };
 
-function getAdaptivePxWidth(viewWidth: ViewWidth) {
-  switch (viewWidth) {
-    case ViewWidth.SMALL_MOBILE:
-      return BREAKPOINTS.MOBILE - 10;
-    case ViewWidth.MOBILE:
-      return BREAKPOINTS.MOBILE;
-    case ViewWidth.SMALL_TABLET:
-      return BREAKPOINTS.SMALL_TABLET;
-    case ViewWidth.TABLET:
-      return BREAKPOINTS.TABLET;
-    case ViewWidth.DESKTOP:
-      return BREAKPOINTS.DESKTOP;
-  }
-}
-
-const AppWrapper = (props: HasChildren) => (
-  <AppRoot mode="embedded">
-    <View activePanel="panel">
-      <Panel id="panel">
-        <Group>{props.children}</Group>
-      </Panel>
-    </View>
-  </AppRoot>
-);
-
-export function describeScreenshotFuzz<Props>(
-  Component: ComponentType<Props>,
-  propSets: Array<PropDesc<Props>> = [],
-  options: ScreenshotOptions = {},
+export function generateCustomScreenshotName(
+  testTitlePath: string[],
+  options: GenerateCustomScreenshotNameOptions,
+  expectCallCount: number,
 ) {
-  const { matchScreenshot, platforms, adaptivity = {}, Wrapper = AppWrapper } = options;
+  const { platform, browserName, appearance } = options;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_excludeFilePath, mainTestTitle, ...restTestTitles] = testTitlePath;
 
-  const describeConditional = platforms && !platforms.includes(PLATFORM) ? describe.skip : describe;
+  return [
+    mainTestTitle,
 
-  describeConditional(PLATFORM, () => {
-    jest.setTimeout(40000);
+    platform,
 
-    const isVKCOM = PLATFORM === Platform.VKCOM;
+    browserName,
 
-    let width: number | 'auto' = isVKCOM ? 'auto' : BREAKPOINTS.MOBILE;
-    if (adaptivity.viewWidth) {
-      width = getAdaptivePxWidth(adaptivity.viewWidth);
-    }
+    appearance,
 
-    const adaptivityProps: AdaptivityProps = Object.assign(
-      isVKCOM ? { sizeX: SizeType.COMPACT, sizeY: SizeType.COMPACT } : {},
-      adaptivity,
-    );
+    ...restTestTitles,
 
-    const viewWidth = adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : '';
+    expectCallCount,
 
-    it(`${BROWSER}-${APPEARANCE}${viewWidth}`, async () => {
-      expect(
-        await screenshot(
-          <ConfigProvider appearance={APPEARANCE} platform={PLATFORM}>
-            <AdaptivityProvider {...adaptivityProps}>
-              <div
-                className="vkuiTestWrapper"
-                style={{
-                  width,
-                  maxWidth: BREAKPOINTS.DESKTOP,
-                  position: 'absolute',
-                  height: 'auto',
-                }}
-              >
-                <Wrapper>
-                  {multiCartesian(propSets, { adaptive: !isVKCOM }).map((props, i) => {
-                    const adaptivityProviderProps = {
-                      ...adaptivityProps,
-                    };
-                    if (props.sizeX) {
-                      adaptivityProviderProps.sizeX = props.sizeX;
-                    }
-                    if (props.sizeY) {
-                      adaptivityProviderProps.sizeY = props.sizeY;
-                    }
-
-                    return (
-                      <Fragment key={i}>
-                        <div className="vkuiProps">{prettyProps(props)}</div>
-                        <div>
-                          <AdaptivityProvider {...adaptivityProviderProps}>
-                            <Component {...props} />
-                          </AdaptivityProvider>
-                        </div>
-                      </Fragment>
-                    );
-                  })}
-                </Wrapper>
-              </div>
-            </AdaptivityProvider>
-          </ConfigProvider>,
-        ),
-      ).toMatchImageSnapshot(matchScreenshot);
-    });
-  });
-}
-
-export function customSnapshotIdentifier({
-  defaultIdentifier,
-}: {
-  defaultIdentifier: string;
-}): string {
-  return `${BROWSER}-${APPEARANCE}-${PLATFORM}-${defaultIdentifier}-snap`;
+    'snap.png',
+  ]
+    .join(' ')
+    .toLocaleLowerCase();
 }

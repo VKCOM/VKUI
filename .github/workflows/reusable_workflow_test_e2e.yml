@@ -13,21 +13,6 @@ jobs:
   test_e2e:
     runs-on: ubuntu-latest
     name: Run visual (aka e2e) tests
-    strategy:
-      fail-fast: false
-      matrix:
-        appearance: [dark, light]
-        browser: [chromium, firefox, webkit]
-        platform: [android, ios, vkcom]
-        exclude:
-          - platform: android
-            browser: firefox
-          - platform: android
-            browser: webkit
-          - platform: ios
-            browser: firefox
-          - platform: ios
-            browser: chromium
     steps:
       - uses: actions/checkout@v3
         with:
@@ -60,22 +45,19 @@ jobs:
         run: curl --connect-timeout 1 azure.archive.ubuntu.com || (sudo sed -i 's/azure\.//' /etc/apt/sources.list && sudo apt-get update)
 
       - name: Install deps for playwright
-        run: yarn run playwright:install ${{ matrix.browser }}
+        run: yarn run playwright:install
 
       - name: Run e2e tests for @vkontakte/vkui workspace
         run: yarn run test:e2e:ci
-        env:
-          APPEARANCE: ${{ matrix.appearance }}
-          BROWSER: ${{ matrix.browser }}
-          PLATFORM: ${{ matrix.platform }}
         continue-on-error: true
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          flags: e2e-${{ matrix.browser }}-${{ matrix.platform }}-${{ matrix.appearance }}
-          files: .nyc_output/coverage.json
-          fail_ci_if_error: true
+      # TODO Playwright реализовать покрытие
+      # - name: Upload coverage to Codecov
+      #   uses: codecov/codecov-action@v3
+      #   with:
+      #     flags: e2e-${{ matrix.browser }}-${{ matrix.platform }}-${{ matrix.appearance }}
+      #     files: .nyc_output/coverage.json
+      #     fail_ci_if_error: true
 
       - name: Upload test artifact
         uses: actions/upload-artifact@v3
@@ -83,5 +65,13 @@ jobs:
         with:
           name: e2e-output
           path: |
-            __diff_output__/
-            e2e-results.json
+            packages/vkui/__diff_output__/
+            packages/vkui/e2e-results.json
+
+      - name: Upload Playwright HTML report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: packages/vkui/playwright-report/
+          retention-days: 30

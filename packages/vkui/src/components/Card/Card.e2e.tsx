@@ -1,18 +1,8 @@
 import * as React from 'react';
-import { describeScreenshotFuzz } from '../../testing/e2e';
-import { Card, CardProps } from './Card';
+import { test } from '@vkui-e2e/test';
+import { CardPlayground } from './Card.e2e-playground';
 
-describe('Card', () => {
-  describeScreenshotFuzz(
-    (props: CardProps) => (
-      <Card {...props} className="vkuiProps">
-        Карточка
-      </Card>
-    ),
-    [
-      {
-        mode: ['tint', 'shadow', 'outline'],
-      },
-    ],
-  );
+test('Card', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+  await mount(<CardPlayground {...componentPlaygroundProps} />);
+  await expectScreenshotClippedToContent();
 });

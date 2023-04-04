@@ -7,21 +7,6 @@ run-name: Update screenshots for ${{ github.ref_name }}
 jobs:
   update_screens:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        appearance: [dark, light]
-        browser: [chromium, firefox, webkit]
-        platform: [android, ios, vkcom]
-        exclude:
-          - platform: android
-            browser: firefox
-          - platform: android
-            browser: webkit
-          - platform: ios
-            browser: firefox
-          - platform: ios
-            browser: chromium
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -52,14 +37,10 @@ jobs:
         run: curl --connect-timeout 1 azure.archive.ubuntu.com || (sudo sed -i 's/azure\.//' /etc/apt/sources.list && sudo apt-get update)
 
       - name: Install deps for playwright
-        run: yarn run playwright:install ${{ matrix.browser }}
+        run: yarn run playwright:install
 
       - name: Update screenshots
-        run: yarn run test:e2e -u
-        env:
-          APPEARANCE: ${{ matrix.appearance }}
-          BROWSER: ${{ matrix.browser }}
-          PLATFORM: ${{ matrix.platform }}
+        run: yarn run test:e2e-update:ci
 
       - name: Set Git credentials
         run: |

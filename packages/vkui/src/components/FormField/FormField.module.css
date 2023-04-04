@@ -182,8 +182,7 @@
 :global(.vkuiInternalFormLayoutGroup--segmented)
   > :global(.vkuiInternalFormItem):not(:first-of-type):not(:last-of-type)
   .FormField,
-:global(.vkuiInternalFormLayoutGroup--segmented)
-  :global(.vkuiInternalRemovable__content)
+:global(.vkuiInternalFormLayoutGroup--segmented .vkuiInternalRemovable__content)
   > :global(.vkuiInternalFormItem):not(:first-of-type):not(:last-of-type)
   .FormField {
   border-radius: 0;
@@ -201,9 +200,8 @@
 :global(.vkuiInternalFormLayoutGroup--segmented)
   > :global(.vkuiInternalFormItem):not(:first-of-type):last-of-type
   .FormField,
-:global(.vkuiInternalFormLayoutGroup--segmented)
-  :global(.vkuiInternalRemovable__content)
-  > :global(.vkuiInternalFormItem):not(:first-of-type):last-of-type
+:global(.vkuiInternalFormLayoutGroup--segmented .vkuiInternalRemovable__content)
+  > .FormItem:not(:first-of-type):last-of-type
   .FormField {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
