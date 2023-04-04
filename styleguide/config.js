@@ -99,7 +99,6 @@ const baseConfig = {
       },
     },
   },
-  propsParser: () => ({}),
   exampleMode: 'expand',
   sections: [
     {
