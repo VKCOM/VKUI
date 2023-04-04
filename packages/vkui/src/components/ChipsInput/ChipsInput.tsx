@@ -19,6 +19,7 @@ export const ChipsInput = <Option extends ChipOption>({
   before,
   after,
   status,
+  mode,
   ...restProps
 }: ChipsInputProps<Option>) => {
   return (
@@ -33,6 +34,7 @@ export const ChipsInput = <Option extends ChipOption>({
       aria-disabled={restProps.disabled}
       aria-readonly={restProps.readOnly}
       status={status}
+      mode={mode}
     >
       <ChipsInputBase {...restProps} />
     </FormField>
