@@ -115,45 +115,49 @@ class Preview extends PreviewParent {
 
           return (
             <Profiler id={exampleId} onRender={logPerf}>
-              <AppearanceProvider appearance={styleGuideContext.appearance}>
-                <div
-                  className={classNames('Preview', `Preview--${styleGuideContext.platform}`, {
-                    'Preview--layout': layout,
-                  })}
-                >
+              <PlatformProvider value={styleGuideContext.platform}>
+                <AppearanceProvider appearance={styleGuideContext.appearance}>
                   <div
-                    className="Preview__shadow"
-                    style={
-                      adaptivity
-                        ? {
-                            maxWidth: width,
-                            maxHeight: styleGuideContext.height,
-                          }
-                        : null
-                    }
-                  />
-                  <div
-                    className="Preview__in"
-                    style={adaptivity ? { height: styleGuideContext.height, width } : null}
+                    className={classNames('Preview', `Preview--${styleGuideContext.platform}`, {
+                      'Preview--layout': layout,
+                    })}
                   >
-                    {error ? (
-                      <PlaygroundError message={error} />
-                    ) : iframe ? (
-                      <Frame
-                        style={adaptivity ? { width, height: styleGuideContext.height } : undefined}
-                        appearance={styleGuideContext.appearance}
-                        platform={styleGuideContext.platform}
-                      >
-                        <Config {...styleGuideContext} exampleId={exampleId}>
-                          {layout ? <Layout>{example}</Layout> : example}
-                        </Config>
-                      </Frame>
-                    ) : (
-                      <WithoutFrame platform={styleGuideContext.platform}>{example}</WithoutFrame>
-                    )}
+                    <div
+                      className="Preview__shadow"
+                      style={
+                        adaptivity
+                          ? {
+                              maxWidth: width,
+                              maxHeight: styleGuideContext.height,
+                            }
+                          : null
+                      }
+                    />
+                    <div
+                      className="Preview__in"
+                      style={adaptivity ? { height: styleGuideContext.height, width } : null}
+                    >
+                      {error ? (
+                        <PlaygroundError message={error} />
+                      ) : iframe ? (
+                        <Frame
+                          style={
+                            adaptivity ? { width, height: styleGuideContext.height } : undefined
+                          }
+                          appearance={styleGuideContext.appearance}
+                          platform={styleGuideContext.platform}
+                        >
+                          <Config {...styleGuideContext} exampleId={exampleId}>
+                            {layout ? <Layout>{example}</Layout> : example}
+                          </Config>
+                        </Frame>
+                      ) : (
+                        <WithoutFrame platform={styleGuideContext.platform}>{example}</WithoutFrame>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </AppearanceProvider>
+                </AppearanceProvider>
+              </PlatformProvider>
             </Profiler>
           );
         }}
