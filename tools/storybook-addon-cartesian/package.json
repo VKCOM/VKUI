@@ -15,7 +15,7 @@
     "@storybook/addon-essentials": "^6.5.16",
     "@storybook/addon-interactions": "^6.5.16",
     "@storybook/addon-links": "^6.5.16",
-    "@storybook/addons": "^6.5.16",
+    "@storybook/addons": "^7.0.2",
     "@storybook/api": "^6.5.16",
     "@storybook/builder-webpack5": "^6.5.16",
     "@storybook/components": "^6.5.16",
