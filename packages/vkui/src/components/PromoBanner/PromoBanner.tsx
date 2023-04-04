@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { Icon24Dismiss } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
+import { warnOnce } from '../../lib/warnOnce';
 import { Button } from '../Button/Button';
 import { Image } from '../Image/Image';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './PromoBanner.module.css';
+
+const warn = warnOnce('PromoBanner');
 
 type StatsType =
   | 'playbackStarted' // Начало показа
@@ -45,6 +48,9 @@ export interface PromoBannerProps extends React.HTMLAttributes<HTMLDivElement> {
 
 /**
  * @see https://vkcom.github.io/VKUI/#/PromoBanner
+ * @deprecated v5.3.1
+ *
+ * Используйте событие [VKWebAppShowBannerAd](https://dev.vk.com/mini-apps/monetization/ad/banners)
  */
 export const PromoBanner = ({
   bannerData = {},
@@ -53,6 +59,12 @@ export const PromoBanner = ({
   className,
   ...restProps
 }: PromoBannerProps) => {
+  if (process.env.NODE_ENV === 'development') {
+    warn(
+      'Компонент устарел и будет удален в v6. Используйте событие VKWebAppShowBannerAd https://dev.vk.com/mini-apps/monetization/ad/banners',
+    );
+  }
+
   const [currentPixel, setCurrentPixel] = React.useState('');
 
   const statsPixels = React.useMemo(
