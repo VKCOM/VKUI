@@ -117,13 +117,13 @@ export function generateCustomScreenshotName(
   return [
     mainTestTitle,
 
+    ...restTestTitles,
+
     platform,
 
     browserName,
 
     appearance,
-
-    ...restTestTitles,
 
     expectCallCount,
 
