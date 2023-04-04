@@ -114,9 +114,13 @@
   -webkit-overflow-scrolling: touch;
 }
 
+.ModalPage--desktop .ModalPage__content-in,
+:global(.vkuiInternalModalRoot__modal--expandable) .ModalPage__content-in {
+  height: 100%;
+}
+
 .ModalPage__content-in {
   position: relative;
-  height: 100%;
   padding-bottom: var(--vkui_internal--safe_area_inset_bottom);
 }
 
