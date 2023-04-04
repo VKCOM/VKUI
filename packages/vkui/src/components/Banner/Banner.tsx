@@ -8,6 +8,7 @@ import {
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
+import { HasRootRef } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
 import { Tappable } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
@@ -16,7 +17,7 @@ import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
 import styles from './Banner.module.css';
 
-export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface BannerProps extends React.HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLElement> {
   /**
    * Тип баннера.
    */
@@ -104,6 +105,7 @@ export const Banner = ({
   onDismiss,
   dismissLabel = 'Скрыть',
   className,
+  getRootRef,
   ...restProps
 }: BannerProps) => {
   const platform = usePlatform();
@@ -161,6 +163,7 @@ export const Banner = ({
         mode === 'image' && imageTheme === 'dark' && styles['Banner--inverted'],
         className,
       )}
+      ref={getRootRef}
     >
       {asideMode === 'expand' ? (
         <Tappable
