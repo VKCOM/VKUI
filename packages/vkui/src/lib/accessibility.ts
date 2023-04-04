@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+export const PREFERS_REDUCED_MOTION_MEDIA_QUERY = '(prefers-reduced-motion: reduce)';
+
 export const FOCUSABLE_ELEMENTS_LIST = [
   'a[href]',
   'area[href]',
