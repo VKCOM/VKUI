@@ -1,30 +1,8 @@
 import * as React from 'react';
-import { describeScreenshotFuzz } from '../../testing/e2e';
-import { Avatar } from '../Avatar/Avatar';
-import { Cell } from './Cell';
+import { test } from '@vkui-e2e/test';
+import { CellPlayground } from './Cell.e2e-playground';
 
-describe('Cell', () => {
-  describeScreenshotFuzz(Cell, [
-    {
-      mode: ['selectable'],
-      before: [<Avatar key="avatar" />],
-      children: ['Мария Саломея Склодовская-Кюри', 'Михаил Лихачев'],
-      $adaptivity: 'y',
-      checked: [true, false],
-      disabled: [true, false],
-      multiline: [true, false],
-    },
-    {
-      mode: ['removable'],
-      $adaptivity: 'y',
-      children: ['Мария Саломея Склодовская-Кюри', 'Евгения Полозова'],
-      multiline: [true, false],
-    },
-    {
-      draggable: [true],
-      $adaptivity: 'y',
-      children: ['Мария Саломея Склодовская-Кюри', 'Артур Стамбульцян'],
-      multiline: [true, false],
-    },
-  ]);
+test('Cell', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+  await mount(<CellPlayground {...componentPlaygroundProps} />);
+  await expectScreenshotClippedToContent();
 });

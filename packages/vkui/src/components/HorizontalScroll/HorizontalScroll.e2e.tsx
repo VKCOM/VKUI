@@ -1,129 +1,91 @@
 import * as React from 'react';
+import { test } from '@vkui-e2e/test';
 import { ViewWidth } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import {
-  APPEARANCE,
-  customSnapshotIdentifier,
-  describeScreenshotFuzz,
-  mount,
-  screenshot,
-} from '../../testing/e2e';
-import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
-import { AppRoot } from '../AppRoot/AppRoot';
-import { Avatar } from '../Avatar/Avatar';
-import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
-import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
-import { HorizontalScroll } from './HorizontalScroll';
+  HorizontalScrollMobilePlayground,
+  HorizontalScrollSmallTabletPlayground,
+  HorizontalScrollWithHasMousePlayground,
+  HorizontalScrollWithoutHasMousePlayground,
+} from './HorizontalScroll.e2e-playground';
 
-describe('HorizontalScroll', () => {
-  const items = new Array(20).fill(0).map((_, i) => (
-    <HorizontalCell key={i} header={`item ${i}`}>
-      <Avatar size={56} />
-    </HorizontalCell>
-  ));
-
-  describeScreenshotFuzz(
-    HorizontalScroll,
-    [
-      {
-        showArrows: ['always'],
-        arrowSize: ['m', 'l'],
-        children: [
-          <div key="0" style={{ display: 'flex' }}>
-            {items}
-          </div>,
-        ],
-      },
-    ],
-    {
-      platforms: [Platform.ANDROID],
-      adaptivity: {
-        viewWidth: ViewWidth.MOBILE,
-        hasPointer: false,
-      },
+test.describe('HorizontalScroll', () => {
+  test.use({
+    adaptivityProviderProps: {
+      viewWidth: ViewWidth.SMALL_TABLET,
+      hasPointer: true,
     },
-  );
+    onlyForPlatforms: [Platform.ANDROID],
+  });
+  test('ViewWidth.SMALL_TABLET hasPointer=true', async ({
+    mount,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
+    await mount(<HorizontalScrollSmallTabletPlayground {...componentPlaygroundProps} />);
+    await expectScreenshotClippedToContent();
+  });
+});
 
-  describeScreenshotFuzz(
-    HorizontalScroll,
-    [
-      {
-        arrowSize: ['m', 'l'],
-        children: [
-          <div key="0" style={{ display: 'flex' }}>
-            {items}
-          </div>,
-        ],
-      },
-    ],
-    {
-      platforms: [Platform.ANDROID],
-      adaptivity: {
-        viewWidth: ViewWidth.SMALL_TABLET,
-        hasPointer: true,
-      },
+test.describe('HorizontalScroll', () => {
+  test.use({
+    onlyForPlatforms: [Platform.ANDROID],
+    adaptivityProviderProps: {
+      viewWidth: ViewWidth.MOBILE,
+      hasPointer: false,
     },
-  );
+  });
+  test('ViewWidth.MOBILE hasPointer=false', async ({
+    mount,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
+    await mount(<HorizontalScrollMobilePlayground {...componentPlaygroundProps} />);
+    await expectScreenshotClippedToContent();
+  });
+});
 
-  it('has arrows on mouse hover', async () => {
-    jest.setTimeout(5000);
+test.describe('HorizontalScroll', () => {
+  const DATA_TESTID = 'horizontal-scroll';
+  const CUSTOM_ROOT_SELECTOR = `[data-testid="${DATA_TESTID}"]`;
+
+  test('has arrows on mouse hover', async ({
+    mount,
+    page,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
     await mount(
-      <ConfigProvider appearance={APPEARANCE}>
-        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
-          <AppRoot className="vkuiTestWrapper">
-            <HorizontalScroll
-              className="vkuiHorizontalScroll"
-              getRef={(element) => {
-                if (!element) {
-                  return;
-                }
-                element.scrollLeft = 32;
-              }}
-            >
-              <div key="0" style={{ display: 'flex' }}>
-                {items}
-              </div>
-            </HorizontalScroll>
-          </AppRoot>
-        </AdaptivityProvider>
-      </ConfigProvider>,
+      <HorizontalScrollWithHasMousePlayground
+        {...componentPlaygroundProps}
+        data-testid={DATA_TESTID}
+      />,
     );
 
-    await page.hover('.vkuiHorizontalScroll');
+    await page.hover(CUSTOM_ROOT_SELECTOR);
 
-    expect(
-      await screenshot(undefined, {
-        selector: '.vkuiHorizontalScroll',
-      }),
-    ).toMatchImageSnapshot({
-      customSnapshotIdentifier,
+    await expectScreenshotClippedToContent({
+      cropToContentSelector: CUSTOM_ROOT_SELECTOR,
     });
   });
 
-  it('does not have arrows without mouse', async () => {
-    jest.setTimeout(5000);
+  test('does not have arrows without mouse', async ({
+    mount,
+    page,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
     await mount(
-      <ConfigProvider appearance={APPEARANCE}>
-        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer={false}>
-          <AppRoot className="vkuiTestWrapper">
-            <HorizontalScroll className="vkuiHorizontalScroll">
-              <div key="0" style={{ display: 'flex' }}>
-                {items}
-              </div>
-            </HorizontalScroll>
-          </AppRoot>
-        </AdaptivityProvider>
-      </ConfigProvider>,
+      <HorizontalScrollWithoutHasMousePlayground
+        {...componentPlaygroundProps}
+        data-testid={DATA_TESTID}
+      />,
     );
 
-    await page.hover('.vkuiHorizontalScroll');
+    await page.hover(CUSTOM_ROOT_SELECTOR);
 
-    expect(
-      await screenshot(undefined, {
-        selector: '.vkuiHorizontalScroll',
-      }),
-    ).toMatchImageSnapshot({
-      customSnapshotIdentifier,
+    await expectScreenshotClippedToContent({
+      cropToContentSelector: CUSTOM_ROOT_SELECTOR,
     });
   });
 });

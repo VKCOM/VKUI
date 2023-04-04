@@ -1,21 +1,8 @@
 import * as React from 'react';
-import { describeScreenshotFuzz } from '../../../testing/e2e/utils';
-import { Paragraph, ParagraphProps } from './Paragraph';
+import { test } from '@vkui-e2e/test';
+import { ParagraphPlayground } from './Paragraph.e2e-playground';
 
-describe('Paragraph', () => {
-  describeScreenshotFuzz(
-    (props: ParagraphProps) => (
-      <Paragraph {...props} style={{ marginBottom: 16 }}>
-        Paragraph {props.weight}
-      </Paragraph>
-    ),
-    [
-      {
-        weight: ['3', '2', '1'],
-      },
-      {
-        normalize: [true],
-      },
-    ],
-  );
+test('Paragraph', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+  await mount(<ParagraphPlayground {...componentPlaygroundProps} />);
+  await expectScreenshotClippedToContent();
 });

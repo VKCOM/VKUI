@@ -12,26 +12,26 @@ on:
 jobs:
   test_e2e:
     runs-on: ubuntu-latest
+    container:
+      # см. https://github.com/microsoft/playwright/blob/main/utils/docker/Dockerfile.focal
+      image: mcr.microsoft.com/playwright:v1.32.3-focal
+      options: --ipc=host
     name: Run visual (aka e2e) tests
-    strategy:
-      fail-fast: false
-      matrix:
-        appearance: [dark, light]
-        browser: [chromium, firefox, webkit]
-        platform: [android, ios, vkcom]
-        exclude:
-          - platform: android
-            browser: firefox
-          - platform: android
-            browser: webkit
-          - platform: ios
-            browser: firefox
-          - platform: ios
-            browser: chromium
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           ref: ${{ inputs.ref }}
+
+      # см. https://github.com/actions/checkout/issues/1169
+      - name: Set safe directory
+        run: git config --global --add safe.directory /__w/VKUI/VKUI
+
+      # см. https://github.com/microsoft/playwright/issues/21920
+      - name: Install git lfs
+        run: |
+          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
+          apt-get install -y git-lfs
 
       - name: Create LFS file list
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
@@ -45,37 +45,27 @@ jobs:
       - name: Checkout LFS objects
         run: git lfs pull
 
-      - name: Checkout base snapshots
-        if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
-        run: git fetch --no-tags --depth=1 origin $GITHUB_BASE_REF && git checkout origin/$GITHUB_BASE_REF packages/vkui/src/**/__image_snapshots__/*.png
-
-      - uses: actions/setup-node@v3
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'yarn'
-      - run: yarn install --frozen-lockfile --ignore-scripts
 
-      - name: '[Troubleshooting for Azure VM] Install APT Repositories'
-        # Связанная проблема https://github.com/actions/runner-images/issues/675
-        run: curl --connect-timeout 1 azure.archive.ubuntu.com || (sudo sed -i 's/azure\.//' /etc/apt/sources.list && sudo apt-get update)
-
-      - name: Install deps for playwright
-        run: yarn run playwright:install ${{ matrix.browser }}
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts
 
       - name: Run e2e tests for @vkontakte/vkui workspace
-        run: yarn run test:e2e:ci
-        env:
-          APPEARANCE: ${{ matrix.appearance }}
-          BROWSER: ${{ matrix.browser }}
-          PLATFORM: ${{ matrix.platform }}
+        # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500
+        run: HOME=/root yarn run test:e2e:ci
         continue-on-error: true
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          flags: e2e-${{ matrix.browser }}-${{ matrix.platform }}-${{ matrix.appearance }}
-          files: .nyc_output/coverage.json
-          fail_ci_if_error: true
+      # TODO Playwright реализовать покрытие
+      # - name: Upload coverage to Codecov
+      #   uses: codecov/codecov-action@v3
+      #   with:
+      #     flags: e2e-${{ matrix.browser }}-${{ matrix.platform }}-${{ matrix.appearance }}
+      #     files: .nyc_output/coverage.json
+      #     fail_ci_if_error: true
 
       - name: Upload test artifact
         uses: actions/upload-artifact@v3
@@ -83,5 +73,13 @@ jobs:
         with:
           name: e2e-output
           path: |
-            __diff_output__/
-            e2e-results.json
+            packages/vkui/__diff_output__/
+            packages/vkui/e2e-results.json
+
+      - name: Upload Playwright HTML report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: packages/vkui/playwright-report/
+          retention-days: 30

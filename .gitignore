@@ -3,7 +3,6 @@ PUBLISHING.md
 
 # Builds
 dist/
-!e2e/dist/index.html
 storybook-static/
 
 # Dependency directory
@@ -17,6 +16,7 @@ a11y-results.json
 lint-results.json
 e2e-results.json
 yarn-error.log
+playwright-report/
 
 # Caches
 .cache

@@ -38,7 +38,9 @@ function generateCustomMedias() {
 
 generateCustomMedias();
 
-module.exports = (ctx) => {
+const IS_VKUI_PACKAGE_BUILD = Boolean(process.env.VKUI_PACKAGE_BUILD);
+
+module.exports = () => {
   const plugins = [
     cssImport(),
     restructureVariable(VKUI_TOKENS_CSS.map((pathSegment) => path.join(__dirname, pathSegment))),
@@ -58,7 +60,7 @@ module.exports = (ctx) => {
   ];
 
   // Обрабатываем только при сборке библиотеки.
-  if (!ctx.options.isSandbox) {
+  if (IS_VKUI_PACKAGE_BUILD) {
     plugins.push(
       cssModules({
         generateScopedName,
@@ -76,10 +78,11 @@ module.exports = (ctx) => {
             // Отключаем из-за того, что `postcss-calc` меняет порядок операндов при умножении -1 на переменную
             // Подробности здесь https://github.com/VKCOM/VKUI/issues/2963
             calc: false,
-            // Отключаем для webpack-сборки песочницы, т.к. пустые CSS блоки удаляются раньше, чем их обработает
-            // `css-loader` с настройками для CSS Modules
+            // Включаем если собираем пакет @vkontakte/vkui.
+            // В остальных кейсах пустые CSS блоки удаляются раньше, чем их обработает
+            // `css-loader` с настройками для CSS Modules.
             // Подробности здесь https://github.com/webpack-contrib/css-loader/issues/266
-            discardEmpty: !ctx.options.isSandbox,
+            discardEmpty: IS_VKUI_PACKAGE_BUILD,
           },
         ],
       }),

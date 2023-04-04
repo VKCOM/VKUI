@@ -1,21 +1,8 @@
 import * as React from 'react';
-import { describeScreenshotFuzz } from '../../testing/e2e';
-import { Counter, CounterProps } from './Counter';
+import { test } from '@vkui-e2e/test';
+import { CounterPlayground } from './Counter.e2e-playground';
 
-describe('Counter', () => {
-  describeScreenshotFuzz(
-    (props: CounterProps) => (
-      <div>
-        <Counter {...props} />
-      </div>
-    ),
-    [
-      {
-        children: ['3'],
-        mode: ['secondary', 'primary', 'prominent', 'contrast'],
-        size: ['m', 's'],
-        $adaptivity: 'y',
-      },
-    ],
-  );
+test('Counter', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+  await mount(<CounterPlayground {...componentPlaygroundProps} />);
+  await expectScreenshotClippedToContent();
 });

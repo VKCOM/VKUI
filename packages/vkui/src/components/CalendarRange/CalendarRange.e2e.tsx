@@ -1,34 +1,12 @@
 import * as React from 'react';
-import { describeScreenshotFuzz } from '../../testing/e2e';
-import { CalendarRange, CalendarRangeProps } from './CalendarRange';
+import { test } from '@vkui-e2e/test';
+import { CalendarRangePlayground } from './CalendarRange.e2e-playground';
 
-describe('CalendarRange', () => {
-  describeScreenshotFuzz(
-    (props: CalendarRangeProps) => <CalendarRange {...props} />,
-    [
-      {
-        value: [[new Date('1970-05-05'), new Date('1970-06-05')]],
-        shouldDisableDate: [undefined, () => true],
-      },
-      {
-        value: [[new Date('1970-05-05'), new Date('1970-06-05')]],
-        weekStartsOn: [0, 1],
-      },
-      {
-        value: [[new Date('1970-05-05'), new Date('1970-06-05')]],
-        nextMonthIcon: [
-          undefined,
-          <span key="next" className="vkuiProps">
-            &gt;
-          </span>,
-        ],
-        prevMonthIcon: [
-          undefined,
-          <span key="prev" className="vkuiProps">
-            &lt;
-          </span>,
-        ],
-      },
-    ],
-  );
+test('CalendarRange', async ({
+  mount,
+  expectScreenshotClippedToContent,
+  componentPlaygroundProps,
+}) => {
+  await mount(<CalendarRangePlayground {...componentPlaygroundProps} />);
+  await expectScreenshotClippedToContent();
 });

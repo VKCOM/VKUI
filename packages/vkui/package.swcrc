@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/swcrc",
-  "exclude": ["\\.(test|spec|e2e|stories)\\.[jt]sx?$", "testing/", "storybook/"],
+  "exclude": ["\\.(test|spec|e2e|e2e-playground|stories)\\.[jt]sx?$", "testing/", "storybook/"],
 
   "module": {
     "type": "es6"

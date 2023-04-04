@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  package_vkui:
+    image: mcr.microsoft.com/playwright:v1.32.3-focal
+    ipc: host
+    user: root
+    working_dir: /repo/packages/vkui
+    command: sh -c "
+      yarn install --frozen-lockfile --ignore-scripts &&
+      yarn run test:e2e:ci ${UPDATE_SNAPSHOTS_FLAG}
+      "
+    volumes:
+      - ../../:/repo
+      # Исключаем node_modules.
+      - /repo/node_modules
+      - /repo/packages/vkui/node_modules
+      # Кешируем установленные внутри контейнера node_modules и кэш директории.
+      - yarn_cache:/yarn
+      - root_node_modules_cache:/repo/node_modules
+      - package_vkui_node_modules_cache:/repo/packages/vkui/node_modules
+      - package_vkui_playwright_cache:/repo/packages/vkui/playwright/.cache
+      # Исключаем всё то, что не потребуется в контейнере.
+      - /repo/.git
+      - /repo/.husky
+      - /repo/.cache
+      - /repo/.swc
+      - /repo/packages/vkui/.swc
+
+volumes:
+  yarn_cache:
+  root_node_modules_cache:
+  package_vkui_node_modules_cache:
+  package_vkui_playwright_cache:

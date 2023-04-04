@@ -3,7 +3,6 @@ dist
 coverage
 .idea
 .vscode
-e2e/dist
 test-results.json
 a11y-results.json
 lint-results.json
@@ -17,3 +16,4 @@ tmp/
 target/
 fixture/
 storybook-static/
+playwright-report/

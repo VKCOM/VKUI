@@ -1,22 +1,12 @@
-import { describeScreenshotFuzz } from '../../testing/e2e';
-import { Pagination } from './Pagination';
+import * as React from 'react';
+import { test } from '@vkui-e2e/test';
+import { PaginationPlayground } from './Pagination.e2e-playground';
 
-describe('Pagination', () => {
-  describeScreenshotFuzz(Pagination, [
-    {
-      $adaptivity: 'y',
-    },
-    {
-      currentPage: [1],
-      totalPages: [3],
-      disabled: [undefined, true],
-      $adaptivity: 'y',
-    },
-    {
-      currentPage: [4],
-      totalPages: [123],
-      siblingCount: [0],
-      $adaptivity: 'y',
-    },
-  ]);
+test('Pagination', async ({
+  mount,
+  expectScreenshotClippedToContent,
+  componentPlaygroundProps,
+}) => {
+  await mount(<PaginationPlayground {...componentPlaygroundProps} />);
+  await expectScreenshotClippedToContent();
 });

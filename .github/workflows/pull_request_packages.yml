@@ -105,38 +105,6 @@ jobs:
     with:
       ref: refs/pull/${{ github.event.pull_request.number }}/merge
 
-  #
-  # У `actions/download-artifact@v3` нет параметра `if-no-files-found`, поэтому джоба `reporter_ci` падает на скачивании
-  # `e2e-output` & `a11y-output` (см. https://github.com/actions/download-artifact/issues/158)
-  #
-  # TODO Удалить джобу после того, как добавят этот параметр и мы не начнём им пользоваться
-  test_e2e_fallback:
-    if: ${{ needs.changed_files.outputs.package_vkui == 'false' }}
-    needs: changed_files
-    runs-on: ubuntu-latest
-    name: Call reusable e2e/a11y tests workflow (fallback for reporter)
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: refs/pull/${{ github.event.pull_request.number }}/merge
-
-      - name: Create fake e2e-results.json (do not use it)
-        run: touch fake-e2e-results.json
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: e2e-output
-          path: fake-e2e-results.json
-
-      - name: Create fake a11y-results.json (do not use it)
-        run: touch fake-a11y-results.json
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: a11y-output
-          path: fake-a11y-results.json
-
   analyze_bundle_size:
     if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
     needs: changed_files
@@ -172,6 +140,7 @@ jobs:
   report_ci:
     if: ${{ always() }}
     needs:
+      - changed_files
       - linters
       - test
       - test_e2e
@@ -197,27 +166,58 @@ jobs:
         with:
           name: test-output
 
+      # [Примечание 1]
+      #
+      # У `actions/download-artifact@v3` нет параметра `if-no-files-found`, поэтому джоба `reporter_ci` падает при скачивании
+      # `a11y-output` (см. https://github.com/actions/download-artifact/issues/158)
+      #
+      # TODO Заменить в экшене условия `needs.changed_files.outputs.package_vkui == 'true'` на параметр `if-no-files-found`, как добавят этот параметр и мы не начнём им пользоваться
       - name: Download a11y artifact
+        # см. [Примечание 1]
+        if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
         uses: actions/download-artifact@v3
         with:
           name: a11y-output
 
-      - name: Download e2e artifact
+      - name: Download Playwright Report artifact
+        # см. [Примечание 1]
+        if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
         uses: actions/download-artifact@v3
         with:
-          name: e2e-output
+          name: playwright-report
+          path: playwright-report/
+
+      - name: Build S3 action
+        if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
+        run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
+        working-directory: ./.github/actions/s3
+
+      - name: Upload Playwright Report
+        if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
+        uses: ./.github/actions/s3
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: vkui-screenshot
+          awsEndpoint: https://hb.bizmrg.com
+          command: upload
+          commandUploadSrc: playwright-report/
+          commandUploadDist: pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}/playwright-report
 
       - name: Build reporter action
         run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
         working-directory: ./.github/actions/reporter
 
-      - name: Push reports
+      - name: Push reports (with Playwright Report comment)
+        if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
         uses: ./.github/actions/reporter
         with:
-          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          awsSecretKey: ${{ secrets.AWS_SECRET_KEY }}
-          awsEndpoint: hb.bizmrg.com
+          playwrightReportURL: https://vkui-screenshot.hb.bizmrg.com/pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}/playwright-report/index.html
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push reports (without Playwright Report comment)
+        if: ${{ needs.changed_files.outputs.package_vkui == 'false' }}
+        uses: ./.github/actions/reporter
 
   styleguide:
     if: ${{ needs.changed_files.outputs.docs_styleguide == 'true' }}

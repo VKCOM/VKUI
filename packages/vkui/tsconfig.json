@@ -1,6 +1,11 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@vkui-e2e/test": ["./src/testing/e2e/index.playwright"],
+      "@vkui-e2e/playground-helpers": ["./src/testing/e2e/index.playground"]
+    },
     "plugins": [
       {
         "name": "typescript-plugin-css-modules",
@@ -18,7 +23,9 @@
     "**/*.config.js",
     "*.config.*.js",
     "*.setup.js",
-    ".eslintrc.js"
+    ".eslintrc.js",
+    "playwright-ct.config.ts",
+    "playwright/index.tsx"
   ],
   "files": ["./global.d.ts", "types/env.d.ts"]
 }

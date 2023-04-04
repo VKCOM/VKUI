@@ -7,24 +7,23 @@ run-name: Update screenshots for ${{ github.ref_name }}
 jobs:
   update_screens:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        appearance: [dark, light]
-        browser: [chromium, firefox, webkit]
-        platform: [android, ios, vkcom]
-        exclude:
-          - platform: android
-            browser: firefox
-          - platform: android
-            browser: webkit
-          - platform: ios
-            browser: firefox
-          - platform: ios
-            browser: chromium
+    container:
+      # см. https://github.com/microsoft/playwright/blob/main/utils/docker/Dockerfile.focal
+      image: mcr.microsoft.com/playwright:v1.32.3-focal
+      options: --ipc=host
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      # см. https://github.com/actions/checkout/issues/1169
+      - name: Set safe directory
+        run: git config --global --add safe.directory /__w/VKUI/VKUI
+
+      # см. https://github.com/microsoft/playwright/issues/21920
+      - name: Install git lfs
+        run: |
+          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
+          apt-get install -y git-lfs
 
       - name: Create LFS file list
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
@@ -47,19 +46,9 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile --ignore-scripts
 
-      - name: '[Troubleshooting for Azure VM] Install APT Repositories'
-        # Связанная проблема https://github.com/actions/runner-images/issues/675
-        run: curl --connect-timeout 1 azure.archive.ubuntu.com || (sudo sed -i 's/azure\.//' /etc/apt/sources.list && sudo apt-get update)
-
-      - name: Install deps for playwright
-        run: yarn run playwright:install ${{ matrix.browser }}
-
       - name: Update screenshots
-        run: yarn run test:e2e -u
-        env:
-          APPEARANCE: ${{ matrix.appearance }}
-          BROWSER: ${{ matrix.browser }}
-          PLATFORM: ${{ matrix.platform }}
+        # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500
+        run: HOME=/root yarn run test:e2e-update:ci
 
       - name: Set Git credentials
         run: |

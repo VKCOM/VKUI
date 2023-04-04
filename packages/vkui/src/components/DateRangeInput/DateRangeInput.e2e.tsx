@@ -1,23 +1,12 @@
 import * as React from 'react';
-import { describeScreenshotFuzz } from '../../testing/e2e';
-import { DateRangeInput, DateRangeInputProps } from './DateRangeInput';
+import { test } from '@vkui-e2e/test';
+import { DateRangeInputPlayground } from './DateRangeInput.e2e-playground';
 
-describe('DateRangeInput', () => {
-  describeScreenshotFuzz(
-    (props: DateRangeInputProps) => <DateRangeInput {...props} />,
-    [
-      {
-        value: [
-          [new Date('1970-05-05'), new Date('1970-06-05')],
-          undefined,
-          [new Date('1970-05-05'), null],
-          [null, new Date('1970-06-05')],
-          [null, null],
-        ],
-      },
-      {
-        status: ['error', 'valid'],
-      },
-    ],
-  );
+test('DateRangeInput', async ({
+  mount,
+  expectScreenshotClippedToContent,
+  componentPlaygroundProps,
+}) => {
+  await mount(<DateRangeInputPlayground {...componentPlaygroundProps} />);
+  await expectScreenshotClippedToContent();
 });

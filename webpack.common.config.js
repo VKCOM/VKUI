@@ -51,11 +51,6 @@ const rules = [
       },
       {
         loader: 'postcss-loader',
-        options: {
-          postcssOptions: {
-            isSandbox: Boolean(sandbox),
-          },
-        },
       },
     ],
   },
@@ -75,11 +70,6 @@ if (sandbox) {
       },
       {
         loader: 'postcss-loader',
-        options: {
-          postcssOptions: {
-            isSandbox: true,
-          },
-        },
       },
     ],
   });
