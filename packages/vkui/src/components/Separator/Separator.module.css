@@ -16,7 +16,10 @@
 
 .Separator__in {
   height: var(--vkui_internal--thin_border);
+  margin: 0;
   background: currentColor;
+  color: inherit;
+  border: none;
   transform-origin: center top;
 }
 
