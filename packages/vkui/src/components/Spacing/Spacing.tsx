@@ -20,12 +20,5 @@ export const Spacing = ({ size = 8, style: styleProp, className, ...restProps }:
     ...styleProp,
   };
 
-  return (
-    <div
-      {...restProps}
-      aria-hidden
-      className={classNames(className, styles['Spacing'])}
-      style={style}
-    />
-  );
+  return <div {...restProps} className={classNames(className, styles['Spacing'])} style={style} />;
 };
