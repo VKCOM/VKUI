@@ -90,3 +90,44 @@
     margin-right: 16px;
   }
 }
+
+/**
+ * CMP:
+ * CardGrid
+ */
+:global(.vkuiInternalCardGrid) .Card {
+  margin-right: var(--vkui--size_cardgrid_padding--regular);
+}
+
+:global(.vkuiInternalCardGrid--size-l) .Card {
+  width: 100%;
+  margin-right: 0;
+}
+
+:global(.vkuiInternalCardGrid--size-l) .Card:not(:first-child) {
+  margin-top: var(--vkui--size_cardgrid_padding--regular);
+}
+
+:global(.vkuiInternalCardGrid--size-m) .Card {
+  width: calc(50% - (var(--vkui--size_cardgrid_padding--regular) / 2));
+}
+
+:global(.vkuiInternalCardGrid--size-m) .Card:nth-child(n + 3) {
+  margin-top: var(--vkui--size_cardgrid_padding--regular);
+}
+
+:global(.vkuiInternalCardGrid--size-m) .Card:nth-child(2n) {
+  margin-right: 0;
+}
+
+:global(.vkuiInternalCardGrid--size-s) .Card {
+  width: calc((100% - 2 * var(--vkui--size_cardgrid_padding--regular)) / 3);
+}
+
+:global(.vkuiInternalCardGrid--size-s) .Card:nth-child(n + 4) {
+  margin-top: var(--vkui--size_cardgrid_padding--regular);
+}
+
+:global(.vkuiInternalCardGrid--size-s) .Card:nth-child(3n) {
+  margin-right: 0;
+}

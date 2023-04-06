@@ -34,11 +34,12 @@ export const CardGrid = ({
       {...restProps}
       className={classNames(
         styles['CardGrid'],
+        'vkuiInternalCardGrid',
         spaced && styles['CardGrid--spaced'],
         {
-          s: styles['CardGrid--size-s'],
-          m: styles['CardGrid--size-m'],
-          l: styles['CardGrid--size-l'],
+          s: 'vkuiInternalCardGrid--size-s',
+          m: 'vkuiInternalCardGrid--size-m',
+          l: 'vkuiInternalCardGrid--size-l',
         }[size],
         sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
         className,
