@@ -92,6 +92,7 @@ export const Group = ({
         tabIndex={tabIndex}
         ref={getRootRef}
         className={classNames(
+          'vkuiInternalGroup',
           styles['Group'],
           platform === Platform.IOS && styles['Group--ios'],
           sizeXClassNames[sizeX],
