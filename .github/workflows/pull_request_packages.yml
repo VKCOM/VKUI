@@ -291,7 +291,7 @@ jobs:
 
       - name: Post styleguide URL to PR
         if: steps.find_url_comment.outputs.comment-id == 0
-        uses: peter-evans/create-or-update-comment@v2
+        uses: peter-evans/create-or-update-comment@v3
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
