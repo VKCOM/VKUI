@@ -168,7 +168,7 @@ export const ImageBase = ({
           <div className={classNames(styles['ImageBase__fallback'])}>{fallbackIcon}</div>
         )}
         {children}
-        {withBorder && <div role="presentation" className={styles['ImageBase__border']} />}
+        {withBorder && <div aria-hidden className={styles['ImageBase__border']} />}
       </div>
     </ImageBaseContext.Provider>
   );
