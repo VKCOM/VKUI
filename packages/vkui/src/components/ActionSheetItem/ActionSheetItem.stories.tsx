@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { getIconArgBySize, getIconComponent, IconArgType, IconName } from '../../storybook/Icons';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { ActionSheetItem, ActionSheetItemProps } from './ActionSheetItem';
@@ -20,44 +20,52 @@ const story: Meta<ActionSheetItemProps> = {
 
 export default story;
 
-const Template: Story<
+type Story = StoryObj<
   Omit<ActionSheetItemProps, 'before' | 'iconChecked'> & {
     before?: IconName;
     iconChecked?: IconName;
   }
-> = ({ before, iconChecked, ...args }) => {
-  const Icon = getIconComponent(before);
-  const CheckIcon = getIconComponent(iconChecked);
-  return (
-    <ActionSheetItem
-      style={{ border: '1px dashed red' }}
-      before={Icon}
-      iconChecked={CheckIcon}
-      {...args}
-    />
-  );
+>;
+
+export const Playground: Story = {
+  render: function Render({ before, iconChecked, ...args }) {
+    const Icon = getIconComponent(before);
+    const CheckIcon = getIconComponent(iconChecked);
+    return (
+      <ActionSheetItem
+        style={{ border: '1px dashed red' }}
+        before={Icon}
+        iconChecked={CheckIcon}
+        {...args}
+      />
+    );
+  },
+  args: {
+    children: 'Сохранить в закладках',
+  },
 };
 
-export const Playground = Template.bind({});
-Playground.args = {
-  children: 'Сохранить в закладках',
+export const WithIcon: Story = {
+  ...Playground,
+  args: {
+    children: 'Редактировать профиль',
+    before: 'Icon28EditOutline',
+  },
 };
 
-export const WithIcon = Template.bind({});
-WithIcon.args = {
-  children: 'Редактировать профиль',
-  before: 'Icon28EditOutline',
+export const WithSubtitle: Story = {
+  ...Playground,
+  args: {
+    children: 'Качество',
+    subtitle: 'Авто',
+  },
 };
 
-export const WithSubtitle = Template.bind({});
-WithSubtitle.args = {
-  children: 'Качество',
-  subtitle: 'Авто',
-};
-
-export const WithChecked = Template.bind({});
-WithChecked.args = {
-  children: 'Друзья по школе',
-  selectable: true,
-  defaultChecked: true,
+export const WithChecked: Story = {
+  ...Playground,
+  args: {
+    children: 'Друзья по школе',
+    selectable: true,
+    defaultChecked: true,
+  },
 };

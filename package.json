@@ -115,6 +115,7 @@
     "docs:styleguide:props": "yarn workspace @project-docs/styleguide run start:props",
     "docs:styleguide:build": "yarn workspace @project-docs/styleguide run build",
     "docs:storybook": "yarn workspace @vkontakte/vkui storybook",
+    "docs:storybook:build": "yarn workspace @vkontakte/vkui build-storybook",
     "build": "yarn workspaces run build",
     "build:vkui": "yarn workspace @vkontakte/vkui run build",
     "test": "yarn workspaces run test",

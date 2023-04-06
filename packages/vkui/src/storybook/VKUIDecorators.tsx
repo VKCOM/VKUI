@@ -1,6 +1,5 @@
 import React from 'react';
-import { DecoratorFunction } from '@storybook/csf/dist/story';
-import { ReactFramework } from '@storybook/react';
+import { Decorator } from '@storybook/react';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { AppRoot } from '../components/AppRoot/AppRoot';
 import { ConfigProvider } from '../components/ConfigProvider/ConfigProvider';
@@ -19,7 +18,7 @@ const CenteredStyle: React.CSSProperties = {
   flexDirection: 'column',
 };
 
-export const withVKUIWrapper: DecoratorFunction<ReactFramework> = (Component, context) => {
+export const withVKUIWrapper: Decorator = (Component, context) => {
   const { platform, appearance, hasPointer = false, webviewType } = context.globals;
   const { centered } = context.parameters;
 
@@ -45,7 +44,7 @@ const SimpleLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export const withVKUILayout: DecoratorFunction<ReactFramework> = (Component) => {
+export const withVKUILayout: Decorator = (Component) => {
   return (
     <SimpleLayout>
       <Component />
@@ -61,7 +60,7 @@ const SimplePanel = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export const withSinglePanel: DecoratorFunction<ReactFramework> = (Component, context) => {
+export const withSinglePanel: Decorator = (Component, context) => {
   const { title } = context;
   const panelHeader = title.split('/').pop();
   return (

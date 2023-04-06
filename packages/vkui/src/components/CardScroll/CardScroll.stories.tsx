@@ -1,8 +1,9 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Playground as BasicCard } from '../Card/Card.stories';
+import { Card as BasicCard } from '../Card/Card';
+import { Playground as BasicCardStory } from '../Card/Card.stories';
 import { Group } from '../Group/Group';
 import { CardScroll, CardScrollProps } from './CardScroll';
 
@@ -21,31 +22,32 @@ const story: Meta<StoryCardScrollProps> = {
 
 export default story;
 
-const Template: Story<StoryCardScrollProps> = ({ count, ...args }) => (
-  <CardScroll {...args}>
-    {Array(count)
-      .fill(null)
-      .map((_, index) => (
-        <BasicCard key={index} {...BasicCard.args} />
-      ))}
-  </CardScroll>
-);
+type Story = StoryObj<StoryCardScrollProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {
-  count: 3,
-};
-Playground.decorators = [withSinglePanel, withVKUILayout];
-
-export const InsideGroup = Template.bind({});
-InsideGroup.args = {
-  ...Playground.args,
-};
-InsideGroup.decorators = [
-  (Component, context) => (
-    <Group>
-      <Component {...context.args} />
-    </Group>
+export const Playground: Story = {
+  render: ({ count, ...args }) => (
+    <CardScroll {...args}>
+      {Array(count)
+        .fill(null)
+        .map((_, index) => (
+          <BasicCard key={index} {...BasicCardStory.args} />
+        ))}
+    </CardScroll>
   ),
-  ...Playground.decorators,
-];
+  args: {
+    count: 3,
+  },
+  decorators: [withSinglePanel, withVKUILayout],
+};
+
+export const InsideGroup: Story = {
+  ...Playground,
+  decorators: [
+    (Component, context) => (
+      <Group>
+        <Component {...context.args} />
+      </Group>
+    ),
+    ...(Playground.decorators || []),
+  ],
+};

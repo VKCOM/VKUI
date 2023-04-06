@@ -1,13 +1,14 @@
 import React from 'react';
 import { useArgs } from '@storybook/addons';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Group } from '../Group/Group';
+import { SubnavigationButton } from '../SubnavigationButton/SubnavigationButton';
 import {
-  Playground as BasicSubnavigationButton,
-  WithCounter as CounterSubnavigationButton,
-  WithIcon as IconSubnavigationButton,
+  Playground as BasicSubnavigationButtonStory,
+  WithCounter as CounterSubnavigationButtonStory,
+  WithIcon as IconSubnavigationButtonStory,
 } from '../SubnavigationButton/SubnavigationButton.stories';
 import { SubnavigationBar, SubnavigationBarProps } from './SubnavigationBar';
 
@@ -27,40 +28,42 @@ const story: Meta<StorySubnavigationBarProps> = {
 
 export default story;
 
-const Template: Story<StorySubnavigationBarProps> = ({ selected, ...args }) => {
-  const [, updateArg] = useArgs();
+type Story = StoryObj<StorySubnavigationBarProps>;
 
-  return (
-    <SubnavigationBar {...args}>
-      <BasicSubnavigationButton
-        {...BasicSubnavigationButton.args}
-        selected={selected === 'size'}
-        onClick={() => updateArg({ selected: 'size' })}
-      />
-      <IconSubnavigationButton
-        {...IconSubnavigationButton.args}
-        selected={selected === 'favorite'}
-        onClick={() => updateArg({ selected: 'favorite' })}
-      />
-      <CounterSubnavigationButton
-        {...CounterSubnavigationButton.args}
-        selected={selected === 'filters'}
-        onClick={() => updateArg({ selected: 'filters' })}
-      />
-    </SubnavigationBar>
-  );
-};
+export const Playground: Story = {
+  render: function Render({ selected, ...args }) {
+    const [, updateArg] = useArgs();
 
-export const Playground = Template.bind({});
-Playground.args = {
-  selected: 'size',
+    return (
+      <SubnavigationBar {...args}>
+        <SubnavigationButton
+          {...BasicSubnavigationButtonStory.args}
+          selected={selected === 'size'}
+          onClick={() => updateArg({ selected: 'size' })}
+        />
+        <SubnavigationButton
+          {...IconSubnavigationButtonStory.args}
+          selected={selected === 'favorite'}
+          onClick={() => updateArg({ selected: 'favorite' })}
+        />
+        <SubnavigationButton
+          {...CounterSubnavigationButtonStory.args}
+          selected={selected === 'filters'}
+          onClick={() => updateArg({ selected: 'filters' })}
+        />
+      </SubnavigationBar>
+    );
+  },
+  args: {
+    selected: 'size',
+  },
+  decorators: [
+    (Component, context) => (
+      <Group>
+        <Component {...context.args} />
+      </Group>
+    ),
+    withSinglePanel,
+    withVKUILayout,
+  ],
 };
-Playground.decorators = [
-  (Component, context) => (
-    <Group>
-      <Component {...context.args} />
-    </Group>
-  ),
-  withSinglePanel,
-  withVKUILayout,
-];

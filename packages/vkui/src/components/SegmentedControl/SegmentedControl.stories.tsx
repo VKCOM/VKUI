@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { SegmentedControl, SegmentedControlProps } from './SegmentedControl';
 
@@ -11,29 +11,30 @@ const story: Meta<SegmentedControlProps> = {
 
 export default story;
 
-const Template: Story<SegmentedControlProps> = (args) => <SegmentedControl {...args} />;
+type Story = StoryObj<SegmentedControlProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {
-  options: [
-    {
-      label: 'Баг',
-      value: 'bug',
-    },
-    {
-      label: 'Идея',
-      value: 'idea',
-    },
-    {
-      label: 'Другое',
-      value: 'other',
-    },
+export const Playground: Story = {
+  args: {
+    options: [
+      {
+        label: 'Баг',
+        value: 'bug',
+      },
+      {
+        label: 'Идея',
+        value: 'idea',
+      },
+      {
+        label: 'Другое',
+        value: 'other',
+      },
+    ],
+  },
+  decorators: [
+    (Component) => (
+      <div style={{ width: '100%' }}>
+        <Component />
+      </div>
+    ),
   ],
 };
-Playground.decorators = [
-  (Component) => (
-    <div style={{ width: '100%' }}>
-      <Component />
-    </div>
-  ),
-];

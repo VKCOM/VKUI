@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useGlobals } from '@storybook/api';
+import { useGlobals } from '@storybook/manager-api';
 import { IconButton, Icons } from '@storybook/components';
 import { PARAM_KEY } from './constants';
 
@@ -12,7 +12,7 @@ export const HasPointer = () => {
   }, [updateGlobals, hasPointer]);
 
   return (
-    <IconButton active={hasPointer} key="pointer" onClick={toggleHasPointer}>
+    <IconButton active={hasPointer} nonce={undefined} key="pointer" onClick={toggleHasPointer}>
       <Icons icon="button" />
       &nbsp;
       {`${hasPointer ? '' : 'no '}pointer`}

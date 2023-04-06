@@ -1,5 +1,4 @@
-import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Radio, RadioProps } from './Radio';
 
@@ -11,17 +10,19 @@ const story: Meta<RadioProps> = {
 
 export default story;
 
-const Template: Story<RadioProps> = (args) => <Radio {...args} />;
+type Story = StoryObj<RadioProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {
-  name: 'payment',
-  children: 'VK Pay',
+export const Playground: Story = {
+  args: {
+    name: 'payment',
+    children: 'VK Pay',
+  },
 };
 
-export const WithDescription = Template.bind({});
-WithDescription.args = {
-  ...Playground.args,
-  description: 'Баланс 7 320 ₽',
-  children: 'VK Pay',
+export const WithDescription: Story = {
+  ...Playground,
+  args: {
+    ...Playground.args,
+    description: 'Баланс 7 320 ₽',
+  },
 };

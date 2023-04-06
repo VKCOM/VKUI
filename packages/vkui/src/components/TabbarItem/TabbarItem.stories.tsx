@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { getIconArgBySize, getIconComponent, IconName } from '../../storybook/Icons';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -32,36 +32,41 @@ const story: Meta<TabbarItemProps> = {
 
 export default story;
 
-const Template: Story<Omit<TabbarItemProps, 'children'> & { children?: IconName }> = ({
-  children,
-  ...args
-}) => {
-  const Icon = getIconComponent(children);
+type Story = StoryObj<Omit<TabbarItemProps, 'children'> & { children?: IconName }>;
 
-  return <TabbarItem {...args}>{Icon}</TabbarItem>;
+const Playground: Story = {
+  render: ({ children, ...args }) => {
+    const Icon = getIconComponent(children);
+
+    return <TabbarItem {...args}>{Icon}</TabbarItem>;
+  },
 };
 
-export const InVerticalTabbar = Template.bind({});
-InVerticalTabbar.args = {
-  children: 'Icon28MessageOutline',
-  text: 'Messages',
+export const InVerticalTabbar: Story = {
+  ...Playground,
+  args: {
+    children: 'Icon28MessageOutline',
+    text: 'Messages',
+  },
+  decorators: [
+    (Component, context) => (
+      <Tabbar mode="vertical">
+        <Component args={context.args} />
+      </Tabbar>
+    ),
+  ],
 };
-InVerticalTabbar.decorators = [
-  (Component, context) => (
-    <Tabbar mode="vertical">
-      <Component args={context.args} />
-    </Tabbar>
-  ),
-];
 
-export const InHorizontalTabbar = Template.bind({});
-InHorizontalTabbar.args = {
-  ...InVerticalTabbar.args,
+export const InHorizontalTabbar: Story = {
+  ...Playground,
+  args: {
+    ...InVerticalTabbar.args,
+  },
+  decorators: [
+    (Component, context) => (
+      <Tabbar mode="horizontal">
+        <Component args={context.args} />
+      </Tabbar>
+    ),
+  ],
 };
-InHorizontalTabbar.decorators = [
-  (Component, context) => (
-    <Tabbar mode="horizontal">
-      <Component args={context.args} />
-    </Tabbar>
-  ),
-];

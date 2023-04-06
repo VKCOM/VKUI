@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { SplitCol } from '../SplitCol/SplitCol';
 import { SplitLayout } from '../SplitLayout/SplitLayout';
@@ -16,15 +16,17 @@ const story: Meta<PopoutWrapperProps> = {
 
 export default story;
 
-const Template: Story<PopoutWrapperProps> = (args) => (
-  <SplitLayout popout={<PopoutWrapper {...args} />}>
-    <SplitCol>
-      <div />
-    </SplitCol>
-  </SplitLayout>
-);
+type Story = StoryObj<PopoutWrapperProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {
-  children: 'Some content',
+export const Playground: Story = {
+  render: (args) => (
+    <SplitLayout popout={<PopoutWrapper {...args} />}>
+      <SplitCol>
+        <div />
+      </SplitCol>
+    </SplitLayout>
+  ),
+  args: {
+    children: 'Some content',
+  },
 };

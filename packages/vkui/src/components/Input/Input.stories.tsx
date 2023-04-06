@@ -1,5 +1,4 @@
-import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Input, InputProps } from './Input';
 
@@ -11,7 +10,6 @@ const story: Meta<InputProps> = {
 
 export default story;
 
-const Template: Story<InputProps> = (args) => <Input {...args} />;
+type Story = StoryObj<InputProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
+export const Playground: Story = {};

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Calendar, CalendarProps } from './Calendar';
 
@@ -16,11 +16,12 @@ const story: Meta<CalendarProps> = {
 
 export default story;
 
-const Template: Story<CalendarProps> = ({ value, ...args }) => {
-  const parsedValue = value ? new Date(value) : value;
+type Story = StoryObj<CalendarProps>;
 
-  return <Calendar value={parsedValue} {...args} />;
+export const Playground: Story = {
+  render: ({ value, ...args }) => {
+    const parsedValue = value ? new Date(value) : value;
+
+    return <Calendar value={parsedValue} {...args} />;
+  },
 };
-
-export const Playground = Template.bind({});
-Playground.args = {};

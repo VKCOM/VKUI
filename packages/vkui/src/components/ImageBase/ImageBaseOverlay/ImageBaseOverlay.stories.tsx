@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/constants';
 import { ImageBaseOverlay, ImageBaseOverlayProps } from './ImageBaseOverlay';
 
@@ -11,16 +11,15 @@ const story: Meta<ImageBaseOverlayProps> = {
 
 export default story;
 
-const Template: Story<ImageBaseOverlayProps> = ({ children, ...args }) => (
-  <ImageBaseOverlay {...args}>{children}</ImageBaseOverlay>
-);
+type Story = StoryObj<ImageBaseOverlayProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
-Playground.decorators = [
-  (Component, context) => (
-    <div style={{ width: 50, height: 50, border: '1px dashed red', position: 'relative' }}>
-      <Component args={{ ...context.args }} />
-    </div>
-  ),
-];
+export const Playground: Story = {
+  render: ({ children, ...args }) => <ImageBaseOverlay {...args}>{children}</ImageBaseOverlay>,
+  decorators: [
+    (Component, context) => (
+      <div style={{ width: 50, height: 50, border: '1px dashed red', position: 'relative' }}>
+        <Component args={{ ...context.args }} />
+      </div>
+    ),
+  ],
+};

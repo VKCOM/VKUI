@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
@@ -16,32 +16,35 @@ const story: Meta<CellProps> = {
 
 export default story;
 
-const Template: Story<CellProps> = (args) => <Cell {...args} />;
+type Story = StoryObj<CellProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {
-  children: 'Игорь Федоров',
-  before: <Avatar src={getAvatarUrl('user_xyz')} />,
+export const Playground: Story = {
+  args: {
+    children: 'Игорь Федоров',
+    before: <Avatar src={getAvatarUrl('user_xyz')} />,
+  },
+  decorators: [
+    (Component, context) => (
+      <Group>
+        <Component {...context.args} />
+      </Group>
+    ),
+  ],
 };
-Playground.decorators = [
-  (Component, context) => (
-    <Group>
-      <Component {...context.args} />
-    </Group>
-  ),
-];
 
-export const Multiple = Template.bind({});
-Multiple.args = {
-  before: <Avatar />,
+export const Multiple: Story = {
+  ...Playground,
+  args: {
+    before: <Avatar />,
+  },
+  decorators: [
+    (Component, context) => (
+      <Group>
+        <Component args={{ ...context.args, children: 'Игорь Федоров' }} />
+        <Component args={{ ...context.args, children: 'Вадим Дорохов' }} />
+        <Component args={{ ...context.args, children: 'Евгения Полозова' }} />
+        <Component args={{ ...context.args, children: 'Владимир Клепов' }} />
+      </Group>
+    ),
+  ],
 };
-Multiple.decorators = [
-  (Component, context) => (
-    <Group>
-      <Component args={{ ...context.args, children: 'Игорь Федоров' }} />
-      <Component args={{ ...context.args, children: 'Вадим Дорохов' }} />
-      <Component args={{ ...context.args, children: 'Евгения Полозова' }} />
-      <Component args={{ ...context.args, children: 'Владимир Клепов' }} />
-    </Group>
-  ),
-];

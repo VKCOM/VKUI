@@ -1,6 +1,5 @@
-import React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { Spinner, SpinnerProps } from './Spinner';
 
@@ -13,7 +12,6 @@ const story: Meta<SpinnerProps> = {
 
 export default story;
 
-const Template: Story<SpinnerProps> = (args) => <Spinner {...args} />;
+type Story = StoryObj<SpinnerProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
+export const Playground: Story = {};

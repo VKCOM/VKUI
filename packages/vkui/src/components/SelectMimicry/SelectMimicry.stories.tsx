@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { SelectMimicry, SelectMimicryProps } from './SelectMimicry';
 
@@ -26,9 +26,8 @@ const story: Meta<StorySelectMimicryProps> = {
 
 export default story;
 
-const Template: Story<StorySelectMimicryProps> = ({ selectValue, ...args }) => (
-  <SelectMimicry {...args}>{selectValue}</SelectMimicry>
-);
+type Story = StoryObj<StorySelectMimicryProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
+export const Playground: Story = {
+  render: ({ selectValue, ...args }) => <SelectMimicry {...args}>{selectValue}</SelectMimicry>,
+};

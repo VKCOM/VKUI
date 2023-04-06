@@ -1,5 +1,4 @@
-import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { SelectProps } from '../CustomSelect/CustomSelect';
 import { Select } from './Select';
@@ -12,9 +11,10 @@ const story: Meta<SelectProps> = {
 
 export default story;
 
-const Template: Story<SelectProps> = (args) => <Select {...args} />;
+type Story = StoryObj<SelectProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {
-  style: { width: 300 },
+export const Playground: Story = {
+  args: {
+    style: { width: 300 },
+  },
 };

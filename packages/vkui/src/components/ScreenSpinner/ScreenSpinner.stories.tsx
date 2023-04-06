@@ -1,5 +1,4 @@
-import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { ScreenSpinner, ScreenSpinnerProps } from './ScreenSpinner';
 
@@ -11,7 +10,6 @@ const story: Meta<ScreenSpinnerProps> = {
 
 export default story;
 
-const Template: Story<ScreenSpinnerProps> = (args) => <ScreenSpinner {...args} />;
+type Story = StoryObj<ScreenSpinnerProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
+export const Playground: Story = {};

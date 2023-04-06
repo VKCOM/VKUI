@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Div } from '../Div/Div';
 import { Group } from '../Group/Group';
@@ -13,19 +13,18 @@ const story: Meta<AccordionProps> = {
 
 export default story;
 
-const Template: Story<AccordionProps> = (args) => (
-  <Accordion {...args}>
-    <Accordion.Summary>Title</Accordion.Summary>
-    <Div>Content</Div>
-  </Accordion>
-);
-
-export const Playground = Template.bind({});
-Playground.args = {};
-Playground.decorators = [
-  (Component) => (
-    <Group>
-      <Component />
-    </Group>
+export const Playground: StoryObj<AccordionProps> = {
+  render: (args) => (
+    <Accordion {...args}>
+      <Accordion.Summary>Title</Accordion.Summary>
+      <Div>Content</Div>
+    </Accordion>
   ),
-];
+  decorators: [
+    (Component) => (
+      <Group>
+        <Component />
+      </Group>
+    ),
+  ],
+};

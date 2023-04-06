@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { DecoratorFunction } from '@storybook/csf/dist/story';
-import { ReactFramework } from '@storybook/react';
+import { Decorator, ReactRenderer } from '@storybook/react';
+import type { StoryContext, StrictArgs } from '@storybook/types';
 
 const CartesianContainerStyle: React.CSSProperties = {
   display: 'flex',
@@ -12,7 +12,11 @@ const CartesianContainerStyle: React.CSSProperties = {
   alignItems: 'baseline',
 };
 
-function cartesianFunc(propDesc: { [s: string]: unknown } | ArrayLike<unknown>) {
+interface CartesianPropType extends StrictArgs {
+  cartesian?: { [s: string]: unknown } | ArrayLike<unknown>;
+}
+
+function cartesianFunc(propDesc: CartesianPropType['cartesian'] = []) {
   return Object.entries(propDesc).reduce(
     (acc, [prop, values]: [string, any]) => {
       const res: any[] = [];
@@ -27,10 +31,10 @@ function cartesianFunc(propDesc: { [s: string]: unknown } | ArrayLike<unknown>) 
   );
 }
 
-export const withCartesian: DecoratorFunction<ReactFramework> = (StoryFn, context) => {
+export const withCartesian: Decorator = (StoryFn, context) => {
   const {
     args: { cartesian, ...restArgs },
-  } = context;
+  } = context as StoryContext<ReactRenderer, CartesianPropType>;
 
   if (cartesian) {
     const variants = cartesianFunc(cartesian);

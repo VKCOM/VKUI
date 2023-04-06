@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import {
   Icon16Dropdown,
   Icon24Done,
@@ -39,192 +39,208 @@ const story: Meta<PanelHeaderProps> = {
 
 export default story;
 
-export const SimplePanelHeader = () => (
-  <View id="main" activePanel="panel1">
-    <Panel id="panel1">
-      <PanelHeader before={<PanelHeaderClose />} after={<Avatar size={36} />}>
-        Стартовый экран
-      </PanelHeader>
-      <Div>PanelHeader c before PanelHeaderClose и after Avatar</Div>
-    </Panel>
-  </View>
-);
+type Story = StoryObj<PanelHeaderProps>;
 
-export const PanelHeaderWithCounter = () => {
-  const platform = usePlatform();
-  return (
+export const SimplePanelHeader: Story = {
+  render: () => (
     <View id="main" activePanel="panel1">
       <Panel id="panel1">
-        <PanelHeader
-          before={<PanelHeaderBack label={platform === Platform.VKCOM ? 'Назад' : undefined} />}
-          after={
-            <PanelHeaderButton
-              aria-label="Изображения"
-              label={
-                <Counter size="s" mode="prominent" aria-label="Обновлений: ">
-                  21
-                </Counter>
-              }
-            >
-              <Icon28PictureOutline />
-            </PanelHeaderButton>
-          }
-        >
-          Вторая панель
+        <PanelHeader before={<PanelHeaderClose />} after={<Avatar size={36} />}>
+          Стартовый экран
         </PanelHeader>
-        <Div>PanelHeader c before PanelHeaderBack и after PanelHeaderButton</Div>
+        <Div>PanelHeader c before PanelHeaderClose и after Avatar</Div>
       </Panel>
     </View>
-  );
+  ),
 };
 
-export const PanelHeaderWithMultipleIcons = () => (
-  <View id="main" activePanel="panel1">
-    <Panel id="panel1">
-      <PanelHeader
-        before={<PanelHeaderBack />}
-        after={
-          <React.Fragment>
-            <PanelHeaderButton
-              aria-label="Настройки"
-              label={
-                <Counter size="s" mode="prominent" aria-label="Новые настройки: ">
-                  3
-                </Counter>
-              }
-            >
-              <Icon28SettingsOutline />
-            </PanelHeaderButton>
-            <PanelHeaderButton
-              aria-label="Уведомления"
-              label={
-                <Counter size="s" mode="prominent" aria-label="Уведомлений: ">
-                  2
-                </Counter>
-              }
-            >
-              <Icon28Notifications />
-            </PanelHeaderButton>
-          </React.Fragment>
-        }
-      >
-        Две иконки
-      </PanelHeader>
-      <Div>Несколько иконок</Div>
-    </Panel>
-  </View>
-);
-
-export const PanelHeaderWithPanelHeaderContent = () => {
-  const platform = usePlatform();
-
-  return (
-    <View id="main" activePanel="panel1">
-      <Panel id="panel1">
-        <PanelHeader
-          before={<PanelHeaderBack label={platform === Platform.VKCOM ? 'Назад' : undefined} />}
-        >
-          <PanelHeaderContent before={<Avatar size={36} />} status="Был в сети вчера">
-            Влад Анесов
-          </PanelHeaderContent>
-        </PanelHeader>
-        <Div>PanelHeaderContent</Div>
-      </Panel>
-    </View>
-  );
+export const PanelHeaderWithCounter: Story = {
+  render: function Render() {
+    const platform = usePlatform();
+    return (
+      <View id="main" activePanel="panel1">
+        <Panel id="panel1">
+          <PanelHeader
+            before={<PanelHeaderBack label={platform === Platform.VKCOM ? 'Назад' : undefined} />}
+            after={
+              <PanelHeaderButton
+                aria-label="Изображения"
+                label={
+                  <Counter size="s" mode="prominent" aria-label="Обновлений: ">
+                    21
+                  </Counter>
+                }
+              >
+                <Icon28PictureOutline />
+              </PanelHeaderButton>
+            }
+          >
+            Вторая панель
+          </PanelHeader>
+          <Div>PanelHeader c before PanelHeaderBack и after PanelHeaderButton</Div>
+        </Panel>
+      </View>
+    );
+  },
 };
 
-export const PanelHeaderWithSearch = () => {
-  const platform = usePlatform();
-
-  return (
-    <View id="main" activePanel="panel1">
-      <Panel id="panel1">
-        <PanelHeader before={platform !== Platform.VKCOM && <PanelHeaderBack />}>
-          <Search />
-        </PanelHeader>
-        <Div>Search</Div>
-      </Panel>
-    </View>
-  );
-};
-
-export const PanelHeaderWithTabs = () => (
-  <View id="main" activePanel="panel1">
-    <Panel id="panel1">
-      <PanelHeader before={<PanelHeaderBack />}>
-        <Tabs>
-          <TabsItem selected>Новости</TabsItem>
-          <TabsItem>Интересное</TabsItem>
-        </Tabs>
-      </PanelHeader>
-      <Div>Tabs</Div>
-    </Panel>
-  </View>
-);
-
-export const PanelHeaderWithPanelHeaderContext = () => {
-  const [contextOpened, setContextOpened] = React.useState(true);
-  const [mode, setMode] = React.useState<string | undefined>('all');
-
-  const toggleContext = () => {
-    setContextOpened((prev) => !prev);
-  };
-
-  const select = (e: React.MouseEvent<HTMLElement>) => {
-    const mode = e.currentTarget.dataset.mode;
-    setMode(mode);
-    requestAnimationFrame(toggleContext);
-  };
-
-  return (
+export const PanelHeaderWithMultipleIcons: Story = {
+  render: () => (
     <View id="main" activePanel="panel1">
       <Panel id="panel1">
         <PanelHeader
           before={<PanelHeaderBack />}
           after={
-            <PanelHeaderButton>
-              <Icon28AddOutline />
-            </PanelHeaderButton>
+            <React.Fragment>
+              <PanelHeaderButton
+                aria-label="Настройки"
+                label={
+                  <Counter size="s" mode="prominent" aria-label="Новые настройки: ">
+                    3
+                  </Counter>
+                }
+              >
+                <Icon28SettingsOutline />
+              </PanelHeaderButton>
+              <PanelHeaderButton
+                aria-label="Уведомления"
+                label={
+                  <Counter size="s" mode="prominent" aria-label="Уведомлений: ">
+                    2
+                  </Counter>
+                }
+              >
+                <Icon28Notifications />
+              </PanelHeaderButton>
+            </React.Fragment>
           }
         >
-          <PanelHeaderContent
-            aside={
-              <Icon16Dropdown
-                style={{
-                  transform: `rotate(${contextOpened ? '180deg' : '0'})`,
-                }}
-              />
-            }
-            onClick={toggleContext}
-          >
-            Communities
-          </PanelHeaderContent>
+          Две иконки
         </PanelHeader>
-        <PanelHeaderContext opened={contextOpened} onClose={toggleContext}>
-          <List>
-            <Cell
-              before={<Icon28UsersOutline />}
-              after={mode === 'all' ? <Icon24Done fill="var(--vkui--color_icon_accent)" /> : null}
-              onClick={select}
-              data-mode="all"
-            >
-              Communities
-            </Cell>
-            <Cell
-              before={<Icon28SettingsOutline />}
-              after={
-                mode === 'managed' ? <Icon24Done fill="var(--vkui--color_icon_accent)" /> : null
-              }
-              onClick={select}
-              data-mode="managed"
-            >
-              Managed Communities
-            </Cell>
-          </List>
-        </PanelHeaderContext>
-        <Div>PanelHeaderContext</Div>
+        <Div>Несколько иконок</Div>
       </Panel>
     </View>
-  );
+  ),
+};
+
+export const PanelHeaderWithPanelHeaderContent: Story = {
+  render: function Render() {
+    const platform = usePlatform();
+
+    return (
+      <View id="main" activePanel="panel1">
+        <Panel id="panel1">
+          <PanelHeader
+            before={<PanelHeaderBack label={platform === Platform.VKCOM ? 'Назад' : undefined} />}
+          >
+            <PanelHeaderContent before={<Avatar size={36} />} status="Был в сети вчера">
+              Влад Анесов
+            </PanelHeaderContent>
+          </PanelHeader>
+          <Div>PanelHeaderContent</Div>
+        </Panel>
+      </View>
+    );
+  },
+};
+
+export const PanelHeaderWithSearch: Story = {
+  render: function Render() {
+    const platform = usePlatform();
+
+    return (
+      <View id="main" activePanel="panel1">
+        <Panel id="panel1">
+          <PanelHeader before={platform !== Platform.VKCOM && <PanelHeaderBack />}>
+            <Search />
+          </PanelHeader>
+          <Div>Search</Div>
+        </Panel>
+      </View>
+    );
+  },
+};
+
+export const PanelHeaderWithTabs: Story = {
+  render: () => (
+    <View id="main" activePanel="panel1">
+      <Panel id="panel1">
+        <PanelHeader before={<PanelHeaderBack />}>
+          <Tabs>
+            <TabsItem selected>Новости</TabsItem>
+            <TabsItem>Интересное</TabsItem>
+          </Tabs>
+        </PanelHeader>
+        <Div>Tabs</Div>
+      </Panel>
+    </View>
+  ),
+};
+
+export const PanelHeaderWithPanelHeaderContext: Story = {
+  render: function Render() {
+    const [contextOpened, setContextOpened] = React.useState(true);
+    const [mode, setMode] = React.useState<string | undefined>('all');
+
+    const toggleContext = () => {
+      setContextOpened((prev) => !prev);
+    };
+
+    const select = (e: React.MouseEvent<HTMLElement>) => {
+      const mode = e.currentTarget.dataset.mode;
+      setMode(mode);
+      requestAnimationFrame(toggleContext);
+    };
+
+    return (
+      <View id="main" activePanel="panel1">
+        <Panel id="panel1">
+          <PanelHeader
+            before={<PanelHeaderBack />}
+            after={
+              <PanelHeaderButton>
+                <Icon28AddOutline />
+              </PanelHeaderButton>
+            }
+          >
+            <PanelHeaderContent
+              aside={
+                <Icon16Dropdown
+                  style={{
+                    transform: `rotate(${contextOpened ? '180deg' : '0'})`,
+                  }}
+                />
+              }
+              onClick={toggleContext}
+            >
+              Communities
+            </PanelHeaderContent>
+          </PanelHeader>
+          <PanelHeaderContext opened={contextOpened} onClose={toggleContext}>
+            <List>
+              <Cell
+                before={<Icon28UsersOutline />}
+                after={mode === 'all' ? <Icon24Done fill="var(--vkui--color_icon_accent)" /> : null}
+                onClick={select}
+                data-mode="all"
+              >
+                Communities
+              </Cell>
+              <Cell
+                before={<Icon28SettingsOutline />}
+                after={
+                  mode === 'managed' ? <Icon24Done fill="var(--vkui--color_icon_accent)" /> : null
+                }
+                onClick={select}
+                data-mode="managed"
+              >
+                Managed Communities
+              </Cell>
+            </List>
+          </PanelHeaderContext>
+          <Div>PanelHeaderContext</Div>
+        </Panel>
+      </View>
+    );
+  },
 };

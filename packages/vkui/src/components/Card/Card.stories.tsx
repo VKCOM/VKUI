@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Card, CardProps } from './Card';
@@ -13,9 +13,10 @@ const story: Meta<CardProps> = {
 
 export default story;
 
-const Template: Story<CardProps> = (args) => <Card {...args} />;
+type Story = StoryObj<CardProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {
-  children: <div style={{ height: 96 }} />,
+export const Playground: Story = {
+  args: {
+    children: <div style={{ height: 96 }} />,
+  },
 };

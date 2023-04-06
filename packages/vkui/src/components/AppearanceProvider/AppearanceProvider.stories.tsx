@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { AppearanceProvider, AppearanceProviderProps } from './AppearanceProvider';
 
@@ -11,8 +11,8 @@ const story: Meta<AppearanceProviderProps> = {
 
 export default story;
 
-const Template: Story<AppearanceProviderProps> = (args) => {
-  return (
+export const Playground: StoryObj<AppearanceProviderProps> = {
+  render: (args) => (
     <AppearanceProvider {...args}>
       <div
         style={{
@@ -24,8 +24,5 @@ const Template: Story<AppearanceProviderProps> = (args) => {
         AppearanceProvider
       </div>
     </AppearanceProvider>
-  );
+  ),
 };
-
-export const Playground = Template.bind({});
-Playground.args = {};

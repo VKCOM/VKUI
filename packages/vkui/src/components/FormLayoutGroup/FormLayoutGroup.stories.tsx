@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { FormItem } from '../FormItem/FormItem';
 import { Input } from '../Input/Input';
@@ -14,22 +14,23 @@ const story: Meta<FormLayoutGroupProps> = {
 
 export default story;
 
-const Template: Story<FormLayoutGroupProps> = (args) => (
-  <FormLayoutGroup {...args}>
-    <FormItem top="Имя ящика">
-      <Input />
-    </FormItem>
-    <FormItem>
-      <Select
-        options={['@mail.ru', '@internet.ru', '@bk.ru', '@inbox.ru', '@list.ru'].map((i) => ({
-          label: i,
-          value: i,
-        }))}
-        defaultValue="@mail.ru"
-      />
-    </FormItem>
-  </FormLayoutGroup>
-);
+type Story = StoryObj<FormLayoutGroupProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
+export const Playground: Story = {
+  render: (args) => (
+    <FormLayoutGroup {...args}>
+      <FormItem top="Имя ящика">
+        <Input />
+      </FormItem>
+      <FormItem>
+        <Select
+          options={['@mail.ru', '@internet.ru', '@bk.ru', '@inbox.ru', '@list.ru'].map((i) => ({
+            label: i,
+            value: i,
+          }))}
+          defaultValue="@mail.ru"
+        />
+      </FormItem>
+    </FormLayoutGroup>
+  ),
+};

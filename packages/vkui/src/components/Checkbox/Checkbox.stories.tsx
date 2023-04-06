@@ -1,5 +1,4 @@
-import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { Checkbox, CheckboxProps } from './Checkbox';
 
@@ -14,19 +13,22 @@ const story: Meta<CheckboxProps> = {
 
 export default story;
 
-const Template: Story<CheckboxProps> = (args) => <Checkbox {...args} />;
+type Story = StoryObj<CheckboxProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
+export const Playground: Story = {};
 
-export const WithText = Template.bind({});
-WithText.args = {
-  ...Playground.args,
-  children: 'Закрепить сообщение',
+export const WithText: Story = {
+  ...Playground,
+  args: {
+    ...Playground.args,
+    children: 'Закрепить сообщение',
+  },
 };
 
-export const WithDescription = Template.bind({});
-WithDescription.args = {
-  ...WithText.args,
-  description: 'Все пользователи получат уведомление',
+export const WithDescription: Story = {
+  ...Playground,
+  args: {
+    ...WithText.args,
+    description: 'Все пользователи получат уведомление',
+  },
 };
