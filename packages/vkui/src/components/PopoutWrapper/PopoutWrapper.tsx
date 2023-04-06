@@ -34,7 +34,7 @@ export const PopoutWrapper = ({
   const elRef = React.useRef<HTMLDivElement>(null);
 
   const onFadeInEnd = (e?: React.AnimationEvent) => {
-    if (!e || e.animationName === 'vkui-animation-full-fade-in') {
+    if (!e || e.animationName === styles['vkui-animation-full-fade-in']) {
       setOpened(true);
     }
   };
