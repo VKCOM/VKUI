@@ -63,3 +63,13 @@
   top: 8px;
   right: 2px;
 }
+
+/**
+ * CMP:
+ * TabbarItem
+ */
+:global(.vkuiInternalTabbarItem__label) .Counter {
+  position: absolute;
+  top: -2px;
+  right: -9px;
+}

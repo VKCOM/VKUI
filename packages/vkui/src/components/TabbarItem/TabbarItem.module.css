@@ -61,18 +61,6 @@
   color: var(--vkui--color_icon_accent_themed);
 }
 
-.TabbarItem__label .Counter {
-  position: absolute;
-  top: -2px;
-  right: -9px;
-}
-
-.TabbarItem__label .Badge {
-  position: absolute;
-  top: -2px;
-  right: -4px;
-}
-
 .TabbarItem__text {
   white-space: nowrap;
   max-width: 100%;
