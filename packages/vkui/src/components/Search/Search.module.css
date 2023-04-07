@@ -44,7 +44,7 @@
 
 .Search__control {
   padding-left: 12px;
-  color: var(--vkui--color_icon_secondary);
+  color: var(--vkui--color_icon_medium);
   display: flex;
   justify-content: flex-start;
   align-items: center;
