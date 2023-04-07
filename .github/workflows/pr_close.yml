@@ -5,26 +5,35 @@ on:
     types: [closed]
 
 jobs:
-  undeploy_styleguide:
+  undeploy_s3:
     # [Примечание 1] Пропускаем очищение, т.к. для PR от dependabot песочница не создаётся
     if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' }}
-    concurrency: ci-gh-pages
     runs-on: ubuntu-latest
-    name: Undeploy docs (styleguide)
+    name: Undeploy S3
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          ref: gh-pages
 
-      - name: Remove styleguide
-        run: rm -rf pull/${{ github.event.pull_request.number }}
-
-      - name: Commit it
-        uses: stefanzweifel/git-auto-commit-action@v4
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
         with:
-          commit_message: 'Remove PR ${{ github.event.pull_request.number }}'
-          branch: gh-pages
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Build S3 action
+        run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
+        working-directory: ./.github/actions/s3
+
+      - name: Delete from S3
+        if: ${{ github.actor != 'dependabot[bot]' }}
+        uses: ./.github/actions/s3
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: vkui-screenshot
+          awsEndpoint: https://hb.bizmrg.com
+          command: delete
+          commandDeletePrefix: pull/${{ github.event.pull_request.number }}
 
   patch:
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'patch')
