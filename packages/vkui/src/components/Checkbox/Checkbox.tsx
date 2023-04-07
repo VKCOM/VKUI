@@ -37,6 +37,7 @@ export interface CheckboxProps
   description?: React.ReactNode;
   indeterminate?: boolean;
   defaultIndeterminate?: boolean;
+  titleAfter?: React.ReactNode;
 }
 
 const warn = warnOnce('Checkbox');
@@ -59,6 +60,7 @@ export const Checkbox = ({
   hasActive,
   focusVisibleMode,
   onChange,
+  titleAfter,
   ...restProps
 }: CheckboxProps) => {
   const inputRef = useExternRef(getRef);
@@ -186,7 +188,10 @@ export const Checkbox = ({
         )}
       </div>
       <div className={styles['Checkbox__content']}>
-        <div className={styles['Checkbox__children']}>{children}</div>
+        <div className={styles['Checkbox__title']}>
+          <span>{children}</span>
+          <div className={styles['Checkbox__titleAfter']}>{titleAfter}</div>
+        </div>
         {hasReactNode(description) && (
           <Footnote className={styles['Checkbox__description']}>{description}</Footnote>
         )}

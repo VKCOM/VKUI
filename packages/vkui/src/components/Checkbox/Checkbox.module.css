@@ -76,12 +76,20 @@
   margin-top: 2px;
 }
 
-.Checkbox__children {
+.Checkbox__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 12px;
 }
 
-.Checkbox__children:last-child {
+.Checkbox__title:last-child {
   margin-bottom: 12px;
+}
+
+.Checkbox__titleAfter {
+  margin-left: 4px;
+  color: var(--vkui--color_icon_tertiary);
 }
 
 .Checkbox__input:checked ~ .Checkbox__icon--on {
@@ -115,11 +123,11 @@
   min-height: var(--vkui--size_field_height--compact);
 }
 
-.Checkbox--sizeY-compact .Checkbox__children {
+.Checkbox--sizeY-compact .Checkbox__title {
   margin-top: 8px;
 }
 
-.Checkbox--sizeY-compact .Checkbox__children:last-child {
+.Checkbox--sizeY-compact .Checkbox__title:last-child {
   margin-bottom: 8px;
 }
 
@@ -133,11 +141,11 @@
     min-height: var(--vkui--size_field_height--compact);
   }
 
-  .Checkbox--sizeY-none .Checkbox__children {
+  .Checkbox--sizeY-none .Checkbox__title {
     margin-top: 8px;
   }
 
-  .Checkbox--sizeY-none .Checkbox__children:last-child {
+  .Checkbox--sizeY-none .Checkbox__title:last-child {
     margin-bottom: 8px;
   }
 

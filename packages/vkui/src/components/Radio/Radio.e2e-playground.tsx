@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Icon12Lock } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Radio, type RadioProps } from './Radio';
 
@@ -27,7 +28,7 @@ export const RadioWithSizesAndDescriptionPlayground = (props: ComponentPlaygroun
       propSets={[
         {
           description: [undefined, 'Description'],
-          $adaptivity: 'y',
+          titleAfter: [undefined, <Icon12Lock key="icon" />],
         },
       ]}
     >

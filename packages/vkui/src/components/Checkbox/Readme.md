@@ -8,7 +8,7 @@
       <FormItem>
         <Checkbox defaultChecked>Я участвую в сборе</Checkbox>
         <Checkbox description="Все пользователи получат уведомление">Закрепить сообщение</Checkbox>
-        <Checkbox checked disabled>
+        <Checkbox checked disabled titleAfter={<Icon12Lock />}>
           Автоматически зачислять на карту
         </Checkbox>
       </FormItem>
