@@ -3,7 +3,6 @@ import { Icon16Dropdown } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { SizeType } from '../../lib/adaptivity';
-import { getTitleFromChildren } from '../../lib/utils';
 import { HasChildren, HasComponent } from '../../types';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
@@ -90,7 +89,6 @@ export const SubnavigationButton = ({
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         className,
       )}
-      aria-label={getTitleFromChildren(children)}
     >
       <span className={styles['SubnavigationButton__in']}>
         {before && <span className={styles['SubnavigationButton__before']}>{before}</span>}
