@@ -20,6 +20,7 @@ export const Subhead = ({
   children,
   weight,
   Component = 'h5',
+  normalize = true,
   ...restProps
 }: SubheadProps) => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -30,6 +31,7 @@ export const Subhead = ({
       className={classNames(
         className,
         styles['Subhead'],
+        normalize && styles['Subhead--normalize'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         weight &&
           {

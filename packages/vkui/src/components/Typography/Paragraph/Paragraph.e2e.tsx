@@ -13,6 +13,9 @@ describe('Paragraph', () => {
       {
         weight: ['3', '2', '1'],
       },
+      {
+        normalize: [true],
+      },
     ],
   );
 });

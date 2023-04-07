@@ -22,6 +22,9 @@ describe('Title', () => {
         level: ['3'],
         weight: [undefined, '1', '2', '3'],
       },
+      {
+        normalize: [false],
+      },
     ],
   );
 });

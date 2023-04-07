@@ -1,6 +1,9 @@
-.Text {
-  display: block;
+.Text--normalize {
   margin: 0;
+  display: block;
+}
+
+.Text {
   font-size: var(--vkui--font_text--font_size--regular);
   line-height: var(--vkui--font_text--line_height--regular);
   font-weight: var(--vkui--font_text--font_weight--regular);

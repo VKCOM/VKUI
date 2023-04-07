@@ -17,6 +17,7 @@ export const Caption = ({
   level = '1',
   caps,
   Component = 'span',
+  normalize = true,
   ...restProps
 }: CaptionProps) => {
   return (
@@ -25,6 +26,7 @@ export const Caption = ({
       className={classNames(
         className,
         styles['Caption'],
+        normalize && styles['Caption--normalize'],
         caps && styles['Caption--caps'],
         {
           '1': styles['Caption--level-1'],

@@ -14,6 +14,7 @@ export const Footnote = ({
   weight,
   caps,
   Component = 'span',
+  normalize = true,
   ...restProps
 }: FootnoteProps) => {
   return (
@@ -22,6 +23,7 @@ export const Footnote = ({
       className={classNames(
         className,
         styles['Footnote'],
+        normalize && styles['Footnote--normalize'],
         caps && styles['Footnote--caps'],
         weight &&
           {

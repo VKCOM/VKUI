@@ -15,6 +15,7 @@ export const Paragraph = ({
   getRootRef,
   weight,
   children,
+  normalize = false,
   ...restProps
 }: ParagraphProps) => {
   return (
@@ -24,6 +25,7 @@ export const Paragraph = ({
       className={classNames(
         className,
         styles['Paragraph'],
+        normalize && styles['Paragraph--normalize'],
         weight &&
           {
             '1': styles['Paragraph--weight-1'],
