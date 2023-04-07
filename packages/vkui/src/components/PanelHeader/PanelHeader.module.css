@@ -157,11 +157,6 @@
   padding: 0 12px;
 }
 
-.PanelHeader--android .Search,
-.PanelHeader--vkcom .Search {
-  padding: 0 4px;
-}
-
 /**
  * CMP:
  * SplitCol
@@ -172,14 +167,18 @@
   padding-left: 0;
 }
 
-.SplitCol--viewWidth-tabletPlus:global(.vkuiInternal.SplitCol--spaced-none.SplitCol--spaced-auto)
+:global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(
+    .vkuiInternalSplitCol--spaced-none
+  ):global(.vkuiInternalSplitCol--spaced-auto)
   .PanelHeader--android.PanelHeader--no-before:not(:global(.vkuiInternalModalPageHeader__in))
   .PanelHeader__content {
   padding-left: 0;
 }
 
 @media (--viewWidth-smallTabletPlus) {
-  .SplitCol--viewWidth-none:global(.vkuiInternal.SplitCol--spaced-none.SplitCol--spaced-auto)
+  :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-none):global(
+      .vkuiInternalSplitCol--spaced-auto
+    )
     .PanelHeader--android.PanelHeader--no-before:not(:global(.vkuiInternalModalPageHeader__in))
     .PanelHeader__content {
     padding-left: 0;
@@ -205,17 +204,17 @@
   padding-right: 0;
 }
 
-:global(
-    .vkuiInternalSplitCol--viewWidth-tabletPlus.vkuiInternalSplitCol--spaced-none.vkuiInternalSplitCol--spaced-auto
-  )
+:global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(
+    .vkuiInternalSplitCol--spaced-none
+  ):global(.vkuiInternalSplitCol--spaced-auto)
   .PanelHeader--android.PanelHeader--no-after:not(:global(.vkuiInternalModalPageHeader__in))
   .PanelHeader__content {
   padding-right: 0;
 }
 
 @media (--viewWidth-smallTabletPlus) {
-  :global(
-      .vkuiInternalSplitCol--viewWidth-none.vkuiInternalSplitCol--spaced-none.vkuiInternalSplitCol--spaced-auto
+  :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-none):global(
+      .vkuiInternalSplitCol--spaced-auto
     )
     .PanelHeader--android.PanelHeader--no-after:not(:global(.vkuiInternalModalPageHeader__in))
     .PanelHeader__content {
@@ -303,4 +302,15 @@
 
 .PanelHeader--no-before .PanelHeader__content > * {
   padding-left: 0;
+}
+
+/**
+ * CMP:
+ * Panel
+ */
+:global(.vkuiInternalPanel--centered) .PanelHeader {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
 }

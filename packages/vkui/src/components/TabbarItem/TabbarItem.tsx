@@ -77,7 +77,9 @@ export const TabbarItem = ({
       <div className={styles['TabbarItem__in']}>
         <div className={styles['TabbarItem__icon']}>
           {children}
-          <div className={styles['TabbarItem__label']}>{hasReactNode(indicator) && indicator}</div>
+          <div className="vkuiInternalTabbarItem__label">
+            {hasReactNode(indicator) && indicator}
+          </div>
         </div>
         {text && (
           <Footnote Component="div" className={styles['TabbarItem__text']} weight="2">

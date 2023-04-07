@@ -8,7 +8,7 @@
 }
 
 .Spinner__self {
-  animation: vkui-rotator var(--vkui_internal--duration) linear infinite;
+  animation: vkui-spinner-rotator var(--vkui_internal--duration) linear infinite;
   transform-origin: center;
 }
 
@@ -17,17 +17,20 @@
 }
 
 /**
+ * CMP:
  * PanelHeader
  */
 
-.PanelHeader .Spinner {
+:global(.vkuiInternalPanelHeader) .Spinner {
   color: currentColor;
 }
 
-/**
- * Button
- */
+@keyframes vkui-spinner-rotator {
+  0% {
+    transform: rotate(0deg);
+  }
 
-.Button .Spinner {
-  color: currentColor;
+  100% {
+    transform: rotate(360deg);
+  }
 }

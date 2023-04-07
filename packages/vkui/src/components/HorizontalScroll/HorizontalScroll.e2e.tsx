@@ -72,6 +72,7 @@ describe('HorizontalScroll', () => {
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
           <AppRoot className="vkuiTestWrapper">
             <HorizontalScroll
+              className="vkuiHorizontalScroll"
               getRef={(element) => {
                 if (!element) {
                   return;
@@ -105,7 +106,7 @@ describe('HorizontalScroll', () => {
       <ConfigProvider appearance={APPEARANCE}>
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer={false}>
           <AppRoot className="vkuiTestWrapper">
-            <HorizontalScroll>
+            <HorizontalScroll className="vkuiHorizontalScroll">
               <div key="0" style={{ display: 'flex' }}>
                 {items}
               </div>

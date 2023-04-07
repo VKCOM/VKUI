@@ -11,7 +11,11 @@
   padding-bottom: 0;
 }
 
-.FormItem .CellButton {
+/**
+ * CMP:
+ * FormItem
+ */
+:global(.vkuiInternalFormItem) .CellButton {
   width: 100%;
   box-sizing: content-box;
   margin: 0 calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
@@ -26,7 +30,7 @@
   text-align: center;
 }
 
-.CellButton--centered .SimpleCell__main {
+.CellButton--centered :global(.vkuiInternalSimpleCell__main) {
   flex-grow: initial;
   max-width: initial;
 }

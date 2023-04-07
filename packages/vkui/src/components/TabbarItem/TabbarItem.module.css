@@ -12,7 +12,7 @@
   position: relative;
 }
 
-.Tabbar .TabbarItem {
+:global(.vkuiInternalTabbar) .TabbarItem {
   flex-shrink: 0;
   max-width: 100%;
   min-width: 0;
@@ -59,18 +59,6 @@
 
 .TabbarItem--selected .TabbarItem__icon {
   color: var(--vkui--color_icon_accent_themed);
-}
-
-.TabbarItem__label .Counter {
-  position: absolute;
-  top: -2px;
-  right: -9px;
-}
-
-.TabbarItem__label .Badge {
-  position: absolute;
-  top: -2px;
-  right: -4px;
 }
 
 .TabbarItem__text {

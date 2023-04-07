@@ -67,24 +67,67 @@
  * Group
  * SplitCol
  */
-:global(.vkuiInternalGroup--mode-card .vkuiInternalCardScroll--size-l) .Card,
-:global(.vkuiInternalSplitCol--spaced .vkuiInternalCardScroll--size-l) .Card {
+:global(.vkuiInternalGroup--mode-card) :global(.vkuiInternalCardScroll--size-l) .Card,
+:global(.vkuiInternalSplitCol--spaced) :global(.vkuiInternalCardScroll--size-l) .Card {
   width: calc(100% - 32px);
   margin-right: 16px;
 }
 
-:global(.vkuiInternalGroup--mode-card .vkuiInternalCardScroll--size-l) .Card:last-of-type,
-:global(.vkuiInternalSplitCol--spaced .vkuiInternalCardScroll--size-l) .Card:last-of-type {
+:global(.vkuiInternalGroup--mode-card) :global(.vkuiInternalCardScroll--size-l) .Card:last-of-type,
+:global(.vkuiInternalSplitCol--spaced) :global(.vkuiInternalCardScroll--size-l) .Card:last-of-type {
   margin-right: 0;
 }
 
 @media (--sizeX-regular) {
-  :global(.vkuiInternalGroup--mode-none .vkuiInternalCardScroll--size-l) .Card:last-of-type {
+  :global(.vkuiInternalGroup--mode-none)
+    :global(.vkuiInternalCardScroll--size-l)
+    .Card:last-of-type {
     margin-right: 0;
   }
 
-  :global(.vkuiInternalGroup--mode-none .vkuiInternalCardScroll--size-l) .Card {
+  :global(.vkuiInternalGroup--mode-none) :global(.vkuiInternalCardScroll--size-l) .Card {
     width: calc(100% - 32px);
     margin-right: 16px;
   }
+}
+
+/**
+ * CMP:
+ * CardGrid
+ */
+:global(.vkuiInternalCardGrid) .Card {
+  margin-right: var(--vkui--size_cardgrid_padding--regular);
+}
+
+:global(.vkuiInternalCardGrid--size-l) .Card {
+  width: 100%;
+  margin-right: 0;
+}
+
+:global(.vkuiInternalCardGrid--size-l) .Card:not(:first-child) {
+  margin-top: var(--vkui--size_cardgrid_padding--regular);
+}
+
+:global(.vkuiInternalCardGrid--size-m) .Card {
+  width: calc(50% - (var(--vkui--size_cardgrid_padding--regular) / 2));
+}
+
+:global(.vkuiInternalCardGrid--size-m) .Card:nth-child(n + 3) {
+  margin-top: var(--vkui--size_cardgrid_padding--regular);
+}
+
+:global(.vkuiInternalCardGrid--size-m) .Card:nth-child(2n) {
+  margin-right: 0;
+}
+
+:global(.vkuiInternalCardGrid--size-s) .Card {
+  width: calc((100% - 2 * var(--vkui--size_cardgrid_padding--regular)) / 3);
+}
+
+:global(.vkuiInternalCardGrid--size-s) .Card:nth-child(n + 4) {
+  margin-top: var(--vkui--size_cardgrid_padding--regular);
+}
+
+:global(.vkuiInternalCardGrid--size-s) .Card:nth-child(3n) {
+  margin-right: 0;
 }

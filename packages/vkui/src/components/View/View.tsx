@@ -194,10 +194,10 @@ export const View = ({
       if (
         (!e ||
           [
-            'vkui-animation-ios-next-forward',
-            'vkui-animation-ios-prev-back',
-            'vkui-animation-view-next-forward',
-            'vkui-animation-view-prev-back',
+            iosStyles['vkui-animation-ios-next-forward'],
+            iosStyles['vkui-animation-ios-prev-back'],
+            styles['vkui-animation-view-next-forward'],
+            styles['vkui-animation-view-prev-back'],
           ].includes(e.animationName)) &&
         prevPanel !== null
       ) {

@@ -4,7 +4,7 @@
   padding: 8px 12px 9px;
   color: var(--vkui--color_text_primary);
   box-shadow: var(--vkui--elevation3);
-  animation: vkui-popper-fadein 0.2s ease;
+  animation: vkui-texttooltip-fadein 0.2s ease;
 }
 
 .TextTooltip__arrow {
@@ -45,4 +45,14 @@
 
 .TextTooltip--appearance-inversion .TextTooltip__arrow {
   color: var(--vkui--color_background_modal_inverse);
+}
+
+@keyframes vkui-texttooltip-fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

@@ -189,6 +189,7 @@
 }
 
 .Button__spinner {
+  color: currentColor;
   position: absolute;
   left: 0;
   top: 0;

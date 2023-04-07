@@ -180,6 +180,7 @@ export const UsersStack = ({
     <div
       {...restProps}
       className={classNames(
+        'vkuiInternalUsersStack',
         styles['UsersStack'],
         {
           s: styles['UsersStack--size-s'],

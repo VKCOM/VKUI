@@ -10,43 +10,6 @@
     var(--vkui--size_base_padding_horizontal--regular);
 }
 
-.CardGrid .Card {
-  margin-right: var(--vkui--size_cardgrid_padding--regular);
-}
-
-.CardGrid--size-l .Card {
-  width: 100%;
-  margin-right: 0;
-}
-
-.CardGrid--size-l .Card:not(:first-child) {
-  margin-top: var(--vkui--size_cardgrid_padding--regular);
-}
-
-.CardGrid--size-m .Card {
-  width: calc(50% - (var(--vkui--size_cardgrid_padding--regular) / 2));
-}
-
-.CardGrid--size-m .Card:nth-child(n + 3) {
-  margin-top: var(--vkui--size_cardgrid_padding--regular);
-}
-
-.CardGrid--size-m .Card:nth-child(2n) {
-  margin-right: 0;
-}
-
-.CardGrid--size-s .Card {
-  width: calc((100% - 2 * var(--vkui--size_cardgrid_padding--regular)) / 3);
-}
-
-.CardGrid--size-s .Card:nth-child(n + 4) {
-  margin-top: var(--vkui--size_cardgrid_padding--regular);
-}
-
-.CardGrid--size-s .Card:nth-child(3n) {
-  margin-right: 0;
-}
-
 .CardGrid--sizeX-compact {
   padding-left: var(--vkui--size_base_padding_horizontal--regular);
   padding-right: var(--vkui--size_base_padding_horizontal--regular);
@@ -71,25 +34,26 @@
 }
 
 /**
+ * CMP:
  * Group
  */
 
-.Group--mode-card .CardGrid {
+:global(.vkuiInternalGroup--mode-card) .CardGrid {
   padding-left: var(--vkui--size_base_padding_horizontal--regular);
   padding-right: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 @media (--sizeX-regular) {
-  .Group--mode-none .CardGrid {
+  :global(.vkuiInternalGroup--mode-none) .CardGrid {
     padding-left: 8px;
     padding-right: 8px;
   }
 }
 
-.Group .CardGrid:first-child {
+:global(.vkuiInternalGroup) .CardGrid:first-child {
   margin-top: var(--vkui--size_cardgrid_padding_vertical--regular);
 }
 
-.Group .CardGrid:last-child {
+:global(.vkuiInternalGroup) .CardGrid:last-child {
   margin-bottom: var(--vkui--size_cardgrid_padding_vertical--regular);
 }

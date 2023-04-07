@@ -2,7 +2,6 @@ import '../src/styles/themes.css';
 import '../src/styles/common.css';
 import '../src/styles/constants.css';
 import '../src/styles/adaptivity.module.css';
-import '../src/styles/animations.css';
 
 import { BREAKPOINTS } from '../src/lib/adaptivity';
 import { Platform, Appearance, WebviewType } from '../src';

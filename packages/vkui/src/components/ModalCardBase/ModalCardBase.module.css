@@ -48,7 +48,7 @@
   margin-top: 16px;
 }
 
-.UsersStack + .ModalCardBase__actions {
+:global(.vkuiInternalUsersStack) + .ModalCardBase__actions {
   margin-top: 24px;
 }
 

@@ -142,29 +142,33 @@
  *
  * TODO: Переделать отрицательные отступы https://github.com/VKCOM/VKUI/issues/3508
  */
-:global(.vkuiInternalGroup--mode-plain:not(:first-of-type)) > .Header:first-child,
-:global(.vkuiInternalGroup--mode-plain:not(:first-of-type) > .vkuiInternalTappable:first-child)
+:global(.vkuiInternalGroup--mode-plain):not(:first-of-type) > .Header:first-child,
+:global(.vkuiInternalGroup--mode-plain):not(:first-of-type)
+  > :global(.vkuiInternalTappable):first-child
   > .Header {
   margin-top: -16px;
 }
 
 @media (--sizeX-compact) {
-  :global(.vkuiInternal.Group--mode-none:not(:first-of-type)) > .Header:first-child,
-  :global(.vkuiInternal.Group--mode-none:not(:first-of-type) > .vkuiInternalTappable:first-child)
+  :global(.vkuiInternalGroup--mode-none):not(:first-of-type) > .Header:first-child,
+  :global(.vkuiInternalGroup--mode-none):not(:first-of-type)
+    > :global(.vkuiInternalTappable):first-child
     > .Header {
     margin-top: -16px;
   }
 }
 
-:global(.vkuiInternal.Group--mode-card) > .Header:not(.Header--mode-tertiary):first-child,
-:global(.vkuiInternal.Group--mode-card > .vkuiInternalTappable:first-child)
+:global(.vkuiInternalGroup--mode-card) > .Header:not(.Header--mode-tertiary):first-child,
+:global(.vkuiInternalGroup--mode-card)
+  > :global(.vkuiInternalTappable):first-child
   > .Header:not(.Header--mode-tertiary) {
   margin-top: -4px;
 }
 
 @media (--sizeX-regular) {
-  :global(.vkuiInternal.Group--mode-none) > .Header:not(.Header--mode-tertiary):first-child,
-  :global(.vkuiInternal.Group--mode-none > .vkuiInternalTappable:first-child)
+  :global(.vkuiInternalGroup--mode-none) > .Header:not(.Header--mode-tertiary):first-child,
+  :global(.vkuiInternalGroup--mode-none)
+    > :global(.vkuiInternalTappable):first-child
     > .Header:not(.Header--mode-tertiary) {
     margin-top: -4px;
   }

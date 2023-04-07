@@ -65,7 +65,6 @@ const JS_MAIN_EXPORT = `${SRC_DIR}/vkui.js`;
 const COMPONENTS_DIR = `${SRC_DIR}/components`;
 const STYLES_DIR = `${SRC_DIR}/styles`;
 const CSS_CONSTANTS = `${STYLES_DIR}/constants.css`;
-const CSS_ANIMATIONS = `${STYLES_DIR}/animations.css`;
 const TYPES_DIR = `${SRC_DIR}/types`;
 const TEST_UTILS_DIR = `${SRC_DIR}/testing`;
 
@@ -77,7 +76,6 @@ module.exports.PATHS = {
   COMPONENTS_DIR,
   STYLES_DIR,
   CSS_CONSTANTS,
-  CSS_ANIMATIONS,
   TYPES_DIR,
   TEST_UTILS_DIR,
 };

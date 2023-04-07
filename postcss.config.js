@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const postcssGlobalData = require('@csstools/postcss-global-data');
-const checkKeyframes = require('@project-tools/postcss-check-keyframes');
 const restructureVariable = require('@project-tools/postcss-restructure-variable');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
@@ -42,9 +41,6 @@ generateCustomMedias();
 module.exports = (ctx) => {
   const plugins = [
     cssImport(),
-    checkKeyframes({
-      importFrom: path.join(__dirname, VKUI_PACKAGE.PATHS.CSS_ANIMATIONS),
-    }),
     restructureVariable(
       [
         './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css',
@@ -68,12 +64,18 @@ module.exports = (ctx) => {
       disableDeprecationNotice: true,
     }),
     autoprefixer(),
-    cssModules({
-      generateScopedName: ctx.options.isSandbox ? (name) => name : generateScopedName,
-      getJSON: () => void 0,
-    }),
     postcssCustomMedia(),
   ];
+
+  // Обрабатываем только при сборке библиотеки.
+  if (!ctx.options.isSandbox) {
+    plugins.push(
+      cssModules({
+        generateScopedName,
+        getJSON: () => void 0,
+      }),
+    );
+  }
 
   if (process.env.NODE_ENV === 'production') {
     plugins.push(

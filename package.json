@@ -5,7 +5,6 @@
   "dependencies": {
     "@project-docs/styleguide": "1.0.0",
     "@project-e2e/helpers": "1.0.0",
-    "@project-tools/postcss-check-keyframes": "1.0.0",
     "@project-tools/postcss-restructure-variable": "1.0.0",
     "@project-tools/storybook-addon-cartesian": "1.0.0",
     "@project-tools/stylelint-atomic": "1.0.0",
