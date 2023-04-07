@@ -6,6 +6,10 @@ export interface TypographyProps extends React.AllHTMLAttributes<HTMLElement>, H
    * Задаёт начертание шрифта, отличное от стандартного.
    */
   weight?: '1' | '2' | '3';
+  /**
+   * Убирает внешние отступы
+   */
+  normalize?: boolean;
 }
 
 export interface HasCaps {

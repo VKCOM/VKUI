@@ -17,6 +17,9 @@ describe('Text', () => {
       {
         weight: ['2', '1'],
       },
+      {
+        normalize: [false],
+      },
     ],
   );
 });

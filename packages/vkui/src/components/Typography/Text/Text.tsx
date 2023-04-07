@@ -22,6 +22,7 @@ export const Text = ({
   weight,
   Component = 'span',
   getRootRef,
+  normalize = true,
   ...restProps
 }: TextProps) => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -33,6 +34,7 @@ export const Text = ({
       className={classNames(
         className,
         styles['Text'],
+        normalize && styles['Text--normalize'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         weight &&
           {

@@ -1,3 +1,8 @@
+.Paragraph--normalize {
+  margin: 0;
+  display: block;
+}
+
 .Paragraph {
   font-size: var(--vkui--font_paragraph--font_size--regular);
   line-height: var(--vkui--font_paragraph--line_height--regular);

@@ -25,6 +25,7 @@ export const Headline = ({
   level = '1',
   Component = 'h4',
   getRootRef,
+  normalize = true,
   ...restProps
 }: HeadlineProps) => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -36,6 +37,7 @@ export const Headline = ({
       className={classNames(
         className,
         styles['Headline'],
+        normalize && styles['Headline--normalize'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         {
           '1': styles['Headline--level-1'],

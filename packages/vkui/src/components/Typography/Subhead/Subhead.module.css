@@ -1,5 +1,8 @@
-.Subhead {
+.Subhead--normalize {
   margin: 0;
+}
+
+.Subhead {
   font-size: var(--vkui--font_subhead--font_size--regular);
   line-height: var(--vkui--font_subhead--line_height--regular);
   font-weight: var(--vkui--font_subhead--font_weight--regular);

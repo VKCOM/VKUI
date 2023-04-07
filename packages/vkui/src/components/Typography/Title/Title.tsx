@@ -16,6 +16,7 @@ export const Title = ({
   weight,
   level = '1',
   Component,
+  normalize = true,
   ...restProps
 }: TitleProps) => {
   if (!Component) {
@@ -27,7 +28,7 @@ export const Title = ({
       {...restProps}
       className={classNames(
         className,
-        styles['Title'],
+        normalize && styles['Title--normalize'],
         {
           '1': styles['Title--level-1'],
           '2': styles['Title--level-2'],

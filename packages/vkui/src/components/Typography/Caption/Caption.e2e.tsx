@@ -15,6 +15,9 @@ describe('Caption', () => {
         weight: [undefined, '1', '2', '3'],
         caps: [undefined, true],
       },
+      {
+        normalize: [false],
+      },
     ],
   );
 });

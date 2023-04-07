@@ -1,6 +1,9 @@
-.Footnote {
+.Footnote--normalize {
   display: block;
   margin: 0;
+}
+
+.Footnote {
   font-size: var(--vkui--font_footnote--font_size--regular);
   line-height: var(--vkui--font_footnote--line_height--regular);
   font-weight: var(--vkui--font_footnote--font_weight--regular);
