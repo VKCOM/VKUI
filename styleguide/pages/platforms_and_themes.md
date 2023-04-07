@@ -71,8 +71,7 @@
 
 ### Откуда взять значение темы при встраивании?
 
-Если ваше приложение встраивается в наши iOS или Android клиенты, то тему можно получить через [vk-bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge).
-Каждому мини-приложению клиент посылает событие `VKWebAppUpdateConfig`. В данных этого события помимо прочего есть поле `appearance`, которое и содержит текущую тему клиента.
+`ConfigProvider` умеет сам определять тему из [vk-bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge).
 
 ### Использование темы в коде
 
