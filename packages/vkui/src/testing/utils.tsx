@@ -196,18 +196,23 @@ export async function waitForFloatingPosition() {
   await act(async () => void 0);
 }
 
-// Не реализован в JSDOM.
-// Объявление скопировано с документации https://jestjs.io/ru/docs/26.x/manual-mocks
-Object.defineProperty(window, 'matchMedia', {
-  writable: true,
-  value: jest.fn().mockImplementation((query) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(), // устарело
-    removeListener: jest.fn(), // устарело
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
-});
+// (Пере)записывает window.matchMedia с переданным media query
+export function defineMatchMedia(_query?: string) {
+  // window.matchMedia не реализован в JSDOM.
+  // Объявление скопировано с документации https://jestjs.io/ru/docs/26.x/manual-mocks
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: jest.fn().mockImplementation((query) => ({
+      matches: query === _query,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(), // устарело
+      removeListener: jest.fn(), // устарело
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    })),
+  });
+}
+
+defineMatchMedia();
