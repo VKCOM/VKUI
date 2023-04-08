@@ -1,6 +1,6 @@
 .Footer {
   display: block;
-  /* TODO v5: переделать на padding */
+  /* TODO [>=6]: переделать на padding */
   margin: 24px var(--vkui--size_base_padding_horizontal--regular);
   padding-top: 0;
   padding-bottom: 0;

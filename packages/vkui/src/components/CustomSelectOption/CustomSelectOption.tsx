@@ -91,7 +91,7 @@ export const CustomSelectOption = ({
   );
 
   if (!!option && process.env.NODE_ENV === 'development') {
-    // TODO v6.0.0. Удалить св-во `option`
+    // TODO [>=6]: Удалить св-во `option`
     warn('Свойство option было добавлено по ошибке и будет удалено в v6.0.0.');
   }
 

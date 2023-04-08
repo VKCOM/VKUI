@@ -1,4 +1,4 @@
-// TODO v6 удалить этот хеллпер
+// TODO [>=6]: удалить этот хеллпер
 import { platform, PlatformType } from '../lib/platform';
 
 /**

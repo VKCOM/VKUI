@@ -6,7 +6,7 @@
     "node": true
   },
   "parser": "@typescript-eslint/parser",
-  "plugins": ["import"],
+  "plugins": ["import", "unicorn"],
   "parserOptions": {
     "project": "./tsconfig.json",
     "ecmaVersion": 2018, // Allows for the parsing of modern ECMAScript features
@@ -18,7 +18,7 @@
     }
   },
   "extends": [
-    "@vkontakte/eslint-config/typescript/react", // "Preset 1"
+    "plugin:@vkontakte/eslint-plugin/react-typescript", // "Preset 1"
     "prettier" // "Preset 2" (overrides "Preset 1")
   ],
   "rules": {
@@ -67,6 +67,7 @@
       }
     ],
     "curly": "error", // Enforce consistent brace style
-    "eqeqeq": "error" // Only type-safe equality operators
+    "eqeqeq": "error", // Only type-safe equality operators
+    "unicorn/expiring-todo-comments": ["error"]
   }
 }

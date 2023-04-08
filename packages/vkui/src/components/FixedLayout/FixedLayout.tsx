@@ -43,7 +43,7 @@ export const FixedLayout = ({
   ...restProps
 }: FixedLayoutProps) => {
   const platform = usePlatform();
-  const ref = useExternRef(getRootRef, getRef); // TODO: v6 удалить getRef
+  const ref = useExternRef(getRootRef, getRef); // TODO [>=6]: удалить getRef
   const [width, setWidth] = React.useState<string | undefined>(undefined);
   const { window } = useDOM();
   const { colRef } = React.useContext(SplitColContext);

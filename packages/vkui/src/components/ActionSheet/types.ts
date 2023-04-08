@@ -12,9 +12,9 @@ export interface SharedDropdownProps extends FocusTrapProps {
   /**
    * Элемент, рядом с которым вылезает попап на десктопе.
    * Лучше передавать RefObject c current.
-   * В v5 будет обязательным.
+   * В v6 будет обязательным.
    */
-  toggleRef?: ToggleRef;
+  toggleRef?: ToggleRef; // TODO [>=6]: сделать обязательным
   /**
    * Направление на десктопе
    */

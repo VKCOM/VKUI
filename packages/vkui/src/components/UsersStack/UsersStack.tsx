@@ -17,7 +17,7 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: 's' | 'm' | 'l';
   /**
    * Вертикальный режим рекомендуется использовать с размером `m`
-   * TODO v6: удалить
+   * TODO [>=6]: удалить
    * @deprecated
    */
   layout?: 'vertical' | 'horizontal';
@@ -171,6 +171,7 @@ export const UsersStack = ({
   ) : null;
 
   if (process.env.NODE_ENV === 'development' && layout) {
+    // TODO [>=6]: Удалить layout
     warn('Свойство "layout" будет удалено в v6. Используйте свойство "direction"');
   }
 

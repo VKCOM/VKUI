@@ -46,6 +46,8 @@ export interface PromoBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   onClose: () => void;
 }
 
+// TODO [>=6]: Удалить компонент
+
 /**
  * @see https://vkcom.github.io/VKUI/#/PromoBanner
  * @deprecated v5.3.1

@@ -1,7 +1,7 @@
 module.exports = {
   root: false,
   extends: ['plugin:react-hooks/recommended'],
-  plugins: ['import', 'eslint-plugin-vkui'],
+  plugins: ['import', '@project-tools/vkui', 'unicorn'],
   parserOptions: {
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,
@@ -94,12 +94,13 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/no-unknown-property': ['error'],
 
-    'vkui/no-object-expression-in-arguments': [
+    '@project-tools/vkui/no-object-expression-in-arguments': [
       'error',
       {
         onlyForFunctionsWithNames: ['classNames'],
       },
     ],
+    'unicorn/expiring-todo-comments': ['error'],
   },
   overrides: [
     {

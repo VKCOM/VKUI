@@ -518,7 +518,7 @@ export function CustomSelect(props: SelectProps) {
 
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
     (e) => {
-      // TODO v6 удалить `onInputChangeProp`.
+      // TODO [>=6]: удалить `onInputChangeProp`.
       if (onInputChangeProp) {
         const options = onInputChangeProp(e, optionsProp);
         if (options) {

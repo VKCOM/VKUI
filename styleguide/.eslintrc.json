@@ -16,7 +16,7 @@
       "spread": true
     }
   },
-  "extends": ["@vkontakte/eslint-config/react", "prettier"],
+  "extends": ["plugin:@vkontakte/eslint-plugin/react", "prettier"],
   "rules": {
     "react/prop-types": [0],
     "no-shadow": "off",
