@@ -25,7 +25,7 @@ export const SegmentedControlOption = ({
   children,
   ...restProps
 }: VisuallyHiddenInputProps) => {
-  const { onBlur, onFocus } = useFocusVisible();
+  const { focusVisible, onBlur, onFocus } = useFocusVisible();
   const { sizeY = 'none' } = useAdaptivity();
 
   return (
@@ -51,7 +51,7 @@ export const SegmentedControlOption = ({
       >
         {children}
       </span>
-      <FocusVisible mode="inside" />
+      <FocusVisible visible={focusVisible} mode="inside" />
     </label>
   );
 };

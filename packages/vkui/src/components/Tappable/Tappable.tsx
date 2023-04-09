@@ -365,7 +365,7 @@ export const Tappable = ({
         <span aria-hidden className={styles.Tappable__stateLayer} />
       )}
       {!props.disabled && isPresetFocusVisibleMode && (
-        <FocusVisible mode={focusVisibleMode as FocusVisibleMode} />
+        <FocusVisible visible={focusVisible} mode={focusVisibleMode as FocusVisibleMode} />
       )}
     </Touch>
   );

@@ -27,7 +27,7 @@ export interface SwitchProps extends VisuallyHiddenInputProps, HasRootRef<HTMLLa
 export const Switch = ({ style, className, getRootRef, ...restProps }: SwitchProps) => {
   const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();
-  const { onBlur, onFocus } = useFocusVisible();
+  const { focusVisible, onBlur, onFocus } = useFocusVisible();
 
   return (
     <label
@@ -49,7 +49,7 @@ export const Switch = ({ style, className, getRootRef, ...restProps }: SwitchPro
         onFocus={callMultiple(onFocus, restProps.onFocus)}
       />
       <span aria-hidden className={styles['Switch__pseudo']} />
-      <FocusVisible mode="outside" />
+      <FocusVisible visible={focusVisible} mode="outside" />
     </label>
   );
 };

@@ -8,6 +8,7 @@
   -webkit-tap-highlight-color: transparent;
   isolation: isolate;
   border-radius: var(--vkui--size_border_radius--regular);
+  outline: none;
 }
 
 .FormField--sizeY-compact {
@@ -125,15 +126,6 @@
 /* stylelint-disable-next-line vkui/atomic */
 .FormField *:focus {
   outline: none;
-}
-
-/**
- * FIXME: необходимо заменить на `useFocusVisible()`
- */
-.FormField:focus-within .FormField__border,
-.FormField *:focus ~ .FormField__border {
-  border-color: var(--vkui--color_stroke_accent);
-  z-index: var(--vkui_internal--z_index_form_field_focus);
 }
 
 /**

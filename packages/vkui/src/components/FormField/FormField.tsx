@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { SizeType } from '../../lib/adaptivity';
 import { HasComponent, HasRootRef } from '../../types';
+import { FocusVisible } from '../FocusVisible/FocusVisible';
 import styles from './FormField.module.css';
 
 const sizeYClassNames = {
@@ -56,6 +59,8 @@ export const FormField = ({
   className,
   ...restProps
 }: FormFieldOwnProps) => {
+  const elRef = useExternRef(getRootRef);
+  const focusWithin = useFocusWithin(elRef);
   const { sizeY = 'none' } = useAdaptivity();
   const [hover, setHover] = React.useState(false);
 
@@ -72,7 +77,7 @@ export const FormField = ({
   return (
     <Component
       {...restProps}
-      ref={getRootRef}
+      ref={elRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={classNames(
@@ -97,6 +102,7 @@ export const FormField = ({
         </span>
       )}
       <span aria-hidden className={styles['FormField__border']} />
+      <FocusVisible thin visible={focusWithin} mode="outline" />
     </Component>
   );
 };
