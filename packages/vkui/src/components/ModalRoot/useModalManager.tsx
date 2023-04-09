@@ -19,7 +19,7 @@ export interface ModalTransitionProps extends ModalTransitionState {
   onEntered: (id: string | null) => void;
   onExit: VoidFunction;
   onExited: (id: string | null) => void;
-  getModalState: (id: string) => ModalsStateEntry;
+  getModalState: (id: string | undefined | null) => ModalsStateEntry | undefined;
   delayEnter: boolean;
 }
 
@@ -180,7 +180,10 @@ export function useModalManager(
   const delayEnter = Boolean(
     transitionState.exitingModal && (isCard(activeModal) || isCard(transitionState.exitingModal)),
   );
-  const getModalState = React.useCallback((id: string) => modalsState[id], [modalsState]);
+  const getModalState = React.useCallback(
+    (id: string | undefined | null) => (id ? modalsState[id] : undefined),
+    [modalsState],
+  );
 
   function onEnter() {
     const modalState = transitionState.activeModal && modalsState[transitionState.activeModal];

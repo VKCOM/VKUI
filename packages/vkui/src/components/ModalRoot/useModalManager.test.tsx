@@ -83,8 +83,8 @@ describe(useModalManager, () => {
       [ModalType.PAGE, ModalType.PAGE, false],
     ])('transitions %s -> %s with delay=%s', (t1, t2, delayEnter) => {
       const handle = flushMount('m1');
-      handle.result.current.getModalState('m1').type = t1;
-      handle.result.current.getModalState('m2').type = t2;
+      handle.result.current.getModalState('m1')!.type = t1;
+      handle.result.current.getModalState('m2')!.type = t2;
       handle.rerender({ id: 'm2' });
       expect(handle.result.current).toMatchObject({
         activeModal: 'm2',

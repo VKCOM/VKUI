@@ -14,7 +14,11 @@ export const useWaitTransitionFinish = () => {
   }, []);
 
   const waitTransitionFinish = React.useCallback(
-    (element: HTMLElement | null, eventHandler: VoidFunction, durationFallback: number) => {
+    (
+      element: HTMLElement | undefined | null,
+      eventHandler: VoidFunction,
+      durationFallback: number,
+    ) => {
       if (element) {
         if (!document?.hidden && transitionEvent.supported && transitionEvent.name) {
           remove();
