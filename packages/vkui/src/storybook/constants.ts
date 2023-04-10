@@ -1,9 +1,5 @@
 export const CanvasFullLayout = {
   layout: 'fullscreen',
-  previewTabs: {
-    'storybook/docs/panel': { hidden: true },
-  },
-  viewMode: 'story',
   centered: true,
 };
 
