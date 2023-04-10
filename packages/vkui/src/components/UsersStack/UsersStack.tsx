@@ -6,11 +6,21 @@ import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './UsersStack.module.css';
 
-export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
+interface UsersStackPhoto {
+  photo: string;
+}
+
+interface UsersStackWrapperProps<T> {
+  photo?: T;
+  children: React.ReactNode;
+}
+
+export interface UsersStackProps<T extends UsersStackPhoto | string = string>
+  extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Массив ссылок на фотографии
    */
-  photos?: string[];
+  photos?: T[];
   /**
    * Размер аватарок
    */
@@ -38,6 +48,7 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
    * @version 5.3.0
    */
   direction?: 'row' | 'row-reverse' | 'column';
+  Wrapper?: React.ElementType<UsersStackWrapperProps<T>>;
 }
 
 interface PathElementProps extends React.SVGAttributes<SVGElement> {
@@ -112,7 +123,7 @@ const warn = warnOnce('UsersStack');
 /**
  * @see https://vkcom.github.io/VKUI/#/UsersStack
  */
-export const UsersStack = ({
+export const UsersStack = <T extends string | UsersStackPhoto>({
   photos = [],
   visibleCount = 3,
   count = Math.max(0, photos.length - visibleCount),
@@ -121,8 +132,9 @@ export const UsersStack = ({
   children,
   className,
   direction: directionProp = 'row',
+  Wrapper = React.Fragment,
   ...restProps
-}: UsersStackProps) => {
+}: UsersStackProps<T>) => {
   const cmpId = useId();
 
   const canShowOthers = count > 0 && count < 100 && size !== 's';
@@ -137,26 +149,24 @@ export const UsersStack = ({
     const id = `UsersStackDefs${cmpId}${i}`;
     const hrefID = `#${id}`;
     const maskID = `UsersStackMask${cmpId}${i}`;
+    const href = typeof photo === 'string' ? photo : photo.photo;
 
     return (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className={styles['UsersStack__photo']}
-        key={i}
-        aria-hidden
-      >
-        <defs>
-          <PathElement id={id} direction={direction} photoSize={photoSize} />
-        </defs>
-        <clipPath id={maskID}>
-          <use href={hrefID} />
-        </clipPath>
-        <g clipPath={`url(#${maskID})`}>
-          <use href={hrefID} className={styles['UsersStack__fill']} />
-          <image href={photo} width={photoSize} height={photoSize} />
-          <use href={hrefID} fill="none" stroke="rgba(0, 0, 0, 0.08)" />
-        </g>
-      </svg>
+      <Wrapper key={i} photo={photo}>
+        <svg xmlns="http://www.w3.org/2000/svg" className={styles['UsersStack__photo']} aria-hidden>
+          <defs>
+            <PathElement id={id} direction={direction} photoSize={photoSize} />
+          </defs>
+          <clipPath id={maskID}>
+            <use href={hrefID} />
+          </clipPath>
+          <g clipPath={`url(#${maskID})`}>
+            <use href={hrefID} className={styles['UsersStack__fill']} />
+            <image href={href} width={photoSize} height={photoSize} />
+            <use href={hrefID} fill="none" stroke="rgba(0, 0, 0, 0.08)" />
+          </g>
+        </svg>
+      </Wrapper>
     );
   });
 

@@ -85,6 +85,27 @@
         </div>
       </Div>
     </Group>
+
+    <Group header={<Header mode="secondary">Обертка</Header>}>
+      <Div>
+        <UsersStack
+          photos={[
+            { photo: getAvatarUrl('user_wayshev'), screen_name: 'wayshev' },
+            { photo: getAvatarUrl('user_arthurstam'), screen_name: 'arthurstam' },
+            { photo: getAvatarUrl('user_xyz'), screen_name: 'xyz' },
+          ]}
+          size="l"
+          direction="column"
+          Wrapper={({ photo: { screen_name }, children }) => (
+            <a href={`https://vk.com/${screen_name}`} target="_blank">
+              {children}
+            </a>
+          )}
+        >
+          и ещё 3 человека
+        </UsersStack>
+      </Div>
+    </Group>
   </Panel>
 </View>
 ```

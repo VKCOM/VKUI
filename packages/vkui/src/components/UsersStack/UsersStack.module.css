@@ -45,7 +45,7 @@
   height: 32px;
 }
 
-.UsersStack__photo + .UsersStack__photo {
+.UsersStack__photos > * + * {
   margin-left: -2px;
 }
 
