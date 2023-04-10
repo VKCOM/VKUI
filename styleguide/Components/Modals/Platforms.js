@@ -14,7 +14,9 @@ const ignorePlatforms = [
 
 export function Platforms({ id }) {
   const { setContext, setActiveModal } = React.useContext(StyleGuideContext);
-  const { data, error } = useFetch('https://unpkg.com/@vkontakte/vkui-tokens@4/themes/?meta');
+  const { data, error } = useFetch(
+    'https://unpkg.com/@vkontakte/vkui-tokens@4.32.2-dev-b7e753.0/themes/?meta',
+  );
 
   const platforms = React.useMemo(() => {
     if (!data) {
