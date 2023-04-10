@@ -40,14 +40,10 @@ export const Switch = ({ style, className, getRootRef, ...restProps }: SwitchPro
       )}
       style={style}
       ref={getRootRef}
+      onBlur={callMultiple(onBlur, restProps.onBlur)}
+      onFocus={callMultiple(onFocus, restProps.onFocus)}
     >
-      <VisuallyHiddenInput
-        {...restProps}
-        type="checkbox"
-        className={styles['Switch__self']}
-        onBlur={callMultiple(onBlur, restProps.onBlur)}
-        onFocus={callMultiple(onFocus, restProps.onFocus)}
-      />
+      <VisuallyHiddenInput {...restProps} type="checkbox" className={styles['Switch__self']} />
       <span aria-hidden className={styles['Switch__pseudo']} />
       <FocusVisible visible={focusVisible} mode="outside" />
     </label>
