@@ -17,7 +17,6 @@ import { useSplitCol } from '../SplitCol/SplitColContext';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import { swipeBackExcluded } from './utils';
 import styles from './View.module.css';
-import iosStyles from './ViewIOS.module.css';
 
 const SWIPE_BACK_AREA = 70;
 
@@ -194,8 +193,8 @@ export const View = ({
       if (
         (!e ||
           [
-            iosStyles['vkui-animation-ios-next-forward'],
-            iosStyles['vkui-animation-ios-prev-back'],
+            styles['vkui-animation-ios-next-forward'],
+            styles['vkui-animation-ios-prev-back'],
             styles['vkui-animation-view-next-forward'],
             styles['vkui-animation-view-prev-back'],
           ].includes(e.animationName)) &&
@@ -491,7 +490,7 @@ export const View = ({
       {...restProps}
       className={classNames(
         styles['View'],
-        platform === Platform.IOS && iosStyles['View--ios'],
+        platform === Platform.IOS && styles['View--ios'],
         !disableAnimation && animated && styles['View--animated'],
         !disableAnimation && swipingBack && styles['View--swiping-back'],
         disableAnimation && styles['View--no-motion'],
@@ -512,15 +511,15 @@ export const View = ({
             <div
               className={classNames(
                 styles['View__panel'],
-                panelId === activePanel && iosStyles['View__panel--active'],
+                panelId === activePanel && styles['View__panel--active'],
                 panelId === prevPanel && styles['View__panel--prev'],
                 panelId === nextPanel && styles['View__panel--next'],
-                panelId === swipeBackPrevPanel && iosStyles['View__panel--swipe-back-prev'],
-                panelId === swipeBackNextPanel && iosStyles['View__panel--swipe-back-next'],
+                panelId === swipeBackPrevPanel && styles['View__panel--swipe-back-prev'],
+                panelId === swipeBackNextPanel && styles['View__panel--swipe-back-next'],
                 swipeBackResult === SwipeBackResults.success &&
-                  iosStyles['View__panel--swipe-back-success'],
+                  styles['View__panel--swipe-back-success'],
                 swipeBackResult === SwipeBackResults.fail &&
-                  iosStyles['View__panel--swipe-back-failed'],
+                  styles['View__panel--swipe-back-failed'],
               )}
               onAnimationEnd={isTransitionTarget ? transitionEndHandler : undefined}
               ref={(el) => panelId !== undefined && (panelNodes.current[panelId] = el)}

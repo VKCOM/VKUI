@@ -48,7 +48,10 @@ export const Panel = ({
         className,
       )}
     >
-      <Touch Component={TooltipContainer} className={styles['Panel__in']}>
+      <Touch
+        Component={TooltipContainer}
+        className={classNames(styles['Panel__in'], 'vkuiInternalPanel__in')}
+      >
         {platform === Platform.IOS && <div className="vkuiInternalPanel__fade" />}
         <div className={styles['Panel__in-before']} />
         {centered ? <div className={styles['Panel__centered']}>{children}</div> : children}
