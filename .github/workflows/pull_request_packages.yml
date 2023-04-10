@@ -223,7 +223,7 @@ jobs:
     if: ${{ needs.changed_files.outputs.docs_styleguide == 'true' }}
     needs: changed_files
     runs-on: ubuntu-latest
-    name: Build docs (styleguide)
+    name: Deploy docs (styleguide)
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -242,59 +242,91 @@ jobs:
       - name: Build styleguide
         run: yarn run docs:styleguide:build
 
-      - name: Uploading styleguide artifact
-        # [Примечание 1] Не сохраняем в артефакт если это PR от dependabot
-        #  PS: но собираем, чтобы убедиться, что сборка песочницы не падает
+      - name: Build S3 action
         if: ${{ github.actor != 'dependabot[bot]' }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: styleguide-dist
-          path: styleguide/dist/
+        run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
+        working-directory: ./.github/actions/s3
 
-  deploy_styleguide:
-    # [Примечание 1] Не заливаем песочницу если это PR от dependabot
-    if: ${{ github.actor != 'dependabot[bot]' }}
-    needs: styleguide
-    concurrency: ci-gh-pages
+      - name: Upload styleguide S3
+        if: ${{ github.actor != 'dependabot[bot]' }}
+        uses: ./.github/actions/s3
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: vkui-screenshot
+          awsEndpoint: https://hb.bizmrg.com
+          command: upload
+          commandUploadSrc: styleguide/dist/
+          commandUploadDist: pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}/styleguide
+
+  storybook:
+    if: ${{ needs.changed_files.outputs.docs_styleguide == 'true' }}
+    needs: changed_files
     runs-on: ubuntu-latest
-    name: Deploy docs (styleguide)
+    name: Deploy docs (storybook)
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           ref: refs/pull/${{ github.event.pull_request.number }}/merge
 
-      - name: Download styleguide artifact
-        uses: actions/download-artifact@v3
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
         with:
-          name: styleguide-dist
-          path: tmp
+          node-version: 18
+          cache: 'yarn'
 
-      - name: Publishing styleguide to GitHub pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts
+
+      - name: Build storybook
+        run: yarn docs:storybook:build
+
+      - name: Build s3 action
+        if: ${{ github.actor != 'dependabot[bot]' }}
+        run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
+        working-directory: ./.github/actions/s3
+
+      - name: Upload storybook S3
+        if: ${{ github.actor != 'dependabot[bot]' }}
+        uses: ./.github/actions/s3
         with:
-          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
-          commit-message: 'Publish PR ${{ github.event.pull_request.number }}'
-          branch: gh-pages
-          folder: tmp
-          target-folder: pull/${{ github.event.pull_request.number }}
-          clean: true
-          force: false
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: vkui-screenshot
+          awsEndpoint: https://hb.bizmrg.com
+          command: upload
+          commandUploadSrc: packages/vkui/storybook-static
+          commandUploadDist: pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}/storybook
 
-      - name: Find styleguide URL comment
+  docs_comment:
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    needs:
+      - storybook
+      - styleguide
+    runs-on: ubuntu-latest
+    name: Docs comment
+    steps:
+      - name: Find storybook URL comment
         uses: peter-evans/find-comment@v2
         id: find_url_comment
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
-          body-includes: <!-- styleguide_url -->
+          body-includes: <!-- storybook_url -->
 
-      - name: Post styleguide URL to PR
+      - name: Create or update comment
         if: steps.find_url_comment.outputs.comment-id == 0
-        uses: peter-evans/create-or-update-comment@v2
+        uses: peter-evans/create-or-update-comment@v3
         with:
+          comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            <!-- styleguide_url -->
-            ## 👀 Styleguide deployed
-            See the styleguide for this PR at https://vkcom.github.io/VKUI/pull/${{ github.event.pull_request.number }}/
+            <!-- storybook_url -->
+            ## 👀 Docs deployed
+
+            - [Styleguide](https://vkui-screenshot.hb.bizmrg.com/pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}/styleguide/index.html)
+            - [Storybook](https://vkui-screenshot.hb.bizmrg.com/pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}/storybook/index.html)
+
+            Commit ${{ github.event.pull_request.head.sha }}
+          edit-mode: replace
