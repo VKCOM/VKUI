@@ -88,12 +88,17 @@ class Action {
       Prefix: prefix,
     });
 
-    const objects = data.Contents?.map((content) => {
+    if (!data.Contents) {
+      core.info('Nothing to delete');
+      return;
+    }
+
+    const objects = data.Contents.map((content) => {
       return { Key: content.Key };
     });
 
     core.debug('deleteObjects');
-    core.debug(`length ${objects?.length}`);
+    core.debug(`length ${objects.length}`);
     await this.s3.deleteObjects({
       Bucket: this.bucket,
       Delete: {
