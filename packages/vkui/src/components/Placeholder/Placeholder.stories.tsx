@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { Icon56UsersOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Placeholder, PlaceholderProps } from './Placeholder';
@@ -12,11 +12,12 @@ const story: Meta<PlaceholderProps> = {
 
 export default story;
 
-const Template: Story<PlaceholderProps> = (args) => <Placeholder {...args} />;
+type Story = StoryObj<PlaceholderProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {
-  children: 'Подключите сообщества, от которых Вы хотите получать уведомления',
-  header: 'Уведомления от сообществ',
-  icon: <Icon56UsersOutline />,
+export const Playground: Story = {
+  args: {
+    children: 'Подключите сообщества, от которых Вы хотите получать уведомления',
+    header: 'Уведомления от сообществ',
+    icon: <Icon56UsersOutline />,
+  },
 };

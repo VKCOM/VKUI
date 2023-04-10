@@ -1,5 +1,5 @@
 import WebpackCommonConfig from '../../../webpack.common.config';
-import type { StorybookConfig } from '@storybook/core-common';
+import type { StorybookConfig } from '@storybook/react-webpack5';
 import { Configuration } from 'webpack';
 
 const cssRegExpString = /\.css$/.toString();
@@ -28,19 +28,14 @@ const config: StorybookConfig = {
     './addons/pointer',
     'storybook-addon-swc',
   ],
-  framework: '@storybook/react',
-  core: {
-    builder: {
-      name: 'webpack5',
-      options: {
+  framework: {
+    name: '@storybook/react-webpack5',
+    options: {
+      fastRefresh: true,
+      builder: {
         fsCache: true,
       },
     },
-  },
-  features: {
-    postcss: true,
-    storyStoreV7: true,
-    buildStoriesJson: true,
   },
   webpackFinal: async (config) => {
     const commonCssRules = getCssRulesFromConfig(WebpackCommonConfig) ?? [];

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Tappable, TappableProps } from './Tappable';
 
@@ -11,11 +11,12 @@ const story: Meta<TappableProps> = {
 
 export default story;
 
-const Template: Story<TappableProps> = (args) => (
-  <Tappable {...args}>
-    <div style={{ padding: 16 }}>Tappable</div>
-  </Tappable>
-);
+type Story = StoryObj<TappableProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
+export const Playground: Story = {
+  render: (args) => (
+    <Tappable {...args}>
+      <div style={{ padding: 16 }}>Tappable</div>
+    </Tappable>
+  ),
+};

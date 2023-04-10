@@ -1,6 +1,6 @@
 import React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import {
   IconExampleForBadgeBasedOnImageBaseSize,
@@ -72,31 +72,36 @@ const story: Meta<AvatarStoryProps> = {
 
 export default story;
 
-const Template: Story<AvatarStoryProps> = ({ badge, overlay, children, ...args }) => (
-  <Avatar src={args.initials ? undefined : getAvatarUrl('user_id34')} {...args}>
-    {badge}
-    {overlay}
-    {children}
-  </Avatar>
-);
+type Story = StoryObj<AvatarStoryProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
-
-export const WithBadge = Template.bind({});
-WithBadge.args = {
-  children: (
-    <Avatar.Badge>
-      <IconExampleForBadgeBasedOnImageBaseSize />
-    </Avatar.Badge>
+export const Playground: Story = {
+  render: ({ badge, overlay, children, ...args }) => (
+    <Avatar src={args.initials ? undefined : getAvatarUrl('user_id34')} {...args}>
+      {badge}
+      {overlay}
+      {children}
+    </Avatar>
   ),
 };
 
-export const WithOverlay = Template.bind({});
-WithOverlay.args = {
-  children: (
-    <Avatar.Overlay>
-      <IconExampleForOverlayBasedOnImageBaseSize />
-    </Avatar.Overlay>
-  ),
+export const WithBadge: Story = {
+  ...Playground,
+  args: {
+    children: (
+      <Avatar.Badge>
+        <IconExampleForBadgeBasedOnImageBaseSize />
+      </Avatar.Badge>
+    ),
+  },
+};
+
+export const WithOverlay: Story = {
+  ...Playground,
+  args: {
+    children: (
+      <Avatar.Overlay>
+        <IconExampleForOverlayBasedOnImageBaseSize />
+      </Avatar.Overlay>
+    ),
+  },
 };

@@ -1,6 +1,6 @@
 import React from 'react';
-import { useArgs } from '@storybook/addons';
-import { Meta, Story } from '@storybook/react';
+import { useArgs } from '@storybook/preview-api';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Pagination, PaginationProps } from './Pagination';
 
@@ -12,18 +12,20 @@ const story: Meta<PaginationProps> = {
 
 export default story;
 
-const Template: Story<PaginationProps> = (args) => {
-  const [, updateArg] = useArgs();
-  const onPageChange = (page: number) => {
-    updateArg({ currentPage: page });
-  };
+type Story = StoryObj<PaginationProps>;
 
-  return <Pagination {...args} onChange={onPageChange} />;
-};
+export const Playground: Story = {
+  render: function Render(args) {
+    const [, updateArg] = useArgs();
+    const onPageChange = (page: number) => {
+      updateArg({ currentPage: page });
+    };
 
-export const Playground = Template.bind({});
-Playground.args = {
-  currentPage: 1,
-  boundaryCount: 2,
-  totalPages: 25,
+    return <Pagination {...args} onChange={onPageChange} />;
+  },
+  args: {
+    currentPage: 1,
+    boundaryCount: 2,
+    totalPages: 25,
+  },
 };

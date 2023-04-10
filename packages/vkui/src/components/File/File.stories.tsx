@@ -1,6 +1,5 @@
-import React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { File, FileProps } from './File';
 
@@ -13,7 +12,6 @@ const story: Meta<FileProps> = {
 
 export default story;
 
-const Template: Story<FileProps> = (args) => <File {...args} />;
+type Story = StoryObj<FileProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
+export const Playground: Story = {};

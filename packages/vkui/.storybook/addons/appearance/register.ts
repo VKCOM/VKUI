@@ -1,4 +1,4 @@
-import { addons, types } from '@storybook/addons';
+import { addons, types } from '@storybook/manager-api';
 import { AppearanceSwitch } from './AppearanceSwitch';
 import { ADDON_ID } from './constants';
 

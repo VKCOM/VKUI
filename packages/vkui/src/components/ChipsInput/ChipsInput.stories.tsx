@@ -1,5 +1,4 @@
-import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { ChipOption } from '../Chip/Chip';
 import { ChipsInput, ChipsInputProps } from './ChipsInput';
@@ -12,7 +11,6 @@ const story: Meta<ChipsInputProps<ChipOption>> = {
 
 export default story;
 
-const Template: Story<ChipsInputProps<ChipOption>> = (args) => <ChipsInput {...args} />;
+type Story = StoryObj<ChipsInputProps<ChipOption>>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
+export const Playground: Story = {};

@@ -1,23 +1,28 @@
 import React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../../storybook/constants';
 import { Footnote, FootnoteProps } from './Footnote';
 
-export default {
+const story: Meta<FootnoteProps> = {
   title: 'Typography/Footnote',
   component: Footnote,
   parameters: CanvasFullLayout,
   decorators: [withCartesian],
-} as Meta<FootnoteProps>;
+};
 
-const Template: Story<FootnoteProps> = (args) => <Footnote {...args}>Footnote</Footnote>;
+export default story;
 
-export const Playground = Template.bind({});
-Playground.args = {};
+type Story = StoryObj<FootnoteProps>;
 
-export const WithCaps = Template.bind({});
-WithCaps.args = {
-  ...Playground.args,
-  caps: true,
+export const Playground: Story = {
+  render: (args) => <Footnote {...args}>Footnote</Footnote>,
+};
+
+export const WithCaps: Story = {
+  ...Playground,
+  args: {
+    ...Playground.args,
+    caps: true,
+  },
 };

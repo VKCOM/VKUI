@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { getIconArgBySize, getIconComponent, IconName } from '../../storybook/Icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
@@ -26,14 +26,16 @@ const story: Meta<ChipProps> = {
 
 export default story;
 
-const Template: Story<Omit<ChipProps, 'after'> & { after?: IconName }> = ({ after, ...args }) => {
-  const Icon = getIconComponent(after);
+type Story = StoryObj<Omit<ChipProps, 'after'> & { after?: IconName }>;
 
-  return <Chip after={Icon} {...args} />;
-};
+export const Playground: Story = {
+  render: ({ after, ...args }) => {
+    const Icon = getIconComponent(after);
 
-export const Playground = Template.bind({});
-Playground.args = {
-  value: 'chip',
-  children: 'Chip Value',
+    return <Chip after={Icon} {...args} />;
+  },
+  args: {
+    value: 'chip',
+    children: 'Chip Value',
+  },
 };

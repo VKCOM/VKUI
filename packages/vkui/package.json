@@ -52,8 +52,8 @@
     "test:ci": "yarn test --ci --silent --outputFile ../../test-results.json --json --coverage --coverageReporters='json' --coverageDirectory='../../.nyc_output'",
     "test:a11y": "jest -c jest.config.a11y.js",
     "test:a11y:ci": "yarn test:a11y --ci --silent --outputFile ../../a11y-results.json --json --coverage --coverageReporters='json' --coverageDirectory='../../.nyc_a11y_output'",
-    "storybook": "cross-env SANDBOX=\\.storybook start-storybook -p 6006",
-    "build-storybook": "cross-env SANDBOX=\\.storybook FROM_STORYBOOK=1 build-storybook"
+    "storybook": "cross-env SANDBOX=\\.storybook storybook dev -p 6006",
+    "storybook:build": "cross-env SANDBOX=\\.storybook FROM_STORYBOOK=1 storybook build"
   },
   "peerDependencies": {
     "@vkontakte/icons": "^2.1.1",

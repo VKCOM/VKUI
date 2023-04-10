@@ -1,6 +1,5 @@
-import React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { FormStatus, FormStatusProps } from './FormStatus';
 
@@ -13,11 +12,12 @@ const story: Meta<FormStatusProps> = {
 
 export default story;
 
-const Template: Story<FormStatusProps> = (args) => <FormStatus {...args} />;
+type Story = StoryObj<FormStatusProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {
-  mode: 'error',
-  header: 'Некорректный мобильный номер',
-  children: 'Необходимо корректно ввести номер в международном формате',
+export const Playground: Story = {
+  args: {
+    mode: 'error',
+    header: 'Некорректный мобильный номер',
+    children: 'Необходимо корректно ввести номер в международном формате',
+  },
 };

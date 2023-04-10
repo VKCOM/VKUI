@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { LocaleProvider, LocaleProviderProps } from './LocaleProvider';
@@ -20,22 +20,23 @@ const story: Meta<LocaleProviderProps> = {
 
 export default story;
 
+type Story = StoryObj<LocaleProviderProps>;
+
 const DisplayLocaleProvider = () => {
   const { locale } = useConfigProvider();
 
   return <div style={{ padding: 5 }}>Inner LocaleProvider: {locale}</div>;
 };
 
-const Template: Story<LocaleProviderProps> = ({ value }) => {
-  const { locale } = useConfigProvider();
+export const Playground: Story = {
+  render: function Render({ value }) {
+    const { locale } = useConfigProvider();
 
-  return (
-    <LocaleProvider value={value ?? locale}>
-      <div style={{ padding: 5 }}>Outer LocaleProvider: {locale}</div>
-      <DisplayLocaleProvider />
-    </LocaleProvider>
-  );
+    return (
+      <LocaleProvider value={value ?? locale}>
+        <div style={{ padding: 5 }}>Outer LocaleProvider: {locale}</div>
+        <DisplayLocaleProvider />
+      </LocaleProvider>
+    );
+  },
 };
-
-export const Playground = Template.bind({});
-Playground.args = {};

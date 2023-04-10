@@ -1,6 +1,5 @@
-import React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { Counter, CounterProps } from './Counter';
 
@@ -13,9 +12,10 @@ const story: Meta<CounterProps> = {
 
 export default story;
 
-const Template: Story<CounterProps> = (args) => <Counter {...args} />;
+type Story = StoryObj<CounterProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {
-  children: '5',
+export const Playground: Story = {
+  args: {
+    children: '5',
+  },
 };

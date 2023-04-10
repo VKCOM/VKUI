@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { ArgTypes, useArgs, useArgTypes, useParameter } from '@storybook/api';
 import { IconButton, Icons, WithTooltipPure } from '@storybook/components';
+import { useArgs, useArgTypes, useParameter } from '@storybook/manager-api';
+import { ArgTypes } from '@storybook/types';
 import { OptionsContainer } from './OptionsContainer';
 import { BooleanOpts } from './constants';
 import { CartesianConfigParameter, OptionNamesProp, OptionsProp } from './types';
@@ -51,8 +52,9 @@ export const Tool = () => {
     <WithTooltipPure
       trigger="click"
       placement="bottom"
-      tooltipShown={isVisible}
-      onVisibilityChange={setIsVisible}
+      visible={isVisible}
+      closeOnOutsideClick
+      onVisibleChange={setIsVisible}
       tooltip={() => (
         <OptionsContainer
           options={options}
@@ -61,7 +63,7 @@ export const Tool = () => {
         />
       )}
     >
-      <IconButton>
+      <IconButton nonce={undefined}>
         <Icons icon="grid" />
         &nbsp; cartesian
       </IconButton>

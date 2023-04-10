@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Panel } from '../Panel/Panel';
@@ -22,23 +22,25 @@ const story: Meta<FixedLayoutProps> = {
 
 export default story;
 
-const Template: Story<FixedLayoutProps> = (args) => (
-  <View activePanel="fixedLayout">
-    <Panel id="fixedLayout">
-      <PanelHeader>Fixed layout</PanelHeader>
-      <FixedLayout {...args}>
-        <Separator wide />
-        <Tabs>
-          <TabsItem selected>176 сообществ</TabsItem>
-          <TabsItem>9 событий</TabsItem>
-        </Tabs>
-      </FixedLayout>
-    </Panel>
-  </View>
-);
+type Story = StoryObj<FixedLayoutProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {
-  vertical: 'bottom',
-  filled: true,
+export const Playground: Story = {
+  render: (args) => (
+    <View activePanel="fixedLayout">
+      <Panel id="fixedLayout">
+        <PanelHeader>Fixed layout</PanelHeader>
+        <FixedLayout {...args}>
+          <Separator wide />
+          <Tabs>
+            <TabsItem selected>176 сообществ</TabsItem>
+            <TabsItem>9 событий</TabsItem>
+          </Tabs>
+        </FixedLayout>
+      </Panel>
+    </View>
+  ),
+  args: {
+    vertical: 'bottom',
+    filled: true,
+  },
 };

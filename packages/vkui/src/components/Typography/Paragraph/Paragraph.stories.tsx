@@ -1,17 +1,20 @@
 import React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../../storybook/constants';
 import { Paragraph, ParagraphProps } from './Paragraph';
 
-export default {
+const story: Meta<ParagraphProps> = {
   title: 'Typography/Paragraph',
   component: Paragraph,
   parameters: CanvasFullLayout,
   decorators: [withCartesian],
-} as Meta<ParagraphProps>;
+};
 
-const Template: Story<ParagraphProps> = (args) => <Paragraph {...args}>Paragraph</Paragraph>;
+export default story;
 
-export const Playground = Template.bind({});
-Playground.args = {};
+type Story = StoryObj<ParagraphProps>;
+
+export const Playground: Story = {
+  render: (args) => <Paragraph {...args}>Paragraph</Paragraph>,
+};

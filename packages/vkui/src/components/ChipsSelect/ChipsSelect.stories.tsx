@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { Icon12Download } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { ChipOption } from '../Chip/Chip';
@@ -13,7 +13,7 @@ const story: Meta<ChipsSelectProps<ChipOption>> = {
 
 export default story;
 
-const Template: Story<ChipsSelectProps<ChipOption>> = (args) => <ChipsSelect {...args} />;
+type Story = StoryObj<ChipsSelectProps<ChipOption>>;
 
 const groups = [
   { value: 'download', label: 'Скачать все и вся!', icon: <Icon12Download /> },
@@ -30,7 +30,8 @@ const groups = [
   { value: '5', label: 'Linkin Park' },
 ];
 
-export const Playground = Template.bind({});
-Playground.args = {
-  options: groups,
+export const Playground: Story = {
+  args: {
+    options: groups,
+  },
 };

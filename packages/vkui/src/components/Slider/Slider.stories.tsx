@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Group } from '../Group/Group';
@@ -13,16 +13,16 @@ const story: Meta<SliderProps> = {
 
 export default story;
 
-const Template: Story<SliderProps> = (args) => <Slider {...args} />;
+type Story = StoryObj<SliderProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
-Playground.decorators = [
-  (Component, context) => (
-    <Group>
-      <Component {...context.args} />
-    </Group>
-  ),
-  withSinglePanel,
-  withVKUILayout,
-];
+export const Playground: Story = {
+  decorators: [
+    (Component, context) => (
+      <Group>
+        <Component {...context.args} />
+      </Group>
+    ),
+    withSinglePanel,
+    withVKUILayout,
+  ],
+};

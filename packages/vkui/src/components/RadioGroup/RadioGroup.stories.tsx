@@ -1,11 +1,12 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Group } from '../Group/Group';
+import { Radio as BasicRadio } from '../Radio/Radio';
 import {
-  Playground as BasicRadio,
-  WithDescription as RadioWithDescription,
+  Playground as BasicRadioStory,
+  WithDescription as RadioWithDescriptionStory,
 } from '../Radio/Radio.stories';
 import { RadioGroup, RadioGroupProps } from './RadioGroup';
 
@@ -17,21 +18,24 @@ const story: Meta<RadioGroupProps> = {
 
 export default story;
 
-const Template: Story<RadioGroupProps> = (args) => (
-  <RadioGroup {...args}>
-    <BasicRadio {...BasicRadio.args}>SberPay</BasicRadio>
-    <RadioWithDescription {...RadioWithDescription.args} />
-  </RadioGroup>
-);
+type Story = StoryObj<RadioGroupProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
-Playground.decorators = [
-  (Component, context) => (
-    <Group>
-      <Component {...context.args} />
-    </Group>
-  ),
-  withSinglePanel,
-  withVKUILayout,
-];
+export const Playground: Story = {
+  render: function Render(args) {
+    return (
+      <RadioGroup {...args}>
+        <BasicRadio {...BasicRadioStory.args}>SberPay</BasicRadio>
+        <BasicRadio {...RadioWithDescriptionStory.args} />
+      </RadioGroup>
+    );
+  },
+  decorators: [
+    (Component, context) => (
+      <Group>
+        <Component {...context.args} />
+      </Group>
+    ),
+    withSinglePanel,
+    withVKUILayout,
+  ],
+};

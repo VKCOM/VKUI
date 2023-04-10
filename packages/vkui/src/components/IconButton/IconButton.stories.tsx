@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { Icon16Delete } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { IconButton, IconButtonProps } from './IconButton';
@@ -12,9 +12,10 @@ const story: Meta<IconButtonProps> = {
 
 export default story;
 
-const Template: Story<IconButtonProps> = (args) => <IconButton {...args} />;
+type Story = StoryObj<IconButtonProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {
-  children: <Icon16Delete />,
+export const Playground: Story = {
+  args: {
+    children: <Icon16Delete />,
+  },
 };

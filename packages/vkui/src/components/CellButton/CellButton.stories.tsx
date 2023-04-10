@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { Icon28AddOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { CellButton, CellButtonProps } from './CellButton';
@@ -12,10 +12,11 @@ const story: Meta<CellButtonProps> = {
 
 export default story;
 
-const Template: Story<CellButtonProps> = (args) => <CellButton {...args} />;
+type Story = StoryObj<CellButtonProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {
-  children: 'Создать беседу',
-  before: <Icon28AddOutline />,
+export const Playground: Story = {
+  args: {
+    children: 'Создать беседу',
+    before: <Icon28AddOutline />,
+  },
 };

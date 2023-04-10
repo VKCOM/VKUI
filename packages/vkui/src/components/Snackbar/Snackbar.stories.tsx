@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { Icon24ThumbsUpOutline, Icon28ErrorCircleOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
@@ -31,25 +31,26 @@ const story: Meta<SnackbarProps> = {
 
 export default story;
 
-const Template: Story<Omit<SnackbarProps, 'after'> & { after?: boolean }> = ({
-  after,
-  ...args
-}) => {
-  const After = after ? <Avatar size={32} src={getAvatarUrl()} /> : undefined;
+type Story = StoryObj<Omit<SnackbarProps, 'after'> & { after?: boolean }>;
 
-  return <Snackbar after={After} {...args} />;
+export const Playground: Story = {
+  render: ({ after, ...args }) => {
+    const After = after ? <Avatar size={32} src={getAvatarUrl()} /> : undefined;
+
+    return <Snackbar after={After} {...args} />;
+  },
+  args: {
+    action: 'Поделиться',
+    children: 'Этот сервис рекомендует один друг',
+    before: 'Icon24',
+  },
 };
 
-export const Playground = Template.bind({});
-Playground.args = {
-  action: 'Поделиться',
-  children: 'Этот сервис рекомендует один друг',
-  before: 'Icon24',
-};
-
-export const WithSubtitle = Template.bind({});
-WithSubtitle.args = {
-  ...Playground.args,
-  action: undefined,
-  subtitle: 'Вы можете порекомендовать сервис в дополнительном меню',
+export const WithSubtitle: Story = {
+  ...Playground,
+  args: {
+    ...Playground.args,
+    action: undefined,
+    subtitle: 'Вы можете порекомендовать сервис в дополнительном меню',
+  },
 };

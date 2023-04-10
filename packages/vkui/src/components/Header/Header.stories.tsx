@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Counter } from '../Counter/Counter';
@@ -15,46 +15,55 @@ const story: Meta<HeaderProps> = {
 
 export default story;
 
-const Template: Story<HeaderProps> = (args) => <Header {...args} />;
+type Story = StoryObj<HeaderProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {
-  children: 'Плейлисты',
+export const Playground: Story = {
+  args: {
+    children: 'Плейлисты',
+  },
 };
 
-export const WithSubtitle = Template.bind({});
-WithSubtitle.args = {
-  ...Playground.args,
-  subtitle: 'SOHN — Conrad',
+export const WithSubtitle: Story = {
+  ...Playground,
+  args: {
+    ...Playground.args,
+    subtitle: 'SOHN — Conrad',
+  },
 };
 
-export const WithAside = Template.bind({});
-WithAside.args = {
-  ...Playground.args,
-  aside: <Link>Показать все</Link>,
+export const WithAside: Story = {
+  ...Playground,
+  args: {
+    ...Playground.args,
+    aside: <Link>Показать все</Link>,
+  },
 };
 
-export const WithIndicator = Template.bind({});
-WithIndicator.args = {
-  ...Playground.args,
-  indicator: '12',
+export const WithIndicator: Story = {
+  ...Playground,
+  args: {
+    ...Playground.args,
+    indicator: '12',
+  },
 };
 
-export const WithCounter = Template.bind({});
-WithCounter.args = {
-  ...Playground.args,
-  indicator: (
-    <Counter size="s" mode="prominent">
-      3
-    </Counter>
-  ),
+export const WithCounter: Story = {
+  ...Playground,
+  args: {
+    ...Playground.args,
+    indicator: (
+      <Counter size="s" mode="prominent">
+        3
+      </Counter>
+    ),
+  },
+  decorators: [
+    (Component, context) => (
+      <Group>
+        <Component {...context.args} />
+      </Group>
+    ),
+    withSinglePanel,
+    withVKUILayout,
+  ],
 };
-WithCounter.decorators = [
-  (Component, context) => (
-    <Group>
-      <Component {...context.args} />
-    </Group>
-  ),
-  withSinglePanel,
-  withVKUILayout,
-];

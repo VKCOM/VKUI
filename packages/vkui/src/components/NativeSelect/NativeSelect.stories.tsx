@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { NativeSelect, NativeSelectProps } from './NativeSelect';
 
@@ -11,12 +11,13 @@ const story: Meta<NativeSelectProps> = {
 
 export default story;
 
-const Template: Story<NativeSelectProps> = (args) => (
-  <NativeSelect {...args}>
-    <option value="m">Мужской</option>
-    <option value="f">Женский</option>
-  </NativeSelect>
-);
+type Story = StoryObj<NativeSelectProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
+export const Playground: Story = {
+  render: (args) => (
+    <NativeSelect {...args}>
+      <option value="m">Мужской</option>
+      <option value="f">Женский</option>
+    </NativeSelect>
+  ),
+};

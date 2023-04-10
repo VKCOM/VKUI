@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { ConfigProvider, ConfigProviderProps } from './ConfigProvider';
 import { useConfigProvider } from './ConfigProviderContext';
@@ -12,19 +12,20 @@ const story: Meta<ConfigProviderProps> = {
 
 export default story;
 
+type Story = StoryObj<ConfigProviderProps>;
+
 const DisplayConfigProvider = () => {
   const values = useConfigProvider();
 
   return <div style={{ padding: 5 }}>{JSON.stringify(values, undefined, 2)}</div>;
 };
 
-const Template: Story<ConfigProviderProps> = (args) => {
-  return (
-    <ConfigProvider {...args}>
-      <DisplayConfigProvider />
-    </ConfigProvider>
-  );
+export const Playground: Story = {
+  render: (args) => {
+    return (
+      <ConfigProvider {...args}>
+        <DisplayConfigProvider />
+      </ConfigProvider>
+    );
+  },
 };
-
-export const Playground = Template.bind({});
-Playground.args = {};

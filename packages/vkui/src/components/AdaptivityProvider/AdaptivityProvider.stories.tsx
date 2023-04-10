@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { AdaptivityProvider, AdaptivityProviderProps } from './AdaptivityProvider';
@@ -25,11 +25,10 @@ const DisplayAdaptivityProvider = () => {
   );
 };
 
-const Template: Story<AdaptivityProviderProps> = (args) => (
-  <AdaptivityProvider {...args}>
-    <DisplayAdaptivityProvider />
-  </AdaptivityProvider>
-);
-
-export const Playground = Template.bind({});
-Playground.args = {};
+export const Playground: StoryObj<AdaptivityProviderProps> = {
+  render: (args) => (
+    <AdaptivityProvider {...args}>
+      <DisplayAdaptivityProvider />
+    </AdaptivityProvider>
+  ),
+};

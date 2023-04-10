@@ -1,5 +1,4 @@
-import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Switch, SwitchProps } from './Switch';
 
@@ -16,7 +15,6 @@ const story: Meta<SwitchProps> = {
 
 export default story;
 
-const Template: Story<SwitchProps> = (args) => <Switch {...args} />;
+type Story = StoryObj<SwitchProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
+export const Playground: Story = {};

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Group } from '../Group/Group';
@@ -13,16 +13,17 @@ const story: Meta<SearchProps> = {
 
 export default story;
 
-const Template: Story<SearchProps> = (args) => <Search {...args} after={null} />;
+type Story = StoryObj<SearchProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
-Playground.decorators = [
-  (Component, context) => (
-    <Group>
-      <Component {...context.args} />
-    </Group>
-  ),
-  withSinglePanel,
-  withVKUILayout,
-];
+export const Playground: Story = {
+  render: (args) => <Search {...args} after={null} />,
+  decorators: [
+    (Component, context) => (
+      <Group>
+        <Component {...context.args} />
+      </Group>
+    ),
+    withSinglePanel,
+    withVKUILayout,
+  ],
+};

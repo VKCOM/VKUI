@@ -1,5 +1,4 @@
-import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { ContentCard, ContentCardProps } from './ContentCard';
 
@@ -16,14 +15,15 @@ const story: Meta<ContentCardProps> = {
 
 export default story;
 
-const Template: Story<ContentCardProps> = (args) => <ContentCard {...args} />;
+type Story = StoryObj<ContentCardProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {
-  src: 'https://images.unsplash.com/photo-1603988492906-4fb0fb251cf8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80',
-  subtitle: 'unsplash',
-  header: 'brown and gray mountains under blue sky during daytime photo',
-  text: 'Mountain changji',
-  caption: 'Photo by Siyuan on Unsplash',
-  maxHeight: 150,
+export const Playground: Story = {
+  args: {
+    src: 'https://images.unsplash.com/photo-1603988492906-4fb0fb251cf8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80',
+    subtitle: 'unsplash',
+    header: 'brown and gray mountains under blue sky during daytime photo',
+    text: 'Mountain changji',
+    caption: 'Photo by Siyuan on Unsplash',
+    maxHeight: 150,
+  },
 };

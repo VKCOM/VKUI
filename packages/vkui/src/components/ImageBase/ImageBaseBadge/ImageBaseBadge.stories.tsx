@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/constants';
 import { ImageBaseBadge, ImageBaseBadgeProps } from './ImageBaseBadge';
 
@@ -11,16 +11,15 @@ const story: Meta<ImageBaseBadgeProps> = {
 
 export default story;
 
-const Template: Story<ImageBaseBadgeProps> = ({ children, ...args }) => (
-  <ImageBaseBadge {...args}>{children}</ImageBaseBadge>
-);
+type Story = StoryObj<ImageBaseBadgeProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
-Playground.decorators = [
-  (Component, context) => (
-    <div style={{ width: 50, height: 50, border: '1px dashed red', position: 'relative' }}>
-      <Component args={{ ...context.args }} />
-    </div>
-  ),
-];
+export const Playground: Story = {
+  render: ({ children, ...args }) => <ImageBaseBadge {...args}>{children}</ImageBaseBadge>,
+  decorators: [
+    (Component, context) => (
+      <div style={{ width: 50, height: 50, border: '1px dashed red', position: 'relative' }}>
+        <Component args={{ ...context.args }} />
+      </div>
+    ),
+  ],
+};

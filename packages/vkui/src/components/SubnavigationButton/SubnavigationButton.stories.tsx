@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { Icon24FavoriteOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Counter } from '../Counter/Counter';
@@ -13,22 +13,27 @@ const story: Meta<SubnavigationButtonProps> = {
 
 export default story;
 
-const Template: Story<SubnavigationButtonProps> = (args) => <SubnavigationButton {...args} />;
+type Story = StoryObj<SubnavigationButtonProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {
-  children: 'Размер',
+export const Playground: Story = {
+  args: {
+    children: 'Размер',
+  },
 };
 
-export const WithIcon = Template.bind({});
-WithIcon.args = {
-  before: <Icon24FavoriteOutline />,
-  children: 'Избранное',
-  expandable: true,
+export const WithIcon: Story = {
+  ...Playground,
+  args: {
+    before: <Icon24FavoriteOutline />,
+    children: 'Избранное',
+    expandable: true,
+  },
 };
 
-export const WithCounter = Template.bind({});
-WithCounter.args = {
-  children: 'Фильтры',
-  after: <Counter size="s">3</Counter>,
+export const WithCounter: Story = {
+  ...Playground,
+  args: {
+    children: 'Фильтры',
+    after: <Counter size="s">3</Counter>,
+  },
 };

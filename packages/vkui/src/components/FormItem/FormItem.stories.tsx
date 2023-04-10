@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Input } from '../Input/Input';
 import { FormItem, FormItemProps } from './FormItem';
@@ -12,17 +12,20 @@ const story: Meta<FormItemProps> = {
 
 export default story;
 
-const Template: Story<FormItemProps> = (args) => <FormItem {...args} />;
+type Story = StoryObj<FormItemProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {
-  top: 'Top form item',
-  bottom: 'Bottom form item',
-  children: 'Form Item',
+export const Playground: Story = {
+  args: {
+    top: 'Top form item',
+    bottom: 'Bottom form item',
+    children: 'Form Item',
+  },
 };
 
-export const WithInputField = Template.bind({});
-WithInputField.args = {
-  top: 'Пароль',
-  children: <Input type="password" placeholder="Введите пароль" />,
+export const WithInputField: Story = {
+  ...Playground,
+  args: {
+    top: 'Пароль',
+    children: <Input type="password" placeholder="Введите пароль" />,
+  },
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { DateRangeInput, DateRangeInputProps } from './DateRangeInput';
 
@@ -37,12 +37,13 @@ const story: Meta<StoryDateRangeInputProps> = {
 
 export default story;
 
-const Template: Story<StoryDateRangeInputProps> = ({ value, startDate, endDate, ...args }) => {
-  const parsedStartDate = startDate ? new Date(startDate) : null;
-  const parsedEndDate = endDate ? new Date(endDate) : null;
+type Story = StoryObj<StoryDateRangeInputProps>;
 
-  return <DateRangeInput value={[parsedStartDate, parsedEndDate]} {...args} />;
+export const Playground: Story = {
+  render: ({ value, startDate, endDate, ...args }) => {
+    const parsedStartDate = startDate ? new Date(startDate) : null;
+    const parsedEndDate = endDate ? new Date(endDate) : null;
+
+    return <DateRangeInput value={[parsedStartDate, parsedEndDate]} {...args} />;
+  },
 };
-
-export const Playground = Template.bind({});
-Playground.args = {};

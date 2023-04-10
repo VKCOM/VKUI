@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import {
   Icon28CopyOutline,
   Icon28DeleteOutline,
@@ -31,93 +31,100 @@ const story: Meta<ActionSheetProps> = {
 
 export default story;
 
-const Template: Story<ActionSheetProps & { items: ActionSheetItemProps[] }> = ({
-  items = [],
-  ...args
-}) => {
-  const baseToggleRef = React.useRef(null);
-  const [visible, setVisible] = React.useState(true);
-  const popout = visible ? (
-    <ActionSheet
-      {...args}
-      onClose={() => setVisible(false)}
-      iosCloseItem={<ActionSheetDefaultIosCloseItem />}
-      toggleRef={baseToggleRef}
-    >
-      {items.map(({ children, ...rest }, index) => (
-        <ActionSheetItem autoClose key={index} {...rest}>
-          {children}
-        </ActionSheetItem>
-      ))}
-    </ActionSheet>
-  ) : null;
+type Story = StoryObj<ActionSheetProps & { items: ActionSheetItemProps[] }>;
 
-  return (
-    <SplitLayout style={{ justifyContent: 'center' }} popout={popout}>
-      <SplitCol width="100%" maxWidth="560px" stretchedOnMobile spaced>
-        <Placeholder stretched>
-          <Button getRootRef={baseToggleRef} onClick={() => setVisible(true)}>
-            Открыть
-          </Button>
-        </Placeholder>
-      </SplitCol>
-    </SplitLayout>
-  );
+export const Base: Story = {
+  render: function Render({ items, ...args }) {
+    const baseToggleRef = React.useRef(null);
+    const [visible, setVisible] = React.useState(true);
+    const popout = visible ? (
+      <ActionSheet
+        {...args}
+        onClose={() => setVisible(false)}
+        iosCloseItem={<ActionSheetDefaultIosCloseItem />}
+        toggleRef={baseToggleRef}
+      >
+        {items.map(({ children, ...rest }, index) => (
+          <ActionSheetItem autoClose key={index} {...rest}>
+            {children}
+          </ActionSheetItem>
+        ))}
+      </ActionSheet>
+    ) : null;
+
+    return (
+      <SplitLayout style={{ justifyContent: 'center' }} popout={popout}>
+        <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
+          <Placeholder stretched>
+            <Button getRootRef={baseToggleRef} onClick={() => setVisible(true)}>
+              Открыть
+            </Button>
+          </Placeholder>
+        </SplitCol>
+      </SplitLayout>
+    );
+  },
+  args: {
+    items: [
+      { children: 'Сохранить в закладках' },
+      { children: 'Закрепить запись' },
+      { children: 'Выключить комментирование' },
+      { children: 'Закрепить запись' },
+      { mode: 'destructive', children: 'Удалить запись' },
+    ],
+  },
 };
 
-export const Base = Template.bind({});
-Base.args = {
-  items: [
-    { children: 'Сохранить в закладках' },
-    { children: 'Закрепить запись' },
-    { children: 'Выключить комментирование' },
-    { children: 'Закрепить запись' },
-    { mode: 'destructive', children: 'Удалить запись' },
-  ],
+export const WithIcon: Story = {
+  ...Base,
+  args: {
+    items: [
+      { before: <Icon28EditOutline />, children: 'Редактировать профиль' },
+      { before: <Icon28ListPlayOutline />, children: 'Слушать далее' },
+      { before: <Icon28ShareOutline />, children: 'Поделиться' },
+      { before: <Icon28CopyOutline />, children: 'Скопировать ссылку' },
+      { before: <Icon28DeleteOutline />, mode: 'destructive', children: 'Удалить плейлист' },
+    ],
+  },
 };
 
-export const WithIcon = Template.bind({});
-WithIcon.args = {
-  items: [
-    { before: <Icon28EditOutline />, children: 'Редактировать профиль' },
-    { before: <Icon28ListPlayOutline />, children: 'Слушать далее' },
-    { before: <Icon28ShareOutline />, children: 'Поделиться' },
-    { before: <Icon28CopyOutline />, children: 'Скопировать ссылку' },
-    { before: <Icon28DeleteOutline />, mode: 'destructive', children: 'Удалить плейлист' },
-  ],
+export const WithSubtitle: Story = {
+  ...Base,
+  args: {
+    items: [
+      { before: <Icon28SettingsOutline />, subtitle: 'Авто', children: 'Качество' },
+      {
+        before: <Icon28SubtitlesOutline />,
+        subtitle: 'Отсутствуют',
+        disabled: true,
+        children: 'Субтитры',
+      },
+      {
+        before: <Icon28PlaySpeedOutline />,
+        subtitle: 'Обычная',
+        children: 'Скорость воспроизведения',
+      },
+    ],
+  },
 };
 
-export const WithSubtitle = Template.bind({});
-WithSubtitle.args = {
-  items: [
-    { before: <Icon28SettingsOutline />, subtitle: 'Авто', children: 'Качество' },
-    {
-      before: <Icon28SubtitlesOutline />,
-      subtitle: 'Отсутствуют',
-      disabled: true,
-      children: 'Субтитры',
-    },
-    {
-      before: <Icon28PlaySpeedOutline />,
-      subtitle: 'Обычная',
-      children: 'Скорость воспроизведения',
-    },
-  ],
+export const WithTitle: Story = {
+  ...Base,
+  args: {
+    header: 'Вы действительно хотите удалить это видео из Ваших видео?',
+    items: [{ mode: 'destructive', children: 'Удалить видео' }],
+  },
 };
 
-export const WithTitle = Template.bind({});
-WithTitle.args = {
-  header: 'Вы действительно хотите удалить это видео из Ваших видео?',
-  items: [{ mode: 'destructive', children: 'Удалить видео' }],
-};
-
-export const WithSelectable = Template.bind({});
-WithSelectable.args = {
-  items: [
-    { selectable: true, children: 'Лучшие друзья', defaultChecked: true },
-    { selectable: true, children: 'Родственники' },
-    { selectable: true, children: 'Коллеги' },
-    { selectable: true, children: 'Друзья по школе' },
-    { selectable: true, children: 'Друзья по вузу' },
-  ],
+export const WithSelectable: Story = {
+  ...Base,
+  args: {
+    items: [
+      { selectable: true, children: 'Лучшие друзья', defaultChecked: true },
+      { selectable: true, children: 'Родственники' },
+      { selectable: true, children: 'Коллеги' },
+      { selectable: true, children: 'Друзья по школе' },
+      { selectable: true, children: 'Друзья по вузу' },
+    ],
+  },
 };

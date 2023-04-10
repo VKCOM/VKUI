@@ -1,6 +1,5 @@
-import React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { Badge, BadgeProps } from './Badge';
 
@@ -13,17 +12,18 @@ const story: Meta<BadgeProps> = {
 
 export default story;
 
-const Template: Story<BadgeProps> = (args) => <Badge {...args} />;
+type Story = StoryObj<BadgeProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
+export const Playground: Story = {};
 
-export const NewMode = Template.bind({});
-NewMode.args = {
-  mode: 'new',
+export const NewMode: Story = {
+  args: {
+    mode: 'new',
+  },
 };
 
-export const ProminentMode = Template.bind({});
-ProminentMode.args = {
-  mode: 'prominent',
+export const ProminentMode: Story = {
+  args: {
+    mode: 'prominent',
+  },
 };

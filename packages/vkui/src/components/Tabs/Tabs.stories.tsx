@@ -1,14 +1,15 @@
 import React from 'react';
-import { useArgs } from '@storybook/addons';
-import { Meta, Story } from '@storybook/react';
+import { useArgs } from '@storybook/preview-api';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Group } from '../Group/Group';
+import { TabsItem } from '../TabsItem/TabsItem';
 import {
-  WithBadge as BadgeTabsItem,
-  Playground as BasicTabsItem,
-  WithBeforeAfter as BeforeAfterTabsItem,
-  WithCounter as CounterTabsItem,
-  WithNumberStatus as NumberStatusTabsItem,
+  WithBadge as BadgeTabsItemStory,
+  Playground as BasicTabsItemStory,
+  WithBeforeAfter as BeforeAfterTabsItemStory,
+  WithCounter as CounterTabsItemStory,
+  WithNumberStatus as NumberStatusTabsItemStory,
 } from '../TabsItem/TabsItem.stories';
 import { Tabs, TabsProps } from './Tabs';
 
@@ -30,46 +31,47 @@ const story: Meta<StoryTabsProps> = {
 
 export default story;
 
-const Template: Story<StoryTabsProps> = ({ selected = 'groups', ...args }) => {
-  const [, updateArg] = useArgs();
+type Story = StoryObj<StoryTabsProps>;
 
-  return (
-    <Tabs {...args}>
-      <BasicTabsItem
-        {...BasicTabsItem.args}
-        selected={selected === 'groups'}
-        onClick={() => updateArg({ selected: 'groups' })}
-      />
-      <BeforeAfterTabsItem
-        {...BeforeAfterTabsItem.args}
-        selected={selected === 'news'}
-        onClick={() => updateArg({ selected: 'news' })}
-      />
-      <BadgeTabsItem
-        {...BadgeTabsItem.args}
-        selected={selected === 'recommendations'}
-        onClick={() => updateArg({ selected: 'recommendations' })}
-      />
-      <CounterTabsItem
-        {...CounterTabsItem.args}
-        selected={selected === 'friends'}
-        onClick={() => updateArg({ selected: 'friends' })}
-      />
-      <NumberStatusTabsItem
-        {...NumberStatusTabsItem.args}
-        selected={selected === 'photos'}
-        onClick={() => updateArg({ selected: 'photos' })}
-      />
-    </Tabs>
-  );
+export const Playground: Story = {
+  render: function Render({ selected = 'groups', ...args }) {
+    const [, updateArg] = useArgs();
+
+    return (
+      <Tabs {...args}>
+        <TabsItem
+          {...BasicTabsItemStory.args}
+          selected={selected === 'groups'}
+          onClick={() => updateArg({ selected: 'groups' })}
+        />
+        <TabsItem
+          {...BeforeAfterTabsItemStory.args}
+          selected={selected === 'news'}
+          onClick={() => updateArg({ selected: 'news' })}
+        />
+        <TabsItem
+          {...BadgeTabsItemStory.args}
+          selected={selected === 'recommendations'}
+          onClick={() => updateArg({ selected: 'recommendations' })}
+        />
+        <TabsItem
+          {...CounterTabsItemStory.args}
+          selected={selected === 'friends'}
+          onClick={() => updateArg({ selected: 'friends' })}
+        />
+        <TabsItem
+          {...NumberStatusTabsItemStory.args}
+          selected={selected === 'photos'}
+          onClick={() => updateArg({ selected: 'photos' })}
+        />
+      </Tabs>
+    );
+  },
+  decorators: [
+    (Component) => (
+      <Group>
+        <Component />
+      </Group>
+    ),
+  ],
 };
-
-export const Playground = Template.bind({});
-Playground.args = {};
-Playground.decorators = [
-  (Component) => (
-    <Group>
-      <Component />
-    </Group>
-  ),
-];

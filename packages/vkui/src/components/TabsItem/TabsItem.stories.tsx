@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import {
   Icon16Dropdown,
   Icon20NewsfeedOutline,
@@ -20,55 +20,60 @@ const story: Meta<TabsItemProps> = {
 
 export default story;
 
-const Template: Story<TabsItemProps> = (args) => <TabsItem {...args} />;
+type Story = StoryObj<TabsItemProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {
-  children: 'Сообщества',
+export const Playground: Story = {
+  args: {
+    children: 'Сообщества',
+  },
+  decorators: [
+    (Component) => (
+      <div style={{ height: 50 }}>
+        <Component />
+      </div>
+    ),
+  ],
 };
-Playground.decorators = [
-  (Component) => (
-    <div style={{ height: 50 }}>
-      <Component />
-    </div>
-  ),
-];
 
-export const WithBeforeAfter = Template.bind({});
-WithBeforeAfter.args = {
-  children: 'Лента',
-  before: <Icon20NewsfeedOutline />,
-  after: <Icon16Dropdown />,
+export const WithBeforeAfter: Story = {
+  ...Playground,
+  args: {
+    children: 'Лента',
+    before: <Icon20NewsfeedOutline />,
+    after: <Icon16Dropdown />,
+  },
 };
-WithBeforeAfter.decorators = Playground.decorators;
 
-export const WithBadge = Template.bind({});
-WithBadge.args = {
-  children: 'Рекомендации',
-  before: <Icon20ThumbsUpOutline />,
-  after: <Icon16Dropdown />,
-  status: <Badge mode="prominent" />,
+export const WithBadge: Story = {
+  ...Playground,
+  args: {
+    children: 'Рекомендации',
+    before: <Icon20ThumbsUpOutline />,
+    after: <Icon16Dropdown />,
+    status: <Badge mode="prominent" />,
+  },
 };
-WithBadge.decorators = Playground.decorators;
 
-export const WithCounter = Template.bind({});
-WithCounter.args = {
-  children: 'Друзья',
-  before: <Icon20UsersOutline />,
-  after: <Icon16Dropdown />,
-  status: (
-    <Counter mode="prominent" size="s">
-      3
-    </Counter>
-  ),
+export const WithCounter: Story = {
+  ...Playground,
+  args: {
+    children: 'Друзья',
+    before: <Icon20UsersOutline />,
+    after: <Icon16Dropdown />,
+    status: (
+      <Counter mode="prominent" size="s">
+        3
+      </Counter>
+    ),
+  },
 };
-WithCounter.decorators = Playground.decorators;
 
-export const WithNumberStatus = Template.bind({});
-WithNumberStatus.args = {
-  children: 'Фотографии',
-  before: <Icon20PictureOutline />,
-  after: <Icon16Dropdown />,
-  status: 23,
+export const WithNumberStatus: Story = {
+  ...Playground,
+  args: {
+    children: 'Фотографии',
+    before: <Icon20PictureOutline />,
+    after: <Icon16Dropdown />,
+    status: 23,
+  },
 };
-WithNumberStatus.decorators = Playground.decorators;

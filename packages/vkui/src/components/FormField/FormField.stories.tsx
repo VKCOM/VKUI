@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { Icon16Clear, Icon28MessageOutline } from '@vkontakte/icons';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -15,46 +15,48 @@ const story: Meta<FormFieldProps> = {
 
 export default story;
 
-const Template: Story<FormFieldProps> = (args) => (
-  <FormField {...args}>
-    <input
-      style={{
-        position: 'relative',
-        display: 'block',
-        width: '100%',
-        margin: 0,
-        paddingRight: 12,
-        paddingLeft: 12,
-        fontSize: 16,
-        lineHeight: '20px',
-        textOverflow: 'ellipsis',
-        color: '#000',
-        border: 'none',
-        background: 'transparent',
-      }}
-    />
-  </FormField>
-);
+type Story = StoryObj<FormFieldProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {
-  before: (
-    <IconButton>
-      <Icon28MessageOutline />
-    </IconButton>
+export const Playground: Story = {
+  render: (args) => (
+    <FormField {...args}>
+      <input
+        style={{
+          position: 'relative',
+          display: 'block',
+          width: '100%',
+          margin: 0,
+          paddingRight: 12,
+          paddingLeft: 12,
+          fontSize: 16,
+          lineHeight: '20px',
+          textOverflow: 'ellipsis',
+          color: '#000',
+          border: 'none',
+          background: 'transparent',
+        }}
+      />
+    </FormField>
   ),
-  after: (
-    <IconButton>
-      <Icon16Clear />
-    </IconButton>
-  ),
+  args: {
+    before: (
+      <IconButton>
+        <Icon28MessageOutline />
+      </IconButton>
+    ),
+    after: (
+      <IconButton>
+        <Icon16Clear />
+      </IconButton>
+    ),
+  },
+  decorators: [
+    (Component, context) => (
+      <Group>
+        <Component {...context.args} />
+      </Group>
+    ),
+    withSinglePanel,
+    withVKUILayout,
+  ],
 };
-Playground.decorators = [
-  (Component, context) => (
-    <Group>
-      <Component {...context.args} />
-    </Group>
-  ),
-  withSinglePanel,
-  withVKUILayout,
-];

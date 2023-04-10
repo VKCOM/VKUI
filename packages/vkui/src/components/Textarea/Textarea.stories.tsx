@@ -1,5 +1,4 @@
-import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Textarea, TextareaProps } from './Textarea';
 
@@ -11,7 +10,6 @@ const story: Meta<TextareaProps> = {
 
 export default story;
 
-const Template: Story<TextareaProps> = (args) => <Textarea {...args} />;
+type Story = StoryObj<TextareaProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
+export const Playground: Story = {};

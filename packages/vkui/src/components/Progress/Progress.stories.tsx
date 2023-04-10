@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Progress, ProgressProps } from './Progress';
 
@@ -16,14 +16,14 @@ const story: Meta<ProgressProps> = {
 
 export default story;
 
-const Template: Story<ProgressProps> = (args) => <Progress {...args} />;
+type Story = StoryObj<ProgressProps>;
 
-export const Playground = Template.bind({});
-Playground.args = {};
-Playground.decorators = [
-  (Component) => (
-    <div style={{ width: '100%', padding: '16px', boxSizing: 'border-box' }}>
-      <Component />
-    </div>
-  ),
-];
+export const Playground: Story = {
+  decorators: [
+    (Component) => (
+      <div style={{ width: '100%', padding: '16px', boxSizing: 'border-box' }}>
+        <Component />
+      </div>
+    ),
+  ],
+};
