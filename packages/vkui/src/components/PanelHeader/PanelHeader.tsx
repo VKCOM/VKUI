@@ -60,9 +60,11 @@ const PanelHeaderIn = ({ before, after, separator, children }: PanelHeaderProps)
         </div>
         <div className={styles['PanelHeader__content']}>
           {platform === Platform.VKCOM ? (
-            <Text weight="2">{children}</Text>
+            <Text weight="2" Component="h2">
+              {children}
+            </Text>
           ) : (
-            <span className={styles['PanelHeader__content-in']}>{children}</span>
+            <h2 className={styles['PanelHeader__content-in']}>{children}</h2>
           )}
         </div>
         <div className={classNames(styles['PanelHeader__after'], 'vkuiInternalPanelHeader__after')}>
