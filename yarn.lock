@@ -3721,6 +3721,13 @@
   dependencies:
     tslib "^2.4.0"
 
+"@swc/helpers@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.5.0.tgz#bf1d807b60f7290d0ec763feea7ccdeda06e85f1"
+  integrity sha512-SjY/p4MmECVVEWspzSRpQEM3sjR17sP8PbGxELWrT+YZMBfiUyt1MRUNjMV23zohwlG2HYtCQOsCwsTHguXkyg==
+  dependencies:
+    tslib "^2.4.0"
+
 "@swc/jest@^0.2.24":
   version "0.2.24"
   resolved "https://registry.yarnpkg.com/@swc/jest/-/jest-0.2.24.tgz#35d9377ede049613cd5fdd6c24af2b8dcf622875"
@@ -4513,12 +4520,12 @@
   resolved "https://registry.yarnpkg.com/@vkontakte/vk-bridge/-/vk-bridge-2.7.0.tgz#6a3c422b75d2ddd20dfad66d9418ab3921974a15"
   integrity sha512-Y3w3PivRaa/QkwKvwDdk+hWYdLRwqnFuxNJN3Z59PcEjLlCqgGbQ1x8vSZiEoLRmqjmV7NOqN+5fWnCCvGVNoQ==
 
-"@vkontakte/vkjs@^0.32.1":
-  version "0.32.1"
-  resolved "https://registry.yarnpkg.com/@vkontakte/vkjs/-/vkjs-0.32.1.tgz#a0af298db3a4c7b489a0f9b9e8994fed5f2218f1"
-  integrity sha512-tsmWVWJw3VT2W7+J+GMQajqFTce+CvlazOMsvllDyXPyYBwXy0YAq6zPMexhnLxpgW52kL2mmzHbJOIXgq78VQ==
+"@vkontakte/vkjs@^0.32.2":
+  version "0.32.2"
+  resolved "https://registry.yarnpkg.com/@vkontakte/vkjs/-/vkjs-0.32.2.tgz#ecdf5d217fa80d2dfac240aa7ff42ca949ed0c26"
+  integrity sha512-OTEPdsOY/UWdzVL31qGg32ZYXnRYzGxAfYy4/T15MIV/z+/Gz2z+wiNXyV2xO5K+/Ytyqg+Bzf7v1vv87DMYOw==
   dependencies:
-    "@swc/helpers" "^0.4.14"
+    "@swc/helpers" "^0.5.0"
 
 "@vkontakte/vkui-tokens@4.32.1":
   version "4.32.1"
