@@ -68,7 +68,7 @@
     "playwright": "1.32.1",
     "playwright-chromium": "1.32.1",
     "playwright-firefox": "1.32.1",
-    "playwright-webkit": "1.32.1",
+    "playwright-webkit": "1.32.3",
     "postcss": "^8.4.21",
     "postcss-cli": "^10.0.0",
     "postcss-csso": "^6.0.0",
