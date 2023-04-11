@@ -6,8 +6,6 @@ on:
 
 jobs:
   undeploy_s3:
-    # [Примечание 1] Пропускаем очищение, т.к. для PR от dependabot песочница не создаётся
-    if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     name: Undeploy S3
     steps:
@@ -25,7 +23,6 @@ jobs:
         working-directory: ./.github/actions/s3
 
       - name: Delete from S3
-        if: ${{ github.actor != 'dependabot[bot]' }}
         uses: ./.github/actions/s3
         with:
           awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
