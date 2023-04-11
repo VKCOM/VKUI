@@ -105,6 +105,16 @@ updates:
       - 'VKCOM/vk-sec'
       - 'VKCOM/vkui-core'
 
+  - package-ecosystem: 'npm'
+    directory: '/.github/actions/s3'
+    schedule:
+      interval: 'daily'
+    allow:
+      - dependency-type: 'direct'
+    reviewers:
+      - 'VKCOM/vk-sec'
+      - 'VKCOM/vkui-core'
+
   - package-ecosystem: 'github-actions'
     # Workflow files stored in the
     # default location of `.github/workflows`
