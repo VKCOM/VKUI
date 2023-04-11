@@ -8,6 +8,7 @@ import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { useConfigProvider, WebviewType } from '../ConfigProvider/ConfigProviderContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
+import { ModalPageContext } from '../ModalPage/ModalPageContext';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { Separator } from '../Separator/Separator';
 import { Spacing } from '../Spacing/Spacing';
@@ -48,6 +49,7 @@ export interface PanelHeaderProps
 const PanelHeaderIn = ({ before, after, separator, children }: PanelHeaderProps) => {
   const { webviewType } = useConfigProvider();
   const { isInsideModal } = React.useContext(ModalRootContext);
+  const { labelId } = React.useContext(ModalPageContext);
   const platform = usePlatform();
 
   return (
@@ -60,11 +62,13 @@ const PanelHeaderIn = ({ before, after, separator, children }: PanelHeaderProps)
         </div>
         <div className={styles['PanelHeader__content']}>
           {platform === Platform.VKCOM ? (
-            <Text weight="2" Component="h2">
+            <Text weight="2" Component="h2" id={labelId}>
               {children}
             </Text>
           ) : (
-            <h2 className={styles['PanelHeader__content-in']}>{children}</h2>
+            <h2 className={styles['PanelHeader__content-in']} id={labelId}>
+              {children}
+            </h2>
           )}
         </div>
         <div className={classNames(styles['PanelHeader__after'], 'vkuiInternalPanelHeader__after')}>
