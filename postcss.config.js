@@ -8,7 +8,7 @@ const postcssCustomMedia = require('postcss-custom-media');
 const cssCustomProperties = require('postcss-custom-properties');
 const cssImport = require('postcss-import');
 const cssModules = require('postcss-modules');
-const { VKUI_PACKAGE, generateScopedName, getCustomMedias } = require('./shared');
+const { VKUI_PACKAGE, VKUI_TOKENS_CSS, generateScopedName, getCustomMedias } = require('./shared');
 
 function getSafelyTmpDirPath(rootPath = __dirname) {
   const tmpDir = path.join(rootPath, 'tmp');
@@ -41,17 +41,7 @@ generateCustomMedias();
 module.exports = (ctx) => {
   const plugins = [
     cssImport(),
-    restructureVariable(
-      [
-        './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css',
-        './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css',
-        './node_modules/@vkontakte/vkui-tokens/themes/vkBaseDark/cssVars/declarations/onlyVariablesLocal.css',
-        './node_modules/@vkontakte/vkui-tokens/themes/vkIOS/cssVars/declarations/onlyVariablesLocal.css',
-        './node_modules/@vkontakte/vkui-tokens/themes/vkIOSDark/cssVars/declarations/onlyVariablesLocal.css',
-        './node_modules/@vkontakte/vkui-tokens/themes/vkCom/cssVars/declarations/onlyVariablesLocal.css',
-        './node_modules/@vkontakte/vkui-tokens/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css',
-      ].map((pathSegment) => path.join(__dirname, pathSegment)),
-    ),
+    restructureVariable(VKUI_TOKENS_CSS.map((pathSegment) => path.join(__dirname, pathSegment))),
     postcssGlobalData({
       files: [
         './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css',
@@ -98,3 +88,6 @@ module.exports = (ctx) => {
 
   return { plugins };
 };
+
+module.exports.generateCustomMedias = generateCustomMedias;
+module.exports.customMediasPath = customMediasPath;

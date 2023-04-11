@@ -22,7 +22,7 @@
         "runtime": "classic"
       }
     },
-    "target": "es2022",
+    "target": "esnext",
 
     "experimental": {
       "plugins": [
