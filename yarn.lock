@@ -13644,10 +13644,10 @@ swc-plugin-coverage-instrument@^0.0.15:
   resolved "https://registry.yarnpkg.com/swc-plugin-coverage-instrument/-/swc-plugin-coverage-instrument-0.0.15.tgz#5ab1175d28a35c941a4bc85c2add474067f00f0d"
   integrity sha512-SFyCGr75EwfSBLPdI0/3E1dxaxwVbcsgFym/xg9plSxopCpmpXjsiqZedeF7i2qXM1ciR4khrSs1SgiBaAtClQ==
 
-swc-plugin-transform-remove-imports@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/swc-plugin-transform-remove-imports/-/swc-plugin-transform-remove-imports-1.1.0.tgz#c4ddf2167cd74901fed56ef1a7c7a132da211bde"
-  integrity sha512-sJ63h0hxln02/LuiAbwPHLX48agI0gGlll3yMiVsAWZGrnqGOTO2nQe4G1qWE5BfVNp8OSP0Ld5mlLW5CkOcdg==
+swc-plugin-transform-remove-imports@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/swc-plugin-transform-remove-imports/-/swc-plugin-transform-remove-imports-1.2.0.tgz#515194ca71c9d397d57a1eef472415ce20756376"
+  integrity sha512-WYY/3s04uk/w40lmBTGfRKSgP3rvs3vQXcFGBjNB1NcbqSFlPjgihLSRSux/dp/Ab364hX0c5sQlZ3W4S8Dt+A==
 
 symbol-tree@^3.2.4:
   version "3.2.4"
