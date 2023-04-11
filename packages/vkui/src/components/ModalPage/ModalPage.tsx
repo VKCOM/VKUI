@@ -98,6 +98,8 @@ export const ModalPage = ({
   return (
     <div
       {...restProps}
+      role="dialog"
+      aria-modal="true"
       id={id}
       className={classNames(
         styles['ModalPage'],
