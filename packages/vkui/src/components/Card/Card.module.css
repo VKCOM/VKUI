@@ -4,11 +4,6 @@
   border-radius: var(--vkui--size_card_border_radius--regular);
 }
 
-.Card__in {
-  position: relative;
-  border-radius: inherit;
-}
-
 .Card--mode-shadow {
   box-shadow: var(
     --vkui--elevation3,

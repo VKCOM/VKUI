@@ -30,7 +30,7 @@ export const Card = ({
         className,
       )}
     >
-      <div className={styles['Card__in']}>{children}</div>
+      {children}
     </div>
   );
 };
