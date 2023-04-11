@@ -29,7 +29,7 @@ export const AccordionPlayground = (props: ComponentPlaygroundProps) => {
       {({ open, ...restProps }) => (
         <Accordion open={open}>
           <Accordion.Summary {...restProps}>Title</Accordion.Summary>
-          <Div className={TEST_CLASS_NAMES.CONTENT}>Content</Div>
+          <Div className={TEST_CLASS_NAMES.CONTENT}>Content TEST</Div>
         </Accordion>
       )}
     </ComponentPlayground>
