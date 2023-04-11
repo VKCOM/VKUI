@@ -14041,10 +14041,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
 
-typescript-plugin-css-modules@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/typescript-plugin-css-modules/-/typescript-plugin-css-modules-5.0.0.tgz#7f7d41315b0255b831a198220948e4a38fb33f01"
-  integrity sha512-fWqguBTVLnV9Xto3maYByUt4rfJdmZ5Z66TQ6jOHpIiU/RPDf/DCCtJPNYyWLQflrbimSawag8zE6EmrkYmuZQ==
+typescript-plugin-css-modules@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/typescript-plugin-css-modules/-/typescript-plugin-css-modules-5.0.1.tgz#cd53a5891d4c8338b1d92936ba8383737a7fcf0e"
+  integrity sha512-hKXObfwfjx2/myRq4JeQ8D3xIWYTFqusi0hS/Aka7RFX1xQEoEkdOGDWyXNb8LmObawsUzbI30gQnZvqYXCrkA==
   dependencies:
     "@types/postcss-modules-local-by-default" "^4.0.0"
     "@types/postcss-modules-scope" "^3.0.1"
