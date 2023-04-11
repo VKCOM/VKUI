@@ -15,7 +15,7 @@
     "@actions/github": "^5.1.1",
     "aws-sdk": "^2.1353.0",
     "md5": "^2.3.0",
-    "semver": "^7.3.8",
+    "semver": "^7.4.0",
     "strip-ansi": "^7.0.1"
   },
   "scripts": {
