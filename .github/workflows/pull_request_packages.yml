@@ -316,7 +316,6 @@ jobs:
           body-includes: <!-- storybook_url -->
 
       - name: Create or update comment
-        if: steps.find_url_comment.outputs.comment-id == 0
         uses: peter-evans/create-or-update-comment@v3
         with:
           comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
