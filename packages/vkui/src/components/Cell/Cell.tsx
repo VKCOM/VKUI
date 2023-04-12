@@ -58,7 +58,7 @@ export const Cell = ({
   after,
   disabled,
   draggable,
-  Component,
+  Component: ComponentProps,
   onChange,
   name,
   value,
@@ -72,6 +72,7 @@ export const Cell = ({
 }: CellProps) => {
   const selectable = mode === 'selectable';
   const removable = mode === 'removable';
+  const Component = selectable ? 'label' : ComponentProps;
 
   const platform = usePlatform();
 
@@ -123,7 +124,7 @@ export const Cell = ({
     platform === Platform.IOS && styles['Cell--ios'],
     dragging && styles['Cell--dragging'],
     removable && styles['Cell--removable'],
-    selectable && styles['Cell--selectable'],
+    Component === 'label' && styles['Cell--selectable'],
     disabled && styles['Cell--disabled'],
   );
 
@@ -134,7 +135,7 @@ export const Cell = ({
       {...restProps}
       className={styles['Cell__content']}
       disabled={simpleCellDisabled}
-      Component={selectable ? 'label' : Component}
+      Component={Component}
       before={
         <React.Fragment>
           {draggable && platform !== Platform.IOS && dragger}
@@ -171,3 +172,5 @@ export const Cell = ({
     </div>
   );
 };
+
+Cell.Checkbox = CellCheckbox;
