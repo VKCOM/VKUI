@@ -78,7 +78,7 @@
 .WriteBar--ios .WriteBar__formIn {
   box-sizing: border-box;
   background-color: var(--vkui--color_write_bar_input_background);
-  border: var(--vkui_internal--thin_border) solid var(--vkui--color_write_bar_input_border);
+  border: var(--vkui_internal--thin_border) solid var(--vkui--color_write_bar_input_border_alpha);
   border-radius: 18px;
   margin: 8px 0;
 }
