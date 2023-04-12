@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import * as React from 'react';
 import { Insets } from '@vkontakte/vk-bridge';
 import { PlatformType } from './lib/platform';
@@ -21,10 +22,6 @@ export interface HasRootRef<T> {
 
 export interface HasRef<T> {
   getRef?: React.Ref<T>;
-}
-
-export interface HasComponent {
-  Component?: React.ElementType;
 }
 
 export interface HasAlign {
@@ -87,3 +84,50 @@ interface Nothing {}
  * @see {@link https://github.com/microsoft/TypeScript/issues/29729}
  */
 export type LiteralUnion<Union, Type> = Union | (Type & Nothing);
+
+/**
+ * Типы для полиморфных компонентов, чей рутовый элемент
+ * может поменяться через `Component={Component}`.
+ *
+ * Спасибо MUI за вдохновение.
+ */
+
+export interface HasComponent<T extends React.ElementType = React.ElementType> {
+  /**
+   * Подменяет рутовый элемент компонента.
+   */
+  Component?: T;
+}
+
+type DistributiveOmit<T, K extends keyof any> = T extends any ? Omit<T, K> : never;
+
+interface ComponentTypeMap {
+  props: {};
+  defaultComponent: React.ElementType;
+}
+
+type ComponentProps<M extends ComponentTypeMap> = M['props'];
+
+type HasComponentTypeMap<C extends React.ElementType, P = {}> = {
+  props: P;
+  defaultComponent: C;
+};
+
+type PolymorphicComponentProps<
+  M extends ComponentTypeMap,
+  C extends React.ElementType,
+> = ComponentProps<M> &
+  DistributiveOmit<React.ComponentPropsWithoutRef<C>, keyof ComponentProps<M>> &
+  HasChildren &
+  HasComponent<C>;
+
+type DefaultComponentProps<M extends ComponentTypeMap> = ComponentProps<M> &
+  DistributiveOmit<React.ComponentPropsWithoutRef<M['defaultComponent']>, keyof ComponentProps<M>> &
+  HasChildren &
+  HasComponent;
+
+export type HasComponentProps<C extends React.ElementType, P extends {} = {}> =
+  | (PolymorphicComponentProps<HasComponentTypeMap<C, DistributiveOmit<P, keyof HasComponent>>, C> &
+      DistributiveOmit<P, keyof HasComponent>)
+  | (DefaultComponentProps<HasComponentTypeMap<C, DistributiveOmit<P, keyof HasComponent>>> &
+      DistributiveOmit<P, keyof HasComponent>);
