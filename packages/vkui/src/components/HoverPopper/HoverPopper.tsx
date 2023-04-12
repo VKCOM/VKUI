@@ -5,7 +5,7 @@ import { useTimeout } from '../../hooks/useTimeout';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { Popper, PopperCommonProps } from '../Popper/Popper';
 
-export interface HoverPopperProps extends PopperCommonProps {
+export interface HoverPopperProps extends Omit<PopperCommonProps, 'content'> {
   /**
    * Содержимое тултипа
    */

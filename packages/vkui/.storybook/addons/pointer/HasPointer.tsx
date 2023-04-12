@@ -12,7 +12,7 @@ export const HasPointer = () => {
   }, [updateGlobals, hasPointer]);
 
   return (
-    <IconButton active={hasPointer} nonce={undefined} key="pointer" onClick={toggleHasPointer}>
+    <IconButton active={hasPointer} key="pointer" onClick={toggleHasPointer}>
       <Icons icon="button" />
       &nbsp;
       {`${hasPointer ? '' : 'no '}pointer`}
