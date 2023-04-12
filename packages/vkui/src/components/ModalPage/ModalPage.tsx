@@ -78,7 +78,7 @@ export const ModalPage = ({
   dynamicContentHeight,
   getModalContentRef,
   nav,
-  id: _id,
+  id: idProp,
   hideCloseButton = false,
   className,
   ...restProps
