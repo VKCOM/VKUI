@@ -83,7 +83,7 @@ export const ModalPage = ({
   className,
   ...restProps
 }: ModalPageProps) => {
-  const randomId = useId();
+  const generatingId = useId();
   const id = _id || randomId;
 
   const { updateModalHeight } = React.useContext(ModalRootContext);
