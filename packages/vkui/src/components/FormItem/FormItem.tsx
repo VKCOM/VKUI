@@ -22,6 +22,9 @@ export interface FormItemProps
     HasRootRef<HTMLElement>,
     HasComponent,
     RemovableProps {
+  /**
+   * Заголовок поля
+   */
   top?: React.ReactNode;
   bottom?: React.ReactNode;
   status?: 'default' | 'error' | 'valid';
@@ -29,6 +32,10 @@ export interface FormItemProps
    * Дает возможность удалить `FormItem`. Рекомендуется использовать только для `Input` или `Select`.
    */
   removable?: boolean;
+  /**
+   * Дополнительный текст после заголовка поля
+   */
+  topAside?: React.ReactNode;
 }
 
 /**
@@ -37,6 +44,7 @@ export interface FormItemProps
 export const FormItem = ({
   children,
   top,
+  topAside,
   bottom,
   status = 'default',
   Component = 'div',
@@ -50,9 +58,18 @@ export const FormItem = ({
   const rootEl = useExternRef(getRootRef);
   const { sizeY = 'none' } = useAdaptivity();
 
+  const topElement = (hasReactNode(top) || hasReactNode(topAside)) && (
+    <div className={styles['FormItem__topWrapper']}>
+      {hasReactNode(top) && <Subhead className={styles['FormItem__top']}>{top}</Subhead>}
+      {hasReactNode(topAside) && (
+        <Subhead className={styles['FormItem__topAside']}>{topAside}</Subhead>
+      )}
+    </div>
+  );
+
   const wrappedChildren = (
     <React.Fragment>
-      {hasReactNode(top) && <Subhead className={styles['FormItem__top']}>{top}</Subhead>}
+      {hasReactNode(topElement) && topElement}
       {children}
       {hasReactNode(bottom) && <Footnote className={styles['FormItem__bottom']}>{bottom}</Footnote>}
     </React.Fragment>
@@ -77,7 +94,7 @@ export const FormItem = ({
             ),
           }[status],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
-        hasReactNode(top) &&
+        hasReactNode(topElement) &&
           classNames(styles['FormItem--withTop'], 'vkuiInternalFormItem--withTop'),
         removable && classNames(styles['FormItem--removable'], 'vkuiInternalFormItem--removable'),
         className,

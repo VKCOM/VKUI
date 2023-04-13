@@ -12,6 +12,7 @@ const addressItems = [
 const Example = () => {
   const [email, setEmail] = React.useState('');
   const [purpose, setPurpose] = React.useState('');
+  const [about, setAbout] = React.useState('');
   const [showPatronymic, setShowPatronymic] = React.useState(true);
 
   const onChange = (e) => {
@@ -20,6 +21,7 @@ const Example = () => {
     const setStateAction = {
       email: setEmail,
       purpose: setPurpose,
+      about: setAbout,
     }[name];
 
     setStateAction && setStateAction(value);
@@ -139,8 +141,8 @@ const Example = () => {
                 ]}
               />
             </FormItem>
-            <FormItem top="О себе">
-              <Textarea />
+            <FormItem top="О себе" topAside={`${about.length}/100`}>
+              <Textarea name="about" onChange={onChange} />
             </FormItem>
             <Checkbox>
               Согласен со всем <Link>этим</Link>

@@ -12,7 +12,8 @@ import { FormItem } from './FormItem';
 describe('FormItem', () => {
   describeScreenshotFuzz(FormItem, [
     {
-      top: [undefined, 'Сверху'],
+      top: [undefined, 'Сверху слева'],
+      topAside: [undefined, 'Сверху справа'],
       bottom: [undefined, 'Снизу'],
       removable: [undefined, true],
       children: [<Input key={0} placeholder="Введите ваше значение" />],
