@@ -30,14 +30,14 @@ const PanelHeaderChildren = ({ hasStatus, hasBefore, children }: PanelHeaderChil
   const platform = usePlatform();
   if (platform === Platform.VKCOM) {
     return (
-      <Text Component="div" weight="2">
+      <Text className={styles['PanelHeaderContent__childrenText']} Component="div" weight="2">
         {children}
       </Text>
     );
   }
 
   return hasStatus || hasBefore ? (
-    <Headline Component="div" weight="2">
+    <Headline className={styles['PanelHeaderContent__childrenText']} Component="div" weight="2">
       {children}
     </Headline>
   ) : (
@@ -94,12 +94,7 @@ export const PanelHeaderContent = ({
         {hasReactNode(status) && (
           <Footnote className={styles['PanelHeaderContent__status']}>{status}</Footnote>
         )}
-        <div
-          className={classNames(
-            'vkuiInternalPanelHeaderContent__children',
-            styles['PanelHeaderContent__children'],
-          )}
-        >
+        <div className={styles['PanelHeaderContent__children']}>
           <PanelHeaderChildren hasStatus={hasReactNode(status)} hasBefore={hasReactNode(before)}>
             {children}
           </PanelHeaderChildren>
