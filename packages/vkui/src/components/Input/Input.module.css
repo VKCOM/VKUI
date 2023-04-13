@@ -21,10 +21,6 @@
   border: none;
   border-radius: inherit;
   appearance: none;
-  font-family: inherit;
-  font-weight: var(--vkui--font_text--font_weight--regular);
-  font-size: var(--vkui--font_text--font_size--regular);
-  line-height: var(--vkui--font_text--line_height--regular);
   color: var(--vkui--color_text_primary);
   padding: 0 12px;
   position: relative;
@@ -34,8 +30,12 @@
 
 .Input--sizeY-compact .Input__el {
   height: var(--vkui--size_field_height--compact);
-  font-size: var(--vkui--font_text--font_size--compact);
-  line-height: var(--vkui--font_text--line_height--compact);
+}
+
+@media (--sizeY-compact) {
+  .Input--sizeY-none .Input__el {
+    height: var(--vkui--size_field_height--compact);
+  }
 }
 
 .Input--hasBefore .Input__el {
@@ -44,14 +44,6 @@
 
 .Input--hasAfter .Input__el {
   padding-right: 0;
-}
-
-@media (--sizeY-compact) {
-  .Input--sizeY-none .Input__el {
-    height: var(--vkui--size_field_height--compact);
-    font-size: var(--vkui--font_text--font_size--compact);
-    line-height: var(--vkui--font_text--line_height--compact);
-  }
 }
 
 .Input__el:disabled {
