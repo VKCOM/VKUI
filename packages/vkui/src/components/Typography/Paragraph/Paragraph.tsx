@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { HasRootRef } from '../../../types';
-import { TypographyProps } from '../types';
+import { Typography, TypographyProps } from '../Typography';
 import styles from './Paragraph.module.css';
 
-export interface ParagraphProps extends TypographyProps, HasRootRef<HTMLElement> {}
+export type ParagraphProps = TypographyProps;
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Paragraph
@@ -12,29 +11,15 @@ export interface ParagraphProps extends TypographyProps, HasRootRef<HTMLElement>
 export const Paragraph = ({
   className,
   Component = 'span',
-  getRootRef,
-  weight,
-  children,
   normalize = false,
   ...restProps
 }: ParagraphProps) => {
   return (
-    <Component
+    <Typography
+      Component={Component}
+      normalize={normalize}
+      className={classNames(className, styles['Paragraph'])}
       {...restProps}
-      ref={getRootRef}
-      className={classNames(
-        className,
-        styles['Paragraph'],
-        normalize && styles['Paragraph--normalize'],
-        weight &&
-          {
-            '1': styles['Paragraph--weight-1'],
-            '2': styles['Paragraph--weight-2'],
-            '3': styles['Paragraph--weight-3'],
-          }[weight],
-      )}
-    >
-      {children}
-    </Component>
+    />
   );
 };

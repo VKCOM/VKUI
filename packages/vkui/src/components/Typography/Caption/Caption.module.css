@@ -1,8 +1,3 @@
-.Caption--normalize {
-  display: block;
-  margin: 0;
-}
-
 .Caption--caps {
   text-transform: uppercase;
 }
@@ -47,19 +42,4 @@
   line-height: var(--vkui--font_caption3_caps--line_height--regular);
   font-weight: var(--vkui--font_caption3_caps--font_weight--regular);
   font-family: var(--vkui--font_caption3_caps--font_family--regular);
-}
-
-.Caption.Caption--weight-1 {
-  /* Мы утяжеляем селектор, чтобы перебить селекторы .Caption--caps */
-  font-weight: var(--vkui--font_weight_accent1);
-}
-
-.Caption.Caption--weight-2 {
-  /* Мы утяжеляем селектор, чтобы перебить селекторы .Caption--caps */
-  font-weight: var(--vkui--font_weight_accent2);
-}
-
-.Caption.Caption--weight-3 {
-  /* Мы утяжеляем селектор, чтобы перебить селекторы .Caption--caps */
-  font-weight: var(--vkui--font_weight_accent3);
 }

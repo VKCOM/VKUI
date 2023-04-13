@@ -2,7 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { SizeType } from '../../../lib/adaptivity';
-import { TypographyProps } from '../types';
+import { Typography, TypographyProps } from '../Typography';
 import styles from './Subhead.module.css';
 
 const sizeYClassNames = {
@@ -17,8 +17,6 @@ export type SubheadProps = TypographyProps;
  */
 export const Subhead = ({
   className,
-  children,
-  weight,
   Component = 'h5',
   normalize = true,
   ...restProps
@@ -26,22 +24,15 @@ export const Subhead = ({
   const { sizeY = 'none' } = useAdaptivity();
 
   return (
-    <Component
-      {...restProps}
+    <Typography
+      Component={Component}
+      normalize={normalize}
       className={classNames(
         className,
         styles['Subhead'],
-        normalize && styles['Subhead--normalize'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
-        weight &&
-          {
-            '1': styles['Subhead--weight-1'],
-            '2': styles['Subhead--weight-2'],
-            '3': styles['Subhead--weight-3'],
-          }[weight],
       )}
-    >
-      {children}
-    </Component>
+      {...restProps}
+    />
   );
 };
