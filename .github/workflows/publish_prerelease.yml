@@ -82,8 +82,10 @@ jobs:
         id: updated_version
         run: echo "version=$(yarn workspace @vkontakte/vkui --silent run --silent package:version)" >> $GITHUB_OUTPUT
 
-      - name: Creating doc for prerelease
+      - name: Build styleguide
         run: yarn run docs:styleguide:build --dist dist/${{ steps.updated_version.outputs.version }}
+      - name: Build storybook
+        run: yarn docs:storybook:build -o ../../styleguide/dist/${{ steps.updated_version.outputs.version }}/storybook
 
       - name: Publishing doc
         uses: JamesIves/github-pages-deploy-action@v4

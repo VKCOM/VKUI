@@ -84,10 +84,11 @@ jobs:
       - name: Creating doc for stable release
         run: |
           yarn run docs:styleguide:build
-          cd styleguide
-          mkdir ${{ steps.updated_version.outputs.version }}
-          cp -R dist/* ${{ steps.updated_version.outputs.version }}
-          mv ${{ steps.updated_version.outputs.version }} dist/${{ steps.updated_version.outputs.version }}
+          yarn run docs:storybook:build
+          mkdir styleguide/${{ steps.updated_version.outputs.version }} styleguide/dist/storybook
+          cp -R packages/vkui/storybook-static/* styleguide/dist/storybook
+          cp -R styleguide/dist/* styleguide/${{ steps.updated_version.outputs.version }}
+          mv styleguide/${{ steps.updated_version.outputs.version }} styleguide/dist/${{ steps.updated_version.outputs.version }}
 
       - name: Publishing doc
         uses: JamesIves/github-pages-deploy-action@v4
