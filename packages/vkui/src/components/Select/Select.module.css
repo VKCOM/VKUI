@@ -23,7 +23,7 @@
 .Select__container {
   flex-grow: 1;
   flex-shrink: 1;
-  padding-right: 12px;
+  padding-right: 0;
   padding-left: 12px;
   color: var(--vkui--color_text_primary);
   box-sizing: border-box;
@@ -34,14 +34,6 @@
 
 .Select--hasBefore .Select__container {
   padding-left: 0;
-}
-
-.Select--hasAfter .Select__container {
-  padding-right: 0;
-}
-
-.Select--hasPlaceholder .Select__container {
-  padding-right: 0;
 }
 
 .Select--multiline .Select__container {

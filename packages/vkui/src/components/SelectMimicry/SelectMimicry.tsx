@@ -59,7 +59,6 @@ export const SelectMimicry = ({
         align === 'center' && styles['Select--align-center'],
         align === 'right' && styles['Select--align-right'],
         before && styles['Select--hasBefore'],
-        after && styles['Select--hasAfter'],
         className,
       )}
       getRootRef={getRootRef}

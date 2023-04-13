@@ -162,6 +162,9 @@ export interface SelectProps extends NativeSelectProps, FormFieldProps, TrackerO
   fetching?: boolean;
   onClose?: VoidFunction;
   onOpen?: VoidFunction;
+  /**
+   * Иконка раскрывающегося списка
+   */
   icon?: React.ReactNode;
   /**
    * Кастомная кнопка для очистки значения.
