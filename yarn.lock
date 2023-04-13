@@ -4520,10 +4520,10 @@
   dependencies:
     "@swc/helpers" "^0.4.14"
 
-"@vkontakte/vkui-tokens@4.32.2-dev-b7e753.0":
-  version "4.32.2-dev-b7e753.0"
-  resolved "https://registry.yarnpkg.com/@vkontakte/vkui-tokens/-/vkui-tokens-4.32.2-dev-b7e753.0.tgz#104de90c61e4f31fa337f7699081d0ec2ca9582f"
-  integrity sha512-E/Ic0PIsj3JA+QA+PHhW+FdKryHtq8KQH9kkjtCMR4JOYQtfiT16bbX6P0+AueCSjWda7uTZfjqppIltcrU4QQ==
+"@vkontakte/vkui-tokens@4.33.0":
+  version "4.33.0"
+  resolved "https://registry.yarnpkg.com/@vkontakte/vkui-tokens/-/vkui-tokens-4.33.0.tgz#d0b9e1c68844bcc39664c7150ddf1656eecf397c"
+  integrity sha512-5nuOdCJxcy96IEAgUNJE3hJNJkXwPgzSlBS+Pogtemru8QEm4HxUBSxOyRjGB2IZ287eC+pisFCluyU42lnD0g==
   dependencies:
     csstype "^3.1.1"
 

@@ -7,7 +7,7 @@ import { Platform } from '@vkui';
  * @return {string}
  */
 function onlyVariablesLocalURL(platform) {
-  return `https://unpkg.com/@vkontakte/vkui-tokens@4.32.2-dev-b7e753.0/themes/${platform}/cssVars/declarations/onlyVariablesLocal.css`;
+  return `https://unpkg.com/@vkontakte/vkui-tokens@4.33.0/themes/${platform}/cssVars/declarations/onlyVariablesLocal.css`;
 }
 /**
  * Возвращает элемент для подключения стилей платформы
