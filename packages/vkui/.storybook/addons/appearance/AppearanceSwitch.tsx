@@ -16,7 +16,7 @@ export const AppearanceSwitch = () => {
   const title = isDarkTheme ? 'Turn the light theme' : 'Turn the dark theme';
 
   return (
-    <IconButton active key="theme" nonce={undefined} onClick={toggleTheme} title={title}>
+    <IconButton active key="theme" onClick={toggleTheme} title={title}>
       {isDarkTheme ? <Icon16Sun /> : <Icon16Moon />}
       &nbsp;
       {globals[PARAM_KEY]}

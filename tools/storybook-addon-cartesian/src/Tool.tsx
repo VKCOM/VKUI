@@ -63,7 +63,7 @@ export const Tool = () => {
         />
       )}
     >
-      <IconButton nonce={undefined}>
+      <IconButton>
         <Icons icon="grid" />
         &nbsp; cartesian
       </IconButton>
