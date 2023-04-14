@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { useId } from '../../hooks/useId';
 import { useOrientationChange } from '../../hooks/useOrientationChange';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
@@ -11,6 +12,7 @@ import { warnOnce } from '../../lib/warnOnce';
 import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
 import { ModalType } from '../ModalRoot/types';
+import { ModalPageContext } from './ModalPageContext';
 import styles from './ModalPage.module.css';
 
 const sizeClassName = {
@@ -76,11 +78,14 @@ export const ModalPage = ({
   dynamicContentHeight,
   getModalContentRef,
   nav,
-  id,
+  id: idProp,
   hideCloseButton = false,
   className,
   ...restProps
 }: ModalPageProps) => {
+  const generatingId = useId();
+  const id = idProp || generatingId;
+
   const { updateModalHeight } = React.useContext(ModalRootContext);
 
   const platform = usePlatform();
@@ -95,42 +100,49 @@ export const ModalPage = ({
   const modalContext = React.useContext(ModalRootContext);
   const { refs } = useModalRegistry(getNavId({ nav, id }, warn), ModalType.PAGE);
 
-  return (
-    <div
-      {...restProps}
-      id={id}
-      className={classNames(
-        styles['ModalPage'],
-        platform === Platform.IOS && styles['ModalPage--ios'],
-        isDesktop && styles['ModalPage--desktop'],
-        sizeX === SizeType.REGULAR && 'vkuiInternalModalPage--sizeX-regular',
-        typeof size === 'string' && sizeClassName[size],
-        className,
-      )}
-    >
-      <div
-        className={styles['ModalPage__in-wrap']}
-        style={{
-          maxWidth: typeof size === 'number' ? size : undefined,
-        }}
-        ref={refs.innerElement}
-      >
-        <div className={styles['ModalPage__in']}>
-          <div className={styles['ModalPage__header']} ref={refs.headerElement}>
-            {header}
-          </div>
+  const contextValue = React.useMemo(() => ({ labelId: `${id}-label` }), [id]);
 
-          <div className={styles['ModalPage__content-wrap']}>
-            <div
-              className={styles['ModalPage__content']}
-              ref={multiRef<HTMLDivElement>(refs.contentElement, getModalContentRef)}
-            >
-              <div className={styles['ModalPage__content-in']}>{children}</div>
+  return (
+    <ModalPageContext.Provider value={contextValue}>
+      <div
+        {...restProps}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={contextValue.labelId}
+        id={id}
+        className={classNames(
+          styles['ModalPage'],
+          platform === Platform.IOS && styles['ModalPage--ios'],
+          isDesktop && styles['ModalPage--desktop'],
+          sizeX === SizeType.REGULAR && 'vkuiInternalModalPage--sizeX-regular',
+          typeof size === 'string' && sizeClassName[size],
+          className,
+        )}
+      >
+        <div
+          className={styles['ModalPage__in-wrap']}
+          style={{
+            maxWidth: typeof size === 'number' ? size : undefined,
+          }}
+          ref={refs.innerElement}
+        >
+          <div className={styles['ModalPage__in']}>
+            <div className={styles['ModalPage__header']} ref={refs.headerElement}>
+              {header}
             </div>
+
+            <div className={styles['ModalPage__content-wrap']}>
+              <div
+                className={styles['ModalPage__content']}
+                ref={multiRef<HTMLDivElement>(refs.contentElement, getModalContentRef)}
+              >
+                <div className={styles['ModalPage__content-in']}>{children}</div>
+              </div>
+            </div>
+            {isCloseButtonShown && <ModalDismissButton onClick={onClose || modalContext.onClose} />}
           </div>
-          {isCloseButtonShown && <ModalDismissButton onClick={onClose || modalContext.onClose} />}
         </div>
       </div>
-    </div>
+    </ModalPageContext.Provider>
   );
 };

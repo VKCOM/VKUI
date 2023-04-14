@@ -5,7 +5,7 @@ import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditi
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
-import { HasRef, HasRootRef } from '../../types';
+import { HasComponent, HasRef, HasRootRef } from '../../types';
 import { useConfigProvider, WebviewType } from '../ConfigProvider/ConfigProviderContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
@@ -45,6 +45,24 @@ export interface PanelHeaderProps
   fixed?: boolean;
 }
 
+interface PanelHeaderContentProps extends React.HTMLAttributes<HTMLElement>, HasComponent {}
+
+const PanelHeaderContent = ({ children, Component = 'span', id }: PanelHeaderContentProps) => {
+  const platform = usePlatform();
+
+  return platform === Platform.VKCOM ? (
+    <Text weight="2" Component={Component} id={id}>
+      {children}
+    </Text>
+  ) : (
+    <Component className={styles['PanelHeader__content-in']} id={id}>
+      {children}
+    </Component>
+  );
+};
+
+PanelHeaderContent.displayName = 'PanelHeaderContent';
+
 const PanelHeaderIn = ({ before, after, separator, children }: PanelHeaderProps) => {
   const { webviewType } = useConfigProvider();
   const { isInsideModal } = React.useContext(ModalRootContext);
@@ -59,10 +77,12 @@ const PanelHeaderIn = ({ before, after, separator, children }: PanelHeaderProps)
           {before}
         </div>
         <div className={styles['PanelHeader__content']}>
-          {platform === Platform.VKCOM ? (
-            <Text weight="2">{children}</Text>
+          {/* Поддерживаем обратную совместимость для подкомпонентного подхода */}
+          {React.isValidElement(children) &&
+          (children as JSX.Element).type.displayName === PanelHeaderContent.displayName ? (
+            children
           ) : (
-            <span className={styles['PanelHeader__content-in']}>{children}</span>
+            <PanelHeaderContent>{children}</PanelHeaderContent>
           )}
         </div>
         <div className={classNames(styles['PanelHeader__after'], 'vkuiInternalPanelHeader__after')}>
@@ -150,3 +170,5 @@ export const PanelHeader = ({
     </div>
   );
 };
+
+PanelHeader.Content = PanelHeaderContent;

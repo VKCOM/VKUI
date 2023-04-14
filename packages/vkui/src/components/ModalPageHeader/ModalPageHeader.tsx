@@ -4,6 +4,7 @@ import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJS
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { HasRef } from '../../types';
+import { ModalPageContext } from '../ModalPage/ModalPageContext';
 import { PanelHeader, PanelHeaderProps } from '../PanelHeader/PanelHeader';
 import { Separator } from '../Separator/Separator';
 import styles from './ModalPageHeader.module.css';
@@ -26,6 +27,7 @@ export const ModalPageHeader = ({
   const platform = usePlatform();
   const hasSeparator = separator && platform === Platform.VKCOM;
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
+  const { labelId } = React.useContext(ModalPageContext);
 
   return (
     <div
@@ -43,7 +45,9 @@ export const ModalPageHeader = ({
         separator={false}
         transparent
       >
-        {children}
+        <PanelHeader.Content Component="h2" id={labelId}>
+          {children}
+        </PanelHeader.Content>
       </PanelHeader>
       {hasSeparator && <Separator wide />}
     </div>
