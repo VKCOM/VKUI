@@ -3,7 +3,7 @@ import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { SizeType } from '../../lib/adaptivity';
-import { HasComponent, HasRootRef } from '../../types';
+import { HasComponent, HasComponentProps, HasRootRef } from '../../types';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Subhead } from '../Typography/Subhead/Subhead';
@@ -17,8 +17,8 @@ const sizeYClassNames = {
   ),
 };
 
-export interface FormItemProps
-  extends React.AllHTMLAttributes<HTMLElement>,
+export interface FormItemProps<T = 'div'>
+  extends React.HTMLAttributes<T>,
     HasRootRef<HTMLElement>,
     HasComponent,
     RemovableProps {
@@ -42,7 +42,7 @@ export interface FormItemProps
 /**
  * @see https://vkcom.github.io/VKUI/#/FormItem
  */
-export const FormItem = ({
+export const FormItem = <C extends React.ElementType = 'div'>({
   children,
   top,
   bottom,
@@ -56,7 +56,7 @@ export const FormItem = ({
   htmlFor,
   bottomId,
   ...restProps
-}: FormItemProps) => {
+}: HasComponentProps<C, FormItemProps<C>>) => {
   const rootEl = useExternRef(getRootRef);
   const { sizeY = 'none' } = useAdaptivity();
 
@@ -91,17 +91,10 @@ export const FormItem = ({
       className={classNames(
         styles['FormItem'],
         'vkuiInternalFormItem',
-        status !== 'default' &&
-          {
-            error: classNames(
-              styles['FormItem--status-error'],
-              'vkuiInternalFormItem--status-error',
-            ),
-            valid: classNames(
-              styles['FormItem--status-valid'],
-              'vkuiInternalFormItem--status-valid',
-            ),
-          }[status],
+        status === 'error' &&
+          classNames(styles['FormItem--status-error'], 'vkuiInternalFormItem--status-error'),
+        status === 'valid' &&
+          classNames(styles['FormItem--status-valid'], 'vkuiInternalFormItem--status-valid'),
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         hasReactNode(top) &&
           classNames(styles['FormItem--withTop'], 'vkuiInternalFormItem--withTop'),
