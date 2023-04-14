@@ -320,6 +320,11 @@ const baseConfig = {
       sectionDepth: 1,
       sections: [
         {
+          title: 'CSS Modules',
+          name: 'CSS Modules',
+          content: './pages/css_modules.md',
+        },
+        {
           title: 'Миграция с v4 на v5',
           name: 'Migration',
           content: './pages/migration_v5.md',
