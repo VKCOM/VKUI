@@ -4,10 +4,10 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { useDOM } from '../../lib/dom';
 import { coordX, coordY, getSupportedEvents, touchEnabled, VKUITouchEvent } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { HasComponent, HasRootRef } from '../../types';
+import { HasComponent, HasComponentProps, HasRootRef } from '../../types';
 
-export interface TouchProps
-  extends React.AllHTMLAttributes<HTMLElement>,
+export interface TouchProps<T = 'div'>
+  extends React.HTMLAttributes<T>,
     HasRootRef<HTMLElement>,
     HasComponent {
   /**
@@ -60,7 +60,7 @@ export type DragHandler = (e: React.DragEvent<HTMLElement>) => void;
 /**
  * @see https://vkcom.github.io/VKUI/#/Touch
  */
-export const Touch = ({
+export const Touch = <C extends React.ElementType = 'div'>({
   onStart,
   onStartX,
   onStartY,
@@ -81,7 +81,7 @@ export const Touch = ({
   noSlideClick = false,
   stopPropagation = false,
   ...restProps
-}: TouchProps) => {
+}: HasComponentProps<C, TouchProps<C>>) => {
   const { document } = useDOM();
   const events = React.useMemo(getSupportedEvents, []);
   const didSlide = React.useRef(false);

@@ -3,7 +3,7 @@ import { createElement } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, polymorphicComponent } from '../../testing/utils';
 import { Button } from '../Button/Button';
 import { Card } from '../Card/Card';
 import { CardScroll } from '../CardScroll/CardScroll';
@@ -63,6 +63,7 @@ afterEach(() => delete window['ontouchstart']);
 
 describe('Touch', () => {
   baselineComponent(Touch);
+  polymorphicComponent(Touch<'div'>);
 
   it('does not leak listeners when unmounting during gesture', () => {
     let moved = false;
