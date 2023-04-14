@@ -1,23 +1,23 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
-import { withContext } from '../../hoc/withContext';
-import { withPlatform } from '../../hoc/withPlatform';
-import { DOMProps, withDOM } from '../../lib/dom';
+import { useObjectMemo } from '../../hooks/useObjectMemo';
+import { usePrevious } from '../../hooks/usePrevious';
+import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
+import { useDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
 import { Platform } from '../../lib/platform';
-import { transitionEvent } from '../../lib/supportEvents';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasPlatform } from '../../types';
 import {
-  ConfigProviderContext,
   ConfigProviderContextInterface,
+  useConfigProvider,
   WebviewType,
 } from '../ConfigProvider/ConfigProviderContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { ModalRootContext, ModalRootContextInterface } from './ModalRootContext';
 import { ModalsStateEntry } from './types';
-import { ModalTransitionProps, withModalManager } from './useModalManager';
+import { useModalManager } from './useModalManager';
 import styles from './ModalRoot.module.css';
 
 const warn = warnOnce('ModalRoot');
@@ -51,80 +51,98 @@ export interface ModalRootProps extends HasPlatform {
   onClosed?(modalId: string): void;
 }
 
-class ModalRootDesktopComponent extends React.Component<
-  ModalRootProps & DOMProps & ModalTransitionProps
-> {
-  constructor(props: ModalRootProps & ModalTransitionProps) {
-    super(props);
+export const ModalRootDesktop = ({
+  activeModal: activeModalProp,
+  children,
+  onOpen,
+  onOpened,
+  onClose,
+  onClosed,
+}: ModalRootProps) => {
+  const maskElementRef = React.useRef<HTMLDivElement>(null);
+  const maskAnimationFrame = React.useRef<number | undefined>(undefined);
+  const restoreFocusTo = React.useRef<HTMLElement | undefined>(undefined);
 
-    this.maskElementRef = React.createRef();
+  const { document } = useDOM();
+  const { webviewType, platform } = useConfigProvider();
+  const {
+    activeModal,
+    exitingModal,
+    onExit,
+    getModalState,
+    enteringModal,
+    onEnter,
+    onEntered,
+    onExited,
+    history,
+    delayEnter,
+  } = useModalManager(activeModalProp, children, onOpen, onOpened, onClose, onClosed, noop);
 
-    this.modalRootContext = {
-      updateModalHeight: () => undefined,
-      registerModal: ({ id, ...data }) => Object.assign(this.getModalState(id) ?? {}, data),
-      onClose: () => this.props.onExit(),
-      isInsideModal: true,
-    };
-  }
+  const { waitTransitionFinish } = useWaitTransitionFinish();
+  const prevProps = usePrevious({
+    exitingModal,
+    enteringModal,
+    activeModal,
+  });
+  const modalRootContext: ModalRootContextInterface = useObjectMemo({
+    updateModalHeight: () => undefined,
+    registerModal: ({ id, ...data }) => Object.assign(getModalState(id) ?? {}, data),
+    onClose: onExit,
+    isInsideModal: true,
+  });
 
-  private readonly maskElementRef: React.RefObject<HTMLDivElement>;
-  private maskAnimationFrame: number | undefined = undefined;
-  private readonly modalRootContext: ModalRootContextInterface;
-  private restoreFocusTo: HTMLElement | undefined = undefined;
+  const timeout = platform === Platform.IOS ? 400 : 320;
+  const modals = React.Children.toArray(children) as React.ReactElement[];
 
-  private get timeout() {
-    return this.props.platform === Platform.IOS ? 400 : 320;
-  }
-
-  private get modals() {
-    return React.Children.toArray(this.props.children) as React.ReactElement[];
-  }
-
-  getModalState(id: string | null) {
-    if (id === null) {
-      return undefined;
+  /* Анимирует сдвиг модального окна */
+  const animateModalOpacity = (modalState: ModalsStateEntry | undefined, display: boolean) => {
+    if (modalState?.innerElement) {
+      modalState.innerElement.style.transition = '';
+      modalState.innerElement.style.transitionDelay = display && delayEnter ? `${timeout}ms` : '';
+      modalState.innerElement.style.opacity = display ? '1' : '0';
     }
-    return this.props.getModalState(id);
-  }
+  };
 
-  componentDidUpdate(prevProps: ModalRootProps & ModalTransitionProps) {
-    // transition phase 2: animate exiting modal
-    if (this.props.exitingModal && this.props.exitingModal !== prevProps.exitingModal) {
-      this.closeModal(this.props.exitingModal);
-    }
-
-    // transition phase 3: animate entering modal
-    if (this.props.enteringModal && this.props.enteringModal !== prevProps.enteringModal) {
-      this.openModal(prevProps);
-    }
-
-    // focus restoration
-    if (this.props.activeModal && !prevProps.activeModal) {
-      this.restoreFocusTo = (this.props.document?.activeElement ?? undefined) as
-        | HTMLElement
-        | undefined;
-    }
-    if (!this.props.activeModal && !this.props.exitingModal && this.restoreFocusTo) {
-      this.restoreFocusTo.focus();
-      this.restoreFocusTo = undefined;
-    }
-  }
-
-  openModal(prevProps: ModalRootProps & ModalTransitionProps) {
-    const { enteringModal } = this.props;
-    if (!enteringModal) {
+  /* Устанавливает прозрачность для полупрозрачной подложки */
+  const setMaskOpacity = (modalState: ModalsStateEntry, forceOpacity: number | null = null) => {
+    if (forceOpacity === null && history?.[0] !== modalState.id) {
       return;
     }
 
-    const enteringState = this.getModalState(enteringModal);
-    this.props.onEnter();
+    if (maskAnimationFrame.current) {
+      cancelAnimationFrame(maskAnimationFrame.current);
+    }
+    maskAnimationFrame.current = requestAnimationFrame(() => {
+      if (maskElementRef.current) {
+        const { translateY = 0, translateYCurrent = 0 } = modalState;
+
+        const opacity =
+          forceOpacity === null
+            ? 1 - (translateYCurrent - translateY) / (100 - translateY) || 0
+            : forceOpacity;
+        maskElementRef.current.style.opacity = clamp(opacity, 0, 100).toString();
+      }
+    });
+  };
+
+  const openModal = () => {
+    if (!enteringModal || !prevProps) {
+      return;
+    }
+
+    const enteringState = getModalState(enteringModal);
+    onEnter();
 
     // Анимация открытия модального окна
     if (!prevProps.exitingModal) {
       requestAnimationFrame(() => {
-        if (this.props.enteringModal === enteringModal) {
-          this.waitTransitionFinish(enteringState, () => this.props.onEntered(enteringModal));
-          this.animateModalOpacity(enteringState, true);
+        if (enteringModal === enteringModal) {
+          waitTransitionFinish(
+            enteringState?.innerElement,
+            () => onEntered(enteringModal),
+            timeout,
+          );
+          animateModalOpacity(enteringState, true);
         }
       });
 
@@ -137,127 +155,92 @@ class ModalRootDesktopComponent extends React.Component<
       enteringState.innerElement.style.opacity = '1';
     }
 
-    this.props.onEntered(enteringModal);
-  }
+    onEntered(enteringModal);
+  };
 
-  closeModal(id: string) {
-    const prevModalState = this.getModalState(id);
+  const closeModal = (id: string) => {
+    const prevModalState = getModalState(id);
     if (!prevModalState) {
       return;
     }
 
     // Анимация закрытия модального окна
-    if (!this.props.activeModal) {
+    if (!activeModal) {
       requestAnimationFrame(() => {
-        this.waitTransitionFinish(prevModalState, () => this.props.onExited(id));
-        this.animateModalOpacity(prevModalState, false);
-        this.setMaskOpacity(prevModalState, 0);
+        waitTransitionFinish(prevModalState?.innerElement, () => onExited(id), timeout);
+        animateModalOpacity(prevModalState, false);
+        setMaskOpacity(prevModalState, 0);
       });
 
       return;
     }
 
     // Переход между модальными окнами без анимации
-    this.props.onExited(id);
-  }
+    onExited(id);
+  };
 
-  waitTransitionFinish(modalState: ModalsStateEntry | undefined, eventHandler: () => void) {
-    if (transitionEvent.supported) {
-      const onceHandler = () => {
-        modalState?.innerElement?.removeEventListener(transitionEvent.name as string, onceHandler);
-        eventHandler();
-      };
-
-      modalState?.innerElement?.addEventListener(transitionEvent.name as string, onceHandler);
-    } else {
-      setTimeout(eventHandler, this.timeout);
-    }
-  }
-
-  /* Анимирует сдвиг модалки */
-  animateModalOpacity(modalState: ModalsStateEntry | undefined, display: boolean) {
-    if (modalState?.innerElement) {
-      modalState.innerElement.style.transition = '';
-      modalState.innerElement.style.transitionDelay =
-        display && this.props.delayEnter ? `${this.timeout}ms` : '';
-      modalState.innerElement.style.opacity = display ? '1' : '0';
-    }
-  }
-
-  /* Устанавливает прозрачность для полупрозрачной подложки */
-  setMaskOpacity(modalState: ModalsStateEntry, forceOpacity: number | null = null) {
-    if (forceOpacity === null && this.props.history?.[0] !== modalState.id) {
+  React.useEffect(() => {
+    if (!prevProps) {
       return;
     }
 
-    if (this.maskAnimationFrame) {
-      cancelAnimationFrame(this.maskAnimationFrame);
+    // transition phase 2: animate exiting modal
+    if (exitingModal && exitingModal !== prevProps.exitingModal) {
+      closeModal(exitingModal);
     }
-    this.maskAnimationFrame = requestAnimationFrame(() => {
-      if (this.maskElementRef.current) {
-        const { translateY = 0, translateYCurrent = 0 } = modalState;
 
-        const opacity =
-          forceOpacity === null
-            ? 1 - (translateYCurrent - translateY) / (100 - translateY) || 0
-            : forceOpacity;
-        this.maskElementRef.current.style.opacity = clamp(opacity, 0, 100).toString();
-      }
-    });
+    // transition phase 3: animate entering modal
+    if (enteringModal && enteringModal !== prevProps.enteringModal) {
+      openModal();
+    }
+
+    // focus restoration
+    if (activeModal && !prevProps.activeModal) {
+      restoreFocusTo.current = (document?.activeElement ?? undefined) as HTMLElement | undefined;
+    }
+    if (!activeModal && !exitingModal && restoreFocusTo.current) {
+      restoreFocusTo.current.focus();
+      restoreFocusTo.current = undefined;
+    }
+  });
+
+  if (!activeModal && !exitingModal) {
+    return null;
   }
 
-  render() {
-    const { exitingModal, activeModal } = this.props;
+  return (
+    <ModalRootContext.Provider value={modalRootContext}>
+      <div
+        className={classNames(
+          styles['ModalRoot'],
+          webviewType === WebviewType.VKAPPS && styles['ModalRoot--vkapps'],
+          styles['ModalRoot--desktop'],
+        )}
+      >
+        <div className={styles['ModalRoot__mask']} ref={maskElementRef} onClick={onExit} />
+        <div className={styles['ModalRoot__viewport']}>
+          {modals.map((Modal: React.ReactElement) => {
+            const modalId = getNavId(Modal.props, warn);
+            if (modalId !== activeModal && modalId !== exitingModal) {
+              return null;
+            }
 
-    if (!activeModal && !exitingModal) {
-      return null;
-    }
+            const key = `modal-${modalId}`;
 
-    return (
-      <ModalRootContext.Provider value={this.modalRootContext}>
-        <div
-          className={classNames(
-            styles['ModalRoot'],
-            this.props.configProvider?.webviewType === WebviewType.VKAPPS &&
-              styles['ModalRoot--vkapps'],
-            styles['ModalRoot--desktop'],
-          )}
-        >
-          <div
-            className={styles['ModalRoot__mask']}
-            ref={this.maskElementRef}
-            onClick={this.props.onExit}
-          />
-          <div className={styles['ModalRoot__viewport']}>
-            {this.modals.map((Modal: React.ReactElement) => {
-              const modalId = getNavId(Modal.props, warn);
-              if (modalId !== activeModal && modalId !== exitingModal) {
-                return null;
-              }
-
-              const key = `modal-${modalId}`;
-
-              return (
-                <FocusTrap
-                  restoreFocus={false}
-                  onClose={this.props.onExit}
-                  timeout={this.timeout}
-                  key={key}
-                  className={styles['ModalRoot__modal']}
-                >
-                  {Modal}
-                </FocusTrap>
-              );
-            })}
-          </div>
+            return (
+              <FocusTrap
+                restoreFocus={false}
+                onClose={onExit}
+                timeout={timeout}
+                key={key}
+                className={styles['ModalRoot__modal']}
+              >
+                {Modal}
+              </FocusTrap>
+            );
+          })}
         </div>
-      </ModalRootContext.Provider>
-    );
-  }
-}
-
-export const ModalRootDesktop = withContext(
-  withPlatform(withDOM<ModalRootProps>(withModalManager()(ModalRootDesktopComponent))),
-  ConfigProviderContext,
-  'configProvider',
-);
+      </div>
+    </ModalRootContext.Provider>
+  );
+};

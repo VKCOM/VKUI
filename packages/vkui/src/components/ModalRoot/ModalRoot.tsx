@@ -88,7 +88,7 @@ class ModalRootTouchComponent extends React.Component<
 
     this.modalRootContext = {
       updateModalHeight: this.updateModalHeight,
-      registerModal: ({ id, ...data }) => Object.assign(this.getModalState(id) ?? {}, data),
+      registerModal: ({ id, ...data }) => Object.assign(this.props.getModalState(id) ?? {}, data),
       onClose: () => this.props.onExit(),
       isInsideModal: true,
     };
@@ -118,13 +118,6 @@ class ModalRootTouchComponent extends React.Component<
     return this.props.window;
   }
 
-  getModalState(id: string | undefined | null) {
-    if (!id) {
-      return undefined;
-    }
-    return this.props.getModalState(id);
-  }
-
   getModals() {
     return React.Children.toArray(this.props.children) as React.ReactElement[];
   }
@@ -150,7 +143,7 @@ class ModalRootTouchComponent extends React.Component<
     // transition phase 3: animate entering modal
     if (this.props.enteringModal && this.props.enteringModal !== prevProps.enteringModal) {
       const { enteringModal } = this.props;
-      const enteringState = this.getModalState(enteringModal);
+      const enteringState = this.props.getModalState(enteringModal);
       this.props.onEnter();
       this.waitTransitionFinish(enteringState, () => {
         if (enteringState?.innerElement) {
@@ -215,12 +208,12 @@ class ModalRootTouchComponent extends React.Component<
   };
 
   updateModalTranslate = () => {
-    const modalState = this.getModalState(this.props.activeModal);
+    const modalState = this.props.getModalState(this.props.activeModal);
     modalState && this.animateTranslate(modalState, modalState.translateY);
   };
 
   checkPageContentHeight() {
-    const modalState = this.getModalState(this.props.activeModal);
+    const modalState = this.props.getModalState(this.props.activeModal);
 
     if (modalState?.type === ModalType.PAGE && modalState?.modalElement) {
       const prevModalState = { ...modalState };
@@ -244,7 +237,7 @@ class ModalRootTouchComponent extends React.Component<
   }
 
   updateModalHeight = () => {
-    const modalState = this.getModalState(this.props.activeModal);
+    const modalState = this.props.getModalState(this.props.activeModal);
 
     if (modalState && modalState.type === ModalType.PAGE && modalState.dynamicContentHeight) {
       if (this.props.enteringModal) {
@@ -261,14 +254,14 @@ class ModalRootTouchComponent extends React.Component<
     // Сбрасываем состояния, которые могут помешать закрытию модального окна
     this.setState({ touchDown: false });
 
-    const prevModalState = this.getModalState(id);
+    const prevModalState = this.props.getModalState(id);
 
     if (!prevModalState) {
       id && warn(`closeActiveModal: модальное окно (страница) ${id} не существует`, 'error');
       return;
     }
 
-    const nextModalState = this.getModalState(this.props.activeModal);
+    const nextModalState = this.props.getModalState(this.props.activeModal);
     const nextIsPage = !!nextModalState && nextModalState.type === ModalType.PAGE;
 
     const prevIsPage = !!prevModalState && prevModalState.type === ModalType.PAGE;
@@ -292,7 +285,7 @@ class ModalRootTouchComponent extends React.Component<
     if (this.props.exitingModal) {
       return;
     }
-    const modalState = this.getModalState(this.props.activeModal);
+    const modalState = this.props.getModalState(this.props.activeModal);
     if (!modalState) {
       return;
     }
@@ -383,7 +376,7 @@ class ModalRootTouchComponent extends React.Component<
   }
 
   onTouchEnd = (e: TouchEvent) => {
-    const modalState = this.getModalState(this.props.activeModal);
+    const modalState = this.props.getModalState(this.props.activeModal);
 
     if (modalState?.type === ModalType.PAGE) {
       return this.onPageTouchEnd(e, modalState);
@@ -512,7 +505,7 @@ class ModalRootTouchComponent extends React.Component<
     if (!activeModal) {
       return;
     }
-    const modalState = this.getModalState(activeModal);
+    const modalState = this.props.getModalState(activeModal);
     if (modalState?.type === ModalType.PAGE && modalState?.contentElement?.contains(target)) {
       modalState.contentScrolled = true;
 
@@ -611,7 +604,7 @@ class ModalRootTouchComponent extends React.Component<
             <div className={styles['ModalRoot__viewport']} ref={this.viewportRef}>
               {this.getModals().map((Modal) => {
                 const modalId = getNavId(Modal.props, warn);
-                const _modalState = this.getModalState(modalId);
+                const _modalState = this.props.getModalState(modalId);
                 if ((modalId !== activeModal && modalId !== exitingModal) || !_modalState) {
                   return null;
                 }
@@ -624,7 +617,7 @@ class ModalRootTouchComponent extends React.Component<
                   <FocusTrap
                     key={key}
                     getRootRef={(e) => {
-                      const modalState = this.getModalState(modalId);
+                      const modalState = this.props.getModalState(modalId);
                       if (modalState) {
                         modalState.modalElement = e;
                       }
