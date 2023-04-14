@@ -104,5 +104,7 @@ type DefaultComponentProps<M extends ComponentTypeMap> = ComponentProps<M> &
   HasComponent;
 
 export type HasComponentProps<C extends React.ElementType, P extends {} = {}> =
-  | (PolymorphicComponentProps<HasComponentTypeMap<C, P>, C> & P)
-  | (DefaultComponentProps<HasComponentTypeMap<C, P>> & P);
+  | (PolymorphicComponentProps<HasComponentTypeMap<C, DistributiveOmit<P, keyof HasComponent>>, C> &
+      DistributiveOmit<P, keyof HasComponent>)
+  | (DefaultComponentProps<HasComponentTypeMap<C, DistributiveOmit<P, keyof HasComponent>>> &
+      DistributiveOmit<P, keyof HasComponent>);
