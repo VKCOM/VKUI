@@ -71,21 +71,8 @@ impl VisitMut for TransformVisitor {
                             n.clone_from(&exp)
                         }
 
-                        // Обрабатываем шаблонную строку
-                        //
-                        // styles[`Component--mode-${mode}`]
-                        Expr::Tpl(tpl) => {
-                            let mut new_tpl = tpl.clone();
-                            new_tpl.quasis[0].raw =
-                                generate_scoped_name(tpl.quasis[0].raw.to_string()).into();
-
-                            let exp = Expr::from(new_tpl);
-
-                            n.clone_from(&exp)
-                        }
-
                         // Выкинет панику при других обращениях
-                        _ => todo!(),
+                        _ => panic!("Don't use a computable conversion in css modules"),
                     },
                 }
             }

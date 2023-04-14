@@ -1,6 +1,5 @@
 [toolchain]
-# https://github.com/swc-project/swc/issues/6807
-channel = "nightly-2022-09-23" 
+channel = "stable" 
 components = [ "clippy" ]
 targets = [ "wasm32-wasi" ]
 profile = "minimal"

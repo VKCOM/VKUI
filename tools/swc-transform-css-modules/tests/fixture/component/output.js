@@ -14,6 +14,4 @@ classNames(
   "vkuiComponent",
   disabled && "vkuiComponent--disabled",
   platform === "ios" && "vkuiComponent--ios",
-  `vkuiComponent--mode-${mode}`,
-  `vkuiComponent--gradient-${appearance}-${gradientColor}`
 );
