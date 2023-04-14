@@ -5,7 +5,7 @@ import { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityCont
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { ScrollContext } from '../components/AppRoot/ScrollContext';
 import { ImgOnlyAttributes } from '../lib/utils';
-import { HasChildren } from '../types';
+import { HasChildren, HasComponentProps, HasRootRef } from '../types';
 
 export function fakeTimers() {
   beforeEach(() => jest.useFakeTimers());
@@ -106,6 +106,34 @@ export function baselineComponent<Props extends BasicProps>(
       }
     });
 }
+
+interface PolymorphicProps<T> extends React.HTMLAttributes<T>, HasRootRef<HTMLElement> {}
+
+type PolymorphicComponent = <C extends React.ElementType = 'div'>({
+  Component,
+  ...restProps
+}: HasComponentProps<C, PolymorphicProps<C>>) => JSX.Element;
+
+export const polymorphicComponent = (Component: PolymorphicComponent, defaultComponent = 'div') => {
+  it('renders as passed { Component }', async () => {
+    const cmpTag = (key = 'cmp') => screen.getByTestId(key).tagName.toLowerCase();
+
+    render(
+      <>
+        {/* @ts-expect-error: TS2322 unsupportedProp не существует */}
+        <Component data-testid="cmp" unsupportedProp="1" />
+        {/* @ts-expect-error: TS2322 href существует для a, но не для div */}
+        <Component data-testid="cmpHref" Component="div" href="#" />
+        {/* 👌 */}
+        <Component data-testid="cmpA" Component="a" href="#" />
+      </>,
+    );
+
+    expect(cmpTag()).toMatch(defaultComponent);
+    expect(cmpTag('cmpHref')).toMatch('div');
+    expect(cmpTag('cmpA')).toMatch('a');
+  });
+};
 
 type RectOptions = { x?: number; y?: number; w?: number; h?: number };
 export function mockRect(el: HTMLElement | null, { x = 0, y = 0, w = 0, h = 0 }: RectOptions) {
