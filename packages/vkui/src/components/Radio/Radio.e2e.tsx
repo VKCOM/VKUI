@@ -1,29 +1,27 @@
 import * as React from 'react';
+import { test } from '@vkui-e2e/test';
 import { SizeType } from '../../lib/adaptivity';
-import { describeScreenshotFuzz } from '../../testing/e2e';
-import { Radio, RadioProps } from './Radio';
+import { RadioPlayground, RadioWithSizesAndDescriptionPlayground } from './Radio.e2e-playground';
 
-describe('Radio', () => {
-  describeScreenshotFuzz(
-    (props: RadioProps) => <Radio {...props}>label</Radio>,
-    [
-      {
-        checked: [false, true],
-        disabled: [undefined, true],
-      },
-    ],
-    { adaptivity: { sizeY: SizeType.REGULAR } },
-  );
+test.describe(() => {
+  test.use({
+    adaptivityProviderProps: {
+      sizeX: SizeType.REGULAR,
+    },
+  });
+  test('Radio', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+    await mount(<RadioPlayground {...componentPlaygroundProps} />);
+    await expectScreenshotClippedToContent();
+  });
 });
 
-describe('Radio sizes and description', () => {
-  describeScreenshotFuzz(
-    (props: RadioProps) => <Radio {...props}>label</Radio>,
-    [
-      {
-        description: [undefined, 'Description'],
-        $adaptivity: 'y',
-      },
-    ],
-  );
+test.describe('Radio', () => {
+  test('sizes and description', async ({
+    mount,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
+    await mount(<RadioWithSizesAndDescriptionPlayground {...componentPlaygroundProps} />);
+    await expectScreenshotClippedToContent();
+  });
 });

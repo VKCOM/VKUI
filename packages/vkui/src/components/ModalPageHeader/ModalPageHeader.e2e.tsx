@@ -1,105 +1,76 @@
 import * as React from 'react';
-import { Icon24Cancel, Icon24Dismiss, Icon24Done } from '@vkontakte/icons';
-import { noop } from '@vkontakte/vkjs';
+import { test } from '@vkui-e2e/test';
 import { ViewWidth } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
-import { describeScreenshotFuzz } from '../../testing/e2e';
-import { ModalRootContext } from '../ModalRoot/ModalRootContext';
-import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
-import { ModalPageHeader, ModalPageHeaderProps } from './ModalPageHeader';
+import {
+  ModalPageHeaderIOSPlayground,
+  ModalPageHeaderPlayground,
+} from './ModalPageHeader.e2e-playground';
 
-const BaseModalPageHeader = (props: ModalPageHeaderProps) => (
-  <ModalRootContext.Provider
-    value={{
-      isInsideModal: true,
-      updateModalHeight: noop,
-      registerModal: noop,
-    }}
-  >
-    <ModalPageHeader {...props} />
-  </ModalRootContext.Provider>
-);
+test.describe('ModalPageHeader', () => {
+  test.use({
+    adaptivityProviderProps: {
+      viewWidth: ViewWidth.MOBILE,
+    },
+    onlyForPlatforms: [Platform.ANDROID, Platform.VKCOM],
+  });
+  test('ViewWidth.MOBILE', async ({
+    mount,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
+    await mount(<ModalPageHeaderPlayground {...componentPlaygroundProps} />);
+    await expectScreenshotClippedToContent();
+  });
+});
 
-describe('ModalPageHeader', () => {
-  const cancel = (
-    <PanelHeaderButton>
-      <Icon24Cancel />
-    </PanelHeaderButton>
-  );
-  const done = (
-    <PanelHeaderButton>
-      <Icon24Done />
-    </PanelHeaderButton>
-  );
-  const dismiss = (
-    <PanelHeaderButton>
-      <Icon24Dismiss />
-    </PanelHeaderButton>
-  );
-  const dismissText = <PanelHeaderButton>Готово</PanelHeaderButton>;
-  const children = ['Заголовок', 'Невероятно длинный заголовок выезжает за шапку даже на десктопе'];
-  describeScreenshotFuzz(
-    BaseModalPageHeader,
-    [
-      {
-        children,
-        before: [null, cancel],
-        after: [null, done],
-      },
-    ],
-    {
-      platforms: [Platform.ANDROID, Platform.VKCOM],
-      adaptivity: {
-        viewWidth: ViewWidth.MOBILE,
-      },
+test.describe('ModalPageHeader', () => {
+  test.use({
+    adaptivityProviderProps: {
+      viewWidth: ViewWidth.DESKTOP,
     },
-  );
-  describeScreenshotFuzz(
-    BaseModalPageHeader,
-    [
-      {
-        children,
-        before: [null, cancel],
-        after: [null, done],
-      },
-    ],
-    {
-      platforms: [Platform.ANDROID, Platform.VKCOM],
-      adaptivity: {
-        viewWidth: ViewWidth.DESKTOP,
-      },
+    onlyForPlatforms: [Platform.ANDROID, Platform.VKCOM],
+  });
+  test('ViewWidth.DESKTOP', async ({
+    mount,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
+    await mount(<ModalPageHeaderPlayground {...componentPlaygroundProps} />);
+    await expectScreenshotClippedToContent();
+  });
+});
+
+test.describe('ModalPageHeader', () => {
+  test.use({
+    adaptivityProviderProps: {
+      viewWidth: ViewWidth.MOBILE,
     },
-  );
-  describeScreenshotFuzz(
-    BaseModalPageHeader,
-    [
-      {
-        children,
-        before: [null, cancel],
-        after: [dismiss, dismissText],
-      },
-    ],
-    {
-      platforms: [Platform.IOS],
-      adaptivity: {
-        viewWidth: ViewWidth.MOBILE,
-      },
+    onlyForPlatforms: [Platform.IOS],
+  });
+  test('ViewWidth.MOBILE ios only', async ({
+    mount,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
+    await mount(<ModalPageHeaderIOSPlayground {...componentPlaygroundProps} />);
+    await expectScreenshotClippedToContent();
+  });
+});
+
+test.describe('ModalPageHeader', () => {
+  test.use({
+    adaptivityProviderProps: {
+      viewWidth: ViewWidth.DESKTOP,
     },
-  );
-  describeScreenshotFuzz(
-    BaseModalPageHeader,
-    [
-      {
-        children,
-        before: [null, cancel],
-        after: [dismiss, dismissText],
-      },
-    ],
-    {
-      platforms: [Platform.IOS],
-      adaptivity: {
-        viewWidth: ViewWidth.DESKTOP,
-      },
-    },
-  );
+    onlyForPlatforms: [Platform.IOS],
+  });
+  test('ViewWidth.DESKTOP ios only', async ({
+    mount,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
+    await mount(<ModalPageHeaderIOSPlayground {...componentPlaygroundProps} />);
+    await expectScreenshotClippedToContent();
+  });
 });

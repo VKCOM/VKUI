@@ -1,17 +1,12 @@
-import { describeScreenshotFuzz } from '../../testing/e2e';
-import { ContentCard } from './ContentCard';
+import * as React from 'react';
+import { test } from '@vkui-e2e/test';
+import { ContentCardPlayground } from './ContentCard.e2e-playground';
 
-describe('ContentCard', () => {
-  describeScreenshotFuzz(ContentCard, [
-    {
-      subtitle: ['Album'],
-      header: ['Halsey – Badlands'],
-      text: [
-        'Badlands is the story about dreams and cruel reality, about opportunities and insurmountable obstacles, about love and broken hearts.',
-      ],
-      caption: ['Blue Vinyl · EU · 2015'],
-      mode: ['tint', 'shadow', 'outline', undefined],
-      $adaptivity: 'y',
-    },
-  ]);
+test('ContentCard', async ({
+  mount,
+  expectScreenshotClippedToContent,
+  componentPlaygroundProps,
+}) => {
+  await mount(<ContentCardPlayground {...componentPlaygroundProps} />);
+  await expectScreenshotClippedToContent();
 });

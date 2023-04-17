@@ -1,3 +1,19 @@
+const tsconfig = require('./tsconfig.json');
+
+const TS_CONFIG_ALIASES = Object.entries(tsconfig.compilerOptions.paths).map(([name, paths]) => [
+  name,
+  paths[0],
+]);
+
+const E2E_TEST = TS_CONFIG_ALIASES.find(([alias]) => alias === '@vkui-e2e/test')[0];
+const E2E_PLAYGROUND_HELPERS = TS_CONFIG_ALIASES.find(
+  ([alias]) => alias === '@vkui-e2e/playground-helpers',
+)[0];
+
+if (!E2E_TEST || !E2E_PLAYGROUND_HELPERS) {
+  throw new Error('ESLint Config: no expected aliases found');
+}
+
 module.exports = {
   root: false,
   extends: ['plugin:react-hooks/recommended'],
@@ -5,6 +21,13 @@ module.exports = {
   parserOptions: {
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,
+  },
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: TS_CONFIG_ALIASES,
+      },
+    },
   },
   globals: {
     Element: true,
@@ -105,7 +128,10 @@ module.exports = {
   overrides: [
     {
       files: ['src/**/*.{ts,tsx}'],
-      excludedFiles: ['src/**/*.{test,spec,e2e}.{ts,tsx}', 'src/**/testing/**/*.{ts,tsx}'],
+      excludedFiles: [
+        'src/**/*.{test,e2e,e2e-playground}.{ts,tsx}',
+        'src/**/testing/**/*.{ts,tsx}',
+      ],
       settings: {
         lintAllEsApis: true,
         polyfills: [
@@ -122,7 +148,7 @@ module.exports = {
     },
 
     {
-      files: ['src/**/*.{test,spec,e2e}.{ts,tsx}', 'src/testing/**/*.{ts,tsx}'],
+      files: ['src/**/*.test.{ts,tsx}', 'src/testing/*.{ts,tsx}'],
       env: {
         jest: true,
       },
@@ -134,9 +160,72 @@ module.exports = {
     },
 
     {
-      files: ['src/**/*.e2e.{ts,tsx}', 'src/testing/**/*.{ts,tsx}'],
-      extends: ['plugin:jest-playwright/recommended'],
+      files: ['src/testing/e2e/*.{ts,tsx}'],
+      rules: {
+        'no-restricted-properties': 'off',
+        'no-restricted-globals': 'off',
+        'react/display-name': 'off',
+      },
     },
+
+    {
+      files: ['src/**/*.e2e.{ts,tsx}'],
+      rules: {
+        'no-restricted-properties': 'off',
+        'no-restricted-globals': 'off',
+        'react/display-name': 'off',
+        'no-restricted-imports': [
+          'error',
+          {
+            patterns: [
+              {
+                group: [
+                  '@playwright/*',
+                  'testing/e2e/*',
+                  '../testing/e2e/*',
+                  '../../testing/e2e/*',
+                ],
+                message: `Use ${E2E_TEST} instead`,
+              },
+              {
+                group: [E2E_PLAYGROUND_HELPERS],
+                message: `Use ${E2E_TEST} instead`,
+              },
+            ],
+          },
+        ],
+      },
+    },
+
+    {
+      files: ['src/**/*.e2e-playground.{ts,tsx}'],
+      rules: {
+        'no-restricted-properties': 'off',
+        'no-restricted-globals': 'off',
+        'react/display-name': 'off',
+        'no-restricted-imports': [
+          'error',
+          {
+            patterns: [
+              {
+                group: [
+                  '@playwright/*',
+                  'testing/e2e/*',
+                  '../testing/e2e/*',
+                  '../../testing/e2e/*',
+                ],
+                message: `Use ${E2E_PLAYGROUND_HELPERS} instead`,
+              },
+              {
+                group: [E2E_TEST],
+                message: `Use ${E2E_PLAYGROUND_HELPERS} instead`,
+              },
+            ],
+          },
+        ],
+      },
+    },
+
     {
       files: 'src/components/**/*.stories.tsx',
       rules: {

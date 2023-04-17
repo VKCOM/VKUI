@@ -16,10 +16,14 @@
     "strict": true,
     "skipLibCheck": true,
     "baseUrl": "./",
+    "outDir": ".cache/ts",
     "paths": {
-      "@project-e2e/helpers": ["./e2e"],
-      "@vkontakte/vkui": ["./packages/vkui"]
+      "@vkontakte/vkui": ["./packages/vkui"],
+      // FIXME дублируем, чтобы не падал `yarn run lint:types`.
+      //  Не выкупается `paths`, который указан в `./packages/vkui`
+      "@vkui-e2e/test": ["./packages/vkui/src/testing/e2e/index.playwright"],
+      "@vkui-e2e/playground-helpers": ["./packages/vkui/src/testing/e2e/index.playground"]
     }
   },
-  "exclude": ["**/node_modules", "**/dist"]
+  "exclude": ["**/node_modules", "**/dist", "**/coverage/**"]
 }

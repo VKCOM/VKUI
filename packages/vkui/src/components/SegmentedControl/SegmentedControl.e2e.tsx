@@ -1,28 +1,15 @@
 import * as React from 'react';
-import { Icon24LogoFacebook, Icon24LogoGoogle, Icon24LogoVk } from '@vkontakte/icons';
-import { describeScreenshotFuzz } from '../../testing/e2e';
-import { SegmentedControl, SegmentedControlOptionInterface } from './SegmentedControl';
+import { test } from '@vkui-e2e/test';
+import { SegmentedControlPlayground } from './SegmentedControl.e2e-playground';
 
-type OptionFn = (label: string) => SegmentedControlOptionInterface;
-const optionFn: OptionFn = (label: string) => ({ label, value: label });
-
-describe('SegmentedControl', () => {
-  describeScreenshotFuzz(SegmentedControl, [
-    {
-      options: [
-        [optionFn('vk'), optionFn('ok')],
-        [optionFn('vk'), optionFn('ok'), optionFn('fb')],
-        [
-          { label: <Icon24LogoVk />, value: 'vk' },
-          { label: <Icon24LogoFacebook />, value: 'fb' },
-          { label: <Icon24LogoGoogle />, value: 'google' },
-        ],
-      ],
-    },
-    {
-      options: [[optionFn('vk'), optionFn('ok')]],
-      size: ['m', 'l'],
-      $adaptivity: 'y',
-    },
-  ]);
+test('SegmentedControl', async ({
+  mount,
+  page,
+  expectScreenshotClippedToContent,
+  componentPlaygroundProps,
+}) => {
+  await mount(<SegmentedControlPlayground {...componentPlaygroundProps} />);
+  // см. https://github.com/VKCOM/VKUI/pull/4652 ("Подводные камни" -> "Firefox")
+  await page.hover('body', { position: { x: 0, y: 0 } });
+  await expectScreenshotClippedToContent();
 });

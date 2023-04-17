@@ -1,19 +1,8 @@
 import * as React from 'react';
-import { describeScreenshotFuzz } from '../../testing/e2e';
-import { Chip, ChipProps } from './Chip';
+import { test } from '@vkui-e2e/test';
+import { ChipPlayground } from './Chip.e2e-playground';
 
-describe('Chip', () => {
-  describeScreenshotFuzz(
-    (props: ChipProps) => (
-      <Chip {...props} value="arctic_monkeys">
-        Arctic Monkeys
-      </Chip>
-    ),
-    [
-      {
-        removable: [false, true],
-        $adaptivity: 'y',
-      },
-    ],
-  );
+test('Chip', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+  await mount(<ChipPlayground {...componentPlaygroundProps} />);
+  await expectScreenshotClippedToContent();
 });

@@ -25,6 +25,7 @@ const config = {
     'src/storybook',
     '\\.test\\.tsx?$',
     '\\.e2e\\.tsx?$',
+    '\\.e2e-playground\\.tsx?$',
     '\\.stories\\.tsx?$',
   ],
   testEnvironment: 'jsdom',

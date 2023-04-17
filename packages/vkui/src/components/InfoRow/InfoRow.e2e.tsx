@@ -1,15 +1,8 @@
 import * as React from 'react';
-import { describeScreenshotFuzz } from '../../testing/e2e';
-import { InfoRow, InfoRowProps } from './InfoRow';
+import { test } from '@vkui-e2e/test';
+import { InfoRowPlayground } from './InfoRow.e2e-playground';
 
-describe('InfoRow', () => {
-  describeScreenshotFuzz(
-    (props: InfoRowProps) => <InfoRow {...props} />,
-    [
-      {
-        children: ['Команда ВКонтакте', undefined],
-        header: ['Место работы', undefined],
-      },
-    ],
-  );
+test('InfoRow', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+  await mount(<InfoRowPlayground {...componentPlaygroundProps} />);
+  await expectScreenshotClippedToContent();
 });

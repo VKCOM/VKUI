@@ -6,3 +6,4 @@ stylelint.config.js
 target/
 fixture/
 storybook-static/
+playwright-report/

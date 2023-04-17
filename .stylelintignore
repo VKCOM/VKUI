@@ -1,6 +1,5 @@
 node_modules/
 dist/
-e2e/
 styleguide/
 coverage/
 !packages/vkui

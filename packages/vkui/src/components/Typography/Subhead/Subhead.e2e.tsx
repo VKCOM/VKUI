@@ -1,21 +1,8 @@
 import * as React from 'react';
-import { describeScreenshotFuzz } from '../../../testing/e2e/utils';
-import { Subhead, SubheadProps } from './Subhead';
+import { test } from '@vkui-e2e/test';
+import { SubheadPlayground } from './Subhead.e2e-playground';
 
-describe('Subhead', () => {
-  describeScreenshotFuzz(
-    (props: SubheadProps) => (
-      <Subhead {...props} style={{ marginBottom: 16 }}>
-        Subhead {props.weight}
-      </Subhead>
-    ),
-    [
-      {
-        weight: [undefined, '1', '2', '3'],
-      },
-      {
-        normalize: [false],
-      },
-    ],
-  );
+test('Subhead', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+  await mount(<SubheadPlayground {...componentPlaygroundProps} />);
+  await expectScreenshotClippedToContent();
 });
