@@ -85,6 +85,7 @@ describe('Button', () => {
     > ```
 - В папке [packages/vkui/playwright](../packages/vkui/playwright) подключаем шрифты, подключаем CSS, подготавливаем HTML файл.
 - В файле [packages/vkui/playwright-сt.config.ts](../packages/vkui/playwright-сt.config.ts) конфигурируем Playwright.
+- В файле `env.development.local` определяем переменные окружения для удобства локального тестирования.
 
 #### Как формируются названия скриншотов?
 
@@ -179,7 +180,7 @@ test.describe(() => {
 yarn run playwright:install
 ```
 
-Далее копируем `.env.local` файл:
+Далее копируем `.env.development.local` файл:
 
 ```sh
 cp packages/vkui/.env.development.local packages/vkui/.env
