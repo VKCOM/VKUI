@@ -70,10 +70,8 @@ export const TableRenderer = ({ columns, rows, getRowKey }) => {
     <div
       className={classNames(
         'Table',
-        {
-          'Table--hasLeft': hasLeft,
-          'Table--hasRight': hasRight,
-        },
+        hasLeft && 'Table--hasLeft',
+        hasRight && 'Table--hasRight',
         `Table--${appearance}`,
       )}
     >

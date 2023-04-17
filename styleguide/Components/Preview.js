@@ -118,9 +118,11 @@ class Preview extends PreviewParent {
               <PlatformProvider value={styleGuideContext.platform}>
                 <AppearanceProvider appearance={styleGuideContext.appearance}>
                   <div
-                    className={classNames('Preview', `Preview--${styleGuideContext.platform}`, {
-                      'Preview--layout': layout,
-                    })}
+                    className={classNames(
+                      'Preview',
+                      `Preview--${styleGuideContext.platform}`,
+                      layout && 'Preview--layout',
+                    )}
                   >
                     <div
                       className="Preview__shadow"

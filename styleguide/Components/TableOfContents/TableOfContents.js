@@ -258,10 +258,11 @@ class TableOfContents extends React.PureComponent {
               }
               onClick={!section.href ? this.onExpandCellClick : undefined}
               data-section-name={section.name}
-              className={classNames('TableOfContents__section', {
-                'TableOfContents__section--selected':
-                  section.name === this.state.currentSectionName,
-              })}
+              className={classNames(
+                'TableOfContents__section',
+                section.name === this.state.currentSectionName &&
+                  'TableOfContents__section--selected',
+              )}
               indicator={section.deprecated && <Caption level="2">deprecated</Caption>}
             >
               {section.title || section.name}
@@ -276,9 +277,10 @@ class TableOfContents extends React.PureComponent {
           )}
           {section.sections.length > 0 && (
             <div
-              className={classNames('TableOfContents__list', {
-                'TableOfContents__list--expanded': expanded,
-              })}
+              className={classNames(
+                'TableOfContents__list',
+                expanded && 'TableOfContents__list--expanded',
+              )}
             >
               {this.renderSections(section.sections)}
               <Footer className="TableOfContents__nothingFound">Ничего не найдено</Footer>

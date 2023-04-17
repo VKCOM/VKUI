@@ -6,7 +6,7 @@ const maybeReactUseId: undefined | (() => string) = (React as any)['useId'.toStr
 
 let id = 0;
 
-// TODO: Remove after React 18
+// TODO [react@>=18]: Remove after React 18
 function useIncrementingCounterID(): string {
   const [state] = React.useState(() => id++);
 

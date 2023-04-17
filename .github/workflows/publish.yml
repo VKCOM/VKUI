@@ -39,6 +39,14 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile --ignore-scripts
 
+      - name: Bump by version type
+        if: ${{ !github.event.inputs.custom_version }}
+        run: yarn workspace @vkontakte/vkui version --${{ github.event.inputs.type }} --no-commit-hooks
+
+      - name: Bump by custom version
+        if: ${{ github.event.inputs.custom_version }}
+        run: yarn workspace @vkontakte/vkui version --new-version ${{ github.event.inputs.custom_version }} --no-commit-hooks
+
       - name: Run linters
         run: yarn run lint
 
@@ -49,14 +57,6 @@ jobs:
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Action"
-
-      - name: Bump by version type
-        if: ${{ !github.event.inputs.custom_version }}
-        run: yarn workspace @vkontakte/vkui version --${{ github.event.inputs.type }} --no-commit-hooks
-
-      - name: Bump by custom version
-        if: ${{ github.event.inputs.custom_version }}
-        run: yarn workspace @vkontakte/vkui version --new-version ${{ github.event.inputs.custom_version }} --no-commit-hooks
 
       - name: Pushing changes
         uses: ad-m/github-push-action@master

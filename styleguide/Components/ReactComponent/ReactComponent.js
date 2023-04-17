@@ -42,9 +42,10 @@ const ReactComponent = ({ component, exampleMode }) => {
       </Link>
       <Heading
         level={1}
-        className={classNames('ReactComponent__name', {
-          'ReactComponent__name--deprecated': deprecated.isDeprecated,
-        })}
+        className={classNames(
+          'ReactComponent__name',
+          deprecated.isDeprecated && 'ReactComponent__name--deprecated',
+        )}
       >
         {visibleName}
       </Heading>

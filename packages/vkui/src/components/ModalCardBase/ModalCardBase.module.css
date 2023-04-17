@@ -75,7 +75,7 @@
  * iOS
  */
 /*
- * TODO v5.0.0: зачем этот стиль? Удалить?
+ * TODO [>=6]: зачем этот стиль? Удалить?
 */
 .ModalCardBase--ios .ModalCardBase__header:first-child {
   padding-left: 36px;

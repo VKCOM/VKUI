@@ -100,6 +100,7 @@ export const SplitCol = (props: SplitColProps) => {
   });
 
   if (process.env.NODE_ENV === 'development' && spaced !== undefined) {
+    // TODO [>=6]: Удалить spaced
     warn('Свойство spaced устарело и будет удалено в v6. Используйте autoSpaced');
   }
 

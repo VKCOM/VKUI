@@ -1,7 +1,6 @@
 {
   "private": true,
-  "//": "TODO В ESLint <= 7 нет возможности добавлять scope. После обновления до v8 нужно добавить scope @project-tools/",
-  "name": "eslint-plugin-vkui",
+  "name": "@project-tools/eslint-plugin-vkui",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
