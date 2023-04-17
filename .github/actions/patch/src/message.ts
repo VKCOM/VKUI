@@ -20,7 +20,16 @@ ${description}
 git stash # опционально
 git fetch origin ${stableBranchRef}
 git checkout -b patch/pr${pullNumber} origin/${stableBranchRef}
-git cherry-pick ${patchRefs.join(' ')}
+
+${patchRefs
+  .map((pathRef) => {
+    return [
+      `git cherry-pick --no-commit ${pathRef}`,
+      `git checkout HEAD --no-commit '**/__image_snapshots__/*.png'`,
+      'git commit --no-verify --no-edit',
+    ].join('\n');
+  })
+  .join('\n\n')}
 \`\`\`
 
 2. Исправьте конфликты, следуя инструкциям из терминала

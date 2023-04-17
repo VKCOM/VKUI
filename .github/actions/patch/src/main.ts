@@ -4,7 +4,6 @@ import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import * as github from '@actions/github';
 import { SemVer } from 'semver';
-
 import { getPatchInstructions } from './message';
 
 function getPrNumber() {
@@ -79,9 +78,21 @@ async function run(): Promise<void> {
     }
 
     try {
-      await exec.exec('git', ['fetch', 'origin', stableBranchRef, ...patchRefs]);
+      await exec.exec('git', [
+        'fetch',
+        '--no-tags',
+        '--depth=1',
+        'origin',
+        stableBranchRef,
+        ...patchRefs,
+      ]);
       await exec.exec('git', ['checkout', stableBranchRef]);
-      await exec.exec('git', ['cherry-pick', ...patchRefs]);
+
+      for (const patchRef of patchRefs) {
+        await exec.exec('git', ['cherry-pick', '--no-commit', patchRef]);
+        await exec.exec('git', ['checkout', 'HEAD', '**/__image_snapshots__/*.png']);
+        await exec.exec('git', ['commit', '--no-verify', '--no-edit']);
+      }
     } catch (e) {
       console.error(e);
 
@@ -106,7 +117,9 @@ async function run(): Promise<void> {
       '--verbose',
     ]);
   } catch (error) {
-    if (error instanceof Error) core.setFailed(error.message);
+    if (error instanceof Error) {
+      core.setFailed(error.message);
+    }
   }
 }
 
