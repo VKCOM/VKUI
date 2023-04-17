@@ -2,11 +2,10 @@ import * as React from 'react';
 import { hasMouse as _hasPointer } from '@vkontakte/vkjs';
 import { BridgeAdaptivity, useBridgeAdaptivity } from '../../hooks/useBridgeAdaptivity';
 import { BREAKPOINTS, SizeType, ViewHeight, ViewWidth } from '../../lib/adaptivity';
+import { HasChildren } from '../../types';
 import { AdaptivityContext, type AdaptivityProps } from './AdaptivityContext';
 
-export interface AdaptivityProviderProps extends AdaptivityProps {
-  children?: React.ReactNode;
-}
+export interface AdaptivityProviderProps extends AdaptivityProps, HasChildren {}
 
 /**
  * @see https://vkcom.github.io/VKUI/#/AdaptivityProvider
@@ -19,7 +18,7 @@ export const AdaptivityProvider = ({
   hasPointer,
   hasHover,
   children,
-}: React.PropsWithChildren<AdaptivityProps>) => {
+}: AdaptivityProviderProps) => {
   const bridge = useBridgeAdaptivity();
   const adaptivity = React.useMemo(
     () =>
