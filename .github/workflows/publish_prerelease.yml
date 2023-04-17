@@ -85,7 +85,7 @@ jobs:
       - name: Build styleguide
         run: yarn run docs:styleguide:build --dist dist/${{ steps.updated_version.outputs.version }}
       - name: Build storybook
-        run: yarn docs:storybook:build -o ../../styleguide/dist/${{ steps.updated_version.outputs.version }}/storybook
+        run: yarn docs:storybook:build -o ../../styleguide/dist/${{ steps.updated_version.outputs.version }}/playground
 
       - name: Publishing doc
         uses: JamesIves/github-pages-deploy-action@v4

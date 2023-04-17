@@ -85,8 +85,8 @@ jobs:
         run: |
           yarn run docs:styleguide:build
           yarn run docs:storybook:build
-          mkdir styleguide/${{ steps.updated_version.outputs.version }} styleguide/dist/storybook
-          cp -R packages/vkui/storybook-static/* styleguide/dist/storybook
+          mkdir styleguide/${{ steps.updated_version.outputs.version }} styleguide/dist/playground
+          cp -R packages/vkui/storybook-static/* styleguide/dist/playground
           cp -R styleguide/dist/* styleguide/${{ steps.updated_version.outputs.version }}
           mv styleguide/${{ steps.updated_version.outputs.version }} styleguide/dist/${{ steps.updated_version.outputs.version }}
 
