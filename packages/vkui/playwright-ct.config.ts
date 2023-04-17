@@ -57,7 +57,11 @@ export default defineConfig<VKUITestOptions>({
   /* Retry on CI only */
   retries: 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 4 : undefined,
+  workers: process.env.CI
+    ? 4
+    : typeof process.env.PLAYWRIGHT_WORKERS === 'string'
+    ? Number(process.env.PLAYWRIGHT_WORKERS)
+    : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: process.env.CI
     ? [['github'], ['dot'], ...DEFAULT_REPORTERS]
