@@ -38,7 +38,7 @@ export interface HorizontalScrollProps
   getScrollToRight?: ScrollPositionHandler;
   arrowSize?: 'm' | 'l';
   /**
-   * Смещает по вертикали иконки кнопок навигации. Относительно их текущего положения.
+   * Смещает иконки кнопок навигации по вертикали.
    */
   arrowOffsetY?: number | string;
   showArrows?: boolean | 'always';
