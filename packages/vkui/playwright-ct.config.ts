@@ -171,21 +171,27 @@ function generateProjects(): TestProject {
     ])
     .flat();
 
-  if (typeof process.env.PLAYWRIGHT_FORCE_PROJECT === 'string') {
-    const foundProject = projects.find(
-      (project) => project.name === process.env.PLAYWRIGHT_FORCE_PROJECT,
-    );
+  if (typeof process.env.PLAYWRIGHT_FORCE_PROJECTS === 'string') {
+    try {
+      const forceProjects = JSON.parse(process.env.PLAYWRIGHT_FORCE_PROJECTS);
+      if (!Array.isArray(forceProjects)) {
+        throw new Error('should be array');
+      }
+      const foundProjects = projects.filter((project) => forceProjects.includes(project.name));
 
-    if (!foundProject) {
-      const supportedProjects = projects.map((i) => i.name);
-      console.error(`
-PLAYWRIGHT_FORCE_PROJECT="${process.env.PLAYWRIGHT_FORCE_PROJECT}" doesn't exist in projects list.
-Supported projects are ${JSON.stringify(supportedProjects, null, 2)}
-`);
+      if (!foundProjects.length) {
+        const supportedProjects = projects.map((i) => i.name);
+        throw new Error(`
+  "${process.env.PLAYWRIGHT_FORCE_PROJECTS}" doesn't exist in projects list.
+  Supported projects are ${JSON.stringify(supportedProjects, null, 2)}
+  `);
+      }
+
+      return foundProjects;
+    } catch (error) {
+      console.error('PLAYWRIGHT_FORCE_PROJECTS', error);
       process.exit(1);
     }
-
-    return [foundProject];
   }
 
   return projects;
