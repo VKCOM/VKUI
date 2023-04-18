@@ -2,11 +2,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.Counter__in {
-  display: block;
-  width: 100%;
   padding-left: 5px;
   padding-right: 5px;
   text-align: center;

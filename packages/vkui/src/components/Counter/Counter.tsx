@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import { Caption } from '../Typography/Caption/Caption';
 import { Headline } from '../Typography/Headline/Headline';
 import styles from './Counter.module.css';
@@ -45,8 +45,9 @@ export const Counter = ({
   const counterLevel = size === 's' ? '1' : '2';
 
   return (
-    <span
+    <CounterTypography
       {...restProps}
+      Component="span"
       className={classNames(
         'vkuiInternalCounter',
         styles['Counter'],
@@ -54,12 +55,9 @@ export const Counter = ({
         sizeClassNames[size],
         className,
       )}
+      level={counterLevel}
     >
-      {hasReactNode(children) && (
-        <CounterTypography Component="span" className={styles['Counter__in']} level={counterLevel}>
-          {children}
-        </CounterTypography>
-      )}
-    </span>
+      {children}
+    </CounterTypography>
   );
 };
