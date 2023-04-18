@@ -16,7 +16,7 @@ import { getOffsetRect } from '../../lib/offset';
 import { Platform } from '../../lib/platform';
 import { coordX, coordY } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { AnchorHTMLAttributesOnly, HasComponent, HasRootRef } from '../../types';
+import { AnchorHTMLAttributesOnly, HasChildren, HasComponent, HasRootRef } from '../../types';
 import { FocusVisible, FocusVisibleMode } from '../FocusVisible/FocusVisible';
 import { Touch, TouchEvent, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
@@ -48,6 +48,7 @@ export interface TappableProps
   extends TappableElementProps,
     HasRootRef<HTMLElement>,
     HasComponent,
+    HasChildren,
     Pick<TouchProps, 'onStart' | 'onEnd' | 'onMove'> {
   /**
    * Длительность показа active-состояния
@@ -74,7 +75,6 @@ export interface TappableProps
    * Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс во время focus-visible
    */
   focusVisibleMode?: FocusVisibleMode | string;
-  children?: React.ReactNode;
   onEnter?(outputEvent: MouseEvent): void;
   onLeave?(outputEvent: MouseEvent): void;
 }
