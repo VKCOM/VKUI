@@ -23,7 +23,7 @@
     "@storybook/react": "^7.0.4",
     "@storybook/react-webpack5": "^7.0.4",
     "@storybook/theming": "^7.0.4",
-    "@storybook/types": "^7.0.4",
+    "@storybook/types": "^7.0.5",
     "storybook": "^7.0.4",
     "storybook-addon-swc": "^1.1.9"
   }
