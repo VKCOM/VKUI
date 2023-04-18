@@ -3,6 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
+import { HasChildren } from '../../types';
 import type { SelectType } from '../Select/Select';
 import styles from './SelectTypography.module.css';
 
@@ -16,10 +17,8 @@ const platformClassNames = {
   android: styles['SelectTypography--android'],
 };
 
-export interface SelectTypographyProps {
+export interface SelectTypographyProps extends React.HTMLAttributes<HTMLSpanElement>, HasChildren {
   selectType?: SelectType;
-  className?: string;
-  children?: React.ReactNode;
 }
 
 /**
