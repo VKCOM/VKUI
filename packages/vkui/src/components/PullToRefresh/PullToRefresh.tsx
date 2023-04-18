@@ -9,7 +9,7 @@ import { DOMProps, useDOM } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
 import { runTapticImpactOccurred } from '../../lib/taptic';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { AnyFunction } from '../../types';
+import { AnyFunction, HasChildren } from '../../types';
 import { ScrollContextInterface, useScroll } from '../AppRoot/ScrollContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
 import { Touch, TouchEvent, TouchProps } from '../Touch/Touch';
@@ -33,7 +33,7 @@ function cancelEvent(event: any) {
   return false;
 }
 
-export interface PullToRefreshProps extends DOMProps, TouchProps {
+export interface PullToRefreshProps extends DOMProps, TouchProps, HasChildren {
   /**
    * Будет вызвана для обновления контента (прим.: функция должна быть мемоизированным коллбэком)
    */
@@ -44,7 +44,6 @@ export interface PullToRefreshProps extends DOMProps, TouchProps {
   isFetching?: boolean;
   /** @ignore */
   scroll?: ScrollContextInterface;
-  children?: React.ReactNode;
 }
 
 const TOUCH_MOVE_EVENT_PARAMS = {
