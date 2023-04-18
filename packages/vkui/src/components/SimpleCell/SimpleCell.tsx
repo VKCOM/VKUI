@@ -7,6 +7,7 @@ import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { HasComponent } from '../../types';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
+import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './SimpleCell.module.css';
@@ -147,30 +148,24 @@ export const SimpleCell = ({
             {badgeBeforeSubtitle && (
               <span className={styles['SimpleCell__badge']}>{badgeBeforeSubtitle}</span>
             )}
-            <span
-              className={classNames(
-                styles['SimpleCell__typography'],
-                styles['SimpleCell__text'],
-                styles['SimpleCell__subtitle'],
-              )}
+            <Footnote
+              normalize={false}
+              className={classNames(styles['SimpleCell__text'], styles['SimpleCell__subtitle'])}
             >
               {subtitle}
-            </span>
+            </Footnote>
             {badgeAfterSubtitle && (
               <span className={styles['SimpleCell__badge']}>{badgeAfterSubtitle}</span>
             )}
           </div>
         )}
         {extraSubtitle && (
-          <span
-            className={classNames(
-              styles['SimpleCell__typography'],
-              styles['SimpleCell__text'],
-              styles['SimpleCell__extraSubtitle'],
-            )}
+          <Footnote
+            normalize={false}
+            className={classNames(styles['SimpleCell__text'], styles['SimpleCell__extraSubtitle'])}
           >
             {extraSubtitle}
-          </span>
+          </Footnote>
         )}
       </div>
       {hasReactNode(indicator) && (

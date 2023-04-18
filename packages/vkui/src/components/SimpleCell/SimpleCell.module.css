@@ -109,13 +109,6 @@
   padding-right: 2px;
 }
 
-.SimpleCell__typography {
-  font-size: var(--vkui--font_footnote--font_size--regular);
-  line-height: var(--vkui--font_footnote--line_height--regular);
-  font-weight: var(--vkui--font_footnote--font_weight--regular);
-  font-family: var(--vkui--font_footnote--font_family--regular);
-}
-
 /**
  * iOS
  */
