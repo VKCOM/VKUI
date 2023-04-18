@@ -3,31 +3,7 @@ import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJS
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { ModalRootTouch } from './ModalRoot';
 import { ModalRootDesktop } from './ModalRootDesktop';
-
-export interface ModalRootProps {
-  activeModal?: string | null;
-
-  /**
-   * Будет вызвано при начале открытия активной модалки с её id
-   */
-  onOpen?(modalId: string): void;
-
-  /**
-   * Будет вызвано при окончательном открытии активной модалки с её id
-   */
-  onOpened?(modalId: string): void;
-
-  /**
-   * Будет вызвано при начале закрытия активной модалки с её id
-   */
-  onClose?(modalId: string): void;
-
-  /**
-   * Будет вызвано при окончательном закрытии активной модалки с её id
-   */
-  onClosed?(modalId: string): void;
-  children?: React.ReactNode;
-}
+import { ModalRootProps } from './types';
 
 /**
  * @see https://vkcom.github.io/VKUI/#/ModalRoot

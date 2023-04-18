@@ -3,13 +3,13 @@ import { isFunction, noop } from '@vkontakte/vkjs';
 import { getNavId } from '../../lib/getNavId';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
+import { HasChildren } from '../../types';
 import { ModalsState, ModalsStateEntry, ModalType } from './types';
 
 interface ModalTransitionState {
   activeModal?: string | null;
   enteringModal?: string | null;
   exitingModal?: string | null;
-
   history?: string[];
   isBack?: boolean | null;
 }
@@ -190,7 +190,7 @@ export function useModalManager(
     if (modalState) {
       if (isFunction(modalState.onOpen)) {
         modalState.onOpen();
-      } else if (isFunction(onOpen)) {
+      } else if (isFunction(onOpen) && modalState.id) {
         onOpen(modalState.id);
       }
     }
@@ -201,7 +201,7 @@ export function useModalManager(
     if (modalState) {
       if (isFunction(modalState.onClose)) {
         modalState.onClose();
-      } else if (isFunction(onClose)) {
+      } else if (isFunction(onClose) && modalState.id) {
         onClose(modalState.id);
       }
     }
@@ -218,15 +218,15 @@ export function useModalManager(
   };
 }
 
+type WithModalManager<Props extends ModalTransitionProps> = HasChildren &
+  Omit<Props, keyof ModalTransitionProps> & {
+    activeModal?: string | null;
+  };
+
 export function withModalManager(initModal: (a: ModalsStateEntry) => void = noop) {
   return function <Props extends ModalTransitionProps>(
     Wrapped: React.ComponentType<Props>,
-  ): React.ComponentType<
-    Omit<Props, keyof ModalTransitionProps> & {
-      activeModal?: string | null;
-      children?: React.ReactNode;
-    }
-  > {
+  ): React.ComponentType<WithModalManager<Props>> {
     return function WithModalManager(props) {
       const transitionManager = useModalManager(
         props.activeModal,

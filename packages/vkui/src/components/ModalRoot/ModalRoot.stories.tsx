@@ -10,7 +10,8 @@ import { Placeholder } from '../Placeholder/Placeholder';
 import { Spinner } from '../Spinner/Spinner';
 import { SplitCol } from '../SplitCol/SplitCol';
 import { SplitLayout } from '../SplitLayout/SplitLayout';
-import { ModalRoot, ModalRootProps } from './ModalRootAdaptive';
+import { ModalRoot } from './ModalRootAdaptive';
+import { ModalRootProps } from './types';
 import { useModalRootContext } from './useModalRootContext';
 
 const story: Meta<ModalRootProps> = {
