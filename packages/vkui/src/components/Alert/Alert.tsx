@@ -5,7 +5,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { Platform } from '../../lib/platform';
 import { stopPropagation } from '../../lib/utils';
-import { AnchorHTMLAttributesOnly } from '../../types';
+import { AnchorHTMLAttributesOnly, HasChildren } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { Button, ButtonProps } from '../Button/Button';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
@@ -42,9 +42,8 @@ export interface AlertProps extends React.HTMLAttributes<HTMLElement> {
 
 type ItemClickHandler = (item: AlertActionInterface) => void;
 
-interface AlertTypography {
+interface AlertTypography extends HasChildren {
   id: string;
-  children?: React.ReactNode;
 }
 
 const AlertHeader = (props: AlertTypography) => {
