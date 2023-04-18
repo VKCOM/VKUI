@@ -3,6 +3,7 @@ import { noop } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
 import { useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { HasChildren } from '../../types';
 
 const clearDisableScrollStyle = (node: HTMLElement) => {
   Object.assign(node.style, {
@@ -43,9 +44,8 @@ export const ScrollContext = React.createContext<ScrollContextInterface>({
 
 export const useScroll = () => React.useContext(ScrollContext);
 
-export interface ScrollControllerProps {
+export interface ScrollControllerProps extends HasChildren {
   elRef: React.RefObject<HTMLElement>;
-  children?: React.ReactNode;
 }
 
 export const GlobalScrollController = ({ children }: ScrollControllerProps) => {

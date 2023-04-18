@@ -2,13 +2,13 @@ import * as React from 'react';
 import { createPortal } from 'react-dom';
 import { useAppearance } from '../../hooks/useAppearance';
 import { useIsClient } from '../../hooks/useIsClient';
+import { HasChildren } from '../../types';
 import { AppearanceProvider } from '../AppearanceProvider/AppearanceProvider';
 import { AppRootContext } from './AppRootContext';
 
-export interface AppRootPortalProps {
+export interface AppRootPortalProps extends HasChildren {
   className?: string;
   forcePortal?: boolean;
-  children?: React.ReactNode;
 }
 
 export const AppRootPortal = ({
