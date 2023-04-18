@@ -13,7 +13,13 @@
           <Radio name="radio" value="2">
             Mastercard **** 1234
           </Radio>
-          <Radio name="radio" value="3" description="Заблокирована" disabled>
+          <Radio
+            name="radio"
+            value="3"
+            description="Заблокирована"
+            disabled
+            titleAfter={<Icon12Lock />}
+          >
             Visa **** 4321
           </Radio>
         </FormItem>

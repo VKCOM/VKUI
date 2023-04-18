@@ -29,6 +29,7 @@ export interface RadioProps
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLLabelElement> {
   description?: React.ReactNode;
+  titleAfter?: React.ReactNode;
 }
 
 /**
@@ -40,6 +41,7 @@ export const Radio = ({
   style,
   className,
   getRootRef,
+  titleAfter,
   ...restProps
 }: RadioProps) => {
   const platform = usePlatform();
@@ -62,7 +64,10 @@ export const Radio = ({
       <div className={styles['Radio__container']}>
         <RadioIcon className={styles['Radio__icon']} />
         <div className={styles['Radio__content']}>
-          <div className={styles['Radio__children']}>{children}</div>
+          <div className={styles['Radio__title']}>
+            <span>{children}</span>
+            <div className={styles['Radio__titleAfter']}>{titleAfter}</div>
+          </div>
           {hasReactNode(description) && (
             <Footnote className={styles['Radio__description']}>{description}</Footnote>
           )}

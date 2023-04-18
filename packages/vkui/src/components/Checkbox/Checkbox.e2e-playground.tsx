@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Icon12Lock } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Checkbox, type CheckboxProps } from './Checkbox';
 
@@ -31,7 +32,7 @@ export const CheckboxSizesAndDescriptionPlayground = (props: ComponentPlayground
       propSets={[
         {
           description: [undefined, 'Description'],
-          $adaptivity: 'y',
+          titleAfter: [undefined, <Icon12Lock key="icon" />],
         },
       ]}
     >
