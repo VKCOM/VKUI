@@ -43,7 +43,9 @@ export const HorizontalScrollSmallTabletPlayground = (props: ComponentPlayground
       {...props}
       propSets={[
         {
+          showArrows: [undefined, 'always'],
           arrowSize: ['m', 'l'],
+          arrowOffsetY: [-10],
           children: [
             <div key="0" style={{ display: 'flex' }}>
               {items}

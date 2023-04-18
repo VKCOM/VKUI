@@ -37,6 +37,10 @@ export interface HorizontalScrollProps
    */
   getScrollToRight?: ScrollPositionHandler;
   arrowSize?: 'm' | 'l';
+  /**
+   * Смещает иконки кнопок навигации по вертикали.
+   */
+  arrowOffsetY?: number | string;
   showArrows?: boolean | 'always';
   scrollAnimationDuration?: number;
   /**
@@ -133,6 +137,7 @@ export const HorizontalScroll = ({
   getScrollToRight,
   showArrows = true,
   arrowSize = 'l',
+  arrowOffsetY,
   scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
   getRef,
   className,
@@ -243,6 +248,7 @@ export const HorizontalScroll = ({
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollLeft && (
         <HorizontalScrollArrow
           size={arrowSize}
+          offsetY={arrowOffsetY}
           direction="left"
           className={styles['HorizontalScroll__arrowLeft']}
           onClick={scrollToLeft}
@@ -251,6 +257,7 @@ export const HorizontalScroll = ({
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollRight && (
         <HorizontalScrollArrow
           size={arrowSize}
+          offsetY={arrowOffsetY}
           direction="right"
           className={styles['HorizontalScroll__arrowRight']}
           onClick={scrollToRight}
