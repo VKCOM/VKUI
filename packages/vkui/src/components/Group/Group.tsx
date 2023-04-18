@@ -42,6 +42,9 @@ export interface GroupProps extends HasRootRef<HTMLElement>, React.HTMLAttribute
 }
 
 const warn = warnOnce('Group');
+/**
+ * @see https://vkcom.github.io/VKUI/#/Group
+ */
 export const Group = ({
   header,
   description,
