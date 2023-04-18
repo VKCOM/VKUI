@@ -13,8 +13,8 @@ export type AccordionProps = React.DetailsHTMLAttributes<HTMLDetailsElement> &
  *
  * Обертка над details.
  *
- * @version 5.3.0
- * @see  https://vkcom.github.io/VKUI/#/Accordion
+ * @since 5.3.0
+ * @see https://vkcom.github.io/VKUI/#/Accordion
  */
 export const Accordion = ({ getRootRef, className, ...restProps }: AccordionProps) => (
   <details className={classNames(styles['Accordion'], className)} ref={getRootRef} {...restProps} />

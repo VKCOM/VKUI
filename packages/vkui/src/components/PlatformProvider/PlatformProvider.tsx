@@ -15,7 +15,7 @@ export interface PlatformProviderProps {
 /**
  * Компонент, позволяющий переопределить платформу для части приложения
  *
- * @version 5.1.0
+ * @since 5.1.0
  * @see https://vkcom.github.io/VKUI/#/PlatformProvider
  */
 export function PlatformProvider({ value, children }: PlatformProviderProps) {

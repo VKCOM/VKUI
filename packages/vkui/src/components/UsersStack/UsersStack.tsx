@@ -35,7 +35,7 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Определяет положение элементов
    * Режим `column` рекомендуется использовать с размером `m`
-   * @version 5.3.0
+   * @since 5.3.0
    */
   direction?: 'row' | 'row-reverse' | 'column';
 }
