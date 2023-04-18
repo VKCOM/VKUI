@@ -5,6 +5,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
+import { HasChildren } from '../../types';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import styles from './IconButton.module.css';
 
@@ -13,9 +14,7 @@ const sizeYClassNames = {
   [SizeType.COMPACT]: styles['IconButton--sizeY-compact'],
 };
 
-export interface IconButtonProps extends TappableProps {
-  children?: React.ReactNode;
-}
+export interface IconButtonProps extends TappableProps, HasChildren {}
 
 const warn = warnOnce('IconButton');
 
