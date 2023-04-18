@@ -15,7 +15,7 @@
     "@storybook/addon-essentials": "^7.0.4",
     "@storybook/addon-interactions": "^7.0.4",
     "@storybook/addon-links": "^7.0.4",
-    "@storybook/api": "^7.0.4",
+    "@storybook/api": "^7.0.5",
     "@storybook/blocks": "^7.0.4",
     "@storybook/components": "^7.0.4",
     "@storybook/manager-api": "^7.0.4",
