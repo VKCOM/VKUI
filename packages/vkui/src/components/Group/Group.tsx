@@ -41,8 +41,10 @@ export interface GroupProps extends HasRootRef<HTMLElement>, React.HTMLAttribute
   children?: React.ReactNode;
 }
 
-const warn = warnOnce('TabsItem');
-
+const warn = warnOnce('Group');
+/**
+ * @see https://vkcom.github.io/VKUI/#/Group
+ */
 export const Group = ({
   header,
   description,

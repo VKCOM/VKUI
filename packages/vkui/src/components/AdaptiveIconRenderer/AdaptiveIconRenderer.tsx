@@ -6,6 +6,10 @@ export interface AdaptiveIconRendererProps {
   IconRegular: React.ComponentType<{ className?: string }>;
 }
 
+/**
+ * @since 5.4.0
+ * @see https://vkcom.github.io/VKUI/#/AdaptiveIconRenderer
+ */
 export const AdaptiveIconRenderer = ({ IconCompact, IconRegular }: AdaptiveIconRendererProps) => {
   const { sizeY } = useAdaptivityConditionalRender();
 

@@ -22,7 +22,7 @@ export interface AccordionSummaryProps extends Omit<SimpleCellProps, 'expandable
 /**
  * Обертка над summary.
  *
- * @version 5.3.0
+ * @since 5.3.0
  * @see  https://vkcom.github.io/VKUI/#/Accordion
  */
 export const AccordionSummary = ({

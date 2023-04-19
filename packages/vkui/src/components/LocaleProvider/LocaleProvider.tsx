@@ -12,9 +12,9 @@ export interface LocaleProviderProps {
 
 /**
  * Компонент, прокидывающий локаль. Список можно найти в
- * [реестре языковых подмёток IANA](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry)
+ * [реестре языковых подметок IANA](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry)
  *
- * @version 5.0.0
+ * @since 5.0.0
  * @see https://vkcom.github.io/VKUI/#/LocaleProvider
  */
 export function LocaleProvider({ value, children }: LocaleProviderProps) {
