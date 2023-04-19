@@ -125,6 +125,19 @@
 
 /**
  * CMP:
+ * View
+ */
+:global(.vkuiInternalView--ios) .Panel__in {
+  padding-bottom: var(--vkui_internal--safe_area_inset_bottom);
+}
+
+:global(.vkuiInternalView--ios) .Panel__in {
+  padding: 0 var(--vkui_internal--safe_area_inset_right)
+    var(--vkui_internal--safe_area_inset_bottom) var(--vkui_internal--safe_area_inset_left);
+}
+
+/**
+ * CMP:
  * Epic
  */
 :global(.vkuiInternalEpic--hasTabbar) .Panel__in {

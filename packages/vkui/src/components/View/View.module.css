@@ -81,15 +81,6 @@
   }
 }
 
-.View--ios :global(.vkuiInternalPanel__in) {
-  padding-bottom: var(--vkui_internal--safe_area_inset_bottom);
-}
-
-.View--ios :global(.vkuiInternalPanel__in) {
-  padding: 0 var(--vkui_internal--safe_area_inset_right)
-    var(--vkui_internal--safe_area_inset_bottom) var(--vkui_internal--safe_area_inset_left);
-}
-
 /**
  * Panel swipe back
  */

@@ -622,7 +622,7 @@ class ViewInfiniteComponent extends React.Component<
         {...restProps}
         className={classNames(
           styles['View'],
-          platform === Platform.IOS && styles['View--ios'],
+          platform === Platform.IOS && classNames(styles['View--ios'], 'vkuiInternalView--ios'),
           !disableAnimation && this.state.animated && styles['View--animated'],
           !disableAnimation && this.state.swipingBack && styles['View--swiping-back'],
           disableAnimation && styles['View--no-motion'],
