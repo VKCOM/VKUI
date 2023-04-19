@@ -7,7 +7,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useDOM } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
 import { getTitleFromChildren } from '../../lib/utils';
-import { HasRootRef } from '../../types';
+import { HasChildren, HasRootRef } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
 import { Tappable } from '../Tappable/Tappable';
 import styles from './Removable.module.css';
@@ -23,9 +23,8 @@ export interface RemovableProps {
   onRemove?: (e: React.MouseEvent, rootEl?: HTMLElement | null) => void;
 }
 
-interface RemovableIosOwnProps extends RemovableProps {
+interface RemovableIosOwnProps extends RemovableProps, HasChildren {
   removePlaceholderString?: string;
-  children?: React.ReactNode;
 }
 
 /**
@@ -108,7 +107,7 @@ const RemovableIos = ({
 };
 
 interface RemovableOwnProps
-  extends React.AllHTMLAttributes<HTMLElement>,
+  extends React.HTMLAttributes<HTMLDivElement>,
     RemovableProps,
     HasRootRef<HTMLDivElement> {
   /**

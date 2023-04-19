@@ -2,6 +2,7 @@ import React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
+import { HasChildren } from '../../types';
 import {
   Playground as CaptionStory,
   WithCaps as CaptionWithCapsStory,
@@ -36,7 +37,7 @@ export default story;
 
 type Story = StoryObj<TypographyOverview>;
 
-const TypographyWrapper = ({ children }: { children?: React.ReactNode }) => {
+const TypographyWrapper = ({ children }: HasChildren) => {
   return <div style={{ margin: 5 }}>{children}</div>;
 };
 

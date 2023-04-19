@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { HasChildren } from '../../types';
 import styles from './Spacing.module.css';
 
-export interface SpacingProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface SpacingProps extends React.HTMLAttributes<HTMLDivElement>, HasChildren {
   /**
    * Высота спэйсинга
    */
   size?: number;
-  children?: React.ReactNode;
 }
 
 /**

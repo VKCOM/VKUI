@@ -1,3 +1,7 @@
+import { DOMContextInterface } from '../../lib/dom';
+import { HasChildren, HasPlatform } from '../../types';
+import { ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
+
 export enum ModalType {
   PAGE = 'page',
   CARD = 'card',
@@ -65,4 +69,35 @@ export interface ModalsStateEntry extends ModalElements {
   expandedRange?: TranslateRange;
   collapsedRange?: TranslateRange;
   hiddenRange?: TranslateRange;
+}
+
+export interface ModalRootProps extends HasChildren {
+  activeModal?: string | null;
+
+  /**
+   * Будет вызвано при начале открытия активной модалки с её id
+   */
+  onOpen?(modalId: string): void;
+
+  /**
+   * Будет вызвано при окончательном открытии активной модалки с её id
+   */
+  onOpened?(modalId: string): void;
+
+  /**
+   * Будет вызвано при начале закрытия активной модалки с её id
+   */
+  onClose?(modalId: string): void;
+
+  /**
+   * Будет вызвано при окончательном закрытии активной модалки с её id
+   */
+  onClosed?(modalId: string): void;
+}
+
+export interface ModalRootWithDOMProps extends HasPlatform, ModalRootProps, DOMContextInterface {
+  /**
+   * @ignore
+   */
+  configProvider?: ConfigProviderContextInterface;
 }

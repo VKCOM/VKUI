@@ -8,48 +8,14 @@ import { useDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
 import { Platform } from '../../lib/platform';
 import { warnOnce } from '../../lib/warnOnce';
-import { HasPlatform } from '../../types';
-import {
-  ConfigProviderContextInterface,
-  useConfigProvider,
-  WebviewType,
-} from '../ConfigProvider/ConfigProviderContext';
+import { useConfigProvider, WebviewType } from '../ConfigProvider/ConfigProviderContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { ModalRootContext, ModalRootContextInterface } from './ModalRootContext';
-import { ModalsStateEntry } from './types';
+import { ModalRootWithDOMProps, ModalsStateEntry } from './types';
 import { useModalManager } from './useModalManager';
 import styles from './ModalRoot.module.css';
 
 const warn = warnOnce('ModalRoot');
-
-export interface ModalRootProps extends HasPlatform {
-  activeModal?: string | null;
-  /**
-   * @ignore
-   */
-  configProvider?: ConfigProviderContextInterface;
-  children?: React.ReactNode;
-
-  /**
-   * Будет вызвано при начале открытия активной модалки с её id
-   */
-  onOpen?(modalId: string): void;
-
-  /**
-   * Будет вызвано при окончательном открытии активной модалки с её id
-   */
-  onOpened?(modalId: string): void;
-
-  /**
-   * Будет вызвано при начале закрытия активной модалки с её id
-   */
-  onClose?(modalId: string): void;
-
-  /**
-   * Будет вызвано при окончательном закрытии активной модалки с её id
-   */
-  onClosed?(modalId: string): void;
-}
 
 export const ModalRootDesktop = ({
   activeModal: activeModalProp,
@@ -58,7 +24,7 @@ export const ModalRootDesktop = ({
   onOpened,
   onClose,
   onClosed,
-}: ModalRootProps) => {
+}: ModalRootWithDOMProps) => {
   const maskElementRef = React.useRef<HTMLDivElement>(null);
   const maskAnimationFrame = React.useRef<number | undefined>(undefined);
   const restoreFocusTo = React.useRef<HTMLElement | undefined>(undefined);

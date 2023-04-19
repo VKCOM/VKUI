@@ -5,7 +5,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { warnOnce } from '../../lib/warnOnce';
-import { HasRootRef } from '../../types';
+import { HasChildren, HasRootRef } from '../../types';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { Separator } from '../Separator/Separator';
 import { Spacing } from '../Spacing/Spacing';
@@ -18,7 +18,10 @@ const sizeXClassNames = {
   [SizeType.REGULAR]: styles['Group--sizeX-regular'],
 };
 
-export interface GroupProps extends HasRootRef<HTMLElement>, React.HTMLAttributes<HTMLElement> {
+export interface GroupProps
+  extends HasRootRef<HTMLElement>,
+    React.HTMLAttributes<HTMLElement>,
+    HasChildren {
   header?: React.ReactNode;
   description?: React.ReactNode;
   /**
@@ -38,7 +41,6 @@ export interface GroupProps extends HasRootRef<HTMLElement>, React.HTMLAttribute
    * Отвечает за отступы вокруг контента в режиме 'card'.
    */
   padding?: 's' | 'm';
-  children?: React.ReactNode;
 }
 
 const warn = warnOnce('Group');

@@ -10,18 +10,13 @@ import { setTransformStyle } from '../../lib/styles';
 import { transitionEvent } from '../../lib/supportEvents';
 import { rubber } from '../../lib/touch';
 import { warnOnce } from '../../lib/warnOnce';
-import { HasPlatform } from '../../types';
-import {
-  ConfigProviderContext,
-  ConfigProviderContextInterface,
-  WebviewType,
-} from '../ConfigProvider/ConfigProviderContext';
+import { ConfigProviderContext, WebviewType } from '../ConfigProvider/ConfigProviderContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import { ModalRootContext, ModalRootContextInterface } from './ModalRootContext';
 import { MODAL_PAGE_DEFAULT_PERCENT_HEIGHT } from './constants';
-import { ModalsStateEntry, ModalType, TranslateRange } from './types';
+import { ModalRootWithDOMProps, ModalsStateEntry, ModalType, TranslateRange } from './types';
 import { ModalTransitionProps, withModalManager } from './useModalManager';
 import styles from './ModalRoot.module.css';
 
@@ -38,46 +33,16 @@ function rangeTranslate(number: number) {
   return clamp(number, 0, 98);
 }
 
-export interface ModalRootProps extends HasPlatform {
-  activeModal?: string | null;
-
-  /**
-   * Будет вызвано при начале открытия активной модалки с её id
-   */
-  onOpen?(modalId: string): void;
-
-  /**
-   * Будет вызвано при окончательном открытии активной модалки с её id
-   */
-  onOpened?(modalId: string): void;
-
-  /**
-   * Будет вызвано при начале закрытия активной модалки с её id
-   */
-  onClose?(modalId: string): void;
-
-  /**
-   * Будет вызвано при окончательном закрытии активной модалки с её id
-   */
-  onClosed?(modalId: string): void;
-
-  /**
-   * @ignore
-   */
-  configProvider?: ConfigProviderContextInterface;
-  children?: React.ReactNode;
-}
-
 interface ModalRootState {
   touchDown?: boolean;
   dragging?: boolean;
 }
 
 class ModalRootTouchComponent extends React.Component<
-  ModalRootProps & DOMProps & ModalTransitionProps,
+  ModalRootWithDOMProps & DOMProps & ModalTransitionProps,
   ModalRootState
 > {
-  constructor(props: ModalRootProps & ModalTransitionProps) {
+  constructor(props: ModalRootWithDOMProps & ModalTransitionProps) {
     super(props);
     this.state = {
       touchDown: false,
@@ -110,12 +75,12 @@ class ModalRootTouchComponent extends React.Component<
     return this.props.platform === Platform.IOS ? 400 : 320;
   }
 
-  get document() {
-    return this.props.document;
+  get document(): Document {
+    return this.props.document as Document;
   }
 
-  get window() {
-    return this.props.window;
+  get window(): Window {
+    return this.props.window as Window;
   }
 
   getModals() {
@@ -131,10 +96,10 @@ class ModalRootTouchComponent extends React.Component<
 
   componentWillUnmount() {
     this.toggleDocumentScrolling(true);
-    this.window!.removeEventListener('resize', this.updateModalTranslate, false);
+    this.window.removeEventListener('resize', this.updateModalTranslate, false);
   }
 
-  componentDidUpdate(prevProps: ModalRootProps & ModalTransitionProps) {
+  componentDidUpdate(prevProps: ModalRootWithDOMProps & ModalTransitionProps) {
     // transition phase 2: animate exiting modal
     if (this.props.exitingModal && this.props.exitingModal !== prevProps.exitingModal) {
       this.closeModal(this.props.exitingModal);
@@ -162,7 +127,7 @@ class ModalRootTouchComponent extends React.Component<
 
     // focus restoration
     if (this.props.activeModal && !prevProps.activeModal) {
-      this.restoreFocusTo = this.document!.activeElement as HTMLElement;
+      this.restoreFocusTo = this.document.activeElement as HTMLElement;
     }
     if (!this.props.activeModal && !this.props.exitingModal && this.restoreFocusTo) {
       this.restoreFocusTo.focus();
@@ -183,12 +148,12 @@ class ModalRootTouchComponent extends React.Component<
       // Здесь нужен последний аргумент с такими же параметрами, потому что
       // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
       // https://github.com/VKCOM/VKUI/issues/444
-      this.window!.removeEventListener('touchmove', this.preventTouch, {
+      this.window.removeEventListener('touchmove', this.preventTouch, {
         // @ts-expect-error: TS2769 В интерфейсе EventListenerOptions нет поля passive
         passive: false,
       });
     } else {
-      this.window!.addEventListener('touchmove', this.preventTouch, {
+      this.window.addEventListener('touchmove', this.preventTouch, {
         passive: false,
       });
     }
@@ -647,7 +612,9 @@ class ModalRootTouchComponent extends React.Component<
 }
 
 export const ModalRootTouch = withContext(
-  withPlatform(withDOM<ModalRootProps>(withModalManager(initModal)(ModalRootTouchComponent))),
+  withPlatform(
+    withDOM<ModalRootWithDOMProps>(withModalManager(initModal)(ModalRootTouchComponent)),
+  ),
   ConfigProviderContext,
   'configProvider',
 );

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
+import { HasChildren } from '../../types';
 import { Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
@@ -20,10 +21,9 @@ export interface PanelHeaderContentProps extends React.HTMLAttributes<HTMLDivEle
   status?: React.ReactNode;
 }
 
-interface PanelHeaderChildrenProps {
+interface PanelHeaderChildrenProps extends HasChildren {
   hasStatus: boolean;
   hasBefore: boolean;
-  children?: React.ReactNode;
 }
 
 const PanelHeaderChildren = ({ hasStatus, hasBefore, children }: PanelHeaderChildrenProps) => {

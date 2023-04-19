@@ -102,7 +102,7 @@ export type { SnackbarProps } from './components/Snackbar/Snackbar';
  * Modals
  */
 export { ModalRoot } from './components/ModalRoot/ModalRootAdaptive';
-export type { ModalRootProps } from './components/ModalRoot/ModalRootAdaptive';
+export type { ModalRootProps } from './components/ModalRoot/types';
 export { withModalRootContext } from './components/ModalRoot/withModalRootContext';
 export { ModalRootContext } from './components/ModalRoot/ModalRootContext';
 export { ModalPage } from './components/ModalPage/ModalPage';
