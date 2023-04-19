@@ -10,8 +10,6 @@ export async function screenshotWithClipToContent(
   const { cropToContentSelector = DEFAULT_CROP_TO_CONTENT_SELECTOR } = options;
 
   await page.evaluate(() => document.fonts.ready);
-  // см. https://github.com/VKCOM/VKUI/pull/3385
-  await page.waitForLoadState('networkidle', { timeout: 3000 });
 
   // getBoundingClientRect в webkit возвращает некорректные значения, спасает timeout 500ms
   // см. https://github.com/VKCOM/VKUI/pull/3417
