@@ -10,7 +10,7 @@ updates:
       - 'VKCOM/vk-sec'
       - 'VKCOM/vkui-core'
 
-      # PACKAGES
+  # PACKAGES
 
   - package-ecosystem: 'npm'
     directory: '/packages/token-translator'
@@ -21,6 +21,18 @@ updates:
     reviewers:
       - 'VKCOM/vk-sec'
       - 'VKCOM/vkui-core'
+
+  - package-ecosystem: 'npm'
+    directory: '/packages/vkui'
+    schedule:
+      interval: 'daily'
+    allow:
+      - dependency-type: 'direct'
+    reviewers:
+      - 'VKCOM/vk-sec'
+      - 'VKCOM/vkui-core'
+
+  # TOOLS PACKAGES
 
   - package-ecosystem: 'npm'
     directory: '/tools/eslint-plugin-vkui'
@@ -46,7 +58,7 @@ updates:
   - package-ecosystem: 'cargo'
     directory: '/tools/swc-transform-css-modules'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     allow:
       - dependency-type: 'indirect'
     reviewers:
@@ -56,12 +68,18 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/tools/storybook-addon-cartesian'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     allow:
       - dependency-type: 'direct'
     reviewers:
       - 'VKCOM/vk-sec'
       - 'VKCOM/vkui-core'
+    # TODO удалить настройки ниже после того, как завезут групповое обновление зависимостей https://github.com/dependabot/dependabot-core/issues/1190
+    open-pull-requests-limit: 1
+    labels:
+      - 'maybe-need-manual-group-update'
+    commit-message:
+      prefix: '[@storybook deps] '
 
   # LOCAL ACTIONS
 
