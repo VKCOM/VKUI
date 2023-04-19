@@ -4,11 +4,9 @@ import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import { SizeType } from '../../../lib/adaptivity';
 import { callMultiple } from '../../../lib/callMultiple';
+import { HasRef } from '../../../types';
 import { FocusVisible } from '../../FocusVisible/FocusVisible';
-import {
-  VisuallyHiddenInput,
-  VisuallyHiddenInputProps,
-} from '../../VisuallyHiddenInput/VisuallyHiddenInput';
+import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './SegmentedControlOption.module.css';
 
 const sizeYClassNames = {
@@ -16,15 +14,20 @@ const sizeYClassNames = {
   [SizeType.COMPACT]: styles['SegmentedControlOption__content--sizeY-compact'],
 };
 
+export interface SegmentedControlOptionProps
+  extends React.InputHTMLAttributes<HTMLInputElement>,
+    HasRef<HTMLInputElement> {}
+
 /**
  * @see https://vkcom.github.io/VKUI/#/SegmentedControl
  */
 export const SegmentedControlOption = ({
+  getRef,
   className,
   style,
   children,
   ...restProps
-}: VisuallyHiddenInputProps) => {
+}: SegmentedControlOptionProps) => {
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
   const { sizeY = 'none' } = useAdaptivity();
 
@@ -37,8 +40,10 @@ export const SegmentedControlOption = ({
       )}
       style={style}
     >
-      <VisuallyHiddenInput
+      <VisuallyHidden
         {...restProps}
+        Component="input"
+        getRootRef={getRef}
         type="radio"
         onBlur={callMultiple(onBlur, restProps.onBlur)}
         onFocus={callMultiple(onFocus, restProps.onFocus)}

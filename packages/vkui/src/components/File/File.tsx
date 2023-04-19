@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { HasRef, HasRootRef } from '../../types';
 import { Button, VKUIButtonProps } from '../Button/Button';
-import { VisuallyHiddenInput } from '../VisuallyHiddenInput/VisuallyHiddenInput';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 
 export interface FileProps
   extends Omit<VKUIButtonProps, 'type'>,
@@ -44,7 +44,7 @@ export const File = ({
       getRootRef={getRootRef}
       disabled={restProps.disabled}
     >
-      <VisuallyHiddenInput {...restProps} type="file" getRef={getRef} />
+      <VisuallyHidden {...restProps} Component="input" type="file" getRootRef={getRef} />
       {children}
     </Button>
   );

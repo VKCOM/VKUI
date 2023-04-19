@@ -17,7 +17,7 @@ import { warnOnce } from '../../lib/warnOnce';
 import { HasRef, HasRootRef } from '../../types';
 import { ACTIVE_EFFECT_DELAY, Tappable, type TappableProps } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
-import { VisuallyHiddenInput } from '../VisuallyHiddenInput/VisuallyHiddenInput';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Checkbox.module.css';
 
 const sizeYClassNames = {
@@ -128,12 +128,13 @@ export const Checkbox = ({
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
     >
-      <VisuallyHiddenInput
+      <VisuallyHidden
         {...restProps}
-        onChange={handleChange}
+        Component="input"
         type="checkbox"
+        onChange={handleChange}
         className={styles['Checkbox__input']}
-        getRef={inputRef}
+        getRootRef={inputRef}
       />
       <div className={classNames(styles['Checkbox__icon'], styles['Checkbox__icon--on'])}>
         {platform === Platform.VKCOM ? (

@@ -8,14 +8,17 @@ import {
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { Platform } from '../../../lib/platform';
-import { VisuallyHiddenInput } from '../../VisuallyHiddenInput/VisuallyHiddenInput';
+import { HasRef } from '../../../types';
+import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import { CellProps } from '../Cell';
 import styles from './CellCheckbox.module.css';
 
-export type CellCheckboxProps = Pick<CellProps, 'defaultChecked' | 'checked'> &
-  React.InputHTMLAttributes<HTMLInputElement>;
+export interface CellCheckboxProps
+  extends Pick<CellProps, 'defaultChecked' | 'checked'>,
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HasRef<HTMLInputElement> {}
 
-export const CellCheckbox = ({ className, style, ...restProps }: CellCheckboxProps) => {
+export const CellCheckbox = ({ className, style, getRef, ...restProps }: CellCheckboxProps) => {
   const platform = usePlatform();
 
   const IconOff =
@@ -30,10 +33,12 @@ export const CellCheckbox = ({ className, style, ...restProps }: CellCheckboxPro
 
   return (
     <span className={className} style={style}>
-      <VisuallyHiddenInput
-        className={styles['CellCheckbox__input']}
-        type="checkbox"
+      <VisuallyHidden
         {...restProps}
+        Component="input"
+        type="checkbox"
+        className={styles['CellCheckbox__input']}
+        getRootRef={getRef}
       />
       <span
         className={classNames(styles['CellCheckbox__icon'], styles['CellCheckbox__icon--off'])}

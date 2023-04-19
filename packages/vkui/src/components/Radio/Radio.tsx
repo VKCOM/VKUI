@@ -7,7 +7,7 @@ import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { ACTIVE_EFFECT_DELAY, Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
-import { VisuallyHiddenInput } from '../VisuallyHiddenInput/VisuallyHiddenInput';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Radio.module.css';
 
 const sizeYClassNames = {
@@ -42,6 +42,7 @@ export const Radio = ({
   className,
   getRootRef,
   titleAfter,
+  getRef,
   ...restProps
 }: RadioProps) => {
   const platform = usePlatform();
@@ -60,7 +61,13 @@ export const Radio = ({
       disabled={restProps.disabled}
       getRootRef={getRootRef}
     >
-      <VisuallyHiddenInput {...restProps} className={styles['Radio__input']} type="radio" />
+      <VisuallyHidden
+        {...restProps}
+        Component="input"
+        type="radio"
+        getRootRef={getRef}
+        className={styles['Radio__input']}
+      />
       <div className={styles['Radio__container']}>
         <RadioIcon className={styles['Radio__icon']} />
         <div className={styles['Radio__content']}>
