@@ -1,5 +1,5 @@
 .Link {
-  color: var(--vkui--color_text_link);
+  color: var(--vkui_internal--link-color, var(--vkui--color_text_link));
   text-decoration: none;
   border: 0;
   background: none;
