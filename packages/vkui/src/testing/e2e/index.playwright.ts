@@ -34,6 +34,18 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
   adaptivityProviderProps: [null, { option: true }],
   onlyForPlatforms: [null, { option: true }],
 
+  /**
+   * см. https://playwright.dev/docs/test-fixtures#overriding-fixtures
+   *
+   * @override
+   */
+  page: async ({ page }, use) => {
+    // Сбрасываем курсор мыши перед началом каждого теста.
+    // см. https://github.com/VKCOM/VKUI/pull/4652#firefox-bottleneck
+    await page.mouse.move(0, 0);
+    await use(page);
+  },
+
   expectScreenshotClippedToContent: async (
     { page, platform, browserName, appearance },
     use,
