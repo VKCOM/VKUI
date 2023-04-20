@@ -1,50 +1,57 @@
 import * as React from 'react';
 import { clamp } from '../../helpers/math';
+import { SliderBase, SliderBaseProps } from '../SliderBase/SliderBase';
 import { TouchEvent } from '../Touch/Touch';
-import { UniversalSlider, UniversalSliderProps } from './UniversalSlider';
 
-export type Value = [number, number];
-export type RangeSliderProps = UniversalSliderProps<Value>;
+type Value = [number, number];
+
+export interface RangeSliderProps extends SliderBaseProps<Value> {
+  defaultValue?: Value;
+}
 
 /**
  * @see https://vkcom.github.io/VKUI/#/RangeSlider
  */
 export const RangeSlider = ({
-  onChange,
   min = 0,
   max = 100,
-  defaultValue = [min, max],
+  // TODO [>=6] Удалить значение по умолчанию, чтобы применялось из SliderBase
   step = 0,
-  ...props
+  value: valueProp,
+  defaultValue = [min, max],
+  disabled,
+  onChange,
+  ...restProps
 }: RangeSliderProps) => {
-  const isControlled = props.value !== undefined;
+  const isControlled = valueProp !== undefined;
 
   const [localValue, setValue] = React.useState(defaultValue);
-  const [start, end] = props.value || localValue;
-  const value = React.useMemo(
-    () => [clamp(start, min, max), clamp(end, min, max)] as Value,
+  const [start, end] = valueProp || localValue;
+  const value = React.useMemo<Value>(
+    () => [clamp(start, min, max), clamp(end, min, max)],
     [end, max, min, start],
   );
 
   const handleChange: RangeSliderProps['onChange'] = React.useCallback(
     (nextValue: Value, event: TouchEvent) => {
-      if (props.disabled || (value[0] === nextValue[0] && value[1] === nextValue[1])) {
+      if (disabled || (value[0] === nextValue[0] && value[1] === nextValue[1])) {
         return;
       }
       !isControlled && setValue(nextValue);
       onChange && onChange(nextValue, event);
     },
-    [props.disabled, value, isControlled, onChange],
+    [disabled, value, isControlled, onChange],
   );
 
   return (
-    <UniversalSlider
-      {...props}
-      value={value}
-      onChange={handleChange}
+    <SliderBase
+      {...restProps}
       min={min}
       max={max}
       step={step}
+      value={value}
+      disabled={disabled}
+      onChange={handleChange}
     />
   );
 };

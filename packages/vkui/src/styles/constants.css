@@ -3,6 +3,7 @@
   --vkui_internal--tabbar_height: 48px;
   --vkui_internal--thin_border: 1px;
   --vkui_internal--grid_avatar_image_offset: 2px;
+  --vkui_internal--slider_thumb_size: 28px;
 
   /**
    * "Safe Zone" добавляет невидимую интерактивную область, по которой пользователь будет вводить мышкой и тем самым

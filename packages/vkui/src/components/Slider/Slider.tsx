@@ -1,43 +1,53 @@
 import * as React from 'react';
 import { clamp } from '../../helpers/math';
-import {
-  UniversalSlider,
-  UniversalSliderProps,
-  UniversalValue,
-} from '../RangeSlider/UniversalSlider';
+import { SliderBase, type SliderBaseProps } from '../SliderBase/SliderBase';
+import type { SliderBaseValue } from '../SliderBase/types';
 import { TouchEvent } from '../Touch/Touch';
 
-export type SliderProps = UniversalSliderProps<number>;
+export interface SliderProps extends SliderBaseProps<number> {
+  defaultValue?: number;
+}
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Slider
  */
 export const Slider = ({
-  onChange,
   min = 0,
   max = 100,
+  // TODO [>=6] Удалить значение по умолчанию, чтобы применялось из SliderBase
+  step = 0,
+  value: valueProp,
   defaultValue = min,
-  value,
-  ...props
+  disabled,
+  onChange,
+  ...restProps
 }: SliderProps) => {
-  const isControlled = value !== undefined;
+  const isControlled = valueProp !== undefined;
 
   const [localValue, setValue] = React.useState(defaultValue);
-  const _value = clamp(isControlled ? value : localValue, min, max);
+  const value = clamp(isControlled ? valueProp : localValue, min, max);
+  const rangeValue: [number, null] = React.useMemo(() => [value, null], [value]);
 
-  const handleChange: UniversalSliderProps<UniversalValue>['onChange'] = React.useCallback(
-    (nextValue: UniversalValue, event: TouchEvent) => {
-      if (props.disabled || _value === nextValue[1]) {
+  const handleChange: SliderBaseProps<SliderBaseValue>['onChange'] = React.useCallback(
+    ([nextValue]: SliderBaseValue, event: TouchEvent) => {
+      if (disabled || value === nextValue) {
         return;
       }
-      !isControlled && setValue(nextValue[1]);
-      onChange && onChange(nextValue[1], event);
+      !isControlled && setValue(nextValue);
+      onChange && onChange(nextValue, event);
     },
-    [props.disabled, _value, isControlled, onChange],
+    [disabled, value, isControlled, onChange],
   );
 
-  const rangeValue: [null, number] = React.useMemo(() => [null, _value], [_value]);
   return (
-    <UniversalSlider {...props} value={rangeValue} onChange={handleChange} min={min} max={max} />
+    <SliderBase
+      {...restProps}
+      min={min}
+      max={max}
+      step={step}
+      value={rangeValue}
+      disabled={disabled}
+      onChange={handleChange}
+    />
   );
 };
