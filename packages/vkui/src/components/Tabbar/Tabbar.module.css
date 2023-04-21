@@ -8,11 +8,7 @@
   padding-bottom: var(--vkui_internal--safe_area_inset_bottom);
   box-sizing: content-box;
   background: var(--vkui--color_background_tertiary);
-}
-
-.Tabbar__in {
   display: flex;
-  justify-content: center;
   overflow: hidden;
 }
 
@@ -30,23 +26,9 @@
 
 .Tabbar--ios.Tabbar--shadow::before {
   position: absolute;
-  bottom: 100%;
   left: 0;
   width: 100%;
-  height: 1px;
+  height: var(--vkui_internal--thin_border);
   background: var(--vkui--color_separator_primary_alpha);
-  transform-origin: center bottom;
   content: '';
-}
-
-@media (min-resolution: 2dppx) {
-  .Tabbar--ios::before {
-    transform: scaleY(0.5);
-  }
-}
-
-@media (min-resolution: 3dppx) {
-  .Tabbar--ios::before {
-    transform: scaleY(0.33);
-  }
 }

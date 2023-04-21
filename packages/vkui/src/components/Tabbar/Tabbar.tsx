@@ -49,7 +49,7 @@ export const Tabbar = ({ children, shadow = true, mode, className, ...restProps 
       )}
       {...restProps}
     >
-      <div className={styles['Tabbar__in']}>{children}</div>
+      {children}
     </div>
   );
 };
