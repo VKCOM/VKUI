@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { TypographyProps } from '../types';
+import { Typography, TypographyProps } from '../Typography';
 import styles from './Title.module.css';
 
 export interface TitleProps extends TypographyProps {
@@ -12,8 +12,6 @@ export interface TitleProps extends TypographyProps {
  */
 export const Title = ({
   className,
-  children,
-  weight,
   level = '1',
   Component,
   normalize = true,
@@ -24,25 +22,18 @@ export const Title = ({
   }
 
   return (
-    <Component
-      {...restProps}
+    <Typography
+      Component={Component}
+      normalize={normalize}
       className={classNames(
         className,
-        normalize && styles['Title--normalize'],
         {
           '1': styles['Title--level-1'],
           '2': styles['Title--level-2'],
           '3': styles['Title--level-3'],
         }[level],
-        weight &&
-          {
-            '1': styles['Title--weight-1'],
-            '2': styles['Title--weight-2'],
-            '3': styles['Title--weight-3'],
-          }[weight],
       )}
-    >
-      {children}
-    </Component>
+      {...restProps}
+    />
   );
 };

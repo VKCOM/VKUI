@@ -1,8 +1,3 @@
-.Footnote--normalize {
-  display: block;
-  margin: 0;
-}
-
 .Footnote {
   font-size: var(--vkui--font_footnote--font_size--regular);
   line-height: var(--vkui--font_footnote--line_height--regular);
@@ -16,16 +11,4 @@
   font-weight: var(--vkui--font_footnote_caps--font_weight--regular);
   font-family: var(--vkui--font_footnote_caps--font_family--regular);
   text-transform: uppercase;
-}
-
-.Footnote--weight-1 {
-  font-weight: var(--vkui--font_weight_accent1);
-}
-
-.Footnote--weight-2 {
-  font-weight: var(--vkui--font_weight_accent2);
-}
-
-.Footnote--weight-3 {
-  font-weight: var(--vkui--font_weight_accent3);
 }

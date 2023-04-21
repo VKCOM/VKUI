@@ -1,7 +1,3 @@
-.Subhead--normalize {
-  margin: 0;
-}
-
 .Subhead {
   font-size: var(--vkui--font_subhead--font_size--regular);
   line-height: var(--vkui--font_subhead--line_height--regular);
@@ -19,16 +15,4 @@
     font-size: var(--vkui--font_subhead--font_size--compact);
     line-height: var(--vkui--font_subhead--line_height--compact);
   }
-}
-
-.Subhead--weight-1 {
-  font-weight: var(--vkui--font_weight_accent1);
-}
-
-.Subhead--weight-2 {
-  font-weight: var(--vkui--font_weight_accent2);
-}
-
-.Subhead--weight-3 {
-  font-weight: var(--vkui--font_weight_accent3);
 }

@@ -1,8 +1,3 @@
-.Title--normalize {
-  display: block;
-  margin: 0;
-}
-
 .Title--level-1 {
   font-size: var(--vkui--font_title1--font_size--regular);
   line-height: var(--vkui--font_title1--line_height--regular);
@@ -22,16 +17,4 @@
   line-height: var(--vkui--font_title3--line_height--regular);
   font-weight: var(--vkui--font_title3--font_weight--regular);
   font-family: var(--vkui--font_title3--font_family--regular);
-}
-
-.Title--weight-1 {
-  font-weight: var(--vkui--font_weight_accent1);
-}
-
-.Title--weight-2 {
-  font-weight: var(--vkui--font_weight_accent2);
-}
-
-.Title--weight-3 {
-  font-weight: var(--vkui--font_weight_accent3);
 }
