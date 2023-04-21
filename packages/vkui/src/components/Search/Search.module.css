@@ -1,45 +1,72 @@
 .Search {
+  display: flex;
   overflow: hidden;
-  font-weight: normal;
-  font-family: var(--vkui--font_family_base);
-  transform: translate3d(0, 0, 0);
-  line-height: normal;
   padding: 8px var(--vkui--size_base_padding_horizontal--regular);
   -webkit-tap-highlight-color: transparent;
+
+  --vkui_internal--search_height: var(--vkui--size_search_height--regular);
 }
 
-.Search__in {
+/*
+  sizeY-compact
+ */
+
+.Search--sizeY-compact {
+  --vkui_internal--search_height: var(--vkui--size_search_height--compact);
+}
+
+@media (--sizeY-compact) {
+  .Search--sizeY-none {
+    --vkui_internal--search_height: var(--vkui--size_search_height--compact);
+  }
+}
+
+.Search__field {
+  flex: 2;
   position: relative;
-}
-
-.Search__width {
-  white-space: nowrap;
-  color: transparent;
+  display: flex;
+  height: var(--vkui_internal--search_height);
+  background-color: var(--vkui--color_search_field_background);
+  border-radius: var(--vkui--size_border_radius--regular);
+  /**
+   * Костыль для PanelHeader. Необходимо для растягивания на всю ширину.
+  */
   width: 10000px;
 }
 
+.Search__field:hover {
+  background-color: var(--vkui--color_search_field_background--hover);
+}
+
+.Search__field:active {
+  background-color: var(--vkui--color_search_field_background--active);
+}
+
 .Search__control {
+  padding-left: 12px;
+  color: var(--vkui--color_icon_medium);
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  position: absolute;
-  left: 0;
-  top: 0;
   width: calc(100% - 1px);
   height: 100%;
-  border-radius: var(--vkui--size_border_radius--regular);
+  border-radius: inherit;
 }
 
 .Search__input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
   -webkit-appearance: none; /* не используем textfield из-за бага в iOS 15.1 http://www.openradar.me/FB9744107 */
   border: none;
   margin: 0;
-  position: relative;
-  padding: 0 22px 0 36px;
+  padding: 0;
+  padding-left: 36px;
   box-sizing: border-box;
-  font-size: 17px;
-  border-radius: var(--vkui--size_border_radius--regular);
-  font-family: inherit;
+  border-radius: inherit;
   max-width: 100%;
   flex-grow: 1;
   min-width: 0;
@@ -64,64 +91,15 @@
 }
 
 .Search--has-value .Search__input,
-.Search--has-icon .Search__input,
-.Search--has-value .Search__placeholder,
-.Search--has-icon .Search__placeholder {
-  padding-right: 40px;
+.Search--has-icon .Search__input {
+  margin-right: calc(var(--vkui_internal--search_height) + 4px);
 }
 
-.Search--has-icon.Search--has-value .Search__input,
-.Search--has-icon.Search--has-value .Search__placeholder {
-  padding-right: 80px;
-}
-
-.Search__after-width {
-  font-size: 17px;
-  padding-left: 12px;
-  padding-right: 4px;
-  flex-shrink: 0;
-  pointer-events: none;
-  cursor: text;
-}
-
-.Search__placeholder {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  cursor: text;
-  text-align: left;
-  font-size: 0;
-  padding-left: 12px;
-  padding-right: 22px;
-  pointer-events: none;
-  box-sizing: border-box;
-  display: flex;
-}
-
-.Search__placeholder-in {
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  flex-grow: 1;
-  max-width: 100%;
-}
-
-.Search__placeholder-text {
-  margin-left: 8px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  color: var(--vkui--color_text_secondary);
-}
-
-.Search--has-value .Search__placeholder-text {
-  opacity: 0;
+.Search--has-icon.Search--has-value .Search__input {
+  margin-right: calc((var(--vkui_internal--search_height) + 4px) * 2);
 }
 
 .Search__icons {
-  position: absolute;
-  right: 100%;
-  top: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -129,214 +107,47 @@
 }
 
 .Search__icon {
-  width: 40px;
+  width: calc(var(--vkui_internal--search_height) + 4px);
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  height: 100%;
+  border-radius: var(--vkui--size_border_radius--regular);
+}
+
+/* stylelint-disable-next-line @project-tools/stylelint-atomic */
+.Search__icon :global(.vkuiIcon) {
+  padding: 0;
 }
 
 .Search__after {
-  position: absolute;
-  left: 100%;
-  top: 0;
-  transform: translate(0);
-  transition: transform 0.3s var(--vkui--animation_easing_platform);
-  cursor: default;
+  flex: 0;
+  transform: translate(50%);
+  transform-origin: left;
+  min-width: initial;
+  max-width: min-content;
+  pointer-events: none;
+  transition: flex 0.3s var(--vkui--animation_easing_platform),
+    transform 0.3s var(--vkui--animation_easing_platform);
+  overflow: hidden;
+  margin-left: 4px;
+  margin-right: calc(4px - var(--vkui--size_base_padding_horizontal--regular));
 }
 
 .Search--focused .Search__after,
 .Search--has-value .Search__after {
-  transform: translate(-100%);
+  flex: 1;
+  transform: translate(0);
+  pointer-events: initial;
 }
 
-.Search__after::before {
-  position: absolute;
-  right: calc(100% - 1px);
+.Search__afterText {
   display: block;
-  height: 100%;
-  width: 10px;
-  content: '';
-  pointer-events: none;
-}
-
-.Search__after-in {
-  position: relative;
-  cursor: pointer;
-  font-size: 17px;
-  padding-left: 12px;
-  padding-right: 4px;
-}
-
-.Search__after::after {
-  position: absolute;
-  right: 100%;
-  display: block;
-  height: 100%;
-  width: 10px;
-  content: '';
-  top: 0;
-  border-radius: 0 var(--vkui--size_border_radius--regular) var(--vkui--size_border_radius--regular)
-    0;
-  cursor: text;
-  pointer-events: none;
+  white-space: nowrap;
+  text-overflow: clip;
+  overflow: hidden;
 }
 
 .Group--mode-plain .Search {
   padding-top: 4px;
-}
-
-.Search__width,
-.Search__input,
-.Search__after-width,
-.Search__placeholder,
-.Search__placeholder-in,
-.Search__icon {
-  height: var(--vkui--size_search_height--compact);
-}
-
-.Search__after-width,
-.Search__after {
-  line-height: var(--vkui--size_search_height--compact);
-}
-
-/*
-  sizeY-regular
- */
-
-.Search--sizeY-regular .Search__width,
-.Search--sizeY-regular .Search__input,
-.Search--sizeY-regular .Search__after-width,
-.Search--sizeY-regular .Search__placeholder,
-.Search--sizeY-regular .Search__placeholder-in,
-.Search--sizeY-regular .Search__icon {
-  height: var(--vkui--size_search_height--regular);
-}
-
-.Search--sizeY-regular .Search__after-width,
-.Search--sizeY-regular .Search__after {
-  line-height: var(--vkui--size_search_height--regular);
-}
-
-@media (--sizeY-regular) {
-  .Search--sizeY-none .Search__width,
-  .Search--sizeY-none .Search__input,
-  .Search--sizeY-none .Search__after-width,
-  .Search--sizeY-none .Search__placeholder,
-  .Search--sizeY-none .Search__placeholder-in,
-  .Search--sizeY-none .Search__icon {
-    height: var(--vkui--size_search_height--regular);
-  }
-
-  .Search--sizeY-none .Search__after-width,
-  .Search--sizeY-none .Search__after {
-    line-height: var(--vkui--size_search_height--regular);
-  }
-}
-
-/*
-  Themes
- */
-
-/*
-  default
- */
-.Search {
-  /* цвет фона для скрывания элементов */
-  background: var(--vkui_internal--background, var(--vkui--color_background_content));
-}
-
-.Search__control {
-  background-color: var(--vkui--color_search_field_background);
-}
-
-.Search__in:hover .Search__control,
-.Search__in:hover .Search__after-width,
-.Search__in:hover .Search__after::after {
-  background-color: var(--vkui--color_search_field_background--hover);
-}
-
-.Search__in:hover .Search__after-width {
-  color: var(--vkui--color_search_field_background--hover);
-}
-
-.Search__in:active .Search__control,
-.Search__in:active .Search__after-width,
-.Search__in:active .Search__after::after {
-  background-color: var(--vkui--color_search_field_background--active);
-}
-
-.Search__in:active .Search__after-width {
-  color: var(--vkui--color_search_field_background--active);
-}
-
-.Search__input {
-  color: var(--vkui--color_text_primary);
-}
-
-.Search__placeholder {
-  color: var(--vkui--color_icon_medium);
-}
-
-.Search__after-width {
-  background: var(--vkui--color_search_field_background);
-  color: var(--vkui--color_search_field_background);
-}
-
-.Search__after {
-  /* цвет фона для скрывания элементов */
-  background: var(--vkui_internal--background, var(--vkui--color_background_content));
-  color: var(--vkui--color_icon_accent_themed);
-}
-
-.Search__after::after {
-  background-color: var(--vkui--color_search_field_background);
-}
-
-.Search__after::before {
-  /* цвет фона для скрывания элементов */
-  background-color: var(--vkui_internal--background, var(--vkui--color_background_content));
-}
-
-/**
- * CMP:
- * PanelHeader
- */
-:global(.vkuiInternalPanelHeader) .Search {
-  background: var(--vkui--color_header_background);
-}
-
-:global(.vkuiInternalPanelHeader) .Search__control {
-  background-color: var(--vkui--color_search_field_background);
-}
-
-:global(.vkuiInternalPanelHeader) .Search__input {
-  color: var(--vkui--color_text_primary);
-}
-
-:global(.vkuiInternalPanelHeader) .Search__placeholder {
-  color: var(--vkui--color_icon_secondary);
-}
-
-:global(.vkuiInternalPanelHeader) .Search__after-width {
-  background: var(--vkui--color_search_field_background);
-  color: var(--vkui--color_search_field_background);
-}
-
-:global(.vkuiInternalPanelHeader) .Search__after {
-  background: var(--vkui--color_header_background);
-  color: var(--vkui--color_icon_accent_themed);
-}
-
-:global(.vkuiInternalPanelHeader) .Search__after::after {
-  background-color: var(--vkui--color_search_field_background);
-}
-
-:global(.vkuiInternalPanelHeader) .Search__after::before {
-  background-color: var(--vkui--color_header_background);
-}
-
-:global(.vkuiInternalPanelHeader--android) .Search,
-:global(.vkuiInternalPanelHeader--vkcom) .Search {
-  padding: 0 4px;
 }

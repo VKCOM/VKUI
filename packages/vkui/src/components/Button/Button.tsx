@@ -56,9 +56,9 @@ export const Button = ({
       hoverMode={styles['Button--hover']}
       activeMode={styles['Button--active']}
       Component={restProps.href ? 'a' : 'button'}
+      focusVisibleMode="outside"
       {...restProps}
       onClick={loading ? undefined : onClick}
-      focusVisibleMode="outside"
       stopPropagation={stopPropagation}
       className={classNames(
         className,

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Icon16Clear, Icon16SearchOutline, Icon24Cancel } from '@vkontakte/icons';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useBooleanState } from '../../hooks/useBooleanState';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -9,37 +10,11 @@ import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { VKUITouchEvent } from '../../lib/touch';
 import { HasRef } from '../../types';
-import { Touch, TouchEvent } from '../Touch/Touch';
-import { Headline } from '../Typography/Headline/Headline';
-import { Title } from '../Typography/Title/Title';
+import { Button } from '../Button/Button';
+import { IconButton } from '../IconButton/IconButton';
+import { TouchEvent } from '../Touch/Touch';
 import styles from './Search.module.css';
-
-const sizeYClassNames = {
-  none: styles['Search--sizeY-none'],
-  [SizeType.REGULAR]: styles['Search--sizeY-regular'],
-};
-
-const SearchPlaceholderTypography = ({
-  children,
-  ...restProps
-}: React.HTMLAttributes<HTMLElement>) => {
-  const platform = usePlatform();
-
-  switch (platform) {
-    case Platform.IOS:
-      return (
-        <Title {...restProps} level="3" weight="3">
-          {children}
-        </Title>
-      );
-    default:
-      return (
-        <Headline {...restProps} weight="3">
-          {children}
-        </Headline>
-      );
-  }
-};
+import stylesHeadline from '../Typography/Headline/Headline.module.css';
 
 export interface SearchProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
@@ -52,6 +27,8 @@ export interface SearchProps
   icon?: React.ReactNode;
   onIconClick?: (e: VKUITouchEvent) => void;
   defaultValue?: string;
+  iconAriaLabel?: string;
+  clearAriaLabel?: string;
 }
 
 /**
@@ -70,10 +47,17 @@ export const Search = ({
   autoComplete = 'off',
   onChange: onChangeProp,
   value: valueProp,
+  iconAriaLabel,
+  clearAriaLabel = 'Очистить',
   ...inputProps
 }: SearchProps) => {
   const inputRef = useExternRef(getRef);
-  const [isFocused, setFocused] = React.useState(false);
+  const {
+    value: isFocused,
+    setTrue: setFocusedTrue,
+    setFalse: setFocusedFalse,
+  } = useBooleanState(false);
+
   const [value, onChange] = useEnsuredControl({
     defaultValue,
     onChange: onChangeProp,
@@ -83,12 +67,12 @@ export const Search = ({
   const platform = usePlatform();
 
   const onFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    setFocused(true);
+    setFocusedTrue();
     inputProps.onFocus && inputProps.onFocus(e);
   };
 
   const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    setFocused(false);
+    setFocusedFalse();
     inputProps.onBlur && inputProps.onBlur(e);
   };
 
@@ -121,8 +105,10 @@ export const Search = ({
   return (
     <div
       className={classNames(
+        'vkuiInternalSearch',
         styles['Search'],
-        sizeY !== SizeType.COMPACT && sizeYClassNames[sizeY],
+        sizeY === 'none' && styles['Search--sizeY-none'],
+        sizeY === SizeType.COMPACT && styles['Search--sizeY-compact'],
         isFocused && styles['Search--focused'],
         value && styles['Search--has-value'],
         after && styles['Search--has-after'],
@@ -131,59 +117,67 @@ export const Search = ({
       )}
       style={style}
     >
-      <div className={styles['Search__in']}>
-        <div className={styles['Search__width']} />
+      <div className={styles['Search__field']}>
         <label className={styles['Search__control']}>
+          {before}
           <input
             type="search"
             {...inputProps}
+            placeholder={placeholder}
             autoComplete={autoComplete}
             ref={inputRef}
-            className={styles['Search__input']}
+            className={classNames(
+              styles['Search__input'],
+              stylesHeadline['Headline--level-1'],
+              stylesHeadline['Headline--weight-3'],
+              sizeY === 'none' && stylesHeadline['Headline--sizeY-none'],
+              sizeY === SizeType.COMPACT && stylesHeadline['Headline--sizeY-compact'],
+            )}
             onFocus={onFocus}
             onBlur={onBlur}
             onChange={onChange}
             value={value}
           />
-          {platform === Platform.IOS && after && (
-            <div className={styles['Search__after-width']}>{after}</div>
-          )}
-          <div className={styles['Search__placeholder']}>
-            <div className={styles['Search__placeholder-in']}>
-              {before}
-              <SearchPlaceholderTypography className={styles['Search__placeholder-text']}>
-                {placeholder}
-              </SearchPlaceholderTypography>
-            </div>
-            {isFocused && platform === Platform.IOS && after && (
-              <div className={styles['Search__after-width']}>{after}</div>
-            )}
-          </div>
         </label>
-        <div className={styles['Search__after']}>
-          <div className={styles['Search__icons']}>
-            {icon && (
-              <Touch onStart={onIconClickStart} className={styles['Search__icon']}>
-                {icon}
-              </Touch>
-            )}
-            {!!value && (
-              <Touch
-                onStart={onIconCancelClickStart}
-                onClick={onCancel}
-                className={styles['Search__icon']}
-              >
-                {platform === Platform.IOS ? <Icon16Clear /> : <Icon24Cancel />}
-              </Touch>
-            )}
-          </div>
-          {platform === Platform.IOS && after && (
-            <div className={styles['Search__after-in']} onClick={onCancel}>
-              {after}
-            </div>
+        <div className={styles['Search__icons']}>
+          {icon && (
+            <IconButton
+              hoverMode="opacity"
+              onStart={onIconClickStart}
+              className={styles['Search__icon']}
+              onFocus={setFocusedTrue}
+              onBlur={setFocusedFalse}
+              aria-label={iconAriaLabel}
+            >
+              {icon}
+            </IconButton>
+          )}
+          {!!value && (
+            <IconButton
+              hoverMode="opacity"
+              onStart={onIconCancelClickStart}
+              onClick={onCancel}
+              className={styles['Search__icon']}
+              aria-label={clearAriaLabel}
+            >
+              {platform === Platform.IOS ? <Icon16Clear /> : <Icon24Cancel />}
+            </IconButton>
           )}
         </div>
       </div>
+      {platform === Platform.IOS && after && (
+        <Button
+          mode="tertiary"
+          size="m"
+          className={styles['Search__after']}
+          focusVisibleMode="inside"
+          onClick={onCancel}
+          onFocus={setFocusedTrue}
+          onBlur={setFocusedFalse}
+        >
+          <span className={styles['Search__afterText']}>{after}</span>
+        </Button>
+      )}
     </div>
   );
 };

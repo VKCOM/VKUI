@@ -39,6 +39,7 @@ export const SearchTestFocusOnIOSPlayground = ({ appearance }: ComponentPlaygrou
             height: 'auto',
             position: 'absolute',
             width: BREAKPOINTS.MOBILE,
+            background: 'var(--vkui--color_background_content)',
           }}
         >
           <Search after="after" />
