@@ -7,7 +7,7 @@ import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { Headline } from '../Typography/Headline/Headline';
 import { Title } from '../Typography/Title/Title';
-import { TypographyProps } from '../Typography/types';
+import { TypographyProps } from '../Typography/Typography';
 import styles from './WriteBar.module.css';
 
 export interface WriteBarProps
@@ -38,9 +38,7 @@ export interface WriteBarProps
   children?: never;
 }
 
-interface WriteBarTypographyProps extends TypographyProps, HasRootRef<HTMLElement> {}
-
-const WriteBarTypography = (props: WriteBarTypographyProps) => {
+const WriteBarTypography = (props: TypographyProps) => {
   const platform = usePlatform();
 
   if (platform === Platform.IOS) {
