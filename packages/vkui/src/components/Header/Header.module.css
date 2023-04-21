@@ -11,17 +11,16 @@
 
 .Header__main {
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
   color: var(--vkui--color_text_primary);
 }
 
 .Header__content {
   display: flex;
-  align-items: baseline;
+  align-items: center;
 }
 
-.Header__content-in {
+.Header__content-in,
+.Header__subtitle {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -37,6 +36,7 @@
 }
 
 .Header__subtitle {
+  display: block;
   color: var(--vkui--color_text_secondary);
 }
 
@@ -44,7 +44,7 @@
   margin-top: -1px;
 }
 
-.Header--mode-secondary:not(.Header--pi) .Header__main,
+.Header--mode-secondary:not(.Header--pi):not(.Header--with-subtitle) .Header__main,
 .Header--mode-tertiary .Header__main {
   color: var(--vkui--color_text_secondary);
 }
@@ -92,6 +92,18 @@
   margin: 15px 0 9px;
 }
 
+.Header--android.Header--mode-primary .Header__main {
+  margin-bottom: 7px;
+}
+
+.Header--android.Header--mode-primary .Header__content:not(:last-child) {
+  margin-top: 0;
+}
+
+.Header--android.Header--mode-primary .Header__content:last-child {
+  margin-bottom: 2px;
+}
+
 .Header--android.Header--mode-tertiary .Header__main {
   margin-top: 11px;
 }
@@ -104,12 +116,17 @@
   margin: 13px 0 9px;
 }
 
+.Header--ios.Header--mode-primary .Header__main {
+  margin: 16px 0 7px;
+}
+
 .Header--ios.Header--mode-secondary .Header__main {
   margin: 14px 0 10px;
 }
 
 .Header--ios.Header--mode-tertiary .Header__main {
-  margin-top: 9px;
+  margin-top: 12px;
+  margin-bottom: 8px;
 }
 
 /**
@@ -168,4 +185,12 @@
     > .Header:not(.Header--mode-tertiary) {
     margin-top: -4px;
   }
+}
+
+/**
+ * Impact:
+ * Link
+ */
+.Header__aside {
+  --vkui_internal--link-color: var(--vkui--color_text_accent);
 }

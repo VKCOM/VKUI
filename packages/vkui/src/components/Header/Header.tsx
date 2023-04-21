@@ -5,8 +5,8 @@ import { Platform } from '../../lib/platform';
 import { HasComponent, HasRootRef } from '../../types';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
+import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import { Subhead } from '../Typography/Subhead/Subhead';
-import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
 import styles from './Header.module.css';
 
@@ -40,10 +40,10 @@ const HeaderContent = ({ mode, size, ...restProps }: HeaderContentProps) => {
         ) : (
           <Title weight="1" level="3" {...restProps} />
         );
+      case 'secondary':
+        return <Footnote weight="1" caps {...restProps} />;
       case 'tertiary':
         return <Title weight="1" level="3" {...restProps} />;
-      case 'secondary':
-        return <Footnote weight="2" caps {...restProps} />;
     }
   }
 
@@ -53,9 +53,10 @@ const HeaderContent = ({ mode, size, ...restProps }: HeaderContentProps) => {
         return isLarge ? (
           <Title level="2" weight="1" {...restProps} />
         ) : (
-          <Headline weight="3" {...restProps} />
+          <Headline level="1" weight="2" {...restProps} />
         );
       case 'secondary':
+        return <Footnote caps weight="1" {...restProps} />;
       case 'tertiary':
         return <Footnote {...restProps} />;
     }
@@ -68,10 +69,10 @@ const HeaderContent = ({ mode, size, ...restProps }: HeaderContentProps) => {
       ) : (
         <Headline weight="2" {...restProps} />
       );
-    case 'tertiary':
-      return <Headline weight="2" {...restProps} />;
     case 'secondary':
       return <Footnote weight="1" caps {...restProps} />;
+    case 'tertiary':
+      return <Headline weight="2" {...restProps} />;
   }
 
   return null;
@@ -94,8 +95,7 @@ export const Header = ({
 }: HeaderProps) => {
   const platform = usePlatform();
 
-  const AsideTypography = platform === Platform.VKCOM ? Subhead : Text;
-  const SubtitleTypography = mode === 'secondary' ? Subhead : Footnote;
+  const AsideTypography = platform === Platform.VKCOM ? Subhead : Paragraph;
 
   return (
     <header
@@ -112,6 +112,7 @@ export const Header = ({
           tertiary: styles['Header--mode-tertiary'],
         }[mode],
         isPrimitiveReactNode(indicator) && styles['Header--pi'],
+        hasReactNode(subtitle) && styles['Header--with-subtitle'],
         className,
       )}
     >
@@ -131,19 +132,16 @@ export const Header = ({
             {children}
           </span>
           {hasReactNode(indicator) && (
-            <Footnote
-              className={styles['Header__indicator']}
-              weight={mode === 'primary' || mode === 'secondary' ? '1' : undefined}
-            >
+            <Footnote className={styles['Header__indicator']} weight="2">
               {indicator}
             </Footnote>
           )}
         </HeaderContent>
 
         {hasReactNode(subtitle) && (
-          <SubtitleTypography className={styles['Header__subtitle']} Component="span">
+          <Subhead className={styles['Header__subtitle']} Component="span">
             {subtitle}
-          </SubtitleTypography>
+          </Subhead>
         )}
       </div>
 
