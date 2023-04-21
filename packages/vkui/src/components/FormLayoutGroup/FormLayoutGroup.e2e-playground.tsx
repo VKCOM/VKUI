@@ -194,6 +194,20 @@ export const FormLayoutGroupPlayground = (props: ComponentPlaygroundProps) => {
             </AdaptivityProvider>,
           ],
         },
+        {
+          mode: ['horizontal'],
+          removable: ['indent'],
+          children: [
+            <React.Fragment key="">
+              <FormItem top="Сверху очень длинная надпись аж распирает">
+                <Input />
+              </FormItem>
+              <FormItem top="И у меня тоже не короче твоей">
+                <Input />
+              </FormItem>
+            </React.Fragment>,
+          ],
+        },
       ]}
     >
       {(props: FormLayoutGroupProps) => <FormLayoutGroup {...props} />}
