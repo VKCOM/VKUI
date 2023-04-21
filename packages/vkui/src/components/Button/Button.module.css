@@ -505,13 +505,13 @@
   line-height: var(--vkui--font_headline1--line_height--compact);
 }
 
-.Button--sizeY-regular.Button--size-l.Button--android .Button__content {
+.Button--sizeY-regular.Button--size-l .Button__content {
   font-size: var(--vkui--font_headline1--font_size--regular);
   line-height: var(--vkui--font_headline1--line_height--regular);
 }
 
 @media (--sizeY-regular) {
-  .Button--sizeY-none.Button--size-l.Button--android .Button__content {
+  .Button--sizeY-none.Button--size-l .Button__content {
     font-size: var(--vkui--font_headline1--font_size--regular);
     line-height: var(--vkui--font_headline1--line_height--regular);
   }
