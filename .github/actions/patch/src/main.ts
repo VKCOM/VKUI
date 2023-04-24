@@ -78,14 +78,7 @@ async function run(): Promise<void> {
     }
 
     try {
-      await exec.exec('git', [
-        'fetch',
-        '--no-tags',
-        '--depth=1',
-        'origin',
-        stableBranchRef,
-        ...patchRefs,
-      ]);
+      await exec.exec('git', ['fetch', '--no-tags', 'origin', stableBranchRef, ...patchRefs]);
       await exec.exec('git', ['checkout', stableBranchRef]);
 
       for (const patchRef of patchRefs) {
