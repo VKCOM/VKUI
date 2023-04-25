@@ -121,7 +121,12 @@
 
 .ModalPage__content-in {
   position: relative;
-  padding-bottom: var(--vkui_internal--safe_area_inset_bottom);
+}
+
+.ModalPage__content-in::after {
+  content: '';
+  height: var(--vkui_internal--safe_area_inset_bottom);
+  display: block;
 }
 
 /**
