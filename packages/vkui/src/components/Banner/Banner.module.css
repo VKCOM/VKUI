@@ -47,15 +47,7 @@
   z-index: var(--vkui_internal--z_index_banner_content);
 }
 
-.Banner__header {
-  display: block;
-}
-
-.Banner__subheader {
-  display: block;
-  color: var(--vkui--color_text_subhead);
-}
-
+.Banner__subheader,
 .Banner__text {
   color: var(--vkui--color_text_subhead);
 }
