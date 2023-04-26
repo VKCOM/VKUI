@@ -2,7 +2,7 @@ const path = require('path');
 const { VKUI_PACKAGE, getCustomMedias } = require('./shared');
 
 module.exports = {
-  extends: ['stylelint-config-standard', 'stylelint-config-prettier'],
+  extends: ['stylelint-config-standard'],
   plugins: [
     'stylelint-value-no-unknown-custom-properties',
     'stylelint-media-use-custom-media',
@@ -22,6 +22,7 @@ module.exports = {
     'custom-property-pattern': null,
     'value-no-vendor-prefix': null,
     'property-no-vendor-prefix': null,
+    'media-feature-range-notation': null, // need 104 chrome
     'alpha-value-notation': 'number',
     /**
      * https://caniuse.com/mdn-css_types_color_hsl_space_separated_parameters
