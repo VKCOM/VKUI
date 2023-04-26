@@ -88,7 +88,6 @@ export const Button = ({
           right: styles['Button--align-right'],
         }[align],
         sizeY !== SizeType.COMPACT && sizeYClassNames[sizeY],
-        platform === Platform.ANDROID && styles['Button--android'],
         platform === Platform.IOS && styles['Button--ios'],
         stretched && styles['Button--stretched'],
         hasIcons && styles['Button--with-icon'],
