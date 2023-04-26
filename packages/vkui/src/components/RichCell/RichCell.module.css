@@ -33,6 +33,7 @@
 
 .RichCell__content {
   display: flex;
+  word-break: break-word;
 }
 
 .RichCell__content-before {
