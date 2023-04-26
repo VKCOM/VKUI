@@ -13,8 +13,8 @@ import { HasRef } from '../../types';
 import { Button } from '../Button/Button';
 import { IconButton } from '../IconButton/IconButton';
 import { TouchEvent } from '../Touch/Touch';
+import { Headline } from '../Typography/Headline/Headline';
 import styles from './Search.module.css';
-import stylesHeadline from '../Typography/Headline/Headline.module.css';
 
 export interface SearchProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
@@ -120,19 +120,16 @@ export const Search = ({
       <div className={styles['Search__field']}>
         <label className={styles['Search__control']}>
           {before}
-          <input
+          <Headline
+            Component="input"
             type="search"
+            level="1"
+            weight="3"
             {...inputProps}
             placeholder={placeholder}
             autoComplete={autoComplete}
-            ref={inputRef}
-            className={classNames(
-              styles['Search__input'],
-              stylesHeadline['Headline--level-1'],
-              stylesHeadline['Headline--weight-3'],
-              sizeY === 'none' && stylesHeadline['Headline--sizeY-none'],
-              sizeY === SizeType.COMPACT && stylesHeadline['Headline--sizeY-compact'],
-            )}
+            getRootRef={inputRef}
+            className={styles['Search__input']}
             onFocus={onFocus}
             onBlur={onBlur}
             onChange={onChange}
