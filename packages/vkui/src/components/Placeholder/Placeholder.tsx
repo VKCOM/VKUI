@@ -24,6 +24,10 @@ export interface PlaceholderProps
    * Растягивает плейсхолдер на весь экран, но в таком случае на экране должен быть только плейсхолдер
    */
   stretched?: boolean;
+  /**
+   * Добавляет отступы к компоненту
+   */
+  withPadding?: boolean;
 }
 
 /**
@@ -37,6 +41,7 @@ export const Placeholder = ({
   stretched,
   getRootRef,
   className,
+  withPadding = true,
   ...restProps
 }: PlaceholderProps) => (
   <div
@@ -45,22 +50,21 @@ export const Placeholder = ({
     className={classNames(
       styles['Placeholder'],
       stretched && styles['Placeholder--stretched'],
+      withPadding && styles['Placeholder--withPadding'],
       className,
     )}
   >
-    <div className={styles['Placeholder__in']}>
-      {hasReactNode(icon) && <div className={styles['Placeholder__icon']}>{icon}</div>}
-      {hasReactNode(header) && (
-        <Title level="2" weight="2" className={styles['Placeholder__header']}>
-          {header}
-        </Title>
-      )}
-      {hasReactNode(children) && (
-        <Headline weight="3" className={styles['Placeholder__text']}>
-          {children}
-        </Headline>
-      )}
-      {hasReactNode(action) && <div className={styles['Placeholder__action']}>{action}</div>}
-    </div>
+    {hasReactNode(icon) && <div className={styles['Placeholder__icon']}>{icon}</div>}
+    {hasReactNode(header) && (
+      <Title level="2" weight="2" className={styles['Placeholder__header']}>
+        {header}
+      </Title>
+    )}
+    {hasReactNode(children) && (
+      <Headline weight="3" className={styles['Placeholder__text']}>
+        {children}
+      </Headline>
+    )}
+    {hasReactNode(action) && <div className={styles['Placeholder__action']}>{action}</div>}
   </div>
 );
