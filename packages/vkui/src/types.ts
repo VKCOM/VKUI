@@ -10,6 +10,11 @@ export interface HasChildren {
   children?: React.ReactNode;
 }
 
+export type HasDataAttribute = Record<
+  `data-${string}`,
+  string | number | boolean | undefined | null
+>;
+
 export interface HasRootRef<T> {
   getRootRef?: React.Ref<T>;
 }

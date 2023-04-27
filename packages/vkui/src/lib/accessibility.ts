@@ -23,7 +23,10 @@ export enum Keys {
   END = 'End',
   ARROW_LEFT = 'ArrowLeft',
   ARROW_RIGHT = 'ArrowRight',
+  ARROW_UP = 'ArrowUp',
   ARROW_DOWN = 'ArrowDown',
+  PAGE_UP = 'PageUp',
+  PAGE_DOWN = 'PageDown',
 }
 
 interface AccessibleKey {
@@ -74,8 +77,23 @@ const ACCESSIBLE_KEYS: AccessibleKey[] = [
     keyCode: 39,
   },
   {
+    code: Keys.ARROW_UP,
+    key: ['ArrowUp'],
+    keyCode: 40,
+  },
+  {
     code: Keys.ARROW_DOWN,
     key: ['ArrowDown'],
+    keyCode: 40,
+  },
+  {
+    code: Keys.PAGE_UP,
+    key: ['PageUp'],
+    keyCode: 40,
+  },
+  {
+    code: Keys.PAGE_DOWN,
+    key: ['PageDown'],
     keyCode: 40,
   },
 ];

@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { Slider, type SliderProps } from './Slider';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import { AppRoot } from '../AppRoot/AppRoot';
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
+import { Slider, type SliderMultipleProps, type SliderProps } from './Slider';
 
 export const SliderPlayground = (props: ComponentPlaygroundProps) => {
   return (
@@ -8,6 +11,7 @@ export const SliderPlayground = (props: ComponentPlaygroundProps) => {
       {...props}
       propSets={[
         {
+          defaultValue: [50],
           disabled: [true],
         },
         {
@@ -15,16 +19,35 @@ export const SliderPlayground = (props: ComponentPlaygroundProps) => {
           min: [-10],
           max: [10],
           value: [0],
-          onChange: [() => void 0],
         },
         {
+          multiple: [true],
+          defaultValue: [[20, 80]],
+        },
+        {
+          defaultValue: [50],
           $adaptivity: 'y',
         },
       ]}
     >
-      {({ value = 50, ...restProps }: SliderProps) => (
-        <Slider style={{ minWidth: '320px' }} value={value} {...restProps} />
+      {(props: SliderProps | SliderMultipleProps) => (
+        <Slider style={{ minWidth: '320px' }} {...props} />
       )}
     </ComponentPlayground>
+  );
+};
+
+export const SliderPlaygroundForKeyboardTest = ({
+  appearance,
+  ...restProps
+}: ComponentPlaygroundProps & (SliderProps | SliderMultipleProps)) => {
+  return (
+    <ConfigProvider appearance={appearance}>
+      <AdaptivityProvider hasPointer>
+        <AppRoot>
+          <Slider style={{ minWidth: '320px' }} {...restProps} />
+        </AppRoot>
+      </AdaptivityProvider>
+    </ConfigProvider>
   );
 };

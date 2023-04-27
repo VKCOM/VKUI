@@ -236,7 +236,7 @@ export type { ChipProps } from './components/Chip/Chip';
 export { ChipsInput } from './components/ChipsInput/ChipsInput';
 export type { ChipsInputProps } from './components/ChipsInput/ChipsInput';
 export { Slider } from './components/Slider/Slider';
-export type { SliderProps } from './components/Slider/Slider';
+export type { SliderBaseProps, SliderProps, SliderMultipleProps } from './components/Slider/Slider';
 export { RangeSlider } from './components/RangeSlider/RangeSlider';
 export type { RangeSliderProps } from './components/RangeSlider/RangeSlider';
 export { Textarea } from './components/Textarea/Textarea';

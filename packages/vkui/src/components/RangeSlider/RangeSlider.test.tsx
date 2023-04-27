@@ -67,7 +67,7 @@ describe('RangeSlider', () => {
         expect(getSlider()).toHaveAttribute('data-value', '5,7');
         fireEvent.mouseUp(getSlider());
       });
-      it('should prevent change direction on over drag', () => {
+      it('should prevent change direction on overdrag', () => {
         render(<RangeSlider defaultValue={[3, 7]} />);
         fireEvent.mouseDown(getSlider(), pointerPos(30));
         fireEvent.mouseMove(getSlider(), pointerPos(80));
