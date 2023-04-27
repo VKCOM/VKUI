@@ -4446,10 +4446,10 @@
     magic-string "^0.27.0"
     react-refresh "^0.14.0"
 
-"@vkontakte/eslint-plugin@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@vkontakte/eslint-plugin/-/eslint-plugin-0.2.0.tgz#7ae30bff51b023398044ea62d26df7456aa3b1d6"
-  integrity sha512-SLxLgf1ypW2O4WKQJDq5I0+/nwuCnQM4ngab9+VY54CuSgeZyuNTw3thaUgzsOPsr2dPyKzDocHYqFuVVeD8ug==
+"@vkontakte/eslint-plugin@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@vkontakte/eslint-plugin/-/eslint-plugin-1.0.0.tgz#68b196fd8624e169302f3f8ad494b5d964208d36"
+  integrity sha512-JYg4eE4VlAqSjw9dePW3vgDxkLZ6SYy9CKZu141Z9phAhOWsWlF24ygx/xnnSpDpLkznhWzVUYCG57rh9KPCaA==
   dependencies:
     "@babel/core" "^7.20.12"
     "@babel/eslint-parser" "^7.19.1"
