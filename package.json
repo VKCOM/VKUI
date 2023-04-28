@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "^1.0.1",
-    "@playwright/experimental-ct-react17": "1.32.3",
+    "@playwright/experimental-ct-react17": "1.33.0",
     "@playwright/test": "1.32.3",
     "@size-limit/file": "^8.2.4",
     "@size-limit/webpack": "^8.2.4",
