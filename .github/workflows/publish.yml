@@ -39,6 +39,11 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile --ignore-scripts
 
+      - name: Set Git credentials
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Action"
+
       - name: Bump by version type
         if: ${{ !github.event.inputs.custom_version }}
         run: yarn workspace @vkontakte/vkui version --${{ github.event.inputs.type }} --no-commit-hooks
@@ -52,11 +57,6 @@ jobs:
 
       - name: Run @vkontakte/vkui unit tests
         run: yarn workspace @vkontakte/vkui run test
-
-      - name: Set Git credentials
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Action"
 
       - name: Pushing changes
         uses: ad-m/github-push-action@master
