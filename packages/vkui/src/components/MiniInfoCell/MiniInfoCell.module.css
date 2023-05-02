@@ -27,6 +27,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  word-break: break-word;
 }
 
 .MiniInfoCell--textWrap-short .MiniInfoCell__content {
