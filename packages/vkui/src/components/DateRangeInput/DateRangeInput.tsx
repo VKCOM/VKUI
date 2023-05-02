@@ -158,7 +158,7 @@ export const DateRangeInput = ({
       }
       const formattedStartValue = `${internalValue[0]}.${internalValue[1]}.${internalValue[2]}`;
       const formattedEndValue = `${internalValue[3]}.${internalValue[4]}.${internalValue[5]}`;
-      const mask = 'dd.MM.yyyy';
+      const mask = 'DD.MM.YYYY';
 
       if (!isMatch(formattedStartValue, mask)) {
         isStartValid = false;
