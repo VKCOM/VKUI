@@ -44,7 +44,7 @@
     "concurrently": "^8.0.1",
     "cross-env": "^7.0.2",
     "css-loader": "^6.5.1",
-    "cssnano": "^6.0.0",
+    "cssnano": "^6.0.1",
     "dotenv": "^16.0.3",
     "eslint": "^8.39.0",
     "eslint-config-prettier": "8.8.0",
