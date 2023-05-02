@@ -38,7 +38,7 @@ function generateCustomMedias() {
 
 generateCustomMedias();
 
-const IS_VKUI_PACKAGE_BUILD = Boolean(process.env.VKUI_PACKAGE_BUILD);
+const IS_VKUI_PACKAGE_BUILD = Boolean(process.env.IS_VKUI_PACKAGE_BUILD);
 
 module.exports = () => {
   const plugins = [
