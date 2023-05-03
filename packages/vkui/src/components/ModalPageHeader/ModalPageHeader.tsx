@@ -44,10 +44,12 @@ export const ModalPageHeader = ({
         fixed={false}
         separator={false}
         transparent
+        typographyProps={{
+          Component: 'h2',
+          id: labelId,
+        }}
       >
-        <PanelHeader.Content Component="h2" id={labelId}>
-          {children}
-        </PanelHeader.Content>
+        {children}
       </PanelHeader>
       {hasSeparator && <Separator wide />}
     </div>
