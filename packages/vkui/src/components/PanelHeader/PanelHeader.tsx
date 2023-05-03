@@ -5,6 +5,7 @@ import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditi
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
+import { warnOnce } from '../../lib/warnOnce';
 import { HasComponent, HasRef, HasRootRef } from '../../types';
 import { useConfigProvider, WebviewType } from '../ConfigProvider/ConfigProviderContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
@@ -43,30 +44,45 @@ export interface PanelHeaderProps
    * Если `false`, то шапка будет в потоке. По умолчанию `true`, но если платформа vkcom, то по умолчанию `false`.
    */
   fixed?: boolean;
+  /**
+   * По умолчанию как `Component` используется `span`.
+   */
+  typographyProps?: HasComponent & React.HTMLAttributes<HTMLElement>;
 }
 
-interface PanelHeaderContentProps extends React.HTMLAttributes<HTMLElement>, HasComponent {}
-
-const PanelHeaderContent = ({ children, Component = 'span', id }: PanelHeaderContentProps) => {
-  const platform = usePlatform();
-
-  return platform === Platform.VKCOM ? (
-    <Text weight="2" Component={Component} id={id}>
-      {children}
-    </Text>
-  ) : (
-    <Component className={styles['PanelHeader__content-in']} id={id}>
-      {children}
-    </Component>
-  );
-};
-
-PanelHeaderContent.displayName = 'PanelHeaderContent';
-
-const PanelHeaderIn = ({ before, after, separator, children }: PanelHeaderProps) => {
+const PanelHeaderIn = ({
+  before,
+  after,
+  separator,
+  children,
+  typographyProps = {},
+}: PanelHeaderProps) => {
+  const { Component = 'span', ...restProps } = typographyProps;
   const { webviewType } = useConfigProvider();
   const { isInsideModal } = React.useContext(ModalRootContext);
   const platform = usePlatform();
+
+  let typographyNode: React.ReactNode;
+
+  // TODO [>=6]: Удалить условие
+  if (
+    React.isValidElement(children) &&
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    (children as JSX.Element).type.displayName === LegacyPanelHeaderContent.displayName
+  ) {
+    typographyNode = children;
+  } else {
+    typographyNode =
+      platform === Platform.VKCOM ? (
+        <Text weight="2" Component={Component} {...restProps}>
+          {children}
+        </Text>
+      ) : (
+        <Component className={styles['PanelHeader__content-in']} {...restProps}>
+          {children}
+        </Component>
+      );
+  }
 
   return (
     <React.Fragment>
@@ -76,15 +92,7 @@ const PanelHeaderIn = ({ before, after, separator, children }: PanelHeaderProps)
         >
           {before}
         </div>
-        <div className={styles['PanelHeader__content']}>
-          {/* Поддерживаем обратную совместимость для подкомпонентного подхода */}
-          {React.isValidElement(children) &&
-          (children as JSX.Element).type.displayName === PanelHeaderContent.displayName ? (
-            children
-          ) : (
-            <PanelHeaderContent>{children}</PanelHeaderContent>
-          )}
-        </div>
+        <div className={styles['PanelHeader__content']}>{typographyNode}</div>
         <div className={classNames(styles['PanelHeader__after'], 'vkuiInternalPanelHeader__after')}>
           {(webviewType === WebviewType.INTERNAL || isInsideModal) && after}
         </div>
@@ -111,6 +119,7 @@ export const PanelHeader = ({
   getRootRef,
   fixed,
   className,
+  typographyProps,
   ...restProps
 }: PanelHeaderProps) => {
   const platform = usePlatform();
@@ -150,12 +159,22 @@ export const PanelHeader = ({
           vertical="top"
           getRootRef={getRef}
         >
-          <PanelHeaderIn before={before} after={after} separator={separator}>
+          <PanelHeaderIn
+            before={before}
+            after={after}
+            separator={separator}
+            typographyProps={typographyProps}
+          >
             {children}
           </PanelHeaderIn>
         </FixedLayout>
       ) : (
-        <PanelHeaderIn before={before} after={after} separator={separator}>
+        <PanelHeaderIn
+          before={before}
+          after={after}
+          separator={separator}
+          typographyProps={typographyProps}
+        >
           {children}
         </PanelHeaderIn>
       )}
@@ -171,4 +190,38 @@ export const PanelHeader = ({
   );
 };
 
-PanelHeader.Content = PanelHeaderContent;
+interface LegacyPanelHeaderContentProps extends React.HTMLAttributes<HTMLElement>, HasComponent {}
+
+const warn = warnOnce('PanelHeader');
+
+/**
+ * TODO [>=6]: Удалить подкомпонент
+ * @deprecated
+ */
+const LegacyPanelHeaderContent = ({
+  children,
+  Component = 'span',
+  id,
+}: LegacyPanelHeaderContentProps) => {
+  if (process.env.NODE_ENV === 'development') {
+    warn(
+      'Подкомпонент PanelHeader.Content устарел и будет удалён в v6. Используйте параметр typographyProps.',
+    );
+  }
+
+  const platform = usePlatform();
+
+  return platform === Platform.VKCOM ? (
+    <Text weight="2" Component={Component} id={id}>
+      {children}
+    </Text>
+  ) : (
+    <Component className={styles['PanelHeader__content-in']} id={id}>
+      {children}
+    </Component>
+  );
+};
+
+LegacyPanelHeaderContent.displayName = 'LegacyPanelHeaderContent';
+
+PanelHeader.Content = LegacyPanelHeaderContent;
