@@ -85,7 +85,7 @@
     "size-limit": "^8.2.4",
     "source-map-loader": "^4.0.0",
     "style-loader": "^3.3.2",
-    "stylelint": "^15.6.0",
+    "stylelint": "^15.6.1",
     "stylelint-config-standard": "^33.0.0",
     "stylelint-media-use-custom-media": "^2.0.0",
     "stylelint-value-no-unknown-custom-properties": "^4.0.0",
