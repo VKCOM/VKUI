@@ -63,6 +63,7 @@ jobs:
       # - name: Upload coverage to Codecov
       #   uses: codecov/codecov-action@v3
       #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
       #     flags: e2e-${{ matrix.browser }}-${{ matrix.platform }}-${{ matrix.appearance }}
       #     files: .nyc_output/coverage.json
       #     fail_ci_if_error: true
