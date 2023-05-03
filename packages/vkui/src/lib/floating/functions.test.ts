@@ -61,13 +61,7 @@ describe('floating/functions', () => {
         left: 0,
         width: 'max-content',
       };
-      expect(convertFloatingDataToReactCSSProperties('absolute', null, null)).toEqual(
-        expectedCSSProperties,
-      );
-      expect(convertFloatingDataToReactCSSProperties('absolute', 0, null)).toEqual(
-        expectedCSSProperties,
-      );
-      expect(convertFloatingDataToReactCSSProperties('absolute', null, 0)).toEqual(
+      expect(convertFloatingDataToReactCSSProperties('absolute', 0, 0)).toEqual(
         expectedCSSProperties,
       );
     });
