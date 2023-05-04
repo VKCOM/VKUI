@@ -187,14 +187,9 @@ jobs:
           name: playwright-report
           path: playwright-report/
 
-      - name: Build S3 action
-        if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
-        run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
-        working-directory: ./.github/actions/s3
-
       - name: Upload Playwright Report
         if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
-        uses: ./.github/actions/s3
+        uses: VKCOM/gh-actions/VKUI/s3@main
         with:
           awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
           awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
@@ -204,20 +199,16 @@ jobs:
           commandUploadSrc: playwright-report/
           commandUploadDist: pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}/playwright-report
 
-      - name: Build reporter action
-        run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
-        working-directory: ./.github/actions/reporter
-
       - name: Push reports (with Playwright Report comment)
         if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
-        uses: ./.github/actions/reporter
+        uses: VKCOM/gh-actions/VKUI/reporter@main
         with:
           playwrightReportURL: https://vkui-screenshot.hb.bizmrg.com/pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}/playwright-report/index.html
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push reports (without Playwright Report comment)
         if: ${{ needs.changed_files.outputs.package_vkui == 'false' }}
-        uses: ./.github/actions/reporter
+        uses: VKCOM/gh-actions/VKUI/reporter@main
 
   styleguide:
     if: ${{ needs.changed_files.outputs.docs_styleguide == 'true' }}
@@ -242,14 +233,9 @@ jobs:
       - name: Build styleguide
         run: yarn run docs:styleguide:build
 
-      - name: Build S3 action
-        if: ${{ github.actor != 'dependabot[bot]' }}
-        run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
-        working-directory: ./.github/actions/s3
-
       - name: Upload styleguide S3
         if: ${{ github.actor != 'dependabot[bot]' }}
-        uses: ./.github/actions/s3
+        uses: VKCOM/gh-actions/VKUI/s3@main
         with:
           awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
           awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
@@ -282,14 +268,9 @@ jobs:
       - name: Build storybook
         run: yarn docs:storybook:build
 
-      - name: Build s3 action
-        if: ${{ github.actor != 'dependabot[bot]' }}
-        run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
-        working-directory: ./.github/actions/s3
-
       - name: Upload storybook S3
         if: ${{ github.actor != 'dependabot[bot]' }}
-        uses: ./.github/actions/s3
+        uses: VKCOM/gh-actions/VKUI/s3@main
         with:
           awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
           awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}

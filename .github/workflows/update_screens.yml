@@ -55,9 +55,5 @@ jobs:
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Action"
 
-      - name: Build push-screenshots action
-        run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
-        working-directory: ./.github/actions/push-screenshots
-
       - name: Push updated screenshots
-        uses: ./.github/actions/push-screenshots
+        uses: VKCOM/gh-actions/VKUI/push-screenshots@main
