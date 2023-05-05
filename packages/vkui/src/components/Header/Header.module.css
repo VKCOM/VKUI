@@ -19,16 +19,11 @@
   align-items: center;
 }
 
-.Header__content-in,
-.Header__subtitle {
+.Header__content-in--ellipsis,
+.Header__subtitle--ellipsis {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-}
-
-.Header__content-in--multiline {
-  white-space: initial;
-  word-break: break-word;
 }
 
 .Header__subtitle {
