@@ -107,7 +107,7 @@ export const Header = ({
           <span
             className={classNames(
               styles['Header__content-in'],
-              multiline && styles['Header__content--multiline'],
+              !multiline && styles['Header__content-in--ellipsis'],
             )}
           >
             {children}
@@ -123,7 +123,7 @@ export const Header = ({
           <Subhead
             className={classNames(
               styles['Header__subtitle'],
-              multiline && styles['Header__content--multiline'],
+              !multiline && styles['Header__subtitle--ellipsis'],
             )}
             Component="span"
           >
