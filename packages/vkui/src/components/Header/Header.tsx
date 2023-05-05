@@ -19,7 +19,7 @@ export interface HeaderProps extends React.HTMLAttributes<HTMLElement>, HasRootR
    */
   aside?: React.ReactNode;
   /**
-   * Допускаются текст, Indicator
+   * Допускаются текст, Badge
    */
   indicator?: React.ReactNode;
   multiline?: boolean;
