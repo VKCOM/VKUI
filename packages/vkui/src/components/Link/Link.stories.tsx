@@ -16,6 +16,7 @@ type Story = StoryObj<LinkProps>;
 
 export const Playground: Story = {
   args: {
+    href: 'https://vkcom.github.io/VKUI/#/About',
     children: 'О VKUI',
   },
 };
