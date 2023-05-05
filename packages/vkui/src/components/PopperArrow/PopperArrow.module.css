@@ -6,18 +6,20 @@
   content: '';
   display: block;
 
-  /* См. Примечание 1 в PopperArrow.tsx. Для кейса с `.PopperArrow[data-placement^='bottom']`. */
+  /* см. Примечание 1 в PopperArrow.tsx. */
   transform: translateY(1px);
 }
 
-.PopperArrow[data-placement^='top'] .PopperArrow__in {
-  transform: rotate(180deg) translateY(1px); /* см. Примечание 1 в PopperArrow.tsx */
+.PopperArrow--placement-right {
+  transform: rotate(90deg) translate(50%, -50%);
+  transform-origin: right;
 }
 
-.PopperArrow[data-placement^='left'] .PopperArrow__in {
-  transform: rotate(90deg) translateY(1px); /* см. Примечание 1 в PopperArrow.tsx */
+.PopperArrow--placement-bottom {
+  transform: rotate(180deg);
 }
 
-.PopperArrow[data-placement^='right'] .PopperArrow__in {
-  transform: rotate(270deg) translateY(1px); /* см. Примечание 1 в PopperArrow.tsx */
+.PopperArrow--placement-left {
+  transform: rotate(-90deg) translate(-50%, -50%);
+  transform-origin: left;
 }

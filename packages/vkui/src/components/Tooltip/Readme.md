@@ -264,3 +264,54 @@ const Example = () => {
   </Tooltip>
 </TooltipContainer>
 ```
+
+## Кастомная стрелка – `ArrowIcon`
+
+> ⚠️ Для начала, следует ознакомиться с описанием параметра `ArrowIcon`.
+
+```jsx { "props": { "layout": false, "adaptivity": true } }
+const ARROW_HEIGHT = 11;
+
+/**
+ * @param {React.SVGAttributes<SVGSVGElement>} props
+ */
+const CustomIcon = (props) => {
+  return (
+    <svg
+      width="80"
+      height={ARROW_HEIGHT}
+      viewBox={`0 0 80 ${ARROW_HEIGHT}`}
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path d="M40 0C33 5.5 20 10 0 10v1h80v-1C60 10 47 5.5 40 0Z" fill="currentColor" />
+    </svg>
+  );
+};
+
+const App = () => {
+  return (
+    <TooltipContainer>
+      <Tooltip
+        text="У этого тултипа кастомная стрелка"
+        offsetY={ARROW_HEIGHT}
+        arrowPadding={6}
+        ArrowIcon={CustomIcon}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          Якорь
+        </div>
+      </Tooltip>
+    </TooltipContainer>
+  );
+};
+
+<App />;
+```
