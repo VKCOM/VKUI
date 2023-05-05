@@ -29,6 +29,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           flags: a11ytests
           files: .nyc_a11y_output/coverage-final.json
           fail_ci_if_error: true

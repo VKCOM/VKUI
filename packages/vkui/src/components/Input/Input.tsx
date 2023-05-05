@@ -4,6 +4,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { SizeType } from '../../lib/adaptivity';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { FormField, FormFieldProps } from '../FormField/FormField';
+import { Text } from '../Typography/Text/Text';
 import styles from './Input.module.css';
 
 const sizeYClassNames = {
@@ -55,7 +56,14 @@ export const Input = ({
       mode={mode}
       status={status}
     >
-      <input {...restProps} type={type} className={styles['Input__el']} ref={getRef} />
+      <Text
+        {...restProps}
+        Component="input"
+        normalize={false}
+        type={type}
+        className={styles['Input__el']}
+        getRootRef={getRef}
+      />
     </FormField>
   );
 };

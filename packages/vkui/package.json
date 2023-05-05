@@ -73,9 +73,6 @@
     "dayjs": "1.11.7",
     "mitt": "3.0.0"
   },
-  "devDependencies": {
-    "@rollup/plugin-commonjs": "^24.1.0"
-  },
   "size-limit": [
     {
       "name": "JS",
