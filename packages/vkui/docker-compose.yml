@@ -1,13 +1,13 @@
 version: '3.8'
 services:
   package_vkui:
-    image: mcr.microsoft.com/playwright:v1.32.3-focal
+    image: mcr.microsoft.com/playwright:v1.33.0-focal
     ipc: host
     user: root
     working_dir: /repo/packages/vkui
     command: sh -c "
       yarn install --frozen-lockfile --ignore-scripts &&
-      yarn run test:e2e:ci ${UPDATE_SNAPSHOTS_FLAG}
+      yarn run test:e2e:ci ${UPDATE_SNAPSHOTS_FLAG:-}
       "
     volumes:
       - ../../:/repo

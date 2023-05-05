@@ -1,5 +1,4 @@
 import path from 'path';
-import commonjsPlugin from '@rollup/plugin-commonjs';
 import {
   defineConfig,
   type DeviceKey,
@@ -78,15 +77,7 @@ export default defineConfig<VKUITestOptions>({
     deviceScaleFactor: 1,
 
     ctViteConfig: {
-      /*
-       * Подключаем '@rollup/plugin-commonjs' самостоятельно, т.к. параметр `commonjsOptions` не работает.
-       *
-       * @see https://github.com/microsoft/playwright/issues/22032
-       *
-       * TODO Как выкатят исправление, удалить `plugins: [commonjsPlugin()]` и плагин.
-       */
       build: { commonjsOptions: { include: [/node_modules/, /\.js/] } },
-      plugins: [commonjsPlugin({ include: [/node_modules/, /\.js/] })],
 
       resolve: {
         alias: TS_CONFIG_ALIASES,
