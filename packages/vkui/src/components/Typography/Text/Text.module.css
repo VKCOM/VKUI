@@ -16,13 +16,3 @@
     line-height: var(--vkui--font_text--line_height--compact);
   }
 }
-
-/**
- * CMP:
- * PanelHeaderContent
- */
-:global(.vkuiInternalPanelHeaderContent__children) .Text {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
