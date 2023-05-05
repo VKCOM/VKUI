@@ -64,10 +64,8 @@ jobs:
           github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           branch: ${{ github.ref }}
 
-      - run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
-        working-directory: ./.github/actions/stable-branch
       - name: Create stable branch
-        uses: ./.github/actions/stable-branch
+        uses: VKCOM/gh-actions/VKUI/stable-branch@main
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           directory: packages/vkui/

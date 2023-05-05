@@ -9,21 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Undeploy S3
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup NodeJS
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'yarn'
-
-      - name: Build S3 action
-        run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
-        working-directory: ./.github/actions/s3
-
       - name: Delete from S3
-        uses: ./.github/actions/s3
+        uses: VKCOM/gh-actions/VKUI/s3@main
         with:
           awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
           awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
@@ -58,12 +45,8 @@ jobs:
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Action"
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
-        working-directory: ./.github/actions/patch
-
       - name: Make patch
-        uses: ./.github/actions/patch
+        uses: VKCOM/gh-actions/VKUI/patch@main
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           directory: packages/vkui/
