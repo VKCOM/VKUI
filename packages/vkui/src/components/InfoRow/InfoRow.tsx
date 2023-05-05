@@ -2,6 +2,7 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './InfoRow.module.css';
 
 export interface InfoRowProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -19,8 +20,9 @@ export const InfoRow = ({ header, children, className, ...restProps }: InfoRowPr
     weight="3"
   >
     {hasReactNode(header) && (
-      <Subhead Component="span" className={styles['InfoRow__header']}>
+      <Subhead Component="strong" className={styles['InfoRow__header']}>
         {header}
+        <VisuallyHidden>&nbsp;</VisuallyHidden>
       </Subhead>
     )}
     {children}
