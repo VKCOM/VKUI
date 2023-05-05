@@ -29,10 +29,10 @@ export function convertFloatingDataToReactCSSProperties(
 ): React.CSSProperties {
   const styles: React.CSSProperties = {
     position: strategy,
-    top: y || 0,
+    top: y,
     right: 'auto',
     bottom: 'auto',
-    left: x || 0,
+    left: x,
   };
   if (initialWidth !== null) {
     styles.width = initialWidth;
