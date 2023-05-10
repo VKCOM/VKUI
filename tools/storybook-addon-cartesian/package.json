@@ -19,7 +19,7 @@
     "@storybook/blocks": "^7.0.8",
     "@storybook/components": "^7.0.8",
     "@storybook/manager-api": "^7.0.8",
-    "@storybook/preview-api": "^7.0.8",
+    "@storybook/preview-api": "^7.0.10",
     "@storybook/react": "^7.0.8",
     "@storybook/react-webpack5": "^7.0.8",
     "@storybook/theming": "^7.0.8",
