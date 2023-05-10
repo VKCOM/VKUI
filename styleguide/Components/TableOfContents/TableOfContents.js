@@ -258,11 +258,8 @@ class TableOfContents extends React.PureComponent {
               }
               onClick={!section.href ? this.onExpandCellClick : undefined}
               data-section-name={section.name}
-              className={classNames(
-                'TableOfContents__section',
-                section.name === this.state.currentSectionName &&
-                  'TableOfContents__section--selected',
-              )}
+              className="TableOfContents__section"
+              hovered={section.name === this.state.currentSectionName}
               indicator={section.deprecated && <Caption level="2">deprecated</Caption>}
             >
               {section.title || section.name}

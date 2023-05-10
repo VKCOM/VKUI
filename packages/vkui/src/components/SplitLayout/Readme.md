@@ -49,19 +49,7 @@ const Example = () => {
             {!isVKCOM && <PanelHeader />}
             <Group>
               {panels.map((i) => (
-                <Cell
-                  key={i}
-                  disabled={i === panel}
-                  style={
-                    i === panel
-                      ? {
-                          backgroundColor: 'var(--vkui--color_background_secondary)',
-                          borderRadius: 8,
-                        }
-                      : {}
-                  }
-                  onClick={() => setPanel(i)}
-                >
+                <Cell key={i} hovered={i === panel} onClick={() => setPanel(i)}>
                   {i}
                 </Cell>
               ))}
