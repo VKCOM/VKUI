@@ -17,6 +17,7 @@
         "runtime": "classic"
       }
     },
+    "target": "es5",
 
     "experimental": {
       "plugins": [
