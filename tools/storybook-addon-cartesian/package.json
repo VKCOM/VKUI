@@ -17,7 +17,7 @@
     "@storybook/addon-links": "^7.0.10",
     "@storybook/api": "^7.0.10",
     "@storybook/blocks": "^7.0.10",
-    "@storybook/components": "^7.0.10",
+    "@storybook/components": "^7.0.11",
     "@storybook/manager-api": "^7.0.10",
     "@storybook/preview-api": "^7.0.10",
     "@storybook/react": "^7.0.10",
