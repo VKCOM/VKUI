@@ -16,7 +16,6 @@ package_vkui: &package_vkui
   - 'packages/vkui/*.!(md)'
   - 'packages/vkui/!(.storybook)src/**/!(*.md|*.stories.*)'
   - 'tools/!(eslint-*|stylelint-*|storybook-*)/**'
-  - 'e2e/**'
   - 'postcss.*'
   - '.browserslistrc'
   - 'webpack.*'

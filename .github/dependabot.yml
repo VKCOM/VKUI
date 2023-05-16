@@ -1,60 +1,28 @@
 version: 2
 updates:
+  # NPM
+
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     allow:
       - dependency-type: 'direct'
+    ignore:
+      # Игнорируем адоны во избежание отдельного PR от бота по каждому из них.
+      # Вместо этого, ориентируемся на обновление Storybook – если он обновился, то и адоны надо
+      # будет обновить (вручную).
+      #
+      # TODO заменить на групповое обновление, когда его завезут в Dependabot https://github.com/dependabot/dependabot-core/issues/1190
+      - dependency-name: '@storybook/*'
+    versioning-strategy: increase
+    open-pull-requests-limit: 20
     reviewers:
       - 'VKCOM/vk-sec'
       - 'VKCOM/vkui-core'
 
-  # PACKAGES
+  # Cargo
 
-  - package-ecosystem: 'npm'
-    directory: '/packages/token-translator'
-    schedule:
-      interval: 'daily'
-    allow:
-      - dependency-type: 'direct'
-    reviewers:
-      - 'VKCOM/vk-sec'
-      - 'VKCOM/vkui-core'
-
-  - package-ecosystem: 'npm'
-    directory: '/packages/vkui'
-    schedule:
-      interval: 'daily'
-    allow:
-      - dependency-type: 'direct'
-    reviewers:
-      - 'VKCOM/vk-sec'
-      - 'VKCOM/vkui-core'
-
-  # TOOLS PACKAGES
-
-  - package-ecosystem: 'npm'
-    directory: '/tools/eslint-plugin-vkui'
-    schedule:
-      interval: 'daily'
-    allow:
-      - dependency-type: 'direct'
-    reviewers:
-      - 'VKCOM/vk-sec'
-      - 'VKCOM/vkui-core'
-
-  - package-ecosystem: 'npm'
-    directory: '/tools/swc-transform-css-modules'
-    schedule:
-      interval: 'daily'
-    allow:
-      - dependency-type: 'direct'
-    reviewers:
-      - 'VKCOM/vk-sec'
-      - 'VKCOM/vkui-core'
-
-  # Maintain dependencies for Cargo
   - package-ecosystem: 'cargo'
     directory: '/tools/swc-transform-css-modules'
     schedule:
@@ -65,21 +33,7 @@ updates:
       - 'VKCOM/vk-sec'
       - 'VKCOM/vkui-core'
 
-  - package-ecosystem: 'npm'
-    directory: '/tools/storybook-addon-cartesian'
-    schedule:
-      interval: 'weekly'
-    allow:
-      - dependency-type: 'direct'
-    reviewers:
-      - 'VKCOM/vk-sec'
-      - 'VKCOM/vkui-core'
-    # TODO удалить настройки ниже после того, как завезут групповое обновление зависимостей https://github.com/dependabot/dependabot-core/issues/1190
-    open-pull-requests-limit: 1
-    labels:
-      - 'maybe-need-manual-group-update'
-    commit-message:
-      prefix: '[@storybook deps] '
+  # GitHub Actions
 
   - package-ecosystem: 'github-actions'
     # Workflow files stored in the
