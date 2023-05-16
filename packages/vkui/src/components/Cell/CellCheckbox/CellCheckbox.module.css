@@ -1,3 +1,9 @@
+.CellCheckbox {
+  display: flex;
+  justify-content: center;
+  width: 24px;
+}
+
 .CellCheckbox__icon {
   display: none;
   color: var(--vkui--color_icon_tertiary);

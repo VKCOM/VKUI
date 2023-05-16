@@ -54,6 +54,18 @@ const reorderList = ({ from, to }, list, updateListFn) => {
       </Cell>
     </Group>
 
+    <Group header={<Header subtitle={<code>Cell.Checkbox</code>}>Выделение</Header>}>
+      <Cell Component="label" before={<Avatar />} after={<Cell.Checkbox />}>
+        Артур Стамбульцян
+      </Cell>
+      <Cell Component="label" before={<Avatar />} after={<Cell.Checkbox />}>
+        Игорь Федоров
+      </Cell>
+      <Cell Component="label" disabled before={<Avatar />} after={<Cell.Checkbox disabled />}>
+        Михаил Лихачев
+      </Cell>
+    </Group>
+
     {removeList.length > 0 && (
       <Group header={<Header subtitle={<code>mode="removable"</code>}>Удаление</Header>}>
         <List>

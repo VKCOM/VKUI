@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {
+  Icon20CheckBoxOff,
+  Icon20CheckBoxOn,
   Icon24CheckBoxOff,
   Icon24CheckBoxOn,
   Icon24CheckCircleOff,
@@ -8,31 +10,60 @@ import {
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { Platform } from '../../../lib/platform';
-import { HasRef } from '../../../types';
+import { HasRef, HasRootRef } from '../../../types';
+import { AdaptiveIconRenderer } from '../../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import { CellProps } from '../Cell';
 import styles from './CellCheckbox.module.css';
 
+const CheckBoxOn = () => (
+  <AdaptiveIconRenderer IconCompact={Icon20CheckBoxOn} IconRegular={Icon24CheckBoxOn} />
+);
+
+const CheckBoxOff = () => (
+  <AdaptiveIconRenderer IconCompact={Icon20CheckBoxOff} IconRegular={Icon24CheckBoxOff} />
+);
+
+function useTypeIcon(type: NonNullable<CellCheckboxProps['type']>) {
+  const platform = usePlatform();
+
+  if (type !== 'auto') {
+    return type;
+  }
+
+  if (platform === Platform.IOS || platform === Platform.VKCOM) {
+    return 'circle';
+  }
+
+  return 'square';
+}
+
 export interface CellCheckboxProps
   extends Pick<CellProps, 'defaultChecked' | 'checked'>,
     React.InputHTMLAttributes<HTMLInputElement>,
-    HasRef<HTMLInputElement> {}
+    HasRootRef<HTMLSpanElement>,
+    HasRef<HTMLInputElement> {
+  /**
+   * Вид чекбокса. Если auto, то зависит от платформы.
+   */
+  type?: 'auto' | 'circle' | 'square';
+}
 
-export const CellCheckbox = ({ className, style, getRef, ...restProps }: CellCheckboxProps) => {
-  const platform = usePlatform();
+export const CellCheckbox = ({
+  getRootRef,
+  getRef,
+  className,
+  style,
+  type = 'auto',
+  ...restProps
+}: CellCheckboxProps) => {
+  const typeIcon = useTypeIcon(type);
 
-  const IconOff =
-    platform === Platform.IOS || platform === Platform.VKCOM
-      ? Icon24CheckCircleOff
-      : Icon24CheckBoxOff;
-
-  const IconOn =
-    platform === Platform.IOS || platform === Platform.VKCOM
-      ? Icon24CheckCircleOn
-      : Icon24CheckBoxOn;
+  const IconOff = typeIcon === 'circle' ? Icon24CheckCircleOff : CheckBoxOff;
+  const IconOn = typeIcon === 'circle' ? Icon24CheckCircleOn : CheckBoxOn;
 
   return (
-    <span className={className} style={style}>
+    <span className={classNames(styles['CellCheckbox'], className)} style={style} ref={getRootRef}>
       <VisuallyHidden
         {...restProps}
         Component="input"

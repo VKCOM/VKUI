@@ -141,6 +141,7 @@ export { List } from './components/List/List';
 export type { ListProps } from './components/List/List';
 export { Cell } from './components/Cell/Cell';
 export type { CellProps } from './components/Cell/Cell';
+export type { CellCheckboxProps } from './components/Cell/CellCheckbox/CellCheckbox';
 export { RichCell } from './components/RichCell/RichCell';
 export type { RichCellProps } from './components/RichCell/RichCell';
 export { SimpleCell } from './components/SimpleCell/SimpleCell';
