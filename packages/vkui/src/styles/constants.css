@@ -26,10 +26,10 @@
 
   /* z_index */
   --vkui_internal--z_index_cell_dragging: 1;
-  --vkui_internal--z_index_pull_to_refresh: 1;
   --vkui_internal--z_index_tabs: 2;
   --vkui_internal--z_index_fixed_layout: 3;
   --vkui_internal--z_index_panel_header_context: 4;
+  --vkui_internal--z_index_pull_to_refresh: 9;
   --vkui_internal--z_index_panel_header_fixed: 10;
   --vkui_internal--z_index_split_layout_panel_header: 11;
 
