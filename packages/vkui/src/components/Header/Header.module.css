@@ -40,10 +40,6 @@
   color: var(--vkui--color_text_secondary);
 }
 
-.Header--mode-primary .Header__content:not(:last-child) {
-  margin-top: -1px;
-}
-
 .Header--mode-secondary:not(.Header--pi):not(.Header--with-subtitle) .Header__main,
 .Header--mode-tertiary .Header__main {
   color: var(--vkui--color_text_secondary);
@@ -85,26 +81,23 @@
   top: 1px;
 }
 
-/**
- * ANDROID
- */
-.Header--android .Header__main {
+.Header__main {
   margin: 15px 0 9px;
 }
 
-.Header--android.Header--mode-primary .Header__main {
+.Header--mode-primary .Header__main {
   margin-bottom: 7px;
 }
 
-.Header--android.Header--mode-primary .Header__content:not(:last-child) {
+.Header--mode-primary .Header__content:not(:last-child) {
   margin-top: 0;
 }
 
-.Header--android.Header--mode-primary .Header__content:last-child {
+.Header--mode-primary .Header__content:last-child {
   margin-bottom: 2px;
 }
 
-.Header--android.Header--mode-tertiary .Header__main {
+.Header--mode-tertiary .Header__main {
   margin-top: 11px;
 }
 
@@ -125,32 +118,15 @@
 }
 
 .Header--ios.Header--mode-tertiary .Header__main {
-  margin-top: 12px;
-  margin-bottom: 8px;
+  margin: 12px 0 8px;
 }
 
-/**
- * VKCOM
- */
-.Header--vkcom {
-  height: 64px;
-  align-items: center;
+.Header--ios.Header--mode-primary .Header__content:not(:last-child) {
+  margin-top: -1px;
 }
 
-.Header--vkcom .Header__main {
-  color: var(--vkui--color_text_primary);
-}
-
-.Header--vkcom.Header--mode-primary .Header__content:not(:last-child) {
-  margin-top: 0;
-}
-
-.Header--vkcom.Header--mode-secondary {
-  height: 56px;
-}
-
-.Header--vkcom.Header--mode-tertiary {
-  height: 40px;
+.Header--ios.Header--mode-primary .Header__content:last-child {
+  margin-bottom: initial;
 }
 
 /**

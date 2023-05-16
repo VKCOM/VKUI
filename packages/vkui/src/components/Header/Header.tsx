@@ -47,21 +47,6 @@ const HeaderContent = ({ mode, size, ...restProps }: HeaderContentProps) => {
     }
   }
 
-  if (platform === Platform.VKCOM) {
-    switch (mode) {
-      case 'primary':
-        return isLarge ? (
-          <Title level="2" weight="1" {...restProps} />
-        ) : (
-          <Headline level="1" weight="2" {...restProps} />
-        );
-      case 'secondary':
-        return <Footnote caps weight="1" {...restProps} />;
-      case 'tertiary':
-        return <Footnote {...restProps} />;
-    }
-  }
-
   switch (mode) {
     case 'primary':
       return isLarge ? (
@@ -95,16 +80,12 @@ export const Header = ({
 }: HeaderProps) => {
   const platform = usePlatform();
 
-  const AsideTypography = platform === Platform.VKCOM ? Subhead : Paragraph;
-
   return (
     <header
       {...restProps}
       ref={getRootRef}
       className={classNames(
         styles['Header'],
-        platform === Platform.VKCOM && styles['Header--vkcom'],
-        platform === Platform.ANDROID && styles['Header--android'],
         platform === Platform.IOS && styles['Header--ios'],
         {
           primary: styles['Header--mode-primary'],
@@ -146,9 +127,9 @@ export const Header = ({
       </div>
 
       {hasReactNode(aside) && (
-        <AsideTypography className={styles['Header__aside']} Component="span">
+        <Paragraph className={styles['Header__aside']} Component="span">
           {aside}
-        </AsideTypography>
+        </Paragraph>
       )}
     </header>
   );
