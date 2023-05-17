@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { HasComponent, HasRef, HasRootRef } from '../../types';
 import { Avatar } from '../Avatar/Avatar';
 import { Tappable } from '../Tappable/Tappable';
@@ -58,8 +56,6 @@ export const HorizontalCell = ({
   extraSubtitle,
   ...restProps
 }: HorizontalCellProps) => {
-  const platform = usePlatform();
-
   return (
     <div
       ref={getRootRef}
@@ -71,7 +67,6 @@ export const HorizontalCell = ({
           m: styles['HorizontalCell--size-m'],
           l: styles['HorizontalCell--size-l'],
         }[size],
-        platform === Platform.IOS && styles['HorizontalCell--ios'],
         className,
       )}
     >
