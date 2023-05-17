@@ -105,7 +105,6 @@ export function useModalManager(
     state.onOpened = Modal.props.onOpened;
     state.onClose = Modal.props.onClose;
     state.onClosed = Modal.props.onClosed;
-    state.dynamicContentHeight = !!modalProps.dynamicContentHeight;
     // ModalPage props
     if (typeof modalProps.settlingHeight === 'number') {
       state.settlingHeight = modalProps.settlingHeight;
