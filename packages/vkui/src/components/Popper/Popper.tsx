@@ -19,7 +19,12 @@ import {
 } from '../../lib/floating';
 import type { HasRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { ARROW_HEIGHT, ARROW_PADDING, PopperArrow } from '../PopperArrow/PopperArrow';
+import {
+  DEFAULT_ARROW_HEIGHT,
+  DEFAULT_ARROW_PADDING,
+  DefaultIcon,
+} from '../PopperArrow/DefaultIcon';
+import { PopperArrow, type PopperArrowProps } from '../PopperArrow/PopperArrow';
 import styles from './Popper.module.css';
 
 export interface PopperRenderContentProps {
@@ -46,9 +51,31 @@ export interface PopperCommonProps
    */
   arrow?: boolean;
   /**
-   * Стиль стрелки
+   * Высота стрелки. Складывается с `offsetDistance`, чтобы стрелка не залезала на якорный элемент.
+   */
+  arrowHeight?: number;
+  /**
+   * Безопасная зона вокруг стрелки, чтобы та не выходила за края контента.
+   */
+  arrowPadding?: number;
+  /**
+   * Стиль стрелки.
    */
   arrowClassName?: string;
+  /**
+   * Пользовательская SVG иконка.
+   *
+   * Требования:
+   *
+   * 1. Иконка по умолчанию должна быть направлена вверх (a.k.a `IconUp`).
+   * 2. Чтобы избежать проблемы с пространством между стрелкой и контентом на некоторых экранах,
+   *    растяните кривую по высоте на `1px` и увеличьте на этот размер `height` и `viewBox` SVG.
+   *    (см. https://github.com/VKCOM/VKUI/pull/4496).
+   * 3. Передайте высоту иконки в параметр `arrowHeight`. В значении высоты можно исключить хак с `1px` из п.2.
+   * 4. Убедитесь, что компонент принимает все валидные для SVG параметры.
+   * 5. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
+   */
+  ArrowIcon?: PopperArrowProps['Icon'];
   /**
    * Выставлять ширину равной target элементу
    */
@@ -87,7 +114,10 @@ export const Popper = ({
   placement: placementProp = 'bottom-start',
   onPlacementChange,
   arrow,
+  arrowHeight = DEFAULT_ARROW_HEIGHT,
+  arrowPadding = DEFAULT_ARROW_PADDING,
   arrowClassName,
+  ArrowIcon = DefaultIcon,
   sameWidth,
   offsetDistance = 8,
   offsetSkidding = 0,
@@ -99,7 +129,7 @@ export const Popper = ({
   className,
   ...restProps
 }: PopperProps) => {
-  const arrowRef = React.useRef<HTMLDivElement>(null);
+  const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
 
   const isNotAutoPlacement = checkIsNotAutoPlacement(placementProp);
 
@@ -107,7 +137,7 @@ export const Popper = ({
     const middlewares: UseFloatingMiddleware[] = [
       offsetMiddleware({
         crossAxis: offsetSkidding,
-        mainAxis: arrow ? offsetDistance + ARROW_HEIGHT : offsetDistance,
+        mainAxis: arrow ? offsetDistance + arrowHeight : offsetDistance,
       }),
     ];
 
@@ -143,20 +173,23 @@ export const Popper = ({
       middlewares.push(
         arrowMiddleware({
           element: arrowRef,
-          padding: ARROW_PADDING,
+          padding: arrowPadding,
         }),
       );
     }
 
     return middlewares;
   }, [
-    arrow,
-    sameWidth,
     offsetSkidding,
+    arrowRef,
+    arrow,
+    arrowHeight,
+    arrowPadding,
     offsetDistance,
+    isNotAutoPlacement,
+    sameWidth,
     customMiddlewares,
     placementProp,
-    isNotAutoPlacement,
   ]);
 
   const {
@@ -208,7 +241,8 @@ export const Popper = ({
           coords={arrowCoords}
           placement={resolvedPlacement}
           arrowClassName={arrowClassName}
-          getRootRef={arrowRef}
+          getRootRef={setArrowRef}
+          Icon={ArrowIcon}
         />
       )}
       {renderContent ? renderContent({ className: '' }) : children}

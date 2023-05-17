@@ -22,7 +22,8 @@ import {
 import { warnOnce } from '../../lib/warnOnce';
 import { HasRootRef } from '../../types';
 import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
-import { PopperArrow } from '../PopperArrow/PopperArrow';
+import { DefaultIcon } from '../PopperArrow/DefaultIcon';
+import { PopperArrow, type PopperArrowProps } from '../PopperArrow/PopperArrow';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { tooltipContainerAttr } from './TooltipContainer';
 import styles from './Tooltip.module.css';
@@ -102,6 +103,24 @@ export interface TooltipProps {
    */
   arrow?: boolean;
   /**
+   * Безопасная зона вокруг стрелки, чтобы та не выходила за края контента.
+   */
+  arrowPadding?: number;
+  /**
+   * Пользовательская SVG иконка.
+   *
+   * Требования:
+   *
+   * 1. Иконка по умолчанию должна быть направлена вверх (a.k.a `IconUp`).
+   * 2. Чтобы избежать проблемы с пространством между стрелкой и контентом на некоторых экранах,
+   *    растяните кривую по высоте на `1px` и увеличьте на этот размер `height` и `viewBox` SVG.
+   *    (см. https://github.com/VKCOM/VKUI/pull/4496).
+   * 3. Убедитесь, что компонент принимает все валидные для SVG параметры.
+   * 4. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
+   * 5. Если стрелка наезжает на якорный элемент, то увеличьте значение параметра `offsetY`.
+   */
+  ArrowIcon?: PopperArrowProps['Icon'];
+  /**
    * Сдвиг стрелочки относительно центра дочернего элемента.
    */
   cornerOffset?: number;
@@ -160,13 +179,15 @@ export const Tooltip = ({
   cornerAbsoluteOffset,
   appearance = 'accent',
   arrow = true,
+  arrowPadding = 14,
+  ArrowIcon = DefaultIcon,
   placement: placementProp,
   text,
   header,
   className,
   ...restProps
 }: TooltipProps) => {
-  const arrowRef = React.useRef<HTMLDivElement>(null);
+  const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
   const [target, setTarget] = React.useState<HTMLElement | null>(null);
   /* eslint-disable no-restricted-properties */
   const tooltipContainer = React.useMemo(
@@ -231,7 +252,7 @@ export const Tooltip = ({
       middlewares.push(
         arrowMiddleware({
           element: arrowRef,
-          padding: 14,
+          padding: arrowPadding,
         }),
       );
       middlewares.push({
@@ -259,7 +280,17 @@ export const Tooltip = ({
     }
 
     return middlewares;
-  }, [arrow, cornerAbsoluteOffset, cornerOffset, offsetX, offsetY, placement, isNotAutoPlacement]);
+  }, [
+    arrow,
+    arrowRef,
+    arrowPadding,
+    cornerAbsoluteOffset,
+    cornerOffset,
+    offsetX,
+    offsetY,
+    placement,
+    isNotAutoPlacement,
+  ]);
 
   const {
     x: floatingDataX,
@@ -319,7 +350,8 @@ export const Tooltip = ({
                   coords={arrowCoords}
                   placement={resolvedPlacement}
                   arrowClassName={styles['Tooltip__arrow']}
-                  getRootRef={arrowRef}
+                  getRootRef={setArrowRef}
+                  Icon={ArrowIcon}
                 />
               )}
               <div className={styles['Tooltip__content']}>

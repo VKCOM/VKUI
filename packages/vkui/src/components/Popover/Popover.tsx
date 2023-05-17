@@ -11,7 +11,10 @@ import { Popper, PopperCommonProps } from '../Popper/Popper';
 import styles from './Popover.module.css';
 
 export interface PopoverProps
-  extends Omit<PopperCommonProps, 'arrow' | 'arrowClassName' | 'content'>,
+  extends Omit<
+      PopperCommonProps,
+      'arrow' | 'arrowClassName' | 'arrowHeight' | 'arrowPadding' | 'ArrowIcon' | 'content'
+    >,
     Pick<FocusTrapProps, 'restoreFocus'> {
   /**
    * Механика вызова всплывающего окна.
