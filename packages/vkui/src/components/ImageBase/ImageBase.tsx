@@ -139,7 +139,6 @@ export const ImageBase = ({
           className,
           styles['ImageBase'],
           sizeClassName,
-          withBorder && styles['ImageBase--withBorder'],
           loaded && styles['ImageBase--loaded'],
         )}
         role={hasSrc ? 'img' : 'presentation'}
@@ -169,6 +168,7 @@ export const ImageBase = ({
           <div className={classNames(styles['ImageBase__fallback'])}>{fallbackIcon}</div>
         )}
         {children}
+        {withBorder && <div role="presentation" className={styles['ImageBase__border']} />}
       </div>
     </ImageBaseContext.Provider>
   );

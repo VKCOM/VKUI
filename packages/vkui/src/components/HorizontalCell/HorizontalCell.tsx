@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { usePlatform } from '../../hooks/usePlatform';
+import { Platform } from '../../lib/platform';
 import { HasComponent, HasRef, HasRootRef } from '../../types';
 import { Avatar } from '../Avatar/Avatar';
 import { Tappable } from '../Tappable/Tappable';
@@ -26,8 +28,18 @@ export interface HorizontalCellProps
     HasRef<HTMLDivElement>,
     HasComponent {
   size?: 's' | 'm' | 'l';
+  /**
+   * Заголовок
+   */
   header?: React.ReactNode;
+  /**
+   * Дополнительная строка текста под `children`.
+   */
   subtitle?: React.ReactNode;
+  /**
+   * Дополнительная строка текста под `children` и `subtitle`.
+   */
+  extraSubtitle?: React.ReactNode;
   disabled?: boolean;
 }
 
@@ -43,8 +55,11 @@ export const HorizontalCell = ({
   children = <Avatar size={56} />,
   getRootRef,
   getRef,
+  extraSubtitle,
   ...restProps
 }: HorizontalCellProps) => {
+  const platform = usePlatform();
+
   return (
     <div
       ref={getRootRef}
@@ -56,6 +71,7 @@ export const HorizontalCell = ({
           m: styles['HorizontalCell--size-m'],
           l: styles['HorizontalCell--size-l'],
         }[size],
+        platform === Platform.IOS && styles['HorizontalCell--ios'],
         className,
       )}
     >
@@ -67,6 +83,9 @@ export const HorizontalCell = ({
           {hasReactNode(header) && <CellTypography size={size}>{header}</CellTypography>}
           {hasReactNode(subtitle) && (
             <Footnote className={styles['HorizontalCell__subtitle']}>{subtitle}</Footnote>
+          )}
+          {hasReactNode(extraSubtitle) && (
+            <Footnote className={styles['HorizontalCell__subtitle']}>{extraSubtitle}</Footnote>
           )}
         </div>
       </Tappable>

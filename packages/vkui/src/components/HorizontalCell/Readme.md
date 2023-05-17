@@ -1,24 +1,23 @@
 HorizontalCell автоматически ставит отступы по бокам в зависимости от платформы, поэтому его лучше использовать в [HorizontalScroll](#!/HorizontalScroll).
 
-- При `size='s'` **для iOS** рекомендуется `<Avatar size={64}/>`, а для остальных платформ `<Avatar size={56}/>` или же любой компонент шириной до 64 пикс.
+- При `size='s'` рекомендуется `<Avatar size={56}/>` или же любой компонент шириной до 56 пикс.
 - При `size='m'` рекомендуется `<Avatar size={88} mode='app'/>` или же любой компонент шириной до 96 пикс.
-- При `size='l'` рекомендуется `<Avatar size={128} mode='image/>` или же любой компонент произвольной ширины.
+- При `size='l'` рекомендуется `<Avatar size={128} mode='image'/>` или же любой компонент произвольной ширины.
 
 ```jsx
 const largeImageStyles = {
   width: 220,
   height: 124,
-  borderRadius: 8,
-  border: '1px solid var(--vkui--color_image_placeholder_alpha)',
+  borderRadius: 4,
+  boxSizing: 'border-box',
+  border: 'var(--vkui_internal--thin_border) solid var(--vkui--color_image_border_alpha)',
   objectFit: 'cover',
 };
 
 const UserItems = () => {
-  const platform = usePlatform();
-
   return getRandomUsers(15).map((user) => (
     <HorizontalCell key={user.id} size="s" header={user.first_name}>
-      <Avatar size={platform === 'ios' ? 64 : 56} src={user.photo_100} />
+      <Avatar size={56} src={user.photo_100} />
     </HorizontalCell>
   ));
 };
@@ -47,11 +46,9 @@ const miniApps = [
 ];
 
 const MiniAppItems = () => {
-  const platform = usePlatform();
-
   return miniApps.map(({ id, title, icon_139 }) => (
     <HorizontalCell key={id} size="s" header={title}>
-      <Image size={platform === 'ios' ? 64 : 56} borderRadius="l" src={icon_139} />
+      <Image size={56} borderRadius="m" src={icon_139} />
     </HorizontalCell>
   ));
 };
