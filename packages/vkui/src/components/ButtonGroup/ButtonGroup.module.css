@@ -16,7 +16,7 @@
   flex-direction: row;
 }
 
-/* stylelint-disable vkui/atomic */
+/* stylelint-disable @project-tools/stylelint-atomic */
 
 /**
  * [Примечание 3] Чтобы не завязываться на класс компонента, используем каскад и универсальный селектор.
@@ -60,7 +60,7 @@
   margin-right: var(--vkui--size_button_group_gap_medium--regular);
 }
 
-/* stylelint-enable vkui/atomic */
+/* stylelint-enable @project-tools/stylelint-atomic */
 
 .ButtonGroup--align-left {
   align-items: flex-start;

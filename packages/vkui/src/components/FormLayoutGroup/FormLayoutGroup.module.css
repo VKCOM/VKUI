@@ -49,7 +49,7 @@
   position: relative;
 }
 
-/* stylelint-disable vkui/atomic */
+/* stylelint-disable @project-tools/stylelint-atomic */
 .FormLayoutGroup--segmented > * {
   min-width: 0;
   flex: 1;

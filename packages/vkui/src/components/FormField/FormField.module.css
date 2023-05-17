@@ -21,7 +21,7 @@
   }
 }
 
-/* stylelint-disable-next-line vkui/atomic */
+/* stylelint-disable-next-line @project-tools/stylelint-atomic */
 .FormField > * {
   border-radius: inherit;
   z-index: var(--vkui_internal--z_index_form_field_element);
@@ -123,7 +123,7 @@
   z-index: var(--vkui_internal--z_index_form_field_border_hover);
 }
 
-/* stylelint-disable-next-line vkui/atomic */
+/* stylelint-disable-next-line  @project-tools/stylelint-atomic */
 .FormField *:focus {
   outline: none;
 }
