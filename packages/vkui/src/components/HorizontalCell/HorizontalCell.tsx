@@ -26,8 +26,18 @@ export interface HorizontalCellProps
     HasRef<HTMLDivElement>,
     HasComponent {
   size?: 's' | 'm' | 'l';
+  /**
+   * Заголовок
+   */
   header?: React.ReactNode;
+  /**
+   * Дополнительная строка текста под `children`.
+   */
   subtitle?: React.ReactNode;
+  /**
+   * Дополнительная строка текста под `children` и `subtitle`.
+   */
+  extraSubtitle?: React.ReactNode;
   disabled?: boolean;
 }
 
@@ -43,6 +53,7 @@ export const HorizontalCell = ({
   children = <Avatar size={56} />,
   getRootRef,
   getRef,
+  extraSubtitle,
   ...restProps
 }: HorizontalCellProps) => {
   return (
@@ -67,6 +78,9 @@ export const HorizontalCell = ({
           {hasReactNode(header) && <CellTypography size={size}>{header}</CellTypography>}
           {hasReactNode(subtitle) && (
             <Footnote className={styles['HorizontalCell__subtitle']}>{subtitle}</Footnote>
+          )}
+          {hasReactNode(extraSubtitle) && (
+            <Footnote className={styles['HorizontalCell__subtitle']}>{extraSubtitle}</Footnote>
           )}
         </div>
       </Tappable>
