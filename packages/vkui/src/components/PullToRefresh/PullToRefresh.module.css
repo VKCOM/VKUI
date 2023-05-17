@@ -10,6 +10,9 @@
 .PullToRefresh__controls {
   width: 100%;
   pointer-events: none;
+}
+
+.PullToRefresh:not(.PullToRefresh--ios) .PullToRefresh__controls {
   z-index: var(--vkui_internal--z_index_pull_to_refresh);
 }
 
