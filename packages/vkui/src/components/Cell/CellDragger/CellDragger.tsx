@@ -7,20 +7,25 @@ import { Touch } from '../../Touch/Touch';
 import { DraggableProps } from '../useDraggable';
 import styles from './CellDragger.module.css';
 
-type CellDraggerProps = DraggableProps & React.HTMLAttributes<HTMLElement>;
+type CellDraggerProps = DraggableProps &
+  Omit<React.HTMLAttributes<HTMLElement>, keyof DraggableProps>;
 
 export const CellDragger = ({
   onDragStart,
   onDragMove,
   onDragEnd,
+  onClick,
   className,
   ...restProps
 }: CellDraggerProps) => {
   const platform = usePlatform();
 
-  const onClick = React.useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-  }, []);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    if (onClick) {
+      onClick(event);
+    }
+  };
 
   return (
     <Touch
@@ -28,7 +33,7 @@ export const CellDragger = ({
       onStart={onDragStart}
       onMoveY={onDragMove}
       onEnd={onDragEnd}
-      onClick={onClick}
+      onClick={handleClick}
       {...restProps}
     >
       {platform === Platform.IOS ? <Icon24ReorderIos /> : <Icon24Reorder />}
