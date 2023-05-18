@@ -4,7 +4,7 @@ import { canUseDOM } from '../lib/dom';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
 interface EventListenerHandle {
-  add: (el: HTMLElement | Document | Window) => void;
+  add: (el: EventTarget) => void;
   remove: () => void;
 }
 
@@ -35,7 +35,7 @@ export function useEventListener<E extends Event, K extends keyof GlobalEventHan
     detach.current = noop;
   }, []);
   const add = React.useCallback(
-    (el: HTMLElement | Document | Window) => {
+    (el: EventTarget) => {
       if (!canUseDOM) {
         return;
       }
