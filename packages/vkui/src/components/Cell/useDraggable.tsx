@@ -3,9 +3,9 @@ import { TouchEvent } from '../Touch/Touch';
 import { CellProps } from './Cell';
 
 export interface DraggableProps {
-  onDragStart: () => void;
-  onDragEnd: () => void;
-  onDragMove: (e: TouchEvent) => void;
+  onDragStart(event: TouchEvent): void;
+  onDragEnd(event: TouchEvent): void;
+  onDragMove(event: TouchEvent): void;
 }
 
 interface UseDraggableProps extends DraggableProps {
@@ -26,11 +26,13 @@ export const useDraggable = <T extends HTMLElement>({
   const [dragShift, setDragShift] = React.useState<number>(0);
   const [dragDirection, setDragDirection] = React.useState<'down' | 'up' | undefined>(undefined);
 
-  const onDragStart = () => {
+  const onDragStart = (event: TouchEvent) => {
     const rootEl = rootElRef.current;
     if (!rootEl) {
       return;
     }
+    event.originalEvent.stopPropagation();
+    event.originalEvent.preventDefault();
 
     setDragging(true);
 
@@ -46,17 +48,18 @@ export const useDraggable = <T extends HTMLElement>({
     setDragShift(0);
   };
 
-  const onDragMove = (e: TouchEvent) => {
-    e.originalEvent.preventDefault();
+  const onDragMove = (event: TouchEvent) => {
+    event.originalEvent.stopPropagation();
+    event.originalEvent.preventDefault();
 
     const rootEl = rootElRef.current;
 
     if (rootEl) {
-      rootEl.style.transform = `translateY(${e.shiftY}px)`;
+      rootEl.style.transform = `translateY(${event.shiftY}px)`;
       const rootGesture = rootEl.getBoundingClientRect();
 
-      setDragDirection(dragShift - e.shiftY < 0 ? 'down' : 'up');
-      setDragShift(e.shiftY);
+      setDragDirection(dragShift - event.shiftY < 0 ? 'down' : 'up');
+      setDragShift(event.shiftY);
       setDragEndIndex(dragStartIndex);
 
       siblings.forEach((sibling: HTMLElement, siblingIndex: number) => {
@@ -93,7 +96,10 @@ export const useDraggable = <T extends HTMLElement>({
     }
   };
 
-  const onDragEnd = () => {
+  const onDragEnd = (event: TouchEvent) => {
+    event.originalEvent.stopPropagation();
+    event.originalEvent.preventDefault();
+
     const [from, to] = [dragStartIndex, dragEndIndex];
 
     siblings.forEach((sibling: HTMLElement) => {
