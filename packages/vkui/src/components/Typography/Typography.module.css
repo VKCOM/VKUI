@@ -1,6 +1,7 @@
 .Typography--normalize {
-  margin: 0;
   display: block;
+  margin: 0;
+  padding: 0;
 }
 
 /* Мы утяжеляем селектор, чтобы перебить другие селекторы */

@@ -116,7 +116,7 @@ export const Banner = ({
   const IconDismissIOS = mode === 'image' ? Icon24DismissDark : Icon24DismissSubstract;
 
   const content = (
-    <React.Fragment>
+    <>
       {mode === 'image' && background && (
         <div aria-hidden className={styles['Banner__bg']}>
           {background}
@@ -127,26 +127,25 @@ export const Banner = ({
 
       <div className={styles['Banner__content']}>
         {hasReactNode(header) && (
-          <HeaderTypography
-            Component="span"
-            className={styles['Banner__header']}
-            weight="2"
-            level={size === 'm' ? '2' : '1'}
-          >
+          <HeaderTypography Component="p" weight="2" level={size === 'm' ? '2' : '1'}>
             {header}
           </HeaderTypography>
         )}
         {hasReactNode(subheader) && (
-          <SubheaderTypography Component="span" className={styles['Banner__subheader']}>
+          <SubheaderTypography Component="p" className={styles['Banner__subheader']}>
             {subheader}
           </SubheaderTypography>
         )}
-        {hasReactNode(text) && <Text className={styles['Banner__text']}>{text}</Text>}
+        {hasReactNode(text) && (
+          <Text Component="p" className={styles['Banner__text']}>
+            {text}
+          </Text>
+        )}
         {hasReactNode(actions) && React.Children.count(actions) > 0 && (
           <div className={styles['Banner__actions']}>{actions}</div>
         )}
       </div>
-    </React.Fragment>
+    </>
   );
 
   return (
