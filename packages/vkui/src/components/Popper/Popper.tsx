@@ -82,6 +82,12 @@ export interface PopperCommonProps
   sameWidth?: boolean;
   forcePortal?: boolean;
   /**
+   * Кастомный root-элемент портала.
+   * При передаче вместе с `forcePorta=true` игнорируется `portalRoot` и `disablePortal`
+   * из контекста `AppRoot`.
+   */
+  portalRoot?: HTMLElement | React.RefObject<HTMLElement> | null;
+  /**
    * Подписывается на изменение геометрии `targetRef`, чтобы пересчитать свою позицию.
    */
   autoUpdateOnTargetResize?: boolean;
@@ -122,6 +128,7 @@ export const Popper = ({
   offsetDistance = 8,
   offsetSkidding = 0,
   forcePortal = true,
+  portalRoot,
   autoUpdateOnTargetResize = false,
   style: styleProp,
   customMiddlewares,
@@ -249,5 +256,9 @@ export const Popper = ({
     </div>
   );
 
-  return <AppRootPortal forcePortal={forcePortal}>{dropdown}</AppRootPortal>;
+  return (
+    <AppRootPortal forcePortal={forcePortal} portalRoot={portalRoot}>
+      {dropdown}
+    </AppRootPortal>
+  );
 };
