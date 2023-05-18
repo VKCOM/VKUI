@@ -35,7 +35,7 @@
 .ActionSheet--ios {
   width: 100%;
   animation: vkui-animation-actionsheet-intro 0.3s var(--vkui--animation_easing_platform);
-  padding: 10px;
+  padding: 8px;
   margin: unset;
   background: transparent;
 }
@@ -54,10 +54,6 @@
 
 .ActionSheet--ios .ActionSheet__title {
   position: relative;
-}
-
-.ActionSheet--ios .ActionSheet__title + .ActionSheet__text {
-  margin-top: 9px;
 }
 
 .ActionSheet--ios .ActionSheet__text {
