@@ -48,22 +48,52 @@ const openIcons = () =>
       iosCloseItem={<ActionSheetDefaultIosCloseItem />}
       toggleRef={iconsTargetRef}
     >
-      <ActionSheetItem autoClose before={<Icon28EditOutline />}>
+      <ActionSheetItem
+        autoClose
+        before={
+          <AdaptiveIconRenderer IconCompact={Icon20WriteOutline} IconRegular={Icon28EditOutline} />
+        }
+      >
         Редактировать профиль
       </ActionSheetItem>
-      <ActionSheetItem autoClose before={<Icon28ListPlayOutline />}>
+      <ActionSheetItem
+        autoClose
+        before={
+          <AdaptiveIconRenderer
+            IconCompact={Icon20ListPlayOutline}
+            IconRegular={Icon28ListPlayOutline}
+          />
+        }
+      >
         Слушать далее
       </ActionSheetItem>
-      <ActionSheetItem autoClose before={<Icon28ShareOutline />}>
+      <ActionSheetItem
+        autoClose
+        before={
+          <AdaptiveIconRenderer IconCompact={Icon20ShareOutline} IconRegular={Icon28ShareOutline} />
+        }
+      >
         Поделиться
       </ActionSheetItem>
-      <ActionSheetItem autoClose before={<Icon28CopyOutline />}>
+      <ActionSheetItem
+        autoClose
+        before={
+          <AdaptiveIconRenderer IconCompact={Icon20CopyOutline} IconRegular={Icon28CopyOutline} />
+        }
+      >
         Скопировать ссылку
       </ActionSheetItem>
       <ActionSheetItem
         autoClose
         before={
-          platform === Platform.IOS ? <Icon28DeleteOutline /> : <Icon28DeleteOutlineAndroid />
+          <AdaptiveIconRenderer
+            IconCompact={
+              platform === Platform.IOS ? Icon20DeleteOutline : Icon20DeleteOutlineAndroid
+            }
+            IconRegular={
+              platform === Platform.IOS ? Icon28DeleteOutline : Icon28DeleteOutlineAndroid
+            }
+          />
         }
         mode="destructive"
       >
@@ -79,18 +109,38 @@ const openSubtitle = () =>
       iosCloseItem={<ActionSheetDefaultIosCloseItem />}
       toggleRef={subtitleTargetRef}
     >
-      <ActionSheetItem before={<Icon28SettingsOutline />} autoClose subtitle="Авто">
+      <ActionSheetItem
+        before={
+          <AdaptiveIconRenderer
+            IconCompact={Icon20GearOutline}
+            IconRegular={Icon28SettingsOutline}
+          />
+        }
+        autoClose
+        subtitle="Авто"
+      >
         Качество
       </ActionSheetItem>
       <ActionSheetItem
-        before={<Icon28SubtitlesOutline />}
+        before={
+          <AdaptiveIconRenderer
+            IconCompact={Icon20TextCenterOutline}
+            IconRegular={Icon28SubtitlesOutline}
+          />
+        }
         autoClose
         subtitle="Отсутствуют"
         disabled
       >
         Субтитры
       </ActionSheetItem>
-      <ActionSheetItem before={<Icon28PlaySpeedOutline />} autoClose subtitle="Обычная">
+      <ActionSheetItem
+        before={
+          <AdaptiveIconRenderer IconCompact={Icon20Play} IconRegular={Icon28PlaySpeedOutline} />
+        }
+        autoClose
+        subtitle="Обычная"
+      >
         Скорость воспроизведения
       </ActionSheetItem>
     </ActionSheet>,

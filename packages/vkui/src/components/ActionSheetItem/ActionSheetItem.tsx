@@ -9,6 +9,7 @@ import { ActionSheetContext, type ActionSheetContextType } from '../ActionSheet/
 import { Tappable } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Text } from '../Typography/Text/Text';
+import { Title } from '../Typography/Title/Title';
 import styles from './ActionSheetItem.module.css';
 
 export interface ActionSheetItemProps
@@ -94,6 +95,7 @@ const ActionSheetItem = ({
         sizeY === SizeType.COMPACT && styles['ActionSheetItem--sizeY-compact'],
         isRich && styles['ActionSheetItem--rich'],
         isDesktop && styles['ActionSheetItem--desktop'],
+        selectable && styles['ActionSheetItem--selectable'],
         className,
       )}
     >
@@ -110,12 +112,17 @@ const ActionSheetItem = ({
             isCentered && styles['ActionSheetItem--centered'],
           )}
         >
-          <Text
-            weight={mode === 'cancel' ? '2' : undefined}
-            className={styles['ActionSheetItem__children']}
-          >
-            {children}
-          </Text>
+          {platform === Platform.IOS ? (
+            <Title
+              className={styles['ActionSheetItem__children']}
+              weight={mode === 'cancel' ? '2' : '3'}
+              level={isCentered ? '2' : '3'}
+            >
+              {children}
+            </Title>
+          ) : (
+            <Text className={styles['ActionSheetItem__children']}>{children}</Text>
+          )}
           {meta && <Text className={styles['ActionSheetItem__meta']}>{meta}</Text>}
         </div>
         {subtitle && <Subhead className={styles['ActionSheetItem__subtitle']}>{subtitle}</Subhead>}
