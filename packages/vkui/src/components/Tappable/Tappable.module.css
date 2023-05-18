@@ -17,7 +17,7 @@ https://developer.mozilla.org/ru/docs/Web/CSS/CSS_Positioning/Understanding_z_in
 https://github.com/VKCOM/VKUI/pull/3641
 */
 
-/* stylelint-disable-next-line vkui/atomic */
+/* stylelint-disable-next-line @project-tools/stylelint-atomic */
 .Tappable > * {
   position: relative;
   z-index: var(--vkui_internal--z_index_tappable_element);

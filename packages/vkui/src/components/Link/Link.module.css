@@ -33,7 +33,7 @@
   color: var(--vkui--color_text_link_visited);
 }
 
-/* stylelint-disable-next-line vkui/atomic */
+/* stylelint-disable-next-line @project-tools/stylelint-atomic */
 .Link :global(.vkuiIcon) {
   margin-left: 4px;
   display: inline-block;
