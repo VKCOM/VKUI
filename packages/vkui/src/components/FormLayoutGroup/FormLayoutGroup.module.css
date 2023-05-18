@@ -4,7 +4,6 @@
     var(--vkui--size_base_padding_horizontal--regular);
   flex-wrap: wrap;
   align-items: flex-start;
-  isolation: isolate;
 }
 
 .FormLayoutGroup__removable {
