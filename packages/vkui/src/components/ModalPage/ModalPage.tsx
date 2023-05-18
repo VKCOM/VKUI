@@ -92,7 +92,11 @@ export const ModalPage = ({
   const orientation = useOrientationChange();
   const { sizeX, isDesktop } = useAdaptivityWithJSMediaQueries();
 
-  React.useEffect(updateModalHeight, [children, orientation, updateModalHeight]);
+  React.useEffect(() => {
+    if (dynamicContentHeight) {
+      updateModalHeight();
+    }
+  }, [children, dynamicContentHeight, orientation, updateModalHeight]);
 
   const isCloseButtonShown = !hideCloseButton && isDesktop;
   const size = isDesktop ? sizeProp : 's';

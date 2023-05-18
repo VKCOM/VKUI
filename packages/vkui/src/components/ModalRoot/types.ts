@@ -39,7 +39,6 @@ export interface ModalsStateEntry extends ModalElements {
   type?: ModalType;
 
   settlingHeight?: number;
-  dynamicContentHeight?: boolean;
   expandable?: boolean;
 
   /**

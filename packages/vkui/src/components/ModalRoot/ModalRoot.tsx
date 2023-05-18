@@ -88,15 +88,13 @@ class ModalRootTouchComponent extends React.Component<
   }
 
   componentDidMount() {
-    // Отслеживаем изменение размеров viewport (Необходимо для iOS)
-    if (this.props.platform === Platform.IOS) {
-      this.window?.addEventListener('resize', this.updateModalTranslate, false);
-    }
+    // Отслеживаем изменение размеров viewport
+    this.window?.addEventListener('resize', this.updateModalHeight, false);
   }
 
   componentWillUnmount() {
     this.toggleDocumentScrolling(true);
-    this.window.removeEventListener('resize', this.updateModalTranslate, false);
+    this.window.removeEventListener('resize', this.updateModalHeight, false);
   }
 
   componentDidUpdate(prevProps: ModalRootWithDOMProps & ModalTransitionProps) {
@@ -172,11 +170,6 @@ class ModalRootTouchComponent extends React.Component<
     return false;
   };
 
-  updateModalTranslate = () => {
-    const modalState = this.props.getModalState(this.props.activeModal);
-    modalState && this.animateTranslate(modalState, modalState.translateY);
-  };
-
   checkPageContentHeight() {
     const modalState = this.props.getModalState(this.props.activeModal);
 
@@ -204,7 +197,7 @@ class ModalRootTouchComponent extends React.Component<
   updateModalHeight = () => {
     const modalState = this.props.getModalState(this.props.activeModal);
 
-    if (modalState && modalState.type === ModalType.PAGE && modalState.dynamicContentHeight) {
+    if (modalState && modalState.type === ModalType.PAGE) {
       if (this.props.enteringModal) {
         this.waitTransitionFinish(modalState, () => {
           requestAnimationFrame(() => this.checkPageContentHeight());
