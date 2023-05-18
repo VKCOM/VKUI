@@ -7,6 +7,7 @@ import { TabsContextProps, TabsModeContext } from '../Tabs/Tabs';
 import { Tappable } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './TabsItem.module.css';
 
 const sizeYClassNames = {
@@ -70,10 +71,14 @@ export const TabsItem = ({
           className={classNames(styles['TabsItem__status'], styles['TabsItem__status--count'])}
           weight="2"
         >
+          <VisuallyHidden>&nbsp;</VisuallyHidden>
           {status}
         </Subhead>
       ) : (
-        <span className={styles['TabsItem__status']}>{status}</span>
+        <span className={styles['TabsItem__status']}>
+          <VisuallyHidden>&nbsp;</VisuallyHidden>
+          {status}
+        </span>
       );
   }
 
