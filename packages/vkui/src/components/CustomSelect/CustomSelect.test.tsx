@@ -530,7 +530,7 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(onChange).toBeCalledTimes(0);
+    expect(onChange).toBeCalledTimes(2);
     expect(getCustomSelectValue()).toEqual('');
   });
 
@@ -550,6 +550,7 @@ describe('CustomSelect', () => {
       />,
     );
 
+    expect(onChange).toBeCalledTimes(1);
     expect(getCustomSelectValue()).toEqual('Mike');
     fireEvent.click(screen.getByRole('button', { hidden: true }));
     expect(getCustomSelectValue()).toEqual('');
