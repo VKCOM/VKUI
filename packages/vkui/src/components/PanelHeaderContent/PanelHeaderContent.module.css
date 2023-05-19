@@ -91,6 +91,6 @@
 /**
  * VKCOM
  */
-.PanelHeader--no-before .PanelHeaderContent--vkcom {
+:global(.vkuiInternalPanelHeader--no-before) .PanelHeaderContent--vkcom {
   padding-left: 16px;
 }

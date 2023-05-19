@@ -145,7 +145,8 @@ export const PanelHeader = ({
           visor &&
           classNames(styles['PanelHeader--sep'], 'vkuiInternalPanelHeader--sep'),
         webviewType === WebviewType.VKAPPS && !isInsideModal && styles['PanelHeader--vkapps'],
-        !before && styles['PanelHeader--no-before'],
+        !before &&
+          classNames(styles['PanelHeader--no-before'], 'vkuiInternalPanelHeader--no-before'),
         !after && styles['PanelHeader--no-after'],
         isFixed && styles['PanelHeader--fixed'],
         sizeX !== SizeType.COMPACT && sizeXClassNames[sizeX],
