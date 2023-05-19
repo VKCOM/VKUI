@@ -481,18 +481,19 @@ export function CustomSelect(props: SelectProps) {
   }, []);
 
   const onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const newSelectedOptionIndex = findSelectedIndex(
-      options,
-      e.currentTarget.value,
-      allowClearButton,
-    );
+    if (!isControlledOutside) {
+      const newSelectedOptionIndex = findSelectedIndex(
+        options,
+        e.currentTarget.value,
+        allowClearButton,
+      );
 
-    if (selectedOptionIndex !== newSelectedOptionIndex) {
-      if (!isControlledOutside) {
+      if (selectedOptionIndex !== newSelectedOptionIndex && !isControlledOutside) {
         setSelectedOptionIndex(newSelectedOptionIndex);
       }
-      onChange?.(e);
     }
+
+    onChange?.(e);
   };
 
   const onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = React.useCallback(
