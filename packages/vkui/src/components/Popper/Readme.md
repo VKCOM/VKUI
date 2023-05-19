@@ -3,8 +3,8 @@
 > Это нестабильный компонент. Его API может меняться в рамках одной мажорной версии. [Подробнее про нестабильные компоненты](https://vkcom.github.io/VKUI/#/Unstable).
 
 Низкоуровневый компонент для отрисовки выпадающего блока. Единственная его задача — корректно позиционироваться
-рядом с целевым элементом. На основе этого компонента сделаны [ClickPopper](https://vkcom.github.io/VKUI/#/ClickPopper) и [HoverPopper](https://vkcom.github.io/VKUI/#/HoverPopper),
-реализующие логику скрытия и показа по клику и по ховеру соответственно.
+рядом с целевым элементом. На основе этого компонента сделан [HoverPopper](https://vkcom.github.io/VKUI/#/HoverPopper),
+реализующий логику скрытия и показа по ховеру.
 
 ```jsx { "props": { "layout": false, "iframe": false } }
 const [shown, setShown] = React.useState(false);
