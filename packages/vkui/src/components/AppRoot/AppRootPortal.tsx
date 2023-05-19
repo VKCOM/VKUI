@@ -63,16 +63,9 @@ function getPortalContainer(
   portalRootProp?: HTMLElement | React.RefObject<HTMLElement> | null,
   portalRoot?: HTMLElement | null,
 ) {
-  let portalContainer: HTMLElement | null = null;
   if (!portalRootProp) {
     return portalRoot;
   }
 
-  if (isRefObject(portalRootProp)) {
-    portalContainer = portalRootProp.current;
-  } else {
-    portalContainer = portalRootProp;
-  }
-
-  return portalContainer;
+  return isRefObject(portalRootProp) ? portalRootProp.current : portalRootProp;
 }
