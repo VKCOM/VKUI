@@ -76,3 +76,17 @@
 .BaseGallery__bullet--active {
   opacity: 1;
 }
+
+.BaseGallery__arrow {
+  position: absolute;
+  top: 0;
+  opacity: 0;
+}
+
+.BaseGallery:hover .BaseGallery__arrow {
+  opacity: var(--vkui--opacity_disable_accessibility);
+}
+
+.BaseGallery .BaseGallery__arrow:hover {
+  opacity: 1;
+}

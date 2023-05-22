@@ -5,7 +5,7 @@ import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
 import { easeInOutSine } from '../../lib/fx';
 import { HasRef } from '../../types';
-import { HorizontalScrollArrow } from './HorizontalScrollArrow';
+import { ScrollArrow } from '../ScrollArrow/ScrollArrow';
 import styles from './HorizontalScroll.module.css';
 
 interface ScrollContext {
@@ -238,7 +238,7 @@ export const HorizontalScroll = ({
       className={classNames(
         styles['HorizontalScroll'],
         'vkuiInternalHorizontalScroll',
-        showArrows === 'always' && 'vkuiInternalHorizontalScroll--withConstArrows',
+        showArrows === 'always' && styles['HorizontalScroll--withConstArrows'],
         className,
       )}
     >
@@ -246,20 +246,26 @@ export const HorizontalScroll = ({
         <div className={styles['HorizontalScroll__in-wrapper']}>{children}</div>
       </div>
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollLeft && (
-        <HorizontalScrollArrow
+        <ScrollArrow
           size={arrowSize}
           offsetY={arrowOffsetY}
           direction="left"
-          className={styles['HorizontalScroll__arrowLeft']}
+          className={classNames(
+            styles['HorizontalScroll__arrow'],
+            styles['HorizontalScroll__arrowLeft'],
+          )}
           onClick={scrollToLeft}
         />
       )}
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollRight && (
-        <HorizontalScrollArrow
+        <ScrollArrow
           size={arrowSize}
           offsetY={arrowOffsetY}
           direction="right"
-          className={styles['HorizontalScroll__arrowRight']}
+          className={classNames(
+            styles['HorizontalScroll__arrow'],
+            styles['HorizontalScroll__arrowRight'],
+          )}
           onClick={scrollToRight}
         />
       )}
