@@ -23,7 +23,7 @@ export const CustomScrollView = ({
   windowResize,
   autoHideScrollbar = false,
   autoHideScrollbarDelay,
-  onScroll: onScrollProp,
+  onScroll,
 }: CustomScrollViewProps) => {
   const { document, window } = useDOM();
 
@@ -146,7 +146,7 @@ export const CustomScrollView = ({
     }
 
     setTrackerPositionFromScroll(boxRef.current.scrollTop);
-    onScrollProp?.(event);
+    onScroll?.(event);
   };
 
   const listeners = [useEventListener('mousemove', onMove), useEventListener('mouseup', onUp)];
