@@ -62,7 +62,7 @@
     "jest-environment-node": "^29.5.0",
     "jest-preset-stylelint": "^6.0.0",
     "lint-staged": "^13.2.2",
-    "mini-css-extract-plugin": "^2.7.5",
+    "mini-css-extract-plugin": "^2.7.6",
     "playwright": "1.33.0",
     "postcss": "^8.4.23",
     "postcss-cli": "^10.0.0",
