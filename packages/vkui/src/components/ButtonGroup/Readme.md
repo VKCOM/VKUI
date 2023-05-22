@@ -6,7 +6,7 @@
 2. Исходя из п. 1, параметр `stretched` растягивает тот [ButtonGroup](#!/ButtonGroup), который имеет это свойство. Для компонента [Button](#!/Button) и вложенных [ButtonGroup](#!/ButtonGroup) его следует определять самостоятельно, где это необходимо.
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-const ButtonGroupPropsForm = ({ caption, defaultProps, onChange }) => {
+const ButtonGroupPropsForm = ({ caption, defaultProps, onChange, isNested = false }) => {
   const [{ mode, gap, align }, setProps] = React.useState(() => defaultProps);
 
   const handleChange = React.useCallback(
@@ -22,6 +22,7 @@ const ButtonGroupPropsForm = ({ caption, defaultProps, onChange }) => {
 
   return (
     <React.Fragment>
+      <div>The change to see on the page</div>
       <FormItem top="mode">
         <Select
           value={mode}
@@ -44,12 +45,13 @@ const ButtonGroupPropsForm = ({ caption, defaultProps, onChange }) => {
           ]}
         />
       </FormItem>
-      {mode === 'vertical' && (
+      {((mode === 'vertical' && isNested) || !isNested) && (
         <FormItem top="align">
           <Select
             value={align}
             onChange={(e) => handleChange('align', e.target.value)}
             options={[
+              { label: '', value: undefined },
               { label: 'left', value: 'left' },
               { label: 'center', value: 'center' },
               { label: 'right', value: 'right' },
@@ -158,6 +160,16 @@ const ExampleBase = () => {
           <Button size="l" appearance="accent" before={<Icon24Add />} stretched />
         </ButtonGroup>
       </Div>
+      <Div>
+        <ButtonGroup {...props}>
+          <Button size="l" appearance="accent">
+            {buttonText}
+          </Button>
+          <Button size="l" appearance="accent">
+            {buttonText}
+          </Button>
+        </ButtonGroup>
+      </Div>
     </React.Fragment>
   );
 };
@@ -171,7 +183,7 @@ const ExampleNested = () => {
   const [props, setProps] = useState({
     mode: 'vertical',
     gap: 's',
-    align: 'left',
+    align: 'undefined',
     stretched: false,
   });
 
@@ -184,6 +196,7 @@ const ExampleNested = () => {
         caption="параметры передаются корневому элементу"
         defaultProps={props}
         onChange={setProps}
+        isNested
       />
       <Div>
         <ButtonGroup {...props}>
