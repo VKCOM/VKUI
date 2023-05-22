@@ -7,8 +7,7 @@
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "./dist",
-    "./docs/assets"
+    "./dist"
   ],
   "sideEffects": [
     "./dist/lib/polyfills.js",
@@ -28,9 +27,8 @@
   "bugs": "https://github.com/VKCOM/VKUI/issues",
   "homepage": "https://vkcom.github.io/VKUI/",
   "scripts": {
-    "prepublishOnly": "yarn copy-essensial-files && yarn copy-docs-assets && yarn build",
+    "prepublishOnly": "yarn copy-essensial-files && yarn build",
     "copy-essensial-files": "cp ../../LICENSE . && cp ../../README.md .",
-    "copy-docs-assets": "mkdir -p docs/assets && cp -r ../../docs/assets/ docs/assets/",
     "package:version": "echo $npm_package_version",
     "size": "yarn clear && yarn build:no-types && size-limit",
     "size:ci": "yarn install --frozen-lockfile --ignore-scripts && yarn build:no-types",
