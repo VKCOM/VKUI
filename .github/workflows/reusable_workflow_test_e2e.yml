@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       # см. https://github.com/microsoft/playwright/blob/main/utils/docker/Dockerfile.focal
-      image: mcr.microsoft.com/playwright:v1.33.0-focal
+      image: mcr.microsoft.com/playwright:v1.34.3-focal
       options: --ipc=host
     name: Run visual (aka e2e) tests
     steps:
