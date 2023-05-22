@@ -62,14 +62,26 @@
 
 /* stylelint-enable @project-tools/stylelint-atomic */
 
-.ButtonGroup--align-left {
+.ButtonGroup--mode-vertical.ButtonGroup--align-left {
   align-items: flex-start;
 }
 
-.ButtonGroup--align-center {
+.ButtonGroup--mode-vertical.ButtonGroup--align-center {
   align-items: center;
 }
 
-.ButtonGroup--align-right {
+.ButtonGroup--mode-vertical.ButtonGroup--align-right {
   align-items: flex-end;
+}
+
+.ButtonGroup--mode-horizontal.ButtonGroup--align-left {
+  justify-content: flex-start;
+}
+
+.ButtonGroup--mode-horizontal.ButtonGroup--align-center {
+  justify-content: center;
+}
+
+.ButtonGroup--mode-horizontal.ButtonGroup--align-right {
+  justify-content: flex-end;
 }
