@@ -14,6 +14,7 @@
 
 .ButtonGroup--mode-horizontal {
   flex-direction: row;
+  align-items: center;
 }
 
 /* stylelint-disable @project-tools/stylelint-atomic */
