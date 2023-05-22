@@ -80,7 +80,7 @@
     "shx": "^0.3.2",
     "size-limit": "^8.2.4",
     "style-loader": "^3.3.3",
-    "stylelint": "^15.6.1",
+    "stylelint": "^15.6.2",
     "stylelint-config-standard": "^33.0.0",
     "stylelint-media-use-custom-media": "^2.0.0",
     "stylelint-value-no-unknown-custom-properties": "^4.0.0",
