@@ -12,6 +12,7 @@ export interface CustomScrollViewProps extends DOMProps, TrackerOptionsProps {
   windowResize?: boolean;
   boxRef?: React.Ref<HTMLDivElement>;
   className?: HTMLDivElement['className'];
+  onScroll?(event: React.UIEvent<HTMLDivElement>): void;
   children: React.ReactNode;
 }
 
@@ -22,6 +23,7 @@ export const CustomScrollView = ({
   windowResize,
   autoHideScrollbar = false,
   autoHideScrollbarDelay,
+  onScroll,
 }: CustomScrollViewProps) => {
   const { document, window } = useDOM();
 
@@ -134,7 +136,7 @@ export const CustomScrollView = ({
     unsubscribe();
   };
 
-  const scroll = () => {
+  const scroll = (event: React.UIEvent<HTMLDivElement>) => {
     if (ratio.current >= 1 || !boxRef.current) {
       return;
     }
@@ -144,6 +146,7 @@ export const CustomScrollView = ({
     }
 
     setTrackerPositionFromScroll(boxRef.current.scrollTop);
+    onScroll?.(event);
   };
 
   const listeners = [useEventListener('mousemove', onMove), useEventListener('mouseup', onUp)];
