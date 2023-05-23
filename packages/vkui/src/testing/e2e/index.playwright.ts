@@ -33,6 +33,7 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
 
   adaptivityProviderProps: [null, { option: true }],
   onlyForPlatforms: [null, { option: true }],
+  onlyForAppearances: [null, { option: true }],
 
   /**
    * см. https://playwright.dev/docs/test-fixtures#overriding-fixtures
@@ -83,15 +84,21 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
   /**
    * @private
    */
-  _skipByOnlyForPlatforms: [
-    async ({ platform, onlyForPlatforms }, use, testInfo) => {
-      let description = '';
-      if (onlyForPlatforms) {
-        description = `Because test only for platforms: [${onlyForPlatforms.join(', ')}]`;
+  _skipByOnlyForProps: [
+    async ({ platform, appearance, onlyForPlatforms, onlyForAppearances }, use, testInfo) => {
+      const skipPlatform = Array.isArray(onlyForPlatforms) && !onlyForPlatforms.includes(platform);
+      const skipAppearance =
+        Array.isArray(onlyForAppearances) && !onlyForAppearances.includes(appearance);
+      let descriptions = [];
+      if (skipPlatform) {
+        descriptions.push(`${onlyForPlatforms.join(', ')} platforms`);
+      }
+      if (skipAppearance) {
+        descriptions.push(`${onlyForAppearances.join(', ')} appearances`);
       }
       testInfo.skip(
-        Array.isArray(onlyForPlatforms) && !onlyForPlatforms.includes(platform),
-        description,
+        skipPlatform || skipAppearance,
+        `Because test only for ${descriptions.join(' and ')}`,
       );
       await use();
     },

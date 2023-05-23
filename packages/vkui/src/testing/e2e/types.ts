@@ -11,6 +11,7 @@ export interface VKUITestOptions {
 export interface InternalVKUITestOptions {
   adaptivityProviderProps?: null | Partial<AdaptivityProps>;
   onlyForPlatforms?: null | Platform[];
+  onlyForAppearances?: null | AppearanceType[];
 }
 
 export interface ScreenshotWithClipToContentOptions {
@@ -21,5 +22,5 @@ export interface VKUITestHelpers {
   componentPlaygroundProps: ComponentPlaygroundProps;
   expectScreenshotClippedToContent(options?: ScreenshotWithClipToContentOptions): Promise<void>;
   /** @private  */
-  _skipByOnlyForPlatforms: void;
+  _skipByOnlyForProps: void;
 }

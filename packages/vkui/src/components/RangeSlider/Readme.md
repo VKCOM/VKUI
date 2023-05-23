@@ -6,11 +6,24 @@
   <Panel id="slider">
     <PanelHeader>RangerSlider</PanelHeader>
     <Group>
-      <FormItem top="Uncontrolled">
-        <RangeSlider min={10} max={20} step={1} defaultValue={[12, 16]} />
+      <FormItem id="uncontrolled" top="Uncontrolled">
+        <RangeSlider
+          min={10}
+          max={20}
+          step={1}
+          defaultValue={[12, 16]}
+          aria-labelledby="uncontrolled"
+        />
       </FormItem>
-      <FormItem top="Disabled">
-        <RangeSlider min={10} max={20} step={1} defaultValue={[12, 16]} disabled />
+      <FormItem id="disabled" top="Disabled">
+        <RangeSlider
+          min={10}
+          max={20}
+          step={1}
+          defaultValue={[12, 16]}
+          disabled
+          aria-labelledby="disabled"
+        />
       </FormItem>
     </Group>
   </Panel>

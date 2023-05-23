@@ -1,50 +1,23 @@
 import * as React from 'react';
-import { clamp } from '../../helpers/math';
-import { TouchEvent } from '../Touch/Touch';
-import { UniversalSlider, UniversalSliderProps } from './UniversalSlider';
+import { Slider, type SliderMultipleProps } from '../Slider/Slider';
 
-export type Value = [number, number];
-export type RangeSliderProps = UniversalSliderProps<Value>;
+export type RangeSliderProps = Omit<SliderMultipleProps, 'multiple'>;
 
 /**
  * @see https://vkcom.github.io/VKUI/#/RangeSlider
+ *
+ * @deprecated 5.5.0
+ *
+ * Компонент устарел и будет удален в v6. Используйте [`Slider`](#/Slider).
  */
 export const RangeSlider = ({
-  onChange,
+  step = 0,
   min = 0,
   max = 100,
   defaultValue = [min, max],
-  step = 0,
-  ...props
+  ...restProps
 }: RangeSliderProps) => {
-  const isControlled = props.value !== undefined;
-
-  const [localValue, setValue] = React.useState(defaultValue);
-  const [start, end] = props.value || localValue;
-  const value = React.useMemo(
-    () => [clamp(start, min, max), clamp(end, min, max)] as Value,
-    [end, max, min, start],
-  );
-
-  const handleChange: RangeSliderProps['onChange'] = React.useCallback(
-    (nextValue: Value, event: TouchEvent) => {
-      if (props.disabled || (value[0] === nextValue[0] && value[1] === nextValue[1])) {
-        return;
-      }
-      !isControlled && setValue(nextValue);
-      onChange && onChange(nextValue, event);
-    },
-    [props.disabled, value, isControlled, onChange],
-  );
-
   return (
-    <UniversalSlider
-      {...props}
-      value={value}
-      onChange={handleChange}
-      min={min}
-      max={max}
-      step={step}
-    />
+    <Slider step={step} min={min} max={max} defaultValue={defaultValue} {...restProps} multiple />
   );
 };

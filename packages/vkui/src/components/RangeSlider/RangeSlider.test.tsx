@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { setRef } from '../../lib/utils';
 import { baselineComponent, mockRect } from '../../testing/utils';
-import { RangeSlider as RangeSliderBase, RangeSliderProps } from './RangeSlider';
+import { RangeSlider as RangeSliderBase, type RangeSliderProps } from './RangeSlider';
 
 const RangeSlider = (props: RangeSliderProps) => {
   const getRootRef: RangeSliderProps['getRootRef'] = (el) => {
@@ -67,11 +67,11 @@ describe('RangeSlider', () => {
         expect(getSlider()).toHaveAttribute('data-value', '5,7');
         fireEvent.mouseUp(getSlider());
       });
-      it('changes direction on overdrag', () => {
+      it('should prevent change direction on overdrag', () => {
         render(<RangeSlider defaultValue={[3, 7]} />);
         fireEvent.mouseDown(getSlider(), pointerPos(30));
         fireEvent.mouseMove(getSlider(), pointerPos(80));
-        expect(getSlider()).toHaveAttribute('data-value', '7,8');
+        expect(getSlider()).toHaveAttribute('data-value', '7,7');
         fireEvent.mouseUp(getSlider());
       });
     });

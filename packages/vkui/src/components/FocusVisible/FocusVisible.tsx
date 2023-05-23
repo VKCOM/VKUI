@@ -13,8 +13,9 @@ export interface FocusVisibleProps {
 /**
  * @see https://vkcom.github.io/VKUI/#/FocusVisible
  */
-export const FocusVisible = ({ visible, mode, thin }: FocusVisibleProps) => (
+export const FocusVisible = ({ visible, mode, thin, ...restProps }: FocusVisibleProps) => (
   <span
+    {...restProps}
     aria-hidden
     className={classNames(
       styles['FocusVisible'],
