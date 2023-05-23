@@ -21,7 +21,7 @@ export interface ButtonGroupProps
    */
   stretched?: boolean;
   /**
-   * Горизонтальное выравнивание элементов внутри группы. Работает только с mode="vertical".
+   * Горизонтальное выравнивание элементов внутри группы.
    */
   align?: AlignType;
 }

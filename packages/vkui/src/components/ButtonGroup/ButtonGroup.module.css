@@ -14,7 +14,8 @@
 
 .ButtonGroup--mode-horizontal {
   flex-direction: row;
-  align-items: center;
+  /* чтобы блоки не растягивались на всю высоту контейнера */
+  align-items: flex-start;
 }
 
 /* stylelint-disable @project-tools/stylelint-atomic */
