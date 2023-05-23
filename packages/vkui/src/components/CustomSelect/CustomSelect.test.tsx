@@ -530,7 +530,7 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(onChange).toBeCalledTimes(2);
+    expect(onChange).toBeCalledTimes(1);
     expect(getCustomSelectValue()).toEqual('');
   });
 
@@ -550,11 +550,11 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(onChange).toBeCalledTimes(1);
+    expect(onChange).toBeCalledTimes(0);
     expect(getCustomSelectValue()).toEqual('Mike');
     fireEvent.click(screen.getByRole('button', { hidden: true }));
     expect(getCustomSelectValue()).toEqual('');
-    expect(onChange).toBeCalledTimes(2);
+    expect(onChange).toBeCalledTimes(1);
   });
 
   it('(controlled): clearButton is not shown when option selected without props.value change', async () => {
@@ -596,18 +596,17 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(onChange).toBeCalledTimes(1);
+    expect(onChange).toBeCalledTimes(0);
     expect(getCustomSelectValue()).toEqual('Josh');
 
     fireEvent.click(screen.getByTestId('target'));
     expect(screen.getByTitle('Josh')).toHaveAttribute('aria-selected', 'true');
     fireEvent.click(screen.getByTitle('Josh'));
 
-    expect(onChange).toBeCalledTimes(2);
+    expect(onChange).toBeCalledTimes(1);
     // onChange возвращает событие с value Josh
-    expect(onChange).toHaveNthReturnedWith(1, '1');
+    expect(onChange).toHaveReturnedWith('1');
     // onChange возвращает событие с value Josh при повторном клике по уже выбранной опции
-    expect(onChange).toHaveNthReturnedWith(2, '1');
 
     // Josh is still selected
     fireEvent.click(screen.getByTestId('target'));
