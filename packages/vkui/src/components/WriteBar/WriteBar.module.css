@@ -69,6 +69,9 @@
 /**
  * iOS
  */
+.WriteBar--ios {
+  background: var(--vkui--color_background_content);
+}
 
 .WriteBar--ios .WriteBar__before,
 .WriteBar--ios .WriteBar__after {
