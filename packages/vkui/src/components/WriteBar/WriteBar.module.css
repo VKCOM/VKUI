@@ -88,14 +88,16 @@
 }
 
 .WriteBar--ios .WriteBar__inlineAfter {
-  margin-right: -1px;
-  margin-top: -9px;
-  margin-bottom: -9px;
+  /* чтобы правильно выровнять иконку, нужно учитывать border */
+  --vkui_internal--writebar-right-gap: calc(-1 * var(--vkui_internal--thin_border));
+  --vkui_internal--writebar-vertical-gap: calc(var(--vkui_internal--writebar-right-gap) - 8px);
+
+  margin-right: var(--vkui_internal--writebar-right-gap);
+  margin-top: var(--vkui_internal--writebar-vertical-gap);
+  margin-bottom: var(--vkui_internal--writebar-vertical-gap);
 }
 
 .WriteBar--ios .WriteBar__textarea {
-  height: 34px;
-  padding: 6px 11px;
-  font-size: 17px;
-  line-height: 22px;
+  height: 36px;
+  padding: 6px 0 6px 12px;
 }

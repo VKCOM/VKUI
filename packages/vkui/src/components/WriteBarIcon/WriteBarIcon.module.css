@@ -44,14 +44,22 @@
  * iOS
  */
 .WriteBarIcon--ios {
-  color: var(--vkui--color_icon_accent);
+  color: var(--vkui--color_icon_accent_themed);
 }
 
 .WriteBarIcon--ios.WriteBarIcon--mode-send,
 .WriteBarIcon--ios.WriteBarIcon--mode-done {
+  color: var(--vkui--color_icon_accent_themed);
   width: 48px;
   padding-left: 0;
   padding-right: 0;
+}
+
+.WriteBarIcon--ios.WriteBarIcon--mode-send:only-child,
+.WriteBarIcon--ios.WriteBarIcon--mode-done:only-child {
+  /* для одной иконки нужно компенсировать отступы */
+  margin-right: -4px;
+  margin-left: -4px;
 }
 
 /**
