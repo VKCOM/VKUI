@@ -6,6 +6,8 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { Headline } from '../Typography/Headline/Headline';
+import { Title } from '../Typography/Title/Title';
+import { TypographyProps } from '../Typography/Typography';
 import styles from './WriteBar.module.css';
 
 export interface WriteBarProps
@@ -35,6 +37,16 @@ export interface WriteBarProps
 
   children?: never;
 }
+
+const WriteBarTypography = (props: TypographyProps) => {
+  const platform = usePlatform();
+
+  if (platform === Platform.IOS) {
+    return <Title {...props} level="3" weight="3" />;
+  }
+
+  return <Headline {...props} />;
+};
 
 /**
  * @see https://vkcom.github.io/VKUI/#/WriteBar
@@ -79,7 +91,7 @@ export const WriteBar = ({
     }
   }, [onHeightChange, textareaRef]);
 
-  React.useEffect(resize, [resize, value]);
+  React.useEffect(resize, [resize, value, platform]);
 
   return (
     <div
@@ -96,7 +108,7 @@ export const WriteBar = ({
         {hasReactNode(before) && <div className={styles['WriteBar__before']}>{before}</div>}
 
         <div className={styles['WriteBar__formIn']}>
-          <Headline
+          <WriteBarTypography
             {...restProps}
             Component="textarea"
             className={styles['WriteBar__textarea']}
