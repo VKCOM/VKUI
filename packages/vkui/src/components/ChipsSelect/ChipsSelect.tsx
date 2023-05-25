@@ -155,7 +155,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
 
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setOpened(true);
-    setFocusedOptionIndex(0);
+    setFocusedOptionIndex(null);
     onFocus!(e);
   };
 
@@ -189,7 +189,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
     }
   };
 
-  const focusOptionByIndex = (index: number, oldIndex: number) => {
+  const focusOptionByIndex = (index: number, oldIndex: number | null) => {
     const { length } = filteredOptions;
 
     if (index < 0) {
@@ -207,7 +207,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
   };
 
   const focusOption = (nextIndex: number | null, type: FocusActionType) => {
-    let index = typeof nextIndex !== 'number' ? -1 : nextIndex;
+    let index = nextIndex === null ? -1 : nextIndex;
 
     if (type === FOCUS_ACTION_NEXT) {
       index = index + 1;
@@ -215,9 +215,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
       index = index - 1;
     }
 
-    if (focusedOptionIndex != null) {
-      focusOptionByIndex(index, focusedOptionIndex);
-    }
+    focusOptionByIndex(index, focusedOptionIndex);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -275,16 +273,6 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
       setFocusedOption(null);
     }
   }, [focusedOptionIndex, filteredOptions, setFocusedOption]);
-
-  React.useEffect(() => {
-    const index = focusedOption
-      ? filteredOptions.findIndex(({ value }) => value === focusedOption.value)
-      : -1;
-
-    if (index === -1 && !!filteredOptions.length && !showCreatable && closeAfterSelect) {
-      setFocusedOption(filteredOptions[0]);
-    }
-  }, [filteredOptions, focusedOption, showCreatable, closeAfterSelect, setFocusedOption]);
 
   useGlobalEventListener(document, 'click', handleClickOutside);
 
