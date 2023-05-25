@@ -6,7 +6,13 @@
 2. Исходя из п. 1, параметр `stretched` растягивает тот [ButtonGroup](#!/ButtonGroup), который имеет это свойство. Для компонента [Button](#!/Button) и вложенных [ButtonGroup](#!/ButtonGroup) его следует определять самостоятельно, где это необходимо.
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-const ButtonGroupPropsForm = ({ caption, defaultProps, onChange }) => {
+const ButtonGroupPropsForm = ({
+  caption,
+  defaultProps,
+  onChange,
+  showMode = true,
+  showStretched = true,
+}) => {
   const [{ mode, gap, align }, setProps] = React.useState(() => defaultProps);
 
   const handleChange = React.useCallback(
@@ -22,16 +28,18 @@ const ButtonGroupPropsForm = ({ caption, defaultProps, onChange }) => {
 
   return (
     <React.Fragment>
-      <FormItem top="mode">
-        <Select
-          value={mode}
-          onChange={(e) => handleChange('mode', e.target.value)}
-          options={[
-            { label: 'vertical', value: 'vertical' },
-            { label: 'horizontal', value: 'horizontal' },
-          ]}
-        />
-      </FormItem>
+      {showMode && (
+        <FormItem top="mode">
+          <Select
+            value={mode}
+            onChange={(e) => handleChange('mode', e.target.value)}
+            options={[
+              { label: 'vertical', value: 'vertical' },
+              { label: 'horizontal', value: 'horizontal' },
+            ]}
+          />
+        </FormItem>
+      )}
       <FormItem top="gap">
         <Select
           value={gap}
@@ -55,7 +63,9 @@ const ButtonGroupPropsForm = ({ caption, defaultProps, onChange }) => {
           ]}
         />
       </FormItem>
-      <Checkbox onChange={(e) => handleChange('stretched', e.target.checked)}>stretched</Checkbox>
+      {showStretched && (
+        <Checkbox onChange={(e) => handleChange('stretched', e.target.checked)}>stretched</Checkbox>
+      )}
       {caption && (
         <FormItem>
           <Footnote>({caption})</Footnote>
@@ -161,6 +171,9 @@ const ExampleBase = () => {
           <Button size="l" appearance="accent" before={<Icon24Add />} stretched />
         </ButtonGroup>
       </Div>
+      <FormItem>
+        <Footnote>(stretched ButtonGroup)</Footnote>
+      </FormItem>
       <Div>
         <ButtonGroup {...props} style={buttonGroupHighlightStyles} stretched>
           <Button size="l" appearance="accent">
@@ -188,13 +201,19 @@ const ExampleNested = () => {
       <Div>
         <Title level="3">Пример с вложенным ButtonGroup</Title>
       </Div>
+      <Div>
+        <Headline level="1" weight="1">
+          Mode: Vertical
+        </Headline>
+      </Div>
       <ButtonGroupPropsForm
         caption="параметры передаются корневому элементу"
         defaultProps={props}
         onChange={setProps}
+        showMode={false}
       />
       <Div>
-        <ButtonGroup {...props}>
+        <ButtonGroup {...props} mode="vertical">
           <ButtonGroup mode="horizontal" gap="m" stretched style={buttonGroupHighlightStyles}>
             <Button size="l" appearance="accent" stretched>
               {stretchedButtonText}
@@ -231,6 +250,45 @@ const ExampleNested = () => {
             <Button size="l" appearance="accent">
               {buttonText}
             </Button>
+          </ButtonGroup>
+          <ButtonGroup mode="vertical" gap="m" stretched={false} style={buttonGroupHighlightStyles}>
+            <Button size="l" appearance="accent" stretched>
+              {stretchedButtonText}
+            </Button>
+            <Button size="l" appearance="accent" before={<Icon24Add />} stretched />
+            <ButtonGroup mode="horizontal" stretched style={buttonGroupHighlightStyles}>
+              <Button size="l" appearance="accent" before={<Icon24Add />} />
+              <Button size="l" appearance="accent" stretched>
+                {stretchedButtonText}
+              </Button>
+            </ButtonGroup>
+          </ButtonGroup>
+        </ButtonGroup>
+      </Div>
+      <Div>
+        <Headline level="1" weight="1">
+          Mode: Horizontal
+        </Headline>
+      </Div>
+      <ButtonGroupPropsForm
+        caption="параметры передаются корневому элементу"
+        defaultProps={props}
+        onChange={setProps}
+        showMode={false}
+        showStretched={false}
+      />
+      <Div>
+        <ButtonGroup {...props} mode="horizontal" stretched style={buttonGroupHighlightStyles}>
+          <ButtonGroup
+            mode="horizontal"
+            gap="m"
+            stretched={false}
+            style={buttonGroupHighlightStyles}
+          >
+            <Button size="l" appearance="accent">
+              {buttonText}
+            </Button>
+            <Button size="l" appearance="accent" before={<Icon24Add />} />
           </ButtonGroup>
           <ButtonGroup mode="vertical" gap="m" stretched={false} style={buttonGroupHighlightStyles}>
             <Button size="l" appearance="accent" stretched>
