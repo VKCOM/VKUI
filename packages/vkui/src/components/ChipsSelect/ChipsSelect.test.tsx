@@ -92,6 +92,9 @@ describe('ChipsSelect', () => {
       render(<ChipsSelectTest value={[]} options={options} onChange={(e) => (value = e)} />);
       await toggleDropdown();
 
+      // Focus on first element
+      userEvent.keyboard('{arrowdown}');
+
       const idx = 7;
       for (let i = 0; i < idx; i++) {
         userEvent.keyboard('{arrowdown}');
