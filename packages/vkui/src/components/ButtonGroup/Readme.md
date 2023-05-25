@@ -130,6 +130,11 @@ const ExampleUseCases = () => {
 const buttonText = 'Button';
 const stretchedButtonText = 'Button (stretched)';
 
+const buttonGroupHighlightStyles = {
+  border: '2px dotted tomato',
+  boxSizing: 'border-box',
+};
+
 const ExampleBase = () => {
   const [props, setProps] = useState({
     mode: 'horizontal',
@@ -145,7 +150,7 @@ const ExampleBase = () => {
       </Div>
       <ButtonGroupPropsForm defaultProps={props} onChange={setProps} />
       <Div>
-        <ButtonGroup {...props}>
+        <ButtonGroup {...props} style={buttonGroupHighlightStyles}>
           <Button size="l" appearance="accent">
             {buttonText}
           </Button>
@@ -157,7 +162,7 @@ const ExampleBase = () => {
         </ButtonGroup>
       </Div>
       <Div>
-        <ButtonGroup {...props}>
+        <ButtonGroup {...props} style={buttonGroupHighlightStyles} stretched>
           <Button size="l" appearance="accent">
             {buttonText}
           </Button>
@@ -168,11 +173,6 @@ const ExampleBase = () => {
       </Div>
     </React.Fragment>
   );
-};
-
-const buttonGroupHighlightStyles = {
-  border: '2px dotted tomato',
-  boxSizing: 'border-box',
 };
 
 const ExampleNested = () => {
