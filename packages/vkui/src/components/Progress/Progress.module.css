@@ -8,5 +8,16 @@
   height: 100%;
   border-radius: inherit;
   transition: width 0.2s ease;
+}
+
+.Progress--appearance-accent .Progress__in {
   background: var(--vkui--color_stroke_accent);
+}
+
+.Progress--appearance-positive .Progress__in {
+  background: var(--vkui--color_stroke_positive);
+}
+
+.Progress--appearance-negative .Progress__in {
+  background: var(--vkui--color_stroke_negative);
 }
