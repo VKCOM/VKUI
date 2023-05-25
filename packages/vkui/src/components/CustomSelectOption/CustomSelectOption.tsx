@@ -75,6 +75,7 @@ export const CustomSelectOption = ({
   disabled,
   style: styleProp,
   className,
+  onClick,
   ...restProps
 }: CustomSelectOptionProps) => {
   const title = typeof children === 'string' ? children : undefined;
@@ -98,6 +99,7 @@ export const CustomSelectOption = ({
   return (
     <Paragraph
       {...restProps}
+      onClick={disabled ? undefined : onClick}
       Component="div"
       role="option"
       title={title}
