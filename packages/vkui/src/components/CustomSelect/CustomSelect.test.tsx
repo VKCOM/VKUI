@@ -554,6 +554,7 @@ describe('CustomSelect', () => {
     expect(getCustomSelectValue()).toEqual('Mike');
     fireEvent.click(screen.getByRole('button', { hidden: true }));
     expect(getCustomSelectValue()).toEqual('');
+
     expect(onChange).toBeCalledTimes(1);
   });
 
@@ -580,10 +581,11 @@ describe('CustomSelect', () => {
     expect(screen.queryByRole('button', { hidden: true })).toBeFalsy();
   });
 
-  it('(controlled): calls onChange expected amount of times after clearing uncontrolled component and clicking on option', async () => {
+  it('(controlled): calls onChange expected amount of times after clearing component and clicking on option without updating controlled prop value', async () => {
+    // мы намеренно проверяем кейсы где при нажатии на опцию или на кнопку очискти value проп не меняется.
     const onChange = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => event.target.value);
 
-    render(
+    const { rerender } = render(
       <CustomSelect
         data-testid="target"
         options={[
@@ -610,6 +612,32 @@ describe('CustomSelect', () => {
 
     expect(onChange).toBeCalledTimes(2);
     expect(onChange).toHaveReturnedWith('1');
+
+    // clear input through prop
+    rerender(
+      <CustomSelect
+        data-testid="target"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        allowClearButton
+        onChange={onChange}
+        value=""
+      />,
+    );
+
+    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.mouseEnter(screen.getByTitle('Mike'));
+    fireEvent.click(screen.getByTitle('Mike'));
+
+    expect(onChange).toBeCalledTimes(3);
+
+    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.mouseEnter(screen.getByTitle('Josh'));
+    fireEvent.click(screen.getByTitle('Josh'));
+
+    expect(onChange).toBeCalledTimes(4);
   });
 
   it('(controlled): calls onChange when click on unselected option without value change', async () => {

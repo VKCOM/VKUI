@@ -398,6 +398,7 @@ export function CustomSelect(props: SelectProps) {
       const shouldTriggerOnChangeWhenControlledAndInnerValueIsOutOfSync =
         isControlledOutside &&
         props.value !== nativeSelectValue &&
+        props.value !== '' &&
         nativeSelectValue !== '' &&
         focusedOptionIndex !== selectedOptionIndex;
 
