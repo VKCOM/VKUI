@@ -196,6 +196,13 @@ const ExampleNested = () => {
     stretched: false,
   });
 
+  const [horizontalProps, setHorizontalProps] = useState({
+    mode: 'horizontal',
+    gap: 's',
+    align: 'left',
+    stretched: false,
+  });
+
   return (
     <React.Fragment>
       <Div>
@@ -272,13 +279,18 @@ const ExampleNested = () => {
       </Div>
       <ButtonGroupPropsForm
         caption="параметры передаются корневому элементу"
-        defaultProps={props}
-        onChange={setProps}
+        defaultProps={horizontalProps}
+        onChange={setHorizontalProps}
         showMode={false}
         showStretched={false}
       />
       <Div>
-        <ButtonGroup {...props} mode="horizontal" stretched style={buttonGroupHighlightStyles}>
+        <ButtonGroup
+          {...horizontalProps}
+          mode="horizontal"
+          stretched
+          style={buttonGroupHighlightStyles}
+        >
           <ButtonGroup
             mode="horizontal"
             gap="m"
