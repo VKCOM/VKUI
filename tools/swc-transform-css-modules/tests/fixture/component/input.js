@@ -14,6 +14,4 @@ classNames(
   styles.Component,
   disabled && styles["Component--disabled"],
   platform === "ios" && stylesIOS["Component--ios"],
-  styles[`Component--mode-${mode}`],
-  styles[`Component--gradient-${appearance}-${gradientColor}`]
 );
