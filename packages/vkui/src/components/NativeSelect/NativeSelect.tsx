@@ -111,7 +111,7 @@ const NativeSelect = ({
         {placeholder && <option value="">{placeholder}</option>}
         {children}
       </select>
-      <div className={styles['Select__container']}>
+      <div className={styles['Select__container']} aria-hidden>
         <SelectTypography className={styles['Select__title']} selectType={selectType}>
           {title}
         </SelectTypography>

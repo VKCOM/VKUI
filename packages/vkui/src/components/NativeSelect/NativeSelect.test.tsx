@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { a11yBasicTest } from '../../testing/a11y';
 import { baselineComponent } from '../../testing/utils';
 import { NativeSelect } from './NativeSelect';
 
 describe('NativeSelect', () => {
   baselineComponent(NativeSelect);
+  a11yBasicTest(() => (
+    <>
+      <label htmlFor="name">Name:</label>
+      <NativeSelect id="name" data-testid="target" value="0">
+        <option value="0">Mike</option>
+        <option value="1">Josh</option>
+      </NativeSelect>
+    </>
+  ));
 
   it('works correctly with value and onChange', () => {
     const SelectController = () => {
