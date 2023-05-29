@@ -61,12 +61,13 @@ export const ButtonGroupWithAlignPlayground = (props: ComponentPlaygroundProps) 
       {...props}
       propSets={[
         {
+          mode: ['vertical', 'horizontal'],
           align: ['left', 'center', 'right'],
         },
       ]}
     >
-      {({ align }: ButtonGroupProps) => (
-        <ButtonGroup mode="vertical" align={align} style={{ width: '100%' }}>
+      {({ mode, align }: ButtonGroupProps) => (
+        <ButtonGroup mode={mode} align={align} style={{ width: '100%' }}>
           <Button size="l" appearance="accent">
             Разрешить
           </Button>
