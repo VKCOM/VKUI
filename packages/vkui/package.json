@@ -67,7 +67,7 @@
   "dependencies": {
     "@floating-ui/react-dom": "^2.0.0",
     "@swc/helpers": "^0.5.1",
-    "@vkontakte/vkjs": "^0.32.1",
+    "@vkontakte/vkjs": "^0.32.3",
     "dayjs": "1.11.7",
     "mitt": "3.0.0"
   },
