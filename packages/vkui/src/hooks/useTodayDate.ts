@@ -20,7 +20,7 @@ export function useTodayDate(listenDayChangesForUpdate = false) {
       return;
     }
 
-    let timeout: NodeJS.Timeout | null = null;
+    let timeout: NodeJS.Timeout | undefined = undefined;
 
     const recalcTimeout = () => {
       if (document.visibilityState === 'visible') {
@@ -29,9 +29,7 @@ export function useTodayDate(listenDayChangesForUpdate = false) {
         const timeToDayChange = getMillisecondsToTomorrow(now);
 
         // Удаляем старый таймаут
-        if (timeout) {
-          clearTimeout(timeout);
-        }
+        clearTimeout(timeout);
 
         // Создаем новый таймаут
         timeout = setTimeout(() => {
@@ -45,9 +43,7 @@ export function useTodayDate(listenDayChangesForUpdate = false) {
       }
     };
 
-    if (!timeout) {
-      recalcTimeout();
-    }
+    recalcTimeout();
 
     // Создаем слушатель visibilitychange, чтобы предотвратить пропуск обновления стейта после заморозки вкладки
     // Если человек ее долго не трогал или закрывал крышку ноута и тп
@@ -55,9 +51,7 @@ export function useTodayDate(listenDayChangesForUpdate = false) {
     document.addEventListener('visibilitychange', recalcTimeout);
 
     return () => {
-      if (timeout) {
-        clearTimeout(timeout);
-      }
+      clearTimeout(timeout);
       document.removeEventListener('visibilitychange', recalcTimeout);
     };
   }, [document, listenDayChangesForUpdate, todayDate]);
