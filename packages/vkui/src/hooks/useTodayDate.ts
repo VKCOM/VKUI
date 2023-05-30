@@ -12,15 +12,15 @@ import { useDOM } from '../lib/dom';
  * @param listenDayChangesForUpdate - флаг по которому определяется, будет ли создаваться подписка на смену календарного дня
  */
 export function useTodayDate(listenDayChangesForUpdate = false) {
-  const { document } = useDOM();
+  const { document, window } = useDOM();
   const [todayDate, setTodayDate] = React.useState(() => new Date());
 
   React.useEffect(() => {
-    if (!listenDayChangesForUpdate || !document) {
+    if (!listenDayChangesForUpdate || !document || !window) {
       return;
     }
 
-    let timeout: NodeJS.Timeout | undefined = undefined;
+    let timeout: number | undefined = undefined;
 
     const recalcTimeout = () => {
       if (document.visibilityState === 'visible') {
@@ -29,10 +29,10 @@ export function useTodayDate(listenDayChangesForUpdate = false) {
         const timeToDayChange = getMillisecondsToTomorrow(now);
 
         // Удаляем старый таймаут
-        clearTimeout(timeout);
+        window.clearTimeout(timeout);
 
         // Создаем новый таймаут
-        timeout = setTimeout(() => {
+        timeout = window.setTimeout(() => {
           setTodayDate(now);
         }, timeToDayChange);
 
@@ -51,10 +51,10 @@ export function useTodayDate(listenDayChangesForUpdate = false) {
     document.addEventListener('visibilitychange', recalcTimeout);
 
     return () => {
-      clearTimeout(timeout);
+      window.clearTimeout(timeout);
       document.removeEventListener('visibilitychange', recalcTimeout);
     };
-  }, [document, listenDayChangesForUpdate, todayDate]);
+  }, [document, listenDayChangesForUpdate, todayDate, window]);
 
   return todayDate;
 }
