@@ -12,7 +12,7 @@
       </FormItem>
 
       <FormItem id="progresslabelPositive" top="Завершено">
-        <Progress appearance="negative" aria-labelledby="progresslabelPositive" value={100} />
+        <Progress appearance="positive" aria-labelledby="progresslabelPositive" value={100} />
       </FormItem>
     </Group>
   </Panel>
