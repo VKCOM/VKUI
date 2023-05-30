@@ -22,7 +22,6 @@ Note: В начале классов разделить (`-`), чтобы кра
     display: none !important;
   }
 }
-
 @media (--sizeX-compact) {
   .-sizeX--regular-mq {
     display: none !important;
@@ -41,7 +40,6 @@ Note: В начале классов разделить (`-`), чтобы кра
     display: none !important;
   }
 }
-
 @media (--sizeY-compact) {
   .-sizeY--regular-mq {
     display: none !important;
@@ -60,7 +58,6 @@ Note: В начале классов разделить (`-`), чтобы кра
     display: none !important;
   }
 }
-
 @media (--viewWidth-tabletMinus) {
   .-viewWidth--tabletPlus-mq {
     display: none !important;
@@ -79,7 +76,6 @@ Note: В начале классов разделить (`-`), чтобы кра
     display: none !important;
   }
 }
-
 @media (--mobile) {
   .-deviceType--desktop-mq {
     display: none !important;

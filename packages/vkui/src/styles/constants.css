@@ -62,7 +62,6 @@
     --vkui_internal--thin_border: 0.5px;
   }
 }
-
 @media (min-resolution: 3dppx) {
   :root {
     --vkui_internal--thin_border: 0.33px;
@@ -77,7 +76,6 @@
     --vkui_internal--safe_area_inset_left: constant(safe-area-inset-left);
   }
 }
-
 @supports (padding-top: env(safe-area-inset-top)) {
   :root {
     --vkui_internal--safe_area_inset_top: env(safe-area-inset-top);

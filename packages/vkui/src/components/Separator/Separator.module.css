@@ -7,7 +7,6 @@
     color: var(--vkui--color_separator_primary2x);
   }
 }
-
 @media (min-resolution: 3dppx) {
   .Separator {
     color: var(--vkui--color_separator_primary3x);

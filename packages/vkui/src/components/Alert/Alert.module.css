@@ -209,7 +209,6 @@
     transform: scaleX(0.5);
   }
 }
-
 @media (min-resolution: 3dppx) {
   .Alert--ios .Alert__content::after,
   .Alert--ios.Alert--v .Alert__action::after {
@@ -268,7 +267,6 @@
     transform: scale(1);
   }
 }
-
 @keyframes vkui-animation-android-alert-intro {
   from {
     opacity: 0;

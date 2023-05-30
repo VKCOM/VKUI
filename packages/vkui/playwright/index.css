@@ -12,21 +12,18 @@
   font-weight: 400;
   src: url('./font/Roboto-Italic.ttf') format('truetype');
 }
-
 @font-face {
   font-family: Roboto;
   font-style: normal;
   font-weight: 400;
   src: url('./font/Roboto-Regular.ttf') format('truetype');
 }
-
 @font-face {
   font-family: Roboto;
   font-style: normal;
   font-weight: 500;
   src: url('./font/Roboto-Medium.ttf') format('truetype');
 }
-
 @font-face {
   font-family: Roboto;
   font-style: normal;
