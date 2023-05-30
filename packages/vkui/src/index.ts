@@ -82,6 +82,8 @@ export { ScrollArrow } from './components/ScrollArrow/ScrollArrow';
 export type { ScrollArrowProps } from './components/ScrollArrow/ScrollArrow';
 export { HorizontalScroll } from './components/HorizontalScroll/HorizontalScroll';
 export type { HorizontalScrollProps } from './components/HorizontalScroll/HorizontalScroll';
+export { AspectRatio } from './components/AspectRatio/AspectRatio';
+export type { AspectRatioProps } from './components/AspectRatio/AspectRatio';
 
 /**
  * Popouts

@@ -69,3 +69,8 @@ export type AnchorHTMLAttributesOnly = Omit<
  * @see {@link https://github.com/microsoft/TypeScript/issues/12936}
  */
 export type Exact<A, B> = A extends B ? B : never;
+
+/**
+ * Для возможности указывать css custom properties
+ */
+export type CSSCustomProperties<T extends string | undefined = string> = Record<`--${string}`, T>;
