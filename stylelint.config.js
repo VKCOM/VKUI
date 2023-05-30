@@ -2,7 +2,7 @@ const path = require('path');
 const { VKUI_PACKAGE, getCustomMedias } = require('./shared');
 
 module.exports = {
-  extends: ['stylelint-config-standard'],
+  extends: ['stylelint-config-standard', '@vkontakte/stylelint-config'],
   plugins: [
     'stylelint-value-no-unknown-custom-properties',
     'stylelint-media-use-custom-media',
