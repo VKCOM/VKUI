@@ -36,6 +36,7 @@ function rangeTranslate(number: number) {
 interface ModalRootState {
   touchDown?: boolean;
   dragging?: boolean;
+  modalOpenedLog: string[];
 }
 
 class ModalRootTouchComponent extends React.Component<
@@ -47,6 +48,7 @@ class ModalRootTouchComponent extends React.Component<
     this.state = {
       touchDown: false,
       dragging: false,
+      modalOpenedLog: [],
     };
 
     this.maskElementRef = React.createRef();
@@ -218,7 +220,11 @@ class ModalRootTouchComponent extends React.Component<
       id && warn(`closeActiveModal: модальное окно (страница) ${id} не существует`, 'error');
       return;
     }
-
+    if (!this.state.modalOpenedLog.length) {
+      this.setState((prevState) => ({
+        modalOpenedLog: [...prevState.modalOpenedLog, id],
+      }));
+    }
     const nextModalState = this.props.getModalState(this.props.activeModal);
     const nextIsPage = !!nextModalState && nextModalState.type === ModalType.PAGE;
 
@@ -236,6 +242,13 @@ class ModalRootTouchComponent extends React.Component<
     if (!nextModalState) {
       // NOTE: was only for clean exit
       this.setMaskOpacity(prevModalState, 0);
+      this.setState({ modalOpenedLog: [] });
+      prevModalState.translateY = undefined;
+    } else if (nextModalState.id && !this.state.modalOpenedLog.includes(nextModalState.id)) {
+      nextModalState.translateY = undefined;
+      this.setState((prevState) => ({
+        modalOpenedLog: [...prevState.modalOpenedLog, nextModalState.id!],
+      }));
     }
   }
 
