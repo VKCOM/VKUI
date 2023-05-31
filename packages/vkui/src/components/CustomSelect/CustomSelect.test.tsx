@@ -9,11 +9,16 @@ const getCustomSelectValue = () => screen.getByTestId('target').textContent;
 const CustomSelectControlled = ({
   options,
   initialValue,
+  onChangeStub,
   ...restProps
-}: Omit<SelectProps, 'value' | 'onChange'> & { initialValue?: string }) => {
+}: Omit<SelectProps, 'value' | 'onChange'> & {
+  initialValue?: string;
+  onChangeStub?(event: React.ChangeEvent<HTMLSelectElement>): void;
+}) => {
   const [value, setValue] = React.useState(initialValue);
   const handleChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
     setValue(event.target.value);
+    onChangeStub?.(event);
   };
   return <CustomSelect {...restProps} options={options} value={value} onChange={handleChange} />;
 };
@@ -659,7 +664,7 @@ describe('CustomSelect', () => {
     expect(onChange).toBeCalledTimes(0);
     expect(getCustomSelectValue()).toEqual('Mike');
 
-    // первый клик по опции не выбранной опции без изменения value
+    // первый клик по не выбранной опции без изменения value
     fireEvent.click(screen.getByTestId('target'));
     expect(screen.getByTitle('Mike')).toHaveAttribute('aria-selected', 'true');
     fireEvent.mouseEnter(screen.getByTitle('Josh'));
@@ -668,7 +673,7 @@ describe('CustomSelect', () => {
     expect(onChange).toBeCalledTimes(1);
     expect(onChange).toHaveReturnedWith('1');
 
-    // второй клик по опции не выбранной опции без изменения value
+    // второй клик по не выбранной опции без изменения value
     // нужно проверить потому что при первом клике внутреннее value селекта (nativeSelectValue) изменилось
     // на value опиции по которой кликнули.
     // При втором оно уже не меняется если кликнули по той же опции, но onChange должен отработать как в первый раз.
@@ -689,5 +694,66 @@ describe('CustomSelect', () => {
 
     expect(onChange).toBeCalledTimes(2);
     expect(onChange).toHaveReturnedWith('1');
+  });
+
+  it('(controlled): does not call onChange on already selected', async () => {
+    const onChangeStub = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => {
+      return event.target.value;
+    });
+
+    render(
+      <CustomSelectControlled
+        data-testid="target"
+        initialValue="0"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        onChangeStub={onChangeStub}
+      />,
+    );
+
+    expect(onChangeStub).toBeCalledTimes(0);
+    expect(getCustomSelectValue()).toEqual('Mike');
+
+    // первый клик по не выбранной опции с изменением value
+    fireEvent.click(screen.getByTestId('target'));
+    expect(screen.getByTitle('Mike')).toHaveAttribute('aria-selected', 'true');
+    fireEvent.mouseEnter(screen.getByTitle('Josh'));
+    fireEvent.click(screen.getByTitle('Josh'));
+
+    // onChange должен вызываться
+    expect(onChangeStub).toBeCalledTimes(1);
+    expect(onChangeStub).toHaveReturnedWith('1');
+
+    // второй клик по выбранной опции
+    fireEvent.click(screen.getByTestId('target'));
+    expect(screen.getByTitle('Josh')).toHaveAttribute('aria-selected', 'true');
+    fireEvent.mouseEnter(screen.getByTitle('Josh'));
+    fireEvent.click(screen.getByTitle('Josh'));
+
+    // onChange не должен вызываться
+    expect(onChangeStub).toBeCalledTimes(1);
+    expect(onChangeStub).toHaveReturnedWith('1');
+
+    // третий клик по не выбранной опции
+    fireEvent.click(screen.getByTestId('target'));
+    expect(screen.getByTitle('Josh')).toHaveAttribute('aria-selected', 'true');
+    fireEvent.mouseEnter(screen.getByTitle('Mike'));
+    fireEvent.click(screen.getByTitle('Mike'));
+
+    // onChange должен быть вызван
+    expect(onChangeStub).toBeCalledTimes(2);
+    expect(onChangeStub).toHaveReturnedWith('0');
+
+    // четвертый клик по выбранной опции
+    fireEvent.click(screen.getByTestId('target'));
+    expect(screen.getByTitle('Mike')).toHaveAttribute('aria-selected', 'true');
+    fireEvent.mouseEnter(screen.getByTitle('Mike'));
+    fireEvent.click(screen.getByTitle('Mike'));
+
+    // onChange не должен вызываться
+    expect(onChangeStub).toBeCalledTimes(2);
+    expect(onChangeStub).toHaveReturnedWith('0');
   });
 });
