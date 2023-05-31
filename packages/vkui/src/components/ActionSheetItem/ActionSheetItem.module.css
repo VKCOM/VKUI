@@ -68,6 +68,10 @@
   margin-right: 16px;
 }
 
+.ActionSheetItem--desktop .ActionSheetItem__before {
+  margin-right: 12px;
+}
+
 .ActionSheetItem--ios .ActionSheetItem__before {
   color: var(--vkui--color_icon_accent_themed);
   margin-right: 18px;
