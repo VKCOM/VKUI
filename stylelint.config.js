@@ -78,5 +78,7 @@ module.exports = {
     ],
     '@project-tools/stylelint-bad-multiplication': true,
     'import-notation': null,
+    'plugin/vkui': null,
+    'plugin/selector-bem-pattern': null,
   },
 };
