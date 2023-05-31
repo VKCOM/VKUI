@@ -587,7 +587,7 @@ describe('CustomSelect', () => {
   });
 
   it('(controlled): calls onChange expected amount of times after clearing component and clicking on option without updating controlled prop value', async () => {
-    // мы намеренно проверяем кейсы где при нажатии на опцию или на кнопку очискти value проп не меняется.
+    // мы намеренно проверяем кейсы где при нажатии на опцию или на кнопку очистки value проп не меняется
     const onChange = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => event.target.value);
 
     const { rerender } = render(
