@@ -30,18 +30,14 @@
 
 .TabbarItem__in {
   display: flex;
-  padding: 0 2px;
+  padding: 4px 2px 2px;
   align-items: center;
   justify-content: center;
   pointer-events: none;
   height: 100%;
   width: 100%;
   overflow: hidden;
-}
-
-:global(.vkuiInternalTabbar--layout-vertical) .TabbarItem--text .TabbarItem__in {
-  position: relative;
-  top: 2px;
+  box-sizing: border-box;
 }
 
 :global(.vkuiInternalTabbar--layout-vertical) .TabbarItem__in {
