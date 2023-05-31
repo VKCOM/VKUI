@@ -19,11 +19,13 @@ Note: В начале классов разделить (`-`), чтобы кра
 
 @media (--sizeX-regular) {
   .-sizeX--compact-mq {
+    /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
 }
 @media (--sizeX-compact) {
   .-sizeX--regular-mq {
+    /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
 }
@@ -37,11 +39,13 @@ Note: В начале классов разделить (`-`), чтобы кра
 
 @media (--sizeY-regular) {
   .-sizeY--compact-mq {
+    /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
 }
 @media (--sizeY-compact) {
   .-sizeY--regular-mq {
+    /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
 }
@@ -55,11 +59,13 @@ Note: В начале классов разделить (`-`), чтобы кра
 
 @media (--viewWidth-tabletPlus) {
   .-viewWidth--tabletMinus-mq {
+    /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
 }
 @media (--viewWidth-tabletMinus) {
   .-viewWidth--tabletPlus-mq {
+    /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
 }
@@ -68,16 +74,19 @@ Note: В начале классов разделить (`-`), чтобы кра
 
 .-deviceType--mobile-forced,
 .-deviceType--desktop-forced {
+  /* stylelint-disable-next-line declaration-no-important */
   display: none !important;
 }
 
 @media (--desktop) {
   .-deviceType--mobile-mq {
+    /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
 }
 @media (--mobile) {
   .-deviceType--desktop-mq {
+    /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
 }
