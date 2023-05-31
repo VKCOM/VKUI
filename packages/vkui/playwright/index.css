@@ -72,6 +72,7 @@
   color: var(--vkui--color_text_primary);
 }
 
+/* stylelint-disable-next-line selector-max-id */
 #root {
   position: relative;
 }
