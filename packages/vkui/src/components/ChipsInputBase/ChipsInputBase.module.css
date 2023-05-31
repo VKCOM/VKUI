@@ -32,7 +32,7 @@
   line-height: 26px;
   color: var(--vkui--color_text_primary);
   background: transparent;
-  border: none;
+  border: 0;
   box-shadow: none;
   appearance: none;
   font-family: inherit;

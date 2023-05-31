@@ -18,7 +18,7 @@
   width: 100%;
   box-sizing: border-box;
   box-shadow: none;
-  border: none;
+  border: 0;
   border-radius: inherit;
   appearance: none;
   color: var(--vkui--color_text_primary);

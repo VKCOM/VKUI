@@ -4,7 +4,7 @@
   justify-content: center;
   color: var(--vkui--color_text_tertiary);
   text-decoration: none;
-  border: none;
+  border: 0;
   outline: none;
   padding: 0;
   background: transparent;

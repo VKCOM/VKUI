@@ -41,7 +41,7 @@
   margin: -1px;
   transform: translateX(-1px);
   color: var(--vkui--color_icon_secondary);
-  border: none;
+  border: 0;
   border-radius: 2px;
   background: transparent;
   box-sizing: border-box;

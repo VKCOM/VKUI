@@ -31,7 +31,7 @@
   min-width: 0;
   margin: 0;
   background: transparent;
-  border: none;
+  border: 0;
   resize: none;
   color: var(--vkui--color_text_primary);
   -webkit-appearance: none;

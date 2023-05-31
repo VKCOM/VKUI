@@ -1,7 +1,7 @@
 .IconButton {
   appearance: none;
   background: none;
-  border: none;
+  border: 0;
   box-shadow: none;
   display: block;
   color: currentColor;

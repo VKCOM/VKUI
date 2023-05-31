@@ -12,7 +12,7 @@
   color: var(--vkui--color_text_primary);
   padding: 12px;
   max-height: 204px;
-  border: none;
+  border: 0;
   z-index: var(--vkui_internal--z_index_form_field_element);
   position: relative;
   background: transparent;
