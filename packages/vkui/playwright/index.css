@@ -1,4 +1,4 @@
-/* stylelint-disable @project-tools/stylelint-atomic */
+/* stylelint-disable @project-tools/stylelint-atomic, declaration-no-important */
 
 /* Глобальные стили, которые не импортируются самими компонентами. */
 @import '../src/styles/themes.css';
