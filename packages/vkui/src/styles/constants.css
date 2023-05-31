@@ -1,3 +1,4 @@
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :root {
   /* sizes */
   --vkui_internal--tabbar_height: 48px;
@@ -14,6 +15,7 @@
   --vkui_internal--popover_safe_zone_padding: 8px;
 
   /* colors */
+  /* stylelint-disable-next-line declaration-property-value-disallowed-list */
   --vkui_internal--white: #fff;
 
   /* insets */
@@ -58,17 +60,20 @@
 }
 
 @media (min-resolution: 2dppx) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :root {
     --vkui_internal--thin_border: 0.5px;
   }
 }
 @media (min-resolution: 3dppx) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :root {
     --vkui_internal--thin_border: 0.33px;
   }
 }
 
 @supports (padding-top: constant(safe-area-inset-top)) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :root {
     --vkui_internal--safe_area_inset_top: constant(safe-area-inset-top);
     --vkui_internal--safe_area_inset_right: constant(safe-area-inset-right);
@@ -77,6 +82,7 @@
   }
 }
 @supports (padding-top: env(safe-area-inset-top)) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :root {
     --vkui_internal--safe_area_inset_top: env(safe-area-inset-top);
     --vkui_internal--safe_area_inset_right: env(safe-area-inset-right);
