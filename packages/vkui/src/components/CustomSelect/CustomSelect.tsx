@@ -386,8 +386,6 @@ export function CustomSelect(props: SelectProps) {
     onClose?.();
   }, [onClose, resetKeyboardInput]);
 
-  console.log('Props value:', props.value);
-  console.log('nativeSelectValue:', nativeSelectValue);
   const selectFocused = React.useCallback(() => {
     if (focusedOptionIndex !== undefined && isValidIndex(focusedOptionIndex)) {
       const item = options[focusedOptionIndex];
@@ -402,17 +400,6 @@ export function CustomSelect(props: SelectProps) {
         nativeSelectValue !== '' &&
         focusedOptionIndex !== selectedOptionIndex;
 
-      console.log(
-        'Should trigger on change from selectFocused: ',
-        shouldTriggerOnChangeWhenControlledAndInnerValueIsOutOfSync,
-      );
-      console.log('Data: ', {
-        isControlledOutside,
-        propsValue: props.value,
-        nativeSelectValue,
-        focusedOptionIndex,
-        selectedOptionIndex,
-      });
       if (shouldTriggerOnChangeWhenControlledAndInnerValueIsOutOfSync) {
         const event = new Event('change', { bubbles: true });
         selectElRef.current?.dispatchEvent(event);
