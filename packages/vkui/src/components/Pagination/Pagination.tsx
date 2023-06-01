@@ -7,13 +7,8 @@ import { SizeType } from '../../lib/adaptivity';
 import type { HasRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { Tappable } from '../Tappable/Tappable';
+import { Text } from '../Typography/Text/Text';
 import styles from './Pagination.module.css';
-
-const pageSizeYClassNames = {
-  none: styles['Pagination__page--sizeY-none'],
-  [SizeType.COMPACT]: styles['Pagination__page--sizeY-compact'],
-  [SizeType.REGULAR]: styles['Pagination__page--sizeY-regular'],
-};
 
 function getPageAriaLabelDefault(page: number, isCurrent: boolean): string {
   return isCurrent ? `${page} страница` : `Перейти на ${page} страницу`;
@@ -74,7 +69,6 @@ export const Pagination = ({
   nextButtonAriaLabel = 'Перейти на следующую страницу',
   getRootRef,
   onChange,
-  className,
   ...resetProps
 }: PaginationProps) => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -115,16 +109,17 @@ export const Pagination = ({
         case 'end-ellipsis':
           return (
             <li key={page}>
-              <div
+              <Text
                 className={classNames(
                   styles['Pagination__page'],
                   styles['Pagination__page--type-ellipsis'],
-                  pageSizeYClassNames[sizeY],
+                  sizeY === 'none' && styles['Pagination__page--sizeY-none'],
+                  sizeY === SizeType.COMPACT && styles['Pagination__page--sizeY-compact'],
                   disabled && styles['Pagination__page--disabled'],
                 )}
               >
                 &#8230;
-              </div>
+              </Text>
             </li>
           );
         default: {
@@ -134,7 +129,8 @@ export const Pagination = ({
               <Tappable
                 className={classNames(
                   styles['Pagination__page'],
-                  pageSizeYClassNames[sizeY],
+                  sizeY === 'none' && styles['Pagination__page--sizeY-none'],
+                  sizeY === SizeType.COMPACT && styles['Pagination__page--sizeY-compact'],
                   isCurrent && styles['Pagination__page--current'],
                   disabled && styles['Pagination__page--disabled'],
                 )}
@@ -149,7 +145,7 @@ export const Pagination = ({
                 aria-label={getPageAriaLabel(page, isCurrent)}
                 onClick={handleClick}
               >
-                {page}
+                <Text normalize={false}>{page}</Text>
               </Tappable>
             </li>
           );
@@ -160,13 +156,7 @@ export const Pagination = ({
   );
 
   return (
-    <nav
-      className={classNames(styles['Pagination'], className)}
-      role="navigation"
-      aria-label="Навигация по страницам"
-      ref={getRootRef}
-      {...resetProps}
-    >
+    <nav role="navigation" aria-label="Навигация по страницам" ref={getRootRef} {...resetProps}>
       <ul className={styles['Pagination__list']}>
         <li className={styles['Pagination__prevButtonContainer']}>
           <Button

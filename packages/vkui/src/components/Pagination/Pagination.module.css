@@ -1,6 +1,3 @@
-.Pagination {
-}
-
 .Pagination__list {
   display: flex;
   margin: 0;
@@ -27,7 +24,8 @@
   text-align: center;
   color: var(--vkui--color_text_secondary);
   user-select: none;
-  font-family: var(--vkui--font_family_base);
+  height: var(--vkui--size_button_large_height--regular);
+  line-height: var(--vkui--size_button_large_height--regular);
 }
 
 .Pagination__page--state-hover {
@@ -45,30 +43,14 @@
 }
 
 .Pagination__page--sizeY-compact {
-  font-size: var(--vkui--font_text--font_size--compact);
   line-height: var(--vkui--size_button_large_height--compact);
   height: var(--vkui--size_button_large_height--compact);
 }
 
 @media (--sizeY-compact) {
   .Pagination__page--sizeY-none {
-    font-size: var(--vkui--font_text--font_size--compact);
     line-height: var(--vkui--size_button_large_height--compact);
     height: var(--vkui--size_button_large_height--compact);
-  }
-}
-
-.Pagination__page--sizeY-regular {
-  font-size: var(--vkui--font_text--font_size--regular);
-  line-height: var(--vkui--size_button_large_height--regular);
-  height: var(--vkui--size_button_large_height--regular);
-}
-
-@media (--sizeY-regular) {
-  .Pagination__page--sizeY-none {
-    font-size: var(--vkui--font_text--font_size--regular);
-    line-height: var(--vkui--size_button_large_height--regular);
-    height: var(--vkui--size_button_large_height--regular);
   }
 }
 
