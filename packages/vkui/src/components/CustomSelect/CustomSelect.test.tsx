@@ -45,8 +45,9 @@ describe('CustomSelect', () => {
     expect(getCustomSelectValue()).toEqual('');
 
     fireEvent.click(screen.getByTestId('target'));
-    fireEvent.mouseEnter(screen.getByTitle('Josh'));
-    fireEvent.click(screen.getByTitle('Josh'));
+    const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
+    fireEvent.mouseEnter(unselectedOption);
+    fireEvent.click(unselectedOption);
 
     expect(getCustomSelectValue()).toEqual('Josh');
   });
@@ -70,8 +71,9 @@ describe('CustomSelect', () => {
     render(<SelectController />);
     expect(getCustomSelectValue()).toEqual('Mike');
     fireEvent.click(screen.getByTestId('target'));
-    fireEvent.mouseEnter(screen.getByTitle('Josh'));
-    fireEvent.click(screen.getByTitle('Josh'));
+    const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
+    fireEvent.mouseEnter(unselectedOption);
+    fireEvent.click(unselectedOption);
     expect(getCustomSelectValue()).toEqual('Josh');
   });
 
@@ -85,8 +87,9 @@ describe('CustomSelect', () => {
 
     expect(getCustomSelectValue()).toEqual('Mike');
     fireEvent.click(screen.getByTestId('target'));
-    fireEvent.mouseEnter(screen.getByTitle('Josh'));
-    fireEvent.click(screen.getByTitle('Josh'));
+    const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
+    fireEvent.mouseEnter(unselectedOption);
+    fireEvent.click(unselectedOption);
     expect(getCustomSelectValue()).toEqual('Mike');
   });
 
@@ -158,8 +161,9 @@ describe('CustomSelect', () => {
     expect(getCustomSelectValue()).toEqual('Josh');
 
     fireEvent.click(screen.getByTestId('target'));
-    fireEvent.mouseEnter(screen.getByTitle('Mike'));
-    fireEvent.click(screen.getByTitle('Mike'));
+    const unselectedOption = screen.getByRole('option', { selected: false, name: 'Mike' });
+    fireEvent.mouseEnter(unselectedOption);
+    fireEvent.click(unselectedOption);
 
     expect(getCustomSelectValue()).toEqual('Mike');
   });
@@ -291,11 +295,11 @@ describe('CustomSelect', () => {
 
     await waitForFloatingPosition();
 
-    expect(screen.getByTitle('Josh').getAttribute('aria-selected')).toEqual('true');
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Josh');
 
     fireEvent.change(screen.getByTestId('target'), { target: { value: 'Jo' } });
 
-    expect(screen.getByTitle('Josh').getAttribute('aria-selected')).toEqual('true');
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Josh');
 
     rerender(
       <CustomSelect
@@ -310,7 +314,7 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(screen.getByTitle('Josh').getAttribute('aria-selected')).toEqual('true');
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Josh');
 
     rerender(
       <CustomSelect
@@ -326,7 +330,7 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(screen.getByTitle('Joe').getAttribute('aria-selected')).toEqual('true');
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Joe');
   });
 
   // см. https://github.com/VKCOM/VKUI/issues/3600
@@ -347,14 +351,15 @@ describe('CustomSelect', () => {
 
     fireEvent.click(screen.getByTestId('target'));
 
-    expect(screen.getByTitle('Категория 3')).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Категория 3');
 
     fireEvent.change(screen.getByTestId('target'), { target: { value: 'Кат' } });
 
-    expect(screen.getByTitle('Категория 3')).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Категория 3');
 
-    fireEvent.mouseEnter(screen.getByTitle('Категория 2'));
-    fireEvent.click(screen.getByTitle('Категория 2'));
+    const unselectedOption = screen.getByRole('option', { selected: false, name: 'Категория 2' });
+    fireEvent.mouseEnter(unselectedOption);
+    fireEvent.click(unselectedOption);
 
     expect(getCustomSelectValue()).toEqual('Категория 2');
   });
@@ -586,6 +591,44 @@ describe('CustomSelect', () => {
     expect(screen.queryByRole('button', { hidden: true })).toBeFalsy();
   });
 
+  it('(uncontrolled): calls onChange when click on unselected option and does not call when click on selected ', async () => {
+    const onChange = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => event.target.value);
+
+    render(
+      <CustomSelect
+        data-testid="target"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        allowClearButton
+        onChange={onChange}
+        defaultValue={0}
+      />,
+    );
+
+    expect(onChange).toBeCalledTimes(0);
+    expect(getCustomSelectValue()).toEqual('Mike');
+
+    fireEvent.click(screen.getByTestId('target'));
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Mike');
+    const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
+    fireEvent.mouseEnter(unselectedOption);
+    fireEvent.click(unselectedOption);
+
+    expect(onChange).toBeCalledTimes(1);
+    expect(onChange).toHaveReturnedWith('1');
+
+    fireEvent.click(screen.getByTestId('target'));
+
+    const selectedOption = screen.getByRole('option', { selected: true, name: 'Josh' });
+    fireEvent.mouseEnter(selectedOption);
+    fireEvent.click(selectedOption);
+
+    expect(onChange).toBeCalledTimes(1);
+    expect(onChange).toHaveReturnedWith('1');
+  });
+
   it('(controlled): calls onChange expected amount of times after clearing component and clicking on option without updating controlled prop value', async () => {
     // мы намеренно проверяем кейсы где при нажатии на опцию или на кнопку очистки value проп не меняется
     const onChange = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => event.target.value);
@@ -612,8 +655,12 @@ describe('CustomSelect', () => {
     expect(onChange).toBeCalledTimes(1);
 
     fireEvent.click(screen.getByTestId('target'));
-    fireEvent.mouseEnter(screen.getByTitle('Josh'));
-    fireEvent.click(screen.getByTitle('Josh'));
+    const unselectedOptionFirstClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Josh',
+    });
+    fireEvent.mouseEnter(unselectedOptionFirstClick);
+    fireEvent.click(unselectedOptionFirstClick);
 
     expect(onChange).toBeCalledTimes(2);
     expect(onChange).toHaveReturnedWith('1');
@@ -633,14 +680,22 @@ describe('CustomSelect', () => {
     );
 
     fireEvent.click(screen.getByTestId('target'));
-    fireEvent.mouseEnter(screen.getByTitle('Mike'));
-    fireEvent.click(screen.getByTitle('Mike'));
+    const unselectedOptionSecondClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Mike',
+    });
+    fireEvent.mouseEnter(unselectedOptionSecondClick);
+    fireEvent.click(unselectedOptionSecondClick);
 
     expect(onChange).toBeCalledTimes(3);
 
     fireEvent.click(screen.getByTestId('target'));
-    fireEvent.mouseEnter(screen.getByTitle('Josh'));
-    fireEvent.click(screen.getByTitle('Josh'));
+    const unselectedOptionThirdClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Josh',
+    });
+    fireEvent.mouseEnter(unselectedOptionThirdClick);
+    fireEvent.click(unselectedOptionThirdClick);
 
     expect(onChange).toBeCalledTimes(4);
   });
@@ -666,9 +721,13 @@ describe('CustomSelect', () => {
 
     // первый клик по не выбранной опции без изменения value
     fireEvent.click(screen.getByTestId('target'));
-    expect(screen.getByTitle('Mike')).toHaveAttribute('aria-selected', 'true');
-    fireEvent.mouseEnter(screen.getByTitle('Josh'));
-    fireEvent.click(screen.getByTitle('Josh'));
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Mike');
+    const unselectedOptionFirstClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Josh',
+    });
+    fireEvent.mouseEnter(unselectedOptionFirstClick);
+    fireEvent.click(unselectedOptionFirstClick);
 
     expect(onChange).toBeCalledTimes(1);
     expect(onChange).toHaveReturnedWith('1');
@@ -678,9 +737,13 @@ describe('CustomSelect', () => {
     // на value опиции по которой кликнули.
     // При втором оно уже не меняется если кликнули по той же опции, но onChange должен отработать как в первый раз.
     fireEvent.click(screen.getByTestId('target'));
-    expect(screen.getByTitle('Mike')).toHaveAttribute('aria-selected', 'true');
-    fireEvent.mouseEnter(screen.getByTitle('Josh'));
-    fireEvent.click(screen.getByTitle('Josh'));
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Mike');
+    const unselectedOptionSecondClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Josh',
+    });
+    fireEvent.mouseEnter(unselectedOptionSecondClick);
+    fireEvent.click(unselectedOptionSecondClick);
 
     expect(onChange).toBeCalledTimes(2);
     expect(onChange).toHaveReturnedWith('1');
@@ -688,9 +751,12 @@ describe('CustomSelect', () => {
     // третий клик уже по выбранной опции (соответствующей value переданному в контролируемый селект),
     // onChange не должен вызываться.
     fireEvent.click(screen.getByTestId('target'));
-    expect(screen.getByTitle('Mike')).toHaveAttribute('aria-selected', 'true');
-    fireEvent.mouseEnter(screen.getByTitle('Mike'));
-    fireEvent.click(screen.getByTitle('Mike'));
+    const selectedOptionThirdClick = screen.getByRole('option', {
+      selected: true,
+      name: 'Mike',
+    });
+    fireEvent.mouseEnter(selectedOptionThirdClick);
+    fireEvent.click(selectedOptionThirdClick);
 
     expect(onChange).toBeCalledTimes(2);
     expect(onChange).toHaveReturnedWith('1');
@@ -718,9 +784,13 @@ describe('CustomSelect', () => {
 
     // первый клик по не выбранной опции с изменением value
     fireEvent.click(screen.getByTestId('target'));
-    expect(screen.getByTitle('Mike')).toHaveAttribute('aria-selected', 'true');
-    fireEvent.mouseEnter(screen.getByTitle('Josh'));
-    fireEvent.click(screen.getByTitle('Josh'));
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Mike');
+    const unselectedOptionFirstClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Josh',
+    });
+    fireEvent.mouseEnter(unselectedOptionFirstClick);
+    fireEvent.click(unselectedOptionFirstClick);
 
     // onChange должен вызываться
     expect(onChangeStub).toBeCalledTimes(1);
@@ -728,9 +798,9 @@ describe('CustomSelect', () => {
 
     // второй клик по выбранной опции
     fireEvent.click(screen.getByTestId('target'));
-    expect(screen.getByTitle('Josh')).toHaveAttribute('aria-selected', 'true');
-    fireEvent.mouseEnter(screen.getByTitle('Josh'));
-    fireEvent.click(screen.getByTitle('Josh'));
+    const selectedOptionSecondClick = screen.getByRole('option', { selected: true, name: 'Josh' });
+    fireEvent.mouseEnter(selectedOptionSecondClick);
+    fireEvent.click(selectedOptionSecondClick);
 
     // onChange не должен вызываться
     expect(onChangeStub).toBeCalledTimes(1);
@@ -738,9 +808,13 @@ describe('CustomSelect', () => {
 
     // третий клик по не выбранной опции
     fireEvent.click(screen.getByTestId('target'));
-    expect(screen.getByTitle('Josh')).toHaveAttribute('aria-selected', 'true');
-    fireEvent.mouseEnter(screen.getByTitle('Mike'));
-    fireEvent.click(screen.getByTitle('Mike'));
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Josh');
+    const unselectedOptionThirdClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Mike',
+    });
+    fireEvent.mouseEnter(unselectedOptionThirdClick);
+    fireEvent.click(unselectedOptionThirdClick);
 
     // onChange должен быть вызван
     expect(onChangeStub).toBeCalledTimes(2);
@@ -748,9 +822,9 @@ describe('CustomSelect', () => {
 
     // четвертый клик по выбранной опции
     fireEvent.click(screen.getByTestId('target'));
-    expect(screen.getByTitle('Mike')).toHaveAttribute('aria-selected', 'true');
-    fireEvent.mouseEnter(screen.getByTitle('Mike'));
-    fireEvent.click(screen.getByTitle('Mike'));
+    const selectedOptionFourthClick = screen.getByRole('option', { selected: true, name: 'Mike' });
+    fireEvent.mouseEnter(selectedOptionFourthClick);
+    fireEvent.click(selectedOptionFourthClick);
 
     // onChange не должен вызываться
     expect(onChangeStub).toBeCalledTimes(2);
@@ -778,8 +852,12 @@ describe('CustomSelect', () => {
 
     // первый клик по не выбранной опции без изменения value
     fireEvent.click(screen.getByTestId('target'));
-    fireEvent.mouseEnter(screen.getByTitle('Mike'));
-    fireEvent.click(screen.getByTitle('Mike'));
+    const unselectedOptionFirstClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Mike',
+    });
+    fireEvent.mouseEnter(unselectedOptionFirstClick);
+    fireEvent.click(unselectedOptionFirstClick);
 
     // onChange должен быть вызван
     expect(onChange).toBeCalledTimes(1);
@@ -787,8 +865,12 @@ describe('CustomSelect', () => {
 
     // второй клик по другой опции без изменения value
     fireEvent.click(screen.getByTestId('target'));
-    fireEvent.mouseEnter(screen.getByTitle('Josh'));
-    fireEvent.click(screen.getByTitle('Josh'));
+    const unselectedOptionSecondClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Josh',
+    });
+    fireEvent.mouseEnter(unselectedOptionSecondClick);
+    fireEvent.click(unselectedOptionSecondClick);
 
     // onChange должен быть вызван
     expect(onChange).toBeCalledTimes(2);
@@ -796,8 +878,12 @@ describe('CustomSelect', () => {
 
     // третий клик по той же опции что и в предыдущий раз
     fireEvent.click(screen.getByTestId('target'));
-    fireEvent.mouseEnter(screen.getByTitle('Josh'));
-    fireEvent.click(screen.getByTitle('Josh'));
+    const unselectedOptionThirdClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Josh',
+    });
+    fireEvent.mouseEnter(unselectedOptionThirdClick);
+    fireEvent.click(unselectedOptionThirdClick);
 
     // onChange должен быть вызван
     expect(onChange).toBeCalledTimes(3);
