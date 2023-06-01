@@ -554,6 +554,7 @@ describe('CustomSelect', () => {
     expect(getCustomSelectValue()).toEqual('Mike');
     fireEvent.click(screen.getByRole('button', { hidden: true }));
     expect(getCustomSelectValue()).toEqual('');
+    expect(onChange).toBeCalledTimes(2);
   });
 
   it('(controlled): clearButton is not shown when option selected without props.value change', async () => {
