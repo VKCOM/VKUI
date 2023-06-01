@@ -1,3 +1,4 @@
+/* stylelint-disable declaration-no-important */
 .VisuallyHidden {
   position: absolute !important;
   height: 1px !important;
@@ -11,3 +12,4 @@
   border: 0 !important;
   opacity: 0;
 }
+/* stylelint-enable declaration-no-important */

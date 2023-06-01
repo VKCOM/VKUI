@@ -26,6 +26,7 @@
    *
    * `!important` – чтобы перебить глобальное обнуление `outline` на `:focus`.
    */
+  /* stylelint-disable-next-line declaration-no-important */
   outline: 2px solid var(--vkui--color_stroke_accent) !important;
 }
 
