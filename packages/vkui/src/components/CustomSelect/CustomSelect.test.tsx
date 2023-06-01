@@ -756,4 +756,51 @@ describe('CustomSelect', () => {
     expect(onChangeStub).toBeCalledTimes(2);
     expect(onChangeStub).toHaveReturnedWith('0');
   });
+
+  it('(controlled): does call onChange on option click when prop value is empty and value is not changning', async () => {
+    const onChange = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => event.target.value);
+
+    render(
+      <CustomSelect
+        data-testid="target"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        allowClearButton
+        onChange={onChange}
+        value=""
+      />,
+    );
+
+    expect(onChange).toBeCalledTimes(0);
+    expect(getCustomSelectValue()).toEqual('');
+
+    // первый клик по не выбранной опции без изменения value
+    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.mouseEnter(screen.getByTitle('Mike'));
+    fireEvent.click(screen.getByTitle('Mike'));
+
+    // onChange должен быть вызван
+    expect(onChange).toBeCalledTimes(1);
+    expect(onChange).toHaveReturnedWith('0');
+
+    // второй клик по другой опции без изменения value
+    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.mouseEnter(screen.getByTitle('Josh'));
+    fireEvent.click(screen.getByTitle('Josh'));
+
+    // onChange должен быть вызван
+    expect(onChange).toBeCalledTimes(2);
+    expect(onChange).toHaveReturnedWith('1');
+
+    // третий клик по той же опции что и в предыдущий раз
+    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.mouseEnter(screen.getByTitle('Josh'));
+    fireEvent.click(screen.getByTitle('Josh'));
+
+    // onChange должен быть вызван
+    expect(onChange).toBeCalledTimes(3);
+    expect(onChange).toHaveReturnedWith('0');
+  });
 });

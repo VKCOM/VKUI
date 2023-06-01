@@ -396,9 +396,7 @@ export function CustomSelect(props: SelectProps) {
       const shouldTriggerOnChangeWhenControlledAndInnerValueIsOutOfSync =
         isControlledOutside &&
         props.value !== nativeSelectValue &&
-        props.value !== '' &&
-        nativeSelectValue !== '' &&
-        focusedOptionIndex !== selectedOptionIndex;
+        nativeSelectValue === item?.value;
 
       if (shouldTriggerOnChangeWhenControlledAndInnerValueIsOutOfSync) {
         const event = new Event('change', { bubbles: true });
@@ -411,7 +409,6 @@ export function CustomSelect(props: SelectProps) {
     isValidIndex,
     options,
     selectElRef,
-    selectedOptionIndex,
     isControlledOutside,
     props.value,
     nativeSelectValue,
