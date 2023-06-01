@@ -70,29 +70,29 @@
 
     --vkui_internal--focus_visible_distance: 0;
   }
+}
 
-  @keyframes vkui-animation-focus-visible {
-    0% {
-    }
-
-    100% {
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      will-change: auto;
-    }
+@keyframes vkui-animation-focus-visible {
+  0% {
   }
-  @keyframes vkui-animation-focus-visible-outside {
-    0% {
-    }
 
-    100% {
-      top: -2px;
-      left: -2px;
-      bottom: -2px;
-      right: -2px;
-      will-change: auto;
-    }
+  100% {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    will-change: auto;
+  }
+}
+@keyframes vkui-animation-focus-visible-outside {
+  0% {
+  }
+
+  100% {
+    top: -2px;
+    left: -2px;
+    bottom: -2px;
+    right: -2px;
+    will-change: auto;
   }
 }
