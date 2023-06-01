@@ -580,6 +580,38 @@ describe('CustomSelect', () => {
     expect(screen.queryByRole('button', { hidden: true })).toBeFalsy();
   });
 
+  it('(controlled): calls onChange expected amount of times after clearing uncontrolled component and clicking on option', async () => {
+    const onChange = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => event.target.value);
+
+    render(
+      <CustomSelect
+        data-testid="target"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        allowClearButton
+        onChange={onChange}
+        value={0}
+      />,
+    );
+
+    expect(onChange).toBeCalledTimes(0);
+    expect(getCustomSelectValue()).toEqual('Mike');
+
+    // clear input
+    fireEvent.click(screen.getByRole('button', { hidden: true }));
+
+    expect(onChange).toBeCalledTimes(1);
+
+    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.mouseEnter(screen.getByTitle('Josh'));
+    fireEvent.click(screen.getByTitle('Josh'));
+
+    expect(onChange).toBeCalledTimes(2);
+    expect(onChange).toHaveReturnedWith('1');
+  });
+
   it('(controlled): calls onChange when click on unselected option without value change', async () => {
     const onChange = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => event.target.value);
 
