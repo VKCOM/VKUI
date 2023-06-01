@@ -578,4 +578,38 @@ describe('CustomSelect', () => {
 
     expect(screen.queryByRole('button', { hidden: true })).toBeFalsy();
   });
+
+  it('calls onChange when click on already selected option (value is not changed)', async () => {
+    const onChange = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => event.target.value);
+
+    render(
+      <CustomSelect
+        data-testid="target"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        allowClearButton
+        onChange={onChange}
+        defaultValue={1}
+      />,
+    );
+
+    expect(onChange).toBeCalledTimes(1);
+    expect(getCustomSelectValue()).toEqual('Josh');
+
+    fireEvent.click(screen.getByTestId('target'));
+    expect(screen.getByTitle('Josh')).toHaveAttribute('aria-selected', 'true');
+    fireEvent.click(screen.getByTitle('Josh'));
+
+    expect(onChange).toBeCalledTimes(2);
+    // onChange возвращает событие с value Josh
+    expect(onChange).toHaveNthReturnedWith(1, '1');
+    // onChange возвращает событие с value Josh при повторном клике по уже выбранной опции
+    expect(onChange).toHaveNthReturnedWith(2, '1');
+
+    // Josh is still selected
+    fireEvent.click(screen.getByTestId('target'));
+    expect(screen.getByTitle('Josh')).toHaveAttribute('aria-selected', 'true');
+  });
 });
