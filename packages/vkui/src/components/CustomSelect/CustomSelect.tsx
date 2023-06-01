@@ -392,8 +392,27 @@ export function CustomSelect(props: SelectProps) {
 
       setNativeSelectValue(item?.value);
       close();
+
+      const shouldTriggerOnChangeWhenControlledAndInnerValueIsOutOfSync =
+        isControlledOutside &&
+        props.value !== nativeSelectValue &&
+        nativeSelectValue === item?.value;
+
+      if (shouldTriggerOnChangeWhenControlledAndInnerValueIsOutOfSync) {
+        const event = new Event('change', { bubbles: true });
+        selectElRef.current?.dispatchEvent(event);
+      }
     }
-  }, [close, focusedOptionIndex, isValidIndex, options]);
+  }, [
+    close,
+    focusedOptionIndex,
+    isValidIndex,
+    options,
+    selectElRef,
+    isControlledOutside,
+    props.value,
+    nativeSelectValue,
+  ]);
 
   const open = React.useCallback(() => {
     setOpened(true);

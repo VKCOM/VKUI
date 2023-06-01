@@ -9,11 +9,16 @@ const getCustomSelectValue = () => screen.getByTestId('target').textContent;
 const CustomSelectControlled = ({
   options,
   initialValue,
+  onChangeStub,
   ...restProps
-}: Omit<SelectProps, 'value' | 'onChange'> & { initialValue?: string }) => {
+}: Omit<SelectProps, 'value' | 'onChange'> & {
+  initialValue?: string;
+  onChangeStub?(event: React.ChangeEvent<HTMLSelectElement>): void;
+}) => {
   const [value, setValue] = React.useState(initialValue);
   const handleChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
     setValue(event.target.value);
+    onChangeStub?.(event);
   };
   return <CustomSelect {...restProps} options={options} value={value} onChange={handleChange} />;
 };
@@ -40,8 +45,9 @@ describe('CustomSelect', () => {
     expect(getCustomSelectValue()).toEqual('');
 
     fireEvent.click(screen.getByTestId('target'));
-    fireEvent.mouseEnter(screen.getByTitle('Josh'));
-    fireEvent.click(screen.getByTitle('Josh'));
+    const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
+    fireEvent.mouseEnter(unselectedOption);
+    fireEvent.click(unselectedOption);
 
     expect(getCustomSelectValue()).toEqual('Josh');
   });
@@ -65,8 +71,9 @@ describe('CustomSelect', () => {
     render(<SelectController />);
     expect(getCustomSelectValue()).toEqual('Mike');
     fireEvent.click(screen.getByTestId('target'));
-    fireEvent.mouseEnter(screen.getByTitle('Josh'));
-    fireEvent.click(screen.getByTitle('Josh'));
+    const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
+    fireEvent.mouseEnter(unselectedOption);
+    fireEvent.click(unselectedOption);
     expect(getCustomSelectValue()).toEqual('Josh');
   });
 
@@ -80,8 +87,9 @@ describe('CustomSelect', () => {
 
     expect(getCustomSelectValue()).toEqual('Mike');
     fireEvent.click(screen.getByTestId('target'));
-    fireEvent.mouseEnter(screen.getByTitle('Josh'));
-    fireEvent.click(screen.getByTitle('Josh'));
+    const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
+    fireEvent.mouseEnter(unselectedOption);
+    fireEvent.click(unselectedOption);
     expect(getCustomSelectValue()).toEqual('Mike');
   });
 
@@ -153,8 +161,9 @@ describe('CustomSelect', () => {
     expect(getCustomSelectValue()).toEqual('Josh');
 
     fireEvent.click(screen.getByTestId('target'));
-    fireEvent.mouseEnter(screen.getByTitle('Mike'));
-    fireEvent.click(screen.getByTitle('Mike'));
+    const unselectedOption = screen.getByRole('option', { selected: false, name: 'Mike' });
+    fireEvent.mouseEnter(unselectedOption);
+    fireEvent.click(unselectedOption);
 
     expect(getCustomSelectValue()).toEqual('Mike');
   });
@@ -286,11 +295,11 @@ describe('CustomSelect', () => {
 
     await waitForFloatingPosition();
 
-    expect(screen.getByTitle('Josh').getAttribute('aria-selected')).toEqual('true');
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Josh');
 
     fireEvent.change(screen.getByTestId('target'), { target: { value: 'Jo' } });
 
-    expect(screen.getByTitle('Josh').getAttribute('aria-selected')).toEqual('true');
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Josh');
 
     rerender(
       <CustomSelect
@@ -305,7 +314,7 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(screen.getByTitle('Josh').getAttribute('aria-selected')).toEqual('true');
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Josh');
 
     rerender(
       <CustomSelect
@@ -321,7 +330,7 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(screen.getByTitle('Joe').getAttribute('aria-selected')).toEqual('true');
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Joe');
   });
 
   // см. https://github.com/VKCOM/VKUI/issues/3600
@@ -342,14 +351,15 @@ describe('CustomSelect', () => {
 
     fireEvent.click(screen.getByTestId('target'));
 
-    expect(screen.getByTitle('Категория 3')).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Категория 3');
 
     fireEvent.change(screen.getByTestId('target'), { target: { value: 'Кат' } });
 
-    expect(screen.getByTitle('Категория 3')).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Категория 3');
 
-    fireEvent.mouseEnter(screen.getByTitle('Категория 2'));
-    fireEvent.click(screen.getByTitle('Категория 2'));
+    const unselectedOption = screen.getByRole('option', { selected: false, name: 'Категория 2' });
+    fireEvent.mouseEnter(unselectedOption);
+    fireEvent.click(unselectedOption);
 
     expect(getCustomSelectValue()).toEqual('Категория 2');
   });
@@ -550,9 +560,12 @@ describe('CustomSelect', () => {
       />,
     );
 
+    expect(onChange).toBeCalledTimes(0);
     expect(getCustomSelectValue()).toEqual('Mike');
     fireEvent.click(screen.getByRole('button', { hidden: true }));
     expect(getCustomSelectValue()).toEqual('');
+
+    expect(onChange).toBeCalledTimes(1);
   });
 
   it('(controlled): clearButton is not shown when option selected without props.value change', async () => {
@@ -576,5 +589,304 @@ describe('CustomSelect', () => {
     fireEvent.click(screen.getByTitle('Mike'));
 
     expect(screen.queryByRole('button', { hidden: true })).toBeFalsy();
+  });
+
+  it('(uncontrolled): calls onChange when click on unselected option and does not call when click on selected ', async () => {
+    const onChange = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => event.target.value);
+
+    render(
+      <CustomSelect
+        data-testid="target"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        allowClearButton
+        onChange={onChange}
+        defaultValue={0}
+      />,
+    );
+
+    expect(onChange).toBeCalledTimes(0);
+    expect(getCustomSelectValue()).toEqual('Mike');
+
+    fireEvent.click(screen.getByTestId('target'));
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Mike');
+    const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
+    fireEvent.mouseEnter(unselectedOption);
+    fireEvent.click(unselectedOption);
+
+    expect(onChange).toBeCalledTimes(1);
+    expect(onChange).toHaveReturnedWith('1');
+
+    fireEvent.click(screen.getByTestId('target'));
+
+    const selectedOption = screen.getByRole('option', { selected: true, name: 'Josh' });
+    fireEvent.mouseEnter(selectedOption);
+    fireEvent.click(selectedOption);
+
+    expect(onChange).toBeCalledTimes(1);
+    expect(onChange).toHaveReturnedWith('1');
+  });
+
+  it('(controlled): calls onChange expected amount of times after clearing component and clicking on option without updating controlled prop value', async () => {
+    // мы намеренно проверяем кейсы где при нажатии на опцию или на кнопку очистки value проп не меняется
+    const onChange = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => event.target.value);
+
+    const { rerender } = render(
+      <CustomSelect
+        data-testid="target"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        allowClearButton
+        onChange={onChange}
+        value={0}
+      />,
+    );
+
+    expect(onChange).toBeCalledTimes(0);
+    expect(getCustomSelectValue()).toEqual('Mike');
+
+    // clear input
+    fireEvent.click(screen.getByRole('button', { hidden: true }));
+
+    expect(onChange).toBeCalledTimes(1);
+
+    fireEvent.click(screen.getByTestId('target'));
+    const unselectedOptionFirstClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Josh',
+    });
+    fireEvent.mouseEnter(unselectedOptionFirstClick);
+    fireEvent.click(unselectedOptionFirstClick);
+
+    expect(onChange).toBeCalledTimes(2);
+    expect(onChange).toHaveReturnedWith('1');
+
+    // clear input through prop
+    rerender(
+      <CustomSelect
+        data-testid="target"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        allowClearButton
+        onChange={onChange}
+        value=""
+      />,
+    );
+
+    fireEvent.click(screen.getByTestId('target'));
+    const unselectedOptionSecondClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Mike',
+    });
+    fireEvent.mouseEnter(unselectedOptionSecondClick);
+    fireEvent.click(unselectedOptionSecondClick);
+
+    expect(onChange).toBeCalledTimes(3);
+
+    fireEvent.click(screen.getByTestId('target'));
+    const unselectedOptionThirdClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Josh',
+    });
+    fireEvent.mouseEnter(unselectedOptionThirdClick);
+    fireEvent.click(unselectedOptionThirdClick);
+
+    expect(onChange).toBeCalledTimes(4);
+  });
+
+  it('(controlled): calls onChange when click on unselected option without value change', async () => {
+    const onChange = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => event.target.value);
+
+    render(
+      <CustomSelect
+        data-testid="target"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        allowClearButton
+        onChange={onChange}
+        value={0}
+      />,
+    );
+
+    expect(onChange).toBeCalledTimes(0);
+    expect(getCustomSelectValue()).toEqual('Mike');
+
+    // первый клик по не выбранной опции без изменения value
+    fireEvent.click(screen.getByTestId('target'));
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Mike');
+    const unselectedOptionFirstClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Josh',
+    });
+    fireEvent.mouseEnter(unselectedOptionFirstClick);
+    fireEvent.click(unselectedOptionFirstClick);
+
+    expect(onChange).toBeCalledTimes(1);
+    expect(onChange).toHaveReturnedWith('1');
+
+    // второй клик по не выбранной опции без изменения value
+    // нужно проверить потому что при первом клике внутреннее value селекта (nativeSelectValue) изменилось
+    // на value опиции по которой кликнули.
+    // При втором оно уже не меняется если кликнули по той же опции, но onChange должен отработать как в первый раз.
+    fireEvent.click(screen.getByTestId('target'));
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Mike');
+    const unselectedOptionSecondClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Josh',
+    });
+    fireEvent.mouseEnter(unselectedOptionSecondClick);
+    fireEvent.click(unselectedOptionSecondClick);
+
+    expect(onChange).toBeCalledTimes(2);
+    expect(onChange).toHaveReturnedWith('1');
+
+    // третий клик уже по выбранной опции (соответствующей value переданному в контролируемый селект),
+    // onChange не должен вызываться.
+    fireEvent.click(screen.getByTestId('target'));
+    const selectedOptionThirdClick = screen.getByRole('option', {
+      selected: true,
+      name: 'Mike',
+    });
+    fireEvent.mouseEnter(selectedOptionThirdClick);
+    fireEvent.click(selectedOptionThirdClick);
+
+    expect(onChange).toBeCalledTimes(2);
+    expect(onChange).toHaveReturnedWith('1');
+  });
+
+  it('(controlled): does not call onChange on already selected', async () => {
+    const onChangeStub = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => {
+      return event.target.value;
+    });
+
+    render(
+      <CustomSelectControlled
+        data-testid="target"
+        initialValue="0"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        onChangeStub={onChangeStub}
+      />,
+    );
+
+    expect(onChangeStub).toBeCalledTimes(0);
+    expect(getCustomSelectValue()).toEqual('Mike');
+
+    // первый клик по не выбранной опции с изменением value
+    fireEvent.click(screen.getByTestId('target'));
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Mike');
+    const unselectedOptionFirstClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Josh',
+    });
+    fireEvent.mouseEnter(unselectedOptionFirstClick);
+    fireEvent.click(unselectedOptionFirstClick);
+
+    // onChange должен вызываться
+    expect(onChangeStub).toBeCalledTimes(1);
+    expect(onChangeStub).toHaveReturnedWith('1');
+
+    // второй клик по выбранной опции
+    fireEvent.click(screen.getByTestId('target'));
+    const selectedOptionSecondClick = screen.getByRole('option', { selected: true, name: 'Josh' });
+    fireEvent.mouseEnter(selectedOptionSecondClick);
+    fireEvent.click(selectedOptionSecondClick);
+
+    // onChange не должен вызываться
+    expect(onChangeStub).toBeCalledTimes(1);
+    expect(onChangeStub).toHaveReturnedWith('1');
+
+    // третий клик по не выбранной опции
+    fireEvent.click(screen.getByTestId('target'));
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Josh');
+    const unselectedOptionThirdClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Mike',
+    });
+    fireEvent.mouseEnter(unselectedOptionThirdClick);
+    fireEvent.click(unselectedOptionThirdClick);
+
+    // onChange должен быть вызван
+    expect(onChangeStub).toBeCalledTimes(2);
+    expect(onChangeStub).toHaveReturnedWith('0');
+
+    // четвертый клик по выбранной опции
+    fireEvent.click(screen.getByTestId('target'));
+    const selectedOptionFourthClick = screen.getByRole('option', { selected: true, name: 'Mike' });
+    fireEvent.mouseEnter(selectedOptionFourthClick);
+    fireEvent.click(selectedOptionFourthClick);
+
+    // onChange не должен вызываться
+    expect(onChangeStub).toBeCalledTimes(2);
+    expect(onChangeStub).toHaveReturnedWith('0');
+  });
+
+  it('(controlled): does call onChange on option click when prop value is empty and value is not changning', async () => {
+    const onChange = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => event.target.value);
+
+    render(
+      <CustomSelect
+        data-testid="target"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        allowClearButton
+        onChange={onChange}
+        value=""
+      />,
+    );
+
+    expect(onChange).toBeCalledTimes(0);
+    expect(getCustomSelectValue()).toEqual('');
+
+    // первый клик по не выбранной опции без изменения value
+    fireEvent.click(screen.getByTestId('target'));
+    const unselectedOptionFirstClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Mike',
+    });
+    fireEvent.mouseEnter(unselectedOptionFirstClick);
+    fireEvent.click(unselectedOptionFirstClick);
+
+    // onChange должен быть вызван
+    expect(onChange).toBeCalledTimes(1);
+    expect(onChange).toHaveReturnedWith('0');
+
+    // второй клик по другой опции без изменения value
+    fireEvent.click(screen.getByTestId('target'));
+    const unselectedOptionSecondClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Josh',
+    });
+    fireEvent.mouseEnter(unselectedOptionSecondClick);
+    fireEvent.click(unselectedOptionSecondClick);
+
+    // onChange должен быть вызван
+    expect(onChange).toBeCalledTimes(2);
+    expect(onChange).toHaveReturnedWith('1');
+
+    // третий клик по той же опции что и в предыдущий раз
+    fireEvent.click(screen.getByTestId('target'));
+    const unselectedOptionThirdClick = screen.getByRole('option', {
+      selected: false,
+      name: 'Josh',
+    });
+    fireEvent.mouseEnter(unselectedOptionThirdClick);
+    fireEvent.click(unselectedOptionThirdClick);
+
+    // onChange должен быть вызван
+    expect(onChange).toBeCalledTimes(3);
+    expect(onChange).toHaveReturnedWith('0');
   });
 });
