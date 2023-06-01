@@ -2,19 +2,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.Placeholder--withPadding {
+  padding: 48px 32px;
 }
 
 .Placeholder--stretched {
   flex: 1 0;
   padding-top: inherit;
   padding-bottom: inherit;
-}
-
-.Placeholder__in {
-  max-width: 100%;
-  text-align: center;
-  box-sizing: border-box;
-  padding: 48px 32px;
 }
 
 .Placeholder__icon {
