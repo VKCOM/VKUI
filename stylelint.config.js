@@ -80,5 +80,6 @@ module.exports = {
     'import-notation': null,
     'plugin/vkui': null,
     'plugin/selector-bem-pattern': null,
+    'property-disallowed-list': null,
   },
 };
