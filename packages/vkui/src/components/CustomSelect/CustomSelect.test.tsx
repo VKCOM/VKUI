@@ -554,4 +554,27 @@ describe('CustomSelect', () => {
     fireEvent.click(screen.getByRole('button', { hidden: true }));
     expect(getCustomSelectValue()).toEqual('');
   });
+
+  it('(controlled): clearButton is not shown when option selected without props.value change', async () => {
+    const onChange = jest.fn();
+
+    render(
+      <CustomSelect
+        data-testid="target"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        allowClearButton
+        onChange={onChange}
+        value=""
+      />,
+    );
+
+    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.mouseEnter(screen.getByTitle('Mike'));
+    fireEvent.click(screen.getByTitle('Mike'));
+
+    expect(screen.queryByRole('button', { hidden: true })).toBeFalsy();
+  });
 });

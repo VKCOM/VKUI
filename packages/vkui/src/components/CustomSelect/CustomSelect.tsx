@@ -664,7 +664,10 @@ export function CustomSelect(props: SelectProps) {
     }
   }, [emptyText, options, renderDropdown, renderOption]);
 
-  const clearButtonShown = allowClearButton && !opened && nativeSelectValue !== '';
+  const controlledValueSet = isControlledOutside && props.value !== '';
+  const uncontrolledValueSet = !isControlledOutside && nativeSelectValue !== '';
+  const clearButtonShown =
+    allowClearButton && !opened && (controlledValueSet || uncontrolledValueSet);
 
   const clearButton = React.useMemo(() => {
     if (!clearButtonShown) {
