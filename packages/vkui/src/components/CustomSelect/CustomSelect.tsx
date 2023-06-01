@@ -393,14 +393,27 @@ export function CustomSelect(props: SelectProps) {
       setNativeSelectValue(item?.value);
       close();
 
-      const shouldTriggerOnChangeWhenSameOptionSelected =
-        focusedOptionIndex === selectedOptionIndex;
-      if (shouldTriggerOnChangeWhenSameOptionSelected) {
+      const shouldTriggerOnChangeWhenControlledAndInnerValueIsOutOfSync =
+        isControlledOutside &&
+        props.value !== nativeSelectValue &&
+        focusedOptionIndex !== selectedOptionIndex;
+
+      if (shouldTriggerOnChangeWhenControlledAndInnerValueIsOutOfSync) {
         const event = new Event('change', { bubbles: true });
         selectElRef.current?.dispatchEvent(event);
       }
     }
-  }, [close, focusedOptionIndex, isValidIndex, options, selectElRef, selectedOptionIndex]);
+  }, [
+    close,
+    focusedOptionIndex,
+    isValidIndex,
+    options,
+    selectElRef,
+    selectedOptionIndex,
+    isControlledOutside,
+    props.value,
+    nativeSelectValue,
+  ]);
 
   const open = React.useCallback(() => {
     setOpened(true);
@@ -487,25 +500,17 @@ export function CustomSelect(props: SelectProps) {
     }
   }, []);
 
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    if (!isControlledOutside) {
-      const newSelectedOptionIndex = findSelectedIndex(
-        options,
-        e.currentTarget.value,
-        allowClearButton,
-      );
+    const newSelectedOptionIndex = findSelectedIndex(
+      options,
+      e.currentTarget.value,
+      allowClearButton,
+    );
 
-      if (selectedOptionIndex !== newSelectedOptionIndex) {
+    if (selectedOptionIndex !== newSelectedOptionIndex) {
+      if (!isControlledOutside) {
         setSelectedOptionIndex(newSelectedOptionIndex);
       }
-    }
-
-    if (mounted) {
       onChange?.(e);
     }
   };

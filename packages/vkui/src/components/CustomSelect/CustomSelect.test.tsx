@@ -530,7 +530,7 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(onChange).toBeCalledTimes(1);
+    expect(onChange).toBeCalledTimes(0);
     expect(getCustomSelectValue()).toEqual('');
   });
 
@@ -580,7 +580,7 @@ describe('CustomSelect', () => {
     expect(screen.queryByRole('button', { hidden: true })).toBeFalsy();
   });
 
-  it('calls onChange when click on already selected option (value is not changed)', async () => {
+  it('(controlled): calls onChange when click on unselected option without value change', async () => {
     const onChange = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => event.target.value);
 
     render(
@@ -592,24 +592,42 @@ describe('CustomSelect', () => {
         ]}
         allowClearButton
         onChange={onChange}
-        defaultValue={1}
+        value={0}
       />,
     );
 
     expect(onChange).toBeCalledTimes(0);
-    expect(getCustomSelectValue()).toEqual('Josh');
+    expect(getCustomSelectValue()).toEqual('Mike');
 
+    // первый клик по опции не выбранной опции без изменения value
     fireEvent.click(screen.getByTestId('target'));
-    expect(screen.getByTitle('Josh')).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByTitle('Mike')).toHaveAttribute('aria-selected', 'true');
+    fireEvent.mouseEnter(screen.getByTitle('Josh'));
     fireEvent.click(screen.getByTitle('Josh'));
 
     expect(onChange).toBeCalledTimes(1);
-    // onChange возвращает событие с value Josh
     expect(onChange).toHaveReturnedWith('1');
-    // onChange возвращает событие с value Josh при повторном клике по уже выбранной опции
 
-    // Josh is still selected
+    // второй клик по опции не выбранной опции без изменения value
+    // нужно проверить потому что при первом клике внутреннее value селекта (nativeSelectValue) изменилось
+    // на value опиции по которой кликнули.
+    // При втором оно уже не меняется если кликнули по той же опции, но onChange должен отработать как в первый раз.
     fireEvent.click(screen.getByTestId('target'));
-    expect(screen.getByTitle('Josh')).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByTitle('Mike')).toHaveAttribute('aria-selected', 'true');
+    fireEvent.mouseEnter(screen.getByTitle('Josh'));
+    fireEvent.click(screen.getByTitle('Josh'));
+
+    expect(onChange).toBeCalledTimes(2);
+    expect(onChange).toHaveReturnedWith('1');
+
+    // третий клик уже по выбранной опции (соответствующей value переданному в контролируемый селект),
+    // onChange не должен вызываться.
+    fireEvent.click(screen.getByTestId('target'));
+    expect(screen.getByTitle('Mike')).toHaveAttribute('aria-selected', 'true');
+    fireEvent.mouseEnter(screen.getByTitle('Mike'));
+    fireEvent.click(screen.getByTitle('Mike'));
+
+    expect(onChange).toBeCalledTimes(2);
+    expect(onChange).toHaveReturnedWith('1');
   });
 });
