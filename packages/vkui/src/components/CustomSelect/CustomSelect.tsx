@@ -29,16 +29,41 @@ const sizeYClassNames = {
   [SizeType.COMPACT]: styles['CustomSelect--sizeY-compact'],
 };
 
-const findIndexAfter = (options: CustomSelectOptionInterface[] = [], startIndex = -1) => {
+const isOptionDisabled = (
+  option: CustomSelectOptionInterface,
+  optionIndex: number,
+  scrollBoxRef: React.RefObject<HTMLDivElement | null>,
+) => {
+  if (option.disabled) {
+    return true;
+  }
+
+  const dropdown = scrollBoxRef.current;
+  const item = dropdown ? (dropdown.children[optionIndex] as HTMLElement) : null;
+  if (item && item.ariaDisabled === 'true') {
+    return true;
+  }
+
+  return false;
+};
+
+const findIndexAfter = (
+  options: CustomSelectOptionInterface[] = [],
+  startIndex = -1,
+  scrollBoxRef: React.RefObject<HTMLDivElement | null>,
+) => {
   if (startIndex >= options.length - 1) {
     return -1;
   }
-  return options.findIndex((option, i) => i > startIndex && !option.disabled);
+  return options.findIndex(
+    (option, i) => i > startIndex && !isOptionDisabled(option, i, scrollBoxRef),
+  );
 };
 
 const findIndexBefore = (
   options: CustomSelectOptionInterface[] = [],
   endIndex: number = options.length,
+  scrollBoxRef: React.RefObject<HTMLDivElement | null>,
 ) => {
   let result = -1;
   if (endIndex <= 0) {
@@ -47,7 +72,7 @@ const findIndexBefore = (
   for (let i = endIndex - 1; i >= 0; i--) {
     let option = options[i];
 
-    if (!option.disabled) {
+    if (!isOptionDisabled(option, i, scrollBoxRef)) {
       result = i;
       break;
     }
@@ -323,7 +348,7 @@ export function CustomSelect(props: SelectProps) {
 
       const option = options[index];
 
-      if (option?.disabled) {
+      if (isOptionDisabled(option, index, scrollBoxRef)) {
         return;
       }
 
@@ -453,11 +478,12 @@ export function CustomSelect(props: SelectProps) {
       let index = focusedOptionIndex;
 
       if (type === 'next') {
-        const nextIndex = findIndexAfter(options, index);
-        index = nextIndex === -1 ? findIndexAfter(options) : nextIndex; // Следующий за index или первый валидный до index
+        const nextIndex = findIndexAfter(options, index, scrollBoxRef);
+        index = nextIndex === -1 ? findIndexAfter(options, -1, scrollBoxRef) : nextIndex; // Следующий за index или первый валидный до index
       } else if (type === 'prev') {
-        const beforeIndex = findIndexBefore(options, index);
-        index = beforeIndex === -1 ? findIndexBefore(options) : beforeIndex; // Предшествующий index или последний валидный после index
+        const beforeIndex = findIndexBefore(options, index, scrollBoxRef);
+        index =
+          beforeIndex === -1 ? findIndexBefore(options, options.length, scrollBoxRef) : beforeIndex; // Предшествующий index или последний валидный после index
       }
 
       focusOptionByIndex(index);
@@ -614,7 +640,8 @@ export function CustomSelect(props: SelectProps) {
       );
       const option = options[index];
 
-      if (option && !option.disabled) {
+      console.log(e.currentTarget);
+      if (option && !isOptionDisabled(option, index, scrollBoxRef)) {
         selectFocused();
       }
     },
