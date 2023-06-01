@@ -392,8 +392,15 @@ export function CustomSelect(props: SelectProps) {
 
       setNativeSelectValue(item?.value);
       close();
+
+      const shouldTriggerOnChangeWhenSameOptionSelected =
+        focusedOptionIndex === selectedOptionIndex;
+      if (shouldTriggerOnChangeWhenSameOptionSelected) {
+        const event = new Event('change', { bubbles: true });
+        selectElRef.current?.dispatchEvent(event);
+      }
     }
-  }, [close, focusedOptionIndex, isValidIndex, options]);
+  }, [close, focusedOptionIndex, isValidIndex, options, selectElRef, selectedOptionIndex]);
 
   const open = React.useCallback(() => {
     setOpened(true);
