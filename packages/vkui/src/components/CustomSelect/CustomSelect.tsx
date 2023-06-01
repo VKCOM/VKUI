@@ -487,6 +487,11 @@ export function CustomSelect(props: SelectProps) {
     }
   }, []);
 
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     if (!isControlledOutside) {
       const newSelectedOptionIndex = findSelectedIndex(
@@ -495,12 +500,14 @@ export function CustomSelect(props: SelectProps) {
         allowClearButton,
       );
 
-      if (selectedOptionIndex !== newSelectedOptionIndex && !isControlledOutside) {
+      if (selectedOptionIndex !== newSelectedOptionIndex) {
         setSelectedOptionIndex(newSelectedOptionIndex);
       }
     }
 
-    onChange?.(e);
+    if (mounted) {
+      onChange?.(e);
+    }
   };
 
   const onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = React.useCallback(
