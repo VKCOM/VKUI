@@ -29,64 +29,25 @@ const sizeYClassNames = {
   [SizeType.COMPACT]: styles['CustomSelect--sizeY-compact'],
 };
 
-/*
- * Проверяем опцию на disabled причём также смотрим на то, чтобы
- * сам кастомный option не был disabled по aria-disabled
- * ведь disabled проп могу передать render function
- * и не указывать в options, тогда элемент может всё ещё быть
- * доступным с клавиатуры для выбора.
- * */
-function isOptionDisabled(
-  option: CustomSelectOptionInterface,
-  optionIndex: number,
-  scrollBoxRef: React.RefObject<HTMLDivElement | null>,
-) {
-  if (option.disabled) {
-    return true;
-  }
-
-  const dropdown = scrollBoxRef.current;
-  const item = dropdown ? (dropdown.children[optionIndex] as HTMLElement) : null;
-  if (item && item.ariaDisabled === 'true') {
-    return true;
-  }
-
-  return false;
-}
-
-type DisabledOptionMap = Record<number, boolean>;
-
-function getDisabledOptionMap(
-  options: CustomSelectOptionInterface[],
-  scrollBoxRef: React.RefObject<HTMLDivElement | null>,
-): DisabledOptionMap {
-  const disabledOptionMap: DisabledOptionMap = {};
-  for (let index = 0; index < options.length; index += 1) {
-    disabledOptionMap[index] = isOptionDisabled(options[index], index, scrollBoxRef);
-  }
-
-  return disabledOptionMap;
-}
-
-const findIndexAfter = (disableOptionMap: DisabledOptionMap, startIndex = -1) => {
-  const optionsLength = Object.keys(disableOptionMap).length;
-  if (startIndex >= optionsLength - 1) {
+const findIndexAfter = (options: CustomSelectOptionInterface[] = [], startIndex = -1) => {
+  if (startIndex >= options.length - 1) {
     return -1;
   }
-  return Object.keys(disableOptionMap).findIndex((_, i) => i > startIndex && !disableOptionMap[i]);
+  return options.findIndex((option, i) => i > startIndex && !option.disabled);
 };
 
 const findIndexBefore = (
-  disableOptionMap: DisabledOptionMap,
-  endIndex: number = Object.keys(disableOptionMap).length,
+  options: CustomSelectOptionInterface[] = [],
+  endIndex: number = options.length,
 ) => {
   let result = -1;
   if (endIndex <= 0) {
     return result;
   }
   for (let i = endIndex - 1; i >= 0; i--) {
-    const isOptionDisabled = disableOptionMap[i];
-    if (!isOptionDisabled) {
+    let option = options[i];
+
+    if (!option.disabled) {
       result = i;
       break;
     }
@@ -362,7 +323,7 @@ export function CustomSelect(props: SelectProps) {
 
       const option = options[index];
 
-      if (isOptionDisabled(option, index, scrollBoxRef)) {
+      if (option?.disabled) {
         return;
       }
 
@@ -491,14 +452,12 @@ export function CustomSelect(props: SelectProps) {
     (type: 'next' | 'prev') => {
       let index = focusedOptionIndex;
 
-      const disabledOptionMap = getDisabledOptionMap(options, scrollBoxRef);
-
       if (type === 'next') {
-        const nextIndex = findIndexAfter(disabledOptionMap, index);
-        index = nextIndex === -1 ? findIndexAfter(disabledOptionMap) : nextIndex; // Следующий за index или первый валидный до index
+        const nextIndex = findIndexAfter(options, index);
+        index = nextIndex === -1 ? findIndexAfter(options) : nextIndex; // Следующий за index или первый валидный до index
       } else if (type === 'prev') {
-        const beforeIndex = findIndexBefore(disabledOptionMap, index);
-        index = beforeIndex === -1 ? findIndexBefore(disabledOptionMap) : beforeIndex; // Предшествующий index или последний валидный после index
+        const beforeIndex = findIndexBefore(options, index);
+        index = beforeIndex === -1 ? findIndexBefore(options) : beforeIndex; // Предшествующий index или последний валидный после index
       }
 
       focusOptionByIndex(index);
@@ -655,8 +614,7 @@ export function CustomSelect(props: SelectProps) {
       );
       const option = options[index];
 
-      console.log(e.currentTarget);
-      if (option && !isOptionDisabled(option, index, scrollBoxRef)) {
+      if (option && !option.disabled) {
         selectFocused();
       }
     },
