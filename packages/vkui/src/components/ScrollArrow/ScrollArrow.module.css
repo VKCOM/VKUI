@@ -3,7 +3,7 @@
   user-select: auto;
   height: 100%;
   padding: 0;
-  border: none;
+  border: 0;
   background-color: transparent;
   transition: opacity 0.15s;
   transition-timing-function: var(--vkui--animation_easing_platform);

@@ -9,7 +9,7 @@
   position: relative;
   flex-grow: 0;
   flex-shrink: 0;
-  border: none;
+  border: 0;
 }
 
 /* Увеличиваем вес селектора */
@@ -38,7 +38,7 @@
   line-height: 45px;
   color: var(--vkui_internal--white);
   background-color: var(--vkui--color_background_negative);
-  border: none;
+  border: 0;
   border-radius: 0;
 }
 
@@ -72,7 +72,7 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  border: none;
+  border: 0;
 }
 
 .Removable__toggle-in::after {

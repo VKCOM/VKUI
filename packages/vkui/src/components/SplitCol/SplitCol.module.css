@@ -21,13 +21,17 @@
 }
 
 .SplitCol--viewWidth-tabletMinus.SplitCol--stretched-on-mobile {
+  /* stylelint-disable-next-line declaration-no-important */
   width: 100% !important;
+  /* stylelint-disable-next-line declaration-no-important */
   max-width: 100% !important;
 }
 
 @media (--viewWidth-tabletMinus) {
   .SplitCol--viewWidth-none.SplitCol--stretched-on-mobile {
+    /* stylelint-disable-next-line declaration-no-important */
     width: 100% !important;
+    /* stylelint-disable-next-line declaration-no-important */
     max-width: 100% !important;
   }
 }

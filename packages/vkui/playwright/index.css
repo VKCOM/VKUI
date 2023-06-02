@@ -1,4 +1,4 @@
-/* stylelint-disable @project-tools/stylelint-atomic */
+/* stylelint-disable @project-tools/stylelint-atomic, declaration-no-important */
 
 /* Глобальные стили, которые не импортируются самими компонентами. */
 @import '../src/styles/themes.css';
@@ -12,21 +12,18 @@
   font-weight: 400;
   src: url('./font/Roboto-Italic.ttf') format('truetype');
 }
-
 @font-face {
   font-family: Roboto;
   font-style: normal;
   font-weight: 400;
   src: url('./font/Roboto-Regular.ttf') format('truetype');
 }
-
 @font-face {
   font-family: Roboto;
   font-style: normal;
   font-weight: 500;
   src: url('./font/Roboto-Medium.ttf') format('truetype');
 }
-
 @font-face {
   font-family: Roboto;
   font-style: normal;
@@ -75,6 +72,7 @@
   color: var(--vkui--color_text_primary);
 }
 
+/* stylelint-disable-next-line selector-max-id */
 #root {
   position: relative;
 }

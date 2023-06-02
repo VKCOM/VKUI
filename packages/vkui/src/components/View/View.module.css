@@ -68,7 +68,6 @@
     transform: translateY(80px);
   }
 }
-
 @keyframes vkui-animation-view-next-forward {
   from {
     opacity: 0;
@@ -173,7 +172,6 @@
     transform: translate3d(0, 0, 0);
   }
 }
-
 @keyframes vkui-animation-ios-next-back {
   from {
     transform: translate3d(-50%, 0, 0);
@@ -183,7 +181,6 @@
     transform: translate3d(0, 0, 0);
   }
 }
-
 @keyframes vkui-animation-ios-prev-forward {
   from {
     transform: translate3d(0, 0, 0);
@@ -193,7 +190,6 @@
     transform: translate3d(-50%, 0, 0);
   }
 }
-
 @keyframes vkui-animation-ios-prev-back {
   from {
     transform: translate3d(0, 0, 0);
@@ -203,7 +199,6 @@
     transform: translate3d(100%, 0, 0);
   }
 }
-
 @keyframes vkui-animation-ios-fade-in {
   from {
     opacity: 0;
@@ -213,7 +208,6 @@
     opacity: 0.3;
   }
 }
-
 @keyframes vkui-animation-ios-fade-out {
   from {
     opacity: 0.3;

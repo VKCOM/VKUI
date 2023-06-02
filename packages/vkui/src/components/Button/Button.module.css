@@ -3,7 +3,7 @@
   display: inline-block;
   box-sizing: border-box;
   text-decoration: none;
-  border: none;
+  border: 0;
   min-height: var(--vkui--size_button_small_height--compact);
   margin: 0;
   padding: 0;

@@ -92,7 +92,6 @@
     transform: scale(1);
   }
 }
-
 @keyframes vkui-ptr-rotator {
   0% {
     transform: rotate(0deg);

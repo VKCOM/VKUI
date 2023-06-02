@@ -9,7 +9,7 @@
   display: block;
   position: absolute;
   appearance: none;
-  border: none;
+  border: 0;
   left: 0;
   top: 0;
   width: 100%;

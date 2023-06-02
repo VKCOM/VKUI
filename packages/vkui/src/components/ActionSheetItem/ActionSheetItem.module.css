@@ -160,7 +160,6 @@
     transform: scaleY(0.5);
   }
 }
-
 @media (min-resolution: 3dppx) {
   .ActionSheetItem--ios::after {
     transform: scaleY(0.33);

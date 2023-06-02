@@ -146,7 +146,6 @@
     transform: translate3d(0, 0, 0);
   }
 }
-
 @keyframes vkui-animation-snackbar-intro-horizontal {
   from {
     transform: translate3d(-140%, 0, 0);

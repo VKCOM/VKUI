@@ -11,6 +11,7 @@
 }
 
 .DateInput__input--time-divider {
+  /* stylelint-disable-next-line declaration-no-important */
   letter-spacing: 6px !important;
 }
 
