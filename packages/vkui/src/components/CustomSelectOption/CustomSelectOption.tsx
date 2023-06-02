@@ -98,7 +98,6 @@ export const CustomSelectOption = ({
 
   return (
     <Paragraph
-      tabIndex={disabled ? -1 : undefined}
       {...restProps}
       onClick={disabled ? undefined : onClick}
       Component="div"
