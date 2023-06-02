@@ -144,6 +144,10 @@ export interface SelectProps extends NativeSelectProps, FormFieldProps, TrackerO
   /**
    * Рендер-проп для кастомного рендера опции.
    * В объекте аргумента приходят [свойства опции](https://vkcom.github.io/VKUI/#/CustomSelectOption?id=props)
+   *
+   * > ⚠️  Важно: cвойство опции `disabled` должно выставляться только через проп `options`.
+   * > Запрещается выставлять `disabled` проп опциям в обход `options`, иначе селект не будет знать об актуальном состоянии
+   * опции.
    */
   renderOption?: (props: CustomSelectOptionProps) => React.ReactNode;
   /**
