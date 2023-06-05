@@ -26,7 +26,7 @@
     "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^13.2.1",
     "@types/css-font-loading-module": "^0.0.8",
-    "@types/jest": "^29.5.1",
+    "@types/jest": "^29.5.2",
     "@types/jest-axe": "^3.5.5",
     "@types/node": "^20.2.5",
     "@types/react": "^17.0.0",
