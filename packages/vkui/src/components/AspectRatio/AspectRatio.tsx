@@ -21,6 +21,9 @@ export interface AspectRatioProps
 /**
  * `AspectRatio` позволяет поддерживать постоянное соотношение ширины и высоты.
  * Его можно использовать для отображения изображений, карт, видео и других медиафайлов.
+ 
+ * @since 5.5.0
+ * @see https://vkcom.github.io/VKUI/#/AspectRatio
  */
 export function AspectRatio({
   ratio,
