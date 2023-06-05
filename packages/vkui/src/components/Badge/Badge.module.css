@@ -22,5 +22,5 @@
 :global(.vkuiInternalTabbarItem__label) .Badge {
   position: absolute;
   top: -2px;
-  right: -4px;
+  right: -2px;
 }
