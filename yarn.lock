@@ -3435,10 +3435,10 @@
     "@babel/plugin-transform-react-jsx-source" "^7.19.6"
     react-refresh "^0.14.0"
 
-"@vkontakte/eslint-plugin@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@vkontakte/eslint-plugin/-/eslint-plugin-1.1.0.tgz#4072186eb4c0a53fef99ebb8c3ed5ea9d483f92a"
-  integrity sha512-LLPoTW6NCKXnMOnDjF9dcUMGRwjnZUvLf9bIccyWBHL1NqK7FS/apM0CPXKBFidhCT2ZI4Wl/KI49nJ4jQN33g==
+"@vkontakte/eslint-plugin@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@vkontakte/eslint-plugin/-/eslint-plugin-1.1.1.tgz#ba66e03f6c668a61575fb3d1c60e6c60ee97fcfe"
+  integrity sha512-+4dtIAu9y/DvX3SMYMz3CWXjegRYn1mQMWqYuDMJXxXMBJ1gBNQrkZCK+2uQjF7KYfmunL1RzJhjBbGbRLA7mw==
   dependencies:
     "@babel/core" "^7.20.12"
     "@babel/eslint-parser" "^7.19.1"
