@@ -136,6 +136,7 @@
   top: 0;
   background: #000;
   pointer-events: none;
+  z-index: var(--vkui_internal--z_index_panel_header_fade);
 }
 
 .View--ios .View__panel--prev :global(.vkuiInternalPanel__fade) {
