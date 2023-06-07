@@ -9,7 +9,7 @@ const [showArrows, setShowArrows] = useState(true);
     <Group header={<Header mode="secondary">Sticks right</Header>}>
       <Gallery slideWidth="90%" bullets="dark">
         <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
-        <img src="https://picsum.photos/1024/640" style={{ display: 'block' }} />
+        <img src="https://placebear.com/1024/640" style={{ display: 'block' }} />
         <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
       </Gallery>
     </Group>
