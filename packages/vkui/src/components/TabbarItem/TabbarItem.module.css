@@ -67,6 +67,7 @@
 :global(.vkuiInternalTabbar--layout-vertical) .TabbarItem__text {
   --vkui--font_footnote--font_size--regular: 10px;
   --vkui--font_footnote--line_height--regular: 12px;
+
   margin-top: 2px;
 }
 
