@@ -18,7 +18,7 @@ const sizeYClassNames = {
 };
 
 export interface NativeSelectProps
-  extends React.SelectHTMLAttributes<HTMLSelectElement>,
+  extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'multiply'>,
     HasRef<HTMLSelectElement>,
     HasRootRef<HTMLLabelElement>,
     HasAlign,
