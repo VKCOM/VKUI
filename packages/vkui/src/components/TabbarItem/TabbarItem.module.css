@@ -65,8 +65,8 @@
 }
 
 :global(.vkuiInternalTabbar--layout-vertical) .TabbarItem__text {
-  font-size: 10px;
-  line-height: var(--vkui--font_caption3--line_height--regular);
+  --vkui--font_footnote--font_size--regular: 10px;
+  --vkui--font_footnote--line_height--regular: 12px;
   margin-top: 2px;
 }
 
