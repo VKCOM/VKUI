@@ -104,7 +104,8 @@
   background-color: var(--vkui--color_background_secondary);
 }
 
-.Banner--mode-image .Banner__dismiss,
+.Banner--inverted .Banner__dismiss,
+.Banner--inverted .Banner__expand,
 .Banner--inverted {
   color: var(--vkui--color_text_contrast);
 }
