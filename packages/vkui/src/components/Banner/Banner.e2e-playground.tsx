@@ -40,6 +40,21 @@ export const BannerPlayground = (props: ComponentPlaygroundProps) => {
             </Button>,
           ],
         },
+        {
+          mode: ['image'],
+          asideMode: ['dismiss', 'expand'],
+          imageTheme: ['light'],
+          header: ['Мои достижения'],
+          subheader: ['Разблокировано 9 из 36'],
+        },
+        {
+          mode: ['image'],
+          asideMode: ['dismiss', 'expand'],
+          imageTheme: ['dark'],
+          header: ['Мои достижения'],
+          subheader: ['Разблокировано 9 из 36'],
+          background: [<div key="img-bg" style={{ backgroundColor: '#222222' }} />],
+        },
       ]}
     >
       {(props: BannerProps) => (

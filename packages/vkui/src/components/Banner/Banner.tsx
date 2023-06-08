@@ -173,7 +173,7 @@ export const Banner = ({
           {content}
 
           <div className={styles['Banner__aside']}>
-            <Icon24Chevron />
+            <Icon24Chevron className={styles['Banner__expand']} />
           </div>
         </Tappable>
       ) : (
