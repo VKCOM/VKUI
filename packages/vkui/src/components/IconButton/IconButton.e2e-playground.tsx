@@ -20,6 +20,7 @@ export const IconButtonPlayground = (props: ComponentPlaygroundProps) => {
             <Icon16MessageHeart key="icon-w16" />,
             <Icon16MoreVertical key="icon-w08" />,
           ],
+          noPadding: [undefined, true],
           $adaptivity: 'y',
         },
       ]}

@@ -14,14 +14,24 @@ const sizeYClassNames = {
   [SizeType.COMPACT]: styles['IconButton--sizeY-compact'],
 };
 
-export interface IconButtonProps extends TappableProps, HasChildren {}
+export interface IconButtonProps extends TappableProps, HasChildren {
+  /**
+   * Добавляет отступы к компоненту
+   */
+  noPadding?: boolean;
+}
 
 const warn = warnOnce('IconButton');
 
 /**
  * @see https://vkcom.github.io/VKUI/#/IconButton
  */
-export const IconButton = ({ children, className, ...restProps }: IconButtonProps) => {
+export const IconButton = ({
+  children,
+  className,
+  noPadding = false,
+  ...restProps
+}: IconButtonProps) => {
   const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();
 
@@ -43,6 +53,7 @@ export const IconButton = ({ children, className, ...restProps }: IconButtonProp
         styles['IconButton'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         platform === Platform.IOS && styles['IconButton--ios'],
+        !noPadding && styles['IconButton--withPadding'],
         className,
       )}
     >

@@ -8,7 +8,6 @@
   padding: 0;
   margin: 0;
   position: relative;
-  height: 48px;
 
   /**
    * Чтобы закргуление было равно половине высоты.
@@ -17,7 +16,11 @@
   border-radius: 9999px;
 }
 
-.IconButton--sizeY-compact {
+.IconButton--withPadding.IconButton {
+  height: 48px;
+}
+
+.IconButton--withPadding.IconButton--sizeY-compact {
   height: 44px;
 }
 
@@ -29,50 +32,50 @@
   border-radius: var(--vkui--size_border_radius--regular);
 }
 
-.IconButton :global(.vkuiIcon--16) {
+.IconButton--withPadding.IconButton :global(.vkuiIcon--16) {
   padding: 16px;
 }
 
-.IconButton :global(.vkuiIcon--16.vkuiIcon--w-8) {
+.IconButton--withPadding.IconButton :global(.vkuiIcon--16.vkuiIcon--w-8) {
   padding: 16px 14px;
 }
 
-.IconButton--sizeY-compact :global(.vkuiIcon--16),
-.IconButton--sizeY-compact :global(.vkuiIcon--16.vkuiIcon--w-8) {
+.IconButton--withPadding.IconButton--sizeY-compact :global(.vkuiIcon--16),
+.IconButton--withPadding.IconButton--sizeY-compact :global(.vkuiIcon--16.vkuiIcon--w-8) {
   padding: 14px;
 }
 
-.IconButton :global(.vkuiIcon--24) {
+.IconButton--withPadding.IconButton :global(.vkuiIcon--24) {
   padding: 12px;
 }
 
-.IconButton--sizeY-compact :global(.vkuiIcon--24) {
+.IconButton--withPadding.IconButton--sizeY-compact :global(.vkuiIcon--24) {
   padding: 10px;
 }
 
-.IconButton :global(.vkuiIcon--28) {
+.IconButton--withPadding.IconButton :global(.vkuiIcon--28) {
   padding: 10px;
 }
 
-.IconButton--sizeY-compact :global(.vkuiIcon--28) {
+.IconButton--withPadding.IconButton--sizeY-compact :global(.vkuiIcon--28) {
   padding: 8px;
 }
 
 @media (--sizeY-compact) {
-  .IconButton--sizeY-none {
+  .IconButton--withPadding.IconButton--sizeY-none {
     height: 44px;
   }
 
-  .IconButton--sizeY-none :global(.vkuiIcon--16),
-  .IconButton--sizeY-none :global(.vkuiIcon--16.vkuiIcon--w-8) {
+  .IconButton--withPadding.IconButton--sizeY-none :global(.vkuiIcon--16),
+  .IconButton--withPadding.IconButton--sizeY-none :global(.vkuiIcon--16.vkuiIcon--w-8) {
     padding: 14px;
   }
 
-  .IconButton--sizeY-none :global(.vkuiIcon--24) {
+  .IconButton--withPadding.IconButton--sizeY-none :global(.vkuiIcon--24) {
     padding: 10px;
   }
 
-  .IconButton--sizeY-none :global(.vkuiIcon--28) {
+  .IconButton--withPadding.IconButton--sizeY-none :global(.vkuiIcon--28) {
     padding: 8px;
   }
 }
