@@ -45,8 +45,8 @@ const Example = () => {
               <Input type="email" name="email" value={email} onChange={onChange} />
             </FormItem>
 
-            <FormItem top="Пароль">
-              <Input type="password" placeholder="Введите пароль" />
+            <FormItem top="Пароль" htmlFor="pass">
+              <Input id="pass" type="password" placeholder="Введите пароль" />
             </FormItem>
 
             <FormItem bottom="Пароль может содержать только латинские буквы и цифры.">

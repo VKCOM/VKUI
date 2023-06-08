@@ -19,12 +19,14 @@ export const Subhead = ({
   className,
   Component = 'h5',
   normalize = true,
+  htmlFor,
   ...restProps
 }: SubheadProps) => {
   const { sizeY = 'none' } = useAdaptivity();
 
   return (
     <Typography
+      htmlFor={htmlFor}
       Component={Component}
       normalize={normalize}
       className={classNames(
