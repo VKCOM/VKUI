@@ -19,7 +19,6 @@ export const Subhead = ({
   className,
   Component = 'h5',
   normalize = true,
-  htmlFor,
   ...restProps
 }: SubheadProps) => {
   const { sizeY = 'none' } = useAdaptivity();
