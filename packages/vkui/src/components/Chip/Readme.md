@@ -64,7 +64,7 @@ const Example = () => {
             />
           </FormItem>
           <FormItem top="Выберите или добавьте цвета">
-            <ChipsSelect {...colorsChipsProps} onClick={() => setActiveView('colors')} />
+            <ChipsSelect {...colorsChipsProps} />
           </FormItem>
         </Group>
       </Panel>
