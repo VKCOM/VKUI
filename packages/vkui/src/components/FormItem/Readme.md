@@ -44,13 +44,14 @@ const Example = () => {
         <Group>
           <FormLayout>
             <FormItem
+              htmlFor="email"
               top="E-mail"
               status={email ? 'valid' : 'error'}
               bottom={
                 email ? 'Электронная почта введена верно!' : 'Пожалуйста, введите электронную почту'
               }
             >
-              <Input type="email" name="email" value={email} onChange={onChange} />
+              <Input id="email" type="email" name="email" value={email} onChange={onChange} />
             </FormItem>
 
             <FormItem top="Пароль" htmlFor="pass">
@@ -62,11 +63,11 @@ const Example = () => {
             </FormItem>
 
             <FormLayoutGroup mode="horizontal">
-              <FormItem top="Имя">
-                <Input />
+              <FormItem htmlFor="name" top="Имя">
+                <Input id="name" />
               </FormItem>
-              <FormItem top="Фамилия">
-                <Input />
+              <FormItem htmlFor="lastname" top="Фамилия">
+                <Input id="lastname" />
               </FormItem>
             </FormLayoutGroup>
 
@@ -74,12 +75,13 @@ const Example = () => {
               <CellButton onClick={onShowPatronymic}>Указать отчество</CellButton>
             ) : (
               <FormItem
+                htmlFor="patronymic"
                 removable
                 onRemove={onRemove}
                 top="Отчество"
                 bottom="Если у вас нет отчества — удалите этот пункт."
               >
-                <Input />
+                <Input id="patronymic" />
               </FormItem>
             )}
 
@@ -117,8 +119,8 @@ const Example = () => {
             </FormItem>
 
             {addressItems.map(({ label, name }) => (
-              <FormItem top={label} key={name}>
-                <Input name={name} />
+              <FormItem htmlFor={label} top={label} key={name}>
+                <Input id={label} name={name} />
               </FormItem>
             ))}
             <FormItem
@@ -147,8 +149,8 @@ const Example = () => {
                 ]}
               />
             </FormItem>
-            <FormItem top="О себе">
-              <Textarea />
+            <FormItem htmlFor="about" top="О себе">
+              <Textarea id="about" />
             </FormItem>
             <Checkbox>
               Согласен со всем <Link>этим</Link>
