@@ -5,7 +5,6 @@ import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditi
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
-import { warnOnce } from '../../lib/warnOnce';
 import { HasComponent, HasRef, HasRootRef } from '../../types';
 import { useConfigProvider, WebviewType } from '../ConfigProvider/ConfigProviderContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
@@ -14,6 +13,7 @@ import { Separator } from '../Separator/Separator';
 import { Spacing } from '../Spacing/Spacing';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { Text } from '../Typography/Text/Text';
+import { LegacyPanelHeaderContent } from './LegacyPanelHeaderContent';
 import styles from './PanelHeader.module.css';
 
 const platformClassNames = {
@@ -190,39 +190,5 @@ export const PanelHeader = ({
     </div>
   );
 };
-
-interface LegacyPanelHeaderContentProps extends React.HTMLAttributes<HTMLElement>, HasComponent {}
-
-const warn = warnOnce('PanelHeader');
-
-/**
- * TODO [>=6]: Удалить подкомпонент
- * @deprecated
- */
-const LegacyPanelHeaderContent = ({
-  children,
-  Component = 'span',
-  id,
-}: LegacyPanelHeaderContentProps) => {
-  if (process.env.NODE_ENV === 'development') {
-    warn(
-      'Подкомпонент PanelHeader.Content устарел и будет удалён в v6. Используйте параметр typographyProps.',
-    );
-  }
-
-  const platform = usePlatform();
-
-  return platform === Platform.VKCOM ? (
-    <Text weight="2" Component={Component} id={id}>
-      {children}
-    </Text>
-  ) : (
-    <Component className={styles['PanelHeader__content-in']} id={id}>
-      {children}
-    </Component>
-  );
-};
-
-LegacyPanelHeaderContent.displayName = 'LegacyPanelHeaderContent';
 
 PanelHeader.Content = LegacyPanelHeaderContent;
