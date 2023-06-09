@@ -26,6 +26,7 @@ export const WithInputField: Story = {
   ...Playground,
   args: {
     top: 'Пароль',
-    children: <Input type="password" placeholder="Введите пароль" />,
+    htmlFor: 'password',
+    children: <Input id="password" type="password" placeholder="Введите пароль" />,
   },
 };
