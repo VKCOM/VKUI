@@ -26,7 +26,6 @@ export const Subhead = ({
 
   return (
     <Typography
-      htmlFor={htmlFor}
       Component={Component}
       normalize={normalize}
       className={classNames(
