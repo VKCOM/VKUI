@@ -58,7 +58,11 @@ export const SubnavigationBar = ({
       )}
     >
       <ScrollWrapper className={styles['SubnavigationBar__in']} {...scrollWrapperProps}>
-        <ul className={styles['SubnavigationBar__scrollIn']}>{children}</ul>
+        <ul className={styles['SubnavigationBar__scrollIn']}>
+          {React.Children.map(children, (child) => (
+            <li>{child}</li>
+          ))}
+        </ul>
       </ScrollWrapper>
     </div>
   );
