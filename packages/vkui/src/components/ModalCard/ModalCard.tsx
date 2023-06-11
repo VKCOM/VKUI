@@ -33,6 +33,7 @@ export const ModalCard = ({
   id,
   className,
   size,
+  getRootRef,
   ...restProps
 }: ModalCardProps) => {
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
@@ -44,6 +45,7 @@ export const ModalCard = ({
   return (
     <div
       {...restProps}
+      ref={getRootRef}
       id={id}
       className={classNames(
         styles['ModalCard'],
