@@ -72,6 +72,7 @@ export const SubnavigationButton = ({
     <Tappable
       {...restProps}
       hasActive={false}
+      Component="li"
       focusVisibleMode="outside"
       className={classNames(
         styles['SubnavigationButton'],

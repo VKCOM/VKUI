@@ -58,7 +58,9 @@ export const SubnavigationBar = ({
       )}
     >
       <ScrollWrapper className={styles['SubnavigationBar__in']} {...scrollWrapperProps}>
-        <div className={styles['SubnavigationBar__scrollIn']}>{children}</div>
+        <div className={styles['SubnavigationBar__scrollIn']}>
+          <ul className={styles['SubnavigationBar__list']}>{children}</ul>
+        </div>
       </ScrollWrapper>
     </div>
   );

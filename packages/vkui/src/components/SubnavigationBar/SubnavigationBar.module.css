@@ -9,6 +9,13 @@
   display: flex;
 }
 
+.SubnavigationBar__list {
+  display: flex;
+  padding-inline-start: unset;
+  margin-block-start: unset;
+  margin-block-end: unset;
+}
+
 .SubnavigationBar__scrollIn::before,
 .SubnavigationBar__scrollIn::after {
   content: '';
