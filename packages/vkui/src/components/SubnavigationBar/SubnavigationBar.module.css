@@ -17,3 +17,17 @@
   content: '';
   min-width: var(--vkui--size_base_padding_horizontal--regular);
 }
+
+.SubnavigationBar__item {
+  list-style-type: none;
+  display: flex;
+}
+
+.SubnavigationBar__item + .SubnavigationBar__item {
+  margin-left: var(--vkui--size_subnavigation_bar_gap--regular);
+}
+
+:global(.vkuiInternalSubnavigationBar--mode-fixed) .SubnavigationBar__item {
+  flex: 1;
+  min-width: 0;
+}
