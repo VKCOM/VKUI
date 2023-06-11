@@ -69,6 +69,7 @@ export const Tabs = ({
       case 'Home': {
         const tabEls = getTabEls();
         const currentFocusedElIndex = tabEls.findIndex((el) => document.activeElement === el);
+
         if (currentFocusedElIndex === -1) {
           return;
         }
@@ -97,27 +98,28 @@ export const Tabs = ({
        Это не прописано в стандартах, но по ссылке ниже это рекомендуется делать.
        https://inclusive-components.design/tabbed-interfaces/
       */
+      case 'ArrowUp':
       case 'ArrowDown': {
         const tabEls = getTabEls();
         const currentFocusedEl = tabEls.find((el) => document.activeElement === el);
-
-        if (!currentFocusedEl || currentFocusedEl.getAttribute('aria-selected') !== 'true') {
+        if (!currentFocusedEl) {
           return;
         }
 
-        const relatedContentElId = currentFocusedEl.getAttribute('aria-controls');
-        if (!relatedContentElId) {
-          return;
+        const currentIndex = tabEls.indexOf(currentFocusedEl);
+        let nextIndex;
+
+        if (key === 'ArrowUp') {
+          nextIndex = currentIndex === 0 ? tabEls.length - 1 : currentIndex - 1;
+        } else {
+          nextIndex = currentIndex === tabEls.length - 1 ? 0 : currentIndex + 1;
         }
 
-        // eslint-disable-next-line no-restricted-properties
-        const relatedContentEl = document.getElementById(relatedContentElId);
-        if (!relatedContentEl) {
-          return;
+        const nextTabEl = tabEls[nextIndex];
+        if (nextTabEl) {
+          event.preventDefault();
+          nextTabEl.focus();
         }
-
-        event.preventDefault();
-        relatedContentEl.focus();
 
         break;
       }
@@ -128,6 +130,7 @@ export const Tabs = ({
         if (currentFocusedEl) {
           currentFocusedEl.click();
         }
+        break;
       }
     }
   };
