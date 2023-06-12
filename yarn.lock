@@ -3464,10 +3464,10 @@
   resolved "https://registry.yarnpkg.com/@vkontakte/prettier-config/-/prettier-config-0.1.0.tgz#4bb288d12a4a3f38cab1827bf7b94b10888773a9"
   integrity sha512-Ec0V5C4IUUZm/7cxHX1AowXRdK3lBEoXXCDxZ8Ii6N3MPhYOXDfegen3ld40mmtQA1jMpJdiqpH+E8e8st/zTg==
 
-"@vkontakte/stylelint-config@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@vkontakte/stylelint-config/-/stylelint-config-3.1.0.tgz#5227c99510605675448be2d454d96af75bcd8aef"
-  integrity sha512-67e1RhbMTE7HXwCb9FT85IpXL66CyyFimTvJKh0A+vLhchSJutl37prdblSdwEwQcXa31mVBh6jbxFNCipbOYQ==
+"@vkontakte/stylelint-config@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@vkontakte/stylelint-config/-/stylelint-config-3.2.0.tgz#202442b77c6772fe3445b9a0b71121a2e74822fd"
+  integrity sha512-HgQZFTdWQ8cb0Uz7bHwVrR9IsWLL77xmDuvKFWPxblnCc69oBchbfZojGKg6Di1VwGCsBFfWCJygRraE/RacnQ==
   dependencies:
     micromatch "^4.0.5"
 
