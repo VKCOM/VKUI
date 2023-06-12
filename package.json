@@ -32,7 +32,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/webpack": "^5.28.1",
-    "@typescript-eslint/eslint-plugin": "^5.59.8",
+    "@typescript-eslint/eslint-plugin": "^5.59.9",
     "@typescript-eslint/parser": "^5.59.8",
     "@vkontakte/eslint-plugin": "^1.1.1",
     "@vkontakte/icons": "2.20.0",
