@@ -19,7 +19,7 @@ opt-level = "s"
 strip = "symbols"
 
 [dependencies]
-swc_core = { version = "0.76", features = ["ecma_plugin_transform", "ecma_parser"] }
+swc_core = { version = "0.78", features = ["ecma_plugin_transform", "ecma_parser"] }
 
 [dev-dependencies]
 testing = "0.33"
