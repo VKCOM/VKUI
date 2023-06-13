@@ -69,7 +69,7 @@
     "postcss-custom-media": "^9.1.4",
     "postcss-custom-properties": "^13.2.0",
     "postcss-import": "^15.0.0",
-    "postcss-loader": "^7.3.2",
+    "postcss-loader": "^7.3.3",
     "postcss-modules": "^6.0.0",
     "postcss-value-parser": "^4.2.0",
     "prettier": "^2.8.8",
