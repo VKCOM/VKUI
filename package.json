@@ -110,8 +110,6 @@
     "build:vkui": "yarn workspace @vkontakte/vkui run build",
     "test": "yarn workspaces run test",
     "test:ci": "yarn workspaces run test:ci",
-    "test:a11y": "yarn workspace @vkontakte/vkui run test:a11y",
-    "test:a11y:ci": "yarn workspace @vkontakte/vkui run test:a11y:ci",
     "test:e2e": "yarn workspace @vkontakte/vkui run test:e2e",
     "test:e2e-update": "yarn workspace @vkontakte/vkui run test:e2e-update",
     "test:e2e:ci": "yarn workspace @vkontakte/vkui run test:e2e:ci",

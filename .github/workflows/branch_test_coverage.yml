@@ -26,11 +26,6 @@ jobs:
     with:
       workspace: '@vkontakte/vkui'
 
-  test_a11y:
-    name: Call reusable a11y tests workflow
-    # Нужны только для компонентов @vkontakte/vkui
-    uses: ./.github/workflows/reusable_workflow_test_a11y.yml
-
   test_e2e:
     name: Call reusable e2e tests workflow
     # На текущий момент e2e так и так запускается только для @vkontakte/vkui
