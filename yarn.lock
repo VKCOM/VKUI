@@ -1796,29 +1796,29 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@playwright/experimental-ct-core@1.34.3":
-  version "1.34.3"
-  resolved "https://registry.yarnpkg.com/@playwright/experimental-ct-core/-/experimental-ct-core-1.34.3.tgz#e0c4fba3e3885fa9307e9cf4e842fc08bc3877d7"
-  integrity sha512-+/JzHK1gkCyKBzyEEQ7POO0ZOUT+GCBYcUqm8dEUiwK/QLnm74mQGVJRoeuFoljUII75XUvVn0rwAZ1xsjqPGQ==
+"@playwright/experimental-ct-core@1.35.0":
+  version "1.35.0"
+  resolved "https://registry.yarnpkg.com/@playwright/experimental-ct-core/-/experimental-ct-core-1.35.0.tgz#42165fed06e0b9056ab7e471657fc93a55febf2e"
+  integrity sha512-LHaN7eN4+s0w8DriVvODwCWiiPtP9tHsXysHhyhJxHBSlca+hxplHFTsMG4BYQhGiADzQRx/QvLB63zfcG0rCQ==
   dependencies:
-    "@playwright/test" "1.34.3"
-    vite "^4.3.3"
+    "@playwright/test" "1.35.0"
+    vite "^4.3.9"
 
-"@playwright/experimental-ct-react17@1.34.3":
-  version "1.34.3"
-  resolved "https://registry.yarnpkg.com/@playwright/experimental-ct-react17/-/experimental-ct-react17-1.34.3.tgz#21faaedfde4743c39f786adad42185393686e49c"
-  integrity sha512-p0npvG/fedD+Vdu7ll0CcT9aec25Eo5dEfw3EnA0YS5JJeWUXhGZpPsDAndOcZiplMu8eThBVG0rK0oLikV6tg==
+"@playwright/experimental-ct-react17@1.35.0":
+  version "1.35.0"
+  resolved "https://registry.yarnpkg.com/@playwright/experimental-ct-react17/-/experimental-ct-react17-1.35.0.tgz#8ba058fc9c27fad88d353d898b49b35c51cf84fa"
+  integrity sha512-4Cc6ziEC6uKcEnfNXVusiuJO5FACiA/YZD3MOhikQgoOxPi4peLxnT586kwagUbRZctY4EJAG1oIpBsgsOQRSA==
   dependencies:
-    "@playwright/experimental-ct-core" "1.34.3"
+    "@playwright/experimental-ct-core" "1.35.0"
     "@vitejs/plugin-react" "^4.0.0"
 
-"@playwright/test@1.34.3":
-  version "1.34.3"
-  resolved "https://registry.yarnpkg.com/@playwright/test/-/test-1.34.3.tgz#d9f1ac3f1a09633b5ca5351c50c308bf802bde53"
-  integrity sha512-zPLef6w9P6T/iT6XDYG3mvGOqOyb6eHaV9XtkunYs0+OzxBtrPAAaHotc0X+PJ00WPPnLfFBTl7mf45Mn8DBmw==
+"@playwright/test@1.35.0":
+  version "1.35.0"
+  resolved "https://registry.yarnpkg.com/@playwright/test/-/test-1.35.0.tgz#532603399a0dd46731fbc31a0df5ce357dafa486"
+  integrity sha512-6qXdd5edCBynOwsz1YcNfgX8tNWeuS9fxy5o59D0rvHXxRtjXRebB4gE4vFVfEMXl/z8zTnAzfOs7aQDEs8G4Q==
   dependencies:
     "@types/node" "*"
-    playwright-core "1.34.3"
+    playwright-core "1.35.0"
   optionalDependencies:
     fsevents "2.3.2"
 
@@ -9981,10 +9981,10 @@ pkg-up@^3.1.0:
   dependencies:
     find-up "^3.0.0"
 
-playwright-core@1.34.3:
-  version "1.34.3"
-  resolved "https://registry.yarnpkg.com/playwright-core/-/playwright-core-1.34.3.tgz#bc906ea1b26bb66116ce329436ee59ba2e78fe9f"
-  integrity sha512-2pWd6G7OHKemc5x1r1rp8aQcpvDh7goMBZlJv6Co5vCNLVcQJdhxRL09SGaY6HcyHH9aT4tiynZabMofVasBYw==
+playwright-core@1.35.0:
+  version "1.35.0"
+  resolved "https://registry.yarnpkg.com/playwright-core/-/playwright-core-1.35.0.tgz#b7871b742b4a5c8714b7fa2f570c280a061cb414"
+  integrity sha512-muMXyPmIx/2DPrCHOD1H1ePT01o7OdKxKj2ebmCAYvqhUy+Y1bpal7B0rdoxros7YrXI294JT/DWw2LqyiqTPA==
 
 pluralize@^8.0.0:
   version "8.0.0"
@@ -13077,7 +13077,7 @@ vfile@^4.0.0:
     unist-util-stringify-position "^2.0.0"
     vfile-message "^2.0.0"
 
-vite@^4.3.3:
+vite@^4.3.9:
   version "4.3.9"
   resolved "https://registry.yarnpkg.com/vite/-/vite-4.3.9.tgz#db896200c0b1aa13b37cdc35c9e99ee2fdd5f96d"
   integrity sha512-qsTNZjO9NoJNW7KnOrgYwczm0WctJ8m/yqYAMAK9Lxt4SoySUfS5S8ia9K7JHpa3KEeMfyF8LoJ3c5NeBJy6pg==
