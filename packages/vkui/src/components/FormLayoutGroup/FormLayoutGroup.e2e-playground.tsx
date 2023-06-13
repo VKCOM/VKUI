@@ -27,11 +27,11 @@ export const FormLayoutGroupPlayground = (props: ComponentPlaygroundProps) => {
           mode: ['horizontal', 'vertical'],
           children: [
             <React.Fragment key="">
-              <FormItem>
-                <Input />
+              <FormItem htmlFor="inputOne">
+                <Input id="inputOne" />
               </FormItem>
-              <FormItem>
-                <Input />
+              <FormItem htmlFor="inputTwo">
+                <Input id="inputTwo" />
               </FormItem>
             </React.Fragment>,
           ],
@@ -40,15 +40,15 @@ export const FormLayoutGroupPlayground = (props: ComponentPlaygroundProps) => {
           mode: ['vertical'],
           children: [
             <React.Fragment key="">
-              <FormItem>
-                <Input />
+              <FormItem htmlFor="inputOne">
+                <Input id="inputOne" />
               </FormItem>
               <FormLayoutGroup mode="horizontal">
-                <FormItem>
-                  <Input />
+                <FormItem htmlFor="inputTwo">
+                  <Input id="inputTwo" />
                 </FormItem>
-                <FormItem>
-                  <Input />
+                <FormItem htmlFor="inputThree">
+                  <Input id="inputThree" />
                 </FormItem>
               </FormLayoutGroup>
             </React.Fragment>,
@@ -59,19 +59,19 @@ export const FormLayoutGroupPlayground = (props: ComponentPlaygroundProps) => {
           removable: [true],
           children: [
             <React.Fragment key="">
-              <FormItem>
-                <Input />
+              <FormItem htmlFor="inputOne">
+                <Input id="inputOne" />
               </FormItem>
-              <FormItem>
-                <Input />
+              <FormItem htmlFor="inputTwo">
+                <Input id="inputTwo" />
               </FormItem>
             </React.Fragment>,
             <React.Fragment key="">
-              <FormItem top="Сверху">
-                <Input />
+              <FormItem htmlFor="inputOne" top="Сверху">
+                <Input id="inputOne" />
               </FormItem>
-              <FormItem top="И у меня">
-                <Input />
+              <FormItem htmlFor="inputTwo" top="И у меня">
+                <Input id="inputTwo" />
               </FormItem>
             </React.Fragment>,
             <React.Fragment key="">
