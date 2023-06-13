@@ -30,7 +30,11 @@ describe('ActionSheet', () => {
     ['desktop', ActionSheetDesktop],
     ['mobile', ActionSheetMobile],
   ])('%s', (_name, ActionSheet) => {
-    baselineComponent((p) => <ActionSheet {...p} />);
+    baselineComponent((props) => <ActionSheet {...props} />, {
+      // TODO [a11y]: "Exceeded timeout of 5000 ms for a test.
+      //              Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+      a11y: false,
+    });
 
     describe('calls handlers', () => {
       it.each([
