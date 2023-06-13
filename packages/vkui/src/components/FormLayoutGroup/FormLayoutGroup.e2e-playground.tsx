@@ -67,27 +67,27 @@ export const FormLayoutGroupPlayground = (props: ComponentPlaygroundProps) => {
               </FormItem>
             </React.Fragment>,
             <React.Fragment key="">
-              <FormItem htmlFor="inputOne" top="Сверху">
-                <Input id="inputOne" />
+              <FormItem htmlFor="top" top="Сверху">
+                <Input id="top" />
               </FormItem>
-              <FormItem htmlFor="inputTwo" top="И у меня">
-                <Input id="inputTwo" />
-              </FormItem>
-            </React.Fragment>,
-            <React.Fragment key="">
-              <FormItem top="Сверху очень длинная надпись аж распирает">
-                <Input />
-              </FormItem>
-              <FormItem top="И у меня тоже не короче твоей">
-                <Input />
+              <FormItem htmlFor="topToo" top="И у меня">
+                <Input id="topToo" />
               </FormItem>
             </React.Fragment>,
             <React.Fragment key="">
-              <FormItem top="Сверху очень длинная надпись аж распирает">
-                <Input />
+              <FormItem htmlFor="tooLongTop" top="Сверху очень длинная надпись аж распирает">
+                <Input id="tooLongTop" />
               </FormItem>
-              <FormItem bottom="А у меня надпись снизу">
-                <Input />
+              <FormItem htmlFor="theSameLongTop" top="И у меня тоже не короче твоей">
+                <Input id="theSameLongTop" />
+              </FormItem>
+            </React.Fragment>,
+            <React.Fragment key="">
+              <FormItem htmlFor="tooLong" top="Сверху очень длинная надпись аж распирает">
+                <Input id="tooLong" />
+              </FormItem>
+              <FormItem htmlFor="theSameLongBottom" bottom="А у меня надпись снизу">
+                <Input id="theSameLongBottom" />
               </FormItem>
             </React.Fragment>,
           ],
@@ -97,25 +97,25 @@ export const FormLayoutGroupPlayground = (props: ComponentPlaygroundProps) => {
           segmented: [true],
           children: [
             <React.Fragment key="kids">
-              <FormItem>
-                <Input defaultValue="Иванов" />
+              <FormItem htmlFor="lastName">
+                <Input id="lastName" defaultValue="Иванов" />
               </FormItem>
-              <FormItem>
-                <Input defaultValue="Иван" />
+              <FormItem htmlFor="firstName">
+                <Input id="firstName" defaultValue="Иван" />
               </FormItem>
-              <FormItem>
-                <Input defaultValue="Иванович" />
+              <FormItem htmlFor="middleName">
+                <Input id="middleName" defaultValue="Иванович" />
               </FormItem>
             </React.Fragment>,
             <React.Fragment key="kids">
-              <FormItem>
-                <Input defaultValue="Иванов" />
+              <FormItem htmlFor="secondLastName">
+                <Input id="secondLastName" defaultValue="Иванов" />
               </FormItem>
-              <FormItem status="error">
-                <Input defaultValue="Иван" />
+              <FormItem htmlFor="firstNameError" status="error">
+                <Input id="firstNameError" defaultValue="Иван" />
               </FormItem>
-              <FormItem>
-                <Input defaultValue="Иванович" />
+              <FormItem htmlFor="secondMiddleName">
+                <Input id="secondMiddleName" defaultValue="Иванович" />
               </FormItem>
             </React.Fragment>,
             <React.Fragment key="kids">
@@ -185,8 +185,8 @@ export const FormLayoutGroupPlayground = (props: ComponentPlaygroundProps) => {
               </FormItem>
             </React.Fragment>,
             <AdaptivityProvider hasPointer={false} key="kids">
-              <FormItem>
-                <Input defaultValue="Текст" />
+              <FormItem htmlFor="text">
+                <Input id="text" defaultValue="Текст" />
               </FormItem>
               <FormItem>
                 <DatePicker />
@@ -199,11 +199,11 @@ export const FormLayoutGroupPlayground = (props: ComponentPlaygroundProps) => {
           removable: ['indent'],
           children: [
             <React.Fragment key="">
-              <FormItem top="Сверху очень длинная надпись аж распирает">
-                <Input />
+              <FormItem htmlFor="tooLongTop" top="Сверху очень длинная надпись аж распирает">
+                <Input id="tooLongTop" />
               </FormItem>
-              <FormItem top="И у меня тоже не короче твоей">
-                <Input />
+              <FormItem htmlFor="theSameLongTop" top="И у меня тоже не короче твоей">
+                <Input id="theSameLongTop" />
               </FormItem>
             </React.Fragment>,
           ],
