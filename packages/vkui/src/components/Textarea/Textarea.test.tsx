@@ -2,12 +2,20 @@ import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { baselineComponent } from '../../testing/utils';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { Textarea } from './Textarea';
 
 const getInput = () => screen.getByRole('textbox');
 
 describe('Textarea', () => {
-  baselineComponent(Textarea);
+  baselineComponent((props) => (
+    <>
+      <VisuallyHidden Component="label" id="textarea">
+        Textarea
+      </VisuallyHidden>
+      <Textarea aria-labelledby="textarea" {...props} />
+    </>
+  ));
 
   describe('works uncontrolled', () => {
     it('uses defaultValue', () => {

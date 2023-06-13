@@ -12,7 +12,7 @@ const IconButtonTest = (props: IconButtonProps) => (
 const button = () => screen.getByTestId('button');
 
 describe('IconButton', () => {
-  baselineComponent(IconButton);
+  baselineComponent((props) => <IconButton {...props} aria-label="IconButton" />);
 
   it('Component: default IconButton is a button', () => {
     render(<IconButtonTest />);

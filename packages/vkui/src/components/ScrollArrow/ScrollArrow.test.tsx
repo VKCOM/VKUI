@@ -6,7 +6,9 @@ import { ScrollArrow } from './ScrollArrow';
 import styles from './ScrollArrow.module.css';
 
 describe(ScrollArrow, () => {
-  baselineComponent(ScrollArrow);
+  baselineComponent((props) => (
+    <ScrollArrow direction="left" aria-label="ScrollArrow" {...props} />
+  ));
 
   it('should have HTML style attribute for offsetY prop', () => {
     const offsetY = 10;

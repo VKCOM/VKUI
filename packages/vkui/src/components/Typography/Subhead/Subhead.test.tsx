@@ -3,5 +3,5 @@ import { baselineComponent } from '../../../testing/utils';
 import { Subhead } from './Subhead';
 
 describe('Subhead', () => {
-  baselineComponent((p) => <Subhead {...p}>Subhead</Subhead>);
+  baselineComponent((props) => <Subhead {...props}>Subhead</Subhead>);
 });

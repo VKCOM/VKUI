@@ -4,7 +4,7 @@ import { baselineComponent } from '../../testing/utils';
 import { WriteBarIcon } from './WriteBarIcon';
 
 describe('WriteBarIcon', () => {
-  baselineComponent(WriteBarIcon);
+  baselineComponent((props) => <WriteBarIcon aria-label="WriteBarIcon" {...props} />);
 
   it('shows counter when count={0} is provided', () => {
     const count = 0;

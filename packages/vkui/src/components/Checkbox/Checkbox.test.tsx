@@ -5,7 +5,8 @@ import { baselineComponent } from '../../testing/utils';
 import { Checkbox } from './Checkbox';
 
 describe('Checkbox', () => {
-  baselineComponent(Checkbox);
+  baselineComponent((props) => <Checkbox {...props}>Checkbox</Checkbox>);
+
   it('handles change', () => {
     const CheckboxController = () => {
       const [checked, setChecked] = useState(false);

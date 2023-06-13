@@ -1,6 +1,11 @@
+import * as React from 'react';
 import { baselineComponent } from '../../../testing/utils';
-import { CellCheckbox } from './CellCheckbox';
+import { Cell } from '../Cell';
 
 describe('CellCheckbox', () => {
-  baselineComponent(CellCheckbox);
+  baselineComponent((props) => (
+    <Cell mode="selectable" {...props}>
+      CellCheckbox
+    </Cell>
+  ));
 });

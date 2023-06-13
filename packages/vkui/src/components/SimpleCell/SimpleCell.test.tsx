@@ -6,7 +6,7 @@ import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { SimpleCell } from './SimpleCell';
 
 describe('SimpleCell', () => {
-  baselineComponent(SimpleCell);
+  baselineComponent((props) => <SimpleCell {...props}>SimpleCell</SimpleCell>);
 
   it('[typography] indicator is a span regardless of sizeY', () => {
     const { rerender } = render(
