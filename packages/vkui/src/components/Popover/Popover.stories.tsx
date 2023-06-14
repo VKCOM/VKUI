@@ -61,11 +61,11 @@ export const Example: Story = {
           onShownChange={setShown}
           content={
             <FormLayout>
-              <FormItem top="Имя">
-                <Input />
+              <FormItem htmlFor="name" top="Имя">
+                <Input id="name" />
               </FormItem>
-              <FormItem top="Фамилия">
-                <Input />
+              <FormItem htmlFor="lastname" top="Фамилия">
+                <Input id="lastname" />
               </FormItem>
               <FormItem top="Соглашение">
                 <Checkbox name="agreement">Согласен</Checkbox>
