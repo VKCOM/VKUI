@@ -9,6 +9,8 @@ export interface DivProps
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Div
+ *
+ * test
  */
 export const Div = ({ children, getRootRef, className, ...restProps }: DivProps) => {
   return (
