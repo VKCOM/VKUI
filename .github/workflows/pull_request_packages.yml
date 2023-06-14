@@ -186,11 +186,24 @@ jobs:
     needs: changed_files
     runs-on: ubuntu-latest
     name: Deploy docs (styleguide)
+    permissions:
+      deployments: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
+      - uses: chrnorm/deployment-action@v2
+        name: Create GitHub deployment
+        id: deployment
+        with:
+          token: '${{ github.token }}'
+          environment-url: https://vkui-screenshot.hb.bizmrg.com/pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}/styleguide/index.html
+          environment: pull/${{ github.event.pull_request.number }}/styleguide
+          transient-environment: true
+          production-environment: false
+          auto-inactive: true
 
       - name: Setup NodeJS
         uses: actions/setup-node@v3
@@ -216,16 +229,47 @@ jobs:
           commandUploadSrc: styleguide/dist/
           commandUploadDist: pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}/styleguide
 
+      - name: Update deployment status (success)
+        if: success()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: '${{ github.token }}'
+          environment-url: ${{ steps.deployment.outputs.environment_url }}
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+          state: 'success'
+
+      - name: Update deployment status (failure)
+        if: failure()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: '${{ github.token }}'
+          environment-url: ${{ steps.deployment.outputs.environment_url }}
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+          state: 'failure'
+
   storybook:
     if: ${{ needs.changed_files.outputs.docs_styleguide == 'true' }}
     needs: changed_files
     runs-on: ubuntu-latest
     name: Deploy docs (storybook)
+    permissions:
+      deployments: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
+      - uses: chrnorm/deployment-action@v2
+        name: Create GitHub deployment
+        id: deployment
+        with:
+          token: '${{ github.token }}'
+          environment-url: https://vkui-screenshot.hb.bizmrg.com/pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}/storybook/index.html
+          environment: pull/${{ github.event.pull_request.number }}/storybook
+          transient-environment: true
+          production-environment: false
+          auto-inactive: true
 
       - name: Setup NodeJS
         uses: actions/setup-node@v3
@@ -250,6 +294,24 @@ jobs:
           command: upload
           commandUploadSrc: packages/vkui/storybook-static
           commandUploadDist: pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}/storybook
+
+      - name: Update deployment status (success)
+        if: success()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: '${{ github.token }}'
+          environment-url: ${{ steps.deployment.outputs.environment_url }}
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+          state: 'success'
+
+      - name: Update deployment status (failure)
+        if: failure()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: '${{ github.token }}'
+          environment-url: ${{ steps.deployment.outputs.environment_url }}
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+          state: 'failure'
 
   docs_comment:
     if: ${{ github.actor != 'dependabot[bot]' }}
