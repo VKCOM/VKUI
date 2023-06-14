@@ -9,7 +9,7 @@ const button = () => screen.getByTestId('custom-btn');
 describe('Button', () => {
   baselineComponent((props) => <Button {...props}>Button</Button>);
 
-  it('[unit][a11y] Component: Button is handled as a native button', () => {
+  it('Component: Button is handled as a native button', () => {
     render(<ButtonTest>Native Button</ButtonTest>);
     expect(button().tagName.toLowerCase()).toMatch('button');
   });
