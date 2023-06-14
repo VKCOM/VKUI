@@ -86,7 +86,7 @@ export interface BannerProps extends React.HTMLAttributes<HTMLDivElement>, HasRo
    */
   actions?: React.ReactNode;
   /**
-   * Добавляет отступы к компоненту
+   * Удаляет отступы у компонента
    */
   noPadding?: boolean;
 }
