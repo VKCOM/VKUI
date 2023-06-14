@@ -201,6 +201,8 @@ describe('Tappable', () => {
           </ConfigProvider>
         </AdaptivityProvider>,
       );
+
+      // TODO: Warning: Encountered two children with the same key
       userEvent.click(screen.getByTestId('x'));
       expect(waveCount()).toBe(1);
       userEvent.click(screen.getByTestId('x'));

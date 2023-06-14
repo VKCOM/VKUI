@@ -37,6 +37,7 @@ describe('Button', () => {
         0
       </ButtonTest>,
     );
+    // TODO: как будто не хватает expect и что мы хотим видеть тут? Сейчас мы просто элементы по айди получаем и все
     screen.getByTestId('before');
     screen.getByTestId('children');
     screen.getByTestId('after');
