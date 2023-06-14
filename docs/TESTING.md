@@ -197,7 +197,7 @@ cp packages/vkui/.env.development.local packages/vkui/.env
    yarn test:e2e:ci --debug
    ```
 
-3. Запуститься Playwright DevTools и указанный браузер.
+3. Запустится Playwright DevTools и указанный браузер.
    > Подробнее см. https://playwright.dev/docs/debug#live-debugging
 
 #### Troubleshooting
