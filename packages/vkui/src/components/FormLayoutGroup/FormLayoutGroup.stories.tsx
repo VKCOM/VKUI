@@ -19,8 +19,8 @@ type Story = StoryObj<FormLayoutGroupProps>;
 export const Playground: Story = {
   render: (args) => (
     <FormLayoutGroup {...args}>
-      <FormItem top="Имя ящика">
-        <Input />
+      <FormItem htmlFor="name" top="Имя ящика">
+        <Input id="name" />
       </FormItem>
       <FormItem>
         <Select
