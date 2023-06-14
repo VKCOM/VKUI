@@ -55,6 +55,12 @@ export const BannerPlayground = (props: ComponentPlaygroundProps) => {
           subheader: ['Разблокировано 9 из 36'],
           background: [<div key="img-bg" style={{ backgroundColor: '#222222' }} />],
         },
+        {
+          header: ['Header'],
+          subheader: ['Subheader'],
+          text: ['Text'],
+          actions: [<Button key="btn">Button</Button>],
+        },
       ]}
     >
       {(props: BannerProps) => (
