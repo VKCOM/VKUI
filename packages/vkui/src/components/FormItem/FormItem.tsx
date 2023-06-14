@@ -47,6 +47,7 @@ export const FormItem = ({
   removePlaceholder = 'Удалить',
   getRootRef,
   className,
+  htmlFor,
   ...restProps
 }: FormItemProps) => {
   const rootEl = useExternRef(getRootRef);
@@ -54,7 +55,15 @@ export const FormItem = ({
 
   const wrappedChildren = (
     <React.Fragment>
-      {hasReactNode(top) && <Subhead className={styles['FormItem__top']}>{top}</Subhead>}
+      {hasReactNode(top) && (
+        <Subhead
+          className={styles['FormItem__top']}
+          Component={htmlFor ? 'label' : 'h5'}
+          htmlFor={htmlFor}
+        >
+          {top}
+        </Subhead>
+      )}
       {children}
       {hasReactNode(bottom) && <Footnote className={styles['FormItem__bottom']}>{bottom}</Footnote>}
     </React.Fragment>

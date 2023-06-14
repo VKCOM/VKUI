@@ -183,8 +183,8 @@ const SettingsPanelContent = ({ name, onChangeName }) => {
       <PanelHeader>Настройки</PanelHeader>
       <Group>
         <Placeholder>Пример с блокированием свайпбека пока не будет выполнено условие</Placeholder>
-        <FormItem top="Имя">
-          <Input value={name} onChange={handleNameChange} />
+        <FormItem htmlFor="name" top="Имя">
+          <Input id="name" value={name} onChange={handleNameChange} />
         </FormItem>
       </Group>
     </React.Fragment>

@@ -29,8 +29,9 @@ const Example = () => {
       <Panel id="panel">
         <PanelHeader>ChipsInput</PanelHeader>
         <Group>
-          <FormItem top="Цвет">
+          <FormItem htmlFor="color" top="Цвет">
             <ChipsInput
+              id="color"
               value={colors}
               after={
                 <IconButton hoverMode="opacity" aria-label="Очистить поле" onClick={onClick}>
@@ -39,11 +40,12 @@ const Example = () => {
               }
             />
           </FormItem>
-          <FormItem top="Список">
-            <ChipsInput placeholder="Введите название и нажмите Enter" />
+          <FormItem htmlFor="list" top="Список">
+            <ChipsInput id="list" placeholder="Введите название и нажмите Enter" />
           </FormItem>
-          <FormItem top="Любимые группы">
+          <FormItem htmlFor="favoriteGroups" top="Любимые группы">
             <ChipsInput
+              id="favoriteGroups"
               readOnly
               value={[
                 {
