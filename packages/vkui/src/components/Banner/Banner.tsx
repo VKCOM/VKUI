@@ -43,18 +43,15 @@ export interface BannerProps extends React.HTMLAttributes<HTMLDivElement>, HasRo
    */
   before?: React.ReactNode;
   /**
-   * Заголовок. <br />
-   * При использовании этого свойства рекомендуется не указывать `text`.
+   * Заголовок.
    */
   header?: React.ReactNode;
   /**
-   * Подзаголовок. <br />
-   * При использовании этого свойства рекомендуется не указывать `text`.
+   * Подзаголовок.
    */
   subheader?: React.ReactNode;
   /**
-   * Текст баннера. <br />
-   * Это свойство следует использовать без указания `header` и `subheader`.
+   * Текст баннера.
    */
   text?: React.ReactNode;
   /**
