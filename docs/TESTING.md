@@ -1,26 +1,12 @@
 ## Быстрый старт
 
-- `yarn test` — запускает все Unit тесты;
-- `yarn test:a11y` — запускает тесты на доступность компонентов;
+- `yarn test` — запускает все unit-тесты;
 - `yarn test:e2e` — запускает в Docker-контейнере скриншотные тесты;
 - `yarn test:e2e-update` — запускает в Docker-контейнере обновление скриншотных тестов.
 
 ## Виды тестов
 
-### Unit тесты
-
-Используем:
-
-- [jest](https://jestjs.io/ru/)
-- [react-testing-library](https://testing-library.com/docs/react-testing-library/example-intro)
-- [jest-dom](https://github.com/testing-library/jest-dom#table-of-contents)
-
-Описываем в файлах:
-
-- Если это обычная функция, то `moduleName.test.ts`, (например, [`packages/vkui/src/lib/adaptivity/functions.test.ts`](../packages/vkui/src/lib/adaptivity/functions.test.ts))
-- Если это React-компонент, то `ComponentName.test.ts` (например, [`Checkbox.test.tsx`](../packages/vkui/src/components/Checkbox/Checkbox.test.tsx))
-
-### A11y тесты
+### Unit-тесты
 
 Используем:
 
@@ -29,21 +15,10 @@
 - [jest-dom](https://github.com/testing-library/jest-dom#table-of-contents)
 - [jest-axe](https://github.com/nickcolley/jest-axe)
 
-Описываем в файлах `ComponentName.a11y.test.tsx` ([например, `Button.a11y.test.tsx` ](../packages/vkui/src/components/Button/Button.a11y.test.tsx))
+Описываем в файлах:
 
-#### `a11yBasicTest`
-
-Функция `a11yBasicTest` из [`/testing/a11y.tsx`](../packages/vkui/src/testing/a11y.tsx) помогает базово протестировать компонент на доступность для скринридеров. Такие тесты — не панацея, они не гарантируют, что компонент будет на 100% доступен, но они способны поймать самые распространенные ошибки и показать, как именно должен использоваться компонент.
-
-```tsx
-describe('Button', () => {
-  a11yBasicTest((props) => (
-    <Button mode="primary" {...props}>
-      Кнопка
-    </Button>
-  ));
-});
-```
+- Если это обычная функция, то `moduleName.test.ts`, (например, [`packages/vkui/src/lib/adaptivity/functions.test.ts`](../packages/vkui/src/lib/adaptivity/functions.test.ts))
+- Если это React-компонент, то `ComponentName.test.ts` (например, [`Checkbox.test.tsx`](../packages/vkui/src/components/Checkbox/Checkbox.test.tsx))
 
 ### Скриншотные тесты
 

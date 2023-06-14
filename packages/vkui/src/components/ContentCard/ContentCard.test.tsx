@@ -16,7 +16,7 @@ const card = () => screen.getByTestId('card');
 const img = () => card().querySelector('img');
 
 describe('ContentCard', () => {
-  baselineComponent((props) => <ContentCard src="/image.png" {...props} />);
+  baselineComponent((props) => <ContentCard src="/image.png" {...props} text="ContentCard" />);
 
   it('[img] renders img if src is passed', () => {
     render(<ContentCardTest src="/image.png" />);

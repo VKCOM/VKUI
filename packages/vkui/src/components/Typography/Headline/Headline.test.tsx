@@ -3,5 +3,5 @@ import { baselineComponent } from '../../../testing/utils';
 import { Headline } from './Headline';
 
 describe('Headline', () => {
-  baselineComponent((p) => <Headline {...p}>Headline</Headline>);
+  baselineComponent((props) => <Headline {...props}>Headline</Headline>);
 });

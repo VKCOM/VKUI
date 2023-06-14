@@ -11,7 +11,11 @@ const LinkTest = (props: LinkProps) => (
 const link = () => screen.getByTestId('link');
 
 describe('Link', () => {
-  baselineComponent(Link);
+  baselineComponent((props) => (
+    <Link href="https://vk.com" {...props}>
+      Link
+    </Link>
+  ));
 
   it('Component: default Link is a button', () => {
     render(<LinkTest />);

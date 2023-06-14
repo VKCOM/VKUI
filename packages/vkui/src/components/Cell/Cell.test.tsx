@@ -10,7 +10,7 @@ const label = 'Перенести ячейку';
 const dragger = () => screen.getByLabelText(label);
 
 describe('Cell', () => {
-  baselineComponent(Cell);
+  baselineComponent((props) => <Cell {...props}>Cell</Cell>);
 
   describe('Controls dragging', () => {
     it('on mouse up/down', () => {
