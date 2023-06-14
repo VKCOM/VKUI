@@ -74,3 +74,5 @@ export type Exact<A, B> = A extends B ? B : never;
  * Для возможности указывать css custom properties
  */
 export type CSSCustomProperties<T extends string | undefined = string> = Record<`--${string}`, T>;
+
+export type Elevation = '1' | '2' | '3' | '4';

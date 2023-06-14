@@ -4,7 +4,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
-import { HasAlign } from '../../types';
+import { Elevation, HasAlign } from '../../types';
 import { Spinner } from '../Spinner/Spinner';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import '../Spinner/Spinner.module.css';
@@ -23,6 +23,7 @@ export interface VKUIButtonProps extends HasAlign {
   before?: React.ReactNode;
   after?: React.ReactNode;
   loading?: boolean;
+  elevation?: Elevation;
 }
 
 export interface ButtonProps extends Omit<TappableProps, 'size'>, VKUIButtonProps {}
@@ -44,6 +45,7 @@ export const Button = ({
   onClick,
   stopPropagation = true,
   className,
+  elevation,
   ...restProps
 }: ButtonProps) => {
   const hasIcons = Boolean(before || after);
@@ -88,6 +90,13 @@ export const Button = ({
           center: styles['Button--align-center'],
           right: styles['Button--align-right'],
         }[align],
+        elevation &&
+          {
+            '1': styles['Button--elevation-1'],
+            '2': styles['Button--elevation-2'],
+            '3': styles['Button--elevation-3'],
+            '4': styles['Button--elevation-4'],
+          }[elevation],
         sizeY !== SizeType.COMPACT && sizeYClassNames[sizeY],
         platform === Platform.IOS && styles['Button--ios'],
         stretched && styles['Button--stretched'],
