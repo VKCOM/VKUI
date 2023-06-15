@@ -70,8 +70,14 @@
 .PanelHeader__after {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   box-sizing: border-box;
   color: var(--vkui--color_icon_accent_themed);
+}
+
+/* stylelint-disable-next-line @project-tools/stylelint-atomic */
+.PanelHeader__after > *:not(:last-child) {
+  margin-right: 4px;
 }
 
 .PanelHeader--vkapps .PanelHeader__after {

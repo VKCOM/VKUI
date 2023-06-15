@@ -32,6 +32,11 @@ export interface PanelHeaderProps
     HasRef<HTMLDivElement>,
     HasRootRef<HTMLDivElement> {
   before?: React.ReactNode;
+  /**
+   * Добавляет элемент справа.
+   *
+   * При передаче нескольких элементов, расставляет отступы между ними.
+   */
   after?: React.ReactNode;
   separator?: boolean;
   transparent?: boolean;
