@@ -2,6 +2,23 @@
 поля-ячейки (`Radio`, `Checkbox`, etc.), если в дизайне для них не предусмотрены `top` и `bottom`. Такие поля можно
 располагать в форме без оборачивания в `FormItem`.
 
+## Доступность
+
+Для корректной работы скринридеров необходимо вручную передавать некоторые параметры:
+<br />
+
+- При передаче в `FormItem` компонента, отвечающего за пользовательский ввод (например, `<input type="text" />`),
+  рекомендуется передавать свойства `top` и `htmlFor`. В компонент пользовательского ввода должно быть передано свойство
+  `id`, которое соответствует значению `htmlFor` в `FormItem`. <br />
+
+Пример рекомендуемого использования:
+
+```js static
+<FormItem top="Имя" htmlFor="name">
+  <input id="name" type="text" placeholder="Семён" />
+</FormItem>
+```
+
 ```jsx
 const addressItems = [
   { label: 'Почтовый индекс', name: 'zip' },
@@ -36,17 +53,18 @@ const Example = () => {
         <Group>
           <FormLayout>
             <FormItem
+              htmlFor="email"
               top="E-mail"
               status={email ? 'valid' : 'error'}
               bottom={
                 email ? 'Электронная почта введена верно!' : 'Пожалуйста, введите электронную почту'
               }
             >
-              <Input type="email" name="email" value={email} onChange={onChange} />
+              <Input id="email" type="email" name="email" value={email} onChange={onChange} />
             </FormItem>
 
-            <FormItem top="Пароль">
-              <Input type="password" placeholder="Введите пароль" />
+            <FormItem top="Пароль" htmlFor="pass">
+              <Input id="pass" type="password" placeholder="Введите пароль" />
             </FormItem>
 
             <FormItem bottom="Пароль может содержать только латинские буквы и цифры.">
@@ -54,11 +72,11 @@ const Example = () => {
             </FormItem>
 
             <FormLayoutGroup mode="horizontal">
-              <FormItem top="Имя">
-                <Input />
+              <FormItem htmlFor="name" top="Имя">
+                <Input id="name" />
               </FormItem>
-              <FormItem top="Фамилия">
-                <Input />
+              <FormItem htmlFor="lastname" top="Фамилия">
+                <Input id="lastname" />
               </FormItem>
             </FormLayoutGroup>
 
@@ -66,12 +84,13 @@ const Example = () => {
               <CellButton onClick={onShowPatronymic}>Указать отчество</CellButton>
             ) : (
               <FormItem
+                htmlFor="patronymic"
                 removable
                 onRemove={onRemove}
                 top="Отчество"
                 bottom="Если у вас нет отчества — удалите этот пункт."
               >
-                <Input />
+                <Input id="patronymic" />
               </FormItem>
             )}
 
@@ -109,8 +128,8 @@ const Example = () => {
             </FormItem>
 
             {addressItems.map(({ label, name }) => (
-              <FormItem top={label} key={name}>
-                <Input name={name} />
+              <FormItem htmlFor={label} top={label} key={name}>
+                <Input id={label} name={name} />
               </FormItem>
             ))}
             <FormItem
@@ -139,8 +158,8 @@ const Example = () => {
                 ]}
               />
             </FormItem>
-            <FormItem top="О себе">
-              <Textarea />
+            <FormItem htmlFor="about" top="О себе">
+              <Textarea id="about" />
             </FormItem>
             <Checkbox>
               Согласен со всем <Link>этим</Link>

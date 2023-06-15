@@ -4,6 +4,8 @@ import { fireEvent, render } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { PopoutWrapper } from './PopoutWrapper';
 
+// TODO: Warning: An update to PopoutWrapper inside a test was not wrapped in act(...)
+
 describe('PopoutWrapper', () => {
   baselineComponent(PopoutWrapper);
 

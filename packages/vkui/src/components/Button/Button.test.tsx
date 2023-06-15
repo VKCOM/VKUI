@@ -7,7 +7,7 @@ const ButtonTest = (props: ButtonProps) => <Button data-testid="custom-btn" {...
 const button = () => screen.getByTestId('custom-btn');
 
 describe('Button', () => {
-  baselineComponent(Button);
+  baselineComponent((props) => <Button {...props}>Button</Button>);
 
   it('Component: Button is handled as a native button', () => {
     render(<ButtonTest>Native Button</ButtonTest>);
@@ -37,6 +37,7 @@ describe('Button', () => {
         0
       </ButtonTest>,
     );
+    // TODO: как будто не хватает expect и что мы хотим видеть тут? Сейчас мы просто элементы по айди получаем и все
     screen.getByTestId('before');
     screen.getByTestId('children');
     screen.getByTestId('after');

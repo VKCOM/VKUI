@@ -43,18 +43,15 @@ export interface BannerProps extends React.HTMLAttributes<HTMLDivElement>, HasRo
    */
   before?: React.ReactNode;
   /**
-   * Заголовок. <br />
-   * При использовании этого свойства рекомендуется не указывать `text`.
+   * Заголовок.
    */
   header?: React.ReactNode;
   /**
-   * Подзаголовок. <br />
-   * При использовании этого свойства рекомендуется не указывать `text`.
+   * Подзаголовок.
    */
   subheader?: React.ReactNode;
   /**
-   * Текст баннера. <br />
-   * Это свойство следует использовать без указания `header` и `subheader`.
+   * Текст баннера.
    */
   text?: React.ReactNode;
   /**
@@ -85,6 +82,10 @@ export interface BannerProps extends React.HTMLAttributes<HTMLDivElement>, HasRo
    * - `gap="m" mode="vertical" stretched`
    */
   actions?: React.ReactNode;
+  /**
+   * Удаляет отступы у компонента
+   */
+  noPadding?: boolean;
 }
 
 /**
@@ -106,6 +107,7 @@ export const Banner = ({
   dismissLabel = 'Скрыть',
   className,
   getRootRef,
+  noPadding,
   ...restProps
 }: BannerProps) => {
   const platform = usePlatform();
@@ -153,6 +155,7 @@ export const Banner = ({
       {...restProps}
       className={classNames(
         styles['Banner'],
+        !noPadding && styles['Banner--withPadding'],
         platform === Platform.IOS && styles['Banner--ios'],
         mode === 'image' && styles['Banner--mode-image'],
         {

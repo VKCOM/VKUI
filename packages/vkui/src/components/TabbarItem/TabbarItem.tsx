@@ -37,6 +37,7 @@ export const TabbarItem = ({
   Component = href ? 'a' : 'button',
   disabled,
   className,
+  getRootRef,
   ...restProps
 }: TabbarItemProps) => {
   const platform = usePlatform();
@@ -52,6 +53,7 @@ export const TabbarItem = ({
   return (
     <Component
       {...restProps}
+      ref={getRootRef}
       disabled={disabled}
       href={href}
       className={classNames(

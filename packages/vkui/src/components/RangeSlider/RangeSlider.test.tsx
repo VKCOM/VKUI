@@ -17,7 +17,10 @@ const RangeSlider = (props: RangeSliderProps) => {
 const getSlider = () => screen.getByTestId('range');
 
 describe('RangeSlider', () => {
-  baselineComponent(RangeSlider);
+  baselineComponent(RangeSliderBase, {
+    // @deprecated
+    a11y: false,
+  });
 
   describe('works uncontrolled', () => {
     it('uses defaultValue', () => {

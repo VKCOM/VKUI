@@ -1,8 +1,12 @@
 .Banner {
   isolation: isolate;
+  color: var(--vkui--color_text_primary);
+}
+
+/* TODO [>=6]: удалить или прийти к padding*/
+.Banner--withPadding {
   margin: 12px 0;
   padding: 0 var(--vkui--size_base_padding_horizontal--regular);
-  color: var(--vkui--color_text_primary);
 }
 
 .Banner__in {

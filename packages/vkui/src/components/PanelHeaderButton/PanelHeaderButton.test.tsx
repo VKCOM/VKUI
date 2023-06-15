@@ -9,7 +9,7 @@ const PanelHeaderButtonTest = (props: PanelHeaderButtonProps) => (
 const button = () => screen.getByTestId('button');
 
 describe('PanelHeaderButton', () => {
-  baselineComponent(PanelHeaderButton);
+  baselineComponent((props) => <PanelHeaderButton {...props}>PanelHeaderButton</PanelHeaderButton>);
 
   it('Component: default PanelHeaderButton is a button', () => {
     render(<PanelHeaderButtonTest />);

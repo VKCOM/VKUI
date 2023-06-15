@@ -1,11 +1,16 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { Icon28NewsfeedOutline } from '@vkontakte/icons';
 import { baselineComponent } from '../../testing/utils';
 import { TabbarItem } from './TabbarItem';
 
 describe('TabbarItem', () => {
-  baselineComponent(TabbarItem);
+  baselineComponent((props) => (
+    <TabbarItem text="TabbarItem" {...props}>
+      <Icon28NewsfeedOutline />
+    </TabbarItem>
+  ));
 
   it('renders button by default', () => {
     render(<TabbarItem data-testid="test" />);

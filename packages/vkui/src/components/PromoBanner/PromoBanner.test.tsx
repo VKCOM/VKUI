@@ -5,7 +5,10 @@ import { baselineComponent } from '../../testing/utils';
 import { PromoBanner } from './PromoBanner';
 
 describe('PromoBanner', () => {
-  baselineComponent(PromoBanner);
+  baselineComponent(PromoBanner, {
+    // @deprecated
+    a11y: false,
+  });
 
   it('renders by default', () => {
     render(<PromoBanner data-testid="test" bannerData={{}} onClose={noop} />);

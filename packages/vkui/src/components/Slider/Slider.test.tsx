@@ -20,7 +20,7 @@ const Slider = ({
 };
 
 describe('Slider', () => {
-  baselineComponent(Slider);
+  baselineComponent((props) => <Slider getAriaLabel={() => 'Slider'} {...props} />);
 
   describe('uncontrolled', () => {
     it('uses min as fallback', () => {

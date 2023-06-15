@@ -8,7 +8,11 @@ import { DatePicker } from './DatePicker';
 const getDate = (year = 2021, month = 1, day = 1) => ({ year, month, day });
 
 describe('DatePicker', () => {
-  baselineComponent(DatePicker);
+  baselineComponent(DatePicker, {
+    // TODO [a11y]: "Exceeded timeout of 5000 ms for a test.
+    //              Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+    a11y: false,
+  });
 
   describe('custom', () => {
     const forceCustom = (jsx: ReactNode) => (

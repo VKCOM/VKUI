@@ -9,7 +9,7 @@ import {
 import { LocaleProvider } from './LocaleProvider';
 
 describe('LocaleProvider', () => {
-  baselineComponent<any>(LocaleProvider, { forward: false });
+  baselineComponent<any>(LocaleProvider, { forward: false, a11y: false });
 
   describe('override config context', () => {
     let config: ConfigProviderContextInterface | undefined;

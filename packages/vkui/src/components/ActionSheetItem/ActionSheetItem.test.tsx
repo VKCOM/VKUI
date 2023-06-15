@@ -9,7 +9,7 @@ const ActionSheetItemTest = (props: ActionSheetItemProps) => (
 const item = () => screen.getByTestId('item');
 
 describe('ActionSheetItem', () => {
-  baselineComponent(ActionSheetItem);
+  baselineComponent((props) => <ActionSheetItem {...props}>ActionSheetItem</ActionSheetItem>);
 
   it('Component: ActionSheetItem is a custom button by default', () => {
     render(<ActionSheetItemTest>ActionSheetItem</ActionSheetItemTest>);

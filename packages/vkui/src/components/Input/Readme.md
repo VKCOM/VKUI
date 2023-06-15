@@ -39,8 +39,9 @@ const ExampleBase = ({ formItemStatus }) => {
       <Checkbox checked={disabled} onChange={(e) => setDisabled(e.target.checked)}>
         disabled
       </Checkbox>
-      <FormItem top="📝 Пример" status={formItemStatus}>
+      <FormItem htmlFor="example" top="📝 Пример" status={formItemStatus}>
         <Input
+          id="example"
           before={before}
           after={after}
           type="text"
@@ -59,8 +60,13 @@ const ExampleWithIcon = ({ formItemStatus }) => {
 
   return (
     <FormLayout>
-      <FormItem top="📝 Пример с кликабельной иконкой" status={formItemStatus}>
+      <FormItem
+        htmlFor="exampleClickable"
+        top="📝 Пример с кликабельной иконкой"
+        status={formItemStatus}
+      >
         <Input
+          id="exampleClickable"
           getRef={textInput}
           type="text"
           placeholder="Ну ведь брокколи это вкусно и полезно 😢"

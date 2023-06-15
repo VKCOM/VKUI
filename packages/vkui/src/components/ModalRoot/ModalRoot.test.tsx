@@ -30,7 +30,7 @@ describe.each([
     jest.useRealTimers();
     rafSpies.forEach((m) => m.mockRestore());
   });
-  baselineComponent<any>(ModalRoot, { forward: false });
+  baselineComponent<any>(ModalRoot, { forward: false, a11y: false });
   describe('With ModalPage', () =>
     mountTest(() => (
       <ModalRoot activeModal="m">

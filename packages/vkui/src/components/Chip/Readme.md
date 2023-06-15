@@ -25,8 +25,9 @@ const Example = () => {
       <Panel id="panel">
         <PanelHeader>Chip</PanelHeader>
         <Group>
-          <FormItem top="Любимые группы">
+          <FormItem htmlFor="favoriteGroups" top="Любимые группы">
             <ChipsInput
+              id="favoriteGroups"
               value={[
                 {
                   value: '1',
@@ -63,8 +64,8 @@ const Example = () => {
               )}
             />
           </FormItem>
-          <FormItem top="Выберите или добавьте цвета">
-            <ChipsSelect {...colorsChipsProps} />
+          <FormItem htmlFor="colors" top="Выберите или добавьте цвета">
+            <ChipsSelect id="colors" {...colorsChipsProps} />
           </FormItem>
         </Group>
       </Panel>

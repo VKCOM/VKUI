@@ -11,7 +11,7 @@
   <a href="https://npmjs.com/package/@vkontakte/vkui"><img src="https://img.shields.io/npm/v/@vkontakte/vkui/latest.svg?maxAge=3600" alt="open latest version"></a>
 </p>
 <p align="center">
-VKUI — это библиотека адаптивных React-компонентов, <br> для создания веб-приложений и <a href="https://vk.com/dev/vk_apps_docs">VK Mini Apps</a> в экосистеме ВКонтакте.<br>
+VKUI — это библиотека адаптивных React-компонентов, <br> для создания веб-приложений и <a href="https://dev.vk.com/mini-apps/overview">VK Mini Apps</a> в экосистеме ВКонтакте.<br>
 Библиотека основана на <a href="https://www.figma.com/@vk">дизайн-системе ВКонтакте</a> и реализует её интерфейсы для различных платформ.<br>
 Релизы: <a href="https://github.com/VKCOM/VKUI/releases">https://github.com/VKCOM/VKUI/releases</a>.<br>
 Гайд по миграции <a href="https://vkcom.github.io/VKUI/#/Migration">на версию 5</a>.
@@ -104,7 +104,7 @@ ReactDOM.render(
 
 ## Тестирование
 
-Мы работаем над качеством библиотеки и подвозим тесты. `yarn test` запускает юниты, проверяет типы и линтит. Также мы поддерживаем скриншотные тесты (e2e) и тесты доступности (a11y) — смотрите наш [гайд по тестированию](https://github.com/VKCOM/VKUI/blob/master/docs/TESTING.md).
+Мы работаем над качеством библиотеки и подвозим тесты. `yarn test` запускает юниты, типы и линтит. Также мы поддерживаем скриншотные тесты (e2e) и проверяем базовую доступность (a11y) компонентов — смотрите наш [гайд по тестированию](https://github.com/VKCOM/VKUI/blob/master/docs/TESTING.md).
 
 ## Документация
 
