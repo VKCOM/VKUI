@@ -3479,19 +3479,19 @@
     "@typescript-eslint/parser" "^5.50.0"
     eslint-config-google "^0.9.1"
 
-"@vkontakte/icons-sprite@^1.0.1":
+"@vkontakte/icons-sprite@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@vkontakte/icons-sprite/-/icons-sprite-1.1.1.tgz#04c7a6a1268be39f324de070d27b490f157d04dd"
   integrity sha512-mZt34A0wK72+C0Jr0rtypuEFtfJO3qBFt9RQQC5lpBDTVGB+sMKmI8Vi+CYbq1kPO8Uv7GiPQxLv8+Ti7cT24g==
   dependencies:
     "@swc/helpers" "^0.5.0"
 
-"@vkontakte/icons@2.20.0":
-  version "2.20.0"
-  resolved "https://registry.yarnpkg.com/@vkontakte/icons/-/icons-2.20.0.tgz#ad09285e91a92458fc6b1fce68a9063d1e003f20"
-  integrity sha512-l0v/r9502lPzIjRZNUoGJwVcG/P7dOTfNpYp2fRtYaZYwj0jE1Jhgei43z5rT4qw8nc1+UPtb5nSE/MkKiWMWg==
+"@vkontakte/icons@2.41.0":
+  version "2.41.0"
+  resolved "https://registry.yarnpkg.com/@vkontakte/icons/-/icons-2.41.0.tgz#66b25aaa33527466e143c361403b92ee8e5663ac"
+  integrity sha512-lOUZa9/srgk1MCR4nbfcimiLktL1YyKNisc7+vLgoY2+0XBpGqpUt0Nzxb901XI2GhNbb2W59s/+YjAHl8HrUg==
   dependencies:
-    "@vkontakte/icons-sprite" "^1.0.1"
+    "@vkontakte/icons-sprite" "^1.1.1"
 
 "@vkontakte/prettier-config@^0.1.0":
   version "0.1.0"
@@ -13009,6 +13009,11 @@ vfile@^4.0.0:
     is-buffer "^2.0.0"
     unist-util-stringify-position "^2.0.0"
     vfile-message "^2.0.0"
+
+vite-plugin-environment@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/vite-plugin-environment/-/vite-plugin-environment-1.1.3.tgz#d01a04abb2f69730a4866c9c9db51d3dab74645b"
+  integrity sha512-9LBhB0lx+2lXVBEWxFZC+WO7PKEyE/ykJ7EPWCq95NEcCpblxamTbs5Dm3DLBGzwODpJMEnzQywJU8fw6XGGGA==
 
 vite@^4.3.9:
   version "4.3.9"

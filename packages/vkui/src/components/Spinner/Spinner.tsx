@@ -24,6 +24,13 @@ export const Spinner = React.memo(
       large: Icon44Spinner,
     }[size];
 
+    const center = {
+      small: 8,
+      regular: 12,
+      medium: 16,
+      large: 22,
+    }[size];
+
     return (
       <span
         role="status"
@@ -31,7 +38,19 @@ export const Spinner = React.memo(
         {...restProps}
         className={classNames(styles['Spinner'], className)}
       >
-        <SpinnerIcon className={styles['Spinner__self']} />
+        <SpinnerIcon>
+          {process.env.IS_PLAYWRIGHT !== '1' && (
+            <animateTransform
+              attributeName="transform"
+              attributeType="XML"
+              type="rotate"
+              from={`0 ${center} ${center}`}
+              to={`360 ${center} ${center}`}
+              dur="0.7s"
+              repeatCount="indefinite"
+            />
+          )}
+        </SpinnerIcon>
       </span>
     );
   },

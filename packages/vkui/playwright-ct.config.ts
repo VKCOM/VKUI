@@ -9,6 +9,7 @@ import {
   type VKUITestOptions,
 } from '@vkui-e2e/test';
 import dotenv from 'dotenv';
+import environmentPlugin from 'vite-plugin-environment';
 import * as tsconfig from './tsconfig.json';
 
 // см. `.env`
@@ -82,6 +83,8 @@ export default defineConfig<VKUITestOptions>({
       resolve: {
         alias: TS_CONFIG_ALIASES,
       },
+
+      plugins: [environmentPlugin({ IS_PLAYWRIGHT: '1' })],
     },
   },
 
