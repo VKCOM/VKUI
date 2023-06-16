@@ -59,7 +59,6 @@ export const TabbarItem = ({
         platform === Platform.IOS && styles['TabbarItem--ios'],
         platform === Platform.ANDROID && styles['TabbarItem--android'],
         selected && styles['TabbarItem--selected'],
-        !!text && styles['TabbarItem--text'],
         className,
       )}
     >
