@@ -19,21 +19,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Запускаем каждый проект в отдельном шарде.
-        # Существующие проекты см. в packages/vkui/playwright-ct.config.ts.
-        appearance: [light, dark]
-        platform:
-          [
-            'android (chromium)',
-            'ios (webkit)',
-            'vkcom (chromium)',
-            'vkcom (firefox)',
-            'vkcom (webkit)',
-          ]
         shardIndex: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-        # 5 (platform) * 2 (appearance) = 10
         shardTotal: [10]
-    name: 'Run e2e tests for "${{ matrix.platform }} • ${{ matrix.appearance }}" (shard ${{ matrix.shardIndex }}/${{ matrix.shardTotal }})'
+    name: 'Run e2e tests for (shard ${{ matrix.shardIndex }}/${{ matrix.shardTotal }})'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -73,7 +61,7 @@ jobs:
 
       - name: Run e2e tests for @vkontakte/vkui workspace
         # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500
-        run: HOME=/root yarn run test:e2e:ci --project="${{ matrix.platform }} • ${{ matrix.appearance }}" --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+        run: HOME=/root yarn run test:e2e:ci --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
         continue-on-error: true
 
       # TODO Ждём возможность мержа HTML report

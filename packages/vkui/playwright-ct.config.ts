@@ -111,9 +111,6 @@ function generateTestMatch() {
   return ['**/*.e2e.{ts,tsx}'];
 }
 
-/**
- * Note: Дублируется в .github/workflows/reusable_workflow_test_e2e.yml
- */
 function generateProjects(): TestProject {
   /**
    * Иначе перебивает `deviceScaleFactor` из общего конфига.
