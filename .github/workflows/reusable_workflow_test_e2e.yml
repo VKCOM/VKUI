@@ -16,7 +16,24 @@ jobs:
       # см. https://github.com/microsoft/playwright/blob/main/utils/docker/Dockerfile.focal
       image: mcr.microsoft.com/playwright:v1.35.1-focal
       options: --ipc=host
-    name: Run visual (aka e2e) tests
+    strategy:
+      fail-fast: false
+      matrix:
+        # Запускаем каждый проект в отдельном шарде.
+        # Существующие проекты см. в packages/vkui/playwright-ct.config.ts.
+        appearance: [light, dark]
+        platform:
+          [
+            'android (chromium)',
+            'ios (webkit)',
+            'vkcom (chromium)',
+            'vkcom (firefox)',
+            'vkcom (webkit)',
+          ]
+        shardIndex: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        # 5 (platform) * 2 (appearance) = 10
+        shardTotal: [10]
+    name: 'Run e2e tests for "${{ matrix.platform }} • ${{ matrix.appearance }}" (shard ${{ matrix.shardIndex }}/${{ matrix.shardTotal }})'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -56,27 +73,11 @@ jobs:
 
       - name: Run e2e tests for @vkontakte/vkui workspace
         # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500
-        run: HOME=/root yarn run test:e2e:ci
+        run: HOME=/root yarn run test:e2e:ci --project="${{ matrix.platform }} • ${{ matrix.appearance }}" --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
         continue-on-error: true
 
-      # TODO Playwright реализовать покрытие
-      # - name: Upload coverage to Codecov
-      #   uses: codecov/codecov-action@v3
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     flags: e2e-${{ matrix.browser }}-${{ matrix.platform }}-${{ matrix.appearance }}
-      #     files: .nyc_output/coverage.json
-      #     fail_ci_if_error: true
-
-      - name: Upload test artifact
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: e2e-output
-          path: |
-            packages/vkui/__diff_output__/
-            packages/vkui/e2e-results.json
-
+      # TODO Ждём возможность мержа HTML report
+      #  см. https://github.com/microsoft/playwright/issues/10437
       - name: Upload Playwright HTML report
         uses: actions/upload-artifact@v3
         if: always()

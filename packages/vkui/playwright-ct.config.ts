@@ -56,9 +56,11 @@ export default defineConfig<VKUITestOptions>({
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
   retries: 0,
+  /* Limit the number of failures on CI to save resources. */
+  maxFailures: process.env.CI ? 10 : undefined,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI
-    ? 4
+    ? 1
     : typeof process.env.PLAYWRIGHT_WORKERS === 'string'
     ? Number(process.env.PLAYWRIGHT_WORKERS)
     : undefined,
@@ -109,6 +111,9 @@ function generateTestMatch() {
   return ['**/*.e2e.{ts,tsx}'];
 }
 
+/**
+ * Note: Дублируется в .github/workflows/reusable_workflow_test_e2e.yml
+ */
 function generateProjects(): TestProject {
   /**
    * Иначе перебивает `deviceScaleFactor` из общего конфига.
