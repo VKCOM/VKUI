@@ -53,14 +53,11 @@ export const FixedLayout = ({
   const [width, setWidth] = React.useState<string | undefined>(undefined);
   const { window } = useDOM();
   const { colRef } = React.useContext(SplitColContext);
+
   const doResize = () => {
     if (useParentWidth && ref.current) {
       const parentWidth = ref.current.parentElement?.getBoundingClientRect().width;
-      if (parentWidth) {
-        setWidth(`${parentWidth}px`);
-      } else {
-        setWidth(undefined);
-      }
+      setWidth(parentWidth ? `${parentWidth}px` : undefined);
     } else if (colRef?.current) {
       const computedStyle = getComputedStyle(colRef.current);
 

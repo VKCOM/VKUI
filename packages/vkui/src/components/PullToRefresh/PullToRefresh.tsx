@@ -245,7 +245,7 @@ export const PullToRefresh = ({
             style={{
               transform: spinnerTransform,
               WebkitTransform: spinnerTransform,
-              opacity: watching || refreshing || canRefresh ? 1 : 0,
+              opacity: watching || refreshing || canRefresh || true ? 1 : 0,
             }}
             on={refreshing}
             progress={refreshing ? undefined : spinnerProgress}
@@ -259,6 +259,7 @@ export const PullToRefresh = ({
             WebkitTransform: contentTransform,
           }}
         >
+          {watching || refreshing || canRefresh && <div>Refreshing</div>}
           {children}
         </div>
       </Touch>

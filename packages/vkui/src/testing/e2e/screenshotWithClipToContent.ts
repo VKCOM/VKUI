@@ -50,6 +50,6 @@ export async function screenshotWithClipToContent(
   return page.screenshot({
     clip,
     fullPage: true,
-    animations: 'disabled',
+    animations: 'allow',
   });
 }
