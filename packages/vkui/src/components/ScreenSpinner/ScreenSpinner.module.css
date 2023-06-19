@@ -2,17 +2,17 @@
   animation: vkui-screen-spinner-intro 0.3s ease;
 }
 
-.ScreenSpinner--state-cancelable {
+.ScreenSpinner--clickable {
   cursor: pointer;
 }
 
 .ScreenSpinner__spinner {
   opacity: 1;
+  transition: opacity 0.1s ease;
 }
 
-.ScreenSpinner--hideSpinner .ScreenSpinner__spinner {
+.ScreenSpinner__spinner--hidden {
   opacity: 0;
-  transition: opacity 0.1s ease;
 }
 
 .ScreenSpinner__container {
@@ -39,7 +39,7 @@
   animation: vkui-screen-spinner-intro 0.2s ease;
 }
 
-.ScreenSpinner--state-done .ScreenSpinner__icon :global(.vkuiIcon) path {
+.ScreenSpinner__icon--state-done :global(.vkuiIcon) path {
   stroke-dasharray: 50;
   stroke-dashoffset: 50;
   animation: vkui-screen-spinner-iconDone 0.6s 0.3s var(--vkui--animation_easing_platform) forwards;

@@ -40,21 +40,27 @@ export const ScreenSpinner = ({
       hasMask={false}
       className={classNames(
         styles['ScreenSpinner'],
-        hideSpinner && styles['ScreenSpinner--hideSpinner'],
-        state === 'cancelable' && styles['ScreenSpinner--state-cancelable'],
-        state === 'done' && styles['ScreenSpinner--state-done'],
+        state === 'cancelable' && styles['ScreenSpinner--clickable'],
         className,
       )}
       style={style}
     >
       <div className={styles['ScreenSpinner__container']} onClick={onClick}>
         <Spinner
-          className={styles['ScreenSpinner__spinner']}
+          className={classNames(
+            styles['ScreenSpinner__spinner'],
+            hideSpinner && styles['ScreenSpinner__spinner--hidden'],
+          )}
           size={size}
           aria-label={ariaLabel}
           {...restProps}
         />
-        <div className={styles['ScreenSpinner__icon']}>
+        <div
+          className={classNames(
+            styles['ScreenSpinner__icon'],
+            state === 'done' && styles['ScreenSpinner__icon--state-done'],
+          )}
+        >
           <Icon />
         </div>
       </div>
