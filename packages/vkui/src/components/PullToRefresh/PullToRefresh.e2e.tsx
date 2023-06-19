@@ -17,8 +17,8 @@ test('PullToRefresh', async ({ page, mount, expectScreenshotClippedToContent, co
   await page.mouse.move(200, 500);
   await page.mouse.move(200, 800, {steps: 5});
   await page.mouse.move(200, 1000, {steps: 5});
-  await new Promise(() => {})
-  await page.mouse.up();
+  // await new Promise(() => {})
+  // await page.mouse.up();
 
   await expectScreenshotClippedToContent();
 });
