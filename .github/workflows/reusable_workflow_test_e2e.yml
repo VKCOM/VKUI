@@ -59,10 +59,25 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile --ignore-scripts
 
+      - name: Restore cached Playwright build
+        id: cache_playwright_build_restore
+        uses: actions/cache/restore@v3
+        with:
+          path: packages/vkui/playwright/.cache
+          key: playwright-build-cache-${{ github.event.pull_request.number }}-${{ github.run_id }}-${{ github.sha }}
+          restore-keys: playwright-build-cache-${{ github.event.pull_request.number }}-
+
       - name: Run e2e tests for @vkontakte/vkui workspace
         # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500
         run: HOME=/root yarn run test:e2e:ci --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
         continue-on-error: true
+
+      - name: Save Playwright build cache
+        id: playwright-build-cache
+        uses: actions/cache/save@v3
+        with:
+          path: packages/vkui/playwright/.cache
+          key: ${{ steps.cache_playwright_build_restore.outputs.cache-primary-key }}
 
       # TODO Ждём возможность мержа HTML report
       #  см. https://github.com/microsoft/playwright/issues/10437
