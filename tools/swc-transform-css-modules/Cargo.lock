@@ -1403,9 +1403,9 @@ dependencies = [
 
 [[package]]
 name = "swc_ecma_ast"
-version = "0.106.0"
+version = "0.106.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0401b0c21c7f06b8048f3d49c315787ad2a13a35c51101d208229c4f9fa6a6b2"
+checksum = "dd5b138534f6f673afa83b6168d67158ad0fff54b4071287e83cfe87a82cfb04"
 dependencies = [
  "bitflags 2.3.2",
  "bytecheck",
@@ -1623,9 +1623,9 @@ dependencies = [
 
 [[package]]
 name = "swc_plugin_proxy"
-version = "0.35.0"
+version = "0.35.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5220312f0818a66e51e8e3a15f6659da49088460fe1b0c93b6cb8f4fc562ef2b"
+checksum = "014ce79bd38f560580bab951b22ae9af18204e9c5bc57c565844ca388ef2435e"
 dependencies = [
  "better_scoped_tls",
  "rkyv",
