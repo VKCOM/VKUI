@@ -1,6 +1,7 @@
 {
   "private": true,
   "version": "0.0.0",
+  "description": "test pr5306",
   "name": "@vkontakte/vkui-monorepo",
   "dependencies": {
     "@project-docs/styleguide": "1.0.0",
