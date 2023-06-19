@@ -140,13 +140,16 @@ jobs:
         with:
           name: test-output
 
-      - name: Download Playwright Report artifact
+      - name: Download Playwright blob reports from GitHub Actions Artifacts
         # см. [Примечание 1]
         if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
         uses: actions/download-artifact@v3
         with:
-          name: playwright-report
-          path: playwright-report/
+          name: all-blob-reports
+          path: all-blob-reports
+
+      - name: Merge Playwright blob reports into HTML Report
+        run: npx playwright merge-reports --reporter html ./all-blob-reports
 
       - name: Upload Playwright Report
         if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}

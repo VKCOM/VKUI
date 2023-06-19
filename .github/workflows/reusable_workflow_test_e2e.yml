@@ -16,7 +16,12 @@ jobs:
       # см. https://github.com/microsoft/playwright/blob/main/utils/docker/Dockerfile.focal
       image: mcr.microsoft.com/playwright:v1.37.0-focal
       options: --ipc=host
-    name: Run visual (aka e2e) tests
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        shardTotal: [10]
+    name: 'Run e2e tests for (shard ${{ matrix.shardIndex }}/${{ matrix.shardTotal }})'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -54,32 +59,29 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile --ignore-scripts
 
+      - name: Restore cached Playwright build
+        id: cache_playwright_build_restore
+        uses: actions/cache/restore@v3
+        with:
+          path: packages/vkui/playwright/.cache
+          key: playwright-build-cache-${{ github.event.pull_request.number }}-${{ github.run_id }}-${{ github.sha }}
+          restore-keys: playwright-build-cache-${{ github.event.pull_request.number }}-
+
       - name: Run e2e tests for @vkontakte/vkui workspace
         # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500
-        run: HOME=/root yarn run test:e2e:ci
+        run: HOME=/root yarn run test:e2e:ci --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
 
-      # TODO Playwright реализовать покрытие
-      # - name: Upload coverage to Codecov
-      #   uses: codecov/codecov-action@v3
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     flags: e2e-${{ matrix.browser }}-${{ matrix.platform }}-${{ matrix.appearance }}
-      #     files: .nyc_output/coverage.json
-      #     fail_ci_if_error: true
-
-      - name: Upload test artifact
-        uses: actions/upload-artifact@v3
-        if: always()
+      - name: Save Playwright build cache
+        id: playwright-build-cache
+        uses: actions/cache/save@v3
         with:
-          name: e2e-output
-          path: |
-            packages/vkui/__diff_output__/
-            packages/vkui/e2e-results.json
+          path: packages/vkui/playwright/.cache
+          key: ${{ steps.cache_playwright_build_restore.outputs.cache-primary-key }}
 
-      - name: Upload Playwright HTML report
-        uses: actions/upload-artifact@v3
+      - name: Upload Playwright blob report to GitHub Actions Artifacts
         if: always()
+        uses: actions/upload-artifact@v3
         with:
-          name: playwright-report
-          path: packages/vkui/playwright-report/
-          retention-days: 30
+          name: all-blob-reports
+          path: packages/vkui/blob-report
+          retention-days: 1

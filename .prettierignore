@@ -17,3 +17,5 @@ target/
 fixture/
 storybook-static/
 playwright-report/
+blob-report/
+all-blob-reports/
