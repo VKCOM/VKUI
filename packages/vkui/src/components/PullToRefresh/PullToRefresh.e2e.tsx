@@ -6,7 +6,7 @@ import { PullToRefreshPlayground } from './PullToRefresh.e2e-playground';
 test.describe('PullToRefresh', () => {
   // we are interested in VKCOM only as we need to test here mostly
   // whether the spinner is positioned properly
-  test.use({ onlyForPlatforms: [Platform.VKCOM] });
+  test.use({ onlyForPlatforms: [Platform.VKCOM], onlyForAppearances: ['light'] });
 
   test('PullToRefresh: renders spinner properly in default environment', async ({
     page,
@@ -17,7 +17,7 @@ test.describe('PullToRefresh', () => {
     await mount(<PullToRefreshPlayground {...componentPlaygroundProps} />);
     await page.mouse.move(100, 100);
     await page.mouse.down();
-    await page.mouse.move(100, 800, { steps: 8 });
+    await page.mouse.move(100, 380, { steps: 10 });
 
     await expectScreenshotClippedToContent();
   });
@@ -31,7 +31,7 @@ test.describe('PullToRefresh', () => {
     await mount(<PullToRefreshPlayground {...componentPlaygroundProps} paddingLeft="150px" />);
     await page.mouse.move(200, 100);
     await page.mouse.down();
-    await page.mouse.move(200, 800, { steps: 8 });
+    await page.mouse.move(200, 380, { steps: 10 });
 
     await expectScreenshotClippedToContent();
   });
