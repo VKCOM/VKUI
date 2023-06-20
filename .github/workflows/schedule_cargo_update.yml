@@ -1,0 +1,31 @@
+name: 'Schedule / Cargo update'
+on:
+  schedule:
+    # Запускается по ПН в 05:00.
+    # Также за обновлениями следит Dependabot (см. .github/dependabot.yml).
+    - cron: '0 5 * * 1'
+
+jobs:
+  cargo-update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: master
+
+      - name: Run cargo update
+        run: cargo update --verbose
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          title: Cargo update
+          branch: github-actions/build/deps/cargo-update
+          commit-message: 'build(deps): cargo update'
+          body: Automated cargo update
+          labels: dependencies, rust
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
