@@ -58,6 +58,9 @@
   --vkui_internal--z_index_image_base_overlay: 0;
   --vkui_internal--z_index_image_base_border: 1;
   --vkui_internal--z_index_image_base_badge: 2;
+
+  /* z_index HorizontalScroll isolate */
+  --vkui_internal--z_index_horizontal_scroll_arrow: 1;
 }
 
 @media (min-resolution: 2dppx) {
