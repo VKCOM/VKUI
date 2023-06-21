@@ -5,6 +5,7 @@ import styles from './Spinner.module.css';
 
 export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
   size?: 'small' | 'regular' | 'medium' | 'large';
+  disableAnimation?: boolean;
 }
 
 /**
@@ -14,6 +15,7 @@ export const Spinner = React.memo(
   ({
     size = 'regular',
     'aria-label': ariaLabel = 'Загружается...',
+    disableAnimation,
     className,
     ...restProps
   }: SpinnerProps) => {
@@ -39,7 +41,7 @@ export const Spinner = React.memo(
         className={classNames(styles['Spinner'], className)}
       >
         <SpinnerIcon>
-          {process.env.IS_PLAYWRIGHT !== '1' && (
+          {!disableAnimation && (
             <animateTransform
               attributeName="transform"
               attributeType="XML"
