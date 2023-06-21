@@ -109,6 +109,11 @@
   padding-right: 2px;
 }
 
+.SimpleCell__after .SimpleCell__chevronIcon {
+  color: var(--vkui--color_icon_tertiary);
+  padding-left: 12px;
+}
+
 /**
  * iOS
  */
@@ -121,12 +126,6 @@
 
 .SimpleCell--ios > :global(.vkuiIcon--28) {
   padding-left: 4px;
-}
-
-.SimpleCell--ios .SimpleCell__after :global(.vkuiIcon--chevron_24) {
-  color: var(--vkui--color_icon_tertiary);
-  padding-right: 4px;
-  padding-left: 12px;
 }
 
 .SimpleCell--sizeY-regular.SimpleCell--ios

@@ -1,16 +1,19 @@
 import * as React from 'react';
-import { Icon24Chevron } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
+import { warnOnce } from '../../lib/warnOnce';
 import { HasComponent } from '../../types';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
+import { Chevron } from './Chevron/Chevron';
 import styles from './SimpleCell.module.css';
+
+const warn = warnOnce('SimpleCell');
 
 const platformClassNames = {
   ios: classNames(styles['SimpleCell--ios'], 'vkuiInternalSimpleCell--ios'),
@@ -75,7 +78,11 @@ export interface SimpleCellOwnProps extends HasComponent {
   /**
    * В iOS добавляет chevron справа. Передавать `true`, если предполагается переход при клике по ячейке.
    */
-  expandable?: boolean;
+  expandable?: boolean | 'auto' | 'always';
+  /**
+   * Размер chevron
+   */
+  chevronSize?: 'small' | 'medium';
   /**
    * Включает многострочный режим для отображения текста
    */
@@ -102,10 +109,23 @@ export const SimpleCell = ({
   subtitle,
   extraSubtitle,
   className,
+  chevronSize = 'medium',
   ...restProps
 }: SimpleCellProps) => {
   const platform = usePlatform();
-  const hasAfter = hasReactNode(after) || (expandable && platform === Platform.IOS);
+
+  if (process.env.NODE_ENV === 'development' && expandable === true) {
+    // TODO [>=6]: Обновить типизацию для expandable свойства
+    warn(
+      'Значение true свойства expandable устарело и будет удалено в v6. Используйте expandable="auto"',
+    );
+  }
+
+  const hasChevron =
+    expandable === 'always' ||
+    ((expandable === true || expandable === 'auto') && platform === Platform.IOS);
+
+  const hasAfter = hasReactNode(after) || hasChevron;
   const { sizeY = 'none' } = useAdaptivity();
 
   return (
@@ -176,7 +196,9 @@ export const SimpleCell = ({
       {hasAfter && (
         <div className={classNames(styles['SimpleCell__after'], 'vkuiInternalSimpleCell__after')}>
           {after}
-          {expandable && platform === Platform.IOS && <Icon24Chevron />}
+          {hasChevron && (
+            <Chevron size={chevronSize} className={styles['SimpleCell__chevronIcon']} />
+          )}
         </div>
       )}
     </Tappable>

@@ -82,6 +82,15 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
           badgeAfterTitle: [<Icon12Verified key="rightBadge" />],
           multiline: [true, false],
         },
+        {
+          children: ['Title'],
+          expandable: [true, 'auto', 'always'],
+        },
+        {
+          children: ['Title'],
+          expandable: ['always'],
+          chevronSize: ['medium', 'small'],
+        },
       ]}
     >
       {(props: SimpleCellProps) => <SimpleCell {...props} />}
