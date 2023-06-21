@@ -23,6 +23,7 @@ export interface VKUIButtonProps extends HasAlign {
   before?: React.ReactNode;
   after?: React.ReactNode;
   loading?: boolean;
+  disableSpinnerAnimation?: boolean;
 }
 
 export interface ButtonProps extends Omit<TappableProps, 'size'>, VKUIButtonProps {}
@@ -44,6 +45,7 @@ export const Button = ({
   onClick,
   stopPropagation = true,
   className,
+  disableSpinnerAnimation,
   ...restProps
 }: ButtonProps) => {
   const hasIcons = Boolean(before || after);
@@ -97,7 +99,13 @@ export const Button = ({
       )}
       getRootRef={getRootRef}
     >
-      {loading && <Spinner size="small" className={styles.Button__spinner} />}
+      {loading && (
+        <Spinner
+          size="small"
+          className={styles.Button__spinner}
+          disableAnimation={disableSpinnerAnimation}
+        />
+      )}
       <span className={styles.Button__in}>
         {hasReactNode(before) && (
           <span
