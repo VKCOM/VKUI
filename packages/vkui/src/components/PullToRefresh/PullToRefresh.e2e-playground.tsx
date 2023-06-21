@@ -9,7 +9,7 @@ export const PullToRefreshPlayground = (
 ) => {
   const { paddingLeft, ...playgroundProps } = props;
   return (
-    <ComponentPlayground {...playgroundProps} platform={Platform.VKCOM} propSets={[]}>
+    <ComponentPlayground {...playgroundProps} platform={Platform.VKCOM}>
       {({ ...props }: PullToRefreshProps) => (
         <Div style={{ width: '300px', paddingLeft }}>
           <PullToRefresh {...props}>

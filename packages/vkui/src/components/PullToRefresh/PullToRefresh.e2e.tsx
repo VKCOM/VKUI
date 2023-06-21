@@ -8,7 +8,7 @@ test.describe('PullToRefresh', () => {
   // whether the spinner is positioned properly
   test.use({ onlyForPlatforms: [Platform.VKCOM], onlyForAppearances: ['light'] });
 
-  test('PullToRefresh: renders spinner properly in default environment', async ({
+  test('renders spinner properly in default environment', async ({
     page,
     mount,
     expectScreenshotClippedToContent,
@@ -22,7 +22,7 @@ test.describe('PullToRefresh', () => {
     await expectScreenshotClippedToContent();
   });
 
-  test('PullToRefresh: renders spinner properly when parent has padding', async ({
+  test('renders spinner properly when parent has padding', async ({
     page,
     mount,
     expectScreenshotClippedToContent,
