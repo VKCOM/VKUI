@@ -1,8 +1,10 @@
 import React from 'react';
 import { useArgs } from '@storybook/preview-api';
 import { Meta, StoryObj } from '@storybook/react';
+import { withSinglePanel } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Group } from '../Group/Group';
+import { HorizontalScroll } from '../HorizontalScroll/HorizontalScroll';
 import { TabsItem } from '../TabsItem/TabsItem';
 import {
   WithBadge as BadgeTabsItemStory,
@@ -73,5 +75,51 @@ export const Playground: Story = {
         <Component />
       </Group>
     ),
+  ],
+};
+
+export const WithHorizontalScroll: Story = {
+  render: function Render({ selected = 'groups', ...args }) {
+    const [, updateArg] = useArgs();
+
+    return (
+      <Tabs {...args}>
+        <HorizontalScroll arrowSize="m">
+          <TabsItem
+            {...BasicTabsItemStory.args}
+            selected={selected === 'groups'}
+            onClick={() => updateArg({ selected: 'groups' })}
+          />
+          <TabsItem
+            {...BeforeAfterTabsItemStory.args}
+            selected={selected === 'news'}
+            onClick={() => updateArg({ selected: 'news' })}
+          />
+          <TabsItem
+            {...BadgeTabsItemStory.args}
+            selected={selected === 'recommendations'}
+            onClick={() => updateArg({ selected: 'recommendations' })}
+          />
+          <TabsItem
+            {...CounterTabsItemStory.args}
+            selected={selected === 'friends'}
+            onClick={() => updateArg({ selected: 'friends' })}
+          />
+          <TabsItem
+            {...NumberStatusTabsItemStory.args}
+            selected={selected === 'photos'}
+            onClick={() => updateArg({ selected: 'photos' })}
+          />
+        </HorizontalScroll>
+      </Tabs>
+    );
+  },
+  decorators: [
+    (Component) => (
+      <Group style={{ maxWidth: 500 }}>
+        <Component />
+      </Group>
+    ),
+    withSinglePanel,
   ],
 };
