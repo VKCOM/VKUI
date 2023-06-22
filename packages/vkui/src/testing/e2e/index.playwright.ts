@@ -13,6 +13,7 @@
  */
 
 // 1. Расширяем Playwright под свои нужды.
+import AxeBuilder from '@axe-core/playwright';
 import { devices, expect, test as testBase } from '@playwright/experimental-ct-react';
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { screenshotWithClipToContent } from './screenshotWithClipToContent';
@@ -70,6 +71,26 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
       appearance,
       adaptivityProviderProps: adaptivityProviderProps ? adaptivityProviderProps : undefined,
     });
+  },
+
+  expectA11yScanResults: async ({ page }, use, testInfo) => {
+    const axeBuilder = () =>
+      new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
+
+    const result = async () => {
+      const results = await axeBuilder().include('#root').analyze();
+
+      if (results.violations.length) {
+        await testInfo.attach('Accessibility Issues Found', {
+          body: JSON.stringify(results.violations, null, 2),
+          contentType: 'application/json',
+        });
+
+        expect(results.violations).toEqual([]);
+      }
+    };
+
+    await use(result);
   },
 
   /**
