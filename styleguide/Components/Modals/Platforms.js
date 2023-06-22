@@ -32,7 +32,12 @@ export function Platforms({ id }) {
   }, [data]);
 
   return (
-    <ModalPage id={id} header={<ModalPageHeader>Platforms</ModalPageHeader>}>
+    <ModalPage
+      aria-busy={!data}
+      aria-live="polite"
+      id={id}
+      header={<ModalPageHeader>Platforms</ModalPageHeader>}
+    >
       {error && <Div>Произошла ошибка</Div>}
       {!data && <PanelSpinner />}
       {platforms.map((platform) => (

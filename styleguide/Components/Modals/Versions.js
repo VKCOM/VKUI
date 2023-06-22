@@ -6,7 +6,12 @@ export function Versions({ id }) {
   const { data, error } = useFetch('https://vkcom.github.io/VKUI/versions.json');
 
   return (
-    <ModalPage id={id} header={<ModalPageHeader>Версии</ModalPageHeader>}>
+    <ModalPage
+      aria-busy={!data}
+      aria-live="polite"
+      id={id}
+      header={<ModalPageHeader>Версии</ModalPageHeader>}
+    >
       {error && <Div>Произошла ошибка</Div>}
       {!data && <PanelSpinner />}
       {data &&
