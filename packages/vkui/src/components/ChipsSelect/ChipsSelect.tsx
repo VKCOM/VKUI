@@ -243,17 +243,21 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
       }
     }
 
-    if (e.key === 'Enter' && !e.defaultPrevented && opened && focusedOptionIndex != null) {
-      const option = filteredOptions[focusedOptionIndex];
+    if (e.key === 'Enter' && !e.defaultPrevented && opened) {
+      if (focusedOptionIndex != null) {
+        const option = filteredOptions[focusedOptionIndex];
 
-      if (option) {
-        onChangeStart!(e, option);
+        if (option) {
+          onChangeStart!(e, option);
 
-        if (!e.defaultPrevented) {
-          addOption(option);
-          setFocusedOptionIndex(null);
-          clearInput();
-          closeAfterSelect && setOpened(false);
+          if (!e.defaultPrevented) {
+            addOption(option);
+            setFocusedOptionIndex(null);
+            clearInput();
+            closeAfterSelect && setOpened(false);
+            e.preventDefault();
+          }
+        } else if (!creatable) {
           e.preventDefault();
         }
       } else if (!creatable) {
