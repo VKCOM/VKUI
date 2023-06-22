@@ -390,9 +390,9 @@ export function CustomSelect(props: SelectProps) {
     onClose?.();
   }, [onClose, resetKeyboardInput]);
 
-  const selectFocused = React.useCallback(() => {
-    if (focusedOptionIndex !== undefined && isValidIndex(focusedOptionIndex)) {
-      const item = options[focusedOptionIndex];
+  const selectOption = React.useCallback(
+    (index: number) => {
+      const item = options[index];
 
       setNativeSelectValue(item?.value);
       close();
@@ -406,17 +406,17 @@ export function CustomSelect(props: SelectProps) {
         const event = new Event('change', { bubbles: true });
         selectElRef.current?.dispatchEvent(event);
       }
+    },
+    [close, options, selectElRef, isControlledOutside, props.value, nativeSelectValue],
+  );
+
+  const selectFocused = React.useCallback(() => {
+    if (focusedOptionIndex === undefined || !isValidIndex(focusedOptionIndex)) {
+      return;
     }
-  }, [
-    close,
-    focusedOptionIndex,
-    isValidIndex,
-    options,
-    selectElRef,
-    isControlledOutside,
-    props.value,
-    nativeSelectValue,
-  ]);
+
+    selectOption(focusedOptionIndex);
+  }, [focusedOptionIndex, isValidIndex, selectOption]);
 
   const open = React.useCallback(() => {
     setOpened(true);
@@ -619,10 +619,10 @@ export function CustomSelect(props: SelectProps) {
       const option = options[index];
 
       if (option && !option.disabled) {
-        selectFocused();
+        selectOption(index);
       }
     },
-    [options, selectFocused],
+    [options, selectOption],
   );
 
   const handleOptionHover = React.useCallback(
