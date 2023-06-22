@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import type { HasRef, HasRootRef } from '../../types';
+import type { HasRef, HasRootRef, LiteralUnion } from '../../types';
 import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge/ImageBaseBadge';
 import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay/ImageBaseOverlay';
 import { ImageBaseContext } from './context';
@@ -35,7 +35,7 @@ export interface ImageBaseProps
    *
    * > ⚠️ Использование кастомного размера – это пограничный кейс.
    */
-  size?: ImageBaseSize | number;
+  size?: LiteralUnion<ImageBaseSize, number>;
   /**
    * Включает или отключает обводку.
    */

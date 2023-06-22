@@ -74,3 +74,16 @@ export type Exact<A, B> = A extends B ? B : never;
  * Для возможности указывать css custom properties
  */
 export type CSSCustomProperties<T extends string | undefined = string> = Record<`--${string}`, T>;
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface Nothing {}
+
+/**
+ * Автозаполнение для типов
+ *
+ * @example
+ * LiteralUnion<'foo' | 'bar', string>
+ *
+ * @see {@link https://github.com/microsoft/TypeScript/issues/29729}
+ */
+export type LiteralUnion<Union, Type> = Union | (Type & Nothing);

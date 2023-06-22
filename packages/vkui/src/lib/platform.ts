@@ -1,4 +1,5 @@
 import { querystring } from '@vkontakte/vkjs';
+import { LiteralUnion } from '../types';
 import { BrowserInfo, computeBrowserInfo } from './browser';
 import { canUseDOM } from './dom';
 
@@ -37,7 +38,7 @@ function getPlatformByQueryString(queryString: string): Platform | undefined {
 
 const platformByQueryString = canUseDOM ? getPlatformByQueryString(location.search) : undefined;
 
-export type PlatformType = Platform.ANDROID | Platform.IOS | Platform.VKCOM | string;
+export type PlatformType = LiteralUnion<'android' | 'ios' | 'vkcom', string>;
 
 export function platform(browserInfo?: BrowserInfo): PlatformType {
   if (platformByQueryString) {
