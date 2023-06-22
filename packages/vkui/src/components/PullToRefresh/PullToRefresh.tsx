@@ -240,7 +240,7 @@ export const PullToRefresh = ({
           className,
         )}
       >
-        <FixedLayout className={styles['PullToRefresh__controls']}>
+        <FixedLayout className={styles['PullToRefresh__controls']} useParentWidth>
           <PullToRefreshSpinner
             style={{
               transform: spinnerTransform,
