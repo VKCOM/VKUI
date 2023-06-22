@@ -4,11 +4,11 @@
 }
 
 .SubnavigationBar__scrollIn {
+  margin: unset;
+  padding: unset;
   padding-top: calc(var(--vkui--size_subnavigation_bar_padding_vertical--regular) + 8px);
   padding-bottom: calc(var(--vkui--size_subnavigation_bar_padding_vertical--regular) + 8px);
   display: flex;
-  margin: unset;
-  padding: unset;
 }
 
 .SubnavigationBar__scrollIn::before,
