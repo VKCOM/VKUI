@@ -16,7 +16,13 @@ import { getOffsetRect } from '../../lib/offset';
 import { Platform } from '../../lib/platform';
 import { coordX, coordY } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { AnchorHTMLAttributesOnly, HasChildren, HasComponent, HasRootRef } from '../../types';
+import {
+  AnchorHTMLAttributesOnly,
+  HasChildren,
+  HasComponent,
+  HasRootRef,
+  LiteralUnion,
+} from '../../types';
 import { FocusVisible, FocusVisibleMode } from '../FocusVisible/FocusVisible';
 import { Touch, TouchEvent, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
@@ -70,15 +76,15 @@ export interface TappableProps
   /**
    * Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active
    */
-  activeMode?: StateMode | string;
+  activeMode?: LiteralUnion<StateMode, string>;
   /**
    * Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover
    */
-  hoverMode?: StateMode | string;
+  hoverMode?: LiteralUnion<StateMode, string>;
   /**
    * Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс во время focus-visible
    */
-  focusVisibleMode?: FocusVisibleMode | string;
+  focusVisibleMode?: LiteralUnion<FocusVisibleMode, string>;
   onEnter?(outputEvent: MouseEvent): void;
   onLeave?(outputEvent: MouseEvent): void;
 }
@@ -104,7 +110,7 @@ const TappableContext = React.createContext<TappableContextInterface>({
   onHoverChange: noop,
 });
 
-function isPresetStateMode(stateMode: StateMode | string): stateMode is StateMode {
+function isPresetStateMode(stateMode: LiteralUnion<StateMode, string>): stateMode is StateMode {
   switch (stateMode) {
     case 'opacity':
     case 'background':
