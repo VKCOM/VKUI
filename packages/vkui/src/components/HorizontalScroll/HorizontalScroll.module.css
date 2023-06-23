@@ -26,6 +26,7 @@
 
 .HorizontalScroll__in-wrapper {
   transition: transform 0.2s;
+  display: flex;
 }
 
 .HorizontalScroll__arrow {
