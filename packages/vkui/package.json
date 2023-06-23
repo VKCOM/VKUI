@@ -1,6 +1,6 @@
 {
   "private": false,
-  "version": "5.5.2",
+  "version": "5.5.3",
   "name": "@vkontakte/vkui",
   "description": "VKUI library",
   "main": "dist/cjs/index.js",
