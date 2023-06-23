@@ -1,8 +1,13 @@
-Компонент-обертка над [Spinner](#!/Spinner).
+Компонент-обертка над [`<Spinner />`](https://vkcom.github.io/VKUI/#/Spinner). Используется в случаях, когда требуется заблокировать интерфейс до завершения асинхронного процесса.
 
 Передаётся в качестве значения свойства `popout` компонента [`SplitLayout`](https://vkcom.github.io/VKUI/#/SplitLayout).
 
-Рекомендуется использовать в случаях, когда требуется заблокировать интерфейс до завершения асинхронного процесса.
+<br/>
+## Цифровая доступность (a11y)
+
+Чтобы уведомить о выполнении асинхронного процесса пользователей скринридеров, проставьте на [`SplitLayout`](https://vkcom.github.io/VKUI/#/SplitLayout), в котором выполняется процесс, метки [`aria-busy`](https://doka.guide/a11y/aria-busy/) и [`aria-live`](https://doka.guide/a11y/aria-live/).
+
+Чтобы заменить текст, который прочитает скринридер, передайте его в `children`. Он будет скрыт визуально, но останется доступным для ассистивных технологий.
 
 ```jsx { "props": { "layout": false, "adaptivity": true } }
 const [popout, setPopout] = useState(null);
@@ -18,7 +23,7 @@ const setDoneScreenSpinner = () => {
   setPopout(<ScreenSpinner state="loading" />);
 
   setTimeout(() => {
-    setPopout(<ScreenSpinner state="done" aria-label="Успешно" />);
+    setPopout(<ScreenSpinner state="done">Успешно</ScreenSpinner>);
 
     setTimeout(clearPopout, 1000);
   }, 2000);
@@ -28,7 +33,7 @@ const setErrorScreenSpinner = () => {
   setPopout(<ScreenSpinner state="loading" />);
 
   setTimeout(() => {
-    setPopout(<ScreenSpinner state="error" aria-label="Произошла ошибка" />);
+    setPopout(<ScreenSpinner state="error">Произошла ошибка</ScreenSpinner>);
 
     setTimeout(clearPopout, 1000);
   }, 2000);
@@ -38,7 +43,7 @@ const setCancelableScreenSpinner = () => {
   setPopout(<ScreenSpinner state="cancelable" onClick={clearPopout} />);
 };
 
-<SplitLayout popout={popout}>
+<SplitLayout popout={popout} aria-live="polite" aria-busy={!!popout}>
   <SplitCol>
     <View activePanel="spinner">
       <Panel id="spinner">
