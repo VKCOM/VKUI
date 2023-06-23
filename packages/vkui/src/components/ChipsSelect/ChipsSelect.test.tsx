@@ -16,6 +16,7 @@ const colors: ChipOption[] = [
   { value: 'blue', label: 'Синий' },
   { value: 'navarin', label: 'Наваринского пламени с дымом' },
 ];
+const testValue = { value: 'testvalue', label: 'testvalue' };
 const toggleDropdown = async () => {
   userEvent.click(screen.getByRole('textbox'));
   await waitForFloatingPosition();
@@ -138,5 +139,33 @@ describe('ChipsSelect', () => {
 
     userEvent.click(redChipRemove);
     expect(getChipsSelect()).not.toHaveFocus();
+  });
+
+  describe('addOnBlur prop', () => {
+    it('add value on blur event if creatable=true', async () => {
+      let value;
+      render(
+        <ChipsSelect
+          options={colors}
+          value={[]}
+          onChange={(e) => (value = e)}
+          creatable
+          addOnBlur
+        />,
+      );
+      userEvent.type(screen.getByRole('textbox'), testValue.label);
+      userEvent.click(document.body);
+      expect(value).toEqual([testValue]);
+    });
+
+    it('does not add value on blur event if creatable=false', async () => {
+      const onChange = jest.fn();
+      render(
+        <ChipsSelect options={colors} value={[]} onChange={onChange} creatable={false} addOnBlur />,
+      );
+      userEvent.type(screen.getByRole('textbox'), testValue.label);
+      userEvent.click(document.body);
+      expect(onChange).not.toHaveBeenCalled();
+    });
   });
 });

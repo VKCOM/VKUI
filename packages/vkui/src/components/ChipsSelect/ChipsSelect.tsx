@@ -66,6 +66,10 @@ export interface ChipsSelectProps<Option extends ChipOption>
    * Иконка раскрывающегося списка
    */
   icon?: React.ReactNode;
+  /**
+   * Добавляет значение в список на событие `onBlur` (использовать вместе с `creatable`)
+   */
+  addOnBlur?: boolean;
 }
 
 type FocusActionType = 'next' | 'prev';
@@ -97,6 +101,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
   const {
     style,
     onFocus,
+    onBlur,
     onKeyDown,
     className,
     fetching,
@@ -157,6 +162,15 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
     setOpened(true);
     setFocusedOptionIndex(null);
     onFocus!(e);
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    onBlur!(e);
+
+    // Не добавляем значение, если его нужно выбрать строго из списка
+    if (!e.defaultPrevented && !creatable) {
+      e.preventDefault();
+    }
   };
 
   const handleClickOutside = (e: MouseEvent) => {
@@ -336,7 +350,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
             className={styles['ChipsSelect__dropdown']}
             activeMode=""
             hoverMode=""
-            // TODO: add label customization
+            // TODO [>=6]: add label customization
             aria-label={opened ? 'Скрыть' : 'Развернуть'}
             onClick={toggleOpened}
           >
@@ -355,6 +369,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
           getOptionValue={getOptionValue}
           renderChip={renderChipWrapper}
           onFocus={handleFocus}
+          onBlur={handleBlur}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           getRef={getRef}
