@@ -9,27 +9,12 @@ import { resolveAppearance, VKBridgeConfigData } from '../helpers/appearance';
 import { useDOM } from '../lib/dom';
 import { matchMediaListAddListener, matchMediaListRemoveListener } from '../lib/matchMedia';
 
-let initialAppearance: AppearanceType | null = null;
-
-vkBridge
-  .send('VKWebAppGetConfig')
-  .then((data) => {
-    initialAppearance = resolveAppearance(data);
-  })
-  .catch(console.error);
-
 function autoDetectAppearanceByBridge(
   setAppearance: (value: AppearanceType) => void,
   onDetectAppearanceByBridge: () => void,
 ) {
-  function bridgeListener(e: VKBridgeEvent<AnyReceiveMethodName>) {
-    const { type, data } = e.detail;
-
-    if (type !== 'VKWebAppUpdateConfig') {
-      return;
-    }
-
-    initialAppearance = resolveAppearance(data as VKBridgeConfigData);
+  function updateAppearance(data: VKBridgeConfigData) {
+    const initialAppearance = resolveAppearance(data);
 
     if (initialAppearance) {
       onDetectAppearanceByBridge();
@@ -37,7 +22,18 @@ function autoDetectAppearanceByBridge(
     }
   }
 
+  function bridgeListener(e: VKBridgeEvent<AnyReceiveMethodName>) {
+    const { type, data } = e.detail;
+
+    if (type !== 'VKWebAppUpdateConfig') {
+      return;
+    }
+
+    updateAppearance(data as VKBridgeConfigData);
+  }
+
   vkBridge.subscribe(bridgeListener);
+  vkBridge.send('VKWebAppGetConfig').then(updateAppearance).catch(console.error);
 
   return () => vkBridge.unsubscribe(bridgeListener);
 }
@@ -77,11 +73,6 @@ export const useAutoDetectAppearance = (
   const [appearance, setAppearance] = React.useState<AppearanceType>(() => {
     if (appearanceProp) {
       return appearanceProp;
-    }
-
-    if (initialAppearance) {
-      onceDetectAppearanceByBridge.current();
-      return initialAppearance;
     }
 
     const mediaQuery =
