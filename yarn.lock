@@ -3476,10 +3476,10 @@
   resolved "https://registry.yarnpkg.com/@vkontakte/vk-bridge/-/vk-bridge-2.7.2.tgz#284380d3d5f54774741e6a2e67cce9fbe62e2072"
   integrity sha512-m/cgWEbd4Xi49xyS0tn14h3b8fLTG3Vw/wNo72k5sw5ILf8SFzB1CAyruc7kKBE6Xc8ibyIydVx1YkHwW1O0PA==
 
-"@vkontakte/vkjs@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@vkontakte/vkjs/-/vkjs-1.0.0.tgz#46055f74ca5bbe50ea7a7d17101d92372f5c08d5"
-  integrity sha512-eWLGhk0nxi8/YP1MznjaFFgX1ioFqxbp8hb1SeS3Ohab+dXaUZlt7xlK50FXuiHsbT9xOOtj5aLGXf+cyp/ROw==
+"@vkontakte/vkjs@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@vkontakte/vkjs/-/vkjs-1.1.0.tgz#7bb12ae0f2e9b4a4a7482709bd71c1a223aff4ed"
+  integrity sha512-cBhngz1x4lwctQJMgXrmCsgbmA7DsLlRASlCKJtDf65BU3pqybW+GIyCSDOYKqGQOk4c8n5MgA3uTCHUWufSdw==
   dependencies:
     "@swc/helpers" "^0.5.0"
 
