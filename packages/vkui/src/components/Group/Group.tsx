@@ -13,7 +13,7 @@ import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './Group.module.css';
 
 const sizeXClassNames = {
-  none: styles['Group--sizeX-none'],
+  none: classNames(styles['Group--sizeX-none'], 'vkuiInternalGroup--sizeX-none'),
   [SizeType.COMPACT]: styles['Group--sizeX-compact'],
 };
 

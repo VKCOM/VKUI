@@ -107,7 +107,7 @@ export const Header = ({
           <span
             className={classNames(
               styles['Header__content-in'],
-              multiline && styles['Header__content-in--multiline'],
+              multiline && styles['Header__content--multiline'],
             )}
           >
             {children}
@@ -120,7 +120,13 @@ export const Header = ({
         </HeaderContent>
 
         {hasReactNode(subtitle) && (
-          <Subhead className={styles['Header__subtitle']} Component="span">
+          <Subhead
+            className={classNames(
+              styles['Header__subtitle'],
+              multiline && styles['Header__content--multiline'],
+            )}
+            Component="span"
+          >
             {subtitle}
           </Subhead>
         )}

@@ -26,13 +26,9 @@
   overflow: hidden;
 }
 
-.Header__content-in--multiline {
+.Header__content--multiline {
   white-space: initial;
   word-break: break-word;
-}
-
-.Header--multiline {
-  white-space: normal;
 }
 
 .Header__subtitle {
@@ -143,8 +139,9 @@
 }
 
 @media (--sizeX-compact) {
-  :global(.vkuiInternalGroup--mode-none):not(:first-of-type) > .Header:first-child,
-  :global(.vkuiInternalGroup--mode-none):not(:first-of-type)
+  :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none):not(:first-of-type)
+    > .Header:first-child,
+  :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none):not(:first-of-type)
     > :global(.vkuiInternalTappable):first-child
     > .Header {
     margin-top: -16px;
@@ -159,8 +156,9 @@
 }
 
 @media (--sizeX-regular) {
-  :global(.vkuiInternalGroup--mode-none) > .Header:not(.Header--mode-tertiary):first-child,
-  :global(.vkuiInternalGroup--mode-none)
+  :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none)
+    > .Header:not(.Header--mode-tertiary):first-child,
+  :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none)
     > :global(.vkuiInternalTappable):first-child
     > .Header:not(.Header--mode-tertiary) {
     margin-top: -4px;
