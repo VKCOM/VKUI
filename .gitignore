@@ -12,13 +12,13 @@ node_modules/
 npm-debug.log
 stats.json
 test-results.json
-a11y-results.json
 lint-results.json
 e2e-results.json
 yarn-error.log
 playwright-report/
 blob-report/
 all-blob-reports/
+axe-report/
 
 # Caches
 .cache
@@ -32,7 +32,6 @@ coverage
 
 # nyc test coverage
 .nyc_output
-.nyc_a11y_output
 
 # Snapshot directory of Cypress Image Diff
 __diff_output__
