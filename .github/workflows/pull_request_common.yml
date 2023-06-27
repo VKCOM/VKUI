@@ -39,3 +39,61 @@ jobs:
 
       - name: Run Prettier
         run: yarn run lint:prettier
+
+  dependabot_check_need_complete_update:
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+    name: '[Dependabot] Check if "@playwright/test" or "storybook" update needs to be completed'
+    outputs:
+      value: ${{ steps.result.outputs.value }}
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1
+        with:
+          github-token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+
+      - name: Check is '@playwrgiht/test' or 'storybook'
+        id: result
+        run: echo "value=${{ contains(steps.metadata.outputs.dependency-names, '@playwright/test') || contains(steps.metadata.outputs.dependency-names, 'storybook') }}" >> "$GITHUB_OUTPUT"
+
+  dependabot_complete_update:
+    needs: dependabot_check_need_complete_update
+    if: ${{ fromJSON(needs.dependabot_check_need_complete_update.outputs.value) }}
+    runs-on: ubuntu-latest
+    name: '[Dependabot] Complete "@playwright/test" or "storybook" update'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1
+        with:
+          github-token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+
+      - name: Complete Playwright update
+        if: ${{ contains(steps.metadata.outputs.dependency-names, '@playwright/test') }}
+        uses: ./.github/actions/complete_playwright_update
+        with:
+          branch: refs/pull/${{ github.event.pull_request.number }}/merge
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          prev_version: ${{ steps.metadata.outputs.previous-version }}
+          next_version: ${{ steps.metadata.outputs.new-version }}
+
+      - name: Complete Storybook update
+        if: ${{ contains(steps.metadata.outputs.dependency-names, 'storybook') }}
+        uses: ./.github/actions/complete_storybook_update
+        with:
+          branch: refs/pull/${{ github.event.pull_request.number }}/merge
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          prev_version: ${{ steps.metadata.outputs.previous-version }}
+          next_version: ${{ steps.metadata.outputs.new-version }}

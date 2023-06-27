@@ -1,0 +1,52 @@
+name: Publish Workflow / Complete Playwright update
+description: It updates Playwright scope dependencies and version of container image
+
+inputs:
+  branch:
+    description: target branch for git push
+    required: true
+  token:
+    description: token for write access to repository
+    required: true
+  prev_version:
+    description: previous version of Playwright
+    required: true
+  next_version:
+    description: next version of Playwright
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Update '@playwright/experimental-ct-react17' dependency
+      run: |
+        yarn add -W @playwright/experimental-ct-react17@${{ inputs.next_version }} --dev
+      shell: bash
+
+    - name: Commit changes
+      run: |
+        git add package.json yarn.lock
+        git diff-index --quiet HEAD || git commit -m 'bump(playwright-deps): @playwright/experimental-ct-react17 from ${{ inputs.prev_version }} to ${{ inputs.next_version }}'
+      shell: bash
+
+    - name: Update container image version in config files
+      # Пример,
+      # ```sh
+      # perl -pi -e "s/v1.35.1/v1.35.2/" packages/vkui/docker-compose.yml
+      # ```
+      run: |
+        perl -pi -e "s/v${{ inputs.prev_version }}/v${{ inputs.next_version }}/" packages/vkui/docker-compose.yml
+        perl -pi -e "s/v${{ inputs.prev_version }}/v${{ inputs.next_version }}/" .github/workflows/reusable_workflow_test_e2e.yml
+      shell: bash
+
+    - name: Commit changes
+      run: |
+        git add packages/vkui/docker-compose.yml .github/workflows/reusable_workflow_test_e2e.yml
+        git diff-index --quiet HEAD || git commit -m 'bump(playwright-deps): Docker container image from ${{ inputs.prev_version }} to ${{ inputs.next_version }}'
+      shell: bash
+
+    - name: Pushing changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ inputs.token }}
+        branch: ${{ inputs.branch }}
