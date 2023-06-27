@@ -15,7 +15,6 @@ import styles from './Group.module.css';
 const sizeXClassNames = {
   none: styles['Group--sizeX-none'],
   [SizeType.COMPACT]: styles['Group--sizeX-compact'],
-  [SizeType.REGULAR]: styles['Group--sizeX-regular'],
 };
 
 export interface GroupProps
@@ -70,6 +69,10 @@ export const Group = ({
     mode = isInsideModal ? 'plain' : 'none';
   }
 
+  if (mode === 'none' && sizeX !== 'none') {
+    mode = sizeX === SizeType.REGULAR ? 'card' : 'plain';
+  }
+
   const isTabPanel = restProps.role === 'tabpanel';
 
   if (
@@ -99,7 +102,7 @@ export const Group = ({
           'vkuiInternalGroup',
           styles['Group'],
           platform === Platform.IOS && styles['Group--ios'],
-          sizeXClassNames[sizeX],
+          sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
           mode &&
             {
               none: classNames(styles['Group--mode-none'], 'vkuiInternalGroup--mode-none'),
