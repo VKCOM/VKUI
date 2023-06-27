@@ -9,18 +9,17 @@
   display: none;
 }
 
-.Group--sizeX-compact + .Group__separator--spacing + .Group__separator--separator,
-.Group--mode-plain + .Group__separator--spacing + .Group__separator--separator {
+.Group--mode-plain + * + .Group__separator--separator {
   display: block;
 }
 
 @media (--sizeX-compact) {
-  .Group--sizeX-none + .Group__separator--spacing + .Group__separator--separator {
+  .Group--sizeX-none.Group--mode-none + * + .Group__separator--separator {
     display: block;
   }
 }
 
-.Group--sizeX-regular.Group--mode-none + .Group__separator--spacing {
+.Group--mode-card + .Group__separator--spacing {
   display: block;
 }
 
@@ -30,12 +29,25 @@
   }
 }
 
-.Group--sizeX-regular.Group--mode-none.Group--padding-s,
+.Group:last-of-type ~ .Group__separator {
+  display: none;
+}
+
+.Group:last-of-type ~ .Group__separator--force,
+.Group--mode-card:last-of-type + .Group__separator--spacing {
+  display: block;
+}
+
+@media (--sizeX-regular) {
+  .Group--sizeX-none.Group--mode-none:last-of-type + .Group__separator--spacing {
+    display: block;
+  }
+}
+
 .Group--mode-card.Group--padding-s {
   padding: 4px;
 }
 
-.Group--sizeX-regular.Group--mode-none.Group--padding-m,
 .Group--mode-card.Group--padding-m {
   padding: 8px;
 }
@@ -62,7 +74,6 @@
   }
 }
 
-.Group--sizeX-regular.Group--mode-none,
 .Group--mode-card {
   background: var(--vkui--color_background_content);
   border-radius: var(--vkui--size_border_radius_paper--regular);
@@ -77,7 +88,6 @@
   }
 }
 
-.Group--sizeX-regular.Group--mode-none::after,
 .Group--mode-card::after {
   content: '';
   left: 0;
@@ -104,8 +114,6 @@
   }
 }
 
-.Group--sizeX-compact.Group--mode-none + .Group__separator,
-.Group--sizeX-compact.Group--mode-none + .Group__separator + .Group__separator,
 .Group--mode-plain + .Group__separator,
 .Group--mode-plain + .Group__separator + .Group__separator {
   padding-top: 8px;
@@ -117,23 +125,6 @@
   .Group--sizeX-none.Group--mode-none + .Group__separator + .Group__separator {
     padding-top: 8px;
     padding-bottom: 8px;
-  }
-}
-
-.Group:last-of-type ~ .Group__separator {
-  display: none;
-}
-
-.Group:last-of-type ~ .Group__separator--force,
-.Group--sizeX-regular.Group--mode-none:last-of-type + .Group__separator--spacing,
-.Group--sizeX-regular.Group--mode-card:last-of-type + .Group__separator--spacing {
-  display: block;
-}
-
-@media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-card:last-of-type + .Group__separator--spacing,
-  .Group--sizeX-none.Group--mode-none:last-of-type + .Group__separator--spacing {
-    display: block;
   }
 }
 
