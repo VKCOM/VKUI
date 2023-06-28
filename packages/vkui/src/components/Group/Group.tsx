@@ -101,6 +101,7 @@ export const Group = ({
         className={classNames(
           'vkuiInternalGroup',
           styles['Group'],
+          isInsideModal && styles['Group--inside-modal'],
           platform === Platform.IOS && styles['Group--ios'],
           sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
           mode &&
