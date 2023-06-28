@@ -53,10 +53,12 @@
 }
 
 @media (--sizeX-regular) {
+  .Group--sizeX-none.Group--inside-modal.Group--padding-s,
   .Group--sizeX-none.Group--mode-none.Group--padding-s {
     padding: 4px;
   }
 
+  .Group--sizeX-none.Group--inside-modal.Group--padding-m,
   .Group--sizeX-none.Group--mode-none.Group--padding-m {
     padding: 8px;
   }
