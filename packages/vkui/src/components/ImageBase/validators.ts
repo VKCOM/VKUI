@@ -12,16 +12,16 @@ import { imageBaseSizes } from './types';
  * Icon28User -> 28
  * Icon12Circle1 -> 12
  * Icon12Circle2 -> 12
+ * Icon20TextHeading1Outline -> 20
  */
 function parseIconSizeByDisplayName(displayName: unknown): number | null {
   if (typeof displayName !== 'string') {
     return null;
   }
-  const rawSize = displayName
-    .replace(/\d+$/g, '') // удаляем цифры в конце
-    .replace(/\D/g, ''); // удаляем всё, что не является числом
-  const size = Number(rawSize);
-  return size > 0 ? size : null;
+
+  const match = /Icon(\d+)/.exec(displayName);
+
+  return match ? Number(match[1]) : null;
 }
 
 function parseIconSizeByWidthProp(width: unknown): number | null {
