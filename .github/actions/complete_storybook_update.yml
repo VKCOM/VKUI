@@ -1,0 +1,49 @@
+name: Publish Workflow / Complete Storybook update
+description: It updates Storybook scope dependencies
+
+inputs:
+  branch:
+    description: target branch for git push
+    required: true
+  token:
+    description: token for write access to repository
+    required: true
+  prev_version:
+    description: previous version of Storybook
+    required: true
+  next_version:
+    description: next version of Storybook
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Update '@storybook/' scope dependencies
+      run: |
+        yarn workspace @project-tools/storybook-addon-cartesian add @storybook/addon-a11y@${{ inputs.next_version }}
+        yarn workspace @project-tools/storybook-addon-cartesian add @storybook/addon-actions@${{ inputs.next_version }}
+        yarn workspace @project-tools/storybook-addon-cartesian add @storybook/addon-essentials@${{ inputs.next_version }}
+        yarn workspace @project-tools/storybook-addon-cartesian add @storybook/addon-interactions@${{ inputs.next_version }}
+        yarn workspace @project-tools/storybook-addon-cartesian add @storybook/addon-links@${{ inputs.next_version }}
+        yarn workspace @project-tools/storybook-addon-cartesian add @storybook/api@${{ inputs.next_version }}
+        yarn workspace @project-tools/storybook-addon-cartesian add @storybook/blocks@${{ inputs.next_version }}
+        yarn workspace @project-tools/storybook-addon-cartesian add @storybook/components@${{ inputs.next_version }}
+        yarn workspace @project-tools/storybook-addon-cartesian add @storybook/manager-api@${{ inputs.next_version }}
+        yarn workspace @project-tools/storybook-addon-cartesian add @storybook/preview-api@${{ inputs.next_version }}
+        yarn workspace @project-tools/storybook-addon-cartesian add @storybook/react@${{ inputs.next_version }}
+        yarn workspace @project-tools/storybook-addon-cartesian add @storybook/react-webpack5@${{ inputs.next_version }}
+        yarn workspace @project-tools/storybook-addon-cartesian add @storybook/theming@${{ inputs.next_version }}
+        yarn workspace @project-tools/storybook-addon-cartesian add @storybook/types@${{ inputs.next_version }}
+      shell: bash
+
+    - name: Commit changes
+      run: |
+        git add tools/storybook-addon-cartesian/package.json yarn.lock
+        git diff-index --quiet HEAD || git commit -m 'bump(storybook-deps): @storybook/* from ${{ inputs.prev_version }} to ${{ inputs.next_version }}'
+      shell: bash
+
+    - name: Pushing changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ inputs.token }}
+        branch: ${{ inputs.branch }}
