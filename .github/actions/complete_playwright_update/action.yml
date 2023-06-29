@@ -39,6 +39,12 @@ runs:
         perl -pi -e "s/v${{ inputs.prev_version }}/v${{ inputs.next_version }}/" .github/workflows/reusable_workflow_test_e2e.yml
       shell: bash
 
+    - name: Set Git credentials
+      run: |
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Action"
+      shell: bash
+
     - name: Commit changes
       run: |
         git add packages/vkui/docker-compose.yml .github/workflows/reusable_workflow_test_e2e.yml
