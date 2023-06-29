@@ -66,8 +66,8 @@
     "@floating-ui/react-dom": "^2.0.1",
     "@swc/helpers": "^0.5.1",
     "@vkontakte/vkjs": "^1.1.0",
-    "dayjs": "1.11.8",
-    "mitt": "3.0.0"
+    "dayjs": "^1.11.8",
+    "mitt": "^3.0.0"
   },
   "size-limit": [
     {
