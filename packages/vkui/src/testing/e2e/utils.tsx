@@ -99,7 +99,7 @@ export function prettyProps(props: any) {
     .join(' ');
 }
 
-type GenerateCustomScreenshotNameOptions = {
+type GenerateCustomNameOptions = {
   platform: string;
   browserName: string;
   appearance: string;
@@ -108,7 +108,7 @@ type GenerateCustomScreenshotNameOptions = {
 
 export function generateCustomScreenshotName(
   testTitlePath: string[],
-  options: GenerateCustomScreenshotNameOptions,
+  options: GenerateCustomNameOptions,
   expectCallCount: number,
 ) {
   const { platform, browserName, appearance } = options;
