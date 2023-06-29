@@ -36,6 +36,12 @@ runs:
         yarn workspace @project-tools/storybook-addon-cartesian add @storybook/types@${{ inputs.next_version }}
       shell: bash
 
+    - name: Set Git credentials
+      run: |
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Action"
+      shell: bash
+
     - name: Commit changes
       run: |
         git add tools/storybook-addon-cartesian/package.json yarn.lock
