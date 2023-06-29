@@ -4,6 +4,7 @@
     "jsx": "react",
     "target": "esnext",
     "lib": ["es6", "dom", "dom.Iterable"],
+    "declarationMap": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true,
