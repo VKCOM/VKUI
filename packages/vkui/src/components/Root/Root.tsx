@@ -16,6 +16,7 @@ import styles from './Root.module.css';
 export interface RootProps extends React.HTMLAttributes<HTMLDivElement>, NavIdProps {
   activeView: string;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
+  children: React.ReactElement | Iterable<React.ReactElement>;
 }
 
 export interface RootState {

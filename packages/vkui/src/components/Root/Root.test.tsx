@@ -7,9 +7,15 @@ import { View } from '../View/View';
 import { Root } from './Root';
 
 const views = [
-  <View id="v1" key="1" activePanel="" />,
-  <View id="v2" key="2" activePanel="" />,
-  <View id="v3" key="3" activePanel="" />,
+  <View id="v1" key="1" activePanel="">
+    <></>
+  </View>,
+  <View id="v2" key="2" activePanel="">
+    <></>
+  </View>,
+  <View id="v3" key="3" activePanel="">
+    <></>
+  </View>,
 ];
 
 describe('Root', () => {
@@ -19,7 +25,9 @@ describe('Root', () => {
   describe('With View', () =>
     mountTest(() => (
       <Root activeView="view">
-        <View id="view" activePanel="" />
+        <View id="view" activePanel="">
+          <></>
+        </View>
       </Root>
     )));
 
@@ -149,8 +157,12 @@ describe('Root', () => {
     it('on activeView change', () => {
       renderFocused();
       const views = [
-        <View id="focus" activePanel="" key="1" />,
-        <View id="other" activePanel="" key="2" />,
+        <View id="focus" activePanel="" key="1">
+          <></>
+        </View>,
+        <View id="other" activePanel="" key="2">
+          <></>
+        </View>,
       ];
       render(<Root activeView="focus">{views}</Root>).rerender(
         <Root activeView="other">{views}</Root>,

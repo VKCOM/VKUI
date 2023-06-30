@@ -53,6 +53,8 @@ export interface ViewProps extends React.HTMLAttributes<HTMLElement>, NavIdProps
    */
   onSwipeBackCancel?(): void;
   history?: string[];
+
+  children: React.ReactElement | Iterable<React.ReactElement>;
 }
 
 export interface ViewState {
