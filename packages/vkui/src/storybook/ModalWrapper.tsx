@@ -9,7 +9,7 @@ export const ModalWrapper = ({
   children,
   modalId,
 }: {
-  children: React.ReactNode;
+  children: React.ReactElement | Iterable<React.ReactElement>;
   modalId: string;
 }) => {
   const [activeModal, setActiveModal] = React.useState<string | null>(modalId);
