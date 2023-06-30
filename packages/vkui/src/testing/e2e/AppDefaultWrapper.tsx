@@ -7,8 +7,8 @@ export const AppDefaultWrapper = ({ children, ...restProps }: AppWrapperProps) =
   <AppRoot mode="embedded" {...restProps}>
     <div
       style={{
-        border: '8px solid var(--vkui--color_image_border_alpha)',
-        background: 'var(--vkui--color_background)',
+        border: '8px solid var(--playwright-border)',
+        background: 'var(--playwright-background)',
       }}
     >
       {children}

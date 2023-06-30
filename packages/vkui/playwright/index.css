@@ -1,3 +1,5 @@
+/* stylelint-disable color-named */
+/* stylelint-disable declaration-property-value-disallowed-list */
 /* stylelint-disable @project-tools/stylelint-atomic, declaration-no-important */
 
 /* Глобальные стили, которые не импортируются самими компонентами. */
@@ -69,7 +71,7 @@
 
 /* см. packages/vkui/testing/e2e/constants.ts */
 .vkuiTestContent {
-  color: var(--vkui--color_text_primary);
+  color: var(--playwright-text);
 }
 
 /* stylelint-disable-next-line selector-max-id */
@@ -85,4 +87,16 @@
   transition: none !important;
   caret-color: transparent !important;
   -webkit-font-smoothing: antialiased !important;
+}
+
+[class$='--light'] {
+  --playwright-background: white;
+  --playwright-border: gray;
+  --playwright-text: black;
+}
+
+[class$='--dark'] {
+  --playwright-background: black;
+  --playwright-border: gray;
+  --playwright-text: white;
 }
