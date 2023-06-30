@@ -29,6 +29,8 @@ const DEFAULT_REPORTERS: ReporterDescription[] = [['json', { outputFile: 'e2e-re
  */
 // eslint-disable-next-line import/no-default-export
 export default defineConfig<VKUITestOptions>({
+  globalTeardown: path.join(__dirname, './src/testing/e2e/global-teardown'),
+
   testDir: path.join(__dirname, './src'),
   testMatch: generateTestMatch(),
 
