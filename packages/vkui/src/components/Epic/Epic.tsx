@@ -8,6 +8,7 @@ import styles from './Epic.module.css';
 export interface EpicProps extends React.HTMLAttributes<HTMLDivElement> {
   tabbar?: React.ReactNode;
   activeStory: string;
+  children: React.ReactElement | Iterable<React.ReactElement>;
 }
 
 const warn = warnOnce('Epic');

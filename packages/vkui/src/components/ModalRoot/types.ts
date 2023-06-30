@@ -1,5 +1,5 @@
 import { DOMContextInterface } from '../../lib/dom';
-import { HasChildren, HasPlatform } from '../../types';
+import { HasPlatform } from '../../types';
 import { ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 
 export enum ModalType {
@@ -70,8 +70,9 @@ export interface ModalsStateEntry extends ModalElements {
   hiddenRange?: TranslateRange;
 }
 
-export interface ModalRootProps extends HasChildren {
+export interface ModalRootProps {
   activeModal?: string | null;
+  children: React.ReactElement | Iterable<React.ReactElement>;
 
   /**
    * Будет вызвано при начале открытия активной модалки с её id
