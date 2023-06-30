@@ -8,26 +8,21 @@ updates:
       interval: 'weekly'
     allow:
       - dependency-type: 'direct'
-    ignore:
-      #
-      # Игнорируем адоны во избежание отдельного PR от бота по каждому из них.
-      # Вместо этого, ориентируемся на обновление Storybook и запускаем
-      # `./.github/actions/complete_storybook_update`.
-      #
-      # TODO
-      #   1. заменить на групповое обновление, когда его завезут в Dependabot
-      #      https://github.com/dependabot/dependabot-core/issues/1190
-      #   2. удалить экшен ./.github/actions/complete_storybook_update и его запуск
-      - dependency-name: '@storybook/*'
-      #
-      # Обновляем в экшене `./.github/actions/complete_playwright_update` (на момент создания
-      # комментария это строки с 21 по 30).
-      #
-      # TODO
-      #   1. заменить на групповое обновление, когда его завезут в Dependabot
-      #      https://github.com/dependabot/dependabot-core/issues/1190
-      #   2. удалить соответствующие строки из `./.github/actions/complete_playwright_update`
-      - dependency-name: '@playwright/experimental-ct-react17'
+    groups:
+      storybook:
+        patterns:
+          - 'storybook'
+          - '@storybook/*'
+      playwright:
+        patterns:
+          - '@playwright/*'
+      typescript-eslint:
+        patterns:
+          - '@typescript-eslint/*'
+      jest:
+        patterns:
+          - 'jest'
+          - 'jest-environment-*'
     versioning-strategy: increase
     open-pull-requests-limit: 20
     reviewers:
