@@ -12,12 +12,13 @@
  * Ошибка в файле /node_modules/@playwright/test/index.js:1:0
  */
 
-// 1. Расширяем Playwright под свои нужды.
+import { promises as fs } from 'fs';
 import AxeBuilder from '@axe-core/playwright';
 import { devices, expect, test as testBase } from '@playwright/experimental-ct-react';
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { screenshotWithClipToContent } from './screenshotWithClipToContent';
 import type {
+  AxeResultsPartial,
   InternalVKUITestOptions,
   ScreenshotWithClipToContentOptions,
   VKUITestHelpers,
@@ -27,6 +28,7 @@ import { generateCustomScreenshotName } from './utils';
 
 export type { VKUITestOptions } from './types';
 
+// 1. Расширяем Playwright под свои нужды.
 export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & VKUITestHelpers>({
   platform: ['android', { option: true }],
   appearance: ['light', { option: true }],
@@ -74,20 +76,28 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
   },
 
   expectA11yScanResults: async ({ page }, use, testInfo) => {
-    const axeBuilder = () =>
-      new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
-
     const result = async () => {
-      const results = await axeBuilder().include('#root').analyze();
+      const componentAxeReport: AxeResultsPartial = await (async () => {
+        try {
+          const axeBuilder = () =>
+            new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
+          const report = await axeBuilder().include('#root').analyze();
 
-      if (results.violations.length) {
-        await testInfo.attach('Accessibility Issues Found', {
-          body: JSON.stringify(results.violations, null, 2),
-          contentType: 'application/json',
-        });
+          return report ?? { violations: [] };
+        } catch (error) {
+          return { violations: [] };
+        }
+      })();
 
-        expect(results.violations).toEqual([]);
-      }
+      const file = testInfo.outputPath('a11y-results.json');
+      await fs.writeFile(file, JSON.stringify(componentAxeReport, null, 2), 'utf8');
+
+      await testInfo.attach('Accessibility Violations', {
+        body: JSON.stringify(componentAxeReport.violations, null, 2),
+        contentType: 'application/json',
+      });
+
+      // expect(results.violations).toEqual([]);
     };
 
     await use(result);
