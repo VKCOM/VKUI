@@ -74,14 +74,12 @@ export const HoverPopper = ({
   };
 
   const targetEnterListener = useEventListener('pointerenter', onTargetEnter);
-  const targetLeaveListener = useEventListener('pointerleave', onTargetLeave);
-  const targetWheelListener = useEventListener('wheel', onTargetLeave);
+  const targetLeaveListener = useEventListener('mouseleave', onTargetLeave);
 
   useIsomorphicLayoutEffect(() => {
     if (childRef.current) {
       targetEnterListener.add(childRef.current);
       targetLeaveListener.add(childRef.current);
-      targetWheelListener.add(childRef.current);
     }
   }, []);
 
