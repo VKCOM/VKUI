@@ -1152,15 +1152,15 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@csstools/cascade-layer-name-parser@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@csstools/cascade-layer-name-parser/-/cascade-layer-name-parser-1.0.2.tgz#35253f57c6c83d684fe396672486c644e6a84127"
-  integrity sha512-xm7Mgwej/wBfLoK0K5LfntmPJzoULayl1XZY9JYgQgT29JiqNw++sLnx95u5y9zCihblzkyaRYJrsRMhIBzRdg==
+"@csstools/cascade-layer-name-parser@^1.0.2", "@csstools/cascade-layer-name-parser@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@csstools/cascade-layer-name-parser/-/cascade-layer-name-parser-1.0.3.tgz#7f049a670c1e071102243ab6c392174844ca6cd7"
+  integrity sha512-ks9ysPP8012j90EQCCFtDsQIXOTCOpTQFIyyoRku06y8CXtUQ+8bXI8KVm9Q9ovwDUVthWuWKZWJD3u1rwnEfw==
 
-"@csstools/css-parser-algorithms@^2.1.1", "@csstools/css-parser-algorithms@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@csstools/css-parser-algorithms/-/css-parser-algorithms-2.2.0.tgz#1268b07196d1118296443aeff41bca27d94b0981"
-  integrity sha512-9BoQ/jSrPq4vv3b9jjLW+PNNv56KlDH5JMx5yASSNrCtvq70FCNZUjXRvbCeR9hYj9ZyhURtqpU/RFIgg6kiOw==
+"@csstools/css-parser-algorithms@^2.2.0", "@csstools/css-parser-algorithms@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@csstools/css-parser-algorithms/-/css-parser-algorithms-2.3.0.tgz#0cc3a656dc2d638370ecf6f98358973bfbd00141"
+  integrity sha512-dTKSIHHWc0zPvcS5cqGP+/TPFUJB0ekJ9dGKvMAFoNuBFhDPBt9OMGNZiIA5vTiNdGHHBeScYPXIGBMnVOahsA==
 
 "@csstools/css-tokenizer@^2.1.1":
   version "2.1.1"
@@ -9857,13 +9857,13 @@ postcss-custom-media@^9.1.5:
     "@csstools/css-tokenizer" "^2.1.1"
     "@csstools/media-query-list-parser" "^2.1.1"
 
-postcss-custom-properties@^13.2.0:
-  version "13.2.0"
-  resolved "https://registry.yarnpkg.com/postcss-custom-properties/-/postcss-custom-properties-13.2.0.tgz#5afac4f38bcfe4cedb834fd6daf65e302940cb81"
-  integrity sha512-UYiPqbqmVayyv56y0mtGhvUKZClflwE9cTTmPaqEX8fOVjVwsotqKGYtJXSLxrJLwf9tt7ka+Luyh1ZAOhGHWA==
+postcss-custom-properties@^13.2.1:
+  version "13.2.1"
+  resolved "https://registry.yarnpkg.com/postcss-custom-properties/-/postcss-custom-properties-13.2.1.tgz#82452ea09b796bf0271cc945badcca18ef59df1c"
+  integrity sha512-Z8UmzwVkRh8aITyeZoZnT4McSSPmS2EFl+OyPspfvx7v+N36V2UseMAODp3oBriZvcf/tQpzag9165x/VcC3kg==
   dependencies:
-    "@csstools/cascade-layer-name-parser" "^1.0.2"
-    "@csstools/css-parser-algorithms" "^2.1.1"
+    "@csstools/cascade-layer-name-parser" "^1.0.3"
+    "@csstools/css-parser-algorithms" "^2.3.0"
     "@csstools/css-tokenizer" "^2.1.1"
     postcss-value-parser "^4.2.0"
 
