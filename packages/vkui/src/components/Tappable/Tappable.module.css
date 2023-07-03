@@ -33,6 +33,8 @@ https://github.com/VKCOM/VKUI/pull/3641
   cursor: default;
 }
 
+.Tappable:focus,
+.Tappable:focus-visible,
 .Tappable--focus-visible {
   outline: none;
 }
