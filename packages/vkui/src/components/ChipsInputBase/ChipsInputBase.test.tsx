@@ -97,4 +97,21 @@ describe('ChipsInputBase', () => {
     userEvent.click(redChip() as HTMLElement);
     expect(getChipsInputBase()).toHaveFocus();
   });
+
+  it('add value on blur event if addOnBlur=true', () => {
+    let value;
+
+    render(
+      <ChipsInputBaseTest
+        addOnBlur
+        value={[]}
+        onChange={(changedValue) => (value = changedValue)}
+      />,
+    );
+
+    userEvent.type(getChipsInputBase(), 'Красный');
+    userEvent.click(document.body);
+
+    expect(value).toEqual([{ value: 'Красный', label: 'Красный' }]);
+  });
 });

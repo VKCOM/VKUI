@@ -22,6 +22,10 @@ export interface ChipsInputBaseProps<Option extends ChipOption>
   getNewOptionData?: (v?: ChipValue, l?: string) => Option;
   renderChip?: (props?: RenderChip<Option>) => React.ReactNode;
   inputAriaLabel?: string;
+  /**
+   * Добавляет значение в список на событие `onBlur`
+   */
+  addOnBlur?: boolean;
 }
 
 export const chipsInputDefaultProps: ChipsInputBaseProps<any> = {
@@ -51,6 +55,7 @@ export const chipsInputDefaultProps: ChipsInputBaseProps<any> = {
       </Chip>
     );
   },
+  addOnBlur: false,
 };
 
 export const ChipsInputBase = <Option extends ChipOption>(props: ChipsInputBaseProps<Option>) => {
@@ -74,6 +79,7 @@ export const ChipsInputBase = <Option extends ChipOption>(props: ChipsInputBaseP
     getNewOptionData,
     renderChip,
     inputAriaLabel,
+    addOnBlur,
     ...restProps
   } = propsWithDefault;
   const { sizeY } = useAdaptivity();
@@ -109,6 +115,10 @@ export const ChipsInputBase = <Option extends ChipOption>(props: ChipsInputBaseP
       setFocused(false);
     }
     onBlur!(e);
+
+    if (addOnBlur && !e.defaultPrevented) {
+      addOptionFromInput();
+    }
   };
 
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
