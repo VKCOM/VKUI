@@ -4,6 +4,7 @@
   border-bottom: 1px solid var(--vkui--color_image_border_alpha);
   box-sizing: border-box;
   position: fixed;
+  top: 0;
   left: 0;
   width: 100%;
   z-index: 3;

@@ -1,14 +1,14 @@
 .Heading--1 {
-  margin-top: 18px;
-  margin-bottom: 6px;
+  padding-top: 18px;
+  padding-bottom: 6px;
 }
 
 .Heading--2 {
-  margin-top: 12px;
-  margin-bottom: 8px;
+  padding-top: 12px;
+  padding-bottom: 8px;
 }
 
 .Heading--3 {
-  margin-top: 14px;
-  margin-bottom: 10px;
+  padding-top: 14px;
+  padding-bottom: 10px;
 }
