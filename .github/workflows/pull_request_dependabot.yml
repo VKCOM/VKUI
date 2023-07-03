@@ -35,6 +35,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
 
       - name: Setup NodeJS
         uses: actions/setup-node@v3
@@ -52,7 +54,7 @@ jobs:
         if: ${{ contains(steps.metadata.outputs.dependency-names, '@playwright/test') }}
         uses: ./.github/actions/complete_playwright_update
         with:
-          branch: ${{ github.ref }}
+          branch: ${{ github.head_ref }}
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           prev_version: ${{ steps.metadata.outputs.previous-version }}
           next_version: ${{ steps.metadata.outputs.new-version }}
