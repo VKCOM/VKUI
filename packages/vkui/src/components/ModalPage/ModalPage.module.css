@@ -91,6 +91,7 @@
 .ModalPage__content-wrap {
   position: relative;
   display: flex;
+  height: 100%;
   flex-direction: column;
   overflow: hidden;
   border-bottom-left-radius: inherit;
