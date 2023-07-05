@@ -65,7 +65,15 @@ export const FormItem = ({
         </Subhead>
       )}
       {children}
-      {hasReactNode(bottom) && <Footnote className={styles['FormItem__bottom']}>{bottom}</Footnote>}
+      {hasReactNode(bottom) && (
+        <Footnote
+          Component={htmlFor ? 'label' : 'span'}
+          htmlFor={htmlFor}
+          className={styles['FormItem__bottom']}
+        >
+          {bottom}
+        </Footnote>
+      )}
     </React.Fragment>
   );
 
