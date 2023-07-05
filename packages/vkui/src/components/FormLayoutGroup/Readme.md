@@ -15,17 +15,17 @@ const Example = () => {
         <Group>
           <FormLayout>
             <FormLayoutGroup mode="vertical">
-              <FormItem top="Имя">
-                <Input />
+              <FormItem htmlFor="name" top="Имя">
+                <Input id="name" />
               </FormItem>
-              <FormItem top="Фамилия">
-                <Input />
+              <FormItem htmlFor="lastName" top="Фамилия">
+                <Input id="lastName" />
               </FormItem>
             </FormLayoutGroup>
 
             <FormLayoutGroup mode="horizontal" segmented>
-              <FormItem top="Имя ящика">
-                <Input />
+              <FormItem htmlFor="mail" top="Имя ящика">
+                <Input id="mail" />
               </FormItem>
               <FormItem>
                 <Select
@@ -44,11 +44,11 @@ const Example = () => {
               <CellButton onClick={() => toggleDates(true)}>Указать даты поездки</CellButton>
             ) : (
               <FormLayoutGroup mode="horizontal" removable onRemove={() => toggleDates(false)}>
-                <FormItem bottom="Дата начала поездки">
-                  <Input />
+                <FormItem htmlFor="begin" bottom="Дата начала поездки">
+                  <Input id="begin" />
                 </FormItem>
-                <FormItem bottom="Дата конца поездки">
-                  <Input />
+                <FormItem htmlFor="end" bottom="Дата конца поездки">
+                  <Input id="end" />
                 </FormItem>
               </FormLayoutGroup>
             )}
