@@ -53,6 +53,7 @@
     "test:e2e-update": "docker compose --env-file=./.env.docker up --abort-on-container-exit",
     "test:e2e:ci": "playwright test --config playwright-ct.config.ts",
     "test:e2e-update:ci": "yarn run test:e2e:ci --update-snapshots",
+    "lint:generated-files": "yarn run generate:css-custom-medias && git diff --exit-code src/styles/customMedias.generated.css",
     "storybook": "cross-env SANDBOX=\\.storybook storybook dev -p 6006",
     "storybook:build": "cross-env SANDBOX=\\.storybook FROM_STORYBOOK=1 storybook build",
     "generate:css-custom-medias": "node scripts/generateCSSCustomMedias.js"
