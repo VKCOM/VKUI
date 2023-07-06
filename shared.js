@@ -1,4 +1,4 @@
-const { VERSION, URLS, PATHS, getCustomMedias } = require('./packages/vkui/shared.config');
+const { VERSION, URLS, PATHS } = require('./packages/vkui/shared.config');
 
 module.exports = {
   VKUI_PACKAGE: {
@@ -16,8 +16,6 @@ module.exports = {
     './node_modules/@vkontakte/vkui-tokens/themes/vkCom/cssVars/declarations/onlyVariablesLocal.css',
     './node_modules/@vkontakte/vkui-tokens/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css',
   ],
-
-  getCustomMedias,
 
   generateScopedName: (name) => {
     return name.startsWith('vkui') || name === 'mount' ? name : `vkui${name}`;

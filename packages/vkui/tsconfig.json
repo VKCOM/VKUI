@@ -25,7 +25,8 @@
     "*.setup.js",
     ".eslintrc.js",
     "playwright-ct.config.ts",
-    "playwright/index.tsx"
+    "playwright/index.tsx",
+    "scripts/*.js"
   ],
   "files": ["./global.d.ts", "types/env.d.ts"]
 }

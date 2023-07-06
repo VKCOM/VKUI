@@ -1,4 +1,3 @@
-const fs = require('fs');
 const path = require('path');
 const postcssGlobalData = require('@csstools/postcss-global-data');
 const restructureVariable = require('@project-tools/postcss-restructure-variable');
@@ -8,35 +7,7 @@ const postcssCustomMedia = require('postcss-custom-media');
 const cssCustomProperties = require('postcss-custom-properties');
 const cssImport = require('postcss-import');
 const cssModules = require('postcss-modules');
-const { VKUI_PACKAGE, VKUI_TOKENS_CSS, generateScopedName, getCustomMedias } = require('./shared');
-
-function getSafelyTmpDirPath(rootPath = __dirname) {
-  const tmpDir = path.join(rootPath, 'tmp');
-
-  if (!fs.existsSync(tmpDir)) {
-    fs.mkdirSync(tmpDir);
-  }
-
-  return tmpDir;
-}
-
-const customMediasPath = './tmp/customMedias.generated.css';
-
-function generateCustomMedias() {
-  const { customMedia } = getCustomMedias();
-
-  getSafelyTmpDirPath();
-
-  const data = Object.entries(customMedia)
-    .map(([key, value]) => {
-      return `@custom-media ${key} ${value};`;
-    })
-    .join('\n');
-
-  fs.writeFileSync(path.join(__dirname, customMediasPath), data, { flag: 'w' });
-}
-
-generateCustomMedias();
+const { VKUI_PACKAGE, VKUI_TOKENS_CSS, generateScopedName } = require('./shared');
 
 const IS_VKUI_PACKAGE_BUILD = Boolean(process.env.IS_VKUI_PACKAGE_BUILD);
 
@@ -48,7 +19,7 @@ module.exports = () => {
       files: [
         './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css',
         VKUI_PACKAGE.PATHS.CSS_CONSTANTS,
-        customMediasPath,
+        VKUI_PACKAGE.PATHS.CSS_CUSTOM_MEDIAS,
       ].map((pathSegment) => path.join(__dirname, pathSegment)),
     }),
     cssCustomProperties({
@@ -91,6 +62,3 @@ module.exports = () => {
 
   return { plugins };
 };
-
-module.exports.generateCustomMedias = generateCustomMedias;
-module.exports.customMediasPath = customMediasPath;

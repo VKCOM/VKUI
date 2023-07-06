@@ -1,0 +1,44 @@
+/* ⚠️ Документ сгенерирован автоматически */
+/* 📝 Если требуется изменения, то запустите команду `yarn workspace @vkontakte/vkui run generate:css-custom-medias` */
+
+/* stylelint-disable */
+/* prettier-ignore */
+@custom-media --sizeX-regular (min-width: 768px);
+/* prettier-ignore */
+@custom-media --sizeX-compact (max-width: 767.9px);
+/* prettier-ignore */
+@custom-media --sizeY-compact (pointer: fine) and (min-width: 768px), (max-height: 414.9px);
+/* prettier-ignore */
+@custom-media --sizeY-regular (pointer: coarse) and (min-height: 415px), (pointer: none) and (min-height: 415px), (max-width: 767.9px) and (min-height: 415px);
+/* prettier-ignore */
+@custom-media --hover-has (hover: hover);
+/* prettier-ignore */
+@custom-media --hover-has-not (hover: none);
+/* prettier-ignore */
+@custom-media --pointer-has (pointer: fine);
+/* prettier-ignore */
+@custom-media --pointer-has-not (pointer: coarse), (pointer: none);
+/* prettier-ignore */
+@custom-media --desktop (min-width: 768px) and (pointer: fine), (min-width: 768px) and (min-height: 720px);
+/* prettier-ignore */
+@custom-media --mobile (max-width: 767.9px), (pointer: none) and (max-height: 719.9px), (pointer: coarse) and (max-height: 719.9px);
+/* prettier-ignore */
+@custom-media --viewWidth-desktopPlus (min-width: 1280px);
+/* prettier-ignore */
+@custom-media --viewWidth-tabletPlus (min-width: 1024px);
+/* prettier-ignore */
+@custom-media --viewWidth-tablet (min-width: 1024px) and (max-width: 1279.9px);
+/* prettier-ignore */
+@custom-media --viewWidth-tabletMinus (max-width: 1023.9px);
+/* prettier-ignore */
+@custom-media --viewWidth-smallTabletPlus (min-width: 768px);
+/* prettier-ignore */
+@custom-media --viewWidth-smallTablet (min-width: 768px) and (max-width: 1023.9px);
+/* prettier-ignore */
+@custom-media --viewWidth-smallTabletMinus (max-width: 767.9px);
+/* prettier-ignore */
+@custom-media --viewWidth-mobilePlus (min-width: 320px);
+/* prettier-ignore */
+@custom-media --viewWidth-mobile (min-width: 320px) and (max-width: 767.9px);
+/* prettier-ignore */
+@custom-media --viewWidth-smallMobileMinus (max-width: 319.9px);

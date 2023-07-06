@@ -17,7 +17,11 @@ module.exports.URLS = {
 
 /**
  * Возвращает медиа выражения необходимые по дизайн-системе. У ключей синтаксис должен быть как у CSS Custom Properties.
- * <br />
+ *
+ * > ❗️IMPORTANT❗️
+ * > При изменении функции следует вызвать команду `yarn workspace @vkontakte/vkui run generate:css-custom-medias`,
+ * > для обновления CSS файла, и закоммитить изменения.
+ *
  * {@link https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-custom-media}
  */
 const getCustomMedias = () => {
@@ -65,6 +69,7 @@ const JS_MAIN_EXPORT = `${SRC_DIR}/vkui.js`;
 const COMPONENTS_DIR = `${SRC_DIR}/components`;
 const STYLES_DIR = `${SRC_DIR}/styles`;
 const CSS_CONSTANTS = `${STYLES_DIR}/constants.css`;
+const CSS_CUSTOM_MEDIAS = `${STYLES_DIR}/customMedias.generated.css`;
 const TYPES_DIR = `${SRC_DIR}/types`;
 const TEST_UTILS_DIR = `${SRC_DIR}/testing`;
 
@@ -76,6 +81,7 @@ module.exports.PATHS = {
   COMPONENTS_DIR,
   STYLES_DIR,
   CSS_CONSTANTS,
+  CSS_CUSTOM_MEDIAS,
   TYPES_DIR,
   TEST_UTILS_DIR,
 };
