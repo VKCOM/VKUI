@@ -26,7 +26,7 @@ module.exports.URLS = {
  */
 const getCustomMedias = () => {
   const customMedia = {
-    '--sizeX-regular': widthPlus(BREAKPOINTS.SMALL_TABLET),
+    '--sizeX-regular': widthPlus(BREAKPOINTS.SMALL_TABLET + 10),
     '--sizeX-compact': widthMinus(BREAKPOINTS.SMALL_TABLET),
 
     '--sizeY-compact': `(pointer: fine) and ${widthPlus(BREAKPOINTS.SMALL_TABLET)}, ${heightMinus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}`, // prettier-ignore
