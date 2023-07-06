@@ -19,22 +19,17 @@ export const StyleGuideDesktop = ({
         popout={popout}
         modal={<StyleGuideModal activeModal={activeModal} />}
       >
-        <SplitCol minWidth={340} width="30%" maxWidth={480} fixed>
+        <SplitCol minWidth={340} width="20%" maxWidth={480} fixed>
           <div className="StyleGuide__sidebar">
             <div className="StyleGuide__sidebarIn">{toc}</div>
           </div>
         </SplitCol>
         <SplitCol
-          width="70%"
-          style={{
-            /**
-             * `min-width` в контексте Flexbox по умолчанию имеет значение `auto`,
-             * из-за чего элементы при переполнении будут выходить за границы контейнера.
-             *
-             * Подробности по ссылке https://stackoverflow.com/a/66689926/2903061
-             */
-            minWidth: 0,
-          }}
+          width="80%"
+          // `min-width` в контексте Flexbox по умолчанию имеет значение `auto`, из-за чего элементы
+          // при переполнении будут выходить за границы контейнера.
+          // Подробности по ссылке https://stackoverflow.com/a/66689926/2903061
+          minWidth={0}
         >
           <div className="StyleGuide__content">
             <div className="StyleGuide__contentIn">{children}</div>

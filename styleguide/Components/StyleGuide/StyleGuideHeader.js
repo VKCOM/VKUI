@@ -46,35 +46,33 @@ export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
   return (
     <div className="StyleGuideHeader">
       <SplitLayout>
-        <SplitCol minWidth={340} width="30%" maxWidth={480} className="StyleGuideHeader__left">
-          <div className="StyleGuideHeader__leftIn">
+        <SplitCol minWidth={340} width="20%" maxWidth={480}>
+          <div className="StyleGuideHeader__left">
             <Tappable
-              hasActive={false}
-              hasHover={false}
+              activeMode="opacity"
+              hoverMode="opacity"
               Component="a"
               href="#/About"
-              className="StyleGuideHeader__logo"
+              focusVisibleMode="outside"
             >
-              <Logo />
+              <Logo display="block" className="StyleGuideHeader__logo" />
             </Tappable>
           </div>
         </SplitCol>
-        <SplitCol width="100%" className="StyleGuideHeader__main">
-          <div className="StyleGuideHeader__links">
-            {links.map(({ title, ...props }, i) => (
-              <Link key={i} target="_blank" className="StyleGuideHeader__link" {...props}>
-                <Text>{title}</Text>
-              </Link>
-            ))}
-          </div>
-          <div className="StyleGuideHeader__aside">
-            <IconButton
-              aria-label="Сменить тему"
-              className="StyleGuideHeader__appearance"
-              onClick={switchStyleGuideAppearance}
-            >
-              {appearance === 'dark' ? <Icon28SunOutline /> : <Icon28MoonOutline />}
-            </IconButton>
+        <SplitCol width="80%">
+          <div className="StyleGuideHeader__right">
+            <div className="StyleGuideHeader__links">
+              {links.map(({ title, ...props }, i) => (
+                <Link key={i} target="_blank" {...props}>
+                  <Text>{title}</Text>
+                </Link>
+              ))}
+            </div>
+            <div className="StyleGuideHeader__aside">
+              <IconButton aria-label="Сменить тему" onClick={switchStyleGuideAppearance}>
+                {appearance === 'dark' ? <Icon28SunOutline /> : <Icon28MoonOutline />}
+              </IconButton>
+            </div>
           </div>
         </SplitCol>
       </SplitLayout>
