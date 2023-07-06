@@ -35,37 +35,37 @@ export const Playground: Story = {
     (Component, { args }) => (
       <Group>
         <HorizontalScroll>
-          {[
-            {
-              id: 1,
-              title: 'Промокот',
-              icon: getAvatarUrl('app_promokot'),
-            },
-            {
-              id: 2,
-              title: 'Разделите счёт',
-              icon: getAvatarUrl('app_split_bill'),
-            },
-            {
-              id: 3,
-              title: 'Рассылки',
-              icon: getAvatarUrl('app_emails'),
-            },
-            {
-              id: 4,
-              title: 'Тексты песен',
-              icon: getAvatarUrl('app_lyrics'),
-            },
-          ].map((element) => (
-            <HorizontalCell key={element.id} size={args.size} header={element.title}>
-              <Avatar
-                size={args.size === 's' ? 56 : args.height}
-                src={element.icon}
-                alt={`avatar: ${element.title}`}
-              />
-            </HorizontalCell>
-          ))}
           <div style={{ display: 'flex' }}>
+            {[
+              {
+                id: 1,
+                title: 'Промокот',
+                icon: getAvatarUrl('app_promokot'),
+              },
+              {
+                id: 2,
+                title: 'Разделите счёт',
+                icon: getAvatarUrl('app_split_bill'),
+              },
+              {
+                id: 3,
+                title: 'Рассылки',
+                icon: getAvatarUrl('app_emails'),
+              },
+              {
+                id: 4,
+                title: 'Тексты песен',
+                icon: getAvatarUrl('app_lyrics'),
+              },
+            ].map((element) => (
+              <HorizontalCell key={element.id} size={args.size} header={element.title}>
+                <Avatar
+                  size={args.size === 's' ? 56 : args.height}
+                  src={element.icon}
+                  alt={`avatar: ${element.title}`}
+                />
+              </HorizontalCell>
+            ))}
             <Component {...args} />
           </div>
         </HorizontalScroll>
