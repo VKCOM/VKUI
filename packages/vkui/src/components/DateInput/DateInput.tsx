@@ -15,6 +15,7 @@ import { IconButton } from '../IconButton/IconButton';
 import { InputLike } from '../InputLike/InputLike';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
 import { Popper } from '../Popper/Popper';
+import { Text } from '../Typography/Text/Text';
 import '../InputLike/InputLike.module.css'; // Reorder css
 import styles from './DateInput.module.css';
 
@@ -242,7 +243,7 @@ export const DateInput = ({
         name={name}
         value={value ? format(value, enableTime ? 'DD.MM.YYYYTHH:mm' : 'DD.MM.YYYY') : ''}
       />
-      <span className={styles['DateInput__input']} onKeyDown={handleKeyDown}>
+      <Text className={styles['DateInput__input']} onKeyDown={handleKeyDown}>
         <InputLike
           length={2}
           getRootRef={daysRef}
@@ -293,7 +294,7 @@ export const DateInput = ({
             />
           </React.Fragment>
         )}
-      </span>
+      </Text>
       {open && !disableCalendar && (
         <Popper targetRef={rootRef} offsetDistance={8} placement={calendarPlacement}>
           <Calendar
