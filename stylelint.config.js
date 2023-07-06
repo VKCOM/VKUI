@@ -1,5 +1,5 @@
 const path = require('path');
-const { VKUI_PACKAGE, getCustomMedias } = require('./shared');
+const { VKUI_PACKAGE } = require('./shared');
 
 module.exports = {
   extends: ['stylelint-config-standard', '@vkontakte/stylelint-config'],
@@ -66,7 +66,7 @@ module.exports = {
     'csstools/media-use-custom-media': [
       'known',
       {
-        importFrom: getCustomMedias,
+        importFrom: path.join(__dirname, VKUI_PACKAGE.PATHS.CSS_CUSTOM_MEDIAS),
       },
     ],
     // Skip reporting in pprecommit run, highlight in editor

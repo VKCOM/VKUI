@@ -54,7 +54,8 @@
     "test:e2e:ci": "playwright test --config playwright-ct.config.ts",
     "test:e2e-update:ci": "yarn run test:e2e:ci --update-snapshots",
     "storybook": "cross-env SANDBOX=\\.storybook storybook dev -p 6006",
-    "storybook:build": "cross-env SANDBOX=\\.storybook FROM_STORYBOOK=1 storybook build"
+    "storybook:build": "cross-env SANDBOX=\\.storybook FROM_STORYBOOK=1 storybook build",
+    "generate:css-custom-medias": "node scripts/generateCSSCustomMedias.js"
   },
   "peerDependencies": {
     "@vkontakte/icons": "^2.41.0",

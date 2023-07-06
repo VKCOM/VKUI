@@ -24,13 +24,6 @@
    ```
    Это поможет игнорировать коммиты, связанные с изменениями стиля кода. `git blame` будет чище.
 2. Запустить сборку пакета `@vkontakte/vkui`: `yarn build:vkui` или `yarn workspace @vkontakte/vkui build`.
-   > **PostCSS** сгенерирует файл `tmp/customMedias.generated.css`, основанный на
-   > [getCustomMedias()](https://github.com/VKCOM/VKUI/blob/master/shared.js)
-   >
-   > Это поможет IDE подсказать доступные `@custom-media`.
-   >
-   > **Tip.** Если у вас **WebStorm**, то вызовите контекстное меню на папке `tmp/` и выполните
-   > _"Mark directory as" | "Cancel Exclusion"_.
 
 ## Чеклист для компонента
 
