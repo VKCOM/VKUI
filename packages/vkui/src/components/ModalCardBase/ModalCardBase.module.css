@@ -2,7 +2,7 @@
   box-sizing: border-box;
   position: relative;
   background: var(--vkui--color_background_modal);
-  border-radius: 18px;
+  border-radius: 12px;
   padding: 16px;
   margin-bottom: var(--vkui_internal--safe_area_inset_bottom);
   display: flex;
@@ -86,9 +86,8 @@
  * Android + vkcom
  */
 
-.ModalCardBase--android .ModalCardBase__container,
-.ModalCardBase--vkcom .ModalCardBase__container {
-  border-radius: 12px;
+.ModalCardBase--ios .ModalCardBase__container {
+  border-radius: 14px;
 }
 
 /**
@@ -96,5 +95,5 @@
  */
 
 .ModalCardBase--desktop .ModalCardBase__container {
-  border-radius: 8px;
+  padding: 24px;
 }
