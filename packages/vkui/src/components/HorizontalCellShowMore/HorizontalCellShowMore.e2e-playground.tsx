@@ -18,7 +18,7 @@ export const HorizontalCellShowMorePlayground = (props: ComponentPlaygroundProps
         {
           children: ['Show more'],
           height: [124, 96],
-          size: ['l'],
+          size: ['m'],
         },
       ]}
     >
