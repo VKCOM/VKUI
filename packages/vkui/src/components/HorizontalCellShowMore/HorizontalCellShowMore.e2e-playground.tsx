@@ -76,8 +76,10 @@ export const HorizontalCellShowMoreMobilePlayground = (props: ComponentPlaygroun
     >
       {(props: HorizontalCellShowMoreProps) => (
         <HorizontalScroll>
-          <div style={{ display: 'flex' }}>{smallCells}</div>
-          <HorizontalCellShowMore {...props} compensateLastCellIndent />
+          <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex' }}>{smallCells}</div>
+            <HorizontalCellShowMore {...props} compensateLastCellIndent />
+          </div>
         </HorizontalScroll>
       )}
     </ComponentPlayground>

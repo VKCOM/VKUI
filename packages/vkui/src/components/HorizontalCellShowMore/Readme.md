@@ -47,30 +47,34 @@ const Example = () => {
         <Group header={<Header>Возможные друзья</Header>}>
           <HorizontalScroll>
             <div style={{ display: 'flex' }}>
-              <RandomUsers />
+              <div style={{ display: 'flex' }}>
+                <RandomUsers />
+              </div>
+              <HorizontalCellShowMore compensateLastCellIndent size="s" height={56} />
             </div>
-            <HorizontalCellShowMore compensateLastCellIndent size="s" height={56} />
           </HorizontalScroll>
         </Group>
         <Group header={<Header>Игры</Header>}>
           <HorizontalScroll>
             <div style={{ display: 'flex' }}>
-              <HorizontalCell size="m" header="Warma-geddon">
-                <Image
-                  size={88}
-                  borderRadius="l"
-                  src={'https://sun9-45.userapi.com/c846418/v846418215/5cf20/Gd9mQ6dVXTw.jpg'}
-                />
-              </HorizontalCell>
-              <HorizontalCell size="m" header="Golden Valley">
-                <Image
-                  size={88}
-                  borderRadius="l"
-                  src={'https://sun9-71.userapi.com/c849220/v849220453/147ade/0MtQXKEVsiQ.jpg'}
-                />
-              </HorizontalCell>
+              <div style={{ display: 'flex' }}>
+                <HorizontalCell size="m" header="Warma-geddon">
+                  <Image
+                    size={88}
+                    borderRadius="l"
+                    src={'https://sun9-45.userapi.com/c846418/v846418215/5cf20/Gd9mQ6dVXTw.jpg'}
+                  />
+                </HorizontalCell>
+                <HorizontalCell size="m" header="Golden Valley">
+                  <Image
+                    size={88}
+                    borderRadius="l"
+                    src={'https://sun9-71.userapi.com/c849220/v849220453/147ade/0MtQXKEVsiQ.jpg'}
+                  />
+                </HorizontalCell>
+              </div>
+              <HorizontalCellShowMore compensateLastCellIndent size="m" height={88} />
             </div>
-            <HorizontalCellShowMore compensateLastCellIndent size="m" height={88} />
           </HorizontalScroll>
         </Group>
       </Panel>
