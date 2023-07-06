@@ -648,7 +648,9 @@ function initPageModal(modalState: ModalsStateEntry) {
   let prevTranslateY = modalState.translateY;
 
   modalState.expandable =
-    contentHeight > (contentElement?.clientHeight ?? 0) || modalState.settlingHeight === 100;
+    contentHeight > (contentElement?.clientHeight ?? 0) ||
+    modalState.settlingHeight === 100 ||
+    modalState.expanded;
 
   let collapsed = false;
   let expanded = false;

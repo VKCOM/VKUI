@@ -91,6 +91,7 @@
 .ModalPage__content-wrap {
   position: relative;
   display: flex;
+  height: 100%;
   flex-direction: column;
   overflow: hidden;
   border-bottom-left-radius: inherit;
@@ -115,7 +116,10 @@
 }
 
 .ModalPage--desktop .ModalPage__content-in,
-:global(.vkuiInternalModalRoot__modal--expandable) .ModalPage__content-in {
+:global(.vkuiInternalModalRoot__modal--expandable):not(
+    :global(.vkuiInternalModalRoot__modal--collapsed)
+  )
+  .ModalPage__content-in {
   height: 100%;
 }
 
