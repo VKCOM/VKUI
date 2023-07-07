@@ -74,16 +74,13 @@ updates:
     directory: '/tools/swc-transform-css-modules'
     schedule:
       interval: 'weekly'
-      # Чтобы отдать приоритет .github/workflows/schedule_cargo_update.yml, переносим расписание
-      # Dependabot на +10 часов. Так частично избежим захламления PR'ами.
-      #
-      # Дублируем конфигурацию в Dependabot ради security updates, который может прилететь как
-      # только так сразу.
-      time: '15:00'
-      day: 'monday'
     allow:
       - dependency-type: 'indirect'
     open-pull-requests-limit: 20
+    groups:
+      cargo:
+        patterns:
+          - '*'
     reviewers:
       - 'VKCOM/vk-sec'
       - 'VKCOM/vkui-core'
