@@ -9,20 +9,59 @@ updates:
     allow:
       - dependency-type: 'direct'
     groups:
+      react:
+        patterns:
+          - 'react'
+          - 'react-dom'
+          - '@types/react'
+          - '@types/react-dom'
       storybook:
         patterns:
           - 'storybook'
           - '@storybook/*'
+      postcss:
+        patterns:
+          - 'postcss*'
+          - '@csstools/postcss-*'
+        exclude-patterns:
+          # см. группу webpack
+          - 'postcss-loader'
+      webpack:
+        patterns:
+          - 'webpack*'
+          - '@types/webpack'
+          - 'postcss-loader'
+          - 'style-loader'
+          - 'swc-loader'
+          - 'css-loader'
       playwright:
         patterns:
           - '@playwright/*'
-      typescript-eslint:
+      eslint:
         patterns:
+          - 'eslint*'
           - '@typescript-eslint/*'
+          - '@vkontakte/eslint-plugin'
+      stylelint:
+        patterns:
+          - 'stylelint*'
+          - '@vkontakte/stylelint-config'
       jest:
         patterns:
-          - 'jest'
-          - 'jest-environment-*'
+          - 'jest*'
+          - '@types/jest*'
+          - '@swc/jest'
+      testing-library:
+        patterns:
+          - '@testing-library/*'
+      size-limit:
+        patterns:
+          - 'size-limit'
+          - '@size-limit/*'
+      prettier:
+        patterns:
+          - 'prettier'
+          - '@vkontakte/prettier-config'
     versioning-strategy: increase
     open-pull-requests-limit: 20
     reviewers:
