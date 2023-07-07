@@ -134,103 +134,110 @@ const Example = () => {
 - внутри `position: fixed` — `<TooltipContainer fixed>`
 
 ```jsx { "props": { "layout": false } }
-<>
-  <TooltipContainer style={{ minHeight: '120vh' }}>
-    <Tooltip text="Я скроллюсь">
-      <div style={{ display: 'inline-block' }}>
-        <Avatar />
-      </div>
-    </Tooltip>
-    <Tooltip text="Двигаем стрелочку" cornerOffset={20}>
-      <div style={{ display: 'inline-block', marginLeft: 100 }}>
-        <Avatar />
-      </div>
-    </Tooltip>
-  </TooltipContainer>
-  <TooltipContainer
-    fixed
-    style={{
-      minHeight: '30px',
-      border: '1px solid',
-      margin: '100px 100px 0',
-      position: 'relative',
-      background: 'var(--vkui--color_background_content)',
-      zIndex: 1,
-    }}
-  >
-    <Tooltip text="Я вылезаю (fixed)">
-      <div style={{ display: 'inline-block' }}>
-        <Avatar />
-      </div>
-    </Tooltip>
-  </TooltipContainer>
-  <TooltipContainer
-    style={{
-      minHeight: '100vh',
-      border: '1px solid',
-      margin: '64px 100px 100px',
-      position: 'relative',
-      background: 'var(--vkui--color_background_content)',
-      zIndex: 1,
-    }}
-  >
-    <Tooltip text="Я прилип слева">
-      <div style={{ display: 'inline-block', position: 'absolute', right: 0 }}>
-        <Avatar />
-      </div>
-    </Tooltip>
-    <Tooltip text="Я прилип справа">
-      <div style={{ display: 'inline-block' }}>
-        <Avatar />
-      </div>
-    </Tooltip>
-    <Tooltip text="Я прилип слева">
-      <div
-        style={{
-          display: 'inline-block',
-          position: 'absolute',
-          left: 0,
-          bottom: 0,
-        }}
-      >
-        <Avatar />
-      </div>
-    </Tooltip>
-    <Tooltip text="Я прилип справа">
-      <div
-        style={{
-          display: 'inline-block',
-          position: 'absolute',
-          right: 0,
-          bottom: 0,
-        }}
-      >
-        <Avatar />
-      </div>
-    </Tooltip>
-    <Tooltip text="Я по центру 😎">
-      <div
-        style={{
-          display: 'inline-block',
-          position: 'absolute',
-          left: '50%',
-          top: '50%',
-          transform: 'translate(50%, 50%)',
-        }}
-      >
-        <Avatar />
-      </div>
-    </Tooltip>
-  </TooltipContainer>
-  <div style={{ height: '100vh' }}></div>
-  <TooltipContainer fixed style={{ position: 'fixed', bottom: 0, width: '100%' }}>
-    <Tooltip text="Я прибит к низу">
-      <div style={{ display: 'inline-block' }}>
-        <Avatar />
-      </div>
-    </Tooltip>
-  </TooltipContainer>
-</>
+<View activePanel="slider">
+  <Panel id="slider">
+    <PanelHeader>Slider</PanelHeader>
+    <Group>
+      <>
+        <TooltipContainer style={{ minHeight: '120vh' }}>
+          <Tooltip text="Я скроллюсь">
+            <div style={{ display: 'inline-block' }}>
+              <Avatar />
+            </div>
+          </Tooltip>
+          <Tooltip text="Двигаем стрелочку" cornerOffset={20}>
+            <div style={{ display: 'inline-block', marginLeft: 100 }}>
+              <Avatar />
+            </div>
+          </Tooltip>
+        </TooltipContainer>
+        <TooltipContainer
+          fixed
+          style={{
+            minHeight: '30px',
+            border: '1px solid',
+            margin: '100px 100px 0',
+            position: 'relative',
+            background: 'var(--vkui--color_background_content)',
+            zIndex: 1,
+          }}
+        >
+          <Tooltip text="Я вылезаю (fixed)">
+            <div style={{ display: 'inline-block' }}>
+              <Avatar />
+            </div>
+          </Tooltip>
+        </TooltipContainer>
+        <TooltipContainer
+          style={{
+            minHeight: '100vh',
+            border: '1px solid',
+            margin: '64px 100px 100px',
+            position: 'relative',
+            background: 'var(--vkui--color_background_content)',
+            zIndex: 1,
+          }}
+        >
+          <Tooltip text="Я прилип слева">
+            <div style={{ display: 'inline-block', position: 'absolute', right: 0 }}>
+              <Avatar />
+            </div>
+          </Tooltip>
+          <Tooltip text="Я прилип справа">
+            <div style={{ display: 'inline-block' }}>
+              <Avatar />
+            </div>
+          </Tooltip>
+          <Tooltip text="Я прилип слева">
+            <div
+              style={{
+                display: 'inline-block',
+                position: 'absolute',
+                left: 0,
+                bottom: 0,
+              }}
+            >
+              <Avatar />
+            </div>
+          </Tooltip>
+          <Tooltip text="Я прилип справа">
+            <div
+              style={{
+                display: 'inline-block',
+                position: 'absolute',
+                right: 0,
+                bottom: 0,
+              }}
+            >
+              <Avatar />
+            </div>
+          </Tooltip>
+          <Tooltip text="Я по центру 😎">
+            <div
+              style={{
+                display: 'inline-block',
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                transform: 'translate(50%, 50%)',
+              }}
+            >
+              <Avatar />
+            </div>
+          </Tooltip>
+        </TooltipContainer>
+        <div style={{ height: '100vh' }}></div>
+        <TooltipContainer fixed style={{ position: 'fixed', bottom: 0, width: '100%' }}>
+          <Tooltip text="Я прибит к низу">
+            <div style={{ display: 'inline-block' }}>
+              <Avatar />
+            </div>
+          </Tooltip>
+        </TooltipContainer>
+      </>
+    </Group>
+  </Panel>
+</View>
 ```
 
 ## Цветовые варианты

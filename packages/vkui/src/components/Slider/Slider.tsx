@@ -46,6 +46,7 @@ export interface SliderBaseProps
    * > Перебивает `aria-valuetext`.
    */
   getAriaValueText?(value: number, index: number): string;
+  withTooltip?: boolean;
 }
 
 export interface SliderProps extends SliderBaseProps {
@@ -85,6 +86,7 @@ export const Slider = ({
   getAriaLabel,
   getAriaValueText,
   onChange,
+  withTooltip,
   ...restProps
 }: SliderProps | SliderMultipleProps) => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -242,6 +244,7 @@ export const Slider = ({
             // Меняем местами порядок слоёв, иначе, при достижении `start` и `end` 100%, `end` будет перекрывать `start`.
             zIndex: multiple && startValueInPercent >= 50 ? 2 : undefined,
           }}
+          withTooltip={withTooltip}
           inputProps={{
             'data-type': 'start',
             'ref': thumbStartInputRef,
@@ -261,6 +264,7 @@ export const Slider = ({
             data-type="end"
             className={styles['Slider__thumb']}
             style={{ left: `${endReversedValueInPercent}%` }}
+            withTooltip={withTooltip}
             inputProps={{
               'data-type': 'end',
               'ref': thumbEndInputRef,
