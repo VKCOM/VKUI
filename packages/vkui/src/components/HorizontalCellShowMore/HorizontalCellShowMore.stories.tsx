@@ -19,11 +19,51 @@ export default story;
 
 type Story = StoryObj<HorizontalCellShowMoreProps & { imgSize: number }>;
 
+const CELL_ITEMS = [
+  {
+    id: 1,
+    title: 'Промокот',
+    icon: getAvatarUrl('app_promokot'),
+  },
+  {
+    id: 2,
+    title: 'Разделите счёт',
+    icon: getAvatarUrl('app_split_bill'),
+  },
+  {
+    id: 3,
+    title: 'Рассылки',
+    icon: getAvatarUrl('app_emails'),
+  },
+  {
+    id: 4,
+    title: 'Тексты песен',
+    icon: getAvatarUrl('app_lyrics'),
+  },
+];
+
+function getNotTooBigHeightBySize({
+  size,
+  height,
+}: Pick<HorizontalCellShowMoreProps, 'size' | 'height'>) {
+  if (size === 's') {
+    return 56;
+  }
+
+  if (size === 'm' && height && height > 88) {
+    return 88;
+  }
+
+  return height;
+}
+
 export const Playground: Story = {
   render: function Render({ ...args }) {
     return (
       <>
-        <HorizontalCellShowMore {...args}>{args.children}</HorizontalCellShowMore>
+        <HorizontalCellShowMore {...args} height={getNotTooBigHeightBySize(args)}>
+          {args.children}
+        </HorizontalCellShowMore>
       </>
     );
   },
@@ -32,45 +72,27 @@ export const Playground: Story = {
     height: 96,
   },
   decorators: [
-    (Component, { args }) => (
-      <Group>
-        <HorizontalScroll>
-          <div style={{ display: 'flex' }}>
-            {[
-              {
-                id: 1,
-                title: 'Промокот',
-                icon: getAvatarUrl('app_promokot'),
-              },
-              {
-                id: 2,
-                title: 'Разделите счёт',
-                icon: getAvatarUrl('app_split_bill'),
-              },
-              {
-                id: 3,
-                title: 'Рассылки',
-                icon: getAvatarUrl('app_emails'),
-              },
-              {
-                id: 4,
-                title: 'Тексты песен',
-                icon: getAvatarUrl('app_lyrics'),
-              },
-            ].map((element) => (
-              <HorizontalCell key={element.id} size={args.size} header={element.title}>
-                <Avatar
-                  size={args.size === 's' ? 56 : args.height}
-                  src={element.icon}
-                  alt={`avatar: ${element.title}`}
-                />
-              </HorizontalCell>
-            ))}
-            <Component {...args} />
-          </div>
-        </HorizontalScroll>
-      </Group>
-    ),
+    (Component, { args }) => {
+      const cellImageSize = getNotTooBigHeightBySize(args);
+      return (
+        <Group>
+          <HorizontalScroll>
+            <div style={{ display: 'flex' }}>
+              {CELL_ITEMS.map((element) => (
+                <HorizontalCell key={element.id} size={args.size} header={element.title}>
+                  <Avatar
+                    size={cellImageSize}
+                    src={element.icon}
+                    alt={`avatar: ${element.title}`}
+                  />
+                </HorizontalCell>
+              ))}
+              <Component {...args} />
+            </div>
+          </HorizontalScroll>
+        </Group>
+      );
+    },
     withSinglePanel,
     withVKUILayout,
   ],
