@@ -169,7 +169,7 @@ const WriteBarExample = (props) => {
 
         <div style={{ height: bottomPadding }} />
 
-        <FixedLayout vertical="bottom">
+        <FixedLayout vertical="bottom" filled>
           <div ref={fixedLayoutInnerElRef}>
             <Separator wide />
 
