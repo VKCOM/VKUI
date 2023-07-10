@@ -86,7 +86,7 @@
     "stylelint-media-use-custom-media": "^2.0.0",
     "stylelint-value-no-unknown-custom-properties": "^4.0.0",
     "swc-loader": "^0.2.3",
-    "swc-plugin-transform-remove-imports": "1.4.0",
+    "swc-plugin-transform-remove-imports": "1.5.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6",
     "typescript-plugin-css-modules": "^5.0.1",
