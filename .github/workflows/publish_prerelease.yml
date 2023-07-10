@@ -30,6 +30,8 @@ run-name: Publish pre-release ${{ inputs.type }} ${{ inputs.custom_version }} (t
 jobs:
   publish:
     concurrency: ci-gh-pages
+    outputs:
+      release_tag: ${{ steps.updated_version.outputs.version }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -95,3 +97,13 @@ jobs:
           folder: styleguide/dist
           clean: false
           force: false
+
+  close_milestone:
+    needs: ['publish']
+    runs-on: ubuntu-latest
+    steps:
+      - name: Close milestone, comment on issues and release notes
+        uses: VKCOM/gh-actions/VKUI/close-milestone@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          releaseTag: ${{ needs.publish.outputs.release_tag }}

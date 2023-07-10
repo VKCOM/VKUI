@@ -1,0 +1,29 @@
+name: 'Schedule / Find actual milestone'
+on:
+  schedule:
+    - cron: '0 9 * * *' # every day at 09:00
+
+jobs:
+  find_actual_milestone:
+    runs-on: ubuntu-latest
+    outputs:
+      milestone_name: ${{ steps.milestone_info.outputs.milestone_name }}
+    steps:
+      - name: Find actual milestone number
+        id: milestone_info
+        uses: VKCOM/gh-actions/VKUI/find-actual-milestone@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  dispatch_publish_workflow:
+    if: ${{ needs.find_actual_milestone.outputs.milestone_name }}
+    environment: publish_release
+    needs: find_actual_milestone
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Dispatch publish workflow run'
+        uses: VKCOM/gh-actions/VKUI/dispatch-publish-workflow@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          releaseTag: ${{ needs.find_actual_milestone.outputs.milestone_name }}
+          workflowId: ${{ contains(needs.find_actual_milestone.outputs.milestone_name, '-') && 'publish_prerelease.yml' || 'publish.yml' }}
