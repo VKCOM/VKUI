@@ -12,12 +12,6 @@ import { Subhead } from '../Typography/Subhead/Subhead';
 import { Title } from '../Typography/Title/Title';
 import styles from './ModalCardBase.module.css';
 
-const platformClassNames = {
-  ios: styles['ModalCardBase--ios'],
-  android: styles['ModalCardBase--android'],
-  vkcom: styles['ModalCardBase--vkcom'],
-};
-
 export interface ModalCardBaseProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement> {
@@ -94,9 +88,7 @@ export const ModalCardBase = ({
       {...restProps}
       className={classNames(
         'vkuiInternalModalCardBase',
-        platformClassNames.hasOwnProperty(platform)
-          ? platformClassNames[platform]
-          : platformClassNames.android,
+        platform === Platform.IOS && styles['ModalCardBase--ios'],
         isDesktop && styles['ModalCardBase--desktop'],
         className,
       )}
