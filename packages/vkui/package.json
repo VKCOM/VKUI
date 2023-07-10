@@ -69,7 +69,7 @@
     "@swc/helpers": "^0.5.1",
     "@vkontakte/vkjs": "^1.1.0",
     "dayjs": "^1.11.9",
-    "mitt": "^3.0.0"
+    "mitt": "^3.0.1"
   },
   "size-limit": [
     {
