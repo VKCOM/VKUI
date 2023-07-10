@@ -9,20 +9,59 @@ updates:
     allow:
       - dependency-type: 'direct'
     groups:
+      react:
+        patterns:
+          - 'react'
+          - 'react-dom'
+          - '@types/react'
+          - '@types/react-dom'
       storybook:
         patterns:
           - 'storybook'
           - '@storybook/*'
+      postcss:
+        patterns:
+          - 'postcss*'
+          - '@csstools/postcss-*'
+        exclude-patterns:
+          # см. группу webpack
+          - 'postcss-loader'
+      webpack:
+        patterns:
+          - 'webpack*'
+          - '@types/webpack'
+          - 'postcss-loader'
+          - 'style-loader'
+          - 'swc-loader'
+          - 'css-loader'
       playwright:
         patterns:
           - '@playwright/*'
-      typescript-eslint:
+      eslint:
         patterns:
+          - 'eslint*'
           - '@typescript-eslint/*'
+          - '@vkontakte/eslint-plugin'
+      stylelint:
+        patterns:
+          - 'stylelint*'
+          - '@vkontakte/stylelint-config'
       jest:
         patterns:
-          - 'jest'
-          - 'jest-environment-*'
+          - 'jest*'
+          - '@types/jest*'
+          - '@swc/jest'
+      testing-library:
+        patterns:
+          - '@testing-library/*'
+      size-limit:
+        patterns:
+          - 'size-limit'
+          - '@size-limit/*'
+      prettier:
+        patterns:
+          - 'prettier'
+          - '@vkontakte/prettier-config'
     versioning-strategy: increase
     open-pull-requests-limit: 20
     reviewers:
@@ -35,16 +74,13 @@ updates:
     directory: '/tools/swc-transform-css-modules'
     schedule:
       interval: 'weekly'
-      # Чтобы отдать приоритет .github/workflows/schedule_cargo_update.yml, переносим расписание
-      # Dependabot на +10 часов. Так частично избежим захламления PR'ами.
-      #
-      # Дублируем конфигурацию в Dependabot ради security updates, который может прилететь как
-      # только так сразу.
-      time: '15:00'
-      day: 'monday'
     allow:
       - dependency-type: 'indirect'
     open-pull-requests-limit: 20
+    groups:
+      cargo:
+        patterns:
+          - '*'
     reviewers:
       - 'VKCOM/vk-sec'
       - 'VKCOM/vkui-core'
