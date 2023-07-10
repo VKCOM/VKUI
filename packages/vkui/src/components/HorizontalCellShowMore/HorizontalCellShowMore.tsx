@@ -68,25 +68,23 @@ export const HorizontalCellShowMore = ({
       )}
       ref={getRootRef}
     >
-      <div className={styles['HorizontalCellShowMore__in']}>
-        <Tappable
-          style={size === 's' ? undefined : { height }}
-          className={styles['HorizontalCellShowMore__body']}
-          getRootRef={getRef}
-          activeMode="opacity"
-          hoverMode="opacity"
-          {...restProps}
-        >
-          <Icon28ChevronRightCircle
-            className={styles['HorizontalCellShowMore__icon']}
-            fill="currentColor"
-          />
+      <Tappable
+        style={size === 's' ? undefined : { height }}
+        className={styles['HorizontalCellShowMore__body']}
+        getRootRef={getRef}
+        activeMode="opacity"
+        hoverMode="opacity"
+        {...restProps}
+      >
+        <Icon28ChevronRightCircle
+          className={styles['HorizontalCellShowMore__icon']}
+          fill="currentColor"
+        />
 
-          <Subhead className={styles['HorizontalCellShowMore__text']} weight="2">
-            {children}
-          </Subhead>
-        </Tappable>
-      </div>
+        <Subhead className={styles['HorizontalCellShowMore__text']} weight="2">
+          {children}
+        </Subhead>
+      </Tappable>
     </div>
   );
 };
