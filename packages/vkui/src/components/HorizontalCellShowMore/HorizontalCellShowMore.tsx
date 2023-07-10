@@ -7,6 +7,12 @@ import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './HorizontalCellShowMore.module.css';
 
+const sizeClassNames = {
+  s: styles['HorizontalCellShowMore--size-s'],
+  m: styles['HorizontalCellShowMore--size-m'],
+  l: styles['HorizontalCellShowMore--size-l'],
+};
+
 export interface HorizontalCellShowMoreProps
   extends Omit<TappableProps, 'getRootRef' | 'size'>,
     HasRef<HTMLElement>,
@@ -58,11 +64,7 @@ export const HorizontalCellShowMore = ({
       className={classNames(
         styles['HorizontalCellShowMore'],
         compensateLastCellIndent && styles['HorizontalCellShowMore--compensate-last-cell-indent'],
-        {
-          s: styles['HorizontalCellShowMore--size-s'],
-          m: styles['HorizontalCellShowMore--size-m'],
-          l: styles['HorizontalCellShowMore--size-l'],
-        }[size],
+        sizeClassNames[size],
         className,
       )}
       ref={getRootRef}
