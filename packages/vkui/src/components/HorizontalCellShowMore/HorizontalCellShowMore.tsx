@@ -13,17 +13,18 @@ export interface HorizontalCellShowMoreProps
     HasRootRef<HTMLDivElement> {
   /**
    * Задаёт высоту компонента. Должeн соответствовать размеру картинок
-   * внутри соседних HorizontalCell компонентов.
+   * внутри соседних `HorizontalCell` компонентов.
    *
-   * Используйте размеры заданные дизайн-системой `16 | 20 | 24 | 28 | 32 | 36 | 40 | 44 | 48 | 56 | 64 | 72 | 80 | 88 | 96`.
+   * Используйте размеры заданные дизайн-системой (см. типы).
    *
    * > ⚠️ Использование кастомного размера – это пограничный кейс.
+   *
    * Игнорируется если `size='s'`.
    */
   height?: LiteralUnion<ImageBaseSize, number>;
   /**
    * Задаёт размер компонента. Аналогичен такому же пропу у [HorizontalCell](https://vkcom.github.io/VKUI/#/HorizontalCellShowMore?id=props).
-   * Должен соответствовать значению пропа `size` соседних HorizontalCell.
+   * Должен соответствовать значению пропа `size` соседних `HorizontalCell`.
    */
   size?: 's' | 'm' | 'l';
   /**
@@ -32,9 +33,9 @@ export interface HorizontalCellShowMoreProps
    * */
   children?: TappableProps['children'];
   /**
-   * Позволяет компенсировать особый правый отступ у предшевствующего последнего элементa HorizontalCell,
+   * Позволяет компенсировать особый правый отступ у предшевствующего элементa `HorizontalCell`,
    * в том случае, если тот элемент последний в родителе.
-   * Если HorizontalCellShowMore находится на одном уровне с остальными HorizontalCell, то этот проп использовать не нужно.
+   * Если `HorizontalCellShowMore` находится на одном уровне с остальными `HorizontalCell`, то этот проп использовать не нужно.
    */
   compensateLastCellIndent?: boolean;
 }
