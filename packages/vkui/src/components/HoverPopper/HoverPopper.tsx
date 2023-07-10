@@ -97,6 +97,7 @@ export const HoverPopper = ({
           {...restProps}
           onMouseOver={hideTimeout.clear}
           onMouseOut={onTargetLeave}
+          onWheel={onTargetWheel}
           getRef={getRef}
           targetRef={childRef}
         >
