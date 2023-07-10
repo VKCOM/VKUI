@@ -71,7 +71,7 @@ export const HorizontalCellShowMore = ({
     >
       <div className={styles['HorizontalCellShowMore__in']}>
         <Tappable
-          style={{ ...(size === 's' ? {} : { height }) }}
+          style={size === 's' ? undefined : { height }}
           className={styles['HorizontalCellShowMore__body']}
           getRootRef={getRef}
           activeMode="opacity"
