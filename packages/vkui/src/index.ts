@@ -236,7 +236,7 @@ export type { FileProps } from './components/File/File';
 export { Input } from './components/Input/Input';
 export type { InputProps } from './components/Input/Input';
 export { Chip } from './components/Chip/Chip';
-export type { ChipProps } from './components/Chip/Chip';
+export type { ChipProps, ChipOption, RenderChip } from './components/Chip/Chip';
 export { ChipsInput } from './components/ChipsInput/ChipsInput';
 export type { ChipsInputProps } from './components/ChipsInput/ChipsInput';
 export { Slider } from './components/Slider/Slider';
