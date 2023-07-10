@@ -54,10 +54,9 @@ export const HorizontalCellShowMore = ({
   compensateLastCellIndent,
   height,
   size = 's',
-  children: childrenProp,
+  children = size === 's' ? 'Все' : 'Показать все',
   ...restProps
 }: HorizontalCellShowMoreProps) => {
-  const children = childrenProp || (size === 's' ? 'Все' : 'Показать все');
   return (
     <div
       style={style}
