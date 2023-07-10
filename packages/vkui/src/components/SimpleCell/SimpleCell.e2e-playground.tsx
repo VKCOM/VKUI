@@ -89,7 +89,7 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
         {
           children: ['Title'],
           expandable: ['always'],
-          chevronSize: ['medium', 'small'],
+          chevronSize: ['m', 's'],
         },
       ]}
     >

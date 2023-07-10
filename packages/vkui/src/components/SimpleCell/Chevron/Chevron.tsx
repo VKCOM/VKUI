@@ -2,15 +2,15 @@ import * as React from 'react';
 import { Icon16Chevron, Icon24ChevronCompactRight } from '@vkontakte/icons';
 
 const iconSize = {
-  small: Icon16Chevron,
-  medium: Icon24ChevronCompactRight,
+  s: Icon16Chevron,
+  m: Icon24ChevronCompactRight,
 };
 
 export interface ChevronProps extends Omit<React.SVGProps<SVGSVGElement>, 'width' | 'height'> {
-  size?: 'small' | 'medium';
+  size?: 's' | 'm';
 }
 
-export const Chevron = ({ size = 'medium', ...restProps }: ChevronProps) => {
+export const Chevron = ({ size = 'm', ...restProps }: ChevronProps) => {
   const Icon = iconSize[size];
 
   return <Icon {...restProps} />;

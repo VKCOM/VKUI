@@ -82,7 +82,7 @@ export interface SimpleCellOwnProps extends HasComponent {
   /**
    * Размер chevron
    */
-  chevronSize?: 'small' | 'medium';
+  chevronSize?: 's' | 'm';
   /**
    * Включает многострочный режим для отображения текста
    */
@@ -109,7 +109,7 @@ export const SimpleCell = ({
   subtitle,
   extraSubtitle,
   className,
-  chevronSize = 'medium',
+  chevronSize = 'm',
   ...restProps
 }: SimpleCellProps) => {
   const platform = usePlatform();
