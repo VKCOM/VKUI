@@ -4,8 +4,10 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useKeyboard } from '../../hooks/useKeyboard';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { HasRootRef } from '../../types';
+import { AdaptivityContext } from '../AdaptivityProvider/AdaptivityContext';
 import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import { Subhead } from '../Typography/Subhead/Subhead';
@@ -118,14 +120,16 @@ export const ModalCardBase = ({
           </Title>
         )}
         {hasReactNode(subheader) && (
-          <Subhead
-            className={classNames(
-              styles['ModalCardBase__subheader'],
-              'vkuiInternalModalCardBase__subheader',
-            )}
-          >
-            {subheader}
-          </Subhead>
+          <AdaptivityContext.Provider value={{ sizeY: SizeType.REGULAR }}>
+            <Subhead
+              className={classNames(
+                styles['ModalCardBase__subheader'],
+                'vkuiInternalModalCardBase__subheader',
+              )}
+            >
+              {subheader}
+            </Subhead>
+          </AdaptivityContext.Provider>
         )}
 
         {children}
