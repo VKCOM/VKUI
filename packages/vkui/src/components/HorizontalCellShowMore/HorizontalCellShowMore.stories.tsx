@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { Avatar } from '../Avatar/Avatar';
 import { Group } from '../Group/Group';
@@ -13,6 +13,9 @@ const story: Meta<HorizontalCellShowMoreProps> = {
   title: 'Blocks/HorizontalCellShowMore',
   component: HorizontalCellShowMore,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  argTypes: {
+    children: StringArg,
+  },
 };
 
 export default story;

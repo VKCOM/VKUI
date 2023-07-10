@@ -4,7 +4,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { HasRef, HasRootRef, LiteralUnion } from '../../types';
 import type { ImageBaseSize } from '../ImageBase/ImageBase';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
-import { Subhead } from '../Typography/Subhead/Subhead';
+import { Subhead, SubheadProps } from '../Typography/Subhead/Subhead';
 import styles from './HorizontalCellShowMore.module.css';
 
 const sizeClassNames = {
@@ -37,7 +37,7 @@ export interface HorizontalCellShowMoreProps
    * Предназначен для отрисовки текста.
    * По умолчанию для `size='s'` содержит текст `Все` для других размеров `Показать все`.
    * */
-  children?: TappableProps['children'];
+  children?: SubheadProps['children'];
   /**
    * Позволяет компенсировать особый правый отступ у предшевствующего элементa `HorizontalCell`,
    * в том случае, если тот элемент последний в родителе.
