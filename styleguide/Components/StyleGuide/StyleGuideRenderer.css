@@ -33,4 +33,13 @@
   padding: 0 36px 36px;
   max-width: 1440px;
   box-sizing: border-box;
+
+  /*
+   * Исправляем схлопывание margin-top.
+   *
+   * Пример см. ../Heading/Heading.css.
+  */
+  border-top-width: 0.5px;
+  border-top-style: solid;
+  border-top-color: transparent;
 }

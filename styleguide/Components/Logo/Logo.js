@@ -1,8 +1,8 @@
 import React from 'react';
 
-export const Logo = () => {
+export const Logo = (props) => {
   return (
-    <svg width="46" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="46" height="24" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path
         d="M0 11.52c0-5.43 0-8.146 1.687-9.833C3.374 0 6.09 0 11.52 0h.96c5.43 0 8.146 0 9.833 1.687C24 3.374 24 6.09 24 11.52v.96c0 5.43
        0 8.146-1.687 9.833C20.626 24 17.91 24 12.48 24h-.96c-5.43 0-8.146 0-9.833-1.687C0 20.626 0 17.91 0 12.48v-.96Z"
