@@ -213,7 +213,7 @@ export const Snackbar = ({
           isDesktop && styles['Snackbar--desktop'],
           className,
         )}
-        style={bottom >= 0 ? { ...style, bottom: offsetY } : style}
+        style={{ ...style, bottom: offsetY }}
       >
         <Touch
           className={styles['Snackbar__in']}
