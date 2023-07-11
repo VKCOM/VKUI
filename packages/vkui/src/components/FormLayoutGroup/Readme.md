@@ -15,17 +15,17 @@ const Example = () => {
         <Group>
           <FormLayout>
             <FormLayoutGroup mode="vertical">
-              <FormItem top="Имя">
-                <Input />
+              <FormItem htmlFor="name" top="Имя">
+                <Input id="name" />
               </FormItem>
-              <FormItem top="Фамилия">
-                <Input />
+              <FormItem htmlFor="lastName" top="Фамилия">
+                <Input id="lastName" />
               </FormItem>
             </FormLayoutGroup>
 
             <FormLayoutGroup mode="horizontal" segmented>
-              <FormItem top="Имя ящика">
-                <Input />
+              <FormItem htmlFor="email" top="Имя ящика">
+                <Input id="email" />
               </FormItem>
               <FormItem>
                 <Select
