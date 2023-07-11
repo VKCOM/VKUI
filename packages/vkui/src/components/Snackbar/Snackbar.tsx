@@ -81,6 +81,7 @@ export const Snackbar = ({
   className,
   subtitle,
   offsetY,
+  style,
   ...restProps
 }: SnackbarProps) => {
   const platform = usePlatform();
@@ -212,7 +213,7 @@ export const Snackbar = ({
           isDesktop && styles['Snackbar--desktop'],
           className,
         )}
-        style={{ bottom: offsetY }}
+        style={{ ...style, bottom: offsetY }}
       >
         <Touch
           className={styles['Snackbar__in']}
