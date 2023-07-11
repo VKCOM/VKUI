@@ -26,6 +26,7 @@ const story: Meta<SnackbarProps> = {
       control: { type: 'boolean' },
     },
     subtitle: StringArg,
+    offsetY: StringArg,
   },
 };
 
