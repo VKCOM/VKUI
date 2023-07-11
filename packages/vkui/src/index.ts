@@ -400,4 +400,7 @@ export type { PopperProps as unstable_PopperProps } from './components/Popper/Po
 export { ViewInfinite as unstable_ViewInfinite } from './components/View/ViewInfinite';
 export type { ViewInfiniteProps as unstable_ViewInfiniteProps } from './components/View/ViewInfinite';
 
+export { HorizontalCellShowMore as unstable_HorizontalCellShowMore } from './components/HorizontalCellShowMore/HorizontalCellShowMore';
+export type { HorizontalCellShowMoreProps as unstable_HorizontalCellShowMoreProps } from './components/HorizontalCellShowMore/HorizontalCellShowMore';
+
 import './styles/common.css';

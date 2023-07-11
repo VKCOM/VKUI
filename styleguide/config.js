@@ -221,6 +221,7 @@ const baseConfig = {
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Cell/Cell.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Accordion/Accordion.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/HorizontalCell/HorizontalCell.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/HorizontalCellShowMore/HorizontalCellShowMore.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/RichCell/RichCell.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/List/List.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Footer/Footer.tsx`,
