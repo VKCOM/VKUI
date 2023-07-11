@@ -24,6 +24,10 @@ export interface FormItemProps
     RemovableProps {
   top?: React.ReactNode;
   bottom?: React.ReactNode;
+  /**
+   * Передаётся при использовании `bottom`. Должен совпадать с `aria-describedby`. который передаётся в <Input />
+   */
+  bottomId?: string;
   status?: 'default' | 'error' | 'valid';
   /**
    * Дает возможность удалить `FormItem`. Рекомендуется использовать только для `Input` или `Select`.
@@ -31,7 +35,6 @@ export interface FormItemProps
    * Режим `indent` предназначен для визуального отступа
    */
   removable?: boolean | 'indent';
-  bottomId?: string;
 }
 
 /**
