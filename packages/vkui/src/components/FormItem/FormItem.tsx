@@ -70,9 +70,9 @@ export const FormItem = ({
           Component={htmlFor ? 'label' : 'span'}
           htmlFor={htmlFor}
           className={styles['FormItem__bottom']}
-          id={htmlFor ? `${htmlFor}` : undefined}
+          id={htmlFor}
           role={status === 'error' ? 'alert' : undefined}
-          aria-describedby={status === 'error' && htmlFor ? `${htmlFor}` : undefined}
+          aria-describedby={status === 'error' && htmlFor ? htmlFor : undefined}
         >
           {bottom}
         </Footnote>
