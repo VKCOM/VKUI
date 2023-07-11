@@ -56,8 +56,9 @@ jobs:
 
       - name: Run e2e tests for @vkontakte/vkui workspace
         # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500
-        run: HOME=/root yarn run test:e2e:ci
-        continue-on-error: true
+        run: |
+          HOME=/root yarn run test:e2e:ci
+          # echo "E2E_TESTS_EXIST_CODE=$?" >> "$GITHUB_ENV"
 
       # TODO Playwright реализовать покрытие
       # - name: Upload coverage to Codecov
