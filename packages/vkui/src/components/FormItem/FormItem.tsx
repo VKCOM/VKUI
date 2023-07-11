@@ -25,7 +25,7 @@ export interface FormItemProps
   top?: React.ReactNode;
   bottom?: React.ReactNode;
   /**
-   * Передаётся при использовании `bottom`. Должен совпадать с `aria-describedby`. который передаётся в <Input />
+   * Передаётся при использовании `bottom`. Должен совпадать с `aria-describedby`. который передаётся в компонент, отвечающий за пользовательский ввод
    */
   bottomId?: string;
   status?: 'default' | 'error' | 'valid';
