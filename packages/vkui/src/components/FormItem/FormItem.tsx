@@ -31,6 +31,7 @@ export interface FormItemProps
    * Режим `indent` предназначен для визуального отступа
    */
   removable?: boolean | 'indent';
+  bottomId?: string;
 }
 
 /**
@@ -48,6 +49,7 @@ export const FormItem = ({
   getRootRef,
   className,
   htmlFor,
+  bottomId,
   ...restProps
 }: FormItemProps) => {
   const rootEl = useExternRef(getRootRef);
@@ -67,12 +69,9 @@ export const FormItem = ({
       {children}
       {hasReactNode(bottom) && (
         <Footnote
-          Component={htmlFor ? 'label' : 'span'}
-          htmlFor={htmlFor}
           className={styles['FormItem__bottom']}
-          id={htmlFor}
+          id={bottomId}
           role={status === 'error' ? 'alert' : undefined}
-          aria-describedby={status === 'error' && htmlFor ? htmlFor : undefined}
         >
           {bottom}
         </Footnote>
