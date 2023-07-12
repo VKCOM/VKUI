@@ -81,8 +81,15 @@ const Example = () => {
               <Input id="pass" type="password" placeholder="Введите пароль" />
             </FormItem>
 
-            <FormItem bottom="Пароль может содержать только латинские буквы и цифры.">
-              <Input type="password" placeholder="Повторите пароль" />
+            <FormItem
+              bottom="Пароль может содержать только латинские буквы и цифры."
+              bottomId="passwordDescription"
+            >
+              <Input
+                type="password"
+                placeholder="Повторите пароль"
+                aria-labelledby="passwordDescription"
+              />
             </FormItem>
 
             <FormLayoutGroup mode="horizontal">
@@ -103,8 +110,9 @@ const Example = () => {
                 onRemove={onRemove}
                 top="Отчество"
                 bottom="Если у вас нет отчества — удалите этот пункт."
+                bottomId="patronymicDescription"
               >
-                <Input id="patronymic" />
+                <Input id="patronymic" aria-labelledby="patronymicDescription" />
               </FormItem>
             )}
 
@@ -149,12 +157,10 @@ const Example = () => {
             <FormItem
               top="Цель поездки"
               bottom={purpose ? '' : 'Пожалуйста, укажите цель поездки'}
-              bottomId="asd"
               status={purpose ? 'valid' : 'error'}
             >
               <Select
                 placeholder="Выберите цель поездки"
-                aria-describedby="asd"
                 onChange={onChange}
                 value={purpose}
                 name="purpose"
