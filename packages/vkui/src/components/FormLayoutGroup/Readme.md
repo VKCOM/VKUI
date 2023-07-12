@@ -44,11 +44,11 @@ const Example = () => {
               <CellButton onClick={() => toggleDates(true)}>Указать даты поездки</CellButton>
             ) : (
               <FormLayoutGroup mode="horizontal" removable onRemove={() => toggleDates(false)}>
-                <FormItem bottom="Дата начала поездки">
-                  <Input />
+                <FormItem bottom="Дата начала поездки" bottomId="start">
+                  <Input aria-labelledby="start" />
                 </FormItem>
-                <FormItem bottom="Дата конца поездки">
-                  <Input />
+                <FormItem bottom="Дата конца поездки" bottomId="end">
+                  <Input aria-labelledby="end" />
                 </FormItem>
               </FormLayoutGroup>
             )}
