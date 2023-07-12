@@ -59,8 +59,16 @@ const Example = () => {
               bottom={
                 email ? 'Электронная почта введена верно!' : 'Пожалуйста, введите электронную почту'
               }
+              bottomId="email-type"
             >
-              <Input id="email" type="email" name="email" value={email} onChange={onChange} />
+              <Input
+                aria-labelledby="email-type"
+                id="email"
+                type="email"
+                name="email"
+                value={email}
+                onChange={onChange}
+              />
             </FormItem>
 
             <FormItem top="Пароль" htmlFor="pass">
@@ -135,10 +143,12 @@ const Example = () => {
             <FormItem
               top="Цель поездки"
               bottom={purpose ? '' : 'Пожалуйста, укажите цель поездки'}
+              bottomId="asd"
               status={purpose ? 'valid' : 'error'}
             >
               <Select
                 placeholder="Выберите цель поездки"
+                aria-describedby="asd"
                 onChange={onChange}
                 value={purpose}
                 name="purpose"
