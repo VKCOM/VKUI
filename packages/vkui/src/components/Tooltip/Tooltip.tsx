@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { hasReactNode } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { useDOM } from '../../lib/dom';
@@ -21,12 +21,9 @@ import {
 } from '../../lib/floating';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasRootRef } from '../../types';
+import { BaseTooltip, type BaseTooltipProps } from '../BaseTooltip/BaseTooltip';
 import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
-import { DefaultIcon } from '../PopperArrow/DefaultIcon';
-import { PopperArrow, type PopperArrowProps } from '../PopperArrow/PopperArrow';
-import { Subhead } from '../Typography/Subhead/Subhead';
 import { tooltipContainerAttr } from './TooltipContainer';
-import styles from './Tooltip.module.css';
 
 /**
  * Перебиваем `ref`.
@@ -50,14 +47,7 @@ const isDOMTypeElement = <
 
 const warn = warnOnce('Tooltip');
 
-const stylesAppearance = {
-  accent: styles['Tooltip--appearance-accent'],
-  white: styles['Tooltip--appearance-white'],
-  black: styles['Tooltip--appearance-black'],
-  inversion: styles['Tooltip--appearance-inversion'],
-};
-
-export interface TooltipProps {
+export interface TooltipProps extends BaseTooltipProps {
   /**
    * **Важно**: если в `children` передан React-компонент, то необходимо убедиться в том, что он поддерживает
    * свойство `getRootRef`, которое должно возвращаться ссылку на корневой DOM-элемент компонента,
@@ -65,25 +55,9 @@ export interface TooltipProps {
    */
   children: React.ReactElement<HasRootRef<any>> | React.ReactElement;
   /**
-   * Стиль отображения подсказки
-   */
-  appearance?: 'accent' | 'neutral' | 'white' | 'black' | 'inversion';
-  /**
    * Если передан `false`, то рисуется просто `children`.
    */
   isShown?: boolean;
-  /**
-   * Текст тултипа.
-   */
-  text?: React.ReactNode;
-  /**
-   * Заголовок тултипа.
-   */
-  header?: React.ReactNode;
-  /**
-   * Положение по горизонтали (прижатие к левому или правому краю `children`).
-   * Если не задано, позиция по горизонтали определятся автоматически
-   */
   alignX?: 'center' | 'left' | 'right';
   /**
    * Положение по вертикали (расположение над или под `children`).
@@ -107,20 +81,6 @@ export interface TooltipProps {
    */
   arrowPadding?: number;
   /**
-   * Пользовательская SVG иконка.
-   *
-   * Требования:
-   *
-   * 1. Иконка по умолчанию должна быть направлена вверх (a.k.a `IconUp`).
-   * 2. Чтобы избежать проблемы с пространством между стрелкой и контентом на некоторых экранах,
-   *    растяните кривую по высоте на `1px` и увеличьте на этот размер `height` и `viewBox` SVG.
-   *    (см. https://github.com/VKCOM/VKUI/pull/4496).
-   * 3. Убедитесь, что компонент принимает все валидные для SVG параметры.
-   * 4. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
-   * 5. Если стрелка наезжает на якорный элемент, то увеличьте значение параметра `offsetY`.
-   */
-  ArrowIcon?: PopperArrowProps['Icon'];
-  /**
    * Сдвиг стрелочки относительно центра дочернего элемента.
    */
   cornerOffset?: number;
@@ -136,10 +96,6 @@ export interface TooltipProps {
    * По умолчанию компонент выберет наилучшее расположение сам. Но его можно задать извне с помощью этого свойства
    */
   placement?: PlacementWithAuto;
-  /**
-   * Пользовательские css-классы, будут добавлены на root-элемент
-   */
-  className?: string;
 }
 
 function mapAlignX(x: TooltipProps['alignX']) {
@@ -177,14 +133,9 @@ export const Tooltip = ({
   onClose,
   cornerOffset = 0,
   cornerAbsoluteOffset,
-  appearance = 'accent',
   arrow = true,
   arrowPadding = 14,
-  ArrowIcon = DefaultIcon,
   placement: placementProp,
-  text,
-  header,
-  className,
   ...restProps
 }: TooltipProps) => {
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
@@ -329,37 +280,19 @@ export const Tooltip = ({
       {isShown &&
         target != null &&
         ReactDOM.createPortal(
-          <div
+          <BaseTooltip
             {...restProps}
-            className={classNames(
-              styles['Tooltip'],
-              appearance !== 'neutral' && stylesAppearance[appearance],
-              className,
+            getRootRef={refs.setFloating}
+            floatingStyle={convertFloatingDataToReactCSSProperties(
+              floatingPositionStrategy,
+              floatingDataX,
+              floatingDataY,
             )}
-          >
-            <div
-              ref={refs.setFloating}
-              style={convertFloatingDataToReactCSSProperties(
-                floatingPositionStrategy,
-                floatingDataX,
-                floatingDataY,
-              )}
-            >
-              {arrow && (
-                <PopperArrow
-                  coords={arrowCoords}
-                  placement={resolvedPlacement}
-                  arrowClassName={styles['Tooltip__arrow']}
-                  getRootRef={setArrowRef}
-                  Icon={ArrowIcon}
-                />
-              )}
-              <div className={styles['Tooltip__content']}>
-                {header && <Subhead weight="2">{header}</Subhead>}
-                {text && <Subhead>{text}</Subhead>}
-              </div>
-            </div>
-          </div>,
+            withArrow={arrow}
+            arrowCoords={arrowCoords}
+            arrowPlacement={resolvedPlacement}
+            getArrowRef={setArrowRef}
+          />,
           tooltipContainer,
         )}
     </React.Fragment>

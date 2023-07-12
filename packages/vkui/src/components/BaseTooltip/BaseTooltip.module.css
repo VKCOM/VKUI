@@ -1,0 +1,57 @@
+.BaseTooltip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  white-space: normal;
+}
+
+.BaseTooltip__content {
+  background-color: var(--vkui--color_background_modal);
+  box-shadow: var(--vkui--elevation3);
+  padding: 9px 12px 10px;
+  border-radius: var(--vkui--size_border_radius--regular);
+  color: var(--vkui--color_text_primary);
+  max-width: 220px;
+}
+
+.BaseTooltip__arrow {
+  color: var(--vkui--color_background_modal);
+}
+
+.BaseTooltip--appearance-accent .BaseTooltip__content {
+  background-color: var(--vkui--color_background_accent_tint);
+  color: var(--vkui--color_text_contrast);
+}
+
+.BaseTooltip--appearance-accent .BaseTooltip__arrow {
+  color: var(--vkui--color_background_accent_tint);
+}
+
+.BaseTooltip--appearance-white .BaseTooltip__content {
+  background-color: var(--vkui--color_background_contrast);
+  color: var(--vkui--color_text_primary_invariably);
+}
+
+.BaseTooltip--appearance-white .BaseTooltip__arrow {
+  color: var(--vkui--color_background_contrast);
+}
+
+.BaseTooltip--appearance-black .BaseTooltip__content {
+  background-color: var(--vkui--color_background_contrast_inverse);
+  color: var(--vkui--color_text_contrast);
+}
+
+.BaseTooltip--appearance-black .BaseTooltip__arrow {
+  color: var(--vkui--color_background_contrast_inverse);
+}
+
+.BaseTooltip--appearance-inversion .BaseTooltip__content {
+  background-color: var(--vkui--color_background_modal_inverse);
+  color: var(--vkui--color_text_contrast_themed);
+}
+
+.BaseTooltip--appearance-inversion .BaseTooltip__arrow {
+  color: var(--vkui--color_background_modal_inverse);
+}
