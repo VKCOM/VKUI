@@ -1,20 +1,8 @@
-import { clamp, precisionRound, rescale } from './math';
+import { clamp, rescale } from './math';
 
 describe(clamp, () => {
   it('clamps min', () => expect(clamp(10, 20, 30)).toBe(20));
   it('clamps max', () => expect(clamp(40, 20, 30)).toBe(30));
-});
-
-describe(precisionRound, () => {
-  it('rounds to precision', () => {
-    expect(precisionRound(0.3 + 0.6, 1)).toBe(0.9);
-    expect(precisionRound(0.88, 1)).toBe(0.9);
-    expect(precisionRound(0.881, 2)).toBe(0.88);
-  });
-  it('can integer-round', () => {
-    expect(precisionRound(1.1, 0)).toBe(1);
-    expect(precisionRound(0.9, 0)).toBe(1);
-  });
 });
 
 describe(rescale, () => {
@@ -34,13 +22,16 @@ describe(rescale, () => {
   it('rounds precision', () => {
     expect(rescale(3.1415926, [3, 4], [3, 4], { step: 0.01 })).toBe(3.14);
   });
-  describe('non-divisor step', () => {
-    it('rounds to min + k * step when min != n * step', () => {
-      expect(rescale(0.1, [0.1, 3.1], [0.1, 3.1], { step: 2 })).toBe(0.1);
-      expect(rescale(3, [1, 5], [1, 5], { step: 2 })).toBe(3);
-    });
-    it('clamps to min + min(max, min + k * step) when max != min + n * step', () => {
-      expect(rescale(3, [0, 3], [0, 3], { step: 2 })).toBe(2);
-    });
+  it('rounds to min when min != n * step', () => {
+    expect(rescale(0.1, [0.1, 3.1], [0.1, 3.1], { step: 2 })).toBe(0.1);
   });
+  it('rounds to max when max != n * step', () => {
+    expect(rescale(3, [1, 5], [1, 5], { step: 2 })).toBe(3);
+    expect(rescale(3, [0, 3], [0, 3], { step: 2 })).toBe(3);
+  });
+  describe('check use cases', () =>
+    // см. https://github.com/VKCOM/VKUI/pull/5284
+    it('should return 20000', () => {
+      expect(rescale(100, [0, 100], [250, 20000], { step: 115 })).toBe(20000);
+    }));
 });
