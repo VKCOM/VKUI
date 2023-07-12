@@ -10,12 +10,18 @@
 - При передаче в `FormItem` компонента, отвечающего за пользовательский ввод (например, `<input type="text" />`),
   рекомендуется передавать свойства `top` и `htmlFor`. В компонент пользовательского ввода должно быть передано свойство
   `id`, которое соответствует значению `htmlFor` в `FormItem`. <br />
+- При использовании `bottom` атрибута рекомендуется также передавать в компонент пользовательского ввода (например,
+  `<input type="text" />`) атрибут `aria-describedby`, а в сам `FormItem` передать `bottomId`, который соответствует значению `aria-describedby`.
 
 Пример рекомендуемого использования:
 
 ```js static
 <FormItem top="Имя" htmlFor="name">
   <input id="name" type="text" placeholder="Семён" />
+</FormItem>
+
+<FormItem top="E-mail" bottom="Например, email@internet.ru" bottomId="emailExample" htmlFor="email">
+  <input id="email" aria-describedby="emailExample" type="email" placeholder="email@internet.ru" />
 </FormItem>
 ```
 

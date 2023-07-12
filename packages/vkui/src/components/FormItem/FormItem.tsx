@@ -24,6 +24,12 @@ export interface FormItemProps
     RemovableProps {
   top?: React.ReactNode;
   bottom?: React.ReactNode;
+  /**
+   * Передаётся при использовании `bottom`.
+   *
+   * Должен совпадать с `aria-describedby`, который передаётся в компонент, отвечающий за пользовательский ввод.
+   */
+  bottomId?: string;
   status?: 'default' | 'error' | 'valid';
   /**
    * Дает возможность удалить `FormItem`. Рекомендуется использовать только для `Input` или `Select`.
@@ -48,6 +54,7 @@ export const FormItem = ({
   getRootRef,
   className,
   htmlFor,
+  bottomId,
   ...restProps
 }: FormItemProps) => {
   const rootEl = useExternRef(getRootRef);
@@ -65,7 +72,15 @@ export const FormItem = ({
         </Subhead>
       )}
       {children}
-      {hasReactNode(bottom) && <Footnote className={styles['FormItem__bottom']}>{bottom}</Footnote>}
+      {hasReactNode(bottom) && (
+        <Footnote
+          className={styles['FormItem__bottom']}
+          id={bottomId}
+          role={status === 'error' ? 'alert' : undefined}
+        >
+          {bottom}
+        </Footnote>
+      )}
     </React.Fragment>
   );
 
