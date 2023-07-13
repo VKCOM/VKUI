@@ -185,6 +185,8 @@ export { PullToRefresh } from './components/PullToRefresh/PullToRefresh';
 export type { PullToRefreshProps } from './components/PullToRefresh/PullToRefresh';
 export { Link } from './components/Link/Link';
 export type { LinkProps } from './components/Link/Link';
+export { TooltipBase } from './components/TooltipBase/TooltipBase';
+export type { TooltipBaseProps } from './components/TooltipBase/TooltipBase';
 export { Tooltip } from './components/Tooltip/Tooltip';
 export type { TooltipProps } from './components/Tooltip/Tooltip';
 export { TooltipContainer } from './components/Tooltip/TooltipContainer';

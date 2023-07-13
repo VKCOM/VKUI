@@ -55,7 +55,9 @@ export interface TooltipBaseProps extends HasRootRef<HTMLDivElement> {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/TooltipBase
+ * Низкоуровневый компонент для отрисовки тултипа.
+ * Примеры использования и Readme можно найти в документации Tooltip
+ * @see https://vkcom.github.io/VKUI/#/Tooltip
  */
 export const TooltipBase = ({
   appearance = 'accent',
