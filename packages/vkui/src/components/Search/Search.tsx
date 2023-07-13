@@ -98,7 +98,7 @@ export const Search = ({
       e.originalEvent.preventDefault();
       inputRef.current?.focus();
     },
-    [inputRef, onCancel],
+    [inputRef],
   );
 
   return (
