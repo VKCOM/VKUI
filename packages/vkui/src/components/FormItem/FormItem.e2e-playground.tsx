@@ -67,7 +67,7 @@ export const FormItemPlayground = (props: ComponentPlaygroundProps) => {
       }: FormItemProps) => {
         const bottomId = bottom && !bottomIdProp ? 'bottom-id' : bottomIdProp;
         const children =
-          bottomId && typeof childrenProp === 'function'
+          typeof childrenProp === 'function'
             ? childrenProp({ 'aria-labelledby': bottomId })
             : childrenProp;
         return (
