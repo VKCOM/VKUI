@@ -11,6 +11,10 @@ export const ProgressPlayground = (props: ComponentPlaygroundProps) => {
           appearance: [undefined, 'negative', 'positive'],
           value: [30],
         },
+        {
+          height: [10],
+          value: [30],
+        },
       ]}
     >
       {Progress}

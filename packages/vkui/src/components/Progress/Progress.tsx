@@ -4,6 +4,22 @@ import { clamp } from '../../helpers/math';
 import { HasRootRef } from '../../types';
 import styles from './Progress.module.css';
 
+function progressCustomHeightStyle(height: number | undefined): React.CSSProperties | undefined {
+  return height
+    ? {
+        height,
+        borderRadius: height / 2,
+      }
+    : undefined;
+}
+
+function progressStyle(height: number | undefined, styleProps: React.CSSProperties | undefined) {
+  const styleHeight = progressCustomHeightStyle(height);
+  const style = styleHeight ? { ...styleProps, ...styleHeight } : styleProps;
+
+  return style;
+}
+
 export interface ProgressProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement> {
@@ -12,6 +28,10 @@ export interface ProgressProps
    */
   appearance?: 'accent' | 'positive' | 'negative';
   value?: number;
+  /**
+   * Высота элемента.
+   */
+  height?: number;
 }
 
 const PROGRESS_MIN_VALUE = 0;
@@ -25,15 +45,20 @@ export const Progress = ({
   getRootRef,
   className,
   appearance = 'accent',
+  height,
+  style: styleProps,
   ...restProps
 }: ProgressProps) => {
   const progress = clamp(value, PROGRESS_MIN_VALUE, PROGRESS_MAX_VALUE);
   const title = `${progress} / ${PROGRESS_MAX_VALUE}`;
 
+  const style = progressStyle(height, styleProps);
+
   return (
     <div
       aria-valuenow={value}
       title={title}
+      style={style}
       {...restProps}
       role="progressbar"
       aria-valuemin={PROGRESS_MIN_VALUE}
