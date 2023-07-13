@@ -4,16 +4,16 @@ import { HasRootRef } from '../../types';
 import { DefaultIcon } from '../PopperArrow/DefaultIcon';
 import { PopperArrow, type PopperArrowProps } from '../PopperArrow/PopperArrow';
 import { Subhead } from '../Typography/Subhead/Subhead';
-import styles from './BaseTooltip.module.css';
+import styles from './TooltipBase.module.css';
 
 const stylesAppearance = {
-  accent: styles['BaseTooltip--appearance-accent'],
-  white: styles['BaseTooltip--appearance-white'],
-  black: styles['BaseTooltip--appearance-black'],
-  inversion: styles['BaseTooltip--appearance-inversion'],
+  accent: styles['TooltipBase--appearance-accent'],
+  white: styles['TooltipBase--appearance-white'],
+  black: styles['TooltipBase--appearance-black'],
+  inversion: styles['TooltipBase--appearance-inversion'],
 };
 
-export interface BaseTooltipProps extends HasRootRef<HTMLDivElement> {
+export interface TooltipBaseProps extends HasRootRef<HTMLDivElement> {
   /**
    * Стиль отображения подсказки
    */
@@ -55,9 +55,9 @@ export interface BaseTooltipProps extends HasRootRef<HTMLDivElement> {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/BaseTooltip
+ * @see https://vkcom.github.io/VKUI/#/TooltipBase
  */
-export const BaseTooltip = ({
+export const TooltipBase = ({
   appearance = 'accent',
   withArrow = true,
   arrowCoords,
@@ -70,12 +70,12 @@ export const BaseTooltip = ({
   header,
   className,
   ...restProps
-}: BaseTooltipProps) => {
+}: TooltipBaseProps) => {
   return (
     <div
       {...restProps}
       className={classNames(
-        styles['BaseTooltip'],
+        styles['TooltipBase'],
         appearance !== 'neutral' && stylesAppearance[appearance],
         className,
       )}
@@ -85,12 +85,12 @@ export const BaseTooltip = ({
           <PopperArrow
             coords={arrowCoords}
             placement={arrowPlacement}
-            arrowClassName={styles['BaseTooltip__arrow']}
+            arrowClassName={styles['TooltipBase__arrow']}
             getRootRef={getArrowRef}
             Icon={ArrowIcon}
           />
         )}
-        <div className={styles['BaseTooltip__content']}>
+        <div className={styles['TooltipBase__content']}>
           {header && <Subhead weight="2">{header}</Subhead>}
           {text && <Subhead>{text}</Subhead>}
         </div>

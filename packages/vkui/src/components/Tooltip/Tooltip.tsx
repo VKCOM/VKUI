@@ -21,8 +21,8 @@ import {
 } from '../../lib/floating';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasRootRef } from '../../types';
-import { BaseTooltip, type BaseTooltipProps } from '../BaseTooltip/BaseTooltip';
 import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
+import { TooltipBase, type TooltipBaseProps } from '../TooltipBase/TooltipBase';
 import { tooltipContainerAttr } from './TooltipContainer';
 
 /**
@@ -49,7 +49,7 @@ const warn = warnOnce('Tooltip');
 
 export interface TooltipProps
   extends Omit<
-    BaseTooltipProps,
+    TooltipBaseProps,
     'arrowCoords' | 'arrowPlacement' | 'getArrowRef' | 'floatingStyle' | 'withArrow'
   > {
   /**
@@ -284,7 +284,7 @@ export const Tooltip = ({
       {isShown &&
         target != null &&
         ReactDOM.createPortal(
-          <BaseTooltip
+          <TooltipBase
             {...restProps}
             getRootRef={refs.setFloating}
             floatingStyle={convertFloatingDataToReactCSSProperties(
