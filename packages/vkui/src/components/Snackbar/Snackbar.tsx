@@ -59,6 +59,10 @@ export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
    * Не может использоваться одновременно с `action`
    */
   subtitle?: React.ReactNode;
+  /**
+   * Величина отступа снизу. Используется для позиционирования элемента в случае, когда нежелательно, чтобы Snackbar при появлении перекрывал важные элементы интерфейса.
+   */
+  offsetY?: React.CSSProperties['bottom'];
 }
 
 /**
@@ -76,6 +80,8 @@ export const Snackbar = ({
   mode = 'default',
   className,
   subtitle,
+  offsetY,
+  style,
   ...restProps
 }: SnackbarProps) => {
   const platform = usePlatform();
@@ -207,6 +213,7 @@ export const Snackbar = ({
           isDesktop && styles['Snackbar--desktop'],
           className,
         )}
+        style={offsetY ? { ...style, bottom: offsetY } : style}
       >
         <Touch
           className={styles['Snackbar__in']}

@@ -26,6 +26,7 @@ const story: Meta<SnackbarProps> = {
       control: { type: 'boolean' },
     },
     subtitle: StringArg,
+    offsetY: StringArg,
   },
 };
 
@@ -52,5 +53,14 @@ export const WithSubtitle: Story = {
     ...Playground.args,
     action: undefined,
     subtitle: 'Вы можете порекомендовать сервис в дополнительном меню',
+  },
+};
+
+export const WithBottomOffset: Story = {
+  ...Playground,
+  args: {
+    ...Playground.args,
+    action: undefined,
+    offsetY: '48px',
   },
 };
