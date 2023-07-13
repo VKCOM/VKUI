@@ -47,7 +47,11 @@ const isDOMTypeElement = <
 
 const warn = warnOnce('Tooltip');
 
-export interface TooltipProps extends BaseTooltipProps {
+export interface TooltipProps
+  extends Omit<
+    BaseTooltipProps,
+    'arrowCoords' | 'arrowPlacement' | 'getArrowRef' | 'floatingStyle' | 'withArrow'
+  > {
   /**
    * **Важно**: если в `children` передан React-компонент, то необходимо убедиться в том, что он поддерживает
    * свойство `getRootRef`, которое должно возвращаться ссылку на корневой DOM-элемент компонента,

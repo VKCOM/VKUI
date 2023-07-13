@@ -30,9 +30,9 @@ export interface BaseTooltipProps extends HasRootRef<HTMLDivElement> {
    * Отображать ли стрелку, указывающую на якорный элемент
    */
   withArrow?: boolean;
-  arrowCoords: PopperArrowProps['coords'];
-  arrowPlacement: PopperArrowProps['placement'];
-  getArrowRef: PopperArrowProps['getRootRef'];
+  arrowCoords?: PopperArrowProps['coords'];
+  arrowPlacement?: PopperArrowProps['placement'];
+  getArrowRef?: PopperArrowProps['getRootRef'];
   /**
    * Пользовательская SVG иконка.
    *
@@ -51,7 +51,7 @@ export interface BaseTooltipProps extends HasRootRef<HTMLDivElement> {
    * Пользовательские css-классы, будут добавлены на root-элемент
    */
   className?: string;
-  floatingStyle: React.CSSProperties;
+  floatingStyle?: React.CSSProperties;
 }
 
 /**
@@ -61,7 +61,7 @@ export const BaseTooltip = ({
   appearance = 'accent',
   withArrow = true,
   arrowCoords,
-  arrowPlacement,
+  arrowPlacement = 'top',
   getArrowRef,
   getRootRef,
   floatingStyle,
