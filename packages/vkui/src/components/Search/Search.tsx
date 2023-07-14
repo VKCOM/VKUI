@@ -97,9 +97,8 @@ export const Search = ({
     (e: TouchEvent) => {
       e.originalEvent.preventDefault();
       inputRef.current?.focus();
-      onCancel();
     },
-    [inputRef, onCancel],
+    [inputRef],
   );
 
   return (
