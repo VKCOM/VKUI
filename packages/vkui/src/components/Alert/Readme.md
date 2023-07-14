@@ -35,6 +35,9 @@ const Example = () => {
     setPopout(null);
   };
 
+  const deleteDocument = () => addActionLogItem('Документ удален.');
+  const disqualify = () => addActionLogItem('Право на модерацию контента убрано.');
+
   const openAction = () => {
     setPopout(
       <Alert
@@ -43,7 +46,7 @@ const Example = () => {
             title: 'Лишить права',
             mode: 'destructive',
             autoClose: true,
-            action: () => addActionLogItem('Право на модерацию контента убрано.'),
+            action: disqualify,
           },
           {
             title: 'Отмена',
@@ -72,7 +75,7 @@ const Example = () => {
             title: 'Удалить',
             autoClose: true,
             mode: 'destructive',
-            action: () => addActionLogItem('Документ удален.'),
+            action: deleteDocument,
           },
         ]}
         actionsLayout="horizontal"
@@ -83,9 +86,7 @@ const Example = () => {
     );
   };
 
-  React.useEffect(() => {
-    openDeletion();
-  }, []);
+  React.useEffect(openDeletion, []);
 
   return (
     <SplitLayout popout={popout}>
@@ -99,6 +100,57 @@ const Example = () => {
               {actionsLog.map((value, i) => (
                 <Div key={i}>{value}</Div>
               ))}
+            </Group>
+          </Panel>
+        </View>
+      </SplitCol>
+    </SplitLayout>
+  );
+};
+
+<Example />;
+```
+
+# Кастомные кнопки
+
+```jsx { "props": { "layout": false, "adaptivity": false } }
+const Example = () => {
+  const [popout, setPopout] = React.useState(null);
+
+  const closePopout = () => {
+    setPopout(null);
+  };
+
+  const openCustomButtons = () => {
+    setPopout(
+      <Alert
+        buttons={
+          <ButtonGroup>
+            <Button size="m" onClick={closePopout}>
+              Удалить
+            </Button>
+            <Button size="m" mode="secondary" onClick={closePopout}>
+              Отмена
+            </Button>
+          </ButtonGroup>
+        }
+        onClose={closePopout}
+        header="Удаление документа"
+        text="Вы уверены, что хотите удалить этот документ?"
+      />,
+    );
+  };
+
+  React.useEffect(openCustomButtons, []);
+
+  return (
+    <SplitLayout popout={popout}>
+      <SplitCol>
+        <View activePanel="alert">
+          <Panel id="alert">
+            <PanelHeader>Alert</PanelHeader>
+            <Group>
+              <CellButton onClick={openCustomButtons}>Открыть Alert</CellButton>
             </Group>
           </Panel>
         </View>

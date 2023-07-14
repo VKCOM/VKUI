@@ -2,6 +2,8 @@ import * as React from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { HasChildren } from '../../types';
 import { AppRoot } from '../AppRoot/AppRoot';
+import { Button } from '../Button/Button';
+import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { Alert, type AlertActionInterface, type AlertProps } from './Alert';
 
 const AppWrapper = ({ children, ...restProps }: HasChildren) => (
@@ -43,6 +45,16 @@ export const AlertMobilePlayground = (props: ComponentPlaygroundProps) => {
           ],
           actionsLayout: ['vertical'],
         },
+        {
+          buttons: [
+            <ButtonGroup key="buttons">
+              <Button size="m">Удалить</Button>
+              <Button size="m" mode="secondary">
+                Отмена
+              </Button>
+            </ButtonGroup>,
+          ],
+        },
       ]}
       AppWrapper={AppWrapper}
     >
@@ -62,6 +74,16 @@ export const AlertDesktopPlayground = (props: ComponentPlaygroundProps) => {
             [cancel, destroy],
           ],
           actionsLayout: ['horizontal'],
+        },
+        {
+          buttons: [
+            <ButtonGroup key="buttons">
+              <Button size="m">Удалить</Button>
+              <Button size="m" mode="secondary">
+                Отмена
+              </Button>
+            </ButtonGroup>,
+          ],
         },
       ]}
       AppWrapper={AppWrapper}

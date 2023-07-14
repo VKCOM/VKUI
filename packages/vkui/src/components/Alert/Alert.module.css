@@ -42,6 +42,7 @@
   background: transparent;
 }
 
+.Alert__buttons,
 .Alert__actions {
   display: flex;
   max-width: 100%;
@@ -113,15 +114,15 @@
   color: inherit;
 }
 
-.Alert--ios .Alert__content::after {
+.Alert--ios .Alert__actions::before {
   content: '';
   position: absolute;
-  bottom: 0;
-  height: 1px;
+  top: 0;
+  height: var(--vkui_internal--thin_border);
   right: 0;
   left: 0;
   background: var(--vkui--color_separator_primary_alpha);
-  transform-origin: center bottom;
+  transform-origin: center top;
 }
 
 .Alert--ios .Alert__actions {
@@ -241,6 +242,7 @@
   padding: 24px;
 }
 
+.Alert--vkcom .Alert__buttons,
 .Alert--vkcom .Alert__actions {
   padding: 0 24px 16px;
 }

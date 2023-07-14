@@ -30,6 +30,7 @@ export interface AlertActionInterface
 export interface AlertProps extends React.HTMLAttributes<HTMLElement> {
   actionsLayout?: 'vertical' | 'horizontal';
   actions?: AlertActionInterface[];
+  buttons?: React.ReactNode;
   header?: React.ReactNode;
   text?: React.ReactNode;
   onClose: VoidFunction;
@@ -136,6 +137,7 @@ export const Alert = ({
   header,
   onClose,
   dismissLabel = 'Закрыть предупреждение',
+  buttons,
   ...restProps
 }: AlertProps) => {
   const platform = usePlatform();
@@ -215,11 +217,14 @@ export const Alert = ({
           {hasReactNode(text) && <AlertText id="vkui--alert--desc">{text}</AlertText>}
           {children}
         </div>
-        <div className={styles['Alert__actions']}>
-          {actions.map((action, i) => (
-            <AlertAction key={i} action={action} onItemClick={onItemClick} />
-          ))}
-        </div>
+        {actions.length !== 0 && (
+          <div className={styles['Alert__actions']}>
+            {actions.map((action, i) => (
+              <AlertAction key={i} action={action} onItemClick={onItemClick} />
+            ))}
+          </div>
+        )}
+        {hasReactNode(buttons) && <div className={styles['Alert__buttons']}>{buttons}</div>}
         {isDesktop && <ModalDismissButton onClick={close} aria-label={dismissLabel} />}
       </FocusTrap>
     </PopoutWrapper>
