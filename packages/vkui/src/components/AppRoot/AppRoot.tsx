@@ -74,7 +74,9 @@ export const AppRoot = ({
     }
     setPortalRoot(portal);
     return () => {
-      portal?.parentElement?.removeChild(portal);
+      if (!portalRootProp) {
+        portal?.parentElement?.removeChild(portal);
+      }
     };
   }, [portalRootProp]);
 
