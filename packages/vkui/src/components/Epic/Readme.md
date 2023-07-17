@@ -20,6 +20,10 @@ const Example = () => {
   const platform = usePlatform();
   const { viewWidth } = useAdaptivityConditionalRender();
   const [activeStory, setActiveStory] = React.useState('profile');
+  const activeStoryStyles = {
+    backgroundColor: 'var(--vkui--color_background_secondary)',
+    borderRadius: 8,
+  };
   const onStoryChange = (e) => setActiveStory(e.currentTarget.dataset.story);
   const isVKCOM = platform !== Platform.VKCOM;
 
@@ -35,14 +39,7 @@ const Example = () => {
             <Group>
               <Cell
                 disabled={activeStory === 'feed'}
-                style={
-                  activeStory === 'feed'
-                    ? {
-                        backgroundColor: 'var(--vkui--color_background_secondary)',
-                        borderRadius: 8,
-                      }
-                    : {}
-                }
+                style={activeStory === 'feed' ? activeStoryStyles : undefined}
                 data-story="feed"
                 onClick={onStoryChange}
                 before={<Icon28NewsfeedOutline />}
@@ -51,14 +48,7 @@ const Example = () => {
               </Cell>
               <Cell
                 disabled={activeStory === 'services'}
-                style={
-                  activeStory === 'services'
-                    ? {
-                        backgroundColor: 'var(--vkui--color_background_secondary)',
-                        borderRadius: 8,
-                      }
-                    : {}
-                }
+                style={activeStory === 'services' ? activeStoryStyles : undefined}
                 data-story="services"
                 onClick={onStoryChange}
                 before={<Icon28ServicesOutline />}
@@ -67,14 +57,7 @@ const Example = () => {
               </Cell>
               <Cell
                 disabled={activeStory === 'messages'}
-                style={
-                  activeStory === 'messages'
-                    ? {
-                        backgroundColor: 'var(--vkui--color_background_secondary)',
-                        borderRadius: 8,
-                      }
-                    : {}
-                }
+                style={activeStory === 'messages' ? activeStoryStyles : undefined}
                 data-story="messages"
                 onClick={onStoryChange}
                 before={<Icon28MessageOutline />}
@@ -83,14 +66,7 @@ const Example = () => {
               </Cell>
               <Cell
                 disabled={activeStory === 'clips'}
-                style={
-                  activeStory === 'clips'
-                    ? {
-                        backgroundColor: 'var(--vkui--color_background_secondary)',
-                        borderRadius: 8,
-                      }
-                    : {}
-                }
+                style={activeStory === 'clips' ? activeStoryStyles : undefined}
                 data-story="clips"
                 onClick={onStoryChange}
                 before={<Icon28ClipOutline />}
@@ -99,14 +75,7 @@ const Example = () => {
               </Cell>
               <Cell
                 disabled={activeStory === 'profile'}
-                style={
-                  activeStory === 'profile'
-                    ? {
-                        backgroundColor: 'var(--vkui--color_background_secondary)',
-                        borderRadius: 8,
-                      }
-                    : {}
-                }
+                style={activeStory === 'profile' ? activeStoryStyles : undefined}
                 data-story="profile"
                 onClick={onStoryChange}
                 before={<Icon28UserCircleOutline />}
