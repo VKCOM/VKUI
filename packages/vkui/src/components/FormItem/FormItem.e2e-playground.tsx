@@ -18,7 +18,11 @@ export const FormItemPlayground = (props: ComponentPlaygroundProps) => {
           top: [undefined, 'Сверху'],
           bottom: [undefined, 'Снизу'],
           removable: [undefined, true],
-          children: [<Input key={0} placeholder="Введите ваше значение" />],
+          children: [
+            (props: React.AriaAttributes) => (
+              <Input key={0} placeholder="Введите ваше значение" {...props} />
+            ),
+          ],
         },
         {
           children: [
@@ -47,12 +51,31 @@ export const FormItemPlayground = (props: ComponentPlaygroundProps) => {
         {
           top: ['Сверху'],
           bottom: ['Снизу'],
+          bottomId: ['bottom-id'],
           removable: ['indent'],
-          children: [<Input key={0} placeholder="Введите ваше значение" />],
+          children: [
+            <Input key={0} aria-labelledby="bottom-id" placeholder="Введите ваше значение" />,
+          ],
         },
       ]}
     >
-      {(props: FormItemProps) => <FormItem {...props} />}
+      {({
+        bottom,
+        bottomId: bottomIdProp,
+        children: childrenProp,
+        ...restProps
+      }: FormItemProps) => {
+        const bottomId = bottom && !bottomIdProp ? 'bottom-id' : bottomIdProp;
+        const children =
+          typeof childrenProp === 'function'
+            ? childrenProp({ 'aria-labelledby': bottomId })
+            : childrenProp;
+        return (
+          <FormItem bottom={bottom} bottomId={bottomId} {...restProps}>
+            {children}
+          </FormItem>
+        );
+      }}
     </ComponentPlayground>
   );
 };

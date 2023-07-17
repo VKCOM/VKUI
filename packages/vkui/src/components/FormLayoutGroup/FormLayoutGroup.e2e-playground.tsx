@@ -86,8 +86,12 @@ export const FormLayoutGroupPlayground = (props: ComponentPlaygroundProps) => {
               <FormItem htmlFor="tooLong" top="Сверху очень длинная надпись аж распирает">
                 <Input id="tooLong" />
               </FormItem>
-              <FormItem htmlFor="theSameLongBottom" bottom="А у меня надпись снизу">
-                <Input id="theSameLongBottom" />
+              <FormItem
+                htmlFor="theSameLongBottom"
+                bottom="А у меня надпись снизу"
+                bottomId="bottom"
+              >
+                <Input id="theSameLongBottom" aria-labelledby="bottom" />
               </FormItem>
             </React.Fragment>,
           ],
