@@ -39,7 +39,7 @@ const Example = () => {
             <Group>
               <Cell
                 disabled={activeStory === 'feed'}
-                style={activeStory === 'feed' ? activeStoryStyles : {}}
+                style={activeStory === 'feed' ? activeStoryStyles : undefined}
                 data-story="feed"
                 onClick={onStoryChange}
                 before={<Icon28NewsfeedOutline />}
@@ -48,7 +48,7 @@ const Example = () => {
               </Cell>
               <Cell
                 disabled={activeStory === 'services'}
-                style={activeStory === 'services' ? activeStoryStyles : {}}
+                style={activeStory === 'services' ? activeStoryStyles : undefined}
                 data-story="services"
                 onClick={onStoryChange}
                 before={<Icon28ServicesOutline />}
@@ -57,7 +57,7 @@ const Example = () => {
               </Cell>
               <Cell
                 disabled={activeStory === 'messages'}
-                style={activeStory === 'messages' ? activeStoryStyles : {}}
+                style={activeStory === 'messages' ? activeStoryStyles : undefined}
                 data-story="messages"
                 onClick={onStoryChange}
                 before={<Icon28MessageOutline />}
@@ -66,7 +66,7 @@ const Example = () => {
               </Cell>
               <Cell
                 disabled={activeStory === 'clips'}
-                style={activeStory === 'clips' ? activeStoryStyles : {}}
+                style={activeStory === 'clips' ? activeStoryStyles : undefined}
                 data-story="clips"
                 onClick={onStoryChange}
                 before={<Icon28ClipOutline />}
@@ -75,7 +75,7 @@ const Example = () => {
               </Cell>
               <Cell
                 disabled={activeStory === 'profile'}
-                style={activeStory === 'profile' ? activeStoryStyles : {}}
+                style={activeStory === 'profile' ? activeStoryStyles : undefined}
                 data-story="profile"
                 onClick={onStoryChange}
                 before={<Icon28UserCircleOutline />}
