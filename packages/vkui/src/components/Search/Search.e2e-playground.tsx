@@ -22,6 +22,11 @@ export const SearchPlayground = (props: ComponentPlaygroundProps) => {
           icon: [<Icon16Add key="" />],
           $adaptivity: 'y',
         },
+        {
+          value: [
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi venenatis ultrices purus id tempor',
+          ],
+        },
       ]}
     >
       {(props: SearchProps) => <Search style={{ maxWidth: '320px' }} {...props} />}
