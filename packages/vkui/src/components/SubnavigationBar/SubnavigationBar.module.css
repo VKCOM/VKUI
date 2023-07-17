@@ -4,8 +4,8 @@
 }
 
 .SubnavigationBar__scrollIn {
-  padding-top: calc(var(--vkui--size_subnavigation_bar_padding_vertical--regular) + 8px);
-  padding-bottom: calc(var(--vkui--size_subnavigation_bar_padding_vertical--regular) + 8px);
+  margin: 0;
+  padding: calc(var(--vkui--size_subnavigation_bar_padding_vertical--regular) + 8px) 0;
   display: flex;
 }
 
@@ -13,4 +13,23 @@
 .SubnavigationBar__scrollIn::after {
   content: '';
   min-width: var(--vkui--size_base_padding_horizontal--regular);
+}
+
+.SubnavigationBar__item {
+  list-style-type: none;
+  display: flex;
+}
+
+.SubnavigationBar__item + .SubnavigationBar__item {
+  margin-left: var(--vkui--size_subnavigation_bar_gap--regular);
+}
+
+/**
+ * CMP:
+ * SubnavigationBar
+ */
+
+:global(.vkuiInternalSubnavigationBar--mode-fixed) .SubnavigationBar__item {
+  flex: 1;
+  min-width: 0;
 }
