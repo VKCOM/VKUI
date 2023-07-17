@@ -90,7 +90,7 @@
   }
 }
 
-.Group--mode-card::after {
+.Group--mode-card::before {
   content: '';
   left: 0;
   top: 0;
@@ -103,7 +103,7 @@
 }
 
 @media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none::after {
+  .Group--sizeX-none.Group--mode-none::before {
     content: '';
     left: 0;
     top: 0;
