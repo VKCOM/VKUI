@@ -52,13 +52,23 @@ export const SubnavigationBar = ({
     <div
       {...restProps}
       className={classNames(
-        'vkuiInternalSubnavigationBar',
+        // TODO: [>=6]
+        // Заменить у SubnavigationButton `display: inline-block` на `width: 100%`
+        // и удалить применение селектора в `SubnavigationButton.module.css`.
+        // 2. Заменить глобальный селектор на CSS Modules `styles['SubnavigationBar--mode-fixed']`
+        // mode !== 'fixed' && classNames('vkuiInternalSubnavigationBar--mode-fixed')
         mode === 'fixed' && classNames('vkuiInternalSubnavigationBar--mode-fixed'),
         className,
       )}
     >
       <ScrollWrapper className={styles['SubnavigationBar__in']} {...scrollWrapperProps}>
-        <div className={styles['SubnavigationBar__scrollIn']}>{children}</div>
+        <ul className={styles['SubnavigationBar__scrollIn']}>
+          {React.Children.map(children, (child, idx) => (
+            <li key={idx} className={styles['SubnavigationBar__item']}>
+              {child}
+            </li>
+          ))}
+        </ul>
       </ScrollWrapper>
     </div>
   );
