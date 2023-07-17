@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useBooleanState } from '../../../hooks/useBooleanState';
 import { useExternRef } from '../../../hooks/useExternRef';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import {
@@ -13,6 +14,7 @@ import {
 import type { HasDataAttribute, HasRootRef } from '../../../types';
 import { FocusVisible } from '../../FocusVisible/FocusVisible';
 import { TooltipBase } from '../../TooltipBase/TooltipBase';
+import { Touch } from '../../Touch/Touch';
 import styles from './SliderThumb.module.css';
 
 interface SliderThumbProps extends HasRootRef<HTMLSpanElement>, HasDataAttribute {
@@ -74,9 +76,22 @@ export const SliderThumb = ({
   );
 
   const handleRootRef = useExternRef<HTMLSpanElement>(getRootRef, refs.setReference);
+  const {
+    value: isHovered,
+    setTrue: setHoveredTrue,
+    setFalse: setHoveredFalse,
+  } = useBooleanState(false);
+
+  const shouldShowTooltip = Boolean(
+    withTooltip && (focusVisible || isHovered) && inputProps && inputProps.value !== 'undefined',
+  );
+
   return (
-    <span
-      ref={handleRootRef}
+    <Touch
+      onEnter={setHoveredTrue}
+      onLeave={setHoveredFalse}
+      Component="span"
+      getRootRef={handleRootRef}
       className={classNames(
         styles['SliderThumb'],
         focusVisible && styles['SliderThumb--focused'],
@@ -93,7 +108,7 @@ export const SliderThumb = ({
         onFocus={onFocus}
       />
       <FocusVisible visible={focusVisible} mode="outside" />
-      {Boolean(withTooltip && focusVisible && inputProps && inputProps.value !== 'undefined') && (
+      {shouldShowTooltip && (
         <TooltipBase
           appearance="neutral"
           getRootRef={refs.setFloating}
@@ -108,6 +123,6 @@ export const SliderThumb = ({
           text={inputProps && inputProps.value}
         />
       )}
-    </span>
+    </Touch>
   );
 };
