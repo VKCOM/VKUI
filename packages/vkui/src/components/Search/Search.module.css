@@ -70,6 +70,7 @@
   max-width: 100%;
   flex-grow: 1;
   min-width: 0;
+  width: stretch; /* автопрефиксер добавит фолбеки https://caniuse.com/mdn-css_properties_width_stretch */
   background-color: transparent;
   color: var(--vkui--color_text_primary);
 }
