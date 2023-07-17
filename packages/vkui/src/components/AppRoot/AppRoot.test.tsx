@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { SizeType } from '../../lib/adaptivity';
 import { baselineComponent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
@@ -25,6 +25,30 @@ describe('AppRoot', () => {
         expect(document.body).toContainElement(portalRoot as HTMLElement);
         unmount();
         expect(document.body).not.toContainElement(portalRoot as HTMLElement);
+      });
+
+      it('does not remove external portalRoot provided as prop', () => {
+        const TestComponent = () => {
+          const [shouldMount, setShouldMount] = React.useState(false);
+          const portalRootRef = React.useRef<HTMLDivElement | null>(null);
+          return (
+            <div>
+              {shouldMount && <AppRoot portalRoot={portalRootRef} />}
+              <button onClick={() => setShouldMount((mountFlag) => !mountFlag)}>
+                {shouldMount ? 'unmount' : 'mount'}
+              </button>
+              <div data-testid="portal-root" ref={portalRootRef} />
+            </div>
+          );
+        };
+
+        render(<TestComponent />);
+
+        expect(screen.queryByTestId('portal-root')).toBeTruthy();
+        fireEvent.click(screen.getByText('mount'));
+        expect(screen.queryByTestId('portal-root')).toBeTruthy();
+        fireEvent.click(screen.getByText('unmount'));
+        expect(screen.queryByTestId('portal-root')).toBeTruthy();
       });
     });
     describe('applies container classes', () => {
