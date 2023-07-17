@@ -63,8 +63,9 @@ const Example = () => {
 
   return (
     <Group separator="hide">
-      <FormItem top="Выберите группы">
+      <FormItem htmlFor="groups" top="Выберите группы">
         <ChipsSelect
+          id="groups"
           {...groupsChipsProps}
           showSelected={false}
           closeAfterSelect={false}
@@ -89,11 +90,14 @@ const Example = () => {
           }}
         />
       </FormItem>
-      <FormItem top="Выберите или добавьте цвета">
-        <ChipsSelect {...colorsChipsProps} />
+      <FormItem htmlFor="colors" top="Выберите или добавьте цвета">
+        <ChipsSelect id="colors" {...colorsChipsProps} />
       </FormItem>
-      <FormItem top="Выберите или добавьте цвета (creatable без кнопки создания)">
-        <ChipsSelect {...colorsCopyChipsProps} />
+      <FormItem
+        htmlFor="colorsWithoutButton"
+        top="Выберите или добавьте цвета (creatable без кнопки создания)"
+      >
+        <ChipsSelect id="colorsWithoutButton" {...colorsCopyChipsProps} />
       </FormItem>
     </Group>
   );

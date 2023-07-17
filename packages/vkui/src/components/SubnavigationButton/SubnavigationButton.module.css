@@ -136,6 +136,7 @@
  * Impact:
  * Counter
  */
+
 .SubnavigationButton {
   --vkui_internal--counter_inherit_background: var(--vkui--color_background_accent_themed);
   --vkui_internal--counter_inherit_color: var(--vkui--color_text_contrast_themed);
@@ -144,14 +145,6 @@
 .SubnavigationButton--selected:not(.SubnavigationButton--mode-tertiary) {
   --vkui_internal--counter_inherit_background: var(--vkui--color_background_content);
   --vkui_internal--counter_inherit_color: var(--vkui--color_text_accent_themed);
-}
-
-/**
- * CMP:
- * SubnavigationBar
- */
-:global(.vkuiInternalSubnavigationBar) .SubnavigationButton + .SubnavigationButton {
-  margin-left: var(--vkui--size_subnavigation_bar_gap--regular);
 }
 
 :global(.vkuiInternalSubnavigationBar--mode-fixed) .SubnavigationButton {

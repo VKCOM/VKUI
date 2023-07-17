@@ -9,11 +9,11 @@
       <FormStatus header="Некорректный мобильный номер" mode="error">
         Необходимо корректно ввести номер в международном формате
       </FormStatus>
-      <FormItem top="Мобильный телефон">
-        <Input defaultValue="+7 12 344 15 48" />
+      <FormItem htmlFor="phone" top="Мобильный телефон">
+        <Input id="phone" defaultValue="+7 12 344 15 48" />
       </FormItem>
-      <FormItem top="Код подтверждения">
-        <Input />
+      <FormItem htmlFor="code" top="Код подтверждения">
+        <Input id="code" />
       </FormItem>
     </Group>
   </Panel>
