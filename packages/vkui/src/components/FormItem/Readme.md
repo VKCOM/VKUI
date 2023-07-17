@@ -65,16 +65,31 @@ const Example = () => {
               bottom={
                 email ? 'Электронная почта введена верно!' : 'Пожалуйста, введите электронную почту'
               }
+              bottomId="email-type"
             >
-              <Input id="email" type="email" name="email" value={email} onChange={onChange} />
+              <Input
+                aria-labelledby="email-type"
+                id="email"
+                type="email"
+                name="email"
+                value={email}
+                onChange={onChange}
+              />
             </FormItem>
 
             <FormItem top="Пароль" htmlFor="pass">
               <Input id="pass" type="password" placeholder="Введите пароль" />
             </FormItem>
 
-            <FormItem bottom="Пароль может содержать только латинские буквы и цифры.">
-              <Input type="password" placeholder="Повторите пароль" />
+            <FormItem
+              bottom="Пароль может содержать только латинские буквы и цифры."
+              bottomId="passwordDescription"
+            >
+              <Input
+                type="password"
+                placeholder="Повторите пароль"
+                aria-labelledby="passwordDescription"
+              />
             </FormItem>
 
             <FormLayoutGroup mode="horizontal">
@@ -95,8 +110,9 @@ const Example = () => {
                 onRemove={onRemove}
                 top="Отчество"
                 bottom="Если у вас нет отчества — удалите этот пункт."
+                bottomId="patronymicDescription"
               >
-                <Input id="patronymic" />
+                <Input id="patronymic" aria-labelledby="patronymicDescription" />
               </FormItem>
             )}
 
