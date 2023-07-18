@@ -12,7 +12,9 @@ name: 'Pull Request / Common'
 #   with:
 #     ref: refs/pull/${{ github.event.pull_request.number }}/merge
 # ```
-on: ['pull_request_target']
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
   group: pr-common-${{ github.event.pull_request.number }}
