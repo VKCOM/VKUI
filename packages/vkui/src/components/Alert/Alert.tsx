@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { useId } from '../../hooks/useId';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { Platform } from '../../lib/platform';
@@ -138,6 +139,11 @@ export const Alert = ({
   dismissLabel = 'Закрыть предупреждение',
   ...restProps
 }: AlertProps) => {
+  const generatedId = useId();
+
+  const headerId = `vkui-alert-${generatedId}-header`;
+  const textId = `vkui-alert-${generatedId}-text`;
+
   const platform = usePlatform();
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
   const { waitTransitionFinish } = useWaitTransitionFinish();
@@ -207,12 +213,12 @@ export const Alert = ({
         )}
         role="alertdialog"
         aria-modal
-        aria-labelledby="vkui--alert--title"
-        aria-describedby="vkui--alert--desc"
+        aria-labelledby={headerId}
+        aria-describedby={textId}
       >
         <div className={styles['Alert__content']}>
-          {hasReactNode(header) && <AlertHeader id="vkui--alert--title">{header}</AlertHeader>}
-          {hasReactNode(text) && <AlertText id="vkui--alert--desc">{text}</AlertText>}
+          {hasReactNode(header) && <AlertHeader id={headerId}>{header}</AlertHeader>}
+          {hasReactNode(text) && <AlertText id={textId}>{text}</AlertText>}
           {children}
         </div>
         <div className={styles['Alert__actions']}>
