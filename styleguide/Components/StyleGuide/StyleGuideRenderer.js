@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Appearance, AppRoot, ConfigProvider, Platform, WebviewType } from '@vkui';
+import { Appearance, AppRoot, ConfigProvider, Platform } from '@vkui';
 import { BREAKPOINTS } from '@vkui/lib/adaptivity';
 import { useViewPortSize } from '../../utils';
 import { SMALL_HEIGHT } from '../Settings/ViewHeightSelect';
@@ -14,7 +14,7 @@ let initialState = {
   hasPointer: true,
   appearance: Appearance.LIGHT,
   styleguideAppearance: Appearance.LIGHT,
-  webviewType: WebviewType.VKAPPS,
+  hasCustomPanelHeaderAfter: true,
   transitionMotionEnabled: true,
 };
 
@@ -76,7 +76,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
         platform={Platform.ANDROID}
         appearance={styleguideAppearance}
         transitionMotionEnabled={false}
-        webviewType="internal"
+        hasCustomPanelHeaderAfter={false}
       >
         <AppRoot>
           <Component

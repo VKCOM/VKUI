@@ -201,7 +201,7 @@ const Scrollable = () => {
   );
 };
 
-<ConfigProvider webviewType="internal">
+<ConfigProvider hasCustomPanelHeaderAfter={false}>
   <Example />
 </ConfigProvider>;
 ```

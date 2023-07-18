@@ -1,6 +1,6 @@
 Надстройка над `<input type="text" />`. Компонент принимает все валидные для этого элемента свойства.
 
-```jsx { "props": { "layout": false, "adaptivity": true, "webviewType": true } }
+```jsx { "props": { "layout": false, "adaptivity": true, "showCustomPanelHeaderAfterProps": true } }
 const thematics = [
   { id: 3201, name: 'Аренда автомобилей' },
   { id: 3273, name: 'Автотовары' },

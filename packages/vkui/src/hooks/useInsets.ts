@@ -41,29 +41,30 @@ function resolveInsets(e: BridgeEvent): Insets | null {
   return null;
 }
 
-vkBridge.subscribe((e: BridgeEvent) => {
-  const insets = resolveInsets(e);
-  if (insets) {
-    initialState = insets;
-  }
-});
-
-export function useInsets(): Insets {
+/**
+ * TODO [>=6]: удалить хук (#5049)
+ * @deprecated
+ */
+export function useInsets(disabled = false): Insets {
   const [insets, setInsets] = React.useState<Insets>(initialState);
 
   useIsomorphicLayoutEffect(() => {
-    function connectListener(e: BridgeEvent) {
-      const insets = resolveInsets(e);
+    if (disabled) {
+      return;
+    }
+
+    const handleBridgeEvent = (event: BridgeEvent) => {
+      const insets = resolveInsets(event);
       if (insets) {
         setInsets(insets);
       }
-    }
-
-    vkBridge.subscribe(connectListener);
-    return () => {
-      vkBridge.unsubscribe(connectListener);
     };
-  }, []);
+
+    vkBridge.subscribe(handleBridgeEvent);
+    return () => {
+      vkBridge.unsubscribe(handleBridgeEvent);
+    };
+  }, [disabled]);
 
   return insets;
 }

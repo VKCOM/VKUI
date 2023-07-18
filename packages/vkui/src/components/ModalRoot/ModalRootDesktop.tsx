@@ -8,7 +8,7 @@ import { useDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
 import { Platform } from '../../lib/platform';
 import { warnOnce } from '../../lib/warnOnce';
-import { useConfigProvider, WebviewType } from '../ConfigProvider/ConfigProviderContext';
+import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { ModalRootContext, ModalRootContextInterface } from './ModalRootContext';
 import { ModalRootWithDOMProps, ModalsStateEntry } from './types';
@@ -30,7 +30,7 @@ export const ModalRootDesktop = ({
   const restoreFocusTo = React.useRef<HTMLElement | undefined>(undefined);
 
   const { document } = useDOM();
-  const { webviewType, platform } = useConfigProvider();
+  const { hasCustomPanelHeaderAfter, platform } = useConfigProvider();
   const {
     activeModal,
     exitingModal,
@@ -179,7 +179,7 @@ export const ModalRootDesktop = ({
       <div
         className={classNames(
           styles['ModalRoot'],
-          webviewType === WebviewType.VKAPPS && styles['ModalRoot--vkapps'],
+          hasCustomPanelHeaderAfter && styles['ModalRoot--hasCustomPanelHeaderAfterSlot'],
           styles['ModalRoot--desktop'],
         )}
       >

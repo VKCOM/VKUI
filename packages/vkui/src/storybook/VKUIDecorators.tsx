@@ -19,11 +19,15 @@ const CenteredStyle: React.CSSProperties = {
 };
 
 export const withVKUIWrapper: Decorator = (Component, context) => {
-  const { platform, appearance, hasPointer = false, webviewType } = context.globals;
+  const { platform, appearance, hasPointer = false, hasCustomPanelHeaderAfter } = context.globals;
   const { centered } = context.parameters;
 
   return (
-    <ConfigProvider platform={platform} appearance={appearance} webviewType={webviewType}>
+    <ConfigProvider
+      platform={platform}
+      appearance={appearance}
+      hasCustomPanelHeaderAfter={hasCustomPanelHeaderAfter}
+    >
       <AdaptivityProvider hasPointer={hasPointer}>
         <AppRoot style={centered ? CenteredStyle : undefined}>
           <Component />

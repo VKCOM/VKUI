@@ -2,9 +2,11 @@
 
 > **Важно**
 >
-> Правая часть шапки скрыта по умолчанию, если требуется показать её, передайте в [`ConfigProvider`](https://vkcom.github.io/VKUI/#/ConfigProvider) свойство `webviewType={WebviewType.INTERNAL}`.
+> Правая часть шапки скрыта по умолчанию, если требуется показать её, передайте в [`ConfigProvider`](https://vkcom.github.io/VKUI/#/ConfigProvider) свойство `hasCustomPanelHeaderAfter={false}`.
+>
+> ⚠️ В v6 значение по умолчанию будет изменено на `false` (см. https://github.com/VKCOM/VKUI/issues/5049).
 
-```jsx { "props": { "webviewType": true } }
+```jsx { "props": { "showCustomPanelHeaderAfterProps": true } }
 const Example = () => {
   const platform = usePlatform();
   return (

@@ -43,6 +43,7 @@ const [activePanel, setActivePanel] = useState('panel1');
 - Передать во `View` коллбек `onSwipeBack` — он сработает при завершении анимации свайпа. Поменяйте в нем `activePanel` и обновите `history`.
 - Передать во `View` проп `history` — массив из id панелей в порядке открытия. Например, если пользователь из `main` перешел в `profile`, а оттуда попал в `education`, то `history=['main', 'profile', 'education']`.
 - Обернуть ваше приложение в `ConfigProvider` — он определит, открыто приложение в webview клиента VK или в браузере (там есть свой swipe back, который будет конфликтовать с нашим). Для проверки в браузере форсируйте определение webview: `<ConfigProvider isWebView>`.
+<!--TODO [>=6]: удалить этот пункт, т.к. это информацию про VK Mini Apps-->
 - На первой панели должен включаться свайпбек нативного клиента, чтобы пользователь смог выйти из приложения — для этого используют `vk-bridge`. **Если вы делаете стандартное мини-приложение ВКонтакте,** при переходах отправляйте [событие `VKWebAppSetSwipeSettings`](https://dev.vk.com/bridge/VKWebAppSetSwipeSettings) с `history: true` на первой панели или `history: false` на других. **Если тип вашего мини-приложения — `WebviewType.INTERNAL`,** отправляйте событие `VKWebAppEnableSwipeBack` при переходе на первую панель и событие `VKWebAppDisableSwipeBack` при переходе на любую другух.
 
 **Блокировка свайпа (вариант #1)**
@@ -66,6 +67,8 @@ const App = () => {
   return <View onSwipeBackStart={handleSwipeBackStart} />;
 };
 ```
+
+<!--TODO [>=6]: удалить информацию про VK Mini Apps-->
 
 ```jsx
 import vkBridge from '@vkontakte/vk-bridge';

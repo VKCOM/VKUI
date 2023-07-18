@@ -122,7 +122,7 @@ export interface SelectProps extends NativeSelectProps, FormFieldProps, TrackerO
    */
   emptyText?: string;
   /**
-   * > ⚠️ В v6 из возвращаемых типов будет удалён `CustomSelectOptionInterface[]`. Для кастомной фильтрации используйте
+   * > ⚠️ В **v6** из возвращаемых типов будет удалён `CustomSelectOptionInterface[]`. Для кастомной фильтрации используйте
    * > `filterFn`.
    */
   onInputChange?: (

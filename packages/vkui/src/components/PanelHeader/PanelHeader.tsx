@@ -6,7 +6,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { HasComponent, HasRef, HasRootRef } from '../../types';
-import { useConfigProvider, WebviewType } from '../ConfigProvider/ConfigProviderContext';
+import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { Separator } from '../Separator/Separator';
@@ -63,8 +63,9 @@ const PanelHeaderIn = ({
   typographyProps = {},
 }: PanelHeaderProps) => {
   const { Component = 'span', ...restProps } = typographyProps;
-  const { webviewType } = useConfigProvider();
+  const { hasCustomPanelHeaderAfter, customPanelHeaderAfterMinWidth } = useConfigProvider();
   const { isInsideModal } = React.useContext(ModalRootContext);
+  const showAfterSlot = !hasCustomPanelHeaderAfter || isInsideModal;
   const platform = usePlatform();
 
   let typographyNode: React.ReactNode;
@@ -98,8 +99,11 @@ const PanelHeaderIn = ({
           {before}
         </div>
         <div className={styles['PanelHeader__content']}>{typographyNode}</div>
-        <div className={classNames(styles['PanelHeader__after'], 'vkuiInternalPanelHeader__after')}>
-          {(webviewType === WebviewType.INTERNAL || isInsideModal) && after}
+        <div
+          className={classNames(styles['PanelHeader__after'], 'vkuiInternalPanelHeader__after')}
+          style={showAfterSlot ? { minWidth: customPanelHeaderAfterMinWidth } : undefined}
+        >
+          {showAfterSlot ? after : null}
         </div>
       </TooltipContainer>
       {separator && platform === Platform.VKCOM && (
@@ -128,8 +132,6 @@ export const PanelHeader = ({
   ...restProps
 }: PanelHeaderProps) => {
   const platform = usePlatform();
-  const { webviewType } = useConfigProvider();
-  const { isInsideModal } = React.useContext(ModalRootContext);
   const { sizeX = 'none' } = useAdaptivity();
   const { sizeX: adaptiveSizeX } = useAdaptivityConditionalRender();
   let isFixed = fixed !== undefined ? fixed : platform !== Platform.VKCOM;
@@ -149,7 +151,6 @@ export const PanelHeader = ({
         separator &&
           visor &&
           classNames(styles['PanelHeader--sep'], 'vkuiInternalPanelHeader--sep'),
-        webviewType === WebviewType.VKAPPS && !isInsideModal && styles['PanelHeader--vkapps'],
         !before &&
           classNames(styles['PanelHeader--no-before'], 'vkuiInternalPanelHeader--no-before'),
         !after && styles['PanelHeader--no-after'],

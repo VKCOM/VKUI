@@ -9,30 +9,27 @@ export enum Platform {
   VKCOM = 'vkcom',
 }
 
-const PLATFORM_ALIAS = {
-  desktop_web: Platform.VKCOM,
-};
-
-function isPlatformAlias(platformAlias: string): platformAlias is keyof typeof PLATFORM_ALIAS {
-  return platformAlias in PLATFORM_ALIAS;
-}
-
 /**
+ * TODO [>=6]: удалить из VKUI
+ *
  * Значение, которое передаётся в качестве query-параметра при открытии VK Mini Apps
  * @see {@link https://dev.vk.com/mini-apps/development/launch-params#vk_platform vk_platform}
+ *
+ * @deprecated
  */
 function getPlatformByQueryString(queryString: string): Platform | undefined {
+  const PLATFORM_ALIAS = { desktop_web: Platform.VKCOM };
+  const isPlatformAlias = (platformAlias: string): platformAlias is keyof typeof PLATFORM_ALIAS =>
+    platformAlias in PLATFORM_ALIAS;
   try {
     const parsedQuery = querystring.parse(queryString);
     const platformAliasByQuery = parsedQuery['vk_platform'];
-
     return typeof platformAliasByQuery === 'string' && isPlatformAlias(platformAliasByQuery)
       ? PLATFORM_ALIAS[platformAliasByQuery]
       : undefined;
   } catch (e) {
     console.warn(e);
-
-    return undefined;
+    return;
   }
 }
 

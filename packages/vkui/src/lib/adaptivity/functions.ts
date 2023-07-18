@@ -1,7 +1,32 @@
 import type { Exact } from '../../types';
 import { Platform, type PlatformType } from '../platform';
-import { SizeType, VIEW_WIDTH_TO_CSS_BREAKPOINT_MAP, ViewHeight, ViewWidth } from './constants';
+import {
+  BREAKPOINTS,
+  SizeType,
+  VIEW_WIDTH_TO_CSS_BREAKPOINT_MAP,
+  ViewHeight,
+  ViewWidth,
+} from './constants';
 import type { CSSBreakpointsClassNames, MediaQueries } from './types';
+
+/**
+ * @public
+ */
+export function getViewWidthByViewportWidth(viewportWidth: number) {
+  if (viewportWidth >= BREAKPOINTS.DESKTOP) {
+    return ViewWidth.DESKTOP;
+  }
+  if (viewportWidth >= BREAKPOINTS.TABLET) {
+    return ViewWidth.TABLET;
+  }
+  if (viewportWidth >= BREAKPOINTS.SMALL_TABLET) {
+    return ViewWidth.SMALL_TABLET;
+  }
+  if (viewportWidth >= BREAKPOINTS.MOBILE) {
+    return ViewWidth.MOBILE;
+  }
+  return ViewWidth.SMALL_MOBILE;
+}
 
 export function getViewWidthByMediaQueries(mediaQueries: MediaQueries): ViewWidth {
   /* eslint-disable no-restricted-properties */
@@ -19,6 +44,19 @@ export function getViewWidthByMediaQueries(mediaQueries: MediaQueries): ViewWidt
   }
   /* eslint-enable no-restricted-properties */
   return ViewWidth.SMALL_MOBILE;
+}
+
+/**
+ * @public
+ */
+export function getViewHeightByViewportHeight(viewportHeight: number) {
+  if (viewportHeight >= BREAKPOINTS.MEDIUM_HEIGHT) {
+    return ViewHeight.MEDIUM;
+  }
+  if (viewportHeight >= BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT) {
+    return ViewHeight.SMALL;
+  }
+  return ViewHeight.EXTRA_SMALL;
 }
 
 export function getViewHeightByMediaQueries(mediaQueries: MediaQueries): ViewHeight {

@@ -1,5 +1,5 @@
-import type { AppearanceType } from '@vkontakte/vk-bridge';
 import type { AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
+import type { AppearanceType } from '../../lib/appearance';
 import { Platform } from '../../lib/platform';
 import type { ComponentPlaygroundProps } from './ComponentPlayground';
 

@@ -365,7 +365,13 @@ export { removeObjectKeys } from './lib/removeObjectKeys';
 export { SSRWrapper } from './lib/SSR';
 export type { SSRWrapperProps } from './lib/SSR';
 export { platform, Platform } from './lib/platform';
-export { ViewWidth, ViewHeight, SizeType } from './lib/adaptivity';
+export {
+  ViewWidth,
+  ViewHeight,
+  SizeType,
+  getViewWidthByViewportWidth,
+  getViewHeightByViewportHeight,
+} from './lib/adaptivity';
 export { getPlatformClassName } from './helpers/getPlatformClassName';
 export type { AdaptivityProps } from './components/AdaptivityProvider/AdaptivityContext';
 export { calcInitialsAvatarColor } from './helpers/avatar';

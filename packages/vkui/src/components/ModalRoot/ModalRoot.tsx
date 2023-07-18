@@ -10,7 +10,7 @@ import { setTransformStyle } from '../../lib/styles';
 import { transitionEvent } from '../../lib/supportEvents';
 import { rubber } from '../../lib/touch';
 import { warnOnce } from '../../lib/warnOnce';
-import { ConfigProviderContext, WebviewType } from '../ConfigProvider/ConfigProviderContext';
+import { ConfigProviderContext } from '../ConfigProvider/ConfigProviderContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
@@ -556,8 +556,8 @@ class ModalRootTouchComponent extends React.Component<
           <Touch
             className={classNames(
               styles['ModalRoot'],
-              this.props.configProvider?.webviewType === WebviewType.VKAPPS &&
-                styles['ModalRoot--vkapps'],
+              this.props.configProvider?.hasCustomPanelHeaderAfter &&
+                styles['ModalRoot--hasCustomPanelHeaderAfterSlot'],
               touchDown &&
                 classNames(styles['ModalRoot--touched'], 'vkuiInternalModalRoot--touched'),
               !!(enteringModal || exitingModal) &&

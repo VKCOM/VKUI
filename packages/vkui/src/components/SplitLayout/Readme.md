@@ -1,6 +1,6 @@
 Компонент-контейнер для реализации интерфейса с [многоколоночной структурой](#!/Adaptivity). Тесно связан со [SplitCol](#!/SplitCol).
 
-```jsx { "props": { "layout": false, "webviewType": true, "adaptivity": true } }
+```jsx { "props": { "layout": false, "showCustomPanelHeaderAfterProps": true, "adaptivity": true } }
 const panels = ['panel 1', 'panel 2', 'panel 3'];
 const modals = ['modal 1', 'modal 2'];
 

@@ -23,19 +23,13 @@ let initialState: BridgeAdaptivity = {
   viewportHeight: 0,
 };
 
-function resolveAdaptivity(e: BridgeEvent): BridgeAdaptivity | null {
-  const { type, data } = e.detail;
-
-  if (type !== 'VKWebAppUpdateConfig' || !data) {
-    return null;
-  }
-
-  const { adaptivity, viewport_width: viewportWidth, viewport_height: viewportHeight } = data;
+function resolveAdaptivity(data: any): BridgeAdaptivity | null {
+  const { adaptivity, viewport_width, viewport_height } = data;
 
   const bridgeAdaptivity: BridgeAdaptivity = {
     type: '',
-    viewportWidth: isFinite(viewportWidth) ? +viewportWidth : 0,
-    viewportHeight: isFinite(viewportHeight) ? +viewportHeight : 0,
+    viewportWidth: isFinite(viewport_width) ? Number(viewport_width) : 0,
+    viewportHeight: isFinite(viewport_height) ? Number(viewport_height) : 0,
   };
 
   switch (adaptivity) {
@@ -48,29 +42,45 @@ function resolveAdaptivity(e: BridgeEvent): BridgeAdaptivity | null {
   return bridgeAdaptivity;
 }
 
-vkBridge.subscribe((e: BridgeEvent) => {
-  const bridgeAdaptivity = resolveAdaptivity(e);
-
-  if (bridgeAdaptivity) {
-    initialState = bridgeAdaptivity;
-  }
-});
-
-export function useBridgeAdaptivity(): BridgeAdaptivity {
+/**
+ * TODO [>=6]: удалить хук (#5049)
+ * @deprecated
+ */
+export function useBridgeAdaptivity(disable = false): BridgeAdaptivity {
   const [bridgeAdaptivity, setBridgeAdaptivity] = React.useState<BridgeAdaptivity>(initialState);
 
   useIsomorphicLayoutEffect(() => {
-    function bridgeListener(e: BridgeEvent) {
-      const newBridgeAdaptivity = resolveAdaptivity(e);
-
-      if (newBridgeAdaptivity) {
-        setBridgeAdaptivity(newBridgeAdaptivity);
-      }
+    if (disable) {
+      return;
     }
 
-    vkBridge.subscribe(bridgeListener);
+    const updateAdaptivity = (data: any) => {
+      if (!('adaptivity' in data) || !('viewport_width' in data) || !('viewport_height' in data)) {
+        return;
+      }
+
+      const newAdaptivity = resolveAdaptivity(data);
+
+      if (newAdaptivity) {
+        setBridgeAdaptivity(newAdaptivity);
+      }
+    };
+
+    const handleBridgeEvent = (event: BridgeEvent) => {
+      const { type, data } = event.detail;
+
+      if (type !== 'VKWebAppUpdateConfig') {
+        return;
+      }
+
+      updateAdaptivity(data);
+    };
+
+    vkBridge.subscribe(handleBridgeEvent);
+    vkBridge.send('VKWebAppGetConfig').then(updateAdaptivity).catch(console.error);
+
     return () => {
-      vkBridge.unsubscribe(bridgeListener);
+      vkBridge.unsubscribe(handleBridgeEvent);
     };
   }, []);
 
