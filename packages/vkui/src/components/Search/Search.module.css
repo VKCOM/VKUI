@@ -100,6 +100,26 @@
   margin-right: calc((var(--vkui_internal--search_height) + 4px) * 2);
 }
 
+.Search--disabled {
+  opacity: var(--vkui--opacity_disable_accessibility);
+  pointer-events: none;
+  cursor: default;
+}
+
+.Search__input:disabled {
+  opacity: var(--vkui--opacity_disable_accessibility);
+}
+
+.Search__input::placeholder {
+  color: var(--vkui--color_text_secondary);
+  /* Для Firefox */
+  opacity: 1;
+}
+
+.Search__input:disabled::placeholder {
+  color: var(--vkui--color_text_secondary);
+}
+
 .Search__icons {
   display: flex;
   align-items: center;
